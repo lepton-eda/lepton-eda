@@ -57,16 +57,17 @@ x_grid_draw(TOPLEVEL *w_current)
 	/* make this more flexible hack */
 	switch(return_zoom_number(w_current->page_current->zoom_factor)) {
 	case(0):
+	case(1):
+	case(2):
 		return;
 		break;
-	case(1):
+	case(3):
 		incr = 1000;
 		break;
-	case(2):
-	case(3):
+	case(4):
 		incr = 500;
 		break;
-	case(4):
+	case(5):
 		incr = 200;
 		break;
 	default:

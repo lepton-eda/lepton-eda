@@ -81,9 +81,9 @@ o_image_create(int x, int y, int color_mode)
 		image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
 	}
 
-	s_color_gdcolor_init();
-
 	current_im_ptr = im_ptr;
+
+	s_color_gdcolor_init();
 }
 
 

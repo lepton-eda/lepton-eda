@@ -51,7 +51,7 @@
 ; STROKE_COLOR                    14
 ; LOCK_COLOR    	          15
 ; OUTPUT_BACKGROUND_COLOR         16
-; Freestyle color		  17 (grey)
+; Freestyle colors		  17-20
 ;
 ; OVERRIDE_NET_COLOR              4
 ; OVERRIDE_PIN_COLOR              1
@@ -233,9 +233,8 @@
 ; Set a freestyle color which can be used in whatever context you want.
 ; However, care should be taken with this facility since users might 
 ; change this colors at will.
-; Do not change color index 17 (it's used in the IEC417 library).
 ;
-(freestyle-color 17 "grey" "darkgrey" ".75 .75 .75" 190 190 190)
+;(freestyle-color 17 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
 ;(freestyle-color 18 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
 ;(freestyle-color 19 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
 ;(freestyle-color 20 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
@@ -469,8 +468,8 @@
 ; This is not the paper size.  That is specified elsewhere.  End users should
 ; not change this at all
 ;
-;(world-size 120.0 90.0 1.0) new possible, but not ready for it.
-(world-size 60.0 45.0 1.0)
+(world-size 120.0 90.0 1.0)
+;(world-size 60.0 45.0 1.0)
 
 ; page-size width height 
 ; Specifies the size of the default paper size

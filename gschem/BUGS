@@ -161,6 +161,11 @@ OKAY	Apparently, an undocumented feature (or maybe it is documented), but
 
 	Some sort of resize error when you open a file and the maximize 
 
+	Related to above: load up some schematics, maximize window, flip
+	between pages... grid drawn wrong. (probably because in the resize
+	handler, you don't go through and set width/height of window in all
+	pages)
+
 	You still get xor droppings during a place and expose event happens
 
 	You still get window droppings due to interactions with:

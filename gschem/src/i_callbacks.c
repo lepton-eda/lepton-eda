@@ -47,7 +47,7 @@
  * want to change the extention using the return value of the
  * function, you need to do pointer arithmetic, assuming your fname is
  * defined as a constant. :-) Note that, if the only '.' appears as
- * the firt character, it is ignored. */
+ * the first character, it is ignored. */
 static const char *
 fnameext_get(const char* fname)
 {
@@ -74,12 +74,12 @@ fnameext_remove(const char *fname)
 	if(*p == '\0') {
 		fname_new = u_basic_strdup(p);
 	} else {
-		len = (p - fname) + 1;
-		fname_new = (char *) malloc(sizeof(char) * len);
+		len = (p - fname); /*  + 1; this extra was causing grief */
+		fname_new = (char *) malloc(sizeof(char) * (len + 1));
 		if(fname_new == NULL) {
 			return NULL;
 		}
-		strncpy(fname_new, fname, len - 1);
+		strncpy(fname_new, fname, len);
 		fname_new[len] = '\0';
 	}
 	return fname_new;
@@ -281,7 +281,6 @@ DEFINE_I_CALLBACK(file_print)
 
 	exit_if_null(w_current);
 
-#if 0 /* commented out till this is debugged */
 	/* get the base file name */
 	if (strcmp(fnameext_get(w_current->page_current->page_filename),
 		   ".sch") == 0) {
@@ -298,12 +297,11 @@ DEFINE_I_CALLBACK(file_print)
 	/* add ".ps" tp the base filename */
 	ps_filename = fnameext_add(base, ".ps");
 	free(base);
-#endif
 
 	if (output_filename) {
 		x_print_setup(w_current, output_filename);
 	} else {
-		x_print_setup(w_current, "output.ps");
+		x_print_setup(w_current, ps_filename);
 	}
 
 	if (ps_filename) {
@@ -330,7 +328,6 @@ DEFINE_I_CALLBACK(file_write_png)
 	return;
 #endif
 
-#if 0 /* commented out till this is debugged */
 	/* get the base file name */
 	if (strcmp(fnameext_get(w_current->page_current->page_filename),
 		   ".sch") == 0) {
@@ -347,12 +344,11 @@ DEFINE_I_CALLBACK(file_write_png)
 	/* add ".ps" tp the base filename */
 	img_filename = fnameext_add(base, ".png");
 	free(base);
-#endif
 
 	if (output_filename) {
 		x_image_setup(w_current, output_filename);
 	} else {
-		x_image_setup(w_current, "output.png");
+		x_image_setup(w_current, img_filename);
 	}
 
 	if (img_filename) {

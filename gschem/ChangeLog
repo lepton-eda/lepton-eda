@@ -9,6 +9,18 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/18/99	Increased world size to be much much larger.  Hopefully this won't
+	break anything.
+
+	Fixed the extension code in i_callback.c to add the NULL character
+	to the right place.
+
+	Removed freestyle color 17, it was unnecessary, the IEC417 symbols
+	can use the lock color (15).
+
+	Fixed the grid drawing to draw the grid at the right zoom levels
+	(since I doubled the world size)
+
 9/17/99	Put some code into i_set_filename which truncates extra long
 	files, so that the window size isn't affected.
 
