@@ -9,6 +9,11 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2001-03-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* Updated makeimage and makeallimage scripts to output png via
+	  ghostscript 
+
 2000-02-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* Added mkimage* and print.scm files back into existance

@@ -3,7 +3,6 @@
 # This script requires the following packages :
 #	- gschem (located the your PATH )
 # 	- ghostscript (I use aladdin gs)
-#	- Netpbm tools (namely ppmtogif)
 #
 
 if [ "$1" == "" ] 
@@ -12,7 +11,7 @@ then
 	exit 1
 fi
 
-version=20000220
+version=`libgeda-config --version`
 basedir=`basename $1`
 
 echo Creating $basedir
@@ -69,59 +68,36 @@ do
 	# use this if you have Aladdin 5.50 ghostscript: 
 	#gs -q -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
 	gs -q \
-		-dNOPAUSE -sOutputFile=${basedir}/${symname}_tn.ppm \
-		-r20 -sDEVICE=ppm \
+		-dNOPAUSE -sOutputFile=${basedir}/${symname}_tn.png \
+		-r20 -sDEVICE=png16 \
 		${basedir}/${symname}.ps quit.ps
-
-	# ppm to gif
-	ppmtogif ${basedir}/${symname}_tn.ppm > ${basedir}/${symname}_tn_temp.gif
-	convert -crop 0x0 ${basedir}/${symname}_tn_temp.gif ${basedir}/${symname}_tn.gif
-	echo Running giftool to reduce ${basedir}/${symname}_tn.gif
-	giftool -B ${basedir}/${symname}_tn.gif
-	rm -f ${basedir}/${symname}_tn_temp.gif
-
 
 	#
 	# make a really really small thumbnail
 	#
 	gs -q \
-		-dNOPAUSE -sOutputFile=${basedir}/${symname}_stn.ppm \
-		-r5 -sDEVICE=ppm \
+		-dNOPAUSE -sOutputFile=${basedir}/${symname}_stn.png \
+		-r5 -sDEVICE=png16 \
 		${basedir}/${symname}.ps quit.ps
 
-	# ppm to gif
-	ppmtogif ${basedir}/${symname}_stn.ppm > ${basedir}/${symname}_stn_temp.gif
-	convert -crop 0x0 ${basedir}/${symname}_stn_temp.gif ${basedir}/${symname}_stn.gif
-	echo Running giftool to reduce ${basedir}/${symname}_stn.gif
-	giftool -B ${basedir}/${symname}_stn.gif
-	rm -f ${basedir}/${symname}_stn_temp.gif
-
-
-	# Then take original postscript file and convert to ppm 
+	# Then take original postscript file and convert to png16 
 	# GNU ghostscript: 
 	# use this if you have Aladdin 5.50 ghostscript: 
 	#gs -q -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
 	gs -q -r100 \
-		-dNOPAUSE -sOutputFile=${basedir}/${symname}.ppm \
-		-sDEVICE=ppm \
+		-dNOPAUSE -sOutputFile=${basedir}/${symname}.png \
+		-sDEVICE=png16 \
 		${basedir}/${symname}.ps quit.ps
 	
-	# finally convert this ppm to gif
-	ppmtogif ${basedir}/${symname}.ppm > ${basedir}/${symname}_temp.gif
-	convert -crop 0x0 ${basedir}/${symname}_temp.gif ${basedir}/${symname}.gif
-	echo Running giftool to reduce ${basedir}/${symname}.gif
-	giftool -B ${basedir}/${symname}.gif
-	rm -f ${basedir}/${symname}_temp.gif
-
 	# Add entry to index.html
-	echo "<IMG SRC=\"./${symname}_tn.gif\">" >> ${basedir}/index.html
+	echo "<IMG SRC=\"./${symname}_tn.png\">" >> ${basedir}/index.html
 	echo "<H3><A HREF=\"./${symname}.sym\">${symname}.sym</A>" >> ${basedir}/index.html
-	echo "<A HREF="./${symname}.gif">GIF</A>  <A HREF="./${symname}.ps">PS</A></H3>" >> ${basedir}/index.html
+	echo "<A HREF="./${symname}.png">PNG</A>  <A HREF="./${symname}.ps">PS</A></H3>" >> ${basedir}/index.html
 	echo "<p><br>" >> ${basedir}/index.html
 
 	# Add entry to small.html
 	echo -n "<A HREF=\"./${symname}.html\">" >> ${basedir}/small.html
-	echo -n "<IMG SRC=\"./${symname}_stn.gif\" alt=\"${symname}\" border=0>" >> ${basedir}/small.html
+	echo -n "<IMG SRC=\"./${symname}_stn.png\" alt=\"${symname}\" border=0>" >> ${basedir}/small.html
 	echo "</A>" >> ${basedir}/small.html
 
 	# Create per sym html file
@@ -133,9 +109,9 @@ do
 	echo "<CENTER><H1>$basedir/$symname library</H1></CENTER>" >> ${basedir}/$symname.html
 	echo "" >> ${basedir}/$symname.html
 
-	echo "<IMG SRC=\"./${symname}_tn.gif\">" >> ${basedir}/$symname.html
+	echo "<IMG SRC=\"./${symname}_tn.png\">" >> ${basedir}/$symname.html
 	echo "<H3><A HREF=\"./${symname}.sym\">${symname}.sym</A>" >> ${basedir}/$symname.html
-	echo "<A HREF="./${symname}.gif">GIF</A>  <A HREF="./${symname}.ps">PS</A></H3>" >> ${basedir}/$symname.html
+	echo "<A HREF="./${symname}.png">PNG</A>  <A HREF="./${symname}.ps">PS</A></H3>" >> ${basedir}/$symname.html
 	echo "<p><br>" >> ${basedir}/$symname.html
 
 	echo ""  >> ${basedir}/$symname.html
