@@ -2,6 +2,8 @@
 
 	* configure.ac: Bumped version to 20031231
 
+        * m4/Makefile.am: Added some missing *.m4 files to EXTRA_DIST.
+
 2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* ABOUT-NLS: Removed machine generated file from CVS
