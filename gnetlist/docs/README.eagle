@@ -1,0 +1,20 @@
+Basic information about the Eagle PCB backend and sch2eaglepos.sh
+
+gnet-eagle.scm  
+
+The script uses the component's package, footprint, value, and (if no
+value) device attributes, as well as the netlist, to generate an Eagle
+script that will add and connect all components.  It also introduces a
+"lib" attribute, which specifies the Eagle library where the footprint
+can be found...if a "lib" attribute is not set for a component, then
+the library defaults to "smd-ipc" (the default Eagle surface mount library).
+
+sch2eaglepos.sh
+
+I am also including a simple shell script that I wrote which has saved
+me hours by extracting the relative locations of the parts from a
+gschem schematic, and generating an Eagle script to place the
+components in the same relative locations on the layout.  By default
+all packages are piled on top of each other, and with a large design
+it takes a long time to sort out which cap bypasses which IC, etc.
+

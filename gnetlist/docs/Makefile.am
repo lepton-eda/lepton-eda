@@ -2,7 +2,7 @@
 SUBDIRS = vams
 
 EXTRA_DIST = README.bom README.pcb README.verilog README.vhdl README.switcap \
-	     gnetlist.1 gnetlist.html
+	     README.sysc README.eagle gnetlist.1 gnetlist.html
 
 BUILT_SOURCES = gnetlist.html
 
@@ -10,7 +10,7 @@ man_MANS = gnetlist.1
 
 docsreadmedir = @GEDADOCDIR@/readmes
 docsreadme_DATA = README.bom README.pcb README.switcap README.verilog \
-		  README.vhdl
+		  README.vhdl README.sysc README.eagle
 
 docsmandir = @GEDADOCDIR@/man
 docsman_DATA = gnetlist.html

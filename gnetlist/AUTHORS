@@ -78,6 +78,9 @@ Dan McMahill		- For contributing a patch to make gschem2pcb a lot
 
 			  For contributing the switcap backend
 
+			  For contributing the cascade backend and many other
+			  backends
+
 Stuart Brorson		- For contributing the advanced spice backend
 			  (spice-sdb) 
 
@@ -85,6 +88,8 @@ Carlos Nieves Onega 	- For contributing the drc2 backend and the necessary
 	 		  code changes to make it possible.
 
 Bill Wilson		- For contributing the gsch2pcb backend 
+
+Braddock Gaskill 	- For contributing the Eagle PCB backend
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

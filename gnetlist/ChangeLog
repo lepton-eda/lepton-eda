@@ -1,3 +1,15 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-cascade.scm: Applied patch by Dan McMahill to fix
+	a bug.
+
+	* docs/README.sysc scheme/gnet-systemc.scm: Added SystemC backend by
+	Jaume Masip
+	
+	* scheme/gnet-eagle.scm scripts/sch2eaglepos.sh docs/README.eagle: 
+	Added Eagle PCB scheme backend and cleanup script.   The backend
+	and script were written by Braddock Gaskill. 
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228

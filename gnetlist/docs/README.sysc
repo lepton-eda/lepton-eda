@@ -1,0 +1,85 @@
+TITLE:
+
+     Gnetlist SystemC Backend
+
+OBJECTIVE:
+
+     Transform a geda schematic into a transaction based structural systemc module.
+
+LIMITATIONS:
+
+     1.- Only transaction based wires are considered (wire_name<user_type>).
+     2.- Unnamed wires are eliminated.
+     3.- In/out ports have to be inserted manually in the sysc code.
+     4.- Duplicated include headers are not eliminated by the backend.
+     5.- The maximum number of object constructor parameters is 31 (attr1->attr31).
+
+LINKS:
+
+     GPL Electronic Design Automation (geda-gnetlist): http://www.geda.seul.org
+     SystemC: http://www.systemc.org
+
+ACK:
+
+     Based on gnet-verilog.scm by Mike Jarabek.
+
+EXAMPLE:
+
+     Schematic:
+
+     src1                         alg1                      snk1
+     ______________               _______________           _______________
+     | source     |  a<user_type> |  algorithm  |  b<float> |        sink |
+     |         OUT|__ _________ __|IN        OUT|__ _____ __|IN           |
+     |            |               |             |           |             |
+     | infile.data|               |             |           | outfile.data|
+     |____________|               |_____________|           |_____________|
+
+
+     Attributes:
+
+            Schematic:
+                     module_name=test_sch2sysc
+     
+            Wires:
+                     netname=a<user_type>
+                     netname=b<float>
+            Symbols:
+                     refdes=src1 attr1=infile.data
+                     refdes=alg1
+                     refdes=snk1 attr1=outfile.data
+                     refdes=pina
+                     refdes=pinb
+
+     SystemC:
+
+		#include "systemc.h"
+		#include "sink.h"
+		#include "source.h"
+		#include "algorithm.h"
+
+		SC_MODULE (test_sch2sysc)
+		{
+			/* Port directions begin here */
+
+		 	/* Wires from the design */
+			sc_signal<float> b;
+			sc_signal<packet_type> a;
+	
+			/* Package instantiations */
+			sink snk1;
+			source src1;
+			algorithm alg1;
+
+			SC_CTOR(test_sch2sysc):
+				snk1("snk1","outfile.data"),
+				src1("src1","infile.data"),
+				alg1("alg1")
+			{
+				snk1.IN(b);
+			  	src1.OUT(a);
+			  	alg1.IN(a);
+			  	alg1.OUT(b);
+			}
+		};
+

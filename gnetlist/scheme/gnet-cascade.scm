@@ -76,7 +76,7 @@
 		    (caadr sourcenet)
 		    )
 		)
-	      (cascade:write-source2 port (cdr pkgs) )
+	      (cascade:write-source port (cdr pkgs) )
 	      )
 	  )
 	;; the list of packages is now empty
