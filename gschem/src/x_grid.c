@@ -40,31 +40,26 @@ x_grid_draw(TOPLEVEL *w_current)
 		return;
 	}
 
-#if DEBUG
-	printf("%d\n",
-	       return_zoom_number(w_current->page_current->zoom_factor));
-#endif
-
-	/* make this more flexible hack */
-	switch(return_zoom_number(w_current->page_current->zoom_factor)) {
-	case(0):
-	case(1):
-	case(2):
-		return;
-		break;
-	case(3):
-		incr = 1000;
-		break;
-	case(4):
-		incr = 500;
-		break;
-	case(5):
-		incr = 200;
-		break;
-	default:
-		incr = 100;
-		break;
+	/*think this is a better alternativ, because the definition of */
+	/* w_current->page_current->zoom_factor is very bad (hw) (agreed avh) */
+	/* now there are no incr-limits as above (100-1000), could be added 
+	/* if wished, (this is fine for now avh) */
+	/* around every 30th screenpixel will be grid-point; */
+	/* adding 0.1 for correct cast*/
+	incr = round_5_2_1(w_current->page_current->to_world_x_constant *30)
+		+0.1;
+        /*limit grid to snap_size; only a idea of mine, hope you like it (hw) */
+        if (incr < w_current->snap_size) {
+		incr = w_current->snap_size;
         }
+        /* usually this should never happen */
+        if (incr < 1){
+        	incr =1;
+        }
+#if DEBUG
+	printf("---------x_grid_draw\n incr: %d\n",incr);
+#endif	
+
 
 #if DEBUG
 	printf("x1 %d\n", pix_x(w_current, 100));
