@@ -1,3 +1,11 @@
+2001-02-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_netattrib.c: Added some if (... == NULL) checks to prevent
+	  some core dumps (original bug pointed out by Wolfgang Buesser)
+
+	* scheme/gnet-spice.scm: Integrated Bas Gieltjes' latest changes
+	  to his netlist backend
+
 2001-02-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_hierarchy.c: Fixed the nasty bug which was caused by my

@@ -46,15 +46,25 @@
 
 
 ;;
+;; gnet-spice replacement of gnetlist:get-nets, a net labeled "GND" becomes 0 
+;;
+(define spice:get-net
+  (lambda (uref pin-name )
+(let ((net-name (gnetlist:get-nets uref pin-name)))
+    (cond ((string=? (car net-name) "GND") (cons "0" #t))
+          (else                            (cons (car net-name) #t))))))
+
+
+;;
 ;; write netnames connected to pin-a and pin-b
 ;;   (currently used by the controlled sources (e,g,f and h)
 ;;
 (define spice:write-two-pin-names
   (lambda (package pin-a pin-b port)
     (display (string-append 
-      (car (gnetlist:get-nets package (gnetlist:get-package-attribute package pin-a))) " ") port)
+      (car (spice:get-net package (gnetlist:get-package-attribute package pin-a))) " ") port)
     (display (string-append 
-      (car (gnetlist:get-nets package (gnetlist:get-package-attribute package pin-b))) " ") port)))
+      (car (spice:get-net package (gnetlist:get-package-attribute package pin-b))) " ") port)))
     
 
 
@@ -113,7 +123,7 @@
           ;; the user should create a uref label beginning with a g
       (display (string-append package " ") port)
       (spice:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
-      (display (string-append (gnetlist:get-package-attribute package "value") "\n" ) port)
+       (display  (string-append (spice:component-value package) "\n")  port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
@@ -185,7 +195,7 @@
   (lambda (package attrib-list port)
     (if (not (null? attrib-list))
       (begin      
-            ; Is it possible to make no differentiation between upper and lower case? 
+            ; Is it possible to make no differentiation between upper and lower case?
             ; That relieves you of mixed case forms e.g. As, AS, as..., they are the 
             ; same attributes, spice3f5 is case insensitive.  And other spice versions?
         (if (not (string=? (gnetlist:get-package-attribute package (car attrib-list)) "unknown"))
@@ -203,10 +213,10 @@
             ;; create list of attributes which can be attached to a mosfet
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic")))
       (spice:write-list-of-attributes package attrib-list port))
-            ;; write the off attribute seperatly
-            ;; no value is attached to this attribute
-    (if (not (string=? (gnetlist:get-package-attribute package "off") "unknown")) 
-      (display " off" port))
+            ;; write the off attribute separately
+    (let ((off-value (gnetlist:get-package-attribute package "off")))
+      (cond ((string=? off-value "#t") (display " off" port))
+            ((string=? off-value "1" ) (display " off" port))))
     (newline port)))
 
 
@@ -223,16 +233,19 @@
         (spice:write-net-name-of-component uref (- number-of-pin 1) port)
             ;; generate a pin-name e.g. pin1, pin2, pin3 ...
         (let ((pin-name (string-append "pin" (number->string number-of-pin))))  
-          (display (car (gnetlist:get-nets uref (gnetlist:get-package-attribute uref pin-name))) port)
+          (display (car (spice:get-net uref (gnetlist:get-package-attribute uref pin-name))) port)
           (write-char #\space port))))))
 
 
 ;;
-;; Given a uref, returns the device attribute value (unknown if not defined)
+;; Given a uref, returns the device attribute value as string
 ;;
 (define spice:component-value
-  (lambda (package)
-    (gnetlist:get-package-attribute package "value")))
+  (lambda (package) 
+    (let ((value (gnetlist:get-package-attribute package "value"))) 
+      (if (not (string=? value "unknown"))
+        value
+        "<No valid value attribute found>"))))
 
 
 ;;
@@ -240,7 +253,7 @@
 ;;
 (define spice:write-include
   (lambda (package port)
-    (display (string-append package " " (gnetlist:get-package-attribute package "value") "\n") port)))
+    (display (string-append package " " (spice:component-value package) "\n") port)))
 
 
 ;;
@@ -253,7 +266,7 @@
     (spice:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
         ;; write component value, if components have a label "value=#"
         ;; what if a component has no value label, currently unknown is written  
-    (display (gnetlist:get-package-attribute package "value") port)))
+    (display (spice:component-value package) port)))
 
 
 ;;
@@ -275,9 +288,9 @@
               (spice:write-vccs package port))
           ( (string=? (get-device package) "SPICE-nullor") 
               (spice:write-nullor package port))
-          ( (string=? (get-device package) "PMOS TRANSISTOR")
+          ( (string=? (get-device package) "PMOS_TRANSISTOR")
               (spice:write-mos-transistor package port))
-          ( (string=? (get-device package) "NMOS TRANSISTOR")
+          ( (string=? (get-device package) "NMOS_TRANSISTOR")
               (spice:write-mos-transistor package port))
           ( (string=? (get-device package) "include")
               (spice:write-include package port))
@@ -287,7 +300,7 @@
 
 
 ;; 
-;; Spice netlist generation warning
+;; Spice netlist header
 ;;
 (define spice:write-top-header
   (lambda (port)

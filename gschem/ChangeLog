@@ -1,3 +1,9 @@
+2001-02-23 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/x_print.c: Fixed a bug where if you specified portrait printing
+	  via the *rc files, you would get incorrect centering of the image.
+	  Bug pointed out by Wolfgang Buesser.
+
 2001-02-19 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
 	* src/o_complex.c: Added code to get symbol translate working with

@@ -239,6 +239,14 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
     char *return_value = NULL;
     int counter = 0;
 
+    if (o_current == NULL) {
+	return(NULL); 
+    }
+
+    if (o_current->complex == NULL) {
+	return(NULL); 
+    }
+
     /* for now just look inside the component */
     value = o_attrib_search_name(o_current->complex->prim_objs,
 				 "net", counter);

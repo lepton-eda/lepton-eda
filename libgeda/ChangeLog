@@ -1,3 +1,8 @@
+2001-02-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/o_attrib.c: Added some if (... == NULL) checks to prevent
+          some core dumps
+
 2001-02-23 Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_hierarchy.c: Added code to either do a normal hierarchy

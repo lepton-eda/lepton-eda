@@ -94,7 +94,7 @@ create_menu_orient (TOPLEVEL *w_current)
 
 	if (w_current->print_orientation == PORTRAIT) {
 		gtk_menu_set_active(GTK_MENU (menu),1);
-		x_print_set_window (NULL, w_current);
+		print_portrait (NULL, w_current);
 	} else {
 		print_landscape (NULL, w_current);
 	}
@@ -401,7 +401,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		if (w_current->print_orientation == PORTRAIT) {
 			gtk_menu_set_active(GTK_MENU (orient_menu),1);
-			x_print_set_window (NULL, w_current);
+			print_portrait (NULL, w_current);
 		} else {
 			gtk_menu_set_active(GTK_MENU (orient_menu),0);
 			print_landscape (NULL, w_current);

@@ -109,7 +109,6 @@ o_attrib_search(ATTRIB *list, OBJECT *item)
 {
 	ATTRIB *a_current;
 
-	/* hack do this for all relavent routines! */	
 	if (item == NULL) {
 		return(NULL);
 	}
@@ -989,6 +988,10 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 
 	o_current = object;
 
+	if (o_current == NULL) {
+		return(NULL);
+	}
+
 	if (o_current->attribs != NULL) {
 		a_current = o_current->attribs;
 
@@ -1393,6 +1396,10 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 
 	o_current = object;
 
+	if (o_current == NULL) {
+		return(NULL);
+	}
+
 	if (o_current->attribs != NULL) {
 		a_current = o_current->attribs;
 
@@ -1470,6 +1477,10 @@ o_attrib_search_name_single_count(OBJECT *object, char *name,
 	
 
 	o_current = object;
+
+	if (o_current == NULL) {
+		return(NULL);
+	}
 
 	if (o_current->attribs != NULL) {
 		a_current = o_current->attribs;
