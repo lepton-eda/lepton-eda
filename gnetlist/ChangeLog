@@ -27,6 +27,10 @@
 
 	* docs/gnetlist.txt: Moved file into docs directory
 
+	* src/s_hierarchy.c: Fixed a minor bug in hierarchy-uref-order and
+	  prepend mode: had to unmangle names using this flag as a parameter
+	  (so that the right uref basename was used).
+
 2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Updated manual with all the various backend formats

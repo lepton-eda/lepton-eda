@@ -197,8 +197,7 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 
 			did_work =
 			    s_hierarchy_setup_rename(pr_current, head,
-						     nl_current->
-						     component_uref,
+						     nl_current->component_uref,
 						     pl_current->pin_label,
 						     source_net_name);
 			if (!did_work) {
@@ -262,7 +261,8 @@ s_hierarchy_setup_rename(TOPLEVEL * pr_current, NETLIST * head, char *uref,
 			   nl_current->component_uref);
 #endif
 		    s_hierarchy_remove_urefconn(head,
-						nl_current->component_uref);
+						nl_current->
+						component_uref);
 		    did_work = TRUE;
 		}
 	    }
@@ -354,13 +354,15 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
 		case (APPEND):
 		    return_value =
 			u_basic_strdup_multiple(hierarchy_tag,
-						pr_current->hierarchy_uref_seperator,
+						pr_current->
+						hierarchy_uref_seperator,
 						basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
 			u_basic_strdup_multiple(basename,
-						pr_current->hierarchy_uref_seperator,
+						pr_current->
+						hierarchy_uref_seperator,
 						hierarchy_tag, NULL);
 
 		    break;
@@ -415,7 +417,8 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 		case (APPEND):
 		    return_value =
 			u_basic_strdup_multiple(hierarchy_tag,
-						pr_current->hierarchy_netname_seperator,
+						pr_current->
+						hierarchy_netname_seperator,
 						basename, NULL);
 
 		    break;
@@ -423,7 +426,8 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 		case (PREPEND):
 		    return_value =
 			u_basic_strdup_multiple(basename,
-						pr_current->hierarchy_netname_seperator,
+						pr_current->
+						hierarchy_netname_seperator,
 						hierarchy_tag, NULL);
 
 		    break;
@@ -481,13 +485,15 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 		case (APPEND):
 		    return_value =
 			u_basic_strdup_multiple(hierarchy_tag,
-						pr_current->hierarchy_netattrib_seperator,
+						pr_current->
+						hierarchy_netattrib_seperator,
 						basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
 			u_basic_strdup_multiple(basename,
-						pr_current->hierarchy_netattrib_seperator,
+						pr_current->
+						hierarchy_netattrib_seperator,
 						hierarchy_tag, NULL);
 
 		    break;
@@ -570,26 +576,55 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 
 char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 {
-    char *return_value;
-    char *start_of_base;
+    char *return_value = NULL;
+    char *start_of_base = NULL;
+    char *end_of_base = NULL;
+    char *cptr = NULL;
+    int i = 0;
+
     /* use hierarchy seperator */
+
+    if (uref == NULL) {
+	return (NULL);
+    }
 #if DEBUG
     printf("Got uref: _%s_\n", uref);
 #endif
 
-    start_of_base = rindex(uref, '/');
-#if DEBUG
-    printf("start of base: %s\n");
-#endif
 
-    if (start_of_base == NULL) {
-	return (u_basic_strdup(uref));
+    if (pr_current->hierarchy_uref_order == APPEND) {
+
+	start_of_base = rindex(uref, '/');	/* seperator is always '/' */
+
+	if (start_of_base == NULL) {
+	    return (u_basic_strdup(uref));
+	}
+
+	return_value = u_basic_strdup(start_of_base + 1);
+
+    } else if (pr_current->hierarchy_uref_order == PREPEND) {
+
+	end_of_base = index(uref, '/');
+
+	if (end_of_base == NULL) {
+	    return (u_basic_strdup(uref));
+	}
+
+	cptr = uref;
+
+	return_value = (char *) malloc(sizeof(char) * (strlen(uref)));
+	i = 0;
+	while (cptr != end_of_base) {
+	    return_value[i] = *cptr;
+	    i++;
+	    cptr++;
+	}
+	return_value[i] = '\0';
     }
-
-    return_value = u_basic_strdup(start_of_base + 1);
 
 #if DEBUG
     printf("new uref return_value = %s\n\n\n", return_value);
 #endif
+
     return (return_value);
 }
