@@ -248,7 +248,7 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
 
 
   /* drop on a template uref attribute */
-  fprintf(fp,"T %d %d 5 10 1 1 0 2\nuref=U?\n",
+  fprintf(fp,"T %d %d 5 10 1 1 0 2\nrefdes=U?\n",
 	  bodyx+100,
 	  bodyy-400);
 

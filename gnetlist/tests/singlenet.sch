@@ -2,7 +2,7 @@ v 19990302
 C 17400 25700 1 0 0 7400-1.sym
 {
 T 17700 26700 5 10 1 1 0
-uref=U100
+refdes=U100
 T 17400 25700 5 10 0 0 0
 slot=2
 }
@@ -44,14 +44,14 @@ This is a single net with one unconnected pin
 C 20300 31500 1 0 0 7400-1.sym
 {
 T 20600 32500 5 10 1 1 0
-uref=U100
+refdes=U100
 T 20300 31500 5 10 0 0 0
 slot=1
 }
 C 22600 23700 1 0 0 7400-1.sym
 {
 T 22900 24700 5 10 1 1 0
-uref=U100
+refdes=U100
 T 22600 23700 5 10 0 0 0
 slot=3
 }

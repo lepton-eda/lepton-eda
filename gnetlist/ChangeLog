@@ -1,3 +1,19 @@
+2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c, s_net.c: Added back some code to search for 
+	the label= attribute.  Users should not use the label= attribute 
+	anymore.  Also, gnetlist prints out a warning message if it finds
+	an old label= attribute.
+
+	* src/g_netlist.c: Removed an obsolete function.
+
+	* src/s_traverse.c, s_net.c, utils/mk_verilog_syms.c: Changed all 
+	user visible references of uref to refdes
+
+	* scheme/gnet-partslist-common.scm, gnet-partslist1.scm 
+	gnet-partslist2.scm gnet-partslist3.scm: Changed all references of
+	uref to refdes
+	
 2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gschem2pcb: Intergrated patch from Dan Mcmahill to make this

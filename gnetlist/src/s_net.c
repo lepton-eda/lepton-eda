@@ -158,8 +158,16 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 
     /* this function only searches the single o_current */
     temp_uref =
-	o_attrib_search_name_single(head->complex_parent, "uref", NULL);
+	o_attrib_search_name_single(head->complex_parent, "refdes", NULL);
 
+    if (!temp_uref)
+    {
+      temp_uref =
+	o_attrib_search_name_single(head->complex_parent, "uref", NULL); // deprecated
+      if (temp_uref) {
+        printf("WARNING: found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
+      }
+    }
 
     if (hierarchy_tag) {
 	hierarchy_tag_len = strlen(hierarchy_tag)+1;
@@ -197,7 +205,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 		sprintf(string, "U? ?");
 	    }
 
-	    fprintf(stderr, "Missing Attributes (uref and pin number)\n");
+	    fprintf(stderr, "Missing Attributes (refdes and pin number)\n");
 	}
     }
 

@@ -20,7 +20,7 @@
 (define partslist1:write-top-header
   (lambda (port)
     (display ".START\n" port)
-    (display "..uref\tdevice\tvalue\tquantity\n" port)))
+    (display "..refdes\tdevice\tvalue\tquantity\n" port)))
 
 (define (partslist1:write-partslist ls port)
   (if (null? ls)

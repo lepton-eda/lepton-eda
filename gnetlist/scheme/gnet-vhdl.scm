@@ -318,7 +318,7 @@
   (lambda (device-list p)
     (begin
       ;;; <DEBUG>
-      ;(display "uref : package : (( IN )( OUT )(INOUT ))")
+      ;(display "refdes : package : (( IN )( OUT )(INOUT ))")
       ;(newline)
       ;(display "========================================")
       ;(newline)

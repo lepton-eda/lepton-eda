@@ -70,7 +70,7 @@
 			  (else (gnetlist:get-toplevel-attribute "entity")))))
 
 	   ;; search all ports of a schematic. for entity generation only.
-	   (port-list  (vams:generate-port-list (vams:get-uref top-attribs)))
+	   (port-list  (vams:generate-port-list (vams:get-ure ftop-attribs)))
 	   
 	   ;; search all generic of a schematic. for entity generatin only.
 	   (generic-list (vams:generate-generic-list top-attribs)))
@@ -670,7 +670,7 @@
 		    (vams:list-without-str-attrib
 		     (vams:list-without-str-attrib
 		      (gnetlist:vams-get-package-attributes uref) 
-		      "uref") "source") "architecture") uref)))
+		      "refdes") "source") "architecture") uref)))
       (if (not (null? new-ls))
 	  (begin
 	    (display "\tGENERIC MAP (\n" port)
@@ -1004,9 +1004,9 @@
     (if (null? ls)
 	'()
 	(append 
-	 (if (not (or (string-prefix=? "uref=" (car ls))
+	 (if (not (or (string-prefix=? "refdes=" (car ls))
 		      (string-prefix=? "source=" (car ls)) 
-		      (string-prefix=?  "architecture=" (car ls))))
+		      (string-prefix=? "architecture=" (car ls))))
 	     (list 
 	      (if (string-index (car ls) #\=)
 		  (list 
@@ -1052,7 +1052,7 @@
     (begin
       (if (null? liste)
 	  '()
-	  (if (string-prefix=? "uref=" (symbol->string (car liste)))
+	  (if (string-prefix=? "refdes=" (symbol->string (car liste)))
 	      (begin
 		(append (substring (car liste) 5 
 				   (string-length (car liste)))))

@@ -70,49 +70,6 @@ SCM g_get_packages(SCM level)
     return (list);
 }
 
-/* old way which didn't return all components, is based on the object_head */
-/* datastructure which is not a good idea, since the uref info has already */
-/* been extracted into the netlist_head datastructures... */
-#if 0
-SCM g_get_packages(SCM scm_level)
-{
-    SCM list = SCM_EOL;
-    char *value;
-    OBJECT *o_current;
-    int i = 0;
-    char *level;
-
-    level = gh_scm2newstr(scm_level, NULL);
-    free(level);
-
-    s_scratch_string_init();
-    o_current = project_current->page_current->object_head;
-
-    /* search for the first instance */
-    /* in the object_head list ... */
-    /* this function will search the entire list */
-    value = o_attrib_search_name(o_current, "uref", 0);
-    while (value != NULL) {
-
-	if (s_scratch_string_fill(value)) {
-	    list = gh_cons(gh_str2scm(value, strlen(value)), list);
-	}
-
-	i++;
-	free(value);
-	value = o_attrib_search_name(o_current, "uref", i);
-
-    }
-
-    if (value)
-	free(value);
-
-    s_scratch_string_free();
-    return (list);
-
-}
-#endif
-
 
 SCM g_get_pins(SCM uref)
 {

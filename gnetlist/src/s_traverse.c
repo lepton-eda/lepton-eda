@@ -47,9 +47,9 @@ void s_traverse_init(void)
 	printf("R : Starting to rename a net\n");
 	printf("v : Found source attribute, traversing down\n");
 	printf("^ : Finished underlying source, going back up\n");
-	printf("u : Found a uref which needs to be demangle\n");
+	printf("u : Found a refdes which needs to be demangle\n");
 	printf
-	    ("U : Found a connected_to uref which needs to be demangle\n");
+	    ("U : Found a connected_to refdes which needs to be demangle\n");
 	printf
 	    ("------------------------------------------------------\n\n");
 
@@ -97,112 +97,121 @@ void
 s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 		 char *hierarchy_tag)
 {
-    OBJECT *o_current;
-    NETLIST *netlist;
-    char *temp;
-    char *temp_uref;
+  OBJECT *o_current;
+  NETLIST *netlist;
+  char *temp;
+  char *temp_uref;
 
-    if (verbose_mode) {
-	printf("- Starting internal netlist creation\n");
-    }
+  if (verbose_mode) {
+    printf("- Starting internal netlist creation\n");
+  }
 
-    o_current = start;
+  o_current = start;
 
-    while (o_current != NULL) {
+  while (o_current != NULL) {
 
-	netlist = s_netlist_return_tail(netlist_head);
+    netlist = s_netlist_return_tail(netlist_head);
 
-	if (o_current->type == OBJ_COMPLEX) {
-
-#if DEBUG
-	    printf("starting NEW component\n\n");
-#endif
-
-	    verbose_print(" C");
-
-	    /* look for special tag */
-	    temp = o_attrib_search_component(o_current, "graphical");
-	    if (temp) {
-		/* don't want to traverse graphical elements */
-		free(temp);
-
-	    } else {
-		netlist = s_netlist_add(netlist);
-		netlist->nlid = o_current->sid;
-
-		/* search the single object only.... */
-		temp_uref =
-		    o_attrib_search_name_single(o_current, "uref", NULL);
-
-		if (temp_uref) {
-		    netlist->component_uref =
-			s_hierarchy_create_uref(pr_current, temp_uref,
-						hierarchy_tag);
-		} else {
-		    netlist->component_uref = NULL;
-		}
-
-		if (hierarchy_tag) {
-		    netlist->hierarchy_tag = u_basic_strdup(hierarchy_tag);
-		}
-
-		if (temp_uref) {
-		    free(temp_uref);
-		}
-
-		netlist->object_ptr = o_current;
-
-		if (!netlist->component_uref) {
-
-		    /* search of net attribute */
-		    /* maybe symbol is not a component */
-		    /* but a power / gnd symbol */
-		    temp =
-			o_attrib_search_name(o_current->complex->prim_objs,
-					     "net", 0);
-
-		    /* nope net attribute not found */
-		    if (!temp) {
-
-			fprintf(stderr,
-				"Could not find uref on component and could not find any special attributes!\n");
-
-			netlist->component_uref =
-			    (char *) malloc(sizeof(char) * strlen("U?") +
-					    1);
-			strcpy(netlist->component_uref, "U?");
-		    } else {
+    if (o_current->type == OBJ_COMPLEX) {
 
 #if DEBUG
-			printf("yeah... found a power symbol\n");
+      printf("starting NEW component\n\n");
 #endif
-			/* it's a power or some other special symbol */
-			netlist->component_uref = NULL;
-			free(temp);
-		    }
 
-		}
+      verbose_print(" C");
 
-		netlist->cpins =
-		    s_traverse_component(pr_current, o_current,
-					 hierarchy_tag);
+      /* look for special tag */
+      temp = o_attrib_search_component(o_current, "graphical");
+      if (temp) {
+        /* don't want to traverse graphical elements */
+        free(temp);
 
-		/* here is where you deal with the */
-		/* net attribute */
-		s_netattrib_handle(pr_current, o_current, netlist,
-				   hierarchy_tag);
+      } else {
+        netlist = s_netlist_add(netlist);
+        netlist->nlid = o_current->sid;
 
-		/* now you need to traverse any underlying schematics */
-		if (pr_current->hierarchy_traversal == TRUE) {
-		    s_hierarchy_traverse(pr_current, o_current, netlist);
-		}
-	    }
-	}
+        /* search the single object only.... */
+        temp_uref =
+          o_attrib_search_name_single(o_current, "refdes", NULL);
 
-	o_current = o_current->next;
+        if (!temp_uref) {
+          temp_uref =
+            o_attrib_search_name_single(o_current, "uref", NULL); // deprecated
+
+          if (temp_uref) {
+            printf("WARNING: found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
+          }
+        }
+
+        if (temp_uref) {
+          netlist->component_uref =
+            s_hierarchy_create_uref(pr_current, temp_uref,
+                                    hierarchy_tag);
+        } else {
+          netlist->component_uref = NULL;
+        }
+
+        if (hierarchy_tag) {
+          netlist->hierarchy_tag = u_basic_strdup(hierarchy_tag);
+        }
+
+        if (temp_uref) {
+          free(temp_uref);
+        }
+
+        netlist->object_ptr = o_current;
+
+        if (!netlist->component_uref) {
+
+          /* search of net attribute */
+          /* maybe symbol is not a component */
+          /* but a power / gnd symbol */
+          temp =
+            o_attrib_search_name(o_current->complex->prim_objs,
+                                 "net", 0);
+
+          /* nope net attribute not found */
+          if (!temp) {
+
+            fprintf(stderr,
+                    "Could not find uref on component and could not find any special attributes!\n");
+
+            netlist->component_uref =
+              (char *) malloc(sizeof(char) * strlen("U?") +
+                              1);
+            strcpy(netlist->component_uref, "U?");
+          } else {
+
+#if DEBUG
+            printf("yeah... found a power symbol\n");
+#endif
+            /* it's a power or some other special symbol */
+            netlist->component_uref = NULL;
+            free(temp);
+          }
+
+        }
+
+        netlist->cpins =
+          s_traverse_component(pr_current, o_current,
+                               hierarchy_tag);
+
+        /* here is where you deal with the */
+        /* net attribute */
+        s_netattrib_handle(pr_current, o_current, netlist,
+                           hierarchy_tag);
+
+        /* now you need to traverse any underlying schematics */
+        if (pr_current->hierarchy_traversal == TRUE) {
+          s_hierarchy_traverse(pr_current, o_current, netlist);
+        }
+      }
     }
 
-    verbose_done();
+    o_current = o_current->next;
+  }
+
+  verbose_done();
 }
 
 CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
@@ -354,103 +363,114 @@ void s_traverse_clear_all_visited(OBJECT * object_head)
 NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
 		    NET * nets, OBJECT * object, char *hierarchy_tag)
 {
-    OBJECT *o_current;
-    NET *new_net;
-    CONN *c_current;
-    GList *cl_current;
-    char *temp;
+  OBJECT *o_current;
+  NET *new_net;
+  CONN *c_current;
+  GList *cl_current;
+  char *temp;
 
-    o_current = object;
+  o_current = object;
 
-    new_net = nets = s_net_add(nets);
-    new_net->nid = object->sid;
+  new_net = nets = s_net_add(nets);
+  new_net->nid = object->sid;
 
-    /* pins are not allowed to have the netname attribute attached to them */
-    if (o_current->type != OBJ_PIN) {
-	temp = o_attrib_search_name_single(o_current, "netname", NULL);
+  /* pins are not allowed to have the netname attribute attached to them */
+  if (o_current->type != OBJ_PIN) {
+    temp = o_attrib_search_name_single(o_current, "netname", NULL);
 
-	if (temp) {
-	    new_net->net_name =
-		s_hierarchy_create_netname(pr_current, temp,
-					   hierarchy_tag);
-	    free(temp);
-	}
+    if (temp) {
+      new_net->net_name =
+        s_hierarchy_create_netname(pr_current, temp,
+                                   hierarchy_tag);
+      free(temp);
+    } else { 
+
+      /* search for the old label= attribute */
+      temp = o_attrib_search_name_single(o_current, "label", NULL);
+      if (temp) {
+        printf("WARNING: Found label=%s. label= is deprecated, please use netname=\n", temp);
+        new_net->net_name =
+          s_hierarchy_create_netname(pr_current, temp,
+                                     hierarchy_tag);
+        free(temp);
+      }
     }
+  }
 #if DEBUG
-    printf("inside traverse: %s\n", object->name);
+  printf("inside traverse: %s\n", object->name);
 #endif
 
-    if (object->type == OBJ_PIN) {
+  if (object->type == OBJ_PIN) {
 
-	verbose_print("P");
+    verbose_print("P");
 
-	new_net->connected_to =
-	    s_net_return_connected_string(pr_current, o_current,
-					  hierarchy_tag);
+    new_net->connected_to =
+      s_net_return_connected_string(pr_current, o_current,
+                                    hierarchy_tag);
 
-	temp = o_attrib_search_name_single_count(o_current, "pinlabel", 0);
+    temp = o_attrib_search_name_single_count(o_current, "pinlabel", 0);
 
-	if (temp) {
-	    new_net->pin_label = temp;
-	}
-
-	/* net= new */
-	if (strstr(nets->connected_to, "POWER")) {
-
-#if DEBUG
-	    printf("going to find netname %s \n", nets->connected_to);
-#endif
-	    nets->net_name =
-		s_netattrib_return_netname(pr_current, o_current,
-					   nets->connected_to,
-					   hierarchy_tag);
-	    nets->net_name_has_priority = TRUE;
-	    free(nets->connected_to);
-	    nets->connected_to = NULL;
-	}
-#if DEBUG
-	printf("traverse connected_to: %s\n", new_net->connected_to);
-#endif
-	return (nets);
-
+    if (temp) {
+      new_net->pin_label = temp;
     }
 
-    /*printf("Found net %s\n", object->name); */
-    verbose_print("n");
-
-    object->visited++;
-
-    /* this is not perfect yet and won't detect a loop... */
-    if (object->visited > 100) {
-	fprintf(stderr, "Found a possible net/pin infinite connection\n");
-	exit(-1);
-    }
-
-    cl_current = object->conn_list;
-    while (cl_current != NULL) {
-
-	c_current = (CONN *) cl_current->data;
-
-	if (c_current->other_object != NULL) {
+    /* net= new */
+    if (strstr(nets->connected_to, "POWER")) {
 
 #if DEBUG
-	    printf("c_current %s visited: %d\n",
-		   c_current->other_object->name,
-		   c_current->other_object->visited);
+      printf("going to find netname %s \n", nets->connected_to);
 #endif
-
-	    if (!c_current->other_object->visited &&
-		c_current->other_object != o_current &&
-		c_current->other_object->type != OBJ_BUS) {
-
-		nets =
-		    s_traverse_net(pr_current, object, nets,
-				   c_current->other_object, hierarchy_tag);
-	    } 
-
-	}
-	cl_current = cl_current->next;
+      nets->net_name =
+        s_netattrib_return_netname(pr_current, o_current,
+                                   nets->connected_to,
+                                   hierarchy_tag);
+      nets->net_name_has_priority = TRUE;
+      free(nets->connected_to);
+      nets->connected_to = NULL;
     }
-
+#if DEBUG
+    printf("traverse connected_to: %s\n", new_net->connected_to);
+#endif
     return (nets);
+
+  }
+
+  /*printf("Found net %s\n", object->name); */
+  verbose_print("n");
+
+  object->visited++;
+
+  /* this is not perfect yet and won't detect a loop... */
+  if (object->visited > 100) {
+    fprintf(stderr, "Found a possible net/pin infinite connection\n");
+    exit(-1);
+  }
+
+  cl_current = object->conn_list;
+  while (cl_current != NULL) {
+
+    c_current = (CONN *) cl_current->data;
+
+    if (c_current->other_object != NULL) {
+
+#if DEBUG
+      printf("c_current %s visited: %d\n",
+             c_current->other_object->name,
+             c_current->other_object->visited);
+#endif
+
+      if (!c_current->other_object->visited &&
+          c_current->other_object != o_current &&
+          c_current->other_object->type != OBJ_BUS) {
+
+        nets =
+          s_traverse_net(pr_current, object, nets,
+                         c_current->other_object, hierarchy_tag);
+      } 
+
+    }
+    cl_current = cl_current->next;
+  }
+
+  return (nets);
 }

@@ -7,69 +7,69 @@ MIKE JARABEK
 C 14300 20100 1 0 0 test_verilog.sym
 {
 T 15300 21100 5 10 1 1 0 0
-uref=TEST1
+refdes=TEST1
 }
 C 18100 19100 1 0 0 block-1.sym
 {
 T 19700 21000 5 10 1 1 0 0
-uref=U1
+refdes=U1
 }
 C 18100 16500 1 0 0 block-1.sym
 {
 T 19700 18400 5 10 1 1 0 0
-uref=U2
+refdes=U2
 }
 C 14300 18900 1 0 0 test_verilog.sym
 {
 T 15300 19900 5 10 1 1 0 0
-uref=TEST2
+refdes=TEST2
 }
 C 21700 19700 1 0 0 test_verilog.sym
 {
 T 23000 20700 5 10 1 1 0 0
-uref=U3
+refdes=U3
 }
 C 10500 21700 1 0 0 ipad-1.sym
 {
 T 10200 21800 5 10 1 1 0 0
-uref=P1
+refdes=P1
 }
 C 10500 21300 1 0 0 ipad-1.sym
 {
 T 10200 21300 5 10 1 1 0 0
-uref=P2
+refdes=P2
 }
 C 10500 15200 1 0 0 ipad-1.sym
 {
 T 10200 15200 5 10 1 1 0 0
-uref=P5
+refdes=P5
 T 25600 20300 5 10 1 1 0 0
-uref=P6
+refdes=P6
 }
 C 25400 17300 1 0 1 iopad-1.sym
 {
 T 25500 17400 5 10 1 1 0 0
-uref=P9
+refdes=P9
 }
 C 25400 17600 1 0 1 iopad-1.sym
 {
 T 25500 17700 5 10 1 1 0 0
-uref=P8
+refdes=P8
 }
 C 24600 20200 1 0 0 opad-1.sym
 {
 T 25600 20300 5 10 1 1 0 0
-uref=P6
+refdes=P6
 }
 C 24600 19400 1 0 0 opad-1.sym
 {
 T 25600 19500 5 10 1 1 0 0
-uref=P7
+refdes=P7
 }
 C 10500 15900 1 0 0 ipad-1.sym
 {
 T 10200 16000 5 10 1 1 0 0
-uref=P4
+refdes=P4
 }
 N 23500 20300 24600 20300 4
 {
@@ -97,7 +97,7 @@ netname=INOUT2
 C 10500 20800 1 0 0 ipad-1.sym
 {
 T 10200 20900 5 10 1 1 0 0
-uref=P3
+refdes=P3
 }
 N 18100 20600 17600 20600 4
 N 17600 20600 17600 21800 4
@@ -170,12 +170,12 @@ L 20900 20500 20800 20500 3
 C 15300 15400 1 0 0 low-1.sym
 {
 T 15600 15600 5 10 1 1 0 0
-uref=PWR0
+refdes=PWR0
 }
 C 15400 16400 1 0 0 high-1.sym
 {
 T 15600 16700 5 10 1 1 0 0
-uref=PWR1
+refdes=PWR1
 }
 N 15500 16400 15500 15700 4
 {
@@ -185,12 +185,12 @@ netname=MUNGLE_NET
 C 21600 21500 1 0 0 block-1.sym
 {
 T 21900 21600 5 10 1 1 0 0
-uref=NO_CONNECTIONS
+refdes=NO_CONNECTIONS
 }
 C 21700 14700 1 0 0 block_pos-1.sym
 {
 T 22000 14800 5 10 1 1 0 0
-uref=BLOCK_POS
+refdes=BLOCK_POS
 }
 N 20900 17700 20900 15900 4
 N 20900 15900 21700 15900 4
@@ -211,12 +211,12 @@ netname=POS_OUT2
 C 24500 15800 1 0 0 opad-1.sym
 {
 T 24400 16000 5 10 1 1 0 0
-uref=P10
+refdes=P10
 }
 C 24500 15500 1 0 0 opad-1.sym
 {
 T 24400 15700 5 10 1 1 0 0
-uref=P11
+refdes=P11
 }
 T 19100 14600 5 10 1 0 0 0
 module_name=VERILOG_TEST

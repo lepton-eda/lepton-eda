@@ -199,7 +199,7 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 						     source_net_name);
 			if (!did_work) {
 			    fprintf(stderr,
-				    "Missing I/O symbol with uref [%s] inside schematic for symbol [%s]\n",
+				    "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n",
 				    pl_current->pin_label,
 				    nl_current->component_uref);
 
@@ -305,7 +305,7 @@ void s_hierarchy_remove_urefconn(NETLIST * head, char *uref_disable)
 	if (nl_current->component_uref) {
 	    if (strcmp(nl_current->component_uref, uref_disable) == 0) {
 #if DEBUG
-		printf("uref disabling: %s\n", nl_current->component_uref);
+		printf("refdes disabling: %s\n", nl_current->component_uref);
 #endif
 		/* can't do frees, since some names are links */
 		/*free(nl_current->component_uref); */

@@ -6,202 +6,202 @@ MIKE JARABEK
 C 22800 30800 1 0 0 nand2-1.sym
 {
 T 23100 30600 5 10 1 1 0
-uref=U1
+refdes=U1
 }
 C 22800 29000 1 0 0 nand2-1.sym
 {
 T 23100 28800 5 10 1 1 0
-uref=U2
+refdes=U2
 }
 C 22800 26700 1 0 0 nand2-1.sym
 {
 T 23100 26500 5 10 1 1 0
-uref=U3
+refdes=U3
 }
 C 24500 29900 1 0 0 nand2-1.sym
 {
 T 24800 29700 5 10 1 1 0
-uref=U4
+refdes=U4
 }
 C 24500 28300 1 0 0 nand2-1.sym
 {
 T 24800 28100 5 10 1 1 0
-uref=U5
+refdes=U5
 }
 C 24500 26000 1 0 0 nand2-1.sym
 {
 T 24800 25800 5 10 1 1 0
-uref=U6
+refdes=U6
 }
 C 24500 24100 1 0 0 nand2-1.sym
 {
 T 24800 23900 5 10 1 1 0
-uref=U7
+refdes=U7
 }
 C 29400 32500 1 0 0 and2-1.sym
 {
 T 29800 32600 5 10 1 1 0
-uref=U8
+refdes=U8
 }
 C 29400 31700 1 0 0 and2-1.sym
 {
 T 29800 31800 5 10 1 1 0
-uref=U9
+refdes=U9
 }
 C 29400 29500 1 0 0 and2-1.sym
 {
 T 29800 29600 5 10 1 1 0
-uref=U10
+refdes=U10
 }
 C 29400 26700 1 0 0 and2-1.sym
 {
 T 29800 26800 5 10 1 1 0
-uref=U11
+refdes=U11
 }
 C 29400 21800 1 0 0 and2-1.sym
 {
 T 29800 21900 5 10 1 1 0
-uref=U12
+refdes=U12
 }
 C 29400 20600 1 0 0 and2-1.sym
 {
 T 29800 20700 5 10 1 1 0
-uref=U13
+refdes=U13
 }
 C 29400 19800 1 0 0 and2-1.sym
 {
 T 29800 19900 5 10 1 1 0
-uref=U14
+refdes=U14
 }
 C 31700 31700 1 0 0 nor3-1.sym
 {
 T 32000 31500 5 10 1 1 0
-uref=U15
+refdes=U15
 }
 C 31700 26300 1 0 0 nor2-1.sym
 {
 T 32000 26100 5 10 1 1 0
-uref=U16
+refdes=U16
 }
 C 31700 23800 1 0 0 nor3-1.sym
 {
 T 32000 23600 5 10 1 1 0
-uref=U17
+refdes=U17
 }
 C 31700 22000 1 0 0 nor2-1.sym
 {
 T 32000 21800 5 10 1 1 0
-uref=U18
+refdes=U18
 }
 C 31700 19800 1 0 0 nor3-1.sym
 {
 T 32000 19600 5 10 1 1 0
-uref=U19
+refdes=U19
 }
 C 31700 17500 1 0 0 nor2-1.sym
 {
 T 32000 17300 5 10 1 1 0
-uref=U20
+refdes=U20
 }
 C 33600 31500 1 0 0 not-1.sym
 {
 T 33900 31500 5 10 1 1 0
-uref=U21
+refdes=U21
 }
 C 33600 28500 1 0 0 not-1.sym
 {
 T 33900 28500 5 10 1 1 0
-uref=U22
+refdes=U22
 }
 C 33600 26100 1 0 0 not-1.sym
 {
 T 33900 26100 5 10 1 1 0
-uref=U23
+refdes=U23
 }
 C 33600 23600 1 0 0 not-1.sym
 {
 T 33900 23600 5 10 1 1 0
-uref=U24
+refdes=U24
 }
 C 33600 21800 1 0 0 not-1.sym
 {
 T 33900 21800 5 10 1 1 0
-uref=U25
+refdes=U25
 }
 C 33600 19600 1 0 0 not-1.sym
 {
 T 33900 19600 5 10 1 1 0
-uref=U39
+refdes=U39
 }
 C 33600 17300 1 0 0 not-1.sym
 {
 T 33900 17300 5 10 1 1 0
-uref=U40
+refdes=U40
 }
 C 22900 24700 1 0 0 not-1.sym
 {
 T 23200 24700 5 10 1 1 0
-uref=U26
+refdes=U26
 }
 C 29400 15400 1 0 0 nand6-1.sym
 {
 T 29800 15800 5 10 1 1 0
-uref=U27
+refdes=U27
 }
 C 29400 30700 1 0 0 and4-1.sym
 {
 T 29800 30900 5 10 1 1 0
-uref=U28
+refdes=U28
 }
 C 29400 28700 1 0 0 and3-1.sym
 {
 T 29800 28800 5 10 1 1 0
-uref=U29
+refdes=U29
 }
 C 29400 27900 1 0 0 and3-1.sym
 {
 T 29800 28000 5 10 1 1 0
-uref=U30
+refdes=U30
 }
 C 29400 25900 1 0 0 and3-1.sym
 {
 T 29800 26000 5 10 1 1 0
-uref=U31
+refdes=U31
 }
 C 29400 24600 1 0 0 and3-1.sym
 {
 T 29800 24700 5 10 1 1 0
-uref=U32
+refdes=U32
 }
 C 29400 23800 1 0 0 and3-1.sym
 {
 T 29800 23900 5 10 1 1 0
-uref=U33
+refdes=U33
 }
 C 29400 23000 1 0 0 and3-1.sym
 {
 T 29800 23100 5 10 1 1 0
-uref=U34
+refdes=U34
 }
 C 29400 19000 1 0 0 and3-1.sym
 {
 T 29800 19100 5 10 1 1 0
-uref=U35
+refdes=U35
 }
 C 29400 17900 1 0 0 and3-1.sym
 {
 T 29800 18000 5 10 1 1 0
-uref=U36
+refdes=U36
 }
 C 29400 16900 1 0 0 and4-1.sym
 {
 T 29800 17100 5 10 1 1 0
-uref=U37
+refdes=U37
 }
 C 31700 28700 1 0 0 nor3-1.sym
 {
 T 32000 28500 5 10 1 1 0
-uref=U38
+refdes=U38
 }
 N 26300 31400 26300 18400 4
 N 26300 18400 29400 18400 4
@@ -300,7 +300,7 @@ N 26300 15500 29400 15500 4
 C 20700 17900 1 0 0 ipad-1.sym
 {
 T 21400 18100 5 10 1 1 0
-uref=P1
+refdes=P1
 }
 N 21600 18000 22400 18000 4
 {
@@ -315,12 +315,12 @@ netname=RIPPLE_BLANK_INn
 C 20700 15600 1 0 0 ipad-1.sym
 {
 T 21400 15800 5 10 1 1 0
-uref=P2
+refdes=P2
 }
 C 36100 15900 1 0 0 opad-1.sym
 {
 T 36000 16100 5 10 1 1 0
-uref=P3
+refdes=P3
 }
 N 30700 16000 36100 16000 4
 {
@@ -330,22 +330,22 @@ netname=RIPPLE_BLANK_OUTn
 C 20700 25100 1 0 0 ipad-1.sym
 {
 T 21400 25300 5 10 1 1 0
-uref=P4
+refdes=P4
 }
 C 20700 27100 1 0 0 ipad-1.sym
 {
 T 21400 27300 5 10 1 1 0
-uref=P5
+refdes=P5
 }
 C 20700 29400 1 0 0 ipad-1.sym
 {
 T 21400 29600 5 10 1 1 0
-uref=P6
+refdes=P6
 }
 C 20700 31200 1 0 0 ipad-1.sym
 {
 T 21400 31400 5 10 1 1 0
-uref=P7
+refdes=P7
 }
 N 21600 25200 22900 25200 4
 {
@@ -370,7 +370,7 @@ netname=INPUTA
 C 36100 17700 1 0 0 opad-1.sym
 {
 T 36000 17900 5 10 1 1 0
-uref=P8
+refdes=P8
 }
 N 34700 17800 36100 17800 4
 {
@@ -380,7 +380,7 @@ netname=OUTPUTGn
 C 36100 20000 1 0 0 opad-1.sym
 {
 T 36000 20200 5 10 1 1 0
-uref=P9
+refdes=P9
 }
 N 34700 20100 36100 20100 4
 {
@@ -390,7 +390,7 @@ netname=OUTPUTFn
 C 36100 22200 1 0 0 opad-1.sym
 {
 T 36000 22400 5 10 1 1 0
-uref=P10
+refdes=P10
 }
 N 34700 22300 36100 22300 4
 {
@@ -400,7 +400,7 @@ netname=OUTPUTEn
 C 36100 24000 1 0 0 opad-1.sym
 {
 T 36000 24200 5 10 1 1 0
-uref=P11
+refdes=P11
 }
 N 34700 24100 36100 24100 4
 {
@@ -410,7 +410,7 @@ netname=OUTPUTDn
 C 36100 26500 1 0 0 opad-1.sym
 {
 T 36000 26700 5 10 1 1 0
-uref=P12
+refdes=P12
 }
 N 34700 26600 36100 26600 4
 {
@@ -420,7 +420,7 @@ netname=OUTPUTCn
 C 36100 28900 1 0 0 opad-1.sym
 {
 T 36100 29100 5 10 1 1 0
-uref=P13
+refdes=P13
 }
 N 34700 29000 36100 29000 4
 {
@@ -430,7 +430,7 @@ netname=OUTPUTBn
 C 36100 31900 1 0 0 opad-1.sym
 {
 T 36100 32100 5 10 1 1 0
-uref=P14
+refdes=P14
 }
 N 34700 32000 36100 32000 4
 {
