@@ -1,3 +1,8 @@
+2004-01-23 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Added check for duplicated references.
+        (above patch applied by Stuart Brorson)
+
 2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_traverse.c: Added a output message if a component is missing

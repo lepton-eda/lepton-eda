@@ -21,6 +21,7 @@
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
 ;;
+;;  2005-01-23: Added check for duplicated references.
 ;;  2003-10-24: Added numslots and slot attributes check.
 ;;  2003-06-17: Added configuration support and slots check.
 ;;  2003-06-05: Now checking for unconnected pins look into the DRC matrix if 
@@ -40,6 +41,7 @@
 ;;       Check                                    Variable                       Value
 ;; -----------------------------------------------------------------------------------------------
 ;; Not numbered parts.                     dont-check-non-numbered-parts         whatever you want
+;; Duplicated part references  (Note 1)    dont-check-duplicated-references      whatever you want
 ;; Nets with only one connection.          dont-check-one-connection-nets        whatever you want
 ;; Type of pins connected to each net.     dont-check-pintypes-of-nets           whatever you want
 ;; Net not driven.                         dont-check-not-driven-nets            whatever you want
@@ -51,8 +53,12 @@
 ;;     Report them as a warning            action-unused-slots                   #\w
 ;;     Report them as an error             action-unused-slots                   #\w
 ;;
+;; Note 1: DRC checks are case sensitive by default. If you want them to be case insensitive, then you
+;; only have to define the variable 'case_insensitive' to whatever value you want.
+;;
 ;; Example:
 ;; (define dont-check-non-numbered-parts 1)
+;; (define dont-check-duplicated-references 1)
 ;; (define dont-check-one-connection-nets 1)
 ;; (define dont-check-pintypes-of-nets 1)
 ;; (define dont-check-not-driven-nets 1)
@@ -60,6 +66,7 @@
 ;; (define dont-check-duplicated-slots 1)
 ;; (define dont-check-unused-slots 1)
 ;; (define action-unused-slots #\w)
+;; (define case_insensitive 1)
 ;;
 ;; The check for not driven nets only is performed when checking the type of the pins connected 
 ;; to each net.
@@ -461,6 +468,40 @@
     (for-each check-slots-of-package packages)
     ))
 
+;; Count the ocurrences of a given reference in the given list.
+(define drc2:count-reference-in-list
+  (lambda (refdes list)
+    (if (null? list)
+	0
+	(let ( (comparison (if (defined? 'case_insensitive)
+			       (string-ci=? refdes (car list))
+			       (string=? refdes (car list)))))
+	  (if comparison
+	      (+ 1 (drc2:count-reference-in-list refdes (cdr list)))
+	      (+ 0 (drc2:count-reference-in-list refdes (cdr list))))
+	  ))
+))
+
+;; Check duplicated references of the given list
+;;   If the number of ocurrences of a reference in the schematic doesn't match the number
+;;   of unique slots used by that part, then that reference is used more than one time in
+;;   the schematic.
+(define drc2:check-duplicated-references 
+  (lambda (port list)
+    (if (null? list)
+	0
+	(let ( (refdes (car list)))
+	       (if (> (drc2:count-reference-in-list refdes (gnetlist:get-non-unique-packages ""))
+		      (length (gnetlist:get-unique-slots refdes)))
+		   (begin
+		     (display (string-append "ERROR: Duplicated reference " refdes ".") port)
+		     (newline port)
+		     (set! errors_number (+ errors_number 1))))
+	       (drc2:check-duplicated-references port (cdr list))
+	       ))
+))
+
+
 ;
 ;  End of symbol checking functions
 ;-----------------------------------------------------------------------
@@ -801,6 +842,14 @@
 		  (display "Checking non-numbered parts..." port)
 		  (newline port)
 		  (drc2:check-non-numbered-items port packages)
+		  (newline port)))
+
+	    ;; Check for duplicated references   
+	    (if (not (defined? 'dont-check-duplicated-references))
+		(begin
+		  (display "Checking duplicated references..." port)
+		  (newline port)
+		  (drc2:check-duplicated-references port packages)
 		  (newline port)))
 
 	    ;; Check nets with only one connection
