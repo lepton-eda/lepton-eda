@@ -314,7 +314,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
  
 }
  
- 
+#if 0
 /*------------------------------------------------------------------
  * This fcn iterates over adds all items found on this page looking
  * for nets and adds them individually to the net table.  Looping over
@@ -395,7 +395,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 #endif
  
 }
- 
+#endif
 
 
 /*------------------------------------------------------------------

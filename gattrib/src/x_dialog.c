@@ -413,7 +413,6 @@ void x_dialog_missing_sym()
   GtkWidget *buttonabort = NULL;
   GtkWidget *vbox, *action_area;
   char *string;
-  char *refdes;
 
 #ifdef DEBUG
   printf("In x_dialog_missing_sym, creating windows.\n");
@@ -448,8 +447,7 @@ void x_dialog_missing_sym()
   
   /*  Create a text label for the dialog window */
   string =
-    g_strdup_printf(_("Warning!  One or more components have been found with missing symbol files (%s)!\n"),
-      refdes);
+    g_strdup_printf(_("Warning!  One or more components have been found with missing symbol files!\n"));
   string =
     g_strdup_printf(_("%s\n"), string);
   string =

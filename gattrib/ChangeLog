@@ -1,3 +1,8 @@
+2005-03-06 Stuart Brorson <sdb@cloud9.net>
+
+	* src/s_table.c, src/x_dialog.c: Fix some uninitialized variables
+	found by Dan McMahill & -wall gcc warning.
+	
 2005-02-21 05:29  Dan McMahill <danmc>
 
 	* configure.ac, include/prototype.h, include/struct.h,
