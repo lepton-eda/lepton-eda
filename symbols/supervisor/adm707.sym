@@ -55,3 +55,7 @@ T 1800 2550 8 10 1 1 0 0
 uref=U?
 T 1550 2100 9 10 1 1 0 0
 device=ADM707
+T 1300 1400 8 10 0 1 0 0
+footprint=SO8
+T 1400 1000 8 10 0 1 0 0
+footprint2=DIP8
