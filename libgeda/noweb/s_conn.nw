@@ -170,6 +170,14 @@ int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
 
 	    c_current->data = NULL;
 	    free(conn);
+
+#if 0 /* this does not work right */
+            if (other_object->type == OBJ_BUS &&
+                other_object->conn_list == NULL) {
+              other_object->bus_ripper_direction = 0;
+            }
+#endif
+            
 	    return (TRUE);
 	}
 
@@ -227,6 +235,13 @@ void s_conn_remove(TOPLEVEL * w_current, OBJECT * to_remove)
 #endif
   g_list_free(to_remove->conn_list);
   to_remove->conn_list = NULL; /* Memory leak? TODO hack */
+
+#if 0 /* this does not work right either */
+  if (to_remove->type == OBJ_BUS)
+  {
+    to_remove->bus_ripper_direction = 0;
+  }
+#endif
 }
 
 
@@ -396,6 +411,29 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
             add_conn = TRUE;
           }
 
+          /* check for pin / bus compatibility */
+          /* you cannot connect pins and buses at all */
+          if (add_conn) {
+            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
+                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
+
+          /* check for net / bus compatibility */
+          /* you cannot connect the endpoint of a bus to a net */
+          /* and the reverse is true as well */
+          if (add_conn) {
+            if ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
+                (object->type == OBJ_BUS && other_object->type == OBJ_NET)) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
+          
 #if DEBUG
           if (add_conn) {
             printf("0\n");
@@ -469,6 +507,29 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
             add_conn = TRUE;
           }
 
+          /* check for pin / bus compatibility */
+          /* you cannot connect pins and buses at all */
+          if (add_conn) {
+            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
+                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
+
+          /* check for net / bus compatibility */
+          /* you cannot connect the endpoint of a bus to a net */
+          /* and the reverse is true as well */
+          if (add_conn) {
+            if ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
+                (object->type == OBJ_BUS && other_object->type == OBJ_NET)) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
+
 #if DEBUG
           if (add_conn) {
             printf("1\n");
@@ -535,7 +596,27 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
           } else {
             add_conn = TRUE;
           }
-          
+
+          /* check for pin / bus compatibility */
+          /* you cannot connect pins and buses at all */
+          if (add_conn) {
+            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
+                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
+
+          /* check for bus / net compatibility */
+          /* you cannot have the middle of bus connect to nets */
+          if (add_conn) {
+            if (object->type == OBJ_BUS && other_object->type == OBJ_NET) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
 
           if (add_conn) {
             /* First do the other object and put it in the current */
@@ -573,7 +654,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
         
         /****/
 
-        /* do other_object's endpoints cross the middle of object? */
+        /* do object's endpoints cross the middle of other_object? */
         /* check for midpoint of other object, k endpoint of current obj*/
         found = s_conn_check_midpoint(object,
                                       other_object->line->x[k],
@@ -597,6 +678,28 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
             }
           } else {
             add_conn = TRUE;
+          }
+
+          
+          /* check for pin / bus compatibility */
+          /* you cannot connect pins and buses at all */
+          if (add_conn) {
+            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
+                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
+          }
+
+          /* check for bus / net compatibility */
+          /* you cannot have the middle of bus connect to nets */
+          if (add_conn) {
+            if (object->type == OBJ_NET && other_object->type == OBJ_BUS) {
+              add_conn = FALSE;
+            } else {
+              add_conn = TRUE;
+            }
           }
 
           
