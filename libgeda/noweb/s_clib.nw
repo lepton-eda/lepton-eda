@@ -65,6 +65,10 @@ To retrieve a list of the directories that make the library, use [[s_clib_get_di
 
 #include <glib.h>
 
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif

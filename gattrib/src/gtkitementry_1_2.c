@@ -20,8 +20,14 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <ctype.h>
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdki18n.h>
 #include <gtk/gtkmain.h>

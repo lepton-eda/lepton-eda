@@ -1,4 +1,5 @@
-#include <stdio.h>
+/* $Id$ */
+
 
 /*----------------------------------------------------------------*
  * Linked list sorting code taken from 
@@ -49,6 +50,12 @@
  * #define FALSE 0 
  * #define TRUE 1
  */
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <stdio.h>
 
 /*------------------------------------------------------------------
  * Gattrib specific includes
