@@ -1,0 +1,28 @@
+v 20001006
+L 4100 1300 4100 700 15 0 0 0 -1 -1
+B 600 700 7600 1400 15 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 600 1300 8200 1300 15 0 0 0 -1 -1
+T 1200 1100 9 10 1 1 0 0
+date=$Date: 2000/11/30 20:59:29 $
+T 5100 1100 9 10 1 1 0 0
+rev=$Revision: 1.15 $
+T 6600 800 9 10 1 1 0 0
+auth=$Author: matt $
+T 1400 1400 9 10 1 1 0 0
+fname=$Source: /projects/cvsroot/af5000/hardware/power_supply/ps.sch,v $
+T 2700 1800 9 14 1 1 0 0
+title=Tractor Power Supply Board
+T 700 1400 15 8 1 0 0 0
+FILE:
+T 4200 1100 15 8 1 0 0 0
+REVISION:
+T 4200 800 15 8 1 0 0 0
+DRAWN BY: 
+T 700 800 15 8 1 0 0 0
+PAGE
+T 2400 800 15 8 1 0 0 0
+OF
+T 700 1800 15 8 1 0 0 0
+TITLE
+T 700 1100 15 8 1 0 0 0
+DATE
