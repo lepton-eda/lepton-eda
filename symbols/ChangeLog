@@ -1,3 +1,6 @@
+2003-03-07 Werner Hoch <werner.ho@gmx.de>
+	* diode: added sa52-11-1.sym, sc52-11-1.sym
+
 2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* documentation/Makefile.am: Added a little more to this Makefile to
