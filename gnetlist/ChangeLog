@@ -1,4 +1,9 @@
 
+2001-01-17  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Improved the
+	  parseconfig procedure. More stable(?) and more PC.
+	
 2001-01-15  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_cpinlist.c: Fixed core dumper when pin doesn't have

@@ -1,6 +1,6 @@
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
-;;; Copyright (C) 1998-2000 Ales V. Hvezda
+;;; Copyright (C) 1998-2001 Ales V. Hvezda
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -45,13 +45,16 @@
 	  (write-char #\tab port)
 	  (bom:printlist (cdr ls) port)))))
 
-;;  Change courtesy of Stefan.  Gets red of strip1
+; Parses attrib file. Returns a list of read attributes.
 (define bom:parseconfig
   (lambda (port)
-    (let ((read-from-file (read port)))
-      (if (not (eof-object? read-from-file))
-          (cons (symbol->string read-from-file) (bom:parseconfig port))
-          '()))))
+    (let ((read-from-file (read-delimited " \n\t" port)))
+      (cond ((eof-object? read-from-file)
+	     '())
+	    ((= 0 (string-length read-from-file))
+	     (bom:parseconfig port))
+	    (else
+	     (cons read-from-file (bom:parseconfig port)))))))
 
 (define bom:components
   (lambda (port ls attriblist)
