@@ -1,3 +1,8 @@
+2005-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* geda/po/it.po, LINGUAS: Added new updated Italian translation by
+	Marco Colombo.  Thanks.  (renamed it_IT.po translation to it.po).
+
 2005-02-12 22:06  Dan McMahill <danmc>
 
 	* graphman/Makefile.am, graphman/callbacks.c, graphman/config.c,
