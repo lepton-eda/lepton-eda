@@ -32,8 +32,7 @@
 (define bom
   (lambda (output-filename)
     (let ((port (open-output-file output-filename))
-	  (attriblist (strip1 (bom:parseconfig
-				   (open-input-file "attribs")))))
+	  (attriblist (bom:parseconfig (open-input-file "attribs"))))
       (bom:printlist (cons 'package attriblist) port)
       (bom:components port packages attriblist))))
 
@@ -46,11 +45,13 @@
 	  (write-char #\tab port)
 	  (bom:printlist (cdr ls) port)))))
 
+;;  Change courtesy of Stefan.  Gets red of strip1
 (define bom:parseconfig
   (lambda (port)
-    (if (not (eof-object? (peek-char port)))
-	(cons (read port) (bom:parseconfig port))
-	'())))
+    (let ((read-from-file (read port)))
+      (if (not (eof-object? read-from-file))
+          (cons read-from-file (bom:parseconfig port))
+          '()))))
 
 (define bom:components
   (lambda (port ls attriblist)

@@ -16,8 +16,15 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+(define vipec:analysis-templates
+   (list
+      (cons
+         (cons "VIPEC" " ")
+         (list
+            (list "value" "R=" #t)))
+))
 
-(define vipec:templates
+(define vipec:component-templates
    (list
       (cons 
          (cons "RESISTOR" "RES")
@@ -73,7 +80,7 @@
                (write-char #\space port))))))
 
 (define vipec:write-attribs
-   (lambda (package attribs port)
+   (lambda (package attribs port term)
       (if (not (null? attribs))
          (let ((attrib (car attribs))
                (value (gnetlist:get-package-attribute package (car(car attribs)))))
@@ -81,38 +88,43 @@
                (begin
                   (display (cadr attrib) port)
                   (display value port)
-                  (display "\t" port))
+                  (display term port))
                (if (and (caddr attrib)(not (null? (cdddr attrib))))
                   (begin
                      (display (cadr attrib) port)
                      (display (cadddr attrib) port)
-                     (display "\t" port))))
-         (vipec:write-attribs package (cdr attribs) port)))))
+                     (display term port))))
+         (vipec:write-attribs package (cdr attribs) port term)))))
 
 (define vipec:write-gen-component
    (lambda (package port netnumbers)
-      (let ((template (vipec:get-template vipec:templates (get-device package))))
+      (let ((template (vipec:get-template vipec:component-templates (get-device package))))
          (display "\t" port)
          (display (cdr (car template)) port)
          (display "\t" port)
          (vipec:write-net-name-of-node package
             (length (gnetlist:get-pins package)) netnumbers port)
-         (vipec:write-attribs package (cdr template) port)
+         (vipec:write-attribs package (cdr template) port "\t")
          (display (string-append "\t% " package) port)
          (newline port))))
 
 (define vipec:component-writing
    (lambda (port ls netnumbers)
       (if (not (null? ls))
-         (let ((package (car ls)))
-            (else (vipec:write-gen-component package port netnumbers))
+         (let ((package (car ls))
+               (device (get-device (car ls))))
+            (cond
+               ((string=? device "VIPEC") #t)
+               ((string=? device "SMITH") #t)
+               ((string=? device "GRID") #t)
+               (else (vipec:write-gen-component package port netnumbers)))
             (vipec:component-writing port (cdr ls) netnumbers)))))
 
 (define vipec:misc-components
    (lambda (netnumbers port)
-      (display "\tRES\t0 " port)
-      (display (get-net-number "GND" netnumbers) port)
-      (display " R=0.00001\t% Assign ground net\n" port)
+;;      (display "\tRES\t0 " port)
+;;      (display (get-net-number "GND" netnumbers) port)
+;;      (display " R=0.00001\t% Assign ground net\n" port)
       (display "\tDEF2P\t" port)
       (display (get-net-number "PORT1" netnumbers) port)
       (display "  " port)
@@ -125,6 +137,16 @@
       (display "% Written by Matthew Ettus\n" port)
       (display "% Based on code by Bas Gieltjes\n" port)))
 
+(define vipec:analysis-block
+   (lambda (packages port)
+      (if (not (null? packages))
+         (begin
+            (if (string=? (get-device (car packages)) "VIPEC")
+               (let ((template (vipec:get-template vipec:analysis-templates "VIPEC")))
+                  (vipec:write-attribs (car packages) (cdr template) port "\n")
+                  (newline port)))
+            (vipec:analysis-block (cdr packages) port)))))
+
 (define vipec
    (lambda (output-filename)
       (let ((port (open-output-file output-filename))
@@ -133,5 +155,7 @@
          (display "CKT\n" port)
          (vipec:component-writing port packages netnumbers)
          (vipec:misc-components netnumbers port)
+         (newline port)
+         (vipec:analysis-block packages port)
          (close-output-port port))))
 

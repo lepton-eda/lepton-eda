@@ -109,17 +109,6 @@
          list)))
 
 ;; ETTUS
-;; strip1
-;; Usage (strip1 list)
-;; Cuts off the last element
-(define strip1
-  (lambda (ls)
-    (if (or (null? ls)
-            (null? (cdr ls)))
-        '()        
-        (cons (car ls) (strip1 (cdr ls))))))
-
-;; ETTUS
 ;; contains?
 ;; Usage (contains? list item)
 ;; True if the list contains the item, according to string=?
@@ -137,9 +126,11 @@
    (lambda (nets number)
       (if (null? nets)
          '()
-         (cons
-            (cons (car nets) number)
-            (number-nets (cdr nets)(+ number 1))))))  
+         (if (string=? "GND" (car nets))
+            (cons (cons "GND" 0) (number-nets (cdr nets) number))
+            (cons
+               (cons (car nets) number)
+               (number-nets (cdr nets)(+ number 1)))))))
 
 ;; ETTUS
 ;; Usage: (get-net-number netname numberlist)
