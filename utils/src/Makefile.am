@@ -12,10 +12,10 @@ olib_SOURCES = olib.l geda_sym_format.h
 INCLUDES = $(LIBGEDA_CFLAGS)
 
 gmk_sym_LDADD = $(LIBERTY)
-smash_megafile_LDADD = 
+smash_megafile_LDADD = $(LIBERTY)
 convert_sym_LDADD = $(LIBERTY) -lm
-sarlacc_schem_LDADD = 
-olib_LDADD = @LEXLIB@ -lm
+sarlacc_schem_LDADD = $(LIBERTY)
+olib_LDADD = @LEXLIB@ $(LIBERTY) -lm
 
 EXTRA_DIST = 
 

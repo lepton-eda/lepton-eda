@@ -1,3 +1,7 @@
+2003-01-26 Ales Hvezda   <ahvezda@geda.seul.org>
+		
+	* src/Makefile.am: Added liberty to all targets for mingw
+
 2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Fixed the distclean-local target. 
