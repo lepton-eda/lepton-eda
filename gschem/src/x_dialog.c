@@ -388,7 +388,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 	gtk_clist_set_column_width (GTK_CLIST (clist), 2, 80);
 
 	gtk_clist_column_titles_show (GTK_CLIST (clist));
-	
+
 	attribhead = gtk_label_new ("Attribute");
 	gtk_widget_show (attribhead);
 	gtk_clist_set_column_widget (GTK_CLIST (clist), 0, attribhead);
@@ -404,6 +404,8 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 	table = gtk_table_new (2,2, FALSE);
 	gtk_widget_show (table);
 	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
+
+        gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)-1);
 
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox2);
