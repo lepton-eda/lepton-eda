@@ -62,6 +62,24 @@ else
 	OTHERPATHSEP=\\\\
 fi
 
+# search for fig2dev
+AC_PATH_PROG(FIG2DEV, fig2dev, no, ${PATH})
+if test $FIG2DEV = "no"; then
+	echo "Cannot find fig2dev (transfig), some documentation will not be created."
+fi
+
+# search for groff
+AC_PATH_PROG(GROFF, groff, no, ${PATH})
+if test $GROFF = "no"; then
+	echo "Cannot find groff, some documentation will not be created."
+fi
+
+# search for ps2pdf
+AC_PATH_PROG(PS2PDF, ps2pdf, no, ${PATH})
+if test $PS2PDF = "no"; then
+	echo "Cannot find ps2pdf, some documentation will not be created."
+fi
+
 
 # Do individual library files
   
