@@ -1,5 +1,3 @@
-/* STILL NEED to clean up line lengths in aa and tr */
-
 /* gEDA - GNU Electronic Design Automation
  * gschem - GNU Schematic Capture
  * Copyright (C) 1998 Ales V. Hvezda
@@ -18,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
+/* TODO: STILL NEED to clean up line lengths in aa and tr */
 
 #include <config.h>
 
@@ -38,19 +38,17 @@
 
 #include <guile/gh.h>
 
-
-
-#include <libgeda/struct.h>   
+#include <libgeda/struct.h>
 #include <libgeda/defines.h>
-#include <libgeda/colors.h>  
+#include <libgeda/colors.h>
 #include <libgeda/globals.h>
 #include <libgeda/prototype.h>
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
-static GtkWidget *stwindow=NULL;
-static GtkWidget *sttext=NULL;
+static GtkWidget *stwindow = NULL;
+static GtkWidget *sttext = NULL;
 
 void
 x_log_read(void)
@@ -70,13 +68,12 @@ x_log_read(void)
 		return;
 	}
 
-	while( (len = read(tmp_fd, &buf, 79)) != 0) {
+	while ((len = read(tmp_fd, &buf, 79)) != 0) {
 		/* not sure if this nukes the last char or not... */
-
 		buf[len] = '\0'; /* null terminate the buffer */
-		gtk_text_insert (GTK_TEXT (sttext), 
-			NULL, NULL, NULL, 
-			buf, len);
+		gtk_text_insert (GTK_TEXT (sttext),
+				 NULL, NULL, NULL,
+				 buf, len);
 	}
 
 	close(tmp_fd);
@@ -96,101 +93,100 @@ x_log_update(char *buf)
 	}
 
 	switch(logging_dest) {
+	case(LOG_WINDOW):
+		if (!stwindow) {
+			return;
+		}
 
-		case(LOG_WINDOW): 
-			if (!stwindow) {
-				return;
-			}
-
-			nchars = strlen(buf);
-			gtk_text_insert (GTK_TEXT (sttext), 
-				NULL, NULL, NULL, 
+		nchars = strlen(buf);
+		gtk_text_insert(GTK_TEXT (sttext),
+				NULL, NULL, NULL,
 				buf, nchars);
 		break;
 
-		case(STDOUT_TTY):
-			fputs (buf, stdout);
+	case(STDOUT_TTY):
+		fputs (buf, stdout);
 		break;
 
-		case(BOTH):
-			fputs (buf, stdout);
+	case(BOTH):
+		fputs (buf, stdout);
 
-			if (!stwindow) {
-				break;
-			}
+		if (!stwindow) {
+			break;
+		}
 
-			nchars = strlen(buf);
-			gtk_text_insert (GTK_TEXT (sttext), 
-				NULL, NULL, NULL, 
+		nchars = strlen(buf);
+		gtk_text_insert(GTK_TEXT (sttext),
+				NULL, NULL, NULL,
 				buf, nchars);
 		break;
-
 	}
 }
-
 
 void
 x_log_close(GtkWidget *w, TOPLEVEL *w_current)
 {
 	gtk_widget_destroy(stwindow);
-	stwindow=NULL;
+	stwindow = NULL;
 
-	/*gtk_grab_remove(w_current->stwindow);*/
+#if 0
+	gtk_grab_remove(w_current->stwindow);
+#endif
 }
 
 void
 x_log_setup_win (TOPLEVEL *w_current)
 {
-	GtkWidget *buttoncancel=NULL;
-	GtkWidget *hscrollbar=NULL;
-	GtkWidget *vscrollbar=NULL;
-	GtkWidget *table=NULL;
-	
+	GtkWidget *buttoncancel = NULL;
+	GtkWidget *hscrollbar = NULL;
+	GtkWidget *vscrollbar = NULL;
+	GtkWidget *table = NULL;
+
 	if (do_logging == FALSE) {
 		return;
 	}
 
-	if (!stwindow)
-	{
-		stwindow = gtk_dialog_new ();
+	if (!stwindow) {
+		stwindow = gtk_dialog_new();
 
-		/* comment this out if you want the log window to have wm */
-		/* decorations */
-
+		/* comment this out if you want the log window to have
+		 * wm decorations */
 		if (w_current->log_window_type == TRANSIENT) {
-			gtk_window_set_transient_for (GTK_WINDOW (stwindow), GTK_WINDOW (w_current->main_window));
-			gtk_window_position (GTK_WINDOW (stwindow), 
+			gtk_window_set_transient_for(
+				GTK_WINDOW (stwindow),
+				GTK_WINDOW (w_current->main_window));
+			gtk_window_position (GTK_WINDOW (stwindow),
                                      GTK_WIN_POS_MOUSE);
 		} else {
-			gtk_window_position (GTK_WINDOW (stwindow), 
+			gtk_window_position (GTK_WINDOW (stwindow),
 				     GTK_WIN_POS_NONE);
 		}
 
 		gtk_widget_set_usize(stwindow, 600, 150);
 
-		gtk_signal_connect (GTK_OBJECT (stwindow), 
-				    "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                          	    &stwindow);
+		gtk_signal_connect(GTK_OBJECT (stwindow),
+				   "destroy", GTK_SIGNAL_FUNC(destroy_window),
+				   &stwindow);
 
-      		gtk_signal_connect (GTK_OBJECT (stwindow), 
-				    "delete_event",
-                          	    GTK_SIGNAL_FUNC(destroy_window),
-                          	    &stwindow);    
+      		gtk_signal_connect(GTK_OBJECT (stwindow),
+				   "delete_event",
+				   GTK_SIGNAL_FUNC(destroy_window),
+				   &stwindow);
 
-		gtk_window_set_title (GTK_WINDOW (stwindow), 
-				      "Status");
-                gtk_container_border_width (GTK_CONTAINER (stwindow), 0);       
+		gtk_window_set_title(GTK_WINDOW (stwindow),
+				     "Status");
+                gtk_container_border_width (GTK_CONTAINER (stwindow), 0);
 
 		table = gtk_table_new (2, 2, FALSE);
 		gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 		gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(stwindow)->vbox), 
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(stwindow)->vbox),
 			table, TRUE, TRUE, 0);
 		gtk_widget_show (table);
 
 		sttext = gtk_text_new (NULL, NULL);
 		gtk_text_set_editable (GTK_TEXT (sttext), FALSE);
-		gtk_table_attach (GTK_TABLE (table), sttext, 
+		gtk_table_attach (GTK_TABLE (table), sttext,
 			0, 1, 0, 1,
                         GTK_EXPAND | GTK_SHRINK | GTK_FILL,
                         GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -206,14 +202,14 @@ x_log_setup_win (TOPLEVEL *w_current)
 		GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 		gtk_widget_show (vscrollbar);
 
-		buttoncancel = gtk_button_new_with_label ("Close");   
+		buttoncancel = gtk_button_new_with_label ("Close");
 		GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(
 				    stwindow)->action_area),
                           	    buttoncancel, TRUE, TRUE, 0);
       		gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
-			  	    GTK_SIGNAL_FUNC(x_log_close), NULL);    
-      		gtk_widget_show (buttoncancel); 
+			  	    GTK_SIGNAL_FUNC(x_log_close), NULL);
+      		gtk_widget_show (buttoncancel);
 	}
 
   	if (!GTK_WIDGET_VISIBLE (stwindow)) {
@@ -223,4 +219,3 @@ x_log_setup_win (TOPLEVEL *w_current)
 		gdk_window_raise(stwindow->window);
 	}
 }
-

@@ -143,7 +143,7 @@ o_copy_end(TOPLEVEL *w_current)
 					      new_object);
 
 			o_net_draw(w_current, new_object);
-			
+
 			/* this is only a temp update, the below
 			 * disconnect_update does the real thing */
 			o_ales_update(w_current->page_current, new_object);
@@ -210,7 +210,7 @@ o_copy_end(TOPLEVEL *w_current)
 						w_current->page_current->
 						object_tail,
 						found);
-				
+
 			} else {
 				new_object = (OBJECT *) o_complex_copy(
 					w_current,
@@ -329,7 +329,7 @@ o_copy_end(TOPLEVEL *w_current)
 						object_head,
 						new_object,
 						found->attached_to->copied_to);
-					
+
 					/* TODO: I have no idea if this is
                                            really needed.... ? */
 #if 0
@@ -342,7 +342,7 @@ o_copy_end(TOPLEVEL *w_current)
 					found->attached_to->copied_to = NULL;
 				}
 			}
-			
+
 			if (w_current->actionfeedback_mode == OUTLINE) {
 				o_ntext_draw_xor(
 					w_current,

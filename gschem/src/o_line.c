@@ -27,7 +27,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -37,7 +36,6 @@
 
 #include "../include/prototype.h"
 
-
 void
 o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
@@ -46,41 +44,40 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	if (o_current->line_points == NULL) {
 		return;
 	}
-	
 
 	/* goes before visible, clipfixme */
 	o_line_recalc(w_current, o_current);
 
-	if (!o_line_visible(w_current, o_current->line_points, 
+	if (!o_line_visible(w_current, o_current->line_points,
 			&x1, &y1, &x2, &y2)) {
 		return;
 	}
 
-#if DEBUG 
+#if DEBUG
         printf("drawing line\n\n");
 #endif
 
    if (w_current->override_color != -1 ) {
 
-		gdk_gc_set_foreground(w_current->gc, 
+		gdk_gc_set_foreground(w_current->gc,
 		x_get_color(w_current->override_color));
 
 		if ( (x1 == x2) && (y1 == y2)) {
 
-			gdk_draw_point(w_current->window, 
-                                        w_current->gc, 
+			gdk_draw_point(w_current->window,
+                                        w_current->gc,
 					x1, y1);
 
-			gdk_draw_point(w_current->backingstore, 
-                                        w_current->gc, 
+			gdk_draw_point(w_current->backingstore,
+                                        w_current->gc,
 					x1, y1);
 
 		} else {
 
 			/* go through and make this less code hungry hack */
-			gdk_draw_line(w_current->window, w_current->gc, 
+			gdk_draw_line(w_current->window, w_current->gc,
 			       x1, y1, x2, y2);
-			gdk_draw_line(w_current->backingstore, w_current->gc, 
+			gdk_draw_line(w_current->backingstore, w_current->gc,
 			       x1, y1, x2, y2);
 		}
 
@@ -91,23 +88,22 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		if ( (x1 == x2) && (y1 == y2)) {
 
-			gdk_draw_point(w_current->window, 
-                                        w_current->gc, 
+			gdk_draw_point(w_current->window,
+                                        w_current->gc,
 					x1, y1);
 
-			gdk_draw_point(w_current->backingstore, 
-                                        w_current->gc, 
+			gdk_draw_point(w_current->backingstore,
+                                        w_current->gc,
 					x1, y1);
 
 		} else {
 
-			gdk_draw_line(w_current->window, w_current->gc, 
+			gdk_draw_line(w_current->window, w_current->gc,
 			       x1, y1, x2, y2);
-			gdk_draw_line(w_current->backingstore, w_current->gc, 
+			gdk_draw_line(w_current->backingstore, w_current->gc,
 			       x1, y1, x2, y2);
 	}
    }
-
 
 #if DEBUG
 	printf("drawing line\n");
@@ -123,17 +119,16 @@ o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	}
 
 	/* changed for dark color stuff */
-	gdk_gc_set_foreground(w_current->outline_xor_gc, 
+	gdk_gc_set_foreground(w_current->outline_xor_gc,
 		x_get_darkcolor(o_current->color));
-	gdk_draw_line(w_current->window, w_current->outline_xor_gc, 
-		       o_current->line_points->screen_x1+dx, 
+	gdk_draw_line(w_current->window, w_current->outline_xor_gc,
+		       o_current->line_points->screen_x1+dx,
 		       o_current->line_points->screen_y1+dy,
 		       o_current->line_points->screen_x2+dx,
 		       o_current->line_points->screen_y2+dy);
 
 	/* backing store? nope not here */
 }
-
 
 void
 o_line_start(TOPLEVEL *w_current, int x, int y)
@@ -142,11 +137,11 @@ o_line_start(TOPLEVEL *w_current, int x, int y)
 	w_current->last_y = w_current->start_y = fix_y(w_current, y);
 
 	/* draw init xor */
-	gdk_gc_set_foreground(w_current->xor_gc, 
+	gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_color(w_current->select_color));
-	gdk_draw_line(w_current->window, w_current->xor_gc, 
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->start_x, w_current->start_y,
+		w_current->last_x, w_current->last_y);
 }
 
 void
@@ -160,21 +155,21 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
                 return;
         }
 
-/* Use last_x and _y from the last time you moved the mouse from the 
-   rubber function, so in otherwords... comment these out... 
+/* Use last_x and _y from the last time you moved the mouse from the
+   rubber function, so in otherwords... comment these out...
 	w_current->last_x = fix_x(w_current, x);
 	w_current->last_y = fix_y(w_current, y);
 */
 
 	/* erase xor image */
-	gdk_gc_set_foreground(w_current->xor_gc, 
+	gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_color(w_current->select_color));
-	gdk_draw_line(w_current->window, w_current->xor_gc, 
-		w_current->start_x, w_current->start_y, 
-		w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->start_x, w_current->start_y,
+		w_current->last_x, w_current->last_y);
 
 	/* don't allow zero length lines */
-	if ( (w_current->start_x == w_current->last_x) && 
+	if ( (w_current->start_x == w_current->last_x) &&
 	     (w_current->start_y == w_current->last_y) ) {
 		w_current->start_x = (-1);
         	w_current->start_y = (-1);
@@ -183,28 +178,27 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
 		return;
 	}
 
-
 	/* draw the real one */
-	gdk_gc_set_foreground(w_current->gc, 
+	gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->graphic_color));
-	gdk_draw_line(w_current->window, w_current->gc, 
-			w_current->start_x, w_current->start_y, 
-			w_current->last_x, w_current->last_y);	
-	gdk_draw_line(w_current->backingstore, w_current->gc, 
-			w_current->start_x, w_current->start_y, 
+	gdk_draw_line(w_current->window, w_current->gc,
+			w_current->start_x, w_current->start_y,
+			w_current->last_x, w_current->last_y);
+	gdk_draw_line(w_current->backingstore, w_current->gc,
+			w_current->start_x, w_current->start_y,
 			w_current->last_x, w_current->last_y);
 
-	SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x1, &y1); 
-	SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2); 
+	SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x1, &y1);
+	SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2);
 
 	x1 = snap_grid(w_current, x1);
 	y1 = snap_grid(w_current, y1);
 	x2 = snap_grid(w_current, x2);
 	y2 = snap_grid(w_current, y2);
 
-	w_current->page_current->object_tail = o_line_add(w_current, 
-			w_current->page_current->object_tail, 
-			OBJ_LINE, w_current->graphic_color, x1, y1, 
+	w_current->page_current->object_tail = o_line_add(w_current,
+			w_current->page_current->object_tail,
+			OBJ_LINE, w_current->graphic_color, x1, y1,
 			x2, y2);
 
 	w_current->start_x = (-1);
@@ -227,11 +221,11 @@ o_line_rubberline(TOPLEVEL *w_current, int x, int y)
 	}
 #endif
 
-	gdk_gc_set_foreground(w_current->xor_gc, 
+	gdk_gc_set_foreground(w_current->xor_gc,
 		x_get_color(w_current->select_color));
-	gdk_draw_line(w_current->window, w_current->xor_gc, 
+	gdk_draw_line(w_current->window, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
-			 w_current->last_x, w_current->last_y);	
+			 w_current->last_x, w_current->last_y);
 
 	w_current->last_x = fix_x(w_current, x);
         w_current->last_y = fix_y(w_current, y);
@@ -242,16 +236,16 @@ o_line_rubberline(TOPLEVEL *w_current, int x, int y)
 		diff_y = abs(w_current->last_y - w_current->start_y);
 
 		if (diff_x >= diff_y) {
-			w_current->last_y = w_current->start_y;	
+			w_current->last_y = w_current->start_y;
 		} else {
 			w_current->last_x = w_current->start_x;
 		}
 	}
 
-	gdk_gc_set_foreground(w_current->xor_gc, 
+	gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_color(w_current->select_color));
-	gdk_draw_line(w_current->window, w_current->xor_gc, 
-			w_current->start_x, w_current->start_y, 
-			w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc,
+			w_current->start_x, w_current->start_y,
+			w_current->last_x, w_current->last_y);
 }
 

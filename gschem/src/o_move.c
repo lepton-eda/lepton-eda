@@ -26,7 +26,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -43,11 +42,11 @@ o_move_start(TOPLEVEL *w_current, int x, int y)
 	if (w_current->page_current->selection_head->next != NULL) {
 
 		w_current->last_drawb_mode = -1;
-		w_current->event_state = MOVE; 
+		w_current->event_state = MOVE;
 
 		w_current->last_x = w_current->start_x = fix_x(w_current, x);
 		w_current->last_y = w_current->start_y = fix_y(w_current, y);
-		o_drawbounding(w_current, w_current->page_current->selection_head->next, 
+		o_drawbounding(w_current, w_current->page_current->selection_head->next,
 			x_get_color(w_current->bb_color));
 		w_current->inside_action = 1;
 
@@ -60,12 +59,12 @@ o_move_end(TOPLEVEL *w_current)
 	OBJECT *selection_list=NULL;
 	OBJECT *current=NULL;
 	OBJECT *found=NULL;
-	int diff_x, diff_y; 
+	int diff_x, diff_y;
 	int screen_diff_x, screen_diff_y;
 	int lx,ly;
 	int sx,sy;
 
-	if (w_current->page_current->selection_head->next == NULL) { 
+	if (w_current->page_current->selection_head->next == NULL) {
 		/* actually this is an error condition hack */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
@@ -76,29 +75,28 @@ o_move_end(TOPLEVEL *w_current)
 	screen_diff_x = w_current->last_x - w_current->start_x;
 	screen_diff_y = w_current->last_y - w_current->start_y;
 
-	
-	SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, 
+	SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y,
 					&lx, &ly);
-	SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y, 
+	SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y,
 					&sx, &sy);
 
-	diff_x = lx - sx;	
-	diff_y = ly - sy;	
+	diff_x = lx - sx;
+	diff_y = ly - sy;
 
 	current = w_current->page_current->selection_head->next; /* skip over head */
 
 	while(current != NULL) {
 
-		found = (OBJECT *) o_list_search(w_current->page_current->object_head, 
+		found = (OBJECT *) o_list_search(w_current->page_current->object_head,
 						current);
 		if (found == NULL) {
-			fprintf(stderr, "UGGG! you blew it... tried to delete something that didn't exist");	
+			fprintf(stderr, "UGGG! you blew it... tried to delete something that didn't exist");
 			exit(-1);
 		}
 
 		switch(found->type) {
 			case(OBJ_LINE):
-				w_current->override_color = 
+				w_current->override_color =
 					w_current->background_color;
 				o_line_draw(w_current, found);
 				w_current->override_color = -1;
@@ -107,10 +105,10 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_line_translate_world(w_current, diff_x, diff_y, found);
 				/* YES! we need this in here.. because it is
-				   redraw that recalcs bounding box */ 
+				   redraw that recalcs bounding box */
 				o_line_draw(w_current, found);
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
 			case(OBJ_NET):
@@ -128,7 +126,7 @@ o_move_end(TOPLEVEL *w_current)
 				/* of the new moved object correctly */
 				/* since we will be keeping it selected */
 				o_net_draw(w_current, found);
-				w_current->override_color = -1; 
+				w_current->override_color = -1;
 
 				/* this is only a temp update, the below */
 				/* disconnect_update does the real thing */
@@ -136,8 +134,8 @@ o_move_end(TOPLEVEL *w_current)
 				o_net_ales_erase(w_current, found);
 				o_net_ales_draw(w_current, found);
 
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
 			case(OBJ_BOX):
@@ -149,8 +147,8 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_box_translate_world(w_current, diff_x, diff_y, found);
 				o_box_draw(w_current, found);
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
 			case(OBJ_CIRCLE):
@@ -162,8 +160,8 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_circle_translate_world(w_current, diff_x, diff_y, found);
 				o_circle_draw(w_current, found);
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
 			case(OBJ_COMPLEX):
@@ -171,22 +169,21 @@ o_move_end(TOPLEVEL *w_current)
 				w_current->override_color = w_current->background_color;
 				o_ales_erase_all(w_current, found->complex);
 				/* single- there for a reason you know */
-				o_redraw_single(w_current, found); 
+				o_redraw_single(w_current, found);
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_complex_draw_xor(w_current, screen_diff_x, screen_diff_y, found->complex);
 				}
 				o_complex_world_translate_toplevel(w_current, diff_x, diff_y, found);
 				w_current->override_color = -1;
 
-
 				o_ales_disconnect_update(w_current->page_current);
 				o_redraw_single(w_current, found);
-	
+
 				o_ales_erase_all(w_current, found->complex);
 				o_ales_draw_all(w_current, found->complex);
 
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
 			case(OBJ_NTEXT):
@@ -198,8 +195,8 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_ntext_translate_world(w_current, diff_x, diff_y, found);
 				o_ntext_draw(w_current, found);
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 
 			break;
 
@@ -221,8 +218,8 @@ o_move_end(TOPLEVEL *w_current)
 				o_net_ales_erase(w_current, found);
 				o_net_ales_draw(w_current, found);
 
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 				break;
 
 			case(OBJ_ARC):
@@ -234,8 +231,8 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_arc_translate_world(w_current, diff_x, diff_y, found);
 				o_arc_draw(w_current, found);
-				selection_list = (OBJECT *) 
-					o_list_copy_to(w_current, selection_list, found, SELECTION);	
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
 				break;
 
 		}
@@ -244,9 +241,8 @@ o_move_end(TOPLEVEL *w_current)
 
 	/* erase the bounding box */
 	if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-		o_erasebounding(w_current, w_current->page_current->selection_head->next);	
+		o_erasebounding(w_current, w_current->page_current->selection_head->next);
 	}
-
 
 	selection_list = (OBJECT *) return_head(selection_list);
 
@@ -255,10 +251,10 @@ o_move_end(TOPLEVEL *w_current)
 	/* fix up both prev and next links */
 	selection_list->prev = w_current->page_current->selection_head;
 	w_current->page_current->selection_head->next = selection_list;
-	
+
 	w_current->page_current->selection_tail = return_tail(
 			w_current->page_current->selection_head);
-			
+
 	w_current->page_current->CHANGED=1;
 
 	o_ales_disconnect_update(w_current->page_current);

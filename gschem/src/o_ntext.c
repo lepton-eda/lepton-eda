@@ -32,7 +32,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -51,7 +50,7 @@
 void
 o_ntext_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
-	
+
 	if (o_current->visibility == INVISIBLE) {
 		return;
 	}
@@ -70,9 +69,9 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	}
 
 	/* always display text which is 12 or larger */
-	if ( (w_current->page_current->zoom_factor > 
-	    w_current->text_display_zoomfactor) || 
-		o_current->text_size >= 12 || 
+	if ( (w_current->page_current->zoom_factor >
+	    w_current->text_display_zoomfactor) ||
+		o_current->text_size >= 12 ||
 		w_current->text_feedback == ALWAYS) {
 		o_complex_draw_xor(w_current, dx, dy, o_current->complex);
 	} else {
@@ -82,17 +81,17 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
 		screen_x1 = o_current->screen_x;
 		screen_y1 = o_current->screen_y;
-		
-		gdk_gc_set_foreground(w_current->outline_xor_gc, 
+
+		gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(o_current->color));
 
 		/* 10 seems to be the average text length */
-		/* of ONE point text... (should be a 20, but that's for 2 
+		/* of ONE point text... (should be a 20, but that's for 2
 		/* point text */
-		length = SCREENabs(w_current, 
+		length = SCREENabs(w_current,
 			o_current->displayed_text_len*10*o_current->text_size);
 
-#if DEBUG 
+#if DEBUG
 		printf("%d %d %d\n",  o_current->displayed_text_len, o_current->displayed_text_len*20*o_current->text_size, length);
 #endif
 
@@ -100,7 +99,7 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 			case(0):
 
 				gdk_draw_line(w_current->window,
-       	        	         	w_current->outline_xor_gc, 
+       	        	         	w_current->outline_xor_gc,
        		                 	screen_x1+dx,
        	        	       	        screen_y1+dy,
 					screen_x1+dx+length,
@@ -110,7 +109,7 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 			case(90):
 
 				gdk_draw_line(w_current->window,
-       	        	         	w_current->outline_xor_gc, 
+       	        	         	w_current->outline_xor_gc,
        		                 	screen_x1+dx,
        	        	       	        screen_y1+dy,
 					screen_x1+dx,
@@ -120,7 +119,7 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 			case(180):
 
 				gdk_draw_line(w_current->window,
-       	        	         	w_current->outline_xor_gc, 
+       	        	         	w_current->outline_xor_gc,
        		                 	screen_x1+dx,
        	        	       	        screen_y1+dy,
 					screen_x1+dx-length,
@@ -130,13 +129,13 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 			case(270):
 
 				gdk_draw_line(w_current->window,
-       	        	         	w_current->outline_xor_gc, 
+       	        	         	w_current->outline_xor_gc,
        		                 	screen_x1+dx,
        	        	       	        screen_y1+dy,
 					screen_x1+dx,
 					screen_y1+dy-length);
 			break;
-		}	
+		}
 	}
 }
 
@@ -144,7 +143,7 @@ void
 o_ntext_input(TOPLEVEL *w_current)
 {
 
-	text_input_dialog(w_current);	
+	text_input_dialog(w_current);
 
 }
 
@@ -181,21 +180,21 @@ o_ntext_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		default:
 			/* do nothing */
 		break;
-	}           
+	}
 
-	/* here you need to add OBJ_NTEXT when it's done */ 
-	w_current->page_current->attrib_place_tail = (OBJECT *) o_ntext_add(w_current, 
-				w_current->page_current->attrib_place_head, 
+	/* here you need to add OBJ_NTEXT when it's done */
+	w_current->page_current->attrib_place_tail = (OBJECT *) o_ntext_add(w_current,
+				w_current->page_current->attrib_place_head,
 				/* type changed from TEXT to NTEXT */
-				OBJ_NTEXT, w_current->text_color, 
+				OBJ_NTEXT, w_current->text_color,
 				x, y, 0, /* zero is angle */
-				w_current->current_attribute, 
-				w_current->text_size,	
+				w_current->current_attribute,
+				w_current->text_size,
 			/* has to be visible so you can place it */
 			/* visibility is set when you create the object */
 				VISIBLE, SHOW_NAME_VALUE);
 
-	o_drawbounding(w_current, w_current->page_current->attrib_place_head->next, 
+	o_drawbounding(w_current, w_current->page_current->attrib_place_head->next,
 				x_get_color(w_current->bb_color));
 }
 
@@ -204,46 +203,46 @@ o_ntext_end(TOPLEVEL *w_current)
 {
 	int world_x, world_y; /* get consistant names hack */
 
-        SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, 
+        SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y,
 			&world_x, &world_y);
 
         world_x = snap_grid(w_current, world_x);
         world_y = snap_grid(w_current, world_y);
 
-	/* here you need to add OBJ_NTEXT when it's done */ 
+	/* here you need to add OBJ_NTEXT when it's done */
         /* make this VIS and SHOW default configurable hack */
-        w_current->page_current->object_tail = 
-			o_ntext_add(w_current, w_current->page_current->object_tail, 
+        w_current->page_current->object_tail =
+			o_ntext_add(w_current, w_current->page_current->object_tail,
 				/* type changed from TEXT to NTEXT */
-			 	OBJ_NTEXT, 
+			 	OBJ_NTEXT,
 				w_current->text_color,
                 		world_x, world_y, 0, /* zero is angle */
-                		w_current->current_attribute, 
-				w_current->text_size, 
-				VISIBLE, SHOW_NAME_VALUE); 
+                		w_current->current_attribute,
+				w_current->text_size,
+				VISIBLE, SHOW_NAME_VALUE);
 
-	/* if the text is invisible then you need to erase the outline 
+	/* if the text is invisible then you need to erase the outline
 	   left by the place */
 	if (w_current->current_visible == INVISIBLE) {
-		 o_drawbounding(w_current, w_current->page_current->attrib_place_head->next, 
+		 o_drawbounding(w_current, w_current->page_current->attrib_place_head->next,
 				x_get_color(w_current->bb_color));
 	}
 	/* you need to erase the bounding box if have that mode set!!! hack */
-	
+
 	/* erase the old bounding box / outline */
 	if (w_current->actionfeedback_mode == OUTLINE) {
-		o_drawbounding(w_current, 
-		       w_current->page_current->attrib_place_head->next, 
+		o_drawbounding(w_current,
+		       w_current->page_current->attrib_place_head->next,
 		       x_get_color(w_current->text_color));
 	} else {
-		o_drawbounding(w_current, 
-		       w_current->page_current->attrib_place_head->next, 
+		o_drawbounding(w_current,
+		       w_current->page_current->attrib_place_head->next,
 		       x_get_color(w_current->select_color));
 	}
 
         w_current->override_color = -1;
-	
-        w_current->page_current->CHANGED=1;     
+
+        w_current->page_current->CHANGED=1;
 
 	/* clear previous selection list if any */
 	o_unselect_all(w_current);
@@ -251,11 +250,11 @@ o_ntext_end(TOPLEVEL *w_current)
 	/* add item to the selection or it'll be selected by itself */
 	/* you probably should create some new functions for this... hack */
 	w_current->page_current->selection_tail = (OBJECT *) o_list_copy_to(
-		 	w_current, 
-		 	w_current->page_current->selection_head, 
-			w_current->page_current->object_tail, 
-			SELECTION); 
-	
+		 	w_current,
+		 	w_current->page_current->selection_head,
+			w_current->page_current->object_tail,
+			SELECTION);
+
 	w_current->page_current->selection_tail = return_tail(
 			w_current->page_current->selection_head);
 
@@ -266,7 +265,7 @@ o_ntext_end(TOPLEVEL *w_current)
 	if (w_current->page_current->object_tail->draw_func != NULL &&
 		 w_current->page_current->object_tail->type != OBJ_HEAD) {
         	(*w_current->page_current->object_tail->draw_func)(w_current, w_current->page_current->object_tail);
-        }  
+        }
 
 	w_current->override_color = -1;
 }
@@ -274,21 +273,20 @@ o_ntext_end(TOPLEVEL *w_current)
 void
 o_ntext_rubberattrib(TOPLEVEL *w_current)
 {
-	o_drawbounding(w_current, w_current->page_current->attrib_place_head->next, 
+	o_drawbounding(w_current, w_current->page_current->attrib_place_head->next,
 		x_get_color(w_current->bb_color));
 }
 
-
 void
-o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current) 
+o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	/* you need to check to make sure only one object is selected */
 	/* no actually this is okay... not here  in o_edit */
-	text_edit_dialog(w_current, o_current->text_string, o_current->text_size);	
+	text_edit_dialog(w_current, o_current->text_string, o_current->text_size);
 }
 
 void
-o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size) 
+o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 {
 	OBJECT *real;
 	OBJECT *temp;
@@ -296,19 +294,18 @@ o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 	/* first change selected */
 	if (w_current->page_current->selection_head->next) {
 
-		o_erase_selected(w_current); 
+		o_erase_selected(w_current);
 		if (w_current->page_current->selection_head->next->text_string) {
-			free(w_current->page_current->selection_head->next->text_string);	
+			free(w_current->page_current->selection_head->next->text_string);
 		}
 
 		w_current->page_current->selection_head->next->text_string = malloc(sizeof(char)*len+1);
-		strcpy(w_current->page_current->selection_head->next->text_string, string); 
+		strcpy(w_current->page_current->selection_head->next->text_string, string);
 
 		temp = w_current->page_current->selection_head->next;
 
 		temp->text_size = text_size;
 		o_ntext_recreate(w_current, temp);
-
 
 		o_redraw_selected(w_current);
 	}

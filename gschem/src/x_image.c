@@ -30,11 +30,10 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
-#include <libgeda/colors.h>   
+#include <libgeda/colors.h>
 #include <libgeda/prototype.h>
 
 #include "../include/x_states.h"
@@ -178,7 +177,7 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 	c_height = gtk_entry_get_text(GTK_ENTRY(w_current->iheight_entry));
 */
 
-	if (filename[0] != '\0') { 
+	if (filename[0] != '\0') {
 
 		width = w_current->image_width;
 		height = w_current->image_height;
@@ -190,12 +189,11 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
         	w_current->height = height;
 
 		/* need to do this every time you change width / height */
-		set_window(w_current, 
-			w_current->page_current->left, 
+		set_window(w_current,
+			w_current->page_current->left,
 			w_current->page_current->right,
-                   	w_current->page_current->top, 
+                   	w_current->page_current->top,
 			w_current->page_current->bottom);
-	
 
 		/* try to use recalc here */
 		o_redraw_all(w_current);
@@ -206,10 +204,10 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 		w_current->height = save_height;
 
 		/* need to do this every time you change width / height */
-		set_window(w_current, 
-			w_current->page_current->left, 
+		set_window(w_current,
+			w_current->page_current->left,
 			w_current->page_current->right,
-                   	w_current->page_current->top, 
+                   	w_current->page_current->top,
 			w_current->page_current->bottom);
 
 		/* try to use recalc here... */
@@ -232,10 +230,9 @@ x_image_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
 	/* gtk_grab_remove(w_current->iwindow);*/
 	gtk_widget_destroy(w_current->iwindow);
-	w_current->iwindow=NULL;	
+	w_current->iwindow=NULL;
 	return(0);
 }
-
 
 void
 x_image_setup (TOPLEVEL *w_current, char *filename)
@@ -252,8 +249,8 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 	if (!w_current->iwindow) {
 
 		w_current->iwindow = gtk_dialog_new ();
-	
-		gtk_window_position (GTK_WINDOW (w_current->iwindow), 
+
+		gtk_window_position (GTK_WINDOW (w_current->iwindow),
 			GTK_WIN_POS_MOUSE);
 
 		gtk_signal_connect (GTK_OBJECT (w_current->iwindow), "destroy",
@@ -286,20 +283,17 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                         w_current);
 		gtk_widget_show (buttoncancel);
 
-
-
 #if 0
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox), 
+	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox),
 			separator, FALSE, TRUE, 0);
-  		gtk_widget_show (separator); 
+  		gtk_widget_show (separator);
 #endif
-
 
 		box = gtk_vbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
         	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(w_current->iwindow)->vbox), box);
-        	gtk_widget_show(box);            
+        	gtk_widget_show(box);
 
 #if 0
 		label = gtk_label_new ("Width");
@@ -307,45 +301,45 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                 gtk_misc_set_padding (GTK_MISC (label), 0, 0);
                 gtk_box_pack_start (GTK_BOX (box),
                           label, FALSE, FALSE, 0);
-                gtk_widget_show (label); 
+                gtk_widget_show (label);
 
 		w_current->iwidth_entry = gtk_entry_new_with_max_length (5);
                 gtk_editable_select_region (GTK_EDITABLE (w_current->iwidth_entry), 0, -1);
                 gtk_box_pack_start (GTK_BOX (box),
                           w_current->iwidth_entry, TRUE, TRUE, 10);
-/* 
-		gtk_signal_connect(GTK_OBJECT(w_current->width_entry), 
+/*
+		gtk_signal_connect(GTK_OBJECT(w_current->width_entry),
 			"activate",
                        GTK_SIGNAL_FUNC(x_image_write),
                        w_current);
 */
-                gtk_widget_show (w_current->iwidth_entry); 
+                gtk_widget_show (w_current->iwidth_entry);
 
 		label = gtk_label_new ("Height");
 		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
                 gtk_misc_set_padding (GTK_MISC (label), 0, 0);
                 gtk_box_pack_start (GTK_BOX (box),
                           label, FALSE, FALSE, 0);
-                gtk_widget_show (label); 
+                gtk_widget_show (label);
 
 		w_current->iheight_entry = gtk_entry_new_with_max_length (5);
                 gtk_editable_select_region (GTK_EDITABLE (w_current->iheight_entry), 0, -1);
                 gtk_box_pack_start (GTK_BOX (box),
                           w_current->iheight_entry, TRUE, TRUE, 10);
-/* 
-		gtk_signal_connect(GTK_OBJECT(w_current->height_entry), 
+/*
+		gtk_signal_connect(GTK_OBJECT(w_current->height_entry),
 			"activate",
                        GTK_SIGNAL_FUNC(x_image_write),
                        w_current);
 */
-                gtk_widget_show (w_current->iheight_entry); 
+                gtk_widget_show (w_current->iheight_entry);
 #endif
 		label = gtk_label_new ("Width x Height");
 		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
                 gtk_misc_set_padding (GTK_MISC (label), 0, 0);
                 gtk_box_pack_start (GTK_BOX (box),
                           label, FALSE, FALSE, 0);
-                gtk_widget_show (label); 
+                gtk_widget_show (label);
 
                 optionmenu = gtk_option_menu_new ();
                 gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), create_menu_size (w_current));
@@ -358,22 +352,22 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                 gtk_misc_set_padding (GTK_MISC (label), 0, 0);
                 gtk_box_pack_start (GTK_BOX (box),
                           label, FALSE, FALSE, 0);
-                gtk_widget_show (label); 
+                gtk_widget_show (label);
 
 		w_current->ifilename_entry = gtk_entry_new_with_max_length (79);
                 gtk_editable_select_region (GTK_EDITABLE (w_current->ifilename_entry), 0, -1);
                 gtk_box_pack_start (GTK_BOX (box),
                           w_current->ifilename_entry, TRUE, TRUE, 10);
-		gtk_signal_connect(GTK_OBJECT(w_current->ifilename_entry), 
+		gtk_signal_connect(GTK_OBJECT(w_current->ifilename_entry),
 			"activate",
                        GTK_SIGNAL_FUNC(x_image_write),
                        w_current);
-                gtk_widget_show (w_current->ifilename_entry); 
+                gtk_widget_show (w_current->ifilename_entry);
 
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox), 
+	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox),
 			separator, FALSE, TRUE, 0);
-  		gtk_widget_show (separator); 
+  		gtk_widget_show (separator);
 
 	}
 
@@ -386,12 +380,12 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 		w_current->image_width = 800;
 		w_current->image_height = 600;
 		gtk_widget_show (w_current->iwindow);
-		gdk_window_raise(w_current->iwindow->window); 
+		gdk_window_raise(w_current->iwindow->window);
 		/* gtk_grab_add (w_current->iwindow);*/
  	} else {
 		/* window should already be mapped */
 		/* otherwise this will core */
-		gdk_window_raise(w_current->iwindow->window); 
+		gdk_window_raise(w_current->iwindow->window);
 	}
 }
 

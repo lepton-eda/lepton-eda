@@ -27,7 +27,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -106,46 +105,43 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	/* reuse line's routine */
         if (!o_line_visible(w_current, o_current->line_points,
 		&x1, &y1, &x2, &y2)) {
-                return; 
+                return;
         }
 
-
-#if DEBUG 
+#if DEBUG
 	printf("drawing pin\n\n");
 #endif
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		size = SCREENabs(w_current, 10); 
+		size = SCREENabs(w_current, 10);
 		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
-		gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
 	if (w_current->override_color != -1 ) {
 	gdk_gc_set_foreground(w_current->gc, x_get_color(w_current->override_color));
-	gdk_draw_line(w_current->window, w_current->gc, 
+	gdk_draw_line(w_current->window, w_current->gc,
 				       x1, y1, x2, y2);
-	gdk_draw_line(w_current->backingstore, w_current->gc, 
+	gdk_draw_line(w_current->backingstore, w_current->gc,
 				       x1, y1, x2, y2);
 	} else {
 	gdk_gc_set_foreground(w_current->gc, x_get_color(o_current->color));
-	gdk_draw_line(w_current->window, w_current->gc, 
+	gdk_draw_line(w_current->window, w_current->gc,
 				       x1, y1, x2, y2);
-	gdk_draw_line(w_current->backingstore, w_current->gc, 
+	gdk_draw_line(w_current->backingstore, w_current->gc,
 				       x1, y1, x2, y2);
 	}
 	/* yes zero is right for the width -> use hardware lines */
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID, 
-					GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
+					GDK_CAP_NOT_LAST,
 					GDK_JOIN_MITER);
 	}
 
-
 	/* here is where you draw any ales cues */
 	/* but for now there are now cues for pins */
-
 
 #if DEBUG
 	printf("drawing pin\n");
@@ -163,28 +159,27 @@ o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor(o_current->color));
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		size = SCREENabs(w_current, 10); 
+		size = SCREENabs(w_current, 10);
 		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
-		gdk_gc_set_line_attributes(w_current->xor_gc, size, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, size,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
-	gdk_draw_line(w_current->window, w_current->xor_gc, 
-			       o_current->line_points->screen_x1+dx, 
+	gdk_draw_line(w_current->window, w_current->xor_gc,
+			       o_current->line_points->screen_x1+dx,
 			       o_current->line_points->screen_y1+dy,
 			       o_current->line_points->screen_x2+dx,
 			       o_current->line_points->screen_y2+dy);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-					GDK_LINE_SOLID, 
-					GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+					GDK_LINE_SOLID,
+					GDK_CAP_NOT_LAST,
 					GDK_JOIN_MITER);
 	}
 }
-
 
 void
 o_pin_start(TOPLEVEL *w_current, int x, int y)
@@ -194,21 +189,21 @@ o_pin_start(TOPLEVEL *w_current, int x, int y)
 	w_current->last_y = w_current->start_y = fix_y(w_current, y);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-                size = SCREENabs(w_current, 10); 
+                size = SCREENabs(w_current, 10);
 		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
-		gdk_gc_set_line_attributes(w_current->xor_gc, size, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, size,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
 	gdk_gc_set_foreground(w_current->xor_gc, x_get_color(w_current->select_color) );
-	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 }
@@ -234,29 +229,29 @@ o_pin_end(TOPLEVEL *w_current, int x, int y)
 
 	/* removed 3/15 to see if we can get pins to be ortho only */
 	/* w_current->last_x = fix_x(w_current, x);
-	w_current->last_y = fix_y(w_current, y);*/ 
+	w_current->last_y = fix_y(w_current, y);*/
 
-	size = SCREENabs(w_current, 10); 
+	size = SCREENabs(w_current, 10);
 	/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->xor_gc, size, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, size,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
 	gdk_gc_set_foreground(w_current->xor_gc, x_get_color(w_current->select_color) );
-	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 
-		gdk_gc_set_line_attributes(w_current->gc, size, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->gc, size,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
@@ -269,21 +264,20 @@ o_pin_end(TOPLEVEL *w_current, int x, int y)
                 w_current->last_y = (-1);
                 return;
         }
-	
 
 	gdk_gc_set_foreground(w_current->gc, x_get_color(color));
-	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);	
-	gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+	gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->gc, 0, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->gc, 0,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
-	SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x1, &y1); 
-	SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2); 
+	SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x1, &y1);
+	SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2);
 	x1 = snap_grid(w_current, x1);
 	y1 = snap_grid(w_current, y1);
 	x2 = snap_grid(w_current, x2);
@@ -314,18 +308,18 @@ o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
 		return;
 	}
 
-	size = SCREENabs(w_current, 10); 
+	size = SCREENabs(w_current, 10);
 	/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->xor_gc, size, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, size,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 
 	gdk_gc_set_foreground(w_current->xor_gc, x_get_color(w_current->select_color) );
-	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
 	w_current->last_x = fix_x(w_current, x);
         w_current->last_y = fix_y(w_current, y);
@@ -334,18 +328,18 @@ o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
 	diff_y = abs(w_current->last_y - w_current->start_y);
 
 	if (diff_x >= diff_y) {
-		w_current->last_y = w_current->start_y;	
+		w_current->last_y = w_current->start_y;
 	} else {
 		w_current->last_x = w_current->start_x;
 	}
 
 	gdk_gc_set_foreground(w_current->xor_gc, x_get_color(w_current->select_color) );
-	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);	
+	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
-						GDK_LINE_SOLID, 
-						GDK_CAP_NOT_LAST, 
+		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+						GDK_LINE_SOLID,
+						GDK_CAP_NOT_LAST,
 						GDK_JOIN_MITER);
 	}
 }

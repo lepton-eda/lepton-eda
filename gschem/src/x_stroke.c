@@ -24,7 +24,6 @@
 
 #include <guile/gh.h>
 
-
 #include <math.h>
 
 #include <libgeda/struct.h>
@@ -42,7 +41,7 @@ struct st_stroke_point {
         STROKE_POINT *next;
 };
 
-static STROKE_POINT *stroke_points=NULL;
+static STROKE_POINT *stroke_points = NULL;
 
 void
 x_stroke_add_point(TOPLEVEL *w_current, int x, int y)
@@ -55,21 +54,23 @@ x_stroke_add_point(TOPLEVEL *w_current, int x, int y)
 	new_point->y = y;
 
 	if (stroke_points == NULL) {
-		stroke_points = new_point;		
+		stroke_points = new_point;
 		stroke_points->next = NULL;
 	} else {
 		new_point->next = stroke_points;
 		stroke_points = new_point;
 	}
 
-/* having this xored was causing some grief; when you zoomed or changed the */
-/* display, there would be point droppings */
-/* so that's why this isn't xor */
-/*	gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_color(w_current->stroke_color));*/
+	/* having this xored was causing some grief; when you zoomed
+	 * or changed the display, there would be point droppings, so
+	 * that's why this isn't xor */
+#if 0
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->stroke_color));
+#endif
 
-	gdk_gc_set_foreground(w_current->gc, 
-			x_get_color(w_current->stroke_color));
+	gdk_gc_set_foreground(w_current->gc,
+			      x_get_color(w_current->stroke_color));
 
        	gdk_draw_point(w_current->window, w_current->gc, x, y);
 }
@@ -82,24 +83,24 @@ x_stroke_erase_all(TOPLEVEL *w_current)
 
 	while(stroke_points != NULL) {
 
-
-#if DEBUG		
+#if DEBUG
 		printf("%d %d\n", stroke_points->x, stroke_points->y);
 #endif
 
 		/* was xor, wasn't working out... see above note */
-		gdk_gc_set_foreground(w_current->gc, 
-				x_get_color(w_current->background_color));
+		gdk_gc_set_foreground(
+			w_current->gc,
+			x_get_color(w_current->background_color));
 
-       		gdk_draw_point(w_current->window, w_current->gc, 
-				stroke_points->x, stroke_points->y);
+       		gdk_draw_point(w_current->window, w_current->gc,
+			       stroke_points->x, stroke_points->y);
 
 		temp = stroke_points;
 		stroke_points = stroke_points->next;
     		free (temp);
 	}
 
-	stroke_points=NULL;
+	stroke_points = NULL;
 }
 
 void
@@ -108,8 +109,7 @@ x_stroke_free_all(void)
 	STROKE_POINT *temp;
 
 	while(stroke_points != NULL) {
-
-#if DEBUG		
+#if DEBUG
 		printf("%d %d\n", stroke_points->x, stroke_points->y);
 #endif
 
@@ -118,5 +118,5 @@ x_stroke_free_all(void)
     		free (temp);
 	}
 
-	stroke_points=NULL;
+	stroke_points = NULL;
 }

@@ -1,5 +1,5 @@
 /* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture 
+ * gschem - GNU Schematic Capture
  * Copyright (C) 1998 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
@@ -28,7 +28,6 @@
 #include <gdk/gdkx.h>
 
 #include <guile/gh.h>
-
 
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
@@ -66,45 +65,37 @@ parse_commandline(int argc, char *argv[])
 
 	while ((ch = getopt (argc, argv, OPTIONS)) != -1) {
 		switch (ch) {
-
-			case 'v':
-				verbose_mode=TRUE;
+		case 'v':
+			verbose_mode = TRUE;
 			break;
 
-			case 't':
-				stroke_info_mode=TRUE;
+		case 't':
+			stroke_info_mode = TRUE;
 			break;
 
-			case 'q':
-				quiet_mode=TRUE;
+		case 'q':
+			quiet_mode = TRUE;
 			break;
 
-			case 'r':
-				rc_filename = (char *) malloc (sizeof(char)*
-						strlen(optarg));
-				strcpy(rc_filename, optarg);
-			/*	printf("r arg: %s\n", optarg);*/
-			break;
-	
-			case 's':
-				script_filename = (char *) malloc(sizeof(char)*
-					(strlen(optarg)+1));
-				strcpy(script_filename, optarg);
+		case 'r':
+			rc_filename = u_basic_strdup(optarg);
 			break;
 
-			case 'o':
-				output_filename = (char *) malloc(sizeof(char)*
-					(strlen(optarg)+1));
-				strcpy(output_filename, optarg);
+		case 's':
+			script_filename = u_basic_strdup(optarg);
 			break;
 
-			case 'h':
-				usage(argv[0]);
+		case 'o':
+			output_filename = u_basic_strdup(optarg);
 			break;
 
-			case '?':
-			default:
-				usage(argv[0]);
+		case 'h':
+			usage(argv[0]);
+			break;
+
+		case '?':
+		default:
+			usage(argv[0]);
 			break;
 		}
 	}

@@ -26,7 +26,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -45,8 +44,8 @@ static int global_wid=0;
 
 /* head pointer to window structure, this points to all the windows that
    currently exist */
-static TOPLEVEL *window_head=NULL; 
-static TOPLEVEL *window_tail=NULL; 
+static TOPLEVEL *window_head=NULL;
+static TOPLEVEL *window_tail=NULL;
 
 /* add to the end of the list */
 TOPLEVEL *
@@ -55,7 +54,7 @@ x_window_add(TOPLEVEL *w_head, TOPLEVEL *w_current)
 	if (w_head == NULL) {
 		w_current->prev = NULL;
 		w_current->next = NULL;
-		return(w_current);	
+		return(w_current);
 	} else {
 		w_current->prev = w_head;
 		w_current->next = NULL;
@@ -67,7 +66,7 @@ x_window_add(TOPLEVEL *w_head, TOPLEVEL *w_current)
 void
 x_window_add_head()
 {
-	window_tail = window_head = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));		
+	window_tail = window_head = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
 	window_head->wid = -1;
 }
 
@@ -77,10 +76,10 @@ x_window_free_head()
 	free(window_head);
 }
 
-/* deletes specified window from w_head list */ 
+/* deletes specified window from w_head list */
 /* doesn't do the actual destroy though */
 void
-x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current) 
+x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current)
 {
 
 	if (w_head == NULL || w_current == NULL) {
@@ -89,13 +88,12 @@ x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current)
 	}
 
 	if (w_current->next)
-		w_current->next->prev = w_current->prev;	
-	
+		w_current->next->prev = w_current->prev;
+
         if (w_current->prev)
 		w_current->prev->next = w_current->next;
 
-
-	s_page_free_all(w_current, w_current->page_tail); 
+	s_page_free_all(w_current, w_current->page_tail);
 
 }
 
@@ -106,8 +104,7 @@ x_window_setup_world(TOPLEVEL *w_current)
         w_current->init_top = 0;
 	/* init_right and _bottom are set before this function is called */
         w_current->min_zoom = 0;
-        w_current->max_zoom = 256;  /* was 128 */  
-
+        w_current->max_zoom = 256;  /* was 128 */
 
 	if (w_current->display_width <= 800) {
 /* old way */
@@ -122,9 +119,9 @@ x_window_setup_world(TOPLEVEL *w_current)
 	} else {
 		w_current->width = 800;
 		w_current->height = 600;
-	}    
+	}
 
-        w_current->starting_width = w_current->width;       
+        w_current->starting_width = w_current->width;
 
 	w_current->win_width = w_current->width;
         w_current->win_height = w_current->height;
@@ -151,7 +148,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->event_state=SELECT;
 	w_current->inside_action=0;
 	w_current->snap=1;
-	w_current->grid=1;     	
+	w_current->grid=1;
 
 	w_current->current_attribute=NULL;
 	w_current->current_visible=-1; /* not sure on these */
@@ -165,15 +162,14 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->font_directory = NULL;
 	w_current->scheme_directory = NULL;
 
-/* part of page mechanism addition commented out 
+/* part of page mechanism addition commented out
 	w_current->zoom_factor=0;
 */
 	w_current->override_color=-1;
 	w_current->inside_redraw=0;
 
-
 	/* Don't init these to zero here... once we are done with all init
-	 *  will these be inited to zero 
+	 *  will these be inited to zero
 	 * w_current->DONT_DRAW_CONN=0;
 	 * w_current->DONT_RESIZE=0;
 	 * w_current->DONT_EXPOSE=0;
@@ -189,28 +185,28 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->last_drawb_mode = -1;
 	w_current->CONTROLKEY=0;
 	w_current->SHIFTKEY=0;
-	w_current->last_callback=NULL; 
-	
+	w_current->last_callback=NULL;
+
 	w_current->cswindow = NULL;
 	w_current->aswindow = NULL;
 	w_current->fowindow = NULL;
 	w_current->sowindow = NULL;
-	w_current->fswindow = NULL;	
+	w_current->fswindow = NULL;
 
-	w_current->tiwindow = NULL;	
-	w_current->tewindow = NULL;	
-	w_current->exwindow = NULL;	
-	w_current->aawindow = NULL;	
-	w_current->trwindow = NULL;	
-	w_current->tswindow = NULL;	
-	w_current->pswindow = NULL;	
-	w_current->pwindow = NULL;	
-	w_current->abwindow = NULL;	
-	w_current->cowindow = NULL;	
-	w_current->clwindow = NULL;	
+	w_current->tiwindow = NULL;
+	w_current->tewindow = NULL;
+	w_current->exwindow = NULL;
+	w_current->aawindow = NULL;
+	w_current->trwindow = NULL;
+	w_current->tswindow = NULL;
+	w_current->pswindow = NULL;
+	w_current->pwindow = NULL;
+	w_current->abwindow = NULL;
+	w_current->cowindow = NULL;
+	w_current->clwindow = NULL;
 
-	w_current->coord_world = NULL;	
-	w_current->coord_screen = NULL;	
+	w_current->coord_world = NULL;
+	w_current->coord_screen = NULL;
 	/* w_current->preview = NULL;experimental widget */
 
 }
@@ -342,19 +338,19 @@ x_window_setup_gc(TOPLEVEL *w_current)
 	GdkGCValues     values;
 	GdkGCValuesMask  values_mask;
 
-	w_current->gc = gdk_gc_new(w_current->window);	
+	w_current->gc = gdk_gc_new(w_current->window);
 
 	if (w_current->gc == NULL) {
 		fprintf(stderr, "Couldn't allocate gc\n");
 		exit(-1);
 	}
 
-	values.foreground = grey90; 
-	values.background = black; 
+	values.foreground = grey90;
+	values.background = black;
 
 	values.function = GDK_XOR;
 	values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND | GDK_GC_FUNCTION;
-	w_current->xor_gc = gdk_gc_new_with_values(w_current->window, 
+	w_current->xor_gc = gdk_gc_new_with_values(w_current->window,
 							&values, values_mask);
 
 	if (w_current->xor_gc == NULL) {
@@ -362,12 +358,12 @@ x_window_setup_gc(TOPLEVEL *w_current)
 		exit(-1);
 	}
 
-	values.foreground = grey90; 
-	values.background = black; 
+	values.foreground = grey90;
+	values.background = black;
 
 	values.function = GDK_XOR;
 	values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND | GDK_GC_FUNCTION;
-	w_current->outline_xor_gc = gdk_gc_new_with_values(w_current->window, 
+	w_current->outline_xor_gc = gdk_gc_new_with_values(w_current->window,
 							&values, values_mask);
 
 	if (w_current->outline_xor_gc == NULL) {
@@ -375,12 +371,12 @@ x_window_setup_gc(TOPLEVEL *w_current)
 		exit(-1);
 	}
 
-	values.foreground = grey90; 
-	values.background = black; 
+	values.foreground = grey90;
+	values.background = black;
 
 	values.function = GDK_XOR;
 	values.line_style = GDK_LINE_ON_OFF_DASH;
-	values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND | 
+	values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND |
 			GDK_GC_LINE_STYLE | GDK_GC_FUNCTION;
 	w_current->bounding_xor_gc = gdk_gc_new_with_values(w_current->window,
 							 &values, values_mask);
@@ -406,22 +402,22 @@ void
 x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 {
 	/* drawing next */
-	w_current->drawing_area = gtk_drawing_area_new (); 
-	/* Set the size here.  Be sure that it has an aspect ratio of 1.333 
-	 * We could calculate this based on root window size, but for now 
-	 * lets just set it to:  
-	 * Width = root_width*3/4   Height = Width/1.3333333333 
-	 * 1.3333333 is the desired aspect ratio! 
+	w_current->drawing_area = gtk_drawing_area_new ();
+	/* Set the size here.  Be sure that it has an aspect ratio of 1.333
+	 * We could calculate this based on root window size, but for now
+	 * lets just set it to:
+	 * Width = root_width*3/4   Height = Width/1.3333333333
+	 * 1.3333333 is the desired aspect ratio!
 	 */
 
- 	gtk_drawing_area_size (GTK_DRAWING_AREA (w_current->drawing_area), 
-			       w_current->win_width, 
+ 	gtk_drawing_area_size (GTK_DRAWING_AREA (w_current->drawing_area),
+			       w_current->win_width,
 			       w_current->win_height);
 
-        gtk_box_pack_start (GTK_BOX (drawbox), w_current->drawing_area, 
+        gtk_box_pack_start (GTK_BOX (drawbox), w_current->drawing_area,
 			       TRUE, TRUE, 0);
-        gtk_widget_show (w_current->drawing_area); 
-	
+        gtk_widget_show (w_current->drawing_area);
+
 }
 
 /* stays the same */
@@ -430,32 +426,32 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
 {
 
 	/* is the configure event type missing here? hack */
-	gtk_widget_set_events (w_current->drawing_area, 
-			       GDK_EXPOSURE_MASK | 
+	gtk_widget_set_events (w_current->drawing_area,
+			       GDK_EXPOSURE_MASK |
 			       GDK_POINTER_MOTION_MASK |
-                               GDK_BUTTON_PRESS_MASK   |   
+                               GDK_BUTTON_PRESS_MASK   |
 			       GDK_ENTER_NOTIFY_MASK |
 			       GDK_KEY_PRESS_MASK |
                                GDK_BUTTON_RELEASE_MASK);
 
-	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area), 
-			    "expose_event", 
-			    GTK_SIGNAL_FUNC (x_event_expose), 
-			    w_current);    
+	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
+			    "expose_event",
+			    GTK_SIGNAL_FUNC (x_event_expose),
+			    w_current);
 
-	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area), 
+	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
 			    "button_press_event",
-                            (GtkSignalFunc) x_event_button_pressed, 
+                            (GtkSignalFunc) x_event_button_pressed,
 			    w_current);
 
-	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area), 
+	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
 		  	    "button_release_event",
-                            (GtkSignalFunc) x_event_button_released, 
+                            (GtkSignalFunc) x_event_button_released,
 			    w_current);
 
-	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area), 
+	gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
 			    "motion_notify_event",
-                            (GtkSignalFunc) x_event_motion, 
+                            (GtkSignalFunc) x_event_motion,
 			    w_current);
 
 	gtk_signal_connect (GTK_OBJECT(w_current->drawing_area),
@@ -468,9 +464,9 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
                            (GtkSignalFunc) x_event_enter,
 			   w_current);
 
-	gtk_signal_connect (GTK_OBJECT (w_current->main_window), 
+	gtk_signal_connect (GTK_OBJECT (w_current->main_window),
 			    "key_press_event",
-                            (GtkSignalFunc) x_event_key_press, 
+                            (GtkSignalFunc) x_event_key_press,
 			    w_current);
 }
 
@@ -485,17 +481,16 @@ x_window_create_main(TOPLEVEL *w_current)
 	GtkWidget *bottom_box;
 
         w_current->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	
+
 	gtk_widget_set_name (w_current->main_window, "3gschem");
-	
+
 	/* We want the widgets to flow around the drawing area, so we don't
   	 * set a size of the main window.  The drawing area's size is fixed,
-	 * see below 
+	 * see below
 	 */
   	/* commented out so that window manager prompts for the location
          * gtk_widget_set_uposition (w_current->main_window, 0, 0);
 	 */
-	
 
 #if 0
 /* for now this is commented out.... */
@@ -509,10 +504,10 @@ x_window_create_main(TOPLEVEL *w_current)
 #if 0
         gtk_signal_connect (GTK_OBJECT (w_current->main_window), "delete_event",
                             GTK_SIGNAL_FUNC (i_callback_close),
-                            w_current); 
+                            w_current);
 #endif
 
-	/* Containers first */        
+	/* Containers first */
         main_box = gtk_vbox_new(FALSE, 1);
         gtk_container_border_width(GTK_CONTAINER(main_box), 0);
         gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
@@ -534,9 +529,9 @@ x_window_create_main(TOPLEVEL *w_current)
 
 	if (w_current->scrollbars_flag == TRUE) {
 		/* setup scroll bars */
-		w_current->v_adjustment = 
-			gtk_adjustment_new (w_current->init_bottom, 
- 						0.0, w_current->init_bottom, 
+		w_current->v_adjustment =
+			gtk_adjustment_new (w_current->init_bottom,
+ 						0.0, w_current->init_bottom,
 						100.0, 100.0, 10.0);
 
 		w_current->v_scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (
@@ -545,19 +540,18 @@ x_window_create_main(TOPLEVEL *w_current)
 		gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar),
 			  	     GTK_UPDATE_CONTINUOUS);
 
-		gtk_box_pack_start (GTK_BOX (drawbox), w_current->v_scrollbar, 
+		gtk_box_pack_start (GTK_BOX (drawbox), w_current->v_scrollbar,
 			    FALSE, FALSE, 0);
 
-		gtk_signal_connect (GTK_OBJECT (w_current->v_adjustment), 
+		gtk_signal_connect (GTK_OBJECT (w_current->v_adjustment),
 			    "value_changed",
-			    GTK_SIGNAL_FUNC (x_event_vschanged), 
-			    w_current);  
+			    GTK_SIGNAL_FUNC (x_event_vschanged),
+			    w_current);
 
 		gtk_widget_show (w_current->v_scrollbar);
 
-
-		w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0, 
-						w_current->init_right, 
+		w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0,
+						w_current->init_right,
 						100.0, 100.0, 10.0);
 
 		w_current->h_scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (
@@ -566,13 +560,13 @@ x_window_create_main(TOPLEVEL *w_current)
 		gtk_range_set_update_policy (GTK_RANGE (w_current->h_scrollbar),
 				     GTK_UPDATE_CONTINUOUS);
 
- 		gtk_box_pack_start (GTK_BOX (main_box), w_current->h_scrollbar, 
+ 		gtk_box_pack_start (GTK_BOX (main_box), w_current->h_scrollbar,
 			    FALSE, FALSE, 0);
 
-		gtk_signal_connect (GTK_OBJECT (w_current->h_adjustment), 
-			    "value_changed", 
+		gtk_signal_connect (GTK_OBJECT (w_current->h_adjustment),
+			    "value_changed",
 			    GTK_SIGNAL_FUNC (x_event_hschanged),
-			    w_current);  
+			    w_current);
 
 		gtk_widget_show (w_current->h_scrollbar);
 	}
@@ -580,7 +574,7 @@ x_window_create_main(TOPLEVEL *w_current)
 	/* bottom box */
         bottom_box = gtk_hbox_new(FALSE, 0);
         gtk_container_border_width(GTK_CONTAINER(bottom_box), 1);
-	gtk_box_pack_start (GTK_BOX (main_box), bottom_box, FALSE, FALSE, 0); 
+	gtk_box_pack_start (GTK_BOX (main_box), bottom_box, FALSE, FALSE, 0);
         gtk_widget_show(bottom_box);
 
 	label = gtk_label_new ("Mouse buttons:");
@@ -588,8 +582,8 @@ x_window_create_main(TOPLEVEL *w_current)
         gtk_widget_show (label);
 
 	w_current->left_button = gtk_button_new_with_label ("Pick");
-	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->left_button, 
-			    FALSE, FALSE, 0); 
+	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->left_button,
+			    FALSE, FALSE, 0);
         gtk_widget_show (w_current->left_button);
 
 #if HAS_LIBSTROKE
@@ -597,8 +591,8 @@ x_window_create_main(TOPLEVEL *w_current)
 #else
 	w_current->middle_button = gtk_button_new_with_label ("none");
 #endif
-	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->middle_button, 
-			    FALSE, FALSE, 0); 
+	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->middle_button,
+			    FALSE, FALSE, 0);
         gtk_widget_show (w_current->middle_button);
 
 	if (default_third_button == POPUP_ENABLED) {
@@ -606,12 +600,12 @@ x_window_create_main(TOPLEVEL *w_current)
 	} else {
 		w_current->right_button = gtk_button_new_with_label ("Pan/Cancel");
 	}
-	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_button, 
-                       	    FALSE, FALSE, 0); 
+	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_button,
+                       	    FALSE, FALSE, 0);
         gtk_widget_show (w_current->right_button);
 
 	w_current->filename_label = gtk_label_new (" ");
-        gtk_box_pack_start (GTK_BOX (bottom_box), w_current->filename_label, 
+        gtk_box_pack_start (GTK_BOX (bottom_box), w_current->filename_label,
  			    FALSE, FALSE, 10);
         gtk_widget_show (w_current->filename_label);
 
@@ -624,29 +618,28 @@ x_window_create_main(TOPLEVEL *w_current)
 
 	w_current->window = w_current->drawing_area->window;
 
-
 	/* draw a black rectangle in drawing area just to make it look nice */
 	/* don't do this now */
-	/* gdk_draw_rectangle(window, main_window->style->black_gc, TRUE, 0, 0, 
+	/* gdk_draw_rectangle(window, main_window->style->black_gc, TRUE, 0, 0,
 	 *				win_width, win_height);
-	 *			
+	 *
 	 */
 
         w_current->backingstore = gdk_pixmap_new(w_current->window,
                                w_current->drawing_area->allocation.width,
                                w_current->drawing_area->allocation.height,
-                               -1);    
+                               -1);
 	x_window_setup_gc(w_current);
 }
 
-/* stays the same */ 
+/* stays the same */
 TOPLEVEL *
 x_window_create_new(void)
 {
-	TOPLEVEL *w_current=NULL; 
+	TOPLEVEL *w_current=NULL;
 
 	/* allocate new window structure */
-	w_current = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));		
+	w_current = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
 
 	/* do init var fill in */
 	x_window_setup_rest(w_current);
@@ -662,33 +655,31 @@ x_window_create_new(void)
 	w_current->DONT_EXPOSE=1;
 	w_current->DONT_REDRAW=1;
 	w_current->DONT_RECALC=1;
-	
+
 	/* the default coord sizes */
 	/* real ones set in rc file */
-        w_current->init_right = default_init_right; 
+        w_current->init_right = default_init_right;
         w_current->init_bottom = default_init_bottom;
-
 
 #if 1 /* X related stuff */
 	w_current->display_height = gdk_screen_height();
 	w_current->display_width = gdk_screen_width();
 #endif
 
-	x_window_setup_world(w_current);	
+	x_window_setup_world(w_current);
 
 #if 1 /* X related stuff */
 	/* do X fill in first */
 	x_window_create_main(w_current);
 #endif
 
-
 	/* Put head node on page list... be sure to free this somewhere hack */
 	s_page_add_head(w_current);
 
 	/* Now create a blank page */
 	w_current->page_tail = s_page_add(w_current,
-					  w_current->page_tail, 
-					  "unknown"); 
+					  w_current->page_tail,
+					  "unknown");
 					/* this is correct */
 
 	s_page_setup(w_current->page_tail);
@@ -701,7 +692,7 @@ x_window_create_new(void)
 	/* w_current->page_current->object_parent=NULL; not this one */
 	w_current->page_current->object_lastplace=NULL;
 	w_current->page_current->object_selected=NULL;
-        set_window(w_current, w_current->init_left, w_current->init_right, 
+        set_window(w_current, w_current->init_left, w_current->init_right,
 		   w_current->init_top, w_current->init_bottom);
 
 #if 1 /* X related stuff */
@@ -713,8 +704,7 @@ x_window_create_new(void)
 	global_wid++;
 	num_windows++;
 
-	window_tail = x_window_add(window_tail, w_current);	
-
+	window_tail = x_window_add(window_tail, w_current);
 
 	/* renable the events */
 	w_current->DONT_DRAW_CONN=0;
@@ -732,56 +722,54 @@ x_window_close(TOPLEVEL *w_current)
 {
 
 	if (s_page_check_changed(w_current->page_head)) {
-		exit_dialog(w_current);	
+		exit_dialog(w_current);
 		return;
-	}	
+	}
 
 #if DEBUG
 	o_ales_print_hash(w_current->page_current->ales_table);
 #endif
-	
+
 	/* make sure window_tail stays correct and doesn't dangle */
 	/* window_head can't dangle since it has a head node, which is */
 	/* NEVER deallocated (only at the very end) */
 	if (window_tail == w_current) {
 		window_tail = w_current->prev;
 	}
-	
 
 	/* close all the dialog boxes */
 	if (w_current->fowindow)
-		gtk_widget_destroy(w_current->fowindow);	
+		gtk_widget_destroy(w_current->fowindow);
 
 	if (w_current->sowindow)
-		gtk_widget_destroy(w_current->sowindow);	
+		gtk_widget_destroy(w_current->sowindow);
 
 	if (w_current->fswindow)
-		gtk_widget_destroy(w_current->fswindow);	
+		gtk_widget_destroy(w_current->fswindow);
 
 	if (w_current->aswindow)
-		gtk_widget_destroy(w_current->aswindow);	
+		gtk_widget_destroy(w_current->aswindow);
 
 	if (w_current->cswindow)
-		gtk_widget_destroy(w_current->cswindow);	
+		gtk_widget_destroy(w_current->cswindow);
 
 	if (w_current->tiwindow)
-		gtk_widget_destroy(w_current->tiwindow);	
+		gtk_widget_destroy(w_current->tiwindow);
 
 	if (w_current->tewindow)
-		gtk_widget_destroy(w_current->tewindow);	
+		gtk_widget_destroy(w_current->tewindow);
 
 	if (w_current->aawindow)
-		gtk_widget_destroy(w_current->aawindow);	
+		gtk_widget_destroy(w_current->aawindow);
 
 	if (w_current->trwindow)
-		gtk_widget_destroy(w_current->trwindow);	
+		gtk_widget_destroy(w_current->trwindow);
 
 	if (w_current->pswindow)
-		gtk_widget_destroy(w_current->pswindow);	
+		gtk_widget_destroy(w_current->pswindow);
 
 	if (w_current->abwindow)
-		gtk_widget_destroy(w_current->abwindow);	
-
+		gtk_widget_destroy(w_current->abwindow);
 
 	o_attrib_free_current(w_current);
         o_complex_free_filename(w_current);
@@ -802,7 +790,6 @@ x_window_close(TOPLEVEL *w_current)
 		free(w_current->scheme_directory);
 	}
 
-	
 	/* stuff that has to be done before we free w_current */
 	if ( (num_windows - 1) == 0) {
 		/* free all fonts */
@@ -814,11 +801,10 @@ x_window_close(TOPLEVEL *w_current)
 	x_window_delete(window_head, w_current);
 	if (w_current->backingstore) {
 		gdk_pixmap_unref(w_current->backingstore);
-        }   
+        }
 
 	x_window_free_gc(w_current);
 
-	
 	/* finally close the main window */
 	gtk_widget_destroy(w_current->main_window);
 
@@ -867,21 +853,20 @@ x_window_get_ptr(int wid)
 
 	while(w_current != NULL) {
 		if (w_current->wid == wid) {
-			return(w_current);	
+			return(w_current);
 		}
 
-		w_current = w_current->next;	
+		w_current = w_current->next;
 	}
 
 	return(NULL);
 }
 
-
 /* stays the same */
-/* GROSS! but this is required because clist widgets don't seem to allow you 
+/* GROSS! but this is required because clist widgets don't seem to allow you
  * pass data to callback functions, so I need to get w_current by searching
  * the entire window list for page_clist widget :(  If somebody knows a better
- * way of doing this, please let me know! 
+ * way of doing this, please let me know!
  */
 TOPLEVEL *
 x_window_search_page_clist(GtkWidget *findme)
@@ -892,10 +877,10 @@ x_window_search_page_clist(GtkWidget *findme)
 
 	while(w_current != NULL) {
 		if (w_current->page_clist == findme) {
-			return(w_current);	
+			return(w_current);
 		}
 
-		w_current = w_current->next;	
+		w_current = w_current->next;
 	}
 
 	return(NULL);

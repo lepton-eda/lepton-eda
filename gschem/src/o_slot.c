@@ -26,7 +26,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -49,7 +48,7 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 	char *slot_value;
 
 	/* shouldn't happen */
-	if (list == NULL) { 
+	if (list == NULL) {
 		/* this is an error condition hack */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
@@ -57,26 +56,23 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 		return;
 	}
 
-
-	/* search for the real object */	
+	/* search for the real object */
 	real = (OBJECT *) o_list_search(w_current->page_current->object_head,
                                                 list);
 
-	/* single object for now */	
+	/* single object for now */
 	if (real->type == OBJ_COMPLEX) {
 
-
-		/* first see if slot attribute already exists outside 
-	         * complex 
+		/* first see if slot attribute already exists outside
+	         * complex
 		 */
 		slot_value = o_attrib_search_slot(real, &slot_text_object);
-
 
 		if (slot_value) {
 
 #if DEBUG
 			printf("slot=%s\n", slot_value);
-			printf("text string : %s\n", slot_text_object->text_string); 
+			printf("text string : %s\n", slot_text_object->text_string);
 #endif
 			slot_edit_dialog(w_current, slot_text_object->text_string);
 		} else {
@@ -101,7 +97,6 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 				strcpy(slot_value, "slot=1");
 			}
 
-
 #if DEBUG
 			printf("slot value: %s\n", slot_value);
 #endif
@@ -121,7 +116,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 	char *slot_value;
 	char *numslots_value;
 	OBJECT *slot_text_object;
-	char name[50]; /* hack */	
+	char name[50]; /* hack */
 	char value[10]; /* hack */
 	int numslots;
 	int new_slot_number;
@@ -129,7 +124,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
 	status = o_attrib_get_name_value(string, name, value);
 	if (!status) {
-		s_log_message("Slot attribute malformed\n"); 
+		s_log_message("Slot attribute malformed\n");
 		return;
 	}
 
@@ -140,9 +135,9 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 	if (real != NULL) {
 
 		numslots_value = o_attrib_search_numslots(real, NULL);
-	
+
 		if (!numslots_value) {
-			s_log_message("numslots attribute missing\n"); 
+			s_log_message("numslots attribute missing\n");
 			s_log_message("Slotting not allowed for this component\n");
 			return;
 		}
@@ -152,20 +147,17 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
 		new_slot_number = atoi(value);
 
-
 #if DEBUG
 		printf("numslots = %d\n", numslots);
 #endif
 
-
 		if (new_slot_number > numslots || new_slot_number <=0 ) {
-			s_log_message("New slot number out of range\n"); 
+			s_log_message("New slot number out of range\n");
 			return;
-		} 	
+		}
 
-
-		/* first see if slot attribute already exists outside 
-	         * complex 
+		/* first see if slot attribute already exists outside
+	         * complex
 		 */
 		slot_value = o_attrib_search_slot(real, &slot_text_object);
 
@@ -182,7 +174,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 			temp = slot_text_object;
 
 			if (temp->visibility == VISIBLE) {
-				o_erase_single(w_current,temp);	
+				o_erase_single(w_current,temp);
 			}
 
 			o_ntext_recreate(w_current, temp);
@@ -197,7 +189,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 		} else {
 			/* here you need to do the add the slot attribute */
 			/* since it doesn't exist */
-			w_current->page_current->object_tail = (OBJECT *) 
+			w_current->page_current->object_tail = (OBJECT *)
 					o_ntext_add(w_current,
 					w_current->page_current->object_tail,
 					OBJ_NTEXT, w_current->text_color,
@@ -207,14 +199,13 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 					INVISIBLE, SHOW_NAME_VALUE);
 
 			/* manually attach attribute */
-			o_attrib_attach(w_current, 
-					w_current->page_current->object_head, 
-					w_current->page_current->object_tail, 
+			o_attrib_attach(w_current,
+					w_current->page_current->object_head,
+					w_current->page_current->object_tail,
 					real);
 
 			slot_text_object = w_current->page_current->object_tail;
 		}
-
 
 		o_attrib_slot_update(w_current, real);
 

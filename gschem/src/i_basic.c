@@ -65,8 +65,6 @@ i_update_left_button(char *string)
 void
 i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
 {
-	char *temp_string;
-
 #ifndef HAS_LIBSTROKE
 	if (func_ptr != NULL) {
 		if (string) {
@@ -84,11 +82,11 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
 #else
 	if (func_ptr != NULL) {
 		if (string) {
-			temp_string = (char *) malloc(
-				sizeof(char) * (strlen(string) +
-						strlen("Stroke/") +
-						1));
-			sprintf(temp_string, "Stroke/%s", string);
+			char *temp_string;
+
+			temp_string = u_basic_strdup_multiple(
+				"Stroke/", string, NULL);
+
 			w_current->DONT_RESIZE = 1;
 			gtk_label_set(GTK_LABEL(GTK_BUTTON(
 				w_current->middle_button)->child),

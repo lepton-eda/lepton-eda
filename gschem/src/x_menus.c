@@ -26,8 +26,6 @@
 #include <strings.h>
 #endif
 
-
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -35,16 +33,15 @@
 
 #include "../include/prototype.h"
 
-
 void
-print_hello (gpointer data, guint callback_action, 
+print_hello (gpointer data, guint callback_action,
 		GtkWidget *widget)
 {
   TOPLEVEL *w_current;
-  
+
   w_current = (TOPLEVEL *) data;
 
-  exit_if_null(w_current); 
+  exit_if_null(w_current);
 
   printf("inside callback: %d %s\n", w_current->wid, w_current->untitled_name);
 }
@@ -160,7 +157,7 @@ int nmenu_items = sizeof(menu_items) / sizeof(menu_items[0]);
 
 int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
 
-void 
+void
 get_main_menu(TOPLEVEL *w_current, GtkWidget ** menubar)
 {
   GtkItemFactory *item_factory;
@@ -175,7 +172,7 @@ get_main_menu(TOPLEVEL *w_current, GtkWidget ** menubar)
               the accelerator table while generating menus.
   */
 
-  item_factory = gtk_item_factory_new(GTK_TYPE_MENU_BAR, "<main>", 
+  item_factory = gtk_item_factory_new(GTK_TYPE_MENU_BAR, "<main>",
                                accel_group);
   /* This function generates the menu items. Pass the item factory,
      the number of items in the array, the array itself, and any
@@ -186,7 +183,7 @@ get_main_menu(TOPLEVEL *w_current, GtkWidget ** menubar)
   gtk_accel_group_attach (accel_group, GTK_OBJECT (w_current->main_window));
 
   if (menubar)
-    /* Finally, return the actual menu bar created by the item factory. */ 
+    /* Finally, return the actual menu bar created by the item factory. */
     *menubar = gtk_item_factory_get_widget(item_factory, "<main>");
 }
 
@@ -205,7 +202,7 @@ get_main_popup(TOPLEVEL *w_current, GtkWidget ** menu)
               the accelerator table while generating menus.
   */
 
-  item_factory = gtk_item_factory_new(GTK_TYPE_MENU, "<popup>", 
+  item_factory = gtk_item_factory_new(GTK_TYPE_MENU, "<popup>",
                                accel_group);
   /* This function generates the menu items. Pass the item factory,
      the number of items in the array, the array itself, and any
@@ -216,10 +213,9 @@ get_main_popup(TOPLEVEL *w_current, GtkWidget ** menu)
   gtk_accel_group_attach (accel_group, GTK_OBJECT (w_current->main_window));
 
   if (menu)
-    /* Finally, return the actual menu bar created by the item factory. */ 
+    /* Finally, return the actual menu bar created by the item factory. */
     *menu = gtk_item_factory_get_widget(item_factory, "<popup>");
 }
-
 
 /* need to look at this... here and the setup */
 gint
@@ -228,13 +224,13 @@ do_popup (TOPLEVEL *w_current, GdkEventButton *event)
 	GtkWidget *menu=NULL; /* was static */
 
 	if (!menu)
-		menu = w_current->popup_menu; 
+		menu = w_current->popup_menu;
 
 	if (menu == NULL) {
 		printf("null menu\n");
 	}
 
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
 		event->button, event->time);
 
 	return FALSE;

@@ -134,7 +134,6 @@ g_rc_parse_local_rc()
 	return found_rc;
 }
 
-
 void
 g_rc_parse(void)
 /* g_rc_parse(TOPLEVEL *w_current) */

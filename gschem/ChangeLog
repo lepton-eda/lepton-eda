@@ -9,8 +9,10 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+7/31/99 Cleaned up *.c. (by Kazu Hirata)
+
 7/25/99 Cleaned up r_gc.c and i_callbacks.c. (by Kazu Hirata)
-	
+
 7/21/99 Found an attribute in test_verilog.sch to be attached to two
 	objects, fixed.
 
@@ -27,7 +29,7 @@ into the cvs repository.
 
 	Reverted back to previous world coord space, adjusting above to
 	match.  Not ready for a change yet.
-	
+
 7/15/99 Added support for libgdgeda 1.6 (mainly means searching for libpng)
 
 	Removed all traces of old libgdgeda 1.5 gif support replaced it with
@@ -36,7 +38,7 @@ into the cvs repository.
 	Changed menu name from Write Image... to Write PNG...
 
 	Minor bug fix in the x_image dialog box code (o_redraw_all in the
-	wrong place) 
+	wrong place)
 
 7/14/99 Wrote functions to handle file name extention in i_callback.c.
 

@@ -117,13 +117,13 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
 
 		w_current->page_current->left =
 			w_current->init_right - GET_PAGE_WIDTH(w_current);
-		
+
 		w_current->page_current->right = w_current->init_right;
         } else if (w_current->page_current->left - ix < w_current->init_left) {
 		/* the left wall was hit */
 		w_current->page_current->right =
 			w_current->init_left  + GET_PAGE_WIDTH(w_current);
-		
+
 		w_current->page_current->left = w_current->init_left;
         } else {
 		/* normal case */
@@ -136,13 +136,13 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
 		/* the bottom wall was hit */
 		w_current->page_current->top =
 			w_current->init_bottom - GET_PAGE_HEIGHT(w_current);
-		
+
 		w_current->page_current->bottom = w_current->init_bottom;
         } else if (w_current->page_current->top - iy < w_current->init_top) {
 		/* the top wall was hit */
 		w_current->page_current->bottom =
 			w_current->init_top    + GET_PAGE_HEIGHT(w_current);
-		
+
 		w_current->page_current->top = w_current->init_top;
         } else {
 		/* normal case */
@@ -161,12 +161,11 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
 
 	current_center_x = GET_PAGE_CENTER_X(w_current);
 	current_center_y = GET_PAGE_CENTER_Y(w_current);
-	
+
 #if DEBUG
 	printf("%d %d\n", current_center_x, current_center_y);
 #endif
 }
-
 
 /* Kazu on July 8, 1999 - TODO: distill common part from a_pan() and
  * a_pan_mouse() because they are doing basically the same thing */
@@ -235,7 +234,6 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 	}
 }
 
-
 void
 a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 {
@@ -260,7 +258,7 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 	w_current->page_current->top    -= pan_y;
 	w_current->page_current->bottom -= pan_y;
 #endif
-	
+
 	if (w_current->page_current->left - pan_x <=
 	    w_current->init_left) {
 		w_current->page_current->left = w_current->init_left;
