@@ -1,4 +1,11 @@
 
+2000-04-26  Stefan Petersen  <spe@geda.seul.org>
+
+	* Added gnet-protelII.scm (for Protel2) and gnet-bae.scm (for
+	  Bartels Autoengineer) to the ever increasing list of contributed
+	  backends for gnetlist. Contributed by Rolf Fiedler 
+	  <Rolf.Fiedler@Ferrari.DE>
+	
 2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* */*: Removed all traces of the physical attribute.  This attribute
