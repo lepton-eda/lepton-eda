@@ -81,4 +81,5 @@ extern int default_bus_ripper_size;
 extern int default_bus_ripper_type;
 extern int default_bus_ripper_rotation;
 extern int default_force_boundingbox;
+extern int default_grid_dot_size;
 

@@ -1371,12 +1371,17 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
   OBJECT *o_current;
   OBJECT *new_object;
   OBJECT *o_temp;
+  OBJECT *o_promoted;
+  OBJECT *object;
   SELECTION *temp_list = NULL;
   SELECTION *s_current;
   ATTRIB* attrib_tail;
+  ATTRIB* a_current;
+  ATTRIB* a_next;
   GList *object_list = NULL;
   GList *new_objects = NULL;
   GList *connected_objects=NULL;
+  GList *temp_glist;
   int i, temp, new_angle;
   int x, y, angle, mirror, was_embedded = FALSE;
   char *complex_clib;
@@ -1475,7 +1480,30 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
       new_object->complex_basename = new_basename;
 
     }
-    
+
+#if 0 /* delete case */
+    a_current = o_current->attribs;
+    if (a_current)
+    {
+      a_current = a_current->next; /* skip over head */
+      while(a_current != NULL)
+      {
+        a_next = a_current->next;
+        if (a_current->object)
+        {
+          OBJECT* holder = a_current->object;
+          if (o_temp == holder)
+            o_temp = o_temp->next;
+          o_erase_single(w_current, holder);
+          s_delete(w_current, holder);
+        }
+
+        a_current = a_next;
+      }
+    }
+#endif
+      
+#if 1 /* default duplicate attributes case */
     /* take those attached attributes and put them on the new object */
     attrib_tail = o_attrib_return_tail(new_object->attribs);
     if (attrib_tail && o_current->attribs && o_current->attribs->next) {
@@ -1483,26 +1511,66 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
       attrib_tail->next->prev = attrib_tail;
       o_current->attribs->next = NULL;
     }
-      
-    /* complex rotate post processing */
-    o_temp = o_temp->next; /* skip over last object */
+
+#endif
+
+#if 0 /* intelligent case, not finished yet... */
+    /* you must reattach attributes that where part of o_current */
+    /* take those attached attributes and put them on the new object */
+
+    printf("%p %p\n", attrib_tail, o_current->attribs);
+    if (o_current->attribs && o_current->attribs->next) {
+
+      attrib_tail = o_attrib_return_tail(new_object->attribs);
+      if (attrib_tail == NULL)
+      {
+        new_object->attribs = attrib_tail = add_attrib_head(new_object);
+      }
+      attrib_tail->next = o_current->attribs->next;
+      attrib_tail->next->prev = attrib_tail;
+      o_current->attribs->next = NULL;
+      printf("Reattach complete...\n");
+    }
+
+    
+    o_promoted = o_temp;  /* o_temp points to the promoted attributes */
+    /* keep looking till we find actual object */
+    while (o_promoted != new_object) {
+      switch(o_promoted->type) {
+        case(OBJ_TEXT):
+
+          printf("Prompted attribute: %s %s\n", o_promoted->name,
+                 o_promoted->text->string);
+          break;
+      }
+      o_promoted = o_promoted->next;
+    }
+#endif
+
+    /* attached (prompted) attribute rotate post processing */
+    /* this code does not handle the case where components are mirrored and */
+    /* rotated */
     while (o_temp != NULL) {
       switch(o_temp->type) {
         case(OBJ_TEXT):
-          temp = new_object->complex->angle / 90;
-          for (i = 0; i < temp; i++) {
-            new_angle = (o_temp->text->angle + 90) % 360;
-            o_text_rotate(w_current, 
-                          new_object->complex->screen_x,
-                          new_object->complex->screen_y,
-                          new_angle, 90, o_temp);
+          /* if the text is already rotated to match the component, then */
+          /* do not rotate it.  I hope this is the right solution. */
+          if (o_temp->text->angle != new_object->complex->angle)
+          {
+            temp = new_object->complex->angle / 90;
+            for (i = 0; i < temp; i++) {
+              new_angle = (o_temp->text->angle + 90) % 360;
+              o_text_rotate(w_current, 
+                            new_object->complex->screen_x,
+                            new_object->complex->screen_y,
+                            new_angle, 90, o_temp);
+            }
           }
           break;
       }
 		
       o_temp = o_temp->next;
     }
-
 
     o_selection_add(temp_list, new_object);
     o_attrib_add_selected(w_current, temp_list, new_object);
@@ -1512,8 +1580,6 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
 
     s_conn_update_complex(w_current, new_object->complex->prim_objs);
     new_objects = g_list_append(new_objects, new_object);
-    connected_objects = s_conn_return_complex_others(connected_objects,
-                                                     new_object);
     o_redraw_single(w_current, new_object);
      
     object_list = object_list->next;
@@ -1525,11 +1591,32 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
   o_selection_return_tail(temp_list);
 
   o_cue_draw_list(w_current, new_objects);
-  o_cue_undraw_list(w_current, connected_objects);
-  o_cue_draw_list(w_current, connected_objects);
+
+    temp_glist = new_objects;
+    while (temp_glist)
+    {
+      object = (OBJECT *) temp_glist->data;
+
+      if (object)
+      {
+        connected_objects = s_conn_return_complex_others(connected_objects,
+                                                         object);
+        o_cue_undraw_list(w_current, connected_objects);
+        o_cue_draw_list(w_current, connected_objects);
+
+  	g_list_free(connected_objects);
+        connected_objects = NULL;
+      }
+
+      temp_glist = temp_glist->next;
+    }
   
   g_list_free(new_objects);
-  g_list_free(connected_objects);
+
+#if 0 /* temporary workaround */
+  /* for now the workaround for the above subtle bug is to redraw everything */
+  o_redraw_all_fast(w_current);
+#endif
 
   w_current->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);

@@ -94,6 +94,7 @@
 <<g_rc.c : g_rc_bus_ripper_type()>>
 <<g_rc.c : g_rc_bus_ripper_rotation()>>
 <<g_rc.c : g_rc_force_boundingbox()>>
+<<g_rc.c : g_rc_grid_dot_size()>>
 
 @
 
@@ -1943,4 +1944,31 @@ g_rc_force_boundingbox(SCM mode)
 
 @ %def g_rc_force_boundingbox
 
+
+@section Function @code{g_rc_grid_dot_size()}
+
+@defun g_rc_grid_dot_size dotsize
+@end defun
+
+<<g_rc.c : g_rc_grid_dot_size()>>=
+SCM
+g_rc_grid_dot_size(SCM dotsize)
+{
+  int val;
+
+  val = gh_scm2int(dotsize);
+
+  if (val <= 0) {
+    fprintf(stderr, _("Invalid dot size [%d] passed to grid-dot-size\n"),
+            val);
+    val = 1; /* absolute default */
+  }
+
+  default_grid_dot_size = val;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_grid_dot_size
 

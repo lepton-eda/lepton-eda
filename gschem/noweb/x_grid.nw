@@ -131,20 +131,34 @@ x_grid_draw(TOPLEVEL *w_current)
                         w_current->page_current->right,
                         w_current->page_current->bottom,
                         i, j)) {
-        points[count].x = x;
-        points[count].y = y;
-        count++;
 
-				/* get out of loop if more than 1000 points */
-        if (count == 5000) {
-          gdk_draw_points(w_current->window,
-                          w_current->gc,
-                          points, count);
-          gdk_draw_points(
-                          w_current->backingstore,
-                          w_current->gc, points, count);
-          count=0;
+	if (w_current->grid_dot_size == 1)
+        {
+          points[count].x = x;
+          points[count].y = y;
+          count++;
 
+          /* get out of loop if more than 1000 points */
+          if (count == 5000) {
+            gdk_draw_points(w_current->window,
+                            w_current->gc,
+                            points, count);
+            gdk_draw_points(
+                            w_current->backingstore,
+                            w_current->gc, points, count);
+            count=0;
+          }
+        }
+        else
+        {
+          gdk_draw_arc(w_current->window, w_current->gc,
+                       TRUE, x, y,
+                       w_current->grid_dot_size,
+                       w_current->grid_dot_size, 0, FULL_CIRCLE);
+          gdk_draw_arc(w_current->backingstore, w_current->gc,
+                       TRUE, x, y,
+                       w_current->grid_dot_size,
+                       w_current->grid_dot_size, 0, FULL_CIRCLE);
         }
       }
     }

@@ -69,7 +69,7 @@ gschem.html: gschem.1
 MOSTLYCLEANFILES = 	*.log *~ gschem.html
 CLEANFILES = 		*.log *~ gschem.html
 DISTCLEANFILES = 	*.log core FILE *~ prototype.bak           \
-			*.html *.dvi *.info *.info-* *.aux *.fn    \
+			*.dvi *.info *.info-* *.aux *.fn    \
 			*.fns *.cp *.ky *.pg *.toc *.tp *.vrs *.vr \
 			$(gschemdoc_TEXINFOS)
 MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure *.html

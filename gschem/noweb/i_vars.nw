@@ -135,6 +135,7 @@ int   default_bus_ripper_size = 200;
 int   default_bus_ripper_type = COMP_BUS_RIPPER;
 int   default_bus_ripper_rotation = NON_SYMMETRIC;
 int   default_force_boundingbox = FALSE;
+int   default_grid_dot_size = 1;
 
 int   default_width = 800;  /* these variables are used in x_window.c */
 int   default_height = 600;
@@ -255,6 +256,7 @@ i_vars_set(TOPLEVEL *w_current)
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
   w_current->force_boundingbox  = default_force_boundingbox;
+  w_current->grid_dot_size  = default_grid_dot_size;
 }
 
 

@@ -647,6 +647,17 @@
 ;(bus-ripper-size 200)
 ;(bus-ripper-type "net")
 
+; Grid dot size 
+; The grid-dot-size keyword controls the size of the grid dots.  The units
+; are in pixels.  The default (min) value of 1 is the best performing as the
+; grid dot size is rendered as a single point and can be accelerated by 
+; the X server.  Values of 2 and 3 are good values to try if the default 
+; grid dot size is too small for your tastes.  Anything larger than 3 is 
+; probably too large.
+;
+(grid-dot-size 1)
+;(grid-dot-size 2)
+;(grid-dot-size 3)
 
 ; force-boundingbox string
 ;

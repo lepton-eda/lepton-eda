@@ -182,6 +182,7 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("bus-ripper-type", g_rc_bus_ripper_type);
   gh_new_procedure1_0 ("bus-ripper-rotation", g_rc_bus_ripper_rotation);
   gh_new_procedure1_0 ("force-boundingbox", g_rc_force_boundingbox);
+  gh_new_procedure1_0 ("grid-dot-size", g_rc_grid_dot_size);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);

@@ -1,3 +1,17 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/it_IT.po: Added the Italian translation by Petrecca Michele.
+  	Thanks!
+
+	* noweb/o_misc.nw: Fixed one possible cause for a crash when updating
+	components.  Also started adding the other two requested modes of
+	update component (delete and intelligent replace).  These two other
+	modes are not functional yet.
+
+	* noweb/x_grid.nw, i_vars.nw, g_rc.nw, g_register.nw, 
+	lib/system-gschemrc.in: Added the ability to adjust the grid
+	dot size via the "grid-dot-size" rc keyword.
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
