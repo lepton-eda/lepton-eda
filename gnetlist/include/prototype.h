@@ -38,6 +38,7 @@ SCM g_rc_hierarchy_uref_separator(SCM name);
 SCM g_rc_hierarchy_netattrib_order(SCM mode);
 SCM g_rc_hierarchy_netname_order(SCM mode);
 SCM g_rc_hierarchy_uref_order(SCM mode);
+SCM g_rc_unnamed_netname(SCM name);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);

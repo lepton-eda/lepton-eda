@@ -75,6 +75,7 @@ void g_register_funcs(void)
   gh_new_procedure1_0("hierarchy-netname-order",
                       g_rc_hierarchy_netname_order);
   gh_new_procedure1_0("hierarchy-uref-order", g_rc_hierarchy_uref_order);
+  gh_new_procedure1_0("unnamed-netname", g_rc_unnamed_netname);
 
   /* netlist functions */
   gh_new_procedure1_0("gnetlist:get-packages", g_get_packages);

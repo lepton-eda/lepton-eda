@@ -63,6 +63,7 @@ int default_hierarchy_uref_order = APPEND;
 char *default_hierarchy_netname_separator = NULL;
 char *default_hierarchy_netattrib_separator = NULL;
 char *default_hierarchy_uref_separator = NULL;
+char *default_unnamed_netname = NULL;
 
 void i_vars_set(TOPLEVEL * pr_current)
 {
@@ -99,7 +100,8 @@ void i_vars_set(TOPLEVEL * pr_current)
 
     if (!default_hierarchy_netname_separator ||
         !default_hierarchy_netattrib_separator ||
-        !default_hierarchy_uref_separator) {
+        !default_hierarchy_uref_separator ||
+        !default_unnamed_netname) {
       fprintf(stderr, "Some rc variables are not set!\n");
       fprintf(stderr, "Check log and make sure the system-gnetlistrc file was found! (exiting)\n");
       exit(-1);
@@ -111,6 +113,8 @@ void i_vars_set(TOPLEVEL * pr_current)
              default_hierarchy_netattrib_separator);
     INIT_STR(pr_current, hierarchy_uref_separator,
              default_hierarchy_uref_separator);
+
+    INIT_STR(pr_current, unnamed_netname, default_unnamed_netname);
 }
 
 void i_vars_setnames(TOPLEVEL * w_current)

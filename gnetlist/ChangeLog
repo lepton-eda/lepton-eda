@@ -1,3 +1,15 @@
+2003-11-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, src/g_rc.c, src/i_vars.c, src/g_register.c,
+	include/prototype.h: Added unnamed-netname as a guile rc keyword.
+	This will allow the "unnamed_net" string to be customized from
+	the rc files.
+
+	* src/s_net.c: Added the necessary code to support unnamed-netname.
+
+	* lib/system-gnetlistrc.in: Added the default (unnamed-netname
+	"unnamed_net")
+
 2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* autogen.sh: Added script to generate all the auto* generated files.

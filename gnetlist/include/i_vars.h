@@ -34,7 +34,7 @@ extern char *default_scheme_directory;
 extern char *default_font_directory;
 extern char *default_bitmap_directory;
 
-
 extern char *default_hierarchy_netname_separator;
 extern char *default_hierarchy_netattrib_separator;
 extern char *default_hierarchy_uref_separator;
+extern char *default_unnamed_netname;

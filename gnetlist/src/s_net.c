@@ -454,13 +454,14 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 	} else {
 	    string =
 		(char *) malloc(sizeof(char) *
-				(strlen("unnamed_net") + 10 +
+				(strlen(pr_current->unnamed_netname) + 10 +
 				 hierarchy_tag_len));
 
 	    if (hierarchy_tag) {
 		temp =
 		    (char *) malloc(sizeof(char) * (strlen("99999") + 10));
-		sprintf(temp, "unnamed_net%d", unnamed_counter++);
+		sprintf(temp, "%s%d", pr_current->unnamed_netname, 
+		        unnamed_counter++);
 
 		misc =
 		    s_hierarchy_create_netname(pr_current, temp,
@@ -468,7 +469,8 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 		strcpy(string, misc);
 		free(misc);
 	    } else {
-		sprintf(string, "unnamed_net%d", unnamed_counter++);
+		sprintf(string, "%s%d", pr_current->unnamed_netname, 
+			unnamed_counter++);
 	    }
 
 	    return (string);

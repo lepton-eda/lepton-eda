@@ -1000,5 +1000,28 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
 		     default_hierarchy_uref_order, 2);
 }
 
+SCM g_rc_unnamed_netname(SCM name)
+{
+  char *string = gh_scm2newstr(name, NULL);
+
+  if (string == NULL) {
+    fprintf(stderr,
+            "%s requires a string as a parameter\n",
+            "unnamed-netname"
+            );
+    return SCM_BOOL_F;
+  }
+
+  if (default_unnamed_netname) {
+    free(default_unnamed_netname);
+  }
+
+  default_unnamed_netname = u_basic_strdup(string);
+
+  free(string);
+  return SCM_BOOL_T;
+}
+
+
 /*************************** GUILE end done *********************************/
 

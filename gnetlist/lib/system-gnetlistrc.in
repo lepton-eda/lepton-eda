@@ -146,6 +146,14 @@
 (hierarchy-netattrib-order "append")
 ;(hierarchy-netattrib-order "prepend")
 
+; unnamed-netname string
+;
+; Specifies the default prepended string which is placed in front of all 
+; nets which are not explicitly named by the user (using the netname= 
+; attribute in the schematic).
+;
+(unnamed-netname "unnamed_net")
+
 ;
 ; End of mode related keywords
 ;
