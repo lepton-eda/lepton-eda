@@ -8,6 +8,76 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.c: Added type variable to UNDO structure
+
+	* src/s_undo.c: Added code to deal with type variable
+
+	* configure.in: Put in checks for gtk+ and glib 1.2.3
+
+	* src/Makefile.am: Bumped up shared library version to 9
+
+	* All gEDA directories/programs: Created distribution Makefile.in 
+	  files
+
+	* include/defines.h: Added #defines to support attrib_edit_dialog
+	  invocation flag
+
+2000-06-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added object_head pointer to UNDO struct
+
+	* src/s_undo.c: Added code to deal with above new pointer
+
+	* src/s_undo.c: Had to change some of the s_undo_* functions to
+	  have the TOPLEVEL *w_current argument.  Need to review and make
+	  sure this is really needed.
+
+	* src/o_*_basic.c: Fixed all *_copy functions to copy the color of
+	  the object correctly (not the selection color)
+
+	* src/o_*_basic.c: Also make sure all *_copy functions copy the
+	  saved_color variable
+
+	* src/o_complex_basic.c: Fixed *_copy functions to preserve the
+ 	  selectability of complex objects
+
+	* include/struct.h: Added undo-type to TOPLEVEL structure
+
+	* src/o_list.c: OOPS!  Found an ancient bug.  Forgot to restore
+	  object_parent pointer if you passed in an empty list src list
+	  to the o_list_copy* functions (did the same for ADDING_SEL flag)
+
+/*************************************************************************/
+/* NOT DONE */
+src/*.c: Removed all the ADDING_SEL nonsense (code).
+include/struct.h: Removed the ADDING_SEL variable from the TOPLEVEL struct
+/* NOT DONE */
+/*************************************************************************/
+
+	* include/defines.h: Added UNDO_ALL and UNDO_VIEWPORT_ONLY #defines
+
+2000-06-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_*_basic.c: Fixed o_*_save to properly save the object if it
+	  is selected
+
+	* include/struct.h: Moved undo_* into the PAGE structure
+
+	* src/s_page.c: Added necessary free and init in s_page_* for undo 
+	  structs
+
+	* include/struct.h: Added undo_levels and undo_control rc vars to 
+	  TOPLEVEL structure
+
+2000-06-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added first cut of UNDO structure/typedef
+
+	* src/s_undo.c: Added new file which will hold low level undo 
+	  code
+
 2000-06-07  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_attrib.c: Added Martin Benes' uref renaming patch.  The 

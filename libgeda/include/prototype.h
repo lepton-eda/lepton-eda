@@ -62,6 +62,7 @@ void o_arc_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_center
 void o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 /* o_attrib.c */
+void o_attrib_update_urefBM(TOPLEVEL *w_current, OBJECT *o_current);
 ATTRIB *o_attrib_search(ATTRIB *list, OBJECT *item);
 ATTRIB *o_attrib_return_tail(ATTRIB *head);
 ATTRIB *add_attrib_head(OBJECT *parent);
@@ -459,6 +460,19 @@ void s_slib_print(void);
 int s_slib_uniq(char *path);
 void s_slib_print_dirs(void);
 /* s_stroke.c */
+/* s_undo.c */
+UNDO *s_undo_return_tail(UNDO *head);
+UNDO *s_undo_return_head(UNDO *tail);
+UNDO *s_undo_new_head(void);
+void s_undo_destroy_head(UNDO *u_head);
+UNDO *s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head, int left, int top, int right, int bottom);
+UNDO *s_undo_print_all(UNDO *head);
+void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head);
+void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos);
+void s_undo_remove_rest(TOPLEVEL *w_current, UNDO *head);
+int s_undo_levels(UNDO *head);
+void s_undo_init(PAGE *p_current);
+void s_undo_free_all(TOPLEVEL *w_current, PAGE *p_current);
 /* u_basic.c */
 char *u_basic_strdup(const char *p);
 char *u_basic_strdup_multiple(const char *str, ...);
