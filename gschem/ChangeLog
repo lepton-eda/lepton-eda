@@ -1,3 +1,8 @@
+2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/gschem.nw: Fixed missing #include <locale.h>.  Pointed 
+	out by Karel Kulhav. 
+
 2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/i_vars.h, include/prototype.h, noweb/g_funcs.nw, 

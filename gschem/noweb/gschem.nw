@@ -58,6 +58,10 @@
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
 #ifdef HAS_LIBSTROKE
 /* libstroke prototype */
 void stroke_init(void);
