@@ -66,7 +66,12 @@ int PackageInitialize(void)
 	if (iResult == FAILURE)
 	{
 		sprintf(szValue, "Cannot find a configuration file '%s' in %s", PACKAGE_CFGFILE, get_current_dir_name());
-		MsgBox(szValue, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain), 
+			"Error !",
+			szValue, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	
@@ -122,7 +127,12 @@ int PackageInitialize(void)
 		else
 		{
 			sprintf(szMessage, "Not known entry in a configuration file:\n%s = %s\nin section [SOFTWARE]", szName, szValue);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Warning !",
+				szMessage, 
+				MSGBOX_WARNING | MSGBOX_OKD
+				);
 		}
 	}
 	
@@ -134,7 +144,12 @@ int PackageInitialize(void)
 		if (j <= 0)
 		{
 			sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Fatal error !",
+				szMessage, 
+				MSGBOX_FATAL | MSGBOX_OKD
+				);
 			return FAILURE;
 		}
 		iCount += j + sizeof(struct CompsTable_s);
@@ -144,7 +159,12 @@ int PackageInitialize(void)
 	if (pCompsTable == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Fatal error !",
+				szMessage, 
+				MSGBOX_FATAL | MSGBOX_OKD
+				);
 		return FAILURE;
 	}
 	
@@ -162,7 +182,12 @@ int PackageInitialize(void)
 		if (j <= 0)
 		{
 			sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Fatal error !",
+				szMessage, 
+				MSGBOX_FATAL | MSGBOX_OKD
+				);
 			return FAILURE;
 		}
 		iPrevious = iCount;
@@ -398,7 +423,12 @@ static int ReadSection(char *szPackage, struct CompsTable_s *pComp)
 		else
 		{
 			sprintf(szMessage, "Not known entry in a configuration file:\n%s = %s\nin section [%s]", szName, szValue, szPackage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Warning !",
+				szMessage, 
+				MSGBOX_WARNING | MSGBOX_OKD
+				);
 		}
 	}
 	
