@@ -106,6 +106,9 @@ Werner Hoch		- For providing a patch to fix some long outstanding
 				a_pan.c a_zoom.c i_callbacks.c x_grid.c
 				x_window.c x_event.c
 
+			  For doing the German strings translation as well
+			  as bug reports related to the i18n support.
+		       
 Chris Ellec		- For providing a patch that causes changes in the
 			  slot= attribute in the multi attrib dialog box
 			  (Add and Change) to take effect.
