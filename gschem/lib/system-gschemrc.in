@@ -1015,7 +1015,7 @@
     ("Shift F" . edit-find-text)
     ("h" . edit-hide-text)
     ("Shift H" . edit-show-text)
-    ("a" . edit-autonumber)))
+    ("u" . edit-autonumber)))
 
 ; All keys in this keymap *must* be unique
 (define options-keymap

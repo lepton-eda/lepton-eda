@@ -2,6 +2,9 @@
 
 	* tests/Makefile.am: Added missing files to EXTRA_DIST
 
+	* lib/system-gschemrc.in: Fixed hotkey for Autonumber Text... dialog
+	box to be unique (so it will even work; hasn't worked since 01/2001).
+
 2005-03-05 Werner Hoch <werner.ho@gmx.de>
 	* noweb/x_dialog.nw: changed the autonumber_text dialog
 	* noweb/o_misc.nw: changed functions which support the autonumber 
