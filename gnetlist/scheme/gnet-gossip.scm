@@ -22,83 +22,36 @@
 ;;  For more info see http://gossip.sourceforge.net 
 ;;
 
-;;
-;; Top level header
-;;
+
 (define gossip:write-top-header
    (lambda (p)
-      (display "START header" p) 
+      (display ";; Gossip Netlist Created by gNetlist" p) 
       (newline p)
       (newline p)
-      (display "gEDA's netlist format" p)
+      (display ";; Created By Matt Ettus <matt@ettus.com>" p)
       (newline p)
-      (display "Created specifically for testing of gnetlist" p)
-      (newline p)
-      (newline p)
-      (display "END header" p)
+      (display ";; Libraries:" p)
       (newline p)
       (newline p)))
 
-;;
-;; header for components section
-;;
-(define gossip:start-components
-   (lambda (p)
-      (display "START components" p)
-      (newline p)
-      (newline p)))
+(define gossip:get-libraries
+  (lambda (p components done)
+    (if (not (null? components))
+      (let ((lib (gnetlist:get-package-attribute (car components) "library")))
+        (if (string=? "unknown" lib)
+          (begin
+            (display "Component ")
+            (display (car components))
+            (display " does not have a library attribute\n")))
+        (if (contains? done lib)
+          (gossip:get-libraries p (cdr components) done)
+          (begin
+            (display "(use-library " p)
+            (display lib p)
+            (display " *)" p)
+            (newline p)
+            (gossip:get-libraries p (cdr components) (cons lib done))))))))
 
-;;
-;; footer for components section
-;;
-(define gossip:end-components
-   (lambda (p)
-      (newline p)
-      (display "END components" p)
-      (newline p)
-      (newline p)))
-
-;;
-;; header for renamed section
-;;
-(define gossip:start-renamed-nets
-   (lambda (p)
-      (display "START renamed-nets" p)
-      (newline p)
-      (newline p)))
-
-;;
-;; footer for renamed section
-;;
-(define gossip:end-renamed-nets
-   (lambda (p)
-      (newline p)
-      (display "END renamed-nets" p)
-      (newline p)
-      (newline p)))
-
-;;
-;; header for nets section
-;;
-(define gossip:start-nets
-   (lambda (p)
-      (display "START nets" p)
-      (newline p)
-      (newline p)))
-
-;;
-;; footer for net section
-;;
-(define gossip:end-nets
-   (lambda (p)
-      (newline p)
-      (display "END nets" p)
-      (newline p)
-      (newline p)))
-	
-;;
-;; Top level component writing 
-;;
 (define gossip:components
    (lambda (port ls)
       (if (not (null? ls))
@@ -111,24 +64,6 @@
                (newline port)
                (gossip:components port (cdr ls)))))))
 
-;;
-;; renamed nets writing 
-;;
-(define gossip:renamed-nets
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((renamed-pair (car ls)))
-            (begin
-;;;	       (display renamed-pair) (newline)
-               (display (car renamed-pair) port)
-	       (display " -> " port)
-               (display (car (cdr renamed-pair)) port)
-               (newline port)
-               (gossip:renamed-nets port (cdr ls)))))))
-
-;;
-;; Display the individual net connections
-;;
 (define gossip:display-connections
    (lambda (nets port)
       (if (not (null? nets))
@@ -142,9 +77,6 @@
 	          (write-char #\space port)))
 	       (gossip:display-connections (cdr nets) port)))))
 
-;;
-;; Display all nets 
-;;
 (define gossip:display-name-nets
    (lambda (port nets)
       (begin
@@ -152,9 +84,6 @@
          (write-char #\space port) 
          (newline port))))
 
-;;
-;; Write netname : uref pin, uref pin, ...
-;;
 (define gossip:write-net
    (lambda (port netnames)
       (if (not (null? netnames))
@@ -165,36 +94,18 @@
                (gossip:display-name-nets port (gnetlist:get-all-connections netname))
 	       (gossip:write-net port (cdr netnames))))))) 
 
-;;
-;; Write the net part of the gEDA format
-;;
 (define gossip:nets
    (lambda (port)
       (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
          (gossip:write-net port all-uniq-nets))))
 
-;;; Highest level function
-;;; Write my special testing netlist format
-;;;
 (define gossip 
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
          (begin
-;;;         (gnetlist:set-netlist-mode "gEDA") No longer needed
             (gossip:write-top-header port)
-            (gossip:start-components port)
+            (gossip:get-libraries port packages '())
             (gossip:components port packages)
-            (gossip:end-components port)
-            (gossip:start-renamed-nets port)
-            (gossip:renamed-nets port (gnetlist:get-renamed-nets "dummy"))
-            (gossip:end-renamed-nets port)
-            (gossip:start-nets port)
-            (gossip:nets port)
-            (gossip:end-nets port))
+            (gossip:nets port))
          (close-output-port port))))
-
-;;
-;; gEDA's native test netlist format specific functions ends 
-;;
-;; --------------------------------------------------------------------------
 
