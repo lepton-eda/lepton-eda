@@ -30,7 +30,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 #include "o_types.h"
 
 #include "../include/prototype.h"

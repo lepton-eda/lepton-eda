@@ -8,6 +8,32 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/21/99 More work on getting all objects to use new object init and link
+	routines (rest of o_*_basic.c functions) 
+
+	Created u_basic.c for utitlity functions to which Kazu is adding
+
+	Removed all traces of s_passing.c and s_passing.h (Yeah, no more
+	p_* kludge)
+
+	#if 0'ed out add_object, replaced by new object init and link 
+	routines
+
+	Found all unknown p_* variables and removed them
+
+7/16/99 Added s_basic_init_object which just creates an object and inits
+	it with default values (this is part of the s_passing kludge removal)
+
+	Added s_basic_link_object which links in the object into the passed in
+	ptr linked list.
+
+	Removed "int selected" from struct.h (was totally unused)
+
+	Minor cosmetic changes in struct.h
+
+	As a first test, converted o_ntext_basic.c to use new 
+	s_basic_init_object and s_basic_link_object
+
 7/15/99 Added support for libgdgeda 1.6 (mainly means searching for libpng)
 
 	Removed all traces of old libgdgeda 1.5 gif support

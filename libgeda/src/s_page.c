@@ -31,7 +31,6 @@
 #include "defines.h"
 #include "struct.h"
 #include "defines.h"
-#include "s_passing.h"
 #include "globals.h"
 
 #include "o_types.h"
@@ -239,97 +238,31 @@ s_page_setup(PAGE *p_current)
 {
 
 	/* First one to setup head */
-	strcpy(p_name, "object_head");
-	p_type = OBJ_HEAD;
-	p_action_func = NULL;
-        p_line_points = NULL;
-        p_circle = NULL;
-	p_action_func = error_if_called;
-	p_sel_func = error_if_called;
-	p_draw_func = error_if_called;
-	p_complex = NULL;
-	p_left = p_right = p_top = p_bottom = -1;
-	p_x = p_y = -1;
-	p_screen_x = p_screen_y = -1;
-	p_color = -1;
-	p_text_string[0] = '\0';
-	p_complex_basename[0] = '\0';
-	p_complex_clib[0] = '\0';
-	p_attribs = NULL;
-	p_attached_to = NULL;
-        /* add p_attrib and p_attached_to */
-	p_current->object_head = add_object(NULL);
+	p_current->object_head = s_basic_init_object("object_head");
+	p_current->object_head->type = OBJ_HEAD;
 
-	strcpy(p_name, "sel_head");
-	p_type = OBJ_HEAD;
-	p_line_points = NULL;
-        p_circle = NULL;
-	p_action_func = error_if_called;
-	p_sel_func = error_if_called;
-	p_draw_func = error_if_called;
-	p_complex = NULL;
-	p_left = p_right = p_top = p_bottom = -1;
-	p_x = p_y = -1;
-	p_screen_x = p_screen_y = -1;
-	p_color = -1;
-	p_text_string[0] = '\0';
-	p_complex_basename[0] = '\0';
-	p_complex_clib[0] = '\0';
-	p_attribs = NULL;
-	p_attached_to = NULL;
-        /* add p_attrib and p_attached_to */
 	p_current->selection_tail = p_current->selection_head = 
-							add_object(NULL);
+				s_basic_init_object("sel_head");
+	p_current->selection_tail->type = OBJ_HEAD;
 
-	strcpy(p_name, "complex_place_head");
-	p_type = OBJ_HEAD;
-	p_line_points = NULL;
-        p_circle = NULL;
-	p_action_func = error_if_called;
-	p_sel_func = error_if_called;
-	p_draw_func = error_if_called;
-	p_complex = NULL;
-	p_left = p_right = p_top = p_bottom = -1;
-	p_x = p_y = -1;
-	p_screen_x = p_screen_y = -1;
-	p_color = -1;
-	p_text_string[0] = '\0';
-	p_complex_basename[0] = '\0';
-	p_complex_clib[0] = '\0';
-	p_attribs = NULL;
-	p_attached_to = NULL;
-        /* add p_attrib and p_attached_to */
 	p_current->complex_place_tail = p_current->complex_place_head = 
-						add_object(NULL);
+				s_basic_init_object("complex_place_head");
+	p_current->complex_place_tail->type = OBJ_HEAD;
 
-	strcpy(p_name, "attrib_place_head");
-	p_type = OBJ_HEAD;
-	p_line_points = NULL;
-	p_circle = NULL;
-	p_action_func = error_if_called;
-	p_sel_func = error_if_called;
-	p_draw_func = error_if_called;
-	p_complex = NULL;
-	p_left = p_right = p_top = p_bottom = -1;
-	p_x = p_y = -1;
-	p_screen_x = p_screen_y = -1;
-	p_color = -1;
-	p_text_string[0] = '\0';
-	p_complex_basename[0] = '\0';
-	p_complex_clib[0] = '\0';
-	p_attribs = NULL;
-	p_attached_to = NULL;
         /* add p_attrib and p_attached_to */
 	p_current->attrib_place_tail = p_current->attrib_place_head = 
-						add_object(NULL);
-
-	p_current->object_tail = return_tail(p_current->object_head);
+				s_basic_init_object("attrib_place_head");
+	p_current->attrib_place_tail->type = OBJ_HEAD;
+	
 
 	/* new ALES stuff */
 	p_current->ales_table = g_hash_table_new(g_str_hash, g_str_equal);
 
 	/* new NETHASH stuff */
 	p_current->nethash_table = g_hash_table_new(g_str_hash, g_str_equal);
+
+	/* do this just to be sure that object tail is truely correct */
+	p_current->object_tail = return_tail(p_current->object_head);
 
 	/* setup parent to point to list */
 	/* this is used for attributes so */

@@ -34,7 +34,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 #include "o_types.h"
 
 #include "colors.h"
@@ -122,57 +121,56 @@ world_get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top
 }
 
 OBJECT *
-o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int radius)
+o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int radius)
 {
 	int screen_x, screen_y;
 	int left, right, top, bottom;
-	CIRCLE *new_circle;
-	p_type = type;
+	OBJECT *new_node;	
 
-	strcpy(p_name, "circle");
+	new_node = s_basic_init_object("circle");
+        new_node->type = type;
+        new_node->color = color;
 
-	new_circle = (CIRCLE *) malloc(sizeof(CIRCLE));
+	new_node->circle = (CIRCLE *) malloc(sizeof(CIRCLE));
+
 /* check for null */	
 
-	new_circle->center_x = x1;
-	new_circle->center_y = y1;
-	new_circle->radius = radius;
+	new_node->circle->center_x = x;
+	new_node->circle->center_y = y;
+	new_node->circle->radius = radius;
 
-/*	printf("new circle: %d %d %d %d\n", x1, y1, x2, y2);*/
 
-	WORLDtoSCREEN(w_current, new_circle->center_x, new_circle->center_y, 
-		  &screen_x, &screen_y);  
+	WORLDtoSCREEN(w_current, 
+		new_node->circle->center_x, new_node->circle->center_y, 
+		&screen_x, &screen_y);  
 	
-	new_circle->screen_x = screen_x;
-	new_circle->screen_y = screen_y;
+	new_node->circle->screen_x = screen_x;
+	new_node->circle->screen_y = screen_y;
 
 
-	new_circle->screen_radius = SCREENabs(w_current, new_circle->radius);
+	new_node->circle->screen_radius = SCREENabs(
+						w_current, 
+						new_node->circle->radius);
 
-	new_circle->screen_left = new_circle->screen_x - 
-				  new_circle->screen_radius;
-	new_circle->screen_top = new_circle->screen_y - 
-					new_circle->screen_radius;
+	new_node->circle->screen_left = new_node->circle->screen_x - 
+				  new_node->circle->screen_radius;
+	new_node->circle->screen_top = new_node->circle->screen_y - 
+					new_node->circle->screen_radius;
 
 
-	get_circle_bounds(w_current, new_circle, &left, &top, &right, &bottom);
+	get_circle_bounds(w_current, new_node->circle, &left, &top, &right, &bottom);
 	
-	p_left = left;
-	p_top = top;
-	p_right = right;
-	p_bottom = bottom;	
+	new_node->left = left;
+	new_node->top = top;
+	new_node->right = right;
+	new_node->bottom = bottom;	
 
-	p_draw_func = (void *) circle_draw_func;  /* questionable cast */
-	p_sel_func = (void *) select_func;  /* questionable cast */
-	p_line_points = NULL;
-	p_circle = new_circle;
+	/* TODO: questionable cast */
+	new_node->draw_func = (void *) circle_draw_func;  
+	/* TODO: questionable cast */
+	new_node->sel_func = (void *) select_func;  
 
-	p_color = color;
-	p_complex = NULL;
-        p_visibility = VISIBLE;
-	p_text_string[0] = '\0';
-
-	object_list = (OBJECT *) add_object(object_list);
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 	return(object_list);
 }
 

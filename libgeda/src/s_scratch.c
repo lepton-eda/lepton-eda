@@ -31,7 +31,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 
 #include "../include/prototype.h"
 

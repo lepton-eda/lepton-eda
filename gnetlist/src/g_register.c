@@ -35,7 +35,6 @@
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
-#include <libgeda/s_passing.h>
 #include <libgeda/globals.h>
 #include <libgeda/o_types.h>
 

@@ -150,7 +150,7 @@ void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_center
 int dist(int x1, int y1, int x2, int y2);
 void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
 void world_get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
-OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int radius);
+OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int radius);
 void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_circle_save(char *buf, OBJECT *object);
@@ -167,8 +167,8 @@ void o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_cen
 void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 OBJECT *add_head(void);
-OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int angle, int mirror, char *clib, char *basename, int selectable);
-OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int angle, char *clib, char *basename, int selectable);
+OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable);
+OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_complex_save(char *buf, OBJECT *object);
@@ -283,6 +283,8 @@ void error_if_called(void);
 void exit_if_null(void *ptr);
 OBJECT *return_tail(OBJECT *head);
 OBJECT *return_head(OBJECT *tail);
+OBJECT *s_basic_init_object(char *name);
+OBJECT *s_basic_link_object(OBJECT *new_node, OBJECT *ptr);
 OBJECT *add_object(OBJECT *ptr);
 void print_struct_forw(OBJECT *ptr);
 void print_struct_back(OBJECT *ptr);
@@ -381,3 +383,4 @@ int s_stroke_uniq(char *stroke);
 void s_stroke_free(void);
 void s_stroke_init(void);
 int s_stroke_search_execute(char *stroke);
+/* u_basic.c */

@@ -29,7 +29,6 @@
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
-#include <libgeda/s_passing.h>
 #include <libgeda/o_types.h>
 #include <libgeda/colors.h>
 #include <libgeda/prototype.h>

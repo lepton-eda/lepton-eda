@@ -35,7 +35,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 #include "o_types.h"
 #include "colors.h"
 #include "funcs.h"
@@ -65,39 +64,14 @@ world_get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *t
 OBJECT *
 o_ntext_add_head(void)
 {
-	OBJECT *ret=NULL;
+	OBJECT *new_node=NULL;
 
-	/* you had a nasty memory leak here */
-	/* you don't create the memory here, it's created for you in */
-	/* add_object */
+	new_node = s_basic_init_object("ntext_head");
+	new_node->type = OBJ_HEAD;
 
-	strcpy(p_name, "ntext_head"); 
-
-	/* max numbers ?? */
-	p_left = 99999;
-	p_top = 99999;
-	p_right = 0;
-	p_bottom = 0;
-	p_x = p_y = -1;
-	p_screen_x = p_screen_y = -1;
-	p_color = -1;
-
-        p_type = OBJ_HEAD; /* make this of head type hack */
-        p_line_points = NULL;
-        p_circle = NULL;
-        p_action_func = error_if_called;
-        p_sel_func = error_if_called;
-        p_draw_func = error_if_called;
-	p_complex = NULL;
-	p_complex_basename[0] = '\0';
-	p_complex_clib[0] = '\0';
-	p_attached_to = NULL;
-	p_attribs = NULL;
-	/* add p_attrib and p_attached_to */
-	p_text_string[0] = '\0';
-
-        ret = (OBJECT *) add_object(NULL);
-	return(ret);
+	/* don't need to do this for head nodes */
+        /* ret = s_basic_link_object(new_node, NULL);*/
+	return(new_node);
 }
 
 void
@@ -498,8 +472,13 @@ o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 }
 
 OBJECT *
-o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *string, int size, int visibility, int show_name_value)
+o_ntext_add(TOPLEVEL *w_current, 
+	OBJECT *object_list, 
+	char type, int color, int x, int y, 
+	int angle, char *string, int size, 
+	int visibility, int show_name_value)
 {
+	OBJECT *new_node=NULL;
 	OBJECT *temp_list=NULL;
         OBJECT *temp_parent=NULL;
 	int screen_x, screen_y;
@@ -512,46 +491,42 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 		return(NULL);
 	}
 
-	/* allocate it hack */
+	/* TODO remove the 1024 max string limitation somehow? */
 	if ( strlen(string) > 1024 ) {
 		fprintf(stderr, "text string too long!\n");
 		return(NULL);
 	} 
 
-	p_type = type;
-	strcpy(p_name, "ntext");
-	strcpy(p_text_string, string);
-	p_text_len = strlen(string);
-	p_text_size = size;
-	p_x = x;
-	p_y = y;
-	
-	p_angle = angle;
+	new_node = s_basic_init_object("ntext");
+	new_node->type = type;
+	new_node->text_string = strdup(string);
+	new_node->text_len = strlen(string);
+	new_node->text_size = size;
+	new_node->x = x;
+	new_node->y = y;
+	new_node->angle = angle;
 
 	WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-	p_screen_x = screen_x;
-	p_screen_y = screen_y;
+	new_node->screen_x = screen_x;
+	new_node->screen_y = screen_y;
 
-	p_draw_func = (void *) ntext_draw_func;  /* questionable cast */
-	p_sel_func = (void *) select_func;  /* questionable cast */
-	p_line_points = NULL;
-        p_circle = NULL;
-	p_color = color;
-	p_complex = NULL;
-	p_visibility = visibility; 
-	p_show_name_value = show_name_value;
+	/* TODO: questionable cast */
+	new_node->draw_func = (void *) ntext_draw_func;  
+	/* TODO: questionable cast */
+	new_node->sel_func = (void *) select_func;  
+
+	new_node->color = color;
+	new_node->visibility = visibility; 
+	new_node->show_name_value = show_name_value;
 
 	/* create the object in the main list */
-	object_list = (OBJECT *) add_object(object_list);
-	
-#if 1
+	/* object_list points to the object */
+	/* I use it below as a sanity check to make sure it was linked
+	/* properly */ 
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-	/* object_list->text_string = malloc(sizeof(char)*strlen(string)+1);
-	strcpy(object_list->text_string, string);*/
-
-
-	/* fix up actual string here */
-	if (o_attrib_get_name_value(string, name, value)) {
+	/* fix up actual string here */ if
+	(o_attrib_get_name_value(string, name, value)) {
 		switch(show_name_value) {
 			case(SHOW_NAME_VALUE):
 				strcpy(output_string, string);
@@ -573,16 +548,12 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 		strcpy(output_string, string);
 	}
 
-#endif
-
-
 	/* now start working on the complex */
 	temp_list = o_ntext_add_head();
 
         temp_parent = w_current->page_current->object_parent;
 	/* set the addition of attributes to the head node */
 	w_current->page_current->object_parent = temp_list;
-
 
 	if (visibility == VISIBLE) {
 		object_list->complex = 
@@ -600,7 +571,7 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 
 	get_ntext_bounds(w_current, object_list, &left, &top, &right, &bottom);
 
-	/* deal with this */	
+	/* set the new object's bounding box */
 	object_list->left = left;
 	object_list->top = top;
 	object_list->right = right;

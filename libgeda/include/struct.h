@@ -78,8 +78,6 @@ struct st_object {
 	int right;
 	int bottom;
 
-	int selected;
-
 	LINEPTS *line_points;		/* Describes a line */
 	CIRCLE *circle;			/* Describes a circle */
 
@@ -96,6 +94,7 @@ struct st_object {
 
 	/* unused for now */
 	void (*action_func)();			/* Execute function */
+
 	void (*sel_func)();			/* Selected function */
 	void (*draw_func)();			/* Draw function */
 

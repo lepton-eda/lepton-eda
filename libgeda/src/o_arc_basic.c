@@ -34,7 +34,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 #include "o_types.h"
 
 #include "colors.h"
@@ -106,53 +105,42 @@ o_arc_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x,
 {
 
 	int left, right, top, bottom;
-	LINEPTS *new_line_points;
+	OBJECT *new_node;
 	int screen_x, screen_y;
 
-	p_type = type;
-
-	strcpy(p_name, "arc");
-
-	new_line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
-
-/* check for null hack check all files */	
+	new_node = s_basic_init_object("arc");
+        new_node->type = type;
+	new_node->color = color;
+	
+	new_node->line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
 
 	/* Screen */	
-	new_line_points->x1 = width;
-	new_line_points->y1 = height;
-	new_line_points->x2 = start_angle;
-	new_line_points->y2 = end_angle;
+	new_node->line_points->x1 = width;
+	new_node->line_points->y1 = height;
+	new_node->line_points->x2 = start_angle;
+	new_node->line_points->y2 = end_angle;
 
-	p_x = x;
-	p_y = y;
+	new_node->x = x;
+	new_node->y = y;
 
-
-	/* world */
 	WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-	/* highly temp out p_x = snap_grid(w_current, world_x);
-	p_y = snap_grid(w_current, world_y);*/
-	p_screen_x = screen_x;
-	p_screen_y = screen_y;
+        new_node->screen_x = screen_x;
+        new_node->screen_y = screen_y;
 
 	WORLDtoSCREEN(w_current, width, height, &screen_x, &screen_y);
+	new_node->line_points->screen_x1 = screen_x; /* dist */  
+	new_node->line_points->screen_y1 = screen_y; /* height */
 
-	new_line_points->screen_x1 = screen_x; /* dist */  
-	new_line_points->screen_y1 = screen_y; /* height */
+	new_node->line_points->screen_x2 = start_angle ; /* start_angle */
+	new_node->line_points->screen_y2 = end_angle ; /* end_angle */
 
-	new_line_points->screen_x2 = start_angle ; /* start_angle */
-	new_line_points->screen_y2 = end_angle ; /* end_angle */
+	/* TODO: questionable cast */
+	new_node->draw_func = (void *) arc_draw_func;  
+	/* TODO: questionable cast */
+	new_node->sel_func = (void *) select_func;  
 
-	p_draw_func = (void *) arc_draw_func;  /* questionable cast */
-	p_sel_func = (void *) select_func;  /* questionable cast */
-	p_line_points = new_line_points;
-	p_circle = NULL;
 
-	p_color = color;
-	p_complex = NULL;
-	p_visibility = VISIBLE;
-	p_text_string[0] = '\0';
-
-	object_list = (OBJECT *) add_object(object_list);
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
 	get_arc_bounds(w_current, object_list, &left, &top, &right, &bottom);
 	

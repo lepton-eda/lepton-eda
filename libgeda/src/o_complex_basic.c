@@ -33,7 +33,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 #include "o_types.h"
 
 #include "colors.h"
@@ -202,44 +201,21 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *t
 OBJECT *
 add_head(void)
 {
-	OBJECT *ret=NULL;
+	OBJECT *new_node=NULL;
 
-	/* you had a nasty memory leak here */
-	/* you don't create the memory here, it's created for you in */
-	/* add_object */
+	new_node = s_basic_init_object("complex_head"); 
 
-	strcpy(p_name, "complex_head"); 
+        new_node->type = OBJ_HEAD; /* make this of head type hack */
 
-	/* max numbers ?? */
-	p_left = 99999;
-	p_top = 99999;
-	p_right = 0;
-	p_bottom = 0;
-	p_x = p_y = -1;
-	p_screen_x = p_screen_y = -1;
-	p_color = -1;
-
-        p_type = OBJ_HEAD; /* make this of head type hack */
-        p_circle = NULL;
-        p_line_points = NULL;
-        p_action_func = error_if_called;
-        p_sel_func = error_if_called;
-        p_draw_func = error_if_called;
-	p_complex = NULL;
-	p_complex_basename[0] = '\0';
-	p_complex_clib[0] = '\0';
-	p_attached_to = NULL;
-	p_attribs = NULL;
-	/* add p_attrib and p_attached_to */
-	p_text_string[0] = '\0';
-
-        ret = (OBJECT *) add_object(NULL);
-	return(ret);
+	/* don't need to do this for head nodes */
+        /* ret = (OBJECT *) s_basic_link_object(new_node, NULL);*/
+	return(new_node);
 }
 
 OBJECT *
-o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int angle, int mirror, char *clib, char *basename, int selectable)
+o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable)
 {
+	OBJECT *new_node=NULL;
 	OBJECT *complex=NULL;
 	OBJECT *temp_tail=NULL;
 	OBJECT *temp_parent=NULL;
@@ -247,62 +223,34 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	
 	char filename[256]; /* hack */
 
-	p_x = x1;
-	p_y = y1;
+	new_node = s_basic_init_object("complex");
+	new_node->type = type;
+	new_node->x = x;
+	new_node->y = y;
 
-	WORLDtoSCREEN(w_current, x1,
-                  y1,
-                  &p_screen_x,
-                  &p_screen_y);    
+	WORLDtoSCREEN(w_current, x, y, 
+			&new_node->screen_x, &new_node->screen_y);    
 	
 
-	p_complex = NULL;
-        p_visibility = VISIBLE;
+	new_node->complex_basename = strdup(basename);
+	new_node->complex_clib = strdup(clib);
 
-	strcpy(p_complex_basename, basename);
-	strcpy(p_complex_clib, clib);
-
-	p_type = type;
-
-	strcpy(p_name, "complex");
-
-	p_text_string[0] = '\0';
-
-	/* no need to do this */
-	/* yeah.. since it dies anyways, since p_complex is NULL */
-	get_complex_bounds(w_current, p_complex, &left, &top, &right, &bottom);
-
-	p_left = left;
-	p_top = top;
-	p_right = right;   
-	p_bottom = bottom;	
-
-	p_color = color;
+	new_node->color = color;
 	
-	p_angle = angle;
-	p_mirror = mirror;
+	new_node->angle = angle;
+	new_node->mirror = mirror;
 
-	p_draw_func = (void *) complex_draw_func;  /* questionable cast */
-	/* (for a title block) an object that isn't selectable */
+	/* TODO: questionable caste? */
+	new_node->draw_func = (void *) complex_draw_func;  
+
 	if (selectable) { 
 
-		p_sel_func = (void *) select_func;
-
+		new_node->sel_func = (void *) select_func;
 	} else {
-		p_sel_func = NULL;
-
-		/* have to think about this a bit more before I do this */
-		/* p_saved_color = color; hack 
-		p_color = GREY; hack */
-
+		new_node->sel_func = NULL;
 	}
 
-	p_line_points = NULL;
-	p_circle = NULL;
-
-
-
-	object_list = (OBJECT *) add_object(object_list);
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);	
 
 	/* this was at the beginning and p_complex was = to complex */
 	complex = (OBJECT *) add_head();
@@ -335,15 +283,14 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 
 	object_list->complex = complex;
 
-
-	if (p_mirror) {
-		o_complex_mirror_lowlevel(w_current, x1, y1, object_list);
+	if (mirror) {
+		o_complex_mirror_lowlevel(w_current, x, y, object_list);
 	}
 
 
-	o_complex_rotate_lowlevel(w_current, x1, y1, angle, angle, object_list);
+	o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list);
 
-	o_complex_world_translate(w_current, x1, y1, complex);
+	o_complex_world_translate(w_current, x, y, complex);
 	
 	return(object_list);
 }
@@ -351,71 +298,48 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 /* this is TOTALLY broken now */
 /* since the complex hasn't been read yet... and not rotate */
 OBJECT *
-o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int angle, char *clib, char *basename, int selectable)
+o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable)
 {
 	OBJECT *complex=NULL;
+	OBJECT *new_node=NULL;
 	int left, right, top, bottom;
+
+	new_node = s_basic_init_object("complex");
+	new_node->type = type;
+	new_node->x = x;
+	new_node->y = y;
+
+	WORLDtoSCREEN(w_current, x, y, 
+			&new_node->screen_x, &new_node->screen_y);    
 	
-	p_x = x1;
-	p_y = y1;
+	new_node->complex_basename = strdup(basename);
+	new_node->complex_clib = strdup(clib);
 
-	WORLDtoSCREEN(w_current, x1,
-                  y1,
-                  &p_screen_x,
-                  &p_screen_y);    
-	
+	new_node->color = color;
 
-	p_complex = NULL;
-        p_visibility = VISIBLE;
+	/* TODO: questionable cast */
+	new_node->draw_func = (void *) complex_draw_func;  
 
-	strcpy(p_complex_basename, basename);
-	strcpy(p_complex_clib, clib);
-
-	p_type = type;
-
-	strcpy(p_name, "complex");
-
-	p_text_string[0] = '\0';
-
-	/* no need to do this */
-	/* yeah.. since it dies anyways, since p_complex is NULL */
-	get_complex_bounds(w_current, p_complex, &left, &top, &right, &bottom);
-
-	p_left = left;
-	p_top = top;
-	p_right = right;   
-	p_bottom = bottom;	
-
-	p_color = color;
-
-	p_draw_func = (void *) complex_draw_func;  /* questionable cast */
 	/* (for a title block) an object that isn't selectable */
 	if (selectable) { 
 
-		p_sel_func = (void *) select_func;
+		new_node->sel_func = (void *) select_func;
 
 	} else {
-		p_sel_func = NULL;
-
-		/* have to think about this a bit more before I do this */
-		/* p_saved_color = color; hack 
-		p_color = GREY; hack */
+		new_node->sel_func = NULL;
 
 	}
 
-	p_line_points = NULL;
-        p_circle = NULL;
+	new_node->angle = angle;
 
-	p_angle = angle;
-
-
-	object_list = (OBJECT *) add_object(object_list);
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
 	/* this was at the beginning and p_complex was = to complex */
 	complex = (OBJECT *) add_head();
 	object_list->complex = complex;
 	
-	/* don't have to rotate here at all */
+	/* don't have to translate/rotate/mirror here at all since the 
+	/* object is in place */
 	
 	return(object_list);
 }

@@ -35,7 +35,6 @@
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-#include "s_passing.h"
 #include "o_types.h"
 
 #include "colors.h"
@@ -82,56 +81,49 @@ o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 {
 	int screen_x, screen_y;
 	int left, top, right, bottom;
-	LINEPTS *new_line_points;
-	p_type = type;
+	OBJECT *new_node;
 
-	strcpy(p_name, "box");
+	new_node = s_basic_init_object("box");
+        new_node->type = type;
+	new_node->color = color;
 
-	new_line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
-/* check for null */	
+	new_node->line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
 
-	/* Do top left etc ... */
-	new_line_points->x1 = x1;
-	new_line_points->y1 = y1;
-	new_line_points->x2 = x2;
-	new_line_points->y2 = y2;
+	new_node->line_points->x1 = x1;
+	new_node->line_points->y1 = y1;
+	new_node->line_points->x2 = x2;
+	new_node->line_points->y2 = y2;
 
-	WORLDtoSCREEN(w_current, new_line_points->x1,
-                  new_line_points->y1,
+	WORLDtoSCREEN(w_current, new_node->line_points->x1,
+                  new_node->line_points->y1,
                   &screen_x,
                   &screen_y);   
 
-	new_line_points->screen_x1 = screen_x;
-        new_line_points->screen_y1 = screen_y;    
+	new_node->line_points->screen_x1 = screen_x;
+        new_node->line_points->screen_y1 = screen_y;    
 
-	WORLDtoSCREEN(w_current, new_line_points->x2,
-                  new_line_points->y2,
+	WORLDtoSCREEN(w_current, new_node->line_points->x2,
+                  new_node->line_points->y2,
                   &screen_x,
                   &screen_y);  
 
-	new_line_points->screen_x2 = screen_x;
-        new_line_points->screen_y2 = screen_y; 
+	new_node->line_points->screen_x2 = screen_x;
+        new_node->line_points->screen_y2 = screen_y; 
 
-	get_box_bounds(w_current, new_line_points, &left, &top, &right, &bottom);
+	get_box_bounds(w_current, new_node->line_points, 
+			&left, &top, &right, &bottom);
 
-	p_left = left;
-	p_top = top;
-	p_right = right;
-	p_bottom = bottom;
+	new_node->left = left;
+	new_node->top = top;
+	new_node->right = right;
+	new_node->bottom = bottom;
 
-	p_color = color;
-	p_complex = NULL;
-        p_visibility = VISIBLE;
-	p_text_string[0] = '\0';
+	/* TODO: questionable cast */     
+	new_node->draw_func = (void *) box_draw_func; 
+	/* TODO: questionable cast */     
+	new_node->sel_func = (void *) select_func;  
 
-
-	p_draw_func = (void *) box_draw_func; /* questionable cast */ 
-	p_sel_func = (void *) select_func;  /* questionable cast */     
-	p_line_points = new_line_points;
-        p_circle = NULL;
-
-
-	object_list = (OBJECT *) add_object(object_list);
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 	return(object_list);
 }
 

@@ -36,11 +36,11 @@
 #include "defines.h"
 #include "struct.h"
 #include "defines.h"
-#include "s_passing.h"
 #include "globals.h"
 
 #include "o_types.h"
 
+#include "../include/colors.h"
 #include "../include/prototype.h"
 
 /* this is modified here and in o_list.c */
@@ -119,6 +119,96 @@ return_head(OBJECT *tail)
 	return(ret_struct);	
 }
 
+OBJECT *
+s_basic_init_object( char *name ) 
+{
+	OBJECT *new_node;
+
+	new_node = (OBJECT *) malloc(sizeof(OBJECT));	
+
+	/* setup sid */
+	new_node->sid = global_sid++;
+	new_node->type = -1;
+
+	/* Setup the name */
+	/* TODO: get rid of magic number 10 that's the size of new_node->sid, */
+	new_node->name = (char *) malloc(sizeof(char)*(strlen(name)+10));
+	sprintf(new_node->name, "%s.%d", name, new_node->sid);
+
+	/* Setup the bounding box */
+	new_node->top = 999999;
+	new_node->left = 999999;
+	new_node->right = 0;
+	new_node->bottom = 0;
+
+	/* Setup line/circle structs */
+	new_node->line_points = NULL;
+	new_node->circle = NULL;
+	new_node->visited = 0;
+	
+	new_node->complex_basename = NULL;
+	new_node->complex_clib = NULL;
+	new_node->complex = NULL;
+	new_node->complex_parent = NULL;
+		
+	new_node->x = -1;
+	new_node->y = -1;
+
+	new_node->screen_x = -1;
+	new_node->screen_y = -1;
+
+	/* Setup the color */
+	new_node->color = WHITE;
+	new_node->saved_color = -1;
+
+	new_node->action_func = error_if_called; 
+	new_node->sel_func = error_if_called; 
+	new_node->draw_func = error_if_called; 
+	
+	/* Set the angle */
+	new_node->angle = 0;
+	new_node->mirror = 0;
+
+	new_node->text_string = NULL;
+	new_node->text_size = -1;
+	new_node->text_len = -1;
+	new_node->displayed_text_len = -1;
+
+
+	new_node->attribs = NULL;
+	new_node->attached_to = NULL;
+	new_node->attribute = 0; 
+	new_node->show_name_value = SHOW_NAME_VALUE;
+	new_node->visibility = VISIBLE;
+	
+	/* Setup link list stuff */
+	new_node->prev = NULL;
+	new_node->next = NULL;
+
+	return(new_node);
+}
+
+OBJECT *
+s_basic_link_object( OBJECT *new_node, OBJECT *ptr ) 
+{
+	/* should never happen, but could */
+	if (new_node == NULL) {
+		fprintf(stderr, "Got a null new_node in link_object\n");
+		return(ptr);
+	}
+
+	if (ptr == NULL) {
+		new_node->prev = NULL; /* setup previous link */
+		return(new_node);
+	} else {
+		new_node->prev = ptr; /* setup previous link */
+		ptr->next = new_node;
+		return(ptr->next);
+	}
+}
+
+#if 0 /* no longer in production */
+/* should be deleted shortly, 7/21/99 */
 OBJECT *
 add_object( OBJECT *ptr ) 
 {
@@ -245,6 +335,7 @@ add_object( OBJECT *ptr )
 		return(ptr->next);
 	}
 }
+#endif
 
 void
 print_struct_forw(OBJECT *ptr)

@@ -14,7 +14,13 @@ install::
 	for i in $(SUBDIRS) ;\
 	do \
 	echo "configuring/making/installing" all "in $$i..."; \
-	(cd $$i ; ./configure --prefix=$(prefix); make install); \
+	( \
+		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export PATH=$(prefix)/bin:${PATH} ; \
+		cd $$i ; \
+		 ./configure --prefix=$(prefix); \
+		make install \
+	); \
 	done
 	@echo Finished!
 	@echo "If you ran make install: than be sure to set"
@@ -32,7 +38,12 @@ config::
 	for i in $(SUBDIRS) ;\
 	do \
 	echo "configuring" all "in $$i..."; \
-	(cd $$i ; ./configure --prefix=$(prefix)); \
+	( \
+		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export PATH=$(prefix)/bin:${PATH} ; \
+		cd $$i ; \
+		./configure --prefix=$(prefix) \
+	); \
 	done
 
 clean::	
@@ -66,7 +77,12 @@ build::
 	for i in $(SUBDIRS) ;\
 	do \
 	echo "building" all "in $$i..."; \
-	(cd $$i ; make); \
+	( \
+		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export PATH=$(prefix)/bin:${PATH} ; \
+		cd $$i ; \
+		make \
+	); \
 	done
 	@echo Finished!
 
@@ -90,7 +106,12 @@ justinstall::
 	for i in $(SUBDIRS) ;\
 	do \
 	echo "justinstalling" all "in $$i..."; \
-	(cd $$i ; make install); \
+	( \
+		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export PATH=$(prefix)/bin:${PATH} ; \
+		cd $$i ; \
+		make install \
+	); \
 	done
 	@echo Finished!
 

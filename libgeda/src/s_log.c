@@ -36,7 +36,6 @@
 #include "defines.h"
 #include "struct.h"
 #include "defines.h"
-#include "s_passing.h"
 #include "globals.h"
 
 #include "funcs.h"
