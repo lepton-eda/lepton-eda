@@ -1,7 +1,7 @@
 
 SUBDIRS = src gschlas scripts lib include examples 
 
-EXTRA_DIST = 
+EXTRA_DIST = README.olib
 
 dist-clean-local:
 	-rm -rf autom4te.cache

@@ -2,7 +2,7 @@ datadocdir = @GEDADATADIR@/documentation
 
 datadoc_DATA = nc.pdf
 
-EXTRA_DIST = nc.doc
+EXTRA_DIST = nc.doc geda.fig
 
 #
 #  some standard rules for groff based documentation
