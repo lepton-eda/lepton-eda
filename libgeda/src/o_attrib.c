@@ -1431,7 +1431,6 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 	/* search for attributes outside */
 
 	if (o_current->type == OBJ_TEXT) {
-		printf("here %c\n", o_current->type);
 	 	val = o_attrib_get_name_value(o_current->text->string, 
 					found_name, found_value);
 
@@ -1651,6 +1650,36 @@ o_attrib_search_slot_number(OBJECT *object, int slotnumber)
 }
 
 
+char *
+o_attrib_search_component(OBJECT *object, char *name)
+{
+	char *return_value = NULL;
+
+	if (!name) {
+		return(NULL);
+	}
+
+	if (object->type != OBJ_COMPLEX) {
+		return(NULL);
+	}
+
+	/* first look inside the complex object */
+	return_value = o_attrib_search_name(object->complex->prim_objs, 
+					    name, 0);
+
+	if (return_value) {
+		return(return_value);
+	}
+
+	/* now look outside to see if it was attached externally */
+	return_value = o_attrib_search_name_single(object, name, NULL);
+
+	if (return_value) {
+		return(return_value);
+	}
+
+	return(NULL);
+}
 
 void
 o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
@@ -1985,3 +2014,4 @@ o_attrib_free_returned(OBJECT **found_objects)
 
 	free(found_objects);
 }
+
