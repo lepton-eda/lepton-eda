@@ -50,6 +50,7 @@ void rotate_point(int x, int y, int angle, int *newx, int *newy);
 void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
 int return_zoom_number(int zoom_factor);
+double round_5_2_1(double unrounded);
 /* o_arc_basic.c */
 void get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
 void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -437,6 +438,7 @@ void s_nethash_delete(NETHASH *nh_current);
 NETHASH *s_nethash_search(NETHASH *nethash_list, OBJECT *o_current);
 void s_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current, char *new_key, int type, CONN *conn_list);
 NETHASH *s_nethash_query_table(GHashTable *nethash_table, char *key);
+void s_nethash_build_func(gpointer key, gpointer value, gpointer user_data);
 void s_nethash_build(GHashTable *nethash_table, GHashTable *conn_table, OBJECT *start);
 /* s_page.c */
 PAGE *s_page_return_tail(PAGE *head);

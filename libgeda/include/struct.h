@@ -295,7 +295,7 @@ struct st_page {
 
 	char *page_filename; 
 	int CHANGED;			/* changed flag */
-	int zoom_factor;
+	/*int zoom_factor; no longer used*/
 	int left, right, top, bottom;		/* World coord limits */
 	double coord_aspectratio;		/* Real worldcoords ratio (?) */
 	int clist_row;				/* used in page manager */
