@@ -13,7 +13,7 @@ pinseq=1
 T 302 35 5 10 0 1 0 0 1
 pintype=IN
 T 50 150 5 10 1 1 0 0 1
-width=6
+pinlabel=6
 }
 T 302 218 5 10 0 1 0 0 1
 device=OPAD

@@ -1,4 +1,4 @@
-v 20031231 1
+v 20040111 1
 P 200 1200 0 1200 1 0 1
 {
 T 150 1250 5 10 0 1 0 0 1
@@ -8,7 +8,7 @@ pinseq=1
 T 250 1150 5 10 1 1 0 0 1
 pinlabel=IN
 T 200 1200 5 10 0 1 0 0 1
-pintype=i
+pintype=in
 }
 P 1200 1200 1400 1200 1 0 1
 {
@@ -19,10 +19,10 @@ pinseq=2
 T 1150 1150 5 10 1 1 0 6 1
 pinlabel=OUT
 T 1200 1200 5 10 0 1 0 0 1
-pintype=o
-T 500 1600 5 10 0 1 0 0 1
-footprint=none
+pintype=out
 }
+T 500 1600 5 10 0 0 0 0 1
+footprint=none
 T -1200 -150 8 10 0 1 0 0 1
 device=cascade-mixer
 T 300 1800 8 10 1 1 0 0 1

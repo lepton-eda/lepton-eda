@@ -2,7 +2,7 @@ v 20040111 1
 T 1100 900 8 10 1 1 0 6 1
 refdes=U?
 T 300 1050 5 10 0 0 0 0 1
-device=HCPL-2630
+device=HCPL-2430
 T 300 1250 5 10 0 0 0 0 1
 footprint=DIP8
 T 300 1450 5 10 0 0 0 0 1
@@ -43,8 +43,10 @@ T 1050 450 5 8 0 1 0 8 1
 pintype=out
 }
 B 300 125 800 700 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 2850 5 10 0 0 0 0 1
+documentation=http://rocky.digikey.com/WebLib/Agilent/Web%20Data/HCPL-2400_2430.pdf
 T 300 2650 5 10 0 0 0 0 1
-description=dual channel 10 MBd optocoupler
+description=dual channel 20 MBd optocoupler
 T 300 2450 5 10 0 0 0 0 1
 numslots=2
 T 300 2250 5 10 0 0 0 0 1
@@ -54,6 +56,4 @@ slotdef=2:4,3,6
 T 300 1850 5 10 0 0 0 0 1
 slot=1
 T 300 -25 9 8 1 0 0 0 1
-HCPL-2630
-T 300 2850 5 10 0 0 0 0 1
-documentation=http://cp.literature.agilent.com/litweb/pdf/5989-0302EN.pdf
+HCPL-2430
