@@ -325,6 +325,11 @@ g_rc_component_library_search(SCM path)
 #endif
 				} else {
 					cwd = getcwd(NULL, 1024);
+#ifdef __MINGW32__
+					u_basic_strip_trailing(cwd, 
+							PATH_SEPARATER_CHAR);
+#endif
+
 					temp = u_basic_strdup_multiple(cwd, 
 						PATH_SEPARATER_STRING, 
 						fullpath, NULL);
@@ -461,6 +466,10 @@ g_rc_source_library_search(SCM path)
 #endif
 				} else {
 					cwd = getcwd(NULL, 1024);
+#ifdef __MINGW32__
+					u_basic_strip_trailing(cwd, 
+							PATH_SEPARATER_CHAR);
+#endif
 					temp = u_basic_strdup_multiple(cwd, 
 						PATH_SEPARATER_STRING, 
 						fullpath, NULL);

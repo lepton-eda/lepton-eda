@@ -94,11 +94,20 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 {
   char *temp;
 
-#if DEBUB
+#if DEBUG
   printf("%s %s\n", directory, filename);
 #endif
-  temp = u_basic_strdup_multiple(directory, PATH_SEPARATER_STRING, 
-				 filename, NULL);
+
+#ifdef __MINGW32__
+  if (u_basic_has_trailing(directory, PATH_SEPARATER_CHAR)) {
+     temp = u_basic_strdup_multiple(directory, filename, NULL);
+  } else {
+#endif
+     temp = u_basic_strdup_multiple(directory, PATH_SEPARATER_STRING, 
+				    filename, NULL);
+#ifdef __MINGW32__
+  }
+#endif
 
   s_page_free(preview, preview->page_current);
 
@@ -382,6 +391,9 @@ x_preview_setup_rest(TOPLEVEL *preview)
   /* be sure to turn off the grid */
   preview->grid = FALSE;
 
+  /* preview windows don't have toolbars */
+  preview->handleboxes = FALSE; 
+  preview->toolbars = FALSE;
 
   x_repaint_background(preview);
 
@@ -442,7 +454,6 @@ x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
   preview_window->h_scrollbar = NULL;
   preview_window->v_scrollbar = NULL;
 
-	
   gtk_widget_set_events (preview_window->drawing_area, 
                          GDK_EXPOSURE_MASK | 
                          GDK_POINTER_MOTION_MASK |

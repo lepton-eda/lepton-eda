@@ -1,3 +1,35 @@
+2002-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_fileselect.nw: A bit more work on getting the WinME problem
+	fixed.
+
+	* noweb/x_preview.nw: A few fixes to address the WinME problem.
+
+	* noweb/g_rc.nw, gschem.nw, i_callbacks.nw, x_fileselect.nw: 
+	Made sure that all of this trailing slash nonsense is only built
+	on mingw and does not impact the unix port.
+
+	* noweb/x_preview.nw: Made sure the toolbars are disabled in the
+	preview window.  Otherwise you get gtk warnings...
+
+2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw, gschem.nw, i_callbacks.nw, x_fileselect.nw: 
+	Added a call to u_basic_strip_trailing for the mingw port to 
+        make WinME happy (ME was interpreting \\ anywhere in filenames as
+        network paths).
+
+2002-06-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_window.nw: Oops forgot to free a temporary string. Fixed.
+
+	* bitmaps/*.xpm: Updated some of the bitmaps I drew to look a little
+	better.
+
+2002-06-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/gschem-lightbg: Changed green3 to green4 for text and graphics.
+
 2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Fixed incorrect environment variable name

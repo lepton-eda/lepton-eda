@@ -14,6 +14,8 @@
 <<u_basic.c : u_basic_strdup()>>
 <<u_basic.c : u_basic_strdup_multiple()>>
 <<u_basic.c : u_basic_breakup_string()>>
+<<u_basic.c : u_basic_strip_trailing()>>
+<<u_basic.c : u_basic_has_trailing()>>
 
 @
 
@@ -203,3 +205,46 @@ u_basic_breakup_string(char *string, int count)
 
 
 @ %def u_basic_breakup_string
+
+
+@section Function @code{u_basic_strip_trailing()}
+
+@defun u_basic_strip_trailing string character
+@end defun
+
+<<u_basic.c : u_basic_strip_trailing()>>=
+void
+u_basic_strip_trailing(char *string, char c)
+{
+  if (string) {
+   int len = strlen(string) - 1; /* point to last char */
+   if (string[len] == c) {
+       string[len] = '\0';
+    }
+  }
+}
+
+
+@ %def u_basic_strip_trailing
+
+
+@section Function @code{u_basic_has_trailing()}
+
+@defun u_has_strip_trailing string character
+@end defun
+
+<<u_basic.c : u_basic_has_trailing()>>=
+int
+u_basic_has_trailing(char *string, char c)
+{
+  if (string) {
+   int len = strlen(string) - 1; /* point to last char */
+   if (string[len] == c) {
+	return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+@ %def u_basic_has_trailing

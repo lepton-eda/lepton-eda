@@ -1,3 +1,7 @@
+2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/u_basic.nw: Added u_basic_strip_trailing utility function
+
 2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/defines.h: Added OTHER_* seperater #defines.  Mainly for

@@ -61,6 +61,9 @@ void main_prog(int argc, char *argv[])
 
     argv_index = parse_commandline(argc, argv);
     cwd = getcwd(NULL, 1024);
+#ifdef __MINGW32__
+    u_basic_strip_trailing(cwd, PATH_SEPARATER_CHAR);
+#endif
 
     /* this is a kludge to make sure that spice mode gets set */
     if (guile_proc) {

@@ -240,8 +240,19 @@ x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
     f_current->filename = u_basic_strdup(filename);
 					
     free(temp); 
-    temp = u_basic_strdup_multiple(f_current->directory, PATH_SEPARATER_STRING,
-                                   f_current->filename, NULL);
+#ifdef __MINGW32__
+    if (u_basic_has_trailing(f_current->directory, PATH_SEPARATER_CHAR)) {
+       temp = u_basic_strdup_multiple(f_current->directory, 
+                                      f_current->filename, NULL);
+    } else {
+#endif
+       temp = u_basic_strdup_multiple(f_current->directory, 
+			              PATH_SEPARATER_STRING,
+                                      f_current->filename, NULL);
+#ifdef __MINGW32__
+    }
+#endif
+
     gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
   } else {
@@ -365,18 +376,33 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
   int max_width=0;
   int width;
   int first, last, j, done=0;
+#ifdef __MINGW32__
+  int has_trailing = FALSE;
+#endif
 
   directory = opendir(f_current->directory);
+#ifdef __MINGW32__
+  has_trailing = u_basic_has_trailing(f_current->directory, 
+				      PATH_SEPARATER_CHAR);
+#endif
 
   if (!directory) {
     fprintf(stderr, "Agg, could open directory: %s\n", f_current->directory);
     return;
   }
 
-
   while((dirent_ptr = readdir(directory)) != NULL) {
-    sprintf(path_buf, "%s%c%s", f_current->directory, PATH_SEPARATER_CHAR,
-	    dirent_ptr->d_name);
+#ifdef __MINGW32__
+    if (has_trailing) {
+    	sprintf(path_buf, "%s%s", f_current->directory, dirent_ptr->d_name);
+    } else {
+#endif
+    	sprintf(path_buf, "%s%c%s", f_current->directory, PATH_SEPARATER_CHAR,
+	        dirent_ptr->d_name);
+#ifdef __MINGW32__
+    }
+#endif
+
     if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode)) {
 /*     	printf("dir: %s\n", path_buf);	 */
       num_directories++;	
@@ -402,14 +428,21 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
   rewinddir(directory);
 
   while((dirent_ptr = readdir(directory)) != NULL) {
-    sprintf(path_buf, "%s%c%s", f_current->directory, PATH_SEPARATER_CHAR,
-	    dirent_ptr->d_name);
+#ifdef __MINGW32__
+    if (has_trailing) {
+    	sprintf(path_buf, "%s%s", f_current->directory, dirent_ptr->d_name);
+    } else {
+#endif
+    	sprintf(path_buf, "%s%c%s", f_current->directory, PATH_SEPARATER_CHAR,
+	        dirent_ptr->d_name);
+#ifdef __MINGW32__
+    }
+#endif
     if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode) &&
        (strcmp(dirent_ptr->d_name, ".") != 0)) {
 
       f_current->directory_entries[dir_count] = (char *)
-        malloc(sizeof(char)*(strlen(
-                                    dirent_ptr->d_name)+2));
+        malloc(sizeof(char)*(strlen(dirent_ptr->d_name)+2));
 	
       sprintf(f_current->directory_entries[dir_count], 
               "%s", dirent_ptr->d_name);
@@ -419,8 +452,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
       if (x_fileselect_include_file(dirent_ptr->d_name,
                                     f_current->filter_type)) {	
         f_current->file_entries[file_count] = (char *)
-          malloc(sizeof(char)*(strlen(
-                                      dirent_ptr->d_name)+1));
+          malloc(sizeof(char)*(strlen(dirent_ptr->d_name)+1));
         strcpy(f_current->file_entries[file_count], 
                dirent_ptr->d_name);
         file_count++;
@@ -717,9 +749,8 @@ x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
   } else {
     f_current->preview_control = TRUE;
 
-    x_preview_update(f_current->preview,	
-                     f_current->directory,
-                     f_current->filename);
+    x_preview_update(f_current->preview, f_current->directory, 
+	             f_current->filename);
   }
   return(0);
 }
@@ -987,10 +1018,7 @@ x_fileselect_file_button (GtkWidget *widget, gint row, gint column,
                                       f_current, temp);
 
           if (f_current->preview_control) { 
-            x_preview_update(f_current->
-                             preview, 
-                             f_current->directory,
-                             temp);
+            x_preview_update(f_current->preview, f_current->directory, temp);
           }
           break;
       }
@@ -1073,8 +1101,18 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
     free(filename);
   }
 				
-  temp = u_basic_strdup_multiple(f_current->directory, PATH_SEPARATER_STRING,
-                                 f_current->filename, NULL);
+#ifdef __MINGW32__
+  if (u_basic_has_trailing(f_current->directory, PATH_SEPARATER_CHAR)) {
+  	temp = u_basic_strdup_multiple(f_current->directory, 
+                                       f_current->filename, NULL);
+  } else { 
+#endif
+  	temp = u_basic_strdup_multiple(f_current->directory, 
+                                       PATH_SEPARATER_STRING,
+                                       f_current->filename, NULL);
+#ifdef __MINGW32__
+  }
+#endif
   gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
   free(temp);
@@ -1491,8 +1529,18 @@ x_fileselect_comp_update_current(FILEDIALOG *f_current,
   }
 
   if (f_current->directory && f_current->filename) {
-    temp = u_basic_strdup_multiple(f_current->directory, PATH_SEPARATER_STRING,
-                                   f_current->filename, NULL);
+#ifdef __MINGW32__
+    if (u_basic_has_trailing(f_current->directory, PATH_SEPARATER_CHAR)) {
+    	temp = u_basic_strdup_multiple(f_current->directory, 
+                                       f_current->filename, NULL);
+    } else {
+#endif
+    	temp = u_basic_strdup_multiple(f_current->directory, 
+				       PATH_SEPARATER_STRING,
+                                       f_current->filename, NULL);
+#ifdef __MINGW32__
+    }
+#endif
     gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
     free(temp);
   } else if (f_current->directory && !f_current->filename) {

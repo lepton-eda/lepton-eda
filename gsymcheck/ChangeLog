@@ -1,3 +1,8 @@
+2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * src/g_rc.c, gnetlist.c: Added a call to u_basic_strip_trailing to
+        fix the network timeout problem on WinME
+
 2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	 * lib/system-gschemrc.in: Fixed incorrect environment variable name

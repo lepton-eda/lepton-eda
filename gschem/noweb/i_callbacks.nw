@@ -357,6 +357,9 @@ DEFINE_I_CALLBACK(file_new)
   /* TODO: probably 256 is enough, but shuold be something like
    * getcwd(NULL, 0); */
   if (getcwd(w_current->cwd, 256)) {
+#ifdef __MINGW32__
+    u_basic_strip_trailing(w_current->cwd, PATH_SEPARATER_CHAR);
+#endif
     /* TODO: the #'s are for 10 digits hack */
     /* TODO: perform a NULL check */
     temp_filename = (char *) malloc(
@@ -438,6 +441,9 @@ DEFINE_I_CALLBACK(file_new_window)
   exit_if_null(w_current);
 
   if (getcwd(w_current->cwd, 256)) {
+#ifdef __MINGW32__
+    u_basic_strip_trailing(w_current->cwd, PATH_SEPARATER_CHAR);
+#endif
     if (w_current->page_current->page_filename) {
       free(w_current->page_current->page_filename);
     }
@@ -2017,6 +2023,9 @@ DEFINE_I_CALLBACK(page_new)
   exit_if_null(w_current);
 
   if (getcwd(w_current->cwd, 256)) {
+#ifdef __MINGW32__
+    u_basic_strip_trailing(w_current->cwd, PATH_SEPARATER_CHAR);
+#endif
     /* TODO: perform a NULL check */
     /* the 20 is a hack and needs to be changed */
     filename = malloc(sizeof(char) *

@@ -891,6 +891,7 @@ x_window_create_main(TOPLEVEL *w_current)
 
   	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
 
+  	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-select.xpm", NULL);
   	w_current->toolbar_select = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),

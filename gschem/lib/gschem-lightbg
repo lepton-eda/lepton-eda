@@ -82,7 +82,7 @@
 ; by this keyword.  
 ; DO NOT change the value of the index (first number)
 ; 
-(graphic-color 3 "green3" "green4" "0 .54 0" 0 139 0)	; light background
+(graphic-color 3 "green4" "green4" "0 .54 0" 0 139 0)	; light background
 
 ; net-color index color_name outline_color ps_color_string 
 ;           int_red int_green int_blue 
@@ -129,7 +129,7 @@
 ; Existing graphic objects are not effected by this keyword.  
 ; DO NOT change the value of the index (first number)
 ;
-(text-color 9 "green3" "green4" "0 .54 0" 0 139 0)	    ; light background
+(text-color 9 "green4" "green4" "0 .54 0" 0 139 0)	    ; light background
 
 ; bus-color index color_name outline_color ps_color_string 
 ;           int_red int_green int_blue 
