@@ -513,12 +513,11 @@ libgeda_install: libgeda$(CD_VERSION)/config.h
 
 # docs
 docs: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
-       $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
+      $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
 	@echo docs Built 
 
-docs_install: symbols_install \
-	       $(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
-	       $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
+docs_install: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
+	      $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} install )
 
 docs_uninstall: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
