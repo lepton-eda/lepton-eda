@@ -1,3 +1,6 @@
+#
+# gEDA/gaf Toplevel Makefile
+#
 
 SHELL=/bin/sh
 
