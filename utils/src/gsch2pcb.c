@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /* gsch2pcb
 |
 |  Bill Wilson    billw@wt.net
@@ -1091,8 +1093,20 @@ add_schematic(gchar *sch)
 static gint
 parse_config(gchar *config, gchar *arg)
 	{
+	gchar *s;
+	int i;
+
+	/* remove trailing white space otherwise strange things can happen */
+	if ( (arg != NULL) && (strlen(arg) >= 1) )
+		{
+		s = arg + strlen(arg) - 1;
+		while( (*s == ' ' || *s == '\t' ) && (s != arg) ) s--;
+		s++;
+		*s = '\0';
+		}
+
 	if (verbose)
-		printf("    %s %s\n", config, arg ? arg : "");
+		printf("    %s \"%s\"\n", config, arg ? arg : "");
 
 	if (!strcmp(config, "remove-unfound") || !strcmp(config, "r"))
 		{
