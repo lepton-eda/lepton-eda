@@ -66,7 +66,7 @@ int PackageInitialize(void)
 	iResult = ConfigOpen(PACKAGE_CFGFILE);
 	if (iResult == FAILURE)
 	{
-		sprintf(szValue, "Cannot find a configuration file '%s' in %s", PACKAGE_CFGFILE, get_current_dir_name());
+		sprintf(szValue, "Cannot find a configuration file '%s'", PACKAGE_CFGFILE);
 		MsgBox(
 			GTK_WINDOW(pWindowMain), 
 			"Error !",

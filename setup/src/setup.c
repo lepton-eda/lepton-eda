@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -21,10 +21,6 @@
 
 #include <errno.h>
 #include <gtk/gtk.h>
-#include <pthread.h>
-#include <signal.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include "comps.h"
