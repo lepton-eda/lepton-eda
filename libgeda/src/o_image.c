@@ -56,6 +56,8 @@ int image_grey;
 
 #ifdef HAS_LIBGDGEDA
 
+extern COLOR colors[MAX_COLORS];
+
 gdImagePtr current_im_ptr;
 
 void
@@ -73,7 +75,17 @@ o_image_create(int x, int y, int color_mode)
 	im_ptr = gdImageCreate(x, y);
 
 	if (color_mode == TRUE) {
-		image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
+		// You can change the background color which is printed
+		if (colors[BACKGROUND_COLOR].image_red != -1 && 
+		    colors[BACKGROUND_COLOR].image_green != -1 &&
+		    colors[BACKGROUND_COLOR].image_blue != -1) {
+		    image_black = gdImageColorAllocate(im_ptr, 
+				    	colors[BACKGROUND_COLOR].image_red,
+				       	colors[BACKGROUND_COLOR].image_green,
+					colors[BACKGROUND_COLOR].image_blue);
+		} else {
+		    image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
+		}
 		image_white = gdImageColorAllocate(im_ptr, 255, 255, 255);
 	} else {
 		/* set the background to white */
