@@ -105,6 +105,8 @@ attrib_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event,
     attrib_edit_dialog_cancel(NULL, w_current);	
   }
 }
+
+
 @ %def attrib_edit_dialog_keypress
 
 

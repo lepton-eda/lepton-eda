@@ -21,6 +21,7 @@
 <<x_print.c : x_print_change_size()>>
 <<x_print.c : x_print_print()>>
 <<x_print.c : x_print_cancel()>>
+<<x_print.c : x_print_keypress()>>
 <<x_print.c : x_print_setup()>>
 
 @
@@ -353,6 +354,25 @@ x_print_cancel(GtkWidget *w, TOPLEVEL *w_current)
 @ %def x_print_cancel
 
 
+@section Function @code{x_print_keypress()}
+
+@defun x_print_keypress w event w_current
+@end defun
+
+<<x_print.c : x_print_keypress()>>=
+void
+x_print_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+    x_print_cancel(NULL, w_current);	
+  }
+}
+
+
+@ %def x_print_keypress
+
+
 @section Function @code{x_print_setup()}
 
 @defun x_print_setup w_current filename
@@ -545,8 +565,12 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
       print_landscape (NULL, w_current);
     }
 
+    gtk_signal_connect(GTK_OBJECT(w_current->pwindow), "key_press_event",
+                         (GtkSignalFunc) x_print_keypress, w_current);
   }
 
+
+  
   if (!GTK_WIDGET_VISIBLE (w_current->pwindow)) {
     gtk_entry_set_text(GTK_ENTRY(w_current->pfilename_entry),
                        filename);

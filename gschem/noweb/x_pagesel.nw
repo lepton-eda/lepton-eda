@@ -26,6 +26,8 @@ gint change_page(GtkWidget *widget, gint row, gint column,
 <<x_pagesel.c : page_close()>>
 <<x_pagesel.c : page_discard()>>
 <<x_pagesel.c : change_page()>>
+<<x_pagesel.c : page_manager_close()>>
+<<x_pagesel.c : page_manager_keypress()>>
 <<x_pagesel.c : setup_page_selector()>>
 
 @
@@ -72,6 +74,42 @@ gint change_page(GtkWidget *widget, gint row, gint column,
 #include "../include/globals.h"
 @
 
+
+@section Function @code{page_manager_close()}
+
+@defun page_manager_close w w_current
+@end defun
+
+<<x_pagesel.c : page_manager_close()>>=
+gint
+page_manager_close(GtkWidget *w, TOPLEVEL *w_current)
+{
+  gtk_widget_destroy(w_current->pswindow);
+  w_current->pswindow=NULL;
+  return(0);
+}
+
+
+@ %def page_manager_close
+
+
+@section Function @code{page_manager_keypress()}
+
+@defun page_manager_keypress w event w_current
+@end defun
+
+<<x_pagesel.c : page_manager_keypress()>>=
+void
+page_manager_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+    page_manager_close(NULL, w_current);	
+  }
+}
+
+
+@ %def page_manager_keypress
 
 
 @section Function @code{update_page_manager()}
@@ -522,11 +560,15 @@ setup_page_selector (TOPLEVEL *w_current)
     buttonclosewin = gtk_button_new_with_label (_("Close Manager"));
     gtk_box_pack_start (GTK_BOX (box2),
                         buttonclosewin, TRUE, TRUE, 10);
-    gtk_signal_connect_object(GTK_OBJECT(buttonclosewin),
-                              "clicked",
-                              GTK_SIGNAL_FUNC(gtk_widget_destroy),
-                              GTK_OBJECT (w_current->pswindow));
+    gtk_signal_connect(GTK_OBJECT(buttonclosewin),
+                       "clicked",
+                       GTK_SIGNAL_FUNC(page_manager_close),
+                       w_current);
     gtk_widget_show (buttonclosewin);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->pswindow), "key_press_event",
+                         (GtkSignalFunc) page_manager_keypress, w_current);
+
   }
 
   if (!GTK_WIDGET_VISIBLE (w_current->pswindow)) {

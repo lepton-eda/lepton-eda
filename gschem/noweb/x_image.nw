@@ -24,6 +24,7 @@
 <<x_image.c : create_menu_size()>>
 <<x_image.c : x_image_write()>>
 <<x_image.c : x_image_cancel()>>
+<<x_image.c : x_image_keypress()>>
 <<x_image.c : x_image_setup()>>
 
 @
@@ -361,6 +362,25 @@ x_image_cancel(GtkWidget *w, TOPLEVEL *w_current)
 @ %def x_image_cancel
 
 
+@section Function @code{x_image_keypress()}
+
+@defun x_image_keypress w event w_current
+@end defun
+
+<<x_image.c : x_image_keypress()>>=
+void
+x_image_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+    x_image_cancel(NULL, w_current);	
+  }
+}
+
+
+@ %def x_image_keypress
+
+
 @section Function @code{x_image_setup()}
 
 @defun x_image_setup w_current filename
@@ -501,8 +521,10 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
     gtk_widget_show (separator);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->iwindow), "key_press_event",
+                       (GtkSignalFunc) x_image_keypress, w_current);
   }
-
+ 
   if (!GTK_WIDGET_VISIBLE (w_current->iwindow)) {
     gtk_entry_set_text(GTK_ENTRY(w_current->ifilename_entry), filename);
     /* gtk_entry_set_text(GTK_ENTRY(w_current->iwidth_entry), "800");

@@ -70,7 +70,6 @@ Copyright @copyright{} xxxx XXXX.
 * File o_text.c:: file o_text.c.
 * File o_undo.c:: file o_undo.c.
 * File parsecmd.c:: file parsecmd.c.
-* File x_attrsel.c:: file x_attrsel.c.
 * File x_basic.c:: file x_basic.c.
 * File x_color.c:: file x_color.c.
 * File x_dialog.c:: file x_dialog.c.
@@ -129,7 +128,6 @@ Copyright @copyright{} xxxx XXXX.
 @include o_text.texi
 @include o_undo.texi
 @include parsecmd.texi
-@include x_attrsel.texi
 @include x_basic.texi
 @include x_color.texi
 @include x_dialog.texi
