@@ -106,8 +106,9 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, INVISIBLE, 
-							 SHOW_NAME_VALUE, o_current);
+    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, 
+								 INVISIBLE, 
+								 SHOW_NAME_VALUE, o_current);
   }
   
   return;
@@ -328,3 +329,24 @@ void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_
 }
                                                                                                     
 
+/*------------------------------------------------------------------
+ * This verifies that the object has a non-null symbol file.
+ * It returns 0 = valid symbol file, 1 = no symbol file found.
+ *------------------------------------------------------------------*/
+int s_object_has_sym_file(OBJECT *object)
+{
+  char *filename;
+
+  filename = object->complex_basename;
+  if (filename != NULL) {
+#ifdef DEBUG
+    printf("In s_object_has_sym_file, object has sym file = %s.\n", filename);
+#endif
+    return 0;
+  } else {
+#ifdef DEBUG
+    printf("In s_object_has_sym_file, found object with no attached symbol file.\n");
+#endif 
+    return 1;
+  }
+}

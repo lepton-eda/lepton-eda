@@ -398,6 +398,171 @@ int x_dialog_delattrib_yes_callback(GtkWidget *buttonyes,
 
 
 /* ========================================================= *
+ * Missing symbol file dialog boxes.                         *
+ * ========================================================= */
+
+/* --------------------------------------------------------- *
+ * This is the "missing symbol file found on object" dialog.
+ * It offers the user the chance to close the project without
+ * saving because he read a schematic with a missing symbol file.
+ * --------------------------------------------------------- */
+int x_dialog_missing_sym(OBJECT *object)
+{
+  GtkWidget *missing_sym_window;
+  GtkWidget *label;
+  GtkWidget *buttoncontinue = NULL;
+  GtkWidget *buttonabort = NULL;
+  GtkWidget *vbox, *action_area;
+  char *string;
+  char *refdes;
+
+#ifdef DEBUG
+  printf("In x_dialog_missing_sym, creating windows.\n");
+#endif
+
+  /* Create window and set its properties */
+  missing_sym_window = x_dialog_create_dialog_box(&vbox, &action_area);
+  gtk_window_position(GTK_WINDOW(missing_sym_window),
+		      GTK_WIN_POS_MOUSE);
+
+  /* I want dialog to maintain focus.  Neither of these seem to work. */
+  gtk_window_set_modal(GTK_WINDOW(missing_sym_window), TRUE);
+
+  gtk_window_set_transient_for(GTK_WINDOW(missing_sym_window),
+                               GTK_WINDOW(window))   /* window is gloabl main window */;
+
+  gtk_window_set_title(GTK_WINDOW(missing_sym_window), "Missing symbol file found for component!");
+  gtk_container_border_width(GTK_CONTAINER(missing_sym_window), 5);
+  
+  gtk_signal_connect(GTK_OBJECT(missing_sym_window),
+		     "destroy", GTK_SIGNAL_FUNC(x_dialog_missing_sym_donothing_callback),
+		     GTK_WIDGET(missing_sym_window) );
+  
+  gtk_signal_connect(GTK_OBJECT(missing_sym_window),
+		     "key_press_event", GTK_SIGNAL_FUNC(x_dialog_missing_sym_donothing_callback),
+		     GTK_WIDGET(missing_sym_window) );
+  gtk_window_set_modal(GTK_WINDOW(missing_sym_window), TRUE);
+  
+  /*  Get refdes of object  */
+  refdes = o_attrib_search_name_single(object, "refdes", NULL);
+  if (!refdes) {
+    refdes = o_attrib_search_name_single(object, "uref", NULL); /* deprecated */
+    if (refdes) {
+      printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", refdes);
+    } else {
+      fprintf(stderr, "In s_dialog_missing_sym, found non-graphical component with no refdes.\n");
+    }
+  }
+
+  /*  Create a text label for the dialog window */
+  string =
+    g_strdup_printf(_("Warning!  The component with refdes %s is missing a symbol file!\n"), refdes);
+  string =
+    g_strdup_printf(_("%s\n"), string);
+  string =
+    g_strdup_printf(_("%sIf you save out a design with a missing symbol file, gattrib will\n"), string);
+  string =
+    g_strdup_printf(_("%spermanently remove this component from your design!  You probably\n"), string);
+  string =
+    g_strdup_printf(_("%sdon't want this!\n"), string);
+  string =
+    g_strdup_printf(_("%s\n"), string);
+  string =
+    g_strdup_printf(_("%sThis probably happened because gattrib couldn't find your component libraries,\n"), string);
+  string =
+    g_strdup_printf(_("%sperhaps because your gafrc or gattribrc files are misconfigured.\n"), string);
+  string =
+    g_strdup_printf(_("%sChose \"Abort program\" to leave gattrib and fix the problem, or\n"), string);
+  string =
+    g_strdup_printf(_("%s\"Continue\" to continue working with gattrib.\n"), string);
+
+  label = gtk_label_new(string);
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
+
+  /* Now create "Abort program" and "Continue" buttons */
+  buttonabort = gtk_button_new_with_label("Abort program");
+  GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
+  gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_missing_sym_abort_callback), 
+		     GTK_WIDGET(missing_sym_window) );
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (GTK_WIDGET (buttonabort), 70, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttonabort), 70, 30);
+#endif
+  gtk_widget_show(buttonabort);
+
+
+  buttoncontinue = gtk_button_new_with_label("Continue");
+  gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_missing_sym_continue_callback), 
+		     GTK_WIDGET(missing_sym_window) );
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (GTK_WIDGET (buttoncontinue), 70, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttoncontinue), 70, 30);
+#endif
+  gtk_widget_show(buttoncontinue);
+
+
+#ifdef DEBUG
+  printf("In x_dialog_missing_sym, now show window.\n");
+#endif
+
+  if (!GTK_WIDGET_VISIBLE(missing_sym_window)) {
+    gtk_widget_show(missing_sym_window);
+  }
+  
+  return;
+}
+
+/* --------------------------------------------------------- *
+ * This callback traps certain events and does nothing.  The
+ * idea is to prevent default event handlers from handing the
+ * events.  
+ * --------------------------------------------------------- */
+int x_dialog_missing_sym_donothing_callback(GtkWidget * widget, 
+					 GdkEventKey * event,
+					 GtkWidget *window)
+{
+#ifdef DEBUG
+    printf("In x_dialog_missing_sym_donothing, received an event, but doing nothing.\n");
+#endif
+  return TRUE;
+}
+
+/* --------------------------------------------------------- *
+ * continue window
+ * --------------------------------------------------------- */
+int x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose, 
+				      GtkWidget *window)
+{
+#ifdef DEBUG
+  printf("In x_dialog_missing_sym_continue_callback, continuing program\n");
+#endif
+  x_dialog_close_window(window);
+  return;
+}
+
+
+/* --------------------------------------------------------- *
+ * Abort button pressed -- close the program now.
+ * --------------------------------------------------------- */
+int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes, 
+				    GtkWidget *window)
+{
+#ifdef DEBUG
+  printf("In x_dialog_missing_sym_abort_callback, closing program\n");
+#endif
+  gattrib_quit();
+}
+
+
+
+/* ========================================================= *
  * Unimplemented feature callback
  * ========================================================= */
 
@@ -590,10 +755,10 @@ void x_dialog_about_dialog()
 }
 
 
-/* --------------------------------------------------------- *
+/* ========================================================= *
  * Fcns common to all dialog boxes
  * This code also stolen from gschem & adapted for gattrib. 
- * --------------------------------------------------------- */
+/* ========================================================= *
 
 /* ---------------------------------------------------- *
  * This creates a dialog box.  It has two areas: the vbox

@@ -64,7 +64,8 @@ s_toplevel_init(TOPLEVEL *pr_current)
 int s_toplevel_read_page(char *filename)
 {
   PAGE local_page;
-  int return_code;
+  int file_return_code;
+
 
   /* If this is not the first page, try to create a new page. */
   if (first_page != 1) {
@@ -88,14 +89,39 @@ int s_toplevel_read_page(char *filename)
   pr_current->page_current->page_filename = u_basic_strdup(filename);
   
   /* read in and fill out pr_current using f_open and its callees */
-  return_code = f_open(pr_current, filename);
-  if (!return_code) {        /* 1 = success reading in page */
+  file_return_code = f_open(pr_current, filename);
+  if (!file_return_code) {        /* 1 = success reading in page */
     /* 0 = failure reading in page */
     fprintf(stderr, "Couldn't load schematic [%s]\n", filename);
   }
-
-  return return_code;
+  return file_return_code;
 }
+
+
+/*------------------------------------------------------------------
+ * This fcn loops through all components in the design looking for
+ * components which are placeholders.  Placeholders are inserted into
+ * the object list when no symbol file is found.  If this fcn finds 
+ * a placeholder, it warns the user.  
+ *------------------------------------------------------------------*/
+int s_toplevel_verify_design(TOPLEVEL *pr_current)
+{
+  OBJECT *o_current;
+
+#ifdef DEBUG
+   printf("In s_toplevel_verify_design, about to check that all components have sym files.\n");
+#endif
+   o_current = pr_current->page_current->object_head;
+   while (o_current != NULL) {
+     /* ------- look for object, and verify that it has a symbol file attached. ----- */
+     if (o_current->type == OBJ_PLACEHOLDER) {  
+       x_dialog_missing_sym(o_current);  /* dialog gives user option to quit */
+     }
+     o_current = o_current->next;
+   }
+}
+
+
 
 /*------------------------------------------------------------------
  * This fcn returns 1 if the project is empty (i.e. pr_current is 

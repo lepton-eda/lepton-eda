@@ -77,6 +77,7 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
 /* ------------- s_toplevel.c ------------- */
 void s_toplevel_init();
 int s_toplevel_read_page(char *filename);
+int s_toplevel_verify_design(TOPLEVEL *pr_current);
 int s_toplevel_empty_project();
 void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_update_page(OBJECT *start_obj);
@@ -118,7 +119,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * w_current, char *text_st
 				     int visibility, int show_name_value,
 				     OBJECT * object);
 void s_object_delete_text_object_in_object(TOPLEVEL *w_current, OBJECT *test_object);
-
+int s_object_has_sym_file(OBJECT *object);
 
 /* ------------- s_rename.c ------------- */
 void s_rename_init(void);
@@ -159,6 +160,15 @@ int x_dialog_delattrib_close_callback(GtkWidget *buttonclose,
 				      GtkWidget *window);
 int x_dialog_delattrib_yes_callback(GtkWidget *buttonok, 
 				    GtkWidget *window);
+
+int x_dialog_missing_sym(OBJECT *object);
+int x_dialog_missing_sym_donothing_callback(GtkWidget * widget,
+					    GdkEventKey * event,
+					    GtkWidget *window);
+int x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose,
+					   GtkWidget *window);
+int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
+					GtkWidget *window);
 
 int x_dialog_unimplemented_feature();
 

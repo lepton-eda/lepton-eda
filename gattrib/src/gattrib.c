@@ -333,13 +333,15 @@ void gattrib_main(int argc, char *argv[])
     
   }
 
-  /* ---------- Now make sure that there are attributes to display.  ---------- */
+  /* ---------- Now verify correctness of read-in design.  ---------- */
+  s_toplevel_verify_design(pr_current);
 
 
   /* ---------- Now enter main event loop for spreadsheet.  ---------- */
   gtk_widget_show( GTK_WIDGET(window) );  /*  One final show for good measure  */
   gtk_main_iteration();  /* force window exposure by running event handler once */
   gtk_main();
+
 
   /* ---------- Spreadsheet has been killed; we are quitting.  ---------- */
 #ifdef DEBUG

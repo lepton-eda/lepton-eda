@@ -911,6 +911,10 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
   gtk_widget_show( GTK_WIDGET(notebook));
   gtk_widget_show( GTK_WIDGET(window));
 
+  /* ---------- Now verify correctness of entire design.  ---------- */
+  s_toplevel_verify_design(pr_current);  /* pr_current is a global */
+
+
   return;
 }
 
