@@ -1,3 +1,32 @@
+2001-11-21  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* configure.in, Makefile.am: Added test to use notangle_guile.scm
+	if notangle is not available.
+
+	* docs/Makefile.am: Moved the documentation generation here.
+
+	* src/Makefile.am: Added a rule to produce prototype.h from noweb
+	files and moved the documentation generation to docs/.
+
+	* scripts/geda_totexi.in: Changed geda_totexi to geda_totexi.in
+	to take benefit from the configure test on AWK. Backend updated
+	to handle cross-references.
+
+	* scripts/notangle_guile.scm.in: Added guile script to tangle
+	noweb code without the whole noweb package installed.
+	
+	* noweb/o_{arc|box|circle|line}.nw: Full documentation, code 
+	clean-up.
+
+	* noweb/o_grips.nw: Full documentation, code clean-up : old 
+	function splitted in one function for each object type. Added
+	function to draw and erase grips.
+
+	* noweb/o_{bus|net|pin}.nw: Grip stuff modified to suit new
+	grip handling (described above).
+
+	* include/prototype.h: Automatically updated after above changes.
+
 2001-10-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_misc.nw: Changed all instances of strnlen to strlen 
