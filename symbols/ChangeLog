@@ -1,3 +1,12 @@
+2002-12-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* font/ae_-lig.sym font/AE-lig.sym font/u_-diaeresis.sym 
+	  font/U-diaeresis.sym font/o_-slash.sym font/O-slash.sym
+	  font/a_-ring.sym font/a-ring.sym: Applied Norwegian/Danish/German
+          characters patch from Egil Kvaleberg
+
+	* font/a-ring.sym: Removed from repository (above patch nulls file). 
+
 2002-12-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* documentation/Makefile.am: Updated makefile to distribute all the
