@@ -1,3 +1,11 @@
+2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/garchive.py, Makefile.am: Included Stuart's garchive
+	script.
+
+	* ChangeLog.gsch2pcb, src/glib12-compat.c, src/gsch2pcb.c:
+	Included Bill Wilson's latest gsch2pcb (version 1.1)
+	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added checks for gtk+ 2.2.x and 1.2.x.  This was

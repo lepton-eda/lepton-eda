@@ -32,7 +32,7 @@
 #endif
 
 
-#define	GSC2PCB_VERSION		"1.0.1"
+#define	GSC2PCB_VERSION		"1.1"
 
 #define	DEFAULT_PCB_INC		"pcb.inc"
 
@@ -53,12 +53,14 @@ typedef struct
 	}
 	PcbElement;
 
+
 typedef struct
 	{
 	gchar		*part_number,
 				*element_name;
 	}
 	ElementMap;
+
 
 static GList	*pcb_element_list,
 				*element_directory_list;
@@ -68,6 +70,7 @@ static gchar	*schematics,
 
 static gchar	*m4_command,
 				*m4_pcbdir,
+				*default_m4_pcbdir,
 				*m4_files,
 				*m4_override_file;
 
@@ -113,6 +116,7 @@ create_m4_override_file()
 	fclose(f);
 	if (verbose)
 		{
+		printf("Default m4-pcbdir: %s\n", default_m4_pcbdir);
 		printf("--------\ngnet-gsch2pcb-tmp.scm override file:\n");
 		if (m4_command)
 			printf("    (define m4-command \"%s\")\n", m4_command);
@@ -415,8 +419,12 @@ insert_element(FILE *f_out, gchar *element_file,
 	gboolean	retval = FALSE;
 
 	if ((f_in = fopen(element_file, "r")) == NULL)
+		{
+		s = g_strdup_printf("insert_element() can't open %s", element_file);
+		perror(s);
+		g_free(s);
 		return FALSE;
-
+		}
 	/* Copy the file element lines.  Substitute new parameters into the
 	|  Element() line and strip comments.
 	*/
@@ -445,10 +453,15 @@ gchar	*
 find_element(gchar *dir_path, gchar *element)
 	{
 	GDir	*dir;
-	gchar	*path, *name, *found = NULL;
+	gchar	*path, *name, *s, *found = NULL;
 
 	if ((dir = g_dir_open(dir_path, 0, NULL)) == NULL)
+		{
+		s = g_strdup_printf("find_element can't open dir %s", dir_path);
+		perror(s);
+		g_free(s);
 		return NULL;
+		}
 	if (verbose > 1)
 			printf("\t  Searching: %s\n", dir_path);
 	while ((name = (gchar *) g_dir_read_name(dir)) != NULL)
@@ -457,8 +470,15 @@ find_element(gchar *dir_path, gchar *element)
 		found = NULL;
 		if (g_file_test(path, G_FILE_TEST_IS_DIR))
 			found = find_element(path, element);
-		else if (!strcmp(name, element))
-			found = g_strdup(path);
+		else
+			{
+			if (verbose > 1)
+				printf("\t           : %s\t", name);
+			if (!strcmp(name, element))
+				found = g_strdup(path);
+			if (verbose > 1)
+				printf("%s\n", found ? "Yes" : "No");
+			}
 		g_free(path);
 		if (found)
 			break;
@@ -1004,7 +1024,7 @@ load_extra_project_files(void)
 	done = TRUE;
 	}
 
-static gchar *usage_string =
+static gchar *usage_string0 =
 "usage: gsch2pcb [options] {project | foo.sch [foo1.sch ...]}\n"
 "\n"
 "Generate a PCB layout file from a set of gschem schematics.\n"
@@ -1026,9 +1046,11 @@ static gchar *usage_string =
 "       output-name myproject\n"
 "\n"
 "options (may be included in a project file):\n"
-"   -d, --elements-dir D  Search D for PCB file elements in addition to the\n"
-"                         default /usr/local/pcb_lib, /usr/lib/pcb_lib,\n"
-"                         and packages directories.\n"
+"   -d, --elements-dir D  Search D for PCB file elements.  These defaults\n"
+"                         are searched if they exist: ./packages,\n"
+"                         /usr/local/share/pcb/newlib, /usr/share/pcb/newlib,\n"
+"                         (old pcb) /usr/local/lib/pcb_lib, /usr/lib/pcb_lib,\n"
+"                         (old pcb) /usr/local/pcb_lib\n"
 "   -o, --output-name N   Use output file names N.net, N.pcb, and N.new.pcb\n"
 "                         instead of foo.net, ... where foo is the basename\n"
 "                         of the first command line .sch file.\n"
@@ -1045,22 +1067,25 @@ static gchar *usage_string =
 "       --m4-file F.inc   Use m4 file F.inc in addition to the default m4\n"
 "                         files ./pcb.inc and ~/.pcb/pcb.inc.\n"
 "       --m4-pcbdir D     Use D as the PCB m4 files install directory\n"
-"                         instead of the default /usr/X11R6/lib/X11/pcb/m4.\n"
-"\n"
+"                         instead of the default:\n";
+
+static gchar *usage_string1 =
 "options (not recognized in a project file):\n"
 "       --fix-elements    If a schematic component footprint is not equal\n"
 "                         to its PCB element Description, update the\n"
 "                         Description instead of replacing the element.\n"
 "                         Do this the first time gsch2pcb is used with\n"
 "                         PCB files originally created with gschem2pcb.\n"
-"   -v, --verbose\n"
+"   -v, --verbose         Use -v -v for additional file element debugging.\n"
 "   -V, --version\n\n"
 ;
 
 static void
 usage()
 	{
-	printf(usage_string);
+	printf(usage_string0);
+	printf("                         %s\n\n", default_m4_pcbdir);
+	printf(usage_string1);
 	exit(0);
 	}
 
@@ -1134,6 +1159,17 @@ main(gint argc, gchar **argv)
 	if (argc < 2)
 		usage();
 
+	/* Default m4 dir was /usr/X11R6/lib/X11/pcb/m4, but in more recent
+	|  pcb versions it's under /usr/share or /usr/local/share
+	*/
+	if (g_file_test("/usr/local/share/pcb/m4", G_FILE_TEST_IS_DIR))
+		m4_pcbdir = g_strdup("/usr/local/share/pcb/m4");
+	else if (g_file_test("/usr/share/pcb/m4", G_FILE_TEST_IS_DIR))
+		m4_pcbdir = g_strdup("/usr/share/pcb/m4");
+	default_m4_pcbdir = g_strdup(m4_pcbdir ?
+		   m4_pcbdir
+		: "/usr/X11R6/lib/X11/pcb/m4" /* hardwired in gnet-gsch2pcb.scm */);
+
 	get_args(argc, argv);
 
 	load_extra_project_files();
@@ -1142,18 +1178,29 @@ main(gint argc, gchar **argv)
 	if (!schematics)
 		usage();
 
-	/* Hardwire in directories from Pcb.ad.
+	/* Hardwire in directories from Pcb.ad.  PCB as of 20031113 uses share
+	|  instead of lib.  Check for standard prefix dirs of /usr and /usr/local.
+	|  If PCB is installed elsewhere (eg. /opt) there will need to be a project
+	|  elements-dir line.
 	*/
-	element_directory_list = g_list_append(element_directory_list, "packages");
-	if (g_file_test("/usr/local/pcb_lib", G_FILE_TEST_IS_DIR))
+	if (g_file_test("packages", G_FILE_TEST_IS_DIR))
 		element_directory_list = g_list_append(element_directory_list,
-					"/usr/local/pcb_lib");
-	if (g_file_test("/usr/local/lib/pcb_lib", G_FILE_TEST_IS_DIR))
+					"packages");
+	if (g_file_test("/usr/local/share/pcb/newlib", G_FILE_TEST_IS_DIR))
+		element_directory_list = g_list_append(element_directory_list,
+					"/usr/local/share/pcb/newlib");
+	if (g_file_test("/usr/share/pcb/newlib", G_FILE_TEST_IS_DIR))
+		element_directory_list = g_list_append(element_directory_list,
+					"/usr/share/pcb/newlib");
+	if (g_file_test("/usr/local/lib/pcb_lib", G_FILE_TEST_IS_DIR))	/* old */
 		element_directory_list = g_list_append(element_directory_list,
 					"/usr/local/lib/pcb_lib");
-	if (g_file_test("/usr/lib/pcb_lib", G_FILE_TEST_IS_DIR))
+	if (g_file_test("/usr/lib/pcb_lib", G_FILE_TEST_IS_DIR))		/* old */
 		element_directory_list = g_list_append(element_directory_list,
 					"/usr/lib/pcb_lib");
+	if (g_file_test("/usr/local/pcb_lib", G_FILE_TEST_IS_DIR))		/* old */
+		element_directory_list = g_list_append(element_directory_list,
+					"/usr/local/pcb_lib");
 
 	net_file_name = g_strconcat(basename, ".net", NULL);
 	pcb_file_name = g_strconcat(basename, ".pcb", NULL);

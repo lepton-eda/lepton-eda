@@ -70,7 +70,7 @@ g_dir_close(GDir *dir)
 
 #define G_FILE_TEST_EXISTS	1
 #define	G_FILE_TEST_IS_DIR	2
-#define G_FILE_TEST_IS_REGULAR  3
+#define G_FILE_TEST_IS_REGULAR  4
 
 gboolean
 g_file_test(gchar *filename, gint test)
