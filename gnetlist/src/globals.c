@@ -65,6 +65,7 @@ int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
 int sort_mode=FALSE;
+int include_mode=FALSE;
 
 /* what kind of netlist are we generating? see define.h for #defs */
 int netlist_mode=gEDA;

@@ -16,6 +16,52 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+;;----------------------------------------------------------------------
+;; The below functions added by SDB in Sept 2003 to support command-line flag
+;; processing.
+;;----------------------------------------------------------------------
+
+;;---------------------------------------------------------------
+;;  debug-spew
+;;  Wrapper which spews debug messages if -v flag is set, otherwise
+;;  does nothing.
+;;  Calling form:  (debug-spew "verbose debug text")
+;;--------------------------------------------------------------
+(define debug-spew
+  (lambda (debug-string)
+    (if (calling-flag? "verbose_mode" (gnetlist:get-calling-flags))
+        (display debug-string) 
+)))
+
+
+;;---------------------------------------------------------------
+;; calling-flag?
+;;   Returns #t or #f depending upon the corresponding flag
+;;   was set in the calling flags given to gnetlist.  
+;;   9.7.2003 -- SDB.
+;;---------------------------------------------------------------
+(define calling-flag?
+  (lambda (searched-4-flag calling-flag-list)
+
+    (if (null? calling-flag-list)
+          '#f                                             ;; return #f if null list -- sort_mode not found.
+          (let* ((calling-pair (car calling-flag-list))   ;; otherwise look for sort_mode in remainder of list.
+                 (calling-flag (car calling-pair))
+                 (flag-value (cadr calling-pair))  )
+
+            ;; (display (string-append "examining calling-flag = " calling-flag "\n" ))
+            ;; (display (string-append "flag-value = " (if flag-value "true" "false") "\n" ))
+
+            (if (string=? calling-flag searched-4-flag)
+                flag-value                                                 ;; return flag-value if sort_mode found
+                (calling-flag? searched-4-flag (cdr calling-flag-list))    ;; otherwise recurse until sort_mode is found
+            )  ;; end if  
+          )  ;; end of let*
+     )  ;; end of if (null?
+))
+
+;;-------------  End of SDB's command line flag functions ----------------
+
 ;; Support functions
 
 ;; get all packages for a particular schematic page 

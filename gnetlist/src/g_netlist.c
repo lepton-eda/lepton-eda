@@ -801,19 +801,19 @@ SCM g_get_slots(SCM scm_uref)
 		}
 		if (slot_tmp) {
 		  slot = g_strconcat ("#d", slot_tmp, NULL);
+		  free (slot_tmp);
 		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
 						     SCM_MAKINUM(10));
 		  free (slot);
 		  if (slot_number != SCM_BOOL_F) {
 		    slots_list = gh_cons(slot_number, slots_list);
-		  } else {
-		    fprintf(stderr, 
-		            "Error reported by gnetlist: Reference %s: Bad slot number: %s\n", 
-			    uref, slot_tmp);
-			    //uref, &(slot_tmp[2]));
 		  }
-		  free (slot_tmp);
+		  else 
+		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
 		} 
+		else {
+		  fprintf(stderr, "Found uref %s without slot attribute\n", uref);
+		}
 	    }
 	}
 	nl_current = nl_current->next;
@@ -866,6 +866,7 @@ SCM g_get_unique_slots(SCM scm_uref)
 		}
 		if (slot_tmp) {
 		  slot = g_strconcat ("#d", slot_tmp, NULL);
+		  free (slot_tmp);
 		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
 						     SCM_MAKINUM(10));
 		  free (slot);
@@ -873,13 +874,13 @@ SCM g_get_unique_slots(SCM scm_uref)
 		    if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
 		      slots_list = gh_cons(slot_number, slots_list);
 		    }
-		  } else {
-		    fprintf(stderr, 
-		            "Error reported by gnetlist: Reference %s: Bad slot number: %s\n", 
-			    uref, slot_tmp);
 		  }
-		  free (slot_tmp);
+		  else 
+		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
 		} 
+		else {
+		  fprintf(stderr, "Found uref %s without slot attribute\n", uref);
+		}
 	    }
 	}
 	nl_current = nl_current->next;
@@ -919,6 +920,11 @@ SCM g_get_calling_flags()
 				gh_bool2scm(interactive_mode),
 				SCM_UNDEFINED), 
 		       arglist);
+
+    arglist = gh_cons( gh_list( gh_str2scm("include_mode", strlen("include_mode") ),
+                                gh_bool2scm(include_mode),
+                                SCM_UNDEFINED), 
+                       arglist);
 
     arglist = gh_cons( gh_list( gh_str2scm("quiet_mode", 
 				           strlen("quiet_mode") ),

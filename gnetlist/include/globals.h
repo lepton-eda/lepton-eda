@@ -53,6 +53,7 @@ extern NETLIST *netlist_head;
 extern char *guile_proc;
 extern int verbose_mode;
 extern int interactive_mode;
+extern int include_mode;
 extern int quiet_mode;
 extern int netlist_mode;
 extern int sort_mode;

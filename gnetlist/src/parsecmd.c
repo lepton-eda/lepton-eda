@@ -32,7 +32,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#define OPTIONS "o:qihvsg:c:l:m:"
+#define OPTIONS "o:qiIhvsg:c:l:m:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -44,6 +44,8 @@ void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
     printf("  -i                Interactive scheme mode\n");
+    printf("  -I                Put .INCLUDE <filename> in output file instead\n");
+    printf("                    of model file's contents\n");
     printf("  -q                Quiet mode\n");
     printf("  -l filename       Load scheme file before loading backend\n");
     printf("  -m filename       Load scheme file after loading backend,\n");
@@ -71,6 +73,10 @@ int parse_commandline(int argc, char *argv[])
 	case 'i':
 	    interactive_mode = TRUE;
 	    break;
+
+        case 'I':
+            include_mode = TRUE;
+            break;
 
 	case 'q':
 	    quiet_mode = TRUE;

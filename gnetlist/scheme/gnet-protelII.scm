@@ -23,13 +23,16 @@
 ;; PROTEL NETLIST 2.0
 ;; [   -- element for list of components
 ;; DESIGNATOR
-;; attrib uref
+;;   REFDES attribute.
 ;; FOOTPRINT
-;; attrib footprint
+;;   FOOTPRINT attrbute.
 ;; PARTTYPE
-;; attrib value
+;;   Either:
+;;     If VALUE attribute exists, output VALUE attribute.
+;;     Otherwise, output DEVICE attrbute.
+;;     (This covers the case of ICs, which usually carry their part no (e.g. uA741) in the DEVICE attribute.)
 ;; DESCRIPTION
-;; empty line
+;;   DEVICE attribute
 ;; Part Field 1
 ;; *
 ;; Part Field 2
@@ -181,7 +184,12 @@
 	       (newline port)
 	       (display "PARTTYPE" port)
 	       (newline port)
-               (display (get-value package) port)
+	       (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
+		     (if (string-ci=? value "unknown")
+			 (display (get-device package) port)
+			 (display value port)
+			 )
+	       )
 	       (newline port)
 	       (display "DESCRIPTION" port)
 	       (newline port)

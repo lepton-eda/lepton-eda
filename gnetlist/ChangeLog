@@ -1,3 +1,26 @@
+2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm, gnet-protelII.scm: Replaced with new
+	versions from Stuart Brorson.  gnet-spice-sdb.scm has a version of
+	12.29.2003.b
+
+	* src/g_netlist.c: Integrated new file from Stuart.  This file 
+	improved some slot related error reporting and added
+	"include_mode" to g_get_calling_flags().
+
+	* src/globals.c, parsecmd.c, include/globals.h: Integrated changes 
+	from Stuart.  Added the -I command line flag.
+
+	* scheme/gnetlist.scm: Integrated changes from Stuart.  This
+	included a whole bunch of useful scheme functions for dealing with
+	the command line.
+
+	* tests/amp.spice-sdb, darlington.spice-sdb: Fixed regression
+	golden files to deal with Stuart's new spice-sdb backend.
+
+	* tests/powersupply.protelII, singlenet.protel: Fixed regression
+	golden files to deal with Stuart's changes to the protelII backend.
+	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Added checks for gtk+ 2.2.x and 1.2.x.  This was
