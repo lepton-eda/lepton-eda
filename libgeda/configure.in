@@ -215,7 +215,7 @@ else
 	        	        AC_DEFINE(HAS_LIBZ)
 		                AC_DEFINE(HAS_LIBPNG)
 	        	        AC_DEFINE(HAS_LIBGDGEDA)
-				AC_CHECK_LIB(gdgeda, gdImageSetThickness, GDGEDA_LIB="-lgdgeda", GDGEDA2_LIB=no, $GD_EXTRA)
+				AC_CHECK_LIB(gdgeda, gdImageSetThickness, GDGEDA2_LIB="-lgdgeda", GDGEDA2_LIB=no, $GD_EXTRA)
 			       if test ! $GDGEDA2_LIB = no; then
 	        	            AC_DEFINE(HAS_LIBGDGEDA2)
 			       fi
