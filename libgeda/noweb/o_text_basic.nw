@@ -906,7 +906,8 @@ o_text_add(TOPLEVEL *w_current,
   /* set the addition of attributes to the head node */
   w_current->page_current->object_parent = temp_list;
 
-  if (visibility == VISIBLE) {
+  if (visibility == VISIBLE ||
+      (visibility == INVISIBLE && w_current->show_hidden_text)) {
     object_list->text->prim_objs = 
       o_text_create_string(w_current, temp_list, 
                            output_string, size, color,
@@ -946,7 +947,7 @@ o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  if (o_current->visibility == INVISIBLE) {
+  if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
     return;
   }
 
@@ -1197,7 +1198,8 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
   /* set the addition of attributes to the head node */
   w_current->page_current->object_parent = o_current->text->prim_objs;
 
-  if (o_current->visibility == VISIBLE) {
+  if (o_current->visibility == VISIBLE ||
+      (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
 
     /* need to create that head node if complex is null */
     if (o_current->text->prim_objs == NULL) {

@@ -118,6 +118,8 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
     pr_current->current_visible = -1;	/* not sure on these */
     pr_current->current_show = -1;
 
+    pr_current->show_hidden_text = 0;
+
     pr_current->internal_basename = NULL;
     pr_current->internal_clib = NULL;
 
@@ -154,6 +156,8 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
     pr_current->CONTROLKEY = 0;
     pr_current->SHIFTKEY = 0;
     pr_current->last_callback = NULL;
+
+    pr_current->show_hidden_text = 0;
 
     pr_current->cswindow = NULL;
     pr_current->aswindow = NULL;

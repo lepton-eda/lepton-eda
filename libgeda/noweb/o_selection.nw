@@ -24,6 +24,7 @@
 <<o_selection.c : o_selection_unselect()>>
 <<o_selection.c : o_selection_return_first_object()>>
 <<o_selection.c : o_selection_return_nth_object()>>
+<<o_selection.c : o_selection_return_num()>>
 
 @ 
 
@@ -460,4 +461,34 @@ o_selection_return_nth_object(SELECTION *head, int count)
 }
 
 @ %def o_selection_return_nth_object
+
+
+@section Function @code{o_selection_return_num()}
+
+@defun o_selection_return_num head
+@end defun
+
+<<o_selection.c : o_selection_return_num()>>=
+int
+o_selection_return_num(SELECTION *head)
+{
+  int counter = 0;
+  SELECTION *s_current;
+
+  if (!head) {
+    return 0;
+  }
+  
+  // skip over head
+  s_current = head->next;
+
+  while (s_current != NULL) {
+    counter++;
+    s_current = s_current->next;
+  }
+  
+  return(counter);
+}
+
+@ %def o_selection_return_num
 

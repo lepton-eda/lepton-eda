@@ -124,6 +124,8 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->current_visible=-1; /* not sure on these */
 	pr_current->current_show=-1;
 
+    	pr_current->show_hidden_text = 0;
+
 	pr_current->internal_basename=NULL;
 	pr_current->internal_clib=NULL;
 
@@ -138,6 +140,7 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->override_color=-1;
 	pr_current->inside_redraw=0;
 
+    	pr_current->show_hidden_text = 0;
 
 	/* Don't init these to zero here... once we are done with all init
 	 *  will these be inited to zero 

@@ -249,6 +249,8 @@ x_window_setup_rest(TOPLEVEL *w_current)
   w_current->snap = 1;
   w_current->grid = 1;
 
+  w_current->show_hidden_text = 0;
+  
   w_current->complex_rotate = 0;
 
   w_current->current_attribute = NULL;

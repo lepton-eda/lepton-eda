@@ -18,7 +18,9 @@
 <<o_misc.c : o_embed()>>
 <<o_misc.c : o_unembed()>>
 <<o_misc.c : o_mirror()>>
+<<o_misc.c : o_edit_show_hidden_lowlevel()>>
 <<o_misc.c : o_edit_show_hidden()>>
+<<o_misc.c : o_edit_make_visible()>>
 <<o_misc.c : o_edit_find_text()>>
 <<o_misc.c : find_max()>>
 <<o_misc.c : autonumber_text()>>
@@ -788,6 +790,54 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
 @ %def o_mirror
 
+@section Function @code{o_edit_show_hidden_lowlevel()}
+
+@defun o_edit_show_hidden_lowlevel w_current o_list
+@end defun
+
+<<o_misc.c : o_edit_show_hidden_lowlevel()>>=
+void
+o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
+{
+  OBJECT *o_current = o_list;
+
+  if (o_current == NULL) {
+    return;
+  }
+
+  while(o_current != NULL) {
+    if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
+
+      // don't toggle the visibility flag
+
+      if (w_current->show_hidden_text) {
+        // draw the text object if it hidden 
+        if (o_current->text->prim_objs == NULL) {
+          o_text_recreate(w_current, o_current);
+        }
+        o_text_recalc(w_current, o_current);
+        o_text_draw(w_current, o_current);
+      } else {
+        /* object is hidden and we are now NOT drawing it, so */
+        /* get rid of the extra primitive data */
+        o_text_recreate(w_current, o_current);
+        o_text_recalc(w_current, o_current);
+        /* unfortunately, you cannot erase the old visible text here */
+        /* because o_text_draw will just return */
+      }    
+    }
+
+    if (o_current->type == OBJ_COMPLEX) {
+      o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
+      o_complex_recalc(w_current, o_current);
+    }
+   
+    o_current = o_current->next;
+  }
+}
+@ %def o_edit_show_hidden_lowlevel
+
+
 
 @section Function @code{o_edit_show_hidden()}
 
@@ -798,11 +848,42 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 void
 o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 {
+  /* this function just shows the hidden text, but doesn't toggle it */
+  /* this function does not change the CHANGED bit, no real changes are */
+  /* made to the schematic */
+  
+  /* toggle show_hidden_text variable, which when it is true */
+  /* means that hidden text IS drawn */
+  w_current->show_hidden_text = !w_current->show_hidden_text;
+
+  o_edit_show_hidden_lowlevel(w_current, o_list);
+  o_redraw_all_fast(w_current);
+
+  if (w_current->show_hidden_text) {
+    s_log_message("Hidden text is now visible\n");
+  } else {
+    s_log_message("Hidden text is now invisible\n");
+  }
+}
+
+
+@ %def o_edit_show_hidden
+
+
+@section Function @code{o_edit_make_visible()}
+
+@defun o_edit_make_visible w_current o_list
+@end defun
+
+<<o_misc.c : o_edit_make_visible()>>=
+void
+o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list)
+{
+  /* this function actually changes the visibility flag */
   OBJECT *o_current = NULL;
 
   if (o_list == NULL)
   return;
-
   o_current = o_list;
 
   while(o_current != NULL) {
@@ -817,16 +898,15 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 
         o_text_draw(w_current, o_current);
 
-        w_current->page_current->CHANGED = 1;
+        w_current->page_current->CHANGED = 1; 
       }
     }
     o_current = o_current->next;
   }
   o_undo_savestate(w_current, UNDO_ALL);
+
 }
-
-
-@ %def o_edit_show_hidden
+@ %def o_edit_make_visible
 
 
 @section Function @code{o_edit_find_text()}

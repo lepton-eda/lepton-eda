@@ -1,3 +1,13 @@
+2001-02-09  Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_selection.nw: Added o_selection_return_num to return the
+	number of selected objects
+
+	* include/struct.h: Added show_hidden_text to toplevel structure
+	
+	* noweb/o_text_basic.nw: Went through and make sure that text is 
+	created properly if it is invisible and show_hidden_text is true
+
 2001-11-25  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/o_arc_basic.nw: Corrected a bug about arc mirroring due to 

@@ -61,6 +61,7 @@ SCM g_key_edit_translate(void);
 SCM g_key_edit_embed(void);
 SCM g_key_edit_unembed(void);
 SCM g_key_edit_show_hidden(void);
+SCM g_key_edit_make_visible(void);
 SCM g_key_edit_find(void);
 SCM g_key_edit_show_text(void);
 SCM g_key_edit_hide_text(void);
@@ -545,6 +546,7 @@ void o_embed(TOPLEVEL *w_current);
 void o_unembed(TOPLEVEL *w_current);
 void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
+void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list);
 int o_edit_find_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext, int descend, int skip);
 void find_max(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 int autonumber_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
@@ -777,8 +779,6 @@ void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
 /* x_multimulti.c */
-void multi_multi_edit_close(GtkWidget *w, GtkWidget *window);
-void multi_multi_edit(TOPLEVEL *w_current, SELECTION *list);
 /* x_pagesel.c */
 void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);
 gint save_page(GtkWidget *gtklist, TOPLEVEL *w_current);

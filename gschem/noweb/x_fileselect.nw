@@ -795,15 +795,19 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 
     w_current->page_current->page_filename = u_basic_strdup(string);
 
-    f_save(w_current, string);
+    if (f_save(w_current, string)) {
+      s_log_message("Saved As [%s]\n", 
+                    w_current->page_current->page_filename);
+    
+      i_set_filename(w_current, string);
 
-    s_log_message("Saved As [%s]\n", 
-                  w_current->page_current->page_filename);
-
-    i_set_filename(w_current, string);
-
-    w_current->page_current->CHANGED = 0;
-    update_page_manager(NULL, w_current);
+      w_current->page_current->CHANGED = 0;
+      update_page_manager(NULL, w_current);
+    } else {
+      s_log_message("Could NOT save [%s]\n",w_current->page_current->page_filename);
+      i_update_status(w_current, "Error while trying to save - Select Mode");
+      w_current->event_state = SELECT;    
+    }
 
     x_fileselect_close (NULL, f_current);
     if (f_current->filesel_type == SAVEAS_QUIT) {

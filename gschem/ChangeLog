@@ -1,3 +1,39 @@
+2002-02-09 Ales Hvezda <ahvezda@geda.seul.org>
+
+	* noweb/o_text.nw: Improved o_text_edit_end to loop over all
+	selected wobjects and change the text size or alignment.  If more
+	than one object is selected then only change size and alignment
+	and not the string.  String can only be changed if one object is 
+	selected.
+
+	* noweb/x_dialog.nw, noweb/o_text.nw: If you select multiple text 
+	strings and you cannot edit the string, so do not give the user 
+	that option (I removed the text entry if the number of selected 
+	objects > 1)
+
+	* noweb/x_fileselect.nw: Also applied the changes that Chris Ellec
+	did for checking if a save was successful to the save as
+	mechanism.
+
+	* noweb/o_select.nw: Fixed an annoying selection behavior, if you
+	select stuff with the selection box while holding down the SHIFT
+	key and you happen to not find anything, any previous selection
+	should be unaffected.  Previous behavior was to unselect
+	everything (which is wrong).
+
+	* noweb/o_misc.nw: Added suggestion by Wojciech Kazubski for a 
+	function which just shows hidden text, but doesn't toggle the
+	visibility.  This new function is called o_edit_show_hidden.
+	The original function is now called o_edit_make_visible.
+	Added it to the rc/lib (g_*.nw) files as well.  
+
+	* noweb/o_attrib.nw, o_text.nw: Further improved on above to
+	draw a little "I" when showing invisible text 
+
+	* noweb/o_text.nw: Fixed the above behavior to work for text items
+	within placed components.  Now you can show all hidden text on a 
+	schematic and see exactly what text is within a symbol! :-)
+		
 2002-01-24 Stefan Petersen <spe@stacken.kth.se>
 
 	* lib/system-gschemrc.in: Fixed bug in path when loading 

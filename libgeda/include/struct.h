@@ -490,6 +490,8 @@ struct st_toplevel {
   /* in gschem to keep track of the current buffer number */
   int buffer_number;
 
+  /* show_hidden_text is used to control which text is hidden in gschem */
+  int show_hidden_text;
 
   /* Variable to keep track of what value the complex is at */
   int complex_rotate;	

@@ -147,9 +147,10 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         break;
 
       case(OBJ_TEXT):
-        /* only do bounding boxes for visble */
+        /* only do bounding boxes for visible or doing show_hidden_text*/
         /* you might lose some attrs though */
-        if (o_current->visibility == VISIBLE) {
+        if (o_current->visibility == VISIBLE ||
+            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
           get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
         }
         break;
@@ -239,9 +240,10 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
         break;
 
       case(OBJ_TEXT):
-        /* only do bounding boxes for visble */
+        /* only do bounding boxes for visible or doing show hidden text */
         /* you might lose some attrs though */
-        if (o_current->visibility == VISIBLE) {
+        if (o_current->visibility == VISIBLE ||
+            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
           get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
         }
         break;
@@ -323,9 +325,10 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         break;
 
       case(OBJ_TEXT):
-        /* only do bounding boxes for visble */
+        /* only do bounding boxes for visible or doing show hidden text */
         /* you might lose some attrs though */
-        if (o_current->visibility == VISIBLE) {
+        if (o_current->visibility == VISIBLE ||
+            (o_current->visibility == INVISIBLE && w_current->show_hidden_text)) {
           world_get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
         }
         break;

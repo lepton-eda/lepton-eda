@@ -350,6 +350,7 @@ o_select_box_search(TOPLEVEL *w_current)
 {
   OBJECT *o_current=NULL;
   int count = 0; /* object count */
+  int SHIFTKEY = w_current->SHIFTKEY;
 	
   int tmp;
 	
@@ -370,7 +371,8 @@ o_select_box_search(TOPLEVEL *w_current)
   while (o_current != NULL) {
     /* only select visible objects */
     if (o_current->type != OBJ_HEAD && 
-        o_current->visibility == VISIBLE) {
+        (o_current->visibility == VISIBLE ||
+        (o_current->visibility == INVISIBLE && w_current->show_hidden_text))) {
       if ( (o_current->left >= w_current->start_x && 
             o_current->top >= w_current->start_y) &&
            (o_current->left >= w_current->start_x && 
@@ -389,8 +391,9 @@ o_select_box_search(TOPLEVEL *w_current)
   }
 
   /* if there were no objects to be found in select box, count will be */
-  /* zero, and you need to deselect anything remaining */
-  if (count == 0) 
+  /* zero, and you need to deselect anything remaining (unless the shift */
+  /* key was pressed */
+  if (count == 0 && !SHIFTKEY) 
   o_selection_remove_most(w_current,
                           w_current->page_current->selection2_head);
 

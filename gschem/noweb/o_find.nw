@@ -74,16 +74,18 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
                       o_current->right, o_current->bottom, 
                       screen_x, screen_y)) {
 			if (o_current->sel_func != NULL &&
-                            o_current->visibility == VISIBLE &&
-                            o_current->type != OBJ_HEAD) {
-                              (*o_current->sel_func)(
-                                                     w_current, o_current, 
-                                                     SINGLE, 0); /* 0 is count */
-                              w_current->page_current->
-                              object_lastplace = 
-                              o_current->next;
-                              return;
-                            }
+                            o_current->type != OBJ_HEAD &&
+                            (o_current->visibility == VISIBLE ||
+                             (o_current->visibility == INVISIBLE &&
+                              w_current->show_hidden_text))) {
+                                (*o_current->sel_func)(
+                                                       w_current, o_current, 
+                                                       SINGLE, 0); /* 0 is count */
+                                w_current->page_current->
+                                object_lastplace = 
+                                o_current->next;
+                                return;
+                              }
                       }
 
     o_current = o_current->next;
@@ -101,9 +103,12 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
     if (inside_region(o_current->left, o_current->top,
                       o_current->right, o_current->bottom, 
                       screen_x, screen_y)) {
+
       if (o_current->sel_func != NULL &&
-          o_current->visibility == VISIBLE &&
-          o_current->type != OBJ_HEAD) {
+          o_current->type != OBJ_HEAD &&
+          (o_current->visibility == VISIBLE ||
+           (o_current->visibility == INVISIBLE &&
+            w_current->show_hidden_text))) {
         (*o_current->sel_func)(
                                w_current, o_current, 
                                SINGLE, 0); /* 0 is count */

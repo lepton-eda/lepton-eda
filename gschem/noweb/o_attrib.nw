@@ -141,18 +141,34 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
     if (object->type == OBJ_TEXT) {
       if (object->visibility == VISIBLE) {
 
-        o_text_erase(w_current, object);
+        /* only erase if we are not showing hidden text */
+        if (!w_current->show_hidden_text) {
+          o_text_erase(w_current, object);
+        }
+        
         object->visibility = INVISIBLE;
+
+        if (w_current->show_hidden_text) {
+          /* draw text so that little I is drawn */
+          o_text_draw(w_current, object); 
+        }
 
         w_current->page_current->CHANGED=1;
       } else {
-        object->visibility = VISIBLE;
+        /* if we are in the special show hidden mode, then erase text first */
+        /* to get rid of the little I */
+        if (w_current->show_hidden_text) {
+          o_text_erase(w_current, object);
+        }
 
-				/* you must do this since real->text->complex */
-				/* might be null when text is invisible */
+        object->visibility = VISIBLE;
+        
+        /* you must do this since real->text->complex */
+        /* might be null when text is invisible */
         if (object->text->prim_objs == NULL)
           o_text_recreate(w_current, object);
 
+        
         o_text_draw(w_current, object);
         w_current->page_current->CHANGED = 1;
       }

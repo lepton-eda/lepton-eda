@@ -58,6 +58,7 @@
 <<i_callbacks.c : i_callback_edit_embed()>>
 <<i_callbacks.c : i_callback_edit_unembed()>>
 <<i_callbacks.c : i_callback_edit_show_hidden()>>
+<<i_callbacks.c : i_callback_edit_make_visible()>>
 <<i_callbacks.c : i_callback_edit_find()>>
 <<i_callbacks.c : i_callback_edit_hide_text()>>
 <<i_callbacks.c : i_callback_edit_show_text()>>
@@ -518,8 +519,9 @@ DEFINE_I_CALLBACK(file_save)
 	    w_current->event_state = SELECT;
 	    w_current->page_current->CHANGED = 0;
 	    update_page_manager(NULL, w_current);
-    }
-    else {
+    } else {
+      	    s_log_message("Could NOT save [%s]\n", w_current->page_current->page_filename);
+
 	    i_update_status(w_current, "Error while trying to save - Select Mode");
 	    w_current->event_state = SELECT;    
     } 
@@ -1284,6 +1286,34 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 
 
 @ %def i_callback_edit_show_hidden
+
+
+@section Function @code{i_callback_edit_make_visible()}
+
+@defun i_callback_edit_make_visible data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_make_visible()>>=
+DEFINE_I_CALLBACK(edit_make_visible)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* This is a new addition 3/15 to prevent this from executing
+   * inside an action */
+  if (w_current->inside_action)
+  return;
+
+  i_update_middle_button(w_current,
+                         i_callback_edit_make_visible,
+                         "MakeVisible");
+
+  o_edit_make_visible(w_current, w_current->page_current->object_head);
+}
+
+
+@ %def i_callback_edit_make_visible
 
 
 @section Function @code{i_callback_edit_find()}

@@ -205,7 +205,8 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
       temp = slot_text_object;
 
-      if (temp->visibility == VISIBLE) {
+      if (temp->visibility == VISIBLE ||
+          (temp->visibility == INVISIBLE && w_current->show_hidden_text)) {
         o_erase_single(w_current,temp);
       }
 
@@ -213,7 +214,8 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
       /* this doesn't deal with the selection list
        * item */
-      if (temp->visibility == VISIBLE) {
+      if (temp->visibility == VISIBLE ||
+          (temp->visibility == INVISIBLE && w_current->show_hidden_text)) {
         o_redraw_single(w_current,temp);
       }
 

@@ -1579,38 +1579,33 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   int text_size;
   char *text_string = NULL;
   char *text_size_string = NULL;
-  int new_text_alignment;	
+  int new_text_alignment;
+  int num_selected;
 
-  text_string = gtk_entry_get_text(GTK_ENTRY(w_current->teentry));
+  num_selected = o_selection_return_num(w_current->page_current->selection2_head);
+
+  /* text string entry will only show up if one object is selected */
+  if (num_selected == 1) {
+    text_string = gtk_entry_get_text(GTK_ENTRY(w_current->teentry));
+  } /* else the string will be null which is okay */
+  
   text_size_string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
-  if ((text_string[0] != '\0') && (text_string[0] != '\0')) {
+  if (text_string) {
     len = strlen(text_string);
-
-#if DEBUG
-    printf("text was: _%s_ %d\n", string, len);
-#endif
-
-    text_size = atoi(text_size_string);
-#if DEBUG
-    printf("text size was: _%s_ %d\n",
-           text_size_string, text_size);
-#endif
-
-    if (text_size == 0) {
-      text_size = default_text_size;
-    }
-
-    new_text_alignment = w_current->text_alignment;
-
-    if (len < 80) {
-      o_text_edit_end(w_current, text_string,
-                      len, text_size, new_text_alignment);
-    } else {
-      /* TODO: you should NOT have limits */
-      fprintf(stderr, "String too long... hack!\n");
-    }
   }
+
+  if (text_size_string) {
+    text_size = atoi(text_size_string);
+  }
+  
+  if (text_size == 0) {
+    text_size = default_text_size;
+  }
+
+  new_text_alignment = w_current->text_alignment;
+
+  o_text_edit_end(w_current, text_string, len, text_size, new_text_alignment);
 
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
@@ -1662,7 +1657,10 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
   GtkWidget *align_menu = NULL;
   char text_size_string[10];
   int len;
+  int num_selected;
 
+  num_selected = o_selection_return_num(w_current->page_current->selection2_head);
+  
   if (!w_current->tewindow) {
     w_current->tewindow = x_create_dialog_box(&vbox, &action_area);
 
@@ -1686,24 +1684,26 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_container_border_width(
                                GTK_CONTAINER(w_current->tewindow), 0);
 
-    label = gtk_label_new ("Edit Text");
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
-    gtk_widget_show (label);
+    if (num_selected == 1) {
+      label = gtk_label_new ("Edit Text");
+      gtk_box_pack_start(
+                         GTK_BOX(vbox),
+                         label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
 
-    w_current->teentry = gtk_entry_new();
-    gtk_editable_select_region(
-                               GTK_EDITABLE(w_current->teentry), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       w_current->teentry, TRUE, TRUE, 10);
+      w_current->teentry = gtk_entry_new();
+      gtk_editable_select_region(
+                                 GTK_EDITABLE(w_current->teentry), 0, -1);
+      gtk_box_pack_start(
+                         GTK_BOX(vbox),
+                         w_current->teentry, TRUE, TRUE, 10);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->teentry), "activate",
-                       GTK_SIGNAL_FUNC(text_edit_dialog_ok),
-                       w_current);
-    gtk_widget_show (w_current->teentry);
-    gtk_widget_grab_focus(w_current->teentry);
+      gtk_signal_connect(GTK_OBJECT(w_current->teentry), "activate",
+                         GTK_SIGNAL_FUNC(text_edit_dialog_ok),
+                         w_current);
+      gtk_widget_show (w_current->teentry);
+      gtk_widget_grab_focus(w_current->teentry);
+    }
 
     label = gtk_label_new ("Edit Text Size");
     gtk_box_pack_start(
@@ -1767,10 +1767,12 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_widget_show (w_current->tewindow);
     if (string != NULL) {
       len = strlen(string);
-      gtk_entry_set_text(GTK_ENTRY(w_current->teentry),
+      if (num_selected == 1) { /* only if one thing is selected */
+        gtk_entry_set_text(GTK_ENTRY(w_current->teentry),
                          string);
       gtk_entry_select_region(GTK_ENTRY(w_current->teentry),
                               0, len);
+      }
     }
 
     sprintf(text_size_string, "%d", text_size);
@@ -4417,7 +4419,7 @@ void find_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 
   string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
-  //    descend = gtk_object_get_data(GTK_OBJECT(w_current->tsentry),"descend");
+  /*    descend = gtk_object_get_data(GTK_OBJECT(w_current->tsentry),"descend"); */
 
   strncpy(generic_textstring, string, 256);
 
@@ -4535,7 +4537,7 @@ void find_text_dialog(TOPLEVEL * w_current)
 
     checkdescend =
 	gtk_check_button_new_with_label("descend into hierarchy");
-    //          gtk_object_set_data (GTK_OBJECT (w_current->tswindow), "descend", w_current->preview_checkbox);
+    /*          gtk_object_set_data (GTK_OBJECT (w_current->tswindow), "descend", w_current->preview_checkbox);*/
 
     gtk_box_pack_start(GTK_BOX(action_area), checkdescend, TRUE, TRUE, 0);
 

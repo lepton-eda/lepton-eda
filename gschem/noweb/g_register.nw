@@ -225,6 +225,7 @@ g_register_funcs(void)
   gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
   gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);
   gh_new_procedure0_0 ("edit-show-hidden", g_key_edit_show_hidden);
+  gh_new_procedure0_0 ("edit-make-text-visible", g_key_edit_make_visible);
   gh_new_procedure0_0 ("edit-find-text", g_key_edit_find);
   gh_new_procedure0_0 ("edit-show-text", g_key_edit_show_text);
   gh_new_procedure0_0 ("edit-hide-text", g_key_edit_hide_text);

@@ -89,6 +89,11 @@ o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
+  if (o_current->visibility == INVISIBLE && w_current->show_hidden_text &&
+      o_current->text->prim_objs == NULL) {
+    o_text_recreate(w_current, o_current);
+  }
+  
   o_redraw(w_current, o_current->text->prim_objs);
 
   get_complex_bounds(w_current, o_current->text->prim_objs,
@@ -119,15 +124,68 @@ void
 o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int screen_x1, screen_y1;
-  int small_dist;
+  int small_dist, offset;
   int length, dx=0, dy=0;
 
-  if (o_current->visibility == INVISIBLE) {
+  if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
     return;
   }
 
   if (!w_current->fast_mousepan || !w_current->doing_pan) {
     o_text_draw_lowlevel(w_current, o_current);
+
+    // Indicate on the schematic that the text is invisible by
+    // drawing a little I on the screen at the origin
+    if (o_current->visibility == INVISIBLE && w_current->show_hidden_text) {
+      if (w_current->override_color != -1 ) {
+        gdk_gc_set_foreground(w_current->gc, 
+                              x_get_color(w_current->override_color));
+      } else {
+
+        gdk_gc_set_foreground(w_current->gc, 
+                              x_get_color(w_current->detachedattr_color));
+      }
+
+      offset = SCREENabs(w_current, 10);
+      small_dist = SCREENabs(w_current, 20);
+      screen_x1 = o_current->text->screen_x + offset;
+      screen_y1 = o_current->text->screen_y + offset;
+      // Top part of the I
+      gdk_draw_line(w_current->window, w_current->gc,
+                        screen_x1,
+                        screen_y1,
+                        screen_x1+small_dist,
+                        screen_y1);
+      gdk_draw_line(w_current->backingstore, w_current->gc, 
+                        screen_x1,
+                        screen_y1,
+                        screen_x1+small_dist,
+                        screen_y1);
+      // Middle part of the I
+      gdk_draw_line(w_current->window, w_current->gc,
+                        screen_x1+small_dist/2,
+                        screen_y1,
+                        screen_x1+small_dist/2,
+                        screen_y1+small_dist);
+      gdk_draw_line(w_current->backingstore, w_current->gc, 
+                        screen_x1+small_dist/2,
+                        screen_y1,
+                        screen_x1+small_dist/2,
+                        screen_y1+small_dist);
+      // Bottom part of the I
+      gdk_draw_line(w_current->window, w_current->gc,
+                        screen_x1,
+                        screen_y1+small_dist,
+                        screen_x1+small_dist,
+                        screen_y1+small_dist);
+      gdk_draw_line(w_current->backingstore, w_current->gc, 
+                        screen_x1,
+                        screen_y1+small_dist,
+                        screen_x1+small_dist,
+                        screen_y1+small_dist);
+
+    }
+    
   } else {
     if (w_current->doing_pan) {
       o_text_recalc(w_current, o_current);
@@ -284,7 +342,7 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   int length;
   int color, factor;
 
-  if (o_current->visibility == INVISIBLE) {
+  if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
     return;
   }
 
@@ -603,38 +661,51 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
 		int text_alignment)
 {
   OBJECT *object;
+  SELECTION *s_current;
+  int numselect;
 
-  object = o_select_return_first_object(w_current);
+  /* skip over head */
+  s_current = w_current->page_current->selection2_head->next;
+  numselect = o_selection_return_num(w_current->page_current->selection2_head);
+  
+  while(s_current != NULL) {
+    object = s_current->selected_object;
 
-  if (object != NULL) {
-    if (object->text->string) {
-      free(object->text->string);
-    }
+    if (object) {
+      if (object->type == OBJ_TEXT) {
 
-    /* Kazu <kazu@seul.org> on August 5, 1999 - I am not
-       sure if strlen(string) == len. If so, activate the
-       second part of this "if".*/
+        /* only change text string if there is only ONE text object selected */
+        if (numselect == 1 && string) {
+          if (object->text->string) {
+            free(object->text->string);
+          }
+          /* Kazu <kazu@seul.org> on August 5, 1999 - I am not
+             sure if strlen(string) == len. If so, activate the
+             second part of this "if".*/
 #if 1
-    object->text->string = malloc(sizeof(char) * len + 1);
-    strcpy(object->text->string, string);
+          object->text->string = malloc(sizeof(char) * len + 1);
+          strcpy(object->text->string, string);
 #else
-    object->text->string = u_basic_strdup(string);
+          object->text->string = u_basic_strdup(string);
 #endif
+        }
 
-    object->text->size = text_size;
-    object->text->alignment = text_alignment;
+        object->text->size = text_size;
+        object->text->alignment = text_alignment;
 		
-    o_text_erase(w_current, object);
-    o_text_recreate(w_current, object);
-    o_text_draw(w_current, object);
+        o_text_erase(w_current, object);
+        o_text_recreate(w_current, object);
+        o_text_draw(w_current, object);
 
-    w_current->page_current->CHANGED = 1;
-    o_undo_savestate(w_current, UNDO_ALL);
-  } else {
-    fprintf(stderr, "uggg! you tried to text edit something "
-            "that doesn't exist!\n");
-    exit(-1);
+      } 
+    }
+    
+    s_current = s_current->next;
   }
+  
+  w_current->page_current->CHANGED = 1;
+  o_undo_savestate(w_current, UNDO_ALL);
+
 }
 
 
@@ -728,3 +799,4 @@ o_text_place_rotate(TOPLEVEL *w_current)
 
 
 @ %def o_text_place_rotate
+
