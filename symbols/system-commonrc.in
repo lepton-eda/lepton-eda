@@ -48,6 +48,7 @@
 (component-library "@symdir@/supervisor")
 (component-library "@symdir@/opto")
 (component-library "@symdir@/diode")
+(component-library "@symdir@/relay")
 
 ; component-library-search atring
 ;
@@ -99,6 +100,7 @@
 (source-library "@symdir@/bus")
 (source-library "@symdir@/opto")
 (source-library "@symdir@/diode")
+(source-library "@symdir@/relay")
 
 ; source-library-search atring
 ;

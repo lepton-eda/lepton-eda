@@ -919,6 +919,10 @@ EOF
 	data74=`echo $data74`
  
 
+	datarelay=`ls -1 $srcdir/relay | grep -v Makefile | grep -v CVS`
+	datarelay=`echo $datarelay`
+ 
+
 	datadiode=`ls -1 $srcdir/diode | grep -v Makefile | grep -v CVS`
 	datadiode=`echo $datadiode`
  
@@ -1034,6 +1038,7 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
 
 
 
@@ -1197,6 +1202,7 @@ trap 'rm -fr `echo "
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	relay/Makefile 
 	bus/Makefile 
 	supervisor/Makefile 
 	lattice/Makefile 
@@ -1297,6 +1303,7 @@ s%@datamemory@%$datamemory%g
 s%@datamicro@%$datamicro%g
 s%@datamisc@%$datamisc%g
 s%@data74@%$data74%g
+s%@datarelay@%$datarelay%g
 s%@datadiode@%$datadiode%g
 s%@dataopto@%$dataopto%g
 s%@databus@%$databus%g
@@ -1358,6 +1365,7 @@ cat >> $CONFIG_STATUS <<EOF
 CONFIG_FILES=\${CONFIG_FILES-"Makefile 
 	4000/Makefile
 	74/Makefile 
+	relay/Makefile 
 	bus/Makefile 
 	supervisor/Makefile 
 	lattice/Makefile 

@@ -87,6 +87,7 @@ GEDA_DECLARE_SYMLIB(radio)
 GEDA_DECLARE_SYMLIB(micro)
 GEDA_DECLARE_SYMLIB(memory)
 GEDA_DECLARE_SYMLIB(74)
+GEDA_DECLARE_SYMLIB(relay)
 GEDA_DECLARE_SYMLIB(diode)
 GEDA_DECLARE_SYMLIB(opto)
 GEDA_DECLARE_SYMLIB(bus)
@@ -165,6 +166,7 @@ AC_SUBST(datamemory)
 AC_SUBST(datamicro)
 AC_SUBST(datamisc)
 AC_SUBST(data74)
+AC_SUBST(datarelay)
 AC_SUBST(datadiode)
 AC_SUBST(dataopto)
 AC_SUBST(databus)
@@ -190,6 +192,7 @@ AC_OUTPUT([
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	relay/Makefile 
 	bus/Makefile 
 	supervisor/Makefile 
 	lattice/Makefile 
