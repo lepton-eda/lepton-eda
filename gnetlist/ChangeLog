@@ -1,3 +1,8 @@
+2003-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_netlist.c, gnetlist.c: Applied Carlos Nieves Onega's warning
+	cleanup patch.
+
 2003-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/prototype.h, scheme/Makefile.am, scheme/gnet-drc2.scm

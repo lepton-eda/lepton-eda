@@ -206,7 +206,7 @@ void main_prog(int argc, char *argv[])
                       list_pnt->data);
         
         fprintf(stderr, "Failed to read scm file [%s]\n", 
-                list_pnt->data);
+                (char *) list_pnt->data);
       }
       list_pnt = g_slist_next(list_pnt);
     }

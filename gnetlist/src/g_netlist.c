@@ -764,7 +764,6 @@ SCM g_set_netlist_mode(SCM mode)
 /* in the form: (1 2 3 4). Repeated slots are returned. */
 SCM g_get_slots(SCM scm_uref)
 {
-    SCM scm_return_value;
     NETLIST *nl_current;
     char *uref;
     gchar *slot = NULL;
@@ -803,7 +802,8 @@ SCM g_get_slots(SCM scm_uref)
 		if (slot_tmp) {
 		  slot = g_strconcat ("#d", slot_tmp, NULL);
 		  free (slot_tmp);
-		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)), 10);
+		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
+						     SCM_MAKINUM(10));
 		  free (slot);
 		  if (slot_number != SCM_BOOL_F) {
 		    slots_list = gh_cons(slot_number, slots_list);
@@ -829,7 +829,6 @@ SCM g_get_slots(SCM scm_uref)
 /* in the form: (1 2 3 4). Repeated slots are NOT returned */
 SCM g_get_unique_slots(SCM scm_uref)
 {
-    SCM scm_return_value;
     NETLIST *nl_current;
     char *uref;
     gchar *slot = NULL;
@@ -868,7 +867,8 @@ SCM g_get_unique_slots(SCM scm_uref)
 		if (slot_tmp) {
 		  slot = g_strconcat ("#d", slot_tmp, NULL);
 		  free (slot_tmp);
-		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)), 10);
+		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
+						     SCM_MAKINUM(10));
 		  free (slot);
 		  if (slot_number != SCM_BOOL_F) {
 		    if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
