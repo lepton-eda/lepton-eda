@@ -463,9 +463,9 @@
 ; upper specifies that all inputed text is in uppercase
 ; both specifies that all inputed text is used as is (no case conversion)
 ;
+(text-caps-style "both")
 ;(text-caps-style "lower")
-(text-caps-style "upper")
-;(text-caps-style "both")
+;(text-caps-style "upper")
 
 ;  file-preview string
 ;  Controls if the preview area in the File Open/Save As and Component 
@@ -679,6 +679,7 @@
 (attribute-name "numslots")
 (attribute-name "slot#")
 (attribute-name "graphical")
+(attribute-name "footprint")
 (attribute-name "name")
 
 ;
