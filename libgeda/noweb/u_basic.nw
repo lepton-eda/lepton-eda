@@ -11,8 +11,6 @@
 /* DO NOT read or edit this file ! Use ../noweb/u_basic.nw instead */
 
 <<u_basic.c : include directives>>
-<<u_basic.c : u_basic_strdup()>>
-<<u_basic.c : u_basic_strdup_multiple()>>
 <<u_basic.c : u_basic_breakup_string()>>
 <<u_basic.c : u_basic_strip_trailing()>>
 <<u_basic.c : u_basic_has_trailing()>>
@@ -73,79 +71,6 @@
 
 @
 
-/* ------------------------------------------------------------ */
-@section Function @code{u_basic_strdup()}
-
-@defun u_basic_strdup p
-@end defun
-
-<<u_basic.c : u_basic_strdup()>>=
-/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - My own version of
- * strdup(). */
-char *
-u_basic_strdup(const char* p)
-{
-  char *q = (char *) malloc(strlen(p) + 1);
-  if (q == NULL) {
-    return NULL;
-  }
-  return strcpy(q, p);
-}
-
-
-@ %def u_basic_strdup
-
-/* ------------------------------------------------------------ */
-@section Function @code{u_basic_strdup_multiple()}
-
-@defun u_basic_strdup_multiple str ...
-@end defun
-
-<<u_basic.c : u_basic_strdup_multiple()>>=
-/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - Allocates memory and
- * returns a pointer to a string that contains all strings passed as
- * parameters combined. The last one must be NULL so that the function
- * can identify the end of the list. */
-char *
-u_basic_strdup_multiple(const char *str, ...)
-{
-  int len;
-  va_list vl;
-  char *all;
-  const char *tmp;
-
-  /* get the total length */
-  va_start(vl, str);
-  len = 0;
-  for(tmp = str; tmp != NULL; tmp = va_arg(vl, char *)) {
-    len += strlen(tmp);
-  }
-  va_end(vl);
-
-  /* '\0' is big enough to occupy its own seat */
-  len++;
-
-  /* allocate memory for all of them */
-  all = malloc(sizeof(char) * len);
-  if(all == NULL) {
-    /* oops, the operating system is not nice to me... */
-    return NULL;
-  }
-
-  /* now combine them all */
-  va_start(vl, str);
-  len = 0;
-  for(tmp = str; tmp != NULL; tmp = va_arg(vl, char *)) {
-    strcpy(&all[len], tmp);
-    len += strlen(tmp);
-  }
-  va_end(vl);
-
-  return all;
-}
-
-
-@ %def u_basic_strdup_multiple
 
 /* ------------------------------------------------------------ */
 @section Function @code{u_basic_breakup_string()}

@@ -1116,7 +1116,7 @@ o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
 
   text = (TEXT *) malloc(sizeof(TEXT));
 
-  text->string = u_basic_strdup(string);
+  text->string = g_strdup (string);
   text->length = strlen(string);
   text->size = size;
   text->alignment = alignment;
@@ -1366,9 +1366,9 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
     fgets(buffer, 1024, fp);
 
     if (string == 0) {
-      string = u_basic_strdup(buffer);
+      string = g_strdup (buffer);
     } else {
-      temp = u_basic_strdup_multiple(string, buffer, NULL);
+      temp = g_strconcat (string, buffer, NULL);
       free(string);
       string = temp;
     }
@@ -1693,7 +1693,7 @@ o_text_print_text_width(FILE *fp, char *output_string)
 
   /* break up the string and find the longest string */
   num_lines = o_text_num_lines(output_string);
-  single_line = u_basic_strdup(output_string);  /* larger than needed */
+  single_line = g_strdup (output_string);  /* larger than needed */
   len = strlen(output_string);
   for (line_number = 0; line_number < num_lines; line_number++)
   {
@@ -1719,7 +1719,7 @@ o_text_print_text_width(FILE *fp, char *output_string)
     {
       max_len = strlen(single_line);
       if (max_length_line) free(max_length_line);
-      max_length_line = u_basic_strdup(single_line);
+      max_length_line = g_strdup (single_line);
     }
   }
 
@@ -2139,7 +2139,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   }
   
   starting_character = 0;
-  single_line = u_basic_strdup(output_string);  /* larger than needed */
+  single_line = g_strdup (output_string);  /* larger than needed */
   len = strlen(output_string);
   for (line_number = 0; line_number < num_lines; line_number++)
   {

@@ -107,13 +107,16 @@
 void
 s_log_init(char *cwd, const char *filename)
 {
-  char *path; 
+  gchar *path; 
   if (do_logging == FALSE) {
     logfile_fd = -1;
     return;
   }
 
-  path = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S, filename, NULL);
+  path = g_strconcat (cwd,
+                      G_DIR_SEPARATOR_S,
+                      filename,
+                      NULL);
 
   /* create log file */
   logfile_fd = open(path, O_RDWR|O_CREAT|O_TRUNC, 0600);	
@@ -125,7 +128,7 @@ s_log_init(char *cwd, const char *filename)
     fprintf(stderr, "Errno was: %d\n", errno);
   }
 
-  free(path);
+  g_free(path);
 }
 
 

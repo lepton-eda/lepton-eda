@@ -127,7 +127,7 @@ s_menu_add_entry(char *new_menu, SCM menu_items)
     return(-1); 
   }
 
-  menu[menu_index].menu_name = u_basic_strdup(new_menu);
+  menu[menu_index].menu_name = g_strdup (new_menu);
   menu[menu_index].menu_items = menu_items;
   menu_index++;
   

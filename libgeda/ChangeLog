@@ -1,5 +1,12 @@
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* include/prototype.h:
+	* noweb/f_basic.nw, noweb/g_smob.nw, noweb/i_vars.nw:
+	* noweb/libgeda.nw, noweb/o_attrib.nw, noweb/s_color.nw:
+	* noweb/s_log.nw, noweb/s_menu.nw, noweb/s_page.nw:
+	* noweb/s_undo.nw, noweb/u_basic.nw: Deleted functions u_basic_strdup() 
+	and u_basic_strdup_multiple(): use GLib functions instead.
+
 	* noweb/o_complex_basic.nw, noweb/o_text_basic.nw:
 	* noweb/s_log.nw, noweb/s_page.nw, noweb/s_slib.nw:
 	* include/defines.h: Deleted *_SEPARATER_* macros: now rely on GLib 

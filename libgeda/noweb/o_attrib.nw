@@ -1051,8 +1051,8 @@ o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 #else
 
   /* larger than needed... but this is okay for now. */
-  *name_ptr = u_basic_strdup(string);
-  *value_ptr = u_basic_strdup(string);
+  *name_ptr  = g_strdup (string);
+  *value_ptr = g_strdup (string);
 
   /* for convenience sake */
   name = *name_ptr;

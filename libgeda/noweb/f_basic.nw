@@ -115,16 +115,16 @@ f_open(TOPLEVEL *w_current, char *filename)
   if (w_current->page_current->page_filename) {
     free(w_current->page_current->page_filename);
   }
-  w_current->page_current->page_filename = u_basic_strdup(full_filename);
+  w_current->page_current->page_filename = g_strdup(full_filename);
 
   /* Before we open the page, let's load the corresponding gafrc. */
   /* First cd into file's directory. */
   file_directory = g_dirname (full_filename);
 
-  full_rcfilename = u_basic_strdup_multiple(file_directory,  
-                                            G_DIR_SEPARATOR_S, 
-                                            "gafrc",
-                                            NULL);
+  full_rcfilename = g_strconcat (file_directory,  
+                                 G_DIR_SEPARATOR_S, 
+                                 "gafrc",
+                                 NULL);
   if (file_directory) { 
     chdir(file_directory);  
     /* Probably should do some checking of chdir return values */
@@ -250,7 +250,7 @@ char* f_normalize_filename(const gchar *filename)
   }
 
   realpath(filename, filename_buffer);  /* places reult in filename_buffer */
-  full_filename = u_basic_strdup(filename_buffer);
+  full_filename = g_strdup (filename_buffer);
 
 #ifdef DEBUG
   printf("In f_normalize_filename, returning full_filename= %s \n", full_filename);

@@ -196,11 +196,7 @@ s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
 	
   u_new = (UNDO *) malloc(sizeof(UNDO));
 
-  if (filename != NULL) {
-    u_new->filename = u_basic_strdup(filename);
-  } else {
-    u_new->filename = NULL;
-  }
+  u_new->filename = g_strdup (filename);
 	
   if (object_head != NULL) {
     u_new->object_head = object_head;	

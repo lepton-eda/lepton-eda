@@ -136,18 +136,16 @@ s_color_request(int color_index, char *color_name, char *outline_color_name,
     free(colors[color_index].color_name);	
   }
 
-  colors[color_index].color_name = u_basic_strdup(color_name);
+  colors[color_index].color_name = g_strdup (color_name);
 
   if (strcmp(outline_color_name, "null") != 0) {
-    colors[color_index].outline_color_name = u_basic_strdup(
-                                                            outline_color_name);
+    colors[color_index].outline_color_name = g_strdup (outline_color_name);
   } else {
     colors[color_index].outline_color_name = NULL;
   }
 	
   if (strcmp(ps_color_string, "null") != 0) {
-    colors[color_index].ps_color_string = u_basic_strdup(
-                                                         ps_color_string);
+    colors[color_index].ps_color_string = g_strdup( ps_color_string);
   } else {
     colors[color_index].ps_color_string = NULL;
   }

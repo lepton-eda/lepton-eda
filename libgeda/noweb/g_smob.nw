@@ -227,7 +227,7 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
     o_attrib_get_name_value(attribute->attribute->object->text->string, 
                             &name, &old_value );
 
-    *new_string = u_basic_strdup_multiple(name, "=", value, NULL);
+    *new_string = g_strconcat (name, "=", value, NULL);
 		
     *world = attribute->world;
     *o_attrib = attribute->attribute->object;

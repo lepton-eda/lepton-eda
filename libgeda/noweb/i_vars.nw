@@ -73,8 +73,8 @@
         if ((w)->name) {                                                \
                 free((w)->name);                                        \
         }                                                               \
-        (w)->name = u_basic_strdup(((default_ ## name) != NULL) ?       \
-                                (default_ ## name) : (str));            \
+        (w)->name = g_strdup(((default_ ## name) != NULL) ?             \
+                             (default_ ## name) : (str));               \
 }
 
 /* Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
@@ -139,12 +139,12 @@ i_vars_libgeda_set(TOPLEVEL *w_current)
 void
 i_vars_setnames(TOPLEVEL *w_current)
 {
-  w_current->series_name      = u_basic_strdup(DEFAULT_SERIES_NAME     );
-  w_current->untitled_name    = u_basic_strdup(DEFAULT_UNTITLED_NAME   );
-  w_current->font_directory   = u_basic_strdup(DEFAULT_FONT_DIRECTORY  );
-  w_current->scheme_directory = u_basic_strdup(DEFAULT_SCHEME_DIRECTORY);
-  w_current->bitmap_directory = u_basic_strdup(DEFAULT_BITMAP_DIRECTORY);
-  w_current->bus_ripper_symname = u_basic_strdup(DEFAULT_BUS_RIPPER_SYMNAME);
+  w_current->series_name        = g_strdup (DEFAULT_SERIES_NAME     );
+  w_current->untitled_name      = g_strdup (DEFAULT_UNTITLED_NAME   );
+  w_current->font_directory     = g_strdup (DEFAULT_FONT_DIRECTORY  );
+  w_current->scheme_directory   = g_strdup (DEFAULT_SCHEME_DIRECTORY);
+  w_current->bitmap_directory   = g_strdup (DEFAULT_BITMAP_DIRECTORY);
+  w_current->bus_ripper_symname = g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
 }
 
 @ %def i_vars_setnames
