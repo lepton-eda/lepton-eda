@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem
-bin_SCRIPTS = sarlacc_sym
+bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate
 
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c 

@@ -1,0 +1,81 @@
+#!/usr/bin/perl
+
+# gEDA - GPL Electronic Design Automation
+# gsymupdate - gEDA Symbol Update 
+# Copyright (C) 2002 Ales V. Hvezda
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+#
+
+#
+# This program takes a schematic filename on the command line and outputs an 
+# update schematic to stdout.  
+#
+# This program only changes the label= attribute on nets to netname=
+#
+# Right now this program should only be run against schematics which are 
+# either version 20020527 or earlier.
+#
+
+foreach $filename (@ARGV) {
+
+    open (FILE, $filename) || die "Cannot open input file: $filename $!\n";
+
+    while (<FILE>) {
+
+        # handle text objects
+        if (/^T/) { 
+
+            $textcmd = $_;
+
+            $textline = <FILE>;
+
+            # are we dealing with an attribute?
+            if ($textline =~ /=/) {  
+
+                # Break the attribute up into name=value
+                @attrib = split(/=/,$textline);
+                $name=@attrib[0];
+                $value=@attrib[1];
+
+                if ($name =~ /^label/) {
+
+                    # It is a label attribute
+                    print $textcmd;
+                    print "netname=$value";
+
+
+                } else {
+                    # none of the above, just pass it through
+                    print $textcmd;
+                    print $textline;
+		}
+
+            } else {
+                # not an attribute
+                print $textcmd;
+                print $textline;
+            }
+
+        } else {
+            # It is not a text, so pass it through
+            print;
+        }
+
+    }
+
+}
+
+

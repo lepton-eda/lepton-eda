@@ -1,3 +1,8 @@
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsymupdate, gschupdate: Added simple perl scripts to convert
+	existing symbols and schematics to use the new attribute conventions
+
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in/Makefile.am: Upgraded to automake 1.6.2
