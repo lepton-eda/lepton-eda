@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/gmk_sym.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-utils
-VERSION=20030901
+VERSION=20030921
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 
@@ -33,17 +33,19 @@ AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_MAKE_SET
 AM_PROG_LEX
 
 #########################################################################
 # 
 # Misc win32 / mingw checks and variables start
+AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
   *cygwin*  ) AC_MSG_ERROR([Building gEDA/gaf under cygwin is not supported]) ;;
-  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW=yes ;;
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
@@ -217,14 +219,15 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHLAS_CFLAGS="$LIBGEDA_CFLAGS"
 GSCHLAS_LDFLAGS="$LIBGEDA_LIBS"  
-GSCH2PCB_CFLAGS="$GLIB_CFLAGS"
-GSCH2PCB_LDFLAGS="$GLIB_LIBS"  
+GSCH2PCB_CFLAGS="$GLIB_CFLAGS $MINGW_CFLAGS"
+GSCH2PCB_LDFLAGS="$GLIB_LIBS $MINGW_LIBS"  
 
 # Makefile.in variable substitution
 AC_SUBST(GSCHLAS_CFLAGS)
 AC_SUBST(GSCHLAS_LDFLAGS)
 AC_SUBST(GSCH2PCB_CFLAGS)
 AC_SUBST(GSCH2PCB_LDFLAGS)
+AC_SUBST(MINGW_CFLAGS)
 AC_SUBST(MINGW_LIBS)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)

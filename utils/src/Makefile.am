@@ -11,8 +11,11 @@ sarlacc_schem_SOURCES = sarlacc_schem.c
 olib_SOURCES = olib.l geda_sym_format.h
 gsch2pcb_SOURCES = gsch2pcb.c
 
+gmk_sym_CFLAGS = @MINGW_CFLAGS@
+smash_megafile_CFLAGS = @MINGW_CFLAGS@
 convert_sym_CFLAGS = @GSCHLAS_CFLAGS@
 sarlacc_schem_CFLAGS = @GSCHLAS_CFLAGS@
+olib_CFLAGS = @MINGW_CFLAGS@
 gsch2pcb_CFLAGS = @GSCH2PCB_CFLAGS@
 
 gmk_sym_LDADD = @MINGW_LIBS@ 
@@ -20,7 +23,7 @@ smash_megafile_LDADD = @MINGW_LIBS@
 convert_sym_LDADD = @MINGW_LIBS@ -lm
 sarlacc_schem_LDADD = @MINGW_LIBS@
 olib_LDADD = @LEXLIB@ @MINGW_LIBS@ -lm
-gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ @MINGW_LIBS@ 
+gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ 
 
 EXTRA_DIST = glib12-compat.c
 
