@@ -7,6 +7,12 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+7/6/99  Changed configure and Makefiles to cut down on the number of 
+	libraries which are linked
+
+	Didn't really disable libgdgeda when using --disable-gdgeda
+        Now fixed.
+
 7/5/99 	Verified that gnetlist works with alphanumeric slotting
 
 	Fixed all warnings 

@@ -132,6 +132,8 @@ else
         if test "$no_gdgeda" = "yes"; then
                 echo found libgdgeda, but disabling gdgeda
                 GDGEDA_LIB=""
+         	libgdgeda_ldflags=""
+         	libgdgeda_cflags=""
         else
                 AC_CHECK_LIB(z, zlibVersion, Z_LIB="-lz", Z_LIB=no)
                 if test $Z_LIB = no; then

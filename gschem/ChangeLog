@@ -9,6 +9,9 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+7/6/99 	Didn't really disable libgdgeda when using --disable-gdgeda
+	Now fixed.
+
 7/5/99	Added in manually configure.in patch Manu provided to help in his
 	rpm building procedures 
 
@@ -29,7 +32,7 @@ into the cvs repository.
 
 	Added an options menu to the image write dialog box
 
-7/3/99 	Went through all same schematic and removed all zero length/etc...
+7/3/99 	Went through all sample schematic and removed all zero length/etc...
 	objects
 
 7/2/99  Fixed the ./configure stuff dealing with libgdgeda so that it works

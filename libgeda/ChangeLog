@@ -8,6 +8,9 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/6/99  Didn't really disable libgdgeda when using --disable-gdgeda
+        Now fixed.
+
 7/5/99	Fixed a minor typo when allocating a string "pin" instead of "slot"
 
 	Hopefully got slotting to work with alphanumeric pins

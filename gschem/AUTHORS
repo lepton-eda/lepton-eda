@@ -39,6 +39,8 @@ Manu Rouat		- For pointing out my inconsistant license headers
 			  (scheme-directory)
 			- Contributed a patch to make zoom limits have a 
 			  border (zoom limits looks much better now)
+			- For contributing a patch which makes building
+			  RPMs easier. (for libgeda/gschem/gnetlist/...)
 
 Roger Williams 		- For supplying a patch with provides variable snap
 			  grid spacing
