@@ -114,6 +114,7 @@ int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
 int   default_undo_type = UNDO_DISK;
 int   default_draw_grips = TRUE;
+int   default_netconn_rubberband = FALSE;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -206,6 +207,7 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->undo_type = default_undo_type;
 
 	w_current->draw_grips = default_draw_grips;
+	w_current->netconn_rubberband = default_netconn_rubberband;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;

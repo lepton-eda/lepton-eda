@@ -401,8 +401,10 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 					   rright  - rleft,
 					   rbottom - rtop);
 		}
-		o_move_stretch_rubberband(w_current);
-		o_move_stretch_rubberband(w_current);
+		if (w_current->netconn_rubberband) {
+			o_move_stretch_rubberband(w_current);
+			o_move_stretch_rubberband(w_current);
+		}
 	}
 
 	/* erase old outline */
@@ -453,8 +455,10 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 					   &rbottom);
 			}
 		}
-		o_move_stretch_rubberband(w_current);
-		o_move_stretch_rubberband(w_current);
+		if (w_current->netconn_rubberband) {
+			o_move_stretch_rubberband(w_current);
+			o_move_stretch_rubberband(w_current);
+		}
 	}
 
 	if (w_current->CONTROLKEY) {

@@ -325,6 +325,15 @@
 ;(net-style "thin")
 (net-style "thick")
 
+; netconn-rubberband string
+;
+; Controls if net connections are maintained when you move a connecting 
+; component or net.   If this is enabled then there is a performance hit
+; when dealing with very large schematics.   
+;
+(netconn-rubberband "disabled")
+;(netconn-rubberband "enabled")
+
 ;  bus-style string
 ;
 ;  Set to thin if you want thin buses.

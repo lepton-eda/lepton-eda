@@ -1591,3 +1591,14 @@ g_rc_draw_grips(SCM mode)
 
 	RETURN_G_RC_MODE("draw-grips", default_draw_grips, 2);
 }
+
+SCM
+g_rc_netconn_rubberband(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("netconn-rubberband", default_netconn_rubberband, 2);
+}

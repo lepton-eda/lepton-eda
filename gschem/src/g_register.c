@@ -141,6 +141,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("undo-type", g_rc_undo_type);
 
 	gh_new_procedure1_0 ("draw-grips", g_rc_draw_grips);
+	gh_new_procedure1_0 ("netconn-rubberband", g_rc_netconn_rubberband);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);

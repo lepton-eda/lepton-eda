@@ -46,7 +46,9 @@ o_move_start(TOPLEVEL *w_current, int x, int y)
                                w_current->page_current->selection2_head->next,
                                x_get_color(w_current->bb_color));
 
-		o_move_prep_rubberband(w_current);
+		if (w_current->netconn_rubberband) {
+			o_move_prep_rubberband(w_current);
+		}
 
 		w_current->inside_action = 1;
 	}
@@ -83,7 +85,9 @@ o_move_end(TOPLEVEL *w_current)
 	diff_x = lx - sx;
 	diff_y = ly - sy;
 
-	o_move_end_rubberband(w_current, diff_x, diff_y);
+	if (w_current->netconn_rubberband) {
+		o_move_end_rubberband(w_current, diff_x, diff_y);
+	}
 
 	/* skip over head node */
 	s_current = w_current->page_current->selection2_head->next;
@@ -315,7 +319,7 @@ o_move_return_whichone(OBJECT *object, int x, int y)
 	}
 
 	fprintf(stderr, "DOH! tried to find the whichone, but didn't find it!\n");
-	return(0);
+	return(0); /* really ought to return an error code */
 }
 
 void
@@ -348,7 +352,7 @@ o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object)
 			if (c_current->object != NULL) {
 				if (c_current->object->saved_color == -1 &&
 					(c_current->type == CONN_NET ||
-				         c_current->type == CONN_BUS)) {
+				         c_current->type == CONN_BUS)) { 
 
 #if DEBUG 
 					printf("%d FOUND: %s %d %d\n", i,
@@ -360,6 +364,25 @@ o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object)
 							c_current->object,
 							c_current->x, 
 							c_current->y);
+
+#if 0 /* not quite right yet */
+					/*c_current->type == CONN_MIDPOINT)) {*/
+					if (whichone == -1) {
+						if (c_current->responsible) {
+						whichone = 
+						    o_move_return_whichone(
+							c_current->responsible,
+							c_current->x, 
+							c_current->y);
+						} else {
+							whichone = 0;
+							/* not the best */
+							/* error handling */
+							/* here TODO, hack */
+						}
+
+					}
+#endif
 
 					w_current->page_current->stretch_tail =
 					       	s_stretch_add(w_current->

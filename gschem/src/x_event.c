@@ -762,7 +762,9 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 	case(ENDMOVE):
 	case(MOVE):
 		if (w_current->inside_action) {
-			o_move_stretch_rubberband(w_current);
+			if (w_current->netconn_rubberband) {
+				o_move_stretch_rubberband(w_current);
+			}
 			o_drawbounding(
 				w_current, NULL,
 				w_current->page_current->selection2_head->next,
@@ -773,7 +775,9 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 				w_current, NULL,
 				w_current->page_current->selection2_head->next,
 				x_get_color(w_current->bb_color));
-			o_move_stretch_rubberband(w_current);
+			if (w_current->netconn_rubberband) {
+				o_move_stretch_rubberband(w_current);
+			}
 		}
                 break;
 

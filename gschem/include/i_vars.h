@@ -70,4 +70,4 @@ extern int default_undo_levels;
 extern int default_undo_control;
 extern int default_undo_type;
 extern int default_draw_grips;
-
+extern int default_netconn_rubberband;

@@ -219,6 +219,7 @@ SCM g_rc_undo_levels(SCM levels);
 SCM g_rc_undo_control(SCM mode);
 SCM g_rc_undo_type(SCM mode);
 SCM g_rc_draw_grips(SCM mode);
+SCM g_rc_netconn_rubberband(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -505,6 +506,7 @@ void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end(TOPLEVEL *w_current);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);
+void o_move_check_midpoint(TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(TOPLEVEL *w_current);
 int o_move_zero_length(OBJECT *object);
 void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y);
