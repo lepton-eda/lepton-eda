@@ -6,4 +6,4 @@
 (component-library (string-append examples-path "/sym"))
 (source-library (string-append examples-path "/sch"))
 
-(display "\n  loaded local commonrc\n")
+(display "\nloaded local commonrc\n")

@@ -1,7 +1,14 @@
 (load "./commonrc")
 
+(hierarchy-traversal "disabled")
+
 (define-module (ice-9 ls) :use-module (ice-9 common-list)
 			  :use-module (ice-9 string-fun))
 
-(load (string-append examples-path "/../gnetlist/scheme/gnet-vams.scm"))
+;; AVH not really needed
+;; (load (string-append examples-path "/../../scheme/gnet-vams.scm"))
 (display "loaded local gnetlistrc\n")
+
+
+;;       (debug-enable 'debug 'backtrace)
+;;       (read-enable 'positions)
