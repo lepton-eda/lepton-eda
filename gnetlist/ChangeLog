@@ -9,6 +9,9 @@
 	changes to these files.  Stuart just added the footprint attribute
 	to the output.
 
+	* src/s_netattrib.c: Per a user's complaint, fixed the 
+	"Got an invalid net= attribute" to be a little more verbose.
+
 2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Fixed wrong command line option (-r is not a 

@@ -261,7 +261,8 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 	if (value) {
 	    char_ptr = strchr(value, ':');
 	    if (char_ptr == NULL) {
-		fprintf(stderr, "Got an invalid net= attrib\n");
+		fprintf(stderr, "Got an invalid net= attrib [net=%s]\nMissing : in net= attrib\n",
+			value);
 		return (NULL);
 	    }
 
@@ -302,7 +303,8 @@ char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
 	if (value) {
 	    char_ptr = strchr(value, ':');
 	    if (char_ptr == NULL) {
-		fprintf(stderr, "Got an invalid net= attrib\n");
+		fprintf(stderr, "Got an invalid net= attrib [net=%s]\nMissing : in net= attrib\n",
+			value);
 		return (NULL);
 	    }
 
