@@ -9,6 +9,37 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-10-09  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/gschem.c: Added full path to page_filename (if filename doesn't
+	  start with a / 
+
+	* src/x_log.c: Added x_log_init to deal with the chdir gschem is doing
+	  now
+
+	* src/x_fs.c: Lots of work to get file selection dialog box to work
+	  with saving
+
+	* src/i_callbacks.c: Changed saveas and open to use new fileselect
+	  dialog box
+
+	* src/x_filesel.c: Removed file from Makefile.am
+
+	* src/x_dialog.c: Added x_destroy_window 
+
+	* src/x_fs.c: Made sure you can't open up a directory
+
+	* src/x_fs.c: Lots of changes related to getting filedialog to act as
+	  the component place dialog box
+
+	* src/i_callback.c: Made the new component place dialog box the 
+	  default
+	
+	* src/x_log.c: Fixed memory leak (added x_log_free)
+		
+	* src/gschem.c: Added some free()'s for some vars which were allocated
+	  but never freed (in gschem_quit)
+
 1999-10-05  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_fs.c: Changed filter entry to a filter option box 

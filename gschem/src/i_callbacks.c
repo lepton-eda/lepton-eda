@@ -201,18 +201,16 @@ DEFINE_I_CALLBACK(file_new_window)
 /* This should be renamed to page_open perhaps... */
 DEFINE_I_CALLBACK(file_open)
 {
+
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
 	exit_if_null(w_current);
-	setup_open_file_selector(w_current);
-}
 
-DEFINE_I_CALLBACK(file_open_new)
-{
-	TOPLEVEL *w_current = (TOPLEVEL *) data;
-
-	exit_if_null(w_current);
 	x_fileselect_setup(w_current, FILESELECT, OPEN);
+
+#if 0 /* replaced by above */
+	setup_open_file_selector(w_current);
+#endif
 }
 
 DEFINE_I_CALLBACK(file_script)
@@ -238,10 +236,13 @@ DEFINE_I_CALLBACK(file_save)
 	 * untitled_name. :-) */
 	if (strstr(w_current->page_current->page_filename,
 		   w_current->untitled_name)) {
+		x_fileselect_setup(w_current, FILESELECT, SAVEAS_NONE);
+#if 0 /* replaced with x_fileselect_setup */
 		setup_saveas_file_selector(
 			w_current,
 			SAVEAS,
 			w_current->page_current->page_filename);
+#endif
 	} else {
 		s_log_message("Saved [%s]\n",
 			      w_current->page_current->page_filename);
@@ -276,9 +277,13 @@ DEFINE_I_CALLBACK(file_save_as)
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
 	exit_if_null(w_current);
+	x_fileselect_setup(w_current, FILESELECT, SAVEAS_NONE);
+
+#if 0 /* replaced with above */
 	setup_saveas_file_selector(w_current,
 				   SAVEAS,
 				   w_current->page_current->page_filename);
+#endif
 }
 
 DEFINE_I_CALLBACK(file_print)
@@ -1019,9 +1024,13 @@ DEFINE_I_CALLBACK(page_close)
 	exit_if_null(w_current);
 
 	if (w_current->page_current->CHANGED) {
+		x_fileselect_setup(w_current, FILESELECT, SAVEAS_CLOSE);
+
+#if 0 /* replaced with above */
 		setup_saveas_file_selector(
 			w_current, CLOSE,
 			w_current->page_current->page_filename);
+#endif
 		return;
 	}
 
@@ -1170,18 +1179,14 @@ DEFINE_I_CALLBACK(add_component)
 
 	exit_if_null(w_current);
 
+	x_fileselect_setup(w_current, COMPSELECT, -1);
+
+#if 0 /* replaced by above */
 	setup_place_file_selector(w_current);
+#endif
 	i_update_middle_button(w_current,
 			       i_callback_add_component, "Component");
 	i_update_status2(w_current, "Select Mode");
-}
-
-DEFINE_I_CALLBACK(add_component_new)
-{
-	TOPLEVEL *w_current = (TOPLEVEL *) data;
-
-	exit_if_null(w_current);
-	x_fileselect_setup(w_current, COMPSELECT, -1);
 }
 
 DEFINE_I_CALLBACK(add_attribute)

@@ -74,6 +74,27 @@
 #define FILESELECT	0
 #define COMPSELECT	1
 
+/* vvvvvvv this is a mess */
+
+/* flags to setup_saveas_file_selector() */
+#define SAVEAS	0 /* next action after click is nothing */
+#define QUIT	1 /* next action after click is quit */
+#define NEW	3 /* next action after click is new */
+#define CLOSE	4 /* next action after click is close */
+
+/* can be either OPEN or SAVEAS_* */
+#define OPEN	2 /* action is a open */
+
+/* flags to setup_saveas_file_selector() */
+#define NULL_ACTION	-1 /* used if action has nothing to do with save */
+#define SAVEAS_NONE	0 /* next action after click is nothing */
+#define SAVEAS_QUIT	1 /* next action after click is quit */
+#define SAVEAS_OPEN	2 /* next action after click is open */
+#define SAVEAS_NEW	3 /* next action after click is new */
+#define SAVEAS_CLOSE	4 /* next action after click is close */
+
+/* ^^^^^^^ this is a mess */
+
 /* for FILEDIALOG filter_type var */
 #define FILEDIALOG_SCH_ONLY	0
 #define FILEDIALOG_SYM_ONLY	1

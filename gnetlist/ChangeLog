@@ -1,3 +1,20 @@
+1999-10-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* gnetlist/gnetlist.c: Fixed up s_log_init to use the new prototype
+
+1999-10-09  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* examples/test.sch: Renamed (replaced) test_verilog.sch
+
+	* examples/test_verilog.sch: Translated it away from borders
+
+	* examples/7447.sch: Translated it away from borders
+
+1999-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnetlist.scm: Fixed a dangling reference to bom:strip1 
+	  (changed to strip1)
+
 1999-10-06  Matthew Ettus   <matt@ettus.com>
 
 	* scheme/gnet-vipec.scm:  New file, not functional yet.

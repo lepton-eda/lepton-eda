@@ -140,14 +140,28 @@ PAGE *
 s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
 {
 	PAGE *p_new;
+	char *pwd;
 
 	/* be sure to free this somewhere */
 	p_new = (PAGE *) malloc(sizeof(PAGE)); 
 
 	p_new->CHANGED = 0;
 	p_new->zoom_factor = 0;
+	pwd = getcwd(NULL, 1024);
+
+	if (page_filename[0] == '/') {
+		p_new->page_filename = u_basic_strdup_multiple(page_filename, 
+							       NULL);
+	} else {
+		p_new->page_filename = u_basic_strdup_multiple(pwd, "/", 
+						       page_filename, NULL);
+	}
+#if 0 /* now done in above line */
 	p_new->page_filename = malloc(sizeof(char)*strlen(page_filename)+1);
 	strcpy(p_new->page_filename, page_filename);
+#endif
+	free(pwd);
+	
         p_new->coord_aspectratio = (float) w_current->init_right /
                                    (float) w_current->init_bottom;
 

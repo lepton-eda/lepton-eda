@@ -86,6 +86,12 @@ static int clib_cache_index=0;
 static struct st_clib_cache clib_cache[MAX_CLIBS_CACHE];
 
 int 
+s_clib_return_num(void) 
+{
+	return(clib_index);
+}
+
+int 
 s_clib_add_entry(char *new_path) 
 {
 	if (new_path == NULL) {

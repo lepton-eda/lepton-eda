@@ -36,6 +36,7 @@
 #include <libgeda/prototype.h>
 
 #include "../include/globals.h"
+#include "../include/i_vars.h"
 #include "../include/prototype.h"
 
 #ifdef HAS_LIBSTROKE
@@ -57,11 +58,18 @@ gschem_quit(void)
 	s_color_destroy_all();
 	/* s_stroke_free(); no longer needed */
 
+	free(default_series_name);
+	free(default_untitled_name);
+	free(default_scheme_directory);
+	free(default_font_directory);
+
+
 	/* x_window_free_head(); can't do this since it causes a
 	 * condition in which window_head->... is still being refered
 	 * after this */
 
 	/* g_mem_profile();*/
+	x_log_free();
 	gtk_main_quit();
 }
 
@@ -69,6 +77,7 @@ void
 main_prog(int argc, char *argv[])
 {
 	int i;
+	char *cwd;
 	TOPLEVEL *w_current;
 	/* TODO: should the size be flexible? */
 	char input_str[256];
@@ -79,10 +88,12 @@ main_prog(int argc, char *argv[])
 	visual = gdk_visual_get_system();
 
 	argv_index = parse_commandline(argc, argv);
+	cwd = getcwd(NULL, 1024);
 
 	/* TODO: Probably the file name shuold be defined elsewhere */
 	/* create log file right away even if logging is enabled */
-	s_log_init("gschem.log");
+	x_log_init(cwd, "gschem.log");
+	s_log_init(cwd, "gschem.log");
 
 	s_log_message("gEDA: gschem version %s - THIS IS AN ALPHA RELEASE!\n",
 		      VERSION);
@@ -128,6 +139,7 @@ main_prog(int argc, char *argv[])
 
 	x_repaint_background(w_current);
 
+
 	i = argv_index;
 	while (argv[i] != NULL) {
 		if (first_page) {
@@ -138,10 +150,22 @@ main_prog(int argc, char *argv[])
 			/* Page structure has already been created...
                          * so, just set the filename and open the
                          * schematic for the first page */
+
+			if (argv[1][0] == '/') {
+				w_current->page_current->page_filename = 
+				   u_basic_strdup_multiple(argv[1], NULL);
+			} else {
+				w_current->page_current->page_filename = 
+				   u_basic_strdup_multiple(cwd, "/", argv[1], 
+						        NULL);
+			}
+
+#if 0 /* now done above */
 			w_current->page_current->page_filename =
 				malloc(sizeof(char) * strlen(argv[i]) + 5);
                 	strcpy(w_current->page_current->page_filename,
 			       argv[i]);
+#endif
 
 			w_current->DONT_REDRAW = 1;
 			/* this needed so that display is shown
@@ -185,6 +209,8 @@ main_prog(int argc, char *argv[])
 		}
 		i++;
 	}
+
+	free(cwd);	
 
 	if (argv[argv_index] == NULL) {
 		if (w_current->page_current->page_filename) {

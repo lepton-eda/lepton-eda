@@ -71,55 +71,9 @@ x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current)
 
 	x_preview_close(f_current->preview);
 	gtk_grab_remove(f_current->xfwindow);
+	f_current->toplevel = NULL;
 	f_current->xfwindow = NULL;
         /* *window = NULL;*/
-}
-
-void
-x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
-{
-	char *temp=NULL;
-
-	if (f_current->filename) {
-		free(f_current->filename);
-		f_current->filename = NULL;
-	}
-
-	if (f_current->directory) {
-		free(f_current->directory);
-		f_current->directory = NULL;
-	}
-	
-	/* this may cause problems on non POSIX complient systems */	
-	temp = getcwd(NULL, 1024);
-	
-	if (filename) {
-		f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
-		f_current->filename = u_basic_strdup(filename);
-					
-		free(temp); 
-		temp = u_basic_strdup_multiple(f_current->directory,
-				      	       f_current->filename, NULL);
-		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
-
-	} else {
-		f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
-
-		if (f_current->filename) {
-			free(f_current->filename);
-			f_current->filename=NULL;
-		}
-
-		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
-			   f_current->directory);
-	}
-
-	free(temp);
-
-#if DEBUG
-	printf("directory: %s\n", f_current->directory);
-#endif
-
 }
 
 void
@@ -156,6 +110,56 @@ x_fileselect_free_list_buffers(FILEDIALOG *f_current)
 		f_current->directory_entries[i] = NULL;
 	}
 }
+
+/*********** File Open/Save As... specific code starts here ***********/
+void
+x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
+{
+	char *temp=NULL;
+
+	if (f_current->filename) {
+		free(f_current->filename);
+		f_current->filename = NULL;
+	}
+
+	if (f_current->directory) {
+		free(f_current->directory);
+		f_current->directory = NULL;
+	}
+
+	/* this may cause problems on non POSIX complient systems */	
+	temp = getcwd(NULL, 1024);
+	
+	if (filename) {
+		f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
+		f_current->filename = u_basic_strdup(filename);
+					
+		free(temp); 
+		temp = u_basic_strdup_multiple(f_current->directory,
+				      	       f_current->filename, NULL);
+		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
+
+	} else {
+		f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
+
+		if (f_current->filename) {
+			free(f_current->filename);
+			f_current->filename=NULL;
+		}
+
+		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
+			   f_current->directory);
+	}
+
+	free(temp);
+
+#if DEBUG
+	printf("directory: %s\n", f_current->directory);
+#endif
+
+}
+
+
 
 void
 x_fileselect_setup_list_buffers(FILEDIALOG *f_current, 
@@ -241,10 +245,10 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 	while((dirent_ptr = readdir(directory)) != NULL) {
 		sprintf(path_buf, "%s%s", f_current->directory, dirent_ptr->d_name);
 		if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode)) {
-		//	printf("dir: %s\n", path_buf);	
+		/*	printf("dir: %s\n", path_buf);	 */
 			num_directories++;	
 		} else {
-		//	printf("file: %s\n", path_buf);	
+		/*	printf("file: %s\n", path_buf);	*/
 			num_files++;	
 		}
 	}
@@ -266,7 +270,8 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 
 	while((dirent_ptr = readdir(directory)) != NULL) {
 		sprintf(path_buf, "%s%s", f_current->directory, dirent_ptr->d_name);
-		if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode)) {
+		if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode) &&
+		   (strcmp(dirent_ptr->d_name, ".") != 0)) {
 
 			f_current->directory_entries[dir_count] = (char *)
 					malloc(sizeof(char)*(strlen(
@@ -373,6 +378,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 			max_width = width;
 		}
 
+		free(temp);
 #if DEBUG
 		printf("directory: %s\n", f_current->directory_entries[i]);
 #endif
@@ -398,6 +404,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 	closedir(directory);
 	gtk_clist_thaw (GTK_CLIST (f_current->file_list));
 	gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
+	f_current->last_search = -1;
 }
 
 gint
@@ -508,6 +515,8 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
 int
 x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
 {
+	TOPLEVEL *w_current;
+
 	if (f_current == NULL) {
 		fprintf(stderr, "x_fileselect_preview_checkbox: Oops got a null f_current!\n");
 		exit(-1);
@@ -519,25 +528,90 @@ x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
 	} else {
 		f_current->preview_control = TRUE;
 
-		if (f_current->filename) {
-			x_preview_update(f_current->preview,	
-					 f_current->directory,
-					 f_current->filename);
-		}
+		x_preview_update(f_current->preview,	
+			 	 f_current->directory,
+			         f_current->filename);
 	}
 }
 
 void
-x_fileselect_close (GtkWidget *w, FILEDIALOG *f_current)
+x_fileselect_saveas_close (GtkWidget *w, FILEDIALOG *f_current)
 {
+	TOPLEVEL *w_current;
+
 	gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
-	
+
+#if 0 /* this isn't relavent anymore */
+	w_current = f_current->toplevel;
+
+        if (f_current->filesel_type == SAVEAS_QUIT) {
+                exit_dialog(w_current);
+        }
+
+        if (f_current->filesel_type == SAVEAS_OPEN) {
+		x_fileselect_setup (w_current, FILESELECT, SAVEAS_OPEN);
+        }
+
+        if (f_current->filesel_type == SAVEAS_NEW) {
+                w_current->page_current->CHANGED = 0;
+                i_callback_file_new(w_current, 0, NULL);
+        }
+#endif
+
+        /* do nothing if close is pressed for SAVEAS_CLOSE case */
 }
 
 void
-x_fileselect_close_saveas(GtkWidget *w, FILEDIALOG *f_current)
+x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 {
+        TOPLEVEL *w_current;
+        PAGE *found_page;
+        char *string;
+	int len;
 
+        w_current = f_current->toplevel;
+
+        string = gtk_entry_get_text(GTK_ENTRY(f_current->filename_entry));
+
+        if (!string) {
+                return;
+        }
+
+	len = strlen(string);
+	printf("%s\n", string);
+
+	if (string[len - 1] != '/') {
+		if (w_current->page_current->page_filename) {
+			free(w_current->page_current->page_filename);
+        	}
+
+		w_current->page_current->page_filename = u_basic_strdup(string);
+
+		f_save(w_current, string);
+
+		s_log_message("Saved As [%s]\n", 
+	 		      w_current->page_current->page_filename);
+
+		i_set_filename(w_current, string);
+
+		w_current->page_current->CHANGED = 0;
+		update_page_manager(NULL, w_current);
+
+		x_fileselect_close (NULL, f_current);
+		if (f_current->filesel_type == SAVEAS_QUIT) {
+			x_window_close(w_current);
+		} else if (f_current->filesel_type == SAVEAS_OPEN) {
+			i_callback_file_open(w_current, 0, NULL);
+		} else if (f_current->filesel_type == SAVEAS_NEW) {
+			i_callback_file_new(w_current, 0, NULL);
+		} else if (f_current->filesel_type == SAVEAS_CLOSE) {
+			i_callback_page_close(w_current, 0, NULL);
+		}
+
+		/* do nothing if SAVEAS_NONE */
+	} else {
+		s_log_message("Specify a Filename!\n");
+	}
 }
 
 void
@@ -557,6 +631,7 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 	TOPLEVEL *w_current;
 	PAGE *found_page;
 	char *string;
+	int len;
 
 	w_current = f_current->toplevel;
 
@@ -567,37 +642,43 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 		return;
 	}
 
+	len = strlen(string);
+
 #if DEBUG
 	printf("opening: %s\n", string);
 #endif
 
-	if ( !(found_page = s_page_new(w_current, string)) ) {
-		w_current->DONT_REDRAW = 1;
-		f_open(w_current, w_current->page_current->page_filename);
-		i_set_filename(w_current, w_current->page_current->
+	if (string[len - 1] != '/') {
+		if ( !(found_page = s_page_new(w_current, string)) ) {
+			w_current->DONT_REDRAW = 1;
+			f_open(w_current, w_current->page_current->page_filename);
+			i_set_filename(w_current, w_current->page_current->
 					  page_filename);
 
-		x_repaint_background(w_current);
-		x_window_setup_world(w_current);
-		x_manual_resize(w_current);
-		a_zoom_limits(w_current, w_current->page_current->object_head);
+			x_repaint_background(w_current);
+			x_window_setup_world(w_current);
+			x_manual_resize(w_current);
+			a_zoom_limits(w_current, w_current->page_current->object_head);
 
-		/* now update the scrollbars */
-		x_hscrollbar_update(w_current);
-		x_vscrollbar_update(w_current);
-		update_page_manager(NULL, w_current);
-		w_current->DONT_REDRAW = 0;
-
-		o_redraw_all(w_current);
+			/* now update the scrollbars */
+			x_hscrollbar_update(w_current);
+			x_vscrollbar_update(w_current);
+			update_page_manager(NULL, w_current);
+			w_current->DONT_REDRAW = 0;
+	
+			o_redraw_all(w_current);
+		} else {
+			s_page_goto(w_current, found_page);
+			update_page_manager(NULL, w_current);
+			i_set_filename(w_current, w_current->
+			page_current->page_filename);
+			x_scrollbars_update(w_current);
+			o_redraw_all(w_current);
+		}
+		gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
 	} else {
-		s_page_goto(w_current, found_page);
-		update_page_manager(NULL, w_current);
-		i_set_filename(w_current, w_current->
-		page_current->page_filename);
-		x_scrollbars_update(w_current);
-		o_redraw_all(w_current);
+		s_log_message("Specify a Filename!\n");
 	}
-	gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
 }
 
 void
@@ -663,6 +744,534 @@ x_fileselect_file_button (GtkWidget *widget, gint row, gint column,
 }
 
 void
+x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
+{
+	char *temp=NULL;
+	char *ptr=NULL;
+	char *new=NULL;
+	char *filename=NULL;
+	char *directory=NULL;
+	int i;
+
+
+	if (f_current->filename) {
+		free(f_current->filename);
+		f_current->filename = NULL;
+	}
+
+	if (f_current->directory) {
+		free(f_current->directory);
+		f_current->directory = NULL;
+	}
+
+	if (new_filename == NULL) {
+		return;
+	}
+
+	directory = (char *) malloc(sizeof(char)*(strlen(new_filename)+1));
+	filename = (char *) malloc(sizeof(char)*(strlen(new_filename)+1));
+
+	ptr = new_filename;	
+	temp = strrchr(new_filename, '/');	
+	if (temp) {
+		i = 0;
+		while(ptr != temp && ptr[0] != '\0') {
+			directory[i] = *ptr;	
+			ptr++;
+			i++;
+		}
+		directory[i] = '\0';
+		ptr++; /* skip over last '/' */
+#if DEBUG
+		printf("directory: %s\n", directory);
+#endif
+		i = 0;
+		while(ptr[0] != '\0') {
+			filename[i] = *ptr;	
+			ptr++;	
+			i++;
+		}
+		filename[i] = '\0';
+#if DEBUG
+		printf("filename: %s\n", filename);
+#endif
+	} else {
+		printf("somehow got a filename which does not have a / in it\n");
+	}
+
+	if (directory) {
+		f_current->directory = u_basic_strdup_multiple(directory, 
+							       "/", NULL);
+		free(directory);
+	}
+
+	if (filename) {
+		f_current->filename = u_basic_strdup(filename);
+		free(filename);
+	}
+					
+	temp = u_basic_strdup_multiple(f_current->directory, 
+				       f_current->filename, NULL);
+	gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
+
+	free(temp);
+
+#if DEBUG
+	printf("directory: %s\n", f_current->directory);
+	printf("filename: %s\n", f_current->filename);
+#endif
+
+}
+void
+x_fileselect_close (GtkWidget *w, FILEDIALOG *f_current)
+{
+	gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
+}
+
+
+/* don't use widget, since it can be NULL */
+void
+x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
+{
+	TOPLEVEL *w_current;
+	PAGE *found_page;
+	char *string;
+	int i;
+	int row;
+
+	w_current = f_current->toplevel;
+
+	string = gtk_entry_get_text(GTK_ENTRY(f_current->search_entry));
+	
+	if (!string) {
+		return;
+	}
+
+	gtk_entry_select_region(GTK_ENTRY(f_current->search_entry), 0, -1);
+
+#if 0 /* not used right now */
+	/* search directories */
+	i = 0;
+	if (f_current->file_entries[0] == NULL) {
+		while (f_current->directory_entries[i] != NULL) {
+		printf("compare: %s %s\n", f_current->directory_entries[i], string);
+			if (strstr(f_current->directory_entries[i], string)) {
+
+				/*text[0] = f_current->directory_entries[i];
+				text[1] = NULL; 
+				row = gtk_clist_find_row_from_data(GTK_CLIST(
+                                                     f_current->dir_list),
+						      f_current->directory_entries[i]);
+				*/
+				
+				gtk_clist_select_row(GTK_CLIST(
+					              f_current->dir_list), 
+						     i, 0);
+				printf("%d found: %s\n", i, f_current->directory_entries[i]);
+				
+				/*x_fileselect_update_dirfile(f_current, NULL);
+				x_fileselect_fill_lists(f_current);*/
+				return;
+			}
+			i++;
+		}
+	}
+#endif
+
+	if (f_current->last_search != -1) {
+		i = f_current->last_search;	
+	} else {
+		i = 0;
+	}
+
+	while (f_current->file_entries[i] != NULL) {
+		if (strstr(f_current->file_entries[i], string)) {
+			gtk_clist_select_row(GTK_CLIST(f_current->file_list), 
+					     i, 0);
+
+			gtk_clist_moveto(GTK_CLIST(
+						  f_current->file_list), 
+                       				  i, 0, -1, -1);
+
+			x_fileselect_update_dirfile(f_current, 
+						    f_current->file_entries[i]);
+			f_current->last_search = i + 1;
+			return;
+		}
+		i++;
+	}
+	f_current->last_search = -1;
+}
+/*********** File Open/Save As... specific code ends here ***********/
+
+/*********** Component Place specific code starts here **************/
+
+gint
+default_components(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->embed_complex = 0;
+	w_current->include_complex = 0;
+	return(0);
+}
+
+gint
+embed_components(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->embed_complex = 1;
+	w_current->include_complex = 0;
+	return(0);
+}
+
+gint
+include_components(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->include_complex = 1;
+	w_current->embed_complex = 0;
+	return(0);
+}
+
+/* this is from gtktest.c */
+static GtkWidget*
+create_menu (TOPLEVEL *w_current)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GSList *group;
+	char buf[100];
+
+	menu = gtk_menu_new ();
+	group = NULL;
+
+	sprintf(buf, "Default behavior - reference component");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) default_components,
+			   w_current);
+
+	gtk_widget_show(menuitem);
+
+	sprintf(buf, "Embed component in schematic");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) embed_components,
+			   w_current);
+	gtk_widget_show(menuitem);
+
+	sprintf(buf, "Include component as individual objects");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) include_components,
+			   w_current);
+	gtk_widget_show(menuitem);
+
+	if (w_current->embed_complex) {
+		gtk_menu_set_active(GTK_MENU (menu),1);
+		embed_components(NULL, w_current);
+	} else {
+		default_components(NULL, w_current);
+	}
+
+	return menu;
+}
+
+void
+x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
+{
+	char *string;
+	int num_files=0;
+	int num_directories=0;
+	int file_count = 0;
+	int dir_count = 0;
+	struct stat stat_en;
+	char path_buf[MAXPATHLEN*2];
+	char *text[2];
+	char *temp;
+	int i;
+	int max_width=0;
+	int width;
+	int first, last, j, done=0;
+	int pass_count = 0;
+
+
+	gtk_clist_freeze (GTK_CLIST (f_current->dir_list));
+	gtk_clist_clear (GTK_CLIST (f_current->dir_list));
+
+	i = 0;
+	text[0] = NULL;
+	text[1] = NULL;
+	max_width = 0;
+        string = (char *) s_clib_getdir(i);
+        while (string != NULL) {
+		temp = strrchr(string, '/');
+		if (temp) {
+			temp++; /* get past last '/' */
+			text[0] = temp;
+		} else {
+			text[0] = string;
+		}
+
+		f_current->directory_entries[i] = u_basic_strdup_multiple(
+					string, "/", NULL);
+		
+		gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
+		width = gdk_string_width(f_current->dir_list->style->font,
+                                         text[0]);
+		if (width > max_width) {
+			gtk_clist_set_column_width(GTK_CLIST(f_current->
+						   dir_list), 0, width);
+			max_width = width;
+		}
+		i++;
+        	string = (char *) s_clib_getdir(i);
+	}
+
+	gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
+	f_current->last_search = -1;
+}
+
+void
+x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
+{
+	char *file, *temp = NULL;
+	int width, max_width;
+	char *text[2];
+	
+	gtk_clist_freeze (GTK_CLIST (f_current->file_list));
+	gtk_clist_clear (GTK_CLIST (f_current->file_list));
+
+	gtk_clist_get_text (GTK_CLIST (f_current->dir_list), row, 0, &temp);
+	
+	strcpy(f_current->toplevel->current_clib, 
+	       f_current->directory_entries[row]);
+	
+	s_clib_getfiles(f_current->directory_entries[row], OPEN_DIR);
+
+	text[0] = NULL;
+	text[1] = NULL;
+	max_width = 0;
+	file = (char *) s_clib_getfiles(f_current->directory_entries[row], 
+					READ_DIR);
+        while(file != NULL) {
+		if (strstr(file, ".sym")) {
+#if DEBUG
+			printf("file: %s\n", file);
+#endif
+			text[0] = file;
+			gtk_clist_append(GTK_CLIST(f_current->file_list), text);
+			width = gdk_string_width(
+					f_current->file_list->style->font,
+                                        text[0]);
+			if (width > max_width) {
+				gtk_clist_set_column_width(GTK_CLIST(f_current->
+						   file_list), 0, width);
+				max_width = width;
+			}
+		}
+		file = (char *) s_clib_getfiles(
+					f_current->directory_entries[row], 
+					READ_DIR);
+	}
+
+	gtk_clist_thaw (GTK_CLIST (f_current->file_list));
+
+        s_clib_getfiles(NULL, CLOSE_DIR);
+}
+
+/* don't pass in f_current->filename or f_current->directory for component */
+/* or library */
+void
+x_fileselect_comp_update_current(FILEDIALOG *f_current, 
+				 char *library, char *component)
+{
+	char *temp=NULL;
+	int i;
+
+
+	/* component */
+	if (f_current->filename) {
+		free(f_current->filename);
+		f_current->filename = NULL;
+	}
+
+	/* library */
+	if (f_current->directory) {
+		free(f_current->directory);
+		f_current->directory = NULL;
+	}
+
+	if (library) {
+		f_current->directory = u_basic_strdup(library);
+	} else {
+		f_current->directory = NULL;
+	}
+
+	if (component) {
+		f_current->filename = u_basic_strdup(component);
+	} else {
+		f_current->filename = NULL;
+	}
+
+	if (f_current->directory && f_current->filename) {
+		temp = u_basic_strdup_multiple(f_current->directory, 
+				       f_current->filename, NULL);
+		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
+	} else if (f_current->directory && !f_current->filename) {
+		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
+				   f_current->directory);
+	} else if (!f_current->directory) {
+		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
+				   "NONE");
+	}
+
+	free(temp);
+
+#if DEBUG 
+	printf("directory: %s\n", f_current->directory);
+	printf("filename: %s\n", f_current->filename);
+#endif
+
+}
+
+void
+x_fileselect_change_clib(FILEDIALOG *f_current, char *new_clib,
+			 int row)
+{
+	x_fileselect_comp_update_current(f_current, new_clib, NULL);
+	x_fileselect_comp_fill_components(f_current, row);
+}
+
+void
+x_fileselect_lib_select (GtkWidget *widget, gint row, gint column,
+                         GdkEventButton *bevent, FILEDIALOG *f_current)
+{
+	char *filename, *temp = NULL;
+
+	gtk_clist_get_text (GTK_CLIST (f_current->dir_list), row, 0, &temp);
+
+	if (temp) {	
+#if DEBUG 
+		printf("selected: %d _%s_ _%s_\n", row, temp, 
+			f_current->directory_entries[row]);
+#endif
+		if (bevent) {
+			switch (bevent->type) {
+			/*	case(GDK_2BUTTON_PRESS): */
+				default:
+					x_fileselect_change_clib(f_current, 
+					    f_current->directory_entries[row],
+					    row);
+					break;
+
+			}
+		}
+	}
+}
+
+void
+x_fileselect_comp_select (GtkWidget *widget, gint row, gint column,
+                         GdkEventButton *bevent, FILEDIALOG *f_current)
+{
+	char *filename;
+	char *comp=NULL;
+	int diff_x, diff_y;
+	TOPLEVEL *w_current;
+
+	w_current = f_current->toplevel;
+
+	gtk_clist_get_text (GTK_CLIST (f_current->file_list), row, 0, &comp);
+
+	if (comp) {	
+	        strcpy(w_current->current_basename, comp);
+
+		if (f_current->preview_control) { 
+			x_preview_update(f_current->preview, 
+			w_current->current_clib,
+		 	comp);
+		}
+
+		x_fileselect_comp_update_current(f_current, 
+						 w_current->current_clib, comp);
+
+        	if (w_current->event_state == ENDCOMP) {
+			diff_x = w_current->last_x - w_current->start_x;
+			diff_y = w_current->last_y - w_current->start_y;
+
+			o_complex_translate_display(w_current,
+						    diff_x, diff_y,
+				 w_current->page_current->complex_place_head);
+		}
+
+        	o_list_delete_rest(w_current,
+                                   w_current->page_current->complex_place_head);
+        	o_complex_set_filename(w_current, w_current->current_clib,
+                               w_current->current_basename);
+
+        	w_current->event_state = DRAWCOMP;
+	}
+}
+
+void
+x_fileselect_comp_apply(GtkWidget *w, FILEDIALOG *f_current)
+{
+	TOPLEVEL *w_current;
+	int diff_x, diff_y;
+	
+	w_current = f_current->toplevel;
+
+	if (w_current->current_basename && w_current->current_clib) {
+        	if (w_current->event_state == ENDCOMP) {
+			diff_x = w_current->last_x - w_current->start_x;
+			diff_y = w_current->last_y - w_current->start_y;
+
+			o_complex_translate_display(w_current,
+						    diff_x, diff_y,
+				 w_current->page_current->complex_place_head);
+		}
+
+        	o_list_delete_rest(w_current,
+                                   w_current->page_current->complex_place_head);
+        	o_complex_set_filename(w_current, w_current->current_clib,
+                               w_current->current_basename);
+
+        	w_current->event_state = DRAWCOMP;
+	}
+}
+
+void
+x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
+{
+	TOPLEVEL *w_current;
+
+	w_current = f_current->toplevel;
+
+	/* erase any existing component while it's being placed */
+	/* do this instead of the below o_redraw_all */
+	if (w_current->inside_action &&
+	     (w_current->event_state == ENDCOMP ||
+	      w_current->event_state == DRAWCOMP)) {
+		o_complex_rubbercomplex(w_current);
+	}
+
+	o_list_delete_rest(w_current, w_current->page_current->
+				   complex_place_head);
+
+	w_current->event_state = SELECT;
+	i_update_status(w_current, "Select Mode");
+
+	gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
+        /* do nothing if close is pressed for SAVEAS_CLOSE case */
+}
+
+
+/*********** Component Place specific code ends here **************/
+
+void
 x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 {
 	GtkWidget *buttonapply;
@@ -672,7 +1281,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	GtkWidget *hbox, *action_area;
 	GtkWidget *scroll_box;
 	GtkWidget *separator;
-	GtkWidget *frame;
+	GtkWidget *optionmenu;
 	GtkWidget *drawbox;
 	GtkWidget *label;
 	GtkWidget *searchbox;
@@ -698,6 +1307,11 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
 		f_current->xfwindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 		f_current->toplevel = w_current;
+		f_current->type = type;
+		f_current->filesel_type = filesel_type;
+		f_current->last_search = -1;
+		f_current->filename = NULL;
+		f_current->directory = NULL;
 
 		if (type == FILESELECT) {
 
@@ -747,19 +1361,6 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 		gtk_box_pack_end (GTK_BOX (vbox), action_area, TRUE, FALSE, 10);
 		gtk_widget_show (action_area);
 
-		label=gtk_label_new("Filter");
-		gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-  		gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-		gtk_widget_show(label);
-
-#if 0 /* no longer used */
- 		f_current->filter_entry = gtk_entry_new_with_max_length (255);
- 		gtk_editable_select_region(GTK_EDITABLE(
-					   f_current->filter_entry), 0, -1);
- 		gtk_box_pack_start(GTK_BOX (vbox), 
-				   f_current->filter_entry, FALSE, FALSE, 0);
- 		gtk_widget_show(f_current->filter_entry);
-#endif
 
 		if (type == FILESELECT) {
 			f_current->filter_type = FILEDIALOG_SCH_ONLY;
@@ -767,14 +1368,22 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 			f_current->filter_type = FILEDIALOG_SYM_ONLY;
 		}
 
-		f_current->filter = gtk_option_menu_new ();
-		gtk_option_menu_set_menu(GTK_OPTION_MENU(f_current->filter),
+		if (type == FILESELECT) {
+			label=gtk_label_new("Filter");
+			gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
+  			gtk_box_pack_start(GTK_BOX(vbox), label, 
+					   FALSE, FALSE, 0);
+			gtk_widget_show(label);
+
+			f_current->filter = gtk_option_menu_new ();
+			gtk_option_menu_set_menu(GTK_OPTION_MENU(f_current->filter),
                                          x_fileselect_filter_menu(f_current));
                 /* gtk_option_menu_set_history(GTK_OPTION_MENU(f_current->filter),
 					    4);*/
-                gtk_box_pack_start(GTK_BOX(vbox), f_current->filter, 
+                	gtk_box_pack_start(GTK_BOX(vbox), f_current->filter, 
 				   FALSE, FALSE, 0);
-                gtk_widget_show (f_current->filter);
+                	gtk_widget_show (f_current->filter);
+		}
 
   		list_hbox = gtk_hbox_new (FALSE, 5);
   		gtk_box_pack_start (GTK_BOX (vbox), list_hbox, TRUE, TRUE, 0);
@@ -784,14 +1393,14 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 		gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
 		gtk_widget_show (separator);
 
-#if 0
+#if 0 /* for demonstration only */
 		frame = gtk_frame_new (NULL);
   		gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   		gtk_widget_show (frame);
+/*		gtk_container_add (GTK_CONTAINER (frame), drawbox); */
 #endif
 
   		drawbox = gtk_hbox_new (FALSE, 0);
-/*		gtk_container_add (GTK_CONTAINER (frame), drawbox); */
   		gtk_box_pack_start (GTK_BOX (vbox), drawbox, TRUE, FALSE, 5);
   		gtk_widget_show (drawbox);
 
@@ -799,14 +1408,25 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_box_pack_end (GTK_BOX (drawbox), searchbox, TRUE, TRUE, 10);
   		gtk_widget_show (searchbox);
 
-		dir_title[0] = u_basic_strdup("Directories");
+		if (type == FILESELECT) {
+			dir_title[0] = u_basic_strdup("Directories");
+		} else {
+			dir_title[0] = u_basic_strdup("Libraries");
+		}
   		dir_title[1] = NULL;
   		f_current->dir_list = gtk_clist_new_with_titles(1, 
 							   (char**) dir_title);
   		gtk_widget_set_usize(f_current->dir_list, 
 				     DIR_LIST_WIDTH, DIR_LIST_HEIGHT);
-  		gtk_signal_connect (GTK_OBJECT (f_current->dir_list), "select_row",
-                      (GtkSignalFunc) x_fileselect_dir_button, f_current);
+		if (type == FILESELECT) {
+  			gtk_signal_connect (GTK_OBJECT (f_current->dir_list), 
+				    "select_row", (GtkSignalFunc) 
+			            x_fileselect_dir_button, f_current);
+		} else {
+  			gtk_signal_connect (GTK_OBJECT (f_current->dir_list), 
+				    "select_row", (GtkSignalFunc) 
+			            x_fileselect_lib_select, f_current);
+		} 
   		gtk_clist_column_titles_passive(GTK_CLIST(f_current->dir_list));
 
   		scrolled_win = gtk_scrolled_window_new(NULL, NULL);
@@ -819,20 +1439,33 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_container_set_border_width(GTK_CONTAINER (scrolled_win), 5);
   		gtk_box_pack_start(GTK_BOX (list_hbox), scrolled_win, 
 				   TRUE, TRUE, 0);
+		/* gtk_clist_set_auto_sort(GTK_CLIST(f_current->dir_list), TRUE);*/
   		gtk_widget_show (f_current->dir_list);
   		gtk_widget_show (scrolled_win);
+		free(dir_title[0]);
 
   		/* The files clist */
-  		file_title[0] = u_basic_strdup("Files");
+		if (type == FILESELECT) {
+  			file_title[0] = u_basic_strdup("Files");
+		} else {
+  			file_title[0] = u_basic_strdup("Components");
+		}
   		file_title[1] = NULL;
   		f_current->file_list = gtk_clist_new_with_titles(1, 
 							(gchar**) file_title);
   		gtk_widget_set_usize(f_current->file_list, 
 				     FILE_LIST_WIDTH, FILE_LIST_HEIGHT);
-  		gtk_signal_connect(GTK_OBJECT (f_current->file_list), 
-				   "select_row", (GtkSignalFunc) 
-				   x_fileselect_file_button,
-                      		   f_current);
+		if (type == FILESELECT) {
+  			gtk_signal_connect(GTK_OBJECT (f_current->file_list), 
+					"select_row", (GtkSignalFunc) 
+				  	x_fileselect_file_button,
+                      		   	f_current);
+		} else {
+  			gtk_signal_connect(GTK_OBJECT (f_current->file_list), 
+					"select_row", (GtkSignalFunc) 
+				  	x_fileselect_comp_select,
+                      		   	f_current);
+		}
   		gtk_clist_column_titles_passive(GTK_CLIST(f_current->file_list));
 
   		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -845,9 +1478,10 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_container_set_border_width(GTK_CONTAINER(scrolled_win), 5);
   		gtk_box_pack_start(GTK_BOX (list_hbox), scrolled_win, 
 				   TRUE, TRUE, 0);
+		/* gtk_clist_set_auto_sort(GTK_CLIST(f_current->file_list), TRUE);*/
   		gtk_widget_show (f_current->file_list);
   		gtk_widget_show (scrolled_win);
-
+		free(file_title[0]);
 
 
   		f_current->preview = x_preview_setup(f_current->xfwindow, 
@@ -862,7 +1496,11 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_widget_show(f_current->preview_checkbox);
 
 
-		label=gtk_label_new("Search");
+		if (f_current->type == FILESELECT) {
+			label=gtk_label_new("Search in Files");
+		} else {
+			label=gtk_label_new("Search in Components");
+		}
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   		gtk_box_pack_start(GTK_BOX(searchbox), label, FALSE, FALSE, 5);
 		gtk_widget_show(label);
@@ -873,7 +1511,21 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 					   f_current->search_entry), 0, -1);
  		gtk_box_pack_start(GTK_BOX (searchbox), 
 				   f_current->search_entry, FALSE, FALSE, 0);
+		gtk_signal_connect(GTK_OBJECT(f_current->search_entry), 
+				   "activate", 
+				   GTK_SIGNAL_FUNC(x_fileselect_search),
+				   f_current);
+		gtk_widget_grab_focus(f_current->search_entry);
  		gtk_widget_show(f_current->search_entry);
+
+		if (type == COMPSELECT) {
+			optionmenu = gtk_option_menu_new ();
+                	gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
+                                         create_menu (w_current));
+                	gtk_box_pack_start(GTK_BOX(searchbox), optionmenu, 
+				   FALSE, FALSE, 10);
+                	gtk_widget_show (optionmenu);
+		}
 
 		label=gtk_label_new("Filename");
 		gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
@@ -885,41 +1537,53 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 					   f_current->filename_entry), 0, -1);
  		gtk_box_pack_start(GTK_BOX (vbox), 
 				   f_current->filename_entry, FALSE, FALSE, 0);
-		gtk_signal_connect(GTK_OBJECT(f_current->filename_entry), 
-				   "activate", 
-				   GTK_SIGNAL_FUNC(x_fileselect_open_file),
-				   f_current);
+
+		if (type == FILESELECT) {
+			gtk_signal_connect(GTK_OBJECT(
+					   f_current->filename_entry), 
+				   	   "activate", 
+				           GTK_SIGNAL_FUNC(
+				           x_fileselect_open_file),
+				   	   f_current);
+		} else {
+			gtk_signal_connect(GTK_OBJECT(
+					   f_current->filename_entry), 
+				   	   "activate", 
+				           GTK_SIGNAL_FUNC(
+				           x_fileselect_comp_apply),
+				   	   f_current);
+		}
+	
  		gtk_widget_show(f_current->filename_entry);
 
-#if 0
-  		separator = gtk_hseparator_new ();
-  		gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
-  		gtk_widget_show (separator);
-#endif
-		buttonapply = gtk_button_new_with_label ("Apply");
-                GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
-                gtk_box_pack_start(GTK_BOX(action_area),
-                                   buttonapply, TRUE, TRUE, 0);
-		gtk_widget_grab_default (buttonapply);
 		if (filesel_type == OPEN) {
+		        buttonapply = gtk_button_new_with_label ("Open");
 			gtk_signal_connect(GTK_OBJECT(buttonapply),
 				   "clicked",
 				   GTK_SIGNAL_FUNC(x_fileselect_open_file),
 				   f_current);
-
-#if 0 /* to be added eventually */
-		} else if (filesel_type == SAVEAS) {
-			gtk_signal_connect(GTK_OBJECT(buttonclose),
+		} else if ((filesel_type == SAVEAS_NONE) ||
+		           (filesel_type == SAVEAS_QUIT) ||
+		           (filesel_type == SAVEAS_OPEN) ||
+		           (filesel_type == SAVEAS_CLOSE) ||
+		 	   (filesel_type == SAVEAS_NEW)) { 
+		        buttonapply = gtk_button_new_with_label ("SaveAs");
+			gtk_signal_connect(GTK_OBJECT(buttonapply),
 				   "clicked",
-				   GTK_SIGNAL_FUNC(x_fileselect_close_saveas),
+				   GTK_SIGNAL_FUNC(x_fileselect_saveas),
 				   f_current);
 		} else if (type == COMPSELECT) {
-			gtk_signal_connect(GTK_OBJECT(buttonclose),
+		        buttonapply = gtk_button_new_with_label ("Apply");
+			gtk_signal_connect(GTK_OBJECT(buttonapply),
 				   "clicked",
-				   GTK_SIGNAL_FUNC(x_fileselect_close),
+				   GTK_SIGNAL_FUNC(x_fileselect_comp_apply),
 				   f_current);
-#endif
 		}
+
+                GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
+                gtk_box_pack_start(GTK_BOX(action_area),
+                                   buttonapply, TRUE, TRUE, 0);
+		gtk_widget_grab_default (buttonapply);
                 gtk_widget_show(buttonapply);
 
 		buttonclose = gtk_button_new_with_label ("Close");
@@ -927,29 +1591,44 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
                 gtk_box_pack_start(GTK_BOX(action_area),
                                    buttonclose, TRUE, TRUE, 0);
 
-		if (filesel_type == OPEN) {
-			gtk_signal_connect(GTK_OBJECT(buttonclose),
-				   "clicked",
-				   GTK_SIGNAL_FUNC(x_fileselect_close),
-				   f_current);
-
-		} else if (filesel_type == SAVEAS) {
-			gtk_signal_connect(GTK_OBJECT(buttonclose),
-				   "clicked",
-				   GTK_SIGNAL_FUNC(x_fileselect_close_saveas),
-				   f_current);
-		} else if (type == COMPSELECT) {
-			gtk_signal_connect(GTK_OBJECT(buttonclose),
-				   "clicked",
-				   GTK_SIGNAL_FUNC(x_fileselect_close),
-				   f_current);
-		}
-
-                gtk_widget_show(buttonclose);
-
-		x_fileselect_update_dirfile(f_current, NULL);
 		if (type == FILESELECT) {
-			x_fileselect_fill_lists(f_current);
+			if (filesel_type == OPEN) {
+				gtk_signal_connect(GTK_OBJECT(buttonclose),
+					   "clicked",
+					   GTK_SIGNAL_FUNC(x_fileselect_close),
+					   f_current);
+                		gtk_widget_show(buttonclose);
+
+				x_fileselect_update_dirfile(f_current, NULL);
+				x_fileselect_fill_lists(f_current);
+			} else if ((filesel_type == SAVEAS_NONE) ||
+		           (filesel_type == SAVEAS_QUIT) ||
+		           (filesel_type == SAVEAS_OPEN) ||
+		           (filesel_type == SAVEAS_CLOSE) ||
+		 	   (filesel_type == SAVEAS_NEW)) { 
+				gtk_signal_connect(GTK_OBJECT(buttonclose),
+					   "clicked",
+					   GTK_SIGNAL_FUNC(
+						x_fileselect_saveas_close),
+					   f_current);
+                		gtk_widget_show(buttonclose);
+
+				x_fileselect_update_dirfile_saveas(f_current, 
+					w_current->page_current->page_filename);
+				x_fileselect_fill_lists(f_current);
+			}
+		} else {
+			gtk_signal_connect(GTK_OBJECT(buttonclose),
+				   "clicked",
+				   GTK_SIGNAL_FUNC(x_fileselect_comp_close),
+				   f_current);
+                	gtk_widget_show(buttonclose);
+
+			/* files data structure is not used for components */
+			x_fileselect_setup_list_buffers(f_current, 
+						        s_clib_return_num(), 0);
+			x_fileselect_comp_update_current(f_current, NULL, NULL);
+			x_fileselect_comp_fill_libs(f_current);
 		}	
 	}
 

@@ -49,6 +49,9 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 {
 	char *temp;
 
+#if DEBUB
+	printf("%s %s\n", directory, filename);
+#endif
 	temp = u_basic_strdup_multiple(directory, filename, NULL);
 
 	s_page_free(preview, preview->page_current);
@@ -248,8 +251,10 @@ x_preview_setup_rest(TOPLEVEL *preview)
 
 	x_repaint_background(preview);
 
-//	f_open(preview, "/home/ahvezda/devel/gschem/examples/filter_1.sch");
-	//f_open(preview, "/home/ahvezda/devel/symbols/74/74191-1.sym");
+/*	
+	f_open(preview, "/home/ahvezda/devel/gschem/examples/filter_1.sch");
+	f_open(preview, "/home/ahvezda/devel/symbols/74/74191-1.sym");
+*/
 	
 #if 0	
 		world_get_complex_bounds(preview, 

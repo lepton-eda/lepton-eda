@@ -194,10 +194,15 @@ struct st_page {
 struct st_filedialog {
 	GtkWidget *xfwindow;		
 
+	int type;
+	int filesel_type;
+
 	GtkWidget *filter;
 	int filter_type;
 
 	GtkWidget *search_entry;
+	int last_search;
+
 	GtkWidget *filename_entry;
 
 	GtkWidget *dir_list;

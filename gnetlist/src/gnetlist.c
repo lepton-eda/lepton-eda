@@ -59,6 +59,7 @@ main_prog(int argc, char *argv[])
 	char input_str[2048];
 	int argv_index;
 	int first_page=1;
+	char *cwd;
 
 	TOPLEVEL *pr_current;
 
@@ -68,6 +69,7 @@ main_prog(int argc, char *argv[])
 
 
 	argv_index = parse_commandline(argc, argv);
+	cwd = getcwd(NULL, 1024);
 
 	/* this is a kludge to make sure that spice mode gets set */ 
 	if (guile_proc) {
@@ -79,8 +81,8 @@ main_prog(int argc, char *argv[])
 	
 	/* create log file right away */
 	/* even if logging is enabled */
-	s_log_init("gnetlist.log");
-
+	s_log_init(cwd, "gnetlist.log");
+	free(cwd);
 
 	s_log_message("gEDA: gnetlist version %s - THIS IS AN ALPHA RELEASE!\n", VERSION);
 

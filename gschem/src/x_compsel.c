@@ -388,7 +388,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
 					 create_menu (w_current));
 		gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 4);
-		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, FALSE, 0);
 		gtk_widget_show (optionmenu);
 
 		w_current->clib_list = gtk_list_new ();

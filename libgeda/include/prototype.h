@@ -334,6 +334,7 @@ char *remove_string(char *string, int start, int end);
 char *insert_string(char *string, int start, char *insert_string);
 char *expand_env_variables(char *string);
 /* s_clib.c */
+int s_clib_return_num(void);
 int s_clib_add_entry(char *new_path);
 int s_clib_search_for_dirname(char *dir_name);
 char *s_clib_cache_search(char *basename);
@@ -358,7 +359,7 @@ int s_color_get_name(int index, char *string);
 /* s_hierarchy.c */
 void s_hierarchy_load_all(TOPLEVEL *w_current, char *filename);
 /* s_log.c */
-void s_log_init(char *filename);
+void s_log_init(char *cwd, char *filename);
 void s_log_message(const gchar *format, ...);
 void s_log_close(void);
 /* s_nethash.c */

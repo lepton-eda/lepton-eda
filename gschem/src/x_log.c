@@ -50,6 +50,14 @@
 static GtkWidget *stwindow = NULL;
 static GtkWidget *sttext = NULL;
 
+static char *logfilename;
+
+void 
+x_log_init(char *cwd, char *filename) 
+{
+	logfilename = u_basic_strdup_multiple(cwd, "/", filename, NULL); 
+}
+
 void
 x_log_read(void)
 {
@@ -57,11 +65,12 @@ x_log_read(void)
 	int tmp_fd;
 	int len;
 
+	
 	if (do_logging == FALSE) {
 		return;
 	}
 
- 	tmp_fd = open("gschem.log", O_RDONLY, 0600);
+ 	tmp_fd = open(logfilename, O_RDONLY, 0600);
 
 	if (tmp_fd == -1) {
 		do_logging = FALSE;
@@ -129,9 +138,17 @@ x_log_close(GtkWidget *w, TOPLEVEL *w_current)
 	gtk_widget_destroy(stwindow);
 	stwindow = NULL;
 
+
 #if 0
 	gtk_grab_remove(w_current->stwindow);
 #endif
+}
+
+void
+x_log_free(void)
+{
+	free(logfilename);
+	logfilename = NULL;
 }
 
 void
@@ -142,6 +159,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 	GtkWidget *vscrollbar = NULL;
 	GtkWidget *table = NULL;
 	GtkWidget *vbox, *action_area;
+
 
 	if (do_logging == FALSE) {
 		return;

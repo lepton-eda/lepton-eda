@@ -45,22 +45,27 @@
 /* This function goes and finds the associated source files and loads ALL up */
 /* only works for schematic files though */
 void
-s_log_init(char *filename)
+s_log_init(char *cwd, char *filename)
 {
+	char *path; 
 	if (do_logging == FALSE) {
 		logfile_fd = -1;
 		return;
 	}
 
+	path = u_basic_strdup_multiple(cwd, "/", filename, NULL);
+
 	/* create log file */
-	logfile_fd = open(filename, O_RDWR|O_CREAT|O_TRUNC, 0600);	
+	logfile_fd = open(path, O_RDWR|O_CREAT|O_TRUNC, 0600);	
 
 	if (logfile_fd == -1) {
 		logfile_fd = -1;
 		do_logging = FALSE;
-		fprintf(stderr, "Could not open log file: %s\n", "gschem.log");
+		fprintf(stderr, "Could not open log file: %s\n", path);
 		fprintf(stderr, "Errno was: %d\n", errno);
 	}
+
+	free(path);
 }
 
 /* limit on a message is 240 bytes */

@@ -832,13 +832,13 @@ x_window_close(TOPLEVEL *w_current)
 	if (w_current->clwindow)
 		gtk_widget_destroy(w_current->clwindow);
 
-#if 0
-	if (w_current->fileselect[0].xfwindow)
+	if (w_current->fileselect[0].xfwindow) {
 		gtk_widget_destroy(w_current->fileselect[0].xfwindow);
+	}
 
-	if (w_current->fileselect[1].xfwindow)
+	if (w_current->fileselect[1].xfwindow) {
 		gtk_widget_destroy(w_current->fileselect[1].xfwindow);
-#endif
+	}
 
 	x_fileselect_free_list_buffers(&w_current->fileselect[0]);
 	x_fileselect_free_list_buffers(&w_current->fileselect[1]);

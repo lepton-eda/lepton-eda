@@ -44,6 +44,13 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+void
+destroy_window(GtkWidget  *widget, GtkWidget **window)
+{
+        *window = NULL;
+}
+
+
 /***************** Start of Text Input dialog box *********************/
 void
 text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)

@@ -56,15 +56,18 @@ main_prog(int argc, char *argv[])
 	int argv_index;
 	int first_page=1;
 	int errors;
+	char *cwd;
 
 	TOPLEVEL *pr_current;
 
 	argv_index = parse_commandline(argc, argv);
+	cwd = getcwd(NULL, 1024);
 
 	/* create log file right away */
 	/* even if logging is enabled */
-	s_log_init("gsymcheck.log");
-
+	s_log_init(cwd, "gsymcheck.log");
+	free(cwd);
+	
 
 	s_log_message("gEDA: gsymcheck version %s - THIS IS AN ALPHA RELEASE!\n", VERSION);
 
