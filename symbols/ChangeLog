@@ -1,3 +1,9 @@
+
+2002-05-31 Werner Hoch <werner.ho@gmx.de>
+
+	* micro/: startet with symbol rework to match current symbol specs
+
+
 2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* switch, linear: Added two new symbols by Vladimir Dergachev.
