@@ -44,28 +44,6 @@ dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 dnl AC_PROG_MAKE_SET
 
-# Defs for libary symbol files
-#
-# Expand the prefix variable
-if eval "test x$prefix = xNONE"; then
- dprefix=$ac_default_prefix
-else
- dprefix=$prefix
-fi
-
-# Old way of installing data into a version dependant dir
-#gedatopdir=$dprefix/share/$DATADIR-$VERSION
-
-gedatopdir=$dprefix/share/$DATADIR
-expandgedadatadir=`echo $gedatopdir`
-
-# new way without version
-gedadatadir=$datadir/$DATADIR
-
-AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
-
-
 # Do individual library files
   
 GEDA_DECLARE_SYMLIB(4000)
@@ -108,46 +86,17 @@ GEDA_DECLARE_SYMLIB(idt)
 GEDA_DECLARE_SYMLIB(diode)
 GEDA_DECLARE_SYMLIB(opto)
 
-symdir=$gedatopdir/sym
-sourcedir=$gedatopdir/source
-
 HOME=`echo $HOME`
-
-# old way of installing data into a version dependant directory
-#gedadatadir=$datadir/$DATADIR-$VERSION
-# new way without version
-gedadatadir=$datadir/$DATADIR
+GEDADATADIR=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
-
-	if eval "test x$prefix = xNONE"; then
-		rclocation=$expandgedadatadir
-	else
-		rclocation=`eval echo $gedadatadir`
-	fi
-
-	# this needs to be expanded (NO ${prefix}) since it's used in the code
-	AC_DEFINE_UNQUOTED(GEDARCDIR, "$rclocation")
-	expandgedarcdir=$rclocation
-
-	# this is used in the makefiles so it can have a ${prefix} in it
-	gedarcdir=$gedadatadir
+	# path not was specified with --with-rcdir
+	GEDARCDIR=$GEDADATADIR
 else
-
 	# path WAS specified with --with-rcdir
-	gedarcdir=$opt_rcdir
-	expandgedarcdir=$opt_rcdir
-	AC_DEFINE_UNQUOTED(GEDARCDIR, "$opt_rcdir")
-
+	GEDARCDIR="$opt_rcdir"
 fi
 
-
-AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
-AC_DEFINE_UNQUOTED(VERSION, "$GEDA_VERSION")
-
-AC_SUBST(gedadatadir)
-AC_SUBST(gedarcdir)
-AC_SUBST(expandgedadatadir)
 
 AC_SUBST(datalocal)
 AC_SUBST(dataanalog)
@@ -187,11 +136,10 @@ AC_SUBST(dataIEC417)
 AC_SUBST(datafont)
 AC_SUBST(dataidt)
 
-AC_SUBST(symdir)
-AC_SUBST(sourcedir)
-
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
+AC_SUBST(GEDADATADIR)
+AC_SUBST(GEDARCDIR)
 
 AC_OUTPUT([ 
         Makefile 

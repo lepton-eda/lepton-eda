@@ -13,6 +13,7 @@
 <<g_rc.c : include directives>>
 <<g_rc.c : macros>>
 <<g_rc.c : global variables>>
+<<g_rc.c : g_rc_parse_path()>>
 <<g_rc.c : g_rc_parse_general()>>
 <<g_rc.c : g_rc_parse_system_rc()>>
 <<g_rc.c : g_rc_parse_home_rc()>>
@@ -179,6 +180,31 @@ typedef struct {
 
 @ %def default_dummy
 
+@section Function @code{g_rc_parse_path()}
+
+@defun g_rc_parse_path 
+You should not free the returned character string.
+@end defun
+<<g_rc.c : g_rc_parse_path()>>=
+char *
+g_rc_parse_path()
+{
+  char *rc_path = NULL;
+  
+  if (strcmp(GEDARCDIR, "none") == 0) {
+    /* rc dir not specified at configure time, so search for config in */
+    /* the normal GEDADATA directory */
+    rc_path = getenv("GEDADATA");
+  } else {
+    /* rc path specified at configure time, always return specified path */
+    rc_path = GEDARCDIR;
+  }
+
+  return(rc_path);
+}
+
+@ %def g_rc_parse_path
+
 
 @section Function @code{g_rc_parse_general()}
 
@@ -221,15 +247,19 @@ g_rc_parse_system_rc()
   int found_rc;
   char *filename;
   char *geda_data = getenv("GEDADATA");
+  char *path_to_rc;
 
   if (geda_data == NULL) {
     fprintf(stderr, "You must set the GEDADATA environment variable!\n");
     exit(-1);
   }
 
-  filename = u_basic_strdup_multiple(geda_data,
+  path_to_rc = g_rc_parse_path(); /* do not free path_to_rc */
+
+  filename = u_basic_strdup_multiple(path_to_rc,
                                      "/system-gschemrc",
                                      NULL);
+  
   if (filename == NULL) {
     return 0;
   }
@@ -326,21 +356,36 @@ g_rc_parse_local_rc()
 <<g_rc.c : g_rc_parse()>>=
 void
 g_rc_parse(void)
-/* g_rc_parse(TOPLEVEL *w_current) */
 {
   int found_rc = 0;
+  char *HOME;
+  char *rc_path;
+  char *filename;
+  char *geda_rcdata;
 
-  /* TODO: why is this still here? */
-#if 0
-  if (w_current == NULL) {
-    return;
+  rc_path = g_rc_parse_path(); /* do not free rc_path */
+
+  /* read in the gschem-gtk rc file */
+  filename = u_basic_strdup_multiple(rc_path, "/", "gschem-gtkrc", NULL);
+  gtk_rc_parse(filename);
+  free(filename);
+  HOME = (char *) getenv("HOME"); 
+  if (HOME != NULL) {
+    filename = u_basic_strdup_multiple(HOME, "/", ".gschem-gtkrc", NULL);
+    gtk_rc_parse(filename);
+    free(filename);
   }
-#endif
 
+  /* set the GEDADATARC environment variable so that the rc files */
+  /* know where to look for others */
+  geda_rcdata = u_basic_strdup_multiple("GEDADATARC=", rc_path, NULL);
+  putenv(geda_rcdata);
+  
   /* visit rc files in order */
   found_rc |= g_rc_parse_system_rc();
   found_rc |= g_rc_parse_home_rc();
   found_rc |= g_rc_parse_local_rc();
+
 
   if (rc_filename != NULL) {
     if (access(rc_filename, R_OK) == 0) {

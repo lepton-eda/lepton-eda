@@ -1,4 +1,4 @@
-datasupervisordir = @gedadatadir@/sym/supervisor
+datasupervisordir = @GEDADATADIR@/sym/supervisor
 
 datasupervisor_DATA = @datasupervisor@
 

@@ -20,6 +20,10 @@
 #include <config.h>
 #include <stdio.h>
 
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
 #include <libgeda/libgeda.h>
 
 #include "../include/papersizes.h"

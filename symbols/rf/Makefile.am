@@ -1,4 +1,4 @@
-datarfdir = @gedadatadir@/sym/rf
+datarfdir = @GEDADATADIR@/sym/rf
 
 datarf_DATA = @datarf@
 

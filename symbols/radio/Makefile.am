@@ -1,4 +1,4 @@
-dataradiodir = @gedadatadir@/sym/radio
+dataradiodir = @GEDADATADIR@/sym/radio
 
 dataradio_DATA = @dataradio@
 

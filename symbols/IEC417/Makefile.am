@@ -1,4 +1,4 @@
-dataIEC417dir = @gedadatadir@/sym/IEC417
+dataIEC417dir = @GEDADATADIR@/sym/IEC417
 
 dataIEC417_DATA = @dataIEC417@
 

@@ -70,6 +70,24 @@ static int vstbl_get_val(const vstbl_entry * table, int index)
     return table[index].m_val;
 }
 
+/* returned path should not be freed */
+char *
+g_rc_parse_path()
+{
+  char *rc_path = NULL;
+  
+  if (strcmp(GEDARCDIR, "none") == 0) {
+    /* rc dir not specified at configure time, so search for config in */
+    /* the normal GEDADATA directory */
+    rc_path = getenv("GEDADATA");
+  } else {
+    /* rc path specified at configure time, always return specified path */
+    rc_path = GEDARCDIR;
+  }
+
+  return(rc_path);
+}
+
 
 static int
 g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)
@@ -96,13 +114,16 @@ g_rc_parse_system_rc()
 	int found_rc;
 	char *filename;
         char *geda_data = getenv("GEDADATA");
+        char *path_to_rc;
 
         if (geda_data == NULL) {
           fprintf(stderr, "You must set the GEDADATA environment variable!\n");
           exit(-1);
         }
+        
+        path_to_rc = g_rc_parse_path(); /* do not free path_to_rc */
 
-	filename = u_basic_strdup_multiple(geda_data,
+	filename = u_basic_strdup_multiple(path_to_rc,
 					   "/system-gnetlistrc",
 					   NULL);
 	if (filename == NULL) {
@@ -173,7 +194,13 @@ void
 g_rc_parse(void)
 {
 	int found_rc = 0;
+        char *rc_path;
+        char *geda_rcdata;
 
+        rc_path = g_rc_parse_path(); /* do not free rc_path */
+        geda_rcdata = u_basic_strdup_multiple("GEDADATARC=", rc_path, NULL);
+        putenv(geda_rcdata);
+        
 	/* visit rc files in order */
 	found_rc |= g_rc_parse_system_rc();
 	found_rc |= g_rc_parse_home_rc();

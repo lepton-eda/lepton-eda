@@ -1,4 +1,4 @@
-dataconnectordir = @gedadatadir@/sym/connector
+dataconnectordir = @GEDADATADIR@/sym/connector
 
 dataconnector_DATA = @dataconnector@
 

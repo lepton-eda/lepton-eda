@@ -19,6 +19,9 @@
 
 #include <config.h>
 #include <stdio.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

@@ -1,4 +1,4 @@
-datatitleblockdir = @gedadatadir@/sym/titleblock
+datatitleblockdir = @GEDADATADIR@/sym/titleblock
 
 datatitleblock_DATA = @datatitleblock@
 

@@ -46,6 +46,9 @@
 <<x_color.c : include directives>>=
 #include <config.h>
 #include <stdio.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #include <signal.h>
 #include <math.h>
 

@@ -1,4 +1,4 @@
-dataxilinxdir = @gedadatadir@/sym/xilinx
+dataxilinxdir = @GEDADATADIR@/sym/xilinx
 
 dataxilinx_DATA = @dataxilinx@
 

@@ -1,4 +1,4 @@
-datamemorydir = @gedadatadir@/sym/memory
+datamemorydir = @GEDADATADIR@/sym/memory
 
 datamemory_DATA = @datamemory@
 

@@ -19,6 +19,9 @@
 
 #include <config.h>
 #include <stdio.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -43,121 +46,110 @@ gsymcheck_quit(void)
 void 
 main_prog(int argc, char *argv[])
 {
-	int i;
-	int argv_index;
-	int first_page=1;
-	int errors;
-	char *cwd;
+  int i;
+  int argv_index;
+  int first_page=1;
+  int errors;
+  char *cwd;
 
-	TOPLEVEL *pr_current;
+  TOPLEVEL *pr_current;
 
-	argv_index = parse_commandline(argc, argv);
-	cwd = getcwd(NULL, 1024);
+  argv_index = parse_commandline(argc, argv);
+  cwd = getcwd(NULL, 1024);
 
-	libgeda_init();
+  libgeda_init();
 
-	/* create log file right away */
-	/* even if logging is enabled */
-	s_log_init(cwd, "gsymcheck.log");
-	free(cwd);
+  /* create log file right away */
+  /* even if logging is enabled */
+  s_log_init(cwd, "gsymcheck.log");
+  free(cwd);
 	
   s_log_message(
-     "gEDA/gsymcheck version %s\n", VERSION);
+                "gEDA/gsymcheck version %s\n", VERSION);
   s_log_message(
-     "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+                "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
   s_log_message(
-     "This is free software, and you are welcome to redistribute it under certain\n");
+                "This is free software, and you are welcome to redistribute it under certain\n");
   s_log_message(
-     "conditions; please see the COPYING file for more details.\n\n"); 
+                "conditions; please see the COPYING file for more details.\n\n"); 
 
   if (!quiet_mode) {
     fprintf(stderr, 
-       "gEDA/symcheck version %s\n", VERSION);
+            "gEDA/symcheck version %s\n", VERSION);
     fprintf(stderr, 
-       "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+            "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     fprintf(stderr, 
-       "This is free software, and you are welcome to redistribute it under certain\n");
+            "This is free software, and you are welcome to redistribute it under certain\n");
     fprintf(stderr, 
-      "conditions; please see the COPYING file for more details.\n\n"); 
+            "conditions; please see the COPYING file for more details.\n\n"); 
   }
 
 #ifdef __CYGWIN32__
-        fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
-	fprintf(stderr, "USE AT YOUR OWN RISK!\n");
+  fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
+  fprintf(stderr, "USE AT YOUR OWN RISK!\n");
 #endif  
 
-	/* register guile (scheme) functions */
-	g_register_funcs();
+  /* register guile (scheme) functions */
+  g_register_funcs();
 
-	s_clib_init();
- 	s_slib_init();
+  s_clib_init();
+  s_slib_init();
 
-	s_project_add_head();
+  s_project_add_head();
 
-	pr_current = s_project_create_new();
+  pr_current = s_project_create_new();
 
-	i = argv_index;
-	while (argv[i] != NULL) {
-		if (first_page) {
-			if (pr_current->page_current->page_filename) {
-				free(pr_current->page_current->page_filename);
-			}
+  i = argv_index;
+  while (argv[i] != NULL) {
+    if (first_page) {
+      if (pr_current->page_current->page_filename) {
+        free(pr_current->page_current->page_filename);
+      }
 
-			/* Page structure has already been created... */	
-			/* so, just set the filename and open the schematic */
-			/* for the first page */
+      /* Page structure has already been created... */	
+      /* so, just set the filename and open the schematic */
+      /* for the first page */
 
-			pr_current->page_current->page_filename = malloc(
-				sizeof(char)*strlen(argv[i])+5);
-	                strcpy(pr_current->page_current->page_filename, 
-				argv[i]);
+      pr_current->page_current->page_filename = malloc(
+                                                       sizeof(char)*strlen(argv[i])+5);
+      strcpy(pr_current->page_current->page_filename, 
+             argv[i]);
 
-if (verbose_mode) {
-			printf("Loading file [%s]\n", argv[i]);
-}
-			f_open(pr_current, pr_current->page_current->page_filename);
-			first_page = 0;
-		} else {
+      if (verbose_mode) {
+        printf("Loading file [%s]\n", argv[i]);
+      }
+      f_open(pr_current, pr_current->page_current->page_filename);
+      first_page = 0;
+    } else {
 
-			/* now are there any other filenames specified? */
-			/* Much simpler	*/
-if (verbose_mode) {
-			printf("Loading file [%s]\n", argv[i]);
-}
-                        if (!s_page_new(pr_current, argv[i])) {
-                                f_open(pr_current, pr_current->
-                                                   page_current->page_filename);
-                        }
-		}
-		i++;
-	}
+      /* now are there any other filenames specified? */
+      /* Much simpler	*/
+      if (verbose_mode) {
+        printf("Loading file [%s]\n", argv[i]);
+      }
+      if (!s_page_new(pr_current, argv[i])) {
+        f_open(pr_current, pr_current->
+               page_current->page_filename);
+      }
+    }
+    i++;
+  }
 
-	if (argv[argv_index] == NULL) {
-		fprintf(stderr, "\nERROR! You must specify at least one filename\n\n");
-		usage(argv[0]);
-	}
+  if (argv[argv_index] == NULL) {
+    fprintf(stderr, "\nERROR! You must specify at least one filename\n\n");
+    usage(argv[0]);
+  }
 
 #if DEBUG 
-	s_page_print_all(pr_current);
+  s_page_print_all(pr_current);
 #endif
 
-	if (verbose_mode) printf("\n");
+  if (verbose_mode) printf("\n");
 
-	errors = s_check_all(pr_current);
-
-#if 0
-	/* temporarly reuse input_str */	
-	sprintf(input_str, "%s/gsymcheck.scm", pr_current->scheme_directory);
-
-/* don't need either of these */
-/*	gh_eval_str ("(primitive-load-path \"ice-9/boot-9.scm\")");*/
-	/* scm_primitive_load_path (scm_makfrom0str ("ice-9/boot-9.scm"));*/
-
- 	g_read_file(input_str);
-#endif
-
-	gsymcheck_quit();
-	exit(errors);
+  errors = s_check_all(pr_current);
+  
+  gsymcheck_quit();
+  exit(errors);
 }
 
 int 

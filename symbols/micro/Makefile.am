@@ -1,4 +1,4 @@
-datamicrodir = @gedadatadir@/sym/micro
+datamicrodir = @GEDADATADIR@/sym/micro
 
 datamicro_DATA = @datamicro@
 

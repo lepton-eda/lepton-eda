@@ -1,4 +1,4 @@
-dataalteradir = @gedadatadir@/sym/altera
+dataalteradir = @GEDADATADIR@/sym/altera
 
 dataaltera_DATA = @dataaltera@
 

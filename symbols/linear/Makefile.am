@@ -1,4 +1,4 @@
-datalineardir = @gedadatadir@/sym/linear
+datalineardir = @GEDADATADIR@/sym/linear
 
 datalinear_DATA = @datalinear@
 

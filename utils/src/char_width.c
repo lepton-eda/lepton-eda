@@ -1,4 +1,9 @@
 
+#include "config.h"
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+
 #define CHAR_POINTS 2
 
 const int char_width[]={

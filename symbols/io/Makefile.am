@@ -1,4 +1,4 @@
-dataiodir = @gedadatadir@/sym/io
+dataiodir = @GEDADATADIR@/sym/io
 
 dataio_DATA = @dataio@
 

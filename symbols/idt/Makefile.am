@@ -1,4 +1,4 @@
-dataidtdir = @gedadatadir@/sym/idt
+dataidtdir = @GEDADATADIR@/sym/idt
 
 dataidt_DATA = @dataidt@
 

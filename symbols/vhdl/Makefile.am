@@ -1,4 +1,4 @@
-datavhdldir = @gedadatadir@/sym/vhdl
+datavhdldir = @GEDADATADIR@/sym/vhdl
 
 datavhdl_DATA = @datavhdl@
 

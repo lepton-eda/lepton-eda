@@ -44,6 +44,9 @@
 <<gschem.c : include directives>>=
 #include <config.h>
 #include <stdio.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -125,6 +128,7 @@ main_prog(int argc, char *argv[])
   int argv_index;
   int first_page = 1;
   char *geda_data;
+  char *geda_rcdata;
   char *HOME;
 
   gtk_init(&argc, &argv);
@@ -181,9 +185,7 @@ main_prog(int argc, char *argv[])
   s_slib_init();
   s_menu_init();
   s_attrib_init();
-
   s_color_init();
-  g_rc_parse();
   o_undo_init(); 
 
   geda_data = getenv("GEDADATA");
@@ -191,14 +193,10 @@ main_prog(int argc, char *argv[])
     fprintf(stderr, "You must set the GEDADATA environment variable!\n");
     exit(-1);
   }
-  sprintf(input_str, "%s/gschem-gtkrc", geda_data);
-  gtk_rc_parse(input_str);
 
-  HOME = (char *) getenv("HOME"); 
-  if (HOME != NULL) {
-    sprintf(input_str, "%s/.gschem-gtkrc", HOME);
-    gtk_rc_parse(input_str);
-  }
+
+  g_rc_parse();
+
   
   sprintf(input_str, "%s/gschem.scm", default_scheme_directory);
   if (g_read_file(input_str) != -1) {

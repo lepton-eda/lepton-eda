@@ -38,7 +38,7 @@ BUILT_SOURCES = \
 
 libgeda_la_SOURCES = $(BUILT_SOURCES:.nw=.c)
 
-libgeda_la_LDFLAGS = -version-info 13:0:0
+libgeda_la_LDFLAGS = -version-info 14:0:0
 
 include_HEADERS = 
 

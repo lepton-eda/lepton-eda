@@ -21,8 +21,8 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for all programs
-(define geda-data (getenv "GEDADATA"))
-(load (string-append geda-data "/system-commonrc"))
+(define gedarcdir (getenv "GEDADATARC"))
+(load (string-append gedarcdir "/system-commonrc"))
 
 ;
 ; Start of color related keywords

@@ -1,4 +1,4 @@
-dataswitchdir = @gedadatadir@/sym/switch
+dataswitchdir = @GEDADATADIR@/sym/switch
 
 dataswitch_DATA = @dataswitch@
 

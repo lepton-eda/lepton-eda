@@ -1,4 +1,4 @@
-data4000dir = @gedadatadir@/sym/4000
+data4000dir = @GEDADATADIR@/sym/4000
 
 data4000_DATA = @data4000@
 

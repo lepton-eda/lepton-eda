@@ -1,4 +1,4 @@
-dataverilogdir = @gedadatadir@/sym/verilog
+dataverilogdir = @GEDADATADIR@/sym/verilog
 
 dataverilog_DATA = @dataverilog@
 

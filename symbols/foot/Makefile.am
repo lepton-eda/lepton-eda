@@ -1,4 +1,4 @@
-datafootdir = @gedadatadir@/sym/foot
+datafootdir = @GEDADATADIR@/sym/foot
 
 datafoot_DATA = @datafoot@
 

@@ -1,4 +1,4 @@
-datatubedir = @gedadatadir@/sym/tube
+datatubedir = @GEDADATADIR@/sym/tube
 
 datatube_DATA = @datatube@
 

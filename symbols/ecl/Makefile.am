@@ -1,4 +1,4 @@
-dataecldir = @gedadatadir@/sym/ecl
+dataecldir = @GEDADATADIR@/sym/ecl
 
 dataecl_DATA = @dataecl@
 

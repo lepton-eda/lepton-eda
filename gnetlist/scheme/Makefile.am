@@ -1,5 +1,5 @@
 
-scmdatadir = @gedadatadir@/scheme
+scmdatadir = @GEDADATADIR@/scheme
 scmdata_DATA = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 	       gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
 	       gnet-vhdl.scm gnet-vipec.scm gnet-PCBboard.scm \

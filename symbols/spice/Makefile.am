@@ -1,4 +1,4 @@
-dataspicedir = @gedadatadir@/sym/spice
+dataspicedir = @GEDADATADIR@/sym/spice
 
 dataspice_DATA = @dataspice@
 

@@ -1,5 +1,5 @@
 
-rcdatadir = @gedarcdir@
+rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-gnetlistrc 
 
 EXTRA_DIST = system-gnetlistrc.in 

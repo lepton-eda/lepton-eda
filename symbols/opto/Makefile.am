@@ -1,4 +1,4 @@
-dataoptodir = @gedadatadir@/sym/opto
+dataoptodir = @GEDADATADIR@/sym/opto
 
 dataopto_DATA = @dataopto@
 

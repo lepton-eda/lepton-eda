@@ -1,4 +1,4 @@
-datamiscdir = @gedadatadir@/sym/misc
+datamiscdir = @GEDADATADIR@/sym/misc
 
 datamisc_DATA = @datamisc@
 

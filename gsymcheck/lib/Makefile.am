@@ -1,5 +1,5 @@
 
-rcdatadir = @gedarcdir@
+rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-gsymcheckrc 
 
 EXTRA_DIST = system-gsymcheckrc.in 

@@ -1,4 +1,4 @@
-datamaximdir = @gedadatadir@/sym/maxim
+datamaximdir = @GEDADATADIR@/sym/maxim
 
 datamaxim_DATA = @datamaxim@
 

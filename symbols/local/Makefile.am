@@ -1,4 +1,4 @@
-datalocaldir = @gedadatadir@/sym/local
+datalocaldir = @GEDADATADIR@/sym/local
 
 datalocal_DATA = @datalocal@
 

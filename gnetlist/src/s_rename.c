@@ -19,6 +19,9 @@
 
 #include <config.h>
 #include <stdio.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 #include <stdlib.h>
 #include <assert.h>
 #include <ctype.h>

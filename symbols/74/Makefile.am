@@ -1,4 +1,4 @@
-data74dir = @gedadatadir@/sym/74
+data74dir = @GEDADATADIR@/sym/74
 
 data74_DATA = @data74@
 

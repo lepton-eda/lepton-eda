@@ -1,5 +1,5 @@
 
-rcdatadir = @gedarcdir@
+rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-gschemrc gschem-gtkrc
 
 EXTRA_DIST = system-gschemrc.in gschem-gtkrc

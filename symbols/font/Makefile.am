@@ -1,4 +1,4 @@
-datafontdir = @gedadatadir@/sym/font
+datafontdir = @GEDADATADIR@/sym/font
 
 datafont_DATA = @datafont@
 

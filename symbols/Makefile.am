@@ -7,7 +7,7 @@ SUBDIRS = \
 
 bin_SCRIPTS = gesym-config
 
-rcdatadir = @gedarcdir@
+rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-commonrc 
 
 MOSTLYCLEANFILES = *.log *~

@@ -1,4 +1,4 @@
-datatransistordir = @gedadatadir@/sym/transistor
+datatransistordir = @GEDADATADIR@/sym/transistor
 
 datatransistor_DATA = @datatransistor@
 

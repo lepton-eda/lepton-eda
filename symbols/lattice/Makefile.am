@@ -1,4 +1,4 @@
-datalatticedir = @gedadatadir@/sym/lattice
+datalatticedir = @GEDADATADIR@/sym/lattice
 
 datalattice_DATA = @datalattice@
 

@@ -1,4 +1,4 @@
-datapladir = @gedadatadir@/sym/pla
+datapladir = @GEDADATADIR@/sym/pla
 
 datapla_DATA = @datapla@
 

@@ -1,4 +1,4 @@
-datadecdir = @gedadatadir@/sym/dec
+datadecdir = @GEDADATADIR@/sym/dec
 
 datadec_DATA = @datadec@
 

@@ -1,4 +1,4 @@
-datanationaldir = @gedadatadir@/sym/national
+datanationaldir = @GEDADATADIR@/sym/national
 
 datanational_DATA = @datanational@
 

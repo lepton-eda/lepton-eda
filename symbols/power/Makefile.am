@@ -1,4 +1,4 @@
-datapowerdir = @gedadatadir@/sym/power
+datapowerdir = @GEDADATADIR@/sym/power
 
 datapower_DATA = @datapower@
 

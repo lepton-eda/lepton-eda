@@ -1,4 +1,4 @@
-datadiodedir = @gedadatadir@/sym/diode
+datadiodedir = @GEDADATADIR@/sym/diode
 
 datadiode_DATA = @datadiode@
 

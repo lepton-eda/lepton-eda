@@ -1,4 +1,4 @@
-databusdir = @gedadatadir@/sym/bus
+databusdir = @GEDADATADIR@/sym/bus
 
 databus_DATA = @databus@
 

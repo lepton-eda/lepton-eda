@@ -1,4 +1,4 @@
-dataanalogdir = @gedadatadir@/sym/analog
+dataanalogdir = @GEDADATADIR@/sym/analog
 
 dataanalog_DATA = @dataanalog@
 

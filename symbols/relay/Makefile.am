@@ -1,4 +1,4 @@
-datarelaydir = @gedadatadir@/sym/relay
+datarelaydir = @GEDADATADIR@/sym/relay
 
 datarelay_DATA = @datarelay@
 

@@ -1,7 +1,27 @@
+2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Cleaned up all the data dir variables (to only have
+          two)
+
+	* noweb/gschem.nw, g_rc.nw: Fixed up code to look for rc files in
+          different place when specifing the rc dirs using --with-rcdir.
+          This used to work, but it was broken me when I added GEDADATA
+	
+	* lib/system-gschemrc.in, noweb/gschem.nw: Added a bunch of code
+	  to allow the rc files to live somewhere else
+
+	* noweb/gschem.nw, g_rc.nw: More work on getting GEDADATA and
+	  GEDADATARC environment variables to work right when you move
+	  the binaries around
+	
+	* noweb/gschem.nw, i_basic.nw, o_slot.nw, o_undo.nw, x_color.nw, 
+	  x_grid.nw: Added patch by Dan Mcmahill for 64-bit architectures.
+
 2001-07-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_undo.nw: Whoops was hardcoding "/tmp", should look at 
 	  environment variable TMP instead
+
 
 2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
 

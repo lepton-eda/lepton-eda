@@ -1,3 +1,8 @@
+2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/char_width.c: Added patch by Dan Mcmahill for 64-bit 
+	  architectures.
+
 2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Bumped up version to 20010722

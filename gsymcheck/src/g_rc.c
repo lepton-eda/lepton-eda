@@ -47,6 +47,24 @@ set_static_project_current(TOPLEVEL *pr_current)
 	project_current = pr_current;
 }
 
+/* You should not free the returned character string. */
+char *
+g_rc_parse_path()
+{
+  char *rc_path = NULL;
+  
+  if (strcmp(GEDARCDIR, "none") == 0) {
+    /* rc dir not specified at configure time, so search for config in */
+    /* the normal GEDADATA directory */
+    rc_path = getenv("GEDADATA");
+  } else {
+    /* rc path specified at configure time, always return specified path */
+    rc_path = GEDARCDIR;
+  }
+
+  return(rc_path);
+}
+
 void
 g_rc_parse(TOPLEVEL *pr_current)
 {
@@ -55,18 +73,25 @@ g_rc_parse(TOPLEVEL *pr_current)
 	int found_rc=0;
 	char *filename2=NULL;
 	char *geda_data = getenv("GEDADATA");
+        char *geda_rcdata;
+        char *rc_path;
 
 	if (pr_current == NULL)
 		return;
 
 	if (geda_data == NULL) {
 		fprintf(stderr, "You must set the GEDADATA environment variable!\n");
-	exit(-1);
-					            }
+                exit(-1);
+	}
+        
 	set_static_project_current(pr_current);
 
+        rc_path = g_rc_parse_path();
+        geda_rcdata = u_basic_strdup_multiple("GEDADATARC=", rc_path, NULL);
+        putenv(geda_rcdata);
+
 	/* Let's try a the system one - GEDADATA/system-gsymcheck */
-	filename2 = u_basic_strdup_multiple(geda_data, 
+	filename2 = u_basic_strdup_multiple(rc_path, 
 			"/system-gsymcheckrc", NULL);
 
 	if ( access(filename2, R_OK) == 0 ) {

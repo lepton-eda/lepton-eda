@@ -46,6 +46,9 @@
 
 <<i_basic.c : include directives>>=
 #include <config.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
 
 #include <libgeda/libgeda.h>
 
