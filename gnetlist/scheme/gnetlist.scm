@@ -165,8 +165,9 @@
 
 ;;
 ;; Wrap a string into lines no longer than wrap-length
+;; wrap-char is put on the end-of-the-wrapped-line, before the return
 ;; (from Stefan Petersen)
-(define (gnetlist:wrap string-to-wrap wrap-length)
+(define (gnetlist:wrap string-to-wrap wrap-length wrap-char)
   (if (> wrap-length (string-length string-to-wrap))
       string-to-wrap ; Last snippet of string
       (let ((pos (string-rindex string-to-wrap #\space 0 wrap-length)))
@@ -176,15 +177,16 @@
 	      (else
 	       (string-append 
 		(substring string-to-wrap 0 pos) 
-		" \\\n "
-		(gnetlist:wrap (substring string-to-wrap (+ pos 1)) wrap-length)))))))
+		wrap-char
+		"\n "
+		(gnetlist:wrap (substring string-to-wrap (+ pos 1)) wrap-length wrap-char)))))))
 
 ;; example use
 ; (define (run-test test-string wrap-len)
 ;   (display (string-append "Wrapping \"" test-string "\" into "))
 ;   (display wrap-len)
 ;   (newline)
-;   (display (gnetlist:wrap split test-string wrap-len))
+;   (display (gnetlist:wrap test-string wrap-len " \\"))
 ;   (newline)
 ;   (newline))
 

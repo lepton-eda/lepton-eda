@@ -51,7 +51,8 @@
             (display (gnetlist:wrap 
 		      (pads:display-connections 
 		       (gnetlist:get-all-connections netname)) 
-		      78) 
+		      78
+		      "") 
 		     port)
 	    (pads:write-net port (cdr netnames))))))
 

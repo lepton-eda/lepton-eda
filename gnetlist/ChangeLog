@@ -1,3 +1,10 @@
+2001-07-26 Stefan Petersen   <spe@geda.seul.org>
+
+	* scheme/gnetlist.scm, scheme/gnet-pads.scm, scheme/gnet-PCB.scm:
+	  gnetlist:wrap now accepts character(s) to terminate line with.
+	  Suggested by Roger Williams <roger@coelacanth.com> since PADS
+	  didn't like lines ending with \.
+	
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, src/gnetlist.c, src/g_rc.c: Cleanup and added the
