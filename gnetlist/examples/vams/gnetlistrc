@@ -1,5 +1,7 @@
 (load "./commonrc")
 
+;; AVH, this is probably needed, since this didn't exist when the vams backend
+;; was originally written
 (hierarchy-traversal "disabled")
 
 (define-module (ice-9 ls) :use-module (ice-9 common-list)

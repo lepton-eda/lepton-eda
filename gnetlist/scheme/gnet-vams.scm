@@ -33,13 +33,25 @@
 ;;;   its evaluate things like output-file, generate-mode, top-attribs 
 ;;;   and starts the major subroutines.  
 
+;; guile didn't like this code:
+;;
+;; (if (string-index output-filename #\.) 
+;;    (string-rindex output-filename #\.) 
+;;   ofl)
+;; 
+;; as a replacement for line below:
+;;
+;; (lpi (string-rindex output-filename #\. 0 ofl))
+;;
+;; why? (avh)
+
 (define vams
   (lambda (output-filename)
     (let* ((port '())                         ;; output-port for architecture
 	   (port-entity '())                  ;; output-port for entity
 	   (ofl (string-length output-filename))            
-	   (lpi (string-rindex output-filename #\. 0 ofl))  
-	   
+	   (lpi (string-rindex output-filename #\. 0 ofl))
+
 	   ;; generate correctly architecture name
 	   (architecture (vams:change-all-whitespaces-to-underlines 
 			  (cond 
@@ -76,16 +88,18 @@
 	       (display "\ngenerating architecture of current schematic in ")
 
 	       ;; generate output-filename, like
-	       ;; <entity>_arc.<output-file-extension>)
-	       (set! output-filename 
-		     (string-append
-		      (substring output-filename 0
-				 (+ (string-rindex 
-				  output-filename #\/ 0 ofl) 1))
-		      (string-downcase! entity)
-		      "_arc"
-		      (substring output-filename lpi ofl)))
-	       
+	       ;; (<entity>_arc.<output-file-extension>)
+               (set! output-filename 
+                (string-append
+                 (if (string-index output-filename #\/)
+                     (substring output-filename 0
+                                (+ (string-rindex 
+                                    output-filename #\/ 0 ofl) 1))
+                     "./")
+                 (string-downcase! entity)
+                 "_arc"
+                 (substring output-filename lpi ofl)))
+
 	       (set!  port (open-output-file output-filename))
 	       (display output-filename)
 	       (newline)
@@ -102,20 +116,22 @@
 	     (if (not (null? top-attribs))
 		 (set! output-filename 
 		       (string-append 
-			(substring output-filename 0
+                        (if (string-index output-filename #\/)
+			   (substring output-filename 0
 				   (+ (string-rindex 
 				       output-filename #\/ 0 ofl) 1))
+                            "./")
 			(string-downcase! 
 			 (get-device (vams:get-uref top-attribs)))
 			".vhdl"))
 		 (set! output-filename 
 		       (string-append 
-			(substring output-filename 0
+                        (if (string-index output-filename #\/)
+			   (substring output-filename 0
 				   (+ (string-rindex 
 				       output-filename #\/ 0 ofl) 1))
+                            "./")
 			(string-downcase! entity)
-			 ;;(gnetlist:get-toplevel-attribute 'entity))
-				;;(get-device (vams:get-uref top-attribs)))
 			".vhdl")))
 		 
 	     (display output-filename)

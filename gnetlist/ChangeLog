@@ -1,4 +1,9 @@
 
+2000-12-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vams.scm: Finally found the time to finish getting this
+	  backend working with guile 1.4 (using the fixes Eduard provided)
+
 2000-12-07  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_project.c: Removed obsolete DONT_REDRAW var from code
