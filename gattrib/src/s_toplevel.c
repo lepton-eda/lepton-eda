@@ -54,7 +54,6 @@
  *------------------------------------------------------------------*/
 int s_toplevel_read_page(char *filename)
 {
-  PAGE local_page;
   int file_return_code;
     
   /* Set the new filename */
@@ -76,7 +75,7 @@ int s_toplevel_read_page(char *filename)
  * the object list when no symbol file is found.  If this fcn finds 
  * a placeholder, it warns the user.  
  *------------------------------------------------------------------*/
-int s_toplevel_verify_design(TOPLEVEL *pr_current)
+void s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
   OBJECT *o_current;
   PAGE *p_current;
@@ -115,7 +114,7 @@ int s_toplevel_verify_design(TOPLEVEL *pr_current)
  * not filled out yet), and 0 if the project is non-empty (i.e. there
  * is some data in pr_current).
  *------------------------------------------------------------------*/
-int s_toplevel_empty_project()
+void s_toplevel_empty_project()
 {
   /* Nothing here yet.  Is this necessary in current program
    * architecture? */
@@ -482,12 +481,7 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
   OBJECT *o_current;
   OBJECT *comp_prim_obj;
   char *temp_uref;
-  char *temp_netname;
-  char *temp_pin;
-  STRING_LIST *new_comp_attrib_list;
   STRING_LIST *new_comp_attrib_pair_list;
-  STRING_LIST *old_comp_attrib_pair_list;
-  STRING_LIST *new_net_attrib_list;
   STRING_LIST *new_pin_attrib_list;
 
   /* -----  First deal with all components on the page.  ----- */
@@ -594,15 +588,12 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
 {
   STRING_LIST *new_attrib_list;
   STRING_LIST *local_attrib_list;
-  STRING_LIST *row_list;
   int i;
   int row = -1;
   int count = 0;
-  char *row_item;
   char *name_value_pair;
   char *new_attrib_value;
   char *new_attrib_name;
-  char *temp;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_get_component_attribs_in_sheet.\n");
@@ -841,7 +832,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname)
 {
   /* must be filled in */
-  return;
+  return NULL;
 }
 
 
@@ -871,7 +862,6 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
 {
   STRING_LIST *new_attrib_list;
   STRING_LIST *local_attrib_list;
-  STRING_LIST *row_list;
   int i;
   int row = -1;
   int count = 0;
@@ -880,7 +870,6 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   char *name_value_pair;
   char *new_attrib_value;
   char *new_attrib_name;
-  char *temp;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_get_pin_attribs_in_sheet.\n");
@@ -967,9 +956,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   char *new_name_value_pair;
   char *new_attrib_name;
   char *new_attrib_value;
-  char *old_attrib_name;
   char *old_attrib_value;
-  ATTRIB *a_current;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_update_pin_attribs_in_toplevel.\n");

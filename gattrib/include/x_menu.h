@@ -33,7 +33,7 @@
 #include "gtkitementry_1_2.h"
 #endif
 
-#include "pixmaps.h"
+/* #include "pixmaps.h" */
 
 /* ----------  Menu definition -- copied from the GTK tutorial file  ---------- */
 /* ----------  and edited/adapted by SDB for gattrib.  ---------- */

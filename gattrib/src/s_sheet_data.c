@@ -98,12 +98,6 @@ SHEET_DATA *s_sheet_data_new()
 void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
   char *temp_uref;
   OBJECT *o_current;
-  OBJECT *temp_object;
-
-  char *numslots_value;
-  int numslots;
-  char *slot_value;
-  OBJECT *slot_text_object;
   
 #ifdef DEBUG
   printf("=========== Just entered  s_sheet_data_add_master_comp_list_items!  ==============\n");
@@ -162,10 +156,7 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
 void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
   char *attrib_text;
   char *attrib_name;
-  char *attrib_value;
-  char *temp_uref;
   OBJECT *o_current;
-  OBJECT *temp_object;
   ATTRIB *a_current;
   
 #ifdef DEBUG

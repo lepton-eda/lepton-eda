@@ -62,7 +62,6 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-/* #include "../include/x_menu.h" */
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -115,7 +114,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
   int return_code;  /* used when invoking s_toplevel_read_page */
   int argv_index;
   char *cwd;
-  char *input_str;
   PAGE *p_local;
   char *logfile;
   
@@ -206,7 +204,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
    * position of the first filename  */
   i = argv_index;
   while(argv[i] != NULL) {
-    PAGE *page;
     gchar *temp_filename = g_build_path (G_DIR_SEPARATOR_S,
 					 cwd,
 					 argv[i],

@@ -44,7 +44,7 @@
 #include "gtkitementry_1_2.h"
 #endif
 
-#include "pixmaps.h"
+/* #include "pixmaps.h" */
 
 /* ========  Data structures used in processing below here  ========== */
 

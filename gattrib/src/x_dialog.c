@@ -61,7 +61,6 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-#include "../include/x_menu.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -74,7 +73,7 @@
 /* --------------------------------------------------------- *
  * This asks for the name of the attrib column to insert
  * --------------------------------------------------------- */
-char *x_dialog_newattrib_get_name()
+void x_dialog_newattrib_get_name()
 {
   GtkWidget *newattrib_window;
   GtkWidget *label;
@@ -197,7 +196,7 @@ int x_dialog_newattrib_keypress_callback(GtkWidget * widget, GdkEventKey * event
  * OK button pressed -- First get text in entry box.  Then
  * return it.
  * --------------------------------------------------------- */
-int x_dialog_newattrib_ok_callback(GtkWidget *buttonok, 
+void x_dialog_newattrib_ok_callback(GtkWidget *buttonok, 
 				   GtkWidget *window)
 {
   GtkEntry *entry;
@@ -224,7 +223,7 @@ int x_dialog_newattrib_ok_callback(GtkWidget *buttonok,
 /* --------------------------------------------------------- *
  * close window
  * --------------------------------------------------------- */
-int x_dialog_newattrib_close_callback(GtkWidget *buttonclose, GtkWidget *window)
+void x_dialog_newattrib_close_callback(GtkWidget *buttonclose, GtkWidget *window)
 {
   x_dialog_close_window(window);
 }
@@ -239,7 +238,7 @@ int x_dialog_newattrib_close_callback(GtkWidget *buttonclose, GtkWidget *window)
  * This fcn throws up the "detele foo, are you sure" dialog
  * box.  It offers two buttons: "yes" and "cancel" 
  * --------------------------------------------------------- */
-int x_dialog_delattrib_confirm()
+void x_dialog_delattrib_confirm()
 {
   GtkWidget *delattrib_window;
   GtkWidget *label;
@@ -367,7 +366,7 @@ int x_dialog_delattrib_keypress_callback(GtkWidget * widget,
 /* --------------------------------------------------------- *
  * close window
  * --------------------------------------------------------- */
-int x_dialog_delattrib_close_callback(GtkWidget *buttonclose, 
+void x_dialog_delattrib_close_callback(GtkWidget *buttonclose, 
 				      GtkWidget *window)
 {
   x_dialog_close_window(window);
@@ -378,7 +377,7 @@ int x_dialog_delattrib_close_callback(GtkWidget *buttonclose,
  * Yes button pressed -- Go ahead & delete attrib column, the
  * close window and return.
  * --------------------------------------------------------- */
-int x_dialog_delattrib_yes_callback(GtkWidget *buttonyes, 
+void x_dialog_delattrib_yes_callback(GtkWidget *buttonyes, 
 				    GtkWidget *window)
 {
   /* call the fcn to actually delete the attrib column.  */
@@ -406,7 +405,7 @@ int x_dialog_delattrib_yes_callback(GtkWidget *buttonyes,
  * It offers the user the chance to close the project without
  * saving because he read a schematic with a missing symbol file.
  * --------------------------------------------------------- */
-int x_dialog_missing_sym()
+void x_dialog_missing_sym()
 {
   GtkWidget *missing_sym_window;
   GtkWidget *label;
@@ -521,7 +520,7 @@ int x_dialog_missing_sym_donothing_callback(GtkWidget * widget,
 /* --------------------------------------------------------- *
  * continue window
  * --------------------------------------------------------- */
-int x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose, 
+void x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose, 
 				      GtkWidget *window)
 {
 #ifdef DEBUG
@@ -535,7 +534,7 @@ int x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose,
 /* --------------------------------------------------------- *
  * Abort button pressed -- close the program now.
  * --------------------------------------------------------- */
-int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes, 
+void x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes, 
 				    GtkWidget *window)
 {
 #ifdef DEBUG
@@ -553,7 +552,7 @@ int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
  * This is the "Unsaved data -- are you sure you want to quit?"
  * dialog box which is thrown up before the user quits.
  * --------------------------------------------------------- */
-int x_dialog_unsaved_data()
+void x_dialog_unsaved_data()
 {
   GtkWidget *unsaved_data_window;
   GtkWidget *label;
@@ -663,7 +662,7 @@ int x_dialog_unsaved_data_donothing_callback(GtkWidget * widget,
 /* --------------------------------------------------------- *
  * continue window
  * --------------------------------------------------------- */
-int x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose, 
+void x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose, 
 				      GtkWidget *window)
 {
 #ifdef DEBUG
@@ -678,7 +677,7 @@ int x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose,
 /* --------------------------------------------------------- *
  * Abort button pressed -- go back to save.
  * --------------------------------------------------------- */
-int x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes, 
+void x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes, 
 					 GtkWidget *window)
 {
 #ifdef DEBUG
@@ -699,7 +698,7 @@ int x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
  * This fcn informs the user that he has chosen an 
  * unimplemented feature.
  * --------------------------------------------------------- */
-int x_dialog_unimplemented_feature()
+void x_dialog_unimplemented_feature()
 {
   GtkWidget *unimplemented_feature_window;
   GtkWidget *label = NULL;
@@ -809,7 +808,7 @@ int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 }
 
 /* --------------------------------------------------------- */
-int x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window)
+void x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window)
 {
   x_dialog_close_window(window);
 }

@@ -1,7 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 ## This Makefile.am created for gattrib by SDB 12.13.2003
 
-AM_CFLAGS = -g -O2 
+if CCISGCC
+AM_CFLAGS = -Wall
+endif
 
 bin_PROGRAMS = gattrib
 

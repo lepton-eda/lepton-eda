@@ -225,7 +225,6 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
  *------------------------------------------------------------------*/
 void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
   OBJECT *o_current;
-  gchar *temp;
   gchar *temp_uref;
   int row, col;
   gchar *attrib_text;
@@ -407,7 +406,6 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
   OBJECT *o_current;
   OBJECT *o_lower_current;
-  gchar *temp;
   gchar *temp_uref;
   gchar *pinnumber;
   gchar *row_label;
@@ -515,7 +513,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
  * the cells, and places them back into TABLE.  This is the
  * first step in saving out a project.
  *------------------------------------------------------------------*/
-int s_table_gtksheet_to_all_tables() {
+void s_table_gtksheet_to_all_tables() {
 
   int num_rows;
   int num_cols;
@@ -578,7 +576,7 @@ int s_table_gtksheet_to_all_tables() {
  * the cells, and placing them back into TABLE.  This is the
  * first step in saving out a project.
  *------------------------------------------------------------------*/
-int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row_list, 
+void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row_list, 
 			 STRING_LIST *master_col_list, TABLE **local_table,
 			 int num_rows, int num_cols) 
 {

@@ -78,7 +78,6 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-#include "../include/x_menu.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -778,7 +777,6 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 {
   PAGE *p_local;
   char *string;
-  int len;
   int return_code = 0;
   int old_num_rows, old_num_cols;  /* There is a better way . . . */
 
@@ -1019,10 +1017,12 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
 				   char *new_filename)
 {
   char *temp = NULL;
+#if 0
   char *ptr = NULL;
+  int i;
+#endif
   char *filename = NULL;
   char *directory = NULL;
-  int i;
 
 #ifdef DEBUG
   printf("In x_fileselect_update_dirfile_saveas, new_filename = [%s]\n", new_filename);
@@ -1166,13 +1166,10 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   GtkWidget *scrolled_win;
   GtkWidget *action_area;
   GtkWidget *separator;
-  GtkWidget *optionmenu;
   GtkWidget *drawbox;
   GtkWidget *label;
   GtkWidget *searchbox;
 
-  int type = FILESELECT;  /* This was a calling arg in gschem */
-                          /* here, I have just made it fixed. */
 
   FILEDIALOG *f_current; 
 

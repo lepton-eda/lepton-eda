@@ -62,7 +62,6 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-#include "../include/x_menu.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -78,16 +77,10 @@
 void
 x_gtksheet_init()
 {
-  gint i, j;
-  int num_rows, num_cols;
+  gint i;
   gchar *folder[]= {"Components",
                    "Nets",
                    "Pins"};
-  gchar *title[]= {"Components",
-                   "Nets",
-                   "Pins"};
-  STRING_LIST *string_list_item;
-  gchar *text;
 
 #ifndef HAS_GTK22
   GtkSheetRange *Range;
@@ -308,7 +301,6 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 {
   STRING_LIST *string_list_item;
   gchar *text;
-  guint widest;
   int j;
 
   string_list_item = list_head;

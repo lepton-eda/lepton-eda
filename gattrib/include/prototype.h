@@ -74,15 +74,15 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj);
 void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj);
 void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj);
 
-int s_table_gtksheet_to_all_tables();
-int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, 
+void s_table_gtksheet_to_all_tables();
+void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, 
 			      STRING_LIST *master_row_list, STRING_LIST *master_col_list, 
 			      TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
 int s_toplevel_read_page(char *filename);
-int s_toplevel_verify_design(TOPLEVEL *pr_current);
-int s_toplevel_empty_project();
+void s_toplevel_verify_design(TOPLEVEL *pr_current);
+void s_toplevel_empty_project();
 void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_update_page(OBJECT *start_obj);
 void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
@@ -147,47 +147,47 @@ void i_vars_setnames(TOPLEVEL * w_current);
 
 
 /* ------------- x_dialog.c ------------- */
-char *x_dialog_newattrib_get_name();
+void x_dialog_newattrib_get_name();
 int x_dialog_newattrib_keypress_callback(GtkWidget * widget, 
 					 GdkEventKey * event,
 					 GtkWidget *window);
-int x_dialog_newattrib_close_callback(GtkWidget * widget, 
+void x_dialog_newattrib_close_callback(GtkWidget * widget, 
 				      GtkWidget *window);
-int x_dialog_newattrib_ok_callback(GtkWidget * widget, 
+void x_dialog_newattrib_ok_callback(GtkWidget * widget, 
 				      GtkWidget *window);
 
-int x_dialog_delattrib_confirm();
+void x_dialog_delattrib_confirm();
 int x_dialog_delattrib_keypress_callback(GtkWidget * widget, 
 					 GdkEventKey * event,
 					 GtkWidget *window);
-int x_dialog_delattrib_close_callback(GtkWidget *buttonclose, 
+void x_dialog_delattrib_close_callback(GtkWidget *buttonclose, 
 				      GtkWidget *window);
-int x_dialog_delattrib_yes_callback(GtkWidget *buttonok, 
+void x_dialog_delattrib_yes_callback(GtkWidget *buttonok, 
 				    GtkWidget *window);
 
-int x_dialog_missing_sym();
+void x_dialog_missing_sym();
 int x_dialog_missing_sym_donothing_callback(GtkWidget * widget,
 					    GdkEventKey * event,
 					    GtkWidget *window);
-int x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose,
+void x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose,
 					   GtkWidget *window);
-int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
+void x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
 					GtkWidget *window);
 
-int x_dialog_unsaved_data();
+void x_dialog_unsaved_data();
 int x_dialog_unsaved_data_donothing_callback(GtkWidget * widget,
 					    GdkEventKey * event,
 					    GtkWidget *window);
-int x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose,
+void x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose,
 					   GtkWidget *window);
-int x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
+void x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
 					GtkWidget *window);
 
-int x_dialog_unimplemented_feature();
+void x_dialog_unimplemented_feature();
 
 int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
 				     GtkWidget * window);
-int x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window);
+void x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window);
 void x_dialog_about_dialog();
 
 GtkWidget *x_dialog_create_dialog_box(GtkWidget ** out_vbox,
@@ -260,7 +260,7 @@ gint x_fileselect_sch_files(GtkWidget * w, FILEDIALOG * f_current);
 gint x_fileselect_sym_files(GtkWidget * w, FILEDIALOG * f_current);
 gint x_fileselect_both_files(GtkWidget * w, FILEDIALOG * f_current);
 gint x_fileselect_all_files(GtkWidget * w, FILEDIALOG * f_current);
-static GtkWidget *x_fileselect_filter_menu(FILEDIALOG * f_current);
+/* static GtkWidget *x_fileselect_filter_menu(FILEDIALOG * f_current); */
 int
 x_fileselect_preview_checkbox(GtkWidget * widget, FILEDIALOG * f_current);
 void x_fileselect_saveas_close(GtkWidget * w, FILEDIALOG * f_current);

@@ -37,6 +37,7 @@ AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt
 
 # Checks for programs.
 AC_PROG_CC
+AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")	
 AC_PROG_MAKE_SET
 AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
 
