@@ -2,6 +2,8 @@
 
 	* scheme/gnet-switcap.scm: Applied Dan's 20040105 patch.
 
+        * docs/Makefile.am: Changed doc install directory readme to readmes
+
 2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-switcap.scm: Applied patch by Dan McMahill to use

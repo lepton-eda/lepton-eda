@@ -1,7 +1,7 @@
 
 SUBDIRS = attributes symbols fileformats hooks keymapping netattrib \
 	  gschem gnetlist switcap spice-sdb toplevel templates \
-	  pads_backannotate cascade
+	  pads_backannotate cascade tragesym_tutorial gsch2pcb_tutorial
 
 EXTRA_DIST = autogen.sh
 

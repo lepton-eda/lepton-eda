@@ -8,7 +8,7 @@ BUILT_SOURCES = gnetlist.html
 
 man_MANS = gnetlist.1
 
-docsreadmedir = @GEDADOCDIR@/readme
+docsreadmedir = @GEDADOCDIR@/readmes
 docsreadme_DATA = README.bom README.pcb README.switcap README.verilog \
 		  README.vhdl
 

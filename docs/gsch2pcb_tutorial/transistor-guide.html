@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+    <title>gschem Symbol and PCB Element Transistor Guide</title>
+</head>
+<body background="./images/paper1.gif">
+<center><h2>gschem Symbol and PCB Element Transistor Guide</h2></center>
+<hr width=100% size=2>
+<blockquote>
+The issue is how to manage
+a library of gschem transistor symbols and a library of PCB transistor
+elements such that we can be confident of correct pin number
+correspondence between the libraries.  We need to understand
+how to handle
+the many permutations of emitter, base, and collector (e,b,c)
+pinouts and the variations of package number of pins and pin numbering.
+This doc shows the approach I've taken in my custom gschem symbols and
+PCB elements.
+</blockquote>
+
+<h3> gschem symbols </h3>
+<blockquote>
+There are a couple of ways to consider:
+<ol>
+	<li>Have a base set of gschem transistor symbols such
+	as npn.sym, pnp.sym, fet.sym, etc which have a fixed and
+	arbitrarily assigned pin number for the emitter, base, and, collector.
+	To accomodate the different permutations of (e,b,c) to pin numbers
+	that exist for transistor packages, you would have to have
+	a set of PCB elements for each transistor package like TO-92-123,
+	TO-92-132, TO-92-213, TO-92-231, TO-92-312, TO-92-321, and similarly
+	for TO-220, TO-5, etc.  The problem with this is that manufacturers
+	do specify pin numbers for their packages and we would be making
+	many elements with pin numbers not corresponding to real packages.
+	Remember, a  PCB element on a pc board layout is supposed to correspond to
+	a phycical electronic component.
+	</li>
+	<li>Have a base set of gschem transistor symbols which spans the
+	possible (e,b,c) permutations which can exist for any given transistor
+	package.  The set of gschem symbols for npn transistors would be
+	npn-ebc.sym, npn-ecb.sym, npn-bec.sym, npn-bce.sym, npn-ceb.sym,
+	and npn-cbe.sym.  There would be similar sets for pnp transistors
+	and FETs (fet-sdg.sym, fet-sgd.sym, ...).  Then there would be
+	PCB elements only for actual physical transistor packages.
+	</li>
+</ol>
+It makes sense to me to say the second approach is obviously better.
+Setting up the gschem symbols is simple enough, just create the six
+sybols for each transistor type with the pin numbers of the
+emitter, base, and collector corresponding to the sequence indicated
+in the name.  For example, the symbol npn-ebc.sym would have an emitter
+<b>pinnumber</b> attribute of <b>1</b>, a base <b>pinnumber</b>
+attribute of <b>2</b> and a collector <b>pinnumber</b> attribute of
+<b>3</b>.
+Now you only need to make
+PCB elements with correctly numbered pins for transistor packages as you
+need them and you need
+to have a systematic approach for naming these elements.
+</blockquote>
+
+<h3>PCB Elements</h3>
+<blockquote>
+	A point to keep in mind when looking at transistor package
+	pin configurations and numbers is that a TO (Transistor
+	Outline) designation is really only just that - a 
+	designation of a particular shaped and sized outline.
+	It actually is not a specification of
+	the pins coming out of that package.  Manufacturers may have
+	have a TO package designation qualified by their internal
+	"case style" or "package number" code.  This qualification determines
+	the definition of the number of pins, the arrangement of the pins,
+	and the pin numbering.
+	<p>
+	However, most TO packages do conform
+	to a standard pin numbering convention and have a predominant number
+	of pins and pin placement configuration.
+	So it makes
+	sense to have PCB elements with a particular TO name which can
+	be used for a majority of cases.  Then when a non conforming case
+	is encountered, we can make a new TO element for it.
+	<p>
+	Here's a description of what seems to be the most common transistor
+	outline configurations:
+
+<ul>
+	<li> <b>Power Transistors - Plastic:</b>
+	Look at the package front (where the lettering is) with the pins pointing
+	down.  The pins are numbered left to right (1,2,3).  This is very
+	common, so it makes sense to create initial sets of
+	three pin PCB elements with this number order using base names
+	such as TO-126, TO-220, TO-264, etc.  For variations such as a five
+	pin TO-220 package for a LM383, you could make a PCB element with its
+	name qualified such as TO-220-5, or maybe TO-220-T05B if you wanted
+	to qualify it with the National Semiconductor T05B package designation
+	for their 5 pin TO-220 package.
+	</li>
+	<li><b>Power Transistors - Metal</b> This would be the TO-3 package which
+	can have from 2 to many pins.  There is no index tab on the package so
+	you need to look at a diagram of the pin out to see the pin numbering.
+	The common 2 pin package could be named TO-3, and N pin packages with
+	N > 2 could be named TO-3-N.
+	</li>
+
+	<li><b>Small Signal Transistors - Metal:</b>
+	Look at the transistor bottom with the pins pointing at you.
+	The pins are numbered clockwise from the index tab (1,2,3,...)
+	Metal can packages such as TO-18, TO-39, or TO-72 will frequently
+	have 3 or 4 pins, while the TO-5 may have 3, 4, 5, 6, 8, or 10 pins.
+	Because of the variable pin numbers, you could, for example, name the PCB
+	elements TO-18-3 and TO-18-4, or you could use TO-18 and TO-18-4
+	assuming that a three pin can is more common and thus earns the
+	base TO-18 element name.
+	</li>
+
+	<li><b>Small Signal Transistors - Plastic:</b>
+	Look at the transistor package flat side (where the lettering is)
+	with the pins pointing down.  Almost all packages where the three pins
+	are in a straight line will have the left to right pin number ordering
+	of (1,2,3) and these can be the base TO-92 PCB element.
+	There are a very small number of cases where the pins will be in a
+	straight line and numbered left to right (3,2,1).  You could have a
+	distinct PCB element for these, but you could also decide to ignore
+	the manufacturer's pin numbering and pretend it's the more common
+	(1,2,3).  However, if the package has the middle pin
+	offset so the pins are in a triangular arrangement, the pin number
+	ordering will frequently be (3,2,1) and this will possibly require a
+	custom PCB element.  But see my comments about my <b>TO-92o</b>
+	element below.
+	</li>
+	<li><b>Surface Mount Transistors:</b>  The SOT (Small Outline
+	Transistor) packages are much more standard than the TO packages
+	and the pins are consistently numbered counterclockwise from the
+	top left as are IC packages.  But for a transistor that has a
+	TO and a SOT version, you can't simply change the
+	<b>footprint</b> attribute on the schematic because the package
+	pin numbers don't map the same to the emitter, base, and collector.
+	You need a separate gschem symbol for them.  For example:
+	<b>2N3904.sym</b> for the TO and <b>MMBT3904</b> for the SOT.
+	</li>
+</ul>
+
+<h3>General Procedure</h3>
+<blockquote>
+	The process of using a transistor for the first time in a gschem
+	to PCB design takes these steps (2N3904 used as an example):
+	<ol>
+		<li>Most transistor spec sheets can be found in pdf format on
+			the web, so get one and determine the case style and pin
+			name and number ordering.  For the
+			2N3904 the case style is TO-92,
+			the pin number order left to right is (1,2,3),
+			and the pin name order left to right is (e,b,c).
+
+		</li>
+		<li>If we have a PCB element in our library for that case style
+			with the correct pin number order, use it.  If not, make a
+			new PCB element.  For the 2N3904, I have a <b>TO-92</b>
+			element in my custom library that has the pin number order
+			of (1,2,3), so I can use it.
+		<li>Copy the gschem transistor symbol corresponding to the pin name
+			order to a new transistor symbol name.  For the 2N3904 example,
+			the pin name order is (e,b,c) so copy the base symbol
+			npn-ebc.sym into 2N3904.sym.
+		</li>
+		<li>Edit the new symbol and change the <b>value</b> attribute to
+			the transistor name and the <b>footprint</b> attribute to
+			the right PCB element.  For our example, this would be
+			<b>2N3904</b> and <b>TO-92</b>
+		</li>
+	</ol>
+</blockquote>
+
+<h3>Special Cases</h3>
+<ol>
+	<li>I have in my library a <b>TO-92o</b> PCB element which has the middle
+	pin offset so the pins are in a triangular arrangement.  This element
+	has the left to right pin number order of (1,2,3) and can be used
+	in place of the <b>TO-92</b> for layout considerations.  You only have
+	to slightly bend the middle pin of the transistor when installing it.
+	</li>
+	<li>The BC546 transistor spec sheet shows its pin number order to be
+	(1,2,3) in a straight line and the pin name order to be (c,b,e).  But
+	I've seen this transistor shipped from the factory with the middle
+	pin pre-bent into the offset configuration.  For this transistor,
+	you would create the gschem symbol from npn-cbe.sym as expected
+	but use the PCB element TO-92o.
+	</li>
+	<li>The BF240 transistor spec sheet shows its pin number order to be
+	left to right (3,2,1) in a straight line and the pin name order would
+	be left to right (c,e,b).  If you made a new PCB element with
+	pins numbered (3,2,1), then you would have to create the gschem
+	BF240.sym from npn-bec.sym because pin 1 on the PCB element has
+	to correspond to pin 1 on the gschem symbol.  But it would be
+	easier to just ignore this uncommon pin numbering and assume
+	the transistor pins are actually numbered the standard left to right
+	(1,2,3).
+	Then you could use the existing TO-92 PCB element and create the
+	gschem symbol using npn-ceb.sym.  Some transistor spec sheets give
+	the pin name order and do not give a pin number order, and for
+	these you just make the same assumption that the pins are numbered
+	left to right (1,2,3).
+	</li>
+	<li> In the second case above, the transistor had an offset pin 2
+	when the spec sheet showed the pins in a straight line,
+	and the pin numbers on the spec sheet were ordered left to right
+	(1,2,3).  But many transistors have the offset pin 2 indicated on the
+	the spec sheet and the pin numbers are ordered left to right (3,2,1).
+	You could use an element such as my TO-92o by ignoring the spec
+	sheet ordering as I suggested in case 3.  But this configuration
+	is much more common than the BF240 example so you might want to
+	have a distinct PCB element for it with pins numbered to match
+	the spec sheet.
+	</li>
+</ol>
+
+<p>
+<hr>
+	<address>
+	<p align=center>
+	<a href="./tutorial.html"
+		name="Back to gsch2pcb Tutorial">Back to gsch2pcb Tutorial</a>
+	<br>
+	Bill Wilson <A HREF="mailto:bill--at--gkrellm.net">bill--at--gkrellm.net</A>
+	<br>
+	</p>
+	</address>
+	
+</body>
+</html>

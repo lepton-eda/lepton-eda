@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+    <title>gschem warmup</title>
+</head>
+<body background="./images/paper1.gif">
+<center><h2>gschem Warmup for Beginners</h2></center>
+<hr width=100% size=2>
+You need to become familiar with doing a few things in gschem, so
+just run <b>gschem</b> and start playing around:
+<p>
+You get an initial blank page with a menus and a toolbar at the
+top.  As you select operations from the menus, notice that there
+are usually keyboard shortcuts which can alternatively be used to
+access the menu functions.
+<p>
+When drawing a schematic, It's a good idea to always start
+by setting some schematic boundaries to draw within, so we will do this by
+adding a titleblock.  I find that using a B sized titleblock lets
+my schematics print at a nice size on letter sized paper:
+	<ul>
+		<li>
+		Bring up the <b>Select Component</b> window by 
+		selecting from the menu <b>Add->Component</b> or hit keyboard
+		shortcut <b>i</b>.
+		Or you could click the add component icon on the toobar.
+		</li>
+		<li>In the <b>Libraries</b> list, select <b>titleblock</b>.</li>
+		<li>Under the <b>Components</b> list, select <b>title-B.sym</b>.</li>
+		<li>Move the mouse onto the gschem drawing area and place the
+		titleblock symbol by clicking the left mouse button.<br>
+		Then click the right mouse button to abort adding more
+		titleblock symbols.
+		<p>
+	<table cellspacing=10 bgcolor=#909088>
+	<tr>
+		<td>
+		<center><img src="images/warmup-0.png" alt="images/warmup-0.png"
+		border="0" align="top"> </center>
+		</td>
+	</tr>
+	</table>
+		</li>
+		<p>
+		<li>With the mouse in the gschem drawing area, hit the keys <b>ve</b>
+		(or <b>View->Zoom Extents</b>) to zoom the view to the titleblock
+		 symbol extents.
+		</li>
+		<li> Back in the select components window, (bring it up again if
+		you closed it).  Select the <b>analog</b> Library and then
+		select the Component <b>resistor-1.sym</b> and place a couple of
+		resistors on the schematic with the left mouse button.  Notice
+		that as you place each one it is a red color and that indicates
+		it is selected.</li>
+		<li>Zoom in and out with <b>z</b> and <b>SHIFT z</b>.  If you get lost,
+		zoom back to extents with <b>ve</b>.</li>
+		<li>Alternate left clicking on both resistors to select them,
+		but notice that if you don't hit the resistor just right, the
+		titleblock is selected instead.  We really don't want to ever
+		select the titleblock again, so we can lock it to prevent
+		its irritating selection:  click so the titleblock IS selected, then
+		select <b>Edit->Lock</b>.  Now it's easier to select the
+		resistors as we like.
+		</li>
+		<li>Move the resistors around with the middle mouse button</li>
+		<li>Select a resistor and then rotate with the <b>er</b> keys
+			or the <b>Edit->Rotate 90 Mode</b>
+		<li>Move the resistors relatively close together and then zoom
+			in on them.</li>
+		<li>Place the mouse on one of the resistor pins and hit the
+			<b>n</b> key to start adding a net.  Move the mouse to
+			a pin on the other resistor and left click to attach
+			the net to the pin.  Right click to abort adding this net
+			but notice that if you left click again you will start adding
+			another net.
+			<center>
+		<img src="images/warmup-1.png" alt="images/warmup-1.png"
+			border="0" align="top"> </center>
+
+			Look at the toolbar and see that your mode has
+			switched to adding nets.  Before you can change resistor
+			selections again, you  will have to re-enter select mode
+			with the <b>s</b> key or by clicking the select toolbar icon
+			or by using the <b>Edit</b> menu.  But if you try to move
+			a resistor with the middle mouse button, you can do it and
+			you will automatically re-enter select mode.  You will
+			have to play with doing things to get used to the gschem modes.
+		</li>
+		<li>If when you added the net between the resistors you get
+			something that looks like this:
+			<center>
+		<img src="images/warmup-2.png" alt="images/warmup-2.png"
+			border="0" align="top"> </center>
+			It means you missed the pin on the right resistor.  Look
+			closely and you'll see the tip of the pin is red and you
+			must start and stop nets with the mouse on this red spot
+			to make a connection to the pin.
+		</li>
+		<li>Select the net between the resistors and delete it with
+			the <b>Delete</b> key.</li>
+		<li>Select a resistor and hit the <b>ee</b> keys.  This will
+			pop up the attribute editing window for the resistor.
+			Here you can change existing attribute values or add
+			new attributes with values to the resistor.  Practice
+			well with adding attributes and changing attribute values
+			because you will need to be very familiar with managing
+			attributes when using gschem.</li>
+	</ul>
+
+	Now go back to the tutorial and try working through the simple
+	example there.  If you encounter steps that aren't clear, look
+	through
+	the <b>gschem user documentation</b> and attributes documentation
+	on the
+	<a href="http://www.geda.seul.org/docs/index.html"
+			name="gEDA Documentation"> gEDA Documentation </a> page.
+<p>
+<hr>
+	<address>
+	<p align=center>
+	<a href="./tutorial.html"
+		name="Back to gsch2pcb Tutorial">Back to gsch2pcb Tutorial</a>
+	<br>
+	Bill Wilson <A HREF="mailto:bill--at--gkrellm.net">bill--at--gkrellm.net</A>
+	<br>
+	</p>
+	</address>
+	
+</body>
+</html>

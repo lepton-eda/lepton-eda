@@ -1,7 +1,7 @@
 
 EXTRA_DIST = README.gsch2pcb README.olib README.tragesym
 
-docsreadmedir = @GEDADOCDIR@/readme
+docsreadmedir = @GEDADOCDIR@/readmes
 docsreadme_DATA = README.gsch2pcb README.olib README.tragesym
 
 MOSTLYCLEANFILES = *.log *~

@@ -146,7 +146,7 @@ gEDA/gaf Documention
 <b>Switcap netlister README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.switcap">txt</A>
+<A HREF="./readmes/README.switcap">txt</A>
 </TD>
 </TR>
 
@@ -179,7 +179,7 @@ gEDA/gaf Documention
 <b>Bill of Material netlister README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.bom">txt</A>
+<A HREF="./readmes/README.bom">txt</A>
 </TD>
 </TR>
 
@@ -188,7 +188,7 @@ gEDA/gaf Documention
 <b>gschem2pcb README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.pcb">txt</A>
+<A HREF="./readmes/README.pcb">txt</A>
 </TD>
 </TR>
 
@@ -197,7 +197,7 @@ gEDA/gaf Documention
 <b>Verilog netlister README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.verilog">txt</A>
+<A HREF="./readmes/README.verilog">txt</A>
 </TD>
 </TR>
 
@@ -206,7 +206,7 @@ gEDA/gaf Documention
 <b>VHDL netlister README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.vhdl">txt</A>
+<A HREF="./readmes/README.vhdl">txt</A>
 </TD>
 </TR>
 
@@ -215,9 +215,9 @@ gEDA/gaf Documention
 <b>VAMS netlister README</b>
 </TD>
 <TD>
-<A HREF="./readme/vams_mode.txt">txt</A>
-(<A HREF="./readme/syntax_architecture.txt">syntax_architecture</A>)
-(<A HREF="./readme/syntax_entity.txt">syntax_entity</A>)
+<A HREF="./readmes/vams_mode.txt">txt</A>
+(<A HREF="./readmes/syntax_architecture.txt">syntax_architecture</A>)
+(<A HREF="./readmes/syntax_entity.txt">syntax_entity</A>)
 </TD>
 </TR>
 
@@ -259,7 +259,16 @@ gEDA/gaf Documention
 <b>gsch2pcb (gschem to PCB) README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.gsch2pcb">txt</A>
+<A HREF="./readmes/README.gsch2pcb">txt</A>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH="50%">
+<b>gsch2pcb Tutorial</b>
+</TD>
+<TD>
+<A HREF="./tutorials/gsch2pcb/tutorial.html">HTML</A>
 </TD>
 </TR>
 
@@ -268,7 +277,16 @@ gEDA/gaf Documention
 <b>tragesym (symbol generator) README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.tragesym">txt</A>
+<A HREF="./readmes/README.tragesym">txt</A>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH="50%">
+<b>tragesym Tutorial</b>
+</TD>
+<TD>
+<A HREF="./tutorials/tragesym/tragesym.html">HTML</A>
 </TD>
 </TR>
 
@@ -277,7 +295,7 @@ gEDA/gaf Documention
 <b>olib (OrCAD (TM) converter) README</b>
 </TD>
 <TD>
-<A HREF="./readme/README.olib">txt</A>
+<A HREF="./readmes/README.olib">txt</A>
 </TD>
 </TR>
 

@@ -1,3 +1,7 @@
+2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* docs/Makefile.am: Changed doc install directory readme to readmes
+
 2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gsch2pcb.c, examples/gsch2pcb/project.sample: Upgraded to 

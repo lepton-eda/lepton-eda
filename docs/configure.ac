@@ -86,6 +86,9 @@ AC_CONFIG_FILES([Makefile
 		 gnetlist/Makefile 
 		 switcap/Makefile 
 		 spice-sdb/Makefile 
+		 tragesym_tutorial/Makefile 
+		 gsch2pcb_tutorial/Makefile 
+		 gsch2pcb_tutorial/images/Makefile 
 		 toplevel/Makefile 
 		 toplevel/gedadocs.html 
                  templates/Makefile ])
