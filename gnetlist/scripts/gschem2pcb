@@ -76,7 +76,7 @@ if [ -e $PCBFILENAME ]; then
 	head -n 5 $PCBTEMPFILENAME > $PCBNEWFILENAME
 	for f in `echo $UREF`; do
 		echo "Find new element $f"
-		LINE=`grep -n $f $PCBTEMPFILENAME|sed 's/:.*$//g' `
+                LINE=`grep -n ^Element.\*$f $PCBTEMPFILENAME|sed 's/:.*$//g' `
 		awk -v line=$LINE '{if (NR>=line)
 					{print
 					if ($1==")") exit}

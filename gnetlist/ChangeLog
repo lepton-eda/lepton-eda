@@ -16,9 +16,22 @@
 	* scheme/gnet-pads.scm: Applied patch (20031216) by Dan McMahill to 
 	use the new net name modification scheme functions.
 
-	tests/powersupply.pads, tests/singlenet.pads: Updated golden files
+	* tests/powersupply.pads, tests/singlenet.pads: Updated golden files
 	to be current (take into the changes Dan's patches made to the 
 	PADS backend)
+
+	* scheme/gnet-cascade.scm: Added new backend by Dan McMahill.  This
+	backend is for driving RF Cascade (http://rfcascade.sourceforge.net)
+	Thanks!
+
+	* scheme/gnet-redac.scm: Added Racal Redac format backend by 
+	W. Kazubski.  This format is also used by Cadstar PCB software
+	(at least up to version 4.30 for DOS  Thanks!
+
+	* scripts/gschem2pcb: Applied a patch by Christopher K Eveland to
+	fix a condition where gschem2pcb was picking up a pin when it 
+	should not.  I don't know if this fix is correct, but somebody 
+	will complain if it breaks gschem2pcb.  Thanks for the bug fix!
 
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -81,6 +81,7 @@ AC_CONFIG_FILES([Makefile
                  keymapping/Makefile 
                  netattrib/Makefile 
                  pads_backannotate/Makefile 
+                 cascade/Makefile 
 		 gschem/Makefile 
 		 gnetlist/Makefile 
 		 switcap/Makefile 

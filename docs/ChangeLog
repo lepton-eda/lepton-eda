@@ -1,3 +1,8 @@
+2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* cascade/cascade.tex and friends: Added RF Cascade symbols and
+	backend documentation by Dan McMahill.
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* attributes/Makefile.am, fileformats/Makefile.am, 

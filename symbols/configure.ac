@@ -132,6 +132,7 @@ GEDA_DECLARE_SYMLIB(font)
 GEDA_DECLARE_SYMLIB(idt)
 GEDA_DECLARE_SYMLIB(diode)
 GEDA_DECLARE_SYMLIB(opto)
+GEDA_DECLARE_SYMLIB(cascade)
 # 
 # Do individual library files start
 #########################################################################
@@ -213,6 +214,7 @@ AC_CONFIG_FILES([
 	diode/Makefile 
 	opto/Makefile 
 	national/Makefile
+	cascade/Makefile 
 	documentation/Makefile
 	system-commonrc ])
 
