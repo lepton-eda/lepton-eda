@@ -10,6 +10,16 @@ All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
 7/16/99 Cleaned up i_sbox.c and i_vars.c o_ales.c (by Kazu Hirata)
+
+	Increased world coord space to 120x90, don't know if there are any
+	side effects of this.
+
+	Increased the max zoom factor to 256
+
+	Changed x_grid to be draw grid the grid at a larger zoom factor
+
+	Reverted back to previous world coord space, adjusting above to
+	match.  Not ready for a change yet.
 	
 7/15/99 Added support for libgdgeda 1.6 (mainly means searching for libpng)
 

@@ -343,6 +343,7 @@
 ; This is not the paper size.  That is specified elsewhere.  End users should
 ; not change this at all
 ;
+;(world-size 120.0 90.0 1.0) new possible, but not ready for it.
 (world-size 60.0 45.0 1.0)
 
 ; page-size width height 

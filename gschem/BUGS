@@ -8,6 +8,8 @@ OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Swedish characters don't work.
 
+	Zoom with pan doesn't work 100% when you are zoomed out all the way.
+
 BETTER	Almost got that 180 postscript printing bug fixed... not perfect yet
 
 	Mouse pan crashed my X server once

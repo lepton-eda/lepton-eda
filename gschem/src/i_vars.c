@@ -187,7 +187,8 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->init_right   = default_init_right;
 	w_current->init_bottom  = default_init_bottom;
 
-	/* you cannot free these string here since new windows need it */
+	/* you cannot free the default* strings here since new windows */
+	/* need them */
 	INIT_STR(w_current, series_name     , DEFAULT_SERIES_NAME     );
 	INIT_STR(w_current, untitled_name   , DEFAULT_UNTITLED_NAME   );
 	INIT_STR(w_current, scheme_directory, DEFAULT_SCHEME_DIRECTORY);

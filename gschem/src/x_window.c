@@ -106,7 +106,7 @@ x_window_setup_world(TOPLEVEL *w_current)
         w_current->init_top = 0;
 	/* init_right and _bottom are set before this function is called */
         w_current->min_zoom = 0;
-        w_current->max_zoom = 128;  /* was 254 */  
+        w_current->max_zoom = 256;  /* was 128 */  
 
 
 	if (w_current->display_width <= 800) {
