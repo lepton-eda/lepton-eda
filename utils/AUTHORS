@@ -5,19 +5,20 @@ GNU Electronic Design Automation
 
 utils AUTHORS
 
-
 gmk_sym		
 char_width.c
 Written by : Jerry O'Keefe
-E-mail: jerryok@pacbell.net 
 
 smash_megafile		
 convert_sym.awk		
 convert_sym.c
 Written by : Mike Jarabek
-E-mail: mjarabek@playground.net
 
 sarlacc
 Written by : Matt Ettus
-E-mail: matt@ettus.com 
 
+gschupdate
+Written by: Ales Hvezda
+
+gsymupdate
+Written by: Ales Hvezda

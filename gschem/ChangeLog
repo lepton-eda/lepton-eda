@@ -137,7 +137,6 @@
 	* noweb/o_delete.nw: Removed a static keyword from
 	o_delete_complex(...) to allow for code reuse.
 	
-	
 2002-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_misc.nw, i_callbacks.nw: Fixed all

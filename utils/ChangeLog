@@ -5,12 +5,12 @@
 
 2002-07-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* utils/gsymupdate: Added code to properly convert type= and label= 
+	* scripts/gsymupdate: Added code to properly convert type= and label= 
 	to pintype= and pinlabel=
 
 2002-07-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* utils/gsymupdate, gschupdate: Added a check to not update if an
+	* scripts/gsymupdate, gschupdate: Added a check to not update if an
 	equivalant .old file is found
 
 2002-07-27 Ales Hvezda   <ahvezda@geda.seul.org>
