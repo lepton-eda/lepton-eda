@@ -1,3 +1,7 @@
+2003-01-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/i_basic.nw: Hierarchy/Up should never be greyed out. Fixed.
+
 2003-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_arc.nw: Added the first of Patrick's suggestions to fixing
