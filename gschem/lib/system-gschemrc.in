@@ -1206,9 +1206,9 @@
            ("Unembed Componnent" edit-unembed           edit-unembed)
 	   ("Show/Hide Inv Text" edit-show-hidden 	edit-show-hidden)
 	   ("Make Inv Text Vis"	 edit-make-text-visible edit-make-text-visible)
-	   ("Find Specific Text"  edit-find-text 	edit-find-text)
-	   ("Hide Specific Text"  edit-hide-text 	edit-hide-text)
-	   ("Show Specific Text"  edit-show-text 	edit-show-text)
+	   ("Find Specific Text..."  edit-find-text 	edit-find-text)
+	   ("Hide Specific Text..."  edit-hide-text 	edit-hide-text)
+	   ("Show Specific Text..."  edit-show-text 	edit-show-text)
 	   ("Autonumber Text"   edit-autonumber		edit-autonumber)))
 
 (define buffer-menu-items 

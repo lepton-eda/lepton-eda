@@ -1,3 +1,13 @@
+2002-02-16 Ales Hvezda <ahvezda@geda.seul.org>
+
+	* noweb/x_event.nw: Added a check in the configure callback to return
+  	if gschem hasn't finished setting up the current page.
+
+2002-02-11 Ales Hvezda <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added "..." to some of the Edit/ menu 
+	options which popup a dialog box.
+
 2002-02-09 Ales Hvezda <ahvezda@geda.seul.org>
 
 	* noweb/o_text.nw: Improved o_text_edit_end to loop over all
@@ -121,8 +131,8 @@
 
 2001-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* noweb/g_rc.nw, g_register.nw, i_vars.nw, x_window.nw: Added
-	  (window-size w h) keyword to make some users (including myself)
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw, x_window.nw: 
+	  Added (window-size w h) keyword to make some users (including myself)
 	  happy and in control of the window size (instead of having 
 	  gschem pick some always too large window size for me)
 	

@@ -1070,6 +1070,11 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 
   exit_if_null(w_current);
   global_window_current = w_current;
+
+  /* don't want to call this if the current page isn't setup yet */
+  if (w_current->page_current == NULL) {
+ 	return;
+  }
         
   /* this callback is for drawing areas only! */
   /* things like changing a label causes a resize */
