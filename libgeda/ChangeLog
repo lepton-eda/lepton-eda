@@ -1,3 +1,7 @@
+2001-03-05 Stefan Petersen <spe@geda.seul.org>
+
+	* src/libgeda/s_cue.c: added some missing HAS_LIBGDGEDA.
+	
 2001-03-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/o_complex_basic.c: Re-enabled the bounding box calculation 

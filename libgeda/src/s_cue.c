@@ -63,6 +63,7 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
     fprintf(fp, "%d %d fbox\n", offset2, offset2);
 }
 
+
 void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp, int x,
 				 int y)
 {
@@ -76,6 +77,9 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp, int x,
     fprintf(fp, "0 360 arc\n");
     fprintf(fp, "fill\n");
 }
+
+
+#ifdef HAS_LIBGDGEDA
 
 void s_cue_image_fillbox(TOPLEVEL * w_current, OBJECT * object, int world_x,
 			 int world_y)
@@ -130,6 +134,9 @@ void s_cue_image_fillcircle(TOPLEVEL * w_current, int world_x, int world_y)
     }
 
 }
+
+#endif
+
 
 void s_cue_output_all(TOPLEVEL * w_current, OBJECT * head, FILE * fp,
 		      int type)
@@ -206,16 +213,20 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
 	    if (count < 1) {	/* Didn't find anything connected there */
 		if (output_type == POSTSCRIPT) {
 		    s_cue_postscript_fillbox(w_current, fp, x, y);
+#ifdef HAS_LIBGDGEDA
 		} else if (output_type == PNG) {
 		    s_cue_image_fillbox(w_current, object, x, y);
+#endif
 		}
 
 
 	    } else if (count >= 2) {
 		if (output_type == POSTSCRIPT) {
 		    s_cue_postscript_fillcircle(w_current, fp, x, y);
+#ifdef HAS_LIBGDGEDA
 		} else if (output_type == PNG) {
 		    s_cue_image_fillcircle(w_current, x, y);
+#endif
 		}
 	    }
 	}
@@ -224,8 +235,10 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
     case (CONN_MIDPOINT):
 	if (output_type == POSTSCRIPT) {
 	    s_cue_postscript_fillcircle(w_current, fp, x, y);
+#ifdef HAS_LIBGDGEDA
 	} else if (output_type == PNG) {
 	    s_cue_image_fillcircle(w_current, x, y);
+#endif
 	}
     }
 
@@ -250,8 +263,10 @@ s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
 	    y = conn->y;
 	    if (output_type == POSTSCRIPT) {
 		s_cue_postscript_fillcircle(w_current, fp, x, y);
+#ifdef HAS_LIBGDGEDA
 	    } else if (output_type == PNG) {
 		s_cue_image_fillcircle(w_current, x, y);
+#endif
 	    }
 	    break;
 	}
