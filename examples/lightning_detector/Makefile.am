@@ -1,7 +1,7 @@
 SUBDIRS = sym
 
 EXTRA_DIST = bom bom.readme lightning.net lightning.pcb lightning.sch \
-             lightning.sch.bom gnetlistrc gschemrc gschlasrc
+             lightning.sch.bom gafrc
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~

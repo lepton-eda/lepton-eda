@@ -1,3 +1,8 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* RF_Amp/gafrc TwoStageAmp/gafrc lightning_detector/gafrc:
+	Added new rc to the directories and removed all other extra rc files
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
