@@ -741,8 +741,10 @@ g_rc_text_display_zoomfactor(SCM zoomfactor)
 SCM
 g_rc_scrollbar_update(SCM scmmode)
 {
+#if 0
   char *mode;
   GtkUpdateType policy;
+#endif
   SCM ret = SCM_BOOL_T;
 
   SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
