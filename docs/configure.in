@@ -81,6 +81,7 @@ AC_CONFIG_FILES([Makefile \
                  netattrib/Makefile \
 		 gschem/Makefile \
 		 gnetlist/Makefile \
+		 switcap/Makefile \
 		 toplevel/Makefile \
                  templates/Makefile])
 AC_OUTPUT

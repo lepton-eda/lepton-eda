@@ -1,3 +1,14 @@
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+ 	* configure.in, Makefile.am, switcap/: Integrated Dan McMahill's 
+	switcap backend (the docs). switcap is a new directory
+
+	* fileformats/fileformats.tex: Updated valid versions
+
+	* switcap/switcap.tex: Fixed a figure reference typo.  
+
+	* toplevel/gedadocs.html: Added links to the switcap backend docs
+
 2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* fileformats/Makefile.am: Oops forgot to add eps and sch files
