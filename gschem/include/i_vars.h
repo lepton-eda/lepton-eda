@@ -66,4 +66,7 @@ extern int default_attribute_promotion;
 extern int default_promote_invisible;
 extern int default_keep_invisible;
 extern int default_continue_component_place;
+extern int default_undo_levels;
+extern int default_undo_control;
+extern int default_undo_type;
 
