@@ -1,3 +1,8 @@
+2004-11-14: (version 0.0.7) Werner Hoch <werner.ho@gmx.de>
+	* made it more tolerant for input files
+	* corrected version
+	* changed text line (multiline support)
+	
 2003-05-25: (version 0.0.6) Werner Hoch <werner.ho@gmx.de>
 	Changes:
 	  - added attributes "documentation=" and "author="
