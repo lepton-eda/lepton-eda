@@ -86,6 +86,7 @@ static GtkItemFactoryEntry popup_items[] = {
   {"/sep1", NULL, NULL, 0, "<Separator>"},
   {"/Down Schematic", 	NULL, i_callback_hierarchy_down_schematic, 0, NULL},
   {"/Down Symbol", 	NULL, i_callback_hierarchy_down_symbol, 0, NULL},
+  {"/Up", 		NULL, i_callback_hierarchy_up, 0, NULL},
 
 };  
 

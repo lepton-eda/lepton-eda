@@ -1,4 +1,4 @@
-@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
 
 @node File i_basic.c,,,Top
 @chapter File @file{i_basic.c}
@@ -493,10 +493,15 @@ i_update_toolbar(TOPLEVEL *w_current)
 void
 i_update_menus(TOPLEVEL *w_current)
 {
-  /* This is very simplistic.  Eventually what gets enabled/disabled */
-  /* should be based on what is in the selection list */
+  /* 
+   * This is very simplistic.  Right now it just disables all menu
+   * items which get greyed out when a component is not selected.
+   * Eventually what gets enabled/disabled
+   * should be based on what is in the selection list 
+   */
   
   if (o_selection_return_num(w_current->page_current->selection2_head)) {
+    /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Edit...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Edit Text...", TRUE);
@@ -537,8 +542,10 @@ i_update_menus(TOPLEVEL *w_current)
     /*  Menu items for hierarchy added by SDB 1.9.2005.  */
     x_menus_popup_sensitivity(w_current, "/Down Schematic", TRUE);
     x_menus_popup_sensitivity(w_current, "/Down Symbol", TRUE);
+    /* x_menus_popup_sensitivity(w_current, "/Up", TRUE); */
 
   } else {
+    /* Nothing is slected.  grey these out */
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Edit...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Edit Text...", FALSE);
@@ -579,7 +586,7 @@ i_update_menus(TOPLEVEL *w_current)
     /*  Menu items for hierarchy added by SDB 1.9.2005.  */
     x_menus_popup_sensitivity(w_current, "/Down Schematic", FALSE);
     x_menus_popup_sensitivity(w_current, "/Down Symbol", FALSE);
-	
+    /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
   }
 }
  
