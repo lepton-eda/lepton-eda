@@ -1,3 +1,7 @@
+2001-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_bus_basic.c: Fixed a typo pointed out by Roger Williams.
+
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/s_attrib.nw, s_basic.nw, s_color.nw, s_log.nw, s_papersizes.nw:

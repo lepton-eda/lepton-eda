@@ -535,7 +535,7 @@ o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   /* need to make this bus specific */
   fprintf(fp, "gsave\n");
   fprintf(fp, "newpath\n");
-  if (w_current->pin_style == THICK) {
+  if (w_current->bus_style == THICK) {
     fprintf(fp, "3.0 setlinewidth\n");	
   }
 
