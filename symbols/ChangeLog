@@ -11,6 +11,12 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-08-12  Stefan Petersen  <spe@geda.seul.org>
+
+	* Changed configure.in to be more place independent.
+	  Patch by Roger Gammans. All Makefile.in and configure
+	  regenerated.
+	
 2000-07-26  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* connecter/jumper-1.sym: Fixed missing pin#=# attributes, pointed

@@ -843,99 +843,124 @@ EOF
 
 
 
-
 # Do individual library files
+  
 
+	data4000=`ls -1 $srcdir/4000 | grep -v Makefile | grep -v CVS`
+	data4000=`echo $data4000`
+ 
 
-data4000=`ls -1 4000 | grep -v Makefile | grep -v CVS`
-data4000=`echo $data4000`
+	datanational=`ls -1 $srcdir/national | grep -v Makefile | grep -v CVS`
+	datanational=`echo $datanational`
+ 
 
-datanational=`ls -1 national | grep -v Makefile | grep -v CVS`
-datanational=`echo $datanational`
+	datalocal=`ls -1 $srcdir/local | grep -v Makefile | grep -v CVS`
+	datalocal=`echo $datalocal`
+ 
 
-datalocal=`ls -1 local | grep -v Makefile | grep -v CVS`
-datalocal=`echo $datalocal`
+	dataio=`ls -1 $srcdir/io | grep -v Makefile | grep -v CVS`
+	dataio=`echo $dataio`
+ 
 
-dataio=`ls -1 io | grep -v Makefile | grep -v CVS`
-dataio=`echo $dataio`
+	dataanalog=`ls -1 $srcdir/analog | grep -v Makefile | grep -v CVS`
+	dataanalog=`echo $dataanalog`
+ 
 
-dataanalog=`ls -1 analog | grep -v Makefile | grep -v CVS`
-dataanalog=`echo $dataanalog`
+	datamaxim=`ls -1 $srcdir/maxim | grep -v Makefile | grep -v CVS`
+	datamaxim=`echo $datamaxim`
+ 
 
-datamaxim=`ls -1 maxim | grep -v Makefile | grep -v CVS`
-datamaxim=`echo $datamaxim`
+	dataverilog=`ls -1 $srcdir/verilog | grep -v Makefile | grep -v CVS`
+	dataverilog=`echo $dataverilog`
+ 
 
-dataverilog=`ls -1 verilog | grep -v Makefile | grep -v CVS`
-dataverilog=`echo $dataverilog`
+	dataspice=`ls -1 $srcdir/spice | grep -v Makefile | grep -v CVS`
+	dataspice=`echo $dataspice`
+ 
 
-dataspice=`ls -1 spice | grep -v Makefile | grep -v CVS`
-dataspice=`echo $dataspice`
+	dataconnector=`ls -1 $srcdir/connector | grep -v Makefile | grep -v CVS`
+	dataconnector=`echo $dataconnector`
+ 
 
-dataconnector=`ls -1 connector | grep -v Makefile | grep -v CVS`
-dataconnector=`echo $dataconnector`
+	dataaltera=`ls -1 $srcdir/altera | grep -v Makefile | grep -v CVS`
+	dataaltera=`echo $dataaltera`
+ 
 
-dataaltera=`ls -1 altera | grep -v Makefile | grep -v CVS`
-dataaltera=`echo $dataaltera`
+	datalinear=`ls -1 $srcdir/linear | grep -v Makefile | grep -v CVS`
+	datalinear=`echo $datalinear`
+ 
 
-datalinear=`ls -1 linear | grep -v Makefile | grep -v CVS`
-datalinear=`echo $datalinear`
+	dataswitch=`ls -1 $srcdir/switch | grep -v Makefile | grep -v CVS`
+	dataswitch=`echo $dataswitch`
+ 
 
-dataswitch=`ls -1 switch | grep -v Makefile | grep -v CVS`
-dataswitch=`echo $dataswitch`
+	datatitleblock=`ls -1 $srcdir/titleblock | grep -v Makefile | grep -v CVS`
+	datatitleblock=`echo $datatitleblock`
+ 
 
-datatitleblock=`ls -1 titleblock | grep -v Makefile | grep -v CVS`
-datatitleblock=`echo $datatitleblock`
+	datatube=`ls -1 $srcdir/tube | grep -v Makefile | grep -v CVS`
+	datatube=`echo $datatube`
+ 
 
-datatube=`ls -1 tube | grep -v Makefile | grep -v CVS`
-datatube=`echo $datatube`
+	dataradio=`ls -1 $srcdir/radio | grep -v Makefile | grep -v CVS`
+	dataradio=`echo $dataradio`
+ 
 
-dataradio=`ls -1 radio | grep -v Makefile | grep -v CVS`
-dataradio=`echo $dataradio`
+	datamicro=`ls -1 $srcdir/micro | grep -v Makefile | grep -v CVS`
+	datamicro=`echo $datamicro`
+ 
 
-datamicro=`ls -1 micro | grep -v Makefile | grep -v CVS`
-datamicro=`echo $datamicro`
+	datamemory=`ls -1 $srcdir/memory | grep -v Makefile | grep -v CVS`
+	datamemory=`echo $datamemory`
+ 
 
-datamemory=`ls -1 memory | grep -v Makefile | grep -v CVS`
-datamemory=`echo $datamemory`
+	data74=`ls -1 $srcdir/74 | grep -v Makefile | grep -v CVS`
+	data74=`echo $data74`
+ 
 
-datamisc=`ls -1 misc | grep -v Makefile | grep -v CVS`
-datamisc=`echo $datamisc`
+	datasupervisor=`ls -1 $srcdir/supervisor | grep -v Makefile | grep -v CVS`
+	datasupervisor=`echo $datasupervisor`
+ 
 
-data74=`ls -1 74 | grep -v Makefile | grep -v CVS`
-data74=`echo $data74`
+	datalattice=`ls -1 $srcdir/lattice | grep -v Makefile | grep -v CVS`
+	datalattice=`echo $datalattice`
+ 
 
-databus=`ls -1 bus | grep -v Makefile | grep -v CVS`
-databus=`echo $databus`
+	datamisc=`ls -1 $srcdir/misc | grep -v Makefile | grep -v CVS`
+	datamisc=`echo $datamisc`
+ 
 
-datasupervisor=`ls -1 supervisor | grep -v Makefile | grep -v CVS`
-datasupervisor=`echo $datasupervisor`
+	dataxilinx=`ls -1 $srcdir/xilinx | grep -v Makefile | grep -v CVS`
+	dataxilinx=`echo $dataxilinx`
+ 
 
-datalattice=`ls -1 lattice | grep -v Makefile | grep -v CVS`
-datalattice=`echo $datalattice`
+	datadec=`ls -1 $srcdir/dec | grep -v Makefile | grep -v CVS`
+	datadec=`echo $datadec`
+ 
 
-dataxilinx=`ls -1 xilinx | grep -v Makefile | grep -v CVS`
-dataxilinx=`echo $dataxilinx`
+	datarf=`ls -1 $srcdir/rf | grep -v Makefile | grep -v CVS`
+	datarf=`echo $datarf`
+ 
 
-datadec=`ls -1 dec | grep -v Makefile | grep -v CVS`
-datadec=`echo $datadec`
+	datapla=`ls -1 $srcdir/pla | grep -v Makefile | grep -v CVS`
+	datapla=`echo $datapla`
+ 
 
-datarf=`ls -1 rf | grep -v Makefile | grep -v CVS`
-datarf=`echo $datarf`
+	datafoot=`ls -1 $srcdir/foot | grep -v Makefile | grep -v CVS`
+	datafoot=`echo $datafoot`
+ 
 
-datapla=`ls -1 pla | grep -v Makefile | grep -v CVS`
-datapla=`echo $datapla`
+	dataIEC417=`ls -1 $srcdir/IEC417 | grep -v Makefile | grep -v CVS`
+	dataIEC417=`echo $dataIEC417`
+ 
 
-datafoot=`ls -1 foot | grep -v Makefile | grep -v CVS`
-datafoot=`echo $datafoot`
+	datafont=`ls -1 $srcdir/font | grep -v Makefile | grep -v CVS`
+	datafont=`echo $datafont`
+ 
 
-dataIEC417=`ls -1 IEC417 | grep -v Makefile | grep -v CVS`
-dataIEC417=`echo $dataIEC417`
-
-datafont=`ls -1 font | grep -v Makefile | grep -v CVS`
-datafont=`echo $datafont`
-
-dataidt=`ls -1 idt | grep -v Makefile | grep -v CVS`
-dataidt=`echo $dataidt`
+	dataidt=`ls -1 $srcdir/idt | grep -v Makefile | grep -v CVS`
+	dataidt=`echo $dataidt`
+ 
 
 symdir=$gedatopdir/sym
 sourcedir=$gedatopdir/source
