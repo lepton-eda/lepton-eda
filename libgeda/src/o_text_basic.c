@@ -802,8 +802,8 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[],
 	}
 
         if (size == 0) {
-                fprintf(stderr, "Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
-                s_log_message("Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
+                fprintf(stderr, "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
+                s_log_message("Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
         }
 
 	switch(angle) {
@@ -815,12 +815,33 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[],
 		break;
 
 		default:
-                	fprintf(stderr, "Found an unsupported text angle [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
-                	s_log_message("Found an unsupported text angle [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
+                	fprintf(stderr, "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
+                	s_log_message("Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
                 	s_log_message("Setting angle to 0\n");
 			angle=0;
 		break;
 
+	}
+
+	switch(alignment) {
+		case(LOWER_LEFT):	
+		case(MIDDLE_LEFT):	
+		case(UPPER_LEFT):	
+		case(LOWER_MIDDLE):	
+		case(MIDDLE_MIDDLE):	
+		case(UPPER_MIDDLE):	
+		case(LOWER_RIGHT):	
+		case(MIDDLE_RIGHT):	
+		case(UPPER_RIGHT):	
+			
+		break;
+		
+		default:
+                	fprintf(stderr, "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
+                	s_log_message("Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle, alignment);
+                	s_log_message("Setting alignment to LOWER_LEFT\n");
+			alignment = LOWER_LEFT; 
+		break;
 	}
 
 	object_list = o_text_add(w_current, object_list, type, color, x, y, 
