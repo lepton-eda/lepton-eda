@@ -119,7 +119,7 @@ if (!quiet_mode) {
 				printf("Loading schematic [%s]\n", argv[i]);
 			}
 			if ( (f_open(pr_current, 
-				     pr_current->page_current->page_filename) == 0) {
+				     pr_current->page_current->page_filename)) == 0) {
 				fprintf(stderr,"Couldn't load schematic [%s]\n",
 					pr_current->page_current->page_filename);
 			}
@@ -133,7 +133,7 @@ if (!quiet_mode) {
 }
 			if (!s_page_new(pr_current, argv[i])) {
 				if ( (f_open(pr_current, 
-					     pr_current->page_current->page_filename) == 0) {
+					     pr_current->page_current->page_filename)) == 0) {
 					fprintf(stderr,"Couldn't load schematic [%s]\n",
 						pr_current->page_current->page_filename);
 			}
