@@ -644,7 +644,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   SELECTION *s_current = NULL;
   GList *combo_items = NULL;
   char* string = NULL;
-  int nsel=0, i;
+  int nsel=0, i, len;
   char name[1024], val[1024]; /* hack size */
   OBJECT *attrib = NULL;
   
@@ -904,6 +904,11 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_object_set_data(GTK_OBJECT(aewindow), "attrib", attrib);
   gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
   gtk_entry_set_text(GTK_ENTRY(value_entry), val);
+  len = strlen(val);
+  if (len) {
+    gtk_entry_select_region(GTK_ENTRY(value_entry),
+                              0, len);
+  }
   gtk_object_set_data(GTK_OBJECT(aewindow), "invocation_flag",
                       (gpointer) flag);
   
