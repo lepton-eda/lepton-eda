@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * libgeda - include files
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2004 Ales V. Hvezda
  *
  * You should have received a copy of the GNU Library General Public
  * License along with this library; if not, write to the

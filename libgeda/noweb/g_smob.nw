@@ -24,7 +24,7 @@
 
 <<g_smob.c : copyright and license>>=
 /* -*- geda-c -*-
- * gEDA - GNU Electronic Design Automation
+ * gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
