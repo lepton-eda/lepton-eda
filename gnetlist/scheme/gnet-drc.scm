@@ -19,60 +19,74 @@
 
 ;; --------------------------------------------------------------------------
 ;;
-;; Bill of Material backend written by Matt Ettus starts here
+;; DRC backend written by Matt Ettus starts here
 ;;
 
-;;; Bill Of Materials Generator
-;;; You must have a file called attribs in the pwd
-;;; The file should be a text list of attributes you want listed,
-;;; One per line.  No comments are allowed in the file.
-;;; Questions? Contact matt@ettus.com
-;;; This software is released under the terms of the GNU GPL
+;; DRC rules format:  (list (part rules) (net rules) (pin rules))
+;; Part rules:  List of predicates of one variable, uref
+;; Net rules:  List of predicates of one variable, net name
+;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
-(define bom
+(define drc
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename))
-	  (attriblist (bom:parseconfig (open-input-file "attribs"))))
-      (bom:printlist (cons 'package attriblist) port)
-      (bom:components port packages attriblist))))
+	(newline)
+   ))
 
-(define bom:printlist
+;;(define drc
+  ;;(lambda (output-filename)
+    ;;(let ((port (open-output-file output-filename))
+	  ;;(attriblist (drc:parseconfig (open-input-file "attribs"))))
+      ;;(drc:printlist (cons 'package attriblist) port)
+      ;;(drc:components port packages attriblist))))
+
+(define drc:has-attribute
+  (lambda (attribute)
+    (lambda (uref)
+      (gnetlist:get-package-attribute uref attribute))))
+
+(define drc:attriblist
+  (list "uref" "device" "footprint" "value"))
+
+(define drc:device-preds
+  (for-each drc:has-attribute drc:attriblist))
+
+
+(define drc:printlist
   (lambda (ls port)
     (if (null? ls)
 	(newline port)
 	(begin
 	  (display (car ls) port)
 	  (write-char #\tab port)
-	  (bom:printlist (cdr ls) port)))))
+	  (drc:printlist (cdr ls) port)))))
 
-;;  Change courtesy of Stefan.  Gets red of strip1
-(define bom:parseconfig
+(define drc:parseconfig
   (lambda (port)
     (let ((read-from-file (read port)))
       (if (not (eof-object? read-from-file))
-          (cons read-from-file (bom:parseconfig port))
+          (cons read-from-file (drc:parseconfig port))
           '()))))
 
-(define bom:components
+(define drc:components
   (lambda (port ls attriblist)
     (if (not (null? ls))
 	(let ((package (car ls)))
-          (if (not (string=? "1" (gnetlist:get-package-attribute package "nobom")))
+          (if (not (string=? "1" (gnetlist:get-package-attribute package "nodrc")))
 	    (begin
               (display package port)
 	      (write-char #\tab port)
-              (bom:printlist (bom:find-attribs package attriblist) port)))
-	  (bom:components port (cdr ls) attriblist)))))
+              (drc:printlist (drc:find-attribs package attriblist) port)))
+	  (drc:components port (cdr ls) attriblist)))))
 
-(define bom:find-attribs
+(define drc:find-attribs
   (lambda (package attriblist)
     (if (null? attriblist)
 	'()
 	(cons (gnetlist:get-package-attribute package (car attriblist))
-	      (bom:find-attribs package (cdr attriblist))))))
+	      (drc:find-attribs package (cdr attriblist))))))
 
 ;;
-;; Bill of Material backend written by Matt Ettus ends here
+;; DRC backend written by Matt Ettus ends here
 ;;
 ;; --------------------------------------------------------------------------
 
