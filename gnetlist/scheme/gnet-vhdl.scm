@@ -101,64 +101,75 @@
 ;;;    support, this too may be conveyed using attributes.
 ;;;
 
-(define vhdl:write-port-clause
-  (lambda (port-list p)
-    (begin
-      (let ((in    (car port-list))
-	    (out   (cadr port-list))
-	    (inout (caddr port-list)))
-	(begin (if (not (or (null? in) (null? out) (null? inout)))
-		   (begin
-		     (display "    PORT (" p)
-		     (newline p)
-		     (if (not (null? in))
-			 (begin
-			   (display "         " p)
-			   (display (car in) p)
-			   (display " : in StdLogic" p)
-			   (if (not (null? inout))
-			       (if (not (null? (cdr in)))
-				   (for-each (lambda (pin)
-					       (begin
-						 (display ";" p)
-						 (newline p)
-						 (display "         " p)
-						 (display pin p)
-						 (display " : in StdLogic" p)
-						 (cdr in))) in)
-				   )
-			       )
-			   (if (not (null? inout))
-			       (if (not (null? (cdr out)))
-				   (for-each (lambda (pin)
-					       (begin
-						 (display ";" p)
-						 (newline p)
-						 (display "         " p)
-						 (display pin p)
-						 (display " : out StdLogic" p)
-						 (cdr out))) out)
-				   )
-			       )
-			   (if (not (null? inout))
-			       (if (not (null? (cdr inout)))
-				   (for-each (lambda (pin)
-					       (begin
-						 (display ";" p)
-						 (newline p)
-						 (display "         " p)
-						 (display pin p)
-						 (display " : inout StdLogic" p)
-						 (cdr inout))) inout)
-				   )
-			       )
-			   (display ");" p)
-			   (newline p)
-			   )
+;;; This little routine writes a single pin on the port clause.
+;;; It assumes a list containing (portname, mode, type) such as
+;;; (CLK in Std_Logic).
+
+(define vhdl:write-port
+  (lambda (port p)
+    (if (not (null? port))
+	(begin
+	  (display (car port) p)
+	  (display " : " p)
+	  (display (cadr port) p)
+	  (display " " p)
+	  (display (caddr port) p)
+	)
+    )
+  )
+)
+
+;;; This little routine will actually write the full port clause given a list
+;;; of pins, such as ((CLK in Std_Logic) (D in Std_Logic) (Q out Std_Logic))
+
+(define vhdl:write-port-list
+  (lambda (list p)
+    (if (not (null? list))
+	(begin
+	  (display "    PORT (" p)
+	  (newline p)
+	  (display "        " p)
+	  (display (car list))
+	  (vhdl:write-port (car list) p)
+	  (for-each (lambda (pin)
+		      (begin
+			(display ";" p)
+			(newline p)
+			(display "        " p)
+			(vhdl:write-port pin p)
 		      )
 		    )
-	  )
+		    (cdr list))
+	  (display ");" p)
+	  (newline p)
 	)
+    )
+  )
+)
+
+;;; This is the real thing. It will take a port-list arrangement.
+;;;
+;;; The port-list is a list containing three list:
+;;;  (in-port-list, out-port-list, inout-port-list)
+;;;
+;;; These lists will be transformed into a single list containing the full
+;;; pin information. Currently is this done with hardwired to Std_Logic.
+
+(define vhdl:write-port-clause
+  (lambda (port-list p)
+    (let ((in (car port-list))
+	  (out (cadr port-list))
+	  (inout (caddr port-list)))
+      (vhdl:write-port-list
+        (append
+	  (map (lambda (pin)
+		      (list pin "in" "Std_Logic")) in)
+	  (map (lambda (pin)
+		      (list pin "out" "Std_Logic")) out)
+	  (map (lambda (pin)
+		      (list pin "inout" "Std_Logic")) inout)
+	)
+	p
       )
     )
   )
@@ -301,7 +312,7 @@
 ;;;    Currently will the identifier list be reduced to a single entry.
 ;;;    There is no support for either register or bus type of signal kind.
 ;;;    Further, no default expression is being supported.
-;;;    The subtype indication is hardwired to StdLogic.
+;;;    The subtype indication is hardwired to Std_Logic.
 
 (define vhdl:write-signal-declarations
   (lambda (p)
@@ -311,7 +322,7 @@
 	 (begin
 	   (display "    SIGNAL " p)
 	   (display signal p)
-	   (display " : StdLogic;" p)
+	   (display " : Std_Logic;" p)
 	   (newline p)
 	 )
        )
@@ -639,6 +650,10 @@
 (define vhdl:write-context-clause
   (lambda (p)
     (display "-- Context clause" p)
+    (newline p)
+    (display "library IEEE;" p)
+    (newline p)
+    (display "use IEEE.Std_Logic_1164.all;" p)
     (newline p)
   )
 )
