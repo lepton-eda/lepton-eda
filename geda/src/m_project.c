@@ -19,6 +19,7 @@
 /*                                                                             */
 /*******************************************************************************/
 
+#define GTK_ENABLE_BROKEN
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>

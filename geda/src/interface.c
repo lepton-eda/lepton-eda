@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <string.h>
 
+#define GTK_ENABLE_BROKEN
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -102,7 +103,7 @@ create_MainWindow (void)
   gtk_object_set_data_full (GTK_OBJECT (MainWindow), "MenuProject_menu", MenuProject_menu,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (MenuProject), MenuProject_menu);
-  MenuProject_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (MenuProject_menu));
+/*  MenuProject_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (MenuProject_menu));*/
 
   MenuProjectNew = gtk_menu_item_new_with_label (_("New"));
   gtk_widget_ref (MenuProjectNew);
@@ -159,7 +160,7 @@ create_MainWindow (void)
   gtk_object_set_data_full (GTK_OBJECT (MainWindow), "MenuFile_menu", MenuFile_menu,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (MenuFile), MenuFile_menu);
-  MenuFile_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (MenuFile_menu));
+/*  MenuFile_menu_accels = gtk_menu_ensure_uline_accel_group (GTK_MENU (MenuFile_menu));*/
 
   MenuFileEdit = gtk_menu_item_new_with_label (_("Edit"));
   gtk_widget_ref (MenuFileEdit);

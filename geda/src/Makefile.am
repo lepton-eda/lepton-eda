@@ -1,12 +1,6 @@
-## Process this file with automake to produce Makefile.in
+# gManager Makefile.am
 
-## Created by Anjuta - will be overwritten
-## If you don't want it to overwrite it,
-## 	Please disable it in the Anjuta project configuration
-
-INCLUDES = \
-	$(GTK_CFLAGS)\
-	 -I./ -I$(top_srcdir)/intl
+INCLUDES = @GMANAGER_CFLAGS@ -I./ -I$(top_srcdir)/intl
 
 localedir = @datadir@/locale
 DEFS = -DPACKAGE_LOCALE_DIR=\"$(localedir)\" @DEFS@
@@ -62,13 +56,11 @@ geda_SOURCES = \
 	window.h\
 	window.c
 
-geda_LDFLAGS =
+geda_LDFLAGS = @GMANAGER_LDFLAGS@
 
-geda_LDADD =  \
-	$(GTK_LIBS)
+geda_LDADD = @GTK_LIBS@
 
 MOSTLYCLEANFILES = *.log *~ geda
 CLEANFILES = *.log *~ geda
 DISTCLEANFILES = *.log core FILE *~ prototype.bak geda
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda
-

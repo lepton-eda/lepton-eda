@@ -1,7 +1,6 @@
+# GraphMan Makefile.am
 
-INCLUDES = \
-	$(GTK_CFLAGS)\
-	 -I./ -I$(top_srcdir)/intl
+INCLUDES = @GMANAGER_CFLAGS@ -I./ -I$(top_srcdir)/intl
 
 localedir = @datadir@/locale
 DEFS = -DPACKAGE_LOCALE_DIR=\"$(localedir)\" @DEFS@
@@ -42,10 +41,9 @@ graphman_SOURCES = \
 	value.h
 
 	
-graphman_LDFLAGS =
+graphman_LDFLAGS = @GMANAGER_LDFLAGS@
 
-graphman_LDADD =  \
-	$(GTK_LIBS)
+graphman_LDADD = @GTK_LIBS@
 
 MOSTLYCLEANFILES = *.log *~ graphman
 CLEANFILES = *.log *~ graphman

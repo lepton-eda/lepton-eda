@@ -28,6 +28,15 @@
 
 
 
+
+#if (HAS_GTK22 == 1)
+#define DIALOG_MODE         GTK_DIALOG_MODAL
+#else
+#define DIALOG_MODE         GTK_WINDOW_DIALOG
+#endif
+
+
+
 /* 
 	Additional message button defines used only locally
 */
@@ -209,7 +218,7 @@ static void MsgBoxCreate(void)
 	}
 	
 	/* create window */
-	pWindow = GTK_WINDOW(gtk_window_new(GTK_WINDOW_DIALOG));
+	pWindow = GTK_WINDOW(gtk_window_new(DIALOG_MODE));
 	iWidth = (iNumber > 3 ? iNumber : 4) * (MSGBOX_BTN_WIDTH + 2 * MSGBOX_BTN_BORDER);
 	iHeight = 150 - (iNumber == 0 ? MSGBOX_BTN_HEIGHT + 2 * MSGBOX_BTN_BORDER : 0);
 	gtk_widget_set_usize(GTK_WIDGET(pWindow), iWidth, iHeight);
