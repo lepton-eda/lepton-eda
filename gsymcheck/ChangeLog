@@ -1,6 +1,16 @@
 2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* src/s_check.c: Changed exit status again to be sane not stupid. :)
+	* src/s_check.c: Changed exit status again to be sane not
+	stupid. :)
+
+	* src/gsymcheck.c: Fixed the "cannot open filename if using a full
+	path" bug
+
+	* src/gsymcheck.c: Change behavior if a file cannot be
+	found/loaded.  Now gsymcheck will exit on this error
+
+	* src/s_check.c: Added a little bit more info output for some of 
+	the tests
 
 2002-08-16 Ales Hvezda   <ahvezda@geda.seul.org>
 

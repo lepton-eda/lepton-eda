@@ -52,6 +52,7 @@ main_prog(int argc, char *argv[])
   int argv_index;
   int first_page=1;
   int exit_status;
+  int fopen_status;
   char *cwd;
   int status;
   struct stat buf;
@@ -105,6 +106,8 @@ main_prog(int argc, char *argv[])
     
     if (stat(argv[i], &buf) != 0) {
       s_log_message("Could not open [%s]\n", argv[i]);
+      s_log_message("Exiting...\n");
+      exit(2); // error      
     } else {
     
       if (first_page) {
@@ -116,13 +119,30 @@ main_prog(int argc, char *argv[])
         /* so, just set the filename and open the schematic */
         /* for the first page */
 
-        pr_current->page_current->page_filename =
-          u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, argv[i], NULL);
+
+#ifdef __MINGW32__
+        if (argv[i][1] == ':' && (argv[i][2] == PATH_SEPARATER_CHAR ||
+                                  argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) {
+#else
+        if (argv[i][0] == PATH_SEPARATER_CHAR) {
+#endif
+          pr_current->page_current->page_filename = u_basic_strdup(argv[i]);
+        } else {
+          pr_current->page_current->page_filename =
+            u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, argv[i], NULL);
+        }
 
         if (verbose_mode) {
           s_log_message("Loading file [%s]\n", argv[i]);
         }
-        f_open(pr_current, pr_current->page_current->page_filename);
+        fopen_status = f_open(pr_current,
+                              pr_current->page_current->page_filename);
+
+        if (!fopen_status) {
+          s_log_message("gsymcheck: Could not load [%s]\n", argv[i]);
+          s_log_message("Exiting...\n");
+          exit(2); // error 
+        }
         first_page = 0;
       } else {
 
@@ -132,7 +152,13 @@ main_prog(int argc, char *argv[])
           s_log_message("Loading file [%s]\n", argv[i]);
         }
         if (!s_page_new(pr_current, argv[i])) {
-          f_open(pr_current, pr_current->page_current->page_filename);
+          fopen_status = f_open(pr_current,
+                                pr_current->page_current->page_filename);
+          if (!fopen_status) {
+            s_log_message("gsymcheck: Could not load [%s]\n", argv[i]);
+            s_log_message("Exiting...\n");
+            exit(2); // error 
+          }
         }
       }
     }
@@ -146,10 +172,11 @@ main_prog(int argc, char *argv[])
 
   free(cwd);
 
+  logging_dest=STDOUT_TTY;
+
 #if DEBUG 
   s_page_print_all(pr_current);
 #endif
-  logging_dest=STDOUT_TTY;
   
   if (!quiet_mode) s_log_message("\n");
 

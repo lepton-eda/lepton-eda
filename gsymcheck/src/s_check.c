@@ -1060,10 +1060,18 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
     if (o_current->type == OBJ_TEXT)
     {
       if (strstr(o_current->text->string, "footprint=")) {
+        message = u_basic_strdup_multiple("Found ", o_current->text->string, 
+                                          " attribute\n", NULL);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+                                               message);
         s_current->found_footprint++;
       }
 
       if (strstr(o_current->text->string, "refdes=")) {
+        message = u_basic_strdup_multiple("Found ", o_current->text->string, 
+                                          " attribute\n", NULL);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+                                               message);
         s_current->found_refdes++;
       }
 
