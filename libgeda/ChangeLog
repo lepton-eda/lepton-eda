@@ -16,6 +16,10 @@ Most recent changes are at the top of this file
 	* src/o_text.c: Added missing alignment field to some of the other
 	  warning messages in o_text_read
 
+	* src/u_basic.c: Added u_basic_breakup_string 
+
+	* include/struct.h: Added raise_dialog_boxes to TOPLEVEL structure
+
 2000-04-15  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_complex.c: Renamed o_complex_return_pin to 

@@ -497,6 +497,8 @@ struct st_toplevel {
 	int fast_mousepan;	/* controls if text is completely drawn */
 				/* during mouse pan */
 
+	int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
+
 	int print_output_type;			/* either window or limits */
 
 	int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */

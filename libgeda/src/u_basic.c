@@ -82,3 +82,59 @@ u_basic_strdup_multiple(const char *str, ...)
 
 	return all;
 }
+
+/* delimiters are , or space */
+/* count starts at zero */
+char *
+u_basic_breakup_string(char *string, int count)
+{
+	int i=0, j=0;
+	int internal_counter=0;
+	int done=FALSE;
+	char *return_value;
+
+	/* skip over any leading white space */
+	while(string[i] == ' ' && !string[i]) {
+		i++;
+	}
+
+	/* this is going to be extra large, but it's only for temp usage */
+	/* anyway */
+	return_value = malloc(sizeof(char)*strlen(string));
+
+	while(!done) {
+
+		/* oops, ran out of string before we found what we were */
+		/* looking for */
+		if (i > strlen(string)) {
+			free(return_value);
+			return(NULL);
+		}
+
+		/* skip over any leading white space */
+		while(string[i] == ' ' && string[i] != '\0') {
+			i++;
+		}
+
+		j = 0;
+
+/* Old forgiving parsing */
+/*		while(string[i] != ',' && string[i] != ';' && */
+/*		      string[i] != ' ' && string[i] != '\0') {*/
+
+		while(string[i] != ',' && string[i] != '\0') {
+			return_value[j] = string[i];
+			i++; j++;
+		}
+
+		if (internal_counter == count)  { 
+			done = TRUE;	
+		} else {
+			internal_counter++;
+			i++; /* skip the offending character */
+		}
+	}
+
+	return_value[j] = '\0';
+	return(return_value);
+}

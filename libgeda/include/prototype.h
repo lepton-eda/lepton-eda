@@ -453,3 +453,4 @@ void s_slib_print_dirs(void);
 /* u_basic.c */
 char *u_basic_strdup(const char *p);
 char *u_basic_strdup_multiple(const char *str, ...);
+char *u_basic_breakup_string(char *string, int count);
