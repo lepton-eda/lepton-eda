@@ -23,3 +23,4 @@ tgz: dvi ps pdf html
 clean:
 	rm -f $(docname).aux $(docname).dvi $(docname).log \
 	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz
+	rm -rf $(docname)

@@ -646,6 +646,7 @@ void o_undo_cleanup(void);
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* x_attribedit.c */
+gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
@@ -668,16 +669,6 @@ GdkColor *x_get_darkcolor(int color);
 int x_color_get_name(int index, char *string);
 /* x_dialog.c */
 void destroy_window(GtkWidget *widget, GtkWidget **window);
-void multi_attrib_edit_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-char *multi_attrib_edit_parser(GtkWidget *w, char **text, int *vis, int *show);
-void multi_attrib_edit_set_values(GtkWindow *window, OBJECT *attrib);
-void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
-void multi_attrib_edit_select_row(GtkCList *clist, gint row, gint col, GdkEventButton *event, TOPLEVEL *w_current);
-void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit(TOPLEVEL *w_current, SELECTION *list);
 void text_input_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
@@ -818,6 +809,7 @@ gint image_1280(GtkWidget *w, TOPLEVEL *w_current);
 gint image_1600(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
+void x_image_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_image_setup(TOPLEVEL *w_current, char *filename);
 /* x_log.c */
 void x_log_init(char *cwd, char *filename);
@@ -832,6 +824,17 @@ void get_main_menuORIG(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
+/* x_multiattrib.c */
+void multi_attrib_edit_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
+char *multi_attrib_edit_parser(GtkWidget *w, char **text, int *vis, int *show);
+void multi_attrib_edit_set_values(GtkWindow *window, OBJECT *attrib);
+void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
+void multi_attrib_edit_select_row(GtkCList *clist, gint row, gint col, GdkEventButton *event, TOPLEVEL *w_current);
+void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
+void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
+void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
+void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
+void multi_attrib_edit(TOPLEVEL *w_current, SELECTION *list);
 /* x_multimulti.c */
 /* x_pagesel.c */
 void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);
@@ -841,6 +844,8 @@ gint file_open(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint page_close(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint page_discard(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint change_page(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent);
+gint page_manager_close(GtkWidget *w, TOPLEVEL *w_current);
+void page_manager_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void setup_page_selector(TOPLEVEL *w_current);
 /* x_preview.c */
 void x_preview_update(TOPLEVEL *preview, char *directory, char *filename);
@@ -859,6 +864,7 @@ gint x_print_set_limits(GtkWidget *w, TOPLEVEL *w_current);
 gint x_print_change_size(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint x_print_print(GtkWidget *w, TOPLEVEL *w_current);
 gint x_print_cancel(GtkWidget *w, TOPLEVEL *w_current);
+void x_print_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_print_setup(TOPLEVEL *w_current, char *filename);
 /* x_script.c */
 void script_selection_ok(GtkWidget *w, TOPLEVEL *w_current);
