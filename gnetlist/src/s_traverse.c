@@ -396,7 +396,11 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	new_net = nets = s_net_add(nets);
 	new_net->nid = object->sid;
 
-	new_net->net_name = o_attrib_search_name_single(o_current, "label", NULL);
+
+	/* Pins are NOT allowed to supply the label= attribute */
+	if (o_current->type != OBJ_PIN) {
+		new_net->net_name = o_attrib_search_name_single(o_current, "label", NULL);
+	}
 
 #if DEBUG
 	printf("inside traverse: %s\n", object->name);
