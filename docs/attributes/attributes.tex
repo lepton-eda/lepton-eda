@@ -171,7 +171,8 @@ If a component has multiple slots in a physical package (such as a 7400
 (NAND) which has 4 NANDs per package) then you need a {\bf numslots}=\#
 attribute.  The \# is the number of slots that are in a physical device.
 {\bf numslots}=\# should exist somewhere in the symbol and be made
-invisible.  This is a free standing or floating  attribute.
+invisible.  This is a free standing or floating attribute.  If the symbol
+does not need slotting, then put {\bf numslots}=0 into the symbol file.
 
 Example: \texttt{numslots=4}
 
