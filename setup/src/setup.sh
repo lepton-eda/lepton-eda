@@ -6,7 +6,7 @@
 GTK_VERSION=1.2.4
 
 # this should be derrived from Makefile
-VERSION=20030223
+VERSION=20030514
 CD_VERSION=-${VERSION}
 DIR_PREFIX=geda-
 
