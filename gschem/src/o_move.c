@@ -96,6 +96,7 @@ o_move_end(TOPLEVEL *w_current)
 			case(OBJ_LINE):
 
 				o_line_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_line_draw_xor(w_current, 
@@ -115,6 +116,8 @@ o_move_end(TOPLEVEL *w_current)
 			case(OBJ_NET):
 				/*o_net_conn_erase(w_current, object); */
 				o_net_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
+
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_net_draw_xor(w_current, 
 						       screen_diff_x, 
@@ -141,6 +144,8 @@ o_move_end(TOPLEVEL *w_current)
 
 				o_bus_conn_erase(w_current, object);
 				o_bus_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
+
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_bus_draw_xor(w_current, 
 						       screen_diff_x, 
@@ -238,8 +243,11 @@ o_move_end(TOPLEVEL *w_current)
 			break;
 
 			case(OBJ_PIN):
+
 				o_pin_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 				o_pin_conn_erase(w_current, object);
+
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_pin_draw_xor(w_current, 
 						       screen_diff_x, 

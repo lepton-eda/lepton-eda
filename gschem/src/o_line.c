@@ -114,7 +114,22 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	(*draw_func)(w_current->backingstore, w_current->gc, color, line_end,
 				 x1, y1, x2, y2,
 				 line_width, length, space);
-	
+
+	if (o_current->draw_grips) {	
+		
+		if (!o_current->selected) {
+			/* erase the grips */
+			o_current->draw_grips = FALSE;
+			gdk_gc_set_foreground(w_current->gc, 
+				x_get_color(w_current->background_color));
+		} else {
+			gdk_gc_set_foreground(w_current->gc, color);
+		}
+
+		o_line_draw_grips(w_current, w_current->window, o_current);
+		o_line_draw_grips(w_current, w_current->backingstore, o_current);
+	}
+
 #if DEBUG
 	printf("drawing line\n");
 #endif
@@ -128,6 +143,7 @@ o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 				  gint line_width, gint length, gint space)
 {
 	gdk_gc_set_foreground(gc, color);
+
 	/* Set the width, end type and join style of the line */
 	gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
 				   cap, GDK_JOIN_MITER);
@@ -147,7 +163,7 @@ o_line_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	double xa, ya;
 
 	gdk_gc_set_foreground(gc, color);
-	
+
 	dx = (double) (x2 - x1);
 	dy = (double) (y2 - y1);
 	l = sqrt((dx * dx) + (dy * dy));
@@ -316,7 +332,7 @@ o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 
 	gdk_gc_set_foreground(gc, color);
 	gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
-							   cap, GDK_JOIN_MITER);
+				   cap, GDK_JOIN_MITER);
 
 	dx = (double) (x2 - x1);
 	dy = (double) (y2 - y1);
@@ -592,3 +608,67 @@ o_line_rubberline(TOPLEVEL *w_current, int x, int y)
 			w_current->last_x, w_current->last_y);
 }
 
+void
+o_line_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current) 
+{
+	int size, x2size;
+
+	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1); 
+	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2); 
+	} else {
+		size = SCREENabs(w_current, GRIP_SIZE3); 
+	}
+	x2size = size * 2;
+
+	/*printf("zf %d  size %d  x2 %d\n", w_current->page_current->zoom_factor, size, x2size); */
+
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		o_current->line->screen_x[0] - size, 
+		o_current->line->screen_y[0] - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		o_current->line->screen_x[1] - size, 
+		o_current->line->screen_y[1] - size,
+		x2size, x2size);
+}
+
+void
+o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+{
+	int size, x2size;
+
+	gdk_gc_set_foreground(w_current->gc, 
+			      x_get_color(w_current->background_color));
+
+	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1); 
+	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2); 
+	} else {
+		size = SCREENabs(w_current, GRIP_SIZE3); 
+	}
+	x2size = 2 * size;
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		o_current->line->screen_x[0] - size, 
+		o_current->line->screen_y[0] - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		o_current->line->screen_x[1] - size, 
+		o_current->line->screen_y[1] - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		o_current->line->screen_x[0] - size, 
+		o_current->line->screen_y[0] - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		o_current->line->screen_x[1] - size, 
+		o_current->line->screen_y[1] - size,
+		x2size, x2size);
+}

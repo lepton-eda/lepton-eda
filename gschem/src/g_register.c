@@ -172,8 +172,10 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-rotate-90-hotkey", g_key_edit_rotate_90_hotkey);
 	gh_new_procedure0_0 ("edit-mirror", g_key_edit_mirror);
 	gh_new_procedure0_0 ("edit-mirror-hotkey", g_key_edit_mirror_hotkey);
+#if 0 /* Obsolete */
 	gh_new_procedure0_0 ("edit-stretch", g_key_edit_stretch);
 	gh_new_procedure0_0 ("edit-stretch-hotkey", g_key_edit_stretch_hotkey);
+#endif
 	gh_new_procedure0_0 ("edit-slot", g_key_edit_slot);
 	gh_new_procedure0_0 ("edit-color", g_key_edit_color);
 	gh_new_procedure0_0 ("edit-edit", g_key_edit_edit);

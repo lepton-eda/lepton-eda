@@ -114,12 +114,21 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		switch(w_current->event_state) {
 
 		case(SELECT):
-			w_current->event_state = STARTSELECT;
-			w_current->start_x = w_current->last_x =
-				(int) event->x;
-			w_current->start_y = w_current->last_y =
-				(int) event->y;
-			break;
+			/* first look for grips */
+			if (!o_grips_start(
+				w_current, (int) event->x, (int) event->y)) {
+				/* now go into normal SELECT */
+				w_current->event_state = STARTSELECT;
+				w_current->start_x = w_current->last_x =
+						(int) event->x;
+				w_current->start_y = w_current->last_y =
+						(int) event->y;
+			} else {
+				/* an grip was found */
+				w_current->event_state = GRIPS;
+				w_current->inside_action = 1;
+			}
+                        break;
 
 		case(STARTCOPY):
 			if (o_select_selected(w_current)) {
@@ -148,6 +157,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			w_current->inside_action = 1;
 			break;
 
+#if 0 /* obsolete */
 		case(STARTSTRETCH):
 			/* make sure the list is not empty */
 			if (o_select_selected(w_current)) {
@@ -164,6 +174,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				}
 			}
                         break;       
+#endif
 
 		case(DRAWLINE):
 			o_line_start(w_current,
@@ -539,6 +550,13 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			w_current->event_state = ENDSTRETCH;
 			break;
 
+		case(GRIPS):
+			o_grips_end(w_current), 
+			w_current->event_state = SELECT;
+			i_update_status(w_current, "Select Mode");
+			w_current->inside_action = 0;
+			break;
+
 		case(ENDMOVE):
 			o_move_end(w_current);
 			/* having this stay in copy was driving me nuts*/
@@ -555,6 +573,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			w_current->inside_action = 0;
 			break;
 
+#if 0 /* obsolete */
 		case(ENDSTRETCH):
 			o_stretch_end(w_current);
 			/* having this stay in copy was driving me nuts*/
@@ -562,6 +581,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			i_update_status(w_current, "Select Mode");
 			w_current->inside_action = 0;
 			break;
+#endif
 
 		case(SBOX):
 			/* fix_x,y was removed to allow more flex */
@@ -590,9 +610,21 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                         break;
 
 		case(STARTSELECT):
-			o_find_object(w_current, (int) event->x, (int) event->y);
-			w_current->event_state = SELECT;
-			w_current->inside_action = 0;
+
+			/* first look for grips */
+			if (!o_grips_start(
+				w_current, (int) event->x, (int) event->y)) {
+				/* now go looking for objects to select */
+				o_find_object(w_current, 
+					      (int) event->x, 
+					      (int) event->y);
+				w_current->event_state = SELECT;
+				w_current->inside_action = 0;
+			} else {
+				/* an grip was found */
+				w_current->event_state = GRIPS;
+				w_current->inside_action = 1;
+			}
                         break;
 
 		}
@@ -729,6 +761,10 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		/* do nothing */
 		break;
 
+	case(GRIPS):
+		o_grips_motion(w_current, (int) event->x, (int) event->y);
+		break;
+
 	case(ENDMOVE):
 	case(MOVE):
 		if (w_current->inside_action) {
@@ -745,6 +781,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		}
                 break;
 
+#if 0 /* obsolete */
 	case(ENDSTRETCH):
 	case(STRETCH):
 		if (w_current->inside_action) {
@@ -753,6 +790,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 			/* printf("inside stretch\n");*/
 		}
 		break;
+#endif
 
 	case(ENDCOPY):
 	case(COPY):

@@ -9,6 +9,33 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_line.c: Added code to draw grips 
+
+	* src/o_grips.c: Added new file which will contain code which deals
+	  with drawing grips
+
+	* src/x_event.c: Added calls to grip routines
+
+	* src/o_net.c: Added code to draw grips
+
+	* src/o_pin.c: Added code to draw grips
+
+	* src/o_bus.c: Added code to draw grips
+
+	* */*: Removed all calls to *stretch functions 
+
+	* src/x_dialog.c: Removed the file/component selection dialog box
+   	  from the "raise on expose event" 
+
+	* src/o_move.c: Added grip erase function calls to clean up any 
+	  droppings
+
+	* src/o_box.c: Added code to draw grips
+
+	* src/o_grips.c: Added support for box grips
+
 2000-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_arc.c: Renamed all d1 to length and d2 to space

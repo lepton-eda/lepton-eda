@@ -156,8 +156,10 @@ DEFINE_G_KEY(edit_rotate_90)
 DEFINE_G_KEY(edit_rotate_90_hotkey)
 DEFINE_G_KEY(edit_mirror)
 DEFINE_G_KEY(edit_mirror_hotkey)
+#if 0 /* obsolete */
 DEFINE_G_KEY(edit_stretch)
 DEFINE_G_KEY(edit_stretch_hotkey)
+#endif
 DEFINE_G_KEY(edit_slot)
 DEFINE_G_KEY(edit_color)
 DEFINE_G_KEY(edit_edit)

@@ -165,6 +165,7 @@ s_basic_init_object( char *name )
 	new_node->saved_color = -1;
 	new_node->selected = FALSE;
 	new_node->locked_color = -1;
+	new_node->draw_grips = FALSE;
 
 	new_node->action_func = error_if_called; 
 	new_node->sel_func = error_if_called; 

@@ -1304,35 +1304,16 @@ o_net_modify(TOPLEVEL *w_current, OBJECT *object,
 	int screen_x, screen_y;
 	int left, right, top, bottom;
 
-	switch(whichone) {
+	object->line->x[whichone] = x;
+	object->line->y[whichone] = y;
 
-	case(1):
-		object->line->x[0] = x;
-		object->line->y[0] = y;
-
-		WORLDtoSCREEN(w_current, 
-		              object->line->x[0], 
-			      object->line->y[0], 
-		  	      &screen_x, &screen_y);  
+	WORLDtoSCREEN(w_current, 
+	              object->line->x[whichone], 
+		      object->line->y[whichone], 
+	  	      &screen_x, &screen_y);  
 	
-		object->line->screen_x[0] = screen_x;
-		object->line->screen_y[0] = screen_y;
-		break;
-
-	case(2):
-		object->line->x[1] = x;
-		object->line->y[1] = y;
-
-		WORLDtoSCREEN(w_current, 
-		  	      object->line->x[1], 
-			      object->line->y[1], 
-		  	      &screen_x,
-                              &screen_y);  
-
-		object->line->screen_x[1] = screen_x;
-		object->line->screen_y[1] = screen_y;
-		break;
-	}
+	object->line->screen_x[whichone] = screen_x;
+	object->line->screen_y[whichone] = screen_y;
 
 	get_net_bounds(w_current, object->line, &left, &top, &right, &bottom);
 	

@@ -1097,3 +1097,28 @@ o_line_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 
 	o_line_translate_world(w_current, world_centerx, world_centery, object);
 }
+
+void
+o_line_modify(TOPLEVEL *w_current, OBJECT *object, 
+	     int x, int y, int whichone)
+{
+	int screen_x, screen_y;
+	int left, right, top, bottom;
+
+	object->line->x[whichone] = x;
+	object->line->y[whichone] = y;
+
+	WORLDtoSCREEN(w_current, 
+		      object->line->x[whichone], object->line->y[whichone], 
+		      &screen_x, &screen_y);  
+	
+	object->line->screen_x[whichone] = screen_x;
+	object->line->screen_y[whichone] = screen_y;
+
+	get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
+	
+	object->left = left;
+	object->top = top;
+	object->right = right;
+	object->bottom = bottom;	
+}

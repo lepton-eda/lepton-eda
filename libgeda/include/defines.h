@@ -56,6 +56,13 @@
 #define THIN            0     
 #define THICK           1
 
+/* For grip size */
+#define GRIP_SIZE1		25 
+#define GRIP_SIZE2		50 
+#define GRIP_SIZE3		80 
+#define SMALL_ZOOMFACTOR1	150 
+#define SMALL_ZOOMFACTOR2	30 
+
 #undef max
 #define max(a,b) ((a) > (b) ? (a) : (b))
 

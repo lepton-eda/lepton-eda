@@ -45,6 +45,17 @@
 
 #include "../include/prototype.h"
 
+/* Kazu on July 16, 1999 - Added these macros to simplify the code */
+#define GET_BOX_WIDTH(w)                        \
+        abs((w)->last_x - (w)->start_x)
+#define GET_BOX_HEIGHT(w)                       \
+	        abs((w)->last_y - (w)->start_y)
+#define GET_BOX_LEFT(w)                         \
+	        min((w)->start_x, (w)->last_x);
+#define GET_BOX_TOP(w)                          \
+		min((w)->start_y, (w)->last_y);
+
+
 void
 get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int
 *bottom)
@@ -864,4 +875,51 @@ o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 	object->box->lower_y = min(newy1,newy2);
 	
  	o_box_translate_world(w_current, world_centerx, world_centery, object);
+}
+
+void
+o_box_modify(TOPLEVEL *w_current, OBJECT *object, 
+	     int x, int y, int whichone)
+{
+	int x1, y1, x2, y2;
+	int left, right, top, bottom;
+	int box_width, box_height, box_left, box_top;
+
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
+	box_left   = GET_BOX_LEFT  (w_current);
+	box_top    = GET_BOX_TOP   (w_current);
+
+	SCREENtoWORLD(w_current,
+			box_left,
+			box_top,
+			&x1,
+			&y1);
+	SCREENtoWORLD(w_current,
+			box_left + box_width,
+			box_top  + box_height,
+			&x2,
+			&y2);
+
+	x1 = snap_grid(w_current, x1);
+	y1 = snap_grid(w_current, y1);
+	x2 = snap_grid(w_current, x2);
+	y2 = snap_grid(w_current, y2);
+
+	object->box->upper_x = x1; 
+	object->box->upper_y = y1;
+	object->box->lower_x = x2; 
+	object->box->lower_y = y2;
+
+	object->box->screen_upper_x = box_left; 
+	object->box->screen_upper_y = box_top;
+	object->box->screen_lower_x = box_left + box_width; 
+	object->box->screen_lower_y = box_top  + box_height;
+
+	get_box_bounds(w_current, object->box, &left, &top, &right, &bottom);
+	
+	object->left = left;
+	object->top = top;
+	object->right = right;
+	object->bottom = bottom;	
 }

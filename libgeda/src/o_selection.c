@@ -241,6 +241,7 @@ o_selection_select(OBJECT *object, int color)
 	}
 
 	object->selected = TRUE;
+	object->draw_grips = TRUE;
 	object->saved_color = object->color;
 	object->color = color;
         if (object->type == OBJ_COMPLEX) { 
@@ -256,6 +257,9 @@ void
 o_selection_unselect(OBJECT *object)
 {
 	object->selected = FALSE;
+	/* object->draw_grips = FALSE; can't do this here... */
+	/* draw_grips is cleared in the individual draw functions after the */
+	/* grips are erase */
 	object->color = object->saved_color;
         if (object->type == OBJ_COMPLEX) { 
         	o_complex_unset_color(object->complex->prim_objs);

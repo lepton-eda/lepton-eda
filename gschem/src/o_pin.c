@@ -238,6 +238,23 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #if DEBUG
 	printf("drawing pin\n");
 #endif
+
+	if (o_current->draw_grips) {	
+		
+		if (!o_current->selected) {
+			/* erase the grips */
+			o_current->draw_grips = FALSE;
+			gdk_gc_set_foreground(w_current->gc, 
+				x_get_color(w_current->background_color));
+		} else {
+			gdk_gc_set_foreground(w_current->gc, 
+						x_get_color(o_current->color));
+		}
+
+		/* yes redraw the line functions */
+		o_line_draw_grips(w_current, w_current->window, o_current);
+		o_line_draw_grips(w_current, w_current->backingstore, o_current);
+	}
 }
 
 void

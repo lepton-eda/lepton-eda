@@ -152,6 +152,20 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 					 o_current->box->screen_upper_y),
 				 line_width, length, space);
 	
+	if (o_current->draw_grips) {	
+		
+		if (!o_current->selected) {
+			/* erase the grips */
+			o_current->draw_grips = FALSE;
+			gdk_gc_set_foreground(w_current->gc, 
+				x_get_color(w_current->background_color));
+		} else {
+			gdk_gc_set_foreground(w_current->gc, color);
+		}
+
+		o_box_draw_grips(w_current, w_current->window, o_current);
+		o_box_draw_grips(w_current, w_current->backingstore, o_current);
+	}
 }
 
 void
@@ -451,4 +465,110 @@ o_box_rubberbox(TOPLEVEL *w_current, int x, int y)
 			   box_top   ,
 			   box_width ,
 			   box_height);
+}
+
+void
+o_box_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current) 
+{
+	int size, x2size;
+	int width;
+	int height;
+
+	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1); 
+	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2); 
+	} else {
+		size = SCREENabs(w_current, GRIP_SIZE3); 
+	}
+	x2size = size * 2;
+
+	/*printf("zf %d  size %d  x2 %d\n", w_current->page_current->zoom_factor, size, x2size); */
+
+	height = abs(o_current->box->screen_upper_x - 
+			o_current->box->screen_lower_x);
+	width  = abs(o_current->box->screen_upper_y - 
+			o_current->box->screen_lower_y);
+
+	/* whichone = 0 */
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		o_current->box->screen_upper_x - size, 
+		o_current->box->screen_upper_y - size,
+		x2size, x2size);
+
+	/* whichone = 1 */
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		o_current->box->screen_lower_x - size, 
+		o_current->box->screen_lower_y - size,
+		x2size, x2size);
+
+	/* whichone = 2 */
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		o_current->box->screen_lower_x - size, 
+		o_current->box->screen_upper_y - size,
+		x2size, x2size);
+
+	/* whichone = 3 */
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		o_current->box->screen_upper_x - size, 
+		o_current->box->screen_lower_y - size,
+		x2size, x2size);
+}
+
+void
+o_box_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+{
+	int size, x2size;
+
+	gdk_gc_set_foreground(w_current->gc, 
+			      x_get_color(w_current->background_color));
+
+	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1); 
+	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2); 
+	} else {
+		size = SCREENabs(w_current, GRIP_SIZE3); 
+	}
+	x2size = 2 * size;
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		o_current->box->screen_upper_x - size, 
+		o_current->box->screen_upper_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		o_current->box->screen_upper_x - size, 
+		o_current->box->screen_upper_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		o_current->box->screen_lower_x - size, 
+		o_current->box->screen_lower_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		o_current->box->screen_lower_x - size, 
+		o_current->box->screen_lower_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		o_current->box->screen_lower_x - size, 
+		o_current->box->screen_upper_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		o_current->box->screen_lower_x - size, 
+		o_current->box->screen_upper_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		o_current->box->screen_upper_x - size, 
+		o_current->box->screen_lower_y - size,
+		x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		o_current->box->screen_upper_x - size, 
+		o_current->box->screen_lower_y - size,
+		x2size, x2size);
 }

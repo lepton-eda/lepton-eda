@@ -2697,12 +2697,16 @@ x_dialog_raise_all(TOPLEVEL *w_current)
         if(w_current->cswindow) {
 		gdk_window_raise(w_current->cswindow->window);
 	}
+
+#if 0 /* don't raise these windows ever */ 
         if(w_current->fileselect[FILESELECT].xfwindow) {
 		gdk_window_raise(w_current->fileselect[FILESELECT].xfwindow->window);
 	}
         if(w_current->fileselect[COMPSELECT].xfwindow) {
 		gdk_window_raise(w_current->fileselect[COMPSELECT].xfwindow->window);
 	}
+#endif
+
         if(w_current->pwindow) {
 		gdk_window_raise(w_current->pwindow->window);
 	}

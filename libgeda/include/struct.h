@@ -190,6 +190,9 @@ struct st_object {
 						/* the object's real color */
 						/* when the object is locked) */
 
+	int draw_grips;				/* if selected, enables 
+						   drawing of grips */
+
 	int font_text_size;			/* used only with fonts defs */
 	OBJECT *font_prim_objs;			/* used only with fonts defs */
 

@@ -372,6 +372,22 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing bus\n");
 #endif
 
+	if (o_current->draw_grips) {	
+		
+		if (!o_current->selected) {
+			/* erase the grips */
+			o_current->draw_grips = FALSE;
+			gdk_gc_set_foreground(w_current->gc, 
+				x_get_color(w_current->background_color));
+		} else {
+			gdk_gc_set_foreground(w_current->gc, 
+					x_get_color(o_current->color));
+		}
+
+		/* yes reuse the line functions */
+		o_line_draw_grips(w_current, w_current->window, o_current);
+		o_line_draw_grips(w_current, w_current->backingstore, o_current);
+	}
 }
 
 void

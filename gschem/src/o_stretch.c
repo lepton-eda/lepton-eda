@@ -25,6 +25,8 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
+#if 0 /* ALL the function in this file are now OBSOLETE */
+
 static int whichone_changing=-1;
 
 int
@@ -400,3 +402,4 @@ o_stretch_motion(TOPLEVEL *w_current, int x, int y)
                                            GDK_JOIN_MITER);
         }
 }
+#endif

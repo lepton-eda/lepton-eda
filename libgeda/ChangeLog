@@ -8,6 +8,24 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added draw_grips variable to OBJECT structure
+
+	* src/o_selection.c: Added code to set and unset draw_grips variable
+
+	* src/s_basic.c: Added code to init draw_grips variable
+
+	* include/defines.h: Added a few grip related #define's
+
+	* src/o_line_basic.c: Added o_line_modify
+
+	* src/o_net_basic.c: Made o_net_modify look like o_line_modify
+
+	* src/o_pin_basic.c: Made o_pin_modify look like o_line_modify
+
+	* src/o_bus_basic.c: Made o_bus_modify look like o_line_modify
+
 2000-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_box_basic.c: Further updated the file format per Patrick's

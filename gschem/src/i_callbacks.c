@@ -19,7 +19,7 @@
 
 #include <config.h>
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -530,6 +530,7 @@ DEFINE_I_CALLBACK(edit_text)
 }
 
 
+#if 0 /* obsolete */
 DEFINE_I_CALLBACK(edit_stretch)
 {
 	TOPLEVEL *w_current;
@@ -548,6 +549,7 @@ DEFINE_I_CALLBACK(edit_stretch)
 
 }
 
+/* obsolete */
 DEFINE_I_CALLBACK(edit_stretch_hotkey)
 {
 	TOPLEVEL *w_current;
@@ -566,6 +568,7 @@ DEFINE_I_CALLBACK(edit_stretch_hotkey)
 		}
 	}
 }
+#endif
 
 DEFINE_I_CALLBACK(edit_slot)
 {

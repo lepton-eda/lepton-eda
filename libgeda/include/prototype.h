@@ -144,6 +144,7 @@ void o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_box_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_bus_basic.c */
 void get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 void world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
@@ -271,6 +272,7 @@ void o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJ
 void o_line_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_line_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_list.c */
 OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag, OBJECT **return_end);
 OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);

@@ -46,8 +46,6 @@ SCM g_key_edit_rotate_90(void);
 SCM g_key_edit_rotate_90_hotkey(void);
 SCM g_key_edit_mirror(void);
 SCM g_key_edit_mirror_hotkey(void);
-SCM g_key_edit_stretch(void);
-SCM g_key_edit_stretch_hotkey(void);
 SCM g_key_edit_slot(void);
 SCM g_key_edit_color(void);
 SCM g_key_edit_edit(void);
@@ -253,8 +251,6 @@ void i_callback_edit_move_hotkey(gpointer data, guint callback_action, GtkWidget
 void i_callback_edit_delete(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_edit(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_text(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_stretch(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_stretch_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_slot(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_color(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_rotate_90(gpointer data, guint callback_action, GtkWidget *widget);
@@ -394,6 +390,8 @@ void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(TOPLEVEL *w_current, int x, int y);
 void o_box_end(TOPLEVEL *w_current, int x, int y);
 void o_box_rubberbox(TOPLEVEL *w_current, int x, int y);
+void o_box_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_box_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_buffer.c */
 void o_buffer_copy(TOPLEVEL *w_current, int buf_num);
 void o_buffer_cut(TOPLEVEL *w_current, int buf_num);
@@ -453,6 +451,11 @@ void o_delete_text(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(TOPLEVEL *w_current);
 /* o_find.c */
 void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
+/* o_grips.c */
+OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
+int o_grips_start(TOPLEVEL *w_current, int x, int y);
+void o_grips_motion(TOPLEVEL *w_current, int x, int y);
+void o_grips_end(TOPLEVEL *w_current);
 /* o_line.c */
 void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
@@ -465,6 +468,8 @@ void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(TOPLEVEL *w_current, int x, int y);
 void o_line_end(TOPLEVEL *w_current, int x, int y);
 void o_line_rubberline(TOPLEVEL *w_current, int x, int y);
+void o_line_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_misc.c */
 void o_edit(TOPLEVEL *w_current, SELECTION *list);
 void o_lock(TOPLEVEL *w_current);
@@ -512,9 +517,6 @@ void o_select_unselect_all(TOPLEVEL *w_current);
 void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);
 /* o_stretch.c */
-int o_stretch_start(TOPLEVEL *w_current, int x, int y);
-void o_stretch_end(TOPLEVEL *w_current);
-void o_stretch_motion(TOPLEVEL *w_current, int x, int y);
 /* o_text.c */
 void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);

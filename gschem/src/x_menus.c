@@ -73,7 +73,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Edit/Delete", NULL, i_callback_edit_delete, 0, NULL},
 	{"/Edit/Rotate 90 Mode", NULL, i_callback_edit_rotate_90, 0, NULL},
 	{"/Edit/Mirror Mode", NULL, i_callback_edit_mirror, 0, NULL},
-	{"/Edit/Stretch Mode", NULL, i_callback_edit_stretch, 0, NULL},
+/* {"/Edit/Stretch Mode", NULL, i_callback_edit_stretch, 0, NULL}, obsolete */
 	{"/Edit/sep2",     NULL,         NULL, 0, "<Separator>"},
 	{"/Edit/Slot...", NULL, i_callback_edit_slot, 0, NULL},
 	{"/Edit/Color...", NULL, i_callback_edit_color, 0, NULL},

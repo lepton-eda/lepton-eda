@@ -964,7 +964,6 @@
     ("d" . edit-delete)
     ("r" . edit-rotate-90-hotkey)
     ("i" . edit-mirror-hotkey)
-    ("h" . edit-stretch-hotkey)
     ("Shift S" . edit-slot)
     ("o" . edit-color)
     ("l" . edit-lock)
@@ -973,6 +972,9 @@
     ("b" . edit-embed)
     ("u" . edit-unembed)
     ("n" . edit-show-hidden)))
+
+
+;;;    ("h" . edit-stretch-hotkey)  Obsolete
 
 ; All keys in this keymap *must* be unique
 (define view-keymap
