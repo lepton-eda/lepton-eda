@@ -1,3 +1,13 @@
+2001-06-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added sort-component-library keyword
+	  default (disabled)
+
+	* noweb/g_rc.c: Added code to support the sort-component-library
+
+	* noweb/x_fileselect.c: Added code to enable/disable the sorting
+	  of component libraries
+	
 2001-06-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: More work on getting build mechanism for noweb

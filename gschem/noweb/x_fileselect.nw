@@ -1308,12 +1308,12 @@ create_menu (TOPLEVEL *w_current)
 
 @section Function @code{x_fileselect_comp_fill_libs()}
 
-@defun x_fileselect_comp_fill_libs f_current
+@defun x_fileselect_comp_fill_libs w_current f_current
 @end defun
 
 <<x_fileselect.c : x_fileselect_comp_fill_libs()>>=
 void
-x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
+x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
 {
   char *text[2];
   char *temp;
@@ -1341,7 +1341,8 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
     }
 
     f_current->directory_entries[i] = u_basic_strdup_multiple(
-                                                              string, "/", NULL);
+                                                              string,
+                                                              "/", NULL);
 		
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
     width = gdk_string_width(f_current->dir_list->style->font,
@@ -1361,27 +1362,29 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
   /* added sort for the directory list so it would match the 
      automatically sorted clist of directories
      Chris Ellec - May 2001                           */
-  done = 0;
-  first = 0;
-  last = i;
-  while(!done) {
-    done = 1;
-    for (j = first ; j < last-1; j++) {
-      /*printf ("%i:",j);*/
-      if (strcmp(f_current->directory_entries[j], 
-                 f_current->directory_entries[j+1]) > 0) {
-        temp = f_current->directory_entries[j];
-        f_current->directory_entries[j] = 
-          f_current->directory_entries[j+1];
-        f_current->directory_entries[j+1] = temp;
-        done = 0;
+  if (w_current->sort_component_library == TRUE) {
+    done = 0;
+    first = 0;
+    last = i;
+    while(!done) {
+      done = 1;
+      for (j = first ; j < last-1; j++) {
+        /*printf ("%i:",j);*/
+        if (strcmp(f_current->directory_entries[j], 
+                   f_current->directory_entries[j+1]) > 0) {
+          temp = f_current->directory_entries[j];
+          f_current->directory_entries[j] = 
+            f_current->directory_entries[j+1];
+          f_current->directory_entries[j+1] = temp;
+          done = 0;
+        }
       }
-    }
-    last = last - 1;
+      last = last - 1;
 
 #if DEBUG 
-    pass_count++;
+      pass_count++;
 #endif
+    }
   }
 }
 
@@ -2029,7 +2032,9 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_container_set_border_width(GTK_CONTAINER (scrolled_win), 5);
     gtk_box_pack_start(GTK_BOX (list_hbox), scrolled_win, 
                        TRUE, TRUE, 0);
-    gtk_clist_set_auto_sort(GTK_CLIST(f_current->dir_list), TRUE);
+    if (w_current->sort_component_library) {
+      gtk_clist_set_auto_sort(GTK_CLIST(f_current->dir_list), TRUE);
+    }
     gtk_widget_show (f_current->dir_list);
     gtk_widget_show (scrolled_win);
     free(dir_title[0]);
@@ -2068,7 +2073,9 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_container_set_border_width(GTK_CONTAINER(scrolled_win), 5);
     gtk_box_pack_start(GTK_BOX (list_hbox), scrolled_win, 
                        TRUE, TRUE, 0);
-    gtk_clist_set_auto_sort(GTK_CLIST(f_current->file_list), TRUE);
+    if (w_current->sort_component_library) {
+      gtk_clist_set_auto_sort(GTK_CLIST(f_current->file_list), TRUE);
+    }
     gtk_widget_show (f_current->file_list);
     gtk_widget_show (scrolled_win);
     free(file_title[0]);
@@ -2249,7 +2256,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
       x_fileselect_setup_list_buffers(f_current, 
                                       s_clib_return_num(), 0);
       x_fileselect_comp_update_current(f_current, NULL, NULL);
-      x_fileselect_comp_fill_libs(f_current);
+      x_fileselect_comp_fill_libs(w_current, f_current);
     }	
   }
 

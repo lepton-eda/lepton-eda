@@ -224,6 +224,7 @@ SCM g_rc_undo_control(SCM mode);
 SCM g_rc_undo_type(SCM mode);
 SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
+SCM g_rc_sort_component_library(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -689,7 +690,7 @@ void x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current);
 gint default_components(GtkWidget *w, TOPLEVEL *w_current);
 gint embed_components(GtkWidget *w, TOPLEVEL *w_current);
 gint include_components(GtkWidget *w, TOPLEVEL *w_current);
-void x_fileselect_comp_fill_libs(FILEDIALOG *f_current);
+void x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current);
 void x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row);
 void x_fileselect_comp_update_current(FILEDIALOG *f_current, char *library, char *component);
 void x_fileselect_change_clib(FILEDIALOG *f_current, char *new_clib, int row);

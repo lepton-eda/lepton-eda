@@ -1,3 +1,7 @@
+2001-06-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added rc variable and reformated the code
+	
 2001-06-21 Stefan Petersen  <spe@geda.seul.org>
 
 	* noweb/g_basic.nw: Improved error information when reading *rc

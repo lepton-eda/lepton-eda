@@ -173,6 +173,7 @@ g_register_funcs(void)
 
   gh_new_procedure1_0 ("draw-grips", g_rc_draw_grips);
   gh_new_procedure1_0 ("netconn-rubberband", g_rc_netconn_rubberband);
+  gh_new_procedure1_0 ("sort-component-library", g_rc_sort_component_library);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);

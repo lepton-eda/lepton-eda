@@ -74,608 +74,609 @@ typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING
 
 
 struct st_line {
-	int x[2];
-	int y[2];
+  int x[2];
+  int y[2];
 
-	int screen_x[2];
-	int screen_y[2];
+  int screen_x[2];
+  int screen_y[2];
 };
 
 struct st_arc {
-	int x, y; /* world */
-	int screen_x, screen_y;
+  int x, y; /* world */
+  int screen_x, screen_y;
 
-	int width;
-	int height;
-	int screen_width, screen_height;
+  int width;
+  int height;
+  int screen_width, screen_height;
 
-	int start_angle;
-	int end_angle;
+  int start_angle;
+  int end_angle;
 };
 
 struct st_box {
-	/* upper is considered the origin */
-	int upper_x, upper_y; /* world */	
-	int lower_x, lower_y;
+  /* upper is considered the origin */
+  int upper_x, upper_y; /* world */	
+  int lower_x, lower_y;
 
-	int screen_upper_x, screen_upper_y;
-	int screen_lower_x, screen_lower_y;
+  int screen_upper_x, screen_upper_y;
+  int screen_lower_x, screen_lower_y;
 };
 
 struct st_text {
-	int x, y;		/* world origin */
-	int screen_x, screen_y;
+  int x, y;		/* world origin */
+  int screen_x, screen_y;
 
-	char *string;			/* text stuff */
-	int length;
-	int size;
-	int alignment;	
-	int displayed_length;
-	int angle;
+  char *string;			/* text stuff */
+  int length;
+  int size;
+  int alignment;	
+  int displayed_length;
+  int angle;
 
-	OBJECT *prim_objs;
+  OBJECT *prim_objs;
 };
 
 struct st_complex {
-	int x, y;		/* world origin */
-	int screen_x, screen_y;
+  int x, y;		/* world origin */
+  int screen_x, screen_y;
 
-	int angle;				/* orientation, only multiples
-					   	 * of 90 degrees allowed */   
-						/* in degrees */
-	int mirror;
+  int angle;				/* orientation, only multiples
+                                         * of 90 degrees allowed */   
+  /* in degrees */
+  int mirror;
 
-	OBJECT *prim_objs;			/* Primitive objects */
-						/* objects which make up the */
-						/* complex */
+  OBJECT *prim_objs;			/* Primitive objects */
+  /* objects which make up the */
+  /* complex */
 };
 
 struct st_circle {
-	int center_x, center_y; /* world */
-	int radius;
+  int center_x, center_y; /* world */
+  int radius;
 
-	int screen_x, screen_y;
-	int screen_left, screen_top;
-	int screen_radius;
+  int screen_x, screen_y;
+  int screen_left, screen_top;
+  int screen_radius;
 };
 
 struct st_object {
-	int type;				/* Basic information */
-	int sid;
-	char *name;
+  int type;				/* Basic information */
+  int sid;
+  char *name;
 
-	int top;				/* Bounding box information */
-	int left;				/* in screen coords */
-	int right;
-	int bottom;
+  int top;				/* Bounding box information */
+  int left;				/* in screen coords */
+  int right;
+  int bottom;
 
-	COMPLEX *complex;
-	LINE *line; 
-	CIRCLE *circle; 
-	ARC *arc;
-	BOX *box;
-	TEXT *text;
+  COMPLEX *complex;
+  LINE *line; 
+  CIRCLE *circle; 
+  ARC *arc;
+  BOX *box;
+  TEXT *text;
 
-	GList *tile_locs;			/* tile locations */
+  GList *tile_locs;			/* tile locations */
 
-	GList *conn_list;			/* List of connections */
-						/* to and from this object */
+  GList *conn_list;			/* List of connections */
+  /* to and from this object */
 
-/* PB : change begin */
-/* PB : every graphical primitive have more or less the same options. */
-/* PB : depending on its nature a primitive is concerned with one or more */
-/* PB : of these fields. If not, value must be ignored. */
-	OBJECT_END line_end;
-	OBJECT_TYPE line_type;
-	int line_width, screen_line_width;
-	int line_space, screen_line_space;
-	int line_length, screen_line_length;
+  /* PB : change begin */
+  /* PB : every graphical primitive have more or less the same options. */
+  /* PB : depending on its nature a primitive is concerned with one or more */
+  /* PB : of these fields. If not, value must be ignored. */
+  OBJECT_END line_end;
+  OBJECT_TYPE line_type;
+  int line_width, screen_line_width;
+  int line_space, screen_line_space;
+  int line_length, screen_line_length;
 
-	OBJECT_FILLING fill_type;
-	int fill_width, screen_fill_width;
-	int fill_angle1, fill_pitch1, screen_fill_pitch1;
-	int fill_angle2, fill_pitch2, screen_fill_pitch2;
-/* PB : change end */	
+  OBJECT_FILLING fill_type;
+  int fill_width, screen_fill_width;
+  int fill_angle1, fill_pitch1, screen_fill_pitch1;
+  int fill_angle2, fill_pitch2, screen_fill_pitch2;
+  /* PB : change end */	
 	
-	int visited;		/* used in gnetlist for travesal purposes */
+  int visited;		/* used in gnetlist for travesal purposes */
 
-	char *complex_basename;			/* Complex basename */
-	char *complex_clib;			/* Complex Component Library */
-	OBJECT *complex_parent;		/* Complex parent object pointer */
-					/* used only in complex head nodes */
+  char *complex_basename;			/* Complex basename */
+  char *complex_clib;			/* Complex Component Library */
+  OBJECT *complex_parent;		/* Complex parent object pointer */
+  /* used only in complex head nodes */
 
-	/* unused for now */
-	void (*action_func)();			/* Execute function */
+  /* unused for now */
+  void (*action_func)();			/* Execute function */
 
-	void (*sel_func)();			/* Selected function */
-	void (*draw_func)();			/* Draw function */
+  void (*sel_func)();			/* Selected function */
+  void (*draw_func)();			/* Draw function */
 
-	int color; 				/* Which color */
-	int saved_color; 			/* Saved color */
-	int selected;				/* object selected flag */
-	int locked_color; 			/* Locked color (used to save */
-						/* the object's real color */
-						/* when the object is locked) */
+  int color; 				/* Which color */
+  int saved_color; 			/* Saved color */
+  int selected;				/* object selected flag */
+  int locked_color; 			/* Locked color (used to save */
+  /* the object's real color */
+  /* when the object is locked) */
 
-	int draw_grips;				/* if selected, enables 
+  int draw_grips;				/* if selected, enables 
 						   drawing of grips */
 
-	int font_text_size;			/* used only with fonts defs */
-	OBJECT *font_prim_objs;			/* used only with fonts defs */
+  int font_text_size;			/* used only with fonts defs */
+  OBJECT *font_prim_objs;			/* used only with fonts defs */
 
-	ATTRIB *attribs;		/* attribute stuff */
-	ATTRIB *attached_to;	  /* when object is an attribute */
-	int attribute;
-	int show_name_value;
-	int visibility; 
+  ATTRIB *attribs;		/* attribute stuff */
+  ATTRIB *attached_to;	  /* when object is an attribute */
+  int attribute;
+  int show_name_value;
+  int visibility; 
 
-	OBJECT *prev;
-	OBJECT *next;
+  OBJECT *prev;
+  OBJECT *next;
 }; 
 
 
 struct st_attrib {
-	OBJECT *object;	/* object attribute is connected to */
+  OBJECT *object;	/* object attribute is connected to */
 	
-	OBJECT *copied_to; /* used when copying attributes */
+  OBJECT *copied_to; /* used when copying attributes */
 
-	ATTRIB *prev;
-	ATTRIB *next;
+  ATTRIB *prev;
+  ATTRIB *next;
 };
 
 struct st_conn {
-	OBJECT *other_object;	/* The "other" object connected to this one */
-	int type;		/* Always in reference to how the "other" */
+  OBJECT *other_object;	/* The "other" object connected to this one */
+  int type;		/* Always in reference to how the "other" */
 				/* object is connected to the current one */
-	int x, y;		/* x, y coord of the connection */
-	int whichone;		/* which endpoint of the current object */
+  int x, y;		/* x, y coord of the connection */
+  int whichone;		/* which endpoint of the current object */
 				/* caused this connection */
-	int other_whichone;	/* which endpoint of the "other" object */
+  int other_whichone;	/* which endpoint of the "other" object */
 				/* caused this connection */
 };
 
 struct st_selection {
-        OBJECT *selected_object;
+  OBJECT *selected_object;
 
-        SELECTION *prev;
-        SELECTION *next;
+  SELECTION *prev;
+  SELECTION *next;
 };
 
 struct st_stretch
 {
-	OBJECT *object;
-	CONN *connection;
+  OBJECT *object;
+  CONN *connection;
 
-	int whichone;
+  int whichone;
 
-        STRETCH *prev;
-        STRETCH *next;
+  STRETCH *prev;
+  STRETCH *next;
 };
 
 struct st_undo {
 
-	/* one of these is used, depending on if you are doing in-memory */
-	/* or file based undo state saving */	
-	char *filename;
-	OBJECT *object_head;
+  /* one of these is used, depending on if you are doing in-memory */
+  /* or file based undo state saving */	
+  char *filename;
+  OBJECT *object_head;
 
-	/* either UNDO_ALL or UNDO_VIEWPORT_ONLY */
-	int type;
+  /* either UNDO_ALL or UNDO_VIEWPORT_ONLY */
+  int type;
 
-	/* viewport information */
-	int left, top, right, bottom;
+  /* viewport information */
+  int left, top, right, bottom;
 
-	/* up and down the hierarchy */
-	int up;
-	/* used to control which pages are viewable when moving around */
-	int page_control;
+  /* up and down the hierarchy */
+  int up;
+  /* used to control which pages are viewable when moving around */
+  int page_control;
 
-        UNDO *prev;
-        UNDO *next;
+  UNDO *prev;
+  UNDO *next;
 };
 
 struct st_tile {
-	GList *objects;
+  GList *objects;
 
-	int top, left, right, bottom;
+  int top, left, right, bottom;
 };
 
 struct st_tile_loc {
-	int i, j;	/* these are the indices into the tile structure */
+  int i, j;	/* these are the indices into the tile structure */
 };
 
 struct st_page {
 
-	int pid;
+  int pid;
 
-	OBJECT *object_head;
-	OBJECT *object_tail;
-	OBJECT *object_parent;
-	SELECTION *selection2_head; /* new selection mechanism */
-	SELECTION *selection2_tail; 
-	OBJECT *complex_place_head;  /* used to place complex's and text */
-	OBJECT *complex_place_tail; 
-	OBJECT *attrib_place_head;
-	OBJECT *attrib_place_tail; 
-	OBJECT *object_lastplace;
-	OBJECT *object_selected;
-	STRETCH *stretch_head; 
-	STRETCH *stretch_tail; 
+  OBJECT *object_head;
+  OBJECT *object_tail;
+  OBJECT *object_parent;
+  SELECTION *selection2_head; /* new selection mechanism */
+  SELECTION *selection2_tail; 
+  OBJECT *complex_place_head;  /* used to place complex's and text */
+  OBJECT *complex_place_tail; 
+  OBJECT *attrib_place_head;
+  OBJECT *attrib_place_tail; 
+  OBJECT *object_lastplace;
+  OBJECT *object_selected;
+  STRETCH *stretch_head; 
+  STRETCH *stretch_tail; 
 
-	char *page_filename; 
-	int CHANGED;			/* changed flag */
-	/*int zoom_factor; no longer used*/
-	int left, right, top, bottom;		/* World coord limits */
-	double coord_aspectratio;		/* Real worldcoords ratio (?) */
-	int clist_row;				/* used in page manager */
-						/* which row is the page in */
+  char *page_filename; 
+  int CHANGED;			/* changed flag */
+  /*int zoom_factor; no longer used*/
+  int left, right, top, bottom;		/* World coord limits */
+  double coord_aspectratio;		/* Real worldcoords ratio (?) */
+  int clist_row;				/* used in page manager */
+  /* which row is the page in */
 
-	float to_screen_x_constant;
-	float to_screen_y_constant;
+  float to_screen_x_constant;
+  float to_screen_y_constant;
 
-	float to_world_x_constant;
-	float to_world_y_constant;
+  float to_world_x_constant;
+  float to_world_y_constant;
 
-	TILE world_tiles[MAX_TILES_X][MAX_TILES_Y];
+  TILE world_tiles[MAX_TILES_X][MAX_TILES_Y];
 
-	/* Undo/Redo Stacks and pointers */	
-	/* needs to go into page mechanism actually */
-	UNDO *undo_bottom;	
-	UNDO *undo_current;
-	UNDO *undo_tos; 	/* Top Of Stack */
+  /* Undo/Redo Stacks and pointers */	
+  /* needs to go into page mechanism actually */
+  UNDO *undo_bottom;	
+  UNDO *undo_current;
+  UNDO *undo_tos; 	/* Top Of Stack */
 
-	/* up and down the hierarchy */
-	/* this holds the pid of the parent page */
-	int up;
-	/* int down; not needed */
+  /* up and down the hierarchy */
+  /* this holds the pid of the parent page */
+  int up;
+  /* int down; not needed */
 
-	/* used to control which pages are viewable when moving around */
-	int page_control;
+  /* used to control which pages are viewable when moving around */
+  int page_control;
 
-	/* left to right movement */
-	PAGE *prev;
-	PAGE *next;
+  /* left to right movement */
+  PAGE *prev;
+  PAGE *next;
 };
 
 struct st_filedialog {
-	GtkWidget *xfwindow;		
+  GtkWidget *xfwindow;		
 
-	int type;
-	int filesel_type;
+  int type;
+  int filesel_type;
 
-	GtkWidget *filter;
-	int filter_type;
+  GtkWidget *filter;
+  int filter_type;
 
-	GtkWidget *search_entry;
-	GtkWidget *search_label;
-	int last_search_lib;
-	int last_search;		
+  GtkWidget *search_entry;
+  GtkWidget *search_label;
+  int last_search_lib;
+  int last_search;		
 
-	GtkWidget *filename_entry;
+  GtkWidget *filename_entry;
 
-	GtkWidget *dir_list;
-	GtkWidget *file_list;
+  GtkWidget *dir_list;
+  GtkWidget *file_list;
 
-	char *directory;
-	char *filename;
+  char *directory;
+  char *filename;
 
-	/* need to make this dynamic TODO ?? */
-	char *directory_entries[MAX_DIRS];
-	char *file_entries[MAX_FILES];
+  /* need to make this dynamic TODO ?? */
+  char *directory_entries[MAX_DIRS];
+  char *file_entries[MAX_FILES];
 
-	TOPLEVEL *preview;
-	GtkWidget *preview_checkbox;
-	int preview_control;
+  TOPLEVEL *preview;
+  GtkWidget *preview_checkbox;
+  int preview_control;
 
-	GtkWidget *component_pulldown;
+  GtkWidget *component_pulldown;
 
-	/* this points to the owner of this filedialog structure */
-	/* should NEVER be freed */
-	TOPLEVEL *toplevel;
+  /* this points to the owner of this filedialog structure */
+  /* should NEVER be freed */
+  TOPLEVEL *toplevel;
 }; 
 
 struct st_toplevel {
 
-	int wid;			/* Window id, always unique */
+  int wid;			/* Window id, always unique */
 
-	int num_untitled;		/* keep track of untitled wins */
+  int num_untitled;		/* keep track of untitled wins */
 	
-	int start_x;
-	int start_y;
-	int save_x;
-	int save_y;
-	int last_x;
-	int last_y;
-	int loc_x, loc_y;
-	int distance;
+  int start_x;
+  int start_y;
+  int save_x;
+  int save_y;
+  int last_x;
+  int last_y;
+  int loc_x, loc_y;
+  int distance;
 
-	char *current_attribute;		/* used by attribute dialog */
-						/* also used by text add 
-						 * dialog 
-						 */
-	int current_visible;			/* in o_attrib.c */
-	int current_show;
-	/* have to decided on attribute list stuff */
-	/* if it should go in here or not */
-	/* leave outside for now */
+  char *current_attribute;		/* used by attribute dialog */
+  /* also used by text add 
+   * dialog 
+   */
+  int current_visible;			/* in o_attrib.c */
+  int current_show;
+  /* have to decided on attribute list stuff */
+  /* if it should go in here or not */
+  /* leave outside for now */
 
-	char *internal_basename;		
-	char *internal_clib;     
-	/* have to decided on component list stuff */
-	/* if it should go in here or not */
-	/* leave outside for now */
+  char *internal_basename;		
+  char *internal_clib;     
+  /* have to decided on component list stuff */
+  /* if it should go in here or not */
+  /* leave outside for now */
 
 
-	char *series_name;			/* Current series basename */
-	char *untitled_name;			/* untitled sch basename */
-	char *font_directory; 			/* path of the vector fonts */
-	char *scheme_directory; 		/* path of the scheme scripts */
+  char *series_name;			/* Current series basename */
+  char *untitled_name;			/* untitled sch basename */
+  char *font_directory; 			/* path of the vector fonts */
+  char *scheme_directory; 		/* path of the scheme scripts */
 	
-	int event_state;			/* Current event state */
+  int event_state;			/* Current event state */
 
-	int inside_action;			/* Are we doing an action? */
+  int inside_action;			/* Are we doing an action? */
 
-	int init_left, init_right; 		/* Starting values for above */
-	int init_top, init_bottom; 
+  int init_left, init_right; 		/* Starting values for above */
+  int init_top, init_bottom; 
 
-	int win_width, win_height;		/* Actual size of window (?) */
-	int width, height;			/* height, width of window */
-	int image_width, image_height;		/* h, w of image write */
-	int snap;				/* Snap on/off*/
-	int grid;				/* Grid on/off*/
-	int min_zoom;				/* minimum zoom factor */
-	int max_zoom;				/* maximum zoom factor */
-	int starting_width;			/* starting window width */
-						/* used to control text */
+  int win_width, win_height;		/* Actual size of window (?) */
+  int width, height;			/* height, width of window */
+  int image_width, image_height;		/* h, w of image write */
+  int snap;				/* Snap on/off*/
+  int grid;				/* Grid on/off*/
+  int min_zoom;				/* minimum zoom factor */
+  int max_zoom;				/* maximum zoom factor */
+  int starting_width;			/* starting window width */
+  /* used to control text */
 
-	int text_alignment;			/* location to hold current */
-						/* alignment of text */
+  int text_alignment;			/* location to hold current */
+  /* alignment of text */
 
-	int line_type;				/* location to hold current */
-						/* line type selection */
-	int fill_type;				/* location to hold current */
-						/* fill type selection (PB) */
+  int line_type;				/* location to hold current */
+  /* line type selection */
+  int fill_type;				/* location to hold current */
+  /* fill type selection (PB) */
 
-	int override_color;			/* used in doing selections */
-	int inside_redraw;			/* complex vs list redrawing */
-	double window_aspectratio;		/* Window ratio (?) */
-	int display_height;			/* display params */
-	int display_width;			/* could me made global (?) */
+  int override_color;			/* used in doing selections */
+  int inside_redraw;			/* complex vs list redrawing */
+  double window_aspectratio;		/* Window ratio (?) */
+  int display_height;			/* display params */
+  int display_width;			/* could me made global (?) */
 
-	int DONT_DRAW_CONN;			/* misc flags */
-	int DONT_RESIZE;
-	int DONT_EXPOSE;
-	int DONT_REDRAW;
-	int DONT_RECALC;
-	int FORCE_CONN_UPDATE;
-	int ADDING_SEL;
-	int REMOVING_SEL;
+  int DONT_DRAW_CONN;			/* misc flags */
+  int DONT_RESIZE;
+  int DONT_EXPOSE;
+  int DONT_REDRAW;
+  int DONT_RECALC;
+  int FORCE_CONN_UPDATE;
+  int ADDING_SEL;
+  int REMOVING_SEL;
 
-	int drawbounding_action_mode; 		/* outline vs bounding box */
-	int last_drawb_mode;			/* last above mode */
+  int drawbounding_action_mode; 		/* outline vs bounding box */
+  int last_drawb_mode;			/* last above mode */
 
-	int CONTROLKEY;				/* control key pressed? */
-	int SHIFTKEY;				/* shift key pressed? */
-	int ALTKEY;				/* alt key pressed? */
+  int CONTROLKEY;				/* control key pressed? */
+  int SHIFTKEY;				/* shift key pressed? */
+  int ALTKEY;				/* alt key pressed? */
 	
-	int doing_pan;				/* mouse pan status flag */
+  int doing_pan;				/* mouse pan status flag */
 
-/* Page system used by gPCB */
-/*	PAGE_T *current_page; commented out */
+  /* Page system used by gPCB */
+  /*	PAGE_T *current_page; commented out */
 
-	/* page system */
-	PAGE *page_head;	
-	PAGE *page_tail;	
-	PAGE *page_current;
+  /* page system */
+  PAGE *page_head;	
+  PAGE *page_tail;	
+  PAGE *page_current;
 
-	/* buffer_number is used by the buffer copy/cut/paste mechanism */
-	/* in gschem to keep track of the current buffer number */
-	int buffer_number;
-
-
-	/* Variable to keep track of what value the complex is at */
-	int complex_rotate;	
-
-	void (*last_callback)();	  	/* Last i_call* cmd executed */
-	char cwd[256]; /* size is hack */ 	/* current working directory */
-
-	/* main window widgets */
-	GtkWidget *main_window;
-	GtkWidget *drawing_area;
-	GtkWidget *popup_menu;
-	GtkWidget *h_scrollbar;
-	GtkWidget *v_scrollbar;    
-	GtkObject *h_adjustment;
-	GtkObject *v_adjustment;
-	GtkWidget *left_label;
-	GtkWidget *middle_label;
-	GtkWidget *right_label;
-	GtkWidget *filename_label;
-	GtkWidget *status_label;
-
-	GtkMenuFactory *factory;
-	GtkMenuFactory *subfactory[2];
-	GHashTable *entry_ht;
-
-	/* Dialog boxes */
-	GtkWidget *fowindow;			/* File open */
-	GtkWidget *fswindow;			/* File save */
-	GtkWidget *sowindow;			/* Script open */
-	int saveas_flag;     			/* what action after save? */
-
-	GtkWidget *aswindow;			/* Attribute select */
-	GtkWidget *attr_list;
-	GtkWidget *asentry_name;
-	GtkWidget *asentry_value; 
-
-	GtkWidget *cswindow;			/* component select */
-	GtkWidget *clib_list;
-	GtkWidget *basename_list;
-	char current_clib[256]; /* hack */
-	char current_basename[256]; 	
+  /* buffer_number is used by the buffer copy/cut/paste mechanism */
+  /* in gschem to keep track of the current buffer number */
+  int buffer_number;
 
 
-	FILEDIALOG fileselect[2];
-						/* see define.h for what */
-						/* each of the different */
-						/* members of this array are */
+  /* Variable to keep track of what value the complex is at */
+  int complex_rotate;	
 
-	GtkWidget *pwindow;			/* printing dialog box */
-	GtkWidget *plib_list;			/* paper size box */
-	GtkWidget *pfilename_entry; 
+  void (*last_callback)();	  	/* Last i_call* cmd executed */
+  char cwd[256]; /* size is hack */ 	/* current working directory */
 
-	GtkWidget *iwindow;			/* image write dialog box */
-	GtkWidget *ifilename_entry; 
+  /* main window widgets */
+  GtkWidget *main_window;
+  GtkWidget *drawing_area;
+  GtkWidget *popup_menu;
+  GtkWidget *h_scrollbar;
+  GtkWidget *v_scrollbar;    
+  GtkObject *h_adjustment;
+  GtkObject *v_adjustment;
+  GtkWidget *left_label;
+  GtkWidget *middle_label;
+  GtkWidget *right_label;
+  GtkWidget *filename_label;
+  GtkWidget *status_label;
 
-	GtkWidget *pswindow;			/* page select */
-	GtkWidget *page_clist;
-	int clist_sig;				/* used only in page manager */
+  GtkMenuFactory *factory;
+  GtkMenuFactory *subfactory[2];
+  GHashTable *entry_ht;
 
-	/* misc dialogs */
-	GtkWidget *tiwindow;			/* text input */
-/*	GtkWidget *tientry;*/
-	GtkWidget *tewindow;			/* text edit */
-	GtkWidget *teentry;
-	GtkWidget *ltwindow;			/* line type / width edit */
-	GtkWidget *ftwindow;			/* fill type edit (PB) */
-	GtkWidget *sewindow;			/* slot edit */
-	GtkWidget *seentry;
-	GtkWidget *exwindow;			/* exit confirm */
-	GtkWidget *aawindow;			/* arc attribs */
-	GtkWidget *mawindow;			/* multi attribute */
-	GtkWidget *aewindow;			/* attribute edit */
-	GtkWidget *aaentry_start;
-	GtkWidget *aaentry_sweep;  
-	GtkWidget *trwindow;			/* translate */
-	GtkWidget *trentry;
-	GtkWidget *tswindow;			/* text size */
-	GtkWidget *tsentry;			/* used in edit/edit and */
-						/* Text size and the snap */
-						/* size dialog boxes */
+  /* Dialog boxes */
+  GtkWidget *fowindow;			/* File open */
+  GtkWidget *fswindow;			/* File save */
+  GtkWidget *sowindow;			/* Script open */
+  int saveas_flag;     			/* what action after save? */
+
+  GtkWidget *aswindow;			/* Attribute select */
+  GtkWidget *attr_list;
+  GtkWidget *asentry_name;
+  GtkWidget *asentry_value; 
+
+  GtkWidget *cswindow;			/* component select */
+  GtkWidget *clib_list;
+  GtkWidget *basename_list;
+  char current_clib[256]; /* hack */
+  char current_basename[256]; 	
+
+
+  FILEDIALOG fileselect[2];
+  /* see define.h for what */
+  /* each of the different */
+  /* members of this array are */
+
+  GtkWidget *pwindow;			/* printing dialog box */
+  GtkWidget *plib_list;			/* paper size box */
+  GtkWidget *pfilename_entry; 
+
+  GtkWidget *iwindow;			/* image write dialog box */
+  GtkWidget *ifilename_entry; 
+
+  GtkWidget *pswindow;			/* page select */
+  GtkWidget *page_clist;
+  int clist_sig;				/* used only in page manager */
+
+  /* misc dialogs */
+  GtkWidget *tiwindow;			/* text input */
+  /*	GtkWidget *tientry;*/
+  GtkWidget *tewindow;			/* text edit */
+  GtkWidget *teentry;
+  GtkWidget *ltwindow;			/* line type / width edit */
+  GtkWidget *ftwindow;			/* fill type edit (PB) */
+  GtkWidget *sewindow;			/* slot edit */
+  GtkWidget *seentry;
+  GtkWidget *exwindow;			/* exit confirm */
+  GtkWidget *aawindow;			/* arc attribs */
+  GtkWidget *mawindow;			/* multi attribute */
+  GtkWidget *aewindow;			/* attribute edit */
+  GtkWidget *aaentry_start;
+  GtkWidget *aaentry_sweep;  
+  GtkWidget *trwindow;			/* translate */
+  GtkWidget *trentry;
+  GtkWidget *tswindow;			/* text size */
+  GtkWidget *tsentry;			/* used in edit/edit and */
+  /* Text size and the snap */
+  /* size dialog boxes */
 	
-	GtkWidget *abwindow;			/* Help/About... dialog*/
-	GtkWidget *hkwindow;			/* Help/Hotkeys... dialog*/
-	GtkWidget *cowindow;
-	GtkWidget *coord_world;
-	GtkWidget *coord_screen;
+  GtkWidget *abwindow;			/* Help/About... dialog*/
+  GtkWidget *hkwindow;			/* Help/Hotkeys... dialog*/
+  GtkWidget *cowindow;
+  GtkWidget *coord_world;
+  GtkWidget *coord_screen;
 
-	GtkWidget *clwindow;
-	int edit_color;
+  GtkWidget *clwindow;
+  int edit_color;
 
-	/* this is the drawing_area's X drawable */
-	GdkWindow *window; 
+  /* this is the drawing_area's X drawable */
+  GdkWindow *window; 
 	
-	/* graphics context stuff */
-	GdkGC *gc;
-	GdkGC *xor_gc;
-	GdkGC *outline_xor_gc;
-	GdkGC *bounding_xor_gc;
-	GdkGC *bus_gc;
+  /* graphics context stuff */
+  GdkGC *gc;
+  GdkGC *xor_gc;
+  GdkGC *outline_xor_gc;
+  GdkGC *bounding_xor_gc;
+  GdkGC *bus_gc;
 
-	/* backingstore pixmap */
-	GdkPixmap *backingstore; 
+  /* backingstore pixmap */
+  GdkPixmap *backingstore; 
 
-	/* rc/user parameters */
-	int graphic_color;
-	int pin_color;
-	int text_color;
-	int logic_bubble_color; /* not used anywhere yet, but will be */
-	int zoom_box_color; 
-	int text_caps;
-	int attribute_color;
-	int detachedattr_color;
-	int text_size;
-	int snap_size;		/* used by math funcs for the snapping */
-	int grid_color;
-	int background_color;
-	int select_color;
-	int bb_color;
-	int lock_color;
-	int net_endpoint_color;
-	int net_color;
-	int bus_color;
-	int override_net_color;
-	int override_bus_color;
-	int override_pin_color;
-	int pin_style;
-	int net_style;
-	int bus_style;
-	int zoom_with_pan; 
-	int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
-	int text_feedback; /* controls if text is drawn or not in */
-			   /* copy/move/place ops */
-	int text_display_zoomfactor; /* zoom factor at which text is
-				      * displayed completely */
-	int net_endpoint_mode; /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
-	int net_midpoint_mode; /* can be either NONE or FILLED or EMPTY */
-	int object_clipping; /* controls whether objects are clipped */
-	int embed_complex; /* controls if complex objects are embedded */
-	int include_complex; /* controls if complex objects are included */
-	int text_output; /* controls how text is printed (vector / PS font) */ 
-	int scrollbars_flag; /* controls if scrollbars are displayed */ 
-	int print_orientation; /* either landscape or portrait */
-	int image_color; /* either TRUE or FALSE (color or no color) */
-	int print_color; /* either TRUE or FALSE (color or no color) */
-	int print_color_background; /* color used color ouput for background */ 
-	int stroke_color; /* color of the stroke points */
-	int log_window; /* controls if the log windows mapped on startup */
-	int log_window_type; /* controls if the log window is decorated or not */
-	int third_button; /* controls what the third mouse button does */
-	int middle_button; /* controls what the third mouse button does */
-	int net_consolidate; /* controls if the net consolidation code is used */ 
-	int file_preview; /* controls if the preview area is enabled or not */ 
-	int enforce_hierarchy; /* controls how much freedom user has when */ 
-                               /* traversing the hierarchy */
-	int text_origin_marker; /* controls if text origin marker is */
+  /* rc/user parameters */
+  int graphic_color;
+  int pin_color;
+  int text_color;
+  int logic_bubble_color; /* not used anywhere yet, but will be */
+  int zoom_box_color; 
+  int text_caps;
+  int attribute_color;
+  int detachedattr_color;
+  int text_size;
+  int snap_size;		/* used by math funcs for the snapping */
+  int grid_color;
+  int background_color;
+  int select_color;
+  int bb_color;
+  int lock_color;
+  int net_endpoint_color;
+  int net_color;
+  int bus_color;
+  int override_net_color;
+  int override_bus_color;
+  int override_pin_color;
+  int pin_style;
+  int net_style;
+  int bus_style;
+  int zoom_with_pan; 
+  int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
+  int text_feedback; /* controls if text is drawn or not in */
+  /* copy/move/place ops */
+  int text_display_zoomfactor; /* zoom factor at which text is
+                                * displayed completely */
+  int net_endpoint_mode; /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
+  int net_midpoint_mode; /* can be either NONE or FILLED or EMPTY */
+  int object_clipping; /* controls whether objects are clipped */
+  int embed_complex; /* controls if complex objects are embedded */
+  int include_complex; /* controls if complex objects are included */
+  int text_output; /* controls how text is printed (vector / PS font) */ 
+  int scrollbars_flag; /* controls if scrollbars are displayed */ 
+  int print_orientation; /* either landscape or portrait */
+  int image_color; /* either TRUE or FALSE (color or no color) */
+  int print_color; /* either TRUE or FALSE (color or no color) */
+  int print_color_background; /* color used color ouput for background */ 
+  int stroke_color; /* color of the stroke points */
+  int log_window; /* controls if the log windows mapped on startup */
+  int log_window_type; /* controls if the log window is decorated or not */
+  int third_button; /* controls what the third mouse button does */
+  int middle_button; /* controls what the third mouse button does */
+  int net_consolidate; /* controls if the net consolidation code is used */ 
+  int file_preview; /* controls if the preview area is enabled or not */ 
+  int enforce_hierarchy; /* controls how much freedom user has when */ 
+  /* traversing the hierarchy */
+  int text_origin_marker; /* controls if text origin marker is */
 				/* displayed or not */
-	int fast_mousepan;	/* controls if text is completely drawn */
+  int fast_mousepan;	/* controls if text is completely drawn */
 				/* during mouse pan */
 
-	int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
+  int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
 
-	int attribute_promotion; /*controls if attribute promotion happens */
-	int promote_invisible; /* controls if invisible attribs are promoted */
-	int keep_invisible;   /* controls if invisible attribs are kept and */
-			      /* not deleted */
-	int continue_component_place; /* controls if after doing a place the */
-				      /* same component can be placed again */
+  int attribute_promotion; /*controls if attribute promotion happens */
+  int promote_invisible; /* controls if invisible attribs are promoted */
+  int keep_invisible;   /* controls if invisible attribs are kept and */
+  /* not deleted */
+  int continue_component_place; /* controls if after doing a place the */
+  /* same component can be placed again */
 
-	int undo_levels;	/* Number of undo levels stored on disk */
-	int undo_control;	/* Controls if undo is enabled or not */
-	int undo_type;	        /* Type of undo (disk/memory) */
+  int undo_levels;	/* Number of undo levels stored on disk */
+  int undo_control;	/* Controls if undo is enabled or not */
+  int undo_type;	        /* Type of undo (disk/memory) */
 
-	int draw_grips;	        /* Controls if grips are enabled or not */
+  int draw_grips;	        /* Controls if grips are enabled or not */
 
-	int netconn_rubberband;			/* controls if nets are */
-						/* rubberbanded as you move */
-						/* them (or connecting comps) */
+  int netconn_rubberband;			/* controls if nets are */
+  /* rubberbanded as you move */
+  /* them (or connecting comps) */
+  int sort_component_library;                    
 
 
-	int print_output_type;			/* either window or limits */
+  int print_output_type;			/* either window or limits */
 
-	int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */
+  int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */
 
-	/* fixed init variables */
-	int image_output_type;			/* either window or limits */
+  /* fixed init variables */
+  int image_output_type;			/* either window or limits */
 
-	/* landscape printing only */
-	int paper_width, paper_height;
+  /* landscape printing only */
+  int paper_width, paper_height;
 
-	/* gnetlist specific */
-	int net_naming_priority;
-	int hierarchy_traversal;
-	int hierarchy_uref_mangle;
-	int hierarchy_netname_mangle;
-	int hierarchy_netattrib_mangle;
-	char *hierarchy_uref_separator;
-	char *hierarchy_netname_separator;
-	char *hierarchy_netattrib_separator;
-	int hierarchy_netattrib_order;
-	int hierarchy_netname_order;
-	int hierarchy_uref_order;
+  /* gnetlist specific */
+  int net_naming_priority;
+  int hierarchy_traversal;
+  int hierarchy_uref_mangle;
+  int hierarchy_netname_mangle;
+  int hierarchy_netattrib_mangle;
+  char *hierarchy_uref_separator;
+  char *hierarchy_netname_separator;
+  char *hierarchy_netattrib_separator;
+  int hierarchy_netattrib_order;
+  int hierarchy_netname_order;
+  int hierarchy_uref_order;
 
-	TOPLEVEL *next;
-	TOPLEVEL *prev; 
+  TOPLEVEL *next;
+  TOPLEVEL *prev; 
 };
 
 /* structures below are for gnetlist */
@@ -683,60 +684,60 @@ struct st_toplevel {
 /* for every component in the object database */
 struct st_netlist {
 
-	int nlid;
+  int nlid;
 
-	char *component_uref;
+  char *component_uref;
 	
-	OBJECT *object_ptr;
+  OBJECT *object_ptr;
 	
-	CPINLIST *cpins;		
+  CPINLIST *cpins;		
 
-	char *hierarchy_tag;
-	int composite_component;
+  char *hierarchy_tag;
+  int composite_component;
 
-	NETLIST *prev;
-	NETLIST *next;
+  NETLIST *prev;
+  NETLIST *next;
 };
 
 
 /* for every pin on a component */
 struct st_cpinlist {
-        int plid;
+  int plid;
 
-	char *pin_number;
-        char *net_name;			/* this is resolved at very end */
-	char *pin_label;
+  char *pin_number;
+  char *net_name;			/* this is resolved at very end */
+  char *pin_label;
 
-        NET *nets;
+  NET *nets;
 
-        CPINLIST *prev;
-        CPINLIST *next;
+  CPINLIST *prev;
+  CPINLIST *next;
 };
 
 /* the net run connected to a pin */
 struct st_net {
 
-        int nid;
+  int nid;
 
-	int net_name_has_priority;
-        char *net_name;
-	char *pin_label;
+  int net_name_has_priority;
+  char *net_name;
+  char *pin_label;
 
-        char *connected_to; /* new to replace above */
+  char *connected_to; /* new to replace above */
 
-        NET *prev;
-        NET *next;
+  NET *prev;
+  NET *next;
 };
 
 /* gsymcheck structure */
 struct st_symcheck {
-        int graphical_symbol;
-        int missing_device_attrib;
-        char *device_attribute;
-        int device_attribute_incorrect;
-        int missing_pin_attrib;
-        int missing_numslots_attrib;
-        int unattached_attribs;
+  int graphical_symbol;
+  int missing_device_attrib;
+  char *device_attribute;
+  int device_attribute_incorrect;
+  int missing_pin_attrib;
+  int missing_numslots_attrib;
+  int unattached_attribs;
 };
 
 /* By Jamil Khatib */
@@ -769,20 +770,20 @@ struct st_chkerrs{
 
 
 struct st_color {
-        char *color_name;
-        char *outline_color_name;
-        char *ps_color_string;
-        int image_red, image_green, image_blue;
+  char *color_name;
+  char *outline_color_name;
+  char *ps_color_string;
+  int image_red, image_green, image_blue;
 
-        GdkColor *gtk_color;
-        GdkColor *gtk_outline_color;
-        int image_color;
+  GdkColor *gtk_color;
+  GdkColor *gtk_outline_color;
+  int image_color;
 };
 
 
 struct st_attrib_smob {
-	TOPLEVEL *world;   /* We need this when updating schematic */
-	ATTRIB   *attribute;
+  TOPLEVEL *world;   /* We need this when updating schematic */
+  ATTRIB   *attribute;
 };
 
 #endif
