@@ -759,7 +759,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_container_set_border_width (GTK_CONTAINER (cancelbutton), 3);
   GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
 
-  frame1 = gtk_frame_new ("Attribute");
+  frame1 = gtk_frame_new ("Add/Edit Attribute");
   gtk_widget_ref (frame1);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "frame1", frame1,
                             (GtkDestroyNotify) gtk_widget_unref);
