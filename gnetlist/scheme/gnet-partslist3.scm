@@ -21,7 +21,7 @@
 (define partslist3:write-top-header
   (lambda (port)
     (display ".START\n" port)
-    (display "..device\tvalue\tquantity\trefdes\n" port)))
+    (display "..device\tvalue\tfootprint\tquantity\trefdes\n" port)))
 
 (define (partslist3:write-partslist ls port)
   (if (null? ls)
@@ -53,7 +53,7 @@
 (define partslist3
   (lambda (output-filename)
     (let ((port (open-output-file output-filename))
-	  (parts-table (marge-sort-with-multikey (get-parts-table packages) '(1 2 0))))
+	  (parts-table (marge-sort-with-multikey (get-parts-table packages) '(1 2 3 0))))
       (set! parts-table (count-same-parts parts-table))
       (partslist3:write-top-header port)
       (partslist3:write-partslist parts-table port)

@@ -23,7 +23,8 @@
 	    (get-parts-table (cdr packages))
 	    (cons (list (gnetlist:get-package-attribute package "refdes")
 			(get-device package)
-			(get-value package))
+			(get-value package)  
+			(gnetlist:get-package-attribute package "footprint")) ;; sdb change
 		  (get-parts-table (cdr packages)))))))
 
 (define (write-one-row ls separator end-char port)

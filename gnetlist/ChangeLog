@@ -4,6 +4,11 @@
 	drc2 patch.  This fixed the slotting check and improved an error
 	message from gnetlist.  Minor tweeks by Ales.
 
+	* scheme/gnet-partslist-common.scm, gnet-partslist1.scm,
+	gnet-partslist2.scm, gnet-partslist3.scm: Applied Stuart's 
+	changes to these files.  Stuart just added the footprint attribute
+	to the output.
+
 2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Fixed wrong command line option (-r is not a 
