@@ -23,7 +23,7 @@ libgeda_la_LDFLAGS = -version-info 9:1:0
 
 include_HEADERS = 
 
-INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
+INCLUDES = -I$(top_srcdir)/include @GUILE_INCLUDE@ @X_CFLAGS@  
 
 EXTRA_DIST = BUGS TODO create_proto 
 

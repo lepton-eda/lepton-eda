@@ -10,6 +10,11 @@ Most recent changes are at the top of this file
 
 2000-08-12  Stefan Petersen  <spe@geda.seul.org>
 
+        * src/Makefile.am: Makes VPATH building work.
+          Patch by Roger Gammans. src/Makefile.in regenerated.
+
+2000-08-12  Stefan Petersen  <spe@geda.seul.org>
+
 	* src/g_smob.c: Added. Contains attribute smob functions.
 
 	* src/Makefile.am: Added above source file. -> 
