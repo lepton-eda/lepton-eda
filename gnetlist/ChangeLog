@@ -1,3 +1,8 @@
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in: Fixed typo and removed some hard coded libraries.
+	  Patch and suggestion from Bruno Schwander.
+	
 2001-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/gnet-vhdl.scm: Integrate Thomas Heidel's VHDL bug fixes

@@ -1,3 +1,8 @@
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in: Removed some hard coded libraries.
+	  Patch and suggestion from Bruno Schwander.
+
 2001-03-04 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
 	* src/o_complex.c: Fixed the symbol translate code to do a zoom limits

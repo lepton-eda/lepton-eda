@@ -34,7 +34,7 @@ dnl Change default location of gtk-config
 AC_ARG_WITH(gtk-config, [  --with-gtk-config=path  Change where gtk-config is located], [opt_gtkconfig=$withval])
 
 dnl Change default location of glib-config
-AC_ARG_WITH(glib-config, [  --with-glib-config=path  Change where glib-config is located], [opt_libconfig=$withval])
+AC_ARG_WITH(glib-config, [  --with-glib-config=path  Change where glib-config is located], [opt_glibconfig=$withval])
 
 dnl Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
@@ -231,7 +231,7 @@ dnl old way of doing this, see if new way works
 dnl CFLAGS="$CFLAGS $CFEXTRA `$GTK_CONFIG --cflags`"
 
 CFLAGS="`$GTK_CONFIG --cflags` $CFLAGS $CFEXTRA"
-LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` -lgtk -lgdk -lglib $LDFLAGS -lm"
+LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS -lm"
 
 AC_MSG_CHECKING([for the rest of gtk])
 AC_TRY_COMPILE(

@@ -1,3 +1,9 @@
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in: Removed some hard coded libraries and rearranged
+	  how zlib, libpg and libgdgeda was scanned during configure.
+	  Patch and suggestion from Bruno Schwander.
+
 2001-03-05 Stefan Petersen <spe@geda.seul.org>
 
 	* src/libgeda/s_cue.c: added some missing HAS_LIBGDGEDA.

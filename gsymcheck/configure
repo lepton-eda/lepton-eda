@@ -3936,7 +3936,7 @@ EOF
 
 
 CFLAGS="`$GTK_CONFIG --cflags` $CFLAGS $CFEXTRA"
-LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` -lgtk -lgdk -lglib $LDFLAGS -lm"
+LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS -lm"
 
 echo $ac_n "checking for the rest of gtk""... $ac_c" 1>&6
 echo "configure:3943: checking for the rest of gtk" >&5
@@ -4345,7 +4345,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x;
+typedef int charset[2]; const charset x = {0,0};
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;
