@@ -425,6 +425,20 @@ fi
 #########################################################################
 
 #########################################################################
+# Check for groff start
+# 
+
+# search for groff
+AC_PATH_PROG(GROFF, groff, no, ${PATH})
+if test $GROFF = "no"; then
+        echo "Cannot find groff, some documentation will not be created."
+fi
+
+# 
+# Check for groff end
+#########################################################################
+
+#########################################################################
 # Checks for header files start
 # 
 AC_HEADER_STDC
@@ -484,6 +498,15 @@ fi
 gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
 
+gedadocdir=$dprefix/share/doc/geda-doc
+# --with-docdir : tells where to store documentation if not default
+AC_ARG_WITH(docdir,
+    [  --with-docdir      Where to store documentation if not default.],
+        gedadocdir=$withval)
+expandgedadocdir=`echo $gedadocdir`
+GEDADOCDIR=$expandgedadocdir
+AC_SUBST(GEDADOCDIR)
+
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
@@ -541,6 +564,7 @@ AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
+expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:
@@ -553,4 +577,5 @@ AC_MSG_RESULT([
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
+   documentation directory:          $expandedGEDADOCDIR
 ])

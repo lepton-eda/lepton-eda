@@ -238,6 +238,20 @@ fi
 #########################################################################
 
 #########################################################################
+# Check for groff start
+#
+
+# search for groff
+AC_PATH_PROG(GROFF, groff, no, ${PATH})
+if test $GROFF = "no"; then
+        echo "Cannot find groff, some documentation will not be created."
+fi
+
+# 
+# Check for groff end
+#########################################################################
+
+#########################################################################
 # gEDA/gaf specify setup start
 #
 
@@ -309,6 +323,7 @@ AC_CONFIG_FILES([Makefile
                  include/Makefile 
                  scripts/Makefile 
                  scripts/config.sh 
+                 docs/Makefile 
                  lib/Makefile 
                  lib/system-gschlasrc 
                  gschlas/Makefile 

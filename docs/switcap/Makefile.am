@@ -1,8 +1,3 @@
-## -*- makefile -*-
-##
-## $Id$
-##
-
 docname=switcap
 docsdir = @GEDADOCDIR@/$(docname)
 docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
@@ -10,7 +5,7 @@ docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
 BUILT_SOURCES = $(docname).dvi $(docname).ps $(docname).pdf \
                 $(docname)
 
-EXTRA_DIST = $(docname).tex $(BUILT_SOURCES)  \
+EXTRA_DIST = $(docname).tex $(BUILT_SOURCES) \
 	analysis.eps \
 	ckt.eps \
 	clocks.eps \

@@ -17,7 +17,7 @@ $(docname).ps: $(docname).dvi
 		dvips -f < $(docname).dvi > $(docname).ps     ; \
 	else                                                    \
 		dvi2ps $(docname) > $(docname).ps             ; \
-       fi
+	fi
 
 $(docname).pdf: $(docname).ps
 	ps2pdf $(docname).ps 

@@ -10,9 +10,7 @@ gsymcheck_SOURCES = \
 INCLUDES = -I$(top_srcdir)/include @GSYMCHECK_CFLAGS@
 gsymcheck_LDADD = @GSYMCHECK_LDFLAGS@
 
-man_MANS = gsymcheck.1
-
-EXTRA_DIST = create_proto gsymcheck.1
+EXTRA_DIST = create_proto 
 
 CPROTO =        cproto
 CPROTOCFLAGS =  $(INCLUDES) -I. -I.. -I../include

@@ -1,3 +1,17 @@
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/Makefile.am, fileformats/Makefile.am, 
+	gnetlist/Makefile.am, gschem/Makefile.am, 
+	pads_backannotate/Makefile.am, spice-sdb/Makefile.am, 
+	switcap/Makefile.am, symbols/Makefile.am:  Misc cleanup for
+	consistency sake.
+
+	* netattrib/Makefile.am netattrib.tex: Added texified netattrib
+	mini-HOWTO.  This work was done by Dan McMahill.  Thanks.
+
+	* toplevel/gedadocs.html: Greatly expanded the toplevel documentation
+	index to include all the newly installed docs and readmes.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* spice-sdb/*.html: Added a few missing "'s in key places and 

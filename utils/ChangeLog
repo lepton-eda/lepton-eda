@@ -1,3 +1,14 @@
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Added --with-docdir command line flag as well all
+        the code to support installing documentation.  Also added a prog
+        check for groff.
+
+	* docs/README.*: Moved all the readmes into the docs subdirectory.
+
+	* docs/Makefile.am: Added code to install all the readme files
+        into the documentation directory.  
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Bumped version to 20031231

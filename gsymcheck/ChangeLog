@@ -1,3 +1,18 @@
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.ac: Added --with-docdir command line flag as well all
+        the code to support installing documentation.  Also added a prog
+        check for groff.
+
+	* docs/Makefile.am:  Added commands to generate an html version
+	of the man page.  This html man page gets installed into the
+	documentation directory.
+
+	* src/Makefile.am, docs/gsymcheck.1: Moved man page from the src
+        directory into the docs directory.
+
+	* docs/gsymcheck.1: Minor updates and fixes. 
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped version to 20031231

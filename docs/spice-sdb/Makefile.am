@@ -1,7 +1,6 @@
 docsdir = @GEDADOCDIR@/spice-sdb
 
 docs_DATA = appendix.html intro.html netlist.html simulation.html
- 
 
 EXTRA_DIST = $(docs_DATA) 
 

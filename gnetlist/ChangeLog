@@ -1,3 +1,22 @@
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Added --with-docdir command line flag as well all	
+	the code to support installing documentation.  Also added a prog
+	check for groff.
+
+	* docs/Makefile.am: Added code to install all the readme files 
+	into the documentation directory.  Also added commands to
+	generate an html version of the man page.  This html man page
+	gets installed into the documentation directory.
+
+	* docs/vams/Makefile.am: Added code to install all the text files
+	for the VAMS backend into the documentation directory.
+
+	* src/Makefile.am, docs/gnetlist.1: Moved man page from the src
+	directory into the docs directory.
+
+	* docs/gnetlist.1: Minor updates and fixes.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-spice-sdb.scm: Updated this backend to version

@@ -8,7 +8,12 @@ TEXI2HTMLFLAGS =	-split_chapter
 
 man_MANS = 		gschem.1
 
-EXTRA_DIST = 		gschemdoc.texi gschem.1 texinfo.tex
+EXTRA_DIST = 		gschemdoc.texi texinfo.tex gschem.1 gschem.html
+
+BUILT_SOURCES = 	gschem.html
+
+docsdir =               @GEDADOCDIR@/man
+docs_DATA =             gschem.html
 
 info_TEXINFOS =		gschemdoc.texi
 gschemdoc_TEXINFOS =	a_pan.texi a_zoom.texi g_funcs.texi g_hook.texi       \
@@ -46,11 +51,25 @@ endif
 html: $(gschemdoc_TEXINFOS) $(info_TEXINFOS)
 	$(TEXI2HTML) $(TEXI2HTMLFLAGS) $(info_TEXINFOS)
 
+%.html: %.1
+	@echo "Creating html manpage (using groff)"
+	@rm -rf $*.tmp
+	@if which groff >/dev/null 2>/dev/null; then             \
+		LC_NUMERIC=C groff -man -T html  $*.1 >$*.tmp   ;\
+	else                                                     \
+		echo "** Did not find groff **"                 ;\
+		echo "Some Documentation might not be correct!" ;\
+                touch $*.html                                   ;\
+	fi
+	@mv -f $*.tmp $*.html
 
-MOSTLYCLEANFILES = 	*.log *~
-CLEANFILES = 		*.log *~
+gschem.html: gschem.1
+
+
+MOSTLYCLEANFILES = 	*.log *~ gschem.html
+CLEANFILES = 		*.log *~ gschem.html
 DISTCLEANFILES = 	*.log core FILE *~ prototype.bak           \
 			*.html *.dvi *.info *.info-* *.aux *.fn    \
 			*.fns *.cp *.ky *.pg *.toc *.tp *.vrs *.vr \
 			$(gschemdoc_TEXINFOS)
-MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure
+MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure *.html

@@ -12,9 +12,7 @@ gnetlist_SOURCES = \
 INCLUDES = -I$(top_srcdir)/include @GNETLIST_CFLAGS@
 gnetlist_LDADD = @GNETLIST_LDFLAGS@
 
-man_MANS = gnetlist.1
-
-EXTRA_DIST = create_proto gnetlist.1 
+EXTRA_DIST = create_proto 
 
 CPROTO =        cproto
 CPROTOCFLAGS =  $(INCLUDES) -I. -I.. -I../include

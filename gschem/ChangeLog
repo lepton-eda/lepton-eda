@@ -7,6 +7,16 @@
 	160x120 and instead setting the window size to 160x136.  This change
 	is only for gtk+ 1.2.x, gtk+ 2.2.x uses 160x120 and allows this size.
 
+        * configure.ac: Added --with-docdir command line flag as well all
+        the code to support installing documentation.  Also added a prog
+        check for groff.
+
+	* docs/Makefile.am: Added commands to generate an html version
+	of the man page.  This html man page gets installed into the 
+	documentation directory.
+
+	* docs/gschem.1: Minor updates and fixes.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Moved some code around to fix a memory 
