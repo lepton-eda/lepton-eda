@@ -5,18 +5,6 @@
 /* Define the location of GEDARCDIR */ 
 #define GEDARCDIR none
 
-/* Define if you have the stroke library   */
-#undef HAS_LIBSTROKE
-
-/* Define if you have the libgdgeda library   */
-#undef HAS_LIBGDGEDA
-
-/* Define if you have the zlib library   */
-#undef HAS_LIBZ
-
-/* Define if you have the png library   */
-#undef HAS_LIBPNG
-
 /* Define if you have optarg in unistd */
 #undef OPTARG_IN_UNISTD
 
@@ -28,9 +16,6 @@
 
 /* Define the version (mainly used in sym/sch/rc version compat. testing) */
 #define VERSION none  
-
-/* Define if you have tcl installed */
-#undef HAS_TCL 
 
 /* Define the gtk version */ 
 #define GTKVERSION none
