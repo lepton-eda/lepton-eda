@@ -7,3 +7,4 @@ configure
 config.h
 config.log
 config.status
+aclocal.m4

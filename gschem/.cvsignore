@@ -7,3 +7,4 @@ configure
 stamp-h1
 stamp-h*.in
 *.cache
+aclocal.m4

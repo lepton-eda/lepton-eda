@@ -9,3 +9,4 @@ config.h
 config.log
 config.status
 libgeda-config
+aclocal.m4

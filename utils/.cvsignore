@@ -6,3 +6,4 @@ config.log
 config.status
 stamp-h1
 configure
+aclocal.m4

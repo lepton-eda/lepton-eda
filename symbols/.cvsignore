@@ -6,3 +6,4 @@ config.status
 configure
 gesym-config
 system-commonrc
+aclocal.m4
