@@ -1,4 +1,5 @@
-/* gEDA - GPL Electronic Design Automation
+/* -*- geda-c -*-
+ * gEDA - GPL Electronic Design Automation
  * gnetlist - gEDA Netlist 
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
@@ -114,11 +115,15 @@ if (!quiet_mode) {
 	                strcpy(pr_current->page_current->page_filename, 
 				argv[i]);
 
-if (!quiet_mode) {
-			printf("Loading schematic [%s]\n", argv[i]);
-}
-			f_open(pr_current, pr_current->page_current->page_filename);
-			first_page = 0;
+			if (!quiet_mode) {
+				printf("Loading schematic [%s]\n", argv[i]);
+			}
+			if ( (f_open(pr_current, 
+				     pr_current->page_current->page_filename) == 0) {
+				fprintf(stderr,"Couldn't load schematic [%s]\n",
+					pr_current->page_current->page_filename);
+			}
+			     first_page = 0;
 		} else {
 
 			/* now are there any other filenames specified? */
@@ -127,8 +132,12 @@ if (!quiet_mode) {
 			printf("Loading schematic [%s]\n", argv[i]);
 }
 			if (!s_page_new(pr_current, argv[i])) {
-                		f_open(pr_current, pr_current->
-				                   page_current->page_filename);
+				if ( (f_open(pr_current, 
+					     pr_current->page_current->page_filename) == 0) {
+					fprintf(stderr,"Couldn't load schematic [%s]\n",
+						pr_current->page_current->page_filename);
+			}
+
 			}
 		}
 		i++;

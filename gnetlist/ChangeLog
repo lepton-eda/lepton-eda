@@ -1,4 +1,9 @@
 
+2000-10-10  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/gnetlist.c: Honours the error code returned from f_open
+	  from now on and tells invoker it didn't find the file.
+	
 2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_traverse.c: Changed the code which reports if a uref is
