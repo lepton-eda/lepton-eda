@@ -8,18 +8,20 @@ To run the binary distribution of gEDA/Cygwin
 You should not have to install the cygwin distribution.  gEDA/Cygwin
 is fairly self contained.
 
-1) Grab gEDA-cygwin-VERSION.zip and unzip it into c:\   At this stage
+1) Grab geda-cygwin-version.zip and unzip it into c:\   At this stage
    in the game, it really needs to be in c:\  Unzipping the zip file
    should create a directory called "geda" (c:\geda)
 
 2) Set the following environment variables:
-	TMP	(some temp directory, say C:\TEMP, make sure this dir exists)
-	HOME	(some home directory, make sure this dir exists)
+	TMP	(some temp directory, say C:\TEMP , make sure this dir exists)
+	HOME	(some home directory, say C:\ ,make sure this dir exists)
 
 3) Added c:\geda\bin to your PATH variable
 
-4) Run gschem by typing: gschem  in a cmd window.  It should run.  If not 
-   please e-mail ahvezda@geda.seul.org with the error message.
+4) Run gschem by typing: gschem  in a cmd window.  It should run.  If not
+   please e-mail ahvezda@geda.seul.org with the error message.  You can
+   also create a shortcut on the desktop to the binary, just change the
+   Run option to run "minimized" if you don't want to see the console.
 
 
 Please keep in mind that this port is really new and may do really stupid
