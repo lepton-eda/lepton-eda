@@ -1,3 +1,12 @@
+2003-12-02 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/comps.c: Fixed bug: Download warning instead of missing
+        file error (if ftp location available).
+        
+        * src/dirs.c: Disabling global installation for non-root users.
+        
+        * src/setup.cfg: List of files for GAF libraries set added.
+        
 2003-11-28 Piotr Miarecki   <tertul@poczta.onet.pl>
 
         * m4/Makefile.am: Fixed bug: nls.m4 and po.m4 were not distributed.
