@@ -2,6 +2,15 @@
 
 	* aclocal.m4: Removed file from cvs.
 
+	* fileformats/fileformats.html: Applied doc patch from Egil (was
+	associated with the unapplied bus ripper support patch)
+
+	* fileformats/Makefile.am: Updated Makefile to be the latex source ->
+	everything else type.
+
+	* fileformats/fileformats.tex: Started converting html into tex.
+	Updating documentation as I go.  Not complete yet.
+	
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* symbols/Makefile.am, attributes/Makefile.am: Changed the mkdir

@@ -1,0 +1,458 @@
+% gEDA - GPL Electronic Design Automation
+% fileformats.tex - gEDA/gaf File Formats 
+% Copyright (C) 2002 Ales V. Hvezda
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+\documentclass{article}
+\usepackage{epsfig}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\title{gEDA/gaf File Format Document}
+\author{Ales V. Hvezda, ahvezda@geda.seul.org\\
+        \\
+        This document is released under GFDL\\
+        (http://www.gnu.org/copyleft/fdl.html)}
+\date{November 30th, 2002}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+
+\section{Overview}
+
+This file is the official documentation for the file formats in gEDA/gaf
+(Gschem And Friends).  The primary file format used in gEDA/gaf is the
+schematic/symbol format.  Files which end with .sch or .sym are schematics
+or symbol files. This file format is current as of gEDA version 20021103.
+Until there is another file type in gEDA/gaf, then this document will
+only cover the symbol/schematic file format.
+
+
+\section{Coordinate Space}
+\begin{itemize}
+ \item All coordinates are in mils (1/1000 or an inch).  This is an arbitrary decision. Remember in there is no concept of physical lengths/dimensions in schematics
+and symbols (for schematic capture only).  
+ \item Origin is in lower left hand corner.
+ \item The size of the coordinate space is unlimited, but it is recommended that all objects stay within (120.0, 90.0) (x, y inches).
+ \item It is generally advisable to have positive x and y coordinates, however, negative coordinates work too, but not recommended.
+\end{itemize}
+
+The following figure shows how the coordinate space is setup:
+
+\begin{center}
+\epsfbox{coords.eps}
+\end{center}
+
+X axis increases going to the right.  Y axis increase going up.
+Coordinate system is landscape and corresponds to a sheet of paper turned
+on its side.
+
+
+\section{Filenames}
+
+Symbols end in .sym and schematics end in .sch.  The only filename convention 
+that is used in gEDA/gaf is that if there are multiple instances of a symbol
+with the same name (like a 7400), then a -1, -2, -3, ... -N suffix is added
+to the end of the filename.  Example: 7400-1.sym, 7400-2.sym, 7400-3.sym...
+
+\section{Object types}
+
+A schematic/symbol file for gEDA/gaf consists of:
+
+\begin{itemize}
+ \item A version (v) as the first item in the file.  This is required.
+ \item Any number of objects and the correct data.  Objects are specified 
+       by an "object type"
+ \item Most objects are a single line, however text objects are two lines long.
+ \item No blank lines at the end of the file (these are ignored by the tools)
+ \item For all enumerated types in the gEDA/gaf file formats, the field takes
+       on the numeric value.
+\end{itemize}
+
+The "object type" id is a single letter and this id {\bf must} start in the 
+first column.  The object type id is case sensitive.
+
+The following sections describe the specifics of each recognized object 
+type.  Each section has the name of the object, which file type (sch/sym)
+the object can appear in, the format of the data, a description of
+each individual field, details and caveats of the fields, and finally
+an example.
+
+\subsection{version}
+
+Valid in: Schematic and Symbol files
+
+{\bf type version}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Field & Description \\ \hline \hline
+{\bf type} & v \\ \hline
+{\bf version} & version of gEDA/gaf file \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The type is a lower case "v" (as in Victor).
+\item This object must be in every file used or created by the gEDA/gaf tools.
+\item The format of the version is YYYYMMDD.  
+\item The version number is not an arbitrary timestamp.  Do not make up a 
+      version number and expect the tools to behave properly.  
+\item The version number is used to keep track of file format variations.
+\end{itemize}
+
+Valid versions include: \newline
+19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704,
+20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527,
+20020825, 20021103
+
+Keep in mind that each of the listed versions might have had file format
+variations.  This document only covers the last version's file format.
+
+Example: \newline
+{\tt v 20021103}
+
+
+\subsection{line}
+
+Valid in: Schematic and Symbol files
+
+{\bf type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Field & Description \\ \hline \hline
+{\bf type} & L \\ \hline
+{\bf x1} & First X coordinate (mils) \\ \hline
+{\bf y1} & First Y coordinate (mils) \\ \hline
+{\bf x2} & Second X coordinate (mils) \\ \hline
+{\bf y2} & Second Y coordinate (mils) \\ \hline
+{\bf color} & Color index (See color section) \\ \hline
+{\bf width} & Width of line (mils) \\ \hline
+{\bf capstyle} & Line cap style: 0, 1, or 2. \\ \hline
+{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
+{\bf dashlength} & Length of dash (mils) \\ \hline
+{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The capstyle is an enumerated type: 
+\begin{itemize}
+	\item END\_NONE = 0
+	\item END\_SQUARE = 1
+	\item END\_ROUND = 2
+\end{itemize}
+\item The dashstyle is an enumerated type: 
+\begin{itemize}
+	\item TYPE\_SOLID = 0 
+	\item TYPE\_DOTTED = 1
+	\item TYPE\_DASHED = 2
+	\item TYPE\_CENTER = 3
+        \item TYPE\_PHANTOM = 4
+\end{itemize}
+\item The dashlength parameter is not used for TYPE\_SOLID and TYPE\_DOTTED.  
+      This parameter should take on a value of -1 in these cases.
+\item The dashspace paramater is not used for TYPE\_SOLID.
+      This parameter should take on a value of -1 in these case.
+\end{itemize}
+
+Example:\newline
+{\tt L 23000 69000 28000 69000 3 40 0 1 -1 75}
+
+A line segment from (23000, 69000) to (28000, 69000) with color index 3, 
+40 mils thick, no cap, dotted line style, and with a spacing of 75 mils 
+in between each dot.
+
+
+\subsection{box}
+
+Valid in: Schematic and Symbol files
+
+{\bf type x y width height color width capstyle dashtype dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 }
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Field & Description \\ \hline \hline
+{\bf type} & B \\ \hline
+{\bf x} & Lower left hand X coordinate (mils) \\ \hline 
+{\bf y} & Lower left hand Y coordinate  (mils)\\ \hline
+{\bf width} & Width of the box (x direction) (mils) \\ \hline
+{\bf height} & Height of the box (y direction) (mils) \\ \hline
+{\bf color} & Color index (See color section) \\ \hline
+{\bf width} & Width of lines (mils) \\ \hline
+{\bf capstyle} & Line cap style: 0, 1, or 2. \\ \hline
+{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
+{\bf dashlength} & Length of dash (mils) \\ \hline
+{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
+{\bf filltype} & Type of fill \\ \hline
+{\bf fillwidth} & Width of the fill lines (mils) \\ \hline
+{\bf angle1} & First angle of fill (degrees) \\ \hline
+{\bf pitch1} & First pitch/spacing of fill (mils) \\ \hline
+{\bf angle2} & Second angle of fill (degrees) \\ \hline
+{\bf pitch2} & Second pitch/spacing of fill (mils) \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The capstyle is an enumerated type: 
+\begin{itemize}
+	\item END\_NONE = 0
+	\item END\_SQUARE = 1
+	\item END\_ROUND = 2
+\end{itemize}
+\item The dashstyle is an enumerated type: 
+\begin{itemize}
+	\item TYPE\_SOLID = 0 
+	\item TYPE\_DOTTED = 1
+	\item TYPE\_DASHED = 2
+	\item TYPE\_CENTER = 3
+        \item TYPE\_PHANTOM = 4
+\end{itemize}
+\item The dashlength parameter is not used for TYPE\_SOLID and TYPE\_DOTTED.  
+      This parameter should take on a value of -1 in these cases.
+\item The dashspace paramater is not used for TYPE\_SOLID.
+      This parameter should take on a value of -1 in these case.
+\item The filltype parameter is an enumerated type: 
+\begin{itemize}
+	\item FILLING\_HOLLOW = 0
+	\item FILLING\_FILL = 1
+	\item FILLING\_MESH = 2 
+	\item FILLING\_HATCH = 3
+        \item FILLING\_VOID = 4  {\bf unused}
+\end{itemize}
+\item If the filltype is 0 (FILLING\_HOLLOW), then all the fill parameters 
+      should take on a value of -1.
+\item The fill type FILLING\_FILL is a solid color fill.
+\item The two pairs of pitch and spacing control the fill or hatch if the
+      fill type is FILLING\_MESH. 
+\item Only the first pair of pitch and spacing are used if the fill type is
+      FILLING\_HATCH.
+\end{itemize}
+
+Example:\newline
+{\tt B 33000 67300 2000 2000 3 60 0 2 75 50 0 -1 -1 -1 -1 -1}
+
+A box with the lower left hand corner at (33000, 67300) and a width and height
+of (2000, 2000), color index 3, line width of 60 mils, no cap, dashed line 
+type, dash length of 75 mils, dash spacing of 50 mils, no fill, rest parameters 
+unset.
+
+\subsection{circle}
+
+Valid in: Schematic and Symbol files
+
+{\bf type x y radius color width capstyle dashtype dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 }
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Field & Description \\ \hline \hline
+{\bf type} & V \\ \hline
+{\bf x} & Center X coordinate (mils) \\ \hline 
+{\bf y} & Center Y coordinate (mils)\\ \hline
+{\bf radius} & Radius of the circle (mils) \\ \hline
+{\bf color} & Color index (See color section) \\ \hline
+{\bf width} & Width of circle line (mils) \\ \hline
+{\bf capstyle} & Should be 0 {\bf unused} \\ \hline
+{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
+{\bf dashlength} & Length of dash (mils) \\ \hline
+{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
+{\bf filltype} & Type of fill \\ \hline
+{\bf fillwidth} & Width of the fill lines (mils) \\ \hline
+{\bf angle1} & First angle of fill (degrees) \\ \hline
+{\bf pitch1} & First pitch/spacing of fill (mils) \\ \hline
+{\bf angle2} & Second angle of fill (degrees) \\ \hline
+{\bf pitch2} & Second pitch/spacing of fill (mils) \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The dashstyle is an enumerated type: 
+\begin{itemize}
+	\item TYPE\_SOLID = 0 
+	\item TYPE\_DOTTED = 1
+	\item TYPE\_DASHED = 2
+	\item TYPE\_CENTER = 3
+        \item TYPE\_PHANTOM = 4
+\end{itemize}
+\item The dashlength parameter is not used for TYPE\_SOLID and TYPE\_DOTTED.  
+      This parameter should take on a value of -1 in these cases.
+\item The dashspace paramater is not used for TYPE\_SOLID.
+      This parameter should take on a value of -1 in these case.
+\item The filltype parameter is an enumerated type: 
+\begin{itemize}
+	\item FILLING\_HOLLOW = 0
+	\item FILLING\_FILL = 1
+	\item FILLING\_MESH = 2 
+	\item FILLING\_HATCH = 3
+        \item FILLING\_VOID = 4  {\bf unused}
+\end{itemize}
+\item If the filltype is 0 (FILLING\_HOLLOW), then all the fill parameters 
+      should take on a value of -1.
+\item The fill type FILLING\_FILL is a solid color fill.
+\item The two pairs of pitch and spacing control the fill or hatch if the
+      fill type is FILLING\_MESH. 
+\item Only the first pair of pitch and spacing are used if the fill type is
+      FILLING\_HATCH.
+\end{itemize}
+
+Example:\newline
+{\tt V 38000 67000 900 3 0 0 2 75 50 2 10 20 30 90 50}
+
+A circle with the center at (38000, 67000) and a radius of 900 mils, color 
+index 3, line width of 0 mils (smallest size), no cap, dashed line 
+type, dash length of 75 mils, dash spacing of 50 mils, mesh fill, 10 mils
+thick mesh lines, first mesh line: 20 degrees, with a spacing of 30 mils, 
+second mesh line: 90 degrees, with a spacing of 50 mils.
+
+
+\subsection{arc}
+
+Valid in: Schematic and Symbol files
+
+{\bf type x y radius startangle sweepangle color width capstyle dashtype dashlength dashspace }
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Field & Description \\ \hline \hline
+{\bf type} & A \\ \hline
+{\bf x} & Center X coordinate (mils) \\ \hline 
+{\bf y} & Center Y coordinate (mils)\\ \hline
+{\bf radius} & Radius of the arc (mils) \\ \hline
+{\bf startangle} & Starting angle of the arc (degrees) \\ \hline
+{\bf sweepangle} & Amount the arc sweeps (degrees) \\ \hline
+{\bf color} & Color index (See color section) \\ \hline
+{\bf width} & Width of circle line (mils) \\ \hline
+{\bf capstyle} & Cap style: 0, 1, or 2. \\ \hline
+{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
+{\bf dashlength} & Length of dash (mils) \\ \hline
+{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The capstyle is an enumerated type: 
+\begin{itemize}
+	\item END\_NONE = 0
+	\item END\_SQUARE = 1
+	\item END\_ROUND = 2
+\end{itemize}
+\item The dashstyle is an enumerated type: 
+\begin{itemize}
+	\item TYPE\_SOLID = 0 
+	\item TYPE\_DOTTED = 1
+	\item TYPE\_DASHED = 2
+	\item TYPE\_CENTER = 3
+        \item TYPE\_PHANTOM = 4
+\end{itemize}
+\item The dashlength parameter is not used for TYPE\_SOLID and TYPE\_DOTTED.  
+      This parameter should take on a value of -1 in these cases.
+\item The dashspace paramater is not used for TYPE\_SOLID.
+      This parameter should take on a value of -1 in these case.
+\end{itemize}
+
+Example:\newline
+{\tt A 30600 75000 2000 0 45 3 0 0 3 75 50}
+
+An arc with the center at (30600, 75000) and a radius of 2000 mils, a 
+starting angle of 0, sweeping 45 degrees, color index 3, line width of 0 mils 
+(smallest size), no cap, center line type, dash length of 75 mils, dash 
+spacing of 50 mils.
+
+
+\subsection{text}
+
+Valid in: Schematic and Symbol files
+
+{\bf type x y color size visibility show\_name\_value angle alignment}\newline
+{\bf string}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Field & Description \\ \hline \hline
+{\bf type} & T \\ \hline
+{\bf x} & First X coordinate (mils) \\ \hline
+{\bf y} & First Y coordinate (mils) \\ \hline
+{\bf color} & Color index (See color section) \\ \hline
+{\bf size} & Size of text (points, 1/72 of an inch) \\ \hline
+{\bf visibility} & Visibility of text either 0 or 1 \\ \hline
+{\bf show\_name\_value} & Attribute visibility control, either 0, 1, or 2 \\ \hline
+{\bf angle} & Angle of the text, either 0, 90, 180, or 270 \\ \hline
+{\bf alignment} & Alignment/origin of the text (see below) \\ \hline
+{\bf string} & The text string, on a seperate line \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item This object is a multi line object.  The first line contains all the 
+      text parameters and the second line is the text string.
+\item The minimum size is 2 points.
+\item There is no maximum size.
+\item The coordinate pair is the origin of the text item.
+\item The visibility field is an enumerated type:
+\begin{itemize}
+	\item INVISIBLE = 0 
+	\item VISIBLE = 1
+\end{itemize}
+\item The show\_name\_value is an enumerated type:
+\begin{itemize}
+	\item SHOW\_NAME\_VALUE = 0  (show both name and value of an attribute)
+	\item SHOW\_VALUE = 1 (show only the value of an attribute)
+	\item SHOW\_NAME = 2  (show only the name of an attribute)
+\end{itemize}
+\item The show\_name\_value field is only valid if the string is an attribute
+      (string has to be in the form: name=value to be considered an attribute).
+\item The angle of the text can only take on one of the following values: 
+      0, 90, 180, 270.  A value of 270 will always generate upright text.
+\item The alignment/origin field controls the relative location of the 
+      origin.
+\item The alignment field can take a value from 0 to 8.
+
+The following diagram shows what the values for the alignment field mean:
+
+\begin{center}
+\epsfbox{alignment.eps}
+\end{center}
+\end{itemize}
+
+Example:\newline 
+{\tt T 16900 35800 3 10 1 0 0 0}\newline
+{\tt Text string!}
+
+A text object with the origin at (16900, 35800), color index 3, 10 points in
+size, visible, attribute flags not valid (not an attribute), origin at lower
+left, string: Text string!
+
+\newpage
+\section{Document Revision History}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+November 30th, 2002 & Created fileformats.tex from fileformats.txt. \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}
+
+
+
