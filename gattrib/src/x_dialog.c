@@ -21,6 +21,9 @@
  * This file holds fcns used to display dialog boxes.  
  *------------------------------------------------------------------*/
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 /*------------------------------------------------------------------
  * Includes required to run graphical widgets.
@@ -54,7 +57,6 @@
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/
-#include <config.h>
 #include <libgeda/libgeda.h>       /* geda library fcns  */
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
@@ -468,7 +470,8 @@ int x_dialog_missing_sym()
   
   /*  Create a text label for the dialog window */
   string =
-    g_strdup_printf(_("Warning!  One or more components have been found with missing symbol files!\n"), refdes);
+    g_strdup_printf(_("Warning!  One or more components have been found with missing symbol files (%s)!\n"),
+      refdes);
   string =
     g_strdup_printf(_("%s\n"), string);
   string =
@@ -933,7 +936,7 @@ void x_dialog_about_dialog()
 /* ========================================================= *
  * Fcns common to all dialog boxes
  * This code also stolen from gschem & adapted for gattrib. 
-/* ========================================================= *
+ * ========================================================= */
 
 /* ---------------------------------------------------- *
  * This creates a dialog box.  It has two areas: the vbox
