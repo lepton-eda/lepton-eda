@@ -51,11 +51,6 @@ extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 
-/* CONNECTION stuff 
-extern void (*pin_CONN_recalc_func)();
-extern void (*net_CONN_recalc_func)();
-*/
-
 
 /* current mouse location */
 extern int mouse_x; /* defined in x_event.c */

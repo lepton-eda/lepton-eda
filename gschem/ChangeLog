@@ -9,6 +9,15 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/5/99	Removed some examples schematic from examples/ directory (moved them
+	to the gnetlist/examples directory)
+
+	Created all74_1.sch for testing purposes
+
+9/4/99	Removed some obsolete stuff from include/globals.h
+
+9/3/99	Update g_key to use gdk_keyval_name instead of XKeysymToString
+
 8/31/99	Renamed ntext to text (finally)
 
 	Updated the stroke mechanism to what Stefan suggested.  Much better
