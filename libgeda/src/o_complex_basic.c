@@ -456,6 +456,33 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versi
 	int mirror;
 
 	sscanf(buf, "%c %d %d %d %d %d %s\n", &type, &x1, &y1, &selectable, &angle, &mirror, basename);
+
+	switch(angle) {
+
+		case(0):
+		case(90):
+		case(180):
+		case(270):
+		break;
+
+		default:
+                	fprintf(stderr, "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n", type, x1, y1, selectable, angle, mirror, basename); 
+                	s_log_message("Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n", type, x1, y1, selectable, angle, mirror, basename); 
+		 break;
+	}
+
+	switch(mirror) {
+
+		case(0):
+		case(1):
+
+		break;
+		
+		default:
+                	fprintf(stderr, "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n", type, x1, y1, selectable, angle, mirror, basename); 
+                	s_log_message("Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n", type, x1, y1, selectable, angle, mirror, basename); 
+		break;
+	}
 	
 	if (strncmp(basename, "EMBEDDED", 8) == 0) {
 		object_list = o_complex_add_embedded(w_current, 

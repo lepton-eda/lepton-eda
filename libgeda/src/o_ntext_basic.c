@@ -637,6 +637,11 @@ o_ntext_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[]
 						&visibility, &show_name_value, 
 						&angle);	
 
+        if (size == 0) {
+                fprintf(stderr, "Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
+                s_log_message("Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
+        }
+
 	object_list = o_ntext_add(w_current, object_list, type, color, x, y, 
 				angle, string, 
 				size, visibility, show_name_value);

@@ -13,6 +13,9 @@ Most recent changes are at the top of this file
 	Removed some obsolete data structure elements in the gnetlist part
 	of struct.h
 
+	Added code to warn user that a zero length object (line, net, pin 
+	etc...) was just read in
+
 7/2/99 	Fixed the ./configure stuff dealing with libgdgeda so that it works
 	when libgdgeda isn't installed in a system directory
 

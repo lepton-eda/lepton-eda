@@ -223,6 +223,12 @@ o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	width = x1 + radius;
 	height = y1 - radius;
 
+        if (radius == 0) {
+                fprintf(stderr, "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n", type, x1, y1, radius, start_angle, end_angle, color);
+                s_log_message("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n", type, x1, y1, radius, start_angle, end_angle, color);
+        }
+
+
 	object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,  x, y, 
 				width, height, 
 				start_angle*64, end_angle*64);

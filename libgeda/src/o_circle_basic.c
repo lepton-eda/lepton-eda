@@ -225,12 +225,10 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
 
 	sscanf(buf, "%c %d %d %d %d\n", &type, &x1, &y1, &radius, &color);	
 
-/* old system 
-	d_x1 = x1-radius; 
-	d_y1 = y1+radius; 
-	d_x2 = x1+radius; 
-	d_y2 = y1-radius;
-*/
+	if (radius == 0) {
+		fprintf(stderr, "Found a zero radius circle [ %c %d %d %d %d ]\n", type, x1, y1, radius, color);
+		s_log_message("Found a zero radius circle [ %c %d %d %d %d ]\n", type, x1, y1, radius, color);
+	}
 
 	object_list = (OBJECT *) o_circle_add(w_current, object_list, type, color, x1, y1, radius);
 

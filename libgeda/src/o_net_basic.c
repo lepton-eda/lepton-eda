@@ -210,6 +210,12 @@ o_net_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	d_x2 = x2; 
 	d_y2 = y2; 
 
+	if (x1 == x2 && y1 == y2) {
+		fprintf(stderr, "Found a zero length net [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
+		s_log_message("Found a zero length net [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
+	}
+
+
 	if (w_current->override_net_color != -1) {
                 color = w_current->override_net_color;
         }

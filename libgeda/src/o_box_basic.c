@@ -190,6 +190,11 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	d_x2 = x1+width; /* end points of the box */
 	d_y2 = y1;
 
+	if (width == 0 || height == 0) {
+                fprintf(stderr, "Found a zero width/height box [ %c %d %d %d %d %d ]\n", type, x1, y1, width, height, color);
+                s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n", type, x1, y1, width, height, color);
+	}
+
 	object_list = (OBJECT *) o_box_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
 
 	return(object_list);

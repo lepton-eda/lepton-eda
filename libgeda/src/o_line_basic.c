@@ -217,6 +217,11 @@ o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	d_x2 = x2; 
 	d_y2 = y2; 
 
+	if (x1 == x2 && y1 == y2) {
+		fprintf(stderr, "Found a zero length line [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
+		s_log_message("Found a zero length line [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
+	}
+
 	object_list = o_line_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
 	return(object_list);
 }
