@@ -33,6 +33,8 @@
 #include "../include/prototype.h"
 
 
+/* Returns 0 on failure and 1 on success */
+
 int
 f_open(TOPLEVEL *w_current, char *filename)
 {
@@ -50,7 +52,7 @@ f_open(TOPLEVEL *w_current, char *filename)
 		s_log_message("Opened schematic [%s]\n", filename);
 	} else {
 	  /* Failed to open page */
-	  return 1;
+	  return 0;
 	}
 
         w_current->page_current->object_tail = (OBJECT *) 
@@ -69,7 +71,7 @@ f_open(TOPLEVEL *w_current, char *filename)
 
 	w_current->page_current->CHANGED=0; /* added 4/7/98 */
 
-	return 0;
+	return 1;
 }
 
 void
