@@ -811,8 +811,9 @@
     ("a" . file-save-as)
     ("l" . file-save-all)
     ("p" . file-print)
+    ("r" . page-revert)  ; yes this is okay; resuing page-revert
     ("i" . file-image)
-    ("r" . file-script)
+    ("t" . file-script)
     ("c" . file-close-window)
     ("q" . file-quit)))
 
@@ -852,6 +853,7 @@
     ("n" . page-next)
     ("p" . page-prev)
     ("e" . page-new)
+    ("r" . page-revert)
     ("c" . page-close)
     ("d" . page-discard)
     ("Shift P" . page-print)))

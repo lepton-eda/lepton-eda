@@ -1085,6 +1085,39 @@ DEFINE_I_CALLBACK(page_close)
 
 }
 
+/* TODO: may have memory leak? */
+DEFINE_I_CALLBACK(page_revert)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	char *filename;
+
+	exit_if_null(w_current);
+
+	filename = u_basic_strdup(w_current->page_current->page_filename);
+
+	s_page_free(w_current, w_current->page_current);
+	s_page_new(w_current, filename);
+
+	/* now re open it */
+	w_current->DONT_REDRAW = 1;
+        f_open(w_current, w_current->page_current->page_filename);
+        i_set_filename(w_current, w_current->page_current->page_filename);
+
+	x_repaint_background(w_current);
+	x_window_setup_world(w_current);
+	x_manual_resize(w_current);
+	a_zoom_limits(w_current, w_current->page_current->object_head);
+
+	/* now update the scrollbars */
+	x_hscrollbar_update(w_current);
+	x_vscrollbar_update(w_current);
+	update_page_manager(NULL, w_current);
+	w_current->DONT_REDRAW = 0;
+
+	o_redraw_all(w_current);
+	free(filename);
+}
+
 DEFINE_I_CALLBACK(page_discard)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;

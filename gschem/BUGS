@@ -7,6 +7,8 @@ Bugs (no particular order):
 	Relative paths are not displayed properly in the component add 
 	dialog box
 
+	Page Revert may or may not have a memory leak, investigate this.
+
 	Try opening a file called untitled_1.sch, doesn't work since
 	you have an untitled_1 (the default) already open.
 

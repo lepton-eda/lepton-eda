@@ -184,6 +184,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("page-prev", g_key_page_prev);
 	gh_new_procedure0_0 ("page-new", g_key_page_new);
 	gh_new_procedure0_0 ("page-close", g_key_page_close);
+	gh_new_procedure0_0 ("page-revert", g_key_page_revert);
 	gh_new_procedure0_0 ("page-discard", g_key_page_discard);
 	gh_new_procedure0_0 ("page-print", g_key_page_print);
 	gh_new_procedure0_0 ("add-component", g_key_add_component);

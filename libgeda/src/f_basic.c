@@ -43,7 +43,8 @@ f_open(TOPLEVEL *w_current, char *filename)
                    w_current->init_top, w_current->init_bottom);
 
 	w_current->page_current->object_tail = (OBJECT *) 
-			o_read(w_current, w_current->page_current->object_tail, filename);
+			o_read(w_current, w_current->page_current->object_tail, 
+		               filename);
 
 	if (w_current->page_current->object_tail != NULL) {
 		s_log_message("Opened schematic [%s]\n", filename);

@@ -69,6 +69,7 @@ SCM g_key_page_next(void);
 SCM g_key_page_prev(void);
 SCM g_key_page_new(void);
 SCM g_key_page_close(void);
+SCM g_key_page_revert(void);
 SCM g_key_page_discard(void);
 SCM g_key_page_print(void);
 SCM g_key_add_component(void);
@@ -236,6 +237,7 @@ void i_callback_page_next(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_page_prev(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_close(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_page_revert(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_discard(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_print(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_component(gpointer data, guint callback_action, GtkWidget *widget);

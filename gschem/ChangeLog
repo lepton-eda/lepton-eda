@@ -9,6 +9,22 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-12-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_menus.c: Added File/Revert Page to make Magnus happy. :-)
+
+	* src/i_callbacks.c: Added code to implement above
+
+	* lib/system-gschemrc: Added hotkey for revert page.
+
+	* src/g_key.c and src/g_register: Changes to support above.
+
+	* lib/system-gschemrc: Changed file script hotkey from "fr" to "ft"
+	  "fr" is now used for revert.
+
+	* src/x_menus.c: Added Zoom limits/Zoom box to the right mouse button
+	  popup menu to make Mangus happy. :-)
+
 1999-11-19  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_menus.c: Added Zoom in and Zoom out to the third mouse

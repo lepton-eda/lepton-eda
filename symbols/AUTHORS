@@ -301,6 +301,21 @@ Magnus Danielson	- For contributing the following symbols:
 				LSI11BUS-1.sym
 
 			  (Some rename/cleanup by Ales)
+			
+			  For making updates/changes/fixes to the following
+			  symbol:
+
+				74182-1.sym
+
+			  For contributing (and checking in the symbols)
+			  the following symbols:
+
+				4001-1.sym 4013-1.sym 74243-1.sym
+				74280-1.sym 74367-1.sym DIN41612C48-1.sym
+				DIN41612C56-1.sym DIN41612C96-1.sym
+				gpib-1.sym z80pio-1.sym
+
+			   (Very minor changes to the symbols by Ales)
 
 Jamil Isma'il Khatib	- For contributing the following symbol:
 
