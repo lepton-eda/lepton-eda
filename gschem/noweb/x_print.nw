@@ -15,7 +15,8 @@
 <<x_print.c : print_landscape()>>
 <<x_print.c : print_portrait()>>
 <<x_print.c : x_print_set_window()>>
-<<x_print.c : x_print_set_limits()>>
+<<x_print.c : x_print_set_extents()>>
+<<x_print.c : x_print_set_nomargins()>>
 <<x_print.c : create_menu_orient()>>
 <<x_print.c : create_menu_type()>>
 <<x_print.c : x_print_change_size()>>
@@ -125,21 +126,40 @@ x_print_set_window(GtkWidget *w, TOPLEVEL *w_current)
 @ %def x_print_set_window
 
 
-@section Function @code{x_print_set_limits()}
+@section Function @code{x_print_set_extents()}
 
-@defun x_print_set_limits w w_current
+@defun x_print_set_extents w w_current
 @end defun
 
-<<x_print.c : x_print_set_limits()>>=
+<<x_print.c : x_print_set_extents()>>=
 gint
-x_print_set_limits(GtkWidget *w, TOPLEVEL *w_current )
+x_print_set_extents(GtkWidget *w, TOPLEVEL *w_current )
 {
-  f_print_set_type(w_current, LIMITS);
+  f_print_set_type(w_current, EXTENTS);
   return(0);
 }
 
 
-@ %def x_print_set_limits
+@ %def x_print_set_extents
+
+
+@section Function @code{x_print_set_nomargins()}
+
+@defun x_print_set_nomargins w w_current
+@end defun
+
+<<x_print.c : x_print_set_nomargins()>>=
+gint
+x_print_set_nomargins(GtkWidget *w, TOPLEVEL *w_current )
+{
+  f_print_set_type(w_current, EXTENTS_NOMARGINS);
+  return(0);
+}
+
+
+@ %def x_print_set_nomargins
+ 
+
 
 
 @section Function @code{create_menu_orient()}
@@ -213,15 +233,22 @@ create_menu_type (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, _("Limits"));
+  sprintf (buf, _("Extents with margins"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) x_print_set_limits,
+                     (GtkSignalFunc) x_print_set_extents,
                      w_current);
-
   gtk_widget_show (menuitem);
+
+  sprintf(buf, _("Extents no margins"));
+  menuitem = gtk_radio_menu_item_new_with_label(group, buf);
+  group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
+  gtk_menu_append(GTK_MENU(menu), menuitem);
+  gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+                   (GtkSignalFunc) x_print_set_nomargins, w_current);
+  gtk_widget_show(menuitem);
 
   sprintf (buf, _("Current Window"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
@@ -232,11 +259,22 @@ create_menu_type (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  if (w_current->print_output_type == WINDOW) {
-    gtk_menu_set_active(GTK_MENU (menu),1);
-    f_print_set_type(w_current, WINDOW);
-  } else {
-    f_print_set_type(w_current, LIMITS);
+  switch (w_current->print_output_type)
+  {
+    case(EXTENTS):
+      gtk_menu_set_active(GTK_MENU (menu),0);
+      f_print_set_type(w_current, EXTENTS);
+      break;
+
+    case(EXTENTS_NOMARGINS):
+      gtk_menu_set_active(GTK_MENU (menu),1);
+      f_print_set_type(w_current, EXTENTS_NOMARGINS);
+      break;
+
+    case(WINDOW):
+      gtk_menu_set_active(GTK_MENU (menu),2);
+      f_print_set_type(w_current, WINDOW);
+      break;
   }
 
   return menu;
@@ -548,14 +586,24 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show (optionmenu);
 
     /* set some defaults */
-    if (w_current->print_output_type == WINDOW) {
-      gtk_menu_set_active(GTK_MENU (type_menu),1);
-      f_print_set_type(w_current, WINDOW);
-    } else {
-      gtk_menu_set_active(GTK_MENU (type_menu),0);
-      f_print_set_type(w_current, LIMITS);
+    switch (w_current->print_output_type)
+    {
+      case(EXTENTS):
+        gtk_menu_set_active(GTK_MENU (type_menu),0);
+        f_print_set_type(w_current, EXTENTS);
+        break;
+        
+      case(EXTENTS_NOMARGINS):
+        gtk_menu_set_active(GTK_MENU (type_menu),1);
+        f_print_set_type(w_current, EXTENTS_NOMARGINS);
+        break;
+        
+      case(WINDOW):
+        gtk_menu_set_active(GTK_MENU (type_menu),2);
+        f_print_set_type(w_current, WINDOW);
+        break;
     }
-
+    
     if (w_current->print_orientation == PORTRAIT) {
       gtk_menu_set_active(GTK_MENU (orient_menu),1);
       print_portrait (NULL, w_current);

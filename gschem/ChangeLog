@@ -1,3 +1,15 @@
+2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * noweb/g_rc.nw, noweb/i_vars.nw, noweb/x_print.nw: Applied Antonio's 
+	no margin printing patch (with minor modifications).  Thanks.
+
+        * noweb/g_rc.nw, noweb/i_vars.nw, noweb/x_print.nw: Renamed "limits" to
+        "extents".
+	
+	* lib/system-gschemrc.in: Added new example usage of the output-type
+	rc keyword, and also put in a note that "limits" should no longer be
+	used.
+
 2003-02-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Added comment to sort-component-library

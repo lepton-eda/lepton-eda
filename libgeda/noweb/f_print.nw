@@ -249,13 +249,16 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
     fprintf(fp, "90 rotate\n");
   }
 
-  x = (float) (paper_size_x)/world_right;
-  y = (float) (paper_size_y)/world_bottom;
+  x = (float) (paper_size_x) / world_right;
+  y = (float) (paper_size_y) / world_bottom;
 
   final = min(x, y);
 
-  /* make the finale scale factor a bit smaller */
-  final = final - final/10;
+  if (w_current->print_output_type != EXTENTS_NOMARGINS) {
+     /* If Window or Extents with margins */
+     /* make the finale scale factor a bit smaller */
+     final = final - final / 10;
+  }
 
   fprintf(fp, "%f %f scale\n", final, final);
 
@@ -520,7 +523,8 @@ f_print(TOPLEVEL *w_current, char *filename)
                            &right, &bottom);
 
 
-  if (w_current->print_output_type == LIMITS) {
+  /* go inside if if output type is EXTENTS or EXTENTS_NOMARGINS */
+  if (w_current->print_output_type != WINDOW) {
 
     if (w_current->print_orientation == LANDSCAPE) {
       scale = f_print_header(w_current, fp, 

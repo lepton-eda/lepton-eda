@@ -248,8 +248,9 @@
 #define PS_FONTS		1
 
 /* for print dialog box */
-#define LIMITS			0
+#define EXTENTS			0
 #define WINDOW			1
+#define EXTENTS_NOMARGINS	2
 
 /* for output-capstyle */ 
 #define BUTT_CAP 		0

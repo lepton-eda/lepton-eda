@@ -2052,10 +2052,12 @@ g_rc_output_type(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
     {WINDOW, "current window" },
-    {LIMITS, "limits" },
+    {EXTENTS, "limits" },  /* deprecated */
+    {EXTENTS, "extents" },
+    {EXTENTS_NOMARGINS, "extents no margins" },
   };
 
-  RETURN_G_RC_MODE("output-type", default_print_output_type, 2);
+  RETURN_G_RC_MODE("output-type", default_print_output_type, 4);
 }
 
 
