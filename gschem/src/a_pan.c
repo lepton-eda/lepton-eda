@@ -58,8 +58,6 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 	int ix, iy, center_x, center_y;
 	int sx, sy, lx, ly;
 
-	puts("a_pan()");
-
 	/* check to see if we are inside an action draw net, etc.  If
 	 * yes, convert screen coords to world coords */
 	if (w_current->inside_action) {
@@ -184,7 +182,6 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 	int pan_x, pan_y;
 	int fix = 0;
 
-	puts("a_pan_mouse()");
 	pan_x = WORLDabs(w_current, diff_x);
 	pan_y = WORLDabs(w_current, diff_y);
 
