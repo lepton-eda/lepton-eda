@@ -98,19 +98,19 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-dataanalogdir = @gedadatadir@/sym/analog
+datasupervisordir = @gedadatadir@/sym/supervisor
 
-dataanalog_DATA = @dataanalog@
+datasupervisor_DATA = @datasupervisor@
 
-EXTRA_DIST = $(dataanalog_DATA)
+EXTRA_DIST = $(datasupervisor_DATA)
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~
-MAINTAINERCLEANFILES = *.log *~
+MOSTLYCLEANFILES = gschem.log *~
+CLEANFILES = gschem.log *~
+DISTCLEANFILES = gschem.log *~
+MAINTAINERCLEANFILES = gschem.log *~
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
-DATA =  $(dataanalog_DATA)
+DATA =  $(datasupervisor_DATA)
 
 DIST_COMMON =  Makefile.am Makefile.in
 
@@ -122,30 +122,30 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu analog/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu supervisor/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 
-install-dataanalogDATA: $(dataanalog_DATA)
+install-datasupervisorDATA: $(datasupervisor_DATA)
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(dataanalogdir)
-	@list='$(dataanalog_DATA)'; for p in $$list; do \
+	$(mkinstalldirs) $(DESTDIR)$(datasupervisordir)
+	@list='$(datasupervisor_DATA)'; for p in $$list; do \
 	  if test -f $(srcdir)/$$p; then \
-	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataanalogdir)/$$p"; \
-	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataanalogdir)/$$p; \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datasupervisordir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datasupervisordir)/$$p; \
 	  else if test -f $$p; then \
-	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(dataanalogdir)/$$p"; \
-	    $(INSTALL_DATA) $$p $(DESTDIR)$(dataanalogdir)/$$p; \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(datasupervisordir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(datasupervisordir)/$$p; \
 	  fi; fi; \
 	done
 
-uninstall-dataanalogDATA:
+uninstall-datasupervisorDATA:
 	@$(NORMAL_UNINSTALL)
-	list='$(dataanalog_DATA)'; for p in $$list; do \
-	  rm -f $(DESTDIR)$(dataanalogdir)/$$p; \
+	list='$(datasupervisor_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(datasupervisordir)/$$p; \
 	done
 tags: TAGS
 TAGS:
@@ -153,14 +153,14 @@ TAGS:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-subdir = analog
+subdir = supervisor
 
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu analog/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu supervisor/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -182,20 +182,20 @@ installcheck: installcheck-am
 install-exec-am:
 install-exec: install-exec-am
 
-install-data-am: install-dataanalogDATA
+install-data-am: install-datasupervisorDATA
 install-data: install-data-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 install: install-am
-uninstall-am: uninstall-dataanalogDATA
+uninstall-am: uninstall-datasupervisorDATA
 uninstall: uninstall-am
 all-am: Makefile $(DATA)
 all-redirect: all-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
 installdirs:
-	$(mkinstalldirs)  $(DESTDIR)$(dataanalogdir)
+	$(mkinstalldirs)  $(DESTDIR)$(datasupervisordir)
 
 
 mostlyclean-generic:
@@ -229,11 +229,11 @@ maintainer-clean-am:  maintainer-clean-generic distclean-am
 
 maintainer-clean: maintainer-clean-am
 
-.PHONY: uninstall-dataanalogDATA install-dataanalogDATA tags distdir \
-info-am info dvi-am dvi check check-am installcheck-am installcheck \
-install-exec-am install-exec install-data-am install-data install-am \
-install uninstall-am uninstall all-redirect all-am all installdirs \
-mostlyclean-generic distclean-generic clean-generic \
+.PHONY: uninstall-datasupervisorDATA install-datasupervisorDATA tags \
+distdir info-am info dvi-am dvi check check-am installcheck-am \
+installcheck install-exec-am install-exec install-data-am install-data \
+install-am install uninstall-am uninstall all-redirect all-am all \
+installdirs mostlyclean-generic distclean-generic clean-generic \
 maintainer-clean-generic clean mostlyclean distclean maintainer-clean
 
 

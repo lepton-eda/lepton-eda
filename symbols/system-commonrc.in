@@ -45,6 +45,7 @@
 (component-library "@symdir@/rf")
 (component-library "@symdir@/pla")
 (component-library "@symdir@/dec")
+(component-library "@symdir@/supervisor")
 
 ; source-library string
 ; Specify where source entities exist.
@@ -80,6 +81,7 @@
 (source-library "@symdir@/rf")
 (source-library "@symdir@/pla")
 (source-library "@symdir@/dec")
+(source-library "@symdir@/supervisor")
 ; out for now (source-library "@sourcedir@")
 
 ; font-directory string
