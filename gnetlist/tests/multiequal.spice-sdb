@@ -6,6 +6,6 @@
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
 V1 1 0 DC 1V
-R1 0 1 20  
 .OPTIONS abotol=1e-11
+R1 0 1 20  
 .END

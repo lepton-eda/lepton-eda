@@ -1,3 +1,12 @@
+2005-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/*, examples/switcap/example.scn: Updated regression golden
+	files to take into account the package reordering that has
+	occurred because the various guile/gnetlist routines were either
+	replaced or rewritten.	No netlist errors detected, just some
+	of the packages were showing up in a different order in the various
+	netlist formats.
+
 2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac, src/gnetlist.c: Removed call to gtk_init().
