@@ -583,7 +583,7 @@ fi
 # Check whether --with-glib-config or --without-glib-config was given.
 if test "${with_glib_config+set}" = set; then
   withval="$with_glib_config"
-  opt_libconfig=$withval
+  opt_glibconfig=$withval
 fi
 
 

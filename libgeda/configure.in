@@ -303,6 +303,8 @@ AC_SUBST(DL_LIB)
 AC_SUBST(GTK)
 AC_SUBST(GDK)
 AC_SUBST(GLIB)
+AC_SUBST(libgdgeda_ldflags)
+AC_SUBST(libgdgeda_cflags)
 
 AC_OUTPUT([ 
 	Makefile 

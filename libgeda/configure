@@ -4195,6 +4195,8 @@ HOME=`echo $HOME`
 
 
 
+
+
 trap '' 1 2 15
 cat > confcache <<\EOF
 # This file is a shell script that caches the results of configure
@@ -4377,6 +4379,8 @@ s%@DL_LIB@%$DL_LIB%g
 s%@GTK@%$GTK%g
 s%@GDK@%$GDK%g
 s%@GLIB@%$GLIB%g
+s%@libgdgeda_ldflags@%$libgdgeda_ldflags%g
+s%@libgdgeda_cflags@%$libgdgeda_cflags%g
 
 CEOF
 EOF
