@@ -86,10 +86,10 @@ int
 f_open(TOPLEVEL *w_current, char *filename)
 {
   int opened=FALSE;
-  char *full_filename;
-  char *full_rcfilename;
-  char *file_directory;
-  char *saved_cwd;
+  char *full_filename = NULL;
+  char *full_rcfilename = NULL;
+  char *file_directory = NULL;
+  char *saved_cwd = NULL;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */

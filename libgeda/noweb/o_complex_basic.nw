@@ -926,7 +926,7 @@ char *
 o_complex_save(OBJECT *object)
 {
   int selectable;
-  char *buf;
+  char *buf = NULL;
 
   if (object->sel_func != NULL) 
   selectable = 1;

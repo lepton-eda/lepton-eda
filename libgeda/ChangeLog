@@ -17,6 +17,11 @@
 	* noweb/g_rc.nw (g_rc_map_font_character_to_file): Added validation of 
 	SCM parameters (SCM_ASSERT).
 
+2005-03-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/f_basic.nw, o_complex_basic.nw: Fixed compiler warnings 
+	about uninitialized variables
+
 2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped version to 20050313
