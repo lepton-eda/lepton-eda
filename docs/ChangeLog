@@ -1,3 +1,9 @@
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* symbols/Makefile.am, attributes/Makefile.am: Changed the mkdir
+	to an install and looped over and install all the htmls files. 
+	Also added the uninstall hook.
+
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Updated version to 20021103 (an official version)

@@ -27,8 +27,17 @@ $(docname)/index.html: $(docname).tex
 $(docname): $(docname)/index.html
 
 install-data-hook: $(docname)/index.html
-	( cd $(docname) ; mkdir -p $(docsdir); \
-          cp -rp * $(docsdir) )
+	( cd $(docname) ; $(INSTALL) -d $(DESTDIR)$(docsdir); \
+          for i in *; do \
+		$(INSTALL_DATA) $$i $(DESTDIR)$(docsdir); \
+	  done )
+
+uninstall-hook:
+	( cd $(docname) ; $(INSTALL) -d $(DESTDIR)$(docsdir); \
+          for i in *; do \
+		rm -f $(DESTDIR)$(docsdir)/$$i; \
+	  done; \
+	  rmdir $(DESTDIR)$(docsdir) )
 
 tgz: $(docname).tex $(docname).dvi $(docname).ps $(docname).pdf \
      $(docname)/index.html
