@@ -142,10 +142,10 @@ static GtkItemFactoryEntry menu_items[] = {
 };
 
 static GtkItemFactoryEntry popup_items[] = {
-	{"/Component...", 	NULL, i_callback_add_component, 0, NULL},
 	{"/Net", 		NULL, i_callback_add_net, 0, NULL},
-	{"/Bus", 		NULL, i_callback_add_bus, 0, NULL},
 	{"/Attribute...", 	NULL, i_callback_add_attribute, 0, NULL},
+	{"/Component...", 	NULL, i_callback_add_component, 0, NULL},
+	{"/Bus", 		NULL, i_callback_add_bus, 0, NULL},
 	{"/Text", 		NULL, i_callback_add_text, 0, NULL},
   	{"/sep1", NULL, NULL, 0, "<Separator>"},
 	{"/Select", 		NULL, i_callback_edit_select, 0, NULL},
