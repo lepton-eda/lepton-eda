@@ -871,7 +871,11 @@ x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
 
 	if (f_current->last_search != -1) {
 		i = f_current->last_search;	
+		gtk_label_set(GTK_LABEL(f_current->search_label), 
+			      "Search in Files"); 
 	} else {
+		gtk_label_set(GTK_LABEL(f_current->search_label), 
+			      "Search in Files"); 
 		i = 0;
 	}
 
@@ -892,6 +896,8 @@ x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
 		i++;
 	}
 	f_current->last_search = -1;
+	gtk_label_set(GTK_LABEL(f_current->search_label), 
+		"Search in Files - End of list"); 
 }
 /*********** File Open/Save As... specific code ends here ***********/
 
@@ -1108,6 +1114,20 @@ x_fileselect_comp_update_current(FILEDIALOG *f_current,
 		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
 				   "NONE");
 	}
+
+#if 0 /* old code */
+	if (f_current->directory && f_current->filename) {
+		temp = u_basic_strdup_multiple(f_current->directory, 
+				       f_current->filename, NULL);
+		gtk_label_set(GTK_LABEL(f_current->filename_entry), temp);
+	} else if (f_current->directory && !f_current->filename) {
+		gtk_label_set(GTK_LABEL(f_current->filename_entry), 
+					f_current->directory);
+	} else if (!f_current->directory) {
+		gtk_label_set(GTK_LABEL(f_current->filename_entry), 
+					" ");
+	}
+#endif
 
 	free(temp);
 
@@ -1645,7 +1665,8 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 5);
 		gtk_widget_show(label);
 
- 		f_current->filename_entry = gtk_entry_new_with_max_length(1024);
+ 		f_current->filename_entry = 
+				gtk_entry_new_with_max_length(1024);
  		gtk_editable_select_region(GTK_EDITABLE(
 					   f_current->filename_entry), 0, -1);
  		gtk_box_pack_start(GTK_BOX (vbox), 
@@ -1654,17 +1675,16 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 		if (type == FILESELECT) {
 			gtk_signal_connect(GTK_OBJECT(
 					   f_current->filename_entry), 
-				   	   "activate", 
-				           GTK_SIGNAL_FUNC(
-				           x_fileselect_open_file),
-				   	   f_current);
+					   "activate", 
+					   GTK_SIGNAL_FUNC(
+					   x_fileselect_open_file),
+					   f_current);
+
+ 			gtk_editable_select_region(GTK_EDITABLE(
+					   f_current->filename_entry), 0, -1);
 		} else {
-			gtk_signal_connect(GTK_OBJECT(
-					   f_current->filename_entry), 
-				   	   "activate", 
-				           GTK_SIGNAL_FUNC(
-				           x_fileselect_comp_apply),
-				   	   f_current);
+			gtk_entry_set_editable(GTK_ENTRY(
+                                           f_current->filename_entry), FALSE);
 		}
 	
  		gtk_widget_show(f_current->filename_entry);
