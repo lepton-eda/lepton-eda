@@ -1,0 +1,19 @@
+
+
+Here's what the prefix letters mean:
+
+        a_ : Action (this was a really poor choice, and will be removed)
+        g_ : Guile related functions
+        i_ : Interface related functions
+        o_ : graphic Object related functions
+        x_ : X related functions
+        f_ : File related functions
+        m_ : Math related functions
+        s_ : data Structure related functions
+
+        I've tried to keep the function names in the files correct, but
+        sometimes I failed.  (look at libgeda/a_basic.c for an example of
+        a file which has a bunch of functions which shouldn't be in there)
+
+								-Ales
+
