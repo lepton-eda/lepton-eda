@@ -1,3 +1,15 @@
+2003-03-30 Werner Hoch <werner.ho@gmx.de>
+	* max/max038-1.sym completed, max/max038-2.sym added
+	* max/max100-1.sym changed (missing pins)
+	* max/max1005-1.sym completed, max/max1005-2.sym added
+	* max/max1011-1.sym completed, max/max1011-2.sym added
+	* max/max101A-1.sym changed (missing pins)
+	* max/max1114-1.sym completed, max/max1114-2.sym added
+	* max/max135-1.sym changed (duplicate pins)
+	* max/max1480A-1.sym changed (missing pins)
+	* 74/7404-3.sym completed
+	Note: changed symbols are not pin compatible with the old symbols
+	
 2003-03-07 Werner Hoch <werner.ho@gmx.de>
 	* diode: added sa52-11-1.sym, sc52-11-1.sym
 
