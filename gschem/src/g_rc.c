@@ -18,13 +18,13 @@
  */
 
 #include <config.h>
-#include <stdio.h> 
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> 
+#include <unistd.h>
 #endif
 
 #include <gtk/gtk.h>
@@ -33,84 +33,91 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
-#include <libgeda/globals.h>  
+#include <libgeda/globals.h>
 #include <libgeda/prototype.h>
 
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-
 void
 g_rc_parse(void)
-/*g_rc_parse(TOPLEVEL *w_current)*/
+/* g_rc_parse(TOPLEVEL *w_current) */
 {
 	char *HOME;
-	char *filename; 
+	char *filename;
 	int found_rc=0;
 	int len;
 
 #if 0
-	if (w_current == NULL)
+	if (w_current == NULL) {
 		return;
+	}
 #endif
 
-
 	/* Let's try a the system one - GEDARCDIR/system-gschemrc */
-	
-	len = strlen("/system-gschemrc") + strlen(GEDARCDIR) + 1; 	
-	filename = (char *) malloc(sizeof(char)*len);
+
+	len = strlen("/system-gschemrc") + strlen(GEDARCDIR) + 1;
+	filename = (char *) malloc(sizeof(char) * len);
 	sprintf(filename, "%s/system-gschemrc", GEDARCDIR);
-	if ( access(filename, R_OK) == 0 ) {
+	if (access(filename, R_OK) == 0) {
 		g_read_file(filename);
 		found_rc = 1;
 		s_log_message("Read system-gschemrc file [%s]\n", filename);
 	} else {
-		s_log_message("Did not find system-gschemrc file [%s]\n", filename);
+		s_log_message("Did not find system-gschemrc file [%s]\n",
+			      filename);
 	}
 	free(filename);
 
 	/* now search the proper rc location (in ~/.gEDA) */
-	HOME = (char *)  getenv("HOME");
+	HOME = (char *) getenv("HOME");
 	if (HOME) {
-		len = strlen("/.gEDA/gschemrc") + strlen(HOME) + 1; 	
+		len = strlen("/.gEDA/gschemrc") + strlen(HOME) + 1;
 		filename = (char *) malloc(sizeof(char)*len);
 		sprintf(filename, "%s/.gEDA/gschemrc", HOME);
-		if ( access(filename, R_OK) == 0) {
+		if (access(filename, R_OK) == 0) {
 			g_read_file(filename);
 			found_rc = 1;
-			s_log_message("Read ~/.gEDA/gschemrc file [%s]\n", filename);
+			s_log_message("Read ~/.gEDA/gschemrc file [%s]\n",
+				      filename);
 		} else {
-			s_log_message("Did not find ~/.gEDA/gschemrc file [%s]\n", filename);
+			s_log_message("Did not find ~/.gEDA/gschemrc file [%s]\n",
+				      filename);
 		}
 		free(filename);
 	}
 
-	/* try the local directory for a gschemrc */ 
-	len = strlen("./gschemrc") + 1; 	
+	/* try the local directory for a gschemrc */
+	len = strlen("./gschemrc") + 1;
 	filename = (char *) malloc(sizeof(char)*len);
 	strcpy(filename, "./gschemrc");
-	if ( access(filename, R_OK) == 0 ) {
+	if (access(filename, R_OK) == 0) {
 		g_read_file(filename);
 		found_rc = 1;
 		s_log_message("Read local gschemrc file [%s]\n", filename);
 	} else {
-		s_log_message("Did not find local gschemrc file [%s]\n", filename);
+		s_log_message("Did not find local gschemrc file [%s]\n",
+			      filename);
 	}
 	free(filename);
 
 	if (rc_filename) {
-		len = strlen(rc_filename) + 1; 	
-		if ( access(rc_filename, R_OK) == 0 ) {
+		len = strlen(rc_filename) + 1;
+		if (access(rc_filename, R_OK) == 0) {
 			g_read_file(rc_filename);
 			found_rc = 1;
-			s_log_message("Read specified rc file [%s]\n", rc_filename);
+			s_log_message("Read specified rc file [%s]\n",
+				      rc_filename);
 		} else {
-			fprintf(stderr, "Did not find specified gschemrc file [%s]\n", rc_filename);
-			s_log_message("Did not find specified gschemrc file [%s]\n", rc_filename);
+			fprintf(stderr,
+				"Did not find specified gschemrc file [%s]\n",
+				rc_filename);
+			s_log_message("Did not find "
+				      "specified gschemrc file [%s]\n",
+				      rc_filename);
 		}
 	}
 
@@ -130,47 +137,25 @@ g_rc_gschem_version(SCM version)
 
 	string = gh_scm2newstr(version, NULL);
 
-	if ( strcmp(string, VERSION) != 0 ) {
-		fprintf(stderr, "Found a version [%s] gschemrc file:\n[%s]\n", 
-					string, rc_filename); 
-		fprintf(stderr, "While gschem is in ALPHA, please be sure that you have the latest rc file.\n");
+	if (strcmp(string, VERSION) != 0) {
+		fprintf(stderr,
+			"Found a version [%s] gschemrc file:\n[%s]\n",
+			string, rc_filename);
+		fprintf(stderr,
+			"While gschem is in ALPHA, "
+			"please be sure that you have the latest rc file.\n");
 	}
 
 	if (string) {
 		free(string);
 	}
 
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-SCM
-g_rc_override_net_color(SCM color)
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to override-net-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_override_net_color = newcolor;
-	}
-
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM
-g_rc_override_pin_color(SCM color)
+/* general color-setting function */
+static SCM
+g_rc_color_general(SCM color, const char* rc_name, int* color_var)
 {
 	char *string;
 	int newcolor;
@@ -178,414 +163,230 @@ g_rc_override_pin_color(SCM color)
 	string = gh_scm2newstr(color, NULL);
 	newcolor = colornametovalue(string);
 
+	/* invalid color? */
 	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to override-pin-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_override_pin_color = newcolor;
+		fprintf(stderr,
+			"Invalid color [%s] passed to %s\n",
+			string,
+			rc_name);
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
 	}
+
+	*color_var = newcolor;
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-SCM
-g_rc_attribute_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to attribute-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_attribute_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-
+#define DEFINE_G_RC_COLOR(func, rc, var)		\
+SCM							\
+func(SCM color)						\
+{							\
+	return g_rc_color_general(color, (rc), &(var));	\
 }
 
-SCM
-g_rc_detachedattr_color(SCM color) 
+DEFINE_G_RC_COLOR(g_rc_override_net_color,
+		  "override-net-color",
+		  default_override_net_color)
+
+DEFINE_G_RC_COLOR(g_rc_override_pin_color,
+		  "override-pin-color",
+		  default_override_pin_color)
+
+DEFINE_G_RC_COLOR(g_rc_attribute_color,
+		  "attribute-color",
+		  default_attribute_color);
+
+DEFINE_G_RC_COLOR(g_rc_detachedattr_color,
+		  "detached-attribute-color",
+		  default_detachattr_color);
+
+DEFINE_G_RC_COLOR(g_rc_text_color,
+		  "text-color",
+		  default_text_color);
+
+DEFINE_G_RC_COLOR(g_rc_net_color,
+		  "net-color",
+		  default_net_color);
+
+DEFINE_G_RC_COLOR(g_rc_pin_color,
+		  "pin-color",
+		  default_pin_color);
+
+DEFINE_G_RC_COLOR(g_rc_graphic_color,
+		  "graphic-color",
+		  default_graphic_color);
+
+DEFINE_G_RC_COLOR(g_rc_grid_color,
+		  "grid-color",
+		  default_grid_color);
+
+DEFINE_G_RC_COLOR(g_rc_background_color,
+		  "background-color",
+		  default_background_color);
+
+DEFINE_G_RC_COLOR(g_rc_select_color,
+		  "select-color",
+		  default_select_color);
+
+DEFINE_G_RC_COLOR(g_rc_boundingbox_color,
+		  "boundingbox-color",
+		  default_bb_color);
+
+DEFINE_G_RC_COLOR(g_rc_net_endpoint_color,
+		  "net-endpoint-color",
+		  default_net_endpoint_color);
+
+typedef struct {
+	int   m_val;
+	char *m_str;
+} vstbl_entry;
+
+/* currently unused */
+#if 0
+static int
+vstbl_lookup_val(const vstbl_entry *table, int size, int val)
 {
-	char *string;
-	int newcolor;
+	int i;
 
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to detached-attribute-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_detachattr_color = newcolor;
+	for(i = 0; i < size; i++) {
+		if(table[i].m_val == val) {
+			break;
+		}
 	}
+	return i;
+}
+#endif
 
-	if (string) {
-		free(string);
+static int
+vstbl_lookup_str(const vstbl_entry *table, int size, const char *str)
+{
+	int i;
+
+	for(i = 0; i < size; i++) {
+		if(strcmp(table[i].m_str, str) == 0) {
+			break;
+		}
 	}
-
-	return(gh_int2scm(0)); 
+	return i;
 }
 
-SCM
-g_rc_text_color(SCM color) 
+static int
+vstbl_get_val(const vstbl_entry *table, int index)
 {
-
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to text-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_text_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	return table[index].m_val;
 }
 
-SCM
-g_rc_net_color(SCM color) 
+/* currently unused */
+#if 0
+static const char *
+vstbl_get_str(const vstbl_entry *table, int index)
 {
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to net-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_net_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	return table[index].m_str;
 }
+#endif
 
-SCM
-g_rc_pin_color(SCM color) 
+static SCM
+g_rc_mode_general(SCM mode,
+		  const char *rc_name,
+		  int *mode_var,
+		  const vstbl_entry *table,
+		  int table_size)
 {
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to pin-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_pin_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM
-g_rc_graphic_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to graphic-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_graphic_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM
-g_rc_grid_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to grid-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_grid_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM
-g_rc_background_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to background-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_background_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM
-g_rc_select_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to select-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_select_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM
-g_rc_boundingbox_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to boundingbox-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_bb_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM 
-g_rc_net_endpoint_color(SCM color)
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to net-endpoint-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_net_endpoint_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-
-
-SCM 
-g_rc_net_endpoint_mode(SCM mode) 
-{
+	int index;
 	char *string;
 
 	string = gh_scm2newstr(mode, NULL);
+	index = vstbl_lookup_str(table, table_size, string);
 
-	if ( strcmp(string, "filledbox") == 0 ) {
-		default_net_endpoint_mode = FILLEDBOX;		
-	} else if ( strcmp(string, "emptybox") == 0 ) {
-		default_net_endpoint_mode = EMPTYBOX;		
-	} else if ( strcmp(string, "x") == 0 ) {
-		default_net_endpoint_mode = X;		
-	} else if ( strcmp(string, "none") == 0 ) {
-		default_net_endpoint_mode = NONE;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to net-endpoint-mode\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
+	/* no match? */
+	if(index == sizeof(table)) {
+		fprintf(stderr,
+			"Invalid mode [%s] passed to %s\n",
+			string,
+			rc_name);
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
 	}
+
+	*mode_var = vstbl_get_val(table, index);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-SCM 
-g_rc_net_midpoint_mode(SCM mode) 
+#define RETURN_G_RC_MODE(rc, var)			\
+	return g_rc_mode_general(mode,			\
+				 (rc),			\
+				 &(var),		\
+				 mode_table,		\
+				 sizeof(mode_table))
+
+SCM
+g_rc_net_endpoint_mode(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{FILLEDBOX, "filledbox"},
+		{EMPTYBOX , "emptybox" },
+		{X        , "x"        },
+		{NONE     , "none"     }
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "filled") == 0 ) {
-		default_net_midpoint_mode = FILLED;		
-	} else if ( strcmp(string, "empty") == 0 ) {
-		default_net_midpoint_mode = EMPTY;		
-	} else if ( strcmp(string, "none") == 0 ) {
-		default_net_midpoint_mode = NONE;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to net-midpoint-mode\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("net-endpoint-mode", default_net_endpoint_mode);
 }
 
-SCM 
-g_rc_net_style(SCM mode) 
+SCM
+g_rc_net_midpoint_mode(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{FILLED, "filled"},
+		{EMPTY , "empty" },
+		{NONE  , "none"  }
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "thin") == 0 ) {
-		default_net_style = THIN;		
-	} else if ( strcmp(string, "thick") == 0 ) {
-		default_net_style = THICK;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to net-style\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("net-midpoint-mode", default_net_midpoint_mode);
 }
 
-
-SCM 
-g_rc_pin_style(SCM mode) 
+SCM
+g_rc_net_style(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{THIN , "thin" },
+		{THICK, "thick"}
+	};
 
-	string = gh_scm2newstr(mode, NULL);
+	RETURN_G_RC_MODE("net-style", default_net_style);
+}
 
-	if ( strcmp(string, "thin") == 0 ) {
-		default_pin_style = THIN;		
-	} else if ( strcmp(string, "thick") == 0 ) {
-		default_pin_style = THICK;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to pin-style\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
+SCM
+g_rc_pin_style(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{THIN , "thin" },
+		{THICK, "thick"}
+	};
 
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("pin-style", default_pin_style);
 }
 
 SCM
 g_rc_action_feedback_mode(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{OUTLINE    , "outline"   },
+		{BOUNDINGBOX, "boudingbox"}
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "outline") == 0 ) {
-		default_actionfeedback_mode = OUTLINE;		
-	} else if ( strcmp(string, "boundingbox") == 0 ) {
-		default_actionfeedback_mode = BOUNDINGBOX;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to action-feedback-mode\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("action-feedback-mode", default_actionfeedback_mode);
 }
 
 SCM
@@ -596,194 +397,132 @@ g_rc_scrollbar_update(SCM mode)
 #if 0
 	string = gh_scm2newstr(mode, NULL);
 
-	if ( strcmp(string, "continuous") == 0 ) {
+	if (strcmp(string, "continuous") == 0) {
 		gtk_range_set_update_policy (GTK_RANGE (
-				     window_current->v_scrollbar),
-                                     GTK_UPDATE_CONTINUOUS);
+			window_current->v_scrollbar),
+					     GTK_UPDATE_CONTINUOUS);
 		gtk_range_set_update_policy (GTK_RANGE (
-				     window_current->h_scrollbar),
-                                     GTK_UPDATE_CONTINUOUS);
-	} else if ( strcmp(string, "delayed") == 0 ) {
+			window_current->h_scrollbar),
+					     GTK_UPDATE_CONTINUOUS);
+	} else if (strcmp(string, "delayed") == 0) {
 		gtk_range_set_update_policy (GTK_RANGE (
-				     window_current->v_scrollbar),
-                                     GTK_UPDATE_DELAYED);
+			window_current->v_scrollbar),
+					     GTK_UPDATE_DELAYED);
 		gtk_range_set_update_policy (GTK_RANGE (
-				     window_current->h_scrollbar),
-                                     GTK_UPDATE_DELAYED);
+			window_current->h_scrollbar),
+					     GTK_UPDATE_DELAYED);
 	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to scrollbar-update\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
+		fprintf(stderr,
+			"Invalid mode [%s] passed to scrollbar-update\n",
+			string);
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
 	}
 #endif
 	if (string) {
 		free(string);
 	}
 
-	return(gh_int2scm(0)); 
-}          
+	return(gh_int2scm(0));
+}
 
 SCM
 g_rc_object_clipping(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"}
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "enabled") == 0 ) {
-		default_object_clipping = TRUE;
-	} else if ( strcmp(string, "disabled") == 0 ) {
-		default_object_clipping = FALSE;
-	} else {
-		fprintf(stderr, "Invalid value [%s] passed to object-clipping\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}          
-
+	RETURN_G_RC_MODE("object-clipping", default_object_clipping);
+}
 
 SCM
 g_rc_logging(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"}
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "enabled") == 0 ) {
-		default_do_logging = TRUE;
-	} else if ( strcmp(string, "disabled") == 0 ) {
-		default_do_logging = FALSE;
-	} else {
-		fprintf(stderr, "Invalid value [%s] passed to logging\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}          
+	RETURN_G_RC_MODE("logging", default_do_logging);
+}
 
 SCM
 g_rc_embed_components(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"}
+	};
 
-	string = gh_scm2newstr(mode, NULL);
+	RETURN_G_RC_MODE("embed-components", default_embed_complex);
+}
 
-	if ( strcmp(string, "enabled") == 0 ) {
-		default_embed_complex = TRUE;
-	} else if ( strcmp(string, "disabled") == 0 ) {
-		default_embed_complex = FALSE;
-	} else {
-		fprintf(stderr, "Invalid value [%s] passed to embed-components\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}          
-
-SCM 
-g_rc_text_size(SCM size) 
+SCM
+g_rc_text_size(SCM size)
 {
 	int val;
-	
+
 	val = gh_scm2int(size);
 
 	if (val == 0) {
-		fprintf(stderr, "Invalid size [%d] passed to text-size\n", val);
+		fprintf(stderr,
+			"Invalid size [%d] passed to text-size\n",
+			val);
 		val = 10; /* absolute default */
 	}
 
-	default_text_size = val;   	
+	default_text_size = val;
 
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-/* inconsistant naming with keyword name and variable to hold variable hack */
+/* HACK: inconsistant naming with keyword name and variable to hold
+ * variable */
 SCM
 g_rc_text_caps_style(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{LOWER, "lower" },
+		{UPPER, "upper" },
+		{BOTH , "both"  }
+	};
 
-	string = gh_scm2newstr(mode, NULL);
+	RETURN_G_RC_MODE("text-caps-style", default_text_caps);
+}
 
-	if ( strcmp(string, "lower") == 0 ) {
-		default_text_caps = LOWER;
-	} else if ( strcmp(string, "upper") == 0 ) {
-		default_text_caps = UPPER;
-	} else if ( strcmp(string, "both") == 0 ) {
-		default_text_caps = BOTH;
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to text-caps-style\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}          
-
-
-SCM 
-g_rc_snap_size(SCM size) 
+SCM
+g_rc_snap_size(SCM size)
 {
 	int val;
 
 	val = gh_scm2int(size);
 
 	if (val == 0) {
-		fprintf(stderr, "Invalid size [%d] passed to snap-size\n", val);
+		fprintf(stderr, "Invalid size [%d] passed to snap-size\n",
+			val);
 		val = 100; /* absolute default */
 	}
 
-	default_snap_size = val;        
+	default_snap_size = val;
 
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
-
 
 SCM
 g_rc_logging_destination(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{LOG_WINDOW         , "log_window" },
+		{STDOUT_TTY         , "tty"        },
+		{BOTH_LOGWIN_STDOUT , "both"       }
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "log_window") == 0 ) {
-		logging_dest = LOG_WINDOW;
-	} else if ( strcmp(string, "tty") == 0 ) {
-		logging_dest = STDOUT_TTY;
-	} else if ( strcmp(string, "both") == 0 ) {
-		logging_dest = BOTH_LOGWIN_STDOUT;
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to logging-destination\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}          
+	RETURN_G_RC_MODE("logging-destination", logging_dest);
+}
 
 SCM
 g_rc_default_series_name(SCM name)
@@ -792,20 +531,25 @@ g_rc_default_series_name(SCM name)
 
 	string = gh_scm2newstr(name, NULL);
 
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"series-name"
+			);
+		return(gh_int2scm(-1));
+	}
+
 	if (default_series_name) {
 		free(default_series_name);
 	}
 
-	default_series_name = malloc(sizeof(char)*(strlen(string)+1));
-	strcpy(default_series_name, string);
+	default_series_name = strdup(string);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
-
 
 SCM
 g_rc_untitled_name(SCM name)
@@ -814,21 +558,25 @@ g_rc_untitled_name(SCM name)
 
 	string = gh_scm2newstr(name, NULL);
 
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"untitled-name"
+			);
+		return(gh_int2scm(-1));
+	}
+
 	if (default_untitled_name) {
 		free(default_untitled_name);
 	}
 
-	default_untitled_name = malloc(sizeof(char)*(
-					strlen(string)+1));
-	strcpy(default_untitled_name, string);
+	default_untitled_name = strdup(string);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
-
 
 SCM
 g_rc_component_library(SCM path)
@@ -843,30 +591,40 @@ g_rc_component_library(SCM path)
 	string = expand_env_variables(string);
 
 	ret = stat(string, &buf);
-	
-	if (ret < 0) {
-		fprintf(stderr, "Invalid path [%s] passed to component-library\n", string);
-	} else {
 
-		if (S_ISDIR(buf.st_mode)) {
-			/* only add path if it is uniq */	
-			if (s_clib_uniq(string)) {
-				s_clib_add_entry(string);
-			} else {
-				if (string) free(string);
-				return(gh_int2scm(-1)); 
-			}
-		} else {
-			if (string) free(string);
-			return(gh_int2scm(-1)); 
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+			"Invalid path [%s] passed to component-library\n",
+			string);
+		if (string) {
+			free(string);
 		}
+		return(gh_int2scm(-1));
 	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	/* not an unique path? */
+	if (!s_clib_uniq(string)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	s_clib_add_entry(string);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
 SCM
@@ -878,35 +636,54 @@ g_rc_source_library(SCM path)
 
 	string = gh_scm2newstr(path, NULL);
 
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"source-library"
+			);
+		return(gh_int2scm(-1));
+	}
+
 	/* take care of any shell variables */
 	string = expand_env_variables(string);
 
 	ret = stat(string, &buf);
-	
+
+	/* invalid path? */
 	if (ret < 0) {
-		fprintf(stderr, "Invalid path [%s] passed to source-library\n", string);
-	} else {
-		if (S_ISDIR(buf.st_mode)) {
-			if (s_slib_uniq(string)) {
-				s_slib_add_entry(string);
-			} else {
-				if (string) free(string);
-				return(gh_int2scm(-1)); 
-			}
-		} else {
-			if (string) free(string);
-			return(gh_int2scm(-1)); 
-			
+		fprintf(stderr,
+			"Invalid path [%s] passed to %s\n",
+			string,
+			"source-library");
+		if (string) {
+			free(string);
 		}
+		return(gh_int2scm(-1));
 	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	/* not a unique path? */
+	if (!s_slib_uniq(string)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	s_slib_add_entry(string);
+
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
-
-
 
 SCM
 g_rc_attribute_name(SCM path)
@@ -916,24 +693,26 @@ g_rc_attribute_name(SCM path)
 	string = gh_scm2newstr(path, NULL);
 
 	if (string == NULL) {
-		fprintf(stderr, "attribute-name requires a string as a parameter\n");
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		
-		if (s_attrib_uniq(string)) {
-			s_attrib_add_entry(string);
-		} else {
-			if (string) free(string);
-			return(gh_int2scm(-1)); 
-		}
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"attribute-name");
+		return(gh_int2scm(-1));
 	}
+
+	/* not unique? */
+	if (!s_attrib_uniq(string)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	s_attrib_add_entry(string);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
 SCM
@@ -945,95 +724,89 @@ g_rc_scheme_directory(SCM path)
 
 	string = gh_scm2newstr(path, NULL);
 
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"scheme-directory"
+			);
+		return(gh_int2scm(-1));
+	}
+
 	/* take care of any shell variables */
 	string = expand_env_variables(string);
 
 	ret = stat(string, &buf);
-	
+
+	/* invalid path? */
 	if (ret < 0) {
-		fprintf(stderr, "Invalid path [%s] passed to scheme-directory\n", string);
-	} else {
-
-		if (S_ISDIR(buf.st_mode)) {
-			/* only add path if it is uniq */	
-
-			if (default_scheme_directory)
-				free(default_scheme_directory);
-
-			default_scheme_directory = malloc(sizeof(char)*(
-					strlen(string)+1));
-			strcpy(default_scheme_directory, string);
-
-		} else {
-			if (string) free(string);
-			return(gh_int2scm(-1)); 
+		fprintf(stderr,
+			"Invalid path [%s] passed to scheme-directory\n",
+			string);
+		if (string) {
+			free(string);
 		}
+		return(gh_int2scm(-1));
 	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	if (default_scheme_directory) {
+		free(default_scheme_directory);
+	}
+	default_scheme_directory = strdup(string);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
 SCM
 g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 {
+#if HAS_LIBSTROKE
 	char *stroke;
 
-#if HAS_LIBSTROKE			
 	stroke = gh_scm2newstr(scm_stroke, NULL);
 
-
-	if (s_stroke_uniq(stroke)) {
-		s_stroke_add_entry(stroke, scm_guile_func);
-	} else {
-if (stroke_info_mode) {
-		s_log_message("Duplicate stroke definition passed to stroke! [%s]\n", stroke);
-		printf("Duplicate stroke definition passed to stroke! [%s]\n", stroke);
-}
-		if (stroke) free(stroke);
-		return(gh_int2scm(-1)); 
+	if (!s_stroke_uniq(stroke)) {
+		if (stroke_info_mode) {
+			s_log_message("Duplicate stroke definition passed to stroke! [%s]\n",
+				      stroke);
+			printf("Duplicate stroke definition passed to stroke! [%s]\n",
+			       stroke);
+		}
+		if (stroke) {
+			free(stroke);
+		}
+		return(gh_int2scm(-1));
 	}
+
+	s_stroke_add_entry(stroke, scm_guile_func);
 
 	if (stroke) {
 		free(stroke);
 	}
-#else 
-if (stroke_info_mode) {
-	printf("A stroke keyword has been found in an rc file, but gschem\n");
-	printf("is not compiled to support strokes, please recompile gschem\n");
-	printf("with LibStroke\n");
-}
+#else
+	if (stroke_info_mode) {
+		printf("A stroke keyword has been found in an rc file, but gschem\n");
+		printf("is not compiled to support strokes, please recompile gschem\n");
+		printf("with LibStroke\n");
+	}
 #endif
 
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-SCM
-g_rc_stroke_color(SCM color) 
-{
-	char *string;
-	int newcolor;
-
-	string = gh_scm2newstr(color, NULL);
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to stroke-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_stroke_color = newcolor;
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
+DEFINE_G_RC_COLOR(g_rc_stroke_color,
+		  "stroke-color",
+		  default_stroke_color);
 
 SCM
 g_rc_font_directory(SCM path)
@@ -1044,64 +817,80 @@ g_rc_font_directory(SCM path)
 
 	string = gh_scm2newstr(path, NULL);
 
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"font-direcoty"
+			);
+		return(gh_int2scm(-1));
+	}
+
 	/* take care of any shell variables */
 	string = expand_env_variables(string);
 
 	ret = stat(string, &buf);
-	
+
+	/* invalid path? */
 	if (ret < 0) {
-		fprintf(stderr, "Invalid path [%s] passed to font-directory\n", string);
-	} else {
-
-		if (S_ISDIR(buf.st_mode)) {
-			if (default_font_directory)
-				free(default_font_directory);
-
-			default_font_directory = malloc(sizeof(char)*(
-					strlen(string)+1));
-			strcpy(default_font_directory, string);
-
-		} else {
-			if (string) free(string);
-			return(gh_int2scm(-1)); 
+		fprintf(stderr,
+			"Invalid path [%s] passed to font-directory\n",
+			string);
+		if (string) {
+			free(string);
 		}
+		return(gh_int2scm(-1));
 	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	if (default_font_directory) {
+		free(default_font_directory);
+	}
+	default_font_directory = strdup(string);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-SCM 
-g_rc_world_size(SCM width, SCM height, SCM border) 
+SCM
+g_rc_world_size(SCM width, SCM height, SCM border)
 {
 	int i_width, i_height, i_border;
 	int init_right, init_bottom;
 
-	/* yes this is legit, we are casing the resulting double to an int */	
-	i_width = (int) (gh_scm2double(width)*MILS_PER_INCH);
- 	i_height = (int) (gh_scm2double(height)*MILS_PER_INCH);
-	i_border = (int) (gh_scm2double(border)*MILS_PER_INCH);
+	/* yes this is legit, we are casing the resulting double to an int */
+	i_width  = (int) (gh_scm2double(width ) * MILS_PER_INCH);
+ 	i_height = (int) (gh_scm2double(height) * MILS_PER_INCH);
+	i_border = (int) (gh_scm2double(border) * MILS_PER_INCH);
 
-	PAPERSIZEtoWORLD(i_width, i_height, i_border, 
+	PAPERSIZEtoWORLD(i_width, i_height, i_border,
 			 &init_right, &init_bottom);
 
 #if 0
 	printf("%d %d\n", i_width, i_height);
-	printf("%d %d\n", init_right, init_bottom); 
+	printf("%d %d\n", init_right, init_bottom);
 #endif
-	
-	default_init_right = init_right;
+
+	default_init_right  = init_right;
 	default_init_bottom = init_bottom;
 
-/*  	out for now
-	x_window_setup_world(window_current);	
-	set_window(window_current, window_current->init_left, 
-		   window_current->init_right, window_current->init_top, 
+#if 0
+  	/* out for now */
+	x_window_setup_world(window_current);
+	set_window(window_current,
+		   window_current->init_left,
+		   window_current->init_right,
+		   window_current->init_top,
 		   window_current->init_bottom);
-*/
+#endif
 
 #if 0
 	/* reset the scrollbars too */
@@ -1109,50 +898,35 @@ g_rc_world_size(SCM width, SCM height, SCM border)
 	x_hscrollbar_set_ranges(window_current);
 #endif
 
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
 SCM
 g_rc_scrollbars(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
 
-	string = gh_scm2newstr(mode, NULL);
+	RETURN_G_RC_MODE("scrollbars", default_scrollbars_flag);
+}
 
-	if ( strcmp(string, "enabled") == 0 ) {
-		default_scrollbars_flag = TRUE;
-	} else if ( strcmp(string, "disabled") == 0 ) {
-		default_scrollbars_flag = FALSE;
-	} else {
-		fprintf(stderr, "Invalid value [%s] passed to scrollbars\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}          
-
-
-SCM 
-g_rc_paper_size(SCM width, SCM height) 
+SCM
+g_rc_paper_size(SCM width, SCM height)
 {
 	int i_width, i_height;
 
-	/* yes this is legit, we are casing the resulting double to an int */	
+	/* yes this is legit, we are casing the resulting double to an int */
 
-	i_width = (int) (gh_scm2double(width)*MILS_PER_INCH);
- 	i_height = (int) (gh_scm2double(height)*MILS_PER_INCH);
+	i_width  = (int) (gh_scm2double(width ) * MILS_PER_INCH);
+ 	i_height = (int) (gh_scm2double(height) * MILS_PER_INCH);
 
-	default_paper_width = i_width;
+	default_paper_width  = i_width;
 	default_paper_height = i_height;
 
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
-
 
 SCM
 g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
@@ -1162,248 +936,118 @@ g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
 	int height;
 
 	string = gh_scm2newstr(papername, NULL);
-	width = (int) (gh_scm2double(scm_width)*MILS_PER_INCH);
-	height = (int) (gh_scm2double(scm_height)*MILS_PER_INCH);
+	width  = (int) (gh_scm2double(scm_width)  * MILS_PER_INCH);
+	height = (int) (gh_scm2double(scm_height) * MILS_PER_INCH);
 
 	if (string == NULL) {
 		fprintf(stderr, "Invalid parameters to paper-sizes\n");
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		
-		if (s_papersizes_uniq(string)) {
-			s_papersizes_add_entry(string, width, height);
-		} else {
-			if (string) free(string);
-			return(gh_int2scm(-1)); 
-		}
+		return(gh_int2scm(-1));
 	}
+
+	if (!s_papersizes_uniq(string)) {
+		if (string) {
+			free(string);
+		}
+		return(gh_int2scm(-1));
+	}
+
+	s_papersizes_add_entry(string, width, height);
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0)); 
+	return(gh_int2scm(0));
 }
 
-SCM 
-g_rc_output_text(SCM mode) 
+SCM
+g_rc_output_text(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{VECTOR_FONTS , "vector" },
+		{PS_FONTS     , "ps"     },
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "vector") == 0 ) {
-		default_text_output = VECTOR_FONTS;		
-	} else if ( strcmp(string, "ps") == 0 ) {
-		default_text_output = PS_FONTS;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to output-text\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("output-text", default_text_output);
 }
 
 /* this keyword needs a better name ... */
-SCM 
-g_rc_output_type(SCM mode) 
+SCM
+g_rc_output_type(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{WINDOW, "current window" },
+		{LIMITS, "limits" },
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "current window") == 0 ) {
-		default_print_output_type = WINDOW;		
-	} else if ( strcmp(string, "limits") == 0 ) {
-		default_print_output_type = LIMITS;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to output-type\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("output-type", default_print_output_type);
 }
 
-SCM 
-g_rc_output_orientation(SCM mode) 
+SCM
+g_rc_output_orientation(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{PORTRAIT , "portrait" },
+		{LANDSCAPE, "landscape"},
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "portrait") == 0 ) {
-		default_print_orientation = PORTRAIT;		
-	} else if ( strcmp(string, "landscape") == 0 ) {
-		default_print_orientation = LANDSCAPE;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to output-orientation\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("output-orientation", default_print_orientation);
 }
 
-SCM 
-g_rc_image_color(SCM mode) 
+SCM
+g_rc_image_color(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "enabled") == 0 ) {
-		default_image_color = TRUE;		
-	} else if ( strcmp(string, "disabled") == 0 ) {
-		default_image_color = FALSE;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to image-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("image-color", default_image_color);
 }
 
 SCM
 g_rc_output_color(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
 
-	string = gh_scm2newstr(mode, NULL);
+	RETURN_G_RC_MODE("output-color", default_print_color);
+}
 
-	if ( strcmp(string, "enabled") == 0 ) {
-		default_print_color = TRUE;
-	} else if ( strcmp(string, "disabled") == 0 ) {
-		default_print_color = FALSE;
-	} else {
-		fprintf(stderr, "Invalid value [%s] passed to output-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
+DEFINE_G_RC_COLOR(g_rc_output_color_background,
+		  "output-color-background",
+		  default_print_color_background);
 
-	if (string) {
-		free(string);
-	}
+SCM
+g_rc_log_window(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{MAP_ON_STARTUP, "startup" },
+		{MAP_LATER     , "later"   },
+	};
 
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("log-window", default_log_window);
 }
 
 SCM
-g_rc_output_color_background(SCM color)
+g_rc_log_window_type(SCM mode)
 {
-	char *string;
-	int newcolor;
+	static const vstbl_entry mode_table[] = {
+		{TRANSIENT, "transient" },
+		{DECORATED, "decorated" },
+	};
 
-	string = gh_scm2newstr(color, NULL);
-
-	newcolor = colornametovalue(string);
-
-	if (newcolor == -1) {
-		fprintf(stderr, "Invalid color [%s] passed to output-color-background\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	} else {
-		default_print_color_background = newcolor;
-	}
-
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("log-window-type", default_log_window_type);
 }
 
-SCM 
-g_rc_log_window(SCM mode) 
+SCM
+g_rc_third_button(SCM mode)
 {
-	char *string;
+	static const vstbl_entry mode_table[] = {
+		{POPUP_ENABLED   , "popup"   },
+		{MOUSEPAN_ENABLED, "mousepan"},
+	};
 
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "startup") == 0 ) {
-		default_log_window = MAP_ON_STARTUP;		
-	} else if ( strcmp(string, "later") == 0 ) {
-		default_log_window = MAP_LATER;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to log-window\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
+	RETURN_G_RC_MODE("third-button", default_third_button);
 }
-
-SCM 
-g_rc_log_window_type(SCM mode) 
-{
-	char *string;
-
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "transient") == 0 ) {
-		default_log_window_type = TRANSIENT;		
-	} else if ( strcmp(string, "decorated") == 0 ) {
-		default_log_window_type = DECORATED;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to log-window-type\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-SCM 
-g_rc_third_button(SCM mode) 
-{
-	char *string;
-
-	string = gh_scm2newstr(mode, NULL);
-
-	if ( strcmp(string, "popup") == 0 ) {
-		default_third_button = POPUP_ENABLED;		
-	} else if ( strcmp(string, "mousepan") == 0 ) {
-		default_third_button = MOUSEPAN_ENABLED;		
-	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to image-color\n", string);
-		if (string) free(string);
-		return(gh_int2scm(-1)); 
-	}
-
-	if (string) {
-		free(string);
-	}
-
-	return(gh_int2scm(0)); 
-}
-
-/*************************** GUILE end done *********************************/
-
