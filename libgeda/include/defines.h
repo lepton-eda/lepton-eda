@@ -24,8 +24,8 @@
 #define MAX_COLORS 25
 
 /* for new fileselection dialog box */
-#define MAX_FILES 1024
-#define MAX_DIRS 1024
+#define MAX_FILES 2048
+#define MAX_DIRS 2048
 
 #define ZOOM_OUT 0
 #define ZOOM_IN 1

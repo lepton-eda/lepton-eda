@@ -1,3 +1,11 @@
+2001-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h: Increased the maximum number of files and
+	  directories
+
+	* configure.in: (and all other configure.in's) set the VERSION 
+	  to 20010708. 
+
 2001-07-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: A little more work to get indent vs gindent to
