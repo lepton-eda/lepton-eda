@@ -460,7 +460,7 @@ int x_dialog_missing_sym(OBJECT *object)
   string =
     g_strdup_printf(_("%s\n"), string);
   string =
-    g_strdup_printf(_("%sIf you save out a design with a missing symbol file, gattrib will\n"), string);
+    g_strdup_printf(_("%sIf you save out a design with a missing symbol file, gattrib could\n"), string);
   string =
     g_strdup_printf(_("%spermanently remove this component from your design!  You probably\n"), string);
   string =
