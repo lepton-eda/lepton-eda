@@ -11,7 +11,8 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
              multiple_pinseq.sym multiple_pintype.sym multiple_refdes.sym \
              nameinside.sym nets.sym noslots.sym old_symbol.sym oldpins.sym \
              oldslot.sym typeinside.sym urefinside.sym zero_pinnumber.sym \
-             zero_pinseq.sym zero_slotnum.sym zero_slots.sym
+             zero_pinseq.sym zero_slotnum.sym zero_slots.sym \
+	     incorrect_footprint.sym duplicate_net.sym
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

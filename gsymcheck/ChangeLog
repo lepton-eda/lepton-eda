@@ -1,3 +1,22 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/pincounts.h, include/struct.h, include/prototype.h, 
+	src/s_check.c, src/s_symstruct.c: Applied patch by Jim Duchek which
+	adds several important tests to gsymcheck: 
+
+		net=Vcc:8,15,14 (for example) is now checked against
+		the pinnumber= attribs for duplicates.	footprint=
+		is checked to get the proper pincount (I included some
+		support for special cases like TO92, which doesn't
+		quite have 92 pins :), and the number of pins defined
+		vs. the number of pins that SHOULD be defined is compared.
+		Total pins are found by: total = num_net_pins + (numslots
+		* numpins).  Of course if numslots == 0 that multiplier
+		doesn't happen.
+	
+	* tests/incorrect_footprint.sym duplicate_net.sym: Added a couple
+	test symbols to exercise the above patch
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228

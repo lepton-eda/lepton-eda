@@ -52,10 +52,15 @@ struct st_symcheck {
 
   /* misc attributes */
   int found_footprint;
+  int footprint_size;
   int found_refdes;
   
   /* number of pins */
   int numpins;
+  /* number of net pins */
+  int numnetpins;
+  /* number of slots */
+  int numslots;  
   
   /* total error counter */
   int error_count;

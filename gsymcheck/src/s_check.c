@@ -32,7 +32,7 @@
 #include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
-
+#include "../include/pincounts.h"
 
 int
 s_check_all(TOPLEVEL *pr_current)
@@ -82,7 +82,13 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
 
   /* check for device attribute */
   s_check_device(object_head, s_symcheck);
- 
+
+  /* check for missing attributes */
+  s_check_missing_attributes(object_head, s_symcheck);
+  
+  /* check for obsolete attributes */
+  s_check_obsolete_forbidden_attributes(object_head, s_symcheck);
+
   /* check for pinseq attribute (and multiples) on all pins */
   s_check_pinseq(object_head, s_symcheck);
 
@@ -104,11 +110,8 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for connections with in a symbol (completely disallowed) */
   s_check_connections(object_head, s_symcheck);
 
-  /* check for missing attributes */
-  s_check_missing_attributes(object_head, s_symcheck);
-  
-  /* check for obsolete attributes */
-  s_check_obsolete_forbidden_attributes(object_head, s_symcheck);
+  /* Check to make sure the total number of pins is correct */
+  s_check_totalpins(object_head, s_symcheck);
   
 
   /* now report the info/warnings/errors to the user */
@@ -359,13 +362,83 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   int missing_pinnumber_attrib_sum=0;
   int multiple_pinnumber_attrib_sum=0;
   int counter=0;
+  int j;
 
   GList *found_numbers = NULL;
   GList *ptr1 = NULL;
   GList *ptr2 = NULL;
-  char *number;
+  char *number = NULL;
   char *message;
+  char *net = NULL;
+  char *temp;
+  char *netpins = NULL;
   char tempstr[10];
+  
+  counter = 0;
+
+  while(net = o_attrib_search_toplevel(object_head, "net", counter))
+  {
+    message = u_basic_strdup_multiple("Found net=", net, 
+                                          " attribute\n", NULL);
+    s_current->info_messages = g_list_append(s_current->info_messages,
+                                                      message);
+
+    netpins = u_basic_breakup_string(net, ':', 1);
+    
+    if (!netpins) {
+      message = u_basic_strdup("Bad net= attribute\n");
+      s_current->error_messages = g_list_append(s_current->error_messages,
+                                              message);
+      s_current->error_count++;
+    
+      free(net);
+      counter++;
+      continue;
+    }
+    
+    j = 0;
+    do {
+      if (number) {
+        free(number);
+        number = NULL;
+      }
+        
+      number = u_basic_breakup_string(netpins, ',', j);
+
+      if (!number)
+        break;
+
+      message = u_basic_strdup_multiple("Found pin number ", number, 
+                          " in net attribute\n", NULL);
+      s_current->info_messages = g_list_append(s_current->info_messages,
+                                             message);
+
+
+      if (strcmp(number, "0") == 0) {
+        message = u_basic_strdup("Found pinnumber 0 in net= attribute\n");
+        s_current->error_messages = g_list_append(s_current->error_messages,
+                                                message);
+        s_current->error_count++;
+      }
+
+      temp = g_strdup(number);
+      found_numbers = g_list_append(found_numbers, temp);
+      
+      s_current->numnetpins++;
+
+      j++;
+    } while (number);
+
+    if (number)
+      free(number);
+
+
+    free(net);
+    free(netpins);
+    
+    counter++;
+  }
+
 
   o_current = object_head;
   while(o_current != NULL)
@@ -394,7 +467,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
       while (string)
       {
         message = u_basic_strdup_multiple("Found pinnumber=", string, 
-				          " attribute\n", NULL);
+                        	          " attribute\n", NULL);
         s_current->info_messages = g_list_append(s_current->info_messages,
 	 	    			         message);
 
@@ -435,10 +508,12 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
       s_current->missing_pinnumber_attrib += missing_pinnumber_attrib_sum;
       s_current->multiple_pinnumber_attrib += multiple_pinnumber_attrib_sum;
     }
-
     
     o_current = o_current->next;
   }
+
+
+
 
   ptr1 = found_numbers;
   while (ptr1)
@@ -480,7 +555,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   g_list_free(found_numbers);
 
 
-  sprintf(tempstr, "%d", s_current->numpins);
+  sprintf(tempstr, "%d", s_current->numpins + s_current->numnetpins);
   message = u_basic_strdup_multiple("Found ", tempstr, " pins inside symbol\n", NULL);
   s_current->info_messages = g_list_append(s_current->info_messages,
                                            message);
@@ -496,7 +571,6 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   char* slotnum = NULL;
   char* pins = NULL;
   char* temp = NULL;
-  int numslots;
   char numslots_str[10];
   int slot;
   int i,j;
@@ -517,8 +591,8 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     return;
   }
 
-  numslots=atoi(value);
-  sprintf(numslots_str, "%d", numslots);
+  s_current->numslots=atoi(value);
+  sprintf(numslots_str, "%d", s_current->numslots);
   free(value);
 
   message = u_basic_strdup_multiple("Found numslots=", numslots_str, 
@@ -526,7 +600,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   s_current->info_messages = g_list_append(s_current->info_messages,
 	 	    			   message);
 
-  if (numslots == 0) {
+  if (s_current->numslots == 0) {
     message = u_basic_strdup("numslots set to zero, symbol does not have slots\n");
     s_current->info_messages = g_list_append(s_current->info_messages,
                                              message);
@@ -539,7 +613,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   while (slotdef != NULL)
   {
 
-    if (i > numslots-1) {
+    if (i > s_current->numslots-1) {
 
       sprintf(tempstr1, "%d", i+1); /* i starts at zero */
       message = 
@@ -585,7 +659,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     free(slotnum);
 
     /* make sure that the slot # is less than the number of slots */
-    if (slot > numslots) {
+    if (slot > s_current->numslots) {
       sprintf(tempstr1, "%d", slot);
       message = 
         u_basic_strdup_multiple("Slot ", tempstr1, 
@@ -690,7 +764,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   }
 
   
-  if (!slotdef && i < numslots) {
+  if (!slotdef && i < s_current->numslots) {
     message = 
       u_basic_strdup_multiple("Missing slotdef= (there should be ", 
                               numslots_str, " slotdef= attributes)\n", 
@@ -1050,7 +1124,10 @@ void
 s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
 {
   OBJECT *o_current;
+  PINCOUNT *pcount;
   char *message;
+  char tempstr[10];
+  char *tmp;
 
   o_current = object_head;
   while(o_current != NULL)
@@ -1068,6 +1145,18 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
                                           " attribute\n", NULL);
         s_current->info_messages = g_list_append(s_current->info_messages,
                                                message);
+                
+
+        s_current->footprint_size = s_get_footprint_size(
+        					o_current->text->string);	                               
+
+        sprintf(tempstr, "%d", s_current->footprint_size);
+
+        message = u_basic_strdup_multiple("Footprint size is ", 
+                                        tempstr, ".\n", NULL);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+                                             message);
+        
         s_current->found_footprint++;
       }
 
@@ -1114,4 +1203,29 @@ s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
     s_current->error_count++;
   }
   
+}
+
+void
+s_check_totalpins(OBJECT *object_head, SYMCHECK *s_current)
+{
+  int totalpins = 0;
+  char *message;
+  
+  totalpins = s_current->numnetpins;
+  
+  if (s_current->numslots)
+    totalpins += s_current->numpins * s_current->numslots;
+  else
+    totalpins += s_current->numpins;
+  
+  if (totalpins != s_current->footprint_size &&
+      s_current->footprint_size != -1) {
+    message = u_basic_strdup_multiple("Number of pins does not match ",
+                                      "footprint size.\n", NULL);
+    s_current->warning_messages = g_list_append(s_current->warning_messages,
+                                                message);
+    s_current->warning_count++;
+  }
+
+
 }
