@@ -18,8 +18,8 @@
 	changes to the symbols in the micro directory.  Thanks Werner.
 
 	* Makefile.am, configure.ac, system-commonrc.in, asic/*.sym: Added
-	asic symbol library and symbols (created by Peter Kaiser).  Thanks
-	Peter.
+	asic symbol library and symbols (created by Peter Kaiser).  I 
+	translated some of the symbols to the origin.  Thanks Peter.
 
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
