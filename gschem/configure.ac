@@ -471,14 +471,14 @@ fi
 #########################################################################
 
 #########################################################################
-# gEDA/gaf specify setup start
+# gEDA/gaf specific setup start
 #
 
 DATADIR=gEDA
 GEDADATADIR=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
-	# path not was specified with --with-rcdir
+	# path was not specified with --with-rcdir
         AC_DEFINE_UNQUOTED(GEDARCDIR, "none", [gEDA/gaf's rc directory])
 	GEDARCDIR=$GEDADATADIR
 else

@@ -84,6 +84,14 @@ void libgeda_init(void)
     putenv(new_data);
     /*free(new_data); putenv takes over the memory? */
   } 
+
+  s_clib_init();
+  s_slib_init();
+  s_menu_init();
+  s_attrib_init();
+  s_color_init();
+
+  g_register_libgeda_funcs();
 }
 
 @ %def libgeda_init

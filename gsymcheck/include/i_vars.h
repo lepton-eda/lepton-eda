@@ -17,12 +17,4 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-extern int default_init_right;
-extern int default_init_bottom;
-
-extern char *default_series_name;
-extern char *default_untitled_name;
-extern char *default_scheme_directory;
-extern char *default_font_directory;
-extern char *default_bitmap_directory;
 

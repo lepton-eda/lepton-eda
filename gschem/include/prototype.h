@@ -155,8 +155,7 @@ SCM g_key_cancel(void);
 SCM g_get_selected_filename(void);
 SCM g_get_selected_component_attributes(void);
 /* g_rc.c */
-char *g_rc_parse_path(void);
-void g_rc_parse(void);
+void g_rc_parse_gtkrc();
 SCM g_rc_gschem_version(SCM version);
 SCM g_rc_override_net_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_override_bus_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
@@ -198,15 +197,10 @@ SCM g_rc_snap_size(SCM size);
 SCM g_rc_logging_destination(SCM mode);
 SCM g_rc_default_series_name(SCM name);
 SCM g_rc_untitled_name(SCM name);
-SCM g_rc_component_library(SCM path);
-SCM g_rc_component_library_search(SCM path);
-SCM g_rc_source_library(SCM path);
-SCM g_rc_source_library_search(SCM path);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
-SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_scrollbars(SCM mode);
 SCM g_rc_paper_size(SCM width, SCM height);
 SCM g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height);
@@ -249,8 +243,6 @@ SCM g_rc_bus_ripper_type(SCM mode);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_bus_ripper_rotation(SCM mode);
 SCM g_rc_force_boundingbox(SCM mode);
-SCM g_rc_reset_component_library(void);
-SCM g_rc_reset_source_library(void);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

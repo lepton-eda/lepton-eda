@@ -15,18 +15,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 SCM g_get_slots(SCM scm_uref);
 SCM g_get_unique_slots(SCM scm_uref);
 /* g_rc.c */
-char *g_rc_parse_path(void);
-void g_rc_parse(void);
 SCM g_rc_gnetlist_version(SCM version);
-SCM g_rc_default_series_name(SCM name);
-SCM g_rc_component_library(SCM path);
-SCM g_rc_component_library_search(SCM path);
-SCM g_rc_source_library(SCM path);
-SCM g_rc_source_library_search(SCM path);
-SCM g_rc_scheme_directory(SCM path);
-SCM g_rc_font_directory(SCM path);
-SCM g_rc_bitmap_directory(SCM path);
-SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_net_naming_priority(SCM mode);
 SCM g_rc_hierarchy_traversal(SCM mode);
 SCM g_rc_hierarchy_uref_mangle(SCM mode);

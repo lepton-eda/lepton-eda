@@ -1,3 +1,24 @@
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Added code to specify the rc directory via
+	--with-rcdir.  Also set GEDARCDIR for the newly added rc code.
+
+	* include/Makefile.am, papersizes.h, libgeda.h: Added papersizes.h 
+	from gschem.
+
+	* include/prototypes.h: Added a whole slew of new function
+	prototypes for the new g_rc_* functions.
+
+	* src/Makefile.am, noweb/Makefile.am, noweb/g_register.nw,
+	g_rc.nw, i_vars.nw, include/i_vars.h: Moved a whole bunch of rc code
+	into libgeda from the various programs.  It is now possible to
+	write libgeda dependent programs without having to duplicate a lot
+	of rc code.
+
+	* noweb/libgeda.nw: Added a bunch of init routines which the
+	individual programs were calling into libgeda_init().
+	
+	
 2004-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_bus_basic.nw, o_net_basic.nw, s_cue.nw: Fixed the multi

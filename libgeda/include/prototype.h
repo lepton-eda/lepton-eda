@@ -23,11 +23,36 @@ int f_print(TOPLEVEL *w_current, char *filename);
 void f_print_set_type(TOPLEVEL *w_current, int type);
 /* g_basic.c */
 int g_read_file(char *filename);
+/* g_rc.c */
+int g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg);
+char *g_rc_parse_path(void);
+void g_rc_parse(char* rcname, char* specified_rc_filename);
+int g_rc_parse_gaf_rc(void);
+SCM g_rc_component_library(SCM path);
+SCM g_rc_component_library_search(SCM path);
+SCM g_rc_source_library(SCM path);
+SCM g_rc_source_library_search(SCM path);
+SCM g_rc_world_size(SCM width, SCM height, SCM border);
+SCM g_rc_reset_component_library(void);
+SCM g_rc_reset_source_library(void);
+SCM g_rc_default_series_name(SCM name);
+SCM g_rc_untitled_name(SCM name);
+SCM g_rc_font_directory(SCM path);
+SCM g_rc_bitmap_directory(SCM path);
+SCM g_rc_scheme_directory(SCM path);
+SCM g_rc_bus_ripper_symname(SCM scmsymname);
+
+/* g_register.c */
+void g_register_libgeda_funcs(void);
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
 SCM g_get_attrib_name_value(SCM attrib_smob);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
 void g_init_attrib_smob(void);
+/* i_vars.c */
+void i_vars_libgeda_set(TOPLEVEL *w_current);
+void i_vars_setnames(TOPLEVEL *w_current);
+void i_vars_freenames();
 /* libgeda.c */
 void libgeda_init(void);
 /* m_basic.c */

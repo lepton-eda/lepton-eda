@@ -11,10 +11,8 @@
 /* DO NOT read or edit this file ! Use ../noweb/i_vars.nw instead */
 
 <<i_vars.c : include directives>>
-<<i_vars.c : macros>>
 <<i_vars.c : global variables>>
 <<i_vars.c : i_vars_set()>>
-<<i_vars.c : i_vars_setnames()>>
 
 @
 
@@ -48,32 +46,10 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/papersizes.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
 @
-
-
-<<i_vars.c : macros>>=
-#define INIT_STR(w, name, str) {					\
-	if ((w)->name) {						\
-		free((w)->name);					\
-	}								\
-	(w)->name = u_basic_strdup(((default_ ## name) != NULL) ?	\
-				(default_ ## name) : (str));		\
-}
-
-/* Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
- * defaults used when default_... is NULL. */
-#define DEFAULT_SERIES_NAME      "untitled"
-#define DEFAULT_UNTITLED_NAME    "untitled"
-#define DEFAULT_SCHEME_DIRECTORY "./"
-#define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
-#define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
-#define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
-
-@ %def INIT_STR DEFAULT_SERIES_NAME DEFAULT_UNTITLED_NAME DEFAULT_SCHEME_DIRECTORY DEFAULT_FONT_DIRECTORY DEFAULT_BITMAP_DIRECTORY
 
 
 <<i_vars.c : global variables>>=
@@ -126,11 +102,6 @@ int   default_print_color = FALSE;
 int   default_print_color_background = OUTPUT_BACKGROUND_COLOR;
 int   default_print_output_type = EXTENTS;
 int   default_print_output_capstyle = SQUARE_CAP;
-char *default_series_name = NULL;
-char *default_untitled_name = NULL;
-char *default_font_directory = NULL;
-char *default_scheme_directory = NULL;
-char *default_bitmap_directory = NULL;
 int   default_log_window = MAP_ON_STARTUP;
 int   default_log_window_type = DECORATED;
 int   default_third_button = POPUP_ENABLED;
@@ -162,7 +133,6 @@ int   default_setpagedevice_orientation = FALSE;
 int   default_setpagedevice_pagesize = FALSE;
 int   default_bus_ripper_size = 200;
 int   default_bus_ripper_type = COMP_BUS_RIPPER;
-char *default_bus_ripper_symname = NULL;
 int   default_bus_ripper_rotation = NON_SYMMETRIC;
 int   default_force_boundingbox = FALSE;
 
@@ -185,10 +155,7 @@ int default_text_feedback = ONLY_WHEN_READABLE;
 void
 i_vars_set(TOPLEVEL *w_current)
 {
-  /* put this back when you get keymaps working again */
-#if 0
-  int i;
-#endif
+  i_vars_libgeda_set(w_current);
 
   /* this will be false if logging cannot be enabled */
   if (do_logging != FALSE) {
@@ -288,38 +255,9 @@ i_vars_set(TOPLEVEL *w_current)
   w_current->bus_ripper_rotation  = default_bus_ripper_rotation;
 
   w_current->force_boundingbox  = default_force_boundingbox;
-
-  /* you cannot free the default* strings here since new windows */
-  /* need them */
-  INIT_STR(w_current, series_name     , DEFAULT_SERIES_NAME     );
-  INIT_STR(w_current, untitled_name   , DEFAULT_UNTITLED_NAME   );
-  INIT_STR(w_current, font_directory  , DEFAULT_FONT_DIRECTORY  );
-  INIT_STR(w_current, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
-  INIT_STR(w_current, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
-  INIT_STR(w_current, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
 }
 
 
 @ %def i_vars_set
 
-
-@section Function @code{i_vars_setnames()}
-
-@defun i_vars_setnames w_current
-@end defun
-
-<<i_vars.c : i_vars_setnames()>>=
-void
-i_vars_setnames(TOPLEVEL *w_current)
-{
-  w_current->series_name      = u_basic_strdup(DEFAULT_SERIES_NAME     );
-  w_current->untitled_name    = u_basic_strdup(DEFAULT_UNTITLED_NAME   );
-  w_current->font_directory   = u_basic_strdup(DEFAULT_FONT_DIRECTORY  );
-  w_current->scheme_directory = u_basic_strdup(DEFAULT_SCHEME_DIRECTORY);
-  w_current->bitmap_directory = u_basic_strdup(DEFAULT_BITMAP_DIRECTORY);
-  w_current->bus_ripper_symname = u_basic_strdup(DEFAULT_BUS_RIPPER_SYMNAME);
-}
-
-
-@ %def i_vars_setnames
 

@@ -92,12 +92,7 @@ gschem_quit(void)
   o_undo_cleanup();
   /* s_stroke_free(); no longer needed */
 
-  free(default_series_name);
-  free(default_untitled_name);
-  free(default_font_directory);
-  free(default_scheme_directory);
-  free(default_bitmap_directory);
-  free(default_bus_ripper_symname);
+  i_vars_freenames();
 
   /* x_window_free_head(); can't do this since it causes a
    * condition in which window_head->... is still being refered
@@ -204,11 +199,6 @@ main_prog(int argc, char *argv[])
   /* register guile (scheme) functions */
   g_register_funcs();
 
-  s_clib_init();
-  s_slib_init();
-  s_menu_init();
-  s_attrib_init();
-  s_color_init();
   o_undo_init(); 
 
   geda_data = getenv("GEDADATA");
@@ -217,9 +207,9 @@ main_prog(int argc, char *argv[])
     exit(-1);
   }
 
-
-  g_rc_parse();
-
+  /* parse the various rc files */
+  g_rc_parse_gtkrc();
+  g_rc_parse("gschemrc", rc_filename);
   
   input_str = g_strdup_printf("%s%cgschem.scm", default_scheme_directory, 
 			      PATH_SEPARATER_CHAR);

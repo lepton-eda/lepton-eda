@@ -69,7 +69,6 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/papersizes.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 

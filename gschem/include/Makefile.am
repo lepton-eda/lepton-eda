@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 noinst_HEADERS = \
-	globals.h i_vars.h papersizes.h prototype.h x_event.h x_states.h \
+	globals.h i_vars.h prototype.h x_event.h x_states.h \
 	gettext.h
 
 MOSTLYCLEANFILES = *.log core FILE *~

@@ -24,7 +24,8 @@ BUILT_SOURCES = \
 	o_pin_basic.nw o_image.nw u_basic.nw s_attrib.nw s_basic.nw \
 	s_clib.nw s_hierarchy.nw s_papersizes.nw s_stretch.nw s_log.nw \
 	s_page.nw s_scratch.nw s_slib.nw s_color.nw s_undo.nw s_conn.nw \
-	s_cue.nw s_tile.nw s_menu.nw s_project.nw g_smob.nw libgeda.nw
+	s_cue.nw s_tile.nw s_menu.nw s_project.nw g_smob.nw libgeda.nw \
+	g_register.nw g_rc.nw i_vars.nw
 
 libgeda_la_SOURCES = $(BUILT_SOURCES:.nw=.c)
 

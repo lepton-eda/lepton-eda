@@ -1,3 +1,20 @@
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: spelling and grammar fixes
+
+	* include/Makefile.am, include/papersizes.h: Moved papersizes.h
+	into libgeda and fixed makefile for this change.
+	
+	* noweb/*.nw: Removed reference to papersizes.h include file 
+	(now inside of libgeda).
+
+	* include/i_vars.h, prototype.h, noweb/g_rc.nw, g_register.nw,
+	gschem.nw, i_vars.nw: Removed a whole bunch of rc related code.
+	The removed code was moved into libgeda.
+
+	* noweb/g_rc.nw: Added g_rc_parse_gtkrc() as a special parse
+	routine for gschem only.
+
 2004-05-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Removed a false comment from the comment 

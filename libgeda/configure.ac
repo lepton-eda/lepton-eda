@@ -448,8 +448,21 @@ AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
 #########################################################################
 
 #########################################################################
-# gEDA/gaf specify setup start
+# gEDA/gaf specific setup start
 #
+
+DATADIR=gEDA
+GEDADATADIR=$datadir/$DATADIR
+
+if eval "test x$opt_rcdir = x"; then
+	# path was not specified with --with-rcdir
+        AC_DEFINE_UNQUOTED(GEDARCDIR, "none", [gEDA/gaf's rc directory])
+	GEDARCDIR=$GEDADATADIR
+else
+	# path WAS specified with --with-rcdir
+        AC_DEFINE_UNQUOTED(GEDARCDIR, "$opt_rcdir", [gEDA/gaf's rc directory])
+	GEDARCDIR="$opt_rcdir"
+fi
 
 # Defs for libary symbol files
 #
@@ -459,9 +472,6 @@ if eval "test x$prefix = xNONE"; then
 else
  dprefix=$prefix
 fi
-
-DATADIR=gEDA
-GEDADATADIR=$datadir/$DATADIR
 
 gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
@@ -485,6 +495,8 @@ AC_SUBST(VERSION)
 AC_SUBST(LIBGEDA_CFLAGS)
 AC_SUBST(LIBGEDA_LDFLAGS)
 AC_SUBST(LIBTOOL_FLAGS)
+AC_SUBST(GEDADATADIR)
+AC_SUBST(GEDARCDIR)
 AC_SUBST(PATHSEP)
 AC_SUBST(OTHERPATHSEP)
 AC_SUBST(NOTANGLE)
@@ -514,6 +526,7 @@ AC_CONFIG_COMMANDS([notangle_guile.scm-chmod],
 AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
+expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:
@@ -524,6 +537,7 @@ AC_MSG_RESULT([
    libgdgeda (png output):           $GDGEDA $GDGEDA_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
+   rc directory:                     $expandedGEDARCDIR
    LIBGEDA .so version:              $SHARED_LIBRARY_VERSION
 ])
 

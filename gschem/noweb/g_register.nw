@@ -137,18 +137,8 @@ g_register_funcs(void)
 
   gh_new_procedure1_0 ("text-caps-style", g_rc_text_caps_style);
   gh_new_procedure1_0 ("logging-destination", g_rc_logging_destination);
-  gh_new_procedure1_0 ("default-series-name", g_rc_default_series_name);
-  gh_new_procedure1_0 ("untitled-name", g_rc_untitled_name);
-  gh_new_procedure1_0 ("component-library", g_rc_component_library);
-  gh_new_procedure1_0 ("component-library-search", g_rc_component_library_search);
-  gh_new_procedure1_0 ("source-library", g_rc_source_library);
-  gh_new_procedure1_0 ("source-library-search", g_rc_source_library_search);
+
   gh_new_procedure1_0 ("attribute-name", g_rc_attribute_name);
-  gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
-  gh_new_procedure1_0 ("bitmap-directory", g_rc_bitmap_directory);
-  /* gh_new_procedure2_0 ("stroke", g_rc_stroke); old way */
-  gh_new_procedure1_0 ("font-directory", g_rc_font_directory);
-  gh_new_procedure3_0 ("world-size", g_rc_world_size);
   gh_new_procedure2_0 ("paper-size", g_rc_paper_size);
   gh_new_procedure3_0 ("paper-sizes", g_rc_paper_sizes);
   /* text-output is old... will eventually be removed! */
@@ -190,11 +180,8 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("setpagedevice-pagesize", g_rc_setpagedevice_pagesize);
   gh_new_procedure1_0 ("bus-ripper-size", g_rc_bus_ripper_size);
   gh_new_procedure1_0 ("bus-ripper-type", g_rc_bus_ripper_type);
-  gh_new_procedure1_0 ("bus-ripper-symname", g_rc_bus_ripper_symname);
   gh_new_procedure1_0 ("bus-ripper-rotation", g_rc_bus_ripper_rotation);
   gh_new_procedure1_0 ("force-boundingbox", g_rc_force_boundingbox);
-  gh_new_procedure0_0 ("reset-component-library", g_rc_reset_component_library);
-  gh_new_procedure0_0 ("reset-source-library", g_rc_reset_source_library);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);
