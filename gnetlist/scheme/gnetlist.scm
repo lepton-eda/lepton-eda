@@ -166,16 +166,16 @@
 ;;
 ;; Split a string into lines no longer than split-length
 ;; (from Stefan Petersen)
-(define (split string-to-split split-length)
+(define (split string-to-split split-length port)
   (if (> split-length (string-length string-to-split))
-      (display string-to-split) ; Last snippet of string
+      (display string-to-split port) ; Last snippet of string
       (let ((pos (string-rindex string-to-split #\space 0 split-length)))
 	(cond ((not pos)
 	       (display "Couldn't split at requested position\n"))
 	      (else
 	       (display (string-append (substring string-to-split 0 pos) 
-				       " \\"))
-	       (newline)
+				       " \\") port)
+	       (newline port)
 	       (split (substring string-to-split (+ pos 1)) split-length))))))
 
 ;; example use
