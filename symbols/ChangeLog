@@ -1,3 +1,7 @@
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* *.sym: Updated all symbols and font definitions to 20030901
+
 2003-08-31 Werner Hoch <werner.ho@gmx.de>
 	* memory/*.sym: repaired and completed all symbols
 	
