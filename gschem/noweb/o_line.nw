@@ -21,6 +21,7 @@
 <<o_line.c : o_line_draw_phantom()>>
 
 <<o_line.c : o_line_erase()>>
+<<o_line.c : o_line_eraserubber()>>
 
 <<o_line.c : o_line_draw_xor()>>
 
@@ -679,6 +680,29 @@ o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 @ %def o_line_erase
+
+
+@section Function @code{o_line_eraserubber()}
+
+@defun o_line_eraserubber w_current
+@end defun
+
+<<o_line.c : o_line_eraserubber()>>=
+/* used in button cancel code in x_events.c */
+void
+o_line_eraserubber(TOPLEVEL *w_current)
+{
+  int size;
+
+  gdk_gc_set_foreground(w_current->gc,
+			x_get_color(w_current->background_color) );
+  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x,
+                w_current->start_y, w_current->last_x, w_current->last_y);
+}
+
+
+@ %def o_line_eraserubber
+
 
 
 @section Function [[o_line_draw_xor()]]

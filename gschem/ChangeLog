@@ -12,6 +12,30 @@
 	* noweb/x_dialog.nw: Improved the appearance of the Add Text...
 	dialog box.
 
+	* noweb/o_line.nw: Added o_line_eraserubber(...) (erase any rubber
+	banding line)
+
+	* noweb/o_box.nw: Added o_box_eraserubber(...) (erase any rubber
+	banding box)
+
+	* noweb/o_circle.nw: Added o_circle_eraserubber(...) (erase any rubber
+	banding circle)
+
+	* noweb/o_basic.nw: Added o_erase_rubber(...) which erases any rubber
+	banding object in progress.
+
+	* noweb/o_arc.nw: Added o_arc_eraserubber(...) (erase any rubber
+	banding arc)
+
+	* noweb/i_callbacks.nw: Fixed a whole slew of quirks when you are
+        drawing something and cancel it or start another command (that 
+        used to leave ghosts around)
+
+	* noweb/i_callbacks.nw: Fixed it so that in some modes, the right
+	mouse button no longer completely cancels the mode
+
+	* noweb/x_dialog.nw: Added modal grab for add arc dialog box.
+
 2002-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
  
 	* noweb/i_basic.nw, o_grips.nw, x_fileselect.nw, i_callbacks.nw,

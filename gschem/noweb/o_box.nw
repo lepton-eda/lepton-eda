@@ -25,6 +25,7 @@
 <<o_box.c : o_box_fill_mesh()>>
 
 <<o_box.c : o_box_erase()>>
+<<o_box.c : o_box_eraserubber()>>
 
 <<o_box.c : o_box_draw_xor()>>
 
@@ -767,6 +768,23 @@ o_box_erase(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 @ %def o_box_erase
+
+
+@section Function @code{o_box_eraserubber()}
+
+@defun o_box_eraserubber w_current
+@end defun
+
+<<o_box.c : o_box_eraserubber()>>=
+/* used in button cancel code in x_events.c */
+void
+o_box_eraserubber(TOPLEVEL *w_current)
+{
+  o_box_rubberbox_xor(w_current);
+}
+
+
+@ %def o_box_eraserubber
 
 
 @section Function [[o_box_draw_xor]]

@@ -579,6 +579,46 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         o_bus_eraserubber(w_current);
         break;
 
+        case(DRAWPIN):
+        case(ENDPIN):
+        w_current->inside_action = 0;
+        w_current->event_state = DRAWPIN;
+        i_update_status(w_current, "Pin Mode");
+        o_pin_eraserubber(w_current);
+        break;
+
+        case(DRAWLINE):
+        case(ENDLINE):
+        w_current->inside_action = 0;
+        w_current->event_state = DRAWLINE;
+        i_update_status(w_current, "Line Mode");
+        o_line_eraserubber(w_current);
+        break;
+
+        case(DRAWBOX):
+        case(ENDBOX):
+        w_current->inside_action = 0;
+        w_current->event_state = DRAWBOX;
+        i_update_status(w_current, "Box Mode");
+        o_box_eraserubber(w_current);
+        break;
+
+        case(DRAWCIRCLE):
+        case(ENDCIRCLE):
+        w_current->inside_action = 0;
+        w_current->event_state = DRAWCIRCLE;
+        i_update_status(w_current, "Circle Mode");
+        o_circle_eraserubber(w_current);
+        break;
+
+        case(DRAWARC):
+        case(ENDARC):
+        w_current->inside_action = 0;
+        w_current->event_state = DRAWARC;
+        i_update_status(w_current, "Arc Mode");
+        o_arc_eraserubber(w_current);
+        break;
+
         default:
         i_callback_cancel(w_current, 0, NULL);
         break;

@@ -1068,7 +1068,7 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_container_border_width(
                                GTK_CONTAINER (w_current->tiwindow), 5);
 
-    label = gtk_label_new ("Enter text, Click apply,\nMove cursor into window, click to place text.");
+    label = gtk_label_new ("Enter text, click apply,\nmove cursor into window, click to place text.\nMiddle button to rotate while placing.");
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -2942,9 +2942,7 @@ arc_angles_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
     o_arc_end4(w_current, atoi(string_start), atoi(string_sweep));
   }
 
-#if 0
   gtk_grab_remove(w_current->aawindow);
-#endif
   gtk_widget_destroy(w_current->aawindow);
   w_current->aawindow = NULL;
 }
@@ -2962,9 +2960,7 @@ arc_angles_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 arc_angles_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-#if 0
   gtk_grab_remove(w_current->aawindow);
-#endif
   gtk_widget_destroy(w_current->aawindow);
   w_current->aawindow = NULL;
 
@@ -3073,9 +3069,7 @@ arc_angle_dialog (TOPLEVEL *w_current)
 
   if (!GTK_WIDGET_VISIBLE (w_current->aawindow)) {
     gtk_widget_show (w_current->aawindow);
-#if 0
     gtk_grab_add (w_current->aawindow);
-#endif
   }
 }
 

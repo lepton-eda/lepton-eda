@@ -20,6 +20,7 @@
 <<o_circle.c : o_circle_fill_mesh()>>
 
 <<o_circle.c : o_circle_erase()>>
+<<o_circle.c : o_circle_eraserubber()>>
 
 <<o_circle.c : o_circle_draw_xor()>>
 
@@ -508,6 +509,22 @@ o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 @ %def o_circle_erase
+
+
+@section Function [[o_circle_eraserubber()]]
+
+@defun o_circle_eraserubber w_current 
+@end defun
+
+<<o_circle.c : o_circle_eraserubber()>>=
+void
+o_circle_eraserubber(TOPLEVEL *w_current)
+{
+   o_circle_rubbercircle_xor(w_current);
+}
+
+
+@ %def o_circle_eraserubber
 
 
 @section Function [[o_circle_draw_xor()]]

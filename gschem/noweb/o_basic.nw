@@ -24,6 +24,7 @@
 <<o_basic.c : o_erase_single()>>
 <<o_basic.c : o_drawbounding()>>
 <<o_basic.c : o_erasebounding()>>
+<<o_basic.c : o_erase_rubber()>>
 
 @
 
@@ -669,3 +670,66 @@ o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list)
 @ %def o_erasebounding
 
 
+@section Function @code{o_erase_rubber()}
+
+@defun o_erase_rubber w_current
+@end defun
+
+<<o_basic.c : o_erase_rubber()>>=
+int
+o_erase_rubber(TOPLEVEL *w_current)
+{
+   /* return FALSE if it did not erase anything */
+ 
+   if (!w_current->inside_action)
+     return(FALSE);
+
+   switch(w_current->event_state) {
+
+     case(STARTDRAWBUS):
+     case(DRAWBUS):
+     case(BUSCONT):
+        o_bus_eraserubber(w_current);
+     break;
+
+     case(STARTDRAWNET):
+     case(DRAWNET):
+     case(NETCONT):
+        o_net_eraserubber(w_current);
+     break;
+
+     case(DRAWPIN):
+     case(ENDPIN):
+        o_pin_eraserubber(w_current);
+     break;
+
+     case(DRAWLINE):
+     case(ENDLINE):
+        o_line_eraserubber(w_current);
+     break;
+
+     case(DRAWBOX):
+     case(ENDBOX):
+        o_box_eraserubber(w_current);
+     break;
+
+     case(DRAWCIRCLE):
+     case(ENDCIRCLE):
+        o_circle_eraserubber(w_current);
+     break;
+
+     case(DRAWARC):
+     case(ENDARC):
+        o_arc_eraserubber(w_current);
+     break;
+
+     default:
+ 	return(FALSE);
+     break;
+   }
+
+   return(TRUE);
+}
+
+
+@ %def o_erase_rubber

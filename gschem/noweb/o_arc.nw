@@ -21,6 +21,7 @@
 <<o_arc.c : o_arc_draw_phantom()>>
 
 <<o_arc.c : o_arc_erase()>>
+<<o_arc.c : o_arc_eraserubber()>>
 
 <<o_arc.c : o_arc_draw_xor()>>
 
@@ -759,6 +760,23 @@ o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current)
   o_arc_draw(w_current, o_current);
   w_current->override_color = -1;
 }
+
+
+@ %def o_arc_erase
+
+
+@section Function [[o_arc_eraserubber()]]
+
+@defun o_arc_erase w_current 
+@end defun
+
+<<o_arc.c : o_arc_eraserubber()>>=
+void
+o_arc_eraserubber(TOPLEVEL *w_current)
+{
+   o_arc_rubberarc_xor(w_current);
+}
+
 
 @ %def o_arc_erase
 

@@ -945,31 +945,9 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    if (w_current->inside_action) {
-	switch(w_current->event_state)
-	{
-	case(DRAWNET):
-        case(NETCONT):
-       		w_current->inside_action = 0;
-        	w_current->event_state = SELECT;
-        	i_update_status(w_current, "Select Mode");
-        	o_net_eraserubber(w_current);
-        break;
-
-        case(DRAWBUS):
-        case(BUSCONT):
-        	w_current->inside_action = 0;
-        	w_current->event_state = SELECT;
-        	i_update_status(w_current, "Select Mode");
-        	o_bus_eraserubber(w_current);
-        break;
-
-        default:
-	        i_callback_cancel(w_current, 0, NULL);
-        break;
-	}
+    if (!o_erase_rubber(w_current)) {
+      i_callback_cancel(w_current, 0, NULL);
     }
-
     i_callback_edit_select((TOPLEVEL*) data, 0, NULL);
   }
 }
@@ -2964,6 +2942,8 @@ DEFINE_I_CALLBACK(add_net)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
   /* need to click */
   w_current->event_state = STARTDRAWNET;
   i_update_middle_button(w_current, i_callback_add_net, "Net");
@@ -2988,6 +2968,8 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+ 
+  o_erase_rubber(w_current);
 
   w_current->event_state = STARTDRAWNET;
 
@@ -3041,6 +3023,8 @@ DEFINE_I_CALLBACK(add_bus)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
   w_current->event_state = STARTDRAWBUS;
 
   /* need to click */
@@ -3068,12 +3052,14 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
+  w_current->event_state = STARTDRAWBUS;
+
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus_hotkey, "Bus");
   i_update_status2(w_current, "Bus Mode");
   i_update_toolbar(w_current);
-
-  w_current->event_state = STARTDRAWBUS;
 
   o_bus_start(w_current, mouse_x, mouse_y);
 
@@ -3119,9 +3105,15 @@ DEFINE_I_CALLBACK(add_text)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+  
+  o_erase_rubber(w_current);
+
+  w_current->inside_action = 0;
+  w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   text_input_dialog(w_current);
-  w_current->inside_action = 0;
 }
 
 
@@ -3161,6 +3153,8 @@ DEFINE_I_CALLBACK(add_line)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
   w_current->event_state = DRAWLINE;
   i_update_middle_button(w_current, i_callback_add_line, "Line");
   i_update_status2(w_current, "Line Mode");
@@ -3182,6 +3176,8 @@ DEFINE_I_CALLBACK(add_line_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+
+  o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_line_hotkey, "Line");
   i_update_status2(w_current, "Line Mode");
@@ -3208,6 +3204,8 @@ DEFINE_I_CALLBACK(add_box)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
   w_current->event_state = DRAWBOX;
   i_update_middle_button(w_current, i_callback_add_box, "Box");
   i_update_status2(w_current, "Box Mode");
@@ -3229,6 +3227,8 @@ DEFINE_I_CALLBACK(add_box_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+
+  o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_box_hotkey, "Box");
   i_update_status2(w_current, "Box Mode");
@@ -3255,6 +3255,8 @@ DEFINE_I_CALLBACK(add_circle)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
   w_current->event_state = DRAWCIRCLE;
   i_update_middle_button(w_current, i_callback_add_circle, "Circle");
   i_update_status2(w_current, "Circle Mode");
@@ -3276,6 +3278,8 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+
+  o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_circle_hotkey,
                          "Circle");
@@ -3302,6 +3306,8 @@ DEFINE_I_CALLBACK(add_arc)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+  
+  o_erase_rubber(w_current);
 
   w_current->event_state = DRAWARC;
   i_update_middle_button(w_current, i_callback_add_arc, "Arc");
@@ -3324,6 +3330,8 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+
+  o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_arc_hotkey, "Arc");
   i_update_status2(w_current, "Arc Mode");
@@ -3350,6 +3358,8 @@ DEFINE_I_CALLBACK(add_pin)
 
   exit_if_null(w_current);
 
+  o_erase_rubber(w_current);
+
   w_current->event_state = DRAWPIN;
   i_update_middle_button(w_current, i_callback_add_pin, "Pin");
   i_update_status2(w_current, "Pin Mode");
@@ -3371,6 +3381,8 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+
+  o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_pin_hotkey, "Pin");
   i_update_status2(w_current, "Pin Mode");
@@ -4127,6 +4139,10 @@ DEFINE_I_CALLBACK(cancel)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+  
+  if (w_current->inside_action) { /* highly temp */
+     o_redraw_all(w_current); /* do I want to deselect sel */
+  }
 
   w_current->inside_action=0;
 
@@ -4136,8 +4152,6 @@ DEFINE_I_CALLBACK(cancel)
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
   i_update_toolbar(w_current);
-
-  o_redraw_all(w_current); /* do I want to deselect sel */
 
   /* clear the key guile command-sequence */
   gh_eval_str("(set! current-command-sequence '())");
