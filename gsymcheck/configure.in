@@ -86,6 +86,7 @@ saved_ldflags="$LDFLAGS"
 if ! test "$CYGWIN"x = x; then
         echo Including -fnative-struct in CFLAGS for CYGWIN port
         CFLAGS="$CFLAGS -fnative-struct"
+        LDFLAGS="-lregex"
 fi
 
 if test "$debug" = "yes"; then

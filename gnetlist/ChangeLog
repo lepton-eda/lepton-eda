@@ -1,4 +1,9 @@
 
+
+2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Added -lregex for CYGWIN32 build
+
 2000-12-12  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/gnet-vams.scm: Finally found the time to finish getting this

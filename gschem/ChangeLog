@@ -9,6 +9,10 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Added -lregex for CYGWIN32 build
+
 2000-12-12  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/g_register.c: Added guile helper functions for netlist generation
