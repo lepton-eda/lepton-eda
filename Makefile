@@ -159,10 +159,10 @@ symbols_config:
 	( cd symbols$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 symbols_reconfig: 
-	( cd symbols$(CD_VERSION); autoreconf --force ; automake )
+	( cd symbols$(CD_VERSION); autoconf ; automake )
 
 symbols_distconfig: 
-	( cd symbols$(CD_VERSION); autoreconf --force ; automake --include-deps )
+	( cd symbols$(CD_VERSION); autoconf ; automake --include-deps )
 
 symbols_dist: 
 	( cd symbols$(CD_VERSION); ${MAKE} dist )
@@ -185,13 +185,13 @@ gschem_config:
 	( cd gschem$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 gschem_reconfig: 
-	( cd gschem$(CD_VERSION); autoreconf --force ; automake )
+	( cd gschem$(CD_VERSION); autoconf ; automake )
 
 gschem_src: 
 	( cd gschem$(CD_VERSION)/src; make src )
 
 gschem_distconfig: 
-	( cd gschem$(CD_VERSION); autoreconf --force ; automake --include-deps )
+	( cd gschem$(CD_VERSION); autoconf ; automake --include-deps )
 
 gschem_dist: 
 	( cd gschem$(CD_VERSION); ${MAKE} dist )
@@ -238,10 +238,10 @@ gnetlist_config:
 	( cd gnetlist$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 gnetlist_reconfig: 
-	( cd gnetlist$(CD_VERSION); autoreconf --force ; automake )
+	( cd gnetlist$(CD_VERSION); autoconf ; automake )
 
 gnetlist_distconfig: 
-	( cd gnetlist$(CD_VERSION); autoreconf --force ; automake --include-deps )
+	( cd gnetlist$(CD_VERSION); autoconf ; automake --include-deps )
 
 gnetlist_dist: 
 	( cd gnetlist$(CD_VERSION); ${MAKE} dist )
@@ -264,10 +264,10 @@ gsymcheck_config:
 	( cd gsymcheck$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 gsymcheck_reconfig: 
-	( cd gsymcheck$(CD_VERSION); autoreconf --force ; automake )
+	( cd gsymcheck$(CD_VERSION); autoconf ; automake )
 
 gsymcheck_distconfig: 
-	( cd gsymcheck$(CD_VERSION); autoreconf --force ; automake --include-deps )
+	( cd gsymcheck$(CD_VERSION); autoconf ; automake --include-deps )
 
 gsymcheck_dist: 
 	( cd gsymcheck$(CD_VERSION); ${MAKE} dist )
@@ -302,10 +302,10 @@ utils_config:
 	( cd utils$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 utils_reconfig: 
-	( cd utils$(CD_VERSION); autoreconf --force ; automake )
+	( cd utils$(CD_VERSION); autoconf ; automake )
 
 utils_distconfig: 
-	( cd utils$(CD_VERSION); autoreconf --force ; automake --include-deps )
+	( cd utils$(CD_VERSION); autoconf ; automake --include-deps )
 
 utils_dist: 
 	( cd utils$(CD_VERSION); ${MAKE} dist )
@@ -342,13 +342,13 @@ libgeda_config:
 	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 libgeda_reconfig: 
-	( cd libgeda$(CD_VERSION); autoreconf --force ; automake )
+	( cd libgeda$(CD_VERSION); autoconf ; automake )
 
 libgeda_src: 
 	( cd libgeda$(CD_VERSION)/src; make src )
 
 libgeda_distconfig: 
-	( cd libgeda$(CD_VERSION); autoreconf --force ; automake --include-deps )
+	( cd libgeda$(CD_VERSION); autoconf ; automake --include-deps )
 
 libgeda_dist: 
 	( cd libgeda$(CD_VERSION); ${MAKE} dist )
