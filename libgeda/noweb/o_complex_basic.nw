@@ -529,7 +529,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
 
   /* check for validity */
   if (clib && basename)
-    filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
+    filename = g_strdup_printf("%s%c%s", clib, G_DIR_SEPARATOR, basename);
   else 
     filename = g_strdup("unknown");
 

@@ -609,8 +609,6 @@ void s_undo_init(PAGE *p_current);
 void s_undo_free_all(TOPLEVEL *w_current, PAGE *p_current);
 
 /* u_basic.c */
-char *u_basic_strdup(const char *p);
-char *u_basic_strdup_multiple(const char *str, ...);
 char *u_basic_breakup_string(char *string, char delimiter, int count);
 void u_basic_strip_trailing(char *string, char c);
 int u_basic_has_trailing(char *string, char c);

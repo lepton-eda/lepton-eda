@@ -261,301 +261,301 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 		
     case(' '):
       temp_string = g_strdup_printf("%s%cspace.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('\n'):
       temp_string = g_strdup_printf("%s%cnewline.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
 		
     case('!'):
       temp_string = g_strdup_printf("%s%cexcl.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 		
     case(','):
       temp_string = g_strdup_printf("%s%ccomma.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('('):
       temp_string = g_strdup_printf("%s%clparen.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case(')'):
       temp_string = g_strdup_printf("%s%crparen.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('-'):
       temp_string = g_strdup_printf("%s%cminus.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('+'):
       temp_string = g_strdup_printf("%s%cplus.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('#'):
       temp_string = g_strdup_printf("%s%cpound.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('?'):
       temp_string = g_strdup_printf("%s%cquest.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('"'):
       temp_string = g_strdup_printf("%s%cquote.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case(':'):
       temp_string = g_strdup_printf("%s%ccolon.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('@'):
       temp_string = g_strdup_printf("%s%cat.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('='):
       temp_string = g_strdup_printf("%s%cequal.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('>'):
       temp_string = g_strdup_printf("%s%cmore.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('<'):
       temp_string = g_strdup_printf("%s%cless.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('/'):
       temp_string = g_strdup_printf("%s%cslash.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('$'):
       temp_string = g_strdup_printf("%s%cdollar.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case(';'):
       temp_string = g_strdup_printf("%s%csemi.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('&'):
       temp_string = g_strdup_printf("%s%camper.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('\\'):
       temp_string = g_strdup_printf("%s%cbackslash.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('{'):
       temp_string = g_strdup_printf("%s%clbrace.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('}'):
       temp_string = g_strdup_printf("%s%crbrace.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('\''):
       temp_string = g_strdup_printf("%s%capost.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('`'):
       temp_string = g_strdup_printf("%s%cbacktick.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('^'):
       temp_string = g_strdup_printf("%s%ccaret.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('%'):
       temp_string = g_strdup_printf("%s%cpercent.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('['):
       temp_string = g_strdup_printf("%s%clbrack.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case(']'):
       temp_string = g_strdup_printf("%s%crbrack.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('*'):
       temp_string = g_strdup_printf("%s%castericks.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('.'):
       temp_string = g_strdup_printf("%s%cperiod.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('_'):
       temp_string = g_strdup_printf("%s%cunder.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('~'):
       temp_string = g_strdup_printf("%s%ctilde.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case('|'):
       temp_string = g_strdup_printf("%s%cvbar.sym", 
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (196): /* A-umlaut finnish/swedish/german */
       temp_string = g_strdup_printf("%s%cA-diaeresis.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (197): /* A-ring finnish/swedish/danish/norwegian */
       temp_string = g_strdup_printf("%s%cA-ring.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (198): /* AE-diphtong danish/norwegian */
       temp_string = g_strdup_printf("%s%cAE-lig.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (214): /* O-umlaut finnish/swedish/german */
       temp_string = g_strdup_printf("%s%cO-diaeresis.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (216): /* O-slash danish/norwegian */
       temp_string = g_strdup_printf("%s%cO-slash.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (220): /* U-umlaut german */
       temp_string = g_strdup_printf("%s%cU-diaeresis.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (228): /* a-umlaut finnish/swedish/german */
       temp_string = g_strdup_printf("%s%ca_-diaeresis.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (229): /* a-ring finnish/swedish/danish/norwegian */
       temp_string = g_strdup_printf("%s%ca_-ring.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (230): /* ae-diphtong danish/norwegian */
       temp_string = g_strdup_printf("%s%cae_-lig.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (246): /* o-umlaut finnish/swedish/german */
       temp_string = g_strdup_printf("%s%co_-diaeresis.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (248): /* o-slash danish/norwegian */
       temp_string = g_strdup_printf("%s%co_-slash.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (252): /* u-umlaut german */
       temp_string = g_strdup_printf("%s%cu_-diaeresis.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (225): /* a-acute_accent spanish */
       temp_string = g_strdup_printf("%s%ca_-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (233): /* e-acute_accent spanish */
       temp_string = g_strdup_printf("%s%ce_-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (237): /* i-acute_accent spanish */
       temp_string = g_strdup_printf("%s%ci_-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (243): /* o-acute_accent spanish */
       temp_string = g_strdup_printf("%s%co_-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (250): /* u-acute_accent spanish */
       temp_string = g_strdup_printf("%s%cu_-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (193): /* A-acute_accent spanish */
       temp_string = g_strdup_printf("%s%cA-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (201): /* E-acute_accent spanish */
       temp_string = g_strdup_printf("%s%cE-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (205): /* I-acute_accent spanish */
       temp_string = g_strdup_printf("%s%cI-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (211): /* O-acute_accent spanish */
       temp_string = g_strdup_printf("%s%cO-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (218): /* U-acute_accent spanish */
       temp_string = g_strdup_printf("%s%cU-acute-accent.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (241): /* n-tilde spanish */
       temp_string = g_strdup_printf("%s%cn_-tilde.sym",
-	      w_current->font_directory, PATH_SEPARATER_CHAR);
+	      w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (209): /* N-tilde spanish */
       temp_string = g_strdup_printf("%s%cN-tilde.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (161): /* open exclamation spanish */
       temp_string = g_strdup_printf("%s%cexcl-open.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
 
     case (191): /* open question spanish */
       temp_string = g_strdup_printf("%s%cquest-open.sym",
-              w_current->font_directory, PATH_SEPARATER_CHAR);
+              w_current->font_directory, G_DIR_SEPARATOR);
       break;
      
     default:	
@@ -566,11 +566,11 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
        */
       if (needed_char >= 'a' && needed_char <= 'z') {
         temp_string = g_strdup_printf("%s%c%c_.sym", 
-                w_current->font_directory, PATH_SEPARATER_CHAR,
+                w_current->font_directory, G_DIR_SEPARATOR,
                 needed_char);
       } else {
         temp_string = g_strdup_printf("%s%c%c.sym", 
-                w_current->font_directory, PATH_SEPARATER_CHAR,
+                w_current->font_directory, G_DIR_SEPARATOR,
                 needed_char);
       }
       break;
@@ -580,7 +580,7 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
   if ( access(temp_string, R_OK) != 0 ) {
     s_log_message("Could not find character %c definition\n",needed_char, temp_string);
     free(temp_string);
-    temp_string = g_strdup_printf("%s%cquest.sym", w_current->font_directory, PATH_SEPARATER_CHAR);
+    temp_string = g_strdup_printf("%s%cquest.sym", w_current->font_directory, G_DIR_SEPARATOR);
     if ( access(temp_string, R_OK) != 0 ) {
       fprintf(stderr, "Could not load question font char -- check font-directory keyword\n");
       exit(-1);

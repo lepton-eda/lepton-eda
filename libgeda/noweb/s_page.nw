@@ -257,16 +257,11 @@ s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
   pwd = getcwd(NULL, 1024);
 
   /* big assumption here that page_filename isn't null */
-#ifdef __MINGW32__
-  if (page_filename[1] == ':' && (page_filename[2] == PATH_SEPARATER_CHAR ||
-				  page_filename[2] == OTHER_PATH_SEPARATER_CHAR)) {
-#else
-  if (page_filename[0] == PATH_SEPARATER_CHAR) {
-#endif
+  if (g_path_is_absolute (page_filename)) {
     p_new->page_filename = u_basic_strdup_multiple(page_filename, 
                                                    NULL);
   } else {
-    p_new->page_filename = u_basic_strdup_multiple(pwd, PATH_SEPARATER_STRING, 
+    p_new->page_filename = u_basic_strdup_multiple(pwd, G_DIR_SEPARATOR_S,
                                                    page_filename, NULL);
   }
 

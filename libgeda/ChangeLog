@@ -1,3 +1,10 @@
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/o_complex_basic.nw, noweb/o_text_basic.nw:
+	* noweb/s_log.nw, noweb/s_page.nw, noweb/s_slib.nw:
+	* include/defines.h: Deleted *_SEPARATER_* macros: now rely on GLib 
+	for the determination of the directory separator.
+
 2005-02-04 04:39  danmc
 
 	* configure.ac, noweb/a_basic.nw, noweb/f_basic.nw,

@@ -261,7 +261,7 @@ s_slib_search_lowlevel(char *basename)
     /* strings */	
     full_path = (char *) malloc(sizeof(char)*(len+2));
 
-    sprintf(full_path, "%s%c%s", slib_path, PATH_SEPARATER_CHAR, basename);
+    sprintf(full_path, "%s%c%s", slib_path, G_DIR_SEPARATOR, basename);
 		
     free(slib_path);
 
