@@ -1,3 +1,9 @@
+2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/parsecmd.c: Cleaned up help message a little.
+
+	* src/gsymcheck.1: Updated manpage a little 
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version

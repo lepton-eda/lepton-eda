@@ -32,7 +32,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#define OPTIONS "o:qihvg:c:l:"
+#define OPTIONS "o:qihvg:c:l:m:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -43,13 +43,15 @@ extern int optind;
 void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-    printf("  -i  		Interactive scheme mode\n");
-    printf("  -q  		Quiet mode\n");
-    printf("  -l filename       Load scheme file before executing procedure\n");
-    printf("  -g proc	        Scheme procedure to execute\n");
-    printf("  -o filename	Output netlist filename\n");
-    printf("  -c string	        Execute string as a scheme script\n");
-    printf("  -v  		Verbose mode on\n");
+    printf("  -i                Interactive scheme mode\n");
+    printf("  -q                Quiet mode\n");
+    printf("  -l filename       Load scheme file before loading backend\n");
+    printf("  -m filename       Load scheme file after loading backend,\n");
+    printf("                    but still before executing procedure\n");
+    printf("  -g proc           Scheme procedure to execute\n");
+    printf("  -o filename       Output netlist filename\n");
+    printf("  -c string         Execute string as a scheme script\n");
+    printf("  -v                Verbose mode on\n");
     printf("\n");
     exit(0);
 }
@@ -80,8 +82,12 @@ int parse_commandline(int argc, char *argv[])
 
 	    break;
 
-       case 'l':        
-           load_files_list = g_slist_append(load_files_list, optarg);
+        case 'l':        
+           pre_backend_list = g_slist_append(pre_backend_list, optarg);
+           break;
+
+        case 'm':        
+           post_backend_list = g_slist_append(post_backend_list, optarg);
            break;
 
 	case 'o':
@@ -96,13 +102,6 @@ int parse_commandline(int argc, char *argv[])
 	case 'c':
 	    gh_eval_str_with_stack_saving_handler(optarg);
 	    break;
-
-
-#if 0
-	case 'f':
-	    printf("f arg: %s\n", optarg);
-	    break;
-#endif
 
 	case 'h':
 	    usage(argv[0]);

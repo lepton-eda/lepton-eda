@@ -5,6 +5,10 @@
 	
 	* examples/cmos-invert.sch: Minor tweak
 
+        * src/parsecmd.c: Cleaned up help message a little.
+
+        * docs/gschem.1: Updated manpage a little
+
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_basic.nw: Removed unused variable

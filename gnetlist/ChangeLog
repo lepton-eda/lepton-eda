@@ -1,3 +1,13 @@
+2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* include/globals.h, src/globals.c, src/gnetlist.c, src/parsecmd.c:
+	Added the -m flag which allows the user to specify scheme code after
+	the backend is loaded, but before the guile procedure is executed.
+
+        * src/parsecmd.c: Cleaned up help message a little.
+
+        * src/gnetlist.1: Updated manpage a little
+
 2003-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_netlist.c, gnetlist.c: Applied Carlos Nieves Onega's warning

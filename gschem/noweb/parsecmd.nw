@@ -85,8 +85,8 @@ void
 usage(char *cmd)
 {
   printf(_("Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
-         "  -q  	  Quiet mode\n"
-         "  -v  	  Verbose mode on\n"
+         "  -q            Quiet mode\n"
+         "  -v            Verbose mode on\n"
          "  -r filename   Rc filename\n"
          "  -s filename   Script (guile) filename\n"
          "  -o filename   Output filename (for printing)\n"

@@ -195,8 +195,8 @@ void main_prog(int argc, char *argv[])
 
 
  
-    /* Load first the configuration file */
-    list_pnt = load_files_list;
+    /* Load the first set of scm files */
+    list_pnt = pre_backend_list;
     while (list_pnt) {
       if (g_read_file(list_pnt->data) != -1) {
         s_log_message("Read scm file [%s]\n", 
@@ -204,14 +204,13 @@ void main_prog(int argc, char *argv[])
       } else {
         s_log_message("Failed to read scm file [%s]\n", 
                       list_pnt->data);
-        
         fprintf(stderr, "Failed to read scm file [%s]\n", 
                 (char *) list_pnt->data);
       }
       list_pnt = g_slist_next(list_pnt);
     }
     /* Free now the list of configuration files */
-    g_slist_free(load_files_list);
+    g_slist_free(pre_backend_list);
 
 
     if (guile_proc) {
@@ -231,6 +230,23 @@ void main_prog(int argc, char *argv[])
 		    guile_proc, input_str);
 	}
 
+
+        /* Load second set of scm files */
+        list_pnt = post_backend_list;
+        while (list_pnt) {
+          if (g_read_file(list_pnt->data) != -1) {
+            s_log_message("Read scm file [%s]\n", 
+                          list_pnt->data);
+          } else {
+            s_log_message("Failed to read scm file [%s]\n", 
+                          list_pnt->data);
+            fprintf(stderr, "Failed to read scm file [%s]\n", 
+                 (char *) list_pnt->data);
+          }
+          list_pnt = g_slist_next(list_pnt);
+        }
+        /* Free now the list of configuration files */
+        g_slist_free(post_backend_list);
 
 	/* check size here hack */
 	sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
