@@ -106,8 +106,11 @@ void s_cpinlist_print(CPINLIST * ptr)
     while (pl_current != NULL) {
 
 	if (pl_current->plid != -1) {
-	    printf("	pin %s", pl_current->pin_number);
-
+	     if (pl_current->pin_number) {
+	        printf("	pin %s", pl_current->pin_number);
+	     } else {
+	        printf("	pin ?");
+	     }
 
 	    if (pl_current->pin_label) {
 		printf(" (%s)", pl_current->pin_label);

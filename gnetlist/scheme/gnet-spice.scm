@@ -62,9 +62,9 @@
 (define spice:write-two-pin-names
   (lambda (package pin-a pin-b port)
     (display (string-append 
-      (car (spice:get-net package (gnetlist:get-package-attribute package pin-a))) " ") port)
+      (car (spice:get-net package (gnetlist:get-pin-attribute-seq package pin-a "pinnumber"))) " ") port)
     (display (string-append 
-      (car (spice:get-net package (gnetlist:get-package-attribute package pin-b))) " ") port)))
+      (car (spice:get-net package (gnetlist:get-pin-attribute-seq package pin-b "pinnumber"))) " ") port)))
     
 
 
@@ -78,16 +78,16 @@
           ;; implement the controlled current source
           ;; the user should create the uref label begining with a h
       (display (string-append package " ") port)
-      (spice:write-two-pin-names package "pin1" "pin2" port)
+      (spice:write-two-pin-names package "1" "2" port)
       (display (string-append "v-sense-" package  " " (spice:component-value package) "\n" ) port)
           ;; implement the current measuring voltage source
       (display (string-append "v-sense-" package " ") port)
-      (spice:write-two-pin-names package "pin3" "pin4" port)
+      (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; now it is possible to leave the output voltage source unconnected
           ;; i.e. spice won't complain about unconnected nodes
       (display (string-append "i-out-" package " ") port)
-      (spice:write-two-pin-names package "pin1" "pin2" port)
+      (spice:write-two-pin-names package "1" "2" port)
       (display "dc 0\n" port)
       (display "* end ccvs expansion\n" port))))
 
@@ -102,11 +102,11 @@
           ;; implement the controlled current source
           ;; the user should create the uref label begining with a f
       (display (string-append package " ") port)
-      (spice:write-two-pin-names package "pin1" "pin2" port)
+      (spice:write-two-pin-names package "1" "2" port)
       (display (string-append "v-sense-" package " " (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the current measuring voltage source
       (display (string-append "v-sense-" package " ") port)
-      (spice:write-two-pin-names package "pin3" "pin4" port)
+      (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
       (display "* end cccs expansion\n" port))))
 
@@ -129,7 +129,7 @@
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
       (display (string-append "i-measure-" package " ") port)
-      (spice:write-two-pin-names package "pin3" "pin4" port)
+      (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
       (display "* end vccs expansion\n" port))))
 
@@ -151,12 +151,12 @@
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
       (display (string-append "i-sense-" package " ") port)
-      (spice:write-two-pin-names package "pin3" "pin4" port)
+      (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; with an output current source it is possible to leave the output voltage source 
           ;; unconnected i.e. spice won't complain about unconnected nodes
       (display (string-append "i-out-" package " ") port)
-      (spice:write-two-pin-names package "pin1" "pin2" port)
+      (spice:write-two-pin-names package "1" "2" port)
       (display "dc 0\n" port)
       (display "* end vcvs expansion\n" port))))
 
@@ -177,12 +177,12 @@
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
       (display (string-append "i-measure-" package " ") port)
-      (spice:write-two-pin-names package "pin3" "pin4" port)
+      (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; with an output current source it is possible to leave the output voltage source 
           ;; unconnected i.e. spice won't complain about unconnected nodes
       (display (string-append "i-out-" package " ") port)
-      (spice:write-two-pin-names package "pin1" "pin2" port)
+      (spice:write-two-pin-names package "1" "2" port)
       (display "dc 0\n" port)
       (display "* end of nullor expansion\n" port))))
 
@@ -232,8 +232,8 @@
             ;; first find pin1 and then start writing the connected net name
         (spice:write-net-name-of-component uref (- number-of-pin 1) port)
             ;; generate a pin-name e.g. pin1, pin2, pin3 ...
-        (let ((pin-name (string-append "pin" (number->string number-of-pin))))  
-          (display (car (spice:get-net uref (gnetlist:get-package-attribute uref pin-name))) port)
+        (let ((pin-name (number->string number-of-pin)))  
+          (display (car (spice:get-net uref (gnetlist:get-pin-attribute-seq uref pin-name "pinnumber"))) port)
           (write-char #\space port))))))
 
 
