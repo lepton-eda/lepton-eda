@@ -20,6 +20,10 @@
 
 	* lib/system-gschemrc.in: Added default for force-boundingbox variable
 
+	* noweb/x_attribedit.nw: Fixed Bug #28: gschem hangs in loop when
+	adding an attribute, by not trying to attach an attribute to a text
+	item.
+
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw, i_vars.h: Added the 
