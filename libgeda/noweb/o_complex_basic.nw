@@ -674,22 +674,21 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
   object_list->complex->prim_objs = prim_objs;
 
-  if (mirror) {
-    o_complex_mirror_lowlevel(w_current, x, y, object_list);
-  }
 
-  o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list);
-
-  /* do not translate the primitive objects if the component was not loaded
-   * via o_read
+  /* do not mirror/rotate/translate/connect the primitive objects if the
+   * component was not loaded via o_read 
    */
-  if (loaded_normally == TRUE)
-  {
-    o_complex_world_translate(w_current, x, y, prim_objs);
-  }
+  if (loaded_normally == TRUE) {
+    if (mirror) {
+      o_complex_mirror_lowlevel(w_current, x, y, object_list);
+    } 
 
-  if (!w_current->ADDING_SEL) {
-    s_conn_update_complex(w_current, prim_objs);
+    o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list); 
+    o_complex_world_translate(w_current, x, y, prim_objs);
+
+    if (!w_current->ADDING_SEL) {
+     s_conn_update_complex(w_current, prim_objs);
+    }
   }
 
   free(filename);

@@ -1,3 +1,8 @@
+2005-01-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/missing.sch, Makefile.am: Added test schematic to test
+	missing component rendering.
+
 2005-01-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/x_fileselect.nw (x_fileselect_comp_fill_components): Removed 
