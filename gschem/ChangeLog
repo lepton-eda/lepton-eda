@@ -1,3 +1,12 @@
+2005-02-21 03:07  Dan McMahill <danmc>
+
+	* noweb/o_text.nw: fix some format string/type mismatch bugs
+
+2005-02-21 03:07  Dan McMahill <danmc>
+
+	* noweb/g_rc.nw: comment out some unused variables which are part
+	  of commented out code
+
 2005-02-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_log.nw: Added code to scroll to the end of the text buffer

@@ -1,3 +1,10 @@
+2005-02-21 03:04  Dan McMahill <danmc>
+
+	* noweb/: f_image.nw, g_rc.nw, o_picture.nw, o_text_basic.nw: fix
+	  some format string/type mismatches, format string/# of arg
+	  mismatches, /* within comments, unused variables, and undeclared
+	  variable bugs.
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/s_clib.nw: Added a missing include of defines.h required for 

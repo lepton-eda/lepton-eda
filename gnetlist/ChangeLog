@@ -1,3 +1,7 @@
+2005-02-21 03:09  Dan McMahill <danmc>
+
+	* src/gnetlist.c: fix some format string/type mismatch bugs
+
 2005-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-spice.scm: Removed string by request from the original
