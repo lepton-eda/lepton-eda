@@ -1,4 +1,20 @@
 
+2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* tests/*.verilog: Updated baseline verilog tests cases to take into
+	  account latest test_verilog.sch and 7447.sch
+
+2000-06-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Added init of some important variables which 
+	  libgeda uses when promoting attributes.  The attribute promotion
+	  code is almost completely disabled through these defaults
+
+	* tests/*.verilog: Updated baseline verilog tests cases to include
+          Mike's header addition
+
+	* scheme/gnet-verilog.scm: Added a missing newline in netlist header
+
 2000-04-26  Stefan Petersen  <spe@geda.seul.org>
 
 	* Added gnet-protelII.scm (for Protel2) and gnet-bae.scm (for

@@ -192,6 +192,11 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	/* special init of net_consolidate, since it's used in libgeda */
 	pr_current->net_consolidate = FALSE;
 
+	/* The following is an attempt at getting (deterministic) defaults */
+	/* for the following variables */
+	pr_current->attribute_promotion = FALSE;
+	pr_current->promote_invisible = FALSE;
+	pr_current->keep_invisible = FALSE;
 }
 
 /* stays the same */ 
