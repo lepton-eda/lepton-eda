@@ -1,0 +1,90 @@
+v 20041228 1
+L 200 975 200 25 3 0 0 0 -1 -1
+L 1000 500 200 975 3 0 0 0 -1 -1
+P 200 700 0 700 1 0 1
+{
+T 166 750 5 8 1 1 0 6 1
+pinnumber=4
+T 50 725 5 8 0 0 0 0 1
+pinseq=1
+T 200 700 5 10 0 1 0 0 1
+pintype=in
+T 227 626 9 12 1 1 0 0 1
+pinlabel=+
+}
+P 200 300 0 300 1 0 1
+{
+T 169 342 5 8 1 1 0 6 1
+pinnumber=5
+T 50 325 5 8 0 0 0 0 1
+pinseq=2
+T 200 300 5 10 0 1 0 0 1
+pintype=in
+T 236 229 9 12 1 1 0 0 1
+pinlabel=-
+}
+P 1000 500 1200 500 1 0 1
+{
+T 994 554 5 8 1 1 0 0 1
+pinnumber=12
+T 1175 525 5 8 0 0 0 0 1
+pinseq=6
+T 1000 500 5 10 0 1 0 0 1
+pintype=out
+T 1000 500 5 8 0 2 0 0 1
+pinlabel=out
+}
+P 500 800 500 1000 1 0 1
+{
+T 550 850 5 8 1 1 0 0 1
+pinnumber=11
+T 525 850 5 8 0 0 0 0 1
+pinseq=3
+T 500 800 5 10 0 1 0 0 1
+pintype=pwr
+T 606 640 9 8 1 1 0 6 1
+pinlabel=V+
+}
+P 500 200 500 0 1 0 1
+{
+T 475 -8 5 8 1 1 0 6 1
+pinnumber=6
+T 400 25 5 8 0 0 0 0 1
+pinseq=4
+T 500 200 5 10 0 1 0 0 1
+pintype=pwr
+T 608 244 9 8 1 1 0 6 1
+pinlabel=V-
+}
+P 700 317 700 100 1 0 1
+{
+T 758 202 5 8 1 1 0 0 1
+pinnumber=3
+T 725 125 5 8 0 0 0 0 1
+pinseq=5
+T 700 250 5 10 0 1 0 0 1
+pintype=pwr
+T 800 400 9 6 1 1 0 6 1
+pinlabel=GND
+}
+T 200 1000 8 10 1 1 0 0 1
+refdes=U?
+T 725 796 9 10 1 1 0 0 1
+device=LM319
+T 600 1200 8 10 0 0 0 0 1
+documentation=http://www.national.com/pf/LM/LM319.html
+T 600 1400 8 10 0 0 0 0 1
+description=comparator
+T 600 2000 8 10 0 0 0 0 1
+numslots=2
+T 600 2200 8 10 0 0 0 0 1
+slot=1
+T 600 2400 8 10 0 0 0 0 1
+footprint=DIP14
+T 600 1600 8 10 0 0 0 0 1
+slotdef=1:4,5,11,6,3,12
+T 600 1800 8 10 0 0 0 0 1
+slotdef=2:9,10,11,6,8,7
+L 1000 500 200 25 3 0 0 0 -1 -1
+T 600 2600 8 10 0 0 0 0 1
+symversion=1.0

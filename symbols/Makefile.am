@@ -4,7 +4,7 @@ SUBDIRS = \
 	local maxim memory micro misc radio switch titleblock tube spice \
 	verilog rf pla ecl dec xilinx lattice national supervisor bus \
 	opto diode relay vhdl power philips transistor switcap cascade \
-	asic gnetman documentation
+	asic gnetman minicircuits st apex allegro irf documentation
 
 rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-commonrc 

@@ -1,0 +1,23 @@
+v 20041228 1
+T 310 750 8 10 0 0 0 0 1
+device=terminal
+P 560 100 900 100 1 0 1
+{
+T 660 150 5 10 0 0 0 0 1
+pinseq=1
+T 510 100 5 10 0 1 0 0 1
+pinnumber=1
+T 510 300 5 10 0 1 0 0 1
+pintype=pas
+T 800 100 5 10 0 1 0 0 1
+pinlabel=terminal
+}
+V 460 100 100 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 310 600 8 10 0 0 0 0 1
+footprint=CONNECTOR 1 1
+T 300 900 8 10 0 1 0 0 1
+author=Karel 'Clock' Kulhavy <clock@twibright.com>
+T 300 1100 8 10 0 0 0 0 1
+numslots=0
+T 250 50 8 10 1 1 0 6 1
+refdes=T?

@@ -1,0 +1,137 @@
+v 20041228 1
+B 300 0 1400 1900 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 0 1600 300 1600 1 0 0
+{
+T 200 1650 5 8 1 1 0 6 1
+pinnumber=9
+T 200 1550 5 8 0 1 0 8 1
+pinseq=9
+T 350 1600 9 8 1 1 0 0 1
+pinlabel=Vdd
+T 350 1600 5 8 0 1 0 2 1
+pintype=in
+}
+P 0 1200 300 1200 1 0 0
+{
+T 200 1250 5 8 1 1 0 6 1
+pinnumber=10
+T 200 1150 5 8 0 1 0 8 1
+pinseq=10
+T 350 1200 9 8 1 1 0 0 1
+pinlabel=HIN
+T 350 1200 5 8 0 1 0 2 1
+pintype=in
+}
+P 0 900 300 900 1 0 0
+{
+T 200 950 5 8 1 1 0 6 1
+pinnumber=11
+T 200 850 5 8 0 1 0 8 1
+pinseq=11
+T 350 900 9 8 1 1 0 0 1
+pinlabel=SD
+T 350 900 5 8 0 1 0 2 1
+pintype=in
+}
+P 0 600 300 600 1 0 0
+{
+T 200 650 5 8 1 1 0 6 1
+pinnumber=12
+T 200 550 5 8 0 1 0 8 1
+pinseq=12
+T 350 600 9 8 1 1 0 0 1
+pinlabel=LIN
+T 350 600 5 8 0 1 0 2 1
+pintype=in
+}
+P 0 200 300 200 1 0 0
+{
+T 200 250 5 8 1 1 0 6 1
+pinnumber=13
+T 200 150 5 8 0 1 0 8 1
+pinseq=13
+T 350 200 9 8 1 1 0 0 1
+pinlabel=Vss
+T 350 200 5 8 0 1 0 2 1
+pintype=in
+}
+P 2000 200 1700 200 1 0 0
+{
+T 1650 200 9 8 1 1 0 6 1
+pinlabel=LO
+T 1800 250 5 8 1 1 0 0 1
+pinnumber=1
+T 1800 150 5 8 0 1 0 2 1
+pinseq=1
+T 1650 200 5 8 0 1 0 8 1
+pintype=out
+}
+P 2000 500 1700 500 1 0 0
+{
+T 1650 500 9 8 1 1 0 6 1
+pinlabel=COM
+T 1800 550 5 8 1 1 0 0 1
+pinnumber=2
+T 1800 450 5 8 0 1 0 2 1
+pinseq=2
+T 1650 500 5 8 0 1 0 8 1
+pintype=in
+}
+P 2000 800 1700 800 1 0 0
+{
+T 1650 800 9 8 1 1 0 6 1
+pinlabel=Vcc
+T 1800 850 5 8 1 1 0 0 1
+pinnumber=3
+T 1800 750 5 8 0 1 0 2 1
+pinseq=3
+T 1650 800 5 8 0 1 0 8 1
+pintype=in
+}
+P 2000 1100 1700 1100 1 0 0
+{
+T 1650 1100 9 8 1 1 0 6 1
+pinlabel=VS
+T 1800 1150 5 8 1 1 0 0 1
+pinnumber=5
+T 1800 1050 5 8 0 1 0 2 1
+pinseq=5
+T 1650 1100 5 8 0 1 0 8 1
+pintype=in
+}
+P 2000 1400 1700 1400 1 0 0
+{
+T 1650 1400 9 8 1 1 0 6 1
+pinlabel=VB
+T 1800 1450 5 8 1 1 0 0 1
+pinnumber=6
+T 1800 1350 5 8 0 1 0 2 1
+pinseq=6
+T 1650 1400 5 8 0 1 0 8 1
+pintype=in
+}
+P 2000 1700 1700 1700 1 0 0
+{
+T 1650 1700 9 8 1 1 0 6 1
+pinlabel=HO
+T 1800 1750 5 8 1 1 0 0 1
+pinnumber=7
+T 1800 1650 5 8 0 1 0 2 1
+pinseq=7
+T 1650 1700 5 8 0 1 0 8 1
+pintype=out
+}
+T 300 2750 8 10 0 0 0 0 1
+numslots=0
+T 300 2550 8 10 0 0 0 0 1
+description=High and Low Side, Half Bridge Mosfet Gate Driver
+T 300 2350 8 10 0 0 0 0 1
+device=IR2110
+T 300 2150 8 10 0 0 0 0 1
+footprint=DIP14
+T 1500 2000 8 10 1 1 0 0 1
+refdes=U?
+T 300 1950 9 10 1 0 0 0 1
+IR2110
+T 300 2950 8 10 0 0 0 0 1
+documentation=http://www.irf.com/product-info/datasheets/data/ir2110.pdf

@@ -427,7 +427,7 @@ Bert Timmerman		- For contributing the following symbols:
 				header20-3.sym  header34-1.sym
 				4011-2.sym
 
-Karel Kulhavy		- For contributing the following symbols:
+Karel 'Clock' Kulhavy	- For contributing the following symbols:
 
 				HSDL7000-1.sym NE-592-1.sym 
 				MAC160-1.sym photodiode-1.sym 74132-1.sym
@@ -438,6 +438,22 @@ Karel Kulhavy		- For contributing the following symbols:
 				BC557-1.sym tl062-1.sym tl072-1.sym tl082-1.sym
 				7404-1.sym (correct visible attribute)
 				mc3487-1.sym
+
+				gnucap-directive-1.sym gnucap-include-1.sym
+				gnucap-model-1.sym gnucap-npn-1.sym
+				gnucap-options-1.sym
+	
+				schottky-1.sym transformer-5.sym
+				terminal-1.sym 7404-4.sym 74133-1.sym (repair)
+				74133-2.sym 7414-2.sym 7432-3.sym
+				7474-3.sym 74power-1.sym DB25-3.sym 
+				lm319-1.sym (repaired) 2N3904-2.sym
+				2N3906-1.sym
+				BC547-3.sym (renamed to -3, -2 was in use)
+
+			- For repairing the following symbols:
+
+				switch-spdt-2.sym
 
 Mark Moss		- For contributing the following symbols:
 
@@ -537,6 +553,14 @@ Dan McMahill		- For contributing the following symbols:
 			 	ax4106-1.sym max4107-1.sym arfx1229-1.sym
 				max1211-1.sym pot-1.sym pot-2.sym
 				testpt-1.sym
+		
+			  For contributing the following symbols:
+
+				ADT1-1WT-1.sym ADT1-1WT-2.sym T1-1T-W38-1.sym
+				T1-1T-X65-1.sym T2-1T-KK81-1.sym max1206-1.sym
+				max1207-1.sym max1208-1.sym max1209-1.sym
+				max12553-1.sym max12554-1.sym max12555-1.sym
+				max1211-1.sym (added symversion=1.0)
 
 Jesse Alexander		- For contributing the following symbol:
 
@@ -559,6 +583,8 @@ Onno Kortmann:		- For contributing the following symbols:
 				mosfet-with-diode-1.sym ntc-1.sym, 
 				l200-1.sym, tfds4500-1.sym 
 				photo-transistor-1.sym
+
+				ATtiny15L-1.sym
 
 Thomas Maeke:		- For contributing the following symbols:
 
@@ -622,6 +648,7 @@ Bob Paddock		- For contributing the following symbols:
 			  	header26-2.sym header32-2.sym
 				header50-3.sym header50r-1.sym
 
+				ATmega32MLF-1.sym AT45db021bso8w-1.sym
 
 voncarstadsl (e-mail only) - For contributing the following symbol:
 
@@ -632,6 +659,11 @@ michalsc (e-mail only)	- For contributing the following symbols:
 				lm339-2.sym  
 				
 			  And pointing out the errors in lm339-1.sym
+
+moncheto (e-mail only)  - For contributing the following symbol:
+
+				LCD-1.sym (added -1)
+				TEC4x3-1.sym (added -1)
 
 Fernando Pereira	- For contributing the following symbol:
 
@@ -676,17 +708,160 @@ jmarino (e-mail only)	- For contributing the following symbol:
 
 				lm337-1.sym
 
+easyb (e-mail only)	- For contributing the following symbol:
+
+				capacitor-4.sym
+
 Piotr Buciak		- For contributing the following symbol:
 		
 				resistorpack7-2.sym
 
 Leon Kos		- For contributing the following symbol:
 	
-				PCF8563-1.sym
+				PCF8563-1.sym PCF8563-1.sym
+
+			  For correct the following symbol:
+
+				smart-media-1.sym (symversion=1.0)
+
+			  For contributing a whole series of connectors with
+			  short pins and correct spacing!  Thanks!
+
+				connector1-2.sym connector10-2.sym
+				connector11-2.sym connector12-2.sym
+				connector13-2.sym connector14-2.sym
+				connector15-2.sym connector16-2.sym
+				connector17-2.sym connector18-2.sym
+				connector19-2.sym connector2-2.sym
+				connector20-2.sym connector21-2.sym
+				connector22-2.sym connector23-2.sym
+				connector24-2.sym connector25-2.sym
+				connector26-2.sym connector27-2.sym
+				connector28-2.sym connector29-2.sym
+				connector3-2.sym connector30-2.sym
+				connector31-2.sym connector32-2.sym
+				connector33-2.sym connector34-2.sym
+				connector35-2.sym connector36-2.sym
+				connector37-2.sym connector38-2.sym
+				connector39-2.sym connector4-2.sym
+				connector40-2.sym connector5-2.sym
+				connector6-2.sym connector7-2.sym
+				connector8-2.sym connector9-2.sym
+	
+Geert Stappers		- For contributing the following symbol:
+
+				switch-dip12.sym
+
 
 Jean-Francios L. Blavier - For conributing the following symbol:
 				
 				hcpl-2430-1.sym
+
+Mark Salyzyn		- For contributing the following symbols:
+
+				varistor-1.sym ips3310-1.sym ips521-1.sym
+				ATmega8-1.sym ltp-757g-1.sym
+	
+Gregory Davis		- For contributing the following symbols:
+
+				max122-1.sym max507-1.sym
+
+Levente Kovacs		- For contributing the following symbol:
+
+				pic16F628-1.sym
+
+Fernando Pereira	- For contributing the following symbol:
+
+				pic18f4431-1.sym
+
+William R. Dieter	- For contributing the following symbols: 
+
+				pic12F675-2.sym pic12F675.sym
+				lp2954IT-1.sym
+
+cbaurtx (e-mail only)	- For contributing the following symbols:
+
+				pa140-1.sym pa91-1.sym
+
+Walter Fetter Lages	- For contributing the following symbol:
+
+				ST7538-1.sym
+
+Wilbert Knol		- For contributing the following symbol:
+
+				mains-entry-1.sym (renamed without _)
+
+Matthew N. Dodd		- For contributing the following symbol:
+
+				HM628511HC-SOJ36-1.sym
+
+Chris Elliott		- For contributing the following symbol:
+
+				dc_motor-1.sym
+s
+Steve Cole		- For contributing the following symbols:
+
+				BC182-1.sym BC547-2.sym BC557-2.sym
+
+Paul Saenen		- For contributing the following symbol:
+				
+				BC307-1.sym
+
+Rui Guerreiro		- For contributing the following symbol:
+
+				AT89C5131_PLCC-1.sym
+
+Jim Duchek		- For contributing the following symbol:
+
+				AT89C5132_TQFP-1.sym
+
+Alejandro Sobrino Beltrán - For contributing the following symbol:
+
+				AT89S53-24PI-1.sym
+
+Kenny Johansson		- For contributing the following symbol:
+
+				ATmega16L-1.sym
+
+Jaroslaw Juda		- For contributing the following symbol:
+
+				ATmega16_DIP-1.sym
+
+Tadas			- For contributing the following symbol:
+
+				74238-1.sym
+
+Sheng Bao		- For contributing the following symbol:
+
+				darlington_NPN_PNP-1.sym (renamed)
+
+Radoslaw Korzeniewski	- For contributing the following symbol:
+
+				lm723-1.sym
+
+Jens-Peter Kaps		- For contributing the following symbol:
+
+				2732-1.sym
+
+Jeff Jackowski		- For contributing the following symbol:
+		
+				25Cxx-1.sym
+
+Ludwig			- For contributing the following symbol:
+
+				 2N2222-1.sym
+
+Marvin Dickens		- For contributing the following symbol:
+
+				75176-1.sym
+
+Stephan Walter		- For contributing the following symbol:
+
+				MC34063-1.sym
+
+Fernando Pereira	- For contributing the following symbol:
+
+				ir2110-1.sym
 
 The following people contributed symbols via the online symbol upload
 (E-mails purposefully truncated):

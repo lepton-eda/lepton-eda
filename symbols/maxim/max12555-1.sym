@@ -1,4 +1,4 @@
-v 20041121 1
+v 20041228 1
 P 100 3500 400 3500 1 0 0
 {
 T 300 3550 5 8 1 1 0 6 1
@@ -116,7 +116,7 @@ pinnumber=32
 T 3100 8550 5 8 0 1 0 2 1
 pinseq=32
 T 2950 8600 9 8 1 1 0 6 1
-pinlabel=NC0
+pinlabel=D0
 T 2950 8600 5 8 0 1 0 8 1
 pintype=out
 }
@@ -127,7 +127,7 @@ pinnumber=31
 T 3100 8250 5 8 0 1 0 2 1
 pinseq=31
 T 2950 8300 9 8 1 1 0 6 1
-pinlabel=NC1
+pinlabel=D1
 T 2950 8300 5 8 0 1 0 8 1
 pintype=out
 }
@@ -138,7 +138,7 @@ pinnumber=30
 T 3100 7950 5 8 0 1 0 2 1
 pinseq=30
 T 2950 8000 9 8 1 1 0 6 1
-pinlabel=D0
+pinlabel=D2
 T 2950 8000 5 8 0 1 0 8 1
 pintype=out
 }
@@ -149,7 +149,7 @@ pinnumber=29
 T 3100 7650 5 8 0 1 0 2 1
 pinseq=29
 T 2950 7700 9 8 1 1 0 6 1
-pinlabel=D1
+pinlabel=D3
 T 2950 7700 5 8 0 1 0 8 1
 pintype=out
 }
@@ -160,7 +160,7 @@ pinnumber=28
 T 3100 7350 5 8 0 1 0 2 1
 pinseq=28
 T 2950 7400 9 8 1 1 0 6 1
-pinlabel=D2
+pinlabel=D4
 T 2950 7400 5 8 0 1 0 8 1
 pintype=out
 }
@@ -171,7 +171,7 @@ pinnumber=27
 T 3100 7050 5 8 0 1 0 2 1
 pinseq=27
 T 2950 7100 9 8 1 1 0 6 1
-pinlabel=D3
+pinlabel=D5
 T 2950 7100 5 8 0 1 0 8 1
 pintype=out
 }
@@ -182,7 +182,7 @@ pinnumber=26
 T 3100 6750 5 8 0 1 0 2 1
 pinseq=26
 T 2950 6800 9 8 1 1 0 6 1
-pinlabel=D4
+pinlabel=D6
 T 2950 6800 5 8 0 1 0 8 1
 pintype=out
 }
@@ -203,7 +203,7 @@ pintype=out
 T 1800 6600 8 10 1 1 0 6 1
 refdes=U?
 T 1400 6140 9 10 1 1 0 0 1
-MAX1211
+MAX12555
 P 100 1200 400 1200 1 0 0
 {
 T 300 1250 5 8 1 1 0 6 1
@@ -222,7 +222,7 @@ pinnumber=25
 T 3100 6450 5 8 0 1 0 2 1
 pinseq=25
 T 2950 6500 9 8 1 1 0 6 1
-pinlabel=D5
+pinlabel=D7
 T 2950 6500 5 8 0 1 0 8 1
 pintype=out
 }
@@ -233,7 +233,7 @@ pinnumber=24
 T 3100 6150 5 8 0 1 0 2 1
 pinseq=24
 T 2950 6200 9 8 1 1 0 6 1
-pinlabel=D6
+pinlabel=D8
 T 2950 6200 5 8 0 1 0 8 1
 pintype=out
 }
@@ -244,7 +244,7 @@ pinnumber=23
 T 3100 5850 5 8 0 1 0 2 1
 pinseq=23
 T 2950 5900 9 8 1 1 0 6 1
-pinlabel=D7
+pinlabel=D9
 T 2950 5900 5 8 0 1 0 8 1
 pintype=out
 }
@@ -255,7 +255,7 @@ pinnumber=22
 T 3100 5550 5 8 0 1 0 2 1
 pinseq=22
 T 2950 5600 9 8 1 1 0 6 1
-pinlabel=D8
+pinlabel=D10
 T 2950 5600 5 8 0 1 0 8 1
 pintype=out
 }
@@ -266,7 +266,7 @@ pinnumber=21
 T 3100 5250 5 8 0 1 0 2 1
 pinseq=21
 T 2950 5300 9 8 1 1 0 6 1
-pinlabel=D9
+pinlabel=D11
 T 2950 5300 5 8 0 1 0 8 1
 pintype=out
 }
@@ -277,7 +277,7 @@ pinnumber=20
 T 3100 4950 5 8 0 1 0 2 1
 pinseq=20
 T 2950 5000 9 8 1 1 0 6 1
-pinlabel=D10
+pinlabel=D12
 T 2950 5000 5 8 0 1 0 8 1
 pintype=out
 }
@@ -288,7 +288,7 @@ pinnumber=19
 T 3100 4650 5 8 0 1 0 2 1
 pinseq=19
 T 2950 4700 9 8 1 1 0 6 1
-pinlabel=D11
+pinlabel=D13
 T 2950 4700 5 8 0 1 0 8 1
 pintype=out
 }
@@ -354,7 +354,7 @@ pinnumber=16
 T 1850 300 5 8 0 1 270 2 1
 pinseq=16
 T 1900 450 9 8 1 1 270 6 1
-pinlabel=OGND
+pinlabel=GND
 T 1900 450 5 8 0 1 270 8 1
 pintype=pwr
 }
@@ -365,7 +365,7 @@ pinnumber=35
 T 2150 300 5 8 0 1 270 2 1
 pinseq=35
 T 2200 450 9 8 1 1 270 6 1
-pinlabel=OGND
+pinlabel=GND
 T 2200 450 5 8 0 1 270 8 1
 pintype=pwr
 }
@@ -461,5 +461,3 @@ T 1000 5400 8 10 1 1 0 0 1
 footprint=TQFN40_6_EP
 T 1600 5000 8 10 0 0 0 0 1
 numslots=0
-T 3200 9900 8 10 0 0 0 0 1
-symversion=1.0

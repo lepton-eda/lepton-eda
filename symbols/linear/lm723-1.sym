@@ -1,0 +1,139 @@
+v 20041228 1
+B 300 300 1400 2400 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
+T 300 3400 8 10 0 0 0 0 1
+device=LM723
+T 300 3600 8 10 0 0 0 0 1
+class=IC
+T 300 3000 8 10 1 1 0 0 1
+refdes=U?
+T 300 2750 3 10 1 0 0 0 1
+LM723
+P 1700 1800 2000 1800 1 0 1
+{
+T 1800 1850 5 8 1 1 0 0 1
+pinnumber=2
+T 1800 1850 5 8 0 0 0 0 1
+pinseq=1
+T 1400 1800 9 10 1 1 0 0 1
+pinlabel=CL
+T 1700 1800 5 10 0 1 0 0 1
+pintype=io
+}
+P 1700 1500 2000 1500 1 0 1
+{
+T 1800 1550 5 8 1 1 0 0 1
+pinnumber=3
+T 1800 1550 5 8 0 0 0 0 1
+pinseq=2
+T 1400 1500 9 10 1 1 0 0 1
+pinlabel=CS
+T 1700 1500 5 10 0 1 0 0 1
+pintype=io
+}
+P 1200 300 1200 0 1 0 1
+{
+T 1275 150 5 8 1 1 0 0 1
+pinnumber=7
+T 1275 150 5 8 0 0 0 0 1
+pinseq=6
+T 1200 400 9 10 1 1 0 0 1
+pinlabel=V-
+T 1200 300 5 10 0 1 0 0 1
+pintype=pwr
+}
+P 300 600 0 600 1 0 1
+{
+T 120 650 5 8 1 1 0 0 1
+pinnumber=5
+T 120 650 5 8 0 0 0 0 1
+pinseq=4
+T 400 600 9 10 1 1 0 0 1
+pinlabel=N.I.
+T 300 600 5 10 0 1 0 0 1
+pintype=in
+}
+P 300 900 0 900 1 0 1
+{
+T 104 950 5 8 1 1 0 0 1
+pinnumber=4
+T 104 950 5 8 0 0 0 0 1
+pinseq=3
+T 400 900 9 10 1 1 0 0 1
+pinlabel=INV
+T 300 900 5 10 0 1 0 0 1
+pintype=in
+}
+P 300 1800 0 1800 1 0 1
+{
+T 120 1850 5 8 1 1 0 0 1
+pinnumber=6
+T 120 1850 5 8 0 0 0 0 1
+pinseq=5
+T 400 1800 9 10 1 1 0 0 1
+pinlabel=Vref
+T 300 1800 5 10 0 1 0 0 1
+pintype=out
+}
+P 300 1500 0 1500 1 0 1
+{
+T 112 1550 5 8 1 1 0 0 1
+pinnumber=9
+T 112 1550 5 8 0 0 0 0 1
+pinseq=7
+T 400 1500 9 10 1 1 0 0 1
+pinlabel=Vz
+T 300 1500 5 10 0 1 0 0 1
+pintype=io
+}
+P 1200 2700 1200 3000 1 0 1
+{
+T 1275 2775 5 8 1 1 0 0 1
+pinnumber=12
+T 1275 2775 5 8 0 0 0 0 1
+pinseq=10
+T 1200 2500 9 10 1 1 0 0 1
+pinlabel=V+
+T 1200 2700 5 10 0 1 0 0 1
+pintype=pwr
+}
+P 300 2400 0 2400 1 0 1
+{
+T 120 2450 5 8 1 1 0 0 1
+pinnumber=11
+T 120 2450 5 8 0 0 0 0 1
+pinseq=9
+T 400 2400 9 10 1 1 0 0 1
+pinlabel=Vc
+T 300 2400 5 10 0 1 0 0 1
+pintype=io
+}
+T 300 3800 8 10 0 0 0 0 1
+footprint=DIP14
+P 1700 700 2000 700 1 0 1
+{
+T 1800 750 5 8 1 1 0 0 1
+pinnumber=13
+T 1800 750 5 8 0 0 0 0 1
+pinseq=11
+T 1100 700 9 10 1 1 0 0 1
+pinlabel=COMP
+T 1700 700 5 10 0 1 0 0 1
+pintype=io
+}
+P 1700 2300 2000 2300 1 0 1
+{
+T 1800 2350 5 8 1 1 0 0 1
+pinnumber=10
+T 1800 2350 5 8 0 0 0 0 1
+pinseq=8
+T 1300 2300 9 10 1 1 0 0 1
+pinlabel=Vout
+T 1700 2300 5 10 0 1 0 0 1
+pintype=out
+}
+T 300 4000 8 10 0 0 0 0 1
+description=Voltage regulator
+T 300 4400 8 10 0 0 0 0 1
+author=Radoslaw Korzeniewski <radoslaw@korzeniewski.net>
+T 300 4200 8 10 0 0 0 0 1
+numslots=0

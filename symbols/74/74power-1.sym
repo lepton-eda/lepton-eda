@@ -1,0 +1,37 @@
+v 20041228 1
+L 0 200 0 800 3 0 0 0 -1 -1
+L 0 800 400 800 3 0 0 0 -1 -1
+T 200 1300 8 10 0 0 0 0 1
+numslots=0
+L 0 200 400 200 3 0 0 0 -1 -1
+P 200 200 200 -100 1 0 1
+{
+T 180 150 5 8 1 1 180 0 1
+pinnumber=7
+T 400 150 5 8 0 1 0 8 1
+pinseq=1
+T 40 240 9 8 1 1 0 0 1
+pinlabel=GND
+T 450 100 5 8 0 1 0 0 1
+pintype=pwr
+}
+P 200 800 200 1100 1 0 1
+{
+T 180 850 5 8 1 1 0 6 1
+pinnumber=14
+T 400 950 5 8 0 1 0 8 1
+pinseq=2
+T 60 750 9 8 1 1 180 6 1
+pinlabel=Vcc
+T 450 900 5 8 0 1 0 2 1
+pintype=pwr
+}
+T 300 900 8 10 1 1 0 0 1
+refdes=U?
+T 200 1450 8 10 0 0 0 0 1
+footprint=DIP14
+T 200 1650 8 10 0 0 0 0 1
+description=power symbol for gates with vcc on 14 and gnd on 7
+L 400 200 400 800 3 0 0 0 -1 -1
+T 500 600 8 10 1 1 0 0 1
+device=74??

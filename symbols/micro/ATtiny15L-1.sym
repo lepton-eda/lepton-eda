@@ -1,0 +1,87 @@
+v 20041228 1
+T 2900 2300 8 10 1 1 0 6 1
+refdes=U?
+T 300 2450 8 10 0 0 0 0 1
+device=ATtiny15L
+T 300 2650 8 10 0 0 0 0 1
+footprint=DIP8
+T 300 2850 8 10 0 0 0 0 1
+net=GND:4
+T 300 3050 8 10 0 0 0 0 1
+net=Vcc:8
+P 0 300 300 300 1 0 0
+{
+T 200 350 5 8 1 1 0 6 1
+pinnumber=1
+T 200 250 5 8 0 1 0 8 1
+pinseq=1
+T 350 300 9 8 1 1 0 0 1
+pinlabel=PB5 (Reset/ADC0)
+T 350 300 5 8 0 1 0 2 1
+pintype=io
+}
+L 738 424 1122 424 3 0 0 0 -1 -1
+P 3200 300 2900 300 1 0 0
+{
+T 3000 350 5 8 1 1 0 0 1
+pinnumber=3
+T 3000 250 5 8 0 1 0 2 1
+pinseq=2
+T 2850 300 9 8 1 1 0 6 1
+pinlabel=(ADC2) PB3
+T 2850 300 5 8 0 1 0 8 1
+pintype=io
+}
+P 3200 700 2900 700 1 0 0
+{
+T 3000 750 5 8 1 1 0 0 1
+pinnumber=2
+T 3000 650 5 8 0 1 0 2 1
+pinseq=3
+T 2850 700 9 8 1 1 0 6 1
+pinlabel=(ADC3) PB4
+T 2850 700 5 8 0 1 0 8 1
+pintype=io
+}
+P 3200 1100 2900 1100 1 0 0
+{
+T 3000 1150 5 8 1 1 0 0 1
+pinnumber=7
+T 3000 1050 5 8 0 1 0 2 1
+pinseq=4
+T 2850 1100 9 8 1 1 0 6 1
+pinlabel=(SCK/ADC1/T0/INT0) PB2
+T 2850 1100 5 8 0 1 0 8 1
+pintype=io
+}
+P 3200 1500 2900 1500 1 0 0
+{
+T 3000 1550 5 8 1 1 0 0 1
+pinnumber=6
+T 3000 1450 5 8 0 1 0 2 1
+pinseq=5
+T 2850 1500 9 8 1 1 0 6 1
+pinlabel=(MISO/OC1A/AIN1) PB1
+T 2850 1500 5 8 0 1 0 8 1
+pintype=io
+}
+P 3200 1900 2900 1900 1 0 0
+{
+T 3000 1950 5 8 1 1 0 0 1
+pinnumber=5
+T 3000 1850 5 8 0 1 0 2 1
+pinseq=6
+T 2850 1900 9 8 1 1 0 6 1
+pinlabel=(MOSI/AIN0/AREF) PB0
+T 2850 1900 5 8 0 1 0 8 1
+pintype=io
+}
+B 300 0 2600 2200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 3250 8 10 0 0 0 0 1
+description=8-bit RISC micro controller (Atmel)
+T 300 3450 8 10 0 0 0 0 1
+numslots=0
+T 300 3650 8 10 0 0 0 0 1
+author=Werner Hoch <werner.hoATgmx.de>
+T 300 2250 9 10 1 0 0 0 1
+ATtiny15L

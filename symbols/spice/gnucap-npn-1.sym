@@ -1,0 +1,59 @@
+v 20041228 1
+L 200 800 200 200 3 0 0 0 -1 -1
+T 100 1100 5 10 0 0 0 0 1
+device=NPN_TRANSISTOR
+L 500 800 200 500 3 0 0 0 -1 -1
+L 200 500 500 200 3 0 0 0 -1 -1
+P 0 500 200 500 1 0 0
+{
+T 100 550 5 6 1 1 0 0 1
+pinlabel=B
+T -56 356 5 6 0 0 90 0 1
+pinseq=2
+T 66 534 5 10 0 1 90 0 1
+pintype=pas
+T 51 333 5 10 0 1 0 0 1
+pinnumber=2
+}
+P 500 1000 500 800 1 0 0
+{
+T 400 850 5 6 1 1 0 0 1
+pinlabel=C
+T 559 905 5 6 0 0 0 0 1
+pinseq=1
+T 576 1009 5 10 0 1 0 0 1
+pintype=pas
+T 333 896 5 10 0 1 0 0 1
+pinnumber=1
+}
+P 500 200 500 0 1 0 1
+{
+T 400 50 5 6 1 1 0 0 1
+pinlabel=E
+T 567 47 5 6 0 0 0 0 1
+pinseq=3
+T 554 190 5 10 0 1 0 0 1
+pintype=pas
+T 485 303 5 10 0 1 0 0 1
+pinnumber=3
+}
+L 500 200 450 300 3 0 0 0 -1 -1
+L 500 200 400 250 3 0 0 0 -1 -1
+L 400 250 450 300 3 0 0 0 -1 -1
+T 600 500 8 10 1 1 0 0 1
+refdes=Q?
+P 200 200 100 100 1 0 1
+{
+T 181 220 5 6 1 1 0 6 1
+pinlabel=S
+T -175 34 5 6 0 0 0 0 1
+pinseq=4
+T -33 -76 5 10 0 1 0 0 1
+pintype=pas
+T -32 122 5 10 0 1 0 0 1
+pinnumber=4
+}
+T 100 1300 5 10 0 0 0 0 1
+description=http://geda.seul.org/tools/gnucap/gnucap-man-html/gnucap-man076.html
+T 600 700 8 10 0 0 0 0 1
+numslots=0

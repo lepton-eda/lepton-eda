@@ -1,0 +1,117 @@
+v 20041228 1
+P 0 2300 300 2300 1 0 0
+{
+T 100 2400 5 8 1 1 0 0 1
+pinnumber=9
+T -700 2400 5 8 0 0 0 0 1
+pinseq=3
+T -900 2200 5 10 0 0 0 0 1
+pintype=in
+T 400 2300 9 10 1 1 0 0 1
+pinlabel=TXD
+}
+P 0 800 300 800 1 0 0
+{
+T 100 900 5 8 1 1 0 0 1
+pinnumber=8
+T -800 900 5 8 0 0 0 0 1
+pinseq=6
+T -1100 700 5 10 0 0 0 0 1
+pintype=out
+T 400 800 9 10 1 1 0 0 1
+pinlabel=RXD
+}
+B 300 300 1800 2600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1800 3000 9 10 1 1 0 0 1
+HSDL-3612
+T 400 3000 8 10 1 1 0 0 1
+refdes=U?
+P 1700 2900 1700 3200 1 0 1
+{
+T 1600 3100 5 8 1 1 180 0 1
+pinnumber=10
+T 1600 3300 5 8 0 0 90 0 1
+pinseq=2
+T 1800 3300 5 10 0 0 90 0 1
+pintype=pwr
+T 1500 2700 9 10 1 1 0 0 1
+pinlabel=LEDA
+}
+A 2100 2100 400 270 180 3 0 0 0 -1 -1
+A 2100 1100 400 270 180 3 0 0 0 -1 -1
+P 0 1700 300 1700 1 0 0
+{
+T 100 1800 5 8 1 1 0 0 1
+pinnumber=4
+T -700 1900 5 8 0 0 0 0 1
+pinseq=4
+T -900 1700 5 10 0 0 0 0 1
+pintype=in
+T 400 1700 9 10 1 1 0 0 1
+pinlabel=MD0
+}
+P 0 1400 300 1400 1 0 0
+{
+T 100 1500 5 8 1 1 0 0 1
+pinnumber=5
+T -700 1500 5 8 0 0 0 0 1
+pinseq=5
+T -900 1300 5 10 0 0 0 0 1
+pintype=in
+T 400 1400 9 10 1 1 0 0 1
+pinlabel=MD1
+}
+P 600 0 600 300 1 0 0
+{
+T 500 200 5 8 1 1 180 0 1
+pinnumber=7
+T 700 -800 5 8 0 0 90 0 1
+pinseq=7
+T 500 -1200 5 10 0 0 90 0 1
+pintype=pwr
+T 400 400 9 10 1 1 0 0 1
+pinlabel=GND
+}
+P 1100 0 1100 300 1 0 0
+{
+T 1000 200 5 8 1 1 180 0 1
+pinnumber=3
+T 1300 -800 5 8 0 0 90 0 1
+pinseq=8
+T 1100 -1200 5 10 0 0 90 0 1
+pintype=pwr
+T 900 400 9 10 1 1 0 0 1
+pinlabel=GND
+}
+P 1800 0 1800 300 1 0 0
+{
+T 1700 200 5 8 1 1 180 0 1
+pinnumber=2
+T 2000 -800 5 8 0 0 90 0 1
+pinseq=9
+T 1800 -1200 5 10 0 0 90 0 1
+pintype=pwr
+T 1500 400 9 10 1 1 0 0 1
+pinlabel=AGND
+}
+P 1000 2900 1000 3200 1 0 1
+{
+T 900 3100 5 8 1 1 180 0 1
+pinnumber=1
+T 800 3300 5 8 0 0 90 0 1
+pinseq=1
+T 1000 3300 5 10 0 0 90 0 1
+pintype=pwr
+T 800 2700 9 10 1 1 0 0 1
+pinlabel=Vcc
+}
+T 2000 4900 8 10 0 1 0 0 1
+description=IrDA SIR integrated transceiver
+T 2000 5100 8 10 0 1 0 0 1
+documentation=http://www.home.agilent.com/cgi-bin/pub/agilent/Product/cp_Product.jsp?NAV_ID=-536893562.536885314.00&LANGUAGE_CODE=eng&CONTENT_KEY=HSDL-3612-007&ID=HSDL-3612-007&COUNTRY_CODE=US
+T 2000 5300 8 10 0 0 0 0 1
+numslots=0
+T 2000 5500 8 10 0 0 0 0 1
+device=HSDL-3612
+T 2000 5700 8 10 0 0 0 0 1
+symversion=1.0
