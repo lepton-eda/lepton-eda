@@ -1,3 +1,45 @@
+2001-07-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_fileselect.nw: Changed a constant two days ago in
+	  defines.h, but in the code the value was being hard coded which
+	  cause a very hard to find (and frustrating) bug to live.  Fixed!
+
+	* lib/system-gschemrc.in: Finished adding menu items
+
+	* noweb/x_menu.c: More work on the top menu bar code, discovered
+	  that some menu actions are not in the keymap (hotkey vs not), so
+	  had to add a third item to the menu item list (the hotkey scheme
+	  function)
+
+	* noweb/*.nw: Renamed all *zoom_limits* functions to
+	  *zoom_extents*
+
+	* lib/system-gschemrc.in: Misc updates to some of the key mappings
+	  (added options-rubberband : or and added zoom-extents : ze)
+	
+2001-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gschem.scm: Added a bunch of scheme code to search
+	  through the global-keymap to find keys which are associated with
+	  a scheme procedure
+
+	* noweb/x_menus.nw: Changed get_main_menu to get its info from
+	  the s_menu_* datastructures as well as put the hotkeys into 
+	  the menu
+
+	* noweb/g_rc.nw: Added g_rc_add_menu 
+
+	* noweb/g_register.nw: Added register call for above
+
+	* noweb/gschem.nw: Added s_menu_init() and s_menu_free() calls
+
+	* lib/gschem-gtkrc: Added gtkrc file to set the font on all 
+	  dialog boxes to be fixed (this can be another font as long as 
+	  it is fixed spaced)
+
+	* lib/system-gschemrc.in: Slowely started adding menu entries
+	  using add-menu
+	
 2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/gschem.nw: Removed the "This is alpha software" message and

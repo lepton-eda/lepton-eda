@@ -103,7 +103,7 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
   preview->page_current = preview->page_tail;
   (void)f_open(preview, temp);
 
-  a_zoom_limits(preview, preview->page_current->object_head, 
+  a_zoom_extents(preview, preview->page_current->object_head, 
                 A_PAN_DONT_REDRAW);
 
   o_redraw_all(preview);
@@ -390,7 +390,7 @@ x_preview_setup_rest(TOPLEVEL *preview)
   preview->DONT_RESIZE = 0;
   preview->DONT_REDRAW = 0;
 
-  a_zoom_limits(preview, preview->page_current->object_head,
+  a_zoom_extents(preview, preview->page_current->object_head,
                 A_PAN_DONT_REDRAW);
 
   o_redraw_all(preview);

@@ -95,6 +95,7 @@
 <<g_rc.c : g_rc_draw_grips()>>
 <<g_rc.c : g_rc_netconn_rubberband()>>
 <<g_rc.c : g_rc_sort_component_library()>>
+<<g_rc.c : g_rc_add_menu()>>
 
 @
 
@@ -2416,3 +2417,25 @@ g_rc_sort_component_library(SCM mode)
 
 @ %def g_rc_sort_component_library
 
+
+@section Function @code{g_rc_add_menu()}
+
+@defun g_rc_add_menu menu_name menu_items
+@end defun
+
+<<g_rc.c : g_rc_add_menu()>>=
+SCM
+g_rc_add_menu(SCM menu_name, SCM menu_items)
+{
+  char *string;
+
+  string = gh_scm2newstr(menu_name, NULL);
+
+  s_menu_add_entry(string, menu_items);  
+
+  free(string);
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_add_menu

@@ -5,7 +5,7 @@ void a_pan(TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags);
-void a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags);
+void a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags);
 void a_zoom_box(TOPLEVEL *w_current, int pan_flags);
 void a_zoom_box_start(TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(TOPLEVEL *w_current, int x, int y);
@@ -83,7 +83,7 @@ SCM g_key_buffer_paste4_hotkey(void);
 SCM g_key_buffer_paste5_hotkey(void);
 SCM g_key_view_redraw(void);
 SCM g_key_view_zoom_full(void);
-SCM g_key_view_zoom_limits(void);
+SCM g_key_view_zoom_extents(void);
 SCM g_key_view_zoom_in(void);
 SCM g_key_view_zoom_out(void);
 SCM g_key_view_zoom_in_hotkey(void);
@@ -225,6 +225,7 @@ SCM g_rc_undo_type(SCM mode);
 SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
 SCM g_rc_sort_component_library(SCM mode);
+SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -278,7 +279,7 @@ void i_callback_edit_linetype(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_edit_filltype(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_redraw(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_full(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_view_zoom_limits(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_zoom_extents(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_box(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_box_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_in(gpointer data, guint callback_action, GtkWidget *widget);
@@ -723,6 +724,7 @@ void x_log_free(void);
 void x_log_setup_win(TOPLEVEL *w_current);
 /* x_menus.c */
 void print_hello(gpointer data, guint callback_action, GtkWidget *widget);
+void get_main_menuORIG(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);

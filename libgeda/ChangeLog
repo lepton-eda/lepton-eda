@@ -1,3 +1,8 @@
+2001-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_menu.nw: Added new file to support dynamic menus in
+	  gschem (add file to all Makefile.am files too)
+	
 2001-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/defines.h: Increased the maximum number of files and

@@ -64,7 +64,7 @@
 /* View menu */
 <<i_callbacks.c : i_callback_view_redraw()>>
 <<i_callbacks.c : i_callback_view_zoom_full()>>
-<<i_callbacks.c : i_callback_view_zoom_limits()>>
+<<i_callbacks.c : i_callback_view_zoom_extents()>>
 <<i_callbacks.c : i_callback_view_zoom_box()>>
 <<i_callbacks.c : i_callback_view_zoom_box_hotkey()>>
 <<i_callbacks.c : i_callback_view_zoom_in()>>
@@ -1371,28 +1371,28 @@ DEFINE_I_CALLBACK(view_zoom_full)
 @ %def i_callback_view_zoom_full
 
 
-@section Function @code{i_callback_view_zoom_limits()}
+@section Function @code{i_callback_view_zoom_extents()}
 
-@defun i_callback_view_zoom_limits data callback_action widget
+@defun i_callback_view_zoom_extents data callback_action widget
 @end defun
 
-<<i_callbacks.c : i_callback_view_zoom_limits()>>=
+<<i_callbacks.c : i_callback_view_zoom_extents()>>=
 /* repeat middle shortcut would get into the way of what user is try to do */
-DEFINE_I_CALLBACK(view_zoom_limits)
+DEFINE_I_CALLBACK(view_zoom_extents)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
 
   /* scroll bar stuff */
-  a_zoom_limits(w_current, w_current->page_current->object_head,
+  a_zoom_extents(w_current, w_current->page_current->object_head,
                 A_PAN_DONT_REDRAW);
   o_redraw_all_fast(w_current);
   o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 
-@ %def i_callback_view_zoom_limits
+@ %def i_callback_view_zoom_extents
 
 
 @section Function @code{i_callback_view_zoom_box()}
@@ -1908,7 +1908,7 @@ DEFINE_I_CALLBACK(page_revert)
   x_repaint_background(w_current);
   x_window_setup_world(w_current);
   x_manual_resize(w_current);
-  a_zoom_limits(w_current, w_current->page_current->object_head,
+  a_zoom_extents(w_current, w_current->page_current->object_head,
                 A_PAN_DONT_REDRAW);
   o_undo_savestate(w_current, UNDO_ALL);
 
@@ -3055,7 +3055,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                                               HIERARCHY_NORMAL_LOAD);
 
           if (page_control != -1)  {
-            a_zoom_limits(w_current, 
+            a_zoom_extents(w_current, 
                           w_current->
                           page_current->
                           object_head,
@@ -3150,7 +3150,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
         }
         i_set_filename(w_current, w_current->
                        page_current->page_filename);
-        a_zoom_limits(w_current, 
+        a_zoom_extents(w_current, 
                       w_current->page_current->object_head,
                       A_PAN_DONT_REDRAW);
         o_redraw_all(w_current);
@@ -3190,7 +3190,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
                               w_current->page_current);
       i_set_filename(w_current,
                      w_current->page_current->page_filename);
-      a_zoom_limits(w_current, 
+      a_zoom_extents(w_current, 
                     w_current->page_current->object_head,
                     A_PAN_DONT_REDRAW);
       o_undo_savestate(w_current, UNDO_ALL);

@@ -434,6 +434,13 @@ PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
 void s_log_init(char *cwd, char *filename);
 void s_log_message(const gchar *format, ...);
 void s_log_close(void);
+/* s_menu.c */
+int s_menu_return_num(void);
+SCM s_menu_return_entry(int index, char **menu_name);
+int s_menu_add_entry(char *new_menu, SCM menu_items);
+void s_menu_print(void);
+void s_menu_free(void);
+void s_menu_init(void);
 /* s_page.c */
 PAGE *s_page_return_tail(PAGE *head);
 void s_page_free(TOPLEVEL *w_current, PAGE *p_current);

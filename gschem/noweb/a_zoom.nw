@@ -13,7 +13,7 @@
 <<a_zoom.c : include directives>>
 <<a_zoom.c : macros>>
 <<a_zoom.c : a_zoom()>>
-<<a_zoom.c : a_zoom_limits()>>
+<<a_zoom.c : a_zoom_extents()>>
 <<a_zoom.c : a_zoom_box()>>
 <<a_zoom.c : a_zoom_box_start()>>
 <<a_zoom.c : a_zoom_box_end()>>
@@ -214,14 +214,14 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
 @ %def a_zoom
 
 
-@section Function @code{a_zoom_limits()}
+@section Function @code{a_zoom_extents()}
 
-@defun a_zoom_limits w_current o_current_pan_flags
+@defun a_zoom_extents w_current o_current_pan_flags
 @end defun
 
-<<a_zoom.c : a_zoom_limits()>>=
+<<a_zoom.c : a_zoom_extents()>>=
 void
-a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
+a_zoom_extents(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
 {
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
@@ -243,7 +243,7 @@ a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
                            &lright, &lbottom);
 
 #if DEBUG
-  printf("in a_zoom_limits:  left: %d, right: %d, top: %d, bottom: %d\n",
+  printf("in a_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",
          lleft, lright, ltop, lbottom);
 #endif
 
@@ -264,7 +264,7 @@ a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags)
 }
 
 
-@ %def a_zoom_limits
+@ %def a_zoom_extents
 
 
 @section Function @code{a_zoom_box()}
@@ -445,7 +445,7 @@ correct_aspect(TOPLEVEL *w_current)
         GET_PAGE_WIDTH(w_current) /
         w_current->page_current->coord_aspectratio;
 
-#if 0 /* ER's original zoom limits code */
+#if 0 /* ER's original zoom extents code */
       pad_y = (delta_y -
                delta_x *
                w_current->page_current->coord_aspectratio) /
@@ -465,7 +465,7 @@ correct_aspect(TOPLEVEL *w_current)
         GET_PAGE_HEIGHT(w_current) *
         w_current->page_current->coord_aspectratio;
 
-#if 0 /* ER's original zoom limits code */
+#if 0 /* ER's original zoom extents code */
       pad_x = (delta_x -
                delta_y *
                w_current->page_current->coord_aspectratio) /

@@ -1013,7 +1013,8 @@
   '(("r" . view-redraw)
     ("b" . view-zoom-box-hotkey)
     ("f" . view-zoom-full)
-    ("l" . view-zoom-limits)
+    ("l" . view-zoom-extents)
+    ("e" . view-zoom-extents)
     ("p" . view-pan-hotkey)
     ("u" . view-update-cues)
     ("o" . view-zoom-out-hotkey)
@@ -1069,6 +1070,7 @@
     ("a" . options-action-feedback)
     ("g" . options-grid)
     ("s" . options-snap)
+    ("r" . options-rubberband)
     ("Shift S" . options-snap-size)
     ("l" . options-show-log-window)
     ("c" . options-show-coord-window)))
@@ -1077,7 +1079,6 @@
 (define help-keymap
   '(("a" . help-about)
     ("h" . help-hotkeys)))
-
 
 ; All keys in the global-keymap *must* be unique
 (define global-keymap
@@ -1123,6 +1124,192 @@
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
+
+;
+; Here are the definitions for the top pull down menu bar
+;
+; The "menu item name" is the name of the item as it will appear in the menu
+; The "menu action" is the scheme function which is executed when the item
+; is selected off of the menu.  And "menu hotkey function" is the scheme
+; function which is executed when the hotkey is pressed.  
+; "menu hotkey function" has no real functionality in the menuing scheme other
+; than providing the information as to what hotkey to display in the menu.
+; "menu hotkey function" is not executed when you select an item off of the
+; list.  The hotkeys which are displayed are defined by the global-keymap.
+; Actions can have several hotkeys, but the displayed keys are the last
+; ones found.
+;
+; The SEPARATOR keyword is case sensitive and puts a seperator into the menu.
+;
+
+(define file-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey function
+;;
+	'( ("New Window"  	file-new-window 	file-new-window) 
+	   ("New Page"		file-new 		file-new)
+	   ("Open Page..." 	file-open 		file-open)
+	   ("Close Page" 	page-close 		page-close)
+	   ("Revert Page" 	page-revert 		page-revert)
+	   ("Save Page" 	file-save 		file-save)
+	   ("Save Page As..." 	file-save-as 		file-save-as)
+	   ("Save All" 		file-save-all 		file-save-all)
+	   ("Print..." 		file-print 		file-print)
+	   ("Write PNG..." 	file-image 		file-image)
+	   ("SEPARATOR"         no-action 		no-action)
+	   ("Execute Script..." file-script 		file-script)
+	   ("SEPARATOR"         no-action 		no-action)
+	   ("Close Window"   	file-close-window 	file-close-window)
+	   ("Quit" 		file-quit 		file-quit)))
+
+(define edit-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Undo"		edit-undo       	edit-undo)
+           ("Redo"              edit-redo       	edit-redo)
+	   ("SEPARATOR"         no-action       	no-action)
+           ("Select Mode"       edit-select     	edit-select)
+           ("Edit..."		edit-edit       	edit-edit)
+           ("Edit Text..."	edit-text       	edit-text)
+           ("Copy Mode"		edit-copy       	edit-copy-hotkey)
+           ("Move Mode"		edit-move       	edit-move-hotkey)
+           ("Delete"		edit-delete     	edit-delete)
+           ("Rotate 90 Mode"	edit-rotate-90  	edit-rotate-90-hotkey)
+           ("Mirror Mode"	edit-mirror     	edit-mirror-hotkey)
+	   ("SEPARATOR"		no-action		no-action)
+	   ("Slot..."           edit-slot               edit-slot)
+ 	   ("Color..."          edit-color              edit-color)
+       	   ("Lock"              edit-lock               edit-lock)
+           ("Unlock"            edit-unlock             edit-unlock)
+           ("Line Width & Type..." edit-linetype        edit-linetype)
+           ("Fill Type..."      edit-filltype           edit-filltype)
+           ("Symbol Translate..." edit-translate        edit-translate)
+           ("Embed Component"   edit-embed              edit-embed)
+           ("Unembed Componnent" edit-unembed           edit-unembed)
+	   ("Show Hidden Text"	edit-show-hidden 	edit-show-hidden)))
+
+(define buffer-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Copy into 1"	buffer-copy1       	buffer-copy1)
+	   ("Copy into 2"	buffer-copy2       	buffer-copy2)
+	   ("Copy into 3"	buffer-copy3       	buffer-copy3)
+	   ("Copy into 4"	buffer-copy4       	buffer-copy4)
+	   ("Copy into 5"	buffer-copy5       	buffer-copy5)
+	   ("Cut into 1"	buffer-cut1       	buffer-cut1)
+	   ("Cut into 2"	buffer-cut2       	buffer-cut2)
+	   ("Cut into 3"	buffer-cut3       	buffer-cut3)
+	   ("Cut into 4"	buffer-cut4       	buffer-cut4)
+	   ("Cut into 5"	buffer-cut5       	buffer-cut5)
+	   ("Paste from 1"	buffer-paste1       	buffer-paste1-hotkey)
+	   ("Paste from 2"	buffer-paste2       	buffer-paste2-hotkey)
+	   ("Paste from 3"	buffer-paste3       	buffer-paste3-hotkey)
+	   ("Paste from 4"	buffer-paste4       	buffer-paste4-hotkey)
+	   ("Paste from 5"	buffer-paste5       	buffer-paste5-hotkey)))
+
+(define view-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Redraw"		view-redraw       	view-redraw)
+	   ("Pan"		view-pan	       	view-pan-hotkey)
+	   ("Zoom Box"		view-zoom-box	       	view-zoom-box-hotkey)
+	   ("Zoom Extents"	view-zoom-extents	view-zoom-extents)
+	   ("Zoom In"		view-zoom-in		view-zoom-in-hotkey)
+	   ("Zoom Out"		view-zoom-out		view-zoom-out-hotkey)
+	   ("Zoom Full"		view-zoom-full		view-zoom-full)))
+
+(define page-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Manager..."	page-manager       	page-manager)
+	   ("Next"		page-next       	page-next)
+	   ("Previous"		page-prev       	page-prev)
+	   ("New"		page-new       		page-new)
+	   ("Revert"		page-revert       	page-revert)
+	   ("Close"		page-close       	page-close)
+	   ("SEPARATOR"		no-action		no-action)
+	   ("Discard"		page-discard       	page-discard)))
+
+(define add-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Component..."	add-component       	add-component)
+	   ("Net"		add-net	  	     	add-net-hotkey)
+	   ("Bus"		add-bus	  	     	add-bus-hotkey)
+	   ("Attribute..."	add-attribute  	     	add-attribute-hotkey)
+	   ("Text..."		add-text  	     	add-text)
+	   ("SEPARATOR"		no-action		no-action)
+	   ("Line"		add-line  	     	add-line-hotkey)
+	   ("Box"		add-box  	     	add-box-hotkey)
+	   ("Circle"		add-circle  	     	add-circle-hotkey)
+	   ("Arc"		add-arc  	     	add-arc-hotkey)
+	   ("Pin"		add-pin  	     	add-pin-hotkey)))
+
+(define hierarchy-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Down Schematic"	hierarchy-down-schematic 
+				hierarchy-down-schematic)
+	   ("Down Symbol"	hierarchy-down-symbol 
+				hierarchy-down-symbol)
+	   ("Up"		hierarchy-up
+				hierarchy-up)))
+
+(define attributes-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Attach"		attributes-attach       attributes-attach)
+	   ("Deattach"		attributes-detach       attributes-detach)
+	   ("Show Value"	attributes-show-value   attributes-show-value)
+	   ("Show Name"		attributes-show-name    attributes-show-name)
+	   ("Show Both"		attributes-show-both    attributes-show-both)
+	   ("Toggle Visibility"	attributes-visibility-toggle    
+				attributes-visibility-toggle)))
+
+(define options-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("Text Size..."	options-text-size       options-text-size)
+	   ("Toggle Grid On/Off" options-grid       	options-grid)
+	   ("Toggle Snap On/Off" options-snap       	options-snap)
+	   ("Snap Grid Spacing..." options-snap-size   	options-snap-size)
+	   ("Toggle Outline/Box"   options-action-feedback   	
+				   options-action-feedback)
+	   ("Toggle Net Rubberband" options-rubberband   options-rubberband)
+	   ("Show Log Window..."    options-show-log-window   
+	 			    options-show-log-window)
+	   ("Show Coord Window..."   options-show-coord-window   
+				     options-show-coord-window)))
+
+(define help-menu-items 
+;;
+;;          menu item name      menu action     	menu hotkey action
+;;
+	'( ("About..."		help-about      	help-about)
+	   ("Hotkeys..."	help-hotkeys      	help-hotkeys)))
+
+;
+; Now actually add the menus.  The order here defines the order in which
+; the menus appear in the top menu bar.
+;
+(add-menu "File" file-menu-items)
+(add-menu "Edit" edit-menu-items)
+(add-menu "Buffer" buffer-menu-items)
+(add-menu "View" view-menu-items)
+(add-menu "Page" page-menu-items)
+(add-menu "Add" add-menu-items)
+(add-menu "Hierarchy" hierarchy-menu-items)
+(add-menu "Attributes" attributes-menu-items)
+(add-menu "Options" options-menu-items)
+(add-menu "Help" help-menu-items)   ; help is special it will be on the right
 
 ;
 ; End of keymapping related keywords

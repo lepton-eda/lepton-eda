@@ -75,6 +75,7 @@ gschem_quit(void)
   s_clib_cache_free();
   s_clib_free();
   s_slib_free();
+  s_menu_free();
   /* o_text_freeallfonts();*/
   s_attrib_free();
   s_papersizes_free();
@@ -123,6 +124,7 @@ main_prog(int argc, char *argv[])
   char input_str[256];
   int argv_index;
   int first_page = 1;
+  char *geda_data;
 
   gtk_init(&argc, &argv);
   visual = gdk_visual_get_system();
@@ -143,23 +145,23 @@ main_prog(int argc, char *argv[])
 #endif
 	
   s_log_message(
-     "gEDA/gschem version %s\n", VERSION);
+                "gEDA/gschem version %s\n", VERSION);
   s_log_message(
-     "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n");
+                "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
   s_log_message(
-     "This is free software, and you are welcome to redistribute it under certain\n");
+                "This is free software, and you are welcome to redistribute it under certain\n");
   s_log_message(
-     "conditions; please see the COPYING file for more details\n\n"); 
+                "conditions; please see the COPYING file for more details.\n\n"); 
 
   if (!quiet_mode) {
     fprintf(stderr, 
-       "gEDA/gschem version %s\n", VERSION);
+            "gEDA/gschem version %s\n", VERSION);
     fprintf(stderr, 
-       "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n");
+            "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     fprintf(stderr, 
-       "This is free software, and you are welcome to redistribute it under certain\n");
+            "This is free software, and you are welcome to redistribute it under certain\n");
     fprintf(stderr, 
-      "conditions; please see the COPYING file for more details\n\n"); 
+            "conditions; please see the COPYING file for more details.\n\n"); 
   }
 
 #ifdef __CYGWIN32__
@@ -176,11 +178,32 @@ main_prog(int argc, char *argv[])
 
   s_clib_init();
   s_slib_init();
+  s_menu_init();
   s_attrib_init();
 
   s_color_init();
   g_rc_parse();
   o_undo_init(); 
+
+  geda_data = getenv("GEDADATA");
+  if (geda_data == NULL) {
+    fprintf(stderr, "You must set the GEDADATA environment variable!\n");
+    exit(-1);
+  }
+  sprintf(input_str, "%s/gschem-gtkrc", geda_data);
+  gtk_rc_parse(input_str);
+  
+  sprintf(input_str, "%s/gschem.scm", default_scheme_directory);
+  if (g_read_file(input_str) != -1) {
+    s_log_message("Read init scm file [%s]\n", input_str);
+  } else {
+    /* TODO: These two messages are the same. Should be
+     * integrated. */
+    s_log_message("Failed to read init scm file [%s]\n",
+                  input_str);
+    fprintf(stderr,
+            "Failed to read init scm file [%s]\n", input_str);
+  }
 
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();
@@ -234,7 +257,7 @@ main_prog(int argc, char *argv[])
       i_set_filename(w_current,
                      w_current->page_current->page_filename);
 
-      a_zoom_limits(w_current,
+      a_zoom_extents(w_current,
                     w_current->page_current->object_head,
                     A_PAN_DONT_REDRAW);
       o_undo_savestate(w_current, UNDO_ALL);
@@ -259,7 +282,7 @@ main_prog(int argc, char *argv[])
                      w_current->page_current->page_filename);
         i_set_filename(w_current,
                        w_current->page_current->page_filename);
-        a_zoom_limits(w_current,
+        a_zoom_extents(w_current,
                       w_current->page_current->object_head,
                       A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
@@ -318,17 +341,6 @@ main_prog(int argc, char *argv[])
     exit(-1);
   }
 
-  sprintf(input_str, "%s/gschem.scm", w_current->scheme_directory);
-  if (g_read_file(input_str) != -1) {
-    s_log_message("Read init scm file [%s]\n", input_str);
-  } else {
-    /* TODO: These two messages are the same. Should be
-     * integrated. */
-    s_log_message("Failed to read init scm file [%s]\n",
-                  input_str);
-    fprintf(stderr,
-            "Failed to read init scm file [%s]\n", input_str);
-  }
 
   /* Execute a script if it exists */
   if (script_filename) {

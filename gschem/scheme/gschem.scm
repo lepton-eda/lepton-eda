@@ -80,6 +80,42 @@
            #t))))
 
 
+;; Search the keymap for a particular scheme function and return the keys
+;; which execute this hotkey
+(define foundkey "")
+(define temp "")
+
+(define find-key-lowlevel 
+  (let ((keys '()))
+    (lambda (keymap function)
+      (for-each 
+       (lambda (mapped-key) ; Receives a pair
+         (if (list? (eval (cdr mapped-key)))
+             (begin
+               (set! temp (car mapped-key))
+               (find-key-lowlevel (eval (cdr mapped-key)) function)
+               (set! temp "")
+               )
+             (if (eq? (cdr mapped-key) function)	
+                 (set! foundkey (string-append temp (car mapped-key)))
+                 
+                 )
+             )
+         ) 
+       keymap))))
+
+(define find-key 
+  (lambda(function)
+    (set! temp "")
+    (set! foundkey "")
+;;    (display function) (newline)
+    (find-key-lowlevel global-keymap function)
+    (if (eq? (string-length foundkey) 0) 
+        #f
+        foundkey
+        )
+    ))
+
 ;; Printing out current key bindings for gEDA (gschem)
 ; Stefan Petersen 1999-04-04 (spe@stacken.kth.se)
 ; Free for all use. Just don't blame me when your house burns up.

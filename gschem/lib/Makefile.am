@@ -1,8 +1,8 @@
 
 rcdatadir = @gedarcdir@
-rcdata_DATA = system-gschemrc 
+rcdata_DATA = system-gschemrc gschem-gtkrc
 
-EXTRA_DIST = system-gschemrc.in 
+EXTRA_DIST = system-gschemrc.in gschem-gtkrc
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

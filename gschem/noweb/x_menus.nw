@@ -14,6 +14,8 @@
 <<x_menus.c : print_hello()>>
 <<x_menus.c : menu items>>
 <<x_menus.c : popup menu items>>
+<<x_menus.c : get_main_menuORIG()>>
+<<x_menus.c : g_menu_execute()>>
 <<x_menus.c : get_main_menu()>>
 <<x_menus.c : get_main_popup()>>
 <<x_menus.c : do_popup()>>
@@ -84,6 +86,7 @@ print_hello (gpointer data, guint callback_action,
 @section Menu items
 
 <<x_menus.c : menu items>>=
+#if 0
 /* gtk+ 1.2.x menu definitions */
 static GtkItemFactoryEntry menu_items[] = {
   {"/File", NULL, NULL, 0, "<Branch>"},
@@ -159,7 +162,7 @@ static GtkItemFactoryEntry menu_items[] = {
   {"/View/Redraw", NULL, i_callback_view_redraw, 0, NULL},
   {"/View/Pan", NULL, i_callback_view_pan, 0, NULL},
   {"/View/Zoom box", NULL, i_callback_view_zoom_box, 0, NULL},
-  {"/View/Zoom limits", NULL, i_callback_view_zoom_limits, 0, NULL},
+  {"/View/Zoom extents", NULL, i_callback_view_zoom_extents, 0, NULL},
   {"/View/Zoom in", NULL, i_callback_view_zoom_in, 0, NULL},
   {"/View/Zoom out", NULL, i_callback_view_zoom_out, 0, NULL},
   {"/View/Zoom full", NULL, i_callback_view_zoom_full, 0, NULL},
@@ -219,6 +222,7 @@ static GtkItemFactoryEntry menu_items[] = {
 /* calculate the number of menu_item's */
 /* no longer static */
 int nmenu_items = sizeof(menu_items) / sizeof(menu_items[0]);
+#endif
 
 @ %def menu_items nmenu_items
 
@@ -233,10 +237,10 @@ static GtkItemFactoryEntry popup_items[] = {
   {"/Bus", 		NULL, i_callback_add_bus, 0, NULL},
   {"/Text", 		NULL, i_callback_add_text, 0, NULL},
   {"/sep1", NULL, NULL, 0, "<Separator>"},
-  {"/Zoom in",            NULL, i_callback_view_zoom_in, 0, NULL},
-  {"/Zoom out",           NULL, i_callback_view_zoom_out, 0, NULL},
-  {"/Zoom box",           NULL, i_callback_view_zoom_box, 0, NULL},
-  {"/Zoom limits",        NULL, i_callback_view_zoom_limits, 0, NULL},
+  {"/Zoom In",            NULL, i_callback_view_zoom_in, 0, NULL},
+  {"/Zoom Out",           NULL, i_callback_view_zoom_out, 0, NULL},
+  {"/Zoom Box",           NULL, i_callback_view_zoom_box, 0, NULL},
+  {"/Zoom Extents",        NULL, i_callback_view_zoom_extents, 0, NULL},
   {"/sep1", NULL, NULL, 0, "<Separator>"},
   {"/Select", 		NULL, i_callback_edit_select, 0, NULL},
   {"/Edit...", 		NULL, i_callback_edit_edit, 0, NULL},
@@ -250,15 +254,16 @@ int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
 @ %def popup_items nmenu_items
 
 
-@section Function @code{get_main_menu()}
+@section Function @code{get_main_menuORIG()}
 
 @defun get_main_menu w_current menubar
 @end defun
 
-<<x_menus.c : get_main_menu()>>=
+<<x_menus.c : get_main_menuORIG()>>=
 void
-get_main_menu(TOPLEVEL *w_current, GtkWidget ** menubar)
+get_main_menuORIG(TOPLEVEL *w_current, GtkWidget ** menubar)
 {
+#if 0
   GtkItemFactory *item_factory;
   GtkAccelGroup *accel_group;
 
@@ -284,8 +289,149 @@ get_main_menu(TOPLEVEL *w_current, GtkWidget ** menubar)
   if (menubar)
   /* Finally, return the actual menu bar created by the item factory. */
   *menubar = gtk_item_factory_get_widget(item_factory, "<main>");
+#endif
 }
 
+
+@ %def get_main_menu
+
+@section Function @code{get_main_menu()}
+
+@defun g_menu_execute func
+@end defun
+
+<<x_menus.c : g_menu_execute()>>=
+static void g_menu_execute(char *func)
+{
+  char guile_string[128];
+  
+  sprintf(guile_string, "(%s)", func);
+#if DEBUG
+  printf("%s\n", guile_string);
+#endif
+  gh_eval_str(guile_string);
+}
+
+@ %def g_menu_execute
+
+
+@section Function @code{get_main_menu()}
+
+@defun get_main_menu w_current menubar
+@end defun
+
+<<x_menus.c : get_main_menu()>>=
+
+void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
+{
+  char buf[128];
+  GtkWidget *menu_item;
+  GtkWidget *root_menu;
+  GtkWidget *menu_bar;
+  GtkWidget *menu;
+  char **menu_name = malloc (sizeof(char *));
+  int scm_items_len;
+  SCM scm_items;
+  SCM scm_item;
+  SCM scm_item_name;
+  SCM scm_item_func;
+  SCM scm_item_hotkey_func;
+  SCM scm_index;
+  SCM scm_keys;
+  char *menu_item_name;
+  char *menu_item_func;
+  char *menu_item_hotkey_func;
+  char *menu_item_keys;
+  char *spaces;
+  int i, j;
+  int name_len, key_len, pad;
+
+  menu_bar = gtk_menu_bar_new ();
+  for (i = 0 ; i < s_menu_return_num(); i++) {
+    
+    scm_items = s_menu_return_entry(i, menu_name);   
+    if (*menu_name == NULL) {
+      fprintf(stderr, "Oops.. got a NULL menu name in get_main_menu()\n");
+      exit(-1);
+    }
+
+    menu = gtk_menu_new();
+
+    menu_item = gtk_tearoff_menu_item_new ();
+    gtk_menu_append(GTK_MENU(menu), menu_item);
+    gtk_widget_show(menu_item);
+
+    scm_items_len = gh_length(scm_items);
+    for (j = 0 ; j < scm_items_len; j++) {
+
+      scm_index = gh_int2scm(j);
+      scm_item = gh_list_ref(scm_items, scm_index);
+      scm_item_name = gh_car(scm_item);
+      scm_item_func = gh_cadr(scm_item);
+      scm_item_hotkey_func = gh_caddr(scm_item);
+
+      menu_item_name = gh_scm2newstr(scm_item_name, NULL);
+      menu_item_func = gh_scm2newstr(scm_item_func, NULL);
+      menu_item_hotkey_func = gh_scm2newstr(scm_item_hotkey_func, NULL);
+
+      if (strcmp(menu_item_name, "SEPARATOR") == 0) {
+        menu_item = gtk_menu_item_new();
+        gtk_menu_append(GTK_MENU(menu), menu_item);
+      } else { 
+        sprintf(buf, "(find-key '%s)", menu_item_hotkey_func);
+        scm_keys = gh_eval_str(buf);
+        if (scm_keys == SCM_BOOL_F) {
+          menu_item_keys = malloc(sizeof(char)*2);
+          menu_item_keys[0] = ' ';
+          menu_item_keys[1] = '\0';
+        } else {
+          menu_item_keys = gh_scm2newstr(scm_keys, NULL);
+        }      
+
+        name_len = strlen(menu_item_name);
+        key_len = strlen(menu_item_keys);
+        pad = 30 - (name_len + key_len);
+
+        spaces = malloc(sizeof(char)*(pad+1));
+        memset(spaces, ' ', pad);
+        spaces[pad] = '\0';
+        sprintf(buf, "%s%s%s", menu_item_name, spaces, menu_item_keys);
+
+#if DEBUG
+        printf("%s :\n %d %d %d = %d\n", buf, name_len, pad, key_len,
+               name_len + pad + key_len);
+#endif
+      
+        menu_item = gtk_menu_item_new_with_label(buf);
+        gtk_menu_append(GTK_MENU(menu), menu_item);
+        gtk_signal_connect_object(GTK_OBJECT(menu_item), "activate",
+                                  GTK_SIGNAL_FUNC(g_menu_execute),
+                                  (gpointer) u_basic_strdup(menu_item_func));
+        // The u_basic_strdup is a memory leak, but this is okay. I think.
+        free(spaces);
+        free(menu_item_keys);
+      }
+      
+      gtk_widget_show(menu_item);  
+      free(menu_item_name);
+      free(menu_item_func);
+      free(menu_item_hotkey_func);
+      
+    }
+
+    
+    root_menu = gtk_menu_item_new_with_label (*menu_name);
+    if (strcmp(*menu_name, "Help") == 0) {
+      gtk_menu_item_right_justify (root_menu);
+    }
+    gtk_widget_show (root_menu);
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
+    gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), root_menu);
+  }
+  
+  free(menu_name);
+  *menubar = menu_bar;
+}
 
 @ %def get_main_menu
 

@@ -75,20 +75,20 @@ void main_prog(int argc, char *argv[])
 
     s_log_message("gEDA/gnetlist version %s\n", VERSION);
     s_log_message
-	("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n");
+	("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     s_log_message
 	("This is free software, and you are welcome to redistribute it under certain\n");
     s_log_message
-	("conditions; please see the COPYING file for more details\n\n");
+	("conditions; please see the COPYING file for more details.\n\n");
 
     if (!quiet_mode) {
 	fprintf(stderr, "gEDA/gnetlist version %s\n", VERSION);
 	fprintf(stderr,
-		"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n");
+		"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
 	fprintf(stderr,
 		"This is free software, and you are welcome to redistribute it under certain\n");
 	fprintf(stderr,
-		"conditions; please see the COPYING file for more details\n\n");
+		"conditions; please see the COPYING file for more details.\n\n");
     }
 
 #ifdef __CYGWIN32__
