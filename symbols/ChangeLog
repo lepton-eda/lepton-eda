@@ -6,6 +6,9 @@
 
 	* micro/8052basic-1.sym: Added symbol by Jesse Alexander  
 
+	* 74/74573-1.sym: Fixed incorrect polarity (should be asserted high)
+	on pin 11 (le), pointed by James Tabor
+
 2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* 74/7474-2.sym: Fixed typo (0 in slotdef), pointed out by Karel
