@@ -111,7 +111,7 @@
     (if (or (null? ls)
             (null? (cdr ls)))
         '()        
-        (cons (car ls) (bom:strip1 (cdr ls))))))
+        (cons (car ls) (strip1 (cdr ls))))))
 
 ;; ETTUS
 ;; contains?
