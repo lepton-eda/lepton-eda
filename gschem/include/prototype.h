@@ -18,6 +18,8 @@ SCM g_funcs_use_rc_values(void);
 SCM g_funcs_key_name(SCM keystring);
 SCM g_funcs_key_value(SCM keystring);
 SCM g_funcs_key_done(void);
+SCM get_selected_component_attributes(gpointer data, guint callback_action, GtkWidget *widget);
+SCM get_selected_filename(gpointer data, guint callback_action, GtkWidget *widget);
 /* g_hook.c */
 SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object);
 SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value);
@@ -140,6 +142,8 @@ SCM g_key_misc3(void);
 SCM g_key_help_about(void);
 SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
+SCM g_get_selected_filename(void);
+SCM g_get_selected_component_attributes(void);
 /* g_rc.c */
 void g_rc_parse(void);
 SCM g_rc_gschem_version(SCM version);
@@ -558,6 +562,7 @@ void o_text_rubberattrib(TOPLEVEL *w_current);
 void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
 void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);
+void o_text_place_rotate(TOPLEVEL *w_current);
 /* o_undo.c */
 void o_undo_init(void);
 void o_undo_savestate(TOPLEVEL *w_current, int flag);
