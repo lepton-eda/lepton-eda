@@ -68,6 +68,7 @@
 #include <gtk/gtk.h>
 #include <guile/gh.h>
 #ifndef HAS_GTK12
+#include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #endif
 

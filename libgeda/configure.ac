@@ -269,6 +269,42 @@ fi
 ############################################################################
 
 ############################################################################
+# Check for gdk 
+# 
+
+# Check for pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test $PKG_CONFIG = no; then
+   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+fi
+
+# Search for gdk (only if we are not forcing the gtk+ to 1.2)
+if test "$opt_gtkver" != "1.2"
+then
+   PKG_CHECK_MODULES(GDK, gdk >= 0.15.0, GDK="yes", no_GDK="yes")
+fi
+
+# This next bit of code figures out what gtk we need to use.
+if test "$GDK" = "yes" -a "$opt_gtkver" != "1.2"
+then
+
+   AC_DEFINE(HAS_GDK, 1, [If gdk has been installed, define this])
+   GDK_CFLAGS=$GDK_CFLAGS
+   GDK_LIBS=$GDK_LIBS
+   GDK_VERSION=`$PKG_CONFIG gdk-2.0 --modversion`
+
+fi
+
+if test "$GDK_VERSION" = ""
+then
+   AC_MSG_ERROR([Cannot find gdk.])
+fi
+
+# 
+# Check for gdk end
+############################################################################
+
+############################################################################
 # Check for gdk-pixbuf 
 # 
 
@@ -576,8 +612,8 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS"
+LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution

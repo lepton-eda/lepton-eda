@@ -1,3 +1,9 @@
+2005-02-23  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac, noweb/o_picture.nw:
+	Added temporary GDK dependency. Fixed CLI compilation error
+	when gdk_init was not found when linking.
+	
 2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
 
         * noweb/o_picture.nw: Fix character conversion.
