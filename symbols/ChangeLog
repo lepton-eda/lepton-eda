@@ -1,3 +1,8 @@
+2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 74/7474-2.sym: Fixed typo (0 in slotdef), pointed out by Karel
+	Kulhavy
+
 2002-08-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* analog/transformer-1.sym: Added symbol, need to verify pinnumbers
