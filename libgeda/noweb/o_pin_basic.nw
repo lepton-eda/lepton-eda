@@ -798,7 +798,7 @@ o_pin_modify(TOPLEVEL *w_current, OBJECT *object,
 
 <<o_pin_basic.c : o_pin_update_whichend()>>=
 void
-o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list)
+o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pins)
 {
   OBJECT *o_current;
   int top, left;
@@ -808,35 +808,34 @@ o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list)
   int min0_whichend, min1_whichend;
   int rleft, rtop, rright, rbottom;
 
-  if (object_list) {
+  if (object_list && num_pins) {
+    if (num_pins == 1) {
+      world_get_complex_bounds(w_current, object_list,
+                             &left, &top, &right, &bottom);
+    } else {
+      left = rleft = w_current->init_right;
+      top = rtop = w_current->init_bottom;;
+      right = rright = 0;
+      bottom = rbottom = 0;
 
-    left = rleft = w_current->init_right;
-    top = rtop = w_current->init_bottom;;
-    right = rright = 0;
-    bottom = rbottom = 0;
+      /* only look at the pins to calculate bounds of the symbol */
+      o_current = object_list;
+      while (o_current != NULL) {
+        if (o_current->type == OBJ_PIN) {
+          world_get_pin_bounds(w_current, o_current->line,
+                               &rleft, &rtop, &rright, &rbottom);
+        }
 
-    /* only look at the pins to calculate bounds of the symbol */
-    o_current = object_list;
-    while (o_current != NULL) {
-      if (o_current->type == OBJ_PIN) {
-        world_get_pin_bounds(w_current, o_current->line,
-                             &rleft, &rtop, &rright, &rbottom);
+        if (rleft < left) left = rleft;
+        if (rtop < top) top = rtop;
+        if (rright > right) right = rright;
+        if (rbottom > bottom) bottom = rbottom;
+      
+        o_current=o_current->next;
       }
 
-      if (rleft < left) left = rleft;
-      if (rtop < top) top = rtop;
-      if (rright > right) right = rright;
-      if (rbottom > bottom) bottom = rbottom;
       
-      o_current=o_current->next;
     }
-    
-#if 0 /* don't do this since it takes all graphics into account. */
-    /* only the pins should be looked at (which is what the above code */
-    /* does). */
-    world_get_complex_bounds(w_current, object_list,
-                             &left, &top, &right, &bottom);
-#endif
   } else {
     return;
   }

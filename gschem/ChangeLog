@@ -1,3 +1,11 @@
+2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/pins.sch: Update test schematic to include single pin 
+	components
+
+	* tests/oldsym2.sch: Added an old single pin symbol, to test that 
+	the auto whichend code handles the single pin correctly.
+	
 2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_cues.nw: Added patch by Egil Kvaleberg to prevent core

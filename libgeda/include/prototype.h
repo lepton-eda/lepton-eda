@@ -310,7 +310,7 @@ void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_center
 void o_pin_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
-void o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list);
+void o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pins);
 /* o_selection.c */
 SELECTION *o_selection_return_tail(SELECTION *head);
 SELECTION *o_selection_return_head(SELECTION *tail);

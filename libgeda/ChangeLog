@@ -1,9 +1,19 @@
+2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_pin_basic.nw: Oops, broke the single pin case.  Added
+	code handle this case (basically do the original world bounding
+	box if only one pin is found).  Changed function to take this pin
+	count as a paramater.
+
+	* noweb/a_basic.nw: Passed the number of found pins to 
+	o_pin_update_whichend
+	
 2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
 	
-	* noweb/o_pin_basic.c: Added some error checking for the whichend
+	* noweb/o_pin_basic.nw: Added some error checking for the whichend
 	parameter on pins.
 
-	* noweb/o_pin_basic.c: Changed the get world bounding box call in
+	* noweb/o_pin_basic.nw: Changed the get world bounding box call in
 	o_pin_update_whichend to only look at pins instead of all
 	graphics.  This fixes a bug which Werner Hoch reported.
 	
