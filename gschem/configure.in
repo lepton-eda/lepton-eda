@@ -273,44 +273,127 @@ if test "$debug" = "yes"; then
 	CFLAGS="$CFLAGS -g"
 fi
 
+
+# Tangling is required if there is no C source files in the src/ 
+# directory. Therefore they need to be extracted from the documented
+# sources in noweb/ either with notangle or notangle_guile.scm.
+#
+# notangle is the utility that comes with the noweb package.
+# notangle_guile.scm is a script that act the same as notangle
+# but only require a guile interpreter with built-in module regex
+# and getopt-long
+
 # search for notangle
 AC_PATH_PROG(NOTANGLE, notangle, no, ${PATH})
 cfiles=`\ls -1 src/gschem.c 2> /dev/null`
 exit_status=$?
 
 if test "$NOTANGLE" = "no" -a "$exit_status" = "1"; then
-        echo "** Cannot find notangle (part of noweb)! **"
-	AC_MSG_ERROR(noweb is required if you are building without C source files)
+	# notangle not found, and no C sources in src 
+	# need notangle_guile.scm
+	echo "** Cannot find notangle (part of noweb) : using notangle_guile.scm instead **"
+	
+	# find the guile interpreter
+	AC_PATH_PROG(GUILEINTERP, guile, no, ${PATH})
+	if test "$GUILEINTERP" = "no"; then
+	   AC_MSG_ERROR(guile interpreter is required)
+	fi
+  
+	# check (ice-9 getopt-long) module in guile
+	AC_MSG_CHECKING([for getopt-long module in guile])
+	guilegetopt=`$GUILEINTERP -c  '(use-modules (ice-9 getopt-long))' 2> /dev/null`
+	exit_status=$?
+	if test "$exit_status" = "1"; then
+	   AC_MSG_RESULT([no])
+	   echo "no support for getopt-long module in guile interpreter"
+	   AC_MSG_ERROR(this module is required by notangle_guile.scm but is not available in the interpreter)
+	fi
+	AC_MSG_RESULT([yes])
+
+	# check (ice-9 regex) module in guile
+	AC_MSG_CHECKING([for regex module in guile])
+	guileregex=`$GUILEINTERP -c  '(use-modules (ice-9 regex))' 2> /dev/null`
+	exit_status=$?
+	if test ! "$exit_status" = "0"; then
+	   AC_MSG_RESULT([no])
+	   echo "no support for regex module in guile interpreter"
+	   AC_MSG_ERROR(this module is required by notangle_guile.scm but is not available in the interpreter)
+	fi
+	AC_MSG_RESULT([yes])
+
+	# set NOTANGLE and NOTANGLEROOT to use notangle_guile.scm
+	# as the result of the previous tests
+	#  - NOTANGLE is the relative pathname to script from the source dir
+	#  - NOTANGLEROOT is the option to give the root code chunk name
+	#  - NOTANGLEFLAGS are other flags to notangle_guile.scm
+	NOTANGLE="../scripts/notangle_guile.scm"
+	NOTANGLEROOT="--rootname="
+	NOTANGLEFLAGS=""
+
+	echo "--            notangle_guile.scm should work fine on this system           --"
+
+else
+	# NOTANGLE has been set by AC_PATH_PROG above
+	NOTANGLEROOT="-R"
+	NOTANGLEFLAGS="-L"
+
 fi
+
+
+# Weaving is extracting the documentation from the noweb files.
+# The noweb package provides noweave to weave these files.
+# 
+# The documentation is here written in Texinfo. A backend is 
+# provided in scripts to format the code chunks in Texinfo.
+#
+# The noweave program is therefore required to produce the 
+# documentation but building documentation is optionnal.
+#
 
 # search for noweave
 AC_PATH_PROG(NOWEAVE, noweave, no, ${PATH})
+# search for AWK
+#  the noweb texinfo backend is based on awk. If awk is not available,
+#  the backend will not work, and therefore it disables the 
+#  documentation creation.
+AC_PROG_AWK
 
-if test "$NOWEAVE" = "no"; then 
-        echo "** Cannot find nowave (part of noweb)! **"
-	echo "** Documentation creation disabled **"
+if test "$NOWEAVE" = "no" -o "$AWK" = "no"; then 
+	# noweave is not available on the system
+        echo "** Cannot find noweave (part of noweb)! **"
+	echo "**   Documentation creation disabled    **"
 	NOWEAVE=echo
-	TEXI2DVI=echo
-	TEXI2HTML=echo
+
+	# prevent from weaving the nw files
+	# but does not prevent from processing gschemdoc
+	builddoc=false
+
 else 
+	# noweave is available on the system.
+	# now checking if the tools for Texinfo files processing
+	# is installed.
+	# The docs can be either processed to produce dvi, html or info
+	# with texi2dvi, texi2html or makeinfo respectively
+	# Note : these tests on makeinfo and texi2dvi are no more 
+	#        needed as automake makes them for us
 
-	# search for texi2dvi
-	AC_PATH_PROG(TEXI2DVI, texi2dvi, no, ${PATH})
+	# enable the weaving of the nw files to get documentation
+	builddoc=true
 
-	if test "$TEXI2DVI" = "no"; then 
-       		echo "** Cannot find texi2dvi **"
-		echo "** DVI file creation disabled **"
-		TEXI2DVI=echo
-	fi
+fi
 
-	# search for texi2html
-	AC_PATH_PROG(TEXI2HTML, texi2html, no, ${PATH})
+# depending on variable builddoc, weaving is performed or not
+# using conditionnal in docs/Makefile.in
+AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
 
-	if test "$TEXI2HTML" = "no"; then 
-       		echo "** Cannot find texi2html **"
-		echo "** HTML file creation disabled **"
-		TEXI2HTML=echo
-	fi
+# search for texi2html
+# it looks like automake does not take care of html doc creation
+AC_PATH_PROG(TEXI2HTML, texi2html, no, ${PATH})
+
+if test "$TEXI2HTML" = "no"; then 
+   echo "**   Cannot find texi2html     **"
+   echo "** HTML file creation disabled **"
+   TEXI2HTML=echo
 fi
 
 
@@ -395,18 +478,24 @@ AC_SUBST(GDK)
 AC_SUBST(GLIB)
 
 AC_SUBST(NOTANGLE)
+AC_SUBST(NOTANGLEROOT)
+AC_SUBST(NOTANGLEFLAGS)
+AC_SUBST(GUILEINTERP)
 AC_SUBST(NOWEAVE)
-AC_SUBST(TEXI2DVI)
 AC_SUBST(TEXI2HTML)
 AC_SUBST(INDENT)
 
-AC_OUTPUT( 	Makefile \
-		src/Makefile \
-		include/Makefile \
-		scheme/Makefile \
-		scripts/Makefile \
-		examples/Makefile \
-		docs/Makefile \
-		lib/Makefile \
-		noweb/Makefile \
-		lib/system-gschemrc )
+AC_OUTPUT_COMMANDS([chmod +x scripts/geda_totexi])
+AC_OUTPUT_COMMANDS([chmod +x scripts/notangle_guile.scm])
+AC_OUTPUT( 	Makefile            \
+		src/Makefile        \
+		include/Makefile    \
+		scheme/Makefile     \
+		scripts/Makefile    \
+		examples/Makefile   \
+		docs/Makefile       \
+		lib/Makefile        \
+		noweb/Makefile      \
+		lib/system-gschemrc \
+		scripts/geda_totexi \
+		scripts/notangle_guile.scm )
