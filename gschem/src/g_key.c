@@ -274,3 +274,16 @@ DEFINE_G_KEY(help_hotkeys)
 being called with a null, I suppose we should call it with the right param.
 hack */
 DEFINE_G_KEY(cancel)
+
+/*help for generate-netlist hot key*/
+SCM g_get_selected_filename(void)                     
+{                                                     
+	return (get_selected_filename(window_current, 0, NULL));
+}
+
+SCM g_get_selected_component_attributes(void)                 
+{                                                     
+	return (get_selected_component_attributes(window_current, 0, NULL));
+}
+
+

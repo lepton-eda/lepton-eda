@@ -282,6 +282,12 @@ g_register_funcs(void)
 	copy_component_hook = scm_create_hook("copy-component-hook", 1);
 	move_component_hook = scm_create_hook("move-component-hook", 1);
 
+	/*help functions for generating netlists*/
+	gh_new_procedure0_0 ("get-selected-filename",g_get_selected_filename);
+	gh_new_procedure0_0 ("get-selected-component-attributes",
+			      g_get_selected_component_attributes);
+
+
 	return;
 }
 

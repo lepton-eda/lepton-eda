@@ -126,3 +126,81 @@ SCM g_funcs_key_done(void)
 	return SCM_BOOL_T;
 }
 
+/* all of the declaration part is copied from some other c-code of
+ * gEDA gschem. 
+ * I don't really know, whether this all are necessary or not, but 
+ * it works :-). */
+
+/* get names from all objects of current_page, which */
+/* selected-flags are true. */
+
+SCM get_selected_component_attributes(gpointer data,		
+				      guint callback_action,	
+				      GtkWidget *widget)
+{
+  OBJECT *obj;
+  PAGE *p;
+  
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  SCM list = SCM_EOL;
+  /*NETLIST *nl_current = NULL; */
+
+  /*nl_current = netlist_head; */
+  p = w_current->page_current;
+  obj = p->object_head;
+
+  s_scratch_string_init();
+  
+  while (obj != NULL)
+    {
+      if (obj->selected) 
+	{
+	  
+	  /*if (obj->type == OBJ_COMPLEX)
+	    {
+	      if (s_scratch_string_fill(obj->complex_basename)) 
+		{
+		  list = gh_cons( gh_str2scm (obj->complex_basename, 
+					      strlen(obj->complex_basename)), 
+				  list);	
+		}
+	    }
+	    else*/
+	    {
+	      if (obj->text && obj->text->string)
+		{
+		  if (s_scratch_string_fill(obj->text->string))
+		    {
+		      list = gh_cons( gh_str2scm (obj->text->string, 
+						  strlen(obj->text->string)), 
+				      list);	
+		    } 
+		}
+	    }
+	}
+      obj = obj->next;
+    }
+  s_scratch_string_free();
+  return(list);
+}
+
+
+
+/* this function returns the whole filename of the current schematic. */
+/* specially, the page_filename of the current_page */
+
+SCM get_selected_filename(gpointer data,		
+			  guint callback_action,	
+			  GtkWidget *widget)
+{
+  SCM return_value;
+  char *filename;
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  
+  exit_if_null(w_current);
+  
+  return_value = gh_str2scm(w_current->page_current->page_filename,
+		  	    strlen(w_current->page_current->page_filename));
+  return(return_value);
+}
+
