@@ -1,3 +1,8 @@
+2002-09-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/a_basic.nw: Minor performance tweek wrt the 20020825 
+	pin compatiblity referenced below.
+
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_attrib.nw: Added a missing termination character to an

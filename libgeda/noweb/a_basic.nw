@@ -467,9 +467,11 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   }
   fclose(fp);
 
-  ver = strtol(version, NULL, 10);
-  if (found_pin && ver <= VERSION_20020825) {
-    o_pin_update_whichend(w_current, return_head(object_list));
+  if (found_pin) {
+    ver = strtol(version, NULL, 10);
+    if (ver <= VERSION_20020825) {
+       o_pin_update_whichend(w_current, return_head(object_list));
+    }
   }
   
   return(object_list);
