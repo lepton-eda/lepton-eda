@@ -1,4 +1,8 @@
 
+2000-11-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vhdl.scm: Renamed this file to gnet-vhdlold.scm
+
 2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Updated manual with all the various backend formats
