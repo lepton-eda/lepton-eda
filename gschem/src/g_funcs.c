@@ -18,13 +18,13 @@
  */
 
 #include <config.h>
-#include <stdio.h> 
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> 
+#include <unistd.h>
 #endif
 
 #include <gtk/gtk.h>
@@ -33,37 +33,40 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
-#include <libgeda/globals.h>  
+#include <libgeda/globals.h>
 #include <libgeda/prototype.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-
-SCM g_funcs_print (SCM filename) 
+SCM g_funcs_print(SCM filename)
 {
 	char *string;
 
 	string = gh_scm2newstr(filename, NULL);
 
 	if (output_filename) {
-		f_print(global_window_current, output_filename);	
+		f_print(global_window_current, output_filename);
 	} else  {
-		f_print(global_window_current, string);	
+		f_print(global_window_current, string);
 	}
+
+	/* TODO: don't I have to this? */
+#if 0
+	free(string);
+#endif
 
 	return(gh_int2scm(0));
 }
 
-SCM g_funcs_exit (void) 
+SCM g_funcs_exit(void)
 {
 	exit(0);
 }
 
-SCM g_funcs_use_rc_values (void) 
+SCM g_funcs_use_rc_values(void)
 {
 	i_vars_set(global_window_current);
 	return(gh_int2scm(0));
