@@ -31,6 +31,7 @@
 #include <unistd.h>
 #undef __USE_GNU
 #include "config.h"
+#include "file.h"
 #include "global.h"
 #include "msgbox.h"
 #include "package.h"
@@ -203,7 +204,7 @@ int PackageInitialize(void)
 	/* TODO: checking correctness of the configuration */
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-		strcpy(pComp->szInstall, pComp->bToBeInstalled ? "+" : "-");
+		strcpy(pComp->szInstall, (pComp->iToBeInstalled == PACKAGE_SELECTED) ? "+" : "-");
 
 		pComp->szNode[0] = pComp->szName;
 		pComp->szNode[1] = pComp->szLicense;
@@ -242,7 +243,7 @@ static int ReadSection(char *szPackage, struct CompsTable_s *pComp)
 		strcpy(pComp->szDesc, "");
 		strcpy(pComp->szLicense, "");
 		pComp->bToBeDisplayed = FALSE;
-		pComp->bToBeInstalled = FALSE;
+		pComp->iToBeInstalled = PACKAGE_IGNORED;
 		strcpy(pComp->szRequiresList, "");
 		strcpy(pComp->szTopLevel, "");
 		strcpy(pComp->szFileName, "");
@@ -312,11 +313,11 @@ static int ReadSection(char *szPackage, struct CompsTable_s *pComp)
 		}
 		else if (strcmp(szName, "FLAGINST") == 0)
 		{
-			if (pComp != NULL && pComp->bToBeInstalled == FALSE)
+			if (pComp != NULL && pComp->iToBeInstalled == PACKAGE_IGNORED)
 			{
-				pComp->bToBeInstalled = (szValue[0] == 'y' || szValue[0] == 'Y')
-					? TRUE
-					: FALSE;
+				pComp->iToBeInstalled = (szValue[0] == 'y' || szValue[0] == 'Y')
+					? PACKAGE_SELECTED
+					: PACKAGE_IGNORED;
 			}
 		}
 		else if (strcmp(szName, "REQLIST") == 0)
@@ -483,7 +484,7 @@ int PackageGetValue(int iName, void *pValue)
 		case PACKAGE_DESC:       strcpy((char *)pValue, pPackage->szDesc);           break;
 		case PACKAGE_LICENSE:    strcpy((char *)pValue, pPackage->szLicense);        break;
 		case PACKAGE_FLAGDISP:   *((int *)pValue) = pPackage->bToBeDisplayed;        break;
-		case PACKAGE_FLAGINST:   *((int *)pValue) = pPackage->bToBeInstalled;        break;
+		case PACKAGE_FLAGINST:   *((int *)pValue) = pPackage->iToBeInstalled;        break;
 		case PACKAGE_REQLIST:    strcpy((char *)pValue, pPackage->szRequiresList);   break;
 		case PACKAGE_PACKAGES:   strcpy((char *)pValue, pPackage->szTopLevel);       break;
 		case PACKAGE_FILENAME:   strcpy((char *)pValue, pPackage->szFileName);       break;
@@ -504,3 +505,138 @@ int PackageGetValue(int iName, void *pValue)
 
 
 
+#define EXPECTED_IN_SYSTEM   "??? (package %s should exist in system)"
+
+char *PackageWhatIsMissing(const char *szTestedCodeName)
+{
+	static char *szMissingFile = NULL;
+
+	struct CompsTable_s *pTestedComp, *pComp;
+	char szCodeName[TEXTLEN];
+	int i, j;
+
+	if (szMissingFile != NULL)
+	{
+		free(szMissingFile);
+		szMissingFile = NULL;
+	}
+
+	/* look for a package */
+	pTestedComp = get_component_by_name(szTestedCodeName);
+	if (pTestedComp == NULL)
+	{
+		szMissingFile = (char *) malloc(1);
+		strcpy(szMissingFile, "");
+		return szMissingFile;
+	}
+
+	/* test a package */
+	if (strlen(pTestedComp->szFileName) > 0)
+	{
+		/* check existence of package and patch files */
+		if (strlen(pTestedComp->szFileName) > 0 && FileTest(pTestedComp->szFileName) != SUCCESS)
+		{
+			szMissingFile = (char *) malloc(strlen(pTestedComp->szFileName) + 1);
+			strcpy(szMissingFile, pTestedComp->szFileName);
+			return szMissingFile;
+		}
+		if (strlen(pTestedComp->szPatch) > 0 && FileTest(pTestedComp->szPatch) != SUCCESS)
+		{
+			szMissingFile = (char *) malloc(strlen(pTestedComp->szPatch) + 1);
+			strcpy(szMissingFile, pTestedComp->szPatch);
+			return szMissingFile;
+		}
+
+		/* test all dependencies */
+		for (i = 0; i < strlen(pTestedComp->szRequiresList); i ++)
+		{
+			i = get_next_component(pTestedComp, i, szCodeName);
+			if (strlen(szCodeName) == 0)
+				break;
+
+			pComp = get_component_by_name(szCodeName);
+			if (pComp == NULL)
+			{
+				/* TODO: error handling */
+				continue;
+			}
+
+			szMissingFile = PackageWhatIsMissing(szCodeName);
+			if (pComp->bInstalled == FALSE && strlen(szMissingFile) != 0)
+				return szMissingFile;
+		}
+	}
+
+	/* test o group of packages */
+	else if (strlen(pTestedComp->szTopLevel) > 0)
+	{
+		/* test all dependencies */
+		for (i = 0; i < strlen(pTestedComp->szTopLevel); i ++)
+		{
+			for (; i < strlen(pTestedComp->szTopLevel); i++)
+			{
+				if (!isspace(pTestedComp->szTopLevel[i]))
+					break;
+			}
+			for (j = 0; i < strlen(pTestedComp->szTopLevel); i ++)
+			{
+				if (!isspace(pTestedComp->szTopLevel[i]))
+					szCodeName[j ++] = pTestedComp->szTopLevel[i];
+				else
+					break;
+			}
+			szCodeName[j] = 0;
+			if (strlen(szCodeName) == 0)
+				break;
+
+			pComp = get_component_by_name(szCodeName);
+			if (pComp == NULL)
+			{
+				/* TODO: error handling */
+				continue;
+			}
+
+			szMissingFile = PackageWhatIsMissing(szCodeName);
+			if (pComp->bInstalled == FALSE && strlen(szMissingFile) != 0)
+				return szMissingFile;
+		}
+	}
+
+	/* packages only to be checked */
+	else
+	{
+		szMissingFile = (char *) malloc(strlen(EXPECTED_IN_SYSTEM) + strlen(szTestedCodeName) + 1);
+		sprintf(szMissingFile, EXPECTED_IN_SYSTEM, szTestedCodeName);
+		return szMissingFile;
+	}
+
+	szMissingFile = (char *) malloc(1);
+	strcpy(szMissingFile, "");
+	return szMissingFile;
+}
+
+
+
+int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName)
+{
+	int i, j = 0;
+
+	/* cancel spaces */
+	for (i = iIndex; i < strlen(pComp->szRequiresList); i ++)
+	{
+		if (!isspace(pComp->szRequiresList[i]))
+			break;
+	}
+	/* read name */
+	for (; i < strlen(pComp->szRequiresList); i ++)
+	{
+		if (!isspace(pComp->szRequiresList[i]))
+			szName[j++] = pComp->szRequiresList[i];
+
+		else
+			break;
+	}
+	szName[j] = 0;
+
+	return i;
+}
