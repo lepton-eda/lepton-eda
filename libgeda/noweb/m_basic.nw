@@ -440,45 +440,46 @@ WORLDabs(TOPLEVEL *w_current, int val)
 
 @section Function @code{set_window()}
 
-@defun set_window w_current xmin xmax ymin ymax
+@defun set_window w_current page xmin xmax ymin ymax
 @end defun
 
 <<m_basic.c : set_window()>>=
-void set_window(TOPLEVEL *w_current, int xmin, int xmax, int ymin, int ymax)
+void set_window(TOPLEVEL *w_current, PAGE *page,
+                int xmin, int xmax, int ymin, int ymax)
 {
   double fs,f0,f1;
   double fw0,fw1,fw;
 
-  w_current->page_current->left=xmin;
-  w_current->page_current->right=xmax;
-  w_current->page_current->top=ymin; 
-  w_current->page_current->bottom=ymax;
+  page->left   = xmin;
+  page->right  = xmax;
+  page->top    = ymin; 
+  page->bottom = ymax;
 
   /* now do the constant setups */
 
   /* pix_x */
-  f0 = w_current->page_current->left;
-  f1 = w_current->page_current->right;
+  f0 = page->left;
+  f1 = page->right;
   fs = w_current->width;
-  w_current->page_current->to_screen_x_constant = fs / (f1 - f0);
+  page->to_screen_x_constant = fs / (f1 - f0);
 
   /* pix_y */
-  f0 = w_current->page_current->top;
-  f1 = w_current->page_current->bottom;
+  f0 = page->top;
+  f1 = page->bottom;
   fs = w_current->height;
-  w_current->page_current->to_screen_y_constant = fs / (f1 - f0); 
+  page->to_screen_y_constant = fs / (f1 - f0); 
 
   /* mil_x */
-  fw1 = w_current->page_current->right;
-  fw0 = w_current->page_current->left;
+  fw1 = page->right;
+  fw0 = page->left;
   fw  = w_current->width;
-  w_current->page_current->to_world_x_constant = (fw1 - fw0) / fw;
+  page->to_world_x_constant = (fw1 - fw0) / fw;
 
   /* mil_y */
-  fw1 = w_current->page_current->bottom;
-  fw0 = w_current->page_current->top;
+  fw1 = page->bottom;
+  fw0 = page->top;
   fw  = w_current->height;
-  w_current->page_current->to_world_y_constant = (fw1 - fw0) / fw;
+  page->to_world_y_constant = (fw1 - fw0) / fw;
 }
 
 @ %def set_window

@@ -83,6 +83,7 @@ void libgeda_init(void)
   /* set GEDADATA if not already set */
   g_setenv ("GEDADATA", GEDADATADIR, FALSE);
 
+  s_toplevel_init ();
   s_clib_init();
   s_slib_init();
   s_menu_init();

@@ -82,7 +82,7 @@ void SCREENtoWORLD(TOPLEVEL *w_current, int mx, int my, int *x, int *y);
 int snap_grid(TOPLEVEL *w_current, int input);
 int SCREENabs(TOPLEVEL *w_current, int val);
 int WORLDabs(TOPLEVEL *w_current, int val);
-void set_window(TOPLEVEL *w_current, int xmin, int xmax, int ymin, int ymax);
+void set_window(TOPLEVEL *w_current, PAGE *page, int xmin, int xmax, int ymin, int ymax);
 int fix_x(TOPLEVEL *w_current, int in);
 int fix_y(TOPLEVEL *w_current, int in);
 int on_snap(int val);
@@ -486,9 +486,9 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *
 void s_cue_output_single(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int type);
 
 /* s_hierarchy.c */
-int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename, PAGE *parent, int page_control, int flag);
-void s_hierarchy_down_schematic_multiple(TOPLEVEL *w_current, char *filename, PAGE *parent);
-void s_hierarchy_down_symbol(TOPLEVEL *w_current, char *filename, PAGE *parent);
+int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, const gchar *filename, PAGE *parent, int page_control, int flag);
+void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);
+void s_hierarchy_down_symbol (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);
 void s_hierarchy_up(TOPLEVEL *w_current, int pid);
 void s_hierarch_traverse(void);
 PAGE *s_hierarchy_find_prev_page(PAGE *p_start, int page_control);
@@ -509,24 +509,17 @@ void s_menu_free(void);
 void s_menu_init(void);
 
 /* s_page.c */
-PAGE *s_page_return_tail(PAGE *head);
-void s_page_free(TOPLEVEL *w_current, PAGE *p_current);
-void s_page_free_all(TOPLEVEL *w_current, PAGE *p_tail);
-PAGE *s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename);
-void s_page_print(PAGE *p_list);
-void s_page_add_head(TOPLEVEL *w_current);
-void s_page_free_head(TOPLEVEL *w_current, PAGE *p_head);
-void s_page_delete(void);
-PAGE *s_page_new_lowlevel(TOPLEVEL *w_current, char *page_filename);
-PAGE *s_page_new(TOPLEVEL *w_current, char *page_filename);
-void s_page_setup(PAGE *p_current);
-int s_page_check_changed(PAGE *p_head);
-void s_page_clear_changed(PAGE *p_head);
-void s_page_goto(TOPLEVEL *w_current, PAGE *p_new);
-PAGE *s_page_search(TOPLEVEL *w_current, char *filename);
-int s_page_search_row(TOPLEVEL *w_current, PAGE *p_findme);
-void s_page_print_all(TOPLEVEL *w_current);
-int s_page_save_all(TOPLEVEL *w_current);
+PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename);
+void s_page_delete (TOPLEVEL *toplevel, PAGE *page);
+void s_page_init_list (TOPLEVEL *toplevel);
+void s_page_delete_list(TOPLEVEL *toplevel);
+void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
+PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
+gint s_page_search_row(TOPLEVEL *toplevel, PAGE *p_findme);
+void s_page_print_all (TOPLEVEL *toplevel);
+gint s_page_save_all (TOPLEVEL *toplevel);
+gboolean s_page_check_changed (PAGE *head);
+void s_page_clear_changed (PAGE *head);
 
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);
@@ -538,18 +531,9 @@ char *s_papersizes_get(int counter);
 void s_papersizes_get_size(char *string, int *width, int *height);
 
 /* s_project.c */
-TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
-void s_project_add_head(void);
-TOPLEVEL *s_project_alloc(void);
-void s_project_free_head(void);
-void s_project_delete(TOPLEVEL *w_head, TOPLEVEL *pr_current);
-void s_project_setup_world(TOPLEVEL *pr_current);
-void s_project_setup_rest(TOPLEVEL *pr_current);
-TOPLEVEL *s_project_create_new(void);
-void s_project_close(TOPLEVEL *pr_current);
-void s_project_close_all(void);
-TOPLEVEL *s_project_get_ptr(int wid);
-TOPLEVEL *s_project_fill_out(TOPLEVEL *pr_current);
+void s_toplevel_init (void);
+TOPLEVEL *s_toplevel_new (void);
+void s_toplevel_delete (TOPLEVEL *toplevel);
 
 /* s_scratch.c */
 void s_scratch_string_init(void);

@@ -72,7 +72,7 @@ Copyright @copyright{} xxxx XXXX.
 * File s_stretch.c:: file s_stretch.c.
 * File s_tile.c:: file s_tile.c.
 * File s_undo.c:: file s_undo.c.
-* File s_project.c:: file s_project.c.
+* File s_toplevel.c:: file s_toplevel.c.
 * File u_basic.c:: file o_basic.c.
 
 * Function Index:: all function names.
@@ -118,7 +118,7 @@ Copyright @copyright{} xxxx XXXX.
 @include s_stretch.texi
 @include s_tile.texi
 @include s_undo.texi
-@include s_project.texi
+@include s_toplevel.texi
 @include u_basic.texi
 
 

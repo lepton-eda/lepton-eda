@@ -95,8 +95,9 @@ f_open(TOPLEVEL *w_current, char *filename)
   /* has the head been freed yet? */
   /* probably not hack PAGE */
 
-  set_window(w_current, w_current->init_left, w_current->init_right,
-             w_current->init_top, w_current->init_bottom);
+  set_window(w_current, w_current->page_current,
+             w_current->init_left, w_current->init_right,
+             w_current->init_top,  w_current->init_bottom);
 
 
   /* 
@@ -210,7 +211,7 @@ void
 f_save_close(TOPLEVEL *w_current, char *filename)
 {
   o_save(w_current, filename);
-  s_page_free(w_current, w_current->page_current);
+  s_page_delete (w_current, w_current->page_current);
 }
 
 @ %def f_save_close

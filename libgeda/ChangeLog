@@ -1,3 +1,25 @@
+2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/f_basic.nw, noweb/libgeda.nw, s_hierarchy.nw: Adapted for 
+	changes in toplevel and page APIs and function set_window.
+
+	* noweb/m_basic.nw (set_window): New prototype: added pointer on page
+	to work on as second parameter.
+	
+	* noweb/s_page.nw: Simplified API and refactoring.
+
+	* src/Makefile.am, docs/Makefile.am, noweb/Makefile.am: Modified for 
+	addition of s_toplevel.nw and deletion of s_project.nw.
+	
+	* docs/libgedadoc.texi: Changed references to s_project in s_toplevel.
+	
+	* noweb/s_toplevel.nw: New file for handling of toplevel structures.
+
+	* noweb/s_project.nw: Removed: replaced by s_toplevel.nw.
+	
+	* include/struct.h: Modified cwd field of toplevel for dynamic memory 
+	allocation.
+
 2005-02-08 22:26  Dan McMahill <danmc>
 
 	* include/defines.h, noweb/g_basic.nw, noweb/g_smob.nw: replace
