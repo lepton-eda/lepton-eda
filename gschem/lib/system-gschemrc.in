@@ -100,7 +100,7 @@
 ; by this keyword.  
 ; DO NOT change the value of the index (first number)
 ; 
-(graphic-color 3 "green4" "green4" "0 1 0" 0 255 0)	; light background
+(graphic-color 3 "green4" "green4" "0 .54 0" 0 139 0)	; light background
 ;(graphic-color 3 "green" "green3" "0 1 0" 0 255 0)	; dark background
 
 ; net-color index color_name outline_color ps_color_string 
