@@ -1,3 +1,4 @@
+
 INCLUDES = \
 	$(GTK_CFLAGS)\
 	 -I./ -I$(top_srcdir)/intl
@@ -10,10 +11,20 @@ AM_CFLAGS =\
 	 -O1\
 	 -g
 
-bin_PROGRAMS = raw2gw
+bin_PROGRAMS = graphman raw2gw
+
+raw2gw_SOURCES = \
+	raw2gw.c
 
 graphman_SOURCES = \
-	raw2gw.c
+	callbacks.c \
+	callbacks.h \
+	interface.c \
+	interface.h \
+	main.c \
+	support.c \
+	support.h
+
 	
 graphman_LDFLAGS =
 
