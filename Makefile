@@ -4,7 +4,7 @@
 
 #SUBDIRS=libgeda symbols gschem 
 #SUBDIRS=libgeda symbols gschem gnetlist gpcb
-SUBDIRS=libgeda symbols gschem gnetlist 
+SUBDIRS=libgeda symbols gschem gnetlist utils
 
 prefix=${HOME}/geda
 

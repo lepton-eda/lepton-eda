@@ -1,0 +1,13 @@
+;; device name ,name, name location(tl,tc,tr,bl,bc,br),X size in pins,Y
+;;size in pins
+BLOCK,BLOCK,tl,5,5
+;;
+;; pin name,pin number,shape(line,clock,dot),side(r,l,t,b),pin position
+IO1,IO1,line,L,1
+IO2,IO2,line,L,2
+INPUT1,INPUT1,line,L,3
+INPUT2,INPUT2,line,L,4
+
+OUTPUT1,OUTPUT1,line,R,2
+OUTPUT2,OUTPUT2,dot,R,3
+

@@ -1,0 +1,54 @@
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+ChangeLog for utils 
+
+Most recent changes (version wise) are at the top of this file 
+All the changes are usually noted in this file when they are checked
+into the cvs repository.
+
+
+7/22/99	Integrated utils directory into the new seperate build system
+
+	Checked utils into cvs repository
+
+
+----------- New seperate build system starts here -----------
+
+
+5/6/99 	Added the latest gmk_sym (includes char_width.c and mk_char_tab.pl) 
+        from Jerry O'Keefe
+
+	Added char_width.c to Makefile.am, removed it from being an included
+	C file in gmk_sym.c
+
+4/9/99 	Renamed mk_sym to gmk_sym (Jerry's send a new one in)
+
+3/30/99 Integrated Mike's latest viewlogic convert/smash code. (fixes the
+	minor type with snprintf)
+
+3/26/99 Added 8031.txt as an example file for mk_sym
+	
+	Put the latest version of mk_sym in place
+
+3/25/99 #if 0'ed some code in convert_sym.c out just to make a -Wall -Werror
+	compile happy, can be put back in; doesn't matter to me.
+
+3/23/99 Integrated new C version of the ViewLogic utils by Mike in the
+	./configure/build mechanism 
+
+	Added more info related to these files to the README
+
+3/22/99 Put the first version of the ViewLogic utils by Mike Jarabek in
+	this dir
+
+	Added info related to these files to the README
+
+3/21/99 Created directory and put mk_sym.c into it
+
+	Removed some // from mk_sym.c
+
+	Created a README for the utils in this directory
+	

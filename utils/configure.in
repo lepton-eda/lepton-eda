@@ -1,0 +1,60 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(src/char_width.c)
+
+dnl Initialize automake stuff
+PACKAGE=gEDA
+
+# new way of doing version
+VERSION=19990705
+
+echo Configuring utils version $VERSION
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+
+dnl Create a configuration header
+AM_CONFIG_HEADER(config.h)
+
+dnl Build time sanity check...
+AM_SANITY_CHECK
+
+dnl Initialize libtool libtool isn't needed for gschem
+dnl AM_PROG_LIBTOOL
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_MAKE_SET
+
+AC_HEADER_SYS_WAIT
+AC_HEADER_DIRENT
+AC_CHECK_HEADERS(fcntl.h unistd.h strings.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+
+dnl Checks for library functions.
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
+
+AC_MSG_CHECKING([for optarg in unistd.h])
+AC_TRY_COMPILE(
+[#include <unistd.h>],
+[ char *string = optarg; int i = optind; ],
+optarg_found=yes,
+optarg_found=no)
+AC_MSG_RESULT($optarg_found)
+
+if test $optarg_found = yes; then
+		AC_DEFINE(OPTARG_IN_UNISTD)
+fi
+
+AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+
+AC_SUBST(HOME)
+AC_SUBST(VERSION)
+
+AC_OUTPUT( 	Makefile \
+		src/Makefile )
+

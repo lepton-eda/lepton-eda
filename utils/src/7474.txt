@@ -1,0 +1,19 @@
+;;***************************************************************/
+;;   mk_sym sample input file to create a 7474-1.sym symbol.
+;;/***************************************************************/
+;; Filename: 7474.txt
+;;   An example of a 7474 symbol make file
+; This is a comment line
+;; device name ,name, name location(tl,tc,tr,bl,bc,br),X size in pins,Y
+size in pins
+7474,74HC74,tr,3,5
+;;
+;; pin name,pin number,shape(line,clock,dot),side(r,l,t,b),pin position
+D,2,line,L,1
+CLK,3,clock,L,4
+
+Q,5,line,R,1
+/Q,6,dot,R,4
+
+CLR,4,dot,T,1
+PRE,1,dot,B,1
