@@ -29,8 +29,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/globals.h>  
 #include <libgeda/prototype.h>
 

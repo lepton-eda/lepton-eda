@@ -27,6 +27,7 @@
 
 #include <guile/gh.h>
 
+#include "defines.h"
 #include "struct.h" /* why should I include these hack, just for prototype ? */
 #include "globals.h"
 

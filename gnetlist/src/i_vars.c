@@ -25,8 +25,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/o_types.h>
 #include <libgeda/colors.h>
 #include <libgeda/globals.h>

@@ -447,6 +447,13 @@
 (text-caps-style "upper")
 ;(text-caps-style "both")
 
+;  file-preview string
+;  Controls if the preview area in the File Open/Save As and Component 
+;  dialog boxes is enabled by default or not
+;
+(file-preview "disabled")
+;(file-preview "enabled")
+
 ;  default-series-name string
 ;  Specify the default series name (of new schematics)
 ;  Will probably be changed a runtime

@@ -9,6 +9,32 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* Started serious work on new file/component select dialog box
+
+	* src/x_preview.c: New file which hold preview window code
+
+	* src/x_fs.c: New file which hold new fileselect/component place 
+	  dialog box.
+
+	* src/x_menu.c: Added File/Open (EXP)... and Add/Component (EXP)... 
+	  entries in the top menu bar
+
+	* src/g_rc.c: Added file-preview keyword
+	
+	* src/g_register.c: Registered above file-preview
+
+	* src/i_vars.c, include/i_vars.h: Added default_file_preview and init 
+
+	* lib/system-gschemrc.in: Added file-preview keyword 
+
+	* In all *.c included defines.h before struct.h
+
+	* src/x_window.c: Added x_fileselect_free_list_buffers
+
+	* Much work still remains on the new file/component dialog box
+
 1999-09-28  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * src/x_menu.c: Added File/Page Close 
@@ -20,6 +46,7 @@ into the cvs repository.
 
 	* src/x_dialog.c: Fixed the color selection menu on the color edit 
 	  dialog box to display the right default color (color 1 - white)
+
 
 9/25/99 Rearranged right mouse button menu (suggestion by Magnus)
 

@@ -21,6 +21,10 @@
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
 
+/* for new fileselection dialog box */
+#define MAX_FILES 1024
+#define MAX_DIRS 1024
+
 #define ZOOM_OUT 0
 #define ZOOM_IN 1
 #define ZOOM_FULL 2
@@ -63,8 +67,12 @@
 #define SAVEAS	0 /* next action after click is nothing */
 #define QUIT	1 /* next action after click is quit */
 #define OPEN	2 /* next action after click is open */
-#define NEW	3 /* next action after click is open */
-#define CLOSE	4 /* next action after click is open */
+#define NEW	3 /* next action after click is new */
+#define CLOSE	4 /* next action after click is close */
+
+/* for xfwindow array */
+#define FILESELECT	0
+#define COMPSELECT	1
 
 /* for s_clib_getfilename() */
 #define OPEN_DIR	0

@@ -6,6 +6,10 @@
 	any or more of the in, out and inout sublists happends to be empty.
 	Stuck in support for signal type.
 
+1999-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * In all *.c included define.h before struct.h
+
 1999-09-28  Magnus Danielson  <cfmd@swipnet.se>
 
 	* scheme/gnet-vhdl.scm: Fixed bug with no ports to entity.

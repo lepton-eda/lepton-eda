@@ -30,8 +30,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/globals.h>
 #include <libgeda/colors.h>
 #include <libgeda/o_types.h>
@@ -205,6 +205,14 @@ DEFINE_I_CALLBACK(file_open)
 
 	exit_if_null(w_current);
 	setup_open_file_selector(w_current);
+}
+
+DEFINE_I_CALLBACK(file_open_new)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+	x_fileselect_setup(w_current, FILESELECT, OPEN);
 }
 
 DEFINE_I_CALLBACK(file_script)
@@ -1166,6 +1174,14 @@ DEFINE_I_CALLBACK(add_component)
 	i_update_middle_button(w_current,
 			       i_callback_add_component, "Component");
 	i_update_status2(w_current, "Select Mode");
+}
+
+DEFINE_I_CALLBACK(add_component_new)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+	x_fileselect_setup(w_current, COMPSELECT, -1);
 }
 
 DEFINE_I_CALLBACK(add_attribute)

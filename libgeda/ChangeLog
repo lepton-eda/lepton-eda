@@ -8,6 +8,37 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+1999-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added filename_entry variable to FILEDIALOG struct
+
+	* include/struct.h: Added preview rc variable to TOPLEVEL struct
+
+	* include/struct.h: Added preview_control variable to FILEDIALOG struct
+
+	* include/struct.h: Added directory_entries and file_entries to
+	  FILEDIALOG struct 
+
+	* include/defines.h: Added MAX_DIRS and MAX_FILES
+
+	* Fixed all *.c files to #include defines.h before struct.h
+
+	* include/struct.h: Added toplevel variable to FILEDIALOG struct
+
+1999-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added TOPLEVEL preview variable to FILEDIALOG struct
+
+1999-10-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added xfwindow array to TOPLEVEL structure
+	
+	* include/struct.h: Made the above array a structure
+ 	
+	* include/struct.h: Changed FILESEL struct to FILEDIALOG struct
+
+	* src/g_basic.c: Added #include for define.h
+
 1999-09-28  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * src/o_attrib.c: Removed the ability to attach non-text items

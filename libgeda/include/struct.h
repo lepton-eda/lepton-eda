@@ -30,6 +30,7 @@ typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
+typedef struct st_filedialog FILEDIALOG;
 
 /* rename to the real thing once things work right */
 typedef struct st_conn CONN;
@@ -190,6 +191,33 @@ struct st_page {
 	PAGE *next;
 };
 
+struct st_filedialog {
+	GtkWidget *xfwindow;		
+
+	GtkWidget *filter_entry;
+	GtkWidget *search_entry;
+	GtkWidget *filename_entry;
+
+	GtkWidget *dir_list;
+	GtkWidget *file_list;
+
+	char *directory;
+	char *filename;
+
+	/* need to make this dynamic TODO ?? */
+	char *directory_entries[MAX_DIRS];
+	char *file_entries[MAX_FILES];
+
+	TOPLEVEL *preview;
+	GtkWidget *preview_checkbox;
+	int preview_control;
+
+	GtkWidget *component_pulldown;
+
+	/* this points to the owner of this filedialog structure */
+	/* should NEVER be freed */
+	TOPLEVEL *toplevel;
+}; 
 
 struct st_toplevel {
 
@@ -316,6 +344,12 @@ struct st_toplevel {
 	char current_clib[256]; /* hack */
 	char current_basename[256]; 	
 
+
+	FILEDIALOG fileselect[2];
+						/* see define.h for what */
+						/* each of the different */
+						/* members of this array are */
+
 	GtkWidget *pwindow;			/* printing dialog box */
 	GtkWidget *plib_list;			/* paper size box */
 	GtkWidget *pfilename_entry; 
@@ -351,7 +385,6 @@ struct st_toplevel {
 
 	GtkWidget *clwindow;
 	int edit_color;
-	/* GtkWidget *preview; for the preview widget */
 
 	/* this is the drawing_area's X drawable */
 	GdkWindow *window; 
@@ -414,6 +447,7 @@ struct st_toplevel {
 	int third_button; /* controls what the third mouse button does */
 	int middle_button; /* controls what the third mouse button does */
 	int net_consolidate; /* controls if the net consolidation code is used */ 
+	int file_preview; /* controls if the preview area is enabled or not */ 
 
 	int print_output_type;			/* either window or limits */
 

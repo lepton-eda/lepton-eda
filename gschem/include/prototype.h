@@ -170,6 +170,7 @@ SCM g_rc_log_window_type(SCM mode);
 SCM g_rc_third_button(SCM mode);
 SCM g_rc_middle_button(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
+SCM g_rc_file_preview(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -188,6 +189,7 @@ void i_set_filename(TOPLEVEL *w_current, char *string);
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_new_window(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_open(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_file_open_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_script(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_save(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_save_all(gpointer data, guint callback_action, GtkWidget *widget);
@@ -238,6 +240,7 @@ void i_callback_page_close(gpointer data, guint callback_action, GtkWidget *widg
 void i_callback_page_discard(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_print(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_component(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_add_component_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_attribute(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
@@ -434,6 +437,7 @@ void x_vscrollbar_set_ranges(TOPLEVEL *w_current);
 void x_vscrollbar_update(TOPLEVEL *w_current);
 void x_scrollbars_update(TOPLEVEL *w_current);
 GtkWidget *x_create_dialog_box(GtkWidget **out_vbox, GtkWidget **out_action_area);
+GtkWidget *x_create_dialog_box_horiz(GtkWidget **out_hbox, GtkWidget **out_action_area);
 /* x_color.c */
 void x_color_allocate_all(void);
 GdkColor *x_get_color(int color);
@@ -504,6 +508,20 @@ void setup_open_file_selector(TOPLEVEL *w_current);
 void file_selection_ok_saveas(GtkWidget *w, TOPLEVEL *w_current);
 void file_selection_cancel_saveas(GtkWidget *w, TOPLEVEL *w_current);
 void setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename);
+/* x_fs.c */
+void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
+void x_fileselect_update_directory(FILEDIALOG *f_current, char *filename);
+void x_fileselect_init_list_buffers(FILEDIALOG *f_current);
+void x_fileselect_free_list_buffers(FILEDIALOG *f_current);
+void x_fileselect_setup_list_buffers(FILEDIALOG *f_current, int num_files, int num_directories);
+void x_fileselect_fill_lists(FILEDIALOG *f_current);
+int x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current);
+void x_fileselect_close(GtkWidget *w, FILEDIALOG *f_current);
+void x_fileselect_close_saveas(GtkWidget *w, FILEDIALOG *f_current);
+void x_fileselect_change_dir(FILEDIALOG *f_current, char *new_directory);
+void x_fileselect_dir_button(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
+void x_fileselect_file_button(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
+void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);
 /* x_image.c */
@@ -535,6 +553,15 @@ gint page_close(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint page_discard(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint change_page(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent);
 void setup_page_selector(TOPLEVEL *w_current);
+/* x_preview.c */
+void x_preview_close(TOPLEVEL *w_current);
+gint x_preview_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
+gint x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
+gint x_preview_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current);
+gint x_preview_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
+void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current);
+int x_preview_setup_rest(TOPLEVEL *preview);
+TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox);
 /* x_print.c */
 gint print_landscape(GtkWidget *w, TOPLEVEL *w_current);
 gint print_portrait(GtkWidget *w, TOPLEVEL *w_current);

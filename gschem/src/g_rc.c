@@ -39,8 +39,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/globals.h>
 #include <libgeda/prototype.h>
 
@@ -1243,4 +1243,16 @@ g_rc_net_consolidate(SCM mode)
 	};
 
 	RETURN_G_RC_MODE("net-consolidate", default_net_consolidate, 2);
+}
+
+SCM
+g_rc_file_preview(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	/* this variable is inconsistantly named with the rest */
+	RETURN_G_RC_MODE("file-preview", default_file_preview, 2);
 }

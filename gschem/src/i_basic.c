@@ -22,8 +22,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/globals.h>
 #include <libgeda/colors.h>
 #include <libgeda/prototype.h>
@@ -34,6 +34,10 @@
 void
 i_update_status(TOPLEVEL *w_current, char *string)
 {
+	if (!w_current->status_label) {
+		return;
+	}
+
 	if (string) {
 		w_current->DONT_RESIZE=1;
 		gtk_label_set(GTK_LABEL(w_current->status_label),
@@ -74,6 +78,10 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
 	if (string == NULL) {
 		return;
 	}	
+
+	if (!w_current->middle_label) {
+		return;
+	}
 
 	switch(w_current->middle_button) {
 
@@ -128,6 +136,9 @@ i_set_filename(TOPLEVEL *w_current, char *string)
 	int len;
 	int i;
 
+	if (!w_current->filename_label) {
+		return;
+	}
 
 	if (string) {
 		len = strlen(string);

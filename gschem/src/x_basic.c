@@ -28,8 +28,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/globals.h>
 #include <libgeda/prototype.h>
 
@@ -241,6 +241,47 @@ x_create_dialog_box(GtkWidget **out_vbox, GtkWidget **out_action_area)
 	gtk_widget_show (separator);
 
 	*out_vbox = vbox;
+	*out_action_area = action_area;
+
+	return(dialog);
+}
+
+/* not used */
+GtkWidget *
+x_create_dialog_box_horiz(GtkWidget **out_hbox, GtkWidget **out_action_area)
+{
+	GtkWidget *separator;
+	GtkWidget *vbox;
+	GtkWidget *hbox;
+	GtkWidget *action_area;
+	GtkWidget *dialog;
+
+	if (!out_hbox)
+		return(NULL);
+
+	if (!out_action_area)
+		return(NULL);
+
+	dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_add (GTK_CONTAINER (dialog), vbox);
+	gtk_widget_show (vbox);
+
+	hbox = gtk_hbox_new (FALSE, 5);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+	gtk_widget_show (hbox);
+
+	separator = gtk_hseparator_new ();
+	gtk_box_pack_end (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
+	gtk_widget_show (separator);
+
+	action_area = gtk_hbox_new (FALSE, 5);
+	gtk_container_set_border_width (GTK_CONTAINER (action_area), 10);
+	gtk_box_pack_end (GTK_BOX (vbox), action_area, FALSE, FALSE, 0);
+	gtk_widget_show (action_area);
+
+	*out_hbox = hbox;
 	*out_action_area = action_area;
 
 	return(dialog);

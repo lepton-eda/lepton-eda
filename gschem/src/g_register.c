@@ -34,7 +34,6 @@
 
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
-#include <libgeda/defines.h>
 #include <libgeda/globals.h>
 #include <libgeda/o_types.h>
 #include <libgeda/prototype.h>
@@ -135,6 +134,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("third-button", g_rc_third_button);
 	gh_new_procedure1_0 ("middle-button", g_rc_middle_button);
 	gh_new_procedure1_0 ("net-consolidate", g_rc_net_consolidate);
+	gh_new_procedure1_0 ("file-preview", g_rc_file_preview);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);

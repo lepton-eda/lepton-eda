@@ -31,8 +31,8 @@
 #include <gdgeda/gd.h>
 #endif
 
-#include "struct.h"
 #include "defines.h"
+#include "struct.h"
 #include "globals.h"
 #include "o_types.h"
 

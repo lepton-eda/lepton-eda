@@ -26,8 +26,8 @@
 
 #include <guile/gh.h>
 
-#include "struct.h"
 #include "defines.h"
+#include "struct.h"
 #include "globals.h"  
 
 #include "../include/prototype.h"

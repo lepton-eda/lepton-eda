@@ -25,8 +25,8 @@
 
 #include <guile/gh.h>
 
-#include <libgeda/struct.h>
 #include <libgeda/defines.h>
+#include <libgeda/struct.h>
 #include <libgeda/o_types.h>
 #include <libgeda/colors.h>
 #include <libgeda/globals.h>
@@ -111,6 +111,7 @@ int   default_middle_button = STROKE;
 int   default_middle_button = REPEAT;
 #endif
 int   default_net_consolidate = FALSE;
+int   default_file_preview = FALSE;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -189,6 +190,7 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->third_button = default_third_button;
 	w_current->middle_button = default_middle_button;
 	w_current->net_consolidate = default_net_consolidate;
+	w_current->file_preview = default_file_preview;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;
