@@ -201,6 +201,10 @@ SCM g_rc_enforce_hierarchy(SCM mode);
 SCM g_rc_text_origin_marker(SCM mode);
 SCM g_rc_fast_mousepan(SCM mode);
 SCM g_rc_raise_dialog_boxes_on_expose(SCM mode);
+SCM g_rc_attribute_promotion(SCM mode);
+SCM g_rc_promote_invisible(SCM mode);
+SCM g_rc_keep_invisible(SCM mode);
+SCM g_rc_continue_component_place(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
