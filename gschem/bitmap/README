@@ -1,0 +1,40 @@
+
+gEDA
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+README for bitmaps
+
+This file describes where the various bitmaps came from and their license.
+AVH = Ales V. Hvezda (ahvezda@geda.seul.org)
+
+gschem-bus.xpm 		Created by AVH, GPL
+gschem-comp.xpm 	Created by AVH, GPL
+gschem-copy.xpm 	Created by AVH, GPL
+gschem-delete.xpm	Created by AVH, GPL 
+gschem-edit.xpm		Created by AVH, GPL 
+gschem-mirror.xpm	Created by AVH, GPL 
+gschem-rotate.xpm	Created by AVH, GPL 
+gschem-move.xpm		Created by AVH, GPL 
+gschem-net.xpm		Created by AVH, GPL 
+gschem-select.xpm	Created by AVH, GPL 
+gschem-text.xpm		Created by AVH, GPL 
+
+All of the following XPM's were created by: tigert@gimp.org
+and were called tb_*.xpm.  These XPM's come from the GNOME project.
+The license on these files is (from the webpage: 
+http://tigert.gimp.org/gnome/gnome-stock/):
+
+Note3: The icons are released under the Gnu General Public License,
+       meaning you can use them in free software projects free of
+       charge.  If you wish to use these for other things (or if you need
+       other icons for your project) contact me. Note: it may take a
+       while to answer you since I get pretty much email.
+
+gschem-new.xpm 		Created by tigert@gimp.org, GPL
+gschem-open.xpm		Created by tigert@gimp.org, GPL
+gschem-undo.xpm		Created by tigert@gimp.org, GPL
+gschem-redo.xpm		Created by tigert@gimp.org, GPL
+gschem-save.xpm		Created by tigert@gimp.org, GPL
+
