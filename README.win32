@@ -60,6 +60,8 @@ complain, and 2) you can place components (via Add/Component...).
 The rest of this readme describes how to build gEDA/gaf (gschem and
 friends) on a win32 machine (WinNT/Win2K/WinXP).  It uses mingw32 as the
 layer between win32 and the unix world (ie gcc, make etc...).
+A useful reference to various porting issues is:
+http://gnuwin32.sourceforge.net/compile.html
 
 gEDA/gaf should build and run out of the box if you follow these
 instructions.  
