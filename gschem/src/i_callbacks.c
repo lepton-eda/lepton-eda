@@ -1006,6 +1006,7 @@ DEFINE_I_CALLBACK(page_close)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	PAGE *p_current;
+	PAGE *p_save;
 
 	exit_if_null(w_current);
 
@@ -1052,13 +1053,37 @@ DEFINE_I_CALLBACK(page_close)
 	}
 
 	/* finally go here if you can't delete the page */
-	s_log_message("Cannot close current page\n");
+	/* because it's the last page being displayed */
+	/* s_log_message("Cannot close current page\n");*/
+	/* now the code creates a new page, and closes the old one */
+	p_save = w_current->page_current;
+	i_callback_page_new(w_current, 0, NULL);
+	w_current->page_current = p_save;	
+
+	if (w_current->page_current->next) {
+		if (w_current->page_current->next->pid != -1) {
+			p_current = w_current->page_current->next;
+			s_log_message("Closing [%s]\n",
+				      w_current->page_current->page_filename);
+			s_page_free(w_current, w_current->page_current);
+			w_current->page_current = p_current;
+			s_page_goto(w_current, w_current->page_current);
+			i_set_filename(w_current,
+				       w_current->page_current->page_filename);
+			x_scrollbars_update(w_current);
+			o_redraw_all(w_current);
+			update_page_manager(NULL, w_current);
+			return;
+		}
+	}
+
 }
 
 DEFINE_I_CALLBACK(page_discard)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	PAGE *p_current;
+	PAGE *p_save;
 
 	exit_if_null(w_current);
 
@@ -1097,7 +1122,30 @@ DEFINE_I_CALLBACK(page_discard)
 	}
 
 	/* finally go here if you can't delete the page */
-	s_log_message("Cannot close current page\n");
+	/* because it's the last page being displayed */
+	/* s_log_message("Cannot close current page\n");*/
+	/* now the code creates a new page, and closes the old one */
+
+	p_save = w_current->page_current;
+	i_callback_page_new(w_current, 0, NULL);
+	w_current->page_current = p_save;	
+
+	if (w_current->page_current->next) {
+		if (w_current->page_current->next->pid != -1) {
+			p_current = w_current->page_current->next;
+			s_log_message("Closing [%s]\n",
+				      w_current->page_current->page_filename);
+			s_page_free(w_current, w_current->page_current);
+			w_current->page_current = p_current;
+			s_page_goto(w_current, w_current->page_current);
+			i_set_filename(w_current,
+				       w_current->page_current->page_filename);
+			x_scrollbars_update(w_current);
+			o_redraw_all(w_current);
+			update_page_manager(NULL, w_current);
+			return;
+		}
+	}
 }
 
 DEFINE_I_CALLBACK(page_print)

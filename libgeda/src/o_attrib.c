@@ -430,6 +430,8 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 	char buf[1024];
 	char string[1024];
 	char objtype;
+	int ATTACH=FALSE;
+	int saved_color;
 
 	object_list = object_to_get_attribs;
 
@@ -439,47 +441,81 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 		switch (objtype) {
 
 			case(OBJ_LINE):
-				object_list = (OBJECT *) o_line_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_line_read(w_current, 
+								object_list,
+								buf, 
+								version);
 			break;
 
 
 			case(OBJ_NET):
-				object_list = (OBJECT *) o_net_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_net_read(w_current, 
+								object_list, 
+								buf, 
+								version);
 			break;
 
 			case(OBJ_BUS):
-				object_list = (OBJECT *) o_bus_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_bus_read(w_current, 
+								object_list, 
+								buf, 
+								version);
 			break;
 
 			case(OBJ_BOX):
-				object_list = (OBJECT *) o_box_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_box_read(w_current, 
+								object_list, 
+								buf, 
+								version);
 			break;
 		
 			case(OBJ_CIRCLE):
-				object_list = (OBJECT *) o_circle_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_circle_read(
+								w_current, 
+								object_list, 
+								buf, 
+								version);
 			break;
 
 			case(OBJ_COMPLEX):
 			
-				object_list = (OBJECT *) o_complex_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_complex_read(
+								w_current, 
+								object_list, 
+								buf, 
+								version);
 
 				/* this is necessary because complex may add
 				   attributes which float */
 				/* still needed? */
-				object_list = (OBJECT *) return_tail(object_list);
+				object_list = (OBJECT *) return_tail(
+								  object_list);
+			break;
+
+			case(OBJ_PIN):
+				object_list = (OBJECT *) o_pin_read(w_current, 
+								object_list, 
+								buf, 
+								version);
+			break;
+
+			case(OBJ_ARC):
+				object_list = (OBJECT *) o_arc_read(w_current, 
+								object_list, 
+								buf, 
+								version);
 			break;
 
 			case(OBJ_TEXT):
 				fgets(string, 1024, fp); /* check if invalid */
-				object_list = (OBJECT *) o_text_read(w_current, object_list, buf, string, version);
-			break;
-
-			case(OBJ_PIN):
-				object_list = (OBJECT *) o_pin_read(w_current, object_list, buf, version);
-			break;
-
-			case(OBJ_ARC):
-				object_list = (OBJECT *) o_arc_read(w_current, object_list, buf, version);
+				object_list = (OBJECT *) o_text_read(w_current,
+					                        object_list, 
+								buf, 
+								string, 
+								version);
+				saved_color = object_list->color;
+				ATTACH=TRUE;
+		
 			break;
 
 			case(ENDATTACH_ATTR): 
@@ -488,8 +524,21 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 
 		}
 
-		o_attrib_attach(w_current, w_current->page_current->object_parent, 
-			object_list, object_to_get_attribs);
+		if (ATTACH) {
+			o_attrib_attach(w_current, 
+					w_current->page_current->object_parent, 
+					object_list, object_to_get_attribs);
+			/* check color to set it to the right value */
+			if (object_list->color != saved_color) {
+				object_list->color = saved_color;
+				o_complex_set_color(w_current,
+                                        	    object_list->color,
+                                                    object_list->complex);
+			}
+			ATTACH=FALSE;
+		} else {
+			fprintf(stderr, "Tried to attach a non-text item as an attribute\n");
+		}
 	}
 	return(object_list);
 }

@@ -8,6 +8,15 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+1999-09-28  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/o_attrib.c: Removed the ability to attach non-text items
+	  as attributes as a sch/sym is being read in (o_read_attribs)
+
+	* src/o_attrib.c: Fixed a nasty bug where the color of text was
+	  being forced to the attribute color even if you didn't want that
+	  color (pointed out by Magnus)
+
 9/19/99 Make sure libgeda works with guile-1.3.2a
 
 	Added some code to o_text.c to look for char_.sym for lowercase

@@ -53,6 +53,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/File/New Window", NULL, i_callback_file_new_window, 0, NULL},
 	{"/File/New Page", NULL, i_callback_file_new, 0, NULL},
 	{"/File/Open Page...", NULL, i_callback_file_open, 0, NULL},
+	{"/File/Close Page", NULL, i_callback_page_close, 0, NULL},
 	{"/File/Save Page", NULL, i_callback_file_save, 0, NULL},
 	{"/File/Save Page as....", NULL, i_callback_file_save_as, 0, NULL},
 	{"/File/Save All", NULL, i_callback_file_save_all, 0, NULL},

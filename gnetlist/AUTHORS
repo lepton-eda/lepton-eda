@@ -18,6 +18,9 @@ Thien-Thi Nguyen	- Patch to gnetlist adding newlines for interactive
 Mike Jarabek		- For contributing the backend verilog netlister
                           (for use with gnetlist)
 
+			  Related to above, wrote some core functions
+			  which are now used by all the backend
+
 			  For providing an updated version (19990629) of above
 
 			  For providing an updated version (19990802) of above

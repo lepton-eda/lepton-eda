@@ -800,6 +800,7 @@
     ("n" . file-new)
     ("o" . file-open)
     ("s" . file-save)
+    ("e" . page-close)   ; yes this is okay; reusing page-close 
     ("a" . file-save-as)
     ("l" . file-save-all)
     ("p" . file-print)

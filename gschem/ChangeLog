@@ -9,6 +9,18 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-09-28  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/x_menu.c: Added File/Page Close 
+	
+	* src/i_callbacks.c: Added code to close the last visible page.
+	  Now it opens up a blank page and close the current visible page.
+
+	* lib/system-gschemrc.in: Added hotkey for File/Close Page (fe)
+
+	* src/x_dialog.c: Fixed the color selection menu on the color edit 
+	  dialog box to display the right default color (color 1 - white)
+
 9/25/99 Rearranged right mouse button menu (suggestion by Magnus)
 
 9/23/99 Updated all the man pages (in all the program dirs) warning users

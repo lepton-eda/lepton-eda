@@ -1471,7 +1471,7 @@ color_edit_dialog (TOPLEVEL *w_current)
 		optionmenu = gtk_option_menu_new ();
                 gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
 					 create_color_menu (w_current));
-                gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 3);
+                gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 0);
                 gtk_box_pack_start(
 			GTK_BOX(vbox),
 			optionmenu, TRUE, TRUE, 0);
