@@ -167,7 +167,7 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   printf("type: %d count: %d\n", type, count);
 #endif
   
-  size = SCREENabs(w_current, 30);
+  size = SCREENabs(w_current, CUE_BOX_SIZE);
   x2size = 2 * size;
 
   if (w_current->override_color != -1 ) {
@@ -202,9 +202,9 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
           /* draw circle */
 
           if (bus_involved) {
-            size = SCREENabs(w_current, 30);
+            size = SCREENabs(w_current, CUE_CIRCLE_SMALL_SIZE);
           } else {
-            size = SCREENabs(w_current, 60);
+            size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
           }
           
           gdk_draw_arc(w_current->window, w_current->gc,
@@ -278,9 +278,9 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   
       /* draw circle */
       if (bus_involved) {
-        size = SCREENabs(w_current, 30);
+        size = SCREENabs(w_current, CUE_CIRCLE_SMALL_SIZE);
       } else {
-        size = SCREENabs(w_current, 60);
+        size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
       }
 
       gdk_draw_arc(w_current->window, w_current->gc,
@@ -323,7 +323,7 @@ o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   x = object->line->x[whichone];
   y = object->line->y[whichone];
 
-  size = SCREENabs(w_current, 30);
+  size = SCREENabs(w_current, CUE_BOX_SIZE);
   x2size = 2 * size;
 
   gdk_gc_set_foreground(w_current->gc,
@@ -390,9 +390,9 @@ o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
                conn->other_object->type == OBJ_NET) ||
               (object->type == OBJ_NET &&
                conn->other_object->type == OBJ_BUS))) {
-          size = SCREENabs(w_current, 30);
+          size = SCREENabs(w_current, CUE_CIRCLE_SMALL_SIZE);
         } else {
-          size = SCREENabs(w_current, 60);
+          size = SCREENabs(w_current, CUE_CIRCLE_LARGE_SIZE);
         }
 
         gdk_draw_arc(w_current->window, w_current->gc,
