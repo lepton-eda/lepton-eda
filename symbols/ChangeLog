@@ -1,3 +1,9 @@
+2002-10-03 Werner Hoch <werner.ho@gmx.de>
+        *74/74240-1.sym: corrected pinlabels YB1..YB4
+	*74/74244-1.sym: corrected pinlabels YB1..YB4
+	*74/74[23456]??-*: completed symbols (added net, pinlabels, ...)
+	*74/74[345789]?-*: inserted numslots=0 at some symbols
+
 2002-10-02 Werner Hoch <werner.ho@gmx.de>
 	*74/741[789]?-*: completed symbols (added net, pinlabels, pintype, ...)
 	*74/74HCT245-1.sym, 74/74HCT4094-1.sym, 74/74HCT541-1.sym:
