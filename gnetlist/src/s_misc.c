@@ -30,6 +30,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 static int char_index = 0;
 

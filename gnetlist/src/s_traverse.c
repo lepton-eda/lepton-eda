@@ -30,6 +30,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 void s_traverse_init(void)
 {
     netlist_head = s_netlist_add(NULL);

@@ -30,6 +30,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 void
 s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 		     NETLIST * netlist)

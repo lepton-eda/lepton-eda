@@ -30,6 +30,10 @@
 #include "../include/papersizes.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 #define DEFAULT_SERIES_NAME      "untitled"
 #define DEFAULT_UNTITLED_NAME    "untitled"
 #define DEFAULT_SCHEME_DIRECTORY "./"

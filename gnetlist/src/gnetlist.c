@@ -32,6 +32,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 void gnetlist_quit(void)
 {
     s_clib_free();

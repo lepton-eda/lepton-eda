@@ -36,6 +36,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 /* hack rename this to be s_return_tail */
 /* update object_tail or any list of that matter */
 CPINLIST *s_cpinlist_return_tail(CPINLIST * head)

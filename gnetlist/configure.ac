@@ -187,6 +187,56 @@ fi
 #########################################################################
 
 #########################################################################
+#
+
+# ------------- dmalloc -------------------
+dnl dmalloc checks
+with_dmalloc="no"
+AC_MSG_CHECKING([if dmalloc debugging should be enabled])
+AC_ARG_ENABLE([dmalloc],
+[  --enable-dmalloc        Compile and link with dmalloc for malloc debugging [[default=no]]],
+[
+if test "X$enable_dmalloc" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_HEADER(dmalloc.h,,
+                AC_ERROR([You have requested dmalloc debugging but dmalloc.h could not be found]))
+        AC_CHECK_LIB(dmalloc,main,,
+                AC_ERROR([You have requested dmalloc debugging but -ldmalloc could not be found]))
+        DMALLOC_LIBS="-ldmalloc"
+        with_dmalloc="yes"
+else
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+fi
+],
+[
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+])
+
+# ------------- ElectricFence -------------------
+dnl ElectricFence checks
+with_efence="no"
+AC_MSG_CHECKING([if ElectricFence debugging should be enabled])
+AC_ARG_ENABLE([efence],
+[  --enable-efence         Link with ElectricFence for malloc debugging [[default=no]]],
+[
+if test "X$enable_efence" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_LIB(efence,main,,
+                AC_ERROR([You have requested ElectricFence debugging but -lefence could not be found]))
+        with_efence="yes"
+else
+        AC_MSG_RESULT([no])
+fi
+],
+[
+AC_MSG_RESULT([no])
+])
+
+#
+#########################################################################
+#########################################################################
 # Check for groff start
 #
 
@@ -247,7 +297,7 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GNETLIST_CFLAGS="$LIBGEDA_CFLAGS"
-GNETLIST_LDFLAGS="$LIBGEDA_LIBS"  
+GNETLIST_LDFLAGS="$LIBGEDA_LIBS $DMALLOC_LIBS"
 
 # Makefile.in variable substitution
 AC_SUBST(GNETLIST_CFLAGS)
@@ -296,5 +346,7 @@ AC_MSG_RESULT([
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
    documentation directory:          $expandedGEDADOCDIR
+   dmalloc debugging:                $with_dmalloc
+   Electric Fence debugging:         $with_efence
 ])
 

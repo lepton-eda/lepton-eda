@@ -30,6 +30,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 /* be sure caller free's return value */
 char *
 vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found) 

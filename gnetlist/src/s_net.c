@@ -36,6 +36,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 static int unnamed_counter = 1;
 
 #define MAX_UNNAMED 99999999

@@ -41,6 +41,10 @@
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 typedef struct {
     int m_val;
     char *m_str;

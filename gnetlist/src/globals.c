@@ -26,6 +26,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 char *rc_filename = NULL; 
 
 /* color stuff */
