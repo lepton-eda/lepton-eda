@@ -1273,7 +1273,7 @@ x_manual_resize(TOPLEVEL *w_current)
   w_current->height = w_current->win_height;
 
   /* need to do this every time you change width / height */
-  set_window(w_current,
+  set_window(w_current, w_current->page_current,
              w_current->page_current->left,
              w_current->page_current->right,
              w_current->page_current->top,

@@ -215,7 +215,7 @@ main_prog(void *closure, int argc, char *argv[])
   }
 
   /* Allocate w_current.   */
-  w_current = x_window_alloc();
+  w_current = s_toplevel_new ();
   global_window_current = w_current;
 
   /* Now read in RC files. */
@@ -240,12 +240,7 @@ main_prog(void *closure, int argc, char *argv[])
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();
 
-  x_window_add_head();
-
-  /* w_current was malloced previously.  Here we just fill it out. */
-  x_window_fill_out(w_current);
-  global_window_current = w_current;
-  
+  x_window_setup (w_current);
 
   /* so we can call key funcs from guile */
   set_window_current_key(w_current);
@@ -314,13 +309,17 @@ main_prog(void *closure, int argc, char *argv[])
       /* Much simpler	*/
 
       /* create new page, and only load if page not loaded */
-      if (!s_page_new(w_current, filename)) {
+      if (!s_page_search (w_current, filename)) {
+        PAGE *page = s_page_new (w_current, filename);
+        s_page_goto (w_current, page);
+        
         if (!quiet_mode) {
           printf(_("Loading schematic [%s]\n"), 
                  filename);
         }
-        (void)f_open(w_current,
-                     w_current->page_current->page_filename);
+        
+        f_open(w_current,
+               w_current->page_current->page_filename);
         i_set_filename(w_current,
                        w_current->page_current->page_filename);
         a_zoom_extents(w_current,
@@ -339,7 +338,7 @@ main_prog(void *closure, int argc, char *argv[])
       free(w_current->page_current->page_filename);
     }
 
-    getcwd(w_current->cwd, 256);
+    w_current->cwd = g_get_current_dir ();
 #ifdef __MINGW32__
     u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
 #endif

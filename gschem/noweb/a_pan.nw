@@ -207,7 +207,7 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
   }
 
   /* set_window */
-  set_window(w_current,
+  set_window(w_current, w_current->page_current,
              w_current->page_current->left  ,
              w_current->page_current->right ,
              w_current->page_current->top   ,
@@ -500,7 +500,7 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
     correct_aspect(w_current);
   }
 
-  set_window(w_current,
+  set_window(w_current, w_current->page_current,
              w_current->page_current->left  ,
              w_current->page_current->right ,
              w_current->page_current->top   ,

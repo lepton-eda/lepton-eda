@@ -403,12 +403,16 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   w_current->page_current->undo_current =  NULL;
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
-    s_page_free(w_current, w_current->page_current);
-    s_page_new(w_current, u_current->filename);
+    PAGE *p_new;
+    s_page_delete (w_current, w_current->page_current);
+    p_new = s_page_new(w_current, u_current->filename);
+    s_page_goto (w_current, p_new);
   } else if (w_current->undo_type == UNDO_MEMORY && 
              u_current->object_head) {
-               s_page_free(w_current, w_current->page_current);
-               s_page_new(w_current, save_filename);
+               PAGE *p_new;
+               s_page_delete (w_current, w_current->page_current);
+               p_new = s_page_new (w_current, save_filename);
+               s_page_goto (w_current, p_new);
              }
 
   /* temporarily disable logging */
@@ -420,7 +424,6 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 
     f_open(w_current, u_current->filename);
 
-    x_window_setup_world(w_current);
     x_manual_resize(w_current);
     w_current->page_current->page_control = u_current->page_control;
     w_current->page_current->up = u_current->up;
@@ -441,7 +444,6 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 		
     w_current->page_current->object_tail = return_tail(
                                                        w_current->page_current->object_head);
-    x_window_setup_world(w_current);
     x_manual_resize(w_current);
     w_current->page_current->page_control = u_current->page_control;
     w_current->page_current->up = u_current->up;
@@ -449,7 +451,8 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   }
 
   /* do misc setups */
-  set_window(w_current, u_current->left, u_current->right, 
+  set_window(w_current, w_current->page_current,
+             u_current->left, u_current->right, 
              u_current->top, u_current->bottom);
   x_hscrollbar_update(w_current);
   x_vscrollbar_update(w_current);

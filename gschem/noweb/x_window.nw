@@ -11,14 +11,8 @@
 /* DO NOT read or edit this file ! Use ../noweb/x_window.nw instead */
 
 <<x_window.c : include directives>>
-<<x_window.c : global variables>>
-<<x_window.c : x_window_alloc()>>
-<<x_window.c : x_window_add()>>
-<<x_window.c : x_window_add_head()>>
-<<x_window.c : x_window_free_head()>>
-<<x_window.c : x_window_delete()>>
-<<x_window.c : x_window_setup_world()>>
-<<x_window.c : x_window_setup_rest()>>
+
+<<x_window.c : x_window_setup()>>
 <<x_window.c : x_window_setup_colors()>>
 <<x_window.c : x_window_free_colors()>>
 <<x_window.c : x_window_setup_gc()>>
@@ -27,10 +21,8 @@
 <<x_window.c : x_window_setup_draw_events()>>
 <<x_window.c : x_window_new_pixmap()>>
 <<x_window.c : x_window_create_main()>>
-<<x_window.c : x_window_fill_out()>>
 <<x_window.c : x_window_close()>>
 <<x_window.c : x_window_close_all()>>
-<<x_window.c : x_window_get_ptr()>>
 <<x_window.c : x_window_search_page_clist()>>
 
 @
@@ -78,297 +70,174 @@
 @
 
 
-<<x_window.c : global variables>>=
-/* global_wid always increments, it needs to be unique per gschem run */
-static int num_windows=0;
-static int global_wid=0;
+@section Function @code{x_window_setup()}
 
-/* head pointer to window structure, this points to all the windows that
-   currently exist */
-static TOPLEVEL *window_head=NULL;
-static TOPLEVEL *window_tail=NULL;
-
-@ %def num_windows global_wid window_head window_tail
-
-
-
-
-
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_alloc()}
-
-@defun x_window_alloc
+@defun x_window_setup toplevel
 @end defun
 
-<<x_window.c : x_window_alloc()>>=
-TOPLEVEL *x_window_alloc()
-{
-  TOPLEVEL *window;
-
-  window = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
-  if (window) {
-    /* This assignment needs to be here because it is used when reading
-     * in the RC files. Is there a better way to do this?  We can make the
-     * RC list a global . . . or maybe use calloc? */
-    window->RC_list = NULL;
-    return window;
-  } else {
-    fprintf(stderr, "Couldn't allocate space for window.\n");
-    exit(-1);
-  }
-}
-
-
-@ %def x_window_alloc
-
-
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_add()}
-
-@defun x_window_add w_head w_current
-@end defun
-
-<<x_window.c : x_window_add()>>=
-/* add to the end of the list */
-TOPLEVEL *
-x_window_add(TOPLEVEL *w_head, TOPLEVEL *w_current)
-{
-  if (w_head == NULL) {
-    w_current->prev = NULL;
-    w_current->next = NULL;
-    return(w_current);
-  } else {
-    w_current->prev = w_head;
-    w_current->next = NULL;
-    w_head->next = w_current;
-    return(w_head->next);
-  }
-}
-
-
-@ %def x_window_add
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_add_head()}
-
-@defun x_window_add_head 
-@end defun
-
-<<x_window.c : x_window_add_head()>>=
+<<x_window.c : x_window_setup()>>=
 void
-x_window_add_head()
+x_window_setup (TOPLEVEL *toplevel)
 {
-  window_tail = window_head = x_window_alloc();
-  window_head->wid = -1;
-}
-
-
-@ %def x_window_add_head
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_free_head()}
-
-@defun x_window_free_head 
-@end defun
-
-<<x_window.c : x_window_free_head()>>=
-void
-x_window_free_head()
-{
-  free(window_head);
-}
-
-
-@ %def x_window_free_head
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_delete()}
-
-@defun x_window_delete w_head w_current
-@end defun
-
-<<x_window.c : x_window_delete()>>=
-/* deletes specified window from w_head list */
-/* doesn't do the actual destroy though */
-void
-x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current)
-{
-
-  if (w_head == NULL || w_current == NULL) {
-    /* error condition hack */
-    return;
-  }
-
-  if (w_current->next)
-  w_current->next->prev = w_current->prev;
-
-  if (w_current->prev)
-  w_current->prev->next = w_current->next;
-
-  s_page_free_all(w_current, w_current->page_tail);
-}
-
-
-@ %def x_window_delete
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_setup_world()}
-
-@defun x_window_setup_world w_current
-@end defun
-
-<<x_window.c : x_window_setup_world()>>=
-void
-x_window_setup_world(TOPLEVEL *w_current)
-{
-  w_current->init_left = -45;
-  w_current->init_top = -45;
-  /* init_right and _bottom are set before this function is called */
-  w_current->min_zoom = 0;
-  w_current->max_zoom = 256;  /* was 128 */
-
-#if 0 /* no longer used */
-  if (w_current->display_width <= 800) {
-    w_current->width = 672;
-    w_current->height = 504;
-  } else if (w_current->display_width <= 1024) {
-    w_current->width = 800;
-    w_current->height = 600;
-  } else if (w_current->display_width <= 1280) {
-    w_current->width = 1024;
-    w_current->height = 768;
-  } else if (w_current->display_width <= 1600) {
-    w_current->width = 1280;
-    w_current->height = 960;
-  } else {
-    w_current->width = 1600;
-    w_current->height = 1200;
-  }
-#endif
-
-  w_current->width = default_width;
-  w_current->height = default_height;
-
-  w_current->starting_width = w_current->width;
-
-  w_current->win_width = w_current->width;
-  w_current->win_height = w_current->height;
-
-}
-
-
-@ %def x_window_setup_world
-
-/* -------------------------------------------------- */
-@section Function @code{x_window_setup_rest()}
-
-@defun x_window_setup_rest w_current
-@end defun
-
-<<x_window.c : x_window_setup_rest()>>=
-void
-x_window_setup_rest(TOPLEVEL *w_current)
-{
-  w_current->num_untitled=0;
-
-  w_current->start_x = -1;
-  w_current->start_y = -1;
-  w_current->save_x = -1;
-  w_current->save_y = -1;
-  w_current->last_x = -1;
-  w_current->last_y = -1;
-  w_current->loc_x = -1;
-  w_current->loc_y = -1;
-  w_current->distance = -1;
-  w_current->event_state = SELECT;
-  w_current->inside_action = 0;
-  w_current->snap = 1;
-  w_current->grid = 1;
-
-  w_current->show_hidden_text = 0;
+  PAGE *page;
   
-  w_current->complex_rotate = 0;
+  /* x_window_setup_rest() - BEGIN */
+  toplevel->num_untitled=0;
 
-  w_current->current_attribute = NULL;
-  w_current->current_visible = -1; /* not sure on these */
-  w_current->current_show = -1;
+  toplevel->start_x = -1;
+  toplevel->start_y = -1;
+  toplevel->save_x = -1;
+  toplevel->save_y = -1;
+  toplevel->last_x = -1;
+  toplevel->last_y = -1;
+  toplevel->loc_x = -1;
+  toplevel->loc_y = -1;
+  toplevel->distance = -1;
+  toplevel->event_state = SELECT;
+  toplevel->inside_action = 0;
+  toplevel->snap = 1;
+  toplevel->grid = 1;
 
-  w_current->internal_basename=NULL;
-  w_current->internal_clib=NULL;
+  toplevel->show_hidden_text = 0;
+  
+  toplevel->complex_rotate = 0;
 
-  w_current->series_name = NULL;
-  w_current->untitled_name = NULL;
-  w_current->font_directory = NULL;
-  w_current->scheme_directory = NULL;
-  w_current->bitmap_directory = NULL;
-  w_current->bus_ripper_symname = NULL;
+  toplevel->current_attribute = NULL;
+  toplevel->current_visible = -1; /* not sure on these */
+  toplevel->current_show = -1;
 
-  w_current->override_color = -1;
-  w_current->inside_redraw=0;
+  toplevel->internal_basename=NULL;
+  toplevel->internal_clib=NULL;
 
-  w_current->FORCE_CONN_UPDATE=0;
-  w_current->ADDING_SEL=0;
-  w_current->REMOVING_SEL=0;
+  toplevel->series_name = NULL;
+  toplevel->untitled_name = NULL;
+  toplevel->font_directory = NULL;
+  toplevel->scheme_directory = NULL;
+  toplevel->bitmap_directory = NULL;
+  toplevel->bus_ripper_symname = NULL;
 
-  w_current->drawbounding_action_mode=FREE;
-  w_current->last_drawb_mode = -1;
-  w_current->CONTROLKEY=0;
-  w_current->SHIFTKEY=0;
-  w_current->last_callback=NULL;
+  toplevel->override_color = -1;
+  toplevel->inside_redraw=0;
 
-  w_current->major_changed_refdes = NULL;
+  toplevel->FORCE_CONN_UPDATE=0;
+  toplevel->ADDING_SEL=0;
+  toplevel->REMOVING_SEL=0;
 
-  w_current->status_label = NULL;
-  w_current->middle_label = NULL;
-  w_current->filename_label = NULL;
+  toplevel->drawbounding_action_mode=FREE;
+  toplevel->last_drawb_mode = -1;
+  toplevel->CONTROLKEY=0;
+  toplevel->SHIFTKEY=0;
+  toplevel->last_callback=NULL;
 
-  w_current->cswindow = NULL;
-  w_current->aswindow = NULL;
-  w_current->fowindow = NULL;
-  w_current->sowindow = NULL;
-  w_current->fswindow = NULL;
+  toplevel->major_changed_refdes = NULL;
 
-  w_current->tiwindow = NULL;
-  w_current->tewindow = NULL;
-  w_current->exwindow = NULL;
-  w_current->aawindow = NULL;
-  w_current->mawindow = NULL;
-  w_current->aewindow = NULL;
-  w_current->trwindow = NULL;
-  w_current->tswindow = NULL;
-  w_current->pswindow = NULL;
-  w_current->pwindow = NULL;
-  w_current->iwindow = NULL;
-  w_current->abwindow = NULL;
-  w_current->hkwindow = NULL;
-  w_current->cowindow = NULL;
-  w_current->clwindow = NULL;
-  w_current->ltwindow = NULL;
-  w_current->ftwindow = NULL;
-  w_current->sewindow = NULL;
-  w_current->fileselect[FILESELECT].xfwindow = NULL;
-  w_current->fileselect[FILESELECT].directory = NULL;
-  w_current->fileselect[FILESELECT].filename = NULL;
-  x_fileselect_init_list_buffers(&w_current->fileselect[FILESELECT]);
-  w_current->fileselect[COMPSELECT].xfwindow = NULL;
-  w_current->fileselect[COMPSELECT].directory = NULL;
-  w_current->fileselect[COMPSELECT].filename = NULL;
-  x_fileselect_init_list_buffers(&w_current->fileselect[COMPSELECT]);
+  toplevel->status_label = NULL;
+  toplevel->middle_label = NULL;
+  toplevel->filename_label = NULL;
 
-  w_current->coord_world = NULL;
-  w_current->coord_screen = NULL;
-  w_current->doing_pan=FALSE;
-  /* w_current->preview = NULL;experimental widget */
+  toplevel->cswindow = NULL;
+  toplevel->aswindow = NULL;
+  toplevel->fowindow = NULL;
+  toplevel->sowindow = NULL;
+  toplevel->fswindow = NULL;
 
-  w_current->buffer_number=0;
+  toplevel->tiwindow = NULL;
+  toplevel->tewindow = NULL;
+  toplevel->exwindow = NULL;
+  toplevel->aawindow = NULL;
+  toplevel->mawindow = NULL;
+  toplevel->aewindow = NULL;
+  toplevel->trwindow = NULL;
+  toplevel->tswindow = NULL;
+  toplevel->pswindow = NULL;
+  toplevel->pwindow = NULL;
+  toplevel->iwindow = NULL;
+  toplevel->abwindow = NULL;
+  toplevel->hkwindow = NULL;
+  toplevel->cowindow = NULL;
+  toplevel->clwindow = NULL;
+  toplevel->ltwindow = NULL;
+  toplevel->ftwindow = NULL;
+  toplevel->sewindow = NULL;
+  toplevel->fileselect[FILESELECT].xfwindow = NULL;
+  toplevel->fileselect[FILESELECT].directory = NULL;
+  toplevel->fileselect[FILESELECT].filename = NULL;
+  x_fileselect_init_list_buffers(&toplevel->fileselect[FILESELECT]);
+  toplevel->fileselect[COMPSELECT].xfwindow = NULL;
+  toplevel->fileselect[COMPSELECT].directory = NULL;
+  toplevel->fileselect[COMPSELECT].filename = NULL;
+  x_fileselect_init_list_buffers(&toplevel->fileselect[COMPSELECT]);
+
+  toplevel->coord_world = NULL;
+  toplevel->coord_screen = NULL;
+  toplevel->doing_pan=FALSE;
+  /* toplevel->preview = NULL;experimental widget */
+
+  toplevel->buffer_number=0;
+  /* x_window_setup_rest() - END */
+
+  /* immediately setup user params */
+  i_vars_set (toplevel);
+
+  /* make sure none of these events happen till we are done */
+  toplevel->DONT_DRAW_CONN = 1;
+  toplevel->DONT_RESIZE    = 1;
+  toplevel->DONT_EXPOSE    = 1;
+  toplevel->DONT_RECALC    = 1;
+
+  /* the default coord sizes */
+  /* real ones set in rc file */
+  toplevel->init_right  = default_init_right;
+  toplevel->init_bottom = default_init_bottom;
+
+  /* X related stuff */
+  toplevel->display_height = gdk_screen_height ();
+  toplevel->display_width  = gdk_screen_width ();
+
+  /* x_window_setup_world() - BEGIN */
+  toplevel->init_left = -45;
+  toplevel->init_top  = -45;
+  /* init_right and _bottom are set before this function is called */
+  toplevel->min_zoom  = 0;
+  toplevel->max_zoom  = 256;  /* was 128 */
+
+  toplevel->width  = default_width;
+  toplevel->height = default_height;
+
+  toplevel->starting_width = toplevel->width;
+
+  toplevel->win_width  = toplevel->width;
+  toplevel->win_height = toplevel->height;
+  /* x_window_setup_world() - END */
+
+  /* X related stuff */
+  /* do X fill in first */
+  x_window_create_main (toplevel);
+
+  /* Now create a blank page */
+  page = s_page_new (toplevel, "unknown");
+  s_page_goto (toplevel, page);
+
+  o_undo_savestate(toplevel, UNDO_ALL);
+  i_update_menus(toplevel);
+
+  /* now update the scrollbars */
+  toplevel->DONT_REDRAW = 1;
+  x_hscrollbar_update(toplevel);
+  x_vscrollbar_update(toplevel);
+  toplevel->DONT_REDRAW = 0;
+
+  /* renable the events */
+  toplevel->DONT_DRAW_CONN=0;
+  toplevel->DONT_RESIZE=0;
+  toplevel->DONT_EXPOSE=0;
+  toplevel->DONT_RECALC=0;
+
 }
 
+@ %def x_window_setup
 
-@ %def x_window_setup_rest
 
-/* -------------------------------------------------- */
 @section Function @code{x_window_setup_colors()}
 
 @defun x_window_setup_colors 
@@ -378,122 +247,32 @@ x_window_setup_rest(TOPLEVEL *w_current)
 void
 x_window_setup_colors(void)
 {
-  int ret;
-
-  gdk_color_parse("black", &black);
-  ret = gdk_color_alloc(colormap, &black);
-  if (ret == 0) {
-    fprintf(stderr, _("Could not allocate the color %s!\n"), _("black"));
-    exit(-1);
+  gdk_color_parse ("black", &black);
+  if (!gdk_colormap_alloc_color (colormap,
+                                 &black,
+                                 FALSE,
+                                 TRUE)) {
+    fprintf (stderr, _("Could not allocate the color %s!\n"), _("black"));
+    exit (-1);
   }
 
-  gdk_color_parse("white", &white);
-  ret = gdk_color_alloc(colormap, &white);
-  if (ret == 0) {
-    fprintf(stderr, _("Could not allocate the color %s!\n"), _("white"));
-    exit(-1);
+  gdk_color_parse ("white", &white);
+  if (!gdk_colormap_alloc_color (colormap,
+                                 &white,
+                                 FALSE,
+                                 TRUE)) {
+    fprintf (stderr, _("Could not allocate the color %s!\n"), _("white"));
+    exit (-1);
   }
 
-  x_color_allocate_all();
+  x_color_allocate_all ();
 
-#if 0
-  gdk_color_parse("grey", &grey);
-  ret = gdk_color_alloc(colormap, &grey);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color grey!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("grey90", &grey90);
-  ret = gdk_color_alloc(colormap, &grey90);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color grey90!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("yellow", &yellow);
-  ret = gdk_color_alloc(colormap, &yellow);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color yellow!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("cyan", &cyan);
-  ret = gdk_color_alloc(colormap, &cyan);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color cyan!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("red", &red);
-  ret = gdk_color_alloc(colormap, &red);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color red!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("blue", &blue);
-  ret = gdk_color_alloc(colormap, &blue);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color blue!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("green", &green);
-  ret = gdk_color_alloc(colormap, &green);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color green!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("red3", &darkred);
-  ret = gdk_color_alloc(colormap, &darkred);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color darkred!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("blue3", &darkblue);
-  ret = gdk_color_alloc(colormap, &darkblue);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color darkblue!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("green3", &darkgreen);
-  ret = gdk_color_alloc(colormap, &darkgreen);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color darkgreen!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("cyan3", &darkcyan);
-  ret = gdk_color_alloc(colormap, &darkcyan);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color darkcyan!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("darkgrey", &darkgrey);
-  ret = gdk_color_alloc(colormap, &darkgrey);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color darkgrey!\n");
-    exit(-1);
-  }
-
-  gdk_color_parse("yellow3", &darkyellow);
-  ret = gdk_color_alloc(colormap, &darkyellow);
-  if (ret == 0) {
-    fprintf(stderr, "Could not allocate the color darkyellow!\n");
-    exit(-1);
-  }
-#endif
 }
 
 
 @ %def x_window_setup_colors
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_free_colors()}
 
 @defun x_window_free_colors w_current
@@ -503,13 +282,16 @@ x_window_setup_colors(void)
 void
 x_window_free_colors(TOPLEVEL *w_current)
 {
-  /* to be done later */
+  GdkColor *colors[] = { &black, &white };
+  
+  gdk_colormap_free_colors (colormap, *colors, 2);
+  
 }
 
 
 @ %def x_window_free_colors
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_setup_gc()}
 
 @defun x_window_setup_gc w_current
@@ -582,7 +364,7 @@ x_window_setup_gc(TOPLEVEL *w_current)
 
 @ %def x_window_setup_gc
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_free_gc()}
 
 @defun x_window_free_gc w_current
@@ -601,7 +383,7 @@ x_window_free_gc(TOPLEVEL *w_current)
 
 @ %def x_window_free_gc
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_create_drawing()}
 
 @defun x_window_create_drawing drawbox w_current
@@ -633,7 +415,7 @@ x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 
 @ %def x_window_create_drawing
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_setup_draw_events()}
 
 @defun x_window_setup_draw_events w_current
@@ -643,6 +425,26 @@ x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 void
 x_window_setup_draw_events(TOPLEVEL *w_current)
 {
+  struct event_reg_t {
+    gchar *detailed_signal;
+    void (*c_handler)(void);
+  };
+
+  struct event_reg_t drawing_area_events[] = {
+    { "expose_event",         G_CALLBACK(x_event_expose)          },
+    { "button_press_event",   G_CALLBACK(x_event_button_pressed)  },
+    { "button_release_event", G_CALLBACK(x_event_button_released) },
+    { "motion_notify_event",  G_CALLBACK(x_event_motion)          },
+    { "configure_event",      G_CALLBACK(x_event_configure)       },
+    { NULL,                   NULL                                } };
+  struct event_reg_t main_window_events[] = {
+    { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
+    { "key_press_event",      G_CALLBACK(x_event_key_press)       },
+#ifdef HAS_GTK22
+    { "scroll_event",         G_CALLBACK(x_event_scroll)          },
+#endif
+    { NULL,                   NULL                                } };
+  struct event_reg_t *tmp;
 
   /* is the configure event type missing here? hack */
   gtk_widget_set_events (w_current->drawing_area,
@@ -652,70 +454,43 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
                          GDK_ENTER_NOTIFY_MASK |
                          GDK_KEY_PRESS_MASK |
                          GDK_BUTTON_RELEASE_MASK);
+  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
+    g_signal_connect (w_current->drawing_area,
+                      tmp->detailed_signal,
+                      tmp->c_handler,
+                      w_current);
+  }
 
-  gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
-                      "expose_event",
-                      GTK_SIGNAL_FUNC (x_event_expose),
+  for (tmp = main_window_events; tmp->detailed_signal != NULL; tmp++) {
+    g_signal_connect (w_current->main_window,
+                      tmp->detailed_signal,
+                      tmp->c_handler,
                       w_current);
-
-  gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
-                      "button_press_event",
-                      (GtkSignalFunc) x_event_button_pressed,
-                      w_current);
-
-  gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
-                      "button_release_event",
-                      (GtkSignalFunc) x_event_button_released,
-                      w_current);
-
-  gtk_signal_connect (GTK_OBJECT (w_current->drawing_area),
-                      "motion_notify_event",
-                      (GtkSignalFunc) x_event_motion,
-                      w_current);
-
-  gtk_signal_connect (GTK_OBJECT(w_current->drawing_area),
-                      "configure_event",
-                      (GtkSignalFunc) x_event_configure,
-                      w_current);
-
-  gtk_signal_connect (GTK_OBJECT(w_current->main_window),
-                      "enter_notify_event",
-                      (GtkSignalFunc) x_event_enter,
-                      w_current);
-
-  gtk_signal_connect (GTK_OBJECT (w_current->main_window),
-                      "key_press_event",
-                      (GtkSignalFunc) x_event_key_press,
-                      w_current);
-#ifdef HAS_GTK22
-  gtk_signal_connect (GTK_OBJECT (w_current->main_window),
-                      "scroll_event",
-                      (GtkSignalFunc) x_event_scroll,
-                      w_current);
-#endif
+  }
+  
 }
 
 
 @ %def x_window_setup_draw_events
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_new_pixmap()}
 
 @defun x_window_new_pixmap filename window background
 @end defun
 
 <<x_window.c : x_window_new_pixmap()>>=
-
 static GtkWidget*
-x_window_new_pixmap(char *filename, GdkWindow *window, GdkColor  *background)
+x_window_new_pixmap(const char *filename,
+                    GdkWindow *window, GdkColor *background)
 {
   GtkWidget *wpixmap;
   GdkPixmap *pixmap;
   GdkBitmap *mask;
 
   pixmap = gdk_pixmap_create_from_xpm (window, &mask,
-				       background,
-				       filename);
+                                       background,
+                                       filename);
 #ifdef HAS_GTK22 
   wpixmap = gtk_image_new_from_pixmap (pixmap, mask);
 #else
@@ -724,10 +499,10 @@ x_window_new_pixmap(char *filename, GdkWindow *window, GdkColor  *background)
 
   return wpixmap;
 }
+
 @ %def new_pixmap
 
 
-/* -------------------------------------------------- */
 @section Function @code{x_window_create_main()}
 
 @defun x_window_create_main w_current
@@ -1213,101 +988,7 @@ x_window_create_main(TOPLEVEL *w_current)
 
 @ %def x_window_create_main
 
-/* -------------------------------------------------- */
-@section Function @code{x_window_fill_out()}
 
-@defun x_window_fill_out
-@end defun
-
-<<x_window.c : x_window_fill_out()>>=
-int x_window_fill_out(TOPLEVEL *w_current)
-{
-
-  /* allocate new window structure if it's not already done */
-  if (w_current == NULL) {
-    w_current = x_window_alloc();
-  }
-
-  /* do init var fill in */
-  x_window_setup_rest(w_current);
-
-  /* immediately setup user params */
-  i_vars_set(w_current);
-
-  w_current->wid = global_wid;
-
-  /* make sure none of these events happen till we are done */
-  w_current->DONT_DRAW_CONN=1;
-  w_current->DONT_RESIZE=1;
-  w_current->DONT_EXPOSE=1;
-  w_current->DONT_RECALC=1;
-
-  /* the default coord sizes */
-  /* real ones set in rc file */
-  w_current->init_right = default_init_right;
-  w_current->init_bottom = default_init_bottom;
-
-#if 1 /* X related stuff */
-  w_current->display_height = gdk_screen_height();
-  w_current->display_width = gdk_screen_width();
-#endif
-
-  x_window_setup_world(w_current);
-
-#if 1 /* X related stuff */
-  /* do X fill in first */
-  x_window_create_main(w_current);
-#endif
-
-  /* Put head node on page list... be sure to free this somewhere hack */
-  s_page_add_head(w_current);
-
-  /* Now create a blank page */
-  w_current->page_tail = s_page_add(w_current,
-                                    w_current->page_tail,
-                                    "unknown");
-  /* this is correct */
-
-  s_page_setup(w_current->page_tail);
-
-  /* setup page_current link */
-  w_current->page_current = w_current->page_tail;
-
-  /* Special case init */
-  /* move this elsewhere eventually */
-  /* w_current->page_current->object_parent=NULL; not this one */
-  w_current->page_current->object_lastplace=NULL;
-  w_current->page_current->object_selected=NULL;
-  set_window(w_current, w_current->init_left, w_current->init_right,
-             w_current->init_top, w_current->init_bottom);
-
-  o_undo_savestate(w_current, UNDO_ALL);
-  i_update_menus(w_current);
-
-  /* now update the scrollbars */
-  w_current->DONT_REDRAW = 1;
-  x_hscrollbar_update(w_current);
-  x_vscrollbar_update(w_current);
-  w_current->DONT_REDRAW = 0;
-
-  global_wid++;
-  num_windows++;
-
-  window_tail = x_window_add(window_tail, w_current);
-
-  /* renable the events */
-  w_current->DONT_DRAW_CONN=0;
-  w_current->DONT_RESIZE=0;
-  w_current->DONT_EXPOSE=0;
-  w_current->DONT_RECALC=0;
-
-  return;
-}
-
-
-@ %def x_window_fill_out
-
-/* -------------------------------------------------- */
 @section Function @code{x_window_close()}
 
 @defun x_window_close w_current
@@ -1317,6 +998,7 @@ int x_window_fill_out(TOPLEVEL *w_current)
 void
 x_window_close(TOPLEVEL *w_current)
 {
+  gboolean last_window = FALSE;
 
   if (s_page_check_changed(w_current->page_head)) {
     exit_dialog(w_current);
@@ -1326,13 +1008,6 @@ x_window_close(TOPLEVEL *w_current)
 #if DEBUG
   o_conn_print_hash(w_current->page_current->conn_table);
 #endif
-
-  /* make sure window_tail stays correct and doesn't dangle */
-  /* window_head can't dangle since it has a head node, which is */
-  /* NEVER deallocated (only at the very end) */
-  if (window_tail == w_current) {
-    window_tail = w_current->prev;
-  }
 
   /* close all the dialog boxes */
   if (w_current->fowindow)
@@ -1412,38 +1087,13 @@ x_window_close(TOPLEVEL *w_current)
   x_fileselect_free_list_buffers(&w_current->fileselect[FILESELECT]);
   x_fileselect_free_list_buffers(&w_current->fileselect[COMPSELECT]);
 
+  if (w_current->next == NULL && w_current->prev->prev == NULL) {
+    /* no more window after this one, remember to quit */
+    last_window = TRUE;
+  }
+  
   o_attrib_free_current(w_current);
   o_complex_free_filename(w_current);
-
-  if (w_current->series_name) {
-    free(w_current->series_name);
-    w_current->series_name = NULL;
-  }
-
-  if (w_current->untitled_name) {
-    free(w_current->untitled_name);
-    w_current->untitled_name = NULL;
-  }
-
-  if (w_current->font_directory) {
-    free(w_current->font_directory);
-    w_current->font_directory = NULL;
-  }
-
-  if (w_current->scheme_directory) {
-    free(w_current->scheme_directory);
-    w_current->scheme_directory = NULL;
-  }
-
-  if (w_current->bitmap_directory) {
-    free(w_current->bitmap_directory);
-    w_current->bitmap_directory = NULL;
-  }
-
-  if (w_current->bus_ripper_symname) {
-    free(w_current->bus_ripper_symname);
-    w_current->bus_ripper_symname = NULL;
-  }
 
   if (w_current->major_changed_refdes) {
     GList* current = w_current->major_changed_refdes;
@@ -1457,16 +1107,15 @@ x_window_close(TOPLEVEL *w_current)
   }
 
   /* stuff that has to be done before we free w_current */
-  if ( (num_windows - 1) == 0) {
+  if (last_window) {
     /* free all fonts */
-    o_text_freeallfonts(w_current);
+    o_text_freeallfonts (w_current);
     /* close the log file */
-    s_log_close();
+    s_log_close ();
     /* free the buffers */
-    o_buffer_free(w_current);
+    o_buffer_free (w_current);
   }
 
-  x_window_delete(window_head, w_current);
   if (w_current->backingstore) {
     gdk_pixmap_unref(w_current->backingstore);
   }
@@ -1475,84 +1124,50 @@ x_window_close(TOPLEVEL *w_current)
 
   /* finally close the main window */
   gtk_widget_destroy(w_current->main_window);
-
-  num_windows = num_windows - 1;
-
-  free(w_current);
+  
+  s_toplevel_delete (w_current);
 
   /* just closed last window, so quit */
-  if (num_windows == 0) {
+  if (last_window) {
     gschem_quit();
   }
+  
 }
 
 
 @ %def x_window_close
 
-/* -------------------------------------------------- */
+
 @section Function @code{x_window_close_all()}
 
-@defun x_window_close_all 
+@defun x_window_close_all toplevel
 @end defun
 
 <<x_window.c : x_window_close_all()>>=
 void
-x_window_close_all()
+x_window_close_all(TOPLEVEL *toplevel)
 {
-  TOPLEVEL *w_current;
-  TOPLEVEL *w_prev;
+  TOPLEVEL *last, *current;
 
-  w_current = window_tail;
+  /* find last toplevel in toplevel list */
+  for (last = toplevel; last->next != NULL; last = last->next);
 
-  /* loop over all windows to close */
-  /* going backwards */
-  /* wid == -1 is the head and we are done. */
-  while(w_current != NULL && w_current->wid != -1) {
-    w_prev = w_current->prev;
-    x_window_close(w_current);
-    w_current = w_prev;
+  /* now close each toplevel */
+  for (current = last; current->prev != NULL; current = last) {
+    /* save a ref to the previous toplevel in the list */
+    last = current->prev;
+    /* close current if it is not a preview toplevel */
+    if (current->main_window != NULL) {
+      x_window_close (current);
+    }
   }
 
-  /* now free the head */
-  /* only if all the windows are gone */
-
-  if (window_head->next == NULL && num_windows == 0)  {
-    x_window_free_head();
-  }
 }
 
 
 @ %def x_window_close_all
 
-/* -------------------------------------------------- */
-@section Function @code{x_window_get_ptr()}
 
-@defun x_window_get_ptr wid
-@end defun
-
-<<x_window.c : x_window_get_ptr()>>=
-TOPLEVEL *
-x_window_get_ptr(int wid)
-{
-  TOPLEVEL *w_current;
-
-  w_current = window_head;
-
-  while(w_current != NULL) {
-    if (w_current->wid == wid) {
-      return(w_current);
-    }
-
-    w_current = w_current->next;
-  }
-
-  return(NULL);
-}
-
-
-@ %def x_window_get_ptr
-
-/* -------------------------------------------------- */
 @section Function @code{x_window_search_page_clist()}
 
 @defun x_window_search_page_clist findme
@@ -1569,20 +1184,18 @@ x_window_search_page_clist(GtkWidget *findme)
 {
   TOPLEVEL *w_current;
 
-  w_current = window_head;
-
-  while(w_current != NULL) {
-    if (w_current->page_clist == findme) {
-      return(w_current);
-    }
-
-    w_current = w_current->next;
-  }
-
-  return(NULL);
+  /* find the toplevel head */
+  for (w_current = global_window_current;
+       w_current->prev != NULL;
+       w_current = w_current->prev);
+  /* now examine page_clist of each toplevel */
+  for (;
+       w_current != NULL && w_current->page_clist != findme;
+       w_current = w_current->next);
+  
+  return w_current;
 }
 
 
 @ %def x_window_search_page_clist
-
 

@@ -1,3 +1,12 @@
+2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/i_callbacks.nw, noweb/o_undo.nw, noweb/x_fileselect.nw:
+	* noweb/x_image.nw, noweb/x_preview.nw: Adapted for new toplevel and 
+	page APIs in libgeda.
+	
+	* noweb/x_window.nw: Refactored to avoid duplication of code with 
+	libgeda.
+
 2005-02-08 22:28  Dan McMahill <danmc>
 
 	* noweb/g_register.nw: replace deprecated guile functions with

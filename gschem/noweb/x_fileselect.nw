@@ -959,17 +959,20 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
       w_current = f_current->toplevel;
 	
       /* allocate space, then stick full, absolute filename into string */
-      string = malloc(strlen(f_current->directory) + strlen(filename)+2);
-      if (!string) {        /* sanity check . . . */
-        /* free(string); freeing a null pointer is bad. */
-        return;
-      }
-      
-      sprintf(string, "%s/%s", f_current->directory, filename);	
+      string = g_build_path (G_DIR_SEPARATOR_S,
+                             f_current->directory,
+                             filename,
+                             NULL);
 
       len = strlen(string);
       if (string[len - 1] != G_DIR_SEPARATOR) {
-        if ( !(found_page = s_page_new(w_current, string)) ) {
+        found_page = s_page_search (f_current->toplevel, string);
+        
+        if (found_page == NULL) {
+          /* create a new page and make it the current page */
+          s_page_goto (w_current,
+                       s_page_new (w_current, string));
+          
           w_current->DONT_REDRAW = 1;
 
 #if DEBUG
@@ -981,7 +984,6 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
                          page_filename);
 
           x_repaint_background(w_current);
-          x_window_setup_world(w_current);
           x_manual_resize(w_current);
           a_zoom_extents(w_current, 
                          w_current->page_current->object_head,

@@ -408,57 +408,41 @@ initiate_gschemdoc(const char* documentation,const char *device,
 /* This should be renamed to page_new perhaps... */
 DEFINE_I_CALLBACK(file_new)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
-  char *temp_filename;
+  TOPLEVEL *toplevel = (TOPLEVEL*)data;
+  PAGE *page;
+  gchar *filename;
 
-  exit_if_null(w_current);
+  exit_if_null (toplevel);
 
-  /* TODO: probably 256 is enough, but shuold be something like
-   * getcwd(NULL, 0); */
-  if (getcwd(w_current->cwd, 256)) {
+  g_free (toplevel->cwd);
+  toplevel->cwd = g_get_current_dir ();
 #ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
+  u_basic_strip_trailing(toplevel->cwd, G_DIR_SEPARATOR);
 #endif
-    /* TODO: the #'s are for 10 digits hack */
-    /* TODO: perform a NULL check */
-    temp_filename = (char *) malloc(
-                                    sizeof(char) * (strlen(w_current->cwd)+
-                                                    strlen(w_current->series_name) +
-                                                    strlen("/_##########.sch") +
-                                                    1));
+  filename = g_strdup_printf ("%s%c%s_%d.sch",
+                              toplevel->cwd,
+                              G_DIR_SEPARATOR,
+                              toplevel->series_name,
+                              ++toplevel->num_untitled);
 
-    w_current->num_untitled++;
-    sprintf(temp_filename, "%s%c%s_%d.sch", w_current->cwd, G_DIR_SEPARATOR,
-            w_current->series_name,
-            w_current->num_untitled);
-  } else {
-    /* TODO: perform a NULL check */
-    temp_filename = malloc(sizeof(char) * (
-                                           strlen(w_current->series_name)+
-                                           strlen("_##########.sch") +
-                                           1));
+  /* create a new page */
+  page = s_page_new (toplevel, filename);
+  /* change current page to page */
+  s_page_goto (toplevel, page);
+  g_free (filename);
 
-    w_current->num_untitled++;
-    sprintf(temp_filename, "%s_%d.sch",
-            w_current->series_name,
-            w_current->num_untitled);
-  }
-
-  /* in this function the filename is allocated and copied */
-  s_page_new(w_current, temp_filename);
-  s_log_message("New page created [%s]\n", temp_filename);
-  free(temp_filename);
-
-  i_set_filename(w_current, w_current->page_current->page_filename);
-
-  update_page_manager(NULL, w_current);
-  i_update_menus(w_current);
-  x_window_setup_world(w_current);
-  x_manual_resize(w_current);
-  x_hscrollbar_update(w_current);
-  x_vscrollbar_update(w_current);
-  x_repaint_background(w_current);
-  o_undo_savestate(w_current, UNDO_ALL);
+  s_log_message (_("New page created [%s]\n"),
+                 toplevel->page_current->page_filename);
+  
+  update_page_manager (NULL, toplevel);
+  i_update_menus (toplevel);
+  i_set_filename (toplevel, toplevel->page_current->page_filename);
+  x_manual_resize (toplevel);
+  x_hscrollbar_update (toplevel);
+  x_vscrollbar_update (toplevel);
+  x_repaint_background (toplevel);
+  o_undo_savestate (toplevel, UNDO_ALL);
+  
 }
 
 
@@ -496,36 +480,23 @@ DEFINE_I_CALLBACK(file_new_window)
 {
   TOPLEVEL *w_current;
        
-  w_current = x_window_alloc();
-  x_window_fill_out(w_current);
+  w_current = s_toplevel_new ();
+  x_window_setup (w_current);
 
   exit_if_null(w_current);
 
-  if (getcwd(w_current->cwd, 256)) {
+  g_free (w_current->cwd);
+  w_current->cwd = g_get_current_dir ();
 #ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
+  u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
 #endif
-    if (w_current->page_current->page_filename) {
-      free(w_current->page_current->page_filename);
-    }
-
-    /* TODO: perform a NULL check */
-    w_current->page_current->page_filename = 
-	malloc(sizeof(char) * (strlen(w_current->cwd)+ 
-			       strlen(w_current->series_name)+
-                               strlen("/_##########.sch")+1));
-
-    w_current->num_untitled++;
-    sprintf(w_current->page_current->page_filename, "%s%c%s_%d.sch",
-            w_current->cwd, G_DIR_SEPARATOR,
-            w_current->series_name,
-            w_current->num_untitled);
-  } else {
-    /* TODO: shouldn't this part do the same thing as
-     * what's equivalent in i_callback_file_new()? This is
-     * not nice to user. */
-    fprintf(stderr, _("Cannot obtain the current directory!\n"));
-  }
+  g_free (w_current->page_current->page_filename);
+  w_current->page_current->page_filename = g_strdup_printf (
+    "%s%c%s_%d.sch",
+    w_current->cwd,
+    G_DIR_SEPARATOR,
+    w_current->series_name,
+    ++w_current->num_untitled);
 
   s_log_message(_("New Window created\n"));
   i_set_filename(w_current, w_current->page_current->page_filename);
@@ -895,7 +866,7 @@ DEFINE_I_CALLBACK(file_quit)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
-  x_window_close_all();
+  x_window_close_all(w_current);
 }
 
 
@@ -2103,32 +2074,29 @@ DEFINE_I_CALLBACK(page_manager)
 <<i_callbacks.c : i_callback_page_next()>>=
 DEFINE_I_CALLBACK(page_next)
 {
-  PAGE *new_page = NULL;
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  TOPLEVEL *w_current = (TOPLEVEL*)data;
+  PAGE *p_current = w_current->page_current;
+  PAGE *p_new;
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->next != NULL &&
-      w_current->page_current->next->pid != -1) {
-
-    if (w_current->enforce_hierarchy == TRUE) { 
-      new_page = s_hierarchy_find_next_page(w_current->
-                                            page_current, 
-                                            w_current->page_current->page_control);
-    } else {
-      new_page = w_current->page_current->next;
-    }
-
-    if (new_page && new_page != w_current->page_current) {
-      w_current->page_current = new_page;
-    } else {
-      return;
-    }
-  } else {
+  if (p_current->next == NULL) {
     return;
   }
 
-  s_page_goto(w_current, w_current->page_current);
+  if (w_current->enforce_hierarchy) {
+    p_new = s_hierarchy_find_next_page(p_current, 
+                                       p_current->page_control);
+  } else {
+    p_new = p_current->next;
+  }
+
+  if (p_new == NULL || p_new == p_current) {
+    return;
+  }
+
+  s_page_goto (w_current, p_new);
+  
   i_set_filename(w_current, w_current->page_current->page_filename);
   x_scrollbars_update(w_current);
   o_redraw_all(w_current);
@@ -2149,37 +2117,35 @@ DEFINE_I_CALLBACK(page_next)
 <<i_callbacks.c : i_callback_page_prev()>>=
 DEFINE_I_CALLBACK(page_prev)
 {
-  PAGE *new_page = NULL;
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  TOPLEVEL *w_current = (TOPLEVEL*)data;
+  PAGE *p_current = w_current->page_current;
+  PAGE *p_new;
 
   exit_if_null(w_current);
 
-  if (w_current->page_current->prev != NULL &&
-      w_current->page_current->prev->pid != -1) {
-
-    if (w_current->enforce_hierarchy == TRUE) { 
-      new_page = s_hierarchy_find_prev_page(w_current->
-                                            page_current, 
-                                            w_current->page_current->page_control);
-    } else {
-      new_page = w_current->page_current->prev;
-    }
-
-    if (new_page && new_page != w_current->page_current) { 
-      w_current->page_current = new_page;
-    } else {
-      return;
-    }
-  } else {
+  if (p_current->prev == NULL || p_current->prev->pid == -1) {
     return;
   }
 
-  s_page_goto(w_current, w_current->page_current);
+  if (w_current->enforce_hierarchy == TRUE) {
+    p_new = s_hierarchy_find_prev_page(p_current, 
+                                       p_current->page_control);
+  } else {
+    p_new = p_current->prev;
+  }
+
+  if (p_new == NULL || p_new == p_current) {
+    return;
+  }
+
+  s_page_goto (w_current, p_new);
+  
   i_set_filename(w_current, w_current->page_current->page_filename);
   x_scrollbars_update(w_current);
   o_redraw_all(w_current);
   update_page_manager(NULL, w_current);
   i_update_menus(w_current);
+  
 }
 
 
@@ -2194,41 +2160,37 @@ DEFINE_I_CALLBACK(page_prev)
 <<i_callbacks.c : i_callback_page_new()>>=
 DEFINE_I_CALLBACK(page_new)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
-  char *filename = NULL;
+  TOPLEVEL *toplevel = (TOPLEVEL*)data;
+  PAGE *page;
+  gchar *filename;
 
-  exit_if_null(w_current);
+  exit_if_null(toplevel);
 
-  if (getcwd(w_current->cwd, 256)) {
+  g_free (toplevel->cwd);
+  toplevel->cwd = g_get_current_dir ();
 #ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
+  u_basic_strip_trailing(toplevel->cwd, G_DIR_SEPARATOR);
 #endif
-    /* TODO: perform a NULL check */
-    /* the 20 is a hack and needs to be changed */
-    filename = malloc(sizeof(char) *
-                      (strlen(w_current->cwd) +
-                       strlen(w_current->series_name) +
-                       strlen("/_##########.sch") +
-                       1));
+  filename = g_strdup_printf ("%s%c%s_%d.sch",
+                              toplevel->cwd,
+                              G_DIR_SEPARATOR,
+                              toplevel->series_name,
+                              ++toplevel->num_untitled);
 
-    w_current->num_untitled++;
-    sprintf(filename, "%s%c%s_%d.sch",
-            w_current->cwd, G_DIR_SEPARATOR,
-            w_current->series_name,
-            w_current->num_untitled);
+  /* create the new page */
+  page = s_page_new (toplevel, filename);
+  /* change current page to page */
+  s_page_goto (toplevel, page);
+  g_free (filename);
 
-  } else {
-    fprintf(stderr, _("Cannot get cwd!\n"));
-  }
-
-  s_page_new(w_current, filename);
-
-  update_page_manager(NULL, w_current);
-  i_update_menus(w_current);
-  i_set_filename(w_current, w_current->page_current->page_filename);
   s_log_message(_("New Page created [%s]\n"),
-                w_current->page_current->page_filename);
-  o_redraw_all(w_current);
+                toplevel->page_current->page_filename);
+  
+  update_page_manager (NULL, toplevel);
+  i_update_menus (toplevel);
+  i_set_filename (toplevel, toplevel->page_current->page_filename);
+  o_redraw_all (toplevel);
+  
 }
 
 
@@ -2251,12 +2213,6 @@ DEFINE_I_CALLBACK(page_close)
 
   if (w_current->page_current->CHANGED) {
     x_fileselect_setup(w_current, FILESELECT, SAVEAS_CLOSE);
-
-#if 0 /* replaced with above */
-    setup_saveas_file_selector(
-                               w_current, CLOSE,
-                               w_current->page_current->page_filename);
-#endif
     return;
   }
 
@@ -2266,12 +2222,11 @@ DEFINE_I_CALLBACK(page_close)
   if (p_current) {
     s_log_message(_("Closing [%s]\n"),
                   w_current->page_current->page_filename);
-    s_page_free(w_current, w_current->page_current);
-    w_current->page_current = p_current;
+    s_page_delete (w_current, w_current->page_current);
 
-    s_page_goto(w_current, w_current->page_current);
-    i_set_filename(w_current,
-                   w_current->page_current->page_filename);
+    s_page_goto (w_current, p_current);
+
+    i_set_filename(w_current, w_current->page_current->page_filename);
     x_scrollbars_update(w_current);
     o_redraw_all(w_current);
     update_page_manager(NULL, w_current);
@@ -2279,41 +2234,43 @@ DEFINE_I_CALLBACK(page_close)
     return;
   }
 
-  if (w_current->page_current->prev) {
-    if (w_current->page_current->prev->pid != -1) {
-      p_current = w_current->page_current->prev;
-      s_log_message(_("Closing [%s]\n"),
-                    w_current->page_current->page_filename);
-      s_page_free(w_current, w_current->page_current);
-      w_current->page_current = p_current;
+  /* is there a page before current? */
+  if (w_current->page_current->prev &&
+      w_current->page_current->prev->pid != -1) {
+        /* yes, change to previous page */
+        p_current = w_current->page_current->prev;
+        s_log_message(_("Closing [%s]\n"),
+                      w_current->page_current->page_filename);
+        s_page_delete (w_current, w_current->page_current);
+        
+        s_page_goto (w_current, p_current);
+        
+        i_set_filename(w_current, w_current->page_current->page_filename);
+        x_scrollbars_update(w_current);
+        o_redraw_all(w_current);
+        update_page_manager(NULL, w_current);
+        i_update_menus(w_current);
+        return;
+      }
 
-      s_page_goto(w_current, w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-      update_page_manager(NULL, w_current);
-      i_update_menus(w_current);
-      return;
-    }
-  }
-
+  /* is there a page after current? */
   if (w_current->page_current->next) {
-    if (w_current->page_current->next->pid != -1) {
-      p_current = w_current->page_current->next;
-      s_log_message(_("Closing [%s]\n"),
-                    w_current->page_current->page_filename);
-      s_page_free(w_current, w_current->page_current);
-      w_current->page_current = p_current;
-      s_page_goto(w_current, w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-      update_page_manager(NULL, w_current);
-      i_update_menus(w_current);
-      return;
-    }
+    /* yes, change to next page */
+    g_assert (w_current->page_current->next->pid != -1);
+    
+    p_current = w_current->page_current->next;
+    s_log_message(_("Closing [%s]\n"),
+                  w_current->page_current->page_filename);
+    s_page_delete (w_current, w_current->page_current);
+    
+    s_page_goto (w_current, p_current);
+    
+    i_set_filename(w_current, w_current->page_current->page_filename);
+    x_scrollbars_update(w_current);
+    o_redraw_all(w_current);
+    update_page_manager(NULL, w_current);
+    i_update_menus(w_current);
+    return;
   }
 
   /* finally go here if you can't delete the page */
@@ -2324,23 +2281,21 @@ DEFINE_I_CALLBACK(page_close)
   i_callback_page_new(w_current, 0, NULL);
   w_current->page_current = p_save;	
 
-  if (w_current->page_current->next) {
-    if (w_current->page_current->next->pid != -1) {
-      p_current = w_current->page_current->next;
-      s_log_message(_("Closing [%s]\n"),
-                    w_current->page_current->page_filename);
-      s_page_free(w_current, w_current->page_current);
-      w_current->page_current = p_current;
-      s_page_goto(w_current, w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-      update_page_manager(NULL, w_current);
-      i_update_menus(w_current);
-      return;
-    }
-  }
+  g_assert (w_current->page_current->next != NULL);
+  g_assert (w_current->page_current->next->pid != -1);
+  
+  p_current = w_current->page_current->next;
+  s_log_message(_("Closing [%s]\n"),
+                w_current->page_current->page_filename);
+  s_page_delete (w_current, w_current->page_current);
+
+  s_page_goto (w_current, p_current);
+  
+  i_set_filename(w_current, w_current->page_current->page_filename);
+  x_scrollbars_update(w_current);
+  o_redraw_all(w_current);
+  update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
 
 }
 
@@ -2358,7 +2313,8 @@ DEFINE_I_CALLBACK(page_close)
 DEFINE_I_CALLBACK(page_revert)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  char *filename;
+  PAGE *page;
+  gchar *filename;
   int page_control;
   int up;
 #ifdef HAS_GTK22
@@ -2389,14 +2345,16 @@ DEFINE_I_CALLBACK(page_revert)
  }
 #endif
 
-  filename = g_strdup (w_current->page_current->page_filename);
-
   /* save this for later */
+  filename = g_strdup (w_current->page_current->page_filename);
   page_control = w_current->page_current->page_control;
   up = w_current->page_current->up;
 
-  s_page_free(w_current, w_current->page_current);
-  s_page_new(w_current, filename);
+  /* delete the page, create a new one and make it the new current */
+  s_page_delete (w_current, w_current->page_current);
+  page = s_page_new (w_current, filename);
+  s_page_goto (w_current, page);
+  g_free (filename);
 
   /* now re open it */
   f_open(w_current, w_current->page_current->page_filename);
@@ -2407,7 +2365,6 @@ DEFINE_I_CALLBACK(page_revert)
   w_current->page_current->up = up;
 
   x_repaint_background(w_current);
-  x_window_setup_world(w_current);
   x_manual_resize(w_current);
   a_zoom_extents(w_current, w_current->page_current->object_head,
                 A_PAN_DONT_REDRAW);
@@ -2420,7 +2377,7 @@ DEFINE_I_CALLBACK(page_revert)
   i_update_menus(w_current);
 
   o_redraw_all(w_current);
-  free(filename);
+  
 }
 
 
@@ -2435,7 +2392,7 @@ DEFINE_I_CALLBACK(page_revert)
 <<i_callbacks.c : i_callback_page_discard()>>=
 DEFINE_I_CALLBACK(page_discard)
 {
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  TOPLEVEL *w_current = (TOPLEVEL*)data;
   PAGE *p_current;
   PAGE *p_save;
 
@@ -2447,12 +2404,11 @@ DEFINE_I_CALLBACK(page_discard)
   if (p_current) {
     s_log_message(_("Closing [%s]\n"),
                   w_current->page_current->page_filename);
-    s_page_free(w_current, w_current->page_current);
-    w_current->page_current = p_current;
+    s_page_delete (w_current, w_current->page_current);
 
-    s_page_goto(w_current, w_current->page_current);
-    i_set_filename(w_current,
-                   w_current->page_current->page_filename);
+    s_page_goto (w_current, p_current);
+
+    i_set_filename(w_current, w_current->page_current->page_filename);
     x_scrollbars_update(w_current);
     o_redraw_all(w_current);
     update_page_manager(NULL, w_current);
@@ -2460,68 +2416,69 @@ DEFINE_I_CALLBACK(page_discard)
     return;
   }
 
-  if (w_current->page_current->prev) {
-    if (w_current->page_current->prev->pid != -1) {
-      p_current = w_current->page_current->prev;
-      s_log_message(_("Discarding page [%s]\n"),
-                    w_current->page_current->page_filename);
-      s_page_free(w_current, w_current->page_current);
-      w_current->page_current = p_current;
-      s_page_goto(w_current, w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-      update_page_manager(NULL, w_current);
-      i_update_menus(w_current);
-      return;
-    }
-  }
+  /* is there a page before current? */
+  if (w_current->page_current->prev &&
+      w_current->page_current->prev->pid != -1) {
+        /* yes, change to previous page */
+        p_current = w_current->page_current->prev;
+        s_log_message(_("Discarding page [%s]\n"),
+                      w_current->page_current->page_filename);
+        s_page_delete (w_current, w_current->page_current);
 
+        s_page_goto (w_current, p_current);
+        
+        i_set_filename(w_current, w_current->page_current->page_filename);
+        x_scrollbars_update(w_current);
+        o_redraw_all(w_current);
+        update_page_manager(NULL, w_current);
+        i_update_menus(w_current);
+        return;
+      }
+
+  /* is there a page after current? */
   if (w_current->page_current->next) {
-    if (w_current->page_current->next->pid != -1) {
-      p_current = w_current->page_current->next;
-      s_log_message(_("Discarding page [%s]\n"),
-                    w_current->page_current->page_filename);
-      s_page_free(w_current, w_current->page_current);
-      w_current->page_current = p_current;
-      s_page_goto(w_current, w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-      update_page_manager(NULL, w_current);
-      i_update_menus(w_current);
-      return;
-    }
+    /* yes, change to next page */
+    g_assert (w_current->page_current->next->pid != -1);
+
+    p_current = w_current->page_current->next;
+    s_log_message(_("Discarding page [%s]\n"),
+                  w_current->page_current->page_filename);
+    s_page_delete (w_current, w_current->page_current);
+
+    s_page_goto (w_current, p_current);
+    
+    i_set_filename(w_current, w_current->page_current->page_filename);
+    x_scrollbars_update(w_current);
+    o_redraw_all(w_current);
+    update_page_manager(NULL, w_current);
+    i_update_menus(w_current);
+    return;
   }
 
   /* finally go here if you can't delete the page */
   /* because it's the last page being displayed */
   /* s_log_message("Cannot close current page\n");*/
   /* now the code creates a new page, and closes the old one */
-
   p_save = w_current->page_current;
   i_callback_page_new(w_current, 0, NULL);
   w_current->page_current = p_save;	
 
-  if (w_current->page_current->next) {
-    if (w_current->page_current->next->pid != -1) {
-      p_current = w_current->page_current->next;
-      s_log_message(_("Closing [%s]\n"),
-                    w_current->page_current->page_filename);
-      s_page_free(w_current, w_current->page_current);
-      w_current->page_current = p_current;
-      s_page_goto(w_current, w_current->page_current);
-      i_set_filename(w_current,
-                     w_current->page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-      update_page_manager(NULL, w_current);
-      i_update_menus(w_current);
-      return;
-    }
-  }
+  g_assert (w_current->page_current->next != NULL);
+  g_assert (w_current->page_current->next->pid != -1);
+  
+  p_current = w_current->page_current->next;
+  s_log_message(_("Discarding page [%s]\n"),
+                w_current->page_current->page_filename);
+  s_page_delete (w_current, w_current->page_current);
+
+  s_page_goto (w_current, p_current);
+
+  i_set_filename(w_current, w_current->page_current->page_filename);
+  x_scrollbars_update(w_current);
+  o_redraw_all(w_current);
+  update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
+  
 }
 
 
