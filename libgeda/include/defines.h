@@ -56,6 +56,16 @@
 #define THIN            0     
 #define THICK           1
 
+/* various thicknesses (in mils) */
+#define NET_WIDTH	10
+#define PIN_WIDTH	10
+#define BUS_WIDTH	30
+
+/* various visual cue sizes (in mils) */
+#define CUE_BOX_SIZE 		30
+#define CUE_CIRCLE_SMALL_SIZE	30
+#define CUE_CIRCLE_LARGE_SIZE	60
+
 /* For grip size */
 #define GRIP_SIZE1		25 
 #define GRIP_SIZE2		50 
