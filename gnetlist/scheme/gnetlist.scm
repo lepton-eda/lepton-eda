@@ -333,7 +333,6 @@
         (lambda (output-filename)
                 (let ((port (open-output-file output-filename)))
                         (begin
-				(display "WARNING: gnetlist still has some serious bugs -- bogus netlists are possible!") (newline)
 				(gnetlist:set-netlist-mode "SPICE")
                                 (spice:header-warning port)
                                 (spice:component-writing port packages)

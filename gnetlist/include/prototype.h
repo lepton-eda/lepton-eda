@@ -41,8 +41,8 @@ NET *s_net_return_head(NET *tail);
 NET *s_net_add(NET *ptr);
 void s_net_print(NET *ptr);
 char *s_net_return_connected_string(OBJECT *object);
-NET *s_net_post_resolve(NETLIST *head, int nid, CPINLIST **cpinlist_parent);
-void s_net_resolve_duplicates(NETLIST *head, CPINLIST *cpinlist_head);
+int s_net_find(NET *net_head, NET *node);
+char *s_net_name_search(NET *net_head);
 char *s_net_name(NETLIST *netlist_head, NET *net_head);
 /* s_netlist.c */
 NETLIST *s_netlist_return_tail(NETLIST *head);

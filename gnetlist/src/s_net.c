@@ -329,9 +329,13 @@ s_net_name(NETLIST *netlist_head, NET *net_head)
 	}
 
 
+#if DEBUG
 	printf("didn't find named net\n");
+#endif
 	/* didn't find a name */
-	/* go looking for another net */
+	/* go looking for another net which might have already been named */
+	/* ie you don't want to create a new unnamed net if the net has */
+	/* already been named */
 	nl_current = netlist_head;
 	while(nl_current != NULL) {
 		if (nl_current->cpins) {
@@ -362,7 +366,9 @@ s_net_name(NETLIST *netlist_head, NET *net_head)
 	}
 	
 
+#if DEBUG
 	printf("didn't find previously named\n");
+#endif
 
 	/* AND we don't want to assign a dangling pin */
 	/* which is signified by having only a head node */

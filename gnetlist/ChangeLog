@@ -12,6 +12,9 @@ Most recent changes (version wise) are at the top of this file
 	Changed Mike's all-nets function to use get-all-unique-nets 
 	(equate same named nets together)
 
+	Added some improved feedback when doing the net traversal with
+	verbose mode on
+
 7/3/99	Removed almost all executing traces of connected_to_[1|2] (these
 	was replaced by connected_to)
 

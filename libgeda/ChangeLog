@@ -8,6 +8,8 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/4/99	Fixed the headers in all files to be correct (GPL)
+
 7/3/99 	Removed some debug printfs from s_nethash.c
 
 	Removed some obsolete data structure elements in the gnetlist part

@@ -38,6 +38,8 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+static int vi; /* counter used in verbose mode */
+
 void
 s_traverse_init(void)
 {
@@ -78,17 +80,26 @@ s_traverse_sheet(TOPLEVEL *pr_current, OBJECT *start)
 	OBJECT *o_current;
 	NETLIST *netlist;
 	char *temp;
-	int i=0;
+
+if (verbose_mode) {
+	printf("Verbose Mode\n\n");
+	printf("n : Found net\n");
+	printf("C : Found component (staring to traverse component)\n");
+	printf("p : Found pin (starting to traverse pin)\n");
+	printf("P : Found end pin connection (end of this net)\n\n");
+
+}
 
 	netlist = s_netlist_return_tail(netlist_head);
 
-if (verbose_mode) {
-	printf("\n- Starting internal netlist creation\n");
-}
 
 	s_traverse_build_nethash(pr_current->page_current->nethash_table, 
 				 pr_current->page_current->ales_table, start);
 
+
+if (verbose_mode) {
+	printf("\n- Starting internal netlist creation\n");
+}
 
 	o_current = start;
 
@@ -101,12 +112,12 @@ if (verbose_mode) {
 		printf("starting NEW component\n\n");
 #endif
 if (verbose_mode) {
-				printf(".");
-				if (i++ == 78) {
+				printf(" C");
+				vi++;
+				if (vi++ == 78) {
 					printf("\n");
-					i = 0;
+					vi = 0;
 				}
-
 }
 				/* look for special tag */
 				temp = o_attrib_search_name(o_current->complex, "graphical", 0);
@@ -128,7 +139,6 @@ if (verbose_mode) {
 
 						/* here you look for the other special tags like gnd, vcc */
 						netlist->component_uref = o_attrib_search_special(o_current);
-	printf("%s\n", netlist->component_uref);
 						if (!netlist->component_uref) {
 							fprintf(stderr, "Could not find uref on component and could not find any special attributes!\n");
 							netlist->component_uref = (char *) malloc (sizeof(char)*strlen("U?")+1);
@@ -146,7 +156,12 @@ if (verbose_mode) {
 	}
 
 if (verbose_mode) {
-	printf(" done\n");
+	if (vi > 70) {
+		printf("\nDONE!\n");
+	} else {
+		printf(" DONE\n");
+	}
+	vi = 0;
 }
 
 	/* questions... when should you do this?  now or after all sheets have
@@ -180,6 +195,14 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 
 	while (o_current != NULL) {
 		if (o_current->type == OBJ_PIN) {
+
+if (verbose_mode) {
+				printf("p");
+				if (vi++ == 78) {
+					printf("\n");
+					vi = 0;
+				}
+}
 
 			o_current->visited = 1;
 
@@ -336,6 +359,13 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 
 	if (object->type == OBJ_PIN) {
 
+if (verbose_mode) {
+		printf("P");
+		if (vi++ == 78) {
+			printf("\n");
+			vi = 0;
+		}
+}
 		new_net->connected_to = s_net_return_connected_string(o_current);
 #if DEBUG
 		printf("traverse connected_to: %s\n",  new_net->connected_to);
@@ -345,6 +375,14 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	}
 
 	/*printf("Found net %s\n", object->name);*/
+
+if (verbose_mode) {
+		printf("n");
+		if (vi++ == 78) {
+			printf("\n");
+			vi = 0;
+		}
+}
 
 	object->visited++;
 
@@ -509,7 +547,7 @@ s_traverse_build_nethash(GHashTable *nethash_table, GHashTable *ales_table,
 	OBJECT *o_current;
 	GHashNode *node;
 	ALES *ales_list, *c_current;
-	int i;
+	int i,vi=0;
 
 if (verbose_mode) {
 	printf("- Creating nethash table\n");
@@ -519,7 +557,18 @@ if (verbose_mode) {
 
 	while (o_current != NULL) {
 
+
 		if (o_current->type == OBJ_NET) {
+
+if (verbose_mode) {
+				printf("n");
+				if (vi++ == 78) {
+					printf("\n");
+					vi = 0;
+				}
+
+}
+
 		  for (i = 0; i < ales_table->size; i++) {
 	  	    for (node = ales_table->nodes[i]; node; node = node->next) {
 			
@@ -566,4 +615,14 @@ if (verbose_mode) {
 #if DEBUG 
 	o_nethash_print_hash(nethash_table);
 #endif
+
+if (verbose_mode) {
+	if (vi > 70) {
+		printf("\nDONE!\n");
+	} else {
+		printf(" DONE!\n");
+	}
+	vi = 0;
+}
+
 }

@@ -17,6 +17,9 @@ Bugs (no particular order):
 	- Ordering of pin outputs in spice netlist ouput for components like 
 	  BJT transistors B C E.  This is wrong for now.
 
+	- (SPICE backend) It is possible to have named a net something (say 1)
+	  and then have an unnamed net called 1 as well.  Obviously my
+	  unnamed net naming is lame.
 
 
 Finished stuff:

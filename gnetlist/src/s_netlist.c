@@ -136,14 +136,14 @@ s_netlist_post_resolve(NETLIST *head)
 	NETLIST *nl_current;
 	CPINLIST *pl_current;
 	CPINLIST *pinlist_parent;
-	int i=0;
+	int vi=0;
 
 	nl_current = head;
 
 if (verbose_mode) {
-	printf("- Staring post processing\n");
-	printf("- Pass one:\n");
-	i = 0;
+	printf("\n- Staring post processing\n");
+	printf("- Naming nets:\n");
+	vi = 0;
 }
 
 	/* this pass gives all nets a name, whether specified or creates a 
@@ -154,11 +154,11 @@ if (verbose_mode) {
 			pl_current = nl_current->cpins;		
 			while(pl_current != NULL) {
 
-if (verbose_mode) {
-				printf(".");
-                               	if (i++ == 78) {
+if (verbose_mode && pl_current->plid != -1) {
+				printf("p");
+                               	if (vi++ == 78) {
                                		printf("\n");
-                                      	i = 0;
+                                      	vi = 0;
                                	}
 }
 
@@ -168,6 +168,14 @@ if (verbose_mode) {
 				 	if (pl_current->net_name) {
 						free(pl_current->net_name);
 					}
+
+if (verbose_mode) {
+				printf("n");
+                               	if (vi++ == 78) {
+                               		printf("\n");
+                                      	vi = 0;
+                               	}
+}
 
 					pl_current->net_name = 
 						s_net_name(head, pl_current->nets);
@@ -192,7 +200,7 @@ if (verbose_mode) {
 if (verbose_mode) {
 	printf(" done\n"); 
 	printf("- Pass four:\n");
-	i = 0;
+	vi = 0;
 }
 	
 	nl_current = head;
@@ -225,7 +233,12 @@ if (verbose_mode) {
 #endif
 
 if (verbose_mode) {
-	printf(" done\n"); 
+        if (vi > 70) {
+                printf("\nDONE!\n");
+        } else {
+                printf(" DONE!\n");
+        }
+        vi = 0;
 }
 
 				
