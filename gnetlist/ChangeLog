@@ -1,8 +1,14 @@
+2005-02-16 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm, scheme/gnet-redac.scm:
+	  Use stdout if the output filename is "-".
+
 2005-02-14  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/g_netlist.c (g_get_packages): Added two lines missing after 
 	yesterday rewrite.
 
+>>>>>>> 1.229
 2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/g_netlist.c (g_get_packages): Rewritten to use a GLib hash 

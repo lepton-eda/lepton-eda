@@ -33,7 +33,9 @@
 
 (define bom2
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename))
+    (let ((port (if (string=? "-" output-filename)
+		      (current-output-port)
+		      (open-output-file output-filename)))
 	  (attriblist (bom2:parseconfig (open-input-file "attribs"))))
       (bom2:printlist (cons 'package attriblist) port #\:)
       (newline port)
