@@ -1,4 +1,11 @@
 
+2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* tests/*: removed some tests since they put version information
+	  into the files which caues the tests to fail.
+
+	* tests/*: Added some more very simple tests (using singlenet_1.sch)
+
 2000-12-17  Stefan Petersen  <spe@geda.seul.org>
 
 	* src/gnetlist.c: Changed the repl to Guile built in one. Better
