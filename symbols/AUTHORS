@@ -432,7 +432,12 @@ Karel Kulhavy		- For contributing the following symbols:
 				HSDL7000-1.sym NE-592-1.sym 
 				MAC160-1.sym photodiode-1.sym 74132-1.sym
                                 74123-3.sym dgnmos-1.sym glow-lamp-1.sym
-				aui-1.sym dual-opamp-1.sym
+				aui-1.sym dual-opamp-1.sym 
+				DS26LS31-1.sym 74133-1.sym switch-spdt-2.sym 
+				2N3904-1.sym (added footprint) BC547-1.sym 
+				BC557-1.sym tl062-1.sym tl072-1.sym tl082-1.sym
+				7404-1.sym (correct visible attribute)
+				mc3487-1.sym
 
 Mark Moss		- For contributing the following symbols:
 

@@ -1,3 +1,8 @@
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-switcap.scm: Applied patch by Dan McMahill to use
+	his new net aliasing (modification) code.
+
 2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * scheme/gnet-gsch2pcb.scm: Upgraded to Bill Wilson's latest

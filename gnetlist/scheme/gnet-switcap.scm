@@ -29,24 +29,27 @@
 ;; Utility functions used by this netlister
 ;; ----------------------------------------------------------------------------
 
+;; This procedure takes a net name as determined by gnetlist and
+;; modifies it to be a valid SWITCAP net name.
 ;;
-;; gnet-switcap replacement of gnetlist:get-nets, a net labeled "GND" becomes 0 
-;; XXX
-;; Also for now, nuke the 'unnamed_net' stuff.  Note, this is
-;; dangerous because if a user uses '3' as a net label we're in
-;; trouble.  For now the solution is to tell the user to not use
-;; straight numbers in named nets.
-;;
-(define switcap:get-net
-  (lambda (uref pin-name )
-    (let ((net-name (gnetlist:get-nets uref pin-name))
-	  (rx (make-regexp "^unnamed_net")) 
-	  )
-      (cond ((string=? (car net-name) "GND") "0")
-	    ;; ugly hack to remove the 'unnamed_net' part.  This also dangerous
-	    ((regexp-exec rx (car net-name) ) (substring (car net-name) 11))
-	    (else (car net-name)) ))))
+(define switcap:map-net-names
+  (lambda (net-name)
+    (let ((rx (make-regexp "^unnamed_net"))
+          )
+      ;; XXX we should use a dynamic regexp based on the current value
+      ;; for the unnamed net base string.
 
+      (cond 
+       ;; Change "GND" to "0"
+       ((string=? net-name "GND") "0")
+       ;; remove the 'unnamed_net' part
+       ((regexp-exec rx net-name) (substring net-name 11))
+       (else net-name)
+       )
+
+      )
+    )
+  )
 
 ;; 
 ;; Given a reference designator, pin number, and output port
@@ -54,9 +57,9 @@
 ;;
 (define switcap:write-pin-net
   (lambda (package pin port)
-    (display (switcap:get-net package pin) port)
-    ))
-    
+    (display (gnetlist:alias-net (car (gnetlist:get-nets package pin))) port)
+    )
+  )
 
 ;; 
 ;; Given a reference designator, attribute name, and output port
@@ -398,6 +401,8 @@
 (define switcap
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases switcap:map-net-names all-unique-nets)
       (switcap:write-top-header port)
       (switcap:write-title-block port packages)
       (display "TIMING;\n" port)

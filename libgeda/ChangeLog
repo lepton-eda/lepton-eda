@@ -1,3 +1,8 @@
+2003-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Applied a patch by Carlos for the new
+	spanish characters he contributed.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_attrib.nw: Fixed a really nasty bug which only

@@ -1,5 +1,20 @@
 2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	* DS26LS31-1.sym 74133-1.sym switch-spdt-2.sym
+        2N3904-1.sym (added footprint) BC547-1.sym
+        BC557-1.sym tl062-1.sym tl072-1.sym tl082-1.sym
+        7404-1.sym (corrected visible attribute)
+        mc3487-1.sym: Added a bunch of symbol by Karel Kulhavy
+
+	* font/A-acute-accent.sym, E-acute-accent.sym, I-acute-accent.sym,
+	N-tilde.sym, O-acute-accent.sym, U-acute-accent.sym, 
+	a_-acute-accent.sym, e_-acute-accent.sym, excl-open.sym,
+	i_-acute-accent.sym, n_-tilde.sym, o_-acute-accent.sym, 
+	quest-open.sym, u_-acute-accent.sym: Added a bunch of new
+	spanish characters by Carlos.
+
+2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* Makefile.am, configure.ac, system-commonrc.in, cascade/*.sym: Added
 	RF Cascade symbol library and symbols.  (updated symbols to the latest
 	file format: 1)

@@ -483,8 +483,77 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
       temp_string = g_strdup_printf("%s%cu_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
-      
-	
+
+    case (225): /* a-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%ca_-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (233): /* e-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%ce_-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (237): /* i-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%ci_-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (243): /* o-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%co_-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (250): /* u-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%cu_-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (193): /* A-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%cA-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (201): /* E-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%cE-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (205): /* I-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%cI-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (211): /* O-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%cO-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (218): /* U-acute_accent spanish */
+      temp_string = g_strdup_printf("%s%cU-acute-accent.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (241): /* n-tilde spanish */
+      temp_string = g_strdup_printf("%s%cn_-tilde.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (209): /* N-tilde spanish */
+      temp_string = g_strdup_printf("%s%cN-tilde.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (161): /* open exclamation spanish */
+      temp_string = g_strdup_printf("%s%cexcl-open.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (191): /* open question spanish */
+      temp_string = g_strdup_printf("%s%cquest-open.sym",
+              w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+     
     default:	
       /* this is needed since WinNT file systems are 
        * case insensitive, and cannot tell the difference 

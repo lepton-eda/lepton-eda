@@ -1,3 +1,8 @@
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/ext_chars.sch: Added all the new spanish characters by 
+	Carlos to the test schematic.
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_preview.nw: Set the size of all preview windows to the
