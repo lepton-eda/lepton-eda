@@ -61,6 +61,8 @@ libpng-1.0.8-2.tar.gz  zlib-1.1.3-5-src.tar.gz
 
 *	set HOME to something useful (c:\devel)
 
+*	set TMP to something useful (c:\tmp)
+
 * 	I had to remount / in textmode so that I wouldn't get syntax errors
 	umount /
 	mount c:/cygwin /
