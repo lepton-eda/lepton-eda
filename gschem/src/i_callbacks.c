@@ -187,6 +187,7 @@ DEFINE_I_CALLBACK(file_new_window)
 
 	s_log_message("New Window created\n");
 	i_set_filename(w_current, w_current->page_current->page_filename);
+	x_repaint_background(w_current);
 }
 
 /* don't use the widget parameter on this function, or do some
