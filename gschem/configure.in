@@ -278,6 +278,53 @@ if test "$debug" = "yes"; then
 	CFLAGS="$CFLAGS -g"
 fi
 
+# search for notangle
+AC_PATH_PROG(NOTANGLE, notangle, no, ${PATH})
+cfiles=`\ls -1 src/gschem.c 2> /dev/null`
+exit_status=$?
+
+if test "$NOTANGLE" = "no" -a "$exit_status" = "1"; then
+        echo "** Cannot find notangle (part of noweb)! **"
+	AC_MSG_ERROR(noweb is required if you are building without C source files)
+fi
+
+# search for noweave
+AC_PATH_PROG(NOWEAVE, noweave, no, ${PATH})
+
+if test "$NOWEAVE" = "no"; then 
+        echo "** Cannot find nowave (part of noweb)! **"
+	echo "** Documentation creation disabled **"
+	NOWEAVE=echo
+	TEXI2DVI=echo
+	TEXI2HTML=echo
+else 
+
+	# search for texi2dvi
+	AC_PATH_PROG(TEXI2DVI, texi2dvi, no, ${PATH})
+
+	if test "$TEXI2DVI" = "no"; then 
+       		echo "** Cannot find texi2dvi **"
+		echo "** DVI file creation disabled **"
+		TEXI2DVI=echo
+	fi
+
+	# search for texi2html
+	AC_PATH_PROG(TEXI2HTML, texi2html, no, ${PATH})
+
+	if test "$TEXI2HTML" = "no"; then 
+       		echo "** Cannot find texi2html **"
+		echo "** HTML file creation disabled **"
+		TEXI2HTML=echo
+	fi
+fi
+
+# search for indent
+AC_PATH_PROG(INDENT, indent, no, ${PATH})
+
+if test "$INDENT" = "no"; then 
+        echo "** Cannot find indent, C code formatting disabled **"
+	INDENT=echo
+fi
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
@@ -377,6 +424,12 @@ AC_SUBST(DL_LIB)
 AC_SUBST(GTK)
 AC_SUBST(GDK)
 AC_SUBST(GLIB)
+
+AC_SUBST(NOTANGLE)
+AC_SUBST(NOWEAVE)
+AC_SUBST(TEXI2DVI)
+AC_SUBST(TEXI2HTML)
+AC_SUBST(INDENT)
 
 AC_OUTPUT( 	Makefile \
 		src/Makefile \

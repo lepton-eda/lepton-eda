@@ -44,6 +44,7 @@ info:
 	@echo "${MAKE} distconfig   Create dist ./configure (and all Makefiles)"
 	@echo "${MAKE} reconfig     Recreate ./configure (and all Makefiles)"
 	@echo "${MAKE} proto        Recreate all prototype.h files"
+	@echo "${MAKE} src          Create all *.c files from *.nw files"
 	@echo "${MAKE} all          Just build. Do not use! Run make install"
 	@echo ""
 	@echo ""
@@ -96,6 +97,9 @@ config: libgeda_config symbols_config gschem_config gnetlist_config \
 # This recreates all ./configure scripts and Makefile.in files
 reconfig: libgeda_reconfig symbols_reconfig gschem_reconfig gnetlist_reconfig \
           gsymcheck_reconfig utils_reconfig
+
+# This creates all *.c files from *.nw files
+src: libgeda_src gschem_src
 
 # This recreates all ./configure scripts and Makefile.in files ready
 # for distribution (removes dependency checking 
@@ -174,6 +178,9 @@ gschem_config:
 
 gschem_reconfig: 
 	( cd gschem$(CD_VERSION); autoreconf --force ; automake )
+
+gschem_src: 
+	( cd gschem$(CD_VERSION)/src; make src )
 
 gschem_distconfig: 
 	( cd gschem$(CD_VERSION); autoreconf --force ; automake --include-deps )
@@ -313,6 +320,9 @@ libgeda_config:
 
 libgeda_reconfig: 
 	( cd libgeda$(CD_VERSION); autoreconf --force ; automake )
+
+libgeda_src: 
+	( cd libgeda$(CD_VERSION)/src; make src )
 
 libgeda_distconfig: 
 	( cd libgeda$(CD_VERSION); autoreconf --force ; automake --include-deps )

@@ -1,7 +1,5 @@
 
-man_MANS = gschem.1
-
-EXTRA_DIST = gschem.txt gschemdoc.texi gschem.1
+EXTRA_DIST = libgeda.texi
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

@@ -116,7 +116,6 @@ void s_traverse_sheet(TOPLEVEL *pr_current, OBJECT *start, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
 void s_traverse_clear_all_visited(OBJECT *object_head);
 NET *s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object, char *hierarchy_tag);
-NET *s_traverse_bus(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object, char *hierarchy_tag);
 /* vams_misc.c */
 char *vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found);
 SCM vams_get_package_attributes(SCM scm_uref);

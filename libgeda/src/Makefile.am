@@ -4,19 +4,23 @@
 # level Makefile.
 AUTOMAKE_OPTIONS = foreign
 
-NOTANGLE=       notangle
+NOTANGLE=       @NOTANGLE@
+NOWEAVE=        @NOWEAVE@
+
 NOTANGLEFLAGS=  
-NOWEAVE=        noweave
 NOWEAVEFLAGS=   -n -index
 TEXIBACKEND=    -backend ../scripts/geda_totexi
-MAKEINFO=       makeinfo
-TEXI2DVI=       texi2dvi
-TEXI2HTML=      texi2html
-INDENTBIN=      indent
+TEXIROOT=       ../docs/libgeda.texi
+
+
+MAKEINFO=       @MAKEINFO@
+TEXI2DVI=       @TEXI2DVI@
+TEXI2HTML=      @TEXI2HTML@
+INDENTBIN=      @INDENT@
 INDENTFLAG=     -kr -i2
 
 
-VPATH = ../noweb:src
+VPATH = ../noweb:../docs:src
 
 
 # Build a libtool library, libhello.la for installation in libdir.
@@ -32,15 +36,7 @@ BUILT_SOURCES = \
 	s_page.nw s_scratch.nw s_slib.nw s_color.nw s_undo.nw s_conn.nw \
 	s_cue.nw s_tile.nw g_smob.nw libgeda.nw
 
-libgeda_la_SOURCES = \
-	a_basic.c f_basic.c f_print.c f_image.c g_basic.c m_basic.c \
-	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c \
-	o_circle_basic.c o_complex_basic.c o_line_basic.c o_list.c \
-	o_net_basic.c o_selection.c o_bus_basic.c o_text_basic.c \
-	o_pin_basic.c o_image.c u_basic.c s_attrib.c s_basic.c \
-	s_clib.c s_hierarchy.c s_papersizes.c s_stretch.c s_log.c \
-	s_page.c s_scratch.c s_slib.c s_color.c s_undo.c s_conn.c \
-	s_cue.c s_tile.c g_smob.c libgeda.c
+libgeda_la_SOURCES = $(BUILT_SOURCES:.nw=.c)
 
 libgeda_la_LDFLAGS = -version-info 12:0:0
 
@@ -50,18 +46,40 @@ INCLUDES = -I$(top_srcdir)/include @GUILE_CFLAGS@ @X_CFLAGS@
 
 EXTRA_DIST = create_proto 
 
-SUFFIXES = .nw
+TEXIFILES = $(BUILT_SOURCES:.nw=.texi)
+
+src: $(libgeda_la_SOURCES)
+	@echo Finished building the C source
+
+info: $(TEXIFILES) $(TEXIROOT)
+	$(MAKEINFO) $(TEXIROOT)
+
+dvi: $(TEXIFILES) $(TEXIROOT)
+	$(TEXI2DVI) $(TEXIROOT)
+
+html: $(TEXIFILES) $(TEXIROOT)
+	$(TEXI2HTML) -split_chapter $(TEXIROOT)
+
+
+SUFFIXES = .nw .texi
 
 .nw.c:
 	$(NOTANGLE) $(NOTANGLEFLAGS) -R'$@ : *' $< > ../src/$@
 	$(INDENTBIN) $(INDENTFLAG) ../src/$@
 	rm -f ../src/$@~
 
+.nw.texi:
+	$(NOWEAVE) $(NOWEAVEFLAGS) $(TEXIBACKEND) $< > $@
+
+
 
 MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
 CLEANFILES = *.log core FILE *~ prototype.bak
 DISTCLEANFILES = *.log core FILE *~ prototype.bak Makefile.in configure
-MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h Makefile.in configure *.c
+MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h \
+			Makefile.in configure \
+			*.c *.html *.dvi *.texi *.info *.info-* *.aux *.fn \
+			*.fns *.cp *.ky *.pg *.toc *.tp *.vr 
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.

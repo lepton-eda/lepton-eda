@@ -1,3 +1,11 @@
+2001-06-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Further improvements on the noweb build mechansim
+
+	* src/Makefile.am: Added the ability to build the docs
+
+	* docs/Makefile.am: Added makefile
+
 2001-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Minor cleanup

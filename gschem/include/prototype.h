@@ -552,7 +552,6 @@ void o_select_unselect_all(TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);
-/* o_stretch.c */
 /* o_text.c */
 void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);

@@ -73,7 +73,7 @@ Copyright @copyright{} xxxx XXXX.
 * File s_undo.c:: file s_undo.c.
 * File u_basic.c:: file o_basic.c.
 
-* Fonction Index:: all function names.
+* Function Index:: all function names.
 @end menu
 
 
@@ -119,8 +119,8 @@ Copyright @copyright{} xxxx XXXX.
 
 
 @c PART 6 : The End of the Document
-@node Fonction Index,,,Top
-@unnumbered Fonction Index
+@node Function Index,,,Top
+@unnumbered Function Index
 
 @printindex fn
 
