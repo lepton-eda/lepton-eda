@@ -26,8 +26,6 @@
 
 /* public functions */
 int InstallSoftware(void);
-/* TODO: remove it */
-struct CompsTable_s *get_component_by_name(char *szName);
 void mark_to_be_installed(void);
 
 
