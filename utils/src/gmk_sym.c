@@ -193,7 +193,7 @@ int main(int argc,char **argv)
       }
   line_nub=-1;
 
-  printf("v 20021103\n"); /* The v character is the version of the file AVH */
+  printf("v 20030525\n"); /* The v character is the version of the file AVH */
 
   while (fgets(LineBuf,sizeof(LineBuf)-1,stream) != NULL)
         {
@@ -252,8 +252,8 @@ int line2fields(char *pBuf,int max_fields,char *pField[])
 /***************************************************/
 void cross(int pos_x,int pos_y,int color)
 {
-   printf("L %d %d %d %d %d\n",pos_x+-50,pos_y,pos_x+50,pos_y,color);
-   printf("L %d %d %d %d %d\n",pos_x,pos_y+50,pos_x,pos_y-50,color);
+   printf("L %d %d %d %d %d 0 0 0 -1 -1\n",pos_x+-50,pos_y,pos_x+50,pos_y,color);
+   printf("L %d %d %d %d %d 0 0 0 -1 -1\n",pos_x,pos_y+50,pos_x,pos_y-50,color);
 }
 
 /***************************************************/
@@ -287,7 +287,8 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
      }
   else if (shape == DOT_SHAPE)
      {
-     printf("V %d %d 50 %d\n",pos_x-50*xdir,pos_y-50*ydir,CYAN);
+     printf("V %d %d 50 %d 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n",
+	                         pos_x-50*xdir,pos_y-50*ydir,CYAN);
      printf("P %d %d %d %d %d 0 1\n",pos_x-100*xdir,pos_y-100*ydir,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
 			         WHITE);
@@ -295,9 +296,9 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
      }
   else if (shape == CLOCK_SHAPE)
      {
-     printf("L %d %d %d %d %d\n",pos_x-100*ydir,pos_y-100*xdir,
+     printf("L %d %d %d %d %d 0 0 0 -1 -1\n",pos_x-100*ydir,pos_y-100*xdir,
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
-     printf("L %d %d %d %d %d\n",pos_x+100*ydir,pos_y+100*xdir,
+     printf("L %d %d %d %d %d 0 0 0 -1 -1\n",pos_x+100*ydir,pos_y+100*xdir,
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
      printf("P %d %d %d %d %d 0 1\n",pos_x,pos_y,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
@@ -439,7 +440,7 @@ int make_box(int fldcnt,char *pFields[])
 
      /* new file format: x y width height color width 
      end type length space filling fillwidth angle1 pitch1 angle2 pitch2 */
-  printf("B %d %d %d %d %d 0 0 0 -1 -1 0 0 -1 -1 -1 -1\n",pos_x,pos_y,BoxWidth,BoxHeight,GREEN);
+  printf("B %d %d %d %d %d 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n",pos_x,pos_y,BoxWidth,BoxHeight,GREEN);
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+700,YELLOW,font_size);
   printf("device=%s\n",device);
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+900,YELLOW,font_size);

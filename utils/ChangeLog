@@ -1,3 +1,8 @@
+2003-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gmk_sym.c: Applied patch by Holger Dietze to fix Bug #63:
+	"utils/gmk_sym is outdated"
+
 2003-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/tragesym, README: Added tragesym 0.0.5 by Werner Hoch.
