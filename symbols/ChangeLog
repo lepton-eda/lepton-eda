@@ -1,3 +1,8 @@
+2002-11-21 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[89]?-*.sym: completed symbols (added footprint, numslot,...)
+	* 4000/40[123]??-*.sym: completed symbols (added footprint, numslot,...)
+	* 4000/4081-2.sym added
+
 2002-11-17 Werner Hoch <werner.ho@gmx.de>
 	* 4000/40[567]?-*.sym: completed symbols (added net, footprint, ..)
 	* 4000/: 4053-1.sym marked as unrepairable, 
