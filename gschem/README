@@ -55,14 +55,14 @@ IMPORTANT
 	symbols (same version as gschem)
 	This can be found on the gEDA website/ftpsite
 		
-	GUILE - guile-1.4 is required (and anything guile requires).  Guile
-	can be found at: ftp://prep.ai.mit.edu/pub/gnu/guile 
+	GUILE - guile-1.4 or 1.6 is required (and anything guile requires).  
+	Guile can be found at: ftp://ftp.gnu.org/pub/gnu/guile
 
-	LibStroke 0.4 [OPTIONAL] - if you want stroke support.  The homepage
+	LibStroke 0.5.1 [OPTIONAL] - if you want stroke support.  The homepage
 	for LibStroke is: http://www.etla.net/libstroke/
 
-	libgdgeda 1.8 [OPTIONAL] - if you want the ability to write png
-	images.  libgdgeda is based on gd 1.8.3  The homepage for gd 1.8 is
+	libgdgeda 2.0.9 [OPTIONAL] - if you want the ability to write png
+	images.  libgdgeda is based on gd 2.0.9  The homepage for gd 2.0.x is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist
 
