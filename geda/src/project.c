@@ -102,8 +102,8 @@ void ProjectNew(const char *szPath)
 	{
 		iResult = MsgBox(
 			pWindowMain,
-			"Question ...",
-			"Project already exists. Overwrite ?",
+			_("Question..."),
+			_("Project already exists. Overwrite?"),
 			MSGBOX_QUESTION | MSGBOX_YES | MSGBOX_NOD | MSGBOX_CANCEL
 			);
 		if (iResult != MSGBOX_YES)
@@ -138,19 +138,28 @@ void ProjectOpen(const char *szPath)
 	int iResult;
 	
 	chdir(pDefaultProjectDir);
-	
-	strcpy(Project.szName, FileGetName(szPath));
-	strcpy(Project.szExt, FileGetExt(szPath));
-	strcpy(Project.szDir, FileGetDir(szPath));
-	chdir(Project.szDir);
 
-	iResult = DocLoad(szPath);
+	/* this functions fail if the szPath is a directory */
+	/* lets do an extra file test */
+	if (g_file_test(szPath,G_FILE_TEST_IS_REGULAR)) {
+	  strcpy(Project.szName, FileGetName(szPath));
+	  strcpy(Project.szExt, FileGetExt(szPath));
+	  strcpy(Project.szDir, FileGetDir(szPath));
+	  
+	  chdir(Project.szDir);
+	  
+	  iResult = DocLoad(szPath);
+	}
+	else {
+	  iResult = FAILURE;
+	}
+
 	if (iResult != SUCCESS)
 	{
 		MsgBox(
 			pWindowMain,
-			"Error !",
-			"Cannot load project !",
+			_("Error!"),
+			_("Cannot load project!"),
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		return;
@@ -189,8 +198,8 @@ int ProjectSave(void)
 	{
 		MsgBox(
 			pWindowMain,
-			"Error !",
-			"Cannot save project !",
+			_("Error!"),
+			_("Cannot save project!"),
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		return FAILURE;

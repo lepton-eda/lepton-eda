@@ -1,3 +1,7 @@
+2005-03-25 Werner Hoch <werner.ho@gmx.de>
+	* src/project.c: added file check, geda hang if theres no file
+	  selection or selection is a directory (Bug #156)
+
 2005-03-19 Werner Hoch <werner.ho@gmx.de>
 
 	* po/de_DE.po, po/LINGUAS: added german translation
