@@ -480,12 +480,14 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 
   /* really bound the left */ 
   if (w_current->page_current->left < 0) {
-    w_current->page_current->left = 0; 
+    w_current->page_current->left = 0;
+    fix++;
   }
 						     
   /* really bound the top */ 
   if (w_current->page_current->top < 0) { 
-    w_current->page_current->top = 0; 
+    w_current->page_current->top = 0;
+    fix++;
   }
 
   if (fix != 0) {

@@ -71,7 +71,7 @@ o_copy_start(TOPLEVEL *w_current, int x, int y)
     w_current->last_y = w_current->start_y = fix_y(w_current, y);
     o_drawbounding(w_current, NULL,
                    w_current->page_current->selection2_head->next,
-                   x_get_color(w_current->bb_color));
+                   x_get_color(w_current->bb_color), TRUE);
     w_current->inside_action = 1;
   }
 }
@@ -460,8 +460,9 @@ o_copy_end(TOPLEVEL *w_current)
 
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-    o_erasebounding(w_current, NULL, 
-                    w_current->page_current->selection2_head->next);
+    o_drawbounding(w_current, NULL,
+                   w_current->page_current->selection2_head->next,
+                   x_get_color(w_current->bb_color), TRUE);
   }
 
   o_selection_remove_most(w_current,

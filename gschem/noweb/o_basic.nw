@@ -122,7 +122,7 @@ o_redraw_all(TOPLEVEL *w_current)
       case(ENDCOPY):
         o_drawbounding(w_current, NULL,
                        w_current->page_current->selection2_head->next,
-                       x_get_color(w_current->bb_color));
+                       x_get_color(w_current->bb_color), FALSE);
         break;
 
       case(DRAWCOMP):
@@ -131,7 +131,7 @@ o_redraw_all(TOPLEVEL *w_current)
                        page_current->
                        complex_place_head->next,
                        NULL,
-                       x_get_color(w_current->bb_color));
+                       x_get_color(w_current->bb_color), FALSE);
         break;
 
       case(DRAWATTRIB):
@@ -142,7 +142,7 @@ o_redraw_all(TOPLEVEL *w_current)
                        page_current->
                        attrib_place_head->next,
                        NULL,
-                       x_get_color(w_current->bb_color));
+                       x_get_color(w_current->bb_color), FALSE);
         break;
     }
   }
@@ -287,23 +287,18 @@ o_erase_single(TOPLEVEL *w_current, OBJECT *object)
 /* name is blah */
 void
 o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, 
-	       GdkColor *color)
+	       GdkColor *color, int firsttime)
 {
   int diff_x, diff_y;
   int test_x, test_y;
 
   /* static is highly temp */	
   /* you have to make these static... for the once mode */
-  int rleft, rtop, rbottom, rright;
+  static int rleft, rtop, rbottom, rright;
 
   if (!o_list && !s_list) {
     return;
   }
-
-#if 0 /* this once stuff is a start at fixing bounding box mode */
-  /* highly temp */
-  static int once=0;
-#endif
 
   if ((w_current->last_drawb_mode == OUTLINE) &&
       (w_current->actionfeedback_mode == BOUNDINGBOX)) {
@@ -573,24 +568,24 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
   }
 
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-    /* this slows things down quite a bit hack */
-    /* if (once == 0) {*/
-    if (o_list) {
-      get_complex_bounds(w_current, o_list,
-                         &rleft  ,
-                         &rtop   ,
-                         &rright ,
-                         &rbottom);
-    } else if (s_list) {
-      get_complex_bounds_selection(w_current, s_list,
-				   &rleft  ,
-				   &rtop   ,
-				   &rright ,
-				   &rbottom);
+
+    if (firsttime == TRUE) {
+      if (o_list) {
+        get_complex_bounds(w_current, o_list,
+                           &rleft  ,
+                           &rtop   ,
+                           &rright ,
+                           &rbottom);
+      } else if (s_list) {
+        get_complex_bounds_selection(w_current, s_list,
+                                     &rleft  ,
+                                     &rtop   ,
+                                     &rright ,
+                                     &rbottom);
+      }
+      /*printf("once\n");*/
+    
     }
-    /* printf("once\n");*/
-    /* once=1;*/
-    /* }*/
     diff_x = w_current->last_x - w_current->start_x;
     diff_y = w_current->last_y - w_current->start_y;
     gdk_gc_set_foreground(w_current->bounding_xor_gc, color);

@@ -1,7 +1,28 @@
+2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/gschem.nw: Removed the "This is alpha software" message and
+	  added the standard gpl/gnu software message
+
+	* noweb/a_pan.nw: Oops, if you mouse pan around in a corner you get
+	  really weird aspect ratio changes.  Fixed.
+
+	* noweb/o_basic.nw: Added a parameter to o_drawbounding which controls
+	  if this is the first time this function is being called for this
+	  operation, should improve performance a tremendous amount when
+	  dealing with bounding boxes (constant time to draw)
+
+	* noweb/*.nw: Went through all code which references
+	  o_drawbounding and set the above parameter to the correct value
+
+	* noweb/o_copy.nw, o_move.nw: The bounding box (when enabled) was
+	  not being erased properly after doing a move or copy. Fixed.
+	
 2001-07-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: A little more work to get indent vs gindent to
           be detected correctly
+
+	* lib/system-gschemrc.in: Added the commented out hook lines
 
 2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
 

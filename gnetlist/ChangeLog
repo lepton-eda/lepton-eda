@@ -1,3 +1,8 @@
+2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Removed the "This is alpha software" message and
+	  added the standard gpl/gnu software message
+
 2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Make sure configure scripts work with autoconf-2.50

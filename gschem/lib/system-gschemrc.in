@@ -769,6 +769,22 @@
 
 
 ;
+; Start of hooks
+;
+
+;
+; Comment in this scheme code if you want automatic numbering when
+; placing new component and copying components
+;
+;(load (string-append geda-data "/scheme/auto-uref.scm"))
+;(add-hook! add-component-hook auto-uref)
+;(add-hook! copy-component-hook auto-uref)
+
+;
+; End of hooks
+;
+
+;
 ; Start of path related keywords
 ;
 

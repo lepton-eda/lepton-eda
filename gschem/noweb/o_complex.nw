@@ -228,7 +228,7 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   o_drawbounding(w_current, 
                  w_current->page_current->complex_place_head->next,
                  NULL,
-                 x_get_color(w_current->bb_color));
+                 x_get_color(w_current->bb_color), TRUE);
 }
 
 
@@ -527,7 +527,7 @@ o_complex_rubbercomplex(TOPLEVEL *w_current)
   o_drawbounding(w_current,
                  w_current->page_current->complex_place_head->next,
                  NULL,
-                 x_get_color(w_current->bb_color));
+                 x_get_color(w_current->bb_color), FALSE);
 }
 
 

@@ -285,7 +285,7 @@ o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y)
   o_drawbounding(w_current,
                  w_current->page_current->attrib_place_head->next,
                  NULL,
-                 x_get_color(w_current->bb_color));
+                 x_get_color(w_current->bb_color), TRUE);
 }
 
 
@@ -336,7 +336,7 @@ o_attrib_end(TOPLEVEL *w_current)
                    w_current->page_current->
                    attrib_place_head->next,
                    NULL,
-                   x_get_color(w_current->bb_color));
+                   x_get_color(w_current->bb_color), FALSE);
   }
 
   /* TODO: you need to erase the bounding box if have that mode
@@ -347,19 +347,19 @@ o_attrib_end(TOPLEVEL *w_current)
                    w_current->page_current->
                    attrib_place_head->next,
                    NULL,
-                   x_get_color(w_current->text_color));
+                   x_get_color(w_current->text_color), FALSE);
   } else {
     o_drawbounding(w_current,
                    w_current->page_current->
                    attrib_place_head->next,
                    NULL,
-                   x_get_color(w_current->select_color));
+                   x_get_color(w_current->select_color), FALSE);
   }
 
   w_current->override_color = -1;
 
-  (*w_current->page_current->object_tail->draw_func)(
-                                                     w_current, w_current->page_current->object_tail);
+  (*w_current->page_current->
+   object_tail->draw_func)(w_current, w_current->page_current->object_tail);
 
   w_current->page_current->CHANGED = 1;
 
@@ -397,7 +397,7 @@ o_attrib_rubberattrib(TOPLEVEL *w_current)
   o_drawbounding(w_current,
                  w_current->page_current->attrib_place_head->next,
                  NULL,
-                 x_get_color(w_current->bb_color));
+                 x_get_color(w_current->bb_color), FALSE);
 }
 
 

@@ -82,7 +82,7 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
 
     o_drawbounding(w_current, NULL,
                    w_current->page_current->selection2_head->next,
-                   x_get_color(w_current->bb_color));
+                   x_get_color(w_current->bb_color), TRUE);
 
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
@@ -453,8 +453,9 @@ void o_move_end(TOPLEVEL * w_current)
 
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
-    o_erasebounding(w_current, NULL,
-                    w_current->page_current->selection2_head->next);
+    o_drawbounding(w_current, NULL,
+                   w_current->page_current->selection2_head->next,
+                   x_get_color(w_current->bb_color), FALSE);
   }
 
   w_current->page_current->CHANGED = 1;

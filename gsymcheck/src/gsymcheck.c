@@ -61,12 +61,25 @@ main_prog(int argc, char *argv[])
 	s_log_init(cwd, "gsymcheck.log");
 	free(cwd);
 	
+  s_log_message(
+     "gEDA/gsymcheck version %s\n", VERSION);
+  s_log_message(
+     "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n");
+  s_log_message(
+     "This is free software, and you are welcome to redistribute it under certain\n");
+  s_log_message(
+     "conditions; please see the COPYING file for more details\n\n"); 
 
-	s_log_message("gEDA: gsymcheck version %s - THIS IS AN ALPHA RELEASE!\n", VERSION);
-
-if (!quiet_mode) {
-	fprintf(stderr, "THIS IS AN ALPHA RELEASE! version %s\n", VERSION);
-}
+  if (!quiet_mode) {
+    fprintf(stderr, 
+       "gEDA/symcheck version %s\n", VERSION);
+    fprintf(stderr, 
+       "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n");
+    fprintf(stderr, 
+       "This is free software, and you are welcome to redistribute it under certain\n");
+    fprintf(stderr, 
+      "conditions; please see the COPYING file for more details\n\n"); 
+  }
 
 #ifdef __CYGWIN32__
         fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
