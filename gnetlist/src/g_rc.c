@@ -848,8 +848,8 @@ g_rc_world_size(SCM width, SCM height, SCM border)
 SCM g_rc_net_naming_priority(SCM mode)
 {
     static const vstbl_entry mode_table[] = {
-	{NET_ATTRIBUTE, "net"},
-	{LABEL_ATTRIBUTE, "label"}
+	{NETATTRIB_ATTRIBUTE, "netattrib"},
+	{NETNAME_ATTRIBUTE, "netname"}
     };
 
     RETURN_G_RC_MODE("net-naming-priority", default_net_naming_priority,

@@ -62,9 +62,9 @@
 (define spice:write-two-pin-names
   (lambda (package pin-a pin-b port)
     (display (string-append 
-      (car (spice:get-net package (gnetlist:get-pin-attribute package pin-a "pinnumber"))) " ") port)
+      (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-a "pinnumber"))) " ") port)
     (display (string-append 
-      (car (spice:get-net package (gnetlist:get-pin-attribute package pin-b "pinnumber"))) " ") port)))
+      (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-b "pinnumber"))) " ") port)))
     
 
 
@@ -233,7 +233,7 @@
         (spice:write-net-name-of-component uref (- number-of-pin 1) port)
             ;; generate a pin-name e.g. pin1, pin2, pin3 ...
         (let ((pin-name (number->string number-of-pin)))  
-          (display (car (spice:get-net uref (gnetlist:get-pin-attribute uref pin-name "pinnumber"))) port)
+          (display (car (spice:get-net uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))) port)
           (write-char #\space port))))))
 
 

@@ -7,9 +7,28 @@
 	* src/s_project.c: Disabled all the draw events as gnetlist doesn't
 	do any drawing
 
-2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+	* examples/*.sch, tests/*.sch: Updated sch to use the new netname= 
+        attribute instead of label= (which is now obsolete)
 
-        * configure.in/Makefile.am: Upgraded to automake 1.6.2
+	* lib/system-gschemrc.in, src/g_rc.c: Changed
+	net-naming-priority parameters to start moving away from label= and
+	instead start using netname=
+
+	* src/g_netlist.c, g_register.c: Renamed
+	gnetlist:get-pin-attribute to gnetlist:get-attribute-by-pinseq
+	
+	* src/g_netlist.c, g_register.c: Renamed
+	gnetlist:get-pin-attribute2 to gnetlist:get-attribute-by-pinnumber
+
+	* scheme/gnet-gossip.scm, gnet-spice.scm, gnet-vams.scm, 
+	gnet-vhdl.scm, gnet-vipec.scm: Updated based on above renames
+
+	* src/s_traverse.c, s_net.c: Renamed all instances of label= 
+	to netname=
+
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+        * configure.in, Makefile.am: Upgraded to automake 1.6.2
 
 2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -578,7 +578,8 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 
 /* takes a uref and pinseq number and returns wanted_attribute associated */
 /* with that pinseq pin and component */
-SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib)
+SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
+                              SCM scm_wanted_attrib)
 {
   SCM scm_return_value;
   NETLIST *nl_current;
@@ -679,8 +680,9 @@ SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib)
 }
 
 /* this takes a pin number and returns the appropriate attribute on that pin*/
-/* pin scm_pin is the number associated with the pinseq= attribute */
-SCM g_get_pin_attribute2(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib)
+/* scm_pin is the value associated with the pinnumber= attribute and uref */
+SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
+                               scm_wanted_attrib)
 {
     SCM scm_return_value;
     NETLIST *nl_current;

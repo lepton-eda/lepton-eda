@@ -365,7 +365,7 @@
 ;;; THHE
 ;;; Build the port list from the symbols
 ;;;
-;;; ... wouldn't it be better to feed get-pins, get-pin-attribute and co.
+;;; ... wouldn't it be better to feed get-pins, get-attribute-by-pinnumber and co.
 ;;;     with the device rather than the component? pin names and atributes are locked to
 ;;;     the symbol and not to the instance of the symbol in the sheet!
 
@@ -386,10 +386,10 @@
 (define vhdl:get-device-matching-pins
   (lambda (device pin-list value)
     (cond ((null? pin-list) '())
-	  ((string=? (gnetlist:get-pin-attribute2 device (car pin-list) "type" )
+	  ((string=? (gnetlist:get-attribute-by-pinnumber device (car pin-list) "type" )
                      value)
 	   (cons 
-            (cons (car pin-list) (gnetlist:get-pin-attribute2 device (car pin-list) "width"))  
+            (cons (car pin-list) (gnetlist:get-attribute-by-pinnumber device (car pin-list) "width"))  
 	    (vhdl:get-device-matching-pins device (cdr pin-list) value))
            )
 	  (else (vhdl:get-device-matching-pins device (cdr pin-list) value))

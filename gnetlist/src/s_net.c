@@ -257,10 +257,10 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 		/* only rename if this net name has priority */
 		/* AND, you are using net= attributes as the */
 		/* netnames which have priority */
-		if (pr_current->net_naming_priority == NET_ATTRIBUTE) {
+		if (pr_current->net_naming_priority == NETATTRIB_ATTRIBUTE) {
 
 #if DEBUG
-		    printf("\nNET_ATTRIBUTE\n");
+		    printf("\nNETATTRIB_ATTRIBUTE\n");
 #endif
 		    if (n_current->net_name_has_priority) {
 
@@ -289,17 +289,17 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 			if (!s_rename_search
 			    (name, n_current->net_name, TRUE)) {
 			    fprintf(stderr,
-				    "Found duplicate net label, renaming [%s] to [%s]\n",
+				    "Found duplicate net name, renaming [%s] to [%s]\n",
 				    name, n_current->net_name);
 			    s_rename_add(name, n_current->net_name);
 			    name = n_current->net_name;
 			}
 		    }
 
-		} else {	/* LABEL_ATTRIBUTE */
+		} else {	/* NETNAME_ATTRIBUTE */
 
 #if DEBUG
-		    printf("\nLABEL_ATTRIBUTE\n");
+		    printf("\nNETNAME_ATTRIBUTE\n");
 #endif
 
 		    /* here we want to rename the net */
@@ -326,7 +326,7 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 			if (!s_rename_search
 			    (name, n_current->net_name, TRUE)) {
 			    fprintf(stderr,
-				    "Found duplicate net label, renaming [%s] to [%s]\n",
+				    "Found duplicate net name, renaming [%s] to [%s]\n",
 				    name, n_current->net_name);
 
 			    s_rename_add(name, n_current->net_name);

@@ -52,7 +52,7 @@ char *default_bitmap_directory = NULL;
 
 int default_init_right = WIDTH_C;
 int default_init_bottom = HEIGHT_C;
-int default_net_naming_priority = NET_ATTRIBUTE;
+int default_net_naming_priority = NETATTRIB_ATTRIBUTE;
 int default_hierarchy_traversal = TRUE;
 int default_hierarchy_uref_mangle = TRUE;
 int default_hierarchy_netname_mangle = TRUE;

@@ -365,9 +365,9 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
     new_net = nets = s_net_add(nets);
     new_net->nid = object->sid;
 
-    /* Pins are NOT allowed to supply the label= attribute */
+    /* pins are not allowed to have the netname attribute attached to them */
     if (o_current->type != OBJ_PIN) {
-	temp = o_attrib_search_name_single(o_current, "label", NULL);
+	temp = o_attrib_search_name_single(o_current, "netname", NULL);
 
 	if (temp) {
 	    new_net->net_name =

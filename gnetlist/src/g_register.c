@@ -93,8 +93,10 @@ void g_register_funcs(void)
                       g_get_toplevel_attribute);
   /* gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode); no longer needed */
   gh_new_procedure1_0("gnetlist:get-renamed-nets", g_get_renamed_nets);
-  gh_new_procedure3_0("gnetlist:get-pin-attribute", g_get_pin_attribute);
-  gh_new_procedure3_0("gnetlist:get-pin-attribute2", g_get_pin_attribute2);
+  gh_new_procedure3_0("gnetlist:get-attribute-by-pinseq",
+                      g_get_attribute_by_pinseq);
+  gh_new_procedure3_0("gnetlist:get-attribute-by-pinnumber",
+                      g_get_attribute_by_pinnumber);
   gh_new_procedure1_0("gnetlist:vams-get-package-attributes",
                       vams_get_package_attributes);
 

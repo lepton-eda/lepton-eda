@@ -76,7 +76,7 @@
          (begin          
             (vipec:write-net-name-of-node uref (- number-of-pin 1) netnumbers port)
             (let ((pin-name (number->string number-of-pin)))
-               (display (get-net-number (car (gnetlist:get-nets uref (gnetlist:get-pin-attribute uref pin-name "pinnumber"))) netnumbers) port)
+               (display (get-net-number (car (gnetlist:get-nets uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))) netnumbers) port)
                (write-char #\space port))))))
 
 (define vipec:write-attribs
