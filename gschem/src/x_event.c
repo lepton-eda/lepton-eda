@@ -405,14 +405,23 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				/* for now do move only */
 				/* make sure the list is not empty */
 				if (o_select_selected(w_current)) {
-					o_find_object(w_current, 
+
+					/* don't want to search if shift */
+					/* key is depresed */
+					if (!w_current->SHIFTKEY) {
+					   o_find_object(w_current, 
 					       (int) event->x, 
 					       (int) event->y);
+					}
 				} else {
 					o_select_unselect_all(w_current);
-					o_find_object(w_current, 
+					/* don't want to search if shift */
+					/* key is depresed */
+					if (!w_current->SHIFTKEY) {
+					   o_find_object(w_current, 
 					       (int) event->x, 
 					       (int) event->y);
+                                        }
 				}
 
 				if (!o_select_selected(w_current)) {
