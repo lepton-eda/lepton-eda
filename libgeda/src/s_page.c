@@ -63,12 +63,15 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 {
 	/* printf("freeing\n");*/
 	s_delete_list_fromstart(w_current, p_current->object_head);
+
 	w_current->REMOVING_SEL = 1;
- 	
 	s_delete_list_fromstart(w_current, p_current->complex_place_head);
 	s_delete_list_fromstart(w_current, p_current->attrib_place_head);
 	o_selection_destroy_all(p_current->selection2_head);
 	w_current->REMOVING_SEL = 0;  
+
+	/* free current page undo structs */
+	s_undo_free_all(w_current, p_current); 
 
 	p_current->object_head = NULL;
 	p_current->object_tail = NULL;
@@ -302,6 +305,9 @@ s_page_setup(PAGE *p_current)
 	/* this is used for attributes so */
 	/* that we know which list to search */
 	p_current->object_parent = p_current->object_head; 
+
+ 	/* Init undo struct pointers */
+	s_undo_init(p_current);
 }
 
 int
