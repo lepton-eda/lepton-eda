@@ -58,6 +58,10 @@
 <<i_callbacks.c : i_callback_edit_embed()>>
 <<i_callbacks.c : i_callback_edit_unembed()>>
 <<i_callbacks.c : i_callback_edit_show_hidden()>>
+<<i_callbacks.c : i_callback_edit_find()>>
+<<i_callbacks.c : i_callback_edit_hide_text()>>
+<<i_callbacks.c : i_callback_edit_show_text()>>
+<<i_callbacks.c : i_callback_edit_autonumber_text()>>
 <<i_callbacks.c : i_callback_edit_linetype()>>
 <<i_callbacks.c : i_callback_edit_filltype()>>
 
@@ -1277,6 +1281,103 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 
 
 @ %def i_callback_edit_show_hidden
+
+
+@section Function @code{i_callback_edit_find()}
+
+@defun i_callback_edit_find data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_find()>>=
+DEFINE_I_CALLBACK(edit_find)
+{
+  extern char generic_textstring[256];
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* This is a new addition 3/15 to prevent this from executing
+   * inside an action */
+  if (w_current->inside_action)
+    return;
+
+  find_text_dialog(w_current);
+}
+
+@ %def i_callback_edit_find
+
+
+@section Function @code{i_callback_edit_hide_text()}
+
+@defun i_callback_edit_hide_text data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_hide_text()>>=
+DEFINE_I_CALLBACK(edit_hide_text)
+{
+  extern char generic_textstring[256];
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* This is a new addition 3/15 to prevent this from executing
+   * inside an action */
+  if (w_current->inside_action)
+    return;
+
+  hide_text_dialog(w_current);
+}
+
+@ %def i_callback_edit_hide_text
+
+
+@section Function @code{i_callback_edit_show_text()}
+
+@defun i_callback_edit_show_text data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_show_text()>>=
+DEFINE_I_CALLBACK(edit_show_text)
+{
+  extern char generic_textstring[256];
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* This is a new addition 3/15 to prevent this from executing
+   * inside an action */
+  if (w_current->inside_action)
+    return;
+
+  show_text_dialog(w_current);
+}
+
+@ %def i_callback_edit_show_text
+
+
+
+@section Function @code{i_callback_edit_autonumber_text()}
+
+@defun i_callback_edit_autonumber_text data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_autonumber_text()>>=
+DEFINE_I_CALLBACK(edit_autonumber_text)
+{
+  extern char generic_textstring[256];
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  /* This is a new addition 3/15 to prevent this from executing
+   * inside an action */
+  if (w_current->inside_action)
+    return;
+
+  autonumber_text_dialog(w_current);
+}
+
+@ %def i_callback_edit_autonumber_text
 
 
 @section Function @code{i_callback_edit_linetype()}

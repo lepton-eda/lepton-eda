@@ -131,7 +131,33 @@
 /*********** Start of misc support functions for dialog boxes *******/
 <<x_dialog.c : misc global variables>>
 <<x_dialog.c : x_dialog_raise_all()>>
+/*********** End of misc support functions for dialog boxes *******/
 
+/*********** Start of generic text input dialog box *******/
+<<x_dialog.c : generic_text_input_ok()>>
+<<x_dialog.c : generic_text_input_dialog()>>
+/*********** End of generic text input dialog box *******/
+
+/*********** Start of find text dialog box *******/
+<<x_dialog.c : find_text_ok()>>
+<<x_dialog.c : find_text_done()>>
+<<x_dialog.c : find_text_dialog()>>
+/*********** End of find text dialog box *******/
+
+/*********** Start of hide text dialog box *******/
+<<x_dialog.c : hide_text_ok()>>
+<<x_dialog.c : hide_text_dialog()>>
+/*********** End of hide text dialog box *******/
+
+/*********** Start of show text dialog box *******/
+<<x_dialog.c : show_text_ok()>>
+<<x_dialog.c : show_text_dialog()>>
+/*********** End of show text dialog box *******/
+
+/*********** Start of autonumber text dialog box *******/
+<<x_dialog.c : autonumber_text_ok()>>
+<<x_dialog.c : autonumber_text_dialog()>>
+/*********** End of autonumber text dialog box *******/
 @
 
 
@@ -4277,5 +4303,538 @@ x_dialog_raise_all(TOPLEVEL *w_current)
 
 
 @ %def x_dialog_raise_all
+
+
+@section Function @code{ generic_text_input_ok()}
+
+@defun generic_text_input_ok w_current
+@end defun
+
+<<x_dialog.c : generic_text_input_ok()>>=
+char generic_textstring[256] = "uref=R";
+
+void generic_text_input_ok(GtkWidget * w, TOPLEVEL * w_current)
+{
+  char *string = NULL;
+  int size;
+
+  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  strncpy(generic_textstring, string, 256);
+
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def generic_text_input_ok
+
+
+@section Function @code{ generic_text_input_dialog()}
+
+@defun generic_text_input_dialog w_current
+@end defun
+
+<<x_dialog.c : generic_text_input_dialog()>>=
+void generic_text_input_dialog(TOPLEVEL * w_current)
+{
+  char string[30];
+  int len;
+  GtkWidget *label = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *vbox, *action_area;
+
+  if (!w_current->tswindow) {
+    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+
+    gtk_window_position(GTK_WINDOW(w_current->tswindow),
+			GTK_WIN_POS_MOUSE);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "destroy",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+
+#if 0				/* removed because it was causing the dialog box to not close */
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "delete_event",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+#endif
+
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow),
+			 "Generic String");
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+
+    label = gtk_label_new("Enter new string.");
+    gtk_misc_set_padding(GTK_MISC(label), 20, 20);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_widget_show(label);
+
+    w_current->tsentry = gtk_entry_new_with_max_length(20);
+    gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), w_current->tsentry, FALSE, FALSE, 5);
+    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
+		       GTK_SIGNAL_FUNC(generic_text_input_ok), w_current);
+    gtk_widget_show(w_current->tsentry);
+    gtk_widget_grab_focus(w_current->tsentry);
+
+    buttonok = gtk_button_new_with_label("OK");
+    GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
+    gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		       GTK_SIGNAL_FUNC(generic_text_input_ok), w_current);
+    gtk_widget_show(buttonok);
+    gtk_widget_grab_default(buttonok);
+  }
+
+  if (!GTK_WIDGET_VISIBLE(w_current->tswindow)) {
+    len = strlen(generic_textstring);
+    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), generic_textstring);
+    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
+    gtk_widget_show(w_current->tswindow);
+    gtk_grab_add(w_current->tswindow);
+  }
+}
+
+@ %def generic_text_input_dialog
+
+
+@section Function @code{ find_text_ok()}
+
+@defun find_text_ok w_current
+@end defun
+
+<<x_dialog.c : find_text_ok()>>=
+GtkWidget *checkdescend = NULL;
+int start_find;
+OBJECT *remember_page;
+void find_text_ok(GtkWidget * w, TOPLEVEL * w_current)
+{
+  char *string = NULL;
+  int size, done;
+  GtkWidget *descend;
+
+  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+
+  //    descend = gtk_object_get_data(GTK_OBJECT(w_current->tsentry),"descend");
+
+  strncpy(generic_textstring, string, 256);
+
+
+  while (remember_page != w_current->page_current->object_head) {
+    s_hierarchy_up(w_current, w_current->page_current->up);
+  }
+  done =
+      o_edit_find_text(w_current, remember_page, string,
+		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
+						    (checkdescend)),
+		       !start_find);
+  if (done) {
+    gtk_grab_remove(w_current->tswindow);
+    gtk_widget_destroy(w_current->tswindow);
+    w_current->tswindow = NULL;
+  }
+  start_find = 0;
+
+}
+@ %def find_text_ok
+
+
+@section Function @code{ find_text_done()}
+
+@defun find_text_done w_current
+@end defun
+
+<<x_dialog.c : find_text_done()>>=
+void find_text_done(GtkWidget * w, TOPLEVEL * w_current)
+{
+  char *string = NULL;
+  int size;
+  GtkWidget *descend;
+
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def find_text_done
+
+@section Function @code{ find_text_dialog()}
+
+@defun find_text_dialog w_current
+@end defun
+
+<<x_dialog.c : find_text_dialog()>>=
+void find_text_dialog(TOPLEVEL * w_current)
+{
+  char string[30];
+  int len;
+  GtkWidget *label = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *buttondone = NULL;
+  GtkWidget *vbox, *action_area;
+  OBJECT *object = NULL;
+
+  start_find = 1;
+  remember_page = w_current->page_current->object_head;
+  if ((object = o_select_return_first_object(w_current)) != NULL) {
+    if (object->type == OBJ_TEXT) {
+      strncpy(generic_textstring, object->text->string, 256);
+    }
+  }
+
+
+
+  if (!w_current->tswindow) {
+    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+
+    gtk_window_position(GTK_WINDOW(w_current->tswindow),
+			GTK_WIN_POS_MOUSE);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "destroy",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+
+#if 0				/* removed because it was causing the dialog box to not close */
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "delete_event",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+#endif
+
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), "Find text");
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+
+    label = gtk_label_new("Text to find:");
+    gtk_misc_set_padding(GTK_MISC(label), 20, 20);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_widget_show(label);
+
+    w_current->tsentry = gtk_entry_new_with_max_length(20);
+    gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), w_current->tsentry, FALSE, FALSE, 5);
+    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
+		       GTK_SIGNAL_FUNC(find_text_ok), w_current);
+    gtk_widget_show(w_current->tsentry);
+    gtk_widget_grab_focus(w_current->tsentry);
+
+    buttonok = gtk_button_new_with_label("Find");
+    GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
+    gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		       GTK_SIGNAL_FUNC(find_text_ok), w_current);
+
+    buttondone = gtk_button_new_with_label("Done");
+    GTK_WIDGET_SET_FLAGS(buttondone, GTK_CAN_DEFAULT);
+    gtk_box_pack_start(GTK_BOX(action_area), buttondone, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttondone), "clicked",
+		       GTK_SIGNAL_FUNC(find_text_done), w_current);
+
+
+    checkdescend =
+	gtk_check_button_new_with_label("descend into hierarchy");
+    //          gtk_object_set_data (GTK_OBJECT (w_current->tswindow), "descend", w_current->preview_checkbox);
+
+    gtk_box_pack_start(GTK_BOX(action_area), checkdescend, TRUE, TRUE, 0);
+
+    gtk_widget_show(buttonok);
+    gtk_widget_show(buttondone);
+    gtk_widget_show(checkdescend);
+    gtk_widget_grab_default(buttonok);
+  }
+
+  if (!GTK_WIDGET_VISIBLE(w_current->tswindow)) {
+    len = strlen(generic_textstring);
+    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), generic_textstring);
+    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
+    gtk_widget_show(w_current->tswindow);
+    gtk_grab_add(w_current->tswindow);
+  }
+}
+
+@ %def find_text_dialog
+
+
+@section Function @code{ hide_text_ok()}
+
+@defun hide_text_ok w_current
+@end defun
+
+<<x_dialog.c : hide_text_ok()>>=
+void hide_text_ok(GtkWidget * w, TOPLEVEL * w_current)
+{
+  char *string = NULL;
+  int size;
+
+  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  strncpy(generic_textstring, string, 256);
+
+  o_edit_hide_specific_text(w_current,
+			    w_current->page_current->object_head, string);
+
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def hide_text_ok
+
+
+@section Function @code{ hide_text_dialog()}
+
+@defun hide_text_dialog w_current
+@end defun
+
+<<x_dialog.c : hide_text_dialog()>>=
+void hide_text_dialog(TOPLEVEL * w_current)
+{
+  char string[30];
+  int len;
+  GtkWidget *label = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *vbox, *action_area;
+
+  if (!w_current->tswindow) {
+    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+
+    gtk_window_position(GTK_WINDOW(w_current->tswindow),
+			GTK_WIN_POS_MOUSE);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "destroy",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+
+#if 0				/* removed because it was causing the dialog box to not close */
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "delete_event",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+#endif
+
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), "Hide text");
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+
+    label = gtk_label_new("Hide text starting with:");
+    gtk_misc_set_padding(GTK_MISC(label), 20, 20);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_widget_show(label);
+
+    w_current->tsentry = gtk_entry_new_with_max_length(20);
+    gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), w_current->tsentry, FALSE, FALSE, 5);
+    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
+		       GTK_SIGNAL_FUNC(hide_text_ok), w_current);
+    gtk_widget_show(w_current->tsentry);
+    gtk_widget_grab_focus(w_current->tsentry);
+
+    buttonok = gtk_button_new_with_label("OK");
+    GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
+    gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		       GTK_SIGNAL_FUNC(hide_text_ok), w_current);
+    gtk_widget_show(buttonok);
+    gtk_widget_grab_default(buttonok);
+  }
+
+  if (!GTK_WIDGET_VISIBLE(w_current->tswindow)) {
+    len = strlen(generic_textstring);
+    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), generic_textstring);
+    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
+    gtk_widget_show(w_current->tswindow);
+    gtk_grab_add(w_current->tswindow);
+  }
+}
+
+@ %def hide_text_dialog
+
+
+@section Function @code{ show_text_ok()}
+
+@defun show_text_ok w_current
+@end defun
+
+<<x_dialog.c : show_text_ok()>>=
+void show_text_ok(GtkWidget * w, TOPLEVEL * w_current)
+{
+  char *string = NULL;
+  int size;
+
+  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  strncpy(generic_textstring, string, 256);
+
+  o_edit_show_specific_text(w_current,
+			    w_current->page_current->object_head, string);
+
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def show_text_ok
+
+
+@section Function @code{ show_text_dialog()}
+
+@defun show_text_dialog w_current
+@end defun
+
+<<x_dialog.c : show_text_dialog()>>=
+void show_text_dialog(TOPLEVEL * w_current)
+{
+  char string[30];
+  int len;
+  GtkWidget *label = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *vbox, *action_area;
+
+  if (!w_current->tswindow) {
+    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+
+    gtk_window_position(GTK_WINDOW(w_current->tswindow),
+			GTK_WIN_POS_MOUSE);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "destroy",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+
+#if 0				/* removed because it was causing the dialog box to not close */
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "delete_event",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+#endif
+
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), "Show text");
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+
+    label = gtk_label_new("Show text starting with:");
+    gtk_misc_set_padding(GTK_MISC(label), 20, 20);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_widget_show(label);
+
+    w_current->tsentry = gtk_entry_new_with_max_length(20);
+    gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), w_current->tsentry, FALSE, FALSE, 5);
+    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
+		       GTK_SIGNAL_FUNC(show_text_ok), w_current);
+    gtk_widget_show(w_current->tsentry);
+    gtk_widget_grab_focus(w_current->tsentry);
+
+    buttonok = gtk_button_new_with_label("OK");
+    GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
+    gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		       GTK_SIGNAL_FUNC(show_text_ok), w_current);
+    gtk_widget_show(buttonok);
+    gtk_widget_grab_default(buttonok);
+  }
+
+  if (!GTK_WIDGET_VISIBLE(w_current->tswindow)) {
+    len = strlen(generic_textstring);
+    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), generic_textstring);
+    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
+    gtk_widget_show(w_current->tswindow);
+    gtk_grab_add(w_current->tswindow);
+  }
+}
+@ %def XXX
+
+
+@section Function @code{ autonumber_text_ok()}
+
+@defun autonumber_text_ok w_current
+@end defun
+
+<<x_dialog.c : autonumber_text_ok()>>=
+void autonumber_text_ok(GtkWidget * w, TOPLEVEL * w_current)
+{
+  char *string = NULL;
+  int size;
+
+  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  strncpy(generic_textstring, string, 256);
+
+  o_edit_autonumber_text(w_current, w_current->page_current->object_head,
+			 string);
+
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def autonumber_text_ok
+
+
+@section Function @code{ autonumber_text_dialog()}
+
+@defun autonumber_text_dialog w_current
+@end defun
+
+<<x_dialog.c : autonumber_text_dialog()>>=
+void autonumber_text_dialog(TOPLEVEL * w_current)
+{
+  char string[30];
+  int len;
+  GtkWidget *label = NULL;
+  GtkWidget *buttonok = NULL;
+  GtkWidget *vbox, *action_area;
+
+  if (!w_current->tswindow) {
+    w_current->tswindow = x_create_dialog_box(&vbox, &action_area);
+
+    gtk_window_position(GTK_WINDOW(w_current->tswindow),
+			GTK_WIN_POS_MOUSE);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "destroy",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+
+#if 0				/* removed because it was causing the dialog box to not close */
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+		       "delete_event",
+		       GTK_SIGNAL_FUNC(destroy_window),
+		       &w_current->tswindow);
+#endif
+
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow),
+			 "Autonumber text");
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+
+    label = gtk_label_new("Autonumber text starting with:");
+    gtk_misc_set_padding(GTK_MISC(label), 20, 20);
+    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_widget_show(label);
+
+    w_current->tsentry = gtk_entry_new_with_max_length(20);
+    gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry), 0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), w_current->tsentry, FALSE, FALSE, 5);
+    gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
+		       GTK_SIGNAL_FUNC(autonumber_text_ok), w_current);
+    gtk_widget_show(w_current->tsentry);
+    gtk_widget_grab_focus(w_current->tsentry);
+
+    buttonok = gtk_button_new_with_label("OK");
+    GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
+    gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
+		       GTK_SIGNAL_FUNC(autonumber_text_ok), w_current);
+    gtk_widget_show(buttonok);
+    gtk_widget_grab_default(buttonok);
+  }
+
+  if (!GTK_WIDGET_VISIBLE(w_current->tswindow)) {
+    len = strlen(generic_textstring);
+    gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), generic_textstring);
+    gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
+    gtk_widget_show(w_current->tswindow);
+    gtk_grab_add(w_current->tswindow);
+  }
+}
+
+@ %def autonumber_text_dialog
 
 

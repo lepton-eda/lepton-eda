@@ -1,3 +1,25 @@
+2001-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_key.nw, g_register.nw: Added first bit of Dave Lawrence's 
+	  find text patch (hotkey for find text)
+
+	* noweb/o_misc.nw: Added more of Dave's patch (lowlevel support
+	  functions)
+
+	* noweb/x_dialog.nw: Added more of Dave's patch (new dialog boxes)
+
+	* lib/system-gschemrc.in: Added Dave's new commands to the menu.
+
+	* noweb/g_key.nw, g_register.nw: Added some missing hotkey scheme
+	  functions
+
+	* noweb/o_misc.nw: Minor updates to the patch wrt find-text, did a 
+	  true blue pan instead of calling set_window(...)  Also added a 
+	  zoom extents so that the zoom is about right (still experimental)
+
+	* src/Makefile.am: Changed the order of source file building, so that
+	  g_key.* is before g_register.* 
+
 2001-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw, x_window.nw: Added

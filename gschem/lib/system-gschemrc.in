@@ -1015,7 +1015,11 @@
     ("t" . edit-translate)
     ("b" . edit-embed)
     ("u" . edit-unembed)
-    ("n" . edit-show-hidden)))
+    ("n" . edit-show-hidden)
+    ("Shift F" . edit-find-text)
+    ("h" . edit-hide-text)
+    ("Shift H" . edit-show-text)
+    ("a" . edit-autonumber)))
 
 
 ;;;    ("h" . edit-stretch-hotkey)  Obsolete
@@ -1199,7 +1203,11 @@
            ("Symbol Translate..." edit-translate        edit-translate)
            ("Embed Component"   edit-embed              edit-embed)
            ("Unembed Componnent" edit-unembed           edit-unembed)
-	   ("Show Hidden Text"	edit-show-hidden 	edit-show-hidden)))
+	   ("Show Hidden Text"	edit-show-hidden 	edit-show-hidden)
+	   ("Find Specific Text"  edit-find-text 	edit-find-text)
+	   ("Hide Specific Text"  edit-hide-text 	edit-hide-text)
+	   ("Show Specific Text"  edit-show-text 	edit-show-text)
+	   ("Autonumber Text"   edit-autonumber		edit-autonumber)))
 
 (define buffer-menu-items 
 ;;

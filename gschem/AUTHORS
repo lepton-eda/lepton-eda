@@ -123,6 +123,8 @@ Rolf Fiedler            - For contributing patches and ideas for feature / UI
 Bruno Schwander		- For suggestions and providing patches to improve
 			  the configure mechanism (Stefan applied the patches)
                           
+Dave Lawrence		- For contributing the find-text, hide-text, show-text,
+			  and autonumber text code.
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
 the subscribers provided good suggestions which are greatly appreciated

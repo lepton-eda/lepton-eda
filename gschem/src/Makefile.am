@@ -25,8 +25,7 @@ bin_PROGRAMS = gschem
 
 BUILT_SOURCES = \
 	a_pan.nw a_zoom.nw \
-	g_register.nw g_hook.nw\
-	g_rc.nw g_key.nw g_funcs.nw \
+	g_key.nw g_rc.nw g_funcs.nw g_hook.nw g_register.nw \
 	globals.nw gschem.nw \
 	i_basic.nw i_callbacks.nw i_vars.nw \
 	o_basic.nw o_attrib.nw o_move.nw o_copy.nw o_delete.nw o_misc.nw \
