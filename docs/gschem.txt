@@ -12,11 +12,12 @@ Contents:
 	3. Running gschem
 	4. User interface
 	5. Basic operations
-	6. Dialog boxes
-	7. Electrical connectivity
-	8. Components/symbols  
-	9. Attributes
-	10. Resource File
+	6. Files
+	7. Dialog boxes
+	8. Electrical connectivity
+	9. Components/symbols  
+	10. Attributes
+	11. Resource File
 
 
 
@@ -110,6 +111,8 @@ both menu and hotkey behavior is exactly the same.  See the section on
 the resource file for more info on how to configure this.
 	
 	mouse buttons...	
+	modal ops
+	keymapping help
 
 
 
@@ -121,7 +124,9 @@ the resource file for more info on how to configure this.
 	b. Addition of objects (Add nets/lines/pins/components etc...)
 	c. Manipulate objects (move/copy/delete/rotate/mirror etc...)
 	d. View operations (Zoom/Pan/Redraw etc...)
-	e. Option changing (text size/gridding/snap etc...)
+	e. Hierarchy operations (...)
+	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
+	g. Option changing (text size/gridding/snap etc...)
 
 	This section will describe each of these.
 
@@ -388,7 +393,7 @@ the resource file for more info on how to configure this.
 			4. Press OK to finalize the values.
 
 		The start angle can be positive or negative.  The degrees
-		are specified using the standard cartesian coordinate
+		are specified using the standard Cartesian coordinate
 		system.  The degrees of sweep can be positive or negative.
 
 		To cancel an arc in progress (while rubberband the radius)
@@ -648,22 +653,166 @@ the resource file for more info on how to configure this.
 	Embed Component
 	Unembed Component
 
+		gschem supports a concept of embedded components which
+		components in a schematics which do not require an
+		external symbol file of any sort.  All the information
+		necessary to display a component is placed in the
+		schematic file.  This causes schematic files to be
+		significantly larger, but it makes it easy to share
+		schematics with other people or archive schematics away,
+		since you don't need any dependencies on symbol files.
+		You should only embed components when absolutely necessary.
+
+		Embed Component and Unembed component work exactly alike:
+
+			1. Select any components you wish to (un)embed	
+			2. Pick or type the hotkey for Edit/(Un)Embed Component
+
+		If you want the unembed a component you must have a symbol
+		with the same name in the component library search path
+		(other wise the unembed will not work).
+
+		You can only embed and unembed components.  Also, you
+		cannot embed and then mirror a component (this is a
+		limitation of gschem and will eventually be fixed).
+
+		You can also place embedded components directly in the 
+		Add Component... dialog box.
+
+	d. View operations (Zoom/Pan/Redraw etc...)
+
+	Redraw
+
+		This option redraws the current display.  This is useful
+		when you have mouse/component/line/text etc... droppings
+		left over from a previous action.  It is also useful when
+		you want to update all visual connectivity cues.	
+
+	Pan
+
+		Pan lets you move around the display.  
+
+		To pan the display (picking View/Pan off of a menu):
+
+			1. Select View/Pan off the menu 
+			2. Click the first mouse button at the new 
+			   center of the display.
+
+		To pan the display using the hotkey is much simpler, simply
+		type the hotkey and the display will pan the display 
+		to the current mouse location.  
+
+		You can also enable mouse panning if you add:
+
+			(third-button "mousepan")
+
+		to one of the gschemrc files.  See the section on the 
+		resource file for more info.  Mouse panning is very nice
+		for small schematics, but tends to lag on larger ones.
+
+	Zoom box
+
+		Zoom box allows you to specify a zoom window for zooming in.
 	
+		To use the zoom box (picking View/Zoom box off of a menu):
+
+			1. Select View/Zoom box off the menu
+			2. Click and hold the first mouse button 
+			3. Drag the mouse drawing the zoom box around
+			   the area you want to zoom
+			4. Release the mouse button and the display will zoom
+
+		To use the zoom box by typing the hotkeys is similar. 
+		Once you type the hotkey, the zoom box will start immediately
+		using the current mouse location as the first corner of the
+		box.
+
+		Zoom box will attempt to zoom the requested area, but some
+		boxes are not legal and gschem will do it's best to zoom
+		the requested area.
+
+	Zoom limits
+
+		Zoom limits will zoom the display attempting to fit all
+		the placed objects on the screen.  
+
+		Simply pick View/Zoom limits off of a menu or type its
+		hotkey and the display will be redrawn.
+
+		There are the special cases (like a single horizontal line)
+		which sometimes do not display correctly (or as expected).
+		Hopefully these exceptions will be fixed someday.
+
+	Zoom In
+	Zoom out
+
+		Zoom In/Out zoom the display using the picked mouse location
+		as the center of the display (or the current mouse location
+		if using the hotkey).  These commands always zoom in/out
+		by a factor.
+
+		To use Zoom In/Out (picking View/Zoom box off of a menu):
+
+			1. Pick Zoom In/Out off of the menu
+			2. Click the first mouse button as the center of
+			   the zoom
+	
+		Using the hotkeys is similar except that the current mouse
+		position serves as the center of the new display.
+
+	Zoom full
+		
+		Zoom full will zoom the display to the maximum possible
+		displayable view.  
+
+		Simple select it off of a menu or type it's hotkey and the
+		display will be zoomed.
+
+	Update Cues
+
+		This menu option is obsolete and will be removed.
 
 
-6. Dialog boxes
+	e. Hierarchy operations (...)
+
+	Open Symbol
+
+		Right now this is the only option for hierarchy related
+		operations.  This option will be dropped for the more 
+		classical push/pop schematic/symbol eventually.
+
+		Basically this will open up an underlying schematic if
+		it exists in the source library search path.  See the
+		Resource File section on how to define this path.
+
+		The underlying schematic must have the same name as the
+		symbol but have a .sch extension and must follow the _#
+		suffix naming convention.  See the Files section below
+		on this convention.
+
+		It is not recommended that people use this mechanism since
+		it is still highly alpha and will be changed soon.
+		
+
+	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
+	g. Option changing (text size/gridding/snap etc...)
+
+6. Files
 	TBA
 
-7. Electrical connectivity 
+7. Dialog boxes
 	TBA
 
-8. Components/symbols  
+8. Electrical connectivity 
 	TBA
 
-9. Attributes
+9. Components/symbols  
 	TBA
 
-10. Resource File
+10. Attributes
+	TBA
+
+11. Resource File
 	TBA
 
 
