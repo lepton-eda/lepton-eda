@@ -20,6 +20,7 @@ README for gEDA version 2000*
 	- Follow instructions on setting shell variables
 	- Set shell variables  *VERY IMPORTANT*
 	- Type: make install
+	- Read the docs in the docs/ subdirectory
 	- Run: gschem and play! :-)
 
 
