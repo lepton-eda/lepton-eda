@@ -101,6 +101,9 @@ void g_register_funcs(void)
                       vams_get_package_attributes);
   gh_new_procedure1_0("gnetlist:get-slots", g_get_slots);
   gh_new_procedure1_0("gnetlist:get-unique-slots", g_get_unique_slots);
+
+  /* SDB -- 9.1.2003 */
+  gh_new_procedure0_0("gnetlist:get-calling-flags", g_get_calling_flags);
 }
 
 SCM g_quit(void)

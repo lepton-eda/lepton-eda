@@ -893,6 +893,48 @@ SCM g_get_unique_slots(SCM scm_uref)
 }
 
 
+/* 
+   This function returns certain calling flags to the calling guile prog. 
+   The calling flags are returned to Guile as a list of option/value pairs [e.g. 
+   ((verbose_mode #t) (interactive_mode #f) . . . ) ]
+   It is used primarily to enable refdes sorting during netlisting via 
+   the -s flag.  Note that this prog is not very flexible -- the allowed 
+   calling flags are hard coded into the function.  At some point this 
+   should be fixed . . . 
+   9.1.2003 -- SDB 
+*/
+SCM g_get_calling_flags()
+{
+    SCM arglist = SCM_EOL;
+
+/*  This is an ugly hack.  Some kind of foreach would be better here . . . .  */
+    
+    arglist = gh_cons( gh_list( gh_str2scm("verbose_mode", 
+				           strlen("verbose_mode") ), 
+				gh_bool2scm(verbose_mode), 
+				SCM_UNDEFINED), 
+		       arglist);
+
+    arglist = gh_cons( gh_list( gh_str2scm("interactive_mode", 
+				           strlen("interactive_mode") ), 
+				gh_bool2scm(interactive_mode),
+				SCM_UNDEFINED), 
+		       arglist);
+
+    arglist = gh_cons( gh_list( gh_str2scm("quiet_mode", 
+				           strlen("quiet_mode") ),
+				gh_bool2scm(quiet_mode),
+				SCM_UNDEFINED), 
+		       arglist);
+
+    arglist = gh_cons( gh_list( gh_str2scm("sort_mode", strlen("sort_mode") ), 
+				gh_bool2scm(sort_mode),
+				SCM_UNDEFINED), 
+		       arglist);
+
+    return (arglist);
+}
+
 
 /* 
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)

@@ -32,7 +32,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#define OPTIONS "o:qihvg:c:l:m:"
+#define OPTIONS "o:qihvsg:c:l:m:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -52,6 +52,7 @@ void usage(char *cmd)
     printf("  -o filename       Output netlist filename\n");
     printf("  -c string         Execute string as a scheme script\n");
     printf("  -v                Verbose mode on\n");
+    printf("  -s                Sort output netlist (for Gnucap)\n");
     printf("\n");
     exit(0);
 }
@@ -102,6 +103,11 @@ int parse_commandline(int argc, char *argv[])
 	case 'c':
 	    gh_eval_str_with_stack_saving_handler(optarg);
 	    break;
+
+        case 's':
+            sort_mode = TRUE;
+            break;
+
 
 	case 'h':
 	    usage(argv[0]);
