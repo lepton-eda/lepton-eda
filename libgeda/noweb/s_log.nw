@@ -101,7 +101,7 @@
 /* This function goes and finds the associated source files and loads ALL up */
 /* only works for schematic files though */
 void
-s_log_init(char *cwd, char *filename)
+s_log_init(char *cwd, const char *filename)
 {
   char *path; 
   if (do_logging == FALSE) {

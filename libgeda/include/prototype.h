@@ -465,7 +465,7 @@ PAGE *s_hierarchy_find_prev_page(PAGE *p_start, int page_control);
 PAGE *s_hierarchy_find_next_page(PAGE *p_start, int page_control);
 PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
 /* s_log.c */
-void s_log_init(char *cwd, char *filename);
+void s_log_init(char *cwd, const char *filename);
 void s_log_message(const gchar *format, ...);
 void s_log_close(void);
 /* s_menu.c */
