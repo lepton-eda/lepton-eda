@@ -33,6 +33,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+
 int
 s_check_all(TOPLEVEL *pr_current)
 {
@@ -60,6 +61,7 @@ s_check_all(TOPLEVEL *pr_current)
   return(return_status);
 }
 
+
 int
 s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
 {
@@ -71,14 +73,14 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   if (verbose_mode) s_log_message("Checking: %s\n", p_current->page_filename);
 
   /* check version number */
-  /* s_check_version(object_head, s_symcheck); */
+  /* s_check_version(object_head, s_symcheck); out */
 
-  /* check for device attribute */
-  s_check_device(object_head, s_symcheck);
-  
   /* check for graphical attribute */
   s_check_graphical(object_head, s_symcheck);
 
+  /* check for device attribute */
+  s_check_device(object_head, s_symcheck);
+ 
   /* check for pinseq attribute (and multiples) on all pins */
   s_check_pinseq(object_head, s_symcheck);
 
@@ -88,6 +90,7 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for slotdef attribute on all pins (if numslots exists) */
   s_check_slotdef(object_head, s_symcheck);
 
+#if 0 
   /* check for old pin#=# attributes */
   s_check_oldpin(object_head, s_symcheck);
 
@@ -100,19 +103,27 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for connections with in a symbol (completely disallowed) */
   s_check_connections(object_head, s_symcheck); 
 
+#endif
   
-  /* done, now see if there were any errors and print out status */
+  /* done, now print out the error messages */
   s_symstruct_print(s_symcheck);
 
-  if (s_symcheck->error_count) {
-    s_log_message("ERROR: %s has %d errors\n",
+  if (s_symcheck->error_count == 0) {
+    s_log_message("%s has no errors\n",
+           p_current->page_filename);
+  } else if (s_symcheck->error_count == 1) {
+    s_log_message("%s has 1 error\n",
+           p_current->page_filename);
+  } else if (s_symcheck->error_count > 1) {
+    s_log_message("%s has %d errors\n",
            p_current->page_filename, s_symcheck->error_count);	
-  } 
+  }
 
   errors = s_symcheck->error_count;
   s_symstruct_free(s_symcheck);
   return(errors);
 }
+
 
 void
 s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)
@@ -128,94 +139,48 @@ s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)
   }
 }
 
+
 s_check_device(OBJECT *o_current, SYMCHECK *s_current)
 {
   char *temp;
+  char *message;
   
   /* search for device attribute */
   temp = o_attrib_search_name(o_current, "device", 0);
   if (!temp) {
+    /* did not find device= attribute */
+    message = u_basic_strdup("missing device= attribute\n");
+    s_current->error_messages = g_list_append(s_current->error_messages,
+		                              message);
     s_current->missing_device_attrib=TRUE;
     s_current->error_count++;
   } else {
+    /* found device= attribute */
     s_current->missing_device_attrib=FALSE;
     s_current->device_attribute =
       (char *) malloc(sizeof(char)*(strlen(temp)+1));
     strcpy(s_current->device_attribute, temp);
+    message = u_basic_strdup_multiple("device=", temp, "\n", NULL);
+    s_current->info_messages = g_list_append(s_current->info_messages,
+		                             message);
   }
 
   /* check for device = none for graphical symbols */
   if (s_current->graphical_symbol && temp) { 
     if ((strcmp(temp, "none") == 0)) {
       s_current->device_attribute_incorrect=FALSE;
+      message = u_basic_strdup("Graphical symbol, device=none\n");
+      s_current->info_messages = g_list_append(s_current->info_messages,
+		    			       message);
     } else if (s_current->graphical_symbol) {
       s_current->device_attribute_incorrect=TRUE;
+      message = u_basic_strdup("Graphical symbol, device= should be set to none\n");
+      s_current->warning_messages = g_list_append(s_current->warning_messages,
+		    			          message);
     } 
   }
   if (temp) 
     free(temp);
-}
-
-void
-s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
-{
-  OBJECT *o_current;
-  char *string;
-  int found_first=FALSE;
-  int missing_pinnumber_attrib_sum=0;
-  int multiple_pinnumber_attrib_sum=0;
-  int counter=0;
-
-  o_current = object_head;
-  while(o_current != NULL)
-  {
-    
-    if (o_current->type == OBJ_PIN)
-    {
-      s_current->numpins++;
-      
-      missing_pinnumber_attrib_sum = 0;
-      multiple_pinnumber_attrib_sum = 0;
-      found_first = FALSE;
-      counter = 0;
-      
-      string = o_attrib_search_name_single_count(o_current, "pinnumber",
-                                                 counter);
-      if (!string)
-      {
-        missing_pinnumber_attrib_sum++;
-        s_current->error_count++;
-      }
-
-      while (string)
-      {
-        if (verbose_mode)
-          s_log_message("- INFO: found pinnumber=%s attribute\n", string);
-        
-        free(string);
-
-        if (found_first) {
-          multiple_pinnumber_attrib_sum++;
-          s_current->error_count++;
-        }
-        
-        /* this is the first attribute found? */
-        if (!found_first) {
-          found_first=TRUE;
-        }
-        
-        counter++;
-        string = o_attrib_search_name_single_count(o_current, "pinnumber",
-                                                   counter);
-      }
-
-      s_current->missing_pinnumber_attrib += missing_pinnumber_attrib_sum;
-      s_current->multiple_pinnumber_attrib += multiple_pinnumber_attrib_sum;
-    }
-
-    
-    o_current = o_current->next;
-  }
 }
 
 
@@ -233,6 +198,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
   GList *ptr1 = NULL;
   GList *ptr2 = NULL;
   char *number;
+  char *message;
   
   o_current = object_head;
   while(o_current != NULL)
@@ -249,22 +215,33 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
                                                  counter);
       if (!string)
       {
+        message = u_basic_strdup("Missing pinseq= attribute\n");
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	 	    			            message);
         missing_pinseq_attrib_sum++;
         s_current->error_count++;
       }
 
       while (string)
       {
-        if (verbose_mode)
-          s_log_message("- INFO: found pinseq=%s attribute\n", string);
+        
+        message = u_basic_strdup_multiple("found pinseq=", string, 
+				          " attribute\n", NULL);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+	 	    			         message);
 
         number = u_basic_strdup(string);
-        free(string);
 
         if (found_first) {
+          message = u_basic_strdup_multiple("Found multiple pinseq=", string, 
+			                    " attributes on one pin\n", NULL);
+          s_current->error_messages = g_list_append(s_current->error_messages,
+	 	    			            message);
           multiple_pinseq_attrib_sum++;
           s_current->error_count++;
         }
+
+        free(string);
         
         /* this is the first attribute found? */
         if (!found_first) {
@@ -308,8 +285,10 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
 
     if (found > 1)
     {
-      if (verbose_mode)
-        s_log_message("- ERROR: found duplicate pinseq [%s] attributes\n", string);
+        message = u_basic_strdup_multiple("Found duplicate pinseq=", string, 
+			                  " attribute in the symbol\n", NULL);
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
         s_current->error_count++;
         s_current->duplicate_pinseq_attrib++;
     }
@@ -329,6 +308,129 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
 
 
 void
+s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
+{
+  OBJECT *o_current;
+  char *string;
+  int found_first=FALSE;
+  int missing_pinnumber_attrib_sum=0;
+  int multiple_pinnumber_attrib_sum=0;
+  int counter=0;
+
+  GList *found_numbers = NULL;
+  GList *ptr1 = NULL;
+  GList *ptr2 = NULL;
+  char *number;
+  char *message;
+
+  o_current = object_head;
+  while(o_current != NULL)
+  {
+    
+    if (o_current->type == OBJ_PIN)
+    {
+      s_current->numpins++;
+      
+      missing_pinnumber_attrib_sum = 0;
+      multiple_pinnumber_attrib_sum = 0;
+      found_first = FALSE;
+      counter = 0;
+      
+      string = o_attrib_search_name_single_count(o_current, "pinnumber",
+                                                 counter);
+      if (!string)
+      {
+        message = u_basic_strdup("Missing pinsnumber= attribute\n");
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	 	    			            message);
+        missing_pinnumber_attrib_sum++;
+        s_current->error_count++;
+      }
+
+      while (string)
+      {
+        message = u_basic_strdup_multiple("Found pinnumber=", string, 
+				          " attribute\n", NULL);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+	 	    			         message);
+
+        if (found_first) {
+          message = u_basic_strdup_multiple("Found multiple pinnumber=", 
+			                    string, 
+			                    " attributes on one pin\n", NULL);
+          s_current->error_messages = g_list_append(s_current->error_messages,
+	 	    			            message);
+          multiple_pinnumber_attrib_sum++;
+          s_current->error_count++;
+        }
+        
+        number = u_basic_strdup(string);
+        free(string);
+
+        /* this is the first attribute found? */
+        if (!found_first) {
+          found_numbers = g_list_append(found_numbers, number);
+          found_first=TRUE;
+        } else {
+          if (number)
+            free(number);
+	}
+        
+        counter++;
+        string = o_attrib_search_name_single_count(o_current, "pinnumber",
+                                                   counter);
+      }
+
+      s_current->missing_pinnumber_attrib += missing_pinnumber_attrib_sum;
+      s_current->multiple_pinnumber_attrib += multiple_pinnumber_attrib_sum;
+    }
+
+    
+    o_current = o_current->next;
+  }
+
+  ptr1 = found_numbers;
+  while (ptr1)
+  {
+    char *string = (char *) ptr1->data;
+    int found = 0;
+    
+    ptr2 = found_numbers;
+    while(ptr2 && string)
+    {
+      char *current = (char *) ptr2->data;
+
+      if (current && strcmp(string, current) == 0) {
+        found++;
+      }
+      
+      ptr2 = ptr2->next;
+    }
+
+    if (found > 1)
+    {
+        message = u_basic_strdup_multiple("Found duplicate pinnumber=", string, 
+			                  " attribute in the symbol\n", NULL);
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
+        s_current->error_count++;
+        s_current->duplicate_pinnumber_attrib++;
+    }
+    
+    ptr1 = ptr1->next;
+  }
+
+  ptr1 = found_numbers;
+  while (ptr1)
+  {
+    free(ptr1->data);
+    ptr1 = ptr1->next;
+  }
+  g_list_free(found_numbers);
+}
+
+
+void
 s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 {
   char* value = NULL;
@@ -337,25 +439,31 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   char* pins = NULL;
   char* temp = NULL;
   int numslots;
+  char numslots_str[10];
   int slot;
   int i,j;
+  char *message;
+  char tempstr1[10];
+  char tempstr2[10];
   
   /* look for numslots to see if this symbol has slotting info */
   value = o_attrib_search_name(object_head, "numslots", 0);
 
   if (!value) {
-    if (verbose_mode)
-      s_log_message("- WARNING: did not find numslots attribute\n");
-
+    message = u_basic_strdup("Did not find numslots= attribute, not checking slotting\n");
+    s_current->warning_messages = g_list_append(s_current->warning_messages,
+		    			          message);
     return;
   }
 
   numslots=atoi(value);
+  sprintf(numslots_str, "%d", numslots);
   free(value);
 
-  if (verbose_mode)
-    s_log_message("- INFO: found numslots=%d\n", numslots);
-
+  message = u_basic_strdup_multiple("Found numberslots=", numslots_str, 
+ 			            " attribute\n", NULL);
+  s_current->info_messages = g_list_append(s_current->info_messages,
+	 	    			   message);
 
   i = 0;
   /* get the slotdef attribute */
@@ -363,22 +471,34 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   while (slotdef != NULL)
   {
 
-    if (i > numslots) {
-      if (verbose_mode)
-        s_log_message("- ERROR: Too many slotdef (should be %d slotdef attributes)\n", numslots);
+    if (i > numslots-1) {
+
+      sprintf(tempstr1, "%d", i+1); /* i starts at zero */
+      message = 
+	   u_basic_strdup_multiple("Found ", tempstr1, 
+			           " slotdef= attributes.  Expecting ", 
+		                   numslots_str, " slotdef= attributes\n", 
+				   NULL); 
+      s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
+
       s_current->error_count++;
       s_current->slotting_errors++;
-      return;
     }
     
-    if (verbose_mode)
-      s_log_message("- INFO: found slotdef=%s\n", slotdef);
+    message = u_basic_strdup_multiple("Found slotdef=", slotdef, 
+ 			              " attribute\n", NULL);
+    s_current->info_messages = g_list_append(s_current->info_messages,
+	 	    			     message);
 
     slotnum = u_basic_breakup_string(slotdef, ':', 0);
     if (!slotnum)
     {
-      if (verbose_mode)
-        s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
+      message = 
+	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+			           " attributes, not continuing\n", NULL);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
@@ -389,8 +509,14 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
     /* make sure that the slot # is less than the number of slots */
     if (slot > numslots) {
-      if (verbose_mode)
-        s_log_message("- ERROR: Slot %d is larger then maximum number (%d) of slots\n", slot, numslots);
+      sprintf(tempstr1, "%d", slot);
+      message = 
+	   u_basic_strdup_multiple("Slot ", tempstr1, 
+			   	   " is larger then the maximum number (",
+				   numslots_str, ") of slots\n", NULL);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+		      			        message);
+
       s_current->error_count++;
       s_current->slotting_errors++;
     }
@@ -398,8 +524,11 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     /* skip over the : */
     pins = index(slotdef, ':');
     if (!pins) {
-      if (verbose_mode)
-        s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
+      message = 
+	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+			           " attributes, not continuing\n", NULL);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
@@ -407,8 +536,23 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     }
     pins++;  /* get past that : */
     if (!pins) {
-      if (verbose_mode)
-        s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
+      message = 
+	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+			           " attributes, not continuing\n", NULL);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
+      s_current->error_count++;
+      s_current->slotting_errors++;
+      free(slotdef);
+      return;
+    }
+
+    if (*pins == '\0') {
+      message = 
+	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+			           " attributes, not continuing\n", NULL);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
@@ -426,22 +570,28 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       temp = u_basic_breakup_string(pins, ',', j);
 
       if (!temp && j < s_current->numpins) {
-        if (verbose_mode)
-          s_log_message("- ERROR: Not enough pins in slotdef=%s\n", slotdef);
+        message = 
+	   u_basic_strdup_multiple("Not enough pins in slotdef=", slotdef, 
+			   	   "\n", NULL);
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
         s_current->error_count++;
         s_current->slotting_errors++;
         break;
       }
 
       if (j > s_current->numpins) {
-        if (verbose_mode)
-          s_log_message("- ERROR: Too many pins in slotdef=%s\n", slotdef);
+        message = 
+	   u_basic_strdup_multiple("Too many pins in slotdef=", slotdef, 
+			   	   "\n", NULL);
+        s_current->error_messages = g_list_append(s_current->error_messages,
+	    			                  message);
         s_current->error_count++;
         s_current->slotting_errors++;
         free(temp);
         temp = NULL;
         break;
-      }
+      } 
      
       j++;
     } while (temp); 
@@ -454,15 +604,19 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     i++;
     slotdef = o_attrib_search_name(object_head, "slotdef", i);
   }
+
   
   if (!slotdef && i < numslots) {
-    if (verbose_mode)
-      s_log_message("- ERROR: missing slotdef (there should be %d slotdef attributes)\n", numslots);
+    message = 
+	   u_basic_strdup_multiple("Missing slotdef= (there should be ", 
+			           numslots_str, " slotdef= attributes)\n", 
+				   NULL);
+    s_current->error_messages = g_list_append(s_current->error_messages,
+			                      message);
     s_current->error_count++;
     s_current->slotting_errors++;
     return;
   }
-    
 }
 
 

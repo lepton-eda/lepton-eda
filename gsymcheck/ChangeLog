@@ -1,3 +1,23 @@
+2002-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added *_messages list items
+
+	* include/struct.h: Slightly cleaned up / reorganized symcheck struct
+
+	* src/s_symcheck.c: Added code to output the new *_message lists
+
+	* src/s_check.c: Added/changed code to use the new *_message lists
+
+	* src/s_check.c: Added more tests to catch duplicate pinnumber
+	attributes
+
+	* src/s_check.c: Added more tests to catch invalid slotdef attributes
+
+	* tests/: Added a few more *.sym files to validate checks
+
+	* src/s_check.c: Still need to comment in tests which I did not 
+	finish converting to using the new *_message lists
+
 2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in/Makefile.am, tests: Added tests directory and a whole

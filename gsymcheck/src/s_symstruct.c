@@ -38,15 +38,23 @@ s_symstruct_init(void)
 	
   s_symcheck = (SYMCHECK *) malloc(sizeof(SYMCHECK));
 
+  s_symcheck->info_messages = NULL;
+  s_symcheck->warning_messages = NULL;
+  s_symcheck->error_messages = NULL;
+
   s_symcheck->graphical_symbol=FALSE;
   s_symcheck->missing_device_attrib=FALSE;
   s_symcheck->device_attribute_incorrect=FALSE;
   s_symcheck->device_attribute=NULL;
+
   s_symcheck->missing_pinseq_attrib=FALSE;
   s_symcheck->multiple_pinseq_attrib=FALSE;
   s_symcheck->duplicate_pinseq_attrib=FALSE;
+
   s_symcheck->missing_pinnumber_attrib=FALSE;
   s_symcheck->multiple_pinnumber_attrib=FALSE;
+  s_symcheck->duplicate_pinnumber_attrib=FALSE;
+
   s_symcheck->missing_numslots_attrib=FALSE;
   s_symcheck->slotting_errors=FALSE;
   s_symcheck->found_oldpin_attrib=FALSE;
@@ -65,40 +73,54 @@ s_symstruct_init(void)
 void
 s_symstruct_print(SYMCHECK *s_current)
 {
+  GList *list;
+  char *msg;
   
-  if (s_current->device_attribute) {
-    if (verbose_mode) s_log_message("- INFO: device attribute = %s\n",
-                                    s_current->device_attribute);
-  }
-  
-  if (s_current->graphical_symbol) {
-    if (verbose_mode) s_log_message("- INFO: graphical symbol\n");
-  }
+  list = s_current->info_messages;
+  while (list != NULL) {
+     msg = (char *) list->data;     
+   /* printf("found info: %s\n", msg); */
+     if (msg && verbose_mode) { 
+       s_log_message("Info: %s", msg);
+     }
 
-  if (s_current->missing_device_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: missing device attribute\n");
-  }
-  
-  if (s_current->missing_pinseq_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: missing pinseq attribute(s)\n");
-  }
+     if (msg)
+       free(msg);
 
-  if (s_current->multiple_pinseq_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: multiple pinseq attributes on a single pin\n");
-  }
+     list = list->next;
+  } 
 
-  if (s_current->duplicate_pinseq_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: duplicate pinseq attributes on different pins\n");
-  }
-  
-  if (s_current->missing_pinnumber_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: missing pinnumber attribute(s)\n");
-  }
+  list = s_current->warning_messages;
+  while (list != NULL) {
+     msg = (char *) list->data;     
+     
+   /* printf("found warning: %s\n", msg); */
+     if (msg && verbose_mode) { 
+       s_log_message("Warning: %s", msg);
+     }
 
-  if (s_current->multiple_pinnumber_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: multiple pinnumber attributes on a single pin\n");
-  }
+     if (msg)
+       free(msg);
 
+     list = list->next;
+  } 
+
+  list = s_current->error_messages;
+  while (list != NULL) {
+     msg = (char *) list->data;     
+     
+   /* printf("found error: %s\n", msg); */
+     if (msg && verbose_mode) { 
+       s_log_message("ERROR: %s", msg);
+     }
+
+     if (msg)
+       free(msg);
+
+     list = list->next;
+  } 
+   
+#if 0	
   if (s_current->slotting_errors) {
     if (verbose_mode) s_log_message("- ERROR: number of slotting errors: %d\n", s_current->slotting_errors);
   }
@@ -122,6 +144,7 @@ s_symstruct_print(SYMCHECK *s_current)
   if (s_current->found_oldslot_attrib) {
     if (verbose_mode) s_log_message("- ERROR: found old slot#=# attribute(s)\n");
   }
+#endif
 }
 
 void
