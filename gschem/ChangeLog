@@ -1,3 +1,8 @@
+2001-07-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_undo.nw: Whoops was hardcoding "/tmp", should look at 
+	  environment variable TMP instead
+
 2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_menu.nw: Added code for Cygwin to get monospaced fonts

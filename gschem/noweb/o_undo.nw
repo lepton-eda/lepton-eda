@@ -73,6 +73,10 @@
 static int undo_file_index=0;
 static int prog_pid=0;
 
+/* TMP environment variable */
+static char* TMP = NULL;
+static int freeTMP = FALSE;
+
 /* this is additional number of levels (or history) at which point the */
 /* undo stack will be trimmed, it's used a safety to prevent running out */ 
 /* of entries to free */
@@ -91,6 +95,15 @@ void
 o_undo_init(void)
 {
   prog_pid = getpid();	
+
+  TMP = getenv("TMP");
+  if (!TMP) {
+     TMP = u_basic_strdup("/tmp");
+     freeTMP = TRUE;
+  } 
+#if DEBUG
+  printf("%s\n", TMP);
+#endif
 }
 
 
@@ -119,12 +132,16 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
     /* 32 is? for max length of pid and index */
-    filename = malloc(sizeof(char)*strlen("/tmp/gschem.save_.sch")+32);
+ 
 
-    sprintf(filename, "/tmp/gschem.save%d_%d.sch", prog_pid, 
+    filename = malloc(sizeof(char)*(strlen("/gschem.save_.sch")+
+	              strlen(TMP)+32));
+
+    sprintf(filename, "%s/gschem.save%d_%d.sch", TMP, prog_pid, 
             undo_file_index++);
 
     f_save(w_current, filename);
+
 		
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
     object_head = s_basic_init_object("undo_head");	
@@ -145,12 +162,10 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
     w_current->page_current->undo_bottom = NULL;
   }
 	
-  w_current->page_current->undo_tos = 
-  w_current->page_current->undo_current;
+  w_current->page_current->undo_tos = w_current->page_current->undo_current;
 
   w_current->page_current->undo_tos =
-  s_undo_add(
-             w_current->page_current->undo_tos, 
+  s_undo_add(w_current->page_current->undo_tos, 
              flag, filename, object_head,
              w_current->page_current->left, 
              w_current->page_current->top,
@@ -515,6 +530,11 @@ o_undo_cleanup(void)
   for (i = 0 ; i < undo_file_index; i++) {
     sprintf(filename, "/tmp/gschem.save%d_%d.sch", prog_pid, i);
     unlink(filename);
+  }
+
+  if (freeTMP) {
+    free(TMP);
+    TMP = NULL;
   }
 }
 
