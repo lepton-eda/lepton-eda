@@ -17,6 +17,8 @@
 	* noweb/gschem.nw, i_basic.nw, o_slot.nw, o_undo.nw, x_color.nw, 
 	  x_grid.nw: Added patch by Dan Mcmahill for 64-bit architectures.
 
+	* docs/gschem.txt: Misc doc update
+
 2001-07-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_undo.nw: Whoops was hardcoding "/tmp", should look at 

@@ -139,7 +139,8 @@ There are a few which are single keystrokes (like zoom in: `z' or
 pan: `x'), but most are typically two keystrokes long.	As examples,
 to execute File/Save you would type `f' and `s' (without the quotes)
 or Add/Line is `a' and `l'.  You can get a listing of the shortcuts by
-picking Help/Hotkeys.  The shortcuts are defined in the resource files
+picking Help/Hotkeys.  You can also see the hotkey assignments in the
+pulldown menus as well.  The shortcuts are defined in the resource files
 (system-gschemrc, ~/.gEDA/gschemrc, or `pwd`/gschemrc).  See the section
 on the resource file for more info.
 
