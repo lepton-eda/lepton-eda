@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* Message box                                                                 */
@@ -19,11 +21,16 @@
 /*******************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#include "../config.h"
+#include "config.h"
 #endif
+
 #include <gtk/gtk.h>
 #include <stdlib.h>
+
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+
 #include "msgbox.h"
 
 

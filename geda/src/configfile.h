@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -19,8 +21,8 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifndef __CONFIG_H_INCLUDED
-#define __CONFIG_H_INCLUDED
+#ifndef __CONFIGFILE_H_INCLUDED
+#define __CONFIGFILE_H_INCLUDED
 
 
 

@@ -15,8 +15,8 @@ bin_PROGRAMS = geda
 geda_SOURCES = \
 	callbacks.h\
 	callbacks.c\
-	config.h\
-	config.c\
+	configfile.h\
+	configfile.c\
 	doc.h\
 	doc.c\
 	file.h\

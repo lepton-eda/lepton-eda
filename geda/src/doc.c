@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -19,20 +21,27 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #ifdef HAVE_CONFIG_H
-#include "../config.h"
+#include "config.h"
 #else
 #define VERSION "devel"
 #endif
 
-#include "config.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#ifdef HAVE_STRING_H  
+#include <string.h>
+#endif
+
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include "configfile.h"
 #include "doc.h"
 #include "file.h"
 #include "filetool.h"

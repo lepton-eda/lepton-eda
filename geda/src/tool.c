@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -20,16 +22,25 @@
 /*******************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#include "../config.h"
+#include "config.h"
 #endif
+
 #include <ctype.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
+
+#ifdef HAVE_STRING_H  
 #include <string.h>
+#endif
+
 #include <sys/types.h>
 #include <sys/wait.h>
+
+#ifdef HAVE_UNISTD_H  
 #include <unistd.h>
-#include "config.h"
+#endif
+
+#include "configfile.h"
 #include "doc.h"
 #include "file.h"
 #include "filetool.h"

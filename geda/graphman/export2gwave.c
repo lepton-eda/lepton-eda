@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -19,12 +21,16 @@
 /*******************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#  include "config.h"
 #endif
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+
 #include <time.h>
 
 #include "export2gwave.h"

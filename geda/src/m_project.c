@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -19,11 +21,22 @@
 /*                                                                             */
 /*******************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #define GTK_ENABLE_BROKEN
 #include <gtk/gtk.h>
 #include <stdlib.h>
+
+#ifdef HAVE_STRING_H  
 #include <string.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include "doc.h"
 #include "filesel.h"
 #include "filetool.h"

@@ -27,7 +27,7 @@ create_MainWindow (void)
   GtkWidget *MenuBar;
   GtkWidget *MenuProject;
   GtkWidget *MenuProject_menu;
-  GtkAccelGroup *MenuProject_menu_accels;
+  /* GtkAccelGroup *MenuProject_menu_accels; */
   GtkWidget *MenuProjectNew;
   GtkWidget *MenuProjectOpen;
   GtkWidget *MenuProjectProperties;
@@ -36,7 +36,7 @@ create_MainWindow (void)
   GtkWidget *MenuProjectExit;
   GtkWidget *MenuFile;
   GtkWidget *MenuFile_menu;
-  GtkAccelGroup *MenuFile_menu_accels;
+  /* GtkAccelGroup *MenuFile_menu_accels; */
   GtkWidget *MenuFileEdit;
   GtkWidget *MenuFileSave;
   GtkWidget *MenuFilePrint;

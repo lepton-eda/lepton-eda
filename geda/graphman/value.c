@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -18,8 +20,15 @@
 /*                                                                             */
 /*******************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <gtk/gtk.h>
+
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
 
 #include "global.h"
 #include "graph.h"
@@ -70,7 +79,9 @@ static void Init_Viewer(const char *szWidget);
 
 static char *Man2File_Number(const char *szNumber);
 static char *File2Man_Number(const char *szNumber);
-static BOOL IsValid_Number(const char *szNumber);
+
+/* not used yet */
+/* static BOOL IsValid_Number(const char *szNumber); */
 
 
 
@@ -1068,7 +1079,8 @@ static char *File2Man_Number(const char *szNumber)
 	return (char *) szNumber;
 }
 
-
+/* not currently used */
+#if 0
 static BOOL IsValid_Number(const char *szNumber)
 {
 	BOOL bValidity;
@@ -1078,7 +1090,7 @@ static BOOL IsValid_Number(const char *szNumber)
 
 	return bValidity;
 }
-
+#endif
 
 
 /********************************************************************************

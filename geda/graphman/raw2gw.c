@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -26,10 +28,16 @@
 	raw2gw will be removed from distribution in near future !!!
 */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <sys/param.h>
-#include <unistd.h>
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 
 int main(int iArgn, const char *szArgv[])

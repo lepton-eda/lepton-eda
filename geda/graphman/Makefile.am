@@ -18,8 +18,8 @@ raw2gw_SOURCES = \
 graphman_SOURCES = \
 	callbacks.c \
 	callbacks.h \
-	config.c \
-	config.h \
+	configfile.c \
+	configfile.h \
 	export2gwave.c \
 	export2gwave.h \
 	filetool.c \

@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /*******************************************************************************/
 /*                                                                             */
 /* gEDA Suite Project Manager                                                  */
@@ -20,30 +22,25 @@
 /*******************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#include "../config.h"
+#include "config.h"
 #endif
+
 #include <ctype.h>
 #include <stdio.h>
+
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
 
-#include "config.h"
+#include "configfile.h"
 #include "global.h"
-#include "libstring.h"
 
 
-/*******************************************************************************
 
-	Static functions and variables
-
-*******************************************************************************/
-
+/* static variables */
 #define MAXLINELEN           256
-
 static FILE *fp = NULL;
-static char szLineBuf[MAXLINELEN];
-
 static int ConfigReadLine(char *szLine);
-static BOOL IsSeparator(const char c);
 
 
 
@@ -139,100 +136,7 @@ int ConfigGetNext(char *szName, char *szValue)
 		szValue[j ++] = szLine[i];
 	szValue[j] = 0;
 	
-
 	return SUCCESS;
-}
-
-
-
-/*******************************************************************************
-
-	Get value of a parameter
-
-	Function reads a string (pointed out) from a parameter line 
-	and return a pointer to it. It uses a static buffer.
-
-*******************************************************************************/
-
-#define PARSE_SPACES        1
-#define PARSE_STRING        2
-#define PARSE_ALNUM         3
-#define PARSE_STOP          4
-
-char *ConfigValue(const int iValue)
-{
-	static char *pString = NULL;
-
-	int iCount, iState, iStart = 0, iStop = 0, i;
-
-	if (pString == NULL)
-		StringCreate();
-
-
-	/* omit beginning of a parameter line, like "KEY = " */
-	for (i = 0; i < strlen(szLineBuf) && szLineBuf[i] != '='; i ++)
-		;
-	i ++;
-
-
-	for (iCount = 1; iCount <= iValue; iCount ++)
-	{
-		for (iState = PARSE_SPACES; i < strlen(szLineBuf) && iState != PARSE_STOP; i ++)
-		{
-			switch (iState)
-			{
-				case PARSE_SPACES:
-					if (!isspace(szLineBuf[i]))
-					{
-						if (szLineBuf[i] == '"')
-						{
-							iStart = i + 1;
-							iStop = iStart;
-							iState = PARSE_STRING;
-						}
-
-						else if (!IsSeparator(szLineBuf[i]))
-						{
-							iStart = i;
-							iStop = iStart;
-							iState = PARSE_ALNUM;
-						}
-					}
-					break;
-
-				case PARSE_STRING:
-					if (szLineBuf[i] == '"')
-					{
-						iStop = i - 1;
-						iState = PARSE_STOP;
-						StringCopyNum(&pString, szLineBuf + iStart, iStop - iStart + 1);
-					}
-					else
-						iStop = i;
-					break;
-
-				case PARSE_ALNUM:
-					if (isspace(szLineBuf[i]) || IsSeparator(szLineBuf[i]))
-					{
-						iState = PARSE_STOP;
-					}
-					else
-						iStop = i;
-					break;
-
-				case PARSE_STOP:
-					break;
-			}
-		}
-
-		if (iCount == iValue)
-			StringCopyNum(&pString, szLineBuf + iStart, iStop - iStart + 1);
-	}
-
-
-	return (strlen(pString) > 0)
-		? pString
-		: NULL;
 }
 
 
@@ -258,26 +162,6 @@ static int ConfigReadLine(char *szLine)
 		c = fgetc(fp);
 	ungetc(c, fp);
 	szLine[j] = 0;
-
-	strcpy(szLineBuf, szLine);
 	
 	return SUCCESS;
-}
-
-
-
-/*******************************************************************************
-
-	Separator recognizing
-
-*******************************************************************************/
-
-static char cSeparator = ',';
-
-
-static BOOL IsSeparator(const char c)
-{
-	return (c == cSeparator)
-		? TRUE
-		: FALSE;
 }
