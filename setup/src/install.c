@@ -267,7 +267,9 @@ int InstallSoftware(void)
 			/* check if install the package */
 			if (strlen(pComp->szFileName) == 0)
 				continue;
-			if (!pComp->bToBeInstalled)
+			if (pComp->iToBeInstalled != PACKAGE_SELECTED
+				&& pComp->iToBeInstalled != PACKAGE_REQUIRED
+				)
 				continue;
 			if (pComp->bInstalled)
 				continue;
@@ -1088,32 +1090,6 @@ static int are_requirements_met(struct CompsTable_s *pComp)
 
 
 
-static int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName)
-{
-	int i, j = 0;
-	
-	/* cancel spaces */
-	for (i = iIndex; i < strlen(pComp->szRequiresList); i ++)
-	{
-		if (!isspace(pComp->szRequiresList[i]))
-			break;
-	}
-	/* read name */
-	for (; i < strlen(pComp->szRequiresList); i ++)
-	{
-		if (!isspace(pComp->szRequiresList[i]))
-			szName[j++] = pComp->szRequiresList[i];
-		
-		else
-			break;
-	}
-	szName[j] = 0;
-	
-	return i;
-}
-
-
-
 struct CompsTable_s *get_component_by_name(char *szName)
 {
 	struct CompsTable_s *pComp = NULL;
@@ -1148,11 +1124,20 @@ void mark_to_be_installed(void)
 	int i, bChanged;
 	char szCodeName[TEXTLEN];
 	
+	/* cancel all REQUIRED markers */
+	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+	{
+		if (pComp->iToBeInstalled == PACKAGE_REQUIRED)
+			pComp->iToBeInstalled = PACKAGE_IGNORED;
+	}
+
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
 		bChanged = FALSE;
 		
-		if (pComp->bToBeInstalled /*&& !are_requirements_met(pComp)*/)
+		if (pComp->iToBeInstalled == PACKAGE_SELECTED
+			|| pComp->iToBeInstalled == PACKAGE_REQUIRED
+			)
 		{
 			for (i = 0; i < strlen(pComp->szRequiresList); i ++)
 			{
@@ -1167,9 +1152,9 @@ void mark_to_be_installed(void)
 					continue;
 				}
 		
-				if (pCount->bToBeInstalled != TRUE)
+				if (pCount->iToBeInstalled == PACKAGE_IGNORED)
 				{
-					pCount->bToBeInstalled = TRUE;
+					pCount->iToBeInstalled = PACKAGE_REQUIRED;
 					bChanged = TRUE;
 				}
 			}
@@ -1190,7 +1175,7 @@ static int get_percentage(void)
 	
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-		if (pComp->bToBeInstalled == TRUE)
+		if (pComp->iToBeInstalled == PACKAGE_SELECTED || pComp->iToBeInstalled == PACKAGE_REQUIRED)
 		{
 			iTotal ++;
 			
