@@ -25,7 +25,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#include "../config.h"
 #endif
 #include <gtk/gtk.h>
 #include <libintl.h>
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 {
 	int iResult;
 
-#ifdef ENABLE_NLS
+#if ENABLE_NLS
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain (PACKAGE);
 #endif

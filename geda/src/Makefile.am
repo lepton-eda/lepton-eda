@@ -9,7 +9,7 @@ INCLUDES = \
 	 -I./ -I$(top_srcdir)/intl
 
 localedir = @datadir@/locale
-DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+DEFS = -DPACKAGE_LOCALE_DIR=\"$(localedir)\" @DEFS@
 
 AM_CFLAGS =\
 	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wtraditional -Wpointer-arith -Wmissing-prototypes\

@@ -19,6 +19,9 @@
 /*                                                                             */
 /*******************************************************************************/
 
+#ifdef HAVE_CONFIG_H
+#include "../config.h"
+#endif
 #include <ctype.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
