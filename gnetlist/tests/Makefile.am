@@ -7,7 +7,8 @@ EXTRA_DIST = 7447.vhdl README amp.spice darlington.spice netattrib.geda \
              powersupply.bae powersupply.geda powersupply.maxascii \
              powersupply.pads powersupply.protelII powersupply.sch \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
-             singlenet.protel singlenet.sch stack.geda
+             singlenet.protel singlenet.sch stack.geda amp.spice-sdb \
+	     darlington.spice-sdb skt.switcap test.ana
 
 tests:
 # cleanup
@@ -59,6 +60,12 @@ tests:
 # powersupply tango
 	gnetlist -o new_powersupply.tango -g tango ./powersupply.sch
 	diff powersupply.tango new_powersupply.tango
+# switcap 
+	gnetlist -o new_skt.switcap -g switcap ../examples/switcap/ckt.sch \
+		../examples/switcap/clocks.sch ../examples/switcap/analysis.sch
+	diff skt.switcap new_skt.switcap
+	diff new_skt.switcap ../examples/switcap/example.scn
+
 
 # These tests are internal to Ales and will not work without the schematics
 # which I am unable to distribute (due to copyright laws).
@@ -75,6 +82,14 @@ tests_ales:
 	gnetlist -o new_darlington.spice -g spice \
 		/home/ahvezda/gEDA/alesch/darlington.sch
 	diff darlington.spice new_darlington.spice
+# amp SPICE SDB
+	gnetlist -o new_amp.spice-sdb -g spice-sdb \
+		/home/ahvezda/gEDA/alesch/amp.sch
+	diff amp.spice-sdb new_amp.spice-sdb
+# darlington SPICE SDB
+	gnetlist -o new_darlington.spice-sdb -g spice-sdb \
+		/home/ahvezda/gEDA/alesch/darlington.sch
+	diff darlington.spice-sdb new_darlington.spice-sdb
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
