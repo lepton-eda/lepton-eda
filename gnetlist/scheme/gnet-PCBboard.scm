@@ -96,9 +96,9 @@
         (let* ((uref (car ls))
                (value (gnetlist:get-package-attribute uref "value"))
 	       (device (gnetlist:get-package-attribute uref "device"))
-;; The physical attribute is used by gschem to indicate the footprint
-               (physical (split-to-list 
-                          (gnetlist:get-package-attribute uref  "physical") ) ) )
+;; The footprint attribute is used by gschem to indicate the footprint
+               (footprint (split-to-list 
+                          (gnetlist:get-package-attribute uref  "footprint") ) ) )
 
 ;; Test if uref contains a space char
           (cond ((has-space? uref)
@@ -113,19 +113,19 @@
                  (display (string-append "ERROR!, space character found in the value of " uref))
                  (newline))
 ;; Test if value contains a space char
-                ((string=? (car physical) "unknown")
-                 (display (string-append "ERROR! no physical attribute in " uref ))
+                ((string=? (car footprint) "unknown")
+                 (display (string-append "ERROR! no footprint attribute in " uref ))
                  (newline))
                 (else
-                 (display (string-append "PKG_" (car physical)) pipe)
+                 (display (string-append "PKG_" (car footprint)) pipe)
                  (display (string-append "(" device "," uref ",") pipe)
                  (display value pipe)
-                 (case (length physical)                   
+                 (case (length footprint)                   
                    ((1) #f)  
-                   ((2) (display (string-append "," (cadr physical)) pipe))
-                   ((3) (display (string-append "," (cadr physical) 
-                                         "," (caddr physical)) pipe))
-                   (else (display (string-append "ERROR!, no physical in device " uref))))
+                   ((2) (display (string-append "," (cadr footprint)) pipe))
+                   ((3) (display (string-append "," (cadr footprint) 
+                                         "," (caddr footprint)) pipe))
+                   (else (display (string-append "ERROR!, no footprint in device " uref))))
                  (display ")" pipe)
                  (newline pipe)
                  (PCBboard:write-value-footprint pipe (cdr ls))))))))

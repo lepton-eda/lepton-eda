@@ -38,7 +38,7 @@ include(/usr/X11R6/lib/X11/pcb/m4/to.inc)
 include(/usr/X11R6/lib/X11/pcb/m4/qfp.inc)
 
 5. Edit the ~/.gEDA/gschemrc file and be sure that the following line exists : 
-(attribute-name "physical")
+(attribute-name "footprint")
 
 
 6. Be sure that grep, sed and gawk are installed. That's all..
@@ -48,11 +48,12 @@ Section II : using gschem2pcb.
 
 1. With gschem, create a schematic. All the device you want to have in pcb must
 have a Uref attribute. The footprint that you want to use in pcb are indicated
-by the physical attribute (see section III for the description of the footprint
+by the footprint attribute (see section III for the description of the footprint
 in pcb)
 
-Be careful that the attributes Uref, name, value and device must not contain space char.
-                               --------------------------------------------------------
+Be careful that the attributes Uref, name, value and device must not contain 
+space char.
+--------------------------------------------------------
 
 2. Save your work (ultralownoise.sch for instance -ambitious design!) and type in a shell
 
@@ -80,12 +81,12 @@ file is also updated so read it again.
 Section III. Description of the name of the footprint in pcb. 
 pcb uses macro to define the footprints. For DIL packages, for instance, 2
 arguments are used to indicate the number of pins and the width in mil of the
-footprint. In gschem the physical attribute of a 300 mil width and 8 pins DIL
+footprint. In gschem the footprint attribute of a 300 mil width and 8 pins DIL
 is: 
 DIL 8 300.
 Warning, for that attribute, you have to included the space char!
 
-In the following. I describe the physical attribute that are to be used in
+In the following. I describe the footprint attribute that are to be used in
 gschem for the footprint avalaible in pcb. N stands
 for the number of pins, W the width in mil, L the length in mil and D the
 diameter in mil

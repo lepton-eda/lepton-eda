@@ -1,4 +1,9 @@
 
+2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* */*: Removed all traces of the physical attribute.  This attribute
+	  is now called footprint
+
 2000-04-20  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/gnetlist.scm: Added useful scheme functions by Andrew 

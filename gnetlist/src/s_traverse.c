@@ -141,7 +141,7 @@ if (verbose_mode) {
 
 					temp = o_attrib_search_name(o_current->
 								    complex, 
-								    "physical",
+								    "footprint",
 								    0);
 					if (temp) {
 

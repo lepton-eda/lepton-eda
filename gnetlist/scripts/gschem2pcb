@@ -111,8 +111,8 @@ fi
 
 # Creation of the pcb file
 
-# Creation of the different elements. It uses the physical attribute in gschem to see what
-# the footprint is.
+# Creation of the different elements. It uses the footprint attribute in 
+# gschem to see what the footprint is.
 # see .inc files of pcb to understand the name of the footprint. Here are some tips :
 # naming of device in pcb is something like PKG_XX(Description, Uref, value)
 # where XX is the name of the footprint.
