@@ -39,11 +39,42 @@
 void
 o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
+	int screen_x1, screen_y1;
+	int small_dist;
+
 	if (o_current->visibility == INVISIBLE) {
 		return;
 	}
 
 	o_complex_draw(w_current, o_current);
+
+	/* make this mark configurable through the rc mechanism */
+	small_dist = SCREENabs(w_current, 5);
+
+	screen_x1 = o_current->screen_x;
+	screen_y1 = o_current->screen_y;
+
+
+   	if (w_current->override_color != -1 ) {
+		gdk_gc_set_foreground(w_current->gc, 
+		                      x_get_color(w_current->override_color));
+	} else {
+
+		gdk_gc_set_foreground(w_current->gc, 
+	                              x_get_color(o_current->color));
+	}
+
+	gdk_draw_line(w_current->window, w_current->gc, 
+		      screen_x1-small_dist, 
+		      screen_y1+small_dist, 
+                      screen_x1+small_dist, 
+		      screen_y1-small_dist);
+
+	gdk_draw_line(w_current->window, w_current->gc, 
+		      screen_x1+small_dist, 
+		      screen_y1+small_dist, 
+                      screen_x1-small_dist, 
+		      screen_y1-small_dist);
 }
 
 void
@@ -179,7 +210,7 @@ o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 			w_current->page_current->attrib_place_head,
 				/* type changed from TEXT to TEXT */
 			OBJ_TEXT, w_current->text_color,
-			x, y, 0, /* zero is angle */
+			x, y, LOWER_LEFT, 0, /* zero is angle */
 			w_current->current_attribute,
 			w_current->text_size,
 			/* has to be visible so you can place it */
@@ -213,7 +244,7 @@ o_text_end(TOPLEVEL *w_current)
 				/* type changed from TEXT to TEXT */
 			    OBJ_TEXT,
 			    w_current->text_color,
-			    world_x, world_y, 0, /* zero is angle */
+			    world_x, world_y, LOWER_LEFT, 0, /* zero is angle */
 			    w_current->current_attribute,
 			    w_current->text_size,
 			    VISIBLE, SHOW_NAME_VALUE);

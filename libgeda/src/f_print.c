@@ -277,6 +277,8 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 	} 
 
 
+	/* no longer change the coords, the postscript translate takes care 
+	 * of this */
 	origin_x = 0;
 	origin_y = 0;
 

@@ -6,7 +6,8 @@ The Complete Attribute Reference Doc
 Attributes are nothing but text items which take on the form: name=value
 name can be anything just as long as it doesn't contain a =.  value can
 also be anything just as long as it is something (vs nothing).  name= 
-is not a valid attribute.
+is not a valid attribute.  Also, there cannot be any spaces immediately
+before or after the equals sign.
 
 Attributes can be attached to some part of the symbol.  Either
 a pin (if it's a pin number) or some other part of the symbol.
@@ -31,7 +32,9 @@ made invisible.  device= is the device name and is required.  If the
 object is a graphic then device= should be set to none (device=none).
 It is no longer required to attach this attribute anything; just having
 it exist as device=name is good enough.  Do not confuse this with just
-having a text label which the device name.
+having a text label which the device name.  Do not put spaces for the value
+of this attribute; there are some programs which dislike spaces in the
+device specifier.
 
 
 graphical

@@ -257,9 +257,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 	OBJECT *temp_parent=NULL;
 	OBJECT *object_before_attr=NULL;
 
-	/* fill version with default string, 19981013 was the last version */ 
-	/* which didn't have versioning */
-	strcpy(version, "19981013"); 
+	/* fill version with default string, the current version */
+	strcpy(version, VERSION); 
 
  	fp = fopen(filename, "r");
 

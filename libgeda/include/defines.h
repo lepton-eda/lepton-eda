@@ -119,6 +119,22 @@
 #define UPPER 1
 #define BOTH  2 
 
+/* for text alignment */
+/*   2 -- 5 -- 8  */
+/*   |    |    |  */
+/*   1 -- 4 -- 7  */
+/*   |    |    |  */
+/*   0 -- 3 -- 6  */
+#define LOWER_LEFT	0
+#define MIDDLE_LEFT	1
+#define UPPER_LEFT	2
+#define LOWER_MIDDLE	3
+#define MIDDLE_MIDDLE	4
+#define UPPER_MIDDLE	5
+#define LOWER_RIGHT	6
+#define MIDDLE_RIGHT	7
+#define UPPER_RIGHT	8
+
 /* These modes are for net_endpoint_mode */
 #define NONE		0
 #define FILLEDBOX	1

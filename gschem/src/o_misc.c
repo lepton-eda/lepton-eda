@@ -47,6 +47,9 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 
 	/* also add the ability to multi attrib edit: nets, busses, pins */
 	case(OBJ_COMPLEX):
+	case(OBJ_NET):
+	case(OBJ_PIN):
+	case(OBJ_BUS):
 		multi_attrib_edit(w_current, list);
 		break;
 	case(OBJ_TEXT):

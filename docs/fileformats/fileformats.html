@@ -93,10 +93,10 @@ type x y selectable angle mirror basename <p>
 <strong> Text </strong> <p>
 
 Example:<br>
-T 16900 35800 3 10 1 0 0<br>
+T 16900 35800 3 10 1 0 0 0<br>
 I'm a string!<p>
 
-type x y color size visibility show_name_value angle<br>
+type x y color size visibility show_name_value alignment angle<br>
 string<p>
 
 <UL>
@@ -110,6 +110,19 @@ string<p>
                           show value only 1<br>
                           show name only 2<br>
 </UL>
+	alignment = the relative location which the (x,y) coords specify using
+	the following diagram as a guide:
+</font>
+<UL>
+<pre>
+	2 -- 5 -- 8
+	|    |    |
+	1 -- 4 -- 7
+	|    |    |
+	0 -- 3 -- 6
+</pre>
+</UL>
+<font face="arial,helvetica"> 
         angle = rotation, 0, 90, 180, 270 (only)<br>
         string = text string<br>
 </UL>

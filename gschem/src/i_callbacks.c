@@ -1909,6 +1909,7 @@ DEFINE_I_CALLBACK(options_show_log_window)
 DEFINE_I_CALLBACK(misc)
 {
 	OBJECT **attrib_objects;
+	OBJECT *object;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	char name[128], value[128];
 	int i=0;
@@ -1941,11 +1942,14 @@ DEFINE_I_CALLBACK(misc)
 
 	/* In this case w_current->page_current->next can be safely null */	
 	/* new demonstration code which shows how to use o_attrib_add_attrib */
-	o_attrib_add_attrib(w_current, "name=value", VISIBLE, 
+	object = o_attrib_add_attrib(w_current, "name=value", VISIBLE, 
 				    SHOW_NAME_VALUE, 
 				    w_current->page_current->
 				    selection_head->next);
 
+
+ 	/* for debugging purposes */
+	printf("%d %s %s\n", object->sid, object->name, object->text_string);
 	/*o_conn_print_hash(w_current->page_current->conn_table);*/
 	/* o_text_print_set();*/
 }

@@ -268,6 +268,7 @@ o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		OBJ_TEXT, w_current->detachedattr_color,
 		x,
 		y,
+		LOWER_LEFT,
 		0, /* zero is angle */
 		w_current->current_attribute,
 		w_current->text_size,
@@ -302,7 +303,8 @@ o_attrib_end(TOPLEVEL *w_current)
 			    OBJ_TEXT, w_current->detachedattr_color,
 			    world_x,
 			    world_y,
-			    0, /* zero is angle */
+			    LOWER_LEFT,
+		 	    0, /* zero is angle */
 			    w_current->current_attribute,
 			    w_current->text_size,
 			    w_current->current_visible,
@@ -439,6 +441,7 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
                            OBJ_TEXT, w_current->attribute_color,
                            world_x,
                            world_y,
+			   LOWER_LEFT,
                            0, /* zero is angle */
                            text_string,
                            w_current->text_size,  /* current text size */ 

@@ -177,6 +177,7 @@ s_basic_init_object( char *name )
 	new_node->text_string = NULL;
 	new_node->text_size = -1;
 	new_node->text_len = -1;
+	new_node->text_alignment = -1;
 	new_node->displayed_text_len = -1;
 
 
@@ -211,136 +212,6 @@ s_basic_link_object( OBJECT *new_node, OBJECT *ptr )
 		return(ptr->next);
 	}
 }
-
-#if 0 /* no longer in production */
-/* should be deleted shortly, 7/21/99 */
-OBJECT *
-add_object( OBJECT *ptr ) 
-{
-	OBJECT *new_node;
-
-	new_node = (OBJECT *) malloc(sizeof(OBJECT));	
-
-	/* setup sid */
-	new_node->sid = global_sid++;
-
-	/* Setup the name */
-	/* size is a hack */
-	/* dangerous magic constant 10 */
-	new_node->name = (char *) malloc(sizeof(char)*(strlen(p_name)+10));
-	sprintf(new_node->name, "%s.%d", p_name, new_node->sid);
-
-	/* Setup the type */
-	new_node->type = p_type;
-
-	/* Setup the bounding box */
-	new_node->top = p_top;
-	new_node->left = p_left;
-	new_node->right = p_right;
-	new_node->bottom = p_bottom;
-
-	/* Setup line points */
-
-	if (p_line_points) {
-	 	new_node->line_points = p_line_points;
-	} else {
-	 	new_node->line_points = NULL;
-	}
-	
-	if (p_circle) {
-		new_node->circle = p_circle;
-	} else {
-	 	new_node->circle = NULL;
-	}
-
-	new_node->visited = 0;
-
-	/* Setup complex part stuff */
-	if (p_complex_basename[0] != '\0') {
-		new_node->complex_basename = (char *) 
-			malloc(sizeof(char)*(strlen(p_complex_basename)+1));
-		strcpy(new_node->complex_basename, p_complex_basename);
-	} else {
-		new_node->complex_basename = NULL;
-	}
-
-	if (p_complex_clib[0] != '\0') {
-		new_node->complex_clib = (char *) 
-			malloc(sizeof(char)*(strlen(p_complex_clib)+1));
-		strcpy(new_node->complex_clib, p_complex_clib);
-	} else {
-		new_node->complex_clib = NULL;
-	}
-		
-	/* link in the actual stuff */
-	new_node->complex = p_complex;
-	
-	/* usually null, code after add_object needs to change this */
-	new_node->complex_parent = NULL;
-
-	/* origin of complex */
-	new_node->x = p_x;
-	new_node->y = p_y;
-
-	new_node->screen_x = p_screen_x;
-	new_node->screen_y = p_screen_y;
-
-	/* Setup the color */
-	new_node->color = p_color;
-	
-	/* Set the angle */
-	new_node->angle = p_angle;
-	new_node->mirror = p_mirror;
-
-	/* init saved_color */
-	new_node->saved_color = -1;
-
-	/* Setup text */
-	if (p_text_string[0] != '\0') {
-		new_node->text_string = (char *) malloc(sizeof(char)*
-						(strlen(p_text_string)+1));
-
-		strcpy(new_node->text_string, p_text_string);
-	} else {
-		new_node->text_string = NULL;
-	}
-
-	new_node->text_len = p_text_len;
-	new_node->text_size = p_text_size;
-
-
-	/* Setup attributes */
-	/* will be null for now (forever?) do we ever add something that */
-	/* will not be null here hack */
-	/* when we are adding true attributes this needs to be p_attribs */
-	/* second will stay NULL, unless it's a floating hack ???? */
-	new_node->attribs = NULL;
-	new_node->visibility = p_visibility;
-	new_node->show_name_value = p_show_name_value;
-	new_node->attached_to = NULL;
-	new_node->attribute = 0; /* change to p_attribute */
-	
-
-	/* Setup functions */
-	new_node->action_func = p_action_func;
-	new_node->sel_func = p_sel_func;
-	new_node->draw_func = p_draw_func;
-
-	/* Setup link list stuff */
-	new_node->next = NULL;
-	/* object_tail = new_node;*/ /* careful hack BAD! out for ever */
-
-
-	if (ptr == NULL) {
-		new_node->prev = NULL; /* setup previous link */
-		return(new_node);
-	} else {
-		new_node->prev = ptr; /* setup previous link */
-		ptr->next = new_node;
-		return(ptr->next);
-	}
-}
-#endif
 
 void
 print_struct_forw(OBJECT *ptr)

@@ -530,7 +530,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19991011
+VERSION=20000220
 
 echo Configuring symbols version $VERSION
 

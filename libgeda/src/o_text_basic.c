@@ -360,6 +360,16 @@ o_text_load_font(TOPLEVEL *w_current, char needed_char)
 }
 
 int
+o_text_height(TOPLEVEL *w_current, int size) 
+{
+	/* 26 is the height of a single char */
+	/* which represents a character which is 2 pts high */
+	/* So size has to be divided in half */
+	return(26*size/2);
+
+}
+
+int
 o_text_width(TOPLEVEL *w_current, char *string, int size) 
 {
 	int i;
@@ -388,7 +398,8 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
 
 OBJECT *
 o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list, 
-	char *string, int size, int color, int x, int y, int angle)
+	char *string, int size, int color, int x, int y, int alignment, 
+	int angle)
 {
         OBJECT *temp_tail=NULL;
 	OBJECT *temp_list;
@@ -397,7 +408,9 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	int len;
 	int x_offset;
 	int y_offset;
-
+	int text_width;
+	int text_height;
+	int sign;
 
 	temp_list = object_list;
 
@@ -411,19 +424,150 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	/* now read in the chars */
 	temp_tail = w_current->page_current->object_tail;
 
+	text_height = o_text_height(w_current, size);
+	text_width = o_text_width(w_current, string, size/2);
 
-	x_offset = x;
-	y_offset = y;
+	switch(angle) {
+		case(0):
+			sign = -1;
+			break;
+		case(90):
+			sign = 1;
+			break;
+		case(180):
+			sign = 1;
+			break;
+		case(270):
+			sign = -1;
+			break;
+	}
 
-#if 1
+	if (angle == 0 || angle == 180) {
+		switch(alignment) {
+
+			case(LOWER_LEFT):
+				x_offset = x;
+				y_offset = y;
+			break;
+		
+			case(MIDDLE_LEFT):
+				x_offset = x;
+				y_offset = y + sign*0.5*text_height;
+			break;
+	
+			case(UPPER_LEFT):
+				x_offset = x;
+				y_offset = y + sign*text_height;
+			break;
+	
+			case(LOWER_MIDDLE):
+				x_offset = x + sign*0.5*text_width;
+				y_offset = y;
+			break;
+	
+			case(MIDDLE_MIDDLE):
+				x_offset = x + sign*0.5*text_width;
+				y_offset = y + sign*0.5*text_height;
+			break;
+	
+			case(UPPER_MIDDLE):
+				x_offset = x + sign*0.5*text_width;
+				y_offset = y + sign*text_height;
+	
+			break;
+	
+			case(LOWER_RIGHT):
+				x_offset = x + sign*text_width;
+				y_offset = y;
+			break;
+	
+			case(MIDDLE_RIGHT):
+				x_offset = x + sign*text_width;
+				y_offset = y + sign*0.5*text_height;
+			break;
+	
+			case(UPPER_RIGHT):
+				x_offset = x + sign*text_width;
+				y_offset = y + sign*text_height;
+			break;
+
+			default: 
+				fprintf(stderr, "Got an invalid text alignment [%d]\n",
+					alignment); 
+				fprintf(stderr, "Defaulting to Lower Left");
+				alignment = LOWER_LEFT;
+				x_offset = x;
+				y_offset = y;
+			break;
+		}
+	} else { /* angle is 90 or 270 */
+		switch(alignment) {
+
+			case(LOWER_LEFT):
+				x_offset = x;
+				y_offset = y;
+			break;
+		
+			case(MIDDLE_LEFT):
+				x_offset = x + sign*0.5*text_height;
+				y_offset = y;
+			break;
+	
+			case(UPPER_LEFT):
+				x_offset = x + sign*text_height;
+				y_offset = y;
+			break;
+	
+			case(LOWER_MIDDLE):
+				x_offset = x;
+				y_offset = y - sign*0.5*text_width;
+			break;
+	
+			case(MIDDLE_MIDDLE):
+				x_offset = x + sign*0.5*text_height;
+				y_offset = y - sign*0.5*text_width;
+			break;
+	
+			case(UPPER_MIDDLE):
+				x_offset = x + sign*text_height;
+				y_offset = y - sign*0.5*text_width;
+	
+			break;
+	
+			case(LOWER_RIGHT):
+				x_offset = x;
+				y_offset = y - sign*text_width;
+			break;
+	
+			case(MIDDLE_RIGHT):
+				x_offset = x + sign*0.5*text_height;
+				y_offset = y - sign*text_width;
+			break;
+	
+			case(UPPER_RIGHT):
+				x_offset = x + sign*text_height;
+				y_offset = y - sign*text_width;
+			break;
+
+			default: 
+				fprintf(stderr, "Got an invalid text alignment [%d]\n",
+					alignment); 
+				fprintf(stderr, "Defaulting to Lower Left");
+				alignment = LOWER_LEFT;
+				x_offset = x;
+				y_offset = y;
+			break;
+		}
+
+	}
+
 	switch(angle) {
 		case(180):
-			x_offset = x_offset - o_text_width(w_current, string, size/2);
-			y_offset = y_offset - 26*size/2;
+			x_offset = x_offset - text_width;
+			y_offset = y_offset - text_height;
 			angle = 0;
 		break;
 	}
-#endif
 
 #if DEBUG
 	printf("width: %d\n", o_text_width(w_current, string, size/2));
@@ -490,7 +634,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 OBJECT *
 o_text_add(TOPLEVEL *w_current, 
 	OBJECT *object_list, 
-	char type, int color, int x, int y, 
+	char type, int color, int x, int y, int alignment,
 	int angle, char *string, int size, 
 	int visibility, int show_name_value)
 {
@@ -518,6 +662,7 @@ o_text_add(TOPLEVEL *w_current,
 	new_node->text_string = strdup(string);
 	new_node->text_len = strlen(string);
 	new_node->text_size = size;
+	new_node->text_alignment = alignment;
 	new_node->x = x;
 	new_node->y = y;
 	new_node->angle = angle;
@@ -592,7 +737,7 @@ o_text_add(TOPLEVEL *w_current,
 		object_list->complex = 
 			o_text_create_string(w_current, temp_list, 
 					      output_string, size, color,
-					      x, y, angle); 
+					      x, y, alignment, angle); 
 			object_list->displayed_text_len = strlen(output_string);
 	} else {
 		object_list->complex = NULL;
@@ -636,12 +781,25 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[],
 	int visibility;
 	int show_name_value;
 	int angle;
+	int alignment;
+	int int_version;
 
 	string = remove_nl(string);	
 
-	sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, &color, &size,
+	int_version = atoi(version);
+
+	if (int_version < 20000220) {
+		sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
+					        &color, &size,
 						&visibility, &show_name_value, 
 						&angle);	
+		alignment = LOWER_LEFT; /* older versions didn't have this */
+	} else {
+		sscanf(buf, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
+					        &color, &size,
+						&visibility, &show_name_value, 
+						&alignment, &angle);	
+	}
 
         if (size == 0) {
                 fprintf(stderr, "Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
@@ -666,7 +824,7 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[],
 	}
 
 	object_list = o_text_add(w_current, object_list, type, color, x, y, 
-				angle, string, 
+				alignment, angle, string, 
 				size, visibility, show_name_value);
 
 	return(object_list);
@@ -714,7 +872,11 @@ o_text_save(char *buf, OBJECT *object)
 	string = object->text_string;
 	size = object->text_size;
 
-        sprintf(buf, "%c %d %d %d %d %d %d %d\n%s", object->type, x, y, color, size,  object->visibility, object->show_name_value, object->angle, string);
+        sprintf(buf, "%c %d %d %d %d %d %d %d %d\n%s", object->type, x, y, 
+		color, size,  object->visibility, 
+	        object->show_name_value, object->text_alignment, 
+	        object->angle, string);
+
         return(buf);
 }
        
@@ -782,6 +944,7 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 					      o_current->text_size, 
 					      o_current->color, 
 					      o_current->x, o_current->y,
+					      o_current->text_alignment,
 					      o_current->angle); 
 			o_current->displayed_text_len = strlen(output_string);
 	} else {
@@ -833,10 +996,14 @@ o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	OBJECT *new_obj;
 
 	new_obj = o_text_add(w_current, list_tail, OBJ_TEXT, 
-	        o_current->color, 
-		o_current->x, o_current->y, o_current->angle,
-		o_current->text_string, o_current->text_size, 
-		o_current->visibility, o_current->show_name_value); 
+	                     o_current->color, 
+		             o_current->x, o_current->y, 
+	                     o_current->text_alignment, 
+	                     o_current->angle,
+		             o_current->text_string, 
+			     o_current->text_size, 
+		             o_current->visibility, 
+			     o_current->show_name_value); 
 
 
 	/* yes it is attached to something */	
@@ -878,6 +1045,32 @@ o_text_freeallfonts(TOPLEVEL *w_current)
 }
 
 void
+o_text_print_text_width(FILE *fp, char *output_string)
+{
+	int len, i;
+
+	fprintf(fp, "(");
+	len = strlen(output_string);
+	for (i = 0 ; i < len; i++) {  
+	    if (output_string[i] == '(' || output_string[i] == ')' || output_string[i] == '\\' ) {
+			fprintf(fp, "\\");
+		}
+
+		fprintf(fp, "%c", output_string[i]);
+	}
+
+	/* convert width to mils */
+	/* .95 is a fudge factor */
+	fprintf(fp, ") stringwidth pop\n");
+}
+
+void
+o_text_print_text_height(FILE *fp, int size)
+{
+        fprintf(fp, "%f\n", (float) size);
+}
+
+void
 o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
 	int origin_x, int origin_y)
 {
@@ -886,6 +1079,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         char value[1025]; /* hack */
 	int len;
 	int i;
+	int x, y;
 
 
 	if (!o_current->text_string) {
@@ -939,9 +1133,69 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	}
 
 	if (o_current->angle != 180) {
-		fprintf(fp, "%d mils %d mils moveto\n", 
-			o_current->x-origin_x,
-			o_current->y-origin_y);
+
+		switch(o_current->text_alignment) {
+			case(LOWER_LEFT):
+				x = o_current->x;
+				y = o_current->y;
+				fprintf(fp, "%d mils %d mils moveto\n", x, y);
+			break;
+
+			case(MIDDLE_LEFT):
+				x = o_current->x;
+				y = o_current->y;
+				fprintf(fp, "%d mils %d mils\n", x, y);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, ".5 mul sub moveto\n");
+			break;
+
+			case(UPPER_LEFT):
+				x = o_current->x;
+				y = o_current->y;
+				fprintf(fp, "%d mils %d mils\n", x, y);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "sub moveto\n");
+			break;
+
+			case(LOWER_MIDDLE):
+				x = o_current->x;
+				y = o_current->y;
+				fprintf(fp, "%d mils ", x);
+
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, ".5 mul sub\n");
+				fprintf(fp, "%d mils\n", y);
+				fprintf(fp, "moveto\n");
+			break;
+
+			case(MIDDLE_MIDDLE):
+				x = o_current->x;
+				y = o_current->y;
+				fprintf(fp, "%d mils ", x);
+
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, ".5 mul sub\n");
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, ".5 mul sub moveto\n");
+			break;
+
+			case(UPPER_MIDDLE):
+				x = o_current->x;
+				y = o_current->y;
+				fprintf(fp, "%d mils ", x);
+
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, ".5 mul sub\n");
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "sub moveto\n");
+			break;
+
+			/* still need to do upper everything */
+			/* and then deal with rotation */
+		}
+
 
 		if (o_current->angle) {
 			fprintf(fp, "%d rotate\n", o_current->angle); 
@@ -967,7 +1221,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		}
 
 		/* convert width to mils */
-		/* .90 is a fudge factor */
+		/* .95 is a fudge factor */
 		fprintf(fp, ") stringwidth pop 72 div 1000 mul .95 mul\n");
 
 		fprintf(fp, "%d exch sub mils\n",
@@ -1101,6 +1355,8 @@ o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	char output_string[1025]; /* hack */
 	char name[1025]; /* hack */
         char value[1025]; /* hack */
+	int height_mod=0;
+	int sign=1;
 	
 	SCREENtoWORLD(w_current, centerx, centery,
 			&world_centerx,
@@ -1109,9 +1365,9 @@ o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	origx = object->x;
 	origy = object->y;
 
-	/* translate to origin */
 	x = origx + (-world_centerx);
 	y = origy + (-world_centery);
+
 
 	if (o_attrib_get_name_value(object->text_string, name, value)) {
 		switch(object->show_name_value) {
@@ -1150,31 +1406,130 @@ o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 		strcpy(output_string, object->text_string);
 	}
 
+	switch(object->text_alignment) {
+		case(LOWER_LEFT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				height_mod = 0;
+			}
+		break;
+
+		case(MIDDLE_LEFT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				height_mod = o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(UPPER_LEFT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				height_mod = 2*o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(LOWER_MIDDLE):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 0.5;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 0;
+			}
+		break;
+
+		case(MIDDLE_MIDDLE): 
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 0.5;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(UPPER_MIDDLE): 
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 0.5;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 2*o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(LOWER_RIGHT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = -1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 0;
+			}
+		break;
+
+		case(MIDDLE_RIGHT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = -1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(UPPER_RIGHT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = -1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 2*o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+	}
+
 	switch (object->angle) {
 
 		case(0): 
-			newx = -(x + o_text_width(w_current, 
+			newx = -(x + sign*o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 		break;
 
 		case(90):
-			newx = -( x - 26*object->text_size/2);
+			newx = -(x - sign*o_text_height(w_current, 
+				                        object->text_size)+
+							height_mod);
 		break;
 
 		case(180):
-			newx = -(x - o_text_width(w_current, 
+			newx = -(x - sign*o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 		break;
 
 		case(270):
-			newx = -( x + 26*object->text_size/2);
+			newx = -(x + sign*o_text_height(w_current, 
+						        object->text_size)-
+							height_mod);
 		break;
 
 
 		default:
-			fprintf(stderr, "Invalid angle used!\n");
+			fprintf(stderr, "Invalid angle specified!\n");
 			return;
 		break;
 
@@ -1200,6 +1555,8 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 	char output_string[1025]; /* hack */
 	char name[1025]; /* hack */
         char value[1025]; /* hack */
+	int sign=1;
+	int height_mod=0;
 	
 	origx = object->x;
 	origy = object->y;
@@ -1207,6 +1564,7 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 	/* translate to origin */
 	x = origx + (-world_centerx);
 	y = origy + (-world_centery);
+
 
 	if (o_attrib_get_name_value(object->text_string, name, value)) {
 		switch(object->show_name_value) {
@@ -1244,31 +1602,128 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 		strcpy(output_string, object->text_string);
 	}
 
+	switch(object->text_alignment) {
+		case(LOWER_LEFT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				height_mod = 0;
+			}
+		break;
+
+		case(MIDDLE_LEFT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				height_mod = o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(UPPER_LEFT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				height_mod = 2*o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(LOWER_MIDDLE): 
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 0.5;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 0;
+			}
+		break;
+
+		case(MIDDLE_MIDDLE): 
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 0.5;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(UPPER_MIDDLE): 
+			if (object->angle == 0 || object->angle == 180) {
+				sign = 0.5;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 2*o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(LOWER_RIGHT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = -1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 0;
+			}
+		break;
+
+		case(MIDDLE_RIGHT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = -1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+
+		case(UPPER_RIGHT):
+			if (object->angle == 0 || object->angle == 180) {
+				sign = -1;
+				height_mod = 0;
+			} else if (object->angle == 90 || object->angle == 270) {
+				sign = 1;
+				height_mod = 2*o_text_height(w_current, 
+				                           object->text_size);
+			}
+		break;
+	}
+
 	switch (object->angle) {
 
 		case(0): 
-			newx = -(x + o_text_width(w_current, 
+			newx = -(x + sign*o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 
 		break;
 
 		case(90):
-			newx = -( x - 26*object->text_size/2);
+			newx = -(x - sign*o_text_height(w_current, 
+					object->text_size)+height_mod);
 		break;
 
 		case(180):
-			newx = -(x - o_text_width(w_current, 
+			newx = -(x - sign*o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 		break;
 
 		case(270):
-			newx = -( x + 26*object->text_size/2);
+			newx = -(x + sign*o_text_height(w_current, 
+					object->text_size)+height_mod);
 		break;
 
 		default:
-			fprintf(stderr, "Invalid angle used!\n");
+			fprintf(stderr, "Invalid angle specified!\n");
 			return;
 		break;
 
@@ -1294,7 +1749,7 @@ o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current, int *centerx, int *
 	int text_height; 
 	int text_width;
 
-	text_height = 26*o_current->text_size/2;
+	text_height = o_text_height(w_current, o_current->text_size);
 
 	/* this will NOT NOT NOT work with attributes */
 	text_width = o_text_width(w_current, o_current->text_string, 

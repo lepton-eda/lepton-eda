@@ -110,6 +110,7 @@ struct st_object {
 	char *text_string;			/* text stuff */
 	int text_size;
 	int text_len;
+	int text_alignment;	
 	int displayed_text_len;
 
         int snap_size;                          /* snap grid size */
