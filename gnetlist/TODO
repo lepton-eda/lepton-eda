@@ -12,3 +12,19 @@ Put code in that deals with the opening of a schematic twice...
 
 Add more regression tests 
 
+
+Hierarchy support
+--------------------------------------------------------
+OKAY seperator configurable (char or string, or nothing)
+
+OKAY append / prepend of tag
+
+FOR DOCS no slotting on composits
+FOR DOCS no net= attribute on composites
+FOR DOCS hetrogenious slotting works if you have uniq pinlabels
+
+DONE multiple sources for underlying schems
+
+SEEMS TO WORK... many many levels of hierarchy?
+MUCH TESTING NEEDED
+
