@@ -49,7 +49,10 @@
             (list "ZO" "ZO=" #t)
             (list "E" "E=" #t)
             (list "F" "F=" #t)))
-            
+      (cons
+         (cons "SPARAMBLOCK" "BLOCK")
+         (list
+            (list "filename" "" #t)))            
 ))
 
 (define vipec:get-template
@@ -97,91 +100,14 @@
          (display "\t" port)
          (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
          (vipec:write-attribs package (cdr template) port)
-         (display package port)
+         (display (string-append "\t% " package) port)
          (newline port))))
-
-(define vipec:write-component
-   (lambda (package port netnumbers)
-      (display package port)
-      (write-char #\space port)
-      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-      (display (get-value package) port)
-      (display "\t" port)
-      (display package port)
-      (newline port)))
-
-(define vipec:write-resistor
-   (lambda (package port netnumbers)
-      (display "   RES\t" port)
-      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-      (display "\t" port)
-      (display "R=" port)
-      (display (get-value package) port)
-      (display "\t" port)
-      (display package port)
-      (newline port)))
-
-(define vipec:write-capacitor
-   (lambda (package port netnumbers)
-      (display "   CAP\t" port)
-      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-      (display "\t" port)
-      (display "C=" port)
-      (display (get-value package) port)
-      (display "\t" port)
-      (display package port)
-      (newline port)))
-
-(define vipec:write-inductor
-   (lambda (package port netnumbers)
-      (display "   IND\t" port)
-      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-      (display "\t" port)
-      (display "L=" port)
-      (display (get-value package) port)
-      (display "\t" port)
-      (let ((Q (gnetlist:get-package-attribute package "Q")))
-         (if (not (string=? Q "unknown"))
-            (begin
-               (display "Q=" port)
-               (display Q port)
-               (display "\t" port))))
-      (display package port)
-      (newline port)))
-
-(define vipec:write-tlin
-   (lambda (package port netnumbers)
-      (display "   TLIN\t" port)
-      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-      (display "\t" port)
-      (let ((Z (gnetlist:get-package-attribute package "Z"))
-            (E (gnetlist:get-package-attribute package "len"))
-            (F (gnetlist:get-package-attribute package "freq")))
-         (if (not (string=? Z "unknown"))
-            (begin
-               (display "Z=" port)
-               (display Z port)
-               (display "\t" port)))
-         (if (not (string=? E "unknown"))
-            (begin
-               (display "E=" port)
-               (display E port)
-               (display "\t" port)))
-         (if (not (string=? F "unknown"))
-            (begin
-               (display "F=" port)
-               (display F port)
-               (display "\t" port))))
-      (display package port)
-      (newline port)))
 
 (define vipec:component-writing
    (lambda (port ls netnumbers)
       (if (not (null? ls))
          (let ((package (car ls)))
             (cond 	
-               ((string=? (get-device package) "SPARAMBLOCK") 
-                  (vipec:write-block package port netnumbers))
                ( else (vipec:write-gen-component package port netnumbers)))
             (vipec:component-writing port (cdr ls) netnumbers)))))
 
@@ -198,5 +124,10 @@
          (vipec:header port)
          (display "CKT\n" port)
          (vipec:component-writing port packages netnumbers)
+         (display "\tDEF2P\t" port)
+         (display (get-net-number "PORT1" netnumbers) port)
+         (display "  " port)
+         (display (get-net-number "PORT2" netnumbers) port)
+         (display "\n\tTERM\t50 50\n" port)
          (close-output-port port))))
 

@@ -13,3 +13,5 @@ T 0 300 5 10 0 0 0
 device=PORT1
 T 50 50 9 8 1 0 0
 Port 1
+T 0 300 8 10 0 0 0
+net=PORT1:1
