@@ -52,16 +52,13 @@
             (newline p)
             (gossip:get-libraries p (cdr components) (cons lib done))))))))
 
-(define gossip:components
+(define gossip:blocks
    (lambda (port ls)
       (if (not (null? ls))
          (let ((package (car ls)))
+            (display "   (" port)
             (display package port)
-            (write-char #\space port)
-            (display "device=" port)
-            (display (get-device package) port)
-            (newline port)
-            (gossip:components port (cdr ls))))))
+            (gossip:blocks port (cdr ls))))))
 
 (define gossip:display-connections
    (lambda (nets port)
@@ -103,8 +100,15 @@
       (let ((blockname (gnetlist:get-toplevel-attribute "blockname")))
          (display "(define-block (" port)
          (display blockname port)
-         (display " (" port))))
+         (display " (" port))
+         (newline port)))
 ;;  Need to add code to find all input and output ports
+
+(define gossip:signals
+   (lambda (port)
+      (display "(signals " port)
+      (display (gnetlist:get-all-unique-nets "dummy") port)
+      (display ")\n" port)))
 
 (define gossip 
    (lambda (output-filename)
@@ -113,7 +117,7 @@
             (gossip:write-top-header port)
             (gossip:get-libraries port packages '())
             (gossip:write-block-header port)
-            (gossip:nets port)
-            (gossip:components port packages))
+            (gossip:signals port)
+            (gossip:blocks port packages))
          (close-output-port port))))
 
