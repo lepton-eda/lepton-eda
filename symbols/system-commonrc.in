@@ -21,7 +21,6 @@
 ;
 (component-library "@symdir@/local")
 (component-library "@symdir@/74")
-(component-library "@symdir@/rf")
 (component-library "@symdir@/4000")
 (component-library "@symdir@/IEC417")
 (component-library "@symdir@/analog")
@@ -40,6 +39,7 @@
 (component-library "@symdir@/switch")
 (component-library "@symdir@/verilog")
 (component-library "@symdir@/spice")
+(component-library "@symdir@/rf")
 
 ; source-library string
 ; Specify where source entities exist.
@@ -54,7 +54,6 @@
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
 (source-library "@symdir@/74")
-(source-library "@symdir@/rf")
 (source-library "@symdir@/4000")
 (source-library "@symdir@/analog")
 (source-library "@symdir@/altera")
@@ -70,6 +69,7 @@
 (source-library "@symdir@/connector")
 (source-library "@symdir@/switch")
 (source-library "@symdir@/verilog")
+(source-library "@symdir@/rf")
 ; out for now (source-library "@sourcedir@")
 
 ; font-directory string
