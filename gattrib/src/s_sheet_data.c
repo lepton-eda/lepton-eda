@@ -316,8 +316,8 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 	  }   /*   while (o_lower_current != NULL)   */
 	  
 	} else {          /* didn't find refdes.  Report error to log. */
-	  fprintf(stderr, "In s_sheet_data_add_master_pin_list_items, found non-graphical component with no refdes.\n");
 #ifdef DEBUG
+	  fprintf(stderr, "In s_sheet_data_add_master_pin_list_items, found non-graphical component with no refdes.\n");
 	  fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
 #endif
 	}
