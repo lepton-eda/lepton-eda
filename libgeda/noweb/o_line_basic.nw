@@ -1585,6 +1585,12 @@ o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
   /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
+
+#ifdef HAS_LIBGDGEDA2
+  gdImageSetThickness(current_im_ptr, SCREENabs(w_current, 
+					        o_current->line_width));
+#endif
+
   gdImageLine(current_im_ptr, 
               o_current->line->screen_x[0],
               o_current->line->screen_y[0],

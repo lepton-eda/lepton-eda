@@ -612,6 +612,16 @@ o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
   /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
+
+#ifdef HAS_LIBGDGEDA2
+  if (w_current->pin_style == THICK) {
+    gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
+                                                  PIN_WIDTH));
+  } else {
+    gdImageSetThickness(current_im_ptr, 0);
+  }
+#endif
+
   gdImageLine(current_im_ptr,
               o_current->line->screen_x[0],
               o_current->line->screen_y[0],

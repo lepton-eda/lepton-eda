@@ -1,5 +1,18 @@
 2002-12-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	* acconfig.h, config.h.in, configure.in.h: Added tests to look for
+	the new libgdgeda 2.0.x 
+
+	* noweb/o_arc_basic.nw, o_box_basic.nw, o_bus_basic.nw,
+	o_circle_basic.nw, o_line_basic.nw, o_net_basic.nw,
+	o_pin_basic.nw: Added calls to the gd thickness function to render
+	thick lines in the png output
+	
+	* noweb/s_basic.nw: Initialized a few members of st_object which 
+	should have been set to zero.
+
+2002-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* noweb/o_text_basic.nw: Applied Norwegian/Danish/German characters 
 	patch from Egil Kvaleberg
 

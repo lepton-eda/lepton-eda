@@ -11,6 +11,9 @@
 /* Define if you have the gdgeda library   */
 #undef HAS_LIBGDGEDA
 
+/* Define if you have the new 2.0.x gdgeda (above will also be defined) */
+#undef HAS_LIBGDGEDA2
+
 /* Define if you have the zlib (libz) library   */
 #undef HAS_LIBZ
 

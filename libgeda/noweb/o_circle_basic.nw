@@ -1489,6 +1489,12 @@ o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
 #ifdef HAS_LIBGDGEDA
+
+#ifdef HAS_LIBGDGEDA2
+  gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
+                                                o_current->line_width));
+#endif
+
   gdImageArc(current_im_ptr, 
              o_current->circle->screen_x, 
              o_current->circle->screen_y,

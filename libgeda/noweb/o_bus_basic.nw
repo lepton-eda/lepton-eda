@@ -631,17 +631,13 @@ o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
   /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
+
+#ifdef HAS_LIBGDGEDA2
+  gdImageSetThickness(current_im_ptr, SCREENabs(w_current, BUS_WIDTH));
+#endif
+
   gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
 
-  /* this is to get thick lines with GD */
-  orient = o_bus_orientation(o_current);
-  if (orient == VERTICAL) {
-    gdImageLine(current_im_ptr, x1+1, y1, x2+1, y2, color);
-    gdImageLine(current_im_ptr, x1-1, y1, x2-1, y2, color);
-  } else if (orient == HORIZONTAL) {
-    gdImageLine(current_im_ptr, x1, y1+1, x2, y2+1, color);
-    gdImageLine(current_im_ptr, x1, y1-1, x2, y2-1, color);
-  }
 #endif
 
 }
