@@ -36,81 +36,79 @@ extern int optind;
 #endif
 
 
-void
-usage(char *cmd)
+void usage(char *cmd)
 {
-	printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-	printf("  -i  		Interactive GUILE mode\n");
-	printf("  -q  		Quiet mode\n");
-	printf("  -g proc	GUILE procedure to execute \n");
-	printf("  -o filename	Output netlist filename\n");
-	printf("  -c string	Execute string like was a guile script\n");
-	printf("  -v  		Verbose mode on\n");
-	printf("\n");
-	exit(0);
+    printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
+    printf("  -i  		Interactive GUILE mode\n");
+    printf("  -q  		Quiet mode\n");
+    printf("  -g proc	GUILE procedure to execute \n");
+    printf("  -o filename	Output netlist filename\n");
+    printf("  -c string	Execute string like was a guile script\n");
+    printf("  -v  		Verbose mode on\n");
+    printf("\n");
+    exit(0);
 }
 
-int
-parse_commandline(int argc, char *argv[])
+int parse_commandline(int argc, char *argv[])
 {
-	int ch;
+    int ch;
 
-	while ((ch = getopt (argc, argv, OPTIONS)) != -1) {
-		switch (ch) {
+    while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
+	switch (ch) {
 
-			case 'v':
-				verbose_mode=TRUE;
-			break;
+	case 'v':
+	    verbose_mode = TRUE;
+	    break;
 
-			case 'i':
-				interactive_mode=TRUE;
-			break;
+	case 'i':
+	    interactive_mode = TRUE;
+	    break;
 
-			case 'q':
-				quiet_mode=TRUE;
-			break;
+	case 'q':
+	    quiet_mode = TRUE;
+	    break;
 
-			case 'g':
-				guile_proc = (char *) malloc(sizeof(char)*
-						(strlen(optarg)+1));
-				strcpy(guile_proc, optarg);	
-			
-			break;
+	case 'g':
+	    guile_proc = (char *) malloc(sizeof(char) *
+					 (strlen(optarg) + 1));
+	    strcpy(guile_proc, optarg);
 
-			case 'o':
-				if (output_filename) {
-					free(output_filename);
-				}
-				output_filename = (char *) malloc(sizeof(char)*
-						(strlen(optarg)+1));
-				strcpy(output_filename, optarg);	
-			break;
+	    break;
 
-			case 'c':
-				gh_eval_str_with_stack_saving_handler(optarg);	
-			break;
-			
+	case 'o':
+	    if (output_filename) {
+		free(output_filename);
+	    }
+	    output_filename = (char *) malloc(sizeof(char) *
+					      (strlen(optarg) + 1));
+	    strcpy(output_filename, optarg);
+	    break;
+
+	case 'c':
+	    gh_eval_str_with_stack_saving_handler(optarg);
+	    break;
+
 
 #if 0
-			case 'f':
-				printf("f arg: %s\n", optarg);
-			break;
+	case 'f':
+	    printf("f arg: %s\n", optarg);
+	    break;
 #endif
 
-			case 'h':
-				usage(argv[0]);
-			break;
+	case 'h':
+	    usage(argv[0]);
+	    break;
 
-			case '?':
-			default:
-				usage(argv[0]);
-			break;
-		}
+	case '?':
+	default:
+	    usage(argv[0]);
+	    break;
 	}
+    }
 
-	if (quiet_mode) {
-		verbose_mode = FALSE;
-	}
+    if (quiet_mode) {
+	verbose_mode = FALSE;
+    }
 
-	return(optind);
+    return (optind);
 }

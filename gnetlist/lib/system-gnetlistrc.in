@@ -44,6 +44,112 @@
 (net-naming-priority "net")
 ;(net-naming-priority "label")
 
+; hierarchy-traversal string
+;
+; Decides if the hierarchy is traversed or not.  If this is disabled then
+; gnetlist will not go down searching for any underlying sources
+;
+(hierarchy-traversal "enabled")
+;(hierarchy-traversal "disabled")
+
+; hierarchy-uref-mangle string
+;
+; Controls if uref names are mangled to make them uniq when traversing 
+; down into the hierarchy.  If this is disabled then urefs are not changed
+; and it is the user's responsibility to make sure they are unique.
+; If you disable this, you really are taking your netlist's life into your
+; own hands.  You *MUST* have unique urefs throughout the entire hierarchy
+; or bad things might happen.  Also you cannot reuse underlying schematics.
+;
+(hierarchy-uref-mangle "enabled")
+;(hierarchy-uref-mangle "disabled")
+
+; hierarchy-netname-mangle string
+;
+; Controls if net names are mangled to make them uniq when traversing 
+; down into the hierarchy.  If this is disabled then the net names are not 
+; changed and it is the user's responsibility to make sure they are unique.
+; If you disable this, you really are taking your netlist's life into your
+; own hands.  This basically has the effect of making all same named nets
+; in the entire hierarchy be electrically connected.  Hope you know what you
+; are doing.
+;
+(hierarchy-netname-mangle "enabled")
+;(hierarchy-netname-mangle "disabled")
+
+; hierarchy-netattrib-mangle string
+;
+; Controls if net created by using the net= attribute are renamed to make 
+; them uniq when traversing down into the hierarchy.  If this is disabled 
+; then the net= created nets are not changed.  This feature is handy to have
+; global nets which spawn the entire hierarchy (like power or ground nets). 
+; Please make sure you know what you are doing.
+;
+(hierarchy-netattrib-mangle "enabled")
+;(hierarchy-netattrib-mangle "disabled")
+
+; hierarchy-uref-seperator string
+;
+; Specifies what the seperator string between the various hierarchy tags
+; for all urefs.  This string can also be "" (empty) to specify that no 
+; chars should be used.  This keyword is ignored if hierarchy-uref-mangle 
+; is disabled (though a default "/" is used in this case, and then all the
+; internal mangling is removed so it is not seen by the user).  This keyword
+; is used in conjunction with the respective hierarchy-*-order keyword.
+;
+(hierarchy-uref-seperator "/")
+;(hierarchy-uref-seperator "")
+
+; hierarchy-netname-seperator string
+;
+; Specifies what the seperator string between the various hierarchy tags
+; for all nets (excluding net= nets, see below for those).  This string can 
+; also be "" (empty) to specify that no chars should be used.  This keyword 
+; is ignored if hierarchy-netname-mangle is disabled.  This keyword
+; is used in conjunction with the respective hierarchy-*-order keyword.
+;
+; This keyword is also fairly coupled with hierarchy-uref-seperator and
+; hierarchy-netattrib-seperator so you will probably have to change those
+; to get the wanted hierarchy naming.
+;
+(hierarchy-netname-seperator "/")
+;(hierarchy-netname-seperator "")
+
+; hierarchy-netattrib-seperator string
+;
+; Specifies what the seperator string between the various hierarchy tags
+; for net= created nets.  This string can also be "" (empty) to specify
+; that no chars should be used.  This keyword is ignored if 
+; hierarchy-netattrib-mangle is disabled.  This keyword is used in 
+; conjunction with the respective hierarchy-*-order keyword.
+;
+(hierarchy-netattrib-seperator "/")
+;(hierarchy-netattrib-seperator "")
+
+; hierarchy-uref-order string
+;
+; Specifies the order in which the hierarchy tags are applied to all 
+; urefs 
+;
+(hierarchy-uref-order "append")
+;(hierarchy-uref-order "prepend")
+
+; hierarchy-netname-order string
+;
+; Specifies the order in which the hierarchy tags are applied to all 
+; regular nets
+;
+(hierarchy-netname-order "append")
+;(hierarchy-netname-order "prepend")
+
+; hierarchy-netattrib-order string
+;
+; Specifies the order in which the hierarchy tags are applied to nets created
+; using the net= attribute
+;
+(hierarchy-netattrib-order "append")
+;(hierarchy-netattrib-order "prepend")
+
 ;
 ; End of mode related keywords
 ;
@@ -69,4 +175,5 @@
 (paper-size 22.0 17.0 1.0)   ; C size sheet
 ;(paper-size 34.0 22.0 1.0)   ; D size sheet
 ;(paper-size 44.0 34.0 1.0)   ; E size shee
+
 

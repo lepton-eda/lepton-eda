@@ -33,188 +33,182 @@
 
 /* hack rename this to be s_return_tail */
 /* update object_tail or any list of that matter */
-NETLIST *
-s_netlist_return_tail(NETLIST *head)
+NETLIST *s_netlist_return_tail(NETLIST * head)
 {
-	NETLIST *nl_current=NULL;
-	NETLIST *ret_struct=NULL;
+    NETLIST *nl_current = NULL;
+    NETLIST *ret_struct = NULL;
 
-	nl_current = head;
-	while ( nl_current != NULL ) { /* goto end of list */
-		ret_struct = nl_current;	
-		nl_current = nl_current->next;
-	}
-	
-	return(ret_struct);	
+    nl_current = head;
+    while (nl_current != NULL) {	/* goto end of list */
+	ret_struct = nl_current;
+	nl_current = nl_current->next;
+    }
+
+    return (ret_struct);
 }
 
 /* hack rename this to be s_return_head */
 /* update object_tail or any list of that matter */
-NETLIST *
-s_netlist_return_head(NETLIST *tail)
+NETLIST *s_netlist_return_head(NETLIST * tail)
 {
-	NETLIST *nl_current=NULL;
-	NETLIST *ret_struct=NULL;
+    NETLIST *nl_current = NULL;
+    NETLIST *ret_struct = NULL;
 
-	nl_current = tail;
-	while ( nl_current != NULL ) { /* goto end of list */
-		ret_struct = nl_current;	
-		nl_current = nl_current->prev;
-	}
-	
-	return(ret_struct);	
+    nl_current = tail;
+    while (nl_current != NULL) {	/* goto end of list */
+	ret_struct = nl_current;
+	nl_current = nl_current->prev;
+    }
+
+    return (ret_struct);
 }
 
 
 /* returns new node */
-NETLIST *
-s_netlist_add ( NETLIST *ptr ) 
+NETLIST *s_netlist_add(NETLIST * ptr)
 {
-	NETLIST *new_node;
+    NETLIST *new_node;
 
-	new_node = (NETLIST *) malloc(sizeof(NETLIST));	
+    new_node = (NETLIST *) malloc(sizeof(NETLIST));
 
-	/* setup node information */
-	new_node->nlid = 0;
-	new_node->cpins = NULL;
-	new_node->component_uref = NULL;
-	new_node->object_ptr = NULL;
+    /* setup node information */
+    new_node->nlid = 0;
+    new_node->cpins = NULL;
+    new_node->component_uref = NULL;
+    new_node->object_ptr = NULL;
+    new_node->hierarchy_tag = NULL;
+    new_node->composite_component = FALSE;
 
-	/* Setup link list stuff */
-	new_node->next = NULL;
+    /* Setup link list stuff */
+    new_node->next = NULL;
 
-	if (ptr == NULL) {
-		new_node->prev = NULL; /* setup previous link */
-		return(new_node);
-	} else {
-		new_node->prev = ptr; /* setup previous link */
-		ptr->next = new_node;
-		return(ptr->next);
-	}
+    if (ptr == NULL) {
+	new_node->prev = NULL;	/* setup previous link */
+	return (new_node);
+    } else {
+	new_node->prev = ptr;	/* setup previous link */
+	ptr->next = new_node;
+	return (ptr->next);
+    }
 }
 
-void
-s_netlist_print(NETLIST *ptr)
+void s_netlist_print(NETLIST * ptr)
 {
-	NETLIST *nl_current=NULL;
+    NETLIST *nl_current = NULL;
 
-	nl_current = ptr;
+    nl_current = ptr;
 
-	if (nl_current == NULL) {
-		return;
+    if (nl_current == NULL) {
+	return;
+    }
+
+    while (nl_current != NULL) {
+
+	if (nl_current->nlid != -1) {
+
+	    if (nl_current->component_uref) {
+		printf("component %s \n", nl_current->component_uref);
+	    } else {
+		printf("component SPECIAL \n");
+	    }
+
+	    if (nl_current->hierarchy_tag) {
+		printf("Hierarchy tag: %s\n");
+	    }
+
+	    if (nl_current->cpins) {
+		s_cpinlist_print(nl_current->cpins);
+	    }
+
+	    printf("\n");
 	}
 
-	while (nl_current != NULL) {
-
-		if (nl_current->nlid != -1) {
-
-			if (nl_current->component_uref) {
-		  		printf("component %s \n", nl_current->component_uref);
-			} else {
-		  		printf("component SPECIAL \n");
-			}
-
-			if (nl_current->cpins) {
-				s_cpinlist_print(nl_current->cpins);
-			}
-
-			printf("\n");
-		}
-
-		nl_current = nl_current->next;
-	}
-	printf("\n");
+	nl_current = nl_current->next;
+    }
+    printf("\n");
 }
 
-void
-s_netlist_post_process(TOPLEVEL *pr_current, NETLIST *head)
+void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 {
-	NETLIST *nl_current;
-	CPINLIST *pl_current;
-	int vi=0;
+    NETLIST *nl_current;
+    CPINLIST *pl_current;
+    int vi = 0;
+    char *temp;
 
-	nl_current = head;
+    nl_current = head;
 
-if (verbose_mode) {
+    if (verbose_mode) {
 	printf("\n- Staring post processing\n");
 	printf("- Naming nets:\n");
 	vi = 0;
-}
+    }
 
-	/* this pass gives all nets a name, whether specified or creates a */
-	/* name */
-	nl_current = head;
-	while(nl_current != NULL) {
-		if (nl_current->cpins) {
-			pl_current = nl_current->cpins;		
-			while(pl_current != NULL) {
+    /* this pass gives all nets a name, whether specified or creates a */
+    /* name */
+    nl_current = head;
+    while (nl_current != NULL) {
+	if (nl_current->cpins) {
+	    pl_current = nl_current->cpins;
+	    while (pl_current != NULL) {
 
-if (verbose_mode && pl_current->plid != -1) {
-				printf("p");
-                               	if (vi++ == 78) {
-                               		printf("\n");
-                                      	vi = 0;
-                               	}
-}
-
-				if (pl_current->plid != -1 && 
-					pl_current->nets) {
-
-				 	if (pl_current->net_name) {
-						free(pl_current->net_name);
-					}
-
-if (verbose_mode) {
-				printf("n");
-                               	if (vi++ == 78) {
-                               		printf("\n");
-                                      	vi = 0;
-                               	}
-}
-
-
-				   /* only name nets of components which */
-				   /* have a uref */
-				   if (nl_current->component_uref) {
-					pl_current->net_name = 
-						s_net_name(pr_current, 
-							   head, 
-							   pl_current->nets);
-
-					/* put this name also in the first 
-					   node of the nets linked list */
-					if (pl_current->net_name && 
-					   pl_current->nets) {
-					  if (pl_current->nets->next) {
-						pl_current->nets->next->net_name = pl_current->net_name;
-					  } 
-					}
-				    }
-				}
-			
-				pl_current = pl_current->next;
-			}
+		if (pl_current->plid != -1) {
+		    verbose_print("p");
 		}
-		nl_current = nl_current->next;
+
+		if (pl_current->plid != -1 && pl_current->nets) {
+
+		    if (pl_current->net_name) {
+			free(pl_current->net_name);
+		    }
+
+		    verbose_print("n");
+
+		    /* only name nets of components which */
+		    /* have a uref */
+		    if (nl_current->component_uref) {
+			pl_current->net_name =
+			    s_net_name(pr_current,
+				       head,
+				       pl_current->nets,
+				       nl_current->hierarchy_tag);
+
+			/* put this name also in the first 
+			   node of the nets linked list */
+			if (pl_current->net_name && pl_current->nets) {
+			    if (pl_current->nets->next) {
+				pl_current->nets->next->net_name =
+				    u_basic_strdup(pl_current->net_name);
+			    }
+			}
+		    }
+		}
+
+		pl_current = pl_current->next;
+	    }
 	}
+	nl_current = nl_current->next;
+    }
 
-if (verbose_mode) {
-	printf(" done\n"); 
+    verbose_done();
+    if (verbose_mode) {
 	printf("- Renaming nets:\n");
-	vi = 0;
+    }
+
+    s_rename_all(pr_current, head);
+
+    verbose_done();
+    if (verbose_mode) {
+	printf("- Resolving hierarchy:\n");
+    }
+    s_hierarchy_post_process(pr_current, head);
+
+    verbose_done();
+    if (pr_current->hierarchy_uref_mangle == FALSE) {
+	if (verbose_mode) {
+	    printf("- Removing uref mangling:\n");
+	}
+	s_hierarchy_remove_uref_mangling(pr_current, head);
+    }
+
+    verbose_done();
 }
-
-	s_rename_all(pr_current, head); 
-
-if (verbose_mode) {
-        if (vi > 70) {
-                printf("\nDONE\n");
-        } else {
-                printf(" DONE\n");
-        }
-        vi = 0;
-}
-
-				
-}
-

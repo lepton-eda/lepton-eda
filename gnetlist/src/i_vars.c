@@ -26,15 +26,39 @@
 #include "../include/prototype.h"
 
 int default_net_naming_priority = NET_ATTRIBUTE;
+int default_hierarchy_traversal = TRUE;
+int default_hierarchy_uref_mangle = TRUE;
+int default_hierarchy_netname_mangle = TRUE;
+int default_hierarchy_netattrib_mangle = TRUE;
+int default_hierarchy_netattrib_order = APPEND;
+int default_hierarchy_netname_order = APPEND;
+int default_hierarchy_uref_order = APPEND;
 
-void
-i_vars_set(TOPLEVEL *w_current)
+void i_vars_set(TOPLEVEL * pr_current)
 {
-	w_current->net_naming_priority = default_net_naming_priority;
+    pr_current->net_naming_priority = default_net_naming_priority;
+    pr_current->hierarchy_traversal = default_hierarchy_traversal;
+    pr_current->hierarchy_uref_mangle = default_hierarchy_uref_mangle;
+    pr_current->hierarchy_netname_mangle =
+	default_hierarchy_netname_mangle;
+    pr_current->hierarchy_netattrib_mangle =
+	default_hierarchy_netattrib_mangle;
+    pr_current->hierarchy_netattrib_order =
+	default_hierarchy_netattrib_order;
+    pr_current->hierarchy_netname_order = default_hierarchy_netname_order;
+    pr_current->hierarchy_uref_order = default_hierarchy_uref_order;
+
+    if (pr_current->hierarchy_uref_mangle == FALSE) {
+	if (pr_current->hierarchy_uref_seperator) {
+	    strcpy(pr_current->hierarchy_uref_seperator, "/");
+	} else {
+	    pr_current->hierarchy_uref_seperator = u_basic_strdup("/");
+	}
+    }
+
 }
 
-void
-i_vars_setnames(TOPLEVEL *w_current)
+void i_vars_setnames(TOPLEVEL * w_current)
 {
 
 }

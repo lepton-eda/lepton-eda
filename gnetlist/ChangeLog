@@ -1,4 +1,37 @@
 
+2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Updated manual with all the various backend formats
+
+2000-11-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_netlist.c: Added another call to a post process routine
+	  (the routine to remove the uref mangling if that's enabled via
+	   rc keyword)
+
+	* src/s_hierarchy.c: Added s_hierarchy_remove_uref_mangling
+
+	* src/s_hierarchy.c: Got hierarchy_uref_rename working right.
+
+	* src/*.c: Renamed "rename" to "mangle" (mainly keyword and variable
+	  changes)
+
+	* src/g_rc.c and friends: Added the following keywords:
+		hierarchy-netname-seperator
+		hierarchy-uref-seperator
+		hierarchy-netattrib-seperator
+		hierarchy-uref-order
+		hierarchy-netname-order
+		hierarchy-netattrib-order
+
+	* src/*.c: Wrote the code to use the above new keywords
+
+	* src/g_rc.c: Finally migrated a change from the gschem/src/g_rc.c
+	  which fixes a core dump if you mess up a value for a keyword.
+	  (pass true size of the lookup table in RETURN_G_RC_MODE)
+
+	* src/s_hierarchy.c: Put some verbose print in for the uref
+	  demangling code
 
 2000-11-02  Stefan Petersen  <spe@geda.seul.org>
 
@@ -6,7 +39,30 @@
 	  from Roger Williams.
 
 	* scheme/gnet-*.scm: Updated copyright.
-	
+	 
+2000-10-31  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Change the if(f_open...) calls to properly deal with 
+	  returned value from f_open
+
+	* src/s_hierarchy.c: Divided up s_hierarchy_create_name into
+	  s_hierarchy_create_netname, s_hierarchy_create_uref, and
+	  s_hierarchy_create_netattrib functions
+
+	* src/*.c: Removed all calls to s_hierarchy_create_name and
+	  started using the new name
+
+	* src/g_rc.c and friends: Added several keywords:
+		hierarchy-traversal, 
+		hierarchy-uref-rename,
+		hierarchy-netname-rename,
+		hierarchy-netattrib-rename
+
+ 	* src/*.c: Removed some old #if 0 code	
+
+	* src/*.c: Unfortunately some functions needed the pr_current pointer,
+	  so had to change all instances to pass this pointer in
+
 2000-10-31  Stefan Petersen  <spe@geda.seul.org>
 
 	* scheme/gnetlist.scm: Cleaned up and renamed split
@@ -15,6 +71,57 @@
 	* scheme/gnet-PCB.scm: Now PCB-backend uses wrap function
 	  above. Was reported as a bug by Russ Dill.
 	
+2000-10-29  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_netattrib.c: Got net= attribute to use the hierarchy tag
+	  when a net= is found in some underlying schematic.
+
+	* src/s_hierarchy.c: Created s_hierarchy_create_name which creates
+	  properly structured hierarchy named things 
+	
+	* src/s_traverse.c and others: All the places where hierarchy
+	  names are created now use above new function
+	
+2000-10-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_rename.c: Was freeing some memory which was being used else
+	  where, oops, created a memory leak by not freeing memory.
+
+	* src/s_traverse.c: Move hierarchy traverse code into s_hierarchy
+
+	* src/s_misc.c: New file, currently contains verbose_* functions
+
+	* src/s_netlist.c, s_traverse.c: Used some of the above newly created
+	  functions from s_misc.c
+
+	* src/s_netlist.c: Reformated file to with indent
+
+	* src/s_rename.c: Properly reset the rename_counter to be zero.
+
+	* src/s_rename.c: Modified s_rename_add to properly deal with the case
+	  where you might have mutiple overlapping renames (which occurs when
+	  you have more than one level of hierarchy)
+
+	* src/s_rename.c: Ran file through indent
+
+2000-10-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Removed extra compare to f_open calls so it
+	  works with the changes Stefan made in libgeda
+
+	* src/create_proto: Updated it the the latest version
+
+	* src/s_traverse.c: Removed a lot of redundant code (made possible
+	  by the recent libgeda structure changes) 
+
+	* src/s_hierarchy.c: Added new file which contains post processing
+	  for hierarchy support 
+
+	* src/*.c: Extensive work to get hierarchy support, modified almost
+	  every file 
+
+	* src/s_traverse.c s_hierarchy.c: Started using indent (gnu mode)
+
 2000-10-12  Stefan Petersen  <spe@geda.seul.org>
 
 	* src/gnetlist.c: Fixed a screw up that made gnetlist fail

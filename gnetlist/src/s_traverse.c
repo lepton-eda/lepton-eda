@@ -27,675 +27,611 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-static int vi; /* counter used in verbose mode */
+static int vi;			/* counter used in verbose mode */
 
-void
-s_traverse_init(void)
+void s_traverse_init(void)
 {
-	netlist_head = s_netlist_add(NULL);
-	netlist_head->nlid = -1; /* head node */
+    netlist_head = s_netlist_add(NULL);
+    netlist_head->nlid = -1;	/* head node */
+
+    if (verbose_mode) {
+	printf
+	    ("\n\n------------------------------------------------------\n");
+	printf("Verbose mode legend\n\n");
+	printf("n : Found net\n");
+	printf("C : Found component (staring to traverse component)\n");
+	printf
+	    ("p : Found pin (starting to traverse pin / or examining pin)\n");
+	printf("P : Found end pin connection (end of this net)\n");
+	printf("R : Starting to rename a net\n");
+	printf("v : Found source attribute, traversing down\n");
+	printf("^ : Finished underlying source, going back up\n");
+	printf("u : Found a uref which needs to be demangle\n");
+	printf
+	    ("U : Found a connected_to uref which needs to be demangle\n");
+	printf
+	    ("------------------------------------------------------\n\n");
+
+    }
 }
 
-void
-s_traverse_start(TOPLEVEL *pr_current)
+void s_traverse_start(TOPLEVEL * pr_current)
 {
-	PAGE *p_current;
+    PAGE *p_current;
 
-	p_current = pr_current->page_head;
+    p_current = pr_current->page_head;
 
 #if DEBUG
-	o_conn_print_hash(pr_current->page_current->conn_table);
+    o_conn_print_hash(pr_current->page_current->conn_table);
 #endif
 
 
-	
-	while(p_current != NULL) {
-		if (p_current->pid != -1) {
 
-			if (p_current->object_head) {
-				pr_current->page_current = p_current;
-				s_traverse_sheet(pr_current, p_current->object_head);
-			}
+    while (p_current != NULL) {
+	if (p_current->pid != -1) {
 
-		}
+	    /* only traverse pages which are toplevel, ie not underneath */
+	    if (p_current->object_head && p_current->page_control == 0) {
+		pr_current->page_current = p_current;
+		s_traverse_sheet(pr_current, p_current->object_head, NULL);
+	    }
 
-		p_current = p_current->next;
 	}
 
-	/* now that all the sheets have been read, go through and do the */
-	/* post processing work */
-        s_netlist_post_process(pr_current, netlist_head); 
+	p_current = p_current->next;
+    }
 
-	if (verbose_mode) {
-		printf("\nInternal netlist representation:\n\n");
-		s_netlist_print(netlist_head);
-	}
+    /* now that all the sheets have been read, go through and do the */
+    /* post processing work */
+    s_netlist_post_process(pr_current, netlist_head);
+
+    if (verbose_mode) {
+	printf("\nInternal netlist representation:\n\n");
+	s_netlist_print(netlist_head);
+    }
 }
 
 
 void
-s_traverse_sheet(TOPLEVEL *pr_current, OBJECT *start) 
+s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
+		 char *hierarchy_tag)
 {
-	OBJECT *o_current;
-	NETLIST *netlist;
-	char *temp;
+    OBJECT *o_current;
+    NETLIST *netlist;
+    PAGE *p_current;
+    char *temp;
+    char *temp_uref;
+    int page_control = 0;
 
-if (verbose_mode) {
-	printf("Verbose Mode\n\n");
-	printf("n : Found net\n");
-	printf("C : Found component (staring to traverse component)\n");
-	printf("p : Found pin (starting to traverse pin)\n");
-	printf("P : Found end pin connection (end of this net)\n");
-	printf("R : Starting to rename a net\n\n");
+    s_traverse_build_nethash(pr_current->page_current->nethash_table,
+			     pr_current->page_current->conn_table, start);
 
-}
+
+    if (verbose_mode) {
+	printf("- Starting internal netlist creation\n");
+    }
+
+    o_current = start;
+
+    while (o_current != NULL) {
 
 	netlist = s_netlist_return_tail(netlist_head);
 
-
-	s_traverse_build_nethash(pr_current->page_current->nethash_table, 
-				 pr_current->page_current->conn_table, start);
-
-
-if (verbose_mode) {
-	printf("\n- Starting internal netlist creation\n");
-}
-
-	o_current = start;
-
-	while (o_current != NULL) {
-		if (o_current->type == OBJ_COMPLEX) {
+	if (o_current->type == OBJ_COMPLEX) {
 
 #if DEBUG
-		printf("starting NEW component\n\n");
+	    printf("starting NEW component\n\n");
 #endif
 
-			if (verbose_mode) {
-				printf(" C");
-				vi++;
-				if (vi++ == 78) {
-					printf("\n");
-					vi = 0;
-				}
-			}
+	    verbose_print(" C");
 
-			/* look for special tag */
-			temp = o_attrib_search_name(o_current->complex->
-						    prim_objs, "graphical", 0);
-			if (temp) {
-			/* don't want to traverse graphical elements */
-				free(temp);
-					
-			} else {
-				netlist = s_netlist_add(netlist);
-				netlist->nlid = o_current->sid;
+	    /* look for special tag */
+	    temp =
+		o_attrib_search_name(o_current->complex->prim_objs,
+				     "graphical", 0);
+	    if (temp) {
+		/* don't want to traverse graphical elements */
+		free(temp);
 
-				/* search the single object only.... */
-				netlist->component_uref = 
-					o_attrib_search_name_single(o_current, 
-								    "uref", 
-								    NULL);
+	    } else {
+		netlist = s_netlist_add(netlist);
+		netlist->nlid = o_current->sid;
 
-				netlist->object_ptr = o_current;
+		/* search the single object only.... */
+		temp_uref =
+		    o_attrib_search_name_single(o_current, "uref", NULL);
 
-				if (!netlist->component_uref) {
+		if (temp_uref) {
+		    netlist->component_uref =
+			s_hierarchy_create_uref(pr_current, temp_uref,
+						hierarchy_tag);
+		} else {
+		    netlist->component_uref = NULL;
+		}
 
-					/* search of net attribute */
-					/* maybe symbol is not a component */
-					/* but a power / gnd symbol */
-					temp = o_attrib_search_name(o_current->
-								    complex-> 
-								    prim_objs,
-								    "net",
-								    0);
+		if (hierarchy_tag) {
+		    netlist->hierarchy_tag = u_basic_strdup(hierarchy_tag);
+		}
 
-					/* nope net attribute not found */
-					if (!temp) {
+		if (temp_uref) {
+		    free(temp_uref);
+		}
 
-						fprintf(stderr, 
+		netlist->object_ptr = o_current;
+
+		if (!netlist->component_uref) {
+
+		    /* search of net attribute */
+		    /* maybe symbol is not a component */
+		    /* but a power / gnd symbol */
+		    temp =
+			o_attrib_search_name(o_current->complex->prim_objs,
+					     "net", 0);
+
+		    /* nope net attribute not found */
+		    if (!temp) {
+
+			fprintf(stderr,
 				"Could not find uref on component and could not find any special attributes!\n");
 
-						netlist->component_uref = 
-							(char *) malloc (
-								sizeof(char)*
-								strlen("U?")+1);
-						strcpy(netlist->component_uref,
-						       "U?");
-					} else {
+			netlist->component_uref =
+			    (char *) malloc(sizeof(char) * strlen("U?") +
+					    1);
+			strcpy(netlist->component_uref, "U?");
+		    } else {
 
-
-#if DEBUG 
-						printf("yeah... found a power symbol\n");
+#if DEBUG
+			printf("yeah... found a power symbol\n");
 #endif
-				/* it's a power or some other special symbol */
-						netlist->component_uref = NULL;
-					}
+			/* it's a power or some other special symbol */
+			netlist->component_uref = NULL;
+			free(temp);
+		    }
 
-				} 
+		}
 
-				netlist->cpins = s_traverse_component(
-						pr_current, 
-						o_current);
+		netlist->cpins =
+		    s_traverse_component(pr_current, o_current,
+					 hierarchy_tag);
 
-				/* here is where you deal with the */
-				/* net attribute */
-				s_netattrib_handle(pr_current, o_current,
-						   netlist);	
+		/* here is where you deal with the */
+		/* net attribute */
+		s_netattrib_handle(pr_current, o_current, netlist,
+				   hierarchy_tag);
 
-			}
-
-		}		
-
-		o_current = o_current->next;
+		/* now you need to traverse any underlying schematics */
+		if (pr_current->hierarchy_traversal == TRUE) {
+		    s_hierarchy_traverse(pr_current, o_current, netlist);
+		}
+	    }
 	}
 
-if (verbose_mode) {
-	if (vi > 70) {
-		printf("\nDONE\n");
-	} else {
-		printf(" DONE\n");
-	}
-	vi = 0;
+	o_current = o_current->next;
+    }
+
+    verbose_done();
 }
 
-
-}
-
-CPINLIST *
-s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
+CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
+			       char *hierarchy_tag)
 {
-	CPINLIST *cpinlist_head=NULL;
-	CPINLIST *cpins=NULL;
-	OBJECT *o_current=NULL; 
-	NET *nets_head=NULL;
-	NET *nets=NULL;
-	char *key;
-	CONN *conn_list;
-	CONN *c_current;
+    CPINLIST *cpinlist_head = NULL;
+    CPINLIST *cpins = NULL;
+    OBJECT *o_current = NULL;
+    NET *nets_head = NULL;
+    NET *nets = NULL;
+    char *key;
+    char *temp;
+    CONN *conn_list;
+    CONN *c_current;
+    int endpoint;
 
-	o_current = component->complex->prim_objs;
+    o_current = component->complex->prim_objs;
 
-	cpinlist_head = cpins = s_cpinlist_add(NULL);
-	cpins->plid = -1;
+    cpinlist_head = cpins = s_cpinlist_add(NULL);
+    cpins->plid = -1;
 
-	while (o_current != NULL) {
-		if (o_current->type == OBJ_PIN) {
+    while (o_current != NULL) {
+	if (o_current->type == OBJ_PIN) {
 
-if (verbose_mode) {
-				printf("p");
-				if (vi++ == 78) {
-					printf("\n");
-					vi = 0;
-				}
-}
+	    verbose_print("p");
 
-			o_current->visited = 1;
+	    o_current->visited = 1;
 
-			/* add cpin node */
-			cpins = s_cpinlist_add(cpins);
-			cpins->plid = o_current->sid;
+	    /* add cpin node */
+	    cpins = s_cpinlist_add(cpins);
+	    cpins->plid = o_current->sid;
 
-			/* search the object only */
-			cpins->pin_number = o_attrib_search_name_partial(o_current, "pin", 0);
+	    /* search the object only */
+	    cpins->pin_number =
+		o_attrib_search_name_partial(o_current, "pin", 0);
 
-			/* head nets node */
-			/* is this really need */
-			nets_head = nets = s_net_add(NULL);
-			nets->nid = -1;
+	    temp =
+		o_attrib_search_name_single_count(o_current, "pinlabel",
+						  0);
 
+	    if (temp) {
+		cpins->pin_label = temp;
+	    }
 
-			/* search for line_ptr->[x|y]1 */
-			key = o_conn_return_key(o_current->line->x[0], 
-					o_current->line->y[0]);	
-		
-			conn_list = g_hash_table_lookup(
-					pr_current->page_current->conn_table,
-                                        key);
+	    /* head nets node */
+	    /* is this really need */
+	    nets_head = nets = s_net_add(NULL);
+	    nets->nid = -1;
 
-			if (conn_list) {
+	    for (endpoint = 0; endpoint < 2; endpoint++) {
+		/* search for line->x|y[endpoint] */
+		key = o_conn_return_key(o_current->line->x[endpoint],
+					o_current->line->y[endpoint]);
 
-				c_current = conn_list;
+		conn_list =
+		    g_hash_table_lookup(pr_current->
+					page_current->conn_table, key);
 
-				while (c_current != NULL) {
-					if (c_current->object != NULL &&
-					    c_current->type != CONN_HEAD) {
+		if (conn_list) {
 
-						if (!c_current->object->visited &&
-						     c_current->object != o_current) {
-							
-						     nets = s_net_add(nets);
-                               		             nets->nid = o_current->sid;
-                               	         	     nets->connected_to = s_net_return_connected_string(o_current);
+		    c_current = conn_list;
 
-/* net= new */
-	if (strstr(nets->connected_to, "POWER")) {
-#if DEBUG
-		printf("going to find netname %s\n", nets->connected_to);
-#endif
-		nets->net_name = s_netattrib_return_netname(o_current, 
-							  nets->
-							  connected_to);
-		nets->net_name_has_priority = TRUE;
-		free(nets->connected_to);
-		nets->connected_to = NULL;
-	}
-
-
-#if DEBUG
-						     printf("%s\n",  nets->connected_to);
-#endif
-                               		             nets = s_traverse_net(pr_current, o_current, nets, c_current->object);
-
-						     s_traverse_clear_all_visited(pr_current->page_current->object_head);
-						}
-
-					}
-					c_current=c_current->next;
-				}
-			}
-
-			free(key);
-
-			/* search for line_ptr->[x|y]2 */
-			key = o_conn_return_key(o_current->line->x[1], 
-					o_current->line->y[1]);	
-
-			conn_list = g_hash_table_lookup(
-					pr_current->page_current->conn_table,
-                                        key);
-
-			if (conn_list) {
-
-				c_current = conn_list;
-
-				while (c_current != NULL) {
-					if (c_current->object != NULL &&
-					    (c_current->type != CONN_HEAD) ) {
-
-						if (!c_current->object->visited &&
-						     c_current->object != o_current) {
-						     nets = s_net_add(nets);
-                       		                     nets->nid = o_current->sid;
-                       		                     nets->connected_to = s_net_return_connected_string(o_current);
-
-/* net= new */
-	if (strstr(nets->connected_to, "POWER")) {
-#if DEBUG
-		printf("going to find netname %s\n", nets->connected_to);
-#endif
-		nets->net_name = s_netattrib_return_netname(o_current, 
-							  nets->
-							  connected_to);
-		nets->net_name_has_priority = TRUE;
-		free(nets->connected_to);
-		nets->connected_to = NULL;
-	}
-
-#if DEBUG
-						     printf("%s\n",  nets->connected_to);
-#endif
-                       		                     nets = s_traverse_net(pr_current, o_current, nets, c_current->object);
-						     s_traverse_clear_all_visited(pr_current->page_current->object_head);
-						}
-
-					}
-					c_current=c_current->next;
-				}
-			}
-
-			free(key);
-			
-			cpins->nets = nets_head;
-			/* s_net_print(nets); */
-
-			/* this is iffy */
-			/* should pass in page_current in top level func */
-		} 
-		s_traverse_clear_all_visited(pr_current->page_current->object_head);
-
-		o_current = o_current->next;
-	}
-
-
-	return(cpinlist_head);
-}
-
-
-void
-s_traverse_clear_all_visited(OBJECT *object_head) 
-{
-	OBJECT *o_current;
-
-	o_current = object_head;
-
-	while(o_current != NULL) {
-
-#if DEBUG
-		if (o_current->visited) {
-			printf("%s\n", o_current->name);
-		}
-#endif
-
-		o_current->visited = 0;
-
-		if (o_current->type == OBJ_COMPLEX && 
-		    o_current->complex->prim_objs) {
-			s_traverse_clear_all_visited(o_current->complex->
-						     prim_objs);
-		}
-
-		o_current = o_current->next;
-	}
-
-}
-
-NET *
-s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object)
-{
-	OBJECT *o_current;
-	NET *new_net;
-	char *key = NULL;
-	CONN *conn_list1;
-	CONN *conn_list2;
-	CONN *c_current;
-
-	o_current = object;
-
-
-	new_net = nets = s_net_add(nets);
-	new_net->nid = object->sid;
-
-
-	/* Pins are NOT allowed to supply the label= attribute */
-	if (o_current->type != OBJ_PIN) {
-		new_net->net_name = o_attrib_search_name_single(o_current, "label", NULL);
-	}
-
-#if DEBUG
-	printf("inside traverse: %s\n", object->name);
-#endif
-
-	if (object->type == OBJ_PIN) {
-
-		if (verbose_mode) {
-			printf("P");
-			if (vi++ == 78) {
-				printf("\n");
-				vi = 0;
-			}
-		}
-
-		new_net->connected_to = s_net_return_connected_string(o_current);
-
-/* net= new */
-		if (strstr(nets->connected_to, "POWER")) {
-
-#if DEBUG
-			printf("going to find netname %s \n", nets->connected_to);
-#endif
-			nets->net_name = s_netattrib_return_netname(o_current, 
-								  nets->
-								  connected_to);
-			nets->net_name_has_priority = TRUE;
-			free(nets->connected_to);
-			nets->connected_to = NULL;
-		}
-#if DEBUG
-		printf("traverse connected_to: %s\n",  new_net->connected_to);
-#endif
-		return(nets);
-	
-	}
-
-	/*printf("Found net %s\n", object->name);*/
-
-	if (verbose_mode) {
-		printf("n");
-		if (vi++ == 78) {
-			printf("\n");
-			vi = 0;
-		}
-	}
-
-	object->visited++;
-
-	/* this is not perfect yet and won't detect a loop... */
-	if (object->visited > 100) {
-		fprintf(stderr, "Found a possible net/pin infinite connection\n");
-		exit(-1);
-	}
-
-	
-	/* search for line_ptr->[x|y]1 */
-	key = o_conn_return_key(o_current->line->x[0],
-				o_current->line->y[0]);	
-		
-#if DEBUG
-	printf("looking at 1: %s\n", key);
-#endif
-	conn_list1 = g_hash_table_lookup(pr_current->page_current->conn_table,
-                                      key);
-
-	if (conn_list1) {
-
-#if DEBUG
-		printf("	found at 1: %s\n", key);
-#endif
-		c_current = conn_list1;
-
-		while (c_current != NULL) {
+		    while (c_current != NULL) {
 			if (c_current->object != NULL &&
 			    c_current->type != CONN_HEAD) {
 
+			    if (!c_current->object->visited &&
+				c_current->object != o_current) {
+
+				nets = s_net_add(nets);
+				nets->nid = o_current->sid;
+				nets->connected_to =
+				    s_net_return_connected_string
+				    (pr_current, o_current, hierarchy_tag);
+
+/* net= new */
+				if (strstr(nets->connected_to, "POWER")) {
 #if DEBUG
-				printf("c_current %s visited: %d\n", c_current->object->name, c_current->object->visited);
+				    printf("going to find netname %s\n",
+					   nets->connected_to);
 #endif
-
-				if (!c_current->object->visited &&
-				     c_current->object != o_current) {
-							
-					nets = s_traverse_net(pr_current, object, nets, c_current->object);
-					}
-
+				    nets->net_name =
+					s_netattrib_return_netname
+					(pr_current, o_current,
+					 nets->connected_to,
+					 hierarchy_tag);
+				    nets->net_name_has_priority = TRUE;
+				    free(nets->connected_to);
+				    nets->connected_to = NULL;
 				}
-				c_current=c_current->next;
+#if DEBUG
+				printf("%s\n", nets->connected_to);
+#endif
+				nets =
+				    s_traverse_net(pr_current, o_current,
+						   nets, c_current->object,
+						   hierarchy_tag);
+
+				s_traverse_clear_all_visited
+				    (pr_current->
+				     page_current->object_head);
+			    }
+
 			}
-	}
-
-	free(key);
-
-	/* search for line_ptr->[x|y]2 */
-	key = o_conn_return_key(o_current->line->x[1], 
-				o_current->line->y[1]);	
-		
-#if DEBUG
-	printf("looking at 2: %s\n", key);
-#endif
-
-	conn_list2 = g_hash_table_lookup(pr_current->page_current->conn_table,
-                                      key);
-
-	if (conn_list2) {
-
-#if DEBUG
-		printf("	found at 2: %s\n", key);
-#endif
-		c_current = conn_list2;
-
-		while (c_current != NULL) {
-			if (c_current->object != NULL &&
-			    c_current->type != CONN_HEAD) {
-
-#if DEBUG
-				printf("c_current %s visited: %d\n", c_current->object->name, c_current->object->visited);
-#endif
-
-				if (!c_current->object->visited &&
-				     c_current->object != o_current) {
-							
-					nets = s_traverse_net(pr_current, object, nets, c_current->object);
-					}
-
-				}
-				c_current=c_current->next;
-			}
-	}
-
-	free(key);
-
-	/* now search for any mid points */
-	nets = s_traverse_midpoints(pr_current, object, nets);
-
-	return(nets);
-}
-
-NET *
-s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *object, NET *nets)
-{
-	NETHASH *nethash_list;
-	NETHASH *nh_current;
-	
-	if (object == NULL) {
-		return(nets);
-	}
-
-#if DEBUG
-	printf("starting traverse of midpoints...\n");
-#endif
-
-	nh_current = nethash_list = o_nethash_query_table(
-				pr_current->page_current->nethash_table,
-				object->name);
-
-#if DEBUG 
-	if (nethash_list) {
-		printf("Found list...\n");
-		o_nethash_print(nethash_list);
-	}
-#endif
-
-	while(nh_current != NULL) {
-
-		if (nh_current->type != CONN_HEAD && 
-			nh_current->object != NULL &&
-			!nh_current->object->visited ) {
-			nets = s_traverse_net(pr_current, object, nets, 
-					nh_current->object);
+			c_current = c_current->next;
+		    }
 		}
 
-		nh_current = nh_current->next;
+		free(key);
+	    }
+
+	    cpins->nets = nets_head;
+	    /* s_net_print(nets); */
+
+	    /* this is iffy */
+	    /* should passindent: Standard input:519: Error:Stmt nesting error.
+	       indent: Standard input:519: Error:Stmt nesting error.
+	       in page_current in top level func */
 	}
+	s_traverse_clear_all_visited(pr_current->
+				     page_current->object_head);
+
+	o_current = o_current->next;
+    }
+
+
+    return (cpinlist_head);
+}
+
+
+void s_traverse_clear_all_visited(OBJECT * object_head)
+{
+    OBJECT *o_current;
+
+    o_current = object_head;
+
+    while (o_current != NULL) {
 
 #if DEBUG
-	printf("finished with midpoint search\n");
+	if (o_current->visited) {
+	    printf("%s\n", o_current->name);
+	}
 #endif
-	return(nets);
+
+	o_current->visited = 0;
+
+	if (o_current->type == OBJ_COMPLEX
+	    && o_current->complex->prim_objs) {
+	    s_traverse_clear_all_visited(o_current->complex->prim_objs);
+	}
+
+	o_current = o_current->next;
+    }
+
+}
+
+NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
+		    NET * nets, OBJECT * object, char *hierarchy_tag)
+{
+    OBJECT *o_current;
+    NET *new_net;
+    char *key = NULL;
+    CONN *conn_list;
+    CONN *c_current;
+    int endpoint;
+    char *temp;
+
+    o_current = object;
+
+    new_net = nets = s_net_add(nets);
+    new_net->nid = object->sid;
+
+    /* Pins are NOT allowed to supply the label= attribute */
+    if (o_current->type != OBJ_PIN) {
+	temp = o_attrib_search_name_single(o_current, "label", NULL);
+
+	if (temp) {
+	    new_net->net_name =
+		s_hierarchy_create_netname(pr_current, temp,
+					   hierarchy_tag);
+	    free(temp);
+	}
+    }
+#if DEBUG
+    printf("inside traverse: %s\n", object->name);
+#endif
+
+    if (object->type == OBJ_PIN) {
+
+	verbose_print("P");
+
+	new_net->connected_to =
+	    s_net_return_connected_string(pr_current, o_current,
+					  hierarchy_tag);
+
+	temp = o_attrib_search_name_single_count(o_current, "pinlabel", 0);
+
+	if (temp) {
+	    new_net->pin_label = temp;
+	}
+
+/* net= new */
+	if (strstr(nets->connected_to, "POWER")) {
+
+#if DEBUG
+	    printf("going to find netname %s \n", nets->connected_to);
+#endif
+	    nets->net_name =
+		s_netattrib_return_netname(pr_current, o_current,
+					   nets->connected_to,
+					   hierarchy_tag);
+	    nets->net_name_has_priority = TRUE;
+	    free(nets->connected_to);
+	    nets->connected_to = NULL;
+	}
+#if DEBUG
+	printf("traverse connected_to: %s\n", new_net->connected_to);
+#endif
+	return (nets);
+
+    }
+
+    /*printf("Found net %s\n", object->name); */
+    verbose_print("n");
+
+    object->visited++;
+
+    /* this is not perfect yet and won't detect a loop... */
+    if (object->visited > 100) {
+	fprintf(stderr, "Found a possible net/pin infinite connection\n");
+	exit(-1);
+    }
+
+
+    for (endpoint = 0; endpoint < 2; endpoint++) {
+	/* search for line->x|y[endpoint] ... */
+	key =
+	    o_conn_return_key(o_current->line->x[endpoint],
+			      o_current->line->y[endpoint]);
+
+#if DEBUG
+	printf("looking at %d: %s\n", endpoint, key);
+#endif
+	conn_list =
+	    g_hash_table_lookup(pr_current->page_current->conn_table, key);
+
+	if (conn_list) {
+
+#if DEBUG
+	    printf("	found at %d: %s\n", endpoint, key);
+#endif
+	    c_current = conn_list;
+
+	    while (c_current != NULL) {
+		if (c_current->object != NULL
+		    && c_current->type != CONN_HEAD) {
+
+#if DEBUG
+		    printf("c_current %s visited: %d\n",
+			   c_current->object->name,
+			   c_current->object->visited);
+#endif
+
+		    if (!c_current->object->visited &&
+			c_current->object != o_current) {
+
+			nets =
+			    s_traverse_net(pr_current, object, nets,
+					   c_current->object,
+					   hierarchy_tag);
+		    }
+
+		}
+		c_current = c_current->next;
+	    }
+	}
+
+	free(key);
+    }
+
+    /* now search for any mid points */
+    nets = s_traverse_midpoints(pr_current, object, nets, hierarchy_tag);
+
+    return (nets);
+}
+
+NET *s_traverse_midpoints(TOPLEVEL * pr_current, OBJECT * object,
+			  NET * nets, char *hierarchy_tag)
+{
+    NETHASH *nethash_list;
+    NETHASH *nh_current;
+
+    if (object == NULL) {
+	return (nets);
+    }
+#if DEBUG
+    printf("starting traverse of midpoints...\n");
+#endif
+
+    nh_current = nethash_list =
+	o_nethash_query_table(pr_current->page_current->nethash_table,
+			      object->name);
+
+#if DEBUG
+    if (nethash_list) {
+	printf("Found list...\n");
+	o_nethash_print(nethash_list);
+    }
+#endif
+
+    while (nh_current != NULL) {
+
+	if (nh_current->type != CONN_HEAD &&
+	    nh_current->object != NULL && !nh_current->object->visited) {
+	    nets = s_traverse_net(pr_current, object, nets,
+				  nh_current->object, hierarchy_tag);
+	}
+
+	nh_current = nh_current->next;
+    }
+
+#if DEBUG
+    printf("finished with midpoint search\n");
+#endif
+    return (nets);
 }
 
 /* unfortunately I need to include this from glib-1.2.x/ghash.c */
 /* since I need to implement my own foreach function */
-typedef struct _GHashNode      GHashNode;
+typedef struct _GHashNode GHashNode;
 
-struct _GHashNode
-{
-  gpointer key;
-  gpointer value;
-  GHashNode *next;
+struct _GHashNode {
+    gpointer key;
+    gpointer value;
+    GHashNode *next;
 };
 
-struct _GHashTable
-{
-  gint size;
-  gint nnodes;
-  guint frozen;
-  GHashNode **nodes;
-  GHashFunc hash_func;
-  GCompareFunc key_compare_func;
+struct _GHashTable {
+    gint size;
+    gint nnodes;
+    guint frozen;
+    GHashNode **nodes;
+    GHashFunc hash_func;
+    GCompareFunc key_compare_func;
 };
 
 void
-s_traverse_build_nethash(GHashTable *nethash_table, GHashTable *conn_table, 
-	OBJECT *start) 
+s_traverse_build_nethash(GHashTable * nethash_table,
+			 GHashTable * conn_table, OBJECT * start)
 {
-	OBJECT *o_current;
-	GHashNode *node;
-	CONN *conn_list, *c_current;
-	int i,vi=0;
+    OBJECT *o_current;
+    GHashNode *node;
+    CONN *conn_list, *c_current;
+    int i, vi = 0;
 
-if (verbose_mode) {
+    if (verbose_mode) {
 	printf("- Creating nethash table\n");
-}
+    }
 
-	o_current = start;
+    o_current = start;
 
-	while (o_current != NULL) {
+    while (o_current != NULL) {
 
 
-		if (o_current->type == OBJ_NET) {
+	if (o_current->type == OBJ_NET) {
 
-if (verbose_mode) {
-				printf("n");
-				if (vi++ == 78) {
-					printf("\n");
-					vi = 0;
-				}
+	    verbose_print("n");
 
-}
+	    for (i = 0; i < conn_table->size; i++) {
+		for (node = conn_table->nodes[i]; node; node = node->next) {
 
-		  for (i = 0; i < conn_table->size; i++) {
-	  	    for (node = conn_table->nodes[i]; node; node = node->next) {
-			
-			conn_list = c_current = (CONN *) node->value;
-			while (c_current != NULL) {
+		    conn_list = c_current = (CONN *) node->value;
+		    while (c_current != NULL) {
 
-				/* yes we found object in list? */
-				/* now look for midpoints */
-				if (c_current->object == o_current) {
+			/* yes we found object in list? */
+			/* now look for midpoints */
+			if (c_current->object == o_current) {
 
-		if (conn_list) {
-			if (conn_list->visual_cue == MIDPOINT_CUE) {
-				   while (conn_list != NULL) {
+			    if (conn_list) {
+				if (conn_list->visual_cue == MIDPOINT_CUE) {
+				    while (conn_list != NULL) {
 
-				if (conn_list->object != o_current && 
-				    conn_list->type != CONN_HEAD) {
+					if (conn_list->object != o_current
+					    && conn_list->type !=
+					    CONN_HEAD) {
 
-	o_nethash_add_new(nethash_table, conn_list->object, 
-			o_current->name, conn_list->type);
+					    o_nethash_add_new
+						(nethash_table,
+						 conn_list->object,
+						 o_current->name,
+						 conn_list->type);
 
 #if DEBUG
-			printf("yeah found equiv midpoint connected net\n");
-			printf("object: %s\n", conn_list->object->name);
-			printf("when looking at: %s\n", o_current->name);
+					    printf
+						("yeah found equiv midpoint connected net\n");
+					    printf("object: %s\n",
+						   conn_list->
+						   object->name);
+					    printf("when looking at: %s\n",
+						   o_current->name);
 #endif
 
-				}
+					}
 
-				      conn_list = conn_list->next;
-				   }
+					conn_list = conn_list->next;
+				    }
+				}
+			    }
+
 			}
+			c_current = c_current->next;
+		    }
 		}
-		
-				}
-				c_current = c_current->next;
-			}
-                    }
-		  }
-		}	
-
-		o_current = o_current->next;
+	    }
 	}
 
-#if DEBUG 
-	o_nethash_print_hash(nethash_table);
+	o_current = o_current->next;
+    }
+
+#if DEBUG
+    o_nethash_print_hash(nethash_table);
 #endif
 
-if (verbose_mode) {
-	if (vi > 70) {
-		printf("\nDONE\n");
-	} else {
-		printf(" DONE\n");
-	}
-	vi = 0;
-}
-
+    verbose_done();
 }

@@ -1,2 +1,9 @@
 
 extern int default_net_naming_priority;
+extern int default_hierarchy_traversal;
+extern int default_hierarchy_uref_mangle;
+extern int default_hierarchy_netname_mangle;
+extern int default_hierarchy_netattrib_mangle;
+extern int default_hierarchy_netattrib_order;
+extern int default_hierarchy_netname_order;
+extern int default_hierarchy_uref_order;

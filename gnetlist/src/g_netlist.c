@@ -31,627 +31,625 @@
 /* current project */
 static TOPLEVEL *project_current;
 
-void
-g_set_project_current(TOPLEVEL *pr_current) 
+void g_set_project_current(TOPLEVEL * pr_current)
 {
-	project_current = pr_current;	
+    project_current = pr_current;
 }
 
 
 /* this function will only return a unique list of packages */
-SCM
-g_get_packages(SCM level)
+SCM g_get_packages(SCM level)
 {
-	SCM list = SCM_EOL;
+    SCM list = SCM_EOL;
 
-	NETLIST *nl_current = NULL; 
+    NETLIST *nl_current = NULL;
 
-	nl_current = netlist_head;
-	s_scratch_string_init();
+    nl_current = netlist_head;
+    s_scratch_string_init();
 
-	while (nl_current != NULL) {
+    while (nl_current != NULL) {
 
-		if (nl_current->component_uref) {
-			if (s_scratch_string_fill(nl_current->component_uref)) {
-				list = gh_cons( gh_str2scm (
-					        nl_current->component_uref, 
-					        strlen(nl_current->
-						       component_uref)), list);	
-			}
-		}
-		nl_current = nl_current->next;
+	if (nl_current->component_uref) {
+	    if (s_scratch_string_fill(nl_current->component_uref)) {
+		list = gh_cons(gh_str2scm(nl_current->component_uref,
+					  strlen
+					  (nl_current->component_uref)),
+			       list);
+	    }
 	}
+	nl_current = nl_current->next;
+    }
 
-	s_scratch_string_free();
-	return(list);
+    s_scratch_string_free();
+    return (list);
 }
 
 /* old way which didn't return all components, is based on the object_head */
 /* datastructure which is not a good idea, since the uref info has already */
 /* been extracted into the netlist_head datastructures... */
 #if 0
-SCM
-g_get_packages(SCM scm_level)
+SCM g_get_packages(SCM scm_level)
 {
-	SCM list = SCM_EOL;
-	char *value;
-	OBJECT *o_current;
-	int i=0;
-	char *level;
-	
-        level = gh_scm2newstr(scm_level, NULL);
-	free(level);
+    SCM list = SCM_EOL;
+    char *value;
+    OBJECT *o_current;
+    int i = 0;
+    char *level;
 
-	s_scratch_string_init();
-	o_current = project_current->page_current->object_head;
+    level = gh_scm2newstr(scm_level, NULL);
+    free(level);
 
-	/* search for the first instance */
-	/* in the object_head list ... */
-	/* this function will search the entire list */
-	value = o_attrib_search_name(o_current, "uref", 0);
-	while (value != NULL) {
+    s_scratch_string_init();
+    o_current = project_current->page_current->object_head;
 
-		if (s_scratch_string_fill(value)) {
-			list = gh_cons( gh_str2scm (value, 
-						    strlen(value)), list);	
-		}
+    /* search for the first instance */
+    /* in the object_head list ... */
+    /* this function will search the entire list */
+    value = o_attrib_search_name(o_current, "uref", 0);
+    while (value != NULL) {
 
-		i++;
-		free(value);
-		value = o_attrib_search_name(o_current, "uref", i);
-
+	if (s_scratch_string_fill(value)) {
+	    list = gh_cons(gh_str2scm(value, strlen(value)), list);
 	}
 
-	if (value) 
-		free(value);
+	i++;
+	free(value);
+	value = o_attrib_search_name(o_current, "uref", i);
 
-	s_scratch_string_free();
-	return(list);
+    }
+
+    if (value)
+	free(value);
+
+    s_scratch_string_free();
+    return (list);
 
 }
 #endif
 
 
-SCM
-g_get_pins(SCM uref)
+SCM g_get_pins(SCM uref)
 {
-	SCM list = SCM_EOL;
-	NETLIST *nl_current;
-	CPINLIST *pl_current;
-	char *string;
+    SCM list = SCM_EOL;
+    NETLIST *nl_current;
+    CPINLIST *pl_current;
+    char *string;
 
-        string = gh_scm2newstr(uref, NULL);
+    string = gh_scm2newstr(uref, NULL);
 
-	/* here is where you make it multi page aware */
-	nl_current = netlist_head;
+    /* here is where you make it multi page aware */
+    nl_current = netlist_head;
 
-	/* search for the first instance */
-	/* through the entire list */
-	while(nl_current != NULL) {
+    /* search for the first instance */
+    /* through the entire list */
+    while (nl_current != NULL) {
 
-	      if (nl_current->component_uref) {
-		if (strcmp(nl_current->component_uref, string) == 0) {
+	if (nl_current->component_uref) {
+	    if (strcmp(nl_current->component_uref, string) == 0) {
 
-			pl_current = nl_current->cpins;
-			while(pl_current != NULL) {
-				if (pl_current->pin_number) {
-					list = gh_cons( gh_str2scm (
-					        pl_current->pin_number, 
-						strlen(pl_current->pin_number)),
-						list);	
-				}
-				pl_current = pl_current->next;
-			}
+		pl_current = nl_current->cpins;
+		while (pl_current != NULL) {
+		    if (pl_current->pin_number) {
+			list = gh_cons(gh_str2scm(pl_current->pin_number,
+						  strlen(pl_current->
+							 pin_number)),
+				       list);
+		    }
+		    pl_current = pl_current->next;
 		}
-	      }
-	      nl_current = nl_current->next;
+	    }
 	}
+	nl_current = nl_current->next;
+    }
 
-	free(string);
-	return(list);
+    free(string);
+    return (list);
 }
 
-SCM
-g_get_all_nets(SCM scm_level)
+SCM g_get_all_nets(SCM scm_level)
 {
 
-  SCM list = SCM_EOL;
-  NETLIST *nl_current;
-  CPINLIST *pl_current;
-  char *net_name;
-  char *level;
-  
-  level = gh_scm2newstr(scm_level, NULL);
-  free(level);
+    SCM list = SCM_EOL;
+    NETLIST *nl_current;
+    CPINLIST *pl_current;
+    char *net_name;
+    char *level;
+
+    level = gh_scm2newstr(scm_level, NULL);
+    free(level);
 
 
-  nl_current = netlist_head;
+    nl_current = netlist_head;
 
-  /* walk through the list of components, and through the list
-   * of individual pins on each, adding net names to the list
-   * being careful to ignore duplicates, and unconnected pins 
-   */
-  while(nl_current != NULL) {
-    pl_current = nl_current->cpins;
-    while(pl_current != NULL) {
-	if (pl_current->net_name) {
-     
-	  net_name = pl_current->net_name;
-	  /* filter off unconnected pins */
-	  if(strcmp(net_name, "unconnected_pin") != 0) {
-	    /* add the net name to the list */
+    /* walk through the list of components, and through the list
+     * of individual pins on each, adding net names to the list
+     * being careful to ignore duplicates, and unconnected pins 
+     */
+    while (nl_current != NULL) {
+	pl_current = nl_current->cpins;
+	while (pl_current != NULL) {
+	    if (pl_current->net_name) {
+
+		net_name = pl_current->net_name;
+		/* filter off unconnected pins */
+		if (strcmp(net_name, "unconnected_pin") != 0) {
+		    /* add the net name to the list */
 #if DEBUG
-	    printf("Got net: `%s'\n",net_name);
-	    printf("pin %s\n",  pl_current->pin_number);
+		    printf("Got net: `%s'\n", net_name);
+		    printf("pin %s\n", pl_current->pin_number);
 #endif
-	    list = gh_cons( gh_str2scm( net_name, strlen(net_name)),list);
-	  }
+		    list =
+			gh_cons(gh_str2scm(net_name, strlen(net_name)),
+				list);
+		}
+	    }
+	    pl_current = pl_current->next;
 	}
-      pl_current = pl_current->next;
+	nl_current = nl_current->next;
     }
-    nl_current = nl_current->next;
-  }
 
-  return list;
+    return list;
 }
 
-SCM
-g_get_all_unique_nets(SCM scm_level)
+SCM g_get_all_unique_nets(SCM scm_level)
 {
 
-  SCM list = SCM_EOL;
-  SCM x = SCM_EOL;
-  SCM is_member = SCM_EOL;
-  NETLIST *nl_current;
-  CPINLIST *pl_current;
-  char *net_name;
-  char *level;
-  
-  level = gh_scm2newstr(scm_level, NULL);
-  free(level);
+    SCM list = SCM_EOL;
+    SCM x = SCM_EOL;
+    SCM is_member = SCM_EOL;
+    NETLIST *nl_current;
+    CPINLIST *pl_current;
+    char *net_name;
+    char *level;
+
+    level = gh_scm2newstr(scm_level, NULL);
+    free(level);
 
 
-  nl_current = netlist_head;
+    nl_current = netlist_head;
 
-  /* walk through the list of components, and through the list
-   * of individual pins on each, adding net names to the list
-   * being careful to ignore duplicates, and unconnected pins 
-   */
-  while(nl_current != NULL) {
-    pl_current = nl_current->cpins;
-    while(pl_current != NULL) {
-	if (pl_current->net_name) {
-     
-	  net_name = pl_current->net_name;
-	  /* filter off unconnected pins */
-	  if(strcmp(net_name, "unconnected_pin") != 0) {
-	    /* add the net name to the list */
-	    /*printf("Got net: `%s'\n",net_name); */
+    /* walk through the list of components, and through the list
+     * of individual pins on each, adding net names to the list
+     * being careful to ignore duplicates, and unconnected pins 
+     */
+    while (nl_current != NULL) {
+	pl_current = nl_current->cpins;
+	while (pl_current != NULL) {
+	    if (pl_current->net_name) {
 
-	    x = gh_str2scm(net_name, strlen(net_name));
-	    is_member = scm_member(x, list);
+		net_name = pl_current->net_name;
+		/* filter off unconnected pins */
+		if (strcmp(net_name, "unconnected_pin") != 0) {
+		    /* add the net name to the list */
+		    /*printf("Got net: `%s'\n",net_name); */
 
-	    if (is_member == SCM_BOOL_F) {
-	       list = gh_cons( gh_str2scm( net_name, strlen(net_name)),list);
-            }
-	  }
+		    x = gh_str2scm(net_name, strlen(net_name));
+		    is_member = scm_member(x, list);
+
+		    if (is_member == SCM_BOOL_F) {
+			list =
+			    gh_cons(gh_str2scm(net_name, strlen(net_name)),
+				    list);
+		    }
+		}
+	    }
+	    pl_current = pl_current->next;
 	}
-      pl_current = pl_current->next;
+	nl_current = nl_current->next;
     }
-    nl_current = nl_current->next;
-  }
 
-  return list;
+    return list;
 }
 
 /* given a net name, return all connections */
-SCM
-g_get_all_connections(SCM scm_netname)
+SCM g_get_all_connections(SCM scm_netname)
 {
 
-  SCM list = SCM_EOL;
-  SCM x = SCM_EOL;
-  SCM is_member = SCM_EOL;
-  SCM connlist = SCM_EOL;
-  SCM pairlist = SCM_EOL;
-  NETLIST *nl_current;
-  CPINLIST *pl_current;
-  NET *n_current;
-  char *wanted_net_name;
-  char *net_name;
-  char *pin;
-  char *uref;
+    SCM list = SCM_EOL;
+    SCM x = SCM_EOL;
+    SCM is_member = SCM_EOL;
+    SCM connlist = SCM_EOL;
+    SCM pairlist = SCM_EOL;
+    NETLIST *nl_current;
+    CPINLIST *pl_current;
+    NET *n_current;
+    char *wanted_net_name;
+    char *net_name;
+    char *pin;
+    char *uref;
 
-  wanted_net_name = gh_scm2newstr(scm_netname, NULL);
+    wanted_net_name = gh_scm2newstr(scm_netname, NULL);
 
-  if (wanted_net_name == NULL) {
-  	return list;
-  }
+    if (wanted_net_name == NULL) {
+	return list;
+    }
 
 
-  nl_current = netlist_head;
+    nl_current = netlist_head;
 
-  /* walk through the list of components, and through the list
-   * of individual pins on each, adding net names to the list
-   * being careful to ignore duplicates, and unconnected pins 
-   */
-  while(nl_current != NULL) {
-    pl_current = nl_current->cpins;
-    while(pl_current != NULL) {
-	if (pl_current->net_name) {
-     
-	  net_name = pl_current->net_name;
-	  /* filter off unconnected pins */
-	  if(strcmp(net_name, wanted_net_name) == 0) {
-	    /* add the net name to the list */
+    /* walk through the list of components, and through the list
+     * of individual pins on each, adding net names to the list
+     * being careful to ignore duplicates, and unconnected pins 
+     */
+    while (nl_current != NULL) {
+	pl_current = nl_current->cpins;
+	while (pl_current != NULL) {
+	    if (pl_current->net_name) {
+
+		net_name = pl_current->net_name;
+		/* filter off unconnected pins */
+		if (strcmp(net_name, wanted_net_name) == 0) {
+		    /* add the net name to the list */
 
 #if DEBUG
-	    printf("found net: `%s'\n", net_name); 
+		    printf("found net: `%s'\n", net_name);
 #endif
 
-  	    n_current = pl_current->nets;
-	    while (n_current != NULL) {
-  
-	       if (n_current->connected_to) { 
+		    n_current = pl_current->nets;
+		    while (n_current != NULL) {
 
-	          pairlist = SCM_EOL;
-		  pin = (char *) malloc(sizeof(char)*
-			strlen(n_current->connected_to));
-		  uref = (char *) malloc(sizeof(char)*
-		        strlen(n_current->connected_to));
+			if (n_current->connected_to) {
 
-		  sscanf(n_current->connected_to, 
-			"%s %s", uref, pin);	
+			    pairlist = SCM_EOL;
+			    pin = (char *) malloc(sizeof(char) *
+						  strlen(n_current->
+							 connected_to));
+			    uref =
+				(char *) malloc(sizeof(char) *
+						strlen(n_current->
+						       connected_to));
 
-		  pairlist = gh_list( 
-			  gh_str2scm (uref, strlen(uref)),
-		 	  gh_str2scm (pin, strlen(pin)),
-			  SCM_UNDEFINED);
+			    sscanf(n_current->connected_to,
+				   "%s %s", uref, pin);
 
-	          x = pairlist;
-	          is_member = scm_member(x, connlist);
+			    pairlist =
+				gh_list(gh_str2scm(uref, strlen(uref)),
+					gh_str2scm(pin, strlen(pin)),
+					SCM_UNDEFINED);
 
-	          if (is_member == SCM_BOOL_F) {
-		     connlist = gh_cons(pairlist, connlist); 
-                  }
+			    x = pairlist;
+			    is_member = scm_member(x, connlist);
 
-		  free(uref);
-		  free(pin);
-	       }
-	    n_current = n_current->next;
+			    if (is_member == SCM_BOOL_F) {
+				connlist = gh_cons(pairlist, connlist);
+			    }
+
+			    free(uref);
+			    free(pin);
+			}
+			n_current = n_current->next;
+		    }
+		}
 	    }
-	  }
+	    pl_current = pl_current->next;
 	}
-      pl_current = pl_current->next;
+	nl_current = nl_current->next;
     }
-    nl_current = nl_current->next;
-  }
 
-  return connlist;
+    return connlist;
 }
 
 /* Given a uref and a pin number return a list of: */
 /*  (netname (uref pin) (uref pin) ... ) */
-SCM
-g_get_nets(SCM scm_uref, SCM scm_pin)
+SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 {
-	SCM outerlist = SCM_EOL;
-	SCM pinslist = SCM_EOL;
-	SCM pairlist = SCM_EOL;
-	NETLIST *nl_current=NULL;
-	CPINLIST *pl_current=NULL;
-	NET *n_current;
-	char *wanted_uref=NULL;
-	char *wanted_pin=NULL;
-	char *net_name=NULL;
+    SCM outerlist = SCM_EOL;
+    SCM pinslist = SCM_EOL;
+    SCM pairlist = SCM_EOL;
+    NETLIST *nl_current = NULL;
+    CPINLIST *pl_current = NULL;
+    NET *n_current;
+    char *wanted_uref = NULL;
+    char *wanted_pin = NULL;
+    char *net_name = NULL;
 
-	char *pin;
-	char *uref;
+    char *pin;
+    char *uref;
 
-        wanted_uref = gh_scm2newstr(scm_uref, NULL);
-        wanted_pin = gh_scm2newstr(scm_pin, NULL);
+    wanted_uref = gh_scm2newstr(scm_uref, NULL);
+    wanted_pin = gh_scm2newstr(scm_pin, NULL);
 
-	nl_current = netlist_head;
+    nl_current = netlist_head;
 
-	/* search for the first instance */
-	/* through the entire list */
-	while(nl_current != NULL) {
+    /* search for the first instance */
+    /* through the entire list */
+    while (nl_current != NULL) {
 
-	  if (nl_current->component_uref) {
+	if (nl_current->component_uref) {
 
 	    if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
 
-	        pl_current = nl_current->cpins;
-		while(pl_current != NULL) {
+		pl_current = nl_current->cpins;
+		while (pl_current != NULL) {
 
-		  if (pl_current->pin_number) {
-	    	   if (strcmp(pl_current->pin_number, wanted_pin) == 0) {
+		    if (pl_current->pin_number) {
+			if (strcmp(pl_current->pin_number, wanted_pin) ==
+			    0) {
 
-			n_current = pl_current->nets;
+			    n_current = pl_current->nets;
 
-			if (pl_current->net_name) {
+			    if (pl_current->net_name) {
 				net_name = pl_current->net_name;
-			}
-			   
-		   	while (n_current != NULL) {
+			    }
 
-			   if (n_current->connected_to) { 
+			    while (n_current != NULL) {
 
-				pairlist = SCM_EOL;
-				pin = (char *) malloc(sizeof(char)*
-					strlen(n_current->connected_to));
-				uref = (char *) malloc(sizeof(char)*
-					strlen(n_current->connected_to));
+				if (n_current->connected_to) {
 
-				sscanf(n_current->connected_to, 
-				       "%s %s", uref, pin);	
+				    pairlist = SCM_EOL;
+				    pin = (char *) malloc(sizeof(char) *
+							  strlen
+							  (n_current->
+							   connected_to));
+				    uref =
+					(char *) malloc(sizeof(char) *
+							strlen(n_current->
+							       connected_to));
 
-			   	pairlist = gh_list( 
-						gh_str2scm (uref, strlen(uref)),
-						gh_str2scm (pin, strlen(pin)),
+				    sscanf(n_current->connected_to,
+					   "%s %s", uref, pin);
+
+				    pairlist =
+					gh_list(gh_str2scm
+						(uref, strlen(uref)),
+						gh_str2scm(pin,
+							   strlen(pin)),
 						SCM_UNDEFINED);
 
-			   	pinslist = gh_cons(pairlist, pinslist); 
+				    pinslist = gh_cons(pairlist, pinslist);
 
-				free(uref);
-				free(pin);
-			   }
-			   n_current = n_current->next;
+				    free(uref);
+				    free(pin);
+				}
+				n_current = n_current->next;
+			    }
 			}
-                    }
-	           }
-		   pl_current = pl_current->next;
-	        }
-	     }
-	  }
-	  nl_current = nl_current->next;
- 	}
-
-	if (net_name != NULL) {
-		outerlist = gh_cons(gh_str2scm(net_name, strlen(net_name)), pinslist);
-	} else {
-		outerlist = gh_cons( gh_str2scm ("ERROR_INVALID_PIN", 
-					 	strlen("ERROR_INVALID_PIN")),
-						outerlist);	
-		fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n", wanted_pin); 
+		    }
+		    pl_current = pl_current->next;
+		}
+	    }
 	}
+	nl_current = nl_current->next;
+    }
 
-	free(wanted_uref);
-	free(wanted_pin);
+    if (net_name != NULL) {
+	outerlist =
+	    gh_cons(gh_str2scm(net_name, strlen(net_name)), pinslist);
+    } else {
+	outerlist = gh_cons(gh_str2scm("ERROR_INVALID_PIN",
+				       strlen("ERROR_INVALID_PIN")),
+			    outerlist);
+	fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n",
+		wanted_pin);
+    }
 
-	return(outerlist);
+    free(wanted_uref);
+    free(wanted_pin);
+
+    return (outerlist);
 }
 
 
 /* Given a uref, Return a list of pairs, each pair contains the name
  * of the pin, and the name of the net connected to that pin.  
  */
-SCM
-g_get_pins_nets(SCM scm_uref)
+SCM g_get_pins_nets(SCM scm_uref)
 {
-  SCM pinslist = SCM_EOL;
-  SCM pairlist = SCM_EOL;
-  NETLIST *nl_current=NULL;
-  CPINLIST *pl_current=NULL;
-  
-  char *wanted_uref=NULL;
-  char *net_name=NULL;
-  char *pin=NULL;
-  
-  wanted_uref = gh_scm2newstr(scm_uref, NULL);
-  
-  /* search for the any instances */
-  /* through the entire list */
-  for(nl_current = netlist_head; nl_current != NULL;
-      nl_current = nl_current->next) {
-    
-    /* is there a uref? */
-    if (nl_current->component_uref) {
-      /* is it the one we want ? */
-      if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
-	
-	for( pl_current = nl_current->cpins; pl_current != NULL;
-	       pl_current = pl_current->next) {
-	  /* is there a valid pin number and a valid name ? */
-	  if (pl_current->pin_number) {
-	    if (pl_current->net_name) {
-	      /* yes, add it to the list */
-	      pin      = pl_current->pin_number;
-	      net_name = pl_current->net_name;
+    SCM pinslist = SCM_EOL;
+    SCM pairlist = SCM_EOL;
+    NETLIST *nl_current = NULL;
+    CPINLIST *pl_current = NULL;
 
-	      pairlist = gh_cons(gh_str2scm (pin, strlen(pin)),
-				 gh_str2scm (net_name, strlen(net_name)));
-	      pinslist = gh_cons(pairlist, pinslist); 
+    char *wanted_uref = NULL;
+    char *net_name = NULL;
+    char *pin = NULL;
+
+    wanted_uref = gh_scm2newstr(scm_uref, NULL);
+
+    /* search for the any instances */
+    /* through the entire list */
+    for (nl_current = netlist_head; nl_current != NULL;
+	 nl_current = nl_current->next) {
+
+	/* is there a uref? */
+	if (nl_current->component_uref) {
+	    /* is it the one we want ? */
+	    if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
+
+		for (pl_current = nl_current->cpins; pl_current != NULL;
+		     pl_current = pl_current->next) {
+		    /* is there a valid pin number and a valid name ? */
+		    if (pl_current->pin_number) {
+			if (pl_current->net_name) {
+			    /* yes, add it to the list */
+			    pin = pl_current->pin_number;
+			    net_name = pl_current->net_name;
+
+			    pairlist =
+				gh_cons(gh_str2scm(pin, strlen(pin)),
+					gh_str2scm(net_name,
+						   strlen(net_name)));
+			    pinslist = gh_cons(pairlist, pinslist);
+			}
+
+		    }
+		}
 	    }
-	    
-	  }
 	}
-      }
     }
-  }
-  
-  free(wanted_uref);
-  
-  pinslist = gh_reverse(pinslist);  /* pins are in reverse order on the way 
-				     * out 
-				     */
-  return(pinslist);
+
+    free(wanted_uref);
+
+    pinslist = gh_reverse(pinslist);	/* pins are in reverse order on the way 
+					 * out 
+					 */
+    return (pinslist);
 }
 
 
-SCM
-g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
+SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 {
-	SCM scm_return_value;
-	NETLIST *nl_current;
-	char *uref;
-	char *wanted_attrib;
-	char *return_value=NULL;
+    SCM scm_return_value;
+    NETLIST *nl_current;
+    char *uref;
+    char *wanted_attrib;
+    char *return_value = NULL;
 
-        uref = gh_scm2newstr(scm_uref, NULL);
-        wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+    uref = gh_scm2newstr(scm_uref, NULL);
+    wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
 
-	/* here is where you make it multi page aware */
-	nl_current = netlist_head;
+    /* here is where you make it multi page aware */
+    nl_current = netlist_head;
 
-	/* search for the first instance */
-	/* through the entire list */
-	while(nl_current != NULL) {
+    /* search for the first instance */
+    /* through the entire list */
+    while (nl_current != NULL) {
 
-	      if (nl_current->component_uref) {
-		if (strcmp(nl_current->component_uref, uref) == 0) {
+	if (nl_current->component_uref) {
+	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
-			/* first search outside the symbol */
-			return_value = o_attrib_search_name_single(
-						    nl_current->object_ptr, 	
-						    wanted_attrib, NULL);
+		/* first search outside the symbol */
+		return_value =
+		    o_attrib_search_name_single(nl_current->object_ptr,
+						wanted_attrib, NULL);
 
-			if (return_value) {
-				break;
-			}
-
-			/* now search inside the symbol */
-			return_value = o_attrib_search_name(
-					   nl_current->object_ptr->complex->
-					   prim_objs,
-					   wanted_attrib, 0);
-
-			break;
+		if (return_value) {
+		    break;
 		}
-	      }
-	      nl_current = nl_current->next;
+
+		/* now search inside the symbol */
+		return_value =
+		    o_attrib_search_name(nl_current->object_ptr->
+					 complex->prim_objs, wanted_attrib,
+					 0);
+
+		break;
+	    }
 	}
+	nl_current = nl_current->next;
+    }
 
-	if (return_value) {
-		scm_return_value = gh_str2scm(return_value, 
-					       strlen(return_value));
-	} else {
-		scm_return_value = gh_str2scm("unknown", 
-					       strlen("unknown"));
+    if (return_value) {
+	scm_return_value = gh_str2scm(return_value, strlen(return_value));
+    } else {
+	scm_return_value = gh_str2scm("unknown", strlen("unknown"));
 
-	}
+    }
 
-	free(uref);
-	free(wanted_attrib);
+    free(uref);
+    free(wanted_attrib);
 
-	return(scm_return_value);
+    return (scm_return_value);
 }
 
 
-SCM
-g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib)
+SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib)
 {
-	SCM scm_return_value;
-	NETLIST *nl_current;
-	OBJECT *pin_object;
-	char *uref;
-	char *pin;
-	char *wanted_attrib;
-	char *return_value=NULL;
-	int done = FALSE;
+    SCM scm_return_value;
+    NETLIST *nl_current;
+    OBJECT *pin_object;
+    char *uref;
+    char *pin;
+    char *wanted_attrib;
+    char *return_value = NULL;
+    int done = FALSE;
 
-        uref = gh_scm2newstr(scm_uref, NULL);
-        pin = gh_scm2newstr(scm_pin, NULL);
-        wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+    uref = gh_scm2newstr(scm_uref, NULL);
+    pin = gh_scm2newstr(scm_pin, NULL);
+    wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
 
-	/* here is where you make it multi page aware */
-	nl_current = netlist_head;
+    /* here is where you make it multi page aware */
+    nl_current = netlist_head;
 
-	/* search for the first instance */
-	/* through the entire list */
-	while(nl_current != NULL && !done) {
-	      if (nl_current->component_uref) {
-		if (strcmp(nl_current->component_uref, uref) == 0) {
+    /* search for the first instance */
+    /* through the entire list */
+    while (nl_current != NULL && !done) {
+	if (nl_current->component_uref) {
+	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
-		  pin_object = o_complex_return_pin_object(nl_current->
-							   object_ptr, pin);
+		pin_object =
+		    o_complex_return_pin_object(nl_current->object_ptr,
+						pin);
 
-		  if (pin_object) {
+		if (pin_object) {
 
-			/* only look for the first occurance of wanted_attrib */
-			return_value = o_attrib_search_attrib_name(
-						    pin_object->attribs, 
+		    /* only look for the first occurance of wanted_attrib */
+		    return_value =
+			o_attrib_search_attrib_name(pin_object->attribs,
 						    wanted_attrib, 0);
-#if DEBUG	
-			if (return_value) { 
-				printf("GOT IT: %s\n", return_value);
-			}
+#if DEBUG
+		    if (return_value) {
+			printf("GOT IT: %s\n", return_value);
+		    }
 #endif
-		  }
 		}
-              }
-	      nl_current = nl_current->next;
+	    }
 	}
+	nl_current = nl_current->next;
+    }
 
-	if (return_value) {
-		scm_return_value = gh_str2scm(return_value, 
-					       strlen(return_value));
-	} else {
-		scm_return_value = gh_str2scm("unknown", 
-					       strlen("unknown"));
-	}
+    if (return_value) {
+	scm_return_value = gh_str2scm(return_value, strlen(return_value));
+    } else {
+	scm_return_value = gh_str2scm("unknown", strlen("unknown"));
+    }
 
-	free(uref);
-	free(pin);
-	free(wanted_attrib);
+    free(uref);
+    free(pin);
+    free(wanted_attrib);
 
-	return(scm_return_value);
+    return (scm_return_value);
 }
 
 
 /* returns value of attribute otherwise string "none" */
 /* still highly temp and doesn't work right */
-SCM
-g_get_toplevel_attribute(SCM scm_wanted_attrib)
+SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
 {
-	char *wanted_attrib;
-	char *return_value;
-	SCM scm_return_value;
+    char *wanted_attrib;
+    char *return_value;
+    SCM scm_return_value;
 
-	wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+    wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
 
-	return_value = o_attrib_search_toplevel_all(
-					project_current->page_head, 
-					wanted_attrib);
+    return_value = o_attrib_search_toplevel_all(project_current->page_head,
+						wanted_attrib);
 
-	if (return_value) {
-		scm_return_value = gh_str2scm(return_value, strlen(return_value));
-		free(return_value);
-	} else {
-		scm_return_value = gh_str2scm("not found", 
-					       strlen("not found"));
-	}
+    if (return_value) {
+	scm_return_value = gh_str2scm(return_value, strlen(return_value));
+	free(return_value);
+    } else {
+	scm_return_value = gh_str2scm("not found", strlen("not found"));
+    }
 
-	free(wanted_attrib);
+    free(wanted_attrib);
 
-	return(scm_return_value);
+    return (scm_return_value);
 }
 
-#if 0 /* No longer needed, but the netlist_mode variable is still used */
-SCM 
-g_set_netlist_mode(SCM mode) 
+#if 0				/* No longer needed, but the netlist_mode variable is still used */
+SCM g_set_netlist_mode(SCM mode)
 {
-	char *string;
+    char *string;
 
-	string = gh_scm2newstr(mode, NULL);
+    string = gh_scm2newstr(mode, NULL);
 
-        if ( strcmp(string, "gEDA") == 0 ) {
-		netlist_mode = gEDA;          
-        } else if ( strcmp(string, "SPICE") == 0 ) {
-		netlist_mode = SPICE;          
-	} else if ( strcmp(string, "TANGO") == 0 ) {
-		netlist_mode = TANGO;          
-	}
-
+    if (strcmp(string, "gEDA") == 0) {
+	netlist_mode = gEDA;
+    } else if (strcmp(string, "SPICE") == 0) {
+	netlist_mode = SPICE;
+    } else if (strcmp(string, "TANGO") == 0) {
+	netlist_mode = TANGO;
+    }
 #if DEBUG
-	printf("netlist_mode: %s %d\n", string, netlist_mode);
+    printf("netlist_mode: %s %d\n", string, netlist_mode);
 #endif
 
-	if (string) {
-		free(string);
-	}
+    if (string) {
+	free(string);
+    }
 
-	return(gh_int2scm(0)); 
+    return (gh_int2scm(0));
 }
 #endif
 
