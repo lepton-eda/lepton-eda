@@ -559,7 +559,7 @@ o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   fprintf(fp, "gsave\n");
   fprintf(fp, "newpath\n");
   if (w_current->bus_style == THICK) {
-    fprintf(fp, "3.0 setlinewidth\n");	
+    fprintf(fp, "%d mils setlinewidth\n", BUS_WIDTH);	
   }
 
   x1 = o_current->line->x[0]-origin_x,
@@ -610,7 +610,7 @@ o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
     color = image_black;
   }
 
-  offset = SCREENabs(w_current, 30);
+  offset = SCREENabs(w_current, BUS_WIDTH);
 
   /* 
      offset = 7 * (float) w_current->height/ (float) w_current->width;

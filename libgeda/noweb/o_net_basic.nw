@@ -546,7 +546,7 @@ o_net_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
   fprintf(fp, "gsave\n");
   fprintf(fp, "newpath\n");
   if (w_current->net_style == THICK) {
-    fprintf(fp, "1.5 setlinewidth\n");
+    fprintf(fp, "%d mils setlinewidth\n", NET_WIDTH);
   }
 
   x1 = o_current->line->x[0] - origin_x,
@@ -599,7 +599,7 @@ o_net_image_write(TOPLEVEL * w_current, OBJECT * o_current,
     color = image_black;
   }
 
-  offset = SCREENabs(w_current, 30);
+  offset = SCREENabs(w_current, NET_WIDTH);
 
   /* 
      offset = 7 * (float) w_current->height/ (float) w_current->width;
