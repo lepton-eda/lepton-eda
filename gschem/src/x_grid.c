@@ -18,18 +18,9 @@
  */
 
 #include <config.h>
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
-#include <guile/gh.h>
-
 #include <math.h>
 
-#include <libgeda/defines.h>
-#include <libgeda/struct.h>
-#include <libgeda/globals.h>
-#include <libgeda/prototype.h>
+#include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
 

@@ -1,5 +1,5 @@
 /* gEDA - GNU Electronic Design Automation
- * libgeda - include files
+ * libgeda include files
  * Copyright (C) 1998 Ales V. Hvezda
  *
  * This library is free software; you can redistribute it and/or
@@ -17,34 +17,21 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef _O_TYPES_H_INCL
-#define _O_TYPES_H_INCL
+#ifndef LIBGEDA_H
+#define LIBGEDA_H
 
-/* Object types */
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 
-#define OBJ_HEAD       	-1 
-#define OBJ_LINE        'L'
-#define OBJ_BOX         'B'
-#define OBJ_CIRCLE      'V'
-#define OBJ_NET         'N'
-#define OBJ_BUS         'U'
-#define OBJ_COMPLEX     'C'
-#define OBJ_TEXT       'T'
-#define OBJ_PIN         'P'
-#define OBJ_ARC         'A' 
-#define OBJ_ROUTE       'R' 
-#define OBJ_THRU_HOLE   'H' 
+#include <guile/gh.h>
 
-#define STARTATTACH_ATTR	'{'	
-#define ENDATTACH_ATTR		'}'	
-#define START_EMBEDDED		'['	
-#define END_EMBEDDED		']'	
-
-/* font stuff */
-#define INFO_FONT         'F' 
-#define VERSION_CHAR      'v' 
-
-/* misc stuff */
-#define COMMENT         '#' 
+#include <libgeda/defines.h>
+#include <libgeda/struct.h>
+#include <libgeda/globals.h>
+#include <libgeda/o_types.h>
+#include <libgeda/funcs.h>
+#include <libgeda/colors.h>
+#include <libgeda/prototype.h>
 
 #endif

@@ -17,13 +17,16 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef _GLOBALS_H_INCL
+#define _GLOBALS_H_INCL
+
+
 #if 0 /* none of this is needed? */
 /* color stuff */
 extern GdkColormap *colormap; 
 extern GdkVisual *visual; 
 
 /* colors */
-#if 0
 extern GdkColor white;
 extern GdkColor black;
 extern GdkColor red;
@@ -39,7 +42,6 @@ extern GdkColor darkyellow;
 extern GdkColor darkcyan;
 extern GdkColor darkblue;
 extern GdkColor darkgrey; 
-#endif
 
 /* color structure */
 extern COLOR colors[MAX_COLORS];
@@ -54,14 +56,6 @@ extern int logging_dest;
 /* colors which are used in o_image */
 extern int image_black;
 extern int image_white;
-#if 0 /* will be removed once image printing works */
-extern int image_red;
-extern int image_green;
-extern int image_blue;
-extern int image_yellow;
-extern int image_cyan;
-extern int image_grey;
-#endif
 
 #ifdef HAS_LIBGDGEDA
 /* I hate to include an include inside an include (ha!) however, I don't */
@@ -70,3 +64,4 @@ extern int image_grey;
 extern gdImagePtr current_im_ptr;
 #endif
 
+#endif

@@ -20,17 +20,7 @@
 #include <config.h>
 #include <stdio.h>
 
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
-#include <guile/gh.h>
-
-#include <libgeda/defines.h>
-#include <libgeda/struct.h>
-#include <libgeda/colors.h>
-#include <libgeda/globals.h>
-#include <libgeda/prototype.h>
+#include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
 

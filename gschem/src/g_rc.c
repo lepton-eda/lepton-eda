@@ -32,18 +32,7 @@
 #endif
 
 
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
-
-#include <guile/gh.h>
-
-#include <libgeda/defines.h>
-#include <libgeda/struct.h>
-#include <libgeda/globals.h>
-#include <libgeda/prototype.h>
-
+#include <libgeda/libgeda.h>
 
 #include "../include/i_vars.h"
 #include "../include/globals.h"
@@ -760,7 +749,9 @@ g_rc_component_library(SCM path)
 {
 	int ret;
 	struct stat buf;
+	char *cwd;
 	char *string = gh_scm2newstr(path, NULL);
+	char *temp;
 
 	/* TODO: don't I have to check string if it's NULL here? */
 
@@ -796,11 +787,21 @@ g_rc_component_library(SCM path)
 		return SCM_BOOL_F;
 	}
 
-	s_clib_add_entry(string);
+
+	if (string[0] == '/') {
+		s_clib_add_entry(string);
+	} else {
+		cwd = getcwd(NULL, 1024);
+		temp = u_basic_strdup_multiple(cwd, "/", string, NULL);
+		s_clib_add_entry(temp);
+		free(temp);
+		free(cwd);
+	}
 
 	if (string) {
 		free(string);
 	}
+
 	return SCM_BOOL_T;
 }
 
@@ -810,6 +811,7 @@ g_rc_source_library(SCM path)
 	int ret;
 	struct stat buf;
 	char *string = gh_scm2newstr(path, NULL);
+	char *temp, *cwd;
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -852,7 +854,15 @@ g_rc_source_library(SCM path)
 		return SCM_BOOL_F;
 	}
 
-	s_slib_add_entry(string);
+	if (string[0] == '/') {
+		s_slib_add_entry(string);
+	} else {
+		cwd = getcwd(NULL, 1024);
+		temp = u_basic_strdup_multiple(cwd, "/", string, NULL);
+		s_slib_add_entry(temp);
+		free(temp);
+		free(cwd);
+	}
 
 	if (string) {
 		free(string);

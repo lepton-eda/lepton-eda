@@ -17,6 +17,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifndef _DEFINES_H_INCL
+#define _DEFINES_H_INCL
 
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
@@ -238,3 +240,5 @@
 #define FLOAT_NET               1
 #define FLOAT_PIN               2
 #define DUP_NET_NAME            4
+
+#endif

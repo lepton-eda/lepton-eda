@@ -18,18 +18,12 @@
  */
 
 #include <config.h>
-#include <gtk/gtk.h>
-
-#include <guile/gh.h>
 
 #ifdef HAVE_STRINGS_H
 #include <strings.h>
 #endif
 
-#include <libgeda/defines.h>
-#include <libgeda/struct.h>
-#include <libgeda/globals.h>
-#include <libgeda/prototype.h>
+#include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
 

@@ -1,3 +1,7 @@
+1999-10-17  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/*.c: Changed all files to use the new libgeda/libgeda.h include
+
 1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/*.scm: Removed all gnetlist:set-netlist-mode

@@ -18,15 +18,8 @@
  */
 
 #include <config.h>
-#include <gtk/gtk.h>
 
-#include <guile/gh.h>
-
-#include <libgeda/defines.h>
-#include <libgeda/struct.h>
-#include <libgeda/globals.h>
-#include <libgeda/colors.h>
-#include <libgeda/prototype.h>
+#include <libgeda/libgeda.h>
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"

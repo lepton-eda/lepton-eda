@@ -4,6 +4,8 @@ Bugs (no particular order):
 
 	Prioritize this list!
 
+	Relative paths are not displayed properly in the component add 
+	dialog box
 
 	Swedish characters don't work.
 

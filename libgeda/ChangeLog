@@ -8,6 +8,14 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+1999-10-17  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/*.h: Added multiple controlling #ifdef's into all *.h files
+
+	* include/libgeda.h: Created file which contains all the required
+	  include files in the right order
+
+
 1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_clib.c: Added the ability to set the count in s_clib_getfiles
