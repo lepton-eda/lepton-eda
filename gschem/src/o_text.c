@@ -395,6 +395,8 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 		}
 
 		selected->text_string = u_basic_strdup(string);
+		selected->visibility = visibility;
+		selected->show_name_value = show;
 
 		/* we don't want to change the visibilty of the selection */
 		o_text_recreate(w_current, selected);

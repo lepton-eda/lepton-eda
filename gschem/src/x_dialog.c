@@ -1889,4 +1889,4 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
 		gdk_window_raise(w_current->hkwindow->window);
 	}
 }
-/***************** End of help/about dialog box *********************/
+/***************** End of help/keymapping dialog box *********************/
