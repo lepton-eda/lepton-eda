@@ -8,10 +8,17 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-09-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net_basic.c: Martin found a core dump bug. Fixed.  Wasn't
+	  being careful about derefencing a possible NULL pointer (added an
+	  if to check if NULL)
+
 2000-09-14  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_net_basic.c: In o_net_consolidate_segments, added a if 
 	  expression to make sure you don't try consolidate non-ortho nets
+	  (pointed out by Patrick)
 
 2000-08-28  Stefan Petersen  <spe@geda.sul.org>
 

@@ -1066,8 +1066,9 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 				tail->next = del_object->attribs->next;
 
 				/* step prev object to point to last object */
-				tail->next->prev = tail; 
-
+				if (tail->next) {
+					tail->next->prev = tail; 
+				}
 
 				/* delete old attrib head */
 				/* and nothing else */
