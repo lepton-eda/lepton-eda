@@ -1,4 +1,12 @@
 
+
+2000-11-02  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnet-pads.scm: Wrapper function applied after request
+	  from Roger Williams.
+
+	* scheme/gnet-*.scm: Updated copyright.
+	
 2000-10-31  Stefan Petersen  <spe@geda.seul.org>
 
 	* scheme/gnetlist.scm: Cleaned up and renamed split
