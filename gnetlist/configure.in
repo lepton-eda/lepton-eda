@@ -205,6 +205,7 @@ if test $GESYMCONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find gesym-config -- be sure that the symbols are installed)
 	fi
 
+# here is where the final X ld/c flags get set
 LDEXTRA=
 CFEXTRA=
 GTK=
