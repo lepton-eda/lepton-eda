@@ -353,7 +353,6 @@ x_preview_setup_rest(TOPLEVEL *preview)
                                          preview->drawing_area->
                                          allocation.height, -1);
 
-
   x_window_setup_gc(preview);
   x_window_setup_rest(preview);
 
@@ -442,7 +441,11 @@ x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
   preview_window->init_bottom = HEIGHT_C;
   x_window_setup_world(preview_window);
   preview_window->width = 160;
+#if HAS_GTK22
   preview_window->height = 120;
+#else
+  preview_window->height = 136;  /* Minimum size gtk+ 1.2.x will allow */
+#endif
   preview_window->win_width = preview_window->width;
   preview_window->win_height = preview_window->height;
   /* be sure to turn off scrollbars */

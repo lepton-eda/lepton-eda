@@ -1,3 +1,12 @@
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_preview.nw: Set the size of all preview windows to the
+	minimum of 160x136.  Even though this does not have the right 
+	aspect ratio, it does get rid of some garbage that was showing up	
+	when using gtk+ 1.2.x.  gtk+ 1.2.x was ignoring my specification of
+	160x120 and instead setting the window size to 160x136.  This change
+	is only for gtk+ 1.2.x, gtk+ 2.2.x uses 160x120 and allows this size.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Moved some code around to fix a memory 
@@ -9,6 +18,8 @@
 	the different types of valid/invalid attributes.
 
         * configure.ac: Bumped version to 20031231
+
+	* m4/Makefile.am: Added some missing *.m4 files to EXTRA_DIST.
 
 2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
