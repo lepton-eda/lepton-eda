@@ -52,6 +52,7 @@ view_file_if_pdf()
 view_file_browser()
 {
 	if test "${browser}" != "no" ; then
+		echo "Found ${browser}"
 		echo "Using browser and file: $1"
 		# NOTE: Mozilla and Netscape does not seem to support
 		#       -- on the command line
@@ -145,6 +146,7 @@ fi
 if test "${browser}" != "no"; then
 	for s in http ftp file; do
 		if echo "$1" | grep -q "^$s:"; then
+			echo "Found ${browser}"
 			echo "Using browser and URL: $1"
 			${browser} "$1"
 			exit

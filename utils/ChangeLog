@@ -1,9 +1,12 @@
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschemdoc.sh: Changed the manual which is brought up when
-	you run gschemdoc -m (from gschem.txt go gedadocs.html)
+	you run gschemdoc -m (from gschem.txt go gedadocs.html).
 
-	* scripts/gschemdoc.sh: Added phoenix to the list of browsers
+	* scripts/gschemdoc.sh: Added phoenix to the list of browsers.
+
+	* scripts/gschemdoc.sh: Added another echo to output which browser
+	has been found.
 
 2002-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
