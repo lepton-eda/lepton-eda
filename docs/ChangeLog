@@ -1,4 +1,4 @@
-2003-09-21 Ales Hvezda   <ahvezda@geda.seul.org>
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gnetlist/gnetlist.tex, gschem/gschem.tex: Added conversion of
 	.txt files to .tex by Dan McMahill.  Thanks. These files still
@@ -9,6 +9,9 @@
 
 	* */*.tex: Added the use of hyperref.sty to all .tex files,
 	so that pdf files get hyperlinks.  Very handy.
+
+	* symbols/symbols.tex: Applied Dan McMahill's QFP and QFN patch
+	JitterBug #75 can now be closed.
 
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -30,7 +30,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(\url{http://www.gnu.org/copyleft/fdl.html})}
-\date{February 11th, 2002}
+\date{September 27th, 2003}
 
 \begin{document}
 
@@ -280,6 +280,9 @@ is not lost.
        starting from 1.
 \item  {\it n} is for the pin count.
 \item  {\it m} is for the pin spacing in mils.
+\item  {\it x} is for the x dimension of the package (excluding
+       pins).  In particular this is used for the QFP package family.
+
 \item  SMT means surface mount, other components are through-hole.
 \end{itemize}
 
@@ -367,7 +370,19 @@ is not lost.
 
 \item   Plastic leadless chip carrier SMT are called {\tt PLCC}{\it n}.
 
-\item   Quad-side flat pack SMT are called {\tt QFP}{\it n}.
+\item   Square quad-side flat pack SMT are called 
+        {\tt QFP}{\it n}\_{\it x}.
+
+\item   Rectangular quad-side flat pack SMT are called 
+        {\tt QFP}{\it n}\_{\tt R}.
+
+\item   Square low profile quad-side flat pack SMT are called 
+        {\tt LQFP}{\it n}\_{\it x}.
+
+\item   Square thin quad-side flat pack SMT are called 
+        {\tt TQFP}{\it n}\_{\it x}.
+
+\item   Quad-side flat no-lead SMT are called {\tt QFN}{\it n}.
 
 \item   Dual in line style crystal oscillators are {\tt OSC8} and
 	{\tt OSC14}.
@@ -599,6 +614,7 @@ Edit/Show/Hide Inv Text):
 September 14th, 2002 & Created symbol.tex from symbols.html \\ \hline
 October 31st, 2002 & Fixed bad example symbol \\ \hline
 February 11th, 2003 & Footprint naming conventions added \\ \hline
+September 27th, 2003 & Applied Dan McMahill's QFP and QFN patch \\ \hline
 
 \end{tabular}
 \end{table}
