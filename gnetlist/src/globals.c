@@ -62,10 +62,6 @@ void (*text_draw_func)() = o_text_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
 void (*select_func)() = NULL;
 void (*x_log_update_func)() = NULL;
-void (*ps_color_string)()   = NULL;
-void (*image_color_int)()   = NULL;
-void (*image_gdcolor_init)() = NULL;
-
 
 /* netlist specific variables */
 NETLIST *netlist_head=NULL;

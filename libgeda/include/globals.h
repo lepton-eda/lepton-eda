@@ -41,6 +41,9 @@ extern GdkColor darkblue;
 extern GdkColor darkgrey; 
 #endif
 
+/* color structure */
+extern COLOR colors[MAX_COLORS];
+
 extern char rc_filename[256]; /* size is hack */
 #endif
 

@@ -39,6 +39,9 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+/* used by the extract functions below */
+#define DELIMITERS ",; "
+
 /* hack rename this to be s_return_tail */
 /* update object_tail or any list of that matter */
 NETLIST *
@@ -240,4 +243,244 @@ if (verbose_mode) {
 }
 
 				
+}
+
+/* these function below deals with the net= attribute */
+
+/* things to do here : */
+/* you need to search for the pin if it already exists...  */
+/* and if it does override it */
+
+/* be sure to free returned string */
+char *
+s_netlist_extract_netname(char *value)
+{
+	char *return_value=NULL;
+	int i=0;
+
+	/* a bit larger than needed ... */
+	return_value = u_basic_strdup(value);
+	
+	while(value[i] != ':' && value[i] != '\0') {
+		return_value[i] = value[i];
+		i++;
+	}
+
+	if (value[i] != ':') {
+		fprintf(stderr, "Found malformed net attribute\n");
+		return(u_basic_strdup("unknown"));
+	}
+
+	return_value[i] = '\0';
+
+	return(return_value);
+	
+}
+
+void
+s_netlist_create_pins(OBJECT *o_current, NETLIST *netlist, 
+		      char *value)
+{
+	NETLIST *netlist_tail;
+	CPINLIST *cpinlist_tail;
+	CPINLIST *new_cpin;
+	char *connected_to=NULL;
+	char *net_name=NULL;
+	char *start_of_pinlist=NULL;
+	char *char_ptr=NULL;
+	char *current_pin=NULL;
+
+
+	char_ptr = strchr(value, ':');
+
+	if (char_ptr == NULL) {
+		return;
+	}	
+
+	net_name = s_netlist_extract_netname(value);
+
+	/* skip over first : */
+	start_of_pinlist = char_ptr + 1;
+	current_pin = strtok(start_of_pinlist, DELIMITERS);
+	while(current_pin) {
+
+		netlist_tail = s_netlist_return_tail(netlist);
+		cpinlist_tail = s_cpinlist_return_tail(netlist_tail->cpins);
+
+		if (netlist->component_uref) {	
+			new_cpin = s_cpinlist_add(cpinlist_tail);
+
+			new_cpin->pin_number = u_basic_strdup(current_pin);
+			new_cpin->net_name = NULL;
+
+			new_cpin->plid = o_current->sid;
+
+			new_cpin->nets = s_net_add(NULL);
+			new_cpin->nets->net_name = u_basic_strdup(net_name);
+
+			connected_to = (char *) malloc(sizeof(char)*(
+					               strlen(netlist->
+							      component_uref)+
+						       strlen(current_pin)+2));	
+			sprintf(connected_to, "%s %s", netlist->component_uref,
+						       current_pin); 
+			new_cpin->nets->connected_to = u_basic_strdup(connected_to);
+			new_cpin->nets->nid = o_current->sid;
+			free(connected_to);
+
+		}
+                current_pin = strtok(NULL, DELIMITERS);
+	}
+
+	free(net_name);
+}
+
+
+void
+s_netlist_net_attribute(TOPLEVEL *pr_current, OBJECT *o_current, 
+		        NETLIST *netlist)
+{
+	char *value;
+	int counter=0;
+
+	/* for now just look inside the component */
+        value = o_attrib_search_name(o_current->complex, "net", counter);
+	while(value != NULL) {
+        	if (value) {
+			s_netlist_create_pins(o_current, netlist, value);
+			free(value);
+        	}
+		counter++;
+        	value = o_attrib_search_name(o_current->complex, "net", counter);
+	}
+
+	
+       	if (value) {
+		free(value);
+       	}
+
+
+	/* for now just look inside the component */
+	counter=0;
+	value = o_attrib_search_name_single_count(o_current, "net", counter);
+	while(value != NULL) {
+        	if (value) {
+			s_netlist_create_pins(o_current, netlist, value);
+			free(value);
+        	}
+		counter++;
+		value = o_attrib_search_name_single_count(o_current, "net", 
+							  counter);
+	}
+	
+	if (value) {
+		free(value);
+        }
+}
+
+char *
+s_netlist_net_search(OBJECT *o_current, char *wanted_pin)
+{
+	char *value;
+	char *temp;
+	char *char_ptr;
+	char *net_name;
+	char *current_pin;
+	char *start_of_pinlist;
+	int counter=0;
+
+	/* for now just look inside the component */
+        value = o_attrib_search_name(o_current->complex, "net", counter);
+	while(value != NULL) {
+        	if (value) {
+			char_ptr = strchr(value, ':');
+			if (char_ptr == NULL) {
+				fprintf(stderr, "Got an invalid net= attrib\n");
+				return(NULL);
+			}
+
+			net_name = s_netlist_extract_netname(value);
+
+			start_of_pinlist = char_ptr + 1;
+			current_pin = strtok(start_of_pinlist, DELIMITERS);
+			while(current_pin) {
+printf("looking at: %s\n", current_pin);
+				if (strcmp(current_pin, wanted_pin) == 0) {
+					printf("found net_name: _%s_\n", net_name);
+					return(net_name);
+				}
+				current_pin = strtok(NULL, DELIMITERS);
+			}
+			
+			free(value);
+        	}
+		counter++;
+        	value = o_attrib_search_name(o_current->complex, "net", counter);
+	}
+
+	
+       	if (value) {
+		free(value);
+       	}
+
+
+	/* for now just look inside the component */
+	counter=0;
+	value = o_attrib_search_name_single_count(o_current, "net", counter);
+	while(value != NULL) {
+        	if (value) {
+			char_ptr = strchr(value, ':');
+			if (char_ptr == NULL) {
+				fprintf(stderr, "Got an invalid net= attrib\n");
+				return(NULL);
+			}
+
+			net_name = s_netlist_extract_netname(value);
+
+			start_of_pinlist = char_ptr + 1;
+			current_pin = strtok(start_of_pinlist, DELIMITERS);
+			while(current_pin) {
+printf("looking at: %s\n", current_pin);
+				if (strcmp(current_pin, wanted_pin) == 0) {
+					printf("found net_name: _%s_\n", net_name);
+					return(net_name);
+				}
+				current_pin = strtok(NULL, DELIMITERS);
+			}
+			
+			free(value);
+        	}
+		counter++;
+		value = o_attrib_search_name_single_count(o_current, "net", 
+							  counter);
+	}
+	
+	if (value) {
+		free(value);
+        }
+
+	return(NULL);
+}
+char *
+s_netlist_return_netname(OBJECT *o_current, char *pinnumber)
+{
+	char *current_pin;
+	OBJECT *parent;
+
+	printf("extract return netname here\n");
+
+	/* skip over POWER tag */
+	current_pin = strtok(pinnumber, " ");
+
+	current_pin = strtok(NULL, " ");
+	if (current_pin == NULL) {
+		return(NULL);
+	}
+
+	printf("inside return_netname: %s\n", current_pin);
+
+	parent = return_head(o_current);	
+	parent = parent->complex_parent;
+
+	return(s_netlist_net_search(parent, current_pin));
 }

@@ -426,15 +426,10 @@ void x_vscrollbar_update(TOPLEVEL *w_current);
 void x_scrollbars_update(TOPLEVEL *w_current);
 GtkWidget *x_create_dialog_box(GtkWidget **out_vbox, GtkWidget **out_action_area);
 /* x_color.c */
-void x_color_init(void);
-int x_color_allocate_all(void);
-int x_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string, int image_red, int image_green, int image_blue);
-void x_color_destroy_all(void);
+void x_color_allocate_all(void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
-char *x_color_ps_string(int color);
-int x_color_image_int(int color);
-void x_color_gdcolor_init(gdImagePtr im_ptr);
+int x_color_get_name(int index, char *string);
 /* x_compsel.c */
 gint default_components(GtkWidget *w, TOPLEVEL *w_current);
 gint embed_components(GtkWidget *w, TOPLEVEL *w_current);
@@ -472,6 +467,9 @@ void about_dialog(TOPLEVEL *w_current);
 void coord_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void coord_display_update(TOPLEVEL *w_current, int x, int y);
 void coord_dialog(TOPLEVEL *w_current, int x, int y);
+gint color_set(GtkWidget *w, gpointer data);
+void color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
+void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog(TOPLEVEL *w_current);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);

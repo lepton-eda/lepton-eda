@@ -55,7 +55,7 @@ gschem_quit(void)
         s_attrib_free();
 	s_papersizes_free();
 	x_stroke_free_all();
-	x_color_destroy_all();
+	s_color_destroy_all();
 	/* s_stroke_free(); no longer needed */
 
 	/* x_window_free_head(); can't do this since it causes a
@@ -105,7 +105,7 @@ main_prog(int argc, char *argv[])
  	s_slib_init();
 	s_attrib_init();
 
-	x_color_init();
+	s_color_init();
 	g_rc_parse();
 
         colormap = gdk_colormap_get_system ();

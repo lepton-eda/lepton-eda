@@ -118,16 +118,13 @@ f_print_set_color(FILE *fp, int color)
 	char *string;
 
 	/* DO NOT free string... it's a reference to a malloced 
-	/* string, there is no memory leak here */
-	if (ps_color_string) {
-		string = (*ps_color_string)(color);
-	}
+	/* string, there is *no* memory leak here */
+	string = s_color_ps_string(color);
 
 	if (string) {
 			fprintf(fp, "%s setrgbcolor\n", string);
 	} else {
 			fprintf(fp, "0 0 0 setrgbcolor\n");
-
 	}
 }
 

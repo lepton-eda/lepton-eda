@@ -162,16 +162,11 @@ s_net_return_connected_string(OBJECT *object)
 		sprintf(string, "%s %s", uref, pinnum);
 	} else {
 		if (pinnum) {
-			/* only supply the pin number/name */
-			/* string = (char *) malloc(sizeof(char)*
-					strlen("U?")+strlen(pinnum)+
-					strlen("  ")+1);	*/
 			string = (char *) malloc(sizeof(char)*
 					strlen(pinnum)+
 					strlen("POWER")+
 					strlen("  ")+1);	
 			sprintf(string, "POWER %s", pinnum);
-			/* sprintf(string, "U? %s", pinnum);*/
 		} else {
 			string = (char *) malloc(sizeof(char)*
 					strlen("U?")+strlen("?")+

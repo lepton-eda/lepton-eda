@@ -95,6 +95,7 @@ void o_attrib_reattach(ATTRIB *attributes);
 void o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes);
 char *o_attrib_search_special(OBJECT *o_current);
 char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
+char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_default_slot(OBJECT *object);
@@ -346,6 +347,14 @@ void s_clib_init(void);
 char *s_clib_getdir(int index);
 char *s_clib_getfiles(char *directory, int flag);
 int s_clib_uniq(char *path);
+/* s_color.c */
+void s_color_init(void);
+int s_color_request(int color_index, char *color_name, char *outline_color_name, char *ps_color_string, int image_red, int image_green, int image_blue);
+void s_color_destroy_all(void);
+char *s_color_ps_string(int color);
+int s_color_image_int(int color);
+void s_color_gdcolor_init(void);
+int s_color_get_name(int index, char *string);
 /* s_hierarchy.c */
 void s_hierarchy_load_all(TOPLEVEL *w_current, char *filename);
 /* s_log.c */

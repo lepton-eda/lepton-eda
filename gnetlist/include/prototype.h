@@ -52,6 +52,11 @@ NETLIST *s_netlist_return_head(NETLIST *tail);
 NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_print(NETLIST *ptr);
 void s_netlist_post_process(NETLIST *head);
+char *s_netlist_extract_netname(char *value);
+void s_netlist_create_pins(OBJECT *o_current, NETLIST *netlist, char *value);
+void s_netlist_net_attribute(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist);
+char *s_netlist_net_search(OBJECT *o_current, char *wanted_pin);
+char *s_netlist_return_netname(OBJECT *o_current, char *pinnumber);
 /* s_project.c */
 TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
 void s_project_add_head(void);

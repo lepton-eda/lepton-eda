@@ -48,7 +48,7 @@
 /* and in o_select when selecting objects, select the attributes */
 
 /* there needs to be a modifier (in struct.h, such as a flag) which */
-/* signifies that this is an attribute */
+/* signifies that this is an attribute (really? why?) */
 
 /* return pointer from attrib_list */
 ATTRIB *
@@ -1219,6 +1219,85 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 		}	
 	}
 
+	return (NULL);
+} 
+
+/* be sure caller free's return value */
+/* this function is like above, except that it returns the n'th occurance */
+/* of the attribute.  counter starts counting at zero */
+char *
+o_attrib_search_name_single_count(OBJECT *object, char *name, 
+                                  int counter) 
+{
+	OBJECT *o_current;
+	ATTRIB *a_current;
+	OBJECT *found=NULL;
+	int val;
+	char found_name[128]; /* limit hack */
+	char found_value[128];
+	char *return_string;
+	int internal_counter=0;
+	
+
+	o_current = object;
+
+	if (o_current->attribs != NULL) {
+		a_current = o_current->attribs;
+
+		while(a_current != NULL) {
+			found = a_current->object;
+			if (found != NULL && found->text_string) {
+				val = o_attrib_get_name_value(
+					found->text_string, 
+					found_name, found_value);
+
+				if (val) {
+
+				   if (strcmp(name, found_name) == 0) {
+					if (counter != internal_counter) {
+						internal_counter++;
+					} else {
+					   return_string = (char *) 
+							malloc(
+			     				 sizeof(char)*
+							 strlen(found_value)+1);
+					  strcpy(return_string, found_value);
+					  return(return_string);
+					}
+				   }
+				}	
+
+#if DEBUG 
+				printf("0 _%s_\n", found->text_string);
+				printf("1 _%s_\n", found_name);
+				printf("2 _%s_\n", found_value);
+#endif
+			}
+			a_current=a_current->next;
+		}	
+
+	}
+	/* search for attributes outside */
+
+	if (o_current->type == OBJ_TEXT) {
+	 	val = o_attrib_get_name_value(o_current->text_string, 
+					found_name, found_value);
+
+		if (val) {
+		   if (strcmp(name, found_name) == 0) {
+			if (counter != internal_counter) {
+					internal_counter++;
+			} else {
+			   return_string = (char *) 
+					malloc(
+		     			 sizeof(char)*
+					 strlen(found_value)+1);
+			  strcpy(return_string, found_value);
+			  return(return_string);
+			}
+		   }
+		}
+	}	
 	return (NULL);
 } 
 

@@ -1226,8 +1226,11 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
 
 /***************** Start of color edit dialog box *********************/
 gint
-color_set(GtkWidget *w, int index)
+color_set(GtkWidget *w, gpointer data)
 {
+	int index;
+
+	index = (int) data;
 
 	/* hate to use this here... but I have to... */
 	global_window_current->edit_color = index;
@@ -1317,7 +1320,7 @@ create_color_menu (TOPLEVEL *w_current)
 	menu = gtk_menu_new ();
 	group = NULL;
 
-	found = x_color_get_name(index, &buf);
+	found = x_color_get_name(index, buf);
 	while (found != FALSE) {
 
 		if (found == TRUE) {
@@ -1344,13 +1347,18 @@ create_color_menu (TOPLEVEL *w_current)
 			gtk_signal_connect (GTK_OBJECT (menuitem), 
 					       "activate", 
 					       (GtkSignalFunc) color_set,
-			    		       (int) index);
+			    		       (int *) index);
+
+			/* I have no idea if doing the above cast is valid, */
+			/* since index isn't a pointer, it's just being */
+			/* treated as one, it's then cast to an int in */
+			/* color_set */
 
 			gtk_widget_show (menuitem);
 		}
 
 		index++;
-		found = x_color_get_name(index, &buf);
+		found = x_color_get_name(index, buf);
 	}
 
 

@@ -29,10 +29,10 @@ typedef struct st_attrib ATTRIB;
 typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
+typedef struct st_color COLOR;
 
 /* rename to the real thing once things work right */
 typedef struct st_conn CONN;
-
 
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
@@ -519,5 +519,19 @@ struct st_chkerrs{
   CHKERRS * next;
 
 };
+
+
+
+struct st_color {
+        char *color_name;
+        char *outline_color_name;
+        char *ps_color_string;
+        int image_red, image_green, image_blue;
+
+        GdkColor *gtk_color;
+        GdkColor *gtk_outline_color;
+        int image_color;
+};
+
 
 #endif

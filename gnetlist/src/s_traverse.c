@@ -103,56 +103,78 @@ if (verbose_mode) {
 	o_current = start;
 
 	while (o_current != NULL) {
-
 		if (o_current->type == OBJ_COMPLEX) {
-
 
 #if DEBUG
 		printf("starting NEW component\n\n");
 #endif
-if (verbose_mode) {
+
+			if (verbose_mode) {
 				printf(" C");
 				vi++;
 				if (vi++ == 78) {
 					printf("\n");
 					vi = 0;
 				}
-}
-				/* look for special tag */
-				temp = o_attrib_search_name(o_current->complex, "graphical", 0);
-				if (temp) {
-					/* don't want to traverse graphical elements */
-					free(temp);
+			}
+
+			/* look for special tag */
+			temp = o_attrib_search_name(o_current->complex, "graphical", 0);
+			if (temp) {
+			/* don't want to traverse graphical elements */
+				free(temp);
 					
-				} else {
-					netlist = s_netlist_add(netlist);
-					netlist->nlid = o_current->sid;
+			} else {
+				netlist = s_netlist_add(netlist);
+				netlist->nlid = o_current->sid;
 
-					/* search the single object only.... */
-					netlist->component_uref = 
-						o_attrib_search_name_single(o_current, "uref", NULL);
+				/* search the single object only.... */
+				netlist->component_uref = 
+					o_attrib_search_name_single(o_current, 
+								    "uref", 
+								    NULL);
 
-					netlist->object_ptr = o_current;
+				netlist->object_ptr = o_current;
 
-					if (!netlist->component_uref) {
+				if (!netlist->component_uref) {
 
-						/* here you look for the other special tags like gnd, vcc */
-						netlist->component_uref = o_attrib_search_special(o_current);
-						if (!netlist->component_uref) {
-							fprintf(stderr, "Could not find uref on component and could not find any special attributes!\n");
-							netlist->component_uref = (char *) malloc (sizeof(char)*strlen("U?")+1);
-							strcpy(netlist->component_uref, "U?");
+					temp = o_attrib_search_name(o_current->
+								    complex, 
+								    "physical",
+								    0);
+					if (temp) {
 
-						}
+						fprintf(stderr, 
+				"Could not find uref on component and could not find any special attributes!\n");
+
+						netlist->component_uref = 
+							(char *) malloc (
+								sizeof(char)*
+								strlen("U?")+1);
+						strcpy(netlist->component_uref,
+						       "U?");
+					} else {
+
+						printf("yeah... found a power symbol\n");
+				/* it's a power or some other special symbol */
+						netlist->component_uref = NULL;
 					}
-					netlist->cpins = s_traverse_component(
-							pr_current, 
-							o_current);
 
-					/* here is where you deal with the */
-					/* net attribute */
-				}
-		}			
+				} 
+
+				netlist->cpins = s_traverse_component(
+						pr_current, 
+						o_current);
+
+				/* here is where you deal with the */
+				/* net attribute */
+				s_netlist_net_attribute(pr_current,
+						        o_current,
+							netlist);	
+
+			}
+
+		}		
 
 		o_current = o_current->next;
 	}
@@ -243,6 +265,18 @@ if (verbose_mode) {
 						     nets = s_net_add(nets);
                                		             nets->nid = o_current->sid;
                                	         	     nets->connected_to = s_net_return_connected_string(o_current);
+
+/* net= new */
+	if (strstr(nets->connected_to, "POWER")) {
+		printf("going to find netname %s\n", nets->connected_to);
+		nets->net_name = s_netlist_return_netname(o_current, 
+							  nets->
+							  connected_to);
+		free(nets->connected_to);
+		nets->connected_to = NULL;
+	}
+
+
 #if DEBUG
 						     printf("%s\n",  nets->connected_to);
 #endif
@@ -279,6 +313,17 @@ if (verbose_mode) {
 						     nets = s_net_add(nets);
                        		                     nets->nid = o_current->sid;
                        		                     nets->connected_to = s_net_return_connected_string(o_current);
+
+/* net= new */
+	if (strstr(nets->connected_to, "POWER")) {
+		printf("going to find netname %s\n", nets->connected_to);
+		nets->net_name = s_netlist_return_netname(o_current, 
+							  nets->
+							  connected_to);
+		free(nets->connected_to);
+		nets->connected_to = NULL;
+	}
+
 #if DEBUG
 						     printf("%s\n",  nets->connected_to);
 #endif
@@ -359,14 +404,25 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 
 	if (object->type == OBJ_PIN) {
 
-if (verbose_mode) {
-		printf("P");
-		if (vi++ == 78) {
-			printf("\n");
-			vi = 0;
+		if (verbose_mode) {
+			printf("P");
+			if (vi++ == 78) {
+				printf("\n");
+				vi = 0;
+			}
 		}
-}
+
 		new_net->connected_to = s_net_return_connected_string(o_current);
+
+/* net= new */
+		if (strstr(nets->connected_to, "POWER")) {
+			printf("going to find netname %s \n", nets->connected_to);
+			nets->net_name = s_netlist_return_netname(o_current, 
+								  nets->
+								  connected_to);
+			free(nets->connected_to);
+			nets->connected_to = NULL;
+		}
 #if DEBUG
 		printf("traverse connected_to: %s\n",  new_net->connected_to);
 #endif
@@ -376,13 +432,13 @@ if (verbose_mode) {
 
 	/*printf("Found net %s\n", object->name);*/
 
-if (verbose_mode) {
+	if (verbose_mode) {
 		printf("n");
 		if (vi++ == 78) {
 			printf("\n");
 			vi = 0;
 		}
-}
+	}
 
 	object->visited++;
 

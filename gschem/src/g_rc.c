@@ -235,7 +235,7 @@ g_rc_color_general(SCM index, SCM color, SCM outline_color,
 	int image_green = gh_scm2int(ig);
 	int image_blue = gh_scm2int(ib);
 
-	status = x_color_request(color_index, color_name, outline_color_name,
+	status = s_color_request(color_index, color_name, outline_color_name,
 			         ps_color_string, 
 			         image_red, image_green, image_blue);
 

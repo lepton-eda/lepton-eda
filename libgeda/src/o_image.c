@@ -81,9 +81,7 @@ o_image_create(int x, int y, int color_mode)
 		image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
 	}
 
-	if (image_gdcolor_init) {
-		(*image_gdcolor_init)(im_ptr);
-	}
+	s_color_gdcolor_init();
 
 	current_im_ptr = im_ptr;
 }
@@ -126,14 +124,7 @@ int
 o_image_geda2gd_color(int color) 
 {
 	int value;
-
-        if (image_color_int) {
-
-		value = (*image_color_int)(color);
-
-		return(value);
-        }
-
-	return(0);
+	value = s_color_image_int(color);
+	return(value);
 }
 
