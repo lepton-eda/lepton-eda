@@ -159,7 +159,6 @@ s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
 	p_new = (PAGE *) malloc(sizeof(PAGE)); 
 
 	p_new->CHANGED = 0;
-	p_new->zoom_factor = 0;
 	pwd = getcwd(NULL, 1024);
 
 	if (page_filename[0] == '/') {
@@ -271,7 +270,6 @@ s_page_new(TOPLEVEL *w_current, char *page_filename)
 	set_window(w_current, w_current->init_left, w_current->init_right,
                    w_current->init_top, w_current->init_bottom);
 
-	w_current->page_current->zoom_factor = 0;
 	return(NULL);
 }
 
