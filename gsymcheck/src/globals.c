@@ -62,8 +62,6 @@ int quiet_mode=FALSE;
 
 void s_log_update(char *buf)
 {
-  int nchars;
-
   if (do_logging == FALSE) {
     return;
   }

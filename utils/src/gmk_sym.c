@@ -131,6 +131,9 @@ PRE,1,dot,B,1
 extern char *optarg;
 extern int optind,opterr,optopt;
 
+/* externals */
+int GetStringDisplayLength(char *str,int font_size);
+
 int line2fields(char *pBuf,int field_cnt,char *pField[]);
 int fields_free(char *pField[]);
 int make_pin(int fldcnt,char *pFields[]);

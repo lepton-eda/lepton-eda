@@ -656,12 +656,10 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   GtkWidget *hbox1;
   GtkWidget *hbuttonbox1;
   GtkWidget *okbutton;
-  GtkWidget *deletebutton;
+  GtkWidget *deletebutton=NULL;
   GtkWidget *cancelbutton;
   GtkWidget *frame1;
   GtkWidget *table3;
-  GtkWidget *combo1;
-  GList *combo1_items = NULL;
   GtkWidget *show_options;
   GtkWidget *show_options_menu;
   GtkWidget *glade_menuitem;

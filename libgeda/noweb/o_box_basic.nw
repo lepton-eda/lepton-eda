@@ -380,9 +380,9 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	int color;
 	int box_width, box_space, box_length;
 	int fill_width, angle1, pitch1, angle2, pitch2;
-	OBJECT_END box_end;
-	OBJECT_TYPE box_type;
-	OBJECT_FILLING box_filling;
+	int box_end;
+	int box_type;
+	int box_filling;
 	long int ver;
 	
 	ver = strtol(version, NULL, 10);
@@ -1093,6 +1093,10 @@ if(o_current->fill_type != FILLING_HOLLOW) {
 			fill_width = -1;
 			fill_func = (void *) o_box_print_filled;
 			break;
+                case(FILLING_HOLLOW):
+                  // nop
+                  break;
+
     }
 	
     if((pitch1 <= 0) || (pitch2 <= 0)) {

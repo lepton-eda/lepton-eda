@@ -1366,7 +1366,6 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
   SELECTION *temp_list = NULL;
   SELECTION *s_current;
   ATTRIB* attrib_tail;
-  ATTRIB* a_current;
   GList *object_list = NULL;
   GList *new_objects = NULL;
   GList *connected_objects=NULL;

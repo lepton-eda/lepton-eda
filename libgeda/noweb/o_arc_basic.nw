@@ -319,8 +319,8 @@ o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int start_angle, end_angle;
   int color;
   int arc_width, arc_length, arc_space;
-  OBJECT_TYPE arc_type;
-  OBJECT_END arc_end;
+  int arc_type;
+  int arc_end;
   long int ver;
 
   <<o_arc_read() : file format version compatibility>>

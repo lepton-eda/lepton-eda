@@ -693,8 +693,6 @@ o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
 void
 o_line_eraserubber(TOPLEVEL *w_current)
 {
-  int size;
-
   gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->background_color) );
   gdk_draw_line(w_current->window, w_current->gc, w_current->start_x,

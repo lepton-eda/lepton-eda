@@ -369,9 +369,9 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
   int color;
   int circle_width, circle_space, circle_length;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  OBJECT_END circle_end;
-  OBJECT_TYPE circle_type;
-  OBJECT_FILLING circle_fill;
+  int circle_end;
+  int circle_type;
+  int circle_fill;
   long int ver;
 
   ver = strtol(version, NULL, 10);
@@ -1063,6 +1063,10 @@ The case where [[pitch1]] and [[pitch2]] are null or negative is avoided as it l
         angle2 = -1; pitch2 = 1;
         fill_width = -1;
         fill_func = (void *) o_circle_print_filled;
+        break;
+        
+      case(FILLING_HOLLOW):
+        // nop
         break;
     }
 

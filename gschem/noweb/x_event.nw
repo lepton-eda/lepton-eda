@@ -1145,7 +1145,7 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 
   /* don't want to call this if the current page isn't setup yet */
   if (w_current->page_current == NULL) {
- 	return;
+ 	return 0;
   }
         
   /* this callback is for drawing areas only! */

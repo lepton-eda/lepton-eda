@@ -479,7 +479,7 @@ o_selection_return_num(SELECTION *head)
     return 0;
   }
   
-  // skip over head
+  /* skip over head */
   s_current = head->next;
 
   while (s_current != NULL) {

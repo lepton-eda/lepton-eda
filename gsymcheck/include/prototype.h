@@ -29,7 +29,7 @@ int parse_commandline(int argc, char *argv[]);
 int s_check_all(TOPLEVEL *pr_current);
 int s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head);
 void s_check_graphical(OBJECT *o_current, SYMCHECK *s_current);
-int s_check_device(OBJECT *o_current, SYMCHECK *s_current);
+void s_check_device(OBJECT *o_current, SYMCHECK *s_current);
 void s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current);

@@ -54,7 +54,6 @@ main_prog(int argc, char *argv[])
   int exit_status;
   int fopen_status;
   char *cwd;
-  int status;
   struct stat buf;
   
   TOPLEVEL *pr_current;

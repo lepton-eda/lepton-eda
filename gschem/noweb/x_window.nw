@@ -687,13 +687,13 @@ x_window_new_pixmap(char *filename, GdkWindow *window, GdkColor  *background)
 void
 x_window_create_main(TOPLEVEL *w_current)
 {
-  GtkWidget *label;
-  GtkWidget *main_box;
-  GtkWidget *menubar;
-  GtkWidget *drawbox;
-  GtkWidget *bottom_box;
-  GtkWidget *toolbar;
-  GtkWidget *handlebox;
+  GtkWidget *label=NULL;
+  GtkWidget *main_box=NULL;
+  GtkWidget *menubar=NULL;
+  GtkWidget *drawbox=NULL;
+  GtkWidget *bottom_box=NULL;
+  GtkWidget *toolbar=NULL;
+  GtkWidget *handlebox=NULL;
   char *filename = NULL;
 
   /* used to signify that the window isn't mapped yet */

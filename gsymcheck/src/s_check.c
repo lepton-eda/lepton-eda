@@ -175,7 +175,7 @@ s_check_graphical(OBJECT *o_current, SYMCHECK *s_current)
   }
 }
 
-
+void
 s_check_device(OBJECT *o_current, SYMCHECK *s_current)
 {
   char *temp;
@@ -502,7 +502,6 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   int i,j;
   char *message;
   char tempstr1[10];
-  char tempstr2[10];
   
   /* look for numslots to see if this symbol has slotting info */
   value = o_attrib_search_name(object_head, "numslots", 0);
@@ -826,7 +825,7 @@ s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current)
         /* skip over = char */
         ptr++;
 
-        while (ptr && *ptr > '0' && *ptr < '9' || *ptr == ',')
+        while ((ptr && (*ptr > '0') && (*ptr < '9')) || (*ptr == ','))
         {
           ptr++;
         }
@@ -918,9 +917,6 @@ void
 s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_current)
 {
   OBJECT *o_current;
-  char *ptr;
-  int found_old = FALSE;
-  int number_counter = 0;
   char *message;
   char *attrib;
   
@@ -1044,9 +1040,7 @@ void
 s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
 {
   OBJECT *o_current;
-
   char *message;
-  char tempstr[10];
 
   o_current = object_head;
   while(o_current != NULL)

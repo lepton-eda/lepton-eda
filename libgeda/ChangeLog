@@ -4,6 +4,8 @@
 
 	* noweb/f_print.nw: Added the code to implement the
 	setpagedevice-* rc keywords.
+
+	* noweb/*.nw: Cleaned up -Wall warnings
 	
 2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
 

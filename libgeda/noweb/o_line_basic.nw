@@ -344,8 +344,8 @@ o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int d_x1, d_y1;
   int d_x2, d_y2;
   int line_width, line_space, line_length;
-  OBJECT_END line_end;
-  OBJECT_TYPE line_type;
+  int line_end;
+  int line_type;
   int color;
   long int ver;
 

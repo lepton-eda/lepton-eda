@@ -545,7 +545,6 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   char *wanted_attrib;
   char *pinseq_attrib;
   char *return_value = NULL;
-  char *string;
   OBJECT *o_text_object;
   OBJECT *o_pin_object;
 
