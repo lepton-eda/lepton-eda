@@ -3,7 +3,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "../config.h"
+#  include <config.h>
 #endif
 
 #include <sys/types.h>
@@ -29,7 +29,7 @@ create_MainWindow (void)
   GtkAccelGroup *MenuProject_menu_accels;
   GtkWidget *MenuProjectNew;
   GtkWidget *MenuProjectOpen;
-  GtkWidget *MenuProjectSave;
+  GtkWidget *MenuProjectProperties;
   GtkWidget *MenuProjectClose;
   GtkWidget *MenuProjectSeparator1;
   GtkWidget *MenuProjectExit;
@@ -118,12 +118,12 @@ create_MainWindow (void)
   gtk_widget_show (MenuProjectOpen);
   gtk_container_add (GTK_CONTAINER (MenuProject_menu), MenuProjectOpen);
 
-  MenuProjectSave = gtk_menu_item_new_with_label (_("Save"));
-  gtk_widget_ref (MenuProjectSave);
-  gtk_object_set_data_full (GTK_OBJECT (MainWindow), "MenuProjectSave", MenuProjectSave,
+  MenuProjectProperties = gtk_menu_item_new_with_label (_("Properties"));
+  gtk_widget_ref (MenuProjectProperties);
+  gtk_object_set_data_full (GTK_OBJECT (MainWindow), "MenuProjectProperties", MenuProjectProperties,
                             (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (MenuProjectSave);
-  gtk_container_add (GTK_CONTAINER (MenuProject_menu), MenuProjectSave);
+  gtk_widget_show (MenuProjectProperties);
+  gtk_container_add (GTK_CONTAINER (MenuProject_menu), MenuProjectProperties);
 
   MenuProjectClose = gtk_menu_item_new_with_label (_("Close"));
   gtk_widget_ref (MenuProjectClose);
@@ -252,6 +252,7 @@ create_MainWindow (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_box_pack_start (GTK_BOX (VBoxMain), ToolBoxMain, TRUE, TRUE, 0);
   gtk_widget_set_usize (ToolBoxMain, -2, 32);
+  gtk_widget_set_sensitive (ToolBoxMain, FALSE);
 
   hboxToolBoxMainContainer = gtk_hbox_new (FALSE, 0);
   gtk_widget_ref (hboxToolBoxMainContainer);
@@ -266,6 +267,7 @@ create_MainWindow (void)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_box_pack_start (GTK_BOX (VBoxMain), ToolBoxUser, TRUE, TRUE, 0);
   gtk_widget_set_usize (ToolBoxUser, -2, 32);
+  gtk_widget_set_sensitive (ToolBoxUser, FALSE);
 
   ToolBoxClientContainer = gtk_hbox_new (FALSE, 0);
   gtk_widget_ref (ToolBoxClientContainer);
@@ -411,22 +413,19 @@ create_MainWindow (void)
                       GTK_SIGNAL_FUNC (on_MainWindow_delete_event),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuProjectNew), "activate",
-                      GTK_SIGNAL_FUNC (MenuProjectNew_Activation),
+                      GTK_SIGNAL_FUNC (ProjectNew_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuProjectOpen), "activate",
-                      GTK_SIGNAL_FUNC (MenuProjectOpen_Activation),
+                      GTK_SIGNAL_FUNC (ProjectOpen_MenuActivation),
                       NULL);
-  gtk_signal_connect (GTK_OBJECT (MenuProjectSave), "activate",
-                      GTK_SIGNAL_FUNC (MenuProjectSave_Activation),
+  gtk_signal_connect (GTK_OBJECT (MenuProjectProperties), "activate",
+                      GTK_SIGNAL_FUNC (ProjectProperties_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuProjectClose), "activate",
-                      GTK_SIGNAL_FUNC (MenuProjectClose_Activation),
-                      NULL);
-  gtk_signal_connect (GTK_OBJECT (MenuFileNew), "activate",
-                      GTK_SIGNAL_FUNC (FileNew_MenuActivation),
+                      GTK_SIGNAL_FUNC (ProjectClose_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuProjectExit), "activate",
-                      GTK_SIGNAL_FUNC (MenuProjectExit_Activation),
+                      GTK_SIGNAL_FUNC (ProjectExit_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileEdit), "activate",
                       GTK_SIGNAL_FUNC (FileEdit_MenuActivation),
@@ -439,6 +438,9 @@ create_MainWindow (void)
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileClose), "activate",
                       GTK_SIGNAL_FUNC (FileClose_MenuActivation),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (MenuFileNew), "activate",
+                      GTK_SIGNAL_FUNC (FileNew_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileImport), "activate",
                       GTK_SIGNAL_FUNC (FileImport_MenuActivation),
@@ -463,6 +465,213 @@ create_MainWindow (void)
                             NULL);
 
   return MainWindow;
+}
+
+GtkWidget*
+create_ProjectProperties (void)
+{
+  GtkWidget *ProjectProperties;
+  GtkWidget *pProjectProperitesVBox;
+  GtkWidget *pProjectPropertiesFrame;
+  GtkWidget *pProjectPropertiesTable;
+  GtkWidget *pProjectPropertiesLabelName;
+  GtkWidget *pProjectPropertiesectoryLabelDir;
+  GtkWidget *pProjectPropertiesLabelAuthor;
+  GtkWidget *pProjectPropertiesLabelDescription;
+  GtkWidget *pProjectPropertiesEntryName;
+  GtkWidget *pProjectPropertiesEntryAuthor;
+  GtkWidget *pProjectPropertiesScrolledWindow;
+  GtkWidget *pProjectPropertiesTextDescription;
+  GtkWidget *pProjectPropertiesVSeparator;
+  GtkWidget *pProjectPropertiesEntryDir;
+  GtkWidget *pProjectPropertiesHBox;
+  GtkWidget *pProjectPropertiesButtonOk;
+  GtkWidget *pProjectPropertiesButtonCancel;
+
+  ProjectProperties = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_object_set_data (GTK_OBJECT (ProjectProperties), "ProjectProperties", ProjectProperties);
+  gtk_widget_set_usize (ProjectProperties, 400, 250);
+  gtk_window_set_title (GTK_WINDOW (ProjectProperties), _("Project Properties"));
+  gtk_window_set_modal (GTK_WINDOW (ProjectProperties), TRUE);
+  gtk_window_set_default_size (GTK_WINDOW (ProjectProperties), 400, 250);
+  gtk_window_set_policy (GTK_WINDOW (ProjectProperties), FALSE, FALSE, FALSE);
+
+  pProjectProperitesVBox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_ref (pProjectProperitesVBox);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectProperitesVBox", pProjectProperitesVBox,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectProperitesVBox);
+  gtk_container_add (GTK_CONTAINER (ProjectProperties), pProjectProperitesVBox);
+
+  pProjectPropertiesFrame = gtk_frame_new (_("Project"));
+  gtk_widget_ref (pProjectPropertiesFrame);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesFrame", pProjectPropertiesFrame,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesFrame);
+  gtk_box_pack_start (GTK_BOX (pProjectProperitesVBox), pProjectPropertiesFrame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (pProjectPropertiesFrame), 8);
+
+  pProjectPropertiesTable = gtk_table_new (5, 2, FALSE);
+  gtk_widget_ref (pProjectPropertiesTable);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesTable", pProjectPropertiesTable,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesTable);
+  gtk_container_add (GTK_CONTAINER (pProjectPropertiesFrame), pProjectPropertiesTable);
+  gtk_container_set_border_width (GTK_CONTAINER (pProjectPropertiesTable), 8);
+  gtk_table_set_row_spacings (GTK_TABLE (pProjectPropertiesTable), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (pProjectPropertiesTable), 8);
+
+  pProjectPropertiesLabelName = gtk_label_new (_("Name"));
+  gtk_widget_ref (pProjectPropertiesLabelName);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesLabelName", pProjectPropertiesLabelName,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesLabelName);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesLabelName, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (pProjectPropertiesLabelName), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (pProjectPropertiesLabelName), 0, 0.5);
+
+  pProjectPropertiesectoryLabelDir = gtk_label_new (_("Directory"));
+  gtk_widget_ref (pProjectPropertiesectoryLabelDir);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesectoryLabelDir", pProjectPropertiesectoryLabelDir,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesectoryLabelDir);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesectoryLabelDir, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (pProjectPropertiesectoryLabelDir), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (pProjectPropertiesectoryLabelDir), 0, 0.5);
+
+  pProjectPropertiesLabelAuthor = gtk_label_new (_("Author"));
+  gtk_widget_ref (pProjectPropertiesLabelAuthor);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesLabelAuthor", pProjectPropertiesLabelAuthor,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesLabelAuthor);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesLabelAuthor, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (pProjectPropertiesLabelAuthor), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (pProjectPropertiesLabelAuthor), 0, 0.5);
+
+  pProjectPropertiesLabelDescription = gtk_label_new (_("Description"));
+  gtk_widget_ref (pProjectPropertiesLabelDescription);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesLabelDescription", pProjectPropertiesLabelDescription,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesLabelDescription);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesLabelDescription, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (pProjectPropertiesLabelDescription), GTK_JUSTIFY_LEFT);
+  gtk_misc_set_alignment (GTK_MISC (pProjectPropertiesLabelDescription), 0, 0);
+
+  pProjectPropertiesEntryName = gtk_entry_new ();
+  gtk_widget_ref (pProjectPropertiesEntryName);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesEntryName", pProjectPropertiesEntryName,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesEntryName);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesEntryName, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  GTK_WIDGET_SET_FLAGS (pProjectPropertiesEntryName, GTK_CAN_DEFAULT);
+
+  pProjectPropertiesEntryAuthor = gtk_entry_new ();
+  gtk_widget_ref (pProjectPropertiesEntryAuthor);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesEntryAuthor", pProjectPropertiesEntryAuthor,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesEntryAuthor);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesEntryAuthor, 1, 2, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  GTK_WIDGET_SET_FLAGS (pProjectPropertiesEntryAuthor, GTK_CAN_DEFAULT);
+
+  pProjectPropertiesScrolledWindow = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_ref (pProjectPropertiesScrolledWindow);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesScrolledWindow", pProjectPropertiesScrolledWindow,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesScrolledWindow);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesScrolledWindow, 1, 2, 3, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_SHRINK | GTK_FILL), 0, 0);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (pProjectPropertiesScrolledWindow), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+
+  pProjectPropertiesTextDescription = gtk_text_new (NULL, NULL);
+  gtk_widget_ref (pProjectPropertiesTextDescription);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesTextDescription", pProjectPropertiesTextDescription,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesTextDescription);
+  gtk_container_add (GTK_CONTAINER (pProjectPropertiesScrolledWindow), pProjectPropertiesTextDescription);
+  GTK_WIDGET_SET_FLAGS (pProjectPropertiesTextDescription, GTK_CAN_DEFAULT);
+  gtk_text_set_editable (GTK_TEXT (pProjectPropertiesTextDescription), TRUE);
+
+  pProjectPropertiesVSeparator = gtk_vseparator_new ();
+  gtk_widget_ref (pProjectPropertiesVSeparator);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesVSeparator", pProjectPropertiesVSeparator,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesVSeparator, 0, 1, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_sensitive (pProjectPropertiesVSeparator, FALSE);
+
+  pProjectPropertiesEntryDir = gtk_entry_new ();
+  gtk_widget_ref (pProjectPropertiesEntryDir);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesEntryDir", pProjectPropertiesEntryDir,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesEntryDir);
+  gtk_table_attach (GTK_TABLE (pProjectPropertiesTable), pProjectPropertiesEntryDir, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  GTK_WIDGET_SET_FLAGS (pProjectPropertiesEntryDir, GTK_CAN_DEFAULT);
+
+  pProjectPropertiesHBox = gtk_hbox_new (TRUE, 0);
+  gtk_widget_ref (pProjectPropertiesHBox);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesHBox", pProjectPropertiesHBox,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesHBox);
+  gtk_box_pack_start (GTK_BOX (pProjectProperitesVBox), pProjectPropertiesHBox, FALSE, FALSE, 0);
+  gtk_widget_set_usize (pProjectPropertiesHBox, -2, 48);
+  gtk_container_set_border_width (GTK_CONTAINER (pProjectPropertiesHBox), 8);
+
+  pProjectPropertiesButtonOk = gtk_button_new_with_label (_("Ok"));
+  gtk_widget_ref (pProjectPropertiesButtonOk);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesButtonOk", pProjectPropertiesButtonOk,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesButtonOk);
+  gtk_box_pack_start (GTK_BOX (pProjectPropertiesHBox), pProjectPropertiesButtonOk, FALSE, FALSE, 0);
+  gtk_widget_set_usize (pProjectPropertiesButtonOk, 112, 48);
+  GTK_WIDGET_SET_FLAGS (pProjectPropertiesButtonOk, GTK_CAN_DEFAULT);
+
+  pProjectPropertiesButtonCancel = gtk_button_new_with_label (_("Cancel"));
+  gtk_widget_ref (pProjectPropertiesButtonCancel);
+  gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesButtonCancel", pProjectPropertiesButtonCancel,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pProjectPropertiesButtonCancel);
+  gtk_box_pack_start (GTK_BOX (pProjectPropertiesHBox), pProjectPropertiesButtonCancel, FALSE, FALSE, 0);
+  gtk_widget_set_usize (pProjectPropertiesButtonCancel, 112, 48);
+  GTK_WIDGET_SET_FLAGS (pProjectPropertiesButtonCancel, GTK_CAN_DEFAULT);
+
+  gtk_signal_connect (GTK_OBJECT (ProjectProperties), "delete_event",
+                      GTK_SIGNAL_FUNC (ProjectProperties_ButtonClicked),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (pProjectPropertiesEntryName), "changed",
+                      GTK_SIGNAL_FUNC (ProjectProperties_NameChanged),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (pProjectPropertiesEntryDir), "delete_text",
+                      GTK_SIGNAL_FUNC (ProjectProperties_DirChanged),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (pProjectPropertiesEntryDir), "insert_text",
+                      GTK_SIGNAL_FUNC (ProjectProperties_DirChanged),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (pProjectPropertiesButtonOk), "clicked",
+                      GTK_SIGNAL_FUNC (ProjectProperties_ButtonClicked),
+                      GTK_OBJECT(pProjectPropertiesButtonOk));
+  gtk_signal_connect (GTK_OBJECT (pProjectPropertiesButtonCancel), "clicked",
+                      GTK_SIGNAL_FUNC (ProjectProperties_ButtonClicked),
+                      GTK_OBJECT(pProjectPropertiesButtonCancel));
+
+  gtk_widget_grab_focus (pProjectPropertiesButtonOk);
+  gtk_widget_grab_default (pProjectPropertiesEntryName);
+  return ProjectProperties;
 }
 
 GtkWidget*

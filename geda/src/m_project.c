@@ -19,9 +19,6 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include "../config.h"
-#endif
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +27,7 @@
 #include "filesel.h"
 #include "filetool.h"
 #include "global.h"
+#include "interface.h"
 #include "m_action.h"
 #include "m_project.h"
 #include "msgbox.h"
@@ -38,44 +36,71 @@
 
 
 
-/* private functions */
 void ProjectWidgetsHide(void);
 void ProjectWidgetsShow(void);
 
 
 
-/*
-	Menu PROJECT handlers
-	(New, Open, Save, Close, Exit)
-*/
+/*******************************************************************************
 
-void MenuProjectNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
+	Static variables and functions, definitions
+
+*******************************************************************************/
+
+static void ProjectPropertiesCreate(void);
+static void ProjectPropertiesDestroy(void);
+static BOOL ProjectPropertiesValid(void);
+
+
+
+/*******************************************************************************
+
+	MENU : Project -> New
+
+*******************************************************************************/
+
+/* callback from menu */
+void ProjectNew_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	int iResult;
 	char szProjectFileName[TEXTLEN];
-	
-	/* firstly ask for name of a new project */
-	strcpy(szProjectFileName, "unnamed.prj");
-/*	ProjectProperties(); */
-	iResult = FileSelection("prj", szProjectFileName);
-	if (iResult != SUCCESS)
-	{
-		strcpy(szProjectFileName, "");
-		return;
-	}
 
-	ProjectNew(szProjectFileName);
+//	strcpy(szProjectFileName, "unnamed.prj");
+
+	chdir(pDefaultProjectDir);
+
+	iResult = ProjectProperties(TRUE);
+	if (iResult == SUCCESS)
+	{
+		strcpy(szProjectFileName, Project.szDir);
+		strcat(szProjectFileName, "/");
+		strcat(szProjectFileName, Project.szName);
+		strcat(szProjectFileName, ".");
+		strcat(szProjectFileName, Project.szExt);
+
+		ProjectNew(szProjectFileName);
+	}
 }
 
 
-void MenuProjectOpen_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
+
+/*******************************************************************************
+
+	MENU : Project -> Open
+
+*******************************************************************************/
+
+/* callback from menu */
+void ProjectOpen_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	int iResult;
 	char szProjectFileName[TEXTLEN];
 	
+	chdir(pDefaultProjectDir);
+
 	/* ask for project name */
-	strcpy(szProjectFileName, "unnamed.prj");
-	iResult = FileSelection("prj", szProjectFileName);
+	strcpy(szProjectFileName, DEF_PRJNAME);
+	iResult = FileSelection(DEF_PRJEXT, szProjectFileName);
 	if (iResult != SUCCESS)
 	{
 		strcpy(szProjectFileName, "");
@@ -86,61 +111,219 @@ void MenuProjectOpen_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 }
 
 
-void MenuProjectSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
+
+/*******************************************************************************
+
+	MENU : Project -> Properties
+
+*******************************************************************************/
+
+static GtkWindow *pWindow = NULL;
+static BOOL bUpdateDir = FALSE;
+static BOOL bUpdateBlock = FALSE;
+static BOOL bCanceled = FALSE;
+static BOOL bCompleted = FALSE;
+
+
+/* callback from menu */
+void ProjectProperties_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
-	int iResult;
-	char szFileName[TEXTLEN];
+	ProjectProperties(FALSE);
+}
+
+
+/* openning project properties window */
+int ProjectProperties(BOOL bIsNew)
+{
+	GtkEntry *pEntryName = NULL, *pEntryDir = NULL, *pEntryAuthor = NULL;
+	GtkText *pTextDescription;
+	gint x;
 	
-	if (strlen(Project.szName) == 0)
+	bUpdateDir = FALSE;
+	bUpdateBlock = FALSE;
+
+	/* default values for new project */
+	if (bIsNew)
 	{
-		MsgBox(
-			pWindowMain,
-			"FATAL ERROR !",
-			"Project has no name.",
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return;
+		strcpy(Project.szName, pDefaultProjectName);
+		strcpy(Project.szExt, pDefaultProjectExt);
+		
+		strcpy(Project.szDir, pDefaultProjectDir);
+		strcat(Project.szDir, G_DIR_SEPARATOR_S);
+		strcat(Project.szDir, Project.szName);
+
+		strcpy(Project.szAuthor, getenv("USER"));
+		strcpy(Project.szDesc, "");
 	}
 
-	/* save project data */
-	strcpy(szFileName, Project.szDir);
-	strcat(szFileName, "/");
-	strcat(szFileName, Project.szName);
-	strcat(szFileName, ".");
-	strcat(szFileName, Project.szExt);
-	iResult = DocSave(szFileName);
-	if (iResult != SUCCESS)
+	/* project editing loop */
+	bCanceled = FALSE;
+	bCompleted = FALSE;
+	while (!bCanceled && !bCompleted)
 	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot save project !",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
+		ProjectPropertiesCreate();
+	
+		pEntryName = GTK_ENTRY(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesEntryName"));
+		if (pEntryName == NULL)
+			FatalError(__FILE__, __LINE__, __DATE__);
+	
+		pEntryDir = GTK_ENTRY(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesEntryDir"));
+		if (pEntryDir == NULL)
+			FatalError(__FILE__, __LINE__, __DATE__);
+	
+		pEntryAuthor = GTK_ENTRY(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesEntryAuthor"));
+		if (pEntryAuthor == NULL)
+			FatalError(__FILE__, __LINE__, __DATE__);
+
+		pTextDescription = GTK_TEXT(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesTextDescription"));
+		if (pTextDescription == NULL)
+			FatalError(__FILE__, __LINE__, __DATE__);
+
+		if (!bIsNew)
+		{
+			gtk_entry_set_editable(pEntryName, FALSE);
+			gtk_widget_set_sensitive(GTK_WIDGET(pEntryName), FALSE);
+			
+			gtk_entry_set_editable(pEntryDir, FALSE);
+			gtk_widget_set_sensitive(GTK_WIDGET(pEntryDir), FALSE);
+			
+			bUpdateDir = TRUE;
+		}
+
+		gtk_entry_set_text(pEntryName, Project.szName);
+		bUpdateBlock = TRUE, gtk_entry_set_text(pEntryDir, Project.szDir), bUpdateBlock = FALSE;
+		gtk_entry_set_text(pEntryAuthor, Project.szAuthor);
+		gtk_editable_delete_text(GTK_EDITABLE(pTextDescription), 0, -1), x = 0, 
+			gtk_editable_insert_text(GTK_EDITABLE(pTextDescription), Project.szDesc, strlen(Project.szDesc), &x);
+
+		while (!bCanceled && !bCompleted)
+			g_main_iteration(FALSE);
+
+		if (bCompleted)
+		{
+			strcpy(Project.szName, FileGetName(gtk_entry_get_text(pEntryName)));
+			strcpy(Project.szExt, 
+				strlen(FileGetExt(gtk_entry_get_text(pEntryName))) > 0
+					? FileGetExt(gtk_entry_get_text(pEntryName))
+					: pDefaultProjectExt
+				);
+			strcpy(Project.szDir, gtk_entry_get_text(pEntryDir));
+			if (strcmp(FileGetName(gtk_entry_get_text(pEntryDir)), Project.szName))
+			{
+				strcat(Project.szDir, G_DIR_SEPARATOR_S);
+				strcat(Project.szDir, Project.szName);
+			};
+			strcpy(Project.szAuthor, gtk_entry_get_text(pEntryAuthor));
+			strcpy(Project.szDesc, gtk_editable_get_chars(GTK_EDITABLE(pTextDescription), 0, -1));
+			
+			ProjectSave();
+		}
+
+		ProjectPropertiesDestroy();
+
+		if (bCompleted && !ProjectPropertiesValid())
+			bCompleted = FALSE;
+	}
+
+	return bCompleted
+		? SUCCESS
+		: FAILURE;
+}
+
+
+static void ProjectPropertiesCreate(void)
+{
+	pWindow = GTK_WINDOW(create_ProjectProperties());
+	if (pWindow == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
+	
+	gtk_window_set_transient_for(GTK_WINDOW(pWindow), GTK_WINDOW(pWindowMain));
+	gtk_window_set_policy(GTK_WINDOW(pWindow), FALSE, FALSE, FALSE);
+	gtk_widget_show(GTK_WIDGET(pWindow));
+	
+	while (g_main_iteration(FALSE)) ;
+}
+
+
+static void ProjectPropertiesDestroy(void)
+{
+	gtk_widget_destroy(GTK_WIDGET(pWindow));
+}
+
+
+static BOOL ProjectPropertiesValid(void)
+{
+	/* TODO: validation of project parameters */
+	return TRUE;
+}
+
+
+void ProjectProperties_ButtonClicked(GtkButton *pButtonClicked, gpointer pUserData)
+{
+	GtkButton *pOk = NULL, *pCancel = NULL;
+	
+	pOk = GTK_BUTTON(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesButtonOk"));
+	if (pOk == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
+	
+	pCancel = GTK_BUTTON(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesButtonCancel"));
+	if (pCancel == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
+
+	if (pButtonClicked == pOk)
+		bCompleted = TRUE;
+
+	else if (pButtonClicked == pCancel)
+		bCanceled = TRUE;
+}
+
+
+void ProjectProperties_NameChanged(GtkEditable *pEditable, GdkEventKey *pEvent, gpointer pUserData)
+{
+	GtkEntry *pEntryName = NULL, *pEntryDir = NULL;
+
+	pEntryName = GTK_ENTRY(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesEntryName"));
+	if (pEntryName == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
+	
+	pEntryDir = GTK_ENTRY(lookup_widget(GTK_WIDGET(pWindow), "pProjectPropertiesEntryDir"));
+	if (pEntryDir == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
+	
+	if (!bUpdateDir)
+	{
+		strcpy(Project.szDir, pDefaultProjectDir);
+		strcat(Project.szDir, "/");
+		strcat(Project.szDir, gtk_entry_get_text(pEntryName));
+
+		bUpdateBlock = TRUE;
+		gtk_entry_set_text(pEntryDir, Project.szDir);
+		bUpdateBlock = FALSE;
 	}
 }
 
 
-void MenuProjectClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
+void ProjectProperties_DirChanged(GtkEditable *pEditable, gint pStartPos, gint pEndPos, gpointer pUserData)
+{
+	if (bUpdateBlock)
+		return;
+	
+	bUpdateDir = TRUE;
+}
+
+
+
+/*******************************************************************************
+
+	MENU : Project -> Close
+
+*******************************************************************************/
+
+/* callback from menu */
+void ProjectClose_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	int iResult;
 	char szFileName[TEXTLEN], szValue[TEXTLEN];
-	
-	/* check if project changed */
-	if (Project.bChanged)
-	{
-		iResult = MsgBox(
-			pWindowMain,
-			"Question ...",
-			"Project changed. Save it now ?",
-			MSGBOX_QUESTION | MSGBOX_YESD | MSGBOX_NO | MSGBOX_CANCEL
-			);
-		if (iResult == MSGBOX_CANCEL)
-			return;
-		if (iResult == MSGBOX_YES)
-			MenuProjectSave_Activation(pMenuItem, pUserData);
-	}
 	
 	/* unload files */
 	iResult = SUCCESS;
@@ -157,88 +340,20 @@ void MenuProjectClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	strcpy(Project.szName, "");
 	ProjectWidgetsHide();
 	ProjectTitle();
-	Project.bChanged = FALSE;
 }
 
 
-void MenuProjectExit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
+
+/*******************************************************************************
+
+	MENU : Project -> Exit
+
+*******************************************************************************/
+
+/* callback from menu */
+void ProjectExit_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
-	MenuProjectClose_Activation(pMenuItem, pUserData);
+	ProjectClose_MenuActivation(pMenuItem, pUserData);
 	/* no gtk_main_loop(), so not gtk_main_quit(); */
 	bRunning = FALSE;
 }
-
-
-
-
-
-#if 0
-
-/*
-    This is not ended project manager window.
-    Development breaked by gaf release.
-    To be continued ...
-*/
-
-void ProjectProperties(BOOL bIsNew)
-{
-	GtkWindow *pWindow = NULL;
-	GtkVBox *pVBox;
-	GtkFrame *pFrameDesc, *pFrameDir;
-	GtkTable *pTableDesc;
-	GtkLabel *pLabelName;
-	GtkEntry *pEntryName;
-	int iWidth, iHeight, iW, iH, iX, iY;
-
-	pWindow = GTK_WINDOW(gtk_window_new(GTK_WINDOW_DIALOG));
-	iWidth = 300; //(iNumber > 3 ? iNumber : 4) * (MSGBOX_BTN_WIDTH + 2 * MSGBOX_BTN_BORDER);
-	iHeight = 400; // - (iNumber == 0 ? MSGBOX_BTN_HEIGHT + 2 * MSGBOX_BTN_BORDER : 0);
-	gtk_widget_set_usize(GTK_WIDGET(pWindow), iWidth, iHeight);
-	gtk_window_set_modal(GTK_WINDOW(pWindow), TRUE);
-	gtk_window_set_position(GTK_WINDOW(pWindow), GTK_WIN_POS_MOUSE);
-	gtk_window_set_transient_for(GTK_WINDOW(pWindow), GTK_WINDOW(pWindowMain));
-	gtk_window_set_title(GTK_WINDOW(pWindow), "Project properties");
-	gtk_window_set_policy(GTK_WINDOW(pWindow), FALSE, FALSE, FALSE);
-	gtk_widget_show(GTK_WIDGET(pWindow));
-	while (g_main_iteration(FALSE)) ;
-	gdk_window_get_size(GTK_WIDGET(pWindowMain)->window, &iW, &iH);
-	gdk_window_get_position(GTK_WIDGET(pWindowMain)->window, &iX, &iY);
-	gdk_window_move(
-		GTK_WIDGET(pWindow)->window,
-		iX + (iWidth >= iW ? iWidth - iW : iW - iWidth) / 2,
-		iY + (iHeight >= iH ? iHeight - iH : iH - iHeight) /2
-		);
-
-	/* create vertical container */
-	pVBox = GTK_VBOX(gtk_vbox_new(FALSE, 0));
-	gtk_container_add(GTK_CONTAINER(pWindow), GTK_WIDGET(pVBox));
-
-	/* create frame in project description area */
-	pFrameDesc = gtk_frame_new("Project description");
-	gtk_box_pack_start(GTK_BOX(pVBox), pFrameDesc, TRUE, TRUE, 0);
-	//gtk_widget_set_usize (StartFrame, 400, -2);
-	gtk_container_set_border_width(GTK_CONTAINER(pFrameDesc), 8);
-
-	pTableDesc = gtk_table_new(8, 2, FALSE);
-	gtk_container_add(GTK_CONTAINER(pFrameDesc), pTableDesc);
-	gtk_container_set_border_width(GTK_CONTAINER(pTableDesc), 8);
-
-	/* project name */
-	pLabelName = gtk_label_new("ABC");
-	gtk_table_attach(GTK_TABLE(pTableDesc), pLabelName, 0, 1, 0, 1, (GtkAttachOptions) (GTK_FILL), (GtkAttachOptions) (0), 0, 0);
-	gtk_misc_set_alignment(GTK_MISC(pLabelName), 0, 0.5);
-	pEntryName = gtk_entry_new();
-	gtk_table_attach(GTK_TABLE(pTableDesc), pEntryName, 1, 2, 0, 1, (GtkAttachOptions) (GTK_EXPAND/* | GTK_FILL*/), (GtkAttachOptions) (0), 0, 0);
-
-	/* create frame in directory area */
-	pFrameDir = gtk_frame_new("Project Directory");
-	gtk_box_pack_start(GTK_BOX(pVBox), pFrameDir, TRUE, TRUE, 0);
-	//gtk_widget_set_usize (StartFrame, 400, -2);
-	gtk_container_set_border_width(GTK_CONTAINER(pFrameDir), 8);
-
-
-	gtk_widget_show_all(GTK_WIDGET(pWindow));
-	//gtk_signal_connect_object_after(GTK_OBJECT(pWindow), "delete-event", GTK_SIGNAL_FUNC(MsgBoxButtonClicked), GTK_OBJECT(pWindow));
-	while (g_main_iteration(FALSE)) ;
-}
-#endif

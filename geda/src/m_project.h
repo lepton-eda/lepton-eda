@@ -22,19 +22,25 @@
 #ifndef __M_PROJECT_H_INCLUDED
 #define __M_PROJECT_H_INCLUDED
 
+#include "global.h"
 
 
-/*******************************************************************************
 
-	Public functions and variables
+/* public functions */
+int ProjectProperties(BOOL bIsNew);
 
-*******************************************************************************/
+/* menu callbacks */
+void ProjectNew_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void ProjectOpen_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void ProjectProperties_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void ProjectSave_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void ProjectClose_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void ProjectExit_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
 
-void MenuProjectNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectOpen_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectExit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
+/* other callbacks */
+void ProjectProperties_ButtonClicked(GtkButton *pButtonClicked, gpointer pUserData);
+void ProjectProperties_DirChanged(GtkEditable *pEditable, gint pStartPos, gint pEndPos, gpointer pUserData);
+void ProjectProperties_NameChanged(GtkEditable *pEditable, GdkEventKey *pEvent, gpointer pUserData);
 
 
 

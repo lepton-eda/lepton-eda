@@ -4,3 +4,4 @@
 
 GtkWidget* create_MainWindow (void);
 GtkWidget* create_FileNew (void);
+GtkWidget* create_ProjectProperties (void);

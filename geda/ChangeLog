@@ -1,3 +1,9 @@
+2003-12-09 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/interface.c, src/interface.h, src/m_project.c, src/m_project.h,
+        src/callbacks.c: Project window connected. No full support for it
+        (properties are not saved).
+        
 2003-12-08 Piotr Miarecki   <tertul@poczta.onet.pl>
 
         * src/Makefile.am, src/interface.c, src/interface.h, src/callbacks.h,
