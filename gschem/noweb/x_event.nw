@@ -924,9 +924,10 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 
     case(ENDARC):
     if (w_current->inside_action)
-    o_arc_rubberline(w_current,
-                     (int) event->x,
-                     (int) event->y);
+	/* pb20011022 - changed name to _rubberarc() and added a parameter */
+    o_arc_rubberarc(w_current,
+					(int) event->x,
+					(int) event->y, ARC_RADIUS);
     break;
 
     case(DRAWNET):

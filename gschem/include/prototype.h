@@ -384,9 +384,12 @@ void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(TOPLEVEL *w_current, int x, int y);
-void o_arc_end2(TOPLEVEL *w_current, int start_angle, int end_angle);
-void o_arc_rubberline(TOPLEVEL *w_current, int x, int y);
-void o_arc_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_arc_end2(TOPLEVEL *w_current, int x, int y);
+void o_arc_end3(TOPLEVEL *w_current, int x, int y);
+void o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle);
+void o_arc_rubberarc(TOPLEVEL *w_current, int x, int y, int whichone);
+void o_arc_rubberarc_xor(TOPLEVEL *w_current);
+void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
 void o_attrib_add_selected(TOPLEVEL *w_current, OBJECT *selected);
@@ -421,7 +424,8 @@ void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(TOPLEVEL *w_current, int x, int y);
 void o_box_end(TOPLEVEL *w_current, int x, int y);
 void o_box_rubberbox(TOPLEVEL *w_current, int x, int y);
-void o_box_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_box_rubberbox_xor(TOPLEVEL *w_current);
+void o_box_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_buffer.c */
 void o_buffer_copy(TOPLEVEL *w_current, int buf_num);
@@ -452,7 +456,8 @@ void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(TOPLEVEL *w_current, int x, int y);
 void o_circle_end(TOPLEVEL *w_current, int x, int y);
 void o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y);
-void o_circle_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_circle_rubbercircle_xor(TOPLEVEL *w_current);
+void o_circle_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_complex.c */
 void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current);
@@ -495,12 +500,27 @@ void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
 /* o_grips.c */
 OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
 OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+OBJECT *o_grips_search_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 int o_grips_start(TOPLEVEL *w_current, int x, int y);
 void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
+void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
+void o_grips_start_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
+void o_grips_start_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_motion(TOPLEVEL *w_current, int x, int y);
 void o_grips_motion_arc(TOPLEVEL *w_current, int x, int y, int whichone);
+void o_grips_motion_box(TOPLEVEL *w_current, int x, int y, int whichone);
+void o_grips_motion_circle(TOPLEVEL *w_current, int x, int y, int whichone);
+void o_grips_motion_line(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_end(TOPLEVEL *w_current);
 void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+void o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+int o_grips_size(TOPLEVEL *w_current);
+void o_grips_draw(TOPLEVEL *w_current, int x, int y);
+void o_grips_erase(TOPLEVEL *w_current, int x, int y);
 /* o_line.c */
 void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
@@ -513,7 +533,8 @@ void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(TOPLEVEL *w_current, int x, int y);
 void o_line_end(TOPLEVEL *w_current, int x, int y);
 void o_line_rubberline(TOPLEVEL *w_current, int x, int y);
-void o_line_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_line_rubberline_xor(TOPLEVEL *w_current);
+void o_line_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_misc.c */
 void o_edit(TOPLEVEL *w_current, SELECTION *list);
@@ -756,6 +777,8 @@ void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
 /* x_multimulti.c */
+void multi_multi_edit_close(GtkWidget *w, GtkWidget *window);
+void multi_multi_edit(TOPLEVEL *w_current, SELECTION *list);
 /* x_pagesel.c */
 void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);
 gint save_page(GtkWidget *gtklist, TOPLEVEL *w_current);
