@@ -1,11 +1,14 @@
-gEDA / gaf - MinGW32
+gEDA / gaf - MinGW
 
 GPL Electronic Design Automation  
 --------------------------------------------------------------------------
-To run the binary distribution of gEDA/gaf - MinGW32:
+To run the binary distribution of gEDA/gaf - MinGW:
+
+Remove any previous version of gEDA/gaf - Cygwin (or older build of the
+mingw version).
 
 You should not have to install anything else than the .zip or .exe for 
-gEDA/gaf.  gEDA/gaf - MinGW32 is fairly self contained.
+gEDA/gaf.  gEDA/gaf - MinGW is fairly self contained.
 
 1) Grab geda-mingw32-VERSION.zip and unzip it into c:\   At this stage
    in the game, it really should be in c:\  Unzipping the zip file
@@ -22,8 +25,14 @@ gEDA/gaf.  gEDA/gaf - MinGW32 is fairly self contained.
    also create a shortcut on the desktop to the binary, just change the
    Run option to run "minimized" if you don't want to see the console.
 
+Please keep in mind that this port is really new and may do really
+stupid things.  PLEASE BACKUP ANY DATA YOU VALUE.  gEDA/gaf - MinGW
+(or any gEDA software) comes with NO WARRANTY (I hate having to say this).
+Please let me know if there are any problems.
+
 ---------------------------------------------------------------------------
-OPTIONAL
+Recommended (but optional if you install into c:\geda)
+Required (if you install into some other directory than c:\geda)
 
 If you want to put the geda directory somewhere else, then you can do
 that too, but you will need to set then environment variable:
@@ -47,13 +56,6 @@ Getting these environment variables right is best done by trial and error.
 You will know when you got it right when 1) gschem starts and doesn't 
 complain, and 2) you can place components (via Add/Component...).
 
----------------------------------------------------------------------------
-
-Please keep in mind that this port is really new and may do really
-stupid things.  PLEASE BACKUP ANY DATA YOU VALUE.  gEDA/gaf - MinGW32
-(or any gEDA software) comes with NO WARRANTY (I hate having to say this).
-Please let me know if there are any problems.
-
 --------------------------------------------------------------------------
 The rest of this readme describes how to build gEDA/gaf (gschem and
 friends) on a win32 machine (WinNT/Win2K/WinXP).  It uses mingw32 as the
@@ -65,14 +67,14 @@ instructions.
 * If any part of this document is unclear, please post on geda-dev. 
 * If any part of this document is wrong, please post on geda-dev. 
 * If you are not familiar with compiling programs, please use a 
-  binary distribution of gEDA/gaf - MinGW32.
+  binary distribution of gEDA/gaf - MinGW.
 
 It is recommend that gEDA/gaf and all libraries are installed into c:/geda
 If you want an alternative location, make sure all dependancies are installed
 into the new location as well.
 
 For this doc, a "%" is the bash shell prompt from msys.
-Build instructions for gEDA/gaf - MinGW32 (gEDA running on Win32 machines)
+Build instructions for gEDA/gaf - MinGW (gEDA running on Win32 machines)
 
 But first an important warning:
 
@@ -116,7 +118,11 @@ occasional build bug.
 	libgeda-VERSION.tar.gz
 	Makefile
 
-  Any VERSION >= 20020527 should build under MinGW32.
+  gEDA/gaf optional libraries (http://www.geda.seul.org/dist)
+ 	libstroke-0.5.1.tar.gz  
+	libgdgeda-1.8.tar.gz 
+
+  Any VERSION >= 20020527 should build under MinGW.
 
 2) Install MSYS by running:
 
@@ -144,6 +150,16 @@ occasional build bug.
 	% cd bin
 	% mv make.exe makeold.exe
 
+   Doing the last step is very important.  The make.exe in /mingw/bin is 
+quite pathetic.
+
+   You may see an error message like doing the untar operations:
+
+tar: Child died with signal 13
+tar: Error exit delayed from previous errors
+
+   I checked and all the files untarred okay, your milage may vary.
+
 5) Build a test program (like hellow) to test the compilers
    You can use vi to input the code or your favorite editor.
 
@@ -169,7 +185,13 @@ main(int argc, char **argv)
 	% mkdir c:/geda
 	% ls c:/geda
 
-7) Build guile-1.4.1-gaf
+7) Add c:/geda/bin to your path in your msys shell
+
+ 	% export PATH=/c/geda/bin:$PATH
+
+	Use /c/... not c:/...
+
+8) Build guile-1.4.1-gaf
 
    guile-1.4.1-gaf is a hacked version of guile-1.4.1 for gEDA/gaf 
    and the Mingw port.  Please don't use it unless you are building gEDA/gaf.
@@ -179,12 +201,17 @@ main(int argc, char **argv)
    above before doing this step. 
 
 	% cd
-	% tar xvfz guile-1.4.1-mingwgeda.tar.gz
-	% cd guile-1.4.1
+	% tar xvfz guile-1.4.1-gaf.tar.gz
+	% cd guile-1.4.1-gaf
 	% ./configure --prefix=c:/geda --enable-posix --enable-regex --without-modules --enable-guile-debug --without-threads --disable-networking --enable-ltdl-convenience 
-	% cd ../libltdl 
+	% cd libltdl 
+
+	Edit the Makefile in libltdl searching for -I. change one of these to
+ 	-I.. (two periods, parent directory; this fixes the "cannot find 
+	libguile.h").
+
 	% make
-	% cd ice-9
+	% cd ../ice-9
 	% make install
 
 	You might get an error about and-let-star.scm or and-let-*.scm; 
@@ -205,7 +232,7 @@ checking whether make sets ${MAKE}..... ./configure: eval: line 1: unexpected EO
 no
 	I ignored it. :-)
 	
-8) Post guile install steps and test
+9) Post guile install steps and test
 
    Copy a few dlls into c:\geda\bin
    	
@@ -262,7 +289,7 @@ main(int argc, char **argv)
    otherwise the following steps will not work either.
 
 
-9) Untar gtk
+10) Untar gtk
 
 	% cd $HOME
 	% tar xvfz gtk+-1.3.0-20020313-gaf.tar.gz
@@ -272,19 +299,13 @@ main(int argc, char **argv)
 
    gtk+-1.3.0-20020313-gaf.tar.gz is a repackaged version of Tor Lillqvist's 
    "gtk+ for Win32".  I (Ales) repackaged to make build life easier for
-   gEDA/gaf users.  Without Tor's work, gEDA/gaf - MinGW32 would NOT
+   gEDA/gaf users.  Without Tor's work, gEDA/gaf - MinGW would NOT
    be possible.
 
 	% cd gtk/lib
 	% cp *.dll c:/geda/bin
 	% cd ../bin
 	% cp gtk-config glib-config c:/geda/bin
-
-10) Add c:/geda/bin to your path
-
- 	% export PATH=/c/geda/bin:$PATH
-
-	Use /c/... not c:/...
 
 11) Test gtk
 
@@ -405,7 +426,56 @@ find ghellow.c in $HOME/gtk.
    the test program does not link and run, then you will NOT be able to build
    and run gEDA/gaf.
 
-12) Build/install gEDA/gaf itself
+12) Build and install libstroke into /mingw
+
+    Build and install libstroke if you want stroke support in gschem.
+
+	% tar xvfz libstroke-0.5.1.tar.gz
+	% cd libstroke-0.5.1
+
+	Edit configure script commenting out the following:
+
+#if test "$X11LIB" = no; then
+#        { echo "configure: error: Cannot find -lX11 library" 1>&2; exit 1; }
+#fi
+
+	% ./configure --prefix=/mingw --disable-gtktest --disable-tcl
+	% cd libstroke
+	% make install
+
+	Install libstroke into /mingw and not c:/geda since it will make 
+gEDA/gaf's build much easier.
+
+13) Build and install libgdgeda into c:/geda
+
+    Build and install libgdgeda if you want the ability to generate png images
+from schematics in gschem.
+
+	% tar xvfz libgdgeda-1.8.tar.gz
+
+	Edit the Makefile to change:
+	ln -sf include gdgeda
+	to:
+	cp -rp include gdgeda
+
+	Edit configure script changing the string png_read_init to 
+        png_get_copyright
+
+Example:
+int main() {
+png_get_copyright()
+; return 0; }
+
+	% ./configure --prefix=c:/geda
+	% make
+	% cd include
+	% make install
+	% cd ../src
+	% make install
+	% cd ..
+	% cp libgdgeda-config c:/geda/bin
+
+14) Build/install gEDA/gaf itself
 
     Untar all of the gEDA/gaf tarballs into a directory.
     Put that Makefile into this toplevel directory.
@@ -415,9 +485,11 @@ find ghellow.c in $HOME/gtk.
 CD_VERSION=-$(VERSION)
 DIR_PREFIX=geda-
 
-    is commented in.  And that:
+    is commented in.  And that the prefix in the Makefile is set to:
 
 prefix=c:/geda
+
+    Also make sure the VERSION variable is correct.
 
     Start the build:
 
@@ -432,13 +504,14 @@ checking whether make sets ${MAKE}..... ./configure: eval: line 1: unexpected EO
 no
 	I ignored it everytime.
 	
+   The symbols are installed twice for some odd reason.
 
    If everything completes okay (no FATAL errors), then 
-gEDA/gaf - MinGW32 has build successfully.  Congratulations.
+gEDA/gaf - MinGW has build successfully.  Congratulations.
 
 
 --------------------------------------------------------------------------
-   The MinGW32 port has been brought to you by many many months of work, 
+   The MinGW port has been brought to you by many many months of work, 
 several crashed Windows machines (seriously), and a few close calls where
 I almost gave up on the port. :->
 
