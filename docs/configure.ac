@@ -16,7 +16,7 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 AC_PATH_PROG(LATEX, latex, no, ${PATH})
 if test $LATEX = "no"; then
    echo "Cannot find latex -- documentation cannot be created"
-   echo "Install latex or install the prepared geda-docs package"
+   AC_MSG_ERROR([Install latex or install the prepared geda-docs package])
 fi
 
 AC_PATH_PROG(DVIPS, dvips, no, ${PATH})
