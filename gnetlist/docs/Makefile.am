@@ -1,7 +1,7 @@
 
 SUBDIRS = vams
 
-EXTRA_DIST = README.bom README.pcb README.verilog README.vhdl gnetlist.txt
+EXTRA_DIST = README.bom README.pcb README.verilog README.vhdl
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

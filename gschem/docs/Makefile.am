@@ -8,7 +8,7 @@ TEXI2HTMLFLAGS =	-split_chapter
 
 man_MANS = 		gschem.1
 
-EXTRA_DIST = 		gschem.txt gschemdoc.texi gschem.1 texinfo.tex
+EXTRA_DIST = 		gschemdoc.texi gschem.1 texinfo.tex
 
 info_TEXINFOS =		gschemdoc.texi
 gschemdoc_TEXINFOS =	a_pan.texi a_zoom.texi g_funcs.texi g_hook.texi       \

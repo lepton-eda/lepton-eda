@@ -77,8 +77,8 @@ go_look_for()
 #
 lookup_manual()
 {
-	if test -f "${DOCDIR}/docs/$1" ; then
-		view_file_browser "${DOCDIR}/docs/$1"
+	if test -f "${DOCDIR}/$1" ; then
+		view_file_browser "${DOCDIR}/$1"
 	fi
 	if test "${locate}" != "no"; then
 		b=`${locate} -- "/$1"`
@@ -125,7 +125,7 @@ done
 #  NOTE: this is too crude..
 #
 if test "$1" = "-m"; then
-	lookup_manual "gschem.txt"
+	lookup_manual "gedadocs.html"
 fi
 
 #

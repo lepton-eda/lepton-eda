@@ -1,3 +1,7 @@
+2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* docs/gnetlist.txt: Move this file to ../docs/gnetlist
+
 2002-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-maxascii.scm, scheme/gnet-pads.scm, 
