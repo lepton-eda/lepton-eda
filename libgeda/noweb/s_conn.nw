@@ -65,7 +65,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include "defines.h"
 #include "struct.h"

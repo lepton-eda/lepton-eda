@@ -152,14 +152,15 @@
 
 
 <<g_rc.c : macros>>=
-#define RETURN_G_RC_MODE(rc, var, size)			\
-	return g_rc_mode_general(mode,			\
-				 (rc),			\
-				 &(var),		\
-				 mode_table,		\
-				 size)
+#define RETURN_G_RC_MODE(rc, var, size) \
+  return g_rc_mode_general(mode,        \
+                           (rc),        \
+                           &(var),      \
+                           mode_table,  \
+                           size)
 
 @ %def RETURN_G_RC_MODE
+
 
 <<g_rc.c : global variables>>=
 /* a random int, used only as a place holder */
@@ -175,31 +176,33 @@ typedef struct {
 
 @section Function @code{g_rc_parse_gtkrc()}
 
-@defun g_rc_parse_gtkrc version
+@defun g_rc_parse_gtkrc
 @end defun
 
 <<g_rc.c : g_rc_parse_gtkrc()>>=
 void
 g_rc_parse_gtkrc()
 {
-  char *rc_path;
-  char *filename;
-  char *HOME;
+  gchar *filename;
+  const gchar *home;
 
-  rc_path = g_rc_parse_path(); /* do not free rc_path */
-
-  /* read in the gschem-gtk rc file */
-  filename = u_basic_strdup_multiple(rc_path, PATH_SEPARATER_STRING, 
-				     "gschem-gtkrc", NULL);
-  gtk_rc_parse(filename);
-  free(filename);
-  HOME = (char *) getenv("HOME"); 
-  if (HOME != NULL) {
-    filename = u_basic_strdup_multiple(HOME, PATH_SEPARATER_STRING,
-				       ".gschem-gtkrc", NULL);
-    gtk_rc_parse(filename);
-    free(filename);
+  filename = g_strconcat (g_rc_parse_path (),
+                          G_DIR_SEPARATOR_S,
+                          "gschem-gtkrc",
+                          NULL);
+  gtk_rc_parse (filename);
+  g_free (filename);
+  
+  home = g_getenv ("HOME");
+  if (home != NULL) {
+    filename = g_strconcat (home,
+                            G_DIR_SEPARATOR_S,
+                            ".gschem-gtkrc",
+                            NULL);
+    gtk_rc_parse (filename);
+    g_free (filename);
   }
+  
 }
 
 @ %def g_rc_parse_gtkrc
@@ -215,29 +218,24 @@ g_rc_parse_gtkrc()
 SCM
 g_rc_gschem_version(SCM version)
 {
-  char *string = gh_scm2newstr(version, NULL);
+  SCM ret;
+  
+  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+              SCM_ARG1, "gschem-version");
 
-  if (string == NULL) {
-    fprintf(stderr,
-            _("%s requires a string as a parameter\n"),
-            "gschem-version"
-            );
-    return SCM_BOOL_F;
-  }
-
-  if (strcmp(string, VERSION) != 0) {
+  if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
     fprintf(stderr,
             _("Found a version [%s] gschemrc file:\n[%s]\n"),
-            string, rc_filename);
+            SCM_STRING_CHARS (version), rc_filename);
     fprintf(stderr,
             _("While gschem is in ALPHA, "
             "please be sure that you have the latest rc file.\n"));
-    free(string);
-    return SCM_BOOL_F;
+    ret = SCM_BOOL_F;
+  } else {
+    ret = SCM_BOOL_T;
   }
 
-  free(string);
-  return SCM_BOOL_T;
+  return ret;
 }
 
 
@@ -253,22 +251,40 @@ g_rc_gschem_version(SCM version)
 /* general color-setting function */
 static SCM
 g_rc_color_general(SCM index, SCM color, SCM outline_color, 
-		   SCM ps_color, SCM ir, SCM ig, SCM ib,
-		   const char *rc_name, int *color_var)
+                   SCM ps_color, SCM ir, SCM ig, SCM ib,
+                   const char *rc_name, int *color_var)
 {
   int status;
-  int color_index = gh_scm2int(index);
-  char *color_name = gh_scm2newstr(color, NULL);
-  char *outline_color_name = gh_scm2newstr(outline_color, NULL);
-  char *ps_color_string = gh_scm2newstr(ps_color, NULL);
-  int image_red = gh_scm2int(ir);
-  int image_green = gh_scm2int(ig);
-  int image_blue = gh_scm2int(ib);
+  int color_index;
+  char *color_name;
+  char *outline_color_name;
+  char *ps_color_string;
+  int image_red;
+  int image_green;
+  int image_blue;
+  SCM ret;
 
-  status = s_color_request(color_index, color_name, outline_color_name,
-                           ps_color_string, 
-                           image_red, image_green, image_blue);
+  SCM_ASSERT (SCM_INUMP (index),   index, SCM_ARG1, rc_name);
+  SCM_ASSERT (SCM_STRINGP (color), color, SCM_ARG2, rc_name);
+  SCM_ASSERT (SCM_NIMP (outline_color) && SCM_STRINGP (outline_color),
+              outline_color, SCM_ARG3, rc_name);
+  SCM_ASSERT (SCM_NIMP (ps_color) && SCM_STRINGP (ps_color), ps_color,
+              SCM_ARG4, rc_name);
+  SCM_ASSERT (SCM_INUMP (ir), ir, SCM_ARG5, rc_name);
+  SCM_ASSERT (SCM_INUMP (ig), ig, SCM_ARG6, rc_name);
+  SCM_ASSERT (SCM_INUMP (ib), ib, SCM_ARG7, rc_name);
 
+  color_index        = SCM_INUM (index);
+  color_name         = SCM_STRING_CHARS (color);
+  outline_color_name = SCM_STRING_CHARS (outline_color);
+  ps_color_string    = SCM_STRING_CHARS (ps_color);
+  image_red          = SCM_INUM (ir);
+  image_green        = SCM_INUM (ig);
+  image_blue         = SCM_INUM (ib);
+  
+  status = s_color_request (color_index, color_name, outline_color_name,
+                            ps_color_string, 
+                            image_red, image_green, image_blue);
 
 #if DEBUG
   printf("%d %s %s %s %d %d %d\n", color_index, color_name, 
@@ -278,34 +294,17 @@ g_rc_color_general(SCM index, SCM color, SCM outline_color,
 
   /* invalid color? */
   if (status == -1) {
-    fprintf(stderr,
-            _("Invalid color [%s] passed to %s\n"),
-            color_name,
-            rc_name);
-    if (color_name) {
-      free(color_name);
-    }
-    if (outline_color_name) {
-      free(outline_color_name);
-    }
-    if (ps_color_string) {
-      free(ps_color_string);
-    }
-    return SCM_BOOL_F;
+    fprintf (stderr,
+             _("Invalid color [%s] passed to %s\n"),
+             color_name,
+             rc_name);
+    ret = SCM_BOOL_F;
+  } else {
+    *color_var = color_index;
+    ret = SCM_BOOL_T;
   }
-
-  *color_var = color_index;
-
-  if (color_name) {
-    free(color_name);
-  }
-  if (outline_color_name) {
-    free(outline_color_name);
-  }
-  if (ps_color_string) {
-    free(ps_color_string);
-  }
-  return SCM_BOOL_T;
+  
+  return ret;
 }
 
 
@@ -315,13 +314,13 @@ g_rc_color_general(SCM index, SCM color, SCM outline_color,
 @section Functions @code{g_rc_*color*()}
 
 <<g_rc.c : g_rc_*color*()>>=
-#define DEFINE_G_RC_COLOR(func, rc, var)			             \
-SCM								             \
-func(SCM index, SCM color, SCM outline_color, SCM ps_color,                  \
-     SCM ir, SCM ig, SCM ib)						     \
-{								             \
-	return g_rc_color_general(index, color, outline_color,               \
-                                  ps_color, ir, ig, ib, (rc), &(var));	     \
+#define DEFINE_G_RC_COLOR(func, rc, var)                         \
+SCM                                                              \
+func(SCM index, SCM color, SCM outline_color, SCM ps_color,      \
+     SCM ir, SCM ig, SCM ib)                                     \
+{                                                                \
+  return g_rc_color_general(index, color, outline_color,         \
+                            ps_color, ir, ig, ib, (rc), &(var)); \
 }
 
 DEFINE_G_RC_COLOR(g_rc_override_net_color,
@@ -491,41 +490,40 @@ vstbl_get_str(const vstbl_entry *table, int index)
 
 @section Function @code{g_rc_mode_general()}
 
-@defun g_rc_mode_general mode rc_name mode_var table table_size
+@defun g_rc_mode_general scmmode rc_name mode_var table table_size
 @end defun
 
 <<g_rc.c : g_rc_mode_general()>>=
 static SCM
-g_rc_mode_general(SCM mode,
+g_rc_mode_general(SCM scmmode,
 		  const char *rc_name,
 		  int *mode_var,
 		  const vstbl_entry *table,
 		  int table_size)
 {
+  SCM ret;
   int index;
-  char *string;
+  char *mode;
 
-  string = gh_scm2newstr(mode, NULL);
-  index = vstbl_lookup_str(table, table_size, string);
-
+  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+              SCM_ARG1, rc_name);
+  
+  mode = SCM_STRING_CHARS (scmmode);
+  
+  index = vstbl_lookup_str(table, table_size, mode);
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
             _("Invalid mode [%s] passed to %s\n"),
-            string,
+            mode,
             rc_name);
-    if (string) {
-      free(string);
-    }
-    return SCM_BOOL_F;
+    ret = SCM_BOOL_F;
+  } else {
+    *mode_var = vstbl_get_val(table, index);
+    ret = SCM_BOOL_T;
   }
-
-  *mode_var = vstbl_get_val(table, index);
-
-  if (string) {
-    free(string);
-  }
-  return SCM_BOOL_T;
+  
+  return ret;
 }
 
 
@@ -708,9 +706,11 @@ SCM
 g_rc_text_display_zoomfactor(SCM zoomfactor)
 {
   int val;
+  
+  SCM_ASSERT (SCM_INUMP (zoomfactor), zoomfactor,
+              SCM_ARG1, "test-display-zoom-factor");
 
-  val = gh_scm2int(zoomfactor);
-
+  val = SCM_INUM (zoomfactor);
   if (val == 0) {
     fprintf(stderr,
             _("Invalid zoomfactor [%d] passed to %s\n"),
@@ -730,47 +730,45 @@ g_rc_text_display_zoomfactor(SCM zoomfactor)
 
 @section Function @code{g_rc_scrollbar_update()}
 
-@defun g_rc_scrollbar_update mode
+@defun g_rc_scrollbar_update scmmode
 @end defun
 
 <<g_rc.c : g_rc_scrollbar_update()>>=
 SCM
-g_rc_scrollbar_update(SCM mode)
+g_rc_scrollbar_update(SCM scmmode)
 {
-  char *string = NULL;
+  char *mode;
+  GtkUpdateType policy;
+  SCM ret = SCM_BOOL_T;
 
+  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+              SCM_ARG1, "scrollbar-update");
+  
 #if 0
-  string = gh_scm2newstr(mode, NULL);
+  mode = SCM_STRING_CHARS (scmmode);
 
-  if (strcmp(string, "continuous") == 0) {
-    gtk_range_set_update_policy (GTK_RANGE (
-                                            window_current->v_scrollbar),
-                                 GTK_UPDATE_CONTINUOUS);
-    gtk_range_set_update_policy (GTK_RANGE (
-                                            window_current->h_scrollbar),
-                                 GTK_UPDATE_CONTINUOUS);
-  } else if (strcmp(string, "delayed") == 0) {
-    gtk_range_set_update_policy (GTK_RANGE (
-                                            window_current->v_scrollbar),
-                                 GTK_UPDATE_DELAYED);
-    gtk_range_set_update_policy (GTK_RANGE (
-                                            window_current->h_scrollbar),
-                                 GTK_UPDATE_DELAYED);
+  if (strcmp (mode, "continuous") == 0) {
+    policy = GTK_UPDATE_CONTINUOUS;
+    ret = SCM_BOOL_T;
+  } else if (strcmp (mode, "delayed") == 0) {
+    policy = GTK_UPDATE_DELAYED
+    ret = SCM_BOOL_T;
   } else {
     fprintf(stderr,
             _("Invalid mode [%s] passed to scrollbar-update\n"),
-            string);
-    if (string) {
-      free(string);
-    }
-    return SCM_BOOL_F;
-  }
-#endif
-  if (string) {
-    free(string);
+            mode);
+    ret = SCM_BOOL_F;
   }
 
-  return SCM_BOOL_T;
+  if (ret == SCM_BOOL_T) {
+    gtk_range_set_update_policy (GTK_RANGE (window_current->v_scrollbar),
+                                 policy);
+    gtk_range_set_update_policy (GTK_RANGE (window_current->h_scrollbar),
+                                 policy);
+  }
+#endif
+
+  return ret;
 }
 
 
@@ -851,8 +849,9 @@ g_rc_text_size(SCM size)
 {
   int val;
 
-  val = gh_scm2int(size);
-
+  SCM_ASSERT (SCM_INUMP (size), size, SCM_ARG1, "text-size");
+  
+  val = SCM_INUM (size);
   if (val == 0) {
     fprintf(stderr,
             _("Invalid size [%d] passed to text-size\n"),
@@ -904,8 +903,9 @@ g_rc_snap_size(SCM size)
 {
   int val;
 
-  val = gh_scm2int(size);
+  SCM_ASSERT (SCM_INUMP (size), size, SCM_ARG1, "snap-size");
 
+  val = SCM_INUM (size);
   if (val == 0) {
     fprintf(stderr, _("Invalid size [%d] passed to snap-size\n"),
             val);
@@ -945,39 +945,34 @@ g_rc_logging_destination(SCM mode)
 
 @section Function @code{g_rc_attribute_name()}
 
-@defun g_rc_attribute_name path
+@defun g_rc_attribute_name scm_path
 @end defun
 
 <<g_rc.c : g_rc_attribute_name()>>=
 SCM
-g_rc_attribute_name(SCM path)
+g_rc_attribute_name(SCM scm_path)
 {
-  char *string = gh_scm2newstr(path, NULL);
+  char *path;
+  SCM ret;
 
-  if (string == NULL) {
-    fprintf(stderr,
-            _("%s requires a string as a parameter\n"),
-            "attribute-name");
-    return SCM_BOOL_F;
-  }
+  SCM_ASSERT (SCM_NIMP (scm_path) && SCM_STRINGP (scm_path), scm_path,
+              SCM_ARG1, "attribute-name");
+
+  path = SCM_STRING_CHARS (scm_path);
 
   /* not unique? */
-  if (!s_attrib_uniq(string)) {
-    free(string);
-    return SCM_BOOL_F;
+  if (!s_attrib_uniq(path)) {
+    ret = SCM_BOOL_F;
+  } else {
+    s_attrib_add_entry (path);
+    ret = SCM_BOOL_T;
   }
-
-  s_attrib_add_entry(string);
-
-  free(string);
-  return SCM_BOOL_T;
+  
+  return ret;
 }
 
 
 @ %def g_rc_attribute_name
-
-
-
 
 
 @section Function @code{g_rc_stroke()}
@@ -989,8 +984,14 @@ g_rc_attribute_name(SCM path)
 SCM
 g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 {
+  SCM ret;
 #ifdef HAS_LIBSTROKE
-  char *stroke = gh_scm2newstr(scm_stroke, NULL);
+  char *stroke;
+
+  SCM_ASSERT (SCM_NIMP (scm_stroke) && SCM_STRINGP (scm_stroke), scm_stroke,
+              SCM_ARG1, "stroke");
+
+  stroke = SCM_STRING_CHARS (scm_stroke);
 
   if (!s_stroke_uniq(stroke)) {
     if (stroke_info_mode) {
@@ -1001,16 +1002,10 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
              "passed to stroke! [%s]\n"),
              stroke);
     }
-    if (stroke) {
-      free(stroke);
-    }
-    return SCM_BOOL_F;
-  }
-
-  s_stroke_add_entry(stroke, scm_guile_func);
-
-  if (stroke) {
-    free(stroke);
+    ret = SCM_BOOL_F;
+  } else {
+    s_stroke_add_entry(stroke, scm_guile_func);
+    ret = SCM_BOOL_T;
   }
 #else
   if (stroke_info_mode) {
@@ -1020,7 +1015,7 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
   }
 #endif
 
-  return SCM_BOOL_T;
+  return ret;
 }
 
 
@@ -1056,19 +1051,20 @@ g_rc_scrollbars(SCM mode)
 <<g_rc.c : g_rc_paper_size()>>=
 SCM
 g_rc_paper_size(SCM width, SCM height)
+#define FUNC_NAME "paper-size"
 {
-  int i_width, i_height;
-
+  SCM_ASSERT (SCM_NIMP (width) && SCM_REALP (width), width,
+              SCM_ARG1, FUNC_NAME);
+  SCM_ASSERT (SCM_NIMP (height) && SCM_REALP (height), height,
+              SCM_ARG2, FUNC_NAME);
+  
   /* yes this is legit, we are casting the resulting double to an int */
-
-  i_width  = (int) (gh_scm2double(width ) * MILS_PER_INCH);
-  i_height = (int) (gh_scm2double(height) * MILS_PER_INCH);
-
-  default_paper_width  = i_width;
-  default_paper_height = i_height;
+  default_paper_width  = (int) (SCM_NUM2DOUBLE (0, width)  * MILS_PER_INCH);
+  default_paper_height = (int) (SCM_NUM2DOUBLE (0, height) * MILS_PER_INCH);
 
   return SCM_BOOL_T;
 }
+#undef FUNC_NAME
 
 
 @ %def g_rc_paper_size
@@ -1076,39 +1072,40 @@ g_rc_paper_size(SCM width, SCM height)
 
 @section Function @code{g_rc_paper_sizes()}
 
-@defun g_rc_paper_sizes papername scm_width scm_height
+@defun g_rc_paper_sizes scm_papername scm_width scm_height
 @end defun
 
 <<g_rc.c : g_rc_paper_sizes()>>=
 SCM
-g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
+g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
+#define FUNC_NAME "paper-sizes"
 {
   int width;
   int height;
-  char *string = gh_scm2newstr(papername, NULL);
-  width  = (int) (gh_scm2double(scm_width)  * MILS_PER_INCH);
-  height = (int) (gh_scm2double(scm_height) * MILS_PER_INCH);
+  char *papername;
+  SCM ret;
 
-  if (string == NULL) {
-    fprintf(stderr, _("Invalid parameters to paper-sizes\n"));
-    return SCM_BOOL_F;
+  SCM_ASSERT (SCM_STRINGP (scm_papername), scm_papername,
+              SCM_ARG1, FUNC_NAME);
+  SCM_ASSERT (SCM_NIMP (scm_width) && SCM_REALP (scm_width), scm_width,
+              SCM_ARG2, FUNC_NAME);
+  SCM_ASSERT (SCM_NIMP (scm_height) && SCM_REALP (scm_height), scm_height,
+              SCM_ARG3, FUNC_NAME);
+
+  papername = SCM_STRING_CHARS (scm_papername);
+  width  = (int) (SCM_NUM2DOUBLE (0, scm_width)  * MILS_PER_INCH);
+  height = (int) (SCM_NUM2DOUBLE (0, scm_height) * MILS_PER_INCH);
+
+  if (!s_papersizes_uniq(papername)) {
+    ret = SCM_BOOL_F;
+  } else {
+    s_papersizes_add_entry(papername, width, height);
+    ret = SCM_BOOL_T;
   }
 
-  if (!s_papersizes_uniq(string)) {
-    if (string) {
-      free(string);
-    }
-    return SCM_BOOL_F;
-  }
-
-  s_papersizes_add_entry(string, width, height);
-
-  if (string) {
-    free(string);
-  }
-  return SCM_BOOL_T;
+  return ret;
 }
-
+#undef FUNC_NAME
 
 @ %def g_rc_paper_sizes
 
@@ -1209,15 +1206,12 @@ g_rc_image_color(SCM mode)
 SCM
 g_rc_image_size(SCM width, SCM height)
 {
-  int i_width, i_height;
-
+  SCM_ASSERT (SCM_INUMP (width),  width,  SCM_ARG1, "image-size");
+  SCM_ASSERT (SCM_INUMP (height), height, SCM_ARG2, "image-size");
+  
   /* yes this is legit, we are casting the resulting double to an int */
-
-  i_width  = gh_scm2int(width);
-  i_height = gh_scm2int(height);
-
-  default_image_width  = i_width;
-  default_image_height = i_height;
+  default_image_width  = SCM_INUM (width);
+  default_image_height = SCM_INUM (height);
 
   return SCM_BOOL_T;
 }
@@ -1577,7 +1571,9 @@ g_rc_undo_levels(SCM levels)
 {
   int val;
 
-  val = gh_scm2int(levels);
+  SCM_ASSERT (SCM_INUMP (levels), levels, SCM_ARG1, "undo-levels");
+
+  val = SCM_INUM (levels);
 
   if (val == 0) {
     fprintf(stderr, _("Invalid num levels [%d] passed to undo-levels\n"),
@@ -1692,8 +1688,8 @@ g_rc_sort_component_library(SCM mode)
   };
 
   RETURN_G_RC_MODE("sort_component_library",
-  default_sort_component_library, 
-  2);
+                   default_sort_component_library, 
+                   2);
 }
 
 
@@ -1709,13 +1705,13 @@ g_rc_sort_component_library(SCM mode)
 SCM
 g_rc_add_menu(SCM menu_name, SCM menu_items)
 {
-  char *string;
+  SCM_ASSERT (SCM_NIMP (menu_name) && SCM_STRINGP (menu_name), menu_name,
+              SCM_ARG1, "add-menu");
+  SCM_ASSERT (SCM_NIMP (menu_items) && SCM_CONSP (menu_items), menu_items,
+              SCM_ARG2, "add-menu");
 
-  string = gh_scm2newstr(menu_name, NULL);
+  s_menu_add_entry(SCM_STRING_CHARS (menu_name), menu_items);  
 
-  s_menu_add_entry(string, menu_items);  
-
-  free(string);
   return SCM_BOOL_T;
 }
 
@@ -1732,13 +1728,11 @@ g_rc_add_menu(SCM menu_name, SCM menu_items)
 SCM
 g_rc_window_size(SCM width, SCM height)
 {
-  int i_width, i_height;
-
-  i_width  = gh_scm2int(width);
-  i_height = gh_scm2int(height);
-
-  default_width  = i_width;
-  default_height = i_height;
+  SCM_ASSERT (SCM_INUMP (width),  width,  SCM_ARG1, "window-size");
+  SCM_ASSERT (SCM_INUMP (height), height, SCM_ARG2, "window-size");
+  
+  default_width  = SCM_INUM (width);
+  default_height = SCM_INUM (height);
 
   return SCM_BOOL_T;
 }
@@ -1865,7 +1859,9 @@ g_rc_bus_ripper_size(SCM size)
 {
   int val;
 
-  val = gh_scm2int(size);
+  SCM_ASSERT (SCM_INUMP (size), size, SCM_ARG1, "bus-ripper-size");
+  
+  val = SCM_INUM (size);
 
   if (val == 0) {
     fprintf(stderr, _("Invalid size [%d] passed to bus-ripper-size\n"),
@@ -1957,7 +1953,9 @@ g_rc_grid_dot_size(SCM dotsize)
 {
   int val;
 
-  val = gh_scm2int(dotsize);
+  SCM_ASSERT (SCM_INUMP (dotsize), dotsize, SCM_ARG1, "grid-dot-size");
+  
+  val = SCM_INUM (dotsize);
 
   if (val <= 0) {
     fprintf(stderr, _("Invalid dot size [%d] passed to grid-dot-size\n"),
@@ -1985,7 +1983,10 @@ g_rc_output_vector_threshold(SCM numlines)
 {
   int val;
 
-  val = gh_scm2int(numlines);
+  SCM_ASSERT (SCM_INUMP (numlines), numlines,
+              SCM_ARG1, "output-vector-threshold");
+  
+  val = SCM_INUM (numlines);
 
   if (val < 0) {
     fprintf(stderr, _("Invalid number of lines [%d] passed to output-vector-threshold\n"),

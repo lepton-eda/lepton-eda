@@ -80,6 +80,17 @@ char *create_command_line(int argc, char *argv[])
     
 
 
+/* from guile (libguile/gh_init.c) */
+static SCM
+catch_handler (void *data, SCM tag, SCM throw_args)
+{
+  fprintf (stderr, "\nJust got an error; tag is\n        ");
+  scm_display (tag, scm_current_output_port ());
+  scm_newline (scm_current_output_port ());
+  scm_newline (scm_current_output_port ());
+  return SCM_BOOL_F;
+}
+
 
 int parse_commandline(int argc, char *argv[])
 {
@@ -129,7 +140,11 @@ int parse_commandline(int argc, char *argv[])
 	    break;
 
 	case 'c':
-	    gh_eval_str_with_stack_saving_handler(optarg);
+        scm_internal_stack_catch (SCM_BOOL_T,
+                                  (scm_t_catch_body) scm_c_eval_string,
+                                  (void *) optarg,
+                                  (scm_t_catch_handler) catch_handler,
+                                  (void *) optarg);
 	    break;
 
         case 's':

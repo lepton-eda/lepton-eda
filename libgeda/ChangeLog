@@ -1,3 +1,13 @@
+2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/*.nw:
+	* include/libgeda.h: Changed the includes of gh.h in include of 
+	libguile.h required by the scm interface of guile.
+	
+	* noweb/g_basic.nw, noweb/g_rc.nw:
+	* noweb/g_register.nw, noweb/g_smob.nw: Switched to the new scm 
+	interface of guile.
+
 2005-01-31  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/g_rc.nw: Fixed the escaping in format strings of messages.

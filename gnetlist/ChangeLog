@@ -1,3 +1,7 @@
+2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c: Switched to the new scm interface of guile.
+
 2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/gnetlist.c (gnetlist_quit): Adapted for new component library

@@ -36,68 +36,71 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-void g_register_funcs(void)
-{
-  /* general functions */
-  gh_new_procedure0_0("quit", g_quit);
-  gh_new_procedure0_0("exit", g_quit);
+
+struct gsubr_t {
+  char* name;
+  int req;
+  int opt;
+  int rst;
+  SCM (*fnc)();
+};
+
+static struct gsubr_t gnetlist_funcs[] = {
+  { "quit",                         0, 0, 0, g_quit },
+  { "exit",                         0, 0, 0, g_quit },
 
   /* gnetlistrc functions */
-  gh_new_procedure1_0("gnetlist-version", g_rc_gnetlist_version);
+  { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
     
-  gh_new_procedure1_0("net-naming-priority", g_rc_net_naming_priority);
-  gh_new_procedure1_0("hierarchy-traversal", g_rc_hierarchy_traversal);
-  gh_new_procedure1_0("hierarchy-uref-mangle",
-                      g_rc_hierarchy_uref_mangle);
-  gh_new_procedure1_0("hierarchy-netname-mangle",
-                      g_rc_hierarchy_netname_mangle);
-  gh_new_procedure1_0("hierarchy-netattrib-mangle",
-                      g_rc_hierarchy_netattrib_mangle);
-  gh_new_procedure1_0("hierarchy-uref-separator",
-                      g_rc_hierarchy_uref_separator);
-  gh_new_procedure1_0("hierarchy-netname-separator",
-                      g_rc_hierarchy_netname_separator);
-  gh_new_procedure1_0("hierarchy-netattrib-separator",
-                      g_rc_hierarchy_netattrib_separator);
-  gh_new_procedure1_0("hierarchy-netattrib-order",
-                      g_rc_hierarchy_netattrib_order);
-  gh_new_procedure1_0("hierarchy-netname-order",
-                      g_rc_hierarchy_netname_order);
-  gh_new_procedure1_0("hierarchy-uref-order", g_rc_hierarchy_uref_order);
-  gh_new_procedure1_0("unnamed-netname", g_rc_unnamed_netname);
+  { "net-naming-priority",          1, 0, 0, g_rc_net_naming_priority },
+  { "hierarchy-traversal",          1, 0, 0, g_rc_hierarchy_traversal },
+  { "hierarchy-uref-mangle",        1, 0, 0, g_rc_hierarchy_uref_mangle },
+  { "hierarchy-netname-mangle",     1, 0, 0, g_rc_hierarchy_netname_mangle },
+  { "hierarchy-netattrib-mangle",   1, 0, 0, g_rc_hierarchy_netattrib_mangle },
+  { "hierarchy-uref-separator",     1, 0, 0, g_rc_hierarchy_uref_separator },
+  { "hierarchy-netname-separator",  1, 0, 0, g_rc_hierarchy_netname_separator },
+  { "hierarchy-netattrib-separator", 1, 0, 0, g_rc_hierarchy_netattrib_separator },
+  { "hierarchy-netattrib-order",    1, 0, 0, g_rc_hierarchy_netattrib_order },
+  { "hierarchy-netname-order",      1, 0, 0, g_rc_hierarchy_netname_order },
+  { "hierarchy-uref-order",         1, 0, 0, g_rc_hierarchy_uref_order },
+  { "unnamed-netname",              1, 0, 0, g_rc_unnamed_netname },
 
   /* netlist functions */
-  gh_new_procedure1_0("gnetlist:get-packages", g_get_packages);
-  gh_new_procedure1_0("gnetlist:get-non-unique-packages", g_get_non_unique_packages);
-  gh_new_procedure1_0("gnetlist:get-pins", g_get_pins);
-  gh_new_procedure1_0("gnetlist:get-all-nets", g_get_all_nets);
-  gh_new_procedure1_0("gnetlist:get-all-unique-nets",
-                      g_get_all_unique_nets);
-  gh_new_procedure1_0("gnetlist:get-all-connections",
-                      g_get_all_connections);
-  gh_new_procedure2_0("gnetlist:get-nets", g_get_nets);
-  gh_new_procedure1_0("gnetlist:get-pins-nets", g_get_pins_nets);
+  { "gnetlist:get-packages",        1, 0, 0, g_get_packages },
+  { "gnetlist:get-non-unique-packages", 1, 0, 0, g_get_non_unique_packages },
+  { "gnetlist:get-pins",            1, 0, 0, g_get_pins },
+  { "gnetlist:get-all-nets",        1, 0, 0, g_get_all_nets },
+  { "gnetlist:get-all-unique-nets", 1, 0, 0, g_get_all_unique_nets },
+  { "gnetlist:get-all-connections", 1, 0, 0, g_get_all_connections },
+  { "gnetlist:get-nets",            2, 0, 0, g_get_nets },
+  { "gnetlist:get-pins-nets",       1, 0, 0, g_get_pins_nets },
 
-  gh_new_procedure2_0("gnetlist:get-package-attribute",
-                      g_get_package_attribute);
-  gh_new_procedure1_0("gnetlist:get-toplevel-attribute",
-                      g_get_toplevel_attribute);
-  /* gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode); no longer needed */
-  gh_new_procedure1_0("gnetlist:get-renamed-nets", g_get_renamed_nets);
-  gh_new_procedure3_0("gnetlist:get-attribute-by-pinseq",
-                      g_get_attribute_by_pinseq);
-  gh_new_procedure3_0("gnetlist:get-attribute-by-pinnumber",
-                      g_get_attribute_by_pinnumber);
-  gh_new_procedure1_0("gnetlist:vams-get-package-attributes",
-                      vams_get_package_attributes);
-  gh_new_procedure1_0("gnetlist:get-slots", g_get_slots);
-  gh_new_procedure1_0("gnetlist:get-unique-slots", g_get_unique_slots);
+  { "gnetlist:get-package-attribute",  2, 0, 0, g_get_package_attribute },
+  { "gnetlist:get-toplevel-attribute", 1, 0, 0, g_get_toplevel_attribute },
+  /* { "gnetlist:set-netlist-mode", 1, 0, 0, g_set_netlist_mode }, no longer needed */
+  { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },
+  { "gnetlist:get-attribute-by-pinseq",    3, 0, 0, g_get_attribute_by_pinseq },
+  { "gnetlist:get-attribute-by-pinnumber", 3, 0, 0, g_get_attribute_by_pinnumber },
+  { "gnetlist:vams-get-package-attributes", 1, 0, 0, vams_get_package_attributes },
+  { "gnetlist:get-slots",           1, 0, 0, g_get_slots },
+  { "gnetlist:get-unique-slots",    1, 0, 0, g_get_unique_slots },
 
   /* SDB -- 9.1.2003 */
-  gh_new_procedure0_0("gnetlist:get-calling-flags", g_get_calling_flags);
-
+  { "gnetlist:get-calling-flags",   0, 0, 0, g_get_calling_flags },
   /* SDB -- 8.22.2004 */
-  gh_new_procedure0_0("gnetlist:get-command-line", g_get_command_line);
+  { "gnetlist:get-command-line",    0, 0, 0, g_get_command_line },
+  { NULL,                           0, 0, 0, NULL } };
+
+
+void g_register_funcs(void)
+{
+  struct gsubr_t *tmp = gnetlist_funcs;
+  
+  while (tmp->name != NULL) {
+    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
+    tmp++;
+  }
+
 }
 
 SCM g_quit(void)

@@ -271,20 +271,16 @@ SCM g_get_renamed_nets(SCM scm_level)
     int i = 0, j = 0;
     char *level;
 
-    level = gh_scm2newstr(scm_level, NULL);
-    free(level);
+    level = SCM_STRING_CHARS (scm_level);
 
     for (i = 0; i < MAX_SETS; i++) {
 	for (j = 0; j < MAX_RENAME; j++) {
 	    if (rename_pairs[i][j].src && rename_pairs[i][j].dest) {
-		pairlist = gh_list(gh_str2scm(rename_pairs[i][j].src,
-					      strlen(rename_pairs[i]
-						     [j].src)),
-				   gh_str2scm(rename_pairs[i][j].dest,
-					      strlen(rename_pairs[i]
-						     [j].dest)),
-				   SCM_UNDEFINED);
-		outerlist = gh_cons(pairlist, outerlist);
+		pairlist = scm_list_n (
+          scm_makfrom0str (rename_pairs[i][j].src),
+          scm_makfrom0str (rename_pairs[i][j].dest),
+          SCM_UNDEFINED);
+		outerlist = scm_cons (pairlist, outerlist);
 	    }
 	}
     }

@@ -83,7 +83,7 @@
 #include <math.h>
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #ifdef HAS_LIBGDGEDA
 #include <gdgeda/gd.h>

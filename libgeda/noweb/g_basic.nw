@@ -61,7 +61,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include "defines.h"
 #include "struct.h"
@@ -136,7 +136,7 @@ load_error_handler(void *data, SCM tag, SCM throw_args)
 	 * If misc-error the column and line pointers points
 	 * to end of file. Not necessary to confuse user.
 	 */
-	if (!gh_eq_p(tag, gh_symbol2scm("misc-error"))) {
+    if (!scm_eq_p (tag, scm_str2symbol ("misc-error"))) {
 		scm_display(scm_makfrom0str("Error : "), cur_out);
 		scm_display(tag, cur_out);
 			
@@ -191,15 +191,15 @@ g_read_file(char *filename)
   	}
 
 	port = scm_open_file(scm_makfrom0str(filename),
-			     scm_makfromstr("r",
-					    (scm_sizet) sizeof (char),
-					    0));
+                         scm_makfromstr("r",
+                                        (scm_sizet) sizeof (char),
+                                        0));
 
-	eval_result = gh_catch (SCM_BOOL_T,
-				(scm_catch_body_t) load, 
-				(void *) port,
-				(scm_catch_handler_t) load_error_handler, 
-				(void *) port);
+	eval_result = scm_internal_catch (SCM_BOOL_T,
+                                      (scm_t_catch_body)load,
+                                      (void*)port,
+                                      (scm_t_catch_handler)load_error_handler,
+                                      (void*)port);
 
 	scm_close_port(port);
 

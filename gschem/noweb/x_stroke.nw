@@ -189,15 +189,15 @@ x_stroke_free_all(void)
 int 
 x_stroke_search_execute(char *sequence)
 {
-  char *guile_string; 
+  gchar *guile_string; 
   SCM eval;
 
   guile_string = g_strdup_printf("(eval-stroke \"%s\")", sequence);
 
-  eval = gh_eval_str(guile_string);
-  free(guile_string);
+  eval = scm_c_eval_string (guile_string);
+  g_free(guile_string);
 
-  return gh_scm2bool(eval);
+  return (SCM_FALSEP (eval)) ? 0 : 1;
 }
 
 

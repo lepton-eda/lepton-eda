@@ -105,14 +105,14 @@ int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
 <<x_menus.c : g_menu_execute()>>=
 static void g_menu_execute(char *func)
 {
-  char *guile_string;
+  gchar *guile_string;
   
   guile_string = g_strdup_printf("(%s)", func);
 #if DEBUG
   printf("%s\n", guile_string);
 #endif
-  gh_eval_str(guile_string);
-  free(guile_string);
+  scm_c_eval_string (guile_string);
+  g_free(guile_string);
 }
 
 @ %def g_menu_execute
@@ -200,21 +200,21 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 
 #endif
 
-    scm_items_len = gh_length(scm_items);
+    scm_items_len = (int) scm_ilength (scm_items);
     for (j = 0 ; j < scm_items_len; j++) {
 
-      scm_index = gh_int2scm(j);
-      scm_item = gh_list_ref(scm_items, scm_index);
-      scm_item_name = gh_car(scm_item);
-      scm_item_func = gh_cadr(scm_item);
-      scm_item_hotkey_func = gh_caddr(scm_item);
+      scm_index = SCM_MAKINUM (j);
+      scm_item = scm_list_ref (scm_items, scm_index);
+      scm_item_name = SCM_CAR (scm_item);
+      scm_item_func = SCM_CADR (scm_item);
+      scm_item_hotkey_func = SCM_CADDR (scm_item);
       SCM_ASSERT(SCM_STRINGP(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
       SCM_ASSERT(SCM_SYMBOLP(scm_item_func), scm_item_func, SCM_ARGn, "get_main_menu item_func");
       SCM_ASSERT(SCM_SYMBOLP(scm_item_hotkey_func), scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
 
-      raw_menu_item_name = gh_scm2newstr(scm_item_name, NULL);
-      menu_item_func = gh_scm2newstr(scm_symbol_to_string(scm_item_func), NULL);
-      menu_item_hotkey_func = gh_scm2newstr(scm_symbol_to_string(scm_item_hotkey_func), NULL);
+      raw_menu_item_name = SCM_STRING_CHARS (scm_item_name);
+      menu_item_func = SCM_STRING_CHARS (scm_symbol_to_string (scm_item_func));
+      menu_item_hotkey_func = SCM_STRING_CHARS (scm_symbol_to_string (scm_item_hotkey_func));
 
       menu_item_name = (char *) gettext(raw_menu_item_name);
 
@@ -223,14 +223,14 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else { 
         buf = g_strdup_printf("(find-key '%s)", menu_item_hotkey_func);
-        scm_keys = gh_eval_str(buf);
+        scm_keys = scm_c_eval_string (buf);
 	free(buf);
         if (scm_keys == SCM_BOOL_F) {
           menu_item_keys = malloc(sizeof(char)*2);
           menu_item_keys[0] = ' ';
           menu_item_keys[1] = '\0';
         } else {
-          menu_item_keys = gh_scm2newstr(scm_keys, NULL);
+          menu_item_keys = g_strdup (SCM_STRING_CHARS (scm_keys));
         }      
 
         name_len = strlen(menu_item_name);
@@ -285,10 +285,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
       gtk_object_set_data(GTK_OBJECT(menu_bar), buf, menu_item);
       free(buf);
-      
-      free(raw_menu_item_name);
-      free(menu_item_func);
-      free(menu_item_hotkey_func);
       
     }
     

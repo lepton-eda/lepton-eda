@@ -250,7 +250,7 @@ void g_register_funcs(void);
 /* globals.c */
 /* gschem.c */
 void gschem_quit(void);
-void main_prog(int argc, char *argv[]);
+void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_basic.c */
 void i_allow_expose(void);

@@ -61,7 +61,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include "defines.h"
 #include "struct.h"
@@ -147,7 +147,7 @@ s_menu_print()
 
   for (i = 0; i < menu_index; i++) {
     printf("Name; %s\n", menu[i].menu_name);
-    gh_display(menu[i].menu_items);
+    scm_display (menu[i].menu_items, scm_current_output_port ());
     printf("\n");
   }
 }

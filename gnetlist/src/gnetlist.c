@@ -41,7 +41,7 @@ void gnetlist_quit(void)
 
 }
 
-void main_prog(int argc, char *argv[])
+void main_prog(void *closure, int argc, char *argv[])
 {
     int i;
     char input_str[2048];
@@ -266,11 +266,11 @@ void main_prog(int argc, char *argv[])
 
 	/* check size here hack */
 	sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
-	gh_eval_str(input_str);
+	scm_c_eval_string (input_str);
 	/* gh_eval_str_with_stack_saving_handler (input_str); */
     } else if (interactive_mode) {
-	gh_eval_str("(set-repl-prompt! \"gnetlist> \")");
-	gh_repl(0, NULL);
+	scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
+	scm_shell (0, NULL);
     } else {
 	fprintf(stderr,
 		"You gave neither backend to execute nor interactive mode!\n");
@@ -287,6 +287,6 @@ int main(int argc, char *argv[])
     if(getenv("GUILE_WARN_DEPRECATED")==NULL)
       putenv("GUILE_WARN_DEPRECATED=no");
 
-    gh_enter(argc, argv, main_prog);
+    scm_boot_guile (argc, argv, main_prog, 0);
     return 0;
 }

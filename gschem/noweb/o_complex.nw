@@ -433,7 +433,9 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F &&
       o_current != NULL) {
-    scm_run_hook(add_component_hook, gh_cons(g_make_attrib_smob_list(w_current, o_current), SCM_EOL));
+    scm_run_hook(add_component_hook,
+                 scm_cons(g_make_attrib_smob_list(w_current, o_current),
+                          SCM_EOL));
   }
 
   /* put code here to deal with emebedded stuff */

@@ -12,6 +12,7 @@
 
 <<g_funcs.c : include directives>>
 <<g_funcs.c : g_funcs_print()>>
+<<g_funcs.c : g_funcs_image()>>
 <<g_funcs.c : g_funcs_exit()>>
 <<g_funcs.c : g_funcs_use_rc_values()>>
 <<g_funcs.c : g_funcs_key_name()>>
@@ -78,19 +79,15 @@
 <<g_funcs.c : g_funcs_print()>>=
 SCM g_funcs_print(SCM filename)
 {
-  char *string = gh_scm2newstr(filename, NULL);
-
-  if (string == NULL) {
-    return SCM_BOOL_T;
-  }
+  SCM_ASSERT (SCM_NIMP (filename) && SCM_STRINGP (filename), filename,
+              SCM_ARG1, "gschem-print");
 
   if (output_filename) {
-    f_print(global_window_current, output_filename);
+    f_print (global_window_current, output_filename);
   } else  {
-    f_print(global_window_current, string);
+    f_print (global_window_current, SCM_STRING_CHARS (filename));
   }
-
-  free(string);
+  
   return SCM_BOOL_T;
 }
 
@@ -103,22 +100,18 @@ SCM g_funcs_print(SCM filename)
 @defun g_funcs_image filename
 @end defun
 
-<<g_funcs.c : g_funcs_print()>>=
+<<g_funcs.c : g_funcs_image()>>=
 SCM g_funcs_image(SCM filename)
 {
-  char *string = gh_scm2newstr(filename, NULL);
-
-  if (string == NULL) {
-    return SCM_BOOL_T;
-  }
+  SCM_ASSERT (SCM_NIMP (filename) && SCM_STRINGP (filename), filename,
+              SCM_ARG1, "gschem-image");
 
   if (output_filename) {
-    x_image_lowlevel(global_window_current, output_filename);
+    x_image_lowlevel (global_window_current, output_filename);
   } else  {
-    x_image_lowlevel(global_window_current, string);
+    x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename));
   }
-
-  free(string);
+  
   return SCM_BOOL_T;
 }
 
@@ -163,34 +156,25 @@ SCM g_funcs_use_rc_values(void)
 @end defun
 
 <<g_funcs.c : g_funcs_key_name()>>=
-static char *key_value_string = NULL;
+static gchar *key_value_string = NULL;
 
 /* there is no string size checking here... so if it core dumps... DOH! */
 /* TODO: fix this ^^^^^^^^^^^^^ */
 /* it's actually pretty usable right now, but needs to be reviewed again */
 SCM g_funcs_key_name(SCM keystring)
 {
-  char *string;
-  SCM_ASSERT(SCM_STRINGP(keystring), keystring, 1, "g_funcs_key_name");
-  string = gh_scm2newstr(keystring, NULL);
-
-  if (string == NULL) {
-    return SCM_BOOL_T;
-  }
+  SCM_ASSERT (SCM_STRINGP (keystring), keystring, 1, "gschem-key-name");
 
   if (key_value_string != NULL) {
-    x_dialog_hotkeys_fill(key_value_string);
-    free(key_value_string); 
+    x_dialog_hotkeys_fill (key_value_string);
+    g_free (key_value_string); 
     key_value_string = NULL;
   }
 
-  /* the 25 is: null char, a few spaces, and the characters */
-  key_value_string = (char *) malloc(sizeof(char)*(
-                                                   strlen(string)+25));
+  /* the 25 is for a few spaces and the characters */
+  key_value_string = g_strdup_printf ("%s :%25c",
+                                      SCM_STRING_CHARS (keystring), ' ');
 
-  sprintf(key_value_string, "%s :", string);
-
-  free(string);
   return SCM_BOOL_T;
 }
 
@@ -206,28 +190,21 @@ SCM g_funcs_key_name(SCM keystring)
 <<g_funcs.c : g_funcs_key_value()>>=
 SCM g_funcs_key_value(SCM keystring)
 {
-  char *temp;
-  char *string = gh_scm2newstr(keystring, NULL);
+  gchar *temp;
 
-  if (string == NULL) {
-    return SCM_BOOL_T;
-  }
-
+  SCM_ASSERT (SCM_STRINGP (keystring), keystring, 1, "gschem-key-value");
 
   if (key_value_string == NULL) {
     fprintf(stderr, _("Ack! something got fouled up with the keymappings!\n"));
     exit(-1);
   }
 
-  temp = (char *) malloc(sizeof(char)*(strlen(key_value_string)+
-                                       strlen(string)+5));
-
-  sprintf(temp, "%s %s", key_value_string, string);
-
-  free(key_value_string);
+  temp = g_strdup_printf ("%s %s",
+                          key_value_string,
+                          SCM_STRING_CHARS (keystring));
+  g_free (key_value_string);
   key_value_string = temp;
 	
-  free(string);
   return SCM_BOOL_T;
 }
 
@@ -243,8 +220,8 @@ SCM g_funcs_key_value(SCM keystring)
 <<g_funcs.c : g_funcs_key_done()>>=
 SCM g_funcs_key_done(void)
 {
-  x_dialog_hotkeys_fill(key_value_string);
-  free(key_value_string);
+  x_dialog_hotkeys_fill (key_value_string);
+  g_free(key_value_string);
   key_value_string = NULL;
   return SCM_BOOL_T;
 }
@@ -304,9 +281,8 @@ SCM get_selected_component_attributes(gpointer data,
         {
           if (s_scratch_string_fill(obj->text->string))
           {
-            list = gh_cons( gh_str2scm (obj->text->string, 
-                                        strlen(obj->text->string)), 
-                            list);	
+            list = scm_cons (scm_makfrom0str (obj->text->string),
+                             list);	
           } 
         }
       }
@@ -339,8 +315,8 @@ SCM get_selected_filename(gpointer data,
   
   exit_if_null(w_current);
   
-  return_value = gh_str2scm(w_current->page_current->page_filename,
-		  	    strlen(w_current->page_current->page_filename));
+  return_value = scm_take0str (w_current->page_current->page_filename);
+
   return(return_value);
 }
 

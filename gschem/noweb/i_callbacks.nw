@@ -4418,7 +4418,7 @@ DEFINE_I_CALLBACK(cancel)
   i_update_toolbar(w_current);
 
   /* clear the key guile command-sequence */
-  gh_eval_str("(set! current-command-sequence '())");
+  scm_c_eval_string ("(set! current-command-sequence '())");
 
   /* see above comment hack */
 #if 0

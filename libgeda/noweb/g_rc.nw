@@ -83,7 +83,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include "defines.h"
 #include "struct.h"
@@ -105,7 +105,7 @@ This is the function which actually reads in the RC file.
 
 First, it looks in a list of previously read RC files.  If the file has already been read, it just says OK.  After reading the file, it places the filename in the list of read files.
 
-It returns 1 if parsing was OK, 0 otherwise.
+It returns 1 if it succeeds, 0 otherwise.
 @end defun
 
 <<g_rc.c : g_rc_parse_general()>>=
@@ -414,9 +414,8 @@ g_rc_component_library(SCM path)
 
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "component-library");
-
-  string = gh_scm2newstr (path, NULL);
   
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
 
@@ -470,8 +469,7 @@ g_rc_component_library_search(SCM path)
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "component-library-search");
 
-  string = gh_scm2newstr(path, NULL);
-  
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
 
@@ -552,8 +550,7 @@ g_rc_source_library(SCM path)
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "source-library");
 
-  string = gh_scm2newstr(path, NULL);
-
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
   
@@ -611,8 +608,7 @@ g_rc_source_library_search(SCM path)
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "source-library-search");
 
-  string = gh_scm2newstr(path, NULL);
-  
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
 
@@ -691,21 +687,22 @@ g_rc_source_library_search(SCM path)
 <<g_rc.c : g_rc_world_size()>>=
 SCM
 g_rc_world_size(SCM width, SCM height, SCM border)
+#define FUNC_NAME "world-size"
 {
   int i_width, i_height, i_border;
   int init_right, init_bottom;
 
   SCM_ASSERT (SCM_NIMP (width) && SCM_REALP (width), width,
-              SCM_ARG1, "world-size");
+              SCM_ARG1, FUNC_NAME);
   SCM_ASSERT (SCM_NIMP (height) && SCM_REALP (height), height,
-              SCM_ARG2, "world-size");
+              SCM_ARG2, FUNC_NAME);
   SCM_ASSERT (SCM_NIMP (border) && SCM_REALP (border), border,
-              SCM_ARG3, "world-size");
+              SCM_ARG3, FUNC_NAME);
   
   /* yes this is legit, we are casing the resulting double to an int */
-  i_width  = (int) (gh_scm2double(width ) * MILS_PER_INCH);
-  i_height = (int) (gh_scm2double(height) * MILS_PER_INCH);
-  i_border = (int) (gh_scm2double(border) * MILS_PER_INCH);
+  i_width  = (int) (SCM_NUM2DOUBLE (0, width)  * MILS_PER_INCH);
+  i_height = (int) (SCM_NUM2DOUBLE (0, height) * MILS_PER_INCH);
+  i_border = (int) (SCM_NUM2DOUBLE (0, border) * MILS_PER_INCH);
 
   PAPERSIZEtoWORLD(i_width, i_height, i_border,
                    &init_right, &init_bottom);
@@ -720,6 +717,7 @@ g_rc_world_size(SCM width, SCM height, SCM border)
 
   return SCM_BOOL_T;
 }
+#undef FUNC_NAME
 
 
 @ %def g_rc_world_size
@@ -742,7 +740,7 @@ g_rc_default_series_name(SCM name)
     free (default_series_name);
   }
 
-  default_series_name = gh_scm2newstr(name, NULL);
+  default_series_name = g_strdup (SCM_STRING_CHARS (name));
 
   return SCM_BOOL_T;
 }
@@ -768,7 +766,7 @@ g_rc_untitled_name(SCM name)
     free (default_untitled_name);
   }
 
-  default_untitled_name = gh_scm2newstr(name, NULL);
+  default_untitled_name = g_strdup (SCM_STRING_CHARS (name));
 
   return SCM_BOOL_T;
 }
@@ -794,8 +792,7 @@ g_rc_font_directory(SCM path)
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "font-directory");
 
-  string = gh_scm2newstr(path, NULL);  
-
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
 
@@ -837,8 +834,7 @@ g_rc_scheme_directory(SCM path)
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "scheme-directory");
 
-  string = gh_scm2newstr (path, NULL);
-
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
 
@@ -880,8 +876,7 @@ g_rc_bitmap_directory(SCM path)
   SCM_ASSERT (SCM_NIMP (path) && SCM_STRINGP (path), path,
               SCM_ARG1, "bitmap-directory");
   
-  string = gh_scm2newstr(path, NULL);
-
+  string = g_strdup (SCM_STRING_CHARS (path));
   /* take care of any shell variables */
   string = expand_env_variables(string);
 
@@ -918,17 +913,13 @@ g_rc_bitmap_directory(SCM path)
 SCM
 g_rc_bus_ripper_symname(SCM scmsymname)
 {
-  char *symname;
-
   SCM_ASSERT (SCM_NIMP (scmsymname) && SCM_STRINGP (scmsymname), scmsymname,
               SCM_ARG1, "bus-ripper-symname");
-
-  symname = gh_scm2newstr(scmsymname, NULL);
 
   if (default_bus_ripper_symname) {
     free (default_bus_ripper_symname);
   }
-  default_bus_ripper_symname = symname;
+  default_bus_ripper_symname = g_strdup (SCM_STRING_CHARS (scmsymname));
 
   return SCM_BOOL_T;
 }

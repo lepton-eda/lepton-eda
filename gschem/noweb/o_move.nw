@@ -272,8 +272,8 @@ void o_move_end(TOPLEVEL * w_current)
         if (scm_hook_empty_p(move_component_hook) == SCM_BOOL_F &&
             object != NULL) {
           scm_run_hook(move_component_hook,
-                       gh_cons(g_make_attrib_smob_list
-                               (w_current, object), SCM_EOL));
+                       scm_cons (g_make_attrib_smob_list
+                                 (w_current, object), SCM_EOL));
         }
 
         /* this next section of code is from */

@@ -66,36 +66,36 @@ static int vstbl_get_val(const vstbl_entry * table, int index)
 
 
 static SCM
-g_rc_mode_general(SCM mode,
+g_rc_mode_general(SCM scmmode,
 		  const char *rc_name,
 		  int *mode_var,
 		  const vstbl_entry *table,
 		  int table_size)
 {
+  SCM ret;
   int index;
-  char *string;
+  char *mode;
 
-  string = gh_scm2newstr(mode, NULL);
-  index = vstbl_lookup_str(table, table_size, string);
+  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+              SCM_ARG1, rc_name);
+  
+  mode = SCM_STRING_CHARS (scmmode);
+  
+  index = vstbl_lookup_str(table, table_size, mode);
 
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
             "Invalid mode [%s] passed to %s\n",
-            string,
+            mode,
             rc_name);
-    if (string) {
-      free(string);
-    }
-    return SCM_BOOL_F;
+    ret = SCM_BOOL_F;
+  } else {
+    *mode_var = vstbl_get_val(table, index);
+    ret = SCM_BOOL_T;
   }
 
-  *mode_var = vstbl_get_val(table, index);
-
-  if (string) {
-    free(string);
-  }
-  return SCM_BOOL_T;
+  return ret;
 }
 
 #define RETURN_G_RC_MODE(rc, var, size)			\
@@ -107,22 +107,18 @@ g_rc_mode_general(SCM mode,
 
 SCM g_rc_gnetlist_version(SCM version)
 {
-  char *string;
+  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+              SCM_ARG1, "gnetlist-version");
 
-  string = gh_scm2newstr(version, NULL);
-
-  if (strcmp(string, VERSION) != 0) {
-    fprintf(stderr, "Found a version [%s] gnetlist file:\n[%s]\n",
-            string, rc_filename);
+  if (strcmp (SCM_STRING_CHARS (version), VERSION) != 0) {
+    fprintf(stderr,
+            "Found a version [%s] gnetlist file:\n[%s]\n",
+            SCM_STRING_CHARS (version), rc_filename);
     fprintf(stderr,
             "While gnetlist is in ALPHA, please be sure that you have the latest rc file.\n");
   }
 
-  if (string) {
-    free(string);
-  }
-
-  return (gh_int2scm(0));
+  return SCM_MAKINUM (0);
 }
 
 
@@ -183,68 +179,43 @@ SCM g_rc_hierarchy_netattrib_mangle(SCM mode)
 
 SCM g_rc_hierarchy_netname_separator(SCM name)
 {
-  char *string = gh_scm2newstr(name, NULL);
-
-  if (string == NULL) {
-    fprintf(stderr,
-            "%s requires a string as a parameter\n",
-            "hierarchy-netname-separator"
-            );
-    return SCM_BOOL_F;
-  }
+  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+              SCM_ARG1, "hierarchy-netname-separator");
 
   if (default_hierarchy_netname_separator) {
     free(default_hierarchy_netname_separator);
   }
 
-  default_hierarchy_netname_separator = u_basic_strdup(string);
+  default_hierarchy_netname_separator = g_strdup (SCM_STRING_CHARS (name));
 
-  free(string);
   return SCM_BOOL_T;
-    
 }
 
 SCM g_rc_hierarchy_netattrib_separator(SCM name)
 {
-  char *string = gh_scm2newstr(name, NULL);
-
-  if (string == NULL) {
-    fprintf(stderr,
-            "%s requires a string as a parameter\n",
-            "hierarchy-netattrib-separator"
-            );
-    return SCM_BOOL_F;
-  }
+  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+              SCM_ARG1, "hierarchy-netattrib-separator");
 
   if (default_hierarchy_netattrib_separator) {
     free(default_hierarchy_netattrib_separator);
   }
 
-  default_hierarchy_netattrib_separator = u_basic_strdup(string);
+  default_hierarchy_netattrib_separator = g_strdup (SCM_STRING_CHARS (name));
 
-  free(string);
   return SCM_BOOL_T;
 }
 
 SCM g_rc_hierarchy_uref_separator(SCM name)
 {
-  char *string = gh_scm2newstr(name, NULL);
-
-  if (string == NULL) {
-    fprintf(stderr,
-            "%s requires a string as a parameter\n",
-            "hierarchy-uref-separator"
-            );
-    return SCM_BOOL_F;
-  }
+  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+              SCM_ARG1, "hierarchy-uref-separator");
 
   if (default_hierarchy_uref_separator) {
     free(default_hierarchy_uref_separator);
   }
 
-  default_hierarchy_uref_separator = u_basic_strdup(string);
+  default_hierarchy_uref_separator = g_strdup (SCM_STRING_CHARS (name));
 
-  free(string);
   return SCM_BOOL_T;
 }
 
@@ -283,23 +254,15 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
 
 SCM g_rc_unnamed_netname(SCM name)
 {
-  char *string = gh_scm2newstr(name, NULL);
-
-  if (string == NULL) {
-    fprintf(stderr,
-            "%s requires a string as a parameter\n",
-            "unnamed-netname"
-            );
-    return SCM_BOOL_F;
-  }
+  SCM_ASSERT (SCM_NIMP (name) && SCM_STRINGP (name), name,
+              SCM_ARG1, "unamed-netname");
 
   if (default_unnamed_netname) {
     free(default_unnamed_netname);
   }
 
-  default_unnamed_netname = u_basic_strdup(string);
+  default_unnamed_netname = g_strdup (SCM_STRING_CHARS (name));
 
-  free(string);
   return SCM_BOOL_T;
 }
 

@@ -56,7 +56,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include "defines.h"
 #include "struct.h"
@@ -114,7 +114,8 @@ g_print_attrib_smob(SCM attrib_smob, SCM port, scm_print_state *pstate)
       attribute->attribute->object->text &&
       attribute->attribute->object->text->string ) {
     scm_puts("#<attribute ", port);
-    scm_display(gh_str02scm(attribute->attribute->object->text->string), port);
+    scm_display (scm_makfrom0str (attribute->attribute->object->text->string),
+                 port);
     scm_puts(">", port);
   }
 	
@@ -177,7 +178,8 @@ g_get_attrib_name_value(SCM attrib_smob)
       attribute->attribute->object->text->string ) {
     o_attrib_get_name_value(attribute->attribute->object->text->string, 
                             &name, &value );
-    returned = gh_cons( gh_str02scm(name), gh_str02scm(value) );
+    returned = scm_cons (scm_makfrom0str (name),
+                         scm_makfrom0str (value));
     if (name) free(name);
     if (value) free(value);
   }
@@ -210,7 +212,7 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
                scm_value, SCM_ARG2, "set-attribute-value!");
 
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  value = gh_scm2newstr(scm_value, NULL);
+  value = SCM_STRING_CHARS (scm_value);
 
   if (attribute &&
       attribute->attribute &&
@@ -230,7 +232,6 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
     if (old_value) free(old_value);
   }
 
-  if (value) free(value);
   return SCM_UNDEFINED;
 }
 

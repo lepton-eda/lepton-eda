@@ -11,6 +11,8 @@
 /* DO NOT read or edit this file ! Use ../noweb/g_register.nw instead */
 
 <<g_register.c : include directives>>
+<<g_register.c : global variables>>
+
 <<g_register.c : g_register_funcs()>>
 
 @
@@ -62,286 +64,281 @@
 @
 
 
+<<g_register.c : global variables>>=
+struct gsubr_t {
+  char* name;
+  int req;
+  int opt;
+  int rst;
+  SCM (*fnc)();
+};
+
+static struct gsubr_t gschem_funcs[] = {
+  /* rc file */
+  { "gschem-version",           1, 0, 0, g_rc_gschem_version },
+  
+  { "override-net-color",       7, 0, 0, g_rc_override_net_color },
+  { "override-bus-color",       7, 0, 0, g_rc_override_bus_color },
+  { "override-pin-color",       7, 0, 0, g_rc_override_pin_color },
+  { "attribute-color",          7, 0, 0, g_rc_attribute_color },
+  { "detached-attribute-color", 7, 0, 0, g_rc_detachedattr_color },
+  { "text-color",               7, 0, 0, g_rc_text_color },
+  { "logic-bubble-color",       7, 0, 0, g_rc_logic_bubble_color },
+  { "lock-color",               7, 0, 0, g_rc_lock_color },
+  { "zoom-box-color",           7, 0, 0, g_rc_zoom_box_color },
+  { "net-color",                7, 0, 0, g_rc_net_color },
+  { "bus-color",                7, 0, 0, g_rc_bus_color },
+  { "pin-color",                7, 0, 0, g_rc_pin_color },
+  { "graphic-color",            7, 0, 0, g_rc_graphic_color },
+  { "grid-color",               7, 0, 0, g_rc_grid_color },
+  { "background-color",         7, 0, 0, g_rc_background_color },
+  { "select-color",             7, 0, 0, g_rc_select_color },
+  { "boundingbox-color",        7, 0, 0, g_rc_boundingbox_color },
+  { "net-endpoint-color",       7, 0, 0, g_rc_net_endpoint_color },
+  { "stroke-color",             7, 0, 0, g_rc_stroke_color },
+  { "output-color-background",  7, 0, 0, g_rc_output_color_background },
+  { "freestyle-color",          7, 0, 0, g_rc_freestyle_color },
+
+  { "net-endpoint-mode",         1, 0, 0, g_rc_net_endpoint_mode },
+  { "net-midpoint-mode",         1, 0, 0, g_rc_net_midpoint_mode },
+  { "net-style",                 1, 0, 0, g_rc_net_style },
+  { "bus-style",                 1, 0, 0, g_rc_bus_style },
+  { "pin-style",                 1, 0, 0, g_rc_pin_style },
+  { "zoom-with-pan",             1, 0, 0, g_rc_zoom_with_pan },
+  { "action-feedback-mode",      1, 0, 0, g_rc_action_feedback_mode },
+  { "text-feedback",             1, 0, 0, g_rc_text_feedback },
+  { "text-display-zoomfactor",   1, 0, 0, g_rc_text_display_zoomfactor },
+  { "scrollbars",                1, 0, 0, g_rc_scrollbars },
+  { "scrollbar-update",          1, 0, 0, g_rc_scrollbar_update },
+  { "object-clipping",           1, 0, 0, g_rc_object_clipping },
+  { "embed-components",          1, 0, 0, g_rc_embed_components },
+  { "logging",                   1, 0, 0, g_rc_logging },
+  { "text-size",                 1, 0, 0, g_rc_text_size },
+  { "snap-size",                 1, 0, 0, g_rc_snap_size },
+
+  { "text-caps-style",           1, 0, 0, g_rc_text_caps_style },
+  { "logging-destination",       1, 0, 0, g_rc_logging_destination },
+
+  { "attribute-name",            1, 0, 0, g_rc_attribute_name },
+  { "paper-size",                2, 0, 0, g_rc_paper_size },
+  { "paper-sizes",               3, 0, 0, g_rc_paper_sizes },
+  /* text-output is old... will eventually be removed! */
+  { "text-output",               1, 0, 0, g_rc_output_text }, 
+  { "output-text",               1, 0, 0, g_rc_output_text },
+  { "output-type",               1, 0, 0, g_rc_output_type },
+  { "output-orientation",        1, 0, 0, g_rc_output_orientation },
+  { "output-color",              1, 0, 0, g_rc_output_color },
+  { "output-capstyle",           1, 0, 0, g_rc_output_capstyle },
+  { "image-color",               1, 0, 0, g_rc_image_color },
+  { "image-size",                2, 0, 0, g_rc_image_size },
+  { "log-window",                1, 0, 0, g_rc_log_window },
+  { "log-window-type",           1, 0, 0, g_rc_log_window_type },
+  { "third-button",              1, 0, 0, g_rc_third_button },
+  { "middle-button",             1, 0, 0, g_rc_middle_button },
+  { "net-consolidate",           1, 0, 0, g_rc_net_consolidate },
+  { "file-preview",              1, 0, 0, g_rc_file_preview },
+  { "enforce-hierarchy",         1, 0, 0, g_rc_enforce_hierarchy },
+  { "text-origin-marker",        1, 0, 0, g_rc_text_origin_marker },
+  { "fast-mousepan",             1, 0, 0, g_rc_fast_mousepan },
+  { "raise-dialog-boxes-on-expose", 1, 0, 0, g_rc_raise_dialog_boxes_on_expose },
+  { "attribute-promotion",       1, 0, 0, g_rc_attribute_promotion },
+  { "promote-invisible",         1, 0, 0, g_rc_promote_invisible },
+  { "keep-invisible",            1, 0, 0, g_rc_keep_invisible },
+  { "continue-component-place",  1, 0, 0, g_rc_continue_component_place },
+  { "undo-levels",               1, 0, 0, g_rc_undo_levels },
+  { "undo-control",              1, 0, 0, g_rc_undo_control },
+  { "undo-type",                 1, 0, 0, g_rc_undo_type },
+
+  { "draw-grips",                1, 0, 0, g_rc_draw_grips },
+  { "netconn-rubberband",        1, 0, 0, g_rc_netconn_rubberband },
+  { "sort-component-library",    1, 0, 0, g_rc_sort_component_library },
+  { "add-menu",                  2, 0, 0, g_rc_add_menu },
+  { "window-size",               2, 0, 0, g_rc_window_size },
+  { "warp-cursor",               1, 0, 0, g_rc_warp_cursor },
+  { "toolbars",                  1, 0, 0, g_rc_toolbars },
+  { "handleboxes",               1, 0, 0, g_rc_handleboxes },
+  { "setpagedevice-orientation", 1, 0, 0, g_rc_setpagedevice_orientation },
+  { "setpagedevice-pagesize",    1, 0, 0, g_rc_setpagedevice_pagesize },
+  { "bus-ripper-size",           1, 0, 0, g_rc_bus_ripper_size },
+  { "bus-ripper-type",           1, 0, 0, g_rc_bus_ripper_type },
+  { "bus-ripper-rotation",       1, 0, 0, g_rc_bus_ripper_rotation },
+  { "force-boundingbox",         1, 0, 0, g_rc_force_boundingbox },
+  { "grid-dot-size",             1, 0, 0, g_rc_grid_dot_size },
+  { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
+
+  /* general guile functions */
+  { "gschem-print",              1, 0, 0, g_funcs_print },
+  { "gschem-image",              1, 0, 0, g_funcs_image },
+  { "gschem-key-name",           1, 0, 0, g_funcs_key_name },
+  { "gschem-key-value",          1, 0, 0, g_funcs_key_value },
+  { "gschem-key-done",           0, 0, 0, g_funcs_key_done },
+  { "gschem-use-rc-values",      0, 0, 0, g_funcs_use_rc_values },
+  { "gschem-exit",               0, 0, 0, g_funcs_exit },
+  /* keymapping callbacks */
+  { "file-new-window",           0, 0, 0, g_keys_file_new_window },
+  { "file-new",                  0, 0, 0, g_keys_file_new },
+  { "file-open",                 0, 0, 0, g_keys_file_open },
+  { "file-script",               0, 0, 0, g_keys_file_script },
+  { "file-save",                 0, 0, 0, g_keys_file_save },
+  { "file-save-as",              0, 0, 0, g_keys_file_save_as },
+  { "file-save-all",             0, 0, 0, g_keys_file_save_all },
+  { "file-print",                0, 0, 0, g_keys_file_print },
+  { "file-image",                0, 0, 0, g_keys_file_write_png },
+  { "file-close-window",         0, 0, 0, g_keys_file_close },
+  { "file-quit",                 0, 0, 0, g_keys_file_quit },
+  { "edit-undo",                 0, 0, 0, g_keys_edit_undo },
+  { "edit-redo",                 0, 0, 0, g_keys_edit_redo },
+  { "edit-select",               0, 0, 0, g_keys_edit_select },
+  { "edit-copy",                 0, 0, 0, g_keys_edit_copy },
+  { "edit-copy-hotkey",          0, 0, 0, g_keys_edit_copy_hotkey },
+  { "edit-move",                 0, 0, 0, g_keys_edit_move },
+  { "edit-move-hotkey",          0, 0, 0, g_keys_edit_move_hotkey },
+  { "edit-delete",               0, 0, 0, g_keys_edit_delete },
+  { "edit-rotate-90",            0, 0, 0, g_keys_edit_rotate_90 },
+  { "edit-rotate-90-hotkey",     0, 0, 0, g_keys_edit_rotate_90_hotkey },
+  { "edit-mirror",               0, 0, 0, g_keys_edit_mirror },
+  { "edit-mirror-hotkey",        0, 0, 0, g_keys_edit_mirror_hotkey },
+#if 0 /* Obsolete */
+  { "edit-stretch",              0, 0, 0, g_keys_edit_stretch },
+  { "edit-stretch-hotkey",       0, 0, 0, g_keys_edit_stretch_hotkey },
+#endif
+  { "edit-slot",                 0, 0, 0, g_keys_edit_slot },
+  { "edit-color",                0, 0, 0, g_keys_edit_color },
+  { "edit-edit",                 0, 0, 0, g_keys_edit_edit },
+  { "edit-text",                 0, 0, 0, g_keys_edit_text },
+  { "edit-lock",                 0, 0, 0, g_keys_edit_lock },
+  { "edit-unlock",               0, 0, 0, g_keys_edit_unlock },
+  { "edit-linetype",             0, 0, 0, g_keys_edit_linetype },
+  { "edit-filltype",             0, 0, 0, g_keys_edit_filltype },
+  { "edit-translate",            0, 0, 0, g_keys_edit_translate },
+  { "edit-embed",                0, 0, 0, g_keys_edit_embed },
+  { "edit-unembed",              0, 0, 0, g_keys_edit_unembed },
+  { "edit-update",               0, 0, 0, g_keys_edit_update },
+  { "edit-show-hidden",          0, 0, 0, g_keys_edit_show_hidden },
+  { "edit-make-text-visible",    0, 0, 0, g_keys_edit_make_visible },
+  { "edit-find-text",            0, 0, 0, g_keys_edit_find },
+  { "edit-show-text",            0, 0, 0, g_keys_edit_show_text },
+  { "edit-hide-text",            0, 0, 0, g_keys_edit_hide_text },
+  { "edit-autonumber",           0, 0, 0, g_keys_edit_autonumber_text },
+
+  { "buffer-copy1",              0, 0, 0, g_keys_buffer_copy1 },
+  { "buffer-copy2",              0, 0, 0, g_keys_buffer_copy2 },
+  { "buffer-copy3",              0, 0, 0, g_keys_buffer_copy3 },
+  { "buffer-copy4",              0, 0, 0, g_keys_buffer_copy4 },
+  { "buffer-copy5",              0, 0, 0, g_keys_buffer_copy5 },
+  { "buffer-cut1",               0, 0, 0, g_keys_buffer_cut1 },
+  { "buffer-cut2",               0, 0, 0, g_keys_buffer_cut2 },
+  { "buffer-cut3",               0, 0, 0, g_keys_buffer_cut3 },
+  { "buffer-cut4",               0, 0, 0, g_keys_buffer_cut4 },
+  { "buffer-cut5",               0, 0, 0, g_keys_buffer_cut5 },
+  { "buffer-paste1",             0, 0, 0, g_keys_buffer_paste1 },
+  { "buffer-paste2",             0, 0, 0, g_keys_buffer_paste2 },
+  { "buffer-paste3",             0, 0, 0, g_keys_buffer_paste3 },
+  { "buffer-paste4",             0, 0, 0, g_keys_buffer_paste4 },
+  { "buffer-paste5",             0, 0, 0, g_keys_buffer_paste5 },
+  { "buffer-paste1-hotkey",      0, 0, 0, g_keys_buffer_paste1_hotkey },
+  { "buffer-paste2-hotkey",      0, 0, 0, g_keys_buffer_paste2_hotkey },
+  { "buffer-paste3-hotkey",      0, 0, 0, g_keys_buffer_paste3_hotkey },
+  { "buffer-paste4-hotkey",      0, 0, 0, g_keys_buffer_paste4_hotkey },
+  { "buffer-paste5-hotkey",      0, 0, 0, g_keys_buffer_paste5_hotkey },
+
+  { "view-redraw",               0, 0, 0, g_keys_view_redraw },
+  { "view-zoom-full",            0, 0, 0, g_keys_view_zoom_full },
+  { "view-zoom-extents",         0, 0, 0, g_keys_view_zoom_extents },
+  { "view-zoom-in",              0, 0, 0, g_keys_view_zoom_in },
+  { "view-zoom-out",             0, 0, 0, g_keys_view_zoom_out },
+  { "view-zoom-in-hotkey",       0, 0, 0, g_keys_view_zoom_in_hotkey },
+  { "view-zoom-out-hotkey",      0, 0, 0, g_keys_view_zoom_out_hotkey },
+  { "view-zoom-box",             0, 0, 0, g_keys_view_zoom_box },
+  { "view-zoom-box-hotkey",      0, 0, 0, g_keys_view_zoom_box_hotkey },
+  { "view-pan",                  0, 0, 0, g_keys_view_pan },
+  { "view-pan-hotkey",           0, 0, 0, g_keys_view_pan_hotkey },
+  { "view-update-cues",          0, 0, 0, g_keys_view_update_cues },
+  { "page-manager",              0, 0, 0, g_keys_page_manager },
+  { "page-next",                 0, 0, 0, g_keys_page_next },
+  { "page-prev",                 0, 0, 0, g_keys_page_prev },
+  { "page-new",                  0, 0, 0, g_keys_page_new },
+  { "page-close",                0, 0, 0, g_keys_page_close },
+  { "page-revert",               0, 0, 0, g_keys_page_revert },
+  { "page-discard",              0, 0, 0, g_keys_page_discard },
+  { "page-print",                0, 0, 0, g_keys_page_print },
+  { "add-component",             0, 0, 0, g_keys_add_component },
+  { "add-attribute",             0, 0, 0, g_keys_add_attribute },
+  { "add-attribute-hotkey",      0, 0, 0, g_keys_add_attribute_hotkey },
+  { "add-net",                   0, 0, 0, g_keys_add_net },
+  { "add-net-hotkey",            0, 0, 0, g_keys_add_net_hotkey },
+  { "add-bus",                   0, 0, 0, g_keys_add_bus },
+  { "add-bus-hotkey",            0, 0, 0, g_keys_add_bus_hotkey },
+  { "add-text",                  0, 0, 0, g_keys_add_text },
+  { "add-line",                  0, 0, 0, g_keys_add_line },
+  { "add-line-hotkey",           0, 0, 0, g_keys_add_line_hotkey },
+  { "add-box",                   0, 0, 0, g_keys_add_box },
+  { "add-box-hotkey",            0, 0, 0, g_keys_add_box_hotkey },
+  { "add-circle",                0, 0, 0, g_keys_add_circle },
+  { "add-circle-hotkey",         0, 0, 0, g_keys_add_circle_hotkey },
+  { "add-arc",                   0, 0, 0, g_keys_add_arc },
+  { "add-arc-hotkey",            0, 0, 0, g_keys_add_arc_hotkey },
+  { "add-pin",                   0, 0, 0, g_keys_add_pin },
+  { "add-pin-hotkey",            0, 0, 0, g_keys_add_pin_hotkey },
+  { "hierarchy-down-schematic",  0, 0, 0, g_keys_hierarchy_down_schematic },
+  { "hierarchy-down-symbol",     0, 0, 0, g_keys_hierarchy_down_symbol },
+  { "hierarchy-up",              0, 0, 0, g_keys_hierarchy_up },
+  { "hierarchy-documentation",   0, 0, 0, g_keys_hierarchy_documentation },
+  { "attributes-attach",         0, 0, 0, g_keys_attributes_attach },
+  { "attributes-detach",         0, 0, 0, g_keys_attributes_detach },
+  { "attributes-show-name",      0, 0, 0, g_keys_attributes_show_name },
+  { "attributes-show-value",     0, 0, 0, g_keys_attributes_show_value },
+  { "attributes-show-both",      0, 0, 0, g_keys_attributes_show_both },
+  { "attributes-visibility-toggle", 0, 0, 0, g_keys_attributes_visibility_toggle },
+  { "options-text-size",         0, 0, 0, g_keys_options_text_size },
+  { "options-snap-size",         0, 0, 0, g_keys_options_snap_size },
+  { "options-action-feedback",   0, 0, 0, g_keys_options_afeedback },
+  { "options-grid",              0, 0, 0, g_keys_options_grid },
+  { "options-snap",              0, 0, 0, g_keys_options_snap },
+  { "options-rubberband",        0, 0, 0, g_keys_options_rubberband },
+  { "options-show-log-window",   0, 0, 0, g_keys_options_show_log_window },
+  { "options-show-coord-window", 0, 0, 0, g_keys_options_show_coord_window },
+  { "help-about",                0, 0, 0, g_keys_help_about },
+  { "help-manual",               0, 0, 0, g_keys_help_manual },
+  { "help-hotkeys",              0, 0, 0, g_keys_help_hotkeys },
+  { "help-component",            0, 0, 0, g_keys_hierarchy_documentation },
+  { "misc-misc",                 0, 0, 0, g_keys_misc },
+  { "misc-misc2",                0, 0, 0, g_keys_misc2 },
+  { "misc-misc3",                0, 0, 0, g_keys_misc3 },
+  { "cancel",                    0, 0, 0, g_keys_cancel },
+
+  /*help functions for generating netlists*/
+  { "get-selected-filename",     0, 0, 0, g_get_selected_filename },
+  { "get-selected-component-attributes", 0, 0, 0, g_get_selected_component_attributes },
+  { NULL,                        0, 0, 0, NULL } };
+  
+@ %def gschem_funcs
+
 @section Function @code{g_register_funcs()}
 
 @defun g_register_funcs
+Creates [[subr]] objects to make [[g_rc_*]] functions that are defined in @file{g_rc.c}, @file{g_keys.c} and @file{g_funcs.c} visible to Scheme.
 @end defun
 
 <<g_register.c : g_register_funcs()>>=
 void
-g_register_funcs(void)
+g_register_funcs (void)
 {
-  /* rc file */
-  gh_new_procedure1_0 ("gschem-version", g_rc_gschem_version);
+  struct gsubr_t *tmp = gschem_funcs;
+  
+  while (tmp->name != NULL) {
+    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
+    tmp++;
+  }
 
-  gh_new_procedure ("override-net-color", g_rc_override_net_color, 
-                    7, 0, 0);
-  gh_new_procedure ("override-bus-color", g_rc_override_bus_color,
-                    7, 0, 0);
-  gh_new_procedure ("override-pin-color", g_rc_override_pin_color,
-                    7, 0, 0);
-  gh_new_procedure ("attribute-color", g_rc_attribute_color,
-                    7, 0, 0);
-  gh_new_procedure ("detached-attribute-color", g_rc_detachedattr_color,
-                    7, 0, 0);
-  gh_new_procedure ("text-color", g_rc_text_color,
-                    7, 0, 0);
-  gh_new_procedure ("logic-bubble-color", g_rc_logic_bubble_color,
-                    7, 0, 0);
-  gh_new_procedure ("lock-color", g_rc_lock_color,
-                    7, 0, 0);
-  gh_new_procedure ("zoom-box-color", g_rc_zoom_box_color,
-                    7, 0, 0);
-  gh_new_procedure ("net-color", g_rc_net_color,
-                    7, 0, 0);
-  gh_new_procedure ("bus-color", g_rc_bus_color,
-                    7, 0, 0);
-  gh_new_procedure ("pin-color", g_rc_pin_color,
-                    7, 0, 0);
-  gh_new_procedure ("graphic-color", g_rc_graphic_color,
-                    7, 0, 0);
-  gh_new_procedure ("grid-color", g_rc_grid_color,
-                    7, 0, 0);
-  gh_new_procedure ("background-color", g_rc_background_color,
-                    7, 0, 0);
-  gh_new_procedure ("select-color", g_rc_select_color,
-                    7, 0, 0);
-  gh_new_procedure ("boundingbox-color", g_rc_boundingbox_color,
-                    7, 0, 0);
-  gh_new_procedure ("net-endpoint-color", g_rc_net_endpoint_color,
-                    7, 0, 0);
-  gh_new_procedure ("stroke-color", g_rc_stroke_color,
-                    7, 0, 0);
-  gh_new_procedure ("output-color-background", g_rc_output_color_background,
-                    7, 0, 0);
-  gh_new_procedure ("freestyle-color", g_rc_freestyle_color,
-                    7, 0, 0);
-
-
-  gh_new_procedure1_0 ("net-endpoint-mode", g_rc_net_endpoint_mode);
-  gh_new_procedure1_0 ("net-midpoint-mode", g_rc_net_midpoint_mode);
-  gh_new_procedure1_0 ("net-style", g_rc_net_style);
-  gh_new_procedure1_0 ("bus-style", g_rc_bus_style);
-  gh_new_procedure1_0 ("pin-style", g_rc_pin_style);
-  gh_new_procedure1_0 ("zoom-with-pan", g_rc_zoom_with_pan);
-  gh_new_procedure1_0 ("action-feedback-mode", g_rc_action_feedback_mode);
-  gh_new_procedure1_0 ("text-feedback", g_rc_text_feedback);
-  gh_new_procedure1_0 ("text-display-zoomfactor", g_rc_text_display_zoomfactor);
-  gh_new_procedure1_0 ("scrollbars", g_rc_scrollbars);
-  gh_new_procedure1_0 ("scrollbar-update", g_rc_scrollbar_update);
-  gh_new_procedure1_0 ("object-clipping", g_rc_object_clipping);
-  gh_new_procedure1_0 ("embed-components", g_rc_embed_components);
-  gh_new_procedure1_0 ("logging", g_rc_logging);
-  gh_new_procedure1_0 ("text-size", g_rc_text_size);
-  gh_new_procedure1_0 ("snap-size", g_rc_snap_size);
-
-  gh_new_procedure1_0 ("text-caps-style", g_rc_text_caps_style);
-  gh_new_procedure1_0 ("logging-destination", g_rc_logging_destination);
-
-  gh_new_procedure1_0 ("attribute-name", g_rc_attribute_name);
-  gh_new_procedure2_0 ("paper-size", g_rc_paper_size);
-  gh_new_procedure3_0 ("paper-sizes", g_rc_paper_sizes);
-  /* text-output is old... will eventually be removed! */
-  gh_new_procedure1_0 ("text-output", g_rc_output_text); 
-  gh_new_procedure1_0 ("output-text", g_rc_output_text);
-  gh_new_procedure1_0 ("output-type", g_rc_output_type);
-  gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
-  gh_new_procedure1_0 ("output-color", g_rc_output_color);
-  gh_new_procedure1_0 ("output-capstyle", g_rc_output_capstyle);
-  gh_new_procedure1_0 ("image-color", g_rc_image_color);
-  gh_new_procedure2_0 ("image-size", g_rc_image_size);
-  gh_new_procedure1_0 ("log-window", g_rc_log_window);
-  gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
-  gh_new_procedure1_0 ("third-button", g_rc_third_button);
-  gh_new_procedure1_0 ("middle-button", g_rc_middle_button);
-  gh_new_procedure1_0 ("net-consolidate", g_rc_net_consolidate);
-  gh_new_procedure1_0 ("file-preview", g_rc_file_preview);
-  gh_new_procedure1_0 ("enforce-hierarchy", g_rc_enforce_hierarchy);
-  gh_new_procedure1_0 ("text-origin-marker", g_rc_text_origin_marker);
-  gh_new_procedure1_0 ("fast-mousepan", g_rc_fast_mousepan);
-  gh_new_procedure1_0 ("raise-dialog-boxes-on-expose", g_rc_raise_dialog_boxes_on_expose);
-  gh_new_procedure1_0 ("attribute-promotion", g_rc_attribute_promotion);
-  gh_new_procedure1_0 ("promote-invisible", g_rc_promote_invisible);
-  gh_new_procedure1_0 ("keep-invisible", g_rc_keep_invisible);
-  gh_new_procedure1_0 ("continue-component-place", g_rc_continue_component_place);
-  gh_new_procedure1_0 ("undo-levels", g_rc_undo_levels);
-  gh_new_procedure1_0 ("undo-control", g_rc_undo_control);
-  gh_new_procedure1_0 ("undo-type", g_rc_undo_type);
-
-  gh_new_procedure1_0 ("draw-grips", g_rc_draw_grips);
-  gh_new_procedure1_0 ("netconn-rubberband", g_rc_netconn_rubberband);
-  gh_new_procedure1_0 ("sort-component-library", g_rc_sort_component_library);
-  gh_new_procedure2_0 ("add-menu", g_rc_add_menu);
-  gh_new_procedure2_0 ("window-size", g_rc_window_size);
-  gh_new_procedure1_0 ("warp-cursor", g_rc_warp_cursor);
-  gh_new_procedure1_0 ("toolbars", g_rc_toolbars);
-  gh_new_procedure1_0 ("handleboxes", g_rc_handleboxes);
-  gh_new_procedure1_0 ("setpagedevice-orientation", g_rc_setpagedevice_orientation);
-  gh_new_procedure1_0 ("setpagedevice-pagesize", g_rc_setpagedevice_pagesize);
-  gh_new_procedure1_0 ("bus-ripper-size", g_rc_bus_ripper_size);
-  gh_new_procedure1_0 ("bus-ripper-type", g_rc_bus_ripper_type);
-  gh_new_procedure1_0 ("bus-ripper-rotation", g_rc_bus_ripper_rotation);
-  gh_new_procedure1_0 ("force-boundingbox", g_rc_force_boundingbox);
-  gh_new_procedure1_0 ("grid-dot-size", g_rc_grid_dot_size);
-  gh_new_procedure1_0 ("output-vector-threshold", g_rc_output_vector_threshold);
-
-  /* general guile functions */
-  gh_new_procedure1_0 ("gschem-print", g_funcs_print);
-  gh_new_procedure1_0 ("gschem-image", g_funcs_image);
-  gh_new_procedure1_0 ("gschem-key-name", g_funcs_key_name);
-  gh_new_procedure1_0 ("gschem-key-value", g_funcs_key_value);
-  gh_new_procedure0_0 ("gschem-key-done", g_funcs_key_done);
-  gh_new_procedure0_0 ("gschem-use-rc-values", g_funcs_use_rc_values);
-  gh_new_procedure0_0 ("gschem-exit", g_funcs_exit);
-
-  /* keymapping callbacks */
-  gh_new_procedure0_0 ("file-new-window", g_keys_file_new_window);
-  gh_new_procedure0_0 ("file-new", g_keys_file_new);
-  gh_new_procedure0_0 ("file-open", g_keys_file_open);
-  gh_new_procedure0_0 ("file-script", g_keys_file_script);
-  gh_new_procedure0_0 ("file-save", g_keys_file_save);
-  gh_new_procedure0_0 ("file-save-as", g_keys_file_save_as);
-  gh_new_procedure0_0 ("file-save-all", g_keys_file_save_all);
-  gh_new_procedure0_0 ("file-print", g_keys_file_print);
-  gh_new_procedure0_0 ("file-image", g_keys_file_write_png);
-  gh_new_procedure0_0 ("file-close-window", g_keys_file_close);
-  gh_new_procedure0_0 ("file-quit", g_keys_file_quit);
-  gh_new_procedure0_0 ("edit-undo", g_keys_edit_undo);
-  gh_new_procedure0_0 ("edit-redo", g_keys_edit_redo);
-  gh_new_procedure0_0 ("edit-select", g_keys_edit_select);
-  gh_new_procedure0_0 ("edit-copy", g_keys_edit_copy);
-  gh_new_procedure0_0 ("edit-copy-hotkey", g_keys_edit_copy_hotkey);
-  gh_new_procedure0_0 ("edit-move", g_keys_edit_move);
-  gh_new_procedure0_0 ("edit-move-hotkey", g_keys_edit_move_hotkey);
-  gh_new_procedure0_0 ("edit-delete", g_keys_edit_delete);
-  gh_new_procedure0_0 ("edit-rotate-90", g_keys_edit_rotate_90);
-  gh_new_procedure0_0 ("edit-rotate-90-hotkey", g_keys_edit_rotate_90_hotkey);
-  gh_new_procedure0_0 ("edit-mirror", g_keys_edit_mirror);
-  gh_new_procedure0_0 ("edit-mirror-hotkey", g_keys_edit_mirror_hotkey);
-#if 0 /* Obsolete */
-  gh_new_procedure0_0 ("edit-stretch", g_keys_edit_stretch);
-  gh_new_procedure0_0 ("edit-stretch-hotkey", g_keys_edit_stretch_hotkey);
-#endif
-  gh_new_procedure0_0 ("edit-slot", g_keys_edit_slot);
-  gh_new_procedure0_0 ("edit-color", g_keys_edit_color);
-  gh_new_procedure0_0 ("edit-edit", g_keys_edit_edit);
-  gh_new_procedure0_0 ("edit-text", g_keys_edit_text);
-  gh_new_procedure0_0 ("edit-lock", g_keys_edit_lock);
-  gh_new_procedure0_0 ("edit-unlock", g_keys_edit_unlock);
-  gh_new_procedure0_0 ("edit-linetype", g_keys_edit_linetype);
-  gh_new_procedure0_0 ("edit-filltype", g_keys_edit_filltype);
-  gh_new_procedure0_0 ("edit-translate", g_keys_edit_translate);
-  gh_new_procedure0_0 ("edit-embed", g_keys_edit_embed);
-  gh_new_procedure0_0 ("edit-unembed", g_keys_edit_unembed);
-  gh_new_procedure0_0 ("edit-update", g_keys_edit_update);
-  gh_new_procedure0_0 ("edit-show-hidden", g_keys_edit_show_hidden);
-  gh_new_procedure0_0 ("edit-make-text-visible", g_keys_edit_make_visible);
-  gh_new_procedure0_0 ("edit-find-text", g_keys_edit_find);
-  gh_new_procedure0_0 ("edit-show-text", g_keys_edit_show_text);
-  gh_new_procedure0_0 ("edit-hide-text", g_keys_edit_hide_text);
-  gh_new_procedure0_0 ("edit-autonumber", g_keys_edit_autonumber_text);
-
-  gh_new_procedure0_0 ("buffer-copy1", g_keys_buffer_copy1);
-  gh_new_procedure0_0 ("buffer-copy2", g_keys_buffer_copy2);
-  gh_new_procedure0_0 ("buffer-copy3", g_keys_buffer_copy3);
-  gh_new_procedure0_0 ("buffer-copy4", g_keys_buffer_copy4);
-  gh_new_procedure0_0 ("buffer-copy5", g_keys_buffer_copy5);
-  gh_new_procedure0_0 ("buffer-cut1", g_keys_buffer_cut1);
-  gh_new_procedure0_0 ("buffer-cut2", g_keys_buffer_cut2);
-  gh_new_procedure0_0 ("buffer-cut3", g_keys_buffer_cut3);
-  gh_new_procedure0_0 ("buffer-cut4", g_keys_buffer_cut4);
-  gh_new_procedure0_0 ("buffer-cut5", g_keys_buffer_cut5);
-  gh_new_procedure0_0 ("buffer-paste1", g_keys_buffer_paste1);
-  gh_new_procedure0_0 ("buffer-paste2", g_keys_buffer_paste2);
-  gh_new_procedure0_0 ("buffer-paste3", g_keys_buffer_paste3);
-  gh_new_procedure0_0 ("buffer-paste4", g_keys_buffer_paste4);
-  gh_new_procedure0_0 ("buffer-paste5", g_keys_buffer_paste5);
-  gh_new_procedure0_0 ("buffer-paste1-hotkey", g_keys_buffer_paste1_hotkey);
-  gh_new_procedure0_0 ("buffer-paste2-hotkey", g_keys_buffer_paste2_hotkey);
-  gh_new_procedure0_0 ("buffer-paste3-hotkey", g_keys_buffer_paste3_hotkey);
-  gh_new_procedure0_0 ("buffer-paste4-hotkey", g_keys_buffer_paste4_hotkey);
-  gh_new_procedure0_0 ("buffer-paste5-hotkey", g_keys_buffer_paste5_hotkey);
-
-  gh_new_procedure0_0 ("view-redraw", g_keys_view_redraw);
-  gh_new_procedure0_0 ("view-zoom-full", g_keys_view_zoom_full);
-  gh_new_procedure0_0 ("view-zoom-extents", g_keys_view_zoom_extents);
-  gh_new_procedure0_0 ("view-zoom-in", g_keys_view_zoom_in);
-  gh_new_procedure0_0 ("view-zoom-out", g_keys_view_zoom_out);
-  gh_new_procedure0_0 ("view-zoom-in-hotkey", g_keys_view_zoom_in_hotkey);
-  gh_new_procedure0_0 ("view-zoom-out-hotkey", g_keys_view_zoom_out_hotkey);
-  gh_new_procedure0_0 ("view-zoom-box", g_keys_view_zoom_box);
-  gh_new_procedure0_0 ("view-zoom-box-hotkey", g_keys_view_zoom_box_hotkey);
-  gh_new_procedure0_0 ("view-pan", g_keys_view_pan);
-  gh_new_procedure0_0 ("view-pan-hotkey", g_keys_view_pan_hotkey);
-  gh_new_procedure0_0 ("view-update-cues", g_keys_view_update_cues);
-  gh_new_procedure0_0 ("page-manager", g_keys_page_manager);
-  gh_new_procedure0_0 ("page-next", g_keys_page_next);
-  gh_new_procedure0_0 ("page-prev", g_keys_page_prev);
-  gh_new_procedure0_0 ("page-new", g_keys_page_new);
-  gh_new_procedure0_0 ("page-close", g_keys_page_close);
-  gh_new_procedure0_0 ("page-revert", g_keys_page_revert);
-  gh_new_procedure0_0 ("page-discard", g_keys_page_discard);
-  gh_new_procedure0_0 ("page-print", g_keys_page_print);
-  gh_new_procedure0_0 ("add-component", g_keys_add_component);
-  gh_new_procedure0_0 ("add-attribute", g_keys_add_attribute);
-  gh_new_procedure0_0 ("add-attribute-hotkey", g_keys_add_attribute_hotkey);
-  gh_new_procedure0_0 ("add-net", g_keys_add_net);
-  gh_new_procedure0_0 ("add-net-hotkey", g_keys_add_net_hotkey);
-  gh_new_procedure0_0 ("add-bus", g_keys_add_bus);
-  gh_new_procedure0_0 ("add-bus-hotkey", g_keys_add_bus_hotkey);
-  gh_new_procedure0_0 ("add-text", g_keys_add_text);
-  gh_new_procedure0_0 ("add-line", g_keys_add_line);
-  gh_new_procedure0_0 ("add-line-hotkey", g_keys_add_line_hotkey);
-  gh_new_procedure0_0 ("add-box", g_keys_add_box);
-  gh_new_procedure0_0 ("add-box-hotkey", g_keys_add_box_hotkey);
-  gh_new_procedure0_0 ("add-circle", g_keys_add_circle);
-  gh_new_procedure0_0 ("add-circle-hotkey", g_keys_add_circle_hotkey);
-  gh_new_procedure0_0 ("add-arc", g_keys_add_arc);
-  gh_new_procedure0_0 ("add-arc-hotkey", g_keys_add_arc_hotkey);
-  gh_new_procedure0_0 ("add-pin", g_keys_add_pin);
-  gh_new_procedure0_0 ("add-pin-hotkey", g_keys_add_pin_hotkey);
-  gh_new_procedure0_0 ("hierarchy-down-schematic", g_keys_hierarchy_down_schematic);
-  gh_new_procedure0_0 ("hierarchy-down-symbol", g_keys_hierarchy_down_symbol);
-  gh_new_procedure0_0 ("hierarchy-up", g_keys_hierarchy_up);
-  gh_new_procedure0_0 ("hierarchy-documentation", g_keys_hierarchy_documentation);
-  gh_new_procedure0_0 ("attributes-attach", g_keys_attributes_attach);
-  gh_new_procedure0_0 ("attributes-detach", g_keys_attributes_detach);
-  gh_new_procedure0_0 ("attributes-show-name", g_keys_attributes_show_name);
-  gh_new_procedure0_0 ("attributes-show-value", g_keys_attributes_show_value);
-  gh_new_procedure0_0 ("attributes-show-both", g_keys_attributes_show_both);
-  gh_new_procedure0_0 ("attributes-visibility-toggle", g_keys_attributes_visibility_toggle);
-  gh_new_procedure0_0 ("options-text-size", g_keys_options_text_size);
-  gh_new_procedure0_0 ("options-snap-size", g_keys_options_snap_size);
-  gh_new_procedure0_0 ("options-action-feedback", g_keys_options_afeedback);
-  gh_new_procedure0_0 ("options-grid", g_keys_options_grid);
-  gh_new_procedure0_0 ("options-snap", g_keys_options_snap);
-  gh_new_procedure0_0 ("options-rubberband", g_keys_options_rubberband);
-  gh_new_procedure0_0 ("options-show-log-window", g_keys_options_show_log_window);
-  gh_new_procedure0_0 ("options-show-coord-window", g_keys_options_show_coord_window);
-  gh_new_procedure0_0 ("help-about", g_keys_help_about);
-  gh_new_procedure0_0 ("help-manual", g_keys_help_manual);
-  gh_new_procedure0_0 ("help-hotkeys", g_keys_help_hotkeys);
-  gh_new_procedure0_0 ("help-component", g_keys_hierarchy_documentation);
-  gh_new_procedure0_0 ("misc-misc", g_keys_misc);
-  gh_new_procedure0_0 ("misc-misc2", g_keys_misc2);
-  gh_new_procedure0_0 ("misc-misc3", g_keys_misc3);
-  gh_new_procedure0_0 ("cancel", g_keys_cancel);
-
-  g_init_attrib_smob();
+  g_init_attrib_smob ();
 
   /* Hook stuff */
-  scm_make_gsubr("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
-  add_component_hook  = scm_create_hook("add-component-hook", 1);
-  copy_component_hook = scm_create_hook("copy-component-hook", 1);
-  move_component_hook = scm_create_hook("move-component-hook", 1);
+  scm_make_gsubr ("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
+  add_component_hook  = scm_create_hook ("add-component-hook", 1);
+  copy_component_hook = scm_create_hook ("copy-component-hook", 1);
+  move_component_hook = scm_create_hook ("move-component-hook", 1);
 
-  /*help functions for generating netlists*/
-  gh_new_procedure0_0 ("get-selected-filename",g_get_selected_filename);
-  gh_new_procedure0_0 ("get-selected-component-attributes",
-                       g_get_selected_component_attributes);
-
-
-  return;
 }
 
 

@@ -12,7 +12,7 @@
 
 <<gschem.c : include directives>>
 <<gschem.c : gschem_quit()>>
-<<gschem.c : main_func()>>
+<<gschem.c : main_prog()>>
 <<gschem.c : main()>>
 
 @
@@ -110,14 +110,14 @@ gschem_quit(void)
 @ %def gschem_quit
 
 
-@section Function @code{main_func()}
+@section Function @code{main_prog()}
 
-@defun main_func argc argv
+@defun main_prog closure argc argv
 @end defun
 
-<<gschem.c : main_func()>>=
+<<gschem.c : main_prog()>>=
 void
-main_prog(int argc, char *argv[])
+main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   char *cwd = NULL;
@@ -362,7 +362,7 @@ main_prog(int argc, char *argv[])
   o_redraw_all_fast(w_current);
 
 #if DEBUG
-  gh_eval_str ("(display \"hello guile\n\")");
+  scm_c_eval_string ("(display \"hello guile\n\")");
 #endif
 
   if (w_current->scheme_directory == NULL) {
@@ -392,7 +392,7 @@ main_prog(int argc, char *argv[])
 }
 
 
-@ %def main_func
+@ %def main_prog
 
 
 @section Function @code{main()}
@@ -420,7 +420,8 @@ main (int argc, char *argv[])
   if(getenv("GUILE_WARN_DEPRECATED") == NULL)
     putenv("GUILE_WARN_DEPRECATED=no");
 
-  gh_enter(argc, argv, main_prog);
+  scm_boot_guile (argc, argv, main_prog, 0);
+  
   return 0;
 }
 

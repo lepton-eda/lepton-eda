@@ -58,8 +58,8 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
 		    
 		    if (val) 
 		      {
-			*list = gh_cons( gh_str2scm (found_name, 
-						     strlen(found_name)), *list);	
+                *list = scm_cons (scm_makfrom0str (found_name),
+                                  *list);	
 		      }	
 		   
 		   if (found_name) free(found_name); 
@@ -88,7 +88,7 @@ vams_get_package_attributes(SCM scm_uref)
 	SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
 		    scm_uref , SCM_ARG1, "gnetlist:vams-get-package-attributes");
 
-        uref = gh_scm2newstr(scm_uref, NULL);
+    uref = SCM_STRING_CHARS (scm_uref);
 
 	/* here is where you make it multi page aware */
 	nl_current = netlist_head;
@@ -116,8 +116,6 @@ vams_get_package_attributes(SCM scm_uref)
 	      }
 	      nl_current = nl_current->next;
 	}
-
-	free(uref);
 
 	return(list);
 }

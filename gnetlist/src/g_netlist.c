@@ -39,7 +39,6 @@ void g_set_project_current(TOPLEVEL * pr_current)
     project_current = pr_current;
 }
 
-
 /* this function will only return a unique list of packages */
 SCM g_get_packages(SCM level)
 {
@@ -57,10 +56,8 @@ SCM g_get_packages(SCM level)
 
 	if (nl_current->component_uref) {
 	    if (s_scratch_string_fill(nl_current->component_uref)) {
-		list = gh_cons(gh_str2scm(nl_current->component_uref,
-					  strlen
-					  (nl_current->component_uref)),
-			       list);
+          list = scm_cons (scm_makfrom0str (nl_current->component_uref),
+                           list);
 	    }
 	}
 	nl_current = nl_current->next;
@@ -87,10 +84,8 @@ SCM g_get_non_unique_packages(SCM level)
 
 	if (nl_current->component_uref) {
 	    if (s_scratch_non_unique_string_fill(nl_current->component_uref)) {
-		list = gh_cons(gh_str2scm(nl_current->component_uref,
-					  strlen
-					  (nl_current->component_uref)),
-			       list);
+          list = scm_cons (scm_makfrom0str (nl_current->component_uref),
+                           list);
 	    }
 	}
 	nl_current = nl_current->next;
@@ -106,12 +101,9 @@ SCM g_get_pins(SCM uref)
     SCM list = SCM_EOL;
     NETLIST *nl_current;
     CPINLIST *pl_current;
-    char *string;
 
     SCM_ASSERT( (SCM_NIMP (uref) && SCM_STRINGP (uref) ),
 		uref, SCM_ARG1, "gnetlist:get-pins");
-
-    string = gh_scm2newstr(uref, NULL);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -121,15 +113,13 @@ SCM g_get_pins(SCM uref)
     while (nl_current != NULL) {
 
 	if (nl_current->component_uref) {
-	    if (strcmp(nl_current->component_uref, string) == 0) {
+	    if (strcmp(nl_current->component_uref, SCM_STRING_CHARS (uref)) == 0) {
 
 		pl_current = nl_current->cpins;
 		while (pl_current != NULL) {
 		    if (pl_current->pin_number) {
-			list = gh_cons(gh_str2scm(pl_current->pin_number,
-						  strlen(pl_current->
-							 pin_number)),
-				       list);
+              list = scm_cons (scm_makfrom0str (pl_current->pin_number),
+                               list);
 		    }
 		    pl_current = pl_current->next;
 		}
@@ -138,7 +128,6 @@ SCM g_get_pins(SCM uref)
 	nl_current = nl_current->next;
     }
 
-    free(string);
     return (list);
 }
 
@@ -149,14 +138,9 @@ SCM g_get_all_nets(SCM scm_level)
     NETLIST *nl_current;
     CPINLIST *pl_current;
     char *net_name;
-    char *level;
 
     SCM_ASSERT( (SCM_NIMP (scm_level) && SCM_STRINGP (scm_level) ),
 		scm_level, SCM_ARG1, "gnetlist:get-all-nets");
-
-    level = gh_scm2newstr(scm_level, NULL);
-    free(level);
-
 
     nl_current = netlist_head;
 
@@ -177,9 +161,8 @@ SCM g_get_all_nets(SCM scm_level)
 		    printf("Got net: `%s'\n", net_name);
 		    printf("pin %s\n", pl_current->pin_number);
 #endif
-		    list =
-			gh_cons(gh_str2scm(net_name, strlen(net_name)),
-				list);
+		    list = scm_cons (scm_makfrom0str (net_name),
+                             list);
 		}
 	    }
 	    pl_current = pl_current->next;
@@ -195,18 +178,12 @@ SCM g_get_all_unique_nets(SCM scm_level)
 
     SCM list = SCM_EOL;
     SCM x = SCM_EOL;
-    SCM is_member = SCM_EOL;
     NETLIST *nl_current;
     CPINLIST *pl_current;
     char *net_name;
-    char *level;
 
     SCM_ASSERT( (SCM_NIMP (scm_level) && SCM_STRINGP (scm_level) ),
 		scm_level, SCM_ARG1, "gnetlist:get-all-unique-nets");
-
-    level = gh_scm2newstr(scm_level, NULL);
-    free(level);
-
 
     nl_current = netlist_head;
 
@@ -225,13 +202,9 @@ SCM g_get_all_unique_nets(SCM scm_level)
 		    /* add the net name to the list */
 		    /*printf("Got net: `%s'\n",net_name); */
 
-		    x = gh_str2scm(net_name, strlen(net_name));
-		    is_member = scm_member(x, list);
-
-		    if (is_member == SCM_BOOL_F) {
-			list =
-			    gh_cons(gh_str2scm(net_name, strlen(net_name)),
-				    list);
+		    x = scm_makfrom0str (net_name);
+		    if (scm_member(x, list) == SCM_BOOL_F) {
+              list = scm_cons (x, list);
 		    }
 		}
 	    }
@@ -263,7 +236,7 @@ SCM g_get_all_connections(SCM scm_netname)
     SCM_ASSERT( (SCM_NIMP (scm_netname) && SCM_STRINGP (scm_netname) ),
 		 scm_netname, SCM_ARG1, "gnetlist:get-all-connections");
 
-    wanted_net_name = gh_scm2newstr(scm_netname, NULL);
+    wanted_net_name = SCM_STRING_CHARS (scm_netname);
 
     if (wanted_net_name == NULL) {
 	return list;
@@ -307,16 +280,15 @@ SCM g_get_all_connections(SCM scm_netname)
 			    sscanf(n_current->connected_to,
 				   "%s %s", uref, pin);
 
-			    pairlist =
-				gh_list(gh_str2scm(uref, strlen(uref)),
-					gh_str2scm(pin, strlen(pin)),
-					SCM_UNDEFINED);
+			    pairlist = scm_list_n (scm_makfrom0str (uref),
+                                       scm_makfrom0str (pin),
+                                       SCM_UNDEFINED);
 
 			    x = pairlist;
 			    is_member = scm_member(x, connlist);
 
 			    if (is_member == SCM_BOOL_F) {
-				connlist = gh_cons(pairlist, connlist);
+				connlist = scm_cons (pairlist, connlist);
 			    }
 
 			    free(uref);
@@ -358,8 +330,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 		scm_pin, SCM_ARG2, "gnetlist:get-nets");
 
 
-    wanted_uref = gh_scm2newstr(scm_uref, NULL);
-    wanted_pin = gh_scm2newstr(scm_pin, NULL);
+    wanted_uref = SCM_STRING_CHARS (scm_uref);
+    wanted_pin  = SCM_STRING_CHARS (scm_pin);
 
     nl_current = netlist_head;
 
@@ -401,14 +373,11 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 				    sscanf(n_current->connected_to,
 					   "%s %s", uref, pin);
 
-				    pairlist =
-					gh_list(gh_str2scm
-						(uref, strlen(uref)),
-						gh_str2scm(pin,
-							   strlen(pin)),
-						SCM_UNDEFINED);
+				    pairlist = scm_list_n (scm_makfrom0str (uref),
+                                           scm_makfrom0str (pin),
+                                           SCM_UNDEFINED);
 
-				    pinslist = gh_cons(pairlist, pinslist);
+				    pinslist = scm_cons (pairlist, pinslist);
 
 				    free(uref);
 				    free(pin);
@@ -425,18 +394,13 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
     }
 
     if (net_name != NULL) {
-	outerlist =
-	    gh_cons(gh_str2scm(net_name, strlen(net_name)), pinslist);
+      outerlist = scm_cons (scm_makfrom0str (net_name), pinslist);
     } else {
-	outerlist = gh_cons(gh_str2scm("ERROR_INVALID_PIN",
-				       strlen("ERROR_INVALID_PIN")),
-			    outerlist);
+      outerlist = scm_cons (scm_makfrom0str ("ERROR_INVALID_PIN"),
+                            outerlist);
 	fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n",
 		wanted_pin);
     }
-
-    free(wanted_uref);
-    free(wanted_pin);
 
     return (outerlist);
 }
@@ -459,7 +423,7 @@ SCM g_get_pins_nets(SCM scm_uref)
     SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
 		scm_uref, SCM_ARG1, "gnetlist:get-pins-nets");
 
-    wanted_uref = gh_scm2newstr(scm_uref, NULL);
+    wanted_uref = SCM_STRING_CHARS (scm_uref);
 
     /* search for the any instances */
     /* through the entire list */
@@ -480,11 +444,9 @@ SCM g_get_pins_nets(SCM scm_uref)
 			    pin = pl_current->pin_number;
 			    net_name = pl_current->net_name;
 
-			    pairlist =
-				gh_cons(gh_str2scm(pin, strlen(pin)),
-					gh_str2scm(net_name,
-						   strlen(net_name)));
-			    pinslist = gh_cons(pairlist, pinslist);
+			    pairlist = scm_cons (scm_makfrom0str (pin),
+                                     scm_makfrom0str (net_name));
+			    pinslist = scm_cons (pairlist, pinslist);
 			}
 
 		    }
@@ -493,9 +455,7 @@ SCM g_get_pins_nets(SCM scm_uref)
 	}
     }
 
-    free(wanted_uref);
-
-    pinslist = gh_reverse(pinslist);	/* pins are in reverse order on the way 
+    pinslist = scm_reverse (pinslist);	/* pins are in reverse order on the way 
 					 * out 
 					 */
     return (pinslist);
@@ -516,8 +476,8 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) && SCM_STRINGP (scm_wanted_attrib) ),
 	       scm_wanted_attrib, SCM_ARG2, "gnetlist:get-package-attribute");
 
-    uref = gh_scm2newstr(scm_uref, NULL);
-    wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+    uref          = SCM_STRING_CHARS (scm_uref);
+    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -551,14 +511,10 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     }
 
     if (return_value) {
-	scm_return_value = gh_str2scm(return_value, strlen(return_value));
+      scm_return_value = scm_makfrom0str (return_value);
     } else {
-	scm_return_value = gh_str2scm("unknown", strlen("unknown"));
-
+      scm_return_value = scm_makfrom0str ("unknown");
     }
-
-    free(uref);
-    free(wanted_attrib);
 
     return (scm_return_value);
 }
@@ -590,9 +546,9 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
                SCM_STRINGP (scm_wanted_attrib) ),
               scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute-seq");
 
-  uref = gh_scm2newstr(scm_uref, NULL);
-  pinseq = gh_scm2newstr(scm_pinseq, NULL);
-  wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+  uref          = SCM_STRING_CHARS (scm_uref);
+  pinseq        = SCM_STRING_CHARS (scm_pinseq);
+  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
   
   pinseq_attrib = u_basic_strdup_multiple("pinseq=", pinseq, NULL);
 
@@ -651,15 +607,11 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   }
 
   if (return_value) {
-    scm_return_value = gh_str2scm(return_value, strlen(return_value));
+    scm_return_value = scm_makfrom0str (return_value);
   } else {
-    scm_return_value = gh_str2scm("unknown", strlen("unknown"));
-
+    scm_return_value = scm_makfrom0str ("unknown");
   }
 
-  free(uref);
-  free(pinseq);
-  free(wanted_attrib);
   free(pinseq_attrib);
 
   return (scm_return_value);
@@ -688,9 +640,9 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) && SCM_STRINGP (scm_wanted_attrib) ),
 		scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute");
 
-    uref = gh_scm2newstr(scm_uref, NULL);
-    pin = gh_scm2newstr(scm_pin, NULL);
-    wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+    uref          = SCM_STRING_CHARS (scm_uref);
+    pin           = SCM_STRING_CHARS (scm_pin);
+    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -723,14 +675,10 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     }
 
     if (return_value) {
-	scm_return_value = gh_str2scm(return_value, strlen(return_value));
+      scm_return_value = scm_makfrom0str (return_value);
     } else {
-	scm_return_value = gh_str2scm("unknown", strlen("unknown"));
+      scm_return_value = scm_makfrom0str ("unknown");
     }
-
-    free(uref);
-    free(pin);
-    free(wanted_attrib);
 
     return (scm_return_value);
 }
@@ -747,19 +695,17 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
     SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) && SCM_STRINGP (scm_wanted_attrib) ),
 	       scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
-    wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
     return_value = o_attrib_search_toplevel_all(project_current->page_head,
 						wanted_attrib);
 
     if (return_value) {
-	scm_return_value = gh_str2scm(return_value, strlen(return_value));
-	free(return_value);
+      scm_return_value = scm_makfrom0str (return_value);
+      free(return_value);
     } else {
-	scm_return_value = gh_str2scm("not found", strlen("not found"));
+      scm_return_value = scm_makfrom0str ("not found");
     }
-
-    free(wanted_attrib);
 
     return (scm_return_value);
 }
@@ -769,7 +715,7 @@ SCM g_set_netlist_mode(SCM mode)
 {
     char *string;
 
-    string = gh_scm2newstr(mode, NULL);
+    string = SCM_STRING_CHARS (mode);
 
     if (strcmp(string, "gEDA") == 0) {
 	netlist_mode = gEDA;
@@ -782,11 +728,7 @@ SCM g_set_netlist_mode(SCM mode)
     printf("netlist_mode: %s %d\n", string, netlist_mode);
 #endif
 
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
+    return (SCM_MAKINUM (0));
 }
 #endif
 
@@ -805,7 +747,7 @@ SCM g_get_slots(SCM scm_uref)
     SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
 		scm_uref, SCM_ARG1, "gnetlist:get-slots-used-of-package");
 
-    uref = gh_scm2newstr(scm_uref, NULL);
+    uref = SCM_STRING_CHARS (scm_uref);
     
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -835,11 +777,11 @@ SCM g_get_slots(SCM scm_uref)
 		}
 		slot = g_strconcat ("#d", slot_tmp, NULL);
 		  free (slot_tmp);
-		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
-						     SCM_MAKINUM(10));
+		  slot_number = scm_string_to_number(scm_makfrom0str (slot),
+                                             SCM_MAKINUM(10));
 		  free (slot);
 		  if (slot_number != SCM_BOOL_F) {
-		    slots_list = gh_cons(slot_number, slots_list);
+		    slots_list = scm_cons (slot_number, slots_list);
 		  }
 		  else 
 		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
@@ -848,8 +790,9 @@ SCM g_get_slots(SCM scm_uref)
 	nl_current = nl_current->next;
     }
 
-    free(uref);
-    slots_list = scm_sort_list_x(slots_list, gh_lookup("<"));
+    slots_list = scm_sort_list_x(slots_list,
+                                 scm_c_module_lookup (
+                                   scm_current_module (), "<"));
 
     return (slots_list);
 }
@@ -869,7 +812,7 @@ SCM g_get_unique_slots(SCM scm_uref)
     SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
 		scm_uref, SCM_ARG1, "gnetlist:get-unique-slots-used-of-package");
 
-    uref = gh_scm2newstr(scm_uref, NULL);
+    uref = SCM_STRING_CHARS (scm_uref);
     
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -899,12 +842,12 @@ SCM g_get_unique_slots(SCM scm_uref)
 		}
 		slot = g_strconcat ("#d", slot_tmp, NULL);
 		free (slot_tmp);
-		slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
-						   SCM_MAKINUM(10));
+		slot_number = scm_string_to_number(scm_makfrom0str (slot),
+                                           SCM_MAKINUM(10));
 		free (slot);
 		if (slot_number != SCM_BOOL_F) {
 		  if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
-		    slots_list = gh_cons(slot_number, slots_list);
+		    slots_list = scm_cons (slot_number, slots_list);
 		  }
 		}
 		else 
@@ -914,8 +857,9 @@ SCM g_get_unique_slots(SCM scm_uref)
 	nl_current = nl_current->next;
     }
 
-    free(uref);
-    slots_list = scm_sort_list_x(slots_list, gh_lookup("<"));
+    slots_list = scm_sort_list_x(slots_list,
+                                 scm_c_module_lookup (
+                                   scm_current_module (), "<"));
 
     return (slots_list);
 }
@@ -937,33 +881,30 @@ SCM g_get_calling_flags()
 
 /*  This is an ugly hack.  Some kind of foreach would be better here . . . .  */
     
-    arglist = gh_cons( gh_list( gh_str2scm("verbose_mode", 
-				           strlen("verbose_mode") ), 
-				gh_bool2scm(verbose_mode), 
-				SCM_UNDEFINED), 
-		       arglist);
+    arglist = scm_cons (scm_list_n (scm_makfrom0str ("verbose_mode"),
+                                    SCM_BOOL (verbose_mode),
+                                    SCM_UNDEFINED), 
+                        arglist);
 
-    arglist = gh_cons( gh_list( gh_str2scm("interactive_mode", 
-				           strlen("interactive_mode") ), 
-				gh_bool2scm(interactive_mode),
-				SCM_UNDEFINED), 
-		       arglist);
+    arglist = scm_cons (scm_list_n (scm_makfrom0str ("interactive_mode"),
+                                    SCM_BOOL (interactive_mode),
+                                    SCM_UNDEFINED), 
+                        arglist);
 
-    arglist = gh_cons( gh_list( gh_str2scm("include_mode", strlen("include_mode") ),
-                                gh_bool2scm(include_mode),
-                                SCM_UNDEFINED), 
-                       arglist);
+    arglist = scm_cons (scm_list_n (scm_makfrom0str ("include_mode"),
+                                    SCM_BOOL (include_mode),
+                                    SCM_UNDEFINED), 
+                        arglist);
 
-    arglist = gh_cons( gh_list( gh_str2scm("quiet_mode", 
-				           strlen("quiet_mode") ),
-				gh_bool2scm(quiet_mode),
-				SCM_UNDEFINED), 
-		       arglist);
+    arglist = scm_cons (scm_list_n (scm_makfrom0str ("quiet_mode"), 
+                                    SCM_BOOL (quiet_mode),
+                                    SCM_UNDEFINED), 
+                        arglist);
 
-    arglist = gh_cons( gh_list( gh_str2scm("sort_mode", strlen("sort_mode") ), 
-				gh_bool2scm(sort_mode),
-				SCM_UNDEFINED), 
-		       arglist);
+    arglist = scm_cons (scm_list_n (scm_makfrom0str ("sort_mode"),
+                                    SCM_BOOL (sort_mode),
+                                    SCM_UNDEFINED), 
+                        arglist);
 
     return (arglist);
 }
@@ -979,7 +920,7 @@ SCM g_get_command_line()
 {
      SCM commandline;
 
-     commandline = gh_str2scm(command_line, strlen(command_line) );
+     commandline = scm_makfrom0str (command_line);
 
      return (commandline);
 }

@@ -24,7 +24,7 @@
 #include <gdk/gdk.h>
 
 #include <stdio.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>

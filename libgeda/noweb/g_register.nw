@@ -11,6 +11,8 @@
 /* DO NOT read or edit this file ! Use ../noweb/g_register.nw instead */
 
 <<g_register.c : include directives>>
+<<g_register.c : global variables>>
+
 <<g_register.c : g_register_libgeda_funcs()>>
 
 @
@@ -55,7 +57,7 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <guile/gh.h>
+#include <libguile.h>
 
 #include "defines.h"
 #include "struct.h"
@@ -68,37 +70,55 @@
 @
 
 
+<<g_register.c : global variables>>=
+struct gsubr_t {
+  char* name;
+  int req;
+  int opt;
+  int rst;
+  SCM (*fnc)();
+};
+
+static struct gsubr_t libgeda_funcs[] = {
+  { "component-library",        1, 0, 0, g_rc_component_library },
+  { "component-library-search", 1, 0, 0, g_rc_component_library_search },
+  { "source-library",           1, 0, 0, g_rc_source_library },
+  { "source-library-search",    1, 0, 0, g_rc_source_library_search },
+  
+  { "world-size",               3, 0, 0, g_rc_world_size },
+  
+  { "reset-component-library",  0, 0, 0, g_rc_reset_component_library },
+  { "reset-source-library",     0, 0, 0, g_rc_reset_source_library },
+  
+  { "default-series-name",      1, 0, 0, g_rc_default_series_name },
+  { "untitled-name",            1, 0, 0, g_rc_untitled_name },
+  { "scheme-directory",         1, 0, 0, g_rc_scheme_directory },
+  { "bitmap-directory",         1, 0, 0, g_rc_bitmap_directory },
+  { "font-directory",           1, 0, 0, g_rc_font_directory },
+  { "bus-ripper-symname",       1, 0, 0, g_rc_bus_ripper_symname },
+  { NULL,                       0, 0, 0, NULL } };
+
+@ %def libgeda_funcs
+
+
 @section Function @code{g_register_libgeda_funcs()}
 
 @defun g_register_libgeda_funcs
+Creates [[subr]] objects to make [[g_rc_*]] functions that are defined in @file{g_rc.c} visible to Scheme.
 @end defun
 
 <<g_register.c : g_register_libgeda_funcs()>>=
 void
-g_register_libgeda_funcs(void)
+g_register_libgeda_funcs (void)
 {
-  /* rc file */
-  gh_new_procedure1_0 ("component-library", g_rc_component_library);
-  gh_new_procedure1_0 ("component-library-search", g_rc_component_library_search);
-  gh_new_procedure1_0 ("source-library", g_rc_source_library);
-  gh_new_procedure1_0 ("source-library-search", g_rc_source_library_search);
-    
-  gh_new_procedure3_0 ("world-size", g_rc_world_size);
-
-  gh_new_procedure0_0 ("reset-component-library", g_rc_reset_component_library);
-  gh_new_procedure0_0 ("reset-source-library", g_rc_reset_source_library);
-
-  gh_new_procedure1_0 ("default-series-name", g_rc_default_series_name);
-  gh_new_procedure1_0 ("untitled-name", g_rc_untitled_name);
-  gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
-  gh_new_procedure1_0 ("bitmap-directory", g_rc_bitmap_directory);
-  gh_new_procedure1_0 ("font-directory", g_rc_font_directory);
-  gh_new_procedure1_0 ("bus-ripper-symname", g_rc_bus_ripper_symname);
+  struct gsubr_t *tmp = libgeda_funcs;
   
-  return;
+  while (tmp->name != NULL) {
+    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
+    tmp++;
+  }
+  
 }
 
 
 @ %def g_register_libgeda_funcs
-
-

@@ -1,3 +1,7 @@
+2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/*.nw: Switched to the new scm interface of guile.
+
 2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/gschem.nw, noweb/o_misc.nw:
