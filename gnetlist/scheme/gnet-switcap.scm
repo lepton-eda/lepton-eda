@@ -35,17 +35,25 @@
 (define switcap:map-net-names
   (lambda (net-name)
     (let ((rx (make-regexp "^unnamed_net"))
+	  (net-alias net-name)
           )
       ;; XXX we should use a dynamic regexp based on the current value
       ;; for the unnamed net base string.
 
       (cond 
        ;; Change "GND" to "0"
-       ((string=? net-name "GND") "0")
+       ((string=? net-name "GND") (set! net-alias "0"))
        ;; remove the 'unnamed_net' part
-       ((regexp-exec rx net-name) (substring net-name 11))
+       ((regexp-exec rx net-name) (set! net-alias (substring net-name 11)))
        (else net-name)
        )
+
+      ;; Truncate to 7 characters
+      (if (> (string-length net-alias) 7)
+	  (set! net-alias (substring net-alias 0 7))
+	  )
+      ;; Convert to all upper case
+      (string-upcase net-alias)
 
       )
     )
