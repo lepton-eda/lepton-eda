@@ -1,0 +1,5 @@
+The source file for keymapping is keymapping.tex. It is then converted
+to html with a tool called HeVeA. HeVeA can be found at:
+http://para.inria.fr/~maranget/hevea/
+
+All other formats can be generated with LaTeX.
