@@ -1,0 +1,145 @@
+v 20030223
+B 300 0 1400 3000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 3250 5 10 0 0 0 0
+device=MAX038
+P 300 2700 0 2700 1 0 1
+{
+T 200 2750 5 8 1 1 0 6
+pinnumber=3
+T 200 2650 5 8 0 1 0 8
+pinseq=3
+T 350 2700 9 8 1 1 0 0
+pinlabel=A0
+T 350 2700 5 8 0 1 0 2
+pintype=in
+}
+P 300 2300 0 2300 1 0 1
+{
+T 200 2350 5 8 1 1 0 6
+pinnumber=4
+T 200 2250 5 8 0 1 0 8
+pinseq=4
+T 350 2300 9 8 1 1 0 0
+pinlabel=A1
+T 350 2300 5 8 0 1 0 2
+pintype=in
+}
+P 300 1100 0 1100 1 0 1
+{
+T 200 1150 5 8 1 1 0 6
+pinnumber=5
+T 200 1050 5 8 0 1 0 8
+pinseq=5
+T 350 1100 9 8 1 1 0 0
+pinlabel=COSC
+T 350 1100 5 8 0 1 0 2
+pintype=pas
+}
+P 300 1900 0 1900 1 0 1
+{
+T 200 1950 5 8 1 1 0 6
+pinnumber=7
+T 200 1850 5 8 0 1 0 8
+pinseq=7
+T 350 1900 9 8 1 1 0 0
+pinlabel=DADJ
+T 350 1900 5 8 0 1 0 2
+pintype=in
+}
+P 300 1500 0 1500 1 0 1
+{
+T 200 1550 5 8 1 1 0 6
+pinnumber=8
+T 200 1450 5 8 0 1 0 8
+pinseq=8
+T 350 1500 9 8 1 1 0 0
+pinlabel=FADJ
+T 350 1500 5 8 0 1 0 2
+pintype=in
+}
+P 300 700 0 700 1 0 1
+{
+T 200 750 5 8 1 1 0 6
+pinnumber=10
+T 200 650 5 8 0 1 0 8
+pinseq=10
+T 350 700 9 8 1 1 0 0
+pinlabel=IIN
+T 350 700 5 8 0 1 0 2
+pintype=pas
+}
+P 300 300 0 300 1 0 1
+{
+T 200 350 5 8 1 1 0 6
+pinnumber=13
+T 200 250 5 8 0 1 0 8
+pinseq=13
+T 350 300 9 8 1 1 0 0
+pinlabel=PDI
+T 350 300 5 8 0 1 0 2
+pintype=in
+}
+P 2000 2700 1700 2700 1 0 0
+{
+T 1800 2750 5 8 1 1 0 0
+pinnumber=1
+T 1800 2650 5 8 0 1 0 2
+pinseq=1
+T 1650 2700 9 8 1 1 0 6
+pinlabel=REF
+T 1650 2700 5 8 0 1 0 8
+pintype=out
+}
+P 2000 300 1700 300 1 0 0
+{
+T 1800 350 5 8 1 1 0 0
+pinnumber=12
+T 1800 250 5 8 0 1 0 2
+pinseq=12
+T 1650 300 9 8 1 1 0 6
+pinlabel=PDO
+T 1650 300 5 8 0 1 0 8
+pintype=out
+}
+P 2000 1900 1700 1900 1 0 0
+{
+T 1800 1950 5 8 1 1 0 0
+pinnumber=14
+T 1800 1850 5 8 0 1 0 2
+pinseq=14
+T 1650 1900 9 8 1 1 0 6
+pinlabel=SYNC
+T 1650 1900 5 8 0 1 0 8
+pintype=out
+}
+P 2000 1500 1700 1500 1 0 0
+{
+T 1800 1550 5 8 1 1 0 0
+pinnumber=19
+T 1800 1450 5 8 0 1 0 2
+pinseq=19
+T 1650 1500 9 8 1 1 0 6
+pinlabel=OUT
+T 1650 1500 5 8 0 1 0 8
+pintype=out
+}
+T 1700 3100 8 10 1 1 0 6
+refdes=U?
+T 300 3650 5 10 0 0 0 0
+footprint=DIP20
+T 300 3850 5 10 0 0 0 0
+description=high frequency waveform generator
+T 300 3450 5 10 0 0 0 0
+numslots=0
+T 300 4250 5 10 0 0 0 0
+net=V+:17
+T 300 4450 5 10 0 0 0 0
+net=V-:20
+T 300 4650 5 10 0 0 0 0
+net=DV+:16
+T 300 4850 5 10 0 0 0 0
+net=DGND:15
+T 300 4050 5 10 0 0 0 0
+net=GND:2,6,9,11,18
+T 300 3050 9 10 1 0 0 0
+MAX038
