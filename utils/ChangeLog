@@ -3,6 +3,12 @@
 	* src/gsch2pcb.c, examples/gsch2pcb/project.sample: Upgraded to 
 	Bill Wilson's latest version (1.2)
 
+	* scripts/gsymupdate: Found a last minute critical bug which
+	caused gschem/gschlas to assert because a text field (the number
+	of lines) wasn't being set on split text lines.  gsymupdate does
+	not really handle multi line text items.  A bug needs to be
+	filed for this so it is not forgotten about.
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added --with-docdir command line flag as well all

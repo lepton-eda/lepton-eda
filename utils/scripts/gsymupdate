@@ -61,6 +61,9 @@ foreach $filename (@ARGV) {
             # handle text objects
             if (/^T/) { 
 
+		# Somewhere here you need to deal with multi line text 
+		# items eventually.  TODO
+
                 $textcmd = $_;
 
                 $textline = <FILE>;
@@ -94,7 +97,7 @@ foreach $filename (@ARGV) {
 
                         # Hide this new attribute by changing the 5th value to 0
                         # Also show both the name and value for the pinseq attrib
-                        print NEWFILE "@textsplit[0] @textsplit[1] @textsplit[2] @textsplit[3] @textsplit[4] 0 0 @textsplit[7] @textsplit[8]\n";
+                        print NEWFILE "@textsplit[0] @textsplit[1] @textsplit[2] @textsplit[3] @textsplit[4] 0 0 @textsplit[7] @textsplit[8] @textsplit[9]\n";
                         print NEWFILE "pinseq=@pinseq[1]\n";
 
                     } elsif ($name =~ /^uref/) {
