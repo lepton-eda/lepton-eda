@@ -29,11 +29,11 @@
       (gnetlist:get-package-attribute package "device")))
 
 ;;
-;; Given a uref, returns the pattern attribute value (PATTERN if not defined)
+;; Given a uref, returns the footprint attribute value (PATTERN if not defined)
 ;;
 (define tango:get-pattern
    (lambda (package)
-      (define pattern (gnetlist:get-package-attribute package "pattern"))
+      (define pattern (gnetlist:get-package-attribute package "footprint"))
       (if (string=? "unknown" pattern)
          "PATTERN"
          pattern)))
