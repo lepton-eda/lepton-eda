@@ -1,3 +1,9 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Changed the call to AM_INIT_AUTOMAKE to take
+	the GEDA_VERSION so that packages get created with the right
+	version number
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
