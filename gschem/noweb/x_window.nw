@@ -647,6 +647,12 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
                       "key_press_event",
                       (GtkSignalFunc) x_event_key_press,
                       w_current);
+#ifdef HAS_GTK22
+  gtk_signal_connect (GTK_OBJECT (w_current->main_window),
+                      "scroll_event",
+                      (GtkSignalFunc) x_event_scroll,
+                      w_current);
+#endif
 }
 
 

@@ -784,6 +784,9 @@ void x_event_hschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_current);
 gint x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
+#ifdef HAS_GTK22
+gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, TOPLEVEL *w_current);
+#endif
 /* x_fileselect.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
 int x_fileselect_keypress(GtkWidget *widget, GdkEventKey *event, FILEDIALOG *f_current);

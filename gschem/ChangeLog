@@ -6,6 +6,15 @@
 	* noweb/gschem.nw: Added an #ifdef HAS_GTK22 around the call to
 	gtk_disable_locale call, since it is gtk+ 2.2.x specific.
 
+	* include/prototype.h noweb/x_event.nw noweb/x_window.nw: Applied
+	scrolled wheel patch by Sascha Silbe.  Thanks!
+
+	* noweb/x_event.nw, x_window.nw: Added #ifdef HAS_GTK22 since
+	these functions used are gtk+ 2.2.x specific.  Also added some
+	code that if you hold down the control key and scroll in the
+	vertical direction, you will pan left or right.  This is for
+	people who don't have two scroll wheels.
+
 2004-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/gschem.nw: Applied patch (with additional comments) to 

@@ -28,6 +28,7 @@
 <<x_event.c : x_event_vschanged()>>
 <<x_event.c : x_event_enter()>>
 <<x_event.c : x_event_key_press()>>
+<<x_event.c : x_event_scroll()>>
 
 @
 
@@ -1421,4 +1422,72 @@ x_event_key_press (GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current)
 
 
 @ %def x_event_key_press
+
+
+@section Function @code{x_event_scroll()}
+
+@defun x_event_scroll widget event w_current
+@end defun
+
+<<x_event.c : x_event_scroll()>>=
+#ifdef HAS_GTK22
+gint
+x_event_scroll (GtkWidget *widget, GdkEventScroll *event, TOPLEVEL *w_current)
+{
+  GtkAdjustment        *adj;
+
+  exit_if_null(w_current);
+  global_window_current = w_current;
+
+  /* update the state of the modifiers */
+  w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
+  w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+  w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
+
+  switch (event->direction) {
+  case(GDK_SCROLL_UP):
+    if (!w_current->CONTROLKEY)
+    {
+      adj = gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
+      gtk_adjustment_set_value(adj, adj->value - (adj->page_increment / 4));
+    } else {
+      /* if the control key is held down, then scroll left as well */
+      adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
+      gtk_adjustment_set_value(adj, adj->value - (adj->page_increment / 4));
+    }
+    break;
+
+  case(GDK_SCROLL_DOWN):
+    if (!w_current->CONTROLKEY)
+    {
+      adj = gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
+      gtk_adjustment_set_value(adj, min(adj->value + (adj->page_increment / 4),
+                                        adj->upper - adj->page_size));
+    } else {
+      /* if the control key is held down, then scroll right as well */
+      adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
+      gtk_adjustment_set_value(adj, min(adj->value + (adj->page_increment / 4),
+                                        adj->upper - adj->page_size));
+    }
+    break;
+
+  case(GDK_SCROLL_LEFT):
+    adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
+    gtk_adjustment_set_value(adj, adj->value - (adj->page_increment / 4));
+    break;
+
+  case(GDK_SCROLL_RIGHT):
+    adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
+    gtk_adjustment_set_value(adj, min(adj->value + (adj->page_increment / 4),
+                                      adj->upper - adj->page_size));
+    break;
+
+  }
+
+  return(0);
+}
+#endif
+
+
+@ %def x_event_scroll
 
