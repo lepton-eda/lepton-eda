@@ -26,7 +26,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(http://www.gnu.org/copyleft/fdl.html)}
-\date{July 14th, 2002}
+\date{October 7th, 2002}
 
 \begin{document}
 
@@ -211,7 +211,6 @@ Examples: \texttt{slotdef=1:1,2,3 slotdef=2:4,5,6 slotdef=3:7,8,9}
 This attribute replaces the obsolete {\bf slot}\#=\# attribute.
 
 
-
 \subsection{\bf footprint\label{footprint}}
 {\bf footprint}=package\_name should exist somewhere in the symbol and
 be made invisible.  This attribute is used by gnetlist and primarily
@@ -223,6 +222,24 @@ attribute.  This is a free standing or floating attribute.
 package\_name is the pcb footprint or package type like DIP14 or DIP40.
 This attribute is pcb package dependent.
 
+
+\subsection{\bf documentation\label{documentation}}
+{\bf documentation}=documentation\_locator may exist somewhere in the 
+symbol and be made invisible.  This attribute is used by gschemdoc to 
+find relevant documentation for the symbol, or rather, the device or 
+component associated with the symbol.
+
+Attach this attribute just like the {\bf device}= (\ref{device})
+attribute.  This is a free standing or floating attribute.
+
+documentation\_locator is either the base filename of the documentation,
+or it is the complete Internet URL (Uniform Resource Locator). If it
+is the filename, an attempt will be made to search for it in the local
+gEDA share directory named \texttt{documentation}.
+
+Filename example: \texttt{documentation=sn74ls00.pdf}
+
+URL example: \texttt{documentation=http://www-s.ti.com/sc/ds/sn74ls00.pdf}
 
 
 \section{Schematic only Attributes}
@@ -333,6 +350,7 @@ July 14th, 2002 & Created attributes.tex from attributes.txt. \\ \hline
 July 14th, 2002 & Updated doc to be in sync with post-20020527. \\ \hline
 August 25th, 2002 & Added obsolete type= attribute. \\ \hline
 September 14, 2002 & Added description= attribute. Minor fixes\\ \hline
+October 7, 2002 & Added doc= attribute; Egil Kvaleberg.\\ \hline
 
 \end{tabular}
 \end{table}
