@@ -12,9 +12,6 @@
 
 <<g_basic.c : include directives>>
 
-
-<<g_basic.c : ORIG_g_read_file()>>
-
 <<g_basic.c : load()>>
 
 <<g_basic.c : load_error_handler()>>
@@ -73,53 +70,6 @@
 
 @
 
-
-@section Function @code{ORIG_g_read_file()}
-
-@defun ORIG_g_read_file filename
-@end defun
-
-<<g_basic.c : ORIG_g_read_file()>>=
-int
-ORIG_g_read_file(char *filename)
-{
-	FILE *fp;
-	/* TODO: isn'y this hack?  */
-	char buf[200];
-
-	if (filename == NULL) {
-		return(-1);
-	}
-
-	if (access(filename, R_OK) != 0) {
-		s_log_message("Could not find [%s] for interpretion\n",
-			      filename);
-		return(-1);
-	}
-
-	fp = fopen(filename, "r");
-
-	if (fp == NULL) {
-		s_log_message("Failed to open [%s] for interpretion\n",
-			      filename);
-		return(-1);
-	}
-
-	/* TODO: allow for one line to be 160 chars ! docmenent me */
-	while (fgets(buf, 160, fp) != NULL) {
-		gh_eval_str_with_stack_saving_handler (buf);
-#if 0
-		gh_display (gh_eval_str_with_stack_saving_handler (buf));
-#endif
-	}
-
-	s_log_message("Interpreted [%s]\n", filename);
-	return(0);
-}
-
-@ %def ORIG_g_read_file
-
-
 @section Function @code{load()}
 
 @defun load data
@@ -128,8 +78,8 @@ ORIG_g_read_file(char *filename)
 <<g_basic.c : load()>>=
 /* The following code was contributed by thi (with formating changes
  * by Ales) Thanks!  */
+/* Later updated by spe */
 
-#if MAYBE
 /* This `load()' is modeled after libguile/load.c, load().
  * Additionally, the most recent form read is saved in case something
  * goes wrong. */
@@ -139,27 +89,25 @@ static SCM most_recently_read_form = SCM_BOOL_F;
 static SCM
 load (void *data)
 {
-	SCM cur_out = scm_current_output_port (), port = (SCM) data, form;
+	SCM load_port = (SCM)data;
+	SCM form;
+	int eof_found = 0;
 
-	while (1) {
-		form = scm_read(port);
-		scm_display(scm_makfrom0str ("Form: "), cur_out);
-		scm_display(form, cur_out);
-		scm_newline(cur_out);
-
+	while (!eof_found) {
+		form = scm_read(load_port);
 		if (SCM_EOF_OBJECT_P(form)) {
-			break;
+			eof_found = 1;
+		} else {
+			most_recently_read_form = form;
+			scm_eval_x(form);
 		}
-
-		most_recently_read_form = form;
-		scm_eval_x(form);
 	}
 
 	most_recently_read_form = SCM_BOOL_F;
 
 	return SCM_BOOL_T;
 }
-#endif /* MAYBE */
+
 
 
 @ %def most_recently_read_form load
@@ -175,20 +123,38 @@ static SCM
 load_error_handler(void *data, SCM tag, SCM throw_args)
 {
 	SCM cur_out = scm_current_output_port ();
+	SCM load_port = (SCM)data;
+	SCM filename  = scm_port_filename(load_port);
 
-	scm_display(scm_makfrom0str((char *)data), cur_out);
-	scm_display(scm_makfrom0str(": Weirdness alert -- tag is "), cur_out);
-	scm_display(tag, cur_out);
+	/*
+	 * If misc-error the column and line pointers points
+	 * to end of file. Not necessary to confuse user.
+	 */
+	if (!gh_eq_p(tag, gh_symbol2scm("misc-error"))) {
+		scm_display(scm_makfrom0str("Error : "), cur_out);
+		scm_display(tag, cur_out);
+			
+		scm_display(scm_makfrom0str(" [C:"), cur_out);
+		scm_display(scm_port_column(load_port), cur_out );
+		scm_display(scm_makfrom0str(" L:"), cur_out);
+		scm_display(scm_port_line(load_port), cur_out );
+		scm_display(scm_makfrom0str("]"), cur_out);
+	} else {
+		scm_display(scm_makfrom0str("Probably parenthesis mismatch"), 
+			    cur_out);
+
+	}
+
+	scm_display(scm_makfrom0str(" in "), cur_out);
+	scm_display(filename, cur_out);
 	scm_newline(cur_out);
 
-#if MAYBE
 	if (most_recently_read_form != SCM_BOOL_F) {
 		scm_display(scm_makfrom0str ("Most recently read form: "),
 			    cur_out);
 		scm_display(most_recently_read_form, cur_out);
 		scm_newline(cur_out);
 	}
-#endif /* MAYBE */
 
 	return SCM_BOOL_F;
 }
@@ -205,9 +171,8 @@ load_error_handler(void *data, SCM tag, SCM throw_args)
 int
 g_read_file(char *filename)
 {
-#if MAYBE
 	SCM port;
-#endif
+	SCM eval_result = SCM_BOOL_F;
 
 	if (filename == NULL) {
 		return(-1);
@@ -219,26 +184,20 @@ g_read_file(char *filename)
 		return(-1);
   	}
 
-#if MAYBE
-	/* Use this if you want to use the `load()' above.  Otherwise,
-	 * the standard `gh_eval_file()' works but doesn't leave clues
-	 * if there is a problem. */
-
 	port = scm_open_file(scm_makfrom0str(filename),
 			     scm_makfromstr("r",
 					    (scm_sizet) sizeof (char),
 					    0));
 
-	return (gh_catch (SCM_BOOL_T,
-			  (scm_catch_body_t) load, port,
-			  (scm_catch_handler_t) load_error_handler, filename)
-		== SCM_BOOL_T);
-#endif /* MAYBE */
+	eval_result = gh_catch (SCM_BOOL_T,
+				(scm_catch_body_t) load, 
+				(void *) port,
+				(scm_catch_handler_t) load_error_handler, 
+				(void *) port);
 
-	return (gh_catch (SCM_BOOL_T,
-			  (scm_catch_body_t) gh_eval_file, filename,
-			  (scm_catch_handler_t) load_error_handler, filename)
-		== SCM_BOOL_T);
+	scm_close_port(port);
+
+	return (eval_result == SCM_BOOL_T);
 }
 
 @ %def g_read_file

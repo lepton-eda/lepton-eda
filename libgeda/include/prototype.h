@@ -22,7 +22,6 @@ void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, i
 int f_print(TOPLEVEL *w_current, char *filename);
 void f_print_set_type(TOPLEVEL *w_current, int type);
 /* g_basic.c */
-int ORIG_g_read_file(char *filename);
 int g_read_file(char *filename);
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);

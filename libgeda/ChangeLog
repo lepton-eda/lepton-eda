@@ -1,3 +1,10 @@
+2001-06-21 Stefan Petersen  <spe@geda.seul.org>
+
+	* noweb/g_basic.nw: Improved error information when reading *rc
+	  and other minor clean ups.
+
+	* include/prototype.h: Removed ORIG_g_read_file
+	
 2001-06-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/Makefile.am: Further improvements on the noweb build mechansim
