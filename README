@@ -9,18 +9,20 @@ README for gEDA/gaf version 2004*
 
 - Installation
 
-	- Download all required packages and the toplevel Makefile. 
-        - If you are building the CVS version, then you must have
+	- Install all the dependencies (glib, gtk, and guile).
+	- Download all source packages and the toplevel Makefile. 
+        - If you are building the CVS version, then you must also have
           autoconf, automake, libtool, and gettext installed.
 	- Untar all packages in a directory and place toplevel Makefile 
-          in this same directory 
+          in this same directory. 
 	- [OPTIONAL] Edit Makefile changing prefix to a different install 
 		     directory other than the default ($HOME/geda)
 	- Type: make
-	- Follow instructions on setting all the shell variables
-	- Set shell variables  *VERY IMPORTANT*
+	- Follow instructions on setting all the shell variables.
+	- Set shell variables.  *VERY IMPORTANT*
 	- Type: make install
-	- Read the docs in: ${prefix}/share/doc/geda-docs/gedadocs.html
+ 	- Read the release notes for more information and last minute issues.
+	- Read the docs in: ${prefix}/share/doc/geda-doc/gedadocs.html
 	- Run: gschem and play! :-)
 
 
@@ -51,7 +53,7 @@ README for gEDA/gaf version 2004*
 
 	Mailing lists:
 
-   	   User List
+   	   User List - For discussing and reporting user problems or issues
 
 		To subscribe send an email to: majordomo@geda.seul.org  
 	 	with   subscribe geda-user   in the body.
@@ -62,7 +64,10 @@ README for gEDA/gaf version 2004*
 		To send email to the list use the address: 
 			geda-user@geda.seul.org
 
-	   Developer List
+		You must subscribe before you can post.  You must post 
+		using the subscribed e-mail address.
+
+	   Developer List - For discussing developer issues
 
 		To subscribe send an email to: majordomo@geda.seul.org  
 	 	with   subscribe geda-dev   in the body.
@@ -73,13 +78,16 @@ README for gEDA/gaf version 2004*
 		To send email to the list use the address: 
 			geda-dev@geda.seul.org
 
+		You must subscribe before you can post.  You must post 
+		using the subscribed e-mail address.
+
 		Remember, geda-dev@geda.seul.org/geda-user@geda.seul.org
 	        is for the actual traffic.  For administrative commands, 
 		use majordomo@geda.seul.org.
 
-		The mailing list archive is at:
+	The mailing list archive is at:
 
-			http://www.geda.seul.org/mailinglist 
+		http://www.geda.seul.org/mailinglist 
 
 	Many thanks to the SEUL project for hosting gEDA!
 
