@@ -11,6 +11,8 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
+SCM g_get_slots(SCM scm_uref);
+SCM g_get_unique_slots(SCM scm_uref);
 /* g_rc.c */
 char *g_rc_parse_path(void);
 void g_rc_parse(void);

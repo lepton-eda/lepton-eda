@@ -760,6 +760,140 @@ SCM g_set_netlist_mode(SCM mode)
 }
 #endif
 
+/* Given an uref, return a list of used slots in the schematic */
+/* in the form: (1 2 3 4). Repeated slots are returned. */
+SCM g_get_slots(SCM scm_uref)
+{
+    SCM scm_return_value;
+    NETLIST *nl_current;
+    char *uref;
+    gchar *slot = NULL;
+    char *slot_tmp = NULL;
+    SCM slots_list = SCM_EOL;
+    SCM slot_number;
+
+
+    SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+		scm_uref, SCM_ARG1, "gnetlist:get-slots-used-of-package");
+
+    uref = gh_scm2newstr(scm_uref, NULL);
+    
+    /* here is where you make it multi page aware */
+    nl_current = netlist_head;
+
+    /* search for the first instance */
+    /* through the entire list */
+    while (nl_current != NULL) {
+
+	if (nl_current->component_uref) {
+	    if (strcmp(nl_current->component_uref, uref) == 0) {
+
+		/* first search outside the symbol */
+		slot_tmp =
+		    o_attrib_search_name_single(nl_current->object_ptr,
+						"slot", NULL);
+
+		if (!slot_tmp) {
+		/* if not found, search inside the symbol */
+		slot_tmp =
+		    o_attrib_search_name(nl_current->object_ptr->
+					 complex->prim_objs, "slot",
+					 0);
+		}
+		if (slot_tmp) {
+		  slot = g_strconcat ("#d", slot_tmp, NULL);
+		  free (slot_tmp);
+		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)), 10);
+		  free (slot);
+		  if (slot_number != SCM_BOOL_F) {
+		    slots_list = gh_cons(slot_number, slots_list);
+		  }
+		  else 
+		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
+		} 
+		else {
+		  fprintf(stderr, "Found uref %s without slot attribute\n", uref);
+		}
+	    }
+	}
+	nl_current = nl_current->next;
+    }
+
+    free(uref);
+    slots_list = scm_sort_list_x(slots_list, gh_lookup("<"));
+
+    return (slots_list);
+}
+
+/* Given an uref, return a unique list of used slots in the schematic */
+/* in the form: (1 2 3 4). Repeated slots are NOT returned */
+SCM g_get_unique_slots(SCM scm_uref)
+{
+    SCM scm_return_value;
+    NETLIST *nl_current;
+    char *uref;
+    gchar *slot = NULL;
+    char *slot_tmp = NULL;
+    SCM slots_list = SCM_EOL;
+    SCM slot_number;
+
+
+    SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+		scm_uref, SCM_ARG1, "gnetlist:get-unique-slots-used-of-package");
+
+    uref = gh_scm2newstr(scm_uref, NULL);
+    
+    /* here is where you make it multi page aware */
+    nl_current = netlist_head;
+
+    /* search for the first instance */
+    /* through the entire list */
+    while (nl_current != NULL) {
+
+	if (nl_current->component_uref) {
+	    if (strcmp(nl_current->component_uref, uref) == 0) {
+
+		/* first search outside the symbol */
+		slot_tmp =
+		    o_attrib_search_name_single(nl_current->object_ptr,
+						"slot", NULL);
+
+		if (!slot_tmp) {
+		/* if not found, search inside the symbol */
+		slot_tmp =
+		    o_attrib_search_name(nl_current->object_ptr->
+					 complex->prim_objs, "slot",
+					 0);
+		}
+		if (slot_tmp) {
+		  slot = g_strconcat ("#d", slot_tmp, NULL);
+		  free (slot_tmp);
+		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)), 10);
+		  free (slot);
+		  if (slot_number != SCM_BOOL_F) {
+		    if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
+		      slots_list = gh_cons(slot_number, slots_list);
+		    }
+		  }
+		  else 
+		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
+		} 
+		else {
+		  fprintf(stderr, "Found uref %s without slot attribute\n", uref);
+		}
+	    }
+	}
+	nl_current = nl_current->next;
+    }
+
+    free(uref);
+    slots_list = scm_sort_list_x(slots_list, gh_lookup("<"));
+
+    return (slots_list);
+}
+
+
+
 /* 
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)
  */

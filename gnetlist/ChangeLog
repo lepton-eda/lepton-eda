@@ -1,3 +1,13 @@
+2003-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/prototype.h, scheme/Makefile.am, scheme/gnet-drc2.scm
+ 	src/g_netlist.c src/g_register.c: Integrated Carlos Nieves Onega's
+	drc2 backend.  Thanks.
+
+	* src/g_netlist.c: Renamed the newly added guile functions a little.
+	(removed the "*used-of-package" string; just for consistancy with
+	 the other guile functions).
+
 2003-06-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/globals.h, src/globals.c, src/gnetlist.c,

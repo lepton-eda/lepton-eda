@@ -99,7 +99,8 @@ void g_register_funcs(void)
                       g_get_attribute_by_pinnumber);
   gh_new_procedure1_0("gnetlist:vams-get-package-attributes",
                       vams_get_package_attributes);
-
+  gh_new_procedure1_0("gnetlist:get-slots", g_get_slots);
+  gh_new_procedure1_0("gnetlist:get-unique-slots", g_get_unique_slots);
 }
 
 SCM g_quit(void)
