@@ -134,6 +134,9 @@ s_net_print(NET *ptr)
 			if (n_current->connected_to_2) {
 				printf("		%s\n", n_current->connected_to_2);
 			} 
+			if (n_current->connected_to) {
+				printf("		%s\n", n_current->connected_to);
+			} 
 		}	
 
 		n_current = n_current->next;

@@ -29,6 +29,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif

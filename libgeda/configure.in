@@ -11,9 +11,16 @@ echo Configuring libgeda version $VERSION
 
 dnl --disable-strokes : turn off stroke support
 AC_ARG_ENABLE(strokes,
-    [  --disable-strokes       Include stroke support (don't use LibStroke at all)],
+    [  --disable-strokes       Disable stroke support (don't use LibStroke at all)],
     [
 	no_strokes=yes
+    ])
+
+dnl --disable-gd : turn off gd support
+AC_ARG_ENABLE(gd,              v
+    [  --disable-gd            Disable gd support (don't use libgd at all)],
+    [
+	no_gd=yes
     ])
 
 
@@ -157,6 +164,7 @@ fi
 
 AC_CHECK_LIB(stroke, stroke_init, STROKE_LIB="-lstroke", STROKE_LIB=no)
 
+
 if test $STROKE_LIB = no; then
 	STROKE_LIB=""
 else 
@@ -165,6 +173,19 @@ else
 		STROKE_LIB=""
 	else 
 		AC_DEFINE(HAS_LIBSTROKE)
+	fi
+fi
+
+AC_CHECK_LIB(gd, gdImageColorAllocate, GD_LIB="-lgd", GD_LIB=no)
+
+if test $GD_LIB = no; then
+	GD_LIB=""
+else 
+	if test "$no_gd" = "yes"; then
+		echo found libgd, but disabling gd
+		GD_LIB=""
+	else 
+		AC_DEFINE(HAS_LIBGD)
 	fi
 fi
 
@@ -212,6 +233,7 @@ AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LDFLAGS)
 AC_SUBST(X_LIBS)
 AC_SUBST(STROKE_LIB)
+AC_SUBST(GD_LIB)
 AC_SUBST(GUILE_LIB)
 AC_SUBST(GUILE_INCLUDE)
 AC_SUBST(DL_LIB)

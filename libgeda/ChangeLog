@@ -8,6 +8,18 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+6/23/99 Added o_image.c (which is code which uses the gd lib to output 
+	schematics to gifs)
+
+	Added some entries in the TOPLEVEL structure to support the image
+	printing
+
+	Added f_print.c which includes all the toplevel code for writing
+	an image
+
+	Added support to configure and friends to make libgd an optional
+	library
+
 6/17/99 Added o_ales_search_object which goes through entire the ales_table and 
 	finds the n'th occurance of object 
 

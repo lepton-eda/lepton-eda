@@ -25,6 +25,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/s_passing.h>
@@ -72,6 +76,7 @@ int default_init_right=WIDTH_C;
 int default_init_bottom=HEIGHT_C;
 int default_scrollbars_flag=TRUE;
 int default_print_orientation=LANDSCAPE; 
+int default_image_orientation=PORTRAIT; 
 int default_print_color=FALSE; 
 int default_print_color_background=WHITE; 
 int default_print_output_type=LIMITS; 
@@ -136,6 +141,8 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->print_orientation = default_print_orientation;
 	w_current->print_color = default_print_color;
 	w_current->print_color_background = default_print_color_background;
+
+	w_current->image_orientation = default_image_orientation;
 
 
 	w_current->paper_width=default_paper_width; 

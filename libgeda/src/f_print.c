@@ -25,8 +25,11 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
-
 #include <guile/gh.h>
+
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
 
 #include "struct.h"
 #include "defines.h"

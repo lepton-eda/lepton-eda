@@ -33,6 +33,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>  
@@ -1247,6 +1251,30 @@ g_rc_output_orientation(SCM mode)
 		default_print_orientation = LANDSCAPE;		
 	} else {
 		fprintf(stderr, "Invalid mode [%s] passed to output-orientation\n", string);
+		if (string) free(string);
+		return(gh_int2scm(-1)); 
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+SCM 
+g_rc_image_orientation(SCM mode) 
+{
+	char *string;
+
+	string = gh_scm2newstr(mode, NULL);
+
+	if ( strcmp(string, "portrait") == 0 ) {
+		default_image_orientation = PORTRAIT;		
+	} else if ( strcmp(string, "landscape") == 0 ) {
+		default_image_orientation = LANDSCAPE;		
+	} else {
+		fprintf(stderr, "Invalid mode [%s] passed to image-orientation\n", string);
 		if (string) free(string);
 		return(gh_int2scm(-1)); 
 	}

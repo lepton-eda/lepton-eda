@@ -24,6 +24,9 @@
 /* Define if you have the stroke library   */
 #undef HAS_LIBSTROKE
 
+/* Define if you have the gd library   */
+#undef HAS_LIBGD
+
 /* Define if you have rint in the math library   */
 #undef HAS_RINT  
 

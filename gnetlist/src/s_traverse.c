@@ -52,6 +52,9 @@ s_traverse_start(TOPLEVEL *pr_current)
 
 	p_current = pr_current->page_head;
 
+	o_ales_print_hash(pr_current->page_current->ales_table);
+
+
 	
 	while(p_current != NULL) {
 		if (p_current->pid != -1) {
@@ -88,6 +91,7 @@ if (verbose_mode) {
 
 		if (o_current->type == OBJ_COMPLEX) {
 
+		printf("starting NEW component\n\n");
 if (verbose_mode) {
 				printf(".");
 				if (i++ == 78) {
@@ -126,6 +130,7 @@ if (verbose_mode) {
 					netlist->cpins = s_traverse_component(
 							pr_current, 
 							o_current);
+			s_traverse_clear_all_visited(pr_current->page_current->object_head);
 				}
 		}			
 
@@ -201,12 +206,13 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 						if (!c_current->object->visited &&
 						     c_current->object != o_current) {
 							
-						nets = s_net_add(nets);
-                               		         	nets->nid = o_current->sid;
-                               	         	nets->connected_to_1 = s_net_return_connected_string(o_current);
-							printf("%s\n",  nets->connected_to_1);
-                               		         	nets = s_traverse_net(pr_current, o_current, nets, c_current->object);
+						     nets = s_net_add(nets);
+                               		             nets->nid = o_current->sid;
+                               	         	     nets->connected_to_1 = s_net_return_connected_string(o_current);
+						     printf("%s\n",  nets->connected_to_1);
+                               		             nets = s_traverse_net(pr_current, o_current, nets, c_current->object);
 
+						     s_traverse_clear_all_visited(pr_current->page_current->object_head);
 						}
 
 					}
@@ -234,11 +240,12 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 
 						if (!c_current->object->visited &&
 						     c_current->object != o_current) {
-							nets = s_net_add(nets);
-                       		                 	nets->nid = o_current->sid;
-                       		                 	nets->connected_to_2 = s_net_return_connected_string(o_current);
-							printf("%s\n",  nets->connected_to_2);
-                       		                 	nets = s_traverse_net(pr_current, o_current, nets, c_current->object);
+						     nets = s_net_add(nets);
+                       		                     nets->nid = o_current->sid;
+                       		                     nets->connected_to_2 = s_net_return_connected_string(o_current);
+						     printf("%s\n",  nets->connected_to_2);
+                       		                     nets = s_traverse_net(pr_current, o_current, nets, c_current->object);
+						     s_traverse_clear_all_visited(pr_current->page_current->object_head);
 						}
 
 					}
@@ -250,6 +257,10 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 			
 			cpins->nets = nets_head;
 			/* s_net_print(nets); */
+
+			/* this is iffy */
+			/* should pass in page_current in top level func */
+			s_traverse_clear_all_visited(pr_current->page_current->object_head);
 		} 
 
 		o_current = o_current->next;
@@ -259,6 +270,22 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 	return(cpinlist_head);
 }
 
+
+void
+s_traverse_clear_all_visited(OBJECT *object_head) 
+{
+	OBJECT *o_current;
+
+	o_current = object_head;
+
+	while(o_current != NULL) {
+
+		o_current->visited = 0;
+
+		o_current = o_current->next;
+	}
+
+}
 
 NET *
 s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object)
@@ -284,7 +311,8 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 
 	if (object->type == OBJ_PIN) {
 
-		printf("found pin %s\n", object->name);
+#if 0
+		/* printf("found pin %s\n", object->name);*/
 		if ( object->line_points->x1 == previous_object->line_points->x1 && 
 		     object->line_points->y1 == previous_object->line_points->y1) {
 			new_net->connected_to_1 = s_net_return_connected_string(o_current);
@@ -304,6 +332,12 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	
 		printf("didn't find equiv point connection\n");
 		return(nets);
+#endif
+
+		new_net->connected_to = s_net_return_connected_string(o_current);
+		printf("traverse connected_to: %s\n",  new_net->connected_to);
+		return(nets);
+	
 	}
 
 	/*printf("Found net %s\n", object->name);*/
@@ -374,19 +408,47 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	free(key);
 
 
-	/* now search for mid points */
-	nets = s_traverse_midpoints(pr_current, object, nets)
+	/* now search for any mid points */
+	nets = s_traverse_midpoints(pr_current, object, nets);
 
 	return(nets);
 }
 
 
+/* unfortunately I need to include this from glib-1.2.x/ghash.c */
+/* since I need to implement my own foreach function */
+typedef struct _GHashNode      GHashNode;
+
+struct _GHashNode
+{
+  gpointer key;
+  gpointer value;
+  GHashNode *next;
+};
+
+struct _GHashTable
+{
+  gint size;
+  gint nnodes;
+  guint frozen;
+  GHashNode **nodes;
+  GHashFunc hash_func;
+  GCompareFunc key_compare_func;
+};
+
+
+
 /* this function needs help */
 NET *
-s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *previous_object, 
-	NET *nets, OBJECT *object)
+s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets)
 {
 	NET *new_net;
+	GHashTable *hash_table;
+	GHashNode *node;
+	ALES *ales_list, *c_current;
+	int i;
+
+	hash_table = pr_current->page_current->ales_table;
 
 #if 0 /* do this only when you find a net */
 	/* for the current pin or net */
@@ -402,18 +464,59 @@ s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *previous_object,
 
 	/* you really need to manually go through each entre in the hash */
 	/* to do the work.. you cannot use the foreach functions */
+	for (i = 0; i < hash_table->size; i++) {
+	  for (node = hash_table->nodes[i]; node; node = node->next) {
 
-	counter=0;
-	ales_midpoint = o_ales_search_object(
-				pr_current->page_current->ales_table,
-				object, counter);
-	while (ales_midpoint != NULL) {
+		printf("new entry in hash table start\n");
+		ales_list = c_current = (ALES *) node->value;
+		while (c_current != NULL) {
+			if (c_current->object) {
 
-		printf("found object in ales_list\n");
+				printf("searching for: %s %s\n", previous_object->name, c_current->object->name);
 
-		counter++;
-		ales_midpoint = o_ales_search_object(
-				pr_current->page_current->ales_table,
-				object, counter);
+				if (c_current->object == previous_object ) {
+				  /* now we found the object */
+				  /* we need to go through the */
+				  /* entire list */
+
+	printf("\n\n");
+		o_ales_print(ales_list);
+	printf("\n\n");
+
+				  while (ales_list != NULL) {
+
+					/* bus here ! */
+				     if (ales_list->object && 
+					 ( ales_list->type == ALES_NET || 
+					   ales_list->type == ALES_MIDPOINT)) {
+				printf("%s was visited: %d\n", ales_list->object->name, ales_list->object->visited);
+ 					 if (!ales_list->object->visited) {
+
+#if 0
+						ales_list->object->visited++;
+		printf("inside midpoint found %s\n", ales_list->object->name);
+						new_net = nets = s_net_add(nets);
+						new_net->nid = ales_list->object->sid;
+
+	
+						/* search the object only */
+						new_net->net_name = o_attrib_search_name_single(ales_list->object, "label", NULL);
+#endif
+
+nets = s_traverse_net(pr_current, previous_object, nets, ales_list->object);
+printf("returned from traverse net\n");
+						//nets = s_traverse_midpoints(pr_current, ales_list->object, nets);
+				        }
+				     }
+				     ales_list = ales_list->next;
+				  }
+				}
+			}
+
+			c_current = c_current->next;
+		}
+	   }
 	}
+
+	return(nets);
 }

@@ -9,6 +9,16 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+6/23/99 Added the first bits of support for the writing of images
+
+	Added configure ability to find and turn off libgd support
+
+	Added image-orientation keyword to control the future ability
+	to write portrait and landscape images
+
+6/19/99 Fixed a bug where you would select something and then visual
+	cues would disappear when you hit redraw
+
 6/10/99 Added support for this idea that hidden text is NOT created, main
 	changes were in the hidding and unhidding of text items
 

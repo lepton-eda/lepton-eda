@@ -46,3 +46,17 @@ extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 
+/* colors which are used in o_image */
+extern int image_black;
+extern int image_white;
+extern int image_red;
+extern int image_green;
+extern int image_blue;
+extern int image_yellow;
+extern int image_cyan;
+extern int image_grey;
+
+#ifdef HAS_LIBGD
+extern gdImagePtr current_im_ptr;
+#endif
+

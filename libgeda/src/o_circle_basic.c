@@ -27,6 +27,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
@@ -384,6 +388,25 @@ o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils\n", o_current->circle->radius);
 	fprintf(fp, "0 360 arc\n");
 	fprintf(fp, "stroke\n");
+}
+
+void
+o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
+	int origin_x, int origin_y)
+{
+	if (o_current == NULL) {
+		printf("got null in o_circle_image_write\n");
+		return;
+	}
+
+	gdImageArc(current_im_ptr, 
+			o_current->circle->screen_x, 
+			o_current->circle->screen_y,
+                        SCREENabs(w_current, o_current->circle->radius)*2,
+                        SCREENabs(w_current, o_current->circle->radius)*2,
+                        0, 360, 
+			o_image_geda2gd_color(o_current->color));
+	
 }
 
 

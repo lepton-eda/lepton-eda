@@ -22,6 +22,7 @@ SCM g_key_file_save(void);
 SCM g_key_file_save_as(void);
 SCM g_key_file_save_all(void);
 SCM g_key_file_print(void);
+SCM g_key_file_image_write(void);
 SCM g_key_file_close_window(void);
 SCM g_key_file_quit(void);
 SCM g_key_edit_select(void);
@@ -137,6 +138,7 @@ SCM g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height);
 SCM g_rc_output_text(SCM mode);
 SCM g_rc_output_type(SCM mode);
 SCM g_rc_output_orientation(SCM mode);
+SCM g_rc_image_orientation(SCM mode);
 SCM g_rc_output_color(SCM mode);
 SCM g_rc_output_color_background(SCM color);
 SCM g_rc_log_window(SCM mode);
@@ -164,6 +166,7 @@ void i_callback_file_save(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_file_save_all(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_save_as(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_print(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_file_image_write(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_close(gpointer data, guint callback_action, GtkWidget *widget);
 int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_quit(gpointer data, guint callback_action, GtkWidget *widget);
@@ -447,6 +450,15 @@ void file_selection_cancel_saveas(GtkWidget *w, TOPLEVEL *w_current);
 void setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);
+/* x_image.c */
+gint image_landscape(GtkWidget *w, TOPLEVEL *w_current);
+gint image_portrait(GtkWidget *w, TOPLEVEL *w_current);
+gint x_image_set_window(GtkWidget *w, TOPLEVEL *w_current);
+gint x_image_set_limits(GtkWidget *w, TOPLEVEL *w_current);
+gint x_image_change_size(GtkWidget *gtklist, TOPLEVEL *w_current);
+gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
+gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
+void x_image_setup(TOPLEVEL *w_current, char *filename);
 /* x_log.c */
 void x_log_read(void);
 void x_log_update(char *buf);

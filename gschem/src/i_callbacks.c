@@ -30,6 +30,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -323,6 +327,68 @@ i_callback_file_print (GtkWidget *widget, gpointer data)
 	
 	if (ps_filename)
 		free(ps_filename);
+}
+
+#if GTK_DEVEL
+void 
+i_callback_file_image_write (gpointer data, guint callback_action, GtkWidget *widget) 
+#else
+void 
+i_callback_file_image_write (GtkWidget *widget, gpointer data) 
+#endif
+{
+	/* don't fix the size hack */
+        char *img_filename=NULL;
+	char *c_ptr;
+	int len;
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	/* + 1 is for null character */
+	/* this will be plenty of space since .sch is being replaced by .ps */ 
+	len = strlen(w_current->page_current->page_filename) + 
+              strlen(".gif") + 1;
+
+	img_filename = (char *) malloc(sizeof(char)*len);
+
+	strcpy(img_filename, w_current->page_current->page_filename);
+	c_ptr = strstr(img_filename, ".sch");
+
+	if (c_ptr == NULL) {
+		/* filename didn't have .sch extension */
+		/* so append a .ps, string should be big enough */
+		len = strlen(w_current->page_current->page_filename);
+		img_filename[len] = '.';
+		img_filename[len+1] = 'g';
+		img_filename[len+2] = 'i';
+		img_filename[len+3] = 'f';
+		img_filename[len+4] = '\0';
+
+	} else {
+		/* found .sch extension, replace it with .ps */
+		*(c_ptr) = '.';
+		*(c_ptr + 1) = 'g';
+		*(c_ptr + 2) = 'i';
+		*(c_ptr + 3) = 'f';
+		*(c_ptr + 4) = '\0';
+	}
+
+	if (output_filename) {
+		x_image_setup(w_current, output_filename);
+	} else {
+		x_image_setup(w_current, img_filename);
+	}
+
+#if 0
+        f_print(w_current, img_filename);
+	s_log_message("Outputed current schematic to [%s]\n", img_filename);
+#endif
+	
+	if (img_filename)
+		free(img_filename);
 }
 
 

@@ -9,6 +9,10 @@ void f_open(TOPLEVEL *w_current, char *filename);
 void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 void f_save(TOPLEVEL *w_current, char *filename);
+/* f_image.c */
+void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale);
+void f_image_write(TOPLEVEL *w_current, char *filename);
+void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
 void f_print_set_color(FILE *fp, int color);
 float f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, int world_right, int world_bottom);
@@ -176,6 +180,11 @@ void o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex);
 OBJECT *o_complex_return_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+/* o_image.c */
+void o_image_init(void);
+void o_image_create(int x, int y);
+void o_image_close(void);
+int o_image_write(char *filename);
 /* o_line_basic.c */
 void get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
 void world_get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
@@ -271,7 +280,6 @@ void print_struct_forw(OBJECT *ptr);
 void print_struct_back(OBJECT *ptr);
 void print_struct(OBJECT *ptr);
 void s_delete(TOPLEVEL *w_current, OBJECT *o_current);
-void s_delete_head(TOPLEVEL *w_current, OBJECT *head);
 void s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start);
 void string_toupper(char *in, char *out);
 void string_tolower(char *in, char *out);

@@ -33,6 +33,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
@@ -95,6 +99,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
 	gh_new_procedure1_0 ("output-color", g_rc_output_color);
 	gh_new_procedure1_0 ("output-color-background", g_rc_output_color_background);
+	gh_new_procedure1_0 ("image-orientation", g_rc_image_orientation);
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);
 	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
 	
@@ -112,6 +117,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("file-save-as", g_key_file_save_as);
 	gh_new_procedure0_0 ("file-save-all", g_key_file_save_all);
 	gh_new_procedure0_0 ("file-print", g_key_file_print);
+	gh_new_procedure0_0 ("file-image", g_key_file_image_write);
 	gh_new_procedure0_0 ("file-close-window", g_key_file_close_window);
 	gh_new_procedure0_0 ("file-quit", g_key_file_quit);
 	gh_new_procedure0_0 ("edit-select", g_key_edit_select);

@@ -27,6 +27,9 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
 
 #include "struct.h"
 #include "defines.h"
@@ -37,6 +40,7 @@
 #include "colors.h"
 #include "funcs.h"
 
+#include "../include/globals.h"
 #include "../include/prototype.h"
 
 void
@@ -367,6 +371,25 @@ o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		o_current->line_points->x2-origin_x,
 		o_current->line_points->y2-origin_y);
 	fprintf(fp, "stroke\n");
+}
+
+void
+o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
+	int origin_x, int origin_y)
+{
+
+	if (o_current == NULL) {
+		printf("got null in o_line_print\n");
+		return;
+	}
+
+	/* assumes screen coords are already calculated correctly */
+	gdImageLine(current_im_ptr, 
+			o_current->line_points->screen_x1,
+			o_current->line_points->screen_y1,
+			o_current->line_points->screen_x2,
+			o_current->line_points->screen_y2, 
+			o_image_geda2gd_color(o_current->color));	
 }
 
 

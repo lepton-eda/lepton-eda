@@ -7,6 +7,8 @@ Code cleanups (no particular order):
 	
 	coding standards
 
+	Remove gd/gd.h from every file... in gschem and libgeda
+
 	Go through and format the code.  it's really gross right now
 
 	Re name end_angle in o_arc* to be sweep_angle

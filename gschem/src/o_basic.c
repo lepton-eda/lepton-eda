@@ -35,6 +35,9 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
 
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
@@ -55,6 +58,8 @@ o_redraw_all(TOPLEVEL *w_current)
 	struct timeval tv2;
 #endif
 
+	o_ales_disconnect_update(w_current->page_current);
+
 	x_repaint_background(w_current);
 /*	gettimeofday(&tv1, NULL);*/
 	o_redraw(w_current, w_current->page_current->object_head);
@@ -67,8 +72,6 @@ o_redraw_all(TOPLEVEL *w_current)
 #endif
 
 
-	/* there used to be a redraw of the visual cues here */
-	/* but I don't think it's needed anymore */
 
 	o_redraw_selected(w_current);
 
@@ -318,8 +321,8 @@ o_select(TOPLEVEL *w_current, OBJECT *selected)
 					w_current->override_color = w_current->select_color;
 					if (selected->draw_func != NULL && selected->type != OBJ_HEAD) {
 						(*selected->draw_func)(w_current, selected);
-						w_current->override_color = -1;
 					}
+					w_current->override_color = -1;
 
 				   } else {
 					/* test this */

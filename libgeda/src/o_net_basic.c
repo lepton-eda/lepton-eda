@@ -27,6 +27,9 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
 
 #include "struct.h"
 #include "defines.h"
@@ -532,6 +535,180 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	}
 
 }
+
+void
+o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
+        int origin_x, int origin_y)
+{
+	int offset, offset2;
+	int cross;
+	int x1, y1;
+	int x2, y2;
+	int cue;
+	int endpoint_color;
+	int i;
+
+        if (o_current == NULL) {
+                printf("got null in o_net_print\n");
+                return;
+        }
+
+	offset = SCREENabs(w_current, 30);
+
+/* 
+	offset = 7 * (float) w_current->height/ (float) w_current->width;
+        offset2 = 7 * (float) w_current->height/ (float) w_current->width*2;  
+
+	printf("%f %d %d\n", (float) ( (float) w_current->height/ (float) w_current->width), 
+				offset, offset2);
+*/
+
+	offset2 = offset*2;
+
+	cross = offset;
+
+	x1 = o_current->line_points->screen_x1;
+	y1 = o_current->line_points->screen_y1;
+	x2 = o_current->line_points->screen_x2;
+	y2 = o_current->line_points->screen_y2;
+
+        /* assumes screen coords are already calculated correctly */
+        gdImageLine(current_im_ptr, x1, y1, x2, y2,
+                        o_image_geda2gd_color(o_current->color));
+
+	cue = o_ales_query_table(w_current->page_current->ales_table,
+				o_current->line_points->x1,
+				o_current->line_points->y1);
+
+	endpoint_color = o_image_geda2gd_color(w_current->net_endpoint_color);
+
+	switch(cue) {
+
+	  case(NET_DANGLING_CUE):
+
+		switch(w_current->net_endpoint_mode) {
+
+			/* hack clean this up so that you save some code */	
+			case(FILLEDBOX): 
+				gdImageFilledRectangle(current_im_ptr, 
+						x1-offset, y1-offset, 
+					        x1-offset+offset2, 
+						y1-offset+offset2,
+						endpoint_color);
+			break;
+
+			case(EMPTYBOX): 
+				gdImageRectangle(current_im_ptr, 
+						x1-offset, y1-offset, 
+					        x1-offset+offset2, 
+						y1-offset+offset2,
+						endpoint_color);
+			break;
+
+			case(X):
+        			gdImageLine(current_im_ptr, x1-cross, y1-cross,
+						x1+cross, y1+cross,
+						endpoint_color);
+        			gdImageLine(current_im_ptr, x1-cross, y1+cross,
+						x1+cross, y1-cross,
+						endpoint_color);
+			break;
+
+			case(NONE):
+				break;			
+
+			default:
+				fprintf(stderr, "Unexpected endpoint mode\n");
+			
+		}
+	   break;
+	
+	   case(MIDPOINT_CUE):
+		if (w_current->net_midpoint_mode != NONE) {
+			if (w_current->net_midpoint_mode == FILLED) {
+				gdImageArc(current_im_ptr, x1, y1, 
+					   offset2*1.25, offset2*1.25, 
+					   0, 360, endpoint_color);
+				for (i = 0 ; i < offset2*1.25; i++) {
+					gdImageArc(current_im_ptr, x1, y1,
+                                           i, i, 0, 360, endpoint_color);
+				}
+			} else if (w_current->net_midpoint_mode == EMPTY) {
+				gdImageArc(current_im_ptr, x1, y1, 
+					   offset2*1.25, offset2*1.25, 
+					   0, 360, endpoint_color);
+			}
+		}
+           break;
+	}
+
+	cue = o_ales_query_table(w_current->page_current->ales_table,
+				o_current->line_points->x2,
+				o_current->line_points->y2);
+
+	switch(cue) {
+
+	  case(NET_DANGLING_CUE):
+
+		switch(w_current->net_endpoint_mode) {
+	
+			/* clean this up so that you save some code */	
+			case(FILLEDBOX):
+				gdImageFilledRectangle(current_im_ptr, 
+						 x2-offset, y2-offset, 
+					         x2-offset+offset2, 
+						 y2-offset+offset2,
+				o_image_geda2gd_color(w_current->net_endpoint_color));
+				break;
+
+			case(EMPTYBOX): 
+				gdImageRectangle(current_im_ptr, 
+						 x2-offset, y2-offset, 
+					         x2-offset+offset2, 
+						 y2-offset+offset2,
+				o_image_geda2gd_color(w_current->net_endpoint_color));
+			break;
+
+			case(X):
+        			gdImageLine(current_im_ptr, x2-cross, y2-cross,
+						x2+cross, y2+cross,
+						endpoint_color);
+        			gdImageLine(current_im_ptr, x2-cross, y2+cross,
+						x2+cross, y2-cross,
+						endpoint_color);
+			break;
+			
+			case(NONE):
+				break;
+
+			default:
+				fprintf(stderr, "Unexpected endpoint mode\n");
+			
+		}
+	   break;	
+
+	   case(MIDPOINT_CUE):
+		if (w_current->net_midpoint_mode != NONE) {
+			if (w_current->net_midpoint_mode == FILLED) {
+				gdImageArc(current_im_ptr, x2, y2, 
+					   offset2*1.25, offset2*1.25, 
+					   0, 360, endpoint_color);
+
+				for (i = 0 ; i < offset2*1.25; i++) {
+					gdImageArc(current_im_ptr, x2, y2,
+                                           i, i, 0, 360, endpoint_color);
+				}
+			
+			} else if (w_current->net_midpoint_mode == EMPTY) {
+				gdImageArc(current_im_ptr, x2, y2, 
+				 	   offset2*1.25, offset2*1.25, 
+					   0, 360, endpoint_color);
+			}
+		}
+           break;
+	}
+}
+
 
 /* takes in screen coordinates for the centerx,y, and then does the rotate 
  * in world space */

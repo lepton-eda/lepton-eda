@@ -33,6 +33,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>  
@@ -194,6 +198,17 @@ g_key_file_print (void)
 	i_callback_file_print(window_current, 0, NULL);
 #else
 	i_callback_file_print(NULL, window_current);
+#endif
+	return(gh_int2scm(0));
+}
+
+SCM 
+g_key_file_image_write (void) 
+{
+#if GTK_DEVEL
+	i_callback_file_image_write(window_current, 0, NULL);
+#else
+	i_callback_file_image_write(NULL, window_current);
 #endif
 	return(gh_int2scm(0));
 }

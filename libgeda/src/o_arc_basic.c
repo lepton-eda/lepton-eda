@@ -27,6 +27,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
@@ -463,6 +467,70 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils\n", radius);
 	fprintf(fp, "%d %d arc\n", start_angle, end_angle);
 	fprintf(fp, "stroke\n");
+}
+
+
+void
+o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
+	int origin_x, int origin_y)
+{
+	int start_angle, end_angle;
+	int wwidth, wheight;
+	int swidth, sheight;
+	int radius;
+	int screen_radius;
+	int x, y;
+	int center_x, center_y;
+
+	if (o_current == NULL) {
+		printf("got null in o_circle_image_write\n");
+		return;
+	}
+
+	start_angle = o_current->line_points->x2/64;
+       	end_angle = o_current->line_points->y2/64;
+
+	if ( end_angle < 0) {
+
+		if (end_angle >= 180) {
+			start_angle = (start_angle - (end_angle)) % 360;
+		} else {
+			start_angle = (start_angle + (end_angle)) % 360;
+		}
+
+		end_angle = abs(end_angle);
+
+	}
+
+	end_angle = start_angle + end_angle;
+	printf("%d %d -- %d %d -- %d %d\n", 
+			o_current->screen_x, o_current->screen_y,
+			o_current->line_points->screen_x1-o_current->screen_x,
+			o_current->line_points->screen_y1-o_current->screen_y,
+                        start_angle, end_angle);
+
+	if ( o_current->screen_x >= 0 && o_current->screen_y >= 0) {
+
+
+#if 0
+	gdImageArc(current_im_ptr, 
+			o_current->screen_x, o_current->screen_y,
+			o_current->line_points->screen_x1-o_current->screen_x,
+			o_current->line_points->screen_y1-o_current->screen_y,
+                        start_angle, end_angle,
+			o_image_geda2gd_color(o_current->color));
+	
+	}
+#endif
+
+	gdImageArc(current_im_ptr, 
+			200, 200,
+			300, 300,
+                        0, 45,
+			o_image_geda2gd_color(o_current->color));
+	
+	}
+
 }
 
 

@@ -37,6 +37,7 @@ extern int default_print_output_type;
 extern int default_print_orientation;
 extern int default_print_color;
 extern int default_print_color_background;
+extern int default_image_orientation;
 extern char *default_series_name;
 extern char *default_untitled_name;
 extern char *default_scheme_directory;

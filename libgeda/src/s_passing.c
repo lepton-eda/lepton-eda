@@ -27,6 +27,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 
 #include "struct.h"
 #include "globals.h"

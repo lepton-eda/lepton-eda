@@ -280,7 +280,6 @@ struct st_toplevel {
 	GtkWidget *filename_label;
 	GtkWidget *status_label;
 
-	
 	GtkMenuFactory *factory;
 	GtkMenuFactory *subfactory[2];
 	GHashTable *entry_ht;
@@ -305,6 +304,10 @@ struct st_toplevel {
 	GtkWidget *pwindow;			/* printing dialog box */
 	GtkWidget *plib_list;			/* paper size box */
 	GtkWidget *pfilename_entry; 
+
+	GtkWidget *iwindow;			/* image write dialog box */
+	GtkWidget *ilib_list;			/* paper size box */
+	GtkWidget *ifilename_entry; 
 
 	GtkWidget *pswindow;			/* page select */
 	GtkWidget *page_clist;
@@ -375,6 +378,7 @@ struct st_toplevel {
 	int text_output; /* controls how text is printed (vector / PS font) */ 
 	int scrollbars_flag; /* controls if scrollbars are displayed */ 
 	int print_orientation; /* either landscape or portrait */
+	int image_orientation; /* either landscape or portrait */
 	int print_color; /* either TRUE or FALSE (color or no color) */
 	int print_color_background; /* color used color ouput for background */ 
 	int stroke_color; /* color of the stroke points */
@@ -384,6 +388,8 @@ struct st_toplevel {
 	/* fixed init variables */
 	int print_output_type;			/* either window or limits */
 
+	/* fixed init variables */
+	int image_output_type;			/* either window or limits */
 
 	/* landscape printing only */
 	int paper_width, paper_height;
@@ -444,6 +450,7 @@ struct st_net {
 
         char *connected_to_1;
         char *connected_to_2;
+        char *connected_to; /* new to replace above */
 
 	int net_is_duplicate;		/* normally 0, but if the net is 
 					   described elsewhere this is true */

@@ -26,6 +26,10 @@
 #include <strings.h>
 #endif
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
@@ -61,6 +65,7 @@ GtkMenuEntry menu_items[] =
 	{"<Main>/File/Save Page as....", NULL, i_callback_file_save_as, NULL},
 	{"<Main>/File/Save All", NULL, i_callback_file_save_all, NULL},
 	{"<Main>/File/Print...", NULL, i_callback_file_print, NULL},
+	{"<Main>/File/Image Write...", NULL, i_callback_file_image_write, NULL},
 	{"<Main>/File/<separator>", NULL, NULL, NULL},
 	{"<Main>/File/Script Execute...", NULL, i_callback_file_script, NULL},
 	{"<Main>/File/<separator>", NULL, NULL, NULL},
@@ -163,6 +168,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/File/Save Page as....", NULL, i_callback_file_save_as, 0, NULL},
 	{"/File/Save All", NULL, i_callback_file_save_all, 0, NULL},
 	{"/File/Print...", NULL, i_callback_file_print, 0, NULL},
+	{"/File/Image Write...", NULL, i_callback_file_image_write, 0, NULL},
 	{"/File/sep1",     NULL,         NULL, 0, "<Separator>"},
 	{"/File/Script Execute...", NULL, i_callback_file_script, 0, NULL},
 	{"/File/sep2",     NULL,         NULL, 0, "<Separator>"},

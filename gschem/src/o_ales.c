@@ -26,6 +26,10 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
+
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -58,6 +62,7 @@ o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 
 	size = zoom_num;
 #endif
+
 
 	size = SCREENabs(w_current, 30);
 

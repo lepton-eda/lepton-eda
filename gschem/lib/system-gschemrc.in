@@ -436,6 +436,13 @@
 (output-color-background "black")
 ;(output-color-background "white")
 
+; image-orientation string
+;
+; Controls which way the image is layed out (landscape or portrait)
+;
+;(image-orientation "portrait")
+(image-orientation "landscape")
+
 ;
 ; End of mode related keywords
 ;
@@ -632,6 +639,7 @@
     ("a" . file-save-as)
     ("l" . file-save-all)
     ("p" . file-print)
+    ("i" . file-image)
     ("r" . file-script)
     ("c" . file-close-window)
     ("q" . file-quit)))

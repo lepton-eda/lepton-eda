@@ -27,6 +27,9 @@
 
 #include <guile/gh.h>
 
+#ifdef HAS_LIBGD
+#include <gd/gd.h>
+#endif
 
 #include "struct.h"
 #include "defines.h"
@@ -378,6 +381,27 @@ o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         	fprintf(fp, "1 setlinewidth\n");
 	}
 }
+
+void
+o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
+        int origin_x, int origin_y)
+{
+
+        if (o_current == NULL) {
+                printf("got null in o_pin_print\n");
+                return;
+        }
+
+
+        /* assumes screen coords are already calculated correctly */
+        gdImageLine(current_im_ptr,
+                        o_current->line_points->screen_x1,
+                        o_current->line_points->screen_y1,
+                        o_current->line_points->screen_x2,
+                        o_current->line_points->screen_y2,
+                        o_image_geda2gd_color(o_current->color));
+}
+
 
 
 void
