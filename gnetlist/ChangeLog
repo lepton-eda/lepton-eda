@@ -1,3 +1,8 @@
+2005-03-16 Stuart Brorson <sdb@cloud9.net>
+
+        * scheme/gnet-spice-sdb.scm: fix typo in CCCS.  Now usage of 
+	Vsense is harmonized.
+
 2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 

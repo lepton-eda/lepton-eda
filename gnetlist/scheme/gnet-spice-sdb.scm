@@ -67,7 +67,7 @@
 ;;  8.29.2004 -- Changed sense source naming in controlled sources because the old convention
 ;;               was confusing ngspice.
 ;;  10.9.2004 -- Added patches for voltage controlled switches from Peter Kaiser.
-;; 
+;;  3.16.2005 -- Fixed CCCS bug (typo in Vsense) noticed by David Logan
 ;;
 ;;**********************************************************************************
 ;;
@@ -491,9 +491,9 @@
           ;; the user should create the refdes label begining with a h
       (display (string-append package " ") port)
       (spice-sdb:write-two-pin-names package "1" "2" port)
-      (display (string-append "VSense_" package  " " (spice-sdb:component-value package) "\n" ) port)
+      (display (string-append "Vsense_" package  " " (spice-sdb:component-value package) "\n" ) port)
           ;; implement the current measuring voltage source
-      (display (string-append "VSense_" package " ") port)
+      (display (string-append "Vsense_" package " ") port)
       (spice-sdb:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; now it is possible to leave the output voltage source unconnected
@@ -516,9 +516,9 @@
           ;; the user should create the refdes label begining with a f
       (display (string-append package " ") port)
       (spice-sdb:write-two-pin-names package "1" "2" port)
-      (display (string-append "VSsense_" package " " (gnetlist:get-package-attribute package "value") "\n" ) port)
+      (display (string-append "Vsense_" package " " (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the current measuring voltage source
-      (display (string-append "VSense_" package " ") port)
+      (display (string-append "Vsense_" package " ") port)
       (spice-sdb:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
       (display "* end cccs expansion\n" port))))
@@ -564,7 +564,7 @@
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
-      (display (string-append "ISense_" package " ") port)
+      (display (string-append "Isense_" package " ") port)
       (spice-sdb:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; with an output current source it is possible to leave the output voltage source
