@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -22,6 +22,8 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "config.h"
 #include "dirs.h"
@@ -79,10 +81,11 @@ void dirs_custom(GtkWidget *Entry)
 		strcat(szCustomDirectory, Software.szDirname);
 		iDone = 1;
 	}
-	
+/*	
 	strcpy(szInstallDirectory, szCustomDirectory);
 	
 	gtk_entry_set_text(GTK_ENTRY(Entry), szInstallDirectory);
+*/
 	gtk_entry_set_editable(GTK_ENTRY(Entry), TRUE);
 	gtk_widget_set_sensitive(Entry, TRUE);
 	
@@ -90,6 +93,10 @@ void dirs_custom(GtkWidget *Entry)
 }
 
 
+
+/*
+	Public functions
+*/
 
 int DirectoryInitialize(void)
 {
@@ -109,9 +116,10 @@ void DirectoryRelease(GtkWidget *pMainWindow)
 void DirectoryShow(GtkWidget *pMainWindow)
 {
 	GdkPixmap *pPixmap;
-    GdkBitmap *pMask;
+	GdkBitmap *pMask;
 	GtkPixmap *pPixmapDirectory;
-    GtkStyle *pStyle;
+	GtkStyle *pStyle;
+	GtkWidget *pWidget;
 	int iResult;
  	
 	iResult = (strlen(Software.szPictName) == 0)
@@ -123,10 +131,48 @@ void DirectoryShow(GtkWidget *pMainWindow)
 		: gdk_pixmap_create_from_xpm(pWindowMain->window, &pMask, &pStyle->bg[GTK_STATE_NORMAL], Software.szPictName);
 	pPixmapDirectory = GTK_PIXMAP(lookup_widget(pMainWindow, "DirectoryPixmap"));
 	gtk_pixmap_set(pPixmapDirectory, pPixmap, pMask);
+
+	if (geteuid() != 0)
+	{
+		pWidget = lookup_widget(pWindowMain, "InstallGlobalButton");
+		gtk_widget_set_sensitive(pWidget, FALSE);
+	}
 }
 
 
 
 void DirectoryHide(GtkWidget *pMainWindow)
 {
+}
+
+
+
+/*
+	Callback functions
+*/
+
+void InstallLocalButton_clicked(GtkButton *pButton, gpointer pUserData)
+{
+	GtkWidget *pWidget;
+	pWidget = lookup_widget(GTK_WIDGET(pButton), "InstallDirectoryEntry");
+
+	dirs_local(pWidget);
+}
+
+
+void InstallGlobalButton_clicked(GtkButton *pButton, gpointer pUserData)
+{
+	GtkWidget *pWidget;
+	pWidget = lookup_widget(GTK_WIDGET(pButton), "InstallDirectoryEntry");
+
+	dirs_global(pWidget);
+}
+
+
+void InstallCustomButton_clicked(GtkButton *pButton, gpointer pUserData)
+{
+	GtkWidget *pWidget;
+	pWidget = lookup_widget(GTK_WIDGET(pButton), "InstallDirectoryEntry");
+
+	dirs_custom(pWidget);
 }
