@@ -35,9 +35,9 @@ gint g_rc_parse_general(TOPLEVEL *w_current,
                         const gchar *fname, 
                         const gchar *ok_msg, const gchar *err_msg);
 const char *g_rc_parse_path(void);
-static gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname);
-static gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname);
-static gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname);
+gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname);
+gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname);
+gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname);
 void g_rc_parse(TOPLEVEL *w_current, const gchar* rcname, 
                 const gchar* specified_rc_filename);
 gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcfilename);
