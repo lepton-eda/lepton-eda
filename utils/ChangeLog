@@ -1,3 +1,21 @@
+2005-02-07 23:57  danmc
+
+	* configure.ac, gschlas/g_rc.c, gschlas/g_register.c,
+	  gschlas/globals.c, gschlas/gschlas.c, gschlas/i_vars.c,
+	  gschlas/parsecmd.c, src/char_width.c, src/convert_sym.c,
+	  src/glib12-compat.c, src/gmk_sym.c, src/gsch2pcb.c,
+	  src/sarlacc_schem.c, src/smash_megafile.c: add dmalloc and
+	  Electric Fence debugging options
+
+2005-02-07 23:18  danmc
+
+	* gschlas/g_rc.c: get rid of gh_* guile interface
+
+2005-02-07 15:47  sdb
+
+	* src/gsch2pcb.c: Added additional printfs during directory search
+	  in -v -v mode.
+
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* gschlas/gschlas.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
