@@ -73,6 +73,7 @@ datafont = @datafont@
 datafoot = @datafoot@
 dataidt = @dataidt@
 dataio = @dataio@
+datalattice = @datalattice@
 datalinear = @datalinear@
 datalocal = @datalocal@
 datamaxim = @datamaxim@
@@ -94,7 +95,7 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-SUBDIRS =  	4000 74 IEC417 altera analog connector font foot idt io linear 	local maxim memory micro misc radio switch titleblock tube spice 	verilog rf pla dec xilinx
+SUBDIRS =  	4000 74 IEC417 altera analog connector font foot idt io linear 	local maxim memory micro misc radio switch titleblock tube spice 	verilog rf pla dec xilinx lattice
 
 
 bin_SCRIPTS = gesym-config

@@ -73,6 +73,7 @@ datafont = @datafont@
 datafoot = @datafoot@
 dataidt = @dataidt@
 dataio = @dataio@
+datalattice = @datalattice@
 datalinear = @datalinear@
 datalocal = @datalocal@
 datamaxim = @datamaxim@

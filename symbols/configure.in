@@ -114,6 +114,9 @@ datamisc=`echo $datamisc`
 data74=`ls -1 74 | grep -v Makefile | grep -v CVS`
 data74=`echo $data74`
 
+datalattice=`ls -1 lattice | grep -v Makefile | grep -v CVS`
+datalattice=`echo $datalattice`
+
 dataxilinx=`ls -1 xilinx | grep -v Makefile | grep -v CVS`
 dataxilinx=`echo $dataxilinx`
 
@@ -197,6 +200,7 @@ AC_SUBST(datamemory)
 AC_SUBST(datamicro)
 AC_SUBST(datamisc)
 AC_SUBST(data74)
+AC_SUBST(datalattice)
 AC_SUBST(dataxilinx)
 AC_SUBST(datadec)
 AC_SUBST(datapla)
@@ -216,6 +220,7 @@ AC_OUTPUT([
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	lattice/Makefile 
 	xilinx/Makefile 
 	dec/Makefile 
 	pla/Makefile 

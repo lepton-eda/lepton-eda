@@ -901,6 +901,9 @@ datamisc=`echo $datamisc`
 data74=`ls -1 74 | grep -v Makefile | grep -v CVS`
 data74=`echo $data74`
 
+datalattice=`ls -1 lattice | grep -v Makefile | grep -v CVS`
+datalattice=`echo $datalattice`
+
 dataxilinx=`ls -1 xilinx | grep -v Makefile | grep -v CVS`
 dataxilinx=`echo $dataxilinx`
 
@@ -972,6 +975,7 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
 
 
 
@@ -1128,6 +1132,7 @@ trap 'rm -fr `echo "
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	lattice/Makefile 
 	xilinx/Makefile 
 	dec/Makefile 
 	pla/Makefile 
@@ -1220,6 +1225,7 @@ s%@datamemory@%$datamemory%g
 s%@datamicro@%$datamicro%g
 s%@datamisc@%$datamisc%g
 s%@data74@%$data74%g
+s%@datalattice@%$datalattice%g
 s%@dataxilinx@%$dataxilinx%g
 s%@datadec@%$datadec%g
 s%@datapla@%$datapla%g
@@ -1275,6 +1281,7 @@ cat >> $CONFIG_STATUS <<EOF
 CONFIG_FILES=\${CONFIG_FILES-"Makefile 
 	4000/Makefile
 	74/Makefile 
+	lattice/Makefile 
 	xilinx/Makefile 
 	dec/Makefile 
 	pla/Makefile 
