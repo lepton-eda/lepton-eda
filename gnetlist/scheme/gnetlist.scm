@@ -106,7 +106,7 @@
 ;; strip1
 ;; Usage (strip1 list)
 ;; Cuts off the last element
-(define bom:strip1
+(define strip1
   (lambda (ls)
     (if (or (null? ls)
             (null? (cdr ls)))
