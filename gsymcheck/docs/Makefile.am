@@ -25,6 +25,6 @@ gsymcheck.html: gsymcheck.1
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ gsymcheck.html
-DISTCLEANFILES = *.log core FILE *~ prototype.bak gsymcheck.html
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure gsymcheck.html
 
