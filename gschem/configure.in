@@ -163,7 +163,6 @@ else
                 if test $PNG_LIB = no; then
                         AC_MSG_ERROR(Cannot find libpng, be sure to install png; it is required for libgdgeda)
                 else
-                        GD_EXTRA="-lpng"
 			AC_CHECK_LIB(gdgeda, gdImageColorAllocate, GDGEDA_LIB="-lgdgeda", GDGEDA_LIB=no, $GD_EXTRA)
 
 			if test $GDGEDA_LIB = no; then
