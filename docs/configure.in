@@ -68,6 +68,10 @@ else
 fi
 
 gedadocdir=$dprefix/share/doc/geda-doc
+dnl --with-docdir : tells where to store documentation if not default
+AC_ARG_WITH(docdir,
+    [  --with-docdir      Where to store documentation if not default.],
+	gedadocdir=$withval)
 expandgedadocdir=`echo $gedadocdir`
 GEDADOCDIR=$expandgedadocdir
 AC_SUBST(GEDADOCDIR)
