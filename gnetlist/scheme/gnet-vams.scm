@@ -56,18 +56,18 @@
 	   (architecture (vams:change-all-whitespaces-to-underlines 
 			  (cond 
 			   ((string=? 
-			     (gnetlist:get-toplevel-attribute 'architecture) 
+			     (gnetlist:get-toplevel-attribute "architecture") 
 			     "not found") "default_architecture")
 			   (else  
-			    (gnetlist:get-toplevel-attribute 'architecture)))))
+			    (gnetlist:get-toplevel-attribute "architecture")))))
 
 	   ;; generate correctly entity name
 	   (entity (vams:change-all-whitespaces-to-underlines 
 		    (cond ((string=? 
-			    (gnetlist:get-toplevel-attribute 'entity) 
+			    (gnetlist:get-toplevel-attribute "entity") 
 			    "not found") 
 			   "default_entity")
-			  (else (gnetlist:get-toplevel-attribute 'entity)))))
+			  (else (gnetlist:get-toplevel-attribute "entity")))))
 
 	   ;; search all ports of a schematic. for entity generation only.
 	   (port-list  (vams:generate-port-list (vams:get-uref top-attribs)))
@@ -506,8 +506,8 @@
       (for-each
        (lambda (net)
 	 (let*((connlist (gnetlist:get-all-connections net))
-	       (port_object (vams:net-consistence 'port_object connlist))
-	       (port_type (vams:net-consistence 'port_type connlist))
+	       (port_object (vams:net-consistence "port_object" connlist))
+	       (port_type (vams:net-consistence "port_type" connlist))
 	       ;;(if (equal? port_object "quantity")
 	       ;;(port_mode (vams:net-consistence 'port_mode connlist)))
 	       )
@@ -618,7 +618,7 @@
 			  (architecture 
 			   (gnetlist:get-package-attribute 
 			    package 
-			    'architecture)))
+			    "architecture")))
 		      (if (not (memv (string->symbol device)
 				     (map string->symbol 
 					  (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
@@ -640,7 +640,7 @@
 				  (if (equal? 
 				       (string-ref 
 					(gnetlist:get-package-attribute package 
-									'architecture) 0) 
+									"architecture") 0) 
 				       #\?)
 				      (display (substring architecture 1) p)
 				      (display architecture p))
@@ -1036,9 +1036,9 @@
 	    (for-each (lambda (pin)
 			(append! port-list
 				 (list (list pin
-					     (gnetlist:get-pin-attribute uref pin 'port_object)
-					     (gnetlist:get-pin-attribute uref pin 'port_type)
-					     (gnetlist:get-pin-attribute uref pin 'port_mode)))))
+					     (gnetlist:get-pin-attribute uref pin "port_object")
+					     (gnetlist:get-pin-attribute uref pin "port_type")
+					     (gnetlist:get-pin-attribute uref pin "port_mode")))))
 		      (gnetlist:get-pins uref))
 	    (append (cdr port-list)))))))
 

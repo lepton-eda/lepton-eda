@@ -1,4 +1,9 @@
 
+2000-12-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vams.scm: Fixed a minor bug which was uncovered by
+	  Stefan's stricter error checking in g_netlist.c
+
 2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* tests/*: removed some tests since they put version information
