@@ -105,48 +105,50 @@ operation or command:
 	
 			-- or --
 
-	Typing the keyboard hotkey(s).
+	Typing the keyboard shortcut(s).
 
 			-- or --
 
 	Draw the appropriate stroke (if stroke support is enabled)
 
 	To make usage matters more confusing, selecting an operation
-off of the menus behaves slightly differently than typing the hotkey.
-Most of the operations operate on the currently selected object(s),
-hence you need to select the object first before manipulating them.
-The menu selected operations usually require some more input (usually
-a mouse click) after they are picked off of the menu.  The keyboard
-hotkey operations take that required input as the current mouse position.
-This saves an extra click since you can position the mouse at the right
-place, type in the hotkey(s), and the command then executes.  Note, you can
-change this so that both menu and hotkey behavior is exactly the same.
-See the section on the resource file for more info on how to configure
-this.
+off of the menus behaves slightly differently than typing the
+keyboard shortcut.  Most of the operations operate on the currently
+selected object(s), hence you need to select the object first before
+manipulating them.  The menu selected operations usually require some
+more input (usually a mouse click) after they are picked off of the menu.
+The keyboard shortcut operations take that required input as the current
+mouse position.  This saves an extra click since you can position
+the mouse at the right place, type in the shortcut(s), and the command
+then executes.	Note, you can change this so that both menu and shortcut
+behavior is exactly the same.  See the section on the resource file for
+more info on how to configure this.
 
-	Most of the interaction with gschem is fairly modal (modes like
-command/editing similar to the great text editor vi).  If you select
-operations off of the menu, the you are placed into corresponding mode
-(like copy/move mode).  You must then select an anchor point (or whatever
-the appropriate point is) to continue the operation.  Most of the commands
-off of the menu expect the objects to be already selected.
+	Most of the interaction with gschem is fairly mode oriented
+(similar to the great text editor vi).	If you select operations off of
+the menu, then you are placed into the corresponding mode (like copy
+or move mode).	You must then select an anchor point (or whatever the
+appropriate point is) to continue the operation.  Most of the commands
+off of the menu expect the objects to be already selected.  Some of the
+modes persist after being execute while other immediately return you
+into select mode (the default mode).
 
-	The hotkeys are also modal in nature.  Most of the default
-hotkeys are for the various commands are not single keystrokes. 
+	The shortcuts are also mode like in nature.  Most of the default
+shortcuts are for the various commands are not single keystrokes.
 There are a few which are single keystrokes (like zoom in: `z' or
 pan: `x'), but most are typically two keystrokes long.	As examples,
 to execute File/Save you would type `f' and `s' (without the quotes)
-or Add/Line is `a' and `l'.  You can get a listing of the hotkeys by
-picking Help/Hotkeys.  The hotkeys are defined in the resource files
+or Add/Line is `a' and `l'.  You can get a listing of the shortcuts by
+picking Help/Hotkeys.  The shortcuts are defined in the resource files
 (system-gschemrc, ~/.gEDA/gschemrc, or `pwd`/gschemrc).  See the section
 on the resource file for more info.
 
 	The mouse button actions in gschem are mostly configurable.
 The first mouse button is always used to select objects or pick points.
 This button is not configurable.  The second mouse button is either a
-copy/move action (when held down over an object) or a repeat last command
-or draw a stroke to execute a command.  The third mouse button is either
-a mouse pan (when held down as the mouse is moved) or a popup dialog box.
+copy/move action (when held down over an object), a repeat last command
+or used to draw a stroke to execute a command.  The third mouse button is
+either a mouse pan (when held down as the mouse is moved) or a popup menu.
 The behavior of the second and third mouse buttons is controlled through
 the resource file (see the section below for more info).
 
@@ -154,7 +156,7 @@ the resource file (see the section below for more info).
 
 5. Basic Operations
 
-	There are seven kinds of operations in gschem:
+	There are nine basic kinds of operations in gschem:
 
 	a. File related (Open/Close/Save/Print etc...)
 	b. Addition of objects (Add nets/lines/pins/components etc...)
@@ -162,9 +164,9 @@ the resource file (see the section below for more info).
 	d. View operations (Zoom/Pan/Redraw etc...)
 	e. Hierarchy operations (Down Schematic/Down Symbol/Up)
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
-	g. Buffer operations
+	g. Buffer operations (Copy / Cut / Paste)
 	h. Option changing (text size/gridding/snap etc...)
-	i. Grips
+	i. Editing Grips
 
 	This section will describe each of these.
 
@@ -278,30 +280,31 @@ the resource file (see the section below for more info).
 
 		To place a component do the following:
 
-			Select a Component library (which btw is specified
-			in the Resource files, see section below) from the
-			left list	
+			Select a Component library (which, btw, is
+			specified in the Resource files, see section
+			below) from the left list
 
 			Select a Component from the right list.
 
-			Move the mouse into the main drawing window (you
-			should see an outline). 
+			Move the mouse into the main drawing window
+			(you should see an outline).
 
-			Press the first mouse button to place the component.
+			Press the first mouse button to place the
+			component.
 
-			Keep pressing the first mouse button to place 
+			Keep pressing the first mouse button to place
 			additional instances of the component.
 
 		If a component name is already selected, hitting apply
 		and moving the mouse into the main window will allow
 		you to place that component again.
 
-		You can rotate the component before you place it by clicking
-		the middle button.  For every button click, the component
-		will be rotate 90 degrees.  
+		You can rotate the component before you place it by
+		clicking the middle button.  For every button click,
+		the component will be rotate 90 degrees.
 
-		To cancel a component place press the last mouse button or
-		the ESC key.
+		To cancel a component place press the last mouse button
+		or the ESC key.
 
 		Please see the dialog box section for detailed information
 		on this dialog box.
@@ -319,28 +322,28 @@ the resource file (see the section below for more info).
 			Press the last mouse button or ESC to cancel
 			any net in progress.
 
-		If you started this using the menu hotkey then the net
-		start immediately at the last mouse position and then
-		it behave exactly as above (except for line #1).
+		If you started this using the keyboard shortcut then
+		the net start immediately at the last mouse position
+		and then it behave exactly as above (except for line #1).
 
 		After drawing a net segment (or segments) and canceling
-		the last net segment, you are automatically placed in 
+		the last net segment, you are automatically placed in
 		select mode.  You must pick add net again or type the
-		hotkey to add more nets.
+		shortcut to add more nets.
 
 		You can hold down the control key to draw non-orthogonal
 		nets.  Just keep in mind that you cannot connect anything
 		to the middle of a non-orthogonal net.
 
-		The boxes at the end of the nets are connectivity cues.
-		Filled boxes signified a dangling net (not connected to
-		anything).  Filled circles are midpoint connections/junctions.
-		These cues are drawn automatically and are an indicator
-		of electrical connectivity.  
+		The boxes at the end of the nets are connectivity
+		cues.  Filled boxes signified a dangling net (not
+		connected to anything).  Filled circles are midpoint
+		connections/junctions.	These cues are drawn automatically
+		and are an indicator of electrical connectivity.
 
-		See the section on electrical connectivity below for more
-		information.
-		
+		See the section on electrical connectivity below for
+		more information.
+
 	Add Bus
 
 		Basically the same thing as nets, except that it draws 
@@ -442,9 +445,9 @@ the resource file (see the section below for more info).
 			2. Move the mouse to see an outline of the circle
 			3. Press the first mouse button to finalize the circle
 
-		To draw a circle (typing the hotkey), same as above except
+		To draw a circle (typing the shortcut), same as above except
 		that the center of the circle is picked for you at the last
-		mouse position when you type the hotkey.
+		mouse position when you type the shortcut.
 
 		To cancel a circle rubberband in progress press the last mouse
 		button or the ESC key.
@@ -571,7 +574,7 @@ the resource file (see the section below for more info).
 			multi-attribute editing dialog box.
 
 			1. Select the item (text/component) to edit.
-			2. Pick or type the hotkeys for Edit/Edit...
+			2. Pick or type the shortcut for Edit/Edit...
 			3. Make the appropriate change and press OK
 
 		Note, only the item will be edited; bulk text/component
@@ -583,7 +586,7 @@ the resource file (see the section below for more info).
 	        an attribute or just a plain text string.
 
 			1. Select the text item text to edit.
-			2. Pick or type the hotkeys for Edit/Edit Text...
+			2. Pick or type the shortcut for Edit/Edit Text...
 			3. Make the appropriate change and press OK
 
 		Note, only the item will be edited; bulk text editing 
@@ -601,9 +604,9 @@ the resource file (see the section below for more info).
 			4. Move the outline to the desired position
 			5. Pick the destination point (first button)
 
-		To copy objects using the hotkey for copy mode is almost
+		To copy objects using the shortcut for copy mode is almost
 		the same as above except that the origin point is selected
-		automatically for you once you hit the copy mode hotkey.
+		automatically for you once you hit the copy mode shortcut.
 
 		After finishing the copy, you are automatically put back
 		into to select mode.
@@ -624,7 +627,7 @@ the resource file (see the section below for more info).
 		To delete objects:
 
 			1. Pick the desired object(s).
-			2. Select or type the hotkey for Edit/Delete
+			2. Select or type the shortcut for Edit/Delete
 			3. Objects will be deleted immediately	
 
 		Use this with caution since there is NO undo yet!	
@@ -640,9 +643,9 @@ the resource file (see the section below for more info).
 			2. Select Edit/Rotate 90 Mode off of a menu
 			3. Pick the pivot or center point of the rotate
 
-		Rotating objects using the hotkey is similar to above except
+		Rotating objects using the shortcut is similar to above except
 		that the center point is the last mouse position at which
-		you typed the hotkey.
+		you typed the shortcut.
 		
 		The objects will be rotate 90 counter clockwise.  You
 		can keep rotate objects 90 degrees till you have them in
@@ -659,9 +662,9 @@ the resource file (see the section below for more info).
 			2. Select Edit/Mirror Mode off of a menu
 			3. Pick the pivot point of the mirror
 	
-		Mirroring objects using the hotkey is similar to above except
+		Mirroring objects using the shortcut is similar to above except
 		that the pivot point is the last mouse position at which you
-		typed the hotkey. 
+		typed the shortcut. 
 
 		Objects are mirrored horizontally about the pivot point.
 		If you want to get a vertical mirror then rotate and mirror
@@ -678,7 +681,7 @@ the resource file (see the section below for more info).
 		To change the slot:
 
 			1. Select the desired component.
-			2. Pick or type the hotkey for Edit/Slot...
+			2. Pick or type the shortcut for Edit/Slot...
 			3. Type in the new slot number 
 			4. Press OK.
 			
@@ -692,7 +695,7 @@ the resource file (see the section below for more info).
 		To change the color of the currently selected objects:
 
 			1. Select the desired object(s).
-			2. Pick or type the hotkey for Edit/Color...
+			2. Pick or type the shortcut for Edit/Color...
 			3. A dialog box with a drop down menu will appear.
 			4. Pick the new color 
 			5. Press Apply.
@@ -752,7 +755,7 @@ the resource file (see the section below for more info).
 		This operation is mainly used to translate symbols around
 		(mainly to the origin).
 
-		To translate a symbol, just select or type the hotkey for
+		To translate a symbol, just select or type the shortcut for
 		Edit/Symbol Translate... and a dialog box will appear.
 		Enter the amount you want translate (positive or negative)
 		in the X and Y directions (the same value will be applied
@@ -781,7 +784,8 @@ the resource file (see the section below for more info).
 		Embed Component and Unembed component work exactly alike:
 
 			1. Select any components you wish to (un)embed	
-			2. Pick or type the hotkey for Edit/(Un)Embed Component
+			2. Pick or type the shortcut for Edit/(Un)Embed
+			   Component
 
 		If you want the unembed a component you must have a symbol
 		with the same name in the component library search path
@@ -797,7 +801,7 @@ the resource file (see the section below for more info).
 	Show Hidden Text
 
 		This operation makes all hidden/invisible text visible.
-		To use it, simply pick the option (or type its hotkeys)
+		To use it, simply pick the option (or type its shortcut)
 		and all the invisible text will appear.  Visible text
 		is unaffected by this operation.  
 
@@ -823,9 +827,9 @@ the resource file (see the section below for more info).
 			2. Click the first mouse button at the new 
 			   center of the display.
 
-		To pan the display using the hotkey is much simpler, simply
-		type the hotkey and the display will pan the display 
-		to the current mouse location.  
+		To pan the display using the shortcut is much simpler,
+		simply type the shortcut and the display will pan the
+		display to the current mouse location.
 
 		You can also enable mouse panning if you add:
 
@@ -847,14 +851,14 @@ the resource file (see the section below for more info).
 			   the area you want to zoom
 			4. Release the mouse button and the display will zoom
 
-		To use the zoom box by typing the hotkeys is similar. 
-		Once you type the hotkey, the zoom box will start immediately
-		using the current mouse location as the first corner of the
-		box.
+		To use the zoom box by typing the shortcut is similar.
+		Once you type the shortcut, the zoom box will start
+		immediately using the current mouse location as the
+		first corner of the box.
 
-		Zoom box will attempt to zoom the requested area, but some
-		boxes are not legal and gschem will do it's best to zoom
-		the requested area.
+		Zoom box will attempt to zoom the requested area, but
+		some boxes are not legal and gschem will do it's best
+		to zoom the requested area.
 
 	Zoom limits
 
@@ -862,7 +866,7 @@ the resource file (see the section below for more info).
 		the placed objects on the screen.  
 
 		Simply pick View/Zoom limits off of a menu or type its
-		hotkey and the display will be redrawn.
+		shortcut and the display will be redrawn.
 
 		There are the special cases (like a single horizontal line)
 		which sometimes do not display correctly (or as expected).
@@ -873,7 +877,7 @@ the resource file (see the section below for more info).
 
 		Zoom In/Out zoom the display using the picked mouse location
 		as the center of the display (or the current mouse location
-		if using the hotkey).  These commands always zoom in/out
+		if using the shortcut).  These commands always zoom in/out
 		by a factor.
 
 		To use Zoom In/Out (picking View/Zoom box off of a menu):
@@ -882,7 +886,7 @@ the resource file (see the section below for more info).
 			2. Click the first mouse button as the center of
 			   the zoom
 	
-		Using the hotkeys is similar except that the current mouse
+		Using the shortcut is similar except that the current mouse
 		position serves as the center of the new display.
 
 	Zoom full
@@ -890,7 +894,7 @@ the resource file (see the section below for more info).
 		Zoom full will zoom the display to the maximum possible
 		displayable view.  
 
-		Simple select it off of a menu or type it's hotkey and the
+		Simple select it off of a menu or type it's shortcut and the
 		display will be zoomed.
 
 	Update Cues
@@ -972,7 +976,7 @@ the resource file (see the section below for more info).
 			1. Select the object which will receive the attributes
 			2. Select the text object(s) which will be attached
 			   to the above object
-			3. Pick or type the hotkeys for Attributes/Attach
+			3. Pick or type the shortcut for Attributes/Attach
 
 		The order of the sequence of selecting the object and
 		then the text items is important; gschem will not allow
@@ -991,7 +995,7 @@ the resource file (see the section below for more info).
 		To deselect an object of all attributes:
 
 			1. Select the object of interest
-			2. Pick or type the hotkeys for Attributes/Detach
+			2. Pick or type the shortcut for Attributes/Detach
 		
 		All the attached attributes (even if they are not selected)
 		will be detached from the object.  This behavior is probably
@@ -1016,7 +1020,7 @@ the resource file (see the section below for more info).
 		To use the options:
 
 			1. Select the attribute(s) of interest
-			2. Pick or type the hotkeys for Attributes/Show *
+			2. Pick or type the shortcut for Attributes/Show *
 	
 		The text item(s) should immediately change.  
 
@@ -1031,7 +1035,7 @@ the resource file (see the section below for more info).
 		To use this option:
 
 			1. Select the text item(s) of interest
-			2. Pick or type the hotkeys for Attributes/Toggle Vis
+			2. Pick or type the shortcut for Attributes/Toggle Vis
 
 		The text item(s) should change their visibility immediately.
 		
@@ -1133,7 +1137,7 @@ the resource file (see the section below for more info).
 	circle radius point or corners of a box) which allow you to change
 	the object quickly.   Grip support currently exists for lines,
 	nets, pins, buses, circles, and boxes.  Arcs do not yet have grips,
-	but will eventually.
+	but will eventually have them.
 
 	Using grips is easy:
 
