@@ -1,9 +1,9 @@
-.TH gnetlist 1 "October 1st, 2003" Version 20030901
+.TH gnetlist 1 "December 31st, 2003" Version 20031231
 .SH NAME
 gnetlist - gEDA/gaf Netlist extraction/generation
 .SH SYNOPSIS
 .B gnetlist
-[-i] [-v] [-l schem_file] [-m schem_file ] [-g guile_procedure] [-o output_filename] schematic1 [... schematicN]
+[-i] [-I] [-q] [-s] [-v] [-l schem_file] [-m schem_file ] [-g guile_procedure] [-c scheme_string ] [-o output_filename] schematic1 [... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgnetlist\fP is the netlist extraction/generation program which is part gEDA 
@@ -24,31 +24,54 @@ following backends:
 
         3) BOM / BOM2 - Bill of Materials (-g bom and -g bom2)
 
-        4) DRC - Start of a design rule checker (-g drc)
+        4) Partslist 1,2,3 - More Bill of Materials (-g partslist[1-3])
 
-        5) gEDA - native format, mainly used for testing (-g geda)
+        5) DRC - Start of a design rule checker (-g drc)
 
-        6) Gossip netlist format (-g gossip)
+        6) DRC2 - A second design rule checker (-g drc2)
 
-        7) PADS netlist format (-g pads)
+        7) gEDA - native format, mainly used for testing (-g geda)
 
-        8) PCB / PCBboard (-g PCB and -g PCBboard)
+        8) Gossip netlist format (-g gossip)
 
-        9) ProtelII netlist format (-g protelII)
+        9) PADS netlist format (-g pads)
 
-        10) Spice compatible netlist format (-g spice)
+        10) PCB / PCBboard (-g PCB and -g PCBboard)
 
-        11) Enhanced spice compatible netlist format (-g spice-sdb)
+        11) gsch2pcb backend (-g gsch2pcb)
 
-        12) Switcap netlist format (-g switcap)
+        12) ProtelII netlist format (-g protelII)
 
-        13) Tango netlist format (-g tango)
+        13) Spice compatible netlist format (-g spice)
 
-        14) Verilog code (-g verilog)
+        14) Enhanced spice compatible netlist format (-g spice-sdb)
 
-        15) VHDL code (-g vhdl)
+        15) Switcap netlist format (-g switcap)
 
-        16) VIPEC netlist format (-g vipec)
+        16) Tango netlist format (-g tango)
+
+        17) Verilog code (-g verilog)
+
+        18) VHDL code (-g vhdl)
+
+        19) VIPEC netlist format (-g vipec)
+
+        20) Bartels Autoengineer netlist format (-g bae)
+
+        21) GOSSIP system simulation system netlist format (-g gossip)
+
+        22) MAXASCII netlist format (-g maxascii)
+
+        23) VHDL-AMS netlist format (-g vams)
+
+        24) Futurenet2 netlist format (-g futurenet2 )
+
+        25) SWITCAP switched capacitor simulator netlist format (-g switcap )
+
+        26) RF Cascade netlist format (-g cascade )
+
+        27) RACAL-REDAC netlist format (-g redac )
+
 
 For more info on these formats please look at the README.*
 
@@ -91,6 +114,9 @@ execute arbitrary guile scripts from the command line.  Be sure to surround
 the string with either single or double quotes to satisfy your shell.  The
 string is execute before any init or netlist backend scheme code is
 loaded or executed.
+.TP 8
+.B -I 
+Put .INCLUDE <filename> in output file instead of model file's contents.
 .TP 8
 .B -i 
 Interactive mode.  After the schematic is read in and parsed then go into 
@@ -152,13 +178,13 @@ with the -v flag:
 No environment variables are used.
 
 .SH "AUTHOR"
-Ales V. Hvezda and many others
+Ales Hvezda and many others
 
 .SH SEE ALSO
 .BR gschem (1),
 .BR gsymcheck (1)
 .SH COPYRIGHT
-Copyright \(co  1999, 2000, 2001, 2003 Ales V Hvezda
+Copyright \(co  1999-2004 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0

@@ -1,9 +1,9 @@
-.TH gschem 1 "May 25th, 2003" Version 20030525
+.TH gschem 1 "December 31st, 2003" Version 20031231
 .SH NAME
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
 .B gschem
-[-q] [-v] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [schematic1 ... schematicN]
+[-q] [-v] [-t] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [schematic1 ... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgschem\fP is the schematic capture program which is part gEDA 
@@ -33,6 +33,12 @@ Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
 .TP 8
 .B -v 
 Verbose mode on.  This mode gives as much feedback to the user as possible. (optional)
+.TP 8
+.B -t 
+Print out more information when using mouse strokes.  With this command
+line flag and the middle button configured for mouse strokes, gschem
+will output the stroke sequence numbers as the user executes strokes.
+These numbers can be used to define new strokes in the system-gschemrc file.
 .TP 8
 .B -r filename
 Specify a rc filename.  Normally \fIgschem\fP searches for the system-gschemrc, then
@@ -76,14 +82,14 @@ To run \fIgschem\fP and load up all schematics in the current subdirectory:
 No environment variables are used.
 
 .SH "AUTHOR"
-Ales V. Hvezda and many others
+Ales Hvezda and many others
 
 .SH SEE ALSO
 .BR gnetlist (1),
 .BR gsymcheck (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co  1999-2003 Ales V Hvezda
+Copyright \(co  1999-2004 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0
