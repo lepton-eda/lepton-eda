@@ -72,6 +72,11 @@ if (!quiet_mode) {
 	fprintf(stderr, "THIS IS AN ALPHA RELEASE! version %s\n", VERSION);
 }
 
+#ifdef __CYGWIN32__
+        fprintf(stderr, "THIS IS THE WinNT version, It is only a DEMO!\n");
+        fprintf(stderr, "Use at your own risk!\n");
+#endif  
+
 	/* register guile (scheme) functions */
 	g_register_funcs();
 

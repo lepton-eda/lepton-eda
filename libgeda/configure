@@ -548,7 +548,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990829
+VERSION=19990919
 
 echo Configuring libgeda version $VERSION
 
