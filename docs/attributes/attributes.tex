@@ -1,0 +1,319 @@
+% gEDA - GNU Electronic Design Automation
+% attributes.tex - Master Attribute Document
+% Copyright (C) 2002 Ales V. Hvezda
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+\documentclass{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\title{gEDA/gaf Master Attribute Document}
+\author{Ales V. Hvezda, ahvezda@geda.seul.org\\
+	\\
+	This document is released under GFDL\\ 
+	(http://www.gnu.org/copyleft/fdl.html)}
+\date{July 14th, 2002}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+
+\section{Overview}
+
+This document describes all the attributes used in in gEDA/gaf (GPL'd
+Electronic Design Automation / Gschem And Friends).  This document
+is broken down into several section: this overview, symbol only
+attributes, schematic only attributes, attributes which can appear
+in both symbols and schematics, and attributes which are obsolete or
+deprecated.
+
+In this document, attribute names are in {\bf bold} and examples
+are in the \texttt{typewriter} font.
+
+\section{What are Attributes?}
+
+Attributes in the gEDA/gaf system are nothing more than text items
+which take on the form: {\bf name}=value.  Name can be anything just as long
+as it doesn't contain a equals sign.  Value can also be anything just
+as long as it is something (vs nothing).  {\bf name}= (without a value part)
+is not a valid attribute.  Also, there cannot be any spaces immediately
+before or after the equals sign.
+
+Attributes can be attached to some part of the symbol.  If the attribute
+conveys information specific to an object, then the attribute should
+be attached directly to the object, otherwise the attribute should be
+free standing or floating.  Free standing attributes just exist in the
+symbol file as text items which take on the form {\bf name}=value.
+
+\newpage
+
+\section{Symbol only Attributes}
+
+
+\subsection{\bf device\label{device}}
+{\bf device}= is the device name of the symbol and is required by gnetlist.  
+
+{\bf device}= should be placed somewhere in the symbol and made invisible.
+This is a free standing or floating attribute.  If the object is a graphic
+then {\bf device}= should be set to none ({\bf device}=none) and attach
+a {\bf graphical}= (\ref{graphical}) attribute.  Do not confuse this
+attribute with just having a text label which the device name.  Do not
+put spaces into the device name; there are some programs which dislike
+spaces in the device specifier.  Generally the device name is in all caps.
+
+Examples: \texttt{device=7400 device=CONNECTOR\_10 device=NPN\_TRANSISTOR}
+
+
+\subsection{\bf graphical\label{graphical}}
+Symbols which have no electrical or circuit significance need a 
+{\bf graphical}=1 attribute.  Symbols like titleboxes are purely
+graphical symbols.  Any symbol which has {\bf graphical}=1 is ignored
+by gnetlist.
+
+{\bf graphical}=1 should exist somewhere in the symbol and made invisible.
+This is a free standing or floating attribute.  Don't forget to set 
+{\bf device}=none (\ref{device}).
+
+Example: \texttt{graphical=1}
+
+
+\subsection{\bf pinseq\label{pinseq}}
+This attribute is used to give each pin an unique number or sequence.
+All pins must have a {\bf pinseq}=\# attribute attached to the pin object.
+This attribute should be hidden.  This attribute is used extensively by
+gschem and gnetlist.
+
+gnetlist will output pins in the order of increasing pin sequence.
+The sequence numbers start at 1 and should increase without skipping
+any numbers.  This attribute is not the pin number (i.e. device pin
+numbers, like GND is 7 on TTL).  For pin numbers see the {\bf pinnumber} (\ref{pinnumber}) attribute.  
+
+Examples: \texttt{pinseq=1 pinseq=2 pinseq=3}
+
+This attribute replaces the obsolete {\bf pin\#}=\# attribute.
+
+
+\subsection{\bf pinnumber\label{pinnumber}}
+This attribute is the pin number (i.e. like GND is 7 on 74 TTL).  
+All pins must have a {\bf pinnumber}=\# attribute attached to the pin object.
+
+You can have numbers or letters for the value.  This attribute should
+be visible with the value only visible.  You also need a {\bf pinseq}
+(\ref{pinseq}) attribute.
+
+Examples: \texttt{pinnumber=1 pinnumber=13 pinnumber=A0}   
+
+This attribute replaces the obsolete {\bf pin\#}=\# attribute.
+
+
+\subsection{\bf pintype\label{pintype}}
+Each pin must have a {\bf pintype}=value attribute attached to it and 
+should be make hidden. Table \ref{pintype values} shows valid values for
+this attribute.  
+
+\vspace{.125in}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+in & Input \\ \hline
+out & Output \\ \hline
+io & Input/Output \\ \hline
+oc & Open collector \\ \hline
+oe & Open emitter \\ \hline
+pas & Passive \\ \hline
+tp & Totem pole \\ \hline
+tri & Tristate (high impedance) \\ \hline
+clk & Clock \\ \hline
+pwr & Power/Ground \\ \hline
+\end{tabular}
+\caption{{\bf pintype} values} \label{pintype values}
+\end{table}
+
+\vspace{.125in}
+
+This attribute is not used extensively in the symbol library, but it
+will be used for DRC and netlisting.
+
+Examples: \texttt{pintype=clk pintype=in pintype=pas}   
+
+
+\subsection{\bf pinlabel\label{pinlabel}}
+This attribute labels a pin object.  This attribute is primarily used 
+by gnetlist to support hierarchical designs.
+
+This attribute must be attached to the pin and be left visible.  Please
+make this attribute green (instead of the default attribute yellow).
+
+Examples: \texttt{pinlabel=A0 pinlabel=DATA1 pinlabel=CLK}
+
+
+\subsection{\bf numslots\label{numslots}}
+If a component has multiple slots in a physical package (such as a 7400
+(NAND) which has 4 NANDs per package) then you need a {\bf numslots}=\#
+attribute.  The \# is the number of slots that are in a physical device.
+{\bf numslots}=\# should exist somewhere in the symbol and be made
+invisible.  This is a free standing or floating  attribute.
+
+Example: \texttt{numslots=4}
+
+
+\subsection{\bf slotdef\label{slotdef}}
+If a component has multiple slots in a physical package then you must 
+attach a {\bf slotdef}=slotnumber:\#,\#,\#... for every device inside
+the physical package.
+
+The slotnumber corresponds to the slot number.  The colon after the
+slot number is required.  For example, if a device has 4 slots then there
+would be {\bf slotdef}=1:..., {\bf slotdef}=2:..., {\bf slotdef}=3:...,
+and {\bf slotdef}=4:...  attributes somewhere in the symbol and be
+made invisible.  This is a free standing or floating attribute.
+
+The \#'s have a one-to-one correspondence to the {\bf pinseq} attributes
+and specify which {\bf pinnumber}=\# is used during display (gschem)
+or netlisting (gnetlist).
+
+It is recommended that all symbols which have slots have a {\bf slot}=1
+(\ref{slot}) attribute attached in the same fashion as the {\bf device}=
+(\ref{device}) attribute.
+
+See 7400-1.sym as a concrete example.
+
+Examples: \texttt{slotdef=1:1,2,3 slotdef=2:4,5,6 slotdef=3:7,8,9}
+
+This attribute replaces the obsolete {\bf slot}\#=\# attribute.
+
+
+
+\subsection{\bf footprint\label{footprint}}
+{\bf footprint}=package\_name should exist somewhere in the symbol and
+be made invisible.  This attribute is used by gnetlist and primarily
+for the PCB package.
+
+Attach this attribute just like the {\bf device}= (\ref{device})
+attribute.  This is a free standing or floating attribute.
+
+package\_name is the pcb footprint or package type like DIP14 or DIP40.
+This attribute is pcb package dependent.
+
+
+
+\section{Schematic only Attributes}
+
+\subsection{{\bf netname}\label{netname}}
+This attribute should be attached to a net object to give it a name.
+Multiple net names for connected net segments is discouraged.  All nets
+which have the same value are considered electrically connected.  This
+attribute is not valid inside symbols (as you cannot have nets inside
+of symbols).
+
+Examples: \texttt{netname=DATA0\_H netname=CLK\_L}
+
+
+\subsection{{\bf source}\label{source}}
+The {\bf source}= attribute is used to specify that a symbol has underlying
+schematics.  This attribute is attached directly to a component.
+
+This attribute should only be attached to instantiated components
+in schematics.  Attach the attribute to a component and specify the
+filename (not the path) of the underlying schematic (like block.sch)
+for the value.  The specified schematic must be in a source-library path.
+This attribute can be attached multiple times with different values
+which basically means that there are multiple underlying schematics.
+
+Examples: \texttt{source=underlying.sch source=memory.sch}
+
+
+\section{Symbol and Schematic Attributes}
+
+\subsection{{\bf refdes}\label{refdes}}
+This attribute is used to specify the reference designator to a particular
+instantiated component.  It must be on ALL components which have some
+sort of electrical significance.  This attribute can also be on the
+inside of a symbol (it will be promoted, i.e. attached to the outside of
+the symbol, if it is visible) to provide a default refdes value (such as
+U?).
+
+Examples: \texttt{refdes=U1 refdes=R10 refdes=CONN1}
+
+\subsection{{\bf slot}\label{slot}}
+This attribute is used to specify a slot for a slotted component.
+It should be attached to an instantiated component.  This attribute can
+also be on the inside of a symbol (it will be promoted, i.e. attached
+to the outside of the symbol, if it is visible) to provide a default
+slot.
+
+\subsection{{\bf net}\label{net}}
+The {\bf net}= attribute is used to create power/ground and arbitrary nets.
+Please see the netattrib Mini-HOWTO for more info.  When this attribute
+is inside a symbol, it is used to create nets.  When this attribute is
+attached to an instantiated component (in a schematic), then the
+{\bf net}= can also be used to create new nets and can used to override
+existing nets.
+
+\subsection{{\bf value}\label{value}}
+Used mainly in the spice backend netlister to specify the value of the
+various elements.  No translation is done on this, and it is placed as
+is into the netlist.
+
+Examples: \texttt{value=1K value=10V}
+
+
+\section{Obsolete Attributes}
+
+\subsection{{\bf name}\label{name}}
+The {\bf name}= attribute should not be attached or appear in any symbol.
+It is considered ambiguous.  {\bf name}= was never used by gEDA/gaf.
+
+
+\subsection{{\bf label}\label{label}}
+The {\bf label}= attribute is obsolete and cannot be used.  It was 
+used to give nets names/labels and to label pins.  The replacement
+attributes for this are {\bf netname} (\ref{netname}) and 
+{\bf pinlabel} (\ref{pinlabel}) respectively.
+
+
+\subsection{{\bf pin\#}\label{pinPOUND}}
+The {\bf pin\#}=\# attribute is obsolete and cannot be used.  It was
+used to provide sequence and number information to pins.  The replacement
+attributes for this are {\bf pinseq} (\ref{pinseq}) and {\bf pinnumber}
+(\ref{pinnumber}).
+
+
+\subsection{{\bf slot\#}\label{slotPOUND}}
+The {\bf slot\#}=\# attribute is obsolete and cannot be used.  It was
+used to provide slotting information to components.  The replacement
+attribute for this is {\bf slotdef} (\ref{slotdef}).
+
+
+\newpage
+\section{Document Revision History}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+July 14th, 2002 & Created attributes.tex from attributes.txt. \\ \hline
+July 14th, 2002 & Updated doc to be in sync with post-20020527. \\ \hline
+
+\end{tabular}
+\end{table}
+
+\end{document}
+
