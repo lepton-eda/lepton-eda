@@ -391,7 +391,7 @@ do_bounding_box(FILE *fp)
   maxy *= scale;
 
   if (symbol_mode == 0)
-    box_object(minx, miny, maxx-minx, maxy-miny, 1);
+    box_object(minx, miny, maxx-minx, maxy-miny, GRAPHIC_COLOR);
 }
 
 
