@@ -514,6 +514,7 @@ struct st_toplevel {
   /* main window widgets */
   GtkWidget *main_window;
   GtkWidget *drawing_area;
+  GtkWidget *menubar;
   GtkWidget *popup_menu;
   GtkWidget *h_scrollbar;
   GtkWidget *v_scrollbar;    
