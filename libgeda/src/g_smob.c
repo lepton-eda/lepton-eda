@@ -134,9 +134,9 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 
 	SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
 		     (SCM_CAR(attrib_smob) == attrib_smob_tag),
-		     attrib_smob, SCM_ARG1, "set-attribute-value");
+		     attrib_smob, SCM_ARG1, "set-attribute-value!");
 	SCM_ASSERT ( SCM_NIMP(scm_value) && SCM_STRINGP(scm_value),
-		     scm_value, SCM_ARG2, "set-attriute-value");
+		     scm_value, SCM_ARG2, "set-attribute-value!");
 
 	attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
 	value = gh_scm2newstr(scm_value, NULL);
