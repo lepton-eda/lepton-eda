@@ -32,6 +32,7 @@
 #include <math.h>
 
 #include <config.h> /* added by AVH for integration into the gEDA tarball */
+#include <libgeda/colors.h>
 
 #if 0 /* removed by AVH just to make a -Wall -Werror happy */
 #ifndef lint
@@ -398,7 +399,7 @@ void
 do_unnatached_attribute(FILE *fp)
 {
   int x,y,angle;
-  unsigned int color, size, origin, viewvis;
+  unsigned int dummy, color, size, origin, viewvis;
   unsigned int linestyle, fillstyle, index;
   unsigned int visibility, show_name_value;
   char text[MAX_TEXTLEN], *name, *value;
@@ -426,9 +427,9 @@ do_unnatached_attribute(FILE *fp)
 
   x *= scale;   /* correct coordinates */
   y *= scale;
-  color = 1;
+  color = DETACHED_ATTRIBUTE_COLOR;
 
-  get_style(fp, &color, &fillstyle, &linestyle);
+  get_style(fp, &dummy, &fillstyle, &linestyle);
 
   /* evaluate visibility for attributes */
   switch(viewvis)
@@ -475,7 +476,7 @@ void
 do_attached_attribute(FILE *fp)
 {
   int x,y,angle;
-  unsigned int color, size, origin, viewvis;
+  unsigned int color, dummy, size, origin, viewvis;
   unsigned int visibility, show_name_value;
   unsigned int fillstyle, linestyle, index;
   char text[MAX_TEXTLEN],text2[MAX_TEXTLEN],*name,*value;
@@ -499,8 +500,8 @@ do_attached_attribute(FILE *fp)
   /* read in the text */
   get_continued_string(text, MAX_TEXTLEN, fp);
 
-  color = 1;
-  get_style(fp, &color, &fillstyle, &linestyle);
+  color = ATTRIBUTE_COLOR;
+  get_style(fp, &dummy, &fillstyle, &linestyle);
 
   /* evaluate visibility for attributes */
   switch(viewvis)
@@ -588,7 +589,7 @@ do_text(FILE *fp)
 
   x *= scale;   /* correct coordinates */
   y *= scale;
-  color = 3;
+  color = TEXT_COLOR;
   visibility = 1;
   show_name_value = 0;
 
@@ -640,7 +641,7 @@ do_line(FILE *fp)
     }
   getc(fp); /* slurp up last CR */
 
-  color = 3;
+  color = GRAPHIC_COLOR;
   /* now check for an optional style record */
   get_style(fp, &color, &fillstyle, &linestyle);
 
@@ -677,7 +678,7 @@ do_pin(FILE *fp)
   y1 *= scale;
   x2 *= scale;
   y2 *= scale;
-  color = 1;
+  color = PIN_COLOR;
 
 
   /* if this pin has to be of negative polarity, add a bitty bubble
@@ -685,7 +686,7 @@ do_pin(FILE *fp)
    */
   radius = 25;
   radius2 = 2*radius;
-  bcolor = 6;
+  bcolor = LOGIC_BUBBLE_COLOR;
   
   if(pinsense == 1) {
     
@@ -794,7 +795,7 @@ do_box(FILE *fp)
 
   width = x2-x1;
   height = y2-y1;
-  color  = 3;
+  color  = GRAPHIC_COLOR;
 
   get_style(fp, &color, &fillstyle, &linestyle);
 
@@ -824,7 +825,7 @@ do_circle(FILE *fp)
   x *= scale;
   y *= scale;
   radius *=  scale;
-  color = 3;
+  color = GRAPHIC_COLOR;
 
   get_style(fp, &color, &fillstyle, &linestyle);
 
@@ -864,7 +865,7 @@ do_arc(FILE *fp)
   y2 *= scale;
   x3 *= scale;
   y3 *= scale;
-  color = 3;
+  color = GRAPHIC_COLOR;
   get_style(fp, &color, &fillstyle, &linestyle);
 
   x2p = x2 - x1;
@@ -947,7 +948,7 @@ do_label(FILE *fp)
 
   x *= scale;
   y *= scale;
-  color = 5;
+  color = ATTRIBUTE_COLOR;
   show_name_value = 0;
 
   /* read in the text */
@@ -974,7 +975,15 @@ do_label(FILE *fp)
 #endif
       show_name_value = 1;
     }
-  
+  else if(pin_attributes == 1)  /* a label on a pin is it's pinname */
+    {
+#ifdef HAVE_SNPRINTF
+      snprintf(text, MAX_TEXTLEN, "pinlabel=%s", text2);
+#else
+      sprintf(text, "pinlabel=%s", text2);
+#endif
+      show_name_value = 1;
+    }
   else
     strcpy(text,text2);     /* don't need to do anything, just copy */
 
@@ -1053,7 +1062,7 @@ do_net_segment(FILE *fp)
       exit(1);
     }
       
-  color = 4;
+  color = NET_COLOR;
 
   /* output a geda net segment */
   net_segment(net_nodes_x[n1], net_nodes_y[n1], 
@@ -1083,7 +1092,7 @@ do_net_segment_bus(FILE *fp)
       exit(1);
     }
 
-  color = 4;
+  color = BUS_COLOR;
 
   /* output a geda bus segment */
   bus_segment(net_nodes_x[n1], net_nodes_y[n1], 
