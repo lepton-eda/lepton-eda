@@ -457,8 +457,11 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 		attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 		attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
  
-		if (strcmp(attrib_name, "pinnumber") != 0) {
-		  /* Don't include "pinnumber" because it is already in other master list */
+		if ( (strcmp(attrib_name, "pinnumber") != 0) 
+		     && (attrib_value != 0) ) {
+		  /* Don't include "pinnumber" because it is already in other master list.
+		   * Also must ensure that value is non-null; certain symbols are not well formed.
+		   */
 
 		  /* Get row and col where to put this attrib */
 		  row = s_table_get_index(sheet_head->master_pin_list_head, row_label);

@@ -364,6 +364,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
   char *temp_uref;
   char *attrib_text;
   char *attrib_name;
+  char *attrib_value;
   OBJECT *o_current;
   OBJECT *o_lower_current;
   ATTRIB *pin_attrib;
@@ -404,8 +405,11 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 		    && pin_attrib->object->text != NULL) {  /* found an attribute */
 		  attrib_text = u_basic_strdup(pin_attrib->object->text->string);
 		  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-		  if (strcmp(attrib_name, "pinnumber") != 0) {  
-		    /* Don't include "pinnumber" because it is already in other master list */
+		  attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
+		  if ( (strcmp(attrib_name, "pinnumber") != 0) 
+		       && (attrib_value != NULL) ) {  
+		    /* Don't include "pinnumber" because it is already in other master list.
+		     * Also guard against pathalogical symbols which have non-attrib text inside pins. */
 
 #if DEBUG
 	    printf("In s_sheet_data_add_master_pin_attrib_list_items, found pin attrib =  %s\n", attrib_name);
@@ -414,6 +418,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 
 		    s_string_list_add_item(sheet_head->master_pin_attrib_list_head, 
 					   &(sheet_head->pin_attrib_count), attrib_name);
+		    free(attrib_value);
 		  }   /* if (strcmp(attrib_name, "pinnumber") != 0) */ 
 		  free(attrib_name);
 		  free(attrib_text);
