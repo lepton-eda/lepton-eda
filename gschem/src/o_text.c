@@ -366,7 +366,7 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 /* selection list */
 void
 o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, 
-	      int visibility)
+	      int visibility, int show)
 {
 	OBJECT *selected=NULL;
 	OBJECT *temp;
@@ -408,6 +408,7 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 
 	object->text_string = u_basic_strdup(string);
 	object->visibility = visibility;
+	object->show_name_value = show;
 	o_text_recreate(w_current, object);
 
 	w_current->page_current->CHANGED = 1;

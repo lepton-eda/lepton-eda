@@ -43,7 +43,10 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 	/* for now deal with only the first item */
 	switch(list->type) {
 	case(OBJ_TEXT):
-		o_text_edit(w_current, list);
+		if(!strchr(list->text_string,'='))
+			o_text_edit(w_current, list);
+		else
+			attrib_edit_dialog(w_current,list);
 		break;
 	}
 

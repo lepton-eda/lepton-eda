@@ -105,6 +105,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Add/Net", NULL, i_callback_add_net, 0, NULL},
 	{"/Add/Bus", NULL, i_callback_add_bus, 0, NULL},
 	{"/Add/Attribute...", NULL, i_callback_add_attribute, 0, NULL},
+	{"/Add/Mattribute...", NULL, i_callback_add_matt_attribute, 0, NULL},
 	{"/Add/Text", NULL, i_callback_add_text, 0, NULL},
 	{"/Add/sep1",     NULL,         NULL, 0, "<Separator>"},
 	{"/Add/Line", NULL, i_callback_add_line, 0, NULL},

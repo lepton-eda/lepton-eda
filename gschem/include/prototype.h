@@ -244,6 +244,7 @@ void i_callback_page_discard(gpointer data, guint callback_action, GtkWidget *wi
 void i_callback_page_print(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_component(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_attribute(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_add_matt_attribute(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_bus(gpointer data, guint callback_action, GtkWidget *widget);
@@ -421,7 +422,7 @@ void o_text_end(TOPLEVEL *w_current);
 void o_text_rubberattrib(TOPLEVEL *w_current);
 void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
-void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibility);
+void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibility,int show);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);

@@ -9,6 +9,28 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-01-07  Matt Ettus  <matt@ettus.com>
+
+	* Added Individual Attribute Editor (nearly done)
+
+	* Added Multiple Attribute Editor (only displays)
+
+	* include/prototype.h:  added my proto's.  Please regenerate
+
+	* src/i_callbacks.c:  Added callbacks for 2 attrib dialogs
+
+	* src/o_misc.c:	Changed o_edit to call attrib edit dialog on attribs,
+	  text edit dialog on text
+
+	* src/o_text.c:  Added show options to o_text_change()
+
+	* src/x_attrsel.c:  Added start of new multiple attribute dialog
+
+	* src/x_dialog.c:  Added new single attribute editor dialog functions
+	  (all the attrib_edit_dialog* functions)
+
+	* src/x_menus.c:  Added "Mattribute" menu item for new dialog
+
 2000-01-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/i_callbacks.c: Created misc-misc2 and misc-misc3 callbacks and
