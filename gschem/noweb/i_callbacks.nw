@@ -510,16 +510,19 @@ DEFINE_I_CALLBACK(file_save)
                                w_current->page_current->page_filename);
 #endif
   } else {
-    s_log_message("Saved [%s]\n",
-                  w_current->page_current->page_filename);
 
-    f_save(w_current, w_current->page_current->page_filename);
-
-    /* don't know if should be kept going to select mode... */
-    i_update_status(w_current, "Saved - Select Mode");
-    w_current->event_state = SELECT;
-    w_current->page_current->CHANGED = 0;
-    update_page_manager(NULL, w_current);
+    if (f_save(w_current, w_current->page_current->page_filename) ) {
+	    s_log_message("Saved [%s]\n",w_current->page_current->page_filename);
+	    /* don't know if should be kept going to select mode... */
+	    i_update_status(w_current, "Saved - Select Mode");
+	    w_current->event_state = SELECT;
+	    w_current->page_current->CHANGED = 0;
+	    update_page_manager(NULL, w_current);
+    }
+    else {
+	    i_update_status(w_current, "Error while trying to save - Select Mode");
+	    w_current->event_state = SELECT;    
+    } 
   }
 }
 
