@@ -410,13 +410,13 @@ void s_conn_print(GList *conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
 GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 /* s_cue.c */
-void s_cue_print_fillbox(TOPLEVEL *w_current, FILE *fp, int x, int y);
-void s_cue_print_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y);
-void s_cue_image_fillbox(TOPLEVEL *w_current, OBJECT *object, int x, int y);
-void s_cue_image_fillcircle(TOPLEVEL *w_current, int x, int y);
+void s_cue_postscript_fillbox(TOPLEVEL *w_current, FILE *fp, int x, int y);
+void s_cue_postscript_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y);
+void s_cue_image_fillbox(TOPLEVEL *w_current, OBJECT *object, int world_x, int world_y);
+void s_cue_image_fillcircle(TOPLEVEL *w_current, int world_x, int world_y);
 void s_cue_output_all(TOPLEVEL *w_current, OBJECT *head, FILE *fp, int type);
-void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FILE *fp, int outputtype);
-void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int type);
+void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FILE *fp, int output_type);
+void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int output_type);
 void s_cue_output_single(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int type);
 /* s_hierarchy.c */
 int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename, PAGE *parent, int page_control, int flag);
