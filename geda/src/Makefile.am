@@ -6,7 +6,10 @@
 
 INCLUDES = \
 	$(GTK_CFLAGS)\
-	 -I./
+	 -I./ -I$(top_srcdir)/intl
+
+localedir = @datadir@/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 AM_CFLAGS =\
 	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wtraditional -Wpointer-arith -Wmissing-prototypes\
@@ -62,8 +65,8 @@ geda_LDFLAGS =
 geda_LDADD =  \
 	$(GTK_LIBS)
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+MOSTLYCLEANFILES = *.log *~ geda
+CLEANFILES = *.log *~ geda
+DISTCLEANFILES = *.log core FILE *~ prototype.bak geda
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda
 

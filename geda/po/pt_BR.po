@@ -1,0 +1,102 @@
+# translation of pt_BR.po to Potugues Brasil
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>, 2003
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pt_BR\n"
+"POT-Creation-Date: 2003-09-01 22:52-0400\n"
+"PO-Revision-Date: 2003-09-20 18:27-0300\n"
+"Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
+"Language-Team: Potugues Brasil <pt_BR@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.1\n"
+
+#: src/support.c:121
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr ""
+
+#: src/support.c:130
+#, c-format
+msgid "Error loading pixmap file: %s"
+msgstr ""
+
+#: src/interface.c:75
+msgid "gEDA"
+msgstr ""
+
+#: src/interface.c:93
+msgid "Project"
+msgstr "Projeto"
+
+#: src/interface.c:107 src/interface.c:200
+msgid "New"
+msgstr "Novo"
+
+#: src/interface.c:114
+msgid "Open"
+msgstr "Abrir"
+
+#: src/interface.c:121 src/interface.c:171
+msgid "Save"
+msgstr "Salvar"
+
+#: src/interface.c:128 src/interface.c:185
+msgid "Close"
+msgstr "Fechar"
+
+#: src/interface.c:143
+msgid "Exit"
+msgstr "Sair"
+
+#: src/interface.c:150
+msgid "File"
+msgstr "Arquivo"
+
+#: src/interface.c:164
+msgid "Edit"
+msgstr "Editar"
+
+#: src/interface.c:178
+msgid "Print"
+msgstr "Imprimir"
+
+#: src/interface.c:207
+msgid "Import"
+msgstr "Importar"
+
+#: src/interface.c:214
+msgid "Unlink"
+msgstr "Tirar"
+
+#: src/interface.c:221
+msgid "Delete"
+msgstr "Apagar"
+
+#: src/interface.c:228
+msgid "Action"
+msgstr "Ação"
+
+#: src/interface.c:235
+msgid "Tool"
+msgstr "Ferramentas"
+
+#: src/interface.c:242
+msgid "Window"
+msgstr "Janela"
+
+#: src/interface.c:341
+msgid "Modules"
+msgstr "Modulos"
+
+#: src/interface.c:365
+msgid "Files"
+msgstr "Arquivos"
+
+#: src/interface.c:396
+msgid "Status"
+msgstr ""
