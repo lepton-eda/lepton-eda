@@ -3,6 +3,10 @@
 	* 74/7474-2.sym: Fixed typo (0 in slotdef), pointed out by Karel
 	Kulhavy
 
+	* 74/7403-1.sym: Added open collector arc by Jim Battle 
+
+	* 74/9602-1.sym 9602-2.sym: Added symbols by Jim Battle
+
 2002-08-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* analog/transformer-1.sym: Added symbol, need to verify pinnumbers
