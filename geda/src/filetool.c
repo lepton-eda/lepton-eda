@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include "filetool.h"
 #include "global.h"
+#include "support.h"
 
 
 
@@ -38,7 +39,7 @@ static pid_t Pid = -1;
 	check if file exists 
 */
 
-int FileIsExisting(char *szFileName)
+int FileIsExisting(const char *szFileName)
 {
 	FILE *fp;
 	
@@ -57,7 +58,7 @@ int FileIsExisting(char *szFileName)
 	copy file 
 */
 
-int FileCopy(char *szSource, char *szDest)
+int FileCopy(const char *szSource, const char *szDest)
 {
 	FILE *Source, *Dest;
 
@@ -155,13 +156,13 @@ char *FileGetRel(const char *szFilename)
 	char szDirectory[TEXTLEN], *pResult;
 	
 	/* get current directory */
-	pResult = get_current_dir_name();
+	pResult = getcwd(szDirectory, TEXTLEN - 1);
 	if (pResult == NULL)
 	{
 		strcpy(szRel, "");
 		return szRel;
 	}
-	strcpy(szDirectory, pResult);
+	
 
 	/* if file name is a relative one */
 	if (szFilename[0] != '/')
@@ -199,11 +200,11 @@ char *FileGetRel(const char *szFilename)
 
 
 
-int FileExec(char *szCommand)
+int FileExec(const char *szCommand)
 {
 	GtkText *pText;
-	FILE *hLog, *hStdOut, *hStdErr;
-	char szValue[TEXTLEN], szMessage[TEXTLEN], szText[2000];
+	FILE *hStdOut, *hStdErr;
+	char szValue[TEXTLEN], szText[2000];
 	int iResult, i, j;
 
 	/* create a new process to execute external shell commands) */
@@ -249,7 +250,7 @@ int FileExec(char *szCommand)
 	}
 
 	/* copy stderr to sterr window */
-	pText = lookup_widget(pWindowMain, "StatusText");
+	pText = GTK_TEXT(lookup_widget(GTK_WIDGET(pWindowMain), "StatusText"));
 	if (pText == NULL)
 	{
 		/* TODO: error handling */

@@ -28,6 +28,7 @@
 #include <unistd.h>
 #include "config.h"
 #include "doc.h"
+#include "file.h"
 #include "filetool.h"
 #include "global.h"
 #include "log.h"
@@ -110,6 +111,8 @@ enum {
 	ACTION_VHD_OPEN,
 	ACTION_DRC_OPEN,
 	ACTION_BOM_OPEN,
+	ACTION_SYM_OPEN,
+	ACTION__OPEN,
 	ACTION_NUMBER
 };
 
@@ -129,6 +132,8 @@ enum {
 	EXT_VHD,
 	EXT_DRC,
 	EXT_BOM,
+	EXT_SYM,
+	EXT_,
 	EXT_NUMBER
 };
 
@@ -180,10 +185,23 @@ struct Group_s GroupList[] =
 /* action entries */
 struct Action_s ActionList[] = 
 {
-	{ 
-		ACTION_TXT_OPEN,   
-		"Open",  
-		"txt", 
+	{
+		ACTION_TXT_OPEN,
+		"Open",
+		"txt",
+		"----- %FILEREL%",
+		"",
+		TASK_INTERNAL | ACTION_DEFAULT,
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
+	},
+
+	{
+		ACTION__OPEN,
+		"Open",
+		"",
 		"----- %FILEREL%",
 		"",
 		TASK_INTERNAL | ACTION_DEFAULT,
@@ -197,6 +215,19 @@ struct Action_s ActionList[] =
 		ACTION_SCH_OPEN,
 		"Open",
 		"sch",
+		"gschem %FILENAME%.%FILEEXT%",
+		"",
+		ACTION_DEFAULT,
+		TOOL_GSCHEM,
+		NULL,
+		0,
+		NULL
+	},
+
+	{
+		ACTION_SYM_OPEN,
+		"Open",
+		"sym",
 		"gschem %FILENAME%.%FILEEXT%",
 		"",
 		ACTION_DEFAULT,
@@ -490,19 +521,21 @@ gnetlist [-i] [-v] [-r rcfilename] [-g guile_procedure] [-o output_filename] sch
 /* extension entries */
 static struct Ext_s ExtList[] = 
 {
-	{ EXT_TXT, "Text",           "txt", "",    GROUP_DOCUMENTATION, TRUE,  FALSE, TOOL_TEMPLATE_TXT, ACTION_TXT_OPEN, NULL, NULL },
-	{ EXT_SCH, "Schematic",      "sch", "",    GROUP_SCHEMATIC,     TRUE,  FALSE, TOOL_TEMPLATE_SCH, ACTION_SCH_OPEN, NULL, NULL },
-	{ EXT_PCB, "PCB layout",     "pcb", "",    GROUP_LAYOUT,        TRUE,  FALSE, TOOL_TEMPLATE_PCB, ACTION_PCB_OPEN, NULL, NULL },
-	{ EXT_GRB, "Gerber data",    "grb", "pcb", GROUP_LAYOUT,        FALSE, FALSE, "",                ACTION_GRB_OPEN, NULL, NULL },
-	{ EXT_ESP, "Simulation",     "esp", "",    GROUP_SIMULATION,    TRUE,  FALSE, "",                ACTION_ESP_OPEN, NULL, NULL },
-	{ EXT_CIR, "SPICE netlist",  "cir", "esp", GROUP_SIMULATION,    TRUE,  FALSE, TOOL_TEMPLATE_CIR, ACTION_CIR_OPEN, NULL, NULL },
-	{ EXT_OUT, "",               "out", "cir", GROUP_SIMULATION,    FALSE, FALSE, "",                ACTION_OUT_OPEN, NULL, NULL },
-	{ EXT_GW,  "Analog waveform","gw",  "out", GROUP_GRAPH,         TRUE,  FALSE, "",                ACTION_GW_OPEN,  NULL, NULL },
-	{ EXT_V,   "Verilog source", "v",   "",    GROUP_PROGRAM,       TRUE,  FALSE, TOOL_TEMPLATE_V,   ACTION_V_OPEN,   NULL, NULL },
-	{ EXT_VCD, "",               "vcd", "v",   GROUP_GRAPH,         FALSE, FALSE, "",                ACTION_VCD_OPEN, NULL, NULL },
-	{ EXT_VHD, "VHDL source",    "vcd", "vhd", GROUP_PROGRAM,       TRUE,  FALSE, TOOL_TEMPLATE_VHD, ACTION_VHD_OPEN, NULL, NULL },
-	{ EXT_DRC, "",               "drc", "sch", GROUP_SCHEMATIC,     FALSE, FALSE, "",                ACTION_DRC_OPEN, NULL, NULL },
-	{ EXT_BOM, "",               "bom", "sch", GROUP_SCHEMATIC,     FALSE, FALSE, "",                ACTION_BOM_OPEN, NULL, NULL }
+	{ EXT_TXT, "Text",             "txt", "",    GROUP_DOCUMENTATION, TRUE,  FALSE, TOOL_TEMPLATE_TXT, ACTION_TXT_OPEN, NULL, NULL },
+	{ EXT_SCH, "Schematic",        "sch", "",    GROUP_SCHEMATIC,     TRUE,  FALSE, TOOL_TEMPLATE_SCH, ACTION_SCH_OPEN, NULL, NULL },
+	{ EXT_PCB, "PCB layout",       "pcb", "",    GROUP_LAYOUT,        TRUE,  FALSE, TOOL_TEMPLATE_PCB, ACTION_PCB_OPEN, NULL, NULL },
+	{ EXT_GRB, "Gerber data",      "grb", "pcb", GROUP_LAYOUT,        FALSE, FALSE, "",                ACTION_GRB_OPEN, NULL, NULL },
+	{ EXT_ESP, "Simulation",       "esp", "",    GROUP_SIMULATION,    TRUE,  FALSE, "",                ACTION_ESP_OPEN, NULL, NULL },
+	{ EXT_CIR, "SPICE netlist",    "cir", "esp", GROUP_SIMULATION,    TRUE,  FALSE, TOOL_TEMPLATE_CIR, ACTION_CIR_OPEN, NULL, NULL },
+	{ EXT_OUT, "",                 "out", "cir", GROUP_SIMULATION,    FALSE, FALSE, "",                ACTION_OUT_OPEN, NULL, NULL },
+	{ EXT_GW,  "Analog waveform",  "gw",  "out", GROUP_GRAPH,         TRUE,  FALSE, "",                ACTION_GW_OPEN,  NULL, NULL },
+	{ EXT_V,   "Verilog source",   "v",   "",    GROUP_PROGRAM,       TRUE,  FALSE, TOOL_TEMPLATE_V,   ACTION_V_OPEN,   NULL, NULL },
+	{ EXT_VCD, "",                 "vcd", "v",   GROUP_GRAPH,         FALSE, FALSE, "",                ACTION_VCD_OPEN, NULL, NULL },
+	{ EXT_VHD, "VHDL source",      "vcd", "vhd", GROUP_PROGRAM,       TRUE,  FALSE, TOOL_TEMPLATE_VHD, ACTION_VHD_OPEN, NULL, NULL },
+	{ EXT_DRC, "",                 "drc", "sch", GROUP_SCHEMATIC,     FALSE, FALSE, "",                ACTION_DRC_OPEN, NULL, NULL },
+	{ EXT_BOM, "",                 "bom", "sch", GROUP_SCHEMATIC,     FALSE, FALSE, "",                ACTION_BOM_OPEN, NULL, NULL },
+	{ EXT_SYM, "Schematic symbol", "sym", "",    GROUP_SCHEMATIC,     TRUE,  FALSE, "",                ACTION_SYM_OPEN, NULL, NULL },
+	{ EXT_,    "Description",      "",    "",    GROUP_DOCUMENTATION, FALSE, FALSE, "",                ACTION__OPEN,    NULL, NULL }
 };
 
 
@@ -1118,7 +1151,7 @@ static int Menu_FileNew_Initialize()
 	struct Ext_s *pExt;
 
 	/* look for File/New widget */
-	pWidget = lookup_widget(pWindowMain, "MenuFileNew");
+	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuFileNew");
 	if (pWidget == NULL)
 	{
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot find widget 'MenuFileNew'");
@@ -1217,7 +1250,7 @@ static int Menu_Tool_Initialize()
 	struct Tool_s *pTool;
 
 	/* look for Tool widget */
-	pWidget = lookup_widget(pWindowMain, "MenuTool");
+	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuTool");
 	if (pWidget == NULL)
 	{
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot find widget 'MenuTool'");
@@ -1285,7 +1318,12 @@ int ToolRun(char *szCommand, char *szFilename, DWORD fFlags)
 	Pid = fork();
 	if (Pid < 0)
 	{
-		MsgBox("Cannot create a subtask !", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot create a subtask !",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 

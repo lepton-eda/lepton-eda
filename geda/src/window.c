@@ -48,7 +48,7 @@ void WindowInitialize(void)
 {
 	GtkHPaned *pHPaned;
 	
-	pHPaned = GTK_HPANED(lookup_widget(pWindowMain, "HPaned"));
+	pHPaned = GTK_HPANED(lookup_widget(GTK_WIDGET(pWindowMain), "HPaned"));
 	
 	pNotebook = GTK_NOTEBOOK(gtk_notebook_new());
 	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pNotebook), FALSE);

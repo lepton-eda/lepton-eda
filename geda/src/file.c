@@ -29,15 +29,15 @@
 #include "doc.h"
 #include "msgbox.h"
 #include "tool.h"
-
-
+#include "txtedit.h"
+#include "window.h"
 
 /*
 	Menu FILE handlers
 	(Edit, Save, Print, Close, New, Import, Unlink, Delete)
 */
-
-
+static void FileDelete(const char *szFilename);
+static void FileUnlink(const char *szFilename);
 
 void FileEdit(const char *szPath)
 {
@@ -85,16 +85,16 @@ void MenuFileEdit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 void MenuFileSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	int iResult;
-	char szName[TEXTLEN];
-	
+	char szName[TEXTLEN], *pFileName;
+
 	/* get the file name */
 	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
 	if (iResult != SUCCESS)
 		return;
 	if (strlen(szName) == 0)
 		return;
-	
-	FileSave(WindowTop());
+	pFileName = WindowTop();
+	FileSave(pFileName);
 }
 
 
@@ -117,17 +117,17 @@ void MenuFilePrint_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 void MenuFileClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	int iResult;
-	char szName[TEXTLEN];
-	
+	char szName[TEXTLEN], *pFileName;
+
 	/* get the file name */
 	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
 	if (iResult != SUCCESS)
 		return;
 	if (strlen(szName) == 0)
 		return;
-	
-	//FileClose(WindowTop());
-	DocClose(WindowTop());
+
+	pFileName = WindowTop();
+	DocClose(pFileName);
 }
 
 
@@ -155,27 +155,47 @@ void MenuFileImport_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Cannot import files of type '%s'", szExt);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 	iResult = ToolValueGet(EXT_LIST, EXT_PARENT, iExtId, szParent);
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Fatal error in file '%s' at line %d", __FILE__, __LINE__);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Fatal error !",
+			szMessage,
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return;
 	}
 	iResult = DocGetProperty(DOC_SELECTED, "", szDocSelected);
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Fatal error in file '%s' at line %d", __FILE__, __LINE__);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Fatal error !",
+			szMessage,
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return;
 	}
 	if (strcmp(szParent, FileGetExt(szDocSelected)) && strlen(szParent) > 0)
 	{
 		sprintf(szMessage, "File '%s' can be bind only to files of type '%s'", szName, szParent);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 	
@@ -184,7 +204,12 @@ void MenuFileImport_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	if (iResult != SUCCESS)
 	{
 		/* error, file does exist */
-		MsgBox("File does not exist.", MSGBOX_ERROR | MSGBOX_OKD);
+		MsgBox(
+			pWindowMain,
+			"File does not exist.",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 	
@@ -193,7 +218,12 @@ void MenuFileImport_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	if (iResult == SUCCESS)
 	{
 		/* error, file in project */
-		MsgBox("File already exists.", MSGBOX_ERROR | MSGBOX_OKD);
+		MsgBox(
+			pWindowMain,
+			"File already exists.",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 	
@@ -202,7 +232,12 @@ void MenuFileImport_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	iResult = DocCreate(szRelName, strlen(szParent) > 0 ? szDocSelected : "");
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot import file.", MSGBOX_ERROR | MSGBOX_OKD);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot import file.",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 }
@@ -222,10 +257,15 @@ void MenuFileUnlink_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	
 	/* accept unlink */
 	sprintf(szMessage, "Do you want to remove file '%s' (and all dependend files) from project ?", szName);
-	iResult = MsgBox(szMessage, MSGBOX_OKCANCEL);
-	if (iResult == 1)
+	iResult = MsgBox(
+		pWindowMain,
+		"Question ...",
+		szMessage,
+		MSGBOX_QUESTION | MSGBOX_OKD | MSGBOX_CANCEL
+		);
+	if (iResult == MSGBOX_CANCEL)
 		return;
-	
+
 	FileUnlink(szName);
 }
 
@@ -233,22 +273,27 @@ void MenuFileUnlink_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 void MenuFileDelete_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	int iResult;
-	char szMessage[TEXTLEN], szName[TEXTLEN], szTemp[TEXTLEN];
-	
+	char szMessage[TEXTLEN], szName[TEXTLEN];
+
 	/* get the file name */
 	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
 	if (iResult != SUCCESS)
 		return;
 	if (strlen(szName) == 0)
 		return;
-	
+
 	/* accept delete */
 	sprintf(szMessage, "Do you want to delete file '%s' (and all dependend files) from the disk ?", szName);
-	iResult = MsgBox(szMessage, MSGBOX_OKCANCEL);
+	iResult = MsgBox(
+		pWindowMain,
+		"Question ...",
+		szMessage,
+		MSGBOX_QUESTION | MSGBOX_OKD | MSGBOX_CANCEL
+		);
 	if (iResult == 1)
 		return;
-	
-	return FileDelete(szName);
+
+	return;
 }
 
 
@@ -256,7 +301,7 @@ static void FileDelete(const char *szFilename)
 {
 	char szMessage[TEXTLEN], szName[TEXTLEN], szParent[TEXTLEN];
 	int iResult;
-	
+
 	/* delete all children of the file */
 	iResult = SUCCESS;
 	strcpy(szName, "");
@@ -269,7 +314,7 @@ static void FileDelete(const char *szFilename)
 		iResult = DocGetProperty(DOC_PARENT, szName, (void *) szParent);
 		if (iResult != SUCCESS)
 			break;
-		
+
 		if (!strcmp(szParent, szFilename))
 			FileDelete(szName);
 	}
@@ -279,7 +324,12 @@ static void FileDelete(const char *szFilename)
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Cannot close file '%s'", szFilename);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 
@@ -288,15 +338,25 @@ static void FileDelete(const char *szFilename)
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Cannot remove file '%s' from project", szFilename);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
-	
+
 	/* delete file from disk */
 	iResult = unlink(szFilename);
 	if (iResult != SUCCESS)
 	{	sprintf(szMessage, "Cannot delete file '%s'", szFilename);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 }
@@ -306,7 +366,7 @@ static void FileUnlink(const char *szFilename)
 {
 	char szMessage[TEXTLEN], szName[TEXTLEN], szParent[TEXTLEN];
 	int iResult;
-	
+
 	/* delete all children of the file */
 	iResult = SUCCESS;
 	strcpy(szName, "");
@@ -319,7 +379,7 @@ static void FileUnlink(const char *szFilename)
 		iResult = DocGetProperty(DOC_PARENT, szName, (void *) szParent);
 		if (iResult != SUCCESS)
 			break;
-		
+
 		if (!strcmp(szParent, szFilename))
 			FileUnlink(szName);
 	}
@@ -329,7 +389,12 @@ static void FileUnlink(const char *szFilename)
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Cannot close file '%s'", szFilename);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 
@@ -338,7 +403,12 @@ static void FileUnlink(const char *szFilename)
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "Cannot remove file '%s' from project", szFilename);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 }
@@ -364,29 +434,44 @@ int FileNew(int iExtId)
 	FILE *hFile;
 	int iResult, iActionId;
 	char szTemplate[TEXTLEN], szName[TEXTLEN], *szExt, szExtension[TEXTLEN], *szRelName, pValue[TEXTLEN], szDocSelected[TEXTLEN], szParent[TEXTLEN];
-	
+
 	/* check if the file has been already added in project */
 	iResult = DocGetProperty(DOC_FILENAME, szName, pValue);
 	if (iResult == SUCCESS)
 	{
 		/* error, file in project */
-		MsgBox("File already exists.", MSGBOX_ERROR | MSGBOX_OKD);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"File already exists.",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
-	
+
 	/* read extension */
 	iResult = ToolValueGet(EXT_LIST, EXT_EXT, iExtId, (void *) szExtension);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot read file extension", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot read file extension",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
-	
+
 	/* read extension of parent */
 	iResult = ToolValueGet(EXT_LIST, EXT_PARENT, iExtId, (void *) szParent);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot read parent extension", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot read parent extension",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 
@@ -394,7 +479,12 @@ int FileNew(int iExtId)
 	iResult = ToolValueGet(EXT_LIST, EXT_TEMPLATE, iExtId, (void *) szTemplate);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot read file template", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot read file template",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 
@@ -402,7 +492,12 @@ int FileNew(int iExtId)
 	iResult = ToolValueGet(EXT_LIST, EXT_ACTIONID, iExtId, (void *) &iActionId);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot determine file extension", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot determine file extension",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 
@@ -422,45 +517,65 @@ int FileNew(int iExtId)
 		strcat(szName, ".");
 		strcat(szName, szExtension);
 	}
-	
+
 	/* check if the file is existing */
 	iResult = FileIsExisting(szName);
 	if (iResult == SUCCESS)
 	{
 		/* error, file does exist */
-		MsgBox("File already exists", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"File already exists",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
-	
+
 	/* create file from template */
 	hFile = fopen(szName, "w");
 	if (hFile == NULL)
 	{
-		MsgBox("Cannot copy template", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot copy template",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	fprintf(hFile, "%s", szTemplate);
 	fclose(hFile);
-	
+
 	/* check if the file is existing */
 	iResult = FileIsExisting(szName);
 	if (iResult != SUCCESS)
 	{
 		/* error, file does exist */
-		MsgBox("File does not exist", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"File does not exist",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
-	
+
 	DocGetProperty(DOC_SELECTED, "", szDocSelected);
-	
+
 	/* create new file and add it to the project */
 	szRelName = FileGetRel(szName);
 	iResult = DocCreate(szRelName, strlen(szParent) ? szDocSelected : "");
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot create document", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot create document",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
-	
+
 	return SUCCESS;
 }

@@ -25,6 +25,8 @@
 #include <string.h>
 #include "doc.h"
 #include "global.h"
+#include "project.h"
+#include "txtedit.h"
 #include "window.h"
 
 

@@ -57,15 +57,25 @@ void ProjectNew(const char *szPath)
 	iResult = FileIsExisting(pPath);
 	if (iResult == SUCCESS)
 	{
-		iResult = MsgBox("Project already exists. Overwrite ?", MSGBOX_YESNOCANCEL);
-		if (iResult != 0)
+		iResult = MsgBox(
+			pWindowMain,
+			"Question ...",
+			"Project already exists. Overwrite ?",
+			MSGBOX_QUESTION | MSGBOX_YES | MSGBOX_NOD | MSGBOX_CANCEL
+			);
+		if (iResult != MSGBOX_YES)
 			goto PROJECT_MENU_EXIT;
 	}
 
 	iResult = DocSave(pPath);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot save project !", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot save project !",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		goto PROJECT_MENU_EXIT;
 	}
 	
@@ -97,7 +107,12 @@ void ProjectOpen(const char *szPath)
 	iResult = DocLoad(szPath);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot load project !", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot load project !",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return;
 	}
 	

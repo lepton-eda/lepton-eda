@@ -25,9 +25,9 @@
 
 
 /* public functions */
-int ConfigOpen(char *szName);
-int ConfigClose();
-int ConfigSection(char *szName);
+int ConfigOpen(const char *szName);
+int ConfigClose(void);
+int ConfigSection(const char *szName);
 int ConfigGetNext(char *szName, char *szValue);
 
 

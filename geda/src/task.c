@@ -34,6 +34,7 @@
 #include "support.h"
 #include "task.h"
 #include "tool.h"
+#include "txtedit.h"
 
 
 
@@ -168,7 +169,7 @@ void TaskProcess(void)
 			PidResult = waitpid(pTask->Id, NULL, WNOHANG);
 			if (PidResult == pTask->Id)
 			{
-				pText = GTK_TEXT(lookup_widget(pWindowMain, "StatusText"));
+				pText = GTK_TEXT(lookup_widget(GTK_WIDGET(pWindowMain), "StatusText"));
 				if (pText == NULL)
 					return;
 
@@ -224,7 +225,7 @@ void TaskProcess(void)
 			
 			case TASK_EXTCMD:   
 				
-				pText = GTK_TEXT(lookup_widget(pWindowMain, "StatusText"));
+				pText = GTK_TEXT(lookup_widget(GTK_WIDGET(pWindowMain), "StatusText"));
 				if (pText == NULL)
 					return;
 				gtk_text_set_point(pText, 0);

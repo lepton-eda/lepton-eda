@@ -51,11 +51,16 @@ void MenuActionInitialize(void)
 	char szMessage[TEXTLEN];
 	
 	/* look for menu Action */
-	pWidget = lookup_widget(pWindowMain, "MenuAction");
+	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuAction");
 	if (pWidget == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s in line %d", __FILE__, __LINE__);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"FATAL ERROR !",
+			szMessage,
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return;
 	}
 	
@@ -107,8 +112,8 @@ void MenuActionRefresh(const char *szExt)
 static void MenuActionActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	struct Action_s *pAction;
-	int iResult, i, j;
-	char szCommand[TEXTLEN], szFileName[TEXTLEN], *szName, *szExt, *szPath, *szRel, szImport[TEXTLEN], szMessage[TEXTLEN];
+	int iResult;
+	char szCommand[TEXTLEN], szFileName[TEXTLEN], *szName, *szExt, *szPath, *szRel;
 	char *pParams[2];
 	
 	DocGetProperty(DOC_SELECTED, NULL, szFileName);
@@ -133,7 +138,7 @@ static void MenuActionActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	/* run the tool */
 	pParams[0] = (void *) pAction;
 	pParams[1] = (void *) &szFileName;
-	iResult = TaskNew(TASK_ACTION, (void **) pParams);
+	iResult = TaskNew(TASK_ACTION, (const void **) pParams);
 	if (iResult != SUCCESS)
 	{
 		/**/

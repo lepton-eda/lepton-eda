@@ -24,6 +24,11 @@
 
 
 
+void FileEdit(const char *szPath);
+void FileSave(const char *szPath);
+void FilePrint(const char *szPath);
+void FileClose(const char *szPath);
+
 /* callback public functions */
 void MenuFileEdit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void MenuFileSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
@@ -33,6 +38,8 @@ void MenuFileClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void MenuFileImport_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void MenuFileUnlink_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void MenuFileDelete_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
+
+int FileNew(int iExtId);
 
 
 

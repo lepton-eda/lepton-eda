@@ -33,6 +33,8 @@
 #include "support.h"
 #include "tool.h"
 #include "txtedit.h"
+#include "window.h"
+
 
 
 /* document list and current document name */
@@ -104,25 +106,18 @@ int DocCreate(const char *szFileName, const char *szParentFileName)
 }
 
 
-int DocDestroy(char *szFileName)
+int DocDestroy(const char *szFileName)
 {
 	struct Doc_s *pDoc = NULL, *pPrevious;
 
-	/* look for document */
+	/* look for the document on the list, close it and remove from viewes */
 	pDoc = DocSearch(szFileName);
 	if (pDoc == NULL)
-	{
-		/* no such document */
-		MsgBox("No such document", MSGBOX_OK);
 		return FAILURE;
-	}
-
-	DocClose(pDoc);
-
-	/* remove from the view tree */
+	DocClose(pDoc->szFileName);
 	DocViewDelete(pDoc);
 
-	/* remove from the list */
+	/* remove the document from the list */
 	if (pDoc == pDocList)
 	{
 		pDocList = pDoc->pNext;
@@ -137,7 +132,7 @@ int DocDestroy(char *szFileName)
 
 		if (pPrevious == NULL)
 		{
-			MsgBox("Missing document", MSGBOX_OK);
+			/* impossible condition */
 		}
 
 		pPrevious->pNext = pDoc->pNext;
@@ -149,7 +144,7 @@ int DocDestroy(char *szFileName)
 	}
 	free(pDoc);
 	ProjectChanged(TRUE);
-	
+
 	return SUCCESS;
 }
 
@@ -159,7 +154,7 @@ int DocDestroy(char *szFileName)
 	Openning and closing documents
 */
 
-int DocOpen(char *szFileName, int iAction)
+int DocOpen(const char *szFileName, const int iAction)
 {
 	struct Action_s *pAction;
 	char *Params[2];
@@ -180,7 +175,7 @@ int DocOpen(char *szFileName, int iAction)
 	else
 	{
 		Params[0] = (char *) pAction;
-		Params[1] = szFileName;
+		Params[1] = (char *) szFileName;
 		TaskNew(TASK_ACTION, (const void **) Params);
 	}
 
@@ -188,30 +183,28 @@ int DocOpen(char *szFileName, int iAction)
 }
 
 
-int DocClose(char *szFileName)
+int DocClose(const char *szFileName)
 {
-	struct Doc_s *pDoc = NULL, *pPrevious;
+	struct Doc_s *pDoc = NULL;
 	int iResult;
 	char szMessage[TEXTLEN];
 	
-	/* look for document */
+	/* look for the document, close it */
 	pDoc = DocSearch(szFileName);
 	if (pDoc == NULL)
-	{
-		/* no such document */
-		MsgBox("No such document", MSGBOX_OK);
 		return FAILURE;
-	}
 	if (pDoc->bChanged)
 	{
 		sprintf(szMessage, "File '%s' not saved.\n\nSave it now ?", szFileName);
-		iResult = MsgBox(szMessage, MSGBOX_YESNOCANCEL);
-		if (iResult == 2)
-			return SUCCESS;
-		else if (iResult == 0)
+		iResult = MsgBox(
+			pWindowMain,
+			"Question ...",
+			szMessage,
+			MSGBOX_QUESTION | MSGBOX_YESD | MSGBOX_NO
+			);
+		if (iResult == MSGBOX_YES)
 			FileSave(szFileName);
 	}
-
 	FileClose(szFileName);
 	
 	return SUCCESS;
@@ -223,16 +216,23 @@ int DocClose(char *szFileName)
 	Saving and loading project
 */
 
-int DocSave(char *szFileName)
+int DocSave(const char *szFileName)
 {
 	FILE *hProject;
 	struct Doc_s *pDoc;
+	char szMessage[TEXTLEN];
 	
 	/* open project file */
 	hProject = fopen(szFileName, "w");
 	if (hProject == NULL)
 	{
-		MsgBox("ERROR ! Cannot open file", MSGBOX_OK);
+		sprintf(szMessage, "Cannot save the project file '%s' !", szFileName);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	
@@ -253,18 +253,24 @@ int DocSave(char *szFileName)
 	return SUCCESS;
 }
 
-int DocLoad(char *szFileName)
+int DocLoad(const char *szFileName)
 {
 	int iResult, i, j, iNumber = 0;
 	int bNoParent, bCreated;
-	char szName[TEXTLEN], szValue[TEXTLEN], szDoc[TEXTLEN], szParent[TEXTLEN];
+	char szName[TEXTLEN], szValue[TEXTLEN], szDoc[TEXTLEN], szParent[TEXTLEN], szMessage[TEXTLEN];
 	char *FileTab[TEXTLEN], *ParentTab[TEXTLEN];
 	
 	/* open project file */
 	iResult = ConfigOpen(szFileName);
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot open project !", MSGBOX_OK);
+		sprintf(szMessage, "Cannot open the project file '%s' !", szFileName);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	
@@ -272,7 +278,13 @@ int DocLoad(char *szFileName)
 	iResult = ConfigSection("FILES");
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Wrong project file !", MSGBOX_OK);
+		sprintf(szMessage, "'%s' is not a valid project file !", szFileName);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		ConfigClose();
 		return FAILURE;
 	}
@@ -457,8 +469,8 @@ void DocViewInitialize(void)
 	char *pNameNode[2], pName[TEXTLEN];
 	int iId;
 
-	pTreeModules = GTK_CTREE(lookup_widget(pWindowMain, "DocModulesTree"));
-	pTreeFiles = GTK_CTREE(lookup_widget(pWindowMain, "DocFilesTree"));
+	pTreeModules = GTK_CTREE(lookup_widget(GTK_WIDGET(pWindowMain), "DocModulesTree"));
+	pTreeFiles = GTK_CTREE(lookup_widget(GTK_WIDGET(pWindowMain), "DocFilesTree"));
 
 	/* create and show file groups */
 	for (
@@ -734,10 +746,10 @@ void Doc_Selection(GtkCTree *pTree, GList *node, gint column, gpointer user_data
 		return;
 	
 	/* look for project tree */
-	pTreeModules = GTK_CTREE(lookup_widget(pWindowMain, "DocModulesTree"));
+	pTreeModules = GTK_CTREE(lookup_widget(GTK_WIDGET(pWindowMain), "DocModulesTree"));
 	if (pTreeModules == NULL)
 		return;
-	pTreeFiles = GTK_CTREE(lookup_widget(pWindowMain, "DocFilesTree"));
+	pTreeFiles = GTK_CTREE(lookup_widget(GTK_WIDGET(pWindowMain), "DocFilesTree"));
 	if (pTreeFiles == NULL)
 		return;
 

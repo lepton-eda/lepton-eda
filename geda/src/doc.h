@@ -58,11 +58,11 @@ extern struct Doc_s *pDocList;
 
 /* public functions and variables */
 int DocCreate(const char *szFileName, const char *szParentFileName);
-int DocDestroy(char *szFileName);
-int DocOpen(char *szFileName, int iAction);
-int DocClose(char *szFileName);
-int DocSave(char *szFileName);
-int DocLoad(char *szFileName);
+int DocDestroy(const char *szFileName);
+int DocOpen(const char *szFileName, const int iAction);
+int DocClose(const char *szFileName);
+int DocSave(const char *szFileName);
+int DocLoad(const char *szFileName);
 void DocCurrent(char *szProjectName, char *szFileName);
 int DocGetNext(char *szFileName);
 int DocGetProperty(int iProperty, char *szDoc, void *pValue);

@@ -29,6 +29,7 @@
 #endif
 #include <gtk/gtk.h>
 #include <libintl.h>
+#include "doc.h"
 #include "global.h"
 #include "interface.h"
 #include "msgbox.h"
@@ -39,7 +40,7 @@
 
 
 /* registered windows */
-GtkWidget *pWindowMain = NULL;
+GtkWindow *pWindowMain = NULL;
 
 /* running flag */
 int bRunning = TRUE;
@@ -66,16 +67,21 @@ int main(int argc, char *argv[])
 #endif
 	
 	/* create windows */
- 	pWindowMain = create_MainWindow();
+ 	pWindowMain = GTK_WINDOW(create_MainWindow());
 	gtk_window_set_title(GTK_WINDOW(pWindowMain), GEDA_TITLE);
-	gtk_widget_show(pWindowMain);
+	gtk_widget_show(GTK_WIDGET(pWindowMain));
 
 	/* initializing modules */
 	WindowInitialize();
 	iResult = ToolInitialize();
 	if (iResult != SUCCESS)
 	{
-		MsgBox("Cannot initialize tool list !", MSGBOX_OK);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			"Cannot initialize tool list !",
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		gtk_main_quit();
 		return -1;
 	}

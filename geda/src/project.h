@@ -41,6 +41,8 @@ extern struct Project_s Project;
 
 /* public functions */
 void ProjectInitialize(void);
+void ProjectNew(const char *szPath);
+void ProjectOpen(const char *szPath);
 void MenuProjectNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void MenuProjectOpen_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void MenuProjectSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
@@ -49,6 +51,7 @@ void MenuProjectExit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void ProjectTitle(void);
 void ProjectChanged(int bValue);
 extern char szProjectFileName[];
+void ProjectWidgetsShow(void);
 
 
 

@@ -22,6 +22,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include "config.h"
 #include "global.h"
 
 
@@ -33,7 +34,7 @@ static int ConfigReadLine(char *szLine);
 
 
 
-int ConfigOpen(char *szName)
+int ConfigOpen(const char *szName)
 {
 	fp = fopen(szName, "r");
 	if (fp == NULL)
@@ -44,7 +45,7 @@ int ConfigOpen(char *szName)
 
 
 
-int ConfigClose()
+int ConfigClose(void)
 {
 	int iReturn;
 	
@@ -59,7 +60,7 @@ int ConfigClose()
 
 
 
-int ConfigSection(char *szName)
+int ConfigSection(const char *szName)
 {
 	int iFound = 0, iResult, i;
 	char szLine[MAXLINELEN], szPattern[MAXLINELEN];

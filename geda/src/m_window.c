@@ -23,6 +23,7 @@
 #include "global.h"
 #include "m_window.h"
 #include "support.h"
+#include "window.h"
 
 
 
@@ -36,7 +37,7 @@ void MenuWindowInitialize(void)
 	GtkWidget *pWidget;
 	
 	/* look for menu Window */
-	pWidget = lookup_widget(pWindowMain, "MenuWindow");
+	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuWindow");
 	if (pWidget == NULL)
 	{
 		/* TODO: error handling */
@@ -54,14 +55,19 @@ void MenuWindowInitialize(void)
 GtkMenuItem *MenuWindowNew(const char *szName)
 {
 	GtkMenuItem *pMenuItem;
-	
+
 	pMenuItem = GTK_MENU_ITEM(gtk_menu_item_new_with_label(szName));
 	gtk_widget_ref(GTK_WIDGET(pMenuItem));
 	gtk_widget_show(GTK_WIDGET(pMenuItem));
 	gtk_container_add(GTK_CONTAINER(pMenu), GTK_WIDGET(pMenuItem));
-	gtk_signal_connect(GTK_OBJECT(pMenuItem), "activate", GTK_SIGNAL_FUNC(MenuWindowActivation), szName);
+	gtk_signal_connect(
+		GTK_OBJECT(pMenuItem),
+		"activate",
+		GTK_SIGNAL_FUNC(MenuWindowActivation),
+		(char *) szName
+		);
 	gtk_widget_set_sensitive(GTK_WIDGET(pMenuItem), TRUE);
-	
+
 	return pMenuItem;
 }
 
@@ -77,11 +83,6 @@ void MenuWindowDelete(GtkMenuItem *pMenuItem)
 
 static void MenuWindowActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
-	struct Action_s *pAction;
-	int iResult, i, j;
-	char szCommand[TEXTLEN], szFileName[TEXTLEN], *szName, *szExt, *szPath, *szRel, szImport[TEXTLEN], szMessage[TEXTLEN];
-	char *pParams[2];
-
 	gmanager_window_select((char *) pUserData);
 
 #if 0
@@ -103,7 +104,7 @@ static void MenuWindowActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 
 	/* interprete command line */
 	strcpy(szCommand, pAction->szCommand);
-	
+
 	/* run the tool */
 	pParams[0] = (void *) pAction;
 	pParams[1] = (void *) &szFileName;
@@ -115,5 +116,5 @@ static void MenuWindowActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	}
 
 	return;
-#endif	
-} 
+#endif
+}

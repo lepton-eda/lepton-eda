@@ -29,8 +29,9 @@
 
 
 /* public functions */
-int FileIsExisting(char *szFileName);
-int FileCopy(char *szSource, char *szDest);
+int FileIsExisting(const char *szFileName);
+int FileCopy(const char *szSource, const char *szDest);
+int FileExec(const char *szCommand);
 
 char *FileGetName(const char *szFilename);
 char *FileGetExt(const char *szFilename);

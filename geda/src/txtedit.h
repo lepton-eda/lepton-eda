@@ -18,3 +18,17 @@
 /* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. */
 /*                                                                             */
 /*******************************************************************************/
+
+#ifndef __TXTEDIT_H_INCLUDED
+#define __TXTEDIT_H_INCLUDED
+
+
+
+void EditOpen(const char *szPath);
+void EditSave(const char *szPath);
+void EditPrint(const char *szPath);
+void EditClose(const char *szPath);
+
+
+
+#endif /* __TXTEDIT_H_INCLUDED */

@@ -61,7 +61,7 @@
 
 
 /* registered windows */
-extern GtkWidget *pWindowMain;
+extern GtkWindow *pWindowMain;
 extern int bRunning;
 
 
