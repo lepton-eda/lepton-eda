@@ -127,6 +127,7 @@ s_page_new (TOPLEVEL *toplevel, const gchar *filename)
     g_free (pwd);
   }
 	
+  g_assert (toplevel->init_bottom != 0);
   page->coord_aspectratio = (
     ((float) toplevel->init_right) / ((float) toplevel->init_bottom));
 
@@ -307,12 +308,6 @@ s_page_init_list (TOPLEVEL *toplevel)
    * page head node 
    */
   head->page_control = -1; 
-
-  /* is this really required for a page head? */
-  head->coord_aspectratio = (
-    ((float) toplevel->init_right) / ((float) toplevel->init_bottom));
-  head->up = -2;
-  s_tile_init (toplevel, head);
 
   /* add head as page head of toplevel */
   toplevel->page_head = toplevel->page_tail = head;

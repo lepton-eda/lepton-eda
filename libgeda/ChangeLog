@@ -1,5 +1,8 @@
 2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/s_page.nw (s_page_init_list): Removed useless initialization 
+	of page head fields.
+
 	* docs/Makefile.am, src/Makefile.am, noweb/Makefile.am: 
 	* docs/libgedadoc.texi: Updated after removal of s_scratch.
 
