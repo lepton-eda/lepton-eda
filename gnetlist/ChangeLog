@@ -1,3 +1,9 @@
+2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c (g_get_packages): Rewritten to use a GLib hash 
+	table instead of the libgeda s_scratch code.
+	(g_get_non_unique_packages): Cleaned up.
+
 2005-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gnetlist.c: Added a chdir back to the starting directory
