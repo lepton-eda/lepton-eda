@@ -1,3 +1,10 @@
+2004-11-07 Werner Hoch <werner.ho@gmx.de>
+	* 4000/4006-2.sym: added missing pin, symversion, repaired wrong pinnames
+	* 4000/4042-1.sym, 4000/4042-2.sym, 4000/40147-1.sym, 4000/4352-1.sym,
+	4000/4353-1.sym, 4000/4515-1.sym,: corrected footprint
+	* 4000/4534-1.sym: added missing pins, symversion=1.0
+	* memory/HM6264P15-1.sym: pinlabel A9 corrected
+	
 2004-11-05 Werner Hoch <werner.ho@gmx.de>
 	* 74/74123-2.sym, 74/74124-1.sym, 74/74133-1.sym, 74/74159-1.sym
 	74161-2.sym, 74168-1.sym, 74169-1.sym, 74265-1.sym, 74/7495-1.sym: 
