@@ -1,4 +1,11 @@
 
+2000-06-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/parsecmd.c: Added the -c flag which allows you to execute
+	  arbitrary strings from the command line
+
+	* src/gnetlist.1: Update the manual page for above
+
 2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* tests/*.verilog: Updated baseline verilog tests cases to take into
