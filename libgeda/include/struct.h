@@ -641,6 +641,11 @@ struct st_toplevel {
 
 	int draw_grips;	        /* Controls if grips are enabled or not */
 
+	int netconn_rubberband;			/* controls if nets are */
+						/* rubberbanded as you move 
+						/* them (or connecting comps) */
+
+
 	int print_output_type;			/* either window or limits */
 
 	int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */
