@@ -9,7 +9,7 @@ README for gEDA/gaf CVS version
 
 - Installation
 
-	- Download all required packages and the toplevel Makefile.
+	- Download all required packages and the toplevel Makefile. 
         - If you are building the CVS version, then you must have
           autoconf, automake, libtool, and gettext installed.
 	- Untar all packages in a directory and place toplevel Makefile 
