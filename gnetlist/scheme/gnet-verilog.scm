@@ -600,7 +600,8 @@
 	    (begin    ; else output a named port instance 
 	      (display "    ." port)
 	      ; Display the escaped version of the identifier
-	      (verilog:display-escaped-identifier (car pin) port)
+	      (verilog:display-escaped-identifier (verilog:netname (car pin))
+						  port)
 	      (display " ( " port)
 	      (verilog:display-escaped-identifier (cdr pin) port)
 	      (display " )" port))))))
