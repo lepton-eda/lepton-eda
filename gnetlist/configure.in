@@ -57,6 +57,7 @@ AC_PROG_CC
 dnl AC_PROG_LEX
 dnl AC_PROG_LEX()
 AC_PROG_MAKE_SET
+AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
 
 case $host_os in
   *cygwin*  ) AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported) ;;
@@ -322,9 +323,12 @@ AC_CONFIG_FILES([Makefile \
 		examples/vams/vhdl/Makefile \
 		examples/vams/vhdl/basic-vhdl/Makefile \
 		examples/vams/vhdl/new-vhdl/Makefile \
+		examples/switcap/Makefile \
 		lib/Makefile \
 		utils/Makefile \
 		scripts/Makefile \
+		scripts/sw2asc \
 		lib/system-gnetlistrc ])
+AC_CONFIG_COMMANDS([sw2asc-chmod],[[chmod +x scripts/sw2asc]],[[]])
 AC_OUTPUT
 

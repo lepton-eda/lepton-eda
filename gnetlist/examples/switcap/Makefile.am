@@ -1,8 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = vams switcap
-
-EXTRA_DIST = 7447.sch test_verilog.sch 
+EXTRA_DIST = README analysis.sch ckt.sch clocks.sch example.out example.scn \
+	     test.ana
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~

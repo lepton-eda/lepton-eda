@@ -1,0 +1,13 @@
+===========================================================================
+
+For more info on this example usage of the switcap backend, please see
+the switcap backend README at: ../../docs/README.switcap
+
+The switcap backend has been integrated into gEDA/gaf so you do not need
+any modifications to gschemrc or gnetlistrc.
+
+To create the example Switcap netlist, please run:
+
+  gnetlist -g switcap -o example.scn ckt.sch clocks.sch analysis.sch
+
+===========================================================================

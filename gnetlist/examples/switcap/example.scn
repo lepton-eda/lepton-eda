@@ -1,0 +1,48 @@
+/* Switcap netlist produced by gnetlist (part of gEDA) */
+/* See http://www.geda.seul.org for more information.  */
+/* Switcap backend written by Dan McMahill             */
+
+
+OPTIONS; WIDTH132; REPORT; GRID; CHKCLK; END;
+
+TITLE:my title;
+
+TIMING;
+     PERIOD 1e-6;
+     CLOCK CLK1 1 (0 3/8);
+END;
+
+CIRCUIT;
+     S7 (5 0) #CLK1;
+     S8 (6 0) #CLK1;
+     S6 (OUT 6) CLK1;
+     S5 (4 5) CLK1;
+     C3 (5 6) 0.2;
+     S4 (3 4) #CLK1;
+     C2 (4 OUT) 1.0;
+     C1 (1 3) 1.0;
+     E1 (OUT 0 0 4) 2.3e5;
+     S3 (0 3) CLK1;
+     S1 (2 1) CLK1;
+     V1 (0 2);
+     S2 (0 1) #CLK1;
+END;
+
+/* reading analysis from "test.ana" */ 
+ANALYZE SSS;
+     INFREQ 100.0 1.0E6 LOG 501;
+     SET V1 AC 1.0 0.0;
+     PRINT VDB(OUT) VP(OUT);
+     END;
+
+ANALYZE TRAN;
+     TIME 0+ 500 1
+     SET V1 PULSE 0 5 10e-6 5e-6 5e-6 100e-6 500e-6;
+     PRINT V(OUT);
+     END;
+
+
+
+
+/* End of SWITCAP netlist */
+END;

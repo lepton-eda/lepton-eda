@@ -1,3 +1,10 @@
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, docs/Makefile.am, docs/README.switcap, 
+	examples/Makefile.am, examples/switchcap/, scheme/Makefile.am,
+	scheme/gnet-switchcap, scripts/Makefile.am, scripts/sw2asc.in: 
+	Integrated Dan McMahill's switcap backend
+
 2003-03-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-PCBboard.scm: Removed a "(false-if-exception  ...)

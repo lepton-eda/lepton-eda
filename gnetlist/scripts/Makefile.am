@@ -1,5 +1,7 @@
 
-EXTRA_DIST = bompp.sh annotate.sh unannotate.sh bom_xref.sh
+EXTRA_DIST = bompp.sh annotate.sh unannotate.sh bom_xref.sh sw2asc.in 
+
+bin_SCRIPTS = sw2asc
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
