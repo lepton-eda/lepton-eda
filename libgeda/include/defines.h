@@ -103,6 +103,10 @@
 #define FILEDIALOG_SCH_SYM	2
 #define FILEDIALOG_ALL_FILES	3
 
+/* for attrib_edit_dialog invocation flag */
+#define FROM_MENU		0
+#define FROM_HOTKEY		1
+
 /* for s_clib_getfilename() */
 #define OPEN_DIR	0
 #define READ_DIR	1
@@ -181,6 +185,17 @@
 #define ONLY_WHEN_READABLE	0
 #define ALWAYS			1
 
+/* used in o_undo_callback */
+#define UNDO_ACTION		0
+#define REDO_ACTION		1
+
+/* used for undo_type */
+#define UNDO_DISK		0
+#define UNDO_MEMORY		1
+
+/* used for undo_savestate flag */
+#define UNDO_ALL		0
+#define UNDO_VIEWPORT_ONLY	1
 
 /* These are for where status information goes */
 #define LOG_WINDOW		0
