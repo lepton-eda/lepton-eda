@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
-"POT-Creation-Date: 2002-10-29 01:20+0900\n"
+"POT-Creation-Date: 2002-11-03 21:13-0500\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -26,7 +26,7 @@ msgstr "おっと!! キーマップの設定に間違いがあります!\n"
 msgid "Attribute failed ot find.\n"
 msgstr "アトリビュートが見付かりません。\n"
 
-#: noweb/g_rc.nw:258 noweb/gschem.nw:195
+#: noweb/g_rc.nw:258 noweb/gschem.nw:198
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "環境変数GEDADATAを設定してください!\n"
 
@@ -193,12 +193,12 @@ msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
 
-#: noweb/gschem.nw:156 noweb/gschem.nw:166
+#: noweb/gschem.nw:159 noweb/gschem.nw:169
 #, c-format
 msgid "gEDA/gschem version %s\n"
 msgstr "gEDA/gschemバージョン%s\n"
 
-#: noweb/gschem.nw:158 noweb/gschem.nw:168
+#: noweb/gschem.nw:161 noweb/gschem.nw:171
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
@@ -206,14 +206,14 @@ msgstr ""
 "gEDA/gschemは完全に無保証で提供されます。詳しくはCOPYINGファイルをご覧くださ"
 "い。\n"
 
-#: noweb/gschem.nw:160 noweb/gschem.nw:170
+#: noweb/gschem.nw:163 noweb/gschem.nw:173
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "これはフリーソフトウェアであり、ある条件の下で再頒布することが奨励されていま"
 "す。\n"
 
-#: noweb/gschem.nw:162 noweb/gschem.nw:172
+#: noweb/gschem.nw:165 noweb/gschem.nw:175
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -221,30 +221,30 @@ msgstr ""
 "詳しくはCOPYINGファイルをご覧ください。\n"
 "\n"
 
-#: noweb/gschem.nw:176
+#: noweb/gschem.nw:179
 msgid "This is the MINGW32 port.\n"
 msgstr "MIGW32版です。\n"
 
-#: noweb/gschem.nw:206
+#: noweb/gschem.nw:209
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "初期化scmファイルを読み込んでいます。[%s]\n"
 
-#: noweb/gschem.nw:210 noweb/gschem.nw:213
+#: noweb/gschem.nw:213 noweb/gschem.nw:216
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
-#: noweb/gschem.nw:258 noweb/gschem.nw:284
+#: noweb/gschem.nw:261 noweb/gschem.nw:287
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "スケマチックを読み込んでいます。[%s]\n"
 
-#: noweb/gschem.nw:349
+#: noweb/gschem.nw:352
 msgid "Scheme directory NOT set!\n"
 msgstr "schemeディレクトリが設定されていません!\n"
 
-#: noweb/gschem.nw:356 noweb/x_script.nw:86
+#: noweb/gschem.nw:359 noweb/x_script.nw:86
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "guileスクリプトを実行しています。[%s]\n"
@@ -414,7 +414,7 @@ msgid "Select objs first"
 msgstr "まずオブジェクトを選択してください。"
 
 #: noweb/i_callbacks.nw:1117 noweb/x_attribedit.nw:554
-#: noweb/x_attribedit.nw:738 noweb/x_multiattrib.nw:713 noweb/x_window.nw:963
+#: noweb/x_attribedit.nw:738 noweb/x_multiattrib.nw:712 noweb/x_window.nw:963
 #: noweb/rcstrings.nw:25
 msgid "Delete"
 msgstr "削除"
@@ -882,12 +882,12 @@ msgstr ""
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr ""
 
-#: noweb/o_net.nw:887 noweb/o_net.nw:924 noweb/o_net.nw:995
-#: noweb/o_net.nw:1031
+#: noweb/o_net.nw:885 noweb/o_net.nw:922 noweb/o_net.nw:993
+#: noweb/o_net.nw:1029
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: noweb/o_net.nw:1098
+#: noweb/o_net.nw:1096
 #, c-format
 msgid "Could not find %s in any component-library\n"
 msgstr "無効なパス[%s]がcomponent-libraryに指定されました。\n"
@@ -953,12 +953,12 @@ msgid "Single Attribute Editor"
 msgstr "シングルアトルビュートエディタ"
 
 #: noweb/x_attribedit.nw:450 noweb/x_attribedit.nw:516
-#: noweb/x_multiattrib.nw:561
+#: noweb/x_multiattrib.nw:560
 msgid "Value"
 msgstr "値"
 
 #: noweb/x_attribedit.nw:461 noweb/x_attribedit.nw:799
-#: noweb/x_multiattrib.nw:618
+#: noweb/x_multiattrib.nw:617
 msgid "Visible"
 msgstr "表示"
 
@@ -978,7 +978,7 @@ msgstr "ネット"
 msgid "Replace"
 msgstr "置換"
 
-#: noweb/x_attribedit.nw:510 noweb/x_multiattrib.nw:554
+#: noweb/x_attribedit.nw:510 noweb/x_multiattrib.nw:553
 msgid "Name"
 msgstr "名前"
 
@@ -1011,11 +1011,11 @@ msgstr "キャンセル"
 msgid "Add/Edit Attribute"
 msgstr "アトリビュート追加/編集"
 
-#: noweb/x_attribedit.nw:810 noweb/x_multiattrib.nw:608
+#: noweb/x_attribedit.nw:810 noweb/x_multiattrib.nw:607
 msgid "Value:"
 msgstr "値:"
 
-#: noweb/x_attribedit.nw:820 noweb/x_multiattrib.nw:598
+#: noweb/x_attribedit.nw:820 noweb/x_multiattrib.nw:597
 msgid "Name:"
 msgstr "名前:"
 
@@ -1027,7 +1027,7 @@ msgstr "値のみ表示"
 msgid "Show Name Only"
 msgstr "名前のみ表示"
 
-#: noweb/x_attribedit.nw:848 noweb/x_multiattrib.nw:673
+#: noweb/x_attribedit.nw:848 noweb/x_multiattrib.nw:672
 msgid "Show Name & Value"
 msgstr "名前と値を表示"
 
@@ -1059,7 +1059,7 @@ msgstr ""
 
 #: noweb/x_dialog.nw:406 noweb/x_dialog.nw:2755 noweb/x_dialog.nw:2903
 #: noweb/x_dialog.nw:3243 noweb/x_dialog.nw:3440 noweb/x_fileselect.nw:2316
-#: noweb/x_image.nw:430 noweb/x_log.nw:315 noweb/x_multiattrib.nw:737
+#: noweb/x_image.nw:430 noweb/x_log.nw:315 noweb/x_multiattrib.nw:736
 #: noweb/x_print.nw:432 noweb/rcstrings.nw:73
 msgid "Close"
 msgstr "閉じる"
@@ -1511,63 +1511,63 @@ msgstr "幅 x 高さ"
 msgid "Status"
 msgstr "ステータス"
 
-#: noweb/x_multiattrib.nw:126 noweb/x_multiattrib.nw:782
+#: noweb/x_multiattrib.nw:126 noweb/x_multiattrib.nw:781
 msgid "Yes"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:129 noweb/x_multiattrib.nw:784
+#: noweb/x_multiattrib.nw:129 noweb/x_multiattrib.nw:783
 msgid "No"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:136 noweb/x_multiattrib.nw:790
+#: noweb/x_multiattrib.nw:136 noweb/x_multiattrib.nw:789
 msgid "V"
 msgstr "値"
 
-#: noweb/x_multiattrib.nw:141 noweb/x_multiattrib.nw:788
+#: noweb/x_multiattrib.nw:141 noweb/x_multiattrib.nw:787
 msgid "N"
 msgstr "名前"
 
-#: noweb/x_multiattrib.nw:146 noweb/x_multiattrib.nw:792
+#: noweb/x_multiattrib.nw:146 noweb/x_multiattrib.nw:791
 msgid "NV"
 msgstr "名前/値"
 
-#: noweb/x_multiattrib.nw:510
+#: noweb/x_multiattrib.nw:509
 msgid "Edit Attributes"
 msgstr "アトリビュート編集"
 
-#: noweb/x_multiattrib.nw:524 noweb/rcstrings.nw:94
+#: noweb/x_multiattrib.nw:523 noweb/rcstrings.nw:94
 msgid "Attributes"
 msgstr "アトリビュート"
 
-#: noweb/x_multiattrib.nw:568
+#: noweb/x_multiattrib.nw:567
 msgid "Vis?"
 msgstr "表示"
 
-#: noweb/x_multiattrib.nw:575
+#: noweb/x_multiattrib.nw:574
 msgid "SN"
 msgstr "名前/値"
 
-#: noweb/x_multiattrib.nw:583
+#: noweb/x_multiattrib.nw:582
 msgid "Add/Edit"
 msgstr "追加/編集"
 
-#: noweb/x_multiattrib.nw:667
+#: noweb/x_multiattrib.nw:666
 msgid "Show Value only"
 msgstr "値のみ表示"
 
-#: noweb/x_multiattrib.nw:670
+#: noweb/x_multiattrib.nw:669
 msgid "Show Name only"
 msgstr "名前のみ表示"
 
-#: noweb/x_multiattrib.nw:693
+#: noweb/x_multiattrib.nw:692
 msgid "Change"
 msgstr "変更"
 
-#: noweb/x_multiattrib.nw:703 noweb/rcstrings.nw:76
+#: noweb/x_multiattrib.nw:702 noweb/rcstrings.nw:76
 msgid "Add"
 msgstr "追加"
 
-#: noweb/x_multiattrib.nw:729
+#: noweb/x_multiattrib.nw:728
 msgid "Clear"
 msgstr "クリア"
 

@@ -31,7 +31,7 @@ IMPORTANT
 	   - Semi recent version of UNIX
 	   - Compiled on:
 		FreeBSD (2.2.5) 	
-		Linux (2.0, 2.2)	(and highly tested) 
+		Linux (2.0, 2.2, 2.4)	(and highly tested) 
 		Solaris (2.5)		
 		SunOS (4.1.3)	
 		HP-UX (9.07)	
