@@ -412,6 +412,7 @@ o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
 	temp_list = object_list;
 
+
 	/* error condition hack */
 	if (string == NULL) {
 		return(NULL);
@@ -583,10 +584,15 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 	w_current->page_current->object_parent = temp_list;
 
 
-	object_list->complex = 
+	if (visibility == VISIBLE) {
+		object_list->complex = 
 			o_ntext_create_string(w_current, temp_list, 
 					      output_string, size, color,
 					      x, y, angle); 
+	} else {
+		object_list->complex = NULL;
+	}
+
 	w_current->page_current->object_parent = temp_parent;
 
 	get_ntext_bounds(w_current, object_list, &left, &top, &right, &bottom);
@@ -720,13 +726,23 @@ o_ntext_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 	/* set the addition of attributes to the head node */
 	w_current->page_current->object_parent = o_current->complex;
 
-	o_current->complex = 
-		o_ntext_create_string(w_current, o_current->complex, 
+	if (o_current->visibility == VISIBLE) {
+
+		/* need to create that head node if complex is null */
+		if (o_current->complex == NULL) {
+			o_current->complex = o_ntext_add_head();
+		}
+
+		o_current->complex = 
+			o_ntext_create_string(w_current, o_current->complex, 
 					      output_string, 
 					      o_current->text_size, 
 					      o_current->color, 
 					      o_current->x, o_current->y,
 					      o_current->angle); 
+	} else {
+		o_current->complex = NULL;
+	}
 
 	w_current->page_current->object_parent = temp_parent;
 }

@@ -9,6 +9,9 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+6/10/99 Added support for this idea that hidden text is NOT created, main
+	changes were in the hidding and unhidding of text items
+
 5/31/99 Found a minor bug in move, not all nets were being redrawn
 
 	Worked a bit more to reduce the flashing of nets/pins when a complex

@@ -8,6 +8,11 @@ Bugs (no particular order):
 
 	Swedish characters don't work.
 
+	Select some text while a symbol is at 0,0 and you will see something
+	being erased at 0,0.  I haven't got a clue as to what is being 
+	erased.  Actually I do, it's the selection list's copy of the text.
+	it seems.  I bet before I translate text object I erase it. hmmmm
+
 	If a symbol isn't found, it's removed from the schematic.... 
 	Is this the behavior we want?
 

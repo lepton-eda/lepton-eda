@@ -101,6 +101,10 @@ Arnim Littek		- For contributing the following symbols:
 
 				ltc2400-1.sym
 
+			  For contributing the following symbols:
+
+				AD633JN-1.sym resistor-variable-1.sym
+
 Jerry O'Keefe		- For contributing the following symbols:
 			  (Ales renamed and did some minor touch ups)
 			  (Lines touching arcs, moved pins in BNC-1.sym,

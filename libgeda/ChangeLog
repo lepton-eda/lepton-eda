@@ -8,6 +8,12 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+6/10/99 Added the start of support for not creating text items which are 
+	hidden
+
+6/9/99	Increased the number of symbols which can be in a directory to 1024
+	from (256) in s_clib.c (s_clib_getfiles)
+
 6/1/99	Fixed a few minor things in s_page.c and s_basic.c (p_circle stuff)
 
 	Put some checks to prevent the coredump condition described below

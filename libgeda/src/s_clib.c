@@ -342,7 +342,7 @@ s_clib_getfiles(char *directory, int flag)
 {
 	static DIR *ptr;
         static struct dirent *dptr;
-	static char *whole_dir[256]; /* make this dynamic hack */
+	static char *whole_dir[1024]; /* make this dynamic hack */
 	static int count=0;
 	static int current=0;
 	
@@ -414,7 +414,7 @@ s_clib_getfiles(char *directory, int flag)
 					len = strlen(dptr->d_name);
 
 					/* hack */
-					if (count < 256) {
+					if (count < 1024) {
 
 						whole_dir[count] = (char *)
 						    malloc(sizeof(char)*len+1);

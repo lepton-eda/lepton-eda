@@ -705,6 +705,11 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list)
 		if (o_current->type == OBJ_NTEXT) {
 			if (o_current->visibility == INVISIBLE) {
 				o_current->visibility = VISIBLE;	
+
+				if (o_current->complex == NULL) {
+					o_ntext_recreate(w_current, o_current);
+				}
+				
 				if (o_current->draw_func &&
 					o_current->type != OBJ_HEAD) {
 					(*o_current->draw_func)(w_current, o_current);

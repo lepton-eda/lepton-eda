@@ -130,11 +130,24 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list)
 				w_current->page_current->CHANGED=1;
 			} else {
 				real->visibility = VISIBLE;	
+
+				/* you must do this since real->complex */
+				/* might be null when text is invisible */
+				if (real->complex == NULL) 
+					o_ntext_recreate(w_current, real);
+
 				if (real->draw_func &&
 					real->type != OBJ_HEAD) {
 					(*real->draw_func)(w_current, real);
 				}
+
 				o_current->visibility = VISIBLE;	
+
+				/* same comment as above */
+				if (o_current->complex == NULL)  {
+					o_ntext_recreate(w_current, o_current);
+				}
+
 				w_current->override_color = 
 					w_current->select_color;
 				if (o_current->draw_func &&

@@ -144,7 +144,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 	GtkWidget *hscrollbar=NULL;
 	GtkWidget *vscrollbar=NULL;
 	GtkWidget *table=NULL;
-
+	
 	if (do_logging == FALSE) {
 		return;
 	}
