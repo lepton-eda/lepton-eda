@@ -298,6 +298,7 @@ fi
 
 # search for notangle
 AC_PATH_PROG(NOTANGLE, notangle, no, ${PATH})
+# BUG: should check *ALL* files and dependencies!
 cfiles=`\ls -1 src/gschem.c 2> /dev/null`
 exit_status=$?
 

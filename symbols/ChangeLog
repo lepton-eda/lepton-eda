@@ -1,3 +1,12 @@
+2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* symbols/Makefile.am, symbols/configure.in, symbols/74/7400-1.sym,
+          symbols/74/7400-2.sym, symbols/documentation/Makefile.am,
+ 	  symbols/documentation/geda.fig, symbols/documentation/nc.doc,
+	  symbols/misc/nc-bottom-1.sym, symbols/misc/nc-left-1.sym,
+	  symbols/misc/nc-right-1.sym, symbols/misc/nc-top-1.sym: Added Egil
+          Kvaleberg's find documentation patch.
+
 2002-10-12 Werner Hoch <werner.ho@gmx.de>
 	* 4000/40[12]?-*.sym: completed symbols (added net, footprint, ..)
 	* 4000/: 4014-2.sym, 4016-2.sym, 4017-2.sym, 4018-2.sym, 4019-2.sym

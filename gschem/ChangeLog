@@ -8,7 +8,18 @@
 	code in libgeda (for older <= 20020825 symbols).  The whichends on
 	all the pins should always be correct.  Do not update this file to
 	the current gEDA/gaf file format ever.
-	
+
+	* configure.in, docs/gschem.txt, include/prototype.h, 
+          lib/system-gschemrc.in, noweb/g_key.nw, noweb/g_register.nw,
+	  noweb/i_callbacks.nw, noweb/rcstrings.nw, noweb/x_menus.nw,
+	  noweb/x_multiattrib.nw: Added Egil Kvaleberg's find documentation
+	  patch.
+
+2002-10-07 Egil Kvaleberg   <egil@kvaleberg.no>
+
+	* Added Hierarchy/Documentation
+	* Added Help/Manual
+
 2002-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Added some missing attributes, noticed and

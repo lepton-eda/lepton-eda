@@ -4,7 +4,9 @@ dnl Process this file with autoconf to produce a configure script.
 dnl Some of our own macros
 AC_DEFUN(GEDA_DECLARE_SYMLIB,
  [
-	data$1=`ls -1 $srcdir/$1 | grep -v Makefile | grep -v CVS`
+	data$1=`ls -1 $srcdir/$1 | grep -v Makefile \
+				 | grep -v CVS | grep -v "\\.cvsignore" \
+				 | grep -v "\\~" | grep -v "\\.orig"`
 	data$1=`echo $data$1`
  ])
 
@@ -195,6 +197,7 @@ AC_CONFIG_FILES([
 	diode/Makefile 
 	opto/Makefile 
 	national/Makefile
+	documentation/Makefile
 	system-commonrc
         gesym-config ])
 AC_CONFIG_COMMANDS([gesym-config],[[chmod +x gesym-config]],[[]])

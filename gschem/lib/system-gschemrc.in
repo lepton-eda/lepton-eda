@@ -666,6 +666,7 @@
 (attribute-name "graphical")
 (attribute-name "footprint")
 (attribute-name "description")
+(attribute-name "documentation")
 
 ;
 ; End of path related keywords
@@ -907,7 +908,8 @@
 (define hierarchy-keymap
   '(("d" . hierarchy-down-schematic)
     ("s" . hierarchy-down-symbol)
-    ("u" . hierarchy-up)))
+    ("u" . hierarchy-up)
+    ("o" . hierarchy-documentation)))
 
 ; All keys in this keymap *must* be unique
 (define attributes-keymap
@@ -936,7 +938,9 @@
 ; All keys in this keymap *must* be unique
 (define help-keymap
   '(("a" . help-about)
-    ("h" . help-hotkeys)))
+    ("m" . help-manual)
+    ("h" . help-hotkeys)
+    ("c" . hierarchy-documentation))) ; yes this is okay; reusing
 
 ; All keys in the global-keymap *must* be unique
 (define global-keymap
@@ -1119,7 +1123,9 @@
 	   ("Down Symbol"	hierarchy-down-symbol 
 				hierarchy-down-symbol)
 	   ("Up"		hierarchy-up
-				hierarchy-up)))
+				hierarchy-up)
+	   ("Documentation"     hierarchy-documentation
+				hierarchy-documentation)))
 
 (define attributes-menu-items 
 ;;
@@ -1158,7 +1164,10 @@
 ;;          menu item name      menu action     	menu hotkey action
 ;;
 	'( ("About..."		help-about      	help-about)
-	   ("Hotkeys..."	help-hotkeys      	help-hotkeys)))
+	   ("Manual..."         help-manual             help-manual)
+	   ("Hotkeys..."        help-hotkeys            help-hotkeys)
+	   ("Component..."      hierarchy-documentation
+						    hierarchy-documentation)))
 
 ;
 ; Now actually add the menus.  The order here defines the order in which

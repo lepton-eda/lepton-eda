@@ -545,7 +545,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (clist);
   gtk_container_add (GTK_CONTAINER (scrolledwindow1), clist);
-  gtk_clist_set_column_width (GTK_CLIST (clist), 0, 70);
+  gtk_clist_set_column_width (GTK_CLIST (clist), 0, 80); /* "documentation" should fit */
   gtk_clist_set_column_width (GTK_CLIST (clist), 1, 140);
   gtk_clist_set_column_width (GTK_CLIST (clist), 2, 25);
   gtk_clist_set_column_width (GTK_CLIST (clist), 3, 10);

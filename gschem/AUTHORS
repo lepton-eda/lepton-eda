@@ -71,6 +71,10 @@ Egil Kvaleberg		- For providing a patch which gives gEDA gtk+ 1.1.x
 
 			  Also for providing numerous patches for various
 			  things (bugs, features etc...).
+	
+			  Wrote the "Hierarchy/Documentation, Help/Manual, 
+			  and Help/Component documentation searching from 
+			  within gschem" feature.
 
 Thomas Dean		- Submitting a few useful patches for various
 			  things

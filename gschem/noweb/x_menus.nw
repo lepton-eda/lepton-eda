@@ -196,6 +196,7 @@ static GtkItemFactoryEntry menu_items[] = {
   {"/Hierarchy/Down Schematic", NULL, i_callback_hierarchy_down_schematic, 0, NULL},
   {"/Hierarchy/Down Symbol", NULL, i_callback_hierarchy_down_symbol, 0, NULL},
   {"/Hierarchy/Up", NULL, i_callback_hierarchy_up, 0, NULL},
+  {"/Hierarchy/Documentation", NULL, i_callback_hierarchy_documentation, 0, NULL},
   {"/Attributes", NULL, NULL, 0, "<Branch>"},
   {"/Attributes/tearoff", NULL, NULL, 0, "<Tearoff>" },
   {"/Attributes/Attach", NULL, i_callback_attributes_attach, 0, NULL},
@@ -217,7 +218,9 @@ static GtkItemFactoryEntry menu_items[] = {
   {"/Help", NULL, NULL, 0, "<LastBranch>"},
   {"/Help/tearoff", NULL, NULL, 0, "<Tearoff>" },
   {"/Help/About...", NULL, i_callback_help_about, 0, NULL},
+  {"/Help/Manual...", NULL, i_callback_help_manual, 0, NULL},
   {"/Help/Hotkeys...", NULL, i_callback_help_hotkeys, 0, NULL},
+  {"/Help/Component", NULL, i_callback_hierarchy_documentation, 0, NULL},
 };
 
 /* calculate the number of menu_item's */

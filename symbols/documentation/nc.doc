@@ -1,0 +1,102 @@
+.\" $Id$
+.\"
+.\" Example documentation for "No connection"
+.\" don't take it too seriously ;-)"
+.\"
+.so geda.pic
+.SH
+No Connection Short Form Data Sheet
+.\"
+.SH
+General Description
+.LP
+The 
+.B "No Connection"
+component is a mono-pole with unique properties.
+.\"--------------------------------------------------
+.SH
+Applications
+.IP "\(sq"
+.I
+Digital circuits
+.IP "\(sq"
+.I
+Analog circuits
+.IP "\(sq"
+.I
+Mixed signal circuits
+.IP "\(sq"
+.I
+Consumer products
+.IP "\(sq"
+.I
+Industry products
+.\"--------------------------------------------------
+.SH
+Features
+.IP "\(bu"
+ESD tolerant
+.IP "\(bu"
+Latchup free
+.IP "\(bu"
+Operates with zero power supplies
+.IP "\(bu"
+Simple connection
+.\"--------------------------------------------------
+.SH
+Electrical Characteristics
+.R
+.TS
+tab(!);
+| l            | l      | l          | n     n     n    | l    |.
+_
+\fBParameter\fP!\fBSymbol\fP!\fBConditions\fP!\fBMin\fP!\fBTyp\fP!\fBMax\fP!\fBUnits\fP
+_
+Supply Voltage ! Vcc    ! Any        !  0  !     ! \(if ! V
+_
+Supply Current ! Icc    ! Any        !  0  !  0  !  0   ! mA
+_
+.TE
+.\"--------------------------------------------------
+.SH
+Pin Descriptions
+.R
+.TS
+tab(!);
+| n              | l          | l         |.
+_
+\fBPin\fP        ! \fBName\fP ! \fBFunction\fP  !
+_
+1                ! NC         ! None whatsoever !
+_
+.TE
+.\"--------------------------------------------------
+.SH
+Detailed Description
+.LP
+The component really does nothing, except making it perfectly clear
+that when it is connected to pins on other components, they should
+not, or at least need not, be connected to anything else.
+.\"--------------------------------------------------
+.SH
+Ordering Information
+.R
+.TS
+tab(!);
+| l              | l                          | l            | l             |.
+_
+\fBPart\fP       ! \fBTemp. Range \fP       ! \fBTerminal\fP ! \fBPackage\fP !
+_
+nc-left          ! -273.16\(deC to +\(if\(deC ! Left         ! None          !
+nc-right         ! -273.16\(deC to +\(if\(deC ! Right        ! None          !
+nc-top           ! -273.16\(deC to +\(if\(deC ! Top          ! None          !
+nc-bottom        ! -273.16\(deC to +\(if\(deC ! Bottom       ! None          !
+_
+.TE
+.\"--------------------------------------------------
+.SH
+References
+.LP
+.I
+http://www.geda.seul.org/symlibrary/symbols/misc/
+.R

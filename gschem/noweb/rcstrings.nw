@@ -89,6 +89,7 @@ _("Hierarchy")
 _("Down Schematic")
 _("Down Symbol")
 _("Up")
+_("Documentation")
 
 _("Attributes")
 _("Attach")
@@ -114,5 +115,7 @@ _("Show Coord Window...")
 
 _("Help")
 _("About...")
+_("Manual...")
 _("Hotkeys...")
+_("Component")
 

@@ -15,6 +15,7 @@
 <<i_callbacks.c : fnameext_get()>>
 <<i_callbacks.c : fnameext_remove()>>
 <<i_callbacks.c : fnameext_add()>>
+<<i_callbacks.c : initiate_gschemdoc()>>
 <<i_callbacks.c : DEFINE_I_CALLBACK()>>
 
 /* right now, all callbacks execpt for the ones on the File menu have
@@ -147,6 +148,7 @@
 <<i_callbacks.c : i_callback_hierarchy_down_schematic()>>
 <<i_callbacks.c : i_callback_hierarchy_down_symbol()>>
 <<i_callbacks.c : i_callback_hierarchy_up()>>
+<<i_callbacks.c : i_callback_hierarchy_documentation()>>
 
 /* Attributes menu */
 <<i_callbacks.c : i_callback_attributes_attach()>>
@@ -176,6 +178,7 @@
 
 /* help menu */
 <<i_callbacks.c : i_callback_help_about()>>
+<<i_callbacks.c : i_callback_help_manual()>>
 <<i_callbacks.c : i_callback_help_hotkeys()>>
 
 <<i_callbacks.c : i_callback_options_show_coord_window()>>
@@ -320,6 +323,51 @@ fnameext_add(const char *fname, const char* ext)
 
 
 @ %def fnameext_add
+
+
+@section Function @code{initiate_gschemdoc()}
+
+@defun initiate_gschemdoc fname
+@end defun
+
+<<i_callbacks.c : initiate_gschemdoc()>>=
+/* Egil Kvaleberg <egil@kvaleberg.no> on October 7, 2002 - 
+ * Initiate the gschemdoc utility to provide the used with as much
+ * documentation on the symbol (i.e. component) as we can manage.
+ */
+static void
+initiate_gschemdoc(const char* documentation,const char *device,
+		   const char *value,
+		   const char* symfile, const char *sympath)
+{
+  int pid;
+
+  if (!documentation) documentation="";
+  if (!device) device="";
+  if (!value) value="";
+  if (!symfile) symfile="";
+  if (!sympath) sympath="";
+
+  s_log_message( _("Documentation for [%s,%s,%s,%s]\n"),
+		    documentation,device,value,symfile);
+
+  if ((pid = fork()) < 0) {
+    fprintf(stderr, _("Could not fork\n"));
+  } else if (pid == 0) {
+    /* daughter process */
+
+    /* assume gschemdoc is part of path */
+    char *gschemdoc = "gschemdoc";
+
+    execlp(gschemdoc, gschemdoc, documentation, device, value, symfile, sympath, NULL);
+
+    /* if we return, then nothing happened */
+    fprintf(stderr, _("Could not invoke %s\n"), gschemdoc);
+    exit(0);
+  }
+}
+
+@ %def initiate_gschemdoc
 
 
 @section Macro @code{DEFINE_I_CALLBACK()}
@@ -3653,8 +3701,8 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 
 @ %def i_callback_hierarchy_down_symbol
 
-
 @section Function @code{i_callback_hierarchy_up()}
+
 
 @defun i_callback_hierarchy_up data callback_action widget
 @end defun
@@ -3674,6 +3722,65 @@ DEFINE_I_CALLBACK(hierarchy_up)
 
 
 @ %def i_callback_hierarchy_up
+
+
+
+@section Function @code{i_callback_hierarchy_documentation()}
+
+@defun i_callback_hierarchy_documentation data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_hierarchy_documentation()>>=
+/* Egil Kvaleberg <egil@kvaleberg.no> on October 7, 2002 - 
+ * Provide documentation for symbol (i.e. component)
+ */
+DEFINE_I_CALLBACK(hierarchy_documentation)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  char *attrib_doc = NULL;
+  char *attrib_device = NULL;
+  char *attrib_value = NULL;
+  OBJECT *object = NULL;
+
+  exit_if_null(w_current);
+
+  object = o_select_return_first_object(w_current);
+  if (object != NULL) {
+    /* only allow going into symbols */
+    if (object->type == OBJ_COMPLEX) {
+
+      /* look for "documentation" first outside, then inside symbol */
+      attrib_doc = o_attrib_search_name_single_count(object, "documentation", 0);
+      if (!attrib_doc) {
+	attrib_doc = o_attrib_search_name(object->complex->prim_objs,
+								"documentation", 0);
+      }
+      /* look for "device" */
+      attrib_device = o_attrib_search_name_single_count(object, "device", 0);
+      if (!attrib_device) {
+	attrib_device = o_attrib_search_name(object->complex->prim_objs,
+								"device", 0);
+      }
+      /* look for "value" */
+      attrib_value = o_attrib_search_name_single_count(object, "value", 0);
+      if (!attrib_value) {
+	attrib_value = o_attrib_search_name(object->complex->prim_objs,
+								"value", 0);
+      }
+      initiate_gschemdoc(attrib_doc,
+			attrib_device,
+			attrib_value,
+			object->complex_basename,
+			object->complex_clib);
+
+      if (attrib_doc) free(attrib_doc);
+      if (attrib_device) free(attrib_device);
+      if (attrib_value) free(attrib_value);
+    }
+  }
+}
+
+@ %def i_callback_hierarchy_documentation
 
 
 /* Attributes menu */
@@ -4229,6 +4336,20 @@ DEFINE_I_CALLBACK(help_about)
 
 
 @ %def i_callback_help_about
+
+
+@section Function @code{i_callback_help_manual()}
+
+@defun i_callback_help_manual data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_help_manual()>>=
+DEFINE_I_CALLBACK(help_manual)
+{
+  initiate_gschemdoc("-m", NULL, NULL, NULL, NULL);
+}
+
+@ %def i_callback_help_manual
 
 
 @section Function @code{i_callback_help_hotkeys()}

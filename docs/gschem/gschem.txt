@@ -962,6 +962,37 @@ the resource file (see the section below for more info).
 		This option will move up the hierarchy (if there are pages 
 		above the currently displayed page).  
 
+	Documentation
+
+		Open any documentation available for the selected 
+		symbol/component.
+
+		The job is handed over to "gschemdoc", which makes a
+		best-effort attempt of finding relevant documentation.
+
+		The documention would normally be in PDF, HTML, text or 
+		image format, but gschemdoc tries to be as transparent as
+		possible on this account.
+
+		First and foremost, the attribute "documentation=" is 
+		assumed to point to the documentation. This attribute should 
+		either be the filename (basename) of the document, or it
+		should be a complete URL.
+
+		If it is a filename, and the file is found locally (in
+		/usr/share/gEDA/documentation or otherwise), the relevant 
+		viewer will be initiated. Otherwise, a Google search for the
+		document will be initiated.
+
+		If there is no documentation attribute, the attributes 
+		"device" and possibly "value" will be consulted in much 
+		the same way as for "documentation". File searches will 
+		be made in forms of filenames like "device-value.pdf" and 
+		"device.pdf".
+
+		Failing that, the file name for the symbol itself will
+		be used as basis for the search.
+
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
 
 	An attribute is nothing more than a text item which is
