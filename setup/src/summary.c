@@ -66,7 +66,7 @@ void SummaryPrepare(void)
 		if (strlen(pComp->szFileName) == 0)
 			continue;
 		
-		if (pComp->bToBeInstalled == TRUE)
+		if (pComp->iToBeInstalled == PACKAGE_SELECTED)
 		{
 			sprintf(szSummary + strlen(szSummary), " -\t%s\n", pComp->szFileName);
 		}
@@ -76,7 +76,7 @@ void SummaryPrepare(void)
 	bRequired = FALSE;
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-		if (pComp->bToBeInstalled == COMPONENTS_REQUIRED)
+		if (pComp->iToBeInstalled == PACKAGE_REQUIRED)
 			bRequired = TRUE;
 	}
 	if (bRequired == TRUE)
