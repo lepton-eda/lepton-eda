@@ -1,3 +1,26 @@
+2002-06-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_rename.c: Added patch by Bryce Denney to fix an infinite loop
+	caused by changing a for index inside of the loop (not a good idea).
+	Patch also added a check to make sure we don't exceed a fixed limit
+	of rename pairs. Thanks for the patch!
+
+	* src/s_net.c, s_traverse.c: Replaced the
+	o_attribute_search_name_partial nonsense with the new scheme.  
+	gnetlist now builds again.
+
+	* src/g_netlist.c, g_register.c: Added g_get_pin_attribute_seq
+	scheme function.  This function takes a uref, a pin seq number, and
+	a desired attribute and returns the value of the desired attribute
+	(if it is found), else returns "unknown".
+
+	* scheme/gnet-spice.scm: Started the cleanup in getting the spice
+	backend to use the new slot/pin numbering attributes.  Initial
+	tests seem to indicate that it does work for very basic
+	schematics.
+
+	* scheme/gnet-vipec.scm: Minor work on getting this working too.
+	
 2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_rc.c, gnetlist.c: Added a call to u_basic_strip_trailing to
