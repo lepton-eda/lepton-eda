@@ -1,4 +1,4 @@
 Makefile
 Makefile.in
-notangle_guile.scm
+notangle_guile
 geda_totexi
