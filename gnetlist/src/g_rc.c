@@ -43,6 +43,7 @@
 #include <libgeda/prototype.h>
 
 #include "../include/globals.h"
+#include "../include/i_vars.h"
 #include "../include/prototype.h"
 
 /* for some really odd reason, the cygnus sys/stat.h doesn't want to work */
@@ -53,6 +54,73 @@
 
 /* this is needed so that these routines know which window they are changing */
 static TOPLEVEL *project_current;
+
+
+typedef struct {
+        int   m_val;
+        char *m_str;
+} vstbl_entry;
+
+static int
+vstbl_lookup_str(const vstbl_entry *table, int size, const char *str)
+{
+	int i;
+
+	for(i = 0; i < size; i++) {
+		if(strcmp(table[i].m_str, str) == 0) {
+			break;
+		}
+	}
+	return i;
+}
+
+static int
+vstbl_get_val(const vstbl_entry *table, int index)
+{
+	return table[index].m_val;
+}
+
+/* written by Kazu, much much better rc handling routines */
+static SCM
+g_rc_mode_general(SCM mode,
+		  const char *rc_name,
+		  int *mode_var,
+		  const vstbl_entry *table,
+		  int table_size)
+{
+	int index;
+	char *string;
+
+	string = gh_scm2newstr(mode, NULL);
+	index = vstbl_lookup_str(table, table_size, string);
+
+	/* no match? */
+	if(index == sizeof(table)) {
+		fprintf(stderr,
+			"Invalid mode [%s] passed to %s\n",
+			string,
+			rc_name);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	*mode_var = vstbl_get_val(table, index);
+
+	if (string) {
+		free(string);
+	}
+	return SCM_BOOL_T;
+}
+
+#define RETURN_G_RC_MODE(rc, var)                       \
+        return g_rc_mode_general(mode,                  \
+                                 (rc),                  \
+                                 &(var),                \
+                                 mode_table,            \
+                                 sizeof(mode_table))
+
 
 void
 set_static_project_current(TOPLEVEL *pr_current)
@@ -370,6 +438,18 @@ g_rc_paper_size(SCM width, SCM height, SCM border)
 	s_project_setup_world(project_current);	
 	return(gh_int2scm(0)); 
 }
+
+SCM
+g_rc_net_naming_priority(SCM mode)
+{
+        static const vstbl_entry mode_table[] = {
+                {NET_ATTRIBUTE, "net"},
+                {LABEL_ATTRIBUTE , "label" }
+        };
+
+        RETURN_G_RC_MODE("net-naming-priority", default_net_naming_priority);
+}
+
 
 /*************************** GUILE end done *********************************/
 

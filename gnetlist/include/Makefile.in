@@ -98,7 +98,7 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-noinst_HEADERS =  	globals.h prototype.h
+noinst_HEADERS =  	globals.h i_vars.h papersizes.h prototype.h
 
 
 MOSTLYCLEANFILES = *.log core FILE *~

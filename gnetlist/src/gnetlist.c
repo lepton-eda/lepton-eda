@@ -45,6 +45,7 @@ gnetlist_quit(void)
 	s_clib_cache_free();
         s_clib_free();
         s_slib_free();
+        s_rename_destroy();
         /* o_text_freeallfonts();*/
 
 }
@@ -92,6 +93,8 @@ if (!quiet_mode) {
 
 	s_clib_init();
  	s_slib_init();
+
+ 	s_rename_init();
 
 	s_project_add_head();
 

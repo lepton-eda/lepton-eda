@@ -134,6 +134,9 @@ g_register_funcs(void)
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
+	gh_new_procedure1_0 ("gschem-key-name", g_funcs_key_name);
+	gh_new_procedure1_0 ("gschem-key-value", g_funcs_key_value);
+	gh_new_procedure0_0 ("gschem-key-done", g_funcs_key_done);
 	gh_new_procedure0_0 ("gschem-use-rc-values", g_funcs_use_rc_values);
 	gh_new_procedure0_0 ("gschem-exit", g_funcs_exit);
 
@@ -220,6 +223,8 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("options-snap", g_key_options_snap);
 	gh_new_procedure0_0 ("options-show-log-window", g_key_options_show_log_window);
 	gh_new_procedure0_0 ("options-show-coord-window", g_key_options_show_coord_window);
+	gh_new_procedure0_0 ("help-about", g_key_help_about);
+	gh_new_procedure0_0 ("help-hotkeys", g_key_help_hotkeys);
 	gh_new_procedure0_0 ("misc-misc", g_key_misc);
 	gh_new_procedure0_0 ("cancel", g_key_cancel);
 }

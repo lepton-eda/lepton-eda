@@ -18,16 +18,10 @@
 		(cond ((list? action)
 		       (mapping-keys action (append keys (car mapped-key))))
 		      (else
-		       (print-mapped-keys (list 
+		       (print-mapped-keys (list  ; was print
 					   (cdr mapped-key)
 					   keys 
 					   (car mapped-key)))))))
 	    keymap))
 
-; You need call this after you call any rc file function
-(gschem-use-rc-values)
-
-; filename is specified on the command line
 (mapping-keys global-keymap '())
-
-;(gschem-exit)

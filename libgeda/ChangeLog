@@ -8,6 +8,8 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+9/12/99	Added a flag in s_netlist structure for net naming priority
+
 9/7/99	Added s_color.c 
 	
 	Cleaned up code to reflect the new function names created by s_color.c

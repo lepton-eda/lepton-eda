@@ -7,6 +7,52 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+9/12/99	Fixed a netlist print function to that it doesn't try to print
+	valid null strings
+
+	Fixed up s_net_name_search so that it tells the user if a multiple 
+	named net is found
+
+	Implemented the concept of net name priority (net_name_has_priority)
+	which controls which name has the highest priority.
+
+	Added net-naming-priority keyword which controls which attribute
+	(either net= or label= ) has priority when both are attached to a net
+
+	Added i_vars.c which containes the rc mode init funcs which are 
+	used by Kazu's rc mode functions
+
+	More work on getting net= attribute to override previously defined
+	pins (all controlled through net-naming-priority)
+
+	Removed some obsolete #if 0'd out code from s_net.c
+
+	Added s_rename.c which contains all the code to handle the renaming
+	(aliasing) of net names.
+
+	Integrated s_rename functions into the code
+
+	Fixed a bug in s_netattrib_net_search where the outside of the 
+	component wasn't being search for overriding net= attributes
+
+	Fixed s_netlist_post_process, (the net naming), to only name
+	nets of components which have a uref.  Components which don't
+	have a uref are power/gnd/special components
+
+	Updated verbose legend to include the R (rename of nets)
+
+	Added gnetlist:get-renamed-nets which takes a dummy parameter and
+	returns a list of lists (which contain src -> destination net 
+	renaming pairs)
+
+	Updated the geda netlist backend to output the above renaming
+	list pairs into the netlist file as a new section
+
+9/11/99	Created s_netattrib.c which contains all the code to handle the net=
+	attribute
+
+9/7/99	Start work on getting the net= attribute to work 
+
 9/5/99	Moved test_verilog.sch into the examples directory (from 
 	gschem/examples)
 

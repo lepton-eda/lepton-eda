@@ -14,6 +14,9 @@ void correct_aspect(TOPLEVEL *w_current);
 SCM g_funcs_print(SCM filename);
 SCM g_funcs_exit(void);
 SCM g_funcs_use_rc_values(void);
+SCM g_funcs_key_name(SCM keystring);
+SCM g_funcs_key_value(SCM keystring);
+SCM g_funcs_key_done(SCM keystring);
 /* g_key.c */
 void set_window_current_key(TOPLEVEL *w_current);
 void g_key_execute(int state, int keyval);
@@ -101,6 +104,8 @@ SCM g_key_options_snap_size(void);
 SCM g_key_options_show_log_window(void);
 SCM g_key_options_show_coord_window(void);
 SCM g_key_misc(void);
+SCM g_key_help_about(void);
+SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
 /* g_rc.c */
 void g_rc_parse(void);
@@ -264,6 +269,7 @@ void i_callback_options_show_log_window(gpointer data, guint callback_action, Gt
 void i_callback_misc(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
 /* i_sbox.c */
 void i_sbox_search(TOPLEVEL *w_current, int flag);
@@ -471,6 +477,10 @@ gint color_set(GtkWidget *w, gpointer data);
 void color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog(TOPLEVEL *w_current);
+void x_dialog_hotkeys_close(GtkWidget *w, TOPLEVEL *w_current);
+void x_dialog_hotkeys_free_all(void);
+void x_dialog_hotkeys_fill(char *string);
+void x_dialog_hotkeys(TOPLEVEL *w_current);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);

@@ -85,7 +85,8 @@ if (verbose_mode) {
 	printf("n : Found net\n");
 	printf("C : Found component (staring to traverse component)\n");
 	printf("p : Found pin (starting to traverse pin)\n");
-	printf("P : Found end pin connection (end of this net)\n\n");
+	printf("P : Found end pin connection (end of this net)\n");
+	printf("R : Starting to rename a net\n\n");
 
 }
 
@@ -155,7 +156,10 @@ if (verbose_mode) {
 						       "U?");
 					} else {
 
+
+#if DEBUG 
 						printf("yeah... found a power symbol\n");
+#endif
 				/* it's a power or some other special symbol */
 						netlist->component_uref = NULL;
 					}
@@ -168,9 +172,8 @@ if (verbose_mode) {
 
 				/* here is where you deal with the */
 				/* net attribute */
-				s_netlist_net_attribute(pr_current,
-						        o_current,
-							netlist);	
+				s_netattrib_handle(pr_current, o_current,
+						   netlist);	
 
 			}
 
@@ -181,7 +184,7 @@ if (verbose_mode) {
 
 if (verbose_mode) {
 	if (vi > 70) {
-		printf("\nDONE!\n");
+		printf("\nDONE\n");
 	} else {
 		printf(" DONE\n");
 	}
@@ -191,7 +194,7 @@ if (verbose_mode) {
 	/* questions... when should you do this?  now or after all sheets have
 	 * been read */
 
-	s_netlist_post_process(netlist_head); 
+	s_netlist_post_process(pr_current, netlist_head); 
 
 if (verbose_mode) {
 	printf("\nInternal netlist representation:\n\n");
@@ -268,10 +271,13 @@ if (verbose_mode) {
 
 /* net= new */
 	if (strstr(nets->connected_to, "POWER")) {
+#if DEBUG
 		printf("going to find netname %s\n", nets->connected_to);
-		nets->net_name = s_netlist_return_netname(o_current, 
+#endif
+		nets->net_name = s_netattrib_return_netname(o_current, 
 							  nets->
 							  connected_to);
+		nets->net_name_has_priority = TRUE;
 		free(nets->connected_to);
 		nets->connected_to = NULL;
 	}
@@ -316,10 +322,13 @@ if (verbose_mode) {
 
 /* net= new */
 	if (strstr(nets->connected_to, "POWER")) {
+#if DEBUG
 		printf("going to find netname %s\n", nets->connected_to);
-		nets->net_name = s_netlist_return_netname(o_current, 
+#endif
+		nets->net_name = s_netattrib_return_netname(o_current, 
 							  nets->
 							  connected_to);
+		nets->net_name_has_priority = TRUE;
 		free(nets->connected_to);
 		nets->connected_to = NULL;
 	}
@@ -416,10 +425,14 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 
 /* net= new */
 		if (strstr(nets->connected_to, "POWER")) {
+
+#if DEBUG
 			printf("going to find netname %s \n", nets->connected_to);
-			nets->net_name = s_netlist_return_netname(o_current, 
+#endif
+			nets->net_name = s_netattrib_return_netname(o_current, 
 								  nets->
 								  connected_to);
+			nets->net_name_has_priority = TRUE;
 			free(nets->connected_to);
 			nets->connected_to = NULL;
 		}
@@ -674,9 +687,9 @@ if (verbose_mode) {
 
 if (verbose_mode) {
 	if (vi > 70) {
-		printf("\nDONE!\n");
+		printf("\nDONE\n");
 	} else {
-		printf(" DONE!\n");
+		printf(" DONE\n");
 	}
 	vi = 0;
 }

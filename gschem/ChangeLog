@@ -9,6 +9,35 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/12/99	Added g_funcs_key_name which is used in the list-keys.scm script
+	and in the list keys dialog box
+	
+	Added g_funcs_key_value which is used in the list-keys.scm script	
+	and in the list keys dialog box
+
+	Added g_funcs_key_done which is used in the list-keys.scm script	
+	and in the list keys dialog box
+
+	Added x_dialog_hotkeys dialog box
+
+	Added above dialog box to the menu
+
+	Modified Stefan's list-key.scm script to fill x_dialog_hotkeys.
+	It's pretty crude, but functional
+
+	Unmodified Stefan's list-key.scm script and moved modified functions
+	into gschem.scm
+
+	Added hotkeys for Help/About... and Help/Hotkeys...
+
+	Put a tear off bar on the Help menu
+
+	Renamed Shift H (Help) to h (and change Hierarchy to Shift H) in the
+	system-gschemrc file
+
+	Adding net= attribute to the attribute selection list dialog box
+	(put net in system-gschemrc.in)
+
 9/7/99	Removed all the stupid function pointers I added yesterday 
 
 	Moved huge chunks of x_color.c into libgeda/src/s_color.c

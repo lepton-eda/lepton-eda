@@ -1666,6 +1666,14 @@ DEFINE_I_CALLBACK(help_about)
 	about_dialog(w_current);
 }
 
+DEFINE_I_CALLBACK(help_hotkeys)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+	x_dialog_hotkeys(w_current);
+}
+
 DEFINE_I_CALLBACK(options_show_coord_window)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;

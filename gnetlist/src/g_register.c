@@ -58,6 +58,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("font-directory", g_rc_font_directory);
 	gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
 	gh_new_procedure3_0 ("paper-size", g_rc_paper_size);
+	gh_new_procedure1_0 ("net-naming-priority", g_rc_net_naming_priority);
 	
 	/* netlist functions */
 	gh_new_procedure1_0 ("gnetlist:get-packages", g_get_packages);
@@ -71,6 +72,7 @@ g_register_funcs(void)
 	gh_new_procedure2_0 ("gnetlist:get-package-attribute", g_get_package_attribute);
 	gh_new_procedure1_0 ("gnetlist:get-toplevel-attribute", g_get_toplevel_attribute);
 	gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode);
+	gh_new_procedure1_0 ("gnetlist:get-renamed-nets", g_get_renamed_nets);
 
 }
 

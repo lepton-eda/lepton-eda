@@ -136,7 +136,9 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Options/Show Log Window", NULL, i_callback_options_show_log_window, 0, NULL},
 	{"/Options/Show Coord Window", NULL, i_callback_options_show_coord_window, 0, NULL},
         {"/Help", NULL, NULL, 0, "<LastBranch>"},
-        {"/Help/About", NULL, i_callback_help_about, 0, NULL},
+  	{"/Help/tearoff", NULL, NULL, 0, "<Tearoff>" },
+        {"/Help/About...", NULL, i_callback_help_about, 0, NULL},
+        {"/Help/Hotkeys...", NULL, i_callback_help_hotkeys, 0, NULL},
 };
 
 static GtkItemFactoryEntry popup_items[] = {

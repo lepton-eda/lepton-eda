@@ -239,11 +239,6 @@ s_project_create_new(void)
 	/* do other var fill in */
 	s_project_setup_rest(pr_current);
 
-	/* do default interface variables */
-#if 0
-	i_vars_setdefault(pr_current);
-#endif
-
 	/* Put head node on page list... be sure to free this somewhere hack */
 	s_page_add_head(pr_current);
 
@@ -259,34 +254,16 @@ s_project_create_new(void)
 	pr_current->page_current = pr_current->page_tail;
 
 	/* Special case init */
-	/* move this elsewhere eventually */
-	/* pr_current->page_current->object_parent=NULL; not this one */
-#if 0
-	pr_current->page_current->object_lastplace=NULL;
-	pr_current->page_current->object_selected=NULL;
-#endif
         set_window(pr_current, pr_current->init_left, pr_current->init_right, 
 		   pr_current->init_top, pr_current->init_bottom);
-
-#if 0 /* X related stuff */
-	/* now update the scrollbars */
-	x_hscrollbar_update(pr_current);
-	x_vscrollbar_update(pr_current);
-#endif
 
 	global_wid++;
 	num_projects++;
 
 	project_tail = s_project_add(project_tail, pr_current);	
 
-#if 0
-	i_vars_setdefault(pr_current);
-#endif
-
-	/* no longer doing the old rc files */
-        /* f_rc_parse(pr_current);*/
-
         g_rc_parse(pr_current);
+	i_vars_set(pr_current);
 
 	/* renable the events */
 	pr_current->DONT_DRAW_CONN=0;

@@ -101,7 +101,7 @@ symdir = @symdir@
 bin_PROGRAMS = gnetlist 
 
 # don't forget all *.h files */
-gnetlist_SOURCES =  		g_netlist.c g_rc.c g_register.c globals.c 		gnetlist.c parsecmd.c s_cpinlist.c s_net.c 		s_netlist.c s_project.c s_traverse.c
+gnetlist_SOURCES =  		i_vars.c g_netlist.c g_rc.c g_register.c globals.c 		gnetlist.c parsecmd.c s_cpinlist.c s_net.c 		s_netlist.c s_netattrib.c s_project.c s_traverse.c 		s_rename.c
 
 
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
@@ -132,8 +132,9 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 X_EXTRA_LIBS = @X_EXTRA_LIBS@
 X_PRE_LIBS = @X_PRE_LIBS@
-gnetlist_OBJECTS =  g_netlist.o g_rc.o g_register.o globals.o gnetlist.o \
-parsecmd.o s_cpinlist.o s_net.o s_netlist.o s_project.o s_traverse.o
+gnetlist_OBJECTS =  i_vars.o g_netlist.o g_rc.o g_register.o globals.o \
+gnetlist.o parsecmd.o s_cpinlist.o s_net.o s_netlist.o s_netattrib.o \
+s_project.o s_traverse.o s_rename.o
 gnetlist_DEPENDENCIES = 
 gnetlist_LDFLAGS = 
 CFLAGS = @CFLAGS@
@@ -153,8 +154,9 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 TAR = tar
 GZIP_ENV = --best
 DEP_FILES =  .deps/g_netlist.P .deps/g_rc.P .deps/g_register.P \
-.deps/globals.P .deps/gnetlist.P .deps/parsecmd.P .deps/s_cpinlist.P \
-.deps/s_net.P .deps/s_netlist.P .deps/s_project.P .deps/s_traverse.P
+.deps/globals.P .deps/gnetlist.P .deps/i_vars.P .deps/parsecmd.P \
+.deps/s_cpinlist.P .deps/s_net.P .deps/s_netattrib.P .deps/s_netlist.P \
+.deps/s_project.P .deps/s_rename.P .deps/s_traverse.P
 SOURCES = $(gnetlist_SOURCES)
 OBJECTS = $(gnetlist_OBJECTS)
 

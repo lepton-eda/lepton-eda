@@ -1482,3 +1482,138 @@ color_edit_dialog (TOPLEVEL *w_current)
 }
 /***************** End of color edit dialog box *********************/
 
+/***************** Start of help/keymapping dialog box *********************/
+
+/* limit this to 128 hotkeys */
+static char *hotkey_strings[128];
+static int hotkey_counter=0;
+
+void
+x_dialog_hotkeys_close (GtkWidget *w, TOPLEVEL *w_current)
+{
+	gtk_widget_destroy(w_current->hkwindow);
+	w_current->hkwindow = NULL;
+}
+
+void
+x_dialog_hotkeys_free_all(void)
+{
+	int i;
+
+	for (i = 0 ; i < hotkey_counter; i++) {
+		if (hotkey_strings[i]) {
+			free(hotkey_strings[i]);
+		}
+	}
+}
+
+void
+x_dialog_hotkeys_fill(char *string) 
+{
+
+	if (hotkey_counter > 127) {
+		printf("Ran out of space in the hotkey buffer...\n");
+		return;
+	}	
+
+	hotkey_strings[hotkey_counter] = (char *) malloc(sizeof(char)*(
+							strlen(string)+1));
+;
+	strcpy(hotkey_strings[hotkey_counter], string);
+	hotkey_counter++;
+}
+
+void
+x_dialog_hotkeys (TOPLEVEL *w_current)
+{
+	GtkWidget *label = NULL;
+	GtkWidget *buttonclose = NULL;
+	GtkWidget *vbox, *action_area, *scrolled_win, *list;
+	GtkWidget *item;
+	int i;
+
+	if (!w_current->hkwindow) {
+
+
+		w_current->hkwindow = x_create_dialog_box(&vbox, &action_area);
+
+		gtk_window_position (GTK_WINDOW (w_current->hkwindow),
+				     GTK_WIN_POS_MOUSE);
+
+		gtk_window_set_title (GTK_WINDOW (w_current->hkwindow),
+				      "Hotkeys...");
+                gtk_container_border_width (GTK_CONTAINER (
+			w_current->hkwindow), 5);
+
+		gtk_widget_set_usize(w_current->hkwindow, 300,300);
+
+		gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
+				    "destroy", GTK_SIGNAL_FUNC(destroy_window),
+                          	    &w_current->hkwindow);
+
+      		gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
+				    "delete_event",
+				    GTK_SIGNAL_FUNC(destroy_window),
+                          	    &w_current->hkwindow);
+
+      		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+      		gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 5);
+      		gtk_widget_set_usize (scrolled_win, -1, 300);
+      		gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
+      		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+				      GTK_POLICY_AUTOMATIC,
+				      GTK_POLICY_AUTOMATIC);
+      		gtk_widget_show (scrolled_win);
+
+      		list = gtk_list_new ();
+      		gtk_list_set_selection_mode (GTK_LIST (list), GTK_SELECTION_SINGLE);
+      		gtk_scrolled_window_add_with_viewport
+				(GTK_SCROLLED_WINDOW (scrolled_win), list);
+      		gtk_container_set_focus_vadjustment
+				(GTK_CONTAINER (list),
+	 	gtk_scrolled_window_get_vadjustment
+	 			(GTK_SCROLLED_WINDOW (scrolled_win)));
+      		gtk_container_set_focus_hadjustment
+				(GTK_CONTAINER (list),
+	 			gtk_scrolled_window_get_hadjustment
+	 			(GTK_SCROLLED_WINDOW (scrolled_win)));
+		gtk_widget_show(list);
+
+	      	item = gtk_list_item_new_with_label (
+						"Function : keystroke(s)");
+	       	gtk_container_add (GTK_CONTAINER (list), item);
+		gtk_widget_show(item);
+
+	      	item = gtk_list_item_new_with_label (" ");
+	       	gtk_container_add (GTK_CONTAINER (list), item);
+		gtk_widget_show(item);
+
+		for (i = 0 ; i < hotkey_counter; i++) {
+
+			if (hotkey_strings[i]) {	
+	      			item = gtk_list_item_new_with_label (
+						hotkey_strings[i]);
+	        		gtk_container_add (GTK_CONTAINER (list), item);
+				gtk_widget_show(item);
+			}
+		}
+
+		buttonclose = gtk_button_new_with_label ("Close");
+		GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(
+			GTK_BOX(action_area),
+			buttonclose, TRUE, TRUE, 0);
+      		gtk_signal_connect(GTK_OBJECT (buttonclose), "clicked",
+				   GTK_SIGNAL_FUNC(x_dialog_hotkeys_close),
+				   w_current);
+      		gtk_widget_show(buttonclose);
+
+	}
+
+  	if (!GTK_WIDGET_VISIBLE(w_current->hkwindow)) {
+		gtk_widget_show(w_current->hkwindow);
+        } else {
+		gdk_window_raise(w_current->hkwindow->window);
+	}
+}
+/***************** End of help/about dialog box *********************/

@@ -343,6 +343,7 @@ struct st_toplevel {
 						/* size dialog boxes */
 	
 	GtkWidget *abwindow;			/* Help/About... dialog*/
+	GtkWidget *hkwindow;			/* Help/Hotkeys... dialog*/
 	GtkWidget *cowindow;
 	GtkWidget *coord_world;
 	GtkWidget *coord_screen;
@@ -422,6 +423,9 @@ struct st_toplevel {
 	/* landscape printing only */
 	int paper_width, paper_height;
 
+	/* gnetlist specific */
+	int net_naming_priority;
+
 	TOPLEVEL *next;
 	TOPLEVEL *prev; 
 };
@@ -463,6 +467,7 @@ struct st_net {
 
         int nid;
 
+	int net_name_has_priority;
         char *net_name;
 
         char *connected_to; /* new to replace above */

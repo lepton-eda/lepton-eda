@@ -188,6 +188,10 @@
 #define SPICE			1
 #define TANGO			2
 
+/* gnetlist: net-naming-priority */
+#define NET_ATTRIBUTE		0
+#define LABEL_ATTRIBUTE		1
+
 /* gschcheck: Error types */
 #define NO_ERR                  0
 #define FLOAT_NET               1

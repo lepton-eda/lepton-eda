@@ -87,6 +87,7 @@ s_net_add ( NET *ptr )
 
 	/* setup node information */
 	new_node->net_name = NULL;
+	new_node->net_name_has_priority = FALSE;
 	new_node->nid = 0;
 	new_node->connected_to=NULL;
 
@@ -186,91 +187,6 @@ s_net_return_connected_string(OBJECT *object)
 	return(string);
 }
 
-/* double start hightly temp */
-/* this is no longer used */
-/* and obsolete */
-#if 0
-NET *
-s_net_post_resolve( NETLIST *head, int nid, CPINLIST **cpinlist_parent )
-{
-	NETLIST *nl_current;
-	CPINLIST *pl_current;
-	NET *n_current=NULL;
-	int done = 0;
-
-	nl_current = head;
-
-	while(nl_current != NULL && !done) {
-
-		pl_current = nl_current->cpins;
-		while (pl_current != NULL && !done) {
-
-			n_current = pl_current->nets;
-			while(n_current != NULL && !done) {
-
-				if (n_current->nid == nid) {
-					done = 1;
-					if (cpinlist_parent)
-						*cpinlist_parent = pl_current;
-				} else {
-					n_current = n_current->next;
-				}
-			}
-
-			pl_current = pl_current->next;
-		}
-
-		nl_current = nl_current->next;
-	}
-
-
-	if (!done) {
-		fprintf(stderr, "somehow didn't find net in post resolve\n");
-		return(NULL);	
-	} else {
-		return(s_net_return_head(n_current));
-	}
-}
-
-void
-s_net_resolve_duplicates(NETLIST *head, CPINLIST *cpinlist_head)
-{
-	CPINLIST *pl_parent;
-	NET *n_current;
-	NET *temp;
-	NET *temp2;
-	int found = 0;
-
-	n_current = cpinlist_head->nets;
-
-	while(n_current != NULL && !found) {
-
-		if (n_current->net_is_duplicate) {
-			temp2 = temp = s_net_post_resolve(head, n_current->net_is_duplicate, &pl_parent);
-			
-			temp = s_net_return_tail(temp);
-
-			/* skip over head */
-			/* you really should redo this so that you only copy
-			 * the net nodes with real information */
-			temp->next = cpinlist_head->nets->next;			
-			temp->next->prev = temp;
-		
-			cpinlist_head->nets = temp2;	
-			cpinlist_head->nets_is_copy = 1;
-			cpinlist_head->original = pl_parent;
-
-			found = 1;
-			n_current->net_is_duplicate = 0;
- 
-		}
-
-		n_current = n_current->next;
-	}
-
-}
-#endif
-
 int
 s_net_find(NET *net_head, NET *node)
 {
@@ -288,25 +204,106 @@ s_net_find(NET *net_head, NET *node)
 }
 
 char *
-s_net_name_search(NET *net_head)
+s_net_name_search(TOPLEVEL *pr_current, NET *net_head)
 {
 	NET *n_current;
+	char *name=NULL;
 
 	n_current = net_head;
 
 	while(n_current != NULL) {
 
 		if (n_current->net_name) {
-			return(n_current->net_name);
+
+			if (name == NULL) {
+
+				name = n_current->net_name;
+
+			} else if (strcmp(name, n_current->net_name) != 0) {
+
+
+#if DEBUG 
+				fprintf(stderr, "Found a net with two names!\n");
+				fprintf(stderr, "Net called: [%s] and [%s]\n",
+						name, n_current->net_name);
+#endif
+
+
+				/* only rename if this net name has priority */
+				/* AND, you are using net= attributes as the */
+				/* netnames which have priority */
+				if (pr_current->net_naming_priority == 
+				    NET_ATTRIBUTE) {
+
+#if DEBUG
+printf("\nNET_ATTRIBUTE\n");
+#endif
+					if (n_current->net_name_has_priority) { 
+
+#if DEBUG
+fprintf(stderr, "Net is now called: [%s]\n", n_current->net_name);
+
+/* this show how to rename nets */
+printf("\nRENAME all nets: %s -> %s\n", name, n_current->net_name);
+#endif
+						s_rename_add(name, n_current->net_name);
+
+						name = n_current->net_name;
+
+					} else {
+
+#if DEBUG
+printf("\nFound a net name called [%s], but it doesn't have priority\n",
+n_current->net_name);
+#endif
+					}
+
+				} else { /* LABEL_ATTRIBUTE */
+
+#if DEBUG
+printf("\nLABEL_ATTRIBUTE\n");
+#endif
+
+					/* here we want to rename the net */
+					/* that has priority to the label */
+					/* name */
+					if (n_current->net_name_has_priority) {
+
+#if DEBUG /* this shows how to rename nets */
+printf("\nRENAME all nets: %s -> %s (priority)\n", n_current->net_name, name);
+#endif
+
+						s_rename_add(n_current->net_name, name);
+
+					} else {
+
+#if DEBUG /* this shows how to rename nets */
+printf("\nRENAME all nets: %s -> %s (not priority)\n", name, n_current->net_name);
+#endif
+						s_rename_add(name, n_current->net_name);
+						name = n_current->net_name;
+					}
+
+#if DEBUG
+fprintf(stderr, "Net is now called: [%s]\n", name);
+#endif
+
+				}
+			}
 		}
 
 		n_current = n_current->next;
 	}
-	return(NULL);
+
+	if (name) {
+		return(name);
+	} else {
+		return(NULL);
+	}
 }
 
 char *
-s_net_name(NETLIST *netlist_head, NET *net_head)
+s_net_name(TOPLEVEL *pr_current, NETLIST *netlist_head, NET *net_head)
 {
 	char *string;
 	NET *n_start;
@@ -315,7 +312,7 @@ s_net_name(NETLIST *netlist_head, NET *net_head)
 	char *net_name=NULL;
 	int found = 0;
 
-	net_name = s_net_name_search(net_head);
+	net_name = s_net_name_search(pr_current, net_head);
 
 	if (net_name) {
 		return(net_name);
@@ -343,7 +340,8 @@ s_net_name(NETLIST *netlist_head, NET *net_head)
 
 						if (found) {
 						  net_name = 
-						    s_net_name_search(n_start);
+						    s_net_name_search(
+							pr_current, n_start);
 						  if (net_name) {
 							return(net_name);
 						  }

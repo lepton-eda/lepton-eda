@@ -69,3 +69,68 @@ SCM g_funcs_use_rc_values(void)
 	i_vars_set(global_window_current);
 	return SCM_BOOL_T;
 }
+
+static char *key_value_string = NULL;
+
+/* there is no string size checking here... so if it core dumps... DOH! */
+/* TODO: fix this ^^^^^^^^^^^^^ */
+/* it's actually pretty usable right now, but needs to be reviewed again */
+SCM g_funcs_key_name(SCM keystring)
+{
+	char *string = gh_scm2newstr(keystring, NULL);
+
+	if (string == NULL) {
+		return SCM_BOOL_T;
+	}
+
+	if (key_value_string != NULL) {
+		x_dialog_hotkeys_fill(key_value_string);
+		free(key_value_string); 
+		key_value_string = NULL;
+	}
+
+	/* the 25 is: null char, a few spaces, and the characters */
+	key_value_string = (char *) malloc(sizeof(char)*(
+				            strlen(string)+25));
+
+	sprintf(key_value_string, "%s : ", string);
+
+	free(string);
+	return SCM_BOOL_T;
+}
+
+
+SCM g_funcs_key_value(SCM keystring)
+{
+	char *temp;
+	char *string = gh_scm2newstr(keystring, NULL);
+
+	if (string == NULL) {
+		return SCM_BOOL_T;
+	}
+
+
+	if (key_value_string == NULL) {
+		fprintf(stderr, "Ack! something got fouled up with the keymappings!\n");
+		exit(-1);
+	}
+
+	temp = (char *) malloc(sizeof(char)*(strlen(key_value_string)+
+			        strlen(string)+5));
+
+	sprintf(temp, "%s %s", key_value_string, string);
+
+	free(key_value_string);
+	key_value_string = temp;
+	
+	free(string);
+	return SCM_BOOL_T;
+}
+
+SCM g_funcs_key_done(SCM keystring)
+{
+	x_dialog_hotkeys_fill(key_value_string);
+	free(key_value_string);
+	key_value_string = NULL;
+}
+

@@ -611,8 +611,9 @@
 ;
 (attribute-name "label")
 (attribute-name "uref")
-(attribute-name "value")
 (attribute-name "slot")
+(attribute-name "value")
+(attribute-name "net")
 (attribute-name "device")
 (attribute-name "pin#")
 (attribute-name "pintype")
@@ -862,6 +863,11 @@
     ("l" . options-show-log-window)
     ("c" . options-show-coord-window)))
 
+; All keys in this keymap *must* be unique
+(define help-keymap
+  '(("a" . help-about)
+    ("h" . help-hotkeys)))
+
 
 ; All keys in the global-keymap *must* be unique
 (define global-keymap
@@ -873,7 +879,7 @@
     ("e" . edit-keymap)
     ("f" . file-keymap)
     ("g" . no-action)
-    ("h" . hierarchy-keymap)
+    ("h" . help-keymap)
     ("i" . add-component)
     ("j" . no-action)
     ("k" . no-action)
@@ -898,6 +904,7 @@
     ("Shift greater" . page-next)
     ("Shift less" . page-prev)
     ("Alt q" . file-quit)
+    ("Shift H" . hierarchy-keymap)
     ("Shift Z" . view-zoom-out-hotkey)))
 
 ; finally set the keymap point to the newly created datastructure 

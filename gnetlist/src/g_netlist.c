@@ -183,7 +183,10 @@ g_get_all_nets(SCM scm_level)
 	  /* filter off unconnected pins */
 	  if(strcmp(net_name, "unconnected_pin") != 0) {
 	    /* add the net name to the list */
-	    /*printf("Got net: `%s'\n",net_name); */
+#if DEBUG
+	    printf("Got net: `%s'\n",net_name);
+	    printf("pin %s\n",  pl_current->pin_number);
+#endif
 	    list = gh_cons( gh_str2scm( net_name, strlen(net_name)),list);
 	  }
 	}
@@ -589,3 +592,7 @@ g_set_netlist_mode(SCM mode)
 
 	return(gh_int2scm(0)); 
 }
+
+/* 
+ * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)
+ */

@@ -79,3 +79,33 @@
            ((eval (cdr action)))
            #t))))
 
+
+;; Printing out current key bindings for gEDA (gschem)
+; Stefan Petersen 1999-04-04 (spe@stacken.kth.se)
+; Free for all use. Just don't blame me when your house burns up.
+; Modifed by Ales to fill internal C buffers which are used by the hotkeys
+; dialog box
+
+; Ales' function which fills internal C buffers with the keymap info
+(define (fill-mapped-keys mapped-keys)
+  (gschem-key-name (car mapped-keys))
+  (for-each (lambda (key)
+	      (cond ((not (null? key))
+		     (gschem-key-value key))))
+	    (cdr mapped-keys)))
+
+
+(define (mapping-keys keymap keys)
+  (for-each (lambda (mapped-key) ; Receives a pair
+	      (let ((action (eval (cdr mapped-key))))
+		(cond ((list? action)
+		       (mapping-keys action (append keys (car mapped-key))))
+		      (else
+		       (fill-mapped-keys (list  ; was print
+					   (cdr mapped-key)
+					   keys 
+					   (car mapped-key)))))))
+	    keymap))
+
+(mapping-keys global-keymap '())
+(gschem-key-done)

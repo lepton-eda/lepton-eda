@@ -55,6 +55,7 @@ gschem_quit(void)
         s_attrib_free();
 	s_papersizes_free();
 	x_stroke_free_all();
+	x_dialog_hotkeys_free_all();
 	s_color_destroy_all();
 	/* s_stroke_free(); no longer needed */
 

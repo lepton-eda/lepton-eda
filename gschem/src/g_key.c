@@ -242,6 +242,9 @@ DEFINE_G_KEY(options_show_log_window)
 DEFINE_G_KEY(options_show_coord_window)
 DEFINE_G_KEY(misc)
 
+DEFINE_G_KEY(help_about)
+DEFINE_G_KEY(help_hotkeys)
+
 /* be sure that you don't use the widget parameter in this one, since it is
 being called with a null, I suppose we should call it with the right param.
 hack */

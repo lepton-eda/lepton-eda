@@ -116,6 +116,25 @@
       (newline p)))
 
 ;;
+;; header for renamed section
+;;
+(define geda:start-renamed-nets
+   (lambda (p)
+      (display "START renamed-nets" p)
+      (newline p)
+      (newline p)))
+
+;;
+;; footer for renamed section
+;;
+(define geda:end-renamed-nets
+   (lambda (p)
+      (newline p)
+      (display "END renamed-nets" p)
+      (newline p)
+      (newline p)))
+
+;;
 ;; header for nets section
 ;;
 (define geda:start-nets
@@ -148,6 +167,21 @@
                (display (get-device package) port)
                (newline port)
                (geda:components port (cdr ls)))))))
+
+;;
+;; renamed nets writing 
+;;
+(define geda:renamed-nets
+   (lambda (port ls)
+      (if (not (null? ls))
+         (let ((renamed-pair (car ls)))
+            (begin
+;;;	       (display renamed-pair) (newline)
+               (display (car renamed-pair) port)
+	       (display " -> " port)
+               (display (car (cdr renamed-pair)) port)
+               (newline port)
+               (geda:renamed-nets port (cdr ls)))))))
 
 ;;
 ;; Display the individual net connections
@@ -208,6 +242,9 @@
             (geda:start-components port)
             (geda:components port packages)
             (geda:end-components port)
+            (geda:start-renamed-nets port)
+            (geda:renamed-nets port (gnetlist:get-renamed-nets "dummy"))
+            (geda:end-renamed-nets port)
             (geda:start-nets port)
             (geda:nets port)
             (geda:end-nets port))

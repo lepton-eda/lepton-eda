@@ -34,6 +34,16 @@
 ;
 (untitled-name "untitled")
 
+; net-naming-priority string
+;
+; Specifies which netname has priority if a net is found with two labels.
+; If this variable is set to "net" then any netname specified with the net=
+; attribute is used as the netname.  Likewise if this variable is set to
+; "label" then any netname conflict is resolved using the label= value.
+;
+(net-naming-priority "net")
+;(net-naming-priority "label")
+
 ;
 ; End of mode related keywords
 ;

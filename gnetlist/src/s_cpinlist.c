@@ -121,7 +121,7 @@ s_cpinlist_print(CPINLIST *ptr)
 			if (pl_current->net_name) {
 				printf(" %s", pl_current->net_name);
 			} else {
-				printf(" null net name");
+				printf(" Null net name");
 			}
 
 			printf("\n");
@@ -134,5 +134,38 @@ s_cpinlist_print(CPINLIST *ptr)
 
 		pl_current = pl_current->next;
 	}
+}
+
+CPINLIST *
+s_cpinlist_search_pin(CPINLIST *ptr, char *pin_number)
+{
+	CPINLIST *pl_current=NULL;
+
+	pl_current = ptr;
+
+	if (pl_current == NULL) {
+		return;
+	}
+
+	while (pl_current != NULL) {
+
+		if (pl_current->plid != -1) {
+				
+			if (strcmp(pl_current->pin_number, pin_number) == 0) {
+
+#if DEBUG
+				printf("equal: %s %s\n", 
+					pl_current->pin_number,
+					pin_number);	
+#endif
+
+				return(pl_current);
+			}
+		}
+
+		pl_current = pl_current->next;
+	}
+
+	return(NULL);
 }
 
