@@ -362,3 +362,54 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 	}
 }
 
+/* The object passed in should be the REAL object, NOT any copy in any */
+/* selection list */
+void
+o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, 
+	      int visibility)
+{
+	OBJECT *selected=NULL;
+	OBJECT *temp;
+
+	if (object == NULL) {
+		return;
+	}
+
+	if (object->type != OBJ_TEXT) {
+		return;
+	}
+
+	/* first change selected */
+
+	/* search for the selected object in the selection list */
+	selected = (OBJECT *) o_list_search(
+		w_current->page_current->selection_head->next,
+		object);
+
+	/* this is okay if it is null, since that means the object we */
+   	/* are change isn't currently selected */
+	if (selected) {
+		o_erase_selected(w_current);
+		if (selected->text_string) {
+			free(selected->text_string);
+		}
+
+		selected->text_string = u_basic_strdup(string);
+
+		/* we don't want to change the visibilty of the selection */
+		o_text_recreate(w_current, selected);
+		o_redraw_selected(w_current);
+	}
+
+	/* second change the real object */
+	if (object->text_string) {
+		free(object->text_string);
+	}
+
+	object->text_string = u_basic_strdup(string);
+	object->visibility = visibility;
+	o_text_recreate(w_current, object);
+
+	w_current->page_current->CHANGED = 1;
+}
+

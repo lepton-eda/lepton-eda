@@ -221,6 +221,8 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("help-about", g_key_help_about);
 	gh_new_procedure0_0 ("help-hotkeys", g_key_help_hotkeys);
 	gh_new_procedure0_0 ("misc-misc", g_key_misc);
+	gh_new_procedure0_0 ("misc-misc2", g_key_misc2);
+	gh_new_procedure0_0 ("misc-misc3", g_key_misc3);
 	gh_new_procedure0_0 ("cancel", g_key_cancel);
 }
 

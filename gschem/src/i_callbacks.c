@@ -1732,6 +1732,62 @@ DEFINE_I_CALLBACK(misc)
 	/* o_text_print_set();*/
 }
 
+/* this is Ales' second catch all misc callback */
+DEFINE_I_CALLBACK(misc2)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *real;
+
+	if (w_current->page_current->selection_head->next != NULL) {
+
+		/* normally you should already have the real object, but */
+		/* in this test code I better get it first since */
+		/* o_text_change requires that the object passed in is the */
+		/* real deal */
+		real = (OBJECT *) o_list_search(
+			w_current->page_current->object_head,
+			w_current->page_current->selection_head->next);
+
+		/* string paramter is exactly how you want the string to be */
+		/* set */
+		o_text_change(w_current, real, "new_name=new_value", VISIBLE);
+	}
+}
+
+/* this is Ales' third catch all misc callback */
+DEFINE_I_CALLBACK(misc3)
+{
+	OBJECT **attrib_objects;
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	char name[128], value[128];
+	int i=0;
+
+	if (w_current->page_current->selection_head->next != NULL) {
+		attrib_objects = o_attrib_return_attribs(
+					      w_current->page_current->
+					      object_head,
+				              w_current->page_current->
+				              selection_head->next);
+
+
+		if (attrib_objects) {
+			while(attrib_objects[i] != NULL) {
+		
+
+				printf("Changing attribute text string: _%s_\n",
+					attrib_objects[i]->text_string);
+				o_text_change(w_current, 
+					      attrib_objects[i], 
+					      "changed=attribute", 
+					      attrib_objects[i]->visibility);
+                		i++;
+			}
+			o_attrib_free_returned(attrib_objects);
+		}
+
+        }
+}
+
 /* HACK: be sure that you don't use the widget parameter in this one,
  * since it is being called with a null, I suppose we should call it
  * with the right param. */

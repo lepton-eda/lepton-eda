@@ -931,6 +931,8 @@
     ("z" . view-zoom-in-hotkey)
     ("period" . repeat-last-command)
     ("comma" . misc-misc)
+    ("equal" . misc-misc2)
+    ("Shift plus" . misc-misc3)
     ("Delete" . edit-delete)
     ("Shift greater" . page-next)
     ("Shift less" . page-prev)

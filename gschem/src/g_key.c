@@ -98,7 +98,7 @@ g_key_execute(int state, int keyval)
 	sprintf(guile_string, "(press-key %s%s\")",
 		modifier, gdk_keyval_name (keyval));
 
-#if DEBUG
+#if DEBUG 
 	printf("_%s_\n", guile_string);
 #endif
 	gh_eval_str(guile_string);
@@ -233,6 +233,8 @@ DEFINE_G_KEY(options_snap_size)
 DEFINE_G_KEY(options_show_log_window)
 DEFINE_G_KEY(options_show_coord_window)
 DEFINE_G_KEY(misc)
+DEFINE_G_KEY(misc2)
+DEFINE_G_KEY(misc3)
 
 DEFINE_G_KEY(help_about)
 DEFINE_G_KEY(help_hotkeys)

@@ -105,6 +105,8 @@ SCM g_key_options_snap_size(void);
 SCM g_key_options_show_log_window(void);
 SCM g_key_options_show_coord_window(void);
 SCM g_key_misc(void);
+SCM g_key_misc2(void);
+SCM g_key_misc3(void);
 SCM g_key_help_about(void);
 SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
@@ -272,6 +274,8 @@ void i_callback_options_grid(gpointer data, guint callback_action, GtkWidget *wi
 void i_callback_options_snap(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_log_window(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_misc(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_misc2(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_misc3(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
@@ -417,6 +421,7 @@ void o_text_end(TOPLEVEL *w_current);
 void o_text_rubberattrib(TOPLEVEL *w_current);
 void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
+void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibility);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);

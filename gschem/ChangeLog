@@ -9,6 +9,14 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-01-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Created misc-misc2 and misc-misc3 callbacks and
+	  hotkeys (src/g_key.c src/g_register.c lib/system-gschemrc.in)
+
+	* src/o_text.c: Created o_text_change which takes a text object,
+	  a new string, and a visiblity flag and recreates that text object.
+
 2000-01-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/i_callbacks.c: Updated misc-misc callback to use the new
