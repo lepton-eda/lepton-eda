@@ -111,14 +111,14 @@ if eval "test x$opt_gtkconfig != x" ; then
 		AC_MSG_ERROR(Cannot find $opt_gtkconfig -- be sure that this pathname is correct)
 
 	else
-		GTKCONFIG=$opt_gtkconfig
+		GTK_CONFIG=$opt_gtkconfig
 	fi
 else
- 	AC_PATH_PROG(GTKCONFIG, gtk-config, no, ${PATH})
+	AM_PATH_GTK(1.2.3,,AC_MSG_ERROR([*** GTK+ >= 1.2.3 not installed - please install first ***]))
 fi
 
 
-if test $GTKCONFIG = "no"; then
+if test $GTK_CONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find gtk-config -- be sure that gtk >= 0.99.7 is installed)
 fi
 
@@ -130,14 +130,14 @@ if eval "test x$opt_glibconfig != x" ; then
 		AC_MSG_ERROR(Cannot find $opt_glibconfig -- be sure that this pathname is correct)
 
 	else
-		GLIBCONFIG=$opt_glibconfig
+		GLIB_CONFIG=$opt_glibconfig
 	fi
 else
- 	AC_PATH_PROG(GLIBCONFIG, glib-config, no, ${PATH})
+	AM_PATH_GLIB(1.2.3,,AC_MSG_ERROR([*** GLIB >= 1.2.3 not installed - please install first ***]))
 fi
 
 
-if test $GLIBCONFIG = "no"; then
+if test $GLIB_CONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find lib-config -- be sure that gtk >= 0.99.7 is installed)
 fi
 
@@ -201,9 +201,9 @@ CFEXTRA=
 GTK=
 GDK=
 GLIB=
-X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags `$GLIBCONFIG --libs`"
-X_CFLAGS="`$GTKCONFIG --cflags` $libgdgeda_cflags `$LIBGEDACONFIG --cflags`"
-gtkversion=`$GTKCONFIG --version | cut -d. -f1,2`
+X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags `$GLIB_CONFIG --libs`"
+X_CFLAGS="`$GTK_CONFIG --cflags` $libgdgeda_cflags `$LIBGEDACONFIG --cflags`"
+gtkversion=`$GTK_CONFIG --version | cut -d. -f1,2`
 
 AC_DEFINE_UNQUOTED(GTKVERSION, "$gtkversion")
 
@@ -221,10 +221,10 @@ fi
 
 
 dnl old way of doing this, see if new way works 
-dnl CFLAGS="$CFLAGS $CFEXTRA `$GTKCONFIG --cflags`"
+dnl CFLAGS="$CFLAGS $CFEXTRA `$GTK_CONFIG --cflags`"
 
-CFLAGS="`$GTKCONFIG --cflags` $CFLAGS $CFEXTRA"
-LDFLAGS="$LDEXTRA `$GTKCONFIG --libs` -lgtk -lgdk -lglib $LDFLAGS -lm"
+CFLAGS="`$GTK_CONFIG --cflags` $CFLAGS $CFEXTRA"
+LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` -lgtk -lgdk -lglib $LDFLAGS -lm"
 
 AC_MSG_CHECKING([for the rest of gtk])
 AC_TRY_COMPILE(

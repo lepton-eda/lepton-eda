@@ -23,6 +23,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h> 
 #endif
@@ -205,6 +206,96 @@ g_rc_component_library(SCM path)
 	return(gh_int2scm(0)); 
 }
 
+SCM
+g_rc_component_library_search(SCM path)
+{
+	int ret;
+	struct stat buf;
+	DIR *top_ptr;
+        struct dirent *dptr;
+	char *string = gh_scm2newstr(path, NULL);
+	char *fullpath;
+	char *cwd, *temp;
+
+	/* TODO: don't I have to check string if it's NULL here? */
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to component-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	top_ptr = opendir(string);
+
+	if (top_ptr == NULL) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to component-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+        }
+
+        while(dptr = readdir(top_ptr)) {
+
+	  /* don't do . and .. and special case font */
+	  if ((strcmp(dptr->d_name, ".") != 0) && 
+	      (strcmp(dptr->d_name, "..") != 0) &&
+              (strcmp(dptr->d_name, "font") != 0)) {
+
+		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
+						      strlen(dptr->d_name)+2));
+		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+                stat(fullpath, &buf);
+                if (S_ISDIR(buf.st_mode)) { 
+			if (s_clib_uniq(fullpath)) {
+				if (fullpath[0] == '/') {
+					s_clib_add_entry(fullpath);
+#if DEBUG
+			printf("absolute: %s\n", fullpath);
+#endif
+				} else {
+					cwd = getcwd(NULL, 1024);
+					temp = u_basic_strdup_multiple(cwd, 
+							"/", fullpath, NULL);
+#if DEBUG
+			printf("relative: %s\n", temp);
+#endif
+					s_clib_add_entry(temp);
+					free(temp);
+					free(cwd);
+				}
+			} 
+                }
+		free(fullpath);
+            }
+        }       
+
+	if (string) {
+		free(string);
+	}
+
+	return SCM_BOOL_T;
+}
 
 SCM
 g_rc_source_library(SCM path)
@@ -241,6 +332,97 @@ g_rc_source_library(SCM path)
 	}
 
 	return(gh_int2scm(0)); 
+}
+
+SCM
+g_rc_source_library_search(SCM path)
+{
+	int ret;
+	struct stat buf;
+	DIR *top_ptr;
+        struct dirent *dptr;
+	char *string = gh_scm2newstr(path, NULL);
+	char *fullpath;
+	char *cwd, *temp;
+
+	/* TODO: don't I have to check string if it's NULL here? */
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to source-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	top_ptr = opendir(string);
+
+	if (top_ptr == NULL) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to source-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+        }
+
+        while(dptr = readdir(top_ptr)) {
+
+	  /* don't do . and .. and special case font */
+	  if ((strcmp(dptr->d_name, ".") != 0) && 
+	      (strcmp(dptr->d_name, "..") != 0) &&
+              (strcmp(dptr->d_name, "font") != 0)) {
+
+		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
+						      strlen(dptr->d_name)+2));
+		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+                stat(fullpath, &buf);
+                if (S_ISDIR(buf.st_mode)) { 
+			if (s_slib_uniq(fullpath)) {
+				if (fullpath[0] == '/') {
+					s_slib_add_entry(fullpath);
+#if DEBUG
+			printf("absolute: %s\n", fullpath);
+#endif
+				} else {
+					cwd = getcwd(NULL, 1024);
+					temp = u_basic_strdup_multiple(cwd, 
+							"/", fullpath, NULL);
+#if DEBUG
+			printf("relative: %s\n", temp);
+#endif
+					s_slib_add_entry(temp);
+					free(temp);
+					free(cwd);
+				}
+			} 
+                }
+		free(fullpath);
+            }
+        }       
+
+	if (string) {
+		free(string);
+	}
+
+	return SCM_BOOL_T;
 }
 
 SCM

@@ -1,4 +1,14 @@
 
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_rc.c, src/g_register.c: Added component-library-search and
+          source-library-search rc keywords
+
+	* tests/test_verilog.verilog, tests/7447.verilog: Updated to reflect 
+	  new backend revision
+
+	* configure.in: Put in checks for gtk+ and glib 1.2.3
+
 2000-06-15  Matt Ettus  <matt@ettus.com>
 
 	* Added scheme/gnet-pads.scm by Roger
