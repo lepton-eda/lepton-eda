@@ -27,6 +27,7 @@
 */
 
 #include <stdio.h>
+#include <sys/param.h>
 #include <unistd.h>
 
 
@@ -34,7 +35,7 @@
 int main(int iArgn, const char *szArgv[])
 {
 	FILE *hFile;
-	char *szDir;
+	char szDir[MAXPATHLEN];
 	
 	if (iArgn < 2)
 		return 0;
@@ -47,7 +48,7 @@ int main(int iArgn, const char *szArgv[])
 		return -1;
 	}
 	
-	szDir = get_current_dir_name();
+	getcwd(szDir, MAXPATHLEN);
 	
 	hFile = fopen(szArgv[2], "w");
 	if (hFile == NULL)
