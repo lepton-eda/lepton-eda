@@ -1,11 +1,10 @@
 docsdir = @GEDADOCDIR@
-
 docs_DATA = gedadocs.html 
 
-EXTRA_DIST = $(docs_DATA)
+EXTRA_DIST = gedadocs.html.in
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = gschem.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak gedadocs.html
+MAINTAINERCLEANFILES = gschem.log *~ Makefile.in configure gedadocs.html
 

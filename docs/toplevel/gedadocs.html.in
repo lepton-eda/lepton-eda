@@ -5,9 +5,12 @@
 <BODY BGCOLOR="#CCCCCC">
 
 <P>
+<CENTER>
 <H1>
-<CENTER> gEDA/gaf Documention </CENTER>
+gEDA/gaf Documention
 </H1>
+<H3>version @VERSION@</H3>
+<CENTER>
 <BR>
 
 
@@ -32,7 +35,7 @@
 
 <TR>
 <TD WIDTH="50%">
-<b>Manpage</b>
+<b>Man page</b>
 </TD>
 <TD>
 <A HREF="./man/gschem.html">HTML</A>
@@ -95,7 +98,7 @@
 
 <TR>
 <TD WIDTH="50%">
-<b>Manpage</b>
+<b>Man page</b>
 </TD>
 <TD>
 <A HREF="./man/gnetlist.html">HTML</A>
@@ -220,7 +223,7 @@
 
 <TR>
 <TD WIDTH="50%">
-<b>Manpage</b>
+<b>Man page</b>
 </TD>
 <TD>
 <A HREF="./man/gsymcheck.html">HTML</A>

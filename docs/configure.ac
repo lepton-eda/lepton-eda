@@ -86,6 +86,7 @@ AC_CONFIG_FILES([Makefile
 		 switcap/Makefile 
 		 spice-sdb/Makefile 
 		 toplevel/Makefile 
+		 toplevel/gedadocs.html 
                  templates/Makefile ])
 AC_OUTPUT
 

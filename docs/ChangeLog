@@ -12,6 +12,11 @@
 	* toplevel/gedadocs.html: Greatly expanded the toplevel documentation
 	index to include all the newly installed docs and readmes.
 
+	* toplevel/Makefile.am, gedadocs.html.in: Created an .in file
+	which is preprocessed by the configure mechanism to create the
+	toplevel .html file.  This was done so that the version string
+	can be inserted into the html file.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* spice-sdb/*.html: Added a few missing "'s in key places and 
