@@ -23,7 +23,8 @@
       (if (not (null? packages))
          (begin
             (let ((pattern (gnetlist:get-package-attribute (car packages) 
-                                                           "footprint"))
+                                                           "pattern"))
+	    ;; The above pattern should stay as "pattern" and not "footprint"
                   (package (car packages)))
                (if (not (string=? pattern "unknown"))
                   (display pattern port))
