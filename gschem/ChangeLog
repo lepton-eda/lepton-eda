@@ -1,3 +1,17 @@
+2005-01-16  Stuart Brorson <sdb@cloud9.net>
+	* noweb/i_basic.nw, noweb/x_menus.nw: incorporated right
+	mouse button bring-up of "up hierarchy", as requested.
+	
+2005-01-15  Stuart Brorson <sdb@cloud9.net>
+	* noweb/(gschem.nw, i_basic.nw, x_event.nw, x_menus.nw, 
+	w_window.nw): Various changes made to enable right-button-
+	mouse bring up of hierarchy menus.  Made hierarchy menus grey
+	out when no components are selected.
+	
+	* noweb/x_log.nw, include/prototype.h: changed x_log_init 
+	to take const char as arg since it's always called with a
+	quoted string.
+
 2005-01-14 Handsome Greg <xdissent@gmail.com>
  
 	* noweb/g_keys.nw: Replaced all g_key_ functions with g_keys_X
