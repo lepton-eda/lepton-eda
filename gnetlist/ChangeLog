@@ -1,3 +1,8 @@
+2001-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-partlist*.scm: Added part list netlist backend written
+	  by MIYAMOTO Takanori
+
 2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gnetlist.c: Removed the "This is alpha software" message and
