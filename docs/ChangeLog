@@ -1,3 +1,15 @@
+2003-09-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gnetlist/gnetlist.tex, gschem/gschem.tex: Added conversion of
+	.txt files to .tex by Dan McMahill.  Thanks. These files still
+	need to be revised, as they are quite dated.  You must have 
+	hyperref.sty installed to build the documentation now.
+
+	* gschem/gschem.txt, gnetlist/gnetlist.txt: Removed obsolete files.
+
+	* */*.tex: Added the use of hyperref.sty to all .tex files,
+	so that pdf files get hyperlinks.  Very handy.
+
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * auto* files: Updated to autoconf 2.57 and automake 1.7.6

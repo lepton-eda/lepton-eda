@@ -1,0 +1,250 @@
+% $Id$
+%
+% gEDA - GPL Electronic Design Automation
+% Copyright (C) 2003 Ales Hvezda
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+\documentclass{article}
+%\usepackage{epsfig}
+\usepackage{graphicx}
+% This line will enable hyperlinks in the PDF output
+% file.
+\usepackage[ps2pdf,breaklinks=true,colorlinks=true]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\title{gEDA gnetlist Users Guide}
+\author{Ales Hvezda\\
+        \\
+        This document is released under GFDL\\ 
+        (\url{http://www.gnu.org/copyleft/fdl.html})}
+\date{September 21st, 2003}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+This document describes how to use gnetlist.  This document and
+gnetlist in general are pretty ALPHA, so keep that in mind as you use
+it to generate netlists.  As all engineers know, it is very important
+that you do not blindly trust tools, assuming that they will always
+create correct output.  gnetlist is certainly no exception to this
+rule.  It is very important that you verify *every* netlists you
+create.  As with most programs (including all the programs in gEDA),
+gnetlist comes with NO WARRANTY.  Blah, I hate having to say that, but
+I'm hoping that this warning will keep the user from assuming that
+gnetlist generates perfect netlists.  Though if you find a bug, please
+let {\tt ahvezda@geda.seul.org} know.
+
+This document is very rough, so please e-mail all corrections to
+{\tt ahvezda@geda.seul.org} or file a bug report on the gEDA homepage
+at \url{http://www.geda.seul.org}.  Thanks!
+
+
+\section{Overview}
+{\tt gnetlist} is the gEDA netlister.  It takes as input schematic files
+and produces a netlist.  A netlist is a textual representation of a
+schematic.  This textual representation has all of the connections
+between devices completely resolved.  This means that all the
+connections associated with a net are grouped together.  The netlister
+also handles hierarchies of schematics.
+
+{\tt gnetlist} has a very flexible architecture.  The main program,
+which is written in C, reads in a schematic (using routines from
+libgeda) and creates an internal representation of the schematic data.
+This internal representation is then manipulated by a backend which is
+responsible for writing the various netlist formats.  The backend for
+each netlist format is written in scheme (specifically Guile).  This
+architecture not only allows for an infinite number of netlist
+formats, but also allows the netlister to generate other reports (like
+bill of material lists).
+
+As of 20001006 gnetlist has scheme backends to support the following
+netlist formats:
+\begin{enumerate}
+\item PCB \& PCBboard - UNIX PCB netlist format.  
+\item Allegro netlist format 
+\item BAE netlist format 
+\item BOM \& BOM2 - Bill of Material generators 
+\item DRC - Start of a design rule checker 
+\item gEDA - the native format of gEDA, mainly used for testing 
+\item Gossip netlist format 
+\item PADS netlist format 
+\item ProtelII netlist format
+\item Spice compatible netlist format 
+\item Tango netlist format 
+\item Verilog code 
+\item VHDL code 
+\item VIPEC netlist format 
+\item VAMS - VHDL-AMS netlist format
+\end{enumerate}
+
+This list is constantly growing.  Several lacking features (as of
+20001006) are: no support for buses, error detection and reporting is
+fairly limited, and ... (many more).
+
+
+
+\section{Installation}
+Hopefully by now you have already installed gnetlist on your machine.
+This document does not cover installation.  You can verify the
+installation by running:
+\begin{verbatim}
+
+        libgeda-config --version 
+        gesym-config --version 
+        which gnetlist
+        ldd `which gnetlist`
+
+\end{verbatim}
+The first two should return the version of the installed tools
+(libgeda and the symbol library) and the next command should return
+the path to the gnetlist binary.  The final command (only on Unix-like
+operating systems which include the {\tt ldd} utility for listing
+dynamic dependencies of executable files or shared objects)
+will return which libraries are linked to gnetlist; all of
+the request libraries must be found for gnetlist to run.  If these
+commands do not return the expected results, then most likely the gEDA
+tools are not installed properly.  Please see the appropriate INSTALL
+docs (which came with the distribution) for more info on installing
+the gEDA tools.
+
+\section{Running gnetlist}
+It is very easy to run gnetlist.  gnetlist is a pure command line
+interface so there is no pesky GUI to get in the way :-) For a list of
+command line arguments please run ``{\tt gnetlist -h}''.
+
+You need to specify the following two parameters to run gnetlists:
+\begin{itemize}
+\item {\tt -g proc}  (this specifies which backend to run against the schematics) 
+\item {\tt filename.sch}    (this specifies the schematic files)
+\end{itemize}
+You can specify multiple schematics on the command line.  The default
+filename for the generated netlist goes into "{\tt output.net}" You can
+change this default location by using the {\tt -o filename} option.
+
+A few examples on running gnetlist:
+\begin{verbatim}
+
+        gnetlist -g geda -o stack.net stack\_1.sch
+
+\end{verbatim}
+(output netlist (in {\tt stack.net}) for {\tt stack\_1.sch} using the gEDA native
+format)
+
+There are also a few debugging flags.  The first one is the {\tt -v}
+flag which enables verbose mode.  Verbose mode outputs a whole bunch
+of information on what gnetlist is doing as well a dump of the
+internal representation.  The {\tt -i} flag which puts gnetlist into a
+interactive mode is very useful in debugging scheme backends and
+typically is not used by the end user.
+
+For a detailed list of command line arguments please see the gnetlist
+man page.
+
+\section{Schematic / symbol requirements}
+This section describes what schematics/symbols need to have to be
+usable with gnetlist.  In order for gnetlist to work correctly, both
+the schematics and supporting symbols must be correct.  Basically
+these requirements consist of attribute specification.  Attributes are
+used through out the gEDA system to represent information.  Attributes
+are the only way of adding information to components, nets, pins,
+etc...  For more detailed information about the attributes mentioned
+in this document, please see the {\tt attributes.txt} document (Master
+attribute list).
+
+\subsection{Symbol requirements}
+\begin{itemize}
+\item All symbols must have a device= attribute.
+  
+\item All pins must have the {\tt pin\#=\#} attribute.  This attribute
+  will eventually change form, but for now it is required as {\tt
+    pin\#=\#}
+
+\item All pin should also have a {\tt pinlabel=} attribute.
+  
+\item For symbols which are slotted you also need the {\tt slot=}
+  attribute, for each slot a {\tt slot\#=\#} attribute, and the {\tt
+    numslots=\#} attribute.  Slotting will also change in the near
+  future, but for now it should be specified as above.
+  
+\item For any power/gnd/arbitrary you need to put {\tt net=}
+  attributes inside the symbol.  See the netattrib.txt document for
+  more info.
+  
+\item You can supply default values for various parameters (this is
+  dependent on which backend you use) by taking advantage of the
+  attribute "promotion" mechanism.  See below for more info as well as
+  the gschem documentation.
+  
+\item For symbols which you want the netlister to completely ignore
+  use the {\tt graphical=1} attribute
+
+\item For more tips on symbols, please see the symbol creation document.
+\end{itemize}
+
+\subsection{Schematic requirements}
+\begin{itemize}
+\item Most importantly, every component you want to show up in a
+  netlist must have a {\tt refdes=} attribute.  This is *VERY* important.
+  gnetlist should warn you if you have a component which doesn't have
+  a {\tt refdes=}, but there have been bugs which do not cause this warning.
+  
+\item You can label all nets using the {\tt label=} attribute.  You only
+  need to attach this label to one net segment (of an electrically
+  connected net) for all the net segments to inherit the label.
+  
+\item You can have multiple schematics in a design (which is actually
+  a confusing term since it means many different things to people).
+  To use multiple schematics to create a single netlist, just specify
+  them on the gnetlist command line.
+  
+\item If you name nets the same, then these nets will be electrically
+  connected.  Same net names spawn all the specified schematics.
+  
+\item There are quite a few issues that deal with hierarchy please see
+  the hierarchy section below.
+\end{itemize}
+           
+\subsection{Random notes}
+\begin{itemize}
+\item Attributes which are not attached to anything and are inside a
+  symbol are "promoted" to the outside of the symbol when the symbol
+  is placed inside a schematic (in gschem).  These promoted attributes
+  are always looked at/for first before going into the symbol.  So, in
+  other words, if there is an attribute with the same name is inside a
+  symbol and attached to the outside of the instantiated component,
+  then the outside attribute takes precedence.
+\end{itemize}
+
+
+\section{Hierarchy Support}
+TBA
+
+\section{Specific backend info}
+TBA
+
+\section{Scheme backend API}
+TBA
+
+\end{document}
+

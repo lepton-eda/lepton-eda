@@ -51,17 +51,18 @@ tgz: $(docname).tex $(docname).dvi $(docname).ps $(docname).pdf \
 
 clean-local:
 	-rm -f $(docname).aux $(docname).dvi $(docname).log \
-	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz 
+	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
+	      $(docname).out 
 	-rm -rf $(docname)
 
 maintainer-clean-local:
 	-rm -f $(docname).aux $(docname).dvi $(docname).log \
 	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
-              Makefile.in Makefile
+              $(docname).out Makefile.in Makefile
 	-rm -rf $(docname)
 dist-clean-local:
 	-rm -f $(docname).aux $(docname).dvi $(docname).log \
 	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
-	      Makefile
+	      $(docname).out Makefile
 	-rm -rf $(docname)
 
