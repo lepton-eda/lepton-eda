@@ -1,3 +1,8 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/gsymfix.pl: Added symbol cleanup script by Mike Skerritt.
+	Thanks!
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
