@@ -191,6 +191,7 @@ x_window_setup_world(TOPLEVEL *w_current)
   w_current->min_zoom = 0;
   w_current->max_zoom = 256;  /* was 128 */
 
+#if 0 /* no longer used */
   if (w_current->display_width <= 800) {
     w_current->width = 672;
     w_current->height = 504;
@@ -207,6 +208,10 @@ x_window_setup_world(TOPLEVEL *w_current)
     w_current->width = 1600;
     w_current->height = 1200;
   }
+#endif
+
+  w_current->width = default_width;
+  w_current->height = default_height;
 
   w_current->starting_width = w_current->width;
 

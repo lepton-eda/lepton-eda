@@ -1,3 +1,10 @@
+2001-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw, x_window.nw: Added
+	  (window-size w h) keyword to make some users (including myself)
+	  happy and in control of the window size (instead of having 
+	  gschem pick some always too large window size for me)
+	
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Cleaned up all the data dir variables (to only have

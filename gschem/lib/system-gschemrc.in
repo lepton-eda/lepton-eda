@@ -604,15 +604,27 @@
 ;
 (untitled-name "untitled")
 
+; window-size width height 
+;
+; Specifies the size of the drawing area window.  The width and height
+; are specified in pixels and do not include the two menu bars and 
+; scrollbars (so the window will be slightly larger than the specified 
+; measurements). Try to keep an aspect ratio of 1.333333 if at all possible. 
+;
+;(window-size 800 600)
+(window-size 1024 768)
+;(window-size 1152 864)
+;(window-size 1280 960)
+
 ; world-size width height border
 ;
-; Specifies the size of the world and a border 
+; Specifies the size of the world and a border (in world space units)
 ; Be sure all inputs are reals (floats/doubles) and don't try to reverse
 ; the values: to get a portrait mode.  Code to support that needs to be added
 ; The code that implements this automatically transforms the dimensions into
 ; the proper aspect ratio.  All units are in inches.
 ; This is not the paper size.  That is specified elsewhere.  End users should
-; not change this at all
+; not change this at all.
 ;
 (world-size 120.0 90.0 1.0)
 ;(world-size 60.0 45.0 1.0)

@@ -72,3 +72,5 @@ extern int default_undo_type;
 extern int default_draw_grips;
 extern int default_netconn_rubberband;
 extern int default_sort_component_library;
+extern int default_width;
+extern int default_height;

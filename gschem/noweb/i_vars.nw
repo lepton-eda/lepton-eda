@@ -151,6 +151,9 @@ int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = FALSE;
 int   default_sort_component_library = FALSE;
 
+int   default_width = 800;  /* these variables are used in x_window.c */
+int   default_height = 600;
+
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 30;
 

@@ -97,6 +97,7 @@
 <<g_rc.c : g_rc_netconn_rubberband()>>
 <<g_rc.c : g_rc_sort_component_library()>>
 <<g_rc.c : g_rc_add_menu()>>
+<<g_rc.c : g_rc_window_size()>>
 
 @
 
@@ -2484,3 +2485,28 @@ g_rc_add_menu(SCM menu_name, SCM menu_items)
 
 
 @ %def g_rc_add_menu
+
+
+@section Function @code{g_rc_window_size()}
+
+@defun g_rc_window_size width height 
+@end defun
+
+<<g_rc.c : g_rc_window_size()>>=
+SCM
+g_rc_window_size(SCM width, SCM height)
+{
+  int i_width, i_height, i_border;
+  int init_right, init_bottom;
+
+  i_width  = gh_scm2int(width);
+  i_height = gh_scm2int(height);
+
+  default_width  = i_width;
+  default_height = i_height;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_window_size

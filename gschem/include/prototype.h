@@ -146,6 +146,7 @@ SCM g_key_cancel(void);
 SCM g_get_selected_filename(void);
 SCM g_get_selected_component_attributes(void);
 /* g_rc.c */
+char *g_rc_parse_path(void);
 void g_rc_parse(void);
 SCM g_rc_gschem_version(SCM version);
 SCM g_rc_override_net_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
@@ -226,6 +227,7 @@ SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
 SCM g_rc_sort_component_library(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
+SCM g_rc_window_size(SCM width, SCM height);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

@@ -175,6 +175,7 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("netconn-rubberband", g_rc_netconn_rubberband);
   gh_new_procedure1_0 ("sort-component-library", g_rc_sort_component_library);
   gh_new_procedure2_0 ("add-menu", g_rc_add_menu);
+  gh_new_procedure2_0 ("window-size", g_rc_window_size);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);
