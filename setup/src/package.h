@@ -78,7 +78,7 @@ struct CompsTable_s
 	char szDesc[TEXTLEN];
 	char szLicense[TEXTLEN];
 	int bToBeDisplayed;
-	int bToBeInstalled;
+	int iToBeInstalled;
 	char szRequiresList[TEXTLEN];
 	char szTopLevel[TEXTLEN];
 	char szFileName[TEXTLEN];
@@ -93,6 +93,7 @@ struct CompsTable_s
 	int iFileList;
 
 	/* variables for an internal use or to be removed */
+	int bCanBeInstalled;
 	/* TODO: check variable list */
 	struct CompsTable_s *pNextComp;
 	GtkCTreeNode *pNode;
@@ -179,6 +180,8 @@ int PackageRelease(void);
 int PackageFirst(void);
 int PackageNext(void);
 int PackageGetValue(int iName, void *pValue);
+char *PackageWhatIsMissing(const char *szTestedCodeName);
+int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName);
 
 
 
