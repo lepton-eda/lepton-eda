@@ -48,19 +48,33 @@ README for gEDA version 2002*
 
 	Homepage: http://www.geda.seul.org
 
-	Mailing list:
+	Mailing lists:
+
+   	   User List
+
+		To subscribe send an email to: majordomo@geda.seul.org  
+	 	with   subscribe geda-user   in the body.
+
+		To unsubscribe send an email to: majordomo@geda.seul.org
+	 	with   unsubscribe geda-user   in the body.
+
+		To send email to the list use the address: 
+			geda-user@geda.seul.org
+
+	   Developer List
+
 		To subscribe send an email to: majordomo@geda.seul.org  
 	 	with   subscribe geda-dev   in the body.
-		
+
 		To unsubscribe send an email to: majordomo@geda.seul.org
 	 	with   unsubscribe geda-dev   in the body.
 
-		To send email to the list use the address:
-
+		To send email to the list use the address: 
 			geda-dev@geda.seul.org
 
-		Remember, geda-dev@geda.seul.org is for the actual traffic.  
-		For administrative commands, use majordomo@geda.seul.org.
+		Remember, geda-dev@geda.seul.org/geda-user@geda.seul.org
+	        is for the actual traffic.  For administrative commands, 
+		use majordomo@geda.seul.org.
 
 		The mailing list archive is at:
 
