@@ -117,7 +117,7 @@ f_print_set_color(FILE *fp, int color)
 {
 	char *string;
 
-	/* DO NOT free string... it's a reference to a malloced 
+	/* DO NOT free string... it's a reference to a malloced */
 	/* string, there is *no* memory leak here */
 	string = s_color_ps_string(color);
 

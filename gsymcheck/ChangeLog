@@ -9,6 +9,8 @@ Most recent changes (version wise) are at the top of this file
 
 9/19/99 Make sure gsymcheck runs with guile-1.3.2a
 
+	Fixed all warnings
+
 9/16/99	Added code in gsymcheck.c to only load up schematics which haven't
         been loaded already
 

@@ -16,7 +16,7 @@ SCM g_funcs_exit(void);
 SCM g_funcs_use_rc_values(void);
 SCM g_funcs_key_name(SCM keystring);
 SCM g_funcs_key_value(SCM keystring);
-SCM g_funcs_key_done(SCM keystring);
+SCM g_funcs_key_done(void);
 /* g_key.c */
 void set_window_current_key(TOPLEVEL *w_current);
 void g_key_execute(int state, int keyval);
@@ -477,6 +477,7 @@ void coord_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void coord_display_update(TOPLEVEL *w_current, int x, int y);
 void coord_dialog(TOPLEVEL *w_current, int x, int y);
 gint color_set(GtkWidget *w, gpointer data);
+char *index2functionstring(int index);
 void color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void color_edit_dialog(TOPLEVEL *w_current);

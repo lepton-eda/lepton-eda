@@ -13,6 +13,11 @@ into the cvs repository.
 
 	Misplaced a bracket in x_event.c (gschem would not build if you
 	did not have libstroke installed)
+	
+	Fixed all warnings
+
+	Added OBJ_BUS and OBJ_PIN to the color change routine in the
+	color edit dialog box
 
 9/18/99	Increased world size to be much much larger.  Hopefully this won't
 	break anything.

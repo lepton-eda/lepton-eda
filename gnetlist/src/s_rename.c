@@ -51,6 +51,7 @@ static RENAME rename_pairs[MAX_RENAME];
 
 static int rename_counter = 0;
 
+void
 s_rename_init(void)
 {
 	int i;
@@ -61,6 +62,7 @@ s_rename_init(void)
 	}
 }
 
+void
 s_rename_destroy(void)
 {
 	int i;
@@ -79,6 +81,7 @@ s_rename_destroy(void)
 	}
 }
 
+void
 s_rename_print(void)
 {
 	int i;
@@ -142,6 +145,7 @@ s_rename_add(char *src, char *dest)
 	rename_counter++;
 }
 
+void
 s_rename_all_lowlevel(NETLIST *netlist_head, char *src, char *dest)
 {
 	NETLIST *nl_current=NULL;
@@ -214,10 +218,8 @@ g_get_renamed_nets(SCM scm_level)
 {
 	SCM pairlist = SCM_EOL;
 	SCM outerlist = SCM_EOL;
-	char *value;
 	int i=0;
 	char *level;
-	char **src, **dest;
 	
         level = gh_scm2newstr(scm_level, NULL);
 	free(level);

@@ -216,7 +216,6 @@ char *
 s_netattrib_net_search(OBJECT *o_current, char *wanted_pin)
 {
 	char *value=NULL;
-	char *temp=NULL;
 	char *char_ptr=NULL;
 	char *net_name=NULL;
 	char *current_pin=NULL;

@@ -17,6 +17,12 @@ Most recent changes are at the top of this file
 
 	Did not return a success (zero) in s_color_request, now fixed
 
+	Increased the number colors to 25
+
+	Fixed all warnings
+
+	Increased the .so version of libgeda to 4
+
 9/18/99	Fixed a bug in s_color_gdcolor_init, had the gd color alloc in the
 	wrong place (before a pointer was set)
 

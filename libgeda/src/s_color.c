@@ -38,8 +38,6 @@
 
 COLOR colors[MAX_COLORS];
 
-static int num_colors=0;
-
 void
 s_color_init(void)
 {
@@ -180,9 +178,6 @@ s_color_gdcolor_init(void)
 int
 s_color_get_name(int index, char *string)
 {
-	int i;
-	int found;
-
 	if (index > MAX_COLORS) {
 		return(FALSE);
 	}

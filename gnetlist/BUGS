@@ -18,6 +18,8 @@ Bugs (no particular order):
 	- gnetlist:get-toplevel-attribute only looks for the first occurrance
 	  of the toplevel attribute.  Make this somehow better?
 
+	- Figure out why the post process screwed up net names when it was
+	  done in the wrong place (after every sheet), low priority
 	
 
 Finished stuff:

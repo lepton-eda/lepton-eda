@@ -38,11 +38,9 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#if 0 /* no longer needed */
 #ifdef HAS_LIBSTROKE
 /* libstroke prototype */
 void stroke_init(void);
-#endif
 #endif
 
 void

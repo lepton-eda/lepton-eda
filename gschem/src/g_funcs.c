@@ -127,10 +127,11 @@ SCM g_funcs_key_value(SCM keystring)
 	return SCM_BOOL_T;
 }
 
-SCM g_funcs_key_done(SCM keystring)
+SCM g_funcs_key_done(void)
 {
 	x_dialog_hotkeys_fill(key_value_string);
 	free(key_value_string);
 	key_value_string = NULL;
+	return SCM_BOOL_T;
 }
 

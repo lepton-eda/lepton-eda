@@ -439,8 +439,6 @@ g_get_pins_nets(SCM scm_uref)
   char *net_name=NULL;
   char *pin=NULL;
   
-  char *uref;
-  
   wanted_uref = gh_scm2newstr(scm_uref, NULL);
   
   /* search for the any instances */

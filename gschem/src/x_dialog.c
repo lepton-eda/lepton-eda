@@ -1238,7 +1238,7 @@ color_set(GtkWidget *w, gpointer data)
 }
 
 /* be sure that the caller frees the returned string */
-static char *
+char *
 index2functionstring(int index)
 {
 	char *string;
@@ -1299,7 +1299,7 @@ index2functionstring(int index)
 			string = u_basic_strdup("unknown");
 			break;
 	}
-
+	return(string);
 }
 
 
@@ -1393,22 +1393,24 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 		}
 
 		switch(found->type) {
-		case(OBJ_LINE):
-		case(OBJ_NET):
-		case(OBJ_BOX):
-		case(OBJ_ARC):
-		case(OBJ_CIRCLE):
-			found->color = w_current->edit_color;
-			w_current->page_current->CHANGED = 1;
-			break;
+			case(OBJ_LINE):
+			case(OBJ_BOX):
+			case(OBJ_CIRCLE):
+			case(OBJ_NET):
+			case(OBJ_BUS):
+			case(OBJ_PIN):
+			case(OBJ_ARC):
+				found->color = w_current->edit_color;
+				w_current->page_current->CHANGED = 1;
+				break;
 
-		case(OBJ_TEXT):
-			found->color = w_current->edit_color;
-			o_complex_set_color(w_current,
+			case(OBJ_TEXT):
+				found->color = w_current->edit_color;
+				o_complex_set_color(w_current,
 					    w_current->edit_color,
 					    found->complex);
-			w_current->page_current->CHANGED = 1;
-			break;
+				w_current->page_current->CHANGED = 1;
+				break;
 		}
 
 		o_current = o_current->next;
@@ -1526,7 +1528,6 @@ x_dialog_hotkeys_fill(char *string)
 void
 x_dialog_hotkeys (TOPLEVEL *w_current)
 {
-	GtkWidget *label = NULL;
 	GtkWidget *buttonclose = NULL;
 	GtkWidget *vbox, *action_area, *scrolled_win, *list;
 	GtkWidget *item;

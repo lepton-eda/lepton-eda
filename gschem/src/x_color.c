@@ -152,9 +152,6 @@ x_get_darkcolor(int color)
 int
 x_color_get_name(int index, char *string)
 {
-	int i;
-	int found;
-
 	if (index > MAX_COLORS) {
 		return(FALSE);
 	}

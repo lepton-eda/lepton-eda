@@ -75,12 +75,12 @@ void s_project_close(TOPLEVEL *pr_current);
 void s_project_close_all(void);
 TOPLEVEL *s_project_get_ptr(int wid);
 /* s_rename.c */
-int s_rename_init(void);
-int s_rename_destroy(void);
-int s_rename_print(void);
+void s_rename_init(void);
+void s_rename_destroy(void);
+void s_rename_print(void);
 int s_rename_search(char *src, char *dest);
 void s_rename_add(char *src, char *dest);
-int s_rename_all_lowlevel(NETLIST *netlist_head, char *src, char *dest);
+void s_rename_all_lowlevel(NETLIST *netlist_head, char *src, char *dest);
 void s_rename_all(TOPLEVEL *pr_current, NETLIST *netlist_head);
 SCM g_get_renamed_nets(SCM scm_level);
 /* s_traverse.c */

@@ -63,8 +63,8 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 }
 
 /* This locks the entire selected list.  It does lock components, but does NOT
-/* change the color (of primatives of the components) though */
-/* this cannot be called recursively */
+ * change the color (of primatives of the components) though 
+ * this cannot be called recursively */
 void
 o_lock(TOPLEVEL *w_current)
 {

@@ -144,7 +144,7 @@ s_cpinlist_search_pin(CPINLIST *ptr, char *pin_number)
 	pl_current = ptr;
 
 	if (pl_current == NULL) {
-		return;
+		return(NULL);
 	}
 
 	while (pl_current != NULL) {

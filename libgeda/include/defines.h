@@ -19,7 +19,7 @@
 
 
 /* for color mechanism used in gschem */
-#define MAX_COLORS 20
+#define MAX_COLORS 25
 
 #define ZOOM_OUT 0
 #define ZOOM_IN 1
