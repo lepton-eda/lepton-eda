@@ -580,7 +580,7 @@ if (verbose_mode) {
 				if (c_current->object == o_current) {
 
 		if (conn_list) {
-			if (conn_list->visual_cue == 4) {
+			if (conn_list->visual_cue == MIDPOINT_CUE) {
 				   while (conn_list != NULL) {
 
 				if (conn_list->object != o_current && 
