@@ -836,3 +836,265 @@ o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 
 	o_net_translate_world(w_current, world_centerx, world_centery, object);
 }
+
+
+int
+o_net_orientation(OBJECT *object)
+{
+	if (object->line_points->y1 == object->line_points->y2) {
+		return(HORIZONTAL);
+	}
+
+	if (object->line_points->x1 == object->line_points->x2) {
+		return(VERTICAL);
+	}
+
+	return(NEITHER);	
+}
+
+/* this function does the actual work of making one net segment out of two */
+/* connected segments */
+/* The second object (del_object) is the object that should be deleted */
+void
+o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient) 
+{
+	int temp1, temp2;
+	int final1, final2;
+	int changed=0;
+	ATTRIB *tail;
+
+#if DEBUG
+	printf("o %d %d %d %d\n", object->line_points->x1, object->line_points->y1, object->line_points->x2, object->line_points->y2);
+	printf("d %d %d %d %d\n", del_object->line_points->x1, del_object->line_points->y1, del_object->line_points->x2, del_object->line_points->y2);
+#endif
+
+
+	if (orient == HORIZONTAL) {
+
+		temp1 = min(object->line_points->x1, 
+				      del_object->line_points->x1);
+		temp2 = min(object->line_points->x2, 
+				      del_object->line_points->x2);
+
+		final1 = min(temp1, temp2);
+
+		temp1 = max(object->line_points->x1, 
+				      del_object->line_points->x1);
+		temp2 = max(object->line_points->x2, 
+				      del_object->line_points->x2);
+
+		final2 = max(temp1, temp2);
+
+		object->line_points->x1 = final1;
+		object->line_points->x2 = final2;
+		changed=1;
+	}
+
+	if (orient == VERTICAL) {
+		temp1 = min(object->line_points->y1, 
+				      del_object->line_points->y1);
+		temp2 = min(object->line_points->y2, 
+				      del_object->line_points->y2);
+
+		final1 = min(temp1, temp2);
+
+		temp1 = max(object->line_points->y1, 
+				      del_object->line_points->y1);
+		temp2 = max(object->line_points->y2, 
+				      del_object->line_points->y2);
+
+		final2 = max(temp1, temp2);
+
+		object->line_points->y1 = final1;
+		object->line_points->y2 = final2;
+		changed=1;
+	}
+
+#if DEBUG
+	printf("fo %d %d %d %d\n", object->line_points->x1, object->line_points->y1, object->line_points->x2, object->line_points->y2);
+#endif
+
+	if (changed) {
+
+		/* first check for attributes */
+		if (del_object->attribs) {
+			printf("yeah... del object has attributes\n");
+			printf("reconnecting them to the right place\n");
+			if (object->attribs) {
+
+		printf("object DID have attributes\n");
+
+				tail = o_attrib_return_tail(object->attribs);
+
+				/* skip over old attrib head */
+				tail->next = del_object->attribs->next;
+
+				/* step prev object to point to last object */
+				tail->next->prev = tail->next; 
+
+				/* delete old attrib head */
+				/* and nothing else */
+				//o_attrib_delete(del_object->attribs);
+
+				/* you don't need to free the attribs list */
+				/* since it's been relinked into object's */
+				/* attribs list */
+
+				del_object->attribs = NULL;
+
+			} else {
+
+		printf("object didn't have any attributes\n");
+				object->attribs = del_object->attribs;
+				object->attribs->prev = object;
+
+				/* setup parent attribute */
+				object->attribs->object = object;
+
+				/* you don't need to free the attribs list */
+				/* since it's been used by object */
+				
+				del_object->attribs = NULL;
+			}	
+		}
+	}
+
+}
+
+
+int 
+o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
+{
+	char *key=NULL;
+	ALES *ales_list;
+	ALES *c_current;
+	int object_orient;
+	int current_orient;
+	int cue;
+	int changed=0;
+
+	if (object == NULL) {
+		return;
+	}
+
+	object_orient = o_net_orientation(object);
+
+	key = o_ales_return_key(object->line_points->x1,
+                                object->line_points->y1);
+
+	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+                                        key);
+
+	if (ales_list) {
+/* TODO: bus here as well? */
+	  if (ales_list->visual_cue != MIDPOINT_CUE) {
+		cue = ales_list->visual_cue;
+                c_current = ales_list;
+                while (c_current != NULL) {
+                        if (c_current->object != NULL) {
+				current_orient = o_net_orientation(c_current->object);
+
+				if (current_orient == object_orient &&
+				    c_current->object->sid != object->sid &&
+				    object->type == OBJ_NET && 
+				    c_current->object->type == OBJ_NET) {
+
+#if 1
+					printf("yeah, can connect %s and %s %d\n",
+						object->name, 
+						c_current->object->name, cue);
+#endif
+
+					o_net_consolidate_lowlevel(object, 
+							c_current->object, 
+							current_orient);
+
+					changed++;
+				
+					s_delete(w_current, c_current->object);
+			                o_ales_disconnect_update(w_current->page_current);
+					o_net_recalc(w_current, object);
+					w_current->page_current->object_tail = 	
+						return_tail(w_current->page_current->object_head);
+					return(-1);
+				}
+
+                        }                                                     
+                        c_current = c_current->next;
+                }
+	  }
+        }
+
+	free(key);
+
+	key = o_ales_return_key(object->line_points->x2,
+                                object->line_points->y2);
+
+	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+                                        key);
+
+	if (ales_list) {
+/* TODO: bus here as well? */
+	  if (ales_list->visual_cue != MIDPOINT_CUE) {
+		cue = ales_list->visual_cue;
+                c_current = ales_list;
+                while (c_current != NULL) {
+                        if (c_current->object != NULL) {
+				current_orient = o_net_orientation(c_current->object);
+
+				if (current_orient == object_orient &&
+				    c_current->object->sid != object->sid &&
+				    object->type == OBJ_NET && 
+				    c_current->object->type == OBJ_NET) {
+
+#if 1
+					printf("yeah, can connect %s and %s %d\n",
+						object->name, 
+						c_current->object->name, cue);
+#endif
+					o_net_consolidate_lowlevel(object, 
+							c_current->object,
+							current_orient);
+					changed++;
+					s_delete(w_current, c_current->object);
+			                o_ales_disconnect_update(w_current->page_current);
+				
+					o_net_recalc(w_current, object);
+					w_current->page_current->object_tail = 	
+						return_tail(w_current->page_current->object_head);
+					return(-1);
+				}
+
+                        }                                                     
+                        c_current = c_current->next;
+                }
+          }
+        }
+
+	free(key);
+
+	return(changed);
+}
+
+int
+o_net_consolidate(TOPLEVEL *w_current)
+{
+	OBJECT *o_current;
+	int status = 0;
+
+	o_current = w_current->page_current->object_head;
+
+	while(o_current != NULL) {
+
+		if (o_current->type == OBJ_NET) {
+			status = o_net_consolidate_segments(w_current, o_current);
+		}
+
+		if (status == -1) {
+			o_current = w_current->page_current->object_head;
+			status = 0;
+		} else {
+			o_current = o_current->next;
+		}
+	}
+}

@@ -1124,3 +1124,14 @@ g_rc_third_button(SCM mode)
 
 	RETURN_G_RC_MODE("third-button", default_third_button);
 }
+
+SCM
+g_rc_net_consolidate(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("net-consolidate", default_net_consolidate);
+}

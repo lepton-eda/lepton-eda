@@ -58,7 +58,7 @@ clean::
 uninstall::	
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "uninstalling" all "in $$i..."; \
+	echo "uninstalling" all "in $$i... (errors can be ignored)"; \
 	(cd $$i ; make uninstall); \
 	done
 	@echo Finished!
@@ -94,6 +94,15 @@ reconfig:
 	done
 	@echo Finished!
 
+proto: 
+	for i in $(SUBDIRS) ;\
+	do \
+	echo "Makeing prototype in $$i..."; \
+	(cd $$i ; make proto ); \
+	done
+	@echo Finished!
+
+
 distconfig: 
 	for i in $(SUBDIRS) ;\
 	do \
@@ -125,6 +134,7 @@ targets::
 	@echo "make clean        Simple clean only"
 	@echo "make maint        Total maintenance clean"
 	@echo "make reconfig     Create ./configure (recreate configure)"
+	@echo "make proto        Recreate all prototype.h files"
 	@echo "make distconfig   Create dist ./configure (recreate configure)"
 	@echo "make justinstall  Just install, no building \(if not needed\)"
 	@echo "make uninstall    Install everything from $(prefix)"

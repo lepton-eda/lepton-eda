@@ -100,6 +100,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);
 	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
 	gh_new_procedure1_0 ("third-button", g_rc_third_button);
+	gh_new_procedure1_0 ("net-consolidate", g_rc_net_consolidate);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);

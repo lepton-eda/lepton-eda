@@ -98,6 +98,7 @@ char *default_font_directory = NULL;
 int   default_log_window = MAP_ON_STARTUP;
 int   default_log_window_type = DECORATED;
 int   default_third_button = POPUP_ENABLED;
+int   default_net_consolidate = FALSE;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -166,6 +167,7 @@ i_vars_set(TOPLEVEL *w_current)
 
 	w_current->image_color  = default_image_color;
 	w_current->third_button = default_third_button;
+	w_current->net_consolidate = default_net_consolidate;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;

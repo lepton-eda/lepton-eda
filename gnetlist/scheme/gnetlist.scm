@@ -499,15 +499,15 @@
 ;; pair
 (define verilog:get-matching-nets
   (lambda (attribute value)
-    (verilog:filter attribute value packages)))
-;    (map (lambda (package)      ; loop over packages
-;	   (let ((attr (gnetlist:get-package-attribute package attribute)))
-;	     (if (string=? attr value)
-;		 (map (lambda (pin)   ; loop over pins on the packages
-;			  (car (gnetlist:get-nets package pin)))
-;		      (pins package))
-;		() )))          ; return empty list, if key does not match
-;	     packages)))
+    (map car (verilog:filter attribute value packages))))
+
+;; This function takes an attribute name, desired value, and a list of
+;; packages.  For each of the packages, it looks up that attribute, and
+;; if it matches, that package name is added to the list, and the function
+;; recurses on the remaining packages.  If the attribute does not match, 
+;; the function just recuses on the remaing packages. Thanks to Mohina Lal
+;; for this trick.
+;;
 
 (define verilog:filter 
   (lambda (attribute value package-list)
@@ -519,8 +519,8 @@
 		   (car (gnetlist:get-nets (car package-list) pin)))
 		 (pins (car package-list)))
 	    (verilog:filter attribute value (cdr package-list))))
-	  (else (verilog:filter attribute value (cdr package-list))))
-))
+	  (else (verilog:filter attribute value (cdr package-list)))))
+)
 
 
 ;;
@@ -552,35 +552,24 @@
       (display module-name p)
       (display " (" p)
       (newline p)
-      (let ((in    (car   port-list))    ; extract list of pins 
-	    (out   (cadr  port-list))
-	    (inout (caddr port-list)))
+      (let ((the-pins ( append (car port-list)     ; build up list of pins
+			       (cadr  port-list)
+			       (caddr port-list))))
 	(begin
-	  (for-each (lambda (pin)   ; loop over inputs
-		      (begin
-			(display "       " p)
-			(display (car pin) p)
-			(display " ," p)
-			(newline p)))
-		    in)
-	  (for-each (lambda (pin)   ; loop over inouts
-		      (begin
-			(display "       " p)
-			(display (car pin) p)
-			(display " ," p)
-			(newline p)))
-		    inout)
-	  ; do remaining batch, but take care of last comma
-	  (display "       " p)  ; XXX your schematic better have at least
-	  (display (caar out) p)  ; one output port!
-	  (if (not (null? (cdr out)))
-	      (for-each (lambda (pin)   ; loop over outputs
-			  (begin
-			    (display " ," p)
-			    (newline p)
-			    (display "       " p)
-			    (display (car pin) p)))
-			(cdr out)))
+	  ;(display the-pins)
+	  ; do pins, but take care of last comma
+	  (if (not (null? the-pins))
+	      (begin
+		(display "       " p) 
+		(display (car the-pins) p)
+		(if (not (null? (cdr the-pins)))
+		    (for-each (lambda (pin)   ; loop over outputs
+				(begin
+				  (display " ," p)
+				  (newline p)
+				  (display "       " p)
+				  (display pin p)))
+			      (cdr the-pins) ))))
 	(newline p)
 	(display "      );" p)
 	(newline p))))))
@@ -598,21 +587,21 @@
 	(for-each (lambda (pin)
 		    (begin
 		      (display "input " p)
-		      (display (car pin) p)
+		      (display pin p)
 		      (display " ;" p)
 		      (newline p))) in)       ; do each input
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "output " p)
-		      (display (car pin) p)
+		      (display pin p)
 		      (display " ;" p)
 		      (newline p))) out)      ; do each output
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "inout " p)
-		      (display (car pin) p)
+		      (display pin p)
 		      (display " ;" p)
 		      (newline p))) inout)    ; do each inout
 		      
@@ -664,14 +653,14 @@
     (for-each (lambda (wire)             ; do high values
 		(begin
 		  (display "assign " p) 
-		  (display (car wire) p) (display " = 1'b1;" p)
+		  (display wire p) (display " = 1'b1;" p)
 		  (newline p)))
 	      (verilog:get-matching-nets "device" "HIGH"))
 
     (for-each (lambda (wire)
 		(begin
 		  (display "assign " p) 
-		  (display (car wire) p) (display " = 1'b0;" p)
+		  (display wire p) (display " = 1'b0;" p)
 		  (newline p)))
 	      (verilog:get-matching-nets "device" "LOW"))
     (newline p))
@@ -700,59 +689,83 @@
       (for-each (lambda (package)         ; loop on packages
 		  (begin
 		    (let ((device (get-device package)))
-		      (if (not (memv (string->symbol device) ; ignore specials
-				     (map string->symbol
-					  (list "IOPAD" "IPAD" "OPAD"
-						"HIGH" "LOW"))))
-			  (begin
-			    (display (get-device package) port)
-			    (display " " port)
-			    (display package port)
-			    (display " (" port)
+ 		      (if (not (memv (string->symbol device) ; ignore specials
+ 				     (map string->symbol
+ 					  (list "IOPAD" "IPAD" "OPAD"
+ 						"HIGH" "LOW"))))
+ 			  (begin
+ 			    (display (get-device package) port)
+ 			    (display " " port)
+ 			    (display package port)
+ 			    (display " ( " port)
+			    ; if this module wants positional pins, 
+			    ; then output that format, otherwise
+			    ; output normal named declaration
 			    (verilog:display-connections 
-			     (gnetlist:get-pins package) package port)
-			    (display " );" port)
-			    (newline port)
-			    (newline port))))))
-		packages)))
+			     package 
+			     (string=? (gnetlist:get-package-attribute
+					package "VERILOG_PORTS" )
+				       "POSITIONAL")
+			     port)
+ 			    (display "    );" port)
+	 		    (newline port)
+ 			    (newline port))))))
+ 		packages)))
+)
+
+;; output a module connection for the package given to us with named ports
+;;
+(define verilog:display-connections
+   (lambda (package positional port)
+     (begin
+       (let ((pin-list (gnetlist:get-pins-nets package)))
+ 	(if (not (null? pin-list))
+ 	    (begin
+	      (newline port)
+ 	      (verilog:display-pin (car pin-list) positional port)
+ 	      (for-each (lambda (pin)
+ 			  (display "," port)
+ 			  (newline port)
+ 			  (verilog:display-pin pin positional port))
+ 			(cdr pin-list))
+ 	      (newline port))))))
 )
 
 
-
-;; output a module connection for all of the pins given to us
-;;
-(define verilog:display-connections
-  (lambda (pins package port)
-    (begin
-      (verilog:format-connection (car pins) 
-				 (car (gnetlist:get-nets package (car pins)))
-				 ""
-				 port)
-      (if (not (null? (cdr pins)))
-	  (for-each (lambda (pin)  ; loop over pins
-		      (begin
-			(verilog:format-connection 
-		       pin (car (gnetlist:get-nets package pin)) "," port)))
-		      (cdr pins) ))
-      (newline port))))
-
 ;;
 ;; Display the individual net connections
-;;  in this format:
+;;  in this format if positional is true:
 ;;
+;;    /* PINNAME */ NETNAME
+;;
+;;  otherwise emit:
+;; 
 ;;      .PINNAME ( NETNAME )
 ;;
-(define verilog:format-connection
-   (lambda (pinname netname comma port)
-     (if (not (string=? "unconnected_pin" netname))
-	 (begin
-	   (display comma port)
-	   (newline port)
-	   (display "     ." port)
-	   (display pinname port)
-	   (display " ( " port)
-	   (display netname port)
-	   (display " )" port)))))
+(define verilog:display-pin
+    (lambda (pin positional port)
+      (begin
+	(if positional
+	    (begin    ; output a positional port instanace
+	      (display "  /* " port)
+	      (display (car pin) port)  ; add in name for debugging
+	      (display " */ " port )
+	      (verilog:display-conditional-pin pin port))
+	    (begin    ; else output a named port instance 
+	      (display "    ." port)
+	      (display (car pin) port) ; name of pin 
+	      (display " ( " port)
+	      (verilog:display-conditional-pin pin port)
+	      (display " )" port)))))
+)
+	 
+;; display a pin only if it is not "unconnected_pin"
+(define verilog:display-conditional-pin
+  (lambda (pin port)
+    (begin
+      (if (not (string=? "unconnected_pin" (cdr pin)))
+	  (display (cdr pin) port))))
+)
 
 
 

@@ -127,8 +127,8 @@ attr_apply(GtkWidget *w, TOPLEVEL *w_current)
 
 	if ((current_value[0] != '\0') && (current_name[0] != '\0')) {
 		char *combined =
-			u_basic_strdup_multiple(current_value, "=",
-						current_name, NULL);
+			u_basic_strdup_multiple(current_name, "=",
+						current_value, NULL);
 
 		o_attrib_set_string(w_current, combined);
 		w_current->event_state = DRAWATTRIB;

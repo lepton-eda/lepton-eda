@@ -6,7 +6,9 @@ SCM g_get_all_nets(SCM scm_level);
 SCM g_get_all_unique_nets(SCM scm_level);
 SCM g_get_all_connections(SCM scm_netname);
 SCM g_get_nets(SCM scm_uref, SCM scm_pin);
+SCM g_get_pins_nets(SCM scm_uref);
 SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
+SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 SCM g_set_netlist_mode(SCM mode);
 /* g_rc.c */
 void set_static_project_current(TOPLEVEL *pr_current);
@@ -27,6 +29,15 @@ SCM g_quit(void);
 void gnetlist_quit(void);
 void main_prog(int argc, char *argv[]);
 int main(int argc, char *argv[]);
+/* mk_verilog_syms.c */
+int main(int argc, char **argv);
+int MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles, int (*body)(FILE *, int, int, unsigned int, unsigned int));
+int AndBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
+int OrBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
+int XorBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
+int WidenBody(FILE *fp, int x, int y, unsigned int pins, unsigned int colour);
+int Pin(FILE *fp, int x1, int y1, int x2, int y2, int bubble);
+int PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);

@@ -8,6 +8,26 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+8/3/99	Added to TOPLEVEL the net_consolidate flag
+
+	Upgraded to libtool 1.3.3
+
+	First attempt at getting net_consolidate to work with attached
+	attributes
+
+	Removed an extra return from o_attrib.c
+
+	net-consolidate code is not 100% working today.
+
+7/27/99 Added o_net_consolidate* functions which take net segments and 
+	if possible combine the nets into one single net.
+
+	Added o_net_consolidate to f_open so that it runs
+	whenever you open a schematic
+
+	Added o_net_consolidate to f_save so that it runs 
+	whenever you save a schematic
+
 7/25/99 Cleaned up g_read_file(). (by Kazu Hirata)
 	
 7/23/99 Added u_basic_strdup_multiple() to u_basic.c. (by Kazu Hirata)

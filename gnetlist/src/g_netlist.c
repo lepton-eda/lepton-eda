@@ -421,6 +421,64 @@ g_get_nets(SCM scm_uref, SCM scm_pin)
 }
 
 
+/* Given a uref, Return a list of pairs, each pair contains the name
+ * of the pin, and the name of the net connected to that pin.  
+ */
+SCM
+g_get_pins_nets(SCM scm_uref)
+{
+  SCM pinslist = SCM_EOL;
+  SCM pairlist = SCM_EOL;
+  NETLIST *nl_current=NULL;
+  CPINLIST *pl_current=NULL;
+  
+  char *wanted_uref=NULL;
+  char *net_name=NULL;
+  char *pin=NULL;
+  
+  char *uref;
+  
+  wanted_uref = gh_scm2newstr(scm_uref, NULL);
+  
+  /* search for the any instances */
+  /* through the entire list */
+  for(nl_current = netlist_head; nl_current != NULL;
+      nl_current = nl_current->next) {
+    
+    /* is there a uref? */
+    if (nl_current->component_uref) {
+      /* is it the one we want ? */
+      if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
+	
+	for( pl_current = nl_current->cpins; pl_current != NULL;
+	       pl_current = pl_current->next) {
+	  /* is there a valid pin number and a valid name ? */
+	  if (pl_current->pin_number) {
+	    if (pl_current->net_name) {
+	      /* yes, add it to the list */
+	      pin      = pl_current->pin_number;
+	      net_name = pl_current->net_name;
+
+	      pairlist = gh_cons(gh_str2scm (pin, strlen(pin)),
+				 gh_str2scm (net_name, strlen(net_name)));
+	      pinslist = gh_cons(pairlist, pinslist); 
+	    }
+	    
+	  }
+	}
+      }
+    }
+  }
+  
+  free(wanted_uref);
+  
+  pinslist = gh_reverse(pinslist);  /* pins are in reverse order on the way 
+				     * out 
+				     */
+  return(pinslist);
+}
+
+
 SCM
 g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 {
@@ -476,6 +534,65 @@ g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 	free(wanted_attrib);
 
 	return(scm_return_value);
+}
+
+/* returns value of attribute otherwise string "none" */
+/* still highly temp and doesn't work right */
+SCM
+g_get_toplevel_attribute(SCM scm_wanted_attrib)
+{
+#if 0
+	SCM scm_return_value;
+	NETLIST *nl_current;
+	char *wanted_attrib;
+	char *return_value=NULL;
+
+        wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+
+	/* here is where you make it multi page aware */
+	nl_current = netlist_head;
+
+	/* search for the first instance */
+	/* through the entire list */
+	while(nl_current != NULL) {
+
+	      if (nl_current->component_uref) {
+		if (strcmp(nl_current->component_uref, uref) == 0) {
+
+			/* first search outside the symbol */
+			return_value = o_attrib_search_name_single(
+						    nl_current->object_ptr, 	
+						    wanted_attrib, NULL);
+
+			if (return_value) {
+				break;
+			}
+
+			/* now search inside the symbol */
+			return_value = o_attrib_search_name(
+					   nl_current->object_ptr->complex, 	
+					   wanted_attrib, 0);
+
+			break;
+		}
+	      }
+	      nl_current = nl_current->next;
+	}
+
+	if (return_value) {
+		scm_return_value = gh_str2scm(return_value, 
+					       strlen(return_value));
+	} else {
+		scm_return_value = gh_str2scm("unknown", 
+					       strlen("unknown"));
+
+	}
+
+	free(uref);
+	free(wanted_attrib);
+
+	return(scm_return_value);
+#endif
 }
 
 SCM 

@@ -201,7 +201,6 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *
 	/* messages like this need to to a error location, like a log! */
 	/* or maybe it's okay.. don't do anything if this happens */
 		return;
-		return;
 	}
 
 #if 0	

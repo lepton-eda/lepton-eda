@@ -54,7 +54,12 @@ f_open(TOPLEVEL *w_current, char *filename)
 
 	/* new ALES stuff */
 	o_ales_disconnect_update(w_current->page_current);
-	
+
+	/* make sure you init net_consolide to false (default) in all */
+	/* programs */
+	if (w_current->net_consolidate == TRUE) {	
+		o_net_consolidate(w_current);
+	}
 
 	w_current->page_current->zoom_factor = 0;
 

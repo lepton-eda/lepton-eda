@@ -4,18 +4,15 @@ void o_save_write_header(FILE *fp);
 void o_save(TOPLEVEL *w_current, char *filename);
 OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename);
 void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale);
-
 /* f_basic.c */
 void f_open(TOPLEVEL *w_current, char *filename);
 void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 void f_save(TOPLEVEL *w_current, char *filename);
-
 /* f_image.c */
 void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
-
 /* f_print.c */
 void f_print_set_color(FILE *fp, int color);
 float f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, int world_right, int world_bottom);
@@ -23,11 +20,9 @@ void f_print_footer(FILE *fp);
 void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale);
 void f_print(TOPLEVEL *w_current, char *filename);
 void f_print_set_type(TOPLEVEL *w_current, int type);
-
 /* g_basic.c */
 int ORIG_g_read_file(char *filename);
 int g_read_file(char *filename);
-
 /* m_basic.c */
 int mil_x(TOPLEVEL *w_current, int val);
 int mil_y(TOPLEVEL *w_current, int val);
@@ -49,7 +44,6 @@ void rotate_point(int x, int y, int angle, int *newx, int *newy);
 void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
 int return_zoom_number(int zoom_factor);
-
 /* o_ales.c */
 ALES *o_ales_return_tail(ALES *head);
 ALES *o_ales_add_head(OBJECT *parent, int x, int y);
@@ -74,7 +68,6 @@ int o_ales_query_table(GHashTable *ales_table, int x, int y);
 int o_ales_disconnect_func(gpointer key, gpointer value, gpointer user_data);
 void o_ales_disconnect_update(PAGE *p_current);
 void o_ales_disconnect(PAGE *p_current);
-
 /* o_arc_basic.c */
 void get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
 void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -92,7 +85,6 @@ void o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_arc_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_attrib.c */
 ATTRIB *o_attrib_search(ATTRIB *list, OBJECT *item);
 ATTRIB *o_attrib_return_tail(ATTRIB *head);
@@ -134,12 +126,10 @@ char *o_attrib_search_pin_number(OBJECT *object, int pin_number, OBJECT **return
 char *o_attrib_search_slot_number(OBJECT *object, int slotnumber);
 void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target);
-
 /* o_basic.c */
 int inside_region(int left, int top, int right, int bottom, int x, int y);
 void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current);
 void o_recalc(TOPLEVEL *w_current, OBJECT *object_list);
-
 /* o_box_basic.c */
 void get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
 void world_get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
@@ -156,7 +146,6 @@ void o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_circle_basic.c */
 int dist(int x1, int y1, int x2, int y2);
 void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
@@ -174,7 +163,6 @@ void o_circle_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, O
 void o_circle_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_circle_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_complex_basic.c */
 void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
@@ -196,14 +184,12 @@ void o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex);
 OBJECT *o_complex_return_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_image.c */
 void o_image_init(void);
 void o_image_create(int x, int y, int color_mode);
 void o_image_close(void);
 int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
-
 /* o_line_basic.c */
 void get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
 void world_get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
@@ -222,14 +208,12 @@ void o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJ
 void o_line_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_list.c */
 OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag);
 OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);
 OBJECT *o_list_search(OBJECT *list, OBJECT *current);
 void o_list_delete(TOPLEVEL *w_current, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *w_current, OBJECT *list);
-
 /* o_net_basic.c */
 void get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
 void world_get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
@@ -246,7 +230,10 @@ void o_net_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_net_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_net_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
+int o_net_orientation(OBJECT *object);
+void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
+int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
+int o_net_consolidate(TOPLEVEL *w_current);
 /* o_ntext_basic.c */
 void get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 void world_get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
@@ -272,7 +259,6 @@ void o_ntext_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_cent
 void o_ntext_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
 void o_ntext_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_ntext_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* o_pin_basic.c */
 void get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
 void world_get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
@@ -289,7 +275,6 @@ void o_pin_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_pin_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
 void s_attrib_print(void);
@@ -297,7 +282,6 @@ int s_attrib_uniq(char *name);
 void s_attrib_free(void);
 void s_attrib_init(void);
 char *s_attrib_get(int counter);
-
 /* s_basic.c */
 void error_if_called(void);
 void exit_if_null(void *ptr);
@@ -305,7 +289,6 @@ OBJECT *return_tail(OBJECT *head);
 OBJECT *return_head(OBJECT *tail);
 OBJECT *s_basic_init_object(char *name);
 OBJECT *s_basic_link_object(OBJECT *new_node, OBJECT *ptr);
-OBJECT *add_object(OBJECT *ptr);
 void print_struct_forw(OBJECT *ptr);
 void print_struct_back(OBJECT *ptr);
 void print_struct(OBJECT *ptr);
@@ -318,7 +301,6 @@ char *remove_nl(char *string);
 char *remove_string(char *string, int start, int end);
 char *insert_string(char *string, int start, char *insert_string);
 char *expand_env_variables(char *string);
-
 /* s_clib.c */
 int s_clib_add_entry(char *new_path);
 int s_clib_search_for_dirname(char *dir_name);
@@ -333,15 +315,12 @@ void s_clib_init(void);
 char *s_clib_getdir(int index);
 char *s_clib_getfiles(char *directory, int flag);
 int s_clib_uniq(char *path);
-
 /* s_hierarchy.c */
 void s_hierarchy_load_all(TOPLEVEL *w_current, char *filename);
-
 /* s_log.c */
 void s_log_init(char *filename);
 void s_log_message(const gchar *format, ...);
 void s_log_close(void);
-
 /* s_nethash.c */
 NETHASH *o_nethash_return_tail(NETHASH *head);
 NETHASH *o_nethash_add_head(OBJECT *parent);
@@ -355,7 +334,6 @@ void o_nethash_delete(NETHASH *nh_current);
 NETHASH *o_nethash_search(NETHASH *nethash_list, OBJECT *o_current);
 void o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current, char *new_key, int type);
 NETHASH *o_nethash_query_table(GHashTable *nethash_table, char *key);
-
 /* s_page.c */
 PAGE *s_page_return_tail(PAGE *head);
 void s_page_free(TOPLEVEL *w_current, PAGE *p_current);
@@ -374,7 +352,6 @@ PAGE *s_page_search(TOPLEVEL *w_current, char *filename);
 int s_page_search_row(TOPLEVEL *w_current, PAGE *p_findme);
 void s_page_print_all(TOPLEVEL *w_current);
 void s_page_save_all(TOPLEVEL *w_current);
-
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);
 void s_papersizes_print(void);
@@ -383,14 +360,10 @@ void s_papersizes_free(void);
 void s_papersizes_init(void);
 char *s_papersizes_get(int counter);
 void s_papersizes_get_size(char *string, int *width, int *height);
-
-/* s_passing.c */
-
 /* s_scratch.c */
 void s_scratch_string_init(void);
 void s_scratch_string_free(void);
 int s_scratch_string_fill(char *string);
-
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);
 int s_slib_search_for_dirname(char *dir_name);
@@ -405,7 +378,6 @@ char *s_slib_getfiles(char *directory, int flag);
 void s_slib_print(void);
 int s_slib_uniq(char *path);
 void s_slib_print_dirs(void);
-
 /* s_stroke.c */
 int s_stroke_add_entry(char *new_stroke, SCM guile_func);
 void s_stroke_print(void);
@@ -413,7 +385,6 @@ int s_stroke_uniq(char *stroke);
 void s_stroke_free(void);
 void s_stroke_init(void);
 int s_stroke_search_execute(char *stroke);
-
 /* u_basic.c */
-char *u_basic_strdup(const char *str);
+char *u_basic_strdup(const char *p);
 char *u_basic_strdup_multiple(const char *str, ...);

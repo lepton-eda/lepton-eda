@@ -10,6 +10,12 @@ OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Zoom with pan doesn't work 100% when you are zoomed out all the way.
 
+	Net consolidate will not work right (core dump) if you select a net
+	and then try to extend that net.. You need to remove that net which
+	is being deleted from the selection list, before you delete it.
+
+	Misspell a keyword value in the rc file and gschem cores.. 
+
 BETTER	Almost got that 180 postscript printing bug fixed... not perfect yet
 
 	Mouse pan crashed my X server once

@@ -193,6 +193,9 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->height = 1;
 	pr_current->snap_size = 100;
 
+	/* special init of net_consolidate, since it's used in libgeda */
+	pr_current->net_consolidate = FALSE;
+
 }
 
 /* stays the same */ 

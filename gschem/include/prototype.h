@@ -152,6 +152,7 @@ SCM g_rc_output_color_background(SCM color);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_log_window_type(SCM mode);
 SCM g_rc_third_button(SCM mode);
+SCM g_rc_net_consolidate(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

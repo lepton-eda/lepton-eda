@@ -7,7 +7,7 @@ Code cleanups (no particular order):
 	
 	coding standards
 
-	Remove gd/gd.h from every file... in gschem and libgeda
+DONE	Remove gd/gd.h from every file... in gschem and libgeda
 
 	Go through and format the code.  it's really gross right now
 
@@ -17,7 +17,7 @@ Code cleanups (no particular order):
 
 	It's becoming critical to add comments...  (very critical)
 	
-	Created o_net_translate_world (been using line function)
+DONE	Created o_net_translate_world (been using line function)
 
 DONE	Replace all struct st_object with a typedef
 
@@ -66,6 +66,8 @@ DONE	Inconsistant naming of o_current, object, current etc...
 
 	get some consistancy with *_world world_* etc.. *_world_*
 	(in complex really)
+
+	Make zoom in, zoom out, pan a single function.  Now this is doable
 
 ----------------------
 

@@ -56,8 +56,8 @@ IMPORTANT
 	LibStroke 0.3 [OPTIONAL] - if you want stroke support.  The homepage
 	for LibStroke is: http://www.etla.net/libstroke/
 
-	libgdgeda 1.5 [OPTIONAL] - if you want the ability to write gif 
-	images.  libgdgeda is based on gd 1.5.  The homepage for gd 1.5 is
+	libgdgeda 1.6 [OPTIONAL] - if you want the ability to write png 
+	images.  libgdgeda is based on gd 1.6.1  The homepage for gd 1.6 is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist
 

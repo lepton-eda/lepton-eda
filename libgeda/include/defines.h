@@ -159,6 +159,11 @@
 #define MENU			1
 #define HOTKEY			2	
 
+/* for o_net_orientation */
+#define NEITHER			0
+#define HORIZONTAL		1
+#define VERTICAL		2
+
 /* gnetlist: netlist_mode */
 #define gEDA			0
 #define SPICE			1

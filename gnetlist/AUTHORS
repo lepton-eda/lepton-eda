@@ -18,6 +18,9 @@ Mike Jarabek		- For contributing the backend verilog netlister
 
 			  For providing an updated version (19990629) of above
 
+			  For providing an updated version (19990802) of above
+			  (lots of symbols and capabilities!)
+
 Nuno Sucena             - For contributing the TANGO gnetlist backend
 
 Bas Gieltjes            - For contributing the SPICE gnetlist backend

@@ -403,6 +403,7 @@ struct st_toplevel {
 	int log_window; /* controls if the log windows mapped on startup */
 	int log_window_type; /* controls if the log window is decorated or not */
 	int third_button; /* controls what the third mouse button does */
+	int net_consolidate; /* controls if the net consolidation code is used */ 
 
 	/* fixed init variables */
 	int print_output_type;			/* either window or limits */

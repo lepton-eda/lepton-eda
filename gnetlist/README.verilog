@@ -1,4 +1,70 @@
 
+Latest README:
+
+Verilog netlister readme.
+
+THIS IS FREE SOFTWARE, see the included file COPYING for more info.
+
+        This is the third release of the Verilog netlister for geda.
+
+        Fixed in this release:
+
+        1) Netlister no longer barfs if there are no
+           Input/Output/InOut ports on the module.
+
+        2) Module instantiation code much improved/cleaned up, mostly
+           due to g_netlist.c patch.
+
+        New in this release:
+
+        1) A whole wack-load of symbols, I created a C program that
+           generates n-input versions of and, nand, or, nor, xor, and
+           xnor symbols
+
+        2) Modules instantiated with positional port connections.
+           Just add the attribute `VERILOG_PORTS=POSITIONAL' to your
+
+          symbol file as an unattached attribute, or attach it to the
+           symbol on the schematic.
+
+        3) Added bufif?, notif?, not and buf symbols.
+        
+        4) Added example of positional port module instantiation to
+           the example schematic
+        
+        5) Added 7447 example schematic
+
+        Coming:
+
+        1) Module instantiation parameters. (probably by an attribute)
+
+	
+        Included in this tar-ball are three patch files against the
+        19990705 version of gEDA.  Apply g_netlist.c.diff and
+        g_register.c.diff to the files in gnetlist/src/ and
+        gnetlist.scm.diff to gnetlist.scm in the gnetlist/scheme
+        directory. You may have to regenerate prototype.h, or manually
+        patch it. Replace the symbols in the sym/verilog directory
+        with the symbols in this distribution. (I have modified all of
+        the symbols to use the new unattached attribute convention for
+        device et al.) (if you have applied the patch I sent to the
+        mailing list that fixes netlisting a module with no ports, you
+        may have trouble applying the gnetlist.scm.diff patch.) Don't
+        forget to do a `make all install' after applying the patches.
+
+	Once again, to netlist the example schematics to verilog type:
+        (Assuming gnetlist has been patched and is properly installed.)
+
+        gnetlist -g verilog -o test.v examples/sch/test.sch
+
+        or
+
+        gnetlist -g verilog -o 7447.v examples/sch/7447.sch
+
+
+----- OLDER README.TXT's -----
+
+(This README was from 19990629)
 Verilog netlister readme.
 
 THIS IS FREE SOFTWARE, see the included file COPYING for more info.
@@ -23,8 +89,7 @@ THIS IS FREE SOFTWARE, see the included file COPYING for more info.
 
 
 
------ OLDER README.TXT's -----
-
+--
 
 
 	This the verilog netlister for gEDA.  Included in the tarball

@@ -571,6 +571,11 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	o_net_ales_draw(w_current, w_current->page_current->object_tail);
 	o_ales_draw_objects(w_current, w_current->page_current->object_tail);
 
+	if (w_current->net_consolidate == TRUE) {
+        	o_net_consolidate_segments(w_current, 
+				           w_current->page_current->object_tail);
+	}
+
 	w_current->page_current->CHANGED=1;
 	w_current->start_x = w_current->save_x;
         w_current->start_y = w_current->save_y;

@@ -41,6 +41,12 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 	OBJECT *o_current=NULL;
 	char buf[1024];
 	char *out;
+
+        /* make sure you init net_consolide to false (default) in all */
+        /* programs */
+        if (w_current->net_consolidate == TRUE) {
+		o_net_consolidate(w_current);
+	}
 	
 	o_current = object_list;
 
@@ -140,6 +146,12 @@ o_save(TOPLEVEL *w_current, char *filename)
 
 
 	o_current = w_current->page_current->object_head;
+
+	/* make sure you init net_consolide to false (default) in all */
+        /* programs */
+        if (w_current->net_consolidate == TRUE) {
+		o_net_consolidate(w_current);
+	}
 
 	o_save_write_header(fp);
 

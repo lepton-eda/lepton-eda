@@ -98,16 +98,21 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-bin_PROGRAMS = gnetlist
+bin_PROGRAMS = gnetlist mk_verilog_syms
 
 # don't forget all *.h files */
 gnetlist_SOURCES =  		g_netlist.c g_rc.c g_register.c globals.c 		gnetlist.c parsecmd.c s_cpinlist.c s_net.c 		s_netlist.c s_project.c s_traverse.c
+
+
+mk_verilog_syms_SOURCES =  		mk_verilog_syms.c
 
 
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
 
 INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
 gnetlist_LDADD = @GUILE_LIB@ @GLIB@ @X_LDFLAGS@ 
+
+mk_verilog_syms_LDADD = -lm 
 
 # original gnetlist which links in everything
 #gnetlist_LDADD = @STROKE_LIB@ @GUILE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ 
@@ -136,6 +141,9 @@ gnetlist_OBJECTS =  g_netlist.o g_rc.o g_register.o globals.o gnetlist.o \
 parsecmd.o s_cpinlist.o s_net.o s_netlist.o s_project.o s_traverse.o
 gnetlist_DEPENDENCIES = 
 gnetlist_LDFLAGS = 
+mk_verilog_syms_OBJECTS =  mk_verilog_syms.o
+mk_verilog_syms_DEPENDENCIES = 
+mk_verilog_syms_LDFLAGS = 
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -153,10 +161,11 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 TAR = tar
 GZIP_ENV = --best
 DEP_FILES =  .deps/g_netlist.P .deps/g_rc.P .deps/g_register.P \
-.deps/globals.P .deps/gnetlist.P .deps/parsecmd.P .deps/s_cpinlist.P \
-.deps/s_net.P .deps/s_netlist.P .deps/s_project.P .deps/s_traverse.P
-SOURCES = $(gnetlist_SOURCES)
-OBJECTS = $(gnetlist_OBJECTS)
+.deps/globals.P .deps/gnetlist.P .deps/mk_verilog_syms.P \
+.deps/parsecmd.P .deps/s_cpinlist.P .deps/s_net.P .deps/s_netlist.P \
+.deps/s_project.P .deps/s_traverse.P
+SOURCES = $(gnetlist_SOURCES) $(mk_verilog_syms_SOURCES)
+OBJECTS = $(gnetlist_OBJECTS) $(mk_verilog_syms_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
@@ -229,6 +238,10 @@ maintainer-clean-libtool:
 gnetlist: $(gnetlist_OBJECTS) $(gnetlist_DEPENDENCIES)
 	@rm -f gnetlist
 	$(LINK) $(gnetlist_LDFLAGS) $(gnetlist_OBJECTS) $(gnetlist_LDADD) $(LIBS)
+
+mk_verilog_syms: $(mk_verilog_syms_OBJECTS) $(mk_verilog_syms_DEPENDENCIES)
+	@rm -f mk_verilog_syms
+	$(LINK) $(mk_verilog_syms_LDFLAGS) $(mk_verilog_syms_OBJECTS) $(mk_verilog_syms_LDADD) $(LIBS)
 
 install-man1:
 	$(mkinstalldirs) $(DESTDIR)$(man1dir)
