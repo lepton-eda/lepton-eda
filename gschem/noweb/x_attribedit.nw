@@ -101,9 +101,9 @@ void
 attrib_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
-   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-	attrib_edit_dialog_cancel(NULL, w_current);	
-   }
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+    attrib_edit_dialog_cancel(NULL, w_current);	
+  }
 }
 @ %def attrib_edit_dialog_keypress
 
@@ -978,6 +978,10 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 		     w_current);
   gtk_signal_connect(GTK_OBJECT(value_entry), "activate",
 		     GTK_SIGNAL_FUNC(attrib_edit_dialog_ok), w_current);
+
+  gtk_signal_connect(GTK_OBJECT(aewindow), "key_press_event",
+                     (GtkSignalFunc) attrib_edit_dialog_keypress, w_current);
+
   if (list) {
     gtk_signal_connect(GTK_OBJECT(deletebutton), "clicked",
 		       GTK_SIGNAL_FUNC(attrib_edit_dialog_delete),
@@ -986,10 +990,10 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 
   gtk_grab_add(w_current->aewindow);
 
-  if (attrib) { 
-        gtk_widget_grab_focus(value_entry);
+  if (attrib || (name && strcmp(name, "netname") == 0)) { 
+    gtk_widget_grab_focus(value_entry);
   } else {  
-        gtk_widget_grab_focus(attrib_combo_entry);
+    gtk_widget_grab_focus(attrib_combo_entry);
   }
 }
 

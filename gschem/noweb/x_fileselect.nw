@@ -13,6 +13,7 @@
 <<x_fileselect.c : include directives>>
 <<x_fileselect.c : macros>>
 <<x_fileselect.c : x_fileselect_destroy_window()>>
+<<x_fileselect.c : x_fileselect_keypress()>>
 <<x_fileselect.c : x_fileselect_init_list_buffers()>>
 <<x_fileselect.c : x_fileselect_free_list_buffers()>>
 
@@ -155,6 +156,23 @@ x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current)
 
 
 @ %def x_fileselect_destroy_window
+
+
+@section Function @code{x_fileselect_keypress()}
+
+@defun x_fileselect_keypress w event w_current
+@end defun
+
+<<x_fileselect.c : x_fileselect_keypress()>>=
+void
+x_fileselect_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              FILEDIALOG* f_current)
+{
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+    x_fileselect_close (NULL, f_current);
+  }
+}
+@ %def x_fileselect_keypress
 
 
 @section Function @code{x_fileselect_init_list_buffers()}
@@ -1984,6 +2002,9 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
                        "destroy",
                        GTK_SIGNAL_FUNC(x_fileselect_destroy_window),
                        f_current);
+
+    gtk_signal_connect(GTK_OBJECT(f_current->xfwindow), "key_press_event",
+                       (GtkSignalFunc) x_fileselect_keypress, f_current);
 
     vbox = gtk_vbox_new (FALSE, 0);
     gtk_container_set_border_width(GTK_CONTAINER (

@@ -19,12 +19,12 @@ gschemdoc_TEXINFOS =	a_pan.texi a_zoom.texi g_funcs.texi g_hook.texi       \
 			o_copy.texi o_cue.texi o_delete.texi o_find.texi      \
 			o_grips.texi o_line.texi o_misc.texi o_move.texi      \
 			o_net.texi o_pin.texi o_select.texi o_slot.texi       \
-			o_text.texi o_undo.texi parsecmd.texi x_attrsel.texi  \
+			o_text.texi o_undo.texi parsecmd.texi                 \
 			x_basic.texi x_color.texi x_dialog.texi x_event.texi  \
 			x_fileselect.texi x_grid.texi x_image.texi x_log.texi \
 			x_menus.texi x_multimulti.texi x_pagesel.texi         \
 			x_preview.texi x_print.texi x_script.texi             \
-			x_stroke.texi x_window.texi
+			x_stroke.texi x_window.texi x_attribedit.texi
 TEXINFO_TEX =		./texinfo.tex
 
 

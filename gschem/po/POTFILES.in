@@ -21,7 +21,6 @@ noweb/o_move.nw
 noweb/o_net.nw
 noweb/o_slot.nw
 noweb/o_undo.nw
-noweb/x_attrsel.nw
 noweb/x_color.nw
 noweb/x_attribedit.nw
 noweb/x_dialog.nw
