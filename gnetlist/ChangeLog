@@ -1,3 +1,10 @@
+2004-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm: Added Stuart's latest backend
+	
+	* tests/*: Updated some of the golden files to take into account
+	version change string in new spice-sdb backend.
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/i_vars.h, prototype.h, src/g_rc.c, g_register.c,
