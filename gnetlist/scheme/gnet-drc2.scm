@@ -21,6 +21,7 @@
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
 ;;
+;;  2003-10-24: Added numslots and slot attributes check.
 ;;  2003-06-17: Added configuration support and slots check.
 ;;  2003-06-05: Now checking for unconnected pins look into the DRC matrix if 
 ;;              it should issue an error, warning, or do nothing.
@@ -43,6 +44,7 @@
 ;; Type of pins connected to each net.     dont-check-pintypes-of-nets           whatever you want
 ;; Net not driven.                         dont-check-not-driven-nets            whatever you want
 ;; Unconnected pins                        dont-check-unconnected-pins           whatever you want
+;; Values of slot and numslots attribs.    dont-check-slots                      whatever you want
 ;; Slot is used more than one time.        dont-check-duplicated-slots           whatever you want
 ;; Reports unused slots                    dont-check-unused-slots               whatever you want
 ;;     Don't report anything               action-unused-slots                   #\c
@@ -328,6 +330,8 @@
     (for-each check-duplicated-slots-of-package packages)
 ))
 
+
+
 ;;
 ;; Checks for slots not used.
 ;;
@@ -360,14 +364,102 @@
 
 	(if (integer? (string->number (gnetlist:get-package-attribute uref "numslots")))
 	    (check-slots-loop 1 (gnetlist:get-unique-slots uref))
-	    (begin
-	      (display (string-append "INTERNAL ERROR: Uref " uref " has no numslots attribute."))
-	      (newline)))
+	    )
 	))
 
     (for-each check-unused-slots-of-package packages)
     ))
 
+;;
+;; Check slot number is greater or equal than numslots for all packages
+;;
+(define drc2:check-slots
+  (lambda (port)
+    (define check-slots-of-package
+      (lambda (uref)
+	
+	(let* ( (numslots_string (gnetlist:get-package-attribute uref "numslots"))
+		(numslots (string->number numslots_string))
+		(slot_string (gnetlist:get-package-attribute uref "slot"))
+		(slot (string->number slot_string))
+		)
+	  (begin
+	    (define check-slots-loop
+	      (lambda (slots_list)
+		(let ((this_slot (car slots_list)))
+		  (if (integer? this_slot)
+		      (if (not (and (<= this_slot numslots) (>= this_slot 1)))
+			  ;; If slot is not between 1 and numslots, then report an error.
+			  (begin
+			    (display (string-append "ERROR: Reference " uref 
+						    ": Slot out of range (" 
+						    (number->string this_slot)
+						    ").") port)
+			    (newline port)
+			    (set! errors_number (+ errors_number 1))))
+		      
+		  (check-slots-loop (cdr slots_list))
+		  ))))
+	    
+	    (if (string-ci=? slot_string "unknown")
+		(begin
+		  ;; If slot attribute is not defined.
+		  (if (or (string-ci=? numslots_string "unknown") (= numslots 0))
+		      (begin
+			;; No slot neither numslots (or set to zero) attributes defined.
+			;; This is correct.
+			;;(display (string-append "No slotted reference: " uref))
+			(display "")
+			;;(newline)
+			)
+		      (begin
+			;; Slot not defined, but numslots defined or different than 0.
+			;; This is incorrect. Check if numslots is a number and
+			;; report the situation to the user.
+			(if (integer? numslots)
+			    ;; If no slot attribute, but numslots is defined and not zero.
+			    (begin
+			      ;; If numslots is a number, then slot should be defined.
+			      (display (string-append "ERROR: Multislotted reference " uref 
+						      " has no slot attribute defined.") port)
+			      (newline port)
+			      (set! errors_number (+ errors_number 1)))
+			    (begin
+			      (display (string-append "ERROR: Reference " uref 
+						      ": Incorrect value of numslots attribute ("
+						      numslots_string ").") 
+				       port)
+			      (newline port)
+			       (set! errors_number (+ errors_number 1))
+			      )
+			    )
+			))
+		  )
+		(begin
+		  ;; Slot attribute defined.
+		  ;; If it's a number, then check slots. If it's not, then report an error.
+		  (if (integer? slot)
+		      (if (integer? numslots)
+			  (check-slots-loop (gnetlist:get-unique-slots uref))
+			  (begin
+			    ;; Slot is defined and it's a number, but numslots it's not a number.
+			    (display (string-append "ERROR: Reference " uref
+						    ": Incorrect value of numslots attribute ("
+						    numslots_string ").") port)
+			    (newline port)
+			    (set! errors_number (+ errors_number 1))))
+		      (begin
+			;; Slot attribute is not a number.
+			(display (string-append "ERROR: Reference " uref 
+						": Incorrect value of slot attribute ("
+						slot_string ").") port)
+			(newline port)
+			(set! errors_number (+ errors_number 1))))
+		  ))))))
+    
+
+    (for-each check-slots-of-package packages)
+    ))
 
 ;
 ;  End of symbol checking functions
@@ -733,6 +825,14 @@
 		  (display "Checking unconnected pins..." port)
 		  (newline port)
 		  (drc2:check-unconnected-pins port packages (gnetlist:get-pins-nets (car packages)))
+		  (newline port)))
+
+	    ;; Check slots   
+	    (if (not (defined? 'dont-check-slots))
+		(begin
+		  (display "Checking slots..." port)
+		  (newline port)
+		  (drc2:check-slots port)
 		  (newline port)))
 
 	    ;; Check for duplicated slots   

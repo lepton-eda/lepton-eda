@@ -1,3 +1,9 @@
+2003-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-drc2.scm, src/g_netlist.c: Applied Carlos' latest
+	drc2 patch.  This fixed the slotting check and improved an error
+	message from gnetlist.  Minor tweeks by Ales.
+
 2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Fixed wrong command line option (-r is not a 
