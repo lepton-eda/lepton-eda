@@ -89,6 +89,7 @@ AC_SUBST(OTHERPATHSEP)
 
 AC_CONFIG_FILES([Makefile \
 		examples/Makefile \
+  	  	scripts/Makefile \
 		src/Makefile ])
 AC_OUTPUT
 

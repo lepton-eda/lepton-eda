@@ -1,5 +1,5 @@
 
-SUBDIRS = src examples
+SUBDIRS = src scripts examples 
 
 EXTRA_DIST = 
 

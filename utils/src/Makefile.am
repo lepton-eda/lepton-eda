@@ -1,7 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
 bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem
-bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate
 
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c 
@@ -16,7 +15,7 @@ smash_megafile_LDADD =
 convert_sym_LDADD = $(LIBERTY) -lm
 sarlacc_schem_LDADD = 
 
-EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl sarlacc_sym
+EXTRA_DIST = 
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 
