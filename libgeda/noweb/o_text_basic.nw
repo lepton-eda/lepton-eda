@@ -240,7 +240,7 @@ o_text_print_set(void)
 
 <<o_text_basic.c : o_text_load_font()>>=
 OBJECT *
-o_text_load_font(TOPLEVEL *w_current, char needed_char)
+o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 {
   char temp_string[256]; /* remove me HACK !!!!!!!!!!!!!!!!!!!!! */
   OBJECT *temp_parent;
@@ -411,37 +411,38 @@ o_text_load_font(TOPLEVEL *w_current, char needed_char)
       sprintf(temp_string, "%s%cvbar.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
+
       /* finnish / swedish characters */
-    case('Ä'):
-      sprintf(temp_string, "%s%cA-diaeresis.sym", 
+    case (196): /* Ä */
+      sprintf(temp_string, "%s%cA-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case('ä'):
-      sprintf(temp_string, "%s%ca-diaeresis.sym", 
+    case (228): /* ä */
+      sprintf(temp_string, "%s%ca_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case('Ö'):
-      sprintf(temp_string, "%s%cO-diaeresis.sym", 
+    case (214): /* Ö */
+      sprintf(temp_string, "%s%cO-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case('ö'):
-      sprintf(temp_string, "%s%co-diaeresis.sym", 
+    case (246): /* ö */
+      sprintf(temp_string, "%s%co_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case('Å'):
-      sprintf(temp_string, "%s%cA-ring.sym", 
+    case (197): /* Å */
+      sprintf(temp_string, "%s%cA-ring.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case('å'):
-      sprintf(temp_string, "%s%ca-ring.sym", 
+    case (229): /* å */
+      sprintf(temp_string, "%s%ca-ring.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
-
+      
     default:	
       /* this is needed since WinNT file systems are 
        * case insensitive, and cannot tell the difference 
@@ -472,18 +473,21 @@ o_text_load_font(TOPLEVEL *w_current, char needed_char)
 
   /* printf("loading: %s\n", temp_string);*/
 
-  font_set[(int) needed_char].font_prim_objs = o_text_add_head();
+  font_set[(unsigned char) needed_char].font_prim_objs = o_text_add_head();
 
   temp_parent = w_current->page_current->object_parent;
   /* set the addition of attributes to the head node */
-  w_current->page_current->object_parent = font_set[(int) needed_char].font_prim_objs;
+  w_current->page_current->object_parent = font_set[(unsigned char) needed_char].font_prim_objs;
 
-  font_set[(int) needed_char].font_prim_objs = o_read(w_current, font_set[(int) needed_char].font_prim_objs, temp_string);
+  font_set[(unsigned char) needed_char].font_prim_objs =
+  o_read(w_current, font_set[(unsigned char) needed_char].font_prim_objs,
+         temp_string);
   w_current->page_current->object_parent = temp_parent;
 
-  font_set[(int) needed_char].font_prim_objs = return_head(font_set[(int) needed_char].font_prim_objs);
+  font_set[(unsigned char) needed_char].font_prim_objs =
+  return_head(font_set[(unsigned char) needed_char].font_prim_objs);
 	
-  return(font_set[(int) needed_char].font_prim_objs);
+  return(font_set[(unsigned char) needed_char].font_prim_objs);
 }
 
 
@@ -526,8 +530,8 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
   len = strlen(string);
 
   for (i = 0 ; i < len ; i++ ) {
-    if (font_set[(int) string[i]].font_prim_objs == NULL) {
-      o_text_load_font(w_current, string[i]);
+    if (font_set[(unsigned char) string[i]].font_prim_objs == NULL) {
+      o_text_load_font(w_current, (unsigned char) string[i]);
     }
 
     /* if (string[i] == ' ') {
@@ -535,7 +539,7 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
        } else { 
        }*/
 
-    width = width + size*font_set[(int) string[i]].font_text_size;
+    width = width + size*font_set[(unsigned char) string[i]].font_text_size;
   }
 
   /* the size is a fudge factor */
@@ -732,15 +736,15 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
   for (i = 0 ; i < len ; i++ ) {
 		
-    if (font_set[(int) string[i]].font_prim_objs == NULL) {
-      o_text_load_font(w_current, string[i]);
+    if (font_set[(unsigned char) string[i]].font_prim_objs == NULL) {
+      o_text_load_font(w_current, (unsigned char) string[i]);
     }
 
     start_of_char = temp_list;
 
-    if (font_set[(int) string[i]].font_prim_objs->next) {
+    if (font_set[(unsigned char) string[i]].font_prim_objs->next) {
       temp_list = o_list_copy_all(w_current, 
-                                  font_set[(int) string[i]].font_prim_objs->next, 
+                                  font_set[(unsigned char) string[i]].font_prim_objs->next, 
                                   temp_list, NORMAL_FLAG);
       start_of_char = start_of_char->next;
       o_complex_set_color(start_of_char, color);	
@@ -757,22 +761,22 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
     switch(angle) {
       case(0):	
         x_offset = (x_offset) + 
-          size/2*font_set[(int) string[i]].font_text_size;
+          size/2*font_set[(unsigned char) string[i]].font_text_size;
         break;
 		
       case(90):
         y_offset = (y_offset) + 
-          size/2*font_set[(int) string[i]].font_text_size;
+          size/2*font_set[(unsigned char) string[i]].font_text_size;
         break;
 
       case(180):
         x_offset = (x_offset) - 
-          size/2*font_set[(int) string[i]].font_text_size;
+          size/2*font_set[(unsigned char) string[i]].font_text_size;
         break;
 		
       case(270):
         y_offset = (y_offset) - 
-          size/2*font_set[(int) string[i]].font_text_size;
+          size/2*font_set[(unsigned char) string[i]].font_text_size;
         break;
     }
   }
@@ -1073,7 +1077,7 @@ o_text_set_info_font(char buf[])
   char type; 
   int width;
   char character;
-  int temp;
+  unsigned int temp;
   int special=0;
   char string[81]; /* not sure if this is right ? hack */
 	
@@ -1088,9 +1092,10 @@ o_text_set_info_font(char buf[])
     character = 32;
   }
 
-  temp = character;
+  
+  temp = (unsigned char) character;
   if ( temp >= 0 && temp <= 255) {
-    font_set[(int) character].font_text_size = width;
+    font_set[(unsigned char) character].font_text_size = width;
   }
 }
 

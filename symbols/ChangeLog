@@ -1,4 +1,9 @@
-2002-07-06 Werner Hoch <werner.ho@gmx.de>
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* font/a_-diaeresis.sym, o_-diaeresis.sym: Renamed these 
+	font def files to include the _ to signify the lowercase version.
+
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* connector/aui-1.sym: Added symbol by Karel Kulhavy
 

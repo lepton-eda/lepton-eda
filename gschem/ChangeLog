@@ -359,7 +359,7 @@
 2002-02-09 Ales Hvezda <ahvezda@geda.seul.org>
 
 	* noweb/o_text.nw: Improved o_text_edit_end to loop over all
-	selected wobjects and change the text size or alignment.  If more
+	selected objects and change the text size or alignment.  If more
 	than one object is selected then only change size and alignment
 	and not the string.  String can only be changed if one object is 
 	selected.

@@ -1,3 +1,8 @@
+2002-07-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Fixed the crash when you try to display
+	the finnish/swedish characters
+	
 2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_complex_basic.nw: Changed o_complex_return_pin_object()

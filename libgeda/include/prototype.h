@@ -326,7 +326,7 @@ void world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, in
 OBJECT *o_text_add_head(void);
 void o_text_init(void);
 void o_text_print_set(void);
-OBJECT *o_text_load_font(TOPLEVEL *w_current, char needed_char);
+OBJECT *o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char);
 int o_text_height(TOPLEVEL *w_current, int size);
 int o_text_width(TOPLEVEL *w_current, char *string, int size);
 OBJECT *o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list, char *string, int size, int color, int x, int y, int alignment, int angle);
