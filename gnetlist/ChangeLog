@@ -1,3 +1,14 @@
+2001-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/bompp.sh: Added bom pretty printer written by Rolf Fiedler
+
+	* src/annotate.sh: Added script written by JM Routoure and modified
+	  by Rolf Fiedler
+
+	* src/unannotate.sh: Added script written by Rolf Fiedler
+
+	* src/bom_xref.sh: Added script written by Rolf Fiedler
+
 2001-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-partlist*.scm: Added part list netlist backend written

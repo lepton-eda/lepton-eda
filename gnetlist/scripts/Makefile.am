@@ -1,5 +1,5 @@
 
-EXTRA_DIST =
+EXTRA_DIST = bompp.sh annotate.sh unannotate.sh bom_xref.sh
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
