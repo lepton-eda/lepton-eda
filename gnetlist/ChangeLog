@@ -1,3 +1,26 @@
+2002-09-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Removed s_project.c from the list of source
+	files.  This functionality is now provided by libgeda
+
+	* tests/*: Updated test output to take into account the changes
+	that Werner Hoch has been making to the symbol library.
+
+	* src/i_var.c: header comment update
+
+	* src/s_project.c: Obsoleted file.  This file is no longer in use.
+
+	* src/globals.c: Added variable_set_func and quit_func.  These are
+	used by libgeda and gnetlist.
+	
+2002-09-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-bom.scm, gnet-bom2.scm, gnet-drc.scm,  
+	  gnet-partslist1.scm, gnet-partslist2.scm,
+          gnet-partslist3.scm: Added a missing `close-output-port' to
+	  each of these backends.  Output would not be written to the port
+	  if the port wasn't closed (affects the win32 port mainly).
+
 2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/*.nw: Cleaned up -Wall warnings

@@ -43,7 +43,8 @@
     (let ((port (open-output-file output-filename)))
       (drc:device-rules drc:attriblist packages port)
       (drc:net-rules (gnetlist:get-all-unique-nets "dummy") port)
-      (drc:pin-rules packages port))))
+      (drc:pin-rules packages port)
+      (close-output-port port))))
 
 
 (define drc:net-rules

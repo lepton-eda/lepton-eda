@@ -8,7 +8,7 @@ bin_SCRIPTS = gschem2pcb
 gnetlist_SOURCES = \
 		i_vars.c g_netlist.c g_rc.c g_register.c globals.c \
 		gnetlist.c parsecmd.c s_cpinlist.c s_net.c \
-		s_netlist.c s_netattrib.c s_project.c s_traverse.c \
+		s_netlist.c s_netattrib.c s_traverse.c \
 		s_rename.c s_hierarchy.c s_misc.c vams_misc.c
 
 INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@  

@@ -39,4 +39,5 @@
 	  (parts-table (marge-sort-with-multikey (get-parts-table packages) '(0 1 2))))
       (partslist1:write-top-header port)
       (partslist1:write-partslist parts-table port)
-      (partslist1:write-bottom-footer port))))
+      (partslist1:write-bottom-footer port)
+      (close-output-port port))))

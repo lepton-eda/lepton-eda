@@ -35,7 +35,8 @@
 	  (attriblist (bom2:parseconfig (open-input-file "attribs"))))
       (bom2:printlist (cons 'package attriblist) port #\:)
       (newline port)
-      (bom2:printbom port (bom2:components packages attriblist)))))
+      (bom2:printbom port (bom2:components packages attriblist))
+      (close-output-port port))))
 
 (define bom2:printbom
   (lambda (port bomlist)

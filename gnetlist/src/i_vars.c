@@ -1,5 +1,5 @@
 /* gEDA - GPL Electronic Design Automation
- * gschem - gEDA Schematic Capture
+ * gnetlist - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify

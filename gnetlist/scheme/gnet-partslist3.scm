@@ -56,4 +56,5 @@
       (set! parts-table (count-same-parts parts-table))
       (partslist3:write-top-header port)
       (partslist3:write-partslist parts-table port)
-      (partslist3:write-bottom-footer port))))
+      (partslist3:write-bottom-footer port)
+      (close-output-port port))))

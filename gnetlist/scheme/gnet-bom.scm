@@ -34,7 +34,8 @@
     (let ((port (open-output-file output-filename))
 	  (attriblist (bom:parseconfig (open-input-file "attribs"))))
       (bom:printlist (cons 'package attriblist) port)
-      (bom:components port packages attriblist))))
+      (bom:components port packages attriblist)
+      (close-output-port port))))
 
 (define bom:printlist
   (lambda (ls port)
