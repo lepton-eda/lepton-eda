@@ -1,3 +1,8 @@
+2003-03-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gschem.scm: Fixed the crashing bug when you press a
+	"no-action" bound key.  Patch by Dan McMahill. Thanks.
+
 2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * noweb/g_rc.nw, noweb/i_vars.nw, noweb/x_print.nw: Applied Antonio's 
