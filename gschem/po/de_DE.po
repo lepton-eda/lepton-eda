@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "POT-Creation-Date: 2002-09-26 21:17-0400\n"
-"PO-Revision-Date: 2002-09-26 11:47GMT\n"
+"PO-Revision-Date: 2002-09-27 16:04GMT\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -450,7 +450,7 @@ msgstr "Editiere Linienart"
 
 #: noweb/i_callbacks.nw:1635 noweb/x_dialog.nw:1481
 msgid "Edit Fill Type"
-msgstr "Editiere Füllart"
+msgstr "Editiere Füllmuster"
 
 #: noweb/i_callbacks.nw:1727 noweb/i_callbacks.nw:1747 noweb/rcstrings.nw:61
 msgid "Zoom Box"
@@ -1180,7 +1180,7 @@ msgstr "Schraffiert"
 
 #: noweb/x_dialog.nw:1487
 msgid "Fill Type"
-msgstr "Füllart"
+msgstr "Füllmuster"
 
 #: noweb/x_dialog.nw:1526
 msgid "Angle1"
@@ -1746,7 +1746,7 @@ msgstr "Spiegel Modus"
 
 #: noweb/x_window.nw:1084
 msgid "Pick"
-msgstr "Aufnehmen"
+msgstr "Auswählen"
 
 #: noweb/x_window.nw:1102
 msgid "Repeat/none"
@@ -1761,9 +1761,8 @@ msgid "Pan/Cancel"
 msgstr "Ausschnitt/Cancel"
 
 #: noweb/rcstrings.nw:2
-#, fuzzy
 msgid "File"
-msgstr "Dateien"
+msgstr "Datei"
 
 #: noweb/rcstrings.nw:3
 msgid "New Window"
@@ -1827,7 +1826,7 @@ msgstr "Linieneigenschaften..."
 
 #: noweb/rcstrings.nw:33
 msgid "Fill Type..."
-msgstr "Füllart"
+msgstr "Füllung..."
 
 #: noweb/rcstrings.nw:34
 msgid "Symbol Translate..."
@@ -1855,7 +1854,7 @@ msgstr "Text sichtbar machen"
 
 #: noweb/rcstrings.nw:41
 msgid "Buffer"
-msgstr ""
+msgstr "Puffer"
 
 #: noweb/rcstrings.nw:42
 msgid "Copy into 1"
@@ -1919,7 +1918,7 @@ msgstr "Einfügen aus 5"
 
 #: noweb/rcstrings.nw:58
 msgid "View"
-msgstr ""
+msgstr "Ansicht"
 
 #: noweb/rcstrings.nw:59
 msgid "Redraw"
@@ -1942,9 +1941,8 @@ msgid "Zoom Full"
 msgstr "Ganze Seite"
 
 #: noweb/rcstrings.nw:67
-#, fuzzy
 msgid "Page"
-msgstr "Neue Seite"
+msgstr "Seite"
 
 #: noweb/rcstrings.nw:68
 msgid "Manager..."
@@ -1968,7 +1966,7 @@ msgstr "Ablegen"
 
 #: noweb/rcstrings.nw:76
 msgid "Add"
-msgstr ""
+msgstr "Einfügen"
 
 #: noweb/rcstrings.nw:77
 msgid "Component..."
@@ -1984,7 +1982,7 @@ msgstr "Text..."
 
 #: noweb/rcstrings.nw:88
 msgid "Hierarchy"
-msgstr ""
+msgstr "Hierarchie"
 
 #: noweb/rcstrings.nw:89
 msgid "Down Schematic"
@@ -1999,7 +1997,6 @@ msgid "Up"
 msgstr "Hinauf"
 
 #: noweb/rcstrings.nw:93
-#, fuzzy
 msgid "Attributes"
 msgstr "Attribut"
 
@@ -2024,9 +2021,8 @@ msgid "Toggle Visibility"
 msgstr "Sichbarkeit EIN/AUS"
 
 #: noweb/rcstrings.nw:101
-#, fuzzy
 msgid "Options"
-msgstr "Aktion"
+msgstr "Optionen"
 
 #: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
@@ -2058,7 +2054,7 @@ msgstr "am Raster ausrichten EIN/AUS"
 
 #: noweb/rcstrings.nw:109
 msgid "Snap Grid Spacing..."
-msgstr "Am Raster ausrichten"
+msgstr "Rastermaß eingeben..."
 
 #: noweb/rcstrings.nw:110
 msgid "Toggle Outline/Box"
@@ -2078,4 +2074,4 @@ msgstr "Koordinaten anzeigen..."
 
 #: noweb/rcstrings.nw:115
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
