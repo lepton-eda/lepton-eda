@@ -4,6 +4,13 @@
 	the GEDA_VERSION so that packages get created with the right
 	version number
 
+	* src/s_toplevel.c, x_dialog.c: Added a few #ifdef HAS_GTK22 tests
+	to get gattrib to build using gtk12.  The addition tests in x_dialog.c
+	are probably okay, but the test in s_toplevel.c needs to be fixed
+	properly.
+
+	* Makefile.am: Added missing file to EXTRA_DIST variable
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228

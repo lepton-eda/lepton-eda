@@ -85,7 +85,11 @@ char *x_dialog_newattrib_get_name()
   newattrib_window = x_dialog_create_dialog_box(&vbox, &action_area);
   gtk_window_position(GTK_WINDOW(newattrib_window),
 		      GTK_WIN_POS_MOUSE);
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET(newattrib_window), 400, 150);  
+#else
+  gtk_widget_set_usize(GTK_WIDGET(newattrib_window), 400, 150);
+#endif
   
   gtk_window_set_title(GTK_WINDOW(newattrib_window), "Enter new attribute name");
   gtk_container_border_width(GTK_CONTAINER(newattrib_window), 5);
@@ -103,7 +107,11 @@ char *x_dialog_newattrib_get_name()
   label = gtk_label_new (_("Enter new attribute name"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (label, 127, 50);
+#else
+  gtk_widget_set_usize (label, 127, 50);
+#endif
 
 
   /*  Create the "attrib" text entry area */
@@ -112,7 +120,12 @@ char *x_dialog_newattrib_get_name()
                              -1);
   gtk_box_pack_start(GTK_BOX(vbox), attrib_entry, TRUE,
                      TRUE, 5);
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (attrib_entry), 400, 20);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (attrib_entry), 400, 20);
+#endif
+
   gtk_object_set_data(GTK_OBJECT(newattrib_window), "attrib_entry",
                       attrib_entry);  /* here we make the string "attrib_entry" point
 				       * to the attrib_entry widget.  We'll use this later. */
@@ -126,7 +139,12 @@ char *x_dialog_newattrib_get_name()
   gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_newattrib_ok_callback), 
 		     GTK_WIDGET(newattrib_window) );
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonok), 50, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttonok), 50, 30);
+#endif
+
   gtk_widget_show(buttonok);
 
 
@@ -135,7 +153,11 @@ char *x_dialog_newattrib_get_name()
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_newattrib_close_callback), 
 		     GTK_WIDGET(newattrib_window) );
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttoncancel), 50, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttoncancel), 50, 30);
+#endif
   gtk_widget_show(buttoncancel);
 
 
@@ -256,7 +278,11 @@ int x_dialog_delattrib_confirm()
   delattrib_window = x_dialog_create_dialog_box(&vbox, &action_area);
   gtk_window_position(GTK_WINDOW(delattrib_window),
 		      GTK_WIN_POS_MOUSE);
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET(delattrib_window), 400, 150);  
+#else
+  gtk_widget_set_usize (GTK_WIDGET(delattrib_window), 400, 150);  
+#endif
 
   gtk_window_set_title(GTK_WINDOW(delattrib_window), "Are you sure?");
   gtk_container_border_width(GTK_CONTAINER(delattrib_window), 5);
@@ -274,7 +300,11 @@ int x_dialog_delattrib_confirm()
   label = gtk_label_new (_("Are you sure you want to delete this attribute?"));
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (label, 127, 50);
+#else
+  gtk_widget_set_usize (label, 127, 50);
+#endif
 
 
   /* Now create "Yes" and "cancel" buttons */
@@ -284,7 +314,11 @@ int x_dialog_delattrib_confirm()
   gtk_signal_connect(GTK_OBJECT(buttonyes), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_delattrib_yes_callback), 
 		     GTK_WIDGET(delattrib_window) );
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonyes), 50, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttonyes), 50, 30);
+#endif
   gtk_widget_show(buttonyes);
 
 
@@ -293,7 +327,11 @@ int x_dialog_delattrib_confirm()
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_delattrib_close_callback), 
 		     GTK_WIDGET(delattrib_window) );
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttoncancel), 50, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttoncancel), 50, 30);
+#endif
   gtk_widget_show(buttoncancel);
 
 
@@ -432,7 +470,11 @@ int x_dialog_unimplemented_feature()
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_about_close_callback),  /* stealing "about" fcn */
 		     GTK_WIDGET(unimplemented_feature_window) );
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttonclose), 50, 30);
+#endif
   gtk_widget_show(buttonclose);
 
   if (!GTK_WIDGET_VISIBLE(unimplemented_feature_window)) {
@@ -535,7 +577,11 @@ void x_dialog_about_dialog()
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_about_close_callback), 
 		     GTK_WIDGET(about_window) );
+#ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttonclose), 50, 30);
+#endif
   gtk_widget_show(buttonclose);
 
   if (!GTK_WIDGET_VISIBLE(about_window)) {
