@@ -459,6 +459,9 @@ int x_dialog_missing_sym(OBJECT *object)
     g_strdup_printf(_("Warning!  The component with refdes %s is missing a symbol file!\n"), refdes);
   string =
     g_strdup_printf(_("%s\n"), string);
+
+#if 0
+  /* Don't need this part of the warning now because I have created placeholders. Maybe delete it?*/
   string =
     g_strdup_printf(_("%sIf you save out a design with a missing symbol file, gattrib could\n"), string);
   string =
@@ -467,6 +470,8 @@ int x_dialog_missing_sym(OBJECT *object)
     g_strdup_printf(_("%sdon't want this!\n"), string);
   string =
     g_strdup_printf(_("%s\n"), string);
+#endif
+
   string =
     g_strdup_printf(_("%sThis probably happened because gattrib couldn't find your component libraries,\n"), string);
   string =

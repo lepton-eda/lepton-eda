@@ -1,3 +1,9 @@
+2005-01-21 Stuart Brorson   <sdb@cloud9.net>
+
+        * src/s_toplevel.c, src/x_dialog.c: Fix bug where only one
+	page of design was searched for missing attribs.  Also updated
+	missing_sym dialog box.
+	
 2005-01-19 Stuart Brorson   <sdb@cloud9.net>
 
         * src/(s_object.c, gattrib.c, s_toplevel.c,x_fileselect.c,

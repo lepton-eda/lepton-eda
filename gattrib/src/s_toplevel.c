@@ -107,17 +107,25 @@ int s_toplevel_read_page(char *filename)
 int s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
   OBJECT *o_current;
+  PAGE *p_current;
 
 #ifdef DEBUG
    printf("In s_toplevel_verify_design, about to check that all components have sym files.\n");
 #endif
-   o_current = pr_current->page_current->object_head;
-   while (o_current != NULL) {
-     /* ------- look for object, and verify that it has a symbol file attached. ----- */
-     if (o_current->type == OBJ_PLACEHOLDER) {  
-       x_dialog_missing_sym(o_current);  /* dialog gives user option to quit */
-     }
-     o_current = o_current->next;
+   
+   p_current = pr_current->page_head; /* must iterate over all pages in design */
+   while (p_current != NULL) {
+     if (p_current->pid != -1) {  /* skip over page_head which has pid = -1. */
+       o_current = p_current->object_head;
+       while (o_current != NULL) { 
+	 /* --- look for object, and verify that it has a symbol file attached. ---- */
+	 if (o_current->type == OBJ_PLACEHOLDER) {  
+	   x_dialog_missing_sym(o_current);  /* dialog gives user option to quit */
+	 }
+	 o_current = o_current->next;
+       }
+     }  /* if (p_current->pid != -1) */
+     p_current = p_current->next;
    }
 }
 
