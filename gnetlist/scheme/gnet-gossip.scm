@@ -53,7 +53,7 @@
 
 (define gossip:list-pins
    (lambda (allnets uref pin port)
-      (let ((pinname (gnetlist:get-pin-attribute uref pin "label")))
+      (let ((pinname (gnetlist:get-pin-attribute uref (number->string pin) "label")))
          (if (string=? "unknown" pinname)
             (display ")\n" port)
             (begin
@@ -74,15 +74,15 @@
 (define gossip:find-net
    (lambda (uref pin allnets)
       (cond
-         ((null? allnets) '() )
+         ((null? allnets) "Not Connected" )
          ((gossip:finder uref pin (gnetlist:get-all-connections (car allnets)))(car allnets))
          (#t (gossip:find-net uref pin (cdr allnets))))))
 
 (define gossip:finder
    (lambda (uref pin list)
       (cond
-         ((null? list)'())
-         ((and (string=? uref (caar list)) (eq? pin (cadar list))) #t)
+         ((null? list)#f)
+         ((and (string=? uref (caar list)) (string=? (number->string pin) (cadar list))) #t)
          (#t (gossip:finder uref pin (cdr list))))))
 
 (define gossip:display-connections
