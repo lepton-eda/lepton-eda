@@ -287,8 +287,12 @@ while (( $line = <LIBRARY>) =~ /^[LRTB]/)
 #  BAD  Must set color somehow
 	print COMPONENT "P $x1 $y1 $x2 $y2 $pincolor\n";
 	print COMPONENT "{\n";
+# Output pinseq (invisible)
+	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 1 0 $pinnumalign\n";
+	print COMPONENT "pinseq=$pinnumber\n";
+# Output pinnumber
 	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize $visibility 1 0 $pinnumalign\n";
-	print COMPONENT "pin$pinnumber=$pinnumber\n";
+	print COMPONENT "pinnumber=$pinnumber\n";
 
 	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 0 0 0\n";
 	print COMPONENT "pintype=$pintype\n";

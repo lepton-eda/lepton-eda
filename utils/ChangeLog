@@ -13,7 +13,16 @@
 
 	* utils/convert_sym.c: Symbols/schematics that are outputed from
 	this tool are now current to the 20020825 attribute scheme.
-	
+
+	* utils/gmk_sym.c: Updated code to output pinseq= and pinnumber=
+	instead of pin#=#.
+
+	* utils/gmk_sym.c: Symbols that are outputed from this tool are
+	now current to the 20020825 attribute scheme.
+
+	* utils/sarlacc_sym: Updated code to output pinseq= and pinnumber=
+	instead of pin#=#.  UNTESTED, but should be okay.
+
 2002-08-14 Chris Ellec   <chris @ gtx.seul.org >
 
 	* utils/gmk_sym.c: Check for multiple instances of the same pin 

@@ -306,6 +306,25 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
    y = pos_y;
 
    /* pin_xy(dir,pin,font_size,&x,&y); */
+   /* output pinseq */
+   switch (dir)
+     {
+     case L_SIDE:
+       printf("T %d %d %d %d 0 1 0 6\n",x-50,y+50,YELLOW,font_size);
+       break;
+     case R_SIDE:
+       printf("T %d %d %d %d 0 1 0 0\n",x+50,y+50,YELLOW,font_size);
+       break;
+     case B_SIDE:
+       printf("T %d %d %d %d 0 1 90 6\n",x-50,y-50,YELLOW,font_size);
+       break;
+     case T_SIDE:
+       printf("T %d %d %d %d 0 1 90 0\n",x-50,y+50,YELLOW,font_size);
+       break;
+     }
+   printf("pinseq=%d\n",++net_pin);
+
+   /* output pinnumber */
    switch (dir)
      {
      case L_SIDE:
@@ -321,7 +340,7 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
        printf("T %d %d %d %d 1 1 90 0\n",x-50,y+50,YELLOW,font_size);
        break;
      }
-   printf("pin%d=%s\n",++net_pin,pin);
+   printf("pinnumber=%s\n",pin);
 
 
    if (type)
@@ -341,7 +360,7 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
 	   printf("T %d %d %d %d 0 0 90 1\n",pos_x,pos_y+400,YELLOW,font_size);
 	   break;
 	 }
-       printf("type=%s\n",type);
+       printf("pintype=%s\n",type);
      }
 
   if (strlen(name))
@@ -361,7 +380,7 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
 	  printf("T %d %d %d %d 1 1 90 7\n",pos_x,pos_y-100,GREEN,font_size);
 	  break;
 	}
-      printf("label=%s\n",name);
+      printf("pinlabel=%s\n",name);
     }
 
 
