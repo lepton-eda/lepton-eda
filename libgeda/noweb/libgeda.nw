@@ -73,7 +73,6 @@ other libgeda functions are called.
 void libgeda_init(void)
 {
   char *new_data=NULL;
-  char string[] = "GEDADATA";
   char *geda_data = getenv("GEDADATA");	
 
   if (geda_data == NULL) {

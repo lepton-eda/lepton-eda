@@ -260,7 +260,6 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
   OBJECT *o_current;
-  int world_centerx, world_centery;
         
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
@@ -600,7 +599,6 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   OBJECT *o_current = NULL;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
-  int world_centerx, world_centery;
 
   if (list == NULL) {
     w_current->event_state = SELECT;
