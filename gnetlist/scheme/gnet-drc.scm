@@ -42,13 +42,29 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
       (drc:device-rules drc:attriblist packages port)
-      (drc:net-rules packages port)
+      (drc:net-rules (gnetlist:get-all-unique-nets "dummy") port)
       (drc:pin-rules packages port))))
 
 
 (define drc:net-rules
-  (lambda(packages port)
-    #t))
+  (lambda(nets port)
+    (cond 
+      ((null? nets) #t)
+      ((null? (gnetlist:get-all-connections (car nets)))
+          (begin
+            (display "Net " port)
+            (display (car nets) port)
+            (display " has no connected pins\n" port)
+            (drc:net-rules (cdr nets) port)
+            #f))
+      ((null? (cdr (gnetlist:get-all-connections (car nets))))
+          (begin
+            (display "Net " port)
+            (display (car nets) port)
+            (display " has only 1 connected pin\n" port)
+            (drc:net-rules (cdr nets) port)
+            #f))
+      (#t (drc:net-rules (cdr nets) port)))))
 
 (define drc:pin-rules
   (lambda(packages port)
