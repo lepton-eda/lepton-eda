@@ -11,6 +11,7 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_bus_basic.nw instead */
 
 <<o_bus_basic.c : include directives>>
+<<o_bus_basic.c : macros>>
 <<o_bus_basic.c : get_bus_bounds()>>
 <<o_bus_basic.c : world_get_bus_bounds()>>
 <<o_bus_basic.c : o_bus_add()>>
@@ -82,6 +83,12 @@
 @ %def
 
 
+<<o_bus_basic.c : macros>>=
+#define VERSION_20020825 20020825
+
+@ %def VERSION_20020825
+
+
 @section Function @code{get_bus_bounds()}
 
 @defun get_bus_bounds w_current line left top right bottom
@@ -149,13 +156,13 @@ world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
 
 @section Function @code{o_bus_add()}
 
-@defun o_bus_add w_current object_list type color x1 y1 x2 y2
+@defun o_bus_add w_current object_list type color x1 y1 x2 y2 dir
 @end defun
 
 <<o_bus_basic.c : o_bus_add()>>=
 OBJECT *
 o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color,
-          int x1, int y1, int x2, int y2)
+          int x1, int y1, int x2, int y2, int bus_ripper_direction)
 {
   int screen_x, screen_y;
   int left, right, top, bottom;
@@ -188,6 +195,8 @@ o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color,
 
   new_node->line->screen_x[1] = screen_x;
   new_node->line->screen_y[1] = screen_y;
+
+  new_node->bus_ripper_direction = bus_ripper_direction;
 
   get_bus_bounds(w_current, new_node->line, &left, &top, &right, &bottom);
 	
@@ -283,8 +292,18 @@ o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
   int d_x1, d_y1;
   int d_x2, d_y2;
   int color;
+  int ripper_dir;
+  long int ver;
 
-  sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);	
+  ver = strtol(version, NULL, 10);
+  if(ver <= VERSION_20020825) {
+    sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
+    ripper_dir = 0;
+  } else {
+    sscanf(buf, "%c %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color,
+           &ripper_dir);
+  }
+    
   d_x1 = x1; 
   d_y1 = y1; 
   d_x2 = x2; 
@@ -294,7 +313,6 @@ o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
     fprintf(stderr, "Found a zero length bus [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
     s_log_message("Found a zero length bus [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
   }
-
 
   if (w_current->override_bus_color != -1) {
     color = w_current->override_bus_color;
@@ -306,8 +324,16 @@ o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
     s_log_message("Setting color to WHITE\n");
     color = WHITE;
   }
-              
-  object_list = o_bus_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
+
+  if (ripper_dir < -1 || ripper_dir > 1) {
+    fprintf(stderr, "Found an invalid bus ripper direction [ %s ]\n", buf);
+    s_log_message("Found an invalid bus ripper direction [ %s ]\n", buf);
+    s_log_message("Reseting direction to neutral (no direction)\n");
+    ripper_dir = 0;
+  }
+
+  object_list = o_bus_add(w_current, object_list, type, color,
+                          d_x1, d_y1, d_x2, d_y2, ripper_dir);
   return(object_list);
 }
 
@@ -338,8 +364,8 @@ o_bus_save(char *buf, OBJECT *object)
     color = object->saved_color;
   }
 
-  sprintf(buf, "%c %d %d %d %d %d", object->type,
-          x1, y1, x2, y2, color);
+  sprintf(buf, "%c %d %d %d %d %d %d", object->type,
+          x1, y1, x2, y2, color, object->bus_ripper_direction);
   return(buf);
 }
        
@@ -467,7 +493,8 @@ o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
   /* I think for now I'll disable the update and manually update */
   new_obj = o_bus_add(w_current, list_tail, OBJ_BUS, color, 
                       o_current->line->x[0], o_current->line->y[0],
-                      o_current->line->x[1], o_current->line->y[1]);
+                      o_current->line->x[1], o_current->line->y[1],
+                      o_current->bus_ripper_direction);
 
   new_obj->line->screen_x[0] = o_current->line->screen_x[0];
   new_obj->line->screen_y[0] = o_current->line->screen_y[0];
