@@ -297,7 +297,7 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GNETLIST_CFLAGS="$LIBGEDA_CFLAGS"
-GNETLIST_LDFLAGS="$LIBGEDA_LIBS $DMALLOC_LIBS $GTK_LIBS"
+GNETLIST_LDFLAGS="$LIBGEDA_LIBS $DMALLOC_LIBS"
 
 # Makefile.in variable substitution
 AC_SUBST(GNETLIST_CFLAGS)

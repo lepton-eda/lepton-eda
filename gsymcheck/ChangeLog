@@ -1,3 +1,8 @@
+2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac, src/gsymcheck.c: Removed call to gtk_init().
+	  GDK is now initialized in libgeda if it's a non-graphical app.
+	
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/gsymcheck.c (main_prog): Adapted for new logging system.

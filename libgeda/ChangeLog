@@ -1,3 +1,7 @@
+2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
+
+        * noweb/o_picture.nw: Initialize GDK if it's a non-graphical app.
+	
 2005-02-21 05:38  Dan McMahill <danmc>
 
 	* configure.ac, src/Makefile.am: if we are using gcc, add -Wall

@@ -102,6 +102,15 @@ o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   gchar buffer[MAX_TEXT_LINE_LENGTH]; 
   gchar *filename;
   GdkPixbuf *pixbuf;
+  static char gdk_initialized=0;
+
+  /* Initialize GDK first if it isn't a graphic app */
+  /* i.e: it has no main window */
+  if ( (w_current->main_window == NULL) &&
+       (gdk_initialized == 0)) {
+    gdk_init(NULL, NULL);
+    gdk_initialized = 1;
+  }
 
   num_conv = sscanf(buf, "%c %d %d %d %d %d %c %c\n",
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);

@@ -1,3 +1,8 @@
+2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* configure.ac, src/gnetlist.c: Removed call to gtk_init().
+	  GDK is now initialized in libgeda if it's a non-graphical app.
+
 2005-02-21 03:09  Dan McMahill <danmc>
 
 	* src/gnetlist.c: fix some format string/type mismatch bugs
