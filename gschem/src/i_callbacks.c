@@ -150,11 +150,14 @@ DEFINE_I_CALLBACK(file_new)
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
 	x_repaint_background(w_current);
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 DEFINE_I_CALLBACK(file_new_window)
 {
-	TOPLEVEL *w_current = x_window_create_new();
+	TOPLEVEL *w_current;
+       
+	w_current = x_window_create_new();
 
 	exit_if_null(w_current);
 
@@ -238,7 +241,6 @@ DEFINE_I_CALLBACK(file_save)
 		s_log_message("Saved [%s]\n",
 			      w_current->page_current->page_filename);
 
-                o_select_unselect_all(w_current); 
        		f_save(w_current, w_current->page_current->page_filename);
 
 		/* don't know if should be kept going to select mode... */
@@ -398,6 +400,20 @@ DEFINE_I_CALLBACK(file_quit)
 }
 
 /* Edit menu */
+
+DEFINE_I_CALLBACK(edit_undo)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	o_undo_callback(w_current, UNDO_ACTION);
+}
+
+DEFINE_I_CALLBACK(edit_redo)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	o_undo_callback(w_current, REDO_ACTION);
+}
 
 /* Select also does not update the middle button shortcut */
 DEFINE_I_CALLBACK(edit_select)
@@ -771,6 +787,7 @@ DEFINE_I_CALLBACK(view_zoom_full)
 	w_current->DONT_RESIZE = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_REDRAW = 0;
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
@@ -791,6 +808,7 @@ DEFINE_I_CALLBACK(view_zoom_limits)
 	w_current->DONT_RESIZE = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_REDRAW = 0;
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
@@ -836,6 +854,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
 	w_current->DONT_RESIZE = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_REDRAW = 0;
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
@@ -855,6 +874,7 @@ DEFINE_I_CALLBACK(view_zoom_out)
 	w_current->DONT_RESIZE = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_REDRAW = 0;
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 /* repeat middle shortcut would get into the way of what user is try
@@ -875,6 +895,7 @@ DEFINE_I_CALLBACK(view_zoom_in_hotkey)
 	w_current->DONT_RESIZE = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_REDRAW = 0;
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
@@ -894,6 +915,7 @@ DEFINE_I_CALLBACK(view_zoom_out_hotkey)
 	w_current->DONT_RESIZE = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_REDRAW = 0;
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 DEFINE_I_CALLBACK(view_pan)
@@ -937,6 +959,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
 	}
+	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
 DEFINE_I_CALLBACK(view_update_cues)
@@ -1190,6 +1213,7 @@ DEFINE_I_CALLBACK(page_revert)
 	x_window_setup_world(w_current);
 	x_manual_resize(w_current);
 	a_zoom_limits(w_current, w_current->page_current->object_head);
+	o_undo_savestate(w_current, UNDO_ALL);
 
 	/* now update the scrollbars */
 	x_hscrollbar_update(w_current);
@@ -1654,8 +1678,20 @@ DEFINE_I_CALLBACK(add_attribute)
 
 	exit_if_null(w_current);
 
-	attrib_edit_dialog(w_current, NULL);
+	attrib_edit_dialog(w_current, NULL, FROM_MENU);
 	i_update_middle_button(w_current, i_callback_add_attribute,
+			       "Attribute");
+	i_update_status2(w_current, "Select Mode");
+}
+
+DEFINE_I_CALLBACK(add_attribute_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	attrib_edit_dialog(w_current, NULL, FROM_HOTKEY);
+	i_update_middle_button(w_current, i_callback_add_attribute_hotkey,
 			       "Attribute");
 	i_update_status2(w_current, "Select Mode");
 }
@@ -2114,9 +2150,11 @@ DEFINE_I_CALLBACK(attributes_attach)
 				w_current->page_current->object_head,
 				s_current->selected_object,
 				first_object);
+			w_current->page_current->CHANGED=1;
 		}
 		s_current = s_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 DEFINE_I_CALLBACK(attributes_detach)
@@ -2151,6 +2189,7 @@ DEFINE_I_CALLBACK(attributes_detach)
 		}
 		s_current = s_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 DEFINE_I_CALLBACK(attributes_show_name)
@@ -2374,7 +2413,10 @@ DEFINE_I_CALLBACK(misc)
 
         }
 #endif
-	o_selection_print_all(w_current->page_current->selection2_head);
+	/*o_selection_print_all(w_current->page_current->selection2_head);*/
+	printf("\n\nUNDO:\n");
+	s_undo_print_all(w_current->page_current->undo_bottom);
+	
 
 #if 0 /* no longer needed and old */
 	/* In this case w_current->page_current->next can be safely null */	
