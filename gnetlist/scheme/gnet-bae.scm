@@ -93,7 +93,7 @@
 	       (display "    " port)
                (display package port)
 	       (display " : " port)
-	       (display (gnetlist:get-package-attribute package  "physical") port)
+	       (display (gnetlist:get-package-attribute package  "footprint") port)
 	       (display ";" port)
 	       (newline port)
                (bae:components port (cdr ls)))))))

@@ -177,7 +177,7 @@
 	       (newline port)
 	       (display "FOOTPRINT" port)
 	       (newline port)
-	       (display (gnetlist:get-package-attribute package  "physical") port)
+	       (display (gnetlist:get-package-attribute package  "footprint") port)
 	       (newline port)
 	       (display "PARTTYPE" port)
 	       (newline port)

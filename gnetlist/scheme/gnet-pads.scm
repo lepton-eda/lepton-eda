@@ -29,7 +29,7 @@
                   (display pattern port))
                (display package port)
 	       (write-char #\tab port) 
-               (display (gnetlist:get-package-attribute package "physical") port)
+               (display (gnetlist:get-package-attribute package "footprint") port)
                (newline port))
             (pads:components port (cdr packages))))))
 

@@ -1,3 +1,13 @@
+2000-07-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-bae.scm, scheme/gnet-pads.scm, scheme/gnet-protelII.scm:
+	  These files still referenced the "physical" attribute, when instead
+	  it should be "footprint"
+
+	* src/s_traverse.c: Because of my overloading of the "label=" attribute
+	  it was possible for a pin to supply a label to net, which is a big
+	  no-no (bug). Fixed by checking to make sure object is not a pin.
+
 2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * src/*.c: Updated copyright info in each file
