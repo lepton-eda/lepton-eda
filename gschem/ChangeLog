@@ -3,6 +3,10 @@
 	* noweb/gschem.nw: Fixed missing #include <locale.h>.  Pointed 
 	out by Karel Kulhav. 
 
+	* noweb/x_dialog.nw: Applied Carlos' patch to fix the text 
+	alignment dialog box so that it show the correct item in the 
+	options menu.
+
 2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/i_vars.h, include/prototype.h, noweb/g_funcs.nw, 

@@ -1,3 +1,20 @@
+2003-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Added some code to make sure that the
+	TAB_CHAR_MODEL character is loaded (via o_text_load_font) before
+	its text_size is used.
+
+2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h: Applied Carlos' latest tab improvement patch.
+	Added TAB_CHAR_MODEL as a #define.  TAB_CHAR_MODEL defines what
+	character is used to decide how big the single space in the tab
+	character is.
+
+	* noweb/o_text_basic.nw: Also part of  Carlos' latest tab
+	improvement patch.  Calculated the spacing for a tab using the
+	TAB_CHAR_MODEL and adding an offset.
+
 2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* a_basic.nw, g_smob.nw, m_basic.nw, o_arc_basic.nw, o_attrib.nw,

@@ -868,6 +868,10 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
       w_current->teentry = gtk_text_view_new();
       gtk_text_view_set_editable(GTK_TEXT_VIEW(w_current->teentry), TRUE);
       select_all_text_in_textview(GTK_TEXT_VIEW(w_current->teentry));
+
+      /* FIXME: Set tab's width in the textview widget. */
+      /* See first the code in text_input_dialog and get it working before adding it here. */
+
       gtk_container_add(GTK_CONTAINER(scrolled_window), w_current->teentry);
 #else
       w_current->teentry = gtk_entry_new();
@@ -909,6 +913,9 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 
                                 text_alignment);
     w_current->text_alignment = text_alignment;
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gtk_menu_get_active(GTK_MENU(align_menu))),
+				   TRUE);
+
     gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
     gtk_widget_show(optionmenu);
 

@@ -613,26 +613,29 @@ int
 o_text_width(TOPLEVEL *w_current, char *string, int size) 
 {
   int i;
-  int len, char_pos = 0;
+  int len;
   int width=0, max_width=0;
+  int size_of_tab_in_coord;
+  
+  /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
+  /* size */
+  if (font_set[(unsigned char) TAB_CHAR_MODEL[0]].font_prim_objs == NULL) {
+    o_text_load_font(w_current, (unsigned char) TAB_CHAR_MODEL[0]);
+  }
+  /* Get the maximum tab width's in coordinates */
+  size_of_tab_in_coord = tab_in_chars * size * 
+              font_set[(unsigned char) TAB_CHAR_MODEL[0]].font_text_size ;
 
   if (string == NULL)
   return 0;
   len = strlen(string);
   for (i = 0 ; i < len ; i++ ) {
     if (string[i] == '\n') {
-      char_pos = 0;
       width = 0;    
       continue;
     }
     if (string[i] == '\t') {
-      /* FIXME: Why the width of a space (size=10) is 55, and the width
-         of a letter b or c is 110, for example ? */
-      /* Remove the multiplier 2 if width of a space is the width of a
-         char */
-      width += (tab_in_chars - (char_pos % tab_in_chars)) * 2 *
-        size*font_set[(unsigned char) ' '].font_text_size ;
-      char_pos += (tab_in_chars - (char_pos % tab_in_chars)) ;
+      width += (size_of_tab_in_coord - (width % size_of_tab_in_coord));
       continue;
       
     }
@@ -641,7 +644,6 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
       o_text_load_font(w_current, (unsigned char) string[i]);
     }
     
-    char_pos ++;
     width = width + size*font_set[(unsigned char) string[i]].font_text_size;
     if (width > max_width)
       max_width = width;
@@ -862,9 +864,17 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
     if (font_set[(unsigned char) string[i]].font_prim_objs->next) {
       int char_pos;
-      /* FIXME: Why the width of a space (size=10) is 55, and the width of a letter b or c is 110, for example ? */
-      /*  In the following line, it should be size/2 instead of size */
-      int size_of_char = o_text_width(w_current, " ", size);
+      int rel_char_coord;
+      int size_of_tab_in_coord;
+
+      /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
+      /* size */
+      if (font_set[(unsigned char) TAB_CHAR_MODEL[0]].font_prim_objs == NULL) {
+         o_text_load_font(w_current, (unsigned char) TAB_CHAR_MODEL[0]);
+      }
+      /* Get the maximum tab width's in coordinates */
+      size_of_tab_in_coord = tab_in_chars * 
+                 o_text_width(w_current, TAB_CHAR_MODEL, size/2);
 
       if (string[i] != '\n' && string[i] != '\t') {
          /* only add the character if it is not a newline or tab character */
@@ -911,21 +921,36 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	  break;
 	}
       case '\t':
+#if DEBUG
+	printf("Found tab character.\n");
+	printf("Tab size in coord: %i\n", size_of_tab_in_coord);
+	printf("Line start: %i,%i\n", line_start_x, line_start_y);
+	printf("Position: %i, %i\n", x_offset, y_offset);
+#endif
 	switch (angle) {
 	case 0:
 	case 180:
-	  char_pos = (x_offset - line_start_x)/(size_of_char);
-	  x_offset += (tab_in_chars - (char_pos % tab_in_chars)) * size_of_char;
+	  rel_char_coord = x_offset - line_start_x;
+#if DEBUG
+	  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
+#endif
+	  x_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
 	  continue;	
 	  break;
 	case 90:
-	  char_pos = (y_offset - line_start_y)/(size_of_char);
-	  y_offset += (tab_in_chars - (char_pos % tab_in_chars)) * size_of_char;
+	  rel_char_coord = y_offset - line_start_y;
+#if DEBUG
+	  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
+#endif
+	  y_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
 	  continue;	
 	  break;
 	case 270:
-	  char_pos = (line_start_y - y_offset)/(size_of_char);
-	  y_offset -= (tab_in_chars - (char_pos % tab_in_chars)) * size_of_char;
+	  rel_char_coord = line_start_y - y_offset;
+#if DEBUG
+	  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
+#endif
+	  y_offset -= (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
 	  continue;	
 	  break;
 	default:

@@ -180,6 +180,10 @@
 /* maximum single line length when reading in text strings */
 #define MAX_TEXT_LINE_LENGTH  1024
 
+/* one character string used to calculate tab's width */
+/* Warning: it MUST be a string. */
+#define TAB_CHAR_MODEL "b"
+
 /* These modes are for net_endpoint_mode */
 #define NONE		0
 #define FILLEDBOX	1
