@@ -32,6 +32,9 @@ void
 o_edit(TOPLEVEL *w_current, OBJECT *list)
 {
 	char *equal_ptr;
+#ifdef HAS_LIBGTKEXTRA
+	OBJECT *current;
+#endif
 
 	/* shouldn't happen */
 	if (list == NULL) {
@@ -47,6 +50,28 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 
 	/* also add the ability to multi attrib edit: nets, busses, pins */
 	case(OBJ_COMPLEX):
+#ifdef HAS_LIBGTKEXTRA
+		current = list->next;
+		if(current == NULL)
+			multi_attrib_edit(w_current, list);
+		else 
+			while(current)
+			{
+				if(current->type == OBJ_COMPLEX)
+				{
+					multi_multi_edit(w_current,list);
+					break;
+				}
+				else if(current->next == NULL)
+					multi_attrib_edit(w_current, list);
+				current=current->next;
+			}
+
+#endif
+#ifndef HAS_LIBGTKEXTRA
+			multi_attrib_edit(w_current, list);
+#endif
+		break;
 	case(OBJ_NET):
 	case(OBJ_PIN):
 	case(OBJ_BUS):
