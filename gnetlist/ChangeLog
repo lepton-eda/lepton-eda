@@ -1,3 +1,15 @@
+2004-01-22 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/g_register.c, src/g_netlist.c, include/prototype.h: 
+	Added function g_get_non_unique_packages so backends 
+	can get a non-unique list of packages. Useful for DRC checking.
+
+	* src/g_netlist.c: g_get_slots and g_get_unique_slots functions: 
+	If a package has no slots attribute, then assume it's using slot 1.
+
+	* src/gnetlist.c: Remind the user to check the schematic
+	has no errors using drc2 backend. 
+	
 2004-12-28 Stuart Brorson   <sdb@cloud9.net>
 
 	* lib/system-gnetlistrc: Changed to refer to system-gafrc instead

@@ -15,6 +15,7 @@
 <<s_scratch.c : s_scratch_string_init()>>
 <<s_scratch.c : s_scratch_string_free()>>
 <<s_scratch.c : s_scratch_string_fill()>>
+<<s_scratch.c : s_scratch_non_unique_string_fill()>>
 
 @
 
@@ -144,6 +145,27 @@ s_scratch_string_fill(char *string)
     }	
   }	
 	
+  return(s_scratch_non_unique_string_fill(string));
+}
+
+
+@ %def s_scratch_string_fill
+
+@section Function @code{s_scratch_non_unique_string_fill()}
+
+@defun s_scratch_non_unique_string_fill string
+@end defun
+
+<<s_scratch.c : s_scratch_non_unique_string_fill()>>=
+/* returns 0 if no string passed, else 1 if added to list */
+int 
+s_scratch_non_unique_string_fill(char *string)
+{
+  int i;
+	
+  if (!string) 
+  return(0);
+
   string_scratch[scratch_index] = (char *) malloc ( sizeof(char) *
                                                     strlen(string) + 1);
 	
@@ -154,5 +176,4 @@ s_scratch_string_fill(char *string)
 }
 
 
-@ %def s_scratch_string_fill
-
+@ %def s_scratch_non_unique_string_fill

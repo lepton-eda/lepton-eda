@@ -106,9 +106,19 @@ void main_prog(int argc, char *argv[])
     }
 
 #ifdef __MINGW32__
-    fprintf(stderr, "This is the MINGW32 port.\n");
+    fprintf(stderr, "This is the MINGW32 port.\n\n");
 #endif
 
+    s_log_message ("Remember to check that your schematic has no errors using the drc2 backend.\n");
+    s_log_message ("You can do it running 'gnetlist -g drc2 your_schematic.sch -o drc_output.txt'\n");
+    s_log_message ("and seeing the contents of the file drc_output.txt.\n\n");
+
+    if (!quiet_mode) {
+      fprintf (stderr, "Remember to check that your schematic has no errors using the drc2 backend.\n");
+      fprintf (stderr, "You can do it running 'gnetlist -g drc2 your_schematic.sch -o drc_output.txt'\n");
+      fprintf (stderr, "and seeing the contents of the file drc_output.txt.\n\n");
+
+    }
     /* register guile (scheme) functions */
     g_register_funcs();
 

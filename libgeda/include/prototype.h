@@ -517,6 +517,7 @@ TOPLEVEL *s_project_get_ptr(int wid);
 void s_scratch_string_init(void);
 void s_scratch_string_free(void);
 int s_scratch_string_fill(char *string);
+int s_scratch_non_unique_string_fill(char *string);
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);
 int s_slib_search_for_dirname(char *dir_name);

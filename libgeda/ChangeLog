@@ -1,3 +1,11 @@
+2005-01-22  Carlos Nieves Onega <cnieves@iespana.es>
+	* noweb/prototype.h, noweb/s_scratch.nw: Added function
+	s_scratch_non_unique_string_fill. This can enable gnetlist
+        to return a non-unique list of packages.
+        In order to don't duplicate code, s_scratch_string_fill
+        function now checks if the string is unique and calls
+        s_scratch_non_unique_string_fill.
+
 2005-01-19 Stuart Brorson <sdb@cloud9.net>	
 	* noweb/o_complex_basic.nw, include/o_types.h: Created 
 	OBJ_PLACEHOLDER to signal a complex found with no

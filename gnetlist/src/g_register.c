@@ -68,6 +68,7 @@ void g_register_funcs(void)
 
   /* netlist functions */
   gh_new_procedure1_0("gnetlist:get-packages", g_get_packages);
+  gh_new_procedure1_0("gnetlist:get-non-unique-packages", g_get_non_unique_packages);
   gh_new_procedure1_0("gnetlist:get-pins", g_get_pins);
   gh_new_procedure1_0("gnetlist:get-all-nets", g_get_all_nets);
   gh_new_procedure1_0("gnetlist:get-all-unique-nets",

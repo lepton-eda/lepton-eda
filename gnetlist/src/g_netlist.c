@@ -70,6 +70,36 @@ SCM g_get_packages(SCM level)
     return (list);
 }
 
+/* this function will only return a non unique list of packages */
+SCM g_get_non_unique_packages(SCM level)
+{
+    SCM list = SCM_EOL;
+
+    NETLIST *nl_current = NULL;
+
+    SCM_ASSERT( (SCM_NIMP (level) && SCM_STRINGP (level) ),
+		level, SCM_ARG1, "gnetlist:get-pins");
+
+    nl_current = netlist_head;
+    s_scratch_string_init();
+
+    while (nl_current != NULL) {
+
+	if (nl_current->component_uref) {
+	    if (s_scratch_non_unique_string_fill(nl_current->component_uref)) {
+		list = gh_cons(gh_str2scm(nl_current->component_uref,
+					  strlen
+					  (nl_current->component_uref)),
+			       list);
+	    }
+	}
+	nl_current = nl_current->next;
+    }
+
+    s_scratch_string_free();
+    return (list);
+}
+
 
 SCM g_get_pins(SCM uref)
 {
@@ -799,8 +829,11 @@ SCM g_get_slots(SCM scm_uref)
 					 complex->prim_objs, "slot",
 					 0);
 		}
-		if (slot_tmp) {
-		  slot = g_strconcat ("#d", slot_tmp, NULL);
+		/* When a package has no slot attribute, then assume it's slot number 1 */
+		if (!slot_tmp) {
+		  slot_tmp=g_strdup("1");
+		}
+		slot = g_strconcat ("#d", slot_tmp, NULL);
 		  free (slot_tmp);
 		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
 						     SCM_MAKINUM(10));
@@ -810,10 +843,6 @@ SCM g_get_slots(SCM scm_uref)
 		  }
 		  else 
 		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
-		} 
-		else {
-		  fprintf(stderr, "Found uref %s without slot attribute\n", uref);
-		}
 	    }
 	}
 	nl_current = nl_current->next;
@@ -864,23 +893,22 @@ SCM g_get_unique_slots(SCM scm_uref)
 					 complex->prim_objs, "slot",
 					 0);
 		}
-		if (slot_tmp) {
-		  slot = g_strconcat ("#d", slot_tmp, NULL);
-		  free (slot_tmp);
-		  slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
-						     SCM_MAKINUM(10));
-		  free (slot);
-		  if (slot_number != SCM_BOOL_F) {
-		    if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
-		      slots_list = gh_cons(slot_number, slots_list);
-		    }
-		  }
-		  else 
-		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
-		} 
-		else {
-		  fprintf(stderr, "Found uref %s without slot attribute\n", uref);
+		/* When a package has no slot attribute, then assume it's slot number 1 */
+		if (!slot_tmp) {
+		  slot_tmp=g_strdup("1");
 		}
+		slot = g_strconcat ("#d", slot_tmp, NULL);
+		free (slot_tmp);
+		slot_number = scm_string_to_number(gh_str2scm(slot, strlen(slot)),
+						   SCM_MAKINUM(10));
+		free (slot);
+		if (slot_number != SCM_BOOL_F) {
+		  if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
+		    slots_list = gh_cons(slot_number, slots_list);
+		  }
+		}
+		else 
+		  fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
 	    }
 	}
 	nl_current = nl_current->next;
