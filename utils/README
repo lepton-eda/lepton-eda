@@ -175,6 +175,16 @@ README for misc utilities versions 2003*
     find the template.src file referenced in the README.tragesym file.
 
 
+    pads_backannotate
+    Dan McMahill
+
+    A perl program which implements backannotation from Pads PowerPCB 
+    board layouts to gschem schematics.
+   
+    Please see the pads_backannotate.[dvi|html|ps|pdf] documentation for more
+    details.
+
+
 - License  
 
 	gEDA (includes gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
@@ -194,6 +204,7 @@ README for misc utilities versions 2003*
         olib is Copyright 2002 by Mario Pascucci
         refdes_renum is Copyright 2003 by Dan McMahill
         tragesym is Copyright 2001-2003 by Werner Hoch
+        pads_backannotate is Copyright 2003 by Dan McMahill
 
 
 

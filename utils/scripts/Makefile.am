@@ -1,11 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
 bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum \
-	      tragesym
+	      tragesym pads_backannotate
 
 EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl \
 	     sarlacc_sym gschupdate gsymupdate refdes_renum \
-	     config.sh.in gschemdoc.sh
+	     config.sh.in gschemdoc.sh pads_backannotate
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
