@@ -896,9 +896,15 @@ o_text_save(char *buf, OBJECT *object)
         x = object->x;
         y = object->y;
 
-	color = object->color;
 	string = object->text_string;
 	size = object->text_size;
+
+	/* Use the right color */
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
 
         sprintf(buf, "%c %d %d %d %d %d %d %d %d\n%s", object->type, x, y, 
 		color, size,  object->visibility, 
@@ -1028,9 +1034,16 @@ OBJECT *
 o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj;
+	int color;
+
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
 
 	new_obj = o_text_add(w_current, list_tail, OBJ_TEXT, 
-	                     o_current->color, 
+	                     color, 
 		             o_current->x, o_current->y, 
 	                     o_current->text_alignment, 
 	                     o_current->angle,
@@ -1038,28 +1051,6 @@ o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 			     o_current->text_size, 
 		             o_current->visibility, 
 			     o_current->show_name_value); 
-
-
-	/* yes it is attached to something */	
-#if 0 /* no longer here */
-	if (o_current->attached_to && !w_current->ADDING_SEL) {
-		if (o_current->attached_to->copied_to) {
-			o_attrib_attach(w_current, 
-				w_current->page_current->object_parent,
-		                new_obj, o_current->attached_to->copied_to);		
-		
-				/* satisfied copy request */	
-				o_current->attached_to->copied_to = NULL;
-		} else {
-			/* not destined to be copied so... */
-			new_obj->attribute = 0; /* no longer an attribute */
-		}
-	} 
-#endif
-
-
-	/* don't do this anymore
-	new_obj->attribute = 0;*/
 
 	return(new_obj);
 }
