@@ -152,11 +152,11 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   warnings = s_symcheck->warning_count;
   s_symstruct_free(s_symcheck);
   if (errors) {
-    return(errors);
+    return(2);
   } else if (warnings) {
-    return(-warnings); /* return -warnings as an exit status */
+    return(1);
   } else {
-    return 0;
+    return(0);
   }
 }
 

@@ -1,3 +1,7 @@
+2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Changed exit status again to be sane not stupid. :)
+
 2002-08-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_check.c: Changed exit status to return negative numbers for

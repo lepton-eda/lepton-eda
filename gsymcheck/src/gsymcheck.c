@@ -51,7 +51,7 @@ main_prog(int argc, char *argv[])
   int i;
   int argv_index;
   int first_page=1;
-  int errors;
+  int exit_status;
   char *cwd;
   int status;
   struct stat buf;
@@ -153,12 +153,12 @@ main_prog(int argc, char *argv[])
   
   if (!quiet_mode) s_log_message("\n");
 
-  errors = s_check_all(pr_current);
+  exit_status = s_check_all(pr_current);
 
   s_page_free_all(pr_current, pr_current->page_tail);
   gsymcheck_quit();
 
-  exit(errors);
+  exit(exit_status);
 }
 
 int 
