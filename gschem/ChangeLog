@@ -1,3 +1,8 @@
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_basic.c: Added code for o_erase_selected (not used
+	currently)
+
 2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Fixed spelling mistake

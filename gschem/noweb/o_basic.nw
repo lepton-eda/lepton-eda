@@ -216,10 +216,10 @@ o_redraw(TOPLEVEL *w_current, OBJECT *object_list)
 void
 o_unselect_all(TOPLEVEL *w_current)
 {
-        if (!w_current->SHIFTKEY) {
-		o_selection_remove_most(w_current, w_current->page_current->
-					selection2_head); 
-        }
+  if (!w_current->SHIFTKEY) {
+    o_selection_remove_most(w_current, w_current->page_current->
+                            selection2_head); 
+  }
 }
 
 
@@ -235,9 +235,24 @@ o_unselect_all(TOPLEVEL *w_current)
 void
 o_erase_selected(TOPLEVEL *w_current)
 {
+  SELECTION* s_current;
+  OBJECT* o_current;
   if (w_current->inside_redraw) {
     return;
   }
+
+  s_current = w_current->page_current->selection2_head->next;
+  while (s_current != NULL) {
+    o_current=s_current->selected_object;
+
+    if (o_current) {
+      o_cue_erase_single(w_current, o_current);
+      o_erase_single(w_current, o_current);
+    }
+    
+    s_current=s_current->next;
+  }
+  
 }
 
 
