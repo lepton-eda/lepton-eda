@@ -1043,8 +1043,7 @@ x_window_close(TOPLEVEL *w_current)
   if (w_current->trwindow)
   gtk_widget_destroy(w_current->trwindow);
 
-  if (w_current->pswindow)
-  gtk_widget_destroy(w_current->pswindow);
+  x_pagesel_close (w_current);
 
   if (w_current->exwindow)
   gtk_widget_destroy(w_current->exwindow);

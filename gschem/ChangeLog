@@ -1,5 +1,14 @@
 2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/gschem.nw, noweb/i_callbacks.nw, noweb/o_undo.nw:
+	* noweb/x_fileselect.nw, noweb/x_window.nw: Changed for new page 
+	manager.
+	
+	* include/x_pagesel.h: New header file for new page manager.
+	
+	* noweb/x_pagesel.nw: New page manager in GTK 2.x with hierarchy 
+	display.
+
 	* noweb/i_callbacks.nw, noweb/o_undo.nw, noweb/x_fileselect.nw:
 	* noweb/x_image.nw, noweb/x_preview.nw: Adapted for new toplevel and 
 	page APIs in libgeda.

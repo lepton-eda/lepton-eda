@@ -12,23 +12,14 @@
 
 <<x_pagesel.c : include directives>>
 
-/* delete me */
-gint change_page(GtkWidget *widget, gint row, gint column,
-		 GdkEventButton * bevent);
 
-#define NUM_COLS 3
+<<x_pagesel.c : x_pagesel_open()>>
+<<x_pagesel.c : x_pagesel_close()>>
+<<x_pagesel.c : x_pagesel_update()>>
+<<x_pagesel.c : x_pagesel_callback_response()>>
 
 
-<<x_pagesel.c : update_page_manager()>>
-<<x_pagesel.c : save_page()>>
-<<x_pagesel.c : file_new()>>
-<<x_pagesel.c : file_open()>>
-<<x_pagesel.c : page_close()>>
-<<x_pagesel.c : page_discard()>>
-<<x_pagesel.c : change_page()>>
-<<x_pagesel.c : page_manager_close()>>
-<<x_pagesel.c : page_manager_keypress()>>
-<<x_pagesel.c : setup_page_selector()>>
+<<x_pagesel.c : Pagesel widget>>
 
 @
 
@@ -76,517 +67,587 @@ gint change_page(GtkWidget *widget, gint row, gint column,
 #include <dmalloc.h>
 #endif
 
+#include "../include/x_pagesel.h"
+
+
+static void x_pagesel_callback_response (GtkDialog *dialog,
+                                         gint arg1,
+                                         gpointer user_data);
+
 @
 
 
-@section Function @code{page_manager_close()}
+@section Function @code{x_pagesel_open()}
 
-@defun page_manager_close w w_current
+@defun x_pagesel_open toplevel
+Opens the page manager dialog for [[toplevel]] if it is not already. In this last case, it raises the dialog.
 @end defun
 
-<<x_pagesel.c : page_manager_close()>>=
-gint
-page_manager_close(GtkWidget *w, TOPLEVEL *w_current)
-{
-  gtk_widget_destroy(w_current->pswindow);
-  w_current->pswindow=NULL;
-  return(0);
-}
-
-
-@ %def page_manager_close
-
-
-@section Function @code{page_manager_keypress()}
-
-@defun page_manager_keypress w event w_current
-@end defun
-
-<<x_pagesel.c : page_manager_keypress()>>=
-int
-page_manager_keypress(GtkWidget * widget, GdkEventKey * event, 
-	              TOPLEVEL * w_current)
-{
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-    page_manager_close(NULL, w_current);	
-    return TRUE;
-  }
-
-  return FALSE;
-}
-
-
-@ %def page_manager_keypress
-
-
-@section Function @code{update_page_manager()}
-
-@defun update_page_manager widget w_current
-@end defun
-
-<<x_pagesel.c : update_page_manager()>>=
-/* Do NOT use the widget parameter. It is set to NULL most of the
- * time. */
+<<x_pagesel.c : x_pagesel_open()>>=
 void
-update_page_manager(GtkWidget *widget, TOPLEVEL *w_current)
+x_pagesel_open (TOPLEVEL *toplevel)
 {
-  PAGE *p_current;
-  char text[NUM_COLS][512]; /* size is hack */
-  char *texts[NUM_COLS];
-  int row;
-  int i;
+  if (toplevel->pswindow == NULL) {
+    toplevel->pswindow = GTK_WIDGET (g_object_new (TYPE_PAGESEL,
+                                                   "toplevel", toplevel,
+                                                   NULL));
 
-  if (w_current->pswindow == NULL) {
-    return;
+    g_signal_connect (toplevel->pswindow,
+                      "response",
+                      G_CALLBACK (x_pagesel_callback_response),
+                      toplevel);
+    
+    gtk_widget_show (toplevel->pswindow);
+  } else {
+    gdk_window_raise (toplevel->pswindow->window);
   }
 
-  p_current = w_current->page_head->next; /* skip over head */
-
-  /* shouldn't happen, but you never know */
-  if (p_current == NULL) {
-    return;
-  }
-
-  gtk_signal_disconnect(GTK_OBJECT(w_current->page_clist),
-                        w_current->clist_sig);
-
-  gtk_clist_freeze(GTK_CLIST(w_current->page_clist));
-
-  /* First clear the list */
-  gtk_clist_clear(GTK_CLIST(w_current->page_clist));
-
-  for (i = 0; i < NUM_COLS; i++) {
-    texts[i] = text[i];
-  }
-
-  i = 0;
-
-  while(p_current != NULL) {
-    if (p_current->page_filename == NULL) {
-      break;
-    }
-
-    sprintf (text[0], "%s", p_current->page_filename);
-
-    sprintf (text[1], "%d", p_current->page_control);
-
-    if (p_current->CHANGED) {
-      sprintf (text[2], "Y");
-    } else {
-      sprintf (text[2], "-");
-    }
-
-    gtk_clist_append (GTK_CLIST (w_current->page_clist), texts);
-    p_current->clist_row = i++;
-
-    p_current = p_current->next;
-  }
-
-  row = s_page_search_row(w_current, w_current->page_current);
-  gtk_clist_select_row(GTK_CLIST(w_current->page_clist), row, 1);
-
-  /* scroll the display so that selection is in the middle */
-  gtk_clist_moveto (GTK_CLIST(w_current->page_clist), row, 0, 1, 1);
-
-  gtk_clist_thaw(GTK_CLIST(w_current->page_clist));
-
-  w_current->clist_sig = gtk_signal_connect(
-                                            GTK_OBJECT(w_current->page_clist),
-                                            "select_row",
-                                            GTK_SIGNAL_FUNC(change_page),
-                                            NULL);
 }
 
+@ %def x_pagesel_open
 
-@ %def update_page_manager
 
+@section Function @code{x_pagesel_close()}
 
-@section Function @code{save_page()}
-
-@defun save_page gtklist w_current
+@defun x_pagesel_close toplevel
+Closes the page manager dialog associated with [[toplevel]].
 @end defun
 
-<<x_pagesel.c : save_page()>>=
-gint
-save_page (GtkWidget *gtklist, TOPLEVEL *w_current)
-{
-  /* Don't need to search for any rows or whatever since
-   * page_current already points to the page we want to save */
-  i_callback_file_save(w_current, 0, NULL);
-
-  return(0);
-}
-
-
-@ %def save_page
-
-
-@section Function @code{file_new()}
-
-@defun file_new gtklist w_current
-@end defun
-
-<<x_pagesel.c : file_new()>>=
-gint
-file_new (GtkWidget *gtklist, TOPLEVEL *w_current)
-{
-  i_callback_file_new(w_current, 0, NULL);
-
-  return(0);
-}
-
-
-@ %def file_new
-
-
-@section Function @code{file_open()}
-
-@defun file_open gtklist w_current
-@end defun
-
-<<x_pagesel.c : file_open()>>=
-gint
-file_open (GtkWidget *gtklist, TOPLEVEL *w_current)
-{
-  i_callback_file_open(w_current, 0, NULL);
-
-  return(0);
-}
-
-
-@ %def file_open
-
-
-@section Function @code{page_close()}
-
-@defun page_close gtklist w_current
-@end defun
-
-<<x_pagesel.c : page_close()>>=
-gint
-page_close (GtkWidget *gtklist, TOPLEVEL *w_current)
-{
-  i_callback_page_close(w_current, 0, NULL);
-
-  return(0);
-}
-
-
-@ %def page_close
-
-
-@section Function @code{page_discard()}
-
-@defun page_discard gtklist w_current
-@end defun
-
-<<x_pagesel.c : page_discard()>>=
-gint
-page_discard (GtkWidget *gtklist, TOPLEVEL *w_current)
-{
-  i_callback_page_discard(w_current, 0, NULL);
-
-  return(0);
-}
-
-
-@ %def page_discard
-
-
-@section Function @code{change_page()}
-
-@defun change_page widget row column bevent
-@end defun
-
-<<x_pagesel.c : change_page()>>=
-gint
-change_page (GtkWidget *widget, gint row, gint column, GdkEventButton * bevent)
-{
-  PAGE *p_new;
-  TOPLEVEL *w_current;
-  gchar *text;
-
-#if DEBUG
-  g_print ("GtkCList Selection: row %d column %d button\n",
-           row, column);
-#endif
-
-  gtk_clist_get_text (GTK_CLIST (widget), row, 0, &text);
-
-  /* gross, yes... see comment in x_window.c */
-  w_current = x_window_search_page_clist(widget);
-  p_new = s_page_search(w_current, text);
-
-  s_page_goto(w_current, p_new);
-  i_set_filename(w_current, w_current->page_current->page_filename);
-  x_scrollbars_update(w_current);
-  o_redraw_all(w_current);
-
-  return(0);
-}
-
-
-@ %def change_page
-
-
-@section Function @code{setup_page_selector()}
-
-@defun setup_page_selector w_current
-@end defun
-
-<<x_pagesel.c : setup_page_selector()>>=
+<<x_pagesel.c : x_pagesel_close()>>=
 void
-setup_page_selector (TOPLEVEL *w_current)
+x_pagesel_close (TOPLEVEL *toplevel)
 {
-  GtkWidget *buttonnew;
-  GtkWidget *scrolled_win;
-  GtkWidget *buttonopen;
-  GtkWidget *buttonsave;
-  GtkWidget *buttonclose;
-  GtkWidget *buttondiscard;
-  GtkWidget *buttonclosewin;
-  GtkWidget *buttonupdatewin;
-  GtkWidget *box;
-  GtkWidget *hbox;
-  GtkWidget *box2;
-  GtkWidget *separator;
-  PAGE *p_current;
-  char *string=NULL;
-  int i;
-  int row;
+  if (toplevel->pswindow) {
+    g_assert (IS_PAGESEL (toplevel->pswindow));
+    gtk_widget_destroy (toplevel->pswindow);
+    toplevel->pswindow = NULL;
+  }
+  
+}
 
-  char text[NUM_COLS][512]; /* size is hack */
-  char *texts[NUM_COLS];
+@ %def x_pagesel_close
 
-  static char *titles[] = {
-    "Filename",
-    "H",
-    "C",
+
+@section Function @code{x_pagesel_update()}
+
+@defun x_pagesel_update toplevel
+Updates the list and status of [[toplevel]]\'s pages if the page manager dialog is opened.
+@end defun
+
+<<x_pagesel.c : x_pagesel_update()>>=
+void
+x_pagesel_update (TOPLEVEL *toplevel)
+{
+  if (toplevel->pswindow) {
+    g_assert (IS_PAGESEL (toplevel->pswindow));
+    pagesel_update (PAGESEL (toplevel->pswindow));
+  }
+  
+}
+
+@ %def x_pagesel_update
+
+
+@section Function @code{x_pagesel_callback_response()}
+
+@defun x_pagesel_callback_response dialog arg1 user_data
+Handles response [[arg1]] of the page manager dialog [[dialog]].
+
+Parameter [[user_data]] is a pointer on the relevant toplevel structure.
+@end defun
+
+<<x_pagesel.c : x_pagesel_callback_response()>>=
+static void
+x_pagesel_callback_response (GtkDialog *dialog,
+                             gint arg1,
+                             gpointer user_data)
+{
+  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
+
+  switch (arg1) {
+      case PAGESEL_RESPONSE_UPDATE:
+        pagesel_update (PAGESEL (dialog));
+        break;
+      case GTK_RESPONSE_DELETE_EVENT:
+      case PAGESEL_RESPONSE_CLOSE:
+        g_assert (GTK_WIDGET (dialog) == toplevel->pswindow);
+        gtk_widget_destroy (GTK_WIDGET (dialog));
+        toplevel->pswindow = NULL;
+        break;
+      default:
+        g_assert_not_reached ();
+  }
+  
+}
+
+@ %def x_pagesel_callback_response
+
+
+@section Widget @code{Pagesel}
+
+<<x_pagesel.c : Pagesel widget>>=
+enum {
+  PROP_TOPLEVEL=1,
+};
+
+enum {
+  COLUMN_PAGE,
+  COLUMN_NAME,
+  COLUMN_CHANGED,
+  NUM_COLUMNS
+};
+
+
+static void pagesel_class_init (PageselClass *class);
+static void pagesel_init       (Pagesel *pagesel);
+static void pagesel_set_property (GObject *object,
+                                  guint property_id,
+                                  const GValue *value,
+                                  GParamSpec *pspec);
+static void pagesel_get_property (GObject *object,
+                                  guint property_id,
+                                  GValue *value,
+                                  GParamSpec *pspec);
+
+<<x_pagesel.c : pagesel_callback_button_*()>>
+<<x_pagesel.c : pagesel_callback_selection_changed()>>
+
+<<x_pagesel.c : pagesel_get_type()>>
+<<x_pagesel.c : pagesel_class_init()>>
+<<x_pagesel.c : pagesel_init()>>
+<<x_pagesel.c : pagesel_set_property()>>
+<<x_pagesel.c : pagesel_get_property()>>
+
+<<x_pagesel.c : pagesel_update()>>
+
+@ 
+
+
+@subsection Function [[page_get_type()]]
+
+@defun pagesel_get_type
+@end defun
+
+<<x_pagesel.c : pagesel_get_type()>>=
+GType
+pagesel_get_type ()
+{
+  static GType pagesel_type = 0;
+  
+  if (!pagesel_type) {
+    static const GTypeInfo pagesel_info = {
+      sizeof(PageselClass),
+      NULL, /* base_init */
+      NULL, /* base_finalize */
+      (GClassInitFunc) pagesel_class_init,
+      NULL, /* class_finalize */
+      NULL, /* class_data */
+      sizeof(Pagesel),
+      0,    /* n_preallocs */
+      (GInstanceInitFunc) pagesel_init,
+    };
+		
+    pagesel_type = g_type_register_static (GTK_TYPE_DIALOG,
+                                           "Pagesel",
+                                           &pagesel_info, 0);
+  }
+  
+  return pagesel_type;
+}
+
+@ %def pagesel_get_type
+
+
+@subsection Function [[pagesel_class_init()]]
+
+@defun pagesel_class_init klass
+@end defun
+
+<<x_pagesel.c : pagesel_class_init()>>=
+static void
+pagesel_class_init (PageselClass *klass)
+{
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  gobject_class->set_property = pagesel_set_property;
+  gobject_class->get_property = pagesel_get_property;
+
+  g_object_class_install_property (
+    gobject_class, PROP_TOPLEVEL,
+    g_param_spec_pointer ("toplevel",
+                          "",
+                          "",
+                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
+	
+}
+
+@ %def pagesel_class_init
+
+
+@subsection Function @code{pagesel_init()}
+
+@defun pagesel_init pagesel
+@end defun
+
+<<x_pagesel.c : pagesel_init()>>=
+static void
+pagesel_init (Pagesel *pagesel)
+{
+  GtkWidget *scrolled_win, *treeview, *bbox, *button;
+  GtkTreeModel *store;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+  GtkTreeSelection *selection;
+  struct button_t {
+    gchar *label;
+    void (*callback)(void);
   };
+  struct button_t buttons[] = {
+    { "New Page",     G_CALLBACK (pagesel_callback_button_new_page)     },
+    { "Open Page",    G_CALLBACK (pagesel_callback_button_open_page)    },
+    { "Save Page",    G_CALLBACK (pagesel_callback_button_save_page)    },
+    { "Close Page",   G_CALLBACK (pagesel_callback_button_close_page)   },
+    { "Discard Page", G_CALLBACK (pagesel_callback_button_discard_page) },
+    { NULL,           NULL                                              } };
+  struct button_t *tmp;
 
-  if (!w_current->pswindow) {
+  /* dialog initialization */
+  g_object_set (G_OBJECT (pagesel),
+                /* GtkContainer */
+                "border-width",    0,
+                /* GtkWindow */
+                "type",            GTK_WINDOW_TOPLEVEL,
+                "title",           _("Page Manager"),
+                "default-height",  220, 
+                "default-width",   515,
+                "modal",           FALSE,
+                "window-position", GTK_WIN_POS_NONE,
+                "type-hint",       GDK_WINDOW_TYPE_HINT_NORMAL,
+                /* GtkDialog */
+                "has-separator",   TRUE,
+                NULL);
 
-    p_current = w_current->page_head->next; /* skip over head */
+  /* create the model for the treeview */
+  store = (GtkTreeModel*)gtk_tree_store_new (NUM_COLUMNS,
+                                             G_TYPE_POINTER,  /* page */
+                                             G_TYPE_STRING,   /* name */
+                                             G_TYPE_BOOLEAN); /* changed */
 
-    /* shouldn't happen, but you never know */
-    if (p_current == NULL) {
+  /* create a scrolled window for the treeview */
+  scrolled_win = GTK_WIDGET (
+    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkContainer */
+                  "border-width",      5,
+                  /* GtkScrolledWindow */
+                  "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "shadow-type",       GTK_SHADOW_ETCHED_IN,
+                  NULL));
+  /* create the treeview */
+  treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
+                                       /* GtkTreeView */
+                                       "model",      store,
+                                       "rules-hint", TRUE,
+                                       NULL));
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+  gtk_tree_selection_set_mode (selection,
+                               GTK_SELECTION_SINGLE);
+  g_signal_connect (selection,
+                    "changed",
+                    G_CALLBACK (pagesel_callback_selection_changed),
+                    pagesel);
+  /*   - first column: page name */
+  renderer = GTK_CELL_RENDERER (
+    g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                  /* GtkCellRendererText */
+                  "editable", FALSE,
+                  NULL));
+  column = GTK_TREE_VIEW_COLUMN (
+    g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                  /* GtkTreeViewColumn */
+                  "title", _("Filename"),
+                  "min-width", 435,
+                  "resizable", TRUE,
+                  NULL));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute (column, renderer, "text", COLUMN_NAME);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+  /*   - second column: changed */
+  renderer = GTK_CELL_RENDERER (
+    g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
+                  /* GtkCellRendererToggle */
+                  "activatable", FALSE,
+                  NULL));
+  column = GTK_TREE_VIEW_COLUMN (
+    g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                  /* GtkTreeViewColumn */
+                  "title", _("Changed"),
+                  "sizing", GTK_TREE_VIEW_COLUMN_FIXED,
+                  NULL));
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute (column, renderer, "active", COLUMN_CHANGED);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+      
+  /* add the treeview to the scrolled window */
+  gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
+  /* set treeview of pagesel */
+  pagesel->treeview = GTK_TREE_VIEW (treeview);
+
+  /* create the button array for actions */
+  bbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBUTTON_BOX,
+                                   /* GtkContainer */
+                                   "border-width", 5,
+                                   /* GtkButtonBox */
+                                   "layout-style", GTK_BUTTONBOX_EDGE,
+                                   NULL));
+  for (tmp = buttons; tmp->label != NULL; tmp++) {
+    button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
+                                       /* GtkButton */
+                                       "label", _(tmp->label),
+                                       NULL));
+    g_signal_connect (button,
+                      "clicked",
+                      tmp->callback,
+                      pagesel);
+    gtk_container_add (GTK_CONTAINER (bbox), button);
+  }
+
+  /* add scrolled window and action buttons to the dialog vbox */
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), scrolled_win,
+                      TRUE, TRUE, 0);
+  gtk_widget_show_all (scrolled_win);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), bbox,
+                      FALSE, TRUE, 0);
+  gtk_widget_show_all (bbox);
+
+
+  /* now add buttons in the action area */
+  gtk_dialog_add_buttons (GTK_DIALOG (pagesel),
+                          /*  - update button */
+                          GTK_STOCK_REFRESH, PAGESEL_RESPONSE_UPDATE,
+                          /*  - close button */
+                          GTK_STOCK_CLOSE,   PAGESEL_RESPONSE_CLOSE,
+                          NULL);
+  
+}
+
+@ %def pagesel_init
+
+
+@subsection Function [[pagesel_set_property()]]
+
+@defun pagesel_set_property object property_id value pspec
+@end defun
+
+<<x_pagesel.c : pagesel_set_property()>>=
+static void
+pagesel_set_property (GObject *object,
+                      guint property_id,
+                      const GValue *value,
+                      GParamSpec *pspec)
+{
+  Pagesel *pagesel = PAGESEL (object);
+
+  switch(property_id) {
+      case PROP_TOPLEVEL:
+        pagesel->toplevel = (TOPLEVEL*)g_value_get_pointer (value);
+        pagesel_update (pagesel);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+
+}
+
+@ %def pagesel_set_property
+
+
+@subsection Function [[pagesel_get_property()]]
+
+@defun pagesel_get_property object property_id value pspec
+@end defun
+
+<<x_pagesel.c : pagesel_get_property()>>=
+static void
+pagesel_get_property (GObject *object,
+                      guint property_id,
+                      GValue *value,
+                      GParamSpec *pspec)
+{
+  Pagesel *pagesel = PAGESEL (object);
+
+  switch(property_id) {
+      case PROP_TOPLEVEL:
+        g_value_set_pointer (value, (gpointer)pagesel->toplevel);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+
+}
+
+@ %def pagesel_get_property
+
+
+@subsection Function @code{pagesel_callback_selection_changed()}
+
+@defun pagesel_callback_selection_changed selection user_data
+@end defun
+
+<<x_pagesel.c : pagesel_callback_selection_changed()>>=
+static void
+pagesel_callback_selection_changed (GtkTreeSelection *selection,
+                                    gpointer user_data)
+{
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  Pagesel *pagesel = (Pagesel*)user_data;
+  TOPLEVEL *toplevel;
+  PAGE *page;
+
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
+    return;
+  }
+  
+  toplevel = pagesel->toplevel;
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_PAGE, &page,
+                      -1);
+
+  /* temp */
+  s_page_goto (toplevel, page);
+  i_set_filename (toplevel, toplevel->page_current->page_filename);
+  x_scrollbars_update (toplevel);
+  o_redraw_all (toplevel);
+
+}
+
+@ %def pagesel_callback_selection_changed
+
+
+@subsection Function @code{pagesel_callback_button_*()}
+
+@defun pagesel_callback_button_* button user_data
+@end defun
+
+<<x_pagesel.c : pagesel_callback_button_*()>>=
+#define DEFINE_BUTTON_CALLBACK(name, action)                      \
+static void                                                       \
+pagesel_callback_button_ ## name (GtkButton *button,              \
+                                  gpointer user_data)             \
+{                                                                 \
+  i_callback_ ## action (PAGESEL (user_data)->toplevel, 0, NULL); \
+}
+
+DEFINE_BUTTON_CALLBACK (new_page,     file_new);
+DEFINE_BUTTON_CALLBACK (open_page,    file_open);
+DEFINE_BUTTON_CALLBACK (save_page,    file_save);
+DEFINE_BUTTON_CALLBACK (close_page,   page_close);
+DEFINE_BUTTON_CALLBACK (discard_page, page_discard);
+
+@ %def pagesel_callback_button_new_page pagesel_callback_button_open_page pagesel_callback_button_save_page pagesel_callback_button_close_page pagesel_callback_button_discard_page
+
+
+@subsection Function @code{pagesel_update()}
+
+@defun pagesel_update pagesel
+Updates the tree model of [[pagesel]]\'s treeview.
+
+Right now, each time it is called, it rebuilds all the model from the list of page in the toplevel.
+@end defun
+
+<<x_pagesel.c : pagesel_update()>>=
+/* recursive function to populate the tree store */
+static
+add_page (GtkTreeModel *model, GtkTreeIter *parent,
+          PAGE *page)
+{
+  GtkTreeIter iter;
+  PAGE *p_current;
+
+  /* add the page to the store */
+  gtk_tree_store_append (GTK_TREE_STORE (model),
+                         &iter,
+                         parent);
+  gtk_tree_store_set (GTK_TREE_STORE (model),
+                      &iter,
+                      COLUMN_PAGE, page,
+                      COLUMN_NAME, page->page_filename,
+                      COLUMN_CHANGED, page->CHANGED,
+                      -1);
+  
+  /* search a page that has a up field == p_current->pid */
+  for (p_current = page->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+    if (p_current->up == page->pid) {
+      add_page (model, &iter, p_current);
+    }
+  }
+  
+}
+
+/* recursive function to select the current page in the treeview */
+static
+select_page (GtkTreeView *treeview, GtkTreeIter *parent, PAGE *page)
+{
+  GtkTreeModel *treemodel = gtk_tree_view_get_model (treeview);
+  GtkTreeIter iter;
+  PAGE *p_current;
+
+  if (!gtk_tree_model_iter_children (treemodel, &iter, parent)) {
+    return;
+  }
+
+  do {
+    gtk_tree_model_get (treemodel, &iter,
+                        COLUMN_PAGE, &p_current,
+                        -1);
+    if (p_current == page) {
+      gtk_tree_view_expand_all (treeview);
+      gtk_tree_selection_select_iter (
+        gtk_tree_view_get_selection (treeview),
+        &iter);
       return;
     }
 
-    w_current->pswindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_container_border_width(
-                               GTK_CONTAINER(w_current->pswindow), 0);
-    gtk_widget_set_usize(w_current->pswindow, 515, 220);
-
-    gtk_window_position(GTK_WINDOW(w_current->pswindow),
-                        GTK_WIN_POS_NONE);
-
-    gtk_signal_connect(GTK_OBJECT(w_current->pswindow),
-                       "destroy",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->pswindow);
-
-#if 0 /* this was causing the dialog box to not die */
-    gtk_signal_connect(GTK_OBJECT (w_current->pswindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->pswindow);
-#endif
-
-    gtk_window_set_title(GTK_WINDOW(w_current->pswindow),
-                         _("Page Manager"));
-
-    box = gtk_vbox_new (FALSE, 2);
-    gtk_container_border_width (GTK_CONTAINER (box), 2);
-    gtk_container_add (GTK_CONTAINER (w_current->pswindow), box);
-    gtk_widget_show (box);
-
-    /* change to clist */
-    w_current->page_clist =
-      gtk_clist_new_with_titles (NUM_COLS, titles);
-
-    gtk_widget_show(w_current->page_clist);
-    scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_policy(
-                                   GTK_SCROLLED_WINDOW(scrolled_win),
-                                   GTK_POLICY_AUTOMATIC,
-                                   GTK_POLICY_AUTOMATIC);
-    gtk_widget_show(scrolled_win);
-    gtk_container_add(GTK_CONTAINER(scrolled_win),
-                      w_current->page_clist);
-
-    gtk_clist_set_row_height(GTK_CLIST(w_current->page_clist),
-                             20);
-    gtk_clist_set_column_width(GTK_CLIST(w_current->page_clist),
-                               0, 435);
-    gtk_clist_set_column_width(GTK_CLIST(w_current->page_clist),
-                               1, 10);
-    gtk_clist_set_column_width(GTK_CLIST(w_current->page_clist),
-                               2, 10);
-
-
-    gtk_clist_set_selection_mode(GTK_CLIST(w_current->page_clist),
-                                 GTK_SELECTION_BROWSE);
-
-    gtk_clist_set_column_justification(
-                                       GTK_CLIST(w_current->page_clist),
-                                       0, GTK_JUSTIFY_LEFT);
-    gtk_clist_set_column_justification(
-                                       GTK_CLIST (w_current->page_clist),
-                                       1, GTK_JUSTIFY_CENTER);
-    gtk_clist_set_column_justification(
-                                       GTK_CLIST (w_current->page_clist),
-                                       2, GTK_JUSTIFY_CENTER);
-
-    for (i = 0; i < NUM_COLS; i++) {
-      texts[i] = text[i];
-    }
-
-    i = 0;
-    string = p_current->page_filename;
-    while(p_current != NULL && string != NULL) {
-
-      sprintf (text[0], "%s", p_current->page_filename);
-
-      sprintf(text[1], "%d", p_current->page_control);
-
-      if (p_current->CHANGED) {
-        sprintf (text[2], "Y");
-      } else {
-        sprintf (text[2], "-");
-      }
-
-
-      gtk_clist_append(GTK_CLIST(w_current->page_clist),
-                       texts);
-
-      p_current->clist_row = i++;
-      p_current = p_current->next;
-
-      if (p_current == NULL) {
-        break;
-      } else {
-        string = p_current->page_filename;
-      }
-    }
-
-    /* we need to store the signal handler here since we
-     * disconnect it and then reconnect it later */
-    w_current->clist_sig = gtk_signal_connect
-      (GTK_OBJECT(w_current->page_clist),
-       "select_row",
-       GTK_SIGNAL_FUNC(change_page),
-       NULL);
-
-    gtk_container_border_width(
-                               GTK_CONTAINER(w_current->page_clist), 0);
-
-    gtk_container_set_border_width(
-                                   GTK_CONTAINER(scrolled_win), 5);
-    gtk_box_pack_start(GTK_BOX (box), scrolled_win, TRUE, TRUE, 0);
-
-    row = s_page_search_row(w_current, w_current->page_current);
-    gtk_clist_select_row(GTK_CLIST(w_current->page_clist), row, 1);
-    gtk_clist_moveto(GTK_CLIST(w_current->page_clist),
-                     5, 0, 0.5, 0.5);
-    gtk_clist_moveto(GTK_CLIST(w_current->page_clist),
-                     5, 0, 0.5, 0.5);
-    gtk_clist_moveto(GTK_CLIST(w_current->page_clist),
-                     5, 0, 0.5, 0.5);
-
-    hbox = gtk_hbox_new (TRUE, 5);
-    gtk_container_border_width (GTK_CONTAINER (hbox), 5);
-    gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
-    gtk_widget_show (hbox);
-
-    separator = gtk_hseparator_new ();
-    gtk_box_pack_start (GTK_BOX (box),
-                        separator, FALSE, TRUE, 0);
-    gtk_widget_show (separator);
-
-    box2 = gtk_hbox_new (TRUE, 5);
-    gtk_container_border_width (GTK_CONTAINER (box2), 5);
-    gtk_box_pack_start (GTK_BOX (box), box2, FALSE, FALSE, 0);
-    gtk_widget_show (box2);
-
-    /* new page */
-    buttonnew = gtk_button_new_with_label (_("New Page"));
-    GTK_WIDGET_SET_FLAGS (buttonnew, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(GTK_BOX (hbox),
-                       buttonnew, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (buttonnew), "clicked",
-                       GTK_SIGNAL_FUNC(file_new), w_current);
-    gtk_widget_show (buttonnew);
-
-    /* open page */
-    buttonopen = gtk_button_new_with_label (_("Open Page"));
-    GTK_WIDGET_SET_FLAGS (buttonopen, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (hbox),
-                        buttonopen, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttonopen), "clicked",
-                        GTK_SIGNAL_FUNC(file_open), w_current);
-    gtk_widget_show (buttonopen);
-
-    /* save page */
-    buttonsave = gtk_button_new_with_label (_("Save Page"));
-    GTK_WIDGET_SET_FLAGS (buttonsave, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (hbox),
-                        buttonsave, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttonsave), "clicked",
-                        GTK_SIGNAL_FUNC(save_page), w_current);
-    gtk_widget_show (buttonsave);
-
-    /* close page */
-    buttonclose = gtk_button_new_with_label (_("Close Page"));
-    GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (hbox),
-                        buttonclose, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttonclose), "clicked",
-                        GTK_SIGNAL_FUNC(page_close), w_current);
-    gtk_widget_show (buttonclose);
-
-    /* discard page */
-    buttondiscard = gtk_button_new_with_label (_("Discard Page"));
-    GTK_WIDGET_SET_FLAGS (buttondiscard, GTK_CAN_DEFAULT);
-    gtk_box_pack_start (GTK_BOX (hbox),
-                        buttondiscard, TRUE, TRUE, 0);
-    gtk_signal_connect (GTK_OBJECT (buttondiscard), "clicked",
-                        GTK_SIGNAL_FUNC(page_discard), w_current);
-    gtk_widget_show (buttondiscard);
-
-    /* This is a window control */
-    buttonupdatewin = gtk_button_new_with_label (_("Update Manager"));
-    gtk_box_pack_start (GTK_BOX (box2),
-                        buttonupdatewin, TRUE, TRUE, 10);
-    gtk_signal_connect (GTK_OBJECT (buttonupdatewin), "clicked",
-                        GTK_SIGNAL_FUNC(update_page_manager),
-                        w_current);
-    gtk_widget_show (buttonupdatewin);
-
-    /* This is a window control */
-    buttonclosewin = gtk_button_new_with_label (_("Close Manager"));
-    gtk_box_pack_start (GTK_BOX (box2),
-                        buttonclosewin, TRUE, TRUE, 10);
-    gtk_signal_connect(GTK_OBJECT(buttonclosewin),
-                       "clicked",
-                       GTK_SIGNAL_FUNC(page_manager_close),
-                       w_current);
-    gtk_widget_show (buttonclosewin);
-
-    gtk_signal_connect(GTK_OBJECT(w_current->pswindow), "key_press_event",
-                         (GtkSignalFunc) page_manager_keypress, w_current);
-
-  }
-
-  if (!GTK_WIDGET_VISIBLE (w_current->pswindow)) {
-    gtk_widget_show (w_current->pswindow);
-    gdk_window_raise(w_current->pswindow->window);
-  } else {
-    /* window should already be mapped, otherwise this
-     * will core */
-    gdk_window_raise(w_current->pswindow->window);
-  }
+    select_page (treeview, &iter, page);
+    
+  } while (gtk_tree_model_iter_next (treemodel, &iter));
+  
 }
 
+void
+pagesel_update (Pagesel *pagesel)
+{
+  GtkTreeModel *model;
+  TOPLEVEL *toplevel;
+  PAGE *p_current;
 
-@ %def setup_page_selector
+  g_assert (IS_PAGESEL (pagesel));
+
+  g_return_if_fail (pagesel->toplevel);
+
+  toplevel = pagesel->toplevel;
+  model    = gtk_tree_view_get_model (pagesel->treeview);
+
+  /* wipe out every thing in the store */
+  gtk_tree_store_clear (GTK_TREE_STORE (model));
+  /* now rebuild */
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+    /* find every page that is not a hierarchy-down of another page */
+    if (p_current->up < 0 ||
+        s_hierarchy_find_page (toplevel->page_head->next,
+                               p_current->up) == NULL) {
+      add_page (model, NULL, p_current);
+    }
+  }
+
+  /* select the current page in the treeview */
+  select_page (pagesel->treeview, NULL, toplevel->page_current);
+  
+}
+
+@ %def pagesel_update

@@ -877,7 +877,7 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
       i_set_filename(w_current, string);
 
       w_current->page_current->CHANGED = 0;
-      update_page_manager(NULL, w_current);
+      x_pagesel_update (w_current);
     } else {
       s_log_message(_("Could NOT save [%s]\n"),w_current->page_current->page_filename);
       i_set_state_msg(w_current, SELECT, _("Error while trying to save"));
@@ -993,14 +993,14 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
           /* now update the scrollbars */
           x_hscrollbar_update(w_current);
           x_vscrollbar_update(w_current);
-          update_page_manager(NULL, w_current);
+          x_pagesel_update (w_current);
 
           w_current->DONT_REDRAW = 0;
           o_redraw_all(w_current);
 
         } else {   /* page already exists . . . */
           s_page_goto(w_current, found_page);
-          update_page_manager(NULL, w_current);
+          x_pagesel_update (w_current);
           i_set_filename(w_current, w_current->
                          page_current->page_filename);
           x_scrollbars_update(w_current);

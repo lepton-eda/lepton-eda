@@ -465,7 +465,7 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   w_current->page_current->page_filename = save_filename;
 
   /* final redraw */
-  update_page_manager(NULL, w_current);
+  x_pagesel_update (w_current);
   w_current->DONT_REDRAW = 0;
 
   diff_x = GET_PAGE_WIDTH (w_current);

@@ -857,16 +857,9 @@ void multi_attrib_edit(TOPLEVEL *w_current, SELECTION *list);
 void multi_attrib_parse_attribute(GtkWidget *w, GtkWidget *w_current);
 /* x_multimulti.c */
 /* x_pagesel.c */
-void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);
-gint save_page(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint file_new(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint file_open(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint page_close(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint page_discard(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint change_page(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent);
-gint page_manager_close(GtkWidget *w, TOPLEVEL *w_current);
-int page_manager_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-void setup_page_selector(TOPLEVEL *w_current);
+void x_pagesel_open (TOPLEVEL *toplevel);
+void x_pagesel_close (TOPLEVEL *toplevel);
+void x_pagesel_update (TOPLEVEL *toplevel);
 /* x_preview.c */
 void x_preview_update(TOPLEVEL *preview, const char *directory, const char *filename);
 void x_preview_close(TOPLEVEL *w_current);
