@@ -1,3 +1,30 @@
+2001-11-21  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* configure.in, Makefile.am: Added test to use notangle_guile.scm
+	if notangle is not available.
+
+	* docs/Makefile.am: Moved the documentation generation here.
+
+	* docs/libgedadoc.texi: Renamed libgeda.texi to libgedadoc.texi
+	to be similar with gschem and to avoid confusion with documentation
+	of source file libgeda.c.
+
+	* src/Makefile.am: Added a rule to produce prototype.h from noweb
+	files and moved the documentation generation to docs/.
+
+	* scripts/geda_totexi.in: Changed geda_totexi to geda_totexi.in
+	to take benefit from the configure test on AWK. Backend updated
+	to handle cross-references.
+
+	* scripts/notangle_guile.scm.in: Added guile script to tangle
+	noweb code without the whole noweb package installed.
+	
+	* noweb/o_{arc|box|circle|line}_basic.nw: Full documentation, 
+	code clean-up and use of the new identifiers for modification.
+
+	* include/struct.h: Defined identifiers for particular points 
+	on each type of object.
+
 2001-07-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_bus_basic.c: Fixed a typo pointed out by Roger Williams.
