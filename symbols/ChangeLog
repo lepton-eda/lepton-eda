@@ -18,6 +18,8 @@ into the cvs repository.
 	* vhdl/: Created symbol library which was contributed by 
 	  Thomas Heidel (symbols derived from the Verilog symbols by Mike)
 
+        * configure.in: Updated version
+
 2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * configure.in: Added -lregex for CYGWIN32 build

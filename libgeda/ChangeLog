@@ -10,6 +10,8 @@
 
 	* src/Makefile.am: Bumped shared library version to 12
 
+        * configure.in: Updated version
+
 2001-03-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Fixed a few bugs dealing with the enabling and
