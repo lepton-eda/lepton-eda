@@ -1,3 +1,8 @@
+2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/Makefile.am: Oops forgot to add eps and sch files
+	to the EXTRA_DIST variable.
+
 2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Added shell code to expand prefix and set the

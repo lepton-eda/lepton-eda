@@ -1,3 +1,8 @@
+2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* documentation/Makefile.am: Added a little more to this Makefile to
+	make sure the example documentation is prebuilt into the dist tarball.
+
 2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* */*.sym: Added a bunch of symbols for the online symbol upload

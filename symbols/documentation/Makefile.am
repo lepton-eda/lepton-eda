@@ -2,7 +2,7 @@ datadocdir = @GEDADOCDIR@
 
 datadoc_DATA = nc.pdf
 
-EXTRA_DIST = nc.doc geda.fig geda.pic nc.ps
+EXTRA_DIST = nc.doc geda.fig geda.pic nc.ps nc.pdf
 
 BUILT_SOURCES = geda.pic nc.pdf nc.ps
 
@@ -46,6 +46,7 @@ BUILT_SOURCES = geda.pic nc.pdf nc.ps
 #  dependencies
 #
 nc.ps: geda.pic
+nc.pdf: nc.ps
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ *.ps *.pdf 

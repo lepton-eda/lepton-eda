@@ -5,7 +5,8 @@ docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
 BUILT_SOURCES = $(docname).dvi $(docname).ps $(docname).pdf \
                 $(docname)
 
-EXTRA_DIST = $(docname).tex $(BUILT_SOURCES) coords.eps
+EXTRA_DIST = $(docname).tex $(BUILT_SOURCES) coords.eps alignment.eps \
+	     alignment.sch coords.sch
 
 $(docname).dvi: $(docname).tex
 	latex $(docname)

@@ -1,3 +1,7 @@
+2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Bumped shared library version number to 18.
+
 2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/defines.h, noweb/f_print.nw: Applied Antonio's no 
