@@ -158,7 +158,7 @@
 ; selects and when objects are selected.  
 ; DO NOT change the value of the index (first number)
 ;
-(select-color 11 "orange" "null" "null" -1 -1 -1)
+(select-color 11 "orange" "orange" "null" -1 -1 -1)
 
 ; boundingbox-color index color_name outline_color ps_color_string 
 ;                   int_red int_green int_blue 
@@ -167,7 +167,7 @@
 ; instead of the default outline.  
 ; DO NOT change the value of the index (first number)
 ; 
-(boundingbox-color 12 "orange" "null" "null" -1 -1 -1)
+(boundingbox-color 12 "orange" "orange" "null" -1 -1 -1)
 
 ; zoom-box-color index color_name outline_color ps_color_string 
 ;                int_red int_green int_blue 
@@ -175,7 +175,7 @@
 ; whenever you use the zoom window / box option. 
 ; DO NOT change the value of the index (first number)
 ; 
-(zoom-box-color 13 "cyan" "null" "null" -1 -1 -1)
+(zoom-box-color 13 "cyan" "cyan" "null" -1 -1 -1)
 
 ; stroke-color index color_name outline_color ps_color_string 
 ;              int_red int_green int_blue 
@@ -183,7 +183,7 @@
 ; Basically this color specifies what the mouse droppings color
 ; DO NOT change the value of the index (first number)
 ;
-(stroke-color 14 "grey90" "null" "null" -1 -1 -1)
+(stroke-color 14 "grey90" "grey90" "null" -1 -1 -1)
 
 ; lock-color index color_name outline_color ps_color_string 
 ;            int_red int_green int_blue 

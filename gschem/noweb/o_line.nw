@@ -904,8 +904,8 @@ o_line_rubberline_xor(TOPLEVEL *w_current)
 {
 	/* draw the circle from the w_current variables */
 	/* with xor-function */
-	gdk_gc_set_foreground(w_current->xor_gc,
-						  x_get_color(w_current->select_color));
+	gdk_gc_set_foreground(w_current->xor_gc, 
+			      x_get_darkcolor(w_current->select_color));
 	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 							   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
 							   GDK_JOIN_MITER);

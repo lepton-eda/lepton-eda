@@ -122,7 +122,7 @@ o_redraw_all(TOPLEVEL *w_current)
       case(ENDCOPY):
         o_drawbounding(w_current, NULL,
                        w_current->page_current->selection2_head->next,
-                       x_get_color(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
       case(DRAWCOMP):
@@ -131,7 +131,7 @@ o_redraw_all(TOPLEVEL *w_current)
                        page_current->
                        complex_place_head->next,
                        NULL,
-                       x_get_color(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), FALSE);
         break;
 
       case(DRAWATTRIB):
@@ -142,7 +142,7 @@ o_redraw_all(TOPLEVEL *w_current)
                        page_current->
                        attrib_place_head->next,
                        NULL,
-                       x_get_color(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), FALSE);
         break;
     }
   }

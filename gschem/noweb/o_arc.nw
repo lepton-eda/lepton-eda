@@ -1217,11 +1217,11 @@ o_arc_rubberarc_xor(TOPLEVEL *w_current)
 	double tmp;
 	int x1, y1;
 	
-	gdk_gc_set_foreground(w_current->xor_gc,
-						  x_get_color(w_current->select_color));
-	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-							   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-							   GDK_JOIN_MITER);
+	gdk_gc_set_foreground(w_current->xor_gc, 
+			      x_get_darkcolor(w_current->select_color));
+	gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
+				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+				   GDK_JOIN_MITER);
 	/* draw the arc from the w_current variables */
 	gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
 				 w_current->start_x - w_current->distance,

@@ -435,8 +435,10 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
   }
 
   gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+			x_get_darkcolor(w_current->select_color) );
+  gdk_draw_line(w_current->window, w_current->xor_gc, 
+		w_current->start_x, w_current->start_y, 
+		w_current->last_x, w_current->last_y);
 
   if (w_current->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -488,8 +490,10 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
   }
 
   gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+			x_get_darkcolor(w_current->select_color) );
+  gdk_draw_line(w_current->window, w_current->xor_gc, 
+		w_current->start_x, w_current->start_y, 
+		w_current->last_x, w_current->last_y);
 
   if (w_current->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -614,8 +618,11 @@ o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
                                GDK_JOIN_MITER);
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc, x_get_color(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+  gdk_gc_set_foreground(w_current->xor_gc, 
+			x_get_darkcolor(w_current->select_color) );
+  gdk_draw_line(w_current->window, w_current->xor_gc, 
+		w_current->start_x, w_current->start_y, 
+		w_current->last_x, w_current->last_y);
 
   /* going into ortho mode (control key not pressed) */
   /* erase non-ortho line */
@@ -639,8 +646,10 @@ o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
   }
 
   gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+			x_get_darkcolor(w_current->select_color) );
+  gdk_draw_line(w_current->window, w_current->xor_gc, 
+		w_current->start_x, w_current->start_y, 
+		w_current->last_x, w_current->last_y);
 
   if (w_current->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
@@ -720,8 +729,10 @@ o_net_xorrubber(TOPLEVEL *w_current)
   }
 
   gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+			x_get_darkcolor(w_current->select_color) );
+  gdk_draw_line(w_current->window, w_current->gc, 
+		w_current->start_x, w_current->start_y, 
+		w_current->last_x, w_current->last_y);
 
   if (w_current->net_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->gc, 0,

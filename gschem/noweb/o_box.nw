@@ -980,11 +980,11 @@ o_box_rubberbox_xor(TOPLEVEL *w_current)
 	box_top    = GET_BOX_TOP   (w_current);
 
 	/* draw the box from the previous variables */
-	gdk_gc_set_foreground(w_current->xor_gc,
-						  x_get_color(w_current->select_color));
-	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-							   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-							   GDK_JOIN_MITER);
+	gdk_gc_set_foreground(w_current->xor_gc, 
+			      x_get_darkcolor(w_current->select_color));
+	gdk_gc_set_line_attributes(w_current->xor_gc, 0, 
+				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+				   GDK_JOIN_MITER);
 	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
 					   FALSE, box_left, box_top, box_width, box_height);
 	

@@ -1,3 +1,18 @@
+2002-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_color.nw: Fixed outline colors so that they xor properly
+	for non-black backgrounds
+
+	* noweb/o_arc.nw, o_attrib.nw, o_box.nw, o_bus.nw, o_circle.nw, 
+	  o_grips.nw, o_line.nw, o_net.nw, o_pin.nw, o_select.nw, o_text.nw:
+	Fixed select color getter so that it returns the dark color which has
+	been corrected for a non-black background.  Also did some minor cleanup.
+
+	* noweb/o_attrib.nw, o_basic.nw, o_buffer.nw o_complex.nw, o_copy.nw,
+	  o_move.nw, o_text.nw, x_event.nw: Fixed boundbox color getter so 
+	that it returns the dark color which has been corrected for a
+	non-black background.
+
 2002-05-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw and friends: Added warp cursor rc keyword and support

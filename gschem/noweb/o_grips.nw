@@ -270,7 +270,7 @@ o_grips_start(TOPLEVEL *w_current, int x, int y)
 				
         o_net_erase(w_current, object);
         gdk_gc_set_foreground(w_current->xor_gc, 
-                              x_get_color(w_current->select_color) );
+                              x_get_darkcolor(w_current->select_color) );
         gdk_draw_line(w_current->window, w_current->xor_gc, 
                       w_current->start_x, w_current->start_y, 
                       w_current->last_x, w_current->last_y);
@@ -294,7 +294,7 @@ o_grips_start(TOPLEVEL *w_current, int x, int y)
 				
         o_pin_erase(w_current, object);
         gdk_gc_set_foreground(w_current->xor_gc, 
-                              x_get_color(w_current->select_color) );
+                              x_get_darkcolor(w_current->select_color) );
         gdk_draw_line(w_current->window, w_current->xor_gc, 
                       w_current->start_x, w_current->start_y, 
                       w_current->last_x, w_current->last_y);
@@ -315,7 +315,7 @@ o_grips_start(TOPLEVEL *w_current, int x, int y)
 				
         o_bus_erase(w_current, object);
         gdk_gc_set_foreground(w_current->xor_gc, 
-                              x_get_color(w_current->select_color) );
+                              x_get_darkcolor(w_current->select_color) );
         gdk_draw_line(w_current->window, w_current->xor_gc, 
                       w_current->start_x, w_current->start_y, 
                       w_current->last_x, w_current->last_y);
@@ -488,7 +488,7 @@ o_grips_end(TOPLEVEL *w_current)
     o_net_erase(w_current, object);
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
-                          x_get_color(w_current->select_color));
+                          x_get_darkcolor(w_current->select_color));
     gdk_draw_line(w_current->window, w_current->xor_gc,
                   w_current->start_x, w_current->start_y,
                   w_current->last_x, w_current->last_y);
@@ -546,7 +546,7 @@ o_grips_end(TOPLEVEL *w_current)
     o_pin_erase(w_current, object);
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
-                          x_get_color(w_current->select_color));
+                          x_get_darkcolor(w_current->select_color));
     gdk_draw_line(w_current->window, w_current->xor_gc,
                   w_current->start_x, w_current->start_y,
                   w_current->last_x, w_current->last_y);
@@ -604,7 +604,7 @@ o_grips_end(TOPLEVEL *w_current)
     o_bus_erase(w_current, object);
     /* erase xor line */
     gdk_gc_set_foreground(w_current->xor_gc,
-                          x_get_color(w_current->select_color));
+                          x_get_darkcolor(w_current->select_color));
     gdk_draw_line(w_current->window, w_current->xor_gc,
                   w_current->start_x, w_current->start_y,
                   w_current->last_x, w_current->last_y);

@@ -142,6 +142,16 @@ x_color_allocate_all(void)
 
       }
 
+      /* Make sure the outline color is correct for non-black backgrounds */
+      if (i > 0) {
+	colors[i].gtk_outline_color->red = 
+		colors[i].gtk_outline_color->red ^ colors[0].gtk_color->red;
+	colors[i].gtk_outline_color->green =	
+		 colors[i].gtk_outline_color->green ^ 
+		 	colors[0].gtk_color->green;
+	colors[i].gtk_outline_color->blue =	
+		 colors[i].gtk_outline_color->blue ^ colors[0].gtk_color->blue;
+      }
 
       error = gdk_color_alloc(colormap, 
                               colors[i].gtk_outline_color);
