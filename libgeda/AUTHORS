@@ -21,5 +21,8 @@ Patrick Bernaud		- For lots and lots of work on libgeda, gschem,
 
 Bryce Denney		- For contributing the \r patch to nl_remove()
 
+Ye Ma			- For contributing the gtk+ 2.2.x patch.  This saved
+			  quite a bit of time in getting the port done.
+
 Please see the AUTHORS file in the various sub packages 
 (gschem/gnetlist/etc...).
