@@ -144,24 +144,24 @@
 	(for-each (lambda (pin)
 		    (begin
 		      (display "input " p)
-		      (verilog:display-escaped-identifier 
-		       (verilog:netname pin) p)
+		      (verilog:display-wire (verilog:get-net 
+					     (verilog:netname pin)) p)
 		      (display " ;" p)
 		      (newline p))) in)       ; do each input
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "output " p)
-		      (verilog:display-escaped-identifier 
-		       (verilog:netname pin) p)
+		      (verilog:display-wire (verilog:get-net 
+					     (verilog:netname pin)) p)
 		      (display " ;" p)
 		      (newline p))) out)      ; do each output
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "inout " p)
-		      (verilog:display-escaped-identifier 
-		       (verilog:netname pin) p)
+		      (verilog:display-wire (verilog:get-net 
+					     (verilog:netname pin)) p)
 		      (display " ;" p)
 		      (newline p))) inout)    ; do each inout
 		      
@@ -438,6 +438,14 @@
      
     all-unique-nets)
     the-nets))
+
+;; Retrieve the requested net record from the database.
+
+(define verilog:get-net
+  (lambda (wire)
+    (begin
+      (assoc wire verilog:get-nets)
+      )))
 
 ;;
 ;;  Display wires from the design
