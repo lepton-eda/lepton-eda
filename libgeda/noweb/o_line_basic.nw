@@ -53,6 +53,7 @@
 <<o_line_basic.c : o_line_scale_world()>>
 
 <<o_line_basic.c : o_line_visible()>>
+<<o_line_basic.c : o_line_length()>>
 
 @
 
@@ -1652,3 +1653,32 @@ o_line_visible(TOPLEVEL *w_current, LINE *line,
 }
 
 @ %def o_line_visible
+
+
+
+@section Function [[o_line_length()]]
+
+@defun o_line_length object
+@end defun
+
+<<o_line_basic.c : o_line_length()>>=
+double 
+o_line_length(OBJECT *object)
+{
+  double length;
+  double dx, dy;
+  
+  if (!object->line) {
+    return 0.0;
+  }
+
+  dx = object->line->x[0]-object->line->x[1];
+  dy = object->line->y[0]-object->line->y[1];
+
+  length = sqrt((dx*dx) + (dy*dy));
+                
+  return(length);
+}
+
+@ %def o_line_length
+
