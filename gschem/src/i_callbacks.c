@@ -1766,6 +1766,7 @@ DEFINE_I_CALLBACK(misc)
 	char name[128], value[128];
 	int i=0;
 
+#if 0 /* old demonstration code on getting all attribs from an object */
 	if (w_current->page_current->selection_head->next != NULL) {
 		attrib_objects = o_attrib_return_attribs(
 					      w_current->page_current->
@@ -1789,6 +1790,14 @@ DEFINE_I_CALLBACK(misc)
 		}
 
         }
+#endif
+
+	/* In this case w_current->page_current->next can be safely null */	
+	/* new demonstration code which shows how to use o_attrib_add_attrib */
+	o_attrib_add_attrib(w_current, "name=value", VISIBLE, 
+				    SHOW_NAME_VALUE, 
+				    w_current->page_current->
+				    selection_head->next);
 
 	/*o_conn_print_hash(w_current->page_current->conn_table);*/
 	/* o_text_print_set();*/

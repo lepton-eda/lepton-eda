@@ -11,6 +11,11 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-01-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* config.h: Remove this file from the cvs repository; should not have
+	  been there in the first place.
+
 2000-01-18  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* analog/opamp-2.sym: Added a slightly larger version of opamp-1.sym

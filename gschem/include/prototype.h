@@ -307,6 +307,7 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, OBJECT *list, int new_
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_attrib_end(TOPLEVEL *w_current);
 void o_attrib_rubberattrib(TOPLEVEL *w_current);
+int o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *o_current);
 /* o_basic.c */
 void o_redraw_all(TOPLEVEL *w_current);
 void o_redraw(TOPLEVEL *w_current, OBJECT *object_list);
@@ -370,6 +371,7 @@ int o_conn_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, GdkGC *loca
 void o_copy_start(TOPLEVEL *w_current, int x, int y);
 void o_copy_end(TOPLEVEL *w_current);
 /* o_delete.c */
+void o_delete_text(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(TOPLEVEL *w_current);
 /* o_line.c */
 void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current);
@@ -455,6 +457,10 @@ GdkColor *x_get_darkcolor(int color);
 int x_color_get_name(int index, char *string);
 /* x_dialog.c */
 void destroy_window(GtkWidget *widget, GtkWidget **window);
+void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
+void multi_attrib_edit_change(GtkWidget *w, GtkCList *clist);
+void multi_attrib_edit_clear(GtkWidget *w, GtkCList *clist);
+void multi_attrib_edit_delete(GtkWidget *w, GtkCList *clist);
 void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit(TOPLEVEL *w_current, OBJECT *list);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);

@@ -380,3 +380,95 @@ o_attrib_rubberattrib(TOPLEVEL *w_current)
 		       w_current->page_current->attrib_place_head->next,
 		       x_get_color(w_current->bb_color));
 }
+
+int
+o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, 
+	            int show_name_value, OBJECT *o_current)
+{
+        int world_x, world_y;
+	int color;
+	int left, right, top, bottom;
+
+	/* creating a toplevel or unattached attribute */
+	if (o_current) {
+        	/* get coordinates of where to place the text object */
+        	switch(o_current->type) {
+			case(OBJ_COMPLEX):
+			case(OBJ_ARC):
+				world_x = o_current->x;
+				world_y = o_current->y;
+			break;
+
+			case(OBJ_CIRCLE):
+				world_x = o_current->circle->center_x;
+				world_y = o_current->circle->center_y;
+			break;
+
+
+			case(OBJ_LINE):
+			case(OBJ_NET):
+			case(OBJ_BOX):
+			case(OBJ_PIN):
+			case(OBJ_BUS):
+				world_x = o_current->line_points->x1;
+				world_y = o_current->line_points->y1;
+			break;
+
+			case(OBJ_TEXT):
+				s_log_message("Cannot attach attribute to text item\n");
+				return(TRUE);
+			break;
+		}
+		color = w_current->attribute_color;
+	} else {
+		color = w_current->detachedattr_color;
+		world_get_complex_bounds(w_current, 
+					 w_current->page_current->object_head,
+                                 	 &left, &top, &right, &bottom);
+	
+		/* this really is the lower left hand corner */	
+		world_x = left; 
+		world_y = top;  
+
+		/* printf("%d %d\n", world_x, world_y); */
+	}
+
+        /* first create text item */
+        w_current->page_current->object_tail =
+                o_text_add(w_current, w_current->page_current->object_tail,
+                           OBJ_TEXT, w_current->attribute_color,
+                           world_x,
+                           world_y,
+                           0, /* zero is angle */
+                           text_string,
+                           w_current->text_size,  /* current text size */ 
+                           visibility, show_name_value);
+
+        /* now w_current->page_current->object_tail contains new text item */
+
+        /* now attach the attribute to the object (if o_current is not NULL) */
+        /* remember that o_current contains the object to get the attribute */
+	if (o_current) {
+        	o_attrib_attach(w_current, w_current->page_current->object_head,
+                                   w_current->page_current->object_tail,
+                                   o_current);
+	}
+
+        /* add item to the selection or it'll be selected by itself */
+        w_current->page_current->selection_tail = (OBJECT *) o_list_copy_to(
+                w_current,
+                w_current->page_current->selection_head,
+                w_current->page_current->object_tail, SELECTION);
+
+        /* now redraw this new item as being selected */
+        w_current->override_color = w_current->select_color;
+
+        /* crude but quite functional */
+        (*w_current->page_current->object_tail->draw_func)(
+                        w_current, w_current->page_current->object_tail);
+
+        w_current->override_color = -1;
+        w_current->page_current->CHANGED = 1;
+
+	return(FALSE);
+}

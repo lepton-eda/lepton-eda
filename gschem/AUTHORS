@@ -75,6 +75,10 @@ Reinhard Kotucha        - For suggesting the use of setlinecap in the
 			  postscript output.  Output looks much better
 			  with some sort of cap style set.
 
+Matt Ettus		- For greatly rewritting the attribute edit
+		  	  attribute dialog box
+
+			  For writing the multi-add/edit attribute dialog box
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
@@ -101,7 +105,6 @@ Geoff Harland
 James Swonger
 Roger Williams 
 Arnim Littek 
-Matt Ettus 
 Nick Bastin
 
 And anybody else who spoke up and let their opinion be heard.
