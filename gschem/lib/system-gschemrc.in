@@ -631,7 +631,7 @@
 ; are displayed.
 ;
 (attribute-name "netname")
-(attribute-name "uref")
+(attribute-name "refdes")
 (attribute-name "slot")
 (attribute-name "value")
 (attribute-name "net")

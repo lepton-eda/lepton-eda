@@ -4277,7 +4277,7 @@ x_dialog_raise_all(TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : generic_text_input_ok()>>=
-char generic_textstring[256] = "uref=R";
+char generic_textstring[256] = "refdes=R";
 
 void generic_text_input_ok(GtkWidget * w, TOPLEVEL * w_current)
 {

@@ -1,3 +1,10 @@
+2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_misc.nw, x_dialog.nw, lib/system-gschemrc.in: Renamed 
+	user visible references of uref to refdes
+
+	* examples/*.sch: Update all schematics using gschupdate
+	
 2002-07-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw: Added code so that value entry field is 

@@ -1232,7 +1232,7 @@ o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
           used_list[i+1] = tmp;
         }
         if (used_list[i]==used_list[i+1]) {
-          printf("Warning: two components with same uref: %d\n", used_list[i]);
+          printf("Warning: two components with same refdes: %d\n", used_list[i]);
         }
       }
     }
