@@ -55,3 +55,55 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
   return FALSE;
 }
 
+
+/*------------------------------------------------------------------
+ * This fcn takes an object, finds its refdes and returns it.
+ * If the component is slotted, it returns a refdes of the form 
+ * refdes.slot.  If no refdes is found, it returns NULL.
+ *------------------------------------------------------------------*/
+char *s_attrib_get_refdes(OBJECT *object)
+{
+  char *temp_uref;
+  char *numslots_value;
+  char *slot_value;
+  OBJECT *slot_text_object;
+
+  /*------ Try to get the refdes -----*/
+  temp_uref = o_attrib_search_name_single(object, "refdes", NULL);
+  if (!temp_uref) {
+    temp_uref = o_attrib_search_name_single(object, "uref", NULL); // deprecated
+    if (temp_uref) {
+      printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
+    } else {        /* didn't find refdes.  Report error to log. */
+#ifdef DEBUG
+      printf("In s_attrib_get_refdes, found non-graphical component with no refdes.\n");
+      printf(". . . . complex_basename = %s.\n", object->complex_basename);
+#endif
+      return NULL;
+    } 
+  }
+
+#ifdef DEBUG
+  printf("In s_attrib_get_refdes, found component with refdes %s.\n", temp_uref);
+#endif   
+  
+  /*------- Now append .slot to refdes if part is slotted -------- */
+  /* Find out if this is a multislotted component */
+  numslots_value = o_attrib_search_numslots(object, NULL);
+  if (numslots_value != NULL) {  /* this is a slotted component; 
+				    append slot number to refdes. */
+    slot_value = o_attrib_search_slot(object, &slot_text_object);
+#if DEBUG
+    printf(". . .  , found slotted component with slot = %s\n", slot_value);
+#endif
+    temp_uref = u_basic_strdup_multiple(temp_uref, ".", slot_value, NULL);
+  }
+
+#ifdef DEBUG
+  printf(". . . .   returning refdes %s.\n", temp_uref);
+#endif   
+  
+  return temp_uref;
+
+}
+

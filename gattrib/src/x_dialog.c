@@ -448,15 +448,7 @@ int x_dialog_missing_sym(OBJECT *object)
   gtk_window_set_modal(GTK_WINDOW(missing_sym_window), TRUE);
   
   /*  Get refdes of object  */
-  refdes = o_attrib_search_name_single(object, "refdes", NULL);
-  if (!refdes) {
-    refdes = o_attrib_search_name_single(object, "uref", NULL); /* deprecated */
-    if (refdes) {
-      printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", refdes);
-    } else {
-      fprintf(stderr, "In s_dialog_missing_sym, found non-graphical component with no refdes.\n");
-    }
-  }
+  refdes = s_attrib_get_refdes(object);
 
   /*  Create a text label for the dialog window */
   string =

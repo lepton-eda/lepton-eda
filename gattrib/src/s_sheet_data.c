@@ -95,10 +95,13 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
   char *temp_uref;
   OBJECT *o_current;
   OBJECT *temp_object;
+
+  char *numslots_value;
+  int numslots;
+  char *slot_value;
+  OBJECT *slot_text_object;
   
 #ifdef DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("=========== Just entered  s_sheet_data_add_master_comp_list_items!  ==============\n");
 #endif
 
@@ -120,33 +123,16 @@ void s_sheet_data_add_master_comp_list_items(OBJECT *start_obj) {
 	    !o_attrib_search_component(o_current, "graphical") ) {    
 	
 #if DEBUG
-	fflush(stderr);
-	fflush(stdout);
 	printf("      In s_sheet_data_add_master_comp_list_items; found component on page\n");
-	fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
+	printf(". . . . complex_basename = %s.\n", o_current->complex_basename);
 #endif
 	verbose_print(" C");
       
-	/*------ Try to get the refdes -----*/
-	temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
-	if (!temp_uref) {
-	  temp_uref = o_attrib_search_name_single(o_current, "uref", NULL); // deprecated
-	  if (temp_uref) {
-	    printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
-	  } else {        /* didn't find refdes.  Report error to log. */
-	    fprintf(stderr, "       In s_sheet_data_add_master_comp_list_items, found non-graphical component with no refdes.\n");
-#ifdef DEBUG
-	    fprintf(stderr, ". . . . complex_basename = %s.\n", o_current->complex_basename);
-#endif
-	  } 
-	}   /*--- if(!temp_uref) ---*/
-	
+	temp_uref = s_attrib_get_refdes(o_current);
 	
 	/* Now that we have refdes, store refdes and attach attrib list to component */
 	if (temp_uref) {
 #if DEBUG
-	  fflush(stderr);
-	  fflush(stdout);
 	  printf("       In s_sheet_add_master_comp_list, about to add to master list refdes = %s\n", temp_uref);
 #endif
 	  s_string_list_add_item(sheet_head->master_comp_list_head, &(sheet_head->comp_count), temp_uref);
@@ -188,7 +174,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
     printf("- Starting master comp attrib list creation.\n");
   }
 
-  /* -----  Iterate through all objects found on page looking for components  ----- */
+  /* -----  Iterate through all objects found on page looking for components (OBJ_COMPLEX) ----- */
   o_current = start_obj;
   while (o_current != NULL) {
 
@@ -211,14 +197,11 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	      && a_current->object->text != NULL) {  /* found an attribute */
 	    attrib_text = u_basic_strdup(a_current->object->text->string);
 	    attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-	    if (strcmp(attrib_name, "refdes") != 0) {  
-	      /* Don't include "refdes" because it is already in other master list */
+
+	      /* Don't include "refdes" or "slot" because they form the row name */
+	    if ( (strcmp(attrib_name, "refdes") != 0) 
+		 && (strcmp(attrib_name, "slot") != 0) ) {  
 #if DEBUG
-	      temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
-	      fflush(stderr);
-	      fflush(stdout);
-	      printf("In s_sheet_data_add_master_comp_attrib_list, examining component refdes = %s\n", temp_uref);
-	      free(temp_uref);
 	      printf(" . . . from this component, about to add to master comp attrib list attrib = %s\n", attrib_name);
 #endif
 	      s_string_list_add_item(sheet_head->master_comp_attrib_list_head, 
@@ -301,7 +284,7 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 #endif
 
       if (o_current->type == OBJ_COMPLEX) {
-	temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
+	temp_uref = s_attrib_get_refdes(o_current);
 	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 	  
 	  /* -----  Now iterate through lower level objects looking for pins.  ----- */
@@ -390,7 +373,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 #endif
 
       if (o_current->type == OBJ_COMPLEX) {
-	temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
+	temp_uref = s_attrib_get_refdes(o_current);
 	if (temp_uref != NULL) {      /* make sure object complex has a refdes  */
 	  
 	  /* -----  Now iterate through lower level objects looking for pins.  ----- */

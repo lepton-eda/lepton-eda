@@ -527,7 +527,7 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
       }
 #endif
 
-      temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
+      temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref != NULL) {
 	/* Must create a name=value pair list for each particular component
 	 * which we can pass to fcn updating o_current.  This fcn places all attribs
@@ -583,7 +583,7 @@ s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj)
        *      attribs corresponding to this refdes:pinnumber
        *  4.  Stick the attribs into the TOPLEVEL data structure.
        */
-      temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
+      temp_uref =  s_attrib_get_refdes(o_current);
       if ( (temp_uref != NULL) && (o_current->complex->prim_objs) ) {    /* make sure object complex has a refdes  */
 
 	comp_prim_obj = o_current->complex->prim_objs;
@@ -738,9 +738,10 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       /* may need to check more thoroughly here. . . . */
       old_name_value_pair = u_basic_strdup(a_current->object->text->string);
       old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
-      /* Don't put refdes into list.  Don't put old name=value pair into list if a new
+      /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
        * one is already in there. */
       if ( (strcmp(old_attrib_name, "refdes") != 0) &&
+	   (strcmp(old_attrib_name, "slot") != 0) &&
 	   (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
       }

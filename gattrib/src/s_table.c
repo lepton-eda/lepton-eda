@@ -253,7 +253,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
          !o_attrib_search_component(o_current, "graphical") ) {
                                                               
       /* ---- Don't process part if it lacks a refdes ----- */
-      temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
+      temp_uref = u_basic_strdup(s_attrib_get_refdes(o_current));
       if (temp_uref) {
 
 #if DEBUG
@@ -272,8 +272,10 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
             attrib_text = u_basic_strdup(a_current->object->text->string);
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
             attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
-            if (strcmp(attrib_name, "refdes") != 0) {
-              /* Don't include "refdes" */
+
+	    /* Don't include "refdes" or "slot" because they form the row name. */
+            if ( (strcmp(attrib_name, "refdes") != 0)
+		 && (strcmp(attrib_name, "slot") != 0) ) {
                
               /* Get row and col where to put this attrib */
               row = s_table_get_index(sheet_head->master_comp_list_head, temp_uref);
@@ -433,7 +435,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
          !o_attrib_search_component(o_current, "graphical") ) {
                                                               
       /* ---- Don't process part if it lacks a refdes ----- */
-      temp_uref = o_attrib_search_name_single(o_current, "refdes", NULL);
+      temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref) {
 
 	/* -----  Now iterate through lower level objects looking for pins.  ----- */
