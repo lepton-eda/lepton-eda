@@ -148,9 +148,9 @@
 
 ; unnamed-netname string
 ;
-; Specifies the default prepended string which is placed in front of all 
-; nets which are not explicitly named by the user (using the netname= 
-; attribute in the schematic).
+; Specifies the default string which is placed in front of all nets that 
+; have not been explicitly named by the user (using the netname= attribute 
+; in the schematic).
 ;
 (unnamed-netname "unnamed_net")
 
