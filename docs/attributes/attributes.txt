@@ -1,0 +1,158 @@
+
+The Complete Attribute Reference Doc
+
+----------------------------------------------------------------------
+
+Attributes are nothing but text items which take on the form: name=value
+name can be anything just as long as it doesn't contain a =.  value can
+also be anything just as long as it is something (vs nothing).  name= 
+is not a valid attribute.
+
+Attributes can be attached to some part of the symbol.  Either
+a pin (if it's a pin number) or some other part of the symbol.
+
+Attributes used to be required to be attached to something to be
+attributes, but now they just have to exist in the symbol file as
+name=value.  Expanding a bit on the last sentence, as long as the
+text item has the format name=value, it is considered an attribute.
+Attributes inside a symbol do not have to be attached to anything.
+In order to see hidden attributes in gschem select Edit/Show Hidden Text.
+
+
+Here is the current list of attributes which are used in the gEDA 
+system:
+
+
+device
+(inside symbols only)	
+
+device=device_name should be placed somewhere in the symbol and
+made invisible.  device= is the device name and is required.  If the
+object is a graphic then device= should be set to none (device=none).
+It is no longer required to attach this attribute anything; just having
+it exist as device=name is good enough.  Do not confuse this with just
+having a text label which the device name.
+
+
+graphical
+(inside symbols only)
+
+graphical=1 should exist somewhere in a symbol which is purely graphical
+(such as a title block or decon symbol).  Symbols which have this
+attribute have no electrical or circuit significance.  Don't forget to
+set device=none (not really required but is nice to have).
+
+
+pin#
+(inside symbols only)
+
+All pins should have a pin#=# attribute attached to the pin object. The
+first # is a placeholder and increments sequentially starting at 1.
+The second # is the actual pin number.	Both #'s are required!
+The order of pin#'s is significant since the netlister will output pins
+in sequential order starting at pin1 going through pinN. Example: pin1=1,
+pin2=2, pin3=5.  These attributes can be either hidden or invisible
+
+
+pinlabel
+(inside symbols only)
+
+All pins should also have the pinlabel=label attribute attached to them.
+This is visible label associated with each pin.  Please make this
+attribute green (instead of the default attribute yellow).  Right now,
+the symbol libraries do not follow this convention, but they will.
+
+
+pintype
+(inside symbols only)
+
+Each pin should have a pintype=value attribute attached to it.  Here
+is a list of valid values:
+
+IN              input
+OUT             output
+I/O             input/output
+OC              open collector
+OE              open emitter
+PAS             passive
+TP              totem pole
+TRI             tristate (high impedance)
+CLK             clock
+PWR             power/ground
+
+The pintype attribute is not used in the symbol library and might change
+drastically (due to some disagreements on the mailing list).
+
+
+numslots
+(inside symbols only)
+
+If a component has multiple slots in a package (such as a 7400 (NAND)
+which has 4 NANDs per package) then you need a numslots=# attribute.
+The # is the number of slots the device has.  numslots= should be exist
+somewhere in the symbol and made invisible.  Additional slot related
+required attributes are below.
+
+
+slot#
+(inside symbols only)
+
+If a component has multiple slots in a package then you also need to
+attach a slot#=#,#,#...  for every slot the component has.  The first
+# corresponds to the slot number.  If a device has 4 slots then there
+would be a slot1=, slot2=, slot3=, and a slot4= attribute exist
+somewhere in the symbol and made invisible.  The subsequent # have
+a one-to-one correspondence to pin# attributes and specify what the pin#
+should be when that slot is set.  Yes this isn't obvious and might be
+changing in the near future.  See 7400-1.sym as an example of how this
+should all work.  It is recommended that all symbols which have slots have
+a slot=1 attribute attached in the same fashion as the device= attributed.
+The default pin#=#'s should reflect the first slot.  You cannot override
+the pin#=# with a non-slot=1 when placing components (at least not yet).
+
+
+physical
+(inside symbols only)
+
+physical=package_name should exist somewhere in the symbol which might
+be used with the netlister.  Attach this attribute just like the device=
+attribute.  package_name is the pcb footprint or package type like DIP14
+or DIP40.  This is very new and so I'm not 100% sure this attribute will
+be call this or what the values should be, so it's not required yet.
+None of the current libraries use this.
+
+
+label
+(schematics only)
+
+The label= attribute should not be inside any symbols.  It is used
+for net name labels only!  If you want to label a net then attach an
+attribute called label=value to the net.  All nets which have the same
+name are considered electrically connected.
+
+
+name
+(should not be used anywhere)
+
+The name= attribute should not be attached anywhere in the symbol.
+It's currently unused and is considered ambiguous.
+
+
+uref
+(schematics only)
+
+The uref= attribute should not be attached anywhere in the symbol.
+It belongs on the outside of the symbol when it is placed on a schematic
+sheet.  This attribute is used to specify the reference name to a particular
+instantiated component.  This attribute will change to uref in the near
+future (don't use ref yet).
+
+
+net
+(both schematics and inside symbols)
+
+The net= attribute is used to create power/ground and arbitrary nets.
+Please see the net= attribute MINI-HOWTO for more info.  The net=
+attribute is not currently used by the symbol library, but is supported
+by gnetlist
+

@@ -123,6 +123,12 @@ Arnim Littek		- For contributing the following symbols:
 				ltc2400-1.sym max232-1.sym pic16c5x-1.sym
 				vcc-1.sym
 
+			  For contributing the following symbols:
+
+			  	24Cxx-1.sym 4000-1.sym 93Cx6-1.sym
+   				connector2-1.sym leddual-1.sym leddual-2.sym
+   				mc1496-1.sym switch-dip6-1.sym
+   				sx28ac-1.sym
 
 Jerry O'Keefe		- For contributing the following symbols:
 			  (Ales renamed and did some minor touch ups)
@@ -305,6 +311,10 @@ Jamil Isma'il Khatib	- For contributing the following symbol:
 Marcel van de Vusse	- For contributing the following symbol:
 
 				581000-1.sym
+
+			  For contributing the following symbol:
+
+				74673A-1.sym
 
 Tom Barraza		- For contributed the following symbols:
 
