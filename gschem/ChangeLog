@@ -1,3 +1,13 @@
+2005-02-26  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_multiattrib.nw (x_multiattrib_open): Fixed bug #153 (first 
+	reported by Ales): added missing reset of toplevel's state at
+	closing of dialog.
+	Created a new CellRenderer for multi-line cells. It is used by the
+	column 'value' of the attributes list.
+	(multiattrib_callback_edited_name): Added a check on the future
+	attribute's name: reject empty names and issue a message.
+
 2005-02-25 Werner Hoch <werner.ho@gmx.de>
 
 	* noweb/o_misc.nw: fixed autonumber_text

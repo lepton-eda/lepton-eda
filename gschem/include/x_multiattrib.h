@@ -18,6 +18,13 @@
  */
 
 
+#ifndef __X_MULTIATTRIB_H__
+#define __X_MULTIATTRIB_H__
+
+
+/*
+ * Multiattrib
+ */
 
 typedef enum {
   MULTIATTRIB_RESPONSE_CLOSE  = 1
@@ -58,3 +65,65 @@ struct _Multiattrib {
 GType multiattrib_get_type (void);
 
 void multiattrib_update (Multiattrib *multiattrib);
+
+
+/*
+ * CellTextView
+ */
+
+#define TYPE_CELL_TEXT_VIEW         (celltextview_get_type())
+#define CELL_TEXT_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_CELL_TEXT_VIEW, CellTextView))
+#define CELL_TEXT_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_CELL_TEXT_VIEW, CellTextViewClass))
+#define IS_CELL_TEXT_VIEW(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_CELL_TEXT_VIEW))
+
+
+typedef struct _CellTextViewClass CellTextViewClass;
+typedef struct _CellTextView      CellTextView;
+
+
+struct _CellTextViewClass {
+  GtkTextViewClass parent_class;
+  
+};
+
+struct _CellTextView {
+  GtkTextView parent_instance;
+
+};
+
+
+GType celltextview_get_type (void);
+
+
+/*
+ * CellRendererMultiLineText
+ */
+
+#define TYPE_CELL_RENDERER_MULTI_LINE_TEXT         (cellrenderermultilinetext_get_type())
+#define CELL_RENDERER_MULTI_LINE_TEXT(obj)         (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_CELL_RENDERER_MULTI_LINE_TEXT, CellRendererMultiLineText))
+#define CELL_RENDERER_MULTI_LINE_TEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), TYPE_CELL_RENDERER_MULTI_LINE_TEXT, CellRendererMultiLineText))
+#define IS_CELL_RENDERER_MULTI_LINE_TEXT(obj)      (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_CELL_RENDERER_MULTI_LINE_TEXT))
+
+
+typedef struct _CellRendererMultiLineTextClass CellRendererMultiLineTextClass;
+typedef struct _CellRendererMultiLineText      CellRendererMultiLineText;
+
+
+struct _CellRendererMultiLineTextClass {
+  GtkCellRendererTextClass parent_class;
+  
+};
+
+struct _CellRendererMultiLineText {
+  GtkCellRendererText parent_instance;
+
+  /*< private >*/
+  guint focus_out_id;
+
+};
+
+
+GType cellrenderermultilinetext_get_type (void);
+
+
+#endif /* __X_MULTIATTRIB_H__ */

@@ -92,6 +92,9 @@ x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
   switch (gtk_dialog_run ((GtkDialog*)dialog)) {
       case MULTIATTRIB_RESPONSE_CLOSE:
       case GTK_RESPONSE_DELETE_EVENT:
+        /* resets state and update message in toolbar */
+        i_set_state (toplevel, SELECT);
+        i_update_toolbar (toplevel);
         break;
       default:
         g_assert_not_reached ();
@@ -106,6 +109,10 @@ x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
 @section Widget @code{Multiattrib}
 
 <<x_multiattrib.c : Multiattrib widget>>=
+
+<<x_multiattrib.c : CellTextView widget>>
+<<x_multiattrib.c : CellRendererMultiLineText cell renderer>>
+
 enum {
   PROP_TOPLEVEL=1,
   PROP_OBJECT
@@ -371,7 +378,7 @@ gtk_tree_view_column_set_cell_data_func (column, renderer,
 gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 /*       - column 2: attribute value */
 renderer = GTK_CELL_RENDERER (
-  g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+  g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT,
                 /* GtkCellRendererText */
                 "editable",  TRUE,
 /* unknown in GTK 2.4 */
@@ -717,6 +724,18 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
     return;
   }
 
+  if (g_ascii_strcasecmp (arg2, "") == 0) {
+    GtkWidget *dialog = gtk_message_dialog_new (
+      GTK_WINDOW (multiattrib),
+      GTK_DIALOG_MODAL,
+      GTK_MESSAGE_ERROR,
+      GTK_BUTTONS_OK,
+      _("Attributes with empty name are not allowed. Please set a name."));
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+    return;
+  }
+  
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
@@ -785,6 +804,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
 {
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
+  GtkTreePath *path;
   GtkTreeIter iter;
   OBJECT *o_attrib;
   TOPLEVEL *toplevel;
@@ -793,7 +813,9 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   model = gtk_tree_view_get_model (multiattrib->treeview);
   toplevel = multiattrib->toplevel;
 
-  if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
+  path = gtk_tree_path_new_from_string (arg1);
+  
+  if (!gtk_tree_model_get_iter (model, &iter, path)) {
     return;
   }
 
@@ -808,10 +830,13 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   /* actually modifies the attribute */
   o_text_change (toplevel, o_attrib,
                  newtext, o_attrib->visibility, o_attrib->show_name_value);
+  /* signals the modification of the row */
+  gtk_tree_model_row_changed (model, path, &iter);
   
   g_free (name);
   g_free (value);
   g_free (newtext);
+  gtk_tree_path_free (path);
   
 }
 
@@ -1481,3 +1506,376 @@ multiattrib_update (Multiattrib *multiattrib)
 
 @ %def multiattrib_update
 
+
+@section Widget @code{CellTextView}
+
+This widget makes a 'GtkTextView' widget implements the 'GtkCellEditable' interface. It can then be used to renderer multi-line texts inside tree views ('GtkTreeView').
+
+<<x_multiattrib.c : CellTextView widget>>=
+
+static void celltextview_class_init (CellTextViewClass *klass);
+static void celltextview_init       (CellTextView *self);
+static void celltextview_cell_editable_init (GtkCellEditableIface *iface);
+
+
+<<x_multiattrib.c : celltextview_key_press_event()>>
+<<x_multiattrib.c : celltextview_start_editing()>>
+
+<<x_multiattrib.c : celltextview_get_type()>>
+<<x_multiattrib.c : celltextview_class_init()>>
+<<x_multiattrib.c : celltextview_init()>>
+<<x_multiattrib.c : celltextview_cell_editable_init()>>
+
+@
+
+
+@subsection Function [[celltextview_get_type()]]
+
+@defun celltextview_get_type
+@end defun
+
+<<x_multiattrib.c : celltextview_get_type()>>=
+GType
+celltextview_get_type ()
+{
+  static GType celltextview_type = 0;
+  
+  if (!celltextview_type) {
+    static const GTypeInfo celltextview_info = {
+      sizeof(CellTextViewClass),
+      NULL, /* base_init */
+      NULL, /* base_finalize */
+      (GClassInitFunc) celltextview_class_init,
+      NULL, /* class_finalize */
+      NULL, /* class_data */
+      sizeof(CellTextView),
+      0,    /* n_preallocs */
+      (GInstanceInitFunc) celltextview_init,
+    };
+
+    static const GInterfaceInfo cell_editable_info = {
+      (GInterfaceInitFunc) celltextview_cell_editable_init,
+      NULL, /* interface_finalize */
+      NULL  /* interface_data */
+    };
+		
+    celltextview_type = g_type_register_static (GTK_TYPE_TEXT_VIEW,
+                                                "CellTextView",
+                                                &celltextview_info, 0);
+    g_type_add_interface_static (celltextview_type,
+                                 GTK_TYPE_CELL_EDITABLE,
+                                 &cell_editable_info);
+  }
+  
+  return celltextview_type;
+}
+
+@ %def celltextview_get_type
+
+
+@subsection Function [[celltextview_class_init()]]
+
+@defun celltextview_class_init klass
+@end defun
+
+<<x_multiattrib.c : celltextview_class_init()>>=
+static void
+celltextview_class_init (CellTextViewClass *klass)
+{
+/*   GObjectClass *gobject_class = G_OBJECT_CLASS (klass); */
+}
+
+@ %def celltextview_class_init
+
+
+@subsection Function @code{celltextview_init()}
+
+@defun celltextview_init self
+@end defun
+
+<<x_multiattrib.c : celltextview_init()>>=
+static void
+celltextview_init (CellTextView *self)
+{
+}
+
+@ %def celltextview_init
+
+
+@subsection Function @code{celltextview_cell_editable_init()}
+
+@defun celltextview_cell_editable_init iface
+@end defun
+
+
+<<x_multiattrib.c : celltextview_cell_editable_init()>>=
+static void
+celltextview_cell_editable_init (GtkCellEditableIface *iface)
+{
+  iface->start_editing = celltextview_start_editing;
+}
+
+@ %def celltextview_cell_editable_init
+
+
+@subsection Function @code{celltextview_key_press_event()}
+
+@defun celltextview_key_press_event widget event data
+@end defun
+
+<<x_multiattrib.c : celltextview_key_press_event()>>=
+static gboolean
+celltextview_key_press_event (GtkWidget   *widget,
+                              GdkEventKey *event,
+                              gpointer     data)
+{
+  CellTextView *celltextview = (CellTextView*)widget;
+  if (event->keyval == GDK_Escape) {
+    gtk_cell_editable_editing_done  (GTK_CELL_EDITABLE (celltextview));
+    gtk_cell_editable_remove_widget (GTK_CELL_EDITABLE (celltextview));
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+@ %def celltextview_key_press_event
+
+
+@subsection Function @code{celltextview_start_editing()}
+
+@defun celltextview_start_editing cell_editable event
+@end defun
+
+<<x_multiattrib.c : celltextview_start_editing()>>=
+static void
+celltextview_start_editing (GtkCellEditable *cell_editable,
+                            GdkEvent        *event)
+{
+  g_signal_connect (cell_editable,
+                    "key_press_event",
+                    G_CALLBACK (celltextview_key_press_event),
+                    NULL);
+  
+}
+
+@ %def celltextview_start_editing
+
+
+
+@section Cell renderer @code{CellRendererMultiLineText}
+
+GTK has no multi-line text cell renderer. This code adds one to be used in gschem code. It is inspired by the 'GtkCellRendererCombo' renderer of GTK 2.4 (LGPL).
+
+<<x_multiattrib.c : CellRendererMultiLineText cell renderer>>=
+static void cellrenderermultilinetext_class_init (CellRendererMultiLineTextClass *klass);
+static void cellrenderermultilinetext_init (CellRendererMultiLineText *self);
+
+static void cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
+                                                    gpointer         user_data);
+static gboolean cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
+                                                           GdkEvent  *event,
+                                                           gpointer   user_data);
+
+
+#define CELL_RENDERER_MULTI_LINE_TEXT_PATH "cell-renderer-multi-line-text-path"
+
+
+<<x_multiattrib.c : cellrenderermultilinetext_start_editing()>>
+<<x_multiattrib.c : cellrenderermultilinetext_editing_done()>>
+<<x_multiattrib.c : cellrenderermultilinetext_focus_out_event()>>
+
+<<x_multiattrib.c : cellrenderermultilinetext_get_type()>>
+<<x_multiattrib.c : cellrenderermultilinetext_class_init()>>
+<<x_multiattrib.c : cellrenderermultilinetext_init()>>
+
+@
+
+
+@subsection Function [[cellrenderermultilinetext_get_type()]]
+
+@defun cellrenderermultilinetext_get_type
+@end defun
+
+<<x_multiattrib.c : cellrenderermultilinetext_get_type()>>=
+GType
+cellrenderermultilinetext_get_type ()
+{
+  static GType cellrenderermultilinetext_type = 0;
+  
+  if (!cellrenderermultilinetext_type) {
+    static const GTypeInfo cellrenderermultilinetext_info = {
+      sizeof(CellRendererMultiLineTextClass),
+      NULL, /* base_init */
+      NULL, /* base_finalize */
+      (GClassInitFunc) cellrenderermultilinetext_class_init,
+      NULL, /* class_finalize */
+      NULL, /* class_data */
+      sizeof(CellRendererMultiLineText),
+      0,    /* n_preallocs */
+      (GInstanceInitFunc) cellrenderermultilinetext_init,
+    };
+		
+    cellrenderermultilinetext_type = g_type_register_static (
+      GTK_TYPE_CELL_RENDERER_TEXT,
+      "CellRendererMultiLineText",
+      &cellrenderermultilinetext_info, 0);
+  }
+  
+  return cellrenderermultilinetext_type;
+}
+
+@ %def cellrenderermultilinetext_get_type
+
+
+@subsection Function [[cellrenderermultilinetext_class_init()]]
+
+@defun cellrenderermultilinetext_class_init klass
+@end defun
+
+<<x_multiattrib.c : cellrenderermultilinetext_class_init()>>=
+static void
+cellrenderermultilinetext_class_init (CellRendererMultiLineTextClass *klass)
+{
+/*   GObjectClass *gobject_class = G_OBJECT_CLASS (klass); */
+  GtkCellRendererClass *cell_class = GTK_CELL_RENDERER_CLASS (klass);
+
+  cell_class->start_editing = cellrenderermultilinetext_start_editing;
+  
+}
+
+@ %def cellrenderermultilinetext_class_init
+
+
+@subsection Function @code{cellrenderermultilinetext_init()}
+
+@defun cellrenderermultilinetext_init self
+@end defun
+
+<<x_multiattrib.c : cellrenderermultilinetext_init()>>=
+static void
+cellrenderermultilinetext_init (CellRendererMultiLineText *self)
+{
+}
+
+@ %def cellrenderermultilinetext_init
+
+
+@subsection Function @code{cellrenderermultilinetext_start_editing()}
+
+@defun cellrenderermultilinetext_start_editing cell event widget path background_area cell_area flags
+@end defun
+
+<<x_multiattrib.c : cellrenderermultilinetext_start_editing()>>=
+static GtkCellEditable*
+cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
+                                         GdkEvent             *event,
+                                         GtkWidget            *widget,
+                                         const gchar          *path,
+                                         GdkRectangle         *background_area,
+                                         GdkRectangle         *cell_area,
+                                         GtkCellRendererState  flags)
+{
+  GtkCellRendererText *cell_text;
+  CellRendererMultiLineText *cell_mlt;
+  GtkWidget *textview;
+  GtkTextBuffer *textbuffer;
+  
+  cell_text = GTK_CELL_RENDERER_TEXT (cell);
+  if (cell_text->editable == FALSE) {
+    return NULL;
+  }
+
+  cell_mlt  = CELL_RENDERER_MULTI_LINE_TEXT (cell);
+
+  textbuffer = GTK_TEXT_BUFFER (g_object_new (GTK_TYPE_TEXT_BUFFER,
+                                              NULL));
+  gtk_text_buffer_set_text (textbuffer,
+                            cell_text->text,
+                            strlen (cell_text->text));
+  
+  textview = GTK_WIDGET (g_object_new (TYPE_CELL_TEXT_VIEW,
+                                       /* GtkTextView */
+/* unknown property in GTK 2.2, use gtk_text_view_set_buffer() instead */
+/*                                        "buffer",   textbuffer, */
+                                       "editable", TRUE,
+                                       NULL));
+  gtk_text_view_set_buffer (GTK_TEXT_VIEW (textview), textbuffer);
+  g_object_set_data_full (G_OBJECT (textview),
+                          CELL_RENDERER_MULTI_LINE_TEXT_PATH,
+                          g_strdup (path), g_free);
+
+  gtk_widget_show (textview);
+
+  g_signal_connect (GTK_CELL_EDITABLE (textview),
+                    "editing_done",
+                    G_CALLBACK (cellrenderermultilinetext_editing_done),
+                    cell_mlt);
+  cell_mlt->focus_out_id =
+  g_signal_connect (textview,
+                    "focus_out_event",
+                    G_CALLBACK (cellrenderermultilinetext_focus_out_event),
+                    cell_mlt);
+
+  return GTK_CELL_EDITABLE (textview);
+}
+
+@ %def cellrenderermultilinetext_start_editing
+
+
+@subsection Function @code{cellrenderermultilinetext_editing_done()}
+
+@defun cellrenderermultilinetext_editing_done cell_editable user_data
+@end defun
+
+<<x_multiattrib.c : cellrenderermultilinetext_editing_done()>>=
+static void
+cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
+                                        gpointer         user_data)
+{
+  CellRendererMultiLineText *cell = CELL_RENDERER_MULTI_LINE_TEXT (user_data);
+  GtkTextBuffer *buffer;
+  GtkTextIter start, end;
+  gchar *new_text;
+  const gchar *path;
+
+  if (cell->focus_out_id > 0) {
+    g_signal_handler_disconnect (cell_editable,
+                                 cell->focus_out_id);
+    cell->focus_out_id = 0;
+  }
+
+  buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (cell_editable));
+  gtk_text_buffer_get_start_iter (buffer, &start);
+  gtk_text_buffer_get_end_iter   (buffer, &end);
+  new_text = gtk_text_buffer_get_text (buffer, &start, &end, TRUE);
+  
+  path = g_object_get_data (G_OBJECT (cell_editable),
+                            CELL_RENDERER_MULTI_LINE_TEXT_PATH);
+  g_signal_emit_by_name (cell, "edited", path, new_text);
+
+  g_free (new_text);
+  
+}
+
+@ %def cellrenderermultilinetext_editing_done
+
+
+@subsection Function @code{cellrenderermultilinetext_focus_out_event()}
+
+@defun cellrenderermultilinetext_focus_out_event widget event user_data
+@end defun
+
+<<x_multiattrib.c : cellrenderermultilinetext_focus_out_event()>>=
+static gboolean
+cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
+                                           GdkEvent  *event,
+                                           gpointer   user_data)
+{
+  cellrenderermultilinetext_editing_done (GTK_CELL_EDITABLE (widget),
+                                          user_data);
+
+  return FALSE;
+}
+
+@ %def cellrenderermultilinetext_focus_out_event
