@@ -20,10 +20,6 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-#if 0 /* commented out because it conflicts with st_box */
-#include "pcb_struct.h"
-#endif
-
 /* gschem structures (gschem) */
 typedef struct st_complex COMPLEX;
 typedef struct st_line LINE;

@@ -2,6 +2,8 @@
 
 	* acinclude.m4: Removed file from repository
 
+	* include/pcb_struct.h: Removed obsolete file
+
 2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Changed the function which is search for libpng.

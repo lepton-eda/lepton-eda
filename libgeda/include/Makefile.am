@@ -2,7 +2,7 @@
 
 libgedaincludedir = $(includedir)/libgeda
 libgedainclude_HEADERS = \
-	colors.h defines.h funcs.h globals.h o_types.h pcb_struct.h \
+	colors.h defines.h funcs.h globals.h o_types.h \
 	prototype.h struct.h libgeda.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
