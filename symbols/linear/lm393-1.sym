@@ -1,7 +1,7 @@
-v 20031231 1
+v 20041228 1
 L 200 800 200 0 3 0 0 0 -1 -1
 L 200 0 800 400 3 0 0 0 -1 -1
-T 825 150 5 8 0 0 0 0 1
+T 225 2050 5 8 0 0 0 0 1
 device=LM393
 T 200 1300 5 10 0 0 0 0 1
 numslots=2
@@ -15,7 +15,7 @@ P 200 600 0 600 1 0 1
 T 50 625 5 8 1 1 0 0 1
 pinnumber=3
 T 50 625 5 8 0 0 0 0 1
-pinseq=3
+pinseq=1
 }
 P 200 200 0 200 1 0 1
 {
@@ -29,14 +29,14 @@ P 800 400 1000 400 1 0 1
 T 875 425 5 8 1 1 0 0 1
 pinnumber=1
 T 875 425 5 8 0 0 0 0 1
-pinseq=1
+pinseq=5
 }
 P 500 600 500 800 1 0 1
 {
 T 525 650 5 8 1 1 0 0 1
 pinnumber=8
 T 525 650 5 8 0 0 0 0 1
-pinseq=8
+pinseq=3
 }
 P 500 200 500 0 1 0 1
 {
@@ -52,3 +52,9 @@ T 225 350 9 8 1 1 0 0 1
 LM393
 T 200 900 8 10 1 1 0 0 1
 refdes=U?
+T 200 1500 5 10 0 0 0 0 1
+documentation=http://www.onsemi.com/pub/Collateral/LM393-D.PDF
+T 200 1700 5 10 0 0 0 0 1
+description=low offset voltage dual comparators
+T 200 1900 5 10 0 0 0 0 1
+symversion=0.1

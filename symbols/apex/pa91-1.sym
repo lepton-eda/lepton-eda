@@ -1,4 +1,4 @@
-v 20041121 1
+v 20041228 1
 L 300 1200 300 200 3 0 0 0 -1 -1
 L 300 1200 1400 700 3 0 0 0 -1 -1
 L 300 200 1400 700 3 0 0 0 -1 -1
@@ -11,7 +11,7 @@ pinnumber=6
 T 1300 500 9 10 1 1 0 0 1
 pinlabel=OUT
 T 1700 700 5 10 0 1 0 0 1
-pintype=OUT
+pintype=out
 }
 P 0 1000 300 1000 1 0 0
 {
@@ -20,7 +20,7 @@ pinseq=1
 T -1500 1800 5 10 0 1 0 0 1
 pinnumber=1
 T 0 1000 5 10 0 1 0 0 1
-pintype=IN
+pintype=in
 T 400 900 9 10 1 1 0 0 1
 pinlabel=-in
 }
@@ -33,7 +33,7 @@ pinlabel=+in
 T 0 400 5 10 0 1 0 0 1
 pinnumber=2
 T 0 400 5 10 0 1 0 0 1
-pintype=IN
+pintype=in
 }
 P 1100 1000 800 1000 1 0 0
 {
@@ -44,7 +44,7 @@ pinlabel=ILIM
 T 1100 1000 5 10 0 1 0 0 1
 pinnumber=9
 T 1100 1000 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 700 100 700 400 1 0 0
 {
@@ -53,7 +53,7 @@ pinseq=4
 T 700 100 5 10 0 1 0 0 1
 pinnumber=4
 T 700 100 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 T 800 200 9 10 1 1 0 0 1
 pinlabel=C1
 }
@@ -64,20 +64,18 @@ pinseq=5
 T 1000 200 5 10 0 1 0 0 1
 pinnumber=5
 T 1000 200 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 T 1100 200 9 10 1 1 0 0 1
 pinlabel=C2
 }
 T 400 700 8 10 1 1 0 0 1
 device=PA91
-T 600 2100 8 10 0 0 0 0 1
+T 600 2100 5 10 0 0 0 0 1
 description=APEX PA91 High Voltage Amplifier
 T 0 0 8 10 0 1 0 0 1
-numslots=1
-T 0 0 8 10 0 1 0 0 1
 slot=1
-T 600 2300 8 10 0 0 0 0 1
-slotdef=1:1,2,3,4,5,6,7,8,9,10,11
+T 600 2300 5 10 0 0 0 0 1
+documentation=http://eportal.apexmicrotech.com/mainsite/pdf/pa91u.pdf
 T -1500 -700 8 10 0 1 0 0 1
 footprint=SIP02
 T 1200 1300 8 10 1 1 0 0 1
@@ -133,7 +131,11 @@ pinseq=10
 T 1300 900 5 10 0 1 0 0 1
 pinnumber=10
 T 1300 900 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 T 1300 900 5 10 0 1 0 0 1
 pinlabel=ILIM2
 }
+T 600 2500 5 10 0 0 0 0 1
+symversion=0.1
+T 600 2700 5 10 0 0 0 0 1
+numslots=0

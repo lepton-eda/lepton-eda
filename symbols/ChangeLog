@@ -1,3 +1,13 @@
+2005-01-29 Werner Hoch <werner.ho@gmx.de>
+	* 4000/4002-2.sym, 4000/4016-2.sym, 4000/4027-1.sym, 4000/4528-1.sym,
+	  4000/4538-1.sym, 74/74124-1.sym, 74/74124-2.sym, 
+	  analog/darlington_NPN-1.sym, analog/dual-opamp-1.sym,
+	  analog/quad_opamp-1.sym, diode/smda05-1.sym, ecl/MC10E104-2.sym, 
+	  linear/lm339-1.sym, linear/lm393-1.sym, misc/ADG601-1.sym,
+	  misc/ADG602-1.sym, misc/ADG619-1.sym, misc/ADG620-1.sym,
+	  switch/ssrelay-spdt-lcc110-1.sym, apex/pa140-1.sym, apex/pa91-1.sym:
+	  repaired slotdef and pinseq errors, misc small changes
+
 2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Removed system-commonrc.in from CVS as system-gafrc.in has replaced

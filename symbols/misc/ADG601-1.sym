@@ -41,7 +41,7 @@ pinseq=4
 T 350 200 9 8 1 1 0 0 1
 pinlabel=Vdd
 T 350 200 5 8 0 1 0 2 1
-pintype=power
+pintype=pwr
 }
 P 1300 1100 1600 1100 1 0 1
 {
@@ -63,7 +63,7 @@ pinseq=7
 T 1250 800 9 8 1 1 0 6 1
 pinlabel=GND
 T 1250 800 5 8 0 1 0 8 1
-pintype=power
+pintype=pwr
 }
 P 1300 500 1600 500 1 0 1
 {
@@ -85,28 +85,26 @@ pinseq=5
 T 1250 200 9 8 1 1 0 6 1
 pinlabel=Vss
 T 1250 200 5 8 0 1 0 8 1
-pintype=power
+pintype=pwr
 }
 B 300 0 1000 1400 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-T 300 1750 8 10 0 0 0 0 1
+T 300 1750 5 10 0 0 0 0 1
 device=ADG601
-T 300 2550 8 10 0 0 0 0 1
-slot=1
-T 300 2350 8 10 0 0 0 0 1
-numslots=2
-T 300 2150 8 10 0 0 0 0 1
-slotdef=1:1,2,4,6,8,18,16,14,12
-T 300 1950 8 10 0 0 0 0 1
-slotdef=2:19,11,13,15,17,9,7,5,3
+T 300 1950 5 10 0 0 0 0 1
+numslots=0
 T 1300 1600 8 10 1 1 0 6 1
 refdes=U?
-T 300 2750 8 10 0 0 0 0 1
+T 300 2150 5 10 0 0 0 0 1
 footprint=MSOP8
-T 300 2950 8 10 0 0 0 0 1
+T 300 2350 5 10 0 0 0 0 1
 description= 2.2  CMOS ± 5 V/5V, SPST Switch
-T 300 3150 8 10 0 0 0 0 1
+T 300 2550 5 10 0 0 0 0 1
 net=Vcc:4
-T 300 3350 8 10 0 0 0 0 1
+T 300 2750 5 10 0 0 0 0 1
 net=GND:7
 T 300 1450 9 10 1 0 0 0 1
 ADG601
+T 300 2950 5 10 0 0 0 0 1
+symversion=0.1
+T 300 3150 5 10 0 0 0 0 1
+documentation=http://www.analog.com/UploadedFiles/Data_Sheets/3597365479993ADG601_2_a.pdf
