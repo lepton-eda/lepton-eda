@@ -25,15 +25,32 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 #include "config.h"
 #include "doc.h"
 #include "filetool.h"
 #include "global.h"
 #include "log.h"
+#include "m_action.h"
+#include "m_window.h"
 #include "msgbox.h"
 #include "support.h"
 #include "task.h"
 #include "tool.h"
+
+
+
+/*
+	Groups of files
+*/
+
+struct Group_s
+{
+	int iId;
+	char szName[TEXTLEN];
+	GtkCTreeNode *pNode;
+	struct Group_s *pNext;
+};
 
 
 
@@ -49,12 +66,24 @@ enum {
 	TOOL_GNETLIST,
 	TOOL_PCB,
 	TOOL_GERBV,
+	TOOL_EASYSPICE,
 	TOOL_NGSPICE,
 	TOOL_GWAVE,
 	TOOL_VC,
 	TOOL_VVP,
 	TOOL_GTKWAVE,
 	TOOL_NUMBER
+};
+
+/* known groups */
+enum {
+	GROUP_DOCUMENTATION = 0,
+	GROUP_SCHEMATIC,
+	GROUP_LAYOUT,
+	GROUP_SIMULATION,
+	GROUP_GRAPH,
+	GROUP_PROGRAM,
+	GROUP_NUMBER
 };
 
 /* known actions */
@@ -69,6 +98,7 @@ enum {
 	ACTION_SCH_TO_BOM,
 	ACTION_PCB_OPEN,
 	ACTION_GRB_OPEN,
+	ACTION_ESP_OPEN,
 	ACTION_CIR_OPEN,
 	ACTION_CIR_TO_OUT,
 	ACTION_OUT_OPEN,
@@ -89,6 +119,7 @@ enum {
 	EXT_SCH,
 	EXT_PCB,
 	EXT_GRB,
+	EXT_ESP,
 	EXT_CIR,
 	EXT_OUT,
 	EXT_GW,
@@ -127,11 +158,23 @@ static struct Tool_s ToolList[] =
 	{ TOOL_GNETLIST,   "",                            "gnetlist",   TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_PCB,        "PCB layout editor",           "pcb",        TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_GERBV,      "Gerber viewer",               "gerbv",      TOOL_EXTERNAL, NULL, NULL },
+	{ TOOL_EASYSPICE,  "Easy SPICE",                  "easy_spice", TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_NGSPICE,    "",                            "ng-spice",   TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_GWAVE,      "Analog waveform viewer",      "gwave",      TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_VC,         "",                            "iverilog",   TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_VVP,        "",                            "vvp",        TOOL_EXTERNAL, NULL, NULL },
 	{ TOOL_GTKWAVE,    "",                            "gtkwave",    TOOL_EXTERNAL, NULL, NULL }
+};
+
+/* group entries */
+struct Group_s GroupList[] =
+{
+	{ GROUP_DOCUMENTATION, "Documentations",       NULL, NULL },
+	{ GROUP_SCHEMATIC,     "Schematic diagrams",   NULL, NULL },
+	{ GROUP_LAYOUT,        "PCB and VLSI layouts", NULL, NULL },
+	{ GROUP_SIMULATION,    "Simulations",          NULL, NULL },
+	{ GROUP_GRAPH,         "Graphs",               NULL, NULL },
+	{ GROUP_PROGRAM,       "Chip programs",        NULL, NULL }
 };
 
 /* action entries */
@@ -144,251 +187,285 @@ struct Action_s ActionList[] =
 		"----- %FILEREL%",
 		"",
 		TASK_INTERNAL | ACTION_DEFAULT,
-		TOOL_EDIT,      
-		NULL, 
-		NULL 
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_SCH_OPEN,   
-		"Open",                 
-		"sch", 
-		"gschem %FILENAME%.%FILEEXT%",     
+
+	{
+		ACTION_SCH_OPEN,
+		"Open",
+		"sch",
+		"gschem %FILENAME%.%FILEEXT%",
 		"",
 		ACTION_DEFAULT,
-		TOOL_GSCHEM,     
-		NULL, 
-		NULL 
+		TOOL_GSCHEM,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_SCH_TO_PCB, 
-		"Create PCB layout",    
-		"sch", 
+
+	{
+		ACTION_SCH_TO_PCB,
+		"Create PCB layout",
+		"sch",
 		"gnetlist -g PCBboard -o %FILENAME%.pcb %FILENAME%.%FILEEXT%",
-		",%FILENAME%.pcb", 
+		",%FILENAME%.pcb",
 		TASK_BLOCKING,
-		TOOL_GSCHEM2PCB, 
-		NULL, 
-		NULL 
+		TOOL_GSCHEM2PCB,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_SCH_TO_CIR, 
-		"Create SPICE netlist", 
-		"sch", 
+
+	{
+		ACTION_SCH_TO_CIR,
+		"Create SPICE netlist",
+		"sch",
 		"gnetlist -g spice -o %FILENAME%.cir %FILENAME%.%FILEEXT%",
-		",%FILENAME%.cir",   
+		",%FILENAME%.cir",
 		TASK_BLOCKING,
-		TOOL_GNETLIST,   
-		NULL, 
-		NULL 
+		TOOL_GNETLIST,
+		NULL,
+		0,
+		NULL
 	},
-	
- 	{ 
-		ACTION_SCH_TO_V, 
-		"Create Verilog source", 
-		"sch", 
+
+ 	{
+		ACTION_SCH_TO_V,
+		"Create Verilog source",
+		"sch",
 		"gnetlist -g verilog -o %FILENAME%.v %FILENAME%.%FILEEXT%",
-		",%FILENAME%.v",   
+		",%FILENAME%.v",
 		TASK_BLOCKING,
-		TOOL_GNETLIST,   
-		NULL, 
-		NULL 
+		TOOL_GNETLIST,
+		NULL,
+		0,
+		NULL
 	},
-	
- 	{ 
-		ACTION_SCH_TO_VHD, 
-		"Create VHDL source", 
-		"sch", 
+
+ 	{
+		ACTION_SCH_TO_VHD,
+		"Create VHDL source",
+		"sch",
 		"gnetlist -g vhdl -o %FILENAME%.vhd %FILENAME%.%FILEEXT%",
-		",%FILENAME%.vhd",   
+		",%FILENAME%.vhd",
 		TASK_BLOCKING,
-		TOOL_GNETLIST,   
-		NULL, 
-		NULL 
+		TOOL_GNETLIST,
+		NULL,
+		0,
+		NULL
 	},
-	
- 	{ 
-		ACTION_SCH_TO_DRC, 
-		"Design rule checking (DRC)", 
-		"sch", 
+
+ 	{
+		ACTION_SCH_TO_DRC,
+		"Design rule checking (DRC)",
+		"sch",
 		"gnetlist -g drc -o %FILENAME%.drc %FILENAME%.%FILEEXT%",
-		"%FILENAME%.%FILEEXT%,%FILENAME%.drc",   
+		"%FILENAME%.%FILEEXT%,%FILENAME%.drc",
 		TASK_BLOCKING,
-		TOOL_GNETLIST,   
-		NULL, 
-		NULL 
+		TOOL_GNETLIST,
+		NULL,
+		0,
+		NULL
 	},
-	
- 	{ 
-		ACTION_SCH_TO_BOM, 
-		"Create bill of materials (BOM)", 
-		"sch", 
+
+ 	{
+		ACTION_SCH_TO_BOM,
+		"Create bill of materials (BOM)",
+		"sch",
 		"gnetlist -g bom -o %FILENAME%.bom %FILENAME%.%FILEEXT%",
-		"%FILENAME%.%FILEEXT%,%FILENAME%.bom",   
+		"%FILENAME%.%FILEEXT%,%FILENAME%.bom",
 		TASK_BLOCKING,
-		TOOL_GNETLIST,   
-		NULL, 
-		NULL 
+		TOOL_GNETLIST,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_PCB_OPEN,   
-		"Open",                 
-		"pcb", 
-		"pcb %FILENAME%.%FILEEXT%",    
+
+	{
+		ACTION_PCB_OPEN,
+		"Open",
+		"pcb",
+		"pcb %FILENAME%.%FILEEXT%",
 		"",
 		ACTION_DEFAULT,
-		TOOL_PCB,        
-		NULL, 
-		NULL 
+		TOOL_PCB,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_GRB_OPEN,   
-		"Open",                 
-		"grb", 
-		"gerbv %FILENAME%.%FILEEXT%",      
+
+	{
+		ACTION_GRB_OPEN,
+		"Open",
+		"grb",
+		"gerbv %FILENAME%.%FILEEXT%",
 		"",
 		ACTION_DEFAULT,
-		TOOL_GERBV,      
-		NULL, 
-		NULL 
+		TOOL_GERBV,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_CIR_OPEN,   
-		"Open",                 
-		"cir", 
-		"----- %FILENAME%.%FILEEXT%",      
-		"",
-		TASK_INTERNAL | ACTION_DEFAULT,
-		TOOL_EDIT,      
-		NULL, 
-		NULL 
-	},
-	
-	{ 
-		ACTION_CIR_TO_OUT, 
-		"Simulate (SPICE)",
-		"cir", 
-		"ngspice -b -i %FILENAME%.%FILEEXT% -r %FILENAME%.out; raw2gw %FILENAME%.out %FILENAME%.gw",
-		"%FILENAME%.%FILEEXT%,%FILENAME%.out,%FILENAME%.out,%FILENAME%.gw",   
-		TASK_BLOCKING,
-		TOOL_NGSPICE,    
-		NULL, 
-		NULL 
-	},
-	
-	{ 
-		ACTION_OUT_OPEN,   
-		"Open",                 
-		"out", 
-		"raw2gw %FILENAME%.%FILEEXT% %FILENAME.gw ; gwave -s %FILENAME%.gw",  
-		"%FILENAME%.out,%FILENAME%.gw",
-		TASK_NOFLAG,
-		TOOL_GWAVE,      
-		NULL, 
-		NULL 
-	},
-	
-	{ 
-		ACTION_GW_OPEN,   
-		"Open",                 
-		"gw", 
-		"gwave -s %FILENAME%.%FILEEXT%",  
+
+	{
+		ACTION_ESP_OPEN,
+		"Open",
+		"esp",
+		"easy_spice -f %FILENAME%.%FILEEXT%",
 		"",
 		ACTION_DEFAULT,
-		TOOL_GWAVE,      
-		NULL, 
-		NULL 
+		TOOL_EASYSPICE,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_V_OPEN,   
-		"Open",                   
-		"v",   
+
+	{
+		ACTION_CIR_OPEN,
+		"Open",
+		"cir",
 		"----- %FILENAME%.%FILEEXT%",
 		"",
 		TASK_INTERNAL | ACTION_DEFAULT,
-		TOOL_EDIT,      
-		NULL, 
-		NULL 
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_V_TO_VCD, 
-		"Simulate",               
-		"v",   
+
+	{
+		ACTION_CIR_TO_OUT,
+		"Simulate (SPICE)",
+		"cir",
+		"ngspice -b -i %FILENAME%.%FILEEXT% -r %FILENAME%.out; raw2gw %FILENAME%.out %FILENAME%.gw",
+		"%FILENAME%.%FILEEXT%,%FILENAME%.out,%FILENAME%.out,%FILENAME%.gw",
+		TASK_BLOCKING,
+		TOOL_NGSPICE,
+		NULL,
+		0,
+		NULL
+	},
+
+	{
+		ACTION_OUT_OPEN,
+		"Open",
+		"out",
+		"raw2gw %FILENAME%.%FILEEXT% %FILENAME.gw ; gwave -s %FILENAME%.gw",
+		"%FILENAME%.out,%FILENAME%.gw",
+		TASK_NOFLAG,
+		TOOL_GWAVE,
+		NULL,
+		0,
+		NULL
+	},
+
+	{
+		ACTION_GW_OPEN,
+		"Open",
+		"gw",
+		"gwave -s %FILENAME%.%FILEEXT%",
+		"",
+		ACTION_DEFAULT,
+		TOOL_GWAVE,
+		NULL,
+		0,
+		NULL
+	},
+
+	{
+		ACTION_V_OPEN,
+		"Open",
+		"v",
+		"----- %FILENAME%.%FILEEXT%",
+		"",
+		TASK_INTERNAL | ACTION_DEFAULT,
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
+	},
+
+	{
+		ACTION_V_TO_VCD,
+		"Simulate",
+		"v",
 		"iverilog -o %FILENAME%.vvp -t vvp %FILENAME%.%FILEEXT% ; vvp %FILENAME%.vvp",
 		"%FILENAME%.v,%FILENAME%.vcd",
 		TASK_BLOCKING,
-		TOOL_VC,         
-		NULL, 
-		NULL 
+		TOOL_VC,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_V_TO_XNF, 
-		"Synthesize",             
-		"v",   
+
+	{
+		ACTION_V_TO_XNF,
+		"Synthesize",
+		"v",
 		"iverilog -o %FILENAME%.xnf -t xnf %FILENAME%.%FILEEXT%",
 		"%FILENAME%.%FILEEXT%,%FILENAME%.xnf",
 		TASK_BLOCKING,
-		TOOL_VVP,        
-		NULL, 
-		NULL 
+		TOOL_VVP,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_VCD_OPEN,   
-		"Open",                 
-		"vcd", 
+
+	{
+		ACTION_VCD_OPEN,
+		"Open",
+		"vcd",
 		"gtkwave %FILENAME%.%FILEEXT%",
 		"",
 		ACTION_DEFAULT,
-		TOOL_GTKWAVE,    
-		NULL, 
-		NULL 
+		TOOL_GTKWAVE,
+		NULL,
+		0,
+		NULL
 	},
 
-	{ 
-		ACTION_VHD_OPEN,   
-		"Open",  
-		"vhd", 
+	{
+		ACTION_VHD_OPEN,
+		"Open",
+		"vhd",
 		"----- %FILEREL%",
 		"",
 		TASK_INTERNAL | ACTION_DEFAULT,
-		TOOL_EDIT,      
-		NULL, 
-		NULL 
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_DRC_OPEN,   
-		"Open",  
-		"drc", 
+
+	{
+		ACTION_DRC_OPEN,
+		"Open",
+		"drc",
 		"----- %FILEREL%",
 		"",
 		TASK_INTERNAL | ACTION_DEFAULT,
-		TOOL_EDIT,      
-		NULL, 
-		NULL 
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
 	},
-	
-	{ 
-		ACTION_BOM_OPEN,   
-		"Open",  
-		"bom", 
+
+	{
+		ACTION_BOM_OPEN,
+		"Open",
+		"bom",
 		"----- %FILEREL%",
 		"",
 		TASK_INTERNAL | ACTION_DEFAULT,
-		TOOL_EDIT,      
-		NULL, 
-		NULL 
+		TOOL_EDIT,
+		NULL,
+		0,
+		NULL
 	},
-	
+
 /*
 gnetlist [-i] [-v] [-r rcfilename] [-g guile_procedure] [-o output_filename] schematic1 [... schematicN]
 
@@ -413,18 +490,19 @@ gnetlist [-i] [-v] [-r rcfilename] [-g guile_procedure] [-o output_filename] sch
 /* extension entries */
 static struct Ext_s ExtList[] = 
 {
-	{ EXT_TXT, "Text",           "txt", "",    TRUE,  FALSE, TOOL_TEMPLATE_TXT, ACTION_TXT_OPEN, NULL, NULL },
-	{ EXT_SCH, "Schematic",      "sch", "",    TRUE,  FALSE, TOOL_TEMPLATE_SCH, ACTION_SCH_OPEN, NULL, NULL },
-	{ EXT_PCB, "PCB layout",     "pcb", "",    TRUE,  FALSE, TOOL_TEMPLATE_PCB, ACTION_PCB_OPEN, NULL, NULL },
-	{ EXT_GRB, "Gerber data",    "grb", "pcb", FALSE, FALSE, NULL,              ACTION_GRB_OPEN, NULL, NULL },
-	{ EXT_CIR, "SPICE netlist",  "cir", "",    TRUE,  FALSE, TOOL_TEMPLATE_CIR, ACTION_CIR_OPEN, NULL, NULL },
-	{ EXT_OUT, "",               "out", "cir", FALSE, FALSE, NULL,              ACTION_OUT_OPEN, NULL, NULL },
-	{ EXT_GW,  "Analog waveform","gw",  "out", TRUE,  FALSE, NULL,              ACTION_GW_OPEN,  NULL, NULL },
-	{ EXT_V,   "Verilog source", "v",   "",    TRUE,  FALSE, TOOL_TEMPLATE_V,   ACTION_V_OPEN,   NULL, NULL },
-	{ EXT_VCD, "",               "vcd", "v",   FALSE, FALSE, NULL,              ACTION_VCD_OPEN, NULL, NULL },
-	{ EXT_VHD, "VHDL source",    "vcd", "vhd", TRUE,  FALSE, TOOL_TEMPLATE_VHD, ACTION_VHD_OPEN, NULL, NULL },
-	{ EXT_DRC, "",               "vcd", "drc", FALSE, FALSE, NULL,              ACTION_DRC_OPEN, NULL, NULL },
-	{ EXT_BOM, "",               "vcd", "bom", FALSE, FALSE, NULL,              ACTION_BOM_OPEN, NULL, NULL }
+	{ EXT_TXT, "Text",           "txt", "",    GROUP_DOCUMENTATION, TRUE,  FALSE, TOOL_TEMPLATE_TXT, ACTION_TXT_OPEN, NULL, NULL },
+	{ EXT_SCH, "Schematic",      "sch", "",    GROUP_SCHEMATIC,     TRUE,  FALSE, TOOL_TEMPLATE_SCH, ACTION_SCH_OPEN, NULL, NULL },
+	{ EXT_PCB, "PCB layout",     "pcb", "",    GROUP_LAYOUT,        TRUE,  FALSE, TOOL_TEMPLATE_PCB, ACTION_PCB_OPEN, NULL, NULL },
+	{ EXT_GRB, "Gerber data",    "grb", "pcb", GROUP_LAYOUT,        FALSE, FALSE, "",                ACTION_GRB_OPEN, NULL, NULL },
+	{ EXT_ESP, "Simulation",     "esp", "",    GROUP_SIMULATION,    TRUE,  FALSE, "",                ACTION_ESP_OPEN, NULL, NULL },
+	{ EXT_CIR, "SPICE netlist",  "cir", "esp", GROUP_SIMULATION,    TRUE,  FALSE, TOOL_TEMPLATE_CIR, ACTION_CIR_OPEN, NULL, NULL },
+	{ EXT_OUT, "",               "out", "cir", GROUP_SIMULATION,    FALSE, FALSE, "",                ACTION_OUT_OPEN, NULL, NULL },
+	{ EXT_GW,  "Analog waveform","gw",  "out", GROUP_GRAPH,         TRUE,  FALSE, "",                ACTION_GW_OPEN,  NULL, NULL },
+	{ EXT_V,   "Verilog source", "v",   "",    GROUP_PROGRAM,       TRUE,  FALSE, TOOL_TEMPLATE_V,   ACTION_V_OPEN,   NULL, NULL },
+	{ EXT_VCD, "",               "vcd", "v",   GROUP_GRAPH,         FALSE, FALSE, "",                ACTION_VCD_OPEN, NULL, NULL },
+	{ EXT_VHD, "VHDL source",    "vcd", "vhd", GROUP_PROGRAM,       TRUE,  FALSE, TOOL_TEMPLATE_VHD, ACTION_VHD_OPEN, NULL, NULL },
+	{ EXT_DRC, "",               "drc", "sch", GROUP_SCHEMATIC,     FALSE, FALSE, "",                ACTION_DRC_OPEN, NULL, NULL },
+	{ EXT_BOM, "",               "bom", "sch", GROUP_SCHEMATIC,     FALSE, FALSE, "",                ACTION_BOM_OPEN, NULL, NULL }
 };
 
 
@@ -432,7 +510,8 @@ static struct Ext_s ExtList[] =
 /* tool structures */
 static struct Tool_s *pToolList = NULL;
 struct Action_s *pActionList = NULL;
-static struct Ext_s *pExtList = NULL;
+struct Ext_s *pExtList = NULL;
+struct Group_s *pGroupList = NULL;
 
 
 
@@ -441,12 +520,13 @@ static int ToolReadTools(void);
 static int ToolRegisterTool(struct Tool_s Entry);
 static int ToolReadActions(void);
 static int ToolRegisterAction(struct Action_s Entry);
+static int ToolReadGroups(void);
+static int ToolRegisterGroup(struct Group_s Entry);
 static int ToolReadExtensions(void);
 static int ToolRegisterExtension(struct Ext_s Entry);
 static int Menu_Tool_Initialize(void);
 static void Menu_Tool_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 static int Menu_FileNew_Initialize(void);
-static void ToolMenuAction_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
 void StrReplace(char *szString, char *szFrom, char *szTo);
 
 
@@ -459,9 +539,17 @@ void StrReplace(char *szString, char *szFrom, char *szTo);
 int ToolInitialize(void)
 {
 	int iResult;
-	
+
 	/* read table of tools */
 	iResult = ToolReadTools();
+	if (iResult == FAILURE)
+	{
+		/* TODO: error handling */
+		return FAILURE;
+	}
+
+	/* read table of groups */
+	iResult = ToolReadGroups();
 	if (iResult == FAILURE)
 	{
 		/* TODO: error handling */
@@ -475,7 +563,7 @@ int ToolInitialize(void)
 		/* TODO: error handling */
 		return FAILURE;
 	}
-	
+
 	/* read table of extensions */
 	iResult = ToolReadExtensions();
 	if (iResult == FAILURE)
@@ -483,7 +571,7 @@ int ToolInitialize(void)
 		/* TODO: error handling */
 		return FAILURE;
 	}
-	
+
 	/* menu File/New */
 	iResult = Menu_FileNew_Initialize();
 	if (iResult == FAILURE)
@@ -491,7 +579,7 @@ int ToolInitialize(void)
 		/* TODO: error handling */
 		return FAILURE;
 	}
-	
+
 	/* menu modification */
 	iResult = Menu_Tool_Initialize();
 	if (iResult == FAILURE)
@@ -499,10 +587,10 @@ int ToolInitialize(void)
 		/* TODO: error handling */
 		return FAILURE;
 	}
-	
+
 	MenuActionInitialize();
 	MenuWindowInitialize();
-	
+
 	return SUCCESS;
 }
 
@@ -523,17 +611,18 @@ int ToolValueGet(int iDataBase, int iValue, int iId, void *pValue)
 	struct Tool_s *pTool;
 	struct Action_s *pAction;
 	struct Ext_s *pExt;
-	
+	struct Group_s *pGroup;
+
 	switch (iDataBase)
 	{
-		case TOOL_LIST:     
-			
+		case TOOL_LIST:
+
 			for (pTool = pToolList; pTool != NULL; pTool = pTool->pNext)
 				if (pTool->iId == iId)
 					break;
 			if (pTool == NULL)
 				return FAILURE;
-	
+
 			switch (iValue)
 			{
 				case TOOL_ID:        *((int *) pValue) = pTool->iId;              break;
@@ -542,17 +631,17 @@ int ToolValueGet(int iDataBase, int iValue, int iId, void *pValue)
 				case TOOL_TYPE:      *((int *) pValue) = pTool->iType;            break;
 				default:                  return FAILURE;
 			}
-			
+
 			break;
 
-		case ACTION_LIST:     
-			
+		case ACTION_LIST:
+
 			for (pAction = pActionList; pAction != NULL; pAction = pAction->pNext)
 				if (pAction->iId == iId)
 					break;
 			if (pAction == NULL)
 				return FAILURE;
-	
+
 			switch (iValue)
 			{
 				case ACTION_ID:      *((int *) pValue) = pAction->iId;            break;
@@ -563,17 +652,17 @@ int ToolValueGet(int iDataBase, int iValue, int iId, void *pValue)
 				case ACTION_TOOLID:  *((int *) pValue) = pAction->iToolId;        break;
 				default:                  return FAILURE;
 			}
-			
+
 			break;
 
-		case EXT_LIST:     
-			
+		case EXT_LIST:
+
 			for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
 				if (pExt->iId == iId)
 					break;
 			if (pExt == NULL)
 				return FAILURE;
-	
+
 			switch (iValue)
 			{
 				case EXT_ID:         *((int *) pValue) = pExt->iId;               break;
@@ -582,19 +671,156 @@ int ToolValueGet(int iDataBase, int iValue, int iId, void *pValue)
 				case EXT_INFILENEW:  *((int *) pValue) = pExt->bInFileNew;        break;
 				case EXT_TEMPLATE:   strcpy((char *) pValue, pExt->szTemplate);   break;
 				case EXT_ACTIONID:   *((int *) pValue) = pExt->iActionId;         break;
+				case EXT_GROUPID:    *((int *) pValue) = pExt->iGroupId;          break;
 				case EXT_PARENT:     strcpy((char *) pValue, pExt->szParent);     break;
 				default:                  return FAILURE;
 			}
-			
+
 			break;
-	
-		default:                
-			
+
+		case GROUP_LIST:
+
+			/* find the specified group */
+			for (pGroup = pGroupList; pGroup != NULL; pGroup = pGroup->pNext)
+			{
+				if (pGroup->iId == iId)
+					break;
+			}
+
+			/* read the specified variable */
+			switch (iValue)
+			{
+				case GROUP_ID:
+					if (pGroup == NULL)
+						return FAILURE;
+					*((int *) pValue) = pGroup->iId;
+					break;
+
+				case GROUP_NAME:
+					if (pGroup == NULL)
+						return FAILURE;
+					strcpy((char *) pValue, pGroup->szName);
+					break;
+
+				case GROUP_NODE:
+					if (pGroup == NULL)
+						return FAILURE;
+					*((GtkCTree **) pValue) = (void *) pGroup->pNode;
+					break;
+
+				case GROUP_NEXT:
+					if (iId == GROUP_NONE)
+					{
+						*((int *) pValue) = (pGroupList != NULL) ? pGroupList->iId : GROUP_NONE;
+						break;
+					}
+					if (pGroup == NULL)
+						return FAILURE;
+					*((int *) pValue) = (pGroup->pNext != NULL) ? pGroup->pNext->iId : GROUP_NONE;
+					break;
+
+				default:
+					return FAILURE;
+			}
+
+			break;
+
+		default:
+
 			return FAILURE;
 	}
-		
+
 	return SUCCESS;
 }
+
+
+int ToolValueSet(int iDataBase, int iValue, int iId, void *pValue)
+{
+	struct Tool_s *pTool;
+	struct Action_s *pAction;
+	struct Ext_s *pExt;
+	struct Group_s *pGroup;
+
+	switch (iDataBase)
+	{
+		case TOOL_LIST:
+
+			for (pTool = pToolList; pTool != NULL; pTool = pTool->pNext)
+				if (pTool->iId == iId)
+					break;
+			if (pTool == NULL)
+				return FAILURE;
+
+			switch (iValue)
+			{
+			}
+
+			break;
+
+		case ACTION_LIST:
+
+			for (pAction = pActionList; pAction != NULL; pAction = pAction->pNext)
+				if (pAction->iId == iId)
+					break;
+			if (pAction == NULL)
+				return FAILURE;
+
+			switch (iValue)
+			{
+			}
+
+			break;
+
+		case EXT_LIST:
+
+			for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
+				if (pExt->iId == iId)
+					break;
+			if (pExt == NULL)
+				return FAILURE;
+
+			switch (iValue)
+			{
+			}
+
+			break;
+
+		case GROUP_LIST:
+
+			for (pGroup = pGroupList; pGroup != NULL; pGroup = pGroup->pNext)
+				if (pGroup->iId == iId)
+					break;
+			if (pGroup == NULL)
+				return FAILURE;
+
+			switch (iValue)
+			{
+				case GROUP_ID:
+					pGroup->iId = *((int *) pValue);
+					break;
+
+				case GROUP_NAME:
+					strcpy(pGroup->szName, (char *) pValue);
+					break;
+
+				case GROUP_NODE:
+					pGroup->pNode = *((GtkCTreeNode **) pValue);
+					break;
+
+				default:
+					return FAILURE;
+			}
+
+			break;
+
+		default:
+
+			return FAILURE;
+	}
+
+	return SUCCESS;
+}
+
 
 
 int ToolGetExtensionId(char *szExtension, int *iExtId)
@@ -608,7 +834,7 @@ int ToolGetExtensionId(char *szExtension, int *iExtId)
 	if (pExt == NULL)
 		return FAILURE;
 	*iExtId = pExt->iId;
-	
+
 	return SUCCESS;
 }
 
@@ -619,7 +845,7 @@ int ToolOpenFile(int iExtId, char *szFilename, int iActionId)
 	struct Action_s *pAction;
 	int iResult, i, j;
 	char szCommand[TEXTLEN], szFullName[TEXTLEN];
-	
+
 	/* look for extension entry */
 	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
 	{
@@ -631,7 +857,7 @@ int ToolOpenFile(int iExtId, char *szFilename, int iActionId)
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot find extension entry");
 		return FAILURE;
 	}
-	
+
 	/* if default action - find it in the table */
 	if (iActionId == TOOL_DEFAULT)
 	{
@@ -660,13 +886,13 @@ int ToolOpenFile(int iExtId, char *szFilename, int iActionId)
 			return FAILURE;
 		}
 	}
-	
+
 	/* get action command, fill variable fields */
 	strcpy(szCommand, pAction->szCommand);
 	strcpy(szFullName, szFilename);
 	if (strlen(szFilename) > 0)
 	{
-/*		
+/*
 		strcat(szFullName, ".");
 		strcat(szFullName, pExt->szExt);
 */
@@ -680,7 +906,7 @@ int ToolOpenFile(int iExtId, char *szFilename, int iActionId)
 			szCommand[j + strlen(szFullName)] = szCommand[j];
 		strcpy(szCommand + i, szFullName);
 	}
-	
+
 	/* run action command */
 	iResult = ToolRun(szCommand, szFullName, pAction->fFlags);
 	if (iResult != SUCCESS)
@@ -697,7 +923,7 @@ int ToolOpenFile(int iExtId, char *szFilename, int iActionId)
 static int ToolReadTools(void)
 {
 	int i;
-	
+
 	for (i = 0; i < TOOL_NUMBER; i ++)
 		ToolRegisterTool(ToolList[i]);
 
@@ -709,7 +935,7 @@ static int ToolReadTools(void)
 static int ToolRegisterTool(struct Tool_s Entry)
 {
 	struct Tool_s *pPtr, *pNewEntry;
-	
+
 	/* a new entry */
 	pNewEntry = (struct Tool_s *) malloc(sizeof(struct Tool_s));
 	if (pNewEntry == NULL)
@@ -722,7 +948,7 @@ static int ToolRegisterTool(struct Tool_s Entry)
 	strcpy(pNewEntry->szCommand, Entry.szCommand);
 	pNewEntry->iType = Entry.iType;
 	pNewEntry->pNext = NULL;
-	
+
 	/* link to a list */
 	if (pToolList != NULL)
 	{
@@ -732,7 +958,7 @@ static int ToolRegisterTool(struct Tool_s Entry)
 	}
 	else
 		pToolList = pNewEntry;
-		
+
 	return SUCCESS;
 }
 
@@ -769,7 +995,7 @@ static int ToolRegisterAction(struct Action_s Entry)
 	pNewEntry->fFlags = Entry.fFlags;
 	pNewEntry->iToolId = Entry.iToolId;
 	pNewEntry->pNext = NULL;
-	
+
 	/* link to a list */
 	if (pActionList != NULL)
 	{
@@ -779,7 +1005,7 @@ static int ToolRegisterAction(struct Action_s Entry)
 	}
 	else
 		pActionList = pNewEntry;
-		
+
 	return SUCCESS;
 }
 
@@ -788,12 +1014,12 @@ static int ToolRegisterAction(struct Action_s Entry)
 static int ToolReadExtensions(void)
 {
 	int i;
-	
+
 	for (i = 0; i < EXT_NUMBER; i ++)
 		ToolRegisterExtension(ExtList[i]);
-	
+
 	return SUCCESS;
-	
+
 }
 
 
@@ -801,7 +1027,7 @@ static int ToolReadExtensions(void)
 static int ToolRegisterExtension(struct Ext_s Entry)
 {
 	struct Ext_s *pPtr, *pNewEntry;
-		
+
 	/* a new entry */
 	pNewEntry = (struct Ext_s *) malloc(sizeof(struct Ext_s));
 	if (pNewEntry == NULL)
@@ -816,9 +1042,10 @@ static int ToolRegisterExtension(struct Ext_s Entry)
 	pNewEntry->bInFileNew = Entry.bInFileNew;
 	pNewEntry->bMenuUsed = FALSE;
 	strcpy(pNewEntry->szTemplate, Entry.szTemplate);
+	pNewEntry->iGroupId = Entry.iGroupId;
 	pNewEntry->iActionId = Entry.iActionId;
 	pNewEntry->pNext = NULL;
-	
+
 	/* link to a list */
 	if (pExtList != NULL)
 	{
@@ -828,7 +1055,50 @@ static int ToolRegisterExtension(struct Ext_s Entry)
 	}
 	else
 		pExtList = pNewEntry;
-		
+
+	return SUCCESS;
+}
+
+
+
+static int ToolReadGroups(void)
+{
+	int i;
+
+	for (i = 0; i < GROUP_NUMBER; i ++)
+		ToolRegisterGroup(GroupList[i]);
+
+	return SUCCESS;
+
+}
+
+
+
+static int ToolRegisterGroup(struct Group_s Entry)
+{
+	struct Group_s *pPtr, *pNewEntry;
+
+	/* a new entry */
+	pNewEntry = (struct Group_s *) malloc(sizeof(struct Group_s));
+	if (pNewEntry == NULL)
+	{
+		/* TODO: error handling */
+		return FAILURE;
+	}
+	pNewEntry->iId = Entry.iId;
+	strcpy(pNewEntry->szName, Entry.szName);
+	pNewEntry->pNext = NULL;
+
+	/* link to a list */
+	if (pGroupList != NULL)
+	{
+		for (pPtr = pGroupList; pPtr->pNext != NULL; pPtr = pPtr->pNext)
+			;
+		pPtr->pNext = pNewEntry;
+	}
+	else
+		pGroupList = pNewEntry;
+
 	return SUCCESS;
 }
 
@@ -852,7 +1122,7 @@ static int Menu_FileNew_Initialize()
 	if (pWidget == NULL)
 	{
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot find widget 'MenuFileNew'");
-		return;
+		return FAILURE;
 	}
 	
 	/* create File/New menu */
@@ -882,15 +1152,15 @@ void MenuFileNewRefresh(const char *szExt)
 {
 	struct Ext_s *pExt;
 	char szDocSelected[TEXTLEN];
-	
+
 	DocGetProperty(DOC_SELECTED, "", (void *) szDocSelected);
-	
+
 	/* remove items from menu */
 	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
 	{
 		if (!pExt->bMenuUsed)
 			continue;
-		
+
 		gtk_container_remove(GTK_CONTAINER(pMenu), GTK_WIDGET(pExt->pMenuItem));
 		pExt->bMenuUsed = FALSE;
 	}
@@ -900,7 +1170,7 @@ void MenuFileNewRefresh(const char *szExt)
 	{
 		if (!pExt->bInFileNew || (strcmp(pExt->szParent, FileGetExt(szDocSelected)) && strlen(pExt->szParent) > 0))
 			continue;
-		
+
 		gtk_widget_show((GtkWidget *) pExt->pMenuItem);
 		gtk_container_add(GTK_CONTAINER(pMenu), (GtkWidget *) pExt->pMenuItem);
 		gtk_widget_set_sensitive(GTK_WIDGET(pExt->pMenuItem), TRUE);
@@ -913,7 +1183,7 @@ void FileNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 {
 	struct Ext_s *pExt;
 	int iResult;
-	
+
 	/* determine type of file extension */
 	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
 		if (pExt->pMenuItem == pMenuItem)
@@ -923,7 +1193,7 @@ void FileNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot determine file type and extension");
 		return;
 	}
-	
+
 	/* run File/New function */
 	iResult = FileNew(pExt->iId);
 	if (iResult != SUCCESS)
@@ -931,7 +1201,7 @@ void FileNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot create new file");
 		return;
 	}
-		
+
 }
 
 
@@ -953,7 +1223,7 @@ static int Menu_Tool_Initialize()
 		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot find widget 'MenuTool'");
 		return FAILURE;
 	}
-	
+
 	/* create Tool menu */
 	pMenu = GTK_MENU(gtk_menu_new());
 	gtk_widget_ref(GTK_WIDGET(pMenu));
@@ -965,7 +1235,7 @@ static int Menu_Tool_Initialize()
 	{
 		if (strlen(pTool->szName) == 0)
 			continue;
-		
+
 		pTool->pMenuItem = GTK_MENU_ITEM(gtk_menu_item_new_with_label(pTool->szName));
 		gtk_widget_ref(GTK_WIDGET(pTool->pMenuItem));
 		gtk_widget_show(GTK_WIDGET(pTool->pMenuItem));
@@ -1009,8 +1279,8 @@ static void Menu_Tool_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
 int ToolRun(char *szCommand, char *szFilename, DWORD fFlags)
 {
 	pid_t Pid;
-	struct Task_s *pTask;
-	
+
+
 	/* create a subtask to run a command */
 	Pid = fork();
 	if (Pid < 0)
@@ -1018,54 +1288,19 @@ int ToolRun(char *szCommand, char *szFilename, DWORD fFlags)
 		MsgBox("Cannot create a subtask !", MSGBOX_OK);
 		return FAILURE;
 	}
-	
+
 	/* run command in child process */
 	else if (Pid == 0)
 	{
 		system(szCommand);
 		_exit(0);
 	}
-	
+
 	/* register the subtask in parent process */
 	else
 	{
 //		TaskNew(Pid, szCommand, fFlags);
 	}
-	
-	return SUCCESS;
-}
 
-
-
-int gmanager_title(char *szTitle, char *szIcon)
-{
-	return SUCCESS;
-}
-
-
-
-int gmanager_tool(char *szName, char *szCommand, unsigned long fFlags)
-{
-	return SUCCESS;
-}
-
-
-
-int gmanager_filetype(int iParent, char *szName, char *szExtension, unsigned long fFlags)
-{
-	return SUCCESS;
-}
-
-
-
-int gmanager_action(int iFileType, int *aTool, char *szName, char *szCommand, char *szImportFile[], unsigned long fFlags)
-{
-	return SUCCESS;
-}
-
-
-
-int gmanager_menu(int iParent, char *szName, char *szShortKey, char *szIcon, int (*fnCallback)(), unsigned long fFlags)
-{
 	return SUCCESS;
 }
