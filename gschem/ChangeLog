@@ -1,3 +1,10 @@
+2001-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/x_fileselect.c: Commented out a debugging printf
+
+	* src/x_fileselect.c: Chris Ellec integrated his component window
+	  sort into the code
+
 2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * Removed all Makefile.in files and configure
