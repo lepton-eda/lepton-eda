@@ -1,7 +1,7 @@
 
 SUBDIRS = src include noweb scripts docs
 
-EXTRA_DIST = HACKING BUGS
+EXTRA_DIST = HACKING BUGS autogen.sh
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = libgeda.pc
@@ -20,4 +20,7 @@ MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak libgeda.pc
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure \
-	               config.status aclocal.m4 libgeda.pc
+	               config.status aclocal.m4 libgeda.pc config.guess \
+		       config.sub depcomp install-sh ltmain.sh missing \
+		       mkinstalldirs
+

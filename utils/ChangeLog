@@ -1,3 +1,13 @@
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * autogen.sh: Added script to generate all the auto* generated files.
+
+        * config.guess config.sub depcomp install-sh mkinstalldirs missing
+	compile: Removed machine generated files from CVS.
+
+        * Makefile.am: Added the above files to be cleaned during
+        maintainer-clean
+
 2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * src/g_rc.nw: Added the words "optional" and "required" to the

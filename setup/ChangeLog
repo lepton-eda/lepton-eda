@@ -1,3 +1,28 @@
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * autogen.sh: Added script to generate all the auto* generated files.
+
+        * config.guess config.sub depcomp install-sh mkinstalldirs missing
+        compile: Removed machine generated files from CVS.
+
+        * Makefile.am: Added the above files to be cleaned during
+        maintainer-clean
+
+	* intl/, m4/: Ran gettextize to update a few files, but these
+ 	files were removed from CVS.
+
+	* configure.ac: Renamed configure.in to configure.ac
+	
+	* Makefile.am: Added a few files to the maintainer-clean local
+        target (files that should not be in cvs).
+
+	* configure.ac: Updated all the AC_DEFINE_* macros to not use
+        acconfig.h anymore.
+
+	* acconfig.h, acinclude.m4, ltmain.sh: Removed from use.
+
+	* po/setup.pot: Removed unused file.
+
 2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Updated version to something more recent, but this

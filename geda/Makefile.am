@@ -3,7 +3,7 @@
 ## If you don't want it to overwrite it,
 ## 	Please disable it in the Anjuta project configuration
 
-SUBDIRS = intl po src pixmaps
+SUBDIRS = m4 intl po include src pixmaps
 
 # The installation directory for these files needs to be decided on.  
 # For now, don't install them. AVH 05/25/03
@@ -23,7 +23,12 @@ distclean-local:
 	-rm -rf autom4te.cache
 
 maintainer-clean-local:
-	-rm -rf autom4te.cache
+	-rm -rf autom4te.cache \
+	  intl/*.h intl/*.c intl/*.alias intl/*.y intl/*.sin intl/VERSION \
+	  intl/config.charset intl/Makefile.in intl/ChangeLog \
+	  po/*.sed po/*.header po/*.sin po/*.template po/Rules-quot \
+	  po/Makefile.in.in po/ChangeLog \
+	  m4/*.m4 
 
 # Copy all the spec files. Of cource, only one is actually used.
 dist-hook:
@@ -37,5 +42,11 @@ MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure \
-                       config.status aclocal.m4
+                       config.status aclocal.m4 config.guess config.rpath \
+	   	       config.sub depcomp mkinstalldirs missing install-sh \
+		       stamp-h.in
 
+
+ACLOCAL_AMFLAGS = -I m4
+
+EXTRA_DIST = config.rpath mkinstalldirs autogen.sh 

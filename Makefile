@@ -228,11 +228,10 @@ symbols_config: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
 	  ./configure --prefix=$(prefix) $(opts) )
 
 symbols_reconfig: 
-	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; automake )
+	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ./autogen.sh )
 
 symbols_distconfig:
-	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ./autogen.sh )
 
 symbols_dist: 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} dist )
@@ -261,14 +260,13 @@ gschem_config: libgeda-pc-install \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 gschem_reconfig: 
-	( cd $(DIR_PREFIX)gschem$(CD_VERSION); aclocal ; autoconf ; automake )
+	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ./autogen.sh )
 
 gschem_src: 
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION)/src; ${MAKE} src )
 
 gschem_distconfig: 
-	( cd $(DIR_PREFIX)gschem$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ./autogen.sh )
 
 gschem_dist: 
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} dist )
@@ -321,11 +319,10 @@ gnetlist_config: libgeda-pc-install \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 gnetlist_reconfig: 
-	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); aclocal ; autoconf ; automake )
+	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ./autogen.sh )
 
 gnetlist_distconfig: 
-	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ./autogen.sh )
 
 gnetlist_dist: 
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} dist )
@@ -354,11 +351,10 @@ gsymcheck_config: libgeda-pc-install \
           ./configure --prefix=$(prefix) $(opts) )
 
 gsymcheck_reconfig: 
-	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); aclocal ; autoconf ; automake )
+	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ./autogen.sh )
 
 gsymcheck_distconfig: 
-	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ./autogen.sh )
 
 gsymcheck_dist: 
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} dist )
@@ -399,11 +395,10 @@ utils_config: libgeda-pc-install \
           ./configure --prefix=$(prefix) $(opts) )
 
 utils_reconfig: 
-	( cd $(DIR_PREFIX)utils$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)utils$(CD_VERSION); ./autogen.sh )
 
 utils_distconfig: 
-	( cd $(DIR_PREFIX)utils$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)utils$(CD_VERSION); ./autogen.sh )
 
 utils_dist: 
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} dist )
@@ -439,11 +434,10 @@ geda_config: geda$(CD_VERSION)/configure
           ./configure --prefix=$(prefix) $(opts) )
 
 geda_reconfig: 
-	( cd geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd geda$(CD_VERSION); ./autogen.sh )
 
 geda_distconfig: 
-	( cd geda$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd geda$(CD_VERSION); ./autogen.sh )
 
 geda_dist: 
 	( cd geda$(CD_VERSION); ${MAKE} dist )
@@ -481,11 +475,10 @@ setup_config: $(DIR_PREFIX)setup$(CD_VERSION)/configure
           ./configure --prefix=$(prefix) $(opts) )
 
 setup_reconfig: 
-	( cd $(DIR_PREFIX)setup$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)setup$(CD_VERSION); ./autogen.sh )
 
 setup_distconfig: 
-	( cd $(DIR_PREFIX)setup$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)setup$(CD_VERSION); ./autogen.sh )
 
 setup_dist: 
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} dist )
@@ -524,14 +517,13 @@ libgeda_config: libgeda$(CD_VERSION)/configure
 	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 libgeda_reconfig: 
-	( cd libgeda$(CD_VERSION); aclocal ; autoconf ; automake )
+	( cd libgeda$(CD_VERSION); ./autogen.sh )
 
 libgeda_src: 
 	( cd libgeda$(CD_VERSION)/src; ${MAKE} src )
 
 libgeda_distconfig: 
-	( cd libgeda$(CD_VERSION); aclocal ; autoconf ; \
-          automake --include-deps )
+	( cd libgeda$(CD_VERSION); ./autogen.sh )
 
 libgeda_dist: 
 	( cd libgeda$(CD_VERSION); ${MAKE} dist )
@@ -565,11 +557,10 @@ docs_config: $(DIR_PREFIX)docs$(CD_VERSION)/configure
           ./configure --prefix=$(prefix) $(opts) )
 
 docs_reconfig: 
-	( cd $(DIR_PREFIX)docs$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)docs$(CD_VERSION); ./autogen.sh )
 
 docs_distconfig: 
-	( cd $(DIR_PREFIX)docs$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)docs$(CD_VERSION); ./autogen.sh )
 
 docs_dist: 
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} dist )
@@ -603,10 +594,9 @@ examples_config: $(DIR_PREFIX)examples$(CD_VERSION)/configure
           ./configure --prefix=$(prefix) $(opts) )
 
 examples_reconfig: 
-	( cd $(DIR_PREFIX)examples$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ./autogen.sh )
 examples_distconfig: 
-	( cd $(DIR_PREFIX)examples$(CD_VERSION); aclocal ; autoconf ; \
-	  automake --include-deps )
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ./autogen.sh )
 
 examples_dist: 
 	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} dist )
@@ -631,48 +621,49 @@ libgeda$(CD_VERSION)/config.h:
 	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 libgeda$(CD_VERSION)/configure:
-	( cd libgeda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd libgeda$(CD_VERSION); ./autogen.sh)
 
 $(DIR_PREFIX)gschem$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)gschem$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)gschem$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ./autogen.sh )
 
 $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ./autogen.sh )
 
 $(DIR_PREFIX)utils$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)utils$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)utils$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)utils$(CD_VERSION); ./autogen.sh )
 
 geda$(CD_VERSION)/config.h:
 	( cd geda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 geda$(CD_VERSION)/configure: 
-	( cd geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd geda$(CD_VERSION); ./autogen.sh )
 
 $(DIR_PREFIX)setup$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)setup$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)setup$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)setup$(CD_VERSION); ./autogen.sh )
 
 $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ./autogen.sh )
+
 $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
@@ -682,21 +673,21 @@ $(DIR_PREFIX)symbols$(CD_VERSION)/Makefile:
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)symbols$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ./autogen.sh )
 
 $(DIR_PREFIX)docs$(CD_VERSION)/Makefile:
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)docs$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)docs$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)docs$(CD_VERSION); ./autogen.sh )
 
 $(DIR_PREFIX)examples$(CD_VERSION)/Makefile:
 	( cd $(DIR_PREFIX)examples$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
 $(DIR_PREFIX)examples$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)examples$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ./autogen.sh )
 
 ############################################################################
 # Executable related related targets 

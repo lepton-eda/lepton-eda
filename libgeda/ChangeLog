@@ -1,3 +1,13 @@
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* config.guess config.sub depcomp install-sh ltmain.sh missing
+	mkinstalldirs: Removed machine generated files from CVS
+
+        * Makefile.am: Added the above files to be cleaned during 
+        maintainer-clean
+
+	* autogen.sh: Added script to create auto* generated files
+
 2003-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Added some code to make sure that the

@@ -1,17 +1,4 @@
-/* config.h.in.  Generated from configure.in by autoheader.  */
-#undef ENABLE_NLS
-#undef HAVE_CATGETS
-#undef HAVE_GETTEXT
-#undef HAVE_LC_MESSAGES
-#undef HAVE_STPCPY
-#undef HAVE_LIBSM
-#undef PACKAGE_LOCALE_DIR
-#undef PACKAGE_DOC_DIR
-#undef PACKAGE_DATA_DIR
-#undef PACKAGE_PIXMAPS_DIR
-#undef PACKAGE_HELP_DIR
-#undef PACKAGE_MENU_DIR
-#undef PACKAGE_SOURCE_DIR
+/* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
@@ -188,8 +175,29 @@
 /* Define to the address where bug reports for this package should be sent. */
 #undef PACKAGE_BUGREPORT
 
+/* Package data directory */
+#undef PACKAGE_DATA_DIR
+
+/* Package doc directory */
+#undef PACKAGE_DOC_DIR
+
+/* Package help directory */
+#undef PACKAGE_HELP_DIR
+
+/* Package locale directory */
+#undef PACKAGE_LOCALE_DIR
+
+/* Package menu directory */
+#undef PACKAGE_MENU_DIR
+
 /* Define to the full name of this package. */
 #undef PACKAGE_NAME
+
+/* Package pixmaps directory */
+#undef PACKAGE_PIXMAPS_DIR
+
+/* Package source directory */
+#undef PACKAGE_SOURCE_DIR
 
 /* Define to the full name and version of this package. */
 #undef PACKAGE_STRING

@@ -1,3 +1,11 @@
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * install-sh missing mkinstalldirs: Removed these files from the
+        CVS repository.
+
+        * autogen.sh: Added new script to recreate all the necessary auto*
+        files.
+
 2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * */*.sch: Updated all example schematics

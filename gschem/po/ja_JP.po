@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
-"POT-Creation-Date: 2003-09-06 22:42-0400\n"
+"POT-Creation-Date: 2003-11-09 17:15-0500\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "これ以上ズームできません。\n"
 
-#: noweb/g_funcs.nw:190
+#: noweb/g_funcs.nw:218
 msgid "Ack! something got fouled up with the keymappings!\n"
 msgstr "おっと!! キーマップの設定に間違いがあります!\n"
 
@@ -26,66 +26,66 @@ msgstr "おっと!! キーマップの設定に間違いがあります!\n"
 msgid "Attribute failed ot find.\n"
 msgstr "アトリビュートが見付かりません。\n"
 
-#: noweb/g_rc.nw:260 noweb/gschem.nw:203
+#: noweb/g_rc.nw:261 noweb/gschem.nw:206
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "環境変数GEDADATAを設定してください!\n"
 
-#: noweb/g_rc.nw:277
+#: noweb/g_rc.nw:278
 #, c-format
 msgid "Read system-gschemrc file [%s]\n"
 msgstr "システムのgshemrcファイルを読み込んでいます。 [%s]\n"
 
-#: noweb/g_rc.nw:278
-#, c-format
-msgid "Did not find system-gschemrc file [%s]\n"
+#: noweb/g_rc.nw:279
+#, fuzzy, c-format
+msgid "Did not find required system-gschemrc file [%s]\n"
 msgstr "システムのgschemrcファイルが見付かりません。 [%s]\n"
 
-#: noweb/g_rc.nw:319
+#: noweb/g_rc.nw:320
 #, c-format
 msgid "Read ~/.gEDA/gschemrc file [%s]\n"
 msgstr "~/.gEDA/gschemrcファイルを読み込んでいます。 [%s]\n"
 
-#: noweb/g_rc.nw:320
-#, c-format
-msgid "Did not find ~/.gEDA/gschemrc file [%s]\n"
+#: noweb/g_rc.nw:321
+#, fuzzy, c-format
+msgid "Did not find optional ~/.gEDA/gschemrc file [%s]\n"
 msgstr "~/.gEDA/gschemrcファイルが見付かりません。 [%s]\n"
 
-#: noweb/g_rc.nw:351
+#: noweb/g_rc.nw:352
 #, c-format
 msgid "Read local gschemrc file [%s]\n"
 msgstr "ローカルのgschemrcファイルを読み込んでいます。 [%s]\n"
 
-#: noweb/g_rc.nw:352
-#, c-format
-msgid "Did not find local gschemrc file [%s]\n"
+#: noweb/g_rc.nw:353
+#, fuzzy, c-format
+msgid "Did not find optional local gschemrc file [%s]\n"
 msgstr "ローカルのgschemrcファイルが見付かりません。 [%s]\n"
 
-#: noweb/g_rc.nw:409
+#: noweb/g_rc.nw:410
 #, c-format
 msgid "Read specified rc file [%s]\n"
 msgstr "指定されたrcファイルを読み込んでいます。 [%s]\n"
 
-#: noweb/g_rc.nw:413 noweb/g_rc.nw:416
+#: noweb/g_rc.nw:414 noweb/g_rc.nw:417
 #, c-format
 msgid "Did not find specified gschemrc file [%s]\n"
 msgstr "指定されたrcファイルが見付かりません。 [%s]\n"
 
-#: noweb/g_rc.nw:425
+#: noweb/g_rc.nw:426
 msgid "Could not find any gschemrc file!\n"
 msgstr "すべてのgschemrcファイルが見付かりません!\n"
 
-#: noweb/g_rc.nw:426
+#: noweb/g_rc.nw:427
 msgid "Could not find a gschemrc file\n"
 msgstr "gschemrcファイルが見付かりません!\n"
 
-#: noweb/g_rc.nw:448 noweb/g_rc.nw:1185 noweb/g_rc.nw:1218 noweb/g_rc.nw:1445
-#: noweb/g_rc.nw:1639 noweb/g_rc.nw:1675 noweb/g_rc.nw:1735 noweb/g_rc.nw:1842
-#: noweb/g_rc.nw:2801
+#: noweb/g_rc.nw:449 noweb/g_rc.nw:1186 noweb/g_rc.nw:1219 noweb/g_rc.nw:1446
+#: noweb/g_rc.nw:1640 noweb/g_rc.nw:1676 noweb/g_rc.nw:1736 noweb/g_rc.nw:1843
+#: noweb/g_rc.nw:2828
 #, c-format
 msgid "%s requires a string as a parameter\n"
 msgstr "%sは文字列のパラメータでなくてはなりません。\n"
 
-#: noweb/g_rc.nw:456
+#: noweb/g_rc.nw:457
 #, c-format
 msgid ""
 "Found a version [%s] gschemrc file:\n"
@@ -94,77 +94,77 @@ msgstr ""
 "バージョン [%s] のgschemrcファイルが見付かりました。: \n"
 "[%s]\n"
 
-#: noweb/g_rc.nw:459
+#: noweb/g_rc.nw:460
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr "gschemはアルファバージョンです。最新のrcファイルを使ってください。\n"
 
-#: noweb/g_rc.nw:508
+#: noweb/g_rc.nw:509
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "無効な色[%s]が%sに指定されました。\n"
 
-#: noweb/g_rc.nw:740
+#: noweb/g_rc.nw:741
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "無効なモード[%s]が%sに指定されました。\n"
 
-#: noweb/g_rc.nw:942
+#: noweb/g_rc.nw:943
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "無効な拡大率[%d]が%sに指定されました。\n"
 
-#: noweb/g_rc.nw:987
+#: noweb/g_rc.nw:988
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr "無効なモード[%s]がscrollbar-updateに指定されました。\n"
 
-#: noweb/g_rc.nw:1084
+#: noweb/g_rc.nw:1085
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: noweb/g_rc.nw:1136
+#: noweb/g_rc.nw:1137
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: noweb/g_rc.nw:1263
+#: noweb/g_rc.nw:1264
 #, c-format
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr "無効なパス[%s]がcomponent-libraryに指定されました。\n"
 
-#: noweb/g_rc.nw:1343 noweb/g_rc.nw:1363
+#: noweb/g_rc.nw:1344 noweb/g_rc.nw:1364
 #, c-format
 msgid "Invalid path [%s] passed to component-library-search\n"
 msgstr "無効なパス[%s]がcompnent-library-searchに指定されました。\n"
 
-#: noweb/g_rc.nw:1459
+#: noweb/g_rc.nw:1460
 #, c-format
 msgid "Invalid path [%s] passed to %s\n"
 msgstr "無効なパス[%s]が%sに指定されました。\n"
 
-#: noweb/g_rc.nw:1540 noweb/g_rc.nw:1560
+#: noweb/g_rc.nw:1541 noweb/g_rc.nw:1561
 #, c-format
 msgid "Invalid path [%s] passed to source-library-search\n"
 msgstr "無効なパス[%s]がsource-library-searchに指定されました。\n"
 
-#: noweb/g_rc.nw:1689
+#: noweb/g_rc.nw:1690
 #, c-format
 msgid "Invalid path [%s] passed to scheme-directory\n"
 msgstr "無効なパス[%s]がscheme-directoryに指定されました。\n"
 
-#: noweb/g_rc.nw:1749
+#: noweb/g_rc.nw:1750
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr "無効なパス[%s]が bitmap-directoryに指定されました。\n"
 
-#: noweb/g_rc.nw:1794 noweb/g_rc.nw:1797
+#: noweb/g_rc.nw:1795 noweb/g_rc.nw:1798
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr "ストロークの定義が重複しています![%s]\n"
 
-#: noweb/g_rc.nw:1814
+#: noweb/g_rc.nw:1815
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
 "is not compiled to support strokes, please recompile gschem\n"
@@ -174,31 +174,31 @@ msgstr ""
 "ストロークのサポートなしでコンパイルされています。LibStrokeと\n"
 "共にgschemを再コンパイルしてください。\n"
 
-#: noweb/g_rc.nw:1856
+#: noweb/g_rc.nw:1857
 #, c-format
 msgid "Invalid path [%s] passed to font-directory\n"
 msgstr "無効なパス[%s]がfont-directoryに指定されました。\n"
 
-#: noweb/g_rc.nw:2001
+#: noweb/g_rc.nw:2002
 msgid "Invalid parameters to paper-sizes\n"
 msgstr "無効なパラメータがpaper-sizeに指定されました。\n"
 
-#: noweb/g_rc.nw:2465
+#: noweb/g_rc.nw:2492
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: noweb/g_rc.nw:2753
+#: noweb/g_rc.nw:2780
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
 
-#: noweb/gschem.nw:161 noweb/gschem.nw:171
+#: noweb/gschem.nw:164 noweb/gschem.nw:174
 #, c-format
 msgid "gEDA/gschem version %s\n"
 msgstr "gEDA/gschemバージョン%s\n"
 
-#: noweb/gschem.nw:163 noweb/gschem.nw:173
+#: noweb/gschem.nw:166 noweb/gschem.nw:176
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
@@ -206,14 +206,14 @@ msgstr ""
 "gEDA/gschemは完全に無保証で提供されます。詳しくはCOPYINGファイルをご覧くださ"
 "い。\n"
 
-#: noweb/gschem.nw:165 noweb/gschem.nw:175
+#: noweb/gschem.nw:168 noweb/gschem.nw:178
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "これはフリーソフトウェアであり、ある条件の下で再頒布することが奨励されていま"
 "す。\n"
 
-#: noweb/gschem.nw:167 noweb/gschem.nw:177
+#: noweb/gschem.nw:170 noweb/gschem.nw:180
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -221,35 +221,35 @@ msgstr ""
 "詳しくはCOPYINGファイルをご覧ください。\n"
 "\n"
 
-#: noweb/gschem.nw:181
+#: noweb/gschem.nw:184
 msgid "This is the MINGW32 port.\n"
 msgstr "MIGW32版です。\n"
 
-#: noweb/gschem.nw:185
+#: noweb/gschem.nw:188
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr ""
 
-#: noweb/gschem.nw:214
+#: noweb/gschem.nw:217
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "初期化scmファイルを読み込んでいます。[%s]\n"
 
-#: noweb/gschem.nw:218 noweb/gschem.nw:221
+#: noweb/gschem.nw:221 noweb/gschem.nw:224
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
-#: noweb/gschem.nw:266 noweb/gschem.nw:292
+#: noweb/gschem.nw:270 noweb/gschem.nw:296
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "スケマチックを読み込んでいます。[%s]\n"
 
-#: noweb/gschem.nw:357
+#: noweb/gschem.nw:361
 msgid "Scheme directory NOT set!\n"
 msgstr "schemeディレクトリが設定されていません!\n"
 
-#: noweb/gschem.nw:364 noweb/x_script.nw:86
+#: noweb/gschem.nw:368 noweb/x_script.nw:86
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "guileスクリプトを実行しています。[%s]\n"
@@ -294,70 +294,70 @@ msgstr "拡大"
 msgid "Pan Mode"
 msgstr "パンモード"
 
-#: noweb/i_basic.nw:173
+#: noweb/i_basic.nw:174
 #, c-format
 msgid "Paste %d Mode"
 msgstr "ペースト%dモード"
 
-#: noweb/i_basic.nw:178
+#: noweb/i_basic.nw:179
 msgid "Net Mode"
 msgstr "ネットモード"
 
-#: noweb/i_basic.nw:182
+#: noweb/i_basic.nw:183
 msgid "Bus Mode"
 msgstr "バスモード"
 
-#: noweb/i_basic.nw:185
+#: noweb/i_basic.nw:186
 msgid "Line Mode"
 msgstr "線モード"
 
-#: noweb/i_basic.nw:188
+#: noweb/i_basic.nw:189
 msgid "Box Mode"
 msgstr "ボックスモード"
 
-#: noweb/i_basic.nw:191
+#: noweb/i_basic.nw:192
 msgid "Circle Mode"
 msgstr "円モード"
 
-#: noweb/i_basic.nw:194
+#: noweb/i_basic.nw:195
 msgid "Arc Mode"
 msgstr "円弧モード"
 
-#: noweb/i_basic.nw:197
+#: noweb/i_basic.nw:198
 msgid "Pin Mode"
 msgstr "ピンモード"
 
-#: noweb/i_basic.nw:199 noweb/i_callbacks.nw:1035 noweb/i_callbacks.nw:1059
+#: noweb/i_basic.nw:200 noweb/i_callbacks.nw:1035 noweb/i_callbacks.nw:1059
 #: noweb/x_window.nw:960
 msgid "Copy"
 msgstr "コピー"
 
-#: noweb/i_basic.nw:201 noweb/i_callbacks.nw:1083 noweb/i_callbacks.nw:1107
+#: noweb/i_basic.nw:202 noweb/i_callbacks.nw:1083 noweb/i_callbacks.nw:1107
 #: noweb/x_window.nw:945
 msgid "Move"
 msgstr "移動"
 
-#: noweb/i_basic.nw:234
+#: noweb/i_basic.nw:238
 msgid "Snap Off"
 msgstr "スナップ・オフ"
 
-#: noweb/i_basic.nw:239
+#: noweb/i_basic.nw:244
 msgid "Show Hidden"
 msgstr "隠しテキスト表示"
 
-#: noweb/i_basic.nw:341 noweb/x_window.nw:1112
+#: noweb/i_basic.nw:350 noweb/x_window.nw:1112
 msgid "Action"
 msgstr "アクション"
 
-#: noweb/i_basic.nw:349 noweb/x_window.nw:1107
+#: noweb/i_basic.nw:358 noweb/x_window.nw:1107
 msgid "Stroke"
 msgstr "ストローク"
 
-#: noweb/i_basic.nw:356 noweb/x_window.nw:1109
+#: noweb/i_basic.nw:365 noweb/x_window.nw:1109
 msgid "none"
 msgstr "なし"
 
-#: noweb/i_basic.nw:364
+#: noweb/i_basic.nw:373
 msgid "Repeat/"
 msgstr "繰り返し/"
 
@@ -376,7 +376,7 @@ msgid "Could not invoke %s\n"
 msgstr ""
 
 #: noweb/i_callbacks.nw:372
-msgid "Documentation commands not supported under MINGW."
+msgid "Documentation commands not supported under MinGW.\n"
 msgstr ""
 
 #: noweb/i_callbacks.nw:522
@@ -396,12 +396,12 @@ msgstr "保存しました。[%s]\n"
 msgid "Saved"
 msgstr "保存しました。"
 
-#: noweb/i_callbacks.nw:642 noweb/x_fileselect.nw:873
+#: noweb/i_callbacks.nw:642 noweb/x_fileselect.nw:877
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "保存できません。[%s]\n"
 
-#: noweb/i_callbacks.nw:644 noweb/x_fileselect.nw:874
+#: noweb/i_callbacks.nw:644 noweb/x_fileselect.nw:878
 msgid "Error while trying to save"
 msgstr "保存中にエラー発生"
 
@@ -427,8 +427,8 @@ msgstr "ウィンドウを閉じています。\n"
 msgid "Select objs first"
 msgstr "まずオブジェクトを選択してください。"
 
-#: noweb/i_callbacks.nw:1131 noweb/x_attribedit.nw:558
-#: noweb/x_attribedit.nw:745 noweb/x_multiattrib.nw:847 noweb/x_window.nw:975
+#: noweb/i_callbacks.nw:1131 noweb/x_attribedit.nw:559
+#: noweb/x_attribedit.nw:748 noweb/x_multiattrib.nw:851 noweb/x_window.nw:975
 #: noweb/rcstrings.nw:25
 msgid "Delete"
 msgstr "削除"
@@ -437,7 +437,7 @@ msgstr "削除"
 msgid "Edit"
 msgstr "編集"
 
-#: noweb/i_callbacks.nw:1181 noweb/x_dialog.nw:710 noweb/x_dialog.nw:715
+#: noweb/i_callbacks.nw:1181 noweb/x_dialog.nw:851 noweb/x_dialog.nw:856
 msgid "Edit Text"
 msgstr "テキスト編集"
 
@@ -465,7 +465,7 @@ msgstr "ロック"
 msgid "Unlock"
 msgstr "ロック解除"
 
-#: noweb/i_callbacks.nw:1404 noweb/x_dialog.nw:2119
+#: noweb/i_callbacks.nw:1404 noweb/x_dialog.nw:2293
 msgid "Translate"
 msgstr "転送"
 
@@ -513,7 +513,7 @@ msgstr "表示する"
 msgid "Edit Line Type"
 msgstr "線種を編集"
 
-#: noweb/i_callbacks.nw:1686 noweb/x_dialog.nw:1485
+#: noweb/i_callbacks.nw:1686 noweb/x_dialog.nw:1657
 msgid "Edit Fill Type"
 msgstr "塗りつぶしを編集"
 
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
 msgstr ""
 
-#: noweb/o_bus.nw:340 noweb/o_bus.nw:373 noweb/o_net.nw:383 noweb/o_net.nw:416
+#: noweb/o_bus.nw:340 noweb/o_bus.nw:373 noweb/o_net.nw:384 noweb/o_net.nw:417
 msgid "selected a nonexistant object!\n"
 msgstr "存在しないオブジェクトが選択されました!\n"
 
@@ -830,53 +830,53 @@ msgstr "不明な線の先端(%d)\n"
 msgid "Unknown type for line (%d) !\n"
 msgstr "不明な線の種類(%d)!\n"
 
-#: noweb/o_misc.nw:102
+#: noweb/o_misc.nw:103
 msgid "Got an unexpected NULL in o_edit\n"
 msgstr ""
 
-#: noweb/o_misc.nw:204
+#: noweb/o_misc.nw:210
 msgid "Object alreadly locked\n"
 msgstr "このオブジェクトはすでにロックされています。\n"
 
-#: noweb/o_misc.nw:248
+#: noweb/o_misc.nw:254
 msgid "Object alreadly unlocked\n"
 msgstr "このオブジェクトはすでにロック解除されています。\n"
 
-#: noweb/o_misc.nw:290
+#: noweb/o_misc.nw:296
 msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr ""
 
-#: noweb/o_misc.nw:497 noweb/o_misc.nw:554
+#: noweb/o_misc.nw:503 noweb/o_misc.nw:560
 msgid "ERROR: NULL object in o_embed!\n"
 msgstr ""
 
-#: noweb/o_misc.nw:574
+#: noweb/o_misc.nw:580
 #, c-format
 msgid "Could not find component [%s], while trying to unembed.\n"
 msgstr "部品[%s]が見付からないため、組み込みを解除できません。\n"
 
-#: noweb/o_misc.nw:577
+#: noweb/o_misc.nw:583
 msgid "Component is still embedded\n"
 msgstr "この部品はすでに組み込まれています。\n"
 
-#: noweb/o_misc.nw:628
+#: noweb/o_misc.nw:634
 msgid "ERROR: NULL object in o_mirror!\n"
 msgstr ""
 
-#: noweb/o_misc.nw:867
+#: noweb/o_misc.nw:873
 msgid "Hidden text is now visible\n"
 msgstr "隠しテキストが表示されました。\n"
 
-#: noweb/o_misc.nw:869
+#: noweb/o_misc.nw:875
 msgid "Hidden text is now invisible\n"
 msgstr "隠しテキストが非表示になりました。\n"
 
-#: noweb/o_misc.nw:1252
+#: noweb/o_misc.nw:1261
 #, c-format
 msgid "Warning: two components with same refdes: %d\n"
 msgstr "警告:2つの部品に同じrefdes: %d\n"
 
-#: noweb/o_misc.nw:1386
+#: noweb/o_misc.nw:1395
 msgid "Got an unexpected NULL in o_update_component\n"
 msgstr ""
 
@@ -892,16 +892,16 @@ msgstr ""
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr ""
 
-#: noweb/o_net.nw:312
+#: noweb/o_net.nw:313
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
 msgstr ""
 
-#: noweb/o_net.nw:885 noweb/o_net.nw:922 noweb/o_net.nw:993
-#: noweb/o_net.nw:1029
+#: noweb/o_net.nw:886 noweb/o_net.nw:923 noweb/o_net.nw:994
+#: noweb/o_net.nw:1030
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: noweb/o_net.nw:1096
+#: noweb/o_net.nw:1097
 #, c-format
 msgid "Could not find %s in any component-library\n"
 msgstr "無効なパス[%s]がcomponent-libraryに指定されました。\n"
@@ -918,11 +918,11 @@ msgstr "スロット番号がありません。\n"
 msgid "Slotting not allowed for this component\n"
 msgstr "この部品にスロットは許可されていません。\n"
 
-#: noweb/o_slot.nw:192
+#: noweb/o_slot.nw:194
 msgid "New slot number out of range\n"
 msgstr "スロット番号が範囲を越えています。\n"
 
-#: noweb/o_slot.nw:273
+#: noweb/o_slot.nw:279
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
 
@@ -962,21 +962,21 @@ msgstr ""
 msgid "ERROR: NULL object!\n"
 msgstr ""
 
-#: noweb/x_attribedit.nw:418 noweb/x_attribedit.nw:706
+#: noweb/x_attribedit.nw:418 noweb/x_attribedit.nw:709
 msgid "Single Attribute Editor"
 msgstr "シングルアトルビュートエディタ"
 
 #: noweb/x_attribedit.nw:454 noweb/x_attribedit.nw:520
-#: noweb/x_multiattrib.nw:690
+#: noweb/x_multiattrib.nw:694
 msgid "Value"
 msgstr "値"
 
-#: noweb/x_attribedit.nw:465 noweb/x_attribedit.nw:806
-#: noweb/x_multiattrib.nw:747
+#: noweb/x_attribedit.nw:465 noweb/x_attribedit.nw:809
+#: noweb/x_multiattrib.nw:751
 msgid "Visible"
 msgstr "表示"
 
-#: noweb/x_attribedit.nw:482 noweb/x_attribedit.nw:879
+#: noweb/x_attribedit.nw:482 noweb/x_attribedit.nw:882
 msgid "All"
 msgstr "すべて"
 
@@ -984,15 +984,15 @@ msgstr "すべて"
 msgid "Comps"
 msgstr "部品"
 
-#: noweb/x_attribedit.nw:494 noweb/x_attribedit.nw:897 noweb/x_window.nw:866
+#: noweb/x_attribedit.nw:494 noweb/x_attribedit.nw:900 noweb/x_window.nw:866
 msgid "Nets"
 msgstr "ネット"
 
-#: noweb/x_attribedit.nw:500 noweb/x_attribedit.nw:905
+#: noweb/x_attribedit.nw:500 noweb/x_attribedit.nw:908
 msgid "Replace"
 msgstr "置換"
 
-#: noweb/x_attribedit.nw:514 noweb/x_multiattrib.nw:683
+#: noweb/x_attribedit.nw:514 noweb/x_multiattrib.nw:687
 msgid "Name"
 msgstr "名前"
 
@@ -1000,68 +1000,64 @@ msgstr "名前"
 msgid "Both"
 msgstr "両方"
 
-#: noweb/x_attribedit.nw:536 noweb/x_dialog.nw:770 noweb/x_dialog.nw:1164
-#: noweb/x_dialog.nw:1618 noweb/x_dialog.nw:1807 noweb/x_dialog.nw:1979
-#: noweb/x_dialog.nw:2142 noweb/x_dialog.nw:2310 noweb/x_dialog.nw:2477
-#: noweb/x_dialog.nw:2654 noweb/x_dialog.nw:3693 noweb/x_dialog.nw:3995
-#: noweb/x_dialog.nw:4122 noweb/x_dialog.nw:4247
+#: noweb/x_attribedit.nw:536 noweb/x_dialog.nw:923 noweb/x_dialog.nw:1329
+#: noweb/x_dialog.nw:1788 noweb/x_dialog.nw:1982 noweb/x_dialog.nw:2153
+#: noweb/x_dialog.nw:2315 noweb/x_dialog.nw:2482 noweb/x_dialog.nw:2649
+#: noweb/x_dialog.nw:2826 noweb/x_dialog.nw:3871 noweb/x_dialog.nw:4173
+#: noweb/x_dialog.nw:4300 noweb/x_dialog.nw:4425
 msgid "OK"
 msgstr "了解"
 
-#: noweb/x_attribedit.nw:551 noweb/x_dialog.nw:398 noweb/x_dialog.nw:3275
-#: noweb/x_fileselect.nw:2292
+#: noweb/x_attribedit.nw:552 noweb/x_dialog.nw:516 noweb/x_dialog.nw:3453
+#: noweb/x_fileselect.nw:2299
 msgid "Apply"
 msgstr "適用"
 
-#: noweb/x_attribedit.nw:564 noweb/x_attribedit.nw:755 noweb/x_dialog.nw:781
-#: noweb/x_dialog.nw:1175 noweb/x_dialog.nw:1629 noweb/x_dialog.nw:1814
-#: noweb/x_dialog.nw:1990 noweb/x_dialog.nw:2152 noweb/x_dialog.nw:2321
-#: noweb/x_dialog.nw:2488 noweb/x_dialog.nw:2665 noweb/x_fileselect.nw:2309
-#: noweb/x_fileselect.nw:2328
+#: noweb/x_attribedit.nw:565 noweb/x_attribedit.nw:758 noweb/x_dialog.nw:934
+#: noweb/x_dialog.nw:1340 noweb/x_dialog.nw:1799 noweb/x_dialog.nw:1989
+#: noweb/x_dialog.nw:2164 noweb/x_dialog.nw:2325 noweb/x_dialog.nw:2493
+#: noweb/x_dialog.nw:2660 noweb/x_dialog.nw:2837 noweb/x_fileselect.nw:2316
+#: noweb/x_fileselect.nw:2335 noweb/x_print.nw:476
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: noweb/x_attribedit.nw:764
+#: noweb/x_attribedit.nw:767
 msgid "Add/Edit Attribute"
 msgstr "アトリビュート追加/編集"
 
-#: noweb/x_attribedit.nw:817 noweb/x_multiattrib.nw:737
+#: noweb/x_attribedit.nw:820 noweb/x_multiattrib.nw:741
 msgid "Value:"
 msgstr "値:"
 
-#: noweb/x_attribedit.nw:827 noweb/x_multiattrib.nw:727
+#: noweb/x_attribedit.nw:830 noweb/x_multiattrib.nw:731
 msgid "Name:"
 msgstr "名前:"
 
-#: noweb/x_attribedit.nw:849
+#: noweb/x_attribedit.nw:852
 msgid "Show Value Only"
 msgstr "値のみ表示"
 
-#: noweb/x_attribedit.nw:852
+#: noweb/x_attribedit.nw:855
 msgid "Show Name Only"
 msgstr "名前のみ表示"
 
-#: noweb/x_attribedit.nw:855 noweb/x_multiattrib.nw:802
+#: noweb/x_attribedit.nw:858 noweb/x_multiattrib.nw:806
 msgid "Show Name & Value"
 msgstr "名前と値を表示"
 
-#: noweb/x_attribedit.nw:862
+#: noweb/x_attribedit.nw:865
 msgid "Multiple Attach"
 msgstr "多重アタッチ"
 
-#: noweb/x_attribedit.nw:888 noweb/x_fileselect.nw:2146
+#: noweb/x_attribedit.nw:891 noweb/x_fileselect.nw:2153
 msgid "Components"
 msgstr "部品"
 
-#: noweb/x_dialog.nw:292 noweb/x_dialog.nw:2558
-msgid "String too long... hack!\n"
-msgstr ""
-
-#: noweb/x_dialog.nw:376
+#: noweb/x_dialog.nw:465
 msgid "Text Entry..."
 msgstr "テキスト..."
 
-#: noweb/x_dialog.nw:380
+#: noweb/x_dialog.nw:469
 msgid ""
 "Enter text, click apply,\n"
 "move cursor into window, click to place text.\n"
@@ -1071,142 +1067,142 @@ msgstr ""
 "ウィンドウ内でクリックするとテキストを配置します。\n"
 "中ボタンで回転します。"
 
-#: noweb/x_dialog.nw:409 noweb/x_dialog.nw:2792 noweb/x_dialog.nw:2943
-#: noweb/x_dialog.nw:3286 noweb/x_dialog.nw:3486 noweb/x_fileselect.nw:2345
-#: noweb/x_image.nw:461 noweb/x_log.nw:384 noweb/x_multiattrib.nw:876
-#: noweb/x_print.nw:473 noweb/rcstrings.nw:73
+#: noweb/x_dialog.nw:527 noweb/x_dialog.nw:2967 noweb/x_dialog.nw:3120
+#: noweb/x_dialog.nw:3464 noweb/x_dialog.nw:3664 noweb/x_fileselect.nw:2352
+#: noweb/x_image.nw:482 noweb/x_log.nw:392 noweb/x_multiattrib.nw:880
+#: noweb/rcstrings.nw:73
 msgid "Close"
 msgstr "閉じる"
 
-#: noweb/x_dialog.nw:474
+#: noweb/x_dialog.nw:592
 msgid "Lower Left"
 msgstr "下 左"
 
-#: noweb/x_dialog.nw:484
+#: noweb/x_dialog.nw:603
 msgid "Middle Left"
 msgstr "中央 左"
 
-#: noweb/x_dialog.nw:494
+#: noweb/x_dialog.nw:614
 msgid "Upper Left"
 msgstr "上 左"
 
-#: noweb/x_dialog.nw:504
+#: noweb/x_dialog.nw:625
 msgid "Lower Middle"
 msgstr "下 中央"
 
-#: noweb/x_dialog.nw:514
+#: noweb/x_dialog.nw:636
 msgid "Middle Middle"
 msgstr "中央 中央"
 
-#: noweb/x_dialog.nw:524
+#: noweb/x_dialog.nw:647
 msgid "Upper Middle"
 msgstr "上 中央"
 
-#: noweb/x_dialog.nw:534
+#: noweb/x_dialog.nw:658
 msgid "Lower Right"
 msgstr "下 右"
 
-#: noweb/x_dialog.nw:544
+#: noweb/x_dialog.nw:669
 msgid "Middle Right"
 msgstr "中央 右"
 
-#: noweb/x_dialog.nw:554
+#: noweb/x_dialog.nw:680
 msgid "Upper Right"
 msgstr "上 右"
 
-#: noweb/x_dialog.nw:735
+#: noweb/x_dialog.nw:889
 msgid "Edit Text Size"
 msgstr "サイズ"
 
-#: noweb/x_dialog.nw:753
+#: noweb/x_dialog.nw:905
 msgid "Edit Text Alignment"
 msgstr "配置"
 
-#: noweb/x_dialog.nw:854
+#: noweb/x_dialog.nw:1014
 msgid "Solid"
 msgstr "実線"
 
-#: noweb/x_dialog.nw:864
+#: noweb/x_dialog.nw:1025
 msgid "Dotted"
 msgstr "点線"
 
-#: noweb/x_dialog.nw:874
+#: noweb/x_dialog.nw:1036
 msgid "Dashed"
 msgstr "破線"
 
-#: noweb/x_dialog.nw:884
+#: noweb/x_dialog.nw:1047
 msgid "Center"
 msgstr "中央"
 
-#: noweb/x_dialog.nw:894
+#: noweb/x_dialog.nw:1058
 msgid "Phantom"
 msgstr "ファントム"
 
-#: noweb/x_dialog.nw:985 noweb/x_dialog.nw:999
+#: noweb/x_dialog.nw:1150 noweb/x_dialog.nw:1164
 msgid "Invalid space specified, setting to 100\n"
 msgstr "無効な間隔が指定されました。100に設定します。\n"
 
-#: noweb/x_dialog.nw:994
+#: noweb/x_dialog.nw:1159
 msgid "Invalid length specified, setting to 100\n"
 msgstr "無効な長さが指定されました。100に設定します。\n"
 
-#: noweb/x_dialog.nw:1085
+#: noweb/x_dialog.nw:1250
 msgid "Edit Line Width & Type"
 msgstr "線種と幅編集"
 
-#: noweb/x_dialog.nw:1092 noweb/x_dialog.nw:1508
+#: noweb/x_dialog.nw:1257 noweb/x_dialog.nw:1680
 msgid "Line Width"
 msgstr "線の幅"
 
-#: noweb/x_dialog.nw:1114
+#: noweb/x_dialog.nw:1279
 msgid "Line Type"
 msgstr "線種"
 
-#: noweb/x_dialog.nw:1130
+#: noweb/x_dialog.nw:1295
 msgid "Line Dash Length"
 msgstr "破線の長さ"
 
-#: noweb/x_dialog.nw:1147
+#: noweb/x_dialog.nw:1312
 msgid "Line Dash Space"
 msgstr "破線の間隔"
 
-#: noweb/x_dialog.nw:1252
+#: noweb/x_dialog.nw:1420
 msgid "Hollow"
 msgstr "空洞"
 
-#: noweb/x_dialog.nw:1262
+#: noweb/x_dialog.nw:1431
 msgid "Filled"
 msgstr "塗りつぶし"
 
-#: noweb/x_dialog.nw:1272
+#: noweb/x_dialog.nw:1442
 msgid "Mesh"
 msgstr "メッシュ"
 
-#: noweb/x_dialog.nw:1282
+#: noweb/x_dialog.nw:1453
 msgid "Hatch"
 msgstr "ハッチ"
 
-#: noweb/x_dialog.nw:1491
+#: noweb/x_dialog.nw:1663
 msgid "Fill Type"
 msgstr "塗りつぶし種類"
 
-#: noweb/x_dialog.nw:1530
+#: noweb/x_dialog.nw:1702
 msgid "Angle1"
 msgstr "角度1"
 
-#: noweb/x_dialog.nw:1552
+#: noweb/x_dialog.nw:1724
 msgid "Pitch1"
 msgstr "ピッチ1"
 
-#: noweb/x_dialog.nw:1574
+#: noweb/x_dialog.nw:1746
 msgid "Angle2"
 msgstr "角度2"
 
-#: noweb/x_dialog.nw:1596
+#: noweb/x_dialog.nw:1768
 msgid "Pitch2"
 msgstr "ピッチ2"
 
-#: noweb/x_dialog.nw:1791
+#: noweb/x_dialog.nw:1966
 #, fuzzy
 msgid ""
 "There are unsaved schematics!\n"
@@ -1219,19 +1215,19 @@ msgstr ""
 "よろしいですか?\n"
 "'了解'ですべての変更を破棄します!"
 
-#: noweb/x_dialog.nw:1942
+#: noweb/x_dialog.nw:2117
 msgid "Arc Params"
 msgstr "円弧パラメータ"
 
-#: noweb/x_dialog.nw:1946
+#: noweb/x_dialog.nw:2121
 msgid "Start Angle"
 msgstr "開始角"
 
-#: noweb/x_dialog.nw:1961
+#: noweb/x_dialog.nw:2136
 msgid "Degrees of Sweep"
 msgstr "スイープ角"
 
-#: noweb/x_dialog.nw:2123
+#: noweb/x_dialog.nw:2297
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1239,40 +1235,44 @@ msgstr ""
 "転送しますか?\n"
 "(0で原点)"
 
-#: noweb/x_dialog.nw:2287
+#: noweb/x_dialog.nw:2460
 msgid "Text Size"
 msgstr "テキストサイズ"
 
-#: noweb/x_dialog.nw:2291
+#: noweb/x_dialog.nw:2464
 msgid "Enter new text size"
 msgstr "テキストサイズを入力してください"
 
-#: noweb/x_dialog.nw:2454
+#: noweb/x_dialog.nw:2627
 msgid "Snap Grid"
 msgstr "スナップグリッド"
 
-#: noweb/x_dialog.nw:2458
+#: noweb/x_dialog.nw:2631
 msgid "Enter new snap grid spacing"
 msgstr "グリッドサイズを入力してください"
 
-#: noweb/x_dialog.nw:2631 noweb/x_dialog.nw:2635
+#: noweb/x_dialog.nw:2731
+msgid "String too long... hack!\n"
+msgstr ""
+
+#: noweb/x_dialog.nw:2804 noweb/x_dialog.nw:2808
 msgid "Edit slot number"
 msgstr "スロット番号編集"
 
-#: noweb/x_dialog.nw:2752 noweb/rcstrings.nw:117
+#: noweb/x_dialog.nw:2924 noweb/rcstrings.nw:117
 msgid "About..."
 msgstr "gschemについて..."
 
-#: noweb/x_dialog.nw:2771
+#: noweb/x_dialog.nw:2943
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA : GPL Electronic Design Automation"
 
-#: noweb/x_dialog.nw:2778
+#: noweb/x_dialog.nw:2951
 #, c-format
 msgid "gschem version %s"
 msgstr "gschemバージョン%s"
 
-#: noweb/x_dialog.nw:2785
+#: noweb/x_dialog.nw:2959
 msgid ""
 "Written by:\n"
 "Ales V. Hvezda\n"
@@ -1284,87 +1284,87 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "および大勢の人々(ファイルAUTHORS参照)"
 
-#: noweb/x_dialog.nw:2894
+#: noweb/x_dialog.nw:3071
 msgid "Coords"
 msgstr "座標"
 
-#: noweb/x_dialog.nw:2918
+#: noweb/x_dialog.nw:3095
 msgid "Screen"
 msgstr "スクリーン"
 
-#: noweb/x_dialog.nw:2931
+#: noweb/x_dialog.nw:3108
 msgid "World"
 msgstr "ワールド"
 
-#: noweb/x_dialog.nw:3192
+#: noweb/x_dialog.nw:3370
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr ""
 
-#: noweb/x_dialog.nw:3247
+#: noweb/x_dialog.nw:3425
 msgid "Color Edit"
 msgstr "色編集"
 
-#: noweb/x_dialog.nw:3385
+#: noweb/x_dialog.nw:3563
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr "ホットキーバッファが溢れました...\n"
 
-#: noweb/x_dialog.nw:3423 noweb/rcstrings.nw:119
+#: noweb/x_dialog.nw:3601 noweb/rcstrings.nw:119
 msgid "Hotkeys..."
 msgstr "ホットキー..."
 
-#: noweb/x_dialog.nw:3468
+#: noweb/x_dialog.nw:3646
 msgid "Function : keystroke(s)"
 msgstr "関数 : キーストローク"
 
-#: noweb/x_dialog.nw:3677
+#: noweb/x_dialog.nw:3855
 msgid "Generic String"
 msgstr ""
 
-#: noweb/x_dialog.nw:3680
+#: noweb/x_dialog.nw:3858
 msgid "Enter new string."
 msgstr "文字列を入力してください"
 
-#: noweb/x_dialog.nw:3837
+#: noweb/x_dialog.nw:4015
 msgid "Find text"
 msgstr "テキスト検索"
 
-#: noweb/x_dialog.nw:3840
+#: noweb/x_dialog.nw:4018
 msgid "Text to find:"
 msgstr "検索テキスト"
 
-#: noweb/x_dialog.nw:3853
+#: noweb/x_dialog.nw:4031
 msgid "Find"
 msgstr "検索"
 
-#: noweb/x_dialog.nw:3859
+#: noweb/x_dialog.nw:4037
 msgid "Done"
 msgstr "終了"
 
-#: noweb/x_dialog.nw:3867
+#: noweb/x_dialog.nw:4045
 msgid "descend into hierarchy"
 msgstr "下の階層も検索"
 
-#: noweb/x_dialog.nw:3979
+#: noweb/x_dialog.nw:4157
 msgid "Hide text"
 msgstr "テキストを隠す"
 
-#: noweb/x_dialog.nw:3982
+#: noweb/x_dialog.nw:4160
 msgid "Hide text starting with:"
 msgstr "隠しテキスト"
 
-#: noweb/x_dialog.nw:4106
+#: noweb/x_dialog.nw:4284
 msgid "Show text"
 msgstr "テキスト表示"
 
-#: noweb/x_dialog.nw:4109
+#: noweb/x_dialog.nw:4287
 msgid "Show text starting with:"
 msgstr "テキスト"
 
-#: noweb/x_dialog.nw:4231
+#: noweb/x_dialog.nw:4409
 msgid "Autonumber text"
 msgstr "オートナンバーテキスト"
 
-#: noweb/x_dialog.nw:4234
+#: noweb/x_dialog.nw:4412
 msgid "Autonumber text starting with:"
 msgstr "オートナンバー"
 
@@ -1385,200 +1385,200 @@ msgstr "ファイルが多すぎます! MAX_FILESを増やしてください。\n"
 msgid "sch - Schematics"
 msgstr "sch - スケマチック"
 
-#: noweb/x_fileselect.nw:714
+#: noweb/x_fileselect.nw:715
 msgid "sym - Symbols "
 msgstr "sym - シンボル"
 
-#: noweb/x_fileselect.nw:723
+#: noweb/x_fileselect.nw:725
 msgid "sym/sch - Schematics and Symbols"
 msgstr "sym/sch - スケマチックとシンボル"
 
-#: noweb/x_fileselect.nw:732
+#: noweb/x_fileselect.nw:735
 msgid "* - All Files"
 msgstr "* - すべてのファイル"
 
-#: noweb/x_fileselect.nw:777
+#: noweb/x_fileselect.nw:781
 msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
 msgstr ""
 
-#: noweb/x_fileselect.nw:865
+#: noweb/x_fileselect.nw:869
 #, c-format
 msgid "Saved As [%s]\n"
 msgstr "[%s]として保存しました。\n"
 
-#: noweb/x_fileselect.nw:891 noweb/x_fileselect.nw:982
+#: noweb/x_fileselect.nw:895 noweb/x_fileselect.nw:986
 msgid "Specify a Filename!\n"
 msgstr "ファイル名を指定してくだい！\n"
 
-#: noweb/x_fileselect.nw:1239 noweb/x_fileselect.nw:1242
-#: noweb/x_fileselect.nw:2197
+#: noweb/x_fileselect.nw:1243 noweb/x_fileselect.nw:1246
+#: noweb/x_fileselect.nw:2204
 msgid "Search in Files"
 msgstr "ファイルを検索"
 
-#: noweb/x_fileselect.nw:1264
+#: noweb/x_fileselect.nw:1268
 msgid "Search in Files - End of list"
 msgstr "ファイルを検索 - 終了"
 
-#: noweb/x_fileselect.nw:1343
+#: noweb/x_fileselect.nw:1347
 msgid "Default behavior - reference component"
 msgstr ""
 
-#: noweb/x_fileselect.nw:1353
+#: noweb/x_fileselect.nw:1358
 msgid "Embed component in schematic"
 msgstr ""
 
-#: noweb/x_fileselect.nw:1362
+#: noweb/x_fileselect.nw:1368
 msgid "Include component as individual objects"
 msgstr ""
 
-#: noweb/x_fileselect.nw:1879 noweb/x_fileselect.nw:1883
-#: noweb/x_fileselect.nw:2199
+#: noweb/x_fileselect.nw:1886 noweb/x_fileselect.nw:1890
+#: noweb/x_fileselect.nw:2206
 msgid "Search in Components"
 msgstr "部品を検索"
 
-#: noweb/x_fileselect.nw:1942
+#: noweb/x_fileselect.nw:1949
 msgid "Search in Components - Found library only"
 msgstr "部品を検索 - 見付かったライブラリのみ"
 
-#: noweb/x_fileselect.nw:1951
+#: noweb/x_fileselect.nw:1958
 msgid "Search in Components - End of list"
 msgstr "部品を検索 - 終了"
 
-#: noweb/x_fileselect.nw:2010
+#: noweb/x_fileselect.nw:2017
 msgid "Open..."
 msgstr "開く..."
 
-#: noweb/x_fileselect.nw:2014 noweb/x_fileselect.nw:2018
+#: noweb/x_fileselect.nw:2021 noweb/x_fileselect.nw:2025
 msgid "Save As..."
 msgstr "別名で保存..."
 
-#: noweb/x_fileselect.nw:2024
+#: noweb/x_fileselect.nw:2031
 msgid "Select Component..."
 msgstr "部品選択..."
 
-#: noweb/x_fileselect.nw:2065
+#: noweb/x_fileselect.nw:2072
 msgid "Filter"
 msgstr "フィルタ"
 
-#: noweb/x_fileselect.nw:2105
+#: noweb/x_fileselect.nw:2112
 msgid "Directories"
 msgstr "ディレクトリ"
 
-#: noweb/x_fileselect.nw:2107
+#: noweb/x_fileselect.nw:2114
 msgid "Libraries"
 msgstr "ライブラリ"
 
-#: noweb/x_fileselect.nw:2144
+#: noweb/x_fileselect.nw:2151
 msgid "Files"
 msgstr "ファイル"
 
-#: noweb/x_fileselect.nw:2188
+#: noweb/x_fileselect.nw:2195
 msgid "Preview"
 msgstr "プレビュー"
 
-#: noweb/x_fileselect.nw:2235 noweb/x_image.nw:533 noweb/x_print.nw:542
+#: noweb/x_fileselect.nw:2242 noweb/x_image.nw:554 noweb/x_print.nw:545
 msgid "Filename"
 msgstr "ファイル名"
 
-#: noweb/x_fileselect.nw:2276 noweb/x_window.nw:796
+#: noweb/x_fileselect.nw:2283 noweb/x_window.nw:796
 msgid "Open"
 msgstr "開く"
 
-#: noweb/x_fileselect.nw:2286
+#: noweb/x_fileselect.nw:2293
 msgid "SaveAs"
 msgstr "保存"
 
-#: noweb/x_image.nw:358
+#: noweb/x_image.nw:356
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "カラーイメージを出力しました。[%s] [%d x %d]\n"
 
-#: noweb/x_image.nw:360
+#: noweb/x_image.nw:358
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "白黒イメージを出力しました。[%s] [%d x %d]\n"
 
-#: noweb/x_image.nw:450
+#: noweb/x_image.nw:471
 msgid "Write Image..."
 msgstr "イメージ出力..."
 
-#: noweb/x_image.nw:452
+#: noweb/x_image.nw:473
 msgid "Write"
 msgstr "出力"
 
-#: noweb/x_image.nw:482
+#: noweb/x_image.nw:503
 msgid "Width"
 msgstr "幅"
 
-#: noweb/x_image.nw:501
+#: noweb/x_image.nw:522
 msgid "Height"
 msgstr "高さ"
 
-#: noweb/x_image.nw:520
+#: noweb/x_image.nw:541
 msgid "Width x Height"
 msgstr "幅 x 高さ"
 
-#: noweb/x_log.nw:333
+#: noweb/x_log.nw:339
 msgid "Status"
 msgstr "ステータス"
 
-#: noweb/x_multiattrib.nw:128 noweb/x_multiattrib.nw:924
+#: noweb/x_multiattrib.nw:128 noweb/x_multiattrib.nw:922
 msgid "Yes"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:131 noweb/x_multiattrib.nw:926
+#: noweb/x_multiattrib.nw:131 noweb/x_multiattrib.nw:924
 msgid "No"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:138 noweb/x_multiattrib.nw:932
+#: noweb/x_multiattrib.nw:138 noweb/x_multiattrib.nw:930
 msgid "V"
 msgstr "値"
 
-#: noweb/x_multiattrib.nw:143 noweb/x_multiattrib.nw:930
+#: noweb/x_multiattrib.nw:143 noweb/x_multiattrib.nw:928
 msgid "N"
 msgstr "名前"
 
-#: noweb/x_multiattrib.nw:148 noweb/x_multiattrib.nw:934
+#: noweb/x_multiattrib.nw:148 noweb/x_multiattrib.nw:932
 msgid "NV"
 msgstr "名前/値"
 
-#: noweb/x_multiattrib.nw:635
+#: noweb/x_multiattrib.nw:639
 msgid "Edit Attributes"
 msgstr "アトリビュート編集"
 
-#: noweb/x_multiattrib.nw:653 noweb/rcstrings.nw:94
+#: noweb/x_multiattrib.nw:657 noweb/rcstrings.nw:94
 msgid "Attributes"
 msgstr "アトリビュート"
 
-#: noweb/x_multiattrib.nw:697
+#: noweb/x_multiattrib.nw:701
 msgid "Vis?"
 msgstr "表示"
 
-#: noweb/x_multiattrib.nw:704
+#: noweb/x_multiattrib.nw:708
 msgid "SN"
 msgstr "名前/値"
 
-#: noweb/x_multiattrib.nw:712
+#: noweb/x_multiattrib.nw:716
 msgid "Add/Edit"
 msgstr "追加/編集"
 
-#: noweb/x_multiattrib.nw:796
+#: noweb/x_multiattrib.nw:800
 msgid "Show Value only"
 msgstr "値のみ表示"
 
-#: noweb/x_multiattrib.nw:799
+#: noweb/x_multiattrib.nw:803
 msgid "Show Name only"
 msgstr "名前のみ表示"
 
-#: noweb/x_multiattrib.nw:827
+#: noweb/x_multiattrib.nw:831
 msgid "Change"
 msgstr "変更"
 
-#: noweb/x_multiattrib.nw:837 noweb/rcstrings.nw:76
+#: noweb/x_multiattrib.nw:841 noweb/rcstrings.nw:76
 msgid "Add"
 msgstr "追加"
 
-#: noweb/x_multiattrib.nw:868
+#: noweb/x_multiattrib.nw:872
 msgid "Clear"
 msgstr "クリア"
 
@@ -1618,49 +1618,49 @@ msgstr "マネージャを閉じる"
 msgid "Landscape"
 msgstr "ランドスケープ"
 
-#: noweb/x_print.nw:194
+#: noweb/x_print.nw:195
 msgid "Portrait"
 msgstr "ポートレイト"
 
-#: noweb/x_print.nw:236
+#: noweb/x_print.nw:238
 msgid "Extents with margins"
 msgstr ""
 
-#: noweb/x_print.nw:245
+#: noweb/x_print.nw:248
 msgid "Extents no margins"
 msgstr ""
 
-#: noweb/x_print.nw:253
+#: noweb/x_print.nw:257
 msgid "Current Window"
 msgstr "現在のウィンドウ"
 
-#: noweb/x_print.nw:356
+#: noweb/x_print.nw:361
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
 msgstr "現在のスケマチックを印刷できません。[%s]\n"
 
-#: noweb/x_print.nw:358
+#: noweb/x_print.nw:363
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "現在のスケマチックを印刷しました。[%s]\n"
 
-#: noweb/x_print.nw:462 noweb/rcstrings.nw:11
+#: noweb/x_print.nw:465 noweb/rcstrings.nw:11
 msgid "Print..."
 msgstr "印刷..."
 
-#: noweb/x_print.nw:464
+#: noweb/x_print.nw:467
 msgid "Print"
 msgstr "印刷"
 
-#: noweb/x_print.nw:482
+#: noweb/x_print.nw:485
 msgid "Output paper size"
 msgstr "出力用紙サイズ"
 
-#: noweb/x_print.nw:566
+#: noweb/x_print.nw:569
 msgid "Type"
 msgstr "種類"
 
-#: noweb/x_print.nw:578
+#: noweb/x_print.nw:581
 msgid "Orientation"
 msgstr "オリエンテーション"
 

@@ -8,6 +8,8 @@ SUBDIRS = \
 rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-commonrc 
 
+EXTRA_DIST = autogen.sh
+
 distclean-local:
 	-rm -rf autom4te.cache
 
@@ -17,5 +19,8 @@ maintainer-clean-local:
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure config.status aclocal.m4
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure config.status \
+		       aclocal.m4 config.guess config.sub install-sh \
+		       missing mkinstalldirs
+
 

@@ -12,7 +12,7 @@ localedir = @datadir@/locale
 DEFS = -DPACKAGE_LOCALE_DIR=\"$(localedir)\" @DEFS@
 
 AM_CFLAGS =\
-	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wtraditional -Wpointer-arith -Wmissing-prototypes\
+	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wpointer-arith -Wmissing-prototypes\
 	 -O1\
 	 -g
 

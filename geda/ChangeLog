@@ -1,3 +1,27 @@
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* config.guess config.rpath config.sub depcomp mkinstalldirs
+	missing install-sh stamp-h.in: Removed machine generated scripts 
+	from CVS
+
+	* intl/, m4/: Ran gettextize to update a few files, but these files
+	were removed from CVS.
+
+	* autogen.sh: Added script to recreate all the auto* generated files.
+
+	* include/: Added directory to build mechanism (eventhough it is 
+	empty).
+	
+	* configure.ac: Renamed configure.in to configure.ac
+	
+	* Makefile.am: Added a few files to the maintainer-clean local 
+	target (files that should not be in cvs).
+
+	* configure.ac: Updated all the AC_DEFINE_* macros to not use
+	acconfig.h anymore.
+
+	* acconfig.h, acinclude.m4: Removed from use.
+
 2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Updated version to something more recent, but this

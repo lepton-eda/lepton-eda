@@ -1,6 +1,6 @@
 
 EXTRA_DIST = ChangeLog geda_totexi.in makeallimages \
-	     makeimages print.scm notangle_guile.scm.in
+	     makeimages print.scm image.scm notangle_guile.scm.in
 
 MOSTLYCLEANFILES =	*.log *~
 CLEANFILES = 		*.log *~

@@ -6,12 +6,6 @@
 /* gEDA/gaf's rc directory */
 #undef GEDARCDIR
 
-/* If gtk+ 1.2.x has been installed, define this */
-#undef HAS_GTK12
-
-/* If gtk+ 2.2.x has been installed, define this */
-#undef HAS_GTK22
-
 /* If your math library has rint in it, define this */
 #undef HAS_RINT
 

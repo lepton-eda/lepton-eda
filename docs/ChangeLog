@@ -1,3 +1,14 @@
+2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* install-sh missing mkinstalldirs: Removed these files from the
+	CVS repository.
+
+	* autogen.sh: Added new script to recreate all the necessary auto*
+	files.
+
+	* Makefile.am: Remove install-sh missing mkinstalldirs when doing
+	maintainer-clean
+
 2003-11-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* symbols/symbols.tex: Added an item to the symbol creation steps.

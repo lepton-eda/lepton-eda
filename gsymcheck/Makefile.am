@@ -1,7 +1,7 @@
 
 SUBDIRS = src include utils lib scheme examples tests
 
-EXTRA_DIST = BUGS
+EXTRA_DIST = BUGS autogen.sh
 
 proto:
 	(cd src ; ./create_proto)
@@ -16,4 +16,5 @@ MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak 
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure \
-		       config.status aclocal.m4
+		       config.status aclocal.m4 config.guess config.sub \
+		       depcomp install-sh missing mkinstalldirs
