@@ -80,6 +80,9 @@ struct st_line {
   int screen_x[2];
   int screen_y[2];
 };
+/* pb20011014 - name the grips */
+#define LINE_END1 0
+#define LINE_END2 1
 
 struct st_arc {
   int x, y; /* world */
@@ -92,6 +95,11 @@ struct st_arc {
   int start_angle;
   int end_angle;
 };
+/* pb20011014 - name the grips */
+#define ARC_CENTER 0
+#define ARC_RADIUS 1
+#define ARC_START_ANGLE 2
+#define ARC_END_ANGLE 3
 
 struct st_box {
   /* upper is considered the origin */
@@ -101,6 +109,11 @@ struct st_box {
   int screen_upper_x, screen_upper_y;
   int screen_lower_x, screen_lower_y;
 };
+/* pb20011014 - name the grips */
+#define BOX_UPPER_LEFT 0
+#define BOX_LOWER_RIGHT 1
+#define BOX_UPPER_RIGHT 2
+#define BOX_LOWER_LEFT 3
 
 struct st_text {
   int x, y;		/* world origin */
@@ -135,9 +148,14 @@ struct st_circle {
   int radius;
 
   int screen_x, screen_y;
-  int screen_left, screen_top;
+/* pb20011010 - removed : used only in o_circle_draw_xor() and
+   meaning unclear */
+/*    int screen_left, screen_top; */
   int screen_radius;
 };
+/* pb20011014 - name the grips */
+#define CIRCLE_CENTER 0
+#define CIRCLE_RADIUS 1
 
 struct st_object {
   int type;				/* Basic information */
