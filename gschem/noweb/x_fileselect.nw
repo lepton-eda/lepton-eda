@@ -379,6 +379,7 @@ x_fileselect_include_file(char *filename, int filter_type)
 @defun x_fileselect_fill_lists f_current
 @end defun
 
+
 <<x_fileselect.c : x_fileselect_fill_lists()>>=
 void
 x_fileselect_fill_lists(FILEDIALOG *f_current)
@@ -929,64 +930,86 @@ x_fileselect_change_dir(FILEDIALOG *f_current, char *new_directory)
 /* don't use widget, since it can be NULL */
 void
 x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
+/*
+ * SDB notes:  This is the fcn which opens the file(s) selected in the
+ * "open file" dialog box.
+ */
 {
   TOPLEVEL *w_current;
   PAGE *found_page;
   char *string;
   int len;
 
-  w_current = f_current->toplevel;
+  char *filename = NULL;
+  GList *files;
+  int row;
 
-  string = gtk_entry_get_text(GTK_ENTRY(f_current->filename_entry));
-
+  /* get GList of selected files  */
+  files = (GTK_CLIST(f_current->file_list))->selection;
+  if (files) {
+    /* iterate over selected files  */
+    for (files ; files ; files = files->next) {     
+      row = (int) files->data;     /* Why do we need to do cast here?  */
+                                   /* because files->data is a void *  */
+      gtk_clist_get_text (GTK_CLIST(f_current->file_list), row, 0, &filename);
+      w_current = f_current->toplevel;
 	
-  if (!string) {
-    return;
-  }
+      /* allocate space, then stick full, absolute filename into string */
+      string = malloc(strlen(f_current->directory) + strlen(filename)+2);
+      if (!string) {        /* sanity check . . . */
+        /* free(string); freeing a null pointer is bad. */
+        return;
+      }
+      
+      sprintf(string, "%s/%s", f_current->directory, filename);	
 
-  len = strlen(string);
-
+      len = strlen(string);
+      if (string[len - 1] != PATH_SEPARATER_CHAR) {
+        if ( !(found_page = s_page_new(w_current, string)) ) {
+          w_current->DONT_REDRAW = 1;
 #if DEBUG
-  printf("opening: %s\n", string);
+          printf("In x_fileselect_open_file, after checking, full filename to open = %s\n", string);
 #endif
+          (void)f_open(w_current, 
+                       w_current->page_current->page_filename);
+          i_set_filename(w_current, w_current->page_current->
+                         page_filename);
 
-  if (string[len - 1] != PATH_SEPARATER_CHAR) {
-    if ( !(found_page = s_page_new(w_current, string)) ) {
-      w_current->DONT_REDRAW = 1;
-      (void)f_open(w_current, 
-                   w_current->page_current->page_filename);
-      i_set_filename(w_current, w_current->page_current->
-                     page_filename);
+          x_repaint_background(w_current);
+          x_window_setup_world(w_current);
+          x_manual_resize(w_current);
+          a_zoom_extents(w_current, 
+                         w_current->page_current->object_head,
+                         A_PAN_DONT_REDRAW);
+          o_undo_savestate(w_current, UNDO_ALL);
 
-      x_repaint_background(w_current);
-      x_window_setup_world(w_current);
-      x_manual_resize(w_current);
-      a_zoom_extents(w_current, 
-                    w_current->page_current->object_head,
-                    A_PAN_DONT_REDRAW);
-      o_undo_savestate(w_current, UNDO_ALL);
+          /* now update the scrollbars */
+          x_hscrollbar_update(w_current);
+          x_vscrollbar_update(w_current);
+          update_page_manager(NULL, w_current);
 
-      /* now update the scrollbars */
-      x_hscrollbar_update(w_current);
-      x_vscrollbar_update(w_current);
-      update_page_manager(NULL, w_current);
-      w_current->DONT_REDRAW = 0;
-	
-      o_redraw_all(w_current);
-    } else {
-      s_page_goto(w_current, found_page);
-      update_page_manager(NULL, w_current);
-      i_set_filename(w_current, w_current->
-                     page_current->page_filename);
-      x_scrollbars_update(w_current);
-      o_redraw_all(w_current);
-    }
+          w_current->DONT_REDRAW = 0;
+          o_redraw_all(w_current);
+
+        } else {   /* page already exists . . . */
+          s_page_goto(w_current, found_page);
+          update_page_manager(NULL, w_current);
+          i_set_filename(w_current, w_current->
+                         page_current->page_filename);
+          x_scrollbars_update(w_current);
+          o_redraw_all(w_current);
+        }
+      } else {       /* no filename given . . . . */
+        s_log_message(_("Specify a Filename!\n"));
+      }
+
+      free(string);
+    }       /* end for files . . .     */
+
+    /* Now close file dialog window . . . . */
     gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
-  } else {
-    s_log_message(_("Specify a Filename!\n"));
-  }
+  }     /* end of if string . . .  */                   
 }
-
 
 @ %def x_fileselect_open_file
 
@@ -1000,6 +1023,13 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 void
 x_fileselect_dir_button (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
+/*
+ *  SDB notes:  This fcn is called for almost every event which occurs
+ *  to the "open file" widget, except when the actual file is to be
+ *  opened.  Stuff handled by this fcn are e.g. highlighting the file
+ *  selected in the file list, updating the dir/file lists upon change
+ *  of directory, etc.
+ */
 {
   char *temp = NULL;
 
@@ -1007,7 +1037,7 @@ x_fileselect_dir_button (GtkWidget *widget, gint row, gint column,
 
   if (temp) {	
 #if DEBUG
-    printf("selected: %d _%s_\n", row, temp);
+    printf("In x_fileselect_dir_button, selected: %d _%s_\n", row, temp);
 #endif
     if (bevent) {
       switch (bevent->type) {
@@ -1037,26 +1067,42 @@ x_fileselect_dir_button (GtkWidget *widget, gint row, gint column,
 void
 x_fileselect_file_button (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
+/*
+ * SDB notes:  This fcn is apparently called for each event occuring to
+ * the file clist.  This fcn determines if the button event captured was to
+ * update the directory/file display or was a doubleclick on a file
+ * in the clist meant to open the file.  It then
+ * calls the appropriate handler.  Unfortunately, in the event of 
+ * selecting multiple files (using ENHANCED mode), bevent is nonnull 
+ * only on the first call.
+ */
 {
   char *temp = NULL;
 
+  /* put name of desired file into temp */
   gtk_clist_get_text (GTK_CLIST (f_current->file_list), row, 0, &temp);
 
   if (temp) {	
 
 #if DEBUG
-    printf("selected: %d %s\n", row, temp);
+    printf("In x_fileselect_file_button, file selected: %d %s\n", row, temp);
+    if (bevent) {
+      printf("in x_fileselect_file_button, bevent->type = %d\n", bevent->type);
+    }
+    else {
+      printf("In x_fileselect_file_button, bevent = NULL\n");
+    }
 #endif
+    
     if (bevent) {
       switch (bevent->type) {
         case(GDK_2BUTTON_PRESS):
-          x_fileselect_open_file(NULL, f_current); 
+          x_fileselect_open_file(NULL, f_current);
           break;
 
         default:
           x_fileselect_update_dirfile(
                                       f_current, temp);
-
           if (f_current->preview_control && f_current->directory && temp) { 
             x_preview_update(f_current->preview, f_current->directory, temp);
           }
@@ -1084,7 +1130,6 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
   char *filename=NULL;
   char *directory=NULL;
   int i;
-
 
   if (f_current->filename) {
     free(f_current->filename);
@@ -1696,7 +1741,7 @@ void
 x_fileselect_comp_select (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
 {
-  char *comp=NULL;
+  char *comp = NULL;
   int diff_x, diff_y;
   TOPLEVEL *w_current;
 
@@ -1971,6 +2016,7 @@ x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
 <<x_fileselect.c : x_fileselect_setup()>>=
 void
 x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
+/*  ----- This fcn creates the entire "open file" dialog box -----  */
 {
   GtkWidget *buttonapply = NULL;
   GtkWidget *buttonclose = NULL;
@@ -2062,6 +2108,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_widget_show (action_area);
 
 
+    /*  ----- Create the filter selection area -----  */
     if (type == FILESELECT) {
       f_current->filter_type = FILEDIALOG_SCH_ONLY;
     } else {
@@ -2108,6 +2155,8 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_box_pack_end (GTK_BOX (drawbox), searchbox, TRUE, TRUE, 10);
     gtk_widget_show (searchbox);
 
+    
+    /*  -----  Create the "directories"/"libraries" clist widgets -----  */
     if (type == FILESELECT) {
       dir_title[0] = u_basic_strdup(_("Directories"));
     } else {
@@ -2145,8 +2194,8 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_widget_show (f_current->dir_list);
     gtk_widget_show (scrolled_win);
     free(dir_title[0]);
-
-    /* The files clist */
+    
+    /*  ----- Create the files clist -----  */
     if (type == FILESELECT) {
       file_title[0] = u_basic_strdup(_("Files"));
     } else {
@@ -2157,15 +2206,23 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
                                                      (gchar**) file_title);
     gtk_widget_set_usize(f_current->file_list, 
                          FILE_LIST_WIDTH, FILE_LIST_HEIGHT);
+    
+    /*  Stuff added by SDB to enable opening multiple files at once   */
+    if (type == FILESELECT) {
+      gtk_clist_set_selection_mode(GTK_CLIST(f_current->file_list),
+                                   GTK_SELECTION_EXTENDED);
+    }	
+
     if (type == FILESELECT) {
       gtk_signal_connect(GTK_OBJECT (f_current->file_list), 
-                         "select_row", (GtkSignalFunc) 
-                         x_fileselect_file_button,
+                         "select_row", 
+                         /* This is file opening callback */
+                         (GtkSignalFunc) x_fileselect_file_button, 
                          f_current);
     } else {
       gtk_signal_connect(GTK_OBJECT (f_current->file_list), 
-                         "select_row", (GtkSignalFunc) 
-                         x_fileselect_comp_select,
+                         "select_row",
+                         (GtkSignalFunc) x_fileselect_comp_select,
                          f_current);
     }
     gtk_clist_column_titles_passive(GTK_CLIST(f_current->file_list));
@@ -2187,7 +2244,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_widget_show (scrolled_win);
     free(file_title[0]);
 
-
+    /*  ----- create the preview widget -----  */
     f_current->preview = x_preview_setup(f_current->xfwindow, 
                                          drawbox);
 
@@ -2199,7 +2256,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     /* other checkbox stuff is done AFTER drawing area is mapped */
     gtk_widget_show(f_current->preview_checkbox);
 
-
+    /* -----  Create the search input text box -----  */
     if (f_current->type == FILESELECT) {
       f_current->search_label=gtk_label_new(_("Search in Files"));
     } else {
@@ -2230,6 +2287,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_widget_grab_focus(f_current->search_entry);
     gtk_widget_show(f_current->search_entry);
 
+    /*  ----- Create the "Filename" text entry area -----  */
     if (type == COMPSELECT) {
       optionmenu = gtk_option_menu_new ();
       gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
@@ -2253,8 +2311,10 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
     if (type == FILESELECT) {
       if (filesel_type == OPEN) {
-        gtk_signal_connect(GTK_OBJECT(
-                                      f_current->filename_entry), 
+        gtk_signal_connect(GTK_OBJECT(f_current->filename_entry),
+                           /* Here we connect the callback to
+                              fileselect_open_file to the filename in
+                              the filename text entry field..  */
                            "activate", 
                            GTK_SIGNAL_FUNC(
 					   x_fileselect_open_file),
@@ -2279,10 +2339,14 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	
     gtk_widget_show(f_current->filename_entry);
 
+    /*  ----- Here we create the "open"/"save as"/"apply" buttons -----  */
     if (filesel_type == OPEN) {
       buttonapply = gtk_button_new_with_label (_("Open"));
       gtk_signal_connect(GTK_OBJECT(buttonapply),
+                         /* Here we attach callback fileselect_open_file to
+                            the "Open" button */
                          "clicked",
+                         /* here's where I need another handler */
                          GTK_SIGNAL_FUNC(x_fileselect_open_file),
                          f_current);
     } else if ((filesel_type == SAVEAS_NONE) ||
@@ -2306,10 +2370,11 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttonapply, TRUE, TRUE, 0);
+    /* This makes the "open" button the default */
     gtk_widget_grab_default (buttonapply);
     gtk_widget_show(buttonapply);
 
-
+    /*  ----- Here we create the "cancel"/"close" buttons -----  */
     if (type == FILESELECT) {
       if (filesel_type == OPEN) {
         buttonclose = gtk_button_new_with_label (

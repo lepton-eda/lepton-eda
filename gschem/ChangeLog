@@ -7,6 +7,14 @@
 	* noweb/o_text.nw: Refactored the quick text rectangle rendering
 	code into its own function.  Added some #if 0'ed code in prep for a 
 	future performance enhancement.
+
+	* noweb/x_log.nw: Further refined the appearance of the log/status
+	dialog box.
+
+	* noweb/x_fileselect.nw: Integrated Stuart's multiple select/open
+	code changes.  Thanks Stuart. You can now pick multiple files from 
+	the file list and they will all be opened.  Use the shift and 
+	control keys to pick the individual files.
 	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
