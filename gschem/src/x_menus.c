@@ -62,6 +62,9 @@ static GtkItemFactoryEntry menu_items[] = {
 	/* because i_callback_file_quit returns an int, the compiler complains*/
 	{"/Edit", NULL, NULL, 0, "<Branch>"},
   	{"/Edit/tearoff", NULL, NULL, 0, "<Tearoff>" },
+	{"/Edit/Undo", NULL, i_callback_edit_undo, 0, NULL},
+	{"/Edit/Redo", NULL, i_callback_edit_redo, 0, NULL},
+	{"/Edit/sep1",     NULL,         NULL, 0, "<Separator>"},
 	{"/Edit/Select Mode", NULL, i_callback_edit_select, 0, NULL},
 	{"/Edit/Edit...", NULL, i_callback_edit_edit, 0, NULL},
 	{"/Edit/Edit Text...", NULL, i_callback_edit_text, 0, NULL},
@@ -71,7 +74,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Edit/Rotate 90 Mode", NULL, i_callback_edit_rotate_90, 0, NULL},
 	{"/Edit/Mirror Mode", NULL, i_callback_edit_mirror, 0, NULL},
 	{"/Edit/Stretch Mode", NULL, i_callback_edit_stretch, 0, NULL},
-	{"/Edit/sep1",     NULL,         NULL, 0, "<Separator>"},
+	{"/Edit/sep2",     NULL,         NULL, 0, "<Separator>"},
 	{"/Edit/Slot...", NULL, i_callback_edit_slot, 0, NULL},
 	{"/Edit/Color...", NULL, i_callback_edit_color, 0, NULL},
 	{"/Edit/Lock", NULL, i_callback_edit_lock, 0, NULL},
