@@ -432,14 +432,6 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibi
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* x_attrsel.c */
-gint change_attr(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint attr_set_show_name(GtkWidget *w, TOPLEVEL *w_current);
-gint attr_set_show_value(GtkWidget *w, TOPLEVEL *w_current);
-gint attr_set_show_both(GtkWidget *w, TOPLEVEL *w_current);
-gint attr_set_visible(GtkWidget *w, TOPLEVEL *w_current);
-gint attr_set_invisible(GtkWidget *w, TOPLEVEL *w_current);
-gint attr_apply(GtkWidget *w, TOPLEVEL *w_current);
-gint attr_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void setup_attr_selector(TOPLEVEL *w_current);
 /* x_basic.c */
 void x_repaint_background(TOPLEVEL *w_current);
@@ -459,7 +451,7 @@ int x_color_get_name(int index, char *string);
 void destroy_window(GtkWidget *widget, GtkWidget **window);
 void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_change(GtkWidget *w, GtkCList *clist);
-void multi_attrib_edit_clear(GtkWidget *w, GtkCList *clist);
+void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
 void multi_attrib_edit_delete(GtkWidget *w, GtkCList *clist);
 void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit(TOPLEVEL *w_current, OBJECT *list);
