@@ -225,6 +225,11 @@ void main_prog(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+    /* disable the deprecated warnings in guile 1.6.3 */
+    /* Eventually the warnings will need to be fixed */
+    if(getenv("GUILE_WARN_DEPRECATED")==NULL)
+      putenv("GUILE_WARN_DEPRECATED=no");
+
     gh_enter(argc, argv, main_prog);
     return 0;
 }

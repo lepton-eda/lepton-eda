@@ -39,6 +39,15 @@ IMPORTANT
 
 
 
+- Notes
+ 
+	* For anybody developing guile scripts using guile 1.6.x really should
+	  set GUILE_WARN_DEPRECATED=detailed   to see if they are using any
+	  deprecated guile functions in their scripts.  gsymcheck disables the
+	  guile deprecated function warnings by default.
+
+
+
 - Contact information  
 
 	Ales V. Hvezda 

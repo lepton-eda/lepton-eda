@@ -3,6 +3,12 @@
         * examples/vams/commonrc: Changed how the current directory
         variable is set (used "'s instead of ').
 
+        * src/gnetlist.c: Applied patchlet from Steve Tell for disabling
+        the guile 1.6.3 deprecated warnings.
+
+        * README: Added note suggestion by Steve Tell about warning users
+        that deprecated guile warnings are turned off.
+
 2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Bumped version to 20030223
