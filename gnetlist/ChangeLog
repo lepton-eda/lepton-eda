@@ -1,4 +1,8 @@
 
+2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* examples/vams/gschemrc: Added one line suggested by Stefan to get
+	  the keymapping stuff working 100% with keymap redefinition.
 
 2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
 

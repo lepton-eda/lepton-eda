@@ -257,6 +257,11 @@ x_preview_setup_rest(TOPLEVEL *preview)
 					 &left, &top, &right, &bottom);
 		set_window(preview, left, right, top, bottom);
 #endif
+
+	preview->DONT_RECALC = 0;
+	preview->DONT_RESIZE = 0;
+	preview->DONT_REDRAW = 0;
+
 	a_zoom_limits(preview, preview->page_current->object_head,
 		      A_PAN_DONT_REDRAW);
 

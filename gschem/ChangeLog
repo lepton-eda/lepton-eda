@@ -9,9 +9,14 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_preview.c: Fixed a bug relating to the preview box randomly
+	  not being drawn.  Fix by Werner Hoch
+
 2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
 
-	* configure.in: Added -lregex for CYGWIN32 build
+	* configure.in: Added -lregexp for CYGWIN32 build
 
 2000-12-12  Ales Hvezda  <ahvezda@geda.seul.org>
 

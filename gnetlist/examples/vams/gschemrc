@@ -49,6 +49,8 @@
     ("Shift R" . edit-redo)
     ("Shift Z" . view-zoom-out-hotkey)))
 
+(set! current-keymap global-keymap)
+
 (attribute-promotion "enabled")
 (promote-invisible "enabled")
 (keep-invisible "enabled")
