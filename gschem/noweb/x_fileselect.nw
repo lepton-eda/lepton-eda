@@ -1535,55 +1535,63 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
 void
 x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 {
-  char *file, *temp = NULL;
-  int width, max_width;
-  char *text[2];
+  GSList *filenames, *filename;
+  gint width, max_width;
 	
   gtk_clist_freeze (GTK_CLIST (f_current->file_list));
   gtk_clist_clear (GTK_CLIST (f_current->file_list));
 
-  gtk_clist_get_text (GTK_CLIST (f_current->dir_list), row, 0, &temp);
-	
-  strcpy(f_current->toplevel->current_clib, 
-         f_current->directory_entries[row]);
-	
-  s_clib_getfiles(f_current->directory_entries[row], OPEN_DIR, 
-                  ".sym", -1);
+  /* update current_clib in toplevel with new directory name */
+  if (f_current->toplevel->current_clib) {
+    free (f_current->toplevel->current_clib);
+  }
+  f_current->toplevel->current_clib = u_basic_strdup (
+    f_current->directory_entries[row]);
 
-  text[0] = NULL;
-  text[1] = NULL;
-  max_width = 0;
-  file = (char *) s_clib_getfiles(f_current->directory_entries[row], 
-                                  READ_DIR, NULL, -1);
-  while(file != NULL) {
-    if (strstr(file, ".sym")) {
-#if DEBUG
-      printf("file: %s\n", file);
-#endif
-      text[0] = file;
-      gtk_clist_append(GTK_CLIST(f_current->file_list), text);
-#ifdef HAS_GTK22
-      width = gdk_string_width(gtk_style_get_font(f_current->file_list->style),
-                               text[0]);
-#else
-      width = gdk_string_width(f_current->file_list->style->font,
-                               text[0]);
-#endif
-
-      if (width > max_width) {
-        gtk_clist_set_column_width(GTK_CLIST(f_current->
-                                             file_list), 0, width);
-        max_width = width;
-      }
-    }
-    file = (char *) s_clib_getfiles(
-                                    f_current->directory_entries[row], 
-                                    READ_DIR, NULL, -1);
+  /* get the list of filenames in directory */
+  filenames = s_clib_getfiles (f_current->directory_entries[row], ".sym");
+  if (filenames == NULL) {
+    s_log_message (_("Failed to open directory [%s].\n"),
+                     f_current->directory_entries[row]);
+    return;
   }
 
-  gtk_clist_thaw (GTK_CLIST (f_current->file_list));
+  filename = filenames;
+  while (filename != NULL) {
+    gchar *text[2];
 
-  s_clib_getfiles(NULL, CLOSE_DIR, NULL, -1);
+    text[0] = (gchar*) filename->data;
+    text[1] = NULL;
+    
+    /* add filename to the clist */
+    gtk_clist_append (GTK_CLIST (f_current->file_list), text);
+    
+#ifdef HAS_GTK22
+    width = gdk_string_width (gtk_style_get_font (
+                                f_current->file_list->style),
+                              (gchar*) filename->data);
+#else
+    width = gdk_string_width (f_current->file_list->style->font,
+                              (gchar*) filename->data);
+#endif
+    if (width > max_width) {
+      /* increase the width of the column */
+      gtk_clist_set_column_width (GTK_CLIST (f_current->file_list),
+                                  0, width);
+      max_width = width;
+    }
+    
+    /* continue with the next filename */
+    filename = g_slist_next (filename);
+  }
+
+  /* get ride of the list of filenames */
+  g_slist_foreach (filenames, (GFunc)free, NULL);
+  g_slist_free (filenames);
+
+  /* allow visual updates to clist */
+  gtk_clist_thaw (GTK_CLIST (f_current->file_list));
+      
 }
 
 
@@ -1862,38 +1870,53 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
 
 <<x_fileselect.c : x_fileselect_search_library()>>=
 int
-x_fileselect_search_library(FILEDIALOG *f_current, char *library, char *string) 
+x_fileselect_search_library(FILEDIALOG *f_current,
+                            char *library, char *string) 
 {
-  char *file;
+  GSList *filenames, *filename;
+  int ret;
 
-  s_clib_getfiles(library, OPEN_DIR, ".sym", -1);
+  /* get the filenames with '.sym' in library */
+  filenames = s_clib_getfiles(library, ".sym");
 
-  if (f_current->last_search != -1) {
-    s_clib_getfiles(library, SET_COUNT, NULL, 
-                    f_current->last_search);
-  } else {
+  if (f_current->last_search == -1) {
+    /* last search failed: start over */
     f_current->last_search = 0;
   }
 
-  file = (char *) s_clib_getfiles(library, READ_DIR, ".sym", -1);
-  while(file != NULL) {
-    if (strstr(file, ".sym")) {
-      if (strstr(file, string)) {
-#if DEBUG
-        printf("found: %s %s %d\n", file, string, f_current->last_search - 1);
-#endif
-        s_clib_getfiles(NULL, CLOSE_DIR, NULL, -1);
-        f_current->last_search++;
-        return(f_current->last_search - 1);
-      }
-    }
+  /* start search from last known position */
+  filename = g_slist_nth (filenames, (guint)f_current->last_search);
+  while (filename != NULL) {
+    /* increase position in search */
     f_current->last_search++;
-    file = (char *) s_clib_getfiles( library, READ_DIR, NULL, -1);
+
+    /* does filename match the query? */
+    if (strstr ((gchar*) filename->data, string)) {
+      /* yes, stop the search, prepare to return last_search */
+#if DEBUG
+      printf("found: %s %s %s %d\n", library, filename->data, string, f_current->last_search - 1);
+#endif
+      break;
+    }
+    
+    filename = g_slist_next (filename);
   }
 
-  s_clib_getfiles(NULL, CLOSE_DIR, NULL, -1);
-  f_current->last_search = -1;
-  return(-1);
+  /* free the list of filenames */
+  g_slist_foreach (filenames, (GFunc)free, NULL);
+  g_slist_free (filenames);
+
+  /* nothing found? */
+  if (filename == NULL) {
+    /* no, reset for next search */
+    f_current->last_search = -1;
+    ret = -1;
+  } else {
+    /* yes, return the position in the list of the filename found */
+    ret = f_current->last_search - 1;
+  }
+
+  return ret;
 }
 
 

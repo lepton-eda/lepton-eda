@@ -1,5 +1,9 @@
 2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/x_fileselect.nw (x_fileselect_comp_fill_components) 
+	(x_fileselect_search_library): Updated for the new s_clib_getfiles() 
+	that fixes file number limitation.
+
 	* noweb/i_callbacks.nw 
 	(i_callback_edit_embed, i_callback_edit_unembed): Updated for new 
 	o_embed() and o_unembed().
