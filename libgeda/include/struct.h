@@ -359,6 +359,7 @@ struct st_toplevel {
 	GdkGC *xor_gc;
 	GdkGC *outline_xor_gc;
 	GdkGC *bounding_xor_gc;
+	GdkGC *bus_gc;
 
 	/* backingstore pixmap */
 	GdkPixmap *backingstore; 

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -358,6 +358,7 @@ void
 o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	int origin_x, int origin_y)
 {
+	OBJECT *bus_object;
 	int cue;
 	int offset, offset2;
 	int cross;
@@ -378,6 +379,7 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		f_print_set_color(fp, o_current->color);
 	}
 
+	fprintf(fp, "gsave\n");
 	fprintf(fp, "newpath\n");
 	if (w_current->net_style == THICK) {
 		fprintf(fp, "1.5 setlinewidth\n");	
@@ -392,9 +394,6 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
 
 	fprintf(fp, "stroke\n");
-	if (w_current->net_style == THICK) {
-		fprintf(fp, "1 setlinewidth\n");	
-	}
 
 	/* maybe move this inside, so it doesn't clutter the ps file */
 	if (w_current->print_color) {
@@ -466,6 +465,33 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			}
 		}
 	   break;
+
+	   case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+							      page_current->
+							      ales_table,
+							      o_current->
+							      line_points->x1,
+							      o_current->
+							      line_points->y1);
+
+			
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_print_busmidpoint(w_current, bus_object,
+							fp, 
+						        o_current->
+						        line_points->x1,
+							o_current->
+						        line_points->y1,
+							o_current->
+							line_points->x2,
+							o_current->
+							line_points->y2);
+			}
+	   break;
 	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -532,7 +558,37 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			}
 		}
            break;
+
+	   case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+							      page_current->
+							      ales_table,
+							      o_current->
+							      line_points->x2,
+							      o_current->
+							      line_points->y2);
+
+			
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_print_busmidpoint(w_current, bus_object,
+							fp, 
+						        o_current->
+						        line_points->x2,
+							o_current->
+						        line_points->y2,
+							o_current->
+							line_points->x1,
+							o_current->
+							line_points->y1);
+			}
+
+
+	   break;
 	}
+	fprintf(fp, "grestore\n");
 
 }
 
@@ -548,6 +604,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	int endpoint_color;
         int color;
 	int i;
+	OBJECT *bus_object;
 
         if (o_current == NULL) {
                 printf("got null in o_net_image_write\n");
@@ -662,6 +719,29 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			}
 		}
            break;
+
+	   case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+							      page_current->
+							      ales_table,
+							      o_current->
+							      line_points->x1,
+							      o_current->
+							      line_points->y1);
+
+			
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_image_busmidpoint(w_current, bus_object,
+						        x1, y1,
+							o_current->
+							line_points->x2,
+							o_current->
+							line_points->y2);
+			}
+	   break;
 	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -738,6 +818,29 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			}
 		}
            break;
+
+	   case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+							      page_current->
+							      ales_table,
+							      o_current->
+							      line_points->x2,
+							      o_current->
+							      line_points->y2);
+
+			
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_image_busmidpoint(w_current, bus_object,
+						        x2, y2,
+							o_current->
+							line_points->x1,
+							o_current->
+							line_points->y1);
+			}
+	   break;
 	}
 }
 
@@ -992,7 +1095,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 	int changed=0;
 
 	if (object == NULL) {
-		return;
+		return(0);
 	}
 
 	object_orient = o_net_orientation(object);
@@ -1017,7 +1120,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 				    object->type == OBJ_NET && 
 				    c_current->object->type == OBJ_NET) {
 
-#if 1
+#if DEBUG 
 					printf("yeah, can connect %s and %s %d\n",
 						object->name, 
 						c_current->object->name, cue);
@@ -1066,7 +1169,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 				    object->type == OBJ_NET && 
 				    c_current->object->type == OBJ_NET) {
 
-#if 1
+#if DEBUG
 					printf("yeah, can connect %s and %s %d\n",
 						object->name, 
 						c_current->object->name, cue);
@@ -1096,7 +1199,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 	return(changed);
 }
 
-int
+void
 o_net_consolidate(TOPLEVEL *w_current)
 {
 	OBJECT *o_current;

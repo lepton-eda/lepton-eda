@@ -1,7 +1,7 @@
 
 SUBDIRS = src include lib scheme examples
 
-EXTRA_DIST = 
+EXTRA_DIST = VOCABULARY
 
 proto:
 	(cd src ; ./create_proto)

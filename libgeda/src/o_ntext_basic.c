@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -521,7 +521,7 @@ o_ntext_add(TOPLEVEL *w_current,
 
 	/* create the object in the main list */
 	/* object_list points to the object */
-	/* I use it below as a sanity check to make sure it was linked
+	/* I use it below as a sanity check to make sure it was linked */
 	/* properly */ 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 

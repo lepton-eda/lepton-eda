@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -383,6 +383,13 @@ x_window_setup_gc(TOPLEVEL *w_current)
 
 	if (w_current->bounding_xor_gc == NULL) {
 		fprintf(stderr, "Couldn't allocate bounding_xor_gc\n");
+		exit(-1);
+	}
+
+	w_current->bus_gc = gdk_gc_new(w_current->window);
+
+	if (w_current->bus_gc == NULL) {
+		fprintf(stderr, "Couldn't allocate bus_gc\n");
 		exit(-1);
 	}
 }

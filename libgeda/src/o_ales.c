@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 /* NUKE responsible */
@@ -352,6 +352,24 @@ o_ales_is_pin(ALES *ales_list)
 	return(FALSE);
 }
 
+int
+o_ales_has_bus_midpoint(ALES *ales_list)
+{
+	ALES *c_current;
+
+	c_current=ales_list;
+
+	while(c_current != NULL) {
+
+		if (c_current->type == ALES_BUS_MIDPOINT) {
+			return(TRUE);	
+		}
+		c_current=c_current->next;
+	}
+
+	return(FALSE);
+}
+
 /* is this used ? */
 #if 0
 ALES *
@@ -595,7 +613,8 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 		if (!found) {
 
 			temp = *ales_list;
-			if (o_ales_is_bus(temp)) {
+			if (o_ales_is_bus(temp) && 
+			    !o_ales_has_bus_midpoint(temp)) {
 				type = INVALID;
 			} else {
 				type = ALES_NET;
@@ -992,6 +1011,37 @@ o_ales_query_table(GHashTable *ales_table, int x, int y)
 	return(ret_value);
 }
 
+/* returns the bus object which caused a midpoint connection */
+OBJECT *
+o_ales_return_bus_object(GHashTable *ales_table, int x, int y)
+{
+	ALES *ales_list;
+	ALES *c_current;
+	char *key;
+
+	/* be sure to carefully free this key */
+	/* only when it's not inserted into the list */
+	key = o_ales_return_key(x, y);
+
+	ales_list = g_hash_table_lookup(ales_table,
+					key);
+
+	c_current = ales_list;
+	while(c_current) { 
+		if (c_current->object) {
+			if (c_current->object->type == OBJ_BUS) {
+				free(key);
+				return(c_current->object);
+			}
+		}
+		
+		c_current = c_current->next;
+	}
+
+	free(key);
+	return(NULL);
+}
+
 int
 o_ales_disconnect_func(
 	gpointer key, 
@@ -1031,3 +1081,157 @@ o_ales_disconnect(PAGE *p_current)
 		NULL);
 }
 
+/* this gets compilcated so it needs to be seperate */
+void
+o_ales_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
+	                FILE *fp, int x, int y, 
+			int other_wx, int other_wy)
+{
+	int orient;
+	int bus_x, bus_y;
+	int bus_wx, bus_wy;
+	int x1=-1, y1=-1, x2=-1, y2=-1;
+	int offset;
+	int DONT_DRAW=FALSE;
+
+	offset = 100;
+
+
+	if (!bus_object) {
+		fprintf(stderr, "Got a null bus_object in "
+				"o_ales_draw_busmidpoint\n");
+		return;
+	}
+
+	orient = o_bus_orientation(bus_object);	
+
+	bus_wx = bus_x = bus_object->line_points->x1;
+	bus_wy = bus_y = bus_object->line_points->y1;
+
+	switch(orient) {
+
+		case(VERTICAL):
+				if (other_wx < bus_wx) {
+/* VERTICAL_LEFT;*/
+	
+					x1 = x-offset; y1 = y;
+					x2 = bus_x; y2 = y+offset;
+				} else if (other_wx > bus_wx) {
+/* VERTICAL_RIGHT;*/
+					x1 = x+offset; y1 = y;
+					x2 = bus_x; y2 = y+offset;
+				} else if (other_wx == bus_x) {
+					fprintf(stderr, "!! Found a net inside a bus1\n");
+					DONT_DRAW=TRUE;
+				}
+			
+			break;
+
+		case(HORIZONTAL):
+				if (other_wy > bus_wy) {
+					x1 = x; y1 = y+offset;
+					x2 = x-offset; y2 = bus_y;
+				} else if (other_wy < bus_wy) {
+					x1 = x; y1 = y-offset;
+					x2 = x-offset; y2 = bus_y;
+				} else if (other_wy == bus_wy) {
+					fprintf(stderr, "!! Found a net inside a bus2\n");
+					DONT_DRAW=TRUE;
+				}
+			break;
+
+		default:
+			fprintf(stderr, "ACK! invalid orientation!\n");
+
+		break;
+	}
+
+	if (!DONT_DRAW) {
+	
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils moveto\n", x1, y1);
+		fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
+		fprintf(fp, "stroke\n");                         
+	
+	}
+}
+
+/* this gets compilcated so it needs to be seperate */
+void
+o_ales_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
+	                int x, int y, int other_wx, int other_wy)
+{
+	int orient;
+	int bus_x, bus_y;
+	int bus_wx, bus_wy;
+	int x1=-1, y1=-1, x2=-1, y2=-1;
+	int offset;
+	int DONT_DRAW=FALSE;
+	int color;
+
+	offset = SCREENabs(w_current, 100);
+
+	color = o_image_geda2gd_color(w_current->net_color);
+
+	if (!bus_object) {
+		fprintf(stderr, "Got a null bus_object in "
+				"o_ales_draw_busmidpoint\n");
+		return;
+	}
+
+	orient = o_bus_orientation(bus_object);	
+
+	bus_wx = bus_object->line_points->x1;
+	bus_wy = bus_object->line_points->y1;
+
+	bus_x = bus_object->line_points->screen_x1;
+	bus_y = bus_object->line_points->screen_y1; 
+
+	switch(orient) {
+
+		case(VERTICAL):
+				if (other_wx < bus_wx) {
+/* VERTICAL_LEFT;*/
+	
+					x1 = x-offset; y1 = y;
+					x2 = bus_x; y2 = y-offset;
+				} else if (other_wx > bus_wx) {
+/* VERTICAL_RIGHT;*/
+					x1 = x+offset; y1 = y;
+					x2 = bus_x; y2 = y-offset;
+				} else if (other_wx == bus_x) {
+					fprintf(stderr, "!! Found a net inside a bus1\n");
+					DONT_DRAW=TRUE;
+				}
+			
+			break;
+
+		case(HORIZONTAL):
+				if (other_wy > bus_wy) {
+/* HORIZONTAL BELOW */
+					x1 = x; y1 = y-offset;
+					x2 = x+offset; y2 = bus_y;
+				} else if (other_wy < bus_wy) {
+/* HORIZONTAL ABOVE */
+					x1 = x; y1 = y+offset;
+					x2 = x+offset; y2 = bus_y;
+				} else if (other_wy == bus_wy) {
+					fprintf(stderr, "!! Found a net inside a bus2\n");
+					DONT_DRAW=TRUE;
+				}
+			break;
+
+		default:
+			fprintf(stderr, "ACK! invalid orientation!\n");
+
+		break;
+	}
+
+	if (!DONT_DRAW) {
+
+#ifdef HAS_LIBGDGEDA
+	        gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
+	        gdImageLine(current_im_ptr, x, y, x2, y2, color);
+#endif
+	}
+}

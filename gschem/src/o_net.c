@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -41,8 +41,12 @@ void
 o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int cue;
+	OBJECT *bus_object;
+
 
 	gdk_gc_set_foreground(w_current->gc,
+			x_get_color(w_current->background_color));
+	gdk_gc_set_foreground(w_current->bus_gc,
 			x_get_color(w_current->background_color));
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -73,6 +77,27 @@ o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 				            o_current->line_points->screen_y1);
                 break;
 
+		case(BUS_MIDPOINT_CUE):
+			bus_object = o_ales_return_bus_object(w_current->
+						              page_current->
+						              ales_table,
+                                		 	      o_current->
+							      line_points->x1,
+                                		 	      o_current->
+							      line_points->y1);
+
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_draw_busmidpoint(w_current, bus_object, 
+					    w_current->bus_gc,
+			                    o_current->line_points->screen_x1,
+				            o_current->line_points->screen_y1,
+			                    o_current->line_points->x2,
+				            o_current->line_points->y2);
+			}
+                break;
+
 	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -101,14 +126,54 @@ o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 			                    o_current->line_points->screen_x2,
 				            o_current->line_points->screen_y2);
                 break;
+
+		case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+						              page_current->
+						              ales_table,
+                                		 	      o_current->
+							      line_points->x2,
+                                		 	      o_current->
+							      line_points->y2);
+
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_draw_busmidpoint(w_current, bus_object, 
+					    w_current->bus_gc,
+			                    o_current->line_points->screen_x2,
+				            o_current->line_points->screen_y2,
+			                    o_current->line_points->x1,
+				            o_current->line_points->y1);
+			}
+                break;
 	}
+
 }
 
 void
 o_net_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 {
+	OBJECT *bus_object;
+	int size;
+
 	gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->background_color));
+
+	gdk_gc_set_foreground(w_current->bus_gc,
+			x_get_color(w_current->background_color));
+
+	if (w_current->page_current->zoom_factor > 0 && 
+	    w_current->net_style == THICK ) {
+
+		size = SCREENabs(w_current, 10);
+
+		gdk_gc_set_line_attributes(w_current->bus_gc, size,
+					   GDK_LINE_SOLID,
+					   GDK_CAP_NOT_LAST,
+					   GDK_JOIN_MITER);
+	}
 
 	o_ales_draw_endpoint(w_current, w_current->gc,
        				o_current->line_points->screen_x1,
@@ -117,23 +182,68 @@ o_net_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 	o_ales_draw_endpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
+
+	bus_object = o_ales_return_bus_object(w_current->page_current->
+					      ales_table,
+                                	      o_current->
+					      line_points->x1,
+                                	      o_current->
+					      line_points->y1);
+	if (bus_object) {
+		o_ales_draw_busmidpoint(w_current, bus_object, 
+					w_current->bus_gc,
+			                o_current->line_points->screen_x1,
+				        o_current->line_points->screen_y1,
+			                o_current->line_points->x2,
+				        o_current->line_points->y2);
+	}
+
+	bus_object = o_ales_return_bus_object(w_current->page_current->
+					      ales_table,
+                                	      o_current->
+					      line_points->x2,
+                                	      o_current->
+					      line_points->y2);
+	if (bus_object) {
+		o_ales_draw_busmidpoint(w_current, bus_object, 
+					w_current->bus_gc,
+			                o_current->line_points->screen_x2,
+				        o_current->line_points->screen_y2,
+			                o_current->line_points->x1,
+				        o_current->line_points->y1);
+	}
+
+        /* yes zero is right for the width -> use hardware lines */
+	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+		gdk_gc_set_line_attributes(w_current->bus_gc, 0, GDK_LINE_SOLID,
+				GDK_CAP_NOT_LAST,
+				GDK_JOIN_MITER);
+	}
 }
 
 void
 o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int cue;
-
-#if 0
-	if (w_current->override_color != -1) {
-		gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->override_color));
-	} else {
-	}
-#endif
+	int size;
+	OBJECT *bus_object;
 
 	gdk_gc_set_foreground(w_current->gc,
 		x_get_color(w_current->net_endpoint_color));
+
+	gdk_gc_set_foreground(w_current->bus_gc,
+		x_get_color(w_current->net_color));
+
+	if (w_current->page_current->zoom_factor > 0 && 
+	    w_current->net_style == THICK ) {
+
+		size = SCREENabs(w_current, 10);
+
+		gdk_gc_set_line_attributes(w_current->bus_gc, size,
+					   GDK_LINE_SOLID,
+					   GDK_CAP_NOT_LAST,
+					   GDK_JOIN_MITER);
+	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
 				o_current->line_points->x1,
@@ -164,6 +274,28 @@ o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			o_ales_draw_invalid(w_current, w_current->gc,
 			                    o_current->line_points->screen_x1,
 				            o_current->line_points->screen_y1);
+                break;
+
+		case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+						              page_current->
+						              ales_table,
+                                		 	      o_current->
+							      line_points->x1,
+                                		 	      o_current->
+							      line_points->y1);
+
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_draw_busmidpoint(w_current, bus_object, 
+					    w_current->bus_gc,
+			                    o_current->line_points->screen_x1,
+				            o_current->line_points->screen_y1,
+			                    o_current->line_points->x2,
+				            o_current->line_points->y2);
+			}
                 break;
 	}
 
@@ -197,6 +329,34 @@ o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			                    o_current->line_points->screen_x2,
 				            o_current->line_points->screen_y2);
                 break;
+
+		case(BUS_MIDPOINT_CUE):
+			bus_object = o_ales_return_bus_object(w_current->
+						              page_current->
+						              ales_table,
+                                		 	      o_current->
+							      line_points->x2,
+                                		 	      o_current->
+							      line_points->y2);
+
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_draw_busmidpoint(w_current, bus_object, 
+					    w_current->bus_gc,
+			                    o_current->line_points->screen_x2,
+				            o_current->line_points->screen_y2,
+			                    o_current->line_points->x1,
+				            o_current->line_points->y1);
+			}
+                break;
+	}
+
+        /* yes zero is right for the width -> use hardware lines */
+	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+		gdk_gc_set_line_attributes(w_current->bus_gc, 0, GDK_LINE_SOLID,
+				GDK_CAP_NOT_LAST,
+				GDK_JOIN_MITER);
 	}
 }
 
@@ -206,6 +366,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	int size;
 	int cue;
 	int x1, y1, x2, y2; /* screen coords */
+	OBJECT *bus_object;
 
 	if (o_current == NULL) {
 		return;
@@ -227,48 +388,50 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing net\n\n");
 #endif
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
-		size = SCREENabs(w_current, 10);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
+        if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+                size = SCREENabs(w_current, 10);
 
-		if (size < 0)
-			size=0;
+                if (size < 0)
+                        size=0;
 
-		gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
-				GDK_CAP_BUTT,
-				GDK_CAP_NOT_LAST);
-				/*GDK_CAP_PROJECTING,
-				/GDK_JOIN_MITER);*/
-	}
+                gdk_gc_set_line_attributes(w_current->gc, size, 
+					   GDK_LINE_SOLID,
+                                           GDK_CAP_BUTT,
+                                 	   GDK_CAP_NOT_LAST);
+
+                gdk_gc_set_line_attributes(w_current->bus_gc, size, 
+				           GDK_LINE_SOLID,
+                                           GDK_CAP_BUTT,
+                                           GDK_CAP_NOT_LAST);
+        }
 
 	if (w_current->override_color != -1 ) {
-	gdk_gc_set_foreground(w_current->gc,
+
+		gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->override_color));
-	gdk_draw_line(w_current->window, w_current->gc,
+
+		gdk_draw_line(w_current->window, w_current->gc,
 				       x1, y1, x2, y2);
-	gdk_draw_line(w_current->backingstore, w_current->gc,
+		gdk_draw_line(w_current->backingstore, w_current->gc,
 				       x1, y1, x2, y2);
 	} else {
-	gdk_gc_set_foreground(w_current->gc,
+
+		gdk_gc_set_foreground(w_current->gc,
 			x_get_color(o_current->color));
-	gdk_draw_line(w_current->window, w_current->gc,
+		gdk_draw_line(w_current->window, w_current->gc,
 				       x1, y1, x2, y2);
-	gdk_draw_line(w_current->backingstore, w_current->gc,
+		gdk_draw_line(w_current->backingstore, w_current->gc,
 				       x1, y1, x2, y2);
 	}
 
-        /* yes zero is right for the width -> use hardware lines */
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
-				GDK_CAP_NOT_LAST,
-				GDK_JOIN_MITER);
-	}
+
 
 	/* ALES stuff, not sure if I'm going to leave this here */
 	/* only draw the connection points, if: */
 	/* - you are drawing regular lines, */
 	/* - you aren't redrawing selected (DONT_DRAW_CONN), */
 	/* - And, you are erasing them */
+
        if ( ((w_current->override_color == -1) &&
 	    (!w_current->DONT_DRAW_CONN)) ||
             (w_current->override_color == w_current->background_color ) ) {
@@ -276,9 +439,13 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		if (w_current->override_color != -1) {
                         gdk_gc_set_foreground(w_current->gc,
                                 x_get_color(w_current->override_color));
+                        gdk_gc_set_foreground(w_current->bus_gc,
+                                x_get_color(w_current->override_color));
                 } else {
                         gdk_gc_set_foreground(w_current->gc,
                                 x_get_color(w_current->net_endpoint_color));
+                        gdk_gc_set_foreground(w_current->bus_gc,
+                                x_get_color(w_current->net_color));
                 }
 
 		cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -312,6 +479,29 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 						    screen_x1,
 				                    o_current->line_points->
 						    screen_y1);
+                	break;
+
+			case(BUS_MIDPOINT_CUE):
+
+			bus_object = o_ales_return_bus_object(w_current->
+						              page_current->
+						              ales_table,
+                                		 	      o_current->
+							      line_points->x1,
+                                		 	      o_current->
+							      line_points->y1);
+
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_draw_busmidpoint(w_current, bus_object, 
+					    w_current->bus_gc,
+			                    o_current->line_points->screen_x1,
+				            o_current->line_points->screen_y1,
+			                    o_current->line_points->x2,
+				            o_current->line_points->y2);
+			}
+
                 	break;
 
 		}
@@ -348,12 +538,46 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 				                    o_current->line_points->
 						    screen_y2);
                 	break;
+
+			case(BUS_MIDPOINT_CUE):
+			bus_object = o_ales_return_bus_object(w_current->
+						              page_current->
+						              ales_table,
+                                		 	      o_current->
+							      line_points->x2,
+                                		 	      o_current->
+							      line_points->y2);
+
+			if (!bus_object) {
+				fprintf(stderr, "Got a null bus_object!\n");
+			} else {
+				o_ales_draw_busmidpoint(w_current, bus_object, 
+					    w_current->bus_gc,
+			                    o_current->line_points->screen_x2,
+				            o_current->line_points->screen_y2,
+			                    o_current->line_points->x1,
+				            o_current->line_points->y1);
+			}
+                	break;
 		}
 	}
 
-#if DEBUG
-	printf("drawing net\n");
+#if DEBUG 
+	printf("drew net\n\n");
 #endif
+
+        /* yes zero is right for the width -> use hardware lines */
+	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+		gdk_gc_set_line_attributes(w_current->gc, 0, 
+					   GDK_LINE_SOLID,
+				           GDK_CAP_NOT_LAST,
+				           GDK_JOIN_MITER);
+
+		gdk_gc_set_line_attributes(w_current->bus_gc, 0, 
+					   GDK_LINE_SOLID,
+				           GDK_CAP_NOT_LAST,
+				           GDK_JOIN_MITER);
+	}
 
 }
 

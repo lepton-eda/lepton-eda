@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -176,6 +176,7 @@ o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 	o_current->line_points->screen_x2 = screen_x2;
 	o_current->line_points->screen_y2 = screen_y2;
+
 
 	get_bus_bounds(w_current, o_current->line_points, &left, &top, &right, &bottom);
 
@@ -359,7 +360,6 @@ void
 o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	int origin_x, int origin_y)
 {
-	int cue;
 	int offset, offset2;
 	int cross;
 	int x1, y1;
@@ -380,6 +380,7 @@ o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	}
 
 	/* need to make this bus specific */
+	fprintf(fp, "gsave\n");
 	fprintf(fp, "newpath\n");
 	if (w_current->pin_style == THICK) {
 		fprintf(fp, "3.0 setlinewidth\n");	
@@ -394,14 +395,12 @@ o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
 
 	fprintf(fp, "stroke\n");
-	if (w_current->net_style == THICK) {
-		fprintf(fp, "1 setlinewidth\n");	
-	}
 
 	/* maybe move this inside, so it doesn't clutter the ps file */
 	if (w_current->print_color) {
 		f_print_set_color(fp, w_current->net_endpoint_color);
 	}
+	fprintf(fp, "grestore\n");
 }
 
 void
@@ -412,10 +411,8 @@ o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	int cross;
 	int x1, y1;
 	int x2, y2;
-	int cue;
-	int endpoint_color;
         int color;
-	int i;
+	int orient;
 
         if (o_current == NULL) {
                 printf("got null in o_bus_image_write\n");
@@ -450,6 +447,16 @@ o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
         /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
         gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
+
+	/* this is to get thick lines with GD */
+	orient = o_bus_orientation(o_current);
+	if (orient == VERTICAL) {
+        	gdImageLine(current_im_ptr, x1+1, y1, x2+1, y2, color);
+        	gdImageLine(current_im_ptr, x1-1, y1, x2-1, y2, color);
+	} else if (orient == HORIZONTAL) {
+        	gdImageLine(current_im_ptr, x1, y1+1, x2, y2+1, color);
+        	gdImageLine(current_im_ptr, x1, y1-1, x2, y2-1, color);
+	}
 #endif
 
 }
@@ -698,6 +705,7 @@ o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 int 
 o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 {
+#if 0
 	char *key=NULL;
 	ALES *ales_list;
 	ALES *c_current;
@@ -710,7 +718,6 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 		return;
 	}
 
-#if 0
 	object_orient = o_net_orientation(object);
 
 	key = o_ales_return_key(object->line_points->x1,
@@ -811,9 +818,10 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	return(changed);
 #endif
+	return(0);
 }
 
-int
+void
 o_bus_consolidate(TOPLEVEL *w_current)
 {
 #if 0

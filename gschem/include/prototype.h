@@ -279,6 +279,7 @@ void o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object);
 void o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list);
 void o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list);
 OBJECT *o_ales_find_closest(OBJECT *object_list, int x, int y, int *whichone, int *prev_distance, int *prev_which);
+int o_ales_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, GdkGC *local_gc, int x, int y, int other_wx, int other_wy);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -398,7 +399,7 @@ void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y);
 void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);
 /* o_stretch.c */
-void o_stretch_start(TOPLEVEL *w_current, int x, int y);
+int o_stretch_start(TOPLEVEL *w_current, int x, int y);
 void o_stretch_end(TOPLEVEL *w_current);
 void o_stretch_motion(TOPLEVEL *w_current, int x, int y);
 /* parsecmd.c */

@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -1153,7 +1153,6 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
         GtkWidget *buttonclose = NULL;
         GtkWidget *frame;
         GtkWidget *vbox2;
-	GtkWidget *vbox, *action_area;
 
         if (!w_current->cowindow) {
                 w_current->cowindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);

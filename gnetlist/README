@@ -63,7 +63,7 @@ IMPORTANT
 	for LibStroke is: http://www.etla.net/libstroke/
 
 	libgdgeda 1.6 [OPTIONAL] - if you want the ability to write png
-	images.  libgdgeda is based on gd 1.6.1  The homepage for gd 1.6 is
+	images.  libgdgeda is based on gd 1.6.3  The homepage for gd 1.6 is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist
 

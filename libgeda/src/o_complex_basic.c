@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -230,7 +230,6 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	OBJECT *complex=NULL;
 	OBJECT *temp_tail=NULL;
 	OBJECT *temp_parent=NULL;
-	int left, right, top, bottom;
 	
 	char filename[256]; /* hack */
 
@@ -306,14 +305,11 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	return(object_list);
 }
 
-/* this is TOTALLY broken now */
-/* since the complex hasn't been read yet... and not rotate */
 OBJECT *
 o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable)
 {
 	OBJECT *complex=NULL;
 	OBJECT *new_node=NULL;
-	int left, right, top, bottom;
 
 	new_node = s_basic_init_object("complex");
 	new_node->type = type;
@@ -349,7 +345,7 @@ o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int 
 	complex = (OBJECT *) add_head();
 	object_list->complex = complex;
 	
-	/* don't have to translate/rotate/mirror here at all since the 
+	/* don't have to translate/rotate/mirror here at all since the */
 	/* object is in place */
 	
 	return(object_list);

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 /* TODO: Lots of Gross code... needs lots of cleanup - mainly
@@ -65,7 +65,10 @@ o_redraw_all(TOPLEVEL *w_current)
 #if 0
 	gettimeofday(&tv1, NULL);
 #endif
+
+	o_recalc(w_current, w_current->page_current->object_head);
 	o_redraw(w_current, w_current->page_current->object_head);
+
 #if 0
 	gettimeofday(&tv2, NULL);
 	printf("secs: %d\n", tv2.tv_sec - tv1.tv_sec);

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -38,14 +38,12 @@
 
 static int whichone_changing=-1;
 
-void
+int
 o_stretch_start(TOPLEVEL *w_current, int x, int y)
 {
 	OBJECT *found;
 	OBJECT *selected;
 	int whichone;
-	int screen_x1, screen_y1;
-	int screen_x2, screen_y2;
 
 	if (w_current->page_current->selection_head->next != NULL) {
 
@@ -173,6 +171,11 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 		printf("whichone: %d\n", whichone);
 #endif
 
+		if (!found) {
+			printf("Stretching not supported for this object type\n");
+			return(FALSE);
+		}
+		
 		if (found->type == OBJ_NET) {
 			gdk_gc_set_foreground(w_current->gc,
                                               x_get_color(w_current->
@@ -185,20 +188,14 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 
 		w_current->inside_action = 1;
 	}
+	return(TRUE);
 }
 
 void
 o_stretch_end(TOPLEVEL *w_current)
 {
-	OBJECT *selection_list=NULL;
-	OBJECT *one=NULL;
-	OBJECT *two=NULL;
 	OBJECT *o_current=NULL;
 	OBJECT *found=NULL;
-	int diff_x, diff_y; 
-	int screen_diff_x, screen_diff_y;
-	int lx,ly;
-	int sx,sy;
 	int x, y;
 
 	if (w_current->page_current->selection_head->next == NULL) { 
@@ -220,7 +217,7 @@ o_stretch_end(TOPLEVEL *w_current)
 						 o_current);
 		if (found == NULL) {
 			fprintf(stderr, "UGGG! you blew it... tried to "
-					"delete something that didn't exist");	
+					"delete something that didn't exist\n");	
 			exit(-1);
 		}
 
@@ -281,6 +278,7 @@ o_stretch_end(TOPLEVEL *w_current)
 #endif
 			break;
 
+#if 0 /* not ready yet */
 			case(OBJ_BUS):
 	
 	        		/* don't allow zero length nets 
@@ -332,6 +330,7 @@ o_stretch_end(TOPLEVEL *w_current)
 				found->line_points->y2);  
 #endif
 			break;
+#endif
 
 			case(OBJ_BOX):
 

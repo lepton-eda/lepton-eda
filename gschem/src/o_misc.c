@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -171,7 +171,7 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			break;
 
 		case(OBJ_NET):
-				/* erase the current selection */
+			/* erase the current selection */
 			o_net_ales_erase(w_current, real);
 			w_current->override_color =
 				w_current->background_color;
@@ -307,10 +307,6 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 
 			new_angle = (real->angle + 90) % 360;
 			o_ntext_rotate(w_current,
-#if 0
-				       o_current->x,
-				       o_current->y,
-#endif
 				       centerx,
 				       centery,
 				       new_angle, 90, real);
@@ -319,10 +315,6 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			o_ntext_rotate(w_current,
 				       centerx,
 				       centery,
-#if 0
-				       o_current->x,
-				       o_current->y,
-#endif
 				       new_angle, 90, o_current);
 
 			o_ntext_draw(w_current, real);

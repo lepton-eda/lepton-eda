@@ -8,6 +8,10 @@ OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Swedish characters don't work.
 
+	still have some core problems with net extension and selections
+
+	Thick lines aren't imaged (write png) correctly
+
 	Zoom with pan doesn't work 100% when you are zoomed out all the way.
 
 	Net consolidate will not work right (core dump) if you select a net

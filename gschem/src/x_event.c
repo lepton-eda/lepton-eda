@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -153,11 +153,18 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			/* make sure the list is not empty */
 			if (w_current->page_current->selection_head->next != 
 			    NULL) {
-				o_stretch_start(w_current, 
+
+				/* only stretch if it's a valid object */
+				if (o_stretch_start(w_current, 
 						(int) event->x, 
-						(int) event->y);
-				w_current->event_state = STRETCH;
-				w_current->inside_action = 1;
+						(int) event->y)) {
+					w_current->event_state = STRETCH;
+					w_current->inside_action = 1;
+				} else {
+					w_current->event_state=SELECT;
+					i_update_status(w_current, "Select Mode");
+					w_current->inside_action = 0;
+				}
 			}
                         break;       
 

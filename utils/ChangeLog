@@ -10,6 +10,12 @@ All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
 
+8/27/99 Set the program version to 19990829 to force Ales to release
+        on the 29th :)
+
+	Updated all *.c and *.h files to have the right address for the
+	FSF in the copyright/licence header
+
 7/22/99	Integrated utils directory into the new seperate build system
 
 	Checked utils into cvs repository

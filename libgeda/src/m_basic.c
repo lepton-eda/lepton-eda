@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -294,8 +294,8 @@ WORLDabs(TOPLEVEL *w_current, int val)
 
 void set_window(TOPLEVEL *w_current, int xmin, int xmax, int ymin, int ymax)
 {
-	double fs,f0,f1,f;
-	double fw0,fw1,fw,fval;
+	double fs,f0,f1;
+	double fw0,fw1,fw;
 
 	w_current->page_current->left=xmin;
 	w_current->page_current->right=xmax;

@@ -56,7 +56,10 @@ void o_ales_print_hash(GHashTable *ales_table);
 void o_ales_delete(ALES *c_current);
 char *o_ales_return_key(int x, int y);
 ALES *o_ales_search(ALES *ales_list, OBJECT *o_current);
-ALES *o_ales_search_midpoint(ALES *ales_list);
+int o_ales_is_bus(ALES *ales_list);
+int o_ales_is_net(ALES *ales_list);
+int o_ales_is_pin(ALES *ales_list);
+int o_ales_has_bus_midpoint(ALES *ales_list);
 void o_ales_makeup(GHashTable *ales_table, char *key, OBJECT *o_current);
 void o_ales_update_cues_info(ALES *ales_list);
 OBJECT *o_ales_find_midpoint(OBJECT *object_list, int x, int y);
@@ -66,9 +69,12 @@ void o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y);
 void o_ales_update(PAGE *p_current, OBJECT *o_current);
 void o_ales_update_all(PAGE *p_current, OBJECT *object_list);
 int o_ales_query_table(GHashTable *ales_table, int x, int y);
+OBJECT *o_ales_return_bus_object(GHashTable *ales_table, int x, int y);
 int o_ales_disconnect_func(gpointer key, gpointer value, gpointer user_data);
 void o_ales_disconnect_update(PAGE *p_current);
 void o_ales_disconnect(PAGE *p_current);
+void o_ales_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, FILE *fp, int x, int y, int other_wx, int other_wy);
+void o_ales_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, int x, int y, int other_wx, int other_wy);
 /* o_arc_basic.c */
 void get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
 void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -168,7 +174,7 @@ void o_bus_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_center
 int o_bus_orientation(OBJECT *object);
 void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
 int o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
-int o_bus_consolidate(TOPLEVEL *w_current);
+void o_bus_consolidate(TOPLEVEL *w_current);
 void o_bus_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_circle_basic.c */
 int dist(int x1, int y1, int x2, int y2);
@@ -257,7 +263,7 @@ void o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_center
 int o_net_orientation(OBJECT *object);
 void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
 int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
-int o_net_consolidate(TOPLEVEL *w_current);
+void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_ntext_basic.c */
 void get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);

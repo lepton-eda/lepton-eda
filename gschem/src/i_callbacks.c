@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -281,7 +281,7 @@ DEFINE_I_CALLBACK(file_print)
 
 	exit_if_null(w_current);
 
-#if 0
+#if 0 /* commented out till this is debugged */
 	/* get the base file name */
 	if (strcmp(fnameext_get(w_current->page_current->page_filename),
 		   ".sch") == 0) {
@@ -305,11 +305,6 @@ DEFINE_I_CALLBACK(file_print)
 	} else {
 		x_print_setup(w_current, "output.ps");
 	}
-
-#if 0
-        f_print(w_current, ps_filename);
-	s_log_message("Printed current schematic to [%s]\n", ps_filename);
-#endif
 
 	if (ps_filename) {
 		free(ps_filename);
@@ -335,7 +330,7 @@ DEFINE_I_CALLBACK(file_write_png)
 	return;
 #endif
 
-#if 0
+#if 0 /* commented out till this is debugged */
 	/* get the base file name */
 	if (strcmp(fnameext_get(w_current->page_current->page_filename),
 		   ".sch") == 0) {
@@ -359,11 +354,6 @@ DEFINE_I_CALLBACK(file_write_png)
 	} else {
 		x_image_setup(w_current, "output.png");
 	}
-
-#if 0
-        f_print(w_current, img_filename);
-	s_log_message("Outputed current schematic to [%s]\n", img_filename);
-#endif
 
 	if (img_filename) {
 		free(img_filename);
@@ -539,9 +529,11 @@ DEFINE_I_CALLBACK(edit_stretch_hotkey)
 	i_update_middle_button(w_current, i_callback_edit_stretch_hotkey, 
 			       "Stretch");
 	if (w_current->page_current->selection_head->next != NULL) {
-		o_stretch_start(w_current, mouse_x, mouse_y);
-		w_current->event_state = ENDSTRETCH;
-		w_current->inside_action = 1;
+		/* only stretch if it's a valid object */
+		if (o_stretch_start(w_current, mouse_x, mouse_y)) {
+			w_current->event_state = ENDSTRETCH;
+			w_current->inside_action = 1;
+		}
 	}
 }
 

@@ -173,6 +173,11 @@
 #define NEITHER			0
 #define HORIZONTAL		1
 #define VERTICAL		2
+#define HORIZONTAL_ABOVE	3
+#define HORIZONTAL_BELOW	4
+#define VERTICAL_LEFT		5
+#define VERTICAL_RIGHT		6
+
 
 /* gnetlist: netlist_mode */
 #define gEDA			0

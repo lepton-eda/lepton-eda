@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -41,7 +41,6 @@ o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
 	int x2size;
-	int width;
 
 	size = SCREENabs(w_current, 30);
 
@@ -192,7 +191,6 @@ void
 o_ales_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
-	int x2size;
 	int width;
 
 	size = SCREENabs(w_current, 60);
@@ -345,7 +343,6 @@ o_ales_find_closest(OBJECT *object_list, int x, int y,
 {
 	OBJECT *o_current;
 	OBJECT *closest=NULL;
-	OBJECT *temp=NULL;
 	int distance = 1000000;
 	int which_point=0;
 	int temp_dist1;
@@ -475,3 +472,86 @@ o_ales_find_closest(OBJECT *object_list, int x, int y,
 		return(NULL);
 	}
 }
+
+int
+o_ales_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
+	                GdkGC *local_gc, int x, int y, 
+			int other_wx, int other_wy)
+{
+	int orient;
+	int bus_x, bus_y;
+	int bus_wx, bus_wy;
+	int x1=-1, y1=-1, x2=-1, y2=-1;
+	int offset;
+	int return_value=0;
+	int DONT_DRAW=FALSE;
+
+	offset = SCREENabs(w_current, 100);
+
+
+	if (!bus_object) {
+		fprintf(stderr, "Got a null bus_object in "
+				"o_ales_draw_busmidpoint\n");
+		return(0);
+	}
+
+	orient = o_bus_orientation(bus_object);	
+
+	bus_x = bus_object->line_points->screen_x1;
+	bus_y = bus_object->line_points->screen_y1;
+
+	bus_wx = bus_object->line_points->x1;
+	bus_wy = bus_object->line_points->y1;
+
+	switch(orient) {
+
+		case(VERTICAL):
+				if (other_wx < bus_wx) {
+					x1 = x-offset; y1 = y;
+					x2 = bus_x; y2 = y-offset;
+					return_value = VERTICAL_LEFT;
+				} else if (other_wx > bus_wx) {
+					x1 = x+offset; y1 = y;
+					x2 = bus_x; y2 = y-offset;
+					return_value = VERTICAL_RIGHT;
+				} else if (other_wx == bus_x) {
+					fprintf(stderr, "Found a net inside a bus\n");
+					DONT_DRAW=TRUE;
+					return_value = FALSE;
+				}
+			
+			break;
+
+		case(HORIZONTAL):
+				if (other_wy > bus_wy) {
+					x1 = x; y1 = y-offset;
+					x2 = x+offset; y2 = bus_y;
+					return_value = HORIZONTAL_BELOW;
+				} else if (other_wy < bus_wy) {
+					x1 = x; y1 = y+offset;
+					x2 = x+offset; y2 = bus_y;
+					return_value = HORIZONTAL_ABOVE;
+				} else if (other_wy == bus_wy) {
+					fprintf(stderr, "Found a net inside a bus\n");
+					DONT_DRAW=TRUE;
+					return_value = FALSE;
+				}
+			break;
+
+		default:
+			fprintf(stderr, "ACK! invalid orientation!\n");
+
+		break;
+	}
+
+	if (!DONT_DRAW) {
+		gdk_draw_line(w_current->window, local_gc, x1, y1, x2, y2);
+		gdk_draw_line(w_current->backingstore, local_gc, x1, y1, x2, y2);
+
+		gdk_draw_line(w_current->window, local_gc, x, y, x2, y2);
+		gdk_draw_line(w_current->backingstore, local_gc, x, y, x2, y2);
+	}
+
+	return(return_value);
+}
+

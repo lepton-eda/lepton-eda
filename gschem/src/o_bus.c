@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
 #include <config.h>
@@ -191,11 +191,11 @@ o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #if 0 /* needs to be bus specific */
 	gdk_gc_set_foreground(w_current->gc,
 		x_get_color(w_current->net_endpoint_color));
+#endif
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
-#endif
 	printf("here\n");
 
 #if DEBUG
@@ -255,7 +255,6 @@ void
 o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int size;
-	int cue;
 	int x1, y1, x2, y2; /* screen coords */
 
 	if (o_current == NULL) {
