@@ -13,7 +13,7 @@ dnl Start of configure actions..
 AC_INIT(74/7400-1.sym)
 
 dnl Initialize automake stuff
-PACKAGE=symbols
+PACKAGE=geda-symbols
 
 DATADIR=gEDA
 
@@ -34,9 +34,6 @@ dnl AM_CONFIG_HEADER(config.h)
 
 dnl Build time sanity check...
 dnl AM_SANITY_CHECK
-
-dnl Initialize libtool libtool isn't needed for gschem
-dnl AM_PROG_LIBTOOL
 
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE

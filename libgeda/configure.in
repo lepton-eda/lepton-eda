@@ -111,7 +111,7 @@ AC_CHECK_LIB(X11, XOpenDisplay, X_LIBS="-lX11", X_LIBS=no, $X_EXTRA_LIBS)
 AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", X_EXT=no, $X_EXTRA_LIBS)
 dnl AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", XEXT=no, $X_EXTRA_LIBS)
 
-if test "$CYGWIN"x = x; then
+if test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
 	if test "$X_LIBS" = no; then
           AC_MSG_ERROR(Cannot find -lX11 library)
         fi
@@ -214,7 +214,7 @@ else
 	fi
 fi
 
-if ! test "$CYGWIN"x = x; then
+if ! test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
 	echo Including -fnative-struct in CFLAGS for CYGWIN port
 	CFLAGS="$CFLAGS -fnative-struct"
 fi
@@ -267,8 +267,14 @@ fi
 AC_PATH_PROG(INDENT, indent, no, ${PATH})
 
 if test "$INDENT" = "no"; then 
-        echo "** Cannot find indent, C code formatting disabled **"
-	INDENT=echo
+	AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
+
+	if test "$GINDENT" = "no"; then 
+        	echo "** Cannot find indent or gindent, C code formatting disabled **"
+		INDENT=echo
+	else
+		INDENT=$GINDENT
+	fi
 fi
 
 AC_HEADER_STDC

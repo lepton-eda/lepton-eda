@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(noweb/gschem.nw)
 
 dnl Initialize automake stuff
-PACKAGE=gschem
+PACKAGE=geda-gschem
 
 DATADIR=gEDA
 
@@ -54,9 +54,6 @@ AM_CONFIG_HEADER(config.h)
 dnl Build time sanity check...
 AM_SANITY_CHECK
 
-dnl Initialize libtool libtool isn't needed for gschem
-AM_PROG_LIBTOOL
-
 dnl Check to see if we are building in the cygnus win32 environment
 AC_CYGWIN
 
@@ -104,7 +101,7 @@ AC_CHECK_LIB(X11, XOpenDisplay, X_LIBS="-lX11", X_LIBS=no, $X_EXTRA_LIBS)
 AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", X_EXT=no, $X_EXTRA_LIBS)
 dnl AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", XEXT=no, $X_EXTRA_LIBS)
 
-if test "$CYGWIN"x = x; then
+if test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
         if test "$X_LIBS" = no; then
           AC_MSG_ERROR(Cannot find -lX11 library)
         fi
@@ -268,7 +265,7 @@ fi
 
 
 
-if ! test "$CYGWIN"x = x; then
+if ! test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
 	echo Including -fnative-struct in CFLAGS for CYGWIN port
 	CFLAGS="$CFLAGS -fnative-struct"
         X_LDFLAGS="-lregex $X_LDFLAGS"
@@ -322,9 +319,16 @@ fi
 AC_PATH_PROG(INDENT, indent, no, ${PATH})
 
 if test "$INDENT" = "no"; then 
-        echo "** Cannot find indent, C code formatting disabled **"
-	INDENT=echo
+	AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
+
+	if test "$GINDENT" = "no"; then 
+        	echo "** Cannot find indent or gindent, C code formatting disabled **"
+		INDENT=echo
+	else
+		INDENT=$GINDENT
+	fi
 fi
+
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT

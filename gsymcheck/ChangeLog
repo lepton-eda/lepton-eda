@@ -1,3 +1,10 @@
+2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/configure.in: Make sure configure scripts work with autoconf-2.50
+	  (had to fix cygwin check), they do not yet work with 2.50
+
+	* Removed all trace of libtool from gsymcheck, not required to build
+
 2001-06-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_rc.c, src/gsymcheck.c: Got the code to use the new GEDADATA

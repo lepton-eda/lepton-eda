@@ -1,3 +1,13 @@
+2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Now searching for gindent as well as indent
+
+	* configure.in: Make sure configure scripts work with autoconf-2.50
+	  (had to fix cygwin check), they do not yet work with 2.50
+	
+	* Removed all traces of libtool from gschem, libtool is not required
+          to build gschem
+
 2001-06-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Added sort-component-library keyword
