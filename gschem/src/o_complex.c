@@ -135,7 +135,7 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 			w_current->page_current->complex_place_head,
 			OBJ_COMPLEX, WHITE, x, y, 0, 0,
 			w_current->internal_clib,
-			w_current->internal_basename, 1);
+			w_current->internal_basename, 1, TRUE);
 	w_current->ADDING_SEL = 0;
 	w_current->DONT_DRAW_CONN = 0;
 
@@ -229,7 +229,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 		w_current->page_current->object_tail,
 		OBJ_COMPLEX, WHITE, x, y, 0, 0,
 		w_current->internal_clib,
-		w_current->internal_basename, 1);
+		w_current->internal_basename, 1, TRUE);
 
 	/* 1 should be define fix everywhere hack */
 
@@ -297,6 +297,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 			w_current->page_current->object_tail);
 	/* the o_redraw_selected is in x_events.c after this call
 	 * returns */
+	o_attrib_add_selected(w_current, w_current->page_current->object_tail);
 
 	o_conn_disconnect_update(w_current->page_current);
 	o_conn_erase_all(w_current, w_current->page_current->object_tail);
@@ -702,7 +703,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 				x, y,
 				object->angle, object->mirror,
 				object->complex_clib, object->complex_basename,
-				1);
+				1, FALSE);
 
 	/* TODO: fix up name sometime ... */
 	new_obj->sid = object->sid;
