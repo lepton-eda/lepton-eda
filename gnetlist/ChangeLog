@@ -7,6 +7,9 @@
 
 	* examples/*.sch, tests/*.sch: Updated schematic files to 20030901
 
+	* scheme/Makefile.am, scheme/gnet-gsch2pcb.scm: Added new PCB helper
+	backend written by Bill Wilson 
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschem2pcb: Moved script into this directory from src/
