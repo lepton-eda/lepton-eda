@@ -1,0 +1,5 @@
+Makefile
+Makefile.in
+*.ps
+*.pdf
+*.pic
