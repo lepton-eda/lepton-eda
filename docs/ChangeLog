@@ -13,6 +13,10 @@
 
 	* gschem/ and gnetlist/: Added directory and appropriate txt files
 
+	* toplevel/ and toplevel/gedadocs.html: Created directory to hold
+	the toplevel index html file.  gedadocs.html is an index of all
+	documentation provided with gEDA/gaf
+
 2002-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in and friends: Started using automake and autoconf

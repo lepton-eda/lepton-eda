@@ -1,6 +1,6 @@
-docsdir = @GEDADATADIR@/documentation/fileformats
+docsdir = @GEDADATADIR@/documentation/gschem
 
-docs_DATA = fileformats.html 
+docs_DATA = gschem.txt 
 
 EXTRA_DIST = $(docs_DATA)
 

@@ -70,5 +70,8 @@ AC_CONFIG_FILES([Makefile \
                  hooks/Makefile \
                  keymapping/Makefile \
                  netattrib/Makefile \
+		 gschem/Makefile \
+		 gnetlist/Makefile \
+		 toplevel/Makefile \
                  templates/Makefile])
 AC_OUTPUT

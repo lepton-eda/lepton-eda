@@ -1,5 +1,6 @@
 
-SUBDIRS = attributes symbols fileformats hooks keymapping netattrib templates
+SUBDIRS = attributes symbols fileformats hooks keymapping netattrib \
+	  gschem gnetlist toplevel templates 
 
 EXTRA_DIST = 
 

@@ -1,6 +1,6 @@
-docsdir = @GEDADATADIR@/documentation/fileformats
+docsdir = @GEDADATADIR@/documentation/gnetlist
 
-docs_DATA = fileformats.html 
+docs_DATA = gnetlist.txt 
 
 EXTRA_DIST = $(docs_DATA)
 
