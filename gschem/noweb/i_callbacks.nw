@@ -1486,10 +1486,26 @@ DEFINE_I_CALLBACK(edit_update)
   exit_if_null(w_current);
 
   i_update_middle_button(w_current, i_callback_edit_update, _("Update"));
-  if (o_select_return_first_object(w_current)) {
-  	o_update_component(w_current,
-                     w_current->page_current->selection2_head->next);
+  /* anything selected ? */
+  if (o_select_selected(w_current)) {
+    /* yes, update each selected component */
+    SELECTION *s_current =
+      w_current->page_current->selection2_head->next;
+
+    while (s_current != NULL) {
+      g_assert (s_current->selected_object != NULL);
+      if (s_current->selected_object->type == OBJ_COMPLEX) {
+        o_update_component (w_current,
+                            s_current->selected_object);
+      }
+      s_current = s_current->next;
+    }
+  } else {
+    /* nothing selected, go back to select state */
+    w_current->inside_action = 0;
+    i_set_state(w_current, SELECT);
   }
+
 }
 
 

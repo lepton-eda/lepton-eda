@@ -1,3 +1,12 @@
+2005-01-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/i_callbacks.nw (i_callback_edit_update): Adapted for the
+	new o_update_component().
+
+	* noweb/o_misc.nw (o_update_component): Rewritten function to
+	avoid duplication of attributes when updating. Prototype change to
+	take a single object as second argument.
+
 2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/it_IT.po: Added the Italian translation by Petrecca Michele.
