@@ -42,9 +42,7 @@
 /* private functions */
 static int are_requirements_met(struct CompsTable_s *pComp);
 static int get_percentage(void);
-static int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName);
 static int InstallComponent(struct CompsTable_s *pComp);
-static int TestIfInstalled(struct CompsTable_s *pPkg);
 static int VerifyFiles(struct CompsTable_s *pPkg);
 static int CopyFiles(struct CompsTable_s *pPkg);
 static int AddVariable(const char *szVariable, const char *szValue);	
@@ -402,7 +400,7 @@ static int InstallComponent(struct CompsTable_s *pComp)
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
 	gtk_label_set_text(pAction, "Searching in system");
 	while (g_main_iteration(FALSE));
-	iResult = TestIfInstalled(pPkg);
+	iResult = PackageTestIfInstalled(pPkg);
 	if (iResult == SUCCESS)
 	{
 		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Package already installed");
@@ -597,7 +595,7 @@ static int InstallComponent(struct CompsTable_s *pComp)
 			}
 					
 			/* test if the tool is installed */
-			iResult = TestIfInstalled(pCount);
+			iResult = PackageTestIfInstalled(pCount);
 			if (iResult != SUCCESS)
 			{
 				/* check if software distribution contains the tool */
@@ -705,7 +703,7 @@ LABEL:
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
 	gtk_label_set_text(pAction, "Testing");
 	while (g_main_iteration(FALSE));
-	iResult = TestIfInstalled(pPkg);
+	iResult = PackageTestIfInstalled(pPkg);
 	if (iResult != SUCCESS)
 	{
 		sprintf(szMessage, "%s cannot not be installed.", pPkg->szName);
@@ -757,115 +755,6 @@ INSTALL_END:
 	return (iErrorFlag) 
 		? FAILURE 
 		: SUCCESS;
-}
-
-
-static int TestIfInstalled(struct CompsTable_s *pPkg)
-{
-	int iFileType = PACKAGE_FILE_UNKNOWN, iTotalResult = SUCCESS, iResult, i, j;
-	char szValue[TEXTLEN], szFileDest[TEXTLEN], szMessage[TEXTLEN], *pPath, *pValue, szLdLibraryPath[TEXTLEN];
-
-	/* get PATH variable */
-	pPath = getenv("PATH");
-	if (pPath == NULL)
-	{
-		sprintf(szMessage, "Cannot get PATH variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
-	}
-	
-	/* get LD_LIBRARY_PATH */
-	strcpy(szLdLibraryPath, "");
-	pValue = getenv("LD_AOUT_LIBRARY_PATH");
-	if (pValue != NULL)
-		strcat(szLdLibraryPath, pValue);
-	pValue = getenv("LD_LIBRARY_PATH");
-	if (pValue != NULL)
-		strcat(szLdLibraryPath, pValue);
-	strcat(szLdLibraryPath, ":/usr/lib:/lib");
-
-	/* scan file list */
-	for (i = 0; i < strlen(FILES(pPkg)); )
-	{
-		/* get a type of the next file */
-		for (; i < strlen(FILES(pPkg)) && isspace(FILES(pPkg)[i]); i ++)
-			;
-		for (j = 0; i < strlen(FILES(pPkg)) && isalnum(FILES(pPkg)[i]); i ++, j ++)
-			szValue[j] = toupper(FILES(pPkg)[i]);
-		szValue[j] = 0;
-		if (strcmp(szValue, PACKAGE_TAG_BINARY) == 0)
-			iFileType = PACKAGE_FILE_BINARY;
-		else if (strcmp(szValue, PACKAGE_TAG_LIBRARY) == 0)
-			iFileType = PACKAGE_FILE_LIBRARY;
-		else if (strcmp(szValue, PACKAGE_TAG_DATA) == 0)
-			iFileType = PACKAGE_FILE_DATA;
-		else if (strcmp(szValue, PACKAGE_TAG_LINK) == 0)
-			iFileType = PACKAGE_FILE_LINK;
-
-		/* omit file attribute */
-		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
-			;
-		i ++;
-		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
-			;
-		i ++;
-		
-		/* omit source file name */
-		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
-			;
-		i ++;
-		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
-			;
-		i ++;
-
-		/* get destination file name */
-		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
-			;
-		i ++;
-		for (j = 0; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++, j ++)
-			szFileDest[j] = FILES(pPkg)[i];
-		szFileDest[j] = 0;
-		i ++;
-		
-		/* test file existence */
-		switch (iFileType)
-		{
-			case PACKAGE_FILE_BINARY:
-				
-				iResult = FileSearch(pPath, szFileDest);
-				if (iResult != SUCCESS)
-					return FAILURE;
-				break;
-				
-			case PACKAGE_FILE_LIBRARY:
-				
-				iResult = FileSearch(szLdLibraryPath, szFileDest);
-				if (iResult != SUCCESS)
-					return FAILURE;
-				break;
-				
-			case PACKAGE_FILE_DATA:
-				
-				iResult = FileSearch(szInstallDirectory, szFileDest);
-				if (iResult != SUCCESS)
-					return FAILURE;
-				break;
-				
-			case PACKAGE_FILE_LINK:
-
-				iResult = FileSearch(szInstallDirectory, szFileDest);
-				if (iResult != SUCCESS)
-					return FAILURE;
-				break;
-		}
-	}
-	
-	return iTotalResult;
 }
 
 
@@ -1090,34 +979,6 @@ static int are_requirements_met(struct CompsTable_s *pComp)
 
 
 
-struct CompsTable_s *get_component_by_name(char *szName)
-{
-	struct CompsTable_s *pComp = NULL;
-	char szValue1[TEXTLEN], szValue2[TEXTLEN];
-	int i;
-	
-	if (strlen(szName) == 0)
-		return NULL;
-	
-	for (i = 0; i < strlen(szName); i ++)
-		szValue1[i] = toupper(szName[i]);
-	szValue1[i] = 0;
-	
-	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
-	{
-		for (i = 0; i < strlen(pComp->szCodeName); i ++)
-			szValue2[i] = toupper(pComp->szCodeName[i]);
-		szValue2[i] = 0;
-	
-		if (!strcmp(szValue1, szValue2))
-			break;
-	}
-	
-	return pComp;
-}
-
-
-
 void mark_to_be_installed(void)
 {
 	struct CompsTable_s *pCount, *pComp;
@@ -1285,7 +1146,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		i = fgetc(hFileOrig);
 		if (i < 0)
 			break;
-		
+
 		fputc(i, hFileTmp);
 	}
 	fclose(hFileTmp);
