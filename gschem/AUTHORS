@@ -95,6 +95,12 @@ Patrick Bernaud		- For many primitive object code updates, bug
 Werner Hoch		- For providing a patch to fix some long outstanding
 			  zooming / panning bugs
 
+			  More bug fixes to the panning / zoom code as well
+	 		  as some really important code cleanup.  Files 
+	 		  changed:
+				a_pan.c a_zoom.c i_callbacks.c x_grid.c
+				x_window.c x_event.c
+
 Chris Ellec		- For providing a patch that causes changes in the
 			  slot= attribute in the multi attrib dialog box
 			  (Add and Change) to take effect.

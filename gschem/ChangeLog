@@ -9,10 +9,74 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-12-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_text.c: Removed all trace of zoom_factor
+
+	* lib/system-gschemrc.in: Changed default text_zoom_factor to 30
+
+	* src/a_zoom.c: Removed one last unused reference to zoom_factor
+
+2000-12-09  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net.c: Removed all trace of zoom_factor
+
+	* src/o_pin.c: Removed all trace of zoom_factor
+
+	* src/o_line.c: Removed all trace of zoom_factor
+
+	* src/o_grips.c: Removed all trace of zoom_factor
+
+	* src/o_text.c: Added another lame patch to fix the short storage of
+	  X coords problem.  Not really a solution, just a lame patch
+
+	* src/o_circle.c: Removed all trace of zoom_factor
+
+	* src/o_line.c, o_circle.c, o_arc.c: re-ran indent against these
+	  files with -kr flags
+
+	* src/o_bus.c: Removed all trace of zoom_factor
+
+	* src/o_box.c: Removed all trace of zoom_factor
+
+	* src/x_dialog.c: Added some more text to the about dialog box
+
+2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Removed some of the DONT_REDRAW from the code (the
+	  DONT_* are total hacks)
+
+	* src/i_callbacks.c, a_zoom.c, a_pan.c and friends: Added a flag
+	  to a_zoom_* to control if the display is redraw or not (augmenting
+	  the current DONT_REDRAW).  Need to fix this properly soon
 
 2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* configure.in: Slightly rearranged things to make cygwin port happy
+
+	* src/a_pan.c: Integrated changes by Werner Hoch, Panning is now done
+	  using a_pan_general
+
+	* src/a_zoom.c: Integrated changes by Werner Hoch, Panning is now done
+          using a_pan_general
+
+	* src/i_callbacks.c: Integrated changes by Werner Hoch, Bunch of
+	  code cleanup, removed some redundant code
+
+	* src/x_grid.c: Integrated changes by Werner Hoch, Changed the way 
+	  the grid spacing is calculated (and drawn)
+
+	* src/x_basic.c: Integrated changes by Werner Hoch, changed some init
+	  variables for the scrollbars
+
+	* src/x_event.c: Integrated changes by Werner Hoch, rewrote (and
+	  fixed) resize callback to properly maintain aspect ratio
+
+	* src/x_window.c: Integrated changes by Werner Hoch, changed some
+	  init variables relating to scrollbars
+
+	* src/a_pan.c: Put in some code to bound the left and top borders
+	  when mouse panning
 
 2000-12-02  Ales Hvezda  <ahvezda@geda.seul.org>
 

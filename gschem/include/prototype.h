@@ -1,13 +1,12 @@
 /* a_pan.c */
+void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy, double relativ_zoom_factor, int flags);
 void a_pan_calc(TOPLEVEL *w_current, int x, int y);
-void a_pan_section_check(TOPLEVEL *w_current);
-void a_pan_calc_without_bordercheck(TOPLEVEL *w_current, int x, int y);
 void a_pan(TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
-void a_zoom(TOPLEVEL *w_current, int dir, int selected_from);
-void a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current);
-void a_zoom_box(TOPLEVEL *w_current);
+void a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags);
+void a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current, int pan_flags);
+void a_zoom_box(TOPLEVEL *w_current, int pan_flags);
 void a_zoom_box_start(TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y);
