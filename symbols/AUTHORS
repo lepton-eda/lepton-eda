@@ -422,6 +422,10 @@ Bert Timmerman		- For contributing the following symbols:
 				switch-pushbutton-nc-1.sym 
 				switch-pushbutton-no-1.sym
 				TC5516AP-1.sym
+				4021-2.sym 4094-2.sym 74HCT4094-1.sym
+				max186-2.sym max238-1.sym
+				header20-3.sym  header34-1.sym
+				4011-2.sym
 
 Karel Kulhavy		- For contributing the following symbols:
 
@@ -451,7 +455,36 @@ Mark Moss		- For contributing the following symbols:
 				40373-1.sym  4508-1.sym   4521-1.sym
 				4555-1.sym
 
-	
+Werner Hoch:		- For contribute the following symbols:	
+
+				AT90S1200.sym AT90S2313.sym AT90S2323.sym
+				AT90S2343.sym AT90S4433_DIP.sym
+				AT90S4433_TQFP.sym AT90S8515_DIP.sym
+				AT90S8515_PLCC.sym AT90S8515_TQFP.sym
+				AT90S8535.sym AT90S8535_DIP.sym
+				AT90S8535_PLCC.sym AT90S8535_TQFP.sym
+				ATmega103.sym ATmega161_DIP.sym
+				ATmega161_TQFP.sym ATmega163_DIP.sym
+				ATmega163_TQFP.sym ATtiny11.sym
+				ATtiny12.sym ATtiny28_DIP.sym
+				ATtiny28_TQFP.sym
+
+Bruno Schwander		- For contributing the following symbols:
+
+				7430-1.sym 7430-2.sym 74165-1.sym (fixes)
+				resistorpack11-1.sym resistorpack12-1.sym
+				resistorpack3-1.sym resistorpack4-1.sym
+				resistorpack5-1.sym resistorpack7-1.sym
+				resistorpack8-2.sym resistorpack9-1.sym
+				2N3055-1.sym 2N3904-1.sym
+				connector5-1.sym (changed to be 5 pins)
+				lm7806-1.sym lm7810-1.sym lm7812-1.sym
+				lm7815-1.sym lm7818-1.sym lm7824-1.sym
+				lm7885-1.sym SLA7024M.sym max233-2.sym
+				AT90S8535J-1.sym AT90S8535P-1.sym
+				gnd-2.sym mct9001-1.sym
+
+
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

@@ -1,8 +1,16 @@
 2002-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
 	
-	* micro/ AT90S8535.sym  AT90S8535_TQFP.sym AT90S8535_PLCC.sym:
-	  Added symbols by Werner Hoch (minor tweeks).
+	* micro/AT90S8535.sym  AT90S8535_TQFP.sym AT90S8535_PLCC.sym:
+	Added symbols by Werner Hoch (minor tweeks).
 
+	* micro/AT*.sym: Added a bunch more symbols by Werner Hoch
+
+	* 74/ analog/ transistor/ connector/ linear/ maxim/ micro/ power/
+	opto/: Added a bunch of symbols by Bruno Schwander
+	
+	* 4000/ 74/ maxim/ connector/: Added a bunch of symbols by Bert 
+	Timmerman
+ 
 2002-02-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* analog/resistor-variable-2.sym: Checked in Bert's fix to the 
