@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
-"POT-Creation-Date: 2003-01-18 10:29-0500\n"
+"POT-Creation-Date: 2003-01-26 21:43-0500\n"
 "PO-Revision-Date: 2003-01-21 18:36+0200\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -316,8 +316,8 @@ msgid ""
 "Press this button to select advanced options of installation (useful for "
 "software developers only)."
 msgstr ""
-"Нажмите на эту кнопку, чтобы выбрать дополнительные опции установки (полезно только "
-"для разработчиков)."
+"Нажмите на эту кнопку, чтобы выбрать дополнительные опции установки (полезно "
+"только для разработчиков)."
 
 #: src/interface.c:509 src/interface.c:541
 msgid "Summary"
@@ -362,4 +362,3 @@ msgstr "Перекомпилировать исходники"
 #: src/interface.c:801
 msgid "Install sources"
 msgstr "Установить исходники"
-

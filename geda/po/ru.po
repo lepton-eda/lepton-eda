@@ -100,4 +100,3 @@ msgstr "Файлы"
 #: src/interface.c:396
 msgid "Status"
 msgstr "Статус"
-
