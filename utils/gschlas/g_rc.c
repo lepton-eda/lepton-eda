@@ -66,35 +66,33 @@ static int vstbl_get_val(const vstbl_entry * table, int index)
 
 
 static SCM
-g_rc_mode_general(SCM mode,
+g_rc_mode_general(SCM scmmode,
 		  const char *rc_name,
 		  int *mode_var,
 		  const vstbl_entry *table,
 		  int table_size)
 {
   int index;
-  char *string;
+  char *mode;
+ 
+  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+	      SCM_ARG1, rc_name);
 
-  string = gh_scm2newstr(mode, NULL);
-  index = vstbl_lookup_str(table, table_size, string);
+  mode = SCM_STRING_CHARS (scmmode);
+
+  index = vstbl_lookup_str(table, table_size, mode);
 
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
             "Invalid mode [%s] passed to %s\n",
-            string,
+            mode,
             rc_name);
-    if (string) {
-      free(string);
-    }
     return SCM_BOOL_F;
   }
 
   *mode_var = vstbl_get_val(table, index);
 
-  if (string) {
-    free(string);
-  }
   return SCM_BOOL_T;
 }
 
@@ -109,20 +107,19 @@ SCM g_rc_gschlas_version(SCM version)
 {
     char *string;
 
-    string = gh_scm2newstr(version, NULL);
+    SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+		SCM_ARG1, "gschem-version");
 
-    if (strcmp(string, VERSION) != 0) {
+
+    if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
 	fprintf(stderr, "Found a version [%s] gschlas file:\n[%s]\n",
-		string, rc_filename);
+		SCM_STRING_CHARS (version), rc_filename);
 	fprintf(stderr,
 		"While gschlas is in ALPHA, please be sure that you have the latest rc file.\n");
+	return SCM_BOOL_F;
     }
 
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
+    return SCM_BOOL_T;
 }
 
 
