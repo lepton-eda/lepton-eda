@@ -5,18 +5,19 @@
 
 SUBDIRS = intl po src pixmaps
 
-gedadocdir = ${prefix}/doc/geda
-gedadoc_DATA = \
-	README\
-	COPYING\
-	AUTHORS\
-	ChangeLog\
-	INSTALL\
-	NEWS\
-	TODO\
-	ABOUT-NLS
-
-EXTRA_DIST = $(gedadoc_DATA)
+# The installation directory for these files needs to be decided on.  
+# For now, don't install them. AVH 05/25/03
+#gedadocdir = ${prefix}/doc/geda
+#gedadoc_DATA = \
+#	README\
+#	COPYING\
+#	AUTHORS\
+#	ChangeLog\
+#	INSTALL\
+#	NEWS\
+#	TODO\
+#	ABOUT-NLS
+#EXTRA_DIST = $(gedadoc_DATA)
 
 distclean-local:
 	-rm -rf autom4te.cache

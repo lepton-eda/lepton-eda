@@ -1,4 +1,17 @@
 
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Disabled the LIBTOOL macro since it is unused.
+
+	* config.rpath: Added this missing file.
+
+	* pixmaps/Makefile.am: For now, do not install the pixmap since it
+	is unused.  
+
+	* Makefile.am: For now, do not install the various README like files.
+	Eventually this will be put back, for the 20030525 release, these
+	files will not be installed.
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version
