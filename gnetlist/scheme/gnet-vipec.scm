@@ -138,6 +138,33 @@
 	)
 )
 
+(define vipec:write-resistor
+   (lambda (package port)
+      (begin
+         (display "RES\t" port)
+         (display "R=" port)
+         (display (gnetlist:get-package-attribute package "value") port)
+         (newline port))))
+
+(define vipec:write-capacitor
+   (lambda (package port)
+      (begin
+         (display "CAP\t" port)
+         (display "C=" port)
+         (display (gnetlist:get-package-attribute package "value") port)
+         (newline port))))
+
+(define vipec:write-inductor
+   (lambda (package port)
+      (begin
+         (display "IND\t" port)
+         (display "L=" port)
+         (display (gnetlist:get-package-attribute package "value") port)
+         (display "  Q=" port)
+         (display (gnetlist:get-package-attribute package "Q") port)
+         (newline port))))
+
+
 ;;
 ;; write the uref, to the pin# connected net and component value
 ;; check if the component is a special vipec component
@@ -148,9 +175,9 @@
          (let ((package (car ls)))
             (cond 	
                ((string=? (get-device package) "RESISTOR") 
-                  (vipec:write-component-2pins package port "R"))
+                  (vipec:write-resistor package port))
                ((string=? (get-device package) "CAPACITOR") 
-                  (vipec:write-component-2pins package port "C"))
+                  (vipec:write-capacitor package port))
                ((string=? (get-device package) "INDUCTOR") 
                   (vipec:write-inductor package port))
                ((string=? (get-device package) "TLIN") 
