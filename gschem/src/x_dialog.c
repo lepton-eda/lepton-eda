@@ -2887,7 +2887,7 @@ about_dialog (TOPLEVEL *w_current)
 			label, TRUE, TRUE, 5);
       		gtk_widget_show (label);
 
-		sprintf(string, "Ales V. Hvezda\nahvezda@geda.seul.org");
+		sprintf(string, "Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)");
 		label = gtk_label_new (string);
 		gtk_box_pack_start(
 			GTK_BOX(vbox),
