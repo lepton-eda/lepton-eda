@@ -1,3 +1,7 @@
+2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Removed all trace of GUILE_LIB and GUILE_INCLUDE
+
 2002-02-16 Ales Hvezda <ahvezda@geda.seul.org>
 
 	* noweb/x_event.nw: Added a check in the configure callback to return

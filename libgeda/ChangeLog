@@ -1,3 +1,9 @@
+2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Andrew Dyer found a GUILE_* bug. Fixed.
+
+        * configure.in: Removed all trace of GUILE_LIB and GUILE_INCLUDE
+
 2001-02-09  Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_selection.nw: Added o_selection_return_num to return the

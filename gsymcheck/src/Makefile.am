@@ -7,9 +7,7 @@ gsymcheck_SOURCES = \
 		g_rc.c g_register.c globals.c gsymcheck.c \
 		parsecmd.c s_check.c s_project.c s_symstruct.c
 
-#INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
-
-INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
+INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@  
 gsymcheck_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@ 
 
 man_MANS = gsymcheck.1

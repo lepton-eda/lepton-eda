@@ -5,7 +5,7 @@ bin_PROGRAMS = mk_verilog_syms
 mk_verilog_syms_SOURCES = \
 		mk_verilog_syms.c
 
-INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
+INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@  
 
 mk_verilog_syms_LDADD = -lm 
 

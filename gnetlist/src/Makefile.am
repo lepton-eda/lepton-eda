@@ -11,13 +11,8 @@ gnetlist_SOURCES = \
 		s_netlist.c s_netattrib.c s_project.c s_traverse.c \
 		s_rename.c s_hierarchy.c s_misc.c vams_misc.c
 
-#INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
-
-INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
+INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@  
 gnetlist_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
-
-# original gnetlist which links in everything
-#gnetlist_LDADD = @STROKE_LIB@ @GUILE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ 
 
 man_MANS = gnetlist.1
 
