@@ -241,7 +241,7 @@ int FileExec(const char *szCommand)
 		Pid = getpid();
 		
 		/* redirecting stdout */
-		sprintf(szValue, "/%s/%s-stdout-%d", GM_TMPDIR, GM_TMPNAME, Pid);
+		sprintf(szValue, "/%s/%s-stdout-%ld", GM_TMPDIR, GM_TMPNAME, (long) Pid);
 		hStdOut = freopen(szValue, "w", stdout);
 		if (hStdOut == NULL)
 		{
@@ -249,7 +249,7 @@ int FileExec(const char *szCommand)
 		}
 
 		/* redirecting stderr */
-		sprintf(szValue, "/%s/%s-stderr-%d", GM_TMPDIR, GM_TMPNAME, Pid);
+		sprintf(szValue, "/%s/%s-stderr-%ld", GM_TMPDIR, GM_TMPNAME, (long) Pid);
 		hStdErr = freopen(szValue, "w", stderr);
 		if (hStdErr == NULL)
 		{
@@ -279,7 +279,7 @@ int FileExec(const char *szCommand)
 	else
 	{
 		/* print stderr */
-		sprintf(szValue, "/%s/%s-stderr-%d", GM_TMPDIR, GM_TMPNAME, Pid);
+		sprintf(szValue, "/%s/%s-stderr-%ld", GM_TMPDIR, GM_TMPNAME, (long) Pid);
 		hStdErr = fopen(szValue, "r");
 		if (hStdErr == NULL)
 		{
@@ -308,7 +308,7 @@ int FileExec(const char *szCommand)
 	}
 	
 	/* remove last stdout file */
-	sprintf(szValue, "/%s/%s-stdout-%d", GM_TMPDIR, GM_TMPNAME, Pid);
+	sprintf(szValue, "/%s/%s-stdout-%ld", GM_TMPDIR, GM_TMPNAME, (long) Pid);
 	iResult = remove(szValue);
 	if (iResult != 0)
 	{
@@ -316,7 +316,7 @@ int FileExec(const char *szCommand)
 	}
 
 	/* remove last stderr file */
-	sprintf(szValue, "/%s/%s-stderr-%d", GM_TMPDIR, GM_TMPNAME, Pid);
+	sprintf(szValue, "/%s/%s-stderr-%ld", GM_TMPDIR, GM_TMPNAME, (long) Pid);
 	iResult = remove(szValue);
 	if (iResult != 0)
 	{

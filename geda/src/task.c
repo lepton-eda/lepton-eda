@@ -189,7 +189,7 @@ void TaskProcess(void)
 					return;
 
 				szTmpFile = (char *) malloc(strlen(GM_TMPDIR) + strlen(GM_TMPNAME) + 64);
-				sprintf(szTmpFile, "/%s/%s-stderr-%d", GM_TMPDIR, GM_TMPNAME, pTask->Id);
+				sprintf(szTmpFile, "/%s/%s-stderr-%ld", GM_TMPDIR, GM_TMPNAME, (long) pTask->Id);
 				hStdErr = fopen(szTmpFile, "r");
 				if (hStdErr == NULL)
 				{
@@ -257,7 +257,7 @@ void TaskProcess(void)
 				else if (pTask->Id == 0)
 				{
 					szTmpFile = (char *) malloc(strlen(GM_TMPDIR) + strlen(GM_TMPNAME) + 64);
-					sprintf(szTmpFile, "/%s/%s-stderr-%d", GM_TMPDIR, GM_TMPNAME, getpid());
+					sprintf(szTmpFile, "/%s/%s-stderr-%ld", GM_TMPDIR, GM_TMPNAME, (long) getpid());
 					hStdErr = freopen(szTmpFile, "w", stderr);
 					free(szTmpFile);
 					if (hStdErr == NULL)
