@@ -23,6 +23,9 @@
 /*          pin rotation.  Added pin type attribute capability. (Roberto */
 /*          Puon)                                                        */
 /*									 */
+/* 02/05/15 Added checks to prevent segfaults on invalid 		 */
+/*	    input data (Chris Ellec)							 */
+/*									 */
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
 /* it under the terms of the GNU General Public License as published by  */
@@ -482,6 +485,12 @@ int make_pin(int fldcnt,char *pFields[])
   int pin_pos;
   char *type;
 
+  if (fldcnt < 5) {
+	fprintf (stderr,"\nError, not enough parameters on input line:%i instead of 5 !\n",fldcnt);
+	fprintf (stderr,"\nPlease fix the input file then try again.\n\n");
+	return -1;
+  }
+  
   strcpy(pin_name,pFields[0]);
   strcpy(pin,pFields[1]); 	      /* get pin number */
   shape = LINE_SHAPE;
@@ -489,14 +498,18 @@ int make_pin(int fldcnt,char *pFields[])
      shape = DOT_SHAPE;
   if (!stricmp(pFields[2],"clock"))   /* get shape */
      shape = CLOCK_SHAPE;
-  if (!stricmp(pFields[3],"L"))
-      side = L_SIDE;
-  if (!stricmp(pFields[3],"R"))
-      side = R_SIDE;
-  if (!stricmp(pFields[3],"B"))
-      side = B_SIDE;
-  if (!stricmp(pFields[3],"T"))
-      side = T_SIDE;
+  if (!stricmp(pFields[3],"L")) side = L_SIDE;
+  else
+	if (!stricmp(pFields[3],"R")) side = R_SIDE;
+	else      
+	  if (!stricmp(pFields[3],"B")) side = B_SIDE;
+	  else    
+		if (!stricmp(pFields[3],"T")) side = T_SIDE;
+		else {
+		   fprintf (stderr,"\nError, %s not a valid position, should be l,t,b or r.\n",pFields[3]);
+		   return -1;
+		}
+		  
   pin_pos = atoi(pFields[4]);
 
   type = NULL;
