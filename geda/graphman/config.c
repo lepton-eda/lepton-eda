@@ -272,7 +272,7 @@ static int ConfigReadLine(char *szLine)
 
 *******************************************************************************/
 
-static cSeparator = ',';
+static char cSeparator = ',';
 
 
 static BOOL IsSeparator(const char c)
