@@ -359,10 +359,8 @@ x_print_print(GtkWidget *w, TOPLEVEL *w_current)
     }
   }
 
-#if 0
   gtk_widget_destroy(w_current->pwindow);
   w_current->pwindow = NULL;
-#endif
   return(0);
 }
 
@@ -470,7 +468,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show (buttonprint);
     gtk_widget_grab_default (buttonprint);
 
-    buttoncancel = gtk_button_new_with_label (_("Close"));
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttoncancel, TRUE, TRUE, 0);

@@ -1,3 +1,14 @@
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/*.sch: Added a few new test schematics
+	
+	* noweb/x_print.nw: Changed the print dialog box so that it closes
+	when the print button is pressed.
+
+	* noweb/x_log.nw: Under gtk+ 2.2.x, change log window to scroll to
+	the end when a new message is displayed.  This is the same behavior
+	that was the default under gtk+ 1.2.x
+
 2003-09-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_callbacks.nw: Minor log message tweak

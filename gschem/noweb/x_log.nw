@@ -81,6 +81,8 @@ GtkWidget *stwindow = NULL;
 #ifdef HAS_GTK22
 static GtkTextBuffer *sttextbuf = NULL;
 static GtkTextView   *sttextview = NULL;
+static GtkTextIter startIter, endIter;
+static GtkTextMark *endMark;
 #else
 static GtkWidget *sttext = NULL;
 #endif
@@ -179,6 +181,7 @@ x_log_update(char *buf)
     nchars = strlen(buf);
 #ifdef HAS_GTK22
     gtk_text_buffer_insert_at_cursor(sttextbuf, buf, nchars);
+    gtk_text_view_scroll_mark_onscreen(sttextview, endMark);
 #else
     gtk_text_insert(GTK_TEXT (sttext),
                     NULL, NULL, NULL,
@@ -200,6 +203,7 @@ x_log_update(char *buf)
     nchars = strlen(buf);
 #if HAS_GTK22
     gtk_text_buffer_insert_at_cursor(sttextbuf, buf, nchars);
+    gtk_text_view_scroll_mark_onscreen(sttextview, endMark);
 #else
     gtk_text_insert(GTK_TEXT (sttext),
                     NULL, NULL, NULL,
@@ -291,6 +295,8 @@ x_log_setup_win (TOPLEVEL *w_current)
   GtkWidget *table = NULL;
   GtkWidget *vbox, *action_area;
 #ifdef HAS_GTK22
+  GtkWidget *textView;
+  GtkWidget *scrolledWin;
   GtkScrolledWindow *swin;
 #endif
 
@@ -341,11 +347,13 @@ x_log_setup_win (TOPLEVEL *w_current)
 
 #ifdef HAS_GTK22
     sttextbuf = gtk_text_buffer_new(gtk_text_tag_table_new());
-    sttextview= gtk_text_view_new_with_buffer(sttextbuf);
+    textView= gtk_text_view_new_with_buffer(sttextbuf);
+    sttextview = GTK_TEXT_VIEW(textView);
     gtk_text_view_set_editable (sttextview, FALSE);
 
-    swin=gtk_scrolled_window_new(sttextview->hadjustment,
-                               sttextview->vadjustment);
+    scrolledWin = gtk_scrolled_window_new(sttextview->hadjustment,
+                                          sttextview->vadjustment);
+    swin = GTK_SCROLLED_WINDOW(scrolledWin);
     gtk_scrolled_window_set_policy(swin, GTK_POLICY_AUTOMATIC, 
                                        GTK_POLICY_AUTOMATIC);
 #else
@@ -399,6 +407,13 @@ x_log_setup_win (TOPLEVEL *w_current)
   } else {
     gdk_window_raise(stwindow->window);
   }
+
+#ifdef HAS_GTK22
+  gtk_text_buffer_get_bounds(sttextbuf, &startIter, &endIter);
+  endMark = gtk_text_buffer_create_mark(sttextbuf, NULL, &endIter, FALSE);
+  gtk_text_view_scroll_mark_onscreen(sttextview, endMark);
+#endif
+
 }
 
 
