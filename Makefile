@@ -119,12 +119,12 @@ notarget:
 # This installs libgeda and symbols and just builds gschem and gnetlist
 all: libgeda symbols gschem gnetlist gattrib gsymcheck geda utils docs examples
 
-# libgeda_install or symbols_install is not needed since the default 
-# libgeda does a make install (ditto for symbols)
-# This also installs gschem, gnetlist, and gsymcheck 
-install: gschem_install gnetlist_install gattrib_install gsymcheck_install \
+# This builds and installs all of gEDA/gaf
+install: symbols_install libgeda_install gschem_install gnetlist_install \
+	 gattrib_install gsymcheck_install \
 	 geda_install utils_install docs_install examples_install
 
+# This uninstalls all of gEDA/gaf
 uninstall: utils_uninstall gsymcheck_uninstall gattrib_uninstall \
 	   gnetlist_uninstall gschem_uninstall symbols_uninstall \
 	   libgeda_uninstall geda_uninstall docs_uninstall examples_uninstall
@@ -252,20 +252,20 @@ proto: libgeda_proto gschem_proto gnetlist_proto gattrib_proto gsymcheck_proto
 symbols: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
 	@echo symbols Installed 
 
-symbols_maint: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
+symbols_maint: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} maintainer-clean )
 
-symbols_clean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
+symbols_clean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} clean )
 
-symbols_distclean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
+symbols_distclean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} distclean )
 
 symbols_install: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
 	         $(DIR_PREFIX)symbols$(CD_VERSION)/Makefile 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} install )
 
-symbols_uninstall: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
+symbols_uninstall: $(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} uninstall )
 
 symbols_config: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
@@ -290,8 +290,7 @@ gschem: $(DIR_PREFIX)gschem$(CD_VERSION)/configure \
 	$(DIR_PREFIX)gschem$(CD_VERSION)/src/gschem
 	@echo gschem Built 
 
-gschem_install: libgeda_install \
-		$(DIR_PREFIX)gschem$(CD_VERSION)/configure \
+gschem_install: $(DIR_PREFIX)gschem$(CD_VERSION)/configure \
 		$(DIR_PREFIX)gschem$(CD_VERSION)/config.h \
 	        $(DIR_PREFIX)gschem$(CD_VERSION)/src/gschem
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} install )
@@ -337,8 +336,7 @@ gnetlist: $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure \
 	$(DIR_PREFIX)gnetlist$(CD_VERSION)/src/gnetlist
 	@echo gnetlist Built
 
-gnetlist_install: libgeda_install \
-		  $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure \
+gnetlist_install: $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure \
 		  $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h \
 	          $(DIR_PREFIX)gnetlist$(CD_VERSION)/src/gnetlist
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} install )
@@ -381,8 +379,7 @@ gattrib: $(DIR_PREFIX)gattrib$(CD_VERSION)/configure \
 	$(DIR_PREFIX)gattrib$(CD_VERSION)/src/gattrib
 	@echo gattrib Built
 
-gattrib_install: libgeda_install \
-		  $(DIR_PREFIX)gattrib$(CD_VERSION)/configure \
+gattrib_install: $(DIR_PREFIX)gattrib$(CD_VERSION)/configure \
 		  $(DIR_PREFIX)gattrib$(CD_VERSION)/config.h \
 	          $(DIR_PREFIX)gattrib$(CD_VERSION)/src/gattrib
 	( cd $(DIR_PREFIX)gattrib$(CD_VERSION); ${MAKE} install )
@@ -425,8 +422,7 @@ gsymcheck: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure \
 	$(DIR_PREFIX)gsymcheck$(CD_VERSION)/src/gsymcheck
 	@echo gsymcheck Built 
 
-gsymcheck_install: libgeda_install \
-		   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure \
+gsymcheck_install: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure \
 		   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h \
 		   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/src/gsymcheck
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} install )
@@ -469,8 +465,7 @@ utils: $(DIR_PREFIX)utils$(CD_VERSION)/configure \
 	$(DIR_PREFIX)utils$(CD_VERSION)/src/gmk_sym
 	@echo utils Built 
 
-utils_install: libgeda_install \
-	       $(DIR_PREFIX)utils$(CD_VERSION)/configure \
+utils_install: $(DIR_PREFIX)utils$(CD_VERSION)/configure \
 	       $(DIR_PREFIX)utils$(CD_VERSION)/config.h \
 	       $(DIR_PREFIX)utils$(CD_VERSION)/src/gmk_sym
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} install )
@@ -623,8 +618,7 @@ libgeda_distcheck:
 libgeda_uninstall: libgeda$(CD_VERSION)/config.h 
 	( cd libgeda$(CD_VERSION); ${MAKE} uninstall )
 
-libgeda_install: symbols_install \
-                 libgeda$(CD_VERSION)/configure \
+libgeda_install: libgeda$(CD_VERSION)/configure \
 		 libgeda$(CD_VERSION)/config.h 
 	( cd libgeda$(CD_VERSION); ${MAKE} install )
 
@@ -761,7 +755,7 @@ $(DIR_PREFIX)gattrib$(CD_VERSION)/config.h:
 $(DIR_PREFIX)gattrib$(CD_VERSION)/configure: 
 	( cd $(DIR_PREFIX)gattrib$(CD_VERSION); ./autogen.sh )
 
-$(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc:
+$(DIR_PREFIX)symbols$(CD_VERSION)/system-gafrc:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
