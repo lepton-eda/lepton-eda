@@ -198,6 +198,15 @@ change_basename (GtkWidget *gtklist, TOPLEVEL *w_current)
         
         if (!dlist) {
             /* g_print("Selection cleared\n");*/
+
+	    /* erase any existing component while it's being placed */
+	    /* do this instead of the below o_redraw_all */
+	    if (w_current->inside_action && 
+			(w_current->event_state == ENDCOMP ||
+			 w_current->event_state == DRAWCOMP)) {
+			o_complex_rubbercomplex(w_current);
+	    }
+
    	    o_list_delete_rest(w_current, w_current->page_current->
 				complex_place_head);
 	    o_complex_set_filename(w_current, w_current->current_clib, 
@@ -205,11 +214,10 @@ change_basename (GtkWidget *gtklist, TOPLEVEL *w_current)
 	    /* this one is okay */
 	    w_current->event_state=SELECT;
 	    i_update_status(w_current, "Select Mode");
-	    o_redraw_all(w_current); 
-   	    /* hmmm.. I don't know if I like this hack */
-	    /* I don't know why the above update_status doesn't cause an 
-       	       expose */
-	/* and clear any old place xor away hack */
+
+	    /* this redraw all is no longer needed */
+	    /*o_redraw_all(w_current); */
+
             return(0);
         }
 

@@ -12,6 +12,9 @@ into the cvs repository.
 6/26/99 Fixed a bug dealing with the font-directory/scheme-directory/etc...
 	which broke opening up a second window
 
+	Fixed a visual annoyance: Place lots of components and inbetween
+	each place there would be a redraw.  Not necessary.  Fixed.
+
 6/25/99 Added the rc keyword "image-color" which controls if image is 
 	in color (enabled) or black and white (disabled)
 
