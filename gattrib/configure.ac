@@ -5,12 +5,12 @@ AC_PREREQ(2.53)
 
 PACKAGE=geda-gattrib
 GEDA_VERSION=20040710
-GATTRIB_VERSION=20040806
+GATTRIB_VERSION=20041120
 echo Configuring $PACKAGE version $GATTRIB_VERSION
 echo Part of gEDA version $GEDA_VERSION
 
 # Initialize automake -- use base gEDA version here
-AM_INIT_AUTOMAKE($PACKAGE, $GEDA_VERSION)
+AM_INIT_AUTOMAKE($PACKAGE, $GATTRIB_VERSION)
 AM_CONFIG_HEADER([config.h])
 
 # Initialize maintainer mode
