@@ -1035,8 +1035,8 @@ void o_arc_image_write(TOPLEVEL * w_current, OBJECT * o_current,
 
     final = max(width, height);
 
-    x = o_current->arc->screen_x + (final) / 2;
-    y = o_current->arc->screen_y + (final) / 2;
+    x = o_current->arc->screen_x;
+    y = o_current->arc->screen_y; 
 
 #ifdef HAS_LIBGDGEDA
     gdImageArc(current_im_ptr,
@@ -1083,6 +1083,10 @@ void o_arc_rotate(TOPLEVEL * w_current, int centerx, int centery,
 		  OBJECT * object)
 {
     int x, y, newx, newy;
+    int i, j;
+
+    i = object->arc->screen_x;
+    j = object->arc->screen_y;
 
     /* translate object to origin */
     o_arc_translate(w_current, -centerx, -centery, object);
@@ -1091,9 +1095,9 @@ void o_arc_rotate(TOPLEVEL * w_current, int centerx, int centery,
     x = object->arc->screen_x;
     y = object->arc->screen_y;
 
-    if (angle % 90 == 0)
+    if (angle % 90 == 0) 
 	rotate_point_90(x, y, angle, &newx, &newy);
-    else
+    else 
 	rotate_point(x, y, angle, &newx, &newy);
 
     object->arc->screen_x = newx;

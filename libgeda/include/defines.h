@@ -242,6 +242,10 @@
 #define LANDSCAPE		0
 #define PORTRAIT 		1
 
+/* for type to s_cue_output_all */
+#define POSTSCRIPT		0
+#define PNG			1
+
 /* for log-window keyword */ 
 #define MAP_LATER		0 
 #define MAP_ON_STARTUP		1 

@@ -378,6 +378,7 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 	o_current = o_current->next;
 	}
 
+	s_cue_output_all(w_current, head, fp, POSTSCRIPT);
 	return;
 }
 

@@ -1,5 +1,3 @@
-
-
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
  * Copyright (C) 1998-2000 Ales V. Hvezda

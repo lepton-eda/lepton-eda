@@ -1,7 +1,27 @@
+2001-03-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Fixed a few bugs dealing with the enabling and
+          disabling of features via the command line (pointed out by 
+	  Karel Kulhavy)
+	
+	* src/s_cue.c: Added file which contains the postscript and 
+	  the image output routines for the cues
+
+	* src/f_print.c: Added call to output the cues
+
+	* src/f_image.c: Added call to output the cues
+
+	* include/defines.h: Added #defines for cue output routines
+
+	* src/o_arc_basic.c: Fixed the image output of arcs
+
 2001-03-02  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_arc_basic.c: Fixed a bug pointed out by Bruno Schwander
 	  (Arcs were to thin compared to thin lines/boxes)
+
+	* src/o_circle_basic.c: Removed some line whitespace at the top
+	  of the file
 
 2001-03-01  Ales Hvezda  <ahvezda@geda.seul.org>
 

@@ -141,6 +141,8 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 	o_current = o_current->next;
 	}
 
+	s_cue_output_all(w_current, head, NULL, PNG);
+
 	return;
 }
 #endif
