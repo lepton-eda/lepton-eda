@@ -2749,12 +2749,12 @@ X_EXT=no
 fi
 
 
-if test "$CYGWIN" = no; then
+if test "$CYGWIN"x = x; then
 	if test "$X_LIBS" = no; then
           { echo "configure: error: Cannot find -lX11 library" 1>&2; exit 1; }
         fi
 else
-	echo X11 not required for CYGNUS
+	echo X11 not required for CYGWIN port
 fi
 
 echo $ac_n "checking for rint in -lm""... $ac_c" 1>&6
@@ -3887,8 +3887,7 @@ trap 'rm -fr `echo "
 	Makefile 
 	libgeda-config 
 	include/Makefile 
-	src/Makefile 
-	src/Makefilewin.in  config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
+	src/Makefile  config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
 
@@ -4009,8 +4008,7 @@ cat >> $CONFIG_STATUS <<EOF
 CONFIG_FILES=\${CONFIG_FILES-"Makefile 
 	libgeda-config 
 	include/Makefile 
-	src/Makefile 
-	src/Makefilewin.in "}
+	src/Makefile "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
 for ac_file in .. $CONFIG_FILES; do if test "x$ac_file" != x..; then

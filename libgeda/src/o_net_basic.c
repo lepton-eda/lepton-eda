@@ -924,16 +924,28 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 
 		printf("object DID have attributes\n");
 
+#if 0
+	printf("object->attribs\n");
+	o_attrib_print(object->attribs);
+	printf("--\n");
+	printf("del_object->attribs\n");
+	o_attrib_print(del_object->attribs);
+	printf("--\n");
+#endif
 				tail = o_attrib_return_tail(object->attribs);
 
 				/* skip over old attrib head */
 				tail->next = del_object->attribs->next;
 
 				/* step prev object to point to last object */
-				tail->next->prev = tail->next; 
+				tail->next->prev = tail; 
+
 
 				/* delete old attrib head */
 				/* and nothing else */
+				del_object->attribs->object=NULL;
+				del_object->attribs->next=NULL;
+				del_object->attribs->prev=NULL;
 				o_attrib_delete(del_object->attribs);
 
 				/* you don't need to free the attribs list */
@@ -941,6 +953,11 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 				/* attribs list */
 
 				del_object->attribs = NULL;
+#if 0
+	printf("\n\nfinal object->attribs\n");
+	o_attrib_print(object->attribs);
+	printf("--\n");
+#endif
 
 			} else {
 
@@ -1017,6 +1034,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 					o_net_recalc(w_current, object);
 					w_current->page_current->object_tail = 	
 						return_tail(w_current->page_current->object_head);
+					free(key);
 					return(-1);
 				}
 
@@ -1063,6 +1081,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 					o_net_recalc(w_current, object);
 					w_current->page_current->object_tail = 	
 						return_tail(w_current->page_current->object_head);
+					free(key);
 					return(-1);
 				}
 

@@ -2908,12 +2908,12 @@ X_EXT=no
 fi
 
 
-if test "$CYGWIN" = no; then
+if test "$CYGWIN"x = x; then
         if test "$X_LIBS" = no; then
           { echo "configure: error: Cannot find -lX11 library" 1>&2; exit 1; }
         fi
 else
-        echo X11 not required for CYGNUS
+        echo X11 not required for CYGWIN port
 fi
 
 echo $ac_n "checking for rint in -lm""... $ac_c" 1>&6

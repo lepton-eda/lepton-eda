@@ -541,58 +541,27 @@ g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 SCM
 g_get_toplevel_attribute(SCM scm_wanted_attrib)
 {
-#if 0
-	SCM scm_return_value;
-	NETLIST *nl_current;
 	char *wanted_attrib;
-	char *return_value=NULL;
+	char *return_value;
+	SCM scm_return_value;
 
-        wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+	wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
 
-	/* here is where you make it multi page aware */
-	nl_current = netlist_head;
-
-	/* search for the first instance */
-	/* through the entire list */
-	while(nl_current != NULL) {
-
-	      if (nl_current->component_uref) {
-		if (strcmp(nl_current->component_uref, uref) == 0) {
-
-			/* first search outside the symbol */
-			return_value = o_attrib_search_name_single(
-						    nl_current->object_ptr, 	
-						    wanted_attrib, NULL);
-
-			if (return_value) {
-				break;
-			}
-
-			/* now search inside the symbol */
-			return_value = o_attrib_search_name(
-					   nl_current->object_ptr->complex, 	
-					   wanted_attrib, 0);
-
-			break;
-		}
-	      }
-	      nl_current = nl_current->next;
-	}
+	return_value = o_attrib_search_toplevel_all(
+					project_current->page_head, 
+					wanted_attrib);
 
 	if (return_value) {
-		scm_return_value = gh_str2scm(return_value, 
-					       strlen(return_value));
+		scm_return_value = gh_str2scm(return_value, strlen(return_value));
+		free(return_value);
 	} else {
 		scm_return_value = gh_str2scm("unknown", 
 					       strlen("unknown"));
-
 	}
 
-	free(uref);
 	free(wanted_attrib);
 
 	return(scm_return_value);
-#endif
 }
 
 SCM 

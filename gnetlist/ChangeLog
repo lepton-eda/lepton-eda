@@ -7,7 +7,14 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+8/11/99	Added the real code to implement gnetlist:get-toplevel-attribute
+
+	Integrated Matt Ettus's bill of material code (cool stuff!)
+
 8/8/99 	Moved mk_verilog_syms to utils (created utils and Makefile.am)
+
+	Minor updates to example schematics since I renamed some of the
+	verilog symbols to have the -1 prefix.
 
 8/5/99	Added some stuff to configure.in for win32 builds
 

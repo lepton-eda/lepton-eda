@@ -1,0 +1,30 @@
+
+README for
+BOM - Bill Of Materials generater for gnetlist.
+
+--------------------------------------------------------------------------
+
+I (Matt) put together a quick bill of materials generator for gnetlist.
+It takes a configuration file which tells it what attributes you want
+netlisted (i.e. vendor, part number).
+
+This is a sample config file:
+
+device
+label
+name  
+
+Just call it with 
+        gnetlist  -g bom -o test.bom test.sch 
+
+The config file must be called "attribs" and be in the pwd, because
+there is no way to pass arguments to the netlister (at least that I
+could find).
+
+Eventually I'd like to integrate this with some sort of a database for
+production purposes.  Let me know if you are interested in helping or
+have any ideas.
+
+Matt
+matt@ettus.com
+

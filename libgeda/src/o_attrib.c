@@ -647,6 +647,7 @@ o_attrib_set_string(TOPLEVEL *w_current, char *string)
 /* counter is the nth occurance of the attribute, starts from ZERO! */
 /* zero being the first occurance */
 /* the list is the top level list... don't pass it an object_head list */
+/* unless you know what you are doing... */
 /* be sure caller free's return value */
 char *
 o_attrib_search_name(OBJECT *list, char *name, int counter) 
@@ -731,6 +732,7 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 /* counter is the nth occurance of the attribute, starts from ZERO! */
 /* zero being the first occurance */
 /* the list is the top level list... don't pass it an object_head list */
+/* unless you know what you are doing... */
 /* be sure caller free's return value */
 /* this needs a better name, but it's a special function of above which */
 /* returns the object where the attribute lives */
@@ -888,9 +890,62 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 	return (NULL);
 } 
 
+/* it is the responsibility of the caller to free the returned string */
+/* returned string is the value */
+/* counter is the nth occurance of the attribute, starts from ZERO! */
+/* zero being the first occurance */
+/* the list is the top level list... don't pass it an object_head list */
+/* unless you know what you are doing... */
+/* be sure caller free's return value */
+/* this function only search for toplevel attributes */
+char *
+o_attrib_search_toplevel(OBJECT *list, char *name, int counter) 
+{
+	OBJECT *o_current;
+	ATTRIB *a_current;
+	OBJECT *found;
+	int val;
+	int internal_counter=0;
+	char found_name[128]; /* limit hack */
+	char found_value[128];
+	char *return_string;
+
+	o_current = list;
+
+	while(o_current != NULL) {
+
+	/* search for attributes outside */
+
+		if (o_current->type == OBJ_NTEXT) {
+		 	val = o_attrib_get_name_value(
+					o_current->text_string, 
+					found_name, found_value);
+			if (val) {
+			   if (strcmp(name, found_name) == 0) {
+				if (counter != internal_counter) {
+					internal_counter++;	
+				} else {
+				   return_string = (char *) 
+						malloc(
+			     			 sizeof(char)*
+						 strlen(found_value)+1);
+				  strcpy(return_string, found_value);
+				  return(return_string);
+				}
+			   }
+			}	
+		}
+
+	  o_current=o_current->next;
+	}
+	
+	return (NULL);
+} 
+
 /* this function search for the counter'th occurance of the string attribute */
 /* be sure caller free's return value */
 /* this routine should NOT be used anywhere */
+#if 0
 OBJECT *
 o_attrib_search_attrib(OBJECT *list, char *attribute, int counter) 
 {
@@ -936,6 +991,7 @@ o_attrib_search_attrib(OBJECT *list, char *attribute, int counter)
 	
 	return (NULL);
 } 
+#endif
 
 
 OBJECT *
@@ -1442,4 +1498,70 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 		current_pin = strtok(NULL, DELIMITERS);
 	} 
 	free(slot_num);
+}
+
+/* returns the number of toplevel attributes in all loaded pages */
+int
+o_attrib_count_toplevel(TOPLEVEL *w_current, char *name)
+{
+	int ret_value=0;
+	int counter=0;
+	PAGE *p_current;
+	char *string;
+
+	p_current = w_current->page_head;
+
+	while(p_current != NULL) {
+
+		counter = 0;
+		string = o_attrib_search_name(p_current->object_head, 
+				name, counter); 
+	printf("%s %d\n", name, counter);
+		while(string) {
+			printf("inside\n");
+			ret_value++;
+			free(string);
+			string=NULL;
+			counter++;
+
+			string = o_attrib_search_name(p_current->object_head, 
+				name, counter); 
+		}
+
+		p_current=p_current->next;
+	}
+	return(ret_value);
+}
+
+/* search all loaded pages for first found toplevel attribute */
+/* caller is responsible to freeing returned value */
+/* see o_attrib_search_toplevel for other comments */
+char *
+o_attrib_search_toplevel_all(PAGE *page_head, char *name)
+{
+	PAGE *p_current;
+	char *ret_value=NULL;
+
+	p_current = page_head;
+
+	while (p_current != NULL) {
+
+
+		/* don't look into the head of page_head */
+		if (p_current->pid != -1) {
+
+			/* only look for first occurrance of the attribute */
+			ret_value = o_attrib_search_toplevel(
+						p_current->object_head, 
+						name, 0);
+		}
+
+		if (ret_value != NULL) {
+			return(ret_value);
+		}
+		
+		p_current = p_current->next;
+	}
+
+	return(NULL);
 }

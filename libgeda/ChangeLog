@@ -8,6 +8,18 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+8/11/99 Added o_attrib_search_toplevel which searches for toplevel attributes
+	in all loaded pages.
+
+	Fixed a fatal bug (core dump) in the o_net_consolidate_lowlevel
+	function (as well as a possible memory leak) that deal with
+	connecting nets together which both had attributes.
+
+	Fixed another memory leak in o_net_consolidate_*
+
+	Fixed configure.in to properly check for cygwin port and X11
+	libraries (for all other tools as well)
+
 8/5/99  Added some stuff to configure.in for win32 builds
 
 	Removed some bogus #includes <dirent.h> from a bunch of files

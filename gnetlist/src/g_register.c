@@ -69,7 +69,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("gnetlist:get-pins-nets", g_get_pins_nets);
 
 	gh_new_procedure2_0 ("gnetlist:get-package-attribute", g_get_package_attribute);
-	gh_new_procedure2_0 ("gnetlist:get-toplevel-attribute", g_get_toplevel_attribute);
+	gh_new_procedure1_0 ("gnetlist:get-toplevel-attribute", g_get_toplevel_attribute);
 	gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode);
 
 }
