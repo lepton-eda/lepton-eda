@@ -23,7 +23,7 @@
 
 ;; return the top level block name for the module
 (define verilog:get-module-name
-  ( gnetlist:get-toplevel-attribute "MODULE_NAME" ))
+  ( gnetlist:get-toplevel-attribute "module_name" ))
 
 ;; return a list of nets whose pins have the desired attribute name/value
 ;; pair
