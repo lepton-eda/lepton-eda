@@ -29,16 +29,18 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/globals.h"
 #include "../include/prototype.h"
 
 /* this is needed so that these routines know which window they are
  * changing */
-static TOPLEVEL *window_current;
+/* static TOPLEVEL *window_current; no longer needed */
 
 void
 set_window_current_key(TOPLEVEL *w_current)
 {
-	window_current = w_current;
+       /*window_current = w_current;*/
+       /* this function is now a nop, remove it */
 }
 
 /* for now this only supports single chars, not shift/alt/ctrl etc... */
@@ -112,7 +114,7 @@ g_key_execute(int state, int keyval)
 #define DEFINE_G_KEY(name)				\
 SCM g_key_ ## name(void)				\
 {							\
-	i_callback_ ## name(window_current, 0, NULL);	\
+	i_callback_ ## name(global_window_current, 0, NULL);	\
 	return SCM_BOOL_T;				\
 }
 
@@ -278,12 +280,12 @@ DEFINE_G_KEY(cancel)
 /*help for generate-netlist hot key*/
 SCM g_get_selected_filename(void)                     
 {                                                     
-	return (get_selected_filename(window_current, 0, NULL));
+	return (get_selected_filename(global_window_current, 0, NULL));
 }
 
 SCM g_get_selected_component_attributes(void)                 
 {                                                     
-	return (get_selected_component_attributes(window_current, 0, NULL));
+	return (get_selected_component_attributes(global_window_current, 0, NULL));
 }
 
 

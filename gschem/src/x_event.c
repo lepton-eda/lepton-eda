@@ -971,6 +971,9 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 	int new_height, new_width;
 	double cx,cy;
 
+        exit_if_null(w_current);
+        global_window_current = w_current;
+        
 	/* this callback is for drawing areas only! */
 	/* things like changing a label causes a resize */
 	/* this code is no longer needed.*/
@@ -1092,6 +1095,7 @@ aren't recalculated (hw) */
 void
 x_manual_resize(TOPLEVEL *w_current)
 {
+  
 	/* of the actual win window (drawing_area) */
 	w_current->win_width  = w_current->drawing_area->allocation.width;
         w_current->win_height = w_current->drawing_area->allocation.height;
@@ -1129,6 +1133,9 @@ x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
 	int new_left;
         GtkAdjustment        *hadjustment;
 
+        exit_if_null(w_current);
+        global_window_current = w_current;
+
 	if (w_current->scrollbars_flag == FALSE) {
 		return;
 	}
@@ -1158,6 +1165,9 @@ x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
 	int new_bottom;
         GtkAdjustment        *vadjustment;
 
+        exit_if_null(w_current);
+        global_window_current = w_current;
+        
 	if (w_current->scrollbars_flag == FALSE) {
 		return;
 	}
@@ -1190,6 +1200,8 @@ gint
 x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
 	TOPLEVEL *w_current)
 {
+	exit_if_null(w_current);
+        global_window_current = w_current;
 	/* do nothing or now */
 	return(0);
 }
