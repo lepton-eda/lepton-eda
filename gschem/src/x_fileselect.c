@@ -1038,7 +1038,7 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
         while(!done) {
 		done = 1;
 		for (j = first ; j < last-1; j++) {
-			printf ("%i:",j);
+			/*printf ("%i:",j);*/
 			if (strcmp(f_current->directory_entries[j], 
 			           f_current->directory_entries[j+1]) > 0) {
 				temp = f_current->directory_entries[j];
