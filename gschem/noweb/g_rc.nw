@@ -108,6 +108,7 @@
 <<g_rc.c : g_rc_bus_ripper_type()>>
 <<g_rc.c : g_rc_bus_ripper_symname()>>
 <<g_rc.c : g_rc_bus_ripper_rotation()>>
+<<g_rc.c : g_rc_force_boundingbox()>>
 
 @
 
@@ -2835,4 +2836,25 @@ g_rc_bus_ripper_rotation(SCM mode)
 
 
 @ %def g_rc_bus_ripper_rotation
+
+
+@section Function @code{g_rc_force_boundingbox()}
+
+@defun g_rc_force_boundingbox mode
+@end defun
+
+<<g_rc.c : g_rc_force_boundingbox()>>=
+SCM
+g_rc_force_boundingbox(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE,  "enabled" },
+    {FALSE, "disabled"  }
+  };
+
+  RETURN_G_RC_MODE("force-boundingbox", default_force_boundingbox, 2);
+}
+
+
+@ %def g_rc_force_boundingbox
 

@@ -246,6 +246,7 @@ SCM g_rc_bus_ripper_size(SCM size);
 SCM g_rc_bus_ripper_type(SCM mode);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_bus_ripper_rotation(SCM mode);
+SCM g_rc_force_boundingbox(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

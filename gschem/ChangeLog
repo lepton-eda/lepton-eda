@@ -14,6 +14,12 @@
         * configure and friends: Ran "autoreconf --force --install -v" 
         to really upgrade to the auto* tools.
 
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw, include/i_vars.h: Added
+	force-boundingbox gschemrc rc variable.  Controls if the bounding
+	box is used in the pin auto whichend code.
+
+	* lib/system-gschemrc.in: Added default for force-boundingbox variable
+
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw, i_vars.h: Added the 
