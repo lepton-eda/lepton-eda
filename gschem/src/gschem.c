@@ -167,10 +167,6 @@ main_prog(int argc, char *argv[])
 			       argv[i]);
 #endif
 
-			w_current->DONT_REDRAW = 1;
-			/* this needed so that display is shown
-			 * properly with negative coords */
-			w_current->DONT_RECALC = 1;
 			if (!quiet_mode) {
 				printf("Loading schematic [%s]\n", argv[i]);
 			}
@@ -181,12 +177,15 @@ main_prog(int argc, char *argv[])
 				       w_current->page_current->page_filename);
 
 			a_zoom_limits(w_current,
-				      w_current->page_current->object_head);
+				      w_current->page_current->object_head,
+				      A_PAN_DONT_REDRAW);
 			o_undo_savestate(w_current, UNDO_ALL);
 
+#if 0
 			/* now update the scrollbars */
 			x_hscrollbar_update(w_current);
 			x_vscrollbar_update(w_current);
+#endif
 
 			first_page = 0;
 		} else {
@@ -203,11 +202,15 @@ main_prog(int argc, char *argv[])
 				i_set_filename(w_current,
 				       w_current->page_current->page_filename);
 				a_zoom_limits(w_current,
-				      w_current->page_current->object_head);
+				      w_current->page_current->object_head,
+				      A_PAN_DONT_REDRAW);
 			        o_undo_savestate(w_current, UNDO_ALL);
+
 				/* now update the scrollbars */
+#if 0
 				x_hscrollbar_update(w_current);
 				x_vscrollbar_update(w_current);
+#endif
 			}
 		}
 		i++;
@@ -240,12 +243,11 @@ main_prog(int argc, char *argv[])
 			       w_current->page_current->page_filename);
 
 		/* update the scrollbars */
+#if 0
 		x_hscrollbar_update(w_current);
 		x_vscrollbar_update(w_current);
+#endif
         }
-
-	w_current->DONT_REDRAW = 0;
-	w_current->DONT_RECALC = 0;
 
 	o_redraw_all(w_current);
 
