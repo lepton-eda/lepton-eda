@@ -1,3 +1,85 @@
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 4000/*.sym: Ran gsymupdate on all symbols
+
+	* 4000/4585-1.sym, 40181-1.sym, 4062-1.sym, 4063-1.sym:  Oops, 
+	gsymupdate broke these symbols because it was choking on the =
+	in label= attributes. Fixed.
+
+	* 74/*.sym: Ran gsymupdate on all symbols
+
+	* altera/*.sym: Ran gsymupdate on all symbols
+
+	* analog/*.sym: Ran gsymupdate on all symbols
+
+	* bus/*.sym: Ran gsymupdate on all symbols
+
+	* connector/*.sym: Ran gsymupdate on all symbols
+
+	* dec/*.sym: Ran gsymupdate on all symbols
+
+	* diode/*.sym: Ran gsymupdate on all symbols
+
+	* ecl/*.sym: Ran gsymupdate on all symbols
+
+	* idt/*.sym: Ran gsymupdate on all symbols
+
+	* io/*.sym: Ran gsymupdate on all symbols
+
+	* lattice/*.sym: Ran gsymupdate on all symbols
+
+	* linear/*.sym: Ran gsymupdate on all symbols
+
+	* linear/lm2941-1.sym: Added missing pinlabel= (had values, but no
+	pinlabel= name).
+
+	* linear/lm7805-2.sym lm78l05-1.sym lm78l05c-1.sym lm7905-1.sym
+	lm7805c-1.sym lm78l05ac-1.sym lm78m05-1.sym lm79m05-1.sym: Removed
+	symbols from distribution because they are wrong.  I got a bug fix
+	for each of these symbols from Hans Nieuwenhuis, but when I went
+	to verify them, I found conflicting information.
+
+	* maxim/*.sym: Ran gsymupdate on all symbols
+
+	* memory/*.sym: Ran gsymupdate on all symbols
+
+	* misc/*.sym: Ran gsymupdate on all symbols
+
+	* national/*.sym: Ran gsymupdate on all symbols
+
+	* opto/*.sym: Ran gsymupdate on all symbols
+
+	* pla/*.sym: Ran gsymupdate on all symbols
+
+	* power/*.sym: Ran gsymupdate on all symbols
+
+	* radio/*.sym: Ran gsymupdate on all symbols
+
+	* relay/*.sym: Ran gsymupdate on all symbols
+
+	* rf/*.sym: Ran gsymupdate on all symbols
+
+	* spice/*.sym: Ran gsymupdate on all symbols
+
+	* supervisor/*.sym: Ran gsymupdate on all symbols
+
+	* switch/*.sym: Ran gsymupdate on all symbols
+
+	* titleblock/*.sym: Ran gsymupdate on all symbols
+
+	* transistor/*.sym: Ran gsymupdate on all symbols
+
+	* tube/*.sym: Ran gsymupdate on all symbols
+
+	* verilog/*.sym: Ran gsymupdate on all symbols
+
+	* vhdl/*.sym: Ran gsymupdate on all symbols
+
+	* xilinx/*.sym: Ran gsymupdate on all symbols
+
+	* font/*.sym: Very carefully updated all font defs to the latest
+	version using gsymupdate (used fontupdate)
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Added gesym-config-install target
