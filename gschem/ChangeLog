@@ -17,6 +17,9 @@ into the cvs repository.
 
 	* src/a_zoom.c: Removed one last unused reference to zoom_factor
 
+	* src/configure.in: Added back the lines (saved_cflags etc...)
+	  which caused debug output to be included in the build
+
 2000-12-09  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_net.c: Removed all trace of zoom_factor

@@ -80,6 +80,9 @@ AC_CHECK_LIB(guile, scm_hook_empty_p,,
 dnl Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
 LIBS="$ac_save_LIBS"
 
+saved_cflags="$CFLAGS"
+saved_ldflags="$LDFLAGS"
+
 dnl Checks for header files.
 AC_PATH_X
 AC_PATH_XTRA
