@@ -109,7 +109,9 @@ o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
 			         &rleft, &rtop, 
 			         &rright, &rbottom);
 
-	x = rleft; y = rtop;
+	/* snap x and y to the grid, pointed out by Martin Benes */
+        x = snap_grid(w_current, rleft);
+        y = snap_grid(w_current, rtop);
 
 	o_complex_world_translate(w_current, -x, -y, object_buffer[buf_num]);
 

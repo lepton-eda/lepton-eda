@@ -203,8 +203,6 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 	object = o_select_return_first_object(w_current); 
 	attrib = o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
-	/* o_attrib_add_attrib can return NULL if you try to attach an */
-	/* attribute to another text item */
 	if (attrib != NULL) {
 		gtk_clist_set_row_data(GTK_CLIST(clist),row,attrib);
 		multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));
@@ -787,16 +785,13 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 		object = o_select_return_first_object(w_current);
 		new=o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
-		/* o_attrib_add_attrib can return NULL if you try to */
-		/* attach the attribute to another text item */
-		if (new != NULL) {
-			SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
-			new->x=world_x;
-			new->y=world_y;
-                	o_text_erase(w_current, new);
-                	o_text_recreate(w_current, new);
-                	o_text_draw(w_current, new);
-		}
+		SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
+		new->x=world_x;
+		new->y=world_y;
+                o_text_erase(w_current, new);
+                o_text_recreate(w_current, new);
+                o_text_draw(w_current, new);
+
 	} else {
 		o_text_change(w_current,attribptr,newtext,vis,show);
 	}

@@ -9,6 +9,24 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-06-08  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_buffer.c: Fixed bug which was causing buffers which are
+	  pasted to be misaligned
+
+	* src/x_dialog.c, src/o_attrib.c: Changed the bug fix with 
+	  o_attrib_add_attrib and gschem crashing to now just not attach
+	  the attribute, now o_attrib_add_attrib cannot return NULL (returns
+	  the new text object always) 
+
+	* src/o_attrib.c: For some odd reason I wasn't using the color 
+	  variable in o_attrib_add_attrib, fixed that.	Also attributes
+	  which are floating should not be yellow (attached color),
+	  so they are now red which signify a floating attrib.  It is the
+	  user's responsibility to change the color to something else.
+	  The red is meant as a warning that this attribute isn't attached
+	  to anything.
+
 2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Made net-consolidate enabled by default

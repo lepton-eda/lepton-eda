@@ -307,15 +307,18 @@ o_attrib_rubberattrib(TOPLEVEL *w_current)
 		       x_get_color(w_current->bb_color));
 }
 
-/* This function can return NULL if you try to attach an attribute to */
-/* another attribute/text item so always check for NULL */
+/* This function no longer returns NULL, but will always return the new */
+/* text item */
 OBJECT *
 o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, 
-	            int show_name_value, OBJECT *o_current)
+	            int show_name_value, OBJECT *object)
 {
         int world_x=-1, world_y=-1;
 	int color;
 	int left, right, top, bottom;
+	OBJECT *o_current;
+
+	o_current = object;
 
 	/* creating a toplevel or unattached attribute */
 	if (o_current) {
@@ -325,11 +328,13 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
 			case(OBJ_ARC):
 				world_x = o_current->x;
 				world_y = o_current->y;
+				color = w_current->attribute_color;
 			break;
 
 			case(OBJ_CIRCLE):
 				world_x = o_current->circle->center_x;
 				world_y = o_current->circle->center_y;
+				color = w_current->attribute_color;
 			break;
 
 
@@ -340,16 +345,25 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
 			case(OBJ_BUS):
 				world_x = o_current->line_points->x1;
 				world_y = o_current->line_points->y1;
+				color = w_current->attribute_color;
 			break;
 
 			case(OBJ_TEXT):
-				s_log_message("Cannot attach attribute to text item\n");
-				return(NULL);
+
+				world_x = o_current->x;
+				world_y = o_current->y;
+			
+				color = w_current->detachedattr_color;
+				o_current = NULL;	
+			
+#if 0 /* don't error out, instead treat text like another OBJECT, but */
+/* don't attach it anywhere */
+/* s_log_message("Cannot attach attribute to text item\n");*/
+/* return(NULL);*/
+#endif
 			break;
 		}
-		color = w_current->attribute_color;
 	} else {
-		color = w_current->detachedattr_color;
 		world_get_complex_bounds(w_current, 
 					 w_current->page_current->object_head,
                                  	 &left, &top, &right, &bottom);
@@ -359,12 +373,13 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
 		world_y = top;  
 
 		/* printf("%d %d\n", world_x, world_y); */
+		color = w_current->detachedattr_color;
 	}
 
         /* first create text item */
         w_current->page_current->object_tail =
                 o_text_add(w_current, w_current->page_current->object_tail,
-                           OBJ_TEXT, w_current->attribute_color,
+                           OBJ_TEXT, color,
                            world_x,
                            world_y,
 			   LOWER_LEFT,
