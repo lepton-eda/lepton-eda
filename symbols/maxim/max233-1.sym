@@ -162,3 +162,7 @@ pin12=12
 T 1900 1050 5 10 1 1 0 0
 label=C2+
 }
+T 500 2100 8 10 0 1 0 0
+footprint=SO20\
+T 800 1600 8 10 0 1 0 0
+footprint2=DIP20

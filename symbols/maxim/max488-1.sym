@@ -92,3 +92,7 @@ pin1=1
 }
 T 1250 550 8 10 1 1 0 0
 uref=U?
+T 1800 2500 8 10 0 1 0 0
+footprint=SO8
+T 2100 2000 8 10 0 1 0 0
+footprint2=DIP8
