@@ -2,6 +2,12 @@
 
 	* switch, linear: Added two new symbols by Vladimir Dergachev.
 
+	* font/colon.sym, comma.sym, excl.sym, quest.sym, semi.sym:
+	Changed the graphical representation to be a little larger.
+	Mauricio de Alencar did the actual work.
+
+	* titleblock: Added a bunch of titleblocks by Eric Winsor.
+
 2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* system-commonrc.in: Add bitmap-directory rc keyword

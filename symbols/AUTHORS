@@ -491,6 +491,19 @@ Vladimir Dergachev	- For contributing the following symbols:
 
 				switch-spdt-1.sym ltc1799-1.sym
 
+Mauricio de Alencar 	- For improving the following font defs:
+
+        			colon.sym comma.sym excl.sym quest.sym
+				semi.sym period.sym
+
+Eric Winsor		- For contributing the following symbols:
+
+				title-bordered-A.sym title-bordered-A3.sym
+				title-bordered-D.sym title-bordered-A0.sym
+				title-bordered-A4.sym
+				title-bordered-E.sym title-bordered-A1.sym
+				title-bordered-B.sym title-bordered-A2.sym
+				title-bordered-C.sym
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

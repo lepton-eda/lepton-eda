@@ -4139,12 +4139,6 @@ DEFINE_I_CALLBACK(cancel)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
-  
-  if (w_current->inside_action) { /* highly temp */
-     o_redraw_all(w_current); /* do I want to deselect sel */
-  }
-
-  w_current->inside_action=0;
 
   /* leave this on for now... but it might have to change */
   /* this is problematic since we don't know what the right mode */
@@ -4161,6 +4155,10 @@ DEFINE_I_CALLBACK(cancel)
   set_cursor_normal();
 #endif
 
+  if (w_current->inside_action) { 
+     o_redraw_all(w_current); 
+  }
+
   /* it is possible to cancel in the middle of a complex place
    * so lets be sure to clean up the complex_place_head
    * structure and also clean up the attrib_place_head.
@@ -4172,6 +4170,8 @@ DEFINE_I_CALLBACK(cancel)
 
   /* also free internal current_attribute */
   o_attrib_free_current(w_current);
+
+  w_current->inside_action=0;
 }
 
 

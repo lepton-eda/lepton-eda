@@ -6,6 +6,8 @@
         * src/g_rc.c, g_register.c, i_vars.c, s_project.c: Added the missing
         bitmap-directory keyword
 
+        * src/g_rc.c: A few more fixes for the mingw32 port.
+
 2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Changed the function which is search for libpng.

@@ -8,6 +8,8 @@
 
 	* src/Makefile.am: Added proto target (for making prototype.h)
 
+	* src/g_rc.c: A few more fixes for the mingw32 port.
+
 2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_rc.c: Missed a few hardcoded /'s, fixed.
