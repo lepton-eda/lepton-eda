@@ -1,3 +1,8 @@
+2001-11-25  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/o_arc_basic.nw: Corrected a bug about arc mirroring due to 
+	the last changes (2001-11-21) : my fault.
+
 2001-11-21  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* configure.in, Makefile.am: Added test to use notangle_guile.scm
