@@ -6,6 +6,8 @@
 	* pads_backannotate: Added Dan's documentation for the
 	backannotation script (by Dan McMahill).
 
+	* switcap/Makefile.am: Added missing *.ps to distribution
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Improved the configuration summary message.

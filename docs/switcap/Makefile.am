@@ -14,6 +14,9 @@ EXTRA_DIST = $(docname).tex $(BUILT_SOURCES)  \
 	analysis.eps \
 	ckt.eps \
 	clocks.eps \
+	analysis.ps \
+	ckt.ps \
+	clocks.ps \
 	gwave_out_sss.ps \
 	gwave_out_tran.ps
 
