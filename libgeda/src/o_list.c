@@ -137,10 +137,12 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 	w_current->page_current->object_parent = dest_list_head;
 
 	if (dest == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
 	if (src == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
@@ -165,10 +167,12 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 	/*dest = dest_list_head; out since we want to add to the end */
 
 	if (dest == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
 	if (src == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
@@ -228,10 +232,12 @@ o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head,
 	w_current->page_current->object_parent = dest_list_head;
 
 	if (dest == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
 	if (src == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
@@ -263,10 +269,12 @@ o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head,
 	/*dest = dest_list_head; out since we want to add to the end */
 
 	if (dest == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
 	if (src == NULL) {
+		w_current->page_current->object_parent = temp_parent;
 		return(NULL);
 	}
 
