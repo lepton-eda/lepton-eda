@@ -31,7 +31,7 @@
   (lambda (port)
     (let ((read-from-file (read port)))
       (if (not (eof-object? read-from-file))
-          (cons read-from-file (drc:parseconfig port))
+          (cons (symbol->string read-from-file) (drc:parseconfig port))
           '()))))
 
 (define drc:attriblist
