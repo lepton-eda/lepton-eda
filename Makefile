@@ -5,7 +5,7 @@ SHELL=/bin/sh
 #
 # Change this to the real version of the distribution
 #
-VERSION=20020512
+VERSION=20020527
 
 # 
 # Use this when you are building the CVS version
