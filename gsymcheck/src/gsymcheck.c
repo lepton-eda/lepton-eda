@@ -20,6 +20,7 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <sys/stat.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -29,6 +30,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -36,10 +38,10 @@
 void
 gsymcheck_quit(void)
 {
-	s_clib_cache_free();
-        s_clib_free();
-        s_slib_free();
-        /* o_text_freeallfonts();*/
+  s_clib_cache_free();
+  s_clib_free();
+  s_slib_free();
+  /* o_text_freeallfonts();*/
 
 }
 
@@ -51,7 +53,9 @@ main_prog(int argc, char *argv[])
   int first_page=1;
   int errors;
   char *cwd;
-
+  int status;
+  struct stat buf;
+  
   TOPLEVEL *pr_current;
 
   argv_index = parse_commandline(argc, argv);
@@ -67,24 +71,17 @@ main_prog(int argc, char *argv[])
   s_log_init(cwd, "gsymcheck.log");
   free(cwd);
 	
-  s_log_message(
-                "gEDA/gsymcheck version %s\n", VERSION);
-  s_log_message(
-                "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
-  s_log_message(
-                "This is free software, and you are welcome to redistribute it under certain\n");
-  s_log_message(
-                "conditions; please see the COPYING file for more details.\n\n"); 
 
-  if (!quiet_mode) {
-    fprintf(stderr, 
-            "gEDA/symcheck version %s\n", VERSION);
-    fprintf(stderr, 
-            "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
-    fprintf(stderr, 
-            "This is free software, and you are welcome to redistribute it under certain\n");
-    fprintf(stderr, 
-            "conditions; please see the COPYING file for more details.\n\n"); 
+  if (!quiet_mode)
+  {
+    s_log_message(
+                  "gEDA/gsymcheck version %s\n", VERSION);
+    s_log_message(
+                  "gEDA/symcheck comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+    s_log_message(
+                  "This is free software, and you are welcome to redistribute it under certain\n");
+    s_log_message(
+                  "conditions; please see the COPYING file for more details.\n\n"); 
   }
 
 #ifdef __MINGW32__
@@ -102,36 +99,43 @@ main_prog(int argc, char *argv[])
   pr_current = s_project_create_new();
 
   i = argv_index;
+  
   while (argv[i] != NULL) {
-    if (first_page) {
-      if (pr_current->page_current->page_filename) {
-        free(pr_current->page_current->page_filename);
-      }
-
-      /* Page structure has already been created... */	
-      /* so, just set the filename and open the schematic */
-      /* for the first page */
-
-      pr_current->page_current->page_filename = malloc(
-                                                       sizeof(char)*strlen(argv[i])+5);
-      strcpy(pr_current->page_current->page_filename, 
-             argv[i]);
-
-      if (verbose_mode) {
-        printf("Loading file [%s]\n", argv[i]);
-      }
-      f_open(pr_current, pr_current->page_current->page_filename);
-      first_page = 0;
+    
+    if (stat(argv[i], &buf) != 0) {
+      s_log_message("Could not open [%s]\n", argv[i]);
     } else {
+    
+      if (first_page) {
+        if (pr_current->page_current->page_filename) {
+          free(pr_current->page_current->page_filename);
+        }
 
-      /* now are there any other filenames specified? */
-      /* Much simpler	*/
-      if (verbose_mode) {
-        printf("Loading file [%s]\n", argv[i]);
-      }
-      if (!s_page_new(pr_current, argv[i])) {
-        f_open(pr_current, pr_current->
-               page_current->page_filename);
+        /* Page structure has already been created... */	
+        /* so, just set the filename and open the schematic */
+        /* for the first page */
+
+        pr_current->page_current->page_filename =
+          malloc(sizeof(char)*strlen(argv[i])+5);
+        strcpy(pr_current->page_current->page_filename, 
+               argv[i]);
+
+        if (verbose_mode) {
+          s_log_message("Loading file [%s]\n", argv[i]);
+        }
+        f_open(pr_current, pr_current->page_current->page_filename);
+        first_page = 0;
+      } else {
+
+        /* now are there any other filenames specified? */
+        /* Much simpler	*/
+        if (verbose_mode) {
+          s_log_message("Loading file [%s]\n", argv[i]);
+        }
+        if (!s_page_new(pr_current, argv[i])) {
+          f_open(pr_current, pr_current->
+                 page_current->page_filename);
+        }
       }
     }
     i++;
@@ -146,7 +150,7 @@ main_prog(int argc, char *argv[])
   s_page_print_all(pr_current);
 #endif
 
-  if (verbose_mode) printf("\n");
+  if (verbose_mode) s_log_message("\n");
 
   errors = s_check_all(pr_current);
   

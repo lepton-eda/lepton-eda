@@ -1,3 +1,26 @@
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added new file to hold gsymcheck specific 
+	structures
+
+	* src/s_check.c, s_symstruct.c: Added #include for above
+
+	* src/*.c: Went through and re-indented most functions
+	
+	* src/*.c: Started expanding tests to include missing pinseq,
+	missing pinnumber, found old pin/slot attributes. (not completely
+	done; some functions stubbed)
+
+	* src/globals.c: Added s_update_log function so that we can log
+	s_log_messages
+
+	* src/*.c: Changed all fprintfs to s_log_messages
+
+	* src/gsymcheck.c: Cleanup in main_prog, don't load files which
+	don't exist
+
+	* src/s_check.c: Minor reorg, refactoring some of the functions
+	
 2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * src/g_rc.c, gnetlist.c: Added a call to u_basic_strip_trailing to

@@ -17,6 +17,7 @@ SCM g_rc_paper_size(SCM width, SCM height, SCM border);
 void g_register_funcs(void);
 SCM g_quit(void);
 /* globals.c */
+void s_log_update(char *buf);
 /* gsymcheck.c */
 void gsymcheck_quit(void);
 void main_prog(int argc, char *argv[]);
@@ -27,6 +28,12 @@ int parse_commandline(int argc, char *argv[]);
 /* s_check.c */
 int s_check_all(TOPLEVEL *pr_current);
 int s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head);
+void s_check_graphical(OBJECT *o_current, SYMCHECK *s_current);
+int s_check_device(OBJECT *o_current, SYMCHECK *s_current);
+void s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current);
+void s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current);
+void s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current);
+void s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current);
 /* s_project.c */
 TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
 void s_project_add_head(void);

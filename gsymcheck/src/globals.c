@@ -23,6 +23,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/struct.h"
 #include "../include/prototype.h"
 
 
@@ -39,7 +40,7 @@ GdkColor black;
 
 int logfile_fd=-1;
 int do_logging=TRUE;
-int logging_dest=LOG_WINDOW;
+int logging_dest=STDOUT_TTY;
 
 /* these are required by libgeda */
 void (*arc_draw_func)() = o_arc_recalc;
@@ -52,13 +53,27 @@ void (*text_draw_func)() = o_text_recalc;
 void (*bus_draw_func)() = o_bus_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
 void (*select_func)() = NULL;
-void (*x_log_update_func)() = NULL;
-
+void (*x_log_update_func)() = s_log_update;
 
 /* command line arguments */
 int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
+
+void s_log_update(char *buf)
+{
+  int nchars;
+
+  if (do_logging == FALSE) {
+    return;
+  }
+
+  if (buf == NULL) {
+    return;
+  }
+
+  fputs(buf, stdout);
+}
 
 
  

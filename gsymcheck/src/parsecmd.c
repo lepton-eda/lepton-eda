@@ -26,6 +26,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -52,39 +53,39 @@ usage(char *cmd)
 int
 parse_commandline(int argc, char *argv[])
 {
-	int ch;
+  int ch;
 
-	while ((ch = getopt (argc, argv, OPTIONS)) != -1) {
-		switch (ch) {
+  while ((ch = getopt (argc, argv, OPTIONS)) != -1) {
+    switch (ch) {
 
-			case 'v':
-				verbose_mode=TRUE;
-			break;
+      case 'v':
+        verbose_mode=TRUE;
+        break;
 
-			case 'q':
-				quiet_mode=TRUE;
-			break;
+      case 'q':
+        quiet_mode=TRUE;
+        break;
 
 #if 0
-			case 'f':
-				printf("f arg: %s\n", optarg);
-			break;
+      case 'f':
+        printf("f arg: %s\n", optarg);
+        break;
 #endif
 
-			case 'h':
-				usage(argv[0]);
-			break;
+      case 'h':
+        usage(argv[0]);
+        break;
 
-			case '?':
-			default:
-				usage(argv[0]);
-			break;
-		}
-	}
+      case '?':
+      default:
+        usage(argv[0]);
+        break;
+    }
+  }
 
-	if (quiet_mode) {
-		verbose_mode = FALSE;
-	}
+  if (quiet_mode) {
+    verbose_mode = FALSE;
+  }
 
-	return(optind);
+  return(optind);
 }

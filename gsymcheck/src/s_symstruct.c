@@ -26,27 +26,32 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
-
 
 /* call this for every symbol that needs to be checked */
 SYMCHECK *
 s_symstruct_init(void)
 {
-	SYMCHECK *s_symcheck;
+  SYMCHECK *s_symcheck;
 	
-	s_symcheck = (SYMCHECK *) malloc(sizeof(SYMCHECK));
+  s_symcheck = (SYMCHECK *) malloc(sizeof(SYMCHECK));
 
-	s_symcheck->graphical_symbol=FALSE;
-        s_symcheck->missing_device_attrib=FALSE;
-        s_symcheck->device_attribute_incorrect=FALSE;
-        s_symcheck->device_attribute=NULL;
-        s_symcheck->missing_pin_attrib=FALSE;
-        s_symcheck->missing_numslots_attrib=FALSE;
-        s_symcheck->unattached_attribs=FALSE;
+  s_symcheck->graphical_symbol=FALSE;
+  s_symcheck->missing_device_attrib=FALSE;
+  s_symcheck->device_attribute_incorrect=FALSE;
+  s_symcheck->device_attribute=NULL;
+  s_symcheck->missing_pinseq_attrib=FALSE;
+  s_symcheck->multiple_pinseq_attrib=FALSE;
+  s_symcheck->missing_pinnumber_attrib=FALSE;
+  s_symcheck->multiple_pinnumber_attrib=FALSE;
+  s_symcheck->missing_numslots_attrib=FALSE;
+  s_symcheck->found_oldpin_attrib=FALSE;
+  s_symcheck->found_oldslot_attrib=FALSE;
+  s_symcheck->unattached_attribs=FALSE;
 
-	return(s_symcheck);
+  return(s_symcheck);
 }
 
 /* return 1 if there were errors */
@@ -54,33 +59,65 @@ s_symstruct_init(void)
 int
 s_symstruct_print(SYMCHECK *s_current)
 {
-	int status=0;
+  int status=0;
+  
+  if (s_current->device_attribute) {
+    if (verbose_mode) s_log_message("- INFO: device attribute = %s\n",
+                             s_current->device_attribute);
+  }
+  
+  if (s_current->graphical_symbol) {
+    if (verbose_mode) s_log_message("  - INFO: graphical symbol\n");
+  }
 
-	if (s_current->graphical_symbol) {
-		if (verbose_mode) printf("  - graphical symbol\n");
-	}
+  if (s_current->missing_device_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: missing device attribute\n");
+    status++;
+  }
 
-	if (s_current->missing_device_attrib) {
-		if (verbose_mode) printf("  - ERROR: missing device attribute\n");
-		status++;
-	}
+  if (s_current->missing_pinseq_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: missing pinseq attribute(s)\n");
+    status++;
+  }
 
-	if (verbose_mode && s_current->device_attribute) {
-		printf("  - device attribute = %s\n", s_current->device_attribute);
-	}
+  if (s_current->multiple_pinseq_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: multiple pinseq attributes on a single pin\n");
+    status++;
+  }
+  
+  if (s_current->missing_pinnumber_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: missing pinnumber attribute(s)\n");
+    status++;
+  }
 
-	return(status);
+  if (s_current->multiple_pinnumber_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: multiple pinnumber attributes on a single pin\n");
+    status++;
+  }
+
+  if (s_current->found_oldpin_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: found old pin#=# attribute(s)\n");
+    status++;
+  }
+
+  if (s_current->found_oldslot_attrib) {
+    if (verbose_mode) s_log_message(" - ERROR: found old pin#=# attribute(s)\n");
+    status++;
+  }
+
+
+  return(status);
 }
 
 void
 s_symstruct_free(SYMCHECK *s_current)
 {
-	if (s_current) {
+  if (s_current) {
 
-		if (s_current->device_attribute) {
-			free(s_current->device_attribute);
-		}
+    if (s_current->device_attribute) {
+      free(s_current->device_attribute);
+    }
 
-		free(s_current);
-	}
+    free(s_current);
+  }
 }
