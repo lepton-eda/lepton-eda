@@ -3,6 +3,8 @@
 	* scripts/gschemdoc.sh: Changed the manual which is brought up when
 	you run gschemdoc -m (from gschem.txt go gedadocs.html)
 
+	* scripts/gschemdoc.sh: Added phoenix to the list of browsers
+
 2002-10-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/olib.l geda_sym_format.h: Added Mario Pascucci's olib converter.
