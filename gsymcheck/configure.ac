@@ -1,7 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([src/gsymcheck.c])
-AC_CONFIG_HEADER([config.h])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gsymcheck
@@ -10,6 +9,7 @@ echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+AM_CONFIG_HEADER([config.h])
 
 # Initialize maintainer mode
 AM_MAINTAINER_MODE

@@ -1,7 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([include/libgeda.h])
-AC_CONFIG_HEADER([config.h])
 AC_PREREQ(2.54)
 
 PACKAGE=libgeda
@@ -11,6 +10,7 @@ echo Configuring $PACKAGE version $VERSION
 
 # Init automake
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_CONFIG_HEADER([config.h])
 
 # Init libtool
 AM_PROG_LIBTOOL

@@ -1,3 +1,7 @@
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Removed redundant tests (gtk+, guile) and improved
