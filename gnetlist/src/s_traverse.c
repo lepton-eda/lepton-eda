@@ -128,6 +128,7 @@ if (verbose_mode) {
 
 						/* here you look for the other special tags like gnd, vcc */
 						netlist->component_uref = o_attrib_search_special(o_current);
+	printf("%s\n", netlist->component_uref);
 						if (!netlist->component_uref) {
 							fprintf(stderr, "Could not find uref on component and could not find any special attributes!\n");
 							netlist->component_uref = (char *) malloc (sizeof(char)*strlen("U?")+1);

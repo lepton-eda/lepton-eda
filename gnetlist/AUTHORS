@@ -16,6 +16,8 @@ Thien-Thi Nguyen	 - Patch to gnetlist adding newlines for
 Mike Jarabek		- For contributing the backend verilog netlister
                           (for use with gnetlist)
 
+			  For providing an updated version (19990629) of above
+
 Nuno Sucena             - For contributing the TANGO gnetlist backend
 
 Bas Gieltjes            - For contributing the SPICE gnetlist backend

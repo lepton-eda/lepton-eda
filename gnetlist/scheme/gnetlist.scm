@@ -16,11 +16,6 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-;;
-;; I need to eliminate the C'ish style of Scheme that's in this file.
-;;
-
-
 ;; Support functions
 
 ;; get all packages for a particular schematic page 
@@ -29,7 +24,13 @@
 (define packages 
   (gnetlist:get-packages "placeholder"))
 
+;; return a list of all unique the nets in the design
+(define all-unique-nets
+  (gnetlist:get-all-unique-nets "placeholder"))
+
+
 ;; return a list of all the nets in the design
+;; Might return duplicates
 (define all-nets
   (gnetlist:get-all-nets "placeholder"))
 
@@ -499,14 +500,28 @@
 ;; pair
 (define verilog:get-matching-nets
   (lambda (attribute value)
-    (map (lambda (package)      ; loop over packages
-	   (let ((attr (gnetlist:get-package-attribute package attribute)))
-	     (if (string=? attr value)
-		 (map (lambda (pin)   ; loop over pins on the packages
-			  (car (gnetlist:get-nets package pin)))
-		      (pins package))
-		() )))          ; return empty list, if key does not match
-	     packages)))
+    (verilog:filter attribute value packages)))
+;    (map (lambda (package)      ; loop over packages
+;	   (let ((attr (gnetlist:get-package-attribute package attribute)))
+;	     (if (string=? attr value)
+;		 (map (lambda (pin)   ; loop over pins on the packages
+;			  (car (gnetlist:get-nets package pin)))
+;		      (pins package))
+;		() )))          ; return empty list, if key does not match
+;	     packages)))
+
+(define verilog:filter 
+  (lambda (attribute value package-list)
+    (cond ((null? package-list) '())
+	  ((string=? (gnetlist:get-package-attribute (car package-list) 
+						      attribute) value)
+	   (cons 
+	    (map (lambda (pin)
+		   (car (gnetlist:get-nets (car package-list) pin)))
+		 (pins (car package-list)))
+	    (verilog:filter attribute value (cdr package-list))))
+	  (else (verilog:filter attribute value (cdr package-list))))
+))
 
 
 ;;
@@ -538,19 +553,38 @@
       (display module-name p)
       (display " (" p)
       (newline p)
-      (for-each (lambda (group)               ; loop over groups
-		  (begin
-		    (for-each (lambda (pin)   ; loop over pins
-				(if (not (null? pin))
-				    (begin
-				      (display "       " p)
-				      (display (car pin) p)
-				      (display " ," p)
-				      (newline p))))
-			      group)))
-		port-list)
-      (display "      );" p)
-      (newline p))))
+      (let ((in    (car   port-list))    ; extract list of pins 
+	    (out   (cadr  port-list))
+	    (inout (caddr port-list)))
+	(begin
+	  (for-each (lambda (pin)   ; loop over inputs
+		      (begin
+			(display "       " p)
+			(display (car pin) p)
+			(display " ," p)
+			(newline p)))
+		    in)
+	  (for-each (lambda (pin)   ; loop over inouts
+		      (begin
+			(display "       " p)
+			(display (car pin) p)
+			(display " ," p)
+			(newline p)))
+		    inout)
+	  ; do remaining batch, but take care of last comma
+	  (display "       " p)  ; XXX your schematic better have at least
+	  (display (caar out) p)  ; one output port!
+	  (if (not (null? (cdr out)))
+	      (for-each (lambda (pin)   ; loop over outputs
+			  (begin
+			    (display " ," p)
+			    (newline p)
+			    (display "       " p)
+			    (display (car pin) p)))
+			(cdr out)))
+	(newline p)
+	(display "      );" p)
+	(newline p))))))
 ;;
 ;; output the module direction section
 ;;
@@ -563,28 +597,25 @@
 	(display "/* Port directions begin here */" p)
 	(newline p)
 	(for-each (lambda (pin)
-		    (if (not (null? pin))
-			(begin
-			  (display "input " p)
-			  (display (car pin) p)
-			  (display " ;" p)
-			  (newline p)))) in)       ; do each input
+		    (begin
+		      (display "input " p)
+		      (display (car pin) p)
+		      (display " ;" p)
+		      (newline p))) in)       ; do each input
 
 	(for-each (lambda (pin)
-		    (if (not (null? pin))
-			(begin
-			  (display "output " p)
-			  (display (car pin) p)
-			  (display " ;" p)
-			  (newline p)))) out)      ; do each output
+		    (begin
+		      (display "output " p)
+		      (display (car pin) p)
+		      (display " ;" p)
+		      (newline p))) out)      ; do each output
 
 	(for-each (lambda (pin)
-		    (if (not (null? pin))
-			(begin
-			  (display "inout " p)
-			  (display (car pin) p)
-			  (display " ;" p)
-			  (newline p)))) inout)    ; do each inout
+		    (begin
+		      (display "inout " p)
+		      (display (car pin) p)
+		      (display " ;" p)
+		      (newline p))) inout)    ; do each inout
 		      
 	(newline p)))))
 ;;
@@ -617,15 +648,37 @@
 ;;
 (define verilog:write-wires
   (lambda (p)
-    (display "/* Wires begin here */" p)
-    (newline p)
+    (display "/* Wires from the design */" p)
     (newline p)
     (for-each (lambda (wire)          ; print a wire statement for each
 		(display "wire " p)   ; net in the design
 		(display wire p)
 		(display " ;" p)
-		(newline p)) all-nets)
+		(newline p)) all-unique-nets)
     (newline p)))
+
+;;  Output any continuous assignment statements generated
+;; by placing `high' and `low' components on the board 
+(define verilog:write-continuous-assigns
+  (lambda (p)
+    (display "/* continuous assignments */" p) (newline p)
+    (for-each (lambda (wire)             ; do high values
+		(begin
+		  (display "assign " p) 
+		  (display (car wire) p) (display " = 1'b1;" p)
+		  (newline p)))
+	      (verilog:get-matching-nets "device" "HIGH"))
+
+    (for-each (lambda (wire)
+		(begin
+		  (display "assign " p) 
+		  (display (car wire) p) (display " = 1'b0;" p)
+		  (newline p)))
+	      (verilog:get-matching-nets "device" "LOW"))
+    (newline p))
+)
+
+
 
 ;;
 ;; Top level component writing 
@@ -642,25 +695,28 @@
 ;;
 (define verilog:components
   (lambda (packages port)
-    (for-each (lambda (package)         ; loop on packages
-		(begin
-		  (let ((device (get-device package)))
-		    (if (not (string=? device "IOPAD"))       ; ignore pads
-			(if (not (string=? device "IPAD"))
-			    (if (not (string=? device "OPAD"))
-				(begin
-				  (display (get-device package) port)
-				  (display " " port)
-				  (display package port)
-				  (display " (" port)
-				  (newline port)
-				  (verilog:display-connections 
-				   (gnetlist:get-pins package) package port)
-					;(display "/* put in net connections here */" port)
-				  (display " );" port)
-				  (newline port)
-				  (newline port))))))))
-			packages)))
+    (begin
+      (display "/* Package instantiations */" port)
+      (newline port)
+      (for-each (lambda (package)         ; loop on packages
+		  (begin
+		    (let ((device (get-device package)))
+		      (if (not (memv (string->symbol device) ; ignore specials
+				     (map string->symbol
+					  (list "IOPAD" "IPAD" "OPAD"
+						"HIGH" "LOW"))))
+			  (begin
+			    (display (get-device package) port)
+			    (display " " port)
+			    (display package port)
+			    (display " (" port)
+			    (verilog:display-connections 
+			     (gnetlist:get-pins package) package port)
+			    (display " );" port)
+			    (newline port)
+			    (newline port))))))
+		packages)))
+)
 
 
 
@@ -668,27 +724,36 @@
 ;;
 (define verilog:display-connections
   (lambda (pins package port)
-    (for-each (lambda (pin)                  ; loop over pins
-		(verilog:format-connection 
-		 pin (car (gnetlist:get-nets package pin)) port))
-	      pins )))
+    (begin
+      (verilog:format-connection (car pins) 
+				 (car (gnetlist:get-nets package (car pins)))
+				 ""
+				 port)
+      (if (not (null? (cdr pins)))
+	  (for-each (lambda (pin)  ; loop over pins
+		      (begin
+			(verilog:format-connection 
+		       pin (car (gnetlist:get-nets package pin)) "," port)))
+		      (cdr pins) ))
+      (newline port))))
 
 ;;
 ;; Display the individual net connections
 ;;  in this format:
 ;;
-;;      .PINNAME ( NETNAME ),
+;;      .PINNAME ( NETNAME )
 ;;
 (define verilog:format-connection
-   (lambda (pinname netname port)
+   (lambda (pinname netname comma port)
      (if (not (string=? "unconnected_pin" netname))
 	 (begin
+	   (display comma port)
+	   (newline port)
 	   (display "     ." port)
 	   (display pinname port)
 	   (display " ( " port)
 	   (display netname port)
-	   (display " )," port)
-	   (newline port)))))
+	   (display " )" port)))))
 
 
 
@@ -702,16 +767,11 @@
 	(gnetlist:set-netlist-mode "SPICE")  ;; don't want 'duplicate' nets
 	(verilog:write-top-header port)
 	(verilog:write-wires port)
+	(verilog:write-continuous-assigns port)
 	(verilog:components packages port)
-	;				(verilog:end-components port)
-	;				(verilog:start-nets port)
-	;				(verilog:nets port packages)
-	;				(verilog:end-nets port)
 	(verilog:write-bottom-footer port)
 	)
       (close-output-port port)
       )
     )
   )
-
-

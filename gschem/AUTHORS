@@ -47,6 +47,8 @@ Roger Williams 		- For supplying a patch with provides variable snap
 
 Mike Jarabek 		- For contributing code which displays grid points 
 			  at negative coordinates. 
+		
+			  Providing an updated test_verilog.sym
 
 Anatole Sokolov		- Pointed out a few bugs in o_erase_* (using a 
 			  constant instead of a variable)

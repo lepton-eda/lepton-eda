@@ -193,6 +193,9 @@ s_net_return_connected_string(OBJECT *object)
 }
 
 /* double start hightly temp */
+/* this is no longer used */
+/* and obsolete */
+#if 0
 NET *
 s_net_post_resolve( NETLIST *head, int nid, CPINLIST **cpinlist_parent )
 {
@@ -235,9 +238,6 @@ s_net_post_resolve( NETLIST *head, int nid, CPINLIST **cpinlist_parent )
 	}
 }
 
-/* this is no longer used */
-/* and obsolete */
-#if 0
 void
 s_net_resolve_duplicates(NETLIST *head, CPINLIST *cpinlist_head)
 {
@@ -277,16 +277,30 @@ s_net_resolve_duplicates(NETLIST *head, CPINLIST *cpinlist_head)
 }
 #endif
 
-char *
-s_net_name(NET *net_head)
+int
+s_net_find(NET *net_head, NET *node)
 {
-	char *string;
 	NET *n_current;
-	int found = 0;
+
+	n_current = net_head;
+	while (n_current != NULL) {
+		if (n_current->nid == node->nid) {
+			return(TRUE);
+		}
+
+		n_current = n_current->next;
+	}
+	return(FALSE);
+}
+
+char *
+s_net_name_search(NET *net_head)
+{
+	NET *n_current;
 
 	n_current = net_head;
 
-	while(n_current != NULL && !found) {
+	while(n_current != NULL) {
 
 		if (n_current->net_name) {
 			return(n_current->net_name);
@@ -294,6 +308,61 @@ s_net_name(NET *net_head)
 
 		n_current = n_current->next;
 	}
+	return(NULL);
+}
+
+char *
+s_net_name(NETLIST *netlist_head, NET *net_head)
+{
+	char *string;
+	NET *n_current; 
+	NET *n_start;
+	NETLIST *nl_current;
+	CPINLIST *pl_current;
+	char *net_name=NULL;
+	int found = 0;
+
+	net_name = s_net_name_search(net_head);
+
+	if (net_name) {
+		return(net_name);
+	}
+
+
+	printf("didn't find named net\n");
+	/* didn't find a name */
+	/* go looking for another net */
+	nl_current = netlist_head;
+	while(nl_current != NULL) {
+		if (nl_current->cpins) {
+			pl_current = nl_current->cpins;
+			while(pl_current != NULL) {
+				if (pl_current->nets) {
+					n_start = pl_current->nets;
+					if (n_start->next && net_head->next) {
+						found = s_net_find(
+							n_start->next, 
+							net_head->next);
+
+						if (found) {
+						  net_name = 
+						    s_net_name_search(n_start);
+						  if (net_name) {
+							return(net_name);
+						  }
+			
+						}
+					}
+				}
+				
+				pl_current = pl_current->next;
+			}
+		}
+		nl_current = nl_current->next;
+	}
+	
+
+	printf("didn't find previously named\n");
 
 	/* AND we don't want to assign a dangling pin */
 	/* which is signified by having only a head node */

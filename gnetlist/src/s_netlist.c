@@ -170,7 +170,16 @@ if (verbose_mode) {
 					}
 
 					pl_current->net_name = 
-						s_net_name(pl_current->nets);
+						s_net_name(head, pl_current->nets);
+
+					/* put this name also in the first 
+					   node of the nets linked list */
+					if (pl_current->net_name && 
+					   pl_current->nets) {
+					  if (pl_current->nets->next) {
+						pl_current->nets->next->net_name = pl_current->net_name;
+					  } 
+					}
 				}
 			
 				pl_current = pl_current->next;
