@@ -214,10 +214,10 @@ void main_prog(void *closure, int argc, char *argv[])
     while (list_pnt) {
       if (g_read_file(list_pnt->data) != -1) {
         s_log_message("Read scm file [%s]\n", 
-                      list_pnt->data);
+                      (char *) list_pnt->data);
       } else {
         s_log_message("Failed to read scm file [%s]\n", 
-                      list_pnt->data);
+                      (char *) list_pnt->data);
         fprintf(stderr, "Failed to read scm file [%s]\n", 
                 (char *) list_pnt->data);
       }
@@ -250,10 +250,10 @@ void main_prog(void *closure, int argc, char *argv[])
         while (list_pnt) {
           if (g_read_file(list_pnt->data) != -1) {
             s_log_message("Read scm file [%s]\n", 
-                          list_pnt->data);
+                          (char *) list_pnt->data);
           } else {
             s_log_message("Failed to read scm file [%s]\n", 
-                          list_pnt->data);
+                          (char *) list_pnt->data);
             fprintf(stderr, "Failed to read scm file [%s]\n", 
                  (char *) list_pnt->data);
           }

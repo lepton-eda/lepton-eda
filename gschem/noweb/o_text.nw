@@ -191,7 +191,7 @@ o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
       break;
 
     default:
-      s_log_message("Tried to render text with an invalid angle: %s\n",
+      s_log_message("Tried to render text with an invalid angle: %d\n",
                     o_current->text->angle); 
       return;
       break;
