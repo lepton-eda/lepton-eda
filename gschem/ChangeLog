@@ -1,3 +1,8 @@
+2005-03-05 Werner Hoch <werner.ho@gmx.de>
+	* noweb/x_dialog.nw: changed the autonumber_text dialog
+	* noweb/o_misc.nw: changed functions which support the autonumber 
+		dialog
+	
 2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
 	* noweb/gschem.nw:
 	  Removing call to o_text_init, since it's now called in libgeda_init.

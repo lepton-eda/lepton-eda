@@ -22,7 +22,11 @@
 <<o_misc.c : o_edit_show_hidden()>>
 <<o_misc.c : o_edit_make_visible()>>
 <<o_misc.c : o_edit_find_text()>>
-<<o_misc.c : find_max()>>
+<<o_misc.c : autonumber_sort_numbers()>>
+<<o_misc.c : autonumber_sort_xy()>>
+<<o_misc.c : autonumber_sort_yx()>>
+<<o_misc.c : autonumber_sort_diagonal()>>
+<<o_misc.c : autonumber_find()>>
 <<o_misc.c : autonumber_text()>>
 <<o_misc.c : o_edit_autonumber_text()>>
 <<o_misc.c : o_edit_hide_specific_text()>>
@@ -73,6 +77,20 @@
 #include <dmalloc.h>
 #endif
 
+#define FOCUS_SELECTION 0
+#define FOCUS_SHEET 1
+#define FOCUS_ALL 2
+
+#define SELECTION_ALL 0
+#define SELECTION_UNNUMBERED 1
+
+#define AUTONUMBER_SKIP_NOT 0
+#define AUTONUMBER_SKIP_PAGE 1
+#define AUTONUMBER_SKIP_SELECTION 2
+
+#define AUTONUMBER_SORT_YX 1
+#define AUTONUMBER_SORT_XY 2
+#define AUTONUMBER_SORT_DIAGONAL 3
 @
 
 
@@ -1062,17 +1080,104 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 
 @ %def o_edit_find_text
 
+@section Function @code{autonumber_sort_numbers()}
 
-@section Function @code{find_max()}
-
-@defun find_max w_current o_list stext 
+@defun autonumber_sort_numbers a b 
 @end defun
 
-<<o_misc.c : find_max()>>=
-int current_max;
-int used_count;
-int used_list[4096];
-void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
+<<o_misc.c : autonumber_sort_numbers()>>=
+
+int
+autonumber_sort_numbers(gconstpointer a, gconstpointer b) {
+  if (GPOINTER_TO_INT(a) < GPOINTER_TO_INT(b))
+    return -1;
+  if (GPOINTER_TO_INT(a) > GPOINTER_TO_INT(b))
+    return 1;
+  return 0;
+}
+
+@ %autonumber_sort_numbers
+
+@section Function @code{autonumber_sort_xy()}
+
+@defun autonumber_sort_xy a b 
+@end defun
+
+<<o_misc.c : autonumber_sort_xy()>>=
+
+int
+autonumber_sort_xy(gconstpointer a, gconstpointer b) {
+  OBJECT *aa, *bb;
+  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  if (aa->text->x < bb->text->x)
+    return -1;
+  if (aa->text->x > bb->text->x)
+    return 1;
+  /* x == x */
+  if (aa->text->y > bb->text->y)
+    return -1;
+  if (aa->text->y < bb->text->y)
+    return 1;
+  return 0;
+}
+
+@ %autonumber_sort_xy
+
+@section Function @code{autonumber_sort_yx()}
+
+@defun autonumber_sort_yx a b 
+@end defun
+
+<<o_misc.c : autonumber_sort_yx()>>=
+
+int
+autonumber_sort_yx(gconstpointer a, gconstpointer b) {
+  OBJECT *aa, *bb;
+  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  if (aa->text->y > bb->text->y)
+    return -1;
+  if (aa->text->y < bb->text->y)
+    return 1;
+  /* x == x */
+  if (aa->text->x < bb->text->x)
+    return -1;
+  if (aa->text->x > bb->text->x)
+    return 1;
+  return 0;
+}
+
+@ %autonumber_sort_yx
+
+
+@section Function @code{autonumber_sort_diagonal()}
+
+@defun autonumber_sort_diagonal a b 
+@end defun
+
+<<o_misc.c : autonumber_sort_diagonal()>>=
+
+int
+autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
+  OBJECT *aa, *bb;
+  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  if (aa->text->x - aa->text->y < bb->text->x - bb->text->y)
+    return -1;
+  if (aa->text->x - aa->text->y > bb->text->x - bb->text->y)
+    return 1;
+  return 0;
+}
+
+@ %autonumber_sort_diagonal
+
+
+@section Function @code{autonumber_find()}
+
+@defun autonumber_find w_current o_list stext used_numbers skip
+@end defun
+
+<<o_misc.c : autonumber_find()>>=
+void autonumber_find(TOPLEVEL * w_current, OBJECT * o_list, char *stext, 
+		  GSList **used_numbers, int skip)
 {
   OBJECT *o_current = NULL;
   char *attrib = NULL;
@@ -1083,16 +1188,21 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
   int pcount = 0;
   int l, m;
 
-  if (o_list == NULL)
-    return;
-
-  o_current = o_list;
-
-  while (o_current != NULL) {
-
-
+  for (o_current = o_list; o_current != NULL; o_current=o_current->next) {
+    if (o_current->type == OBJ_TEXT && skip != AUTONUMBER_SKIP_PAGE) {
+      if (!(o_current->selected) || skip != AUTONUMBER_SKIP_SELECTION) {
+	if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
+	  if (!strncmp(stext, o_current->text->string, strlen(stext))) {
+	    if (isdigit(o_current->text->string[strlen(stext)])) {
+	      sscanf(o_current->text->string + strlen(stext), "%d", &m);
+	      *used_numbers = g_slist_append(*used_numbers,GINT_TO_POINTER(m));
+	      /* printf(" %d\n", m);*/
+	    }
+	  }
+	}
+      }
+    }
     if (o_current->type == OBJ_COMPLEX) {
-
       parent = w_current->page_current;
       attrib = o_attrib_search_name_single_count(o_current,
 						 "source", count);
@@ -1101,46 +1211,32 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
       if (attrib == NULL) {
 	attrib = o_attrib_search_name(o_current->
 				      complex->prim_objs, "source", count);
-	/*            looking_inside = TRUE; */
+	/* looking_inside = TRUE; */
       }
 
       if (attrib) {
 	pcount = 0;
 	current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	if (current_filename != NULL) {
+	  /* printf("autonumber_find: recursion filename \"%s\"\n",
+	     current_filename); */
 	  page_control =
-	      s_hierarchy_down_schematic_single(w_current,
-						current_filename,
-						parent,
-						page_control,
-						HIERARCHY_NORMAL_LOAD);
+	    s_hierarchy_down_schematic_single(w_current,
+					      current_filename,
+					      parent,
+					      page_control,
+					      HIERARCHY_NORMAL_LOAD);
 
-	  find_max(w_current, w_current->page_current->object_head, stext);
+	  autonumber_find(w_current, w_current->page_current->object_head,
+		       stext, used_numbers, AUTONUMBER_SKIP_NOT);
 	  s_hierarchy_up(w_current, w_current->page_current->up);
 	}
-      }
+      } 
     }
-    if (o_current->type == OBJ_TEXT) {
-      if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
-	if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-	  if (isdigit(o_current->text->string[strlen(stext)])) {
-	    sscanf(o_current->text->string + strlen(stext), "%d", &m);
-            if (used_count < 4094) {
-              used_list[used_count++] = m;
-            }
-	    if (m > current_max) {
-	      current_max = m;
-	    }
-	    /*            printf("%d %d\n", m, max); */
-	  }
-	}
-      }
-    }
-    o_current = o_current->next;
   }
 }
 
-@ %def find_max
+@ %def autonumber_find
 
 
 @section Function @code{autonumber_text()}
@@ -1150,9 +1246,16 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 
 <<o_misc.c : autonumber_text()>>=
 void
-autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
+autonumber_text(TOPLEVEL * w_current, char *stext, GSList **used, 
+		int *currentnumber, int unnumbered, int searchfocus, 
+		int sortorder)
 {
+  GSList *o_list = NULL;
   OBJECT *o_current = NULL;
+  GSList *o_list_complex = NULL;
+  OBJECT *o_complex_current = NULL;
+  GSList *item;
+
   char *attrib = NULL;
   int count = 0;
   PAGE *parent = NULL;
@@ -1163,17 +1266,85 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
   unsigned char *ss;
   int l;
 
-  o_current = o_list;
-  while (o_current != NULL) {
-    if (o_current->type == OBJ_COMPLEX) {
+  o_current = w_current->page_current->object_head;
 
+  for (o_current = w_current->page_current->object_head; o_current != NULL;
+       o_current = o_current->next) {
+    if (o_current->type == OBJ_COMPLEX) {
+      o_list_complex = g_slist_append(o_list_complex, o_current);
+    }
+    if (o_current->type == OBJ_TEXT) {
+      if (searchfocus != FOCUS_SELECTION || o_current->selected) {
+	if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
+	  if (!strncmp(stext, o_current->text->string, strlen(stext))) {
+	    if (o_current->text->string[strlen(stext)] == '?'
+		|| (isdigit(o_current->text->string[strlen(stext)])
+		    && unnumbered == SELECTION_ALL)){
+	      o_list=g_slist_append(o_list,o_current);
+	      /* printf("autonumber_text: text \"%s\" \n", 
+		 o_current->text->string);*/
+	    }
+	  }
+	}
+      }
+    }
+  }
+
+  /* sort o_list */
+  switch (sortorder) {
+  case AUTONUMBER_SORT_YX:
+    o_list=g_slist_sort(o_list,autonumber_sort_yx);
+    break;
+  case AUTONUMBER_SORT_XY:
+    o_list=g_slist_sort(o_list,autonumber_sort_xy);
+    break;
+  case AUTONUMBER_SORT_DIAGONAL:
+    o_list=g_slist_sort(o_list,autonumber_sort_diagonal);
+    break;
+  default:
+    ; /* unsorted file order */
+  }
+
+  for (item=o_list; item != NULL; item=g_slist_next(item)) {
+    o_current= item->data;
+    free(o_current->text->string);
+
+    while (*used != NULL && *currentnumber > GPOINTER_TO_INT((*used)->data)) {
+      *used=(*used)->next;
+    }
+
+    while (*used != NULL && *currentnumber == GPOINTER_TO_INT((*used)->data)) {
+      *used=(*used)->next;
+      (*currentnumber)++;
+      while (*used != NULL && *currentnumber > GPOINTER_TO_INT((*used)->data))
+	*used=(*used)->next;
+    }
+
+    /* printf("autonumber_text: currentnumber %d\n",*currentnumber);*/
+
+    ss = g_strdup_printf("%s%d", stext, (*currentnumber)++);
+    /*            printf("%s\n", ss); */
+    o_current->text->string =
+      (char *) malloc(sizeof(char) * (strlen(ss) + 1));
+    strcpy(o_current->text->string, ss);
+    free(ss);
+    o_text_erase(w_current, o_current);
+    o_text_recreate(w_current, o_current);
+    o_text_draw(w_current, o_current);
+    w_current->page_current->CHANGED = 1;
+  }
+
+  /* only walk down the hierarchy if requested */
+  if (searchfocus == FOCUS_ALL) {
+    for (item=o_list_complex; item != NULL; item=g_slist_next(item)) {
+      o_complex_current= item->data;
       parent = w_current->page_current;
-      attrib = o_attrib_search_name_single_count(o_current,
+      attrib = o_attrib_search_name_single_count(o_complex_current,
 						 "source", count);
 
       /* if above is null, then look inside symbol */
       if (attrib == NULL) {
-	attrib = o_attrib_search_name(o_current->
+	attrib = o_attrib_search_name(o_complex_current->
 				      complex->prim_objs, "source", count);
 	/*            looking_inside = TRUE; */
       }
@@ -1183,55 +1354,21 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 	current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	if (current_filename != NULL) {
 	  page_control =
-	      s_hierarchy_down_schematic_single(w_current,
-						current_filename,
-						parent,
-						page_control,
-						HIERARCHY_NORMAL_LOAD);
-	  /*o_redraw_all(w_current); */
-	  autonumber_text(w_current, w_current->page_current->object_head,
-			  stext);
+	    s_hierarchy_down_schematic_single(w_current,
+					      current_filename,
+					      parent,
+					      page_control,
+					      HIERARCHY_NORMAL_LOAD);
+	  autonumber_text(w_current, stext, used, currentnumber, 
+			  unnumbered, searchfocus, sortorder);
 
 	  s_hierarchy_up(w_current, w_current->page_current->up);
-
 	}
       }
     }
-
-    if (o_current->type == OBJ_TEXT) {
-      if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
-	if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-	  /* printf("%s %d\n", o_current->text->string, (unsigned char) o_current->text->string[strlen(stext)]); */
-	  if (o_current->text->string[strlen(stext)] == '?') {
-	    free(o_current->text->string);
-
-            while (current_max > used_list[used_count]) {
-              used_count++;
-            }
-            while (current_max==used_list[used_count]) {
-              current_max++;
-              used_count++;
-            }
-
-	    /* printf("autonumber_text: used_count %d, current_max %d\n",
-	       used_count,current_max);*/
-
-	    ss = g_strdup_printf("%s%d", stext, current_max++);
-	    /*            printf("%s\n", ss); */
-	    o_current->text->string =
-		(char *) malloc(sizeof(char) * (strlen(ss) + 1));
-	    strcpy(o_current->text->string, ss);
-	    free(ss);
-	    o_text_erase(w_current, o_current);
-	    o_text_recreate(w_current, o_current);
-	    o_text_draw(w_current, o_current);
-	    w_current->page_current->CHANGED = 1;
-	  }
-	}
-      }
-    }
-    o_current = o_current->next;
   }
+  g_slist_free(o_list);
+  g_slist_free(o_list_complex);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -1245,47 +1382,81 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 
 <<o_misc.c : o_edit_autonumber_text()>>=
 void
-o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
+o_edit_autonumber_text(TOPLEVEL * w_current, char * searchtext,
+		       int startnumber,int searchfocus,
+		       int unnumbered, int sortorder)
 {
-  int i, tmp,sorted=0;
+  GSList *used_numbers=NULL;
+  GSList *searchtext_list=NULL;
+  GSList *item;
+  char* stext=NULL;
+  int skip_numbering=AUTONUMBER_SKIP_NOT;
+  GSList *used_iterator=NULL;  /* used in recursive autonumber_text */
+  int currentnumber;           /* used in recursive autonumber_text */
 
-  current_max = 0; /* these are global variables, (Werner) */
-  used_count = 0;
+  /* Step2: if searchtext has an asterisk at the end we have to find
+     all matching searchtextes. 
+     The function can take care of the selection options.
+     The search function should return all possibles searchtexts that have
+     its own number space.
+     This requires something like:
+       grep searchtext | sort | uniq
+     in the object list down the hierarchy.
 
-  find_max(w_current, o_list, stext);
+     Example:  "refdes=*" will match each text that starts with "refdes="
+     and has a trailing "?" (and a trailing number if the "all"-option is set.
+     The function should return a list of all possible prefixes:
+     refdes=R, refdes=C in the same way the searchstring is entered.
 
-  /*  printf("o_edit_autonumber_text: used_count %d, current_max %d\n",
-      used_count,current_max);*/
+     If there is only one search pattern, it becomes a single item
+     in the searchtext list */
 
-  if ((used_count < 4094)&&(used_count > 0)) {
-    while (!sorted) {
-      sorted = 1;
-      for (i=0;i<used_count-1;i++) {
-        if (used_list[i]>used_list[i+1]) {
-          sorted = 0;
-          tmp = used_list[i];
-          used_list[i] = used_list[i+1];
-          used_list[i+1] = tmp;
-        }
-        if (used_list[i]==used_list[i+1]) {
-          printf(_("Warning: two components with same refdes: %d\n"), used_list[i]);
-        }
-      }
-    }
-    current_max = 1;
-  } else {
-    used_list[0] = current_max;
-    used_count = 1;
+  if (searchtext[strlen(searchtext)-1] == '*') {
+    fprintf(stderr,"o_edit_autonumber_text: multiple searchtext option\n"
+	    "  not implemented yet\n");
+    /* collect the possible searchtextes, not implemented yet */
   }
-  used_list[used_count] = 1000000;
-  used_count = 0;
+  else {
+    /* single searchtext */
+    searchtext_list=g_slist_append (searchtext_list, searchtext);
+  }
 
-  /*  printf("o_edit_autonumber_text: used_count %d, current_max %d\n",
-      used_count,current_max);*/
+  /* Step3: iterate over the search item in the list */
+  for (item=searchtext_list; item !=NULL; item=g_slist_next(item)) {
+    stext = item->data;
+    /* printf("o_edit_autonumber_text: iterate text: \"%s\"\n",stext);*/
+    /* Step3.1: get the used numbers, ignore numbers that will be overwritten*/
+    if (unnumbered==SELECTION_ALL && searchfocus==FOCUS_ALL) {
+      ; /* all numbers will be overwritten, don't search */
+    }
+    else {
+      if (unnumbered == SELECTION_ALL && searchfocus == FOCUS_SHEET)
+	skip_numbering = AUTONUMBER_SKIP_PAGE;
+      if (unnumbered == SELECTION_ALL && searchfocus == FOCUS_SELECTION)
+	skip_numbering = AUTONUMBER_SKIP_SELECTION;
 
-  autonumber_text(w_current, o_list, stext);
+      autonumber_find(w_current, w_current->page_current->object_head, 
+		   stext, &used_numbers, skip_numbering);
+    }
+
+    /* printf("o_edit_autonumber_text: listlength: %d\n",
+       g_slist_length(used_numbers)); */
+    /* sort used numbers */
+    used_numbers=g_slist_sort(used_numbers,autonumber_sort_numbers);
+
+  /* Step3.2: get a list of all matching objects 
+              sort the list (sort option)
+	      renumber all objects (start number option)
+     this whole step is done in the autonumber_text function */
+    used_iterator=used_numbers;
+    currentnumber=startnumber;
+    autonumber_text(w_current, stext, &used_iterator, &currentnumber, 
+		    unnumbered, searchfocus, sortorder);
+    g_slist_free(used_numbers);
+    used_numbers=NULL;
+  }
+  g_slist_free(searchtext_list);
   o_redraw_all(w_current);
-
 }
 
 @ %def o_edit_autonumber_text
