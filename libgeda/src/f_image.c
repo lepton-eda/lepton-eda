@@ -201,17 +201,13 @@ f_image_set_type(TOPLEVEL *w_current, int type)
         				temp_parent = object_parent;
         				object_parent = o_complex;
 					o_complex = add_head();
-				        ADDING_SEL = 1;
         				o_complex = o_read(o_complex, o_current->complex_filename);
-				        ADDING_SEL = 0;
 					o_complex = return_head(o_complex);
         				object_tail = temp_tail;
         				object_parent = temp_parent;   
 
 					f_print_objects(fp, o_complex);
-				        REMOVING_SEL = 1;
 					s_delete_list_fromstart(o_complex);
-				        REMOVING_SEL = 0;
 					o_complex=NULL;
 					fprintf(fp, "grestore\n");
 					break;
