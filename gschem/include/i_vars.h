@@ -80,3 +80,4 @@ extern int default_toolbars;
 extern int default_handleboxes;
 extern int default_setpagedevice_orientation;
 extern int default_setpagedevice_pagesize;
+extern int default_bus_ripper_size;

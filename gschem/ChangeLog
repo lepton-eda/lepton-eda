@@ -1,3 +1,33 @@
+2002-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_net.nw: Added o_net_add_busrippers function.  This
+	function adds the bus rippers after a net addition and after a 
+	net is changed via the grips.
+
+	* noweb/o_net.nw: Added calls to above in o_net_end.
+
+	* noweb/o_net.nw: Rearranged o_net_end a little to accommodate the
+	bus ripper code.
+	
+	* noweb/o_cue.nw: Added code to render the smaller sized
+	connection cues that connect buses to nets.
+
+	* noweb/o_grips.nw: Added code to the net case (when ending grip
+	manipulations) to draw the bus rippers when connecting the net
+	to a bus.
+	
+	* noweb/o_bus.nw: Fix to o_bus_add to init the
+	bus_ripper_direction to zero.
+	
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw and friends: Added code
+	to implement the bus-ripper-size rc keyword.
+
+	* lib/system-gschemrc.in: Added defaults for bus-ripper-size.
+
+	* tests/nets.sch: Added test schematic for nets.
+
+	* tests/pins.sch: Added a few more test cases.
+	
 2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/pins.sch: Update test schematic to include single pin 

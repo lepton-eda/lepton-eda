@@ -242,6 +242,7 @@ SCM g_rc_toolbars(SCM mode);
 SCM g_rc_handleboxes(SCM mode);
 SCM g_rc_setpagedevice_orientation(SCM mode);
 SCM g_rc_setpagedevice_pagesize(SCM mode);
+SCM g_rc_bus_ripper_size(SCM size);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -250,8 +251,8 @@ void gschem_quit(void);
 void main_prog(int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_basic.c */
-void i_show_state(TOPLEVEL *w_current, const char *message);
 void i_allow_expose(void);
+void i_show_state(TOPLEVEL *w_current, const char *message);
 void i_set_state(TOPLEVEL *w_current, enum x_states newstate);
 void i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate, const char *message);
 void i_update_left_button(const char *string);
@@ -608,6 +609,7 @@ int o_net_end(TOPLEVEL *w_current, int x, int y);
 void o_net_rubbernet(TOPLEVEL *w_current, int x, int y);
 void o_net_eraserubber(TOPLEVEL *w_current);
 void o_net_xorrubber(TOPLEVEL *w_current);
+int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
 /* o_pin.c */
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current);
