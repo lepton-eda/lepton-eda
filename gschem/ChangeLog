@@ -1,3 +1,15 @@
+2005-02-13  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* include/prototype.h, noweb/x_pagesel.nw:
+	  Commented out the code defining the "Discard page" button,
+	  so it doesn't appear in the page manager.
+	  Added new function "e_gtk_button_new_with_icon" which allows
+	  to create a button with a given text, and an icon from the GTK
+	  stock. Which is the right file to include such a generic function?
+	  If texts like "Add page" are preferred in the buttons, then
+	  there is only needed to comment a line, and uncomment another.
+	  See the code of pagesel_init pagesel function.
+	 
 2005-02-12  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* noweb/x_attribedit.nw, noweb/x_dialog.nw, noweb/x_fileselect.nw,

@@ -860,6 +860,7 @@ void multi_attrib_parse_attribute(GtkWidget *w, GtkWidget *w_current);
 void x_pagesel_open (TOPLEVEL *toplevel);
 void x_pagesel_close (TOPLEVEL *toplevel);
 void x_pagesel_update (TOPLEVEL *toplevel);
+GtkWidget *e_gtk_button_new_with_icon(const char *text, const char *stock);
 /* x_preview.c */
 void x_preview_update(TOPLEVEL *preview, const char *directory, const char *filename);
 void x_preview_close(TOPLEVEL *w_current);

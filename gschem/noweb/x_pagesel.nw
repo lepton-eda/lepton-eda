@@ -17,7 +17,7 @@
 <<x_pagesel.c : x_pagesel_close()>>
 <<x_pagesel.c : x_pagesel_update()>>
 <<x_pagesel.c : x_pagesel_callback_response()>>
-
+<<x_pagesel.c : e_gtk_button_new_with_icon()>>
 
 <<x_pagesel.c : Pagesel widget>>
 
@@ -326,13 +326,15 @@ pagesel_init (Pagesel *pagesel)
       , GTK_STOCK_CLOSE
 #endif
     },
-    { "Discard Page", G_CALLBACK (pagesel_callback_button_discard_page)
-#ifndef HAS_GTK12
-      , GTK_STOCK_CANCEL
-#endif
-    },
+/*     { "Discard Page", G_CALLBACK (pagesel_callback_button_discard_page) */
+/* #ifndef HAS_GTK12 */
+/*       , GTK_STOCK_CANCEL */
+/* #endif */
+/*     }, */
     { NULL,           NULL                                             
+#ifndef HAS_GTK12
       , NULL
+#endif
     } };
   struct button_t *tmp;
 
@@ -432,9 +434,10 @@ pagesel_init (Pagesel *pagesel)
                                        "label", _(tmp->label),
                                        NULL));
 #else
-    button = gtk_button_new_from_stock (tmp->stock_id);
-    /* If the label is set after the button is created, the icon is lost */
-    /*    gtk_button_set_label (GTK_BUTTON(button), _(tmp->label)); */
+    button = gtk_button_new_from_stock(tmp->stock_id);
+    /* Comment the above line, and uncomment the line below if buttons with
+       the right label, like "Add page" or "Close page", are preferred */
+    /*    button = e_gtk_button_new_with_icon(_(tmp->label), tmp->stock_id);*/
 #endif
     g_signal_connect (button,
                       "clicked",
@@ -682,3 +685,48 @@ pagesel_update (Pagesel *pagesel)
 }
 
 @ %def pagesel_update
+
+@section Function @code{e_gtk_button_new_with_icon()}
+
+@defun e_gtk_button_new_with_icon text stock
+Create a gtk button with a custom label [[text]] and a stock icon [[stock]].
+[[text]]: The mnemonic text for the label.
+[[stock]]: The name of the stock item to get the icon from.
+
+Return value: The widget.
+
+Taken from evolution code:
+http://lists.ximian.com/archives/public/evolution-patches/2003-April/000088.html
+@end defun
+
+<<x_pagesel.c : e_gtk_button_new_with_icon()>>=
+GtkWidget *
+e_gtk_button_new_with_icon(const char *text, const char *stock)
+{
+	GtkWidget *button, *label;
+	GtkStockItem item;
+
+	button = gtk_button_new();
+	label = gtk_label_new_with_mnemonic(text);
+	gtk_label_set_mnemonic_widget((GtkLabel *)label, button);
+
+	if (gtk_stock_lookup(stock, &item)) {
+		GtkWidget *image, *hbox, *align;
+
+		image = gtk_image_new_from_stock(stock, GTK_ICON_SIZE_BUTTON);
+		hbox = gtk_hbox_new(FALSE, 2);
+		align = gtk_alignment_new(0.5, 0.5, 0.0, 0.0);
+		gtk_box_pack_start((GtkBox *)hbox, image, FALSE, FALSE, 0);
+		gtk_box_pack_end((GtkBox *)hbox, label, FALSE, FALSE, 0);
+		gtk_container_add((GtkContainer *)align, hbox);
+		gtk_container_add((GtkContainer *)button, align);
+		gtk_widget_show_all(align);
+	} else {
+		gtk_misc_set_alignment((GtkMisc *)label, 0.5, 0.5);
+		gtk_container_add((GtkContainer *)button, label);
+		gtk_widget_show(label);
+	}
+
+	return button;
+}
+@ %def e_gtk_button_new_with_icon
