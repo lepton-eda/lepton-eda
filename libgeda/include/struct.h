@@ -49,9 +49,6 @@ typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
 typedef struct st_net NET;
 
-/* sym check structures (gsymcheck) */
-typedef struct st_symcheck SYMCHECK;
-
 /* sch check structures (gschcheck) */
 typedef struct st_schcheck SCHCHECK;
 typedef struct st_chkerrs CHKERRS;
@@ -825,17 +822,6 @@ struct st_net {
 
   NET *prev;
   NET *next;
-};
-
-/* gsymcheck structure */
-struct st_symcheck {
-  int graphical_symbol;
-  int missing_device_attrib;
-  char *device_attribute;
-  int device_attribute_incorrect;
-  int missing_pin_attrib;
-  int missing_numslots_attrib;
-  int unattached_attribs;
 };
 
 /* By Jamil Khatib */

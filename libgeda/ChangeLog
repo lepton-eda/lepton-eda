@@ -1,3 +1,11 @@
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Moved all the gsymcheck structures to a
+	gsymcheck specific file
+
+	* noweb/o_attrib.nw: Completely removed two obsolete o_attrib_search_* 
+	functions
+
 2002-06-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/s_basic.nw: Added patch by Bryce Denney to remove \r in 
