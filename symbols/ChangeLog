@@ -8,6 +8,9 @@
 	maxim/max6674-1.sym micro/6821-2.sym opto/810-1.sym: Added 
 	contributed symbols.
 
+ 	* 4000/4049-1.sym 4000/4050-1.sym: Applied symbol patch by 
+	Gabriel Paubert to fix the broken 4049-1 symbol.
+
 2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* *.sym: Updated all symbols and font definitions to 20030901
