@@ -1,12 +1,10 @@
+1999-10-04  Magnus Danielson  <cfmd@swipnet.se>
 
-gEDA
-
-GNU Electronic Design Automation
-------------------------------------------------------------------------------
-
-ChangeLog for gnetlist
-
-Most recent changes (version wise) are at the top of this file 
+	* scheme/gnet-vhdl.scm: Finally fixed the write-port-clause stuff.
+	This is now splitted into three routines which forms a much better
+	basis for further development and also fixes the bugs which occurs if
+	any or more of the in, out and inout sublists happends to be empty.
+	Stuck in support for signal type.
 
 1999-09-28  Magnus Danielson  <cfmd@swipnet.se>
 
