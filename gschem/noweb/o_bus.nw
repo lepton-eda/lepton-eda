@@ -517,7 +517,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
             w_current->page_current->object_tail,
             OBJ_BUS,
             color,
-            x1, y1, x2, y2);
+            x1, y1, x2, y2, 0);
 
   /* conn stuff */
   other_objects = s_conn_return_others(other_objects,
