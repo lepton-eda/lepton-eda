@@ -122,10 +122,9 @@ main(int argc, char **argv)
 	  }
 
 	/* and finally add the device attribute */
-	fprintf(fp,"T 400 0 5 8 0 0 0 0\ndevice=%s\n",generate[i].name);
+	fprintf(fp,"T 400 100 5 8 0 0 0 0\ndevice=%s\n",generate[i].name);
 	/* and the positional pin directive */
-	fprintf(fp,"T 400 100 5 8 0 0 0 0\nVERILOG_PORTS=POSITIONAL\n");
-
+	fprintf(fp,"T 400 200 5 8 0 0 0 0\nVERILOG_PORTS=POSITIONAL");
 	fclose(fp);
       }
 
@@ -246,6 +245,12 @@ MakeSymbol(FILE *fp, unsigned int pins, int inputBubbles, int outputBubbles,
 	}
 
     }
+
+
+  /* drop on a template uref attribute */
+  fprintf(fp,"T %d %d 5 10 1 1 0 2\nuref=U?\n",
+	  bodyx+100,
+	  bodyy-400);
 
 
   return 0;
