@@ -380,7 +380,7 @@ on_snap(int val)
 }
 
 typedef struct st_halfspace HALFSPACE;
-typedef struct st_point POINT;
+typedef struct st_point sPOINT;
 
 struct st_halfspace {
 	int left; /* these are booleans */
@@ -400,7 +400,7 @@ struct st_point {
 
 /* halfspace must be allocated before this is called */
 static void
-SCREENencode_halfspace(TOPLEVEL *w_current, POINT *point, HALFSPACE *halfspace)
+SCREENencode_halfspace(TOPLEVEL *w_current, sPOINT *point, HALFSPACE *halfspace)
 {
 	halfspace->left = point->x < 0;
 	halfspace->right = point->x > w_current->width;
@@ -410,7 +410,7 @@ SCREENencode_halfspace(TOPLEVEL *w_current, POINT *point, HALFSPACE *halfspace)
 
 /* halfspace must be allocated before this is called */
 static void
-WORLDencode_halfspace(TOPLEVEL *w_current, POINT *point, HALFSPACE *halfspace)
+WORLDencode_halfspace(TOPLEVEL *w_current, sPOINT *point, HALFSPACE *halfspace)
 {
 	halfspace->left = point->x < w_current->page_current->left;
 	halfspace->right = point->x > w_current->page_current->right;
@@ -423,8 +423,8 @@ SCREENclip_change(TOPLEVEL *w_current,int *x1, int *y1, int *x2, int *y2)
 {
 	HALFSPACE half1, half2; 
 	HALFSPACE tmp_half;
-	POINT tmp_point;
-	POINT point1, point2;
+	sPOINT tmp_point;
+	sPOINT point1, point2;
 	float slope;
 	int in1, in2, done;
 	int visible;
@@ -543,8 +543,8 @@ clip_nochange(TOPLEVEL *w_current,int x1, int y1, int x2, int y2)
 {
 	HALFSPACE half1, half2; 
 	HALFSPACE tmp_half;
-	POINT tmp_point;
-	POINT point1, point2;
+	sPOINT tmp_point;
+	sPOINT point1, point2;
 	float slope;
 	int in1, in2, done;
 	int visible;

@@ -934,7 +934,7 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 
 				/* delete old attrib head */
 				/* and nothing else */
-				//o_attrib_delete(del_object->attribs);
+				o_attrib_delete(del_object->attribs);
 
 				/* you don't need to free the attribs list */
 				/* since it's been relinked into object's */
@@ -946,7 +946,8 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 
 		printf("object didn't have any attributes\n");
 				object->attribs = del_object->attribs;
-				object->attribs->prev = object;
+/* TODO: what should this be? */
+				object->attribs->prev = NULL;
 
 				/* setup parent attribute */
 				object->attribs->object = object;

@@ -43,6 +43,9 @@ AM_SANITY_CHECK
 dnl Initialize libtool libtool isn't needed for gschem
 AM_PROG_LIBTOOL
 
+dnl Check to see if we are building in the cygnus win32 environment
+AC_CYGWIN
+
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 

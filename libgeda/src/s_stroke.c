@@ -29,10 +29,6 @@
 
 #include <guile/gh.h>
 
-#ifdef HAVE_DIRENT_H
-#include <dirent.h>
-#endif
-
 #include "struct.h"
 #include "globals.h"
 

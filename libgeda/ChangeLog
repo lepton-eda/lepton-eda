@@ -8,6 +8,17 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+8/5/99  Added some stuff to configure.in for win32 builds
+
+	Removed some bogus #includes <dirent.h> from a bunch of files
+	s_attrib.c, s_papersize.c, s_stroke.c
+
+	Renamed private POINT structure to sPOINT (single POINT) in m_basic.c
+	(it was conflicting with some includes in win32)
+
+	Added some more #if conditions to the #include <direct.h>, only
+	include this on UNIX platforms
+
 8/3/99	Added to TOPLEVEL the net_consolidate flag
 
 	Upgraded to libtool 1.3.3
