@@ -406,7 +406,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
  *------------------------------------------------------------------*/
 void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
   OBJECT *o_current;
-  OBJECT *o_lower_current;;
+  OBJECT *o_lower_current;
   gchar *temp;
   gchar *temp_uref;
   gchar *pinnumber;

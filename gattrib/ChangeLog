@@ -1,3 +1,8 @@
+2005-02-13 11:30  Stuart Brorson <sdb@cloud9.net>
+
+	* src/s_table.c: Fixed syntax bug (doubled ;;) in 
+	s_table_add_toplevel_pin_items_to_pin_table.
+	
 2005-02-13 01:40  Dan McMahill <danmc>
 
 	* src/s_string_list.c: fix 2 places where a pointer to an int was
