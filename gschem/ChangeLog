@@ -1,5 +1,13 @@
 2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/i_callbacks.nw 
+	(i_callback_edit_embed, i_callback_edit_unembed): Updated for new 
+	o_embed() and o_unembed().
+
+	* noweb/o_misc.nw (o_embed, o_unembed): Cleaned-up code, changed
+	prototype to take a single object and make it issue a message to
+	log when done.
+
 	* noweb/i_callbacks.nw (i_callback_edit_filltype): Modified to
 	create a list of relevant objects that is passed to
 	fill_type_dialog.

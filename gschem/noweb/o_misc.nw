@@ -483,54 +483,39 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
 @section Function @code{o_embed()}
 
-@defun o_embed w_current
+@defun o_embed w_current o_current
 @end defun
 
 <<o_misc.c : o_embed()>>=
 void
-o_embed(TOPLEVEL *w_current)
+o_embed(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  OBJECT *object = NULL;
-  char *new_basename;
-  SELECTION *s_current = NULL;
+  gchar *new_basename;
 
-  s_current = w_current->page_current->selection2_head->next;
-
-  while (s_current != NULL) {
-    object = s_current->selected_object;
-
-    if (!object) {
-      fprintf(stderr, _("ERROR: NULL object in o_embed!\n"));
-      return;
+  /* check o_current is a complex and is not already embedded */
+  if (o_current->type == OBJ_COMPLEX &&
+      !o_complex_is_embedded (o_current))
+  {
+    /* change the clib of complex to "EMBEDDED" */
+    if (o_current->complex_clib) {
+      free (o_current->complex_clib);
     }
+    o_current->complex_clib = u_basic_strdup ("EMBEDDED");
 
-    if (object->type == OBJ_COMPLEX) {
-      if (strncmp(object->complex_clib, "EMBEDDED", 8) != 0) {
+    /* change the basename to "EMBEDDED"+basename */
+    new_basename = u_basic_strdup_multiple ("EMBEDDED",
+                                            o_current->complex_basename,
+                                            NULL);
+    free (o_current->complex_basename);
+    o_current->complex_basename = new_basename;
 
-        if (object->complex_clib) {
-          free(object->complex_clib);
-        }
-
-        object->complex_clib = 
-          u_basic_strdup("EMBEDDED");
-        new_basename = u_basic_strdup_multiple(
-                                               "EMBEDDED",
-                                               object->
-                                               complex_basename,
-                                               NULL);
-
-        free(object->complex_basename);
-
-        object->complex_basename =
-          u_basic_strdup(new_basename);
-
-        free(new_basename);
-
-        w_current->page_current->CHANGED = 1;
-      }
-    }
-    s_current = s_current->next;
+    s_log_message (_("Component [%s] has been embedded\n"),
+                   o_current->complex_basename + 8);
+    
+    /* page content has been modified */
+    w_current->page_current->CHANGED = 1;
   }
+  
 }
 
 
@@ -539,64 +524,48 @@ o_embed(TOPLEVEL *w_current)
 
 @section Function @code{o_unembed()}
 
-@defun o_unembed w_current
+@defun o_unembed w_current o_current
 @end defun
 
 <<o_misc.c : o_unembed()>>=
 void
-o_unembed(TOPLEVEL *w_current)
+o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  OBJECT *object = NULL;
-  char *new_basename;
-  char *new_clib;
-  SELECTION *s_current = NULL;
+  gchar *new_basename, *new_clib;
+  
+  /* check o_current is an embedded complex */
+  if (o_current->type == OBJ_COMPLEX &&
+      o_complex_is_embedded (o_current))
+  {
+    /* get ride of the EMBEDDED word in basename */
+    new_basename = u_basic_strdup (o_current->complex_basename + 8);
 
-  s_current = w_current->page_current->selection2_head->next;
+    /* search for the symbol in the library */
+    new_clib = s_clib_search (new_basename);
 
-  while (s_current != NULL) {
-    object = s_current->selected_object;
+    if (!new_clib) {
+      /* symbol not found in the symbol library: signal an error */
+      s_log_message (_("Could not find component [%s], while trying to unembed. Component is still embedded\n"),
+                     o_current->complex_basename + 8);
+      
+    } else {
+      /* set the object new basename */
+      free (o_current->complex_basename);
+      o_current->complex_basename = new_basename;
 
-    if (!object) {
-      fprintf(stderr, _("ERROR: NULL object in o_embed!\n"));
-      return;
+      /* set the object new clib */
+      free (o_current->complex_clib);
+      o_current->complex_clib = new_clib;
+
+      s_log_message (_("Component [%s] has been successfully unembedded\n"),
+                     o_current->complex_basename);
+      
+      /* page content has been modified */
+      w_current->page_current->CHANGED = 1;
+      
     }
-
-    if (object->type == OBJ_COMPLEX) {
-      if (strncmp(object->complex_clib, "EMBEDDED", 8) == 0) {
-
-        new_basename =
-          (char *) malloc(
-                          sizeof(char) *
-                          (strlen(object->
-                                  complex_basename)+1));
-
-        sprintf(new_basename, "%s",
-                (object->complex_basename + 8));
-
-        new_clib =
-          (char *) s_clib_search(new_basename);
-
-        if (!new_clib) {
-          fprintf(stderr, _("Could not find component [%s], while trying to unembed.\n"),
-                  object->complex_basename);
-          fprintf(stderr,
-                  _("Component is still embedded\n"));
-        } else {
-          free(object->complex_basename);
-
-          object->complex_basename = new_basename;
-
-          free(object->complex_clib);
-
-          object->complex_clib = new_clib;
-
-          w_current->page_current->CHANGED = 1;
-        }
-      }
-    }
-
-    s_current=s_current->next;
   }
+  
 }
 
 
