@@ -1,3 +1,7 @@
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
 2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* pads_backannotate: Added Dan's documentation for the
