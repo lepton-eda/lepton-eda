@@ -1,3 +1,8 @@
+2005-03-14 07:13  Dan McMahill <danmc>
+
+	* maxim/: max12527-1.sym, max12557-1.sym: add 2 more Maxim high
+	  speed ADCs
+
 2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* transistor/BC557-1.sym: Replaced this symbol with BC557-2.sym
