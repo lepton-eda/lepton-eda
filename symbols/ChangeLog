@@ -11,6 +11,14 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* system-commonrc.in: Added component-library-search keyword to allow
+	  for the automatic search for component libraries
+
+	* system-commonrc.in: Added source-library-search keyword to allow
+	  for the automatic search for source libraries
+
 2000-06-21  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* memory/*.sym: Updated all symbols to have default uref

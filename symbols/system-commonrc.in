@@ -7,13 +7,11 @@
 ; Start of path related keywords
 ;
 
-; component-library
+; component-library string
 ; Specify where components exist.
 ; The string after this keyword should be a valid directory name.
 ; You should have read access to this directory and all the files inside
 ; the directory.
-; The component library which is in the user's local project directory is
-; added automatically and doesn't need to be specified here (*TBD later *)
 ; The order of the component-library keywords determines the order they
 ; are displayed, but they are searched *backwards*, ie last one in this list
 ; is searched *first*.
@@ -47,13 +45,24 @@
 (component-library "@symdir@/dec")
 (component-library "@symdir@/supervisor")
 
+; component-library-search atring
+;
+; Specifies the directory where other component libraries can be found
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The order of the component libraries found within the specified directory
+; is in inode order.  The libraries found using this keyword will be searched
+; *before* the component libraries specified above.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(component-library-search "@symdir@")
+
 ; source-library string
 ; Specify where source entities exist.
 ; The string after this keyword should be a valid directory name.
 ; You should have read access to this directory and all the files inside
 ; the directory.
-; The source library which is in the user's local project directory is
-; added automatically and doesn't need to be specified here (*TBD later *)
 ; The order of the source-library keywords determines the order they
 ; are displayed, but they are searched *backwards*, ie last one in this list
 ; is searched *first*.
@@ -82,7 +91,19 @@
 (source-library "@symdir@/pla")
 (source-library "@symdir@/dec")
 (source-library "@symdir@/supervisor")
-; out for now (source-library "@sourcedir@")
+
+; source-library-search atring
+;
+; Specifies the directory where other source libraries can be found
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The order of the source libraries found within the specified directory
+; is in inode order.  The libraries found using this keyword will be searched
+; *before* the source libraries specified above.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(source-library-search "@symdir@")
 
 ; font-directory string
 ; Specifies where the vector font definitions are stored.
