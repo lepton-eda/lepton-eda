@@ -152,7 +152,7 @@ ifed out 3/15/98 due to above
 
 	/* we'll try this here */
 	if (!w_current->ADDING_SEL) {
-                o_ales_update(w_current->page_current, object_list);
+                o_conn_update(w_current->page_current, object_list);
         }
 
 	return(object_list);

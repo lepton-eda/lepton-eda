@@ -333,7 +333,7 @@ s_project_close(TOPLEVEL *pr_current)
 	/* free all fonts */
 	/* if you close a window, then you free the font set... */
 	/* this is probably a bad idea... */
-	o_ntext_freeallfonts(pr_current);
+	o_text_freeallfonts(pr_current);
 
 	s_project_delete(project_head, pr_current);
 

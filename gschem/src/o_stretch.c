@@ -55,7 +55,7 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 #endif
 	
 		selected = w_current->page_current->selection_head->next;
-		found = o_ales_find_closest(selected, x, y, 
+		found = o_conn_find_closest(selected, x, y, 
 					    &whichone, NULL, NULL);
 
 		if (found) {
@@ -181,7 +181,7 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
                                               x_get_color(w_current->
 							  background_color));
 
-			o_ales_draw_endpoint(w_current, w_current->gc, 
+			o_conn_draw_endpoint(w_current, w_current->gc, 
 				             w_current->last_x, 
 					     w_current->last_y);
 		}
@@ -209,7 +209,8 @@ o_stretch_end(TOPLEVEL *w_current)
 	/* skip over head */
 	o_current = w_current->page_current->selection_head->next; 
 
-	while(o_current != NULL) {
+	/* this will change to while(...) once things work right */
+	if(o_current != NULL) {
 
 		found = (OBJECT *) o_list_search(w_current->
 						 page_current->
@@ -344,7 +345,7 @@ o_stretch_end(TOPLEVEL *w_current)
 
 			break;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 
 			break;
 
@@ -362,9 +363,9 @@ o_stretch_end(TOPLEVEL *w_current)
 
 	w_current->page_current->CHANGED=1;
 
-	o_ales_disconnect_update(w_current->page_current);
+	o_conn_disconnect_update(w_current->page_current);
 
-	/* o_ales_erase_all(w_current, w_current->page_current->object_head);*/
+	/* o_conn_erase_all(w_current, w_current->page_current->object_head);*/
 	o_redraw(w_current, w_current->page_current->object_head);
         o_redraw_selected(w_current);
 

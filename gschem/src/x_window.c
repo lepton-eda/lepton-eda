@@ -734,7 +734,7 @@ x_window_close(TOPLEVEL *w_current)
 	}
 
 #if DEBUG
-	o_ales_print_hash(w_current->page_current->ales_table);
+	o_conn_print_hash(w_current->page_current->conn_table);
 #endif
 
 	/* make sure window_tail stays correct and doesn't dangle */
@@ -800,7 +800,7 @@ x_window_close(TOPLEVEL *w_current)
 	/* stuff that has to be done before we free w_current */
 	if ( (num_windows - 1) == 0) {
 		/* free all fonts */
-		o_ntext_freeallfonts(w_current);
+		o_text_freeallfonts(w_current);
 		/* close the log file */
 		s_log_close();
 	}

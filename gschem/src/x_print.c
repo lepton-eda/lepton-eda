@@ -230,6 +230,8 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 	GtkWidget *scrolled_win;
 	GtkWidget *list_item;
 	GtkWidget *optionmenu;
+	GtkWidget *orient_menu;
+	GtkWidget *type_menu;
 	GtkWidget *vbox, *action_area;
 	char *string = NULL;
 	int i;
@@ -363,8 +365,9 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
                 gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
                 gtk_widget_show (label);
 		optionmenu = gtk_option_menu_new ();
-		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
-					 create_menu_type (w_current));
+		type_menu = create_menu_type (w_current);
+		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), 
+				         type_menu);
 		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
 		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
 		gtk_widget_show(optionmenu);
@@ -375,16 +378,30 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
                 gtk_widget_show (label);
 		optionmenu = gtk_option_menu_new ();
-		gtk_option_menu_set_menu(GTK_OPTION_MENU (optionmenu),
-					 create_menu_orient (w_current));
+		orient_menu = create_menu_orient (w_current);
+		gtk_option_menu_set_menu(GTK_OPTION_MENU (optionmenu), 
+				         orient_menu);
 		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
 		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
 		gtk_widget_show (optionmenu);
 
 		/* set some defaults */
-		/* TODO: this should be whatever the last value was
-		 * set to??? */
-		f_print_set_type(w_current, LIMITS);
+		if (w_current->print_output_type == WINDOW) {
+			gtk_menu_set_active(GTK_MENU (type_menu),1);
+			f_print_set_type(w_current, WINDOW);
+		} else {
+			gtk_menu_set_active(GTK_MENU (type_menu),0);
+			f_print_set_type(w_current, LIMITS);
+		}
+
+		if (w_current->print_orientation == PORTRAIT) {
+			gtk_menu_set_active(GTK_MENU (orient_menu),1);
+			x_print_set_window (NULL, w_current);
+		} else {
+			gtk_menu_set_active(GTK_MENU (orient_menu),0);
+			print_landscape (NULL, w_current);
+		}
+
 	}
 
 	if (!GTK_WIDGET_VISIBLE (w_current->pwindow)) {

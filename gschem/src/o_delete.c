@@ -56,7 +56,7 @@ o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 	o_net_draw(w_current, obj);
 	w_current->override_color = -1;
 
-	o_net_ales_erase_force(w_current, obj);
+	o_net_conn_erase_force(w_current, obj);
 
 	removing_sel_save = w_current->REMOVING_SEL;
 	w_current->REMOVING_SEL = 1;
@@ -76,7 +76,7 @@ o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
 	o_bus_draw(w_current, obj);
 	w_current->override_color = -1;
 
-	o_bus_ales_erase_force(w_current, obj);
+	o_bus_conn_erase_force(w_current, obj);
 
 	removing_sel_save = w_current->REMOVING_SEL;
 	w_current->REMOVING_SEL = 1;
@@ -131,10 +131,10 @@ o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
 }
 
 static void
-o_delete_ntext(TOPLEVEL *w_current, OBJECT *obj)
+o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
 {
 	w_current->override_color = w_current->background_color;
-	o_ntext_draw(w_current, obj);
+	o_text_draw(w_current, obj);
 	w_current->override_color = -1;
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
@@ -208,8 +208,8 @@ o_delete(TOPLEVEL *w_current)
 			o_delete_pin(w_current, found);
 			break;
 
-		case(OBJ_NTEXT):
-			o_delete_ntext(w_current, found);
+		case(OBJ_TEXT):
+			o_delete_text(w_current, found);
 			break;
 
 		case(OBJ_ARC):
@@ -229,13 +229,13 @@ o_delete(TOPLEVEL *w_current)
 
 	w_current->page_current->CHANGED=1;
 
-	/* New ALES stuff */
-	o_ales_disconnect_update(w_current->page_current);
+	/* New CONN stuff */
+	o_conn_disconnect_update(w_current->page_current);
 
 	o_redraw(w_current, w_current->page_current->object_head);
 
 	/* I don't think I like this */
 #if 0
-	o_ales_draw_all(w_current, w_current->page_current->object_head);
+	o_conn_draw_all(w_current, w_current->page_current->object_head);
 #endif
 }

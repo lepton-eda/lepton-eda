@@ -40,11 +40,11 @@
 
 #include "../include/prototype.h"
 
-ALES *
-o_ales_return_tail(ALES *head) 
+CONN *
+o_conn_return_tail(CONN *head) 
 {
-	ALES *c_current=NULL;
-        ALES *current=NULL;
+	CONN *c_current=NULL;
+        CONN *current=NULL;
 
         c_current = head;
         while ( c_current != NULL ) { /* goto end of list */
@@ -55,12 +55,12 @@ o_ales_return_tail(ALES *head)
 }
 
 /* rename to be consistant */
-ALES *
-o_ales_add_head(OBJECT *parent, int x, int y)
+CONN *
+o_conn_add_head(OBJECT *parent, int x, int y)
 {
-	ALES *head = NULL;
+	CONN *head = NULL;
 
-	head = (ALES *) malloc(sizeof(ALES));
+	head = (CONN *) malloc(sizeof(CONN));
 	head->next = NULL;
 
 	head->object = parent; 
@@ -76,18 +76,18 @@ o_ales_add_head(OBJECT *parent, int x, int y)
 }
 
 /* list_head is the list where you want to add item to */
-/* item is the item you want to add as an ales */
-ALES *
-o_ales_add(ALES *list_head, OBJECT *item, OBJECT *responsible, int type, int x, int y)
+/* item is the item you want to add as an conn */
+CONN *
+o_conn_add(CONN *list_head, OBJECT *item, OBJECT *responsible, int type, int x, int y)
 {
-	ALES *end = NULL;
-	ALES *new = NULL;
+	CONN *end = NULL;
+	CONN *new = NULL;
 
 	/* get tail of list_head */
-	end = o_ales_return_tail(list_head);
+	end = o_conn_return_tail(list_head);
 
 	/* create an new st_attrib object */
-	new = (ALES *) malloc(sizeof(ALES));
+	new = (CONN *) malloc(sizeof(CONN));
 
 	/* fill item with correct data (mainly item) */
 	new->next = NULL;
@@ -101,7 +101,7 @@ o_ales_add(ALES *list_head, OBJECT *item, OBJECT *responsible, int type, int x, 
 	new->y = y;
 
 #if DEBUG 
-	if (new->type == ALES_MIDPOINT) {
+	if (new->type == CONN_MIDPOINT) {
 		printf("finally adding midpoint!!!\n");
 	}
 #endif
@@ -118,7 +118,7 @@ o_ales_add(ALES *list_head, OBJECT *item, OBJECT *responsible, int type, int x, 
 /* this routine is not nice to next and prev */
 /* this routine is only called from free_all */
 void
-o_ales_free(ALES *current)
+o_conn_free(CONN *current)
 {
 	if (current != NULL) {
 
@@ -135,29 +135,29 @@ o_ales_free(ALES *current)
 /* so it should only be used when an object is being destroyed */
 /* goes backwards */
 void
-o_ales_free_all(ALES *list)
+o_conn_free_all(CONN *list)
 {
-        ALES *c_current; 
-	ALES *c_next;
+        CONN *c_current; 
+	CONN *c_next;
 
 	c_current = list;
 
 	while (c_current != NULL) {
 		c_next = c_current->next;
-		o_ales_free(c_current);
+		o_conn_free(c_current);
                 c_current = c_next;
        	}
 }
 
 void
-o_ales_print(ALES *ales) 
+o_conn_print(CONN *conn) 
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current = ales;
+	c_current = conn;
 
 #if DEBUG
-	printf("Starting ales list printout\n");
+	printf("Starting conn list printout\n");
 #endif
 
 	while (c_current != NULL) {
@@ -178,19 +178,19 @@ o_ales_print(ALES *ales)
 
 	
 
-		if (c_current->type == ALES_NET) {
-			printf("type: ALES_NET ");
-		} else if (c_current->type == ALES_PIN) {
-			printf("type: ALES_PIN ");
+		if (c_current->type == CONN_NET) {
+			printf("type: CONN_NET ");
+		} else if (c_current->type == CONN_PIN) {
+			printf("type: CONN_PIN ");
 		} else if (c_current->type == INVALID) {
 			printf("type: INVALID ");
-		} else if (c_current->type == ALES_BUS) {
-			printf("type: ALES_BUS ");
-		} else if (c_current->type == ALES_MIDPOINT) {
-			printf("type: ALES_MIDPOINT ");
-		} else if (c_current->type == ALES_BUS_MIDPOINT) {
-			printf("type: ALES_BUS_MIDPOINT ");
-		} else if (c_current->type == ALES_HEAD) {
+		} else if (c_current->type == CONN_BUS) {
+			printf("type: CONN_BUS ");
+		} else if (c_current->type == CONN_MIDPOINT) {
+			printf("type: CONN_MIDPOINT ");
+		} else if (c_current->type == CONN_BUS_MIDPOINT) {
+			printf("type: CONN_BUS_MIDPOINT ");
+		} else if (c_current->type == CONN_HEAD) {
 			printf("type: head node ");
 			printf("cue type: %d ", c_current->visual_cue);
 		}
@@ -199,22 +199,22 @@ o_ales_print(ALES *ales)
 		c_current = c_current->next;
 	}
 #if 0
-	printf("Ending ales list printout\n\n");
+	printf("Ending conn list printout\n\n");
 #endif
 }
 
 void 
-o_ales_print_hash_func(gpointer key, gpointer value, gpointer user_data)
+o_conn_print_hash_func(gpointer key, gpointer value, gpointer user_data)
 {
 	char *orig_key;
-	ALES *ales_list;
+	CONN *conn_list;
 
 	orig_key = key;
-	ales_list = (ALES *) value;
+	conn_list = (CONN *) value;
 
-	printf("item left over in hash: %s type: %d cue: %d\n", orig_key, ales_list->type, ales_list->visual_cue);
+	printf("item left over in hash: %s type: %d cue: %d\n", orig_key, conn_list->type, conn_list->visual_cue);
 
- 	o_ales_print(ales_list);
+ 	o_conn_print(conn_list);
 
 	printf("--\n");
 }
@@ -222,17 +222,17 @@ o_ales_print_hash_func(gpointer key, gpointer value, gpointer user_data)
 
 
 void
-o_ales_print_hash(GHashTable *ales_table)
+o_conn_print_hash(GHashTable *conn_table)
 {
 	printf("\n\nStarting to print out entire hash table\n");
-	g_hash_table_foreach(ales_table, o_ales_print_hash_func, NULL);
+	g_hash_table_foreach(conn_table, o_conn_print_hash_func, NULL);
 }
 
-/* this routine goes out and removes the current ales, while */
+/* this routine goes out and removes the current conn, while */
 /* preserving the next, prev pointers */
-/* this routine should be used when removing st_ales nodes from a list */
+/* this routine should be used when removing st_conn nodes from a list */
 void
-o_ales_delete(ALES *c_current)
+o_conn_delete(CONN *c_current)
 {
 	if (c_current != NULL) {
 
@@ -255,9 +255,9 @@ o_ales_delete(ALES *c_current)
 
 /* it is the user's responsibility to free the returned string */
 /* this function returns a string which is used as the key in the */
-/* ales_table */
+/* conn_table */
 char *
-o_ales_return_key(int x, int y)
+o_conn_return_key(int x, int y)
 {
 	char *return_string;
 
@@ -275,12 +275,12 @@ o_ales_return_key(int x, int y)
 	return(return_string);
 }
 
-ALES *
-o_ales_search(ALES *ales_list, OBJECT *o_current)
+CONN *
+o_conn_search(CONN *conn_list, OBJECT *o_current)
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current=ales_list;
+	c_current=conn_list;
 
 	while(c_current != NULL) {
 		if (c_current->object == o_current) {
@@ -293,11 +293,11 @@ o_ales_search(ALES *ales_list, OBJECT *o_current)
 }
 
 int
-o_ales_is_bus(ALES *ales_list)
+o_conn_is_bus(CONN *conn_list)
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current=ales_list;
+	c_current=conn_list;
 
 	while(c_current != NULL) {
 
@@ -313,11 +313,11 @@ o_ales_is_bus(ALES *ales_list)
 }
 
 int
-o_ales_is_net(ALES *ales_list)
+o_conn_is_net(CONN *conn_list)
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current=ales_list;
+	c_current=conn_list;
 
 	while(c_current != NULL) {
 
@@ -333,11 +333,11 @@ o_ales_is_net(ALES *ales_list)
 }
 
 int
-o_ales_is_pin(ALES *ales_list)
+o_conn_is_pin(CONN *conn_list)
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current=ales_list;
+	c_current=conn_list;
 
 	while(c_current != NULL) {
 
@@ -353,15 +353,15 @@ o_ales_is_pin(ALES *ales_list)
 }
 
 int
-o_ales_has_bus_midpoint(ALES *ales_list)
+o_conn_has_bus_midpoint(CONN *conn_list)
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current=ales_list;
+	c_current=conn_list;
 
 	while(c_current != NULL) {
 
-		if (c_current->type == ALES_BUS_MIDPOINT) {
+		if (c_current->type == CONN_BUS_MIDPOINT) {
 			return(TRUE);	
 		}
 		c_current=c_current->next;
@@ -372,16 +372,16 @@ o_ales_has_bus_midpoint(ALES *ales_list)
 
 /* is this used ? */
 #if 0
-ALES *
-o_ales_search_midpoint(ALES *ales_list)
+CONN *
+o_conn_search_midpoint(CONN *conn_list)
 {
-	ALES *c_current;
+	CONN *c_current;
 
-	c_current=ales_list;
+	c_current=conn_list;
 
 	while(c_current != NULL) {
 		/* deal with buses here */
-		if (c_current->type == ALES_MIDPOINT) {
+		if (c_current->type == CONN_MIDPOINT) {
 			return(c_current);
 		}
 		c_current=c_current->next;
@@ -393,18 +393,18 @@ o_ales_search_midpoint(ALES *ales_list)
 
 /* testing only */
 void
-o_ales_makeup(GHashTable *ales_table, char *key, OBJECT *o_current)
+o_conn_makeup(GHashTable *conn_table, char *key, OBJECT *o_current)
 {
-	ALES *ptr;
+	CONN *ptr;
 
-	ptr = o_ales_add_head(NULL, 0, 0);
+	ptr = o_conn_add_head(NULL, 0, 0);
 
-	o_ales_add(ptr, o_current, NULL, ALES_NET, 0, 0);
+	o_conn_add(ptr, o_current, NULL, CONN_NET, 0, 0);
 
-	g_hash_table_insert(ales_table, key, ptr);
+	g_hash_table_insert(conn_table, key, ptr);
 }
 
-/* this function updates the visual_cue field of each ales_list */
+/* this function updates the visual_cue field of each conn_list */
 /* based on these simple rules: */
 /*  	0 items in a list : error */
 /*	1 item in a list : draw dangling cues */ 
@@ -413,13 +413,13 @@ o_ales_makeup(GHashTable *ales_table, char *key, OBJECT *o_current)
 /* 	midpoint connection in a list : draw a midpoint connection */	
 /* 	bus_midpoint connection in a list : draw a bus_midpoint connection */	
 void
-o_ales_update_cues_info(ALES *ales_list)
+o_conn_update_cues_info(CONN *conn_list)
 {
-	ALES *c_current;
+	CONN *c_current;
 	int connection_counter=0;
 	int done=0;
 
-	c_current = ales_list;
+	c_current = conn_list;
 
 	while (c_current != NULL) {
 
@@ -428,32 +428,32 @@ o_ales_update_cues_info(ALES *ales_list)
 /* find any of them or all of them in a single list */
 
 		if (c_current->type == INVALID) {
-			ales_list->visual_cue = INVALID_CUE;
+			conn_list->visual_cue = INVALID_CUE;
 
 			/* keep head node whole_type in sync */
 			/* not used , should be nuked */
-			ales_list->whole_type = NO_MIDPOINT;
+			conn_list->whole_type = NO_MIDPOINT;
 			return;
 		} 
 
-		if (c_current->type == ALES_BUS_MIDPOINT) {
-			ales_list->visual_cue = BUS_MIDPOINT_CUE;
+		if (c_current->type == CONN_BUS_MIDPOINT) {
+			conn_list->visual_cue = BUS_MIDPOINT_CUE;
 
 			/* keep head node whole_type in sync */
 			/* not used , should be nuked */
-			ales_list->whole_type = HAS_BUS_MIDPOINT;
+			conn_list->whole_type = HAS_BUS_MIDPOINT;
 			done++;
 		} 
 
-		if (c_current->type == ALES_MIDPOINT && !done) {
-			ales_list->visual_cue = MIDPOINT_CUE;
+		if (c_current->type == CONN_MIDPOINT && !done) {
+			conn_list->visual_cue = MIDPOINT_CUE;
 			/* keep head node whole_type in sync */
 			/* not used , should be nuked */
-			ales_list->whole_type = HAS_MIDPOINT;
+			conn_list->whole_type = HAS_MIDPOINT;
 			done++;
 		} 
 
-		if (c_current->type == ALES_NET || c_current->type == ALES_PIN || c_current->type == ALES_BUS) {
+		if (c_current->type == CONN_NET || c_current->type == CONN_PIN || c_current->type == CONN_BUS) {
 			connection_counter++;	
 
 		}
@@ -467,26 +467,26 @@ o_ales_update_cues_info(ALES *ales_list)
 
 	if (connection_counter == 0) {
 
-		printf("You got a ales list with just a head ugg!\n");
+		printf("You got a conn list with just a head ugg!\n");
 		printf("This node should be deleted\n");
-		o_ales_print(ales_list);
+		o_conn_print(conn_list);
 
 	} else if (connection_counter == 1) {
 
 		/* you are sure to have atleast one item in the list */
 		/* so this should be safe */
-		if (ales_list->next->type == ALES_NET) { 
-			ales_list->visual_cue = NET_DANGLING_CUE;
+		if (conn_list->next->type == CONN_NET) { 
+			conn_list->visual_cue = NET_DANGLING_CUE;
 #if DEBUG 
 			printf("draw NET_DANGLING_CUE\n");
 #endif
-		} else if (ales_list->next->type == ALES_PIN) {
-			ales_list->visual_cue = PIN_DANGLING_CUE;
+		} else if (conn_list->next->type == CONN_PIN) {
+			conn_list->visual_cue = PIN_DANGLING_CUE;
 #if DEBUG
 			printf("draw PIN_DANGLING_CUE\n");
 #endif
-		} else if (ales_list->next->type == ALES_BUS) {
-			ales_list->visual_cue = BUS_DANGLING_CUE;
+		} else if (conn_list->next->type == CONN_BUS) {
+			conn_list->visual_cue = BUS_DANGLING_CUE;
 #if DEBUG
 			printf("draw BUS_DANGLING_CUE\n");
 #endif
@@ -495,7 +495,7 @@ o_ales_update_cues_info(ALES *ales_list)
 	} else if (connection_counter == 2) {
 
 		/* Exactly two items, so nothing should be drawn */
-		ales_list->visual_cue = NO_CUE;
+		conn_list->visual_cue = NO_CUE;
 #if DEBUG
 		printf("draw NO CUE\n");
 #endif
@@ -504,22 +504,22 @@ o_ales_update_cues_info(ALES *ales_list)
 
 		/* there are multiple things connecting here, draw a */
 		/* midpoint connection */
-		ales_list->visual_cue = MIDPOINT_CUE;
+		conn_list->visual_cue = MIDPOINT_CUE;
 #if DEBUG
 		printf("draw a MIDPOINT\n");
 #endif
 	}
 
-	ales_list->whole_type = NO_MIDPOINT;
+	conn_list->whole_type = NO_MIDPOINT;
 
 #if DEBUG 
-	printf("final type: %d\n", ales_list->visual_cue);
+	printf("final type: %d\n", conn_list->visual_cue);
 	printf("connection counter: %d\n", connection_counter);
 #endif
 }
 
 OBJECT *
-o_ales_find_midpoint(OBJECT *object_list, int x, int y) 
+o_conn_find_midpoint(OBJECT *object_list, int x, int y) 
 {
 	OBJECT *o_current;
 	int min_x, min_y, max_x, max_y;
@@ -576,75 +576,75 @@ o_ales_find_midpoint(OBJECT *object_list, int x, int y)
 }
 
 void
-o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
+o_conn_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 {
-	GHashTable *ales_table;
+	GHashTable *conn_table;
 	char *key = NULL;
 	OBJECT *midpoint_object=NULL;
-	ALES **ales_list = NULL;
+	CONN **conn_list = NULL;
 	char **orig_key = NULL;
-	ALES *found = NULL;
-	ALES *temp = NULL;
+	CONN *found = NULL;
+	CONN *temp = NULL;
 	int type;
 
-	ales_table = p_current->ales_table;
+	conn_table = p_current->conn_table;
 
-	ales_list = (ALES **) malloc(sizeof(ALES *));
+	conn_list = (CONN **) malloc(sizeof(CONN *));
 	orig_key = (char **) malloc(sizeof(char *));
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */
-	key = o_ales_return_key(x, y);
+	key = o_conn_return_key(x, y);
 
 	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(ales_table, key, 
-		(gpointer) orig_key, (gpointer) ales_list)) {
+	if (g_hash_table_lookup_extended(conn_table, key, 
+		(gpointer) orig_key, (gpointer) conn_list)) {
 
 #if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
 #endif
-		/* o_ales_print(*ales_list);*/
+		/* o_conn_print(*conn_list);*/
 
-		/* Search for o_current in st_ales list */
-		found = o_ales_search(*ales_list, o_current);
+		/* Search for o_current in st_conn list */
+		found = o_conn_search(*conn_list, o_current);
 
 		/* if found, do nothing */
 
 		if (!found) {
 
-			temp = *ales_list;
-			if (o_ales_is_bus(temp) && 
-			    !o_ales_has_bus_midpoint(temp)) {
+			temp = *conn_list;
+			if (o_conn_is_bus(temp) && 
+			    !o_conn_has_bus_midpoint(temp)) {
 				type = INVALID;
 			} else {
-				type = ALES_NET;
+				type = CONN_NET;
 			}
 
 
-			o_ales_add(*ales_list, o_current, NULL, type, x, y);
-			o_ales_update_cues_info(*ales_list);
+			o_conn_add(*conn_list, o_current, NULL, type, x, y);
+			o_conn_update_cues_info(*conn_list);
 		}
 
 		/* you have to check for mid points here as well */
-		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
+		midpoint_object = o_conn_find_midpoint(p_current->object_head, 
 						       x, y);
 
 		/* if it is than add found object to this */
-		/* new st_ales node list */
+		/* new st_conn node list */
 		if (midpoint_object && midpoint_object != o_current) {
 			/* need to deal with busses too */
 #if DEBUG 
-			printf("ADDING midpoint (found previous st_ales): %s %s!!!\n", midpoint_object->name, o_current->name);	
+			printf("ADDING midpoint (found previous st_conn): %s %s!!!\n", midpoint_object->name, o_current->name);	
 #endif
 
 			if (midpoint_object->type == OBJ_BUS) {
-				o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS_MIDPOINT, x, y);
+				o_conn_add(*conn_list, midpoint_object, o_current, CONN_BUS_MIDPOINT, x, y);
 			} else if (midpoint_object->type == OBJ_NET) {
-				o_ales_add(*ales_list, midpoint_object, o_current, ALES_MIDPOINT, x, y);
+				o_conn_add(*conn_list, midpoint_object, o_current, CONN_MIDPOINT, x, y);
 			}
 
 
-			o_ales_update_cues_info(*ales_list);
+			o_conn_update_cues_info(*conn_list);
 
 		} 
 
@@ -652,12 +652,12 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 			printf("got that condition\n");
 		}*/
 
-		/* key wasn't inserted, nothing re-inserted into ales table */
+		/* key wasn't inserted, nothing re-inserted into conn table */
 		/* safe to free */
 		free(key);
 
 #if DEBUG 
-		o_ales_print(*ales_list);
+		o_conn_print(*conn_list);
 #endif
 
 	} else {
@@ -667,19 +667,19 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 #endif
 
 		/* not found */
-		/* create st_ales node head */
-		*ales_list = o_ales_add_head(NULL, x, y);
+		/* create st_conn node head */
+		*conn_list = o_conn_add_head(NULL, x, y);
 
-		/* added st_ales node for o_current */
-		o_ales_add(*ales_list, o_current, NULL, ALES_NET, x, y);
+		/* added st_conn node for o_current */
+		o_conn_add(*conn_list, o_current, NULL, CONN_NET, x, y);
 
 		/* do a complete search of entire object list */
 		/* to see if point is a mid point connection */
-		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
+		midpoint_object = o_conn_find_midpoint(p_current->object_head, 
 						       x, y);
 
 		/* if it is than add found object to this */
-		/* new st_ales node list */
+		/* new st_conn node list */
 		if (midpoint_object && midpoint_object != o_current) {
 
 			/* need to deal with busses too */
@@ -688,90 +688,90 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 
 #endif
 			if (midpoint_object->type == OBJ_BUS) {
-				o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS_MIDPOINT, x, y);
+				o_conn_add(*conn_list, midpoint_object, o_current, CONN_BUS_MIDPOINT, x, y);
 			} else if (midpoint_object->type == OBJ_NET) {
-				o_ales_add(*ales_list, midpoint_object, o_current, ALES_MIDPOINT, x, y);
+				o_conn_add(*conn_list, midpoint_object, o_current, CONN_MIDPOINT, x, y);
 			}
 		}
 
-		/* update *ales_list for the various conditions */
-		o_ales_update_cues_info(*ales_list);
+		/* update *conn_list for the various conditions */
+		o_conn_update_cues_info(*conn_list);
 
 
-		/* add st_ales list into ales_table */ 
-		g_hash_table_insert(ales_table, key, *ales_list);
+		/* add st_conn list into conn_table */ 
+		g_hash_table_insert(conn_table, key, *conn_list);
 
 		/* key was used so you can't remove it */
 	}
 
-	free(ales_list);
+	free(conn_list);
 	free(orig_key);
 }
 
 /* function needs a lot of work */
 void
-o_ales_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y)
+o_conn_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y)
 {
-	GHashTable *ales_table;
+	GHashTable *conn_table;
 	char *key = NULL;
 	OBJECT *midpoint_object=NULL;
-	ALES **ales_list = NULL;
+	CONN **conn_list = NULL;
 	char **orig_key = NULL;
-	ALES *found = NULL;
-	ALES *temp = NULL;
+	CONN *found = NULL;
+	CONN *temp = NULL;
 	int type;
 
-	ales_table = p_current->ales_table;
+	conn_table = p_current->conn_table;
 
-	ales_list = (ALES **) malloc(sizeof(ALES *));
+	conn_list = (CONN **) malloc(sizeof(CONN *));
 	orig_key = (char **) malloc(sizeof(char *));
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */
-	key = o_ales_return_key(x, y);
+	key = o_conn_return_key(x, y);
 
 	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(ales_table, key, 
-		(gpointer) orig_key, (gpointer) ales_list)) {
+	if (g_hash_table_lookup_extended(conn_table, key, 
+		(gpointer) orig_key, (gpointer) conn_list)) {
 
 #if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
 #endif
-		/* o_ales_print(*ales_list);*/
+		/* o_conn_print(*conn_list);*/
 
-		/* Search for o_current in st_ales list */
-		found = o_ales_search(*ales_list, o_current);
+		/* Search for o_current in st_conn list */
+		found = o_conn_search(*conn_list, o_current);
 
 		/* if found, do nothing */
 
 		if (!found) {
 
-			temp = *ales_list;
-			if (o_ales_is_pin(temp) || o_ales_is_net(temp)) {
+			temp = *conn_list;
+			if (o_conn_is_pin(temp) || o_conn_is_net(temp)) {
 				type = INVALID;
 			} else {
-				type = ALES_BUS;
+				type = CONN_BUS;
 			}
 
-			o_ales_add(*ales_list, o_current, NULL, type, x, y);
-			o_ales_update_cues_info(*ales_list);
+			o_conn_add(*conn_list, o_current, NULL, type, x, y);
+			o_conn_update_cues_info(*conn_list);
 		}
 
 		/* you have to check for mid points here as well */
-		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
+		midpoint_object = o_conn_find_midpoint(p_current->object_head, 
 						       x, y);
 
 		/* if it is than add found object to this */
-		/* new st_ales node list */
+		/* new st_conn node list */
 		if (midpoint_object && midpoint_object != o_current) {
 			/* need to deal with busses too */
 #if DEBUG 
-			printf("ADDING midpoint (found previous st_ales): %s %s!!!\n", midpoint_object->name, o_current->name);	
+			printf("ADDING midpoint (found previous st_conn): %s %s!!!\n", midpoint_object->name, o_current->name);	
 #endif
 		
-			o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS, x, y);
+			o_conn_add(*conn_list, midpoint_object, o_current, CONN_BUS, x, y);
 
-			o_ales_update_cues_info(*ales_list);
+			o_conn_update_cues_info(*conn_list);
 
 		} 
 
@@ -779,12 +779,12 @@ o_ales_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y)
 			printf("got that condition\n");
 		}*/
 
-		/* key wasn't inserted, nothing re-inserted into ales table */
+		/* key wasn't inserted, nothing re-inserted into conn table */
 		/* safe to free */
 		free(key);
 
 #if DEBUG 
-		o_ales_print(*ales_list);
+		o_conn_print(*conn_list);
 #endif
 
 	} else {
@@ -794,95 +794,95 @@ o_ales_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y)
 #endif
 
 		/* not found */
-		/* create st_ales node head */
-		*ales_list = o_ales_add_head(NULL, x, y);
+		/* create st_conn node head */
+		*conn_list = o_conn_add_head(NULL, x, y);
 
-		/* added st_ales node for o_current */
-		o_ales_add(*ales_list, o_current, NULL, ALES_BUS, x, y);
+		/* added st_conn node for o_current */
+		o_conn_add(*conn_list, o_current, NULL, CONN_BUS, x, y);
 
 		/* do a complete search of entire object list */
 		/* to see if point is a mid point connection */
-		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
+		midpoint_object = o_conn_find_midpoint(p_current->object_head, 
 						       x, y);
 
 		/* if it is than add found object to this */
-		/* new st_ales node list */
+		/* new st_conn node list */
 		if (midpoint_object && midpoint_object != o_current) {
 
 			/* need to deal with busses too */
 #if DEBUG 
 			printf("ADDING midpoint: %s %s!!!\n", midpoint_object->name, o_current->name);	
 #endif
-			o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS, x, y);
+			o_conn_add(*conn_list, midpoint_object, o_current, CONN_BUS, x, y);
 		}
 
-		/* update *ales_list for the various conditions */
-		o_ales_update_cues_info(*ales_list);
+		/* update *conn_list for the various conditions */
+		o_conn_update_cues_info(*conn_list);
 
 
-		/* add st_ales list into ales_table */ 
-		g_hash_table_insert(ales_table, key, *ales_list);
+		/* add st_conn list into conn_table */ 
+		g_hash_table_insert(conn_table, key, *conn_list);
 
 		/* key was used so you can't remove it */
 	}
 
-	free(ales_list);
+	free(conn_list);
 	free(orig_key);
 }
 
 void
-o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
+o_conn_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 {
-	GHashTable *ales_table;
+	GHashTable *conn_table;
 	char *key = NULL;
-	ALES **ales_list = NULL;
+	CONN **conn_list = NULL;
 	char **orig_key = NULL;
-	ALES *found = NULL;
-	ALES *temp;
+	CONN *found = NULL;
+	CONN *temp;
 	int type;
 
-	ales_table = p_current->ales_table;
+	conn_table = p_current->conn_table;
 
-	ales_list = (ALES **) malloc(sizeof(ALES *));
+	conn_list = (CONN **) malloc(sizeof(CONN *));
 	orig_key = (char **) malloc(sizeof(char *));
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */
-	key = o_ales_return_key(x, y);
+	key = o_conn_return_key(x, y);
 
 	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(ales_table, key,
-		(gpointer) orig_key, (gpointer) ales_list)) {
+	if (g_hash_table_lookup_extended(conn_table, key,
+		(gpointer) orig_key, (gpointer) conn_list)) {
 
 #if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
 #endif
-		/* o_ales_print(*ales_list);*/
+		/* o_conn_print(*conn_list);*/
 
-		/* Search for o_current in st_ales list */
-		found = o_ales_search(*ales_list, o_current);
+		/* Search for o_current in st_conn list */
+		found = o_conn_search(*conn_list, o_current);
 
 		/* if found, do nothing */
 
 		if (!found) {
 
-			temp = *ales_list;
-			if (o_ales_is_bus(temp)) {
+			temp = *conn_list;
+			if (o_conn_is_bus(temp)) {
 				type = INVALID;
 			} else {
-				type = ALES_PIN;
+				type = CONN_PIN;
 			}
 
-			o_ales_add(*ales_list, o_current, NULL, type, x, y);
-			o_ales_update_cues_info(*ales_list);
+			o_conn_add(*conn_list, o_current, NULL, type, x, y);
+			o_conn_update_cues_info(*conn_list);
 		}
 
-		/* key wasn't inserted, nothing re-inserted into ales table */
+		/* key wasn't inserted, nothing re-inserted into conn table */
 		/* safe to free */
 		free(key);
 
 #if DEBUG 
-		o_ales_print(*ales_list);
+		o_conn_print(*conn_list);
 #endif
 
 	} else {
@@ -892,57 +892,57 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 #endif
 
 		/* not found */
-		/* create st_ales node head */
-		*ales_list = o_ales_add_head(NULL, x, y);
+		/* create st_conn node head */
+		*conn_list = o_conn_add_head(NULL, x, y);
 
-		/* added st_ales node for o_current */
-		o_ales_add(*ales_list, o_current, NULL, ALES_PIN, x, y);
+		/* added st_conn node for o_current */
+		o_conn_add(*conn_list, o_current, NULL, CONN_PIN, x, y);
 
-		/* update *ales_list for the various conditions */
-		o_ales_update_cues_info(*ales_list);
+		/* update *conn_list for the various conditions */
+		o_conn_update_cues_info(*conn_list);
 
-		/* add st_ales list into ales_table */ 
-		g_hash_table_insert(ales_table, key, *ales_list);
+		/* add st_conn list into conn_table */ 
+		g_hash_table_insert(conn_table, key, *conn_list);
 
 		/* key was used so you can't remove it */
 	}
 
-	free(ales_list);
+	free(conn_list);
 	free(orig_key);
 }
 
 void
-o_ales_update(PAGE *p_current, OBJECT *o_current)
+o_conn_update(PAGE *p_current, OBJECT *o_current)
 {
 	switch (o_current->type) {
 
 		case(OBJ_NET):
 
-			o_ales_update_net(p_current, o_current, 
+			o_conn_update_net(p_current, o_current, 
 					  o_current->line_points->x1,
 					  o_current->line_points->y1);
 
-			o_ales_update_net(p_current, o_current, 
+			o_conn_update_net(p_current, o_current, 
 					  o_current->line_points->x2,
 					  o_current->line_points->y2);
 		break;
 
 		case(OBJ_BUS):
-			o_ales_update_bus(p_current, o_current, 
+			o_conn_update_bus(p_current, o_current, 
 					  o_current->line_points->x1,
 					  o_current->line_points->y1);
 
-			o_ales_update_bus(p_current, o_current, 
+			o_conn_update_bus(p_current, o_current, 
 					  o_current->line_points->x2,
 					  o_current->line_points->y2);
 		break;
 
 		case(OBJ_PIN):
-			o_ales_update_pin(p_current, o_current, 
+			o_conn_update_pin(p_current, o_current, 
 					  o_current->line_points->x1,
 					  o_current->line_points->y1);
 
-			o_ales_update_pin(p_current, o_current, 
+			o_conn_update_pin(p_current, o_current, 
 					  o_current->line_points->x2,
 					  o_current->line_points->y2);
 
@@ -950,14 +950,14 @@ o_ales_update(PAGE *p_current, OBJECT *o_current)
 
 		case(OBJ_COMPLEX):
 
-			o_ales_update(p_current, o_current->complex);
+			o_conn_update(p_current, o_current->complex);
 		break;
 	}
 }
 
 
 void
-o_ales_update_all(PAGE *p_current, OBJECT *object_list)
+o_conn_update_all(PAGE *p_current, OBJECT *object_list)
 {
 	OBJECT *o_current;
 
@@ -971,12 +971,12 @@ o_ales_update_all(PAGE *p_current, OBJECT *object_list)
 			case(OBJ_NET):
 			case(OBJ_BUS):
 
-				o_ales_update(p_current, o_current);
+				o_conn_update(p_current, o_current);
 			break;
 
 			case(OBJ_COMPLEX):
 
-				o_ales_update_all(p_current, o_current->complex);
+				o_conn_update_all(p_current, o_current->complex);
 			break;
 		}
 
@@ -988,21 +988,21 @@ o_ales_update_all(PAGE *p_current, OBJECT *object_list)
 
 /* returns a *_CUE type to be drawn */
 int
-o_ales_query_table(GHashTable *ales_table, int x, int y)
+o_conn_query_table(GHashTable *conn_table, int x, int y)
 {
-	ALES *ales_list;
+	CONN *conn_list;
 	char *key;
 	int ret_value=0;
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */
-	key = o_ales_return_key(x, y);
+	key = o_conn_return_key(x, y);
 
-	ales_list = g_hash_table_lookup(ales_table,
+	conn_list = g_hash_table_lookup(conn_table,
 					key);
 
-	if (ales_list) {
-		ret_value = ales_list->visual_cue;
+	if (conn_list) {
+		ret_value = conn_list->visual_cue;
 	} else {
 		ret_value = -1;
 	}
@@ -1013,20 +1013,20 @@ o_ales_query_table(GHashTable *ales_table, int x, int y)
 
 /* returns the bus object which caused a midpoint connection */
 OBJECT *
-o_ales_return_bus_object(GHashTable *ales_table, int x, int y)
+o_conn_return_bus_object(GHashTable *conn_table, int x, int y)
 {
-	ALES *ales_list;
-	ALES *c_current;
+	CONN *conn_list;
+	CONN *c_current;
 	char *key;
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */
-	key = o_ales_return_key(x, y);
+	key = o_conn_return_key(x, y);
 
-	ales_list = g_hash_table_lookup(ales_table,
+	conn_list = g_hash_table_lookup(conn_table,
 					key);
 
-	c_current = ales_list;
+	c_current = conn_list;
 	while(c_current) { 
 		if (c_current->object) {
 			if (c_current->object->type == OBJ_BUS) {
@@ -1043,47 +1043,47 @@ o_ales_return_bus_object(GHashTable *ales_table, int x, int y)
 }
 
 int
-o_ales_disconnect_func(
+o_conn_disconnect_func(
 	gpointer key, 
 	gpointer value, 
 	gpointer user_data)
 {
 	char *orig_key;
-	ALES *ales_list;
+	CONN *conn_list;
 
 	orig_key = key;
-	ales_list = (ALES *) value;
+	conn_list = (CONN *) value;
 
 #if DEBUG
-	printf("o_ales_disconnect_func freeing list %d\n", ales_list->visual_cue);
+	printf("o_conn_disconnect_func freeing list %d\n", conn_list->visual_cue);
 #endif
-	o_ales_free_all(ales_list);
+	o_conn_free_all(conn_list);
 
 	free(orig_key);
 	return(TRUE);
 }
 
 void
-o_ales_disconnect_update(PAGE *p_current)
+o_conn_disconnect_update(PAGE *p_current)
 {
-	g_hash_table_foreach_remove(p_current->ales_table, 
-		o_ales_disconnect_func, 
+	g_hash_table_foreach_remove(p_current->conn_table, 
+		o_conn_disconnect_func, 
 		NULL);
 
-	o_ales_update_all(p_current, p_current->object_head);
+	o_conn_update_all(p_current, p_current->object_head);
 }
 
 void
-o_ales_disconnect(PAGE *p_current)
+o_conn_disconnect(PAGE *p_current)
 {
-	g_hash_table_foreach_remove(p_current->ales_table, 
-		o_ales_disconnect_func, 
+	g_hash_table_foreach_remove(p_current->conn_table, 
+		o_conn_disconnect_func, 
 		NULL);
 }
 
 /* this gets compilcated so it needs to be seperate */
 void
-o_ales_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
+o_conn_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
 	                FILE *fp, int x, int y, 
 			int other_wx, int other_wy)
 {
@@ -1099,7 +1099,7 @@ o_ales_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 
 	if (!bus_object) {
 		fprintf(stderr, "Got a null bus_object in "
-				"o_ales_draw_busmidpoint\n");
+				"o_conn_draw_busmidpoint\n");
 		return;
 	}
 
@@ -1130,10 +1130,10 @@ o_ales_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 		case(HORIZONTAL):
 				if (other_wy > bus_wy) {
 					x1 = x; y1 = y+offset;
-					x2 = x-offset; y2 = bus_y;
+					x2 = x+offset; y2 = bus_y;
 				} else if (other_wy < bus_wy) {
 					x1 = x; y1 = y-offset;
-					x2 = x-offset; y2 = bus_y;
+					x2 = x+offset; y2 = bus_y;
 				} else if (other_wy == bus_wy) {
 					fprintf(stderr, "!! Found a net inside a bus2\n");
 					DONT_DRAW=TRUE;
@@ -1147,18 +1147,26 @@ o_ales_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 	}
 
 	if (!DONT_DRAW) {
-	
+		if (w_current->print_output_capstyle != BUTT_CAP) {
+			fprintf(fp, "0 setlinecap\n");
+		}
+
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", x1, y1);
 		fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
-		fprintf(fp, "stroke\n");                         
-	
+		fprintf(fp, "stroke\n");
+
+		if (w_current->print_output_capstyle == SQUARE_CAP) {
+			fprintf(fp, "2 setlinecap\n");
+		} else if (w_current->print_output_capstyle == ROUND_CAP) {
+			fprintf(fp, "1 setlinecap\n");
+		}
 	}
 }
 
 /* this gets compilcated so it needs to be seperate */
 void
-o_ales_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
+o_conn_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
 	                int x, int y, int other_wx, int other_wy)
 {
 	int orient;
@@ -1175,7 +1183,7 @@ o_ales_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 
 	if (!bus_object) {
 		fprintf(stderr, "Got a null bus_object in "
-				"o_ales_draw_busmidpoint\n");
+				"o_conn_draw_busmidpoint\n");
 		return;
 	}
 

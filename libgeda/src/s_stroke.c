@@ -34,6 +34,9 @@
 
 #include "../include/prototype.h"
 
+#if 0 
+/* all this code has been made obsolete by Stefans new schemy way of */
+/* implementing strokes */
 
 struct st_stroke {
 	char *stroke;
@@ -149,3 +152,4 @@ s_stroke_search_execute(char *stroke)
 	return(status);
 }
 
+#endif

@@ -54,7 +54,7 @@ s_traverse_start(TOPLEVEL *pr_current)
 	p_current = pr_current->page_head;
 
 #if DEBUG
-	o_ales_print_hash(pr_current->page_current->ales_table);
+	o_conn_print_hash(pr_current->page_current->conn_table);
 #endif
 
 
@@ -93,7 +93,7 @@ if (verbose_mode) {
 
 
 	s_traverse_build_nethash(pr_current->page_current->nethash_table, 
-				 pr_current->page_current->ales_table, start);
+				 pr_current->page_current->conn_table, start);
 
 
 if (verbose_mode) {
@@ -187,8 +187,8 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 	NET *nets_head=NULL;
 	NET *nets=NULL;
 	char *key;
-	ALES *ales_list;
-	ALES *c_current;
+	CONN *conn_list;
+	CONN *c_current;
 
 	o_current = component->complex;
 
@@ -222,20 +222,20 @@ if (verbose_mode) {
 
 
 			/* search for line_ptr->[x|y]1 */
-			key = o_ales_return_key(o_current->line_points->x1, 
+			key = o_conn_return_key(o_current->line_points->x1, 
 					o_current->line_points->y1);	
 		
-			ales_list = g_hash_table_lookup(
-					pr_current->page_current->ales_table,
+			conn_list = g_hash_table_lookup(
+					pr_current->page_current->conn_table,
                                         key);
 
-			if (ales_list) {
+			if (conn_list) {
 
-				c_current = ales_list;
+				c_current = conn_list;
 
 				while (c_current != NULL) {
 					if (c_current->object != NULL &&
-					    c_current->type != ALES_HEAD) {
+					    c_current->type != CONN_HEAD) {
 
 						if (!c_current->object->visited &&
 						     c_current->object != o_current) {
@@ -259,20 +259,20 @@ if (verbose_mode) {
 			free(key);
 
 			/* search for line_ptr->[x|y]2 */
-			key = o_ales_return_key(o_current->line_points->x2, 
+			key = o_conn_return_key(o_current->line_points->x2, 
 					o_current->line_points->y2);	
 
-			ales_list = g_hash_table_lookup(
-					pr_current->page_current->ales_table,
+			conn_list = g_hash_table_lookup(
+					pr_current->page_current->conn_table,
                                         key);
 
-			if (ales_list) {
+			if (conn_list) {
 
-				c_current = ales_list;
+				c_current = conn_list;
 
 				while (c_current != NULL) {
 					if (c_current->object != NULL &&
-					    (c_current->type != ALES_HEAD) ) {
+					    (c_current->type != CONN_HEAD) ) {
 
 						if (!c_current->object->visited &&
 						     c_current->object != o_current) {
@@ -341,9 +341,9 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	OBJECT *o_current;
 	NET *new_net;
 	char *key = NULL;
-	ALES *ales_list1;
-	ALES *ales_list2;
-	ALES *c_current;
+	CONN *conn_list1;
+	CONN *conn_list2;
+	CONN *c_current;
 
 	o_current = object;
 
@@ -394,25 +394,25 @@ if (verbose_mode) {
 
 	
 	/* search for line_ptr->[x|y]1 */
-	key = o_ales_return_key(o_current->line_points->x1, 
+	key = o_conn_return_key(o_current->line_points->x1, 
 				o_current->line_points->y1);	
 		
 #if DEBUG
 	printf("looking at 1: %s\n", key);
 #endif
-	ales_list1 = g_hash_table_lookup(pr_current->page_current->ales_table,
+	conn_list1 = g_hash_table_lookup(pr_current->page_current->conn_table,
                                       key);
 
-	if (ales_list1) {
+	if (conn_list1) {
 
 #if DEBUG
 		printf("	found at 1: %s\n", key);
 #endif
-		c_current = ales_list1;
+		c_current = conn_list1;
 
 		while (c_current != NULL) {
 			if (c_current->object != NULL &&
-			    c_current->type != ALES_HEAD) {
+			    c_current->type != CONN_HEAD) {
 
 #if DEBUG
 				printf("c_current %s visited: %d\n", c_current->object->name, c_current->object->visited);
@@ -432,26 +432,26 @@ if (verbose_mode) {
 	free(key);
 
 	/* search for line_ptr->[x|y]2 */
-	key = o_ales_return_key(o_current->line_points->x2, 
+	key = o_conn_return_key(o_current->line_points->x2, 
 				o_current->line_points->y2);	
 		
 #if DEBUG
 	printf("looking at 2: %s\n", key);
 #endif
 
-	ales_list2 = g_hash_table_lookup(pr_current->page_current->ales_table,
+	conn_list2 = g_hash_table_lookup(pr_current->page_current->conn_table,
                                       key);
 
-	if (ales_list2) {
+	if (conn_list2) {
 
 #if DEBUG
 		printf("	found at 2: %s\n", key);
 #endif
-		c_current = ales_list2;
+		c_current = conn_list2;
 
 		while (c_current != NULL) {
 			if (c_current->object != NULL &&
-			    c_current->type != ALES_HEAD) {
+			    c_current->type != CONN_HEAD) {
 
 #if DEBUG
 				printf("c_current %s visited: %d\n", c_current->object->name, c_current->object->visited);
@@ -503,7 +503,7 @@ s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *object, NET *nets)
 
 	while(nh_current != NULL) {
 
-		if (nh_current->type != ALES_HEAD && 
+		if (nh_current->type != CONN_HEAD && 
 			nh_current->object != NULL &&
 			!nh_current->object->visited ) {
 			nets = s_traverse_net(pr_current, object, nets, 
@@ -541,12 +541,12 @@ struct _GHashTable
 };
 
 void
-s_traverse_build_nethash(GHashTable *nethash_table, GHashTable *ales_table, 
+s_traverse_build_nethash(GHashTable *nethash_table, GHashTable *conn_table, 
 	OBJECT *start) 
 {
 	OBJECT *o_current;
 	GHashNode *node;
-	ALES *ales_list, *c_current;
+	CONN *conn_list, *c_current;
 	int i,vi=0;
 
 if (verbose_mode) {
@@ -569,35 +569,35 @@ if (verbose_mode) {
 
 }
 
-		  for (i = 0; i < ales_table->size; i++) {
-	  	    for (node = ales_table->nodes[i]; node; node = node->next) {
+		  for (i = 0; i < conn_table->size; i++) {
+	  	    for (node = conn_table->nodes[i]; node; node = node->next) {
 			
-			ales_list = c_current = (ALES *) node->value;
+			conn_list = c_current = (CONN *) node->value;
 			while (c_current != NULL) {
 
 				/* yes we found object in list? */
 				/* now look for midpoints */
 				if (c_current->object == o_current) {
 
-		if (ales_list) {
-			if (ales_list->visual_cue == 4) {
-				   while (ales_list != NULL) {
+		if (conn_list) {
+			if (conn_list->visual_cue == 4) {
+				   while (conn_list != NULL) {
 
-				if (ales_list->object != o_current && 
-				    ales_list->type != ALES_HEAD) {
+				if (conn_list->object != o_current && 
+				    conn_list->type != CONN_HEAD) {
 
-	o_nethash_add_new(nethash_table, ales_list->object, 
-			o_current->name, ales_list->type);
+	o_nethash_add_new(nethash_table, conn_list->object, 
+			o_current->name, conn_list->type);
 
 #if DEBUG
 			printf("yeah found equiv midpoint connected net\n");
-			printf("object: %s\n", ales_list->object->name);
+			printf("object: %s\n", conn_list->object->name);
 			printf("when looking at: %s\n", o_current->name);
 #endif
 
 				}
 
-				      ales_list = ales_list->next;
+				      conn_list = conn_list->next;
 				   }
 			}
 		}

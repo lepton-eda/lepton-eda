@@ -8,6 +8,20 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+8/31/99 Renamed ntext to text (finally)
+
+	Hopefully fixed the problem that gnetlist was having with embedded
+	components ?
+
+8/30/99	Fixed the bus visual cues postscript output to look better 
+	(by controlling the capstyle)
+
+	Fixed the direction of horizontal bus visual cues in postscript
+	output
+
+	Renamed all ales to conn and ALES to CONN
+
+
 8/29/99	Added bus_gc
 
 	Added support to the postscript / image printing for the bus cues

@@ -271,15 +271,6 @@ void i_sbox_rubberbox(TOPLEVEL *w_current, int x, int y);
 /* i_vars.c */
 void i_vars_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
-/* o_ales.c */
-void o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
-void o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
-void o_ales_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
-void o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object);
-void o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list);
-void o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list);
-OBJECT *o_ales_find_closest(OBJECT *object_list, int x, int y, int *whichone, int *prev_distance, int *prev_which);
-int o_ales_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, GdkGC *local_gc, int x, int y, int other_wx, int other_wy);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -316,9 +307,9 @@ void o_box_start(TOPLEVEL *w_current, int x, int y);
 void o_box_end(TOPLEVEL *w_current, int x, int y);
 void o_box_rubberbox(TOPLEVEL *w_current, int x, int y);
 /* o_bus.c */
-void o_bus_ales_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_bus_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
-void o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_bus_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_bus_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
+void o_bus_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_bus_start(TOPLEVEL *w_current, int x, int y);
@@ -344,6 +335,15 @@ void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
 int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery, OBJECT *object);
+/* o_conn.c */
+void o_conn_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
+void o_conn_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
+void o_conn_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
+void o_conn_draw_objects(TOPLEVEL *w_current, OBJECT *object);
+void o_conn_draw_all(TOPLEVEL *w_current, OBJECT *object_list);
+void o_conn_erase_all(TOPLEVEL *w_current, OBJECT *object_list);
+OBJECT *o_conn_find_closest(OBJECT *object_list, int x, int y, int *whichone, int *prev_distance, int *prev_which);
+int o_conn_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, GdkGC *local_gc, int x, int y, int other_wx, int other_wy);
 /* o_copy.c */
 void o_copy_start(TOPLEVEL *w_current, int x, int y);
 void o_copy_end(TOPLEVEL *w_current);
@@ -368,9 +368,9 @@ void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list);
 void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end(TOPLEVEL *w_current);
 /* o_net.c */
-void o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_net_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
-void o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
+void o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_net_start(TOPLEVEL *w_current, int x, int y);
@@ -378,18 +378,18 @@ void o_net_end(TOPLEVEL *w_current, int x, int y);
 void o_net_rubbernet(TOPLEVEL *w_current, int x, int y);
 void o_net_eraserubber(TOPLEVEL *w_current);
 void o_net_xorrubber(TOPLEVEL *w_current);
-/* o_ntext.c */
-void o_ntext_draw(TOPLEVEL *w_current, OBJECT *o_current);
-void o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
-void o_ntext_input(TOPLEVEL *w_current);
-void o_ntext_start(TOPLEVEL *w_current, int screen_x, int screen_y);
-void o_ntext_end(TOPLEVEL *w_current);
-void o_ntext_rubberattrib(TOPLEVEL *w_current);
-void o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current);
-void o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
+/* o_text.c */
+void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
+void o_text_input(TOPLEVEL *w_current);
+void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y);
+void o_text_end(TOPLEVEL *w_current);
+void o_text_rubberattrib(TOPLEVEL *w_current);
+void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current);
+void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
 /* o_pin.c */
-void o_pin_ales_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_pin_ales_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_pin_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_pin_start(TOPLEVEL *w_current, int x, int y);

@@ -146,9 +146,9 @@ o_copy_end(TOPLEVEL *w_current)
 
 			/* this is only a temp update, the below
 			 * disconnect_update does the real thing */
-			o_ales_update(w_current->page_current, new_object);
-			o_net_ales_erase(w_current, new_object);
-			o_net_ales_draw(w_current, new_object);
+			o_conn_update(w_current->page_current, new_object);
+			o_net_conn_erase(w_current, new_object);
+			o_net_conn_draw(w_current, new_object);
 
 			selection_list = (OBJECT *) o_list_copy_to(
 				w_current,
@@ -177,10 +177,10 @@ o_copy_end(TOPLEVEL *w_current)
 
 			/* this is only a temp update, the below
 			 * disconnect_update does the real thing */
-			o_ales_update(w_current->page_current, new_object);
-			o_bus_ales_erase(w_current, new_object);
+			o_conn_update(w_current->page_current, new_object);
+			o_bus_conn_erase(w_current, new_object);
 #if 0 /* needs to be bus specific */
-			o_bus_ales_draw(w_current, new_object);
+			o_bus_conn_draw(w_current, new_object);
 #endif
 
 			selection_list = (OBJECT *) o_list_copy_to(
@@ -264,8 +264,8 @@ o_copy_end(TOPLEVEL *w_current)
 				diff_y,
 				new_object);
 
-			o_ales_disconnect_update(w_current->page_current);
-			o_ales_erase_all(w_current, new_object);
+			o_conn_disconnect_update(w_current->page_current);
+			o_conn_erase_all(w_current, new_object);
 
 			o_redraw_single(w_current, new_object);
 
@@ -297,9 +297,9 @@ o_copy_end(TOPLEVEL *w_current)
 
 			/* this is only a temp update, the below
 			 * disconnect_update does the real thing */
-			o_ales_update(w_current->page_current, new_object);
-			o_pin_ales_draw(w_current, new_object);
-			o_pin_ales_erase(w_current, new_object);
+			o_conn_update(w_current->page_current, new_object);
+			o_pin_conn_draw(w_current, new_object);
+			o_pin_conn_erase(w_current, new_object);
 
 			selection_list = (OBJECT *) o_list_copy_to(
 				w_current, selection_list,
@@ -349,8 +349,8 @@ o_copy_end(TOPLEVEL *w_current)
 
 		switch(found->type) {
 
-		case(OBJ_NTEXT):
-			new_object = (OBJECT *) o_ntext_copy(
+		case(OBJ_TEXT):
+			new_object = (OBJECT *) o_text_copy(
 				w_current,
 				w_current->page_current->object_tail,
 				found);
@@ -378,13 +378,13 @@ o_copy_end(TOPLEVEL *w_current)
 			}
 
 			if (w_current->actionfeedback_mode == OUTLINE) {
-				o_ntext_draw_xor(
+				o_text_draw_xor(
 					w_current,
 					screen_diff_x,
 					screen_diff_y,
 					found);
 			}
-			o_ntext_translate_world(
+			o_text_translate_world(
 				w_current,
 				diff_x,
 				diff_y,
@@ -403,7 +403,7 @@ o_copy_end(TOPLEVEL *w_current)
 
 			/* signify that object is no longer an
 			 * attribute */
-			o_ntext_draw(w_current, new_object);
+			o_text_draw(w_current, new_object);
 
 			selection_list = (OBJECT *) o_list_copy_to(
 				w_current, selection_list,
@@ -448,9 +448,9 @@ o_copy_end(TOPLEVEL *w_current)
 
 	w_current->page_current->CHANGED = 1;
 
-	o_ales_disconnect_update(w_current->page_current);
+	o_conn_disconnect_update(w_current->page_current);
 #if 0
-	o_ales_draw_all(w_current, w_current->page_current->object_head);
+	o_conn_draw_all(w_current, w_current->page_current->object_head);
 #endif
 	o_redraw(w_current, w_current->page_current->object_head);
 #if 0

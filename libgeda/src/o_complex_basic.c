@@ -84,11 +84,11 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, in
 					get_complex_bounds(w_current, o_current->complex, &rleft, &rtop, &rright, &rbottom);
 			break;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 					/* only do bounding boxes for visble */
 					/* you might lose some attrs though */
 					if (o_current->visibility == VISIBLE) {
-						get_ntext_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
+						get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
 					}
 			break;
 
@@ -168,11 +168,11 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *t
 					world_get_complex_bounds(w_current, o_current->complex, &rleft, &rtop, &rright, &rbottom);
 			break;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 					/* only do bounding boxes for visble */
 					/* you might lose some attrs though */
 					if (o_current->visibility == VISIBLE) {
-						world_get_ntext_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
+						world_get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
 					}
 			break;
 
@@ -297,7 +297,6 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 		o_complex_mirror_lowlevel(w_current, x, y, object_list);
 	}
 
-
 	o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list);
 
 	o_complex_world_translate(w_current, x, y, complex);
@@ -323,21 +322,17 @@ o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int 
 	new_node->complex_clib = strdup(clib);
 
 	new_node->color = color;
+	new_node->angle = angle;
 
 	/* TODO: questionable cast */
 	new_node->draw_func = (void *) complex_draw_func;  
 
 	/* (for a title block) an object that isn't selectable */
 	if (selectable) { 
-
 		new_node->sel_func = (void *) select_func;
-
 	} else {
 		new_node->sel_func = NULL;
-
 	}
-
-	new_node->angle = angle;
 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
@@ -345,9 +340,11 @@ o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int 
 	complex = (OBJECT *) add_head();
 	object_list->complex = complex;
 	
+	/* set the parent field now */
+	complex->complex_parent = object_list;
+
 	/* don't have to translate/rotate/mirror here at all since the */
 	/* object is in place */
-	
 	return(object_list);
 }
 
@@ -690,8 +687,8 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex)
 				o_complex_world_translate_toplevel(w_current, x1, y1, o_current);
 			break;
 
-			case(OBJ_NTEXT):
-				o_ntext_translate_world(w_current, x1, y1, o_current);
+			case(OBJ_TEXT):
+				o_text_translate_world(w_current, x1, y1, o_current);
 			break;
 
 			/* same note as above */
@@ -750,7 +747,7 @@ o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex)
 			case(OBJ_ARC):
 				o_current->color = color;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 			case(OBJ_COMPLEX):
 				o_complex_set_color(w_current, color, o_current->complex);
 
@@ -841,8 +838,8 @@ o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
 			break;
 #endif
 
-			case(OBJ_NTEXT):
-				o_ntext_rotate_world(w_current, 0, 0, angle, angle_change, o_current);
+			case(OBJ_TEXT):
+				o_text_rotate_world(w_current, 0, 0, angle, angle_change, o_current);
 			break;
 
 		}
@@ -897,8 +894,8 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 			break;
 #endif
 
-			case(OBJ_NTEXT):
-				o_ntext_mirror_world(w_current, 0, 0, o_current);
+			case(OBJ_TEXT):
+				o_text_mirror_world(w_current, 0, 0, o_current);
 			break;
 
 		}

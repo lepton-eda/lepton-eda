@@ -5,7 +5,7 @@ extern void (*complex_draw_func)();
 extern void (*line_draw_func)();
 extern void (*net_draw_func)();
 extern void (*bus_draw_func)();
-extern void (*ntext_draw_func)();
+extern void (*text_draw_func)();
 extern void (*pin_draw_func)();
 extern void (*select_func)();
 extern void (*pin_conn_recalc_func)(); 

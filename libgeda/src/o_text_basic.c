@@ -50,23 +50,23 @@
 OBJECT font_set[NUM_CHARS];
 
 void
-get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom)
+get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom)
 {
 	get_complex_bounds(w_current, o_current->complex, left, top, right, bottom);
 }
 
 void
-world_get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom)
+world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom)
 {
 	world_get_complex_bounds(w_current, o_current->complex, left, top, right, bottom);
 }
 
 OBJECT *
-o_ntext_add_head(void)
+o_text_add_head(void)
 {
 	OBJECT *new_node=NULL;
 
-	new_node = s_basic_init_object("ntext_head");
+	new_node = s_basic_init_object("text_head");
 	new_node->type = OBJ_HEAD;
 
 	/* don't need to do this for head nodes */
@@ -75,7 +75,7 @@ o_ntext_add_head(void)
 }
 
 void
-o_ntext_init(void)
+o_text_init(void)
 {
 	int i;
 
@@ -86,7 +86,7 @@ o_ntext_init(void)
 }
 
 void
-o_ntext_print_set(void)
+o_text_print_set(void)
 {
 	OBJECT *o_current;
 	int i;
@@ -108,7 +108,7 @@ o_ntext_print_set(void)
 }
 
 OBJECT *
-o_ntext_load_font(TOPLEVEL *w_current, char needed_char)
+o_text_load_font(TOPLEVEL *w_current, char needed_char)
 {
 	char temp_string[256]; /* remove me HACK !!!!!!!!!!!!!!!!!!!!! */
 	OBJECT *temp_parent;
@@ -329,7 +329,7 @@ o_ntext_load_font(TOPLEVEL *w_current, char needed_char)
 
 	/* printf("loading: %s\n", temp_string);*/
 
-	font_set[(int) needed_char].complex = o_ntext_add_head();
+	font_set[(int) needed_char].complex = o_text_add_head();
 
         temp_parent = w_current->page_current->object_parent;
 	/* set the addition of attributes to the head node */
@@ -344,7 +344,7 @@ o_ntext_load_font(TOPLEVEL *w_current, char needed_char)
 }
 
 int
-o_ntext_width(TOPLEVEL *w_current, char *string, int size) 
+o_text_width(TOPLEVEL *w_current, char *string, int size) 
 {
 	int i;
 	int len;
@@ -354,7 +354,7 @@ o_ntext_width(TOPLEVEL *w_current, char *string, int size)
 
 	for (i = 0 ; i < len ; i++ ) {
 		if (font_set[(int) string[i]].complex == NULL) {
-			o_ntext_load_font(w_current, string[i]);
+			o_text_load_font(w_current, string[i]);
 		}
 
 		/* if (string[i] == ' ') {
@@ -371,7 +371,7 @@ o_ntext_width(TOPLEVEL *w_current, char *string, int size)
 
 
 OBJECT *
-o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list, 
+o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list, 
 	char *string, int size, int color, int x, int y, int angle)
 {
         OBJECT *temp_tail=NULL;
@@ -402,7 +402,7 @@ o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 #if 1
 	switch(angle) {
 		case(180):
-			x_offset = x_offset - o_ntext_width(w_current, string, size/2);
+			x_offset = x_offset - o_text_width(w_current, string, size/2);
 			y_offset = y_offset - 26*size/2;
 			angle = 0;
 		break;
@@ -410,14 +410,14 @@ o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 #endif
 
 #if DEBUG
-	printf("width: %d\n", o_ntext_width(w_current, string, size/2));
+	printf("width: %d\n", o_text_width(w_current, string, size/2));
 	printf("1 %d %d\n", x_offset, y_offset);
 #endif
 
 	for (i = 0 ; i < len ; i++ ) {
 		
 		if (font_set[(int) string[i]].complex == NULL) {
-			o_ntext_load_font(w_current, string[i]);
+			o_text_load_font(w_current, string[i]);
 		}
 
 		start_of_char = temp_list;
@@ -432,7 +432,7 @@ o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 		
 			/* do this if you want to stack chars */
 			/* we don't want to do that for now */
-			o_ntext_rotate_lowlevel(w_current, x, y, angle, start_of_char);
+			o_text_rotate_lowlevel(w_current, x, y, angle, start_of_char);
 			o_complex_world_translate(w_current, 
 					x_offset, y_offset, 
 					start_of_char);
@@ -472,7 +472,7 @@ o_ntext_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 }
 
 OBJECT *
-o_ntext_add(TOPLEVEL *w_current, 
+o_text_add(TOPLEVEL *w_current, 
 	OBJECT *object_list, 
 	char type, int color, int x, int y, 
 	int angle, char *string, int size, 
@@ -497,7 +497,7 @@ o_ntext_add(TOPLEVEL *w_current,
 		return(NULL);
 	} 
 
-	new_node = s_basic_init_object("ntext");
+	new_node = s_basic_init_object("text");
 	new_node->type = type;
 	new_node->text_string = strdup(string);
 	new_node->text_len = strlen(string);
@@ -511,7 +511,7 @@ o_ntext_add(TOPLEVEL *w_current,
 	new_node->screen_y = screen_y;
 
 	/* TODO: questionable cast */
-	new_node->draw_func = (void *) ntext_draw_func;  
+	new_node->draw_func = (void *) text_draw_func;  
 	/* TODO: questionable cast */
 	new_node->sel_func = (void *) select_func;  
 
@@ -549,7 +549,7 @@ o_ntext_add(TOPLEVEL *w_current,
 	}
 
 	/* now start working on the complex */
-	temp_list = o_ntext_add_head();
+	temp_list = o_text_add_head();
 
         temp_parent = w_current->page_current->object_parent;
 	/* set the addition of attributes to the head node */
@@ -557,7 +557,7 @@ o_ntext_add(TOPLEVEL *w_current,
 
 	if (visibility == VISIBLE) {
 		object_list->complex = 
-			o_ntext_create_string(w_current, temp_list, 
+			o_text_create_string(w_current, temp_list, 
 					      output_string, size, color,
 					      x, y, angle); 
 			object_list->displayed_text_len = strlen(output_string);
@@ -569,7 +569,7 @@ o_ntext_add(TOPLEVEL *w_current,
 
 	w_current->page_current->object_parent = temp_parent;
 
-	get_ntext_bounds(w_current, object_list, &left, &top, &right, &bottom);
+	get_text_bounds(w_current, object_list, &left, &top, &right, &bottom);
 
 	/* set the new object's bounding box */
 	object_list->left = left;
@@ -581,7 +581,7 @@ o_ntext_add(TOPLEVEL *w_current,
 }
 
 void
-o_ntext_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	
 	if (o_current->visibility == INVISIBLE) {
@@ -594,7 +594,7 @@ o_ntext_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 
 OBJECT *
-o_ntext_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[], char *version)
+o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[], char *version)
 {
 	char type; 
 	int x, y;
@@ -632,7 +632,7 @@ o_ntext_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[]
 
 	}
 
-	object_list = o_ntext_add(w_current, object_list, type, color, x, y, 
+	object_list = o_text_add(w_current, object_list, type, color, x, y, 
 				angle, string, 
 				size, visibility, show_name_value);
 
@@ -640,7 +640,7 @@ o_ntext_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[]
 }
 
 void
-o_ntext_set_info_font(char buf[])
+o_text_set_info_font(char buf[])
 {
 	char type; 
 	int width;
@@ -667,7 +667,7 @@ o_ntext_set_info_font(char buf[])
 }
 
 char *
-o_ntext_save(char *buf, OBJECT *object)
+o_text_save(char *buf, OBJECT *object)
 {
 	int x, y;
 	int color;
@@ -687,7 +687,7 @@ o_ntext_save(char *buf, OBJECT *object)
        
 
 void
-o_ntext_recreate(TOPLEVEL *w_current, OBJECT *o_current)
+o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	OBJECT *temp_parent;
 	char name[1025];
@@ -726,11 +726,11 @@ o_ntext_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 
 		/* need to create that head node if complex is null */
 		if (o_current->complex == NULL) {
-			o_current->complex = o_ntext_add_head();
+			o_current->complex = o_text_add_head();
 		}
 
 		o_current->complex = 
-			o_ntext_create_string(w_current, o_current->complex, 
+			o_text_create_string(w_current, o_current->complex, 
 					      output_string, 
 					      o_current->text_size, 
 					      o_current->color, 
@@ -746,13 +746,13 @@ o_ntext_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
-o_ntext_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+o_text_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 {
 	o_complex_translate(w_current, dx, dy, object);	
 }
 
 void
-o_ntext_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current)
+o_text_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current)
 {
 	int screen_x, screen_y;
 	int left, right, top, bottom;
@@ -772,7 +772,7 @@ o_ntext_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current)
 
 	/* update bounding box */
 	/* do it */
-	get_ntext_bounds(w_current, o_current, &left, &top, &right, &bottom);
+	get_text_bounds(w_current, o_current, &left, &top, &right, &bottom);
 
 	o_current->left = left;
 	o_current->top = top;
@@ -781,11 +781,11 @@ o_ntext_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current)
 }
 
 OBJECT *
-o_ntext_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj;
 
-	new_obj = o_ntext_add(w_current, list_tail, OBJ_NTEXT, 
+	new_obj = o_text_add(w_current, list_tail, OBJ_TEXT, 
 	        o_current->color, 
 		o_current->x, o_current->y, o_current->angle,
 		o_current->text_string, o_current->text_size, 
@@ -817,7 +817,7 @@ o_ntext_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 }
 
 void
-o_ntext_freeallfonts(TOPLEVEL *w_current)
+o_text_freeallfonts(TOPLEVEL *w_current)
 {
 	int i;
 
@@ -831,7 +831,7 @@ o_ntext_freeallfonts(TOPLEVEL *w_current)
 }
 
 void
-o_ntext_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
 	int origin_x, int origin_y)
 {
 	char output_string[1025]; /* hack */
@@ -947,16 +947,16 @@ o_ntext_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 /* takes world coords as the center point as well as a true angle */
 void
-o_ntext_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object)
+o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object)
 {
 	OBJECT *o_current=NULL;
 
 	/* translate object to origin */
-	/* o_ntext_translate_world(w_current, -world_centerx, -world_centery, object);*/
+	/* o_text_translate_world(w_current, -world_centerx, -world_centery, object);*/
 
 	/* rotate_point_90(object->x, object->y, &newx, &newy);*/
 	
-	/* o_ntext_translate_world(w_current, world_centerx, world_centery, object);*/
+	/* o_text_translate_world(w_current, world_centerx, world_centery, object);*/
 	
 	o_current = object;
 
@@ -971,7 +971,7 @@ o_ntext_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_center
 }
 
 void
-o_ntext_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object)
+o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object)
 {
 	int newx, newy;
 	int origx, origy;
@@ -996,13 +996,13 @@ o_ntext_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, 
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 	
-	o_ntext_translate_world(w_current, x-object->x, y-object->y, object);
+	o_text_translate_world(w_current, x-object->x, y-object->y, object);
 
-	o_ntext_recreate(w_current, object);
+	o_text_recreate(w_current, object);
 }
 
 void
-o_ntext_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object)
+o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object)
 {
 	int newx, newy;
 	int origx, origy;
@@ -1027,13 +1027,13 @@ o_ntext_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int ang
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 	
-	o_ntext_translate_world(w_current, x-object->x, y-object->y, object);
+	o_text_translate_world(w_current, x-object->x, y-object->y, object);
 
-	o_ntext_recreate(w_current, object);
+	o_text_recreate(w_current, object);
 }
 
 void
-o_ntext_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
+o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 {
 	int newx=0, newy=0;
 	int origx, origy;
@@ -1080,7 +1080,7 @@ o_ntext_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	switch (object->angle) {
 
 		case(0): 
-			newx = -(x + o_ntext_width(w_current, 
+			newx = -(x + o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 		break;
@@ -1090,7 +1090,7 @@ o_ntext_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 		break;
 
 		case(180):
-			newx = -(x - o_ntext_width(w_current, 
+			newx = -(x - o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 		break;
@@ -1113,13 +1113,13 @@ o_ntext_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	y = newy + (world_centery);
 	
 	/* don't know if this is needed? */	
-	o_ntext_translate_world(w_current, x-object->x, y-object->y, object);
+	o_text_translate_world(w_current, x-object->x, y-object->y, object);
 
-	o_ntext_recreate(w_current, object);
+	o_text_recreate(w_current, object);
 }
 
 void
-o_ntext_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object)
+o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object)
 {
 	int newx=0, newy=0;
 	int origx, origy;
@@ -1161,7 +1161,7 @@ o_ntext_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, 
 	switch (object->angle) {
 
 		case(0): 
-			newx = -(x + o_ntext_width(w_current, 
+			newx = -(x + o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 
@@ -1172,7 +1172,7 @@ o_ntext_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, 
 		break;
 
 		case(180):
-			newx = -(x - o_ntext_width(w_current, 
+			newx = -(x - o_text_width(w_current, 
 						   output_string, 
 						   object->text_size/2)); 
 		break;
@@ -1197,13 +1197,13 @@ o_ntext_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, 
 	object->y = y;
 
 	/* don't know if this is needed ?*/	
-	/* o_ntext_translate_world(w_current, x-object->x, y-object->y, object);*/
-	o_ntext_recreate(w_current, object);
+	/* o_text_translate_world(w_current, x-object->x, y-object->y, object);*/
+	o_text_recreate(w_current, object);
 }
 
 #if 0 /* interesting, but currently unused code */
 void
-o_ntext_return_center(TOPLEVEL *w_current, OBJECT *o_current, int *centerx, int *centery)
+o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current, int *centerx, int *centery)
 {
 	int text_height; 
 	int text_width;
@@ -1211,7 +1211,7 @@ o_ntext_return_center(TOPLEVEL *w_current, OBJECT *o_current, int *centerx, int 
 	text_height = 26*o_current->text_size/2;
 
 	/* this will NOT NOT NOT work with attributes */
-	text_width = o_ntext_width(w_current, o_current->text_string, 
+	text_width = o_text_width(w_current, o_current->text_string, 
 				   o_current->text_size/2); 
 	
 	switch(o_current->angle) {
@@ -1238,7 +1238,7 @@ o_ntext_return_center(TOPLEVEL *w_current, OBJECT *o_current, int *centerx, int 
 }
 
 /* the complex here is the complex of a complex object */
-o_ntext_change_angle(TOPLEVEL *w_current, OBJECT *complex, int new_angle)
+o_text_change_angle(TOPLEVEL *w_current, OBJECT *complex, int new_angle)
 {
 	OBJECT *o_current;
 	int centerx, centery;
@@ -1246,39 +1246,39 @@ o_ntext_change_angle(TOPLEVEL *w_current, OBJECT *complex, int new_angle)
 	o_current = complex;
 
 	while (o_current != NULL) {
-		if (o_current->type == OBJ_NTEXT) {
+		if (o_current->type == OBJ_TEXT) {
 			o_current->angle = new_angle;
 
 			/* change world to non */
-			o_ntext_return_center(w_current, o_current, &centerx, &centery);
+			o_text_return_center(w_current, o_current, &centerx, &centery);
 
-			o_ntext_translate_world(w_current, 
+			o_text_translate_world(w_current, 
 						-centerx, -centery, o_current);
 
-			o_ntext_mirror_world(w_current, 0, 0, 
+			o_text_mirror_world(w_current, 0, 0, 
 				o_current);
 /* 
-			o_ntext_rotate_world(w_current, 0, 0, 
+			o_text_rotate_world(w_current, 0, 0, 
 				new_angle, 180, o_current);
 */
 
-/*			o_ntext_rotate_world(w_current, 0, 0, new_angle, 
+/*			o_text_rotate_world(w_current, 0, 0, new_angle, 
 					180, o_current)*/
 
-			o_ntext_translate_world(w_current, 
+			o_text_translate_world(w_current, 
 						centerx, centery, o_current);
 
-/* 			o_ntext_rotate_lowlevel(w_current, 
+/* 			o_text_rotate_lowlevel(w_current, 
 				0, 0, new_angle, 180, o_current->complex);*/
 
 #if 0
 			w_current->override_color =
                                         w_current->background_color;
-                        o_ntext_draw(w_current, o_current);
+                        o_text_draw(w_current, o_current);
                         w_current->override_color = -1;
 #endif
 
-			o_ntext_recreate(w_current, o_current);
+			o_text_recreate(w_current, o_current);
 		}
 		o_current = o_current->next;
 	}

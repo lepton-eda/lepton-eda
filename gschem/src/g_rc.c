@@ -876,6 +876,7 @@ g_rc_scheme_directory(SCM path)
 	return SCM_BOOL_T;
 }
 
+#if 0 /* old obsolete way of handling strokes */
 SCM
 g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 {
@@ -912,6 +913,7 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 
 	return SCM_BOOL_T;
 }
+#endif
 
 DEFINE_G_RC_COLOR(g_rc_stroke_color,
 		  "stroke-color",

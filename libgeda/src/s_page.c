@@ -92,9 +92,9 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 
 
 
-	/* be sure table is empty ALES */
+	/* be sure table is empty CONN */
 	/* g_hash_table_foreach_remove(hash_table, free_func, NULL);*/
-	g_hash_table_destroy(p_current->ales_table);
+	g_hash_table_destroy(p_current->conn_table);
 
 	g_hash_table_destroy(p_current->nethash_table);
 
@@ -255,8 +255,8 @@ s_page_setup(PAGE *p_current)
 	p_current->attrib_place_tail->type = OBJ_HEAD;
 	
 
-	/* new ALES stuff */
-	p_current->ales_table = g_hash_table_new(g_str_hash, g_str_equal);
+	/* new CONN stuff */
+	p_current->conn_table = g_hash_table_new(g_str_hash, g_str_equal);
 
 	/* new NETHASH stuff */
 	p_current->nethash_table = g_hash_table_new(g_str_hash, g_str_equal);

@@ -351,7 +351,7 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 					fprintf(fp, "grestore\n");
 				break;
 
-				case(OBJ_NTEXT):
+				case(OBJ_TEXT):
 					if (o_current->visibility == VISIBLE) {
 						fprintf(fp, "gsave\n");
 			
@@ -362,7 +362,7 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 							origin_x, origin_y, scale);
 					} else {
 
-						o_ntext_print(w_current, fp, 
+						o_text_print(w_current, fp, 
 						o_current,
 						origin_x, origin_y);
 
@@ -404,8 +404,8 @@ f_print(TOPLEVEL *w_current, char *filename)
 	int origin_x, origin_y, bottom, right;
 	float scale;
 
-	/* new ALES stuff */
-	o_ales_disconnect_update(w_current->page_current);
+	/* new CONN stuff */
+	o_conn_disconnect_update(w_current->page_current);
 
 	/* dots are breaking my filename selection hack hack !!!! */
 	fp = fopen(filename, "w");

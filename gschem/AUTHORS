@@ -22,6 +22,8 @@ Stefan Petersen		- For writing the actual guile code which implements
 			- Bug fixes and improvements to gschem.scm
 			- Continued bug fixes and additions to gschem.scm
 			- list-keys.scm which prints out the keymap
+			- For writing a better scheme like way of handling
+			  strokes
 
 Thien-Thi Nguyen 	- Wrote a much better g_read_file()
 		     	- A configure.in which handles guile better then 
@@ -68,6 +70,11 @@ Egil Kvaleberg		- For providing a patch which gives gEDA gtk+ 1.1.x
 
 Thomas Dean		- Submitting a few useful patches for various
 			  things
+
+Reinhard Kotucha        - For suggesting the use of setlinecap in the 
+			  postscript output.  Output looks much better
+			  with some sort of cap style set.
+
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

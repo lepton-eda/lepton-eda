@@ -86,14 +86,14 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("source-library", g_rc_source_library);
 	gh_new_procedure1_0 ("attribute-name", g_rc_attribute_name);
 	gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
-	gh_new_procedure2_0 ("stroke", g_rc_stroke);
+	/* gh_new_procedure2_0 ("stroke", g_rc_stroke); old way */
 	gh_new_procedure1_0 ("stroke-color", g_rc_stroke_color);
 	gh_new_procedure1_0 ("font-directory", g_rc_font_directory);
 	gh_new_procedure3_0 ("world-size", g_rc_world_size);
 	gh_new_procedure2_0 ("paper-size", g_rc_paper_size);
 	gh_new_procedure3_0 ("paper-sizes", g_rc_paper_sizes);
 	/* text-output is old... will eventually be removed! */
-	gh_new_procedure1_0 ("text-output", g_rc_output_text);
+	gh_new_procedure1_0 ("text-output", g_rc_output_text); 
 	gh_new_procedure1_0 ("output-text", g_rc_output_text);
 	gh_new_procedure1_0 ("output-type", g_rc_output_type);
 	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);

@@ -226,7 +226,7 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 		}
 
 		if (len < 80) {
-			o_ntext_edit_end(w_current, text_string,
+			o_text_edit_end(w_current, text_string,
 					 len, text_size);
 		} else {
 			/* TODO: you should NOT have limits */
@@ -1410,7 +1410,7 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 			w_current->page_current->CHANGED = 1;
 			break;
 
-		case(OBJ_NTEXT):
+		case(OBJ_TEXT):
 			found->color = w_current->edit_color;
 			o_complex_set_color(w_current,
 					    w_current->edit_color,

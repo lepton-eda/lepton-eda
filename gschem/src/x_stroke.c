@@ -120,3 +120,20 @@ x_stroke_free_all(void)
 
 	stroke_points = NULL;
 }
+
+
+/* this is the function that does the actual work of the strokes */
+/* by executing the right guile function which is associated with the stroke */
+int 
+x_stroke_search_execute(char *sequence)
+{
+	char guile_string[50]; /* Size hack */
+	SCM eval;
+
+	sprintf(guile_string, "(eval-stroke \"%s\")", sequence);
+
+	eval = gh_eval_str(guile_string);
+
+	return gh_scm2bool(eval);
+}
+

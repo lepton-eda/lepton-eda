@@ -53,8 +53,8 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 
 	/* for now deal with only the first item */
 	switch(list->type) {
-	case(OBJ_NTEXT):
-		o_ntext_edit(w_current, list);
+	case(OBJ_TEXT):
+		o_text_edit(w_current, list);
 		break;
 	}
 
@@ -172,7 +172,7 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 
 		case(OBJ_NET):
 			/* erase the current selection */
-			o_net_ales_erase(w_current, real);
+			o_net_conn_erase(w_current, real);
 			w_current->override_color =
 				w_current->background_color;
 			o_net_draw(w_current, o_current);
@@ -190,7 +190,7 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 
 		case(OBJ_BUS):
 #if 0 /* needs to be bus specific */
-			o_bus_ales_erase(w_current, real);
+			o_bus_conn_erase(w_current, real);
 #endif
 			/* erase the current selection */
 			w_current->override_color =
@@ -210,7 +210,7 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 
 		case(OBJ_PIN):
 			/* erase the current selection */
-			o_pin_ales_erase(w_current, real);
+			o_pin_conn_erase(w_current, real);
 			w_current->override_color =
 				w_current->background_color;
 			o_pin_draw(w_current, o_current);
@@ -298,26 +298,26 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			o_complex_draw(w_current, real);
 			break;
 
-		case(OBJ_NTEXT):
+		case(OBJ_TEXT):
 			/* erase the current selection */
 			w_current->override_color =
 				w_current->background_color;
-			o_ntext_draw(w_current, o_current);
+			o_text_draw(w_current, o_current);
 			w_current->override_color = -1;
 
 			new_angle = (real->angle + 90) % 360;
-			o_ntext_rotate(w_current,
+			o_text_rotate(w_current,
 				       centerx,
 				       centery,
 				       new_angle, 90, real);
 
 			new_angle = (o_current->angle + 90) % 360;
-			o_ntext_rotate(w_current,
+			o_text_rotate(w_current,
 				       centerx,
 				       centery,
 				       new_angle, 90, o_current);
 
-			o_ntext_draw(w_current, real);
+			o_text_draw(w_current, real);
 			break;
 		}
 
@@ -342,8 +342,8 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			w_current->page_current->selection_head);
 	}
 
-	o_ales_disconnect_update(w_current->page_current);
-	o_ales_draw_all(w_current, w_current->page_current->object_head);
+	o_conn_disconnect_update(w_current->page_current);
+	o_conn_draw_all(w_current, w_current->page_current->object_head);
         o_redraw_real(w_current, w_current->page_current->selection_head);
 	o_redraw_selected(w_current);
 }
@@ -513,7 +513,7 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 		case(OBJ_NET):
 			/* need to recalculate nets */
 		       	/* erase the current selection */
-			o_net_ales_erase(w_current, real);
+			o_net_conn_erase(w_current, real);
 			w_current->override_color =
 				w_current->background_color;
 			o_net_draw(w_current, o_current);
@@ -533,7 +533,7 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 		case(OBJ_BUS):
 		       	/* erase the current selection */
 #if 0 /* needs to be bus specific */
-			o_bus_ales_erase(w_current, real);
+			o_bus_conn_erase(w_current, real);
 #endif
 			w_current->override_color =
 				w_current->background_color;
@@ -553,7 +553,7 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 
 		case(OBJ_PIN):
 			/* erase the current selection */
-			o_pin_ales_erase(w_current, real);
+			o_pin_conn_erase(w_current, real);
 			w_current->override_color =
 				w_current->background_color;
 			o_pin_draw(w_current, o_current);
@@ -682,24 +682,24 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			}
 			break;
 
-		case(OBJ_NTEXT):
+		case(OBJ_TEXT):
 			/* erase the current selection */
 			w_current->override_color =
 				w_current->background_color;
-			o_ntext_draw(w_current, o_current);
+			o_text_draw(w_current, o_current);
 			w_current->override_color = -1;
 
-			o_ntext_mirror(w_current,
+			o_text_mirror(w_current,
 				       centerx, centery,
 				       real);
 
 			w_current->ADDING_SEL = 1;
-			o_ntext_mirror(w_current,
+			o_text_mirror(w_current,
 				       centerx, centery,
 				       o_current);
 			w_current->ADDING_SEL=0;
 
-			o_ntext_draw(w_current, real);
+			o_text_draw(w_current, real);
 			break;
 		}
 
@@ -725,8 +725,8 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			w_current->page_current->selection_head);
 	}
 
-	o_ales_disconnect_update(w_current->page_current);
-	o_ales_draw_all(w_current, w_current->page_current->object_head);
+	o_conn_disconnect_update(w_current->page_current);
+	o_conn_draw_all(w_current, w_current->page_current->object_head);
         o_redraw_real(w_current, w_current->page_current->selection_head);
 	o_redraw_selected(w_current);
 }
@@ -742,12 +742,12 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list)
 	o_current = list;
 
 	while(o_current != NULL) {
-		if (o_current->type == OBJ_NTEXT) {
+		if (o_current->type == OBJ_TEXT) {
 			if (o_current->visibility == INVISIBLE) {
 				o_current->visibility = VISIBLE;
 
 				if (o_current->complex == NULL) {
-					o_ntext_recreate(w_current, o_current);
+					o_text_recreate(w_current, o_current);
 				}
 
 				if (o_current->draw_func &&

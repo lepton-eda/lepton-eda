@@ -66,4 +66,16 @@
        (not (null? last-command-sequence))
        (for-each press-key (reverse last-command-sequence))))
 
+(define (eval-stroke stroke)
+  (let ((action (assoc stroke strokes)))
+    (cond ((not action)
+;           (display "No such stroke\n")
+;          (display stroke)
+           #f)
+          (else
+;           (display "Scheme found action ")
+;           (display action)
+;           (display "\n")
+           ((eval (cdr action)))
+           #t))))
 

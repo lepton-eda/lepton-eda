@@ -38,9 +38,11 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#if 0 /* no longer needed */
 #ifdef HAS_LIBSTROKE
 /* libstroke prototype */
 void stroke_init(void);
+#endif
 #endif
 
 void
@@ -53,7 +55,7 @@ gschem_quit(void)
         s_attrib_free();
 	s_papersizes_free();
 	x_stroke_free_all();
-	s_stroke_free();
+	/* s_stroke_free(); no longer needed */
 
 	/* x_window_free_head(); can't do this since it causes a
 	 * condition in which window_head->... is still being refered
@@ -87,7 +89,7 @@ main_prog(int argc, char *argv[])
 
 #if HAS_LIBSTROKE
 	stroke_init(); /* libstroke function */
-	s_stroke_init(); /* libgeda function */
+	/* s_stroke_init(); no longer needed libgeda function */
 #endif
 
 	if (!quiet_mode) {
@@ -116,7 +118,7 @@ main_prog(int argc, char *argv[])
 	set_window_current_key(w_current);
 
 	/* o_text_init(); goes away */
-	o_ntext_init();
+	o_text_init();
 	x_repaint_background(w_current);
 
 	i = argv_index;

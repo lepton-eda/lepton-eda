@@ -71,4 +71,4 @@ CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component);
 void s_traverse_clear_all_visited(OBJECT *object_head);
 NET *s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object);
 NET *s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *object, NET *nets);
-void s_traverse_build_nethash(GHashTable *nethash_table, GHashTable *ales_table, OBJECT *start);
+void s_traverse_build_nethash(GHashTable *nethash_table, GHashTable *conn_table, OBJECT *start);

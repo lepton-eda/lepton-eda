@@ -96,8 +96,8 @@ o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
 #endif
 			break;
 
-		case(OBJ_NTEXT):
-			o_ntext_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_TEXT):
+			o_text_draw_xor(w_current, dx, dy, o_current);
 			break;
 
 		case(OBJ_PIN):
@@ -309,10 +309,10 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	/* the o_redraw_selected is in x_events.c after this call
 	 * returns */
 
-	o_ales_disconnect_update(w_current->page_current);
-	o_ales_erase_all(w_current, w_current->page_current->object_tail);
+	o_conn_disconnect_update(w_current->page_current);
+	o_conn_erase_all(w_current, w_current->page_current->object_tail);
 #if 0
-        o_ales_draw_all(w_current, w_current->page_current->object_head);
+        o_conn_draw_all(w_current, w_current->page_current->object_head);
 #endif
 	o_redraw(w_current, w_current->page_current->object_head);
 
@@ -362,8 +362,8 @@ o_complex_translate_display(TOPLEVEL *w_current,
 					   x1, y1, o_current->complex);
 			break;
 
-		case(OBJ_NTEXT):
-			o_ntext_draw_xor(w_current, x1, y1, o_current);
+		case(OBJ_TEXT):
+			o_text_draw_xor(w_current, x1, y1, o_current);
 			break;
 
 		case(OBJ_PIN):
@@ -535,7 +535,7 @@ o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
 	case(90):
 		object->angle = 270;
 #if 0
-		o_ntext_change_angle(w_current, object->complex,
+		o_text_change_angle(w_current, object->complex,
 				     object->angle);
 #endif
 
@@ -545,7 +545,7 @@ o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
 	case(270):
 		object->angle = 90;
 #if 0
-		o_ntext_change_angle(w_current, object->complex,
+		o_text_change_angle(w_current, object->complex,
 				     object->angle);
 #endif
 		change = 1;
@@ -611,7 +611,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 	case(90):
 		object->angle = 270;
 #if 0
-		o_ntext_change_angle(w_current, object->complex,
+		o_text_change_angle(w_current, object->complex,
 				     object->angle);
 #endif
 		change = 1;
@@ -620,7 +620,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 	case(270):
 		object->angle = 90;
 #if 0
-		o_ntext_change_angle(w_current, object->complex,
+		o_text_change_angle(w_current, object->complex,
 				     object->angle);
 #endif
 		change=1;

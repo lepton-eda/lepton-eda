@@ -7,6 +7,10 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+8/31/99	Renamed ntext to text (finally)
+
+8/30/99	Renamed all ales to conn and ALES to CONN
+
 8/27/99	Set the program version to 19990829 to force Ales to release
 	on the 29th :)
 	

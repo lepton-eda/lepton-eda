@@ -138,9 +138,9 @@ o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-	/* new ALES stuff */
+	/* new CONN stuff */
 	if (!w_current->ADDING_SEL) {
-		o_ales_update(w_current->page_current, object_list);
+		o_conn_update(w_current->page_current, object_list);
 	}
 
 	return(object_list);
@@ -320,7 +320,7 @@ o_net_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	OBJECT *new_obj;
 	ATTRIB *a_current;
 
-	/* ALES stuff... */
+	/* CONN stuff... */
 	/* make sure you fix this in pin and bus as well */
 	/* still doesn't work... you need to pass in the new values */
 	/* or don't update and update later */
@@ -401,7 +401,7 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	}
 
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 
@@ -468,9 +468,9 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 	   case(BUS_MIDPOINT_CUE):
 
-			bus_object = o_ales_return_bus_object(w_current->
+			bus_object = o_conn_return_bus_object(w_current->
 							      page_current->
-							      ales_table,
+							      conn_table,
 							      o_current->
 							      line_points->x1,
 							      o_current->
@@ -480,7 +480,7 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
-				o_ales_print_busmidpoint(w_current, bus_object,
+				o_conn_print_busmidpoint(w_current, bus_object,
 							fp, 
 						        o_current->
 						        line_points->x1,
@@ -494,7 +494,7 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	   break;
 	}
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x2,
 				o_current->line_points->y2);
 
@@ -561,9 +561,9 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 	   case(BUS_MIDPOINT_CUE):
 
-			bus_object = o_ales_return_bus_object(w_current->
+			bus_object = o_conn_return_bus_object(w_current->
 							      page_current->
-							      ales_table,
+							      conn_table,
 							      o_current->
 							      line_points->x2,
 							      o_current->
@@ -573,7 +573,7 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
-				o_ales_print_busmidpoint(w_current, bus_object,
+				o_conn_print_busmidpoint(w_current, bus_object,
 							fp, 
 						        o_current->
 						        line_points->x2,
@@ -641,7 +641,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
         gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
 #endif
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 
@@ -722,9 +722,9 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 	   case(BUS_MIDPOINT_CUE):
 
-			bus_object = o_ales_return_bus_object(w_current->
+			bus_object = o_conn_return_bus_object(w_current->
 							      page_current->
-							      ales_table,
+							      conn_table,
 							      o_current->
 							      line_points->x1,
 							      o_current->
@@ -734,7 +734,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
-				o_ales_image_busmidpoint(w_current, bus_object,
+				o_conn_image_busmidpoint(w_current, bus_object,
 						        x1, y1,
 							o_current->
 							line_points->x2,
@@ -744,7 +744,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	   break;
 	}
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x2,
 				o_current->line_points->y2);
 
@@ -821,9 +821,9 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 	   case(BUS_MIDPOINT_CUE):
 
-			bus_object = o_ales_return_bus_object(w_current->
+			bus_object = o_conn_return_bus_object(w_current->
 							      page_current->
-							      ales_table,
+							      conn_table,
 							      o_current->
 							      line_points->x2,
 							      o_current->
@@ -833,7 +833,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
-				o_ales_image_busmidpoint(w_current, bus_object,
+				o_conn_image_busmidpoint(w_current, bus_object,
 						        x2, y2,
 							o_current->
 							line_points->x1,
@@ -1087,8 +1087,8 @@ int
 o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 {
 	char *key=NULL;
-	ALES *ales_list;
-	ALES *c_current;
+	CONN *conn_list;
+	CONN *c_current;
 	int object_orient;
 	int current_orient;
 	int cue;
@@ -1100,17 +1100,17 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	object_orient = o_net_orientation(object);
 
-	key = o_ales_return_key(object->line_points->x1,
+	key = o_conn_return_key(object->line_points->x1,
                                 object->line_points->y1);
 
-	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
 
-	if (ales_list) {
+	if (conn_list) {
 /* TODO: bus here as well? */
-	  if (ales_list->visual_cue != MIDPOINT_CUE) {
-		cue = ales_list->visual_cue;
-                c_current = ales_list;
+	  if (conn_list->visual_cue != MIDPOINT_CUE) {
+		cue = conn_list->visual_cue;
+                c_current = conn_list;
                 while (c_current != NULL) {
                         if (c_current->object != NULL) {
 				current_orient = o_net_orientation(c_current->object);
@@ -1133,7 +1133,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 					changed++;
 				
 					s_delete(w_current, c_current->object);
-			                o_ales_disconnect_update(w_current->page_current);
+			                o_conn_disconnect_update(w_current->page_current);
 					o_net_recalc(w_current, object);
 					w_current->page_current->object_tail = 	
 						return_tail(w_current->page_current->object_head);
@@ -1149,17 +1149,17 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	free(key);
 
-	key = o_ales_return_key(object->line_points->x2,
+	key = o_conn_return_key(object->line_points->x2,
                                 object->line_points->y2);
 
-	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
 
-	if (ales_list) {
+	if (conn_list) {
 /* TODO: bus here as well? */
-	  if (ales_list->visual_cue != MIDPOINT_CUE) {
-		cue = ales_list->visual_cue;
-                c_current = ales_list;
+	  if (conn_list->visual_cue != MIDPOINT_CUE) {
+		cue = conn_list->visual_cue;
+                c_current = conn_list;
                 while (c_current != NULL) {
                         if (c_current->object != NULL) {
 				current_orient = o_net_orientation(c_current->object);
@@ -1179,7 +1179,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 							current_orient);
 					changed++;
 					s_delete(w_current, c_current->object);
-			                o_ales_disconnect_update(w_current->page_current);
+			                o_conn_disconnect_update(w_current->page_current);
 				
 					o_net_recalc(w_current, object);
 					w_current->page_current->object_tail = 	

@@ -6,13 +6,7 @@ Bugs (no particular order):
 	  with.  Technically at this point, gnetlist can't do anything so 
 	  it really should exit.  Add code to do this later...
 
-	- infinite net connection loops
-
 	- memory leaks (lots right now)
-	
-        - attach an label to a net which is going to no pin and it won't
-          show up. (this is because mid point connections are not being
-	  dealt with properly...)
 
 	- Ordering of pin outputs in spice netlist ouput for components like 
 	  BJT transistors B C E.  This is wrong for now. (might be fixed now)
@@ -24,6 +18,14 @@ Bugs (no particular order):
 	- gnetlist:get-toplevel-attribute only looks for the first occurrance
 	  of the toplevel attribute.  Make this somehow better?
 
+	
 
 Finished stuff:
 
+FIXED	embedded schematics don't netlist at all.
+
+OKAY	infinite net connection loops
+
+FIXED  	attach an label to a net which is going to no pin and it won't
+        show up. (this is because mid point connections are not being
+	dealt with properly...)

@@ -921,7 +921,7 @@ DEFINE_I_CALLBACK(view_update_cues)
 	i_update_middle_button(w_current,
 			       i_callback_view_update_cues, "Update Cues");
 
-	o_ales_disconnect_update(w_current->page_current);
+	o_conn_disconnect_update(w_current->page_current);
         o_redraw_all(w_current);
 }
 
@@ -1614,8 +1614,8 @@ DEFINE_I_CALLBACK(misc)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
-	o_ales_print_hash(w_current->page_current->ales_table);
-	/* o_ntext_print_set();*/
+	o_conn_print_hash(w_current->page_current->conn_table);
+	/* o_text_print_set();*/
 }
 
 /* HACK: be sure that you don't use the widget parameter in this one,

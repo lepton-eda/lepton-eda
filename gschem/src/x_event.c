@@ -292,7 +292,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		case(DRAWTEXT):
 			w_current->start_x = fix_x(w_current, (int) event->x);
 			w_current->start_y = fix_y(w_current, (int) event->y);
-			o_ntext_input(w_current);
+			o_text_input(w_current);
 			w_current->inside_action = 1;
 			break;
 #endif
@@ -343,7 +343,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			break;
 
 		case(ENDTEXT):
-			o_ntext_end(w_current);
+			o_text_end(w_current);
 				/* not sure on this one either... */
 				/* keep it as well */
 			w_current->event_state=SELECT;
@@ -546,6 +546,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			printf ("Sequence=\"%s\"\n",sequence);
 		}
 
+#if 0 /* old way written by AVH */
 		/* if it finds a stroke, erase the stroke, else leave
 		 * it drawn */
 		if (s_stroke_search_execute(sequence)) {
@@ -554,6 +555,16 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			}
 			x_stroke_erase_all(w_current);
 		}
+#endif
+
+	/* new way written by Stefan Petersen, much better */
+	if (x_stroke_search_execute(sequence)) {
+
+		if (stroke_info_mode) {
+                        printf ("Sequence understood\n");
+		}
+                        x_stroke_erase_all(w_current);
+	}
 #endif
 
 	} else if (event->button == 3) {
@@ -740,7 +751,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		break;
 
 	case(DRAWTEXT):
-		o_ntext_start(w_current, (int) event->x, (int) event->y);
+		o_text_start(w_current, (int) event->x, (int) event->y);
 		w_current->event_state = ENDTEXT;
 		w_current->inside_action = 1;
 		break;
@@ -753,10 +764,10 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		break;
 
 	case(ENDTEXT):
-		o_ntext_rubberattrib(w_current);
+		o_text_rubberattrib(w_current);
 		w_current->last_x = fix_x(w_current, (int) event->x);
 		w_current->last_y = fix_y(w_current, (int) event->y);
-		o_ntext_rubberattrib(w_current);
+		o_text_rubberattrib(w_current);
 		break;
 
 	case(STARTSELECT):

@@ -138,9 +138,9 @@ o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-	/* new ALES stuff */
+	/* new CONN stuff */
 	if (!w_current->ADDING_SEL) {
-		o_ales_update(w_current->page_current, object_list);
+		o_conn_update(w_current->page_current, object_list);
 	}
 
 	return(object_list);
@@ -321,7 +321,7 @@ o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	OBJECT *new_obj;
 	ATTRIB *a_current;
 
-	/* ALES stuff... */
+	/* CONN stuff... */
 	/* make sure you fix this in pin and bus as well */
 	/* still doesn't work... you need to pass in the new values */
 	/* or don't update and update later */
@@ -707,8 +707,8 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 {
 #if 0
 	char *key=NULL;
-	ALES *ales_list;
-	ALES *c_current;
+	CONN *conn_list;
+	CONN *c_current;
 	int object_orient;
 	int current_orient;
 	int cue;
@@ -720,17 +720,17 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	object_orient = o_net_orientation(object);
 
-	key = o_ales_return_key(object->line_points->x1,
+	key = o_conn_return_key(object->line_points->x1,
                                 object->line_points->y1);
 
-	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
 
-	if (ales_list) {
+	if (conn_list) {
 /* TODO: bus here as well? */
-	  if (ales_list->visual_cue != MIDPOINT_CUE) {
-		cue = ales_list->visual_cue;
-                c_current = ales_list;
+	  if (conn_list->visual_cue != MIDPOINT_CUE) {
+		cue = conn_list->visual_cue;
+                c_current = conn_list;
                 while (c_current != NULL) {
                         if (c_current->object != NULL) {
 				current_orient = o_net_orientation(c_current->object);
@@ -753,7 +753,7 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 					changed++;
 				
 					s_delete(w_current, c_current->object);
-			                o_ales_disconnect_update(w_current->page_current);
+			                o_conn_disconnect_update(w_current->page_current);
 					o_net_recalc(w_current, object);
 					w_current->page_current->object_tail = 	
 						return_tail(w_current->page_current->object_head);
@@ -769,17 +769,17 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	free(key);
 
-	key = o_ales_return_key(object->line_points->x2,
+	key = o_conn_return_key(object->line_points->x2,
                                 object->line_points->y2);
 
-	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
 
-	if (ales_list) {
+	if (conn_list) {
 /* TODO: bus here as well? */
-	  if (ales_list->visual_cue != MIDPOINT_CUE) {
-		cue = ales_list->visual_cue;
-                c_current = ales_list;
+	  if (conn_list->visual_cue != MIDPOINT_CUE) {
+		cue = conn_list->visual_cue;
+                c_current = conn_list;
                 while (c_current != NULL) {
                         if (c_current->object != NULL) {
 				current_orient = o_net_orientation(c_current->object);
@@ -799,7 +799,7 @@ o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 							current_orient);
 					changed++;
 					s_delete(w_current, c_current->object);
-			                o_ales_disconnect_update(w_current->page_current);
+			                o_conn_disconnect_update(w_current->page_current);
 				
 					o_net_recalc(w_current, object);
 					w_current->page_current->object_tail = 	

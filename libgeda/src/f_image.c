@@ -84,7 +84,7 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 						origin_x, origin_y, scale, color_mode);
 				break;
 
-				case(OBJ_NTEXT):
+				case(OBJ_TEXT):
 					if (o_current->visibility == VISIBLE) {
 			
 					/*if (w_current->text_output == VECTOR_FONTS) {	*/
@@ -93,7 +93,7 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 							origin_x, origin_y, scale, color_mode);
 					/*} else {*/
 #if 0
-						o_ntext_image_write(w_current, fp, 
+						o_text_image_write(w_current, fp, 
 						o_current,
 						origin_x, origin_y);
 
@@ -154,8 +154,8 @@ f_image_write(TOPLEVEL *w_current, char *filename, int width, int height,
 	int origin_x, origin_y, bottom, right;
 	float scale=0.0;
 
-	/* new ALES stuff */
-	o_ales_disconnect_update(w_current->page_current);
+	/* new CONN stuff */
+	o_conn_disconnect_update(w_current->page_current);
 
 	/* dots are breaking my filename selection hack hack !!!! */
 	

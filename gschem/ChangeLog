@@ -9,6 +9,17 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+8/31/99	Renamed ntext to text (finally)
+
+	Updated the stroke mechanism to what Stefan suggested.  Much better
+
+8/30/99	Fixed a bug in the print dialog box, where it wasn't setting the state
+	of the window to the previous states
+
+	Fixed net stretch to only stretch ONE net for now
+
+	Finally renamed all ALES -> CONN and ales -> conn
+
 8/29/99	More work on getting bus midpoint cues to work
 
 	Added bus_gc for bus cue drawing

@@ -38,14 +38,14 @@
 #include "../include/prototype.h"
 
 void
-o_bus_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
+o_bus_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int cue;
 
 	gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->background_color));
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 
@@ -56,26 +56,26 @@ o_bus_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
-			o_ales_draw_endpoint(w_current, w_current->gc,
+			o_conn_draw_endpoint(w_current, w_current->gc,
                                     o_current->line_points->screen_x1,
                                     o_current->line_points->screen_y1);
 		break;
 
 		case(MIDPOINT_CUE):
-			o_ales_draw_midpoint(w_current, w_current->gc,
+			o_conn_draw_midpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x1,
                                  o_current->line_points->screen_y1);
 		break;
 
 		case(INVALID_CUE):
-			o_ales_draw_invalid(w_current, w_current->gc,
+			o_conn_draw_invalid(w_current, w_current->gc,
 					    o_current->line_points->screen_x1,
 					    o_current->line_points->screen_y1);
 		break;
 
 	}
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				 o_current->line_points->x2,
 				 o_current->line_points->y2);
 #if DEBUG
@@ -85,19 +85,19 @@ o_bus_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
-			o_ales_draw_endpoint(w_current, w_current->gc,
+			o_conn_draw_endpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 		break;
 
 		case(MIDPOINT_CUE):
-			o_ales_draw_midpoint(w_current, w_current->gc,
+			o_conn_draw_midpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 		break;
 
 		case(INVALID_CUE):
-			o_ales_draw_invalid(w_current, w_current->gc,
+			o_conn_draw_invalid(w_current, w_current->gc,
 					    o_current->line_points->screen_x2,
 					    o_current->line_points->screen_y2);
 		break;
@@ -106,22 +106,22 @@ o_bus_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
-o_bus_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
+o_bus_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int cue;
 
 	gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->background_color));
 
-	o_ales_draw_endpoint(w_current, w_current->gc,
+	o_conn_draw_endpoint(w_current, w_current->gc,
        				o_current->line_points->screen_x1,
                                 o_current->line_points->screen_y1);
 
-	o_ales_draw_endpoint(w_current, w_current->gc,
+	o_conn_draw_endpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 
@@ -132,26 +132,26 @@ o_bus_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
-			o_ales_draw_endpoint(w_current, w_current->gc,
+			o_conn_draw_endpoint(w_current, w_current->gc,
                                     o_current->line_points->screen_x1,
                                     o_current->line_points->screen_y1);
 		break;
 
 		case(MIDPOINT_CUE):
-			o_ales_draw_midpoint(w_current, w_current->gc,
+			o_conn_draw_midpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x1,
                                  o_current->line_points->screen_y1);
 		break;
 
 		case(INVALID_CUE):
-			o_ales_draw_invalid(w_current, w_current->gc,
+			o_conn_draw_invalid(w_current, w_current->gc,
 					    o_current->line_points->screen_x1,
 					    o_current->line_points->screen_y1);
 		break;
 
 	}
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				 o_current->line_points->x2,
 				 o_current->line_points->y2);
 #if DEBUG
@@ -161,19 +161,19 @@ o_bus_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
-			o_ales_draw_endpoint(w_current, w_current->gc,
+			o_conn_draw_endpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 		break;
 
 		case(MIDPOINT_CUE):
-			o_ales_draw_midpoint(w_current, w_current->gc,
+			o_conn_draw_midpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 		break;
 
 		case(INVALID_CUE):
-			o_ales_draw_invalid(w_current, w_current->gc,
+			o_conn_draw_invalid(w_current, w_current->gc,
 					    o_current->line_points->screen_x2,
 					    o_current->line_points->screen_y2);
 		break;
@@ -184,7 +184,7 @@ o_bus_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 
 /* needs to be bus specific... probably not needed */
 void
-o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
+o_bus_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int cue;
 
@@ -193,7 +193,7 @@ o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		x_get_color(w_current->net_endpoint_color));
 #endif
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 	printf("here\n");
@@ -208,13 +208,13 @@ o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		break;
 
 		case(NET_DANGLING_CUE):
-			o_ales_draw_endpoint(w_current, w_current->gc,
+			o_conn_draw_endpoint(w_current, w_current->gc,
                                     o_current->line_points->screen_x1,
                                     o_current->line_points->screen_y1);
 		break;
 
 		case(MIDPOINT_CUE):
-			o_ales_draw_midpoint(w_current, w_current->gc,
+			o_conn_draw_midpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x1,
                                  o_current->line_points->screen_y1);
 		break;
@@ -222,7 +222,7 @@ o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		/* bus case */
 	}
 
-	cue = o_ales_query_table(w_current->page_current->ales_table,
+	cue = o_conn_query_table(w_current->page_current->conn_table,
 				 o_current->line_points->x2,
 				 o_current->line_points->y2);
 
@@ -236,13 +236,13 @@ o_bus_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		break;
 
 		case(NET_DANGLING_CUE):
-			o_ales_draw_endpoint(w_current, w_current->gc,
+			o_conn_draw_endpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 		break;
 
 		case(MIDPOINT_CUE):
-			o_ales_draw_midpoint(w_current, w_current->gc,
+			o_conn_draw_midpoint(w_current, w_current->gc,
                                  o_current->line_points->screen_x2,
                                  o_current->line_points->screen_y2);
 		break;
@@ -313,7 +313,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 /* needs to be bus specific */
 #if 0
-	/* ALES stuff, not sure if I'm going to leave this here */
+	/* CONN stuff, not sure if I'm going to leave this here */
 	/* only draw the connection points, if: */
 	/* - you are drawing regular lines, */
 	/* - you aren't redrawing selected (DONT_DRAW_CONN), */
@@ -330,7 +330,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
                                 x_get_color(w_current->net_endpoint_color));
                 }
 
-		cue = o_ales_query_table(w_current->page_current->ales_table,
+		cue = o_conn_query_table(w_current->page_current->conn_table,
 					 o_current->line_points->x1,
 					 o_current->line_points->y1);
 		switch(cue) {
@@ -340,13 +340,13 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			break;
 
 			case(NET_DANGLING_CUE):
-				o_ales_draw_endpoint(w_current, w_current->gc,
+				o_conn_draw_endpoint(w_current, w_current->gc,
                                           o_current->line_points->screen_x1,
                                           o_current->line_points->screen_y1);
 			break;
 
 			case(MIDPOINT_CUE):
-				o_ales_draw_midpoint(w_current, w_current->gc,
+				o_conn_draw_midpoint(w_current, w_current->gc,
                                           o_current->line_points->screen_x1,
                                           o_current->line_points->screen_y1);
 			break;
@@ -354,7 +354,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			/* bus case */
 		}
 
-		cue = o_ales_query_table(w_current->page_current->ales_table,
+		cue = o_conn_query_table(w_current->page_current->conn_table,
 					 o_current->line_points->x2,
 					 o_current->line_points->y2);
 		switch(cue) {
@@ -364,13 +364,13 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			break;
 
 			case(NET_DANGLING_CUE):
-				o_ales_draw_endpoint(w_current, w_current->gc,
+				o_conn_draw_endpoint(w_current, w_current->gc,
                                           o_current->line_points->screen_x2,
                                           o_current->line_points->screen_y2);
 			break;
 
 			case(MIDPOINT_CUE):
-				o_ales_draw_midpoint(w_current, w_current->gc,
+				o_conn_draw_midpoint(w_current, w_current->gc,
                                           o_current->line_points->screen_x2,
                                           o_current->line_points->screen_y2);
 			break;
@@ -628,14 +628,14 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 
 	w_current->page_current->object_tail = o_bus_add(w_current, w_current->page_current->object_tail, OBJ_BUS, color, x1, y1, x2, y2);
 
-	/* ales stuff */
-	o_ales_disconnect_update(w_current->page_current);
+	/* conn stuff */
+	o_conn_disconnect_update(w_current->page_current);
 
 /* this needs to be bus specific... might not be needed */
 #if 0
-	o_bus_ales_erase(w_current, w_current->page_current->object_tail);
-	o_bus_ales_draw(w_current, w_current->page_current->object_tail);
-	o_ales_draw_objects(w_current, w_current->page_current->object_tail);
+	o_bus_conn_erase(w_current, w_current->page_current->object_tail);
+	o_bus_conn_draw(w_current, w_current->page_current->object_tail);
+	o_conn_draw_objects(w_current, w_current->page_current->object_tail);
 
 	if (w_current->net_consolidate == TRUE) {
         	o_bus_consolidate_segments(w_current, 

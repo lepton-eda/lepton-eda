@@ -31,7 +31,7 @@ typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
 
 /* rename to the real thing once things work right */
-typedef struct st_ales ALES;
+typedef struct st_conn CONN;
 
 
 /* netlist structures (gnetlist) */
@@ -133,11 +133,11 @@ struct st_attrib {
 	ATTRIB *next;
 };
 
-struct st_ales {
+struct st_conn {
 	OBJECT *object;	/* object connected to */
 	OBJECT *responsible;	/* object which caused this midpoint to be */
 				/* created */
-				/* Only used with type == ALES_MIDPOINT */
+				/* Only used with type == CONN_MIDPOINT */
 
 	int type; /* individual object type */
 	int whole_type;	/* type of the entire list, either */
@@ -145,8 +145,8 @@ struct st_ales {
 	int visual_cue; /* this is only used when type == HEAD */
 	int x, y;
 	
-	ALES *prev;
-	ALES *next;
+	CONN *prev;
+	CONN *next;
 };
 
 
@@ -180,7 +180,7 @@ struct st_page {
 	float to_world_x_constant;
 	float to_world_y_constant;
 
-	GHashTable *ales_table;	/* used to maintain ales information */
+	GHashTable *conn_table;	/* used to maintain conn information */
 
 	/* used to maintain net/midpoint information */
 	/* used only in gnetlist */

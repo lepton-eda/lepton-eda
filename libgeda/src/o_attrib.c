@@ -196,7 +196,7 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *
 
         o_current = list; /* hack get consistant names */
 
-	if (object->type == OBJ_NTEXT) {
+	if (object->type == OBJ_TEXT) {
 	/* printf("Make sure first is NOT a text item"); */
 	/* messages like this need to to a error location, like a log! */
 	/* or maybe it's okay.. don't do anything if this happens */
@@ -207,7 +207,7 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *
 /* for now this is out... */
 /*  I suppose you can attach anything to anything */
 	while(temp2 != NULL) {
-		if (temp->type != OBJ_NTEXT) {
+		if (temp->type != OBJ_TEXT) {
 			printf("Cannot attach non-text object as an attribute\n");
 			return;
 		}
@@ -465,9 +465,9 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 				object_list = (OBJECT *) return_tail(object_list);
 			break;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 				fgets(string, 1024, fp); /* check if invalid */
-				object_list = (OBJECT *) o_ntext_read(w_current, object_list, buf, string, version);
+				object_list = (OBJECT *) o_text_read(w_current, object_list, buf, string, version);
 			break;
 
 			case(OBJ_PIN):
@@ -535,8 +535,8 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
 					out = (char *) o_complex_save(buf, o_current);
 				break;
 
-				case(OBJ_NTEXT):
-					out = (char *) o_ntext_save(buf, o_current);
+				case(OBJ_TEXT):
+					out = (char *) o_text_save(buf, o_current);
 				break;
 
 				case(OBJ_PIN):
@@ -710,7 +710,7 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 
 	/* search for attributes outside */
 
-		if (o_current->type == OBJ_NTEXT) {
+		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
 					o_current->text_string, 
 					found_name, found_value);
@@ -795,7 +795,7 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
 
 	/* search for attributes outside */
 
-		if (o_current->type == OBJ_NTEXT) {
+		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
 					o_current->text_string, 
 					found_name, found_value);
@@ -875,7 +875,7 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 
 	/* search for attributes outside */
 
-		if (o_current->type == OBJ_NTEXT) {
+		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
 					o_current->text_string, 
 					found_name, found_value);
@@ -923,7 +923,7 @@ o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
 
 	/* search for attributes outside */
 
-		if (o_current->type == OBJ_NTEXT) {
+		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
 					o_current->text_string, 
 					found_name, found_value);
@@ -1106,7 +1106,7 @@ o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes)
 
 		if (a_current->object) {	
 			
-			if (a_current->object->type == OBJ_NTEXT &&
+			if (a_current->object->type == OBJ_TEXT &&
 			     a_current->object->complex) {
 				o_complex_set_color(w_current, 
 					w_current->attribute_color, 
@@ -1192,7 +1192,7 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 	}
 	/* search for attributes outside */
 
-	if (o_current->type == OBJ_NTEXT) {
+	if (o_current->type == OBJ_TEXT) {
 	 	val = o_attrib_get_name_value(o_current->text_string, 
 					found_name, found_value);
 
@@ -1404,7 +1404,7 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 			sprintf(o_pin_attrib->text_string, "pin%d=%s", 
 					pin_counter, current_pin); 
 
-			o_ntext_recreate(w_current, o_pin_attrib);
+			o_text_recreate(w_current, o_pin_attrib);
 
 #if DEBUG 
 			printf("full object string %s\n", o_pin_attrib->text_string);
@@ -1492,7 +1492,7 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 			sprintf(o_pin_attrib->text_string, "pin%d=%s", 
 					pin_counter, current_pin); 
 
-			o_ntext_recreate(w_current, o_pin_attrib);
+			o_text_recreate(w_current, o_pin_attrib);
 
 #if DEBUG 
 			printf("full object string %s\n", o_pin_attrib->text_string);

@@ -124,7 +124,7 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list)
 		/* all text can be invisible or visible, so next line
                  * is out */
 		/* if (real->attribute && real->type == OBJ_TEXT) { */
-		if (real->type == OBJ_NTEXT) {
+		if (real->type == OBJ_TEXT) {
 			if (real->visibility == VISIBLE) {
 				w_current->override_color =
 					w_current->background_color;
@@ -142,7 +142,7 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list)
 				/* you must do this since real->complex */
 				/* might be null when text is invisible */
 				if (real->complex == NULL)
-					o_ntext_recreate(w_current, real);
+					o_text_recreate(w_current, real);
 
 				if (real->draw_func &&
 				    real->type != OBJ_HEAD) {
@@ -153,7 +153,7 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list)
 
 				/* same comment as above */
 				if (o_current->complex == NULL)  {
-					o_ntext_recreate(w_current, o_current);
+					o_text_recreate(w_current, o_current);
 				}
 
 				w_current->override_color =
@@ -195,7 +195,7 @@ o_attrib_toggle_show_name_value(
 			return;
 		}
 
-		if (real->type == OBJ_NTEXT) {
+		if (real->type == OBJ_TEXT) {
 			/* just for attributes or for all? */
 			w_current->override_color =
 				w_current->background_color;
@@ -205,9 +205,9 @@ o_attrib_toggle_show_name_value(
 			}
 
 			real->show_name_value = new_show_name_value;
-			o_ntext_recreate(w_current, real);
+			o_text_recreate(w_current, real);
 			o_current->show_name_value = new_show_name_value;
-			o_ntext_recreate(w_current, o_current);
+			o_text_recreate(w_current, o_current);
 
 			w_current->override_color = w_current->select_color;
 			if (o_current->draw_func &&
@@ -271,12 +271,12 @@ o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		break;
 	}
 
-	/* here you need to add OBJ_NTEXT when it's done */
-	w_current->page_current->attrib_place_tail = (OBJECT *) o_ntext_add(
+	/* here you need to add OBJ_TEXT when it's done */
+	w_current->page_current->attrib_place_tail = (OBJECT *) o_text_add(
 		w_current,
 		w_current->page_current->attrib_place_head,
-		/* type changed from TEXT to NTEXT */
-		OBJ_NTEXT, w_current->detachedattr_color,
+		/* type changed from TEXT to TEXT */
+		OBJ_TEXT, w_current->detachedattr_color,
 		x,
 		y,
 		0, /* zero is angle */
@@ -305,12 +305,12 @@ o_attrib_end(TOPLEVEL *w_current)
         world_x = snap_grid(w_current, world_x);
         world_y = snap_grid(w_current, world_y);
 
-	/* here you need to add OBJ_NTEXT when it's done */
+	/* here you need to add OBJ_TEXT when it's done */
         /* make this VIS and SHOW default configurable hack */
         w_current->page_current->object_tail =
-		o_ntext_add(w_current, w_current->page_current->object_tail,
-				/* type changed from TEXT to NTEXT */
-			    OBJ_NTEXT, w_current->detachedattr_color,
+		o_text_add(w_current, w_current->page_current->object_tail,
+				/* type changed from TEXT to TEXT */
+			    OBJ_TEXT, w_current->detachedattr_color,
 			    world_x,
 			    world_y,
 			    0, /* zero is angle */

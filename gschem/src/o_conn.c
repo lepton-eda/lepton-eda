@@ -37,7 +37,7 @@
 #include "../include/x_states.h"
 
 void
-o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
+o_conn_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
 	int x2size;
@@ -147,7 +147,7 @@ o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 }
 
 void
-o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
+o_conn_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
 
@@ -188,7 +188,7 @@ o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 }
 
 void
-o_ales_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
+o_conn_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
 	int width;
@@ -237,22 +237,22 @@ o_ales_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 
 /* draw the other objects which connect to points specified by object */
 void
-o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
+o_conn_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 {
-	ALES *ales_list;
-	ALES *c_current;
+	CONN *conn_list;
+	CONN *c_current;
 
 	char *key;
 
 	/* be sure to carefully free this key only when it's not
 	 * inserted into the list */
-	key = o_ales_return_key(object->line_points->x1,
+	key = o_conn_return_key(object->line_points->x1,
 				object->line_points->y1);
 
-	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
-	if (ales_list) {
-        	c_current = ales_list;
+	if (conn_list) {
+        	c_current = conn_list;
 		while (c_current != NULL) {
 			if (c_current->object != NULL) {
 				o_redraw_single(w_current, c_current->object);
@@ -265,13 +265,13 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 
 	/* be sure to carefully free this key only when it's not
 	 * inserted into the list */
-	key = o_ales_return_key(object->line_points->x2,
+	key = o_conn_return_key(object->line_points->x2,
 				object->line_points->y2);
 
-	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
+	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
-	if (ales_list) {
-        	c_current = ales_list;
+	if (conn_list) {
+        	c_current = conn_list;
 		while (c_current != NULL) {
 			if (c_current->object != NULL) {
 				o_redraw_single(w_current, c_current->object);
@@ -284,7 +284,7 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 }
 
 void
-o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
+o_conn_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 {
 	OBJECT *o_current = object_list;
 
@@ -298,15 +298,15 @@ o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 */
 
 		case(OBJ_PIN):
-			o_pin_ales_draw(w_current, o_current);
+			o_pin_conn_draw(w_current, o_current);
 			break;
 
 		case(OBJ_NET):
-			o_net_ales_draw(w_current, o_current);
+			o_net_conn_draw(w_current, o_current);
 			break;
 
 		case(OBJ_COMPLEX):
-			o_ales_draw_all(w_current, o_current->complex);
+			o_conn_draw_all(w_current, o_current->complex);
 			break;
 		}
 		o_current = o_current->next;
@@ -314,22 +314,22 @@ o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 }
 
 void
-o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
+o_conn_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
 {
 	OBJECT *o_current = object_list;
 
 	while (o_current != NULL) {
 		switch(o_current->type) {
 		case(OBJ_PIN):
-			o_pin_ales_erase(w_current, o_current);
+			o_pin_conn_erase(w_current, o_current);
 			break;
 
 		case(OBJ_NET):
-			o_net_ales_erase(w_current, o_current);
+			o_net_conn_erase(w_current, o_current);
 			break;
 
 		case(OBJ_COMPLEX):
-			o_ales_erase_all(w_current, o_current->complex);
+			o_conn_erase_all(w_current, o_current->complex);
 			break;
 		}
 		o_current = o_current->next;
@@ -338,7 +338,7 @@ o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
 
 
 OBJECT *
-o_ales_find_closest(OBJECT *object_list, int x, int y, 
+o_conn_find_closest(OBJECT *object_list, int x, int y, 
 		    int *whichone, int *prev_distance, int *prev_which)
 {
 	OBJECT *o_current;
@@ -413,7 +413,7 @@ o_ales_find_closest(OBJECT *object_list, int x, int y,
 
 #if 0
 			case(OBJ_COMPLEX):
-				temp = o_ales_find_closest(o_current->
+				temp = o_conn_find_closest(o_current->
 							   complex, 
 							   x, y, 
 							   new_x, new_y,
@@ -474,7 +474,7 @@ o_ales_find_closest(OBJECT *object_list, int x, int y,
 }
 
 int
-o_ales_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
+o_conn_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, 
 	                GdkGC *local_gc, int x, int y, 
 			int other_wx, int other_wy)
 {
@@ -491,7 +491,7 @@ o_ales_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 
 	if (!bus_object) {
 		fprintf(stderr, "Got a null bus_object in "
-				"o_ales_draw_busmidpoint\n");
+				"o_conn_draw_busmidpoint\n");
 		return(0);
 	}
 

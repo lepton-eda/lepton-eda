@@ -89,8 +89,8 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int fla
 			}
 		break;
 
-		case(OBJ_NTEXT):
-			end = (OBJECT *) o_ntext_copy(w_current, end, selected);	
+		case(OBJ_TEXT):
+			end = (OBJECT *) o_text_copy(w_current, end, selected);	
 			if (selected->attribute && 
 				selected->visibility == INVISIBLE) {
 				end->visibility = INVISIBLE;
@@ -147,7 +147,7 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 	/* first do all NON text items */
 	while(src != NULL) {
 
-		if (src->type != OBJ_NTEXT) {
+		if (src->type != OBJ_TEXT) {
 			dest->next = o_list_copy_to(w_current, NULL, src, flag);
 		
 			dest->next->prev = dest;
@@ -172,7 +172,7 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 	/* then do all text items */
 	while(src != NULL) {
 
-		if (src->type == OBJ_NTEXT) {
+		if (src->type == OBJ_TEXT) {
 			dest->next = o_list_copy_to(w_current, NULL, src, flag);
 	
         if (src->attached_to && !w_current->ADDING_SEL) {

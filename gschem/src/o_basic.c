@@ -59,7 +59,7 @@ o_redraw_all(TOPLEVEL *w_current)
 	struct timeval tv2;
 #endif
 
-	o_ales_disconnect_update(w_current->page_current);
+	o_conn_disconnect_update(w_current->page_current);
 
 	x_repaint_background(w_current);
 #if 0

@@ -87,7 +87,7 @@ o_nethash_add(NETHASH *list_head, OBJECT *object, int type)
 	new->type = type;
 
 #if DEBUG 
-	if (new->type == ALES_MIDPOINT) {
+	if (new->type == CONN_MIDPOINT) {
 		printf("finally adding midpoint!!!\n");
 	}
 #endif
@@ -155,15 +155,15 @@ o_nethash_print(NETHASH *nethash)
 			printf("opts: NOTHING ");
 		}
 
-		if (nh_current->type == ALES_NET) {
+		if (nh_current->type == CONN_NET) {
 			printf("type: NETHASH_NET ");
-		} else if (nh_current->type == ALES_PIN) {
+		} else if (nh_current->type == CONN_PIN) {
 			printf("type: NETHASH_PIN ");
-		} else if (nh_current->type == ALES_MIDPOINT) {
+		} else if (nh_current->type == CONN_MIDPOINT) {
 			printf("type: NETHASH_MIDPOINT ");
-		} else if (nh_current->type == ALES_BUS_MIDPOINT) {
+		} else if (nh_current->type == CONN_BUS_MIDPOINT) {
 			printf("type: NETHASH_BUS_MIDPOINT ");
-		} else if (nh_current->type == ALES_HEAD) {
+		} else if (nh_current->type == CONN_HEAD) {
 			printf("type: head node ");
 		}
 		printf("\n");
@@ -276,7 +276,7 @@ o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current,
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
 #endif
 
-		/* Search for o_current in st_ales list */
+		/* Search for o_current in st_conn list */
 		found = o_nethash_search(*nethash_list, o_current);
 
 		/* if found, do nothing */
@@ -333,36 +333,36 @@ o_nethash_query_table(GHashTable *nethash_table, char *key)
 
 /* delete stuff after this line */
 #if 0
-o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
+o_conn_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 {
-	GHashTable *ales_table;
+	GHashTable *conn_table;
 	char *key = NULL;
 	OBJECT *midpoint_object=NULL;
-	ALES **ales_list = NULL;
+	CONN **conn_list = NULL;
 	char **orig_key = NULL;
-	ALES *found = NULL;
+	CONN *found = NULL;
 	int ret_value=0;
 
-	ales_table = p_current->ales_table;
+	conn_table = p_current->conn_table;
 
-	ales_list = (ALES **) malloc(sizeof(ALES *));
+	conn_list = (CONN **) malloc(sizeof(CONN *));
 	orig_key = (char **) malloc(sizeof(char *));
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */
-	key = o_ales_return_key(x, y);
+	key = o_conn_return_key(x, y);
 
 	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(ales_table, key,
-		(gpointer) orig_key, (gpointer) ales_list)) {
+	if (g_hash_table_lookup_extended(conn_table, key,
+		(gpointer) orig_key, (gpointer) conn_list)) {
 
 #if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
 #endif
-		/* o_ales_print(*ales_list);*/
+		/* o_conn_print(*conn_list);*/
 
-		/* Search for o_current in st_ales list */
-		found = o_ales_search(*ales_list, o_current);
+		/* Search for o_current in st_conn list */
+		found = o_conn_search(*conn_list, o_current);
 
 		/* if found, do nothing */
 
@@ -372,16 +372,16 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 			/* is valid ie (cannot connect a net to a bus */
 			/* endpoint) */
 
-			o_ales_add(*ales_list, o_current, NULL, ALES_PIN, x, y);
-			o_ales_update_cues_info(*ales_list);
+			o_conn_add(*conn_list, o_current, NULL, CONN_PIN, x, y);
+			o_conn_update_cues_info(*conn_list);
 		}
 
-		/* key wasn't inserted, nothing re-inserted into ales table */
+		/* key wasn't inserted, nothing re-inserted into conn table */
 		/* safe to free */
 		free(key);
 
 #if DEBUG 
-		o_ales_print(*ales_list);
+		o_conn_print(*conn_list);
 #endif
 
 	} else {
@@ -391,22 +391,22 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 #endif
 
 		/* not found */
-		/* create st_ales node head */
-		*ales_list = o_ales_add_head(NULL, x, y);
+		/* create st_conn node head */
+		*conn_list = o_conn_add_head(NULL, x, y);
 
-		/* added st_ales node for o_current */
-		o_ales_add(*ales_list, o_current, NULL, ALES_PIN, x, y);
+		/* added st_conn node for o_current */
+		o_conn_add(*conn_list, o_current, NULL, CONN_PIN, x, y);
 
-		/* update *ales_list for the various conditions */
-		o_ales_update_cues_info(*ales_list);
+		/* update *conn_list for the various conditions */
+		o_conn_update_cues_info(*conn_list);
 
-		/* add st_ales list into ales_table */ 
-		g_hash_table_insert(ales_table, key, *ales_list);
+		/* add st_conn list into conn_table */ 
+		g_hash_table_insert(conn_table, key, *conn_list);
 
 		/* key was used so you can't remove it */
 	}
 
-	free(ales_list);
+	free(conn_list);
 	free(orig_key);
 }
 

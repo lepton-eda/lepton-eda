@@ -174,7 +174,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 				o_erase_single(w_current,temp);
 			}
 
-			o_ntext_recreate(w_current, temp);
+			o_text_recreate(w_current, temp);
 
 			/* this doesn't deal with the selection list
                          * item */
@@ -188,10 +188,10 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 			/* here you need to do the add the slot
                            attribute since it doesn't exist */
 			w_current->page_current->object_tail =
-				(OBJECT *) o_ntext_add(
+				(OBJECT *) o_text_add(
 					w_current,
 					w_current->page_current->object_tail,
-					OBJ_NTEXT, w_current->text_color,
+					OBJ_TEXT, w_current->text_color,
 					real->x, real->y,
 					0, /* zero is angle */
 					string,

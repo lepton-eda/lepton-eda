@@ -89,21 +89,21 @@
 #define EMPTY 	4
 
 
-/* The ales modes for type */
-#define ALES_HEAD		-1	
+/* The conn modes for type */
+#define CONN_HEAD		-1	
 #define INVALID			0	
-#define ALES_NET		1
-#define ALES_PIN		2
-#define ALES_MIDPOINT		3
-#define ALES_BUS		4
-#define ALES_BUS_MIDPOINT	5
+#define CONN_NET		1
+#define CONN_PIN		2
+#define CONN_MIDPOINT		3
+#define CONN_BUS		4
+#define CONN_BUS_MIDPOINT	5
 
-/* The ales whole type */
+/* The conn whole type */
 #define NO_MIDPOINT		0
 #define HAS_MIDPOINT		1	
 #define HAS_BUS_MIDPOINT	2	
 
-/* The ales modes for visual_cue */
+/* The conn modes for visual_cue */
 #define NO_CUE			1	
 #define NET_DANGLING_CUE	2
 #define PIN_DANGLING_CUE	3

@@ -48,7 +48,7 @@
 #define NUM_CHARS 255
 
 void
-o_ntext_draw(TOPLEVEL *w_current, OBJECT *o_current)
+o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	if (o_current->visibility == INVISIBLE) {
 		return;
@@ -58,7 +58,7 @@ o_ntext_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
-o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
 	int length;
@@ -138,13 +138,13 @@ o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 }
 
 void
-o_ntext_input(TOPLEVEL *w_current)
+o_text_input(TOPLEVEL *w_current)
 {
 	text_input_dialog(w_current);
 }
 
 void
-o_ntext_start(TOPLEVEL *w_current, int screen_x, int screen_y)
+o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
 	int x, y;
 	char *value;
@@ -183,13 +183,13 @@ o_ntext_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		break;
 	}
 
-	/* here you need to add OBJ_NTEXT when it's done */
+	/* here you need to add OBJ_TEXT when it's done */
 	w_current->page_current->attrib_place_tail =
-		(OBJECT *) o_ntext_add(
+		(OBJECT *) o_text_add(
 			w_current,
 			w_current->page_current->attrib_place_head,
-				/* type changed from TEXT to NTEXT */
-			OBJ_NTEXT, w_current->text_color,
+				/* type changed from TEXT to TEXT */
+			OBJ_TEXT, w_current->text_color,
 			x, y, 0, /* zero is angle */
 			w_current->current_attribute,
 			w_current->text_size,
@@ -203,7 +203,7 @@ o_ntext_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 }
 
 void
-o_ntext_end(TOPLEVEL *w_current)
+o_text_end(TOPLEVEL *w_current)
 {
 	/* TODO: get consistant names */
 	int world_x, world_y;
@@ -217,12 +217,12 @@ o_ntext_end(TOPLEVEL *w_current)
         world_x = snap_grid(w_current, world_x);
         world_y = snap_grid(w_current, world_y);
 
-	/* here you need to add OBJ_NTEXT when it's done */
+	/* here you need to add OBJ_TEXT when it's done */
         /* TODO: make this VIS and SHOW default configurable */
         w_current->page_current->object_tail =
-		o_ntext_add(w_current, w_current->page_current->object_tail,
-				/* type changed from TEXT to NTEXT */
-			    OBJ_NTEXT,
+		o_text_add(w_current, w_current->page_current->object_tail,
+				/* type changed from TEXT to TEXT */
+			    OBJ_TEXT,
 			    w_current->text_color,
 			    world_x, world_y, 0, /* zero is angle */
 			    w_current->current_attribute,
@@ -287,7 +287,7 @@ o_ntext_end(TOPLEVEL *w_current)
 }
 
 void
-o_ntext_rubberattrib(TOPLEVEL *w_current)
+o_text_rubberattrib(TOPLEVEL *w_current)
 {
 	o_drawbounding(w_current,
 		       w_current->page_current->attrib_place_head->next,
@@ -295,7 +295,7 @@ o_ntext_rubberattrib(TOPLEVEL *w_current)
 }
 
 void
-o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current)
+o_text_edit(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	/* you need to check to make sure only one object is selected */
 	/* no actually this is okay... not here in o_edit */
@@ -304,7 +304,7 @@ o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
-o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
+o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 {
 	OBJECT *real;
 	OBJECT *temp;
@@ -335,7 +335,7 @@ o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 		temp = w_current->page_current->selection_head->next;
 
 		temp->text_size = text_size;
-		o_ntext_recreate(w_current, temp);
+		o_text_recreate(w_current, temp);
 
 		o_redraw_selected(w_current);
 	}
@@ -362,7 +362,7 @@ o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 
 		temp = real;
 		real->text_size = text_size;
-		o_ntext_recreate(w_current, temp);
+		o_text_recreate(w_current, temp);
 
 		w_current->page_current->CHANGED = 1;
 	} else {

@@ -52,8 +52,8 @@ f_open(TOPLEVEL *w_current, char *filename)
         w_current->page_current->object_tail = (OBJECT *) 
 			return_tail(w_current->page_current->object_head); 
 
-	/* new ALES stuff */
-	o_ales_disconnect_update(w_current->page_current);
+	/* new CONN stuff */
+	o_conn_disconnect_update(w_current->page_current);
 
 	/* make sure you init net_consolide to false (default) in all */
 	/* programs */

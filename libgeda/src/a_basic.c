@@ -94,8 +94,8 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 						}
 					break;
 
-					case(OBJ_NTEXT):
-						out = (char *) o_ntext_save(buf, o_current);
+					case(OBJ_TEXT):
+						out = (char *) o_text_save(buf, o_current);
 					break;
 
 					case(OBJ_PIN):
@@ -205,8 +205,8 @@ o_save(TOPLEVEL *w_current, char *filename)
 						}
 					break;
 
-					case(OBJ_NTEXT):
-						out = (char *) o_ntext_save(buf, o_current);
+					case(OBJ_TEXT):
+						out = (char *) o_text_save(buf, o_current);
 					break;
 
 					case(OBJ_PIN):
@@ -303,9 +303,9 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 				object_list = (OBJECT *) return_tail(object_list);
 			break;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 				fgets(string, 1024, fp); /* check if invalid */
-				object_list = (OBJECT *) o_ntext_read(w_current, object_list, buf, string, version);
+				object_list = (OBJECT *) o_text_read(w_current, object_list, buf, string, version);
 			break;
 
 			case(OBJ_PIN):
@@ -361,7 +361,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 			break;	
 
 			case(INFO_FONT): 
-				o_ntext_set_info_font(buf);
+				o_text_set_info_font(buf);
 			break;	
 
 			case(COMMENT):

@@ -112,7 +112,7 @@ o_move_end(TOPLEVEL *w_current)
 			break;
 
 			case(OBJ_NET):
-				o_net_ales_erase(w_current, found);
+				o_net_conn_erase(w_current, found);
 				w_current->override_color = w_current->background_color;
 				o_net_draw(w_current, found);
 
@@ -122,7 +122,7 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_line_translate_world(w_current, diff_x, diff_y, found);
 
-				/* purpose of this is to draw ALES points */
+				/* purpose of this is to draw CONN points */
 				/* of the new moved object correctly */
 				/* since we will be keeping it selected */
 				o_net_draw(w_current, found);
@@ -130,9 +130,9 @@ o_move_end(TOPLEVEL *w_current)
 
 				/* this is only a temp update, the below */
 				/* disconnect_update does the real thing */
-				o_ales_update(w_current->page_current, found);
-				o_net_ales_erase(w_current, found);
-				o_net_ales_draw(w_current, found);
+				o_conn_update(w_current->page_current, found);
+				o_net_conn_erase(w_current, found);
+				o_net_conn_draw(w_current, found);
 
 				selection_list = (OBJECT *)
 					o_list_copy_to(w_current, selection_list, found, SELECTION);
@@ -140,7 +140,7 @@ o_move_end(TOPLEVEL *w_current)
 
 			case(OBJ_BUS):
 
-				o_bus_ales_erase(w_current, found);
+				o_bus_conn_erase(w_current, found);
 				w_current->override_color = w_current->background_color;
 				o_bus_draw(w_current, found);
 
@@ -150,7 +150,7 @@ o_move_end(TOPLEVEL *w_current)
 				}
 				o_line_translate_world(w_current, diff_x, diff_y, found);
 
-				/* purpose of this is to draw ALES points */
+				/* purpose of this is to draw CONN points */
 				/* of the new moved object correctly */
 				/* since we will be keeping it selected */
 				o_bus_draw(w_current, found);
@@ -158,11 +158,11 @@ o_move_end(TOPLEVEL *w_current)
 
 				/* this is only a temp update, the below */
 				/* disconnect_update does the real thing */
-				o_ales_update(w_current->page_current, found);
+				o_conn_update(w_current->page_current, found);
 
-				o_bus_ales_erase(w_current, found);
+				o_bus_conn_erase(w_current, found);
 #if 0 /* needs to be bus specific */
-				o_bus_ales_draw(w_current, found);
+				o_bus_conn_draw(w_current, found);
 #endif
 
 				selection_list = (OBJECT *)
@@ -198,7 +198,7 @@ o_move_end(TOPLEVEL *w_current)
 			case(OBJ_COMPLEX):
 
 				w_current->override_color = w_current->background_color;
-				o_ales_erase_all(w_current, found->complex);
+				o_conn_erase_all(w_current, found->complex);
 				/* single- there for a reason you know */
 				o_redraw_single(w_current, found);
 				if (w_current->actionfeedback_mode == OUTLINE) {
@@ -207,32 +207,32 @@ o_move_end(TOPLEVEL *w_current)
 				o_complex_world_translate_toplevel(w_current, diff_x, diff_y, found);
 				w_current->override_color = -1;
 
-				o_ales_disconnect_update(w_current->page_current);
+				o_conn_disconnect_update(w_current->page_current);
 				o_redraw_single(w_current, found);
 
-				o_ales_erase_all(w_current, found->complex);
-				o_ales_draw_all(w_current, found->complex);
+				o_conn_erase_all(w_current, found->complex);
+				o_conn_draw_all(w_current, found->complex);
 
 				selection_list = (OBJECT *)
 					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
-			case(OBJ_NTEXT):
+			case(OBJ_TEXT):
 				w_current->override_color = w_current->background_color;
-				o_ntext_draw(w_current, found);
+				o_text_draw(w_current, found);
 				w_current->override_color = -1;
 				if (w_current->actionfeedback_mode == OUTLINE) {
-					o_ntext_draw_xor(w_current, screen_diff_x, screen_diff_y, found);
+					o_text_draw_xor(w_current, screen_diff_x, screen_diff_y, found);
 				}
-				o_ntext_translate_world(w_current, diff_x, diff_y, found);
-				o_ntext_draw(w_current, found);
+				o_text_translate_world(w_current, diff_x, diff_y, found);
+				o_text_draw(w_current, found);
 				selection_list = (OBJECT *)
 					o_list_copy_to(w_current, selection_list, found, SELECTION);
 
 			break;
 
 			case(OBJ_PIN):
-				o_pin_ales_erase(w_current, found);
+				o_pin_conn_erase(w_current, found);
 				w_current->override_color = w_current->background_color;
 				o_pin_draw(w_current, found);
 				w_current->override_color = -1;
@@ -245,9 +245,9 @@ o_move_end(TOPLEVEL *w_current)
 
 				/* this is only a temp update, the below */
 				/* disconnect_update does the real thing */
-				o_ales_update(w_current->page_current, found);
-				o_pin_ales_erase(w_current, found);
-				o_pin_ales_draw(w_current, found);
+				o_conn_update(w_current->page_current, found);
+				o_pin_conn_erase(w_current, found);
+				o_pin_conn_draw(w_current, found);
 
 				selection_list = (OBJECT *)
 					o_list_copy_to(w_current, selection_list, found, SELECTION);
@@ -288,9 +288,9 @@ o_move_end(TOPLEVEL *w_current)
 
 	w_current->page_current->CHANGED=1;
 
-	o_ales_disconnect_update(w_current->page_current);
+	o_conn_disconnect_update(w_current->page_current);
 
-	/* o_ales_erase_all(w_current, w_current->page_current->object_head);*/
+	/* o_conn_erase_all(w_current, w_current->page_current->object_head);*/
 	o_redraw(w_current, w_current->page_current->object_head);
         o_redraw_selected(w_current);
 }

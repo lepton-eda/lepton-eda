@@ -460,8 +460,8 @@ s_delete(TOPLEVEL *w_current, OBJECT *o_current)
 if (!w_current->REMOVING_SEL) {
 		/* find all instances of points to current and remove them */
 
-		/* ALES new stuff */
-		o_ales_disconnect(w_current->page_current); 
+		/* CONN new stuff */
+		o_conn_disconnect(w_current->page_current); 
 
 } /* end of REMOVING_SEL */
 

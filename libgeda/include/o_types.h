@@ -26,7 +26,7 @@
 #define OBJ_NET         'N'
 #define OBJ_BUS         'U'
 #define OBJ_COMPLEX     'C'
-#define OBJ_NTEXT       'T'
+#define OBJ_TEXT       'T'
 #define OBJ_PIN         'P'
 #define OBJ_ARC         'A' 
 #define OBJ_ROUTE       'R' 
