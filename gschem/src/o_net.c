@@ -57,17 +57,22 @@ o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
 			o_ales_draw_endpoint(w_current, w_current->gc,
-                                    o_current->line_points->screen_x1,
-                                    o_current->line_points->screen_y1);
+                                             o_current->line_points->screen_x1,
+                                             o_current->line_points->screen_y1);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_ales_draw_midpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x1,
-                                 o_current->line_points->screen_y1);
+                                             o_current->line_points->screen_x1,
+                                             o_current->line_points->screen_y1);
 		break;
 
-		/* bus case */
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+			                    o_current->line_points->screen_x1,
+				            o_current->line_points->screen_y1);
+                break;
+
 	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -81,17 +86,21 @@ o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
 			o_ales_draw_endpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                             o_current->line_points->screen_x2,
+                                             o_current->line_points->screen_y2);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_ales_draw_midpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                             o_current->line_points->screen_x2,
+                                             o_current->line_points->screen_y2);
 		break;
 
-		/* bus case */
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+			                    o_current->line_points->screen_x2,
+				            o_current->line_points->screen_y2);
+                break;
 	}
 }
 
@@ -130,7 +139,7 @@ o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 
-#if DEBUG
+#if DEBUG 
 	printf("dfirst: %d\n", cue);
 #endif
 	switch(cue) {
@@ -141,17 +150,21 @@ o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 			o_ales_draw_endpoint(w_current, w_current->gc,
-                                    o_current->line_points->screen_x1,
-                                    o_current->line_points->screen_y1);
+                                             o_current->line_points->screen_x1,
+                                             o_current->line_points->screen_y1);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_ales_draw_midpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x1,
-                                 o_current->line_points->screen_y1);
+                                             o_current->line_points->screen_x1,
+                                             o_current->line_points->screen_y1);
 		break;
 
-		/* bus case */
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+			                    o_current->line_points->screen_x1,
+				            o_current->line_points->screen_y1);
+                break;
 	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -169,17 +182,21 @@ o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 			o_ales_draw_endpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                             o_current->line_points->screen_x2,
+                                             o_current->line_points->screen_y2);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_ales_draw_midpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                             o_current->line_points->screen_x2,
+                                             o_current->line_points->screen_y2);
 		break;
 
-		/* bus case */
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+			                    o_current->line_points->screen_x2,
+				            o_current->line_points->screen_y2);
+                break;
 	}
 }
 
@@ -275,17 +292,28 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 			case(NET_DANGLING_CUE):
 				o_ales_draw_endpoint(w_current, w_current->gc,
-                                          o_current->line_points->screen_x1,
-                                          o_current->line_points->screen_y1);
+                                          	     o_current->line_points->
+						     screen_x1,
+                                          	     o_current->line_points->
+						     screen_y1);
 			break;
 
 			case(MIDPOINT_CUE):
 				o_ales_draw_midpoint(w_current, w_current->gc,
-                                          o_current->line_points->screen_x1,
-                                          o_current->line_points->screen_y1);
+                                          	     o_current->line_points->
+						     screen_x1,
+                                          	     o_current->line_points->
+						     screen_y1);
 			break;
 
-			/* bus case */
+			case(INVALID_CUE):
+				o_ales_draw_invalid(w_current, w_current->gc,
+			                            o_current->line_points->
+						    screen_x1,
+				                    o_current->line_points->
+						    screen_y1);
+                	break;
+
 		}
 
 		cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -299,17 +327,27 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 			case(NET_DANGLING_CUE):
 				o_ales_draw_endpoint(w_current, w_current->gc,
-                                          o_current->line_points->screen_x2,
-                                          o_current->line_points->screen_y2);
+                                          	     o_current->line_points->
+						     screen_x2,
+                                                     o_current->line_points->
+						     screen_y2);
 			break;
 
 			case(MIDPOINT_CUE):
 				o_ales_draw_midpoint(w_current, w_current->gc,
-                                          o_current->line_points->screen_x2,
-                                          o_current->line_points->screen_y2);
+                                          	     o_current->line_points->
+						     screen_x2,
+                                           	     o_current->line_points->
+						     screen_y2);
 			break;
 
-			/* bus case */
+			case(INVALID_CUE):
+				o_ales_draw_invalid(w_current, w_current->gc,
+			                            o_current->line_points->
+						    screen_x2,
+				                    o_current->line_points->
+						    screen_y2);
+                	break;
 		}
 	}
 

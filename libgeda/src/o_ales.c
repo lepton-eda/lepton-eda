@@ -182,6 +182,10 @@ o_ales_print(ALES *ales)
 			printf("type: ALES_NET ");
 		} else if (c_current->type == ALES_PIN) {
 			printf("type: ALES_PIN ");
+		} else if (c_current->type == INVALID) {
+			printf("type: INVALID ");
+		} else if (c_current->type == ALES_BUS) {
+			printf("type: ALES_BUS ");
 		} else if (c_current->type == ALES_MIDPOINT) {
 			printf("type: ALES_MIDPOINT ");
 		} else if (c_current->type == ALES_BUS_MIDPOINT) {
@@ -288,6 +292,68 @@ o_ales_search(ALES *ales_list, OBJECT *o_current)
 	return(NULL);
 }
 
+int
+o_ales_is_bus(ALES *ales_list)
+{
+	ALES *c_current;
+
+	c_current=ales_list;
+
+	while(c_current != NULL) {
+
+		if (c_current->object) {
+			if (c_current->object->type == OBJ_BUS) {
+				return(TRUE);	
+			}
+		}
+		c_current=c_current->next;
+	}
+
+	return(FALSE);
+}
+
+int
+o_ales_is_net(ALES *ales_list)
+{
+	ALES *c_current;
+
+	c_current=ales_list;
+
+	while(c_current != NULL) {
+
+		if (c_current->object) {
+			if (c_current->object->type == OBJ_NET) {
+				return(TRUE);	
+			}
+		}
+		c_current=c_current->next;
+	}
+
+	return(FALSE);
+}
+
+int
+o_ales_is_pin(ALES *ales_list)
+{
+	ALES *c_current;
+
+	c_current=ales_list;
+
+	while(c_current != NULL) {
+
+		if (c_current->object) {
+			if (c_current->object->type == OBJ_PIN) {
+				return(TRUE);	
+			}
+		}
+		c_current=c_current->next;
+	}
+
+	return(FALSE);
+}
+
+/* is this used ? */
+#if 0
 ALES *
 o_ales_search_midpoint(ALES *ales_list)
 {
@@ -305,6 +371,7 @@ o_ales_search_midpoint(ALES *ales_list)
 
 	return(NULL);
 }
+#endif
 
 /* testing only */
 void
@@ -326,32 +393,58 @@ o_ales_makeup(GHashTable *ales_table, char *key, OBJECT *o_current)
 /* 	2 items in a list : draw NO cues */
 /* 	3 items or more in a list : draw a midpoint connection */
 /* 	midpoint connection in a list : draw a midpoint connection */	
+/* 	bus_midpoint connection in a list : draw a bus_midpoint connection */	
 void
 o_ales_update_cues_info(ALES *ales_list)
 {
 	ALES *c_current;
 	int connection_counter=0;
+	int done=0;
 
 	c_current = ales_list;
 
 	while (c_current != NULL) {
 
+/* TODO: this still isn't right... */
+/* you need priority for which type is more important since you could */
+/* find any of them or all of them in a single list */
 
-		/* for now this doesn't deal with busses */
-		if (c_current->type == ALES_MIDPOINT) {
-			ales_list->visual_cue = MIDPOINT_CUE;
+		if (c_current->type == INVALID) {
+			ales_list->visual_cue = INVALID_CUE;
 
 			/* keep head node whole_type in sync */
-			ales_list->whole_type = HAS_MIDPOINT;
+			/* not used , should be nuked */
+			ales_list->whole_type = NO_MIDPOINT;
 			return;
-		}
+		} 
 
-		if (c_current->type == ALES_NET || c_current->type == ALES_PIN) {
+		if (c_current->type == ALES_BUS_MIDPOINT) {
+			ales_list->visual_cue = BUS_MIDPOINT_CUE;
+
+			/* keep head node whole_type in sync */
+			/* not used , should be nuked */
+			ales_list->whole_type = HAS_BUS_MIDPOINT;
+			done++;
+		} 
+
+		if (c_current->type == ALES_MIDPOINT && !done) {
+			ales_list->visual_cue = MIDPOINT_CUE;
+			/* keep head node whole_type in sync */
+			/* not used , should be nuked */
+			ales_list->whole_type = HAS_MIDPOINT;
+			done++;
+		} 
+
+		if (c_current->type == ALES_NET || c_current->type == ALES_PIN || c_current->type == ALES_BUS) {
 			connection_counter++;	
 
 		}
 
 		c_current = c_current->next;	
+	}
+
+	if (done) {
+		return;
 	}
 
 	if (connection_counter == 0) {
@@ -374,6 +467,11 @@ o_ales_update_cues_info(ALES *ales_list)
 #if DEBUG
 			printf("draw PIN_DANGLING_CUE\n");
 #endif
+		} else if (ales_list->next->type == ALES_BUS) {
+			ales_list->visual_cue = BUS_DANGLING_CUE;
+#if DEBUG
+			printf("draw BUS_DANGLING_CUE\n");
+#endif
 		}
 
 	} else if (connection_counter == 2) {
@@ -395,6 +493,11 @@ o_ales_update_cues_info(ALES *ales_list)
 	}
 
 	ales_list->whole_type = NO_MIDPOINT;
+
+#if DEBUG 
+	printf("final type: %d\n", ales_list->visual_cue);
+	printf("connection counter: %d\n", connection_counter);
+#endif
 }
 
 OBJECT *
@@ -410,6 +513,7 @@ o_ales_find_midpoint(OBJECT *object_list, int x, int y)
 		switch(o_current->type) {
 
 			case(OBJ_NET):
+			case(OBJ_BUS):
 
 				min_y = min(o_current->line_points->y1, 
 					    o_current->line_points->y2);
@@ -445,9 +549,6 @@ o_ales_find_midpoint(OBJECT *object_list, int x, int y)
 
 			break;
 
-
-			/* do the similar for OBJ_BUS */
-
 		}
 
 		o_current = o_current->next;
@@ -465,6 +566,8 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 	ALES **ales_list = NULL;
 	char **orig_key = NULL;
 	ALES *found = NULL;
+	ALES *temp = NULL;
+	int type;
 
 	ales_table = p_current->ales_table;
 
@@ -491,11 +594,15 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 
 		if (!found) {
 
-			/* you need to check here to make sure connection */
-			/* is valid ie (cannot connect a net to a bus */
-			/* endpoint) */
+			temp = *ales_list;
+			if (o_ales_is_bus(temp)) {
+				type = INVALID;
+			} else {
+				type = ALES_NET;
+			}
 
-			o_ales_add(*ales_list, o_current, NULL, ALES_NET, x, y);
+
+			o_ales_add(*ales_list, o_current, NULL, type, x, y);
 			o_ales_update_cues_info(*ales_list);
 		}
 
@@ -510,8 +617,13 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 #if DEBUG 
 			printf("ADDING midpoint (found previous st_ales): %s %s!!!\n", midpoint_object->name, o_current->name);	
 #endif
-		
-			o_ales_add(*ales_list, midpoint_object, o_current, ALES_MIDPOINT, x, y);
+
+			if (midpoint_object->type == OBJ_BUS) {
+				o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS_MIDPOINT, x, y);
+			} else if (midpoint_object->type == OBJ_NET) {
+				o_ales_add(*ales_list, midpoint_object, o_current, ALES_MIDPOINT, x, y);
+			}
+
 
 			o_ales_update_cues_info(*ales_list);
 
@@ -554,8 +666,135 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 			/* need to deal with busses too */
 #if DEBUG 
 			printf("ADDING midpoint: %s %s!!!\n", midpoint_object->name, o_current->name);	
+
 #endif
-			o_ales_add(*ales_list, midpoint_object, o_current, ALES_MIDPOINT, x, y);
+			if (midpoint_object->type == OBJ_BUS) {
+				o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS_MIDPOINT, x, y);
+			} else if (midpoint_object->type == OBJ_NET) {
+				o_ales_add(*ales_list, midpoint_object, o_current, ALES_MIDPOINT, x, y);
+			}
+		}
+
+		/* update *ales_list for the various conditions */
+		o_ales_update_cues_info(*ales_list);
+
+
+		/* add st_ales list into ales_table */ 
+		g_hash_table_insert(ales_table, key, *ales_list);
+
+		/* key was used so you can't remove it */
+	}
+
+	free(ales_list);
+	free(orig_key);
+}
+
+/* function needs a lot of work */
+void
+o_ales_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y)
+{
+	GHashTable *ales_table;
+	char *key = NULL;
+	OBJECT *midpoint_object=NULL;
+	ALES **ales_list = NULL;
+	char **orig_key = NULL;
+	ALES *found = NULL;
+	ALES *temp = NULL;
+	int type;
+
+	ales_table = p_current->ales_table;
+
+	ales_list = (ALES **) malloc(sizeof(ALES *));
+	orig_key = (char **) malloc(sizeof(char *));
+
+	/* be sure to carefully free this key */
+	/* only when it's not inserted into the list */
+	key = o_ales_return_key(x, y);
+
+	/* search for key in hash table */
+	if (g_hash_table_lookup_extended(ales_table, key, 
+		(gpointer) orig_key, (gpointer) ales_list)) {
+
+#if DEBUG
+		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
+#endif
+		/* o_ales_print(*ales_list);*/
+
+		/* Search for o_current in st_ales list */
+		found = o_ales_search(*ales_list, o_current);
+
+		/* if found, do nothing */
+
+		if (!found) {
+
+			temp = *ales_list;
+			if (o_ales_is_pin(temp) || o_ales_is_net(temp)) {
+				type = INVALID;
+			} else {
+				type = ALES_BUS;
+			}
+
+			o_ales_add(*ales_list, o_current, NULL, type, x, y);
+			o_ales_update_cues_info(*ales_list);
+		}
+
+		/* you have to check for mid points here as well */
+		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
+						       x, y);
+
+		/* if it is than add found object to this */
+		/* new st_ales node list */
+		if (midpoint_object && midpoint_object != o_current) {
+			/* need to deal with busses too */
+#if DEBUG 
+			printf("ADDING midpoint (found previous st_ales): %s %s!!!\n", midpoint_object->name, o_current->name);	
+#endif
+		
+			o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS, x, y);
+
+			o_ales_update_cues_info(*ales_list);
+
+		} 
+
+		/* else {
+			printf("got that condition\n");
+		}*/
+
+		/* key wasn't inserted, nothing re-inserted into ales table */
+		/* safe to free */
+		free(key);
+
+#if DEBUG 
+		o_ales_print(*ales_list);
+#endif
+
+	} else {
+
+#if DEBUG 
+		printf("key not found!\n");
+#endif
+
+		/* not found */
+		/* create st_ales node head */
+		*ales_list = o_ales_add_head(NULL, x, y);
+
+		/* added st_ales node for o_current */
+		o_ales_add(*ales_list, o_current, NULL, ALES_BUS, x, y);
+
+		/* do a complete search of entire object list */
+		/* to see if point is a mid point connection */
+		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
+						       x, y);
+
+		/* if it is than add found object to this */
+		/* new st_ales node list */
+		if (midpoint_object && midpoint_object != o_current) {
+
+			/* need to deal with busses too */
+#if DEBUG 
+			printf("ADDING midpoint: %s %s!!!\n", midpoint_object->name, o_current->name);	
+#endif
+			o_ales_add(*ales_list, midpoint_object, o_current, ALES_BUS, x, y);
 		}
 
 		/* update *ales_list for the various conditions */
@@ -580,6 +819,8 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 	ALES **ales_list = NULL;
 	char **orig_key = NULL;
 	ALES *found = NULL;
+	ALES *temp;
+	int type;
 
 	ales_table = p_current->ales_table;
 
@@ -606,11 +847,14 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 
 		if (!found) {
 
-			/* you need to check here to make sure connection */
-			/* is valid ie (cannot connect a net to a bus */
-			/* endpoint) */
+			temp = *ales_list;
+			if (o_ales_is_bus(temp)) {
+				type = INVALID;
+			} else {
+				type = ALES_PIN;
+			}
 
-			o_ales_add(*ales_list, o_current, NULL, ALES_PIN, x, y);
+			o_ales_add(*ales_list, o_current, NULL, type, x, y);
 			o_ales_update_cues_info(*ales_list);
 		}
 
@@ -664,6 +908,16 @@ o_ales_update(PAGE *p_current, OBJECT *o_current)
 					  o_current->line_points->y2);
 		break;
 
+		case(OBJ_BUS):
+			o_ales_update_bus(p_current, o_current, 
+					  o_current->line_points->x1,
+					  o_current->line_points->y1);
+
+			o_ales_update_bus(p_current, o_current, 
+					  o_current->line_points->x2,
+					  o_current->line_points->y2);
+		break;
+
 		case(OBJ_PIN):
 			o_ales_update_pin(p_current, o_current, 
 					  o_current->line_points->x1,
@@ -696,7 +950,7 @@ o_ales_update_all(PAGE *p_current, OBJECT *object_list)
 
 			case(OBJ_PIN):
 			case(OBJ_NET):
-			/* case(OBJ_BUS):*/
+			case(OBJ_BUS):
 
 				o_ales_update(p_current, o_current);
 			break;

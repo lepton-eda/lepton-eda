@@ -170,7 +170,6 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 			o_line_draw(w_current, real);
 			break;
 
-			/* need to recalculate nets */
 		case(OBJ_NET):
 				/* erase the current selection */
 			o_net_ales_erase(w_current, real);
@@ -187,6 +186,26 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 				     centerx, centery, 90, o_current);
 
 			o_net_draw(w_current, real);
+			break;
+
+		case(OBJ_BUS):
+#if 0 /* needs to be bus specific */
+			o_bus_ales_erase(w_current, real);
+#endif
+			/* erase the current selection */
+			w_current->override_color =
+				w_current->background_color;
+			o_bus_draw(w_current, o_current);
+
+			w_current->override_color = -1;
+
+			o_bus_rotate(w_current,
+				     centerx, centery, 90, real);
+
+			o_bus_rotate(w_current,
+				     centerx, centery, 90, o_current);
+
+			o_bus_draw(w_current, real);
 			break;
 
 		case(OBJ_PIN):
@@ -516,6 +535,27 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 				     centerx, centery, o_current);
 
 			o_net_draw(w_current, real);
+
+			break;
+
+		case(OBJ_BUS):
+		       	/* erase the current selection */
+#if 0 /* needs to be bus specific */
+			o_bus_ales_erase(w_current, real);
+#endif
+			w_current->override_color =
+				w_current->background_color;
+			o_bus_draw(w_current, o_current);
+
+			w_current->override_color = -1;
+
+			o_bus_mirror(w_current,
+				     centerx, centery, real);
+
+			o_bus_mirror(w_current,
+				     centerx, centery, o_current);
+
+			o_bus_draw(w_current, real);
 
 			break;
 

@@ -138,6 +138,37 @@ o_move_end(TOPLEVEL *w_current)
 					o_list_copy_to(w_current, selection_list, found, SELECTION);
 			break;
 
+			case(OBJ_BUS):
+
+				o_bus_ales_erase(w_current, found);
+				w_current->override_color = w_current->background_color;
+				o_bus_draw(w_current, found);
+
+				w_current->override_color = -1;
+				if (w_current->actionfeedback_mode == OUTLINE) {
+					o_bus_draw_xor(w_current, screen_diff_x, screen_diff_y, found);
+				}
+				o_line_translate_world(w_current, diff_x, diff_y, found);
+
+				/* purpose of this is to draw ALES points */
+				/* of the new moved object correctly */
+				/* since we will be keeping it selected */
+				o_bus_draw(w_current, found);
+				w_current->override_color = -1;
+
+				/* this is only a temp update, the below */
+				/* disconnect_update does the real thing */
+				o_ales_update(w_current->page_current, found);
+
+				o_bus_ales_erase(w_current, found);
+#if 0 /* needs to be bus specific */
+				o_bus_ales_draw(w_current, found);
+#endif
+
+				selection_list = (OBJECT *)
+					o_list_copy_to(w_current, selection_list, found, SELECTION);
+			break;
+
 			case(OBJ_BOX):
 				w_current->override_color = w_current->background_color;
 				o_box_draw(w_current, found);
@@ -215,8 +246,8 @@ o_move_end(TOPLEVEL *w_current)
 				/* this is only a temp update, the below */
 				/* disconnect_update does the real thing */
 				o_ales_update(w_current->page_current, found);
-				o_net_ales_erase(w_current, found);
-				o_net_ales_draw(w_current, found);
+				o_pin_ales_erase(w_current, found);
+				o_pin_ales_draw(w_current, found);
 
 				selection_list = (OBJECT *)
 					o_list_copy_to(w_current, selection_list, found, SELECTION);

@@ -184,6 +184,7 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
 /* coordinate setup function */
  	fprintf(fp, "/setcoords\n{\n");
 
+
 	/* regular if it's portrait */
 	if (w_current->print_orientation == LANDSCAPE) {
 		fprintf(fp, "%d mils 0 translate\n", paper_size_y);
@@ -208,6 +209,7 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
 		fprintf(fp, "0 0 moveto\n612 0 rlineto 0 792 rlineto -612 0 rlineto\nclosepath fill\n");
 	}
 
+
 /* print out rest of the header */
         i = 0;
         ptr = &header[0];
@@ -216,6 +218,14 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
                 i++;
                 ptr = &header[i];
         }
+
+	if (w_current->print_output_capstyle == BUTT_CAP) {
+		fprintf(fp, "0 setlinecap\n");
+	} else if (w_current->print_output_capstyle == SQUARE_CAP) {
+		fprintf(fp, "2 setlinecap\n");
+	} else if (w_current->print_output_capstyle == ROUND_CAP) {
+		fprintf(fp, "1 setlinecap\n");
+	}
 
 	return(final);
 }
@@ -314,6 +324,11 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 	
 				case(OBJ_NET):
 					o_net_print(w_current, fp, o_current,
+						origin_x, origin_y);
+				break;
+
+				case(OBJ_BUS):
+					o_bus_print(w_current, fp, o_current,
 						origin_x, origin_y);
 				break;
 	

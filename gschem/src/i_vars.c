@@ -58,14 +58,17 @@ int   default_text_caps = LOWER;
 int   default_attribute_color = YELLOW;
 int   default_detachattr_color = RED;
 int   default_net_color = BLUE;
+int   default_bus_color = GREEN;
 int   default_net_endpoint_color = RED;
 int   default_override_net_color = -1;
+int   default_override_bus_color = -1;
 int   default_override_pin_color = -1;
 int   default_net_endpoint_mode = FILLEDBOX;
 int   default_net_midpoint_mode = FILLED;
 int   default_pin_color = WHITE;
 int   default_pin_style = THICK;
 int   default_net_style = THICK;
+int   default_bus_style = THICK;
 int   default_grid_color = GREY;
 int   default_background_color = BLACK;
 int   default_select_color = GREY90;
@@ -91,6 +94,7 @@ int   default_image_color = FALSE;
 int   default_print_color = FALSE;
 int   default_print_color_background = WHITE;
 int   default_print_output_type = LIMITS;
+int   default_print_output_capstyle = SQUARE_CAP;
 char *default_series_name = NULL;
 char *default_untitled_name = NULL;
 char *default_scheme_directory = NULL;
@@ -142,6 +146,10 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->net_midpoint_mode  = default_net_midpoint_mode;
 	w_current->override_net_color = default_override_net_color;
 
+	w_current->bus_color          = default_bus_color;
+	w_current->bus_style          = default_bus_style;
+	w_current->override_bus_color = default_override_bus_color;
+
 	w_current->pin_color          = default_pin_color;
 	w_current->pin_style          = default_pin_style;
 	w_current->override_pin_color = default_override_pin_color;
@@ -161,6 +169,7 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->log_window_type = default_log_window_type;
 
 	w_current->print_output_type      = default_print_output_type;
+	w_current->print_output_capstyle  = default_print_output_capstyle;
 	w_current->print_orientation      = default_print_orientation;
 	w_current->print_color            = default_print_color;
 	w_current->print_color_background = default_print_color_background;

@@ -66,6 +66,10 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int fla
 			end = (OBJECT *) o_net_copy(w_current, end, selected);	
 		break;
 
+		case(OBJ_BUS):
+			end = (OBJECT *) o_bus_copy(w_current, end, selected);	
+		break;
+
 		case(OBJ_BOX):
 			end = (OBJECT *) o_box_copy(w_current, end, selected);	
 		break;

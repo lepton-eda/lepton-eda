@@ -24,6 +24,7 @@
 #define OBJ_BOX         'B'
 #define OBJ_CIRCLE      'V'
 #define OBJ_NET         'N'
+#define OBJ_BUS         'U'
 #define OBJ_COMPLEX     'C'
 #define OBJ_NTEXT       'T'
 #define OBJ_PIN         'P'

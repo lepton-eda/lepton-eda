@@ -8,6 +8,24 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+8/18/99	More work getting buses to work correctly, updates to o_ales 
+	(which will turn into o_conn eventually)
+
+	Added #defines for output-capstyle
+	
+	Added code in f_print which does the work of the capstyle keyword 
+
+	More work in o_ales to get bus to work right.
+	
+	Added code which determines if a connection is valid or invalid
+		NOT valid:  pin to bus
+		NOT valid:  net to endpoint of bus	
+		
+8/17/99 Started adding bus object
+		Including creation of all basic functions
+		Update toplevel structure (struct.h)
+		Update of enumerated types of objects 
+
 8/12/99	Added o_net_modify to support the stretch command
 
 8/11/99 Added o_attrib_search_toplevel which searches for toplevel attributes

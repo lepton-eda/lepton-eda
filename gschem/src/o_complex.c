@@ -75,6 +75,10 @@ o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
 			o_net_draw_xor(w_current, dx, dy, o_current);
 			break;
 
+		case(OBJ_BUS):
+			o_bus_draw_xor(w_current, dx, dy, o_current);
+			break;
+
 		case(OBJ_BOX):
 			o_box_draw_xor(w_current, dx, dy, o_current);
 			break;
@@ -339,6 +343,10 @@ o_complex_translate_display(TOPLEVEL *w_current,
 
 		case(OBJ_NET):
 			o_net_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_BUS):
+			o_bus_draw_xor(w_current, x1, y1, o_current);
 			break;
 
 		case(OBJ_BOX):

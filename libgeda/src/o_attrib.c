@@ -443,6 +443,10 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 				object_list = (OBJECT *) o_net_read(w_current, object_list, buf, version);
 			break;
 
+			case(OBJ_BUS):
+				object_list = (OBJECT *) o_bus_read(w_current, object_list, buf, version);
+			break;
+
 			case(OBJ_BOX):
 				object_list = (OBJECT *) o_box_read(w_current, object_list, buf, version);
 			break;
@@ -486,6 +490,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 	return(object_list);
 }
 
+/* this should be trimmed down to only save attributes which are text items */
 void
 o_save_attribs(FILE *fp, ATTRIB *attribs)
 {
@@ -512,6 +517,10 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
 
 				case(OBJ_NET):
 					out = (char *) o_net_save(buf, o_current);
+				break;
+
+				case(OBJ_BUS):
+					out = (char *) o_bus_save(buf, o_current);
 				break;
 
 				case(OBJ_BOX):

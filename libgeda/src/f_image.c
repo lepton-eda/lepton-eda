@@ -109,6 +109,11 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 
 				break;
 
+				case(OBJ_BUS):
+					o_bus_image_write(w_current, o_current,
+						origin_x, origin_y, color_mode);
+				break;
+
 				case(OBJ_CIRCLE):
 					o_circle_image_write(w_current, 
 						o_current,

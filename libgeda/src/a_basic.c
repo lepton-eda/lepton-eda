@@ -65,6 +65,10 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 					case(OBJ_NET):
 						out = (char *) o_net_save(buf, o_current);
 					break;
+
+					case(OBJ_BUS):
+						out = (char *) o_bus_save(buf, o_current);
+					break;
 	
 					case(OBJ_BOX):
 						out = (char *) o_box_save(buf, o_current);
@@ -170,6 +174,10 @@ o_save(TOPLEVEL *w_current, char *filename)
 					case(OBJ_NET):
 						out = (char *) o_net_save(buf, o_current);
 					break;
+
+					case(OBJ_BUS):
+						out = (char *) o_bus_save(buf, o_current);
+					break;
 	
 					case(OBJ_BOX):
 						out = (char *) o_box_save(buf, o_current);
@@ -272,6 +280,10 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
 			case(OBJ_NET):
 				object_list = (OBJECT *) o_net_read(w_current, object_list, buf, version);
+			break;
+
+			case(OBJ_BUS):
+				object_list = (OBJECT *) o_bus_read(w_current, object_list, buf, version);
 			break;
 
 			case(OBJ_BOX):

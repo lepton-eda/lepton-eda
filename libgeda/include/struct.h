@@ -378,10 +378,13 @@ struct st_toplevel {
 	int bb_color;
 	int net_endpoint_color;
 	int net_color;
+	int bus_color;
 	int override_net_color;
+	int override_bus_color;
 	int override_pin_color;
 	int pin_style;
 	int net_style;
+	int bus_style;
 	int zoom_with_pan; 
 	int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
 	int text_feedback; /* controls if text is drawn or not in */
@@ -405,8 +408,9 @@ struct st_toplevel {
 	int third_button; /* controls what the third mouse button does */
 	int net_consolidate; /* controls if the net consolidation code is used */ 
 
-	/* fixed init variables */
 	int print_output_type;			/* either window or limits */
+
+	int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */
 
 	/* fixed init variables */
 	int image_output_type;			/* either window or limits */

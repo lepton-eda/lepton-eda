@@ -335,11 +335,11 @@ DEFINE_I_CALLBACK(file_write_png)
 
 	/* get the base file name */
 	if (strcmp(fnameext_get(w_current->page_current->page_filename),
-		   ".png") == 0) {
-		/* the filename ends with .png */
+		   ".sch") == 0) {
+		/* the filename ends with .sch */
 		base = fnameext_remove(w_current->page_current->page_filename);
 	} else {
-		/* the filename does not end with .png */
+		/* the filename does not end with .sch */
 		base = u_basic_strdup(w_current->page_current->page_filename);
 	}
 	if(base == NULL) {
@@ -918,12 +918,12 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
 	}
 }
 
-DEFINE_I_CALLBACK(view_updatenets)
+DEFINE_I_CALLBACK(view_update_cues)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
 	i_update_middle_button(w_current,
-			       i_callback_view_updatenets, "Update");
+			       i_callback_view_update_cues, "Update Cues");
 
 	o_ales_disconnect_update(w_current->page_current);
         o_redraw_all(w_current);
@@ -1169,6 +1169,38 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 	o_net_start(w_current, mouse_x, mouse_y);
 
 	w_current->event_state=DRAWNET;
+	w_current->inside_action = 1;
+}
+
+DEFINE_I_CALLBACK(add_bus)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	/* need to click */
+	w_current->event_state = STARTDRAWBUS;
+	i_update_middle_button(w_current, i_callback_add_bus, "Bus");
+	i_update_status2(w_current, "Bus Mode");
+	/* somewhere you need to nearest point locking... */
+	w_current->inside_action = 0;
+}
+
+DEFINE_I_CALLBACK(add_bus_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	/* need to click */
+	i_update_middle_button(w_current, i_callback_add_bus_hotkey, "Bus");
+	i_update_status2(w_current, "Bus Mode");
+
+	w_current->event_state = STARTDRAWBUS;
+
+	o_bus_start(w_current, mouse_x, mouse_y);
+
+	w_current->event_state=DRAWBUS;
 	w_current->inside_action = 1;
 }
 

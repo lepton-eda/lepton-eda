@@ -74,6 +74,7 @@ void (*circle_draw_func)()  = o_circle_draw;
 void (*complex_draw_func)() = o_complex_draw;
 void (*line_draw_func)()    = o_line_draw;
 void (*net_draw_func)()     = o_net_draw;
+void (*bus_draw_func)()     = o_bus_draw;
 void (*ntext_draw_func)()   = o_ntext_draw;
 void (*pin_draw_func)()     = o_pin_draw;
 void (*select_func)()       = o_select;

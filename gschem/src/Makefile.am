@@ -15,7 +15,7 @@ gschem_SOURCES = \
 	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c \
 	o_slot.c o_stretch.c \
 	o_arc.c o_box.c o_circle.c o_complex.c \
-	o_line.c o_net.c o_ntext.c o_pin.c \
+	o_line.c o_net.c o_ntext.c o_pin.c o_bus.c \
 	x_attrsel.c x_basic.c x_compsel.c x_dialog.c \
 	x_event.c x_filesel.c x_grid.c x_log.c x_menus.c x_script.c \
 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c \

@@ -71,6 +71,7 @@ void (*circle_draw_func)() = o_circle_recalc;
 void (*complex_draw_func)() = o_complex_recalc;
 void (*line_draw_func)() = o_line_recalc;
 void (*net_draw_func)() = o_net_recalc;
+void (*bus_draw_func)() = o_bus_recalc;
 void (*ntext_draw_func)() = o_ntext_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
 void (*select_func)() = NULL;

@@ -65,6 +65,11 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, in
 					/* same as a line (diff name)*/
 					get_net_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
 			break;
+
+			case(OBJ_BUS):
+					/* same as a line (diff name)*/
+					get_bus_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+			break;
 	
 			case(OBJ_BOX):
 					get_box_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
@@ -143,6 +148,12 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *t
 					/* same as a line (diff name)*/
 					world_get_net_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
 			break;
+
+			case(OBJ_BUS):
+					/* same as a line (diff name)*/
+					world_get_bus_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+			break;
+	
 	
 			case(OBJ_BOX):
 					world_get_box_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
@@ -660,6 +671,16 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex)
 				o_redraw_single(w_current, two);
 				w_current->override_color = temp_color;
 			break;
+
+			case(OBJ_BUS):
+				/* same as a line, don't do this */
+				o_line_translate_world(w_current, x1, y1, o_current);
+				temp_color = w_current->override_color;
+				w_current->override_color = -1;
+				o_redraw_single(w_current, one); /* trying loop? hack*/
+				o_redraw_single(w_current, two);
+				w_current->override_color = temp_color;
+			break;
 	
 			case(OBJ_BOX):
 				o_box_translate_world(w_current, x1, y1, o_current);
@@ -726,6 +747,7 @@ o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex)
 		switch(o_current->type) {
 			case(OBJ_LINE):
 			case(OBJ_NET):
+			case(OBJ_BUS):
 			case(OBJ_BOX):
 			case(OBJ_CIRCLE):
 			case(OBJ_PIN):
@@ -797,6 +819,10 @@ o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
 			case(OBJ_NET):
 				o_net_rotate_world(w_current, 0, 0, angle_change, o_current);
 			break;
+
+			case(OBJ_BUS):
+				o_bus_rotate_world(w_current, 0, 0, angle_change, o_current);
+			break;
 	
 			case(OBJ_BOX):
 				o_box_rotate_world(w_current, 0, 0, angle_change, o_current);
@@ -847,6 +873,10 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 
 			case(OBJ_NET):
 				o_net_mirror_world(w_current, 0, 0, o_current);
+			break;
+
+			case(OBJ_BUS):
+				o_bus_mirror_world(w_current, 0, 0, o_current);
 			break;
 	
 			case(OBJ_BOX):

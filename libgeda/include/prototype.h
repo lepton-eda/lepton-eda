@@ -61,6 +61,7 @@ void o_ales_makeup(GHashTable *ales_table, char *key, OBJECT *o_current);
 void o_ales_update_cues_info(ALES *ales_list);
 OBJECT *o_ales_find_midpoint(OBJECT *object_list, int x, int y);
 void o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y);
+void o_ales_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y);
 void o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y);
 void o_ales_update(PAGE *p_current, OBJECT *o_current);
 void o_ales_update_all(PAGE *p_current, OBJECT *object_list);
@@ -148,6 +149,27 @@ void o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+/* o_bus_basic.c */
+void get_bus_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+void world_get_bus_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
+void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
+char *o_bus_save(char *buf, OBJECT *object);
+void o_bus_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
+OBJECT *o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
+void o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
+void o_bus_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_bus_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_bus_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_bus_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+int o_bus_orientation(OBJECT *object);
+void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
+int o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
+int o_bus_consolidate(TOPLEVEL *w_current);
+void o_bus_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_circle_basic.c */
 int dist(int x1, int y1, int x2, int y2);
 void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);

@@ -260,6 +260,10 @@ DEFINE_G_RC_COLOR(g_rc_override_net_color,
 		  "override-net-color",
 		  default_override_net_color)
 
+DEFINE_G_RC_COLOR(g_rc_override_bus_color,
+		  "override-bus-color",
+		  default_override_bus_color)
+
 DEFINE_G_RC_COLOR(g_rc_override_pin_color,
 		  "override-pin-color",
 		  default_override_pin_color)
@@ -279,6 +283,10 @@ DEFINE_G_RC_COLOR(g_rc_text_color,
 DEFINE_G_RC_COLOR(g_rc_net_color,
 		  "net-color",
 		  default_net_color);
+
+DEFINE_G_RC_COLOR(g_rc_bus_color,
+		  "bus-color",
+		  default_bus_color);
 
 DEFINE_G_RC_COLOR(g_rc_pin_color,
 		  "pin-color",
@@ -431,6 +439,17 @@ g_rc_net_style(SCM mode)
 	};
 
 	RETURN_G_RC_MODE("net-style", default_net_style);
+}
+
+SCM
+g_rc_bus_style(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{THIN , "thin" },
+		{THICK, "thick"}
+	};
+
+	RETURN_G_RC_MODE("bus-style", default_bus_style);
 }
 
 SCM
@@ -1098,7 +1117,20 @@ g_rc_output_color(SCM mode)
 		{FALSE, "disabled"},
 	};
 
+	/* this variable is inconsistantly named with the rest */
 	RETURN_G_RC_MODE("output-color", default_print_color);
+}
+
+SCM
+g_rc_output_capstyle(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{BUTT_CAP , "butt" },
+		{ROUND_CAP , "round" },
+		{SQUARE_CAP, "square"},
+	};
+
+	RETURN_G_RC_MODE("output-capstyle", default_print_output_capstyle);
 }
 
 DEFINE_G_RC_COLOR(g_rc_output_color_background,

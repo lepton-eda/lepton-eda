@@ -92,8 +92,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/View/Zoom in", NULL, i_callback_view_zoom_in, 0, NULL},
 	{"/View/Zoom out", NULL, i_callback_view_zoom_out, 0, NULL},
 	{"/View/Zoom full", NULL, i_callback_view_zoom_full, 0, NULL},
-	{"/View/Update nets", NULL,  i_callback_view_updatenets, 0, NULL},
-	/* change name of update nets */
+	{"/View/Update Cues", NULL,  i_callback_view_update_cues, 0, NULL},
 	{"/Page", NULL, NULL, 0, "<Branch>"},
   	{"/Page/tearoff", NULL, NULL, 0, "<Tearoff>" },
 	{"/Page/Manager...", NULL,  i_callback_page_manager, 0, NULL},
@@ -107,6 +106,7 @@ static GtkItemFactoryEntry menu_items[] = {
   	{"/Add/tearoff", NULL, NULL, 0, "<Tearoff>" },
 	{"/Add/Component...", NULL, i_callback_add_component, 0, NULL},
 	{"/Add/Net", NULL, i_callback_add_net, 0, NULL},
+	{"/Add/Bus", NULL, i_callback_add_bus, 0, NULL},
 	{"/Add/Attribute...", NULL, i_callback_add_attribute, 0, NULL},
 	{"/Add/Text", NULL, i_callback_add_text, 0, NULL},
 	{"/Add/sep1",     NULL,         NULL, 0, "<Separator>"},
@@ -142,6 +142,7 @@ static GtkItemFactoryEntry menu_items[] = {
 static GtkItemFactoryEntry popup_items[] = {
 	{"/Component...", 	NULL, i_callback_add_component, 0, NULL},
 	{"/Net", 		NULL, i_callback_add_net, 0, NULL},
+	{"/Bus", 		NULL, i_callback_add_bus, 0, NULL},
 	{"/Attribute...", 	NULL, i_callback_add_attribute, 0, NULL},
 	{"/Text", 		NULL, i_callback_add_text, 0, NULL},
   	{"/sep1", NULL, NULL, 0, "<Separator>"},

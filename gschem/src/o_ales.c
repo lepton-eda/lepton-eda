@@ -41,29 +41,9 @@ o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
 	int x2size;
-
-#if 0 /* old way  */
-	int zoom_num;
-	zoom_num =
-		return_zoom_number(w_current->page_current->zoom_factor) +
-		1;
-
-	if (zoom_num <= 1) {
-		zoom_num = 5;
-	}
-	if (zoom_num == 2) {
-		zoom_num = 4;
-	}
-
-	size = zoom_num;
-#endif
+	int width;
 
 	size = SCREENabs(w_current, 30);
-
-	/* had + 2 */
-#if 0
-	size = (return_zoom_number(w_current->page_current->zoom_factor));
-#endif
 
 	x2size = 2 * size;
 
@@ -119,6 +99,52 @@ o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 			      x - size,
 			      y + size);
 	} /* Else mode was set to NONE or garbage */
+
+#if 0 /* doesn't belong here */
+	} else if (w_current->net_endpoint_mode == INVALID_CUE) {
+		size = SCREENabs(w_current, 60);
+
+		width = SCREENabs(w_current, 15);
+
+		if (width < 2) {
+			width = 2;
+		}
+
+		gdk_gc_set_line_attributes(w_current->gc, width, 
+					   GDK_LINE_SOLID,
+				           GDK_CAP_BUTT,
+			                   GDK_CAP_NOT_LAST);
+
+		gdk_draw_line(w_current->window,
+			      local_gc,
+			      x - size,
+			      y - size,
+			      x + size,
+			      y + size);
+		gdk_draw_line(w_current->backingstore,
+			      local_gc,
+			      x - size,
+			      y - size,
+			      x + size,
+			      y + size);
+		gdk_draw_line(w_current->window,
+			      local_gc,
+			      x + size,
+			      y - size,
+			      x - size,
+			      y + size);
+		gdk_draw_line(w_current->backingstore,
+			      local_gc,
+			      x + size,
+			      y - size,
+			      x - size,
+			      y + size);
+
+		gdk_gc_set_line_attributes(w_current->gc, 0, 
+					   GDK_LINE_SOLID,
+                                           GDK_CAP_NOT_LAST,
+                                           GDK_JOIN_MITER);
+#endif
 }
 
 void
@@ -128,22 +154,6 @@ o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 
 #if DEBUG
 	printf("zn %d\n", zoom_num);
-#endif
-
-#if 0 /* old way */
-	int zoom_num;
-
-	zoom_num = return_zoom_number(w_current->page_current->zoom_factor);
-
-	if (zoom_num <= 0) {
-		zoom_num = 1;
-        	size = 3 * (zoom_num);
-	} else if (zoom_num == 1) {
-		zoom_num = 2;
-        	size = 4;
-	} else {
-        	size = 3 * (zoom_num);
-	}
 #endif
 
 	size = SCREENabs(w_current, 60);
@@ -174,7 +184,57 @@ o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 			     x - size / 2,
 			     y - size / 2,
 			     size, size, 0, FULL_CIRCLE);
+
 	} /* Else mode was set to NONE or garbage */
+}
+
+void
+o_ales_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
+{
+	int size;
+	int x2size;
+	int width;
+
+	size = SCREENabs(w_current, 60);
+
+	width = SCREENabs(w_current, 15);
+
+	if (width < 2) {
+		width = 2;
+	}
+	gdk_gc_set_line_attributes(w_current->gc, width, GDK_LINE_SOLID,
+				   GDK_CAP_BUTT,
+			           GDK_CAP_NOT_LAST);
+
+	gdk_draw_line(w_current->window,
+		      local_gc,
+		      x - size,
+		      y - size,
+		      x + size,
+		      y + size);
+	gdk_draw_line(w_current->backingstore,
+		      local_gc,
+		      x - size,
+		      y - size,
+		      x + size,
+	              y + size);
+	gdk_draw_line(w_current->window,
+		      local_gc,
+		      x + size,
+		      y - size,
+		      x - size,
+		      y + size);
+	gdk_draw_line(w_current->backingstore,
+		      local_gc,
+		      x + size,
+		      y - size,
+		      x - size,
+		      y + size);
+
+	gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
+                                   GDK_CAP_NOT_LAST,
+                                   GDK_JOIN_MITER);
+
 }
 
 /* draw the other objects which connect to points specified by object */
@@ -232,12 +292,16 @@ o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 
 	while (o_current != NULL) {
 		switch(o_current->type) {
-#if 0
+
+/* Don't think buses have visual cues 	
+		case(OBJ_BUS):
+
+			break;
+*/
+
 		case(OBJ_PIN):
-			/* pins don't have visual cues... */
 			o_pin_ales_draw(w_current, o_current);
 			break;
-#endif
 
 		case(OBJ_NET):
 			o_net_ales_draw(w_current, o_current);

@@ -47,11 +47,13 @@ g_register_funcs(void)
 	/* rc file */
 	gh_new_procedure1_0 ("gschem-version", g_rc_gschem_version);
 	gh_new_procedure1_0 ("override-net-color", g_rc_override_net_color);
+	gh_new_procedure1_0 ("override-bus-color", g_rc_override_bus_color);
 	gh_new_procedure1_0 ("override-pin-color", g_rc_override_pin_color);
 	gh_new_procedure1_0 ("attribute-color", g_rc_attribute_color);
 	gh_new_procedure1_0 ("detached-attribute-color", g_rc_detachedattr_color);
 	gh_new_procedure1_0 ("text-color", g_rc_text_color);
 	gh_new_procedure1_0 ("net-color", g_rc_net_color);
+	gh_new_procedure1_0 ("bus-color", g_rc_bus_color);
 	gh_new_procedure1_0 ("pin-color", g_rc_pin_color);
 	gh_new_procedure1_0 ("graphic-color", g_rc_graphic_color);
 	gh_new_procedure1_0 ("grid-color", g_rc_grid_color);
@@ -62,6 +64,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("net-endpoint-mode", g_rc_net_endpoint_mode);
 	gh_new_procedure1_0 ("net-midpoint-mode", g_rc_net_midpoint_mode);
 	gh_new_procedure1_0 ("net-style", g_rc_net_style);
+	gh_new_procedure1_0 ("bus-style", g_rc_bus_style);
 	gh_new_procedure1_0 ("pin-style", g_rc_pin_style);
 	gh_new_procedure1_0 ("zoom-with-pan", g_rc_zoom_with_pan);
 	gh_new_procedure1_0 ("action-feedback-mode", g_rc_action_feedback_mode);
@@ -96,6 +99,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
 	gh_new_procedure1_0 ("output-color", g_rc_output_color);
 	gh_new_procedure1_0 ("output-color-background", g_rc_output_color_background);
+	gh_new_procedure1_0 ("output-capstyle", g_rc_output_capstyle);
 	gh_new_procedure1_0 ("image-color", g_rc_image_color);
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);
 	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
@@ -151,7 +155,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("view-zoom-box-hotkey", g_key_view_zoom_box_hotkey);
 	gh_new_procedure0_0 ("view-pan", g_key_view_pan);
 	gh_new_procedure0_0 ("view-pan-hotkey", g_key_view_pan_hotkey);
-	gh_new_procedure0_0 ("view-update-nets", g_key_view_updatenets);
+	gh_new_procedure0_0 ("view-update-cues", g_key_view_update_cues);
 	gh_new_procedure0_0 ("page-manager", g_key_page_manager);
 	gh_new_procedure0_0 ("page-next", g_key_page_next);
 	gh_new_procedure0_0 ("page-prev", g_key_page_prev);
@@ -163,6 +167,8 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("add-attribute", g_key_add_attribute);
 	gh_new_procedure0_0 ("add-net", g_key_add_net);
 	gh_new_procedure0_0 ("add-net-hotkey", g_key_add_net_hotkey);
+	gh_new_procedure0_0 ("add-bus", g_key_add_bus);
+	gh_new_procedure0_0 ("add-bus-hotkey", g_key_add_bus_hotkey);
 	gh_new_procedure0_0 ("add-text", g_key_add_text);
 	gh_new_procedure0_0 ("add-line", g_key_add_line);
 	gh_new_procedure0_0 ("add-line-hotkey", g_key_add_line_hotkey);

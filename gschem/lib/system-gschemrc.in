@@ -32,7 +32,7 @@
 
 ; Load up commonrc
 ;
-; Contains all paths needed for gnetlist
+; Contains all paths needed for all programs
 (load "@expandgedarcdir@/system-commonrc")
 
 ;
@@ -45,6 +45,13 @@
 ; then saved. Comment out if you don't want to override the net color.
 ; 
 ;(override-net-color "blue")
+
+; override-bus-color string
+; Override the color of ALL buses
+; New net color will be applied to all buses in any file which is opened and
+; then saved. Comment out if you don't want to override the bus color.
+; 
+;(override-bus-color "green")
 
 ; override-pin-color string
 ; Override the color of ALL pins
@@ -80,6 +87,12 @@
 ; To change existing nets use the override-net-color 
 ;
 (net-color "blue")
+
+; bus-color string
+; Set the color of any new buses (does not effect existing buses).
+; To change existing buses use the override-bus-color 
+;
+(bus-color "green")
 
 ; pin-color string
 ; Set the color of any new pins (does not effect existing pins).
@@ -181,6 +194,14 @@
 ;
 ;(net-style "thin")
 (net-style "thick")
+
+;  bus-style string
+;  Set to thin if you want thin buses.
+;  Set to thick if you want thick buses.
+;  This mode also determines what bus style gets printed
+;
+;(bus-style "thin")
+(bus-style "thick")
 
 ; pin-style string
 ; Set to thin if you want thin pins
@@ -470,6 +491,14 @@
 (output-color-background "black")
 ;(output-color-background "white")
 
+; output-capstyle string
+;
+; Controls the capstyle at the end of lines in the postscript output
+;
+(output-capstyle "square")
+;(output-capstyle "round")
+;(output-capstyle "butt")
+
 ; image-color string
 ;
 ; Controls if image (gif) is color (enabled) or black/white (disabled)
@@ -713,7 +742,7 @@
     ("f" . view-zoom-full)
     ("l" . view-zoom-limits)
     ("p" . view-pan-hotkey)
-    ("u" . view-update-nets)
+    ("u" . view-update-cues)
     ("o" . view-zoom-out-hotkey)
     ("i" . view-zoom-in-hotkey)))
 
@@ -732,6 +761,7 @@
   '(("c" . add-component)
     ("a" . add-attribute)
     ("n" . add-net-hotkey)
+    ("u" . add-bus-hotkey)
     ("t" . add-text)
     ("l" . add-line-hotkey)
     ("b" . add-box-hotkey)
@@ -786,7 +816,7 @@
     ("r" . view-redraw)
     ("s" . edit-select)
     ("t" . attributes-keymap)
-    ("u" . no-action)
+    ("u" . add-bus-hotkey)
     ("v" . view-keymap)
     ("w" . view-zoom-box-hotkey)
     ("x" . view-pan-hotkey)

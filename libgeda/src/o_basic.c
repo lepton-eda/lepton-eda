@@ -85,6 +85,10 @@ o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
 				o_net_recalc(w_current, o_current);
 			break;
 
+			case(OBJ_BUS):
+				o_bus_recalc(w_current, o_current);
+			break;
+
 			case(OBJ_BOX):
 				o_box_recalc(w_current, o_current);
 			break;

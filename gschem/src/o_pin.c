@@ -64,7 +64,11 @@ o_pin_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
                                  o_current->line_points->screen_y1);
 		break;
 
-		/* bus case */
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+                                    o_current->line_points->screen_x1,
+                                    o_current->line_points->screen_y1);
+		break;
 	}
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
@@ -86,15 +90,70 @@ o_pin_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
                                  o_current->line_points->screen_y2);
 		break;
 
-		/* bus case */
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+                                    o_current->line_points->screen_x2,
+                                    o_current->line_points->screen_y2);
+		break;
 	}
 }
 
+
+void
+o_pin_ales_draw(TOPLEVEL *w_current, OBJECT *o_current)
+{
+	int cue;
+
+#if 0
+	if (w_current->override_color != -1) {
+		gdk_gc_set_foreground(w_current->gc,
+			x_get_color(w_current->override_color));
+	} else {
+	}
+#endif
+
+	gdk_gc_set_foreground(w_current->gc,
+		x_get_color(w_current->net_endpoint_color));
+
+	cue = o_ales_query_table(w_current->page_current->ales_table,
+				o_current->line_points->x1,
+				o_current->line_points->y1);
+
+#if DEBUG
+	printf("dfirst: %d\n", cue);
+#endif
+
+	switch(cue) {
+
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+                                    o_current->line_points->screen_x1,
+                                    o_current->line_points->screen_y1);
+		break;
+	}
+
+	cue = o_ales_query_table(w_current->page_current->ales_table,
+				 o_current->line_points->x2,
+				 o_current->line_points->y2);
+
+#if DEBUG
+	printf("dsecond: %d\n", cue);
+#endif
+	switch(cue) {
+
+		case(INVALID_CUE):
+			o_ales_draw_invalid(w_current, w_current->gc,
+                                    o_current->line_points->screen_x2,
+                                    o_current->line_points->screen_y2);
+		break;
+	}
+}
 void
 o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int size;
 	int x1, y1, x2, y2; /* screen coords */
+	int cue;
 
 	if (o_current->line_points == NULL) {
 		return;
@@ -140,9 +199,57 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 					GDK_JOIN_MITER);
 	}
 
-	/* here is where you draw any ales cues */
-	/* but for now there are now cues for pins */
+	/* ALES stuff, not sure if I'm going to leave this here */
+	/* only draw the connection points, if: */
+	/* - you are drawing regular lines, */
+	/* - you aren't redrawing selected (DONT_DRAW_CONN), */
+	/* - And, you are erasing them */
+       if ( ((w_current->override_color == -1) &&
+	    (!w_current->DONT_DRAW_CONN)) ||
+            (w_current->override_color == w_current->background_color ) ) {
 
+		if (w_current->override_color != -1) {
+                        gdk_gc_set_foreground(w_current->gc,
+                                x_get_color(w_current->override_color));
+                } else {
+                        gdk_gc_set_foreground(w_current->gc,
+                                x_get_color(w_current->net_endpoint_color));
+                }
+
+		cue = o_ales_query_table(w_current->page_current->ales_table,
+					 o_current->line_points->x1,
+					 o_current->line_points->y1);
+		switch(cue) {
+			case(INVALID_CUE):
+				o_ales_draw_invalid(w_current, 
+						    w_current->gc,
+                                                    o_current->
+		 				    line_points->
+					            screen_x1,
+                                    		    o_current->
+						    line_points->
+						    screen_y1);
+			break;
+
+		}
+
+		cue = o_ales_query_table(w_current->page_current->ales_table,
+					 o_current->line_points->x2,
+					 o_current->line_points->y2);
+		switch(cue) {
+
+			case(INVALID_CUE):
+				o_ales_draw_invalid(w_current, 
+						    w_current->gc,
+                                    		    o_current->
+						    line_points->
+						    screen_x2,
+                                    		    o_current->
+						    line_points->
+						    screen_y2);
+			break;
+		}
+	}
 #if DEBUG
 	printf("drawing pin\n");
 #endif

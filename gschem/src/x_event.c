@@ -90,6 +90,8 @@ x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
 
 		case(DRAWNET):
 		case(NETCONT):
+		case(DRAWBUS):
+		case(BUSCONT):
 			/* do nothing for now */
 			break;
                 }
@@ -248,6 +250,15 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 			break;
 
+		case(STARTDRAWBUS):  
+			o_bus_start(w_current,
+				    (int) event->x,
+				    (int) event->y);
+			w_current->inside_action = 1;
+			w_current->event_state=DRAWBUS;
+
+			break;
+
 		case(DRAWNET):
 		case(NETCONT):
 			o_net_end(w_current,
@@ -257,6 +268,17 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				    (int) w_current->save_x,
 				    (int) w_current->save_y);
 			w_current->event_state=NETCONT;
+			break;
+
+		case(DRAWBUS):
+		case(BUSCONT):
+			o_bus_end(w_current,
+				  (int) event->x,
+				  (int) event->y);
+			o_bus_start(w_current,
+				    (int) w_current->save_x,
+				    (int) w_current->save_y);
+			w_current->event_state=BUSCONT;
 			break;
 
 #if 0 /* old way with the text dialog box which was around only once */
@@ -389,6 +411,14 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				w_current->event_state = SELECT;
 				i_update_status(w_current, "Select Mode");
 				o_net_eraserubber(w_current);
+                        	break;
+
+			case(DRAWBUS):
+			case(BUSCONT):
+				w_current->inside_action = 0;
+				w_current->event_state = SELECT;
+				i_update_status(w_current, "Select Mode");
+				o_bus_eraserubber(w_current);
                         	break;
 
 				/* TODO: go and seperate each draw to
@@ -662,6 +692,14 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 	case(NETCONT):
 		if (w_current->inside_action)
 			o_net_rubbernet(w_current,
+					(int) event->x,
+				 	(int) event->y);
+		break;
+
+	case(DRAWBUS):
+	case(BUSCONT):
+		if (w_current->inside_action)
+			o_bus_rubberbus(w_current,
 					(int) event->x,
 				 	(int) event->y);
 		break;

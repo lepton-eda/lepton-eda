@@ -155,6 +155,39 @@ o_copy_end(TOPLEVEL *w_current)
 				selection_list, new_object, SELECTION);
 			break;
 
+		case(OBJ_BUS):
+			new_object = (OBJECT *) o_bus_copy(
+				w_current,
+				w_current->page_current->object_tail,
+				found);
+
+			if (w_current->actionfeedback_mode == OUTLINE) {
+				o_bus_draw_xor(w_current,
+					       screen_diff_x,
+					       screen_diff_y,
+					       found);
+			}
+
+			o_bus_translate_world(w_current,
+					      diff_x,
+					      diff_y,
+					      new_object);
+
+			o_bus_draw(w_current, new_object);
+
+			/* this is only a temp update, the below
+			 * disconnect_update does the real thing */
+			o_ales_update(w_current->page_current, new_object);
+			o_bus_ales_erase(w_current, new_object);
+#if 0 /* needs to be bus specific */
+			o_bus_ales_draw(w_current, new_object);
+#endif
+
+			selection_list = (OBJECT *) o_list_copy_to(
+				w_current,
+				selection_list, new_object, SELECTION);
+			break;
+
 		case(OBJ_BOX):
 			new_object = (OBJECT *) o_box_copy(
 				w_current,
@@ -265,6 +298,7 @@ o_copy_end(TOPLEVEL *w_current)
 			/* this is only a temp update, the below
 			 * disconnect_update does the real thing */
 			o_ales_update(w_current->page_current, new_object);
+			o_pin_ales_draw(w_current, new_object);
 			o_pin_ales_erase(w_current, new_object);
 
 			selection_list = (OBJECT *) o_list_copy_to(

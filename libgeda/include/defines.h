@@ -91,21 +91,26 @@
 
 /* The ales modes for type */
 #define ALES_HEAD		-1	
+#define INVALID			0	
 #define ALES_NET		1
 #define ALES_PIN		2
 #define ALES_MIDPOINT		3
-#define ALES_BUS_MIDPOINT	4
+#define ALES_BUS		4
+#define ALES_BUS_MIDPOINT	5
 
 /* The ales whole type */
 #define NO_MIDPOINT		0
 #define HAS_MIDPOINT		1	
+#define HAS_BUS_MIDPOINT	2	
 
 /* The ales modes for visual_cue */
 #define NO_CUE			1	
 #define NET_DANGLING_CUE	2
 #define PIN_DANGLING_CUE	3
-#define MIDPOINT_CUE		4
-#define BUS_MIDPOINT_CUE	5
+#define BUS_DANGLING_CUE	4
+#define MIDPOINT_CUE		5
+#define BUS_MIDPOINT_CUE	6
+#define INVALID_CUE		7	
 
 /* These modes are for actionfeedback_mode */
 /* there's a hack in i_keypress.c dealing with the 0 and 1 (has to be these */
@@ -137,6 +142,11 @@
 /* for print dialog box */
 #define LIMITS			0
 #define WINDOW			1
+
+/* for output-capstyle */ 
+#define BUTT_CAP 		0
+#define ROUND_CAP 		1
+#define SQUARE_CAP 		2
 
 /* for print dialog box */
 #define LANDSCAPE		0

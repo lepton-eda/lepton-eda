@@ -68,6 +68,26 @@ o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 }
 
 static void
+o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
+{
+	int removing_sel_save;
+
+	w_current->override_color = w_current->background_color;
+	o_bus_draw(w_current, obj);
+	w_current->override_color = -1;
+
+	o_bus_ales_erase_force(w_current, obj);
+
+	removing_sel_save = w_current->REMOVING_SEL;
+	w_current->REMOVING_SEL = 1;
+	s_delete(w_current, obj);
+	w_current->REMOVING_SEL = removing_sel_save;
+
+	w_current->page_current->object_tail =
+		(OBJECT *) return_tail(w_current->page_current->object_head);
+}
+
+static void
 o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
 {
 	w_current->override_color = w_current->background_color;
@@ -166,6 +186,10 @@ o_delete(TOPLEVEL *w_current)
 
 		case(OBJ_NET):
 			o_delete_net(w_current, found);
+			break;
+
+		case(OBJ_BUS):
+			o_delete_bus(w_current, found);
 			break;
 
 		case(OBJ_BOX):
