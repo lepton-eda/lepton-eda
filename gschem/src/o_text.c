@@ -418,7 +418,6 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 	      int visibility, int show)
 {
 	OBJECT *selected=NULL;
-	OBJECT *temp;
 
 	if (object == NULL) {
 		return;

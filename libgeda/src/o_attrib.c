@@ -1713,7 +1713,7 @@ o_attrib_search_toplevel_all(PAGE *page_head, char *name)
 	return(NULL);
 }
 
-/* This function returns all attached attribute objects to the specified 
+/* This function returns all attached attribute objects to the specified */
 /* object */
 /* The returned list is an array of objects and should be freed using the */
 /* below function */

@@ -17,6 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+#if 0 /* this file can eventually be removed */
 #include <config.h>
 
 #include <stdio.h>
@@ -32,12 +33,13 @@
 
 static const gchar *list_item_data_key = "list_item_data";
 
+
 void
 setup_attr_selector (TOPLEVEL *w_current)
 {
 	attrib_edit_dialog(w_current,NULL);
 }
-#if 0
+
 gint
 change_attr(GtkWidget *gtklist, TOPLEVEL *w_current)
 {

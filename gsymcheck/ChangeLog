@@ -7,6 +7,12 @@ ChangeLog for gsymcheck (renamed gsymbol)
 
 Most recent changes (version wise) are at the top of this file 
 
+2000-02-19  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * README/INSTALL: Updated files to reflect next release
+
+	* src/*.c: Fixed all warnings (using -Wall -Werror)
+
 1999-10-17  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Changed all files to use the new libgeda/libgeda.h include

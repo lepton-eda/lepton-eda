@@ -387,7 +387,7 @@ OBJECT *
 o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, 
 	            int show_name_value, OBJECT *o_current)
 {
-        int world_x, world_y;
+        int world_x=-1, world_y=-1;
 	int color;
 	int left, right, top, bottom;
 

@@ -231,7 +231,7 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
 		{
 			attrib = gtk_clist_get_row_data(GTK_CLIST(clist),row);
 			o_text_change(w_current,attrib,newtext,vis,show);
-//			multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));
+/*			multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));*/
 			gtk_clist_set_text(GTK_CLIST(clist),row,0,text[0]);
 			gtk_clist_set_text(GTK_CLIST(clist),row,1,text[1]);
 			gtk_clist_set_text(GTK_CLIST(clist),row,2,text[2]);
@@ -261,7 +261,7 @@ multi_attrib_edit_delete (GtkWidget *w, TOPLEVEL *w_current)
 	o_delete_text(w_current,attrib);
 	
 	multi_attrib_edit_clear (NULL,GTK_WINDOW(w_current->mawindow));
-// Tell System about change!
+/* Tell System about change! */
 
 }
 
@@ -280,7 +280,6 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 {
 
 	char *text[3];
-	char name[1000];
 	char *string;
 	int i;
 	int row;
@@ -319,7 +318,8 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	GtkWidget *delbutton;
 	GtkWidget *closebutton;
 
-	gchar *titles[]= {"Attribute","Visibility","Value"};
+	/* no longer used?*/
+	/* gchar *titles[]= {"Attribute","Visibility","Value"}; */
 
 
 	/* Do basic checks first */	
@@ -735,7 +735,7 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	char *newtext;
 	GtkEntry *val_entry, *lab_entry;
 	GtkWidget *visbutton,*showvalbutton,*showlabbutton,*showboth;
-	OBJECT *attribptr,*real_attribptr;
+	OBJECT *attribptr;
 	int vis,show;
 
         w_current->event_state = SELECT;
@@ -814,27 +814,27 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	char *string=NULL;
 	char name[1000], val[1000];
 	OBJECT *attrib;
-	GtkWidget *aewindow;
-	GtkWidget *vbox2;
-	GtkWidget *table1;
-	GtkWidget *hbox7;
-	GtkWidget *label12;
-	GtkWidget *combo3;
+	GtkWidget *aewindow=NULL;
+	GtkWidget *vbox2=NULL;
+	GtkWidget *table1=NULL;
+	GtkWidget *hbox7=NULL;
+	GtkWidget *label12=NULL;
+	GtkWidget *combo3=NULL;
 	GList *combo3_items = NULL;
-	GtkWidget *lab_entry;
-	GtkWidget *hbox8;
-	GtkWidget *label13;
-	GtkWidget *val_entry;
-	GtkWidget *visbutton;
-	GtkWidget *hbox10;
+	GtkWidget *lab_entry=NULL;
+	GtkWidget *hbox8=NULL;
+	GtkWidget *label13=NULL;
+	GtkWidget *val_entry=NULL;
+	GtkWidget *visbutton=NULL;
+	GtkWidget *hbox10=NULL;
 	GSList *show_group = NULL;
-	GtkWidget *namebutton;
-	GtkWidget *valbutton;
-	GtkWidget *showbothbutton;
-	GtkWidget *hbuttonbox2;
-	GtkWidget *buttondelete;
-	GtkWidget *buttonok;
-	GtkWidget *buttonapply;
+	GtkWidget *namebutton=NULL;
+	GtkWidget *valbutton=NULL;
+	GtkWidget *showbothbutton=NULL;
+	GtkWidget *hbuttonbox2=NULL;
+	GtkWidget *buttondelete=NULL; 
+	GtkWidget *buttonok=NULL;
+	/* GtkWidget *buttonapply;*/
 	GtkWidget *buttoncancel;
 
 	if(w_current->aewindow)return;
@@ -1032,6 +1032,7 @@ change_alignment(GtkWidget *w, TOPLEVEL *w_current)
 	alignment = gtk_object_get_data(GTK_OBJECT(w),"alignment");
 	w_current->text_alignment = atoi(alignment);
 	
+	return(0);
 }
 
 static GtkWidget*
@@ -1144,10 +1145,8 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
 	int len;
 	int text_size;
-	GtkWidget *align_entry;
 	char *text_string = NULL;
 	char *text_size_string = NULL;
-	char *text_alignment = NULL;
 	int new_text_alignment;	
 
 	text_string = gtk_entry_get_text(GTK_ENTRY(w_current->teentry));

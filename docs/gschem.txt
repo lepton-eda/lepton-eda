@@ -1137,6 +1137,7 @@ the resource file (see the section below for more info).
 				It is important the symbols have this
 				extension.
 
+#if 0 /* this is all old */
 		For toplevel symbols which have underlying schematics
 		(for a schematics hierarchy) there is a naming convention
 		(it's basically what's described above).  This naming
@@ -1153,9 +1154,14 @@ the resource file (see the section below for more info).
 		change).  Now this also means that ales-2.sym has
 		the same underlying schematics (ales_1.sch, ales_2.sch,
 		ales_3.sch etc...).
+#endif 
+	
+		The new way of specifing hierarchy is by using the source=
+		attribute.  Please see the master attribute document for info
+	 	on this mechanism.
 
-		The hierarchy mechanism is still in heavy flux, but the
-		naming conventions will probably stay the same.
+		The hierarchy mechanism is still in heavy flux, so there 
+	 	might be some more changes.
 
 	system-gschemrc
 	~/.gEDA/gschemrc

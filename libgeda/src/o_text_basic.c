@@ -410,7 +410,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	int y_offset;
 	int text_width;
 	int text_height;
-	int sign;
+	int sign=1;
 
 	temp_list = object_list;
 
@@ -1155,24 +1155,24 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		switch(o_current->text_alignment) {
 			case(LOWER_LEFT):
 				fprintf(fp, "%d mils %d mils moveto\n", x, y);
-//				x_offset = x;
-//				y_offset = y;
+/*				x_offset = x; */
+/*				y_offset = y; */
 			break;
 
 			case(MIDDLE_LEFT):
 				fprintf(fp, "%d mils %d mils\n", x, y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
-//				x_offset = x;
-//				y_offset = y + sign*0.5*text_height;
+/*				x_offset = x; */
+/*				y_offset = y + sign*0.5*text_height; */
 			break;
 
 			case(UPPER_LEFT):
 				fprintf(fp, "%d mils %d mils\n", x, y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, "%d mul add moveto\n", sign);
-//				x_offset = x;
-//				y_offset = y + sign*text_height;
+/*				x_offset = x; */
+/*				y_offset = y + sign*text_height; */
 			break;
 
 			case(LOWER_MIDDLE):
@@ -1182,8 +1182,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				fprintf(fp, "moveto\n");
-//				x_offset = x + sign*0.5*text_width;
-//				y_offset = y;
+/*				x_offset = x + sign*0.5*text_width; */
+/*				y_offset = y; */
 			break;
 
 			case(MIDDLE_MIDDLE):
@@ -1194,8 +1194,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
-//				x_offset = x + sign*0.5*text_width;
-//				y_offset = y + sign*0.5*text_height;
+/*				x_offset = x + sign*0.5*text_width; */
+/*				y_offset = y + sign*0.5*text_height; */
 			break;
 
 			case(UPPER_MIDDLE):
@@ -1206,8 +1206,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, "%d mul add moveto\n", sign);
-//				x_offset = x + sign*0.5*text_width;
-//				y_offset = y + sign*text_height;
+/*				x_offset = x + sign*0.5*text_width; */
+/*				y_offset = y + sign*text_height; */
 			break;
 
 			case(LOWER_RIGHT):
@@ -1217,8 +1217,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				fprintf(fp, "moveto\n");
-//				x_offset = x + sign*text_width;
-//				y_offset = y;
+/*				x_offset = x + sign*text_width; */
+/*				y_offset = y; */
 			break;
 
 			case(MIDDLE_RIGHT):
@@ -1229,8 +1229,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
-//				x_offset = x + sign*text_width;
-//				y_offset = y + sign*0.5*text_height;
+/*				x_offset = x + sign*text_width; */
+/*				y_offset = y + sign*0.5*text_height; */
 			break;
 
 			case(UPPER_RIGHT):
@@ -1241,13 +1241,13 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, "%d mul add moveto\n", sign);
-//				x_offset = x + sign*text_width;
-//				y_offset = y + sign*text_height;
+/*				x_offset = x + sign*text_width; */
+/*				y_offset = y + sign*text_height; */
 			break;
 		}
 
 #if 0 /* no longer needed */
-		if (o_current->angle == ) {
+		if (o_current->angle != 0) {
 			fprintf(fp, "%d rotate\n", o_current->angle); 
 		}
 #endif
@@ -1257,8 +1257,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 			case(LOWER_LEFT):
 				fprintf(fp, "%d mils %d mils moveto\n", x, y);
-//				x_offset = x;
-//				y_offset = y;
+/*				x_offset = x; */
+/*				y_offset = y; */
 			break;
 		
 			case(MIDDLE_LEFT):
@@ -1267,8 +1267,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils moveto\n", y);
-//				x_offset = x + sign*0.5*text_height;
-//				y_offset = y;
+/*				x_offset = x + sign*0.5*text_height; */
+/*				y_offset = y; */
 			break;
 	
 			case(UPPER_LEFT):
@@ -1277,8 +1277,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils moveto\n", y);
-//				x_offset = x + sign*text_height;
-//				y_offset = y;
+/*				x_offset = x + sign*text_height; */
+/*				y_offset = y; */
 			break;
 	
 			case(LOWER_MIDDLE):
@@ -1286,8 +1286,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
-//				x_offset = x;
-//				y_offset = y - sign*0.5*text_width;
+/*				x_offset = x; */
+/*				y_offset = y - sign*0.5*text_width; */
 			break;
 	
 			case(MIDDLE_MIDDLE):
@@ -1297,8 +1297,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
-//				x_offset = x + sign*0.5*text_height;
-//				y_offset = y - sign*0.5*text_width;
+/*				x_offset = x + sign*0.5*text_height; */
+/*				y_offset = y - sign*0.5*text_width; */
 			break;
 	
 			case(UPPER_MIDDLE):
@@ -1308,8 +1308,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
-//				x_offset = x + sign*text_height;
-//				y_offset = y - sign*0.5*text_width;
+/*				x_offset = x + sign*text_height; */
+/*				y_offset = y - sign*0.5*text_width; */
 	
 			break;
 	
@@ -1318,8 +1318,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "%d mul sub moveto\n", sign);
-//				x_offset = x;
-//				y_offset = y - sign*text_width;
+/*				x_offset = x; */
+/*				y_offset = y - sign*text_width; */
 			break;
 	
 			case(MIDDLE_RIGHT):
@@ -1329,8 +1329,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "%d mul sub moveto\n", sign);
-//				x_offset = x + sign*0.5*text_height;
-//				y_offset = y - sign*text_width;
+/*				x_offset = x + sign*0.5*text_height; */
+/*				y_offset = y - sign*text_width; */
 			break;
 	
 			case(UPPER_RIGHT):
@@ -1340,8 +1340,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "%d mul sub moveto\n", sign);
-//				x_offset = x + sign*text_height;
-//				y_offset = y - sign*text_width;
+/*				x_offset = x + sign*text_height; */
+/*				y_offset = y - sign*text_width; */
 			break;
 		}
 

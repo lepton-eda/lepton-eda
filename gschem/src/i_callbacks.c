@@ -1308,7 +1308,7 @@ DEFINE_I_CALLBACK(add_attribute)
 
 	exit_if_null(w_current);
 
-	setup_attr_selector(w_current);
+	attrib_edit_dialog(w_current, NULL);
 	i_update_middle_button(w_current, i_callback_add_attribute,
 			       "Attribute");
 	i_update_status2(w_current, "Select Mode");
@@ -1531,7 +1531,6 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 	char *filename;
 	char *attrib;
 	int count=0;
-	char *name, *value;
 	OBJECT *object;
 	PAGE *save_first_page=NULL;
 	PAGE *parent=NULL;
@@ -1656,7 +1655,6 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 DEFINE_I_CALLBACK(hierarchy_up)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	char *filename;
 
 	exit_if_null(w_current);
 
@@ -1908,11 +1906,8 @@ DEFINE_I_CALLBACK(options_show_log_window)
 /* this is Ales' catch all misc callback */
 DEFINE_I_CALLBACK(misc)
 {
-	OBJECT **attrib_objects;
 	OBJECT *object;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	char name[128], value[128];
-	int i=0;
 
 #if 0 /* old demonstration code on getting all attribs from an object */
 	if (w_current->page_current->selection_head->next != NULL) {
@@ -1981,7 +1976,6 @@ DEFINE_I_CALLBACK(misc3)
 {
 	OBJECT **attrib_objects;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	char name[128], value[128];
 	int i=0;
 
 	if (w_current->page_current->selection_head->next != NULL) {
