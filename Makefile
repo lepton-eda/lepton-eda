@@ -6,6 +6,8 @@
 #SUBDIRS=libgeda symbols gschem gnetlist gpcb
 SUBDIRS=libgeda symbols gschem gpcb gnetlist gsymcheck utils
 
+SHELL=/bin/sh
+
 prefix=${HOME}/geda
 
 all: targets
@@ -21,7 +23,7 @@ install::
 		export PATH ; \
 		cd $$i ; \
 		 ./configure --prefix=$(prefix); \
-		make install \
+		make install  \
 	); \
 	done
 	@echo Finished!

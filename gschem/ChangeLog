@@ -9,6 +9,13 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-11-19  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_menus.c: Added Zoom in and Zoom out to the third mouse
+	  button popup menu
+
+	* src/parsecmd.c: Add -h (help) flag
+
 1999-11-11  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Fixed the dialog box title for the SAVEAS_CLOSE

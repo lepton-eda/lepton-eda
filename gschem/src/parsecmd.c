@@ -28,7 +28,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#define OPTIONS "qvr:s:o:t"
+#define OPTIONS "hqvr:s:o:t"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -45,6 +45,7 @@ usage(char *cmd)
 	printf("  -s filename   Script (guile) filename\n");
 	printf("  -o filename   Output filename (for printing)\n");
 	printf("  -t            Print stroke information\n");
+	printf("  -h            Help; this message\n");
 	printf("\n");
 	exit(0);
 }
