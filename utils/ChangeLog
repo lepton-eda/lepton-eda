@@ -1,3 +1,7 @@
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
 2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/Makefile.am: Changed doc install directory readme to readmes

@@ -3,6 +3,8 @@
 	* noweb/gschem.nw: Added a call to the scrollbar update code to fix
 	the "scrollbars are wrong on startup" bug.
 
+        * configure.ac: Updated version to 20040111
+
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/multiline3.sch: Added another test schematic for the 

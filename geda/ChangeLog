@@ -1,3 +1,7 @@
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added checks for time.h and nanosleep.  nanosleep

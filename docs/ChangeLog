@@ -3,6 +3,8 @@
 	* fileformats/fileformats.tex: More really minor version field 
 	updates 
 
+	* configure.ac: Updated version to 20040111
+
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* fileformats/fileformats.tex: Fixed valid/test versions

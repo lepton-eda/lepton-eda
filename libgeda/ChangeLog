@@ -1,4 +1,8 @@
-2003-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040111
+
+2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Fixed the postscript printing of text
 	when it is rotated 180 degrees.  
@@ -10,7 +14,7 @@
 
 	* include/defines.h: Changes LINE_SPACING to be a float.
 
-2003-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Applied a patch by Carlos for the new
 	spanish characters he contributed.
