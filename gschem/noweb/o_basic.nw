@@ -247,7 +247,7 @@ o_draw_list(TOPLEVEL *w_current, GList* list)
   l_current = list;
   while (l_current != NULL) {
 
-    o_current= (OBJECT *) l_current->data;
+    o_current = (OBJECT *) l_current->data;
 
     if (o_current) {
       o_redraw_single(w_current, o_current);

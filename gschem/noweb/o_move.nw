@@ -567,9 +567,6 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
       switch (object->type) {
         
         case (OBJ_NET):
-
-          /* save a pointer to the object being moved for later */
-          *objects = g_list_append(*objects, object);
           
           /* save the other objects and remove object's connections */
           *other_objects =
@@ -578,7 +575,6 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
-
 
 #if DEBUG
           printf("OLD: %d, %d\n", x, y);
@@ -604,6 +600,7 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
             s_conn_update_object(w_current, object);
             *connected_objects =
               s_conn_return_others(*connected_objects, object);
+            *objects = g_list_append(*objects, object);
           }
 
           break;
@@ -615,9 +612,6 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           break;
 
         case (OBJ_BUS):
-
-          /* save a pointer to the object being moved for later */
-          *objects = g_list_append(*objects, object);
 
           /* save the other objects and remove object's connections */
           *other_objects =
@@ -648,6 +642,7 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
             s_conn_update_object(w_current, object);
             *connected_objects =
               s_conn_return_others(*connected_objects, object);
+            *objects = g_list_append(*objects, object);
           }
 
           break;

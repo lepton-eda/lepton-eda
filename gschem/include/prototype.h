@@ -603,6 +603,7 @@ int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(TOPLEVEL *w_current);
 int o_move_zero_length(OBJECT *object);
+void is_inside(GList *list, int tag, OBJECT *object);
 void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y, GList **objects, GList **other_objects, GList **connected_objects);
 void o_move_stretch_rubberband(TOPLEVEL *w_current);
 /* o_net.c */
