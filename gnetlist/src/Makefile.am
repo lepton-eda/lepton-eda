@@ -2,6 +2,8 @@
 
 bin_PROGRAMS = gnetlist 
 
+bin_SCRIPTS = gschem2pcb
+
 # don't forget all *.h files */
 gnetlist_SOURCES = \
 		i_vars.c g_netlist.c g_rc.c g_register.c globals.c \
