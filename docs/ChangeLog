@@ -8,6 +8,9 @@
 
 	* switcap/Makefile.am: Added missing *.ps to distribution
 
+	* spice-sdb: Updated to Stuart's latest doc (split into multiple
+	html files).  Thanks Stuart!
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Improved the configuration summary message.

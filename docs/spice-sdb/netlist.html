@@ -1,0 +1,839 @@
+<html><head><title>gEDA-SPICE-HOWTO -- SPICE netlist creation</title></head>
+
+<body lang="EN-US" style="">
+
+<center>
+<h1><p>SPICE on gEDA HOWTO -- SPICE netlist creation</p></h1>
+</center>
+
+<a name="capture">
+<h1>Schematic capture</h1>
+</a>
+<p>
+Schematic capture is the process by which one uses a special-purpose
+drawing program to draw a schematic diagram of the circuit under
+design.  In the gEDA environment, the schematic capture program is
+called "gschem".  I assume you already know how to use gschem.  For
+the purposes of creating SPICE netlists, you must use gschem to
+attach attributes to components, and possibly also incorporate other
+SPICE directives into your netlist.  After you are done with schematic
+capture, you create the SPICE netlist by running gEDA's netlister
+"gnetlist" on your design. 
+</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="attributes">
+<h2>Gschem attributes for spice netlisting</h2>
+</a>
+
+<p>There are several ways that spice attributes may be
+associated with a component using gschem.
+The way you choose to do this depends upon many factors, including the
+type of component, and the size and format of the SPICE model.</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="componentattributes">
+<h3>Component attributes and meanings</h3>
+</a>
+
+<p>The following attributes are meaningful for SPICE
+netlisting, and may be attached from within gschem:</p>
+
+<ul>
+
+<li>
+<b>refdes:</b> 
+The reference designator of the component.
+Valid values depend upon the component type and are given in the
+<a href="appendix.html#attributesummary">
+appendix.</a>
+</li>
+
+<li>
+<b>value:</b>
+For passives, this is the component value.
+For actives, this is the type (model no) of the component (e.g.
+2N3904, uA741).
+When a model for an
+active is instantiated separately from the component itself, the
+"value" attribute holds the name of the spice model.
+</li>
+
+<li>
+<b>model:</b>
+This holds a one line spice model for the component.
+</li>
+
+<li>
+<b>file:</b>
+This holds the name of a file.
+Typically, this is a file holding e.g. a SPICE .MODEL, .SUBCKT, or
+other SPICE code.
+</li>
+
+<li>
+<b>model-name:</b>
+This holds the name of the spice model referred to in a .MODEL or .SUBCKT
+statement.
+"model-name" is
+mainly used to identify the spice model name in the symbol "spice-model-1.sym".
+Active components should call out this name
+in the "device" attribute to associate the component with its
+particular spice model or subcircuit.
+</li>
+
+<li>
+<b>type:</b>
+This specifies the type of component 
+and is used by spice when interpreting the model parameters.
+Valid values depend upon the device being
+modeled.
+</li>
+</ul>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="refdesconventions">
+<h3>Refdes conventions</h3>
+</a>
+
+<p>As a prerequisite to handling SPICE-related attributes, the
+SPICE netlister requires that all components must have a refdes attached to
+them.  The refdes may be attached either
+by hand (which is laborious), or using the program refdes_renum included in the
+gEDA distribution.
+
+</p><p>Note that the first letter of the refdes must correspond to
+the appropriate letter for spice simulation.
+The refdes convention is given in the 
+<a href="appendix.html#attributesummary">
+appendix</a></p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="passives">
+<h3>Passives</h3>
+</a>
+
+<h4>
+Basic passives
+</h4>
+
+<p>The most basic components which one encounters in spice are
+passive components like resistors and capacitors which have numeric values, but
+no other modeling attributes.  In this
+case the following attributes must be filled in:
+
+</p><ul>
+<li>
+<b>refdes:</b>
+The correct refdes for the component.
+</li>
+
+<li>
+<b>value:</b>
+For passives, this is the numeric value of the component (e.g. 100pF).
+For actives, this attribute may be filled
+in, but if no model attribute is available elsewhere in the schematic, the
+value is not used (in SPICE netlisting, anyway).
+</li>
+</ul>
+
+<p>If only a refdes and value attribute are encountered, the
+netlister will write a single line into the output file.</p>
+
+<blockquote>
+<p>
+<b>Example resistor:</b><br>
+refdes = R2<br>
+value = 220<br>
+SPICE line generated: R2 0 4 220
+</p>
+</blockquote>
+
+<p>(note that "0" and "4" correspond to the
+net nodes connected to the component, and are generated automatically by
+gnetlist.)</p>
+
+<blockquote>
+<p><b>Example capacitor:</b><br>
+refdes = C22<br>
+value = 1UF<br>
+SPICE line generated: C22 4 23
+1UF</p>
+</blockquote>
+
+<h4>Passives with additional attributes</h4>
+
+<p>Oftentimes, passive components have additional attributes
+attached to them for spice simulation.
+Examples of such attributes are temperature coefficients (for resistors)
+and initial conditions (for reactive components).
+These additional components may be incorporated into the SPICE
+file by simply attaching them to the component's "model" attribute.
+Specifically, the required attributes are:</p>
+
+<ul>
+
+<li>
+<b>refdes:</b>
+Correct component refdes.
+</li>
+
+<li>
+<b>value:</b>
+Numerical component value, as always.
+</li>
+
+<li>
+<b>model:</b> 
+One line string holding additional parameters,
+formatted as a valid SPICE string.
+</li>
+
+</ul>
+
+<p>This string is placed after the component value in the line
+generated by gnetlist.
+Therefore, it is
+important to format the string placed in the "model" line to be valid SPICE
+code.
+Otherwise, you will risk causing
+the SPICE simulator to barf.</p>
+
+<blockquote>
+<p><b>Example resistor:</b><br>
+refdes = R5<br>
+value = 1MEG<br>
+model = TC=0.001,0.015<br>
+SPICE line generated: R2 0 4 220 TC=0.001,0.015
+</p>
+</blockquote>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="transdiodes">
+<h3>Transistors and diodes</h3>
+</a>
+
+<p>Transistors and diodes are generally accompanied by a
+device-specific model -- otherwise, SPICE simulation is pointless.
+The SPICE model may be either a short,
+one-line string of parameters, or a multi-line set of SPICE parameters.
+A typical one-line parameter string is a
+short list of parameters describing a small-signal diode.
+Typical multi-line models come from
+component vendors, who often provide models for their components in a text
+file.
+Since there are two broad formats
+of SPICE information, there are two approaches to incorporating these
+parameters into the schematic:</p>
+
+<h4>One line string of SPICE parameters</h4>
+
+<p>To incorporate a one line string of SPICE parameters into
+the netlist, the following attributes must be attached to the component:</p>
+
+<ul>
+
+<li>
+<b>refdes:</b>
+Correct component refdes.
+</li>
+
+<li>
+<b>value:</b>
+The model number or part number of the component.
+</li>
+
+<li>
+<b>model-name:</b>
+The name you wish to give the SPICE
+model.
+This is usually the model number
+or part number of the component.
+If you
+have already attached a "value" attribute to the component, this parameter is
+optional.
+</li>
+
+<li>
+<b>model:</b>
+One line string holding additional
+parameters.
+Do not place the model
+parameters in parentheses -- gnetlist will do this for you.
+</li>
+</ul>
+
+<blockquote>
+<b>Example diode:</b><br>
+refdes = D5<br>
+model-name = 1N1004<br>
+model = IS=0.5UA RS=6 BV=5.20<br>
+SPICE lines generated: <br>
+D5 2 6 1N1004<br>
+MODEL 1N1004 D (IS=0.5UA RS=6 BV=5.20)
+</blockquote>
+
+<h4>SPICE model file</h4>
+
+<p>To incorporate a file-full of SPICE parameters into the
+netlist, the following attributes must be attached to the component:</p>
+
+<ul>
+<li>
+<b>refdes:</b>
+Correct component refdes.
+</li>
+
+<li>
+<b>value:</b>
+The model number or part number of the component.
+</li>
+
+<li>
+<b>model-name:</b>
+the name you wish to give the SPICE
+model.
+This is usually the model number
+or part number of the component.
+If you
+have already attached a "value" attribute to the component, this parameter is
+optional.
+</li>
+
+<li>
+<b>file:</b>
+The file
+name of the SPICE model which you wish to incorporate into the netlist.
+This file name may specify either a relative
+or an absolute path, but it is probably better to use an absolute path to avoid
+problems if you ever move your schematic directory.
+</li>
+</ul>
+
+<p>Note that you need to make sure that the model name held in
+your SPICE model file is the same as the "value" or "model-name" attributes you
+attached to the component.It is also a
+good idea to verify that the pin assignments in the model file correspond to
+the pin assignments made by the component symbol.</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="actives">
+<h3>Actives -- integrated circuits</h3>
+</a>
+
+<p>Integrated circuits are incorporated into the netlist
+similarly to transistors and diodes.
+As
+such, you may incorporate the spice information either as a one-line parameter
+string, or as a model file.</p>
+
+<h4>One line string of SPICE parameters</h4>
+
+<p>To incorporate a one line string of SPICE parameters into
+the netlist, the following attributes must be attached to the component:</p>
+
+<ul>
+<li>
+<b>refdes:</b>
+Correct component refdes.
+</li>
+
+<li>
+<b>value:</b>
+The model number or part number of the component.
+</li>
+
+<li>
+<b>model-name:</b>
+the name you wish to give the SPICE model.
+This is usually the model number or part
+number of the component.
+If you have
+already attached a "value" attribute to the component, this parameter is
+optional.
+</li>
+
+<li>
+<b>model:</b>
+One line string holding additional
+parameters.
+Do not place the model
+parameters in parentheses -- gnetlist will do this for you.
+</li>
+</ul>
+
+<h4>SPICE .MODEL or .SUBCKT file</h4>
+
+<p>To incorporate a file-full of SPICE parameters into the
+netlist, the following attributes must be attached to the component:</p>
+
+<ul>
+<li>
+<b>refdes:</b>
+Correct component refdes.  <b>Note that if the file holds a .MODEL, the
+refdes should start with U; if the file holds a .SUBCKT, the refdes
+should start with X.</b>  The netlister checks for the file type and
+tries to "do the right thing", but
+problems can arise if you don't follow this rule. 
+</li>
+
+<li>
+<b>value:</b>
+The model number or part number of the component.
+</li>
+
+<li>
+<b>model-name:</b>
+The name you wish to give the SPICE
+model.
+This is usually the model number
+or part number of the component.
+If you
+have already attached a "value" attribute to the component, this parameter is
+optional.
+</li>
+
+<li>
+<b>file:</b>
+The 
+name of the file holding the SPICE .MODEL or .SUBCKT which you wish 
+to incorporate into the netlist. 
+This file name may specify either a relative
+or an absolute path, but it is probably better to use an absolute path to avoid
+problems if you ever move your schematic directory.
+</li>
+</ul>
+
+<p>Note that you need to make sure that the model name held in
+your SPICE model file is the same as the "value" or "model-name" attributes you
+attached to the component.
+It is also a
+good idea to verify that the pin assignments in the model file correspond to the
+pin assignments made by the component symbol.</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="indsources">
+<h3>Independent sources</h3>
+</a>
+
+<p>There are two independent sources: voltage sources and current sources.
+For incorporation into a SPICE netlist, they both work the same
+way. To incorporate an independent source into your SPICE netlist, do the
+following:</p>
+
+<ol>
+<li>
+Place the independent source on your schematic.
+(Do "Add" -&gt;
+"Component" -&gt; "spice" -&gt; &lt;independent source
+name&gt;.sym")
+</li>
+
+<li>
+Double click on the block and add/edit the following
+attributes:
+
+<ul>
+<li><b>refdes:</b> V? or I?
+</li>
+
+<li>
+<b>value:</b> A one
+line string in SPICE format describing the source.
+</li>
+</ul>
+</li></ol>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="depsources">
+<h3>Dependent sources</h3>
+</a>
+
+<p>There are four dependent sources:</p>
+
+<p>This section remains TBD.</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="spicecomps">
+<h3>SPICE components</h3>
+</a>
+
+<h4>Spice model block</h4>
+
+<p>In certain situations, you may wish to embed a spice model
+block directly into your schematic.
+This is done when you have several devices with a "value"
+attribute calling out for a spice model.
+Depending upon whether the spice block is one line or multi-line, you
+may embed the code in one of two ways:</p>
+
+<h5>One line SPICE model:</h5>
+
+<ol>
+<li>
+Place a spice model block on your schematic.
+(Do "Add" -&gt;
+"Component" -&gt; "spice" -&gt; spice-model-1.sym")
+</li>
+
+<li>
+Double click on the block and add/edit the following
+attributes:
+<ul>
+<li>
+<b>refdes:</b> a?
+</li>
+
+<li>
+<b>model:</b>
+model name (i.e. the model name used in the
+components being modeled.)
+</li>
+
+<li>
+<b>type:</b>
+One of
+the valid spice component types defined in the spice spec.
+</li>
+
+<li>
+<b>value:</b>
+The
+corresponding one-line spice model
+</li>
+</ul>
+</li></ol>
+
+<h5>Multi-line SPICE model:</h5>
+
+<ol>
+<li>Place a spice model block on your schematic.(Do "Add" -&gt;
+"Component" -&gt; "spice" -&gt; spice-model-1.sym")
+</li>
+
+<li>
+Double click on the block and add/edit the following
+attributes:
+
+<ul>
+<li>
+<b>refdes:</b> a?
+</li>
+
+<li>
+<b>model-name:</b> model name
+</li>
+
+<li>
+<b>file:</b> Name of
+file holding SPICE model code (i.e. .MODEL or .SUBCKT).
+</li>
+</ul>
+</li></ol>
+
+<h4>Include block</h4>
+
+<p>The include block places a .INCLUDE directive into your
+netlist.</p>
+
+<ol>
+<li>
+Place a spice model block on your schematic.
+(Do "Add" -&gt;
+"Component" -&gt; "spice" -&gt; spice-include-1.sym")
+</li>
+
+<li>
+Double click on the block and add/edit the following
+attributes:
+
+<ul>
+<li>
+<b>refdes:</b> a?
+</li>
+
+<li>
+<b>file:</b> The name
+of the file to include.
+</li>
+</ul>
+</li></ol>
+
+<h4>SPICE directive block</h4>
+
+<p>Placing a SPICE directive block into your schematic creates
+an arbitrary block of SPICE code in the netlist.
+The directive may be either statements held in a file, or a
+one-line string held in the "model" attribute.
+Examples of situations where this is useful include:
+
+</p><ul>
+<li>
+.TEMP statement
+</li>
+
+<li>
+.IC statement
+</li>
+
+
+<li>
+Other SPICE statements for which gschem has no symbol.
+</li>
+</ul>
+
+<p>To place a SPICE directive on your schematic, do:</p>
+
+<ol>
+<li>
+Place a SPICE directive block on your schematic.
+(Do "Add" -&gt;
+"Component" -&gt; "spice" -&gt; spice-directive-1.sym")
+</li>
+
+<li>
+Double click on the block and add/edit the following
+attributes:
+
+<ul>
+<li>
+<b>refdes:</b> a?
+</li>
+
+<li>
+<b>file:</b> The name
+of the file to include.
+</li>
+</ul>
+</li></ol>
+<br><a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="hierarchy">
+<h2>Handling hierarchical models</h2>
+</a>
+
+<p>
+In SPICE modeling, there are often situations where you wish to create
+a schematic representation of some particular component as a .SUBCKT,
+and then embed that component's model in a higher level schematic.
+A common example might be as follows: You are doing a microwave
+simulation, and want to use a capacitor 
+model which includes parasitic inductances and resistances, as well
+as the capacitance.  Capacitor manufacturers often supply a printed
+schematic showing a circuit topology incorporating parasitics, and
+specify values for the parasitics.  You would like to draw the
+capacitor model using gschem, netlist it to create a .SUBCKT, and then
+use the .SUBCKT to model capacitors in a higher lever schematic. 
+</p>
+
+<p>
+Since this kind of task is very common in SPICE simulation,
+gnet-spice-sdb now supports it (starting with rev 20030331).  To
+create a lower level .SUBCKT and 
+use it in a higher level schematic, do the following:
+</p><ol>
+<li>
+Draw the schematic of the lower level component (e.g. the capacitor +
+parasitics) using gschem.
+</li>
+
+<li>
+On the lower level schematic, place a spice-subcircuit-LL block
+(spice-subcircuit-LL-1.sym).  This 
+alerts the netlister that the schematic is a Lower Level .SUBCKT.
+Attach the following attributes to the symbol:
+<ul>
+<li>
+model-name = cap_with_parasitics
+</li>
+</ul>
+(Of course, "cap_with_parasitics" is the <i>example</i> we use here.  Use
+your own model name in your schematic.)
+Upon netlisting, this schematic symbol will cause the netlist to
+insert ".SUBCKT cap_with_parasitics <nets>" into the first line of the
+netlist file.  
+</nets></li>
+
+<li>
+On the lower level schematic, attach a 
+spice-subcircuit-IO symbol (spice-subcircuit-IO-1.sym)
+to each IO net (i.e. connection to the
+upper level).  Number the refdeses of the
+IO symbols in the same order as you would like the IO nets to be
+listed in the .SUBCKT line in the output file.  (i.e. P1 = first, P2 =
+second, etc.)
+</li>
+
+<li>
+When you are done with the lower level schematic, netlist it in the
+usual way.  For example, if your schematic is called
+cap_with_parasitics.sch, netlist it by saying:<br>
+gnetlist -g spice-sdb -o cap_with_parasitics.cir
+cap_with_parasitics.sch<br>
+This will dump the SPICE netlist into the file called
+"cap_with_parasitics.cir".  Visually inspect the .cir file to make sure
+that netlisting worked correctly.  
+</li>
+
+<li>
+Next, create a symbol for the upper level schematic which will point
+to the .SUBCKT.  Note that the symbol must have a refdes starting with
+the letter "X".  To ensure that this happens, do the following:
+<ol>
+<li>
+Use gschem to draw the symbol.  I usually draw a box around a model
+symbol to distinguish it from a normal component.   Make any other
+annotations desired.
+</li>
+<li>
+In the symbol, make sure that the pins are ordered identically to the
+order in which you have placed the pins in the .SUBCKT.  This is done
+by editing the symbol with a text editor and setting the "PINSEQ"
+attribute.  The netlister will output the pins in the order determined
+by the "PINSEQ" attribute.
+</li>
+<li>
+Using a text editor, give the symbol a "DEVICE" attribute like
+"capacitor-model".  Do <b>not</b> assign the symbol one of the native device
+types listed in the 
+<a href="appendix.html#attributesummary">
+appendix</a>!  The goal is to create a symbol whose
+refdes starts with "X", and if the "DEVICE" is a recognized type, this
+will not happen.
+</li>
+<li>
+Using a text editor, give the symbol the "REFDES" attribute "X?"
+</li>
+</ol>
+</li>
+
+<li>
+Create the upper level schematic.  Place your newly created symbol on
+the schematic as many times as required &amp; wire up
+the schematic in the usual way.
+</li>
+
+<li>
+To point your symbol to the lower level .SUBCKT, double click on the
+symbol and set the following attributes:
+<ul>
+<li>
+file = cap_with_parasitics.cir
+</li>
+<li>
+model-name = cap_with_parasitics
+</li>
+</ul>
+as well as any other attributes required (e.g. refdes). 
+</li>
+
+<li>
+Now netlist your upper level schematic the usual way.  The contents of
+each .SUBCKT file is dumped into the main netlist. Inspect your
+netlist visually using a text editor to ensure that it is correct.
+It is a good idea to pay particular attention to the following:
+<ul>
+<li>Verify that the ordering of the nets connecting the
+upper level netlist to the lower level .SUBCKT is correct.</li>
+<li>Make sure that the upper level model-name and the lower level
+model name (on the .SUBCKT declaration line) are the same.
+</li>
+</ul>
+</li></ol>
+<p></p>
+
+<p>
+Once the netlist is created, you may simulate your design using any
+SPICE simulator desired.
+</p>
+
+<p>
+One final note:  The netlister writes the contents of the lower level
+.SUBCKT file into the main netlist <b>every time</b> it encounters a
+component with "FILE" attribute pointing to that file.   Therefore, if
+you use the same component with the same model more than once in a
+design you should instantiate the model file using a "spice-model"
+symbol and point to it with each component.  This is described in the
+"multi-line SPICE model block" section above.
+</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="netlisting">
+<h1>SPICE netlist generation</h1>
+</a>
+<p>
+Once the schematic is captured, a SPICE netlist can be generated running
+the gEDA utility "gnetlist" on the schematic files.  Gnetlist is built
+to be customizable, and is able to generate a netlist of any desired
+format using a Scheme back-end, which does the real heavy-lifting of
+creating the netlist.  The back-end Scheme file which implements SPICE
+netlisting is called gnet-spice-sdb.scm, and it lives in the
+${PREFIX}/geda/share/gEDA/scheme directory.
+</p>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="netlistcreation">
+<h2>Creating the netlist</h2>
+</a>
+
+<p>Creating a netlist from a schematic is easy.
+To generate a SPICE netlist, just do the
+following:</p>
+
+<ul>
+<li>
+Save your schematic to &lt;filename.sch&gt;
+</li>
+
+<li>
+Create the SPICE netlist by doing "gnetlist &#8211;g spice-sdb &lt;filename.sch&gt;".
+The output is a netlist held in the
+file output.net.  Alternatively, if you wish to give your output file
+a different name, set the output name using the -o switch.  For
+example:<br>
+gnetlist -g spice-sdb -o amplifier.cir amplifier.sch<br>
+takes the design schematic called "amplifier.sch" and outputs a SPICE
+netlist named "amplifier.cir".
+</li>
+
+<li>
+Inspect your SPICE netlist using a text editor.
+Verify that there are no missing attributes or other netlist
+problems.
+</li>
+</ul>
+<a href="intro.html#TOC">Back to the table of contents.</a>
+
+<a name="netlistproblems">
+<h2>Common netlisting problems</h2>
+</a>
+
+<p>It is important to manually inspect your SPICE netlist prior
+to using it in simulation.
+Please
+remember that the netlister is still "alpha" quality, and some problems may
+still exist in netlist generation.
+The following list attempts to catalog common problems with the netlist and the
+associated fixes.</p>
+
+<ul>
+<li>ERROR_INVALID_PIN: This can happen if the symbol&#8217;s PINSEQ
+attributes don&#8217;t start at 1, or have gaps in the numbering.
+This must be fixed by editing the
+symbol itself in a text editor.
+</li>
+</ul>
+<br><a href="intro.html#TOC">Back to the table of contents.</a>
+
+<br><br><br>
+<center>
+<a href="simulation.html">Continue on to performing a SPICE simulation.</a>
+</center>
+
+<hr width="100%">
+
+<p>Please send comments or questions about this HOWTO to Stuart
+Brorson at <a href="mailto:sdb@cloud9.net">sdb@cloud9.net</a>.
+</p>
+
+</body></html>

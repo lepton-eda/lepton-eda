@@ -1,0 +1,305 @@
+<html><head><title>gEDA-SPICE-HOWTO -- Introduction and Overview</title></head><body lang="EN-US" style="">
+
+<center>
+<h1><p>SPICE on gEDA HOWTO -- introduction and overview</p></h1>
+</center>
+
+<p>
+Revision history:
+</p><ul>
+<li>Revision 1.0 &#8211; 3.10.2003, SDB.</li>
+<li>Revision 1.1 &#8211; 3.19.2003.  Added .SUBCKT stuff &amp; stuff about LTSpice.  SDB.</li>
+<li>Revision 1.2 &#8211; 3.31.2003.  Added stuff about creating hierarchical
+projects (i.e. creating .SUBCKTs using gschem and incorporating a
+lower level .SUBCKT into a higher level schematic).</li>
+<li>Revision 2.0 &#8211; 7.23.2003.  Split doc into sections.  Edited
+netlisting stuff to correspond to gEDA-20030525, which now includes spice-sdb in
+the distribution. Added
+new section about ngspice/tclspice.</li>
+</ul>
+<p></p>
+
+<p>The most recent copy of this document is always available at
+<a href="http://www.brorson.com/gEDA/SPICE/">
+http://www.brorson.com/gEDA/SPICE/
+</a>
+</p>
+
+<a name="TOC">
+<h1>Table of Contents</h1>
+</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/intro.html#introduction">Introduction</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/intro.html#overview">Overview</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/intro.html#configuration">spice-sdb netlister installation and configuration </a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/intro.html#flow">Design/simulation flow summary</a>
+</dd></dl>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#symbolandfilenotes">Preliminary notes about symbols and SPICE model files</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/intro.html#symbolcreation">Symbol creation</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/intro.html#spicefileconfig">SPICE file configuration</a>
+</dd></dl>
+<a href="http://www.brorson.com/gEDA/SPICE/netlist.html#capture">Schematic capture</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#attributes">Gschem attributes</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#componentattributes">Component attributes</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#refdesconventions">Refdes conventions</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#passives">Passives</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#transdiodes">Transistors and diodes</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#actives">Actives -- integrated circuits</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#indsources">Independent sources</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#depsources">Dependent sources</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#spicecomps">SPICE components</a>
+</dd></dl>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#hierarchy">Handling hierarchical models</a>
+</dd></dl>
+<a href="http://www.brorson.com/gEDA/SPICE/netlist.html#netlisting">SPICE netlist generation</a>
+<dl><d><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#netlistcreation">Creating the netlist</a>
+<dd><a href="http://www.brorson.com/gEDA/SPICE/netlist.html#netlistproblems">Common netlisting problems</a>
+</dd></d></dl>
+<a href="http://www.brorson.com/gEDA/SPICE/simulation.html">SPICE simulation</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/simulation.html#ltspice">LTSpice</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/simulation.html#ngspice">ngspice/tclspice</a>
+</dd></dl>
+<a href="http://www.brorson.com/gEDA/SPICE/appendix.html">Appendicies</a>
+<dl><dd><a href="http://www.brorson.com/gEDA/SPICE/appendix.html#attributesummary">Component attribute summary</a>
+</dd><dd><a href="http://www.brorson.com/gEDA/SPICE/appendix.html#types">Valid types</a>
+</dd></dl>
+</dd></dl>
+
+<a name="introduction">
+<h1>Introduction</h1>
+</a>
+
+<p>The purpose of this document is to explain how to use the
+gEDA tools (running on Linux) to perform SPICE simulations.  
+In particular, this HOWTO documents the
+usage of spice-sdb, which is an advanced backend for the gEDA
+netlister (gnetlist) used to create SPICE netlists.  This HOWTO also provides
+advice about using LTSpice  
+and/or ngspice to simulate a circuit netlisted with spice-sdb.
+I assume that you
+are already familiar with electronic design, the mechanics of schematic capture
+using EDA tools, and SPICE simulation in general.
+I also assume that you are reasonably familiar with the Linux
+operating system and its development environment.</p>
+
+<p>
+<b>Note that this is now a multi-page document.</b>  To navigate through
+the document, either use the table of contents as a jump-off point, or
+use the link at the bottom of each page to get to the next page.
+</p>
+<a href="#TOC">Back to the table of contents.</a>
+
+
+<a name="overview">
+<h2>Overview</h2>
+</a>
+
+<p>From the top level, SPICE simulation in gEDA proceeds via
+the following steps:
+
+</p><ol>
+<li>Creation and gathering of schematic symbols and SPICE model files.
+Oftentimes, the SPICE model files are obtained from the component vendor.</li>
+<li>Schematic capture using symbols and SPICE models created in step 1.</li>
+<li>Netlist generation from the schematic created in step 2.</li>
+<li>SPICE simulation of the circuit described by the netlist created in step 3.</li>
+</ol>
+<p></p>
+
+<p>To create a SPICE netlist, the netlister (gnetlist) iterates
+through the entire schematic and looks at several parts of each component's
+symbol in order to create a blob of SPICE code.
+In general, each component can generate one or more lines of
+SPICE code.  Component information needed
+by the netlister is held in two places:</p>
+
+<p>
+</p><ol>
+<li>The symbol itself, in the "device" attribute,
+which is attached when the symbol is created, and is typically accessed through
+the symbol editor.
+</li>
+<li>In attributes manually attached to the component during
+schematic capture using gschem.
+</li>
+</ol>
+<p></p>
+
+<p>Since there are two places the netlister looks for
+information, you must make sure that the required information is available in
+both places. </p>
+<a href="#TOC">Back to the table of contents.</a>
+
+
+<a name="configuration">
+<h2>Spice-sdb netlister installation and configuration </h2>
+</a>
+
+<p>This document was originally written around gEDA/gaf 20030223, and the
+SPICE netlister spice-SDB.  Starting with gEDA/gaf 20030525, my
+netlister was incorporated into the main gEDA distribution, and
+renamed spice-sdb (lower case sdb).  <b>For smoothest operation, you are
+best off just 
+downloading and installing the latest version of gEDA.</b>
+However, if you have a gEDA version predating
+20030525, and you want to hack, you can download and install spice-SDB using the
+instructions provided on 
+<a href="http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html">
+http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html</a>.
+In any event, it's a good idea to 
+make sure that the file gnet-spice-sdb.scm is present in your scheme directory
+(usually ${prefix}/geda/share/gEDA/scheme)
+if you are interested in performing SPICE simulations with gEDA as described in this HOWTO.
+</p>
+<a href="#TOC">Back to the table of contents.</a>
+
+<a name="flow">
+<h2>Design/simulation flow summary</h2>
+</a>
+
+<p>
+The detailed steps required to create a circuit and simulate it with
+gEDA look like this:
+</p><ol>
+
+<li>
+Schematic
+symbol creation with correct "device" attribute.
+(Usually, the symbols have already been created with the correct
+"device" attribute, but if you are having problems, it doesn't hurt to check them.)
+</li>
+
+<li>
+Schematic capture using gschem.
+</li>
+
+<li>
+Assignment of SPICE attributes (value, model, file, type, etc.) to components using gschem.
+</li>
+
+<li>
+Assignment of refdes using e.g. refdes_renum.
+</li>
+
+<li>
+Creation of netlist using "gnetlist -g spice-sdb".
+</li>
+
+<li>
+Check netlist for correctness (manually open and inspect netlist).
+</li>
+
+<li>
+Run spice using a simulator such as LTSpice or ngspice.
+</li>
+
+<li>
+Plot/analyze results (often plotting/analysis tools are incorporated in the simulator).
+</li>
+</ol>
+The purpose of this HOWTO is to provide the detailed understanding necessary to
+successfully navigate this process. 
+<p></p>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+
+<a name="symbolandfilenotes">
+<h1>Preliminary notes about symbols and SPICE model files</h1>
+</a>
+
+<a name="symbolcreation">
+<h2>Symbol creation for SPICE netlisting.</h2>
+</a>
+
+<p>The SPICE netlister recognizes a particular symbol in two ways:  
+1.  The symbol's "device" attribute, and 
+2.  The symbol's  refdes.
+Both of these attributes are attached to the symbol when the symbol is
+created.
+</p>
+
+<p>Each symbol has a "device" attribute attached to
+it.  The "device" attribute is the first
+thing the netlister examines when processing the symbol.
+There are a number of devices which are
+native to the netlister, meaning that the netlister knows exactly how to deal
+with these types of devices.
+Native
+device types include RESISTOR, CAPACITOR, NPN_TRANSISTOR, etc.
+The entire list of native devices is present
+in the appendix.
+</p>
+
+<p>The "device" attribute is hidden during normal use
+of gschem.
+Most often, the symbol's
+creator has already given the symbol the correct "device"
+attribute.
+However, because the
+"device" attribute is hidden from the ordinary user, it can sometimes
+cause problems with SPICE netlist creation when it is set to an unexpected
+value.
+To view the "device"
+attribute, go into the symbol editor (select the symbol to edit, and do
+"Hierarchy" -&gt; "down symbol"), and turn on invisible
+attributes (Edit -&gt; show/hide inv text).
+If the "device" attribute is incorrect, you may change it by editing the
+symbol itself using a text editor.
+</p>
+
+<p>If a symbol is not native (i.e. the netlister doesn't
+recognize it as a built-in type), the netlister relies upon the first letter of
+the refdes to determine how to process the symbol.
+The refdes prefix is also built into the symbol when it is
+created.
+Example refdes prefixes are R
+for resistors, C for capacitors, Q for transistors, etc.
+Refdes prefixes correct for SPICE are listed
+in the appendix.
+Note that relying upon
+the refdes to identify the component for SPICE is not foolproof -- for example,
+the netlister cannot distinguish between NPN and PNP transistors based upon the
+refdes.
+Therefore, it is always best to
+use a native "device" in your symbols.</p>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+<a name="spicefileconfig">
+<h2>SPICE file configuration</h2>
+</a>
+
+<p>Files holding complicated SPICE models or other SPICE code
+may be incorporated into the final SPICE netlist by including appropriate
+symbols into the schematic.
+SPICE model
+files are usually obtained from component vendors.
+Dealing with these files is straightforward.
+However, some issues should be kept in mind
+when preparing models for use during schematic capture:</p>
+
+<ul>
+<li>It is usually prudent to place these files into a dedicated
+directory distinct from the symbol directories.</li>
+<li>Make sure that the SPICE files pin assignments correctly
+correspond to the pins as defined in the component's symbol.</li>
+<li>Make sure that the last character in a SPICE model file is a
+carriage return.  If no carriage return exists, then the next
+component listed in the netlist may be placed on the same line as the
+last line of the SPICE model file.</li> 
+</ul>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+
+<!-- ----------------------------------------------- -->
+
+<br><br><br>
+<center>
+<a href="http://www.brorson.com/gEDA/SPICE/netlist.html">Continue on to creating a SPICE netlist.</a>
+</center>
+
+<hr width="100%">
+
+<p>Please send comments or questions about this HOWTO to Stuart
+Brorson at <a href="mailto:sdb@cloud9.net">sdb@cloud9.net</a>.
+</p>
+
+</body></html>

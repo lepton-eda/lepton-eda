@@ -1,0 +1,408 @@
+<html><head><title>gEDA-SPICE-HOWTO -- simulation</title></head><body lang="EN-US" style="">
+
+<center>
+<h1><p>SPICE on gEDA HOWTO -- simulation</p></h1>
+</center>
+
+<a name="simulation">
+<h1>SPICE simulation</h1>
+</a>
+
+<p>There are several options for doing SPICE simulations
+under Linux; I will highlight two:
+
+</p><ul>
+<li><b>LTSpice</b>, which is a freeware SPICE simulator originally released by Linear
+Technologies as a component selection/design tool running under Windows.
+Because its SPICE engine is very fast
+and powerful, it has become a popular SPICE simulator amongst hobbyists
+and design engineers who prefer to use free tools.  LTSpice has been tweaked to run under 
+Linux using wine; I recommend using it if you need a robust,
+<b>professional-quality</b> SPICE simulator.</li>  
+
+<li><b>Ngspice/tclspice</b>, which is a component of the gEDA distribution.  Ngspice
+provides a simulation engine, a command-line driven front-end, and the
+capability to plot simulation results graphically under X.  The main branch of 
+ngspice development has been arrested since late 2001.  However, a fork of
+the development tree, called "tclspice", remains under active
+development.   Tclspice is the package I recommend if you want to use
+a <b>Linux-native</b> SPICE simulator.
+
+</li></ul>
+There is also a GPL'ed simulator called "gnucap", which is based upon (or is
+the descendent of) Al's Circuit Simulator (ACS). 
+I haven't used it at all; information about
+gnucap is therefore TBD.
+
+<p></p>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+<a name="ltspice">
+<h2>LTSpice</h2>
+</a>
+
+<p>
+LTSpice was written by Mike Englehardt at Linear Technologies, and was
+originally given away by LinearTech as a design aid for engineers wishing to
+simulate the performance of LinearTech's switch mode power supply
+controllers.  The package incorporates a schematic capture front end,
+fast and powerful SPICE engine, and the capability for plotting the
+results of many different types of SPICE analysis.  Personally, I
+think the schematic capture front-end is hard to use and clunky;
+gschem knocks its socks off for ease of use and features.  However,
+the SPICE engine and analysis stuff in LTSpice is simply great.
+</p>
+
+<p>
+LTSpice was originally developed to run under Windows, but Mike has
+tweaked it so that it runs fairly well on Linux under wine.  (Only the help
+menu system is broken -- the rest of the package runs well.)
+Another good feature of LTSpice is that it is well supported -- Mike
+reads the newsgroup sci.electronics.cad regularly and is generally
+happy to help people who experience problems with it.
+Therefore, despite its Windoze heritage, I recommend LTSpice as a powerful,
+professional-quality simulation and analysis back end for gEDA.  
+</p>
+
+
+<h3>Installation and configuration of LTSpice</h3>
+To install and configure LTSpice, do the following:
+<ol>
+<li>Download and install wine.  I have had success using
+Wine-20030219.</li>
+
+<li>Download LTSpice.  It is available under
+http://www.linear.com/software under the name SwitcherCAD-III.</li>
+
+<li>Run the LTSpice installer under wine.</li>
+</ol>
+
+<h3>Running LTSpice with gEDA designs</h3>
+<p>
+LTSpice can read a file holding a gEDA SPICE netlist.  I have had
+success doing LTSpice sumulations in the following way:
+</p><ol>
+<li>
+First of all, make sure that you are logged in as a normal user --
+Wine doesn't like to run when invoked by root.  
+</li>
+
+<li>Create a file in your project directory called "Simulation.cmd".
+In this file place your spice analysis commands (e.g. .OP, .AC, .DC,
+etc.)  
+</li>
+
+<li>Place a SPICE include block into your schematic.  For the file
+attribute, type in "Simulation.cmd".
+</li>
+
+<li>Netlist your design.</li>
+
+<li>Create a link from your netlist "output.net" and a netlist in the
+directory in which SwCADIII lives.  Make the netlist suffix .cir.  For example:
+ln -s ${DESIGN_HOME}/output.net ${WINE_HOME}/.wine/fake_windows/Program Files/LTC/SwCADIII/MyDesign.cir
+</li>
+
+<li>Run LTSpice:  cd into the directory where SwCADIII lives and say "wine scad3.exe"</li>
+
+<li>From the SwCADIII GUI, do: File -&gt; Open -&gt; (files of type netlist
+[.cir]), and select your file.</li>
+
+<li>Run the simulator by clicking on the run button, or doing:
+Simulate -&gt; Run.</li>
+
+<li>Select the variables to graph, and then click OK.  SwCADIII does
+the rest of the work.</li>
+
+</ol>
+
+Naturally, it is very important to play around with LTSpice to
+understand how to use it effectively, but the above description should 
+suffice to get you started.<p></p>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+<a name="ngspice">
+<h2>Ngspice and tclspice</h2>
+</a>
+
+<p>Ngspice was started at the University of Rome by Paolo Nenzi as an
+attempt to create 
+a GPL'ed version of the standard Berkeley SPICE version 3 by re-writing
+the entire SPICE package.  Plans were also laid to create better, more
+robust computational algorithms for the simulation engine.  More
+information is available at the ngspice website:
+<a href="http://ngspice.sourceforge.net/">
+http://ngspice.sourceforge.net/</a>.
+Unfortunately, development on ngspice seems to have ceased at the end of 2001.
+Moreover, my initial experiences with ngspice were not good -- it
+crashed and burned when run on many of my netlists, and it couldn't deal with
+SPICE 2's POLY construct in dependent sources.  Dependent sources with
+PLOY attributes are common in vendor models, so this represents a
+real deficiency.  
+</p>
+
+<p>
+Fortunately, some friendly people at MultiGig Ltd.
+(<a href="http://www.multigig.com/">www.multigig.com</a>)
+were busy developing a branch of ngspice which they called
+"tclspice".  The purpose of tclspice is to enable SPICE commands to
+be embedded into TCL scripts, thereby enabling automated circuit
+optimization.  The project homepage is at:
+<a href="http://tclspice.sourceforge.net/">
+http://tclspice.sourceforge.net/</a>.
+Since the tclspice branch of the code was alive, I decided to work on
+it, instead of the seemingly dead main ngspice branch.  During spring
+2003, I fixed tclspice in three useful (IMNSHO) ways: 
+</p><ol>
+<li>I fixed the parser so that it would handle netnames with
+non-numeric/non-alphabetic characters like "+" or "-" which are common
+in real netlists (e.g. "Vin+", or "Vout1_pull-up").</li>
+<li>I fixed the parser so that it would correctly handle hierarchical
+schematics, and correctly deal with the netnames inside the
+blocks.</li>
+<li>I got the POLY translation code (which exists in XSPICE) working
+so that one can now run SPICE 2 netlists with tclspice.</li>
+</ol>
+Tclspice seems to work nicely now (although there are still some
+issues with memory leaks).  Moreover, because the tclspice
+code is a superset of ngspice, <b>if you build  
+tclspice, you will also build the command-line driven ngspice
+program.</b>  Therefore, I recommend getting and installing tclspice if
+you want to do Linux-native SPICE simulations.
+<p></p>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+
+<h3>Installation and configuration of ngspice and tclspice</h3>
+<p>
+To install ngspice and tclspice, do the following:
+</p><ol>
+<li>Get the latest tclspice distribution from 
+<a href="http://tclspice.sourceforge.net/">
+http://tclspice.sourceforge.net/</a>.  As of this writing, the latest
+version is tclspice-0.2.12.  This version incorporates the fixes I
+mentioned above, as well as other improvements made by the
+hard-working people at MultiGig, so make sure that your version is
+equal or greater than 0.2.12.</li>
+<li>Do the usual "gunzip ; tar -xvf" dance to create a source
+directory for tclspice.</li>
+<li>First build ngspice. Do 
+"./configure --enable-xspice --prefix=/usr/local/geda" 
+in the source directory.  Of course, "--prefix=" should point to the 
+place where you put your geda stuff.  Note that you also
+must do "--enable-xspice" to be able to use SPICE 2 POLYs (and other XSpice goodies).
+</li>
+<li>Do "make &amp;&amp; make install" to compile and install ngspice.  As
+always, you will probably need to be root in order to install the
+packages in a public directory.</li>
+<li>At this point, you should be able to use ngspice.  You can test
+your installation by trying one of the test circuits held in the tests
+directory.  I recommend running the TransImpedanceAmp test, since it
+tests the SPICE2 POLY functionality.
+Information how
+to use ngspice is provided in the next section below.</li>
+<li>If you only want to use ngspice, you can stop now.  Otherwise,
+next build tclspice.  To build tclspice, you need to have the 
+following other packages already installed:
+<ul>
+<li>TclX (tclx8.3.5 works for me.)</li>
+<li>tclreadline (tclreadline-2.1.0 works for me.)</li>
+<li>BLT for TCL (blt2.4z works for me.)</li>
+</ul>
+If you don't have these packages already on your Linux box, you need
+to get them and build them.  Note that building TclX requires having
+the sources for TCL and Tk, so you will also need to get those sources
+if you don't have them installed already.  I am running successfully
+with TCL/Tk 8.4.3, although 8.3.X versions are also supposed to work.</li>
+<li>Assuming you have gotten the additional packages mentioned above
+installed, Do
+"./configure --enable-xspice --prefix=/usr/local/geda --enable-tcl 
+--enable-experimental --disable-shared"
+to configure the Makefiles for tclspice.  (If you don't have the
+additional packages installed correctly , configure will complain and
+barf, so 
+this step acts as a check on your installation.)</li>
+<li>Do "make tcl &amp;&amp; make install-tcl" to compile and install tclspice.</li>
+<li>Now you will be ready to write TCL scripts which incorporate SPICE
+commands.  Information about using tclspice is given below.</li>
+</ol>
+Finally, if you are interested in hacking tclspice (or even if you are
+not), it's a good idea to read
+the NOTES file living in the top source directory for a couple of
+useful pointers.
+<p></p>
+
+<h3>Use of ngspice</h3>
+<p>
+Running ngspice is very simple.  Just issue the command "ngspice
+filename.net" at the unix command prompt, and ngspice will load the
+SPICE netlist called "filename.net" into its workspace, and leave you
+at an ngspice command prompt.  You can
+run the simulator by saying "run".  Your results will be stored in
+SPICE vectors for later printing or plotting.  The command set
+available to you is documented at
+<a href="http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/sec5.html#5">
+http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/sec5.html#5
+</a>.
+</p>
+
+<p>
+To make use of the SPICE2 POLY codemodel, you need to load it into
+ngspice <b>before</b> you load your netlist.  (If you load it after loading
+your netlist, POLYs in your netlist are not translated, and therefore won't
+be simulated correctly.)  To load the
+codemodel, just say "codemodel
+/usr/local/src/tclspice-0.2.12/src/xspice/icm/spice2poly.cm" at the
+ngspice prompt.  Note that you must provide the <b>absolute path</b> to the
+location of the codemodel; ngspice isn't smart enough to look for it
+in any default locations.  (Also note that you should specify the
+location where spice2poly.cm lives on <i>your</i> machine; the path above is
+for mine.)
+</p>
+
+<p>
+A better way to read in the spice2poly codemodel is to include it in
+the ngspice initialization file, "spinit".  The initialization file
+lives in the directory /usr/local/geda/share/ng-spice-rework/scripts
+(or where ever you placed your geda installation).  Other
+ngspice customizations may also be placed into the spinit file.
+</p>
+
+<h3>Use of tclspice</h3>
+<p>
+The tclspice package is a superset of ngspice.  Not only does the
+package include the ngspice interactive environment; tclspice also
+provides a facility which exports the ngspice command set as TCL
+commands for inclusion into a TCL script.  This is a very powerful
+tool: With tclspice you can write a TCL script which runs a
+loop, tweaks
+component values, runs an analysis, and then evaluates the circuit
+performance with the tweaked components before looping again.
+Obviously, this ability can be used to perform automated,
+multi-dimensional circuit optimization.
+</p>
+
+<p>
+To use tclspice, you just need to say "package require spice" at the
+beginning of your TCL program.  Thereafter, to invoke a SPICE command,
+you just call it in the spice namesapce.  For example, the following
+TCL program will read in a SPICE netlist, command a transient analysis,
+run the simulation, and then
+plot the voltage observed over time on net Vout:
+</p><blockquote>
+#! tclsh<br>
+package require spice<br>
+spice::codemodel /usr/local/src/tclspice-0.2.12/src/xspice/icm/spice2poly.cm<br>
+<br>
+spice::source netlistname.cir<br>
+spice::tran 0.1ns 40ns<br>
+spice::run<br>
+spice::plot Vout<br>
+puts "All done now!"
+</blockquote>
+Note that  since tclspice doesn't read the
+ngspice initialization file "spinit", you will need to put any
+initialization commands directly into the TCL program.  For example,
+in the above example we read the spice2poly codemodel directly into
+the workspace.  Many other commands are also available; the entire
+tclspice commandset is documented at:
+<a href="http://tclspice.sourceforge.net/docs/tclspice_com.html">
+http://tclspice.sourceforge.net/docs/tclspice_com.html
+</a>
+<p></p>
+
+<p>
+A major problem with tclspice (which was inherited from ngspice) is
+that it leaks memory.  Therefore, the time over which
+you may run a simulation is limited.  This means that if you want to
+do an 
+optimization by looping through a circuit many, many times, you may
+run out of memory before your program has completed its optimization.
+This is a known issue with tclspice, and efforts are underway to plug
+the leaks.
+</p>
+
+<p>
+Meanwhile, there are some workarounds which can be used on
+moderate-sized designs to facilitate long optimization runs.  One
+method I have employed is to have the optimizer write its current
+state into a file after every circuit analysis, and read its starting
+state from the same file.  The optimizer also stores the current list
+of best components in another file, and reads this file at the start
+of every run.  Then, I have a TCL program called TaskMgr.tcl which
+runs in a loop; at each iteration of the loop it forks a child process
+to run the optimizer.  Meanwhile, the parent process waits for 5
+minutes (a heuristically determined time), and then issues a "KILL"
+signal to the child before looping and starting the optimizer again.
+This way, the optimizer never runs long enough to consume all 
+the memory
+in my machine.  The TaskMgr.tcl program is shown here:
+</p><blockquote>
+#! tclsh<br>
+package require Tclx<br>
+while {1} {
+<dl><dd>
+    set PID [fork]<br>
+    if {$PID} {<br>
+<dl><dd>
+        # Parent<br>
+        after 300000<br>
+        puts "About to kill child PID = $PID . . . ."<br>
+        kill $PID<br>
+        wait $PID<br>
+</dd></dl>
+    } else {<br>
+<dl><dd>
+        # Child<br>
+        source Optimize.tcl<br>
+        # If we ever get through this, we can print out the following:<br>
+        error "We are done now!!!!!!"
+</dd></dl>
+    }
+</dd></dl>
+}
+</blockquote>
+Note that TaskMgr.tcl needs the TclX package you already installed to
+run tclspice.  Also, you may want to change the wait time to a
+different value depending upon the memory and speed of your machine.
+Finally, the parent has to wait on $PID because that causes the child
+process's corpse to be taken off the Linux kernal's task list when it dies.
+Otherwise, you will end up with a lot of zombie processes lurking
+around your machine as the optimizer runs -- a long optimization could
+turn your system into "the night of the living dead"!
+<p></p>
+
+<p>
+This method of waiting a specific amout of time for the child process
+is preferable if a single analysis run takes a relativly short time
+compared to the time required to eat all memory in the machine.  If
+the analysis time is comparable to the time taken to eat all memory in
+the machine, a better approach is to have the parent keep track of the
+analysis state, kick off a single
+analysis run, and then have the run terminate after
+every iteration.  Whether this is preferable depends upon the size and
+complexity of your design; you may want to experiment with your
+analysis to see just how long it takes and how much memory it
+consumes.  I have found that a design comprised of six op amps (with
+corresponding vendor models) and 50 or so passives will run in under
+10 seconds on a PIII 333MHz with 128MB RAM.  Therefore, your design
+must be very big before a single analysis will eat a significant
+amount of RAM.
+</p>
+<a href="http://www.brorson.com/gEDA/SPICE/intro.html#TOC">Back to the table of contents.</a>
+
+<!-- ----------------------------------------------- -->
+
+<br><br><br>
+<center>
+<a href="http://www.brorson.com/gEDA/SPICE/appendix.html">Continue on to the appendix.</a>
+</center>
+
+
+<hr width="100%">
+
+<p>Please send comments or questions about this HOWTO to Stuart
+Brorson at <a href="mailto:sdb@cloud9.net">sdb@cloud9.net</a>.
+</p>
+
+</body></html>
