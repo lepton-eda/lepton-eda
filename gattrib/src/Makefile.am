@@ -8,17 +8,15 @@ bin_PROGRAMS = gattrib
 ## don't forget all *.h files */
 if GTK22_SOURCE
 gattrib_SOURCES = \
-		gtksheet_2_2.c gtksheet_2_2.h \
-		gtkextra-marshal.c gtkextra-marshal.h \
-                gtkitementry_2_2.c gtkitementry_2_2.h \
-		globals.c globals.h \
-		prototype.h \
-		struct.h \
+		gtksheet_2_2.c \
+		gtkextra-marshal.c \
+                gtkitementry_2_2.c \
+		globals.c \
 		listsort.c \
 		parsecmd.c \
 		g_register.c \
 		g_rc.c \
-		i_vars.c i_vars.h \
+		i_vars.c \
 		i_basic.c \
 		x_window.c \
 		x_gtksheet.c \
@@ -34,16 +32,14 @@ gattrib_SOURCES = \
 		gattrib.c 
 else
 gattrib_SOURCES = \
-		gtksheet_1_2.c gtksheet_1_2.h \
-                gtkitementry_1_2.c gtkitementry_1_2.h \
-		globals.c globals.h \
-		prototype.h \
-		struct.h \
+		gtksheet_1_2.c \
+                gtkitementry_1_2.c \
+		globals.c \
 		listsort.c \
 		parsecmd.c \
 		g_register.c \
 		g_rc.c \
-		i_vars.c i_vars.h \
+		i_vars.c \
 		i_basic.c \
 		x_window.c \
 		x_gtksheet.c \

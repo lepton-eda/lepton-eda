@@ -1,5 +1,5 @@
 
-EXTRA_DIST = ProgramArchitecture.gnumeric gEDA_Structures_updated.pn
+EXTRA_DIST = ProgramArchitecture.gnumeric gEDA_Structures_updated.png
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
