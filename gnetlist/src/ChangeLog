@@ -1,0 +1,223 @@
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+ChangeLog for gnetlist
+
+Most recent changes (version wise) are at the top of this file 
+
+5/14/99 Updated manual page a bit 
+
+5/13/99 Integrated Mike Jarabek's verilog netlister 
+
+4/11/99	Added some more debugging information when reading in the scm file
+
+4/9/99	Fixed Makefile.am so that gnetlist.1 is installed
+
+3/26/99 Added some newlines in a few places in gnetlist.scm
+
+3/20/99 Got spice backend guile functions to follow the new 
+	backend:function_name naming convention
+
+3/19/99	Updated g_rc to print more diag message to the log file when
+	it can't find an rc file (like gschem)
+
+3/18/99 Updated g_rc to use new macros for finding system-*rc files
+
+3/11/99 Added back the original implementation of the write-net-name-... 
+	guile code for the spice netlist.  It works right for transistors.
+	Mine did not.  Bummer.  Spice netlist doesn't support slotting for
+	now.
+
+3/10/99	Fixed a coredump when you pass in an "unknown" for the pin number
+	in get-nets.  Return a list which is ("ERROR"). (pointed out by
+	Bas Gieltjes)
+
+	Changed ales-netlist format to geda-netlist format.  Changed
+	gnetlist.scm appropriately	
+
+	Renamed all C guile functions to be called gnetlist:<whatever>
+	This makes it clear where functions come from 
+
+	Added code to set netlist_mode which enables/disables certain
+	netlist features.  Each backend should call this with something
+	even if it's the default mode: gEDA
+
+	Added gnetlist:set-netlist-mode to g_register and g_netlist which 
+	sets the above mode
+
+	Integrated tango netlist backend by Nuno Sucena (thanks)
+
+	Changed the highest level function in all backends to take a 
+	parameter which is the netlist output filename.  This is a required
+	parameter
+
+	Added -o flag which specifies output filename (for above), if you
+	don't specify an output filename the default is output.net
+
+	Integrated spice backend by Bas Gieltjes
+
+	Had to add a kludge to gnetlist.c which sets netlist_mode based
+	on the guile_proc string (for spice mode which needs to be set
+	before the .sch files are read in)
+
+	Changed the default unnamed_counter to be one instead of zero
+
+	Fixed the incorrect behavior when you have slotted components and
+	the spice backend.  
+
+	Played a bit with the way power connections show up in the netlists
+	(s_net.c and the POWER string code)  Not completely happy with 
+	any of this.
+
+3/9/99	Fixed a few variables which were uninitialized (width, height,
+	snap_size)
+
+1/24/99 Removed some // comments (shouldn't use those in C code)
+
+12/3/98 Added thi's small gnetlist patch
+
+11/8/98	Changed the ales-netlist slightly (less newlines)
+
+	Started adding code to resolve same net names
+
+	Found a really nasty bug, wasn't initalizing net_name in cpinlist!
+
+	Found several really nasty bugs, where something was initalized
+	incorrectly (strings = 0 ?!?) (s_net.c in add function)
+
+	Found another missing init (object_ptr) in s_netlist.c (add function)
+
+	Found another missing init (original) in s_cpinlist.c (add function)
+
+	All of the above bugs were apparently the cause of the mysterious
+	guile 1.3 problem.  Further testing is needed
+
+10/25/98 Cleaned up all warnings 
+
+10/24/98 Discovered that gnetlist doesn't like guile 1.3
+
+	 Fixed a memory overrite in s_net_name, also added a return(NULL)
+
+	 Fixed a place where I was freeing a null pointer in g_get_packages
+
+	 Found/fixed another "trying to free null data"
+
+ 	 Updated gnetlist.scm with display-connections (output.net looks 
+	 better)
+
+10/20/98 Fixed a bug which prevented gnetlist to work with guile 1.3
+
+	 Change rc file guile primative version to gnetlist-version
+
+10/18/98 Changed o_attrib_search_name_single to pass a null in for the last
+	 argument
+
+10/12/98 Added guile code to handle unconnected pins (gnetlist.scm)
+
+	 Found a place where U? wasn't being set.
+
+10/11/98 Added parsecmd.c (commandline argument parsing)
+
+         Simplified the loading of schematic sheets and intergrated above
+
+	 Added the actual command line options (-v for verbose mode) and
+	 (-i for guile interactive mode)  Default for both of these is
+	 off
+
+	 Added usage() function (which exits when called)
+
+	 Added quiet_mode to the command line arguments, to shut off all
+	 messages
+
+	 Removed all warnings
+
+	 Worked on gnetlist.scm to get some guile code to drive some of 
+	 the new netlist code
+	
+	 Added and registered g_get_package_attribute guile function which
+	 returns the wanted attribute from the specified package uref
+
+	 Added command line option -g guile_proc so you can execute guile
+	 scripts from the command line 
+
+	 Added code to support above
+
+	 More work into gnetlist.scm to get some sort of netlist writer 
+	 going
+		
+
+10/10/98 Added file s_traverse.c which creates flat netlist datastructure
+
+	 Serious work on getting netlist code to work!
+
+	 Add s_net.c (functions that deal with the net structure) 
+
+	 Add s_netlist.c (functions that deal with the netlist struct)
+
+	 Add s_cpinlist.c (functions that deal with the cpinlist struct)
+
+	 Completely preliminary code for netlist generation (first cut,
+	 highly inefficient, but works! :)
+
+	 Updated g_get_packages to use the new available structures (much
+	 faster)
+
+	 Updated g_get_pins to use the new available structures (much
+	 faster)
+
+	 Added (exit) and (quit) guile functions
+
+	 Found a condition where my attempt to speed up the netlist post
+	 processing, but it found a nasty bug, so now we have a 3 pass
+	 post process. 
+	
+
+0.0.5
+-------
+
+9/19/98 Improved the input gathering code for the guile shell a bit.
+
+9/13/98 Changed netlist.scm to gnetlist.scm
+
+	Fixed g_rc_scheme_directory to store the string in the structure 
+
+9/4/98	Made then necessary changes to have gnetlist use libgeda
+
+	Fixed a few minor tidbits related to above
+	
+8/30/98 Added embedded component support from gschem to gnetlist
+ 
+8/29/98 Added complex_parent pointer to object structure
+
+	Added code to fill above pointer 
+
+	Added s_netlist.c and added it to Makefile.am
+
+	Added first cut of GUILE netlist routines	
+		g_get_packages
+
+	Added s_scratch.c (misc scratch buffer routines)
+
+	Made some changes to the attribute handling, head attrib node 
+	points to the object where the attributes belong to.  Be sure 	
+	to propegate this change back to gschem (done)
+
+	Made sure that text_string is only set when it should be by 
+	setting p_text_string[0] = '\0'.  Be sure to propegate this change
+	back to gschem (done)
+
+	Added a bunch of attribute search routines to support all this
+	Be sure to propagate these attribute routines back go gschem
+
+	Wrote some test scheme code which is in ../bin/netlist.scm
+
+8/25/98	Added code into the repository and devel tree
+
+	Fixed logging mechanism
+
+	Added appropriate lines in all the upper makefiles to build this code
+
+	Code doesn't do anything other then read in the schematics
+
