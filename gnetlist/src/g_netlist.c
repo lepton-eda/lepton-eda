@@ -878,38 +878,28 @@ SCM g_get_unique_slots(SCM scm_uref)
    calling flags are hard coded into the function.  At some point this 
    should be fixed . . . 
    9.1.2003 -- SDB 
+ 
+   8.2.2005 -- Carlos Nieves Onega
+   Different modes are now included in the backend_params list, as well as
+   the backend parameters given from the command line. Since the function 
+   calling-flag? in scheme/gnetlist.scm returns false if the calling flag was
+   not found, it's only necessary to include the flags being true.
 */
 SCM g_get_calling_flags()
 {
     SCM arglist = SCM_EOL;
 
-/*  This is an ugly hack.  Some kind of foreach would be better here . . . .  */
+    GSList *aux;
+  
+    aux = backend_params;
+    while (aux != NULL) {
+      arglist = scm_cons (scm_list_n (scm_makfrom0str (aux->data),
+				      SCM_BOOL (TRUE),
+				      SCM_UNDEFINED), 
+			  arglist);
+      aux = aux->next;
+    }
     
-    arglist = scm_cons (scm_list_n (scm_makfrom0str ("verbose_mode"),
-                                    SCM_BOOL (verbose_mode),
-                                    SCM_UNDEFINED), 
-                        arglist);
-
-    arglist = scm_cons (scm_list_n (scm_makfrom0str ("interactive_mode"),
-                                    SCM_BOOL (interactive_mode),
-                                    SCM_UNDEFINED), 
-                        arglist);
-
-    arglist = scm_cons (scm_list_n (scm_makfrom0str ("include_mode"),
-                                    SCM_BOOL (include_mode),
-                                    SCM_UNDEFINED), 
-                        arglist);
-
-    arglist = scm_cons (scm_list_n (scm_makfrom0str ("quiet_mode"), 
-                                    SCM_BOOL (quiet_mode),
-                                    SCM_UNDEFINED), 
-                        arglist);
-
-    arglist = scm_cons (scm_list_n (scm_makfrom0str ("sort_mode"),
-                                    SCM_BOOL (sort_mode),
-                                    SCM_UNDEFINED), 
-                        arglist);
-
     return (arglist);
 }
 

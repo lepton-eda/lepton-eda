@@ -1,3 +1,8 @@
+2005-02-08 Carlos Nieves Onega <cnieves@iespana.es>
+	* include/globals.h, src/globals.c, src/g_netlist.c, 
+	  src/parsecmd.c, src/gnetlist.c: 
+	  Added '-O' option allowing to pass parameters to the backend.
+	
 2005-02-04 23:14  danmc
 
 	* configure.ac, src/g_netlist.c, src/g_rc.c, src/g_register.c,

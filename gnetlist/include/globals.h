@@ -60,6 +60,7 @@ extern int sort_mode;
 extern char *output_filename;
 extern GSList *pre_backend_list;  /* before backend loaded */
 extern GSList *post_backend_list; /* after backend loaded, before execute */
+extern GSList *backend_params;  /* Parameters passed to the backend from the command line */
 
 /* stuff to pass command line to Scheme back end */
 extern char *command_line;

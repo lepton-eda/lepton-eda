@@ -85,3 +85,5 @@ GSList *post_backend_list=NULL;
 /* String holding command line */
 char *command_line;
 
+/* Parameters passed to the backend from the command line */
+GSList *backend_params = NULL;  

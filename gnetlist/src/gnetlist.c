@@ -38,11 +38,16 @@
 
 void gnetlist_quit(void)
 {
+#ifdef HAS_GTK12
+    GSList *aux;
+#endif
     s_clib_free();
     s_slib_free();
     s_rename_destroy_all();
     /* o_text_freeallfonts(); */
-
+    
+    /* Free GSList *backend_params */
+    g_slist_free (backend_params);
 }
 
 void main_prog(void *closure, int argc, char *argv[])

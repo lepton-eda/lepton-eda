@@ -36,7 +36,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "o:qiIhvsg:c:l:m:"
+#define OPTIONS "o:qiIhvsg:c:l:m:O:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -57,6 +57,7 @@ void usage(char *cmd)
     printf("  -g proc           Scheme procedure to execute\n");
     printf("  -o filename       Output netlist filename\n");
     printf("  -c string         Execute string as a scheme script\n");
+    printf("  -O option         Pass the given option to the backend\n");
     printf("  -v                Verbose mode on\n");
     printf("  -s                Sort output netlist (for Gnucap)\n");
     printf("\n");
@@ -104,18 +105,22 @@ int parse_commandline(int argc, char *argv[])
 	switch (ch) {
 
 	case 'v':
+	    backend_params = g_slist_append(backend_params, "verbose_mode");
 	    verbose_mode = TRUE;
 	    break;
 
 	case 'i':
+	    backend_params = g_slist_append(backend_params, "interactive_mode");
 	    interactive_mode = TRUE;
 	    break;
 
         case 'I':
+	    backend_params = g_slist_append(backend_params, "include_mode");
             include_mode = TRUE;
             break;
 
 	case 'q':
+	    backend_params = g_slist_append(backend_params, "quiet_mode");
 	    quiet_mode = TRUE;
 	    break;
 
@@ -143,6 +148,10 @@ int parse_commandline(int argc, char *argv[])
 	    strcpy(output_filename, optarg);
 	    break;
 
+	case 'O':        
+	  backend_params = g_slist_append(backend_params, optarg);
+	  break;
+
 	case 'c':
         scm_internal_stack_catch (SCM_BOOL_T,
                                   (scm_t_catch_body) scm_c_eval_string,
@@ -152,6 +161,7 @@ int parse_commandline(int argc, char *argv[])
 	    break;
 
         case 's':
+ 	    backend_params = g_slist_append(backend_params, "sort_mode");
             sort_mode = TRUE;
             break;
 
