@@ -1271,12 +1271,15 @@ the resource file (see the section below for more info).
 	a big red X at the invalid endpoint connection.  Buses are still
 	very new so there are still many quirks.
 
-	Nets which have the same attribute label= attached to them are
-	also considered electrically connected.  You will not get any
-	indication of this connection by gschem, but the netlister
-	(gnetlist) considers nets with the same label= attribute
-	electrically connected.  The naming convention for buses has not
-	been formalized yet.
+	You can label nets by using the label= attribute.  Do not attach
+	more than one label= to a net.	You only need to attach the label=
+	attribute to one net segment.  Different nets (i.e. multiple
+	net segments which aren't connected together) which have the
+	same attribute label= attached to them are also considered
+	electrically connected.  You will not get any indication of this
+	connection by gschem, but the netlister (gnetlist) considers
+	nets with the same label= attribute electrically connected.
+	The naming convention for buses has not been formalized yet.
 
 	More TBA
 
