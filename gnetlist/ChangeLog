@@ -1,4 +1,10 @@
 2005-02-08 Carlos Nieves Onega <cnieves@iespana.es>
+	* scheme/gnet-drc2.scm:
+	  Use a parameter instead of the quiet mode of gnetlist so 
+          gnetlist doesn't return a non-zero value when there are only
+	  warnings. This parameter is 'ignore-warnings-in-return-value'.
+	
+2005-02-08 Carlos Nieves Onega <cnieves@iespana.es>
 	* include/globals.h, src/globals.c, src/g_netlist.c, 
 	  src/parsecmd.c, src/gnetlist.c: 
 	  Added '-O' option allowing to pass parameters to the backend.

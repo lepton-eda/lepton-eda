@@ -1,8 +1,6 @@
-;;; $Id$
-;;;
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
-;;; Copyright (C) 1998-2000 Ales V. Hvezda
+;;; Copyright (C) 1998-2005 Ales V. Hvezda
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,6 +21,13 @@
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
 ;;
+;;  2005-02-08: Use a parameter instead of the quiet mode of gnetlist so 
+;;              gnetlist doesn't return a non-zero value when there are only
+;;              warnings. This parameter is 'ignore-warnings-in-return-value'.
+;;  2005-02-06: Make gnetlist return a non-zero value when errors or warnings
+;;              are found. If there is only warnings, the non-zero return value
+;;              can be disabled using the "quiet mode" option of gnetlist.
+;;  2005-02-06: Fixed bug when packages list is empty.
 ;;  2005-01-23: Added check for duplicated references.
 ;;  2003-10-24: Added numslots and slot attributes check.
 ;;  2003-06-17: Added configuration support and slots check.
@@ -34,6 +39,16 @@
 ;;  2003-06-04: Added check for unconnected pins and fix one small error (index limit error).
 ;;  2003-06-03: First release
 
+;; Parameters
+;; ----------
+;; Parameters should be passed to the backed using -O option in gnetlist's
+;; command line.
+;;
+;;   * ignore-warnings-in-return-value: By default, this backend makes gnetlist
+;;        return a non-zero value when warnings or errors are found. This is 
+;;        useful for Makefiles. Using this option, gnetlist will return a zero
+;;        value if there are only DRC warnings.
+;;
 ;; Configuration
 ;; -------------
 ;; 
@@ -875,7 +890,8 @@
 		(begin
 		  (display "Checking unconnected pins..." port)
 		  (newline port)
-		  (drc2:check-unconnected-pins port packages (gnetlist:get-pins-nets (car packages)))
+		  (if (not (null? packages))
+		      (drc2:check-unconnected-pins port packages (gnetlist:get-pins-nets (car packages))))
 		  (newline port)))
 
 	    ;; Check slots   
@@ -924,7 +940,18 @@
 		  (display "No errors found. " port)
 		  (newline port)))
 
-         (close-output-port port)))))
+         (close-output-port port)
+	 
+	 ;; Make gnetlist return an error if there are DRC errors.
+	 ;; If there are only warnings and it's in quiet mode, then
+	 ;; do not return an error.
+	 (if (> errors_number 0)
+	     (error "DRC errors found. See output file.")
+	     (if (> warnings_number 0)
+		 (if (not (calling-flag? "ignore-warnings-in-return-value" (gnetlist:get-calling-flags)))
+		     (error "DRC warnings found. See output file."))))
+
+	 ))))
 
 
 ;;
