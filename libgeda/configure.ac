@@ -348,10 +348,10 @@ fi
 
 # Tangling is required if there is no C source files in the src/ 
 # directory. Therefore they need to be extracted from the documented
-# sources in noweb/ either with notangle or notangle_guile.scm.
+# sources in noweb/ either with notangle or notangle_guile.
 #
 # notangle is the utility that comes with the noweb package.
-# notangle_guile.scm is a script that act the same as notangle
+# notangle_guile is a script that act the same as notangle
 # but only require a guile interpreter with built-in module regex
 # and getopt-long
 
@@ -363,8 +363,8 @@ exit_status=$?
 if test "$NOTANGLE" = "no" -a "$exit_status" = "1"; then
 
    # notangle not found, and no C sources in src 
-   # need notangle_guile.scm
-   echo "** Cannot find notangle (part of noweb) : using notangle_guile.scm instead **"
+   # need notangle_guile
+   echo "** Cannot find notangle (part of noweb) : using notangle_guile instead **"
 	
    # find the guile interpreter
    AC_PATH_PROG(GUILEINTERP, guile, no, ${PATH})
@@ -379,7 +379,7 @@ if test "$NOTANGLE" = "no" -a "$exit_status" = "1"; then
    if test "$exit_status" = "1"; then
       AC_MSG_RESULT([no])
       echo "no support for getopt-long module in guile interpreter"
-      AC_MSG_ERROR([this module is required by notangle_guile.scm but is not available in the interpreter])
+      AC_MSG_ERROR([this module is required by notangle_guile but is not available in the interpreter])
    fi
    AC_MSG_RESULT([yes])
  
@@ -390,20 +390,20 @@ if test "$NOTANGLE" = "no" -a "$exit_status" = "1"; then
    if test ! "$exit_status" = "0"; then
       AC_MSG_RESULT([no])
       echo "no support for regex module in guile interpreter"
-      AC_MSG_ERROR([this module is required by notangle_guile.scm but is not available in the interpreter])
+      AC_MSG_ERROR([this module is required by notangle_guile but is not available in the interpreter])
    fi
    AC_MSG_RESULT([yes])
 
-   # set NOTANGLE and NOTANGLEROOT to use notangle_guile.scm
+   # set NOTANGLE and NOTANGLEROOT to use notangle_guile
    # as the result of the previous tests
    #  - NOTANGLE is the relative pathname to script from the source dir
    #  - NOTANGLEROOT is the option to give the root code chunk name
-   #  - NOTANGLEFLAGS are other flags to notangle_guile.scm
-   NOTANGLE="../scripts/notangle_guile.scm"
+   #  - NOTANGLEFLAGS are other flags to notangle_guile
+   NOTANGLE="../scripts/notangle_guile"
    NOTANGLEROOT="--rootname="
    NOTANGLEFLAGS=""
 
-   echo "--            notangle_guile.scm should work fine on this system           --"
+   echo "--            notangle_guile should work fine on this system           --"
 
 else
 
@@ -642,12 +642,12 @@ AC_CONFIG_FILES([Makefile
                  docs/Makefile
 	         libgeda.pc
 	         scripts/geda_totexi
-	         scripts/notangle_guile.scm ])
+	         scripts/notangle_guile ])
 
 AC_CONFIG_COMMANDS([geda_totexi-chmod], 
                    [[chmod +x scripts/geda_totexi]],[[]])
-AC_CONFIG_COMMANDS([notangle_guile.scm-chmod],
-                   [[chmod +x scripts/notangle_guile.scm]],[[]])
+AC_CONFIG_COMMANDS([notangle_guile-chmod],
+                   [[chmod +x scripts/notangle_guile]],[[]])
 
 AC_OUTPUT
 

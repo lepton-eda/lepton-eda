@@ -1,3 +1,9 @@
+2005-02-24  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* configure.ac, scripts/Makefile.am: Adapted for renaming of script.
+	
+	* scripts/notangle_guile.scm.in: Renamed to notangle_guile.in.
+	
 2005-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Fixed a minor typo that was causing the linking of
