@@ -1,3 +1,8 @@
+2002-10-02 Werner Hoch <werner.ho@gmx.de>
+	*74/741[789]?-*: completed symbols (added net, pinlabels, pintype, ...)
+	*74/74HCT245-1.sym, 74/74HCT4094-1.sym, 74/74HCT541-1.sym:
+		added numslots=0
+
 2002-10-01 Werner Hoch <werner.ho@gmx.de>
 	*74/741[456]?-*: corrected the wrong whichend attribute on some pins
 	
