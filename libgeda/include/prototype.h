@@ -360,7 +360,8 @@ int s_color_image_int(int color);
 void s_color_gdcolor_init(void);
 int s_color_get_name(int index, char *string);
 /* s_hierarchy.c */
-void s_hierarchy_down_schematic(TOPLEVEL *w_current, char *filename, PAGE *parent);
+int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename, PAGE *parent, int page_control);
+void s_hierarchy_down_schematic_multiple(TOPLEVEL *w_current, char *filename, PAGE *parent);
 void s_hierarchy_down_symbol(TOPLEVEL *w_current, char *filename, PAGE *parent);
 void s_hierarchy_up(TOPLEVEL *w_current, int pid);
 void s_hierarch_traverse(void);
@@ -421,6 +422,7 @@ char *s_slib_search_dirs(char *basename);
 char *s_slib_search_lowlevel(char *basename);
 char *s_slib_getbasename(char *rawname);
 char *s_slib_search(char *filename, int flag);
+char *s_slib_search_single(char *filename);
 void s_slib_free(void);
 void s_slib_init(void);
 char *s_slib_getdir(int index);

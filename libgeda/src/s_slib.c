@@ -341,6 +341,26 @@ s_slib_search(char *filename, int flag)
 	return(string);
 }
 
+/* This function takes one of the following: */
+/* 	SLIB_SEARCH_START   starts a new search for a source file */
+/* 	SLIB_SEARCH_NEXT    returns the next instance of the file if exist */
+/* 	SLIB_SEARCH_DONE    finished searching */
+/* filename is the raw symbol/whatever filename, this function does the all */
+/* the required stripping (up to the first period) */
+/* don't forget to free the returned string hack */
+/* this routine only looks for the filename as is and does no other changes */
+/* to the filename*/
+char *
+s_slib_search_single(char *filename)
+{
+	char *string=NULL;
+
+	string = s_slib_search_lowlevel(filename);
+
+	/* don't forget to free this string */
+	return(string);
+}
+
 void
 s_slib_free()
 {

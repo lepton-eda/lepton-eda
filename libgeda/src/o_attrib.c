@@ -1786,6 +1786,10 @@ o_attrib_free_returned(OBJECT **found_objects)
 {
 	int i=0;
 
+	if (!found_objects) {
+		return;
+	}
+
 	/* don't free the insides of found_objects, since the contents are */
 	/* just pointers into the real object list */
 	while(found_objects[i] != NULL) {

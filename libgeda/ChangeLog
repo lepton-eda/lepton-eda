@@ -8,6 +8,28 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-01-31  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_slib.c: Created s_slib_search_single which just search for
+          the filename and does nothing else to the name.
+
+	* src/s_hierarchy.c: Created s_hierarchy_down_schematic_single and
+	  transformed old call into s_hierarchy_down_schematic_multiple
+
+	* src/o_attrib.c: Put in another check in o_attrib_free_returned
+	  to make sure found_objects is not null before it is dereferenced
+
+	* include/struct.h: Added enforce_hierarchy to toplevel structure
+
+	* include/struct.h: Added mawindow to toplevel structure 
+          (multi-attrib window)
+
+	* include/struct.h: Added aewindow to toplevel structure 
+          (attrib-edit window)
+
+	* include/struct.h: Added sewindow/seentry to toplevel structure 
+          (slot-edit)
+
 2000-01-17  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: up and down pointers to the st_page structure

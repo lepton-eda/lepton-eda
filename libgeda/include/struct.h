@@ -384,8 +384,12 @@ struct st_toplevel {
 	GtkWidget *tientry;
 	GtkWidget *tewindow;			/* text edit */
 	GtkWidget *teentry;
+	GtkWidget *sewindow;			/* slot edit */
+	GtkWidget *seentry;
 	GtkWidget *exwindow;			/* exit confirm */
 	GtkWidget *aawindow;			/* arc attribs */
+	GtkWidget *mawindow;			/* multi attribute */
+	GtkWidget *aewindow;			/* attribute edit */
 	GtkWidget *aaentry_start;
 	GtkWidget *aaentry_sweep;  
 	GtkWidget *trwindow;			/* translate */
@@ -466,6 +470,8 @@ struct st_toplevel {
 	int middle_button; /* controls what the third mouse button does */
 	int net_consolidate; /* controls if the net consolidation code is used */ 
 	int file_preview; /* controls if the preview area is enabled or not */ 
+	int enforce_hierarchy; /* controls how much freedom user has when */ 
+                               /* traversing the hierarchy */
 
 	int print_output_type;			/* either window or limits */
 
