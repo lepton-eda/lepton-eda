@@ -34,7 +34,7 @@
 /*  #include <gtk/gtkintl.h>  */
 /*  #include <gtk/gtkmarshalers.h>  */
 /*  #include <gtk/gtktextutil.h>  */
-#include <gtk/gtkcelllayout.h>
+/*  #include <gtk/gtkcelllayout.h>  */
 
 
 #include <pango/pango.h>
