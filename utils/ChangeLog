@@ -5,6 +5,9 @@
 	* src/gsch2pcb.c, examples/gsch2pcb/project.sample: Upgraded to 
 	Bill Wilson's latest version (1.4) (1.3 skipped)
 
+	* Makefile.am: Oops forgot to remove references to the README.* 
+	files when they were moved, so make dist broke.  Fixed.
+
 2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/Makefile.am: Changed doc install directory readme to readmes

@@ -1,8 +1,7 @@
 
 SUBDIRS = src gschlas scripts lib include examples docs
 
-EXTRA_DIST = README.olib ChangeLog.tragesym README.tragesym \
-	     README.gsch2pcb ChangeLog.gsch2pcb autogen.sh
+EXTRA_DIST = ChangeLog.tragesym ChangeLog.gsch2pcb autogen.sh
 
 distclean-local:
 	-rm -rf autom4te.cache

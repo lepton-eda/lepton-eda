@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-31 21:18-0500\n"
+"POT-Creation-Date: 2004-01-11 17:48-0500\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -241,16 +241,16 @@ msgstr "初期化scmファイルを読み込んでいます。[%s]\n"
 msgid "Failed to read init scm file [%s]\n"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
-#: noweb/gschem.nw:270 noweb/gschem.nw:296
+#: noweb/gschem.nw:270 noweb/gschem.nw:290
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "スケマチックを読み込んでいます。[%s]\n"
 
-#: noweb/gschem.nw:361
+#: noweb/gschem.nw:344
 msgid "Scheme directory NOT set!\n"
 msgstr "schemeディレクトリが設定されていません!\n"
 
-#: noweb/gschem.nw:368 noweb/x_script.nw:86
+#: noweb/gschem.nw:351 noweb/x_script.nw:86
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "guileスクリプトを実行しています。[%s]\n"

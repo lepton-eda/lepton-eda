@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-31 21:18-0500\n"
+"POT-Creation-Date: 2004-01-11 17:48-0500\n"
 "PO-Revision-Date: 2003-06-03 18:30GMT\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -249,16 +249,16 @@ msgstr "Lese init scm Datei [%s]\n"
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Die Datei init scm [%s] konnte nicht gelesen werden.\n"
 
-#: noweb/gschem.nw:270 noweb/gschem.nw:296
+#: noweb/gschem.nw:270 noweb/gschem.nw:290
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Lade Schaltplan [%s]\n"
 
-#: noweb/gschem.nw:361
+#: noweb/gschem.nw:344
 msgid "Scheme directory NOT set!\n"
 msgstr "Das scheme Verzeichnis wurde nicht definiert!\n"
 
-#: noweb/gschem.nw:368 noweb/x_script.nw:86
+#: noweb/gschem.nw:351 noweb/x_script.nw:86
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Führe guile scipt aus [%s]\n"

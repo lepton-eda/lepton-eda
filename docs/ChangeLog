@@ -9,6 +9,8 @@
 	more footprints). Thanks Dan.
 
 	* symbols/symbols.tex: Added a couple missing \'s to above patch
+	
+	* netattrib/netattrib.txt: Removed obsolete file from CVS.
 
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
