@@ -135,6 +135,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 {
     OBJECT *head;
     OBJECT *o_current;
+    OBJECT *o_pinnum_object;
     char *pinnum = NULL;
     char *uref = NULL;
     char *temp_uref = NULL;
@@ -146,7 +147,9 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     o_current = object;
 
     /* this function only searches the single o_current */
-    pinnum = o_attrib_search_name_partial(o_current, "pin", 0);
+    pinnum = o_attrib_search_name_single(o_current, "pinnumber",
+                                         &o_pinnum_object);
+    
     head = return_head(o_current);
 
 #if DEBUG
