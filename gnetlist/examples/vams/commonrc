@@ -1,4 +1,4 @@
-(define examples-path (getenv 'PWD))
+(define examples-path (getenv "PWD"))
 
 (define-module (ice-9 ls) :use-module (ice-9 common-list)
 			  :use-module (ice-9 string-fun))

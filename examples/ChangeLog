@@ -1,4 +1,9 @@
 
+2003-02-20  Ales Hvezda (ahvezda@seul.org)
+
+	* gTAG/commonrc: Changed how the current directory variable is
+	set (used "'s instead of ').
+
 2003-01-11  Ales Hvezda (ahvezda@seul.org)
 
 	* Created configure.in and friends.  Added all files into cvs.

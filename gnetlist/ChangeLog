@@ -1,3 +1,8 @@
+2003-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * examples/vams/commonrc: Changed how the current directory
+        variable is set (used "'s instead of ').
+
 2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Bumped version to 20030223

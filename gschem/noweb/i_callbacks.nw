@@ -1998,7 +1998,7 @@ DEFINE_I_CALLBACK(page_manager)
 <<i_callbacks.c : i_callback_page_next()>>=
 DEFINE_I_CALLBACK(page_next)
 {
-  PAGE *new_page;
+  PAGE *new_page = NULL;
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
@@ -2014,11 +2014,13 @@ DEFINE_I_CALLBACK(page_next)
       new_page = w_current->page_current->next;
     }
 
-    if (new_page) {
+    if (new_page && new_page != w_current->page_current) {
       w_current->page_current = new_page;
     } else {
       return;
     }
+  } else {
+    return;
   }
 
   s_page_goto(w_current, w_current->page_current);
@@ -2042,7 +2044,7 @@ DEFINE_I_CALLBACK(page_next)
 <<i_callbacks.c : i_callback_page_prev()>>=
 DEFINE_I_CALLBACK(page_prev)
 {
-  PAGE *new_page;
+  PAGE *new_page = NULL;
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
@@ -2058,11 +2060,13 @@ DEFINE_I_CALLBACK(page_prev)
       new_page = w_current->page_current->prev;
     }
 
-    if (new_page) { 
+    if (new_page && new_page != w_current->page_current) { 
       w_current->page_current = new_page;
     } else {
       return;
     }
+  } else {
+    return;
   }
 
   s_page_goto(w_current, w_current->page_current);
