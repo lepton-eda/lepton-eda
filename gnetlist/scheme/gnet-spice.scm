@@ -148,7 +148,6 @@
       (display (string-append "i-out-" package " ") port)
       (spice:write-two-pin-names package "pin1" "pin2" port)
       (display "dc 0\n" port)
-      (display "* end of nullor expansion\n" port)
       (display "* end vcvs expansion\n" port))))
 
 
@@ -204,7 +203,7 @@
             ;; create list of attributes which can be attached to a mosfet
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic")))
       (spice:write-list-of-attributes package attrib-list port))
-            ;; the off attribute to use the initial conditions,
+            ;; write the off attribute seperatly
             ;; no value is attached to this attribute
     (if (not (string=? (gnetlist:get-package-attribute package "off") "unknown")) 
       (display " off" port))
@@ -234,6 +233,14 @@
 (define spice:component-value
   (lambda (package)
     (gnetlist:get-package-attribute package "value")))
+
+
+;;
+;; Include a file
+;;
+(define spice:write-include
+  (lambda (package port)
+    (display (string-append package " " (gnetlist:get-package-attribute package "value") "\n") port)))
 
 
 ;;
@@ -272,6 +279,8 @@
               (spice:write-mos-transistor package port))
           ( (string=? (get-device package) "NMOS TRANSISTOR")
               (spice:write-mos-transistor package port))
+          ( (string=? (get-device package) "include")
+              (spice:write-include package port))
           ( else (spice:write-one-component package port)
                (newline port)))
         (spice:write-netlist port (cdr ls)) ))))  

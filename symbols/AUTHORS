@@ -130,6 +130,10 @@ Arnim Littek		- For contributing the following symbols:
    				mc1496-1.sym switch-dip6-1.sym
    				sx28ac-1.sym
 
+			  For contributing the following symbols:
+
+				diode-2.sym lt1108-1.sym 
+
 Jerry O'Keefe		- For contributing the following symbols:
 			  (Ales renamed and did some minor touch ups)
 			  (Lines touching arcs, moved pins in BNC-1.sym,
@@ -292,6 +296,11 @@ Bas Gieltjes 		- For contributing the following symbols:
 
 				cccs-1.sym ccvs-1.sym nullor-1.sym 
 				vccs-1.sym vcvs-1.sym
+			 
+			  For contributing the following gnetlist spice backend
+			  symbol:
+				
+				include-1.sym
 
 Magnus Danielson	- For contributing the following symbols:
 	
