@@ -6,7 +6,7 @@ scmdata_DATA = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
                gnet-pads.scm gnetlist.scm gnet-bae.scm gnet-protelII.scm \
                gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm \
 	       gnet-partslist-common.scm gnet-partslist1.scm \
-	       gnet-partslist2.scm gnet-partslist3.scm
+	       gnet-partslist2.scm gnet-partslist3.scm gnet-maxascii.scm
 
 EXTRA_DIST = $(scmdata_DATA)
 

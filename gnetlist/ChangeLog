@@ -1,3 +1,7 @@
+2002-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-maxascii.scm:  Checked in new backed by Dave Lawrence
+
 2001-07-26 Stefan Petersen   <spe@geda.seul.org>
 
 	* scheme/gnetlist.scm, scheme/gnet-pads.scm, scheme/gnet-PCB.scm:
@@ -38,7 +42,7 @@
 
 	* scripts/bompp.sh: Added bom pretty printer written by Rolf Fiedler
 
-	* src/annotate.sh: Added script written by JM Routoure and modified
+	* scripts/annotate.sh: Added script written by JM Routoure and modified
 	  by Rolf Fiedler
 
 	* src/unannotate.sh: Added script written by Rolf Fiedler
