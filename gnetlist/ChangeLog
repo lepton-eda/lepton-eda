@@ -1,3 +1,14 @@
+2005-02-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Added a chdir back to the starting directory
+	after all the rc files and schematics are loaded.  This is done
+	so that the output files from gnetlist go into the expected
+	directory instead of some other schematic directory.  This allows
+	"make tests" in gnetlist/tests to work again.
+
+	* src/gnetlist.c: Changed the size of the cwd directory to be
+	MAXPATHLEN (the correct size).
+
 2005-02-11 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/gnet-drc2.scm: Use stdout if the output filename is "-".

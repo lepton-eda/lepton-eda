@@ -20,6 +20,7 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <sys/param.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -67,7 +68,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
 
     argv_index = parse_commandline(argc, argv);
-    cwd = getcwd(NULL, 1024);
+    cwd = getcwd(NULL, MAXPATHLEN);
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
@@ -157,6 +158,12 @@ void main_prog(void *closure, int argc, char *argv[])
       i++;
       g_free (filename);
     }
+    
+    /* Change back to the directory where we started.  This is done */
+    /* since gnetlist is a command line utility and will deposit its output */
+    /* in the current directory.  Having the output go to a different */
+    /* directory will confuse the user (confused me, at first). */
+    chdir(cwd);
     free(cwd);
 
 
