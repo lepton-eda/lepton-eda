@@ -264,7 +264,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing bus\n\n");
 #endif
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		size = SCREENabs(w_current, 30);
 
 		if (size < 0)
@@ -292,7 +292,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
         /* yes zero is right for the width -> use hardware lines */
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
 				GDK_JOIN_MITER);
@@ -416,9 +416,8 @@ o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
         gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
                 size = SCREENabs(w_current, 30);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -433,7 +432,7 @@ o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
 	/* backing store ? not approriate here */
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -461,9 +460,8 @@ o_bus_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT 
 			x_get_darkcolor(color));
 
 #if 0
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
                 size = SCREENabs(w_current, 30);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -494,7 +492,7 @@ o_bus_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT 
 	/* backing store ? not approriate here */
 
 #if 0
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -590,9 +588,8 @@ o_bus_start(TOPLEVEL *w_current, int x, int y)
 	}
 #endif
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
                 size = SCREENabs(w_current, 30);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -603,7 +600,7 @@ o_bus_start(TOPLEVEL *w_current, int x, int y)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -632,7 +629,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 
 	size = SCREENabs(w_current, 30);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -643,7 +640,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -690,7 +687,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 	gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -742,9 +739,8 @@ o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
 		return;
 	}
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		size = SCREENabs(w_current, 30);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -779,7 +775,7 @@ o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -793,7 +789,7 @@ o_bus_eraserubber(TOPLEVEL *w_current)
 {
 	int size;
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		size = SCREENabs(w_current, 30);
 
 		if (size < 0)
@@ -809,7 +805,7 @@ o_bus_eraserubber(TOPLEVEL *w_current)
 			x_get_color(w_current->background_color) );
 	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -823,7 +819,7 @@ o_bus_xorrubber(TOPLEVEL *w_current)
 {
 	int size;
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 
 		size = SCREENabs(w_current, 30);
 
@@ -840,7 +836,7 @@ o_bus_xorrubber(TOPLEVEL *w_current)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+	if (w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,

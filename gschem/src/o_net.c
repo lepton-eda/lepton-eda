@@ -153,8 +153,7 @@ o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 	gdk_gc_set_foreground(w_current->bus_gc,
 			x_get_color(w_current->background_color));
 
-	if (w_current->page_current->zoom_factor > 0 && 
-	    w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 
 		size = SCREENabs(w_current, 10);
 
@@ -203,7 +202,7 @@ o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
         /* yes zero is right for the width -> use hardware lines */
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->bus_gc, 0, GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
 				GDK_JOIN_MITER);
@@ -223,8 +222,7 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	gdk_gc_set_foreground(w_current->bus_gc,
 		x_get_color(w_current->net_color));
 
-	if (w_current->page_current->zoom_factor > 0 && 
-	    w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 
 		size = SCREENabs(w_current, 10);
 
@@ -342,7 +340,7 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
         /* yes zero is right for the width -> use hardware lines */
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->bus_gc, 0, GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
 				GDK_JOIN_MITER);
@@ -376,7 +374,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing net\n\n");
 #endif
 
-        if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+        if (w_current->net_style == THICK ) {
                 size = SCREENabs(w_current, 10);
 
                 if (size < 0)
@@ -555,7 +553,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #endif
 
         /* yes zero is right for the width -> use hardware lines */
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0, 
 					   GDK_LINE_SOLID,
 				           GDK_CAP_NOT_LAST,
@@ -612,9 +610,8 @@ o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
         gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
                 size = SCREENabs(w_current, 10);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -629,7 +626,7 @@ o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
 	/* backing store ? not approriate here */
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -658,10 +655,9 @@ o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
         gdk_gc_set_foreground(w_current->outline_xor_gc,
 			x_get_darkcolor(color));
 
-#if 0
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+#if 0 /* if I had this enabled, than xoring would leave a lot of mouse drops */
+	if (w_current->net_style == THICK ) {
                 size = SCREENabs(w_current, 10);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -691,8 +687,8 @@ o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
 
 	/* backing store ? not approriate here */
 
-#if 0
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+#if 0 /* if I had this enabled, than xoring would leave a lot of mouse drops */
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -788,9 +784,8 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 	}
 #endif
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
                 size = SCREENabs(w_current, 10);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -801,7 +796,7 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -831,9 +826,8 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
         }
 
 	size = SCREENabs(w_current, 10);
-	/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -844,7 +838,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -891,7 +885,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 	gdk_draw_line(w_current->backingstore, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -943,9 +937,8 @@ o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
 		return;
 	}
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		size = SCREENabs(w_current, 10);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -980,7 +973,7 @@ o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 					GDK_LINE_SOLID,
 					GDK_CAP_NOT_LAST,
@@ -994,7 +987,7 @@ o_net_eraserubber(TOPLEVEL *w_current)
 {
 	int size;
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		size = SCREENabs(w_current, 10);
 
 		if (size < 0)
@@ -1010,7 +1003,7 @@ o_net_eraserubber(TOPLEVEL *w_current)
 			x_get_color(w_current->background_color) );
 	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,
@@ -1024,7 +1017,7 @@ o_net_xorrubber(TOPLEVEL *w_current)
 {
 	int size;
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 
 		size = SCREENabs(w_current, 10);
 
@@ -1041,7 +1034,7 @@ o_net_xorrubber(TOPLEVEL *w_current)
 			x_get_color(w_current->select_color) );
 	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
 
-	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+	if (w_current->net_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->gc, 0,
 				GDK_LINE_SOLID,
 				GDK_CAP_NOT_LAST,

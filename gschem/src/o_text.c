@@ -152,6 +152,12 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	screen_x1 = o_current->text->screen_x;
 	screen_y1 = o_current->text->screen_y;
 
+	/* this is not really a fix, but a lame patch */
+	/* not having this will cause a bad draw of things when coords */
+	/* get close to the 2^15 limit of X */
+	if (screen_x1+small_dist > 32767 || screen_y1+small_dist > 32767) {
+		return;
+	}
 
    	if (w_current->override_color != -1 ) {
 		gdk_gc_set_foreground(w_current->gc, 
@@ -198,15 +204,15 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
 	int length;
-	int color;
+	int color, factor;
 
 	if (o_current->visibility == INVISIBLE) {
 		return;
 	}
 
 	/* always display text which is 12 or larger */
-	if ((w_current->page_current->zoom_factor >
-	     w_current->text_display_zoomfactor) ||
+	factor = (int) w_current->page_current->to_world_x_constant;
+	if ((factor < w_current->text_display_zoomfactor) ||
 	    o_current->text->size >= 12 ||
 	    w_current->text_feedback == ALWAYS) {
 		o_complex_draw_xor(w_current, dx, dy, o_current->text->prim_objs);
