@@ -26,7 +26,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(http://www.gnu.org/copyleft/fdl.html)}
-\date{October 7th, 2002}
+\date{February 11th, 2002}
 
 \begin{document}
 
@@ -221,8 +221,11 @@ Attach this attribute just like the {\bf device}= (\ref{device})
 attribute.  This is a free standing or floating attribute.
 
 package\_name is the pcb footprint or package type like DIP14 or DIP40.
-This attribute is pcb package dependent.
-
+Although this attribute in principle is pcb package dependent, 
+gEDA/gaf conventions exist to make this attribute as portable as
+possible, allowing for easy collaboration and sharing between users.
+See the {\it Footprint naming conventions} in the
+{\it gEDA/gaf Symbol Creation Document}.
 
 \subsection{\bf documentation\label{documentation}}
 {\bf documentation}=documentation\_locator may exist somewhere in the 
@@ -352,6 +355,7 @@ July 14th, 2002 & Updated doc to be in sync with post-20020527. \\ \hline
 August 25th, 2002 & Added obsolete type= attribute. \\ \hline
 September 14, 2002 & Added description= attribute. Minor fixes\\ \hline
 October 7, 2002 & Added doc= attribute; Egil Kvaleberg.\\ \hline
+February 11, 2002 & Added reference to footprint conventions.\\ \hline
 
 \end{tabular}
 \end{table}

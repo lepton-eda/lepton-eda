@@ -27,7 +27,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(http://www.gnu.org/copyleft/fdl.html)}
-\date{September 14th, 2002}
+\date{February 11th, 2002}
 
 \begin{document}
 
@@ -161,8 +161,9 @@ Master Attribute Document.
 \item {\bf footprint}=PACKAGENAME should exist somewhere in the symbol
       which might be used with the PCB netlister.  PACKAGENAME is the
       PCB footprint or package type like DIP14 or DIP40.  Please see
-      the PCB documentation and gnetlist/docs/README.pcb for more info
-      on this attribute.
+      the {\bf Footprint naming conventions} chapter for further detail. 
+      See also the PCB documentation and gnetlist/docs/README.pcb for 
+      more info on this attribute.
 
 \item You should put a {\bf refdes}=U? attribute inside the symbol.
       Make only the value visible and it will be promoted (attached to
@@ -251,6 +252,207 @@ symbol library.
       the pins on a symbol logically so that they promote an uncluttered
       schematic.  Note that this is frequently not the same pin
       arrangement as the physical device.
+\end{itemize}
+
+\section{Footprint naming conventions}
+
+This section describes the conventions for naming of footprints used in
+gEDA/gaf. 
+
+The purpose of the naming convention is to establish a standard to
+maintain the same naming convention through the different phases of the 
+CAD chain. This helps in ensuring that the collaborative effort of gEDA/gaf 
+is not lost.
+
+\subsection{Notes}
+\begin{itemize}
+\item  Unless otherwise noted, numerical pin names will be used,
+       starting from 1.
+\item  {\it n} is for the pin count.
+\item  {\it m} is for the pin spacing in mils.
+\item  SMT means surface mount, other components are through-hole.
+\end{itemize}
+
+\subsection{Integrated circuit packages}
+\begin{itemize}
+\item   Dual in line packages with up to 22 100 mil spaced pins and 300
+	mil row spacing are called {\tt DIP}{\it n}.
+
+\item   Dual in line packages with 24 or more 100 mil spaced pins and
+	300 mil row spacing are called {\tt DIP}{\it n}{\tt N}.
+
+\item   Dual in line packages with 100 mil spaced pins and 400 mil row
+	spacing are called {\tt DIP}{\it n}{\tt H}.
+
+\item   Dual in line packages with 24 or more 100 mil spaced pins and
+	600 mil row spacing are called {\tt DIP}{\it n}.
+
+\item   Shrink dual in line packages with up to 24 70 mil spaced pins
+	and 300 mil row spacing are called {\tt SDIP}{\it n}.
+
+\item   Shrink dual in line packages with more than 24 70 mil spaced
+	pins and 400 mil row spacing are called {\tt SDIP}{\it n}.
+
+\item   Single in line packages with 100 mil spaced pins are called
+	{\tt SIP}{\it n}{\tt N}. See also {\tt JUMPER}, below.
+
+\item   Zig-zag in-line package are called {\tt ZIP}{\it n}.
+
+\item   Plastic leadless chip carrier with pin socket are called
+	{\tt PLCC}{\it n}{\tt X}.
+\end{itemize}
+
+\subsection{Integrated circuit SMT packages}
+\begin{itemize}
+\item   Small outline SMT packages with up to 16 50 mil spaced pins and
+	150 mil total width are called {\tt SO}{\it n}.
+
+\item   Small outline SMT packages with more than 16 50 mil spaced pins
+	and 150 mil total width are called {\tt SO}{\it n}{\tt N}.
+
+\item   Small outline SMT packages with 50 mil spaced pins and 200 mil
+	total width are called {\tt SO}{\it n}{\tt M}.
+
+\item   Small outline SMT packages with up to 20 50 mil spaced pins and
+	300 mil total width are called {\tt SO}{\it n}{\tt W}.
+
+\item   Small outline SMT packages with more than 20 50 mil spaced pins
+	and 300 mil total width are called {\tt SO}{\it n}.
+
+\item   Small outline SMT packages with 44 or more 50 mil spaced pins
+	and 525 mil total width are called {\tt SO}{\it n}.
+
+\item   Metric shrink small outline SMT packages with 0.65 mm spaced
+	pins and 323 mil total width are called {\tt MSSOP}{\it n}. 
+	{\it NOTE: To be confirmed.}
+
+\item   Metric shrink small outline SMT packages with up to 44 0.65 mm
+	spaced pins and 420 mil total width are called 
+	{\tt MSSOP}{\it n}{\tt W}.
+
+\item   Metric shrink small outline SMT packages with over 44 0.65 mm
+	spaced pins and 545 mil total width are called 
+	{\tt MSSOP}{\it n}{\tt W}.
+
+\item   Shrink small outline SMT packages with 0.25 mil spaced pins and
+	420 mil total width are called {\tt SSOP}{\it n}{\tt W}.
+
+\item   Quarter size small outline SMT packages with 0.25 mil spaced
+	pins and 244 mil total width are called {\tt SSOP}{\it n}.
+
+\item   Thin small outline SMT packages with 0.2165 mil spaced pins and
+	535 mil total width are called {\tt TSOP}{\it n}.
+
+\item   Thin small outline SMT packages with 0.20 mil spaced pins and
+	795 mil total width are called {\tt TSOP}{\it n}{\tt A}.
+
+\item   Thin small outline SMT packages with 0.20 mil spaced pins and
+	559 mil total width are called {\tt TSOP}{\it n}{\tt B}.
+
+\item   Thin shrink small outline SMT packages with up to 28 0.26 mil
+	spaced pins and 260 mil total width are called {\tt TSSOP}{\it n}.
+
+\item   Thin shrink small outline SMT packages with over 28 0.20 mil
+	spaced pins and 319 mil total width are called {\tt TSSOP}{\it n}.
+
+\item   Plastic leadless chip carrier SMT are called {\tt PLCC}{\it n}.
+
+\item   Quad-side flat pack SMT are called {\tt QFP}{\it n}.
+
+\item   Dual in line style crystal oscillators are {\tt OSC8} and
+	{\tt OSC14}.
+
+\item   5 pin SOT SMT packages are {\tt SOT25} and {\tt SOT325}.
+
+\item   6 pin SOT SMT packages are {\tt SOT26} and {\tt SOT326}.
+\end{itemize}
+
+\subsection{Basic semiconductors}
+\begin{itemize}
+\item   Axial diodes are called {\tt ALF}{\it m}. Pin 1 is the cathode.
+
+\item   Conventional through hole LED is {\tt LED3} and {\tt LED5}
+	for 3 and 5 mm respectively. Pin 1 is plus. 
+	{\it NOTE: Should probably be changed to be in line with diode
+	convention.}
+
+\item   TO transistors are {\tt TO5}, {\tt TO92}, {\tt TO126}, 
+	{\tt TO220} etc. Suffixes may apply, e.g. {\tt TO126W} is for 
+	wide, {\tt TO126S} is for standing, {\tt TO126SW} is for standing,
+	wide.
+\end{itemize}
+
+\subsection{Basic SMT semiconductors}
+\begin{itemize}
+\item   SOD diode SMT packages use their standard package name, e.g.
+	{\tt SOD80}, {\tt SOD87}, {\tt SOD106A}, {\tt SOD110}. There are 
+	also {\tt SOD123}, {\tt SOD323} with narrow pads.
+
+\item   SOT transistor SMT packages use their standard package name,
+	e.g. {\tt SOT23}, {\tt SOT323}. There is also an {\tt SC90}.
+
+\item   SOT transistor SMT packages with numbering as for diodes (pin 1
+	is cathode, pin 2 anode) are {\tt SOT23D}, {\tt SOT323D}.
+
+\item   4 pin SOT SMT packages are {\tt SOT89}, {\tt SOT143}, {\tt SOT223}.
+\end{itemize}
+
+\subsection{Passive components}
+\begin{itemize}
+\item   Axial non-polar components (typically resistor, capacitor) are
+	called {\tt ACY}{\it m}.
+
+\item   Bottom lead (radial) non-polar circular component (typically
+	capacitor) is {\tt RCY}{\it m}.
+
+\item   Bottom lead non-polar rectangular component (typically
+	capacitor) is {\tt BRE}{\it m}.
+
+\item   A standard crystal is {\tt HC49}, or other HC designations as 
+	required.
+
+\item   Single row 100 mil pin spacing jumpers are {\tt JUMPER}{\it n}. 
+	The main difference compared to single in line package is the hole
+	size.
+
+\item   Dual row 100 mil spacing headers with DIP pin numbering
+	are {\tt HEADER}{\it n}\_1. Note that {\it n} is an even number.
+
+\item   Dual row 100 mil spacing headers with ribbon cable numbering
+	are {\tt HEADER}{\it n}\_2. Note that {\it n} is an even number.
+
+\item   Angled full header connectors with latches are 
+	{\tt DIN41651\_}{\it n}.
+
+\item   Standing full header connectors with latches are 
+	{\tt DIN41651\_}{\it n}S.
+
+\item   DSUB connectors female are {\tt DB}{\it n}{\tt F}.
+
+\item   DSUB connectors male are {\tt DB}{\it n}{\tt M}.
+
+\item   Female DIN card-to-card connectors are {\tt DIN41612C}{\it n}{\tt F}.
+	Add {\tt S} suffix for standing.
+
+\item   Male DIN card-to-card connectors are {\tt DIN41612C}{\it n}{\tt M}.
+	Add {\tt S} suffix for standing.
+
+\item   AMP modular RJ connectors with screen are {\tt RJ11}, {\tt RJ12} and
+	{\tt RJ45}.
+\end{itemize}
+
+\subsection{Passive SMT components}
+\begin{itemize}
+\item   Standard SMT resistors, inductors, capacitors etc are {\tt 0201},
+	{\tt 0402}, {\tt 0603}, {\tt 0805}, {\tt 1206}, {\tt 1210}, 
+	{\tt 1806}, {\tt 1812}, {\tt 1825}, {\tt 2020}, {\tt 2706}.
+
+\item   Tantalum SMT capacitors are {\tt EIA3216}, {\tt EIA3528},
+	{\tt EIA6032}, and {\tt EIA7343}. Pin 1 is plus.
+
+\item   SMT electrolytics are designated by can diameter in 1/10 mm:
+	{\tt SME33}, {\tt SME43}, {\tt SME53}, {\tt SME66}, {\tt SME84},
+	{\tt SME104}.
 \end{itemize}
 
 \section{Hints and Tips}
@@ -372,7 +574,8 @@ This example produces the following (using gschem):
 \epsfbox{7400a.eps}
 \end{center}
 
-This is the same symbol with all the hidden text visible (via Edit/Show/Hide Inv Text):
+This is the same symbol with all the hidden text visible (via 
+Edit/Show/Hide Inv Text):
 
 \begin{center}
 \epsfbox{7400b.eps}
@@ -385,6 +588,7 @@ This is the same symbol with all the hidden text visible (via Edit/Show/Hide Inv
 \begin{tabular}{|l|l|} \hline
 September 14th, 2002 & Created symbol.tex from symbols.html \\ \hline
 October 31st, 2002 & Fixed bad example symbol \\ \hline
+February 11th, 2003 & Footprint naming conventions added \\ \hline
 
 \end{tabular}
 \end{table}
