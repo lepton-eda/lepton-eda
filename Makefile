@@ -1,4 +1,7 @@
 
+# Thanks to Kazu Hirata for suggestion some comments which would make this
+# Makefile a bit more "user friendly"
+
 #SUBDIRS=libgeda symbols gschem 
 #SUBDIRS=libgeda symbols gschem gnetlist gpcb
 SUBDIRS=libgeda symbols gschem gnetlist 
@@ -17,12 +20,12 @@ install::
 	@echo "If you ran make install: than be sure to set"
 	@echo ""
 	@echo For bourne shell:
-	@echo export LD_LIBRARY_PATH=${prefix}:\$$LD_LIBRARY_PATH
-	@echo export PATH=${prefix}:\$$\{PATH\}
+	@echo export LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
+	@echo export PATH=${prefix}/bin:\$$\{PATH\}
 	@echo ""
 	@echo For csh/tcsh shell:
-	@echo setenv LD_LIBRARY_PATH ${prefix}:\$$LD_LIBRARY_PATH
-	@echo setenv PATH ${prefix}:\$$PATH
+	@echo setenv LD_LIBRARY_PATH ${prefix}/lib:\$$LD_LIBRARY_PATH
+	@echo setenv PATH ${prefix}/bin:\$$PATH
 	@echo ""
 
 config::
@@ -105,3 +108,15 @@ targets::
 	@echo "make justinstall  Just install, no building \(if not needed\)"
 	@echo "make uninstall    Install everything from $(prefix)"
 	@echo ""
+	@echo ""
+	@echo "Note that, before doing anything, be sure to set"
+	@echo ""
+	@echo For bourne shell:
+	@echo export LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
+	@echo export PATH=${prefix}/bin:\$$\{PATH\}
+	@echo ""
+	@echo For csh/tcsh shell:
+	@echo setenv LD_LIBRARY_PATH ${prefix}/lib:\$$LD_LIBRARY_PATH
+	@echo setenv PATH ${prefix}/bin:\$$PATH
+	@echo ""
+
