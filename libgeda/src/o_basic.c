@@ -114,3 +114,61 @@ o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
 	}
 }
 
+void
+o_set_line_options(TOPLEVEL *w_current, OBJECT *o_current,
+				   OBJECT_END end, OBJECT_TYPE type,
+				   int width, int length, int space) 
+{
+
+	if(o_current == NULL) {
+		return;
+	}
+
+	o_current->line_width= width;
+	o_current->line_end  = end;
+	o_current->line_type = type;
+
+	o_current->line_length = length;
+	o_current->line_space  = space;
+}
+
+void
+o_set_fill_options(TOPLEVEL *w_current, OBJECT *o_current,
+				   OBJECT_FILLING type, int width,
+				   int pitch1, int angle1,
+				   int pitch2, int angle2) 
+{
+
+	if(o_current == NULL) {
+		return;
+	}
+
+	o_current->fill_type = type;
+	o_current->fill_width = width;
+
+	o_current->fill_pitch1 = pitch1;
+	o_current->fill_angle1 = angle1;
+
+	o_current->fill_pitch2 = pitch2;
+	o_current->fill_angle2 = angle2;
+	
+}
+
+void
+o_object_recalc(TOPLEVEL *w_current, OBJECT *o_current) 
+{
+	int width, length, space;
+	
+	if(o_current == NULL) {
+		return;
+	}
+
+	width = SCREENabs(w_current, o_current->line_width);
+	o_current->screen_line_width = width;
+
+	length = SCREENabs(w_current, o_current->line_length);
+	o_current->screen_line_length = length;
+
+	space = SCREENabs(w_current, o_current->line_space);
+	o_current->screen_line_space = space;
+}

@@ -112,6 +112,16 @@ struct st_pslines footer[] = {
 	{ NULL }
 };
 
+
+/* width is in mils */
+void
+f_print_set_line_width(FILE *fp, int width)
+{
+	if (width > 0) {
+		fprintf(fp, "%d mils setlinewidth\n", width);
+	}
+}
+
 void
 f_print_set_color(FILE *fp, int color) 
 {

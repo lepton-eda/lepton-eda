@@ -17,6 +17,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/* PB : file modified on 06.09.2000 to suit proposed fields
+   in object structure */
+#define VERSION_20000704 20000704
 
 #include <config.h>
 #include <math.h>
@@ -51,11 +54,15 @@ get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, i
 	*right = box->screen_lower_x;
 	*bottom = box->screen_lower_y;
 
-        *left = *left - 4;
-        *top = *top - 4;
-                                  
-        *right = *right + 4;
-        *bottom = *bottom + 4;
+/* PB : bounding box has to take into account the width of the line it is
+   composed with, ie adding/substracting half the width to this box */
+/* PB : but width is unknown here */	
+	
+	*left = *left - 4;
+	*top = *top - 4;
+	
+	*right = *right + 4;
+	*bottom = *bottom + 4;
 }
 
 void
@@ -65,6 +72,8 @@ world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *ri
 	*top = min(box->upper_y, box->lower_y);
 	*right = max(box->upper_x, box->lower_x);
 	*bottom = max(box->upper_y, box->lower_y);
+
+/* PB : same as above here */	
 
 
 #if DEBUG 
@@ -77,7 +86,9 @@ world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *ri
 
 
 OBJECT *
-o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2)
+o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
+		  char type, int color,
+		  int x1, int y1, int x2, int y2)
 {
 	int screen_x, screen_y;
 	int left, top, right, bottom;
@@ -85,7 +96,7 @@ o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 	BOX *box;
 
 	new_node = s_basic_init_object("box");
-        new_node->type = type;
+	new_node->type = type;
 	new_node->color = color;
 
 	box = (BOX *) malloc(sizeof(BOX));
@@ -95,23 +106,15 @@ o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 	box->lower_x = x2;
 	box->lower_y = y2;
 
-	WORLDtoSCREEN(w_current, 
-		      box->upper_x, box->upper_y,
-		      &box->screen_upper_x, &box->screen_upper_y);   
-
-	WORLDtoSCREEN(w_current, 
-		      box->lower_x, box->lower_y,
-		      &box->screen_lower_x, &box->screen_lower_y);   
-
 	new_node->box = box;
 
-	get_box_bounds(w_current, new_node->box, 
-			&left, &top, &right, &bottom);
-
-	new_node->left = left;
-	new_node->top = top;
-	new_node->right = right;
-	new_node->bottom = bottom;
+	/* Init */
+	o_set_line_options(w_current, new_node,
+					   END_NONE, TYPE_SOLID, 0, -1, -1);
+	o_set_fill_options(w_current, new_node,
+					   FILLING_HOLLOW, -1, -1, -1, -1, -1);
+	
+	o_box_recalc(w_current, new_node);
 
 	/* TODO: questionable cast */     
 	new_node->draw_func = (void *) box_draw_func; 
@@ -134,16 +137,16 @@ o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
 	WORLDtoSCREEN(w_current, o_current->box->upper_x, 
-		  o_current->box->upper_y, 
-		  &screen_x1,
+				  o_current->box->upper_y, 
+				  &screen_x1,
                   &screen_y1);  
 
 	o_current->box->screen_upper_x = screen_x1;
 	o_current->box->screen_upper_y = screen_y1;
 
 	WORLDtoSCREEN(w_current, o_current->box->lower_x, 
-		  o_current->box->lower_y, 
-		  &screen_x2,
+				  o_current->box->lower_y, 
+				  &screen_x2,
                   &screen_y2);  
 
 	o_current->box->screen_lower_x = screen_x2;
@@ -156,6 +159,8 @@ o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	o_current->right = right;
 	o_current->bottom = bottom;
 
+	o_object_recalc(w_current, o_current);
+	
 }
 
 
@@ -168,9 +173,34 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	int d_x1, d_y1;
 	int d_x2, d_y2;
 	int color;
+	int box_width, box_space, box_length;
+	OBJECT_END box_end;
+	OBJECT_TYPE box_type;
+	OBJECT_FILLING box_filling;
+	long int ver;
+	int tmp;
 
-	sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &width, &height, 
-						&color);	
+/* PB : check of the version of the file before read */
+	ver = strtol(version, NULL, 10);
+	if(ver <= VERSION_20000704) {
+		sscanf(buf, "%c %d %d %d %d %d\n",
+			   &type, &x1, &y1, &width, &height, &color);
+
+		box_width   = 0;
+		box_end     = END_NONE;
+		box_type    = TYPE_SOLID;
+		box_filling = FILLING_HOLLOW;
+		box_length  = -1;
+		box_space   = -1;
+	} else {
+		sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+			   &type, &x1, &y1, &width, &height, &color,
+			   &box_width, &box_end, &box_type, &box_length, 
+			   &box_space, &box_filling,
+			   &tmp, &tmp, &tmp, &tmp, &tmp);
+			   /* box_fillwidth box_angle1 box_pitch1 box_angle2 */
+			   /* box_pitch2 */
+	}
 
 	d_x1 = x1;
 	d_y1 = y1+height; /* move box origin to top left */
@@ -179,18 +209,28 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	d_y2 = y1;
 
 	if (width == 0 || height == 0) {
-                fprintf(stderr, "Found a zero width/height box [ %c %d %d %d %d %d ]\n", type, x1, y1, width, height, color);
-                s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n", type, x1, y1, width, height, color);
+		fprintf(stderr, "Found a zero width/height box [ %c %d %d %d %d %d ]\n",
+				type, x1, y1, width, height, color);
+		s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n",
+					  type, x1, y1, width, height, color);
 	}
 
 	if (color < 0 || color > MAX_COLORS) {
-                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-                s_log_message("Found an invalid color [ %s ]\n", buf);
+		fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+		s_log_message("Found an invalid color [ %s ]\n", buf);
 		s_log_message("Setting color to WHITE\n");
 		color = WHITE;
 	}
-
-	object_list = (OBJECT *) o_box_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
+	
+/* PB : modification of the o_box_add() prototype */	
+	object_list = (OBJECT *) o_box_add(w_current, object_list,
+					   type, color,
+					   d_x1, d_y1, d_x2, d_y2);
+	o_set_line_options(w_current, object_list,
+					   box_end, box_type, box_width, 
+					   box_length, box_space);
+	o_set_fill_options(w_current, object_list,
+					   box_filling, -1, -1, -1, -1, -1);
 
 	return(object_list);
 }
@@ -201,16 +241,19 @@ o_box_save(char *buf, OBJECT *object)
 	int x1, y1; 
 	int width, height;
 	int color;
-
+	int box_width, box_space, box_length;
+	OBJECT_END box_end;
+	OBJECT_TYPE box_type;
+	OBJECT_FILLING box_fill;
 		
-	width = abs(object->box->lower_x - object->box->upper_x); 
+	width  = abs(object->box->lower_x - object->box->upper_x); 
 	height = abs(object->box->upper_y - object->box->lower_y);
 
 	x1 = object->box->upper_x;
-	y1 = object->box->upper_y-height; /* move the origin to 0, 0*/
+	y1 = object->box->upper_y - height; /* move the origin to 0, 0*/
 
 #if DEBUG
-	printf("box: %d %d %d %d\n", x1, y1, width, height);
+	printf("box: %d %d %d %d\n", x1, y1, d_x, d_y);
 #endif
 
 	/* Use the right color */
@@ -220,8 +263,22 @@ o_box_save(char *buf, OBJECT *object)
 		color = object->saved_color;
 	}
 
-	sprintf(buf, "%c %d %d %d %d %d", object->type, 
-			x1, y1, width, height, color);
+/* PB : new fields are saved */
+	box_end   = object->line_end;
+	box_width = object->line_width;
+	box_type  = object->line_type;
+	box_length= object->line_length;
+	box_space = object->line_space;
+	box_fill  = object->fill_type;
+	
+	sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+			object->type,
+			x1, y1, width, height, color,
+			box_width, box_end, box_type, box_length, box_space, 
+			box_fill,
+			-1, -1, -1, -1, -1);
+			/* box_fillwidth box_angle1 box_pitch1 box_angle2 */
+			/* box_pitch2 */
 			
 	return(buf);
 }
@@ -236,28 +293,28 @@ o_box_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 	
 
 	/* Do screen coords */
-        object->box->screen_upper_x = object->box->screen_upper_x + dx;
-        object->box->screen_upper_y = object->box->screen_upper_y + dy;
-        object->box->screen_lower_x = object->box->screen_lower_x + dx;
-        object->box->screen_lower_y = object->box->screen_lower_y + dy;
+	object->box->screen_upper_x = object->box->screen_upper_x + dx;
+	object->box->screen_upper_y = object->box->screen_upper_y + dy;
+	object->box->screen_lower_x = object->box->screen_lower_x + dx;
+	object->box->screen_lower_y = object->box->screen_lower_y + dy;
 
 	/* printf("box: trans: %d %d\n", dx, dy);*/
 
-	 SCREENtoWORLD(w_current, object->box->screen_upper_x,
-                   object->box->screen_upper_y,
-                   &x,
-                   &y);
-
-        object->box->upper_x = snap_grid(w_current, x);
-        object->box->upper_y = snap_grid(w_current, y);
-
-        SCREENtoWORLD(w_current, object->box->screen_lower_x,
+	SCREENtoWORLD(w_current, object->box->screen_upper_x,
+				  object->box->screen_upper_y,
+				  &x,
+				  &y);
+	
+	object->box->upper_x = snap_grid(w_current, x);
+	object->box->upper_y = snap_grid(w_current, y);
+	
+	SCREENtoWORLD(w_current, object->box->screen_lower_x,
                   object->box->screen_lower_y,
                   &x,
                   &y);
-
-        object->box->lower_x = snap_grid(w_current, x);
-        object->box->lower_y = snap_grid(w_current, y);
+	
+	object->box->lower_x = snap_grid(w_current, x);
+	object->box->lower_y = snap_grid(w_current, y);
 }
 
 void
@@ -267,33 +324,33 @@ o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 	int screen_x2, screen_y2;
 	int left, right, top, bottom;
 
-        if (object == NULL) printf("btw NO!\n");
-
-
-        /* Do world coords */
-        object->box->upper_x = object->box->upper_x + x1;
-        object->box->upper_y = object->box->upper_y + y1;
-        object->box->lower_x = object->box->lower_x + x1;
-        object->box->lower_y = object->box->lower_y + y1;     
-
+	if (object == NULL) printf("btw NO!\n");
+	
+	
+	/* Do world coords */
+	object->box->upper_x = object->box->upper_x + x1;
+	object->box->upper_y = object->box->upper_y + y1;
+	object->box->lower_x = object->box->lower_x + x1;
+	object->box->lower_y = object->box->lower_y + y1;     
+	
 	WORLDtoSCREEN(w_current, object->box->upper_x, 
-		  object->box->upper_y, 
-		  &screen_x1,
+				  object->box->upper_y, 
+				  &screen_x1,
                   &screen_y1);  
-
+	
 	object->box->screen_upper_x = screen_x1;
 	object->box->screen_upper_y = screen_y1;
-
+	
 	WORLDtoSCREEN(w_current, object->box->lower_x, 
-		  object->box->lower_y, 
-		  &screen_x2,
+				  object->box->lower_y, 
+				  &screen_x2,
                   &screen_y2);  
-
+	
 	object->box->screen_lower_x = screen_x2;
 	object->box->screen_lower_y = screen_y2;
-
+	
 	get_box_bounds(w_current, object->box, &left, &top, &right, &bottom);
-
+	
 	object->left = left;
 	object->top = top;
 	object->right = right;
@@ -303,33 +360,45 @@ o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 OBJECT *
 o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
-        OBJECT *new_obj;
+	OBJECT *new_obj;
 	ATTRIB *a_current;
 	int color;
-
+	
 	if (o_current->saved_color == -1) {
 		color = o_current->color;
 	} else {
 		color = o_current->saved_color;
 	}
-
-        new_obj = o_box_add(w_current, list_tail, OBJ_BOX, color, 0, 0, 0, 0);
-
+	
+	new_obj = o_box_add(w_current, list_tail,
+						OBJ_BOX, color,
+						0, 0, 0, 0);
+	
 	new_obj->box->screen_upper_x = o_current->box->screen_upper_x;
-        new_obj->box->screen_upper_y = o_current->box->screen_upper_y;
-        new_obj->box->screen_lower_x = o_current->box->screen_lower_x;
-        new_obj->box->screen_lower_y = o_current->box->screen_lower_y;  
-
+	new_obj->box->screen_upper_y = o_current->box->screen_upper_y;
+	new_obj->box->screen_lower_x = o_current->box->screen_lower_x;
+	new_obj->box->screen_lower_y = o_current->box->screen_lower_y;  
+	
 	new_obj->box->upper_x = o_current->box->upper_x;
-        new_obj->box->upper_y = o_current->box->upper_y;
-        new_obj->box->lower_x = o_current->box->lower_x;
-        new_obj->box->lower_y = o_current->box->lower_y;  
+	new_obj->box->upper_y = o_current->box->upper_y;
+	new_obj->box->lower_x = o_current->box->lower_x;
+	new_obj->box->lower_y = o_current->box->lower_y;
 
+	
+/* PB : make the copy of new fields in OBJECT from original to copy */
+	o_set_line_options(w_current, new_obj, o_current->line_end,
+				o_current->line_type, o_current->line_width,
+				o_current->line_length, o_current->line_space);
+	o_set_fill_options(w_current, new_obj,
+				o_current->fill_type, o_current->fill_width,
+				o_current->fill_pitch1, o_current->fill_angle1,
+				o_current->fill_pitch2, o_current->fill_angle2);
+	
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
 	if (a_current) {
 		while ( a_current ) {
-
+			
 			/* head attrib node has prev = NULL */
 			if (a_current->prev != NULL) {
 				a_current->copied_to = new_obj;
@@ -338,34 +407,302 @@ o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 		}
 	}
 
-        return(new_obj);
+	return(new_obj);
 } 
+
 
 void
 o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
-	int origin_x, int origin_y)
+			 int origin_x, int origin_y)
 {
-	int width, height;
+	if (o_current == NULL) {
+		printf("got null in o_box_print\n");
+		return;
+	}
+
+	switch(o_current->line_type) {
+
+		case(TYPE_SOLID):
+			o_box_print_solid(w_current, fp, o_current, FALSE,
+					   o_current->box->upper_x,
+					   o_current->box->upper_y,
+					   abs(o_current->box->lower_x -
+					       o_current->box->upper_x),
+					   abs(o_current->box->lower_y -
+					       o_current->box->upper_y),
+					   o_current->line_width,
+					   o_current->line_length,
+					   o_current->line_space,
+					   origin_x, origin_y);
+		break;
+
+		case(TYPE_DOTTED):
+			o_box_print_dotted(w_current, fp, o_current, FALSE,
+					   o_current->box->upper_x,
+					   o_current->box->upper_y,
+					   abs(o_current->box->lower_x -
+					       o_current->box->upper_x),
+					   abs(o_current->box->lower_y -
+					       o_current->box->upper_y),
+					   o_current->line_width,
+					   o_current->line_length,
+					   o_current->line_space,
+					   origin_x, origin_y);
+		break;
+
+		case(TYPE_DASHED):
+			o_box_print_dashed(w_current, fp, o_current, FALSE,
+					   o_current->box->upper_x,
+					   o_current->box->upper_y,
+					   abs(o_current->box->lower_x -
+					       o_current->box->upper_x),
+					   abs(o_current->box->lower_y -
+					       o_current->box->upper_y),
+					   o_current->line_width,
+					   o_current->line_length,
+					   o_current->line_space,
+					   origin_x, origin_y);
+		break;
+
+		case(TYPE_CENTER):
+			o_box_print_center(w_current, fp, o_current, FALSE,
+					   o_current->box->upper_x,
+					   o_current->box->upper_y,
+					   abs(o_current->box->lower_x -
+					       o_current->box->upper_x),
+					   abs(o_current->box->lower_y -
+					       o_current->box->upper_y),
+					   o_current->line_width,
+					   o_current->line_length,
+					   o_current->line_space,
+					   origin_x, origin_y);
+		break;
+
+		case(TYPE_PHANTOM):
+			o_box_print_phantom(w_current, fp, o_current, FALSE,
+					   o_current->box->upper_x,
+					   o_current->box->upper_y,
+					   abs(o_current->box->lower_x -
+					       o_current->box->upper_x),
+					   abs(o_current->box->lower_y -
+					       o_current->box->upper_y),
+					   o_current->line_width,
+					   o_current->line_length,
+					   o_current->line_space,
+					   origin_x, origin_y);
+		break;
+
+	}
+}
+
+void
+o_box_print_solid(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			int filled, int x, int y,
+			int width, int height,
+			int line_width, int length, int space, 
+			int origin_x, int origin_y)
+{
 	int x1, y1;
 	if (o_current == NULL) {
 		printf("got null in o_box_print\n");
 		return;
 	}
 
+	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, o_current->color);
 	}
 
+	f_print_set_line_width(fp, o_current->line_width);
 
-	width = abs(o_current->box->lower_x - o_current->box->upper_x); 
-	height = abs(o_current->box->upper_y - o_current->box->lower_y);
-
-	x1 = o_current->box->upper_x;
-	y1 = o_current->box->upper_y-height; /* move the origin to 0, 0*/
+#if 0 /*original way */
+	x1 = x;
+	y1 = y-height; /* move the origin to 0, 0*/
 
 	fprintf(fp, "newpath\n");
 	fprintf(fp, "%d mils %d mils moveto\n", x1-origin_x, y1-origin_y);
 	fprintf(fp, "%d mils %d mils box\n", width, height);
+	fprintf(fp, "grestore\n");
+#endif
+
+	x1 = x;
+	y1 = y-height; /* move the origin to 0, 0*/
+
+	o_line_print_solid(w_current, fp, o_current,
+			  x1, y1, x1 + width, y1, line_width, length, space,
+			  origin_x, origin_y);
+	o_line_print_solid(w_current, fp, o_current,
+			  x1 + width, y1, x1 + width, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_solid(w_current, fp, o_current, 
+			  x1 + width, y1 + height, x1, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_solid(w_current, fp, o_current, 
+			  x1, y1 + height, x1, y1, line_width, length, space,
+			  origin_x, origin_y);
+	fprintf(fp, "grestore\n");
+}
+
+void
+o_box_print_dotted(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			int filled, int x, int y,
+			int width, int height,
+			int line_width, int length, int space, 
+			int origin_x, int origin_y)
+{
+	int x1, y1;
+	if (o_current == NULL) {
+		printf("got null in o_box_print\n");
+		return;
+	}
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, o_current->color);
+	}
+
+	f_print_set_line_width(fp, o_current->line_width);
+
+	x1 = x;
+	y1 = y-height; /* move the origin to 0, 0*/
+
+	o_line_print_dotted(w_current, fp, o_current,
+			  x1, y1, x1 + width, y1, line_width, length, space,
+			  origin_x, origin_y);
+	o_line_print_dotted(w_current, fp, o_current,
+			  x1 + width, y1, x1 + width, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_dotted(w_current, fp, o_current, 
+			  x1 + width, y1 + height, x1, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_dotted(w_current, fp, o_current, 
+			  x1, y1 + height, x1, y1, line_width, length, space,
+			  origin_x, origin_y);
+	fprintf(fp, "grestore\n");
+}
+
+void
+o_box_print_dashed(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			int filled, int x, int y,
+			int width, int height,
+			int line_width, int length, int space, 
+			int origin_x, int origin_y)
+{
+	int x1, y1;
+	if (o_current == NULL) {
+		printf("got null in o_box_print\n");
+		return;
+	}
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, o_current->color);
+	}
+
+	f_print_set_line_width(fp, o_current->line_width);
+
+	x1 = x;
+	y1 = y-height; /* move the origin to 0, 0*/
+
+	o_line_print_dashed(w_current, fp, o_current,
+			  x1, y1, x1 + width, y1, line_width, length, space,
+			  origin_x, origin_y);
+	o_line_print_dashed(w_current, fp, o_current,
+			  x1 + width, y1, x1 + width, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_dashed(w_current, fp, o_current, 
+			  x1 + width, y1 + height, x1, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_dashed(w_current, fp, o_current, 
+			  x1, y1 + height, x1, y1, line_width, length, space,
+			  origin_x, origin_y);
+	fprintf(fp, "grestore\n");
+}
+
+void
+o_box_print_center(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			int filled, int x, int y,
+			int width, int height,
+			int line_width, int length, int space, 
+			int origin_x, int origin_y)
+{
+	int x1, y1;
+	if (o_current == NULL) {
+		printf("got null in o_box_print\n");
+		return;
+	}
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, o_current->color);
+	}
+
+	f_print_set_line_width(fp, o_current->line_width);
+
+	x1 = x;
+	y1 = y-height; /* move the origin to 0, 0*/
+
+	o_line_print_center(w_current, fp, o_current,
+			  x1, y1, x1 + width, y1, line_width, length, space,
+			  origin_x, origin_y);
+	o_line_print_center(w_current, fp, o_current,
+			  x1 + width, y1, x1 + width, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_center(w_current, fp, o_current, 
+			  x1 + width, y1 + height, x1, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_center(w_current, fp, o_current, 
+			  x1, y1 + height, x1, y1, line_width, length, space,
+			  origin_x, origin_y);
+	fprintf(fp, "grestore\n");
+}
+
+void
+o_box_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			int filled, int x, int y,
+			int width, int height,
+			int line_width, int length, int space, 
+			int origin_x, int origin_y)
+{
+	int x1, y1;
+	if (o_current == NULL) {
+		printf("got null in o_box_print\n");
+		return;
+	}
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, o_current->color);
+	}
+
+	f_print_set_line_width(fp, o_current->line_width);
+
+	x1 = x;
+	y1 = y-height; /* move the origin to 0, 0*/
+
+	o_line_print_phantom(w_current, fp, o_current,
+			  x1, y1, x1 + width, y1, line_width, length, space,
+			  origin_x, origin_y);
+	o_line_print_phantom(w_current, fp, o_current,
+			  x1 + width, y1, x1 + width, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_phantom(w_current, fp, o_current, 
+			  x1 + width, y1 + height, x1, y1 + height, line_width, 
+			  length, space,
+			  origin_x, origin_y);
+	o_line_print_phantom(w_current, fp, o_current, 
+			  x1, y1 + height, x1, y1, line_width, length, space,
+			  origin_x, origin_y);
+	fprintf(fp, "grestore\n");
 }
 
 void

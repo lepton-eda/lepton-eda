@@ -8,6 +8,57 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_box_basic.c: Further updated the file format per Patrick's
+	  instructions
+
+	* src/o_circle_basic.c: Further updated the file format per Patrick's
+	  instructions
+
+	* src/o_arc_basic.c: Found a instance where the wrong object was 
+	  getting it's line type and file options set (in o_arc_copy.c)
+
+	* src/o_basic.c: Renamed all d1 to length and d2 to space
+
+	* src/f_print.c: Added f_print_set_line_width
+	
+	* src/o_*_basic.c: Make the appropriate call to above
+
+	* src/o_line_basic.c: Added line type postscript output (solid,
+	  dotted, dashed, center, phantom)
+
+	* src/o_box_basic.c: Added postscript output using line postscript
+	  output code
+
+	* src/o_complex_basic.c: Found an bug where mirror flag was being
+	  set to -1 for embedded components (should have really been 0)
+
+2000-09-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Intergrated OBJECT structure changes by 
+	  Patrick Bernaud 
+
+	* src/o_arc_basic.c: Intergrated changes to the arc primitive by
+	  Patrick Bernaud
+
+	* src/o_box_basic.c: Intergrated changes to the box primitive by
+	  Patrick Bernaud
+
+	* src/o_circle_basic.c: Intergrated changes to the circle primitive by
+	  Patrick Bernaud
+
+	* src/o_line_basic.c: Intergrated changes to the line primitive by
+	  Patrick Bernaud
+
+	* src/create_proto: Updated script to be a lot more general (but
+	  unfortunately had to add an ugly hack to get it to work)
+
+	* src/o_attrib.c: Changed <strings.h> to <string.h>
+
+	* src/o_arc_basic.c: Moved some common code out of this file
+	  src/o_basic.c: Moved the above code into this file
+
 2000-09-22  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_net_basic.c: Martin found a core dump bug. Fixed.  Wasn't

@@ -31,11 +31,17 @@
 #define GET_BOX_HEIGHT(w)			\
 	abs((w)->last_y - (w)->start_y)
 
+
 void
 o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int wleft, wright, wtop, wbottom;
 	int width, height;
+	int arc_width;
+	GdkCapStyle arc_end;
+	GdkColor *color;
+	void (*draw_func)();
+	int length, space;
 
 	if (o_current->arc == NULL) {
 		return;
@@ -47,8 +53,8 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			     &wleft, &wtop, &wright, &wbottom);
 
  	if (!visible(w_current, wleft, wtop, wright, wbottom)) {
-                return;
-        }
+		return;
+	}
 
 	width  = o_current->arc->screen_width - o_current->arc->screen_x;
 	height = o_current->arc->screen_height - o_current->arc->screen_y;
@@ -64,66 +70,391 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("Computed width height: %d %d\n", width, height);
 #endif
 
-	if (w_current->override_color != -1) {
+	if (w_current->override_color != -1 )
+		color = x_get_color(w_current->override_color);
+	else
+		color = x_get_color(o_current->color);
 
-		gdk_gc_set_foreground(w_current->gc,
-				      x_get_color(w_current->override_color));
-		gdk_draw_arc(w_current->window, w_current->gc, FALSE,
-			     /* x and y */
-			     o_current->arc->screen_x,
-			     o_current->arc->screen_y,
-
-			     /* width and height */
-			     width ,
-			     height,
-
-			     /* Start and end */
-			     o_current->arc->start_angle,
-			     o_current->arc->end_angle);
-		gdk_draw_arc(w_current->backingstore, w_current->gc, FALSE,
-			     /* x and y */
-			     o_current->arc->screen_x,
-			     o_current->arc->screen_y,
-
-			     /* width and height */
-			     width ,
-			     height,
-
-			     /* Start and end */
-			     o_current->arc->start_angle,
-			     o_current->arc->end_angle);
+	if(o_current->screen_line_width > 0) {
+		arc_width = o_current->screen_line_width;
 	} else {
-		gdk_gc_set_foreground(w_current->gc,
-				      x_get_color(o_current->color));
-		gdk_draw_arc(w_current->window, w_current->gc, FALSE,
-			     /* x and y */
-			     o_current->arc->screen_x,
-			     o_current->arc->screen_y,
-
-			     /* width and height */
-			     width ,
-			     height,
-
-			     /* Start and end */
-			     o_current->arc->start_angle,
-			     o_current->arc->end_angle);
-		gdk_draw_arc(w_current->backingstore, w_current->gc, FALSE,
-			     /* x and y */
-			     o_current->arc->screen_x,
-			     o_current->arc->screen_y,
-
-			     /* width and height */
-			     width ,
-			     height,
-
-			     /* Start and end */
-			     o_current->arc->start_angle,
-			     o_current->arc->end_angle);
+		arc_width = 1;
+	}
+	
+	switch(o_current->line_end) {
+		case END_NONE:   arc_end = GDK_CAP_BUTT;       break;
+		case END_SQUARE: arc_end = GDK_CAP_PROJECTING; break;
+		case END_ROUND:  arc_end = GDK_CAP_ROUND;      break;
+		default: fprintf(stderr, "Unknown end for arc (%d)\n", o_current->line_end);
 	}
 
+	length = o_current->screen_line_length;
+	space = o_current->screen_line_space;
+	
+	switch(o_current->line_type) {
+		case TYPE_SOLID:
+			length = -1;
+			space = -1;
+			draw_func = (void *) o_arc_draw_solid;
+			break;
+			
+		case TYPE_DOTTED:
+			length = -1; /* AVH changed o_arc_draw_dotted to use */
+				     /* space parameter only */
+			draw_func = (void *) o_arc_draw_dotted;
+			break;
+			
+		case TYPE_DASHED:
+			draw_func = (void *) o_arc_draw_dashed;
+			break;
+			
+		case TYPE_CENTER:
+			draw_func = (void *) o_arc_draw_center;
+			break;
+			
+		case TYPE_PHANTOM:
+			draw_func = (void *) o_arc_draw_phantom;
+			break;
+			
+		case TYPE_ERASE:
+			break;
+			
+		default:
+			fprintf(stderr, "Unknown type for arc !\n");
+			break;
+	}
+
+	if((length == 0) || (space == 0))
+		draw_func = (void *) o_arc_draw_solid;
+
+	(*draw_func)(w_current->window, w_current->gc, color,
+				 arc_end, FALSE,
+				 o_current->arc->screen_x,
+				 o_current->arc->screen_y,
+				 width, height,
+				 o_current->arc->start_angle,
+				 o_current->arc->end_angle,
+				 arc_width, length, space);
+	(*draw_func)(w_current->backingstore, w_current->gc, color,
+				 arc_end, FALSE,
+				 o_current->arc->screen_x,
+				 o_current->arc->screen_y,
+				 width, height,
+				 o_current->arc->start_angle,
+				 o_current->arc->end_angle,
+				 arc_width, length, space);
+	
 #if DEBUG
 	printf("drawing arc\n");
 #endif
+}
+
+void
+o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				 gint filled,
+				 gint x, gint y,
+				 gint width, gint height,
+				 gint angle1, gint angle2,
+				 gint arc_width, gint length, gint space)
+{
+	gdk_gc_set_foreground(gc, color);
+	/* Set the width, end type and join style of the line */
+	gdk_gc_set_line_attributes(gc, arc_width, 
+				   GDK_LINE_SOLID, cap, GDK_JOIN_MITER);
+
+	/* Draw the arc */
+	gdk_draw_arc(w, gc, FALSE, x, y, width, height, angle1, angle2);
+
+}
+
+/* length parameter is not used here */
+void
+o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint filled,
+				  gint x, gint y,
+				  gint width, gint height,
+				  gint angle1, gint angle2,
+				  gint arc_width, gint length, gint space)
+{
+	double radius;
+	double x1, y1; /* coordinate of center */
+	double xa, ya;
+	int da, d;
+
+	gdk_gc_set_foreground(gc, color);
+	
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y + radius;
+
+	da = (int) (((space * 180) / (M_PI * radius)) * 64);
+
+	/* If da or db too small for arc to be displayed as dotted,
+	   draw a solid arc */
+	if(da <= 0) {
+		gdk_draw_arc(w, gc, filled, x, y, width, height, angle1, angle2);
+		return;
+	}
+	
+	d = angle1;
+	while(d < (angle2 + angle1)) {
+		xa = x1 + radius * cos((d / 64) * M_PI/180);
+		ya = y1 - radius * sin((d / 64) * M_PI/180);
+		
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + da;
+	}
+
+}
+
+void
+o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint filled,
+				  gint x, gint y,
+				  gint width, gint height,
+				  gint angle1, gint angle2,
+				  gint arc_width, gint length, gint space)
+{
+	double radius;
+	double x1, y1; /* coordinate of center */
+	int da, db, a1, a2, d;
+
+	gdk_gc_set_foreground(gc, color);	
+	gdk_gc_set_line_attributes(gc, arc_width, GDK_LINE_SOLID, cap, 
+				   GDK_JOIN_MITER);
+
+	radius = ((double) width) / 2;
+
+	da = (int) ((length * 180) / (M_PI * radius)) * 64;
+	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+
+	/* If da or db too small for arc to be displayed as dotted,
+	   draw a solid arc */
+	if((da <= 0) || (db <= 0)) {
+		gdk_draw_arc(w, gc, filled, x, y, width, height, angle1, angle2);
+		return;
+	}
+	
+	d = angle1;
+	while((d + da + db) < angle2) {
+		a1 = d;
+		d = d + da;
+		gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
+
+		d = d + db;
+		
+	}
+
+	if((d + da) < angle2) {
+		a1 = d;
+		a2 = da;
+	} else {
+		a1 = d;
+		a2 = angle2 - d;
+	}
+	gdk_draw_arc(w, gc, filled, x, y, width, height, a1, a2);
+	
+}
+
+void
+o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint filled,
+				  gint x, gint y,
+				  gint width, gint height,
+				  gint angle1, gint angle2,
+				  gint arc_width, gint length, gint space)
+{
+	double radius;
+	double x1, y1, xa, ya; /* coordinate of center */
+	int da, db, a1, a2, d;
+
+	gdk_gc_set_foreground(gc, color);	
+	gdk_gc_set_line_attributes(gc, arc_width, 
+				   GDK_LINE_SOLID, cap, GDK_JOIN_MITER);
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y + radius;
+	
+	da = (int) ((length * 180) / (M_PI * radius)) * 64;
+	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+
+	/* If da or db too small to be displayed, draw an arc */
+	if((da <= 0) || (db <= 0)) {
+		gdk_draw_arc(w, gc, filled, x, y, width, height, angle1, angle2);
+		return;
+	}
+	
+	d = angle1;
+	while((d + da + 2 * db) < angle2) {
+		a1 = d;
+		d = d + da;
+		gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
+
+		d = d + db;
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + db;
+	}
+
+	if((d + da) < angle2) {
+		a1 = d;
+		a2 = da;
+		
+		d = d + da;
+	} else {
+		a1 = d;
+		a2 = angle2 - d;
+
+		d = d + da;
+	}
+	gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
+
+	if((d + db) < angle2) {
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
+
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+	}
+	
+}
+
+void
+o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				   gint filled,
+				   gint x, gint y,
+				   gint width, gint height,
+				   gint angle1, gint angle2,
+				   gint arc_width, gint length, gint space)
+{
+	double radius;
+	double x1, y1, xa, ya; /* coordinate of center */
+	int da, db, a1, a2, d;
+
+	gdk_gc_set_foreground(gc, color);	
+	gdk_gc_set_line_attributes(gc, arc_width, 
+				   GDK_LINE_SOLID, cap, GDK_JOIN_MITER);
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y + radius;
+	
+	da = (int) ((length * 180) / (M_PI * radius)) * 64;
+	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+
+	/* If da or db too small for arc to be displayed as dotted,
+	   draw a solid arc */
+	if((da <= 0) || (db <= 0)) {
+		gdk_draw_arc(w, gc, filled, x, y, width, height, angle1, angle2);
+		return;
+	}
+	
+	d = angle1;
+	while((d + da + 3 * db) < angle2) {
+		a1 = d;
+		d = d + da;
+		gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
+
+		d = d + db;
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + db;
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + db;
+	}
+
+	if((d + da) < angle2) {
+		a1 = d;
+		a2 = da;
+		d = d + da;
+	} else {
+		a1 = d;
+		a2 = angle2 - d;
+		d = d + da;
+	}
+	gdk_draw_arc(w, gc, filled, x, y, width, height, a1, a2);
+
+	if((d + db) < angle2) {
+		d = d + db;
+
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
+		
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+	}
+
+	if((d + db) < angle2) {
+		d = d + db;
+
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
+		
+		if(arc_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - arc_width/2, 
+				     ((int) ya) - arc_width/2,
+				     arc_width, arc_width, 0, FULL_CIRCLE);
+		}
+	}
+	
 }
 
 void
@@ -199,6 +530,9 @@ o_arc_start(TOPLEVEL *w_current, int x, int y)
 
 	gdk_gc_set_foreground(w_current->xor_gc,
 			      x_get_color(w_current->select_color));
+	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+				   GDK_JOIN_MITER);
 	gdk_draw_line(w_current->window, w_current->xor_gc,
 		      w_current->start_x,
 		      w_current->start_y,
@@ -278,11 +612,11 @@ o_arc_end2(TOPLEVEL *w_current, int start_angle, int end_angle)
 
 	w_current->page_current->object_tail =
 		o_arc_add(w_current, w_current->page_current->object_tail,
-			  OBJ_ARC, w_current->graphic_color,
-			  x1, y1,
-			  x2, y2,
-			  start_angle * 64,
-			  end_angle   * 64);
+				  OBJ_ARC, w_current->graphic_color,
+				  x1, y1,
+				  x2, y2,
+				  start_angle * 64,
+				  end_angle   * 64);
 
 	(*w_current->page_current->object_tail->draw_func)(
 		w_current,

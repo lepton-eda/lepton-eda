@@ -116,6 +116,11 @@ void
 o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
 	int x, y;
+#if 0
+	OBJECT *o_current;
+	int new_angle;
+	int screen_x_local=-1, screen_y_local=-1;
+#endif
 
 	w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
 	w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
@@ -142,6 +147,43 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 	w_current->ADDING_SEL = 0;
 	w_current->DONT_DRAW_CONN = 0;
 
+#if 0 /* in place rotate */
+	o_current = w_current->page_current->complex_place_head->next;
+	while(o_current) {
+		switch(o_current->type) {	
+			case(OBJ_COMPLEX):
+				screen_x_local = o_current->complex->screen_x; 
+				screen_y_local = o_current->complex->screen_y;
+			break;
+		}
+		o_current = o_current->next;
+	}
+
+	if (screen_x_local == -1) {
+		printf("Could not find complex in new componet placement!\n");
+		return;
+	}
+
+	o_current = w_current->page_current->complex_place_head->next;
+	while(o_current) {
+		switch(o_current->type) {	
+
+			case(OBJ_TEXT):
+				new_angle = (o_current->text->angle + 90) % 360;
+			        o_text_rotate(w_current, screen_x_local, screen_y_local,
+					new_angle, 90, o_current);
+			break;
+
+			case(OBJ_COMPLEX):
+				new_angle = (o_current->complex->angle + 90) % 360;
+				o_complex_rotate(w_current, screen_x_local, screen_y_local,
+						new_angle, 90, o_current);
+			break;
+
+		}
+		o_current = o_current->next;
+	}
+#endif
 
 	o_drawbounding(w_current, 
 		       w_current->page_current->complex_place_head->next,

@@ -554,7 +554,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=20000704
+VERSION=20001006
 
 echo Configuring libgeda version $VERSION
 
@@ -3957,7 +3957,7 @@ else
 int main() {
 
 /* Ultrix mips cc rejects this.  */
-typedef int charset[2]; const charset x = {0,0};
+typedef int charset[2]; const charset x;
 /* SunOS 4.1.1 cc rejects this.  */
 char const *const *ccp;
 char **p;

@@ -17,6 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/* PB : file modified on 06.09.2000 to suit proposed new fields
+   in object structure */
+#define VERSION_20000704 20000704
+
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
@@ -74,6 +78,8 @@ get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int 
 	*right = *left + circle->screen_radius*2;
 	*bottom = circle->screen_top+circle->screen_radius*2;
 
+/* PB : need to take into account the width of the line in the bounding box */
+	
 /* out temp  
 	*left = *left - 4;
 	*top = *top - 4;
@@ -121,15 +127,18 @@ world_get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top
 }
 
 OBJECT *
-o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int radius)
+o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
+			 char type, int color,
+			 int x, int y, int radius)
 {
 	int screen_x, screen_y;
+	int screen_width;
 	int left, right, top, bottom;
 	OBJECT *new_node;	
 
 	new_node = s_basic_init_object("circle");
-        new_node->type = type;
-        new_node->color = color;
+	new_node->type = type;
+	new_node->color = color;
 
 	new_node->circle = (CIRCLE *) malloc(sizeof(CIRCLE));
 
@@ -139,31 +148,14 @@ o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int
 	new_node->circle->center_y = y;
 	new_node->circle->radius = radius;
 
-
-	WORLDtoSCREEN(w_current, 
-		new_node->circle->center_x, new_node->circle->center_y, 
-		&screen_x, &screen_y);  
+	/* Init */
+	o_set_line_options(w_current, new_node,
+					   END_NONE, TYPE_SOLID, 0, -1, -1);
+	o_set_fill_options(w_current, new_node,
+					   FILLING_HOLLOW, -1, -1, -1, -1, -1);
 	
-	new_node->circle->screen_x = screen_x;
-	new_node->circle->screen_y = screen_y;
-
-
-	new_node->circle->screen_radius = SCREENabs(
-						w_current, 
-						new_node->circle->radius);
-
-	new_node->circle->screen_left = new_node->circle->screen_x - 
-				  new_node->circle->screen_radius;
-	new_node->circle->screen_top = new_node->circle->screen_y - 
-					new_node->circle->screen_radius;
-
-
-	get_circle_bounds(w_current, new_node->circle, &left, &top, &right, &bottom);
-	
-	new_node->left = left;
-	new_node->top = top;
-	new_node->right = right;
-	new_node->bottom = bottom;	
+/* PB : replacement as it was doing exactly the same */
+	o_circle_recalc(w_current, new_node);
 
 	/* TODO: questionable cast */
 	new_node->draw_func = (void *) circle_draw_func;  
@@ -198,7 +190,7 @@ o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	o_current->circle->screen_y = screen_y1;
 
 	o_current->circle->screen_radius = SCREENabs(w_current, 
-						 o_current->circle->radius);
+												 o_current->circle->radius);
 
 	o_current->circle->screen_left = o_current->circle->screen_x - 
 					 o_current->circle->screen_radius;
@@ -211,6 +203,8 @@ o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	o_current->top = top;
 	o_current->right = right;
 	o_current->bottom = bottom;
+
+	o_object_recalc(w_current, o_current);
 }
 
 OBJECT * 
@@ -220,23 +214,59 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
 	int x1, y1;
 	int radius;
 	int color;
+	int circle_width, circle_space, circle_length;
+	OBJECT_END circle_end;
+	OBJECT_TYPE circle_type;
+	OBJECT_FILLING circle_fill;
+	long int ver;
+	int tmp;
 
-	sscanf(buf, "%c %d %d %d %d\n", &type, &x1, &y1, &radius, &color);	
+/* PB : check of the version of the file before read */
+	ver = strtol(version, NULL, 10);
+	if(ver <= VERSION_20000704) {
+		sscanf(buf, "%c %d %d %d %d\n", &type, &x1, &y1, &radius, &color);
 
-	if (radius == 0) {
-		fprintf(stderr, "Found a zero radius circle [ %c %d %d %d %d ]\n", type, x1, y1, radius, color);
-		s_log_message("Found a zero radius circle [ %c %d %d %d %d ]\n", type, x1, y1, radius, color);
+		circle_width = 0;
+		circle_end   = END_NONE;
+		circle_type  = TYPE_SOLID;
+		circle_length= -1;
+		circle_space = -1;
+		circle_fill  = FILLING_HOLLOW;
+	} else {
+/* PB : change */
+		sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+			   &type, &x1, &y1, &radius, &color,
+			   &circle_width, &circle_end, &circle_type,
+			   &circle_length, &circle_space, &circle_fill,
+			   &tmp, &tmp, &tmp, &tmp, &tmp);
+			   /* circle_fillwidth circle_angle1 circle_pitch1 */
+			   /* circle_angle2 circle_pitch2*/
 	}
 
+	if (radius == 0) {
+		fprintf(stderr, "Found a zero radius circle [ %c %d %d %d %d ]\n",
+				type, x1, y1, radius, color);
+		s_log_message("Found a zero radius circle [ %c %d %d %d %d ]\n",
+					  type, x1, y1, radius, color);
+		
+	}
+	
 	if (color < 0 || color > MAX_COLORS) {
-                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-                s_log_message("Found an invalid color [ %s ]\n", buf);
+		fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+		s_log_message("Found an invalid color [ %s ]\n", buf);
 		s_log_message("Setting color to WHITE\n");
 		color = WHITE;
 	}
-
-	object_list = (OBJECT *) o_circle_add(w_current, object_list, type, color, x1, y1, radius);
-
+	
+/* PB : modification of o_circle_add() prototype */	
+	object_list = (OBJECT *) o_circle_add(w_current, object_list,
+					      type, color, x1, y1, radius);
+	o_set_line_options(w_current, object_list,
+				circle_end, circle_type, circle_width, 
+				circle_length, circle_space);
+	o_set_fill_options(w_current, object_list,
+				circle_fill, -1, -1, -1, -1, -1);
+	
 	return(object_list);
 }
 
@@ -246,10 +276,22 @@ o_circle_save(char *buf, OBJECT *object)
 	int x,y;
 	int radius;
 	int color;
+	int circle_width, circle_space, circle_length;
+	OBJECT_END circle_end;
+	OBJECT_TYPE circle_type;
+	OBJECT_FILLING circle_fill;
 
-        x = object->circle->center_x;
-        y = object->circle->center_y;
-        radius = object->circle->radius;
+	x = object->circle->center_x;
+	y = object->circle->center_y;
+	radius = object->circle->radius;
+
+/* PB : for new fields in OBJECT */
+	circle_width = object->line_width;
+	circle_end   = object->line_end;
+	circle_type  = object->line_type;
+	circle_length= object->line_length;
+	circle_space = object->line_space;
+	circle_fill  = object->fill_type;
 
 #if 0 /* old system */
 	radius = abs(x2 - x1)/2;
@@ -268,9 +310,16 @@ o_circle_save(char *buf, OBJECT *object)
 		color = object->saved_color;
 	}
 
-	sprintf(buf, "%c %d %d %d %d", object->type, x, y, radius, color);
+/* PB : changed to save new fields : width, type and filling */	
+	sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+			object->type, x, y, radius, color,
+			circle_width, circle_end, circle_type, circle_length, 
+			circle_space, circle_fill,
+			-1, -1, -1, -1, -1);
+			/* circle_fillwidth circle_angle1 circle_pitch1 */
+			/* circle_angle2 circle_pitch2 */
 
-        return(buf);
+	return(buf);
 }
            
 void
@@ -281,29 +330,31 @@ o_circle_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 	if (object == NULL) printf("ct NO!\n");
 
 	/* Do screen coords */
-        object->circle->screen_x = object->circle->screen_x + dx;
-        object->circle->screen_y = object->circle->screen_y + dy;
-        object->circle->screen_left = object->circle->screen_left + dx;
-        object->circle->screen_top = object->circle->screen_top + dy;
+	object->circle->screen_x = object->circle->screen_x + dx;
+	object->circle->screen_y = object->circle->screen_y + dy;
+	object->circle->screen_left = object->circle->screen_left + dx;
+	object->circle->screen_top = object->circle->screen_top + dy;
 
 
 	/* I don't think we need snap grid here hack */
 	SCREENtoWORLD(w_current, 
-	          object->circle->screen_x, 
+				  object->circle->screen_x, 
                   object->circle->screen_y,
                   &x,
                   &y);
+	
+	object->circle->center_x = snap_grid(w_current, x);
+	object->circle->center_y = snap_grid(w_current, y);
 
-        object->circle->center_x = snap_grid(w_current, x);
-        object->circle->center_y = snap_grid(w_current, y);
-
+/* PB : is it needed here ? translation should not change radius,
+   am I wrong? */
 	object->circle->screen_radius = SCREENabs(w_current, 
-						 object->circle->radius);
-
+											  object->circle->radius);
+	
 	object->circle->screen_left = object->circle->screen_x - 
-					 object->circle->screen_radius;
+		object->circle->screen_radius;
 	object->circle->screen_top = object->circle->screen_y - 
-					 object->circle->screen_radius;
+		object->circle->screen_radius;
 }
 
 void
@@ -312,24 +363,25 @@ o_circle_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 	int screen_x1, screen_y1;
 	int left, right, top, bottom;
 
-        if (object == NULL) printf("ctw NO!\n");
+	if (object == NULL) printf("ctw NO!\n");
 
-	 /* Do world coords */
-        object->circle->center_x = object->circle->center_x + x1;
-        object->circle->center_y = object->circle->center_y + y1;
-
+	/* Do world coords */
+	object->circle->center_x = object->circle->center_x + x1;
+	object->circle->center_y = object->circle->center_y + y1;
+	
 	WORLDtoSCREEN(w_current, 
-		  object->circle->center_x, 
-		  object->circle->center_y, 
-		  &screen_x1,
+				  object->circle->center_x, 
+				  object->circle->center_y, 
+				  &screen_x1,
                   &screen_y1);  
-
+	
 	object->circle->screen_x = screen_x1;
 	object->circle->screen_y = screen_y1;
 
+/* PB : same comments as above in o_circle_translate() */
 	object->circle->screen_radius = SCREENabs(w_current, 
-						object->circle->radius);
-
+											  object->circle->radius);
+	
 	object->circle->screen_left = object->circle->screen_x - 
 					 object->circle->screen_radius;
 	object->circle->screen_top = object->circle->screen_y - 
@@ -357,22 +409,31 @@ o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	}
 
 	new_obj = o_circle_add(w_current, list_tail, OBJ_CIRCLE, 
-			color, 
-			o_current->circle->center_x, 
-			o_current->circle->center_y, 
-			o_current->circle->radius);
+				   color, 
+				   o_current->circle->center_x, 
+				   o_current->circle->center_y, 
+				   o_current->circle->radius);
+	
+	new_obj->circle->screen_x = o_current->circle->screen_x;
+	new_obj->circle->screen_y = o_current->circle->screen_y;
+	new_obj->circle->screen_left = o_current->circle->screen_left;
+	new_obj->circle->screen_top = o_current->circle->screen_top;
+	new_obj->circle->screen_radius = o_current->circle->screen_radius;
 
-        new_obj->circle->screen_x = o_current->circle->screen_x;
-        new_obj->circle->screen_y = o_current->circle->screen_y;
-        new_obj->circle->screen_left = o_current->circle->screen_left;
-        new_obj->circle->screen_top = o_current->circle->screen_top;
-        new_obj->circle->screen_radius = o_current->circle->screen_radius;
-
+/* PB : make the copy of new fields in OBJECT from original to copy */
+	o_set_line_options(w_current, new_obj, o_current->line_end,
+				o_current->line_type, o_current->line_width,
+				o_current->line_length, o_current->line_space);
+	o_set_fill_options(w_current, new_obj,
+				o_current->fill_type, o_current->fill_width,
+				o_current->fill_pitch1, o_current->fill_angle1,
+				o_current->fill_pitch2, o_current->fill_angle2);
+	
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
 	if (a_current) {
 		while ( a_current ) {
-
+			
 			/* head attrib node has prev = NULL */
 			if (a_current->prev != NULL) {
 				a_current->copied_to = new_obj;
@@ -393,9 +454,12 @@ o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		return;
 	}
 
+	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, o_current->color);
 	}
+
+	f_print_set_line_width(fp, o_current->line_width);
 
 	fprintf(fp, "newpath\n");
 	fprintf(fp, "%d mils %d mils\n", o_current->circle->center_x-origin_x, 
@@ -403,6 +467,7 @@ o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils\n", o_current->circle->radius);
 	fprintf(fp, "0 360 arc\n");
 	fprintf(fp, "stroke\n");
+	fprintf(fp, "grestore\n");
 }
 
 void
@@ -449,17 +514,17 @@ o_circle_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 	int x, y;
 
 	SCREENtoWORLD(w_current, centerx, centery, 
-		  &world_centerx,
+				  &world_centerx,
                   &world_centery);  
-
+	
 	radius = object->circle->radius;
-
+	
 	/* translate object to origin */
 	o_circle_translate_world(w_current, -world_centerx, -world_centery, object);
 
 	/* translate radius point */
 	x = object->circle->center_x;
-        y = object->circle->center_y;
+	y = object->circle->center_y;
 
 	rotate_point_90(x, y, angle, &newx, &newy);
 

@@ -41,6 +41,8 @@
 
 #include "../include/prototype.h"
 
+#define VERSION_20000704 20000704
+
 void
 get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom)
 {
@@ -63,6 +65,11 @@ get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *ri
 		*bottom = object->arc->screen_y + 
 		    abs(object->arc->screen_y - object->arc->screen_height)/2;
 	}
+
+/* PB : bounding box has to take into account the width of the line it is
+   composed with, ie adding/substracting half the width to this box */
+/* PB : but width is unknown here */	
+   
 }
 
 void
@@ -90,59 +97,52 @@ world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, i
 		*bottom = object->arc->y - 
 			abs(object->arc->y - object->arc->height)/2;
 	}
+
+/* PB : same problem as above */
+	
 }
 
 /* now fixed for world_coords */
 OBJECT *
-o_arc_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int width, int height, int start_angle, int end_angle)
+o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
+		  char type, int color,
+		  int x, int y, int width, int height, int start_angle, int end_angle)
 {
 
 	int left, right, top, bottom;
 	OBJECT *new_node;
-	ARC *arc;
 	int screen_x, screen_y;
 
 	new_node = s_basic_init_object("arc");
-        new_node->type = type;
+	new_node->type = type;
 	new_node->color = color;
 
-	arc = (ARC *) malloc(sizeof(ARC));	
+	new_node->arc = (ARC *) malloc(sizeof(ARC));	
 
 	/* Screen */	
-	arc->width = width;
-	arc->height = height;
-	arc->start_angle = start_angle;
-	arc->end_angle = end_angle;
-	arc->x = x; 
-	arc->y = y; 
+	new_node->arc->width = width;
+	new_node->arc->height = height;
+	new_node->arc->start_angle = start_angle;
+	new_node->arc->end_angle = end_angle;
+	new_node->arc->x = x; 
+	new_node->arc->y = y; 
 
-	WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-        arc->screen_x = screen_x;
-        arc->screen_y = screen_y;
-
-	WORLDtoSCREEN(w_current, width, height, &screen_x, &screen_y);
-	arc->screen_width = screen_x; /* width */  
-	arc->screen_height = screen_y; /* height */
-
-	new_node->arc = arc;
+	/* Init */
+	o_set_line_options(w_current, new_node,
+			   END_NONE, TYPE_SOLID, 0, -1, -1);
+	o_set_fill_options(w_current, new_node,
+			   FILLING_HOLLOW, -1, -1, -1, -1, -1);
+	
+	o_arc_recalc(w_current, new_node);
 
 	/* new_node->graphical = arc; eventually */
-
+	
 	/* TODO: questionable cast */
 	new_node->draw_func = (void *) arc_draw_func;  
 	/* TODO: questionable cast */
 	new_node->sel_func = (void *) select_func;  
-
-
-	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-
-	get_arc_bounds(w_current, object_list, &left, &top, &right, &bottom);
 	
-	object_list->left = left;
-	object_list->top = top;
-	object_list->right = right;
-	object_list->bottom = bottom;
-
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 	return(object_list);
 }
 
@@ -159,20 +159,20 @@ o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
 	WORLDtoSCREEN(w_current, o_current->arc->x, o_current->arc->y, 
-		  &screen_x,
-                  &screen_y);  
+		      &screen_x, &screen_y);  
 
 	o_current->arc->screen_x = screen_x; /* x and y coords */
 	o_current->arc->screen_y = screen_y;
 
 	WORLDtoSCREEN(w_current, o_current->arc->width, o_current->arc->height, 
-		  &width,
-                  &height);  
+		      &width, &height);  
 
 	o_current->arc->screen_width = width; /* width and height */
 	o_current->arc->screen_height = height; /* was height */
 	/* with x and y added in */
 
+	o_object_recalc(w_current, o_current);
+		
 	get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
 
 	o_current->left = left;
@@ -192,9 +192,28 @@ o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	int radius;
 	int start_angle, end_angle;
 	int color;
-
+	int arc_width, arc_length, arc_space;
+	OBJECT_TYPE arc_type;
+	OBJECT_END arc_end;
+	long int ver;
+	
+	ver = strtol(version, NULL, 10);
+	if(ver <= VERSION_20000704) {
         sscanf(buf, "%c %d %d %d %d %d %d", &type,
-			&x1, &y1, &radius, &start_angle, &end_angle, &color);
+			   &x1, &y1, &radius, &start_angle, &end_angle, &color);
+
+		arc_width = 0;
+		arc_end   = END_NONE;
+		arc_type  = TYPE_SOLID;
+		arc_space = -1;
+		arc_length= -1;
+	} else {
+        sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
+			   &x1, &y1, &radius, &start_angle, &end_angle, &color,
+			   &arc_width, &arc_end, &arc_type, &arc_length, &arc_space);
+
+	}
+		
 
 	x = x1 - radius; 
 	y = y1 + radius;
@@ -202,21 +221,28 @@ o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	width = x1 + radius;
 	height = y1 - radius;
 
-        if (radius == 0) {
-                fprintf(stderr, "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n", type, x1, y1, radius, start_angle, end_angle, color);
-                s_log_message("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n", type, x1, y1, radius, start_angle, end_angle, color);
-        }
-
+	if (radius == 0) {
+		fprintf(stderr, "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+				type, x1, y1, radius, start_angle, end_angle, color);
+		s_log_message("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+					  type, x1, y1, radius, start_angle, end_angle, color);
+	}
+	
 	if (color < 0 || color > MAX_COLORS) {
-                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-                s_log_message("Found an invalid color [ %s ]\n", buf);
+		fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+		s_log_message("Found an invalid color [ %s ]\n", buf);
 		s_log_message("Setting color to WHITE\n");
 		color = WHITE;
 	}
-
+	
+/* PB : modification of the o_arc_add() prototype */	
 	object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,  x, y, 
 				width, height, 
 				start_angle*64, end_angle*64);
+	o_set_line_options(w_current, object_list,
+			   arc_end, arc_type, arc_width, arc_length, arc_space);
+	o_set_fill_options(w_current, object_list,
+			   FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
 	return(object_list);
 }
@@ -232,17 +258,20 @@ o_arc_save(char *buf, OBJECT *object)
 	int start_angle, end_angle;
 	int width, height;
 	int radius;
+	int arc_width, arc_length, arc_space;
+	OBJECT_END arc_end;
+	OBJECT_TYPE arc_type;
 
-        width = object->arc->width;
-        height = object->arc->height;
+	width = object->arc->width;
+	height = object->arc->height;
 
 	radius = abs(height - object->arc->y)/2;
-
+	
 	x = object->arc->x+radius;
 	y = object->arc->y-radius;
-
-        start_angle = object->arc->start_angle/64;
-        end_angle = object->arc->end_angle/64;
+	
+	start_angle = object->arc->start_angle/64;
+	end_angle = object->arc->end_angle/64;
 	
 	/* Use the right color */
 	if (object->saved_color == -1) {
@@ -251,9 +280,17 @@ o_arc_save(char *buf, OBJECT *object)
 		color = object->saved_color;
 	}
 
-        sprintf(buf, "%c %d %d %d %d %d %d", object->type,
-			x, y, radius, start_angle, end_angle, color);
-        return(buf);
+/* PB : new fields are saved */
+	arc_width  = object->line_width;
+	arc_end    = object->line_end;
+	arc_type   = object->line_type;
+	arc_length = object->line_length;
+	arc_space  = object->line_space;
+	
+	sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
+			x, y, radius, start_angle, end_angle, color,
+			arc_width, arc_end, arc_type, arc_length, arc_space);
+	return(buf);
 }
        
 
@@ -361,12 +398,22 @@ o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 		color = o_current->saved_color;
 	}
 
+
+/* PB : modification of the o_arc_add() prototype */	
 	new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, color,
 				o_current->arc->x, o_current->arc->y, 
 				o_current->arc->width,
 				o_current->arc->height,
 				o_current->arc->start_angle,
 				o_current->arc->end_angle);
+	o_set_line_options(w_current, new_obj,
+				o_current->line_end, o_current->line_type,
+				o_current->line_width,
+				o_current->line_length, o_current->line_space);
+	o_set_fill_options(w_current, new_obj,
+				o_current->fill_type, o_current->fill_width,
+				o_current->fill_pitch1, o_current->fill_angle1,
+				o_current->fill_pitch2, o_current->fill_angle2);
 
 	a_current = o_current->attribs;
 	if (a_current) {
@@ -397,9 +444,12 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		return;
 	}
 
+	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, o_current->color);
 	}
+
+	f_print_set_line_width(fp, o_current->line_width);
 
         awidth = o_current->arc->width;
         aheight = o_current->arc->height;
@@ -443,6 +493,7 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils\n", radius);
 	fprintf(fp, "%d %d arc\n", start_angle, end_angle);
 	fprintf(fp, "stroke\n");
+	fprintf(fp, "grestore\n");
 }
 
 
@@ -542,14 +593,14 @@ o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 	int x, y;
 
 	SCREENtoWORLD(w_current, centerx, centery, 
-		  &world_centerx,
+				  &world_centerx,
                   &world_centery);  
 
-        width = object->arc->width;
-        height = object->arc->height;
-
+	width = object->arc->width;
+	height = object->arc->height;
+	
 	radius = abs(height - object->arc->y)/2;
-
+	
 	/* translate object to origin */
 	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
 

@@ -562,7 +562,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=20000704
+VERSION=20001006
 
 echo Configuring gsymcheck version $VERSION
 

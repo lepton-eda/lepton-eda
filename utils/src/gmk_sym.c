@@ -161,7 +161,9 @@ int main(int argc,char **argv)
       }
   line_nub=-1;
 
-  printf("v %s\n",TimeStamp());
+  /* printf("v %s\n",TimeStamp()); Original line of code AVH 10/2/00 */
+  printf("v 20000704\n"); /* The v character is the version of the file AVH */
+  			  /* not a time stamp */
   while (fgets(LineBuf,sizeof(LineBuf)-1,stream) != NULL)
         {
         if (line_chk(LineBuf) < 0)

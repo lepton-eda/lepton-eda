@@ -354,6 +354,11 @@ void i_vars_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(TOPLEVEL *w_current, int x, int y);
@@ -379,6 +384,11 @@ void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, GdkC
 void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list);
 /* o_box.c */
 void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
+void o_box_draw_dotted(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
+void o_box_draw_dashed(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
+void o_box_draw_center(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
+void o_box_draw_phantom(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
 void o_box_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(TOPLEVEL *w_current, int x, int y);
@@ -445,6 +455,11 @@ void o_delete(TOPLEVEL *w_current);
 void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
 /* o_line.c */
 void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
+void o_line_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
+void o_line_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
+void o_line_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
+void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(TOPLEVEL *w_current, int x, int y);

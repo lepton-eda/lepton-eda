@@ -9,6 +9,12 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gmk_sym.c: Changed the v output (version) to be a fixed date
+
+	* src/convert_sym.c: Changed the v output (version) to be a fixed date
+
 2000-07-12  Matt Ettus  <matt@ettus.com>
 
 	* gmk_sym.c:  Pin Labels now properly attached to pins

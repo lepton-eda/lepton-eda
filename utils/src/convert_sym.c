@@ -260,7 +260,7 @@ convert_file(FILE *fp)
   char buf[MAX_TEXTLEN];
 
   /* output pre-amble */
-  printf("v %s\n",VERSION);
+  printf("v 20000704\n"); /* Set the version of the file to a fixed date AVH */
   reset_attributes();
 
 

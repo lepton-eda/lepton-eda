@@ -487,7 +487,7 @@ o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int 
 			&new_node->complex->screen_y);    
 
 	new_node->complex->angle = angle;
-	new_node->complex->mirror = -1;
+	new_node->complex->mirror = 0;
 	
 	new_node->complex_basename = strdup(basename);
 	new_node->complex_clib = strdup(clib);

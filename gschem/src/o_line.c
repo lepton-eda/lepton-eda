@@ -25,87 +25,418 @@
 
 #include "../include/prototype.h"
 
+
 void
 o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int x1, y1, x2, y2;
-
+	int line_width, length, space;
+	GdkColor *color;
+	GdkCapStyle line_end;
+	void (*draw_func)();
+	
 	if (o_current->line == NULL) {
 		return;
 	}
-
+	
 	/* goes before visible, clipfixme */
 	o_line_recalc(w_current, o_current);
-
+	
 	if (!o_line_visible(w_current, o_current->line,
-			&x1, &y1, &x2, &y2)) {
+						&x1, &y1, &x2, &y2)) {
 		return;
 	}
-
+	
 #if DEBUG
-        printf("drawing line\n\n");
+	printf("drawing line\n\n");
 #endif
-
-   if (w_current->override_color != -1 ) {
-
-		gdk_gc_set_foreground(w_current->gc,
-		x_get_color(w_current->override_color));
-
-		if ( (x1 == x2) && (y1 == y2)) {
-
-			gdk_draw_point(w_current->window,
-                                        w_current->gc,
-					x1, y1);
-
-			gdk_draw_point(w_current->backingstore,
-                                        w_current->gc,
-					x1, y1);
-
-		} else {
-
-			/* go through and make this less code hungry hack */
-			gdk_draw_line(w_current->window, w_current->gc,
-			       x1, y1, x2, y2);
-			gdk_draw_line(w_current->backingstore, w_current->gc,
-			       x1, y1, x2, y2);
-		}
-
-   } else {
-
-		gdk_gc_set_foreground(w_current->gc,
-			 x_get_color(o_current->color));
-
-		if ( (x1 == x2) && (y1 == y2)) {
-
-			gdk_draw_point(w_current->window,
-                                        w_current->gc,
-					x1, y1);
-
-			gdk_draw_point(w_current->backingstore,
-                                        w_current->gc,
-					x1, y1);
-
-		} else {
-
-			gdk_draw_line(w_current->window, w_current->gc,
-			       x1, y1, x2, y2);
-			gdk_draw_line(w_current->backingstore, w_current->gc,
-			       x1, y1, x2, y2);
+	
+	if (w_current->override_color != -1 )
+		color = x_get_color(w_current->override_color);
+	else
+		color = x_get_color(o_current->color);
+	
+	if(o_current->screen_line_width > 0) {
+		line_width = o_current->screen_line_width;
+	} else {
+		line_width = 1;
 	}
-   }
+	
+	switch(o_current->line_end) {
+		case END_NONE:   line_end = GDK_CAP_BUTT;       break;
+		case END_SQUARE: line_end = GDK_CAP_PROJECTING; break;
+		case END_ROUND:  line_end = GDK_CAP_ROUND;      break;
+		default: fprintf(stderr, "Unknown end for line (%d)\n",
+						 o_current->line_end);
+	}
 
+	length = o_current->screen_line_length;
+	space = o_current->screen_line_space;
+	
+	switch(o_current->line_type) {
+		case TYPE_SOLID:
+			length = -1;
+			space = -1;
+			draw_func = (void *) o_line_draw_solid;
+			break;
+			
+		case TYPE_DOTTED:
+			length = -1; /* in ..._draw_dotted, length is unused */
+			draw_func = (void *) o_line_draw_dotted;
+			break;
+			
+		case TYPE_DASHED:
+			draw_func = (void *) o_line_draw_dashed;
+			break;
+			
+		case TYPE_CENTER:
+			draw_func = (void *) o_line_draw_center;
+			break;
+			
+		case TYPE_PHANTOM:
+			draw_func = (void *) o_line_draw_phantom;
+			break;
+			
+		case TYPE_ERASE:
+			break;
+			
+		default:
+			fprintf(stderr, "Unknown type for line (%d) !\n",
+					o_current->line_type);
+	}
+
+	if((length == 0) || (space == 0))
+		draw_func = (void *) o_line_draw_solid;
+
+	(*draw_func)(w_current->window, w_current->gc, color, line_end,
+				 x1, y1, x2, y2,
+				 line_width, length, space);
+	(*draw_func)(w_current->backingstore, w_current->gc, color, line_end,
+				 x1, y1, x2, y2,
+				 line_width, length, space);
+	
 #if DEBUG
 	printf("drawing line\n");
 #endif
 
 }
 
+
+void
+o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint x1, gint y1, gint x2, gint y2,
+				  gint line_width, gint length, gint space)
+{
+	gdk_gc_set_foreground(gc, color);
+	/* Set the width, end type and join style of the line */
+	gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
+				   cap, GDK_JOIN_MITER);
+
+	/* Draw the line */
+	gdk_draw_line(w, gc, x1, y1, x2, y2);
+
+}
+
+/* length parameter is unused */
+void
+o_line_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				   gint x1, gint y1, gint x2, gint y2,
+				   gint line_width, gint length, gint space) {
+	double dx, dy, l, d;
+	double dx1, dy1;
+	double xa, ya;
+
+	gdk_gc_set_foreground(gc, color);
+	
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * space) / l;
+	dy1 = (dy * space) / l;
+
+	d = 0;
+	xa = x1; ya = y1;
+	while(d < l) {
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - line_width/2, 
+				     ((int) ya) - line_width/2,
+				     line_width, line_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + space;
+		xa = xa + dx1;
+		ya = ya + dy1;
+	}
+	
+}
+
+
+void
+o_line_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				   gint x1, gint y1, gint x2, gint y2,
+				   gint line_width, gint length, gint space) {
+	double dx, dy, l, d;
+	double dx1, dy1, dx2, dy2;
+	double xa, ya, xb, yb;
+
+	gdk_gc_set_foreground(gc, color);
+	gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
+				   cap, GDK_JOIN_MITER);
+
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * length) / l;
+	dy1 = (dy * length) / l;
+
+	dx2 = (dx * space) / l;
+	dy2 = (dy * space) / l;
+	
+	d = 0;
+	xa = x1; ya = y1;
+	while((d + length + space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+		gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+
+	}
+
+	if((d + length) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+	} else {
+		xb = x2;
+		yb = y2;
+	}
+
+	gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+
+}
+
+
+void
+o_line_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				   gint x1, gint y1, gint x2, gint y2,
+				   gint line_width, gint length, gint space) {
+	double dx, dy, l, d;
+	double dx1, dy1, dx2, dy2;
+	double xa, ya, xb, yb;
+
+	gdk_gc_set_foreground(gc, color);
+	gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
+							   cap, GDK_JOIN_MITER);
+
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * length) / l;
+	dy1 = (dy * length) / l;
+
+	dx2 = (dx * space) / l;
+	dy2 = (dy * space) / l;
+	
+	d = 0;
+	xa = x1; ya = y1;
+	while((d + length + 2 * space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+		gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - line_width/2, 
+				     ((int) ya) - line_width/2,
+				     line_width, line_width, 0, FULL_CIRCLE);
+		}
+		
+		d = d + space;
+		xa = xa + dx2;
+		ya = ya + dy2;
+	}
+	
+	if((d + length + space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+		gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				    ((int) xa) - line_width/2, 
+				    ((int) ya) - line_width/2,
+				    line_width, line_width, 0, FULL_CIRCLE);
+		}
+		
+	} else {
+		if(d + length < l) {
+			xb = xa + dx1;
+			yb = ya + dy1;
+		} else {
+			xb = x2;
+			yb = y2;
+		}
+		
+		gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+	
+	}
+
+}
+
+
+void
+o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+					gint x1, gint y1, gint x2, gint y2,
+					gint line_width, gint length, gint space) {
+	double dx, dy, l, d;
+	double dx1, dy1, dx2, dy2;
+	double xa, ya, xb, yb;
+
+	gdk_gc_set_foreground(gc, color);
+	gdk_gc_set_line_attributes(gc, line_width, GDK_LINE_SOLID,
+							   cap, GDK_JOIN_MITER);
+
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * length) / l;
+	dy1 = (dy * length) / l;
+
+	dx2 = (dx * space) / l;
+	dy2 = (dy * space) / l;
+	
+	d = 0;
+	xa = x1; ya = y1;
+	while((d + length + 3 * space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+		gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - line_width/2, 
+				     ((int) ya) - line_width/2,
+				     line_width, line_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + space;
+		xa = xa + dx2;
+		ya = ya + dy2;
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - line_width/2, 
+				     ((int) ya) - line_width/2,
+				     line_width, line_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + space;
+		xa = xa + dx2;
+		ya = ya + dy2;
+	}
+	
+	if((d + length + 2 * space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+		gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - line_width/2, 
+				     ((int) ya) - line_width/2,
+				     line_width, line_width, 0, FULL_CIRCLE);
+		}
+
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+		if(line_width == 1) {
+			gdk_draw_point(w, gc, (int) xa, (int) ya);
+		} else {
+			gdk_draw_arc(w, gc, TRUE,
+				     ((int) xa) - line_width/2, 
+				     ((int) ya) - line_width/2,
+				     line_width, line_width, 0, FULL_CIRCLE);
+		}
+
+	} else {
+		if(d + length + space < l) {
+			d = d + length;
+			xb = xa + dx1;
+			yb = ya + dy1;
+			gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+
+			d = d + space;
+			xa = xb + dx2;
+			ya = yb + dy2;
+			if(line_width == 1) {
+				gdk_draw_point(w, gc, (int) xa, (int) ya);
+			} else {
+				gdk_draw_arc(w, gc, TRUE,
+					     ((int) xa)-line_width/2, 
+					     ((int) ya)-line_width/2,
+					     line_width, line_width, 0, 
+					     FULL_CIRCLE);
+			}
+		
+		} else {
+			if(d + length < l) {
+				xb = xa + dx1;
+				yb = ya + dy1;
+			} else {
+				xb = x2;
+				yb = y2;
+			}
+		
+			gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		}
+	}
+
+}
+
+
 void
 o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
 {
-        w_current->override_color = w_current->background_color;
+	w_current->override_color = w_current->background_color;
 	o_line_draw(w_current, o_current);
-        w_current->override_color = -1;
+	w_current->override_color = -1;
 }
 
 void
@@ -144,6 +475,9 @@ o_line_start(TOPLEVEL *w_current, int x, int y)
 	/* draw init xor */
 	gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_color(w_current->select_color));
+	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+				   GDK_JOIN_MITER);
 	gdk_draw_line(w_current->window, w_current->xor_gc,
 		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
@@ -202,10 +536,11 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
 	y2 = snap_grid(w_current, y2);
 	
 
-	w_current->page_current->object_tail = o_line_add(w_current,
-			w_current->page_current->object_tail,
-			OBJ_LINE, w_current->graphic_color, x1, y1,
-			x2, y2);
+/* PB : modification in o_line_add() prototype */	
+	w_current->page_current->object_tail =
+		o_line_add(w_current,
+				   w_current->page_current->object_tail,
+				   OBJ_LINE, w_current->graphic_color, x1, y1, x2, y2);
 
 	w_current->start_x = (-1);
         w_current->start_y = (-1);

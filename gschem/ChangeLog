@@ -9,6 +9,46 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_arc.c: Renamed all d1 to length and d2 to space
+		       Misc number to #define substitutions
+
+	* src/o_line.c: Renamed all d1 to length and d2 to space
+		        Misc number to #define substitutions
+
+	* src/o_box.c: Renamed all d1 to length and d2 to space
+
+	* src/o_circle.c: Renamed all d1 to length and d2 to space
+
+	* src/o_*.c: Found a minor bug in o_*_draw which caused primitives to 
+	  sometimes not be drawn
+
+	* src/o_box.c: Renamed box_width to line_width (when it applied to 
+          the thickness of a line)
+
+	* src/o_*.c: Made sure the thickness of all graphic contexts are 0
+          before starting to draw
+
+2000-09-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_arc.c: Intergrated changes to the arc primitive by
+          Patrick Bernaud
+
+	* src/o_box.c: Intergrated changes to the box primitive by
+          Patrick Bernaud
+
+	* src/o_circle.c: Intergrated changes to the circle primitive by
+          Patrick Bernaud
+
+	* src/o_line.c: Intergrated changes to the line primitive by
+          Patrick Bernaud
+
+	* Above files: Removed temporary function prototype
+
+	* src/create_proto: Update to be more general like libgeda's version
+	  (but it is slightly different)
+
 2000-08-30  Stefan Petersen  <spe@geda.seul.org>
 
 	* Added auto-uref.scm and print-NB-attribs.scm scheme programs.

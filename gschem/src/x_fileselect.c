@@ -33,7 +33,7 @@
 #endif
 
 #ifdef HAVE_STRINGS_H
-#include <strings.h>
+#include <string.h>
 #endif
 
 #include <libgeda/libgeda.h>

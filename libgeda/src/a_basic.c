@@ -377,7 +377,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 			case(VERSION_CHAR):
 				sscanf(buf, "v %s\n", version);
 
-#if DEBUG
+#if DEBUG 
 				printf("Found version: %s\n", version);
 #endif
 				/* do nothing for now */

@@ -59,6 +59,18 @@ typedef struct st_schcheck SCHCHECK;
 typedef struct st_chkerrs CHKERRS;
 
 
+/* PB : change begin */
+/* PB : these enum are constant to define :
+   - the end of open line of an object ;
+   - the type of the line of an object ;
+   - the filling of a closed object. */
+/* PB : used in struct st_object (predefined type OBJECT)*/
+typedef enum {END_NONE, END_SQUARE, END_ROUND} OBJECT_END;
+typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
+typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING_VOID} OBJECT_FILLING;
+/* PB : change end */
+
+
 struct st_line {
 	int x[2];
 	int y[2];
@@ -142,6 +154,22 @@ struct st_object {
 	BOX *box;
 	TEXT *text;
 
+/* PB : change begin */
+/* PB : every graphical primitive have more or less the same options. */
+/* PB : depending on its nature a primitive is concerned with one or more */
+/* PB : of these fields. If not, value must be ignored. */
+	OBJECT_END line_end;
+	OBJECT_TYPE line_type;
+	int line_width, screen_line_width;
+	int line_space, screen_line_space;
+	int line_length, screen_line_length;
+
+	OBJECT_FILLING fill_type;
+	int fill_width, screen_fill_width;
+	int fill_angle1, fill_pitch1;
+	int fill_angle2, fill_pitch2;
+/* PB : change end */	
+	
 	int visited;		/* used in gnetlist for travesal purposes */
 
 	char *complex_basename;			/* Complex basename */

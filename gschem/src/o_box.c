@@ -39,6 +39,10 @@ void
 o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int wleft, wright, wtop, wbottom; /* world bounds */
+	int line_width, length, space;
+	GdkCapStyle box_end;
+	GdkColor *color;
+	void (*draw_func)();
 
 	if (o_current->box == NULL) {
 		return;
@@ -48,70 +52,203 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	/* Get read to check for visibility of this line by using it's
 	 * bounding box */
-        world_get_box_bounds(w_current, o_current->box,
-			     &wleft  ,
-			     &wtop   ,
-			     &wright ,
-			     &wbottom);
-
-        if (!visible(w_current, wleft, wtop, wright, wbottom)) {
-                return;
-        }
-
+	world_get_box_bounds(w_current, o_current->box,
+						 &wleft  ,
+						 &wtop   ,
+						 &wright ,
+						 &wbottom);
+	
+	if (!visible(w_current, wleft, wtop, wright, wbottom)) {
+		return;
+	}
+	
 #if DEBUG
 	printf("drawing box\n\n");
-
+	
 	printf("drawing box: %d %d %d %d\n",
 	       o_current->box->screen_upper_x,
 	       o_current->box->screen_upper_y,
 	       o_current->box->screen_upper_x +
 	       abs(o_current->box->screen_lower_x -
-		   o_current->box->screen_upper_x),
+			   o_current->box->screen_upper_x),
 	       o_current->box->screen_upper_y +
 	       abs(o_current->box->screen_lower_y -
-		   o_current->box->screen_upper_y));
+			   o_current->box->screen_upper_y));
 #endif
-
+	
 	if (w_current->override_color != -1 ) {  /* Override */
-		gdk_gc_set_foreground(w_current->gc,
-				      x_get_color(w_current->override_color));
-		gdk_draw_rectangle(w_current->window,
-				   w_current->gc, FALSE,
-				   o_current->box->screen_upper_x,
-				   o_current->box->screen_upper_y,
-				   abs(o_current->box->screen_lower_x -
-				       o_current->box->screen_upper_x),
-				   abs(o_current->box->screen_lower_y -
-				       o_current->box->screen_upper_y));
-		gdk_draw_rectangle(w_current->backingstore,
-				   w_current->gc, FALSE,
-				   o_current->box->screen_upper_x,
-				   o_current->box->screen_upper_y,
-				   abs(o_current->box->screen_lower_x -
-				       o_current->box->screen_upper_x),
-				   abs(o_current->box->screen_lower_y -
-				       o_current->box->screen_upper_y));
-	} else { /* regular */
-		gdk_gc_set_foreground(w_current->gc,
-				      x_get_color(o_current->color));
-		gdk_draw_rectangle(w_current->window,
-				   w_current->gc, FALSE,
-				   o_current->box->screen_upper_x,
-				   o_current->box->screen_upper_y,
-				   abs(o_current->box->screen_lower_x -
-				       o_current->box->screen_upper_x),
-				   abs(o_current->box->screen_lower_y -
-				       o_current->box->screen_upper_y));
-		gdk_draw_rectangle(w_current->backingstore,
-				   w_current->gc, FALSE,
-				   o_current->box->screen_upper_x,
-				   o_current->box->screen_upper_y,
-				   abs(o_current->box->screen_lower_x -
-				       o_current->box->screen_upper_x),
-				   abs(o_current->box->screen_lower_y -
-				       o_current->box->screen_upper_y));
+		color = x_get_color(w_current->override_color);
+	} else {
+		color = x_get_color(o_current->color);
 	}
+
+	if(o_current->screen_line_width > 0) {
+		line_width = o_current->screen_line_width;
+	} else {
+		line_width = 1;
+	}
+
+	switch(o_current->line_end) {
+		case END_NONE:   box_end = GDK_CAP_BUTT;       break;
+		case END_SQUARE: box_end = GDK_CAP_PROJECTING; break;
+		case END_ROUND:  box_end = GDK_CAP_ROUND;      break;
+		default: fprintf(stderr, "Unknown end for box (%d)\n",
+						 o_current->line_end);
+	}
+	
+	length = o_current->screen_line_length;
+	space = o_current->screen_line_space;
+	
+	switch(o_current->line_type) {
+		case TYPE_SOLID:
+			length = -1;
+			space = -1;
+			draw_func = (void *) o_box_draw_solid;
+			break;
+
+		case TYPE_DOTTED:
+			length = -1; /* ..._draw_dotted only space is used */
+			draw_func = (void *) o_box_draw_dotted;
+			break;
+
+		case TYPE_DASHED:
+			draw_func = (void *) o_box_draw_dashed;
+			break;
+
+		case TYPE_CENTER:
+			draw_func = (void *) o_box_draw_center;
+			break;
+
+		case TYPE_PHANTOM:
+			draw_func = (void *) o_box_draw_phantom;
+			break;
+
+		case TYPE_ERASE:
+			break;
+			
+		default:
+			fprintf(stderr, "Unknown type for box !\n");
+	}
+
+	if((length == 0) || (space == 0))
+		draw_func = (void *) o_box_draw_solid;
+	
+	(*draw_func)(w_current->window, w_current->gc, color, box_end,
+				 FALSE,
+				 o_current->box->screen_upper_x,
+				 o_current->box->screen_upper_y,
+				 abs(o_current->box->screen_lower_x -
+					 o_current->box->screen_upper_x),
+				 abs(o_current->box->screen_lower_y -
+					 o_current->box->screen_upper_y),
+				 line_width, length, space);
+	(*draw_func)(w_current->backingstore, w_current->gc, color, box_end,
+				 FALSE,
+				 o_current->box->screen_upper_x,
+				 o_current->box->screen_upper_y,
+				 abs(o_current->box->screen_lower_x -
+					 o_current->box->screen_upper_x),
+				 abs(o_current->box->screen_lower_y -
+					 o_current->box->screen_upper_y),
+				 line_width, length, space);
+	
 }
+
+void
+o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				 gint filled, gint x, gint y,
+				 gint width, gint height,
+				 gint line_width, gint length, gint space) {
+
+	o_line_draw_solid(w, gc, color, cap,
+			  x, y, x + width, y, line_width, length, space);
+	o_line_draw_solid(w, gc, color, cap,
+			  x + width, y, x + width, y + height, line_width, 
+			  length, space);
+	o_line_draw_solid(w, gc, color, cap,
+			  x + width, y + height, x, y + height, line_width, 
+			  length, space);
+	o_line_draw_solid(w, gc, color, cap,
+			  x, y + height, x, y, line_width, length, space);
+}
+
+/* length parameter is unused */
+void
+o_box_draw_dotted(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint filled, gint x, gint y,
+				  gint width, gint height,
+				  gint line_width, gint length, gint space) {
+
+	o_line_draw_dotted(w, gc, color, cap,
+			   x, y, x + width, y, line_width, length, space);
+	o_line_draw_dotted(w, gc, color, cap,
+			   x + width, y, x + width, y + height, 
+			   line_width, length, space);
+	o_line_draw_dotted(w, gc, color, cap,
+			   x + width, y + height, x, y+height, 
+			   line_width, length, space);
+	o_line_draw_dotted(w, gc, color, cap,
+			   x, y + height, x, y, line_width, length, space);
+	
+}
+
+void
+o_box_draw_dashed(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint filled, gint x, gint y,
+				  gint width, gint height,
+				  gint line_width, gint length, gint space) {
+
+	o_line_draw_dashed(w, gc, color, cap,
+			   x, y, x + width, y, line_width, length, space);
+	o_line_draw_dashed(w, gc, color, cap,
+			   x + width, y, x + width, y + height, 
+			   line_width, length, space);
+	o_line_draw_dashed(w, gc, color, cap,
+			   x + width, y + height, x, y+height, 
+			   line_width, length, space);
+	o_line_draw_dashed(w, gc, color, cap,
+			   x, y + height, x, y, line_width, length, space);
+	
+}
+
+void
+o_box_draw_center(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				  gint filled, gint x, gint y,
+				  gint width, gint height,
+				  gint line_width, gint length, gint space) {
+
+	o_line_draw_center(w, gc, color, cap,
+			   x, y, x + width, y, line_width, length, space);
+	o_line_draw_center(w, gc, color, cap,
+			   x + width, y, x + width, y + height, 
+			   line_width, length, space);
+	o_line_draw_center(w, gc, color, cap,
+			   x + width, y + height, x, y+height, 
+			   line_width, length, space);
+	o_line_draw_center(w, gc, color, cap,
+			   x, y + height, x, y, line_width, length, space);
+	
+}
+
+void
+o_box_draw_phantom(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
+				   gint filled, gint x, gint y,
+				   gint width, gint height,
+				   gint line_width, gint length, gint space) {
+
+	o_line_draw_phantom(w, gc, color, cap,
+			    x, y, x + width, y, line_width, length, space);
+	o_line_draw_phantom(w, gc, color, cap,
+			    x + width, y, x + width, y+height, 
+			    line_width, length, space);
+	o_line_draw_phantom(w, gc, color, cap,
+			    x + width, y + height, x, y+height, 
+			    line_width, length, space);
+	o_line_draw_phantom(w, gc, color, cap,
+			    x, y + height, x, y, line_width, length, space);
+}
+
+
 
 void
 o_box_erase(TOPLEVEL *w_current, OBJECT *o_current)
@@ -171,6 +308,9 @@ o_box_start(TOPLEVEL *w_current, int x, int y)
 
 	gdk_gc_set_foreground(w_current->xor_gc,
 			      x_get_color(w_current->select_color));
+	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+				   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+				   GDK_JOIN_MITER);
 	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
 			   FALSE,
 			   w_current->start_x,
@@ -247,19 +387,20 @@ o_box_end(TOPLEVEL *w_current, int x, int y)
 	x2 = snap_grid(w_current, x2);
 	y2 = snap_grid(w_current, y2);
 
-        w_current->page_current->object_tail =
-		o_box_add(w_current, w_current->page_current->object_tail,
-			  OBJ_BOX, w_current->graphic_color, x1, y1, x2, y2);
+	w_current->page_current->object_tail =
+		o_box_add(w_current,
+				  w_current->page_current->object_tail,
+				  OBJ_BOX, w_current->graphic_color, x1, y1, x2, y2);
 
 #if DEBUG
-        printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
+	printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
 #endif
-
-        w_current->start_x = (-1);
-        w_current->start_y = (-1);
-        w_current->last_x  = (-1);
-        w_current->last_y  = (-1);
-
+	
+	w_current->start_x = (-1);
+	w_current->start_y = (-1);
+	w_current->last_x  = (-1);
+	w_current->last_y  = (-1);
+	
 	w_current->page_current->CHANGED = 1;
 	o_undo_savestate(w_current, UNDO_ALL);
 }
