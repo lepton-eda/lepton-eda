@@ -22,10 +22,10 @@ gEDA/Cygwin.
 Install cygwin-1.x using one of the approved methods (setup.exe etc...)
 	You many need WININET.DLL and SHLWAPI.DLL from some Windows machine
 	if these dll are not already on your machine
-	I installed cygwin 1.x to c:\cygwin
-	Here is the list of packages I installed:
+	I installed cygwin 1.x to c:\cygwin  (I recommend you do the same)
 	It is recommend that install so that the directories are mounted
 	in textmode.  Do this by selecting "DOS" for "Default Text File Type"
+ 	when you run setup.exe
 
 Here is a list of all the cygwin packages I installed (some are old, just
 grab the latest versions):
@@ -106,12 +106,27 @@ Installed guile-1.4:
 
 * ./configure --prefix=/geda 
 
-* edit libguile/net_db.c and modify the line 
+* edit libguile/net_db.c and #if 0 out the line:
 	extern int h_errno;
-  to
-	#define h_errno 0
-  You might not have to do this, but if you get any errors during the link
-  stage related to h_errno, then this is the fix.
+
+  so that it reads: 
+
+#if 0
+	extern int h_errno;
+#endif
+
+* make 
+
+* cd libguile
+
+* edit libguile.la and added -lregex to the dependency_libs='' line so that 
+  it reads:
+
+dependency_libs='-lregex'
+
+* rm guile.exe 
+
+* cd ..
 
 * make install
 
