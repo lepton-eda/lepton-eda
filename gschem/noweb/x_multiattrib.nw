@@ -160,6 +160,7 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
 <<x_multiattrib.c : multiattrib_callback_popup_menu()>>
 <<x_multiattrib.c : multiattrib_callback_popup_*()>>
 
+<<x_multiattrib.c : multiattrib_callback_value_key_pressed()>>
 <<x_multiattrib.c : multiattrib_callback_button_add()>>
 
 <<x_multiattrib.c : multiattrib_init_attrib_names()>>
@@ -254,7 +255,7 @@ static void
 multiattrib_init (Multiattrib *multiattrib)
 {
   GtkWidget *frame, *label, *scrolled_win, *treeview;
-  GtkWidget *table, *entry, *combo, *optionm, *button;
+  GtkWidget *table, *textview, *combo, *optionm, *button;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
@@ -503,14 +504,25 @@ label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
                                   /* GtkLabel */
                                   "label",  _("Value:"),
                                   NULL));
-entry = GTK_WIDGET (g_object_new (GTK_TYPE_ENTRY,
-                                  NULL));
-multiattrib->entry_value = GTK_ENTRY (entry);
+scrolled_win = GTK_WIDGET (
+  g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                /* GtkScrolledWindow */
+                "hscrollbar-policy", GTK_POLICY_NEVER,
+                "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                "shadow-type",       GTK_SHADOW_IN,
+                NULL));
+textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
+                                     NULL));
+g_signal_connect (textview,
+                  "key_press_event",
+                  G_CALLBACK (multiattrib_callback_value_key_pressed),
+                  multiattrib);
+gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
+multiattrib->textview_value = GTK_TEXT_VIEW (textview);
 gtk_table_attach (GTK_TABLE (table), label,
                   0, 1, 1, 2, 0, 0, 0, 0);
-gtk_table_attach (GTK_TABLE (table), entry,
+gtk_table_attach (GTK_TABLE (table), scrolled_win,
                   1, 2, 1, 2, GTK_EXPAND | GTK_FILL, 0, 6, 3);
-
 
 /*   - the visible status */
 button = GTK_WIDGET (g_object_new (GTK_TYPE_CHECK_BUTTON,
@@ -1247,6 +1259,46 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
 @ %def multiattrib_callback_popup_delete
 
 
+@subsection Function @code{multiattrib_callback_value_key_pressed()}
+
+@defun multiattrib_callback_value_key_pressed widget event user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_value_key_pressed()>>=
+static gboolean
+multiattrib_callback_value_key_pressed (GtkWidget   *widget,
+                                        GdkEventKey *event,
+                                        gpointer     user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)widget;
+  gboolean retval = FALSE;
+
+  /* ends editing of cell if one of these keys are pressed: */
+  /*  - the Return key without the Control modifier */
+  /*  - the Tab key without the Control modifier */
+  if ((event->keyval == GDK_Return || event->keyval == GDK_KP_Enter) ||
+      (event->keyval == GDK_Tab    || event->keyval == GDK_KP_Tab)) {
+    /* Control modifier activated? */
+    if (event->state & GDK_CONTROL_MASK) {
+      /* yes the modifier in event structure and let event propagate */
+      event->state ^= GDK_CONTROL_MASK;
+      retval = FALSE;
+    } else {
+      /* change focus and stop propagation */
+      g_signal_emit_by_name (multiattrib,
+                             "move_focus",
+                             (event->state & GDK_SHIFT_MASK) ?
+                             GTK_DIR_TAB_BACKWARD : GTK_DIR_TAB_FORWARD);
+      retval = TRUE;
+    }
+  }
+
+  return retval;
+}
+
+@ %def multiattrib_callback_value_key_pressed
+
+
 @subsection Function @code{multiattrib_callback_button_add()}
 
 @defun multiattrib_callback_button_add button user_data
@@ -1258,7 +1310,10 @@ multiattrib_callback_button_add (GtkButton *button,
                                  gpointer user_data)
 {
   Multiattrib *multiattrib = (Multiattrib*)user_data;
-  const gchar *name, *value;
+  GtkTextBuffer *buffer;
+  GtkTextIter start, end;
+  const gchar *name;
+  gchar *value;
   TOPLEVEL *toplevel;
   OBJECT *object;
   gboolean visible;
@@ -1266,13 +1321,15 @@ multiattrib_callback_button_add (GtkButton *button,
 
   toplevel = multiattrib->toplevel;
   object   = multiattrib->object;
-
+  buffer   = gtk_text_view_get_buffer (multiattrib->textview_value);
+  
   /* retrieve information from the Add/Edit frame */
   /*   - attribute's name */
   name = gtk_entry_get_text (
     GTK_ENTRY (GTK_COMBO (multiattrib->combo_name)->entry));
   /*   - attribute's value */
-  value = gtk_entry_get_text (multiattrib->entry_value);
+  gtk_text_buffer_get_bounds (buffer, &start, &end);
+  value = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
   /*   - attribute's visibility status */
   visible = gtk_toggle_button_get_active (
     (GtkToggleButton*)multiattrib->button_visible);
@@ -1281,20 +1338,20 @@ multiattrib_callback_button_add (GtkButton *button,
 
   if (name[0] == '\0' || name[0] == ' ') {
     /* name not allowed for an attribute */
+    g_free (value);
     return;
   }
 
   multiattrib_action_add_attribute (toplevel, object,
                                     name, value,
                                     visible, shownv);
+  g_free (value);
   
   /* clear fields of lower frame */
   /*   - resets entry for name */
   gtk_list_select_item (GTK_LIST (multiattrib->combo_name->list), 0);
   /*   - resets entry for value */
-  g_object_set (multiattrib->entry_value,
-                "text", "",
-                NULL);
+  gtk_text_buffer_set_text (buffer, "", 0);
   /*   - resets entry for visibility */
   g_object_set (multiattrib->button_visible,
                 "active", TRUE,
@@ -1630,7 +1687,15 @@ celltextview_key_press_event (GtkWidget   *widget,
                               gpointer     data)
 {
   CellTextView *celltextview = (CellTextView*)widget;
-  if (event->keyval == GDK_Escape) {
+
+  /* ends editing of cell if one of these keys are pressed */
+  if (
+    /* the Escape key */
+    event->keyval == GDK_Escape ||
+    /* the Enter key without the Control modifier */
+    (!(event->state & GDK_CONTROL_MASK) &&
+     (event->keyval == GDK_Return ||
+      event->keyval == GDK_KP_Enter))) {
     gtk_cell_editable_editing_done  (GTK_CELL_EDITABLE (celltextview));
     gtk_cell_editable_remove_widget (GTK_CELL_EDITABLE (celltextview));
     return TRUE;

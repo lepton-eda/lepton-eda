@@ -1,3 +1,10 @@
+2005-02-27  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_multiattrib.nw: Modified dialog to make it possible to
+	set multi-line values at adding of attributes.
+	Changed the behavior of the value column to stop edition when
+	hitting the Enter key: for a new line, use Ctrl+Enter.
+
 2005-02-26  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/x_multiattrib.nw (x_multiattrib_open): Fixed bug #153 (first 
