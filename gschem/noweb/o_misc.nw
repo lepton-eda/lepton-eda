@@ -1447,6 +1447,8 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
     w_current->page_current->object_tail =
       return_tail(w_current->page_current->object_tail);
 
+    free(complex_clib);
+    free(complex_basename);
 
     /* re-emb the object */
     if (was_embedded) {

@@ -25,6 +25,8 @@
 
 	* noweb/*.nw: Cleaned up -Wall warnings
 
+	* configure.in: Added -mwindows flag for the mingw port
+
 2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_grips.nw: Fixed a bug where searching for grips would stop

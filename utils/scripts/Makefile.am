@@ -2,7 +2,8 @@
 
 bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate
 
-EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl sarlacc_sym
+EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl \
+	     sarlacc_sym gschupdate gsymupdate
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 

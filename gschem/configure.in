@@ -271,8 +271,9 @@ CFLAGS="$saved_cflags $CFEXTRA"
 
 if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	echo Including -fnative-struct in CFLAGS for MINGW32 port
-        echo Include -lregex in LDFLAGS for MINGW32 port
-	CFLAGS="$CFLAGS -fnative-struct"
+	echo Including -mwindows in CFLAGS for MINGW32 port
+        echo Including -lregex in LDFLAGS for MINGW32 port
+	CFLAGS="$CFLAGS -fnative-struct -mwindows"
         X_LDFLAGS="-lregex -liberty $X_LDFLAGS"
 	PATHSEP=\\\\
 	OTHERPATHSEP=/
