@@ -1,0 +1,54 @@
+=== 0.2.1 ===
+
+FIXED BUGS:
+
+	It is possible now to install more than about 20 packages at once.
+
+	Diplayed logo has been changed. It is no more related to gEDA project.
+	
+	Added flag CPPFLAGS to InstallSoftware().
+	
+	Removed presentation of results of command executing.
+	
+	Error information now appers after errors during installation.
+	
+	Mistake in error checking in InstallSoftware() (szName=getenv(); if (szVariable==NULL) ...).
+	
+	Setup log has been moved to /tmp/XXXX-setup.log and is contains now stderr.
+	
+	Buttons are now not active before reading configuration.
+	
+	Removed double checking dependencies (in InstallSoftware() and InstallComponent() ).
+	
+NEW FEATURES:
+
+	Message box appears when error/warning/message should be displayed.
+	
+	Added possibility of patching.
+
+	Calling to Log() has been replaced in package.c, some in install.c
+	
+	Removed PackageUnpack() in install.c.
+
+	Added possibility to read stdout/stderr from last command execution:
+	new functions FileExecStdOut() and FileExecStdErr().
+	
+	Setup checks if a build tool exist in a system. If not it can install it.
+	
+	Added updating environment variables in /etc/profile and $HOME/.bash_profile .
+	
+	Added picture loaded from file.
+	
+SMALL CHANGES
+
+	Buttons PREV and NEXT are more close.
+	
+	Removed set_pixmaps().
+	
+=== 0.2 ===
+
+The code has been totally rewritten.
+
+=== 0.1 === 
+
+First attempt.

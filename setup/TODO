@@ -1,0 +1,48 @@
+BUGS:
+
+* Killing setup does not result in killing of executed command.
+
+* Remove _exit() calls in InstallSoftware().
+
+* In some cases progress bar stops not at 100%.
+
+* No removing build tools after installation.
+
+* Bad installation testing.
+
+INCONVENIENCES:
+
+* Summary cursor is at the end of text. Move it to the beginning.
+
+* Ordering of Comps module is necessary.
+
+MISSING FUNCTIONALITY:
+
+* Missing CANCEL key.
+
+* Advanced window:
+  - not delete build tools after setup is completed,
+  - force recompilation, even if not needed,
+  - install source files,
+
+* Self copying sources to install directory
+
+* Checking root priviledges
+
+* Good dependency checking and showing (selection /  unselection)
+
+* Checking what libraries are installed in the system.
+
+* Possibility of uninstalling not neccessary files
+
+* Integration with RPM
+
+* Integration with DEB
+
+* Integration with KDE2
+
+* Integration with GNOME
+
+* Testing on different platforms
+
+* Ftp client.

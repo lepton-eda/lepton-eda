@@ -1,0 +1,45 @@
+# List of source files containing translatable strings.
+
+## Created by Anjuta - will be overwritten
+## If you don't want it to overwrite it,
+## 	Please disable it in the Anjuta project configuration
+
+# Source files
+src/support.h
+src/support.c
+src/main.c
+src/interface.h
+src/interface.c
+src/callbacks.h
+src/callbacks.c
+src/comps.c
+src/config.c
+src/dirs.c
+src/file.c
+src/install.c
+src/license.c
+src/log.c
+src/msgbox.c
+src/package.c
+src/setup.c
+src/start.c
+src/status.c
+src/summary.c
+src/xpm.c
+src/comps.h
+src/config.h
+src/dirs.h
+src/file.h
+src/install.h
+src/license.h
+src/log.h
+src/global.h
+src/msgbox.h
+src/package.h
+src/setup.h
+src/start.h
+src/status.h
+src/summary.h
+src/xpm.h
+
+

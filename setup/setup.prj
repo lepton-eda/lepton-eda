@@ -1,0 +1,153 @@
+# Anjuta Version 0.1.9 
+Compatibility Level: 1 
+
+<PROJECT_DESCRIPTION_START>
+Setup is a tool that simplifies software installation process. It is a graphic application running under X-Windows.
+
+Software distributed with usage of Setup may contain many components, sources or/and binaries. In a typical case it contain main software packages and all necessary libraries. Setup checks all dependencies, compiles (if necessary) and copies files in the destination place: only those what are needed and in the desired order (if only properly configured). It uses text based, easy to understand, configuration file.
+<PROJECT_DESCRIPTION_END>
+<CONFIG_PROGS_START>
+<CONFIG_PROGS_END>
+<CONFIG_LIBS_START>
+<CONFIG_LIBS_END>
+<CONFIG_HEADERS_START>
+<CONFIG_HEADERS_END>
+<CONFIG_CHARACTERISTICS_START>
+<CONFIG_CHARACTERISTICS_END>
+<CONFIG_LIB_FUNCS_START>
+<CONFIG_LIB_FUNCS_END>
+<CONFIG_ADDITIONAL_START>
+<CONFIG_ADDITIONAL_END>
+<CONFIG_FILES_START>
+<CONFIG_FILES_END>
+<MAKEFILE_AM_START>
+<MAKEFILE_AM_END>
+
+props.file.type=project
+
+anjuta.version=0.1.9
+anjuta.compatibility.level=1
+
+project.name=setup
+project.type=GTK
+project.target.type=EXECUTABLE
+project.version=0.2.1
+project.author=Piotr Miarecki <sp9rve@eter.ariadna.pl>
+project.source.target=setup
+
+project.excluded.modules=
+
+project.has.gettext=1
+
+project.programming.language=C
+
+project.menu.entry=setup Version 0.1
+project.menu.group=Applications
+project.menu.comment=setup Version 0.1
+project.menu.icon=
+project.menu.need.terminal=0
+
+project.configure.options=
+
+anjuta.program.arguments=
+
+project.config.blocked=0
+
+project.config.disable.overwriting=0 0 0 0 0 0 0 0 0 
+project.config.extra.modules.before=
+project.config.extra.modules.after=
+
+module.include.name=include
+module.include.type=
+module.include.expanded=0
+module.include.files=
+
+module.source.name=src
+module.source.type=
+module.source.expanded=1
+module.source.files=\
+	support.h\
+	support.c\
+	main.c\
+	interface.h\
+	interface.c\
+	callbacks.h\
+	callbacks.c\
+	comps.c\
+	config.c\
+	dirs.c\
+	file.c\
+	install.c\
+	license.c\
+	log.c\
+	msgbox.c\
+	package.c\
+	setup.c\
+	start.c\
+	status.c\
+	summary.c\
+	xpm.c\
+	comps.h\
+	config.h\
+	dirs.h\
+	file.h\
+	install.h\
+	license.h\
+	log.h\
+	global.h\
+	msgbox.h\
+	package.h\
+	setup.h\
+	start.h\
+	status.h\
+	summary.h\
+	xpm.h
+
+module.pixmap.name=pixmaps
+module.pixmap.type=
+module.pixmap.expanded=0
+module.pixmap.files=
+
+module.data.name=data
+module.data.type=
+module.data.expanded=0
+module.data.files=
+
+module.help.name=help
+module.help.type=
+module.help.expanded=0
+module.help.files=
+
+module.doc.name=doc
+module.doc.type=
+module.doc.expanded=0
+module.doc.files=
+
+module.po.expanded=0
+module.po.files=
+
+compiler.options.supports=GTK 
+
+compiler.options.include.paths=
+
+compiler.options.library.paths=
+
+compiler.options.libraries=
+compiler.options.libraries.selected=
+
+compiler.options.defines=
+
+compiler.options.warning.buttons=0 0 1 1 1 1 1 1 1 1 1 0 1 1 0 1 
+
+compiler.options.optimize.buttons=0 1 0 0 
+
+compiler.options.other.buttons=1 0 
+
+compiler.options.other.c.flags=
+
+compiler.options.other.l.flags=
+
+compiler.options.other.l.libs=
+
+project.source.paths=
+
