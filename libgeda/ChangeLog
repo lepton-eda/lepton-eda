@@ -2,6 +2,8 @@
 
 	* configure.ac: Fixed MinGW cflags/ldflags
 
+        * auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
 2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
