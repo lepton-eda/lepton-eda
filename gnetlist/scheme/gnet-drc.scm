@@ -27,39 +27,6 @@
 ;; Net rules:  List of predicates of one variable, net name
 ;; Pin Rules:  List of predicates of 2 variables, uref and pin number
 
-(define drc
-  (lambda (output-filename)
-	(newline)
-   ))
-
-;;(define drc
-  ;;(lambda (output-filename)
-    ;;(let ((port (open-output-file output-filename))
-	  ;;(attriblist (drc:parseconfig (open-input-file "attribs"))))
-      ;;(drc:printlist (cons 'package attriblist) port)
-      ;;(drc:components port packages attriblist))))
-
-(define drc:has-attribute
-  (lambda (attribute)
-    (lambda (uref)
-      (gnetlist:get-package-attribute uref attribute))))
-
-(define drc:attriblist
-  (list "uref" "device" "footprint" "value"))
-
-(define drc:device-preds
-  (for-each drc:has-attribute drc:attriblist))
-
-
-(define drc:printlist
-  (lambda (ls port)
-    (if (null? ls)
-	(newline port)
-	(begin
-	  (display (car ls) port)
-	  (write-char #\tab port)
-	  (drc:printlist (cdr ls) port)))))
-
 (define drc:parseconfig
   (lambda (port)
     (let ((read-from-file (read port)))
@@ -67,23 +34,45 @@
           (cons read-from-file (drc:parseconfig port))
           '()))))
 
-(define drc:components
-  (lambda (port ls attriblist)
-    (if (not (null? ls))
-	(let ((package (car ls)))
-          (if (not (string=? "1" (gnetlist:get-package-attribute package "nodrc")))
-	    (begin
-              (display package port)
-	      (write-char #\tab port)
-              (drc:printlist (drc:find-attribs package attriblist) port)))
-	  (drc:components port (cdr ls) attriblist)))))
+(define drc:attriblist
+  (drc:parseconfig 
+    (open-input-file "attribs")))
 
-(define drc:find-attribs
-  (lambda (package attriblist)
-    (if (null? attriblist)
-	'()
-	(cons (gnetlist:get-package-attribute package (car attriblist))
-	      (drc:find-attribs package (cdr attriblist))))))
+(define drc
+  (lambda (output-filename)
+    (let ((port (open-output-file output-filename)))
+      (drc:device-rules drc:attriblist packages port)
+      (drc:net-rules packages port)
+      (drc:pin-rules packages port))))
+
+
+(define drc:net-rules
+  (lambda(packages port)
+    #t))
+
+(define drc:pin-rules
+  (lambda(packages port)
+    #t))
+
+(define drc:device-rules
+  (lambda (attriblist packages port)
+    (if (not (null? packages))
+      (begin
+        (drc:has-attributes? attriblist (car packages) port)
+        (drc:device-rules attriblist (cdr packages) port)))))
+
+(define drc:has-attributes?
+  (lambda (attriblist uref port)
+    (if (not (null? attriblist)) 
+      (begin
+        (if (string=? "unknown" (gnetlist:get-package-attribute uref (car attriblist)))
+          (begin
+            (display uref port)
+            (display " Does not have attribute: " port)
+            (display (car attriblist) port)
+            (newline port)))
+        (drc:has-attributes? (cdr attriblist) uref port)))))
+
 
 ;;
 ;; DRC backend written by Matt Ettus ends here
