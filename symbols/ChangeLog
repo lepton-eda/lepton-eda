@@ -1,3 +1,10 @@
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * Updated all symbols to file format version 1.
+
+        * font/newline.sym: Added dummy font definition to get rid of a
+        warning.  This file is not really used.
+
 2003-10-19 Werner Hoch <werner.ho@gmx.de>
 	symbol rework in micro/
 	* 6821-1.sym: added missing pinlabel and pintype
@@ -17,8 +24,13 @@
 	  AT90S8535_PLCC.sym, AT90S8535.sym, AT90S8535_TQFP.sym, ATmega103.sym,
 	  ATmega161_DIP.sym, ATmega161_TQFP.sym, ATmega163_DIP.sym, 
 	  ATtiny11.sym, ATmega163_TQFP.sym, ATtiny12.sym, ATtiny28_DIP.sym, 
-	  ATtiny28_TQFP.sym
- 		added numslots=0, author, rearanged pintype
+	  ATtiny28_TQFP.sym:
+ 	  added numslots=0, author, rearanged pintype
+	
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
 	
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
