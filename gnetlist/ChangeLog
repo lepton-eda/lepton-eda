@@ -1,3 +1,13 @@
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gnetlistrc.in: Changed the variable names which hold
+	the paths to the data and rc directories.
+
+	* scheme/gnet-partslist[1|2|3].scm: Fixed another bug reported by
+	Koichi Nagashima (via debian bugs) where the common partslist scm
+	file wasn't being found if --with-rcdir was specified (as the 
+	debian packages do).
+
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-partslist[1,2,3].scm: Fixed bug reported by Koichi

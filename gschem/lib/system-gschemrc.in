@@ -21,8 +21,9 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for all programs
-(define gedarcdir (getenv "GEDADATARC"))
-(load (string-append gedarcdir "@PATHSEP@system-commonrc"))
+(define gedadata (getenv "GEDADATA"))
+(define gedadatarc (getenv "GEDADATARC"))
+(load (string-append gedadatarc "@PATHSEP@system-commonrc"))
 
 ;
 ; Start of color section 
@@ -31,8 +32,8 @@
 ; Comment out the first line and comment in the second line for a
 ; dark (black) background.  The dark background is the original look. 
 ; 
-(load (string-append gedarcdir "@PATHSEP@gschem-darkbg")) ; dark background
-;(load (string-append gedarcdir "@PATHSEP@gschem-lightbg")) ; light background
+(load (string-append gedadatarc "@PATHSEP@gschem-darkbg")) ; dark background
+;(load (string-append gedadatarc "@PATHSEP@gschem-lightbg")) ; light background
 
 ;
 ; End of color section
@@ -665,7 +666,7 @@
 ; Comment in this scheme code if you want automatic numbering when
 ; placing new component and copying components
 ;
-;(load (string-append gedarcdir "/scheme/auto-uref.scm"))
+;(load (string-append gedadatarc "/scheme/auto-uref.scm"))
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 

@@ -1,3 +1,8 @@
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * lib/system-gschlasrc.in: Changed the variable names which hold
+        the paths to the data and rc directories.
+
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschemdoc.sh: Added %20filetype:pdf to the google search

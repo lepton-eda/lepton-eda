@@ -20,8 +20,9 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for gsymcheck
-(define geda-data (getenv "GEDADATARC"))
-(load (string-append geda-data "@PATHSEP@system-commonrc"))
+(define gedadata (getenv "GEDADATA"))
+(define gedadatarc (getenv "GEDADATARC"))
+(load (string-append gedadatarc "@PATHSEP@system-commonrc"))
 
 ;  default-series-name string
 ;  Specify the default series name (of new schematics)

@@ -1,3 +1,9 @@
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * lib/system-gschemrc.in: Changed the variable names which hold
+        the paths to the data and rc directories.  Fixed all references to
+	these variables.
+
 2002-11-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gschem/noweb.nw: Applied patch by Alexandre P. Nunes for
