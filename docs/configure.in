@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 
-VERSION=20030514
+VERSION=20030525
 PACKAGE=geda-docs
 
 # Init automake

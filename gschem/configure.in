@@ -8,7 +8,7 @@ PACKAGE=geda-gschem
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20030514
+VERSION=20030525
 
 echo Configuring gschem version $VERSION
 

@@ -8,7 +8,7 @@ PACKAGE=libgeda
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20030514
+VERSION=20030525
 
 echo Configuring libgeda version $VERSION
 
