@@ -4,6 +4,8 @@ Bugs (no particular order):
 
 	Prioritize this list!
 
+	When copying components, be sure to preserve locked bit.
+
 FIXED	Text direction on rotated fast text line is wrong.
 
 BETTER	Length of fast text line is wrong.
@@ -30,9 +32,10 @@ BETTER	Length of fast text line is wrong.
 	stretch seems to pick random objects to stretch if you don't select 
 	something (cannot replicate)
 
-	Swedish characters don't work.
+	Swedish characters don't work. In fact, any Multi key character acts
+	funky (or core dump) 
 
-	still have some core problems with net extension and selections
+FIXED	still have some core problems with net extension and selections
 
 	Thick lines aren't imaged (write png) correctly
 

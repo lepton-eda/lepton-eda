@@ -8,6 +8,26 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-05-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added buffer_number to TOPLEVEL structure
+
+2000-05-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex.c: Added o_complex_unset_color_single and 
+	  o_complex_set_color_single which unset/set the color on only
+	  one object
+
+	* src/o_list.c: Added a return paramater to o_list_copy_to
+	  (return the new object which was copied)
+
+	* src/o_list.c: Added o_list_copy_all_selection2 which copies 
+	  the objects in a selection list into a plain object list 
+
+	* src/o_list.c: In o_list_copy_all_selection2 unselected the object
+	  first (all objects in the selection list should be selected) and
+	  then reselected it
+
 2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_*_basic.c: Added a check to make sure the color of all read

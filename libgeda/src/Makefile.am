@@ -18,7 +18,7 @@ libgeda_la_SOURCES = \
 	s_log.c s_page.c s_scratch.c s_slib.c s_stroke.c s_color.c \
 	o_conn.c s_nethash.c funcs.h globals.h 
 
-libgeda_la_LDFLAGS = -version-info 7:0:0
+libgeda_la_LDFLAGS = -version-info 8:0:0
 
 
 include_HEADERS = 

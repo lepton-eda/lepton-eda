@@ -291,21 +291,6 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	/* This doesn't allow anything else to be in the selection
 	 * list when you add a component */
 
-#if 0 /* OLDSEL */
-/*selection_list = (OBJECT *) o_list_copy_to( */
-/*w_current, */
-/*selection_list, */
-/*w_current->page_current->object_tail, SELECTION_FLAG); */
-/*addon maybe later... press shift when adding an object to */
-/*add it to the current selection list?  */
-/*o_unredraw_selected(w_current); */
-/*o_list_delete_rest(w_current, w_current->page_current->selection_head); */
-/*w_current->page_current->selection_head->next = selection_list; */
-/*selection_list->prev = w_current->page_current->selection_head; */
-/*w_current->page_current->selection_tail = return_tail( */
-/*w_current->page_current->selection_head); */
-#endif
-
 	o_selection_remove_most(w_current,
                                 w_current->page_current->selection2_head);
 	o_selection_add(w_current->page_current->selection2_head, 

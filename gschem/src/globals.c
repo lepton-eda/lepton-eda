@@ -23,6 +23,7 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/x_states.h"
+#include "../include/globals.h"
 #include "../include/prototype.h"
 
 /* this is needed since guile scripts only deal with the current
@@ -62,3 +63,7 @@ void (*x_log_update_func)()  = x_log_update;
 int quiet_mode = FALSE;
 int verbose_mode = FALSE;
 int stroke_info_mode = FALSE;
+
+/* Global buffers */
+OBJECT *object_buffer[MAX_BUFFERS];
+

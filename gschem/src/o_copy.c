@@ -201,7 +201,7 @@ o_copy_end(TOPLEVEL *w_current)
 				}
 				o_circle_translate_world(w_current,
 							 diff_x, diff_y,
-							 object);
+							 new_object);
 
 				o_circle_draw(w_current, new_object);
 				o_selection_add(temp_list, new_object);

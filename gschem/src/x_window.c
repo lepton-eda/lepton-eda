@@ -219,6 +219,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->doing_pan=FALSE;
 	/* w_current->preview = NULL;experimental widget */
 
+	w_current->buffer_number=0;
 }
 
 void
@@ -873,6 +874,8 @@ x_window_close(TOPLEVEL *w_current)
 		o_text_freeallfonts(w_current);
 		/* close the log file */
 		s_log_close();
+		/* free the buffers */
+		o_buffer_free(w_current);
 	}
 
 	x_window_delete(window_head, w_current);

@@ -10,6 +10,7 @@ void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 void f_save(TOPLEVEL *w_current, char *filename);
 /* f_image.c */
+void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
@@ -185,8 +186,10 @@ void o_complex_delete(TOPLEVEL *w_current, OBJECT *delete);
 void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
 void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 void o_complex_set_color(OBJECT *complex, int color);
+void o_complex_set_color_single(OBJECT *o_current, int color);
 void o_complex_set_color_save(OBJECT *complex, int color);
 void o_complex_unset_color(OBJECT *complex);
+void o_complex_unset_color_single(OBJECT *o_current);
 void o_complex_set_saved_color_only(OBJECT *complex, int color);
 OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
@@ -224,6 +227,10 @@ void o_conn_disconnect(PAGE *p_current);
 void o_conn_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, FILE *fp, int x, int y, int other_wx, int other_wy);
 void o_conn_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, int x, int y, int other_wx, int other_wy);
 /* o_image.c */
+void o_image_init(void);
+void o_image_create(int x, int y, int color_mode);
+void o_image_close(void);
+int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
 /* o_line_basic.c */
 void get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
@@ -244,8 +251,9 @@ void o_line_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_cente
 void o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 /* o_list.c */
-OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag);
+OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag, OBJECT **return_end);
 OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);
+OBJECT *o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head, OBJECT *dest_list_head, int flag);
 OBJECT *o_list_search(OBJECT *list, OBJECT *current);
 void o_list_delete(TOPLEVEL *w_current, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *w_current, OBJECT *list);

@@ -1295,6 +1295,342 @@ DEFINE_I_CALLBACK(page_print)
 	s_page_print_all(w_current);
 }
 
+/* Buffer menu */
+DEFINE_I_CALLBACK(buffer_copy1)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_copy1, "Copy 1");
+	o_buffer_copy(w_current, 0);
+}
+
+DEFINE_I_CALLBACK(buffer_copy2)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_copy2, "Copy 2");
+	o_buffer_copy(w_current, 1);
+}
+
+DEFINE_I_CALLBACK(buffer_copy3)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_copy3, "Copy 3");
+	o_buffer_copy(w_current, 2);
+}
+
+DEFINE_I_CALLBACK(buffer_copy4)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_copy4, "Copy 4");
+	o_buffer_copy(w_current, 3);
+}
+
+DEFINE_I_CALLBACK(buffer_copy5)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_copy5, "Copy 5");
+	o_buffer_copy(w_current, 4);
+}
+
+DEFINE_I_CALLBACK(buffer_cut1)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_cut1, "Cut 1");
+	o_buffer_cut(w_current, 0);
+}
+
+DEFINE_I_CALLBACK(buffer_cut2)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_cut2, "Cut 2");
+	o_buffer_cut(w_current, 1);
+}
+
+DEFINE_I_CALLBACK(buffer_cut3)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_cut3, "Cut 3");
+	o_buffer_cut(w_current, 2);
+}
+
+DEFINE_I_CALLBACK(buffer_cut4)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_cut4, "Cut 4");
+	o_buffer_cut(w_current, 3);
+}
+
+DEFINE_I_CALLBACK(buffer_cut5)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
+
+	i_update_middle_button(w_current, i_callback_buffer_cut5, "Cut 5");
+	o_buffer_cut(w_current, 4);
+}
+
+DEFINE_I_CALLBACK(buffer_paste1)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_buffer_paste1, "Paste 1");
+	if (object_buffer[0] != NULL) {
+		if (object_buffer[0]->next != NULL) {
+			i_update_status(w_current, "Paste 1 Mode ");
+			w_current->event_state = STARTPASTE;
+			w_current->buffer_number = 0;
+			w_current->inside_action = 1;
+		}
+	} else { 
+		i_update_status(w_current, "Empty buffer");
+	}
+}
+
+DEFINE_I_CALLBACK(buffer_paste2)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_buffer_paste2, "Paste 2");
+	if (object_buffer[1] != NULL) {
+		if (object_buffer[1]->next != NULL) {
+			i_update_status(w_current, "Paste 2 Mode ");
+			w_current->event_state = STARTPASTE;
+			w_current->buffer_number = 1;
+			w_current->inside_action = 1;
+		}
+	} else {
+		i_update_status(w_current, "Empty buffer");
+	}
+}
+
+DEFINE_I_CALLBACK(buffer_paste3)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_buffer_paste3, "Paste 3");
+	if (object_buffer[2] != NULL) {
+		if (object_buffer[2]->next != NULL) {
+			i_update_status(w_current, "Paste 3 Mode ");
+			w_current->event_state = STARTPASTE;
+			w_current->buffer_number = 2;
+			w_current->inside_action = 1;
+		}
+	} else { 
+		i_update_status(w_current, "Empty buffer");
+	}
+}
+
+DEFINE_I_CALLBACK(buffer_paste4)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_buffer_paste4, "Paste 4");
+	if (object_buffer[3] != NULL) {
+		if (object_buffer[3]->next != NULL) {
+			i_update_status(w_current, "Paste 4 Mode ");
+			w_current->event_state = STARTPASTE;
+			w_current->buffer_number = 3;
+			w_current->inside_action = 1;
+		}
+	} else {
+		i_update_status(w_current, "Empty buffer");
+	}
+}
+
+DEFINE_I_CALLBACK(buffer_paste5)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_buffer_paste5, "Paste 5");
+	if (object_buffer[4] != NULL) {
+		if (object_buffer[4]->next != NULL) {
+			i_update_status(w_current, "Paste 5 Mode ");
+			w_current->event_state = STARTPASTE;
+			w_current->buffer_number = 4;
+			w_current->inside_action = 1;
+		}
+	} else {
+		i_update_status(w_current, "Empty buffer");
+	}
+}
+
+DEFINE_I_CALLBACK(buffer_paste1_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	if (object_buffer[0] == NULL) {
+		return;
+	}
+
+	if (object_buffer[0]->next == NULL)  {
+		return;
+	
+	}
+	
+	o_buffer_paste_start(w_current, mouse_x, mouse_y, 0);
+}
+
+DEFINE_I_CALLBACK(buffer_paste2_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	if (object_buffer[1] == NULL) {
+		return;
+	}
+
+	if (object_buffer[1]->next == NULL)  {
+		return;
+	
+	}
+
+	o_buffer_paste_start(w_current, mouse_x, mouse_y, 1);
+}
+
+DEFINE_I_CALLBACK(buffer_paste3_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	if (object_buffer[2] == NULL) {
+		return;
+	}
+
+	if (object_buffer[2]->next == NULL)  {
+		return;
+	
+	}
+
+	o_buffer_paste_start(w_current, mouse_x, mouse_y, 2);
+}
+
+DEFINE_I_CALLBACK(buffer_paste4_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	if (object_buffer[3] == NULL) {
+		return;
+	}
+
+	if (object_buffer[3]->next == NULL)  {
+		return;
+	
+	}
+
+	o_buffer_paste_start(w_current, mouse_x, mouse_y, 3);
+}
+
+DEFINE_I_CALLBACK(buffer_paste5_hotkey)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	if (object_buffer[4] == NULL) {
+		return;
+	}
+
+	if (object_buffer[4]->next == NULL)  {
+		return;
+	
+	}
+
+	o_buffer_paste_start(w_current, mouse_x, mouse_y, 4);
+}
+
 /* Add menu */
 DEFINE_I_CALLBACK(add_component)
 {
@@ -2060,59 +2396,45 @@ DEFINE_I_CALLBACK(misc)
 DEFINE_I_CALLBACK(misc2)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	OBJECT *real;
 
-#if 0 /* old and nolonger needed */
-	if (w_current->page_current->selection_head->next != NULL) {
+#if 0
+	SELECTION *s_current = NULL;
+	OBJECT *o_current = NULL;
 
-		/* normally you should already have the real object, but */
-		/* in this test code I better get it first since */
-		/* o_text_change requires that the object passed in is the */
-		/* real deal */
-		/* real = (OBJECT *) o_list_search(*/
-		/*	w_current->page_current->object_head,*/
-		/*	w_current->page_current->selection_head->next);*/
+	if (w_current->page_current->selection2_head->next == NULL)
+		return;
 
-		/* string paramter is exactly how you want the string to be */
-		/* set */
-		o_text_change(w_current, real, "new_name=new_value", VISIBLE, SHOW_VALUE);
-	}
+	/* o_buffer_cut(w_current);*/
+	/*o_buffer_copy(w_current);*/
 #endif
 }
 
 /* this is Ales' third catch all misc callback */
 DEFINE_I_CALLBACK(misc3)
 {
-	OBJECT **attrib_objects;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	int i=0;
 
-#if 0 /* old and no longer needed */
-	if (w_current->page_current->selection_head->next != NULL) {
-		attrib_objects = o_attrib_return_attribs(
-					      w_current->page_current->
-					      object_head,
-				              w_current->page_current->
-				              selection_head->next);
+#if 0
+	OBJECT *o_current;
+	PAGE *p_current;
+	OBJECT *new_object;
+	OBJECT *o_saved = NULL;
+	SELECTION *temp_list = NULL;
+
+	if (object_buffer[0] == NULL) {
+		return;
+	}
+
+#if DEBUG
+	o_current = object_buffer[0];
+	while(o_current != NULL) {
+		printf("- %s\n", o_current->name);
+		o_current = o_current->next;
+	}
+#endif
 
 
-		if (attrib_objects) {
-			while(attrib_objects[i] != NULL) {
-		
-
-				printf("Changing attribute text string: _%s_\n",
-					attrib_objects[i]->text_string);
-				o_text_change(w_current, 
-					      attrib_objects[i], 
-					      "changed=attribute", 
-					      attrib_objects[i]->visibility,
-						SHOW_VALUE);
-                		i++;
-			}
-			o_attrib_free_returned(attrib_objects);
-		}
-
-        }
+	/* o_buffer_paste_start(w_current, mouse_x, mouse_y);*/
 #endif
 }
 

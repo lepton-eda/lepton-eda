@@ -172,6 +172,28 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
 	gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);
 	gh_new_procedure0_0 ("edit-show-hidden", g_key_edit_show_hidden);
+
+	gh_new_procedure0_0 ("buffer-copy1", g_key_buffer_copy1);
+	gh_new_procedure0_0 ("buffer-copy2", g_key_buffer_copy2);
+	gh_new_procedure0_0 ("buffer-copy3", g_key_buffer_copy3);
+	gh_new_procedure0_0 ("buffer-copy4", g_key_buffer_copy4);
+	gh_new_procedure0_0 ("buffer-copy5", g_key_buffer_copy5);
+	gh_new_procedure0_0 ("buffer-cut1", g_key_buffer_cut1);
+	gh_new_procedure0_0 ("buffer-cut2", g_key_buffer_cut2);
+	gh_new_procedure0_0 ("buffer-cut3", g_key_buffer_cut3);
+	gh_new_procedure0_0 ("buffer-cut4", g_key_buffer_cut4);
+	gh_new_procedure0_0 ("buffer-cut5", g_key_buffer_cut5);
+	gh_new_procedure0_0 ("buffer-paste1", g_key_buffer_paste1);
+	gh_new_procedure0_0 ("buffer-paste2", g_key_buffer_paste2);
+	gh_new_procedure0_0 ("buffer-paste3", g_key_buffer_paste3);
+	gh_new_procedure0_0 ("buffer-paste4", g_key_buffer_paste4);
+	gh_new_procedure0_0 ("buffer-paste5", g_key_buffer_paste5);
+	gh_new_procedure0_0 ("buffer-paste1-hotkey", g_key_buffer_paste1_hotkey);
+	gh_new_procedure0_0 ("buffer-paste2-hotkey", g_key_buffer_paste2_hotkey);
+	gh_new_procedure0_0 ("buffer-paste3-hotkey", g_key_buffer_paste3_hotkey);
+	gh_new_procedure0_0 ("buffer-paste4-hotkey", g_key_buffer_paste4_hotkey);
+	gh_new_procedure0_0 ("buffer-paste5-hotkey", g_key_buffer_paste5_hotkey);
+
 	gh_new_procedure0_0 ("view-redraw", g_key_view_redraw);
 	gh_new_procedure0_0 ("view-zoom-full", g_key_view_zoom_full);
 	gh_new_procedure0_0 ("view-zoom-limits", g_key_view_zoom_limits);

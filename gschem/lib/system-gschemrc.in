@@ -370,10 +370,10 @@
 ; raise-dialog-boxes-on-expose string
 ;
 ; Controls if dialog boxes are raised whenever an expose event happens
-; Default is disabled
+; Default is enabled
 ;
-(raise-dialog-boxes-on-expose "disabled")
-;(raise-dialog-boxes-on-expose "enabled")
+(raise-dialog-boxes-on-expose "enabled")
+;(raise-dialog-boxes-on-expose "disabled")
 
 ; object-clipping string
 ; Determines if the object clipping code is executed or not
@@ -880,6 +880,11 @@
     ("o" . view-zoom-out-hotkey)
     ("i" . view-zoom-in-hotkey)))
 
+(define buffer-keymap
+  '(("c" . buffer-copy1)
+    ("u" . buffer-cut1)
+    ("p" . buffer-paste1-hotkey)))
+
 ; All keys in this keymap *must* be unique
 (define page-keymap
   '(("m" . page-manager)
@@ -962,7 +967,7 @@
     ("v" . view-keymap)
     ("w" . view-zoom-box-hotkey)
     ("x" . view-pan-hotkey)
-    ("y" . no-action)
+    ("y" . buffer-keymap)
     ("z" . view-zoom-in-hotkey)
     ("period" . repeat-last-command)
     ("comma" . misc-misc)

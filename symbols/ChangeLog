@@ -20,6 +20,8 @@ into the cvs repository.
 	* local/EPF10K-1.sym and altera/EPC1LC20-1.sym : Color changes and 
 	  minor cosmetic updates 
 
+	* */*.sym: Changed all pinlabel attributes to label
+
 2000-04-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* Added the contributed symbols by JM Routoure 

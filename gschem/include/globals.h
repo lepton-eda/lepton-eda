@@ -65,3 +65,6 @@ extern int verbose_mode;
 extern int stroke_info_mode;
 
 
+#define MAX_BUFFERS 	5
+/* Global buffers */
+extern OBJECT *object_buffer[MAX_BUFFERS];

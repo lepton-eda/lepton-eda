@@ -853,6 +853,29 @@ o_complex_set_color(OBJECT *complex, int color)
 }
 
 void
+o_complex_set_color_single(OBJECT *o_current, int color)
+{
+	switch(o_current->type) {
+		case(OBJ_LINE):
+		case(OBJ_NET):
+		case(OBJ_BUS):
+		case(OBJ_BOX):
+		case(OBJ_CIRCLE):
+		case(OBJ_PIN):
+		case(OBJ_ARC):
+			o_current->color = color;
+		break;
+
+		case(OBJ_TEXT):
+		case(OBJ_COMPLEX):
+			o_current->color = color;
+			o_complex_set_color(o_current->complex, color);
+		break;
+
+	}
+}
+
+void
 o_complex_set_color_save(OBJECT *complex, int color)
 {
 	OBJECT *o_current=NULL;
@@ -915,6 +938,31 @@ o_complex_unset_color(OBJECT *complex)
 
 		}
 		o_current=o_current->next;
+	}
+}
+
+void
+o_complex_unset_color_single(OBJECT *o_current)
+{
+	switch(o_current->type) {
+		case(OBJ_LINE):
+		case(OBJ_NET):
+		case(OBJ_BUS):
+		case(OBJ_BOX):
+		case(OBJ_CIRCLE):
+		case(OBJ_PIN):
+		case(OBJ_ARC):
+			o_current->color = o_current->saved_color;
+			o_current->saved_color = -1;
+		break;
+
+		case(OBJ_TEXT):
+		case(OBJ_COMPLEX):
+			o_current->color = o_current->saved_color;
+			o_current->saved_color = -1;
+			o_complex_unset_color(o_current->complex);
+
+		break;
 	}
 }
 

@@ -104,6 +104,10 @@ main_prog(int argc, char *argv[])
         fprintf(stderr, "Use at your own risk!\n");
 #endif  
 
+
+	/* init global buffers */
+	o_buffer_init();
+
 	/* register guile (scheme) functions */
 	g_register_funcs();
 

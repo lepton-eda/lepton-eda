@@ -139,6 +139,15 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			}
                         break;
 
+		case(STARTPASTE):
+			o_buffer_paste_start(w_current, 
+					     (int) event->x,
+					     (int) event->y,
+					     w_current->buffer_number);
+			w_current->event_state = ENDPASTE;
+			w_current->inside_action = 1;
+			break;
+
 		case(STARTSTRETCH):
 			/* make sure the list is not empty */
 			if (o_select_selected(w_current)) {
@@ -295,6 +304,16 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			i_update_status(w_current, "Select Mode");
 			w_current->inside_action = 0;
 			o_redraw_single(w_current, w_current->page_current->object_tail);
+                        break;
+
+		case(ENDPASTE):
+			o_buffer_paste_end(w_current,
+				      fix_x(w_current, (int) event->x),
+				      fix_y(w_current, (int) event->y),
+				      w_current->buffer_number);
+			w_current->event_state=SELECT;
+			i_update_status(w_current, "Select Mode");
+			w_current->inside_action = 0;
                         break;
 
 		case(ENDATTRIB):
@@ -798,6 +817,13 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		w_current->last_y = fix_y(w_current, (int) event->y);
 		o_complex_rubbercomplex(w_current);
                 break;
+
+	case(ENDPASTE):
+		o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
+		w_current->last_x = fix_x(w_current, (int) event->x);
+		w_current->last_y = fix_y(w_current, (int) event->y);
+		o_buffer_paste_rubberpaste(w_current, w_current->buffer_number);
+		break;
 
 	case(DRAWATTRIB):
 		o_attrib_start(w_current, (int) event->x, (int) event->y);

@@ -342,6 +342,10 @@ struct st_toplevel {
 	PAGE *page_tail;	
 	PAGE *page_current;
 
+	/* buffer_number is used by the buffer copy/cut/paste mechanism */
+	/* in gschem to keep track of the current buffer number */
+	int buffer_number;
+
 	/* hierarchy system */
 
 	void (*last_callback)();	  	/* Last i_call* cmd executed */

@@ -31,6 +31,7 @@
 #include "struct.h"
 #include "globals.h"
 #include "o_types.h"
+#include "colors.h"
 
 #include "../include/prototype.h"
 
@@ -42,13 +43,10 @@ extern int global_sid;
 /* copies selected to list_head (!! returns new list) */
 /* flag is either NORMAL_FLAG or SELECTION_FLAG */
 OBJECT *
-o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag)
+o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, 
+	       int flag, OBJECT **return_end)
 {
 	OBJECT *end=NULL;
-
-	/* this didn't work */
-/*	if (selected == NULL)
-		return(list_head);*/
 
 	/* are we adding a selection or the real object list */
 	w_current->ADDING_SEL = flag; 
@@ -116,6 +114,10 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int fla
 
 	w_current->ADDING_SEL = 0; /* hack */
 
+	if (return_end) {
+		*return_end = end;	
+	}
+
 	return(list_head);
 }
 
@@ -148,7 +150,8 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 	while(src != NULL) {
 
 		if (src->type != OBJ_TEXT) {
-			dest->next = o_list_copy_to(w_current, NULL, src, flag);
+			dest->next = o_list_copy_to(w_current, NULL, src, flag,
+						    NULL);
 		
 			dest->next->prev = dest;
 			dest = dest->next;
@@ -173,7 +176,8 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 	while(src != NULL) {
 
 		if (src->type == OBJ_TEXT) {
-			dest->next = o_list_copy_to(w_current, NULL, src, flag);
+			dest->next = o_list_copy_to(w_current, NULL, src, flag,
+						    NULL);
 	
         if (src->attached_to && !w_current->ADDING_SEL) {
                 if (src->attached_to->copied_to) {
@@ -190,6 +194,112 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 			dest = dest->next;
 			dest->sid = global_sid++;
 		}
+
+		src = src->next;
+	}
+
+	w_current->ADDING_SEL = adding_sel_save;
+	w_current->page_current->object_parent = temp_parent;
+
+	return(dest);
+}
+
+/* you need to pass in a head_node for dest_list_head */
+/* flag is either NORMAL_FLAG or SELECTION_FLAG */
+/* this function copies the objects in the src SELECTION list */
+/* to the OBJECT list in dest_list_head */
+/* this routine assumes that objects in src_list_head are selected */
+/* objects are unselected before they are copied and then reselected */
+/* this is necessary to preserve the color info */
+OBJECT *
+o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head, 
+			   OBJECT *dest_list_head, int flag)
+{
+	SELECTION *src;
+	OBJECT *object;
+	OBJECT *dest;
+ 	OBJECT *temp_parent=NULL;
+	int adding_sel_save;
+
+	src = src_list_head;
+	dest = dest_list_head;
+
+	temp_parent = w_current->page_current->object_parent;
+	w_current->page_current->object_parent = dest_list_head;
+
+	if (dest == NULL) {
+		return(NULL);
+	}
+
+	if (src == NULL) {
+		return(NULL);
+	}
+
+	adding_sel_save = w_current->ADDING_SEL;
+
+	/* first do all NON text items */
+	while(src != NULL) {
+
+		object = src->selected_object;
+
+		/* unselect the object before the copy */
+		o_selection_unselect(object);	
+
+		if (object->type != OBJ_TEXT && object->type != OBJ_HEAD) {
+			dest->next = o_list_copy_to(w_current, NULL, object, 
+						    flag, NULL);
+			dest->next->prev = dest;
+			dest = dest->next;
+			dest->sid = global_sid++;
+		}
+
+		/* reselect it */
+		o_selection_select(object, SELECT_COLOR);
+
+		src = src->next;
+	}
+
+	src = src_list_head;
+	/*dest = dest_list_head; out since we want to add to the end */
+
+	if (dest == NULL) {
+		return(NULL);
+	}
+
+	if (src == NULL) {
+		return(NULL);
+	}
+
+	/* then do all text items */
+	while(src != NULL) {
+
+		object = src->selected_object;
+
+		/* unselect the object before the copy */
+		o_selection_unselect(object);	
+
+		if (object->type == OBJ_TEXT) {
+			dest->next = o_list_copy_to(w_current, NULL, object, 
+						    flag, NULL);
+	
+        if (object->attached_to && !w_current->ADDING_SEL) {
+                if (object->attached_to->copied_to) {
+                        o_attrib_attach(w_current,
+                                w_current->page_current->object_parent,
+                                dest->next, object->attached_to->copied_to);     
+
+                                /* satisfied copy request */
+                                object->attached_to->copied_to = NULL;
+                } 
+        }
+		
+			dest->next->prev = dest;
+			dest = dest->next;
+			dest->sid = global_sid++;
+		}
+
+		/* reselect it */
+		o_selection_select(object, SELECT_COLOR);
 
 		src = src->next;
 	}
