@@ -1,0 +1,12 @@
+ARCHITECTURE <architecture-identifier> OF <entity-identifier> IS 
+ 
+      {<subnet-object> <subnet-name> : subnet-kind;}
+
+BEGIN
+
+  {<label> : ENTITY <entity> [(<architecture>)]
+	    [GENERIC MAP (<set-generic> => <generic-value> 
+			 {; <set-generic=> <generic-value>})]
+            PORT MAP ( <pin-name> => <subnet-name>{; <.. => ..>});} 
+
+END ARCHITECTURE <architecture-identifier>;

@@ -1,0 +1,7 @@
+(load "./commonrc")
+
+(define-module (ice-9 ls) :use-module (ice-9 common-list)
+			  :use-module (ice-9 string-fun))
+
+(load (string-append examples-path "/../gnetlist/scheme/gnet-vams.scm"))
+(display "loaded local gnetlistrc\n")

@@ -1,0 +1,68 @@
+(load "./commonrc")
+
+(define-module (ice-9 ls) :use-module (ice-9 common-list)
+			  :use-module (ice-9 string-fun))
+
+; All keys in the global-keymap *must* be unique
+(define global-keymap
+  '(("Escape" . cancel)
+    ("a" . add-keymap)
+    ("b" . add-box-hotkey)
+    ("c" . edit-copy-hotkey)
+    ("d" . edit-delete)
+    ("e" . edit-keymap)
+    ("f" . file-keymap)
+    ("g" . gnetlist-keymap)
+    ("h" . help-keymap)
+    ("i" . add-component)
+    ("j" . no-action)
+    ("k" . no-action)
+    ("l" . add-line-hotkey) 
+    ("m" . edit-move-hotkey)
+    ("n" . add-net-hotkey)
+    ("o" . options-keymap)
+    ("p" . page-keymap)
+    ("q" . no-action)
+    ("r" . view-redraw)
+    ("s" . edit-select)
+    ("t" . attributes-keymap)
+    ("u" . add-bus-hotkey)
+    ("v" . view-keymap)
+    ("w" . view-zoom-box-hotkey)
+    ("x" . view-pan-hotkey)
+    ("y" . buffer-keymap)
+    ("z" . view-zoom-in-hotkey)
+    ("period" . repeat-last-command)
+    ("comma" . misc-misc)
+    ("equal" . misc-misc2)
+    ("Shift plus" . misc-misc3)
+    ("Delete" . edit-delete)
+    ("Shift greater" . page-next)
+    ("Shift less" . page-prev)
+    ("Alt q" . file-quit)
+    ("Shift H" . hierarchy-keymap)
+    ("Shift U" . edit-undo)
+    ("Shift R" . edit-redo)
+    ("Shift Z" . view-zoom-out-hotkey)))
+
+(attribute-promotion "enabled")
+(promote-invisible "enabled")
+(keep-invisible "enabled")
+(enforce-hierarchy "disabled")
+
+(attribute-name "port_object")
+(attribute-name "port_type")
+(attribute-name "port_mode")
+(attribute-name "entity")
+(attribute-name "architecture")
+
+(define gnetlist-keymap
+  '(("n" . generate-netlist)
+    ("e" . generate-entity)))
+
+(load (string-append examples-path "/../gschem/scheme/generate_netlist.scm"))
+
+(define vhdl-path (string-append examples-path "/vhdl/new-vhdl"))
+
+(display "loaded local gschemrc\n")
+

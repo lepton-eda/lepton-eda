@@ -1,0 +1,9 @@
+LIBRARY <library-identifier>{,<library-identifier>};
+USE     <package-identidier>{,<package-identifier>};
+
+ENTITY <entity-identifier> IS 
+   [GENERIC ( <generic-identifier> : REAL := <default-value>
+	    {;<generic-identifier> : REAL := <default-value>}); ]
+   [PORT (<port-kind> <port-identifier> : [<port-mode>] <port-type>
+	{;<port-kind> <port-identifier> : [<port-mode>] <port-type>});]
+END ENTITY;

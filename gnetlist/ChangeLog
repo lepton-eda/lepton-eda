@@ -9,6 +9,11 @@
 	* docs/: Created documentation directory and moved all README.* 
 	  files into this directory
 
+	* docs/vams: Created directory, added vams documentation
+
+	* examples/vams/: Created directory, moved the example vams design
+	  into this directory
+
 2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Updated manual with all the various backend formats

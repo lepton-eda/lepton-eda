@@ -1,0 +1,9 @@
+(define examples-path (getenv 'PWD))
+
+(define-module (ice-9 ls) :use-module (ice-9 common-list)
+			  :use-module (ice-9 string-fun))
+
+(component-library (string-append examples-path "/sym"))
+(source-library (string-append examples-path "/sch"))
+
+(display "\n  loaded local commonrc\n")
