@@ -313,6 +313,7 @@ AC_CONFIG_FILES([Makefile \
 		scheme/Makefile \
 		examples/Makefile \
 		tests/Makefile \
+		tests/hierarchy/Makefile \
 		docs/Makefile \
 		docs/vams/Makefile \
 		examples/vams/Makefile \

@@ -1,0 +1,41 @@
+!PADS-POWERPCB-V3.0-MILS!
+
+*PART*
+U2	unknown
+C4	unknown
+C3	unknown
+R1	unknown
+C2	unknown
+R2	unknown
+C1	unknown
+S1	unknown
+CONN1	unknown
+T1	unknown
+F1	unknown
+U1	unknown
+
+*NET*
+*SIGNAL* ten
+ U2.1 R1.2 C3.1 R2.1
+*SIGNAL* eleven
+ U2.2 C4.1 R2.2
+*SIGNAL* GND
+ CONN1.3
+*SIGNAL* one
+ S1.1 CONN1.1
+*SIGNAL* five
+ CONN1.2 T1.2
+*SIGNAL* three
+ T1.1 F1.2
+*SIGNAL* two
+ S1.2 F1.1
+*SIGNAL* six
+ T1.3 U1.4
+*SIGNAL* seven
+ T1.4 U1.3
+*SIGNAL* nine
+ C4.2 C3.2 R1.3 R1.1 C2.2 C1.2 U1.2
+*SIGNAL* eight
+ U2.3 C2.1 C1.1 U1.1
+
+*END*

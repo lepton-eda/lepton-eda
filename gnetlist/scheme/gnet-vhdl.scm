@@ -386,7 +386,7 @@
 (define vhdl:get-device-matching-pins
   (lambda (device pin-list value)
     (cond ((null? pin-list) '())
-	  ((string=? (gnetlist:get-attribute-by-pinnumber device (car pin-list) "type" )
+	  ((string=? (gnetlist:get-attribute-by-pinnumber device (car pin-list) "pintype" )
                      value)
 	   (cons 
             (cons (car pin-list) (gnetlist:get-attribute-by-pinnumber device (car pin-list) "width"))  

@@ -2,7 +2,7 @@
 
 SUBDIRS = vams
 
-EXTRA_DIST = 7447.sch test_verilog.sch singlenet_1.sch
+EXTRA_DIST = 7447.sch test_verilog.sch 
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
