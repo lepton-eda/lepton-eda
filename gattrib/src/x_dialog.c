@@ -148,12 +148,6 @@ char *x_dialog_newattrib_get_name()
   gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_newattrib_ok_callback), 
 		     GTK_WIDGET(newattrib_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttonok), 50, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttonok), 50, 30);
-#endif
-
   gtk_widget_show(buttonok);
 
 
@@ -166,11 +160,6 @@ char *x_dialog_newattrib_get_name()
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_newattrib_close_callback), 
 		     GTK_WIDGET(newattrib_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttoncancel), 50, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttoncancel), 50, 30);
-#endif
   gtk_widget_show(buttoncancel);
 
 
@@ -324,18 +313,13 @@ int x_dialog_delattrib_confirm()
 #ifdef HAS_GTK12
   buttonyes = gtk_button_new_with_label("Yes");
 #else
-  buttonyes = gtk_button_new_from_stock (GTK_STOCK_OK);
+  buttonyes = gtk_button_new_from_stock (GTK_STOCK_YES);
 #endif
   GTK_WIDGET_SET_FLAGS(buttonyes, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonyes, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonyes), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_delattrib_yes_callback), 
 		     GTK_WIDGET(delattrib_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttonyes), 50, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttonyes), 50, 30);
-#endif
   gtk_widget_show(buttonyes);
 
 
@@ -348,11 +332,6 @@ int x_dialog_delattrib_confirm()
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_delattrib_close_callback), 
 		     GTK_WIDGET(delattrib_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttoncancel), 50, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttoncancel), 50, 30);
-#endif
   gtk_widget_show(buttoncancel);
 
 
@@ -479,9 +458,9 @@ int x_dialog_missing_sym()
   string =
     g_strdup_printf(_("%sperhaps because your gafrc or gattribrc files are misconfigured.\n"), string);
   string =
-    g_strdup_printf(_("%sChose \"Abort\" to leave gattrib and fix the problem, or\n"), string);
+    g_strdup_printf(_("%sChose \"Quit\" to leave gattrib and fix the problem, or\n"), string);
   string =
-    g_strdup_printf(_("%s\"Continue\" to continue working with gattrib.\n"), string);
+    g_strdup_printf(_("%s\"Forward\" to continue working with gattrib.\n"), string);
 
   label = gtk_label_new(string);
   gtk_widget_show (label);
@@ -489,25 +468,20 @@ int x_dialog_missing_sym()
 
   /* Now create "Abort program" and "Continue" buttons */
 #ifdef HAS_GTK12
-  buttonabort = gtk_button_new_with_label("Abort");
+  buttonabort = gtk_button_new_with_label("Quit");
 #else
-  buttonabort = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+  buttonabort = gtk_button_new_from_stock (GTK_STOCK_QUIT);
 #endif
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_missing_sym_abort_callback), 
 		     GTK_WIDGET(missing_sym_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttonabort), 70, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttonabort), 70, 30);
-#endif
   gtk_widget_show(buttonabort);
 
 
 #ifdef HAS_GTK12
-  buttoncontinue = gtk_button_new_with_label("Continue");
+  buttoncontinue = gtk_button_new_with_label("Forward");
 #else
   buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
 #endif
@@ -515,11 +489,6 @@ int x_dialog_missing_sym()
   gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_missing_sym_continue_callback), 
 		     GTK_WIDGET(missing_sym_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttoncontinue), 70, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttoncontinue), 70, 30);
-#endif
   gtk_widget_show(buttoncontinue);
 
 
@@ -631,9 +600,9 @@ int x_dialog_unsaved_data()
   string =
     g_strdup_printf(_("Warning!  You have unsaved data in the spreadsheet!\n"));
   string =
-    g_strdup_printf(_("%sAre you sure you want to quit?  Click \"Continue\" to\n"), string);
+    g_strdup_printf(_("%sAre you sure you want to quit?  Click \"Quit\" to\n"), string);
   string =
-    g_strdup_printf(_("%squit, or \"Abort\" to go back and save you work.\n"), string);
+    g_strdup_printf(_("%squit anyway, or \"Stop\" to go back and save you work.\n"), string);
 
   label = gtk_label_new(string);
   gtk_widget_show (label);
@@ -641,37 +610,27 @@ int x_dialog_unsaved_data()
 
   /* Now create "Abort program" and "Continue" buttons */
 #ifdef HAS_GTK12
-  buttonabort = gtk_button_new_with_label("Abort");
+  buttonabort = gtk_button_new_with_label("Stop");
 #else
-  buttonabort = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+  buttonabort = gtk_button_new_from_stock (GTK_STOCK_STOP);
 #endif
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_unsaved_data_abort_callback), 
 		     GTK_WIDGET(unsaved_data_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttonabort), 70, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttonabort), 70, 30);
-#endif
   gtk_widget_show(buttonabort);
 
 
 #ifdef HAS_GTK12
-  buttoncontinue = gtk_button_new_with_label("Continue");
+  buttoncontinue = gtk_button_new_with_label("Quit");
 #else
-  buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
+  buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_QUIT);
 #endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_unsaved_data_continue_callback), 
 		     GTK_WIDGET(unsaved_data_window) );
-#ifdef HAS_GTK22
-  gtk_widget_set_size_request (GTK_WIDGET (buttoncontinue), 70, 30);
-#else
-  gtk_widget_set_usize (GTK_WIDGET (buttoncontinue), 70, 30);
-#endif
   gtk_widget_show(buttoncontinue);
 
 
@@ -809,11 +768,16 @@ int x_dialog_unimplemented_feature()
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_about_close_callback),  /* stealing "about" fcn */
 		     GTK_WIDGET(unimplemented_feature_window) );
+
+/* Remove bad size for widget */
+#if 0
 #ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
 #else
   gtk_widget_set_usize (GTK_WIDGET (buttonclose), 50, 30);
 #endif
+#endif 
+
   gtk_widget_show(buttonclose);
 
   if (!GTK_WIDGET_VISIBLE(unimplemented_feature_window)) {
@@ -920,11 +884,16 @@ void x_dialog_about_dialog()
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_about_close_callback), 
 		     GTK_WIDGET(about_window) );
+
+/* Remove bad size for widget */
+#if 0
 #ifdef HAS_GTK22
   gtk_widget_set_size_request (GTK_WIDGET (buttonclose), 50, 30);
 #else
   gtk_widget_set_usize (GTK_WIDGET (buttonclose), 50, 30);
 #endif
+#endif
+
   gtk_widget_show(buttonclose);
 
   if (!GTK_WIDGET_VISIBLE(about_window)) {

@@ -1,3 +1,8 @@
+2005-02-15 18:32  Stuart Brorson <sdb@cloud9.net>
+
+	* src/x_dialog.c: Modified GTK buttons slightly so the captions 
+	fit the button, and the button usage matches the text.
+
 2005-02-14 22:31  Dan McMahill <danmc>
 
 	* src/: gtkextra-marshal.c, gtkitementry_1_2.c, listsort.c: add
