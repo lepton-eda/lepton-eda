@@ -980,6 +980,8 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 					       o_current->saved_color);
 		o_current->displayed_text_len = strlen(output_string);
 	} else {
+		/* make sure list is truely free */
+		s_delete_list_fromstart(w_current, o_current->complex);
 		o_current->complex = NULL;
 		o_current->displayed_text_len = 0;
 	}
@@ -1539,8 +1541,9 @@ o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angl
 	o_text_recreate(w_current, object);
 }
 
+#if 0 /* code which is no longer needed, replaced by new functions below */
 void
-o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
+o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 {
 	int newx=0, newy=0;
 	int origx, origy;
@@ -1741,7 +1744,7 @@ o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 }
 
 void
-o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object)
+o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object)
 {
 	int newx=0, newy=0;
 	int origx, origy;
@@ -1935,6 +1938,7 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 	/* o_text_translate_world(w_current, x-object->x, y-object->y, object);*/
 	o_text_recreate(w_current, object);
 }
+#endif
 
 #if 0 /* interesting, but currently unused code */
 void
@@ -2019,3 +2023,95 @@ o_text_change_angle(TOPLEVEL *w_current, OBJECT *complex, int new_angle)
 	}
 }
 #endif
+
+void
+o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object)
+{
+	int origx, origy;
+	int x, y;
+	int height_mod=0;
+	int sign=1;
+	
+	origx = object->x;
+	origy = object->y;
+
+	x = origx + (-world_centerx);
+	y = origy + (-world_centery);
+
+	if ((object->angle%180)==0) {
+	  switch(object->text_alignment) {
+	  case(LOWER_LEFT):
+	    object->text_alignment=LOWER_RIGHT;
+	    break;
+
+	  case(MIDDLE_LEFT):
+	    object->text_alignment=MIDDLE_RIGHT;
+	    break;
+
+	  case(UPPER_LEFT):
+	    object->text_alignment=UPPER_RIGHT;
+	    break;
+
+	  case(LOWER_RIGHT):
+	    object->text_alignment=LOWER_LEFT;
+	    break;
+
+	  case(MIDDLE_RIGHT):
+	    object->text_alignment=MIDDLE_LEFT;
+	    break;
+
+	  case(UPPER_RIGHT):
+	    object->text_alignment=UPPER_LEFT;
+	    break;
+
+	  default:
+	    break;
+	  }
+	} else {
+	  switch(object->text_alignment) {
+	  case(LOWER_LEFT):
+	    object->text_alignment=UPPER_LEFT;
+	    break;
+
+	  case(UPPER_LEFT):
+	    object->text_alignment=LOWER_LEFT;
+	    break;
+
+	  case(LOWER_RIGHT):
+	    object->text_alignment=UPPER_RIGHT;
+	    break;
+
+	  case(UPPER_RIGHT):
+	    object->text_alignment=LOWER_RIGHT;
+	    break;
+
+	  case(LOWER_MIDDLE):
+	    object->text_alignment=UPPER_MIDDLE;
+	    break;
+
+	  case(UPPER_MIDDLE):
+	    object->text_alignment=LOWER_MIDDLE;
+	    break;
+
+	  default:
+	    break;
+	  }
+	}
+
+	object->x = -x + (world_centerx);
+	object->y =  y + (world_centery);
+	
+	o_text_recreate(w_current, object);
+}
+
+void
+o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
+{
+	int world_centerx, world_centery;
+
+	SCREENtoWORLD(w_current, centerx, centery,
+			&world_centerx,
+			&world_centery);
+
+	o_text_mirror_world(w_current, world_centerx, world_centery, object);
+}
