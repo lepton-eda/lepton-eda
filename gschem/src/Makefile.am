@@ -28,7 +28,7 @@ BUILT_SOURCES = \
 	x_attrsel.nw x_basic.nw x_dialog.nw \
 	x_event.nw x_grid.nw x_log.nw x_menus.nw x_script.nw \
 	x_pagesel.nw x_print.nw x_window.nw x_stroke.nw x_image.nw x_color.nw \
-	x_fileselect.nw x_preview.nw \
+	x_fileselect.nw x_preview.nw x_attribedit.nw \
 	x_multimulti.nw \
 	parsecmd.nw o_cue.nw
 

@@ -5,6 +5,19 @@
 
         * configure.in/Makefile.am: Upgraded to automake 1.6.2
 
+	* noweb/x_dialog.nw: Removed attrib edit dialog box from this file
+
+	* noweb/x_attribedit.nw: Created new file for attrib edit dialog box
+
+	* src/Makefile.am, noweb/Makefile.am: Added above file to Makefiles
+
+	* noweb/x_attribedit.nw: Completely reworked attrib edit dialog box to
+	be much simpler and cleaner
+
+	* noweb/x_attribedit.nw: Integrated patch from Dave Lawrence which
+	adds a bunch of useful capabilities to the attrib add dialog box, 
+	add an attribute to multiple objects, replace existing attributes
+
 2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Fixed spelling mistake
