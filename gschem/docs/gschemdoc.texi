@@ -39,7 +39,7 @@ Copyright @copyright{} xxxx XXXX.
 * File a_zoom.c:: file a_zoom.c.
 * File g_funcs.c:: file g_funcs.c.
 * File g_hook.c:: file g_hook.c.
-* File g_key.c:: file g_key.c.
+* File g_keys.c:: file g_keys.c.
 * File g_rc.c:: file g_rc.c.
 * File g_register.c:: file g_register.c.
 * File globals.c:: file globals.c.
@@ -97,7 +97,7 @@ Copyright @copyright{} xxxx XXXX.
 @include a_zoom.texi
 @include g_funcs.texi
 @include g_hook.texi
-@include g_key.texi
+@include g_keys.texi
 @include g_rc.texi
 @include g_register.texi
 @include globals.texi

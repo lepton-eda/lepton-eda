@@ -1416,7 +1416,7 @@ x_event_key_press (GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current)
   set_window_current_key(w_current);
 
   if (event) {
-    g_key_execute(event->state, event->keyval);
+    g_keys_execute(event->state, event->keyval);
   }
 
   return(0);

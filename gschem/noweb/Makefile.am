@@ -1,5 +1,5 @@
 
-EXTRA_DIST = a_pan.nw a_zoom.nw g_funcs.nw g_hook.nw g_key.nw g_rc.nw \
+EXTRA_DIST = a_pan.nw a_zoom.nw g_funcs.nw g_hook.nw g_keys.nw g_rc.nw \
              g_register.nw globals.nw gschem.nw i_basic.nw i_callbacks.nw \
              i_vars.nw o_arc.nw o_attrib.nw o_basic.nw o_box.nw o_buffer.nw \
              o_bus.nw o_circle.nw o_complex.nw o_copy.nw o_cue.nw \

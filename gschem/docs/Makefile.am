@@ -17,7 +17,7 @@ docs_DATA =             gschem.html
 
 info_TEXINFOS =		gschemdoc.texi
 gschemdoc_TEXINFOS =	a_pan.texi a_zoom.texi g_funcs.texi g_hook.texi       \
-			g_key.texi g_rc.texi g_register.texi globals.texi     \
+			g_keys.texi g_rc.texi g_register.texi globals.texi    \
 			gschem.texi i_basic.texi i_callbacks.texi i_vars.texi \
 			o_arc.texi o_attrib.texi o_basic.texi o_box.texi      \
 			o_buffer.texi o_bus.texi o_circle.texi o_complex.texi \

@@ -1,3 +1,19 @@
+2005-01-14 Handsome Greg <xdissent@gmail.com>
+ 
+	* noweb/g_keys.nw: Replaced all g_key_ functions with g_keys_X
+	and changed associated makefile generation scripts and docs to
+	reflect this change. (fixes Gtk/Glib-2.6.0). Applied by Ales, 
+	the following files changed:
+		M include/prototype.h
+		M docs/gschemdoc.texi
+		M src/Makefile.am
+		M docs/Makefile.am
+		M noweb/Makefile.am
+		A noweb/g_keys.nw
+		R noweb/g_key.nw 
+		M noweb/g_register.nw
+ 		M noweb/x_event.nw
+
 2005-01-08  Stuart Brorson <sdb@cloud9.net>
 	* noweb/x_multiattrib.nw: Added symbol name to items displayed 
 	in multiattrib dialog box.
