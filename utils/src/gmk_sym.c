@@ -1,4 +1,4 @@
-/*************************************************************************/	
+/*************************************************************************/
 /* gmk_sym, a program to create rectangular symbols for gschem           */
 /* from a file composed of comma separated lines                         */
 /*  From: Jerry O'Keefe, jerryok@pacbell.net                             */
@@ -12,6 +12,15 @@
 /* 99/05/02 Add char_width.c support					 */
 /*									 */
 /* 00/07/12 Major changes to match new styles for text and attributes	 */
+/* 02/01/19 Changed the way pin labels and numbers are anchored to the   */
+/*          pins.  They make use of the text origin feature so that      */
+/*          calculation of the string width is no longer needed.  This   */
+/*          results in much more uniformly placed pins on the left and   */
+/*          bottom side of the device.  Also added the ability to        */
+/*          place the device name in the center of the symbol, useful    */
+/*          for large symbols containing pins on all sides.  Top and     */
+/*          bottom pin numbers are rotated by 90 degrees to match the    */
+/*          pin rotation.  Added pin type attribute capability.                                                */
 /*									 */
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
@@ -49,6 +58,8 @@
 /*     3rd value: pin shape, choice of: line, clock, dot&line            */
 /*     4th value: side of box to attach the pin,choice of: R, L, T, B    */
 /*     5th value: location of pin on side of box, in pin spacings	 */
+/*     6th value: (optional) pin type attribute: in, out, io, oc, oe,    */
+/*                pas, tp, tri, clk, pwr                                 */
 /*  See the 7474 sample file below					 */
 /*************************************************************************/
 #if 0
@@ -56,7 +67,8 @@
 ;; Filename: 7474.txt
 ;;   An example of a 7474 symbol make file
 ; This is a comment line
-;; device name ,name, name location(tl,tc,tr,bl,bc,br),X size in pins,Y size in pins 
+/* puon: added "cc" */
+;; device name ,name, name location(tl,tc,tr,bl,bc,br,cc),X size in pins,Y size in pins 
 7474,74HC74,tr,3,5
 ;;
 ;; pin name,pin number,shape(line,clock,dot),side(r,l,t,b),pin position
@@ -102,6 +114,17 @@ PRE,1,dot,B,1
 #define DOT_SHAPE   1
 #define CLOCK_SHAPE 2
 
+#define PINTYPE_IN  "IN"
+#define PINTYPE_OUT "OUT"
+#define PINTYPE_IO  "IO"
+#define PINTYPE_OC  "OC"
+#define PINTYPE_OE  "OE"
+#define PINTYPE_PAS "PAS"
+#define PINTYPE_TP  "TP"
+#define PINTYPE_TRI "TRI"
+#define PINTYPE_CLK "CLK"
+#define PINTYPE_PWR "PWR"
+
 extern char *optarg;
 extern int optind,opterr,optopt;
 
@@ -118,7 +141,7 @@ int stricmp(char *s, char *p);
 char *TimeStamp(void);
 
 /* add by AVH to make compile warning free */
-int GetStringDisplayLength(char *str,int font_size); 
+int GetStringDisplayLength(char *str,int font_size);
 
 int pin_len=300;
 int pin_spacing =300;
@@ -227,6 +250,10 @@ void cross(int pos_x,int pos_y,int color)
 
 /***************************************************/
 /***************************************************/
+#if 0
+/* commented out by puon.  No longer needed since pins
+   are now anchored using the text origin capabilities of gschem.
+*/
 void pin_xy(int dir,char *pin,int font_size,int *x,int *y)
 { int pixs;
   pixs = GetStringDisplayLength(pin,font_size);
@@ -246,16 +273,17 @@ void pin_xy(int dir,char *pin,int font_size,int *x,int *y)
 	         return;
     }
 }
+#endif
 
 /***************************************************/
 /***************************************************/
-void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name)
+void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *type)
 { int x,y;
-  int name_size=0;
+//  int name_size=0;
   int xdir=0,ydir=0,font_size=8;
   int shape_offset=0;
 
-  if (shape == 2)
+  if (shape == DOT_SHAPE)
      shape_offset = 75;
   switch (dir)
     {
@@ -297,27 +325,67 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name)
      }
    x = pos_x;
    y = pos_y;
-   pin_xy(dir,pin,font_size,&x,&y);
-   printf("T %d %d %d %d 1 1 0 0\n",x,y,YELLOW,font_size);
+
+   /* puon: begin */
+   /* pin_xy(dir,pin,font_size,&x,&y); */
+   switch (dir)
+     {
+     case L_SIDE:
+       printf("T %d %d %d %d 1 1 0 6\n",x-50,y+50,YELLOW,font_size);
+       break;
+     case R_SIDE:
+       printf("T %d %d %d %d 1 1 0 0\n",x+50,y+50,YELLOW,font_size);
+       break;
+     case B_SIDE:
+       printf("T %d %d %d %d 1 1 90 6\n",x-50,y-50,YELLOW,font_size);
+       break;
+     case T_SIDE:
+       printf("T %d %d %d %d 1 1 90 0\n",x-50,y+50,YELLOW,font_size);
+       break;
+     }
+   /* puon: end */
    printf("pin%d=%s\n",++net_pin,pin);
+
+
    if (strlen(name))
      {
-     name_size = GetStringDisplayLength(name,font_size);
+     /*name_size = GetStringDisplayLength(name,font_size);*/
      switch (dir)
        {
-       case L_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x+75+shape_offset,pos_y-50,GREEN,font_size);
+       /*case L_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x+75+shape_offset,pos_y-50,GREEN,font_size); commented out by puon*/
+       case L_SIDE: printf("T %d %d %d %d 1 0 0 1\n",pos_x+100,pos_y,GREEN,font_size);
 	       break;
-       case R_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size-50-shape_offset,pos_y-50,GREEN,font_size);
+       /*case R_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size-50-shape_offset,pos_y-50,GREEN,font_size); commented out by puon */
+       case R_SIDE: printf("T %d %d %d %d 1 0 0 7\n",pos_x-100,pos_y,GREEN,font_size);
 	       break;
        /*case B_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y+50,GREEN,font_size); commented out by Rolf (avh) */
-       case B_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y+75+shape_offset,GREEN,font_size);
+       /*case B_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y+75+shape_offset,GREEN,font_size); commented out by puon*/
+       case B_SIDE: printf("T %d %d %d %d 1 0 90 1\n",pos_x,pos_y+100,GREEN,font_size);
 	       break;
        /* case T_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y-150,GREEN,font_size); commented out by Rolf (avh) */
-	case T_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y-name_size-50-shape_offset,GREEN,font_size);
+       /*case T_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y-name_size-50-shape_offset,GREEN,font_size); commented out by puon */
+       case T_SIDE: printf("T %d %d %d %d 1 0 90 7\n",pos_x,pos_y-100,GREEN,font_size);
 	       break;
        }
      printf("%s\n",name);
      }
+
+  if (type)
+  {
+     switch (dir)
+     {
+        case L_SIDE: printf("T %d %d %d %d 0 0 0 7\n",pos_x-400,pos_y,YELLOW,font_size);
+          break;
+        case R_SIDE: printf("T %d %d %d %d 0 0 0 1\n",pos_x+400,pos_y,YELLOW,font_size);
+          break;
+        case B_SIDE: printf("T %d %d %d %d 0 0 90 7\n",pos_x,pos_y-400,YELLOW,font_size);
+          break;
+        case T_SIDE: printf("T %d %d %d %d 0 0 90 1\n",pos_x,pos_y+400,YELLOW,font_size);
+          break;
+     }
+     printf("type=%s\n",type);
+  }
+
    printf("}\n");
 }
 
@@ -334,19 +402,19 @@ int make_box(int fldcnt,char *pFields[])
 
   strcpy(device,pFields[0]);
   strcpy(name,pFields[1]);
-  strcpy(name_pos,pFields[2]); 
-  pin_width  = atoi(pFields[3]); 
-  pin_height = atoi(pFields[4]); 
- 
-  pin_0_x  = pin_spacing; 
-  pin_0_y  = pin_spacing*(pin_height + 1); 
+  strcpy(name_pos,pFields[2]);
+  pin_width  = atoi(pFields[3]);
+  pin_height = atoi(pFields[4]);
+
+  pin_0_x  = pin_spacing;
+  pin_0_y  = pin_spacing*(pin_height + 1);
   BoxWidth = pin_width * pin_spacing;
   BoxHeight = pin_height * pin_spacing;
 
   if(fldcnt >=8)
   {
   	strcpy(uref,pFields[5]);
-  	strcat(uref,"?"); 
+  	strcat(uref,"?");
   	if(uref[0]=='U' || uref[0]=='u')strcpy(class,"IC");
   	if(uref[0]=='J' || uref[0]=='j')strcpy(class,"IO");
   	if(uref[0]=='C' || uref[0]=='c')strcpy(class,"IO");
@@ -386,7 +454,7 @@ int make_box(int fldcnt,char *pFields[])
   if (strlen(name))
      {
      name_size = GetStringDisplayLength(name,font_size);
-     /* Vaild positions: tl,tc,tr, bl,bc,br */
+     /* Vaild positions: tl,tc,tr, bl,bc,br cc */
      if (!stricmp(name_pos,"tl"))
         {
         pos_x = pin_0_x;
@@ -417,6 +485,13 @@ int make_box(int fldcnt,char *pFields[])
         pos_x = pin_0_x+BoxWidth-(name_size)/2;
         pos_y = pin_0_y-BoxHeight-175;
 	}
+     /* puon: begin */
+     else if (!strcmp(name_pos,"cc"))
+       {
+	 pos_x = pin_0_x+BoxWidth/2-(name_size)/2;
+	 pos_y = pin_0_y-BoxHeight/2;
+       }
+     /* puon: end */
      else
         {
         pos_x = pin_0_x;
@@ -435,6 +510,7 @@ int make_pin(int fldcnt,char *pFields[])
   char pin_name[40];
   char pin[40];
   int pin_pos;
+  char *type;
 
   strcpy(pin_name,pFields[0]);
   strcpy(pin,pFields[1]); 	   // get pin number
@@ -453,16 +529,43 @@ int make_pin(int fldcnt,char *pFields[])
       side = T_SIDE;
   pin_pos = atoi(pFields[4]);
 
-  pos_x = pin_spacing; 
+  type = NULL;
+  if (pFields[5])
+  {
+    if (!stricmp(pFields[5],"in"))
+        type = PINTYPE_IN;
+    else if ( !stricmp(pFields[5],"out"))
+        type = PINTYPE_OUT;
+    else if ( !stricmp(pFields[5],"io"))
+        type = PINTYPE_IO;
+    else if ( !stricmp(pFields[5],"oc"))
+        type = PINTYPE_OC;
+    else if ( !stricmp(pFields[5],"oe"))
+        type = PINTYPE_OE;
+    else if ( !stricmp(pFields[5],"pas"))
+        type = PINTYPE_PAS;
+    else if ( !stricmp(pFields[5],"tp"))
+        type = PINTYPE_TP;
+    else if ( !stricmp(pFields[5],"tri"))
+        type = PINTYPE_TRI;
+    else if ( !stricmp(pFields[5],"clk"))
+        type = PINTYPE_CLK;
+    else if ( !stricmp(pFields[5],"pwr"))
+        type = PINTYPE_PWR;
+    else
+      fprintf( stderr, "WARNING: Invlalid pin type attribute for pin %s: %s\n", pin_name, pFields[5] );
+  }
+
+  pos_x = pin_spacing;
   if (side == L_SIDE)
      {
      pos_y = pin_0_y - (pin_spacing*pin_pos);
-     pos_x = pin_spacing; 
+     pos_x = pin_spacing;
      }
   if (side == R_SIDE)
      {
      pos_y = pin_0_y - (pin_spacing*pin_pos);
-     pos_x = pin_spacing + BoxWidth; 
+     pos_x = pin_spacing + BoxWidth;
      }
   if (side == B_SIDE)
      {
@@ -474,7 +577,7 @@ int make_pin(int fldcnt,char *pFields[])
      pos_x = pin_0_x + (pin_spacing*pin_pos);
      pos_y = pin_0_y;
      }
-  pin_add(pos_x,pos_y,pin,shape,side,pin_name);
+  pin_add(pos_x,pos_y,pin,shape,side,pin_name,type);
   return 0;
 }
 
