@@ -15,7 +15,7 @@ README for gEDA version 2002*
 	- [OPTIONAL] Edit Makefile changing prefix to a different install 
 		     directory other than the default ($HOME/geda)
 	- Type: make
-	- Follow instructions on setting shell variables
+	- Follow instructions on setting all the shell variables
 	- Set shell variables  *VERY IMPORTANT*
 	- Type: make install
 	- Read the docs in the docs/ subdirectory
