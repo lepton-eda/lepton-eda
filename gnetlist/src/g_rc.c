@@ -672,22 +672,22 @@ SCM g_rc_hierarchy_netattrib_mangle(SCM mode)
 		     default_hierarchy_netattrib_mangle, 2);
 }
 
-SCM g_rc_hierarchy_netname_seperator(SCM name)
+SCM g_rc_hierarchy_netname_separator(SCM name)
 {
     char *string;
 
     string = gh_scm2newstr(name, NULL);
 
-    if (project_current->hierarchy_netname_seperator) {
-	free(project_current->hierarchy_netname_seperator);
+    if (project_current->hierarchy_netname_separator) {
+	free(project_current->hierarchy_netname_separator);
     }
 
     if (string) {
-	project_current->hierarchy_netname_seperator =
+	project_current->hierarchy_netname_separator =
 	    malloc(sizeof(char) * (strlen(string) + 1));
-	strcpy(project_current->hierarchy_netname_seperator, string);
+	strcpy(project_current->hierarchy_netname_separator, string);
     } else {
-	project_current->hierarchy_netname_seperator = NULL;
+	project_current->hierarchy_netname_separator = NULL;
     }
 
     if (string) {
@@ -697,22 +697,22 @@ SCM g_rc_hierarchy_netname_seperator(SCM name)
     return (gh_int2scm(0));
 }
 
-SCM g_rc_hierarchy_netattrib_seperator(SCM name)
+SCM g_rc_hierarchy_netattrib_separator(SCM name)
 {
     char *string;
 
     string = gh_scm2newstr(name, NULL);
 
-    if (project_current->hierarchy_netattrib_seperator) {
-	free(project_current->hierarchy_netattrib_seperator);
+    if (project_current->hierarchy_netattrib_separator) {
+	free(project_current->hierarchy_netattrib_separator);
     }
 
     if (string) {
-	project_current->hierarchy_netattrib_seperator =
+	project_current->hierarchy_netattrib_separator =
 	    malloc(sizeof(char) * (strlen(string) + 1));
-	strcpy(project_current->hierarchy_netattrib_seperator, string);
+	strcpy(project_current->hierarchy_netattrib_separator, string);
     } else {
-	project_current->hierarchy_netattrib_seperator = NULL;
+	project_current->hierarchy_netattrib_separator = NULL;
     }
 
     if (string) {
@@ -722,22 +722,22 @@ SCM g_rc_hierarchy_netattrib_seperator(SCM name)
     return (gh_int2scm(0));
 }
 
-SCM g_rc_hierarchy_uref_seperator(SCM name)
+SCM g_rc_hierarchy_uref_separator(SCM name)
 {
     char *string;
 
     string = gh_scm2newstr(name, NULL);
 
-    if (project_current->hierarchy_uref_seperator) {
-	free(project_current->hierarchy_uref_seperator);
+    if (project_current->hierarchy_uref_separator) {
+	free(project_current->hierarchy_uref_separator);
     }
 
     if (string) {
-	project_current->hierarchy_uref_seperator =
+	project_current->hierarchy_uref_separator =
 	    malloc(sizeof(char) * (strlen(string) + 1));
-	strcpy(project_current->hierarchy_uref_seperator, string);
+	strcpy(project_current->hierarchy_uref_separator, string);
     } else {
-	project_current->hierarchy_uref_seperator = NULL;
+	project_current->hierarchy_uref_separator = NULL;
     }
 
     if (string) {

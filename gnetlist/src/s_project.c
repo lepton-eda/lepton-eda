@@ -192,9 +192,9 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
     pr_current->promote_invisible = FALSE;
     pr_current->keep_invisible = FALSE;
 
-    pr_current->hierarchy_netattrib_seperator = NULL;
-    pr_current->hierarchy_netname_seperator = NULL;
-    pr_current->hierarchy_uref_seperator = NULL;
+    pr_current->hierarchy_netattrib_separator = NULL;
+    pr_current->hierarchy_netname_separator = NULL;
+    pr_current->hierarchy_uref_separator = NULL;
 }
 
 /* stays the same */

@@ -49,10 +49,10 @@ void i_vars_set(TOPLEVEL * pr_current)
     pr_current->hierarchy_uref_order = default_hierarchy_uref_order;
 
     if (pr_current->hierarchy_uref_mangle == FALSE) {
-	if (pr_current->hierarchy_uref_seperator) {
-	    strcpy(pr_current->hierarchy_uref_seperator, "/");
+	if (pr_current->hierarchy_uref_separator) {
+	    strcpy(pr_current->hierarchy_uref_separator, "/");
 	} else {
-	    pr_current->hierarchy_uref_seperator = u_basic_strdup("/");
+	    pr_current->hierarchy_uref_separator = u_basic_strdup("/");
 	}
     }
 

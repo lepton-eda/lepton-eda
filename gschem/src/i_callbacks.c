@@ -530,46 +530,6 @@ DEFINE_I_CALLBACK(edit_text)
 }
 
 
-#if 0 /* obsolete */
-DEFINE_I_CALLBACK(edit_stretch)
-{
-	TOPLEVEL *w_current;
-
-	w_current = (TOPLEVEL *) data;
-
-	exit_if_null(w_current);
-
-	i_update_middle_button(w_current, i_callback_edit_stretch, "Stretch");
-	if (o_select_return_first_object(w_current)) {
-		i_update_status(w_current, "Stretch Mode");
-		w_current->event_state = STARTSTRETCH;
-	} else {
-		i_update_status(w_current, "Select objs first");
-	}
-
-}
-
-/* obsolete */
-DEFINE_I_CALLBACK(edit_stretch_hotkey)
-{
-	TOPLEVEL *w_current;
-
-	w_current = (TOPLEVEL *) data;
-
-	exit_if_null(w_current);
-
-	i_update_middle_button(w_current, i_callback_edit_stretch_hotkey, 
-			       "Stretch");
-	if (o_select_return_first_object(w_current)) {
-		/* only stretch if it's a valid object */
-		if (o_stretch_start(w_current, mouse_x, mouse_y)) {
-			w_current->event_state = ENDSTRETCH;
-			w_current->inside_action = 1;
-		}
-	}
-}
-#endif
-
 DEFINE_I_CALLBACK(edit_slot)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;

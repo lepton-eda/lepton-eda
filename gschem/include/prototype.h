@@ -418,6 +418,7 @@ void o_bus_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
+void o_bus_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
 void o_bus_start(TOPLEVEL *w_current, int x, int y);
 int o_bus_end(TOPLEVEL *w_current, int x, int y);
 void o_bus_rubberbus(TOPLEVEL *w_current, int x, int y);
@@ -465,6 +466,8 @@ int o_conn_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, GdkGC *loca
 void o_copy_start(TOPLEVEL *w_current, int x, int y);
 void o_copy_end(TOPLEVEL *w_current);
 /* o_delete.c */
+void o_delete_net(TOPLEVEL *w_current, OBJECT *obj);
+void o_delete_bus(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_text(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(TOPLEVEL *w_current);
 /* o_find.c */
@@ -500,6 +503,12 @@ void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end(TOPLEVEL *w_current);
+int o_move_return_whichone(OBJECT *object, int x, int y);
+void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);
+void o_move_prep_rubberband(TOPLEVEL *w_current);
+int o_move_zero_length(OBJECT *object);
+void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y);
+void o_move_stretch_rubberband(TOPLEVEL *w_current);
 /* o_net.c */
 void o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
@@ -507,6 +516,7 @@ void o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
+void o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
 void o_net_start(TOPLEVEL *w_current, int x, int y);
 int o_net_end(TOPLEVEL *w_current, int x, int y);
 void o_net_rubbernet(TOPLEVEL *w_current, int x, int y);

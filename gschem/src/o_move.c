@@ -46,6 +46,8 @@ o_move_start(TOPLEVEL *w_current, int x, int y)
                                w_current->page_current->selection2_head->next,
                                x_get_color(w_current->bb_color));
 
+		o_move_prep_rubberband(w_current);
+
 		w_current->inside_action = 1;
 	}
 }
@@ -80,6 +82,8 @@ o_move_end(TOPLEVEL *w_current)
 
 	diff_x = lx - sx;
 	diff_y = ly - sy;
+
+	o_move_end_rubberband(w_current, diff_x, diff_y);
 
 	/* skip over head node */
 	s_current = w_current->page_current->selection2_head->next;
@@ -297,4 +301,291 @@ o_move_end(TOPLEVEL *w_current)
 	/* o_conn_erase_all(w_current, w_current->page_current->object_head);*/
 	o_redraw(w_current, w_current->page_current->object_head);
 	o_undo_savestate(w_current, UNDO_ALL);
+}
+
+int
+o_move_return_whichone(OBJECT *object, int x, int y)
+{
+	if (object->line->x[0] == x && object->line->y[0] == y) {
+		return(0);
+	}
+
+	if (object->line->x[1] == x && object->line->y[1] == y) {
+		return(1);
+	}
+
+	printf("DOH! tried to find the whichone, but didn't find it!\n");
+	return(0);
+}
+
+void
+o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object)
+{
+	CONN *conn_list;
+	CONN *c_current;
+	int i, whichone;
+	char *key;
+
+	if (!object)
+		return;
+
+	if (object->type != OBJ_NET && object->type != OBJ_PIN && 
+	    object->type != OBJ_BUS) {
+		fprintf(stderr, "Got a non line object in o_move_check_endpoint\n");
+		return;
+	}
+
+	for (i = 0 ; i < 2; i++) {
+
+		key = o_conn_return_key(object->line->x[i], object->line->y[i]);
+
+		conn_list = g_hash_table_lookup(
+				w_current->page_current->conn_table, key);
+
+
+		c_current = conn_list;
+		while (c_current != NULL) {
+			if (c_current->object != NULL) {
+				if (c_current->object->saved_color == -1 &&
+					(c_current->type == CONN_NET ||
+				         c_current->type == CONN_BUS)) {
+
+#if DEBUG 
+					printf("%d FOUND: %s %d %d\n", i,
+						c_current->object->name, 
+						c_current->x, c_current->y);
+#endif
+
+					whichone = o_move_return_whichone(
+							c_current->object,
+							c_current->x, 
+							c_current->y);
+
+					w_current->page_current->stretch_tail =
+					       	s_stretch_add(w_current->
+							      page_current->
+							      stretch_tail, 
+							      c_current->
+							      object, 
+							      c_current, 
+							      whichone);
+				}
+			}
+			c_current = c_current->next;
+		}
+
+		free(key);
+
+	}
+
+}
+
+
+void
+o_move_prep_rubberband(TOPLEVEL *w_current)
+{
+	SELECTION *s_current;
+	OBJECT *object;
+	OBJECT *o_current;
+
+	s_stretch_remove_most(w_current, w_current->page_current->stretch_head);
+	w_current->page_current->stretch_tail = 
+		w_current->page_current->stretch_head;
+
+#if DEBUG
+	printf("\n\n\n");
+	s_stretch_print_all(w_current->page_current->stretch_head);
+	printf("\n\n\n");
+#endif
+
+	/* skip over head */
+	s_current = w_current->page_current->selection2_head->next;
+	while (s_current != NULL) {
+		object = s_current->selected_object;
+		if (object) {
+			switch(object->type) {
+				case(OBJ_NET):
+				case(OBJ_PIN):
+				case(OBJ_BUS):
+					o_move_check_endpoint(w_current, object);
+				break;
+				
+				case(OBJ_COMPLEX):
+					o_current = object->complex->
+								prim_objs;
+					while(o_current != NULL) {
+
+						if (o_current->type == OBJ_PIN) {
+							o_move_check_endpoint(
+								w_current, 
+								o_current);
+						}
+
+						o_current = o_current->next;
+					}
+					
+				break;
+
+			}
+		}
+		s_current = s_current->next;
+	}
+
+	/*s_stretch_print_all(w_current->page_current->stretch_head);*/
+}
+
+int 
+o_move_zero_length(OBJECT *object)
+{
+#if DEBUG
+	printf("x: %d %d y: %d %d\n", 
+	    object->line->x[0], object->line->x[1], 
+	    object->line->y[0], object->line->y[1]);
+#endif
+
+	if (object->line->x[0] == object->line->x[1] && 
+	    object->line->y[0] == object->line->y[1] ) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
+
+void
+o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y)
+{
+	STRETCH *s_current;
+	OBJECT *object;
+	int x, y;
+	int whichone;
+
+	/* skip over head */
+	s_current = w_current->page_current->stretch_head->next;
+
+	while (s_current != NULL) {
+
+		object = s_current->object;
+		if (object) {
+			whichone = s_current->whichone;
+
+			switch(object->type) {
+				case(OBJ_NET):
+					o_net_erase(w_current, object);
+					o_line_erase_grips(w_current, object);
+					o_net_conn_erase(w_current, object);
+
+					x = object->line->x[whichone];	
+					y = object->line->y[whichone];	
+
+#if DEBUG
+					printf("OLD: %d, %d\n", x, y);
+					printf("diff: %d, %d\n", world_diff_x, 
+							         world_diff_y);
+#endif
+					x = x + world_diff_x;
+					y = y + world_diff_y;
+
+#if DEBUG
+					printf("NEW: %d, %d\n", x, y);
+#endif
+					object->line->x[whichone] = x;
+					object->line->y[whichone] = y;
+
+					if (o_move_zero_length(object)) {
+						o_delete_net(w_current, object);
+					} else {
+
+						o_net_recalc(w_current, object);
+						o_conn_update(w_current->page_current, object); 
+						o_net_draw(w_current, object);
+				       		o_net_conn_draw(w_current, object);
+					}
+
+					break;
+
+				case(OBJ_PIN):
+
+					/* not valid to do with pins */
+
+					break;
+
+				case(OBJ_BUS):
+					o_bus_erase(w_current, object);
+					o_line_erase_grips(w_current, object);
+					o_bus_conn_erase(w_current, object);
+
+					x = object->line->x[whichone];	
+					y = object->line->y[whichone];	
+
+#if DEBUG
+					printf("OLD: %d, %d\n", x, y);
+					printf("diff: %d, %d\n", world_diff_x, 
+							         world_diff_y);
+#endif
+					x = x + world_diff_x;
+					y = y + world_diff_y;
+
+#if DEBUG
+					printf("NEW: %d, %d\n", x, y);
+#endif
+					object->line->x[whichone] = x;
+					object->line->y[whichone] = y;
+
+					if (o_move_zero_length(object)) {
+						o_delete_bus(w_current, object);
+					} else {
+
+						o_bus_recalc(w_current, object);
+						o_conn_update(w_current->page_current, object); 
+						o_bus_draw(w_current, object);
+				       		o_bus_conn_draw(w_current, object);
+					}
+
+					break;
+			}
+		}
+
+		s_current = s_current->next;
+	}
+}
+
+void
+o_move_stretch_rubberband(TOPLEVEL *w_current)
+{
+
+	STRETCH *s_current;
+	OBJECT *object;
+	int diff_x, diff_y;
+	int whichone;
+
+	diff_x = w_current->last_x - w_current->start_x;
+	diff_y = w_current->last_y - w_current->start_y;
+
+
+	/* skip over head */
+	s_current = w_current->page_current->stretch_head->next;
+	while (s_current != NULL) {
+
+		object = s_current->object;
+		if (object) {
+			whichone = s_current->whichone;
+			switch(object->type) {
+				case(OBJ_NET):
+					o_net_draw_xor_single(w_current, 
+							diff_x, 
+							diff_y, 
+							whichone, object);
+					break;
+
+				case(OBJ_BUS):
+					o_bus_draw_xor_single(w_current, 
+							diff_x, 
+							diff_y, 
+							whichone, object);
+					break;
+			}
+		}
+		s_current = s_current->next;
+	}
 }

@@ -185,7 +185,6 @@ o_bus_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	cue = o_conn_query_table(w_current->page_current->conn_table,
 				o_current->line->x[0],
 				o_current->line->y[0]);
-	printf("here\n");
 
 #if DEBUG
 	printf("dfirst: %d\n", cue);
@@ -440,6 +439,69 @@ o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 					GDK_CAP_NOT_LAST,
 					GDK_JOIN_MITER);
 	}
+}
+
+void
+o_bus_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current)
+{
+	int size;
+	int color;
+	int dx1, dy1, dx2, dy2;
+
+        if (o_current->line == NULL) {
+                return;
+        }
+
+        if (o_current->saved_color != -1) {
+                color = o_current->saved_color;
+        } else {
+                color = o_current->color;
+        }
+
+        gdk_gc_set_foreground(w_current->outline_xor_gc,
+			x_get_darkcolor(color));
+
+#if 0
+	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+                size = SCREENabs(w_current, 30);
+		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
+		gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
+				GDK_LINE_SOLID,
+				GDK_CAP_NOT_LAST,
+				GDK_JOIN_MITER);
+	}
+#endif
+
+	if (whichone == 0) {
+		dx1 = dx;
+		dy1 = dy;
+		dx2 = 0;
+		dy2 = 0;
+	} else if (whichone == 1) {
+		dx2 = dx;
+		dy2 = dy;
+		dx1 = 0;
+		dy1 = 0;
+	} else {
+		fprintf(stderr, "Got an invalid which one in o_bus_draw_xor_single\n");
+	}
+
+        gdk_draw_line(w_current->window, w_current->outline_xor_gc,
+                       o_current->line->screen_x[0]+dx1,
+                       o_current->line->screen_y[0]+dy1,
+                       o_current->line->screen_x[1]+dx2,
+                       o_current->line->screen_y[1]+dy2);
+
+	/* backing store ? not approriate here */
+
+#if 0
+	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
+		gdk_gc_set_line_attributes(w_current->outline_xor_gc, 0,
+					GDK_LINE_SOLID,
+					GDK_CAP_NOT_LAST,
+					GDK_JOIN_MITER);
+	}
+#endif
 }
 
 void

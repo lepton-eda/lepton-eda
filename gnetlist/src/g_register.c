@@ -58,12 +58,12 @@ void g_register_funcs(void)
 			g_rc_hierarchy_netname_mangle);
     gh_new_procedure1_0("hierarchy-netattrib-mangle",
 			g_rc_hierarchy_netattrib_mangle);
-    gh_new_procedure1_0("hierarchy-uref-seperator",
-			g_rc_hierarchy_uref_seperator);
-    gh_new_procedure1_0("hierarchy-netname-seperator",
-			g_rc_hierarchy_netname_seperator);
-    gh_new_procedure1_0("hierarchy-netattrib-seperator",
-			g_rc_hierarchy_netattrib_seperator);
+    gh_new_procedure1_0("hierarchy-uref-separator",
+			g_rc_hierarchy_uref_separator);
+    gh_new_procedure1_0("hierarchy-netname-separator",
+			g_rc_hierarchy_netname_separator);
+    gh_new_procedure1_0("hierarchy-netattrib-separator",
+			g_rc_hierarchy_netattrib_separator);
     gh_new_procedure1_0("hierarchy-netattrib-order",
 			g_rc_hierarchy_netattrib_order);
     gh_new_procedure1_0("hierarchy-netname-order",

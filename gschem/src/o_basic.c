@@ -401,6 +401,8 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 					   rright  - rleft,
 					   rbottom - rtop);
 		}
+		o_move_stretch_rubberband(w_current);
+		o_move_stretch_rubberband(w_current);
 	}
 
 	/* erase old outline */
@@ -451,6 +453,8 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 					   &rbottom);
 			}
 		}
+		o_move_stretch_rubberband(w_current);
+		o_move_stretch_rubberband(w_current);
 	}
 
 	if (w_current->CONTROLKEY) {
@@ -502,9 +506,11 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 	 * so that all lists can be moved ... */
 	if (o_list) {
 		o_complex_translate2(w_current, diff_x, diff_y, o_list);
+		//o_move_stretch_rubberband(w_current);
 	} else if (s_list) {
 		o_complex_translate_selection(w_current, diff_x, diff_y, 
 					      s_list);
+		//o_move_stretch_rubberband(w_current);
 	}
 }
 

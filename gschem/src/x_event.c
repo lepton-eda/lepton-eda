@@ -157,25 +157,6 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			w_current->inside_action = 1;
 			break;
 
-#if 0 /* obsolete */
-		case(STARTSTRETCH):
-			/* make sure the list is not empty */
-			if (o_select_selected(w_current)) {
-				/* only stretch if it's a valid object */
-				if (o_stretch_start(w_current, 
-						(int) event->x, 
-						(int) event->y)) {
-					w_current->event_state = STRETCH;
-					w_current->inside_action = 1;
-				} else {
-					w_current->event_state=SELECT;
-					i_update_status(w_current, "Select Mode");
-					w_current->inside_action = 0;
-				}
-			}
-                        break;       
-#endif
-
 		case(DRAWLINE):
 			o_line_start(w_current,
 				     (int) event->x,
@@ -553,10 +534,6 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			w_current->event_state = ENDCOPY;
 			break;
 
-		case(STRETCH):
-			w_current->event_state = ENDSTRETCH;
-			break;
-
 		case(GRIPS):
 			o_grips_end(w_current), 
 			w_current->event_state = SELECT;
@@ -579,16 +556,6 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			i_update_status(w_current, "Select Mode");
 			w_current->inside_action = 0;
 			break;
-
-#if 0 /* obsolete */
-		case(ENDSTRETCH):
-			o_stretch_end(w_current);
-			/* having this stay in copy was driving me nuts*/
-			w_current->event_state = SELECT;
-			i_update_status(w_current, "Select Mode");
-			w_current->inside_action = 0;
-			break;
-#endif
 
 		case(SBOX):
 			/* fix_x,y was removed to allow more flex */
@@ -795,6 +762,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 	case(ENDMOVE):
 	case(MOVE):
 		if (w_current->inside_action) {
+			o_move_stretch_rubberband(w_current);
 			o_drawbounding(
 				w_current, NULL,
 				w_current->page_current->selection2_head->next,
@@ -805,19 +773,9 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 				w_current, NULL,
 				w_current->page_current->selection2_head->next,
 				x_get_color(w_current->bb_color));
+			o_move_stretch_rubberband(w_current);
 		}
                 break;
-
-#if 0 /* obsolete */
-	case(ENDSTRETCH):
-	case(STRETCH):
-		if (w_current->inside_action) {
-			o_stretch_motion(w_current, 
-			                 (int) event->x, (int) event->y);
-			/* printf("inside stretch\n");*/
-		}
-		break;
-#endif
 
 	case(ENDCOPY):
 	case(COPY):

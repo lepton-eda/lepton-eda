@@ -1,4 +1,8 @@
 
+2000-11-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Fixed the misspelling of separator (pointed out by Stefan)
+
 2000-11-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/gnet-vhdl.scm: Renamed this file to gnet-vhdlold.scm

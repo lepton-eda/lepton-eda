@@ -206,6 +206,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->cowindow = NULL;
 	w_current->clwindow = NULL;
 	w_current->ltwindow = NULL;
+	w_current->ftwindow = NULL;
 	w_current->sewindow = NULL;
 	w_current->fileselect[FILESELECT].xfwindow = NULL;
 	w_current->fileselect[FILESELECT].directory = NULL;

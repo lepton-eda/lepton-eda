@@ -8,6 +8,19 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-11-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added st_stretch structure (and typdef)
+
+	* src/s_stretch.c: Added file which will contain the low level
+	  data structure for stretching/rubberbanding when a move occurs
+
+	* include/struct.h: Added stretch_head to page structure
+
+	* src/s_page.c: Added the init of stretch_head
+
+	* include/struct.h: Fixed the misspelling of separator
+
 2000-11-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added some variables the undo structure to hold

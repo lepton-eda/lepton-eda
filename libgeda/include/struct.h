@@ -45,6 +45,9 @@ typedef struct st_undo UNDO;
 /* rename to the real thing once things work right */
 typedef struct st_conn CONN;
 
+/* Used when you move objects and you want the nets/pins to stretch */
+typedef struct st_stretch STRETCH;
+
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
@@ -239,6 +242,17 @@ struct st_selection {
         SELECTION *next;
 };
 
+struct st_stretch
+{
+	OBJECT *object;
+	CONN *connection;
+
+	int whichone;
+
+        STRETCH *prev;
+        STRETCH *next;
+};
+
 struct st_undo {
 
 	/* one of these is used, depending on if you are doing in-memory */
@@ -276,6 +290,8 @@ struct st_page {
 	OBJECT *attrib_place_tail; 
 	OBJECT *object_lastplace;
 	OBJECT *object_selected;
+	STRETCH *stretch_head; 
+	STRETCH *stretch_tail; 
 
 	char *page_filename; 
 	int CHANGED;			/* changed flag */
@@ -641,9 +657,9 @@ struct st_toplevel {
 	int hierarchy_uref_mangle;
 	int hierarchy_netname_mangle;
 	int hierarchy_netattrib_mangle;
-	char *hierarchy_uref_seperator;
-	char *hierarchy_netname_seperator;
-	char *hierarchy_netattrib_seperator;
+	char *hierarchy_uref_separator;
+	char *hierarchy_netname_separator;
+	char *hierarchy_netattrib_separator;
 	int hierarchy_netattrib_order;
 	int hierarchy_netname_order;
 	int hierarchy_uref_order;

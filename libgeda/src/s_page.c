@@ -70,6 +70,8 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	o_selection_destroy_all(p_current->selection2_head);
 	w_current->REMOVING_SEL = 0;  
 
+	s_stretch_destroy_all(p_current->stretch_head);
+
 	/* free current page undo structs */
 	s_undo_free_all(w_current, p_current); 
 
@@ -79,6 +81,8 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	p_current->object_lastplace = NULL;
 	p_current->selection2_head = NULL;
 	p_current->selection2_tail = NULL;
+	p_current->stretch_head = NULL;
+	p_current->stretch_tail = NULL;
 	p_current->complex_place_head = NULL;
 	p_current->complex_place_tail = NULL;
 	p_current->attrib_place_head = NULL;
@@ -281,6 +285,9 @@ s_page_setup(PAGE *p_current)
 	/* new selection mechanism */
         p_current->selection2_head = p_current->selection2_tail = 
 				o_selection_new_head();
+
+	/* net/pin/bus stretch when doing moves */
+        p_current->stretch_head = p_current->stretch_tail = s_stretch_new_head();
 
 	p_current->complex_place_tail = p_current->complex_place_head = 
 				s_basic_init_object("complex_place_head");

@@ -36,7 +36,7 @@ o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
 		(OBJECT *) return_tail(w_current->page_current->object_head);
 }
 
-static void
+void
 o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 {
 	int removing_sel_save;
@@ -54,7 +54,7 @@ o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 		(OBJECT *) return_tail(w_current->page_current->object_head);
 }
 
-static void
+void
 o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
 {
 	int removing_sel_save;

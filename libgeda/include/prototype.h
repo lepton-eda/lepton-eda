@@ -480,6 +480,16 @@ char *s_slib_getfiles(char *directory, int flag);
 void s_slib_print(void);
 int s_slib_uniq(char *path);
 void s_slib_print_dirs(void);
+/* s_stretch.c */
+STRETCH *s_stretch_return_tail(STRETCH *head);
+STRETCH *s_stretch_return_head(STRETCH *tail);
+STRETCH *s_stretch_new_head(void);
+void s_stretch_destroy_head(STRETCH *s_head);
+STRETCH *s_stretch_add(STRETCH *head, OBJECT *object, CONN *connection, int whichone);
+void s_stretch_remove(STRETCH *head, OBJECT *object);
+void s_stretch_remove_most(TOPLEVEL *w_current, STRETCH *head);
+void s_stretch_print_all(STRETCH *head);
+void s_stretch_destroy_all(STRETCH *head);
 /* s_stroke.c */
 /* s_undo.c */
 UNDO *s_undo_return_tail(UNDO *head);

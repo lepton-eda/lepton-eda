@@ -233,7 +233,7 @@ s_hierarchy_setup_rename(TOPLEVEL * pr_current, NETLIST * head, char *uref,
     /* this is questionable, because I'm not sure if it's exactly the */
     /* same as the #if 0'ed out line */
     /* search for the uref which has the name: label/uref (or whatever the */
-    /* hierarchy tag/seperator order is) */
+    /* hierarchy tag/separator order is) */
     wanted_uref = s_hierarchy_create_uref(pr_current, label, uref);
 
 #if DEBUG
@@ -349,20 +349,20 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
     if (hierarchy_tag) {
 	if (basename) {
 
-	    if (pr_current->hierarchy_uref_seperator) {
+	    if (pr_current->hierarchy_uref_separator) {
 		switch (pr_current->hierarchy_uref_order) {
 		case (APPEND):
 		    return_value =
 			u_basic_strdup_multiple(hierarchy_tag,
 						pr_current->
-						hierarchy_uref_seperator,
+						hierarchy_uref_separator,
 						basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
 			u_basic_strdup_multiple(basename,
 						pr_current->
-						hierarchy_uref_seperator,
+						hierarchy_uref_separator,
 						hierarchy_tag, NULL);
 
 		    break;
@@ -412,13 +412,13 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
     if (hierarchy_tag) {
 	if (basename) {
 
-	    if (pr_current->hierarchy_netname_seperator) {
+	    if (pr_current->hierarchy_netname_separator) {
 		switch (pr_current->hierarchy_netname_order) {
 		case (APPEND):
 		    return_value =
 			u_basic_strdup_multiple(hierarchy_tag,
 						pr_current->
-						hierarchy_netname_seperator,
+						hierarchy_netname_separator,
 						basename, NULL);
 
 		    break;
@@ -427,7 +427,7 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 		    return_value =
 			u_basic_strdup_multiple(basename,
 						pr_current->
-						hierarchy_netname_seperator,
+						hierarchy_netname_separator,
 						hierarchy_tag, NULL);
 
 		    break;
@@ -480,20 +480,20 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
     if (hierarchy_tag) {
 	if (basename) {
 
-	    if (pr_current->hierarchy_netattrib_seperator) {
+	    if (pr_current->hierarchy_netattrib_separator) {
 		switch (pr_current->hierarchy_netattrib_order) {
 		case (APPEND):
 		    return_value =
 			u_basic_strdup_multiple(hierarchy_tag,
 						pr_current->
-						hierarchy_netattrib_seperator,
+						hierarchy_netattrib_separator,
 						basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
 			u_basic_strdup_multiple(basename,
 						pr_current->
-						hierarchy_netattrib_seperator,
+						hierarchy_netattrib_separator,
 						hierarchy_tag, NULL);
 
 		    break;
@@ -582,7 +582,7 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
     char *cptr = NULL;
     int i = 0;
 
-    /* use hierarchy seperator */
+    /* use hierarchy separator */
 
     if (uref == NULL) {
 	return (NULL);
@@ -594,7 +594,7 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 
     if (pr_current->hierarchy_uref_order == APPEND) {
 
-	start_of_base = rindex(uref, '/');	/* seperator is always '/' */
+	start_of_base = rindex(uref, '/');	/* separator is always '/' */
 
 	if (start_of_base == NULL) {
 	    return (u_basic_strdup(uref));

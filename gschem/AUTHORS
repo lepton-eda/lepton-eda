@@ -98,6 +98,7 @@ Werner Hoch		- For providing a patch to fix some long outstanding
 Chris Ellec		- For providing a patch that causes changes in the
 			  slot= attribute in the multi attrib dialog box
 			  (Add and Change) to take effect.
+			  For providing lots of feedback on various bugs
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

@@ -9,6 +9,32 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-11-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_move.c: Started working on the first cut of the net/pin/bus
+	  stretch while doing a move
+
+	* src/*.c: Removed all traces of the old stretch callback etc...
+
+	* include/x_states.c: Removed all traces of the old stretch command
+
+	* src/o_delete.c: Removed static flag from o_delete_net (for use
+	  in o_move_end_rubberband)
+
+	* src/o_delete.c: Removed static flag from o_delete_bus (for use
+	  in o_move_end_rubberband)
+
+	* src/o_basic.c: Added a call to o_move_stretch_rubberband to erase
+	  old rubberbands (when doing a move and switching from free
+	  to constrained move)
+
+	* src/x_event.c: Added calls to o_move_stretch_rubberband 
+
+	* src/o_net.c o_bus.c: Added some routines to support above
+
+	* src/x_window.c: Oops forgot to init ftwindow which will cause
+	  a core dump on some systems, fixed 
+
 2000-11-09  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_dialog.c: Fixed a core dumper.	Basically did not unselect
