@@ -23,9 +23,10 @@
 /*          pin rotation.  Added pin type attribute capability. (Roberto */
 /*          Puon)                                                        */
 /*									 */
-/* 02/05/15 Added checks to prevent segfaults on invalid 		 */
-/*	    input data (Chris Ellec)							 */
-/*									 */
+/* 2002/05/15 Added checks to prevent segfaults on invalid 		 */
+/*	         input data (Chris Ellec)							 */
+/* 2002/08/14 Check for multiple instances of the same pin number and quit */
+/*            when this happens, give Fatal error messsage. (Chris Ellec)  */
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
 /* it under the terms of the GNU General Public License as published by  */
@@ -142,10 +143,13 @@ int stricmp(char *s, char *p);
 #endif
 
 int pin_len=300;
-int pin_spacing =300;
+int pin_spacing=300;
 int pin_0_x,pin_0_y;
 int BoxHeight,BoxWidth;
 int net_pin=0;
+
+char pin_used[300][5];       /* keep track of pin number used. Assume 300 pins max */
+int pin_counter=0;
 
 /***************************************************/
 /***************************************************/
@@ -197,7 +201,10 @@ int main(int argc,char **argv)
 	   if (line_nub == 0)
               make_box(fldcnt,pFields);
 	   else
-              make_pin(fldcnt,pFields);
+              if (make_pin(fldcnt,pFields)< 0) {
+                    fields_free(pFields);
+                    break;                /* error processing the pin, get out */
+              }      
            fields_free(pFields);
 	   }
 	}
@@ -478,8 +485,8 @@ int make_box(int fldcnt,char *pFields[])
 
 /***************************************************/
 /***************************************************/
-int make_pin(int fldcnt,char *pFields[])
-{ int pos_x=0,pos_y=0,shape,side=0;
+int make_pin(int fldcnt,char *pFields[]) {
+  int pos_x=0,pos_y=0,shape,side=0,i;
   char pin_name[40];
   char pin[40];
   int pin_pos;
@@ -493,6 +500,14 @@ int make_pin(int fldcnt,char *pFields[])
   
   strcpy(pin_name,pFields[0]);
   strcpy(pin,pFields[1]); 	      /* get pin number */
+  
+  for (i=0;i<pin_counter;i++)
+     if (!strcmp(pin,pin_used[i])) {
+          fprintf (stderr,"\nFatal Error, pin %s is used more that once !\n\n",pin);
+          return -1;
+     }
+  strncpy(pin_used[pin_counter++],pin,5);    /* save the current pin, the first 5 char */
+  
   shape = LINE_SHAPE;
   if (!stricmp(pFields[2],"dot"))     /* get shape */
      shape = DOT_SHAPE;
@@ -536,7 +551,7 @@ int make_pin(int fldcnt,char *pFields[])
     else if ( !stricmp(pFields[5],"pwr"))
         type = PINTYPE_PWR;
     else
-      fprintf( stderr, "WARNING: Invlalid pin type attribute for pin %s: %s\n", pin_name, pFields[5] );
+      fprintf( stderr, "WARNING: Invalid pin type attribute for pin %s: %s\n", pin_name, pFields[5] );
   }
 
   pos_x = pin_spacing;
