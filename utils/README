@@ -121,6 +121,24 @@ IMPORTANT
 	component instantiations.
 		
 
+    Sarlacc (consists of sarlacc_schem and sarlacc_sym)
+    Written by: Matthew Ettus
+
+    Sarlacc is an OrCAD to gEDA format schematic converter. This software is 
+    beta, so it still has limitations.  To convert files do the following:
+
+      * Go into ORCAD, load up your schematic, and save it as "SDT IV format".
+        All of the versions of ORCAD should be able to do this.  This
+        is the old ORCAD 16 bit format.  In this process, your library parts 
+        will be converted to a new format.  Along the way, there is an
+        intermediate format which is all text.  It is probably kept in your 
+        tmp directory (C:\windows\temp ?), and it has a .src extension. 
+        Save this file too. 
+      * To convert schematics type:  sarlacc_schem orcadfile > gedafile.sch 
+      * To convert symbols type: sarlacc_sym orcadlibrary.src 
+          This will create individual .sym files for gschem. You will need to 
+          put them somewhere gschem will find them
+
 - License  
 
 	gEDA (includes gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
@@ -134,6 +152,8 @@ IMPORTANT
 
 	mk_sym is Copyright 1999 by Jerry O'Keefe
 	smash_megafile is Copyright 1999 by Mike Jarabek
+	convert_sym is Copyright 1999-2002 by Mike Jarabek
+        All of sarlacc is Copyright 1999-2002 by Matthew Ettus
 
 
 
