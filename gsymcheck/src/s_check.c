@@ -380,7 +380,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
   
   counter = 0;
 
-  while(net = o_attrib_search_toplevel(object_head, "net", counter))
+  while( (net = o_attrib_search_toplevel(object_head, "net", counter)) != NULL)
   {
     message = g_strdup_printf ("Found net=%s attribute\n", net);
     s_current->info_messages = g_list_append(s_current->info_messages,
@@ -1119,10 +1119,7 @@ void
 s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current)
 {
   OBJECT *o_current;
-  PINCOUNT *pcount;
   char *message;
-  char tempstr[10];
-  char *tmp;
 
   o_current = object_head;
   while(o_current != NULL)
@@ -1235,8 +1232,6 @@ void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)
   int found_first=FALSE;
   int counter=0;
 
-  GList *ptr1 = NULL;
-  GList *ptr2 = NULL;
   char *pintype;
   char *message;
   

@@ -48,7 +48,6 @@ main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   int argv_index;
-  int first_page=1;
   int exit_status;
   int fopen_status;
   char *cwd;
@@ -103,7 +102,6 @@ main_prog(void *closure, int argc, char *argv[])
   
   i = argv_index;
   while (argv[i] != NULL) {
-    PAGE *page;
     gchar *filename = g_build_path (G_DIR_SEPARATOR_S,
                                     cwd,
                                     argv[i],
