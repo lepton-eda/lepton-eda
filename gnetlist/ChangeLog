@@ -1,3 +1,12 @@
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice-sdb.scm: Updated this backend to version
+	12.29.2003.c
+
+	* tests/amp.spice-sdb, darlington.spice-sdb: Updated golden files
+	to the new spice-sdb backend version.  (tests not passing yet due to 
+	extra spaces, needs to be fixed).
+
 2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-spice-sdb.scm, gnet-protelII.scm: Replaced with new
