@@ -42,6 +42,7 @@ void i_vars_set(TOPLEVEL *pr_current);
 void i_vars_setnames(TOPLEVEL *w_current);
 /* parsecmd.c */
 void usage(char *cmd);
+char *create_command_line(int argc, char *argv[]);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);
