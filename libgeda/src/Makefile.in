@@ -98,7 +98,7 @@ EXTRA_DIST = BUGS TODO create_proto
 
 # Build a libtool library, libhello.la for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
-libgeda_la_SOURCES =  	a_basic.c f_basic.c f_print.c f_image.c g_basic.c m_basic.c 	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c o_circle_basic.c 	o_complex_basic.c o_line_basic.c o_list.c o_net_basic.c 	o_ntext_basic.c o_pin_basic.c o_image.c 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c 	s_log.c s_page.c s_scratch.c s_passing.c s_slib.c s_stroke.c 	prototype1.2.h o_ales.c s_nethash.c 	funcs.h globals.h 
+libgeda_la_SOURCES =  	a_basic.c f_basic.c f_print.c f_image.c g_basic.c m_basic.c 	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c o_circle_basic.c 	o_complex_basic.c o_line_basic.c o_list.c o_net_basic.c 	o_ntext_basic.c o_pin_basic.c o_image.c u_basic.c 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c 	s_log.c s_page.c s_scratch.c s_passing.c s_slib.c s_stroke.c 	prototype1.2.h o_ales.c s_nethash.c 	funcs.h globals.h 
 
 
 libgeda_la_LDFLAGS = -version-info 3:1:0
@@ -132,9 +132,9 @@ libgeda_la_OBJECTS =  a_basic.lo f_basic.lo f_print.lo f_image.lo \
 g_basic.lo m_basic.lo o_arc_basic.lo o_attrib.lo o_basic.lo \
 o_box_basic.lo o_circle_basic.lo o_complex_basic.lo o_line_basic.lo \
 o_list.lo o_net_basic.lo o_ntext_basic.lo o_pin_basic.lo o_image.lo \
-s_attrib.lo s_basic.lo s_clib.lo s_hierarchy.lo s_papersizes.lo \
-s_log.lo s_page.lo s_scratch.lo s_passing.lo s_slib.lo s_stroke.lo \
-o_ales.lo s_nethash.lo
+u_basic.lo s_attrib.lo s_basic.lo s_clib.lo s_hierarchy.lo \
+s_papersizes.lo s_log.lo s_page.lo s_scratch.lo s_passing.lo s_slib.lo \
+s_stroke.lo o_ales.lo s_nethash.lo
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -157,7 +157,7 @@ DEP_FILES =  .deps/a_basic.P .deps/f_basic.P .deps/f_image.P \
 .deps/o_ntext_basic.P .deps/o_pin_basic.P .deps/s_attrib.P \
 .deps/s_basic.P .deps/s_clib.P .deps/s_hierarchy.P .deps/s_log.P \
 .deps/s_nethash.P .deps/s_page.P .deps/s_papersizes.P .deps/s_passing.P \
-.deps/s_scratch.P .deps/s_slib.P .deps/s_stroke.P
+.deps/s_scratch.P .deps/s_slib.P .deps/s_stroke.P .deps/u_basic.P
 SOURCES = $(libgeda_la_SOURCES)
 OBJECTS = $(libgeda_la_OBJECTS)
 
