@@ -822,6 +822,7 @@ gint image_800(GtkWidget *w, TOPLEVEL *w_current);
 gint image_1024(GtkWidget *w, TOPLEVEL *w_current);
 gint image_1280(GtkWidget *w, TOPLEVEL *w_current);
 gint image_1600(GtkWidget *w, TOPLEVEL *w_current);
+gint image_3200(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void x_image_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);

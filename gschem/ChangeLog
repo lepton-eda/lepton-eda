@@ -1,3 +1,8 @@
+2003-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_image.nw: Added 3200x1600 to the image write dialog box.
+ 	Suggestions by Karel Kulhavy.
+
 2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* noweb/o_arc.nw: Applied patch by Patrick to fix Bug #45: arc's 
