@@ -1,3 +1,4 @@
+
 gEDA
 
 GNU Electronic Design Automation
@@ -6,6 +7,10 @@ GNU Electronic Design Automation
 ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
+
+1999-09-28  Magnus Danielson  <cfmd@swipnet.se>
+
+	* scheme/gnet-vhdl.scm: Fixed bug with no ports to entity.
 
 9/25/99	Integrated Magnus's latest VHDL backend .scm code
 
