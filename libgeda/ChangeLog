@@ -17,6 +17,8 @@
 	* include/prototype.h: Updated due to changed loading function
 	signatures.
 
+	* configure.ac: Incremented shared library to 20
+
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Fixed MinGW cflags/ldflags
