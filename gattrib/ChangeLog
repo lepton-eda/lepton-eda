@@ -1,3 +1,22 @@
+2005-02-21 05:29  Dan McMahill <danmc>
+
+	* configure.ac, include/prototype.h, include/struct.h,
+	  include/x_menu.h, src/Makefile.am, src/gattrib.c, src/listsort.c,
+	  src/s_sheet_data.c, src/s_table.c, src/s_toplevel.c,
+	  src/x_dialog.c, src/x_fileselect.c, src/x_gtksheet.c: Fix many
+	  instances of non-void functions not having return values.  Most
+	  of these were simply changed to void functions since nothing
+	  seemed to be expecting a return value.  While here, garbage
+	  collect several unused variables to make the compiler warnings
+	  easier to dig through.  Also if we're using gcc, then turn on
+	  -Wall.
+
+2005-02-21 03:58  Dan McMahill <danmc>
+
+	* autogen.sh: avoid using the '-path' primary to find(1) as it's an
+	  extension to posix.2 and is not supported on some operating
+	  systems such as solaris.  Now we can autogen.sh on solaris 9.
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/gattrib.c (gattrib_main): Adapted for new logging system.
