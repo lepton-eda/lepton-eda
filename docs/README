@@ -13,10 +13,10 @@ These docs are always under heavy construction.
 
 - License  
 
-	gEDA (libgeda/gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
-	and all associated files (such as component symbols)) is placed
-	under the GNU Public License (GPL) version 2.0.  See the toplevel
-	COPYING file for more information.
+        gEDA (libgeda/gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
+        and all associated files (such as component symbols and all the
+        file formats)) are placed under the GNU Public License (GPL)
+        version 2.0.  See the various COPYING files for more information.
 
 	Programs and associated files are: 
 	Copyright 1998-2003 by Ales V. Hvezda and the respective

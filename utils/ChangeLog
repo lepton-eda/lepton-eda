@@ -1,3 +1,8 @@
+2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Added checks for gtk+ 2.2.x and 1.2.x.  This was
+	needed since the HAS_GTK22 will start to be used in libgeda includes.
+
 2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * autogen.sh: Added script to generate all the auto* generated files.
