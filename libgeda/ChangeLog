@@ -1,3 +1,8 @@
+2005-02-18 22:26  Dan McMahill <danmc>
+
+	* noweb/g_rc.nw: remove a static declaration to match prototype in
+	  prototype.h
+
 2005-02-17 20:00  Stuart Brorson <sdb@cloud9.net>
 	* noweb/g_rc.nw, noweb/libgeda.nw: Reverted to putenv after
 	W. Hoch had problems with compiling g_setenv.
