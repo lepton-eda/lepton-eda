@@ -1,3 +1,22 @@
+2001-06-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Added an if check so that buses are ignored
+	  (once again).
+
+2001-06-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Oops forgot to call libgeda_init, added call
+
+	* src/i_vars.c: Added code to prevent gnetlist dumping core if
+	  the system-gnetlistrc file is not found
+	
+2001-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Changed g_rc_parse_system to use the GEDADATA 
+	  environment variable
+
+	* lib/system-gnetlistrc.in: Added support for GEDADATA
+	
 2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Removed all Makefile.in files and configure 

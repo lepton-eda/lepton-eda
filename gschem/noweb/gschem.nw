@@ -130,6 +130,8 @@ main_prog(int argc, char *argv[])
   argv_index = parse_commandline(argc, argv);
   cwd = getcwd(NULL, 1024);
 
+  libgeda_init();
+  
   /* TODO: Probably the file name shuold be defined elsewhere */
   /* create log file right away even if logging is enabled */
   x_log_init(cwd, "gschem.log");

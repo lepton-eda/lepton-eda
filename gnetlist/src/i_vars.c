@@ -88,6 +88,14 @@ void i_vars_set(TOPLEVEL * pr_current)
     INIT_STR(pr_current, untitled_name   , DEFAULT_UNTITLED_NAME   );
     INIT_STR(pr_current, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
     INIT_STR(pr_current, font_directory  , DEFAULT_FONT_DIRECTORY  );
+
+    if (!default_hierarchy_netname_separator ||
+        !default_hierarchy_netattrib_separator ||
+        !default_hierarchy_uref_separator) {
+      fprintf(stderr, "Some rc variables are not set!\n");
+      fprintf(stderr, "Check log and make sure the system-gnetlistrc file was found! (exiting)\n");
+      exit(-1);
+    }
     
     INIT_STR(pr_current, hierarchy_netname_separator,
              default_hierarchy_netname_separator);

@@ -29,14 +29,16 @@ SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
 SCM g_get_attrib_name_value(SCM attrib_smob);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
 void g_init_attrib_smob(void);
+/* libgeda.c */
+void libgeda_init(void);
 /* m_basic.c */
 int mil_x(TOPLEVEL *w_current, int val);
 int mil_y(TOPLEVEL *w_current, int val);
 int pix_x(TOPLEVEL *w_current, int val);
 int pix_y(TOPLEVEL *w_current, int val);
 void WORLDtoSCREEN(TOPLEVEL *w_current, int x, int y, int *mil_x, int *mil_y);
-int snap_grid(TOPLEVEL *w_current, int input);
 void SCREENtoWORLD(TOPLEVEL *w_current, int mx, int my, int *x, int *y);
+int snap_grid(TOPLEVEL *w_current, int input);
 int SCREENabs(TOPLEVEL *w_current, int val);
 int WORLDabs(TOPLEVEL *w_current, int val);
 void set_window(TOPLEVEL *w_current, int xmin, int xmax, int ymin, int ymax);
@@ -209,6 +211,7 @@ void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *lef
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 OBJECT *add_head(void);
 int o_complex_is_eligible_attribute(OBJECT *object, int promote_invisible);
+int o_complex_is_embedded(OBJECT *o_current);
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable, int attribute_promotion);
 OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
@@ -217,11 +220,11 @@ char *o_complex_save(char *buf, OBJECT *object);
 void o_complex_set_filename(TOPLEVEL *w_current, char *clib, char *basename);
 void o_complex_free_filename(TOPLEVEL *w_current);
 void o_complex_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *prim_objs);
+void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_complex_delete(TOPLEVEL *w_current, OBJECT *delete);
-void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *prim_objs);
-void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 void o_complex_set_color(OBJECT *prim_objs, int color);
 void o_complex_set_color_single(OBJECT *o_current, int color);
 void o_complex_set_color_save(OBJECT *complex, int color);
@@ -368,6 +371,7 @@ void print_struct_back(OBJECT *ptr);
 void print_struct(OBJECT *ptr);
 void s_delete(TOPLEVEL *w_current, OBJECT *o_current);
 void s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start);
+OBJECT *s_remove(TOPLEVEL *w_current, OBJECT *object);
 void string_toupper(char *in, char *out);
 void string_tolower(char *in, char *out);
 int colornametovalue(char *string);
@@ -431,7 +435,6 @@ PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
 void s_log_init(char *cwd, char *filename);
 void s_log_message(const gchar *format, ...);
 void s_log_close(void);
-/* s_nethash.c */
 /* s_page.c */
 PAGE *s_page_return_tail(PAGE *head);
 void s_page_free(TOPLEVEL *w_current, PAGE *p_current);
@@ -488,7 +491,6 @@ void s_stretch_remove(STRETCH *head, OBJECT *object);
 void s_stretch_remove_most(TOPLEVEL *w_current, STRETCH *head);
 void s_stretch_print_all(STRETCH *head);
 void s_stretch_destroy_all(STRETCH *head);
-/* s_stroke.c */
 /* s_tile.c */
 void s_tile_init(TOPLEVEL *w_current, PAGE *p_current);
 TILE_LOC *s_tile_new_loc(int i, int j);

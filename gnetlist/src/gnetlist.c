@@ -66,6 +66,7 @@ void main_prog(int argc, char *argv[])
 	}
     }
 
+    libgeda_init();
 
     /* create log file right away */
     /* even if logging is enabled */

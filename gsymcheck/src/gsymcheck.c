@@ -54,6 +54,8 @@ main_prog(int argc, char *argv[])
 	argv_index = parse_commandline(argc, argv);
 	cwd = getcwd(NULL, 1024);
 
+	libgeda_init();
+
 	/* create log file right away */
 	/* even if logging is enabled */
 	s_log_init(cwd, "gsymcheck.log");

@@ -33,7 +33,7 @@ NWFILES=	a_basic.nw						\
 		s_cue.nw s_hierarchy.nw s_log.nw s_page.nw 		\
 		s_papersizes.nw s_scratch.nw s_slib.nw s_stretch.nw 	\
 		s_tile.nw s_undo.nw 					\
-		u_basic.nw
+		u_basic.nw libgeda.nw
 
 SRCFILES=	a_basic.c						\
 		f_basic.c f_image.c f_print.c 				\
@@ -47,7 +47,7 @@ SRCFILES=	a_basic.c						\
 		s_cue.c s_hierarchy.c s_log.c s_page.c 			\
 		s_papersizes.c s_scratch.c s_slib.c s_stretch.c 	\
 		s_tile.c s_undo.c 					\
-		u_basic.c
+		u_basic.c libgeda.c
 
 TEXIFILES=	a_basic.texi						\
 		f_basic.texi f_image.texi f_print.texi 			\
@@ -62,7 +62,7 @@ TEXIFILES=	a_basic.texi						\
 		s_conn.texi s_cue.texi s_hierarchy.texi s_log.texi 	\
 		s_page.texi s_papersizes.texi s_scratch.texi 		\
 		s_slib.texi s_stretch.texi s_tile.texi s_undo.texi	\
-		u_basic.texi
+		u_basic.texi libgeda.texi
 
 TEXIROOT=	../docs/libgeda.texi
 

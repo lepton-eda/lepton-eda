@@ -95,8 +95,14 @@ g_rc_parse_system_rc()
 {
 	int found_rc;
 	char *filename;
+        char *geda_data = getenv("GEDADATA");
 
-	filename = u_basic_strdup_multiple(GEDARCDIR,
+        if (geda_data == NULL) {
+          fprintf(stderr, "You must set the GEDADATA environment variable!\n");
+          exit(-1);
+        }
+
+	filename = u_basic_strdup_multiple(geda_data,
 					   "/system-gnetlistrc",
 					   NULL);
 	if (filename == NULL) {

@@ -1357,7 +1357,7 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
 
   gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
   f_current->last_search_lib = -1;
-	
+
   /* added sort for the directory list so it would match the 
      automatically sorted clist of directories
      Chris Ellec - May 2001                           */

@@ -1,3 +1,20 @@
+2001-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Minor cleanup
+
+	* src/Makefile.am: Added support for automatic dependency tracking
+	  wrt the noweb files (using VPATH)
+
+	* noweb/g_rc.c: Changed g_rc_parse_system to look for the *rc file
+	  in the right place using GEDADATA environment variables
+
+	* lib/gschem-systemrc.in: Changed the load of the commonrc file
+	  to use the GEDADATA environment variable
+	
+2001-06-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gschem.c: Added call to libgeda_init
+	
 2001-06-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/Makefile: misc path changes

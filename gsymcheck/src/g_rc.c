@@ -50,25 +50,34 @@ set_static_project_current(TOPLEVEL *pr_current)
 void
 g_rc_parse(TOPLEVEL *pr_current)
 {
-	char *HOME;
+	char *HOME=NULL;
 	char filename[256]; /* hack */
 	int found_rc=0;
+	char *filename2=NULL;
+	char *geda_data = getenv("GEDADATA");
 
 	if (pr_current == NULL)
 		return;
 
+	if (geda_data == NULL) {
+		fprintf(stderr, "You must set the GEDADATA environment variable!\n");
+	exit(-1);
+					            }
 	set_static_project_current(pr_current);
 
-	/* Let's try a the system one - GEDARCDIR/system-gsymcheck */
-	sprintf(filename, "%s/system-gsymcheckrc", GEDARCDIR);
-	if ( access(filename, R_OK) == 0 ) {
-		strcpy(rc_filename, filename); /* size verify hack */
-		g_read_file(filename);
+	/* Let's try a the system one - GEDADATA/system-gsymcheck */
+	filename2 = u_basic_strdup_multiple(geda_data, 
+			"/system-gsymcheckrc", NULL);
+
+	if ( access(filename2, R_OK) == 0 ) {
+		strcpy(rc_filename, filename2); /* size verify hack */
+		g_read_file(filename2);
 		found_rc = 1;
-		s_log_message("Read system-gsymcheckrc file [%s]\n", filename);
+		s_log_message("Read system-gsymcheckrc file [%s]\n", filename2);
 	} else {
-		s_log_message("Did not find local gsymcheckrc file [%s]\n", filename);
+		s_log_message("Did not find local gsymcheckrc file [%s]\n", filename2);
 	}
+	free(filename2);
 
 	/* now search the proper rc location (in ~/.gEDA) */
 	HOME = (char *)  getenv("HOME");

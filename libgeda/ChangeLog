@@ -1,3 +1,23 @@
+2001-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Minor cleanup
+
+	* src/Makefile.am: Added support for automatic dependency tracking
+	  wrt the noweb files (using VPATH)
+	  
+	* noweb/libgeda.c: Changed the init code so that you do not have
+	  to have the GEDADATADIR variable set, but if it is, override 
+	  the default
+	
+2001-06-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/libgeda.c: Added an init function for the library which is
+	  responsible for make sure the require environment variable is set
+
+	* noweb/Makefile: Added above file 
+
+	* src/Makefile.am: Added above file
+
 2001-06-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/Makefile: misc path changes

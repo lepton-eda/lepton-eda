@@ -1,0 +1,87 @@
+@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+
+@node File libgeda.c,,,Top
+@chapter File @file{libgeda.c}
+
+@section File header
+
+<<libgeda.c : *>>=
+<<libgeda.c : copyright and license>>
+
+/* DO NOT read or edit this file ! Use ../noweb/libgeda.nw instead */
+
+<<libgeda.c : include directives>>
+<<libgeda.c : libgeda_init()>>
+
+@
+
+
+<<libgeda.c : copyright and license>>=
+/* gEDA - GPL Electronic Design Automation
+ * libgeda - gEDA's library
+ * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+@ 
+
+
+<<libgeda.c : include directives>>=
+#include <config.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
+#include <stdlib.h>
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+#include "defines.h"
+#include "struct.h"
+#include "globals.h"
+
+#include "../include/prototype.h"
+
+@
+
+
+@section Function @code{libgeda_init()}
+
+@defun libgeda_init 
+libgeda_init is responsible for making sure that any runtime initialization
+is done for all the libgeda routines.  It should be called before any
+other libgeda functions are called.  
+@end defun
+
+<<libgeda.c : libgeda_init()>>=
+void libgeda_init(void)
+{
+  char *new_data=NULL;
+  char string[] = "GEDADATA";
+  char *geda_data = getenv("GEDADATA");	
+
+  if (geda_data == NULL) {
+    new_data = u_basic_strdup_multiple("GEDADATA=", GEDADATADIR, NULL);
+    putenv(new_data);
+    /*free(new_data); putenv takes over the memory? */
+  } 
+}
+
+@ %def libgeda_init
+
