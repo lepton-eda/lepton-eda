@@ -1,4 +1,4 @@
-gEDA - GNU Electronic Design Automation
+gEDA - GPL Electronic Design Automation
 
 HOOKS AND SCHEME EXTENSION IN GSCHEM
 ==================================== 
