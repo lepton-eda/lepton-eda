@@ -1,20 +1,26 @@
+2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* misc/interpage_bidir-1.sym, interpage_from-1.sym, 
+	  interpage_to-1.sym: Symbols into CVS.  These somehow made it into
+          20020825 accidentally, but they should be in CVS either way.
+
 2002-10-03 Werner Hoch <werner.ho@gmx.de>
-        *74/74240-1.sym: corrected pinlabels YB1..YB4
-	*74/74244-1.sym: corrected pinlabels YB1..YB4
-	*74/74[23456]??-*: completed symbols (added net, pinlabels, ...)
-	*74/74[345789]?-*: inserted numslots=0 at some symbols
+        * 74/74240-1.sym: corrected pinlabels YB1..YB4
+	* 74/74244-1.sym: corrected pinlabels YB1..YB4
+	* 74/74[23456]??-*: completed symbols (added net, pinlabels, ...)
+	* 74/74[345789]?-*: inserted numslots=0 at some symbols
 
 2002-10-02 Werner Hoch <werner.ho@gmx.de>
-	*74/741[789]?-*: completed symbols (added net, pinlabels, pintype, ...)
-	*74/74HCT245-1.sym, 74/74HCT4094-1.sym, 74/74HCT541-1.sym:
+	* 74/741[789]?-*: completed symbols (added net, pinlabels, pintype, ...)
+	* 74/74HCT245-1.sym, 74/74HCT4094-1.sym, 74/74HCT541-1.sym:
 		added numslots=0
 
 2002-10-01 Werner Hoch <werner.ho@gmx.de>
-	*74/741[456]?-*: corrected the wrong whichend attribute on some pins
+	* 74/741[456]?-*: corrected the wrong whichend attribute on some pins
 	
 2002-09-29 Werner Hoch <werner.ho@gmx.de>
-	*74/741[456]?-*: completed symbols (added net, pinlabels, pintype, ...)
-	*74/74161-2.sym, 74/74168-1.sym, 74/74169-1.sym: marked as bad
+	* 74/741[456]?-*: completed symbols (added net, pinlabels, pintype, ...)
+	* 74/74161-2.sym, 74/74168-1.sym, 74/74169-1.sym: marked as bad
 	
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
