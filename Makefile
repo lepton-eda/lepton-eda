@@ -19,7 +19,7 @@ DIR_PREFIX=
 #
 # Set this to the location where you want to install gEDA/gaf
 #
-prefix=$(HOME)/geda
+prefix=/usr/local/geda
 
 #
 # You can set any global options you want here to be passed to the 
@@ -90,16 +90,18 @@ notarget:
 ##----------------------------------------------------------------------
 ##  SDB notes:  To create a gEDA distribution, do this (in this order):
 ##  1. make maint
-##  2. make reconfig
+##  2. make reconfig  <--  This is entry point when you download from CVS
+##                         (i.e. start with "make reconfig")
 ##  3. make config
-##  --->  At this point you can do "make install" if you want.
+##  --->  At this point you can do "make install" if you want
+##        to install gEDA on your machine.
 ##  4. make dist
-##  "Make dist" will leave tarballs of the various parts of the suite in
-##  the base directory.  Note that you have to change the $VERSION
-##  of each program in the configure.ac in each directory.  In principle,
-##  you can check that "make dist" worked by doing:
+##     "Make dist" will leave tarballs of the various parts of the suite in
+##     the base directory.  Note that you have to change the $VERSION
+##     of each program in the configure.ac in each directory.  In principle,
+##     you can check that "make dist" worked by doing:
 ##  5. make distcheck
-##  However, this is broken right now.
+##     however, "make distcheck" is broken right now.
 ##
 ##  Note that you need to have the autotools installed; if you are not a
 ##  developer or you don't know what the autotools are, you probably 
