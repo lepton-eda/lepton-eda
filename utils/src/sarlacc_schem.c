@@ -3,28 +3,55 @@
  *   For more info email matt@ettus.com
  *   Ths code is released under the terms of the GNU GPL
  *   See www.fsf.org for a copy of the license
+ *
+ *  Changes 0.94 by <egil@kvaleberg.no>, october 5th 2002
+ *    Scaling defaults to 200%
+ *    Bus implemented - but still no bus entries!
+ *    Check for stack overwrite and other horrors
+ *    Changed orcad_xsize/orcad_ysize to sarlacc_dim
+ *    Port improved
+ *    Command line options
+ *
+ *  Todo:
+ *    Hierarchy
+ *    Bus entries
+ *    Many details - see BAD
  */
 
 /*   This program will convert an ORCAD SDT IV file to geda format */
- 
-#include<stdio.h>
-#include<stdlib.h>
+	
+#include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <getopt.h>
 
-#define GET_TAG(VAL) (VAL & 0x0F) 
+#include <libgeda/colors.h>
+
 /*
-#define CONV16(VAR,POS) ( (VAR[POS]&255)|(VAR[POS + 1]&255)<<8 )
-*/
+ *  command line options
+ */
+#define VERSION "0.94"
+#define GEDAVERSION "20020825"
 
+#define DEFAULT_SCALE 200 /* was 100 */
+
+char *symbol_dir = 0;
+int scale = DEFAULT_SCALE;
+
+#define TEXTSIZE ((scale <= 100) ? 6 : 10)
+
+/*
+ *  orcad
+ */
+#define GET_TAG(VAL) (VAL & 0x0F) 
 
 int CONV16(char *base,int offset)
 {
-	/* int b1, b2, b3; unused variables? AVH */
 	int retval;
 	retval = ((base[offset+1] & 255) <<8) | (base[offset] & 255);
 	if(base[offset+1]&128)
@@ -34,23 +61,21 @@ int CONV16(char *base,int offset)
 
 #define CONV32(VAR,POS) (VAR[POS]+VAR[POS+1]*256+VAR[POS+2]*65536+VAR[POS+3]*256*16777216)
 
-#define CONVX(X) ( 10*X )
-#define CONVY(Y) ( 32700 - (10*Y) )
+#define CONV(X)  ( (scale/10)*X )
+#define CONVX(X) CONV(X)
+#define CONVY(Y) ( 32700 - ((scale/10)*Y) )
 
-#define HDR_LEN	0x20
-#define BYTECOUNT	0x16
-#define DATE 	0x05
-#define PATH 	0x3B
-#define REV  	0x60
-#define TITLE	0x64
-#define ORG	0x91
-#define ADDR1	0xBE
-#define ADDR2	0xEB
-#define ADDR3	0x118
-#define ADDR4	0x145
-
-#define TEXTCOLOR 3
-#define TEXTSIZE 6
+#define HDR_LEN 0x20
+#define BYTECOUNT       0x16
+#define DATE    0x05
+#define PATH    0x3B
+#define REV     0x60
+#define TITLE   0x64
+#define ORG     0x91
+#define ADDR1   0xBE
+#define ADDR2   0xEB
+#define ADDR3   0x118
+#define ADDR4   0x145
 
 /* change return type from int to void AVH */
 void remove_spaces(char *src)
@@ -64,32 +89,84 @@ void remove_spaces(char *src)
 	}
 }
 
-char read_string(char *dest, char *src)
+/*
+ *  read block from Orcad file
+ *  return size
+ */
+unsigned read_block(int fd, char *block, int block_min_size,int block_max_size)
 {
-    strncpy(dest,src+1,src[0]);
-    dest[src[0]]=0;
-    return src[0];
+    char sizebuf[2];
+    unsigned size;
+
+    read(fd,sizebuf,2);
+    size = CONV16(sizebuf,0);
+    if (size < block_min_size) {
+	fprintf(stderr,"Segment too small; size %d, min is %d\n",
+						size, block_min_size);
+	exit(1);
+    }
+    if (size > block_max_size) {
+	fprintf(stderr,"Segment too large; size %d, max is %d\n",
+						size, block_max_size);
+	exit(1);
+    }
+    if (read(fd,block,size) != size) {
+	fprintf(stderr,"File truncated\n");
+	exit(1);
+    }
+    return size;
 }
 
+unsigned read_string(char *dest, int dest_size, char *src)
+{
+    unsigned size = ((unsigned char *)src)[0];
+
+    if (size+1 > dest_size) {
+	fprintf(stderr,"Text too large; size %d, max is %d\n",
+						size, dest_size-1);
+	exit(1);
+    }
+    strncpy(dest,src+1,size);
+    dest[size] = '\0';
+    return size;
+}
 
 /* change return type from int to void AVH */
-void read_string_file(int fd,char *dest)
+void read_string_file(int fd,char *dest, int dest_size)
 {
-    char len;
-    read(fd,&len,1);
-    read(fd,dest,len);
-    dest[len]=0;
+    unsigned char len;
+
+    if (read(fd,&len,1) != 1) {
+	fprintf(stderr,"File truncated\n");
+	exit(1);
+    }
+    if (len+1 > dest_size) {
+	fprintf(stderr,"Text too large; size %d, max is %d\n",
+						len, dest_size-1);
+	exit(1);
+    }
+    if (len > 0) {
+	if (read(fd,dest,len) != len) {
+	    fprintf(stderr,"File truncated\n");
+	    exit(1);
+	}
+    }
+    dest[len] = '\0';
 }
 
+/*
+ *
+ */
 void parse_header(int fd1,int fd2)
 {
     unsigned char localbuf[32];
     int length;
+
     read(fd1,localbuf,32);
     if( strncmp(localbuf,"Schematic FILE",14) )
     {
 	fprintf(stderr,"\nFile is not an ORCAD 16 Bit Schematic\n");
-	exit(-1);
+	exit(1);
     }
 
     length=CONV32(localbuf,BYTECOUNT);    
@@ -105,27 +182,28 @@ void parse_titleblock(int fd)
     char localbuf[1000];
     char data[100];
     char pagesize;
-    
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    fprintf(stderr,"\nTitleblock %d bytes\n",size);
-    read(fd,localbuf,size); 
+	
+    size = read_block(fd,localbuf,5,sizeof(localbuf));
+    // fprintf(stderr,"\nTitleblock %d bytes\n",size);
+
     sheet=CONV16(localbuf,0x00);
     total=CONV16(localbuf,0x02);
     fprintf(stderr,"Sheet #%d of %d\n",sheet,total);
-    read_string(data,localbuf+DATE);
+    read_string(data,sizeof(data),localbuf+DATE);
     fprintf(stderr,"%s\n",data);
 
     switch(localbuf[4] && 0x0F)
     {
-	case 0:	pagesize = 'A'; ypos = 850; break;
-	case 1:	pagesize = 'B'; ypos = 1100; break;
-	case 2:	pagesize = 'C'; ypos = 1700; break;
-	case 3:	pagesize = 'D'; ypos = 2200; break;
-	case 4:	pagesize = 'E'; ypos = 3400; break;
+	case 0: pagesize = 'A'; ypos = 8*scale+scale/2; break;
+	case 1: pagesize = 'B'; ypos = 11*scale; break;
+	case 2: pagesize = 'C'; ypos = 17*scale; break;
+	case 3: pagesize = 'D'; ypos = 22*scale; break;
+	case 4: pagesize = 'E'; ypos = 34*scale; break;
 	default:  fprintf(stderr,"Unknown Page Size\n");exit(-1);
     }
-    fprintf(stdout,"C %d %d 0 0 0 title-%c.sym\n",CONVX(0),CONVY(ypos),pagesize);
+    if (scale==100) {
+	fprintf(stdout,"C %d %d 0 0 0 title-%c.sym\n",CONVX(0),CONVY(ypos),pagesize);
+    }
 }
 
 /*  BAD  Rotation and mirroring origin issues */
@@ -134,13 +212,16 @@ void parse_component(int fd1,int fd2)
 {
     char localbuf[1000];
     char partname[256];
+    char filename[512];
+    char full_filename[1024];
     int size;
     int x,y;
     int xpos,ypos,xpossav,ypossav;
     int xgeda,ygeda;
     int angle,mirror;
     int i;
-    int orcad_xsize = 0, orcad_ysize = 0, orcad_msize = 0;
+    int sarlacc_xsize = 0, sarlacc_ysize = 0;
+    int sarlacc_xoffset = 0, sarlacc_yoffset = 0;
     int attribcnt;
 
     int refx,refy,ref_vis;
@@ -152,21 +233,19 @@ void parse_component(int fd1,int fd2)
 
     char flags;
     char vis;
-    
+	
     int pointer;
     FILE *cfp;
     char buff[128];
-    
-    read(fd1,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd1,localbuf,size);
+	
+    size = read_block(fd1,localbuf,29,sizeof(localbuf));
 
     x=CONV16(localbuf,0);
     y=CONV16(localbuf,2);
 
     refx = CONVX(x + CONV16(localbuf,4));
     refy = CONVY(y + CONV16(localbuf,6));
-    
+	
     valx = CONVX(x + CONV16(localbuf,8));
     valy = CONVY(y + CONV16(localbuf,10));
 
@@ -177,125 +256,143 @@ void parse_component(int fd1,int fd2)
     else mirror=0;
 
     angle=0;
-    if(localbuf[12] & 0x20)angle=90;
-    if(localbuf[12] & 0x40)angle+=180;
+    if (localbuf[12] & 0x20) angle=90;
+    if (localbuf[12] & 0x40) angle+=180;
 /* BAD decode and use device number, fix rotation offset */
 
     ref_vis=val_vis=1;
 
     flags = localbuf[13];
-    if(flags & 2) ref_vis=0;
-    if(flags & 4) val_vis=0;
+    if (flags & 2) ref_vis=0;
+    if (flags & 4) val_vis=0;
 /* BAD decode more flags */
 
     vis = localbuf[14];
 
     /* 14-27 */
 
-    pointer = 28 + read_string(refdes,localbuf+28) +1;
-    pointer = pointer + 1 +read_string(value,localbuf+pointer);
+    pointer = 28 + read_string(refdes,sizeof(refdes),localbuf+28) +1;
+    pointer = pointer + 1 +read_string(value,sizeof(value),localbuf+pointer);
 
-
-    read_string_file(fd2,partname);
+    read_string_file(fd2,partname,sizeof(partname));
     remove_spaces(partname);
-    fprintf(stderr,"Component: %s\n",partname);
+ // fprintf(stderr,"Component %s: %s\n",refdes,partname);
+    snprintf(filename,sizeof(filename),"%s-1.sym", partname);
+    if (symbol_dir) {
+	snprintf(full_filename,sizeof(full_filename),"%s/%s", 
+					       symbol_dir, filename);
+    } else {
+	snprintf(full_filename,sizeof(full_filename),"%s", filename);
+    }
 
-    if (angle!=0 || mirror!=0) {
-      sprintf(buff,"%s-1.sym", partname);
-      cfp = fopen(buff, "r");
-      if (cfp > 0) {
+    cfp = fopen(full_filename, "r");
+    if (cfp > 0) {
+	/* "sarlacc_dim=" set by sarlacc_sym */
 	while (!feof(cfp)) {
 	  fgets(buff, 128, cfp);
-	  if (!strncmp(buff, "orcad_xsize =", 13)) {
-	    sscanf(buff+13, "%d", &orcad_xsize);
-	  }
-	  if (!strncmp(buff, "orcad_ysize =", 13)) {
-	    sscanf(buff+13, "%d", &orcad_ysize);
+	  if (!strncmp(buff, "sarlacc_dim=", 12)) {
+	    sscanf(buff+12, "%d,%d,%d,%d", 
+	    &sarlacc_xoffset,&sarlacc_yoffset,&sarlacc_xsize,&sarlacc_ysize);
 	  }
 	}
 	fclose(cfp);
-	fprintf(stderr,"orcad_size = %d %d\n", orcad_xsize, orcad_ysize);
-	orcad_msize = (orcad_xsize<orcad_ysize)?orcad_xsize:orcad_ysize;
-	if (mirror && !angle) {
-	  xgeda = xgeda + (orcad_xsize*100.0);
-	} else if (angle && !mirror) {
-	  switch (angle) {
-	  case 90:
-	    /*	    ygeda = ygeda - (orcad_msize*100.0);*/
-	    
-	    ygeda = ygeda - (orcad_xsize*100.0);
+
+	fprintf(stderr,"ref: %s dim = %d %d %d %d angle = %d mirror = %d\n",
+	      refdes,
+	      sarlacc_xoffset, sarlacc_yoffset,
+	      sarlacc_xsize, sarlacc_ysize, angle, mirror);
+
+	switch (angle) {
+	default: /* 0 */
+	    if (mirror) {
+		xgeda = xgeda + sarlacc_xsize + sarlacc_xoffset;
+	    } else {
+		xgeda = xgeda - sarlacc_xoffset;
+	    }
+	    ygeda = ygeda - (sarlacc_ysize + sarlacc_yoffset);
 	    break;
-	  case 180:
-	    ygeda = ygeda - (orcad_ysize*100.0);
-	    xgeda = xgeda + (orcad_xsize*100.0);
+	case 90:
+	    xgeda = xgeda + sarlacc_ysize + sarlacc_yoffset;
+	    if (mirror) {
+		/* BAD untested */
+		ygeda = ygeda + sarlacc_xoffset;
+	    } else {
+		ygeda = ygeda - (sarlacc_xsize + sarlacc_xoffset);
+	    }
 	    break;
-	  case 270:
-	    /*	    xgeda = xgeda + (orcad_msize*100.0);*/
-	    xgeda = xgeda + (orcad_ysize*100.0);
+	case 180:
+	    if (mirror) {
+		xgeda = xgeda - sarlacc_xoffset;
+	    } else {
+		xgeda = xgeda + sarlacc_xsize + sarlacc_xoffset;
+	    }
+	    ygeda = ygeda + sarlacc_yoffset;
 	    break;
-	  default:
+	case 270:
+	    xgeda = xgeda - sarlacc_yoffset;
+	    if (mirror) {
+		/* BAD untested */
+		ygeda = ygeda - (sarlacc_xsize + sarlacc_xoffset);
+	    } else {
+		ygeda = ygeda + sarlacc_xoffset;
+	    }
 	    break;
-	  }
-	} else if (mirror) {
-	  if (angle == 270) {
-	    ygeda = ygeda - (orcad_xsize*100.0);
-	    /* Could be msize instead of ysize */
-	    xgeda = xgeda + (orcad_ysize*100.0);
-	  } else if (angle == 180) {
-	    /* Could be msize instead of ysize */
-	    ygeda = ygeda - (orcad_ysize*100.0);
-	  }
 	}
-      } else {
-	fprintf(stderr,"Couldn't open %s\n", partname);
-      }
-      
+    } else {
+	fprintf(stderr,"Couldn't find symbol %s in file: %s\n"
+		       "Position on sheet will be uncertain\n", partname, full_filename);
     }
 
-
-    fprintf(stdout,"C %d %d 1 %d %d %s-1.sym\n",
-	xgeda,ygeda,angle,mirror,partname);
+    fprintf(stdout,"C %d %d 1 %d %d %s\n",
+	xgeda,ygeda,angle,mirror,filename);
     fprintf(stdout,"{\n");
 
+#if 0
     /* For sarlacc debugging purposes, it's useful to see
-       if a component is mirrored and how much it's rotated
-       fprintf(stdout,"T %d %d %d %d %d 1 0\nmirror=%d\n",
-	refx,refy,TEXTCOLOR,TEXTSIZE,0,mirror);
-    fprintf(stdout,"T %d %d %d %d %d 1 0\nrotation=%d\n",
-    refx,refy,TEXTCOLOR,TEXTSIZE,0,angle);*/
+       if a component is mirrored and how much it's rotated */
+       fprintf(stdout,"T %d %d %d %d %d 1 0 0\nmirror=%d\n",
+				refx,refy,GRAPHIC_COLOR,TEXTSIZE,0,mirror);
+       fprintf(stdout,"T %d %d %d %d %d 1 0 0\nrotation=%d\n",
+				refx,refy,GRAPHIC_COLOR,TEXTSIZE,0,angle);
+#endif
     if (refdes[0] != 0) {
-      fprintf(stdout,"T %d %d %d %d %d 1 0\nrefdes=%s\n",
-	      refx,refy,TEXTCOLOR,TEXTSIZE,ref_vis,refdes);
+      if (value[0] && refx==valx && refy==valy) {
+	/* prevent text overlap */
+	refy += scale;
+      }
+      fprintf(stdout,"T %d %d %d %d %d 1 0 0\nrefdes=%s\n",
+	      refx,refy,ATTRIBUTE_COLOR,TEXTSIZE,ref_vis,refdes);
     }
 
-    if (value[0]!=0) {
-      fprintf(stdout,"T %d %d %d %d %d 1 0\nvalue=%s\n",
-	      valx,valy,TEXTCOLOR,TEXTSIZE,val_vis,value);
+    if (value[0] != 0) {
+      fprintf(stdout,"T %d %d %d %d %d 1 0 0\nvalue=%s\n",
+	      valx,valy,ATTRIBUTE_COLOR,TEXTSIZE,val_vis,value);
     }
+
     attribcnt = 0;
-    if(flags & 0x40)
-	for(i=0;i<8;i++)
-	{
-
+    if(flags & 0x40) {
+	for(i=0;i<8;i++) {
 	  /* This assumes that the last attribute is the footprint */
 	    xpos = CONVX(x + CONV16(localbuf,pointer));
 	    ypos = CONVY(y + CONV16(localbuf,pointer+2));
 	    pointer += 4;
-	    size = read_string(attrib,localbuf+pointer);
+	    size = read_string(attrib,sizeof(attrib),localbuf+pointer);
 	    pointer += size + 1;
-	    if(size > 0) {
+	    if (size > 0) {
 	      attribcnt++;
-	      fprintf(stdout,"T %d %d %d %d %d 1 0\npattern=%s\n",
-		      xpos,ypos,TEXTCOLOR,TEXTSIZE,
+	      fprintf(stdout,"T %d %d %d %d %d 1 0 0\npattern=%s\n",
+				xpos,ypos,ATTRIBUTE_COLOR,TEXTSIZE,
 		      ( (flags & (1<<i))?1:0 ),attrib);
 	      xpossav = xpos;
 	      ypossav = ypos;
 	      strcpy(attribsav, attrib);
 	    }
 	}
-    if (attribcnt > 0) {
-      fprintf(stdout,"T %d %d %d %d %d 1 0\nfootprint=%s\n",
-	      xpos,ypos,TEXTCOLOR,TEXTSIZE,
+    }
+    if (attribcnt > 0 && attrib[0]) {
+      fprintf(stdout,"T %d %d %d %d %d 1 0 0\n"
+		     "footprint=%s\n",
+		     xpos,ypos,ATTRIBUTE_COLOR,TEXTSIZE,
 	      ( (flags & (1<<i))?1:0 ),attrib);
     }
     fprintf(stdout,"}\n");
@@ -305,63 +402,89 @@ void parse_component(int fd1,int fd2)
 void parse_sheet (int fd)
 {
     char localbuf[1000];
-    /* char sheetname[256]; unused variable? AVH */
+    char filename[1000];
+    char filetext[1000];
     int size;
+    int index;
+    int n;
     int x1,y1,x2,y2;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    fprintf(stderr,"Sheet %d bytes\n",size);
-    read(fd,localbuf,size);                   
+    size = read_block(fd,localbuf,15,sizeof(localbuf));
+    // fprintf(stderr,"Sheet %d bytes\n",size);
 
     x1=CONVX(CONV16(localbuf,0));
     y1=CONVY(CONV16(localbuf,2));    
 
-    x2=CONVX(CONV16(localbuf,4));
-    y2=CONVY(CONV16(localbuf,6));    
+    x2=CONV(CONV16(localbuf,4));
+    y2=CONV(CONV16(localbuf,6));
+    index = 8;
 
-    fprintf(stderr,"%d %d %d %d\n",x1,y1,x2,y2);
+    /* BAD 5 bytes - dunno? */
+    index += 5;
 
-    fprintf(stderr,"SHEET %d bytes\n",size);
-    fprintf(stderr,"gEDA doesn't do Hierarchy yet\n");
-    exit(-1);
+    n = 1+read_string(filename,sizeof(filename),localbuf+index);
+    index += n;
+    n = 1+read_string(filetext,sizeof(filetext),localbuf+index);
+    index += n;
+
+    /* BAD Implement Hierarchy properly! */
+    fprintf(stderr,"Hierarchy\n");
+    fprintf(stderr,"xy = %d %d %d %d\n",x1,y1,x2,y2);
+    for (n=8; n<13; ++n) fprintf(stderr,"%02x ",localbuf[n] & 0xff);
+    fprintf(stderr,"\nfile = %s\n",filename);
+    fprintf(stderr,"text = %s\n",filetext);
+
+    /* BAD not the way to do it... */
+    fprintf(stdout,"C %d %d 0 0 0 include-1.sym\n",x1,y1-y2);
+    fprintf(stdout,"{\n");
+    fprintf(stdout,"B %d %d %d %d %d 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n",
+					x1,y1-y2,x2,y2,GRAPHIC_COLOR);
+    fprintf(stdout,"T %d %d %d %d 0 1 0 0\n"
+		   "source=%s\n",x1,y1-y2,ATTRIBUTE_COLOR,TEXTSIZE,filename);
+    fprintf(stdout,"T %d %d %d %d 1 1 0 0\n"
+		   "%s\n",x1,(y1-y2)-scale,ATTRIBUTE_COLOR,TEXTSIZE,filetext);
+    fprintf(stdout,"}\n");
 }
- 
+	
 static int pending_netlabel=0;
 static char netlabel[256];
-static int netlx, netly, netla;
+static int netlabel_x, netlabel_y, netlabel_angle;
 
 /* BAD Set wire color properly  */
-void parse_wire (int fd)
+static void wire_or_bus(int fd, char kind, int color)
 {
     char localbuf[32];
     int size;
     int x1,y1,x2,y2;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd,localbuf,size);
+    size = read_block(fd,localbuf,8,sizeof(localbuf));
 
     x1=CONVX(CONV16(localbuf,0));
     y1=CONVY(CONV16(localbuf,2));
 
     x2=CONVX(CONV16(localbuf,4));
     y2=CONVY(CONV16(localbuf,6));                         
-    fprintf(stdout,"N %d %d %d %d 4\n",x1,y1,x2,y2);
+    fprintf(stdout,"%c %d %d %d %d %d 0 0 0 -1 -1\n",kind,x1,y1,x2,y2,color);
     if (pending_netlabel) {
       fprintf(stdout,"{\n");
-      fprintf(stdout,"T %d %d 5 10 1 1 %d 0\n", netlx, netly, netla);
-      fprintf(stdout,"label=%s\n", netlabel);
+      fprintf(stdout,"T %d %d %d %d 1 1 %d 0\n", netlabel_x, netlabel_y,
+			      ATTRIBUTE_COLOR, TEXTSIZE, netlabel_angle);
+      fprintf(stdout,"label=%s\n", netlabel); /* BAD netname= */
       fprintf(stdout,"}\n");
       pending_netlabel = 0;
     }
 }
 
-/*  BAD GEDA doesn't do buses yet! */
+void parse_wire (int fd)
+{
+    wire_or_bus(fd, 'N', NET_COLOR);
+}
+
+/*  BAD Haven't implemented GEDA buses */
+/*  but guessing that Orcad busses are parsed just like wires... */
 void parse_bus (int fd)
 {
-    fprintf(stderr,"GEDA Can't Handle Buses\n");
-    exit(-1);
+    wire_or_bus(fd, 'U', BUS_COLOR);
 }  
 
 /*  BAD How do we handle junctions in GEDA? */
@@ -373,11 +496,8 @@ void parse_junction (int fd)
 {
     char localbuf[32];
     int size;
-    /* int x,y; unused variable? AVH */
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd,localbuf,size);
+    size = read_block(fd,localbuf,4,sizeof(localbuf));
 
 /*
     x=CONVX(CONV16(localbuf,0));
@@ -395,17 +515,36 @@ void parse_port (int fd)
     char textbuf[1024];
     int size;
     int x,y;
+    int w;
+    int m;
+    int mirror = 0;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd,localbuf,size);
-    x=CONVX(CONV16(localbuf,0));
-    y=CONVY(CONV16(localbuf,2));
+    size = read_block(fd,localbuf,7,sizeof(localbuf));
 
-    read_string(textbuf,localbuf+0x06);
-    fprintf(stderr,"PORT %s %d %d\n",textbuf,(int)localbuf[4],(int)localbuf[5]);
-    fprintf(stdout,"C %d %d 1 0 0 input-orcad-1.sym\n",x,y);
-    fprintf(stdout,"{\nT %d %d 3 8 1 1 0\nvalue=%s\n}\n",x,y,textbuf);
+    x = CONVX(CONV16(localbuf,0));
+    y = CONVY(CONV16(localbuf,2));
+    w = localbuf[4] & 0xff;
+    m = localbuf[5] & 0xff;
+    read_string(textbuf,sizeof(textbuf),localbuf+6);
+
+    // fprintf(stderr,"PORT %s %d %d %d 0x%x\n",textbuf,x,y,w,m);
+
+    switch (m & 0x60) {
+    case 0x40: /* 0101 */
+    case 0x20: /* 1010 */
+	x += scale + w * (scale/10);
+	break;
+    case 0x00: /* 0000 */
+	       /* 1001 */
+    case 0x60: /* 1111 */
+	mirror = 1;
+	break;
+    }
+    fprintf(stdout,"C %d %d 1 0 %d input-orcad-1.sym\n",x,y,mirror);
+    fprintf(stdout,"{\n"
+		   "T %d %d %d 8 1 1 0 0\nvalue=%s\n"
+		   "}\n",x,y,GRAPHIC_COLOR,
+								      textbuf);
 }  
 
 /* BAD Fix Labels attach to wire.  Multiline issues?*/
@@ -419,28 +558,27 @@ void parse_label (int fd)
     int angle;
     int textsize;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd,localbuf,size);
+    size = read_block(fd,localbuf,5,sizeof(localbuf));
+
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
 
-    read_string(textbuf,localbuf+0x06);
+    read_string(textbuf,sizeof(textbuf),localbuf+0x06);
 
     angle=0;
     textsize = 5* CONV16(localbuf,4);
     if (textsize<0)
     {
-        textsize *= -1;
-        angle = 90;
+	textsize *= -1;
+	angle = 90;
     }
-    /*    fprintf(stdout,"T %d %d 3 6 1 1 %d\n",x,y,angle);
-	  fprintf(stdout,"label=%s ATTACHME\n",textbuf);                  */
+    /*    fprintf(stdout,"T %d %d %d %d 1 1 %d 0\n",x,y,GRAPHIC_COLOR, TEXTSIZE, angle);
+	  fprintf(stdout,"net=%s ATTACHME\n",textbuf);                    */
     pending_netlabel = 1;
     strncpy(netlabel, textbuf, 256);
-    netlx = x;
-    netly = y;
-    netla = angle;
+    netlabel_x = x;
+    netlabel_y = y;
+    netlabel_angle = angle;
 }  
 
 /* BAD Fix Entries */
@@ -451,10 +589,8 @@ void parse_entry (int fd)
     int size;
     int x,y,type;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    fprintf(stderr,"Entry %d bytes\n",size);
-    read(fd,localbuf,size);
+    size = read_block(fd,localbuf,5,sizeof(localbuf));
+    // fprintf(stderr,"Entry %d bytes\n",size);
 
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
@@ -470,10 +606,8 @@ void parse_dashed (int fd)
     int size;
     int x,y,type;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
+    size = read_block(fd,localbuf,4,sizeof(localbuf));
     fprintf(stderr,"Dashed  %d bytes\n",size);
-    read(fd,localbuf,size);
 
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
@@ -493,11 +627,10 @@ void parse_power (int fd)
     int angle;
     char type;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    fprintf(stderr,"POWER %d bytes\n",size);
-    read(fd,localbuf,size);
-    read_string(textbuf,localbuf+0x05);    
+    size = read_block(fd,localbuf,5,sizeof(localbuf));
+    // fprintf(stderr,"POWER %d bytes\n",size);
+
+    read_string(textbuf,sizeof(textbuf),localbuf+0x05);
 
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
@@ -522,10 +655,16 @@ void parse_power (int fd)
 		symbol = "vcc-orcad-circle-1.sym";break;
     }
     fprintf(stdout,"C %d %d 1 %d 0 %s\n",x,y,angle,symbol);
-    /*    fprintf(stdout,"{\nT %d %d %d %d 1 1 %d\nvalue=%s\n}\n",
-	  xtext,ytext,TEXTCOLOR,TEXTSIZE,angle%180,textbuf);*/
-    fprintf(stdout,"{\nT %d %d %d %d 1 1 %d\nnet=%s:1\n}\n",
-	    xtext,ytext,TEXTCOLOR,TEXTSIZE,angle%180,textbuf);
+    /*    fprintf(stdout,"{\n"
+			 "T %d %d %d %d 1 1 %d 0\n"
+			 "value=%s\n"
+			 "}\n",
+	    xtext,ytext,GRAPHIC_COLOR,TEXTSIZE,angle%180,textbuf);*/
+    fprintf(stdout,"{\n"
+		   "T %d %d %d %d 1 1 %d 0\n"
+		   "net=%s:1\n"
+		   "}\n",
+	    xtext,ytext,GRAPHIC_COLOR,TEXTSIZE,angle%180,textbuf);
 }
 
 /*  BAD Fix Text color and check rotation */
@@ -538,22 +677,20 @@ void parse_text (int fd)
     int size;
     int x,y,textsize,angle;
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd,localbuf,size);                         
+    size = read_block(fd,localbuf,7,sizeof(localbuf));
 
     x=CONVX(CONV16(localbuf,0));
     y=CONVY(CONV16(localbuf,2));
-    read_string(textbuf,localbuf+0x06); 
+    read_string(textbuf,sizeof(textbuf),localbuf+6);
 
     angle=0;
-    textsize = 5* CONV16(localbuf,4);
+    textsize = TEXTSIZE * CONV16(localbuf,4);
     if (textsize<0)
     {
 	textsize *= -1;
 	angle = 90;
     }
-    fprintf(stdout,"T %d %d 3 %d 1 1 %d\n",x,y,textsize,angle);
+    fprintf(stdout,"T %d %d %d %d 1 1 %d 0\n",x,y,GRAPHIC_COLOR,textsize,angle);
     fprintf(stdout,"%s\n",textbuf);
 }
 
@@ -566,11 +703,8 @@ void parse_marker (int fd)
 {
     char localbuf[1024];
     int size;
-    /* int x,y,type; unused variables? AVH */
 
-    read(fd,localbuf,2);
-    size=CONV16(localbuf,0);
-    read(fd,localbuf,size);      
+    size = read_block(fd,localbuf,0,sizeof(localbuf));
 
     /* fprintf(stderr,"MARKER %d\n",size); */
 }
@@ -629,47 +763,75 @@ int parse_block(int fd1,int fd2)
 	    exit(-1);
 	    break;
     }
-    
-	    
+	
+		
     return 1;
 }
 
 int
 main(int argc, char **argv)
 {
-    /* int count=0; unused variables? AVH */
-    /* int length; */
-    /* int sheet; */
+    int c;
     int fd1,fd2;
 
-    if( argc != 2 )
-    {
-	fprintf(stderr,"\n  Usage:  %s infile  >outfile\n",argv[0]);
-	exit(-1);
+    while ((c = getopt(argc, argv, "d:hs:v")) > 0) {
+	switch (c) {
+	case 'd':
+	    symbol_dir = optarg;
+	    break;
+	case 's':
+	    scale = atoi(optarg);
+	    break;
+	case 'v':
+	    fprintf(stderr,"sarlacc_scheme ver %s\n", VERSION);
+	    exit(0);
+	    break;
+	case 'h':
+	default:
+	    fprintf(stderr,"Convert Oracd schematics file (16 bit format) to gEDA\n");
+	  usage:
+	    fprintf(stderr,"\nUsage:   %s [options] infile >outfile\n"
+			   "\nOptions:"
+			   "\n         -d<dir>  directory for symbols (from sarlacc_sym)"
+			   "\n         -h       help"
+			   "\n         -s<n>    scale <n>%%, default is %d"
+			   "\n         -v       version"
+			   "\n\n",
+			   argv[0],DEFAULT_SCALE);
+	    exit(1);
+	    break;
+	}
     }
-    
-    fprintf(stdout,"v 1990705\n");
 
-    fd1 = open(argv[1],O_RDONLY);
-    if( fd1 < 1 )
+    if( optind+1 != argc )
     {
-	fprintf(stderr,"\n  Could not open input file\n");
-	exit(-1);
+	goto usage;
     }
-    fd2 = open(argv[1],O_RDONLY);
-    if( fd2 < 1 )
+	
+    /* BAD update to latest file format.. */
+    fprintf(stdout,"v %s\n",GEDAVERSION);
+
+    fd1 = open(argv[optind],O_RDONLY);
+    if( fd1 < 0 )
+    {
+	fprintf(stderr,"\nCould not open input file: %s\n",argv[optind]);
+	exit(1);
+    }
+    fd2 = open(argv[optind],O_RDONLY);
+    if( fd2 < 0 )
     {
 	fprintf(stderr,"\n  Could not open input file part deux\n");
 	exit(-1);
     }
-    
+	
     parse_header(fd1,fd2);
-    
+	
     while(parse_block(fd1,fd2));
     fprintf(stderr,"\n Normal End\n");
 
     return(0);    
 }
+
 
 
 

@@ -1,3 +1,8 @@
+2002-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/sarlacc_schem.c, scripts/sarlacc_sym: Added updates from
+	Egil Kvaleberg.  Thanks.
+
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gschlas/: Added new libgeda program: gEDA schematic/symbol Load and

@@ -1,22 +1,70 @@
 #!/usr/bin/perl
 
-##  Library version 0.92
+##  Library version 0.94
 ##  This program is released under the terms of the GNU GPL
 ##  See www.fsf.org for a copy of the license
+##
+##  Copyright 1999 Matthew Ettus
+##  For more info, email matt@ettus.com
+##
+##  This program will convert ORCAD text libraries to gEDA components
+##
+##  Changes 0.94 by <egil@kvaleberg.no>, october 5th 2002
+##      Implement CLK modifier
+##      Implement negation for text ('\'-character)
+##      Doubled size to better fit with gEDA symbols
+##      Default to U? refdes, fixed refdes and made visible
+##      Define sarlacc_dim attribute for sarlacc_scheme
+##      Command line options
+##
+##  Changes 0.93 by <egil@kvaleberg.no>, october 4th 2002
+##      Pin attribs modified for 20020825 convention
+##      File format to 20020825 convention
+##      Give duplicate components correct names
+##      Implemented BITMAP
+##      Implemented CONVERT
+##      Implemented multiple slot component
+##      Better syntax check for pin defs
+##      Removed negative coordinates by adding an offset
+##      Got rid of need to calculate text sizes
+##      Got the ARC right
+##      Graphics components has invisible pin labels
+##      Implemented pintype PWR
+##      Implement pintypes (IN, I/O, hiZ, OUT, PAS, OC, OE)
+##
+##  Todo
+##      Implement symbols like THREE_STATE
+##      Implement FILL (?)
+##
 
-## Copyright 1999 Matthew Ettus
-## For more info, email matt@ettus.com
+$version = "0.94";
+$gedaversion="20020825";
 
-## This program will convert ORCAD text libraries to gEDA components
+#
+# colors
+#
+$pin_color = 1;         # white
+$graphic_color = 3;     # green
+$attribute_color = 5;   # yellow
+$text_color = 9;        # green
 
-$linecolor = 3;
-$textcolor = 5;
-$pincolor = 1;
-$pinnumcolor = 3;
+#
+# symbol scaling
+#
 
-$pinnumsize = 6;
-$partnamesize = 6;
+# was 6:
+$pinnumsize = 8;
+$partnamesize = 10;
+# was 100:
+$scale = 200;
 
+$pinlen = 3;
+$xoffset = $pinlen * $scale;
+$yoffset = $pinlen * $scale;
+
+#
+# character width table (approximate)
+#
 @char_width=(
      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
      0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -36,359 +84,666 @@ $partnamesize = 6;
      0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0
 );                                           
 
-## Unread a line from the input file
-## Usage:  unread_line ( FILE, line)
-sub unread_line
-{
-	seek LIBRARY, -length($line), 1;
-}
-
 sub string_len 
 { 
     $char_points = 2;
-    $width=0;
+    $width = 0;
     @expanded = unpack "C*",$_[0];
     foreach $char (@expanded)
     {
-        $width += $char_width[$char];
+	$width += $char_width[$char];
     }
     $width = ($_[1]*$width)/$char_points;
     return $width;
 }         
 
-open(LIBRARY,$ARGV[0] ) or die "Can't open $ARGV[0]:  $!\n";
-
-$line = <LIBRARY>;
-if ( not ($line =~ /Compiled/ ))
+#
+#  draw a pin
+#  $x1
+#  $x2
+#  $dx
+#  $dy
+#
+sub draw_pin
 {
-	print $line;
-        print "Not a Library File\n";
-        die;           
+	local $sx,$sy;
+	local $x2,$y2;
+	$sx = 0;
+	$sx = 1 if ($dx > 0);
+	$sx = -1 if ($dx < 0);
+	$sy = 0;
+	$sy = 1 if ($dy > 0);
+	$sy = -1 if ($dy < 0);
+
+	$x2 = $x1 + $sx * $len;
+	$y2 = $y1 + $sy * $len;
+
+	if( $is_clk )
+	{
+		local $xa,$ya,$xb,$xb;
+
+		$xa = $x1 - $sy * $spacing;
+		$xb = $x1 - $sx * $spacing;
+		$ya = $y1 - $sx * $spacing;
+		$yb = $y1 - $sy * $spacing;
+		print COMPONENT "L $xa $ya $xb $yb $graphic_color".
+				   " 0 0 0 -1 -1\n";
+		$xa = $x1 + $sy * $spacing;
+		$ya = $y1 + $sx * $spacing;
+		print COMPONENT "L $xa $ya $xb $yb $graphic_color".
+				   " 0 0 0 -1 -1\n";
+	}
+
+	if ( not ($pinlabel =~ /\$/) && not $is_graphic)
+	{
+		# negation?
+		if ( $pinlabel =~ /\\/ )
+		{
+			local $w;
+			$pinlabel =~ tr/\\//d;
+			$w = string_len($pinlabel,$pinnumsize);
+
+			if ($w > 0) {
+				local $xa,$ya,$xb,$xb;
+
+				$xa = $x1 + abs($sy) * $spacing
+					  - $sx * $spacing;
+				$xb = $x1 + abs($sy) * $spacing
+					  - $sx * ($spacing + $w);
+				$ya = $y1 + abs($sx) * $spacing
+					  - $sy * $spacing;
+				$yb = $y1 + abs($sx) * $spacing
+					  - $sy * ($spacing + $w);
+				print COMPONENT "L $xa $ya $xb $yb $text_color".
+					" 0 0 0 -1 -1\n";
+			}
+		}
+	}
+
+	if( $dotsize )
+	{
+		local $rad;
+
+		$rad = $dotsize / 2;
+		$x1 += $sx * $rad;
+		$y1 += $sy * $rad;
+		print COMPONENT "V $x1 $y1 $rad $pin_color ",
+				   " 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n";
+		$x1 += $sx * $rad;
+		$y1 += $sy * $rad;
+	}
+
+	print COMPONENT "P $x1 $y1 $x2 $y2 $pin_color\n";
 }
 
-while (not (<LIBRARY> =~ /PREFIX/)){};
-while (not (<LIBRARY> =~ /END/)){};
-
-while (1)
+#
+#  define a pin
+#  $pinseq
+#  $place
+#  $pinnumbers
+#  $pintype
+#  $pinlabel
+#  $slots
+#  $is_graphic
+#
+sub def_pin
 {
-while (not (($component = <LIBRARY>) =~ /\'/))
-{
-	if (eof LIBRARY)
+	if ($pinnumbers =~ /^(.*)[ \t]+([A-Za-z]+)[ \t]*$/ )
 	{
-		exit;
+		$pinnumbers = $1;
+		$modifier = $2;
 	}
-}
-
-$component =~ s/\'//g;
-chomp $component;
-$component =~ s/\r//g;
-$component =~ s/\ /_/g;
-
-open(COMPONENT,">$component-1.sym");
-print COMPONENT "v 20000704a\n";
-
-#  BAD Do we need both copies?  other libraries have both for some reason 
-print COMPONENT "T 100 100 $textcolor $partnamesize 1 0 0 0\n";
-print COMPONENT $component, "\n";
-
-print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0 0\n";
-print COMPONENT "device=$component\n";
-
-print $component, "\n";
-
-
-# Handle components with multiple names....
-
-@namelist = ();
-while (($line = <LIBRARY>) =~ /^\'/)
-{
-	$line =~ s/\'//g;
-	chomp $line;
-	$line =~ s/\r//g;
-	$line =~ s/\ /_/g;
-	push @namelist ,( $line);
-}
-
-if($line =~ /REFERENCE/)
-{
-	($dummy,$ref) = split("\'",$line);
-	$line=<LIBRARY>;
-	print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0 0\n";
-	print COMPONENT "refdes=$ref?\n";
-}
-
-($dummy,$x,$y,$parts)=split("=}",$line);
-($xsize)=split(" ",$x);
-($ysize)=split(" ",$y);
-$xsize*=100;$ysize*=100;
-
-chomp $parts;
-
-$fakenum = 1;
-while (( $line = <LIBRARY>) =~ /^[LRTB]/)
-{
-    if ( $parts <=1 )
-    {
-	$count=($place,$pinnumber,$modifier,$pintype,$pinlabel)=split(" ",$line);
-	$pinname = 0;
-	if (($count < 4) || ($count > 6))
+	else
 	{
-		print "$count  Malformed Pin Definition:\n$line\n";
-		exit;
+		$modifier = "";
 	}
-	elsif ($count == 4)
-	{
-		if($modifier =~ /\'/)	
-		{
-			$pinname = $modifier;
-			$pinname =~ tr/\'//d;
-			$pintype = $pinnumber;
-			$pinnumber = $fakenum++;
-			$pinlabel = $pinnumber;
-		}
-		else
-		{
-			print "Error: Place $place number $pinnumber mod $modifier type $pintype label $pinlabel\n";
-			exit;
-		}
-	}
-	elsif ($count == 5)  # regular pin
-	{
-		$pinlabel=$pintype;
-		$pintype=$modifier;
-		if(($pinnumber =~ /SHORT/) or ($pinnumber =~ /DOT/) )
-			 #Its a no-number pin!
-		{
-			$modifier = $pinnumber;
-			$pinnumber = $fakenum++;
-		}
-		elsif($pinnumber =~ /\'/)
-		{
-			$pinname = $pinnumber;
-			$pinname =~ tr/\'//d;
-			$pinnumber = $fakenum++;
-		}
-		elsif($pinnumber =~ /A-Za-z/)
-		{
-			print "Unrecognized Modifier $modifier\n";
-                	exit;      
-		}
-	}
-	elsif ($count == 6)  #modified pin
-	{
-		if($pinnumber =~ /\'/)
-		{
-			$pinname = $pinnumber;
-                        $pinname =~ tr/\'//d;          
-			$pinnumber = $fakenum++;
-		}
-	}
-# BAD  need more pin modifiers
-	$dotsize=0;
+	chomp $pinnumbers;
+
+	$len = $pinlen * $scale;
+	$visibility = 1;
+	$dotsize = 0;
+	$is_clk = 0;
 	if ($modifier eq "DOT")
 	{
-		$len = 250;
-		$visibility=1;
-		$dotsize=50;
+		$dotsize = $scale / 2;
 	}
-	if ($modifier eq "SHORT")
+	elsif ($modifier eq "SHORT")
 	{
-		$len = 100;
-		$visibility=0;
+		$len = $scale;
 	}
-	else
+	elsif ($modifier eq "CLK")
 	{
-		$len=300;
-		$visibility=1;
+		$is_clk = 1;
 	}
-    }
-    else   #  BAD Multicomponent Packages
-    {
-	$length=@array=split(" ",$line);
-	print "HERE $length\n";
-	if ($length == 3+$parts)
+	elsif ($modifier ne "")
 	{
-		print "+3\n";
+		print "Modifier not supported: $modifier\n";
 	}
-	elsif ($length == 4+$parts)
-	{
-		print "+4\n";
-	}
-	else
-	{
-		print "error $length \n";
-		exit;
-	}
-    }
-# BAD  Gotta be a better way to do this
-	$letter=$num=$place;
-	$letter =~tr/0-9//d;
-	$num=~ tr/LRTB//d;
-	$pinlabel =~ tr/\'//d;
-	$spacing = 50;
 
-# BAD  better label sizing
+	$is_pwr = 0;
+	if ($pintype eq "PWR")
+	{
+		$is_pwr = 1;
+		$visibility = 0;
+	}
+	elsif (($a = $pintype_assoc{$pintype}) ne "")
+	{
+		$pintype = $a;
+	}
+	elsif ($pintype ne "")
+	{
+		## BAD others are: tp clk pwr
+		print "Pintype not supported: $pintype\n";
+	}
+
+	# by gEDA convention
+	$pinlabel = "Vcc" if ($pinlabel eq "VCC");
+
+	#
+	#  extract the pin numbers
+	#
+	if ($slots > 1)
+	{
+		$length = @array = split(" ",$pinnumbers);
+		if ($length != $slots)
+		{
+			print "Error: incorrect number of pins $length, should be $slots\n";
+			exit;
+		}
+		if (not $is_pwr)
+		{
+			$def_slot[$pinseq] = [ @array ];
+		}
+		$pinnumber = $array[0];
+	}
+	else
+	{
+		$pinnumber = $pinnumbers;
+	}
+	$pinnumber =~ tr/ //d;
+	$pinnumber =~ tr/\'//d;
+	$pinnumalign = 0;
+	$pinnumangle = 0;
+	$pinlabelalign = 0;
+	$pinlabelangle = 0;
+
+	#
+	#  place the label
+	#
+	$letter = $num = $place;
+	$letter =~ tr/0-9//d;
+	$num =~ tr/LRTB//d;
+	$spacing = $scale / 2;
 
 	if ($letter eq "L")
 	{
-	    $x1=-$len; $x2=-$dotsize; $y1=$y2=-$num*100;
-	    $textx = -string_len($pinnumber,$pinnumsize)-$spacing; 
-	    $texty = $y1+20;
-	    $namex = $spacing; 
-	    $namey = $y1;
-	    if( $dotsize )
-	    {
-		$rad=$dotsize/2;
-		print COMPONENT "V -$rad $y1 $rad $linecolor\n";
-	    }
+		$x1 = $xoffset;
+		$y1 = $yoffset + $ysize - $num*$scale;
+		$dx = -$len;
+		$dy = 0;
+		$textx = $xoffset - $spacing;
+		$texty = $y1 + $scale/10;
+		$namex = $xoffset + $spacing;
+		$namey = $y1;
+		$pinlabelalign = 1;
+		$pinnumalign = 6;
 	}
 	elsif ($letter eq "R")
 	{
-	    $x1=$xsize+$dotsize; $x2=$xsize+$len; $y1=$y2=-$num*100;
-	    $textx = $xsize+$spacing;
-	    $texty=$y1+20;
-	    $namex = $xsize-$spacing;
-	    $namey=$y1;
-	    if( $dotsize )
-	    {
-		$rad=$dotsize/2;
-		print COMPONENT "V ",$xsize+$rad," $y1 $rad $linecolor\n";
-	    }
+		$x1 = $xoffset + $xsize;
+		$y1 = $yoffset + $ysize - $num*$scale;
+		$dx = $len;
+		$dy = 0;
+		$textx = $xoffset + $xsize + $spacing;
+		$texty = $y1 + $scale/10;
+		$namex = $xoffset + $xsize - $spacing;
+		$namey = $y1;
+		$pinlabelalign = 7;
 	}
 	elsif ($letter eq "T")
 	{
-	    $y1=$len; $y2=$dotsize; $x1=$x2=$num*100;
-	    $texty = -100; $textx=$x1;
-	    $namex = $x1-string_len($pinlabel,$pinnumsize)/2; $namey = 100;
-	    if( $dotsize )
-	    {
-		$rad=$dotsize/2;
-		print COMPONENT "V $x1 -$rad $rad $linecolor\n";
-	    }
+		$x1 = $xoffset + $num*$scale;
+		$y1 = $yoffset + $ysize;
+		$dx = 0;
+		$dy = $len;
+		$textx = $x1 - $scale/10;
+		$texty = $yoffset + $ysize + $spacing;
+		$namex = $x1;
+		$namey = $yoffset + $ysize - $spacing;
+		$pinnumangle = $pinlabelangle = 90;
+		$pinlabelalign = 7;
 	}
 	elsif ($letter eq "B")
 	{
-	    $y1=-$dotsize-$ysize; $y2=-$len-$ysize; $x1=$x2=$num*100;
-	    $texty = -$ysize-150; $textx=$x1+10;
-	    $namex = $x1-string_len($pinlabel,$pinnumsize)/2;
-	    $namey = -$ysize + 50;
-	    if( $dotsize )
-	    {
-		$rad=$dotsize/2;
-		print COMPONENT "V $x1 ",-$ysize-$rad," $rad $linecolor\n";
-	    }
+		$y1 = $yoffset;
+		$x1 = $xoffset + $num*$scale;
+		$dx = 0;
+		$dy = -$len;
+		$textx = $x1 - $scale/10;
+		$texty = $yoffset - $spacing;
+		$namex = $x1;
+		$namey = $yoffset + $spacing;
+		$pinnumangle = $pinlabelangle = 90;
+		$pinlabelalign = 1;
+		$pinnumalign = 6;
 	}
 	else
 	{
-		print "P $letter $num test  $x1 $y1 $x2 $y2\n";
-		print "Unrecognized pin position: $letter\n";
+		print "Cannot happen: $letter\n";
 		exit;
 	}
-#  BAD  Must set color somehow
-	print COMPONENT "P $x1 $y1 $x2 $y2 $pincolor\n";
-	print COMPONENT "{\n";
-# Output pinseq (invisible)
-	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 1 0 $pinnumalign\n";
-	print COMPONENT "pinseq=$pinnumber\n";
-# Output pinnumber
-	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize $visibility 1 0 $pinnumalign\n";
-	print COMPONENT "pinnumber=$pinnumber\n";
 
-	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 0 0 0\n";
-	print COMPONENT "pintype=$pintype\n";
-
-	if ( not ($pinlabel =~ /\$/) )
+	if( $is_pwr )
 	{
-		print COMPONENT "T $namex $namey $pinnumcolor ",
-		"$pinnumsize $visibility 1 0 $pinlabelalign\n";
-		print COMPONENT "pinlabel=$pinlabel\n";
-	}
-	if ($pinname)
-	{
-		print COMPONENT "T $namex $namey $pinnumcolor ",
-                "$pinnumsize 0 0 0 0\n";
-                print COMPONENT "pinname=$pinname\n"; 
-	}
-	print COMPONENT "}\n";
-}
-
-#Check for Orcad bitmaps
-while ($line =~ /\{/)
-{
-	$line = <LIBRARY>;
-}
-
-if (( $line = <LIBRARY>) =~ /VECTOR/ )
-{
-	while (not (( $line = <LIBRARY>) =~ /END/))
-	{
-		if ($line =~ /LINE/)
+		if ($pinnumber ne "")
 		{
-			($dummy,$x1,$y1,$x2,$y2)=
-				split(" ",$line);
-			$x1*=100; $y1*=-100; $x2*=100; $y2*=-100;
-			print COMPONENT "L $x1 $y1 $x2 $y2 $linecolor\n";
-		}
-		elsif($line =~ /TEXT/)
-		{
-# BAD set textsize properly , check multi-line text
-			($dummy,$x1,$y1,$textsize)=split(" ",$line); 
-			($dummy,$text)=split("\'",$line);
-			$x1*=100; $y1*=-100; $textsize *= 6; 
-			$text=~ tr/\'//d;
-			print COMPONENT "T $x1 $y1 $linecolor $textsize 1 0 0 0\n";
-			print COMPONENT "$text\n";
-		}
-		elsif ($line =~ /CIRCLE/)
-		{
-			($dummy,$x1,$y1,$radius)=split(" ",$line);
-			$x1*=100;$y1*=-100;$radius*=100;
-			print COMPONENT "V $x1 $y1 $radius $linecolor\n";
-		}
-		elsif ($line =~ /ARC/)
-		{
-			($dummy,$xcenter,$ycenter,$dx1,$dy1,$dx2,$dy2,$rad) =
-				split(" ",$line);
-			$ycenter *= -1;
-			$dy1 *= -1;
-			$dy2 *= -1;
-			$factor = 180 / atan2(1,1) / 4;
-			$startangle = int ( $factor * atan2 ($dy1, $dx1));
-			$endangle = int ( $factor * atan2 ($dy2, $dx2));
-			$sweepangle = $endangle - $startangle;
-			$sweepangle = - abs ($sweepangle);
-			$xcenter *= 100;
-			$ycenter *= 100;
-			$rad *= 100;
-			print COMPONENT "A $xcenter $ycenter $rad",
-				" $startangle $sweepangle $linecolor\n";
-		}
-		elsif ($line =~ /FILL/)
-		{
-			print "FILL\n";
-		}
-		else
-		{
-			print "Unrecognized Tag! \n $line \n";
-			exit;
+			print COMPONENT "T $textx $texty $attribute_color $pinnumsize 0 0 0 0\n";
+			print COMPONENT "net=$pinlabel:$pinnumber\n";
 		}
 	}
+	else
+	{
+		draw_pin();
+
+		++$pinseq;
+
+		print COMPONENT "{\n";
+
+		# *EK* use pinnumber= and pinseq= for 20020825
+		if ($pinnumber ne "")
+		{
+			print COMPONENT "T $textx $texty $attribute_color $pinnumsize $visibility 1 $pinnumangle $pinnumalign\n";
+			print COMPONENT "pinnumber=$pinnumber\n";
+		}
+		print COMPONENT "T $textx $texty $attribute_color $pinnumsize 0 0 0 0\n";
+		print COMPONENT "pinseq=$pinseq\n";
+		print COMPONENT "T $textx $texty $attribute_color $pinnumsize 0 0 0 0\n";
+		print COMPONENT "pintype=$pintype\n";
+
+		if ( not ($pinlabel =~ /\$/) )
+		{
+			# do not show label if graphic package
+			$visibility = 0 if ($is_graphic);
+
+			print COMPONENT "T $namex $namey $text_color ",
+			"$pinnumsize $visibility 1 $pinlabelangle $pinlabelalign\n";
+			print COMPONENT "pinlabel=$pinlabel\n";
+		}
+		print COMPONENT "}\n";
+	}
 }
-else
+
+#
+#  define all pins
+#  $is_graphic
+#
+sub def_all_pins
 {
-	unread_line (LIBRARY, $line);
-	print COMPONENT "B 0 -$ysize $xsize $ysize $linecolor\n";
+	$pinseq = 0;
 
+	#
+	#  define the pins
+	#
+	for ($pin = 0; $pin < $pins; ++$pin)
+	{
+		$place      = $def_place[$pin];
+		$pinnumbers = $def_pinnumbers[$pin];
+		$pintype    = $def_pintype[$pin];
+		$pinlabel   = $def_pinlabel[$pin];
+
+		def_pin();
+	}
 }
-close(COMPONENT);
 
-# BAD make copies for multiple component names.  device= doesn't change
-# should it??
-
-foreach $duplicate (@namelist)
+#
+#  next component
+#  $component
+#  $namelist
+#  $slots
+#
+sub def_component
 {
-	`cp $component-1.sym $duplicate-1.sym`;
+	open(COMPONENT,">$component-$convert.sym");
+	print COMPONENT "v $gedaversion\n";
+
+	print COMPONENT "T $scale 0 $attribute_color $partnamesize 1 1 0 0\n";
+	print COMPONENT "refdes=$refdes?\n";
+
+	# make displayed name also an attribute
+	print COMPONENT "T $scale $scale $attribute_color $partnamesize 1 1 0 0\n";
+	print COMPONENT "partno=$component\n";
+	print COMPONENT "T $scale $scale $attribute_color $partnamesize 0 1 0 0\n";
+	print COMPONENT "device=$component\n";
+
+
+	if ( $slots > 1 )
+	{
+		print COMPONENT "T $scale $scale $attribute_color $partnamesize 0 0 0 0\n";
+		print COMPONENT "slot=1\n";
+		print COMPONENT "T $scale $scale $attribute_color $partnamesize 0 0 0 0\n";
+		print COMPONENT "numslots=$slots\n";
+	}
+	else
+	{
+		print COMPONENT "T $scale $scale $attribute_color $partnamesize 0 0 0 0\n";
+		print COMPONENT "numslots=0\n";
+	}
+
+	$pins = 0;
+
+	#
+	#  scan the pins
+	#
+	while (($line = <LIBRARY>) =~
+	    /(^[LRTB][0-9]+)(.*)[ \t]+([A-Za-z\/]+)[ \t]+'(.*)'/ )
+	#      L1            3 DOT     I/O               'OUTPUT'
+	{
+		$def_place[$pins]        = $1;
+		$def_pinnumbers[$pins]   = $2;
+		$def_pintype[$pins]      = $3;
+		$def_pinlabel[$pins]     = $4;
+		++$pins;
+	}
+
+	#
+	#  define the body
+	#
+
+	#skip Orcad bitmaps
+	while ($line =~ /\{/)
+	{
+		$line = <LIBRARY>;
+	}
+
+	if ( $line =~ /BITMAP[ \t]+'(.*)'/ )
+	{
+		$is_graphic = 1;
+		def_all_pins();
+
+		# re-use previous vector image
+		$def_body = $body{$1};
+
+		$line = <LIBRARY>;
+	}
+	elsif (( $line = <LIBRARY>) =~ /VECTOR/ )
+	{
+		$is_graphic = 1;
+		def_all_pins();
+
+		$def_body="";
+		while (not (( $line = <LIBRARY>) =~ /END/))
+		{
+			if ($line =~ /LINE/)
+			{
+				($dummy,$x1,$y1,$x2,$y2)=
+					split(" ",$line);
+				$x1 = $xoffset + $x1*$scale;
+				$y1 = $yoffset + $ysize - $y1*$scale;
+				$x2 = $xoffset + $x2*$scale;
+				$y2 = $yoffset + $ysize - $y2*$scale;
+				$def_body .= "L $x1 $y1 $x2 $y2 $graphic_color".
+					   " 0 0 0 -1 -1\n";
+			}
+			elsif($line =~ /TEXT/)
+			{
+				# BAD set textsize properly , check multi-line text
+				($dummy,$x1,$y1,$textsize,$text)=split(" ",$line);
+				$x1 = $xoffset + $x1*$scale;
+				$y1 = $yoffset + $ysize - $y1*$scale;
+
+				# print "Text=$text\n";
+				if ($text eq "OPEN_L")
+				{
+					# BAD ignore
+				}
+				elsif ($text eq "OPEN_H")
+				{
+					# BAD ignore
+				}
+				elsif ($text eq "THREE_STATE")
+				{
+					# BAD ignore
+				}
+				elsif ($text !~ /'/)
+				{
+					print "Symbol not supported: $text\n";
+				}
+				else 
+				{
+					$text=~ tr/\'//d;
+					$textsize *= $pinnumsize;
+					$def_body .= "T $x1 $y1 $graphic_color $textsize 1 0 0 0\n".
+						   "$text\n";
+				}
+			}
+			elsif ($line =~ /CIRCLE/)
+			{
+				($dummy,$x1,$y1,$radius) = split(" ",$line);
+				$x1 = $xoffset + $x1*$scale;
+				$y1 = $yoffset + $ysize - $y1*$scale;
+				$radius *= $scale;
+				$def_body .= "V $x1 $y1 $radius $graphic_color".
+					   " 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n";
+			}
+			elsif ($line =~ /ARC/)
+			{
+				($dummy,$x1,$y1,$dx1,$dy1,$dx2,$dy2,$rad) =
+							split(" ",$line);
+				$x1 = $xoffset + $x1*$scale;
+				$y1 = $yoffset + $ysize - $y1*$scale;
+				$factor = 180 / atan2(1,1) / 4;
+				$startangle = int ( $factor * atan2 (-$dy1, $dx1));
+				$endangle = int ( $factor * atan2 (-$dy2, $dx2));
+				$sweepangle = $endangle - $startangle;
+				# Orcad brain damage: ARC is always < 180 deg
+				if ($sweepangle > 180) {
+					$sweepangle -= 360;
+				}
+				if ($sweepangle < -180) {
+					$sweepangle += 360;
+				}
+				$rad *= $scale;
+				$def_body .= "A $x1 $y1 $rad".
+					" $startangle $sweepangle $graphic_color".
+					" 0 0 0 -1 -1\n";
+			}
+			elsif ($line =~ /FILL/)
+			{
+				# BAD Ignore FILL
+			}
+			else
+			{
+				print "Unrecognized tag:\n $line \n";
+				exit;
+			}
+		}
+
+		$line = <LIBRARY>;
+	}
+	else
+	{
+		$is_graphic = 0;
+		def_all_pins();
+
+		$x1 = $xoffset;
+		$y1 = $yoffset;
+
+		$def_body = "B $x1 $y1 $xsize $ysize $graphic_color".
+			  " 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n";
+
+	}
+
+	#
+	#  define slots, if any
+	#
+	if ($slots > 1)
+	{
+		for ($s = 0; $s < $slots; ++$s)
+		{
+			print COMPONENT "T $scale $scale $attribute_color $partnamesize 0 0 0 0\n";
+			print COMPONENT "slotdef=",$s+1;
+			$c = ":";
+
+			for ($n = 0; $n < $pinseq; ++$n)
+			{
+				$pin = $def_slot[$n][$s];
+				print COMPONENT "$c$pin";
+				$c = ",";
+			}
+			print COMPONENT "\n";
+		}
+	}
+
+	#
+	#  emit text for body
+	#
+	print COMPONENT "$def_body";
+	$body{$component} = "$def_body";
+
+	#
+	# for sarlacc_schem
+	#
+	print COMPONENT "T $scale $scale $attribute_color $partnamesize 0 0 0 0\n";
+	print COMPONENT "sarlacc_dim=$xoffset,$yoffset,$xsize,$ysize\n";
+
+	close(COMPONENT);
+
+	#
+	# make copies for multiple component names.
+	# device= changed to suit
+	#
+	foreach $duplicate (@namelist)
+	{
+		# make duplicate component, remembering to change device name
+		`cat $component-1.sym                   |
+		 sed "s/partno=$component/partno=$duplicate/" |
+		 sed "s/device=$component/device=$duplicate/" |
+		 cat >$duplicate-1.sym`;
+	}
 }
+
+#
+#  main loop
+#  arg: library name
+#
+sub main_loop
+{
+    local $library = $_[0];
+
+    open(LIBRARY,$library ) or die "Can't open $library:  $!\n";
+
+    $line = <LIBRARY>;
+    if ( not ($line =~ /Compiled/ ))
+    {
+	    print $line;
+	    print "Not a library file: $library\n";
+	    die;
+    }
+
+    while (not (<LIBRARY> =~ /PREFIX/)){};
+    while (not (<LIBRARY> =~ /END/)){};
+
+    $line = <LIBRARY>;
+
+    while (not (eof LIBRARY))
+    {
+	    if ($line =~ /\'/)
+	    {
+		    $component = $line;
+		    $component =~ s/\'//g;
+		    chomp $component;
+		    $component =~ s/\r//g;
+		    $component =~ s/\ /_/g;
+		    $convert = 1;
+		    $refdes="U";
+
+		    # Handle components with multiple names....
+		    @namelist = ();
+		    while (($line = <LIBRARY>) =~ /^\'/)
+		    {
+			    $line =~ s/\'//g;
+			    chomp $line;
+			    $line =~ s/\r//g;
+			    $line =~ s/\ /_/g;
+			    push @namelist ,( $line);
+		    }
+
+		    if ($line =~ /REFERENCE/)
+		    {
+			    ($dummy,$refdes) = split("\'",$line);
+			    $line = <LIBRARY>;
+		    }
+
+		    ($dummy,$x,$y,$slots) = split("=}",$line);
+		    ($xsize) = split(" ",$x);
+		    ($ysize) = split(" ",$y);
+		    $xsize *= $scale;
+		    $ysize *= $scale;
+
+		    chomp $slots;
+		    $slots =~ tr/ //d;
+
+		    # print "Define: $component\n";
+
+		    def_component();
+	    }
+	    elsif ( $line =~ /CONVERT/ )
+	    {
+		   $convert += 1;
+		   def_component();
+	    }
+	    else
+	    {
+		   $line = <LIBRARY>;
+	    }
+    }
+    close(LIBRARY);
 }
+
+#
+#  main
+#
+
+# pin types for Orcad to gEDA
+$pintype_assoc{'PWR'} = "pwr";
+$pintype_assoc{'IN'}  = "in";
+$pintype_assoc{'I/O'} = "io";
+$pintype_assoc{'OUT'} = "out";
+$pintype_assoc{'hiZ'} = "tri";
+$pintype_assoc{'PAS'} = "pas";
+$pintype_assoc{'OC'}  = "oc";
+$pintype_assoc{'OE'}  = "oe";
+
+$argc = @ARGV;
+
+for ($argn = 0; $argn < @ARGV; ++$argn)
+{
+	$arg = $ARGV[$argn];
+	if ($arg =~ /^-([A-Za-z?])(.*)$/ ) {
+		if ($1 eq "s") {
+			$scale = $2;
+		} elsif ($1 eq "v") {
+			print "sarlacc_sym ver $version\n";
+		} else {
+			print "Convert Oracd symbol library (text format) to gEDA\n";
+			print "\nUsage:   sarlacc_sym [options] library",
+			   "\nOptions:",
+			 # "\n         -d<dir>  directory for symbols",
+			   "\n         -h       help",
+			   "\n         -s<n>    scale <n>%, default is $scale",
+			   "\n         -v       version",
+			   "\n\n";
+			die;
+		}
+	} else {
+		main_loop($arg);
+	}
+}
+
+
+
+
+
+
 
 
