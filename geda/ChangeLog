@@ -1,3 +1,22 @@
+2005-02-12 22:06  Dan McMahill <danmc>
+
+	* graphman/Makefile.am, graphman/callbacks.c, graphman/config.c,
+	  graphman/config.h, graphman/configfile.c, graphman/configfile.h,
+	  graphman/export2gwave.c, graphman/filetool.c, graphman/graph.c,
+	  graphman/libstring.c, graphman/main.c, graphman/msgbox.c,
+	  graphman/raw2gw.c, graphman/support.c, graphman/value.c,
+	  src/Makefile.am, src/callbacks.c, src/config.c, src/config.h,
+	  src/configfile.c, src/configfile.h, src/doc.c, src/file.c,
+	  src/filesel.c, src/filetool.c, src/interface.c, src/l_toolbar.c,
+	  src/log.c, src/m_action.c, src/m_file.c, src/m_project.c,
+	  src/m_window.c, src/main.c, src/msgbox.c, src/project.c,
+	  src/task.c, src/tool.c, src/txtedit.c, src/window.c: rename
+	  config.{c,h} to configfile.{c,h} inside src/ and graphman/ to
+	  avoid issues with . and .. being in the search path and needing
+	  to pull in the top level config.h file.  Also clean up inclusion
+	  of the configure generated config.h and protect the inclusion of
+	  a couple of headers with the configure tests.
+
 2005-02-12  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/interface.c: Beautify buttons (use GTK stock).
