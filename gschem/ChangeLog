@@ -1,3 +1,17 @@
+2002-09-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_multiattrib.nw: Redid the "Flags" column to be now
+	"Vis?" and "SN".  Basically added 2 columns instead of one.
+
+	* noweb/x_multiattrib.nw: Changed the justification of the last
+	two columns to be center
+
+	* noweb/x_mulitattrib.nw: Fixed the slot changing code to be 
+	correct (use the correct column)
+
+	* noweb/x_multiattrib.nw: After clicking Change, re-highlight the
+	value entry
+	
 2002-09-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Redid multi attribute dialog box using
