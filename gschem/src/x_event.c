@@ -950,6 +950,7 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 	TOPLEVEL *w_current)
 {
 	int new_height, new_width;
+	double cx,cy;
 
 	/* this callback is for drawing areas only! */
 	/* things like changing a label causes a resize */
@@ -1037,11 +1038,21 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 	w_current->height = w_current->win_height;
 
 	/* need to do this every time you change width / height */
-	set_window(w_current,
+/* at the moment this set_w.. call is doing really nothing, because  ..->left...
+aren't recalculated (hw) */
+/*	set_window(w_current,
 		   w_current->page_current->left,
 		   w_current->page_current->right,
 		   w_current->page_current->top,
 		   w_current->page_current->bottom);
+*/	
+	/* doing this the aspectratio is kept when changing (hw)*/
+	cx = (double) (w_current->page_current->left +
+		 w_current->page_current->right) /2;
+	cy = (double) (w_current->page_current->top +
+		w_current->page_current->bottom) /2;	
+	a_pan_general(w_current, cx, cy, 1.0, 6);	
+	
 
 	if (w_current->backingstore) {
 		gdk_pixmap_unref(w_current->backingstore);
@@ -1051,7 +1062,6 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 						 widget->allocation.width,
 						 widget->allocation.height,
 						 -1);
-
 	if (!w_current->DONT_REDRAW)
 		o_redraw_all_fast(w_current);
 
@@ -1117,7 +1127,7 @@ x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
 			(current_left - new_left);
 	}
 
-	if (!w_current->DONT_REDRAW) {
+	if (!w_current->DONT_REDRAW) {	
 		o_redraw_all_fast(w_current);
 	}
 }
@@ -1152,7 +1162,7 @@ x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
 	printf("actual: %d %d\n", top, bottom);
 #endif
 
-	if (!w_current->DONT_REDRAW) {
+	if (!w_current->DONT_REDRAW) {	
 		o_redraw_all_fast(w_current);
 	}
 }
