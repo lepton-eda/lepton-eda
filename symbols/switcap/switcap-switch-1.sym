@@ -1,0 +1,30 @@
+v 20030223
+L 300 400 500 200 3 0 0 0 -1 -1
+T 100 400 5 10 0 0 0 0
+device=SWITCAP-switch
+P 500 200 800 200 1 0 1
+{
+T 650 250 5 8 0 1 0 0
+pinnumber=2
+T 650 250 5 8 0 0 0 0
+pinseq=2
+T 500 200 5 10 0 1 0 0
+pinlabel=B
+T 500 200 5 10 0 1 0 0
+pintype=io
+}
+P 300 200 0 200 1 0 1
+{
+T 100 250 5 8 0 1 0 0
+pinnumber=1
+T 100 250 5 8 0 0 0 0
+pinseq=1
+T 300 200 5 10 0 1 0 0
+pinlabel=A
+T 300 200 5 10 0 1 0 0
+pintype=io
+}
+T 300 0 8 10 1 1 0 0
+clock=clk
+T 400 400 8 10 1 1 0 0
+refdes=S?

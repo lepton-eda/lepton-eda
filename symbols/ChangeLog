@@ -2,6 +2,10 @@
 
 	* memory/am9128-1.sym: Cosmetic improvements to this symbol
 
+	* configure.in, Makefile.am, switchcap/, system-commonrc.in: 
+	Integrated Dan McMahill's new switcap backend (the
+	symbols). switchcap/ is a new directory
+
 2003-03-30 Werner Hoch <werner.ho@gmx.de>
 	* max/max038-1.sym completed, max/max038-2.sym added
 	* max/max100-1.sym changed (missing pins)

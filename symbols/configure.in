@@ -95,6 +95,7 @@ GEDA_DECLARE_SYMLIB(connector)
 GEDA_DECLARE_SYMLIB(altera)
 GEDA_DECLARE_SYMLIB(linear)
 GEDA_DECLARE_SYMLIB(switch)
+GEDA_DECLARE_SYMLIB(switcap)
 GEDA_DECLARE_SYMLIB(titleblock)
 GEDA_DECLARE_SYMLIB(tube)
 GEDA_DECLARE_SYMLIB(radio)
@@ -157,6 +158,7 @@ AC_SUBST(dataaltera)
 AC_SUBST(datalinear)
 AC_SUBST(dataio)
 AC_SUBST(dataswitch)
+AC_SUBST(dataswitcap)
 AC_SUBST(datatitleblock)
 AC_SUBST(data4000)
 AC_SUBST(datanational)
@@ -223,6 +225,7 @@ AC_CONFIG_FILES([
 	philips/Makefile 
 	radio/Makefile 
 	switch/Makefile 
+	switcap/Makefile 
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile

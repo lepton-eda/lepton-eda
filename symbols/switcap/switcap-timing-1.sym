@@ -1,0 +1,13 @@
+v 20030223
+T 1700 700 8 10 1 0 0 0
+PERIOD=1e-6
+B 0 0 4500 1500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 0 400 4500 400 3 0 0 0 -1 -1
+T 100 1100 9 20 1 0 0 0
+Switcap Timing Block
+T 1800 3400 8 10 0 1 0 0
+device=SWITCAP-timing
+T 100 100 8 10 1 1 0 0
+refdes=TIMING
+T 3400 100 8 10 0 1 0 0
+net=GND:1

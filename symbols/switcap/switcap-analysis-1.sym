@@ -1,0 +1,13 @@
+v 20030223
+B 0 0 4400 1300 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 0 400 4400 400 3 0 0 0 -1 -1
+T 200 900 9 20 1 0 0 0
+Switcap Analysis Block
+T 1800 3400 8 10 0 1 0 0
+device=SWITCAP-analysis
+T 200 100 8 10 1 1 0 0
+refdes=ANA?
+T 200 600 8 10 1 0 0 0
+file=none
+T 3700 100 8 10 0 1 0 0
+net=GND:1

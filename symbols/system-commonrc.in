@@ -41,6 +41,7 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@tube")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@connector")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switch")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switcap")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@spice")
