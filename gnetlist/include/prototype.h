@@ -11,6 +11,7 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 /* g_rc.c */
+char *g_rc_parse_path(void);
 void g_rc_parse(void);
 SCM g_rc_gnetlist_version(SCM version);
 SCM g_rc_default_series_name(SCM name);
@@ -32,6 +33,7 @@ SCM g_rc_hierarchy_uref_separator(SCM name);
 SCM g_rc_hierarchy_netattrib_order(SCM mode);
 SCM g_rc_hierarchy_netname_order(SCM mode);
 SCM g_rc_hierarchy_uref_order(SCM mode);
+SCM g_rc_bitmap_directory(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);

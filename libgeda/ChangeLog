@@ -1,3 +1,11 @@
+2002-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/libgeda.h: Removed the last reference to gdkx.h
+
+2002-05-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added toolbars and handleboxes rc variables
+
 2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added bitmap-directory rc variable 

@@ -34,6 +34,7 @@
 #define DEFAULT_UNTITLED_NAME    "untitled"
 #define DEFAULT_SCHEME_DIRECTORY "./"
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
+#define DEFAULT_BITMAP_DIRECTORY   "non-existant"
 
 #define INIT_STR(w, name, str) {					\
 	if ((w)->name) {						\
@@ -47,6 +48,7 @@ char *default_series_name = NULL;
 char *default_untitled_name = NULL;
 char *default_scheme_directory = NULL;
 char *default_font_directory = NULL;
+char *default_bitmap_directory = NULL;
 
 int default_init_right = WIDTH_C;
 int default_init_bottom = HEIGHT_C;
@@ -93,6 +95,7 @@ void i_vars_set(TOPLEVEL * pr_current)
     INIT_STR(pr_current, untitled_name   , DEFAULT_UNTITLED_NAME   );
     INIT_STR(pr_current, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
     INIT_STR(pr_current, font_directory  , DEFAULT_FONT_DIRECTORY  );
+    INIT_STR(pr_current, bitmap_directory, DEFAULT_BITMAP_DIRECTORY  );
 
     if (!default_hierarchy_netname_separator ||
         !default_hierarchy_netattrib_separator ||
@@ -117,5 +120,6 @@ void i_vars_setnames(TOPLEVEL * w_current)
   w_current->untitled_name    = u_basic_strdup(DEFAULT_UNTITLED_NAME   );
   w_current->scheme_directory = u_basic_strdup(DEFAULT_SCHEME_DIRECTORY);
   w_current->font_directory   = u_basic_strdup(DEFAULT_FONT_DIRECTORY  );
+  w_current->bitmap_directory = u_basic_strdup(DEFAULT_BITMAP_DIRECTORY  );
   
 }

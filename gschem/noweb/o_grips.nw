@@ -469,10 +469,10 @@ o_grips_end(TOPLEVEL *w_current)
       w_current->last_y = (-1);
       w_current->inside_action=0;
       w_current->event_state = SELECT;
-      i_update_status(w_current, 
-                      "Select Mode");
       o_net_eraserubber(w_current);
       o_redraw_single(w_current, object);
+      i_update_status(w_current, "Select Mode");
+      i_update_toolbar(w_current);
       return;
     }
 	  
@@ -527,10 +527,10 @@ o_grips_end(TOPLEVEL *w_current)
       w_current->last_x = (-1);
       w_current->last_y = (-1);
       w_current->inside_action=0;
-      w_current->event_state = SELECT;
-      i_update_status(w_current, 
-                      "Select Mode");
       o_redraw_single(w_current, object);
+      w_current->event_state = SELECT;
+      i_update_status(w_current, "Select Mode");
+      i_update_toolbar(w_current);
       return;
     }
 	  
@@ -585,11 +585,11 @@ o_grips_end(TOPLEVEL *w_current)
       w_current->last_x = (-1);
       w_current->last_y = (-1);
       w_current->inside_action=0;
-      w_current->event_state = SELECT;
-      i_update_status(w_current, 
-                      "Select Mode");
       o_net_eraserubber(w_current);
       o_redraw_single(w_current, object);
+      w_current->event_state = SELECT;
+      i_update_status(w_current, "Select Mode");
+      i_update_toolbar(w_current);
       return;
     }
 	  
@@ -1052,8 +1052,9 @@ if ((box_width == 0) && (box_height == 0))
 	w_current->inside_action=0;
 	w_current->event_state = SELECT;
 	
-	i_update_status(w_current, "Select Mode");
 	o_redraw_single(w_current, o_current);
+	i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
 	
 	return;
 }
@@ -1223,6 +1224,7 @@ o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 		/* return to select mode */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
+                i_update_toolbar(w_current);
 
 		o_redraw_single(w_current, o_current);
 		return;
@@ -1377,6 +1379,7 @@ o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 		  /* return to select mode */
           w_current->event_state = SELECT;
           i_update_status(w_current, "Select Mode");
+          i_update_toolbar(w_current);
 		  
           o_redraw_single(w_current, o_current);
           return;

@@ -20,7 +20,7 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for gnetlist
-(define geda-data (getenv "GEDADATARC"))
+(define geda-data (getenv "GEDADATA"))
 (load (string-append geda-data "@PATHSEP@system-commonrc"))
 
 ;  default-series-name string

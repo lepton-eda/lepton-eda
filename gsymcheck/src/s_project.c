@@ -132,6 +132,7 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->series_name = NULL;
 	pr_current->untitled_name = NULL;
 	pr_current->font_directory = NULL;
+	pr_current->bitmap_directory = NULL;
 	pr_current->scheme_directory = NULL;
 
 /* part of page mechanism addition commented out 
@@ -313,10 +314,17 @@ s_project_close(TOPLEVEL *pr_current)
 
 	if (pr_current->font_directory) {
 		free(pr_current->font_directory);
+		pr_current->font_directory = NULL;
 	}
 
 	if (pr_current->scheme_directory) {
 		free(pr_current->scheme_directory);
+		pr_current->scheme_directory = NULL;
+	}
+	
+	if (pr_current->bitmap_directory) {
+		free(pr_current->bitmap_directory);
+		pr_current->bitmap_directory = NULL;
 	}
 
 	/* close the log file */

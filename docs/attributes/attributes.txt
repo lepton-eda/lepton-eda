@@ -57,27 +57,25 @@ in sequential order starting at pin1 going through pinN. Example: pin1=1,
 pin2=2, pin3=5.  These attributes can be either hidden or invisible.
 
 
-type
+pintype
 (inside symbols only attached to pins)
 
-Each pin should have a type=value attribute attached to it.  Here
+Each pin should have a pintype=value attribute attached to it.  Here
 is a list of valid values:
 
-IN              input
-OUT             output
-I/O             input/output
-OC              open collector
-OE              open emitter
-PAS             passive
-TP              totem pole
-TRI             tristate (high impedance)
-CLK             clock
-PWR             power/ground
+in              input
+out             output
+io              input/output
+oc              open collector
+oe              open emitter
+pas             passive
+tp              totem pole
+tri             tristate (high impedance)
+clk             clock
+pwr             power/ground
 
-The type attribute is not used in the symbol library and might change
+The pintype attribute is not used in the symbol library and might change
 drastically (due to some disagreements on the mailing list).
-This symbol was formally known as "pintype"; that name should not be
-used anymore.
 
 
 numslots

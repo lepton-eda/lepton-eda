@@ -16,6 +16,7 @@
 <<i_basic.c : i_update_left_button()>>
 <<i_basic.c : i_update_middle_button()>>
 <<i_basic.c : i_update_right_button()>>
+<<i_basic.c : i_update_toolbar()>>
 <<i_basic.c : i_set_filename()>>
 
 @
@@ -205,6 +206,87 @@ i_update_right_button(char *string)
 
 
 @ %def i_update_right_button
+
+
+@section Function @code{i_update_toolbar()}
+
+@defun i_update_toolbar w_current
+@end defun
+
+<<i_basic.c : i_update_toolbar()>>=
+void
+i_update_toolbar(TOPLEVEL *w_current)
+{
+  if (!w_current->toolbars) 
+	return;
+
+  switch(w_current->event_state) {
+ 	case(NONE):
+ 	case(SELECT):
+ 	case(STARTSELECT): 
+ 	case(TEXTENTRY): 
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_select), TRUE);
+	break;
+
+ 	case(DRAWNET): 
+ 	case(STARTDRAWNET): 
+ 	case(NETCONT): 
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_net), TRUE);
+	break;
+
+ 	case(DRAWBUS): 
+ 	case(STARTDRAWBUS): 
+ 	case(BUSCONT): 
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_bus), TRUE);
+	break;
+
+ 	case(DRAWCOMP): /* TODO */
+ 	case(DRAWLINE): /* TODO */
+ 	case(DRAWBOX): /* TODO */
+ 	case(DRAWPIN): /* TODO */
+ 	case(DRAWCIRCLE): /* TODO */
+ 	case(DRAWARC): /* TODO */
+ 	case(MOVE): /* TODO */
+ 	case(COPY): /* TODO */
+ 	case(ZOOM): /* TODO */
+ 	case(PAN): /* TODO */
+ 	case(STARTPAN): /* TODO */
+ 	case(STARTCOPY): /* TODO */
+ 	case(STARTMOVE): /* TODO */
+ 	case(ENDCOPY): /* TODO */
+ 	case(ENDMOVE): /* TODO */
+ 	case(ENDLINE): /* TODO */
+ 	case(ENDBOX): /* TODO */
+ 	case(ENDCIRCLE): /* TODO */
+ 	case(ENDARC): /* TODO */
+ 	case(ENDPIN): /* TODO */
+ 	case(ENDCOMP): /* TODO */
+ 	case(DRAWATTRIB): /* TODO */
+ 	case(ENDATTRIB): /* TODO */
+ 	case(DRAWTEXT): /* TODO */
+ 	case(ENDTEXT): /* TODO */
+ 	case(ENDROTATEP): /* TODO */
+ 	case(ENDMIRROR): /* TODO */
+ 	case(ZOOMBOXSTART): /* TODO */
+ 	case(ZOOMBOXEND): /* TODO */
+ 	case(STARTROUTENET): /* TODO */
+ 	case(ENDROUTENET): /* TODO */
+ 	case(MOUSEPAN): /* TODO */
+ 	case(STARTPASTE): /* TODO */
+ 	case(ENDPASTE): /* TODO */
+ 	case(GRIPS): /* TODO */
+	default:
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_select), TRUE);
+        break;
+  }
+}
+
+
+@ %def i_update_toolbar
 
 
 @section Function @code{i_set_filename()}

@@ -694,11 +694,10 @@ x_window_create_main(TOPLEVEL *w_current)
   GtkWidget *bottom_box;
   GtkWidget *toolbar;
   GtkWidget *handlebox;
-  GtkWidget *button1;
-  GtkWidget *button2;
-  GtkWidget *button3;
-  GtkWidget *button4;
   char *filename = NULL;
+
+  /* used to signify that the window isn't mapped yet */
+  w_current->window = NULL; 
 
   w_current->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -733,33 +732,41 @@ x_window_create_main(TOPLEVEL *w_current)
   gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
   gtk_widget_show(main_box);
 
-#if 0
   get_main_menu(w_current, &menubar);
-  gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
-  gtk_widget_show(menubar);
-#endif
+  if (w_current->handleboxes) {
+  	handlebox = gtk_handle_box_new ();
+  	gtk_box_pack_start(GTK_BOX(main_box), handlebox, FALSE, FALSE, 0);
+  	gtk_widget_show(handlebox);
+  	gtk_container_add (GTK_CONTAINER (handlebox), menubar);
+  } else {
+  	gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
+  }
 
-  handlebox = gtk_handle_box_new ();
-  gtk_box_pack_start(GTK_BOX(main_box), handlebox, FALSE, FALSE, 0);
-  get_main_menu(w_current, &menubar);
-  //gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (handlebox), menubar);
   gtk_widget_show(menubar);
-  gtk_widget_show(handlebox);
   gtk_widget_realize (w_current->main_window);
 
-  handlebox = gtk_handle_box_new ();
-  gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
-  toolbar = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_ICONS);
-  gtk_container_set_border_width (GTK_CONTAINER (toolbar), 5);
-  gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar), 5);
-  gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar), GTK_RELIEF_NONE);
-  gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_SPACE_LINE);
-  gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
+  if (w_current->handleboxes && w_current->toolbars) {
+  	handlebox = gtk_handle_box_new ();
+  	gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
+  }
+ 
+  if (w_current->toolbars) {
+  	toolbar = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, 
+				   GTK_TOOLBAR_ICONS);
+  	gtk_container_set_border_width (GTK_CONTAINER (toolbar), 5);
+  	gtk_toolbar_set_space_size (GTK_TOOLBAR (toolbar), 5);
+  	gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar), GTK_RELIEF_NONE);
+  	gtk_toolbar_set_space_style (GTK_TOOLBAR (toolbar), 
+				     GTK_TOOLBAR_SPACE_LINE);
+  	if (w_current->handleboxes) {
+  		gtk_container_add (GTK_CONTAINER (handlebox), toolbar);
+	} else {
+  		gtk_box_pack_start(GTK_BOX(main_box), toolbar, FALSE, FALSE, 0);
+	}
 
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-new.xpm", NULL);
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "New", 
 			   "New file", 
 			   "toolbar/new", 
@@ -769,10 +776,10 @@ x_window_create_main(TOPLEVEL *w_current)
 					bg[GTK_STATE_NORMAL]), 
 	      		   (GtkSignalFunc) i_callback_toolbar_file_new, 
 			   w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-open.xpm", NULL);
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Open", 
 			   "Open file...", 
 			   "toolbar/open", 
@@ -782,10 +789,10 @@ x_window_create_main(TOPLEVEL *w_current)
 					bg[GTK_STATE_NORMAL]), 
 	      		   (GtkSignalFunc) i_callback_toolbar_file_open, 
 			   w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-save.xpm", NULL);
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Save", 
 			   "Save file", 
 			   "toolbar/save", 
@@ -795,11 +802,11 @@ x_window_create_main(TOPLEVEL *w_current)
 					bg[GTK_STATE_NORMAL]), 
 	      		   (GtkSignalFunc) i_callback_toolbar_file_save, 
 			   w_current);
-  gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-undo.xpm", NULL);
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Undo", 
 			   "Undo last operation", 
 			   "toolbar/undo", 
@@ -809,10 +816,10 @@ x_window_create_main(TOPLEVEL *w_current)
 					bg[GTK_STATE_NORMAL]), 
 	      		   (GtkSignalFunc) i_callback_toolbar_edit_undo, 
 			   w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-redo.xpm", NULL);
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Redo", 
 			   "Redo last undo", 
 			   "toolbar/redo", 
@@ -822,12 +829,12 @@ x_window_create_main(TOPLEVEL *w_current)
 					bg[GTK_STATE_NORMAL]), 
 	      		   (GtkSignalFunc) i_callback_toolbar_edit_redo, 
 			   w_current);
-  gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-comp.xpm", NULL);
-  /* not part of any radio button group */
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	/* not part of any radio button group */
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Component", 
 			   "Add component...", 
 			   "toolbar/component", 
@@ -837,41 +844,41 @@ x_window_create_main(TOPLEVEL *w_current)
 					bg[GTK_STATE_NORMAL]), 
 	      		   (GtkSignalFunc) i_callback_toolbar_add_component, 
 			   w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-net.xpm", NULL);
-  w_current->toolbar_net = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_net = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      NULL,
                                      "Nets",
-                                     "Add nets mode",
+                                     "Add nets mode\nRight mouse button to cancel",
                                      "toolbar/nets",
 	                             x_window_new_pixmap (filename,
                                      w_current->main_window->window,
                                      &w_current->main_window->style->
                                      bg[GTK_STATE_NORMAL]),
-	      		             (GtkSignalFunc) NULL, 
+	      		             (GtkSignalFunc) i_callback_toolbar_add_net,
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-bus.xpm", NULL);
-  w_current->toolbar_bus = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_bus = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_net,
                                      "Bus",
-                                     "Add buses mode",
+                                     "Add buses mode\nRight mouse button to cancel",
                                      "toolbar/bus",
 	                             x_window_new_pixmap (filename,
                                      w_current->main_window->window,
                                      &w_current->main_window->style->
                                      bg[GTK_STATE_NORMAL]),
-	      		             (GtkSignalFunc) NULL, 
+	      		             (GtkSignalFunc) i_callback_toolbar_add_bus,
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-text.xpm", NULL);
-  /* not part of any radio button group */
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
+  	/* not part of any radio button group */
+  	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Text", 
 			   "Add Text...", 
 			   "toolbar/text", 
@@ -882,11 +889,11 @@ x_window_create_main(TOPLEVEL *w_current)
 	      		   (GtkSignalFunc) i_callback_toolbar_add_text, 
 			   w_current);
 
-  gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
+  	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
 
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-select.xpm", NULL);
-  w_current->toolbar_select = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_select = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_bus,
                                      "Select",
@@ -896,12 +903,14 @@ x_window_create_main(TOPLEVEL *w_current)
                                      w_current->main_window->window,
                                      &w_current->main_window->style->
                                      bg[GTK_STATE_NORMAL]),
-	      		             (GtkSignalFunc) NULL, 
+	      		   	     (GtkSignalFunc) i_callback_toolbar_edit_select, 
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+
+#if 0 /* out until they work */
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-edit.xpm", NULL);
-  w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_select,
                                      "Edit",
@@ -913,10 +922,10 @@ x_window_create_main(TOPLEVEL *w_current)
                                      bg[GTK_STATE_NORMAL]),
 	      		             (GtkSignalFunc) NULL, 
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-move.xpm", NULL);
-  w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_edit,
                                      "Move",
@@ -928,10 +937,10 @@ x_window_create_main(TOPLEVEL *w_current)
                                      bg[GTK_STATE_NORMAL]),
 	      		             (GtkSignalFunc) NULL, 
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-copy.xpm", NULL);
-  w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_edit,
                                      "Copy",
@@ -943,10 +952,10 @@ x_window_create_main(TOPLEVEL *w_current)
                                      bg[GTK_STATE_NORMAL]),
 	      		             (GtkSignalFunc) NULL, 
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-delete.xpm", NULL);
-  w_current->toolbar_delete = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_delete = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_edit,
                                      "Delete",
@@ -958,10 +967,10 @@ x_window_create_main(TOPLEVEL *w_current)
                                      bg[GTK_STATE_NORMAL]),
 	      		             (GtkSignalFunc) NULL, 
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-rotate.xpm", NULL);
-  w_current->toolbar_rotate = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_rotate = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_delete,
                                      "Rotate",
@@ -973,10 +982,10 @@ x_window_create_main(TOPLEVEL *w_current)
                                      bg[GTK_STATE_NORMAL]),
 	      		             (GtkSignalFunc) NULL, 
 			             w_current);
-  free(filename);
-  filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
+  	free(filename);
+  	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
 			       PATH_SEPARATER_STRING, "gschem-mirror.xpm", NULL);
-  w_current->toolbar_mirror = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
+  	w_current->toolbar_mirror = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_rotate,
                                      "Mirror",
@@ -988,15 +997,18 @@ x_window_create_main(TOPLEVEL *w_current)
                                      bg[GTK_STATE_NORMAL]),
 	      		             (GtkSignalFunc) NULL, 
 			             w_current);
-  free(filename);
+  	free(filename);
+#endif
 
-  gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w_current->toolbar_select),
+  	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
+  	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w_current->toolbar_select),
 			       TRUE);
-  gtk_widget_show (toolbar);
-  gtk_widget_show (handlebox);
+  	gtk_widget_show (toolbar);
+  } 
 
-
+  if (w_current->handleboxes) {
+  	gtk_widget_show (handlebox);
+  }
 
   get_main_popup(w_current, &(w_current->popup_menu));
 

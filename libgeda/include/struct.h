@@ -742,6 +742,12 @@ struct st_toplevel {
   /* warp the cursor when zooming */
   int warp_cursor;                    
 
+  /* controls if the toolbar(s) are enabled or disabled */
+  int toolbars;                    
+
+  /* controls if the handleboxes are enabled or disabled */
+  int handleboxes;                    
+
   /* either window or limits */
   int print_output_type;
 

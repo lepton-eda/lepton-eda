@@ -1,5 +1,6 @@
 /* g_rc.c */
 void set_static_project_current(TOPLEVEL *pr_current);
+char *g_rc_parse_path(void);
 void g_rc_parse(TOPLEVEL *pr_current);
 SCM g_rc_gsymcheck_version(SCM version);
 SCM g_rc_default_series_name(SCM name);
@@ -10,6 +11,7 @@ SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
+SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_paper_size(SCM width, SCM height, SCM border);
 /* g_register.c */
 void g_register_funcs(void);

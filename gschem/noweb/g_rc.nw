@@ -100,6 +100,8 @@
 <<g_rc.c : g_rc_add_menu()>>
 <<g_rc.c : g_rc_window_size()>>
 <<g_rc.c : g_rc_warp_cursor()>>
+<<g_rc.c : g_rc_toolbars()>>
+<<g_rc.c : g_rc_handleboxes()>>
 
 @
 
@@ -2506,6 +2508,7 @@ g_rc_draw_grips(SCM mode)
 	RETURN_G_RC_MODE("draw-grips", default_draw_grips, 2);
 }
 
+
 @ %def g_rc_draw_grips
 
 
@@ -2525,6 +2528,7 @@ g_rc_netconn_rubberband(SCM mode)
 
   RETURN_G_RC_MODE("netconn-rubberband", default_netconn_rubberband, 2);
 }
+
 
 @ %def g_rc_netconn_rubberband
 
@@ -2546,6 +2550,7 @@ g_rc_sort_component_library(SCM mode)
   default_sort_component_library, 
   2);
 }
+
 
 @ %def g_rc_sort_component_library
 
@@ -2592,6 +2597,8 @@ g_rc_window_size(SCM width, SCM height)
 
   return SCM_BOOL_T;
 }
+
+
 @ %def g_rc_window_size
 
 
@@ -2612,4 +2619,47 @@ g_rc_warp_cursor(SCM mode)
   RETURN_G_RC_MODE("warp-cursor", default_warp_cursor, 2);
 }
 
+
 @ %def g_rc_warp_cursor
+
+
+@section Function @code{g_rc_toolbars()}
+
+@defun g_rc_toolbars mode
+@end defun
+ 
+<<g_rc.c : g_rc_toolbars()>>=
+SCM
+g_rc_toolbars(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("toolbars", default_toolbars, 2);
+}
+
+
+@ %def g_rc_toolbars
+
+
+@section Function @code{g_rc_handleboxes()}
+
+@defun g_rc_handleboxes mode
+@end defun
+ 
+<<g_rc.c : g_rc_handleboxes()>>=
+SCM
+g_rc_handleboxes(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("handleboxes", default_handleboxes, 2);
+}
+
+
+@ %def g_rc_toolbars

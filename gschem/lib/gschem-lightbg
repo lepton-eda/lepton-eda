@@ -1,0 +1,232 @@
+
+; 
+; Light background color init file for gschem
+;
+
+;  ;'s are comments
+;  keywords are case sensitive (guile feature)
+;  mode strings are case sensitive
+;  colors are not case sensitive 
+;  
+
+;
+; Start of color related keywords
+;
+
+;
+; Color index reference
+;
+; All valid X color names are valid (assuming you can allocate the colors)
+; DO NOT change the index value of these colors, unless you understand what
+; you are changing.
+
+; BACKGROUND_COLOR                0
+; PIN_COLOR                       1
+; NET_ENDPOINT_COLOR              2
+; GRAPHIC_COLOR                   3
+; NET_COLOR                       4
+; ATTRIBUTE_COLOR                 5
+; LOGIC_BUBBLE_COLOR              6
+; GRID_COLOR                      7
+; DETACHED_ATTRIBUTE_COLOR        8
+; TEXT_COLOR                      9
+; BUS_COLOR                       10
+; SELECT_COLOR                    11
+; BOUNDINGBOX_COLOR               12
+; ZOOM_BOX_COLOR                  13
+; STROKE_COLOR                    14
+; LOCK_COLOR    	          15
+; OUTPUT_BACKGROUND_COLOR         16
+; Freestyle colors		  17-20
+;
+; OVERRIDE_NET_COLOR              4
+; OVERRIDE_PIN_COLOR              1
+; OVERRIDE_BUS_COLOR              10
+
+;
+; In all of the color modes: 
+; 	the first string is the actual color name
+;	the second string is the outline color name 
+; 	the third string is the postscript color name
+; 	and the final 3 integers are the RGB values for PNG image files
+;
+
+
+
+; background-color index color_name outline_color ps_color_string 
+;                  int_red int_green int_blue 
+; Set the default background color.  
+; DO NOT change the value of the index (first number)
+;
+(background-color 0 "grey94" "null" "null" -1 -1 -1)  	; light background
+
+; pin-color index color_name outline_color ps_color_string 
+;           int_red int_green int_blue 
+; Set the color of any new pins (does not effect existing pins).
+; To change existing pins use the override-pin-color
+; DO NOT change the value of the index (first number)
+;
+(pin-color 1 "black" "grey30" "0 0 0" 0 0 0)		; light background
+
+; net-endpoint-color index color_name outline_color ps_color_string 
+;                    int_red int_green int_blue 
+; Set the default net endpoint color.  
+; DO NOT change the value of the index (first number)
+;
+(net-endpoint-color 2 "red" "red3" "1 0 0" 255 0 0)	; light background
+
+; graphic-color index color_name outline_color ps_color_string 
+;               int_red int_green int_blue 
+; Set the default graphics color.  All new Lines, Boxes, Circles, and Arcs 
+; are effected by this keyword.  Existing graphic objects are not effected 
+; by this keyword.  
+; DO NOT change the value of the index (first number)
+; 
+(graphic-color 3 "green3" "green4" "0 .54 0" 0 139 0)	; light background
+
+; net-color index color_name outline_color ps_color_string 
+;           int_red int_green int_blue 
+; Set the color of any new nets (does not effect existing nets).
+; To change existing nets use the override-net-color 
+; DO NOT change the value of the index (first number)
+;
+(net-color 4 "blue2" "blue3" "0 0 1" 0 0 255)		; light background
+
+; attribute-color index color_name outline_color ps_color_string 
+;                 int_red int_green int_blue 
+; Set the color of attributes.  Attributes are any object associated with 
+; another with the 'Attach Attribute' command.  
+; DO NOT change the value of the index (first number)
+;
+(attribute-color 5 "black" "grey30" "0 0 0" 0 0 0)	  ; light background
+
+; logic-bubble-color index color_name outline_color ps_color_string 
+;                    int_red int_green int_blue 
+; Set the color of logic bubbles / circles.  
+; DO NOT change the value of the index (first number)
+;
+(logic-bubble-color 6 "DarkCyan" "DarkCyan" "0 .54 .54" 0 139 139) ; light bg  
+
+; grid-color index color_name outline_color ps_color_string 
+;            int_red int_green int_blue 
+; Set the default grid color.  
+; DO NOT change the value of the index (first number)
+;
+(grid-color 7 "grey50" "null" "null" -1 -1 -1)		; light background
+
+; detached-attribute-color index color_name outline_color ps_color_string 
+;                          int_red int_green int_blue 
+; Set the color of detached attributes.  Detached attributes are just 
+; text items which were attributes at one time.  Detached attributes 
+; are created in conjunction with the 'Detach Attribute' command.  
+; DO NOT change the value of the index (first number)
+;
+(detached-attribute-color 8 "red" "red3" "1 0 0" 255 0 0)   ; light background
+
+; text-color index color_name outline_color ps_color_string 
+;            int_red int_green int_blue 
+; Set the color of any new text (does not effect attributes, see below).
+; Existing graphic objects are not effected by this keyword.  
+; DO NOT change the value of the index (first number)
+;
+(text-color 9 "green3" "green4" "0 .54 0" 0 139 0)	    ; light background
+
+; bus-color index color_name outline_color ps_color_string 
+;           int_red int_green int_blue 
+; Set the color of any new buses (does not effect existing buses).
+; To change existing buses use the override-bus-color 
+; DO NOT change the value of the index (first number)
+;
+(bus-color 10 "green2" "green3" "0 .9333 0" 0 238 0)	    ; light background
+
+; select-color index color_name outline_color ps_color_string 
+;              int_red int_green int_blue 
+; Set the default selection color.  This include the bounding box in window
+; selects and when objects are selected.  
+; DO NOT change the value of the index (first number)
+;
+(select-color 11 "firebrick" "firebrick" "null" -1 -1 -1)   ; light background
+
+; boundingbox-color index color_name outline_color ps_color_string 
+;                   int_red int_green int_blue 
+; Set the default bounding box color.  The bounding box color is displayed 
+; whenever you request that actions (move/copy/place) use a bounding box 
+; instead of the default outline.  
+; DO NOT change the value of the index (first number)
+; 
+(boundingbox-color 12 "orange" "orange" "null" -1 -1 -1)    ; light background
+
+; zoom-box-color index color_name outline_color ps_color_string 
+;                int_red int_green int_blue 
+; Set the default zoom box color.  The zoom box color is displayed 
+; whenever you use the zoom window / box option. 
+; DO NOT change the value of the index (first number)
+; 
+(zoom-box-color 13 "DarkCyan" "DarkCyan" "null" -1 -1 -1)    ; light background
+
+; stroke-color index color_name outline_color ps_color_string 
+;              int_red int_green int_blue 
+; Set the default stroke color which is displayed when you draw a stroke.
+; Basically this color specifies what the mouse droppings color
+; DO NOT change the value of the index (first number)
+;
+(stroke-color 14 "grey90" "grey90" "null" -1 -1 -1)	     ; light background
+
+; lock-color index color_name outline_color ps_color_string 
+;            int_red int_green int_blue 
+; Set the default lock color which is used when you lock an object down
+; DO NOT change the value of the index (first number)
+;
+(lock-color 15 "grey40" "darkgrey" ".4 .4 .4" 102 102 102)   ; light background
+
+; output-color-background index color_name outline_color ps_color_string 
+;                         int_red int_green int_blue 
+; Specifies the color of the background of the output (color postscript file)
+; 	- string is one of the valid colors
+; 	- Only used if ouput-color is "enabled" (see above)
+; DO NOT change the value of the index (first number)
+;
+(output-color-background 16 "white" "null" "1 1 1" 255 255 255) ; light back
+
+; override-net-color index color_name outline_color ps_color_string 
+;                    int_red int_green int_blue 
+; Override the color of ALL nets
+; New net color will be applied to all nets in any file which is opened and
+; then saved. Comment out if you don't want to override the net color.
+; DO NOT change the value of the index (first number)
+; 
+;(override-net-color 4 "blue" "blue3" "0 0 1" 0 0 255)
+
+; override-pin-color index color_name outline_color ps_color_string 
+;                    int_red int_green int_blue 
+; Override the color of ALL pins
+; New pin color will be applied to all pin in any file which is opened and
+; then saved.  Comment out if you don't want to override the pin color.
+; DO NOT change the value of the index (first number)
+;
+;(override-pin-color 1 "white" "grey" "1 1 1" 255 255 255)
+
+; override-bus-color index color_name outline_color ps_color_string 
+;                    int_red int_green int_blue 
+; Override the color of ALL buses
+; New net color will be applied to all buses in any file which is opened and
+; then saved. Comment out if you don't want to override the bus color.
+; DO NOT change the value of the index (first number)
+; 
+;(override-bus-color 10 "green" "green3" "0 1 0" 0 255 0)
+
+; freestyle-color index color_name outline_color ps_color_string 
+;            int_red int_green int_blue 
+; Set a freestyle color which can be used in whatever context you want.
+; However, care should be taken with this facility since users might 
+; change this colors at will.
+;
+;(freestyle-color 17 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+;(freestyle-color 18 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+;(freestyle-color 19 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+;(freestyle-color 20 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+
+;
+; End of color related keywords
+;
+

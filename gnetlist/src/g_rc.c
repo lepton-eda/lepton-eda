@@ -750,6 +750,57 @@ g_rc_font_directory(SCM path)
 	return SCM_BOOL_T;
 }
 
+
+SCM
+g_rc_bitmap_directory(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string = gh_scm2newstr(path, NULL);
+
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"bitmap-direcoty"
+			);
+		return SCM_BOOL_F;
+	}
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+			"Invalid path [%s] passed to bitmap-directory\n",
+			string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	if (default_bitmap_directory) {
+		free(default_bitmap_directory);
+	}
+	default_bitmap_directory = u_basic_strdup(string);
+
+	if (string) {
+		free(string);
+	}
+	return SCM_BOOL_T;
+}
+
 SCM
 g_rc_world_size(SCM width, SCM height, SCM border)
 {
@@ -931,8 +982,4 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
 }
 
 /*************************** GUILE end done *********************************/
-
-
-
-
 

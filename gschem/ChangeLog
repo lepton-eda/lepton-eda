@@ -1,3 +1,41 @@
+2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Fixed incorrect environment variable name
+        "GEDADATARC" to be GEDADATA. 
+
+2002-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
+ 
+	* noweb/i_basic.nw, o_grips.nw, x_fileselect.nw, i_callbacks.nw,
+        x_event.nw: Add a bunch of i_update_toolbar calls to make sure that
+	the toolbar reflects the current event_state.
+
+2002-05-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/gschem-darkbg, gschem-lightbg: Added these files which allow
+	the user the ability to easily switch between a dark or light
+	background.
+
+	* lib/system-gschemrc.in: Added code to easily switch between a dark
+	or light background color scheme.
+
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw, x_window.nw: Implemented
+	the toolbars and handleboxes rc variables
+
+	* lib/system-gschemrc.in: Add the use of toolbars and handleboxes
+	rc variables
+
+	* lib/system-gschemrc.in: Adjusted the size of the window to take
+	into account the handleboxes and toolbar.
+
+	* noweb/x_event.nw: A code to get the toolbar buttons to act
+	correctly.
+
+	* noweb/i_basic.nw: Added i_update_toolbar_select, which sets the
+	toolbar icon to select.  This code needs to be refactored.
+
+	* noweb/x_window.nw: Commented out the toolbars which are not 
+	ready for use yet.
+
 2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw: Added bitmap-directory 

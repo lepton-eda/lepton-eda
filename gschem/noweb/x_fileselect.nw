@@ -803,8 +803,9 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
       update_page_manager(NULL, w_current);
     } else {
       s_log_message("Could NOT save [%s]\n",w_current->page_current->page_filename);
-      i_update_status(w_current, "Error while trying to save - Select Mode");
       w_current->event_state = SELECT;    
+      i_update_status(w_current, "Error while trying to save - Select Mode");
+      i_update_toolbar(w_current);
     }
 
     x_fileselect_close (NULL, f_current);
@@ -1697,6 +1698,7 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
 
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
   /* do nothing if close is pressed for SAVEAS_CLOSE case */

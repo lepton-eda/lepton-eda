@@ -563,6 +563,47 @@ g_rc_font_directory(SCM path)
 	return(gh_int2scm(0)); 
 }
 
+
+SCM
+g_rc_bitmap_directory(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string;
+
+	string = gh_scm2newstr(path, NULL);
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+	
+	if (ret < 0) {
+		fprintf(stderr, "Invalid path [%s] passed to bitmap-directory\n", string);
+	} else {
+
+		if (S_ISDIR(buf.st_mode)) {
+			if (project_current->bitmap_directory)
+				free(project_current->bitmap_directory);
+
+			project_current->bitmap_directory = malloc(sizeof(char)*(
+					strlen(string)+1));
+			strcpy(project_current->bitmap_directory, string);
+
+		} else {
+			if (string) free(string);
+			return(gh_int2scm(-1)); 
+		}
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+
 SCM 
 g_rc_paper_size(SCM width, SCM height, SCM border) 
 {

@@ -6,6 +6,7 @@ MISC_FLAGS="-I/usr/X11R6/include -I../include -I. -I.."
 
 ALES_HACK=-D__GNUC__
 
+make src
 cproto $ALES_HACK $CFLAGS $MISC_FLAGS *.c > new_proto
 
 mv -f new_proto ../include/prototype.h

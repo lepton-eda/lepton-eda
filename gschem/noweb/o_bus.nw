@@ -469,8 +469,8 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
          w_current->last_x = (-1);
          w_current->last_y = (-1);
          w_current->inside_action=0;
-         w_current->event_state = SELECT;
-         i_update_status(w_current, "Select Mode");
+         w_current->event_state = STARTDRAWBUS;
+         i_update_status(w_current, "Bus Mode");
          o_bus_eraserubber(w_current);
          return(FALSE);
        }

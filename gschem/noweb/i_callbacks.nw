@@ -44,6 +44,7 @@
 <<i_callbacks.c : i_callback_edit_redo()>>
 <<i_callbacks.c : i_callback_toolbar_edit_redo()>>
 <<i_callbacks.c : i_callback_edit_select()>>
+<<i_callbacks.c : i_callback_toolbar_edit_select()>>
 <<i_callbacks.c : i_callback_edit_copy()>>
 <<i_callbacks.c : i_callback_edit_copy_hotkey()>>
 <<i_callbacks.c : i_callback_edit_move()>>
@@ -124,8 +125,10 @@
 <<i_callbacks.c : i_callback_add_attribute_hotkey()>>
 <<i_callbacks.c : i_callback_add_net()>>
 <<i_callbacks.c : i_callback_add_net_hotkey()>>
+<<i_callbacks.c : i_callback_toolbar_add_net()>>
 <<i_callbacks.c : i_callback_add_bus()>>
 <<i_callbacks.c : i_callback_add_bus_hotkey()>>
+<<i_callbacks.c : i_callback_toolbar_add_bus()>>
 <<i_callbacks.c : i_callback_add_text()>>
 <<i_callbacks.c : i_callback_toolbar_add_text()>>
 <<i_callbacks.c : i_callback_add_line()>>
@@ -409,7 +412,11 @@ DEFINE_I_CALLBACK(file_new)
 /* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
-   i_callback_file_new((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+    
+  i_callback_file_new((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -502,7 +509,11 @@ DEFINE_I_CALLBACK(file_open)
 /* This should be renamed to page_open perhaps... */
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
-   i_callback_file_open((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  i_callback_file_open((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -560,15 +571,17 @@ DEFINE_I_CALLBACK(file_save)
     if (f_save(w_current, w_current->page_current->page_filename) ) {
 	    s_log_message("Saved [%s]\n",w_current->page_current->page_filename);
 	    /* don't know if should be kept going to select mode... */
-	    i_update_status(w_current, "Saved - Select Mode");
 	    w_current->event_state = SELECT;
 	    w_current->page_current->CHANGED = 0;
+	    i_update_status(w_current, "Saved - Select Mode");
+	    i_update_toolbar(w_current);
 	    update_page_manager(NULL, w_current);
     } else {
       	    s_log_message("Could NOT save [%s]\n", w_current->page_current->page_filename);
 
-	    i_update_status(w_current, "Error while trying to save - Select Mode");
 	    w_current->event_state = SELECT;    
+	    i_update_status(w_current, "Error while trying to save - Select Mode");
+	    i_update_toolbar(w_current);
     } 
   }
 }
@@ -589,7 +602,11 @@ DEFINE_I_CALLBACK(file_save)
 /* This should be renamed to page_open perhaps... */
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
-   i_callback_file_save((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  i_callback_file_save((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -612,8 +629,9 @@ DEFINE_I_CALLBACK(file_save_all)
 
   s_page_save_all(w_current);
 
-  i_update_status(w_current, "Saved All - Select");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Saved All - Select");
+  i_update_toolbar(w_current);
   update_page_manager(NULL, w_current);
 }
 
@@ -841,7 +859,11 @@ DEFINE_I_CALLBACK(edit_undo)
 /* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
-   i_callback_edit_undo((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  i_callback_edit_undo((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -875,7 +897,11 @@ DEFINE_I_CALLBACK(edit_redo)
 /* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
-   i_callback_edit_redo((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  i_callback_edit_redo((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -896,11 +922,60 @@ DEFINE_I_CALLBACK(edit_select)
   /* this is probably the only place this should be */
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   w_current->inside_action = 0;
 }
 
 
 @ %def i_callback_edit_select
+
+
+@section Function @code{i_callback_toolbar_edit_select()}
+
+@defun i_callback_toolbar_edit_select widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_edit_select()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active) {
+    if (w_current->inside_action) {
+	switch(w_current->event_state)
+	{
+	case(DRAWNET):
+        case(NETCONT):
+       		w_current->inside_action = 0;
+        	w_current->event_state = SELECT;
+        	i_update_status(w_current, "Select Mode");
+        	o_net_eraserubber(w_current);
+        break;
+
+        case(DRAWBUS):
+        case(BUSCONT):
+        	w_current->inside_action = 0;
+        	w_current->event_state = SELECT;
+        	i_update_status(w_current, "Select Mode");
+        	o_bus_eraserubber(w_current);
+        break;
+
+        default:
+	        i_callback_cancel(w_current, 0, NULL);
+        break;
+	}
+    }
+
+    i_callback_edit_select((TOPLEVEL*) data, 0, NULL);
+  }
+}
+
+
+@ %def i_callback_toolbar_edit_select
 
 
 @section Function @code{i_callback_edit_copy()}
@@ -1021,8 +1096,9 @@ DEFINE_I_CALLBACK(edit_delete)
     /* if you delete the objects you must go into select
      * mode after the delete */
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
     w_current->inside_action = 0;
+    i_update_status(w_current, "Select Mode");
+    i_update_toolbar(w_current);
   }
 }
 
@@ -1168,6 +1244,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 
   w_current->event_state = SELECT;
   w_current->inside_action = 0;
+  i_update_toolbar(w_current);
 }
 
 
@@ -1222,6 +1299,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 
   w_current->event_state = SELECT;
   w_current->inside_action = 0;
+  i_update_toolbar(w_current);
 }
 
 
@@ -1814,6 +1892,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
        w_current->event_state == STARTDRAWNET )) {
     w_current->event_state = SELECT;
     i_update_status(w_current, "Select Mode");
+    i_update_toolbar(w_current);
   }
   o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
@@ -2818,7 +2897,11 @@ DEFINE_I_CALLBACK(add_component)
 /* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
-   i_callback_add_component((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  i_callback_add_component((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -2885,6 +2968,7 @@ DEFINE_I_CALLBACK(add_net)
   w_current->event_state = STARTDRAWNET;
   i_update_middle_button(w_current, i_callback_add_net, "Net");
   i_update_status2(w_current, "Net Mode");
+  i_update_toolbar(w_current);
   /* somewhere you need to nearest point locking... */
   w_current->inside_action = 0;
 }
@@ -2905,11 +2989,12 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 
   exit_if_null(w_current);
 
+  w_current->event_state = STARTDRAWNET;
+
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net_hotkey, "Net");
   i_update_status2(w_current, "Net Mode");
-
-  w_current->event_state = STARTDRAWNET;
+  i_update_toolbar(w_current);
 
   o_net_start(w_current, mouse_x, mouse_y);
 
@@ -2919,6 +3004,29 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 
 
 @ %def i_callback_add_net_hotkey
+
+
+@section Function @code{i_callback_toolbar_add_net()}
+
+@defun i_callback_toolbar_add_net widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_add_net()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active) {
+    i_callback_add_net((TOPLEVEL*) data, 0, NULL);
+  }
+}
+
+
+@ %def i_callback_toolbar_add_net
 
 
 @section Function @code{i_callback_add_bus()}
@@ -2933,10 +3041,13 @@ DEFINE_I_CALLBACK(add_bus)
 
   exit_if_null(w_current);
 
-  /* need to click */
   w_current->event_state = STARTDRAWBUS;
+
+  /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus, "Bus");
   i_update_status2(w_current, "Bus Mode");
+  i_update_toolbar(w_current);
+
   /* somewhere you need to nearest point locking... */
   w_current->inside_action = 0;
 }
@@ -2960,6 +3071,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus_hotkey, "Bus");
   i_update_status2(w_current, "Bus Mode");
+  i_update_toolbar(w_current);
 
   w_current->event_state = STARTDRAWBUS;
 
@@ -2971,6 +3083,29 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
 
 
 @ %def i_callback_add_bus_hotkey
+
+
+@section Function @code{i_callback_toolbar_add_bus()}
+
+@defun i_callback_toolbar_add_bus widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_add_bus()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active) {
+     i_callback_add_bus((TOPLEVEL*) data, 0, NULL);
+  }
+}
+
+
+@ %def i_callback_toolbar_add_bus
 
 
 @section Function @code{i_callback_add_text()}
@@ -3003,7 +3138,11 @@ DEFINE_I_CALLBACK(add_text)
 /* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-   i_callback_add_text((TOPLEVEL*) data, 0, NULL);
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  exit_if_null(w_current);
+  if (!w_current->window) return;
+
+  i_callback_add_text((TOPLEVEL*) data, 0, NULL);
 }
 
 
@@ -3996,6 +4135,7 @@ DEFINE_I_CALLBACK(cancel)
   /* (when you cancel inside an action) should be */
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   o_redraw_all(w_current); /* do I want to deselect sel */
 

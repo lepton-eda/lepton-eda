@@ -53,6 +53,7 @@ void g_register_funcs(void)
 			g_rc_source_library_search);
     gh_new_procedure1_0("font-directory", g_rc_font_directory);
     gh_new_procedure1_0("scheme-directory", g_rc_scheme_directory);
+    gh_new_procedure1_0("bitmap-directory", g_rc_bitmap_directory);
     gh_new_procedure3_0("world-size", g_rc_world_size);
     
     gh_new_procedure1_0("net-naming-priority", g_rc_net_naming_priority);

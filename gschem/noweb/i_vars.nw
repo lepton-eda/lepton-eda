@@ -153,6 +153,8 @@ int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = FALSE;
 int   default_sort_component_library = FALSE;
 int   default_warp_cursor = TRUE;
+int   default_toolbars = TRUE;
+int   default_handleboxes = TRUE;
 
 int   default_width = 800;  /* these variables are used in x_window.c */
 int   default_height = 600;
@@ -260,6 +262,8 @@ i_vars_set(TOPLEVEL *w_current)
   w_current->netconn_rubberband = default_netconn_rubberband;
   w_current->sort_component_library = default_sort_component_library;
   w_current->warp_cursor = default_warp_cursor;
+  w_current->toolbars = default_toolbars;
+  w_current->handleboxes = default_handleboxes;
 
   w_current->paper_width  = default_paper_width;
   w_current->paper_height = default_paper_height;

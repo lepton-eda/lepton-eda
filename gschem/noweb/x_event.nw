@@ -378,8 +378,9 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                           (int) event->y);
         } else {
           w_current->event_state=SELECT;
-          i_update_status(w_current, "Select Mode");
           w_current->inside_action = 0;
+          i_update_status(w_current, "Select Mode");
+          i_update_toolbar(w_current);
         }
         break;
 
@@ -389,8 +390,9 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                            fix_y(w_current, (int) event->y),
                            w_current->buffer_number);
         w_current->event_state=SELECT;
-        i_update_status(w_current, "Select Mode");
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(ENDATTRIB):
@@ -398,8 +400,9 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				/* not sure on this one either... */
 				/* keep it as well */
         w_current->event_state=SELECT;
-        i_update_status(w_current, "Select Mode");
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
 				/* the following happen inside attrib_end */
 				/* therefore they are commeneted out here */
                                 /* o_redraw_single(object_tail);*/
@@ -415,6 +418,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
         w_current->event_state = SELECT;
         i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(ENDMIRROR):
@@ -425,15 +429,17 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
         w_current->event_state = SELECT;
         i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(ENDTEXT):
         o_text_end(w_current);
 				/* not sure on this one either... */
 				/* keep it as well */
+        w_current->inside_action = 0;
         w_current->event_state=SELECT;
         i_update_status(w_current, "Select Mode");
-        w_current->inside_action = 0;
+        i_update_toolbar(w_current);
 				/* the following happen inside attrib_end */
 				/* therefore they are commeneted out here */
                                 /* o_redraw_single(object_tail);*/
@@ -448,6 +454,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				/* keep this one too */
         w_current->event_state = SELECT;
         i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
 				/* go to select state or not? hack */
         break;
 
@@ -504,8 +511,8 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
          * find anything */
         w_current->event_state = SELECT;
         w_current->inside_action = 0;
-        i_update_status(w_current,
-                        "Select Mode");
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         return(0);
       }
 
@@ -552,30 +559,31 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         start_pan_y = (int) event->y;
         throttle=0;
       }
-    } else {
+    } else { /* this is the default cancel */
       switch (w_current->event_state) {
+        case(STARTDRAWNET):
         case(DRAWNET):
         case(NETCONT):
         w_current->inside_action = 0;
-        w_current->event_state = SELECT;
-        i_update_status(w_current, "Select Mode");
+        w_current->event_state = STARTDRAWNET;
+        i_update_status(w_current, "Net Mode");
         o_net_eraserubber(w_current);
         break;
 
+        case(STARTDRAWBUS):
         case(DRAWBUS):
         case(BUSCONT):
         w_current->inside_action = 0;
-        w_current->event_state = SELECT;
-        i_update_status(w_current, "Select Mode");
+        w_current->event_state = STARTDRAWBUS;
+        i_update_status(w_current, "Bus Mode");
         o_bus_eraserubber(w_current);
         break;
 
-				/* TODO: go and seperate each draw to
-				 * call the currect eraserubber */
         default:
         i_callback_cancel(w_current, 0, NULL);
         break;
       }
+      i_update_toolbar(w_current);	
     }
   }
   return(0);
@@ -622,25 +630,28 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
       case(GRIPS):
         o_grips_end(w_current), 
-          w_current->event_state = SELECT;
-        i_update_status(w_current, "Select Mode");
+        w_current->event_state = SELECT;
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(ENDMOVE):
         o_move_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->event_state = SELECT;
-        i_update_status(w_current, "Select Mode");
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(ENDCOPY):
         o_copy_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->event_state = SELECT;
-        i_update_status(w_current, "Select Mode");
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(SBOX):
@@ -654,6 +665,8 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* this one stays */
         w_current->event_state = SELECT;
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(ZOOMBOXEND):
@@ -664,9 +677,10 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                        (int) event->x,
                        (int) event->y);
         /* this one stays */
-        i_update_status(w_current, "Select Mode");
         w_current->event_state = SELECT;
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
       case(STARTSELECT):
@@ -733,17 +747,17 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         case(MOVE):
         o_move_end(w_current);
         w_current->event_state = SELECT;
-        i_update_status(w_current, 
-                        "Select Mode");
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
 
         case(COPY):
         o_copy_end(w_current);
         w_current->event_state = SELECT;
-        i_update_status(w_current, 
-                        "Select Mode");
         w_current->inside_action = 0;
+        i_update_status(w_current, "Select Mode");
+        i_update_toolbar(w_current);
         break;
       }
       break;
@@ -783,12 +797,17 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
     }
 
   } else if (event->button == 3) {
-    w_current->event_state = SELECT;
-    w_current->inside_action = 0;
-    if (w_current->doing_pan) {
+    if (w_current->doing_pan) { /* just for ending a mouse pan */
       w_current->doing_pan=FALSE;
       o_redraw_all_fast(w_current);
       o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+      /* this needs to be REDONE */
+      /* if you mouse pan, you will be thrown out of the current mode. */
+      /* not good */
+      w_current->event_state = SELECT;
+      w_current->inside_action = 0;
+      i_update_status(w_current, "Select Mode"); 
+      i_update_toolbar(w_current);
     }
   }
   return(0);

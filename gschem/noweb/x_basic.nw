@@ -66,6 +66,10 @@
 #include "../include/x_event.h"
 #include "../include/prototype.h"
 
+#ifndef __MINGW32__
+#include <gdk/gdkx.h>
+#endif
+
 @
 
 
@@ -428,7 +432,7 @@ x_create_dialog_box_horiz(GtkWidget **out_hbox, GtkWidget **out_action_area)
 void x_basic_warp_cursor(GtkWidget* widget, gint x, gint y, gboolean relative)
 {
 #ifndef __MINGW32__
-   XWarpPointer(GDK_WINDOW_XDISPLAY(widget->window),None, 
+   XWarpPointer(GDK_WINDOW_XDISPLAY(widget->window), None, 
                 GDK_WINDOW_XWINDOW(widget->window),0,0,0,0,x,y);
 #endif
 }
