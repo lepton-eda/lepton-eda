@@ -1,3 +1,8 @@
+2002-12-30 Chris Ellec <chris @ gtx.seul.org>
+
+     * utils/src/gmk_sym.c: updated file format to 20021103
+     for pins and boxes.
+
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * lib/system-gschlasrc.in: Changed the variable names which hold
