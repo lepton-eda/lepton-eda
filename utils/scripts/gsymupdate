@@ -103,6 +103,18 @@ foreach $filename (@ARGV) {
                         print NEWFILE $textcmd;
                         print NEWFILE "refdes=$value";
 
+                    } elsif ($name =~ /^type/) {
+
+                        # It is a type= attribute, convert to pintype==
+                        print NEWFILE $textcmd;
+                        print NEWFILE "pintype=$value";
+
+                    } elsif ($name =~ /^label/) {
+
+                        # It is a label= attribute, convert to pinlabel=
+                        print NEWFILE $textcmd;
+                        print NEWFILE "pinlabel=$value";
+
                     } else {
                         # none of the above, just pass it through
                         print NEWFILE $textcmd;
