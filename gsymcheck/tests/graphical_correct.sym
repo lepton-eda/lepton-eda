@@ -7,6 +7,8 @@ T 500 900 5 10 0 0 0 0
 device=none
 T 500 1200 5 10 0 0 0 0
 graphical=1
+T 1200 1100 5 10 0 0 0 0
+footprint=unspecified
 T 500 1100 5 10 0 0 0 0
 slot=1
 T 500 1300 5 10 0 0 0 0

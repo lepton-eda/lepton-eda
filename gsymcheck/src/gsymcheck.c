@@ -69,7 +69,6 @@ main_prog(int argc, char *argv[])
   /* create log file right away */
   /* even if logging is enabled */
   s_log_init(cwd, "gsymcheck.log");
-  free(cwd);
 	
   logging_dest=STDOUT_TTY;
   if (!quiet_mode)
@@ -118,9 +117,7 @@ main_prog(int argc, char *argv[])
         /* for the first page */
 
         pr_current->page_current->page_filename =
-          malloc(sizeof(char)*strlen(argv[i])+5);
-        strcpy(pr_current->page_current->page_filename, 
-               argv[i]);
+          u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, argv[i], NULL);
 
         if (verbose_mode) {
           s_log_message("Loading file [%s]\n", argv[i]);
@@ -135,8 +132,7 @@ main_prog(int argc, char *argv[])
           s_log_message("Loading file [%s]\n", argv[i]);
         }
         if (!s_page_new(pr_current, argv[i])) {
-          f_open(pr_current, pr_current->
-                 page_current->page_filename);
+          f_open(pr_current, pr_current->page_current->page_filename);
         }
       }
     }
@@ -147,6 +143,8 @@ main_prog(int argc, char *argv[])
     fprintf(stderr, "\nERROR! You must specify at least one filename\n\n");
     usage(argv[0]);
   }
+
+  free(cwd);
 
 #if DEBUG 
   s_page_print_all(pr_current);

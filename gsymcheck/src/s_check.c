@@ -504,7 +504,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   if (!value) {
     message = u_basic_strdup("Did not find numslots= attribute, not checking slotting\n");
     s_current->warning_messages = g_list_append(s_current->warning_messages,
-		    			          message);
+                                                message);
     s_current->warning_count++;
     return;
   }
@@ -528,12 +528,12 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
       sprintf(tempstr1, "%d", i+1); /* i starts at zero */
       message = 
-	   u_basic_strdup_multiple("Found ", tempstr1, 
-			           " slotdef= attributes.  Expecting ", 
-		                   numslots_str, " slotdef= attributes\n", 
-				   NULL); 
+        u_basic_strdup_multiple("Found ", tempstr1, 
+                                " slotdef= attributes.  Expecting ", 
+                                numslots_str, " slotdef= attributes\n", 
+                                NULL); 
       s_current->error_messages = g_list_append(s_current->error_messages,
-	    			                  message);
+                                                message);
 
       s_current->error_count++;
       s_current->slotting_errors++;
@@ -548,15 +548,24 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     if (!slotnum)
     {
       message = 
-	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
-			           " attributes, not continuing\n", NULL);
+        u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+                                " attributes, not continuing\n", NULL);
       s_current->error_messages = g_list_append(s_current->error_messages,
-	    			                  message);
+                                                message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
       return;
     }
+
+    if (strcmp(slotnum, "0") == 0) {
+      message = u_basic_strdup_multiple("Found a zero slot in slotdef=",
+                                        slotdef, "\n", NULL);
+      s_current->error_messages = g_list_append(s_current->error_messages,
+                                                message);
+      s_current->error_count++;
+    }
+  
     slot = atoi(slotnum);
     free(slotnum);
 
@@ -564,9 +573,9 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     if (slot > numslots) {
       sprintf(tempstr1, "%d", slot);
       message = 
-	   u_basic_strdup_multiple("Slot ", tempstr1, 
-			   	   " is larger then the maximum number (",
-				   numslots_str, ") of slots\n", NULL);
+        u_basic_strdup_multiple("Slot ", tempstr1, 
+                                " is larger then the maximum number (",
+                                numslots_str, ") of slots\n", NULL);
       s_current->error_messages = g_list_append(s_current->error_messages,
 		      			        message);
 
@@ -578,10 +587,10 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     pins = index(slotdef, ':');
     if (!pins) {
       message = 
-	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
-			           " attributes, not continuing\n", NULL);
+        u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+                                " attributes, not continuing\n", NULL);
       s_current->error_messages = g_list_append(s_current->error_messages,
-	    			                  message);
+                                                message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
@@ -590,10 +599,10 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     pins++;  /* get past that : */
     if (!pins) {
       message = 
-	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
-			           " attributes, not continuing\n", NULL);
+        u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+                                " attributes, not continuing\n", NULL);
       s_current->error_messages = g_list_append(s_current->error_messages,
-	    			                  message);
+                                                message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
@@ -602,17 +611,16 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
     if (*pins == '\0') {
       message = 
-	   u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
-			           " attributes, not continuing\n", NULL);
+        u_basic_strdup_multiple("Invalid slotdef=", slotdef, 
+                                " attributes, not continuing\n", NULL);
       s_current->error_messages = g_list_append(s_current->error_messages,
-	    			                  message);
+                                                message);
       s_current->error_count++;
       s_current->slotting_errors++;
       free(slotdef);
       return;
     }
 
-    
     j = 0;
     do {
       if (temp) {
@@ -624,8 +632,8 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
       if (!temp && j < s_current->numpins) {
         message = 
-	   u_basic_strdup_multiple("Not enough pins in slotdef=", slotdef, 
-			   	   "\n", NULL);
+          u_basic_strdup_multiple("Not enough pins in slotdef=", slotdef, 
+                                  "\n", NULL);
         s_current->error_messages = g_list_append(s_current->error_messages,
 	    			                  message);
         s_current->error_count++;
@@ -635,8 +643,8 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
       if (j > s_current->numpins) {
         message = 
-	   u_basic_strdup_multiple("Too many pins in slotdef=", slotdef, 
-			   	   "\n", NULL);
+          u_basic_strdup_multiple("Too many pins in slotdef=", slotdef, 
+                                  "\n", NULL);
         s_current->error_messages = g_list_append(s_current->error_messages,
 	    			                  message);
         s_current->error_count++;
@@ -644,10 +652,18 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
         free(temp);
         temp = NULL;
         break;
-      } 
+      }
+      
+      if (temp && strcmp(temp, "0") == 0) {
+        message = u_basic_strdup_multiple("Found a zero pin in slotdef=",
+                                          slotdef, "\n", NULL);
+        s_current->error_messages = g_list_append(s_current->error_messages,
+                                                  message);
+        s_current->error_count++;
+      }
      
       j++;
-    } while (temp); 
+    } while (temp);
 
     if (temp)
       free(temp);
@@ -661,9 +677,9 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   
   if (!slotdef && i < numslots) {
     message = 
-	   u_basic_strdup_multiple("Missing slotdef= (there should be ", 
-			           numslots_str, " slotdef= attributes)\n", 
-				   NULL);
+      u_basic_strdup_multiple("Missing slotdef= (there should be ", 
+                              numslots_str, " slotdef= attributes)\n", 
+                              NULL);
     s_current->error_messages = g_list_append(s_current->error_messages,
 			                      message);
     s_current->error_count++;

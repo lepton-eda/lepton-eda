@@ -1,3 +1,13 @@
+2002-07-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_check.c: Added code to check for zero slots number and
+	pins within a slotdef
+
+	* tests/zero*.sym: Added a couple of test symbols to test the
+	above errors
+
+	* tests/*.sym: Added a dummy footprint= attribute to all the files
+	
 2002-07-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/*.sym: Bunch of additional symbols to test various new
