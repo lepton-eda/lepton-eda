@@ -1,11 +1,11 @@
-v 20001217
+v 20021103
 T 100 400 5 4 1 0 0 0
 BAV70LT1
 T 100 600 5 6 0 1 0 0
 device=BAV70LT1
 T 100 500 5 6 1 1 0 0
 refdes=D?
-P 0 300 100 300 1
+P 0 300 100 300 1 0 0
 {
 T 2 320 3 6 0 1 0 0
 pinnumber=1
@@ -16,7 +16,7 @@ pintype=PAS
 T 150 300 3 6 0 1 0 0
 pinlabel=ANODE1
 }
-P 400 200 500 200 1
+P 400 200 500 200 1 0 1
 {
 T 450 220 3 6 0 1 0 0
 pinnumber=3
@@ -27,7 +27,7 @@ pintype=PAS
 T 350 200 3 6 0 1 0 0
 pinlabel=CATHODE
 }
-P 0 100 100 100 1
+P 0 100 100 100 1 0 0
 {
 T -28 120 3 6 0 1 0 0
 pinnumber=2
