@@ -98,6 +98,34 @@ SCM g_funcs_print(SCM filename)
 @ %def g_funcs_print
 
 
+@section Function @code{g_funcs_image()}
+
+@defun g_funcs_image filename
+@end defun
+
+<<g_funcs.c : g_funcs_print()>>=
+SCM g_funcs_image(SCM filename)
+{
+  char *string = gh_scm2newstr(filename, NULL);
+
+  if (string == NULL) {
+    return SCM_BOOL_T;
+  }
+
+  if (output_filename) {
+    x_image_lowlevel(global_window_current, output_filename);
+  } else  {
+    x_image_lowlevel(global_window_current, string);
+  }
+
+  free(string);
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_funcs_image
+
+
 @section Function @code{g_funcs_exit()}
 
 @defun g_funcs_exit 

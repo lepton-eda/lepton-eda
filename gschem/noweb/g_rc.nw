@@ -75,6 +75,7 @@
 <<g_rc.c : g_rc_output_type()>>
 <<g_rc.c : g_rc_output_orientation()>>
 <<g_rc.c : g_rc_image_color()>>
+<<g_rc.c : g_rc_image_size()>>
 <<g_rc.c : g_rc_output_color()>>
 <<g_rc.c : g_rc_output_capstule()>>
 <<g_rc.c : g_rc_log_window()>>
@@ -2106,6 +2107,32 @@ g_rc_image_color(SCM mode)
 
 
 @ %def g_rc_image_color
+
+
+@section Function @code{g_rc_image_size()}
+
+@defun g_rc_image_size width height
+@end defun
+
+<<g_rc.c : g_rc_image_size()>>=
+SCM
+g_rc_image_size(SCM width, SCM height)
+{
+  int i_width, i_height;
+
+  /* yes this is legit, we are casting the resulting double to an int */
+
+  i_width  = gh_scm2int(width);
+  i_height = gh_scm2int(height);
+
+  default_image_width  = i_width;
+  default_image_height = i_height;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_image_size
 
 
 @section Function @code{g_rc_output_color()}

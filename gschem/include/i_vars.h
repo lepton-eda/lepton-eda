@@ -48,6 +48,8 @@ extern int default_print_color;
 extern int default_print_color_background;
 extern int default_print_output_capstyle;
 extern int default_image_color;
+extern int default_image_width;
+extern int default_image_height;
 extern char *default_series_name;
 extern char *default_untitled_name;
 extern char *default_font_directory;

@@ -1,3 +1,16 @@
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, include/prototype.h, noweb/g_funcs.nw, 
+	noweb/g_rc.nw, noweb/g_register.nw, noweb/i_vars.nw, 
+	noweb/x_image.nw, scripts/image.scm:  Added the ability to 
+	generate images (png) of schematics from the command line:
+	gschem -o test.png -s image.scm filename.sch
+
+	* noweb/g_rc.nw: Added rc keyword: (image-size width height)
+
+	* noweb/g_funcs.nw: Added new gschem command: gschem-image 
+	which outputs a png to a file.
+
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this

@@ -23,6 +23,7 @@
 <<x_image.c : image_1600()>>
 <<x_image.c : image_3200()>>
 <<x_image.c : create_menu_size()>>
+<<x_image.c : x_image_lowlevel()>>
 <<x_image.c : x_image_write()>>
 <<x_image.c : x_image_cancel()>>
 <<x_image.c : x_image_keypress()>>
@@ -292,6 +293,69 @@ create_menu_size (TOPLEVEL *w_current)
 @ %def create_menu_size
 
 
+@section Function @code{x_image_lowlevel()}
+
+@defun x_image_lowlevel w_current
+@end defun
+
+<<x_image.c : x_image_lowlevel()>>=
+void
+x_image_lowlevel(TOPLEVEL *w_current, char* filename)
+{
+  int width, height;
+  int save_height, save_width;
+
+  width = w_current->image_width;
+  height = w_current->image_height;
+
+  save_width = w_current->width;
+  save_height = w_current->height;
+
+  w_current->width = width;
+  w_current->height = height;
+
+  /* need to do this every time you change width / height */
+  set_window(w_current,
+             w_current->page_current->left,
+             w_current->page_current->right,
+             w_current->page_current->top,
+             w_current->page_current->bottom);
+
+  /* de select everything first */
+  o_selection_remove_most(w_current,
+                          w_current->page_current->
+                          selection2_head);
+		
+  /* try to use recalc here */
+  o_redraw_all(w_current);
+
+  f_image_write(w_current, filename, width, height, 
+                w_current->image_color);
+
+  w_current->width = save_width;
+  w_current->height = save_height;
+
+  /* need to do this every time you change width / height */
+  set_window(w_current,
+             w_current->page_current->left,
+             w_current->page_current->right,
+             w_current->page_current->top,
+             w_current->page_current->bottom);
+
+  /* try to use recalc here... */
+  o_redraw_all(w_current);
+
+  if (w_current->image_color == TRUE) {
+    s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
+  } else {
+    s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
+  }
+}
+
+
+@ %def x_image_lowlevel
+
+
 @section Function @code{x_image_write()}
 
 @defun x_image_write w w_current
@@ -307,58 +371,8 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 
   filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
 
-  /*
-    c_width = gtk_entry_get_text(GTK_ENTRY(w_current->iwidth_entry));
-    c_height = gtk_entry_get_text(GTK_ENTRY(w_current->iheight_entry));
-  */
-
   if (filename[0] != '\0') {
-
-    width = w_current->image_width;
-    height = w_current->image_height;
-
-    save_width = w_current->width;
-    save_height = w_current->height;
-
-    w_current->width = width;
-    w_current->height = height;
-
-    /* need to do this every time you change width / height */
-    set_window(w_current,
-               w_current->page_current->left,
-               w_current->page_current->right,
-               w_current->page_current->top,
-               w_current->page_current->bottom);
-
-    /* de select everything first */
-    o_selection_remove_most(w_current,
-                            w_current->page_current->
-                            selection2_head);
-		
-    /* try to use recalc here */
-    o_redraw_all(w_current);
-
-    f_image_write(w_current, filename, width, height, 
-                  w_current->image_color);
-
-    w_current->width = save_width;
-    w_current->height = save_height;
-
-    /* need to do this every time you change width / height */
-    set_window(w_current,
-               w_current->page_current->left,
-               w_current->page_current->right,
-               w_current->page_current->top,
-               w_current->page_current->bottom);
-
-    /* try to use recalc here... */
-    o_redraw_all(w_current);
-
-    if (w_current->image_color == TRUE) {
-      s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
-    } else {
-      s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
-    }
+    x_image_lowlevel(w_current, filename);
   }
 
   gtk_widget_destroy(w_current->iwindow);

@@ -159,6 +159,7 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("output-color", g_rc_output_color);
   gh_new_procedure1_0 ("output-capstyle", g_rc_output_capstyle);
   gh_new_procedure1_0 ("image-color", g_rc_image_color);
+  gh_new_procedure2_0 ("image-size", g_rc_image_size);
   gh_new_procedure1_0 ("log-window", g_rc_log_window);
   gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
   gh_new_procedure1_0 ("third-button", g_rc_third_button);
@@ -197,6 +198,7 @@ g_register_funcs(void)
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);
+  gh_new_procedure1_0 ("gschem-image", g_funcs_image);
   gh_new_procedure1_0 ("gschem-key-name", g_funcs_key_name);
   gh_new_procedure1_0 ("gschem-key-value", g_funcs_key_value);
   gh_new_procedure0_0 ("gschem-key-done", g_funcs_key_done);
