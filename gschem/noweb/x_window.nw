@@ -108,6 +108,10 @@ TOPLEVEL *x_window_alloc()
 
   window = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
   if (window) {
+    /* This assignment needs to be here because it is used when reading
+     * in the RC files. Is there a better way to do this?  We can make the
+     * RC list a global . . . or maybe use calloc? */
+    window->RC_list = NULL;
     return window;
   } else {
     fprintf(stderr, "Couldn't allocate space for window.\n");
@@ -1231,8 +1235,6 @@ int x_window_fill_out(TOPLEVEL *w_current)
   i_vars_set(w_current);
 
   w_current->wid = global_wid;
-
-  w_current->RC_list = NULL;
 
   /* make sure none of these events happen till we are done */
   w_current->DONT_DRAW_CONN=1;
