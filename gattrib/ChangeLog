@@ -1,3 +1,16 @@
+2005-02-14 22:31  Dan McMahill <danmc>
+
+	* src/: gtkextra-marshal.c, gtkitementry_1_2.c, listsort.c: add
+	  some missing config.h inclusions
+
+2005-02-14 22:27  Dan McMahill <danmc>
+
+	* src/x_dialog.c: - move the config.h inclusion higher up so the
+	  protected inclusion of string.h doesn't fail.
+
+	  - fix a format string/# of arguments mismatch in a warning
+	  string.
+
 2005-02-13 11:30  Stuart Brorson <sdb@cloud9.net>
 
 	* src/s_table.c: Fixed syntax bug (doubled ;;) in 

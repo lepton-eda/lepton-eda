@@ -1,3 +1,7 @@
+2005-02-14 22:29  Dan McMahill <danmc>
+
+	* noweb/x_preview.nw: add missing header file needed for chdir()
+
 2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/g_keys.nw (g_get_selected_component_attributes): Adapted for 

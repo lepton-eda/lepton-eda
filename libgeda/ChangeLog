@@ -1,9 +1,30 @@
+2005-02-14 22:32  Dan McMahill <danmc>
+
+	* noweb/o_complex_basic.nw: fix a couple of format string not
+	  matching # of arguments bugs
+
+2005-02-14 22:32  Dan McMahill <danmc>
+
+	* noweb/f_basic.nw: remove an unused variable
+
+2005-02-14 22:31  Dan McMahill <danmc>
+
+	* noweb/s_clib.nw: add some missing config.h inclusions
+
+2005-02-14 22:30  Dan McMahill <danmc>
+
+	* noweb/a_basic.nw: fix a "/* in a comment" warning
+
+2005-02-14 22:29  Dan McMahill <danmc>
+
+	* include/prototype.h: change prototypes in public header file to
+	  not be static
+
 2005-02-14 02:17  Dan McMahill <danmc>
 
 	* include/defines.h, noweb/g_basic.nw, noweb/g_smob.nw: put back
 	  scm_makfrom0str().  It is scm_makfromstr() which was deprecated,
 	  scm_makfrom0str() is still ok.  Suggested by Patrick Bernaud.
-
 
 2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
