@@ -1673,13 +1673,24 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 				   f_current->filename_entry, FALSE, FALSE, 0);
 
 		if (type == FILESELECT) {
-			gtk_signal_connect(GTK_OBJECT(
+			if (filesel_type == OPEN) {
+				gtk_signal_connect(GTK_OBJECT(
 					   f_current->filename_entry), 
 					   "activate", 
 					   GTK_SIGNAL_FUNC(
 					   x_fileselect_open_file),
 					   f_current);
-
+			} else if ((filesel_type == SAVEAS_NONE) ||
+		           (filesel_type == SAVEAS_QUIT) ||
+		           (filesel_type == SAVEAS_OPEN) ||
+		           (filesel_type == SAVEAS_CLOSE) ||
+		 	   (filesel_type == SAVEAS_NEW)) { 
+				gtk_signal_connect(GTK_OBJECT(
+					   f_current->filename_entry), 
+					   "activate", 
+				   	   GTK_SIGNAL_FUNC(x_fileselect_saveas),
+					   f_current);
+			}
  			gtk_editable_select_region(GTK_EDITABLE(
 					   f_current->filename_entry), 0, -1);
 		} else {
