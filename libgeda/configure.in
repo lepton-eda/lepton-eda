@@ -58,31 +58,37 @@ AC_PROG_MAKE_SET
 dnl Check for guile
 GUILE_FLAGS
 
-dnl Check that SCM_RETURN_NEW_SMOB exist
-AC_CHECK_LIB(guile, SCM_RETURN_NEW_SMOB,
-	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
-	$GUILE_LDFLAGS)
-
 dnl Check that scm_make_smob_type exist
 AC_CHECK_LIB(guile, scm_make_smob_type,,
 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
 	$GUILE_LDFLAGS)
+
+dnl Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
+LIBS="$ac_save_LIBS"
 
 dnl Check that scm_set_smob_mark exist
 AC_CHECK_LIB(guile, scm_set_smob_mark,,
 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
 	$GUILE_LDFLAGS)
 
+dnl Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
+LIBS="$ac_save_LIBS"
+
 dnl Check that scm_set_smob_free exist
 AC_CHECK_LIB(guile, scm_set_smob_free,,
 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
 	$GUILE_LDFLAGS)
+
+dnl Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
+LIBS="$ac_save_LIBS"
 
 dnl Check that scm_set_smob_print exist
 AC_CHECK_LIB(guile, scm_set_smob_print,,
 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
 	$GUILE_LDFLAGS)
 
+dnl Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
+LIBS="$ac_save_LIBS"
 
 dnl Checks for header files.
 AC_PATH_X
