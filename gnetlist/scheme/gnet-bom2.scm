@@ -33,19 +33,35 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename))
 	  (attriblist (bom2:parseconfig (open-input-file "attribs"))))
-      (bom2:printlist (cons 'package attriblist) port)
-      (bom2:components packages attriblist))))
+      (bom2:printlist (cons 'package attriblist) port #\:)
+      (newline port)
+      (bom2:printbom port (bom2:components packages attriblist)))))
+
+(define bom2:printbom
+  (lambda (port bomlist)
+    (if (not (null? bomlist))
+      (if (not (null? (caar bomlist)))
+        (begin
+          (display (caaar bomlist) port)
+          (if (not (null? (cdaar bomlist)))
+            (write-char #\, port))
+          (bom2:printbom port (cons (cons (cdaar bomlist)(cdar bomlist))(cdr bomlist))))
+        (begin
+          (display #\: port)
+          (bom2:printlist (cdar bomlist) port #\:)
+          (newline port)
+          (bom2:printbom port (cdr bomlist)))))))
 
 (define bom2:printlist
-  (lambda (ls port)
+  (lambda (ls port delimiter)
     (if (null? ls)
-	(newline port)
+        #f
 	(begin
 	  (display (car ls) port)
-	  (write-char #\tab port)
-	  (bom2:printlist (cdr ls) port)))))
+          (if (not (null? (cdr ls)))
+	    (write-char delimiter port))
+	  (bom2:printlist (cdr ls) port delimiter)))))
 
-;;  Change courtesy of Stefan.  Gets red of strip1
 (define bom2:parseconfig
   (lambda (port)
     (let ((read-from-file (read port)))
@@ -63,12 +79,13 @@
       (#t (bom2:match-list? (cdr l1)(cdr l2))))))
 
 (define bom2:match?
-  (lambda (attriblist bomlist)
+  (lambda (uref attriblist bomlist)
     (if (null? bomlist)
-      #f
+      (list (cons (list uref) attriblist))
       (if (bom2:match-list? attriblist (cdar bomlist))
-        #t
-        (bom2:match? attriblist (cdr bomlist))))))
+;;        (cons (cons (cons uref (caar bomlist)) (cdar bomlist))(cdr bomlist))
+        (cons (cons (merge (list uref) (caar bomlist) string<? ) (cdar bomlist))(cdr bomlist))
+        (cons (car bomlist)(bom2:match? uref attriblist (cdr bomlist)))))))
 
 (define bom2:components
   (lambda (ls attriblist)
@@ -79,9 +96,7 @@
             (attribs (bom2:find-attribs (car ls) attriblist)))
         (if (not (string=? "unknown" (gnetlist:get-package-attribute package "nobom")))
           bomlist
-          (if (bom2:match? attribs bomlist)
-            bomlist
-            (cons (cons (list package) attribs) bomlist)))))))
+          (bom2:match? package attribs bomlist))))))
 
 (define bom2:find-attribs
   (lambda (package attriblist)
