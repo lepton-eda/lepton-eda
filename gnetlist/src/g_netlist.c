@@ -44,9 +44,8 @@ SCM g_get_packages(SCM level)
 
     NETLIST *nl_current = NULL;
 
-    SCM_ASSERT(SCM_NIMP (level) && 
-	       (SCM_STRINGP (level) || SCM_CONSP(level)),
-	       level, SCM_ARG1, "gnetlist:get-pins");
+    SCM_ASSERT( (SCM_NIMP (level) && SCM_STRINGP (level) ),
+		level, SCM_ARG1, "gnetlist:get-pins");
 
     nl_current = netlist_head;
     s_scratch_string_init();
@@ -119,9 +118,8 @@ SCM g_get_pins(SCM uref)
     CPINLIST *pl_current;
     char *string;
 
-    SCM_ASSERT(SCM_NIMP (uref) && 
-	       (SCM_STRINGP (uref) || SCM_CONSP(uref)),
-	       uref, SCM_ARG1, "gnetlist:get-pins");
+    SCM_ASSERT( (SCM_NIMP (uref) && SCM_STRINGP (uref) ),
+		uref, SCM_ARG1, "gnetlist:get-pins");
 
     string = gh_scm2newstr(uref, NULL);
 
@@ -163,9 +161,8 @@ SCM g_get_all_nets(SCM scm_level)
     char *net_name;
     char *level;
 
-    SCM_ASSERT(SCM_NIMP (scm_level) && 
-	       (SCM_STRINGP (scm_level) || SCM_CONSP(scm_level)),
-	       scm_level, SCM_ARG1, "gnetlist:get-all-nets");
+    SCM_ASSERT( (SCM_NIMP (scm_level) && SCM_STRINGP (scm_level) ),
+		scm_level, SCM_ARG1, "gnetlist:get-all-nets");
 
     level = gh_scm2newstr(scm_level, NULL);
     free(level);
@@ -214,9 +211,8 @@ SCM g_get_all_unique_nets(SCM scm_level)
     char *net_name;
     char *level;
 
-    SCM_ASSERT(SCM_NIMP (scm_level) && 
-	       (SCM_STRINGP (scm_level) || SCM_CONSP(scm_level)),
-	       scm_level, SCM_ARG1, "gnetlist:get-all-unique-nets");
+    SCM_ASSERT( (SCM_NIMP (scm_level) && SCM_STRINGP (scm_level) ),
+		scm_level, SCM_ARG1, "gnetlist:get-all-unique-nets");
 
     level = gh_scm2newstr(scm_level, NULL);
     free(level);
@@ -274,9 +270,8 @@ SCM g_get_all_connections(SCM scm_netname)
     char *pin;
     char *uref;
 
-    SCM_ASSERT(SCM_NIMP (scm_netname) && 
-	       (SCM_STRINGP (scm_netname) || SCM_CONSP(scm_netname)),
-	       scm_netname, SCM_ARG1, "gnetlist:get-all-connections");
+    SCM_ASSERT( (SCM_NIMP (scm_netname) && SCM_STRINGP (scm_netname) ),
+		 scm_netname, SCM_ARG1, "gnetlist:get-all-connections");
 
     wanted_net_name = gh_scm2newstr(scm_netname, NULL);
 
@@ -366,13 +361,11 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
     char *pin;
     char *uref;
 
-    SCM_ASSERT(SCM_NIMP (scm_uref) && 
-	       (SCM_STRINGP (scm_uref) || SCM_CONSP(scm_uref)),
-	       scm_uref, SCM_ARG1, "gnetlist:get-nets");
+    SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+		scm_uref, SCM_ARG1, "gnetlist:get-nets");
 
-    SCM_ASSERT(SCM_NIMP (scm_pin) && 
-	       (SCM_STRINGP (scm_pin) || SCM_CONSP(scm_pin)),
-	       scm_pin, SCM_ARG2, "gnetlist:get-nets");
+    SCM_ASSERT( (SCM_NIMP (scm_pin) && SCM_STRINGP (scm_pin) ),
+		scm_pin, SCM_ARG2, "gnetlist:get-nets");
 
 
     wanted_uref = gh_scm2newstr(scm_uref, NULL);
@@ -473,9 +466,8 @@ SCM g_get_pins_nets(SCM scm_uref)
     char *net_name = NULL;
     char *pin = NULL;
 
-    SCM_ASSERT(SCM_NIMP (scm_uref) && 
-	       (SCM_STRINGP (scm_uref) || SCM_CONSP(scm_uref)),
-	       scm_uref, SCM_ARG1, "gnetlist:get-pins-nets");
+    SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+		scm_uref, SCM_ARG1, "gnetlist:get-pins-nets");
 
     wanted_uref = gh_scm2newstr(scm_uref, NULL);
 
@@ -528,13 +520,10 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     char *wanted_attrib;
     char *return_value = NULL;
 
-    SCM_ASSERT(SCM_NIMP (scm_uref) && 
-	       (SCM_STRINGP (scm_uref) || SCM_CONSP(scm_uref)),
-	       scm_uref, SCM_ARG1, "gnetlist:get-package-attribute");
+    SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+		scm_uref, SCM_ARG1, "gnetlist:get-package-attribute");
 
-    SCM_ASSERT(SCM_NIMP (scm_wanted_attrib) && 
-	       (SCM_STRINGP (scm_wanted_attrib) || 
-		SCM_CONSP(scm_wanted_attrib)),
+    SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) && SCM_STRINGP (scm_wanted_attrib) ),
 	       scm_wanted_attrib, SCM_ARG2, "gnetlist:get-package-attribute");
 
     uref = gh_scm2newstr(scm_uref, NULL);
@@ -596,19 +585,14 @@ SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib)
     char *return_value = NULL;
     int done = FALSE;
 
-    SCM_ASSERT(SCM_NIMP (scm_uref) && 
-	       (SCM_STRINGP (scm_uref) || SCM_CONSP(scm_uref)),
-	       scm_uref, SCM_ARG1, "gnetlist:get-pin-attribute");
+    SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+		scm_uref, SCM_ARG1, "gnetlist:get-pin-attribute");
 
-    SCM_ASSERT(SCM_NIMP (scm_pin) && 
-	       (SCM_STRINGP (scm_pin) || 
-		SCM_CONSP(scm_pin)),
-	       scm_pin, SCM_ARG2, "gnetlist:get-pin-attribute");
+    SCM_ASSERT( (SCM_NIMP (scm_pin) && SCM_STRINGP (scm_pin) ),
+		scm_pin, SCM_ARG2, "gnetlist:get-pin-attribute");
 
-    SCM_ASSERT(SCM_NIMP (scm_wanted_attrib) && 
-	       (SCM_STRINGP (scm_wanted_attrib) || 
-		SCM_CONSP(scm_wanted_attrib)),
-	       scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute");
+    SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) && SCM_STRINGP (scm_wanted_attrib) ),
+		scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute");
 
     uref = gh_scm2newstr(scm_uref, NULL);
     pin = gh_scm2newstr(scm_pin, NULL);
@@ -666,9 +650,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
     char *return_value;
     SCM scm_return_value;
 
-    SCM_ASSERT(SCM_NIMP (scm_wanted_attrib) && 
-	       (SCM_STRINGP (scm_wanted_attrib) || 
-		SCM_CONSP(scm_wanted_attrib)),
+    SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) && SCM_STRINGP (scm_wanted_attrib) ),
 	       scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
     wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
