@@ -181,7 +181,7 @@ using gschem just like drawing a schematic sheet.  <p>
 		     pinN. Example: pin1=1, pin2=2, pin3=5.
 		</LI>
 
-		<LI> All pins should also have the <strong>label=value</strong>
+		<LI> All pins should also have the <strong>pinlabel=value</strong>
 		     attribute attached to them.  Please make this attribute
 		     green (instead of the default attribute yellow).  Right 
 		     now, the symbol libraries do not follow this convention,
@@ -230,12 +230,13 @@ using gschem just like drawing a schematic sheet.  <p>
 		</LI>
 
 		<LI> The label= attribute should not be attached anywhere in
-		     the symbol.  It is used for net name labels only!  This 
-		     statement contradicts the above pin label= attribute.
-		     For now, ignore this statement.  </LI>
+		     the symbol.  It is obsolete.  </LI>
 
 		<LI> The name= attribute should not be attached anywhere in
 		     the symbol.  It's currently unused.</LI>
+
+		<LI> The netname= attribute should not be attached anywhere in
+		     the symbol.  It is only used in schematics.</LI>
 
 		<LI> You can put a uref= attribute inside a symbol.  Make only
 		     the value visible and it will be promoted (attached

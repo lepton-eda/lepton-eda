@@ -153,7 +153,7 @@ The free floating attributes are also called toplevel attributes.
 	consists of a 7400 with the net= attributes attached for power
 	and ground, One of the input pins grounded using a gnd symbol and
 	the other at a logic one using the vcc symbol (with an attached
-	net= attribute).  One of the input net is labeled, but as you
+	net= attribute).  One of the input net is named, but as you
 	will see, the netname is replaced by the net= signal name (see
 	above for more info on this).  The output is pulled up with a
 	pull up resistor which has power specified using the +5V symbol.
@@ -174,7 +174,7 @@ net=+5V:14
 N 38700 58800 37400 58800 4
 {
 T 37600 58900 5 10 1 1 0
-label=NETLABEL
+netname=NETLABEL
 }
 N 37400 58800 37400 59200 4
 N 38700 58400 37400 58400 4
@@ -188,7 +188,7 @@ net=+5V:1
 N 40000 58600 41600 58600 4
 {
 T 41200 58700 5 10 1 1 0
-label=OUTPUT
+netname=OUTPUT
 }
 C 40700 58800 1 90 0 resistor-1.sym
 {

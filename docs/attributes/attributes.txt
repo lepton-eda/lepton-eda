@@ -132,12 +132,18 @@ be call this or what the values should be, so it's not required yet.
 None of the current libraries use this.
 
 
-label
+netname
 (schematics)
 
-If you want to label a net then attach an attribute called label=value to
-the net.  All nets which have the same name are considered electrically
-connected.  
+If you want to give a net a name, then attach an attribute called
+netname=value to the net.  All nets which have the same value are
+considered electrically connected.
+
+
+label
+(schematic)
+
+This attribute is obsolete and should not be used.
 
 
 pinlabel
