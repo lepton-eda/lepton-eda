@@ -22,6 +22,6 @@ CLEANFILES = *.log *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak 
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure config.status \
 		       aclocal.m4 config.guess config.sub install-sh \
-		       missing mkinstalldirs
+		       missing mkinstalldirs config.h.in
 
 

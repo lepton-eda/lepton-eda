@@ -1,3 +1,16 @@
+2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_fileselect.nw: Moved the component option combo menu into
+	the vbox to fix the garbage which people have been seeing.  Turns
+	out that if the combomenu is in the searchbox, then the preview
+	drawing area gets resized which is not permited (otherwise you 
+	get garbage).  Pointed out and fixed by Carlos.  Thanks.
+
+	* noweb/x_preview.nw: Removed the gtk+ 1.2.x hack, because the
+	above fixed it for both gtk+ 1.2.x and 2.2.x.
+
+        * config.h.in: Remove machine generated file.
+
 2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/gschem.nw: Added a call to the scrollbar update code to fix
