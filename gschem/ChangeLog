@@ -1,5 +1,12 @@
 2005-01-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/i_callbacks.nw (i_callback_edit_linetype): Modified to create 
+	a list of relevant objects that is passed to line_type_dialog.
+
+	* noweb/x_dialog.nw (line_type_dialog*): Rewrote most of the code
+	for the line type dialog. Now it applies to more than a single
+	object.
+	
 	* noweb/i_callbacks.nw (i_callback_edit_update): Adapted for the
 	new o_update_component().
 

@@ -1670,15 +1670,39 @@ DEFINE_I_CALLBACK(edit_autonumber_text)
 DEFINE_I_CALLBACK(edit_linetype)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  OBJECT *object;
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_color, _("Edit Line Type"));
+  /* anything selected ? */
+  if (o_select_selected(w_current)) {
+    SELECTION *s_current =
+      w_current->page_current->selection2_head->next;
+    GList *objects = NULL;
 
-  if ( (object = o_select_return_first_object(w_current)) ) {
-    line_type_dialog(w_current, object);
+    /* yes, build a list of relevant objects */
+    while (s_current != NULL) {
+      OBJECT *o_current = s_current->selected_object;
+          
+      if (o_current->type == OBJ_LINE   ||
+          o_current->type == OBJ_BOX    ||
+          o_current->type == OBJ_CIRCLE ||
+          o_current->type == OBJ_ARC) {
+        objects = g_list_prepend (objects, o_current);
+      }
+
+      s_current = s_current->next;
+    }
+
+    if (objects != NULL) {
+      /* at least one object in the list */
+      i_update_middle_button(w_current,
+                             i_callback_edit_color,
+                             _("Edit Line Type"));
+      /* enter edition of parameters of selected objects */
+      line_type_dialog(w_current, objects);
+    }
   }
+  
 }
 
 

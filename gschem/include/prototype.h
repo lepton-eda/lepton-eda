@@ -695,11 +695,7 @@ int text_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w
 void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog(TOPLEVEL *w_current, char *string, int text_size, int text_alignment);
-gint change_linetype(GtkWidget *w, TOPLEVEL *w_current);
-int line_type_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-void line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
-void line_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
-void line_type_dialog(TOPLEVEL *w_current, OBJECT *object);
+void line_type_dialog(TOPLEVEL *w_current, GList *objects);
 gint change_filltype(GtkWidget *w, TOPLEVEL *w_current);
 int fill_type_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
