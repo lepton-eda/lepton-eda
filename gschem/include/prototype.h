@@ -263,6 +263,7 @@ void i_update_left_button(const char *string);
 void i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, const char *string);
 void i_update_right_button(const char *string);
 void i_update_toolbar(TOPLEVEL *w_current);
+void i_update_menus(TOPLEVEL *w_current);
 void i_update_cursor(TOPLEVEL *w_current);
 void i_set_filename(TOPLEVEL *w_current, const char *string);
 /* i_callbacks.c */
@@ -603,7 +604,6 @@ int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(TOPLEVEL *w_current);
 int o_move_zero_length(OBJECT *object);
-void is_inside(GList *list, int tag, OBJECT *object);
 void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y, GList **objects, GList **other_objects, GList **connected_objects);
 void o_move_stretch_rubberband(TOPLEVEL *w_current);
 /* o_net.c */
@@ -834,11 +834,10 @@ void x_log_close(GtkWidget *w, TOPLEVEL *w_current);
 void x_log_free(void);
 void x_log_setup_win(TOPLEVEL *w_current);
 /* x_menus.c */
-void print_hello(gpointer data, guint callback_action, GtkWidget *widget);
-void get_main_menuORIG(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
+void x_menus_sensitivity(TOPLEVEL *w_current, char *buf, int flag);
 /* x_multiattrib.c */
 void multi_attrib_edit_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 char *multi_attrib_edit_parser(GtkWidget *w, char **text, int *vis, int *show);

@@ -743,6 +743,7 @@ x_window_create_main(TOPLEVEL *w_current)
   	gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
   }
 
+  w_current->menubar = menubar;
   gtk_widget_show(menubar);
   gtk_widget_realize (w_current->main_window);
 
@@ -1223,6 +1224,7 @@ x_window_create_new(void)
              w_current->init_top, w_current->init_bottom);
 
   o_undo_savestate(w_current, UNDO_ALL);
+  i_update_menus(w_current);
 
   /* now update the scrollbars */
   w_current->DONT_REDRAW = 1;

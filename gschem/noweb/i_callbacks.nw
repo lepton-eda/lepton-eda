@@ -441,6 +441,7 @@ DEFINE_I_CALLBACK(file_new)
   i_set_filename(w_current, w_current->page_current->page_filename);
 
   update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
   x_window_setup_world(w_current);
   x_manual_resize(w_current);
   x_hscrollbar_update(w_current);
@@ -628,12 +629,14 @@ DEFINE_I_CALLBACK(file_save)
 	    w_current->page_current->CHANGED = 0;
 	    i_set_state_msg(w_current, SELECT, _("Saved"));
 	    i_update_toolbar(w_current);
+            i_update_menus(w_current);
 	    update_page_manager(NULL, w_current);
     } else {
       	    s_log_message(_("Could NOT save [%s]\n"), w_current->page_current->page_filename);
 
 	    i_set_state_msg(w_current, SELECT, _("Error while trying to save"));
 	    i_update_toolbar(w_current);
+            i_update_menus(w_current);
     } 
   }
 }
@@ -684,6 +687,7 @@ DEFINE_I_CALLBACK(file_save_all)
   i_set_state_msg(w_current, SELECT, _("Saved All"));
   i_update_toolbar(w_current);
   update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
 }
 
 
@@ -2019,6 +2023,7 @@ DEFINE_I_CALLBACK(page_next)
   x_scrollbars_update(w_current);
   o_redraw_all(w_current);
   update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
 
 }
 
@@ -2062,6 +2067,7 @@ DEFINE_I_CALLBACK(page_prev)
   x_scrollbars_update(w_current);
   o_redraw_all(w_current);
   update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
 }
 
 
@@ -2106,6 +2112,7 @@ DEFINE_I_CALLBACK(page_new)
   s_page_new(w_current, filename);
 
   update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
   i_set_filename(w_current, w_current->page_current->page_filename);
   s_log_message(_("New Page created [%s]\n"),
                 w_current->page_current->page_filename);
@@ -2156,6 +2163,7 @@ DEFINE_I_CALLBACK(page_close)
     x_scrollbars_update(w_current);
     o_redraw_all(w_current);
     update_page_manager(NULL, w_current);
+    i_update_menus(w_current);
     return;
   }
 
@@ -2173,6 +2181,7 @@ DEFINE_I_CALLBACK(page_close)
       x_scrollbars_update(w_current);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       return;
     }
   }
@@ -2190,6 +2199,7 @@ DEFINE_I_CALLBACK(page_close)
       x_scrollbars_update(w_current);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       return;
     }
   }
@@ -2215,6 +2225,7 @@ DEFINE_I_CALLBACK(page_close)
       x_scrollbars_update(w_current);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       return;
     }
   }
@@ -2269,6 +2280,7 @@ DEFINE_I_CALLBACK(page_revert)
   x_hscrollbar_update(w_current);
   x_vscrollbar_update(w_current);
   update_page_manager(NULL, w_current);
+  i_update_menus(w_current);
 
   o_redraw_all(w_current);
   free(filename);
@@ -2307,6 +2319,7 @@ DEFINE_I_CALLBACK(page_discard)
     x_scrollbars_update(w_current);
     o_redraw_all(w_current);
     update_page_manager(NULL, w_current);
+    i_update_menus(w_current);
     return;
   }
 
@@ -2323,6 +2336,7 @@ DEFINE_I_CALLBACK(page_discard)
       x_scrollbars_update(w_current);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       return;
     }
   }
@@ -2340,6 +2354,7 @@ DEFINE_I_CALLBACK(page_discard)
       x_scrollbars_update(w_current);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       return;
     }
   }
@@ -2366,6 +2381,7 @@ DEFINE_I_CALLBACK(page_discard)
       x_scrollbars_update(w_current);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       return;
     }
   }
@@ -3628,6 +3644,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                       A_PAN_DONT_REDRAW);
         o_redraw_all(w_current);
         update_page_manager(NULL, w_current);
+        i_update_menus(w_current);
       }
     }
   }
@@ -3670,6 +3687,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
       o_undo_savestate(w_current, UNDO_ALL);
       o_redraw_all(w_current);
       update_page_manager(NULL, w_current);
+      i_update_menus(w_current);
       free(filename);
     }
   }
@@ -3695,6 +3713,7 @@ DEFINE_I_CALLBACK(hierarchy_up)
 	i_set_filename(w_current, w_current->page_current->page_filename);
 	o_redraw_all(w_current);
 	update_page_manager(NULL, w_current);
+        i_update_menus(w_current);
 }
 
 

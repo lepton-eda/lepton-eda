@@ -21,6 +21,7 @@
 <<i_basic.c : i_update_middle_button()>>
 <<i_basic.c : i_update_right_button()>>
 <<i_basic.c : i_update_toolbar()>>
+<<i_basic.c : i_update_menus()>>
 <<i_basic.c : i_update_cursor()>>
 <<i_basic.c : i_set_filename()>>
 
@@ -470,6 +471,103 @@ i_update_toolbar(TOPLEVEL *w_current)
 
 
 @ %def i_update_toolbar
+
+
+@section Function @code{i_update_menus()}
+
+@defun i_update_menus w_current
+@end defun
+
+<<i_basic.c : i_update_menus()>>=
+void
+i_update_menus(TOPLEVEL *w_current)
+{
+  GtkWidget* item;
+
+  /* This is very simplistic.  Eventually what gets enabled/disabled */
+  /* should be based on what is in the selection list */
+  
+  if (o_selection_return_num(w_current->page_current->selection2_head)) {
+    /* These strings should NOT be internationalized */
+    x_menus_sensitivity(w_current, "Edit/Edit...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Edit Text...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Copy Mode", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Move Mode", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Delete", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Rotate 90 Mode", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Mirror Mode", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Slot...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Color...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Lock", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Unlock", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Line Width & Type...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Fill Type...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Embed Component", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Unembed Component", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Update Component", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 1", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 2", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 3", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 4", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 5", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 1", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 2", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 3", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 4", TRUE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 5", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/Down Schematic", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/Down Symbol", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/Up", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/Documentation", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Attach", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Detach", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Show Value", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Show Name", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Show Both", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Toggle Visibility", TRUE);
+  } else {
+    /* These strings should NOT be internationalized */
+    x_menus_sensitivity(w_current, "Edit/Edit...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Edit Text...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Copy Mode", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Move Mode", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Delete", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Rotate 90 Mode", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Mirror Mode", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Slot...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Color...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Lock", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Unlock", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Line Width & Type...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Fill Type...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Embed Component", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Unembed Component", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Update Component", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 1", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 2", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 3", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 4", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Copy into 5", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 1", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 2", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 3", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 4", FALSE);
+    x_menus_sensitivity(w_current, "Buffer/Cut into 5", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/Down Schematic", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/Down Symbol", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/Up", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/Documentation", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Attach", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Detach", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Show Value", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Show Name", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Show Both", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Toggle Visibility", FALSE);
+  }
+}
+ 
+
+@ %def i_update_menus
 
 
 @section Function @code{i_set_filename()}

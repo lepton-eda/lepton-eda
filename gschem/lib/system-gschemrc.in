@@ -1173,7 +1173,7 @@
 ;;          menu item name      menu action     	menu hotkey action
 ;;
 	'( ("Attach"		attributes-attach       attributes-attach)
-	   ("Deattach"		attributes-detach       attributes-detach)
+	   ("Detach"		attributes-detach       attributes-detach)
 	   ("Show Value"	attributes-show-value   attributes-show-value)
 	   ("Show Name"		attributes-show-name    attributes-show-name)
 	   ("Show Both"		attributes-show-both    attributes-show-both)

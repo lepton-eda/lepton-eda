@@ -9,6 +9,33 @@
 	it required the reordering of some operations (namely when things
 	are drawn), so the change is non-trivial.
 
+	* lib/system-gschemrc.in: Fixed spelling mistake: "Dettach" is not
+	a word. 
+
+	* noweb/x_menus.nw: Added data (via gtk_object_set_data()) to 
+	the toplevel menubar.  This data is the individual menu items
+	(of all menus) via the menu path.
+
+	* noweb/x_menus.nw: Added x_menus_sensitivity which given a path
+	to a menu item (using above) allows for the disabled (greyed out)
+	or enabled menu item control.
+
+	* noweb/x_menus.nw: Removed some cruft which has been around for
+	too long.
+
+	* noweb/x_window.nw: Added code to store the menubar in the 
+	TOPLEVEL structure.  Also called i_update_menus when the main
+	window first appears.
+
+	* noweb/i_basic.nw: Added i_update_menus, which, for now, simply
+	disables or enables menu items depending on if there is something
+	selected or not.  This should be improved to take into account 
+	what is inside the selection list.
+
+	* noweb/i_callbacks.nw, o_buffer.nw, o_complex.nw, o_find.nw, 
+	o_select.nw, o_text.nw: Added calls to i_update_menus to keep the
+	menu item disabled/enabled state up to date.
+
 2002-12-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* m4/Makefile.am: Added Makefile.in to the maintainer-clean target.

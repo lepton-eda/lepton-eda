@@ -609,6 +609,7 @@ o_text_end(TOPLEVEL *w_current)
 
   w_current->override_color = -1;
   o_undo_savestate(w_current, UNDO_ALL);
+  i_update_menus(w_current);
 }
 
 

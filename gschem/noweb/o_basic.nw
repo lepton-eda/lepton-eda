@@ -230,7 +230,7 @@ o_unselect_all(TOPLEVEL *w_current)
 
 @section Function @code{o_draw_list()}
 
-@defun o_draw_list w_current
+@defun o_draw_list w_current list
 @end defun
 
 <<o_basic.c : o_draw_list()>>=

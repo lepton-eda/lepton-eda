@@ -393,18 +393,20 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
     o_redraw(w_current, o_start);
     w_current->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
+    i_update_menus(w_current);
     o_list_delete_rest(w_current, w_current->page_current->
                        complex_place_head);
     return;
   }
 
   o_temp = w_current->page_current->object_tail;
-  w_current->page_current->object_tail = o_complex_add(
-                                                       w_current,
-                                                       w_current->page_current->object_tail,
-                                                       OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
-                                                       w_current->internal_clib,
-                                                       w_current->internal_basename, 1, TRUE);
+  w_current->page_current->object_tail =
+    o_complex_add(
+                  w_current,
+                  w_current->page_current->object_tail,
+                  OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
+                  w_current->internal_clib,
+                  w_current->internal_basename, 1, TRUE);
 
   /* complex rotate post processing */
   o_temp = o_temp->next; /* skip over last object */
@@ -510,6 +512,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
         
   w_current->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
+  i_update_menus(w_current);
 }
 
 

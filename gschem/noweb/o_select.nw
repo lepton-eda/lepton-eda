@@ -400,6 +400,7 @@ o_select_box_search(TOPLEVEL *w_current)
   o_selection_remove_most(w_current,
                           w_current->page_current->selection2_head);
 
+  i_update_menus(w_current);
 }
 
 @ %def o_select_box_search

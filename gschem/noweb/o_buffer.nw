@@ -287,6 +287,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   w_current->page_current->CHANGED = 1;
   o_redraw(w_current, o_saved->next); /* only redraw new objects */
   o_undo_savestate(w_current, UNDO_ALL);
+  i_update_menus(w_current);
 }
 
 

@@ -83,9 +83,9 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
                                 (*o_current->sel_func)(
                                                        w_current, o_current, 
                                                        SINGLE, 0); /* 0 is count */
-                                w_current->page_current->
-                                object_lastplace = 
-                                o_current->next;
+                                w_current->page_current-> object_lastplace =
+                                   o_current->next;
+                                i_update_menus(w_current);
                                 return;
                               }
                       }
@@ -111,12 +111,11 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
           (o_current->visibility == VISIBLE ||
            (o_current->visibility == INVISIBLE &&
             w_current->show_hidden_text))) {
-        (*o_current->sel_func)(
-                               w_current, o_current, 
-                               SINGLE, 0); /* 0 is count */
-        w_current->page_current->
-          object_lastplace = o_current;
-
+        /* 0 is count */
+        (*o_current->sel_func)(w_current, o_current, SINGLE, 0);
+        w_current->page_current->object_lastplace = o_current;
+        
+        i_update_menus(w_current);
         return;
       }
     }
@@ -135,6 +134,8 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
     o_selection_remove_most(w_current, 
                             w_current->page_current->selection2_head);
   }
+
+  i_update_menus(w_current);
 }
 
 
