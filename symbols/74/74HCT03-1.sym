@@ -63,3 +63,5 @@ T 600 3100 5 10 0 0 0 0
 description=4 NAND gates with 2 inputs and open collector output
 T 300 0 9 8 1 0 0 0
 74HCT03
+T 600 3300 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT03_CNV_2.pdf

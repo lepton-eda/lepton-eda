@@ -276,3 +276,5 @@ V 1750 500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 1750 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 250 500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 250 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 6450 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT154_CNV_2.pdf

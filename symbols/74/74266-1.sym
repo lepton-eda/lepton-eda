@@ -66,3 +66,5 @@ T 800 3200 5 10 0 0 0 0
 description=4 XOR gates with open collector output
 T 300 0 9 8 1 0 0 0
 74266
+T 800 3400 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc266.pdf

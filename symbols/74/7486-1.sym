@@ -64,3 +64,5 @@ T 700 2900 5 10 0 0 0 0
 net=GND:7
 T 300 0 9 8 1 0 0 0
 7486
+T 700 3100 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc86.pdf

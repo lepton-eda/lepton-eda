@@ -174,3 +174,5 @@ T 300 3650 3 10 1 0 0 0
 74HCT4094
 T 300 5050 5 10 0 0 0 0
 numslots=0
+T 300 5250 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT4094_CNV_2.pdf

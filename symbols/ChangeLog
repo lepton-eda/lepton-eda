@@ -1,4 +1,8 @@
 2002-11-21 Werner Hoch <werner.ho@gmx.de>
+	* 74/*sym: added documentation attribut to symbols
+	* 74/74595-1.sym: completed symbol (added footprint, pintype,...)
+
+2002-11-21 Werner Hoch <werner.ho@gmx.de>
 	* 4000/40[89]?-*.sym: completed symbols (added footprint, numslot,...)
 	* 4000/40[123]??-*.sym: completed symbols (added footprint, numslot,...)
 	* 4000/4081-2.sym added

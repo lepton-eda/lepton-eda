@@ -113,3 +113,5 @@ L 375 1400 300 1450 3 0 0 0 -1 -1
 L 500 1525 525 1525 3 0 0 0 -1 -1
 T 300 2950 5 10 0 0 0 0
 numslots=0
+T 300 3150 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT93_CNV_2.pdf

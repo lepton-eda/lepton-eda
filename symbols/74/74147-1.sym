@@ -186,3 +186,5 @@ V 1750 3000 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 V 1750 2600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 5550 5 10 0 0 0 0
 comment=At some devices A0 is not connected
+T 300 5750 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT147_CNV_2.pdf

@@ -218,3 +218,5 @@ numslots=0
 T 300 3540 9 10 1 0 0 0
 74573
 L 350 625 550 625 3 0 0 0 -1 -1
+T 300 5150 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT573_CNV_2.pdf

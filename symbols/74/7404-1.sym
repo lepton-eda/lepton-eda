@@ -60,3 +60,5 @@ T 600 3500 5 10 0 0 0 0
 footprint=DIP14
 T 600 3700 5 10 0 0 0 0
 description=6 NOT gates
+T 600 3900 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc04.pdf

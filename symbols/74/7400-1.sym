@@ -59,9 +59,9 @@ T 500 2250 5 10 0 0 0 0
 footprint=DIP14
 T 500 2450 5 10 0 0 0 0
 description=4 NAND gates with 2 inputs
-T 500 2650 5 10 0 0 0 0
-documentation=http://www-s.ti.com/sc/ds/sn74ls00.pdf
 T 500 2850 5 10 0 0 0 0
 net=Vcc:14
 T 500 3050 5 10 0 0 0 0
 net=GND:7
+T 500 2650 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc00.pdf

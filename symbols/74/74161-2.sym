@@ -161,3 +161,5 @@ T 300 3340 9 10 1 0 0 0
 74161
 T 900 750 5 10 1 1 0 0
 comment=DONT_USE this symbol, pin 9 is missing
+T 300 4750 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc161.pdf

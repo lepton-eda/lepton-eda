@@ -96,3 +96,5 @@ L 300 250 375 200 3 0 0 0 -1 -1
 L 375 200 300 150 3 0 0 0 -1 -1
 T 2100 800 5 10 0 0 0 0
 slot=1
+T 2100 2600 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc74.pdf

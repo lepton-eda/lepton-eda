@@ -182,3 +182,5 @@ T 300 3340 9 10 1 0 0 0
 74137
 L 350 1125 650 1125 3 0 0 0 -1 -1
 L 350 325 525 325 3 0 0 0 -1 -1
+T 300 4750 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT137_CNV_2.pdf

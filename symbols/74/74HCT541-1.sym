@@ -218,3 +218,5 @@ L 1300 475 1500 475 3 0 0 0 -1 -1
 L 500 475 675 475 3 0 0 0 -1 -1
 T 300 4150 5 10 0 0 0 0
 numslots=0
+T 300 4350 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hct541.pdf

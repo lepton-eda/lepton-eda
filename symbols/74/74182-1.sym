@@ -180,3 +180,5 @@ net=GND:8
 T 300 4140 9 10 1 0 0 0
 74182
 V 1750 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 5550 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT182_CNV_2.pdf

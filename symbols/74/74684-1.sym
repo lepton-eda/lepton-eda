@@ -218,3 +218,5 @@ T 300 6650 5 10 0 0 0 0
 numslots=0
 T 300 5440 9 10 1 0 0 0
 74684
+T 300 7050 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc684.pdf

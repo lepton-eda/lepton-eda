@@ -64,3 +64,5 @@ T 500 2700 5 10 0 0 0 0
 net=GND:7
 T 500 2900 5 10 0 0 0 0
 net=Vcc:14
+T 500 3100 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc03.pdf

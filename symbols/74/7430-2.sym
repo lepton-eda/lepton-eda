@@ -129,3 +129,5 @@ T 500 200 5 10 0 0 0 0
 description=NAND gate with 8 inputs
 T 500 1000 5 10 0 0 0 0
 numslots=0
+T 900 1200 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT30_CNV_2.pdf

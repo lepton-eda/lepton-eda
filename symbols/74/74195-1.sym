@@ -177,3 +177,5 @@ L 1625 3000 1700 2950 3 0 0 0 -1 -1
 V 250 2600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 L 625 725 800 725 3 0 0 0 -1 -1
 V 250 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 4750 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT195_CNV_2.pdf

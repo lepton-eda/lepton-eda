@@ -84,3 +84,5 @@ T 600 2400 5 10 0 0 0 0
 net=Vcc:14
 T 600 2600 5 10 0 0 0 0
 net=GND:7
+T 600 2800 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc21.pdf

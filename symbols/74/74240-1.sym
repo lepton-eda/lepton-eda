@@ -224,3 +224,5 @@ T 300 3950 5 10 0 0 0 0
 net=GND:10
 T 300 2950 9 10 1 0 0 0
 74240
+T 300 4350 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc240.pdf

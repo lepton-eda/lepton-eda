@@ -59,3 +59,5 @@ net=GND:7
 T 300 940 9 10 1 0 0 0
 74125
 L 350 325 550 325 3 0 0 0 -1 -1
+T 2100 2350 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc125.pdf

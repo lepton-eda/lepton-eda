@@ -127,3 +127,5 @@ T 300 2950 5 10 0 0 0 0
 net=GND:7
 T 300 1950 9 10 1 0 0 0
 74243
+T 300 3350 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT243_CNV_2.pdf

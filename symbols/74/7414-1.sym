@@ -61,3 +61,5 @@ T 300 3400 5 10 0 0 0 0
 footprint=DIP14
 T 300 3600 5 10 0 0 0 0
 description=6 inverting Schmitt-triggers
+T 300 3800 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc14.pdf

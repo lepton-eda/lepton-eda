@@ -90,3 +90,5 @@ T 300 1740 9 10 1 0 0 0
 L 1550 1125 1650 1125 3 0 0 0 -1 -1
 L 350 725 625 725 3 0 0 0 -1 -1
 V 250 600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 2100 2550 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT73_CNV_2.pdf

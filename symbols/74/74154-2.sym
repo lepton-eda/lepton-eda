@@ -276,3 +276,5 @@ T 300 7550 5 10 0 0 0 0
 net=GND:12
 T 300 6540 9 10 1 0 0 0
 74154
+T 300 7950 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT154_CNV_2.pdf

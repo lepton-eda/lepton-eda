@@ -92,3 +92,5 @@ L 350 725 625 725 3 0 0 0 -1 -1
 L 1550 1125 1650 1125 3 0 0 0 -1 -1
 T 2100 765 5 10 0 0 0 0
 slot=1
+T 2100 2550 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT107_CNV_2.pdf

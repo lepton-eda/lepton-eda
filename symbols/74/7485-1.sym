@@ -170,3 +170,5 @@ T 300 4940 9 10 1 0 0 0
 7485
 T 300 6150 5 10 0 0 0 0
 numslots=0
+T 300 6350 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT85_CNV_2.pdf

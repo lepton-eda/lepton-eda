@@ -216,3 +216,5 @@ net=GND:10
 T 300 3440 9 10 1 0 0 0
 74373
 L 350 525 550 525 3 0 0 0 -1 -1
+T 300 4850 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc373.pdf

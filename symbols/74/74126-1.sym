@@ -57,3 +57,5 @@ T 2100 2150 5 10 0 0 0 0
 net=GND:7
 T 300 940 9 10 1 0 0 0
 74126
+T 2100 2350 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc126.pdf

@@ -103,3 +103,5 @@ T 300 1740 9 10 1 0 0 0
 7475
 L 1500 1125 1650 1125 3 0 0 0 -1 -1
 L 1450 325 1650 325 3 0 0 0 -1 -1
+T 300 3750 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT75_CNV_2.pdf

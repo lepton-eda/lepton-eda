@@ -109,3 +109,5 @@ T 2100 1140 5 10 0 0 0 0
 slot=1
 T 300 2140 9 10 1 0 0 0
 74112
+T 2100 2950 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc112.pdf

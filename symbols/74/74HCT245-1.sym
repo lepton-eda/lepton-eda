@@ -216,3 +216,5 @@ T 300 4450 5 10 0 0 0 0
 numslots=0
 T 300 3240 9 10 1 0 0 0
 74HCT245
+T 300 4650 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hct245.pdf

@@ -180,3 +180,5 @@ L 375 600 300 650 3 0 0 0 -1 -1
 L 375 600 300 550 3 0 0 0 -1 -1
 L 375 200 300 250 3 0 0 0 -1 -1
 L 375 200 300 150 3 0 0 0 -1 -1
+T 300 4750 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT192_CNV_2.pdf

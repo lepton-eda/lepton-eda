@@ -93,3 +93,5 @@ comment=DONT_USE this symbol: pin /Q is missing
 T 300 3340 5 10 0 0 0 0
 slot=1
 V 250 1000 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 3540 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/74HC_HCT123_CNV_2.pdf

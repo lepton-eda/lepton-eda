@@ -170,3 +170,5 @@ T 300 5550 5 10 0 0 0 0
 net=GND:8
 T 300 4540 9 10 1 0 0 0
 74148
+T 300 5950 5 10 0 0 0 0
+documentation=http://www-s.ti.com/sc/ds/sn74hc148.pdf
