@@ -320,13 +320,14 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 #endif
 	}
 
+
+
 #if DEBUG 
 		printf("file passes: %d\n", pass_count);
 		pass_count = 0;
 		printf("test: %d\n", strcmp("./", "../"));
 		printf("DIR COUNT: %d\n", dir_count);
 #endif
-
 
 	/* lame bubble sort */
 	done = 0;
@@ -350,6 +351,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 		pass_count++;
 #endif
 	}
+
 
 #if DEBUG
 		printf("directory passes: %d\n", pass_count);
@@ -990,6 +992,7 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
 	int i;
 	int max_width=0;
 	int width;
+	int first,last,done,j;		/* variables for the sort */
 
 	gtk_clist_freeze (GTK_CLIST (f_current->dir_list));
 	gtk_clist_clear (GTK_CLIST (f_current->dir_list));
@@ -1025,6 +1028,32 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
 
 	gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
 	f_current->last_search_lib = -1;
+	
+	/* added sort for the directory list so it would match the 
+		automatically sorted clist of directories
+		Chris Ellec - May 2001                           */
+	done = 0;
+        first = 0;
+        last = i;
+        while(!done) {
+		done = 1;
+		for (j = first ; j < last-1; j++) {
+			printf ("%i:",j);
+			if (strcmp(f_current->directory_entries[j], 
+			           f_current->directory_entries[j+1]) > 0) {
+				temp = f_current->directory_entries[j];
+				f_current->directory_entries[j] = 
+					f_current->directory_entries[j+1];
+				f_current->directory_entries[j+1] = temp;
+				done = 0;
+			}
+		}
+		last = last - 1;
+
+#if DEBUG 
+		pass_count++;
+#endif
+	}
 }
 
 void
@@ -1573,7 +1602,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_container_set_border_width(GTK_CONTAINER (scrolled_win), 5);
   		gtk_box_pack_start(GTK_BOX (list_hbox), scrolled_win, 
 				   TRUE, TRUE, 0);
-		/* gtk_clist_set_auto_sort(GTK_CLIST(f_current->dir_list), TRUE);*/
+		gtk_clist_set_auto_sort(GTK_CLIST(f_current->dir_list), TRUE);
   		gtk_widget_show (f_current->dir_list);
   		gtk_widget_show (scrolled_win);
 		free(dir_title[0]);
@@ -1612,7 +1641,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_container_set_border_width(GTK_CONTAINER(scrolled_win), 5);
   		gtk_box_pack_start(GTK_BOX (list_hbox), scrolled_win, 
 				   TRUE, TRUE, 0);
-		/* gtk_clist_set_auto_sort(GTK_CLIST(f_current->file_list), TRUE);*/
+		gtk_clist_set_auto_sort(GTK_CLIST(f_current->file_list), TRUE);
   		gtk_widget_show (f_current->file_list);
   		gtk_widget_show (scrolled_win);
 		free(file_title[0]);
