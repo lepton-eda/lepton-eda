@@ -138,6 +138,10 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->override_color=-1;
 	pr_current->inside_redraw=0;
 
+	/* init some important variables */
+	/* important when reading in nets and pins */
+	pr_current->override_net_color=-1;
+	pr_current->override_pin_color=-1;
 
 	/* Don't init these to zero here... once we are done with all init
 	 *  will these be inited to zero 
