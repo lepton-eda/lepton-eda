@@ -733,6 +733,7 @@
 (attribute-name "description")
 (attribute-name "documentation")
 (attribute-name "symversion")
+(attribute-name "comment")
 
 ;
 ; End of path related keywords

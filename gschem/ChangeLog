@@ -1,3 +1,7 @@
+2004-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added comment to attribute list.
+
 2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/versionsym1.sch versionsym2.sch versionsym3.sch
