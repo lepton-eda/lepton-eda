@@ -394,9 +394,11 @@ s_nethash_build_func(gpointer key, gpointer value, gpointer user_data)
 		printf("%p %p\n", c_current->object, o_current);
 #endif
 		if (c_current->object == o_current) {
+#if DEBUG
 			if (!conn_list) {
 				printf("NULL conn_list\n");
 			}
+#endif
 			if (conn_list) {
 				if (conn_list->visual_cue == MIDPOINT_CUE) {
 				    while (conn_list != NULL) {
