@@ -6,6 +6,9 @@
 	* po/geda-gschem.pot, pt_BR.po: Updated these file from what 
 	Antonio and Alexandre sent me.
 
+	* tests/pins.sch: Added test schematic which exercises the pin
+	whichend flag
+
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* examples/flipflop_1.sch: Fixed invalid attributes and gave all
