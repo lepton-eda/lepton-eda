@@ -19,17 +19,6 @@
 
 ;; Allegro netlist format
 
-(define allegro 
-   (lambda (filename)
-      (let ((port (open-output-file filename)))
-         (display "(Allegro netlister by M. Ettus)\n" port)
-         (display "$PACKAGES\n" port)
-         (allegro:components port packages)
-         (display "$NETS\n" port)
-         (allegro:write-net port (gnetlist:get-all-unique-nets "dummy"))
-         (display "$END\n" port)
-         (close-output-port port)
-	 (allegro:write-device-files packages '() ))))
 
 (define allegro:write-device-files
    (lambda (packages done)
@@ -59,10 +48,9 @@
 
 (define allegro:components
    (lambda (port packages)
-      (if (not (null? packages)
+      (if (not (null? packages))
          (begin
             (let ((pattern (gnetlist:get-package-attribute (car packages) 
-                                                           package 
                                                            "pattern"))
                   (package (car packages)))
                (if (not (string=? pattern "unknown"))
@@ -98,4 +86,16 @@
 	    (display ";" port)
             (allegro:display-connections port (gnetlist:get-all-connections netname))
 	    (allegro:write-net port (cdr netnames)))))) 
+
+(define allegro 
+   (lambda (filename)
+      (let ((port (open-output-file filename)))
+         (display "(Allegro netlister by M. Ettus)\n" port)
+         (display "$PACKAGES\n" port)
+         (allegro:components port packages)
+         (display "$NETS\n" port)
+         (allegro:write-net port (gnetlist:get-all-unique-nets "dummy"))
+         (display "$END\n" port)
+         (close-output-port port)
+	 (allegro:write-device-files packages '() ))))
 

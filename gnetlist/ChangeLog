@@ -1,3 +1,14 @@
+1999-10-06  Matthew Ettus   <matt@ettus.com>
+
+	* scheme/gnet-vipec.scm:  New file, not functional yet.
+
+	* scheme/gnet-PCB.scm:  Cleaned up functions, moved common ones to
+	main gnetlist.scm file. 
+
+	* scheme/gnet-allegro.scm:  Clean up, remove dead code
+
+	* scheme/gnet-bom.scm:  Clean up, remove dead code
+
 1999-10-04  Magnus Danielson  <cfmd@swipnet.se>
 
 	* scheme/gnet-vhdl.scm: Finally fixed the write-port-clause stuff.
