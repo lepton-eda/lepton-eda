@@ -638,7 +638,7 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
                       (GtkSignalFunc) x_event_configure,
                       w_current);
 
-  gtk_signal_connect (GTK_OBJECT(w_current->drawing_area),
+  gtk_signal_connect (GTK_OBJECT(w_current->main_window),
                       "enter_notify_event",
                       (GtkSignalFunc) x_event_enter,
                       w_current);

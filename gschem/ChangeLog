@@ -17,6 +17,14 @@
 
 	* docs/gschem.1: Minor updates and fixes.
 
+	* noweb/x_window.nw: Fixed a very long standing bug identified by
+	Karel Kulhav which deals with opening up a schematic, then a
+	new window and then opening a new schematic or closing the new 
+	window.  The bug was that the wrong window will get the open or 
+	close event.  The fix was to change enter_notify event to be the
+	main window and not the drawing_area.  Thanks for the bug report
+	Karel.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Moved some code around to fix a memory 
