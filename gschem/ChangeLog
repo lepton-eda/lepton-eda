@@ -1,5 +1,7 @@
 2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
+        * configure.in: Bumped version to 20030223
+
 	* noweb/g_funcs.nw, noweb/x_menus.nw, scheme/gschem.scm: Applied
 	Steve Tell's guile 1.6.3 patch. Thanks.
 

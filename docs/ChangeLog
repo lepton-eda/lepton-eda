@@ -1,6 +1,11 @@
+2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.in: Bumped version to 20030223
+
 2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Fixed the distclean-local target.
+
 
 2002-12-01 Ales Hvezda   <ahvezda@geda.seul.org>
 	

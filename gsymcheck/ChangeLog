@@ -1,5 +1,7 @@
 2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
+        * configure.in: Bumped version to 20030223
+
         * configure.in: Applied Gabriel Paubert's warning reducing patch with
         a few minor mods.
 
