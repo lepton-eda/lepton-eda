@@ -1,4 +1,4 @@
-2003-09-21 Ales Hvezda   <ahvezda@geda.seul.org>
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/pt_BR.po, src/Makefile.am: Integrated Antonio's pt_BR
 	translation.
