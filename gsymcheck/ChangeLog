@@ -1,3 +1,8 @@
+2005-02-26 01:14  Dan McMahill <danmc>
+
+	* src/: gsymcheck.c, s_check.c: remove a handful of compiler
+	  warnings
+
 2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac, src/gsymcheck.c: Removed call to gtk_init().

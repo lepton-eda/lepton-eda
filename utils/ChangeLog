@@ -1,3 +1,10 @@
+2005-02-26 01:16  Dan McMahill <danmc>
+
+	* src/: Makefile.am, olib.l: portability fixes to allow AT&T lex
+	  (yeck, but its what ships with solaris) to compile this.  Also
+	  #ifdef around some GCC-isms to let this build with non-gcc
+	  compilers.
+
 2005-02-24 01:21  Dan McMahill <danmc>
 
 	* src/gsch2pcb.c: when parsing the project file, remove trailing
