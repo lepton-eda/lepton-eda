@@ -1,10 +1,15 @@
 dnl Process this file with autoconf to produce a configure script.
-dnl Created by Anjuta - will be overwritten
-dnl If you don't want it to overwrite it,
-dnl 	Please disable it in the Anjuta project configuration
-
 AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(geda, 0.2)
+
+dnl Initialize automake stuff
+PACKAGE=geda
+
+# new way of doing version
+VERSION=20030223
+
+echo Configuring $PACKAGE version $VERSION
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 AM_CONFIG_HEADER(config.h)
 
 AC_ISC_POSIX
@@ -96,7 +101,6 @@ AC_OUTPUT([
 Makefile
 intl/Makefile
 po/Makefile.in
-include/Makefile
 src/Makefile
 pixmaps/Makefile
 ])
