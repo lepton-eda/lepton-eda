@@ -460,7 +460,7 @@ AC_CONFIG_FILES([
 	noweb/Makefile
 	scripts/geda_totexi
 	scripts/notangle_guile.scm])
-AC_CONFIG_COMMANDS([geda_totexi],[[chmod +x scripts/geda_totexi]],[[]])
-AC_CONFIG_COMMANDS([notangle_guile.scm],[[chmod +x scripts/notangle_guile.scm]],[[]])
-AC_CONFIG_COMMANDS([libgeda-config],[[chmod +x libgeda-config]],[[]])
+AC_CONFIG_COMMANDS([geda_totexi-chmod],[[chmod +x scripts/geda_totexi]],[[]])
+AC_CONFIG_COMMANDS([notangle_guile.scm-chmod],[[chmod +x scripts/notangle_guile.scm]],[[]])
+AC_CONFIG_COMMANDS([libgeda-config-chmod],[[chmod +x libgeda-config]],[[]])
 AC_OUTPUT 

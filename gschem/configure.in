@@ -516,6 +516,6 @@ AC_CONFIG_FILES([Makefile m4/Makefile po/Makefile.in  intl/Makefile \
 		lib/system-gschemrc \
 		scripts/geda_totexi \
 		scripts/notangle_guile.scm ])
-AC_CONFIG_COMMANDS([geda_totexi],[[chmod +x scripts/geda_totexi]],[[]])
-AC_CONFIG_COMMANDS([notangle_guile.scm],[[chmod +x scripts/notangle_guile.scm]],[[]])
+AC_CONFIG_COMMANDS([geda_totexi-chmod],[[chmod +x scripts/geda_totexi]],[[]])
+AC_CONFIG_COMMANDS([notangle_guile.scm-chmod],[[chmod +x scripts/notangle_guile.scm]],[[]])
 AC_OUTPUT

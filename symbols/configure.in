@@ -200,6 +200,6 @@ AC_CONFIG_FILES([
 	documentation/Makefile
 	system-commonrc
         gesym-config ])
-AC_CONFIG_COMMANDS([gesym-config],[[chmod +x gesym-config]],[[]])
+AC_CONFIG_COMMANDS([gesym-config-chmod],[[chmod +x gesym-config]],[[]])
 AC_OUTPUT 
 

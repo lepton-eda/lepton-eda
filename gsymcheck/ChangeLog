@@ -1,3 +1,7 @@
+2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
+	
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Bumped version to 20020922, which is NOT a release.

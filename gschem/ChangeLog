@@ -9,7 +9,9 @@
 	* noweb/*.nw, include/*.h: Intergrated patch from Egil for
 	"Snap Off" and "Show Hidden" status indicators (originally written
 	on 10/09/2002).
-	
+
+	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
+
 2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_cues.nw: Added patch by Egil Kvaleberg to prevent core
