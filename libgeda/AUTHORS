@@ -10,5 +10,9 @@ Ales V. Hvezda
 E-mail: ahvezda@geda.seul.org
 Web: http://www.geda.seul.org/
 
+Martin Benes		- For contributing the attribute promotion code,
+			  much improved text origin mirror code, and many
+			  useful bug fixes
+
 Please see the AUTHORS file in the various sub packages 
 (gschem/gnetlist/etc...).

@@ -31,3 +31,5 @@ Feature additions (no particular order):
 	if the text item is invisible.  Also don't do any other ops if that's
 	the case
 
+	Does it make sense to have attribute promotion with embedded 
+	components

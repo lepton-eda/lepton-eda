@@ -8,6 +8,57 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/o_text_basic.c: Oops, found an old memory leak; made the
+	  assumption that text which was invisible had no text_head.?? and
+	  just set complex pointer to NULL, and hence created a leak. 
+	  Plugged leak by freeing complex list completely before NULLing
+
+	* src/o_net_basic.c: #if DEBUG'ed out some printf's which dealt
+	  with net consolidation
+
+2000-06-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.c: Added continue_component_place variable to the
+	  TOPLEVEL structure
+
+2000-06-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added promote_invisible variable to the TOPLEVEL
+          structure
+
+	* src/o_complex.c: Added code to act on above variable in the new
+   	  attribute promotion code
+
+	* include/struct.h: Added keep_invisible variable to the TOPLEVEL 
+          structure
+
+2000-05-28  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added attribute_promotion to TOPLEVEL structure
+
+	* src/o_complex_basic.c: Added Martin Benes' code to implement 
+	  attribute promotion.  
+
+	* src/o_complex_basic.c: Renamed attach_attributes to 
+	  attribute_promotion
+
+	* src/o_complex_basic.c: Changed some 0's to FALSEs.
+
+	* src/o_complex_basic.c: Added another test to 
+	  o_complex_is_eligible_attribute, only visible floating text 
+          attributes will be promoted
+
+	* src/o_list.c: Added Martin Benes' code changes
+
+2000-05-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_text.c: Replaced o_text_mirror and o_text_mirror_world
+          by the much improved routines written by Martin Benes, these 
+	  function properly handle the changing of the origin when mirroring
+	  text
+
 2000-05-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added buffer_number to TOPLEVEL structure
