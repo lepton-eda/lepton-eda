@@ -78,6 +78,9 @@ SCM g_get_packages(SCM level)
                              nl_current->component_uref);
       }
     }
+    /* now create a scheme list of the entries in the hash table */
+    g_hash_table_foreach (ht, hash_table_2_list, &list);
+    g_hash_table_destroy (ht);
 
     return list;
 }

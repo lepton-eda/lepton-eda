@@ -1,3 +1,8 @@
+2005-02-14  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/g_netlist.c (g_get_packages): Added two lines missing after 
+	yesterday rewrite.
+
 2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/g_netlist.c (g_get_packages): Rewritten to use a GLib hash 
