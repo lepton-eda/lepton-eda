@@ -23,6 +23,7 @@
 typedef struct st_page_ewb PAGE_T;
 typedef struct st_box BOX_T;
 typedef struct st_bounding_box BOUNDING_BOX_T;
+typedef struct st_board_ewb BOARD_T;
 typedef struct st_component_ewb COMPONENT_T;
 typedef struct st_footprint_ewb FOOTPRINT_T;
 typedef struct st_track_ewb TRACK_T;
@@ -67,8 +68,9 @@ struct st_selection_ewb {
 };
 
 /* All objects that make up a given page are included in this structure */
-/* Each member is the start of a linked list */
+/* Most members are the start of a linked list */
 struct st_page_ewb {
+	BOARD_T *board;
 	COMPONENT_T *components;
 	COMPONENT_T *last_comp;
 	NET_T *nets;
@@ -83,6 +85,14 @@ struct st_page_ewb {
 	TRACK_T *routeTrack;
 	TRACK_SEG_T *lastSeg;
 	TRACK_SEG_T *routeSeg;
+};
+
+struct st_board_ewb {
+        int x1, y1, x2, y2; /* Board location */
+
+        int selected;
+
+        BOUNDING_BOX_T bb; /* In screen coordinates */
 };
 
 /* Component information is held in this structure. */
