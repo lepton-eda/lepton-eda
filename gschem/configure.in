@@ -55,25 +55,18 @@ dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
 
-dnl Check for guile-config; use it to set 
-dnl GUILE_INCLUDE and GUILE_LIB.
-dnl Issue: Is it OK to include "-L" in GUILE_LIB?
+dnl Guile stuff
+GUILE_FLAGS
 
-AC_PATH_PROG(GUILE_CONFIG_PROG, guile-config)
-
-if test ! -n "$GUILE_CONFIG_PROG" ; then
-		AC_MSG_ERROR(Cannot find guile-config -- Install GUILE 1.3 and run ./configure again)
-fi
-
-	guile_incdir=`$GUILE_CONFIG_PROG info includedir`
-	guile_libdir=`$GUILE_CONFIG_PROG info libdir`
-	guile_libs=`$GUILE_CONFIG_PROG link`
-	GUILE_INCLUDE="-I${guile_incdir}"
-	GUILE_LIB="-L${guile_libdir} ${guile_libs}"
-
-dnl Check if hooks are defined in guile (since ver. 1.3.2)
+dnl Check if scm_run_hook are defined 
 AC_CHECK_LIB(guile, scm_run_hook,,
- 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2))
+ 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
+
+dnl Check if scm_hook_empty_p are defined 
+AC_CHECK_LIB(guile, scm_hook_empty_p,,
+ 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
 
 saved_cflags="$CFLAGS"
 saved_ldflags="$LDFLAGS"
