@@ -1,3 +1,7 @@
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target.
+
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * lib/system-gsymcheckrc.in: Changed the variable names which hold

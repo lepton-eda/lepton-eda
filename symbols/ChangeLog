@@ -1,4 +1,9 @@
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target.
+
 2003-01-03 Werner Hoch <werner.ho@gmx.de>
+
 	* 4000/4[357]*.sym: added missing attributes and ajusted 
 	  the boxwidth of some symbols
 	  corrected some pinnumber errors

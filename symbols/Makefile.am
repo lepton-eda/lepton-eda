@@ -16,7 +16,7 @@ gesym-config-install: gesym-config
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
 	$(binSCRIPT_INSTALL) gesym-config $(DESTDIR)$(bindir)
 
-dist-clean-local:
+distclean-local:
 	-rm -rf autom4te.cache
 
 maintainer-clean-local:

@@ -1,7 +1,11 @@
+2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Makefile.am: Fixed the distclean-local target. 
+
 2002-12-30 Chris Ellec <chris @ gtx.seul.org>
 
-     * utils/src/gmk_sym.c: updated file format to 20021103
-     for pins and boxes.
+	* utils/src/gmk_sym.c: updated file format to 20021103
+     	for pins and boxes.
 
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -4,7 +4,7 @@ SUBDIRS = attributes symbols fileformats hooks keymapping netattrib \
 
 EXTRA_DIST = 
 
-dist-clean-local:
+distclean-local:
 	-rm -rf autom4te.cache
 
 maintainer-clean-local:

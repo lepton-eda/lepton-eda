@@ -6,7 +6,7 @@ EXTRA_DIST = BUGS
 proto:
 	(cd src ; ./create_proto)
 
-dist-clean-local:
+distclean-local:
 	-rm -rf autom4te.cache
 
 maintainer-clean-local:
