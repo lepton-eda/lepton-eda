@@ -1,3 +1,7 @@
+2005-02-08 22:32  Dan McMahill <danmc>
+
+	* src/comps.c: make sure szMissingFile is initialized
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
