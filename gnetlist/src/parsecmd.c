@@ -28,12 +28,13 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#define OPTIONS "o:qihvg:"
+#define OPTIONS "o:qihvg:c:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
 extern int optind;
 #endif
+
 
 void
 usage(char *cmd)
@@ -43,6 +44,7 @@ usage(char *cmd)
 	printf("  -q  		Quite mode\n");
 	printf("  -g proc	GUILE procedure to execute \n");
 	printf("  -o filename	Output netlist filename\n");
+	printf("  -c string	Execute string like was a guile script\n");
 	printf("  -v  		Verbose mode on\n");
 	printf("\n");
 	exit(0);
@@ -82,6 +84,10 @@ parse_commandline(int argc, char *argv[])
 				output_filename = (char *) malloc(sizeof(char)*
 						(strlen(optarg)+1));
 				strcpy(output_filename, optarg);	
+			break;
+
+			case 'c':
+				gh_eval_str_with_stack_saving_handler(optarg);	
 			break;
 			
 
