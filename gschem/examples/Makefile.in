@@ -97,7 +97,7 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-EXTRA_DIST =  		IEC417.sch adders_1.sch all_1.sch agile-vfo-block_1.sch 		README.agile cmos-invert.sch cmos-nand.sch cmos-nor.sch 		embedded_1.sch filter_1.sch flipflop_1.sch 		grey_counter_1.sch hierarchy_1.sch letters_1.sch 		logo_1.sch multiplex_1.sch radio_1.sch 		stack_1.sch states_1.sch all74_1.sch
+EXTRA_DIST =  		IEC417.sch adders_1.sch all_1.sch agile-vfo-block_1.sch 		README.agile cmos-invert.sch cmos-nand.sch cmos-nor.sch 		embedded_1.sch filter_1.sch flipflop_1.sch 		grey_counter_1.sch hierarchy_1.sch letters_1.sch 		logo_1.sch multiplex_1.sch radio_1.sch 		stack_1.sch states_1.sch all74_1.sch 
 
 
 MOSTLYCLEANFILES = core *.log FILE *.ps *~
@@ -117,9 +117,9 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps examples/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu examples/Makefile
 
-Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -132,6 +132,11 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = examples
 
 distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu examples/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \

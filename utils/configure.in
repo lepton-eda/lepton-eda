@@ -52,8 +52,19 @@ fi
 
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 
+# search for libgeda-config
+AC_PATH_PROG(LIBGEDACONFIG, libgeda-config, no, ${PATH})
+
+if test $LIBGEDACONFIG = "no"; then
+        AC_MSG_ERROR(Cannot find libgeda-config -- be sure that libgeda is installed)
+fi
+
+LIBGEDA_CFLAGS=`$LIBGEDACONFIG --cflags`
+#LIBGEDA_LDFLAGS = `$LIBGEDACONFIG --libs`
+
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
+AC_SUBST(LIBGEDA_CFLAGS)
 
 AC_OUTPUT( 	Makefile \
 		src/Makefile )

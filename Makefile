@@ -15,8 +15,10 @@ install::
 	do \
 	echo "configuring/making/installing" all "in $$i..."; \
 	( \
-		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
-		export PATH=$(prefix)/bin:${PATH} ; \
+		LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export LD_LIBRARY_PATH ; \
+		PATH=$(prefix)/bin:${PATH} ; \
+		export PATH ; \
 		cd $$i ; \
 		 ./configure --prefix=$(prefix); \
 		make install \
@@ -26,6 +28,12 @@ install::
 	@echo "If you ran make install: than be sure to set"
 	@echo ""
 	@echo For bourne shell:
+	@echo LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
+	@echo export LD_LIBRARY_PATH
+	@echo PATH=${prefix}/bin:\$$\{PATH\}
+	@echo export PATH
+	@echo ""
+	@echo For bash:
 	@echo export LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
 	@echo export PATH=${prefix}/bin:\$$\{PATH\}
 	@echo ""
@@ -39,8 +47,10 @@ config::
 	do \
 	echo "configuring" all "in $$i..."; \
 	( \
-		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
-		export PATH=$(prefix)/bin:${PATH} ; \
+		LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export LD_LIBRARY_PATH ; \
+		PATH=$(prefix)/bin:${PATH} ; \
+		export PATH ; \
 		cd $$i ; \
 		./configure --prefix=$(prefix) \
 	); \
@@ -78,8 +88,10 @@ build::
 	do \
 	echo "building" all "in $$i..."; \
 	( \
-		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
-		export PATH=$(prefix)/bin:${PATH} ; \
+		LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export LD_LIBRARY_PATH ; \
+		PATH=$(prefix)/bin:${PATH} ; \
+		export PATH ; \
 		cd $$i ; \
 		make \
 	); \
@@ -116,8 +128,10 @@ justinstall::
 	do \
 	echo "justinstalling" all "in $$i..."; \
 	( \
-		export LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
-		export PATH=$(prefix)/bin:${PATH} ; \
+		LD_LIBRARY_PATH=$(prefix)/lib:${LD_LIBRARY_PATH} ; \
+		export LD_LIBRARY_PATH ; \
+		PATH=$(prefix)/bin:${PATH} ; \
+		export PATH ; \
 		cd $$i ; \
 		make install \
 	); \
@@ -143,6 +157,12 @@ targets::
 	@echo "Note that, before doing anything, be sure to set"
 	@echo ""
 	@echo For bourne shell:
+	@echo LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
+	@echo export LD_LIBRARY_PATH
+	@echo PATH=${prefix}/bin:\$$\{PATH\}
+	@echo export PATH
+	@echo ""
+	@echo For bash:
 	@echo export LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
 	@echo export PATH=${prefix}/bin:\$$\{PATH\}
 	@echo ""

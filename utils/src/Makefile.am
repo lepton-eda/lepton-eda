@@ -9,7 +9,7 @@ smash_megafile_SOURCES = smash_megafile.c
 convert_sym_SOURCES = convert_sym.c char_width.c
 sarlacc_schem_SOURCES = sarlacc_schem.c
 
-INCLUDES =
+INCLUDES = $(LIBGEDA_CFLAGS)
 
 gmk_sym_LDADD = 
 smash_megafile_LDADD = 

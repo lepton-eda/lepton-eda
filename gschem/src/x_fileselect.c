@@ -1730,13 +1730,15 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 		gtk_widget_grab_default (buttonapply);
                 gtk_widget_show(buttonapply);
 
-		buttonclose = gtk_button_new_with_label ("Close");
-                GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
-                gtk_box_pack_start(GTK_BOX(action_area),
-                                   buttonclose, TRUE, TRUE, 0);
 
 		if (type == FILESELECT) {
 			if (filesel_type == OPEN) {
+				buttonclose = gtk_button_new_with_label (
+						"Cancel");
+                		GTK_WIDGET_SET_FLAGS(buttonclose, 
+						     GTK_CAN_DEFAULT);
+                		gtk_box_pack_start(GTK_BOX(action_area),
+                                 	  buttonclose, TRUE, TRUE, 0);
 				gtk_signal_connect(GTK_OBJECT(buttonclose),
 					   "clicked",
 					   GTK_SIGNAL_FUNC(x_fileselect_close),
@@ -1750,6 +1752,12 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 		           (filesel_type == SAVEAS_OPEN) ||
 		           (filesel_type == SAVEAS_CLOSE) ||
 		 	   (filesel_type == SAVEAS_NEW)) { 
+				buttonclose = gtk_button_new_with_label (
+						"Cancel");
+                		GTK_WIDGET_SET_FLAGS(buttonclose, 
+						     GTK_CAN_DEFAULT);
+                		gtk_box_pack_start(GTK_BOX(action_area),
+                                 	  buttonclose, TRUE, TRUE, 0);
 				gtk_signal_connect(GTK_OBJECT(buttonclose),
 					   "clicked",
 					   GTK_SIGNAL_FUNC(
@@ -1762,6 +1770,10 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 				x_fileselect_fill_lists(f_current);
 			}
 		} else {
+			buttonclose = gtk_button_new_with_label ("Close");
+                	GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
+                	gtk_box_pack_start(GTK_BOX(action_area),
+                                 	  buttonclose, TRUE, TRUE, 0);
 			gtk_signal_connect(GTK_OBJECT(buttonclose),
 				   "clicked",
 				   GTK_SIGNAL_FUNC(x_fileselect_comp_close),
