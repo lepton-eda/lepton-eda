@@ -1,3 +1,7 @@
+2001-10-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_misc.nw: Changed all instances of strnlen to strlen 
+
 2001-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_key.nw, g_register.nw: Added first bit of Dave Lawrence's 

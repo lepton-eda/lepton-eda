@@ -1007,10 +1007,10 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
       }
     }
     if (o_current->type == OBJ_TEXT) {
-      if ((l = strlen(o_current->text->string) - strnlen(stext)) > 0) {
+      if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
 	if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-	  if (isdigit(o_current->text->string[strnlen(stext)])) {
-	    sscanf(o_current->text->string + strnlen(stext), "%d", &m);
+	  if (isdigit(o_current->text->string[strlen(stext)])) {
+	    sscanf(o_current->text->string + strlen(stext), "%d", &m);
 	    if (m > current_max) {
 	      current_max = m;
 	    }
@@ -1085,10 +1085,10 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
     }
 
     if (o_current->type == OBJ_TEXT) {
-      if ((l = strlen(o_current->text->string) - strnlen(stext)) > 0) {
+      if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
 	if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-	  /* printf("%s %d\n", o_current->text->string, (unsigned char) o_current->text->string[strnlen(stext)]); */
-	  if (o_current->text->string[strnlen(stext)] == '?') {
+	  /* printf("%s %d\n", o_current->text->string, (unsigned char) o_current->text->string[strlen(stext)]); */
+	  if (o_current->text->string[strlen(stext)] == '?') {
 	    free(o_current->text->string);
 	    sprintf(ss, "%s%d", stext, ++current_max);
 	    /*            printf("%s\n", ss); */
