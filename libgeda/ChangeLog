@@ -1,3 +1,10 @@
+2005-02-14 02:17  Dan McMahill <danmc>
+
+	* include/defines.h, noweb/g_basic.nw, noweb/g_smob.nw: put back
+	  scm_makfrom0str().  It is scm_makfromstr() which was deprecated,
+	  scm_makfrom0str() is still ok.  Suggested by Patrick Bernaud.
+
+
 2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/s_page.nw (s_page_init_list): Removed useless initialization 
