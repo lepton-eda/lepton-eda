@@ -85,13 +85,13 @@ $component =~ s/\r//g;
 $component =~ s/\ /_/g;
 
 open(COMPONENT,">$component-1.sym");
-print COMPONENT "v 19990705\n";
+print COMPONENT "v 20000704a\n";
 
 #  BAD Do we need both copies?  other libraries have both for some reason 
-#print COMPONENT "T 100 100 $textcolor $partnamesize 1 0 0\n";
-#print COMPONENT $component, "\n";
+print COMPONENT "T 100 100 $textcolor $partnamesize 1 0 0 0\n";
+print COMPONENT $component, "\n";
 
-print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0\n";
+print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0 0\n";
 print COMPONENT "device=$component\n";
 
 print $component, "\n";
@@ -113,8 +113,8 @@ if($line =~ /REFERENCE/)
 {
 	($dummy,$ref) = split("\'",$line);
 	$line=<LIBRARY>;
-	print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0\n";
-	print COMPONENT "uref=$ref\n";
+	print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0 0\n";
+	print COMPONENT "uref=$ref?\n";
 }
 
 ($dummy,$x,$y,$parts)=split("=}",$line);
@@ -302,7 +302,7 @@ while (( $line = <LIBRARY>) =~ /^[LRTB]/)
 	if ($pinname)
 	{
 		print COMPONENT "T $namex $namey $pinnumcolor ",
-                "$pinnumsize 0 0 0\n";
+                "$pinnumsize 0 0 0 0\n";
                 print COMPONENT "pinname=$pinname\n"; 
 	}
 	print COMPONENT "}\n";
@@ -332,7 +332,7 @@ if (( $line = <LIBRARY>) =~ /VECTOR/ )
 			($dummy,$text)=split("\'",$line);
 			$x1*=100; $y1*=-100; $textsize *= 6; 
 			$text=~ tr/\'//d;
-			print COMPONENT "T $x1 $y1 $linecolor $textsize 1 0 0\n";
+			print COMPONENT "T $x1 $y1 $linecolor $textsize 1 0 0 0\n";
 			print COMPONENT "$text\n";
 		}
 		elsif ($line =~ /CIRCLE/)
