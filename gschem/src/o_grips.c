@@ -47,19 +47,21 @@ o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
 	int top, left, right, bottom;
 	int size, x2size;
 	int x1, y1;
+	int factor;
 
 	if (!whichone) {
 		return(NULL);
 	}
 
-	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
-		size = SCREENabs(w_current, GRIP_SIZE1); 
-	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
-		size = SCREENabs(w_current, GRIP_SIZE2); 
+	factor = (int) w_current->page_current->to_world_x_constant;
+	if (factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1);
+	} else if (factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2);
 	} else {
-		size = SCREENabs(w_current, GRIP_SIZE3); 
+		size = SCREENabs(w_current, GRIP_SIZE3);
 	}
-	x2size = 2 * size;
+	x2size = size * 2;
 
 	/* skip over head */
 	s_current = w_current->page_current->selection2_head->next;
@@ -385,9 +387,8 @@ o_grips_motion(TOPLEVEL *w_current, int x, int y)
 	}
 
 
-#if 0	
-        if (w_current->page_current->zoom_factor > 0 && 
-            w_current->net_style == THICK ) {
+#if 0 /* doing this causes excessize mouse droppings */	
+        if (w_current->net_style == THICK ) {
                 size = SCREENabs(w_current, 10);
                 gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                            GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
@@ -526,9 +527,8 @@ o_grips_motion(TOPLEVEL *w_current, int x, int y)
 		break;
 	}
 
-#if 0
-        if (w_current->page_current->zoom_factor > 0 && 
-	    w_current->net_style == THICK ) {
+#if 0 /* doing this causes excessize mouse droppings */
+        if (w_current->net_style == THICK ) {
                 gdk_gc_set_line_attributes(w_current->xor_gc, 0,
                                            GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
                                            GDK_JOIN_MITER);
