@@ -204,10 +204,21 @@ void gattrib_main(void *closure, int argc, char *argv[])
    * position of the first filename  */
   i = argv_index;
   while(argv[i] != NULL) {
-    gchar *temp_filename = g_build_path (G_DIR_SEPARATOR_S,
-					 cwd,
-					 argv[i],
-					 NULL);
+
+    gchar *temp_filename;
+#ifdef __MINGW32__
+    if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
+                              argv[i][2] == OTHER_PATH_SEPARATER_CHAR))
+#else
+    if (argv[i][0] == G_DIR_SEPARATOR)
+#endif
+    {
+      /* Path is already absolute so no need to do any concat of cwd */
+      temp_filename = g_strdup(argv[i]);
+    } else {
+      temp_filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
+    }
+
     gchar *filename = f_normalize_filename(temp_filename);
     g_free(temp_filename);
 

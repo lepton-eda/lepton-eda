@@ -1,3 +1,11 @@
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Fixed code to allow user to specify absolute 
+	filenames on the command line again.
+
+	* tests/*: Updated more golden regression files to take into
+	account the package reordering changes.
+
 2005-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/*, examples/switcap/example.scn: Updated regression golden

@@ -5,6 +5,12 @@
 	* lib/system-gschemrc.in: Fixed hotkey for Autonumber Text... dialog
 	box to be unique (so it will even work; hasn't worked since 01/2001).
 
+        * noweb/gschem.c: Fixed code to allow user to specify absolute
+        filenames on the command line again.
+
+	* tests/agile-vfo-block_1.sch: Moved schematic into test directory 
+	since it's out-of-date.	
+
 2005-03-05 Werner Hoch <werner.ho@gmx.de>
 	* noweb/x_dialog.nw: changed the autonumber_text dialog
 	* noweb/o_misc.nw: changed functions which support the autonumber 

@@ -1,3 +1,8 @@
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * gschlas/gschlas.c: Fixed code to allow user to specify absolute
+        filenames on the command line again.
+
 2005-02-26 01:16  Dan McMahill <danmc>
 
 	* src/: Makefile.am, olib.l: portability fixes to allow AT&T lex

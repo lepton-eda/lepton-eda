@@ -145,17 +145,26 @@ void main_prog(void *closure, int argc, char *argv[])
     i = argv_index;
     while (argv[i] != NULL) {
       PAGE *page;
-      gchar *filename = g_build_path (G_DIR_SEPARATOR_S,
-                                      cwd,
-                                      argv[i],
-                                      NULL);
+      gchar *filename; 
+
+#ifdef __MINGW32__
+      if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
+                                argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) 
+#else
+      if (argv[i][0] == G_DIR_SEPARATOR) 
+#endif
+      {
+        /* Path is already absolute so no need to do any concat of cwd */
+        filename = g_strdup (argv[i]);
+      } else {
+        filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
+      }
 
       if (!quiet_mode) {
         printf ("Loading schematic [%s]\n", filename);
       }
 
-      s_page_goto (pr_current,
-                   s_page_new (pr_current, filename));
+      s_page_goto (pr_current, s_page_new (pr_current, filename));
       
       if (!f_open (pr_current, filename)) {
         fprintf (stderr, "Couldn't load schematic [%s]\n", filename);

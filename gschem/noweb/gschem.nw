@@ -133,7 +133,7 @@ main_prog(void *closure, int argc, char *argv[])
 
 #if ENABLE_NLS
   /* this should be equivalent to setlocale (LC_ALL, "") */
-  const char *locale = gtk_set_locale();
+  gtk_set_locale();
 
   /* This must be the same for all locales */
   setlocale(LC_NUMERIC, "POSIX");
@@ -255,10 +255,20 @@ main_prog(void *closure, int argc, char *argv[])
 
   i = argv_index;
   while (argv[i] != NULL) {
-    filename = g_strconcat (cwd,
-                            G_DIR_SEPARATOR_S,
-                            argv[i],
-                            NULL);
+
+#ifdef __MINGW32__
+     if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
+                               argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) 
+#else
+    if (argv[i][0] == G_DIR_SEPARATOR) 
+#endif
+    {
+      /* Path is already absolute so no need to do any concat of cwd */
+      filename = g_strdup (argv[i]);
+    } else {
+      filename = g_strconcat (cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
+    }
+
     if (first_page) {
       if (w_current->page_current->page_filename) {
         free(w_current->page_current->page_filename);
@@ -268,29 +278,13 @@ main_prog(void *closure, int argc, char *argv[])
        * so, just set the filename and open the
        * schematic for the first page */
 
-#if 0
-        /* SDB Notes: This is what it used to be.  I have probably broken the MINGW32 stuff */
-#ifdef __MINGW32__
-      if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
-			        argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) {
-#else
-      if (argv[i][0] == G_DIR_SEPARATOR) {
-#endif
-        w_current->page_current->page_filename = 
-          g_strdup (argv[i]);
-      } else {
-        w_current->page_current->page_filename = 
-          g_strconcat (cwd, PATH_SEPARATER_STRING, argv[i], NULL);
-      }
-#endif
-
-      /* SDB says: always use absolute file names to eliminate confusion */
+      /* always use absolute file names to eliminate confusion */
       w_current->page_current->page_filename = filename;
 
       /* 
        * SDB notes:  at this point the filename might be unnormalized, like
        * /path/to/foo/../bar/baz.sch.  Bad filenames will be normalized
-       * in f_open.  This works for Linux.  Will this work for the MINGW32 port?
+       * in f_open.  This works for Linux and MINGW32.
        */
 
       if (!quiet_mode) {

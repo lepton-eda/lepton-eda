@@ -1,3 +1,8 @@
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gattrib.c: Fixed code to allow user to specify absolute
+        filenames on the command line again.
+
 2005-03-06 Stuart Brorson <sdb@cloud9.net>
 
 	* src/s_table.c, src/x_dialog.c: Fix some uninitialized variables

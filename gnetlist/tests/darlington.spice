@@ -1,9 +1,8 @@
 * Spice netlister for gnetlist
-* Spice backend written by Bas Gieltjes
+Q2 2 3 4 QM
+Q1 2 1 3 QM
+RE 4 0 4.7K
 Vcc 2 0 DC 12V
 Vin 1 0 DC 5V
 RB 2 1 47K
-RE 4 0 4.7K
-Q2 2 3 4 QM
-Q1 2 1 3 QM
 .END

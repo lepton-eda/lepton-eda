@@ -8,6 +8,7 @@ EXTRA_DIST = all74_1.sch all_1.sch buses.sch embedded_1.sch ext_chars.sch \
 	     versionsym_invalid.sym versionsym_major.sym versionsym_minor.sym \
 	     versionsym_minor2.sym missing.sch autonumber.sch \
 	     autonumber_sub1.sch autonumber_sub2.sch autonumber_sub_sub1.sch \
+	     agile-vfo-block_1.sch \
 	     gafrc
 
 MOSTLYCLEANFILES =	*.log *~

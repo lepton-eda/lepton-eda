@@ -102,10 +102,20 @@ main_prog(void *closure, int argc, char *argv[])
   
   i = argv_index;
   while (argv[i] != NULL) {
-    gchar *filename = g_build_path (G_DIR_SEPARATOR_S,
-                                    cwd,
-                                    argv[i],
-                                    NULL);
+
+    gchar *filename;
+#ifdef __MINGW32__
+     if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
+                               argv[i][2] == OTHER_PATH_SEPARATER_CHAR))
+#else
+    if (argv[i][0] == G_DIR_SEPARATOR)
+#endif
+    {
+      /* Path is already absolute so no need to do any concat of cwd */
+      filename = g_strdup (argv[i]);
+    } else {
+      filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
+    }
 
     if (stat(filename, &buf) != 0) {
       s_log_message("Could not open [%s]\n", filename);
