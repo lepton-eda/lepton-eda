@@ -94,7 +94,6 @@ GEDA_DECLARE_SYMLIB(dec)
 GEDA_DECLARE_SYMLIB(rf)
 GEDA_DECLARE_SYMLIB(pla)
 GEDA_DECLARE_SYMLIB(ecl)
-GEDA_DECLARE_SYMLIB(foot)
 GEDA_DECLARE_SYMLIB(IEC417)
 GEDA_DECLARE_SYMLIB(font)
 GEDA_DECLARE_SYMLIB(idt)
@@ -145,7 +144,6 @@ AC_SUBST(datadec)
 AC_SUBST(datapla)
 AC_SUBST(dataecl)
 AC_SUBST(datarf)
-AC_SUBST(datafoot)
 AC_SUBST(dataIEC417)
 AC_SUBST(datafont)
 AC_SUBST(dataidt)
@@ -174,7 +172,6 @@ AC_CONFIG_FILES([
 	analog/Makefile 
 	connector/Makefile 
 	font/Makefile 
-	foot/Makefile 
 	idt/Makefile 
 	io/Makefile 
 	linear/Makefile 

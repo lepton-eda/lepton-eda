@@ -2,6 +2,8 @@
 	
 	* font/[a-z].sym: Removed these obsolete symbol files
 
+	* foot: Removed directory
+
 2002-04-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* font/period.sym: Changed the graphical representation to be a little
