@@ -89,6 +89,10 @@ PRE,1,dot,B,1
 /****************************************************/
 #endif
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -97,6 +101,10 @@ PRE,1,dot,B,1
 #include <sys/time.h>
 #include <time.h>
 #include <errno.h>
+
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
 
 #define BLACK		0
 #define WHITE		1

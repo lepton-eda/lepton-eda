@@ -32,6 +32,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 #define OPTIONS "hqv"
 
 #ifndef OPTARG_IN_UNISTD

@@ -35,6 +35,10 @@
 
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 void
 g_register_funcs(void)
 {

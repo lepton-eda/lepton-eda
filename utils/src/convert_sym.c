@@ -34,6 +34,10 @@
 #include <config.h> /* added by AVH for integration into the gEDA tarball */
 #include <libgeda/colors.h>
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 #if 0 /* removed by AVH just to make a -Wall -Werror happy */
 #ifndef lint
 static char vcid[] = "$Id$";

@@ -4,6 +4,10 @@
 #include <string.h>
 #endif
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 #define CHAR_POINTS 2
 
 const int char_width[]={

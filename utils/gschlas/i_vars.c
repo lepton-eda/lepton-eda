@@ -31,6 +31,10 @@
 #include "../include/prototype.h"
 #include "../include/papersizes.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 int default_force_boundingbox = FALSE;
 
 void i_vars_set(TOPLEVEL * pr_current)

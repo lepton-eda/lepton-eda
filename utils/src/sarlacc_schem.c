@@ -19,7 +19,11 @@
  */
 
 /*   This program will convert an ORCAD SDT IV file to geda format */
-	
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -34,10 +38,14 @@
 
 #include <libgeda/colors.h>
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 /*
  *  command line options
  */
-#define VERSION "0.94"
+#define SARVERSION "0.94"
 #define GEDAVERSION "20020825"
 
 #define DEFAULT_SCALE 200 /* was 100 */
@@ -785,7 +793,7 @@ main(int argc, char **argv)
 	    scale = atoi(optarg);
 	    break;
 	case 'v':
-	    fprintf(stderr,"sarlacc_scheme ver %s\n", VERSION);
+	    fprintf(stderr,"sarlacc_scheme ver %s\n", SARVERSION);
 	    exit(0);
 	    break;
 	case 'h':

@@ -18,6 +18,10 @@
 */
 
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <glib.h>
 
 #include <stdio.h>
@@ -31,6 +35,9 @@
 #include "glib12-compat.c"
 #endif
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
 
 #define	GSC2PCB_VERSION		"1.4"
 

@@ -20,9 +20,17 @@
 /*  Functions to enable gsch2pcb.c to compile under glib1.2
 */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <dirent.h>
 #include <unistd.h>
 #include <sys/stat.h>
+
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
 
 typedef struct
 	{
