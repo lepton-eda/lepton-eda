@@ -80,7 +80,6 @@ Copyright @copyright{} xxxx XXXX.
 * File x_image.c:: file x_image.c.
 * File x_log.c:: file x_log.c.
 * File x_menus.c:: file x_menus.c.
-* File x_multimulti.c:: file x_multimulti.c.
 * File x_pagesel.c:: file x_pagesel.c.
 * File x_preview.c:: file x_preview.c.
 * File x_print.c:: file x_print.c.
@@ -139,7 +138,6 @@ Copyright @copyright{} xxxx XXXX.
 @include x_image.texi
 @include x_log.texi
 @include x_menus.texi
-@include x_multimulti.texi
 @include x_pagesel.texi
 @include x_preview.texi
 @include x_print.texi

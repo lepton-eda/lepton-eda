@@ -1,3 +1,11 @@
+2003-04-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, noweb/Makefile.am: Removed x_multimulti.nw from the 
+	build and removed the dependancy on gtk+extra (also removed references
+	to this file in the docs/ directory)
+
+	* noweb/x_multimulti.nw: Removed file from CVS
+
 2003-04-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw: Added reset-component-library and

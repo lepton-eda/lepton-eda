@@ -8,7 +8,7 @@ EXTRA_DIST = a_pan.nw a_zoom.nw g_funcs.nw g_hook.nw g_key.nw g_rc.nw \
              o_undo.nw parsecmd.nw rcstrings.nw x_attribedit.nw x_basic.nw \
              x_color.nw x_dialog.nw x_event.nw x_fileselect.nw x_grid.nw \
              x_image.nw x_log.nw x_menus.nw x_multiattrib.nw \
-             x_multimulti.nw x_pagesel.nw x_preview.nw x_print.nw \
+             x_pagesel.nw x_preview.nw x_print.nw \
              x_script.nw x_stroke.nw x_window.nw
 
 MOSTLYCLEANFILES = *.log *~

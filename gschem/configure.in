@@ -179,23 +179,25 @@ else
 	fi
 fi
 
-# search for gtkextra-config
-AC_PATH_PROG(GTKEXTRACONFIG, gtkextra-config, no, ${PATH})
 
-if test $GTKEXTRACONFIG = "no"; then
-	gtkextra_ldflags=""
-	gtkextra_cflags=""
-else
-	gtkextra_ldflags=`$GTKEXTRACONFIG --libs`
-	gtkextra_cflags=`$GTKEXTRACONFIG --cflags`
-	GTK_EXTRA="$gtk_cflags $gtkextra_cflags $gtkextra_ldflags $gtk_ldflags -lm"
-	AC_CHECK_LIB(gtkextra, gtk_sheet_new, GTKEXTRA_LIB="-lgtkextra", GTKEXTRA_LIB=no, $GTK_EXTRA)
-	if test $GTKEXTRA_LIB = "no"; then
-		AC_MSG_ERROR(gtkextra library improperly installed)
-	else	
-		AC_DEFINE(HAS_LIBGTKEXTRA)
-	fi
-fi
+# search for gtkextra-config
+# no longer in use
+#AC_PATH_PROG(GTKEXTRACONFIG, gtkextra-config, no, ${PATH})
+#
+#if test $GTKEXTRACONFIG = "no"; then
+#	gtkextra_ldflags=""
+#	gtkextra_cflags=""
+#else
+#	gtkextra_ldflags=`$GTKEXTRACONFIG --libs`
+#	gtkextra_cflags=`$GTKEXTRACONFIG --cflags`
+#	GTK_EXTRA="$gtk_cflags $gtkextra_cflags $gtkextra_ldflags $gtk_ldflags -lm"
+#	AC_CHECK_LIB(gtkextra, gtk_sheet_new, GTKEXTRA_LIB="-lgtkextra", GTKEXTRA_LIB=no, $GTK_EXTRA)
+#	if test $GTKEXTRA_LIB = "no"; then
+#		AC_MSG_ERROR(gtkextra library improperly installed)
+#	else	
+#		AC_DEFINE(HAS_LIBGTKEXTRA)
+#	fi
+#fi
 
 # search for libgeda-config
 AC_PATH_PROG(LIBGEDACONFIG, libgeda-config, no, ${PATH})
@@ -241,8 +243,8 @@ CFEXTRA=
 GTK=
 GDK=
 GLIB=
-X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags $gtkextra_ldflags $gtk_ldflags"
-X_CFLAGS="$gtk_cflags $libgdgeda_cflags $gtkextra_cflags `$LIBGEDACONFIG --cflags`"
+X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags $gtk_ldflags"
+X_CFLAGS="$gtk_cflags $libgdgeda_cflags `$LIBGEDACONFIG --cflags`"
 gtkversion=`$GTK_CONFIG --version | cut -d. -f1,2`
 
 AC_DEFINE_UNQUOTED(GTKVERSION, "$gtkversion")
