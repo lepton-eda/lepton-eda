@@ -452,28 +452,20 @@ g_rc_component_library(SCM path)
     return SCM_BOOL_F;
   }
 
-  /* not an unique path? */
-  if (!s_clib_uniq(string)) {
-    if (string) {
-      free(string);
-    }
-    return SCM_BOOL_F;
-  }
-
 #ifdef __MINGW32__
   if (string[1] == ':' && (string[2] == PATH_SEPARATER_CHAR ||
  			   string[2] == OTHER_PATH_SEPARATER_CHAR)) {
 #else
   if (string[0] == PATH_SEPARATER_CHAR) {
 #endif
-    s_clib_add_entry(string);
+    s_clib_add_directory (string);
   } else {
     cwd = getcwd(NULL, 1024);
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, PATH_SEPARATER_CHAR);
 #endif
     temp = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, string, NULL);
-    s_clib_add_entry(temp);
+    s_clib_add_directory (temp);
     free(temp);
     free(cwd);
   }
@@ -557,35 +549,32 @@ g_rc_component_library_search(SCM path)
 	          dptr->d_name);
           stat(fullpath, &buf);
           if (S_ISDIR(buf.st_mode)) { 
-            if (s_clib_uniq(fullpath)) {
-
 #ifdef __MINGW32__
-              if (fullpath[1] == ':' &&
-                  (fullpath[2] == PATH_SEPARATER_CHAR ||
-                   fullpath[2] == OTHER_PATH_SEPARATER_CHAR))  {
+            if (fullpath[1] == ':' &&
+                (fullpath[2] == PATH_SEPARATER_CHAR ||
+                 fullpath[2] == OTHER_PATH_SEPARATER_CHAR))  {
 #else
-              if (fullpath[0] == PATH_SEPARATER_CHAR) {
+            if (fullpath[0] == PATH_SEPARATER_CHAR) {
 #endif
-                s_clib_add_entry(fullpath);
+              s_clib_add_directory(fullpath);
 #if DEBUG
-                printf("absolute: %s\n", fullpath);
+              printf("absolute: %s\n", fullpath);
 #endif
-              } else {
-                cwd = getcwd(NULL, 1024);
+            } else {
+              cwd = getcwd(NULL, 1024);
 #ifdef __MINGW32__
-		u_basic_strip_trailing(cwd, PATH_SEPARATER_CHAR);
+              u_basic_strip_trailing(cwd, PATH_SEPARATER_CHAR);
 #endif
-                temp = u_basic_strdup_multiple(cwd, 
-                                               PATH_SEPARATER_STRING, 
-					       fullpath, NULL);
+              temp = u_basic_strdup_multiple(cwd, 
+                                             PATH_SEPARATER_STRING, 
+                                             fullpath, NULL);
 #if DEBUG
-                printf("relative: %s\n", temp);
+              printf("relative: %s\n", temp);
 #endif
-                s_clib_add_entry(temp);
-                free(temp);
-                free(cwd);
-              }
-            } 
+              s_clib_add_directory(temp);
+              free(temp);
+              free(cwd);
+            }
           }
           free(fullpath);
         }
@@ -1128,8 +1117,6 @@ g_rc_bus_ripper_symname(SCM scmsymname)
 SCM
 g_rc_reset_component_library(void)
 {
-  s_clib_cache_free();
-  s_clib_free();
   s_clib_init();
   
   return SCM_BOOL_T;

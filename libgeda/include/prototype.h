@@ -445,23 +445,12 @@ char *insert_string(char *string, int start, char *insert_string);
 char *expand_env_variables(char *string);
 
 /* s_clib.c */
-int s_clib_return_num(void);
-int s_clib_add_entry(char *new_path);
-int s_clib_search_for_dirname(char *dir_name);
-char *s_clib_cache_search(char *basename);
-int s_clib_cache_add(char *clib_path, char *basename);
-char *s_clib_search_dirs(char *basename);
-char *s_clib_search(char *basename);
-void s_clib_print(void);
-void s_clib_cache_free(void);
-void s_clib_free(void);
-void s_clib_init(void);
-char *s_clib_getdir(int index);
-GSList *s_clib_getfiles(const char *directory, const char *filter);
-int s_clib_uniq(char *path);
-int s_clib_get_index();
-void s_clib_pop();
-
+void s_clib_init (void);
+void s_clib_free (void);
+void s_clib_add_directory (const gchar *directory);
+const GSList* s_clib_get_directories ();
+GSList* s_clib_get_files (const gchar *directory, const gchar *filter);
+const GSList* s_clib_search_basename (const gchar *basename);
 
 /* s_color.c */
 void s_color_init(void);

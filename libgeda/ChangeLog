@@ -1,3 +1,10 @@
+2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/g_rc.nw, noweb/o_complex_basic.nw: Adapted for new component 
+	library code.
+
+	* noweb/s_clib.nw: Rewrote code for component library.
+
 2005-01-28 Stuart Brorson <sdb@cloud9.net>
 
 	*  noweb/f_basic.nw, noweb/g_rc.nw, noweb/s_page.nw, 

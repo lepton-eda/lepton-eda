@@ -867,8 +867,14 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
 @ 
 
 <<o_complex_read() : add a complex from library>>=
-
-    clib = (char *) s_clib_search(basename); 
+GList *clibs = s_clib_search_basename (basename);
+if (g_slist_next (clibs)) {
+  s_log_message ("More than one component found with name [%s]\n",
+                 basename);
+  /* PB: for now, use the first directory in clibs */
+  /* PB: maybe open a dialog to select the right one? */
+}
+clib = (gchar*)clibs->data;
  
     if (clib == NULL)
     {
@@ -884,7 +890,6 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
                                 x1, y1, 
                                 angle, mirror,
                                 clib, basename, selectable, FALSE);
-    free(clib);
 
 @ 
 
