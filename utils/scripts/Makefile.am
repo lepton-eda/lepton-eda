@@ -21,5 +21,5 @@ gschemdoc: config.sh gschemdoc.sh
 ##  SDB's stuff to enable garchive.  This hardcodes the path to the
 ##  system libraries into garchive prior to installation.
 garchive: garchive.py
-	sed -e s\cGEDADATADIR\c$(GEDADATADIR)\c garchive.py > garchive
+	sed -e "s#GEDADATADIR#$(GEDADATADIR)#" garchive.py > garchive
 	chmod a+x garchive
