@@ -22,8 +22,8 @@ install::
 		PATH=$(prefix)/bin:${PATH} ; \
 		export PATH ; \
 		cd $$i ; \
-		 ./configure --prefix=$(prefix); \
-		make install  \
+		./configure --prefix=$(prefix); \
+		make install ; \
 	); \
 	done
 	@echo Finished!

@@ -360,7 +360,13 @@ int s_color_image_int(int color);
 void s_color_gdcolor_init(void);
 int s_color_get_name(int index, char *string);
 /* s_hierarchy.c */
-void s_hierarchy_load_all(TOPLEVEL *w_current, char *filename);
+void s_hierarchy_down_schematic(TOPLEVEL *w_current, char *filename, PAGE *parent);
+void s_hierarchy_down_symbol(TOPLEVEL *w_current, char *filename, PAGE *parent);
+void s_hierarchy_up(TOPLEVEL *w_current, int pid);
+void s_hierarch_traverse(void);
+PAGE *s_hierarchy_find_prev_page(PAGE *p_start, int page_control);
+PAGE *s_hierarchy_find_next_page(PAGE *p_start, int page_control);
+PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
 /* s_log.c */
 void s_log_init(char *cwd, char *filename);
 void s_log_message(const gchar *format, ...);

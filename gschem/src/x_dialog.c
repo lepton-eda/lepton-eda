@@ -92,10 +92,34 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	GtkWidget *delbutton;
 	GtkWidget *closebutton;
 	GtkWidget *table;
+
+
+	/* Do basic checks first */	
+	if(!w_current)return;
+	if(!w_current->page_current)return;
+	if(!w_current->page_current->object_head)return;
+	if(!w_current->page_current->selection_head)return;
+	if(!w_current->page_current->selection_head->next)return;
+	
+	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
+		w_current->page_current->selection_head->next);
+	text[0] = malloc(1000);
+	text[1] = malloc(1000);
+	text[2] = malloc(1000);
+
+	/* Make sure attriblist isn't NULL */
+	if (attriblist == NULL) {
+		free(text[0]);
+		free(text[1]);
+		free(text[2]);
+		return;
+	}
 	
 	window1 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_object_set_data (GTK_OBJECT (window1), "window1", window1);
 	gtk_window_set_title (GTK_WINDOW (window1), "window1");
+  
+	gtk_window_position(GTK_WINDOW (window1), GTK_WIN_POS_MOUSE);
 
 	vbox = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox);
@@ -239,24 +263,13 @@ gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
 	gtk_container_add (GTK_CONTAINER (hbuttonbox1), closebutton);
 	GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
 	
-	
-	if(!w_current)return;
-	if(!w_current->page_current)return;
-	if(!w_current->page_current->object_head)return;
-	if(!w_current->page_current->selection_head)return;
-	if(!w_current->page_current->selection_head->next)return;
-	
-	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
-		w_current->page_current->selection_head->next);
-	text[0] = malloc(1000);
-	text[1] = malloc(1000);
-	text[2] = malloc(1000);
 
 	i=0;
        	while(attriblist[i] != NULL)
         {
                 o_attrib_get_name_value(attriblist[i]->text_string,
 			text[0],text[2]);
+		strcpy(text[1], "TODO");
                 gtk_clist_append(GTK_CLIST(clist),text);
                 i++;
         }
@@ -277,8 +290,6 @@ gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
 	o_attrib_free_returned(attriblist);
 	w_current->tewindow=window1;
 
-        gtk_window_position(GTK_WINDOW (window1), GTK_WIN_POS_MOUSE);
-
 	gtk_signal_connect(GTK_WINDOW (window1), "destroy",
 				GTK_SIGNAL_FUNC(destroy_window),
 				&w_current->tewindow);
@@ -293,6 +304,9 @@ gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
                         GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
 
 
+	free(text[0]);
+	free(text[1]);
+	free(text[2]);
 }
 
 
@@ -513,6 +527,15 @@ attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 void
 attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
 {
+	OBJECT *object;
+
+	/* for now unselect everything, but in the future you really ought 
+	 * to just unselect a single object */
+	o_unselect_all(w_current);
+
+	object = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"attrib");
+	o_delete_text(w_current, object);
+
 	i_update_status(w_current, "Select Mode");
         w_current->event_state = SELECT;
         gtk_grab_remove(w_current->tewindow);

@@ -934,13 +934,21 @@ DEFINE_I_CALLBACK(page_manager)
 
 DEFINE_I_CALLBACK(page_next)
 {
+	PAGE *new_page;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
 	exit_if_null(w_current);
 
 	if (w_current->page_current->next != NULL &&
 	    w_current->page_current->next->pid != -1) {
-		w_current->page_current = w_current->page_current->next;
+
+		new_page = s_hierarchy_find_next_page(w_current->page_current, 
+					 w_current->page_current->page_control);
+		if (new_page) {
+			w_current->page_current = new_page;
+		} else {
+			return;
+		}
 	}
 
 	s_page_goto(w_current, w_current->page_current);
@@ -953,13 +961,21 @@ DEFINE_I_CALLBACK(page_next)
 
 DEFINE_I_CALLBACK(page_prev)
 {
+	PAGE *new_page;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
 	exit_if_null(w_current);
 
 	if (w_current->page_current->prev != NULL &&
 			w_current->page_current->prev->pid != -1) {
-		w_current->page_current = w_current->page_current->prev;
+
+		new_page = s_hierarchy_find_prev_page(w_current->page_current, 
+					 w_current->page_current->page_control);
+		if (new_page) { 
+			w_current->page_current = new_page;
+		} else {
+			return;
+		}
 	}
 
 	s_page_goto(w_current, w_current->page_current);
@@ -1434,7 +1450,7 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
 }
 
 /* Hierarchy menu */
-DEFINE_I_CALLBACK(hierarchy_open_symbol)
+DEFINE_I_CALLBACK(hierarchy_down_schematic)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	char *filename;
@@ -1448,13 +1464,59 @@ DEFINE_I_CALLBACK(hierarchy_open_symbol)
 			filename = w_current->page_current->selection_head->
 				next->complex_basename;
 			s_log_message("Searching for source [%s]\n", filename);
-			s_hierarchy_load_all(w_current, filename);
+			s_hierarchy_down_schematic(w_current, filename,
+				 		   w_current->page_current);
 			i_set_filename(w_current,
 				       w_current->page_current->page_filename);
+
 			o_redraw_all(w_current);
 			update_page_manager(NULL, w_current);
 		}
         }
+}
+
+DEFINE_I_CALLBACK(hierarchy_down_symbol)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	char *filename;
+
+	exit_if_null(w_current);
+
+	if (w_current->page_current->selection_head->next != NULL) {
+		/* only allow going into symbols */
+		if (w_current->page_current->selection_head->next->
+		    type == OBJ_COMPLEX) {
+			filename = u_basic_strdup_multiple( 
+				w_current->page_current->selection_head->next->
+				complex_clib, 
+				"/", 
+				w_current->page_current->selection_head->next->
+				complex_basename, NULL);
+			s_log_message("Searching for symbol [%s]\n", filename);
+			s_hierarchy_down_symbol(w_current, filename, 
+				 		w_current->page_current);
+			i_set_filename(w_current,
+				       w_current->page_current->page_filename);
+			a_zoom_limits(w_current, 
+				      w_current->page_current->object_head);
+			o_redraw_all(w_current);
+			update_page_manager(NULL, w_current);
+			free(filename);
+		}
+        }
+}
+
+DEFINE_I_CALLBACK(hierarchy_up)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	char *filename;
+
+	exit_if_null(w_current);
+
+	s_hierarchy_up(w_current, w_current->page_current->up);
+	i_set_filename(w_current, w_current->page_current->page_filename);
+	o_redraw_all(w_current);
+	update_page_manager(NULL, w_current);
 }
 
 /* Attributes menu */

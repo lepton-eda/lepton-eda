@@ -37,28 +37,48 @@
 #include "../include/prototype.h"
 
 
+static int page_control_counter=0;
+
 /* This function goes and finds the associated source files and loads ALL up */
 /* only works for schematic files though */
+/* this is basically push */
 void
-s_hierarchy_load_all(TOPLEVEL *w_current, char *filename)
+s_hierarchy_down_schematic(TOPLEVEL *w_current, char *filename, PAGE *parent) 
 {
 	char *string=NULL;
 	PAGE *save_first_page=NULL;
+	PAGE *found;
 	int loaded_schematics=0;
-
 
 	s_slib_search(NULL, SLIB_SEARCH_START);
 
 	string = s_slib_search(filename, SLIB_SEARCH_NEXT);
 	while (string != NULL) {
 
-		s_page_new(w_current, string);
+		found = s_page_new(w_current, string);
+
+		if (found) {
+			w_current->page_current = found;
+			s_page_goto(w_current, found);
+			return;
+		}
+
 		f_open(w_current, w_current->page_current->page_filename);
 
 		if (loaded_schematics == 0) {
+			page_control_counter++;
 			save_first_page = w_current->page_current;
+			/* parent->down = w_current->page_current; not needed */
+			w_current->page_current->page_control = 
+						page_control_counter;
 			loaded_schematics=1;
+		} else {
+			w_current->page_current->page_control = 
+						page_control_counter;
 		}
+
+		w_current->page_current->up = parent->pid;
+		/* w_current->page_current->down = NULL; not needed */
 
 		if (string) 
 			free(string);
@@ -76,4 +96,105 @@ s_hierarchy_load_all(TOPLEVEL *w_current, char *filename)
 	}
 
 	s_page_goto(w_current, w_current->page_current);
+}
+
+void
+s_hierarchy_down_symbol(TOPLEVEL *w_current, char *filename, PAGE *parent)
+{
+	PAGE *found;
+
+	/* stupid way of doing this */
+	/* absolutely NO error detection */
+	found = s_page_new(w_current, filename);
+
+	if (found) {
+		w_current->page_current = found;
+		s_page_goto(w_current, found);
+		return;
+	}
+
+	f_open(w_current, w_current->page_current->page_filename);
+
+	w_current->page_current->up = parent->pid;
+	/* w_current->page_current->down = NULL; not needed */
+	/* parent->down = w_current->page_current; not needed */
+	page_control_counter++;
+	w_current->page_current->page_control = page_control_counter;
+
+	s_page_goto(w_current, w_current->page_current);
+}
+
+void
+s_hierarchy_up(TOPLEVEL *w_current, int pid)
+{
+	PAGE *p_current;
+
+	if (pid < 0) {
+		return;
+	}
+
+	p_current = s_hierarchy_find_page(w_current->page_head, pid);
+
+	if (p_current) {
+		s_page_goto(w_current, p_current);
+	} else {
+		s_log_message("There are no schematics above the current one!\n");
+	}
+}
+
+void
+s_hierarch_traverse(void) 
+{
+
+}
+
+PAGE *
+s_hierarchy_find_prev_page(PAGE *p_start, int page_control) 
+{
+	PAGE *p_current;	
+
+	p_current = p_start->prev;
+
+	while(p_current != NULL) {
+		if (p_current->page_control == page_control) {
+			return(p_current);
+		}
+		p_current = p_current->prev;
+	}
+
+	return(NULL);
+}
+
+PAGE *
+s_hierarchy_find_next_page(PAGE *p_start, int page_control)
+{
+	PAGE *p_current;	
+
+	p_current = p_start->next;
+
+	while(p_current != NULL) {
+		if (p_current->page_control == page_control) {
+			return(p_current);
+		}
+		p_current = p_current->next;
+	}
+
+	return(NULL);
+}
+
+PAGE *
+s_hierarchy_find_page(PAGE *p_start, int pid)
+{
+	PAGE *p_current;	
+
+	p_current = p_start;
+
+	while(p_current != NULL) {
+		if (p_current->pid == pid) {
+			return(p_current);
+		}
+		p_current = p_current->next;
+	}
+
+	return(NULL);
 }

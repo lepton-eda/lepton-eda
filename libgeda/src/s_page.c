@@ -80,6 +80,10 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	p_current->attrib_place_head = NULL;
 	p_current->attrib_place_tail = NULL;
 
+	/* ouch, deal with parents going away and the children still around */
+	p_current->up = -2;
+	/* p_current->down = NULL; not needed */
+
 	if (p_current->page_filename) {
 		free(p_current->page_filename);
 	}
@@ -89,7 +93,6 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 
         if (p_current->prev)
                 p_current->prev->next = p_current->next;
-
 
 
 	/* be sure table is empty CONN */
@@ -166,13 +169,14 @@ s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
         p_new->coord_aspectratio = (float) w_current->init_right /
                                    (float) w_current->init_bottom;
 
+	p_new->up = -2;
+	/* p_new->down = NULL; not needed */
+	p_new->page_control = 0;
 
 	if (p_tail == NULL) {
 		p_new->pid = -1; /* head node */
                 p_new->prev = NULL;
                 p_new->next = NULL;
-
-
                 return(p_new);
         } else {
 		p_new->pid = global_pid++;
@@ -206,6 +210,11 @@ s_page_add_head(TOPLEVEL *w_current)
 							w_current,
 							NULL, 
 							"page_head");
+
+	/* this is important so that page_next and page_prev ignore the 
+	 * page head node 
+	 */
+	w_current->page_head->page_control = -1; 
 }
 
 void

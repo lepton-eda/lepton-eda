@@ -873,7 +873,9 @@
 
 ; All keys in this keymap *must* be unique
 (define hierarchy-keymap
-  '(("o" . hierarchy-open-symbol)))
+  '(("d" . hierarchy-down-schematic)
+    ("s" . hierarchy-down-symbol)
+    ("u" . hierarchy-up)))
 
 ; All keys in this keymap *must* be unique
 (define attributes-keymap

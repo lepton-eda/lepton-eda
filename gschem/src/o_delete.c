@@ -119,7 +119,7 @@ o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
 		(OBJECT *) return_tail(w_current->page_current->object_head);
 }
 
-static void
+void
 o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
 {
 	w_current->override_color = w_current->background_color;

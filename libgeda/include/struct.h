@@ -187,8 +187,17 @@ struct st_page {
 	/* used only in gnetlist */
 	GHashTable *nethash_table;
 
+	/* used to control which pages are viewable when moving around */
+	int page_control;
+
+	/* left to right movement */
 	PAGE *prev;
 	PAGE *next;
+
+	/* up and down the hierarchy */
+	/* this holds the pid of the parent page */
+	int up;
+	/* PAGE *down; not needed */
 };
 
 struct st_filedialog {
@@ -474,7 +483,6 @@ struct st_toplevel {
 	TOPLEVEL *next;
 	TOPLEVEL *prev; 
 };
-
 
 /* structures below are for gnetlist */
 

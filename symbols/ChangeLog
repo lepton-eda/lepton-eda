@@ -11,6 +11,10 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-01-18  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* analog/opamp-2.sym: Added a slightly larger version of opamp-1.sym
+
 1999-11-07  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* local/ULN2003-1.sym: Fixed the wrong text colors (text colors should

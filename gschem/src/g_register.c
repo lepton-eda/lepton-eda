@@ -204,7 +204,9 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("add-arc-hotkey", g_key_add_arc_hotkey);
 	gh_new_procedure0_0 ("add-pin", g_key_add_pin);
 	gh_new_procedure0_0 ("add-pin-hotkey", g_key_add_pin_hotkey);
-	gh_new_procedure0_0 ("hierarchy-open-symbol", g_key_hierarchy_open_symbol);
+	gh_new_procedure0_0 ("hierarchy-down-schematic", g_key_hierarchy_down_schematic);
+	gh_new_procedure0_0 ("hierarchy-down-symbol", g_key_hierarchy_down_symbol);
+	gh_new_procedure0_0 ("hierarchy-up", g_key_hierarchy_up);
 	gh_new_procedure0_0 ("attributes-attach", g_key_attributes_attach);
 	gh_new_procedure0_0 ("attributes-detach", g_key_attributes_detach);
 	gh_new_procedure0_0 ("attributes-show-name", g_key_attributes_show_name);
