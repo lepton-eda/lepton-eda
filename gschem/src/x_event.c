@@ -300,10 +300,18 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 				      fix_y(w_current, (int) event->y));
 				/* not sure on this one */
 				/* probably keep this one */
-			w_current->event_state=SELECT;
-			i_update_status(w_current, "Select Mode");
-			w_current->inside_action = 0;
-			o_redraw_single(w_current, w_current->page_current->object_tail);
+
+			o_redraw_single(w_current, w_current->page_current->
+					           object_tail);
+			if (w_current->continue_component_place) {
+				o_complex_start(w_current,
+				   	       (int) event->x,
+					       (int) event->y);
+			} else {
+				w_current->event_state=SELECT;
+				i_update_status(w_current, "Select Mode");
+				w_current->inside_action = 0;
+			}
                         break;
 
 		case(ENDPASTE):
