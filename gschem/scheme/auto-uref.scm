@@ -48,7 +48,8 @@
 	    (name (car name-value))
 	    (value (cdr name-value))
 	    (prefix (get-prefix value)))
-       (if (string=? name "uref")
+       ; If get-prefix fails (returns #f) there is no ? in the string
+       (if (and prefix (string=? name "uref"))
 	   (set-attribute-value! attrib (string-append 
 					 prefix 
 					 (number->string (get-next-uref prefix)))))))
