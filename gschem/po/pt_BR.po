@@ -1,19 +1,19 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Alexandre Pereira Nunes
+# translation of pt_BR.po to Portugues Brasil
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) YEAR Alexandre Pereira Nunes
+# Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>, 2003
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda-schem-CVS-2002-06-12\n"
+"Project-Id-Version: pt_BR\n"
 "POT-Creation-Date: 2003-02-24 00:39-0500\n"
-"PO-Revision-Date: 2002-09-15 00:23GMT\n"
+"PO-Revision-Date: 2003-04-21 02:59+0000\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
-"Language-Team: Brazilian Portuguese <C@li.org>\n"
+"Language-Team: Portugues Brasil <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.5\n"
+"X-Generator: KBabel 1.0.1\n"
 
 #: noweb/a_zoom.nw:294
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -96,8 +96,7 @@ msgstr ""
 "[%s]\n"
 
 #: noweb/g_rc.nw:457
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Enquanto o gschem for versão ALPHA, assegure que você tem a última versão de "
 "arquivo rc.\n"
@@ -135,8 +134,7 @@ msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
 #: noweb/g_rc.nw:1261
 #, c-format
 msgid "Invalid path [%s] passed to component-library\n"
-msgstr ""
-"Caminho para biblioteca de componentes [%s] inválido (component-library)\n"
+msgstr "Caminho para biblioteca de componentes [%s] inválido (component-library)\n"
 
 #: noweb/g_rc.nw:1341 noweb/g_rc.nw:1361
 #, c-format
@@ -192,8 +190,7 @@ msgstr "Parametros inválidos para tamanho do paepl\n"
 #: noweb/g_rc.nw:2463
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
-msgstr ""
-"Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
+msgstr "Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
 
 #: noweb/g_rc.nw:2751
 #, fuzzy, c-format
@@ -214,8 +211,7 @@ msgstr ""
 "para maiores detalhes.\n"
 
 #: noweb/gschem.nw:165 noweb/gschem.nw:175
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Este programa é um software livre, e você é convidado a redistribui-lo sob "
 "certas\n"
@@ -233,7 +229,7 @@ msgstr "Esta é a versão portada para MINGW32.\n"
 #: noweb/gschem.nw:185
 #, c-format
 msgid "Current locale settings: %s\n"
-msgstr ""
+msgstr "Configuração para Localização: %s\n"
 
 #: noweb/gschem.nw:214
 #, c-format
@@ -264,19 +260,16 @@ msgid "Select Mode"
 msgstr "Modo de Seleção"
 
 #: noweb/i_basic.nw:145
-#, fuzzy
 msgid "Attribute Mode"
-msgstr "Atributo"
+msgstr "Modo de Atributo"
 
 #: noweb/i_basic.nw:148
-#, fuzzy
 msgid "Component Mode"
-msgstr "Componente"
+msgstr "Modo de Componente"
 
 #: noweb/i_basic.nw:152
-#, fuzzy
 msgid "Text Mode"
-msgstr "Modo conexão"
+msgstr "Modo Texto"
 
 #: noweb/i_basic.nw:155 noweb/rcstrings.nw:23
 msgid "Copy Mode"
@@ -292,7 +285,7 @@ msgstr "Modo de Rotação"
 
 #: noweb/i_basic.nw:162 noweb/rcstrings.nw:27
 msgid "Mirror Mode"
-msgstr "Modo espelho"
+msgstr "Modo de espelho"
 
 #: noweb/i_basic.nw:166 noweb/rcstrings.nw:61
 msgid "Zoom Box"
@@ -303,37 +296,37 @@ msgid "Pan Mode"
 msgstr "Modo Pan"
 
 #: noweb/i_basic.nw:173
-#, fuzzy, c-format
+#, c-format
 msgid "Paste %d Mode"
-msgstr "Modo Colar de 5"
+msgstr "Modo Colar de %d"
 
 #: noweb/i_basic.nw:178
 msgid "Net Mode"
-msgstr "Modo conexão"
+msgstr "Modo de Conexão (NET)"
 
 #: noweb/i_basic.nw:182
 msgid "Bus Mode"
-msgstr "Modo Barramento"
+msgstr "Modo Barramento (BUS)"
 
 #: noweb/i_basic.nw:185
 msgid "Line Mode"
-msgstr "Modo Linha"
+msgstr "Modo de Linha"
 
 #: noweb/i_basic.nw:188
 msgid "Box Mode"
-msgstr "Modo Caixa"
+msgstr "Modo de Caixa"
 
 #: noweb/i_basic.nw:191
 msgid "Circle Mode"
-msgstr "Modo Círculo"
+msgstr "Modo de Círculo"
 
 #: noweb/i_basic.nw:194
 msgid "Arc Mode"
-msgstr "Modo Arco"
+msgstr "Modo de Arco"
 
 #: noweb/i_basic.nw:197
 msgid "Pin Mode"
-msgstr "Modo Pino"
+msgstr "Modo de Pino"
 
 #: noweb/i_basic.nw:199 noweb/i_callbacks.nw:1028 noweb/i_callbacks.nw:1052
 #: noweb/x_window.nw:949
@@ -346,12 +339,10 @@ msgid "Move"
 msgstr "Mover"
 
 #: noweb/i_basic.nw:234
-#, fuzzy
 msgid "Snap Off"
-msgstr "Agarre ligado\n"
+msgstr "Agarre desligado"
 
 #: noweb/i_basic.nw:239
-#, fuzzy
 msgid "Show Hidden"
 msgstr "Mostrar Oculto"
 
@@ -374,17 +365,16 @@ msgstr "Repetir/"
 #: noweb/i_callbacks.nw:350
 #, c-format
 msgid "Documentation for [%s,%s,%s,%s]\n"
-msgstr ""
+msgstr "Documentação para [%s,%s,%s,%s]\n"
 
 #: noweb/i_callbacks.nw:354
-#, fuzzy
 msgid "Could not fork\n"
-msgstr "Impossível encontrar a cor %s!\n"
+msgstr ""
 
 #: noweb/i_callbacks.nw:364
-#, fuzzy, c-format
+#, c-format
 msgid "Could not invoke %s\n"
-msgstr "Impossível encontrar a cor %s!\n"
+msgstr "Impossível invocar %s!\n"
 
 #: noweb/i_callbacks.nw:515
 msgid "Cannot obtain the current directory!\n"
@@ -400,29 +390,25 @@ msgid "Saved [%s]\n"
 msgstr "Salvo [%s]\n"
 
 #: noweb/i_callbacks.nw:630
-#, fuzzy
 msgid "Saved"
-msgstr "Salvar"
+msgstr "Salvo"
 
 #: noweb/i_callbacks.nw:635 noweb/x_fileselect.nw:856
 #, c-format
 msgid "Could NOT save [%s]\n"
-msgstr "Não foi possível salvar [%s]\n"
+msgstr "NÃO foi possível salvar [%s] !\n"
 
 #: noweb/i_callbacks.nw:637 noweb/x_fileselect.nw:857
-#, fuzzy
 msgid "Error while trying to save"
-msgstr "Erro tentando salvar - Modo de Seleção"
+msgstr "Erro tentando salvar"
 
 #: noweb/i_callbacks.nw:686
-#, fuzzy
 msgid "Failed to Save All"
-msgstr "Salvar Como"
+msgstr "Falha ao salvar tudo"
 
 #: noweb/i_callbacks.nw:688
-#, fuzzy
 msgid "Saved All"
-msgstr "Salvar Como"
+msgstr "Salvar Tudo"
 
 #: noweb/i_callbacks.nw:787 noweb/i_callbacks.nw:790
 msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
@@ -496,8 +482,7 @@ msgstr "ATENÇÃO: A grade de agarre não está em 100!\n"
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
-msgstr ""
-"ATENÇÃO: Se transladar um símbolo para origem, a grade deve estar em 100\n"
+msgstr "ATENÇÃO: Se transladar um símbolo para origem, a grade deve estar em 100\n"
 
 #: noweb/i_callbacks.nw:1435
 msgid "Embed"
@@ -525,11 +510,11 @@ msgstr "Editar Tipo de Linha"
 
 #: noweb/i_callbacks.nw:1679 noweb/x_dialog.nw:1473
 msgid "Edit Fill Type"
-msgstr "Editar Tipo de Preenchimento"
+msgstr "Editar Preenchimento"
 
 #: noweb/i_callbacks.nw:1907 noweb/i_callbacks.nw:1927 noweb/rcstrings.nw:60
 msgid "Pan"
-msgstr "Pan"
+msgstr ""
 
 #: noweb/i_callbacks.nw:1965
 msgid "Update Cues"
@@ -693,7 +678,7 @@ msgstr "Mostrar V"
 
 #: noweb/i_callbacks.nw:3984
 msgid "ShowB"
-msgstr "Mostrar V"
+msgstr "Mostrar T"
 
 #: noweb/i_callbacks.nw:4021
 msgid "VisToggle"
@@ -721,7 +706,7 @@ msgstr "Grade LIGADA\n"
 
 #: noweb/i_callbacks.nw:4161
 msgid "Snap OFF (CAUTION!)\n"
-msgstr "Agarre desligado\n"
+msgstr "Agarre desligado (CUIDADO!)\n"
 
 #: noweb/i_callbacks.nw:4164
 msgid "Snap ON\n"
@@ -846,7 +831,7 @@ msgstr ""
 
 #: noweb/o_misc.nw:204
 msgid "Object alreadly locked\n"
-msgstr ""
+msgstr "Objeto já bloqueado\n"
 
 #: noweb/o_misc.nw:248
 msgid "Object alreadly unlocked\n"
@@ -912,10 +897,9 @@ msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
 #: noweb/o_net.nw:1096
-#, fuzzy, c-format
+#, c-format
 msgid "Could not find %s in any component-library\n"
-msgstr ""
-"Caminho para biblioteca de componentes [%s] inválido (component-library)\n"
+msgstr "Não consigo encontrar %s em nenhuma biblioteca\n"
 
 #: noweb/o_slot.nw:165
 msgid "Slot attribute malformed\n"
@@ -993,7 +977,7 @@ msgstr "Todos"
 
 #: noweb/x_attribedit.nw:485
 msgid "Comps"
-msgstr "Componentes"
+msgstr ""
 
 #: noweb/x_attribedit.nw:491 noweb/x_attribedit.nw:891 noweb/x_window.nw:855
 msgid "Nets"
@@ -1001,7 +985,7 @@ msgstr "Conexões"
 
 #: noweb/x_attribedit.nw:497 noweb/x_attribedit.nw:899
 msgid "Replace"
-msgstr "Substitui"
+msgstr "Substituir"
 
 #: noweb/x_attribedit.nw:511 noweb/x_multiattrib.nw:553
 msgid "Name"
@@ -1017,7 +1001,7 @@ msgstr "Ambos"
 #: noweb/x_dialog.nw:2620 noweb/x_dialog.nw:3647 noweb/x_dialog.nw:3943
 #: noweb/x_dialog.nw:4067 noweb/x_dialog.nw:4189
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: noweb/x_attribedit.nw:548 noweb/x_dialog.nw:395 noweb/x_dialog.nw:3232
 #: noweb/x_fileselect.nw:2263
@@ -1034,7 +1018,7 @@ msgstr "Cancelar"
 
 #: noweb/x_attribedit.nw:758
 msgid "Add/Edit Attribute"
-msgstr "Insere/Edita Atributo"
+msgstr "Inserir/Editar Atributo"
 
 #: noweb/x_attribedit.nw:811 noweb/x_multiattrib.nw:607
 msgid "Value:"
@@ -1091,19 +1075,19 @@ msgstr "Fechar"
 
 #: noweb/x_dialog.nw:471
 msgid "Lower Left"
-msgstr "Baixo Esq"
+msgstr "Esq Baixo"
 
 #: noweb/x_dialog.nw:481
 msgid "Middle Left"
-msgstr "Centro Esq"
+msgstr "Esq Centro"
 
 #: noweb/x_dialog.nw:491
 msgid "Upper Left"
-msgstr "Alto Esq"
+msgstr "Esq Alto"
 
 #: noweb/x_dialog.nw:501
 msgid "Lower Middle"
-msgstr "Baixo Centro"
+msgstr "Centro Baixo"
 
 #: noweb/x_dialog.nw:511
 msgid "Middle Middle"
@@ -1111,19 +1095,19 @@ msgstr "Centro Centro"
 
 #: noweb/x_dialog.nw:521
 msgid "Upper Middle"
-msgstr "Alto Centro"
+msgstr "Centro Alto"
 
 #: noweb/x_dialog.nw:531
 msgid "Lower Right"
-msgstr "Baixo Dir"
+msgstr "Dir Baixo"
 
 #: noweb/x_dialog.nw:541
 msgid "Middle Right"
-msgstr "Centro Dir"
+msgstr "Dir Centro"
 
 #: noweb/x_dialog.nw:551
 msgid "Upper Right"
-msgstr "Alto Dir"
+msgstr "Dir Alto"
 
 #: noweb/x_dialog.nw:729
 msgid "Edit Text Size"
@@ -1175,11 +1159,11 @@ msgstr "Tipo da Linha"
 
 #: noweb/x_dialog.nw:1121
 msgid "Line Dash Length"
-msgstr "Comprimento de traço de linha"
+msgstr "Comprimento dos traços"
 
 #: noweb/x_dialog.nw:1138
 msgid "Line Dash Space"
-msgstr "Comp. de espaço"
+msgstr "Comprimento dos espaços"
 
 #: noweb/x_dialog.nw:1243
 msgid "Hollow"
@@ -1231,7 +1215,7 @@ msgstr ""
 "Existem arquivos não salvos!\n"
 "\n"
 "Você tem certeza?\n"
-"Um OK vai descartar todas as mudanças!"
+"Um OK vai descartar TODAS as mudanças!"
 
 #: noweb/x_dialog.nw:1920
 msgid "Arc Params"
@@ -1250,7 +1234,7 @@ msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
 msgstr ""
-"OffSet a transladar?\n"
+"Valor a transladar?\n"
 "(0 para origem)"
 
 #: noweb/x_dialog.nw:2259
@@ -1316,7 +1300,7 @@ msgstr ""
 
 #: noweb/x_dialog.nw:3204
 msgid "Color Edit"
-msgstr "Editar Cor"
+msgstr "Edição de Cor"
 
 #: noweb/x_dialog.nw:3339
 msgid "Ran out of space in the hotkey buffer...\n"
@@ -1376,7 +1360,7 @@ msgstr "Mostrar texto iniciado com:"
 
 #: noweb/x_dialog.nw:4173
 msgid "Autonumber text"
-msgstr "Automuerar texto"
+msgstr "Autonumerar texto"
 
 #: noweb/x_dialog.nw:4176
 msgid "Autonumber text starting with:"
@@ -1397,7 +1381,7 @@ msgstr "Muitos arquivos! Aumentar MAX_FILES\n"
 
 #: noweb/x_fileselect.nw:688
 msgid "sch - Schematics"
-msgstr "sch - diagramas"
+msgstr "sch - Diagramas"
 
 #: noweb/x_fileselect.nw:697
 msgid "sym - Symbols "
@@ -1405,7 +1389,7 @@ msgstr "sym - Símbolos"
 
 #: noweb/x_fileselect.nw:706
 msgid "sym/sch - Schematics and Symbols"
-msgstr "sym/sch - Símbolos e diagramas"
+msgstr "sym/sch - Símbolos e Diagramas"
 
 #: noweb/x_fileselect.nw:715
 msgid "* - All Files"
@@ -1448,15 +1432,15 @@ msgstr "Incluir como objetos individuais"
 #: noweb/x_fileselect.nw:1850 noweb/x_fileselect.nw:1854
 #: noweb/x_fileselect.nw:2170
 msgid "Search in Components"
-msgstr "Procurar em componentes"
+msgstr "Procurar nos componentes"
 
 #: noweb/x_fileselect.nw:1913
 msgid "Search in Components - Found library only"
-msgstr "Procurar em componentes - Encontrado só biblioteca"
+msgstr "Procurar nos componentes - Encontrado só biblioteca"
 
 #: noweb/x_fileselect.nw:1922
 msgid "Search in Components - End of list"
-msgstr "Procurar em componentes - Fim de lista"
+msgstr "Procurar nos componentes - Fim de lista"
 
 #: noweb/x_fileselect.nw:1981
 msgid "Open..."
@@ -1538,11 +1522,11 @@ msgstr ""
 
 #: noweb/x_multiattrib.nw:126 noweb/x_multiattrib.nw:781
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 #: noweb/x_multiattrib.nw:129 noweb/x_multiattrib.nw:783
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 #: noweb/x_multiattrib.nw:136 noweb/x_multiattrib.nw:789
 msgid "V"
@@ -1557,14 +1541,12 @@ msgid "NV"
 msgstr ""
 
 #: noweb/x_multiattrib.nw:509
-#, fuzzy
 msgid "Edit Attributes"
-msgstr "Insere/Edita Atributo"
+msgstr "Editar Atributos"
 
 #: noweb/x_multiattrib.nw:523 noweb/rcstrings.nw:94
-#, fuzzy
 msgid "Attributes"
-msgstr "Atributo"
+msgstr "Atributos"
 
 #: noweb/x_multiattrib.nw:567
 msgid "Vis?"
@@ -1575,17 +1557,14 @@ msgid "SN"
 msgstr ""
 
 #: noweb/x_multiattrib.nw:582
-#, fuzzy
 msgid "Add/Edit"
-msgstr "Editar"
+msgstr "Inserir/Editar"
 
 #: noweb/x_multiattrib.nw:666
-#, fuzzy
 msgid "Show Value only"
 msgstr "Mostra apenas Valor"
 
 #: noweb/x_multiattrib.nw:669
-#, fuzzy
 msgid "Show Name only"
 msgstr "Mostra apenas Nome"
 
@@ -1603,7 +1582,7 @@ msgstr "Limpar"
 
 #: noweb/x_multimulti.nw:147
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #: noweb/x_multimulti.nw:154
 msgid "Test Sheet"
@@ -1619,7 +1598,7 @@ msgstr "Gerenciador de Páginas"
 
 #: noweb/x_pagesel.nw:505 noweb/rcstrings.nw:4
 msgid "New Page"
-msgstr "Nova"
+msgstr "Nova Página"
 
 #: noweb/x_pagesel.nw:514
 msgid "Open Page"
@@ -1631,7 +1610,7 @@ msgstr "Salvar"
 
 #: noweb/x_pagesel.nw:532 noweb/rcstrings.nw:6
 msgid "Close Page"
-msgstr "Fechar"
+msgstr "Fechar Página"
 
 #: noweb/x_pagesel.nw:541
 msgid "Discard Page"
@@ -1655,11 +1634,11 @@ msgstr "Retrato"
 
 #: noweb/x_print.nw:236
 msgid "Extents with margins"
-msgstr ""
+msgstr "Extensão com margens"
 
 #: noweb/x_print.nw:245
 msgid "Extents no margins"
-msgstr ""
+msgstr "Extensão sem margens"
 
 #: noweb/x_print.nw:253
 msgid "Current Window"
@@ -1770,8 +1749,8 @@ msgid ""
 "click to place\n"
 "Right mouse button to cancel"
 msgstr ""
-"Insira um componente...\n"
-"Selecione a biblioteca e componente da lista, vá para a janela mãe,  clique "
+"Inserir um componente:\n"
+"Selecione a biblioteca e componente da lista, vá para a janela mãe, clique "
 "para colocar o componente\n"
 "Botão Direito para cancelar"
 
@@ -1805,31 +1784,31 @@ msgstr "Selecionar"
 
 #: noweb/x_window.nw:903
 msgid "Select mode"
-msgstr "Selecionar modo"
+msgstr "Modo de Seleção"
 
 #: noweb/x_window.nw:920
 msgid "Edit mode"
-msgstr "Modo Editar"
+msgstr "Modo de Edição"
 
 #: noweb/x_window.nw:935
 msgid "Move mode"
-msgstr "Modo Mover"
+msgstr "Modo de Mover"
 
 #: noweb/x_window.nw:950
 msgid "Copy mode"
-msgstr "Modo Copiar"
+msgstr "Modo de Copiar"
 
 #: noweb/x_window.nw:965
 msgid "Delete mode"
-msgstr "Modo Apagar"
+msgstr "Modo de Apagar"
 
 #: noweb/x_window.nw:980
 msgid "Rotate mode"
-msgstr "Modo Rotacionar"
+msgstr "Modo de Rotacionar"
 
 #: noweb/x_window.nw:995
 msgid "Mirror mode"
-msgstr "Modo Espelhar"
+msgstr "Modo de Espelhar"
 
 #: noweb/x_window.nw:1085
 msgid "Pick"
@@ -1848,380 +1827,320 @@ msgid "Pan/Cancel"
 msgstr "Pan/Cancelar"
 
 #: noweb/rcstrings.nw:2
-#, fuzzy
 msgid "File"
-msgstr "Arquivos"
+msgstr "Arquivo"
 
 #: noweb/rcstrings.nw:3
-#, fuzzy
 msgid "New Window"
-msgstr "Nova janela criada\n"
+msgstr "Nova Janela"
 
 #: noweb/rcstrings.nw:5
-#, fuzzy
 msgid "Open Page..."
-msgstr "Abrir"
+msgstr "Abrir Página..."
 
 #: noweb/rcstrings.nw:7
-#, fuzzy
 msgid "Revert Page"
-msgstr "Salvar"
+msgstr "Reverter Página"
 
 #: noweb/rcstrings.nw:9
-#, fuzzy
 msgid "Save Page As..."
 msgstr "Salvar Como..."
 
 #: noweb/rcstrings.nw:10
-#, fuzzy
 msgid "Save All"
-msgstr "Salvar Como"
+msgstr "Salvar Tudo"
 
 #: noweb/rcstrings.nw:12
-#, fuzzy
 msgid "Write PNG..."
-msgstr "Salvar Imagem..."
+msgstr "Salvar PNG..."
 
 #: noweb/rcstrings.nw:13
 msgid "Execute Script..."
-msgstr ""
+msgstr "Script..."
 
 #: noweb/rcstrings.nw:14
-#, fuzzy
 msgid "Close Window"
-msgstr "Fechando Janela\n"
+msgstr "Fechando Janela"
 
 #: noweb/rcstrings.nw:15
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 #: noweb/rcstrings.nw:21
-#, fuzzy
 msgid "Edit..."
-msgstr "Editar"
+msgstr "Editar..."
 
 #: noweb/rcstrings.nw:22
-#, fuzzy
 msgid "Edit Text..."
-msgstr "Editar Texto"
+msgstr "Editar Texto..."
 
 #: noweb/rcstrings.nw:26
-#, fuzzy
 msgid "Rotate 90 Mode"
 msgstr "Modo de Rotação"
 
 #: noweb/rcstrings.nw:28
-#, fuzzy
 msgid "Slot..."
-msgstr "Sobre..."
+msgstr ""
 
 #: noweb/rcstrings.nw:29
-#, fuzzy
 msgid "Color..."
-msgstr "Cor"
+msgstr "Cor..."
 
 #: noweb/rcstrings.nw:32
-#, fuzzy
 msgid "Line Width & Type..."
-msgstr "Editar Largura e Tipo de Linha"
+msgstr "Largura/Tipo de Linha..."
 
 #: noweb/rcstrings.nw:33
-#, fuzzy
 msgid "Fill Type..."
-msgstr "Tipo de Preenchimento"
+msgstr "Preenchimento..."
 
 #: noweb/rcstrings.nw:34
-#, fuzzy
 msgid "Symbol Translate..."
-msgstr "Transladar"
+msgstr "Transladar..."
 
 #: noweb/rcstrings.nw:35
-#, fuzzy
 msgid "Embed Component"
-msgstr "Editar Componente"
+msgstr "Embutir Componente"
 
 #: noweb/rcstrings.nw:36
-#, fuzzy
 msgid "Unembed Component"
-msgstr "Editar Componente"
+msgstr "Desembutir Componente"
 
 #: noweb/rcstrings.nw:37
-#, fuzzy
 msgid "Update Component"
-msgstr "Editar Componente"
+msgstr "Atualizar Componente"
 
 #: noweb/rcstrings.nw:38
-#, fuzzy
 msgid "Show/Hide Inv Text"
-msgstr "Mostrar Oculto"
+msgstr "Exibir/Ocultar textos ocultos"
 
 #: noweb/rcstrings.nw:39
 msgid "Make Inv Text Vis"
-msgstr ""
+msgstr "Tornar todos textos visíveis"
 
 #: noweb/rcstrings.nw:41
 msgid "Buffer"
 msgstr ""
 
 #: noweb/rcstrings.nw:42
-#, fuzzy
 msgid "Copy into 1"
 msgstr "Copiar para 1"
 
 #: noweb/rcstrings.nw:43
-#, fuzzy
 msgid "Copy into 2"
 msgstr "Copiar para 2"
 
 #: noweb/rcstrings.nw:44
-#, fuzzy
 msgid "Copy into 3"
 msgstr "Copiar para 3"
 
 #: noweb/rcstrings.nw:45
-#, fuzzy
 msgid "Copy into 4"
 msgstr "Copiar para 4"
 
 #: noweb/rcstrings.nw:46
-#, fuzzy
 msgid "Copy into 5"
 msgstr "Copiar para 5"
 
 #: noweb/rcstrings.nw:47
-#, fuzzy
 msgid "Cut into 1"
 msgstr "Cortar para 1"
 
 #: noweb/rcstrings.nw:48
-#, fuzzy
 msgid "Cut into 2"
 msgstr "Cortar para 2"
 
 #: noweb/rcstrings.nw:49
-#, fuzzy
 msgid "Cut into 3"
 msgstr "Cortar para 3"
 
 #: noweb/rcstrings.nw:50
-#, fuzzy
 msgid "Cut into 4"
 msgstr "Cortar para 4"
 
 #: noweb/rcstrings.nw:51
-#, fuzzy
 msgid "Cut into 5"
 msgstr "Cortar para 5"
 
 #: noweb/rcstrings.nw:52
-#, fuzzy
 msgid "Paste from 1"
 msgstr "Colar de 1"
 
 #: noweb/rcstrings.nw:53
-#, fuzzy
 msgid "Paste from 2"
 msgstr "Colar de 2"
 
 #: noweb/rcstrings.nw:54
-#, fuzzy
 msgid "Paste from 3"
 msgstr "Colar de 3"
 
 #: noweb/rcstrings.nw:55
-#, fuzzy
 msgid "Paste from 4"
 msgstr "Colar de 4"
 
 #: noweb/rcstrings.nw:56
-#, fuzzy
 msgid "Paste from 5"
 msgstr "Colar de 5"
 
 #: noweb/rcstrings.nw:58
 msgid "View"
-msgstr ""
+msgstr "Exibir"
 
 #: noweb/rcstrings.nw:59
-#, fuzzy
 msgid "Redraw"
-msgstr "Refazer"
+msgstr "Redesenhar"
 
 #: noweb/rcstrings.nw:62
-#, fuzzy
 msgid "Zoom Extents"
-msgstr "Caixa de Zoom"
+msgstr "Zoom desenho"
 
 #: noweb/rcstrings.nw:63
-#, fuzzy
 msgid "Zoom In"
-msgstr "Caixa de Zoom"
+msgstr "Zoom maior"
 
 #: noweb/rcstrings.nw:64
-#, fuzzy
 msgid "Zoom Out"
-msgstr "Caixa de Zoom"
+msgstr "Zoom menor"
 
 #: noweb/rcstrings.nw:65
 msgid "Zoom Full"
-msgstr ""
+msgstr "Zoom total"
 
 #: noweb/rcstrings.nw:67
-#, fuzzy
 msgid "Page"
-msgstr "Nova"
+msgstr "Página"
 
 #: noweb/rcstrings.nw:68
-#, fuzzy
 msgid "Manager..."
-msgstr "Gerenciador de Páginas"
+msgstr "Gerenciador"
 
 #: noweb/rcstrings.nw:69
-#, fuzzy
 msgid "Next"
-msgstr "Conexão"
+msgstr "Próxima"
 
 #: noweb/rcstrings.nw:70
-#, fuzzy
 msgid "Previous"
-msgstr "Prévia"
+msgstr "Anterior"
 
 #: noweb/rcstrings.nw:72
-#, fuzzy
 msgid "Revert"
-msgstr "Repetir/"
+msgstr "Reverter"
 
 #: noweb/rcstrings.nw:74
-#, fuzzy
 msgid "Discard"
 msgstr "Descartar"
 
 #: noweb/rcstrings.nw:77
-#, fuzzy
 msgid "Component..."
-msgstr "Componente"
+msgstr "Componente..."
 
 #: noweb/rcstrings.nw:80
-#, fuzzy
 msgid "Attribute..."
-msgstr "Atributo"
+msgstr "Atributo..."
 
 #: noweb/rcstrings.nw:81
-#, fuzzy
 msgid "Text..."
-msgstr "Adicionar Texto..."
+msgstr "Texto..."
 
 #: noweb/rcstrings.nw:88
 msgid "Hierarchy"
-msgstr ""
+msgstr "Hierarquia"
 
 #: noweb/rcstrings.nw:89
-#, fuzzy
 msgid "Down Schematic"
-msgstr "sch - diagramas"
+msgstr "Descer ao Esquemático"
 
 #: noweb/rcstrings.nw:90
 msgid "Down Symbol"
-msgstr ""
+msgstr "Descer ao Símbolo"
 
 #: noweb/rcstrings.nw:91
 msgid "Up"
-msgstr ""
+msgstr "Subir"
 
 #: noweb/rcstrings.nw:92
-#, fuzzy
 msgid "Documentation"
-msgstr "Orientação"
+msgstr "Documentação"
 
 #: noweb/rcstrings.nw:96
-#, fuzzy
 msgid "Deattach"
 msgstr "Desanexar"
 
 #: noweb/rcstrings.nw:97
-#, fuzzy
 msgid "Show Value"
-msgstr "Mostra apenas Valor"
+msgstr "Mostra Valor"
 
 #: noweb/rcstrings.nw:98
-#, fuzzy
 msgid "Show Name"
-msgstr "Mostra apenas Nome"
+msgstr "Mostra Nome"
 
 #: noweb/rcstrings.nw:99
-#, fuzzy
 msgid "Show Both"
-msgstr "Mostrar V"
+msgstr "Mostrar Ambos"
 
 #: noweb/rcstrings.nw:100
-#, fuzzy
 msgid "Toggle Visibility"
-msgstr "Visibilidade"
+msgstr "Comuta Visibilidade"
 
 #: noweb/rcstrings.nw:102
-#, fuzzy
 msgid "Options"
-msgstr "Ação"
+msgstr "Opções"
 
 #: noweb/rcstrings.nw:103
 msgid "Find Specific Text..."
-msgstr ""
+msgstr "Procurar texto..."
 
 #: noweb/rcstrings.nw:104
 msgid "Hide Specific Text..."
-msgstr ""
+msgstr "Ocultar Texto..."
 
 #: noweb/rcstrings.nw:105
 msgid "Show Specific Text..."
-msgstr ""
+msgstr "Exibir Texto..."
 
 #: noweb/rcstrings.nw:106
-#, fuzzy
 msgid "Autonumber Text..."
-msgstr "Automuerar texto"
+msgstr "Autonumerar..."
 
 #: noweb/rcstrings.nw:107
-#, fuzzy
 msgid "Text Size..."
-msgstr "Tamanho do Texto"
+msgstr "Tamanho do Texto..."
 
 #: noweb/rcstrings.nw:108
 msgid "Toggle Grid On/Off"
-msgstr ""
+msgstr "Liga/Desliga Grade"
 
 #: noweb/rcstrings.nw:109
 msgid "Toggle Snap On/Off"
-msgstr ""
+msgstr "Liga/Desliga Agarre"
 
 #: noweb/rcstrings.nw:110
-#, fuzzy
 msgid "Snap Grid Spacing..."
-msgstr "Grade de agarre"
+msgstr "Grade de Agarre..."
 
 #: noweb/rcstrings.nw:111
 msgid "Toggle Outline/Box"
-msgstr ""
+msgstr "Silhueta/Caixa"
 
 #: noweb/rcstrings.nw:112
 msgid "Toggle Net Rubberband"
-msgstr ""
+msgstr "Lig/Desliga elástico"
 
 #: noweb/rcstrings.nw:113
 msgid "Show Log Window..."
-msgstr ""
+msgstr "Exibir janela de Log"
 
 #: noweb/rcstrings.nw:114
 msgid "Show Coord Window..."
-msgstr ""
+msgstr "Exibir janela de Coordenadas"
 
 #: noweb/rcstrings.nw:116
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
 
 #: noweb/rcstrings.nw:118
-#, fuzzy
 msgid "Manual..."
-msgstr "Gerenciador de Páginas"
+msgstr "Manual..."
 
 #~ msgid "Limits"
 #~ msgstr "Limites"
@@ -2243,3 +2162,5 @@ msgstr "Gerenciador de Páginas"
 
 #~ msgid "Paste 4 Mode "
 #~ msgstr "Modo Colar de 4"
+
+

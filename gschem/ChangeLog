@@ -1,3 +1,7 @@
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/pt_BR.po: Added update translation from Antonio.
+
 2003-04-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, noweb/Makefile.am: Removed x_multimulti.nw from the 
