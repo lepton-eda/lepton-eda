@@ -87,9 +87,13 @@ AC_CHECK_LIB(X11, XOpenDisplay, X_LIBS="-lX11", X_LIBS=no, $X_EXTRA_LIBS)
 AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", X_EXT=no, $X_EXTRA_LIBS)
 dnl AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", XEXT=no, $X_EXTRA_LIBS)
 
+if test "$CYGWIN" = no; then
 	if test "$X_LIBS" = no; then
           AC_MSG_ERROR(Cannot find -lX11 library)
         fi
+else
+	echo X11 not required for CYGNUS
+fi
 
 dnl Checking for rint in math library
 AC_CHECK_LIB(m, rint, AC_DEFINE(HAS_RINT), no_RINT="yes")
@@ -287,4 +291,5 @@ AC_OUTPUT([
 	Makefile 
 	libgeda-config 
 	include/Makefile 
-	src/Makefile ], [chmod +x libgeda-config]) 
+	src/Makefile 
+	src/Makefilewin.in ], [chmod +x libgeda-config]) 

@@ -1216,7 +1216,7 @@ echo "configure:1216: checking for ld used by GCC" >&5
   ac_prog=`($CC -print-prog-name=ld) 2>&5`
   case "$ac_prog" in
   # Accept absolute paths.
-  /* | A-Za-z:\\*)
+  /* | [A-Za-z]:\\*)
     test -z "$LD" && LD="$ac_prog"
     ;;
   "")
@@ -2748,10 +2748,14 @@ else
 X_EXT=no
 fi
 
-
+if test "$CYGWIN" = no; then
 	if test "$X_LIBS" = no; then
           { echo "configure: error: Cannot find -lX11 library" 1>&2; exit 1; }
         fi
+else
+        echo X11 not required for CYGNUS
+fi
+
 
 echo $ac_n "checking for rint in -lm""... $ac_c" 1>&6
 echo "configure:2758: checking for rint in -lm" >&5
@@ -4002,8 +4006,11 @@ EOF
 cat >> $CONFIG_STATUS <<EOF
 
 CONFIG_FILES=\${CONFIG_FILES-"Makefile 
+	Makefilewin
 	libgeda-config 
 	include/Makefile 
+        include/Makefilewin
+        src/Makefilewin
 	src/Makefile "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF

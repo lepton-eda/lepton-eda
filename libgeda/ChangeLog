@@ -19,6 +19,9 @@ Most recent changes are at the top of this file
 	Added some more #if conditions to the #include <direct.h>, only
 	include this on UNIX platforms
 
+	Added code in configure.in to ignore the requirement for X11 for
+	cygwin
+
 8/3/99	Added to TOPLEVEL the net_consolidate flag
 
 	Upgraded to libtool 1.3.3
