@@ -38,7 +38,7 @@ notarget:
 	@echo ""
 	@echo "Type:"
 	@echo ""
-	@echo "${MAKE} xinstall     Builds and runs gEDA Suite Setup" 
+	@echo "${MAKE} xinstall     Builds and runs gEDA Suite Setup (alpha)" 
 	@echo "${MAKE} install      Installs gEDA/gaf into $(prefix)"
 	@echo "${MAKE} uninstall    Uninstall gEDA/gaf from $(prefix)"
 	@echo "${MAKE} clean        Simple clean only (remove all .o and bins)"
@@ -116,7 +116,7 @@ xinstall:
 			rm -Rf $(DIR_PREFIX)setup$(CD_VERSION) ; \
 		else \
 			echo "Trying to download $(DIR_PREFIX)setup$(CD_VERSION).tar.gz ..." ; \
-			wget -c -t0 ftp://ftp.seul.org/geda/devel/${GAF_VERSION}/${DIR_PREFIX}setup${CD_VERSION}.tar.gz >/dev/null 2>/dev/null ; \
+			wget -c -t0 ftp://ftp.seul.org/pub/geda/devel/${VERSION}/${DIR_PREFIX}setup${CD_VERSION}.tar.gz >/dev/null 2>/dev/null ; \
 			if test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
 				echo "Using distributed version of setup.sh (from downloaded $(DIR_PREFIX)setup$(CD_VERSION).tar.gz)..."; \
 				tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh ; \
