@@ -22,7 +22,6 @@
 ;       libraries.  Please see Jitterbug #9 on this gEDA/gaf limitation.
 ;       It will be fixed soon. AVH 01/04/2004
 ;
-(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@IEC417")
@@ -62,6 +61,7 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@cascade")
 ;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
 ;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@gnetman")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
 
 ; component-library-search atring
 ;

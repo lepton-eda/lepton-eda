@@ -4,6 +4,8 @@
 	gsymcheck.c, i_vars.c: Removed a whole bunch of rc related code.
 	The removed code was moved into libgeda.
 
+        * configure.ac: Updated version to 20040710
+
 2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * config.h.in: Remove machine generated file.

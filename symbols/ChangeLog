@@ -1,3 +1,11 @@
+2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20040710
+
+	* system-commonrc.in: Moved local component library to the end 
+	(searched first, since these are user symbols).  This is a bug
+	reported by Eric Winsor.
+
 2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20040111

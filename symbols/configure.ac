@@ -4,8 +4,7 @@ AC_CONFIG_SRCDIR([74/7400-1.sym])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-symbols
-VERSION=20040111
-SHARED_LIBRARY_VERSION=20:0:0
+VERSION=20040710
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake stuff

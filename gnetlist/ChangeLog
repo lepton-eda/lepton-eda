@@ -3,6 +3,8 @@
 	* include/i_vars.h, prototype.h, src/g_rc.c, g_register.c,
 	gnetlist.c, i_vars.c: Removed a whole bunch of rc related code.
 	The removed code was moved into libgeda.
+
+        * configure.ac: Updated version to 20040710
 	
 2004-02-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
