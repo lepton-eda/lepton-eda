@@ -519,7 +519,7 @@ g_rc_action_feedback_mode(SCM mode)
 {
 	static const vstbl_entry mode_table[] = {
 		{OUTLINE    , "outline"   },
-		{BOUNDINGBOX, "boudingbox"}
+		{BOUNDINGBOX, "boundingbox"}
 	};
 
 	RETURN_G_RC_MODE("action-feedback-mode",default_actionfeedback_mode,2);
