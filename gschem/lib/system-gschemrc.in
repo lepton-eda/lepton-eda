@@ -612,6 +612,12 @@
 (warp-cursor "enabled")
 ;(warp-cursor "disabled")
 
+; bus-ripper-size number
+;
+; Sets the default size of the auto bus rippers.  
+;   
+(bus-ripper-size 200)
+
 ;
 ; End of mode related keywords
 ;
