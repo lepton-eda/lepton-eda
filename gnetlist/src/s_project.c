@@ -142,7 +142,6 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
      * pr_current->DONT_DRAW_CONN=0;
      * pr_current->DONT_RESIZE=0;
      * pr_current->DONT_EXPOSE=0;
-     * pr_current->DONT_REDRAW=0;
      * pr_current->DONT_RECALC=0;
      */
 
@@ -207,15 +206,6 @@ TOPLEVEL *s_project_create_new(void)
 
     pr_current->wid = global_wid;
 
-    /* make sure none of these events happen till we are done */
-#if 0
-    pr_current->DONT_DRAW_CONN = 1;
-    pr_current->DONT_RESIZE = 1;
-    pr_current->DONT_EXPOSE = 1;
-    pr_current->DONT_REDRAW = 1;
-    pr_current->DONT_RECALC = 1;
-#endif
-
     /* the default coord sizes */
     /* real ones set in rc file */
     pr_current->init_right = WIDTH_C;
@@ -266,7 +256,6 @@ TOPLEVEL *s_project_create_new(void)
     pr_current->DONT_DRAW_CONN = 0;
     pr_current->DONT_RESIZE = 0;
     pr_current->DONT_EXPOSE = 0;
-    pr_current->DONT_REDRAW = 0;
     pr_current->DONT_RECALC = 0;
 
     return (pr_current);

@@ -1,4 +1,8 @@
 
+2000-12-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Removed obsolete DONT_REDRAW var from code
+
 2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* configure.in: Slightly rearranged things to make cygwin port happy
