@@ -98,6 +98,10 @@
 
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 @ 
 
 <<o_box_basic.c : macros>>=

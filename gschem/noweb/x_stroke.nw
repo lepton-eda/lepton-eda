@@ -53,6 +53,10 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 @
 
 

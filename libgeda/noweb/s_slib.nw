@@ -78,6 +78,10 @@
 
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 /* slib stands for source (project/schematic/hdl/model source) library */
 
 /* need to test everything at boundary conditions (exceed cache size etc...) */

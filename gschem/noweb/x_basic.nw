@@ -66,6 +66,10 @@
 #include "../include/x_event.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 #ifndef __MINGW32__
 #include <gdk/gdkx.h>
 #endif

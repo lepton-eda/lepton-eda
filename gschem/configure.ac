@@ -522,6 +522,56 @@ fi
 #########################################################################
 
 #########################################################################
+#
+
+# ------------- dmalloc -------------------
+dnl dmalloc checks
+with_dmalloc="no"
+AC_MSG_CHECKING([if dmalloc debugging should be enabled])
+AC_ARG_ENABLE([dmalloc],
+[  --enable-dmalloc        Compile and link with dmalloc for malloc debugging [[default=no]]],
+[
+if test "X$enable_dmalloc" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_HEADER(dmalloc.h,,
+                AC_ERROR([You have requested dmalloc debugging but dmalloc.h could not be found]))
+        AC_CHECK_LIB(dmalloc,main,,
+                AC_ERROR([You have requested dmalloc debugging but -ldmalloc could not be found]))
+        DMALLOC_LIBS="-ldmalloc"
+        with_dmalloc="yes"
+else
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+fi
+],
+[
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+])
+
+# ------------- ElectricFence -------------------
+dnl ElectricFence checks
+with_efence="no"
+AC_MSG_CHECKING([if ElectricFence debugging should be enabled])
+AC_ARG_ENABLE([efence],
+[  --enable-efence         Link with ElectricFence for malloc debugging [[default=no]]],
+[
+if test "X$enable_efence" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_LIB(efence,main,,
+                AC_ERROR([You have requested ElectricFence debugging but -lefence could not be found]))
+        with_efence="yes"
+else
+        AC_MSG_RESULT([no])
+fi
+],
+[
+AC_MSG_RESULT([no])
+])
+
+#
+#########################################################################
+#########################################################################
 # gEDA/gaf specific setup start
 #
 
@@ -572,7 +622,7 @@ AM_GNU_GETTEXT_VERSION(0.12.1)
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHEM_CFLAGS="$LIBSTROKE_CFLAGS $LIBGEDA_CFLAGS"
-GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GTK_LIBS $X_LDFLAGS" 
+GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GTK_LIBS $X_LDFLAGS $DMALLOC_LIBS" 
 
 # Makefile.in variable substitution
 AC_SUBST(GSCHEM_CFLAGS)
@@ -629,4 +679,6 @@ AC_MSG_RESULT([
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
    documentation directory:          $expandedGEDADOCDIR
+   dmalloc debugging:                $with_dmalloc
+   ElectricFence debugging:          $with_efence
 ])

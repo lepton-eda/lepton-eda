@@ -448,6 +448,57 @@ AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
 #########################################################################
 
 #########################################################################
+#
+
+# ------------- dmalloc -------------------
+dnl dmalloc checks
+with_dmalloc="no"
+AC_MSG_CHECKING([if dmalloc debugging should be enabled])
+AC_ARG_ENABLE([dmalloc],
+[  --enable-dmalloc        Compile and link with dmalloc for malloc debugging [[default=no]]],
+[
+if test "X$enable_dmalloc" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_HEADER(dmalloc.h,,
+                AC_ERROR([You have requested dmalloc debugging but dmalloc.h could not be found]))
+        AC_CHECK_LIB(dmalloc,main,,
+                AC_ERROR([You have requested dmalloc debugging but -ldmalloc could not be found]))
+        DMALLOC_LIBS="-ldmalloc"
+        with_dmalloc="yes"
+else
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+fi
+],
+[
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+])
+
+# ------------- ElectricFence -------------------
+dnl ElectricFence checks
+with_efence="no"
+AC_MSG_CHECKING([if ElectricFence debugging should be enabled])
+AC_ARG_ENABLE([efence],
+[  --enable-efence         Link with ElectricFence for malloc debugging [[default=no]]],
+[
+if test "X$enable_efence" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_LIB(efence,main,,
+                AC_ERROR([You have requested ElectricFence debugging but -lefence could not be found]))
+        with_efence="yes"
+else
+        AC_MSG_RESULT([no])
+fi
+],
+[
+AC_MSG_RESULT([no])
+])
+
+#
+#########################################################################
+
+#########################################################################
 # gEDA/gaf specific setup start
 #
 
@@ -487,7 +538,7 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution
@@ -539,5 +590,7 @@ AC_MSG_RESULT([
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
    LIBGEDA .so version:              $SHARED_LIBRARY_VERSION
+   dmalloc debugging:                $with_dmalloc
+   ElectricFence debugging:          $with_efence
 ])
 

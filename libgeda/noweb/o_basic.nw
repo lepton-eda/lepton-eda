@@ -66,6 +66,10 @@
 
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 /* Lots of Gross code... needs lots of cleanup */
 /* mainly readability issues */
 

@@ -219,6 +219,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 static GtkWidget* create_menu_linetype (TOPLEVEL *w_current);
 static gint line_type_dialog_linetype_change (GtkWidget *w, gpointer data);

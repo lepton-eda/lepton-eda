@@ -71,6 +71,11 @@ gint change_page(GtkWidget *widget, gint row, gint column,
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 @
 
 
