@@ -8,7 +8,11 @@ dvi: $(docname).tex
 	latex $(docname)
 
 ps: dvi
-	dvi2ps $(docname) > $(docname).ps
+	if which dvips >/dev/null 2>/dev/null; then             \
+		dvips -f < $(docname).dvi > $(docname).ps     ; \
+	else                                                    \
+		dvi2ps $(docname) > $(docname).ps             ; \
+       fi
 
 pdf: ps
 	ps2pdf $(docname).ps 
