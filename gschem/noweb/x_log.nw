@@ -406,7 +406,11 @@ x_log_setup_win (TOPLEVEL *w_current)
                                GTK_BUTTONBOX_END);
     gtk_box_pack_start (GTK_BOX (action_area), hbuttonbox1, TRUE, TRUE, 0);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Close"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     gtk_container_add (GTK_CONTAINER (hbuttonbox1), buttoncancel);
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
 #if 0                  

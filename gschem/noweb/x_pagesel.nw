@@ -301,14 +301,39 @@ pagesel_init (Pagesel *pagesel)
   struct button_t {
     gchar *label;
     void (*callback)(void);
+#ifndef HAS_GTK12
+    const gchar *stock_id;
+#endif
   };
   struct button_t buttons[] = {
-    { "New Page",     G_CALLBACK (pagesel_callback_button_new_page)     },
-    { "Open Page",    G_CALLBACK (pagesel_callback_button_open_page)    },
-    { "Save Page",    G_CALLBACK (pagesel_callback_button_save_page)    },
-    { "Close Page",   G_CALLBACK (pagesel_callback_button_close_page)   },
-    { "Discard Page", G_CALLBACK (pagesel_callback_button_discard_page) },
-    { NULL,           NULL                                              } };
+    { "New Page",     G_CALLBACK (pagesel_callback_button_new_page)
+#ifndef HAS_GTK12
+      , GTK_STOCK_NEW     
+#endif
+    },
+    { "Open Page",    G_CALLBACK (pagesel_callback_button_open_page)
+#ifndef HAS_GTK12
+      , GTK_STOCK_OPEN    
+#endif
+    },
+    { "Save Page",    G_CALLBACK (pagesel_callback_button_save_page)
+#ifndef HAS_GTK12
+      , GTK_STOCK_SAVE
+#endif
+    },
+    { "Close Page",   G_CALLBACK (pagesel_callback_button_close_page)
+#ifndef HAS_GTK12
+      , GTK_STOCK_CLOSE
+#endif
+    },
+    { "Discard Page", G_CALLBACK (pagesel_callback_button_discard_page)
+#ifndef HAS_GTK12
+      , GTK_STOCK_CANCEL
+#endif
+    },
+    { NULL,           NULL                                             
+      , NULL
+    } };
   struct button_t *tmp;
 
   /* dialog initialization */
@@ -401,10 +426,16 @@ pagesel_init (Pagesel *pagesel)
                                    "layout-style", GTK_BUTTONBOX_EDGE,
                                    NULL));
   for (tmp = buttons; tmp->label != NULL; tmp++) {
+#ifdef HAS_GTK12
     button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
                                        /* GtkButton */
                                        "label", _(tmp->label),
                                        NULL));
+#else
+    button = gtk_button_new_from_stock (tmp->stock_id);
+    /* If the label is set after the button is created, the icon is lost */
+    /*    gtk_button_set_label (GTK_BUTTON(button), _(tmp->label)); */
+#endif
     g_signal_connect (button,
                       "clicked",
                       tmp->callback,

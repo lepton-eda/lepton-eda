@@ -579,7 +579,11 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_object_set_data(GTK_OBJECT(w_current->tiwindow),
                         "tientry",tientry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("Apply"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -590,7 +594,11 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Close"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -993,7 +1001,11 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_widget_show(optionmenu);
 
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label (_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1004,7 +1016,11 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_widget_show(buttonok);
     gtk_widget_grab_default(buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1386,7 +1402,11 @@ line_type_dialog (TOPLEVEL *w_current, GList *objects)
                      space_entry,
                      TRUE, TRUE, 10);
 
+#ifdef HAS_GTK12
   buttonok = gtk_button_new_with_label (_("OK"));
+#else
+  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
   gtk_box_pack_start(GTK_BOX(action_area),
                      buttonok,
@@ -1396,7 +1416,11 @@ line_type_dialog (TOPLEVEL *w_current, GList *objects)
                      line_type_data);
   gtk_widget_grab_default(buttonok);
 
+#ifdef HAS_GTK12
   buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
   gtk_box_pack_start(GTK_BOX(action_area),
                      buttoncancel,
@@ -1859,7 +1883,11 @@ fill_type_dialog(TOPLEVEL *w_current, GList *objects)
                       fill_type_data);
 
 		
+#ifdef HAS_GTK12
   buttonok = gtk_button_new_with_label (_("OK"));
+#else
+  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (action_area),
                       buttonok,
@@ -1869,7 +1897,11 @@ fill_type_dialog(TOPLEVEL *w_current, GList *objects)
                       fill_type_data);
   gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
   buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (action_area),
                       buttoncancel,
@@ -2078,14 +2110,22 @@ exit_dialog (TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (vbox1), hbuttonbox1, FALSE, FALSE, 0);
     gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox1), 10);
 
+#ifdef HAS_GTK12
     button1 = gtk_button_new_with_label (_("OK"));
+#else
+    button1 = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     gtk_widget_show (button1);
     gtk_container_add (GTK_CONTAINER (hbuttonbox1), button1);
     GTK_WIDGET_SET_FLAGS (button1, GTK_CAN_DEFAULT);
     gtk_signal_connect(GTK_OBJECT (button1), "clicked",
                        GTK_SIGNAL_FUNC(exit_dialog_ok), w_current);
 
+#ifdef HAS_GTK12
     button2 = gtk_button_new_with_label (_("Cancel"));
+#else
+    button2 = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     gtk_widget_show (button2);
     gtk_container_add (GTK_CONTAINER (hbuttonbox1), button2);
     GTK_WIDGET_SET_FLAGS (button2, GTK_CAN_DEFAULT);
@@ -2249,7 +2289,11 @@ arc_angle_dialog (TOPLEVEL *w_current)
                        w_current);
     gtk_widget_show(w_current->aaentry_sweep);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label (_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start (
 			GTK_BOX(action_area),
@@ -2260,7 +2304,11 @@ arc_angle_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
                         buttoncancel, TRUE, TRUE, 0);
@@ -2411,7 +2459,11 @@ translate_dialog (TOPLEVEL *w_current)
     gtk_widget_show (w_current->trentry);
     gtk_widget_grab_focus(w_current->trentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label (_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
                         buttonok, TRUE, TRUE, 0);
@@ -2421,7 +2473,11 @@ translate_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2578,7 +2634,11 @@ text_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show (w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label (_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2589,7 +2649,11 @@ text_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2745,7 +2809,11 @@ snap_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label (_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2756,7 +2824,11 @@ snap_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2922,7 +2994,11 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_widget_show (w_current->seentry);
     gtk_widget_grab_focus(w_current->seentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label (_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2933,7 +3009,11 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Cancel"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area), buttoncancel, 
                         TRUE, TRUE, 0);
@@ -3063,7 +3143,11 @@ about_dialog (TOPLEVEL *w_current)
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
+#ifdef HAS_GTK12
     buttonclose = gtk_button_new_with_label (_("Close"));
+#else
+    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3216,7 +3300,11 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
     gtk_widget_show(w_current->coord_world);
     gtk_widget_show(frame);
 
+#ifdef HAS_GTK12
     buttonclose = gtk_button_new_with_label (_("Close"));
+#else
+    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX ( vbox2 ),
                        buttonclose, TRUE, TRUE, 0);
@@ -3549,7 +3637,11 @@ color_edit_dialog (TOPLEVEL *w_current)
                        optionmenu, TRUE, TRUE, 0);
     gtk_widget_show (optionmenu);
 
+#ifdef HAS_GTK12
     buttonapply = gtk_button_new_with_label (_("Apply"));
+#else
+    buttonapply = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonapply, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3560,7 +3652,11 @@ color_edit_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonapply);
     gtk_widget_grab_default(buttonapply);
 
+#ifdef HAS_GTK12
     buttonclose = gtk_button_new_with_label (_("Close"));
+#else
+    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     gtk_box_pack_start(
                        GTK_BOX(action_area),
                        buttonclose, TRUE, TRUE, 0);
@@ -3760,7 +3856,11 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
       }
     }
 
+#ifdef HAS_GTK12
     buttonclose = gtk_button_new_with_label (_("Close"));
+#else
+    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3967,7 +4067,11 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4127,13 +4231,21 @@ void find_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("Find"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_FIND);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
 		       GTK_SIGNAL_FUNC(find_text_ok), w_current);
 
+#ifdef HAS_GTK12
     buttondone = gtk_button_new_with_label(_("Done"));
+#else
+    buttondone = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS(buttondone, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttondone, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttondone), "clicked",
@@ -4269,7 +4381,11 @@ void hide_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4396,7 +4512,11 @@ void show_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4521,7 +4641,11 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
+#ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("OK"));
+#else
+    buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4558,7 +4682,11 @@ quick_message_dialog(char *message)
    
   dialog = gtk_dialog_new();
   label = gtk_label_new (message);
+#ifdef HAS_GTK12
   close_button = gtk_button_new_with_label("Close");
+#else
+  close_button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
    
   /* Ensure that the dialog box is destroyed when the user clicks ok. */
    

@@ -1378,7 +1378,11 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   
   /*  ----- Here we create the "open"/"save as"/"apply" buttons -----  */
   if (filesel_type == OPEN) {
+#ifdef HAS_GTK12
     buttonapply = gtk_button_new_with_label("Open");
+#else
+    buttonapply = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+#endif
     gtk_signal_connect(GTK_OBJECT(buttonapply),
 		       "clicked",
 		       GTK_SIGNAL_FUNC(x_fileselect_open_file),
@@ -1390,7 +1394,11 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
 	     (filesel_type == SAVEAS_OPEN) ||
 	     (filesel_type == SAVEAS_CLOSE) ||
 	     (filesel_type == SAVEAS_NEW)) {
+#ifdef HAS_GTK12
     buttonapply = gtk_button_new_with_label("SaveAs");
+#else
+    buttonapply = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
+#endif
     gtk_signal_connect(GTK_OBJECT(buttonapply),
 		       "clicked",
 		       GTK_SIGNAL_FUNC(x_fileselect_saveas), f_current);
@@ -1404,7 +1412,11 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   
   /*  ----- Here we create the "cancel"/"close" buttons -----  */
   if (filesel_type == OPEN) {
+#ifdef HAS_GTK12
     buttonclose = gtk_button_new_with_label("Cancel");
+#else
+    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
 		       buttonclose, TRUE, TRUE, 0);
@@ -1420,7 +1432,11 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
 	     (filesel_type == SAVEAS_OPEN) ||
 	     (filesel_type == SAVEAS_CLOSE) ||
 	     (filesel_type == SAVEAS_NEW)) {
+#ifdef HAS_GTK12
     buttonclose = gtk_button_new_with_label("Cancel");
+#else
+    buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
 		       buttonclose, TRUE, TRUE, 0);

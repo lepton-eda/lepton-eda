@@ -471,7 +471,11 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 
     gtk_window_set_title (GTK_WINDOW (w_current->iwindow), _("Write Image..."));
 
+#ifdef HAS_GTK12
     buttonwrite = gtk_button_new_with_label (_("Write"));
+#else
+    buttonwrite = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
     GTK_WIDGET_SET_FLAGS (buttonwrite, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
 			buttonwrite, TRUE, TRUE, 0);
@@ -480,7 +484,11 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show (buttonwrite);
     gtk_widget_grab_default (buttonwrite);
 
+#ifdef HAS_GTK12
     buttoncancel = gtk_button_new_with_label (_("Close"));
+#else
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
 			buttoncancel, TRUE, TRUE, 0);

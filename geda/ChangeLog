@@ -1,3 +1,7 @@
+2005-02-12  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/interface.c: Beautify buttons (use GTK stock).
+	
 2005-02-03 23:04  danmc
 
 	* src/m_file.c: - lots of clean up of 'const' usage.  Seems to have

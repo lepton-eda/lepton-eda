@@ -633,7 +633,11 @@ create_ProjectProperties (void)
   gtk_widget_set_usize (pProjectPropertiesHBox, -2, 48);
   gtk_container_set_border_width (GTK_CONTAINER (pProjectPropertiesHBox), 8);
 
+#ifdef HAS_GTK12
   pProjectPropertiesButtonOk = gtk_button_new_with_label (_("Ok"));
+#else
+  pProjectPropertiesButtonOk = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   gtk_widget_ref (pProjectPropertiesButtonOk);
   gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesButtonOk", pProjectPropertiesButtonOk,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -642,7 +646,11 @@ create_ProjectProperties (void)
   gtk_widget_set_usize (pProjectPropertiesButtonOk, 112, 48);
   GTK_WIDGET_SET_FLAGS (pProjectPropertiesButtonOk, GTK_CAN_DEFAULT);
 
+#ifdef HAS_GTK12
   pProjectPropertiesButtonCancel = gtk_button_new_with_label (_("Cancel"));
+#else
+  pProjectPropertiesButtonCancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   gtk_widget_ref (pProjectPropertiesButtonCancel);
   gtk_object_set_data_full (GTK_OBJECT (ProjectProperties), "pProjectPropertiesButtonCancel", pProjectPropertiesButtonCancel,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -780,7 +788,11 @@ create_FileNew (void)
   gtk_widget_set_usize (pFileNewHBox, -2, 48);
   gtk_container_set_border_width (GTK_CONTAINER (pFileNewHBox), 8);
 
+#ifdef HAS_GTK12
   pFileNewButtonOk = gtk_button_new_with_label (_("Ok"));
+#else
+  pFileNewButtonOk = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   gtk_widget_ref (pFileNewButtonOk);
   gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewButtonOk", pFileNewButtonOk,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -789,7 +801,11 @@ create_FileNew (void)
   gtk_widget_set_usize (pFileNewButtonOk, 112, 48);
   GTK_WIDGET_SET_FLAGS (pFileNewButtonOk, GTK_CAN_DEFAULT);
 
+#ifdef HAS_GTK12
   pFileNewButtonCancel = gtk_button_new_with_label (_("Cancel"));
+#else
+  pFileNewButtonCancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   gtk_widget_ref (pFileNewButtonCancel);
   gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewButtonCancel", pFileNewButtonCancel,
                             (GtkDestroyNotify) gtk_widget_unref);

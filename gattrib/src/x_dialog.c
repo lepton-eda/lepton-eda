@@ -136,7 +136,11 @@ char *x_dialog_newattrib_get_name()
 
 
   /* Now create "OK" and "cancel" buttons */
+#ifdef HAS_GTK12
   buttonok = gtk_button_new_with_label("OK");
+#else
+  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonok, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -151,7 +155,11 @@ char *x_dialog_newattrib_get_name()
   gtk_widget_show(buttonok);
 
 
+#ifdef HAS_GTK12
   buttoncancel = gtk_button_new_with_label("Cancel");
+#else
+  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_newattrib_close_callback), 
@@ -311,7 +319,11 @@ int x_dialog_delattrib_confirm()
 
 
   /* Now create "Yes" and "cancel" buttons */
+#ifdef HAS_GTK12
   buttonyes = gtk_button_new_with_label("Yes");
+#else
+  buttonyes = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   GTK_WIDGET_SET_FLAGS(buttonyes, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonyes, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonyes), "clicked",
@@ -325,7 +337,11 @@ int x_dialog_delattrib_confirm()
   gtk_widget_show(buttonyes);
 
 
+#ifdef HAS_GTK12
   buttoncancel = gtk_button_new_with_label("Cancel");
+#else
+  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_delattrib_close_callback), 
@@ -469,7 +485,11 @@ int x_dialog_missing_sym()
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
   /* Now create "Abort program" and "Continue" buttons */
+#ifdef HAS_GTK12
   buttonabort = gtk_button_new_with_label("Abort");
+#else
+  buttonabort = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
@@ -483,7 +503,11 @@ int x_dialog_missing_sym()
   gtk_widget_show(buttonabort);
 
 
+#ifdef HAS_GTK12
   buttoncontinue = gtk_button_new_with_label("Continue");
+#else
+  buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
+#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_missing_sym_continue_callback), 
@@ -613,7 +637,11 @@ int x_dialog_unsaved_data()
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
   /* Now create "Abort program" and "Continue" buttons */
+#ifdef HAS_GTK12
   buttonabort = gtk_button_new_with_label("Abort");
+#else
+  buttonabort = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
@@ -627,7 +655,11 @@ int x_dialog_unsaved_data()
   gtk_widget_show(buttonabort);
 
 
+#ifdef HAS_GTK12
   buttoncontinue = gtk_button_new_with_label("Continue");
+#else
+  buttoncontinue = gtk_button_new_from_stock (GTK_STOCK_GO_FORWARD);
+#endif
   gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
 		     GTK_SIGNAL_FUNC(x_dialog_unsaved_data_continue_callback), 
@@ -764,7 +796,11 @@ int x_dialog_unimplemented_feature()
   gtk_widget_show(label);
   
   /* Now create button to stick in action area */
+#ifdef HAS_GTK12
   buttonclose = gtk_button_new_with_label("Close");
+#else
+  buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
   GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
   gtk_box_pack_start(GTK_BOX(action_area), buttonclose, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",
@@ -871,7 +907,11 @@ void x_dialog_about_dialog()
   gtk_widget_show(label);
   
   /* Now create button to stick in action area */
+#ifdef HAS_GTK12
   buttonclose = gtk_button_new_with_label("Close");
+#else
+  buttonclose = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
   GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
   gtk_box_pack_start(GTK_BOX(action_area), buttonclose, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonclose), "clicked",

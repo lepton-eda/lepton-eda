@@ -933,7 +933,11 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 #endif
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
 
+#ifdef HAS_GTK12
   changebutton = gtk_button_new_with_label (_("Change"));
+#else
+  changebutton = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+#endif
   gtk_widget_ref (changebutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "changebutton", changebutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -943,7 +947,11 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   /* gschem specific */
   gtk_object_set_data(GTK_OBJECT(changebutton), "mawindow", mawindow);
 
+#ifdef HAS_GTK12
   addbutton = gtk_button_new_with_label (_("Add"));
+#else
+  addbutton = gtk_button_new_from_stock (GTK_STOCK_ADD);
+#endif
   gtk_widget_ref (addbutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "addbutton", addbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -953,7 +961,11 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   /* gschem specific */
   gtk_object_set_data(GTK_OBJECT(addbutton), "mawindow", mawindow); 
 
+#ifdef HAS_GTK12
   deletebutton = gtk_button_new_with_label (_("Delete"));
+#else
+  deletebutton = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+#endif
   gtk_widget_ref (deletebutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "deletebutton", deletebutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -974,7 +986,11 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 #endif
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox2), GTK_BUTTONBOX_END);
 
+#ifdef HAS_GTK12
   clearbutton = gtk_button_new_with_label (_("Clear"));
+#else
+  clearbutton = gtk_button_new_from_stock (GTK_STOCK_CLEAR);
+#endif
   gtk_widget_ref (clearbutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "clearbutton", clearbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -982,7 +998,11 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_container_add (GTK_CONTAINER (hbuttonbox2), clearbutton);
   GTK_WIDGET_SET_FLAGS (clearbutton, GTK_CAN_DEFAULT);
 
+#ifdef HAS_GTK12
   closebutton = gtk_button_new_with_label (_("Close"));
+#else
+  closebutton = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+#endif
   gtk_widget_ref (closebutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "closebutton", closebutton,
                             (GtkDestroyNotify) gtk_widget_unref);

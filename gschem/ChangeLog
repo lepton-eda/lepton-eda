@@ -1,3 +1,10 @@
+2005-02-12  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* noweb/x_attribedit.nw, noweb/x_dialog.nw, noweb/x_fileselect.nw,
+	  noweb/x_image.nw, noweb/x_log.nw, noweb/x_multiattrib.nw, 
+	  noweb/x_print.nw, noweb/x_pagesel.nw: 
+	  Beautify buttons (use GTK stock).
+	
 2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/gschem.nw, noweb/i_callbacks.nw, noweb/o_undo.nw:

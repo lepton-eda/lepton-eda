@@ -537,7 +537,11 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_widget_show(hbuttonbox2);
   gtk_box_pack_start(GTK_BOX(vbox2), hbuttonbox2, FALSE, TRUE, 0);
 
+#ifdef HAS_GTK12
   buttonok = gtk_button_new_with_label(_("OK"));
+#else
+  buttonok = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   gtk_widget_show(buttonok);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttonok);
   GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
@@ -553,20 +557,32 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 #if 0				/* highly temp change which Ales will eventually finish up to allow */
 /* this dialog to stay open */
 /* out for now */
+#ifdef HAS_GTK12
   buttonapply = gtk_button_new_with_label(_("Apply"));
+#else
+  buttonapply = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+#endif
   gtk_widget_show(buttonapply);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttonapply);
   GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
 #endif
 
   if (list) {
+#ifdef HAS_GTK12
     buttondelete = gtk_button_new_with_label(_("Delete"));
+#else
+    buttondelete = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+#endif
     gtk_widget_show(buttondelete);
     gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttondelete);
     GTK_WIDGET_SET_FLAGS(buttondelete, GTK_CAN_DEFAULT);
   }
 
+#ifdef HAS_GTK12
   buttoncancel = gtk_button_new_with_label(_("Cancel"));
+#else
+  buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   gtk_widget_show(buttoncancel);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttoncancel);
   GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
@@ -739,7 +755,11 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_box_pack_start (GTK_BOX (hbox1), hbuttonbox1, TRUE, TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox1), 1);
 
+#ifdef HAS_GTK12
   okbutton = gtk_button_new_with_label ("OK");
+#else
+  okbutton = gtk_button_new_from_stock (GTK_STOCK_OK);
+#endif
   gtk_widget_ref (okbutton);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "okbutton", okbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -750,7 +770,11 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_button_set_relief (GTK_BUTTON (okbutton), GTK_RELIEF_HALF);
 
   if (list) { /* gschem specific */
+#ifdef HAS_GTK12
     deletebutton = gtk_button_new_with_label (_("Delete"));
+#else
+    deletebutton = gtk_button_new_from_stock (GTK_STOCK_DELETE);
+#endif
     gtk_widget_ref (deletebutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "deletebutton", deletebutton,
                               (GtkDestroyNotify) gtk_widget_unref);
@@ -760,7 +784,11 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     GTK_WIDGET_SET_FLAGS (deletebutton, GTK_CAN_DEFAULT);
   }
 
+#ifdef HAS_GTK12
   cancelbutton = gtk_button_new_with_label (_("Cancel"));
+#else
+  cancelbutton = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+#endif
   gtk_widget_ref (cancelbutton);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "cancelbutton", cancelbutton,
                             (GtkDestroyNotify) gtk_widget_unref);

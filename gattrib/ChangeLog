@@ -1,3 +1,7 @@
+2005-02-12  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/x_dialog.c, src/x_fileselect.c: Beautify buttons (use GTK stock).
+	
 2005-02-08 12:33  Dan McMahill <danmc>
 
 	* include/prototype.h, src/g_rc.c, src/g_register.c, src/gattrib.c:
