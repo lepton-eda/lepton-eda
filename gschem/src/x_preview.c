@@ -48,7 +48,7 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 
 	s_page_new(preview, temp);
 	preview->page_current = preview->page_tail;
-	f_open(preview, temp);
+	(void)f_open(preview, temp);
 
 	a_zoom_limits(preview, preview->page_current->object_head);
 

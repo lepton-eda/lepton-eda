@@ -1219,7 +1219,7 @@ DEFINE_I_CALLBACK(page_revert)
 
 	/* now re open it */
 	w_current->DONT_REDRAW = 1;
-        f_open(w_current, w_current->page_current->page_filename);
+        (void)f_open(w_current, w_current->page_current->page_filename);
         i_set_filename(w_current, w_current->page_current->page_filename);
 
 	/* make sure we maintain the hierarchy info */

@@ -645,7 +645,8 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 	if (string[len - 1] != '/') {
 		if ( !(found_page = s_page_new(w_current, string)) ) {
 			w_current->DONT_REDRAW = 1;
-			f_open(w_current, w_current->page_current->page_filename);
+			(void)f_open(w_current, 
+				     w_current->page_current->page_filename);
 			i_set_filename(w_current, w_current->page_current->
 					  page_filename);
 

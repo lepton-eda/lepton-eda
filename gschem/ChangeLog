@@ -9,6 +9,11 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-10-10  Stefan Petersen  <spe@geda.seul.org>
+ 	
+	* src/gschem.c, src/i_callbacks.c, src/x_fileselect.c, src/x_preview.c
+	  f_open calls silently ignores the error code returned.
+
 2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Removed all // comments
