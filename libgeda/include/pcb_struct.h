@@ -47,7 +47,7 @@ typedef enum {LAYER_ALL=-1, LAYER_NONE, LAYER_1, LAYER_2} layer_type;
 typedef enum {VIA_NULL, VIA_FULL} via_type;
 
 /* Supported types of pads, should eventually include surface mount types */
-typedef enum {PAD_NULL, PAD_THRU_HOLE} pad_type;
+typedef enum {PAD_NULL, PAD_CIRCLE, PAD_RECTANGLE, PAD_HEXAGON} pad_type;
 
 /* Box coordinates */
 struct st_box {
@@ -196,10 +196,16 @@ struct st_via_ewb {
 /* Each component has a number of pads associated with it */
 struct st_pad_ewb {
 	pad_type type;
+
+	layer_type layer;
+	
 	PAD_NAME name;
 
 	int x, y;              /* Pad location, relative to component location */
 	int size;
+	int size2;
+
+	int hole;
 	
 	BOUNDING_BOX_T bb;
 
