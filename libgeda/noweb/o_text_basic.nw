@@ -1773,7 +1773,8 @@ void
 o_text_print_text_height_full(FILE *fp, char *string, int size)
 {
   int num_lines = o_text_num_lines(string);
-  fprintf(fp, "%f\n", (float) size*num_lines*LINE_SPACING);
+  fprintf(fp, "%f\n", (float) (size*num_lines + 
+          size * LINE_SPACING * (num_lines - 1)));
 }
 
 
@@ -1925,6 +1926,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         fprintf(fp, "%d mils %d mils\n", x, y);
         o_text_print_text_height_full(fp, output_string,
                                        o_current->text->size);
+        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
         fprintf(fp, ".5 mul %d mul add moveto\n", sign);
         /*				x_offset = x; */
         /*				y_offset = y + sign*0.5*text_height; */
@@ -1934,6 +1936,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         fprintf(fp, "%d mils %d mils\n", x, y);
         o_text_print_text_height_full(fp, output_string,
                                       o_current->text->size);
+        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
         fprintf(fp, "%d mul add moveto\n", sign);
         /*				x_offset = x; */
         /*				y_offset = y + sign*text_height; */
@@ -1958,6 +1961,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         fprintf(fp, "%d mils\n", y);
         o_text_print_text_height_full(fp, output_string,
                                       o_current->text->size);
+        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
         fprintf(fp, ".5 mul %d mul add moveto\n", sign);
         /*				x_offset = x + sign*0.5*text_width; */
         /*				y_offset = y + sign*0.5*text_height; */
@@ -1971,6 +1975,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         fprintf(fp, "%d mils\n", y);
         o_text_print_text_height_full(fp, output_string,
                                       o_current->text->size);
+        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
         fprintf(fp, "%d mul add moveto\n", sign);
         /*				x_offset = x + sign*0.5*text_width; */
         /*				y_offset = y + sign*text_height; */
@@ -1995,6 +2000,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         fprintf(fp, "%d mils\n", y);
         o_text_print_text_height_full(fp, output_string,
                                       o_current->text->size);
+        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
         fprintf(fp, ".5 mul %d mul add moveto\n", sign);
         /*				x_offset = x + sign*text_width; */
         /*				y_offset = y + sign*0.5*text_height; */
@@ -2008,6 +2014,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         fprintf(fp, "%d mils\n", y);
         o_text_print_text_height_full(fp, output_string,
                                       o_current->text->size);
+        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
         fprintf(fp, "%d mul add moveto\n", sign);
         /*				x_offset = x + sign*text_width; */
         /*				y_offset = y + sign*text_height; */
@@ -2033,6 +2040,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       fprintf(fp, "%d mils\n", x); 
 						
       o_text_print_text_height_full(fp, output_string, o_current->text->size);
+      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
       fprintf(fp, ".5 mul %d mul add\n", sign);
       fprintf(fp, "%d mils moveto\n", y);
       /*				x_offset = x + sign*0.5*text_height; */
@@ -2043,6 +2051,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       fprintf(fp, "%d mils\n", x); 
 						
       o_text_print_text_height_full(fp, output_string, o_current->text->size);
+      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
       fprintf(fp, "%d mul add\n", sign);
       fprintf(fp, "%d mils moveto\n", y);
       /*				x_offset = x + sign*text_height; */
@@ -2061,6 +2070,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       case(MIDDLE_MIDDLE):
       fprintf(fp, "%d mils\n", x);
       o_text_print_text_height_full(fp, output_string, o_current->text->size);
+      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
       fprintf(fp, "0.5 mul %d mul add\n", sign);
       fprintf(fp, "%d mils\n", y);
       o_text_print_text_width(fp, output_string);
@@ -2072,6 +2082,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       case(UPPER_MIDDLE):
       fprintf(fp, "%d mils\n", x);
       o_text_print_text_height_full(fp, output_string, o_current->text->size);
+      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
       fprintf(fp, "%d mul add\n", sign);
       fprintf(fp, "%d mils\n", y);
       o_text_print_text_width(fp, output_string);
@@ -2093,6 +2104,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       case(MIDDLE_RIGHT):
       fprintf(fp, "%d mils\n", x);
       o_text_print_text_height_full(fp, output_string, o_current->text->size);
+      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
       fprintf(fp, "0.5 mul %d mul add\n", sign);
       fprintf(fp, "%d mils\n", y);
       o_text_print_text_width(fp, output_string);
@@ -2104,6 +2116,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
       case(UPPER_RIGHT):
       fprintf(fp, "%d mils\n", x);
       o_text_print_text_height_full(fp, output_string, o_current->text->size);
+      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
       fprintf(fp, "%d mul add\n", sign);
       fprintf(fp, "%d mils\n", y);
       o_text_print_text_width(fp, output_string);
@@ -2121,6 +2134,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     o_text_print_text_width(fp, output_string); 
     fprintf(fp, "-1.0 mul\n"); /* x distance back */
     o_text_print_text_height_full(fp, output_string, o_current->text->size);
+    fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
     fprintf(fp, "-1.0 mul\n"); /* y distance down */
     fprintf(fp, "rmoveto\n");
   }
@@ -2172,7 +2186,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         case 0:
           /* stack: x y */
           o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "-1 mul %d mul add moveto\n", LINE_SPACING);
+          fprintf(fp, "-1 mul %f mul add moveto\n", LINE_SPACING);
           /* stack: empty */
 
           /* x = line_start_x; */          
@@ -2182,7 +2196,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         case 90:
           fprintf(fp, "exch\n"); /* stack: y x */
           o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "%d mul add exch moveto\n", LINE_SPACING);
+          fprintf(fp, "%f mul add exch moveto\n", LINE_SPACING);
           /* stack: empty */
           /* x = line_start_x + char_height * 2; */
           /* y = line_start_y; */
@@ -2191,7 +2205,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         case 180:
           /* stack: x y */
           o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "%d mul sub moveto\n", LINE_SPACING);
+          fprintf(fp, "%f mul sub moveto\n", LINE_SPACING);
           /* stack: empty */
 
           /* x = line_start_x; */
@@ -2202,7 +2216,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         case 270:
           fprintf(fp, "exch\n"); /* stack: y x */
           o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "%d mul sub exch moveto\n", LINE_SPACING);
+          fprintf(fp, "%f mul sub exch moveto\n", LINE_SPACING);
           /* stack: empty */
           
           /* x = line_start_x - char_height * 2; */

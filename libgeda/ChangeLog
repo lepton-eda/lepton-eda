@@ -1,3 +1,15 @@
+2003-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Fixed the postscript printing of text
+	when it is rotated 180 degrees.  
+
+	* noweb/o_text_basic.nw: Attempted to get the multi line text
+	printing a little more accurate.  Not quite there, still have a 
+	large error when the text consists of many lines.  Work in 
+	progress.
+
+	* include/defines.h: Changes LINE_SPACING to be a float.
+
 2003-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Applied a patch by Carlos for the new

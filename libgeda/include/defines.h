@@ -185,7 +185,7 @@
 #define TAB_CHAR_MODEL "b"
 
 /* multi text line spacing (multipled times character height) */
-#define LINE_SPACING    2
+#define LINE_SPACING    2.0
 
 /* These modes are for net_endpoint_mode */
 #define NONE		0
