@@ -15,7 +15,7 @@ libgeda_la_SOURCES = \
 	o_complex_basic.c o_line_basic.c o_list.c o_net_basic.c o_selection.c \
 	o_bus_basic.c o_text_basic.c o_pin_basic.c o_image.c u_basic.c \
 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c s_stretch.c \
-	s_log.c s_page.c s_scratch.c s_slib.c s_stroke.c s_color.c s_undo.c \
+	s_log.c s_page.c s_scratch.c s_slib.c s_color.c s_undo.c \
 	s_conn.c s_cue.c s_tile.c g_smob.c funcs.h globals.h  
 
 libgeda_la_LDFLAGS = -version-info 12:0:0

@@ -5,9 +5,6 @@
 /* Define the location of GEDARCDIR */ 
 #define GEDARCDIR none
 
-/* Define if you have the stroke library   */
-#undef HAS_LIBSTROKE
-
 /* Define if you have optarg in unistd.h */
 #undef OPTARG_IN_UNISTD
 

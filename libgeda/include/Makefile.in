@@ -81,11 +81,12 @@ MAKEINFO = @MAKEINFO@
 NM = @NM@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
-STROKE_LIB = @STROKE_LIB@
 VERSION = @VERSION@
 X_CFLAGS = @X_CFLAGS@
 X_LDFLAGS = @X_LDFLAGS@
 X_LIBS = @X_LIBS@
+libgdgeda_cflags = @libgdgeda_cflags@
+libgdgeda_ldflags = @libgdgeda_ldflags@
 
 libgedaincludedir = $(includedir)/libgeda
 libgedainclude_HEADERS =  	colors.h defines.h funcs.h globals.h o_types.h pcb_struct.h 	prototype.h struct.h libgeda.h
@@ -110,9 +111,9 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps include/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu include/Makefile
 
-Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -166,10 +167,15 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = include
 
 distdir: $(DISTFILES)
+	here=`cd $(top_builddir) && pwd`; \
+	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
+	cd $(top_srcdir) \
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu include/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
-	    cp -pr $$/$$file $(distdir)/$$file; \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
 	  else \
 	    test -f $(distdir)/$$file \
 	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \

@@ -1,3 +1,12 @@
+2001-03-11  Stefan Petersen  <spe@geda.seul.org>
+
+	* Makefile.am, Makefile.in, acconfig.h, config.h.in, 
+	  configure, configure.in, include/Makefile.in, src/Makefile.am, 
+	  src/Makefile.in: Removed all traces of libstroke et al and 
+	  regenerated some files.
+	  
+	* s_stroke.c : Removed
+	
 2001-03-07  Stefan Petersen  <spe@geda.seul.org>
 
 	* configure.in: Fixed minor bug introduced yesterday.
