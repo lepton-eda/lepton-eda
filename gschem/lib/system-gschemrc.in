@@ -658,13 +658,14 @@
 (attribute-name "pinnumber")
 (attribute-name "pinseq")
 (attribute-name "pintype")
+(attribute-name "pinlabel")
 (attribute-name "source")
 (attribute-name "numslots")
 (attribute-name "slot")
 (attribute-name "slotdef")
 (attribute-name "graphical")
 (attribute-name "footprint")
-(attribute-name "name")
+(attribute-name "description")
 
 ;
 ; End of path related keywords

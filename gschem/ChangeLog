@@ -1,3 +1,8 @@
+2002-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added some missing attributes, noticed and
+	patch by Egil Kvaleberg.  Removed "name" from attribute-name list.
+
 2002-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_menus.nw: Fixed the code so that toplevel menu names are
