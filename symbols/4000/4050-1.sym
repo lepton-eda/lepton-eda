@@ -1,12 +1,14 @@
 v 20021103
 P 0 500 300 500 1 0 0
 {
-T 100 550 5 8 1 1 0 0
+T 200 550 5 8 1 1 0 6
 pinnumber=3
-T 100 550 5 8 0 0 0 0
+T 200 450 5 8 0 1 0 8
 pinseq=1
-T 100 350 5 8 0 1 0 0
+T 350 500 5 8 0 1 0 2
 pintype=in
+T 350 500 9 8 0 1 0 0
+pinlabel=A
 }
 L 300 800 300 200 3 0 0 0 -1 -1
 L 300 800 900 500 3 0 0 0 -1 -1
@@ -15,19 +17,21 @@ P 900 500 1200 500 1 0 1
 {
 T 1000 550 5 8 1 1 0 0
 pinnumber=2
-T 1000 550 5 8 0 0 0 0
+T 1000 450 5 8 0 1 0 2
 pinseq=2
-T 1000 350 5 8 0 1 0 0
+T 850 500 5 8 0 1 0 8
 pintype=out
+T 850 500 9 8 0 1 0 6
+pinlabel=Y
 }
-T 1700 -100 5 10 0 0 0 0
+T 1700 2100 5 10 0 0 0 0
 net=VDD:1
 T 1700 100 5 10 0 0 0 0
 net=VSS:8
 T 1700 300 5 10 0 0 0 0
 device=4050
 T 1700 500 5 10 0 0 0 0
-footprint=None
+footprint=DIP16
 T 1700 700 5 10 0 0 0 0
 numslots=6
 T 1700 900 5 10 0 0 0 0
@@ -42,7 +46,11 @@ T 1700 1700 5 10 0 0 0 0
 slotdef=5:11,12
 T 1700 1900 5 10 0 0 0 0
 slotdef=6:14,15
-T 300 900 2 10 1 1 0 0
+T 300 900 8 10 1 1 0 0
 refdes=U?
+T 1700 2300 5 10 0 0 0 0
+description=6 buffers
+T 1700 2500 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4050B_CNV_3.pdf
 T 300 0 9 10 1 0 0 0
 4050

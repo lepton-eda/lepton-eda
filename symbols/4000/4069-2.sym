@@ -22,29 +22,39 @@ L 800 500 300 200 3 0 0 0 -1 -1
 L 300 800 300 500 3 0 0 0 -1 -1
 L 300 500 300 200 3 0 0 0 -1 -1
 V 250 500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-T 300 0 9 8 1 0 0 0
-4069
 P 1100 500 800 500 1 0 0
 {
-T 815 550 5 8 1 1 0 0
+T 900 550 5 8 1 1 0 0
 pinnumber=2
-T 815 550 5 8 0 0 0 0
+T 900 450 5 8 0 1 0 2
 pinseq=2
+T 750 500 9 8 0 1 0 6
+pinlabel=Y
+T 750 500 5 8 0 1 0 8
+pintype=out
 }
 P 200 500 0 500 1 0 1
 {
-T 100 550 5 8 1 1 0 0
+T 200 550 5 8 1 1 0 6
 pinnumber=1
-T 100 550 5 8 0 0 0 0
+T 200 450 5 8 0 1 0 8
 pinseq=1
+T 350 500 9 8 0 1 0 0
+pinlabel=A
+T 350 500 5 8 0 1 0 2
+pintype=in
 }
 T 300 900 8 10 1 1 0 0
 refdes=U?
-T 600 2900 5 10 0 0 0 0
-pins=14
-T 600 2700 5 10 0 0 0 0
-class=IC
 T 600 3300 5 10 0 0 0 0
 net=GND:7
 T 600 3100 5 10 0 0 0 0
 net=Vcc:14
+T 600 2700 5 10 0 0 0 0
+footprint=DIP14
+T 600 2900 5 10 0 0 0 0
+description=6 inverters
+T 600 3500 5 10 0 0 0 0
+documentation=http://www.semiconductors.philips.com/acrobat/datasheets/HEF4069UB_CNV_3.pdf
+T 300 0 9 8 1 0 0 0
+4069

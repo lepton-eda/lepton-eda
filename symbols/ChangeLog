@@ -1,6 +1,13 @@
-2002-11-10 Werner Hoch <werner.ho@gmx.de>
+2002-11-17 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[567]?-*.sym: completed symbols (added net, footprint, ..)
+	* 4000/: 4053-1.sym marked as unrepairable, 
+                 4056-1.sym repaired pin14, pin15
+	* 4000/: added 4053-2.sym, 4060-2.sym, 4066-2.sym, 4067-2.sym, 
+	         4068-2.sym, 4072-2.sym, 4073-2.sym, 4075-2.sym, 4078-2.sym
+
+2002-11-15 Werner Hoch <werner.ho@gmx.de>
 	* 4000/40[34]?-*.sym: completed symbols (added net, footprint, ..)
-	* 4000/: 4032-2.sym, 4033-2.sym, 4035-2.sym, 4038-2.sym, 
+	* 4000/: added 4032-2.sym, 4033-2.sym, 4035-2.sym, 4038-2.sym, 
 	         4042-2.sym, 4043-2.sym, 4044-2.sym
 	
 2002-11-09 Werner Hoch  <werner.ho@gmx.de>	
