@@ -1,0 +1,754 @@
+
+; 
+; Init file for gschem
+;
+
+;  ;'s are comments
+;  keywords are case sensitive (guile feature)
+;  mode strings are case sensitive
+;  colors are not case sensitive 
+;  
+
+;  The following are the ONLY premitted colors
+;    In the future this will be any X color name, but for now it is limited to:
+;
+;       black
+;       white
+;       red
+;       green
+;       blue
+;       yellow
+;       cyan
+;       grey
+;
+
+; gschem-version string
+;
+; Specifies the version of this file.  This number is used to make sure 
+; that the rc file is compatible with the version of gschem that is 
+; being run. The end user should *not* change this value.
+;
+(gschem-version "@VERSION@")
+
+; Load up commonrc
+;
+; Contains all paths needed for gnetlist
+(load "@expandgedadatadir@/system-commonrc")
+
+;
+; Start of color related keywords
+;
+
+; override-net-color string
+; Override the color of ALL nets
+; New net color will be applied to all nets in any file which is opened and
+; then saved. Comment out if you don't want to override the net color.
+; 
+;(override-net-color "blue")
+
+; override-pin-color string
+; Override the color of ALL pins
+; New pin color will be applied to all pin in any file which is opened and
+; then saved.  Comment out if you don't want to override the pin color.
+;
+;(override-pin-color "white")
+
+; attribute-color string
+; Set the color of attributes.  Attributes are any object associated with 
+; another with the 'Attach Attribute' command.  Comment out if you want 
+; the default color.
+;
+(attribute-color "yellow")
+
+; detached-attribute-color string
+; Set the color of detached attributes.  Detached attributes are just 
+; text items which were attributes at one time.  Detached attributes 
+; are created in conjunction with the 'Detach Attribute' command.  Comment 
+; out if you want the default color.
+;
+(detached-attribute-color "red")
+
+; text-color string
+; Set the color of any new text (does not effect attributes, see below).
+; Existing graphic objects are not effected by this keyword.  Comment 
+; out if you want the default color.
+;
+(text-color "green")
+
+; net-color string
+; Set the color of any new nets (does not effect existing nets).
+; To change existing nets use the override-net-color 
+;
+(net-color "blue")
+
+; pin-color string
+; Set the color of any new pins (does not effect existing pins).
+; To change existing pins use the override-pin-color
+;
+(pin-color "white")
+
+; graphic-color string
+; Set the default graphics color.  All new Lines, Boxes, Circles, and Arcs 
+; are effected by this keyword.  Existing graphic objects are not effected 
+; by this keyword.  Comment out if you want the default color.
+; 
+(graphic-color "green")
+
+; grid-color string
+; Set the default grid color.  Comment out if you want the default color.
+;
+(grid-color "grey")
+
+; background-color string
+; Set the default background color.  Comment out if you want the default color.
+;
+(background-color "black")
+
+; select-color string
+; Set the default selection color.  This include the bounding box in window
+; selects and when objects are selected.  The default selection color 
+; (grey90) is an internal color and should not be set here.  Comment out 
+; if you want the default color.
+;
+(select-color "grey")
+
+; stroke-color string
+; Set the default stroke color which is displayed when you draw a stroke.
+; Basically this color specifies what the mouse droppings color
+;
+(stroke-color "grey90")
+
+; boundingbox-color string
+; Set the default bounding box color.  The bounding box color is displayed 
+; whenever you request that actions (move/copy/place) use a bounding box 
+; instead of the default outline.  Comment out if you want the default color.
+; (which is grey90 and cannot be specified here (yet))
+; 
+;(boundingbox-color "cyan")
+
+; net-endpoint-color string
+; Set the default net endpoint color.  Comment out if you want the default 
+; color.
+;
+(net-endpoint-color "red")
+
+;
+; End of color related keywords
+;
+
+;
+; Start of mode related keywords
+;
+
+; net-endpoint-mode string
+; Set to none if you don't want any indicators of unconnected nets
+; Set to filledbox if you want filled squares at the end of unconnected nets
+; Set to emptybox if you want hollow squares at the end of unconnected nets
+; Set to x if you want x shaped crosses at the end of unconnected nets
+; This mode also determines which type of endpoint gets printed
+; Comment out if you want the default mode
+;
+;(net-endpoint-mode "none")
+(net-endpoint-mode "filledbox")
+;(net-endpoint-mode "emptybox")
+;(net-endpoint-mode "x")
+
+;  net-midpoint-mode string
+;  Set to none if you don't want any indicators of mid connected nets
+;  Set to filled if you want filled circles at the end of mid connected nets
+;  Set to empty if you want empty circles at the end of mid connected nets
+;  This mode also determines which type of midpoint gets printed
+;  Comment out if you want the default mode
+;
+;(net-midpoint-mode "none")
+(net-midpoint-mode "filled")
+;(net-midpoint-mode "empty")
+
+;  net-style string
+;  Set to thin if you want thin nets.
+;  Set to thick if you want thick nets.
+;  This mode also determines what net style gets printed
+;
+;(net-style "thin")
+(net-style "thick")
+
+; pin-style string
+; Set to thin if you want thin pins
+; Set to thick if you want thick pins.
+; This mode also determines what pin style gets printed
+;
+;(pin-style "thin")
+(pin-style "thick")
+
+; action-feedback-mode string
+; Set the default action feedback mode (for copy/move/component place).
+; Set to outline to get an outline of the selection. 
+; Set to boundingbox to get a bounding box of the selection. 
+; For a fast machines with fast video use outline (it looks good).
+; For a slow machine use boundingbox; it is much faster.
+; Comment out if you want the default mode.
+;
+(action-feedback-mode "outline")
+;(action-feedback-mode "boundingbox")
+
+; scrollbars string
+;
+; Controls if the scrollbars are displayed (enabled) or not (disabled)
+;
+(scrollbars "enabled")
+;(scrollbars "disabled")
+
+; scrollbar-update string
+; Specifies the behavior of the scrollbars in the main window.
+;    continuous - display is redrawn as you move the scrollbar
+;    delayed - display is redrawn once you stop moving the scrollbar
+; Default is continuous
+;
+(scrollbar-update "continuous")
+;(scrollbar-update "delayed")
+
+; object-clipping string
+; Determines if the object clipping code is executed or not
+; This code does speed up redraws a bit.
+;   Possible options: enabled or disabled
+; Default is enabled
+;
+(object-clipping "enabled")
+;(object-clipping "disabled")
+
+; embed-components string
+; Determines if the newly placed components are embedded in the schematic 
+; or if only the filename is specified and the component is searched for 
+; instead.  If it is enabled, then all new components will be embedded 
+; othewise they are not embedded.  This can be controlled on the fly during
+; runtime with the "Embed Component" checkbox on the select component dialog
+; box
+;
+;(embed-components "enabled")
+(embed-components "disabled")
+
+; logging string
+; Determines if the logging mechanism is enabled or disabled
+;   Possible options: enabled or disabled
+; Default is enabled.
+; See below for the logging-destination keyword for control over
+; where the messages go.
+;
+(logging "enabled")
+;(logging "disabled")
+
+
+; log-window string
+; Controls if the log message window is mapped when gschem is started up
+; Possible options:
+;       startup - opened up when gschem starts
+;       later   - NOT opened up when gschem starts
+;                 (can be opened by Options/Show Log Window)
+;
+(log-window "startup")
+;(log-window "later")
+
+
+; log-window-type string
+; Controls if the log message window is a transient or if it is decorated 
+; as a normal window (this is dependant on the window manager doing decoration
+; right)
+;
+; Possible options:
+;       decorated       - log window is a normal decorated window
+;       transient       - log window is a transient dialog box, typically
+;                         not decorated by the window manager
+;
+(log-window-type "decorated")
+;(log-window-type "transient")
+
+
+; logging-destination string
+; Specifies where log message go during run time.
+; Possible options are:
+;      log_window      The log window (if it's visible)
+;      tty             The stdout of the terminal where gschem was run from
+;      both            Both of the above locations
+; Message are always written to the log file (unless logging is disabled)
+; by the above keyword
+;
+; Default is log_window
+;
+(logging-destination "log_window")
+;(logging-destination "tty")
+;(logging-destination "both")
+
+; text-size number
+; Sets the default text size.
+;
+(text-size 10)
+
+; snap-size number
+; Sets the default spacing which objects snap to.  This is not the grid 
+; spacing (that's independent of this variable)
+; 
+(snap-size 100)
+
+; text-caps-style string
+; Sets the default caps style used for the input of text
+; lower specifies that all inputed text is in lowercase
+; upper specifies that all inputed text is in uppercase
+; both specifies that all inputed text is used as is (no case conversion)
+;
+;(text-caps-style "lower")
+(text-caps-style "upper")
+;(text-caps-style "both")
+
+;  default-series-name string
+;  Specify the default series name (of new schematics)
+;  Will probably be changed a runtime
+;
+(default-series-name "untitled")
+
+; untitled-name string
+; Specify the default untitled basename (usually only used a startup time)
+; And typically not changed at runtime
+;
+(untitled-name "untitled")
+
+; world-size width height border
+; Specifies the size of the world and a border 
+; Be sure all inputs are reals (floats/doubles) and don't try to reverse
+; the values: to get a portrait mode.  Code to support that needs to be added
+; The code that implements this automatically transforms the dimensions into
+; the proper aspect ratio.  All units are in inches.
+; This is not the paper size.  That is specified elsewhere.  End users should
+; not change this at all
+;
+(world-size 60.0 45.0 1.0)
+
+; page-size width height 
+; Specifies the size of the default paper size
+; Be sure all inputs are reals (floats/doubles) and don't try to reverse
+; the values: to get a portrait mode.  Code to support that needs to be added
+; The code that implements this automatically transforms the dimensions into
+; the proper aspect ratio.  All units are in inches. (use output-orientation
+; to get portrait mode)
+;
+(paper-size 11.0 8.5) ; letter
+;(paper-size 14.0 8.5) ; legal 
+;(paper-size 8.5 5.5) ; statement
+;(paper-size 17.0 11.0) ; tabloid
+;(paper-size 11.0 17.0) ; ledger
+;(paper-size 13.0 8.5) ; folio
+;(paper-size 10.833 8.472) ; quarto 
+;(paper-size 14 10) ; 10x14
+;(paper-size 10.0 7.5) ; executive
+;(paper-size 11.0 8.5) ; A
+;(paper-size 17.0 11.0) ; B 
+;(paper-size 22.0 17.0) ; C 
+;(paper-size 34.0 22.0) ; D 
+;(paper-size 44.0 34.0) ; E 
+;(paper-size 46.81 33.11) ; A0 
+;(paper-size 33.11 23.39) ; A1
+;(paper-size 23.39 16.54) ; A2
+;(paper-size 16.54 11.69) ; A3
+;(paper-size 11.69 8.27) ; A4
+;(paper-size 8.27 5.83) ; A5
+;(paper-size 5.83 4.13) ; A6
+;(paper-size 4.13 2.91) ; A7 
+;(paper-size 2.91 2.05) ; A8
+;(paper-size 2.05 1.46) ; A9 
+;(paper-size 1.46 1.02) ; A10
+;(paper-size 1.02 0.71) ; A11
+;(paper-size 0.71 0.51) ; A12
+
+; paper-sizes string width height
+; Specifies which paper sizes are available for printing.
+; The width and height parameters are in the order for landscape printing,
+; so reversing them for portrait won't work just yet. (and that will be 
+; implemented differently. 
+; The default paper size is set above.  All units are in inches.
+;
+(paper-sizes "Letter : 8.5 in x 11 in" 11.0 8.5)
+(paper-sizes "Legal : 8.5 in x 14 in" 14.0 8.5)
+(paper-sizes "Statement : 5.5 in x 8.5 in" 8.5 5.5)
+(paper-sizes "Tabloid : 11 in x 17 in" 17.0 11.0) 
+(paper-sizes "Ledger : 17 in x 11 in" 11.0 17.0) 
+(paper-sizes "Folio : 8.5 in x 13 in" 13.0 8.5) 
+(paper-sizes "Quarto : 8.472 in x 10.833 in" 10.833 8.472) 
+(paper-sizes "10x14 : 10 in x 14 in " 14 10) 
+(paper-sizes "Executive : 7.5 x 10" 10.0 7.5) 
+(paper-sizes "A : 8.5 in x 11 in" 11.0 8.5)
+(paper-sizes "B : 11 in x 17 in" 17.0 11.0)
+(paper-sizes "C : 17 in x 22 in" 22.0 17.0)
+(paper-sizes "D : 22 in x 34 in" 34.0 22.0)
+(paper-sizes "E : 34 in x 44 in" 44.0 34.0)
+(paper-sizes "A0  84.10 cm x 118.90 cm" 46.81 33.11)
+(paper-sizes "A1  59.40 cm x 84.10 cm" 33.11 23.39)
+(paper-sizes "A2  42.00 cm x 59.40 cm" 23.39 16.54)
+(paper-sizes "A3  29.70 cm x 42.00 cm" 16.54 11.69)
+(paper-sizes "A4  21.00 cm x 29.70 cm" 11.69 8.27)
+(paper-sizes "A5  14.80 cm x 21.00 cm" 8.27 5.83)
+(paper-sizes "A6  10.50 cm x 14.80 cm" 5.83 4.13)
+(paper-sizes "A7  7.40 cm x 10.50 cm" 4.13 2.91)
+(paper-sizes "A8  5.20 cm x 7.40 cm" 2.91 2.05)
+(paper-sizes "A9  3.70 cm x 5.20 cm" 2.05 1.46)
+(paper-sizes "A10 2.60 cm x 3.70 cm" 1.46 1.02)
+(paper-sizes "A11 1.80 cm x 2.60 cm" 1.02 0.71)
+(paper-sizes "A12 1.30 cm x 1.80 cm" 0.71 0.51)
+
+; output-text string
+; Controls how text is rendered to postscript
+; 	vector - the displayed vector font is rendered to the postscript file
+; 	ps     - an equivalent postscript font is rendered to the ps file
+; vector rendering is *exactly* as the display is shown 
+; ps is close, but not perfect (yet) (ps rendering does NOT render 180 degree
+; rotated text correctly yet)
+; Also vector rendered text files are much much larger then ps files.
+; 
+;(output-text "vector")
+(output-text "ps")
+
+; output-type string
+;
+; Controls what is actually printed
+;	string is either "current window" or "limits"
+;
+(output-type "limits")
+;(output-type "current window")
+
+; output-orientation string
+;
+; Controls which way the output page is layed out (landscape or portrait)
+;
+;(output-orientation "portrait")
+(output-orientation "landscape")
+
+; output-color string
+;
+; Controls if output (postscript) is color (enabled) or black/white (disabled)
+;
+(output-color "disabled")
+;(output-color "enabled")
+
+; output-color-background string
+;
+; Specifies the color of the background of the output (color postscript file)
+; 	- string is one of the valid colors
+; 	- Only used if ouput-color is "enabled" (see above)
+;
+(output-color-background "black")
+;(output-color-background "white")
+
+;
+; End of mode related keywords
+;
+
+
+;
+; Start of path related keywords
+;
+
+; attribute-name string
+; Specifies the default attributes which are presented to the user in the
+; "Add Attribute" dialog box.
+; The main purpose of this keyword is to allow the user to add any attributes
+; which should be in this dialog box.
+; Some of these names are specific for symbols while others are for general
+; components or nets.  The attribute names are case sensitive. (change this?)
+;
+; The order of the attribute-name keywords determines the order they
+; are displayed.
+;
+(attribute-name "label")
+(attribute-name "uref")
+(attribute-name "value")
+(attribute-name "slot")
+(attribute-name "device")
+(attribute-name "slot#")
+(attribute-name "pin#")
+(attribute-name "numslots")
+(attribute-name "graphical")
+(attribute-name "name")
+
+;
+; End of path related keywords
+;
+
+;
+; Start of stroke related keywords
+;
+
+; stroke string guile-function
+;
+; The stroke keyword associates a stroke sequence with a guile function
+; which is executed when the stroke is drawn in the gschem window
+;
+; You can see the stroke sequence which gschem gets by running gschem 
+; which the -v flag (verbose) and as you draw strokes, you will see 
+; the sequence which defines that stroke.  The verbose flag will also 
+; enable the warning messages which are generated if:
+;
+;	1) you don't have libstroke and gschem finds a stroke keyword
+;	2) for duplicate stroke defs
+;
+; Strokes are defined as follows: 
+;
+; 1  2  3
+;
+; 4  5  6
+;
+; 7  8  9
+;
+; The sequence of number such as "852" specify how the stroke is drawn.
+; Sequence "852" happens to be a vertical line drawn from the bottom going 
+; up.
+;
+; Please see the libstroke documentation for further information on the 
+; stroke description.  
+;
+; For the most part I went a little overboard on the stroke defs, you 
+; probably can get away with many less stroke defs, but I'm a very 
+; sloppy stroke drawing person. :-)  Guess my teachers were always 
+; right-- my handwritting was/is awful.
+; 
+
+; Letter L for line
+(stroke "14789" add-line)
+
+; Letter Z for zoom window
+(stroke "125789" view-zoom-box)
+(stroke "1254789" view-zoom-box)
+(stroke "1235789" view-zoom-box)
+(stroke "2354789" view-zoom-box)
+(stroke "2324789" view-zoom-box)
+(stroke "12354789" view-zoom-box)
+(stroke "12324789" view-zoom-box)
+(stroke "12365789" view-zoom-box)
+(stroke "1232789" view-zoom-box)
+
+; line up for zoom out
+(stroke "852" view-zoom-out)
+; line down for zoom in
+(stroke "258" view-zoom-in)
+
+; Letter C for copy
+(stroke "3214789" edit-copy)
+(stroke "214789" edit-copy)
+(stroke "21489" edit-copy)
+(stroke "32478" edit-copy)
+
+; Letter E for edit
+(stroke "563214789" edit-edit)
+(stroke "53214789" edit-edit)
+(stroke "5321478" edit-edit)
+(stroke "5214789" edit-edit)
+(stroke "521478" edit-edit)
+(stroke "453214789" edit-edit)
+(stroke "45321478" edit-edit)
+(stroke "456321478" edit-edit)
+(stroke "456214789" edit-edit)
+(stroke "45621478" edit-edit)
+
+; Letter N for net
+(stroke "415963" add-net)
+(stroke "7414863" add-net)
+(stroke "74148963" add-net)
+(stroke "74158963" add-net)
+(stroke "7415963"  add-net)
+
+
+; Letter M for move
+(stroke "741236963" edit-move)
+(stroke "7412572369" edit-move)
+(stroke "7412575369" edit-move)
+(stroke "741258369" edit-move)
+(stroke "74125852369" edit-move)
+(stroke "7412585369" edit-move)
+(stroke "74125863" edit-move)
+(stroke "74126963" edit-move)
+(stroke "741475369" edit-move)
+(stroke "7414785369" edit-move)
+(stroke "74148369" edit-move)
+(stroke "7414852369" edit-move)
+(stroke "741485369" edit-move)
+(stroke "74148669" edit-move)
+(stroke "741552369" edit-move)
+(stroke "741575369" edit-move)
+(stroke "7415852369" edit-move)
+(stroke "741585369" edit-move)
+(stroke "74185369" edit-move)
+(stroke "74255369" edit-move)
+(stroke "7425852369" edit-move)
+(stroke "742585369" edit-move)
+(stroke "7426963" edit-move)
+(stroke "74585369" edit-move)
+
+; Letter D for delete
+(stroke "14786321" edit-delete)
+(stroke "14789621" edit-delete)
+(stroke "147896321" edit-delete)
+(stroke "15896321" edit-delete)
+(stroke "257896321" edit-delete)
+(stroke "25896321" edit-delete)
+(stroke "4789621" edit-delete)
+
+; Letter S for select
+(stroke "2145987" edit-select )
+(stroke "215987" edit-select )
+(stroke "2156987" edit-select )
+(stroke "21256987" edit-select )
+(stroke "3215987" edit-select )
+(stroke "32156987" edit-select )
+(stroke "32148987" edit-select )
+(stroke "32145987" edit-select )
+
+;
+; End of stroke related keywords
+;
+
+
+;
+; Start of keymapping related keywords
+;
+
+; Keymapping rules:
+;
+;	- Everything is case sensitive
+; 	- For a         --  "a"
+; 	- For Shift-A   --  "Shift A"
+; 	- For Control-a --  "Control a"
+; 	- For Alt-a     --  "Alt a"
+; 	- At this point in time you can only have one modifier 
+;	  (shift, control, alt) at a time.
+; 	- Keys must be unique in each keymap, especially the global one
+;	- Strings (without any modifers) are the same strings specified
+; 	  for the keys in the file /usr/lib/X11/XKeysymDB (at least on 
+; 	  a linux box)
+;
+
+; All keys in this keymap *must* be unique
+(define file-keymap
+  '(("w" . file-new-window)
+    ("n" . file-new)
+    ("o" . file-open)
+    ("s" . file-save)
+    ("a" . file-save-as)
+    ("l" . file-save-all)
+    ("p" . file-print)
+    ("r" . file-script)
+    ("c" . file-close-window)
+    ("q" . file-quit)))
+
+; All keys in this keymap *must* be unique
+(define edit-keymap
+  '(("s" . edit-select)
+    ("c" . edit-copy-hotkey)    ; This can also just be edit-copy and then
+    ("e" . edit-edit)           ; you must pick the anchor point
+    ("m" . edit-move-hotkey)    ; This can also just be edit-move
+    ("d" . edit-delete)
+    ("r" . edit-rotate-90-hotkey)
+    ("i" . edit-mirror-hotkey)
+    ("Shift S" . edit-slot)
+    ("l" . edit-lock)
+    ("Shift L" . edit-unlock)
+    ("t" . edit-translate)
+    ("b" . edit-embed)
+    ("u" . edit-unembed)))
+
+; All keys in this keymap *must* be unique
+(define view-keymap
+  '(("r" . view-redraw)
+    ("b" . view-zoom-box-hotkey)
+    ("f" . view-zoom-full)
+    ("l" . view-zoom-limits)
+    ("p" . view-pan-hotkey)
+    ("u" . view-update-nets)
+    ("o" . view-zoom-out)
+    ("i" . view-zoom-in)))
+
+; All keys in this keymap *must* be unique
+(define page-keymap
+  '(("m" . page-manager)
+    ("n" . page-next)
+    ("p" . page-prev)
+    ("e" . page-new)
+    ("c" . page-close)
+    ("d" . page-discard)
+    ("Shift P" . page-print)))
+
+; All keys in this keymap *must* be unique
+(define add-keymap
+  '(("c" . add-component)
+    ("a" . add-attribute)
+    ("n" . add-net-hotkey)
+    ("t" . add-text)
+    ("l" . add-line-hotkey)
+    ("b" . add-box-hotkey)
+    ("i" . add-circle-hotkey)
+    ("r" . add-arc-hotkey)
+    ("p" . add-pin-hotkey)))
+
+; All keys in this keymap *must* be unique
+(define hierarchy-keymap
+  '(("o" . hierarchy-open-symbol)))
+
+; All keys in this keymap *must* be unique
+(define attributes-keymap
+  '(("a" . attributes-attach)
+    ("d" . attributes-detach)
+    ("n" . attributes-show-name)
+    ("v" . attributes-show-value)
+    ("b" . attributes-show-both)
+    ("t" . attributes-visibility-toggle)))
+
+; All keys in this keymap *must* be unique
+(define options-keymap
+  '(("t" . options-text-size)
+    ("a" . options-action-feedback)
+    ("g" . options-grid)
+    ("s" . options-snap)
+    ("Shift S" . options-snap-size)
+    ("l" . options-show-log-window)
+    ("c" . options-show-coord-window)))
+
+
+; All keys in the global-keymap *must* be unique
+(define global-keymap
+  '(("Escape" . cancel)
+    ("a" . add-keymap)
+    ("b" . add-box-hotkey)
+    ("c" . edit-copy-hotkey)
+    ("d" . edit-delete)
+    ("e" . edit-keymap)
+    ("f" . file-keymap)
+    ("g" . no-action)
+    ("h" . hierarchy-keymap)
+    ("i" . add-component)
+    ("j" . no-action)
+    ("k" . no-action)
+    ("l" . add-line-hotkey) 
+    ("m" . edit-move-hotkey)
+    ("n" . add-net-hotkey)
+    ("o" . options-keymap)
+    ("p" . page-keymap)
+    ("q" . no-action)
+    ("r" . view-redraw)
+    ("s" . edit-select)
+    ("t" . attributes-keymap)
+    ("u" . no-action)
+    ("v" . view-keymap)
+    ("w" . view-zoom-box-hotkey)
+    ("x" . view-pan-hotkey)
+    ("y" . no-action)
+    ("z" . view-zoom-in)
+    ("period" . repeat-last-command)
+    ("comma" . misc-misc)
+    ("Delete" . edit-delete)
+    ("Shift greater" . page-next)
+    ("Shift less" . page-prev)
+    ("Alt q" . file-quit)
+    ("Shift Z" . view-zoom-out)))
+
+; finally set the keymap point to the newly created datastructure 
+(define current-keymap global-keymap)
+
+;
+; End of keymapping related keywords
+;

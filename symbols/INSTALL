@@ -1,0 +1,18 @@
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+Installation instructions 
+
+Please see the end of this file for platform / vendor specific hints and 
+tips.
+
+-----------------------------------------------------------------------------
+
+% ./configure 
+% make install
+
+
+The is no code in this package (yet) 
+

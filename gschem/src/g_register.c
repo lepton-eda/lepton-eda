@@ -1,0 +1,183 @@
+/* gEDA - GNU Electronic Design Automation
+ * gschem - GNU Schematic Capture
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <config.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> 
+#endif
+
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+#include <libgeda/defines.h>
+#include <libgeda/struct.h>
+#include <libgeda/defines.h>
+#include <libgeda/s_passing.h>
+#include <libgeda/globals.h>
+#include <libgeda/o_types.h>
+#include <libgeda/prototype.h>
+
+#include "../include/prototype.h"
+
+void
+g_register_funcs(void)
+{
+	/* rc file */
+	gh_new_procedure1_0 ("gschem-version", g_rc_gschem_version);
+	gh_new_procedure1_0 ("override-net-color", g_rc_override_net_color);
+	gh_new_procedure1_0 ("override-pin-color", g_rc_override_pin_color);
+	gh_new_procedure1_0 ("attribute-color", g_rc_attribute_color);
+	gh_new_procedure1_0 ("detached-attribute-color", g_rc_detachedattr_color);
+	gh_new_procedure1_0 ("text-color", g_rc_text_color);
+	gh_new_procedure1_0 ("net-color", g_rc_net_color);
+	gh_new_procedure1_0 ("pin-color", g_rc_pin_color);
+	gh_new_procedure1_0 ("graphic-color", g_rc_graphic_color);
+	gh_new_procedure1_0 ("grid-color", g_rc_grid_color);
+	gh_new_procedure1_0 ("background-color", g_rc_background_color);
+	gh_new_procedure1_0 ("select-color", g_rc_select_color);
+	gh_new_procedure1_0 ("boundingbox-color", g_rc_boundingbox_color);
+	gh_new_procedure1_0 ("net-endpoint-color", g_rc_net_endpoint_color);
+	gh_new_procedure1_0 ("net-endpoint-mode", g_rc_net_endpoint_mode);
+	gh_new_procedure1_0 ("net-midpoint-mode", g_rc_net_midpoint_mode);
+	gh_new_procedure1_0 ("net-style", g_rc_net_style);
+	gh_new_procedure1_0 ("pin-style", g_rc_pin_style);
+	gh_new_procedure1_0 ("action-feedback-mode", g_rc_action_feedback_mode);
+	gh_new_procedure1_0 ("scrollbars", g_rc_scrollbars);
+	gh_new_procedure1_0 ("scrollbar-update", g_rc_scrollbar_update);
+	gh_new_procedure1_0 ("object-clipping", g_rc_object_clipping);
+	gh_new_procedure1_0 ("embed-components", g_rc_embed_components);
+	gh_new_procedure1_0 ("logging", g_rc_logging);
+	gh_new_procedure1_0 ("text-size", g_rc_text_size);
+	gh_new_procedure1_0 ("snap-size", g_rc_snap_size);
+
+	gh_new_procedure1_0 ("text-caps-style", g_rc_text_caps_style);
+	gh_new_procedure1_0 ("logging-destination", g_rc_logging_destination);
+	gh_new_procedure1_0 ("default-series-name", g_rc_default_series_name);
+	gh_new_procedure1_0 ("untitled-name", g_rc_untitled_name);
+	gh_new_procedure1_0 ("component-library", g_rc_component_library);
+	gh_new_procedure1_0 ("source-library", g_rc_source_library);
+	gh_new_procedure1_0 ("attribute-name", g_rc_attribute_name);
+	gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
+	gh_new_procedure2_0 ("stroke", g_rc_stroke);
+	gh_new_procedure1_0 ("stroke-color", g_rc_stroke_color);
+	gh_new_procedure1_0 ("font-directory", g_rc_font_directory);
+	gh_new_procedure3_0 ("world-size", g_rc_world_size);
+	gh_new_procedure2_0 ("paper-size", g_rc_paper_size);
+	gh_new_procedure3_0 ("paper-sizes", g_rc_paper_sizes);
+	/* text-output is old... will eventually be removed! */
+	gh_new_procedure1_0 ("text-output", g_rc_output_text); 
+	gh_new_procedure1_0 ("output-text", g_rc_output_text);
+	gh_new_procedure1_0 ("output-type", g_rc_output_type);
+	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
+	gh_new_procedure1_0 ("output-color", g_rc_output_color);
+	gh_new_procedure1_0 ("output-color-background", g_rc_output_color_background);
+	gh_new_procedure1_0 ("log-window", g_rc_log_window);
+	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
+	
+	/* general guile functions */
+	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
+	gh_new_procedure0_0 ("gschem-use-rc-values", g_funcs_use_rc_values);
+	gh_new_procedure0_0 ("gschem-exit", g_funcs_exit);
+
+	/* keymapping callbacks */
+	gh_new_procedure0_0 ("file-new-window", g_key_file_new_window);
+	gh_new_procedure0_0 ("file-new", g_key_file_new);
+	gh_new_procedure0_0 ("file-open", g_key_file_open);
+	gh_new_procedure0_0 ("file-script", g_key_file_script);
+	gh_new_procedure0_0 ("file-save", g_key_file_save);
+	gh_new_procedure0_0 ("file-save-as", g_key_file_save_as);
+	gh_new_procedure0_0 ("file-save-all", g_key_file_save_all);
+	gh_new_procedure0_0 ("file-print", g_key_file_print);
+	gh_new_procedure0_0 ("file-close-window", g_key_file_close_window);
+	gh_new_procedure0_0 ("file-quit", g_key_file_quit);
+	gh_new_procedure0_0 ("edit-select", g_key_edit_select);
+	gh_new_procedure0_0 ("edit-copy", g_key_edit_copy);
+	gh_new_procedure0_0 ("edit-copy-hotkey", g_key_edit_copy_hotkey);
+	gh_new_procedure0_0 ("edit-move", g_key_edit_move);
+	gh_new_procedure0_0 ("edit-move-hotkey", g_key_edit_move_hotkey);
+	gh_new_procedure0_0 ("edit-delete", g_key_edit_delete);
+	gh_new_procedure0_0 ("edit-rotate-90", g_key_edit_rotate_90);
+	gh_new_procedure0_0 ("edit-rotate-90-hotkey", g_key_edit_rotate_90_hotkey);
+	gh_new_procedure0_0 ("edit-mirror", g_key_edit_mirror);
+	gh_new_procedure0_0 ("edit-mirror-hotkey", g_key_edit_mirror_hotkey);
+	gh_new_procedure0_0 ("edit-slot", g_key_edit_slot);
+	gh_new_procedure0_0 ("edit-edit", g_key_edit_edit);
+	gh_new_procedure0_0 ("edit-lock", g_key_edit_lock);
+	gh_new_procedure0_0 ("edit-unlock", g_key_edit_unlock);
+	gh_new_procedure0_0 ("edit-translate", g_key_edit_translate);
+	gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
+	gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);
+	gh_new_procedure0_0 ("view-redraw", g_key_view_redraw);
+	gh_new_procedure0_0 ("view-zoom-full", g_key_view_zoom_full);
+	gh_new_procedure0_0 ("view-zoom-limits", g_key_view_zoom_limits);
+	gh_new_procedure0_0 ("view-zoom-in", g_key_view_zoom_in);
+	gh_new_procedure0_0 ("view-zoom-out", g_key_view_zoom_out);
+	gh_new_procedure0_0 ("view-zoom-box", g_key_view_zoom_box);
+	gh_new_procedure0_0 ("view-zoom-box-hotkey", g_key_view_zoom_box_hotkey);
+	gh_new_procedure0_0 ("view-pan", g_key_view_pan);
+	gh_new_procedure0_0 ("view-pan-hotkey", g_key_view_pan_hotkey);
+	gh_new_procedure0_0 ("view-update-nets", g_key_view_updatenets);
+	gh_new_procedure0_0 ("page-manager", g_key_page_manager);
+	gh_new_procedure0_0 ("page-next", g_key_page_next);
+	gh_new_procedure0_0 ("page-prev", g_key_page_prev);
+	gh_new_procedure0_0 ("page-new", g_key_page_new);
+	gh_new_procedure0_0 ("page-close", g_key_page_close);
+	gh_new_procedure0_0 ("page-discard", g_key_page_discard);
+	gh_new_procedure0_0 ("page-print", g_key_page_print);
+	gh_new_procedure0_0 ("add-component", g_key_add_component);
+	gh_new_procedure0_0 ("add-attribute", g_key_add_attribute);
+	gh_new_procedure0_0 ("add-net", g_key_add_net);
+	gh_new_procedure0_0 ("add-net-hotkey", g_key_add_net_hotkey);
+	gh_new_procedure0_0 ("add-text", g_key_add_text);
+	gh_new_procedure0_0 ("add-line", g_key_add_line);
+	gh_new_procedure0_0 ("add-line-hotkey", g_key_add_line_hotkey);
+	gh_new_procedure0_0 ("add-box", g_key_add_box);
+	gh_new_procedure0_0 ("add-box-hotkey", g_key_add_box_hotkey);
+	gh_new_procedure0_0 ("add-circle", g_key_add_circle);
+	gh_new_procedure0_0 ("add-circle-hotkey", g_key_add_circle_hotkey);
+	gh_new_procedure0_0 ("add-arc", g_key_add_arc);
+	gh_new_procedure0_0 ("add-arc-hotkey", g_key_add_arc_hotkey);
+	gh_new_procedure0_0 ("add-pin", g_key_add_pin);
+	gh_new_procedure0_0 ("add-pin-hotkey", g_key_add_pin_hotkey);
+	gh_new_procedure0_0 ("hierarchy-open-symbol", g_key_hierarchy_open_symbol);
+	gh_new_procedure0_0 ("attributes-attach", g_key_attributes_attach);
+	gh_new_procedure0_0 ("attributes-detach", g_key_attributes_detach);
+	gh_new_procedure0_0 ("attributes-show-name", g_key_attributes_show_name);
+	gh_new_procedure0_0 ("attributes-show-value", g_key_attributes_show_value);
+	gh_new_procedure0_0 ("attributes-show-both", g_key_attributes_show_both);
+	gh_new_procedure0_0 ("attributes-visibility-toggle", g_key_attributes_visibility_toggle);
+	gh_new_procedure0_0 ("options-text-size", g_key_options_text_size);
+	gh_new_procedure0_0 ("options-snap-size", g_key_options_snap_size);
+	gh_new_procedure0_0 ("options-action-feedback", g_key_options_afeedback);
+	gh_new_procedure0_0 ("options-grid", g_key_options_grid);
+	gh_new_procedure0_0 ("options-snap", g_key_options_snap);
+	gh_new_procedure0_0 ("options-show-log-window", g_key_options_show_log_window);
+	gh_new_procedure0_0 ("options-show-coord-window", g_key_options_show_coord_window);
+	gh_new_procedure0_0 ("misc-misc", g_key_misc);
+	gh_new_procedure0_0 ("cancel", g_key_cancel);
+}
+

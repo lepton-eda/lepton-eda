@@ -1,0 +1,542 @@
+TODOs
+----------------------
+
+
+Code cleanups (no particular order):
+----------------------
+	
+	coding standards
+
+	Go through and format the code.  it's really gross right now
+
+	Re name end_angle in o_arc* to be sweep_angle
+
+	Go through and make sure all mallocs with strings are sane
+
+	It's becoming critical to add comments...  (very critical)
+	
+	Created o_net_translate_world (been using line function)
+
+DONE	Replace all struct st_object with a typedef
+
+	Clean up COPY vs ENDCOPY (MOVE as well) in x_event 
+
+	Change current_attribute and related setting funcs to be more
+	generally named
+
+	Go through and add null checks and print statements
+
+	o_connect_midpoint etc... fix/get rid of the offset2 stuff
+	
+FIRST	Figure out gtk_signal_connect and friends: proper last param.
+SHOT DONE
+
+DONE	The p_connect stuff is unused and needs to be removed 
+
+	IMPORTANT go through and fix object_tail and return_tail on all places
+
+	Careful with all lists which have a head, in particular attributes,
+	(they have a head, which has a null "object" pointer), which causes
+	some grief, see note in o_attrib.c about the grief
+
+DONE	Get accurate names for o_list... routines.  like o_list_delete_all
+	which doesn't delete all (it doesn't delete the head)
+
+	Total chaos between selected/object_head and replicated coded
+
+DONE	Inconsistant naming of o_current, object, current etc...
+
+	Go through and clean up switch, case, break tabbing.
+	Related to above, way too many switch/case statements... 
+
+	The object_parent variable and how it is used, is a slight kludge,
+	but I don't know of any other way of getting o_attrib_attach to
+	search the right list, depending on if you are reading a regular
+	component to object_head or a complex which goes to object->complex.
+	It becomes an issue, that you have to search the list.
+
+	move a_zoom a_pan to i_* world 
+
+	perhaps rename a_basic to something else 
+
+	go through and fix left, top, right, bottom to be what they really 
+	mean (0,0 is in the lower left) 
+
+	get some consistancy with *_world world_* etc.. *_world_*
+	(in complex really)
+
+----------------------
+
+
+
+Feature additions (no particular order):
+----------------------
+
+DONE	Add a new dialog box for saving and managing pages.  Use a different
+	mechanism for calling the saveas dialog box. 
+
+	Panning: the working area follows the mouse.
+
+	Seperate translate in the X and Y directions (in addition to the 
+	current coupled X and Y translate)
+
+	Code to have all attributes visible
+
+	Make sure snap spacing is set to 100 when doing symbol translates
+
+	Agg! get rid of all window_current's and global_window_current
+
+	Added rc keyword for pin/net thickness (the value) and for visual
+	cue size
+	
+	Fix the color scheme and make it flexable.
+
+	Figure out if you want the net draw/add action to end when you draw
+	a zero length net (configureable?) 
+
+	Check and see what we are doing with invisible attibutes, if we are
+	rendering them or not (to speed things up)
+
+	Check for incorrect angles on text... warn user
+
+	Add dashed lines etc...
+
+	there was an analog to the 'array' command  where you select
+	a group of stuff and hit array, enter the number of rows and
+	columns, and the relative spacing between them, and the copies
+	the thing nxm times and draws it all for you.
+
+	when first editing a text object, after the popup box appears with
+	the highlited selection, hitting the right arrow key would clear
+	the highlight and keep the cursor at the end of the text. 
+
+	Text as objects: Visual texts to be selected separately. All
+	text geometry stored relative to its "mother object" so that
+	the text moves when the "mother" does.
+
+DONE	Add the ability to specify $HOME in an rc file for a path
+	( do you want to do ~ as well? )
+
+DONE	Do sanity checks on all drawing input
+
+BETTER	Better handling of dot/square size routine drawing based on zoom 
+	factor
+
+DONE	Don't allow zero length objects in general
+
+	Go through and make sure everything has a default (every release)
+
+	Added the ability to rotate embedded components
+
+DONE	When you rotate a component, associated attributes get de-assosciated
+	write code to fix this
+
+	Added LogFilename keyword 
+
+	Search for schematic in memory and don't load it from disk if it is.
+
+	Document all the features of the dialog boxes (returns etc...)
+
+	Alignment of text objects
+
+	Document filename naming restrictions: 
+		- Symbols are named filename.sym
+		- Schematics are named filename_#.sch  where # is sheet number
+		- Sym/Sch names need to be unique.
+		- ONE dot per filename!
+
+	Generalize the way source files are displayed, ie if you get a .gif
+	the program should run a image program, use mime.types and mailcap
+	for this
+
+	Add config option for geometry of the window. (or command line option)
+
+	Change directory option? 
+
+	Open symbol pops up a new window, configurable through rc file
+
+DONE	Move schematic filenames toward the _# convention.  Where the #
+	(is a number) signifies the sheet number it's on.  Will make moving
+	between sheets easier.
+
+	A toggle invisiblity ALL objects
+
+	Configurability of mouse button order (left vs right handed)
+
+	Configurable "hit return and close dialog box" for attributes,
+	components etc... 
+
+	Configurability as to what mode a cancel (with right mouse button)
+	does.
+
+	Better toggle buttons for visibility etc (sub instead: GtkSpinButton)
+
+DONE	Move/Copy actions start right away after hot key press
+
+	Go back and look at 4 nets coming together problem (not showing dot)
+
+DONE	Added text dialog box which behaves like attribute add.
+
+	Breaking of nets when you connect in the middle.
+
+	Automatic saving
+
+DONE	mouse coordinates
+
+DONE	Document the ortho/non ortho ability of nets 
+
+	Two "indicators" in some way (suggest to the right of the pulldowns)
+	that indicates if you're in 'toggle snap' or not, and if you're in
+	'toggle grid' or not. 'Toggle grid' might not be useful because you
+	should see it :-)  Then 'Toggle outline' is another choice?
+
+	Another menu option to rotate one component? Or check if the
+	selection is just one component and via a gschemrc item give the
+	user the possibility to rotate the component around it's origin
+	or a common point? Rotate more selected objects the way it is
+	implemented now.
+
+                                                                 
+NAH	Consider using an aspect frame to control the aspectratio of the 
+	drawing area (enforce aspect ratio then indirectly)
+	
+	Complex within a Complex?
+	Probably not yet at least not yet. (might work mostly now, but not
+	completely)  This is not the same thing as hierarchical design.
+	
+DONE	Attribute dialog box.  which lets you select the standard attributes
+
+DONE	Font system must be replaced by a more flexable system.  Ie arbitrary
+	text sizes allowed and the choosing of the font should be based on
+	zoom_scale.
+
+DONE	Dialog box for printing...
+(first cut)
+	
+	A set of compile or runtime flags to control "fluff" (ie make things
+	go as fast as possible) 
+
+	metric units instead of mils (in addition to mils)
+
+	Not sure I like that selectable vs unselectable flag in complex's
+	Fix with locking layers
+
+DONE	Default behavior of caps vs case sensitive labels/text? 
+	make this configurable 
+
+GONE	fix dialog box to be able to handle NEW discards... see NEW define
+	in x_filesel.c
+
+	Fix o_edit to handle multi edits.  Should be just a code clean:
+		get rid of all direct access to new_sel_head and friends 	
+		pass in structure that is being edited...
+		Move object/structure code out of x_dialog.c 
+
+	Editing of objects:
+		TEXT - color size string
+		LINE/CIRCLE/ARC/BOX color endpoints?
+		NET/COMP ???? 
+
+	PIN/NET thickness configurability
+
+DONE	configuration ability for ortho pins and nets
+	This wasn't done, but you can draw non-orth lines and nets. (non ortho
+	pins might be added later)
+
+	Add code so that when you switch between actionfeedback modes
+	and your inside an action you get instant feedback 
+
+OKAY	Pins need their own conn_recalc routine
+
+DONE	Boxes (box and selection) that go in both directions... left->right 
+	right->left 
+
+	Not a well behaved X program: finish wm hints, icon, X commandline args
+	etc... 
+
+DONE	Add lock down component code and interface hook.
+
+MOSTLY	Object clipping...
+DONE
+
+WORKING	component slotting (ie dealing with the number of slots in a packages)
+
+WORK	Analog support (draw symbols)
+IN
+PROGESS
+
+Second TODO list
+
+0 = every release
+1 = just started
+2 = crude basics working
+3 = mostly working
+4 = a lot fluff added
+5 = done
+
+easy:	
+0	remove all // comments
+	newer net system
+	buses
+	comments in the code
+	Control-C handler
+	checks for all system calls (with perror)	
+	update specs
+	crosshair
+	console
+	color selection (better color handling)
+1	macro/extensiable lang
+1	Make symbol (odd bug with hitting S twice then it works ? )
+1	push/pop into a symbol
+2	cleanup printfs
+2	hierarchical design
+2	object clipping out of active window
+3	logging mechanism
+3	attributes 
+3	sloting (as in pin numbers in multpacks) of components
+3	rotate of primatives
+3	rotate of complex
+3	mirror of primatives
+3	mirror of complex
+3	Standard place for symbols/symbol hierarchy
+4	finer grid (selectable snappage)
+4 	zoom box
+4	boundingbox vs outline
+4	text (vector font)
+4	arcs
+4	page system
+4	pins (still need to check conn funcs)
+4	interface cleanup
+5	multi select box! / window select 
+5	contrained move/copy
+5	fix all return values
+5	Change color of highlight to light grey
+5	prototypes for everything
+5	Change file format to use letters for types instead of #'s
+5	outline copies should be more color realistic
+5	middle button to repeat last command?
+5	attributes with names= etc...	
+5	backingstore and improved expose event handling
+5	multi select 
+5	scrollbars
+5	Contrained lines (with control key like o_drawbounding())
+	
+
+medium:
+	netlists (belongs in gnetlist)
+	layers
+
+harder:
+	transparent zooms and pans
+	stretch/edit of nets
+	multibuffers (make sure all routines don't hardcode new_sel_head)
+	client lib to do above and protocol
+	cut and paste
+	dashed lines (slightly hard, but time consuming to change code value?)
+
+questionable:
+	active attributes
+	HUD
+	have cursor jump around if snap on
+
+MISC
+-------------
+
+-	A solution to the current block problem (offset wrong) is to
+	write out the block as it is in memory to the file.. and then
+	when it is loaded again it will be correct... hmmmmm.. use
+	the left/top coords as the starting x and y then instead of the
+	original pair... 
+
+- 	A better solution would be to translate all the objects to zero zero
+        and then save the object as a symbol.	
+	Of course this is what I did
+
+	Requires a color display
+
+	Doesn't work too well with AutoRaise
+	This has improved, but I still need to work on this.
+
+
+misc FAQ 
+-----------------------------------------------------------------------------
+
+Q:  Copying/Moving objects that aren't on the grid, causes them to snap
+    onto the grid if snap is on.  What's the deal with that? 
+
+A:  This is a "normal" behavior.  It is an artifact of how I do grid/snap 
+    locking.  Don't move/copy objects which are not snapped to the 
+    grid with snap on.  Since this is not a general purpose drawing program,
+    don't work with the snap off.  You should only have to do that if you are
+    adding text in key places or drawing symbols.  I am thinking on how	
+    to improve my snap/grid locking to be more robust. 
+
+
+
+
+REWRITES
+------------------------------------------------------------------------------
+- A possible redo of the boundingbox idea, what if you searched through
+  all individual boundingboxes on all objects (especially complex)
+
+- Coord system needs total rewrite.  Maybe not, but it is lacking in that
+  it is based on ints
+
+
+
+Misc Stuff todo:
+------------------------------------------------------------------------------
+
+midpoint droppings on moves/copies
+
+
+
+Suggested ideas: 
+-----------------------
+
+(this list is not complete, there are still many more people who suggested 
+stuff, and each of the listed people suggested other things.  I just 
+haven't had time to move the ideas from my mailbox to here)
+
+suggestions by:  Andrew Dyer 
+- View logic compatibility
+- web enabled : schematics/symbols/models viewing/distributing on the web etc.
+- in-memory connections database
+- revision control (cvs rcs)
+- infinite undo
+- EDIF (and tango netlists) and other friends 
+- extension lang/ macro lang (tcl, forth ? )
+- EDITOR support for editing big symbols
+- arrow key support
+
+suggestions by: Erik de Castro Lopo
+- SPICE netlist format
+- Scrollbars and a better zoom (center of window)
+- properties dialog box for components
+- Design Rule Checking and dialog box suggestions
+- better window/aspect ratio control (get rid of mostly)
+- more dynamic window size (give user more control)
+
+suggestions by: Emmanuel Rouat
+- connected nets staying with components with distortion. 
+
+suggestions by: Matt Ettus
+- RCS/CVS support (another vote for this)
+- project management program ("glue" between programs)
+- remove concept of filename from gschem ???  (a design librarian)
+
+suggestions by: borges@ifi.uio.no
+- Set a dialog box size on component select.
+- escape key to cancel.
+- libraries with this subsloting idea? .
+- Scrollbar on the middle button (configuration)
+- toolbox with icons.
+- alternate move/copy behavior.  Just select object and drag.  
+
+suggestions by: Harry Eaton
+- spread-sheet window that contains properties of whatever you're 
+  interested in on the schematic (could be a list of elements, names, 
+  spice model names, package types, etc, or a list of nets, and their 
+  properties) 
+
+suggestions by: Kyriacos Iacovou
+- draw/outline commands with the mouse to select the various modes   
+
+suggestions by: Stefan Petersen
+- As few keystrokes/mouse clicks as possible -> stay in mode until users 
+  selects a new mode 
+- alternate move/copy behavior:  Just click and drag. 
+
+suggestions by: Jeff McNeal
+- Another vote for nets update when you move a component
+- Strokes.  A la CADENCE or Mentor.
+- Go to FreeHDL intermediate format instead of VHDL? 
+
+suggestions by: Michael Linnemann <Linnemann@berg.net>
+- A manual keyboard search entry for entering symbols.
+- better symbol lookup searching catagorizing mechanism
+
+
+Future Specifications for gschem 
+-----------------------
+
+Basic Stuff
+-------------
+text
+	add
+	edit
+nets
+	be one complete net (not done yet)
+	add to existing net
+	break net
+	(filled|empty) squares/cross at the end of nets
+	(filled|empty) circles at midnet connection points
+boxes
+circles
+ellipses?
+lines
+pins
+busses
+arcs 
+complex
+	add
+	push
+	pop
+	create symbols
+attributes
+	attach
+	detach
+	edit
+	execute special action 
+	value=name
+Layers
+
+Operations (for all objects)
+----------
+copy
+move
+delete
+cut and paste
+Constrained/Free move (SHIFT/CTRL keys)
+outline/move
+multiselect/deselect (SHIFT/CTRL keys)
+select box
+rotate? 
+
+
+View
+----
+Zoom in/out
+Zoom Full
+Pan
+Redraw
+
+Other stuff
+----------
+Page system (neads to be done early)
+page size selection
+Zoom box (?)
+Printing to postscript
+all units in mils
+
+File
+----
+	open
+	close
+	save
+	save as
+	rcfile handling		
+		color selection
+		mode selection
+		library path selection
+
+
+interface
+---------
+	Flexable interface	
+	should be easy to use	
+	console
+	scripting language
+	
+
+

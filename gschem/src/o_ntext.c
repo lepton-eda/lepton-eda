@@ -1,0 +1,269 @@
+/* gEDA - GNU Electronic Design Automation
+ * gschem - GNU Schematic Capture
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <config.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+
+#include <libgeda/struct.h>
+#include <libgeda/defines.h>
+#include <libgeda/globals.h>
+#include <libgeda/s_passing.h>
+#include <libgeda/o_types.h>
+#include <libgeda/colors.h>
+#include <libgeda/prototype.h>
+
+#include "../include/prototype.h"
+
+#define WINONLY	1
+#define BACKING 2
+
+/* font storage and friends are staying global so that all can access */
+#define NUM_CHARS 255
+
+void
+o_ntext_draw(TOPLEVEL *w_current, OBJECT *o_current)
+{
+	
+	if (o_current->visibility == INVISIBLE) {
+		return;
+	}
+
+	o_complex_draw(w_current, o_current);
+}
+
+void
+o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
+{
+	if (o_current->visibility == INVISIBLE) {
+		return;
+	}
+
+	o_complex_draw_xor(w_current, dx, dy, o_current->complex);
+}
+
+void
+o_ntext_input(TOPLEVEL *w_current)
+{
+
+	text_input_dialog(w_current);	
+
+}
+
+void
+o_ntext_start(TOPLEVEL *w_current, int screen_x, int screen_y)
+{
+	int x, y;
+	char *value;
+
+	w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
+	w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
+
+	w_current->last_drawb_mode = -1;
+
+	/* make sure list is null first, so that you don't have a mem leak */
+        SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x, &y);
+
+	/* remove the old attrib list if it exists */
+	/* without killing the head structure */
+        o_list_delete_rest(w_current, w_current->page_current->attrib_place_head);
+
+	value = w_current->current_attribute;
+
+	switch(w_current->text_caps) {
+		case(LOWER):
+			string_tolower(value, value);
+		break;
+
+		case(UPPER):
+			string_toupper(value, value);
+		break;
+
+		case(BOTH):
+		default:
+			/* do nothing */
+		break;
+	}           
+
+	/* here you need to add OBJ_NTEXT when it's done */ 
+	w_current->page_current->attrib_place_tail = (OBJECT *) o_ntext_add(w_current, 
+				w_current->page_current->attrib_place_head, 
+				/* type changed from TEXT to NTEXT */
+				OBJ_NTEXT, w_current->text_color, 
+				x, y, 0, /* zero is angle */
+				w_current->current_attribute, 
+				w_current->text_size,	
+			/* has to be visible so you can place it */
+			/* visibility is set when you create the object */
+				VISIBLE, SHOW_NAME_VALUE);
+
+	o_drawbounding(w_current, w_current->page_current->attrib_place_head->next, 
+				x_get_color(w_current->bb_color));
+}
+
+void
+o_ntext_end(TOPLEVEL *w_current)
+{
+	int world_x, world_y; /* get consistant names hack */
+
+        SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, 
+			&world_x, &world_y);
+
+        world_x = snap_grid(w_current, world_x);
+        world_y = snap_grid(w_current, world_y);
+
+	/* here you need to add OBJ_NTEXT when it's done */ 
+        /* make this VIS and SHOW default configurable hack */
+        w_current->page_current->object_tail = 
+			o_ntext_add(w_current, w_current->page_current->object_tail, 
+				/* type changed from TEXT to NTEXT */
+			 	OBJ_NTEXT, 
+				w_current->text_color,
+                		world_x, world_y, 0, /* zero is angle */
+                		w_current->current_attribute, 
+				w_current->text_size, 
+				VISIBLE, SHOW_NAME_VALUE); 
+
+	/* if the text is invisible then you need to erase the outline 
+	   left by the place */
+	if (w_current->current_visible == INVISIBLE) {
+		 o_drawbounding(w_current, w_current->page_current->attrib_place_head->next, 
+				x_get_color(w_current->bb_color));
+	}
+	/* you need to erase the bounding box if have that mode set!!! hack */
+	
+	/* erase the old bounding box / outline */
+	if (w_current->actionfeedback_mode == OUTLINE) {
+		o_drawbounding(w_current, 
+		       w_current->page_current->attrib_place_head->next, 
+		       x_get_color(w_current->text_color));
+	} else {
+		o_drawbounding(w_current, 
+		       w_current->page_current->attrib_place_head->next, 
+		       x_get_color(w_current->select_color));
+	}
+
+        w_current->override_color = -1;
+	
+        w_current->page_current->CHANGED=1;     
+
+	/* clear previous selection list if any */
+	o_unselect_all(w_current);
+
+	/* add item to the selection or it'll be selected by itself */
+	/* you probably should create some new functions for this... hack */
+	w_current->page_current->selection_tail = (OBJECT *) o_list_copy_to(
+		 	w_current, 
+		 	w_current->page_current->selection_head, 
+			w_current->page_current->object_tail, 
+			SELECTION); 
+	
+	w_current->page_current->selection_tail = return_tail(
+			w_current->page_current->selection_head);
+
+	/* now redraw this new item as being selected */
+	w_current->override_color = w_current->select_color;
+
+	/* object_tail is the object that was just added */
+	if (w_current->page_current->object_tail->draw_func != NULL &&
+		 w_current->page_current->object_tail->type != OBJ_HEAD) {
+        	(*w_current->page_current->object_tail->draw_func)(w_current, w_current->page_current->object_tail);
+        }  
+
+	w_current->override_color = -1;
+}
+
+void
+o_ntext_rubberattrib(TOPLEVEL *w_current)
+{
+	o_drawbounding(w_current, w_current->page_current->attrib_place_head->next, 
+		x_get_color(w_current->bb_color));
+}
+
+
+void
+o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current) 
+{
+	/* you need to check to make sure only one object is selected */
+	/* no actually this is okay... not here  in o_edit */
+	text_edit_dialog(w_current, o_current->text_string, o_current->text_size);	
+}
+
+void
+o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size) 
+{
+	OBJECT *real;
+	OBJECT *temp;
+
+	/* first change selected */
+	if (w_current->page_current->selection_head->next) {
+
+		o_erase_selected(w_current); 
+		if (w_current->page_current->selection_head->next->text_string) {
+			free(w_current->page_current->selection_head->next->text_string);	
+		}
+
+		w_current->page_current->selection_head->next->text_string = malloc(sizeof(char)*len+1);
+		strcpy(w_current->page_current->selection_head->next->text_string, string); 
+
+		temp = w_current->page_current->selection_head->next;
+
+		temp->text_size = text_size;
+		o_ntext_recreate(w_current, temp);
+
+
+		o_redraw_selected(w_current);
+	}
+
+	/* second change real object */
+	real = (OBJECT *) o_list_search(w_current->page_current->object_head, w_current->page_current->selection_head->next);
+
+	if (real != NULL) {
+		if (real->text_string) {
+			free(real->text_string);
+		}
+
+		real->text_string = malloc(sizeof(char)*len+1);
+		strcpy(real->text_string, string);
+
+		temp = real;
+		real->text_size = text_size;
+		o_ntext_recreate(w_current, temp);
+
+		w_current->page_current->CHANGED=1;
+	} else {
+
+		fprintf(stderr, "uggg! you tried to text edit something that doesn't exist!\n");
+		exit(-1);
+	}
+
+}
+

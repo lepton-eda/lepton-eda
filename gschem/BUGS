@@ -1,0 +1,727 @@
+
+Bugs (no particular order): 
+----------------------
+
+	Prioritize this list!
+
+	Missing GDK_CONFIGURE from event types wanted list?
+
+	If a symbol isn't found, it's removed from the schematic.... 
+	Is this the behavior we want?
+
+	Mirror still has some bugs in it when dealing with the new conn
+	system (mirror will create extra midpoint connections which are
+	temporary only)
+
+	If you put bogus numbers (ie not 0 or 1) in for the visibility and/or
+	show_name_value field, you get *totally bogus results!
+
+	Multiple instances of gschem clobber each other's log file, solve
+	this how?
+
+	Document how tswindow is being used in the include file.
+	(it's also used by snap size), have snapsize get it's own window
+
+	does it cause problems that the translate dialog box doesn't
+	grab the focus for the app?
+
+	there's a bug in arc visiblity clipping, just zoom around close
+	in using DB*-1.sym (the corners)
+
+FIXED	Unexplained core dump when opening another window (when compiled
+	with -lccmalloc -ldl) related to:
+	Odd behavior when quiting multiple windows and then opening another
+	schematic in existing windows (can't find a font?) 
+	Was caused by freeing common rc variables (ie each window didn't have
+	a proper copy of the string)
+
+	THERE IS A SIGNIFICANT slowdown in this version (19981013 before
+	another release) delete really (with o_conn_disconnect_all with
+	big schematics)
+
+	Mirror something and then change slots... selection is wrong
+
+	Move a single net.  You will see a stray visual cue at 0,0
+
+	Setting slot=something other than 1 in a symbol doesn't work (ie
+	slot isn't updated when you place the component).
+
+	Copy something with slot != 1 and it doesn't draw right when it's
+	placed
+
+	Start a component place and then change to a different page.  You
+	get a whole bunch of cmt2 NO! warnings 
+
+GONE?	Core dump on 64 bit architectures? 
+	1) open stack_1.sch from the examples dir
+	2) box zoom somewhere in the schematic
+	3) drag the vertical scroll bar up to the top of its range
+
+KLUDGED	Really odd behavior with display :'s... type some :'s and then
+???????	add a component or net or pin and they disappear? huh?
+	(FIXED by adding gdk_draw_point in o_line, not a good solution 
+	 though) Also don't draw lines with zero length in general
+
+	Observed some really odd characters being written to the log files
+	(between Read local gschemrc and Saved ...
+
+	Rotate object... slot is wrong
+
+	View Limits is broken for a single horizontal line (at least you 
+	can't see the line because it's below the drawing area)
+
+FIXED	Zoomin far enough and lines/nets start acting really weird!!!!!!!
+	(by properly clipping the line)
+
+FIXED	pins colors are being written out as -1
+
+	When placing an invisible attribute, you get the left over image
+	that needs to be erased.
+
+	I'm not eraseing or dealing with the slot= attribute if you change
+	the symbol and the attribute is visible.  It won't get properly 
+	drawn.  (need to do a redraw to see the visible results)
+
+FIXED	Gschem core dumps when I hit the special Windows key...  ha, it 
+	doesn't like microsoft keys?  :)
+
+	In o_select and o_select_many, when you try to update the tail to
+	be proper, select_many doesn't work.  I wonder what else is effected
+	Might have fixed some of this, but it's still highly suspect.
+	
+        Got a "Ahh you blew it.. tried to delete something which does
+	exist" error.  need to watch for that and replicated it
+
+	Got an unexplained core dump, dealing with trying to disconnect a 
+	bogus net (already freed?).  I haven't been able to replicate this 
+	at all.  
+
+	Figure out and fix why text when selected and deselected (and placed)
+	is sometimes offset (visually).  You have to do a redraw to get one
+	image (non-offset)
+
+	When doing "open symbols...", the newly loaded symbols are not 
+	zoomed limits
+
+	Bug in arcs and large large world-size... Don't draw right.
+
+FIXED	Attaching an attribute doesn't set CHANGED flag
+
+	Minor bug dealing with zooming out of corners (the zoom factors going
+	out are different then going in)
+
+	Right now you can attached a text item as an attribute in two places.
+	Disallow that
+
+	Right now you can attach non text items as attributes.
+	Disallow that.
+
+BETTER	MAJOR PROBLEM!!!!!!!!!!!!!!!!!!!!! gschem is broken with this broken
+	Got a major annoyance... order in copying objects to get attributes
+	to attach is a problem.  How do I fix that?  by copying text last
+
+FIXED	If you try to unembed a symbol and it cannot be found in any search
+	path then things get slightly screwed up.  See a_basic.c o_unembed
+
+GONE?	Saw some odd selection behavior, ie selecting something when you were
+	not inside it's bounding box.  I think this was caused by not having
+	snap on.
+
+	Selection boxes and hitting the control key does not behave as it
+	should (ie selection box toggles existing objects)
+
+	Found some wierdness with the symbol translate (due to snap being off)
+
+OKAY?	Unexplained core dump with related to object_lastplace being bogus.
+	cannot replicate this. (haven't seen this at all again)
+
+	Found another core dump bug, if you send a DELETE event to the
+	window (from the wm) then on exit gschem will core.  This is okay, 
+	since I don't deal with the DELETE event yet...
+
+	Regular objects which are locked and then saved to a file will not
+	be locked anymore... locking only seems to work on components.
+
+	I'm not sure if tty vs both vs window_log stuff is working? low 
+	priority though 
+
+	Select an clib from the comp list and scroll down the component pane
+	and then select another clib, other pane not starting from top
+
+BETTER	Get consistant behavior for SHIFT/CONTROL in the various modes
+
+OKAY?	Another segfault.  This one totally unexplained.  Was seeing some
+	odd behavor with the hotkeys (hotkeys not doing what they should).
+	Core dump happened the moment I press the right mouse button (the
+	popup menu) which makes me suspect a gtk problem.   This might be
+	related to the odd accelerator problem I was seeing (now accelerators
+	are removed from the right mouse button popup)
+	Unfortunately core not generated since gtk wasn't compiled to 
+	generate code dump files.  Need to recompile gtk to do so.
+
+	A segfault will occur if you attach NON text items to other items
+	and then delete the whole bunch and then try to select something.
+	The cause is unknown but a possible fix is known.  You should not be 
+	allowed to attach NON text items as attributes.  (it segfault 
+	doesn't always happen, can't replicate it, but it's there somewhere)
+
+OKAY	Apparently, an undocumented feature (or maybe it is documented), but
+	if you press a key while you select a item off of a menu (popup or
+	pulldown) then you can change the hot key?  Hmmm... that's pretty
+	interesting.
+
+	Some sort of resize error when you open a file and the maximize 
+
+	You still get xor droppings during a place and expose event happens
+
+	You still get window droppings due to interactions with:
+		- status updating (causing expose events which are being
+	 	  ignored 
+		- middle button shortcut updates (same reason as above)
+	
+
+	What happens if you attach an attribute to two places... nothing, 
+	but you should disallow that.
+	
+FIXED	AGGGG... stuff showing up in basename_list in the wrong order :(
+
+OKAY	Order in the basename_list is not based on alphabetics (it's based
+NOW	on the creation date/inode of the file) (make the order alphabetic)
+
+	Still have dangling cue blip in lower corner... 
+	now seeing it on copys/moves, related to selected drawing conns.
+
+	CHANGED flag -- make sure it's set in all places.
+
+BETTER	Do some sanity on input files 
+	(check for zero's...)
+
+	Need to fix +4 stuff in get_line_bounding etc... :
+		- get consistant name
+		- and perhaps make +4 zoom_factor aware
+
+	You can't put ='s in text strings (unless it's the seperator for
+	name=value in attributes) (is this a bug or just a restriction?)
+	(either way, document it).
+
+MOSTLY	Go through and be sure you use the #DEFINES created by configure
+DONE
+
+	If a move/copy/compdraw is under an exposed area and an expose
+	event happens then you get xor droppings
+
+	There is still a bug.. draw a net and then another one which 
+	would cause a midpoint connection... only after you do a redraw do you
+        get the change many ways to fix this... but all required either 1) 
+	a redraw after every major action, or 2) or a smarter "recalc" routine 
+
+	limits on complex_filename, drawing_filename, text_string etc...
+	REMOVE them (the limits that is)
+	Size of drawing_filename and friends need to be dynamic....
+DONE		drawing_filename
+		text_string
+		complex_filename
+		basename
+		clib		
+	
+	Check the issues related to visibility and if you can select it
+	and if it's an attribute
+
+DONE	Can't print )'s and spacing between chars on paper is much larger
+	than on the screen (due to postscript using )'s : filter input)
+
+	Pressing key during place causes droppings? 
+	Hitting keys and during an action (x_events.c)
+
+FIXED	Droppings with thick pins and move/copies/deletes? 
+
+	Select something, then hit 'n' instead of 'm' and you get left
+	overs from the net command  (same thing as mentioned above. inside
+	action and hitting a key leaves ghosts)
+
+	place two complex.
+	- Connect net inbetween.
+	- Connect another net to that new net
+	Move all... see what happens?  ( be sure components are at the end
+	of each of the nets )  It's caused by order dependant searching 
+	and if the old and new overlap you will get a round connection
+
+	Multiconnection midpoints, should draw a circle, but doesn't for now.
+	Put warnings in documentation (ie when you draw many nets to a single
+	point you should get a circle... instead you get nothing... 
+
+	Things get really slow with huge object copies... 
+	Perhaps we don't want to be doing the o_conn_recalc_all on actions. 
+
+	Major bug with add component with outline/bounding, if you zoom
+	inbetween an add you get this HUGE monstrocity!
+	(transparent zooms not implemented yet)
+
+DONE	Cleanup grid/snapping so that it's more flexable so that you could
+	have half grid snaps... (MAJOR ANNOYANCE)
+
+GONE!	Related bug to above, drawing lines, first point must lock and then
+        the second can be free. doesn't work vice versa! (related to above)
+
+MUCH	Arcs are a hack by default
+BETTER	This has gotten better (a lot better).
+
+OKAY	A small bug dealing with arcs and the symbol command.  The x,y location
+	will get negative values (which may be okay actually)
+
+FIXED?	Unexplained grid locking when you draw an arc?  must have something 
+	to do with the way width+x-x and height+y-y rounds off?
+	
+	Huge bounding box on arcs... uggg
+	For now, arcs have been removed from the boundingbox calc.
+	So if you just move an arc, you can't see the bounding box.
+
+	Odd bug related to doing a objtosym (sym cmd), in that you don't get
+	an exact move to zero unless you zoom one (or more?) 
+
+FIXED	Roundoff errors creaping into move/copy commands 
+	( some objects would be offset too much or too little relative 
+	to the other ones ) Fixed mostly, but still need to re-examine 
+	screen to world mapping functions.  This still needs to be dealt 
+	with properly. I think this is fixed now.  Did move in world coords
+	instead of screen coords
+
+XBUG?	Saw some serious root-window corruption and drawing_area corruption
+	because 1) of an X server bug in XF86S3V or 2) I'm not clipping lines
+	(line clipping should be done by gschem)
+
+
+Finished stuff:
+
+GONE!	The difference between a save (saveas) and open window is not 
+	enough.  This has cause me to nuke a schematic more than once 
+	already! (this was fixed by removing this behavior)
+
+FIXED	Opening up a second window (or more) causes the rc file to be read 
+	again and that adds the new paths to the current ones.. ugg!  change
+	that! 
+
+DONE	There is still some sort of odd behavior with the page manager losing
+	its mind.   Not good.  not sure if it's a gtk problem or mine.
+	Problem has been identified as bogus parameters to gtk_clist_moveto.
+
+DONE	Need to check if file exists (or check the fp) when you open files.
+
+FIXED	The dialog boxes (in x_dialog) don't look all the same
+
+FIXED	Zoom in a bit, and try selecting something... and then something
+	else (many times) and you will see a bug (objects not being selected
+	when they should be). (only when zoomed in...)  This is caused by 
+	the event state machine going into sbox mode when it should not!  
+	Fix this by converting the threshold into something that is dependent
+	on the current zoom factor
+
+FIXED	There is a condition that cause gschem to exit (unwanted), Edit some
+	text and then unselect the text that is being edited.  This bug
+	surfaced when we removed the dialog box grabs.  Other dialog box
+	might be affected as well... (fixed by adding grab back to some
+	dialog boxes)
+
+FIXED	Suddenly some sort of an event happened and drawing window area 
+	was totally wrong (too small) (caused by status label being too long)
+	( Don't have too long status labels ) 
+
+GONE	For every drawing_filename and strcpy (sprintf) you need to check 
+	the size (now you need to worry about page_filename)
+
+GONE	Once got a "(null)"... how? Haven't seen it again when I was drawing
+	text.  String was set to null.  Should be fixed, but don't know.
+
+GONE	Be sure to go back and fix the huge bounding boxes on (16,32pt) text
+
+FIXED	The selection name in saveas file selectors (and/or others)
+	is being nuked. (problem with gtk?)
+
+OKAY	Set a default value for show_name_value
+
+FIXED	Small erases happen once in a while when connecting three nets to
+	the same point
+
+FIXED	Also, you cannot print any filename (the path is the problem) that
+	has a . in it.  Fixed by replacing the .sch with .ps or just adding
+	it
+
+FIXED	Still a minor textsize vs pan vs zoom bug.  zoom in all the way,
+	the pan to the edge repeatedly then zoom out... text size doesn't
+	look right  (fix by getting flexable font system see below )
+
+FIXED	Drawing a box incorrectly (ie right then left) cause invalid boxes 
+	to be drawn and puts invalid boxes into the database. 
+
+FIXED	Printing arcs is broken!
+
+FIXED	Uggg... open multiple windows... add ntext and then close them...
+	core dumpy (caused by stupid programmer, freeing memory which was
+	already freed accidentally)
+
+GONE	Some xor droppings being left behind when moving text?  X server bug?
+	This was seen only on my old box and nowhere else
+
+DONE	Change MOVE so it's sequence is: 1) press m, 2) click to start, 
+	3) press to place. 
+
+FIXED	Odd coredump see CORE.LOG, have to see if the happens again with
+	coredumping on. (wasn't reseting left,right,top,bottom for heads)
+
+FIXED	Hitting delete and saveas window. and then hitting cancel.
+
+FIXED	Misc pixels at the bottom of drawing area, cause by doing an open
+	and then win_height gets set to 719 (supposed to be 720).   The 
+	right height will be set if a configure event happens....
+
+FIXED	Don't get a configure event if you hit key while the window is 
+	coming up.
+
+DONE	Inconcistancy with click and move and click-hold-draw of nets and 
+	others.
+
+GONE	Semaphore the interface shared memory 
+	
+FIXED	Place something when something is selected! BUG, original selection
+	doesn't get unselected
+
+
+FIXED	Cause of MAJOR instablity on SGI and others:
+	Change type of type and p_type to be int or do something about the -1
+	Type is now an int	
+
+GONE	Try quitting program before gschem_intr starts.. you get:
+	_X11TransSocketUNIXConnect: Can't connect: errno = 4    	
+
+
+GONE	Still occasionally see a screwup on the update of an interface 
+
+
+DONE	You need to put a linewidth fix in o_pin so that when you draw a pin
+	it gets finish (redraw) with the right width (don't need this in o_net
+	because of the o_conn_recalc stuff)
+
+FIXED	Still have some doubts over which object should be unredraw
+	( the selection or the actual object )  (right now it's the 
+	actual object)
+
+FIXED	Placing a component on another object causes the old comp to 
+	be selected.  This is due to the way we handle the select mode
+	( on the release ).  There should be another mode which is null
+	which causes a switch to SELECT after the release.
+
+FIXED	Still have some draws when you are doing mass deletes.... coredumps
+	See o_conn_disconnect_all in s_basic (s_delete)
+
+OKAY	Visibility of text works, but don't hit toggle vis during an action 
+
+OKAY	Fixed a small bug in o_select, verify it all still works
+	
+FIXED	Round connection droppings.  Demonstrate: when you have many nets
+	some with round connetions.  Delete them all.  Now, when you do this
+	some of the nets where the round connections were are deleted (and
+	the associated link in the other round connected net).  So when you
+	erase the round net, you get droppings, because the net doesn't know
+	that it had round connections.  Solution: put in some code in draw:
+	which:
+		1) if override color == background
+		2) connection_1 or connection_2 are not zero
+		3) erase the corresponding one 
+		THE FIX is in o_net.c in the draw... just as above
+		This fix might cause side effects if we start copy/moving
+		the connection points 
+
+
+FIXED	Another round connection problem, draw a net.  Then draw a net	
+	which would cause a round connection point to occur.   You will
+	see that second net is on top of first connection point.  How
+	do you solve this?  (by having a redraw all connection points after
+	doing a redraw)
+
+GONE	Still occasionally see interface die or lock up... ???? 	
+
+FIXED	when you draw some text and then you resize the window, the text
+	isn't the same length as it was. (Fixed by drawing each char 
+	individually and varring this space depending on size of window)
+	Height is still off though, and the lenght is still not *exactly* 
+	accurate, but this might be good enough (for now).
+
+
+OKAY?	Minor bug, but resize events occure twice... put in flag so that
+	it occures only once.
+
+FIXED	Major pin/connection bug.  Draw symbol. connect to another symbol 
+I THINK	(through just a pin) delete one of them.. then copy/move other.
+?	core dumpy... :(
+
+OKAY	Odd bug, when you select a complex, the selected image doesn't
+I THINK	always lineup.  Has something to do with non snap objects and
+?	o_*_copy and o_*_translate (has to do with inaccuracies in the 
+	display at zoom_factor 0)
+
+FIXED	Fix makefile so that it handles dependencies correctly
+
+FIXED	Deal with pins touching pins...
+	
+FIXED	Deal with connections to the middle of an net
+
+OKAY? 	If you select a net, and then connect something to that selected net,
+	it becomes unselected. (is this okay?)
+
+OKAY	Connection points are NOT selected, minor asthetic bug, code gets
+	messy if you try to select them, because un selection becomes hell 
+
+OKAY	Still have some minor net conns (the line) not being redrawn if 
+	you connect to the middle of a net.  Have to go through code and
+	really figure out what is happening where?
+	What's happening is:  how can the program know that you just drew
+	a line with a possible midpoint connection?  Well solution for now
+	is the o_recalc_conn key
+
+DONE	Move origin to lower left instead of upper left
+
+DONE	Make aspect ratio of both window and coord system 4/3
+
+
+DONE	Still have some net connections not being update.  Need a button
+	for update nets  
+
+KLUDGED	Deleting object in particular a net, doesn't redraw connection points
+I THINK I CAN CLEANLY FIX THIS, BUT it's going to take a new s_delete????
+
+OKAY	Drawing a net, doesn't show the first connection point until you select
+	the second.  Is this the behavior we want?  Yes, because you don't know
+	what kind of connection you'll get
+	
+FIXED:	selecting object, and then zoom, doesn't redraw selected object
+
+FIXED:	zooming too much core dump
+
+FIXED:	possible, odd way net draw works with button down or up
+	NOW, nets are drawn when the n key is hit.
+
+FIXED:	When you move a complex, you get a total redraw! don't do that 
+	
+FIXED:	Related to above, doing delete of a complex does a redraw! no!
+	
+FIXED:	Pan doesn't always give perfectly square aspects
+MOSTLY:	Well there is still an aspect bug going to the far right/top bottom
+	corner (still a bug with text size though)
+
+GONE	Nasty constants in a_pan.c
+
+FIXED	pan bug with interface.  Select pan on the interface window, and then
+	pick a point which will center an object.  That object will be 
+	selected. 
+	(Fixed by removing the SELECT case in button_release, not needed 
+	 and was causing this bug)
+
+DONE	Change the add component so that you can either drag outline or 
+	boundingbox, should be straightforward, just change o_drawbounding
+	to be more general
+
+GONE?	There is still a select, copy with bounding box on (you get xor 
+	leftovers)
+	
+FIXED	Fixit so that aspect ratio of display/window doesn't matter??
+	Is this even possible?  (It is possible, and it does matter!)
+
+DONE!	Add hotkey for insert component (i perhaps? yes)
+
+DONE!	Text dynamic storage, but it is still limited to 80 chars 
+
+DONE!	Text size selection (was solved through intr)
+
+DONE!	Change arcs, so that degrees are stored, instead of deg*64 
+
+	
+DONE!	lack of coupling between zoom_factor and left,top,right,bottom
+MOSTLY  (still need some work with font sizes and zoom_factor coupling )
+
+NOT	Zoom different amounts depending on the inital values for right, left 
+DONE	etc.. (Irrelavent)
+
+FIXED	Contrained move/copy works for the most part, but try hitting the key
+AND     and then going in and out of it... leaves ghosting...
+DONE	The solution to this is to 1) disallow mode changing in the middle of
+	an action or 2) erase old ghost depending on if you are entering
+	contrained or exiting it. (you'll need a flag which is set depending
+	on if your in it or not)
+	This problem isn't with constrained but with copy/move and actions
+	(Hitting any key will cause ghosting)  I think? (key inside action...)
+
+DONE!	Go through o_basic and move o_save(read)_attrib to o_attrib.c
+
+DONE	Streamline all the X globals and stuff in setup
+
+NOTED	Some sort of bug with text/zooming in all the way and outline moving
+	Only with biggest font (only on my home machine, new linuxes works 
+	fine)
+
+GONE	If you are typing text and before you hit enter you change sizes,
+	the current text should reflect this text size
+
+FIXED	Fonts and aspect ratio are not related, so they don't always look
+MOSTLY  the same. 
+
+GONE?	Look for not eraseing bounding box with boundingbox draw outline mode
+
+GONE!	Related to above try switching between outline and bounding while
+	inside a move/copy, outline stuff is left behind!
+
+OKAY	You need to redraw an object if you move/translate/ copy it, so 
+I THINK	that the bounding box is update... do we want to change 	
+	that?  (the way to fix this is recalc bounding in the translate 
+	functions)
+
+OKAY	Minor mystery why attributes inside complex don't change colors
+	(which is good), oh because they are read from disk!  I think!? 
+	YES!
+
+FIXED	Odd behavour of buttons (move/copy), wasn't written for multiselect
+
+FIXED	BUG! Select something, and then draw a multiselect box (don't select 
+	anything in this box) and you will see that first object won't
+	be unselected
+
+FIXED	Coredump when you do an attach with nothing selected? 
+
+GONE	There is a small redraw bug in net/copy/cancel which is hard
+	to reproduce, but basically object_selected wasn't being redrawn
+
+OKAY	Another redraw bug related to hitting escape, if you have a redraw
+	in that section then you get two redraws when you inside an action
+	Be sure all cancel action buttons look like the right button one,
+	because I think that's the most current one
+
+DONE!	Having a too large text size causes a core dump, fix this by
+	putting in a check during read/write and force value
+
+DONE!	Corefile is still generated if you have lots of objects, connected it
+	an odd fashion and then you do a delete.  basically in the conn
+	disconnect you get a dangling pointer.  Solution is to go through and
+	disconnect every object which points to the current object!
+	Verify this!
+
+DONE!	Go through and make all colors configurable 
+
+DONE!	Quirky multiple select cycle (okay I think)
+
+DONE!	Not too happy with the feedback when you are placing a component
+	Two lines are okay, but bounding box would be much much better!
+	The way to do this is to create a dummy object (read in file)
+	and use this as the object when you draw the bounding box 
+	(of course this is exactly what was done)
+
+
+MOSTLY	Am I freeing everything when I leave?  memory leak? 
+FIXED	There is still a small small leak somewhere (yup)
+
+NOTDONE	go back and add gdk_flush wherever there was a XFlush 
+	Don't do this.. gdk_flush is not needed (and should be used).
+
+
+
+DONE	When you copy/move something create a new list and copy those items
+	into this list, so that you have something selected at the end.
+
+OKAY	Attributes are going outside of a complex.
+	Fine, but you need to do something about loads/saves so that some
+	values which are inside a complex get put outside etc...	
+
+DONE!	Deleting all objects and then adding needs to call setup_struct(). 
+
+FIXED	Due to the new new_sel_head stuff, some buttons from interface are 
+	broken, see hack in x_events.c (next_state stuff) 
+
+FIXED	I think there is a bug related to this "it happened in deletes" NO
+	Definately a data corruption bug
+		- Select complex
+        	- copy complex
+		- delete original
+		- create copy of copy
+		- unselect 
+		- redraw (copy is gone)
+	Something with select and delete complex? 
+	broken behavior in s_delete, commented out "out for now"
+
+FIXED	Possible bug in complex_draw and o_redraw 	
+	Just copy and delete copy and delete
+
+DONE!	Revamp structure by doing doubly linked list
+	
+OKAY	Not really a bug, but erasing the bounding box with an arc (since
+	it is soo large) effects other parts of the drawing 
+	( Fix this by making bounding box on arc smaller.
+
+OKAY	Do we want to save complexs in a file or just the filename (like it
+	is now) Yeah we want to keep it this way, gets way to complex
+
+OKAY	Attributes, do we want a special structure or a regular one
+		- Advantages of specialized, less data, simpler data struct
+		- Disadvantages of specialized, whole new routines, code waste	
+	( Attributes are text which special links on objects which link them )
+
+DONE:	Remove the font_inflation stuff
+
+DONE:	Farthest left most point must be at the far left possible coord
+	Solved with o_complex_to_symbol() 
+
+GONE?	When you do a delete (using keys), delete seems to want to erase
+	an nonexistant bounding box (the cyan dashed thing).
+
+DONE!	Fix names in i_keypressed.c
+
+FIXED	using quit button isn't very clean for schem. stupid pause
+
+FIXED	Maybe if you hit a action key (move/copy) and nothing is selected it
+	can behave as if you were to hit the button... hmmmm
+
+GONE	Work on detaching interface more... currently the program assumes
+	that the interface is there...
+	(this is getting there with the SIGCHLD handling )
+
+-interface issues- ALL OF THESE ARE GONE with the intergration of the two
+
+RESOLVED 
+	If something is selected when you hit copy, schem will unselect it?
+	Basically there are two modes: if an object is selected, then the
+	next button press starts the action, else if not then first you go
+	into select mode and then the action starts. 
+
+GONE	Add the ability to replace the file selection window when you hit
+	the place command again (if the file selection window as already there)
+
+OKAY	Ah, hitting okay when you don't select something.. ugg, in component
+	select
+
+
+DONE	outline of component for place, along with boundingbox
+
+GONE	There is some sort of scrollbar problem with xforms? remove precision
+	( no more scroll bar for text size ) ( also no more xforms )
+
+DONE	Fix room for status (more more more!)
+
+DONE	Fix right increment on text size 
+	
+DONE	Component button needs ...
+
+DONE	Fix grid color button 
+	
+DONE	Fix default status line
+	
+GONE	Check for proper parameters, otherwise it will core
+
+DONE	Possible race if both interface and schem try to send a command
+	Yes.. solution is a semaphore
+	
+DONE	Free the semaphore when you are done? 
+
+DONE	somewhere put the hot key assignements (help? on buttons?)
+
+DONE	Add outline toggle mode 
+
+DONE	Add attribute attach/detach stuff
+
+----------------------

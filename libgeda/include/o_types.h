@@ -1,0 +1,44 @@
+/* gEDA - GNU Electronic Design Automation
+ * libgeda - include files
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ */
+
+/* Object types */
+
+#define OBJ_HEAD       	-1 
+#define OBJ_LINE        'L'
+#define OBJ_BOX         'B'
+#define OBJ_CIRCLE      'V'
+#define OBJ_NET         'N'
+#define OBJ_COMPLEX     'C'
+#define OBJ_NTEXT       'T'
+#define OBJ_PIN         'P'
+#define OBJ_ARC         'A' 
+#define OBJ_ROUTE       'R' 
+#define OBJ_THRU_HOLE   'H' 
+
+#define STARTATTACH_ATTR	'{'	
+#define ENDATTACH_ATTR		'}'	
+#define START_EMBEDDED		'['	
+#define END_EMBEDDED		']'	
+
+/* font stuff */
+#define INFO_FONT         'F' 
+#define VERSION_CHAR      'v' 
+
+/* misc stuff */
+#define COMMENT         '#' 

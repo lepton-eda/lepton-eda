@@ -1,0 +1,418 @@
+
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+ChangeLog for libgeda 
+
+Most recent changes are at the top of this file
+
+5/29/99 Change the license for libgeda back to GPL (from LGPL)
+
+	Put in another check in the o_ales_update_nets function to 
+	make sure we don't add duplicate objects into the ales_list's
+
+5/99	See ChangeLog in gschem for all the changes related to the new
+	connection stuff
+
+	All connection stuff is in o_ales.c (will be renamed to o_conn.c
+	once things get a big more stable)
+
+5/16/99 Removed ../libgeda/prototype.h from f_print.c
+
+        Removed ../include/x_states.h and ../include/x_events.c
+
+        Moved prototype.h to ../include (change all the source as well)
+
+        Commented out most of ../include/globals.h
+
+5/13/99 Increased the size of buffers and the reading in of attributes 
+	(o_attrib.c -- o_read_attribs)
+
+	Increased the size of text strings (in o_ntext_basic.c)
+	
+	Fixed the appropriate string in s_passing.c (and s_passing.h)
+
+	Fixed text_string allocation size in add_object (s_basic.c) 
+
+	The above changes should fix the bug reported by Thomas Dean
+
+4/27/99 Minor comment fix in include/struct.h
+
+4/20/99 Minor fprintf warning/error message touchups in s_clib.c
+
+4/15/99	Added coord dialog variables to WINDOW structure
+
+3/23/99 Added GtkWidget *abwindow to struct.h
+
+3/19/99	Added expand_env_variables which takes a string and expands all
+	shell enviroment variables. 
+
+	Fixed it so that when you do some attribute related activities
+	the changed flag gets set
+
+	Had to remove one of the above because just selecting something 
+	with attributes would cause the flag to be set...
+
+3/9/99  Remove all // from all include/*.h files
+
+3/2/99	Added missing #include <stdarg.h> to s_basic.c
+
+3/1/99	Fixed the vsnprintf problem I thought I fixed.  It's fixed now!
+
+	Updated struct.h (new schcheck structure)
+
+2/25/99 Added gsymcheck structures (include/struct.h)
+
+2/12/99 Added code (#ifndef'ed) for vnsprintf to fix the Solaris 5.5.x 
+	problem (didn't have vnsprintf).  The vnsprintf wrapper is from 
+	Timidity++-1.2.1, which is under the GPL v2.0
+
+	Minor bug fix to s_log_close (disable the logging of messages after
+	you close the log file)
+
+	Found a memory leak in s_clib_cache_free, the index used in the loop
+        could wrap, so you might end up freeing only a portion of the entries
+
+2/11/99	Searching through stroke structure fixed to be faster (does not 
+	search the whole array of structures)
+
+	Implemented a return value of s_stroke_search_execute (TRUE if it
+	finds a stroke, FALSE otherwise)
+
+	Increased max number of strokes to 256
+
+2/9/99	Increased buffer which is used for reading in schematics to 1024
+	characters
+
+	Increased buffer which is used for saving schematics to 1024
+	characters
+
+	Added s_stroke.c (place where strokes to action mapping is stored)
+
+1/24/99 Fixed a fprintf format statement (%% instead of %) in f_print.c
+
+1/23/99 Fixed printing problem created when I switched the rc reading order
+
+	Added code to support portrait printing printing (in struct.h : 
+	print_orientation, defines.h - a few useful defines)
+
+	Changed f_print_header, w_current is passed in now 
+
+	Worked some on getting portait mode right (instead of the _hack_ 
+	which it currently is)
+
+	Changed the way the translating actual happens in the actual 
+	postscript (instead of changing the points in C, it's done with a 
+	translate), much cleaner. (be sure to remove all the dead code... 
+	maybe?)
+
+	Got portrait printing working more or less.  Still might be buggy
+	though.
+
+	Added support for color postscript printing (f_print_set_color)
+
+	Fixed some bugs in the printing of colored nets (end/midpoints not 
+	being colored right)
+
+1/17/99 More gtk+ 1.1.x compatibility work (in s_log.c) (minor #ifndef)
+
+	Changed s_log_message to use vsnprintf instead of the g_v* functions
+	since they were not behaving like I want them to.
+
+1/9/99	Added gtk+ 1.1.x compatibility to libgeda
+		g_vprintf -> g_strdup_vprintf (s_log.c)
+
+12/30/98 Removed duplicate code from snap_grid function
+
+12/15/98 Added clip_nochange and clip_change (really just copied and
+	 changed existing code).  These routines either just tell if a 
+	 line (object) should be clipped and/or the actual points are 
+	 clipped. 
+
+	 Added SCREENencode_halfspace and WORLDencode_halfspace
+	 which support above code
+
+	 Discovered that my clipping routine wasn't working completely 
+	 right (slope was always zero) fixed now? 
+
+12/13/98 Fixed pin color being saved as -1
+	 
+	 Added some checks in clip to make sure you don't divide by zero 
+	 Assume the object is visible if you were going to divide by zero.
+
+12/9/98 Added WORLDabs and SCREENabs, these function, don't return a points
+	coordinates, but rather an absolute measure in either world or screen
+	coordinates (such as a width of a line or the radius of a circle)
+
+	Finally fixed o_ntext_print so that you can print out ('s and )'s.
+	(should work on all postscript printers correctly)
+
+	Changed the ps of text output so that it uses "show" instead of
+	"true charpath fill"
+
+	Cleaned up rest of circlefixme comments left over from yesterday
+
+12/8/98 Added st_circle structure and CIRCLE typedef to include/struct.h
+
+	Started changing o_circle_basic to use new structures above
+
+	Changed s_basic to allocate and free above structures
+
+	Added circle structure to s_passing.c/s_passing.h
+	
+	Added some if's in add_object for p_line_points and p_circle
+
+	Went through and added p_circle=NULL to all the places that needed it
+
+	Went through and fixed up all prototype errors associated with above
+	change
+
+	Discovered a major bug in o_complex_rotate_lowlevel, was trying to
+	rotate a circle using a box routine (worked previously since circle/box
+	used similar datastructs, now that's changed) 
+
+	Found the same sort of bug as above in o_complex_mirror_lowlevel. 
+	(trying to use box routine to mirror a circle)
+
+12/6/98 Found another really long term bug in dist() (wrong value being 
+	set to temp var).  I don't know how it worked with this bug.
+
+	Found another long standing bug in circle, again not sure how things
+	worked before, dumb luck.  When saving, radius which was saved 
+	could have been zero due to how the circle is represented in memory
+	(stupidly)
+
+12/5/98 Found a nasty bug in the printing of X endpoint lines, was using
+	offset variable instead of cross, also had the wrong variables
+	in various places
+
+12/3/98	Added Tom Javen's finnish / swedish libgeda patch to o_ntext_basic.c
+
+11/27/98 Apparently I didn't fix the %! in f_print.c so now it's definately
+	 fixed 
+
+11/18/98 Removed some irrelavent/dead/wasteful code from m_basic.c (math 
+	 routines)
+
+11/15/98 Added code to center LIMITS printed schematics
+
+	 Added code to deal with space.sym (the right way) (when reading in
+	 the width specifier)
+
+	 Added backtick.sym to o_ntext_basic.c
+
+11/6/98 Added sort routine to s_clib_getfiles (so that components are in 
+	alphabetical order when displayed)
+
+	Added support to TOPLEVEL struct for print dialog box
+
+	Added s_papersizes.c, place to hold paper sizes read from rc file
+
+	Added print_output_type to TOPLEVEL structure 
+
+11/5/98	Added paper_width, paper_height to the TOPLEVEL structure
+
+	Started work on generalizing the postscript printing (print to
+	any papersize)
+
+	Started work on being able to print out the current window
+
+10/28/98 Cleaned up o_ntext_basic to get rid of special code for space 
+	 character
+
+10/25/98 Cleaned up all warnings (-Wall only)
+
+	 Added some error checking in a few misc places
+
+	 Added version information to o_save (o_save_write_header)
+
+	 Added version information reading to o_read 
+	
+	 Passed version info to all o_*_read functions (this was done so, 
+	 because o_read is called recursively)
+
+10/24/98 Added the ability to have comments in schematic files, but they are
+	 not saved...
+
+10/22/98 Removed arc bounding code again... still not working right
+
+	 Added o_attrib_slot_update (update pins based on slot, given complex)
+
+	 Added o_attrib_search_slot_number (search for slot#)
+
+	 Added o_attrib_search_pin_number (search for pin#)
+	
+	 Added o_attrib_slot_copy (copy pin information over to new complex)
+
+	 Added the o_attrib_slot_copy to o_complex_copy
+
+	 Found a memory leak in the above code, fixed (along with some other
+	 major/minor bugs)
+
+	 Got the first working version of the slotting done
+
+10/18/98 Added o_attrib_search_slot 
+
+	 Changed o_attrib_search_name_single to return the object where the
+	 attribute lives
+
+	 Added a bunch of o_attrib_search_name_* function to search for
+	 various standard attributes
+
+10/17/98 Applied patch by Roger to add variable grid spacing
+
+10/15/98 Attempt to fix the arc bounding code (doesn't quite work 100%)
+
+10/12/98 Found a small bug in world_get_circle_bounds which was causing 
+	 a_zoom_limits to set the wrong value if a circle was the largest 
+	 object 
+
+	 Finally fixed o_arc_add so that it takes world coords like all
+	 the other objects! Woo Hoo!
+
+10/10/98 Added netlist structures to struct.h 
+
+	 Added visited flag to object structure
+
+10/9/98 Removed some really old #if 0 and did a small amount of code cleanup
+
+10/8/98 Worked some more on the mirror code of complex objects
+
+	Almost working except for text inside components which is unmirrored 
+	(that displays incorrectly)
+
+10/6/98 Broke schematic format again with the addition of the mirror flag
+	on complex objects
+
+	Added code to implement above
+
+	Changed the way the rotating of complex is done
+
+10/5/98 Added o_line_mirror
+
+	Found a nasty cpu sucker, in o_ntext_rotate, where you were doing
+	the rotate effectively twice.  Oops.  Removed one line rotate while
+	loop
+
+	Added rest of o_*_mirror
+
+	Worked on o_ntext_mirror 
+
+	Worked on o_complex_mirror
+
+	Added all o_*_mirror_world
+
+	Found/fixed a minor bug in the text rotate dealing with the mirror of
+	attributes (mirroring wrong point when mirroring attributes)
+
+	Discovered a case which broke arc printing (negative sweep angles),
+	Hacked something together to fix it, but unknown if it's a complete
+	solution
+
+	Figured out how to finish up complex mirrors, but that will have
+	to wait till tomorrow.
+
+10/4/98 Worked on gettting printing working and flexible (f_print)
+
+	Got text to be printed using native postscript fonts.  The mapping
+	between the stroked fonts and the real ones is really close, not 
+	perfect, but close.
+
+10/1/98 Fixed all warnings (with -Wall)
+
+	Found a place where temp_parent wasn't being used to temporarly
+	hold object_parent (o_list.c _copy_all)
+
+	Added README and COPYING
+
+9/30/98	Added code to have text that is rotate 180 degrees be upright and
+	readable (almost perfect, but still need to get it exactly looking
+	right) (text with bars and text with subscripts doesn't rotate right,
+	but that can be fixed in a better way)
+
+9/29/98 Today starts the new release system: 19980929
+
+	Added o_attrib_copy_all (to copy attribute lists), useful when you 
+	rotate components (and the attribute list is discarded)
+
+	Added o_attrib_reattach and o_attrib_set_color to help support the
+	proper continuation of attached attributes to complexes when they 
+	are rotated
+
+0.0.5
+-------
+9/27/98 Fixed o_complex_*_rotate functions to actually work
+	Modelled after the ntext ones
+
+	Found a rotate bug in arc_world if you passed in a zero angle
+	Made a similar change to all the rotate_world functions
+
+	Found a new bug in arc_rotate_world, arc's were not being rotated
+	correctly
+
+	Moved the highly gschem specific o_complex_rotate into gschem/
+
+	Fixed the broken x_update_log call in s_log_message
+
+9/26/98 Added o_*_rotate_world routines  
+
+	More attempts at getting complex's to read and rotate in correctly
+
+	Added o_ntext_rotate_lowlevel (which properly rotates text 
+	based on angle)
+
+	Fixed rotate_point_90 so that it can accept any angle in increments
+	of 90 degrees.
+
+	Wrote and Got o_ntext_rotate working (which rotates text when you
+	hit the rotate button)
+
+9/25/98 Added the angle argument to the complex type (this breaks all 
+	schematic files!!) (embedded components now totally broken)
+
+9/23/98	Fixed snap_grid, so that it would work on negative inputs (doh!)
+
+	Added rotate_point_90, a simplied more general func of rotate_point
+	Might be removed in the future, but for now is guaranteed to work.
+
+	Fixed o_line_rotate (better name) and to use above function
+
+	Added all the o_*_rotate functions, most stubbed, only ones that work
+	are the line related ones
+
+9/17/98 New code for snapping to the grid (m_basic.c)
+
+9/13/98	Added scheme_directory to the TOPLEVEL structure 
+
+9/12/98 Added return_zoom_number (m_basic.c)
+
+	Added world_get_complex_bounds (o_complex_basic.c)
+
+	Added o_complex_world_translate_toplevel (for object like components)
+	which should be completely translated (o_complex_basic.c)
+
+	Added world_get_ntext_bounds (o_ntext_basic.c)
+
+	Fixed a bug in o_ntext_add where the bounding box of the text item
+	was not being set (incorrect call to get_ntext_bounds)
+
+	Fixed a bug in the translate_all deal with complex objects, wrong
+	complex translate was being called (should have been _toplevel)
+
+9/4/98	Switched to -version-info since it's more portable 
+	
+	Moved o_basic (mostly) out of libgeda and into gschem
+
+	Removed a lot of gschem specific functions out of libgeda
+
+	Made some function pointers so that various functions can be 
+	revectored (very useful) 
+
+9/3/98	Create libgeda using libtool
+
+	Forced library name to use -release instead of -version-info
+	because library will change drastically for a while
+
+	Started work on breaking (removing specifics) libgeda from gschem

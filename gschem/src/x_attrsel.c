@@ -1,0 +1,379 @@
+/* gEDA - GNU Electronic Design Automation
+ * gschem - GNU Schematic Capture
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <config.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#ifdef HAVE_STRINGS_H
+#include <strings.h>
+#endif
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+
+#include <libgeda/struct.h>
+#include <libgeda/defines.h>
+#include <libgeda/globals.h>
+#include <libgeda/colors.h>   
+#include <libgeda/prototype.h>
+
+#include "../include/x_states.h"
+#include "../include/prototype.h"
+
+static const   gchar   *list_item_data_key="list_item_data";	
+
+gint
+change_attr (GtkWidget *gtklist, TOPLEVEL *w_current)
+{
+        GList		*dlist;
+        GtkObject       *listitem;
+        gchar           *item_data_string;
+	int len;
+       
+        dlist=GTK_LIST(w_current->attr_list)->selection;
+        
+        if (!dlist) {
+            /* g_print("Selection cleared\n");*/
+            return(0);
+        }
+
+        listitem=GTK_OBJECT(dlist->data);
+        item_data_string=gtk_object_get_data(listitem, list_item_data_key);
+
+#if DEBUG 
+            printf("%s\n", item_data_string);
+#endif
+            
+	/* strcpy(current_attr_name, item_data_string);*/
+
+	len = strlen(item_data_string);
+        gtk_entry_set_text(GTK_ENTRY(w_current->asentry_name), item_data_string);
+        gtk_entry_select_region(GTK_ENTRY(w_current->asentry_name), 0, len); 	
+
+	return(0);
+}
+
+gint
+attr_set_show_name(GtkWidget *w, TOPLEVEL *w_current)
+{
+	o_attrib_set_show(w_current, SHOW_NAME);
+	return(0);
+}
+
+gint
+attr_set_show_value(GtkWidget *w, TOPLEVEL *w_current )
+{
+	o_attrib_set_show(w_current, SHOW_VALUE);
+	return(0);
+}
+
+gint
+attr_set_show_both(GtkWidget *w, TOPLEVEL *w_current )
+{
+	o_attrib_set_show(w_current, SHOW_NAME_VALUE);
+	return(0);
+}
+
+gint
+attr_set_visible(GtkWidget *w, TOPLEVEL *w_current )
+{
+	o_attrib_set_visible(w_current, VISIBLE);
+	return(0);
+}
+
+gint
+attr_set_invisible(GtkWidget *w, TOPLEVEL *w_current )
+{
+	o_attrib_set_visible(w_current, INVISIBLE);
+	return(0);
+}
+
+
+gint
+attr_apply(GtkWidget *w, TOPLEVEL *w_current)
+{
+	char *current_value=NULL;
+	char *current_name=NULL;
+	char *combined=NULL;
+	int name_len;
+	int value_len;
+
+	current_name = gtk_entry_get_text(GTK_ENTRY(w_current->asentry_name));
+	current_value = gtk_entry_get_text(GTK_ENTRY(w_current->asentry_value));
+
+	if (current_value[0] != '\0' && current_name[0] != '\0') {
+		value_len = strlen(current_value);
+		name_len = strlen(current_name);	
+
+		/* the 2 is (1) equals sign (2) null terminator */
+		combined = (char *) malloc(sizeof(char)*
+					(value_len + name_len) + 2);		
+
+		sprintf(combined, "%s=%s", current_name, current_value);
+
+		o_attrib_set_string(w_current, combined);
+		w_current->event_state = DRAWATTRIB;	
+
+		if (combined)
+			free(combined);
+	}
+	return(0);
+}
+
+gint
+attr_cancel(GtkWidget *w, TOPLEVEL *w_current)
+{
+	gtk_widget_destroy(w_current->aswindow);
+	w_current->aswindow=NULL;	
+	return(0);
+}
+
+
+void
+setup_attr_selector (TOPLEVEL *w_current)
+{
+	GtkWidget *label;
+	GtkWidget *separator;
+	GtkWidget *box;
+#if GTK_DEVEL
+	GtkWidget *box2;
+#endif
+	GSList *group;
+	GtkWidget *button;
+	GtkWidget *buttonapply;
+	GtkWidget *buttonclose;
+	GtkWidget *scrolled_win;
+	GtkWidget *list_item;
+	char *string=NULL;
+	int i;
+
+	/* freeze the window_current pointer so that it doesn't change */
+
+	if (!w_current->aswindow) {
+
+		w_current->aswindow = gtk_dialog_new ();
+	
+		gtk_window_position (GTK_WINDOW (w_current->aswindow), GTK_WIN_POS_NONE);
+
+		gtk_signal_connect (GTK_OBJECT (w_current->aswindow), "destroy",
+			GTK_SIGNAL_FUNC(destroy_window),
+			&w_current->aswindow);
+
+		gtk_signal_connect (GTK_OBJECT (w_current->aswindow), "delete_event",
+			GTK_SIGNAL_FUNC(destroy_window),
+			&w_current->aswindow);
+
+		gtk_window_set_title (GTK_WINDOW (w_current->aswindow), "Add Attribute");
+
+		buttonapply = gtk_button_new_with_label ("Apply");
+		GTK_WIDGET_SET_FLAGS (buttonapply, GTK_CAN_DEFAULT);
+		gtk_box_pack_start (GTK_BOX (
+			GTK_DIALOG(w_current->aswindow)->action_area),
+			buttonapply, TRUE, TRUE, 0);
+		gtk_signal_connect (GTK_OBJECT (buttonapply), "clicked",
+			GTK_SIGNAL_FUNC(attr_apply), w_current);
+		gtk_widget_show (buttonapply);
+
+		buttonclose = gtk_button_new_with_label ("Close");
+		GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
+		gtk_box_pack_start (GTK_BOX (
+			GTK_DIALOG(w_current->aswindow)->action_area),
+			buttonclose, TRUE, TRUE, 0);
+		gtk_signal_connect ( GTK_OBJECT(buttonclose),
+                        "clicked", GTK_SIGNAL_FUNC(attr_cancel),
+                        w_current);
+		gtk_widget_show (buttonclose);
+
+		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+#if GTK_DEVEL
+		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+			GTK_POLICY_AUTOMATIC,
+			GTK_POLICY_AUTOMATIC);
+
+      		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			scrolled_win, TRUE, TRUE, 10);
+		gtk_widget_show (scrolled_win);
+		box2 = gtk_vbox_new (FALSE, 0);
+		gtk_scrolled_window_add_with_viewport(
+			GTK_SCROLLED_WINDOW (scrolled_win), box2);
+
+		gtk_widget_show(box2);
+#endif
+
+#ifndef GTK_DEVEL
+		gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 300, 70);
+      		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
+				      scrolled_win),
+                                      GTK_POLICY_AUTOMATIC,
+                                      GTK_POLICY_AUTOMATIC);
+      		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			scrolled_win, TRUE, TRUE, 10);
+	        gtk_widget_show (scrolled_win);
+#endif
+
+		w_current->attr_list = gtk_list_new ();
+
+#if GTK_DEVEL
+		gtk_container_add (GTK_CONTAINER (box2), w_current->attr_list);
+#else
+		gtk_container_add (GTK_CONTAINER (scrolled_win), w_current->attr_list);
+#endif
+		gtk_widget_show (w_current->attr_list);
+
+		i = 0;
+		string = (char *) s_attrib_get(i);
+		while ( string != NULL ) {
+			GtkWidget       *label;
+
+			label=gtk_label_new(string);
+			gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
+
+		        list_item=gtk_list_item_new();
+			gtk_container_add(GTK_CONTAINER(list_item), label);
+			gtk_widget_show(label);
+          		gtk_container_add(GTK_CONTAINER (w_current->attr_list), list_item);
+          		gtk_widget_show (list_item);
+			gtk_label_get(GTK_LABEL(label), &string);
+            		gtk_object_set_data(GTK_OBJECT(list_item),
+                                list_item_data_key,
+                                string);
+			i++;
+			string = (char *) s_attrib_get(i);
+        	}
+
+		gtk_signal_connect(GTK_OBJECT(w_current->attr_list),
+                           "selection_changed",
+                           GTK_SIGNAL_FUNC(change_attr),
+                           w_current);
+
+		box = gtk_hbox_new(FALSE, 0);
+        	gtk_container_border_width(GTK_CONTAINER(box), 5);
+        	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(w_current->aswindow)->vbox), box);
+        	gtk_widget_show(box);            
+
+		label = gtk_label_new ("Name");
+		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
+                gtk_misc_set_padding (GTK_MISC (label), 0, 0);
+                gtk_box_pack_start (GTK_BOX (box),
+                          label, FALSE, FALSE, 0);
+                gtk_widget_show (label); 
+
+		w_current->asentry_name = gtk_entry_new_with_max_length (79);
+                gtk_editable_select_region (GTK_EDITABLE (w_current->asentry_name), 0, -1);
+                gtk_box_pack_start (GTK_BOX (box),
+                          w_current->asentry_name, TRUE, TRUE, 10);
+                gtk_widget_show (w_current->asentry_name); 
+
+		box = gtk_hbox_new(FALSE, 0);
+        	gtk_container_border_width(GTK_CONTAINER(box), 5);
+        	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(w_current->aswindow)->vbox), box);
+        	gtk_widget_show(box);            
+
+		label = gtk_label_new ("Value");
+		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
+                gtk_misc_set_padding (GTK_MISC (label), 0,0);
+                gtk_box_pack_start (GTK_BOX (box),
+                          label, FALSE, FALSE, 0);
+                gtk_widget_show (label); 
+
+
+		w_current->asentry_value = gtk_entry_new_with_max_length (79);
+                gtk_editable_select_region (GTK_EDITABLE (w_current->asentry_value), 0, -1);
+                gtk_box_pack_start (GTK_BOX (box),
+                          w_current->asentry_value, TRUE, TRUE, 10);
+                gtk_signal_connect(GTK_OBJECT(w_current->asentry_value), "activate",
+                       GTK_SIGNAL_FUNC(attr_apply),
+                       w_current);
+
+                gtk_widget_show (w_current->asentry_value); 
+
+		separator = gtk_hseparator_new ();
+	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			separator, FALSE, TRUE, 0);
+  		gtk_widget_show (separator); 
+
+		button = gtk_radio_button_new_with_label (NULL, "Show Value");
+  		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			button, TRUE, TRUE, 0);
+		/* rewrite callbacks to use third parameter to be clean hack */
+		gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                                 GTK_SIGNAL_FUNC (attr_set_show_value),
+				 w_current);
+  		gtk_widget_show (button);
+		
+
+		group = gtk_radio_button_group (GTK_RADIO_BUTTON (button)); 
+		button = gtk_radio_button_new_with_label (group, "Show Both");
+  		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			button, TRUE, TRUE, 0);
+		/* rewrite callbacks to use third parameter to be clean hack */
+		gtk_signal_connect(GTK_OBJECT (button), "clicked",
+                                 GTK_SIGNAL_FUNC (attr_set_show_both),
+				 w_current);
+  		gtk_widget_show (button);
+
+		group = gtk_radio_button_group (GTK_RADIO_BUTTON (button)); 
+		button = gtk_radio_button_new_with_label (group, "Show Name");
+  		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			button, TRUE, TRUE, 0);
+		gtk_signal_connect(GTK_OBJECT (button), "clicked",
+                                 GTK_SIGNAL_FUNC (attr_set_show_name),
+				w_current);
+  		gtk_widget_show (button);
+
+		button = gtk_radio_button_new_with_label (NULL, "Visible");
+  		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			button, TRUE, TRUE, 0);
+		/* rewrite callbacks to use third parameter to be clean hack */
+		gtk_signal_connect(GTK_OBJECT (button), "clicked",
+                                 GTK_SIGNAL_FUNC (attr_set_visible),
+				w_current);
+  		gtk_widget_show (button);
+
+		group = gtk_radio_button_group (GTK_RADIO_BUTTON (button)); 
+		button = gtk_radio_button_new_with_label (group, "Invisible");
+  		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
+			button, TRUE, TRUE, 0);
+		/* rewrite callbacks to use third parameter to be clean hack */
+		gtk_signal_connect(GTK_OBJECT (button), "clicked",
+                                 GTK_SIGNAL_FUNC (attr_set_invisible),
+				w_current);
+  		gtk_widget_show (button);
+
+		/* set some defaults */
+		/* this should be whatever the last value was set to??? hack */
+		o_attrib_set_show(w_current, SHOW_VALUE);
+		o_attrib_set_visible(w_current, VISIBLE);
+
+	}
+
+	if (!GTK_WIDGET_VISIBLE (w_current->aswindow)) {
+		gtk_widget_show (w_current->aswindow);
+		gdk_window_raise(w_current->aswindow->window); 
+ 	} else {
+		/* window should already be mapped */
+		/* otherwise this will core */
+		gdk_window_raise(w_current->aswindow->window); 
+	}
+}
+

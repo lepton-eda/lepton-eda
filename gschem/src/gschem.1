@@ -1,0 +1,95 @@
+.TH gEDA 1 "January 24th, 1998" Version 19990124
+.SH NAME
+gschem - GNU Schematic Capture
+.SH SYNOPSIS
+.B gschem
+[-q] [-v] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [schematic1 ... schematicN]
+.SH DESCRIPTION
+.PP
+\fIgschem\fP is the schematic capture program which is part gEDA 
+(GNU Electronic Design Automation) toolset.  This program is used to draw
+electronic schematics.  Schematics consist of standard symbols (which 
+are either part of a standard library or created by the user) which 
+represent the various gates and components.  These components are then 
+interconnected by nets (wires).  Schematics may be printed to a
+PostScript file for printing or further conversion to other output
+formats. 
+
+\fIgschem\fP is also the symbol creation editor.  All the standard 
+methods of creating schematics are used in the creation of symbols. There
+are a few special rules when creating symbols, so please refer to the
+(non-existant as of now) symbol creation document.
+
+Please read the official documentation (very minimal at this point)
+on how to use \fIgschem\fP, since this man page just describes the command
+line arguments and a few examples on how to run \fIgschem\fP.
+
+.SH OPTIONS
+.l
+\fIgschem\fP accepts the following options:
+.TP 8
+.B -q
+Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
+.TP 8
+.B -v 
+Verbose mode on.  This mode gives as much feedback to the user as possible. (optional)
+.TP 8
+.B -r filename
+Specify a rc filename.  Normally \fIgschem\fP searches for the system-gschemrc, then
+~/.gEDA/gschemrc, and finally for a gschemrc in the current directory.  This
+options allows the user to specify an additional rc file which is read after
+all the other rc files are read. (optional)
+.TP 8
+.B -s filename
+Specify a guile script to be executed at startup. (optional)
+.TP 8
+.B -o filename
+Specify a filename for postscript output.  This command line argument is 
+useful when running \fIgschem\fP from a shell script and with a guile script.  The 
+filename can be changed through
+the print dialog box.
+.TP 8
+.B schematic1 [... schematicN]
+Schematic file to be loaded.  Specifing a schematic file is optional.  If
+multiple schematic files are specified they are read in sequentially and 
+put on seperate pages.  
+
+.SH EXAMPLES 
+These examples assume that you are in the \fIgschem\fP directory of the gEDA
+distribution.
+
+To run \fIgschem\fP and then interact with the program:
+
+	./gschem 
+.br
+
+To run \fIgschem\fP in interactive mode but load a sample schematic:
+
+	./gschem ../examples/adders_1.sch
+
+To run \fIgschem\fP and load up all schematics in the examples subdirectory:
+
+	./gschem ../examples/*.sch
+
+To run \fIgschem\fP but run the guile script "print.scm" (which terminates \fIgschem\fP):
+
+.nf
+	./gschem -s ../scripts/print.scm ../examples/adders_1.sch
+
+
+.SH "ENVIRONMENT"
+No environment variables are used.
+
+.SH "AUTHOR"
+Ales V. Hvezda and many others
+
+.SH SEE ALSO
+.BR geda (1),
+.BR gnetlist (1),
+.SH COPYRIGHT
+.nf
+Copyright \(co  1999 Ales V Hvezda
+
+This document can be freely redistributed according to the terms of the 
+GNU General Public License version 2.0
+

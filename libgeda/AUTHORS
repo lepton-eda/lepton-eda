@@ -1,0 +1,14 @@
+
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+libgeda AUTHORS
+
+Ales V. Hvezda
+E-mail: ahvezda@geda.seul.org
+Web: http://www.geda.seul.org/
+
+Please see the AUTHORS file in the various sub packages 
+(gschem/gnetlist/etc...).

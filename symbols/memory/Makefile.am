@@ -1,0 +1,11 @@
+datamemorydir = @gedadatadir@/sym/memory
+
+datamemory_DATA = @datamemory@
+
+EXTRA_DIST = $(datamemory_DATA)
+
+MOSTLYCLEANFILES = *.log *~
+CLEANFILES = *.log *~
+DISTCLEANFILES = *.log *~
+MAINTAINERCLEANFILES = *.log *~
+

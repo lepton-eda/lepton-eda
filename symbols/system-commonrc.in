@@ -1,0 +1,90 @@
+
+; 
+; Common init file for gEDA
+;
+
+;
+; Start of path related keywords
+;
+
+; component-library
+; Specify where components exist.
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The component library which is in the user's local project directory is
+; added automatically and doesn't need to be specified here (*TBD later *)
+; The order of the component-library keywords determines the order they
+; are displayed, but they are searched *backwards*, ie last one in this list
+; is searched *first*.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(component-library "@symdir@/local")
+(component-library "@symdir@/74")
+(component-library "@symdir@/4000")
+(component-library "@symdir@/IEC417")
+(component-library "@symdir@/analog")
+(component-library "@symdir@/linear")
+(component-library "@symdir@/altera")
+(component-library "@symdir@/idt")
+(component-library "@symdir@/misc")
+(component-library "@symdir@/memory")
+(component-library "@symdir@/micro")
+(component-library "@symdir@/maxim")
+(component-library "@symdir@/radio")
+(component-library "@symdir@/tube")
+(component-library "@symdir@/connector")
+(component-library "@symdir@/switch")
+(component-library "@symdir@/verilog")
+
+; source-library string
+; Specify where source entities exist.
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The source library which is in the user's local project directory is
+; added automatically and doesn't need to be specified here (*TBD later *)
+; The order of the source-library keywords determines the order they
+; are displayed, but they are searched *backwards*, ie last one in this list
+; is searched *first*.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(source-library "@symdir@/74")
+(source-library "@symdir@/4000")
+(source-library "@symdir@/analog")
+(source-library "@symdir@/altera")
+(source-library "@symdir@/idt")
+(source-library "@symdir@/local")
+(source-library "@symdir@/memory")
+(source-library "@symdir@/micro")
+(source-library "@symdir@/linear")
+(source-library "@symdir@/maxim")
+(source-library "@symdir@/misc")
+(source-library "@symdir@/radio")
+(source-library "@symdir@/tube")
+(source-library "@symdir@/connector")
+(source-library "@symdir@/switch")
+(source-library "@symdir@/verilog")
+; out for now (source-library "@sourcedir@")
+
+; font-directory string
+; Specifies where the vector font definitions are stored.
+; You should have read access to this directory and all the files inside
+; the directory.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(font-directory "@symdir@/font")
+
+
+; scheme-directory string
+; Specifies where the supporting scheme lives
+; You should have read access to this directory and all the files inside
+; the directory.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(scheme-directory "@expandgedadatadir@/scheme")
+
+;
+; End of path related keywords
+;
+

@@ -1,0 +1,888 @@
+/* gEDA - GNU Electronic Design Automation
+ * gschem - GNU Schematic Capture
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <config.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+#include <libgeda/struct.h>
+#include <libgeda/globals.h>
+#include <libgeda/colors.h>
+#include <libgeda/prototype.h>
+
+#include "../include/globals.h"
+#include "../include/x_states.h"
+#include "../include/prototype.h"
+
+
+/* used in key_press, since it isn't passed this information */
+/* filled in x_event_motion */
+int mouse_x, mouse_y; 
+
+/* used for the stroke stuff */
+#ifdef HAS_LIBSTROKE
+#define MAX_SEQUENCE 20
+static int DOING_STROKE = FALSE;
+char sequence[MAX_SEQUENCE+1];
+
+/* libstroke prototypes */
+void stroke_init (void);
+void stroke_record (int x, int y); 
+int stroke_trans (char *sequence);
+#endif
+
+gint
+x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
+{                 
+
+#if DEBUG 
+	printf("EXPOSE\n");
+#endif
+
+	exit_if_null(w_current); 
+	global_window_current = w_current;
+
+	gdk_draw_pixmap(widget->window,
+                       widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+                       w_current->backingstore,
+                       event->area.x, event->area.y,
+                       event->area.x, event->area.y,
+                       event->area.width, event->area.height);
+
+	/* either this or put xor's and friends into backingstore */
+	/* take care of ghosting when you get an expose event */
+	if (w_current->inside_action) {
+                switch(w_current->event_state) {
+                        case(ENDMOVE):
+                        case(ENDCOPY):
+                             o_drawbounding(w_current, 
+			         w_current->page_current->selection_head->next,
+				 x_get_color(w_current->bb_color));
+                        break;
+
+                        case(DRAWNET):
+                        case(NETCONT):
+				/* do nothing for now */
+			break;
+                }
+        }          	
+
+	return(0);
+}
+
+gint
+x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, 
+	TOPLEVEL *w_current)
+{
+
+	exit_if_null(w_current); 
+	global_window_current = w_current;
+
+#if DEBUG
+	printf("pressed! %d \n", event_state);
+#endif
+
+	if (event->state & GDK_SHIFT_MASK)
+		w_current->SHIFTKEY=1;
+	else 	
+		w_current->SHIFTKEY=0;
+
+	if (event->state & GDK_CONTROL_MASK)
+		w_current->CONTROLKEY=1;
+	else 	
+		w_current->CONTROLKEY=0;
+
+
+	if (event->button == 1) {
+		switch(w_current->event_state) {
+
+			case(SELECT):
+				w_current->event_state = STARTSELECT;
+				w_current->start_x = w_current->last_x = 
+					(int) event->x;	
+				w_current->start_y = w_current->last_y = 
+					(int) event->y;	
+			break;
+
+                        case(STARTCOPY):
+				/* make sure the list is not empty */
+				if (w_current->page_current->selection_head->next != NULL) {
+                                	o_copy_start(w_current, 
+						(int) event->x, 
+						(int) event->y);
+					w_current->event_state = COPY;
+					w_current->inside_action = 1;
+				}
+                        break;
+
+                        case(STARTMOVE):
+				/* make sure the list is not empty */
+				if (w_current->page_current->selection_head->next != NULL) {
+                                	o_move_start(w_current, 
+						(int) event->x, 
+						(int) event->y);
+					w_current->event_state = MOVE;
+					w_current->inside_action = 1;
+				}
+                        break;       
+
+			case(DRAWLINE): 
+				o_line_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->event_state = ENDLINE;
+				w_current->inside_action = 1;
+			break;
+
+			case(ENDLINE): 
+				o_line_end(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->inside_action = 0;
+				w_current->event_state = DRAWLINE;
+			break;
+
+			case(DRAWBOX): 
+				o_box_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->event_state = ENDBOX;
+				w_current->inside_action = 1;
+			break;
+
+			case(ENDBOX): 
+				o_box_end(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->inside_action = 0;
+				w_current->event_state = DRAWBOX;
+			break;
+
+			case(DRAWCIRCLE): 
+				o_circle_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->event_state = ENDCIRCLE;
+				w_current->inside_action = 1;
+			break;
+
+			case(ENDCIRCLE): 
+				o_circle_end(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->inside_action = 0;
+				w_current->event_state = DRAWCIRCLE;
+			break;
+
+			case(DRAWARC): 
+				o_arc_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->event_state = ENDARC;
+				w_current->inside_action = 1;
+			break;
+
+			case(ENDARC): 
+				o_arc_end1(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->inside_action = 0;
+				w_current->event_state = DRAWARC;
+			break;
+
+			case(DRAWPIN): 
+				o_pin_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->event_state = ENDPIN;
+				w_current->inside_action = 1;
+			break;
+
+			case(ENDPIN): 
+				o_pin_end(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->inside_action = 0;
+				w_current->event_state = DRAWPIN;
+			break;
+
+
+			case(STARTDRAWNET):  /* change state name ? hack */
+				o_net_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->inside_action = 1;
+				w_current->event_state=DRAWNET;
+
+			break;
+
+			case(DRAWNET): 
+			case(NETCONT): 
+				o_net_end(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				o_net_start(w_current, 
+						(int) w_current->save_x, 
+						(int) w_current->save_y); 
+				w_current->event_state=NETCONT;
+			break;
+
+#if 0 /* old way with the text dialog box which was around only once */
+			case(DRAWTEXT): 
+				w_current->start_x = fix_x(w_current, (int) event->x); 
+				w_current->start_y = fix_y(w_current, (int) event->y);
+				o_ntext_input(w_current);
+				w_current->inside_action = 1;
+			break;
+#endif
+	
+			case(ENDCOMP):
+                                o_complex_end(w_current, fix_x(w_current, (int) event->x),
+                                              fix_y(w_current, (int) event->y));
+				/* not sure on this one */
+				/* probably keep this one */
+                                w_current->event_state=SELECT;
+                                i_update_status(w_current, "Select Mode");
+                                w_current->inside_action = 0;
+                                o_redraw_single(w_current, w_current->page_current->object_tail);
+                                o_redraw_selected(w_current);
+                        break;
+                                         
+			case(ENDATTRIB):
+                                o_attrib_end(w_current);
+				/* not sure on this one either... */
+				/* keep it as well */
+                                w_current->event_state=SELECT;
+                                i_update_status(w_current, "Select Mode");
+                                w_current->inside_action = 0;
+				/* the following happen inside attrib_end */
+				/* therefore they are commeneted out here */
+                                /* o_redraw_single(object_tail);*/
+                                /* o_redraw_selected(); not sure on this */
+                        break;
+
+			case(ENDROTATEP): 
+				o_rotate_90(w_current, 
+				 	w_current->page_current->selection_head->next,
+					(int) event->x, (int) event->y);
+				 
+				w_current->inside_action = 0;
+				w_current->event_state = SELECT;
+			break;
+
+			case(ENDMIRROR): 
+				o_mirror(w_current, 
+				 	w_current->page_current->selection_head->next,
+					(int) event->x, (int) event->y);
+				 
+				w_current->inside_action = 0;
+				w_current->event_state = SELECT;
+			break;
+
+			case(ENDTEXT):
+                                o_ntext_end(w_current);
+				/* not sure on this one either... */
+				/* keep it as well */
+                                w_current->event_state=SELECT;
+                                i_update_status(w_current, "Select Mode");
+                                w_current->inside_action = 0;
+				/* the following happen inside attrib_end */
+				/* therefore they are commeneted out here */
+                                /* o_redraw_single(object_tail);*/
+                                /* o_redraw_selected(); not sure on this */
+                        break;
+
+			case(STARTPAN):
+				a_pan(w_current, (int) event->x, 
+						 (int) event->y);
+	
+				/* keep this one too */
+				w_current->event_state = SELECT;
+				i_update_status(w_current, "Select Mode");
+				/* go to select state or not? hack */
+			break;
+
+			case(ZOOMBOXSTART): 
+				a_zoom_box_start(w_current, 
+						(int) event->x, 
+						(int) event->y); 
+				w_current->event_state = ZOOMBOXEND;
+				w_current->inside_action = 1;
+			break;
+
+		}
+	} else if (event->button == 2) {
+
+		/* try this out and see how it behaves */
+		if (w_current->inside_action) {
+#if GTK_DEVEL
+			i_callback_cancel(w_current, 0, NULL);
+#else
+			i_callback_cancel(NULL, w_current);
+#endif
+		}
+
+#ifndef HAS_LIBSTROKE 
+		if (w_current->last_callback != NULL) {
+#if GTK_DEVEL
+			(*w_current->last_callback)(w_current, 0, NULL);	
+#else
+			(*w_current->last_callback)(NULL, w_current);	
+#endif
+		}
+#else
+		/* if the last_callback isn't null and the control key is */
+		/* pressed */
+		if ((w_current->last_callback != NULL && 
+		     w_current->CONTROLKEY)) {
+			/* execute it */
+#if GTK_DEVEL
+			(*w_current->last_callback)(w_current, 0, NULL);	
+#else
+			(*w_current->last_callback)(NULL, w_current);	
+#endif
+		} else {
+			/* else we are doing as stroke */
+			DOING_STROKE=TRUE;
+		}
+#endif
+
+	} else if (event->button == 3) {
+
+		if (!w_current->inside_action) {
+			do_popup(w_current, event);
+		} else {
+
+			switch (w_current->event_state) {
+
+                        	case(DRAWNET):
+                        	case(NETCONT):
+                               		w_current->inside_action=0;
+                               		w_current->event_state = SELECT;
+					i_update_status(w_current, "Select Mode");
+                                	o_net_eraserubber(w_current);
+                        	break;
+
+			/* go and seperate each draw to call the 
+			 * currect eraserubber hack */
+                        	default:
+#if GTK_DEVEL
+					i_callback_cancel(w_current, 0, NULL);
+#else
+					i_callback_cancel(NULL, w_current);
+#endif
+                        	break;       
+
+			}
+		}
+	}
+	return(0);
+}
+
+gint
+x_event_button_released(GtkWidget *widget, GdkEventButton *event, 
+	TOPLEVEL *w_current)
+{
+
+	exit_if_null(w_current); 
+	global_window_current = w_current;
+
+#if DEBUG
+	printf("released! %d \n", event_state);
+#endif
+
+	if (event->state & GDK_SHIFT_MASK)
+		w_current->SHIFTKEY=1;
+	else 	
+		w_current->SHIFTKEY=0;
+
+	if (event->state & GDK_CONTROL_MASK)
+		w_current->CONTROLKEY=1;
+	else 	
+		w_current->CONTROLKEY=0;
+
+	if (event->button == 1) {
+
+		switch(w_current->event_state) {
+
+			case(SELECT):
+				/* do nothing */
+			break;
+	
+			case(MOVE):
+				w_current->event_state = ENDMOVE;
+			break;
+
+                        case(COPY):
+				w_current->event_state = ENDCOPY;
+			break;
+
+			case(ENDMOVE):
+                                o_move_end(w_current);
+			/* having this stay in copy was driving me nuts*/
+                                w_current->event_state = SELECT;
+                                i_update_status(w_current, "Select Mode");
+                                w_current->inside_action = 0;
+                                break;
+
+                        case(ENDCOPY):
+                                o_copy_end(w_current);
+			/* having this stay in copy was driving me nuts*/
+                                w_current->event_state = SELECT;
+                                i_update_status(w_current, "Select Mode");
+                                w_current->inside_action = 0;
+                                break;          
+
+			case(SBOX):
+				/* fix_x,y was removed to allow more flex */
+                                w_current->last_x = (int) event->x; 
+                                w_current->last_y = (int) event->y;
+                                i_sbox_end(w_current,  
+						(int) event->x, 
+						(int) event->y);
+				/* this one stays */
+                                w_current->event_state = SELECT;
+                                w_current->inside_action = 0;
+                        break;
+
+			case(ZOOMBOXEND):
+				/* fix_x,y was removed to allow more flex */
+                                w_current->last_x = (int) event->x; 
+                                w_current->last_y = (int) event->y;
+                                a_zoom_box_end(w_current,  
+						(int) event->x, 
+						(int) event->y);
+				/* this one stays */
+                                i_update_status(w_current, "Select Mode");
+                                w_current->event_state = SELECT;
+                                w_current->inside_action = 0;
+                        break;
+
+
+                        case(STARTSELECT):
+                                o_find(w_current, (int) event->x, (int) event->y);
+                                w_current->event_state = SELECT;
+                                w_current->inside_action = 0;
+                        break;
+
+		}
+	} else if (event->button == 2) {
+
+#if HAS_LIBSTROKE
+		DOING_STROKE=FALSE;
+
+		
+		if (stroke_trans (sequence) == TRUE) {
+if (stroke_info_mode) {
+			printf ("LibStroke Translation succeeded: ");
+}
+		} else {
+if (stroke_info_mode) {
+			printf ("LibStroke Translation failed: ");
+}
+		}
+
+if (stroke_info_mode) {
+		printf ("Sequence=\"%s\"\n",sequence);
+}
+
+
+		/* if it finds a stroke, erase the stroke, else */
+		/* leave it drawn */
+		if (s_stroke_search_execute(sequence)) {
+
+if (stroke_info_mode) {
+			printf ("Sequence understood\n");
+}
+			x_stroke_erase_all(w_current);
+		}
+#endif	
+
+	}
+	return(0);
+}
+
+gint
+x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
+{
+	int temp_x, temp_y;
+
+	int zoom_scale;
+	int diff_x;
+
+	exit_if_null(w_current); 
+	global_window_current = w_current;
+
+
+	if (event->state & GDK_SHIFT_MASK)
+		w_current->SHIFTKEY=1;
+	else 	
+		w_current->SHIFTKEY=0;
+
+	if (event->state & GDK_CONTROL_MASK)
+		w_current->CONTROLKEY=1;
+	else 	
+		w_current->CONTROLKEY=0;
+
+	
+	mouse_x = (int) event->x;
+	mouse_y = (int) event->y;
+
+	if (w_current->cowindow) {
+		coord_display_update(w_current, mouse_x, mouse_y);
+	}
+
+#if DEBUG
+	/* printf("MOTION!\n");*/
+#endif
+
+#if HAS_LIBSTROKE
+	if (DOING_STROKE == TRUE) {
+
+
+		x_stroke_add_point(w_current, (int) event->x, (int) event->y);
+
+		stroke_record ((int) event->x, (int) event->y);
+		return(0);
+	}
+#endif
+
+	switch(w_current->event_state) {
+
+		case(SELECT):
+				/* do nothing */
+		break;
+
+		case(ENDMOVE):
+		case(MOVE):
+			if (w_current->inside_action) {
+                       		o_drawbounding(w_current, w_current->page_current->selection_head->next,
+					 x_get_color(w_current->bb_color));
+                       		w_current->last_x = fix_x(w_current,  (int) event->x);
+                       		w_current->last_y = fix_y(w_current,  (int) event->y);
+                       		o_drawbounding(w_current, w_current->page_current->selection_head->next, 
+					x_get_color(w_current->bb_color));
+			}
+                break;
+
+		case(ENDCOPY):
+                case(COPY):
+			if (w_current->inside_action) {
+ 	                	o_drawbounding(w_current, w_current->page_current->selection_head->next, 
+					x_get_color(w_current->bb_color));
+                        	w_current->last_x = fix_x(w_current,  (int) event->x);
+       	                	w_current->last_y = fix_y(w_current,  (int) event->y);
+                        	o_drawbounding(w_current, w_current->page_current->selection_head->next,
+					x_get_color(w_current->bb_color));
+			}
+                break;         
+
+		case(ENDLINE): 
+			if (w_current->inside_action)
+				o_line_rubberline(w_current,   
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+
+		case(ENDBOX): 
+			if (w_current->inside_action)
+				o_box_rubberbox( w_current,  
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+
+		case(ENDCIRCLE): 
+			if (w_current->inside_action)
+				o_circle_rubbercircle(w_current,
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+
+		case(ENDARC):
+			if (w_current->inside_action)
+				o_arc_rubberline(w_current,
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+
+		case(DRAWNET): 
+		case(NETCONT): 
+			if (w_current->inside_action)
+				o_net_rubbernet(w_current,
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+
+		case(ENDPIN): 
+			if (w_current->inside_action)
+				o_pin_rubberpin(w_current,
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+	
+		case(DRAWCOMP):
+			o_complex_start( w_current, (int) event->x, 
+					 (int) event->y);	
+			w_current->event_state = ENDCOMP;
+			w_current->inside_action = 1;
+		break;
+
+		case(ENDCOMP):
+                       	o_complex_rubbercomplex(w_current);
+                       	w_current->last_x = fix_x(w_current, (int) event->x);
+                       	w_current->last_y = fix_y(w_current, (int) event->y);
+                       	o_complex_rubbercomplex(w_current);
+                break;
+
+		case(DRAWATTRIB):
+			o_attrib_start(w_current, (int) event->x, (int) event->y);	
+			w_current->event_state = ENDATTRIB;
+			w_current->inside_action = 1;
+		break;
+
+		case(DRAWTEXT):
+			o_ntext_start(w_current, (int) event->x, (int) event->y);	
+			w_current->event_state = ENDTEXT;
+			w_current->inside_action = 1;
+		break;
+		
+		case(ENDATTRIB):
+                       	o_attrib_rubberattrib(w_current);
+                       	w_current->last_x = fix_x(w_current, (int) event->x);
+                       	w_current->last_y = fix_y(w_current, (int) event->y);
+                       	o_attrib_rubberattrib(w_current);
+		break;
+
+		case(ENDTEXT):
+                       	o_ntext_rubberattrib(w_current);
+                       	w_current->last_x = fix_x(w_current, (int) event->x);
+                       	w_current->last_y = fix_y(w_current, (int) event->y);
+                       	o_ntext_rubberattrib(w_current);
+		break;
+
+		case(STARTSELECT):
+                       	temp_x = fix_x(w_current, (int) event->x);
+                       	temp_y = fix_y(w_current, (int) event->y);
+                       	/* is eight enough of a threshold? */
+			/* make this configurable anyways */
+			diff_x = fabs(w_current->page_current->right - 
+				w_current->page_current->left);
+
+#ifdef HAS_RINT
+			zoom_scale = (int) rint(w_current->init_right / diff_x);
+#else 
+			zoom_scale = (int) w_current->init_right / diff_x;
+#endif
+			
+			if (zoom_scale < 10) {
+				zoom_scale = 10;	
+			}
+
+                       	if ( (abs(temp_x - w_current->start_x) > zoom_scale) ||
+                               (abs(temp_y - w_current->start_y) > zoom_scale) ) {
+                              	w_current->event_state = SBOX;
+                              	i_sbox_start(w_current,
+						(int) event->x,
+						(int) event->y);
+                               	w_current->inside_action = 1;
+                       	}
+		break;
+
+		case(SBOX):
+                       	if (w_current->inside_action)
+				i_sbox_rubberbox(w_current,  
+					       (int) event->x,
+                                               (int) event->y);
+		break;
+
+		case(ZOOMBOXEND): 
+			if (w_current->inside_action)
+				a_zoom_box_rubberband( w_current,  
+					(int) event->x,
+				 	(int) event->y); 
+		break;
+
+	}
+	return(0);
+}
+
+gint
+x_event_configure(GtkWidget *widget, GdkEventConfigure *event, 
+	TOPLEVEL *w_current)
+{
+	int new_height, new_width;
+
+	/* this callback is for drawing areas only! */	
+	/* things like changing a label causes a resize */
+	/* this code is no longer needed.*/
+
+#if DEBUG 
+	printf("RESIZE\n");
+#endif
+
+	/* get the new width/height */
+	new_width = widget->allocation.width;
+        new_height = widget->allocation.height;
+
+	/* if it's equal to the current width/height don't do anything */
+	if (new_width == w_current->win_width && 
+    	    new_height == w_current->win_height) {
+		return(0);
+	}
+
+	/* of the actual win window (drawing_area) */
+	w_current->win_width = widget->allocation.width;
+        w_current->win_height = widget->allocation.height;
+
+	w_current->width = w_current->win_width;
+	w_current->height = w_current->win_height;
+
+	if (w_current->backingstore)
+        {
+		gdk_pixmap_unref(w_current->backingstore);
+        }
+
+	w_current->backingstore = gdk_pixmap_new(widget->window,
+                               widget->allocation.width,
+                               widget->allocation.height,
+                               -1);
+
+	if (!w_current->DONT_REDRAW) 	
+		o_redraw_all(w_current);
+
+	return(0);
+}
+
+/* this is used during an open command */
+/* to setup the correct sizes */
+void
+x_manual_resize(TOPLEVEL *w_current)
+{
+	/* of the actual win window (drawing_area) */
+	w_current->win_width = w_current->drawing_area->allocation.width;
+        w_current->win_height = w_current->drawing_area->allocation.height;
+
+	#if DEBUG
+	printf("manual: %d %d\n", win_width, win_height);
+	#endif
+
+	w_current->width = w_current->win_width;
+	w_current->height = w_current->win_height;
+
+
+#if DEBUG
+	printf("Coord aspect: %f Window aspect: %f\n", coord_aspectratio, (float
+) win_width/(float) win_height);
+        printf("w: %d h: %d\n", width, height);
+        printf("aw: %d ah: %d\n", win_width, win_height);  
+#endif
+
+	/* I'm assuming that the backingstore pixmap is of the right size */
+}
+
+void
+x_event_hschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
+{
+	int current_left;
+	int new_left;
+        GtkAdjustment        *hadjustment;
+
+
+	if (w_current->scrollbars_flag == FALSE) {
+		return;
+	}	
+
+        hadjustment = gtk_range_get_adjustment (GTK_RANGE (
+						w_current->h_scrollbar));
+	
+	current_left = w_current->page_current->left;
+        new_left = (int) hadjustment->value; 
+
+	if (!w_current->DONT_RECALC) {
+		w_current->page_current->left = new_left;
+		w_current->page_current->right = w_current->page_current->right - (current_left - new_left);
+	}
+
+	if (!w_current->DONT_REDRAW)	
+		o_redraw_all(w_current);
+}
+
+void
+x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
+{
+	int current_bottom;
+	int new_bottom;
+        GtkAdjustment        *vadjustment;
+
+	if (w_current->scrollbars_flag == FALSE) {
+		return;
+	}
+
+        vadjustment = gtk_range_get_adjustment (GTK_RANGE (
+						w_current->v_scrollbar));
+	
+	current_bottom = w_current->page_current->bottom;
+        new_bottom = w_current->init_bottom - (int) vadjustment->value; 
+
+	if (!w_current->DONT_RECALC) {
+		w_current->page_current->bottom = new_bottom;
+		w_current->page_current->top = w_current->page_current->top - (current_bottom - new_bottom);
+	}
+
+#if DEBUG
+	printf("vrange %f %f\n", vadjustment->lower, vadjustment->upper);
+	printf("vvalue %f\n", vadjustment->value);
+	printf("actual: %d %d\n", top, bottom);
+#endif
+
+	if (!w_current->DONT_REDRAW)	
+		o_redraw_all(w_current);
+}
+
+gint
+x_event_enter(GtkWidget *widget, GdkEventCrossing *event, 
+	TOPLEVEL *w_current)
+{
+	/* do nothing or now */
+	return(0);
+}
+
+
+gint
+x_event_key_press (GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current)
+{
+	exit_if_null(w_current); 
+	global_window_current = w_current;
+
+	set_window_current_key(w_current);	
+		
+	if (event) {
+		g_key_execute(event->state, event->keyval);
+	}
+
+	return(0);
+}
+

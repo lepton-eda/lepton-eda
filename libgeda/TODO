@@ -1,0 +1,33 @@
+TODOs
+----------------------
+
+
+Code cleanups (no particular order):
+----------------------
+
+	All of it. :-)
+
+	Including all code cleanups listed in ../gschem/TODO
+
+	Use the ascii code in all the font width specifiers (lib/sym/font)
+
+----------------------
+
+
+
+Feature additions (no particular order):
+----------------------
+
+	Added ability to rotate embedded complexes
+
+	Added text with bars (inverted labels)
+
+	Add support for subscripted text
+	
+	Figure out how to rotate and mirror text in place. (for doing mirrors
+	on 90/270 to unmirrored 90/270 (and vs) correctly) (currently kludged)
+
+	Change the way invisible text items are added.  Don't create the string
+	if the text item is invisible.  Also don't do any other ops if that's
+	the case
+
