@@ -530,6 +530,18 @@
 ;(output-text "vector")
 (output-text "ps")
 
+; output-vector-threshold
+;
+; Controls the threshold (in text lines) where multi-line text objects
+; are outputted using the postscript font or the vector font.  If the 
+; number of lines exceeds the specified threshold, then the whole multi-line 
+; text item is outputted using the vector font instead of the postscript 
+; font.  If you want to disable this feature, then comment in the line with 
+; the large value.
+;
+(output-vector-threshold 3)
+;(output-vector-threshold 999999)
+
 ; output-type string
 ;
 ; Controls what is actually printed

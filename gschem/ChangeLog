@@ -1,3 +1,12 @@
+2005-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/i_vars.h, prototype.h, noweb/g_rc.nw, g_register.nw,
+	i_vars.nw, lib/system-gschemrc.in: Added a new keyword
+	"output-vector-threshold" which controls the minimum number lines
+	(in a multi-line text object) that are output using the postscript
+	font.  If the threshold (in number of lines) is exceeded then
+	the multi-line text item is output using the vector font.
+
 2005-01-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/i_callbacks.nw (i_callback_edit_linetype): Modified to create 

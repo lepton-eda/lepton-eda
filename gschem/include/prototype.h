@@ -244,6 +244,7 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_bus_ripper_rotation(SCM mode);
 SCM g_rc_force_boundingbox(SCM mode);
 SCM g_rc_grid_dot_size(SCM dotsize);
+SCM g_rc_output_vector_threshold(SCM numlines);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

@@ -445,7 +445,10 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
           if (o_current->visibility == VISIBLE) {
             fprintf(fp, "gsave\n");
 			
-            if (w_current->text_output == VECTOR_FONTS) {	
+            if (w_current->text_output == VECTOR_FONTS || 
+		o_text_num_lines(o_current->text->string) > 
+	 	  w_current->print_vector_threshold) 
+            {	
               f_print_objects(w_current, 
                               fp, 
                               o_current->text->

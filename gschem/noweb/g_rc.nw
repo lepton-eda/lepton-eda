@@ -95,6 +95,7 @@
 <<g_rc.c : g_rc_bus_ripper_rotation()>>
 <<g_rc.c : g_rc_force_boundingbox()>>
 <<g_rc.c : g_rc_grid_dot_size()>>
+<<g_rc.c : g_rc_output_vector_threshold()>>
 
 @
 
@@ -1971,4 +1972,32 @@ g_rc_grid_dot_size(SCM dotsize)
 
 
 @ %def g_rc_grid_dot_size
+
+
+@section Function @code{g_rc_output_vector_threshold()}
+
+@defun g_output_vector_threshold dotsize
+@end defun
+
+<<g_rc.c : g_rc_output_vector_threshold()>>=
+SCM
+g_rc_output_vector_threshold(SCM numlines)
+{
+  int val;
+
+  val = gh_scm2int(numlines);
+
+  if (val < 0) {
+    fprintf(stderr, _("Invalid number of lines [%d] passed to output-vector-threshold\n"),
+            val);
+    val = 3; /* absolute default */
+  }
+
+  default_print_vector_threshold = val;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_output_vector_threshold
 

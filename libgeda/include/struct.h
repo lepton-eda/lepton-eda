@@ -800,6 +800,10 @@ struct st_toplevel {
 
   /* controls the grid dot size */
   int grid_dot_size;
+
+  /* controls the threshold (in lines of text) when the multi-line text */
+  /* output font is forced to vector */
+  int print_vector_threshold;
   
   /* gnetlist specific */
   int net_naming_priority;

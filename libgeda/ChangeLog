@@ -3,6 +3,13 @@
 	* noweb/o_basic.nw (o_set_line_options): Moved in this function some 
 	error checking and correcting that previously was in gschem code.
 
+2005-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h, noweb/s_project.nw, noweb/f_print.nw: Implemented
+	a threshold which controls when postscript outputted text is rendered
+	using the vector font instead of the postscript font.  This is a 
+	work around for the rather inaccurate multi-line postscript output.
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228, update shared library
