@@ -109,6 +109,9 @@ int line_chk(char *pBuf);
 int stricmp(char *s, char *p);
 char *TimeStamp(void);
 
+/* add by AVH to make compile warning free */
+int GetStringDisplayLength(char *str,int font_size); 
+
 int pin_len=300;
 int pin_spacing =300;
 int pin_0_x,pin_0_y;

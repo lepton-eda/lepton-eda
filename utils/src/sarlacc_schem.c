@@ -12,6 +12,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
 
 #define GET_TAG(VAL) (VAL & 0x0F) 
 /*
@@ -21,7 +23,7 @@
 
 int CONV16(char *base,int offset)
 {
-	int b1, b2, b3;
+	/* int b1, b2, b3; unused variables? AVH */
 	int retval;
 	retval = ((base[offset+1] & 255) <<8) | (base[offset] & 255);
 	if(base[offset+1]&128)
@@ -49,7 +51,8 @@ int CONV16(char *base,int offset)
 #define TEXTCOLOR 3
 #define TEXTSIZE 6
 
-int remove_spaces(char *src)
+/* change return type from int to void AVH */
+void remove_spaces(char *src)
 {
 	char *ptr=src;
 	while (*ptr != 0)
@@ -67,7 +70,9 @@ char read_string(char *dest, char *src)
     return src[0];
 }
 
-int read_string_file(int fd,char *dest)
+
+/* change return type from int to void AVH */
+void read_string_file(int fd,char *dest)
 {
     char len;
     read(fd,&len,1);
@@ -219,7 +224,7 @@ void parse_component(int fd1,int fd2)
 void parse_sheet (int fd)
 {
     char localbuf[1000];
-    char sheetname[256];
+    /* char sheetname[256]; unused variable? AVH */
     int size;
     int x1,y1,x2,y2;
 
@@ -276,7 +281,7 @@ void parse_junction (int fd)
 {
     char localbuf[32];
     int size;
-    int x,y;
+    /* int x,y; unused variable? AVH */
 
     read(fd,localbuf,2);
     size=CONV16(localbuf,0);
@@ -462,7 +467,7 @@ void parse_marker (int fd)
 {
     char localbuf[1024];
     int size;
-    int x,y,type;
+    /* int x,y,type; unused variables? AVH */
 
     read(fd,localbuf,2);
     size=CONV16(localbuf,0);
@@ -530,11 +535,12 @@ int parse_block(int fd1,int fd2)
     return 1;
 }
 
+int
 main(int argc, char **argv)
 {
-    int count=0;
-    int length;
-    int sheet;
+    /* int count=0; unused variables? AVH */
+    /* int length; */
+    /* int sheet; */
     int fd1,fd2;
 
     if( argc != 2 )
@@ -562,7 +568,8 @@ main(int argc, char **argv)
     
     while(parse_block(fd1,fd2));
     fprintf(stderr,"\n Normal End\n");
-    
+
+    return(0);    
 }
 
 
