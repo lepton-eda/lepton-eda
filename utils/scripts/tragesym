@@ -1,8 +1,9 @@
 #!/usr/bin/python
-#***************************************************************************
+# coding: iso8859-1
+# ***************************************************************************
 #    tragesym  - create gEDA symbols out of structured textfiles
 #    begin                : 2001-10-20
-#    copyright            : (C) 2001,2002,2003 by Werner Hoch
+#    copyright            : (C) 2001,2002,2003,2004 by Werner Hoch
 #    email                : werner.ho@gmx.de
 # ***************************************************************************
 # *                                                                         *
@@ -28,7 +29,7 @@
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.6"
+VERSION="0.0.7"
 
 CHARHIGH=26
 pre_options={"wordswap":"yes"
@@ -98,6 +99,18 @@ def swapwords(str):
         back=i+" "+back
     return back
 
+## make the parser more tolerant to the input file
+def type_translate(str):
+    if str == "i/o":
+        str="io"
+    elif str == "i":
+        str="in"
+    elif str == "o":
+        str="out"
+    elif str == "p":
+        str="pas"
+    return str
+
 ## returns 2 dicts: (options, attr) and 2 arrays: (devices, pins)
 def readsrc(filename):
     geda_attr={}
@@ -113,7 +126,7 @@ def readsrc(filename):
             section=string.split(line[1:],"]")[0]
             continue
         elif section=="" or line[0]=="#" \
-             or len(string.strip(line)) == 0:  # comment, empty line or no section started
+             or len(string.strip(line)) == 0: # comment, empty line or no section
             continue
         if section=="options":
             element=string.split(line,"=",1)
@@ -130,6 +143,10 @@ def readsrc(filename):
             if len(element) > 2:
                 for j in xrange(len(element)):
                     element[j]=string.strip(element[j])
+                    if j in [P_TYPE,P_POS,P_STYLE]:
+                        element[j]= string.lower(element[j])
+                    if j == P_TYPE:
+                        element[j] = type_translate(element[j])
                 while len(element) < 7:
                     element.append("")
                 pins.append(element)
@@ -251,75 +268,75 @@ def writesym(filename,options,attr,pins):
         print "version attribut missing"
     if attr.has_key(("refdes",1)):
         value=attr[("refdes",1)]
-        f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6\n")
+        f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6 1\n")
         f.write("refdes=" + value + "\n")
     else:
         print "refdes attribut missing"
     if attr.has_key(("name",1)):
         value=attr[("name",1)]
-        f.write("T %i" %textx + " %i"% texty + " 9 10 1 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 9 10 1 0 0 0 1\n")
         f.write(value + "\n")
         texty=texty+200
     else:
         print "name attribut missing"
     if attr.has_key(("device",1)):
         value=attr[("device",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("device=" + value + "\n")
         texty=texty+200
     else:
         print "device attribut missing"
     if attr.has_key(("footprint",1)):
         value=attr[("footprint",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("footprint=" + value + "\n")
         texty=texty+200
     else:
         print "footprint attribut missing"
     if attr.has_key(("author",1)):
         value=attr[("author",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("author=" + value + "\n")
         texty=texty+200
     else:
         print "author attribut missing"
     if attr.has_key(("documentation",1)):
         value=attr[("documentation",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("documentation=" + value + "\n")
         texty=texty+200
     else:
-        print "footprint attribut missing"
+        print "documentation attribut missing"
     if attr.has_key(("description",1)):
         value=attr[("description",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("description=" + value + "\n")
         texty=texty+200
     else:
         print "description attribut missing"
     if attr.has_key(("numslots",1)):
         value=attr[("numslots",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("numslots=" + value + "\n")
         texty=texty+200
     else:
         print "numslots attribut missing"
     if attr.has_key(("slot",1)):
         value=attr[("slot",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("slot=" + value + "\n")
         texty=texty+200
     i = 1
     while attr.has_key(("slotdef",i)):
         value=attr[("slotdef",i)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("slotdef=" + value + "\n")
         texty=texty+200
         i = i + 1
     i = 1
     while attr.has_key(("comment",i)):
         value=attr[("comment",i)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("comment=" + value + "\n")
         texty=texty+200
         i = i + 1
@@ -332,7 +349,7 @@ def writesym(filename,options,attr,pins):
             else:
                 nets[pin[P_NET]] = nets[pin[P_NET]] + ","+ pin[P_NR]
     for key,value in nets.items():
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
         f.write("net=" + key + ":" + value + "\n")
         texty=texty+200
 
@@ -413,13 +430,13 @@ def writesym(filename,options,attr,pins):
         pintx, pinty, pinta, pintr=pint
         x=basex+pintx
         y=basey+pinty
-        f.write("T %i"%x+" %i"%y+" 5 8 1 1 %i"%pintr+" %i\n"%pinta)
+        f.write("T %i"%x+" %i"%y+" 5 8 1 1 %i"%pintr+" %i 1\n"%pinta)
         f.write("pinnumber="+pin[P_NR]+"\n")
 ### draw pinseq
         pintx, pinty, pinta, pintr=pinq
         x=basex+pintx
         y=basey+pinty
-        f.write("T %i"%x+" %i"%y+" 5 8 0 1 %i"%pintr+" %i\n"%pinta)
+        f.write("T %i"%x+" %i"%y+" 5 8 0 1 %i"%pintr+" %i 1\n"%pinta)
         f.write("pinseq="+pin[P_SEQ]+"\n")
 ### draw pinlabel and pintype
         pinlx, pinly, pinla, pinlr=pinl
@@ -439,9 +456,9 @@ def writesym(filename,options,attr,pins):
         else:
             label=pin[P_LABEL]
         label, neglines, wordlength = parselabel(label)
-        f.write("T %i"%pinlx+" %i"%pinly+" 9 8 1 1 %i"%pinlr+" %i\n"%pinla)
+        f.write("T %i"%pinlx+" %i"%pinly+" 9 8 1 1 %i"%pinlr+" %i 1\n"%pinla)
         f.write("pinlabel="+label+"\n")
-        f.write("T %i"%pinax+" %i"%pinay+" 5 8 0 1 %i"%pinar+" %i\n"%pinaa)
+        f.write("T %i"%pinax+" %i"%pinay+" 5 8 0 1 %i"%pinar+" %i 1\n"%pinaa)
         f.write("pintype="+pin[P_TYPE]+"\n")
         f.write("}\n")
 ### draw negation lines

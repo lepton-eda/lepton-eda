@@ -17,7 +17,7 @@ pinwidthhorizontal=600
 # name will be printed in the top of the symbol
 # if you have a device with slots, you'll have to use slot= and slotdef=
 # use comment= if there are special information you want to add
-version=20030525
+version=20040710 1
 name=TEST1
 device=devTEST1
 refdes=U?
@@ -53,15 +53,15 @@ numslots=0
 2	20	out	clk	l		_neg_
 3	19	out	dot	l		_n_0_n_
 4		pwr	none		GND
-5	18	io	line	l		_ABC_ (DEF)
+5	18	IO	line	l		_ABC_ (DEF)
 6	17	out	clk	l		xx_XX_xx
 7	16	out	dot	l		_Reset_
 8		pwr	none		AGND
-9	15	io	line	l		A12a100xx
+9	15	I/O	line	l		A12a100xx
 10	14	out	clk	l		A12a100
 11	13	out	dot	l		ner
 12		pwr	none		AVcc
-13	12	io	line	l		A1
+13	12	i/o	line	l		A1
 14	11	out	clk	l		A12
 15	10	out	dot	l		A2
 16		pwr	none		Vcc

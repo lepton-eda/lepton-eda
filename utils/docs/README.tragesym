@@ -5,6 +5,9 @@ For creating a symbol you have to edit the sourcefile first.  You can
 use the template.src file, which is in /examples/tragesym/ directory.
 Some examples are in the examples/tragesym directory too.
 
+For possible footprint names take a look into the ~geda directory 
+of the PCB program.
+
 usage is:
   tragesym <sourcefile> <symbolfile>
 
