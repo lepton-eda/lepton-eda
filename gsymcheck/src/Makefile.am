@@ -10,7 +10,7 @@ gsymcheck_SOURCES = \
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
 
 INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
-gsymcheck_LDADD = @GUILE_LIB@ @GLIB@ @X_LDFLAGS@ 
+gsymcheck_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LIB@ 
 
 man_MANS = gsymcheck.1
 

@@ -67,7 +67,7 @@ if (!quiet_mode) {
 }
 
 #ifdef __CYGWIN32__
-        fprintf(stderr, "This is the CYGWIN32 version, It is an unsupported port.\n");
+        fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
 	fprintf(stderr, "USE AT YOUR OWN RISK!\n");
 #endif  
 
