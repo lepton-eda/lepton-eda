@@ -1,3 +1,8 @@
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: More really minor version field 
+	updates 
+
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* fileformats/fileformats.tex: Fixed valid/test versions
