@@ -1,3 +1,12 @@
+1999-10-19  Matt Ettus   <matt@ettus.com>
+
+	* scheme/gnet-vipec.scm: Fixed ground node handling, some code cleaning.
+
+	* scheme/gnet-bom.scm:  Removed references to strip1.  Thanks Stefan.
+
+	* scheme/gnetlist.scm: Removed strip1, added ground handling for
+	number-nets function.
+
 1999-10-17  Ales Hvezda  <ahvezda@geda.seul.org>
 	
 	* src/*.c: Changed all files to use the new libgeda/libgeda.h include
