@@ -60,6 +60,7 @@ SCM g_key_edit_filltype(void);
 SCM g_key_edit_translate(void);
 SCM g_key_edit_embed(void);
 SCM g_key_edit_unembed(void);
+SCM g_key_edit_update(void);
 SCM g_key_edit_show_hidden(void);
 SCM g_key_edit_make_visible(void);
 SCM g_key_edit_find(void);
@@ -251,6 +252,7 @@ void i_update_left_button(char *string);
 void i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string);
 void i_update_right_button(char *string);
 void i_update_toolbar(TOPLEVEL *w_current);
+void i_update_cursor(TOPLEVEL *w_current);
 void i_set_filename(TOPLEVEL *w_current, char *string);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
@@ -292,6 +294,7 @@ void i_callback_edit_unlock(gpointer data, guint callback_action, GtkWidget *wid
 void i_callback_edit_translate(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_embed(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_unembed(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_update(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_hidden(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_make_visible(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_find(gpointer data, guint callback_action, GtkWidget *widget);
@@ -410,7 +413,7 @@ void o_arc_rubberarc_xor(TOPLEVEL *w_current);
 void o_arc_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
-void o_attrib_add_selected(TOPLEVEL *w_current, OBJECT *selected);
+void o_attrib_add_selected(TOPLEVEL *w_current, SELECTION *selection_list, OBJECT *selected);
 void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list);
 void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, SELECTION *list, int new_show_name_value);
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
@@ -514,6 +517,7 @@ void o_cue_undraw_objects(TOPLEVEL *w_current, OBJECT *list);
 /* o_delete.c */
 void o_delete_net(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_bus(TOPLEVEL *w_current, OBJECT *obj);
+void o_delete_complex(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_text(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(TOPLEVEL *w_current);
 /* o_find.c */
@@ -575,6 +579,7 @@ void autonumber_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_autonumber_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_hide_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_show_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
+void o_update_component(TOPLEVEL *w_current, SELECTION *list);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, int screen_diff_x, int screen_diff_y);

@@ -181,7 +181,8 @@ o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* do the attributes */
-  o_attrib_add_selected(w_current, o_current);
+  o_attrib_add_selected(w_current, w_current->page_current->selection2_head,
+                        o_current);
 
   /* finally redraw object */
   o_redraw_single(w_current, o_current);

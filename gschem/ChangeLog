@@ -1,3 +1,28 @@
+2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Fixed spelling mistake
+
+	* lib/system-gschemrc.in: Fixed the load of the commonrc file to 
+	work with --with-rcdir again.
+
+	* noweb/g_key.nw, g_register.nw, i_callbacks.nw: Added Edit/update
+	command 
+
+2002-06-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_attrib.nw: Changed o_attrib_add_selected to take a 
+	selection list as a parameter (allows for code reuse)
+
+	* noweb/o_select.nw, o_complex.nw: Updated calls to above to pass
+	in the appropriate selection list.
+
+	* noweb/o_misc.nw: Added o_update_component which updates a
+	component from disk and forces attributes to be repromoted.
+
+	* noweb/o_delete.nw: Removed a static keyword from
+	o_delete_complex(...) to allow for code reuse.
+	
+	
 2002-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_misc.nw, i_callbacks.nw: Fixed all

@@ -498,7 +498,8 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
                   w_current->page_current->object_tail);
   /* the o_redraw_selected is in x_events.c after this call
    * returns */
-  o_attrib_add_selected(w_current, w_current->page_current->object_tail);
+  o_attrib_add_selected(w_current, w_current->page_current->selection2_head,
+                        w_current->page_current->object_tail);
 
   s_conn_update_complex(w_current, o_current->complex->prim_objs);
   connected_objects = s_conn_return_complex_others(connected_objects,

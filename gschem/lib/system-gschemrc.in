@@ -21,7 +21,7 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for all programs
-(define gedarcdir (getenv "GEDADATA"))
+(define gedarcdir (getenv "GEDADATARC"))
 (load (string-append gedarcdir "@PATHSEP@system-commonrc"))
 
 ;
@@ -833,6 +833,7 @@
     ("t" . edit-translate)
     ("b" . edit-embed)
     ("u" . edit-unembed)
+    ("p" . edit-update)
     ("n" . edit-show-hidden)
     ("v" . edit-make-text-visible)))
 
@@ -1001,27 +1002,28 @@
 ;;
 ;;          menu item name      menu action     	menu hotkey action
 ;;
-	'( ("Undo"		edit-undo       	edit-undo)
-           ("Redo"              edit-redo       	edit-redo)
-	   ("SEPARATOR"         no-action       	no-action)
-           ("Select Mode"       edit-select     	edit-select)
-           ("Edit..."		edit-edit       	edit-edit)
-           ("Edit Text..."	edit-text       	edit-text)
-           ("Copy Mode"		edit-copy       	edit-copy-hotkey)
-           ("Move Mode"		edit-move       	edit-move-hotkey)
-           ("Delete"		edit-delete     	edit-delete)
-           ("Rotate 90 Mode"	edit-rotate-90  	edit-rotate-90-hotkey)
-           ("Mirror Mode"	edit-mirror     	edit-mirror-hotkey)
-	   ("SEPARATOR"		no-action		no-action)
-	   ("Slot..."           edit-slot               edit-slot)
- 	   ("Color..."          edit-color              edit-color)
-       	   ("Lock"              edit-lock               edit-lock)
-           ("Unlock"            edit-unlock             edit-unlock)
+	'( ("Undo"		 edit-undo       	edit-undo)
+           ("Redo"               edit-redo       	edit-redo)
+	   ("SEPARATOR"          no-action       	no-action)
+           ("Select Mode"        edit-select     	edit-select)
+           ("Edit..."		 edit-edit       	edit-edit)
+           ("Edit Text..."	 edit-text       	edit-text)
+           ("Copy Mode"		 edit-copy       	edit-copy-hotkey)
+           ("Move Mode"		 edit-move       	edit-move-hotkey)
+           ("Delete"		 edit-delete     	edit-delete)
+           ("Rotate 90 Mode"	 edit-rotate-90  	edit-rotate-90-hotkey)
+           ("Mirror Mode"	 edit-mirror     	edit-mirror-hotkey)
+	   ("SEPARATOR"		 no-action		no-action)
+	   ("Slot..."            edit-slot              edit-slot)
+ 	   ("Color..."           edit-color             edit-color)
+       	   ("Lock"               edit-lock              edit-lock)
+           ("Unlock"             edit-unlock            edit-unlock)
            ("Line Width & Type..." edit-linetype        edit-linetype)
-           ("Fill Type..."      edit-filltype           edit-filltype)
+           ("Fill Type..."       edit-filltype          edit-filltype)
            ("Symbol Translate..." edit-translate        edit-translate)
-           ("Embed Component"   edit-embed              edit-embed)
-           ("Unembed Componnent" edit-unembed           edit-unembed)
+           ("Embed Component"    edit-embed             edit-embed)
+           ("Unembed Component"  edit-unembed           edit-unembed)
+           ("Update Component"   edit-update            edit-update)
 	   ("Show/Hide Inv Text" edit-show-hidden 	edit-show-hidden)
 	   ("Make Inv Text Vis"	 edit-make-text-visible edit-make-text-visible)))
 

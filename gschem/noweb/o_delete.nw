@@ -169,7 +169,7 @@ o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
 @end defun
 
 <<o_delete.c : o_delete_complex()>>=
-static void
+void
 o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
 {
   GList *other_objects = NULL;

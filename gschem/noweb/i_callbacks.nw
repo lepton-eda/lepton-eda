@@ -63,6 +63,7 @@
 <<i_callbacks.c : i_callback_edit_translate()>>
 <<i_callbacks.c : i_callback_edit_embed()>>
 <<i_callbacks.c : i_callback_edit_unembed()>>
+<<i_callbacks.c : i_callback_edit_update()>>
 <<i_callbacks.c : i_callback_edit_show_hidden()>>
 <<i_callbacks.c : i_callback_edit_make_visible()>>
 <<i_callbacks.c : i_callback_edit_find()>>
@@ -1418,6 +1419,30 @@ DEFINE_I_CALLBACK(edit_unembed)
 
 
 @ %def i_callback_edit_unembed
+
+
+@section Function @code{i_callback_edit_update()}
+
+@defun i_callback_edit_update data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_update()>>=
+/* Update components */
+DEFINE_I_CALLBACK(edit_update)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  i_update_middle_button(w_current, i_callback_edit_update, "Update");
+  if (o_select_return_first_object(w_current)) {
+  	o_update_component(w_current,
+                     w_current->page_current->selection2_head->next);
+  }
+}
+
+
+@ %def i_callback_edit_update
 
 
 @section Function @code{i_callback_edit_show_hidden()}
