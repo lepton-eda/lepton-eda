@@ -68,7 +68,7 @@ go_look_for()
 {
 	if test "${browser}" != "no" ; then
 		echo "Go look for: $1"
-		${browser} "http://www.google.com/search?q=$1"
+		${browser} "http://www.google.com/search?q=$1%20filetype:pdf"
 		exit
 	fi
 }
