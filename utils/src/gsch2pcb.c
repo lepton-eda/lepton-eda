@@ -598,6 +598,8 @@ search_element_directories( PcbElement	*el)
 	for (list = element_directory_list; list; list = list->next)
 		{
 		dir_path = (gchar *) list->data;
+		if (verbose > 1)
+		      printf("\tLooking in directory: %s\n", dir_path);
 		path = find_element(dir_path, elname);
 		if (path)
 			{
@@ -1112,8 +1114,12 @@ parse_config(gchar *config, gchar *arg)
 		return 0;
 		}
 	if (!strcmp(config, "elements-dir") || !strcmp(config, "d"))
+	        {
+	        if (verbose > 1)
+	              printf("\tAdding directory to file element directory list: %s\n", expand_dir(arg) );
 		element_directory_list =
 				g_list_prepend(element_directory_list, expand_dir(arg));
+	        }
 	else if (!strcmp(config, "output-name") || !strcmp(config, "o"))
 		basename = g_strdup(arg);
 	else if (!strcmp(config, "schematics"))
