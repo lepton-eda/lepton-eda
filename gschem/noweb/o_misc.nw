@@ -963,7 +963,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 
 	if (attrib) {
 	  pcount = 0;
-	  current_filename = u_basic_breakup_string(attrib, pcount);
+	  current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	  if (current_filename != NULL) {
 	    page_control =
 		s_hierarchy_down_schematic_single(w_current,
@@ -1074,7 +1074,7 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 
       if (attrib) {
 	pcount = 0;
-	current_filename = u_basic_breakup_string(attrib, pcount);
+	current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	if (current_filename != NULL) {
 	  page_control =
 	      s_hierarchy_down_schematic_single(w_current,
@@ -1150,7 +1150,7 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 
       if (attrib) {
 	pcount = 0;
-	current_filename = u_basic_breakup_string(attrib, pcount);
+	current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	if (current_filename != NULL) {
 	  page_control =
 	      s_hierarchy_down_schematic_single(w_current,

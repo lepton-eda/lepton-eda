@@ -3466,9 +3466,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
 				/* look for source=filename,filename, ... */
         pcount = 0;
-        current_filename = u_basic_breakup_string(
-                                                  attrib, 
-                                                  pcount);
+        
+        current_filename = u_basic_breakup_string(attrib, ',', pcount);
 
 				/* loop over all filenames */
         while(current_filename != NULL) {
@@ -3525,10 +3524,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
           free(current_filename);
           pcount++;
-          current_filename = 
-            u_basic_breakup_string(
-                                   attrib, 
-                                   pcount);
+          current_filename = u_basic_breakup_string(attrib, ',', pcount);
         }
 
         if (attrib) {
@@ -3544,17 +3540,13 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 				/* continue looking outside first */
         if (!looking_inside) {
           attrib = 
-            o_attrib_search_name_single_count(
-                                              object,
-                                              "source",
-                                              count);
+            o_attrib_search_name_single_count(object, "source", count);
         } 
 
 				/* okay we were looking outside and didn't */
 				/* find anything, so now we need to look */
 				/* inside the symbol */
-        if (!looking_inside && attrib == NULL && 
-            !loaded_flag ) {
+        if (!looking_inside && attrib == NULL && !loaded_flag ) {
           looking_inside = TRUE;
 #if DEBUG
           printf("switching to go to look inside\n");
