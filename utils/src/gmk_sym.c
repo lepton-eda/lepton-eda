@@ -111,7 +111,9 @@ int make_box(int fldcnt,char *pFields[]);
 static char *strLabel(char *p, char *pTemp);
 void strtrail(char *wrk);
 int line_chk(char *pBuf);
+#ifndef __CYGWIN32__
 int stricmp(char *s, char *p);
+#endif
 char *TimeStamp(void);
 
 /* add by AVH to make compile warning free */
@@ -535,6 +537,7 @@ int line_chk(char *pBuf)
 /************************************************/
 /* Compare two string without regard for case   */
 /************************************************/
+#ifndef __CYGWIN32__
 int stricmp(char *s, char *p)
 {
   for (; toupper(*s) == toupper(*p); s++, p++)
@@ -542,6 +545,7 @@ int stricmp(char *s, char *p)
       return 0;
   return toupper(*s) - toupper(*p);
 }
+#endif
 
 /********************************/
 /*  Create a timestamp string   */
