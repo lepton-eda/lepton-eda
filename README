@@ -14,8 +14,8 @@ README for gEDA version 2000*
 	- Download all required packages and the toplevel Makefile.
 	- Untar all packages in a directory and place toplevel Makefile 
           in this same directory 
-	- [OPTIONAL] Edit Makefile changing prefix to a different place 
-                     other than default
+	- [OPTIONAL] Edit Makefile changing prefix to a different install 
+		     directory other than the default ($HOME/geda)
 	- Type: make
 	- Follow instructions on setting shell variables
 	- Set shell variables  *VERY IMPORTANT*
