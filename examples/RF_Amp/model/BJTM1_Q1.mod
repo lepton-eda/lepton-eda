@@ -1,0 +1,9 @@
+* This is the BJT model used in the Agilent MSA-26 model
+* documented in 5980-2496E.pdf.
+* Model entered 3.31.2003 by SDB
+.model BJTM1_Q1   NPN(Bf=1e6 IKF=5.895e-1 ISE=2.838e-19 NE=1.006
++  VAF=44 NF=1 TF=5.37e-12 XTF=20 VTF=0.8 ITF=2.218e-1 PTF=22
++  XTB=0.7 BR=1 IKR=1.1e-2 NC=2 VAR=3.37 NR=1.005 TR=4e-9
++  EG=1.17 IS=4.475e-18 XTI=3 TNOM=21 CJC=2.921e-14
++  VJC=0.6775 MJC=0.3319 XCJC=4.398e-1 FC=0.8 CJE=7.546e-14 
++  VJE=0.9907 MJE=0.5063 RB=9.301 IRB=8.18e-5 RBM=0.1 KF=1.643e-23)

@@ -1,0 +1,10 @@
+v 20030223
+B 0 300 2200 300 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 100 300 9 10 0 1 0 0
+device=spice-subcircuit-LL
+T 100 400 9 10 1 1 0 0
+refdes=A?
+T 600 400 9 10 1 0 0 0
+SPICE .SUBCKT
+T 100 100 8 10 1 1 0 0
+model-name=?

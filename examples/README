@@ -26,7 +26,7 @@ None of the examples are installed anywhere.
 
 	See gTAG/README and gTAG/ChangeLog for more information.
 	
-	gTAG shows off how to do hierachical schematics in gEDA/gaf.
+	gTAG shows off how to do hierarchical schematics in gEDA/gaf.
 
 
 	lightning_detector - A lightning detector
@@ -40,6 +40,16 @@ None of the examples are installed anywhere.
 	lightning detector shows off how to use gEDA/gaf and PCB.
 	Also includes the start of a bom creator which reads sch files
 	directly.
+
+
+	RF_Amp - schematics and associated materials for a SPICE model
+	of Agilent's MSA-2643 bipolar amp.
+	-----------------------------
+	Author: Stuart Brorson
+	Copyright (C) 2003 Stuart Brorson
+
+	This project exemplifies construction of a hierarchical SPICE
+	simulation using gEDA.
 
 
 - License  
