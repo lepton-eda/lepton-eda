@@ -369,7 +369,7 @@ initiate_gschemdoc(const char* documentation,const char *device,
     _exit(0);
   }
 #else
-  s_log_message(_("Documentation commands not supported under MINGW."));
+  s_log_message(_("Documentation commands not supported under MinGW.\n"));
 #endif
 }
 

@@ -18,10 +18,10 @@ AM_MAINTAINER_MODE
 #########################################################################
 # Command line flags start
 # 
-# --disable-strokes : turn off stroke support
-AC_ARG_ENABLE(strokes,
-    [  --disable-strokes       Disable stroke support (don't use LibStroke at all)], [ if test $enableval = "no"; then
-	 no_strokes=yes
+# --disable-stroke : turn off stroke support
+AC_ARG_ENABLE(stroke,
+    [  --disable-stroke       Disable stroke support (don't use LibStroke at all)], [ if test $enableval = "no"; then
+	 no_stroke=yes
         fi ])
 
 # --disable-gdgeda : turn off libgdgeda support
@@ -35,6 +35,9 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 
 # Force a specific version of gtk+          
 AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt_gtkver=1.2])
+
+# Allow the user to specify where there libstroke library lives
+AC_ARG_WITH(stroke, [  --with-stroke           Tell configure where to find libstroke], [opt_stroke=$withval])
 
 # 
 # Command line flags end
@@ -231,19 +234,42 @@ fi
 ############################################################################
 # Check for libstroke start
 #
-AC_CHECK_LIB(stroke, stroke_init, LIBSTROKE="yes", LIBSTROKE="no")
 
-if test $LIBSTROKE = yes; then
-   # Check disable-stroke command line flag value
-   if test "$no_strokes" = "yes"; then
-      echo found libstroke, but disabling strokes
-      LIBSTROKE_LIB=""
-   else 
-      AC_DEFINE(HAS_LIBSTROKE, 1, [Define if you have libstroke installed])
-      LIBSTROKE_LIBS="-lstroke"
+# user specified --with-stroke
+if eval "test x$opt_stroke != x"; then
+   LIBSTROKE_LIBS="-L$opt_stroke/lib"
+   LIBSTROKE_CFLAGS="-I$opt_stroke/include"
+fi
+
+# only check if the user has not disable strokes
+if test "$no_stroke" != "yes"; then
+   save_cppflags="$CPPFLAGS"
+   save_ldflags="$LDFLAGS"
+   CPPFLAGS="$CPPFLAGS $LIBSTROKE_CFLAGS"
+   LDFLAGS="$LDFLAGS $LIBSTROKE_LIBS"
+   AC_CHECK_LIB(stroke, stroke_init, LIBSTROKE="yes", LIBSTROKE="no")
+   CPPFLAGS="$save_cppflags"
+   LDFLAGS="$save_ldflags"
+fi
+
+if test "$LIBSTROKE" = "yes"; then
+   AC_DEFINE(HAS_LIBSTROKE, 1, [Define if you have libstroke installed])
+   if eval "test x$opt_stroke = x"; then
+       LIBSTROKE_LIBS="-lstroke"
+       LIBSTROKE_CFLAGS=""
+   else
+       LIBSTROKE_LIBS="$LIBSTROKE_LIBS -lstroke"
+       # LIBSTROKE_CFLAGS set above
    fi
-else 
+fi
+
+if test "$no_stroke" = "yes"; then
+   echo "**                                **"
+   echo "** Disabling libstroke by request **"
+   echo "**                                **"
    LIBSTROKE_LIB=""
+   LIBSTROKE_CFLAGS=""
+   LIBSTROKE="no"
 fi
 
 #
@@ -471,7 +497,7 @@ AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION(0.11.5)
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-GSCHEM_CFLAGS="$LIBGEDA_CFLAGS"
+GSCHEM_CFLAGS="$LIBSTROKE_CFLAGS $LIBGEDA_CFLAGS"
 GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GTK_LIBS $X_LDFLAGS" 
 
 # Makefile.in variable substitution

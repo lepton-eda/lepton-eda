@@ -1,3 +1,10 @@
+2003-09-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/i_callbacks.nw: Minor log message tweak
+
+	* configure.ac: Added --with-stroke configure command line option
+	so that users can tell the mechanism where to find libstroke.
+
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed MinGW cflags/ldflags
