@@ -1,3 +1,8 @@
+2002-12-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Applied Norwegian/Danish/German characters 
+	patch from Egil Kvaleberg
+
 2002-12-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added menubar variable to TOPLEVEL

@@ -412,37 +412,66 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-      /* finnish / swedish characters */
-    case (196): /* A-umlaut */
+    case (196): /* A-umlaut finnish/swedish/german */
       sprintf(temp_string, "%s%cA-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (228): /* a-umlaut */
-      sprintf(temp_string, "%s%ca_-diaeresis.sym",
+    case (197): /* A-ring finnish/swedish/danish/norwegian */
+      sprintf(temp_string, "%s%cA-ring.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (198): /* AE-diphtong danish/norwegian */
+      sprintf(temp_string, "%s%cAE-lig.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (214): /* O-umlaut */
+    case (214): /* O-umlaut finnish/swedish/german */
       sprintf(temp_string, "%s%cO-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (246): /* o-umlaut */
+    case (216): /* O-slash danish/norwegian */
+      sprintf(temp_string, "%s%cO-slash.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (220): /* U-umlaut german */
+      sprintf(temp_string, "%s%cU-diaeresis.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (228): /* a-umlaut finnish/swedish/german */
+      sprintf(temp_string, "%s%ca_-diaeresis.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (229): /* a-ring finnish/swedish/danish/norwegian */
+      sprintf(temp_string, "%s%ca_-ring.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+
+    case (230): /* ae-diphtong danish/norwegian */
+      sprintf(temp_string, "%s%cae_-lig.sym",
+	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
+
+    case (246): /* o-umlaut finnish/swedish/german */
       sprintf(temp_string, "%s%co_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (197): /* A-ring */
-      sprintf(temp_string, "%s%cA-ring.sym",
+    case (248): /* o-slash danish/norwegian */
+      sprintf(temp_string, "%s%co_-slash.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (229): /* a-ring */
-      sprintf(temp_string, "%s%ca-ring.sym",
+    case (252): /* u-umlaut german */
+      sprintf(temp_string, "%s%cu_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
       
+	
     default:	
       /* this is needed since WinNT file systems are 
        * case insensitive, and cannot tell the difference 
