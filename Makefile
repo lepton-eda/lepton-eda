@@ -415,44 +415,44 @@ utils_distclean: $(DIR_PREFIX)utils$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} distclean )
 
 # geda
-geda: $(DIR_PREFIX)geda$(CD_VERSION)/configure \
-	$(DIR_PREFIX)geda$(CD_VERSION)/config.h \
-	$(DIR_PREFIX)geda$(CD_VERSION)/src/geda
+geda: geda$(CD_VERSION)/configure \
+	geda$(CD_VERSION)/config.h \
+	geda$(CD_VERSION)/src/geda
 	@echo geda Built 
 
-geda_install: $(DIR_PREFIX)geda$(CD_VERSION)/configure \
-	      $(DIR_PREFIX)geda$(CD_VERSION)/config.h \
-	      $(DIR_PREFIX)geda$(CD_VERSION)/src/geda
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} install )
+geda_install: geda$(CD_VERSION)/configure \
+	      geda$(CD_VERSION)/config.h \
+	      geda$(CD_VERSION)/src/geda
+	( cd geda$(CD_VERSION); ${MAKE} install )
 
-geda_uninstall: $(DIR_PREFIX)geda$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} uninstall )
+geda_uninstall: geda$(CD_VERSION)/config.h 
+	( cd geda$(CD_VERSION); ${MAKE} uninstall )
 
-geda_config: $(DIR_PREFIX)geda$(CD_VERSION)/configure
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); \
+geda_config: geda$(CD_VERSION)/configure
+	( cd geda$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
 geda_reconfig: 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+	( cd geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
 geda_distconfig: 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); aclocal ; autoconf ; \
+	( cd geda$(CD_VERSION); aclocal ; autoconf ; \
 	  automake --include-deps )
 
 geda_dist: 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} dist )
+	( cd geda$(CD_VERSION); ${MAKE} dist )
 
 geda_distcheck: 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} distcheck )
+	( cd geda$(CD_VERSION); ${MAKE} distcheck )
 
-geda_maint: $(DIR_PREFIX)geda$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} maintainer-clean )
+geda_maint: geda$(CD_VERSION)/config.h 
+	( cd geda$(CD_VERSION); ${MAKE} maintainer-clean )
 
-geda_clean: $(DIR_PREFIX)geda$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} clean )
+geda_clean: geda$(CD_VERSION)/config.h 
+	( cd geda$(CD_VERSION); ${MAKE} clean )
 
-geda_distclean: $(DIR_PREFIX)geda$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} distclean )
+geda_distclean: geda$(CD_VERSION)/config.h 
+	( cd geda$(CD_VERSION); ${MAKE} distclean )
 
 # setup
 setup: $(DIR_PREFIX)setup$(CD_VERSION)/configure \
@@ -648,12 +648,11 @@ $(DIR_PREFIX)utils$(CD_VERSION)/config.h:
 $(DIR_PREFIX)utils$(CD_VERSION)/configure: 
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
-$(DIR_PREFIX)geda$(CD_VERSION)/config.h:
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); \
-	  ./configure --prefix=$(prefix) $(opts) )
+geda$(CD_VERSION)/config.h:
+	( cd geda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
-$(DIR_PREFIX)geda$(CD_VERSION)/configure: 
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+geda$(CD_VERSION)/configure: 
+	( cd geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
 $(DIR_PREFIX)setup$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); \
@@ -705,8 +704,8 @@ $(DIR_PREFIX)gnetlist$(CD_VERSION)/src/gnetlist:
 $(DIR_PREFIX)utils$(CD_VERSION)/src/gmk_sym:
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} )
 
-$(DIR_PREFIX)geda$(CD_VERSION)/src/geda:
-	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} )
+geda$(CD_VERSION)/src/geda:
+	( cd geda$(CD_VERSION); ${MAKE} )
 
 $(DIR_PREFIX)setup$(CD_VERSION)/src/setup:
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} )
