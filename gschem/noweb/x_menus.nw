@@ -122,8 +122,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   GtkWidget *root_menu;
   GtkWidget *menu_bar;
   GtkWidget *menu;
-  GdkFont *font=NULL;
-  GtkStyle *style;
   int scm_items_len;
   SCM scm_items;
   SCM scm_item;
@@ -144,6 +142,13 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   int i, j;
   int name_len, key_len, pad;
   int sum, diff, max_size, space_size;
+#ifdef HAS_GTK22
+  PangoLayout *layout;
+  int name_width, keys_width;
+#else
+  GtkStyle *style;
+  GdkFont *font=NULL;
+#endif 
 
   menu_bar = gtk_menu_bar_new ();
   for (i = 0 ; i < s_menu_return_num(); i++) {
@@ -160,24 +165,30 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     gtk_menu_append(GTK_MENU(menu), menu_item);
     gtk_widget_show(menu_item);
 
+#ifdef HAS_GTK12
     /* get info for style/font */
     style = gtk_rc_get_style(w_current->main_window);
     if (style) {
-#ifdef HAS_GTK22
-       font = gtk_style_get_font(style);
-#else
        font = style->font;
-#endif
     } else {
-#ifdef HAS_GTK22
-       font = gtk_style_get_font(GTK_WIDGET (w_current->main_window)->style);
-#else
        font = GTK_WIDGET (w_current->main_window)->style->font;
-#endif
     }
+
     space_size = gdk_string_width(font, " ");
     max_size = gdk_string_width(font, "123456789012345678901234567890");
-	
+
+#else
+
+    layout = gtk_widget_create_pango_layout(menu, " ");
+    pango_layout_get_pixel_size(layout, &space_size, NULL);
+    g_object_unref(layout);
+
+    layout = gtk_widget_create_pango_layout(menu, 
+	                                    "123456789012345678901234567890");
+    pango_layout_get_pixel_size(layout, &max_size, NULL);
+    g_object_unref(layout);
+
+#endif
 
     scm_items_len = gh_length(scm_items);
     for (j = 0 ; j < scm_items_len; j++) {
@@ -215,13 +226,21 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         name_len = strlen(menu_item_name);
         key_len = strlen(menu_item_keys);
 
-#if 0 /* old way of calculating pad, assumes fixed width font */
-        pad = 30 - (name_len + key_len);
-#endif
+#ifdef HAS_GTK22
+        layout = gtk_widget_create_pango_layout(menu, menu_item_name);
+        pango_layout_get_pixel_size(layout, &name_width, NULL);
+        g_object_unref(layout);
 
-        /* new way of calculating pad */
+        layout = gtk_widget_create_pango_layout(menu, menu_item_keys);
+        pango_layout_get_pixel_size(layout, &keys_width, NULL);
+        g_object_unref(layout);
+
+        sum = name_width + keys_width;
+#else
         sum = gdk_string_width(font, menu_item_name) + 
               gdk_string_width(font, menu_item_keys);
+#endif
+
 	diff = max_size - sum;
 	pad = diff/space_size;
 	if (pad < 0) { 
@@ -250,32 +269,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       }
       
       gtk_widget_show(menu_item);
-
-/* __MINGW32__ old */
-#if 0  
-      if (GTK_BIN (menu_item)->child) {
-        GtkWidget *child = GTK_BIN (menu_item)->child;
-        
-        /* do stuff with child */
-        if (GTK_IS_LABEL (child))
-        {
-          font =
-            gdk_fontset_load ("-unknown-Courier New-normal-r-normal--17-127-96-96-m-0-iso8859-1");
-          if (!font) {
-            font =
-              gdk_fontset_load ("-unknown-Fixedsys-normal-r-normal--14-105-96-96-m-0-iso8859-1");
-          }
-
-          if (font) {
-            style = gtk_style_copy (gtk_widget_get_style (child));
-            gdk_font_unref (style->font);
-            style->font = font;
-            gdk_font_ref (style->font);
-            gtk_widget_set_style (child, style);
-          }
-        }
-      }
-#endif
 
       /* add a handle to the menu_bar object to get access to widget objects */
       /* This string should NOT be internationalized */

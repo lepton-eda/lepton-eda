@@ -1,3 +1,11 @@
+2003-11-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_menus.nw: Fixed the alignment of the hotkeys in the pull
+	down menus to be mostly correct when using gtk+ 2.2.x.  This involved
+	using Pango.
+
+	* noweb/x_menus.nw: Removed some old dead code.
+
 2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* config.guess config.rpath config.sub depcomp install-sh missing
