@@ -285,9 +285,11 @@ multi_attrib_edit_delete (GtkWidget *w, TOPLEVEL *w_current)
 	gtk_clist_remove(clist,selected);
 	gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)-1);
 	
+	o_selection_remove(w_current->page_current->selection2_head, attrib);
 	o_delete_text(w_current,attrib);
 	w_current->page_current->CHANGED=1;
 	o_undo_savestate(w_current, UNDO_ALL);
+
 	
 	multi_attrib_edit_clear (NULL,GTK_WINDOW(w_current->mawindow));
 /* Tell System about change! */
