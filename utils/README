@@ -75,67 +75,44 @@ IMPORTANT
 	smash_megafile is installed when make install is run.
 
 
-   convert_sym.awk		
    convert_sym.c
    Written by: Mike Jarabek, mjarabek@playground.net
 
-	convert_sym.awk is an AWK script which takes ViewLogic Viewdraw
-	schematic or symbol and outputs a gschem compatible file. This 
-	awk script is now OBSOLETE and will be replaced completely by
-	the C version.  It's just included in the dist as a reference for
-	other converter authors.
-
-	convert_sym.c does the same thing as the AWK script but is
-	written in C and has some bugs fixed.  
+	convert_sym converts Viewlogic schematics and symbols into
+	geda format.
 
 	This utility should be considered a work in progress.
-	Be warned, the program has quite a few limitations:
+	Be warned, the program has a few limitations:
 
-		1) gEDA does not have a 'bus' type net, so for the
-		   moment, busses are output as simple nets.
-
-		2) I don't think that I am adding net names correctly
-		   to the output schematic, gnetlist does not seem to
-		   pick up the right names.
-
-		3) Viewlogic text uses a text origin system that has
-		   9 anchor points for the text.  Text in geda only has
-		   one anchor point, so the text anchoring position is
-		   approximated by shifting text around. This may result
-		   in wierd looking text positions.
-
-		4) Some text spacing may be lost due to the way that I
+		1) Some text spacing may be lost due to the way that I
 		   extract the text from the viewlogic records
 
-		5) Rotated and mirrored text will not appear correctly
-		   in the geda schematic, to make this work properly
-		   will require some interesting math, but I don't think
-		   there is much benefit to this
-
-		6) Arcs in viewlogic are stored implicitly as a record
+		2) Arcs in viewlogic are stored implicitly as a record
 		   where the arc passes through three points,
 		   the conversion from this format to geda's
 		   center/radius/start/stop notation is not exact,
 		   so some arcs may not render well.
 
-		7) Bubbles are drawn on pins that are negated.	I believe
+		3) Bubbles are drawn on pins that are negated.	I believe
 		   the code is correct, but have not tried all the
 		   end cases.
 
-		8) Rotated and mirrored components may not show up correctly.
+		4) Rotated and mirrored components may not show up correctly,
+		   but should be better now, thanks to patches from 
+                   Thepthai Tabtieng <tabtieng@lsil.com>.
 
-	convert_sym.awk typical use:
-
-		cat viewlogic_file | awk -f convert_sym.awk > geda_file
-
-	convert_sym.awk is NOT installed when make install is run.
 
 	convert_sym (the C version) typical use:
 
-		./convert_sym viewlogic_filename > geda_file
+		convert_sym -s viewlogic_symbol.1 > viewlogic_symbol-1.sym
+
+		convert_sym viewlogic_schematic.1 > viewlogic_schematic-1.sch
 
 	convert_sym is installed when make install is run.
 
+	Thanks to Thepthai Tabtieng <tabtieng@lsil.com> for code to
+	support rotated and mirrored components, and a fix for
+	component instantiations.
 		
 
 - License  
