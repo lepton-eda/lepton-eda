@@ -253,16 +253,22 @@
 (define verilog:display-connections
    (lambda (package positional port)
      (begin
-       (let ((pin-list (gnetlist:get-pins-nets package)))
+       (let ( (pin-list (gnetlist:get-pins-nets package)) 
+	      (comma_pending #f) )
  	(if (not (null? pin-list))
  	    (begin
 	      (newline port)
- 	      (verilog:display-pin (car pin-list) positional port)
  	      (for-each (lambda (pin)
- 			  (display "," port)
- 			  (newline port)
- 			  (verilog:display-pin pin positional port))
- 			(cdr pin-list))
+ 			  (if (not (string=? "unconnected_pin" (cdr pin)))
+			      (begin
+				;; handle commas after the first pin
+				(if comma_pending 
+				    (begin
+				      (display "," port)
+				      (newline port))
+				    (set! comma_pending #t))
+				(verilog:display-pin pin positional port))))
+ 			pin-list)
  	      (newline port))))))
 )
 
@@ -285,22 +291,22 @@
 	      (display "  /* " port)
 	      (display (car pin) port)  ; add in name for debugging
 	      (display " */ " port )
-	      (verilog:display-conditional-pin pin port))
+	      (display (cdr pin) port))
 	    (begin    ; else output a named port instance 
 	      (display "    ." port)
 	      (display (car pin) port) ; name of pin 
 	      (display " ( " port)
-	      (verilog:display-conditional-pin pin port)
-	      (display " )" port)))))
-)
+	      (display (cdr pin) port)
+	      (display " )" port))))))
+    
 	 
 ;; display a pin only if it is not "unconnected_pin"
-(define verilog:display-conditional-pin
-  (lambda (pin port)
-    (begin
-      (if (not (string=? "unconnected_pin" (cdr pin)))
-	  (display (cdr pin) port))))
-)
+;(define verilog:display-conditional-pin
+;  (lambda (pin port)
+;    (begin
+;      (if (not (string=? "unconnected_pin" (cdr pin)))
+;	  (display (cdr pin) port))))
+;)
 
 
 
