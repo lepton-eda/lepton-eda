@@ -40,7 +40,8 @@
 
 #include "../include/prototype.h"
 
-/* this is needed so that these routines know which window they are changing */
+/* this is needed so that these routines know which window they are
+ * changing */
 static TOPLEVEL *window_current;
 
 void
@@ -84,7 +85,8 @@ g_key_execute(int state, int keyval)
 		return;
 	}
 
-	sprintf(guile_string, "(press-key %s%s\")", modifier, XKeysymToString (keyval));
+	sprintf(guile_string, "(press-key %s%s\")",
+		modifier, XKeysymToString (keyval));
 
 #if DEBUG
 	printf("_%s_\n", guile_string);
@@ -101,7 +103,7 @@ g_key_execute(int state, int keyval)
 SCM g_key_ ## name(void)				\
 {							\
 	i_callback_ ## name(window_current, 0, NULL);	\
-	return(gh_int2scm(0));				\
+	return SCM_BOOL_T;				\
 }
 
 DEFINE_G_KEY(file_new)
@@ -136,7 +138,7 @@ g_key_file_close_window(void)
 {
 	/* close the current window */
 	i_callback_file_close(window_current, 0, NULL);
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 DEFINE_G_KEY(file_quit)
@@ -227,7 +229,7 @@ DEFINE_G_KEY(options_snap_size)
 SCM g_key_options_show_log_window(void)
 {
 	i_callback_options_show_status(window_current, 0, NULL);
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 /* can't convert to the macro becasue of the inconsisntency of the
@@ -235,7 +237,7 @@ SCM g_key_options_show_log_window(void)
 SCM g_key_options_show_coord_window(void)
 {
 	i_callback_options_show_coord(window_current, 0, NULL);
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 DEFINE_G_KEY(misc)

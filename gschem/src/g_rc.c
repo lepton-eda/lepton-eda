@@ -137,6 +137,14 @@ g_rc_gschem_version(SCM version)
 
 	string = gh_scm2newstr(version, NULL);
 
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"gschem-version"
+			);
+		return SCM_BOOL_F;
+	}
+
 	if (strcmp(string, VERSION) != 0) {
 		fprintf(stderr,
 			"Found a version [%s] gschemrc file:\n[%s]\n",
@@ -144,13 +152,16 @@ g_rc_gschem_version(SCM version)
 		fprintf(stderr,
 			"While gschem is in ALPHA, "
 			"please be sure that you have the latest rc file.\n");
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
 	}
 
 	if (string) {
 		free(string);
 	}
-
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 /* general color-setting function */
@@ -172,7 +183,7 @@ g_rc_color_general(SCM color, const char* rc_name, int* color_var)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	*color_var = newcolor;
@@ -180,7 +191,7 @@ g_rc_color_general(SCM color, const char* rc_name, int* color_var)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 #define DEFINE_G_RC_COLOR(func, rc, var)		\
@@ -313,7 +324,7 @@ g_rc_mode_general(SCM mode,
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	*mode_var = vstbl_get_val(table, index);
@@ -321,7 +332,7 @@ g_rc_mode_general(SCM mode,
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 #define RETURN_G_RC_MODE(rc, var)			\
@@ -409,20 +420,21 @@ g_rc_text_display_zoomfactor(SCM zoomfactor)
 
 	if (val == 0) {
 		fprintf(stderr,
-			"Invalid zoomfactor [%d] passed to text-display-zoomfactor\n",
-			val);
+			"Invalid zoomfactor [%d] passed to %s\n",
+			val,
+			"text-display-zoom-factor");
 		val = 10; /* absolute default */
 	}
 
 	default_text_display_zoomfactor = val;
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
 g_rc_scrollbar_update(SCM mode)
 {
-	char *string=NULL;
+	char *string = NULL;
 
 #if 0
 	string = gh_scm2newstr(mode, NULL);
@@ -448,14 +460,14 @@ g_rc_scrollbar_update(SCM mode)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 #endif
 	if (string) {
 		free(string);
 	}
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -507,7 +519,7 @@ g_rc_text_size(SCM size)
 
 	default_text_size = val;
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 /* HACK: inconsistant naming with keyword name and variable to hold
@@ -539,7 +551,7 @@ g_rc_snap_size(SCM size)
 
 	default_snap_size = val;
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -566,7 +578,7 @@ g_rc_default_series_name(SCM name)
 			"%s requires a string as a parameter\n",
 			"series-name"
 			);
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	if (default_series_name) {
@@ -578,7 +590,7 @@ g_rc_default_series_name(SCM name)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -593,7 +605,7 @@ g_rc_untitled_name(SCM name)
 			"%s requires a string as a parameter\n",
 			"untitled-name"
 			);
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	if (default_untitled_name) {
@@ -605,7 +617,7 @@ g_rc_untitled_name(SCM name)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -630,7 +642,7 @@ g_rc_component_library(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not a directory? */
@@ -638,7 +650,7 @@ g_rc_component_library(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not an unique path? */
@@ -646,7 +658,7 @@ g_rc_component_library(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	s_clib_add_entry(string);
@@ -654,7 +666,7 @@ g_rc_component_library(SCM path)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -671,7 +683,7 @@ g_rc_source_library(SCM path)
 			"%s requires a string as a parameter\n",
 			"source-library"
 			);
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* take care of any shell variables */
@@ -688,7 +700,7 @@ g_rc_source_library(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not a directory? */
@@ -696,7 +708,7 @@ g_rc_source_library(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not a unique path? */
@@ -704,7 +716,7 @@ g_rc_source_library(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	s_slib_add_entry(string);
@@ -712,7 +724,7 @@ g_rc_source_library(SCM path)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -726,7 +738,7 @@ g_rc_attribute_name(SCM path)
 		fprintf(stderr,
 			"%s requires a string as a parameter\n",
 			"attribute-name");
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not unique? */
@@ -734,7 +746,7 @@ g_rc_attribute_name(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	s_attrib_add_entry(string);
@@ -742,7 +754,7 @@ g_rc_attribute_name(SCM path)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -759,7 +771,7 @@ g_rc_scheme_directory(SCM path)
 			"%s requires a string as a parameter\n",
 			"scheme-directory"
 			);
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* take care of any shell variables */
@@ -775,7 +787,7 @@ g_rc_scheme_directory(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not a directory? */
@@ -783,7 +795,7 @@ g_rc_scheme_directory(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	if (default_scheme_directory) {
@@ -794,7 +806,7 @@ g_rc_scheme_directory(SCM path)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -815,7 +827,7 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 		if (stroke) {
 			free(stroke);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	s_stroke_add_entry(stroke, scm_guile_func);
@@ -831,7 +843,7 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 	}
 #endif
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 DEFINE_G_RC_COLOR(g_rc_stroke_color,
@@ -852,7 +864,7 @@ g_rc_font_directory(SCM path)
 			"%s requires a string as a parameter\n",
 			"font-direcoty"
 			);
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* take care of any shell variables */
@@ -868,7 +880,7 @@ g_rc_font_directory(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	/* not a directory? */
@@ -876,7 +888,7 @@ g_rc_font_directory(SCM path)
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	if (default_font_directory) {
@@ -887,7 +899,7 @@ g_rc_font_directory(SCM path)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -928,7 +940,7 @@ g_rc_world_size(SCM width, SCM height, SCM border)
 	x_hscrollbar_set_ranges(window_current);
 #endif
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -955,7 +967,7 @@ g_rc_paper_size(SCM width, SCM height)
 	default_paper_width  = i_width;
 	default_paper_height = i_height;
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM
@@ -971,14 +983,14 @@ g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
 
 	if (string == NULL) {
 		fprintf(stderr, "Invalid parameters to paper-sizes\n");
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	if (!s_papersizes_uniq(string)) {
 		if (string) {
 			free(string);
 		}
-		return(gh_int2scm(-1));
+		return SCM_BOOL_F;
 	}
 
 	s_papersizes_add_entry(string, width, height);
@@ -986,7 +998,7 @@ g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
 	if (string) {
 		free(string);
 	}
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM

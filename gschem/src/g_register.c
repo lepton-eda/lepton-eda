@@ -23,16 +23,14 @@
 #include <assert.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> 
+#include <unistd.h>
 #endif
-
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
 #include <guile/gh.h>
-
 
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
@@ -92,7 +90,7 @@ g_register_funcs(void)
 	gh_new_procedure2_0 ("paper-size", g_rc_paper_size);
 	gh_new_procedure3_0 ("paper-sizes", g_rc_paper_sizes);
 	/* text-output is old... will eventually be removed! */
-	gh_new_procedure1_0 ("text-output", g_rc_output_text); 
+	gh_new_procedure1_0 ("text-output", g_rc_output_text);
 	gh_new_procedure1_0 ("output-text", g_rc_output_text);
 	gh_new_procedure1_0 ("output-type", g_rc_output_type);
 	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
@@ -102,7 +100,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);
 	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
 	gh_new_procedure1_0 ("third-button", g_rc_third_button);
-	
+
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
 	gh_new_procedure0_0 ("gschem-use-rc-values", g_funcs_use_rc_values);

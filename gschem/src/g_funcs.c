@@ -58,7 +58,7 @@ SCM g_funcs_print(SCM filename)
 	free(string);
 #endif
 
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
 SCM g_funcs_exit(void)
@@ -69,5 +69,5 @@ SCM g_funcs_exit(void)
 SCM g_funcs_use_rc_values(void)
 {
 	i_vars_set(global_window_current);
-	return(gh_int2scm(0));
+	return SCM_BOOL_T;
 }
