@@ -66,6 +66,9 @@ data4000=`echo $data4000`
 datalocal=`ls -1 local | grep -v Makefile | grep -v CVS`
 datalocal=`echo $datalocal`
 
+dataio=`ls -1 io | grep -v Makefile | grep -v CVS`
+dataio=`echo $dataio`
+
 dataanalog=`ls -1 analog | grep -v Makefile | grep -v CVS`
 dataanalog=`echo $dataanalog`
 
@@ -86,6 +89,9 @@ datalinear=`echo $datalinear`
 
 dataswitch=`ls -1 switch | grep -v Makefile | grep -v CVS`
 dataswitch=`echo $dataswitch`
+
+datatitleblock=`ls -1 titleblock | grep -v Makefile | grep -v CVS`
+datatitleblock=`echo $datatitleblock`
 
 datatube=`ls -1 tube | grep -v Makefile | grep -v CVS`
 datatube=`echo $datatube`
@@ -165,7 +171,9 @@ AC_SUBST(dataverilog)
 AC_SUBST(dataconnector)
 AC_SUBST(dataaltera)
 AC_SUBST(datalinear)
+AC_SUBST(dataio)
 AC_SUBST(dataswitch)
+AC_SUBST(datatitleblock)
 AC_SUBST(data4000)
 AC_SUBST(datatube)
 AC_SUBST(dataradio)
@@ -195,6 +203,7 @@ AC_OUTPUT([
 	font/Makefile 
 	foot/Makefile 
 	idt/Makefile 
+	io/Makefile 
 	linear/Makefile 
 	local/Makefile
         maxim/Makefile 
@@ -203,6 +212,7 @@ AC_OUTPUT([
 	misc/Makefile 
 	radio/Makefile 
 	switch/Makefile 
+	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
 	system-commonrc

@@ -28,6 +28,8 @@
 (component-library "@symdir@/altera")
 (component-library "@symdir@/idt")
 (component-library "@symdir@/misc")
+(component-library "@symdir@/io")
+(component-library "@symdir@/titleblock")
 (component-library "@symdir@/memory")
 (component-library "@symdir@/micro")
 (component-library "@symdir@/maxim")

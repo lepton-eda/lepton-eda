@@ -853,6 +853,9 @@ data4000=`echo $data4000`
 datalocal=`ls -1 local | grep -v Makefile | grep -v CVS`
 datalocal=`echo $datalocal`
 
+dataio=`ls -1 io | grep -v Makefile | grep -v CVS`
+dataio=`echo $dataio`
+
 dataanalog=`ls -1 analog | grep -v Makefile | grep -v CVS`
 dataanalog=`echo $dataanalog`
 
@@ -873,6 +876,9 @@ datalinear=`echo $datalinear`
 
 dataswitch=`ls -1 switch | grep -v Makefile | grep -v CVS`
 dataswitch=`echo $dataswitch`
+
+datatitleblock=`ls -1 titleblock | grep -v Makefile | grep -v CVS`
+datatitleblock=`echo $datatitleblock`
 
 datatube=`ls -1 tube | grep -v Makefile | grep -v CVS`
 datatube=`echo $datatube`
@@ -951,6 +957,8 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
+
 
 
 
@@ -1107,6 +1115,7 @@ trap 'rm -fr `echo "
 	font/Makefile 
 	foot/Makefile 
 	idt/Makefile 
+	io/Makefile 
 	linear/Makefile 
 	local/Makefile
         maxim/Makefile 
@@ -1115,6 +1124,7 @@ trap 'rm -fr `echo "
 	misc/Makefile 
 	radio/Makefile 
 	switch/Makefile 
+	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
 	system-commonrc
@@ -1174,7 +1184,9 @@ s%@dataverilog@%$dataverilog%g
 s%@dataconnector@%$dataconnector%g
 s%@dataaltera@%$dataaltera%g
 s%@datalinear@%$datalinear%g
+s%@dataio@%$dataio%g
 s%@dataswitch@%$dataswitch%g
+s%@datatitleblock@%$datatitleblock%g
 s%@data4000@%$data4000%g
 s%@datatube@%$datatube%g
 s%@dataradio@%$dataradio%g
@@ -1240,6 +1252,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	font/Makefile 
 	foot/Makefile 
 	idt/Makefile 
+	io/Makefile 
 	linear/Makefile 
 	local/Makefile
         maxim/Makefile 
@@ -1248,6 +1261,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	misc/Makefile 
 	radio/Makefile 
 	switch/Makefile 
+	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
 	system-commonrc

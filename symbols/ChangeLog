@@ -11,6 +11,36 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/13/99	Fixed all the misc power/gnd symbols to work with the new net= 
+	gnetlist options
+		- Removed all special attributes
+		- Properly named pin# attributes
+		- Added net=GND:1 to gnd-1.sym 
+		- Did not add any net= attribs to any v* symbol
+		- Made sure all the v*-1.sym are consistant
+
+	Removed vdd-1.sym and renamed vdd-2.sym to be vdd-1.sym 
+	(old vdd-1.sym was just a 180 degree rotation of vdd-2)
+	All v symbols should be drawn with the label on top, and the 
+	pin going down.  All gnd symbols should have the pin going up.
+
+	Created misc/vee-1.sym
+
+	Created symbol directory called titleblock.  Moved all the title block
+	symbols into this new library.
+
+	Added above to Makefile/configure and to the system-commonrc.in files
+
+	Created symbol directory called io (input/output).  Moved all input
+	and output type symbols into this new library.
+	
+	Added above to Makefile/configure and to the system-commonrc.in files
+
+	Created +3.3V, +5V, -5V, +12V, -12V, 9V, -9V symbols which
+	contain the net= attribute
+
+	Removed all device= attributes from the power/gnd symbols
+
 9/6/99	Start of getting symbols updated with the new colors scheme:
 		- All locked components need to be color 15 (locked)
 		- All text items need to be color 9

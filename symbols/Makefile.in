@@ -71,6 +71,7 @@ dataconnector = @dataconnector@
 datafont = @datafont@
 datafoot = @datafoot@
 dataidt = @dataidt@
+dataio = @dataio@
 datalinear = @datalinear@
 datalocal = @datalocal@
 datamaxim = @datamaxim@
@@ -79,6 +80,7 @@ datamicro = @datamicro@
 datamisc = @datamisc@
 dataradio = @dataradio@
 dataswitch = @dataswitch@
+datatitleblock = @datatitleblock@
 datatube = @datatube@
 dataverilog = @dataverilog@
 expandgedadatadir = @expandgedadatadir@
@@ -87,7 +89,7 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-SUBDIRS =  	4000 74 IEC417 altera analog connector font foot idt linear local 	maxim memory micro misc radio switch tube verilog 
+SUBDIRS =  	4000 74 IEC417 altera analog connector font foot idt io linear 	local maxim memory micro misc radio switch titleblock tube verilog 
 
 
 bin_SCRIPTS = gesym-config
