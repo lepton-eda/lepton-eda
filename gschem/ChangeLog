@@ -1,3 +1,21 @@
+2005-02-21 04:11  Dan McMahill <danmc>
+
+	* noweb/x_fileselect.nw: remove unused variable
+
+2005-02-21 04:10  Dan McMahill <danmc>
+
+	* noweb/x_log.nw: add a missing GTK_TEXT_VIEW ()
+
+2005-02-21 04:06  Dan McMahill <danmc>
+
+	* noweb/x_pagesel.nw: specify return type for some static functions
+
+2005-02-21 03:58  Dan McMahill <danmc>
+
+	* autogen.sh: avoid using the '-path' primary to find(1) as it's an
+	  extension to posix.2 and is not supported on some operating
+	  systems such as solaris.  Now we can autogen.sh on solaris 9.
+
 2005-02-21 03:07  Dan McMahill <danmc>
 
 	* noweb/o_text.nw: fix some format string/type mismatch bugs
