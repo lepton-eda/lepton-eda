@@ -26,10 +26,16 @@
 #include "file.h"
 #include "install.h"
 #include "log.h"
+#include "msgbox.h"
 #include "support.h"
 #include "comps.h"
 #include "package.h"
 #include "xpm.h"
+
+
+
+int bShowIconsHidden = FALSE;
+int bCompsAlwaysMarkFailed = FALSE;
 
 
 
@@ -40,10 +46,23 @@
 static const char *PixmapNoneXpm[] = XPM_ICON_NONE;
 static const char *PixmapPartXpm[] = XPM_ICON_PART;
 static const char *PixmapFullXpm[] = XPM_ICON_FULL;
+static const char *PixmapPartFailedXpm[] = XPM_ICON_PART_FAILED;
+static const char *PixmapFullFailedXpm[] = XPM_ICON_FULL_FAILED;
+static const char *PixmapReqXpm[] = XPM_ICON_REQUIRED;
+static const char *PixmapReqFailedXpm[] = XPM_ICON_REQUIRED_FAILED;
 static GdkPixmap *pGdkPixmapNone = NULL;
 static GdkPixmap *pGdkPixmapPart = NULL;
 static GdkPixmap *pGdkPixmapFull = NULL;
+static GdkPixmap *pGdkPixmapPartFailed = NULL;
+static GdkPixmap *pGdkPixmapFullFailed = NULL;
+static GdkPixmap *pGdkPixmapReq = NULL;
+static GdkPixmap *pGdkPixmapReqFailed = NULL;
 //, *MaskOpened = NULL, *MaskClosed = NULL;
+
+
+
+/* static */ int ShowDesc(struct CompsTable_s *pPkg);
+/* static */ int ShowIcons(const char *szParent);
 
 
 
@@ -62,33 +81,57 @@ static int BuildTree(GtkCTree *pTree, char *szParent);
 
 int ComponentsInitialize(void)
 {
-    GtkStyle *pStyle;
+	GtkStyle *pStyle;
 	GtkCTree *pTree;
 	GtkPixmap *pPixmapComponents;
 	GdkBitmap *pGdkMask;
 	GdkPixmap *pGdkPixmap;
 	int iResult;
-	
+
 	/* prepare pixmaps for marking selection */
 	pStyle = gtk_widget_get_style(pWindowMain);
-    pGdkPixmapNone = gdk_pixmap_create_from_xpm_d(
-		pWindowMain->window, 
-		&pGdkMask, 
-		&pStyle->bg[GTK_STATE_NORMAL], 
-		(gchar **)PixmapNoneXpm
-		);
-    pGdkPixmapPart = gdk_pixmap_create_from_xpm_d(
-		pWindowMain->window,  
+	pGdkPixmapNone = gdk_pixmap_create_from_xpm_d(
+		pWindowMain->window,
 		&pGdkMask,
 		&pStyle->bg[GTK_STATE_NORMAL],
-        (gchar **)PixmapPartXpm
+		(gchar **)PixmapNoneXpm
 		);
-    pGdkPixmapFull = gdk_pixmap_create_from_xpm_d(
+	pGdkPixmapPart = gdk_pixmap_create_from_xpm_d(
+		pWindowMain->window,
+		&pGdkMask,
+		&pStyle->bg[GTK_STATE_NORMAL],
+		(gchar **)PixmapPartXpm
+		);
+	pGdkPixmapFull = gdk_pixmap_create_from_xpm_d(
 		pWindowMain->window,
 		&pGdkMask,
 		&pStyle->bg[GTK_STATE_NORMAL],
 		(gchar **)PixmapFullXpm );
-	
+	pGdkPixmapPartFailed = gdk_pixmap_create_from_xpm_d(
+		pWindowMain->window,
+		&pGdkMask,
+		&pStyle->bg[GTK_STATE_NORMAL],
+		(gchar **)PixmapPartFailedXpm
+		);
+	pGdkPixmapFullFailed = gdk_pixmap_create_from_xpm_d(
+		pWindowMain->window,
+		&pGdkMask,
+		&pStyle->bg[GTK_STATE_NORMAL],
+		(gchar **)PixmapFullFailedXpm
+		 );
+	pGdkPixmapReq = gdk_pixmap_create_from_xpm_d(
+		pWindowMain->window,
+		&pGdkMask,
+		&pStyle->bg[GTK_STATE_NORMAL],
+		(gchar **)PixmapReqXpm
+		);
+	pGdkPixmapReqFailed = gdk_pixmap_create_from_xpm_d(
+		pWindowMain->window,
+		&pGdkMask,
+		&pStyle->bg[GTK_STATE_NORMAL],
+		(gchar **)PixmapReqFailedXpm
+		 );
+
 	/* show a picture on a components page */
 	iResult = (strlen(Software.szPictName) == 0)
 		? FAILURE
@@ -112,11 +155,11 @@ int ComponentsInitialize(void)
 	}
 	BuildTree(pTree, "");
 /* here was set_pixmaps() */
-	CompsShow("");
+	ShowIcons("");
 	gtk_widget_show(GTK_WIDGET(pTree));
-	
-	ComponentsPrepare(pCompsTable);
-	
+
+	ShowDesc(pCompsTable);
+
 	return SUCCESS;
 }
 
@@ -128,53 +171,37 @@ int ComponentsRelease(void)
 
 
 
-int ComponentsPrepare(struct CompsTable_s *pPkg)
+void CompsPrepare(void)
 {
-	GtkWidget *pWidget;
-	char szString[TEXTLEN];
-	
-	strcpy(szString, "");
-	
-	/* set pixmaps */
-	pWidget = lookup_widget(pWindowMain, "ComponentTree");
-	if (pWidget == NULL)
+	struct CompsTable_s *pComp;
+
+	/* check what has been installed and what tgz's exist */
+	MsgBox(
+		GTK_WINDOW(pWindowMain),
+		"Please wait ...",
+		"Checking dependencies ...",
+		0
+		);
+	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-		Log(LOG_FATAL, LOG_START, "Cannot find widget: 'ComponentTree'");
-		return FAILURE;
+		pComp->bCanBeInstalled = (!strlen(PackageWhatIsMissing(pComp->szCodeName)))
+			? TRUE
+			: FALSE;
+
+		while (g_main_iteration(FALSE)) ;
 	}
-	/* was: set_pixmaps() */
-	CompsShow("");
-	
-	/* prepare text to show */
-	if (pPkg != NULL)
+	MsgBoxDestroy();
+
+	/* unmark components that cannot be installed */
+	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-#if 0
-		strcpy(szString, pPkg->szCodeName);
-		strcat(szString, " ");
-		strcat(szString, pPkg->szVersion);
-		if (strlen(pPkg->szRelease) != 0)
-		{
-			strcat(szString, ".");
-			strcat(szString, pPkg->szRelease);
-		}
-		strcat(szString, ":\n");
-		strcat(szString, pPkg->szDesc);
-#else
-		strcpy(szString, pPkg->szDesc);
-#endif
+		if (!pComp->bCanBeInstalled)
+			pComp->iToBeInstalled = PACKAGE_IGNORED;
 	}
-	
-	/* show text */
-	pWidget = lookup_widget(pWindowMain, "ComponentsDesc");
-	if (pWidget == NULL)
-	{
-		Log(LOG_FATAL, LOG_START, "Cannot find widget: 'ComponentsDesc'");
-		return FAILURE;
-	}
-	gtk_label_set_text((GtkLabel *)pWidget, szString);
-	
-	return SUCCESS;
+
+	ShowIcons("");
 }
+
 
 
 int ComponentsHide(void)
@@ -191,18 +218,18 @@ int ComponentsHide(void)
 void mark_components(struct CompsTable_s *pMaster, int iFlag)
 {
 	struct CompsTable_s *pComp;
-		
-	pMaster->bToBeInstalled = (iFlag == MARK_SELECT)
-		? TRUE
-		: FALSE;
-	
+
+	pMaster->iToBeInstalled = (iFlag == MARK_SELECT)
+		? PACKAGE_SELECTED
+		: PACKAGE_IGNORED;
+
 	if (iFlag == MARK_SELECT)
 	{
 		for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 			if (pComp->pCompParent == pMaster)
 				mark_components(pComp, MARK_SELECT);
 	}
-	
+
 	else
 	{
 		for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
@@ -223,10 +250,10 @@ int is_expanded(GtkCTree *pTree, GtkCTreeNode *pNode)
     GdkBitmap **mask_opened = NULL;
 	gboolean *is_leaf = NULL;
 	gboolean *expanded = NULL;
-	
+
 	gtk_ctree_get_node_info(
-		pTree, 
-		pNode, 
+		pTree,
+		pNode,
         text,
         spacing,
         pixmap_closed,
@@ -235,7 +262,7 @@ int is_expanded(GtkCTree *pTree, GtkCTreeNode *pNode)
         mask_opened,
         is_leaf,
         expanded);
-		
+
 	return *expanded;
 }
 
@@ -256,7 +283,7 @@ static int BuildTree(GtkCTree *pTree, char *szParent)
 		? Software.szPackage
 		: pParent->szTopLevel
 		);
-	
+
 	/* display subsequent components */
 	for (i = strlen(szPkgList) - 1; i >= 0; i --)
 	{
@@ -280,11 +307,11 @@ static int BuildTree(GtkCTree *pTree, char *szParent)
 			Log(LOG_ERROR, LOG_MODULE_COMPS, szMessage);
 			return FAILURE;
 		}
-		
+
 		/* omit not displayed components */
-		if (pComp->bToBeDisplayed != TRUE)
+		if (!pComp->bToBeDisplayed && !bShowIconsHidden)
 			continue;
-		
+
 		/* show component */
 		pComp->pNode = gtk_ctree_insert_node(
 			pTree,
@@ -299,24 +326,74 @@ static int BuildTree(GtkCTree *pTree, char *szParent)
 			FALSE,
 			FALSE
 			);
-		
+
 		Sibling = pComp->pNode;
 		pComp->pCompParent = pParent;
-		
+
 		/* build tree treating the component as parent */
 		BuildTree(pTree, pComp->szCodeName);
 	}
-	
+
 	return SUCCESS;
 }
 
 
 
-int CompsShow(char *szParent)
+/* static */ int ShowDesc(struct CompsTable_s *pPkg)
+{
+	GtkWidget *pWidget;
+	char szString[TEXTLEN];
+
+	strcpy(szString, "");
+
+	/* set pixmaps */
+	pWidget = lookup_widget(pWindowMain, "ComponentTree");
+	if (pWidget == NULL)
+	{
+		Log(LOG_FATAL, LOG_START, "Cannot find widget: 'ComponentTree'");
+		return FAILURE;
+	}
+	/* was: set_pixmaps() */
+	ShowIcons("");
+
+	/* prepare text to show */
+	if (pPkg != NULL)
+	{
+#if 0
+		strcpy(szString, pPkg->szCodeName);
+		strcat(szString, " ");
+		strcat(szString, pPkg->szVersion);
+		if (strlen(pPkg->szRelease) != 0)
+		{
+			strcat(szString, ".");
+			strcat(szString, pPkg->szRelease);
+		}
+		strcat(szString, ":\n");
+		strcat(szString, pPkg->szDesc);
+#else
+		strcpy(szString, pPkg->szDesc);
+#endif
+	}
+
+	/* show text */
+	pWidget = lookup_widget(pWindowMain, "ComponentsDesc");
+	if (pWidget == NULL)
+	{
+		Log(LOG_FATAL, LOG_START, "Cannot find widget: 'ComponentsDesc'");
+		return FAILURE;
+	}
+	gtk_label_set_text((GtkLabel *)pWidget, szString);
+
+	return SUCCESS;
+}
+
+
+
+/* static */ int ShowIcons(const char *szParent)
 {
 	struct CompsTable_s *pComp, *pParent;
 	GtkCTree *pTree;
-	int iFoundSelected = FALSE, iFoundUnselected = FALSE, iFoundChildren = FALSE, i, j;
+	int iFoundSelected = FALSE, iFoundUnselected = FALSE, iFoundChildren = FALSE, iFoundFailed = FALSE, i, j;
 	char szPkgList[TEXTLEN], szCodeName[TEXTLEN], szValue[TEXTLEN], szMessage[TEXTLEN];
 
 	/* look for the component tree */
@@ -335,13 +412,13 @@ int CompsShow(char *szParent)
 		? Software.szPackage
 		: pParent->szTopLevel
 		);
-	
+
 	/* set pixmap for the subsequent components */
 	for (i = strlen(szPkgList) - 1; i >= 0; i --)
 	{
 		/* one or more children found */
 		iFoundChildren = TRUE;
-		
+
 		/* get component name */
 		for (; i >= 0 && isspace(szPkgList[i]); i --)
 			;
@@ -362,17 +439,29 @@ int CompsShow(char *szParent)
 			Log(LOG_ERROR, LOG_MODULE_COMPS, szMessage);
 			return FAILURE;
 		}
-		
+
 		/* omit not displayed components */
-		if (pComp->bToBeDisplayed != TRUE)
+		if (!pComp->bToBeDisplayed && !bShowIconsHidden)
 			continue;
 		
 		/* determine icons for all children */
-		CompsShow(pComp->szCodeName);
-		if (pComp->Icon == pGdkPixmapFull)
+		ShowIcons(pComp->szCodeName);
+		if (pComp->Icon == pGdkPixmapFull
+			|| pComp->Icon == pGdkPixmapFullFailed
+			|| pComp->Icon == pGdkPixmapReq
+			|| pComp->Icon == pGdkPixmapReqFailed
+			)
 			iFoundSelected = TRUE;
-		else if (pComp->Icon == pGdkPixmapNone || pComp->Icon == pGdkPixmapPart)
+		else if (pComp->Icon == pGdkPixmapNone
+			|| pComp->Icon == pGdkPixmapPart
+			|| pComp->Icon == pGdkPixmapPartFailed
+			)
 			iFoundUnselected = TRUE;
+		if (pComp->Icon == pGdkPixmapFullFailed
+			|| pComp->Icon == pGdkPixmapPartFailed
+			|| pComp->Icon == pGdkPixmapReqFailed
+			)
+			iFoundFailed = TRUE;
 	}
 
 	/* determine icon */
@@ -380,24 +469,40 @@ int CompsShow(char *szParent)
 	{
 		if (iFoundSelected == TRUE && iFoundUnselected == TRUE)
 		{
-			pParent->Icon = pGdkPixmapPart;
-			pParent->bToBeInstalled = FALSE;
+			pParent->Icon = (iFoundFailed == TRUE)
+				? pGdkPixmapPartFailed
+				: pGdkPixmapPart;
+			pParent->iToBeInstalled = PACKAGE_IGNORED;
 		}
 		else if (iFoundSelected == TRUE && iFoundUnselected == FALSE)
 		{
-			pParent->Icon = pGdkPixmapFull;
-			pParent->bToBeInstalled = TRUE;
+			pParent->Icon = (iFoundFailed == TRUE)
+				? pGdkPixmapFullFailed
+				: pGdkPixmapFull;
+			pParent->iToBeInstalled = PACKAGE_SELECTED;
 		}
 		else if (iFoundSelected == FALSE && iFoundUnselected == TRUE)
 		{
 			pParent->Icon = pGdkPixmapNone;
-			pParent->bToBeInstalled = FALSE;
+			pParent->iToBeInstalled = PACKAGE_IGNORED;
 		}
 	}
 	else
 	{
-		if (pParent->bToBeInstalled == TRUE)
-			pParent->Icon = pGdkPixmapFull;
+		mark_to_be_installed();
+
+		if (pParent->iToBeInstalled == PACKAGE_SELECTED)
+		{
+			pParent->Icon =  (pParent->bCanBeInstalled == TRUE)
+				? pGdkPixmapFull
+				: pGdkPixmapFullFailed;
+		}
+		else if (pParent->iToBeInstalled == PACKAGE_REQUIRED)
+		{
+			pParent->Icon =  (pParent->bCanBeInstalled == TRUE)
+				? pGdkPixmapReq
+				: pGdkPixmapReqFailed;
+		}
 		else
 			pParent->Icon = pGdkPixmapNone;
 	}
@@ -408,8 +513,6 @@ int CompsShow(char *szParent)
 	cSelectFlag = 0;
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-		if (pComp->bToBeDisplayed == FALSE)
-			continue;
 		if (pComp->pNode == NULL)
 			continue;
 		
