@@ -100,7 +100,8 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 			/* the string, there better be a null after it! */
 			if ( (*(equal_ptr + 1) != ' ') &&
 			     (*(equal_ptr - 1) != ' ') ) {
-				attrib_edit_dialog(w_current,o_current);
+				attrib_edit_dialog(w_current,o_current, 
+						   FROM_MENU);
 			} else {
 				o_text_edit(w_current, o_current);
 			} 
@@ -144,6 +145,7 @@ o_lock(TOPLEVEL *w_current)
 	}
 
 	o_unselect_all(w_current);
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 /* You can unlock something by selecting it with a bounding box... */
@@ -174,6 +176,7 @@ o_unlock(TOPLEVEL *w_current)
 
 		s_current=s_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
@@ -280,7 +283,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				/* erase the current selection */
 				o_complex_erase(w_current, object);
 
-				w_current->ADDING_SEL=1; /* NEWSEL: needed? */
+                                w_current->ADDING_SEL=1; /* NEWSEL: needed? */
 				new_angle = (object->angle + 90) % 360;
 				o_complex_rotate(w_current, centerx, centery,
 					         new_angle, 90, object);
@@ -310,6 +313,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 /* NEWSEL: below needed? */
 /*	o_conn_draw_all(w_current, w_current->page_current->object_head);*/
 
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
@@ -592,6 +596,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 #endif /* OLDSEL */
 
 	o_conn_disconnect_update(w_current->page_current);
+	o_undo_savestate(w_current, UNDO_ALL);
 
 /* NEWSEL needed? *?
 /*o_conn_draw_all(w_current, w_current->page_current->object_head); */
@@ -626,4 +631,5 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 		}
 		o_current = o_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
