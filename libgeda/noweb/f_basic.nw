@@ -90,7 +90,6 @@ f_open(TOPLEVEL *w_current, char *filename)
   char *full_rcfilename;
   char *file_directory;
   char *saved_cwd;
-  int i;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */
