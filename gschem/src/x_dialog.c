@@ -112,7 +112,7 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 		show, w_current->page_current->
 		selection_head->next);
 	free(newtext);
-	multi_attrib_edit_clear(NULL,window);
+	multi_attrib_edit_clear(GTK_WIDGET(NULL),GTK_WINDOW(window));
 }
 
 void
@@ -436,7 +436,7 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
         gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
                         GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
 
-	multi_attrib_edit_clear(NULL,window);
+	multi_attrib_edit_clear(GTK_WIDGET(NULL),GTK_WINDOW(window));
         gtk_grab_add(w_current->mawindow);
 
 	free(text[0]);
