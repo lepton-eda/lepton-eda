@@ -1,3 +1,11 @@
+2001-03-16  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in, configure: didn't build properly if libgdgeda
+	  wasn't placed in it' "usual place".
+
+	* src/x_menus.c: if libgdgeda isn't added, the menu alternative
+	  will not appear (silly, but I did it).
+	
 2001-03-07  Stefan Petersen  <spe@geda.seul.org>
 
 	* configure.in: Added patch from Bruno Schwander on libgeda also
