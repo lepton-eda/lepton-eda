@@ -527,7 +527,9 @@ fi
 
 
 
-PACKAGE=gEDA
+PACKAGE=symbols
+
+DATADIR=gEDA
 
 # new way of doing version
 VERSION=20010304
@@ -572,7 +574,7 @@ ac_configure=$ac_aux_dir/configure # This should be Cygnus configure.
 # SVR4 /usr/ucb/install, which tries to use the nonexistent group "staff"
 # ./install, which can be erroneously created by make from ./install.sh.
 echo $ac_n "checking for a BSD compatible install""... $ac_c" 1>&6
-echo "configure:576: checking for a BSD compatible install" >&5
+echo "configure:578: checking for a BSD compatible install" >&5
 if test -z "$INSTALL"; then
 if eval "test \"`echo '$''{'ac_cv_path_install'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -625,7 +627,7 @@ test -z "$INSTALL_SCRIPT" && INSTALL_SCRIPT='${INSTALL_PROGRAM}'
 test -z "$INSTALL_DATA" && INSTALL_DATA='${INSTALL} -m 644'
 
 echo $ac_n "checking whether build environment is sane""... $ac_c" 1>&6
-echo "configure:629: checking whether build environment is sane" >&5
+echo "configure:631: checking whether build environment is sane" >&5
 # Just in case
 sleep 1
 echo timestamp > conftestfile
@@ -682,7 +684,7 @@ test "$program_suffix" != NONE &&
 test "$program_transform_name" = "" && program_transform_name="s,x,x,"
 
 echo $ac_n "checking whether ${MAKE-make} sets \${MAKE}""... $ac_c" 1>&6
-echo "configure:686: checking whether ${MAKE-make} sets \${MAKE}" >&5
+echo "configure:688: checking whether ${MAKE-make} sets \${MAKE}" >&5
 set dummy ${MAKE-make}; ac_make=`echo "$2" | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_prog_make_${ac_make}_set'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
@@ -721,7 +723,7 @@ fi
 
 missing_dir=`cd $ac_aux_dir && pwd`
 echo $ac_n "checking for working aclocal""... $ac_c" 1>&6
-echo "configure:725: checking for working aclocal" >&5
+echo "configure:727: checking for working aclocal" >&5
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.
 # Redirect stdin to placate older versions of autoconf.  Sigh.
@@ -734,7 +736,7 @@ else
 fi
 
 echo $ac_n "checking for working autoconf""... $ac_c" 1>&6
-echo "configure:738: checking for working autoconf" >&5
+echo "configure:740: checking for working autoconf" >&5
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.
 # Redirect stdin to placate older versions of autoconf.  Sigh.
@@ -747,7 +749,7 @@ else
 fi
 
 echo $ac_n "checking for working automake""... $ac_c" 1>&6
-echo "configure:751: checking for working automake" >&5
+echo "configure:753: checking for working automake" >&5
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.
 # Redirect stdin to placate older versions of autoconf.  Sigh.
@@ -760,7 +762,7 @@ else
 fi
 
 echo $ac_n "checking for working autoheader""... $ac_c" 1>&6
-echo "configure:764: checking for working autoheader" >&5
+echo "configure:766: checking for working autoheader" >&5
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.
 # Redirect stdin to placate older versions of autoconf.  Sigh.
@@ -773,7 +775,7 @@ else
 fi
 
 echo $ac_n "checking for working makeinfo""... $ac_c" 1>&6
-echo "configure:777: checking for working makeinfo" >&5
+echo "configure:779: checking for working makeinfo" >&5
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.
 # Redirect stdin to placate older versions of autoconf.  Sigh.
@@ -791,7 +793,7 @@ fi
 
 
 echo $ac_n "checking whether to enable maintainer-specific portions of Makefiles""... $ac_c" 1>&6
-echo "configure:795: checking whether to enable maintainer-specific portions of Makefiles" >&5
+echo "configure:797: checking whether to enable maintainer-specific portions of Makefiles" >&5
     # Check whether --enable-maintainer-mode or --disable-maintainer-mode was given.
 if test "${enable_maintainer_mode+set}" = set; then
   enableval="$enable_maintainer_mode"
@@ -825,13 +827,13 @@ else
 fi
 
 # Old way of installing data into a version dependant dir
-#gedatopdir=$dprefix/share/$PACKAGE-$VERSION
+#gedatopdir=$dprefix/share/$DATADIR-$VERSION
 
-gedatopdir=$dprefix/share/$PACKAGE
+gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
 
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 cat >> confdefs.h <<EOF
 #define GEDADATADIR "$gedatopdir"
@@ -1000,9 +1002,9 @@ sourcedir=$gedatopdir/source
 HOME=`echo $HOME`
 
 # old way of installing data into a version dependant directory
-#gedadatadir=$datadir/$PACKAGE-$VERSION
+#gedadatadir=$datadir/$DATADIR-$VERSION
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
 
@@ -1239,6 +1241,7 @@ trap 'rm -fr `echo "
 	diode/Makefile 
 	opto/Makefile 
 	national/Makefile
+	winfonts/Makefile
 	system-commonrc
         gesym-config " | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
@@ -1404,6 +1407,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	diode/Makefile 
 	opto/Makefile 
 	national/Makefile
+	winfonts/Makefile
 	system-commonrc
         gesym-config "}
 EOF

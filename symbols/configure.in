@@ -13,7 +13,9 @@ dnl Start of configure actions..
 AC_INIT(74/7400-1.sym)
 
 dnl Initialize automake stuff
-PACKAGE=gEDA
+PACKAGE=symbols
+
+DATADIR=gEDA
 
 # new way of doing version
 VERSION=20010304
@@ -55,13 +57,13 @@ else
 fi
 
 # Old way of installing data into a version dependant dir
-#gedatopdir=$dprefix/share/$PACKAGE-$VERSION
+#gedatopdir=$dprefix/share/$DATADIR-$VERSION
 
-gedatopdir=$dprefix/share/$PACKAGE
+gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
 
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
@@ -113,9 +115,9 @@ sourcedir=$gedatopdir/source
 HOME=`echo $HOME`
 
 # old way of installing data into a version dependant directory
-#gedadatadir=$datadir/$PACKAGE-$VERSION
+#gedadatadir=$datadir/$DATADIR-$VERSION
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
 
@@ -227,6 +229,7 @@ AC_OUTPUT([
 	diode/Makefile 
 	opto/Makefile 
 	national/Makefile
+	winfonts/Makefile
 	system-commonrc
         gesym-config ], [chmod +x gesym-config]) 
 
