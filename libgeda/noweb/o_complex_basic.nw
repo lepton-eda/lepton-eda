@@ -1744,7 +1744,7 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
   if (!inside_present && outside_present)
   {
     s_log_message("WARNING: Symbol version oddity on refdes %s:\n"
-                  "\tsymversion=%s attached to instanciated symbol, "
+                  "\tsymversion=%s attached to instantiated symbol, "
                   "but no symversion= inside symbol file\n",
                   refdes, outside);
     goto done;
@@ -1759,11 +1759,11 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
     
     fprintf(stderr, "WARNING: Symbol version mismatch on refdes %s (%s):\n"
             "\tSymbol in library is newer than "
-            "instanciated symbol\n",
+            "instantiated symbol\n",
             refdes, object->complex_basename);
     s_log_message("WARNING: Symbol version mismatch on refdes %s (%s):\n"
                   "\tSymbol in library is newer than "
-                  "instanciated symbol\n",
+                  "instantiated symbol\n",
                   refdes, object->complex_basename);
 
     /* break up the version values into major.minor numbers */
@@ -1790,10 +1790,10 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
     {
       char* refdes_copy;
       fprintf(stderr, "\tMAJOR VERSION CHANGE (file %.3f, "
-              "instanciated %.3f)!\n",
+              "instantiated %.3f)!\n",
               inside_value, outside_value, refdes);
       s_log_message("\tMAJOR VERSION CHANGE (file %.3f, "
-                    "instanciated %.3f)!\n",
+                    "instantiated %.3f)!\n",
                     inside_value, outside_value);
 
       /* add the refdes to the major_changed_refdes GList */
@@ -1803,15 +1803,18 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
                                             ")", NULL);
       w_current->major_changed_refdes =
         g_list_append(w_current->major_changed_refdes, refdes_copy);
+
+      /* don't bother checking minor changes if there are major ones*/
+      goto done; 
     }
 
     if (inside_minor > outside_minor)
     {
       fprintf(stderr, "\tMinor version change (file %.3f, "
-              "instanciated %.3f)\n",
+              "instantiated %.3f)\n",
               inside_value, outside_value);
       s_log_message("\tMinor version change (file %.3f, "
-                    "instanciated %.3f)\n",
+                    "instantiated %.3f)\n",
                     inside_value, outside_value);
     }
 

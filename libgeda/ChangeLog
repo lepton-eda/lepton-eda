@@ -23,6 +23,10 @@
 	new symversion= attribute) to be always promoted (even if they are
 	invisible).   Misc whitespace cleanup too.
 
+	* noweb/o_complex_basic.nw: Fixed a few spelling mistakes and
+	changed version checking so that minor changes are not checked if
+	there are major changes.
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added code to specify the rc directory via
