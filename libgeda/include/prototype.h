@@ -526,9 +526,9 @@ PAGE *s_hierarchy_find_next_page(PAGE *p_start, int page_control);
 PAGE *s_hierarchy_find_page(PAGE *p_start, int pid);
 
 /* s_log.c */
-void s_log_init(char *cwd, const char *filename);
-void s_log_message(const gchar *format, ...);
-void s_log_close(void);
+void s_log_init (const gchar *filename);
+void s_log_close (void);
+gchar *s_log_read (void);
 
 /* s_menu.c */
 int s_menu_return_num(void);

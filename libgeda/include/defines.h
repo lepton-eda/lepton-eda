@@ -355,4 +355,26 @@
 #define M_PI  3.14159265358979323846
 #endif
 
+
+/* inspired of GLib's g_message() (gmessages.h) - LGPL */
+#ifdef G_HAVE_ISO_VARARGS
+#define s_log_message(...)  g_log (G_LOG_DOMAIN,         \
+                                   G_LOG_LEVEL_MESSAGE,  \
+                                   __VA_ARGS__)
+#elif defined(G_HAVE_GNUC_VARARGS)
+#define s_log_message(format...)    g_log (G_LOG_DOMAIN,         \
+                                           G_LOG_LEVEL_MESSAGE,  \
+                                           format)
+#else   /* no varargs macros */
+static void
+s_log_message (const gchar *format,
+               ...)
+{
+  va_list args;
+  va_start (args, format);
+  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, format, args);
+  va_end (args);
+}
+#endif  /* !__GNUC__ */
+
 #endif

@@ -1,3 +1,12 @@
+2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/s_clib.nw: Added a missing include of defines.h required for 
+	s_log_message().
+	
+	* include/defines.h (s_log_message): Added macro for message logging.
+	
+	* noweb/s_log.nw: Rewritten to use GLib's message logging.
+
 2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
 
         * configure.ac, include/funcs.h, include/libgeda.h, 

@@ -11,10 +11,16 @@
 /* DO NOT read or edit this file ! Use ../noweb/s_log.nw instead */
 
 <<s_log.c : include directives>>
-<<s_log.c : macro>>
+
+<<s_log.c : global variables>>
+
+
 <<s_log.c : s_log_init()>>
-<<s_log.c : s_log_message()>>
 <<s_log.c : s_log_close()>>
+
+<<s_log.c : s_log_read()>>
+
+<<s_log.c : s_log_handler()>>
 
 @
 
@@ -85,132 +91,191 @@
 #include <dmalloc.h>
 #endif
 
+
+static void s_log_handler (const gchar *log_domain,
+                           GLogLevelFlags log_level,
+                           const gchar *message,
+                           gpointer user_data);
+
 @
 
 
-<<s_log.c : macro>>=
-/* limit on a message is 240 bytes */
+<<s_log.c : global variables>>=
+static int logfile_fd = -1;
 
-#define MSG_MAXLEN 240
+static guint log_handler_id;
 
-@ %def MSG_MAXLEN
+@ %def logfile_fd log_handler_id
 
 
 @section Function @code{s_log_init()}
 
-@defun s_log_init cwd filename
+@defun s_log_init filename
+Initializes the logging feature of libgeda.
+
+It opens the file [[filename]] to log to and registers the handler to redirect log message to this file.
 @end defun
 
 <<s_log.c : s_log_init()>>=
-/* This function goes and finds the associated source files and loads ALL up */
-/* only works for schematic files though */
 void
-s_log_init(char *cwd, const char *filename)
+s_log_init (const gchar *filename)
 {
-  gchar *path; 
   if (do_logging == FALSE) {
     logfile_fd = -1;
     return;
   }
 
-  path = g_strconcat (cwd,
-                      G_DIR_SEPARATOR_S,
-                      filename,
-                      NULL);
-
   /* create log file */
-  logfile_fd = open(path, O_RDWR|O_CREAT|O_TRUNC, 0600);	
-
+  logfile_fd = open (filename, O_RDWR|O_CREAT|O_TRUNC, 0600);
   if (logfile_fd == -1) {
-    logfile_fd = -1;
-    do_logging = FALSE;
-    fprintf(stderr, "Could not open log file: %s\n", path);
+    fprintf(stderr, "Could not open log file: %s\n", filename);
     fprintf(stderr, "Errno was: %d\n", errno);
+    return;
   }
 
-  g_free(path);
-}
+  /* install the log handler */
+  log_handler_id = g_log_set_handler (NULL,
+                                      G_LOG_LEVEL_MESSAGE,
+                                      s_log_handler,
+                                      NULL);
 
+}
 
 @ %def s_log_init
 
 
-@section Function @code{s_log_message()}
+@section Function @code{s_log_close()}
 
-@defun s_log_message format ...
+@defun s_log_close
+Terminates the logging of messages.
+
+It deregisters the handler for redirection to the log file and closes it.
 @end defun
 
-<<s_log.c : s_log_message()>>=
+<<s_log.c : s_log_close()>>=
 void
-s_log_message(const gchar *format, ...)
+s_log_close (void)
 {
-  va_list args;
+  do_logging = FALSE; /* subsequent messages are lost after the close */
 
-  char *buf=NULL;
-  int len;
+  /* remove the handler */
+  g_log_remove_handler (NULL, log_handler_id);
+  
+  /* close the file */
+  if (logfile_fd != -1) {
+    close (logfile_fd);
+    logfile_fd = -1;
+  }
+
+}
+
+@ %def s_log_close
+
+
+@section Function @code{s_log_read()}
+
+@defun s_log_read
+Reads the current log file and returns its contents.
+@end defun
+
+<<s_log.c : s_log_read()>>=
+gchar*
+s_log_read (void)
+{
+  gboolean tmp;
+#define BUFSIZE 200  
+  gchar buf[BUFSIZE];
+  GString *contents;
+  gint len;
+  
+  if (logfile_fd == -1) {
+    return NULL;
+  }
+
+  tmp = do_logging;
+  do_logging = FALSE;
+
+  /* rewind the file */
+  lseek(logfile_fd, 0, SEEK_SET);
+
+  /* read its contents and build a string */
+  contents = g_string_new ("");
+  while ((len = read (logfile_fd, &buf, BUFSIZE)) != 0) {
+    contents = g_string_append_len (contents, buf, len);
+  }
+
+  do_logging = tmp;
+
+  return g_string_free (contents, FALSE);
+}
+
+@ %def s_log_read
+
+
+@section Function @code{s_log_handler()}
+
+@defun s_log_handler log_domain log_level message user_data
+Writes [[message]] to the current log file whose file descriptor is [[logfile_fd]].
+
+It also sends [[message]] to the optional function [[x_log_update]] for further use.
+@end defun
+
+<<s_log.c : s_log_handler()>>=
+static void
+s_log_handler (const gchar *log_domain,
+               GLogLevelFlags log_level,
+               const gchar *message,
+               gpointer user_data)
+{
   int status;
 
   if (do_logging == FALSE) {
     return;
   }
-
-  buf = (char *) malloc(sizeof(char)*MSG_MAXLEN);	
-
-  va_start(args, format);	
-  vsnprintf(buf, MSG_MAXLEN, format, args);
-  va_end(args);
-
-  if (buf == NULL) {
-    return;
-  }
-
-
-  if (logfile_fd == -1) 
-  return;
-
-  len = strlen(buf);
-
-  status = write(logfile_fd, buf, len);
-
-  /* I'm not sure if tty vs both vs window_log stuff is working hack */
-  /* libhack */
-  /* temp out of commission */
-  if (x_log_update_func)
-  (*x_log_update_func)(buf);
-
+  g_assert (logfile_fd != -1);
+  
+  status = write (logfile_fd, message, strlen (message));
   if (status == -1) {
     fprintf(stderr, "Could not write message to log file\n");
+    fprintf(stderr, "Message was: %s\n", message);
     fprintf(stderr, "Errno was: %d\n", errno);
   }
 
-  free(buf);
+  if (x_log_update_func) {
+    (*x_log_update_func) (message);
+  }
+
 }
 
+@ %def s_log_handler
+
+
+@section Macro @code{s_log_message()}
+
+@defmac s_log_message format ...
+Logs a normal message.
+@end defmac
+
+<<defines.h : macro s_log_message()>>=
+/* inspired of GLib's g_message() (gmessages.h) - LGPL */
+#ifdef G_HAVE_ISO_VARARGS
+#define s_log_message(...)  g_log (G_LOG_DOMAIN,         \
+                                   G_LOG_LEVEL_MESSAGE,  \
+                                   __VA_ARGS__)
+#elif defined(G_HAVE_GNUC_VARARGS)
+#define s_log_message(format...)    g_log (G_LOG_DOMAIN,         \
+                                           G_LOG_LEVEL_MESSAGE,  \
+                                           format)
+#else   /* no varargs macros */
+static void
+s_log_message (const gchar *format,
+               ...)
+{
+  va_list args;
+  va_start (args, format);
+  g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, format, args);
+  va_end (args);
+}
+#endif  /* !__GNUC__ */
 
 @ %def s_log_message
-
-
-@section Function @code{s_log_close()}
-
-@defun s_log_close 
-@end defun
-
-<<s_log.c : s_log_close()>>=
-void
-s_log_close(void)
-{
-  if (do_logging == FALSE) {
-    return;
-  }
-
-  do_logging = FALSE; /* subsequent messages are lost after the close */
-
-  if (logfile_fd != -1) {
-    close(logfile_fd);
-    logfile_fd = -1;
-  }
-}
-
-
-@ %def s_log_close
-

@@ -73,6 +73,8 @@ To retrieve a list of the directories that make the library, use [[s_clib_get_di
 #include <dmalloc.h>
 #endif
 
+#include "defines.h"
+
 
 void s_clib_free (void);
 
