@@ -154,9 +154,9 @@ multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
 {
         i_update_status(w_current, "Select Mode");
         w_current->event_state = SELECT;
-        gtk_grab_remove(w_current->tewindow);
-        gtk_widget_destroy(w_current->tewindow);
-        w_current->tewindow = NULL;
+        gtk_grab_remove(w_current->mawindow);
+        gtk_widget_destroy(w_current->mawindow);
+        w_current->mawindow = NULL;
 }
 
 void
@@ -214,12 +214,15 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	
 	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
 		w_current->page_current->selection_head->next);
-	text[0] = malloc(1000);
-	text[1] = malloc(4);
-	text[2] = malloc(1000);
+	text[0] = malloc(sizeof(char)*512);
+	text[1] = malloc(sizeof(char)*5);
+	text[2] = malloc(sizeof(char)*512);
 	text[1][1]=' ';
 	text[1][3]='\0';
 
+#if 0 /* this method cannot be used since it prevents this dialog box to be */
+      /* opened if nothing is selected; the check needs to happen further */
+      /* down */
 	/* Make sure attriblist isn't NULL */
 	if (attriblist == NULL) {
 		free(text[0]);
@@ -227,9 +230,11 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 		free(text[2]);
 		return;
 	}
+#endif
 	
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title (GTK_WINDOW (window), "Edit Component");
+	gtk_widget_set_usize(window, 545, 200);
   
 	gtk_window_position(GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
@@ -376,24 +381,27 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
 	
 	i=0;
-       	while(attriblist[i] != NULL)
-        {
-                o_attrib_get_name_value(attriblist[i]->text_string,
-			text[0],text[2]);
-		if(attriblist[i]->visibility == VISIBLE)
-			text[1][0]='V';
-		else
-			text[1][0]='I';
 
-		if(attriblist[i]->show_name_value == SHOW_NAME)
-			text[1][2]='N';
-		else if(attriblist[i]->show_name_value == SHOW_VALUE)
-			text[1][2]='V';
-		else
-			text[1][2]='B';
-                gtk_clist_append(GTK_CLIST(clist),text);
-                i++;
-        }
+	if (attriblist) {
+       		while(attriblist[i] != NULL)
+        	{
+               		o_attrib_get_name_value(attriblist[i]->text_string,
+				text[0],text[2]);
+			if(attriblist[i]->visibility == VISIBLE)
+				text[1][0]='V';
+			else
+				text[1][0]='I';
+
+			if(attriblist[i]->show_name_value == SHOW_NAME)
+				text[1][2]='N';
+			else if(attriblist[i]->show_name_value == SHOW_VALUE)
+				text[1][2]='V';
+			else
+				text[1][2]='B';
+                	gtk_clist_append(GTK_CLIST(clist),text);
+                	i++;
+        	}
+	}
 
 	i = 0;
         string = (char *) s_attrib_get(i);
@@ -409,13 +417,13 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 
 	gtk_widget_show (window);
 	o_attrib_free_returned(attriblist);
-	w_current->tewindow=window;
+	w_current->mawindow=window;
 
         gtk_window_position(GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
 	gtk_signal_connect(GTK_OBJECT (window), "destroy",
 				GTK_SIGNAL_FUNC(destroy_window),
-				&w_current->tewindow);
+				&w_current->mawindow);
 
         gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
                         GTK_SIGNAL_FUNC(multi_attrib_edit_add),w_current);
@@ -429,6 +437,7 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
                         GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
 
 	multi_attrib_edit_clear(NULL,window);
+        gtk_grab_add(w_current->mawindow);
 
 	free(text[0]);
 	free(text[1]);
@@ -608,14 +617,12 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
         w_current->event_state = SELECT;
         i_update_status(w_current, "Select Mode");
 
-        gtk_grab_remove(w_current->tewindow);
-
-	val_entry = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"val_entry");
-	lab_entry = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"lab_entry");
-	visbutton = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"visbutton");
-	showvalbutton = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"showvalbutton");
-	showlabbutton = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"showlabbutton");
-	showboth = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"showboth");
+	val_entry = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"val_entry");
+	lab_entry = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"lab_entry");
+	visbutton = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"visbutton");
+	showvalbutton = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"showvalbutton");
+	showlabbutton = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"showlabbutton");
+	showboth = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"showboth");
 
 	value=gtk_entry_get_text(val_entry);
 	label=gtk_entry_get_text(lab_entry);
@@ -633,7 +640,7 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	else 
         	show = SHOW_NAME_VALUE;
 
-	attribptr = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"attrib");
+	attribptr = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"attrib");
 	if(!attribptr)
 		o_attrib_add_attrib(w_current, newtext, vis,
                                     show,
@@ -641,8 +648,9 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
                                     selection_head->next);
 	else
 		o_text_change(w_current,attribptr,newtext,vis,show);
-        gtk_widget_destroy(w_current->tewindow);
-	w_current->tewindow = NULL;
+        gtk_grab_remove(w_current->aewindow);
+        gtk_widget_destroy(w_current->aewindow);
+	w_current->aewindow = NULL;
 	free(newtext);
 }
 
@@ -651,9 +659,9 @@ attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
 	i_update_status(w_current, "Select Mode");
         w_current->event_state = SELECT;
-        gtk_grab_remove(w_current->tewindow);
-        gtk_widget_destroy(w_current->tewindow);
-        w_current->tewindow = NULL;
+        gtk_grab_remove(w_current->aewindow);
+        gtk_widget_destroy(w_current->aewindow);
+        w_current->aewindow = NULL;
 }
 
 void
@@ -665,14 +673,14 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
 	 * to just unselect a single object */
 	o_unselect_all(w_current);
 
-	object = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"attrib");
+	object = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"attrib");
 	o_delete_text(w_current, object);
 
 	i_update_status(w_current, "Select Mode");
         w_current->event_state = SELECT;
-        gtk_grab_remove(w_current->tewindow);
-        gtk_widget_destroy(w_current->tewindow);
-        w_current->tewindow = NULL;
+        gtk_grab_remove(w_current->aewindow);
+        gtk_widget_destroy(w_current->aewindow);
+        w_current->aewindow = NULL;
 }
 
 void
@@ -682,7 +690,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	char *string=NULL;
 	char name[1000], val[1000];
 	OBJECT *attrib;
-	GtkWidget *tewindow;
+	GtkWidget *aewindow;
 	GtkWidget *vbox2;
 	GtkWidget *table1;
 	GtkWidget *hbox7;
@@ -702,16 +710,17 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	GtkWidget *hbuttonbox2;
 	GtkWidget *buttondelete;
 	GtkWidget *buttonok;
+	GtkWidget *buttonapply;
 	GtkWidget *buttoncancel;
 
-	if(w_current->tewindow)return;
+	if(w_current->aewindow)return;
 
-	tewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title (GTK_WINDOW (tewindow), "Single Attribute Editor");
+	aewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title (GTK_WINDOW (aewindow), "Single Attribute Editor");
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
-	gtk_container_add (GTK_CONTAINER (tewindow), vbox2);
+	gtk_container_add (GTK_CONTAINER (aewindow), vbox2);
 
 	table1 = gtk_table_new (2, 2, FALSE);
 	gtk_widget_show (table1);
@@ -733,7 +742,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_box_pack_start (GTK_BOX (hbox7), combo3, TRUE, TRUE, 0);
 
 	lab_entry = GTK_COMBO (combo3)->entry;
-	gtk_object_set_data (GTK_OBJECT (tewindow), "lab_entry", lab_entry);
+	gtk_object_set_data (GTK_OBJECT (aewindow), "lab_entry", lab_entry);
 	gtk_widget_show (lab_entry);
 
 	hbox8 = gtk_hbox_new (FALSE, 0);
@@ -748,14 +757,14 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_box_pack_start (GTK_BOX (hbox8), label13, TRUE, TRUE, 0);
 
 	val_entry = gtk_entry_new ();
-	gtk_object_set_data (GTK_OBJECT (tewindow), "val_entry", val_entry);
+	gtk_object_set_data (GTK_OBJECT (aewindow), "val_entry", val_entry);
 
 	gtk_widget_show (val_entry);
 
 	gtk_box_pack_start (GTK_BOX (hbox8), val_entry, TRUE, TRUE, 0);
 
 	visbutton = gtk_check_button_new_with_label ("Visible");
-	gtk_object_set_data (GTK_OBJECT (tewindow), "visbutton", visbutton);
+	gtk_object_set_data (GTK_OBJECT (aewindow), "visbutton", visbutton);
 
 	gtk_table_attach (GTK_TABLE (table1), visbutton, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
@@ -771,20 +780,20 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_container_set_border_width (GTK_CONTAINER (hbox10), 3);
 
 	radiobutton8 = gtk_radio_button_new_with_label (show_group, "Name");
-	gtk_object_set_data(GTK_OBJECT(tewindow),"showlabbutton",radiobutton8);
+	gtk_object_set_data(GTK_OBJECT(aewindow),"showlabbutton",radiobutton8);
 	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton8));
 	gtk_widget_show (radiobutton8);
 	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton8, FALSE, FALSE, 0);
 
 	radiobutton9 = gtk_radio_button_new_with_label (show_group, "Value");
 	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton9));
-	gtk_object_set_data(GTK_OBJECT(tewindow),"showvalbutton",radiobutton9);
+	gtk_object_set_data(GTK_OBJECT(aewindow),"showvalbutton",radiobutton9);
 	gtk_widget_show (radiobutton9);
 	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton9, FALSE, FALSE, 0);
 
 	radiobutton10 = gtk_radio_button_new_with_label (show_group, "Both");
 	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton10));
-	gtk_object_set_data(GTK_OBJECT(tewindow),"showboth",radiobutton10);
+	gtk_object_set_data(GTK_OBJECT(aewindow),"showboth",radiobutton10);
 	gtk_widget_show (radiobutton10);
 	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton10, FALSE, FALSE, 0);
 
@@ -796,6 +805,14 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_widget_show (buttonok);
 	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
 	GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
+
+#if 0 /* highly temp change which Ales will eventually finish up to allow */
+      /* this dialog to stay open */ /* out for now */
+	buttonapply = gtk_button_new_with_label ("Apply");
+	gtk_widget_show (buttonapply);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonapply);
+	GTK_WIDGET_SET_FLAGS (buttonapply, GTK_CAN_DEFAULT);
+#endif
 
 	if(list)
 	{
@@ -850,18 +867,18 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_combo_set_popdown_strings (GTK_COMBO (combo3), combo3_items);
 	g_list_free (combo3_items);
 
-	gtk_object_set_data(GTK_OBJECT(tewindow),"attrib",attrib);
+	gtk_object_set_data(GTK_OBJECT(aewindow),"attrib",attrib);
 
 	gtk_entry_set_text (GTK_ENTRY (val_entry), val);
 	gtk_entry_set_text (GTK_ENTRY (lab_entry), name);
 
-	w_current->tewindow=tewindow;
+	w_current->aewindow=aewindow;
 
-	gtk_window_position(GTK_WINDOW (tewindow), GTK_WIN_POS_MOUSE);
+	gtk_window_position(GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
 
-	gtk_signal_connect(GTK_OBJECT (tewindow), "destroy",
+	gtk_signal_connect(GTK_OBJECT (aewindow), "destroy",
                                    GTK_SIGNAL_FUNC(destroy_window),
-                                   &w_current->tewindow);
+                                   &w_current->aewindow);
 
 	gtk_signal_connect(GTK_OBJECT(buttonok),"clicked",
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_ok),w_current);
@@ -874,9 +891,10 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 		gtk_signal_connect(GTK_OBJECT(buttondelete),"clicked",
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_delete),w_current);
 
-	gtk_widget_show(tewindow);
+	gtk_widget_show(aewindow);
 
-	gtk_widget_grab_focus(tewindow);
+        gtk_grab_add(w_current->aewindow);
+	gtk_widget_grab_focus(aewindow);
 }
 
 
@@ -1628,7 +1646,7 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	int len;
 	char *string = NULL;
 
-	string = gtk_entry_get_text(GTK_ENTRY(w_current->teentry));
+	string = gtk_entry_get_text(GTK_ENTRY(w_current->seentry));
 
 	if (string[0] != '\0') {
 		len = strlen(string);
@@ -1648,9 +1666,9 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	w_current->event_state = SELECT;
 	i_update_status(w_current, "Select Mode");
 
-	gtk_grab_remove(w_current->tewindow);
-	gtk_widget_destroy(w_current->tewindow);
-	w_current->tewindow = NULL;
+	gtk_grab_remove(w_current->sewindow);
+	gtk_widget_destroy(w_current->sewindow);
+	w_current->sewindow = NULL;
 }
 
 void
@@ -1658,9 +1676,9 @@ slot_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
 	i_update_status(w_current, "Select Mode");
 	w_current->event_state = SELECT;
-	gtk_grab_remove(w_current->tewindow);
-	gtk_widget_destroy(w_current->tewindow);
-	w_current->tewindow = NULL;
+	gtk_grab_remove(w_current->sewindow);
+	gtk_widget_destroy(w_current->sewindow);
+	w_current->sewindow = NULL;
 }
 
 void
@@ -1672,27 +1690,27 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 	GtkWidget *vbox, *action_area;
 	int len;
 
-	if (!w_current->tewindow) {
-		w_current->tewindow = x_create_dialog_box(&vbox, &action_area);
+	if (!w_current->sewindow) {
+		w_current->sewindow = x_create_dialog_box(&vbox, &action_area);
 
-		gtk_window_position(GTK_WINDOW(w_current->tewindow),
+		gtk_window_position(GTK_WINDOW(w_current->sewindow),
 				    GTK_WIN_POS_MOUSE);
 
-		gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
+		gtk_signal_connect(GTK_OBJECT (w_current->sewindow),
 				   "destroy", GTK_SIGNAL_FUNC(destroy_window),
-				   &w_current->tewindow);
+				   &w_current->sewindow);
 
 #if 0 /* removed because it was causing the dialog box to not close */
-      		gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
+      		gtk_signal_connect(GTK_OBJECT (w_current->sewindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
-				   &w_current->tewindow);
+				   &w_current->sewindow);
 #endif
 
-		gtk_window_set_title(GTK_WINDOW (w_current->tewindow),
+		gtk_window_set_title(GTK_WINDOW (w_current->sewindow),
 				     "Edit slot number");
                 gtk_container_border_width(
-			GTK_CONTAINER(w_current->tewindow), 0);
+			GTK_CONTAINER(w_current->sewindow), 0);
 
 		label = gtk_label_new ("Edit slot number");
 		gtk_box_pack_start(
@@ -1700,18 +1718,18 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 			label, TRUE, TRUE, 0);
       		gtk_widget_show (label);
 
-		w_current->teentry = gtk_entry_new();
+		w_current->seentry = gtk_entry_new();
       		gtk_editable_select_region(
-			GTK_EDITABLE (w_current->teentry), 0, -1);
+			GTK_EDITABLE (w_current->seentry), 0, -1);
 		gtk_box_pack_start(
 			GTK_BOX(vbox),
-			w_current->teentry, TRUE, TRUE, 10);
+			w_current->seentry, TRUE, TRUE, 10);
 
-		gtk_signal_connect(GTK_OBJECT(w_current->teentry), "activate",
+		gtk_signal_connect(GTK_OBJECT(w_current->seentry), "activate",
                        	           GTK_SIGNAL_FUNC(slot_edit_dialog_ok),
                        	           w_current);
-      		gtk_widget_show (w_current->teentry);
-		gtk_widget_grab_focus(w_current->teentry);
+      		gtk_widget_show (w_current->seentry);
+		gtk_widget_grab_focus(w_current->seentry);
 
 		buttonok = gtk_button_new_with_label ("OK");
 		GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
@@ -1735,17 +1753,17 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 
 	}
 
-  	if (!GTK_WIDGET_VISIBLE (w_current->tewindow)) {
-		gtk_widget_show (w_current->tewindow);
+  	if (!GTK_WIDGET_VISIBLE (w_current->sewindow)) {
+		gtk_widget_show (w_current->sewindow);
 
 		if (string != NULL) {
 			len = strlen(string);
-			gtk_entry_set_text(GTK_ENTRY(w_current->teentry),
+			gtk_entry_set_text(GTK_ENTRY(w_current->seentry),
 					   string);
-			gtk_entry_select_region(GTK_ENTRY(w_current->teentry),
+			gtk_entry_select_region(GTK_ENTRY(w_current->seentry),
 						strlen("slot="), len);
 		}
-		gtk_grab_add (w_current->tewindow);
+		gtk_grab_add (w_current->sewindow);
 	}
 }
 /***************** End of Slot Edit dialog box *********************/
