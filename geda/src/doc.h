@@ -65,7 +65,7 @@ int DocSave(const char *szFileName);
 int DocLoad(const char *szFileName);
 void DocCurrent(char *szProjectName, char *szFileName);
 int DocGetNext(char *szFileName);
-int DocGetProperty(int iProperty, char *szDoc, void *pValue);
+int DocGetProperty(const int iProperty, const char *szDoc, void *pValue);
 void Doc_Selection(GtkCTree *pTree, GList *node, gint column, gpointer user_data);
 gboolean on_DocModulesTree_button_press_event(GtkWidget *widget, GdkEventButton *event, gpointer user_data);
 void DocViewInitialize(void);

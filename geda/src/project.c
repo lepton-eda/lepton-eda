@@ -98,18 +98,6 @@ void ProjectNew(const char *szPath)
 			goto PROJECT_MENU_EXIT;
 	}
 
-	iResult = DocSave(pPath);
-	if (iResult != SUCCESS)
-	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot save project !",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		goto PROJECT_MENU_EXIT;
-	}
-	
 	strcpy(Project.szName, FileGetName(pPath));
 	strcpy(Project.szExt, FileGetExt(pPath));
 	strcpy(Project.szDir, FileGetDir(pPath));
@@ -117,6 +105,7 @@ void ProjectNew(const char *szPath)
 
 	/* make project active */
 	ProjectWidgetsShow();
+	ProjectSave();
 	ProjectTitle();
 
 PROJECT_MENU_EXIT:
@@ -174,15 +163,8 @@ int ProjectSave(void)
 	char szFileName[TEXTLEN];
 	
 	if (strlen(Project.szName) == 0)
-	{
-		MsgBox(
-			pWindowMain,
-			"FATAL ERROR !",
-			"Project has no name.",
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
 		FatalError(__FILE__, __LINE__, __DATE__);
-	}
+
 
 	strcpy(szFileName, Project.szDir);
 	strcat(szFileName, G_DIR_SEPARATOR_S);
@@ -201,7 +183,8 @@ int ProjectSave(void)
 			);
 		return FAILURE;
 	}
-	
+
+
 	return SUCCESS;
 }
 
@@ -226,7 +209,7 @@ void ProjectWidgetsHide(void)
 	if (pWidget == NULL)
 		/**/;
 	gtk_widget_set_sensitive(pWidget, TRUE);
-	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuProjectSave");
+	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuProjectProperties");
 	if (pWidget == NULL)
 		/**/;
 	gtk_widget_set_sensitive(pWidget, FALSE);
@@ -280,7 +263,7 @@ void ProjectWidgetsShow(void)
 	if (pWidget == NULL)
 		/**/;
 	gtk_widget_set_sensitive(pWidget, FALSE);
-	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuProjectSave");
+	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuProjectProperties");
 	if (pWidget == NULL)
 		/**/;
 	gtk_widget_set_sensitive(pWidget, TRUE);

@@ -220,9 +220,11 @@ int DocClose(const char *szFileName)
 
 
 
-/*
-	Saving and loading project
-*/
+/*******************************************************************************
+
+	Saving and loading projects
+
+*******************************************************************************/
 
 int DocSave(const char *szFileName)
 {
@@ -231,30 +233,14 @@ int DocSave(const char *szFileName)
 	char szMessage[TEXTLEN], szPwd[TEXTLEN], szDirName[TEXTLEN], szFullDest[TEXTLEN], *pResult;
 	int iResult, i, j;
 
-#if 0
-	FILE *FileSource, *FileDest;
-	char szMessage[TEXTLEN], *pResult;
-#endif
-	
 	/* read current working directory */
 	pResult = getcwd(szPwd, TEXTLEN);
 	if (pResult == NULL)
 	{
 		sprintf(szMessage, "Cannot determine current working directory (Package::FileCopy())");
-//		Log(LOG_ERROR, MODULE_PACKAGE, szMessage);
 		return FAILURE;
 	}
 
-#if 0
-	/* add installation directory (if only the read one is not an absolute path) */
-	if (szDest[0] != G_DIR_SEPARATOR)
-	{
-		strcpy(szFullDest, szInstallDirectory);
-		strcat(szFullDest, G_DIR_SEPARATOR_S);
-		strcat(szFullDest, szDest);
-	}
-#endif
-	
 strcpy(szFullDest, szFileName);
 	
 	/* creating directories */
@@ -301,20 +287,38 @@ strcpy(szFullDest, szFileName);
 	}
 	
 
+	/* 
+		open project file for writing
+	*/
 	
-	/* open project file */
 	hProject = fopen(szFileName, "w");
 	if (hProject == NULL)
 		return FAILURE;
 	
-	/* save project properties */
+	
+	/* 
+		save GManager section
+	*/
+	
+	fprintf(hProject, "[GMANAGER]\n");
+	fprintf(hProject, "VERSION = \"%s\"\n", VERSION);
+	fprintf(hProject, "\n");
+	
+	
+	/* 
+		save project properties
+	*/
+
 	fprintf(hProject, "[PROJECT]\n");
-	fprintf(hProject, "GMANAGER = \"%s\"\n", VERSION);
-	fprintf(hProject, "NAME = \"%s\"\n", Project.szName);
 	fprintf(hProject, "AUTHOR = \"%s\"\n", Project.szAuthor);
 	fprintf(hProject, "DESC = \"%s\"\n", Project.szDesc);
+	fprintf(hProject, "\n");
 	
-	/* save file list */
+	
+	/* 
+		save file list 
+	*/
+	
 	fprintf(hProject, "[FILES]\n");
 	for (pDoc = pDocList; pDoc != NULL; pDoc = pDoc->pNext)
 	{
@@ -323,12 +327,19 @@ strcpy(szFullDest, szFileName);
 			(pDoc->pParent != NULL) ? pDoc->pParent->szFileName : ""
 			);
 	}
+	fprintf(hProject, "\n");
 	
-	/* close project file */
+	
+	/* 
+		close project file 
+	*/
+	
 	fclose(hProject);
+	
 	
 	return SUCCESS;
 }
+
 
 int DocLoad(const char *szFileName)
 {
@@ -336,8 +347,13 @@ int DocLoad(const char *szFileName)
 	int bNoParent, bCreated;
 	char szName[TEXTLEN], szValue[TEXTLEN], szDoc[TEXTLEN], szParent[TEXTLEN], szMessage[TEXTLEN];
 	char *FileTab[TEXTLEN], *ParentTab[TEXTLEN];
+	BOOL bOldVersion = FALSE; /* marker that loaded file is an old one */
 	
-	/* open project file */
+	
+	/* 
+		open a project file for reading
+	*/
+	
 	iResult = ConfigOpen(szFileName);
 	if (iResult != SUCCESS)
 	{
@@ -351,19 +367,46 @@ int DocLoad(const char *szFileName)
 		return FAILURE;
 	}
 	
-	/* read PROJECT section */
+	
+	/* 
+		read GMANAGER section 
+	*/
+	
+	iResult = ConfigSection("GMANAGER");
+	if (iResult != SUCCESS)
+	{
+		bOldVersion = TRUE;
+		/* TODO: set deafults as appropriate */
+	}
+	for (iResult = ConfigGetNext(szName, szValue); iResult == SUCCESS; iResult = ConfigGetNext(szName, szValue))
+	{
+		if (!strcmp(szName, "VERSION"))
+		{
+			/* read file name */
+			for (i = 0; i < strlen(szValue) && szValue[i] != '"'; i ++)
+				;
+			i ++;
+			for (j = 0; i < strlen(szValue) && szValue[i] != '"'; i ++)
+				szDoc[j ++] = szValue[i];
+			szDoc[j] = 0;
+			i ++;
+			
+			/* TODO: what todo with version ??? */
+		}
+	}
+
+
+	/* 
+		read PROJECT section 
+	*/
+	
 	iResult = ConfigSection("PROJECT");
 	if (iResult != SUCCESS)
 	{
-		sprintf(szMessage, "'%s' is not a valid project file !", szFileName);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		ConfigClose();
-		return FAILURE;
+		bOldVersion = TRUE;
+
+		strcpy(Project.szAuthor, "");
+		strcpy(Project.szDesc, "");
 	}
 	for (iResult = ConfigGetNext(szName, szValue); iResult == SUCCESS; iResult = ConfigGetNext(szName, szValue))
 	{
@@ -396,7 +439,11 @@ int DocLoad(const char *szFileName)
 		}
 	}
 
-	/* read FILE section */
+
+	/* 
+		read file list 
+	*/
+	
 	iResult = ConfigSection("FILES");
 	if (iResult != SUCCESS)
 	{
@@ -470,14 +517,27 @@ int DocLoad(const char *szFileName)
 		}
 	}
 	
-	/* close project file */
+	
+	/* 
+		close project file 
+	*/
+	
 	ConfigClose();
 	
+
+	/*
+		convert old files to a new version
+	*/	
+	
+	if (bOldVersion)
+		ProjectProperties(FALSE);
+	
+
 	return SUCCESS;
 }
 
 
-int DocGetProperty(int iProperty, char *szDoc, void *pValue)
+int DocGetProperty(const int iProperty, const char *szDoc, void *pValue)
 {
 	struct Doc_s *pDoc;
 
@@ -939,8 +999,9 @@ on_DocModulesTree_button_press_event   (GtkWidget       *widget,
 	
 	if (event->type != GDK_2BUTTON_PRESS)
 		return FALSE;
-	
+
 	gmanager_window_select(szDocCurrent);
 	DocOpen(szDocCurrent, 0);
+
 	return FALSE;
 }

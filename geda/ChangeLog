@@ -1,5 +1,9 @@
 2003-12-11 Piotr Miarecki   <tertul@poczta.onet.pl>
 
+        * src/project.c, src/doc.c, src/doc.h: Added saving project
+        files with project properties (small changes in project file
+        format).
+
         * src/filetool.c: Bug fixed: project was saved with wrong filename
         (last letter disappeared).
         
