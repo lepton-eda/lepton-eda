@@ -76,7 +76,12 @@ int InstallSoftware(void)
 		if (iResult != 0)
 		{
 			sprintf(szMessage, "Cannot remove old setup log file %s", SETUP_LOGFILE);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Warning !",
+				szMessage, 
+				MSGBOX_WARNING | MSGBOX_OKD
+				);
 		}
 	}
 	
@@ -85,7 +90,12 @@ int InstallSoftware(void)
 	if (pWidget == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	gtk_notebook_next_page((GtkNotebook *) pWidget);
@@ -99,21 +109,36 @@ int InstallSoftware(void)
 	if (pName == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	pAction = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelAction");
 	if (pAction == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	pCompleted = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelCompleted");
 	if (pCompleted == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 		
@@ -122,7 +147,12 @@ int InstallSoftware(void)
 	if (szVariable == NULL)
 	{
 		sprintf(szMessage, "Cannot get PATH variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 	sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "bin", szVariable);
@@ -130,7 +160,12 @@ int InstallSoftware(void)
 	if (iResult != 0)
 	{
 		sprintf(szMessage, "Cannot set PATH variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 		
@@ -139,7 +174,12 @@ int InstallSoftware(void)
 	if (szVariable == NULL)
 	{
 		sprintf(szMessage, "Cannot get LD_LIBRARY_PATH variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 	sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "lib", szVariable);
@@ -147,7 +187,12 @@ int InstallSoftware(void)
 	if (iResult != 0)
 	{
 		sprintf(szMessage, "Cannot set LD_LIBRARY_PATH variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 		
@@ -157,7 +202,12 @@ int InstallSoftware(void)
 	if (iResult != 0)
 	{
 		sprintf(szMessage, "Cannot set CFLAGS variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 		
@@ -167,7 +217,12 @@ int InstallSoftware(void)
 	if (iResult != 0)
 	{
 		sprintf(szMessage, "Cannot set CPPFLAGS variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 		
@@ -176,7 +231,12 @@ int InstallSoftware(void)
 	if (iResult != 0)
 	{
 		sprintf(szMessage, "Cannot set PREFIX variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 
@@ -185,7 +245,12 @@ int InstallSoftware(void)
 	if (pResult == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 			
@@ -223,10 +288,15 @@ int InstallSoftware(void)
 	}
 
 	/* adding variables */
-	iResult = MsgBox("Update your environment variables ?\nChanges will be active after you login next time.", MSGBOX_OKCANCEL);
+	iResult = MsgBox(
+		GTK_WINDOW(pWindowMain),
+		"Question ...",
+		"Update your environment variables ?\nChanges will be active after you login next time.", 
+		MSGBOX_QUESTION | MSGBOX_OK | MSGBOX_CANCELD
+		);
 	switch (iResult)
 	{
-		case 0: /* OK */
+		case MSGBOX_OK:
 			
 			for (i = 0; i < strlen(Software.szDirname); i ++)
 				szName[i] = toupper(Software.szDirname[i]);
@@ -282,21 +352,36 @@ static int InstallComponent(struct CompsTable_s *pComp)
 	if (pName == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	pAction = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelAction");
 	if (pAction == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	pCompleted = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelCompleted");
 	if (pCompleted == NULL)
 	{
 		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Fatal error !",
+			szMessage, 
+			MSGBOX_FATAL | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 		
@@ -325,13 +410,18 @@ static int InstallComponent(struct CompsTable_s *pComp)
 			case OVERWRITE_ASK:
 
 				sprintf(szMessage, "%s is already installed.\nInstall it anyway ?", pPkg->szName);
-				iResult = MsgBox(szMessage, MSGBOX_ALWAYSYESNO);
+				iResult = MsgBox(
+					GTK_WINDOW(pWindowMain),
+					"Question ...",
+					szMessage, 
+					MSGBOX_QUESTION | MSGBOX_ALWAYSYES | MSGBOX_YESD | MSGBOX_ALWAYSNO | MSGBOX_NO
+					);
 				switch (iResult)
 				{
-					case 0:   /* YES        */                                                     break;
-					case 1:   /* ALWAYS YES */   iOverWrite = OVERWRITE_YES;                       break;
-					case 2:   /* NO         */                                 goto INSTALL_END;   break;
-					case 3:   /* ALWAYS NO  */   iOverWrite = OVERWRITE_NO;    goto INSTALL_END;   break;
+					case MSGBOX_YES:                                                           break;
+					case MSGBOX_ALWAYSYES:   iOverWrite = OVERWRITE_YES;                       break;
+					case MSGBOX_NO:                                        goto INSTALL_END;   break;
+					case MSGBOX_ALWAYSNO:    iOverWrite = OVERWRITE_NO;    goto INSTALL_END;   break;
 				}
 				break;
 
@@ -359,7 +449,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		getcwd(szDir, TEXTLEN);
 		sprintf(szMessage, "Cannot find a file '%s' in %s", pComp->szFileName, szDir);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		iErrorFlag = TRUE;
 		goto LABEL;
 	}
@@ -370,7 +465,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		getcwd(szDir, TEXTLEN);
 		sprintf(szMessage, "Cannot unpack a file '%s' in %s", pPkg->szFileName, szDir);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		iErrorFlag = TRUE;
 		goto LABEL;
 	}
@@ -388,7 +488,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 			getcwd(szDir, TEXTLEN);
 			sprintf(szMessage, "Cannot find a patch file '%s' in %s", pComp->szPatch, szDir);
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage, 
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
 			iErrorFlag = TRUE;
 			goto LABEL;
 		}
@@ -399,7 +504,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 			getcwd(szDir, TEXTLEN);
 			sprintf(szMessage, "Cannot patch with '%s' in %s", pPkg->szPatch, szDir);
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage, 
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
 			iErrorFlag = TRUE;
 			goto LABEL;
 		}
@@ -413,7 +523,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 	{
 		sprintf(szMessage, "Cannot enter the directory '%s'", pPkg->szDirName);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		iErrorFlag = TRUE;
 		goto LABEL;
 	}
@@ -431,7 +546,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		{
 			sprintf(szMessage, "Cannot execute preprocessing command:\n%s", pComp->szPreInst);
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage, 
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
 			iErrorFlag = TRUE;
 			goto LABEL;
 		}
@@ -465,7 +585,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 			if (pCount == NULL)
 			{
 				sprintf(szMessage, "Fatal error in configuration file !\nCannot find section [%s].", szCodeName);
-				MsgBox(szMessage, MSGBOX_OK);
+				MsgBox(
+					GTK_WINDOW(pWindowMain),
+					"Fatal error !",
+					szMessage, 
+					MSGBOX_FATAL | MSGBOX_OKD
+					);
 				goto LABEL;
 			}
 					
@@ -477,7 +602,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 				if (strlen(pCount->szFileName) == 0)
 				{
 					sprintf(szMessage, "Cannot build %s from sources.\n\nPlease install %s before running %s setup.", pPkg->szName, pCount->szName, Software.szName);
-					MsgBox(szMessage, MSGBOX_OK);
+					MsgBox(
+						GTK_WINDOW(pWindowMain),
+						"Error !",
+						szMessage, 
+						MSGBOX_ERROR | MSGBOX_OKD
+						);
 					iErrorFlag = TRUE;
 					goto LABEL;
 				}
@@ -502,7 +632,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		{
 			sprintf(szMessage, "Cannot execute build command\n%s", pPkg->szCommand);
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage, 
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
 			iErrorFlag = TRUE;
 			goto LABEL;
 		}
@@ -532,7 +667,12 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		{
 			sprintf(szMessage, "Cannot execute postprocessing command:\n%s", pComp->szPostInst);
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage, 
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
 			iErrorFlag = TRUE;
 			goto LABEL;
 		}
@@ -549,7 +689,12 @@ LABEL:
 	{
 		sprintf(szMessage, "Cannot change directory to %s", szWorkingDirectory);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		iErrorFlag = TRUE;
 	}
 
@@ -563,7 +708,12 @@ LABEL:
 	{
 		sprintf(szMessage, "%s cannot not be installed.", pPkg->szName);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		iErrorFlag = TRUE;
 	}
 	
@@ -578,7 +728,12 @@ LABEL:
 		{
 			sprintf(szMessage, "Cannot remove directory: %s", pPkg->szDirName);
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(szMessage, MSGBOX_OK);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage, 
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
 			iErrorFlag = TRUE;
 		}
 	}
@@ -613,7 +768,12 @@ static int TestIfInstalled(struct CompsTable_s *pPkg)
 	if (pPath == NULL)
 	{
 		sprintf(szMessage, "Cannot get PATH variable");
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		_exit(0);
 	}
 	
@@ -1083,7 +1243,12 @@ static int AddVariable(const char *szVariable, const char *szValue)
 			if (pResult == NULL)
 			{
 				sprintf(szMessage, "Cannot get HOME variable");
-				MsgBox(szMessage, MSGBOX_OK);
+				MsgBox(
+					GTK_WINDOW(pWindowMain),
+					"Error !",
+					szMessage, 
+					MSGBOX_ERROR | MSGBOX_OKD
+					);
 				_exit(0);
 			}
 			strcpy(szFileNameOrig, pResult);
@@ -1108,7 +1273,12 @@ static int AddVariable(const char *szVariable, const char *szValue)
 	{
 		sprintf(szMessage, "Cannot write a file %s", szFileNameTmp);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	hFileOrig = fopen(szFileNameOrig, "r");
@@ -1117,7 +1287,12 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		fclose(hFileTmp);
 		sprintf(szMessage, "Cannot open a file %s", szFileNameOrig);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	while (!feof(hFileOrig))
@@ -1137,7 +1312,12 @@ static int AddVariable(const char *szVariable, const char *szValue)
 	{
 		sprintf(szMessage, "Cannot write a file %s", szFileNameOrig);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	hFileTmp = fopen(szFileNameTmp, "r");
@@ -1145,7 +1325,12 @@ static int AddVariable(const char *szVariable, const char *szValue)
 	{
 		sprintf(szMessage, "Cannot open a file %s", szFileNameTmp);
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(szMessage, MSGBOX_OK);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage, 
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
 		return FAILURE;
 	}
 	fprintf(hFileOrig, "# Change made by %s Setup\n", Software.szName);
