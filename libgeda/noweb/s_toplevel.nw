@@ -290,6 +290,14 @@ s_toplevel_new (void)
   toplevel->coord_world = NULL;
   toplevel->coord_screen = NULL;
 
+  toplevel->pfswindow = NULL;
+  toplevel->pcfswindow = NULL;
+#ifndef HAS_GTK12
+  toplevel->current_pixbuf = NULL;
+#endif
+  toplevel->pixbuf_filename = NULL;
+  toplevel->pixbuf_wh_ratio = 0;
+
   toplevel->clwindow = NULL;
   toplevel->edit_color = 0;
 

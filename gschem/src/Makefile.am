@@ -25,6 +25,7 @@ BUILT_SOURCES = \
 	o_slot.nw o_grips.nw \
 	o_arc.nw o_box.nw o_circle.nw o_complex.nw o_select.nw o_find.nw \
 	o_line.nw o_net.nw o_text.nw o_pin.nw o_bus.nw o_buffer.nw o_undo.nw \
+	o_picture.nw \
 	x_basic.nw x_dialog.nw \
 	x_event.nw x_grid.nw x_log.nw x_menus.nw x_script.nw \
 	x_pagesel.nw x_print.nw x_window.nw x_stroke.nw x_image.nw x_color.nw \

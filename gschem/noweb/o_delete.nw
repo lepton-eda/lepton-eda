@@ -17,6 +17,9 @@
 <<o_delete.c : o_delete_complex()>>
 <<o_delete.c : o_delete_line()>>
 <<o_delete.c : o_delete_box()>>
+#ifndef HAS_GTK12
+<<o_delete.c : o_delete_picture()>>
+#endif
 <<o_delete.c : o_delete_circle()>>
 <<o_delete.c : o_delete_text()>>
 <<o_delete.c : o_delete_arc()>>
@@ -236,6 +239,25 @@ o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
 
 @ %def o_delete_box
 
+@section Function @code{o_delete_picture()}
+
+@defun o_delete_picture w_current obj
+@end defun
+
+<<o_delete.c : o_delete_picture()>>=
+static void
+o_delete_picture(TOPLEVEL *w_current, OBJECT *obj)
+{
+  o_picture_erase(w_current, obj);
+  o_picture_erase_grips(w_current, obj);
+
+  s_delete(w_current, obj);
+  w_current->page_current->object_tail =
+  (OBJECT *) return_tail(w_current->page_current->object_head);
+}
+
+
+@ %def o_delete_box
 
 @section Function @code{o_delete_circle()}
 
@@ -347,6 +369,12 @@ o_delete(TOPLEVEL *w_current)
 
       case(OBJ_BOX):
         o_delete_box(w_current, object);
+        break;
+
+      case(OBJ_PICTURE):
+#ifndef HAS_GTK12
+        o_delete_picture(w_current, object);
+#endif
         break;
 
       case(OBJ_CIRCLE):

@@ -9,7 +9,7 @@ EXTRA_DIST = a_pan.nw a_zoom.nw g_funcs.nw g_hook.nw g_keys.nw g_rc.nw \
              x_color.nw x_dialog.nw x_event.nw x_fileselect.nw x_grid.nw \
              x_image.nw x_log.nw x_menus.nw x_multiattrib.nw \
              x_pagesel.nw x_preview.nw x_print.nw \
-             x_script.nw x_stroke.nw x_window.nw
+             x_script.nw x_stroke.nw x_window.nw o_picture.nw
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

@@ -17,24 +17,36 @@
 <<o_grips.c : o_grips_search()>>
 <<o_grips.c : o_grips_search_arc()>>
 <<o_grips.c : o_grips_search_box()>>
+#ifndef HAS_GTK12
+<<o_grips.c : o_grips_search_picture()>>
+#endif
 <<o_grips.c : o_grips_search_circle()>>
 <<o_grips.c : o_grips_search_line()>>
 
 <<o_grips.c : o_grips_start()>>
 <<o_grips.c : o_grips_start_arc()>>
 <<o_grips.c : o_grips_start_box()>>
+#ifndef HAS_GTK12
+<<o_grips.c : o_grips_start_picture()>>
+#endif
 <<o_grips.c : o_grips_start_circle()>>
 <<o_grips.c : o_grips_start_line()>>
 
 <<o_grips.c : o_grips_motion()>>
 <<o_grips.c : o_grips_motion_arc()>>
 <<o_grips.c : o_grips_motion_box()>>
+#ifndef HAS_GTK12
+<<o_grips.c : o_grips_motion_picture()>>
+#endif
 <<o_grips.c : o_grips_motion_circle()>>
 <<o_grips.c : o_grips_motion_line()>>
 
 <<o_grips.c : o_grips_end()>>
 <<o_grips.c : o_grips_end_arc()>>
 <<o_grips.c : o_grips_end_box()>>
+#ifndef HAS_GTK12
+<<o_grips.c : o_grips_end_picture()>>
+#endif
 <<o_grips.c : o_grips_end_circle()>>
 <<o_grips.c : o_grips_end_line()>>
 
@@ -97,7 +109,18 @@
 #define GET_BOX_TOP(w)                          \
 	        min((w)->start_y, (w)->last_y);
 
-@ %def GET_BOX_WIDTH GET_BOX_HEIGHT GET_BOX_LEFT GET_BOX_TOP
+#define GET_PICTURE_WIDTH(w)			\
+	abs((w)->last_x - (w)->start_x) 
+#define GET_PICTURE_HEIGHT(w)			\
+	(w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->last_x - (w)->start_x)/(w)->pixbuf_wh_ratio
+#define GET_PICTURE_LEFT(w)				\
+	min((w)->start_x, (w)->last_x);
+#define GET_PICTURE_TOP(w)				\
+	(w)->start_y < (w)->last_y ? (w)->start_y  : \
+                                     (w)->start_y-abs((w)->last_x - (w)->start_x)/(w)->pixbuf_wh_ratio;
+
+@ %def GET_BOX_WIDTH GET_BOX_HEIGHT GET_BOX_LEFT GET_BOX_TOP \
+       GET_PICTURE_WIDTH GET_PICTURE_HEIGHT GET_PICTURE_LEFT GET_PICTURE_TOP
 
 
 @section Global Variables [[whichone_changing]] and [[object_changing]]
@@ -166,6 +189,15 @@ o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
           found = o_grips_search_box(w_current, object,
                                      x, y, size, whichone);
           if(found != NULL) return found;
+          break;
+		  
+        case(OBJ_PICTURE):
+          /* check the grips of the picture object */
+#ifndef HAS_GTK12
+          found = o_grips_search_picture(w_current, object,
+                                         x, y, size, whichone);
+          if(found != NULL) return found;
+#endif
           break;
 		  
         case(OBJ_CIRCLE):
@@ -249,6 +281,17 @@ o_grips_start(TOPLEVEL *w_current, int x, int y)
         whichone_changing = whichone;
         object_changing = object;
         return(TRUE);
+        break;
+				
+      case(OBJ_PICTURE):
+				/* start the modification of a grip on a picture */
+#ifndef HAS_GTK12
+        o_grips_start_picture(w_current, object, x, y, whichone);
+				
+        whichone_changing = whichone;
+        object_changing = object;
+        return(TRUE);
+#endif
         break;
 				
       case(OBJ_CIRCLE):
@@ -390,6 +433,13 @@ o_grips_motion(TOPLEVEL *w_current, int x, int y)
     o_grips_motion_box(w_current, x, y, whichone_changing);
     break;
 		
+    case(OBJ_PICTURE):
+    /* erase, update and draw a box */
+#ifndef HAS_GTK12
+    o_grips_motion_picture(w_current, x, y, whichone_changing);
+#endif
+    break;
+		
     case(OBJ_CIRCLE):
     /* erase, update and draw a circle */
     o_grips_motion_circle(w_current, x, y, whichone_changing);
@@ -453,6 +503,13 @@ o_grips_end(TOPLEVEL *w_current)
     case(OBJ_BOX):
     /* modify a box object */
     o_grips_end_box(w_current, object, whichone_changing);
+    break;
+	  
+    case(OBJ_PICTURE):
+    /* modify a picture object */
+#ifndef HAS_GTK12
+    o_grips_end_picture(w_current, object, whichone_changing);
+#endif
     break;
 	  
     case(OBJ_CIRCLE):
@@ -1134,6 +1191,241 @@ o_redraw_single(w_current, o_current);
 
 @
 
+@section Function [[o_grips_start_picture()]]
+
+@defun o_grips_start_picture w_current o_current x y whichone
+This function initializes the grip motion process for a picture. From the [[o_current]] pointed object, it stores into the TOPLEVEL structure the .... These variables are used in the grip process.
+@end defun
+
+The function first erases the grips.
+
+The coordinates of the selected corner are put in ([[w_current->last_x]],[[w_current->last_y]]).
+
+The coordinates of the opposite corner go in ([[w_current->start_x]],[[w_current->start_y]]). They are not suppose to change during the action.
+
+<<o_grips.c : o_grips_start_picture()>>=
+void
+o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current,
+				  int x, int y, int whichone)
+{
+  w_current->last_drawb_mode = -1;
+	
+  /* erase the picture before */
+  o_picture_erase(w_current, o_current);
+  w_current->current_pixbuf = o_current->picture->original_picture;
+  w_current->pixbuf_filename = o_current->picture->filename;
+  w_current->pixbuf_wh_ratio = o_current->picture->ratio;
+
+  /* (last_x,last_y)    is the selected corner */
+  /* (start_x, start_y) is the opposite corner */
+  switch(whichone) {
+    case PICTURE_UPPER_LEFT: 
+      w_current->last_x  = o_current->picture->screen_upper_x;
+      w_current->last_y  = o_current->picture->screen_upper_y;
+      w_current->start_x = o_current->picture->screen_lower_x;
+      w_current->start_y = o_current->picture->screen_lower_y;
+      break;
+    case PICTURE_LOWER_RIGHT: 
+      w_current->last_x  = o_current->picture->screen_lower_x;
+      w_current->last_y  = o_current->picture->screen_lower_y;
+      w_current->start_x = o_current->picture->screen_upper_x;
+      w_current->start_y = o_current->picture->screen_upper_y;
+      break;
+    case PICTURE_UPPER_RIGHT: 
+      w_current->last_x  = o_current->picture->screen_lower_x;
+      w_current->last_y  = o_current->picture->screen_upper_y;
+      w_current->start_x = o_current->picture->screen_upper_x;
+      w_current->start_y = o_current->picture->screen_lower_y;
+      break;
+    case PICTURE_LOWER_LEFT: 
+      w_current->last_x  = o_current->picture->screen_upper_x;
+      w_current->last_y  = o_current->picture->screen_lower_y;
+      w_current->start_x = o_current->picture->screen_lower_x;
+      w_current->start_y = o_current->picture->screen_upper_y;
+      break;
+    default:
+      return; /* error */
+  }
+
+  /* draw the first temporary picture */
+  o_picture_rubberbox_xor(w_current);
+
+}
+
+@ %def o_grips_start_picture
+
+
+@section Function [[o_grips_search_picture()]]
+
+@defun o_grips_search_picture w_current o_current x y whichone
+This function checks if the pointer event occuring at ([[x]],[[y]]) is inside one of the grips of the [[o_current]] pointed picture object. 
+If so, the [[whichone]] pointed integer is set to the identifier of this grip and the returned pointer is a pointer on this object. 
+If the point is not inside a grip the function returns a NULL pointer and the [[whichone]] pointed integer is unset.
+@end defun
+
+A picture object has four grips : one at each corner of the picture. The identifiers of each corner are [[PICTURE_UPPER_LEFT]], [[PICTURE_UPPER_RIGHT]], [[PICTURE_LOWER_LEFT]] and [[PICTURE_LOWER_RIGHT]].
+
+The [[x]] and [[y]] parameters are in screen units.
+
+The [[size]] parameter is half the width (and half the height) of the square representing a grip in screen unit.
+
+<<o_grips.c : o_grips_search_picture()>>=
+OBJECT *
+o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current,
+				   int x, int y, int size, int *whichone)
+{
+  int left, right, top, bottom;
+  int x2size;
+
+  /* width/height of the grip */
+  x2size = 2 * size;
+
+  /* inside upper left grip ? */
+  left   = o_current->picture->screen_upper_x - size;
+  top    = o_current->picture->screen_upper_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = PICTURE_UPPER_LEFT;
+    return(o_current);
+  }
+
+  /* inside lower right grip ? */
+  left   = o_current->picture->screen_lower_x - size;
+  top    = o_current->picture->screen_lower_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = PICTURE_LOWER_RIGHT;
+    return(o_current);
+  }
+
+  /* inside upper right grip ? */
+  left   = o_current->picture->screen_lower_x - size;
+  top    = o_current->picture->screen_upper_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = PICTURE_UPPER_RIGHT;
+    return(o_current);
+  }
+
+  /* inside lower left grip ? */
+  left   = o_current->picture->screen_upper_x - size;
+  top    = o_current->picture->screen_lower_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = PICTURE_LOWER_LEFT;
+    return(o_current);
+  }
+
+  return NULL;
+}
+
+@ %def o_grips_search_picture
+
+
+@section Function [[o_grips_motion_picture()]]
+
+@defun o_grips_motion_picture w_current x y whichone
+This function is the refreshing part of the grip motion process. It is called whenever the position of the pointer is changed, therefore requiring the TOPLEVEL variables to be updated.
+Depending on the grip selected and moved, the temporary TOPLEVEL variables are changed according to the current position of the pointer and the modifications temporary drawn.
+@end defun
+
+This function only makes a call to [[o_picture_rubberpicture()]] that updates the TOPLEVEL variables, erase the previous temporary picture and draw the new temporary picture.
+
+<<o_grips.c : o_grips_motion_picture()>>=
+void
+o_grips_motion_picture(TOPLEVEL *w_current, int x, int y, int whichone)
+{
+	/* erase, update and draw the temporary picture */
+	o_picture_rubberbox(w_current, x, y);
+
+}
+
+@ %def o_grips_motion_picture
+
+@section Function [[o_grips_end_picture()]]
+
+@defun o_grips_end_picture w_current o_current whichone
+@end defun
+
+<<o_grips.c : o_grips_end_picture()>>=
+void
+o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
+{
+	int picture_width, picture_height;
+	int x, y;
+
+	<<o_grips_end_picture() : get the new coordinates of the picture>>
+	
+	<<o_grips_end_picture() : check the new width and height>>
+
+	<<o_grips_end_picture() : modify the picture object>>
+
+	<<o_grips_end_picture() : erase the temporary picture and draw the modified picture>>
+
+}
+
+@ %def o_grips_end_picture
+
+
+
+<<o_grips_end_picture() : get the new coordinates of the picture>>=
+picture_width  = GET_PICTURE_WIDTH (w_current);
+picture_height = GET_PICTURE_HEIGHT(w_current);
+
+@ 
+
+
+<<o_grips_end_picture() : check the new width and height>>=
+/* don't allow zero width/height picturees
+ * this ends the picture drawing behavior 
+ * we want this? hack */
+if ((picture_width == 0) && (picture_height == 0))
+{
+	w_current->start_x = (-1);
+	w_current->start_y = (-1);
+	w_current->last_x  = (-1);
+	w_current->last_y  = (-1);
+	
+	w_current->inside_action=0;
+	i_set_state(w_current, SELECT);
+	
+	o_redraw_single(w_current, o_current);
+        i_update_toolbar(w_current);
+	
+	return;
+}
+
+@ 
+
+
+<<o_grips_end_picture() : modify the picture object>>=
+SCREENtoWORLD(w_current, 
+			  w_current->last_x, w_current->last_y,
+			  &x, &y);
+x = snap_grid(w_current, x);
+y = snap_grid(w_current, y);
+
+o_picture_modify(w_current, o_current, x, y, whichone);
+
+@ 
+
+
+<<o_grips_end_picture() : erase the temporary picture and draw the modified picture>>=
+/* erase the temporary picture */
+o_picture_rubberbox_xor(w_current);
+
+/* draw the modified picture */
+o_redraw_single(w_current, o_current);
+
+w_current->current_pixbuf = NULL;
+w_current->pixbuf_filename = NULL;
+w_current->pixbuf_wh_ratio = 0;
+
+@
 
 @section Function [[o_grips_search_circle()]]
 

@@ -247,7 +247,7 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSYMCHECK_CFLAGS="$LIBGEDA_CFLAGS"
-GSYMCHECK_LDFLAGS="$LIBGEDA_LIBS"  
+GSYMCHECK_LDFLAGS="$LIBGEDA_LIBS $GTK_LIBS"  
 
 # Makefile.in variable substitution
 AC_SUBST(GSYMCHECK_CFLAGS)

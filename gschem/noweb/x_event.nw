@@ -269,6 +269,26 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->event_state = DRAWBOX;
         break;
 
+      case(DRAWPICTURE):
+#ifndef HAS_GTK12
+        o_picture_start(w_current,
+                    (int) event->x,
+                    (int) event->y);
+        w_current->event_state = ENDPICTURE;
+        w_current->inside_action = 1;
+#endif
+        break;
+
+      case(ENDPICTURE):
+#ifndef HAS_GTK12
+        o_picture_end(w_current,
+                  (int) event->x,
+                  (int) event->y);
+        w_current->inside_action = 0;
+        w_current->event_state = DRAWPICTURE;
+#endif
+        break;
+
       case(DRAWCIRCLE):
         o_circle_start(w_current,
                        (int) event->x,
@@ -592,6 +612,15 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
 	i_set_state(w_current, DRAWBOX);
         o_box_eraserubber(w_current);
+        break;
+
+        case(DRAWPICTURE):
+        case(ENDPICTURE):
+#ifndef HAS_GTK12
+        w_current->inside_action = 0;
+	i_set_state(w_current, DRAWPICTURE);
+        o_picture_eraserubber(w_current);
+#endif
         break;
 
         case(DRAWCIRCLE):
@@ -966,6 +995,15 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
     o_box_rubberbox( w_current,
                      (int) event->x,
                      (int) event->y);
+    break;
+
+    case(ENDPICTURE):
+#ifndef HAS_GTK12
+    if (w_current->inside_action)
+    o_picture_rubberbox( w_current,
+                        (int) event->x,
+                        (int) event->y);
+#endif
     break;
 
     case(ENDCIRCLE):

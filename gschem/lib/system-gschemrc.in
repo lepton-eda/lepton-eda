@@ -1202,6 +1202,7 @@
 	   ("SEPARATOR"		no-action		no-action)
 	   ("Line"		add-line  	     	add-line-hotkey)
 	   ("Box"		add-box  	     	add-box-hotkey)
+	   ("Picture..."       	add-picture  	     	add-picture-hotkey)
 	   ("Circle"		add-circle  	     	add-circle-hotkey)
 	   ("Arc"		add-arc  	     	add-arc-hotkey)
 	   ("Pin"		add-pin  	     	add-pin-hotkey)))

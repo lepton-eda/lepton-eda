@@ -1,5 +1,6 @@
 extern void (*arc_draw_func)();
 extern void (*box_draw_func)();
+extern void (*picture_draw_func)();
 extern void (*circle_draw_func)();
 extern void (*complex_draw_func)();
 extern void (*line_draw_func)();

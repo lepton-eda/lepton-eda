@@ -151,6 +151,10 @@ o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
         o_box_recalc(w_current, o_current);
         break;
 
+      case(OBJ_PICTURE):
+        o_picture_recalc(w_current, o_current);
+        break;
+
       case(OBJ_CIRCLE):
         o_circle_recalc(w_current, o_current);
         break;

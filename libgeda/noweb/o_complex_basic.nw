@@ -141,6 +141,12 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
         break;
 
+      case(OBJ_PICTURE):
+#ifndef HAS_GTK12
+        get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
+#endif
+        break;
+
       case(OBJ_CIRCLE):
         get_circle_bounds(w_current, o_current->circle, &rleft, &rtop, &rright, &rbottom);
         break;
@@ -235,6 +241,12 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
         get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
         break;
 
+      case(OBJ_PICTURE):
+#ifndef HAS_GTK12
+        get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
+#endif
+        break;
+
       case(OBJ_CIRCLE):
         get_circle_bounds(w_current, o_current->circle, &rleft, &rtop, &rright, &rbottom);
         break;
@@ -319,6 +331,12 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 	
       case(OBJ_BOX):
         world_get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
+        break;
+
+      case(OBJ_PICTURE):
+#ifndef HAS_GTK12
+        world_get_picture_bounds(w_current, o_current->picture, &rleft, &rtop, &rright, &rbottom);
+#endif
         break;
 
       case(OBJ_CIRCLE):
@@ -1087,6 +1105,10 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1,
         o_box_translate_world(w_current, x1, y1, o_current);
         break;
 
+      case(OBJ_PICTURE):
+        o_picture_translate_world(w_current, x1, y1, o_current);
+        break;
+
       case(OBJ_CIRCLE):
         o_circle_translate_world(w_current, x1, y1, o_current);
         break;
@@ -1322,6 +1344,7 @@ o_complex_set_color(OBJECT *prim_objs, int color)
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_BOX):
+      case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
       case(OBJ_PIN):
       case(OBJ_ARC):
@@ -1361,6 +1384,7 @@ o_complex_set_color_single(OBJECT *o_current, int color)
     case(OBJ_NET):
     case(OBJ_BUS):
     case(OBJ_BOX):
+    case(OBJ_PICTURE):
     case(OBJ_CIRCLE):
     case(OBJ_PIN):
     case(OBJ_ARC):
@@ -1404,6 +1428,7 @@ o_complex_set_color_save(OBJECT *complex, int color)
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_BOX):
+      case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
       case(OBJ_PIN):
       case(OBJ_ARC):
@@ -1455,6 +1480,7 @@ o_complex_unset_color(OBJECT *complex)
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_BOX):
+      case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
       case(OBJ_PIN):
       case(OBJ_ARC):
@@ -1499,6 +1525,7 @@ o_complex_unset_color_single(OBJECT *o_current)
     case(OBJ_NET):
     case(OBJ_BUS):
     case(OBJ_BOX):
+    case(OBJ_PICTURE):
     case(OBJ_CIRCLE):
     case(OBJ_PIN):
     case(OBJ_ARC):
@@ -1544,6 +1571,7 @@ o_complex_set_saved_color_only(OBJECT *complex, int color)
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_BOX):
+      case(OBJ_PICTURE):
       case(OBJ_CIRCLE):
       case(OBJ_PIN):
       case(OBJ_ARC):
@@ -1644,6 +1672,12 @@ o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
         o_box_rotate_world(w_current, 0, 0, angle_change, o_current);
         break;
 
+      case(OBJ_PICTURE):
+#ifndef HAS_GTK12
+        o_picture_rotate_world(w_current, 0, 0, angle_change, o_current);
+#endif
+        break;
+
       case(OBJ_CIRCLE):
         o_circle_rotate_world(w_current, 0, 0, angle_change, o_current);
         break;
@@ -1706,6 +1740,12 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 	
       case(OBJ_BOX):
         o_box_mirror_world(w_current, 0, 0, o_current);
+        break;
+
+      case(OBJ_PICTURE):
+#ifndef HAS_GTK12
+        o_picture_mirror_world(w_current, 0, 0, o_current);
+#endif
         break;
 
       case(OBJ_CIRCLE):

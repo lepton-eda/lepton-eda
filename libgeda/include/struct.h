@@ -28,6 +28,7 @@ typedef struct st_line LINE;
 typedef struct st_circle CIRCLE;
 typedef struct st_arc ARC;
 typedef struct st_box BOX;
+typedef struct st_picture PICTURE;
 typedef struct st_text TEXT;
 
 typedef struct st_attrib ATTRIB;
@@ -76,6 +77,7 @@ struct st_line {
   int screen_x[2];
   int screen_y[2];
 };
+
 /* pb20011014 - name the grips */
 #define LINE_END1 0
 #define LINE_END2 1
@@ -110,6 +112,30 @@ struct st_box {
 #define BOX_LOWER_RIGHT 1
 #define BOX_UPPER_RIGHT 2
 #define BOX_LOWER_LEFT 3
+
+struct st_picture {
+#ifndef HAS_GTK12
+  GdkPixbuf *original_picture;
+  GdkPixbuf *displayed_picture;
+#endif
+  double ratio;
+  char *filename;
+  int angle;
+  char mirrored;
+
+  /* upper is considered the origin */
+  int upper_x, upper_y; /* world */	
+  int lower_x, lower_y;
+
+  int screen_upper_x, screen_upper_y;
+  int screen_lower_x, screen_lower_y;
+};
+
+#define PICTURE_UPPER_LEFT 0
+#define PICTURE_LOWER_RIGHT 1
+#define PICTURE_UPPER_RIGHT 2
+#define PICTURE_LOWER_LEFT 3
+
 
 struct st_text {
   int x, y;		/* world origin */
@@ -170,6 +196,7 @@ struct st_object {
   ARC *arc;
   BOX *box;
   TEXT *text;
+  PICTURE *picture;
 
   GList *tile_locs;			/* tile locations */
 
@@ -426,6 +453,14 @@ struct st_toplevel {
   /* also used by text add dialog */
   char *current_attribute;		
 
+
+  /* used by add picture dialog */
+#ifndef HAS_GTK12
+  GdkPixbuf *current_pixbuf;
+#endif
+  double pixbuf_wh_ratio;                  /* width/height ratio of the pixbuf */
+  char *pixbuf_filename;
+
   int current_visible;			/* in o_attrib.c */
   int current_show;
   /* have to decided on attribute list stuff */
@@ -547,6 +582,8 @@ struct st_toplevel {
   GtkWidget *fowindow;			/* File open */
   GtkWidget *fswindow;			/* File save */
   GtkWidget *sowindow;			/* Script open */
+  GtkWidget *pfswindow;                 /* Picture File Selection window */
+  GtkWidget *pcfswindow;                /* Picture Change File Selection window */
   int saveas_flag;     			/* what action after save? */
 
   GtkWidget *aswindow;			/* Attribute select */

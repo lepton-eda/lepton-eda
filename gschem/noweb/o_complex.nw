@@ -152,6 +152,10 @@ o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
         o_box_draw_xor(w_current, dx, dy, o_current);
         break;
 
+      case(OBJ_PICTURE):
+        o_picture_draw_xor(w_current, dx, dy, o_current);
+        break;
+
       case(OBJ_CIRCLE):
         o_circle_draw_xor(w_current, dx, dy, o_current);
         break;
@@ -572,6 +576,10 @@ o_complex_translate_display(TOPLEVEL *w_current,
         o_box_draw_xor(w_current, x1, y1, o_current);
         break;
 
+      case(OBJ_PICTURE):
+        o_picture_draw_xor(w_current, x1, y1, o_current);
+        break;
+
       case(OBJ_CIRCLE):
         o_circle_draw_xor(w_current, x1, y1, o_current);
         break;
@@ -639,6 +647,10 @@ o_complex_translate_display_selection(TOPLEVEL *w_current,
 
       case(OBJ_BOX):
         o_box_draw_xor(w_current, x1, y1, o_current);
+        break;
+
+      case(OBJ_PICTURE):
+        o_picture_draw_xor(w_current, x1, y1, o_current);
         break;
 
       case(OBJ_CIRCLE):

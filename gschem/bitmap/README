@@ -21,6 +21,13 @@ gschem-net.xpm		Created by AVH, GPL
 gschem-select.xpm	Created by AVH, GPL 
 gschem-text.xpm		Created by AVH, GPL 
 
+
+This icon come from the GNOME project, and is released under the 
+Gnu General Public License, meaning that you can use them in free
+software projects free of charge.
+
+gschem-warning.png	From the GNOME projec. GPL
+
 All of the following XPM's were created by: tigert@gimp.org
 and were called tb_*.xpm.  These XPM's come from the GNOME project.
 The license on these files is (from the webpage: 

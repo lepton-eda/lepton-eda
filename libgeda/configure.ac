@@ -268,6 +268,44 @@ fi
 ############################################################################
 
 ############################################################################
+# Check for gdk-pixbuf 
+# 
+
+# Check for pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test $PKG_CONFIG = no; then
+   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+fi
+
+# Search for gdk-pixbuf (only if we are not forcing the gtk+ to 1.2)
+if test "$opt_gtkver" != "1.2"
+then
+   PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= 0.15.0, GDK_PIXBUF="yes", no_GDK_PIXBUF="yes")
+fi
+
+# This next bit of code figures out what gtk we need to use.
+if test "$GDK_PIXBUF" = "yes" -a "$opt_gtkver" != "1.2"
+then
+
+   AC_DEFINE(HAS_GDK_PIXBUF, 1, [If gdk-pixbuf has been installed, define this])
+   GDK_PIXBUF_CFLAGS=$GDK_PIXBUF_CFLAGS
+   GDK_PIXBUF_LIBS=$GDK_PIXBUF_LIBS
+   GDK_PIXBUF_VERSION=`$PKG_CONFIG gdk-pixbuf-2.0 --modversion`
+
+fi
+
+if test "$GDK_PIXBUF_VERSION" = ""
+then
+   AC_MSG_ERROR([Cannot find gdk-pixbuf.])
+fi
+
+# 
+# Check for gdk-pixbuf end
+############################################################################
+
+
+
+############################################################################
 # Check for notangle, noweave, texi2html, indent start
 # 
 
@@ -537,8 +575,8 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS"
+LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution

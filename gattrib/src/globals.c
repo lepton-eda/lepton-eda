@@ -51,6 +51,7 @@ int logging_dest=LOG_WINDOW;
  * for gattrib -- no drawing is done. */
 void (*arc_draw_func)() = NULL;
 void (*box_draw_func)() = NULL;
+void (*picture_draw_func)() = o_picture_recalc;
 void (*circle_draw_func)() = NULL;
 void (*complex_draw_func)() = NULL;
 void (*line_draw_func)() = NULL;

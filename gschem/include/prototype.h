@@ -120,6 +120,8 @@ SCM g_keys_add_line(void);
 SCM g_keys_add_line_hotkey(void);
 SCM g_keys_add_box(void);
 SCM g_keys_add_box_hotkey(void);
+SCM g_keys_add_picture(void);
+SCM g_keys_add_picture_hotkey(void);
 SCM g_keys_add_circle(void);
 SCM g_keys_add_circle_hotkey(void);
 SCM g_keys_add_arc(void);
@@ -369,6 +371,10 @@ void i_callback_add_line(gpointer data, guint callback_action, GtkWidget *widget
 void i_callback_add_line_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
+#ifndef HAS_GTK12
+void i_callback_add_picture(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_add_picture_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
+#endif
 void i_callback_add_circle(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_circle_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_arc(gpointer data, guint callback_action, GtkWidget *widget);
@@ -540,21 +546,33 @@ void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
 OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
 OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+#ifndef HAS_GTK12
+OBJECT *o_grips_search_picture(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+#endif
 OBJECT *o_grips_search_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 int o_grips_start(TOPLEVEL *w_current, int x, int y);
 void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
+#ifndef HAS_GTK12
+void o_grips_start_picture(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
+#endif
 void o_grips_start_circle(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_start_line(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_motion(TOPLEVEL *w_current, int x, int y);
 void o_grips_motion_arc(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_box(TOPLEVEL *w_current, int x, int y, int whichone);
+#ifndef HAS_GTK12
+void o_grips_motion_picture(TOPLEVEL *w_current, int x, int y, int whichone);
+#endif
 void o_grips_motion_circle(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_motion_line(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_end(TOPLEVEL *w_current);
 void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_box(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+#ifndef HAS_GTK12
+void o_grips_end_picture(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
+#endif
 void o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 void o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 int o_grips_size(TOPLEVEL *w_current);
@@ -615,6 +633,27 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y);
 void o_net_eraserubber(TOPLEVEL *w_current);
 void o_net_xorrubber(TOPLEVEL *w_current);
 int o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj, GList *other_objects);
+/* o_picture.c */
+#ifndef HAS_GTK12
+void o_picture_start(TOPLEVEL *w_current, int x, int y);
+void o_picture_end(TOPLEVEL *w_current, int x, int y);
+void picture_selection_ok (GtkWidget *widget, TOPLEVEL *w_current);
+void picture_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current);
+#endif
+void picture_selection_dialog (TOPLEVEL *w_current);
+#ifndef HAS_GTK12
+void o_picture_eraserubber(TOPLEVEL *w_current);
+void o_picture_rubberbox_xor(TOPLEVEL *w_current);
+void o_picture_rubberbox(TOPLEVEL *w_current, int x, int y);
+void o_picture_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_picture_draw_grips(TOPLEVEL *w_current, OBJECT *o_current);
+void o_picture_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
+void o_picture_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_picture_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);void picture_change_selection_cancel (GtkWidget *widget, TOPLEVEL *w_current);
+void picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current);
+void picture_change_filename_dialog (TOPLEVEL *w_current);
+#endif
+
 /* o_pin.c */
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current);

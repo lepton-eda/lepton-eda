@@ -165,6 +165,14 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
                             origin_x, origin_y, color_mode);
           break;
 			
+	case(OBJ_PICTURE):
+          /* FIXME: Implement this */
+	  fprintf(stderr, "f_image_write_objects: o_picture_image_write not implemented yet\n");
+	  out = NULL;
+	  /* out = (char *) o_picture_image_write(w_current, o_current,
+	     origin_x, origin_y, color_mode); */
+	  break;
+
         default:
           fprintf(stderr, "Error type!\n");
           exit(-1);

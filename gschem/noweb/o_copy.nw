@@ -324,6 +324,28 @@ o_copy_end(TOPLEVEL *w_current)
         
         break;
 
+#ifndef HAS_GTK12
+      case(OBJ_PICTURE):
+        new_object = (OBJECT *) o_picture_copy(w_current,
+					       w_current->page_current->
+					       object_tail,
+					       object);
+        if (w_current->actionfeedback_mode == OUTLINE) {
+          o_picture_draw_xor(w_current,
+			     screen_diff_x,
+			     screen_diff_y,
+			     object);
+        }
+        o_picture_translate_world(w_current,
+				  diff_x, diff_y,
+				  new_object);
+        
+        o_selection_add(temp_list, new_object);
+        new_object->saved_color = object->saved_color;
+        o_picture_draw(w_current, new_object);
+        
+        break;
+#endif
       case(OBJ_CIRCLE):
         new_object = (OBJECT *) o_circle_copy(w_current,
                                               w_current->page_current->

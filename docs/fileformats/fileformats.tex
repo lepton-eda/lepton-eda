@@ -218,6 +218,55 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3,
 40 mils thick, no cap, dotted line style, and with a spacing of 75 mils 
 in between each dot.
 
+\subsection{picture}
+
+Valid in: Schematic and Symbol files
+
+{\bf type x1 y1 width height angle ratio mirrored embedded}
+\newline
+{\bf filename}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char		& G \\ \hline
+{\bf x} 	& int/mils 	& Lower left X coordinate \\ \hline 
+{\bf y} 	& int/mils	& Lower left Y coordinate \\ \hline
+{\bf width} 	& int/mils	& Width of the picture \\ \hline
+{\bf height} 	& int/mils	& Height of the picture \\ \hline
+{\bf angle} 	& int/degrees	& Angle of the picture \\ \hline
+{\bf mirrored} 	& char          & Mirrored or normal picture \\ \hline
+{\bf embedded} 	& char          & Embedded or link to the picture file\\ \hline
+{\bf filename} 	& string        & path and filename of a not embedded  picture \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item This object is a picture object. The first line contains all the picture 
+      parameters, and the second line is the path and filename of the picture.
+\item The angle of the picture can only take on one of the following values: 
+      0, 90, 180, 270.
+\item The mirrored field is an enumerated type:
+\begin{itemize}
+	\item NOT MIRRORED = 0 
+	\item MIRRORED = 1
+\end{itemize}
+\item The embdded field is an enumerated type:
+\begin{itemize}
+	\item NOT EMBEDDED = 0
+	\item EMBEDDED = 1 (not yet supported)
+\end{itemize}
+\end{itemize}
+
+Example:\newline 
+{\tt G 16900 35800 1400 2175 0 6.435331e-01 0 0}\newline
+{\tt ../bitmaps/logo.jpg}
+
+A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils (i.e.: the ratio is 0.6353). \newline
+The picture rotation is 0 degrees and the picture is not mirrored, neither embedded.\newline
+The picture path and filename is showed in the second line. \newline
+
 
 \subsection{box}
 

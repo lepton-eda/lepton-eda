@@ -154,6 +154,10 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
             out = (char *) o_arc_save(o_current);
             break;
 
+  	  case(OBJ_PICTURE):
+	    out = (char *) o_picture_save(o_current); 
+	    break;
+
           default:
             fprintf(stderr, "Error type!\n");
             exit(-1);
@@ -290,6 +294,10 @@ o_save(TOPLEVEL *w_current, const char *filename)
             out = (char *) o_arc_save(o_current);
             break;
 
+  	  case(OBJ_PICTURE):
+	    out = (char *) o_picture_save(o_current); 
+	    break;
+
           default:
             fprintf(stderr, "Error type!\n");
             exit(-1);
@@ -396,6 +404,12 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
       case(OBJ_BOX):
         object_list = (OBJECT *) o_box_read(w_current, object_list, buf,
                                             release_ver, fileformat_ver);
+        break;
+		
+      case(OBJ_PICTURE):
+        object_list = (OBJECT *) o_picture_read(w_current, object_list, buf,
+						fp,
+						release_ver, fileformat_ver);
         break;
 		
       case(OBJ_CIRCLE):

@@ -253,6 +253,7 @@ s_basic_init_object( char *name )
   new_node->circle = NULL;
   new_node->arc = NULL;
   new_node->box = NULL;
+  new_node->picture = NULL;
   new_node->text = NULL;
   new_node->complex = NULL;
 
@@ -532,6 +533,20 @@ s_delete(TOPLEVEL *w_current, OBJECT *o_current)
       free(o_current->box);
     }
     o_current->box = NULL;
+
+    if (o_current->picture) {
+      /*	printf("sdeleting picture\n");*/
+#ifndef HAS_GTK12
+      if (o_current->picture->original_picture)
+	free(o_current->picture->original_picture);
+      if (o_current->picture->displayed_picture)
+	free(o_current->picture->displayed_picture);
+#endif
+      if (o_current->picture->filename)
+	free(o_current->picture->filename);
+      free(o_current->picture);
+    }
+    o_current->picture = NULL;
 
     if (o_current->text) {
       if (o_current->text->string) {

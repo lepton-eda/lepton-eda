@@ -29,6 +29,7 @@
 #endif
 
 #include <libgeda/libgeda.h>
+#include <gtk/gtk.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -57,6 +58,8 @@ main_prog(void *closure, int argc, char *argv[])
   struct stat buf;
   
   TOPLEVEL *pr_current;
+
+  gtk_init(&argc, &argv);
 
   argv_index = parse_commandline(argc, argv);
   cwd = getcwd(NULL, 1024);

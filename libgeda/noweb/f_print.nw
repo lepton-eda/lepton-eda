@@ -482,6 +482,12 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
                       origin_x, origin_y);
           break;
 
+  	case(OBJ_PICTURE):
+            /* FIXME: Implement this */
+	  fprintf(stderr, "f_print_objects: o_picture_print not implemented yet\n");
+	  /* o_picture_print(); */
+	  break;
+
         default:
           fprintf(stderr, "Error type!\n");
           exit(-1);

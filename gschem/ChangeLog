@@ -1,3 +1,15 @@
+2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* bitmap/Makefile.am, bitmap/README: Added new file gschem-warning.png.
+	* include/prototype.h, include/x_states.h, lib/system-gschemrc.in,
+	  noweb/Makefile.am, noweb/g_keys.nw, noweb/g_register.nw, 
+	  noweb/globals.nw, noweb/i_basic.nw, noweb/i_callbacks.nw,
+	  noweb/o_basic.nw, noweb/o_complex.nw, noweb/o_copy.nw,
+	  noweb/o_delete.nw, noweb/o_grips.nw, noweb/o_misc.nw,
+	  noweb/o_move.nw, noweb/o_picture.nw, noweb/rcstrings.nw,
+	  noweb/x_event.nw, src/Makefile.am:
+	  Added picture support.	
+	
 2005-02-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/fr_FR.po, LINGUAS: Added French translation by Iznogood.

@@ -118,6 +118,10 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected,
       end = (OBJECT *) o_box_copy(w_current, end, selected);	
       break;
 
+    case(OBJ_PICTURE):
+      end = (OBJECT *) o_picture_copy(w_current, end, selected);	
+      break;
+
     case(OBJ_CIRCLE):
       end = (OBJECT *) o_circle_copy(w_current, end, selected);	
       break;

@@ -1,3 +1,14 @@
+2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
+
+        * configure.ac, include/funcs.h, include/libgeda.h, 
+	  include/o_types.h, include/prototype.h, include/struct.h,
+	  noweb/Makefile.am, noweb/a_basic.nw, noweb/f_image.nw,
+	  noweb/f_print.nw, noweb/gdk-pixbuf-hacks.nw, noweb/o_attrib.nw,
+	  noweb/o_basic.nw, noweb/o_complex_basic.nw, noweb/o_list.nw,
+	  noweb/o_picture.nw, noweb/s_basic.nw, noweb/s_toplevel.nw,
+	  src/Makefile.am:
+	  Added picture support.
+	
 2005-02-18 22:26  Dan McMahill <danmc>
 
 	* noweb/g_rc.nw: remove a static declaration to match prototype in

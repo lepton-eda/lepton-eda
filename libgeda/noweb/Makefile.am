@@ -7,7 +7,8 @@ EXTRA_DIST = a_basic.nw f_basic.nw f_image.nw f_print.nw g_basic.nw \
 	     s_attrib.nw s_basic.nw s_clib.nw s_color.nw s_conn.nw s_cue.nw \
 	     s_hierarchy.nw s_log.nw s_page.nw s_papersizes.nw \
 	     s_slib.nw s_stretch.nw s_tile.nw s_undo.nw s_menu.nw \
-	     s_toplevel.nw u_basic.nw g_register.nw g_rc.nw i_vars.nw
+	     s_toplevel.nw u_basic.nw g_register.nw g_rc.nw i_vars.nw \
+	     o_picture.nw gdk-pixbuf-hacks.nw		
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

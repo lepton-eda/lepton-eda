@@ -49,6 +49,7 @@ int logging_dest=LOG_WINDOW;
 /* these are required by libgeda */
 void (*arc_draw_func)() = o_arc_recalc;
 void (*box_draw_func)() = o_box_recalc;
+void (*picture_draw_func)() = o_picture_recalc;
 void (*circle_draw_func)() = o_circle_recalc;
 void (*complex_draw_func)() = o_complex_recalc;
 void (*line_draw_func)() = o_line_recalc;

@@ -963,6 +963,10 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
           out = (char *) o_arc_save(o_current);
           break;
 
+  	case(OBJ_PICTURE):
+	  out = (char *) o_picture_save(o_current); 
+	  break;
+
         default:
           fprintf(stderr, "Error type!\n");
           exit(-1);

@@ -29,6 +29,7 @@
 #endif
 
 #include <libgeda/libgeda.h>
+#include <gtk/gtk.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -61,6 +62,8 @@ void main_prog(void *closure, int argc, char *argv[])
 
     TOPLEVEL *pr_current;
 
+    gtk_init(&argc, &argv);
+  
     /* set default output filename */
     output_filename =
 	(char *) malloc(sizeof(char) * (strlen("output.net") + 1));

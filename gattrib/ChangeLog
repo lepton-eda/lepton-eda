@@ -1,3 +1,8 @@
+2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* src/globals.c: Added definition of picture_draw_func after 
+	adding picture support to libgeda.
+	
 2005-02-15 18:32  Stuart Brorson <sdb@cloud9.net>
 
 	* src/x_dialog.c: Modified GTK buttons slightly so the captions 

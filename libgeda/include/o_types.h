@@ -25,6 +25,7 @@
 #define OBJ_HEAD       	-1 
 #define OBJ_LINE        'L'
 #define OBJ_BOX         'B'
+#define OBJ_PICTURE     'G'
 #define OBJ_CIRCLE      'V'
 #define OBJ_NET         'N'
 #define OBJ_BUS         'U'

@@ -278,6 +278,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "add-line-hotkey",           0, 0, 0, g_keys_add_line_hotkey },
   { "add-box",                   0, 0, 0, g_keys_add_box },
   { "add-box-hotkey",            0, 0, 0, g_keys_add_box_hotkey },
+  { "add-picture",               0, 0, 0, g_keys_add_picture},
+  { "add-picture-hotkey",        0, 0, 0, g_keys_add_picture_hotkey},
   { "add-circle",                0, 0, 0, g_keys_add_circle },
   { "add-circle-hotkey",         0, 0, 0, g_keys_add_circle_hotkey },
   { "add-arc",                   0, 0, 0, g_keys_add_arc },

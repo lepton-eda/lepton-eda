@@ -192,6 +192,9 @@ i_status_string(TOPLEVEL *w_current)
   case DRAWBOX:
   case ENDBOX:
     return _("Box Mode");
+  case DRAWPICTURE:
+  case ENDPICTURE:
+    return _("Picture Mode");
   case DRAWCIRCLE:
   case ENDCIRCLE:
     return _("Circle Mode");
@@ -445,6 +448,7 @@ i_update_toolbar(TOPLEVEL *w_current)
  	case(DRAWCOMP): /* TODO */
  	case(DRAWLINE): /* TODO */
  	case(DRAWBOX): /* TODO */
+ 	case(DRAWPICTURE): /* TODO */
  	case(DRAWPIN): /* TODO */
  	case(DRAWCIRCLE): /* TODO */
  	case(DRAWARC): /* TODO */
@@ -459,6 +463,7 @@ i_update_toolbar(TOPLEVEL *w_current)
  	case(ENDMOVE): /* TODO */
  	case(ENDLINE): /* TODO */
  	case(ENDBOX): /* TODO */
+ 	case(ENDPICTURE): /* TODO */
  	case(ENDCIRCLE): /* TODO */
  	case(ENDARC): /* TODO */
  	case(ENDPIN): /* TODO */
@@ -738,6 +743,7 @@ GdkCursor *cursor;
  	case(DRAWCOMP): /* TODO */
  	case(DRAWLINE): /* TODO */
  	case(DRAWBOX): /* TODO */
+ 	case(DRAWPICTURE): /* TODO */
  	case(DRAWPIN): /* TODO */
  	case(DRAWCIRCLE): /* TODO */
  	case(DRAWARC): /* TODO */
@@ -752,6 +758,7 @@ GdkCursor *cursor;
  	case(ENDMOVE): /* TODO */
  	case(ENDLINE): /* TODO */
  	case(ENDBOX): /* TODO */
+ 	case(ENDPICTURE): /* TODO */
  	case(ENDCIRCLE): /* TODO */
  	case(ENDARC): /* TODO */
  	case(ENDPIN): /* TODO */

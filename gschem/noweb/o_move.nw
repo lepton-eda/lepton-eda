@@ -164,6 +164,12 @@ o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
         o_box_translate_world(w_current, diff_x, diff_y, object);
         break;
 
+      case (OBJ_PICTURE):
+#ifndef HAS_GTK12
+        o_picture_translate_world(w_current, diff_x, diff_y, object);
+#endif
+        break;
+
       case (OBJ_CIRCLE):
         o_circle_translate_world(w_current, diff_x, diff_y, object);
         break;
@@ -262,6 +268,7 @@ void o_move_end(TOPLEVEL * w_current)
       case (OBJ_BUS):
       case (OBJ_LINE):
       case (OBJ_BOX):
+      case (OBJ_PICTURE):
       case (OBJ_CIRCLE):
       case (OBJ_ARC):
       case (OBJ_TEXT):
@@ -659,7 +666,8 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
   }
 
 #if DEBUG
-  printf("%d\n", g_list_length(*moved_objects));
+  /* FIXME: moved_objects doesn't exist? */
+  /*printf("%d\n", g_list_length(*moved_objects));*/
   printf("%d\n", g_list_length(*other_objects));
   printf("%d\n", g_list_length(*connected_objects));
 #endif

@@ -34,6 +34,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+#include <gtk/gtk.h>
 
 void
 gsymcheck_quit(void)
@@ -56,6 +57,8 @@ main_prog(void *closure, int argc, char *argv[])
   struct stat buf;
   
   TOPLEVEL *pr_current;
+  
+  gtk_init(&argc, &argv);
 
   argv_index = parse_commandline(argc, argv);
   cwd = getcwd(NULL, 1024);

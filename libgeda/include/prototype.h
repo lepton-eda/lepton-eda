@@ -69,6 +69,13 @@ void i_vars_libgeda_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
 void i_vars_freenames();
 
+/* gdk-pixbuf-hacks.c */
+#ifndef HAS_GTK12
+GdkPixbuf *gdk_pixbuf_rotate (GdkPixbuf *pixbuf, guint angle);
+void gdk_pixbuf_add (GdkPixbuf *pixbuf, int offset_x, int offset_y, GdkPixbuf *pixbuf_to_add);
+GdkPixbuf *gdk_pixbuf_mirror_flip(GdkPixbuf *src, gint mirror, gint flip);
+#endif
+
 /* libgeda.c */
 void libgeda_init(void);
 
@@ -348,6 +355,29 @@ int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y);
 int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
 void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
+
+/* o_picture.c */
+#ifndef HAS_GTK12
+OBJECT *o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+            FILE *fp, unsigned int release_ver, unsigned int fileformat_ver);
+char *o_picture_save(OBJECT *object);
+void o_picture_set_pixbuf(TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *filename);
+OBJECT *o_picture_add(TOPLEVEL *w_current, OBJECT *object_list,
+		      GdkPixbuf * pixbuf, char *filename, double ratio,
+		      char type, 
+		      int x1, int y1, int x2, int y2, int angle, char mirrored,
+		      char embedded);
+void o_picture_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+void get_picture_bounds(TOPLEVEL *w_current, PICTURE *picture, int *left, int *top, int *right, int *bottom);void world_get_picture_bounds(TOPLEVEL *w_current, PICTURE *picture, int *left, int *top, int *right, int *bottom);
+void o_picture_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
+void o_picture_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_picture_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle,OBJECT *object);
+void o_picture_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_picture_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_picture_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_picture_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
+OBJECT *o_picture_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+#endif
 
 /* o_pin_basic.c */
 void get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);

@@ -25,7 +25,7 @@ BUILT_SOURCES = \
 	s_clib.nw s_hierarchy.nw s_papersizes.nw s_stretch.nw s_log.nw \
 	s_page.nw s_slib.nw s_color.nw s_undo.nw s_conn.nw \
 	s_cue.nw s_tile.nw s_menu.nw s_toplevel.nw g_smob.nw libgeda.nw \
-	g_register.nw g_rc.nw i_vars.nw
+	g_register.nw g_rc.nw i_vars.nw o_picture.nw gdk-pixbuf-hacks.nw
 
 libgeda_la_SOURCES = $(BUILT_SOURCES:.nw=.c)
 
