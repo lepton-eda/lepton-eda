@@ -94,6 +94,8 @@ GEDA_DECLARE_SYMLIB(bus)
 GEDA_DECLARE_SYMLIB(supervisor)
 GEDA_DECLARE_SYMLIB(lattice)
 GEDA_DECLARE_SYMLIB(misc)
+GEDA_DECLARE_SYMLIB(transistor)
+GEDA_DECLARE_SYMLIB(power)
 GEDA_DECLARE_SYMLIB(xilinx)
 GEDA_DECLARE_SYMLIB(dec)
 GEDA_DECLARE_SYMLIB(rf)
@@ -165,7 +167,9 @@ AC_SUBST(datatube)
 AC_SUBST(dataradio)
 AC_SUBST(datamemory)
 AC_SUBST(datamicro)
+AC_SUBST(datapower)
 AC_SUBST(datamisc)
+AC_SUBST(datatransistor)
 AC_SUBST(data74)
 AC_SUBST(datarelay)
 AC_SUBST(datadiode)
@@ -216,6 +220,8 @@ AC_OUTPUT([
 	memory/Makefile 
 	micro/Makefile 
 	misc/Makefile 
+	transistor/Makefile 
+	power/Makefile 
 	radio/Makefile 
 	switch/Makefile 
 	titleblock/Makefile 

@@ -1,3 +1,19 @@
+2001-07-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* opto/hcpl-2631-1.sym: Minor touch up work
+
+	* local/*.sym: Moved a bunch of symbols around to their right places
+
+	* power: New directory which got all the power/gnd symbols from misc
+	  (changed all config files to add this new symbol directory)
+
+	* misc: Moved all power/gnd symbols into above new dir
+
+	* transistor: Added transistor symbol library (changed all config
+	  files to add this new symbol directory)
+
+	* Rearranged a few symbol libraries (namely local and misc)
+	
 2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/configure.in: Make sure configure scripts work with autoconf-2.50
