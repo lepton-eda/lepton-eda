@@ -1,3 +1,7 @@
+2002-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Bumped version to 20021031
+
 002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure and friends: Ran "autoreconf --force --install -v"

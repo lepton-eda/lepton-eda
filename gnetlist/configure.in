@@ -8,7 +8,7 @@ PACKAGE=geda-gnetlist
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20020922
+VERSION=20021031
 
 echo Configuring gnetlist version $VERSION
 
