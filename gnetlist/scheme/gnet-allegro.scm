@@ -43,6 +43,13 @@
          (display "PINCOUNT " p)
          (display (gnetlist:get-package-attribute package "pins" )p)
          (newline p)
+         (let ((altfoot (gnetlist:get-package-attribute package "alt_foot")))
+            (if (not (string=? altfoot "unknown"))
+               (begin
+                  (display "PACKAGEPROP   ALT_SYMBOLS\n" p)
+                  (display "'(" p)
+                  (display altfoot p)
+                  (display ")'\n" p))))
          (display "END\n" p)
          (close-output-port p))))
 
