@@ -117,7 +117,7 @@ int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = FALSE;
 
 /* default zoom_factor at which text is displayed completely */
-int   default_text_display_zoomfactor = 4;
+int   default_text_display_zoomfactor = 30;
 
 int default_text_feedback = ONLY_WHEN_READABLE;
 
