@@ -8,9 +8,40 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-12-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Removed zoom_factor variable
+
+2000-12-09  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/m_basic.c: Put some code into WORLDtoSCREEN routines to bound
+	  coords to +/- 2^15 - 1  This is caused by 1) a less than perfect
+	  clipping routine and 2) the fact that X stores coords in signed
+	  shorts.   This may effect portability to machines where this isn't
+	  the case.   The original manifested itself by an endpoint (zoomed
+	  really really close) suddenly drawing itself incorrectly.  The
+	  clipping routine I used doesn't handle horizontal lines at all.
+
+	* src/s_nethash.c: #if DEBUG'ed out a printf
+
+	* src/f_basic.c: Removed all trace of zoom_factor
+
+	* src/s_page.c: Removed all trace of zoom_factor
+
+	* src/m_basic.c: #if 0'd out unused return_zoom_number function
+
+2000-12-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_basic.c, o_conn.c: Started Removing DONT_* flags
+
+	* include/defines.h: Added some pan related #defines
+
 2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* configure.in: Slightly rearranged things to make cygwin port happy
+
+	* src/m_basic.c: Integrated changes by Werner Hoch, added round_5_2_1
+	  function
 
 2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
 
