@@ -2,6 +2,8 @@
 
         * configure.in: Updated version to 20021103 (an official version)
 
+	* tests/*: Updated netlists to take into account fixes to the symbols.
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/gnetlist.txt: Move this file to ../docs/gnetlist
