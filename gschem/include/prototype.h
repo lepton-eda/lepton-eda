@@ -831,7 +831,7 @@ gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 int x_image_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_image_setup(TOPLEVEL *w_current, char *filename);
 /* x_log.c */
-void x_log_init(char *cwd, char *filename);
+void x_log_init(char *cwd, const char *filename);
 void x_log_read(void);
 void x_log_update(char *buf);
 void x_log_close(GtkWidget *w, TOPLEVEL *w_current);
@@ -839,9 +839,10 @@ void x_log_free(void);
 void x_log_setup_win(TOPLEVEL *w_current);
 /* x_menus.c */
 void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
-void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
+GtkWidget *get_main_popup(TOPLEVEL *w_current);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
-void x_menus_sensitivity(TOPLEVEL *w_current, char *buf, int flag);
+void x_menus_sensitivity(TOPLEVEL *w_current, const char *buf, int flag);
+void x_menus_popup_sensitivity(TOPLEVEL *w_current, const char *buf, int flag);
 /* x_multiattrib.c */
 int multi_attrib_edit_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 char *multi_attrib_edit_parser(GtkWidget *w, char **text, int *vis, int *show);

@@ -99,7 +99,7 @@ static char *logfilename;
 
 <<x_log.c : x_log_init()>>=
 void 
-x_log_init(char *cwd, char *filename) 
+x_log_init(char *cwd, const char *filename) 
 {
   logfilename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, 
 					filename, NULL); 
