@@ -157,7 +157,11 @@ void s_rename_add(char *src, char *dest)
     flag = s_rename_search(src, dest, FALSE);
 
     if (flag) {
-	for (i = 0; i < rename_counter; i++) {
+        // Rename_counter may be incremented within this loop, so it cannot
+	// be used in the loop exit condition.  Just iterate over the number
+	// of renames that were in the list at the start of the loop.
+        int orig_rename_counter = rename_counter;
+	for (i = 0; i < orig_rename_counter; i++) {
 	    if (rename_pairs[cur_set][i].src
 		&& rename_pairs[cur_set][i].dest) {
 		if (strcmp(dest, rename_pairs[cur_set][i].src) == 0) {
@@ -192,6 +196,11 @@ void s_rename_add(char *src, char *dest)
 	    (char *) malloc(sizeof(char) * (strlen(dest) + 1));
 	strcpy(rename_pairs[cur_set][rename_counter].dest, dest);
 	rename_counter++;
+    }
+    if (rename_counter == MAX_RENAME) {
+	fprintf(stderr,
+		"Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n");
+	exit(-1);
     }
 
 }
