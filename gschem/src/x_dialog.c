@@ -44,6 +44,13 @@ destroy_window(GtkWidget *widget, GtkWidget **window)
 /***************** Start of Multiple Attrib Edit dialog box ***********/
 
 void
+multi_attrib_edit_add (GtkWidget *w, GtkCList *clist)
+{
+	char *text[]= { "","V V","" };
+	gtk_clist_append(clist,text);
+}
+
+void
 multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
 {
         i_update_status(w_current, "Select Mode");
@@ -64,24 +71,26 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	OBJECT **attriblist=NULL;
 
 	GtkWidget *window1;
+	GtkWidget *table;
 	GtkWidget *vbox;
+	GtkWidget *hbox2;
+	GtkWidget *hbox4;
+	GtkWidget *hbox5;
+	GtkWidget *hbox6;
 	GtkWidget *scrolledwindow1;
 	GtkWidget *clist;
 	GtkWidget *attribhead;
 	GtkWidget *vishead;
 	GtkWidget *valhead;
-	GtkWidget *hbox2;
+
 	GtkWidget *label10;
+	GtkWidget *label11;
+
 	GtkWidget *combo2;
 	GList *combo2_items = NULL;
 	GtkWidget *combo_entry2;
-	GtkWidget *hbox5;
-	GSList *vis_group = NULL;
 	GtkWidget *visbutton;
-	GtkWidget *hbox4;
-	GtkWidget *label11;
 	GtkWidget *entry2;
-	GtkWidget *hbox6;
 	GSList *show_group = NULL;
 	GtkWidget *radiobutton3;
 	GtkWidget *radiobutton4;
@@ -91,7 +100,8 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	GtkWidget *updbutton;
 	GtkWidget *delbutton;
 	GtkWidget *closebutton;
-	GtkWidget *table;
+
+	gchar *titles[]= {"Attribute","Visibility","Value"};
 
 
 	/* Do basic checks first */	
@@ -104,8 +114,10 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
 		w_current->page_current->selection_head->next);
 	text[0] = malloc(1000);
-	text[1] = malloc(1000);
+	text[1] = malloc(4);
 	text[2] = malloc(1000);
+	text[1][1]=' ';
+	text[1][3]='\0';
 
 	/* Make sure attriblist isn't NULL */
 	if (attriblist == NULL) {
@@ -133,11 +145,13 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 		GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 	
 	clist = gtk_clist_new (3);
+	//clist = gtk_clist_new_with_titles (3,titles);
 	gtk_widget_show (clist);
 	gtk_container_add (GTK_CONTAINER (scrolledwindow1), clist);
 	gtk_clist_set_column_width (GTK_CLIST (clist), 0, 80);
 	gtk_clist_set_column_width (GTK_CLIST (clist), 1, 80);
 	gtk_clist_set_column_width (GTK_CLIST (clist), 2, 80);
+
 	gtk_clist_column_titles_show (GTK_CLIST (clist));
 	
 	attribhead = gtk_label_new ("Attribute");
@@ -154,20 +168,15 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	
 	table = gtk_table_new (2,2, FALSE);
 	gtk_widget_show (table);
-	gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
-/*	
-	hbox1 = gtk_hbox_new (TRUE, 0);
-	gtk_widget_show (hbox1);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox1, FALSE, FALSE, 0);
-*/
+	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
+
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox2);
 
-gtk_table_attach (GTK_TABLE (table), hbox2,0,1,0,1,
+	gtk_table_attach (GTK_TABLE (table), hbox2,0,1,0,1,
 	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
-	/*gtk_box_pack_start (GTK_BOX (hbox1), hbox2, TRUE, TRUE, 0);*/
 	gtk_container_set_border_width (GTK_CONTAINER (hbox2), 3);
 
 
@@ -177,35 +186,30 @@ gtk_table_attach (GTK_TABLE (table), hbox2,0,1,0,1,
 	
 	combo2 = gtk_combo_new ();
 	gtk_widget_show (combo2);
-	gtk_box_pack_start (GTK_BOX (hbox2), combo2, TRUE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox2), combo2, TRUE, TRUE, 0);
 	
 	combo_entry2 = GTK_COMBO (combo2)->entry;
 	gtk_widget_show (combo_entry2);
-	//gtk_entry_set_text (GTK_ENTRY (combo_entry2), "ref");
 	
 	hbox5 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox5);
-	/*gtk_box_pack_start (GTK_BOX (hbox1), hbox5, TRUE, TRUE, 0);*/
 	
 	visbutton = gtk_check_button_new_with_label ("Visible");
 	gtk_object_set_data (GTK_OBJECT (window1), "visbutton", visbutton);
 	gtk_widget_show (visbutton);
 	gtk_box_pack_start (GTK_BOX (hbox5), visbutton, FALSE, FALSE, 0);
 	
-	/*hbox3 = gtk_hbox_new (TRUE, 0);
-	gtk_widget_show (hbox3);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox3, FALSE, TRUE, 0);
-*/
-gtk_table_attach (GTK_TABLE (table), hbox5,1,2,0,1,
+//
+	gtk_table_attach (GTK_TABLE (table), hbox5,1,2,0,1,
 	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+                    (GtkAttachOptions) ( GTK_FILL), 0, 0);
 	
 	hbox4 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox4);
-	/*gtk_box_pack_start (GTK_BOX (hbox3), hbox4, TRUE, TRUE, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox4), 3);*/
-gtk_table_attach (GTK_TABLE (table), hbox4,0,1,1,2,
-	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+	gtk_container_set_border_width (GTK_CONTAINER (hbox4), 3);
+//
+	gtk_table_attach (GTK_TABLE (table), hbox4,0,1,1,2,
+	                  (GtkAttachOptions) ( GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	
 	label11 = gtk_label_new ("Value");
@@ -218,9 +222,8 @@ gtk_table_attach (GTK_TABLE (table), hbox4,0,1,1,2,
 	
 	hbox6 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox6);
-	/*gtk_box_pack_start (GTK_BOX (hbox3), hbox6, TRUE, TRUE, 0);*/
 	
-gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
+	gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
 	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
@@ -263,13 +266,22 @@ gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
 	gtk_container_add (GTK_CONTAINER (hbuttonbox1), closebutton);
 	GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
 	
-
 	i=0;
        	while(attriblist[i] != NULL)
         {
                 o_attrib_get_name_value(attriblist[i]->text_string,
 			text[0],text[2]);
-		strcpy(text[1], "TODO");
+		if(attriblist[i]->visibility == VISIBLE)
+			text[1][0]='V';
+		else
+			text[1][0]='I';
+
+		if(attriblist[i]->show_name_value == SHOW_NAME)
+			text[1][2]='N';
+		else if(attriblist[i]->show_name_value == SHOW_VALUE)
+			text[1][2]='V';
+		else
+			text[1][2]='B';
                 gtk_clist_append(GTK_CLIST(clist),text);
                 i++;
         }
@@ -282,7 +294,7 @@ gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
                 i++;
                 string = (char *) s_attrib_get(i);
         }
-        //combo2_items = g_list_prepend (combo2_items, name);
+        combo2_items = g_list_prepend (combo2_items, NULL);
         gtk_combo_set_popdown_strings (GTK_COMBO (combo2), combo2_items);
         g_list_free (combo2_items);
 
@@ -290,12 +302,14 @@ gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
 	o_attrib_free_returned(attriblist);
 	w_current->tewindow=window1;
 
-	gtk_signal_connect(GTK_WINDOW (window1), "destroy",
+        gtk_window_position(GTK_WINDOW (window1), GTK_WIN_POS_MOUSE);
+
+	gtk_signal_connect(GTK_OBJECT (window1), "destroy",
 				GTK_SIGNAL_FUNC(destroy_window),
 				&w_current->tewindow);
 
         gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
-                        GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
+                        GTK_SIGNAL_FUNC(multi_attrib_edit_add),clist);
         gtk_signal_connect(GTK_OBJECT(delbutton),"clicked",
                         GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
         gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
