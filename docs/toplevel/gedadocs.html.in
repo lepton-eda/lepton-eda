@@ -221,6 +221,24 @@ gEDA/gaf Documention
 </TD>
 </TR>
 
+<TR>
+<TD WIDTH="50%">
+<b>SystemC netlister README</b>
+</TD>
+<TD>
+<A HREF="./readmes/README.sysc">txt</A>
+</TD>
+</TR>
+
+<TR>
+<TD WIDTH="50%">
+<b>Eagle PCB netlister README</b>
+</TD>
+<TD>
+<A HREF="./readmes/README.eagle">txt</A>
+</TD>
+</TR>
+
 </TABLE>
 
 <p>
