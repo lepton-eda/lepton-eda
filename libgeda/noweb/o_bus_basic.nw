@@ -328,7 +328,7 @@ o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
   if (ripper_dir < -1 || ripper_dir > 1) {
     fprintf(stderr, "Found an invalid bus ripper direction [ %s ]\n", buf);
     s_log_message("Found an invalid bus ripper direction [ %s ]\n", buf);
-    s_log_message("Reseting direction to neutral (no direction)\n");
+    s_log_message("Resetting direction to neutral (no direction)\n");
     ripper_dir = 0;
   }
 
