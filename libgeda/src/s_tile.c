@@ -47,7 +47,6 @@ void s_tile_init(TOPLEVEL * w_current, PAGE * p_current)
 {
     int i, j;
     TILE *t_current;
-    int world_x, world_y;
     int x_size = w_current->init_right / MAX_TILES_X;
     int y_size = w_current->init_bottom / MAX_TILES_Y;
     int x_sum = 0;
@@ -160,7 +159,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
         found = g_list_find(t_current->objects, object);
 
         if (!found) {
-          //printf("%d %d\n", v, w);
+          /*printf("%d %d\n", v, w);*/
           t_current->objects = g_list_append(t_current->objects,
                                              object);
 
@@ -179,7 +178,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
         found = g_list_find(t_current->objects, object);
 
         if (!found) {
-          //printf("%d %d\n", v, w);
+          /*printf("%d %d\n", v, w);*/
           t_current->objects = g_list_append(t_current->objects,
                                              object);
           tile_loc = s_tile_new_loc(v, w);
@@ -198,7 +197,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
         found = g_list_find(t_current->objects, object);
 
         if (!found) {
-          //printf("%d %d\n", v, w);
+          /*printf("%d %d\n", v, w);*/
           t_current->objects = g_list_append(t_current->objects,
                                              object);
           tile_loc = s_tile_new_loc(v, w);
@@ -226,7 +225,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
           found = g_list_find(t_current->objects, object);
 
           if (!found) {
-            //printf("%d %d\n", v, w);
+            /*printf("%d %d\n", v, w);*/
             t_current->objects =
               g_list_append(t_current->objects, object);
             tile_loc = s_tile_new_loc(v, w);
@@ -245,7 +244,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
           found = g_list_find(t_current->objects, object);
 
           if (!found) {
-            //printf("%d %d\n", v, w);
+            /*printf("%d %d\n", v, w);*/
             t_current->objects =
               g_list_append(t_current->objects, object);
             tile_loc = s_tile_new_loc(v, w);
@@ -265,7 +264,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
           found = g_list_find(t_current->objects, object);
 
           if (!found) {
-            //printf("%d %d\n", v, w);
+            /*printf("%d %d\n", v, w);*/
             t_current->objects =
               g_list_append(t_current->objects, object);
             tile_loc = s_tile_new_loc(v, w);
@@ -293,7 +292,7 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
       found = g_list_find(t_current->objects, object);
 
       if (!found) {
-        //printf("%d %d\n", v, w);
+        /*printf("%d %d\n", v, w);*/
         t_current->objects = g_list_append(t_current->objects,
                                            object);
         tile_loc = s_tile_new_loc(v, w);
@@ -308,7 +307,6 @@ void s_tile_add_object(TOPLEVEL * w_current, OBJECT * object, int world_x1,
 void s_tile_remove_object_all_crude(TOPLEVEL * w_current, OBJECT * object)
 {
   TILE *t_current;
-  GList *found;
 
   int i, j;
 
@@ -343,8 +341,6 @@ void s_tile_remove_object_all(TOPLEVEL * w_current, PAGE *p_current,
   TILE_LOC *tl_current;
   GList *tloc_list;
   GList *found;
-  GList *objects;
-  OBJECT *real_object;
   int i, j;
 
   tloc_list = object->tile_locs;
@@ -420,12 +416,8 @@ void s_tile_print(TOPLEVEL * w_current)
 
 void s_tile_free_all(PAGE * p_current)
 {
-  TILE *t_current;
-  GList *found;
   int i, j;
-
-  OBJECT *real_object;
-  GList *objects;
+  TILE *t_current;
   
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {

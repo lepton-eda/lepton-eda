@@ -44,7 +44,7 @@ o_circle_draw (TOPLEVEL * w_current, OBJECT * o_current)
   int fill_width, angle1, pitch1, angle2, pitch2;
   GdkCapStyle circle_end;
   GdkColor *color;
-  void (*draw_func) ();
+  void (*draw_func) () = NULL;
   void (*fill_func) ();
 
   if (o_current->circle == NULL)

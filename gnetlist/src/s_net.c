@@ -151,8 +151,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 
 
     if (hierarchy_tag) {
-	hierarchy_tag_len = strlen(hierarchy_tag);
-	+1;
+	hierarchy_tag_len = strlen(hierarchy_tag)+1;
     } else {
 	hierarchy_tag_len = 0;
     }

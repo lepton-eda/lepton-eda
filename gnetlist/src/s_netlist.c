@@ -113,7 +113,7 @@ void s_netlist_print(NETLIST * ptr)
 	    }
 
 	    if (nl_current->hierarchy_tag) {
-		printf("Hierarchy tag: %s\n");
+		printf("Hierarchy tag: %s\n", nl_current->hierarchy_tag);
 	    }
 
 	    if (nl_current->cpins) {
@@ -133,7 +133,6 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
     NETLIST *nl_current;
     CPINLIST *pl_current;
     int vi = 0;
-    char *temp;
 
     nl_current = head;
 

@@ -264,7 +264,7 @@ OBJECT *
  o_arc_read(TOPLEVEL * w_current, OBJECT * object_list, char buf[], char *version)
 {
     char type;
-    int x, y, x1, y1;
+    int x1, y1;
     int radius;
     int start_angle, end_angle;
     int color;
@@ -419,7 +419,7 @@ void o_arc_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     int x, y, radius, start_angle, end_angle;
     int color;
     int arc_width, space, length;
-    void (*outl_func) ();
+    void (*outl_func) () = NULL;
 
     if (o_current == NULL) {
 	printf("got null in o_arc_print\n");
@@ -430,6 +430,7 @@ void o_arc_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     radius = o_current->arc->width / 2;
     start_angle = o_current->arc->start_angle;
     end_angle = o_current->arc->end_angle;
+    color = o_current->color;
 
     if (o_current->line_width > 0) {
 	arc_width = o_current->line_width;

@@ -145,15 +145,6 @@ SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
 SCM g_get_selected_filename(void);
 SCM g_get_selected_component_attributes(void);
-/* globals.c */
-/* g_object.c */
-SCM g_make_arc_smob(SCM s_center, SCM s_radius, SCM s_angle1, SCM s_angle2);
-SCM g_make_box_smob(SCM s_point1, SCM s_point2);
-SCM g_make_circle_smob(SCM s_center, SCM s_radius);
-SCM g_make_complex_smob(void);
-SCM g_make_line_smob(SCM s_point1, SCM s_point2);
-SCM g_redraw_all(void);
-void g_init_object_smob(TOPLEVEL *w_curr);
 /* g_rc.c */
 void g_rc_parse(void);
 SCM g_rc_gschem_version(SCM version);
@@ -235,7 +226,7 @@ SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
-void g_register_smobs(TOPLEVEL *w_current);
+/* globals.c */
 /* gschem.c */
 void gschem_quit(void);
 void main_prog(int argc, char *argv[]);
@@ -479,8 +470,8 @@ void o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object);
 void o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object);
 void o_cue_undraw(TOPLEVEL *w_current, OBJECT *object);
 void o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object);
-int o_cue_draw_list(TOPLEVEL *w_current, GList *object_list);
-int o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list);
+void o_cue_draw_list(TOPLEVEL *w_current, GList *object_list);
+void o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list);
 void o_cue_undraw_objects(TOPLEVEL *w_current, OBJECT *list);
 /* o_delete.c */
 void o_delete_net(TOPLEVEL *w_current, OBJECT *obj);

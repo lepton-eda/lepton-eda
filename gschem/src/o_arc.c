@@ -42,7 +42,7 @@ void o_arc_draw(TOPLEVEL * w_current, OBJECT * o_current)
     int arc_width;
     GdkCapStyle arc_end;
     GdkColor *color;
-    void (*draw_func) ();
+    void (*draw_func) () = NULL;
     int length, space;
 
     if (o_current->arc == NULL) {

@@ -194,7 +194,6 @@ SCM get_selected_filename(gpointer data,
 			  GtkWidget *widget)
 {
   SCM return_value;
-  char *filename;
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   
   exit_if_null(w_current);

@@ -176,10 +176,6 @@ void
 o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
 {
   int x, y, screen_x, screen_y;
-  GList *cl_current;
-  CONN *conn;
-  int type, count = 0;
-  int done = FALSE;
   int size, x2size;
   
   x = object->line->x[whichone];
@@ -260,10 +256,6 @@ o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
 void
 o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object)
 {
-  GList *cl_current;
-  CONN *conn;
-  int x, y;
-
   if (!object) {
     return;
   }
@@ -281,10 +273,6 @@ o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object)
 void
 o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object)
 {
-  GList *cl_current;
-  CONN *conn;
-  int x, y;
-
   if (!object) {
     return;
   }
@@ -361,7 +349,7 @@ o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object)
   o_redraw_single(w_current, object);
 }
 
-
+void
 o_cue_draw_list(TOPLEVEL *w_current, GList *object_list)
 {
   OBJECT *object;
@@ -375,9 +363,9 @@ o_cue_draw_list(TOPLEVEL *w_current, GList *object_list)
     
     ol_current = ol_current->next;
   }
-
 }
 
+void
 o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list)
 {
   OBJECT *object;
@@ -391,7 +379,6 @@ o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list)
     
     ol_current = ol_current->next;
   }
-
 }
 
 void

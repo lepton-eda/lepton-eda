@@ -391,8 +391,6 @@ void
 o_net_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
 	    int origin_x, int origin_y)
 {
-    OBJECT *bus_object;
-    int cue;
     int offset, offset2;
     int cross;
     int x1, y1;
@@ -444,11 +442,8 @@ o_net_image_write(TOPLEVEL * w_current, OBJECT * o_current,
     int cross;
     int x1, y1;
     int x2, y2;
-    int cue;
     int endpoint_color;
     int color;
-    int i;
-    OBJECT *bus_object;
 
     if (o_current == NULL) {
 	printf("got null in o_net_image_write\n");
@@ -774,8 +769,6 @@ int o_net_consolidate_segments(TOPLEVEL * w_current, OBJECT * object)
 {
   int object_orient;
   int other_orient;
-  int i;
-  int screen_x, screen_y;
   GList *c_current;
   CONN *conn;
   OBJECT *other_object;
@@ -792,8 +785,8 @@ int o_net_consolidate_segments(TOPLEVEL * w_current, OBJECT * object)
 
   object_orient = o_net_orientation(object);
 
-  //screen_x = object->line->screen_x[j];
-  //screen_y = object->line->screen_y[i];
+  /*screen_x = object->line->screen_x[j];
+    screen_y = object->line->screen_y[i];*/
 
   c_current = object->conn_list;
   while(c_current != NULL) {
@@ -850,6 +843,8 @@ int o_net_consolidate_segments(TOPLEVEL * w_current, OBJECT * object)
 
     c_current = c_current->next;
   }
+
+  return(0);
 }
 
 void o_net_consolidate(TOPLEVEL * w_current)

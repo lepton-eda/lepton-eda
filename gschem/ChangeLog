@@ -1,3 +1,14 @@
+2001-03-01 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_move.c: Fixed a bug (pointed out by Matt Ettus) where an
+	  endpoint was added to the netconn rubberband structure when it 
+	  should not have been.  Bug was in an if statement which included
+	  an || which was causing a false hit
+
+	* src/*.c: Changed some // comments to be /* */
+
+	* src/*.c: Fixed a bunch of -Wall warnings
+
 2001-02-23 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
 	* src/x_print.c: Fixed a bug where if you specified portrait printing

@@ -404,8 +404,8 @@ o_circle_print (TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
   int color;
   int circle_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  void (*outl_func) ();
-  void (*fill_func) ();
+  void (*outl_func) () = NULL;
+  void (*fill_func) () = NULL;
 
   if (o_current == NULL)
     {

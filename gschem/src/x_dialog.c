@@ -1493,7 +1493,7 @@ create_menu_linetype (TOPLEVEL *w_current)
 void
 line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
-	int width, length, space;
+	int width=-1, length=-1, space=-1;
 	OBJECT *object;
 	GtkWidget *length_entry, *space_entry, *width_entry;
 	char *line_width_string = NULL;
@@ -1596,7 +1596,9 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
 	GtkWidget *vbox, *action_area;
 	GtkWidget *optionmenu = NULL;
 	GtkWidget *line_type_menu = NULL;
-	GtkWidget *length_entry, *space_entry, *width_entry;
+	GtkWidget *length_entry = NULL;
+        GtkWidget *space_entry = NULL;
+        GtkWidget *width_entry = NULL;
 	char string[10];
 	int len;
 
@@ -1808,7 +1810,7 @@ create_menu_filltype (TOPLEVEL *w_current)
 void
 fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
-	int width, angle1, pitch1, angle2, pitch2;
+	int width=-1, angle1=-1, pitch1=-1, angle2=-1, pitch2=-1;
 	OBJECT *object;
 	GtkWidget *width_entry, *angle1_entry, *pitch1_entry, *angle2_entry, *pitch2_entry;
 	char *fill_width_string = NULL;
@@ -1921,7 +1923,11 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
 	GtkWidget *vbox, *action_area;
 	GtkWidget *optionmenu = NULL;
 	GtkWidget *fill_type_menu = NULL;
-	GtkWidget *width_entry, *angle1_entry, *pitch1_entry, *angle2_entry, *pitch2_entry;
+	GtkWidget *width_entry = NULL;
+        GtkWidget *angle1_entry = NULL;
+        GtkWidget *pitch1_entry = NULL;
+        GtkWidget *angle2_entry = NULL;
+        GtkWidget *pitch2_entry = NULL;
 	char string[10];
 	int len;
 

@@ -41,8 +41,9 @@ x_grid_draw(TOPLEVEL *w_current)
 	}
 
 	/*think this is a better alternativ, because the definition of */
-	/* w_current->page_current->zoom_factor is very bad (hw) (agreed avh) */
-	/* now there are no incr-limits as above (100-1000), could be added 
+	/* w_current->page_current->zoom_factor is very bad (hw) */
+        /* (agreed avh) */
+	/* now there are no incr-limits as above (100-1000), could be added */
 	/* if wished, (this is fine for now avh) */
 	/* around every 30th screenpixel will be grid-point; */
 	/* adding 0.1 for correct cast*/

@@ -643,7 +643,7 @@ void o_grips_motion(TOPLEVEL * w_current, int x, int y)
 void o_grips_motion_arc(TOPLEVEL * w_current, int x, int y, int whichone)
 {
     double sin_a_, cos_a_, a, dx, dy;
-    int radius, d;
+    int d;
 
     gdk_gc_set_foreground(w_current->xor_gc,
 			  x_get_color(w_current->select_color));

@@ -159,8 +159,8 @@ void
 o_complex_place_rotate(TOPLEVEL *w_current)
 {
 	OBJECT *o_current;
-	int screen_x_local;
-	int screen_y_local;
+	int screen_x_local=-1;
+	int screen_y_local=-1;
 	int new_angle;
 
 	o_current = w_current->page_current->complex_place_head->next;

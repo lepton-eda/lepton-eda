@@ -463,7 +463,7 @@ o_line_print (TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
   int x1, y1, x2, y2;
   int color;
   int line_width, length, space;
-  void (*outl_func) ();
+  void (*outl_func) () = NULL;
 
   if (o_current == NULL)
     {

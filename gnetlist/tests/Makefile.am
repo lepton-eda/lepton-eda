@@ -3,7 +3,7 @@
 EXTRA_DIST = README singlenet_1.PCB singlenet_1.geda \
 	     stack_1.geda darlington_1.spice \
 	     amp_1.spice 7447.vhdl singlenet_1.pads singlenet_1.protel
-          
+
 tests:
 	rm -f new_*
 # gEDA 
@@ -36,11 +36,11 @@ tests_ales:
 	rm -f new_*
 # SPICE 
 	gnetlist -o new_amp_1.spice -g spice \
-		/home/ahvezda/gEDA/contrib/alesch/amp_1.sch
+		/home/ahvezda/gEDA/alesch/amp_1.sch
 	diff amp_1.spice new_amp_1.spice
 # SPICE 
 	gnetlist -o new_darlington_1.spice -g spice \
-		/home/ahvezda/gEDA/contrib/alesch/darlington_1.sch
+		/home/ahvezda/gEDA/alesch/darlington_1.sch
 	diff darlington_1.spice new_darlington_1.spice
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~

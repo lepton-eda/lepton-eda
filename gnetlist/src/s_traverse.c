@@ -27,8 +27,6 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-static int vi;			/* counter used in verbose mode */
-
 void s_traverse_init(void)
 {
     netlist_head = s_netlist_add(NULL);
@@ -98,10 +96,8 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 {
     OBJECT *o_current;
     NETLIST *netlist;
-    PAGE *p_current;
     char *temp;
     char *temp_uref;
-    int page_control = 0;
 
     if (verbose_mode) {
 	printf("- Starting internal netlist creation\n");
@@ -215,12 +211,9 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
   OBJECT *o_current = NULL;
   NET *nets_head = NULL;
   NET *nets = NULL;
-  char *key;
   char *temp;
-  CONN *conn_list;
   CONN *c_current;
   GList *cl_current;
-  int endpoint;
 
   o_current = component->complex->prim_objs;
 
@@ -357,11 +350,8 @@ NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
 {
   OBJECT *o_current;
   NET *new_net;
-  char *key = NULL;
-  CONN *conn_list;
   CONN *c_current;
   GList *cl_current;
-  int endpoint;
   char *temp;
 
   o_current = object;

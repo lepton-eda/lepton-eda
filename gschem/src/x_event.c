@@ -391,10 +391,10 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		if (w_current->inside_action) {
 			if (w_current->event_state == ENDCOMP ||
 			    w_current->event_state == ENDTEXT ) {
-				return;
+				return(0);
 			} else {
 				i_callback_cancel(w_current, 0, NULL);
-				return;
+				return(0);
 			}
 		}
 
@@ -621,7 +621,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 					w_current->page_current->
 					complex_place_head->next, 
 					NULL, x_get_color(w_current->bb_color));
-				return;
+				return(0);
 			} else if (w_current->event_state == ENDTEXT) {
 				o_drawbounding(w_current,
 					w_current->page_current->
@@ -637,7 +637,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 					w_current->page_current->
 					attrib_place_head->next, 
 					NULL, x_get_color(w_current->bb_color));
-				return;
+				return(0);
 
 			}
 		}

@@ -37,7 +37,6 @@ vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found)
 	int val;
 	char found_name[128]; /* limit hack */
 	char found_value[128];
-	char *return_string;
 
 	o_current = object;
 
@@ -77,7 +76,6 @@ SCM
 vams_get_package_attributes(SCM scm_uref)
 {
 	SCM list = SCM_EOL;
-	SCM scm_return_value;
 	NETLIST *nl_current;
 	char *uref;
 	char *return_value=NULL;

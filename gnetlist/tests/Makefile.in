@@ -247,11 +247,11 @@ tests_ales:
 	rm -f new_*
 # SPICE 
 	gnetlist -o new_amp_1.spice -g spice \
-		/home/ahvezda/gEDA/contrib/alesch/amp_1.sch
+		/home/ahvezda/gEDA/alesch/amp_1.sch
 	diff amp_1.spice new_amp_1.spice
 # SPICE 
 	gnetlist -o new_darlington_1.spice -g spice \
-		/home/ahvezda/gEDA/contrib/alesch/darlington_1.sch
+		/home/ahvezda/gEDA/alesch/darlington_1.sch
 	diff darlington_1.spice new_darlington_1.spice
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

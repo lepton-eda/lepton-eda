@@ -730,6 +730,7 @@ int
 o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 {
 
+  return(0);
 }
 
 void

@@ -47,10 +47,6 @@
 #include <sys/stat.h>
 #endif
 
-/* this is needed so that these routines know which window they are changing */
-static TOPLEVEL *project_current;
-
-
 typedef struct {
     int m_val;
     char *m_str;

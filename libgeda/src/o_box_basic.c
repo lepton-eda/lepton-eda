@@ -192,7 +192,6 @@ o_box_read (TOPLEVEL * w_current, OBJECT * object_list, char buf[], char *versio
   OBJECT_TYPE box_type;
   OBJECT_FILLING box_filling;
   long int ver;
-  int tmp;
 
   ver = strtol (version, NULL, 10);
   if (ver <= VERSION_20000704)
@@ -456,8 +455,8 @@ o_box_print (TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
   int color;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
-  void (*outl_func) ();
-  void (*fill_func) ();
+  void (*outl_func) () = NULL;
+  void (*fill_func) () = NULL;
 
   if (o_current == NULL)
     {
@@ -881,7 +880,6 @@ o_box_print_hatch (TOPLEVEL * w_current, FILE * fp,
 		   int angle2, int pitch2,
 		   int origin_x, int origin_y)
 {
-  int i;
   int x3, y3, x4, y4;
   double cos_a_, sin_a_;
   double x0, y0, r;

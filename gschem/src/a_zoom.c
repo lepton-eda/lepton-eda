@@ -67,7 +67,7 @@
 void
 a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
 {
-	double world_pan_center_x,world_pan_center_y,relativ_zoom_factor;
+	double world_pan_center_x,world_pan_center_y,relativ_zoom_factor=-1;
 	int sx, sy;
 	int lx, ly;
 
@@ -325,8 +325,6 @@ void
 correct_aspect(TOPLEVEL *w_current)
 {
 	double new_aspect;
-	int diff_x;
-	int zoom_scale;
 
 	new_aspect = GET_PAGE_ASPECT_RATIO(w_current);
 

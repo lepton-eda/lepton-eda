@@ -75,7 +75,7 @@ o_image_create(int x, int y, int color_mode)
 	im_ptr = gdImageCreate(x, y);
 
 	if (color_mode == TRUE) {
-		// You can change the background color which is outputed
+          /* You can change the background color which is outputed */
 		if (colors[BACKGROUND_COLOR].image_red != -1 && 
 		    colors[BACKGROUND_COLOR].image_green != -1 &&
 		    colors[BACKGROUND_COLOR].image_blue != -1) {

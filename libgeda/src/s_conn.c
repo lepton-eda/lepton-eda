@@ -92,7 +92,6 @@ int s_conn_remove_other(TOPLEVEL * w_current, OBJECT * other_object,
 			OBJECT * to_remove)
 {
     GList *c_current = NULL;
-    GList *temp = NULL;
     CONN *conn = NULL;
 
     c_current = other_object->conn_list;
@@ -216,9 +215,7 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
   OBJECT *found;
   CONN *new_conn;
   int i, j;
-  int x, y;
   int k;
-  int whichone = 0;
 
   /* loop over all tiles which object appears in */
   tloc_list = object->tile_locs;

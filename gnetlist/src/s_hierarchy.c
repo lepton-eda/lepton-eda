@@ -31,9 +31,8 @@ void
 s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 		     NETLIST * netlist)
 {
-    char *filename;
     char *attrib;
-    int page_control;
+    int page_control=-1;
     PAGE *p_current;
     int count = 0;
     int pcount = 0;
@@ -147,7 +146,6 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
     NETLIST *nl_current;
     CPINLIST *pl_current;
     char *source_net_name = NULL;
-    int vi = 0;
     int did_work = FALSE;
 
     s_rename_next_set();
@@ -221,9 +219,7 @@ s_hierarchy_setup_rename(TOPLEVEL * pr_current, NETLIST * head, char *uref,
 {
     NETLIST *nl_current;
     CPINLIST *pl_current;
-    NET *n_current;
     char *wanted_uref = NULL;
-    char uref_disable[80], pin_disable[10];
     int did_work = FALSE;
 
     /* this is questionable, because I'm not sure if it's exactly the */
@@ -320,9 +316,6 @@ void s_hierarchy_remove_urefconn(NETLIST * head, char *uref_disable)
 void s_hierarchy_remove_compsite_all(NETLIST * head)
 {
     NETLIST *nl_current;
-    CPINLIST *pl_current;
-    char *source_net_name = NULL;
-    int vi = 0;
 
     nl_current = head;
     while (nl_current != NULL) {

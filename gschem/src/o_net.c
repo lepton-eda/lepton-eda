@@ -30,9 +30,7 @@ void
 o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int size;
-	int cue;
 	int x1, y1, x2, y2; /* screen coords */
-	OBJECT *bus_object;
 
 #if NET_DEBUG /* debug */
 	char tempstring[64];
@@ -204,9 +202,8 @@ void
 o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
 		      OBJECT *o_current)
 {
-	int size;
 	int color;
-	int dx1, dx2, dy1, dy2;
+	int dx1=-1, dx2=-1, dy1=-1,dy2=-1;
 
         if (o_current->line == NULL) {
                 return;

@@ -1,3 +1,14 @@
+2001-03-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Misc -Wall warnings cleaned up
+	  Part of this cleanup found some warnings which could have lead
+	  to core dumper bugs.
+
+	* tests/Makefile.am: Fixed location of my test schematics
+
+	* tests/amp_1.spice: Updated regression test to take into account
+	  Bas' latest spice backend changes
+	
 2001-02-25  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_netattrib.c: Added some if (... == NULL) checks to prevent

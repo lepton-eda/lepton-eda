@@ -36,7 +36,7 @@ void o_line_draw(TOPLEVEL * w_current, OBJECT * o_current)
     int line_width, length, space;
     GdkColor *color;
     GdkCapStyle line_end;
-    void (*draw_func) ();
+    void (*draw_func) () = NULL;
 
     if (o_current->line == NULL) {
 	return;

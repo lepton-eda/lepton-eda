@@ -30,7 +30,6 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int size;
 	int x1, y1, x2, y2; /* screen coords */
-	int cue;
 
 	if (o_current->line == NULL) {
 		return;

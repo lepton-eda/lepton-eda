@@ -310,11 +310,11 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
         }
       
         /* do the rotate */
-        //w_current->ADDING_SEL=1; /* NEWSEL: needed? */
+        /*w_current->ADDING_SEL=1; NEWSEL: needed? */
         new_angle = (object->complex->angle + 90) % 360;
         o_complex_rotate(w_current, centerx, centery,
                          new_angle, 90, object);
-        //w_current->ADDING_SEL = 0; /* NEWSEL: needed? */
+        /*w_current->ADDING_SEL = 0; NEWSEL: needed? */
         s_conn_update_complex(w_current, object->complex->prim_objs);
         o_complex_draw(w_current, object);
 
@@ -493,7 +493,6 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 {
   OBJECT *object;
   SELECTION *s_current;
-  OBJECT *temp = NULL;
   OBJECT *o_current = NULL;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;

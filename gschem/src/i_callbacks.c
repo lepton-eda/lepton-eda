@@ -2346,7 +2346,7 @@ DEFINE_I_CALLBACK(misc2)
   OBJECT *first = o_select_return_first_object(w_current);
 
   if (first) {
-    //o_cue_draw_single(w_current, first);
+    /*o_cue_draw_single(w_current, first);*/
     o_cue_undraw(w_current, first);
     s_conn_print(first->conn_list);
   }

@@ -43,8 +43,6 @@ void gnetlist_quit(void)
 void main_prog(int argc, char *argv[])
 {
     int i;
-    int c;
-    int done;
     char input_str[2048];
     int argv_index;
     int first_page = 1;
