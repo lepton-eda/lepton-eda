@@ -7,7 +7,7 @@ SUBDIRS = \
 	asic asicpads gnetman minicircuits st apex allegro irf documentation
 
 rcdatadir = @GEDARCDIR@
-rcdata_DATA = system-commonrc 
+rcdata_DATA = system-gafrc 
 
 EXTRA_DIST = autogen.sh
 

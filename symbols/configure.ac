@@ -231,7 +231,7 @@ AC_CONFIG_FILES([
 	allegro/Makefile 
 	irf/Makefile 
 	documentation/Makefile
-	system-commonrc ])
+	system-gafrc ])
 
 AC_OUTPUT 
 
