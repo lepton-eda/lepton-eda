@@ -109,7 +109,7 @@ x_log_init(char *cwd, char *filename)
 void
 x_log_read(void)
 {
-  char buf[81];
+  char buf[200]; /* increased size to make multibyte character sets happy */
   int tmp_fd;
   int len;
 
@@ -125,7 +125,7 @@ x_log_read(void)
     return;
   }
 
-  while ((len = read(tmp_fd, &buf, 79)) != 0) {
+  while ((len = read(tmp_fd, &buf, 198)) != 0) {
     /* not sure if this nukes the last char or not... */
     buf[len] = '\0'; /* null terminate the buffer */
     gtk_text_insert (GTK_TEXT (sttext),

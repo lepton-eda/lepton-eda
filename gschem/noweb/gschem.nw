@@ -130,6 +130,10 @@ main_prog(int argc, char *argv[])
   int first_page = 1;
   char *geda_data;
 
+#if ENABLE_NLS
+  gtk_set_locale();
+#endif
+
   gtk_init(&argc, &argv);
   visual = gdk_visual_get_system();
 

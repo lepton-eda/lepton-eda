@@ -197,7 +197,7 @@ x_draw_tiles(TOPLEVEL *w_current)
 
   gdk_gc_set_foreground(w_current->gc, x_get_color(w_current->lock_color));
 
-  font = gdk_font_load ("fixed");
+  font = gdk_fontset_load ("fixed");
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
       t_current = &w_current->page_current->world_tiles[i][j];

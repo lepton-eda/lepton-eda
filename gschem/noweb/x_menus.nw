@@ -458,10 +458,10 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         if (GTK_IS_LABEL (child))
         {
           font =
-            gdk_font_load ("-unknown-Courier New-normal-r-normal--17-127-96-96-m-0-iso8859-1");
+            gdk_fontset_load ("-unknown-Courier New-normal-r-normal--17-127-96-96-m-0-iso8859-1");
           if (!font) {
             font =
-              gdk_font_load ("-unknown-Fixedsys-normal-r-normal--14-105-96-96-m-0-iso8859-1");
+              gdk_fontset_load ("-unknown-Fixedsys-normal-r-normal--14-105-96-96-m-0-iso8859-1");
           }
 
           if (font) {

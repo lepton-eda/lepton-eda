@@ -123,31 +123,31 @@ multi_attrib_edit_parser (GtkWidget *w, char **text, int *vis, int *show)
 
   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton))) {
     *vis = VISIBLE;
-    strcpy(text[2], "Yes");
+    strcpy(text[2], _("Yes"));
   } else {
     *vis = INVISIBLE;
-    strcpy(text[2], "No");
+    strcpy(text[2], _("No"));
   }
 
   option_index = option_menu_get_history(GTK_OPTION_MENU(show_options));
   switch (option_index) {
     case (0):
       *show = SHOW_VALUE;
-      strcpy(text[3], "V");
+      strcpy(text[3], _("V"));
       break;
 
     case (1):
       *show = SHOW_NAME;
-      strcpy(text[3], "N");
+      strcpy(text[3], _("N"));
       break;
 
     case (2):
       *show = SHOW_NAME_VALUE;
-      strcpy(text[3], "NV");
+      strcpy(text[3], _("NV"));
       break;
 
     default:
-      fprintf(stderr, "Got invalid show option; defaulting to show both\n");
+      fprintf(stderr, _("Got invalid show option; defaulting to show both\n"));
       *show = SHOW_NAME_VALUE;
       break;
   }
@@ -507,7 +507,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   mawindow = gtk_window_new (GTK_WINDOW_DIALOG);
   w_current->mawindow = mawindow; /* gschem specific */
   gtk_object_set_data (GTK_OBJECT (mawindow), "mawindow", mawindow);
-  gtk_window_set_title (GTK_WINDOW (mawindow), "Edit Attributes");
+  gtk_window_set_title (GTK_WINDOW (mawindow), _("Edit Attributes"));
   gtk_window_set_position (GTK_WINDOW (mawindow), GTK_WIN_POS_MOUSE);
   gtk_window_set_modal (GTK_WINDOW (mawindow), TRUE);
   gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 350);
@@ -521,7 +521,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_container_add (GTK_CONTAINER (mawindow), vbox1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox1), 5);
 
-  frame1 = gtk_frame_new ("Attributes");
+  frame1 = gtk_frame_new (_("Attributes"));
   gtk_widget_ref (frame1);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame1", frame1,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -551,28 +551,28 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   /* gschem specific */
   gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)-1);
 
-  label1 = gtk_label_new ("Name");
+  label1 = gtk_label_new (_("Name"));
   gtk_widget_ref (label1);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "label1", label1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label1);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 0, label1);
 
-  label2 = gtk_label_new ("Value");
+  label2 = gtk_label_new (_("Value"));
   gtk_widget_ref (label2);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "label2", label2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label2);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 1, label2);
 
-  label3a = gtk_label_new ("Vis?");
+  label3a = gtk_label_new (_("Vis?"));
   gtk_widget_ref (label3a);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "label3", label3a,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (label3a);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 2, label3a);
 
-  label3b = gtk_label_new ("SN");
+  label3b = gtk_label_new (_("SN"));
   gtk_widget_ref (label3b);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "label3", label3b,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -580,7 +580,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_clist_set_column_widget (GTK_CLIST (clist), 3, label3b);
 
   
-  frame3 = gtk_frame_new ("Add/Edit");
+  frame3 = gtk_frame_new (_("Add/Edit"));
   gtk_widget_ref (frame3);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame3", frame3,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -595,7 +595,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_container_add (GTK_CONTAINER (frame3), table1);
   gtk_container_set_border_width(GTK_CONTAINER(table1), 4);
 
-  label4 = gtk_label_new ("Name:");
+  label4 = gtk_label_new (_("Name:"));
   gtk_widget_ref (label4);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "label4", label4,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -605,7 +605,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
 
-  label5 = gtk_label_new ("Value:");
+  label5 = gtk_label_new (_("Value:"));
   gtk_widget_ref (label5);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "label5", label5,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -615,7 +615,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
 
-  visbutton = gtk_check_button_new_with_label ("Visible");
+  visbutton = gtk_check_button_new_with_label (_("Visible"));
   gtk_widget_ref (visbutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "visbutton", visbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -664,13 +664,13 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 6, 3);
   show_options_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label ("Show Value only");
+  glade_menuitem = gtk_menu_item_new_with_label (_("Show Value only"));
   gtk_widget_show (glade_menuitem);
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label ("Show Name only");
+  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name only"));
   gtk_widget_show (glade_menuitem);
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label ("Show Name & Value");
+  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name & Value"));
   gtk_widget_show (glade_menuitem);
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
@@ -690,7 +690,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, FALSE, TRUE, 0);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
 
-  changebutton = gtk_button_new_with_label ("Change");
+  changebutton = gtk_button_new_with_label (_("Change"));
   gtk_widget_ref (changebutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "changebutton", changebutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -700,7 +700,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   /* gschem specific */
   gtk_object_set_data(GTK_OBJECT(changebutton), "mawindow", mawindow);
 
-  addbutton = gtk_button_new_with_label ("Add");
+  addbutton = gtk_button_new_with_label (_("Add"));
   gtk_widget_ref (addbutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "addbutton", addbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -710,7 +710,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   /* gschem specific */
   gtk_object_set_data(GTK_OBJECT(addbutton), "mawindow", mawindow); 
 
-  deletebutton = gtk_button_new_with_label ("Delete");
+  deletebutton = gtk_button_new_with_label (_("Delete"));
   gtk_widget_ref (deletebutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "deletebutton", deletebutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -726,7 +726,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, TRUE, TRUE, 0);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox2), GTK_BUTTONBOX_END);
 
-  clearbutton = gtk_button_new_with_label ("Clear");
+  clearbutton = gtk_button_new_with_label (_("Clear"));
   gtk_widget_ref (clearbutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "clearbutton", clearbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -734,7 +734,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_container_add (GTK_CONTAINER (hbuttonbox2), clearbutton);
   GTK_WIDGET_SET_FLAGS (clearbutton, GTK_CAN_DEFAULT);
 
-  closebutton = gtk_button_new_with_label ("Close");
+  closebutton = gtk_button_new_with_label (_("Close"));
   gtk_widget_ref (closebutton);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "closebutton", closebutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -779,17 +779,17 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
       o_attrib_get_name_value(attriblist[i]->text->string,
                               text[0], text[1]);
       if(attriblist[i]->visibility == VISIBLE) {
-        strcpy(text[2], "Yes");
+        strcpy(text[2], _("Yes"));
       } else {
-        strcpy(text[2], "No");
+        strcpy(text[2], _("No"));
       }
 
       if(attriblist[i]->show_name_value == SHOW_NAME) {
-        strcpy(text[3], "N");
+        strcpy(text[3], _("N"));
       } else if(attriblist[i]->show_name_value == SHOW_VALUE) {
-        strcpy(text[3], "V");
+        strcpy(text[3], _("V"));
       } else {
-        strcpy(text[3], "NV");
+        strcpy(text[3], _("NV"));
       }
       row = gtk_clist_append(GTK_CLIST(clist),text);
       gtk_clist_set_row_data (GTK_CLIST(clist),row,attriblist[i]);

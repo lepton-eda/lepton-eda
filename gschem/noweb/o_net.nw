@@ -136,7 +136,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 #if NET_DEBUG
     /* temp debug only */
-    font = gdk_font_load ("10x20");
+    font = gdk_fontset_load ("10x20");
     sprintf(tempstring, "%s", o_current->name);
     gdk_draw_text (w_current->window,
                    font,
