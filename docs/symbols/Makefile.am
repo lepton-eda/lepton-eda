@@ -2,7 +2,10 @@ docname=symbols
 docsdir = @GEDADATADIR@/documentation/$(docname)
 docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
 
-EXTRA_DIST = $(docname).tex
+BUILT_SOURCES = $(docname).dvi $(docname).ps $(docname).pdf \
+                $(docname)
+
+EXTRA_DIST = $(docname).tex $(BUILT_SOURCES)
 
 $(docname).dvi: $(docname).tex
 	latex $(docname)
@@ -20,6 +23,8 @@ $(docname).pdf: $(docname).ps
 
 $(docname)/index.html: $(docname).tex
 	latex2html -local_icons $(docname)
+
+$(docname): $(docname)/index.html
 
 install-data-hook: $(docname)/index.html
 	( cd $(docname) ; mkdir -p $(docsdir); \

@@ -6,6 +6,9 @@
 	echos, this will allow me to distribute prebuilt docs and still
 	use the configure mechanism
 
+	* symbols/Makefile.am, attributes/Makefile.am: Attempted to get
+	the dist target to include all the built documentation. 
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, Makefile.am: Updates to get things working a little
