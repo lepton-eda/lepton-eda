@@ -1,3 +1,6 @@
+## $Id$
+##
+
 docname=switcap
 docsdir = @GEDADOCDIR@/$(docname)
 docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
@@ -35,8 +38,8 @@ $(docname)/index.html: $(docname).tex
 $(docname): $(docname)/index.html
 
 install-data-hook: $(docname)/index.html
-	( cd $(docname) ; $(INSTALL) -d $(DESTDIR)$(docsdir); \
-          for i in *; do \
+	( $(INSTALL) -d $(DESTDIR)$(docsdir); \
+          for i in $(docname)/*; do \
 		$(INSTALL_DATA) $$i $(DESTDIR)$(docsdir); \
 	  done )
 
