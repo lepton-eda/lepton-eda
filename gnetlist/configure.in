@@ -228,7 +228,7 @@ dnl old way of doing this, see if new way works
 dnl CFLAGS="$CFLAGS $CFEXTRA `$GTK_CONFIG --cflags`"
 
 CFLAGS="`$GTK_CONFIG --cflags` $CFLAGS $CFEXTRA"
-LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS -lm"
+LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS"
 
 AC_MSG_CHECKING([for the rest of gtk])
 AC_TRY_COMPILE(

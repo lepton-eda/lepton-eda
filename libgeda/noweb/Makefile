@@ -64,7 +64,7 @@ TEXIFILES=	a_basic.texi						\
 		s_slib.texi s_stretch.texi s_tile.texi s_undo.texi	\
 		u_basic.texi
 
-TEXIROOT=	libgeda.texi
+TEXIROOT=	../docs/libgeda.texi
 
 
 all: $(SRCFILES)

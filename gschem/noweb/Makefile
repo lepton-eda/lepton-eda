@@ -9,7 +9,7 @@ NOTANGLE=	notangle
 NOTANGLEFLAGS=	
 NOWEAVE=	noweave
 NOWEAVEFLAGS=	-n -index
-TEXIBACKEND=	-backend geda_totexi
+TEXIBACKEND=	-backend ../scripts/geda_totexi
 
 # piur génération doc
 MAKEINFO=	makeinfo
@@ -70,7 +70,7 @@ TEXIFILES=	a_pan.texi a_zoom.texi					\
 		x_preview.texi x_print.texi x_script.texi x_stroke.texi	\
 		x_window.texi
 
-TEXIROOT=	gschemdoc.texi
+TEXIROOT=	../docs/gschemdoc.texi
 
 
 all: $(SRCFILES)

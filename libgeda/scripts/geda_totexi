@@ -10,4 +10,4 @@ for i do
     *) echo "This can't happen -- $i passed to totex" 1>&2 ; exit 1 ;;
   esac
 done
-gawk -f ../scripts/geda_totexi.awk delay=$delay noindex=$noindex
+awk -f ../scripts/geda_totexi.awk delay=$delay noindex=$noindex
