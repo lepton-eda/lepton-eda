@@ -5,3 +5,5 @@ convert_sym
 sarlacc_schem
 gmk_sym
 smash_megafile
+olib
+olib.c

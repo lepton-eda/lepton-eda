@@ -139,6 +139,15 @@ IMPORTANT
           This will create individual .sym files for gschem. You will need to 
           put them somewhere gschem will find them
 
+
+    olib
+    Written by: Mario Pascucci
+
+    olib is a simple automated converter from OrCAD(tm) v4 (in SDT version
+    1.10) parts library (in ASCII dump format, through "decomp" utility)
+    to gEDA component definition in .sym format file.
+
+
 - License  
 
 	gEDA (includes gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
@@ -154,6 +163,8 @@ IMPORTANT
 	smash_megafile is Copyright 1999 by Mike Jarabek
 	convert_sym is Copyright 1999-2002 by Mike Jarabek
         All of sarlacc is Copyright 1999-2002 by Matthew Ettus
+	gschlas is Copyright 2002 by Ales Hvezda
+        olib is Copyright 2002 by Mario Pascucci
 
 
 
