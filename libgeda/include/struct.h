@@ -1,4 +1,5 @@
-/* gEDA - GNU Electronic Design Automation
+/* -*- geda-c -*-
+ * gEDA - GNU Electronic Design Automation
  * libgeda - include files
  * Copyright (C) 1998 Ales V. Hvezda
  *
@@ -658,5 +659,10 @@ struct st_color {
         int image_color;
 };
 
+
+struct st_attrib_smob {
+	TOPLEVEL *world;   /* We need this when updating schematic */
+	ATTRIB   *attribute;
+};
 
 #endif

@@ -23,6 +23,12 @@ void f_print_set_type(TOPLEVEL *w_current, int type);
 /* g_basic.c */
 int ORIG_g_read_file(char *filename);
 int g_read_file(char *filename);
+/* g_smob.c */
+SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
+SCM g_get_attrib_name_value(SCM attrib_smob);
+SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, 
+				TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
+void g_init_attrib_smob(void);
 /* m_basic.c */
 int mil_x(TOPLEVEL *w_current, int val);
 int mil_y(TOPLEVEL *w_current, int val);
