@@ -50,7 +50,6 @@
 	is true, then use the entire bounding box in the pin auto whichend
 	calculation (instead of default: just the pins).
 	
-	
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added variables for the bus ripper support
@@ -64,7 +63,6 @@
 
 	* noweb/o_bus_basic.nw: Added code to properly set the
 	bus_ripper_direction variable when rotating nets.
-
 
 2002-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
