@@ -34,77 +34,106 @@ typedef struct {
 } RENAME;
 
 #define MAX_RENAME 64
+#define MAX_SETS 10
 
 /* size is fixed... TODO: maybe make this dynamic */
-static RENAME rename_pairs[MAX_RENAME];
+static RENAME rename_pairs[MAX_SETS][MAX_RENAME];
 
 static int rename_counter = 0;
+static int cur_set = 0;
 
 void s_rename_init(void)
 {
-    int i;
+    int i, j;
 
-    for (i = 0; i < MAX_RENAME; i++) {
-	rename_pairs[i].src = NULL;
-	rename_pairs[i].dest = NULL;
+    for (i = 0; i < MAX_SETS; i++) {
+	for (j = 0; j < MAX_RENAME; j++) {
+	    rename_pairs[i][j].src = NULL;
+	    rename_pairs[i][j].dest = NULL;
+	}
     }
     rename_counter = 0;
+    cur_set = 0;
 }
 
-void s_rename_destroy(void)
+void s_rename_destroy_all(void)
 {
-    int i;
+    int i, j;
 
-    for (i = 0; i < rename_counter; i++) {
+    for (i = 0; i < MAX_SETS; i++) {
+	for (j = 0; j < MAX_RENAME; j++) {
 
-	if (rename_pairs[i].src) {
-	    free(rename_pairs[i].src);
-	    rename_pairs[i].src = NULL;
-	}
+	    if (rename_pairs[i][j].src) {
+		free(rename_pairs[i][j].src);
+		rename_pairs[i][j].src = NULL;
+	    }
 
-	if (rename_pairs[i].dest) {
-	    free(rename_pairs[i].dest);
-	    rename_pairs[i].dest = NULL;
+	    if (rename_pairs[i][j].dest) {
+		free(rename_pairs[i][j].dest);
+		rename_pairs[i][j].dest = NULL;
+	    }
 	}
     }
+    rename_counter = 0;
+    cur_set = 0;
+}
+
+void s_rename_next_set(void)
+{
+    if (cur_set == MAX_SETS) {
+	fprintf(stderr,
+		"Increase number of rename_pair sets in s_net.c\n");
+	exit(-1);
+    }
+    cur_set++;
     rename_counter = 0;
 }
 
 void s_rename_print(void)
 {
-    int i;
+    int i,j;
 
-    for (i = 0; i < rename_counter; i++) {
-	if (rename_pairs[i].src) {
-	    printf("%d) Source: _%s_", i, rename_pairs[i].src);
-	}
+    for (i = 0; i < MAX_SETS; i++) {
+	for (j = 0; j < MAX_RENAME; j++) {
+	    if (rename_pairs[i][j].src) {
+		printf("%d) Source: _%s_", i, rename_pairs[i][j].src);
+	    }
 
-	if (rename_pairs[i].dest) {
-	    printf(" -> Dest: _%s_\n", rename_pairs[i].dest);
-	} else {
-	    printf(" -> No Dest! Invalid entry!\n");
+	    if (rename_pairs[i][j].dest) {
+		printf(" -> Dest: _%s_\n", rename_pairs[i][j].dest);
+	    } else {
+		printf(" -> No Dest! Invalid entry!\n");
+	    }
 	}
     }
 }
 
 /* if the src is found, return true */
 /* if the dest is found, also return true, but warn user */
-int s_rename_search(char *src, char *dest)
+/* If quiet_flag is true than don't print anything */
+int s_rename_search(char *src, char *dest, int quiet_flag)
 {
     int i;
     for (i = 0; i < rename_counter; i++) {
-	if (strcmp(src, rename_pairs[i].src) == 0) {
-	    return (TRUE);
+
+	if (rename_pairs[cur_set][i].src && rename_pairs[cur_set][i].dest) {
+
+	    if (strcmp(src, rename_pairs[cur_set][i].src) == 0) {
+		return (TRUE);
+	    }
+
+	    if (strcmp(dest, rename_pairs[cur_set][i].src) == 0) {
+		if (!quiet_flag) {
+		    fprintf(stderr,
+			    "WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n",
+			    dest, rename_pairs[cur_set][i].src);
+		    fprintf(stderr,
+			    "This warning is okay if you have multiple levels of hierarchy!\n");
+		}
+		return (TRUE);
+	    }
 	}
 
-	if (strcmp(dest, rename_pairs[i].src) == 0) {
-	    fprintf(stderr,
-		    "WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n",
-		    dest, rename_pairs[i].src);
-	    fprintf(stderr,
-		    "This warning is okay if you have multiple levels of hierarchy!\n");
-	    return (TRUE);
-	}
     }
 
     return (FALSE);
@@ -119,39 +148,43 @@ void s_rename_add(char *src, char *dest)
 	return;
     }
 
-    flag = s_rename_search(src, dest);
+    flag = s_rename_search(src, dest, FALSE);
 
     if (flag) {
 	for (i = 0; i < rename_counter; i++) {
-	    if (strcmp(dest, rename_pairs[i].src) == 0) {
+	    if (rename_pairs[cur_set][i].src
+		&& rename_pairs[cur_set][i].dest) {
+		if (strcmp(dest, rename_pairs[cur_set][i].src) == 0) {
 #if DEBUG
-		printf
-		    ("Found dest [%s] in src [%s] and that had a dest as: [%s]\nSo you want rename [%s] to [%s]\n",
-		     dest, rename_pairs[i].src, rename_pairs[i].dest, src,
-		     rename_pairs[i].dest);
+		    printf
+			("Found dest [%s] in src [%s] and that had a dest as: [%s]\nSo you want rename [%s] to [%s]\n",
+			 dest, rename_pairs[cur_set][i].src,
+			 rename_pairs[cur_set][i].dest,
+			 src, rename_pairs[cur_set][i].dest);
 #endif
 
-		rename_pairs[rename_counter].src =
-		    (char *) malloc(sizeof(char) * (strlen(src) + 1));
-		strcpy(rename_pairs[rename_counter].src, src);
-		rename_pairs[rename_counter].dest =
-		    (char *) malloc(sizeof(char) *
-				    (strlen(rename_pairs[i].dest) + 1));
-		strcpy(rename_pairs[rename_counter].dest,
-		       rename_pairs[i].dest);
-		rename_counter++;
+		    rename_pairs[cur_set][rename_counter].src =
+			(char *) malloc(sizeof(char) * (strlen(src) + 1));
+		    strcpy(rename_pairs[cur_set][rename_counter].src, src);
+		    rename_pairs[cur_set][rename_counter].dest =
+			(char *) malloc(sizeof(char) *
+					(strlen
+					 (rename_pairs[cur_set][i].dest) +
+					 1));
+		    strcpy(rename_pairs[cur_set][rename_counter].dest,
+			   rename_pairs[cur_set][i].dest);
+		    rename_counter++;
+		}
 	    }
 	}
     } else {
 
-	rename_pairs[rename_counter].src = (char *) malloc(sizeof(char) *
-							   (strlen(src) +
-							    1));
-	strcpy(rename_pairs[rename_counter].src, src);
-	rename_pairs[rename_counter].dest = (char *) malloc(sizeof(char) *
-							    (strlen(dest) +
-							     1));
-	strcpy(rename_pairs[rename_counter].dest, dest);
+	rename_pairs[cur_set][rename_counter].src =
+	    (char *) malloc(sizeof(char) * (strlen(src) + 1));
+	strcpy(rename_pairs[cur_set][rename_counter].src, src);
+	rename_pairs[cur_set][rename_counter].dest =
+	    (char *) malloc(sizeof(char) * (strlen(dest) + 1));
+	strcpy(rename_pairs[cur_set][rename_counter].dest, dest);
 	rename_counter++;
     }
 
@@ -206,13 +239,14 @@ void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head)
 
 	verbose_print("R");
 
-#if DEBUG
-	printf("%d Renaming: %s -> %s\n", i, rename_pairs[i].src,
-	       rename_pairs[i].dest);
+#if DEBUG 
+	printf("%d Renaming: %s -> %s\n", i, rename_pairs[cur_set][i].src,
+	       rename_pairs[cur_set][i].dest);
 #endif
 
 	s_rename_all_lowlevel(netlist_head,
-			      rename_pairs[i].src, rename_pairs[i].dest);
+			      rename_pairs[cur_set][i].src,
+			      rename_pairs[cur_set][i].dest);
     }
 }
 
@@ -221,23 +255,25 @@ SCM g_get_renamed_nets(SCM scm_level)
 {
     SCM pairlist = SCM_EOL;
     SCM outerlist = SCM_EOL;
-    int i = 0;
+    int i = 0, j = 0;
     char *level;
 
     level = gh_scm2newstr(scm_level, NULL);
     free(level);
 
-    for (i = 0; i < rename_counter; i++) {
-
-	if (rename_pairs[i].src && rename_pairs[i].dest) {
-	    pairlist = gh_list(gh_str2scm(rename_pairs[i].src,
-					  strlen(rename_pairs[i].src)),
-			       gh_str2scm(rename_pairs[i].dest,
-					  strlen(rename_pairs[i].dest)),
-			       SCM_UNDEFINED);
+    for (i = 0; i < MAX_SETS; i++) {
+	for (j = 0; j < MAX_RENAME; j++) {
+	    if (rename_pairs[i][j].src && rename_pairs[i][j].dest) {
+		pairlist = gh_list(gh_str2scm(rename_pairs[i][j].src,
+					      strlen(rename_pairs[i]
+						     [j].src)),
+				   gh_str2scm(rename_pairs[i][j].dest,
+					      strlen(rename_pairs[i]
+						     [j].dest)),
+				   SCM_UNDEFINED);
+		outerlist = gh_cons(pairlist, outerlist);
+	    }
 	}
-
-	outerlist = gh_cons(pairlist, outerlist);
     }
 
     return (outerlist);

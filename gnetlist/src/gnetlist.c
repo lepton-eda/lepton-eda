@@ -36,7 +36,7 @@ void gnetlist_quit(void)
     s_clib_cache_free();
     s_clib_free();
     s_slib_free();
-    s_rename_destroy();
+    s_rename_destroy_all();
     /* o_text_freeallfonts(); */
 
 }

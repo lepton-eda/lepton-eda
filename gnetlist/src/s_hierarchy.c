@@ -138,11 +138,6 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 					  "source", count);
 	}
     }
-
-
-
-
-
 }
 
 
@@ -154,7 +149,7 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
     int vi = 0;
     int did_work = FALSE;
 
-    s_rename_destroy();
+    s_rename_next_set();
 
     nl_current = head;
     while (nl_current != NULL) {

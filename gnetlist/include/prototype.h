@@ -103,9 +103,10 @@ void s_project_close_all(void);
 TOPLEVEL *s_project_get_ptr(int wid);
 /* s_rename.c */
 void s_rename_init(void);
-void s_rename_destroy(void);
+void s_rename_destroy_all(void);
+void s_rename_next_set(void);
 void s_rename_print(void);
-int s_rename_search(char *src, char *dest);
+int s_rename_search(char *src, char *dest, int quiet_flag);
 void s_rename_add(char *src, char *dest);
 void s_rename_all_lowlevel(NETLIST *netlist_head, char *src, char *dest);
 void s_rename_all(TOPLEVEL *pr_current, NETLIST *netlist_head);

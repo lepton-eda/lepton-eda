@@ -1,4 +1,29 @@
 
+2001-01-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_rename.c: Due to a bug in how the s_rename_* routines are
+	  being used, you cannot get the renamed names, added code to properly
+	  mux several sets of rename pairs.
+
+	* src/s_hierarchy.c: Changed the s_rename_destroy to use 
+	  s_rename_next_set (instead of destroying, go to the next set)
+
+	* src/gnetlist.c: Changed s_rename_destroy to s_rename_destroy_all
+
+	* tests/netattrib_1*: Added a test schematic and valid netlist to 
+	  the tests
+
+2001-01-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_net.c, s_rename.c: More work on getting the rename of two
+	  same named nets working.
+
+2001-01-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_net.c: Added some code which will rename nets which are
+	  named twice.  This code needs to be examined again to make sure
+	  this is the right way of doing this.
+
 2001-01-17  Stefan Petersen  <spe@geda.seul.org>
 
 	* scheme/gnet-bom.scm, scheme/gnet-bom2.scm: Improved the

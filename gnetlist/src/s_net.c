@@ -273,6 +273,17 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 			    ("\nFound a net name called [%s], but it doesn't have priority\n",
 			     n_current->net_name);
 #endif
+
+			/* do the rename anyways, this might cause problems */
+			/* this will rename net which have the same label= */
+			if (!s_rename_search
+			    (name, n_current->net_name, TRUE)) {
+			    fprintf(stderr,
+				    "Found duplicate net label, renaming [%s] to [%s]\n",
+				    name, n_current->net_name);
+			    s_rename_add(name, n_current->net_name);
+			    name = n_current->net_name;
+			}
 		    }
 
 		} else {	/* LABEL_ATTRIBUTE */
@@ -300,8 +311,17 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 			    ("\nRENAME all nets: %s -> %s (not priority)\n",
 			     name, n_current->net_name);
 #endif
-			s_rename_add(name, n_current->net_name);
-			name = n_current->net_name;
+			/* do the rename anyways, this might cause problems */
+			/* this will rename net which have the same label= */
+			if (!s_rename_search
+			    (name, n_current->net_name, TRUE)) {
+			    fprintf(stderr,
+				    "Found duplicate net label, renaming [%s] to [%s]\n",
+				    name, n_current->net_name);
+
+			    s_rename_add(name, n_current->net_name);
+			    name = n_current->net_name;
+			}
 		    }
 
 #if DEBUG
