@@ -141,7 +141,7 @@ CPINLIST *s_cpinlist_search_pin(CPINLIST * ptr, char *pin_number)
 
     while (pl_current != NULL) {
 
-	if (pl_current->plid != -1) {
+	if (pl_current->plid != -1 && (pl_current->pin_number != NULL)) {
 
 	    if (strcmp(pl_current->pin_number, pin_number) == 0) {
 
