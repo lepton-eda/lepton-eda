@@ -105,7 +105,12 @@ TOPLEVEL *s_project_alloc()
   TOPLEVEL *project;
  
   project = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
+
   if (project) {
+    /* This assignment needs to be here because it is used when reading
+     * in the RC files. Is there a better way to do this?  We can make the
+     * RC list a global . . . or maybe use calloc?  */
+    project->RC_list = (GList *) NULL;
     return project;
   } else {
     fprintf(stderr, "Couldn't allocate space for project.\n");
@@ -113,7 +118,8 @@ TOPLEVEL *s_project_alloc()
   }
 }
 
-@ %def s_project_add
+
+@ %def s_project_alloc
 
 
 /* -------------------------------------------------------- */
@@ -361,8 +367,6 @@ TOPLEVEL * s_project_fill_out(TOPLEVEL *pr_current)
 {
 
   pr_current->wid = global_wid;
-
-  pr_current->RC_list = (GList *) NULL;
 
   /* the default coord sizes */
   /* real ones set in rc file */
