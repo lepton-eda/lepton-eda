@@ -153,6 +153,7 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
 		o_attrib_get_name_value(attrib->text_string,name,value);
 		gtk_entry_set_text (GTK_ENTRY (val_entry), value);
 		gtk_entry_set_text (GTK_ENTRY (lab_entry), name);
+		gtk_widget_grab_focus(val_entry);
 	}
 }
 
@@ -239,6 +240,10 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
 	}
 	free(newtext);
 	free(text);
+
+	if (gtk_object_get_data(GTK_OBJECT(w), "close")) {
+	  multi_attrib_edit_close (w,w_current);
+	}
 }
 
 
@@ -442,6 +447,8 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 	gtk_widget_show (val_entry);
 	gtk_box_pack_start (GTK_BOX (hbox4), val_entry, TRUE, TRUE, 0);
 	gtk_object_set_data(GTK_OBJECT(window),"val_entry",val_entry);
+	gtk_object_set_data(GTK_OBJECT(val_entry),"window",window);
+	gtk_object_set_data(GTK_OBJECT(val_entry),"close",(void *)1);
 	
 	hbox6 = gtk_hbox_new (FALSE, 0);
 	gtk_widget_show (hbox6);
@@ -547,7 +554,9 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 				GTK_SIGNAL_FUNC(destroy_window),
 				&w_current->mawindow);
 
-        gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
+	gtk_signal_connect(GTK_OBJECT(val_entry), "activate",
+			GTK_SIGNAL_FUNC(multi_attrib_edit_change),w_current);
+	gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
                         GTK_SIGNAL_FUNC(multi_attrib_edit_add),w_current);
         gtk_signal_connect(GTK_OBJECT(changebutton),"clicked",
                         GTK_SIGNAL_FUNC(multi_attrib_edit_change),w_current);
@@ -768,8 +777,17 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
 	attribptr = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"attrib");
 	if(!attribptr) {
+	        int world_x, world_y;
+		OBJECT *new;
+
 		object = o_select_return_first_object(w_current);
-		o_attrib_add_attrib(w_current, newtext, vis, show, object);
+		new=o_attrib_add_attrib(w_current, newtext, vis, show, object);
+		SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
+		new->x=world_x;
+		new->y=world_y;
+                o_text_erase(w_current, new);
+                o_text_recreate(w_current, new);
+                o_text_draw(w_current, new);
 	} else {
 		o_text_change(w_current,attribptr,newtext,vis,show);
 	}
@@ -972,9 +990,17 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	}
 	else
 	{
+	        OBJECT *object;
+
 		attrib=NULL;
 		name[0]=0;
 		val[0]=0;
+
+	        if (object = o_select_return_first_object(w_current)) { 
+		  if (object->type==OBJ_NET)
+		    strcpy(name,"label");
+		}
+
 		gtk_toggle_button_set_active 
 			(GTK_TOGGLE_BUTTON (visbutton), TRUE);
 		gtk_toggle_button_set_active 
@@ -1019,7 +1045,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_widget_show(aewindow);
 
         gtk_grab_add(w_current->aewindow);
-	gtk_widget_grab_focus(aewindow);
+	gtk_widget_grab_focus(val_entry);
 }
 
 
