@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -531,7 +531,7 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	}
 
 	/* test a package */
-	if (strlen(pTestedComp->szFileName) > 0 && !PackageTestIfInstalled(pTestedComp))
+	if (strlen(pTestedComp->szFileName) > 0 && PackageTestIfInstalled(pTestedComp) != SUCCESS)
 	{
 		/* check existence of package and patch files */
 		if (strlen(pTestedComp->szFileName) > 0 && FileTest(pTestedComp->szFileName) != SUCCESS)
@@ -603,7 +603,7 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	}
 
 	/* packages only to be checked */
-	else if (!PackageTestIfInstalled(pTestedComp))
+	else if (PackageTestIfInstalled(pTestedComp) != SUCCESS)
 	{
 		szMissingFile = (char *) malloc(strlen(EXPECTED_IN_SYSTEM) + strlen(szTestedCodeName) + 1);
 		sprintf(szMissingFile, EXPECTED_IN_SYSTEM, szTestedCodeName);
