@@ -3,6 +3,7 @@
 SHELL=/bin/sh
 
 prefix=${HOME}/geda
+opts=
 
 ############################################################################
 # Basic targets
@@ -16,17 +17,17 @@ info:
 	@echo ""
 	@echo Type:
 	@echo ""
-	@echo "make install      Installs gEDA into $(prefix)"
-	@echo "make uninstall    Uninstall everything from $(prefix)"
-	@echo "make clean        Simple clean only (remove all .o and binaries)"
+	@echo "${MAKE} install      Installs gEDA into $(prefix)"
+	@echo "${MAKE} uninstall    Uninstall everything from $(prefix)"
+	@echo "${MAKE} clean        Simple clean only (remove all .o and binaries)"
 	@echo ""
 	@echo "These targets are primarily used by the developers:"
-	@echo "make config       Just do the ./configure --prefix=${prefix}"
-	@echo "make maint        Total maintenance clean"
-	@echo "make reconfig     Recreate ./configure (and all Makefiles)"
-	@echo "make distconfig   Create dist ./configure (and all Makefiles)"
-	@echo "make proto        Recreate all prototype.h files"
-	@echo "make all          Just build. Do not use! Run make install"
+	@echo "${MAKE} config       Just do the ./configure --prefix=${prefix}"
+	@echo "${MAKE} maint        Total maintenance clean"
+	@echo "${MAKE} reconfig     Recreate ./configure (and all Makefiles)"
+	@echo "${MAKE} distconfig   Create dist ./configure (and all Makefiles)"
+	@echo "${MAKE} proto        Recreate all prototype.h files"
+	@echo "${MAKE} all          Just build. Do not use! Run make install"
 	@echo ""
 	@echo ""
 	@echo "---------------------------READ THIS---------------------------"
@@ -96,19 +97,19 @@ symbols: symbols/gesym-config
 	@echo symbols Installed 
 
 symbols_maint: symbols/system-commonrc
-	( cd symbols; make maintainer-clean )
+	( cd symbols; ${MAKE} maintainer-clean )
 
 symbols_clean: symbols/system-commonrc
-	( cd symbols; make clean )
+	( cd symbols; ${MAKE} clean )
 
 symbols_install: symbols/gesym-config
-	( cd symbols; make install )
+	( cd symbols; ${MAKE} install )
 
 symbols_uninstall: symbols/system-commonrc
-	( cd symbols; make uninstall )
+	( cd symbols; ${MAKE} uninstall )
 
 symbols_config: 
-	( cd symbols; ./configure --prefix=$(prefix) )
+	( cd symbols; ./configure --prefix=$(prefix) $(opts) )
 
 symbols_reconfig: 
 	( cd symbols; autoreconf --force ; automake )
@@ -122,13 +123,13 @@ gschem: gschem/config.h gschem/src/gschem
 
 gschem_install: libgeda_install symbols_install \
 		gschem/config.h gschem/src/gschem
-	( cd gschem; make install )
+	( cd gschem; ${MAKE} install )
 
 gschem_uninstall: gschem/config.h 
-	( cd gschem; make uninstall )
+	( cd gschem; ${MAKE} uninstall )
 
 gschem_config: 
-	( cd gschem; ./configure --prefix=$(prefix) )
+	( cd gschem; ./configure --prefix=$(prefix) $(opts) )
 
 gschem_reconfig: 
 	( cd gschem; autoreconf --force ; automake )
@@ -137,13 +138,13 @@ gschem_distconfig:
 	( cd gschem; autoreconf --force ; automake --include-deps )
 
 gschem_maint: gschem/config.h 
-	( cd gschem; make maintainer-clean )
+	( cd gschem; ${MAKE} maintainer-clean )
 
 gschem_clean: gschem/config.h 
-	( cd gschem; make clean )
+	( cd gschem; ${MAKE} clean )
 
 gschem_proto: gschem/config.h 
-	( cd gschem; make proto )
+	( cd gschem; ${MAKE} proto )
 
 # gnetlist
 gnetlist: gnetlist/config.h gnetlist/src/gnetlist
@@ -151,22 +152,22 @@ gnetlist: gnetlist/config.h gnetlist/src/gnetlist
 
 gnetlist_install: libgeda_install symbols_install \
 		  gnetlist/config.h gnetlist/src/gnetlist
-	( cd gnetlist; make install )
+	( cd gnetlist; ${MAKE} install )
 
 gnetlist_uninstall: gnetlist/config.h 
-	( cd gnetlist; make uninstall )
+	( cd gnetlist; ${MAKE} uninstall )
 
 gnetlist_maint: gnetlist/config.h 
-	( cd gnetlist; make maintainer-clean )
+	( cd gnetlist; ${MAKE} maintainer-clean )
 
 gnetlist_clean: gnetlist/config.h 
-	( cd gnetlist; make clean )
+	( cd gnetlist; ${MAKE} clean )
 
 gnetlist_proto: gnetlist/config.h 
-	( cd gnetlist; make proto )
+	( cd gnetlist; ${MAKE} proto )
 
 gnetlist_config: 
-	( cd gnetlist; ./configure --prefix=$(prefix) )
+	( cd gnetlist; ./configure --prefix=$(prefix) $(opts) )
 
 gnetlist_reconfig: 
 	( cd gnetlist; autoreconf --force ; automake )
@@ -180,13 +181,13 @@ gsymcheck: gsymcheck/config.h gsymcheck/src/gsymcheck
 
 gsymcheck_install: libgeda_install symbols_install \
 		gsymcheck/config.h gsymcheck/src/gsymcheck
-	( cd gsymcheck; make install )
+	( cd gsymcheck; ${MAKE} install )
 
 gsymcheck_uninstall: gsymcheck/config.h
-	( cd gsymcheck; make uninstall )
+	( cd gsymcheck; ${MAKE} uninstall )
 
 gsymcheck_config: 
-	( cd gsymcheck; ./configure --prefix=$(prefix) )
+	( cd gsymcheck; ./configure --prefix=$(prefix) $(opts) )
 
 gsymcheck_reconfig: 
 	( cd gsymcheck; autoreconf --force ; automake )
@@ -195,13 +196,13 @@ gsymcheck_distconfig:
 	( cd gsymcheck; autoreconf --force ; automake --include-deps )
 
 gsymcheck_maint: gsymcheck/config.h 
-	( cd gsymcheck; make maintainer-clean )
+	( cd gsymcheck; ${MAKE} maintainer-clean )
 
 gsymcheck_clean: gsymcheck/config.h 
-	( cd gsymcheck; make clean )
+	( cd gsymcheck; ${MAKE} clean )
 
 gsymcheck_proto: gsymcheck/config.h 
-	( cd gsymcheck; make proto )
+	( cd gsymcheck; ${MAKE} proto )
 
 # utils
 utils: utils/config.h utils/src/gmk_sym
@@ -209,13 +210,13 @@ utils: utils/config.h utils/src/gmk_sym
 
 utils_install: libgeda_install symbols_install \
 	       utils/config.h utils/src/gmk_sym
-	( cd utils; make install )
+	( cd utils; ${MAKE} install )
 
 utils_uninstall: utils/config.h 
-	( cd utils; make uninstall )
+	( cd utils; ${MAKE} uninstall )
 
 utils_config: 
-	( cd utils; ./configure --prefix=$(prefix) )
+	( cd utils; ./configure --prefix=$(prefix) $(opts) )
 
 utils_reconfig: 
 	( cd utils; autoreconf --force ; automake )
@@ -224,26 +225,26 @@ utils_distconfig:
 	( cd utils; autoreconf --force ; automake --include-deps )
 
 utils_maint: utils/config.h 
-	( cd utils; make maintainer-clean )
+	( cd utils; ${MAKE} maintainer-clean )
 
 utils_clean: utils/config.h 
-	( cd utils; make clean )
+	( cd utils; ${MAKE} clean )
 
 # libgeda
 libgeda: libgeda/config.h libgeda/src/.libs/libgeda.a
 	@echo libgeda Installed 
 
 libgeda_maint: libgeda/config.h
-	( cd libgeda; make maintainer-clean )
+	( cd libgeda; ${MAKE} maintainer-clean )
 
 libgeda_clean: libgeda/config.h
-	( cd libgeda; make clean )
+	( cd libgeda; ${MAKE} clean )
 
 libgeda_proto: libgeda/config.h
-	( cd libgeda; make proto )
+	( cd libgeda; ${MAKE} proto )
 
 libgeda_config: 
-	( cd libgeda; ./configure --prefix=$(prefix) )
+	( cd libgeda; ./configure --prefix=$(prefix) $(opts) )
 
 libgeda_reconfig: 
 	( cd libgeda; autoreconf --force ; automake )
@@ -252,52 +253,52 @@ libgeda_distconfig:
 	( cd libgeda; autoreconf --force ; automake --include-deps )
 
 libgeda_uninstall: libgeda/config.h 
-	( cd libgeda; make uninstall )
+	( cd libgeda; ${MAKE} uninstall )
 
 libgeda_install: libgeda/config.h 
-	( cd libgeda; make install )
+	( cd libgeda; ${MAKE} install )
 
 ############################################################################
 # Configure related targets 
 ############################################################################
 
 libgeda/config.h:
-	( cd libgeda; ./configure --prefix=$(prefix) )
+	( cd libgeda; ./configure --prefix=$(prefix) $(opts) )
 
 gschem/config.h:
-	( cd gschem; ./configure --prefix=$(prefix) )
+	( cd gschem; ./configure --prefix=$(prefix) $(opts) )
 
 gsymcheck/config.h:
-	( cd gsymcheck; ./configure --prefix=$(prefix) )
+	( cd gsymcheck; ./configure --prefix=$(prefix) $(opts) )
 
 utils/config.h:
-	( cd utils; ./configure --prefix=$(prefix) )
+	( cd utils; ./configure --prefix=$(prefix) $(opts) )
 
 gnetlist/config.h:
-	( cd gnetlist; ./configure --prefix=$(prefix) )
+	( cd gnetlist; ./configure --prefix=$(prefix) $(opts) )
 
 symbols/system-commonrc:
-	( cd symbols; ./configure --prefix=$(prefix) )
+	( cd symbols; ./configure --prefix=$(prefix) $(opts) )
 
 ############################################################################
 # Executable related related targets 
 ############################################################################
 
 gschem/src/gschem:
-	(cd gschem; make )
+	(cd gschem; ${MAKE} )
 
 gsymcheck/src/gsymcheck:
-	(cd gsymcheck; make )
+	(cd gsymcheck; ${MAKE} )
 
 gnetlist/src/gnetlist:
-	(cd gnetlist; make )
+	(cd gnetlist; ${MAKE} )
 
 utils/src/gmk_sym:
-	(cd utils; make )
+	(cd utils; ${MAKE} )
 
 libgeda/src/.libs/libgeda.a:
-	( cd libgeda; make install )
+	( cd libgeda; ${MAKE} install )
 
 symbols/gesym-config:
-	( cd symbols; ./configure --prefix=$(prefix); make install )
+	( cd symbols; ./configure --prefix=$(prefix) $(opts) ; ${MAKE} install )
 
