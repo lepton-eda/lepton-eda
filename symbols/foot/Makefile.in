@@ -79,6 +79,7 @@ datamemory = @datamemory@
 datamicro = @datamicro@
 datamisc = @datamisc@
 dataradio = @dataradio@
+dataspice = @dataspice@
 dataswitch = @dataswitch@
 datatitleblock = @datatitleblock@
 datatube = @datatube@

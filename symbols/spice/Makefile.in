@@ -90,11 +90,11 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-datalocaldir = @gedadatadir@/sym/local
+dataspicedir = @gedadatadir@/sym/spice
 
-datalocal_DATA = @datalocal@
+dataspice_DATA = @dataspice@
 
-EXTRA_DIST = $(datalocal_DATA)
+EXTRA_DIST = $(dataspice_DATA)
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
@@ -102,7 +102,7 @@ DISTCLEANFILES = *.log *~
 MAINTAINERCLEANFILES = *.log *~
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
-DATA =  $(datalocal_DATA)
+DATA =  $(dataspice_DATA)
 
 DIST_COMMON =  Makefile.am Makefile.in
 
@@ -114,30 +114,30 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu local/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu spice/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 
-install-datalocalDATA: $(datalocal_DATA)
+install-dataspiceDATA: $(dataspice_DATA)
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(datalocaldir)
-	@list='$(datalocal_DATA)'; for p in $$list; do \
+	$(mkinstalldirs) $(DESTDIR)$(dataspicedir)
+	@list='$(dataspice_DATA)'; for p in $$list; do \
 	  if test -f $(srcdir)/$$p; then \
-	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datalocaldir)/$$p"; \
-	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datalocaldir)/$$p; \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataspicedir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataspicedir)/$$p; \
 	  else if test -f $$p; then \
-	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(datalocaldir)/$$p"; \
-	    $(INSTALL_DATA) $$p $(DESTDIR)$(datalocaldir)/$$p; \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(dataspicedir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(dataspicedir)/$$p; \
 	  fi; fi; \
 	done
 
-uninstall-datalocalDATA:
+uninstall-dataspiceDATA:
 	@$(NORMAL_UNINSTALL)
-	list='$(datalocal_DATA)'; for p in $$list; do \
-	  rm -f $(DESTDIR)$(datalocaldir)/$$p; \
+	list='$(dataspice_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(dataspicedir)/$$p; \
 	done
 tags: TAGS
 TAGS:
@@ -145,14 +145,14 @@ TAGS:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-subdir = local
+subdir = spice
 
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu local/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu spice/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -174,20 +174,20 @@ installcheck: installcheck-am
 install-exec-am:
 install-exec: install-exec-am
 
-install-data-am: install-datalocalDATA
+install-data-am: install-dataspiceDATA
 install-data: install-data-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 install: install-am
-uninstall-am: uninstall-datalocalDATA
+uninstall-am: uninstall-dataspiceDATA
 uninstall: uninstall-am
 all-am: Makefile $(DATA)
 all-redirect: all-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
 installdirs:
-	$(mkinstalldirs)  $(DESTDIR)$(datalocaldir)
+	$(mkinstalldirs)  $(DESTDIR)$(dataspicedir)
 
 
 mostlyclean-generic:
@@ -221,7 +221,7 @@ maintainer-clean-am:  maintainer-clean-generic distclean-am
 
 maintainer-clean: maintainer-clean-am
 
-.PHONY: uninstall-datalocalDATA install-datalocalDATA tags distdir \
+.PHONY: uninstall-dataspiceDATA install-dataspiceDATA tags distdir \
 info-am info dvi-am dvi check check-am installcheck-am installcheck \
 install-exec-am install-exec install-data-am install-data install-am \
 install uninstall-am uninstall all-redirect all-am all installdirs \

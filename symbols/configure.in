@@ -78,6 +78,9 @@ datamaxim=`echo $datamaxim`
 dataverilog=`ls -1 verilog | grep -v Makefile | grep -v CVS`
 dataverilog=`echo $dataverilog`
 
+dataspice=`ls -1 spice | grep -v Makefile | grep -v CVS`
+dataspice=`echo $dataspice`
+
 dataconnector=`ls -1 connector | grep -v Makefile | grep -v CVS`
 dataconnector=`echo $dataconnector`
 
@@ -168,6 +171,7 @@ AC_SUBST(datalocal)
 AC_SUBST(dataanalog)
 AC_SUBST(datamaxim)
 AC_SUBST(dataverilog)
+AC_SUBST(dataspice)
 AC_SUBST(dataconnector)
 AC_SUBST(dataaltera)
 AC_SUBST(datalinear)
@@ -215,6 +219,7 @@ AC_OUTPUT([
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
+	spice/Makefile
 	system-commonrc
         gesym-config ], [chmod +x gesym-config]) 
 

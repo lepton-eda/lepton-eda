@@ -1,7 +1,8 @@
 
 SUBDIRS = \
 	4000 74 IEC417 altera analog connector font foot idt io linear \
-	local maxim memory micro misc radio switch titleblock tube verilog 
+	local maxim memory micro misc radio switch titleblock tube spice \
+	verilog 
 
 bin_SCRIPTS = gesym-config
 

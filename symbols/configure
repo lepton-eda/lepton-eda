@@ -865,6 +865,9 @@ datamaxim=`echo $datamaxim`
 dataverilog=`ls -1 verilog | grep -v Makefile | grep -v CVS`
 dataverilog=`echo $dataverilog`
 
+dataspice=`ls -1 spice | grep -v Makefile | grep -v CVS`
+dataspice=`echo $dataspice`
+
 dataconnector=`ls -1 connector | grep -v Makefile | grep -v CVS`
 dataconnector=`echo $dataconnector`
 
@@ -957,6 +960,7 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
 
 
 
@@ -1127,6 +1131,7 @@ trap 'rm -fr `echo "
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
+	spice/Makefile
 	system-commonrc
         gesym-config " | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
@@ -1181,6 +1186,7 @@ s%@datalocal@%$datalocal%g
 s%@dataanalog@%$dataanalog%g
 s%@datamaxim@%$datamaxim%g
 s%@dataverilog@%$dataverilog%g
+s%@dataspice@%$dataspice%g
 s%@dataconnector@%$dataconnector%g
 s%@dataaltera@%$dataaltera%g
 s%@datalinear@%$datalinear%g
@@ -1264,6 +1270,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
+	spice/Makefile
 	system-commonrc
         gesym-config "}
 EOF

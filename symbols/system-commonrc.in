@@ -38,6 +38,7 @@
 (component-library "@symdir@/connector")
 (component-library "@symdir@/switch")
 (component-library "@symdir@/verilog")
+(component-library "@symdir@/spice")
 
 ; source-library string
 ; Specify where source entities exist.
