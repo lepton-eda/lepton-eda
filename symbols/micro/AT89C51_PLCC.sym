@@ -18,9 +18,9 @@ pinnumber=33
 T 3100 1650 5 8 0 0 0 0
 pinseq=1
 T 2950 1600 3 8 1 1 0 6
-label=ALE/PROG
+pinlabel=ALE/PROG
 T 2950 1600 5 8 0 1 0 8
-type=out
+pintype=out
 }
 L 2498 1724 2950 1724 3 0 0 0 -1 -1
 P 3300 1200 3100 1200 1
@@ -30,9 +30,9 @@ pinnumber=35
 T 3100 1250 5 8 0 0 0 0
 pinseq=2
 T 2950 1200 3 8 1 1 0 6
-label=EA/VPP
+pinlabel=EA/VPP
 T 2950 1200 5 8 0 1 0 8
-type=in
+pintype=in
 }
 L 2338 1324 2570 1324 3 0 0 0 -1 -1
 V 3050 1200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -43,9 +43,9 @@ pinnumber=43
 T 3100 8450 5 8 0 0 0 0
 pinseq=3
 T 2950 8400 3 8 1 1 0 6
-label=(AD0) P0.0
+pinlabel=(AD0) P0.0
 T 2950 8400 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 8000 3000 8000 1
 {
@@ -54,9 +54,9 @@ pinnumber=42
 T 3100 8050 5 8 0 0 0 0
 pinseq=4
 T 2950 8000 3 8 1 1 0 6
-label=(AD1) P0.1
+pinlabel=(AD1) P0.1
 T 2950 8000 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 7600 3000 7600 1
 {
@@ -65,9 +65,9 @@ pinnumber=41
 T 3100 7650 5 8 0 0 0 0
 pinseq=5
 T 2950 7600 3 8 1 1 0 6
-label=(AD2) P0.2
+pinlabel=(AD2) P0.2
 T 2950 7600 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 7200 3000 7200 1
 {
@@ -76,9 +76,9 @@ pinnumber=40
 T 3100 7250 5 8 0 0 0 0
 pinseq=6
 T 2950 7200 3 8 1 1 0 6
-label=(AD3) P0.3
+pinlabel=(AD3) P0.3
 T 2950 7200 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 6800 3000 6800 1
 {
@@ -87,9 +87,9 @@ pinnumber=39
 T 3100 6850 5 8 0 0 0 0
 pinseq=7
 T 2950 6800 3 8 1 1 0 6
-label=(AD4) P0.4
+pinlabel=(AD4) P0.4
 T 2950 6800 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 6400 3000 6400 1
 {
@@ -98,9 +98,9 @@ pinnumber=38
 T 3100 6450 5 8 0 0 0 0
 pinseq=8
 T 2950 6400 3 8 1 1 0 6
-label=(AD5) P0.5
+pinlabel=(AD5) P0.5
 T 2950 6400 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 6000 3000 6000 1
 {
@@ -109,9 +109,9 @@ pinnumber=37
 T 3100 6050 5 8 0 0 0 0
 pinseq=9
 T 2950 6000 3 8 1 1 0 6
-label=(AD6) P0.6
+pinlabel=(AD6) P0.6
 T 2950 6000 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 5600 3000 5600 1
 {
@@ -120,9 +120,9 @@ pinnumber=36
 T 3100 5650 5 8 0 0 0 0
 pinseq=10
 T 2950 5600 3 8 1 1 0 6
-label=(AD7) P0.7
+pinlabel=(AD7) P0.7
 T 2950 5600 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 5000 3000 5000 1
 {
@@ -131,9 +131,9 @@ pinnumber=24
 T 3100 5050 5 8 0 0 0 0
 pinseq=11
 T 2950 5000 3 8 1 1 0 6
-label=(A8) P2.0
+pinlabel=(A8) P2.0
 T 2950 5000 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 4600 3000 4600 1
 {
@@ -142,9 +142,9 @@ pinnumber=25
 T 3100 4650 5 8 0 0 0 0
 pinseq=12
 T 2950 4600 3 8 1 1 0 6
-label=(A9) P2.1
+pinlabel=(A9) P2.1
 T 2950 4600 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 4200 3000 4200 1
 {
@@ -153,9 +153,9 @@ pinnumber=26
 T 3100 4250 5 8 0 0 0 0
 pinseq=13
 T 2950 4200 3 8 1 1 0 6
-label=(A10) P2.2
+pinlabel=(A10) P2.2
 T 2950 4200 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 3800 3000 3800 1
 {
@@ -164,9 +164,9 @@ pinnumber=27
 T 3100 3850 5 8 0 0 0 0
 pinseq=14
 T 2950 3800 3 8 1 1 0 6
-label=(A11) P2.3
+pinlabel=(A11) P2.3
 T 2950 3800 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 3400 3000 3400 1
 {
@@ -175,9 +175,9 @@ pinnumber=28
 T 3100 3450 5 8 0 0 0 0
 pinseq=15
 T 2950 3400 3 8 1 1 0 6
-label=(A12) P2.4
+pinlabel=(A12) P2.4
 T 2950 3400 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 3000 3000 3000 1
 {
@@ -186,9 +186,9 @@ pinnumber=29
 T 3100 3050 5 8 0 0 0 0
 pinseq=16
 T 2950 3000 3 8 1 1 0 6
-label=(A13) P2.5
+pinlabel=(A13) P2.5
 T 2950 3000 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 2600 3000 2600 1
 {
@@ -197,9 +197,9 @@ pinnumber=30
 T 3100 2650 5 8 0 0 0 0
 pinseq=17
 T 2950 2600 3 8 1 1 0 6
-label=(A14) P2.6
+pinlabel=(A14) P2.6
 T 2950 2600 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 2200 3000 2200 1
 {
@@ -208,9 +208,9 @@ pinnumber=31
 T 3100 2250 5 8 0 0 0 0
 pinseq=18
 T 2950 2200 3 8 1 1 0 6
-label=(A15) P2.7
+pinlabel=(A15) P2.7
 T 2950 2200 5 8 0 1 0 8
-type=i/o
+pintype=i/o
 }
 P 3300 800 3100 800 1
 {
@@ -219,9 +219,9 @@ pinnumber=32
 T 3100 850 5 8 0 0 0 0
 pinseq=19
 T 2950 800 3 8 1 1 0 6
-label=PSEN
+pinlabel=PSEN
 T 2950 800 5 8 0 1 0 8
-type=out
+pintype=out
 }
 L 2522 924 2950 924 3 0 0 0 -1 -1
 V 3050 800 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -232,9 +232,9 @@ pinnumber=1
 T 300 1450 5 8 0 0 0 6
 pinseq=20
 T 450 1400 3 8 1 1 0 0
-label=NC.
+pinlabel=NC.
 T 450 1400 5 8 0 1 0 2
-type=tp
+pintype=tp
 }
 P 100 1200 400 1200 1
 {
@@ -243,9 +243,9 @@ pinnumber=12
 T 300 1250 5 8 0 0 0 6
 pinseq=21
 T 450 1200 3 8 1 1 0 0
-label=NC.
+pinlabel=NC.
 T 450 1200 5 8 0 1 0 2
-type=tp
+pintype=tp
 }
 P 100 1000 400 1000 1
 {
@@ -254,9 +254,9 @@ pinnumber=23
 T 300 1050 5 8 0 0 0 6
 pinseq=22
 T 450 1000 3 8 1 1 0 0
-label=NC.
+pinlabel=NC.
 T 450 1000 5 8 0 1 0 2
-type=tp
+pintype=tp
 }
 P 100 800 400 800 1
 {
@@ -265,9 +265,9 @@ pinnumber=34
 T 300 850 5 8 0 0 0 6
 pinseq=23
 T 450 800 3 8 1 1 0 0
-label=NC.
+pinlabel=NC.
 T 450 800 5 8 0 1 0 2
-type=tp
+pintype=tp
 }
 P 100 8400 400 8400 1
 {
@@ -276,9 +276,9 @@ pinnumber=2
 T 300 8450 5 8 0 0 0 6
 pinseq=24
 T 450 8400 3 8 1 1 0 0
-label=P1.0
+pinlabel=P1.0
 T 450 8400 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 8000 400 8000 1
 {
@@ -287,9 +287,9 @@ pinnumber=3
 T 300 8050 5 8 0 0 0 6
 pinseq=25
 T 450 8000 3 8 1 1 0 0
-label=P1.1
+pinlabel=P1.1
 T 450 8000 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 7600 400 7600 1
 {
@@ -298,9 +298,9 @@ pinnumber=4
 T 300 7650 5 8 0 0 0 6
 pinseq=26
 T 450 7600 3 8 1 1 0 0
-label=P1.2
+pinlabel=P1.2
 T 450 7600 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 7200 400 7200 1
 {
@@ -309,9 +309,9 @@ pinnumber=5
 T 300 7250 5 8 0 0 0 6
 pinseq=27
 T 450 7200 3 8 1 1 0 0
-label=P1.3
+pinlabel=P1.3
 T 450 7200 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 6800 400 6800 1
 {
@@ -320,9 +320,9 @@ pinnumber=6
 T 300 6850 5 8 0 0 0 6
 pinseq=28
 T 450 6800 3 8 1 1 0 0
-label=P1.4
+pinlabel=P1.4
 T 450 6800 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 6400 400 6400 1
 {
@@ -331,9 +331,9 @@ pinnumber=7
 T 300 6450 5 8 0 0 0 6
 pinseq=29
 T 450 6400 3 8 1 1 0 0
-label=P1.5
+pinlabel=P1.5
 T 450 6400 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 6000 400 6000 1
 {
@@ -342,9 +342,9 @@ pinnumber=8
 T 300 6050 5 8 0 0 0 6
 pinseq=30
 T 450 6000 3 8 1 1 0 0
-label=P1.6
+pinlabel=P1.6
 T 450 6000 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 5600 400 5600 1
 {
@@ -353,9 +353,9 @@ pinnumber=9
 T 300 5650 5 8 0 0 0 6
 pinseq=31
 T 450 5600 3 8 1 1 0 0
-label=P1.7
+pinlabel=P1.7
 T 450 5600 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 5000 400 5000 1
 {
@@ -364,9 +364,9 @@ pinnumber=11
 T 300 5050 5 8 0 0 0 6
 pinseq=32
 T 450 5000 3 8 1 1 0 0
-label=P3.0 (RXD)
+pinlabel=P3.0 (RXD)
 T 450 5000 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 4600 400 4600 1
 {
@@ -375,9 +375,9 @@ pinnumber=13
 T 300 4650 5 8 0 0 0 6
 pinseq=33
 T 450 4600 3 8 1 1 0 0
-label=P3.1 (TXD)
+pinlabel=P3.1 (TXD)
 T 450 4600 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 4200 400 4200 1
 {
@@ -386,9 +386,9 @@ pinnumber=14
 T 300 4250 5 8 0 0 0 6
 pinseq=34
 T 450 4200 3 8 1 1 0 0
-label=P3.2 (INT0)
+pinlabel=P3.2 (INT0)
 T 450 4200 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 L 882 4324 1226 4324 3 0 0 0 -1 -1
 P 100 3800 400 3800 1
@@ -398,9 +398,9 @@ pinnumber=15
 T 300 3850 5 8 0 0 0 6
 pinseq=35
 T 450 3800 3 8 1 1 0 0
-label=P3.3 (INT1)
+pinlabel=P3.3 (INT1)
 T 450 3800 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 L 866 3924 1170 3924 3 0 0 0 -1 -1
 P 100 3400 400 3400 1
@@ -410,9 +410,9 @@ pinnumber=16
 T 300 3450 5 8 0 0 0 6
 pinseq=36
 T 450 3400 3 8 1 1 0 0
-label=P3.4 (T0)
+pinlabel=P3.4 (T0)
 T 450 3400 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 3000 400 3000 1
 {
@@ -421,9 +421,9 @@ pinnumber=17
 T 300 3050 5 8 0 0 0 6
 pinseq=37
 T 450 3000 3 8 1 1 0 0
-label=P3.5 (T1)
+pinlabel=P3.5 (T1)
 T 450 3000 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 P 100 2600 400 2600 1
 {
@@ -432,9 +432,9 @@ pinnumber=18
 T 300 2650 5 8 0 0 0 6
 pinseq=38
 T 450 2600 3 8 1 1 0 0
-label=P3.6 (WR)
+pinlabel=P3.6 (WR)
 T 450 2600 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 L 874 2724 1126 2724 3 0 0 0 -1 -1
 P 100 2200 400 2200 1
@@ -444,9 +444,9 @@ pinnumber=19
 T 300 2250 5 8 0 0 0 6
 pinseq=39
 T 450 2200 3 8 1 1 0 0
-label=P3.7 (RD)
+pinlabel=P3.7 (RD)
 T 450 2200 5 8 0 1 0 2
-type=i/o
+pintype=i/o
 }
 L 858 2324 1066 2324 3 0 0 0 -1 -1
 P 1000 100 1000 400 1
@@ -456,9 +456,9 @@ pinnumber=10
 T 1050 200 5 8 0 0 0 0
 pinseq=40
 T 1000 450 3 8 1 1 0 3
-label=RST
+pinlabel=RST
 T 1000 600 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 1800 100 1800 400 1
 {
@@ -467,9 +467,9 @@ pinnumber=21
 T 1850 200 5 8 0 0 0 0
 pinseq=41
 T 1800 450 3 8 1 1 0 3
-label=XTAL1
+pinlabel=XTAL1
 T 1800 600 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 2400 100 2400 400 1
 {
@@ -478,8 +478,8 @@ pinnumber=20
 T 2450 200 5 8 0 0 0 0
 pinseq=42
 T 2400 450 3 8 1 1 0 3
-label=XTAL2
+pinlabel=XTAL2
 T 2400 600 5 8 0 1 0 3
-type=out
+pintype=out
 }
 B 400 400 2600 8400 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

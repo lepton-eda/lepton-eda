@@ -11,7 +11,7 @@ pinnumber=OPAD
 T 302 35 5 10 0 0 0 0
 pinseq=1
 T 302 35 5 10 0 1 0 0
-type=IN
+pintype=IN
 T 50 150 5 10 1 1 0 0
 width=6
 }

@@ -6,7 +6,7 @@ pinnumber=2
 T 100 3750 5 8 0 0 0 0
 pinseq=2
 T 350 3750 9 10 1 1 0 0
-label=T1in
+pinlabel=T1in
 }
 P 300 3300 0 3300 1
 {
@@ -15,7 +15,7 @@ pinnumber=3
 T 100 3350 5 8 0 0 0 0
 pinseq=3
 T 350 3350 9 10 1 1 0 0
-label=R1out
+pinlabel=R1out
 }
 P 2600 3300 2300 3300 1
 {
@@ -24,7 +24,7 @@ pinnumber=4
 T 2400 3350 5 8 0 0 0 0
 pinseq=4
 T 1800 3350 9 10 1 1 0 0
-label=R1in
+pinlabel=R1in
 }
 P 2600 3700 2300 3700 1
 {
@@ -33,7 +33,7 @@ pinnumber=5
 T 2400 3750 5 8 0 0 0 0
 pinseq=5
 T 1750 3750 9 10 1 1 0 0
-label=T1out
+pinlabel=T1out
 }
 P 1200 300 1200 0 1
 {
@@ -42,12 +42,12 @@ pinnumber=6
 T 1300 250 5 8 0 0 180 0
 pinseq=6
 T 1350 500 9 10 1 1 180 0
-label=GND
+pinlabel=GND
 }
 P 1400 4200 1400 4500 1
 {
 T 1300 4050 9 8 1 1 0 0
-label=Vcc
+pinlabel=Vcc
 T 1450 4250 5 10 1 1 0 0
 pinnumber=7
 T 1450 4250 5 10 0 0 0 0
@@ -60,7 +60,7 @@ pinnumber=8
 T 100 1650 5 8 0 0 0 0
 pinseq=8
 T 350 1550 9 10 1 1 0 0
-label=V+
+pinlabel=V+
 }
 T 350 4350 9 10 1 1 0 0
 device=MAX233
@@ -71,7 +71,7 @@ pinnumber=19
 T 2400 2350 5 8 0 0 0 0
 pinseq=19
 T 1750 2350 9 10 1 1 0 0
-label=R2in
+pinlabel=R2in
 }
 P 0 2300 300 2300 1
 {
@@ -80,7 +80,7 @@ pinnumber=20
 T 50 2350 5 8 0 0 0 0
 pinseq=20
 T 350 2350 9 10 1 1 0 0
-label=R2out
+pinlabel=R2out
 }
 P 2300 1600 2600 1600 1
 {
@@ -89,12 +89,12 @@ pinnumber=11
 T 2400 1650 5 8 0 0 0 0
 pinseq=11
 T 1900 1550 9 10 1 1 0 0
-label=C2-
+pinlabel=C2-
 }
 P 2300 2700 2600 2700 1
 {
 T 1750 2750 9 10 1 1 0 0
-label=T2out
+pinlabel=T2out
 T 2400 2750 5 8 1 1 0 0
 pinnumber=18
 T 2400 2750 5 8 0 0 0 0
@@ -109,7 +109,7 @@ pinnumber=1
 T 100 2750 5 8 0 0 0 0
 pinseq=1
 T 350 2750 9 10 1 1 0 0
-label=T2in
+pinlabel=T2in
 }
 T 2000 4350 5 10 1 1 0 0
 refdes=U?
@@ -151,12 +151,12 @@ pinnumber=10
 T 50 1350 5 10 0 0 0 0
 pinseq=10
 T 350 1250 9 10 1 1 0 0
-label=V-
+pinlabel=V-
 }
 P 0 1000 300 1000 1
 {
 T 350 950 9 10 1 1 0 0
-label=V-
+pinlabel=V-
 T 50 1050 5 10 1 1 0 0
 pinnumber=17
 T 50 1050 5 10 0 0 0 0
@@ -169,7 +169,7 @@ pinnumber=9
 T 1800 250 5 8 0 0 180 0
 pinseq=9
 T 1850 500 9 10 1 1 180 0
-label=GND
+pinlabel=GND
 }
 P 2300 1900 2600 1900 1
 {
@@ -178,7 +178,7 @@ pinnumber=16
 T 2400 1950 5 8 0 0 0 0
 pinseq=16
 T 1900 1850 9 10 1 1 0 0
-label=C2-
+pinlabel=C2-
 }
 P 2300 800 2600 800 1
 {
@@ -187,7 +187,7 @@ pinnumber=15
 T 2400 850 5 8 0 0 0 0
 pinseq=15
 T 1900 750 9 10 1 1 0 0
-label=C2+
+pinlabel=C2+
 }
 P 2300 1100 2600 1100 1
 {
@@ -196,7 +196,7 @@ pinnumber=12
 T 2400 1150 5 8 0 0 0 0
 pinseq=12
 T 1900 1050 9 10 1 1 0 0
-label=C2+
+pinlabel=C2+
 }
 T 500 2100 8 10 0 1 0 0
 footprint=SO20\

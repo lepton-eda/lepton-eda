@@ -161,9 +161,9 @@ pinnumber=16
 T 500 3500 5 8 0 0 0 1
 pinseq=16
 T 400 3400 5 10 0 1 0 0
-type=PWR
+pintype=PWR
 T 300 3400 5 10 1 1 0 2
-label=vcc
+pinlabel=vcc
 }
 P 400 0 400 200 1
 {
@@ -172,9 +172,9 @@ pinnumber=8
 T 500 100 5 8 0 0 0 1
 pinseq=8
 T 400 0 5 10 0 1 0 0
-type=PWR
+pintype=PWR
 T 300 300 5 10 1 1 0 1
-label=gnd
+pinlabel=gnd
 }
 T 872 3600 8 10 1 1 0 0
 refdes=U?

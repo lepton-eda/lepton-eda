@@ -1,5 +1,10 @@
 2002-07-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	* */*.sym: Re-ran gsymupdate on all symbol files to update type= and
+	label= to pintype= and pinlabel=
+
+2002-07-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* */*.sym: Ran gsymupdate on all symbol files
 
 	* winfonts: Removed directory

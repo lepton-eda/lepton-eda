@@ -77,7 +77,7 @@ pinnumber=8
 T 600 1400 5 8 0 0 0 4
 pinseq=8
 T 400 1200 5 8 1 1 0 0
-label=vcc
+pinlabel=vcc
 }
 P 500 0 500 200 1
 {
@@ -86,7 +86,7 @@ pinnumber=5
 T 600 100 5 8 0 0 0 4
 pinseq=5
 T 500 300 5 8 1 1 0 4
-label=gnd
+pinlabel=gnd
 }
 T 800 1800 8 8 0 0 0 1
 device=HCPL-2631

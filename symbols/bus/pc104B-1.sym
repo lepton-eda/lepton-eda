@@ -6,7 +6,7 @@ pinnumber=C1
 T 0 4000 9 8 0 0 0 0
 pinseq=1
 T 400 3950 9 10 1 1 0 0
-label=/SBHE
+pinlabel=/SBHE
 }
 P 0 3800 300 3800 1
 {
@@ -15,7 +15,7 @@ pinnumber=C2
 T 0 3800 9 8 0 0 0 0
 pinseq=2
 T 400 3750 9 10 1 1 0 0
-label=LA23
+pinlabel=LA23
 }
 P 0 3600 300 3600 1
 {
@@ -24,7 +24,7 @@ pinnumber=C3
 T 0 3600 9 8 0 0 0 0
 pinseq=3
 T 400 3550 9 10 1 1 0 0
-label=LA22
+pinlabel=LA22
 }
 P 0 3400 300 3400 1
 {
@@ -33,7 +33,7 @@ pinnumber=C4
 T 0 3400 9 8 0 0 0 0
 pinseq=4
 T 400 3350 9 10 1 1 0 0
-label=LA21
+pinlabel=LA21
 }
 P 0 3200 300 3200 1
 {
@@ -42,7 +42,7 @@ pinnumber=C5
 T 0 3200 9 8 0 0 0 0
 pinseq=5
 T 400 3150 9 10 1 1 0 0
-label=LA20
+pinlabel=LA20
 }
 P 0 3000 300 3000 1
 {
@@ -51,7 +51,7 @@ pinnumber=C6
 T 0 3000 9 8 0 0 0 0
 pinseq=6
 T 400 2950 9 10 1 1 0 0
-label=LA19
+pinlabel=LA19
 }
 P 0 2800 300 2800 1
 {
@@ -60,7 +60,7 @@ pinnumber=C7
 T 0 2800 9 8 0 0 0 0
 pinseq=7
 T 400 2750 9 10 1 1 0 0
-label=LA18
+pinlabel=LA18
 }
 P 0 2600 300 2600 1
 {
@@ -69,7 +69,7 @@ pinnumber=C8
 T 0 2600 9 8 0 0 0 0
 pinseq=8
 T 400 2550 9 10 1 1 0 0
-label=LA17
+pinlabel=LA17
 }
 P 0 2400 300 2400 1
 {
@@ -78,7 +78,7 @@ pinnumber=C9
 T 0 2400 9 8 0 0 0 0
 pinseq=9
 T 400 2350 9 10 1 1 0 0
-label=/MEMR
+pinlabel=/MEMR
 }
 P 0 2200 300 2200 1
 {
@@ -87,7 +87,7 @@ pinnumber=C10
 T 0 2200 9 8 0 0 0 0
 pinseq=10
 T 400 2150 9 10 1 1 0 0
-label=/MEMW
+pinlabel=/MEMW
 }
 P 0 2000 300 2000 1
 {
@@ -96,7 +96,7 @@ pinnumber=C11
 T 0 2000 9 8 0 0 0 0
 pinseq=11
 T 400 1950 9 10 1 1 0 0
-label=SD8
+pinlabel=SD8
 }
 P 0 1800 300 1800 1
 {
@@ -105,7 +105,7 @@ pinnumber=C12
 T 0 1800 9 8 0 0 0 0
 pinseq=12
 T 400 1750 9 10 1 1 0 0
-label=SD9
+pinlabel=SD9
 }
 P 0 1600 300 1600 1
 {
@@ -114,7 +114,7 @@ pinnumber=C13
 T 0 1600 9 8 0 0 0 0
 pinseq=13
 T 400 1550 9 10 1 1 0 0
-label=SD10
+pinlabel=SD10
 }
 P 0 1400 300 1400 1
 {
@@ -123,7 +123,7 @@ pinnumber=C14
 T 0 1400 9 8 0 0 0 0
 pinseq=14
 T 400 1350 9 10 1 1 0 0
-label=SD11
+pinlabel=SD11
 }
 P 0 1200 300 1200 1
 {
@@ -132,7 +132,7 @@ pinnumber=C15
 T 0 1200 9 8 0 0 0 0
 pinseq=15
 T 400 1150 9 10 1 1 0 0
-label=SD12
+pinlabel=SD12
 }
 P 0 1000 300 1000 1
 {
@@ -141,7 +141,7 @@ pinnumber=C16
 T 0 1000 9 8 0 0 0 0
 pinseq=16
 T 400 950 9 10 1 1 0 0
-label=SD13
+pinlabel=SD13
 }
 P 0 800 300 800 1
 {
@@ -150,7 +150,7 @@ pinnumber=C17
 T 0 800 9 8 0 0 0 0
 pinseq=17
 T 400 750 9 10 1 1 0 0
-label=SD14
+pinlabel=SD14
 }
 P 0 600 300 600 1
 {
@@ -159,7 +159,7 @@ pinnumber=C18
 T 0 600 9 8 0 0 0 0
 pinseq=18
 T 400 550 9 10 1 1 0 0
-label=SD15
+pinlabel=SD15
 }
 P 0 400 300 400 1
 {
@@ -168,7 +168,7 @@ pinnumber=C19
 T 0 400 9 8 0 0 0 0
 pinseq=19
 T 400 350 9 10 1 1 0 0
-label=KEY
+pinlabel=KEY
 }
 P 0 4200 300 4200 1
 {
@@ -177,7 +177,7 @@ pinnumber=C0
 T 0 4200 9 8 0 0 0 0
 pinseq=0
 T 400 4150 9 10 1 1 0 0
-label=0V
+pinlabel=0V
 }
 P 2500 4000 2800 4000 1
 {
@@ -186,7 +186,7 @@ pinnumber=D1
 T 2500 4000 5 8 0 0 0 0
 pinseq=33
 T 2350 4000 9 10 1 1 0 7
-label=/MEMCS16
+pinlabel=/MEMCS16
 }
 P 2500 3800 2800 3800 1
 {
@@ -195,7 +195,7 @@ pinnumber=D2
 T 2500 3800 5 8 0 0 0 0
 pinseq=34
 T 2350 3800 9 10 1 1 0 7
-label=/IOCS16
+pinlabel=/IOCS16
 }
 P 2500 3600 2800 3600 1
 {
@@ -204,7 +204,7 @@ pinnumber=D3
 T 2500 3600 5 8 0 0 0 0
 pinseq=35
 T 2350 3600 9 10 1 1 0 7
-label=IRQ10
+pinlabel=IRQ10
 }
 P 2500 3400 2800 3400 1
 {
@@ -213,7 +213,7 @@ pinnumber=D4
 T 2500 3400 5 8 0 0 0 0
 pinseq=36
 T 2350 3400 9 10 1 1 0 7
-label=IRQ11
+pinlabel=IRQ11
 }
 P 2500 3200 2800 3200 1
 {
@@ -222,7 +222,7 @@ pinnumber=D5
 T 2500 3200 5 8 0 0 0 0
 pinseq=37
 T 2350 3200 9 10 1 1 0 7
-label=IRQ12
+pinlabel=IRQ12
 }
 P 2500 3000 2800 3000 1
 {
@@ -231,7 +231,7 @@ pinnumber=D6
 T 2500 3000 5 8 0 0 0 0
 pinseq=38
 T 2350 3000 9 10 1 1 0 7
-label=IRQ15
+pinlabel=IRQ15
 }
 P 2500 2800 2800 2800 1
 {
@@ -240,7 +240,7 @@ pinnumber=D7
 T 2500 2800 5 8 0 0 0 0
 pinseq=39
 T 2350 2800 9 10 1 1 0 7
-label=IRQ14
+pinlabel=IRQ14
 }
 P 2500 2600 2800 2600 1
 {
@@ -249,7 +249,7 @@ pinnumber=D8
 T 2500 2600 5 8 0 0 0 0
 pinseq=40
 T 2350 2600 9 10 1 1 0 7
-label=/DACK0
+pinlabel=/DACK0
 }
 P 2500 2400 2800 2400 1
 {
@@ -258,7 +258,7 @@ pinnumber=D9
 T 2500 2400 5 8 0 0 0 0
 pinseq=41
 T 2350 2400 9 10 1 1 0 7
-label=DRQ0
+pinlabel=DRQ0
 }
 P 2500 2200 2800 2200 1
 {
@@ -267,7 +267,7 @@ pinnumber=D10
 T 2500 2200 5 8 0 0 0 0
 pinseq=42
 T 2350 2200 9 10 1 1 0 7
-label=/DACK5
+pinlabel=/DACK5
 }
 P 2500 2000 2800 2000 1
 {
@@ -276,7 +276,7 @@ pinnumber=D11
 T 2500 2000 5 8 0 0 0 0
 pinseq=43
 T 2350 2000 9 10 1 1 0 7
-label=DRQ5
+pinlabel=DRQ5
 }
 P 2500 1800 2800 1800 1
 {
@@ -285,7 +285,7 @@ pinnumber=D12
 T 2500 1800 5 8 0 0 0 0
 pinseq=44
 T 2350 1800 9 10 1 1 0 7
-label=/DACK6
+pinlabel=/DACK6
 }
 P 2500 1600 2800 1600 1
 {
@@ -294,7 +294,7 @@ pinnumber=D13
 T 2500 1600 5 8 0 0 0 0
 pinseq=45
 T 2350 1600 9 10 1 1 0 7
-label=DRQ6
+pinlabel=DRQ6
 }
 P 2500 1400 2800 1400 1
 {
@@ -303,7 +303,7 @@ pinnumber=D14
 T 2500 1400 5 8 0 0 0 0
 pinseq=46
 T 2350 1400 9 10 1 1 0 7
-label=/DACK7
+pinlabel=/DACK7
 }
 P 2500 1200 2800 1200 1
 {
@@ -312,7 +312,7 @@ pinnumber=D15
 T 2500 1200 5 8 0 0 0 0
 pinseq=47
 T 2350 1200 9 10 1 1 0 7
-label=DRQ7
+pinlabel=DRQ7
 }
 P 2500 1000 2800 1000 1
 {
@@ -321,7 +321,7 @@ pinnumber=D16
 T 2500 1000 5 8 0 0 0 0
 pinseq=48
 T 2350 1000 9 10 1 1 0 7
-label=+5V
+pinlabel=+5V
 }
 P 2500 800 2800 800 1
 {
@@ -330,7 +330,7 @@ pinnumber=D17
 T 2500 800 5 8 0 0 0 0
 pinseq=49
 T 2350 800 9 10 1 1 0 7
-label=/MASTER
+pinlabel=/MASTER
 }
 P 2500 600 2800 600 1
 {
@@ -339,7 +339,7 @@ pinnumber=D18
 T 2500 600 5 8 0 0 0 0
 pinseq=50
 T 2350 600 9 10 1 1 0 7
-label=0V
+pinlabel=0V
 }
 P 2500 400 2800 400 1
 {
@@ -348,7 +348,7 @@ pinnumber=D19
 T 2500 400 5 8 0 0 0 0
 pinseq=51
 T 2350 400 9 10 1 1 0 7
-label=0V
+pinlabel=0V
 }
 P 2500 4200 2800 4200 1
 {
@@ -357,7 +357,7 @@ pinnumber=D0
 T 2500 4200 5 8 0 0 0 0
 pinseq=52
 T 2350 4200 9 10 1 1 0 7
-label=0V
+pinlabel=0V
 }
 T 1200 4550 8 10 1 1 0 0
 refdes=J?

@@ -78,7 +78,7 @@ pinseq=8
 P 1600 500 1450 500 1
 {
 T 1200 450 5 8 1 1 0 0
-label=Vc
+pinlabel=Vc
 T 1500 550 5 10 1 1 0 0
 pinnumber=5
 T 1500 550 5 10 0 0 0 0
@@ -91,5 +91,5 @@ pinnumber=4
 T 900 1500 5 8 0 0 180 0
 pinseq=4
 T 650 1200 5 10 1 1 0 0
-label=Vcc
+pinlabel=Vcc
 }

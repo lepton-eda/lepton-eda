@@ -7,7 +7,7 @@ pinnumber=1
 T 150 650 5 10 0 0 0 0
 pinseq=1
 T 250 550 5 10 0 1 0 0
-label=IN
+pinlabel=IN
 }
 P 1000 600 1200 600 1
 {
@@ -16,7 +16,7 @@ pinnumber=2
 T 1050 650 5 10 0 0 0 0
 pinseq=2
 T 600 550 5 10 0 1 0 0
-label=OUT
+pinlabel=OUT
 }
 A 470 525 150 30 120 3 0 0 0 -1 -1
 A 730 675 150 210 120 3 0 0 0 -1 -1
@@ -33,7 +33,7 @@ pinnumber=3
 T 500 0 5 10 0 0 0 0
 pinseq=3
 T 400 200 5 10 0 1 0 0
-label=GND
+pinlabel=GND
 }
 T 200 1150 8 10 0 1 0 0
 device=FILTER

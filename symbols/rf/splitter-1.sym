@@ -21,7 +21,7 @@ pinnumber=3
 T 500 0 5 10 0 0 0 0
 pinseq=3
 T 650 250 5 10 1 1 0 0
-label=S
+pinlabel=S
 }
 T 150 1150 8 10 0 1 0 0
 device=SPLITTER

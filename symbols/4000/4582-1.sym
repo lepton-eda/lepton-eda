@@ -18,9 +18,9 @@ pinnumber=6
 T 100 2650 5 8 0 0 0 0
 pinseq=1
 T 350 2600 3 8 1 1 0 0
-label=P3
+pinlabel=P3
 T 350 2600 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 2724 538 2724 3 0 0 0 -1 -1
 V 250 2600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -31,9 +31,9 @@ pinnumber=15
 T 100 3050 5 8 0 0 0 0
 pinseq=2
 T 350 3000 3 8 1 1 0 0
-label=P2
+pinlabel=P2
 T 350 3000 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 3124 554 3124 3 0 0 0 -1 -1
 V 250 3000 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -44,9 +44,9 @@ pinnumber=2
 T 100 3450 5 8 0 0 0 0
 pinseq=3
 T 350 3400 3 8 1 1 0 0
-label=P1
+pinlabel=P1
 T 350 3400 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 3524 514 3524 3 0 0 0 -1 -1
 V 250 3400 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -57,9 +57,9 @@ pinnumber=4
 T 100 3850 5 8 0 0 0 0
 pinseq=4
 T 350 3800 3 8 1 1 0 0
-label=P0
+pinlabel=P0
 T 350 3800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 3924 554 3924 3 0 0 0 -1 -1
 V 250 3800 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -70,9 +70,9 @@ pinnumber=5
 T 100 1050 5 8 0 0 0 0
 pinseq=5
 T 350 1000 3 8 1 1 0 0
-label=G3
+pinlabel=G3
 T 350 1000 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 1124 558 1124 3 0 0 0 -1 -1
 V 250 1000 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -83,9 +83,9 @@ pinnumber=14
 T 100 1450 5 8 0 0 0 0
 pinseq=6
 T 350 1400 3 8 1 1 0 0
-label=G2
+pinlabel=G2
 T 350 1400 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 1524 574 1524 3 0 0 0 -1 -1
 V 250 1400 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -96,9 +96,9 @@ pinnumber=1
 T 100 1850 5 8 0 0 0 0
 pinseq=7
 T 350 1800 3 8 1 1 0 0
-label=G1
+pinlabel=G1
 T 350 1800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 1924 534 1924 3 0 0 0 -1 -1
 V 250 1800 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -109,9 +109,9 @@ pinnumber=3
 T 100 2250 5 8 0 0 0 0
 pinseq=8
 T 350 2200 3 8 1 1 0 0
-label=G0
+pinlabel=G0
 T 350 2200 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 2324 574 2324 3 0 0 0 -1 -1
 V 250 2200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -122,9 +122,9 @@ pinnumber=13
 T 100 650 5 8 0 0 0 0
 pinseq=9
 T 350 600 3 8 1 1 0 0
-label=Cn
+pinlabel=Cn
 T 350 600 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 1600 2600 1400 2600 1
 {
@@ -133,9 +133,9 @@ pinnumber=7
 T 1400 2650 5 8 0 0 0 0
 pinseq=10
 T 1250 2600 3 8 1 1 0 6
-label=P
+pinlabel=P
 T 1250 2600 5 8 0 1 0 8
-type=out
+pintype=out
 }
 L 1190 2724 1260 2724 3 0 0 0 -1 -1
 V 1350 2600 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -146,9 +146,9 @@ pinnumber=10
 T 1400 2250 5 8 0 0 0 0
 pinseq=11
 T 1250 2200 3 8 1 1 0 6
-label=G
+pinlabel=G
 T 1250 2200 5 8 0 1 0 8
-type=out
+pintype=out
 }
 L 1169 2324 1261 2324 3 0 0 0 -1 -1
 V 1350 2200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -159,9 +159,9 @@ pinnumber=9
 T 1400 1450 5 8 0 0 0 0
 pinseq=12
 T 1250 1400 3 8 1 1 0 6
-label=Cn+Z
+pinlabel=Cn+Z
 T 1250 1400 5 8 0 1 0 8
-type=out
+pintype=out
 }
 P 1600 1000 1300 1000 1
 {
@@ -170,9 +170,9 @@ pinnumber=11
 T 1400 1050 5 8 0 0 0 0
 pinseq=13
 T 1250 1000 3 8 1 1 0 6
-label=Cn+Y
+pinlabel=Cn+Y
 T 1250 1000 5 8 0 1 0 8
-type=out
+pintype=out
 }
 P 1600 600 1300 600 1
 {
@@ -181,8 +181,8 @@ pinnumber=12
 T 1400 650 5 8 0 0 0 0
 pinseq=14
 T 1250 600 3 8 1 1 0 6
-label=Cn+X
+pinlabel=Cn+X
 T 1250 600 5 8 0 1 0 8
-type=out
+pintype=out
 }
 B 300 200 1000 4000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

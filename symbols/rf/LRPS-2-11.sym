@@ -21,7 +21,7 @@ pinnumber=6
 T 500 0 5 10 0 0 0 0
 pinseq=6
 T 650 250 5 10 0 1 0 0
-label=S
+pinlabel=S
 }
 T 150 1150 8 10 0 1 0 0
 device=LRPS-2-11
@@ -36,7 +36,7 @@ class=IC
 P 900 200 900 100 1
 {
 T 900 200 5 10 0 1 0 0
-label=GND
+pinlabel=GND
 T 900 200 5 10 0 1 0 0
 pinnumber=2
 T 900 200 5 10 0 0 0 0
@@ -45,7 +45,7 @@ pinseq=2
 P 1000 200 1000 100 1
 {
 T 1000 200 5 10 0 1 0 0
-label=GND
+pinlabel=GND
 T 1000 200 5 10 0 1 0 0
 pinnumber=5
 T 1000 200 5 10 0 0 0 0
@@ -54,7 +54,7 @@ pinseq=5
 P 800 200 800 100 1
 {
 T 800 200 5 10 0 1 0 0
-label=GND
+pinlabel=GND
 T 800 200 5 10 0 1 0 0
 pinnumber=1
 T 800 200 5 10 0 0 0 0

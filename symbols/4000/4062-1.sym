@@ -18,9 +18,9 @@ pinnumber=1
 T 1950 100 5 8 0 0 0 0
 pinseq=1
 T 1900 350 3 8 1 1 0 3
-label=B3
+pinlabel=B3
 T 1900 500 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 1500 0 1500 300 1
 {
@@ -29,9 +29,9 @@ pinnumber=14
 T 1550 100 5 8 0 0 0 0
 pinseq=2
 T 1500 350 3 8 1 1 0 3
-label=B2
+pinlabel=B2
 T 1500 500 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 1100 0 1100 300 1
 {
@@ -40,9 +40,9 @@ pinnumber=11
 T 1150 100 5 8 0 0 0 0
 pinseq=3
 T 1100 350 3 8 1 1 0 3
-label=B1
+pinlabel=B1
 T 1100 500 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 700 0 700 300 1
 {
@@ -51,9 +51,9 @@ pinnumber=9
 T 750 100 5 8 0 0 0 0
 pinseq=4
 T 700 350 3 8 1 1 0 3
-label=B0
+pinlabel=B0
 T 700 500 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 0 700 300 700 1
 {
@@ -62,9 +62,9 @@ pinnumber=4
 T 100 750 5 8 0 0 0 0
 pinseq=5
 T 350 700 3 8 1 1 0 0
-label=(A > B) In
+pinlabel=(A > B) In
 T 350 700 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 0 1100 300 1100 1
 {
@@ -73,9 +73,8 @@ pinnumber=3
 T 100 1150 5 8 0 0 0 0
 pinseq=6
 T 350 1100 3 8 1 1 0 0
-label=(A = B) In
-T 350 1100 5 8 0 1 0 2
-type=in
+pinlabel=(A T 350 1100 5 8 0 1 0 2
+pintype=in
 }
 P 0 1500 300 1500 1
 {
@@ -84,9 +83,9 @@ pinnumber=2
 T 100 1550 5 8 0 0 0 0
 pinseq=7
 T 350 1500 3 8 1 1 0 0
-label=(A < B) In
+pinlabel=(A < B) In
 T 350 1500 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 2600 700 2300 700 1
 {
@@ -95,9 +94,9 @@ pinnumber=5
 T 2400 750 5 8 0 0 0 0
 pinseq=8
 T 2250 700 3 8 1 1 0 6
-label=(A > B) Out
+pinlabel=(A > B) Out
 T 2250 700 5 8 0 1 0 8
-type=out
+pintype=out
 }
 P 2600 1100 2300 1100 1
 {
@@ -106,9 +105,8 @@ pinnumber=6
 T 2400 1150 5 8 0 0 0 0
 pinseq=9
 T 2250 1100 3 8 1 1 0 6
-label=(A = B) Out
-T 2250 1100 5 8 0 1 0 8
-type=out
+pinlabel=(A T 2250 1100 5 8 0 1 0 8
+pintype=out
 }
 P 2600 1500 2300 1500 1
 {
@@ -117,9 +115,9 @@ pinnumber=7
 T 2400 1550 5 8 0 0 0 0
 pinseq=10
 T 2250 1500 3 8 1 1 0 6
-label=(A < B) Out
+pinlabel=(A < B) Out
 T 2250 1500 5 8 0 1 0 8
-type=out
+pintype=out
 }
 P 1900 2200 1900 1900 1
 {
@@ -128,9 +126,9 @@ pinnumber=15
 T 1950 2000 5 8 0 0 0 0
 pinseq=11
 T 1900 1850 3 8 1 1 0 5
-label=A3
+pinlabel=A3
 T 1900 1700 5 8 0 1 0 5
-type=in
+pintype=in
 }
 P 1500 2200 1500 1900 1
 {
@@ -139,9 +137,9 @@ pinnumber=13
 T 1550 2000 5 8 0 0 0 0
 pinseq=12
 T 1500 1850 3 8 1 1 0 5
-label=A2
+pinlabel=A2
 T 1500 1700 5 8 0 1 0 5
-type=in
+pintype=in
 }
 P 1100 2200 1100 1900 1
 {
@@ -150,9 +148,9 @@ pinnumber=12
 T 1150 2000 5 8 0 0 0 0
 pinseq=13
 T 1100 1850 3 8 1 1 0 5
-label=A1
+pinlabel=A1
 T 1100 1700 5 8 0 1 0 5
-type=in
+pintype=in
 }
 P 700 2200 700 1900 1
 {
@@ -161,8 +159,8 @@ pinnumber=10
 T 750 2000 5 8 0 0 0 0
 pinseq=14
 T 700 1850 3 8 1 1 0 5
-label=A0
+pinlabel=A0
 T 700 1700 5 8 0 1 0 5
-type=in
+pintype=in
 }
 B 300 300 2000 1600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

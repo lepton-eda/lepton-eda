@@ -6,7 +6,7 @@ pinnumber=3
 T 100 450 5 8 0 0 0 0
 pinseq=1
 T 100 250 5 8 0 1 0 0
-type=in
+pintype=in
 }
 P 0 800 300 800 1
 {
@@ -15,7 +15,7 @@ pinnumber=4
 T 100 850 5 8 0 0 0 0
 pinseq=2
 T 100 650 5 8 0 1 0 0
-type=in
+pintype=in
 }
 L 300 1000 300 200 3 0 0 0 -1 -1
 L 300 1000 1100 1000 3 0 0 0 -1 -1
@@ -28,7 +28,7 @@ pinnumber=5
 T 1600 650 5 8 0 0 0 0
 pinseq=3
 T 1600 450 5 8 0 1 0 0
-type=out
+pintype=out
 }
 T 2400 0 5 10 0 0 0 0
 net=VDD:14

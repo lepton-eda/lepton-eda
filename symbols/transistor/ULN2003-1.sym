@@ -6,7 +6,7 @@ pinnumber=16
 T 1800 3050 5 8 0 0 0 0
 pinseq=16
 T 1440 3000 9 8 1 1 0 0
-label=1C
+pinlabel=1C
 }
 P 2000 2600 1700 2600 1
 {
@@ -15,7 +15,7 @@ pinnumber=15
 T 1800 2650 5 8 0 0 0 0
 pinseq=15
 T 1440 2600 9 8 1 1 0 0
-label=2C
+pinlabel=2C
 }
 P 2000 2200 1700 2200 1
 {
@@ -24,7 +24,7 @@ pinnumber=14
 T 1800 2250 5 8 0 0 0 0
 pinseq=14
 T 1440 2200 9 8 1 1 0 0
-label=3C
+pinlabel=3C
 }
 P 2000 1800 1700 1800 1
 {
@@ -33,7 +33,7 @@ pinnumber=13
 T 1800 1850 5 8 0 0 0 0
 pinseq=13
 T 1440 1800 9 8 1 1 0 0
-label=4C
+pinlabel=4C
 }
 T 1550 3640 5 10 0 0 0 0
 device=ULN2003
@@ -44,7 +44,7 @@ ULN2003
 P 300 3000 0 3000 1
 {
 T 360 3000 9 8 1 1 0 0
-label=1B
+pinlabel=1B
 T 150 3050 5 10 1 1 0 0
 pinnumber=1
 T 150 3050 5 10 0 0 0 0
@@ -53,7 +53,7 @@ pinseq=1
 P 300 2600 0 2600 1
 {
 T 360 2600 9 8 1 1 0 0
-label=2B
+pinlabel=2B
 T 100 2650 5 10 1 1 0 0
 pinnumber=2
 T 100 2650 5 10 0 0 0 0
@@ -62,7 +62,7 @@ pinseq=2
 P 300 2200 0 2200 1
 {
 T 360 2200 9 8 1 1 0 0
-label=3B
+pinlabel=3B
 T 100 2250 5 10 1 1 0 0
 pinnumber=3
 T 100 2250 5 10 0 0 0 0
@@ -71,7 +71,7 @@ pinseq=3
 P 300 1800 0 1800 1
 {
 T 360 1800 9 8 1 1 0 0
-label=4B
+pinlabel=4B
 T 100 1850 5 10 1 1 0 0
 pinnumber=4
 T 100 1850 5 10 0 0 0 0
@@ -84,7 +84,7 @@ pinnumber=5
 T 100 1450 5 10 0 0 0 0
 pinseq=5
 T 360 1400 9 8 1 1 0 0
-label=5B
+pinlabel=5B
 }
 P 300 1000 0 1000 1
 {
@@ -93,7 +93,7 @@ pinnumber=6
 T 100 1050 5 10 0 0 0 0
 pinseq=6
 T 360 1000 9 8 1 1 0 0
-label=6B
+pinlabel=6B
 }
 P 300 600 0 600 1
 {
@@ -102,7 +102,7 @@ pinnumber=7
 T 100 650 5 10 0 0 0 0
 pinseq=7
 T 360 600 9 8 1 1 0 0
-label=7B
+pinlabel=7B
 }
 P 300 200 0 200 1
 {
@@ -111,7 +111,7 @@ pinnumber=8
 T 100 250 5 10 0 0 0 0
 pinseq=8
 T 360 200 9 8 1 1 0 0
-label=E
+pinlabel=E
 }
 P 2000 1400 1700 1400 1
 {
@@ -120,7 +120,7 @@ pinnumber=12
 T 1800 1450 5 8 0 0 0 0
 pinseq=12
 T 1440 1400 9 8 1 1 0 0
-label=5C
+pinlabel=5C
 }
 P 2000 1000 1700 1000 1
 {
@@ -129,7 +129,7 @@ pinnumber=11
 T 1800 1050 5 8 0 0 0 0
 pinseq=11
 T 1440 1000 9 8 1 1 0 0
-label=6C
+pinlabel=6C
 }
 P 2000 600 1700 600 1
 {
@@ -138,7 +138,7 @@ pinnumber=10
 T 1800 650 5 8 0 0 0 0
 pinseq=10
 T 1440 600 9 8 1 1 0 0
-label=7C
+pinlabel=7C
 }
 P 2000 200 1700 200 1
 {
@@ -147,7 +147,7 @@ pinnumber=9
 T 1800 250 5 8 0 0 0 0
 pinseq=9
 T 1290 200 9 8 1 1 0 0
-label=COM
+pinlabel=COM
 }
 B 300 0 1400 3300 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 1700 3400 8 10 1 1 0 6

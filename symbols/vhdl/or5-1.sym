@@ -13,7 +13,7 @@ pinnumber=OUT0
 T 1000 500 5 8 0 0 0 0
 pinseq=1
 T 1000 500 5 8 0 0 0 0
-type=OUT
+pintype=OUT
 }
 P 300 100 0 100 1
 {
@@ -22,7 +22,7 @@ pinnumber=IN0
 T 300 100 5 8 0 0 0 0
 pinseq=2
 T 300 100 5 8 0 0 0 0
-type=IN
+pintype=IN
 }
 P 300 300 0 300 1
 {
@@ -31,7 +31,7 @@ pinnumber=IN1
 T 300 300 5 8 0 0 0 0
 pinseq=3
 T 300 300 5 8 0 0 0 0
-type=IN
+pintype=IN
 }
 P 300 500 0 500 1
 {
@@ -40,7 +40,7 @@ pinnumber=IN2
 T 300 500 5 8 0 0 0 0
 pinseq=4
 T 300 500 5 8 0 0 0 0
-type=IN
+pintype=IN
 }
 P 300 700 0 700 1
 {
@@ -49,7 +49,7 @@ pinnumber=IN3
 T 300 700 5 8 0 0 0 0
 pinseq=5
 T 300 700 5 8 0 0 0 0
-type=IN
+pintype=IN
 }
 P 300 900 0 900 1
 {
@@ -58,7 +58,7 @@ pinnumber=IN4
 T 300 900 5 8 0 0 0 0
 pinseq=6
 T 300 900 5 8 0 0 0 0
-type=IN
+pintype=IN
 }
 T 400 100 5 10 1 1 0 2
 refdes=U?

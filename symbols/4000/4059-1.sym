@@ -18,9 +18,9 @@ pinnumber=2
 T 1250 200 5 8 0 0 0 0
 pinseq=1
 T 1200 450 3 8 1 1 0 3
-label=LD
+pinlabel=LD
 T 1200 600 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 100 3600 400 3600 1
 {
@@ -29,9 +29,9 @@ pinnumber=18
 T 200 3650 5 8 0 0 0 0
 pinseq=2
 T 450 3600 3 8 1 1 0 0
-label=J9
+pinlabel=J9
 T 450 3600 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 4000 400 4000 1
 {
@@ -40,9 +40,9 @@ pinnumber=19
 T 200 4050 5 8 0 0 0 0
 pinseq=3
 T 450 4000 3 8 1 1 0 0
-label=J8
+pinlabel=J8
 T 450 4000 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 4400 400 4400 1
 {
@@ -51,9 +51,9 @@ pinnumber=20
 T 200 4450 5 8 0 0 0 0
 pinseq=4
 T 450 4400 3 8 1 1 0 0
-label=J7
+pinlabel=J7
 T 450 4400 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 4800 400 4800 1
 {
@@ -62,9 +62,9 @@ pinnumber=21
 T 200 4850 5 8 0 0 0 0
 pinseq=5
 T 450 4800 3 8 1 1 0 0
-label=J6
+pinlabel=J6
 T 450 4800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 5200 400 5200 1
 {
@@ -73,9 +73,9 @@ pinnumber=22
 T 200 5250 5 8 0 0 0 0
 pinseq=6
 T 450 5200 3 8 1 1 0 0
-label=J5
+pinlabel=J5
 T 450 5200 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 5600 400 5600 1
 {
@@ -84,9 +84,9 @@ pinnumber=6
 T 200 5650 5 8 0 0 0 0
 pinseq=7
 T 450 5600 3 8 1 1 0 0
-label=J4
+pinlabel=J4
 T 450 5600 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 6000 400 6000 1
 {
@@ -95,9 +95,9 @@ pinnumber=5
 T 200 6050 5 8 0 0 0 0
 pinseq=8
 T 450 6000 3 8 1 1 0 0
-label=J3
+pinlabel=J3
 T 450 6000 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 6400 400 6400 1
 {
@@ -106,9 +106,9 @@ pinnumber=4
 T 200 6450 5 8 0 0 0 0
 pinseq=9
 T 450 6400 3 8 1 1 0 0
-label=J2
+pinlabel=J2
 T 450 6400 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 800 400 800 1
 {
@@ -117,9 +117,9 @@ pinnumber=7
 T 200 850 5 8 0 0 0 0
 pinseq=10
 T 450 800 3 8 1 1 0 0
-label=J16
+pinlabel=J16
 T 450 800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 1200 400 1200 1
 {
@@ -128,9 +128,9 @@ pinnumber=8
 T 200 1250 5 8 0 0 0 0
 pinseq=11
 T 450 1200 3 8 1 1 0 0
-label=J15
+pinlabel=J15
 T 450 1200 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 1600 400 1600 1
 {
@@ -139,9 +139,9 @@ pinnumber=9
 T 200 1650 5 8 0 0 0 0
 pinseq=12
 T 450 1600 3 8 1 1 0 0
-label=J14
+pinlabel=J14
 T 450 1600 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 2000 400 2000 1
 {
@@ -150,9 +150,9 @@ pinnumber=10
 T 200 2050 5 8 0 0 0 0
 pinseq=13
 T 450 2000 3 8 1 1 0 0
-label=J13
+pinlabel=J13
 T 450 2000 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 2400 400 2400 1
 {
@@ -161,9 +161,9 @@ pinnumber=15
 T 200 2450 5 8 0 0 0 0
 pinseq=14
 T 450 2400 3 8 1 1 0 0
-label=J12
+pinlabel=J12
 T 450 2400 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 2800 400 2800 1
 {
@@ -172,9 +172,9 @@ pinnumber=16
 T 200 2850 5 8 0 0 0 0
 pinseq=15
 T 450 2800 3 8 1 1 0 0
-label=J11
+pinlabel=J11
 T 450 2800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 3200 400 3200 1
 {
@@ -183,9 +183,9 @@ pinnumber=17
 T 200 3250 5 8 0 0 0 0
 pinseq=16
 T 450 3200 3 8 1 1 0 0
-label=J10
+pinlabel=J10
 T 450 3200 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 6800 400 6800 1
 {
@@ -194,9 +194,9 @@ pinnumber=3
 T 200 6850 5 8 0 0 0 0
 pinseq=17
 T 450 6800 3 8 1 1 0 0
-label=J1
+pinlabel=J1
 T 450 6800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 P 100 7200 400 7200 1
 {
@@ -205,9 +205,9 @@ pinnumber=1
 T 200 7250 5 8 0 0 0 0
 pinseq=18
 T 525 7200 3 8 1 1 0 0
-label=CLK
+pinlabel=CLK
 T 525 7200 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 500 7200 400 7275 3 0 0 0 -1 -1
 L 500 7200 400 7125 3 0 0 0 -1 -1
@@ -218,9 +218,9 @@ pinnumber=23
 T 2100 4050 5 8 0 0 0 0
 pinseq=19
 T 1950 4000 3 8 1 1 0 6
-label=23
+pinlabel=23
 T 1950 4000 5 8 0 1 0 8
-type=out
+pintype=out
 }
 P 1600 7900 1600 7600 1
 {
@@ -229,9 +229,9 @@ pinnumber=11
 T 1650 7700 5 8 0 0 0 0
 pinseq=20
 T 1600 7550 3 8 1 1 0 5
-label=KC
+pinlabel=KC
 T 1600 7400 5 8 0 1 0 5
-type=in
+pintype=in
 }
 P 1200 7900 1200 7600 1
 {
@@ -240,9 +240,9 @@ pinnumber=13
 T 1250 7700 5 8 0 0 0 0
 pinseq=21
 T 1200 7550 3 8 1 1 0 5
-label=KB
+pinlabel=KB
 T 1200 7400 5 8 0 1 0 5
-type=in
+pintype=in
 }
 P 800 7900 800 7600 1
 {
@@ -251,8 +251,8 @@ pinnumber=14
 T 850 7700 5 8 0 0 0 0
 pinseq=22
 T 800 7550 3 8 1 1 0 5
-label=KA
+pinlabel=KA
 T 800 7400 5 8 0 1 0 5
-type=in
+pintype=in
 }
 B 400 400 1600 7200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

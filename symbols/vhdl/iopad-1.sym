@@ -12,7 +12,7 @@ pinnumber=IOPAD
 T 125 36 5 10 0 0 0 0
 pinseq=1
 T 125 36 5 10 0 1 0 0
-type=INOUT
+pintype=INOUT
 }
 T 113 221 2 10 0 1 0 0
 device=IOPAD
