@@ -13,6 +13,7 @@
 
 #include "comps.h"
 #include "dirs.h"
+#include "msgbox.h"
 #include "package.h"
 #include "setup.h"
 
@@ -52,7 +53,8 @@ void on_next_clicked(GtkButton *pButton, gpointer user_data)
 			break;
 		
 		case 1: /* component list selection */
-			
+
+			CompsPrepare();
 			break;
 		
 		case 2: /* license agreement */
@@ -62,7 +64,7 @@ void on_next_clicked(GtkButton *pButton, gpointer user_data)
 		case 3: /* directory selection */
 			
 			break;
-		
+
 		case 4: /* summary information */
 			
 			SummaryPrepare();
@@ -293,7 +295,8 @@ void on_ComponentTree_tree_select_row       (GtkCTree        *ctree,
                                         gpointer         user_data)
 {
 	struct CompsTable_s *pComp;
-		int iResult;
+	int iResult;
+	char szMessage[TEXTLEN], *szMissingFile;
 		
 	if (cSelectFlag == 0)
 		return;
@@ -303,7 +306,7 @@ void on_ComponentTree_tree_select_row       (GtkCTree        *ctree,
 	/* search component */
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
-		if (node == pComp->pNode)
+		if (GTK_CTREE_NODE(node) == pComp->pNode)
 			break;
 	}
 	if (pComp == NULL)
@@ -313,19 +316,42 @@ void on_ComponentTree_tree_select_row       (GtkCTree        *ctree,
 	
 //printf("onSelect() > package '%s'\n", pComp->szCodeName);
 	/* toggle installation flag */
-	if (pComp->bToBeInstalled == TRUE)
+	if (pComp->iToBeInstalled == PACKAGE_SELECTED)
 	{
-		pComp->bToBeInstalled = FALSE;
+		pComp->iToBeInstalled = PACKAGE_IGNORED;
 		mark_components(pComp, MARK_UNSELECT);
 	}
 	else
 	{
-		pComp->bToBeInstalled = TRUE;
-		mark_components(pComp, MARK_SELECT);
+		if (!pComp->bCanBeInstalled && !bCompsAlwaysMarkFailed)
+		{
+			szMissingFile = PackageWhatIsMissing(pComp->szCodeName);
+
+			sprintf(
+				szMessage,
+				"%s cannot be installed.\nMissing file: %s !\n\nForcing installation will cause errors. Continue ?",
+				pComp->szName,
+				szMissingFile
+				);
+			iResult = MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_YES | MSGBOX_ALWAYSYES | MSGBOX_NOD
+				);
+			if (iResult == MSGBOX_ALWAYSYES)
+				bCompsAlwaysMarkFailed = TRUE;
+		}
+
+		if (pComp->bCanBeInstalled == TRUE || iResult == MSGBOX_YES || bCompsAlwaysMarkFailed)
+		{
+			pComp->iToBeInstalled = PACKAGE_SELECTED;
+			mark_components(pComp, MARK_SELECT);
+		}
 	}
 
 	/* activate display changes */
-	iResult = ComponentsPrepare(pComp);
+	iResult = ShowDesc(pComp);
 	if (iResult != SUCCESS)
 	{
 		Log(LOG_FATAL, LOG_MAIN, "Cannot show COMPONENTS page");
@@ -349,7 +375,7 @@ on_ComponentTree_tree_expand           (GtkCTree        *ctree,
                                         gpointer         user_data)
 {
 	//printf("expand() >\n");
-	CompsShow("");
+	ShowIcons("");
 }
 
 
@@ -359,7 +385,7 @@ on_ComponentTree_tree_collapse         (GtkCTree        *ctree,
                                         gpointer         user_data)
 {
 	//printf("collapse() >\n");
-	CompsShow("");
+	ShowIcons("");
 }
 
 
