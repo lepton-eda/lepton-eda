@@ -16,7 +16,7 @@ setupdoc_DATA = \
 	TODO\
 	ABOUT-NLS
 
-EXTRA_DIST = setup.prj $(setupdoc_DATA)
+EXTRA_DIST = setup.prj $(setupdoc_DATA) config.rpath
 
 distclean-local:
 	-rm -rf autom4te.cache

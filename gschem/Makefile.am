@@ -2,7 +2,7 @@
 SUBDIRS = include lib intl src m4 po scheme bitmap scripts examples noweb \
           tests docs 
 
-EXTRA_DIST = config.rpath VOCABULARY BUGS guile.m4
+EXTRA_DIST = config.rpath VOCABULARY BUGS 
 
 #proto:
 #	(cd src ; ./create_proto)

@@ -25,6 +25,8 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 # glib)
 AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt_gtkver=1.2])
 
+# --with-docdir : tells where to store documentation if not default
+# defined below 
 # 
 # Command line flags end
 #########################################################################
@@ -196,6 +198,14 @@ fi
 gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
 
+gedadocdir=$dprefix/share/doc/geda-doc
+# --with-docdir : tells where to store documentation if not default
+AC_ARG_WITH(docdir,
+    [  --with-docdir      Where to store documentation if not default.],
+	gedadocdir=$withval)
+expandgedadocdir=`echo $gedadocdir`
+GEDADOCDIR=$expandgedadocdir
+
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
@@ -218,6 +228,7 @@ AC_SUBST(GSCH2PCB_LDFLAGS)
 AC_SUBST(MINGW_LIBS)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
+AC_SUBST(GEDADOCDIR)
 AC_SUBST(PATHSEP)
 AC_SUBST(OTHERPATHSEP)
 
@@ -238,6 +249,7 @@ AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
+expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:
@@ -247,5 +259,6 @@ AC_MSG_RESULT([
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
+   documentation directory:          $expandedGEDADOCDIR
 ])
 

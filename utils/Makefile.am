@@ -1,7 +1,8 @@
 
 SUBDIRS = src gschlas scripts lib include examples 
 
-EXTRA_DIST = README.olib ChangeLog.tragesym README.tragesym 
+EXTRA_DIST = README.olib ChangeLog.tragesym README.tragesym \
+	     README.gsch2pcb ChangeLog.gsch2pcb
 
 distclean-local:
 	-rm -rf autom4te.cache

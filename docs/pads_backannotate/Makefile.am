@@ -10,12 +10,7 @@ docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
 BUILT_SOURCES = $(docname).dvi $(docname).ps $(docname).pdf \
                 $(docname)
 
-EXTRA_DIST = $(docname).tex $(BUILT_SOURCES)  \
-	analysis.eps \
-	ckt.eps \
-	clocks.eps \
-	gwave_out_sss.ps \
-	gwave_out_tran.ps
+EXTRA_DIST = $(docname).tex $(BUILT_SOURCES) 
 
 $(docname).dvi: $(docname).tex
 	latex $(docname)

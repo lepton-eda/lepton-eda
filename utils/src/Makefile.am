@@ -22,7 +22,7 @@ sarlacc_schem_LDADD = @MINGW_LIBS@
 olib_LDADD = @LEXLIB@ @MINGW_LIBS@ -lm
 gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ @MINGW_LIBS@ 
 
-EXTRA_DIST = 
+EXTRA_DIST = glib12-compat.c
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c
 CLEANFILES = *.log *.ps core FILE *~  olib.c
