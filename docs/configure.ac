@@ -80,6 +80,7 @@ AC_CONFIG_FILES([Makefile
                  hooks/Makefile 
                  keymapping/Makefile 
                  netattrib/Makefile 
+                 pads_backannotate/Makefile 
 		 gschem/Makefile 
 		 gnetlist/Makefile 
 		 switcap/Makefile 

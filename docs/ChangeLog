@@ -3,6 +3,9 @@
 	* attributes/attributes.tex: Merged author= and email= together.
 	Suggestion by Werner Hoch.
 
+	* pads_backannotate: Added Dan's documentation for the
+	backannotation script (by Dan McMahill).
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Improved the configuration summary message.
