@@ -186,7 +186,7 @@ g_rc_parse_path()
 @end defun
 
 <<g_rc.c : g_rc_parse_system_rc()>>=
-static gint
+gint
 g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
 {
   const gchar *geda_data = g_getenv ("GEDADATA");
@@ -234,7 +234,7 @@ g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
 @end defun
 
 <<g_rc.c : g_rc_parse_home_rc()>>=
-static gint
+gint
 g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
 {
   const gchar *home = g_getenv ("HOME");
@@ -283,7 +283,7 @@ g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
 @end defun
 
 <<g_rc.c : g_rc_parse_local_rc()>>=
-static gint
+gint
 g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname)
 {
   gint found_rc;
