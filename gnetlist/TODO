@@ -1,0 +1,11 @@
+TODOs
+----------------------
+
+Most code cleanup things from gschem apply here too
+
+tweak to gnetlist to add `instance-get-pins'
+
+gnetlist gave the coordinates of the component it was unhappy with and
+the component type.
+
+
