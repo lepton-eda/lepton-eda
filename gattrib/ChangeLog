@@ -1,3 +1,9 @@
+2005-01-19 Stuart Brorson   <sdb@cloud9.net>
+
+        * src/(s_object.c, gattrib.c, s_toplevel.c,x_fileselect.c,
+	x_dialog.c): Incorporated pop-up window which notifies
+	user if a component is found with no sym file.
+	
 2004-12-28 Stuart Brorson   <sdb@cloud9.net>
 
 	* lib/system-gattribrc.in:  Changed to refer to system-gafrc.
