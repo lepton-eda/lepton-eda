@@ -1451,6 +1451,7 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
   int max_width=0;
   int width;
   int first,last,done,j;		/* variables for the sort */
+  const GSList *dirs, *dir;
 
   gtk_clist_freeze (GTK_CLIST (f_current->dir_list));
   gtk_clist_clear (GTK_CLIST (f_current->dir_list));
@@ -1459,8 +1460,12 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
   text[0] = NULL;
   text[1] = NULL;
   max_width = 0;
-  string = (char *) s_clib_getdir(i);
-  while (string != NULL) {
+
+  /* populate the directory list */
+  dirs = s_clib_get_directories ();
+  for (dir = dirs; dir != NULL; dir = g_slist_next (dir)) {
+    gchar *string = (gchar*)dir->data;
+
     temp = strrchr(string, PATH_SEPARATER_CHAR);
     if (temp) {
       temp++; /* get past last '/' */
@@ -1469,9 +1474,8 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
       text[0] = string;
     }
 
-    f_current->directory_entries[i] = u_basic_strdup_multiple(string,
-                                                              NULL);
-		
+    f_current->directory_entries[i++] = g_strdup (string);
+    
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
 
 #ifdef HAS_GTK22
@@ -1487,8 +1491,6 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
                                            dir_list), 0, width);
       max_width = width;
     }
-    i++;
-    string = (char *) s_clib_getdir(i);
   }
 
   gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
@@ -1550,7 +1552,7 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
     f_current->directory_entries[row]);
 
   /* get the list of filenames in directory */
-  filenames = s_clib_getfiles (f_current->directory_entries[row], ".sym");
+  filenames = s_clib_get_files (f_current->directory_entries[row], ".sym");
 
   filename = filenames;
   while (filename != NULL) {
@@ -1873,7 +1875,7 @@ x_fileselect_search_library(FILEDIALOG *f_current,
   int ret;
 
   /* get the filenames with '.sym' in library */
-  filenames = s_clib_getfiles(library, ".sym");
+  filenames = s_clib_get_files(library, ".sym");
 
   if (f_current->last_search == -1) {
     /* last search failed: start over */
@@ -2444,8 +2446,8 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
       gtk_widget_show(buttonclose);
 
       /* files data structure is not used for components */
-      x_fileselect_setup_list_buffers(f_current, 
-                                      s_clib_return_num(), 0);
+      x_fileselect_setup_list_buffers(f_current,
+                                      g_slist_length (s_clib_get_directories()), 0);
       x_fileselect_comp_update_current(f_current, NULL, NULL);
       x_fileselect_comp_fill_libs(w_current, f_current);
     }	

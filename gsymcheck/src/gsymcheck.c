@@ -39,7 +39,6 @@ void
 gsymcheck_quit(void)
 {
   
-  s_clib_cache_free();
   s_clib_free();
   s_slib_free();
 

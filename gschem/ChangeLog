@@ -1,3 +1,9 @@
+2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/gschem.nw, noweb/o_misc.nw:
+	* noweb/o_net.nw, noweb/x_fileselect.nw: Adapted for new component 
+	library code.
+
 2005-01-28  Stuart Brorson <sdb@cloud9.net>
 
 	* noweb/x_preview.nw:  Incorporated patch from Patrick Bernaud.

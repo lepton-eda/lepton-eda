@@ -533,6 +533,7 @@ void
 o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
 {
   gchar *new_basename, *new_clib;
+  const GSList *clibs;
   
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPLEX &&
@@ -540,11 +541,11 @@ o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
   {
     /* get ride of the EMBEDDED word in basename */
     new_basename = u_basic_strdup (o_current->complex_basename + 8);
-
+    
     /* search for the symbol in the library */
-    new_clib = s_clib_search (new_basename);
+    clibs = s_clib_search_basename (new_basename);
 
-    if (!new_clib) {
+    if (!clibs) {
       /* symbol not found in the symbol library: signal an error */
       s_log_message (_("Could not find component [%s], while trying to unembed. Component is still embedded\n"),
                      o_current->complex_basename + 8);
@@ -556,6 +557,13 @@ o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
 
       /* set the object new clib */
       free (o_current->complex_clib);
+      if (g_slist_next (clibs)) {
+        s_log_message (_("More than one component found with name [%s]\n"),
+                       new_basename);
+        /* PB: for now, use the first directory in clibs */
+        /* PB: maybe open a dialog to select the right one? */
+      }
+      new_clib = g_strdup ((gchar*)clibs->data);
       o_current->complex_clib = new_clib;
 
       s_log_message (_("Component [%s] has been successfully unembedded\n"),
@@ -1347,14 +1355,25 @@ o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 
   /* identify symbol name */
   if (is_embedded) {
+    GSList *clibs;
+    
     /* skip over EMBEDDED word */
     basename = g_strdup (o_current->complex_basename + 8);
-    clib     = s_clib_search (basename);
-    if (!clib) {
+
+    /* search for basename in component library */
+    clibs    = s_clib_search_basename (basename);
+    if (!clibs) {
       s_log_message (_("Could not unembedded component, could not find appropriate .sym file\n"));
       s_log_message (_("Component still embedded and not updated\n"));
       return;
     }
+    if (g_slist_next (clibs)) {
+      s_log_message (_("More than one component found with name [%s]\n"),
+                     basename);
+      /* PB: for now, use the first directory in clibs */
+      /* PB: maybe open a dialog to select the right one? */
+    }
+    clib = (gchar*)clibs->data;
   } else {
     basename = o_current->complex_basename;
     clib     = o_current->complex_clib;

@@ -1070,7 +1070,10 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
     s_conn_remove(w_current, net_obj);
 
     if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
-        clib = s_clib_search(w_current->bus_ripper_symname);
+      GSList *clibs = s_clib_search_basename (w_current->bus_ripper_symname);
+      if (clibs != NULL) {
+        clib = (gchar*)clibs->data;
+      }
     }
     
     for (i = 0; i < ripper_count; i++) {
@@ -1099,11 +1102,6 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
                         w_current->bus_ripper_symname);
         }
       }
-    }
-
-    if (clib) {
-      free(clib);
-      clib = NULL;
     }
     
     s_conn_update_object(w_current, net_obj);

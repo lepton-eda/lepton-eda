@@ -79,7 +79,6 @@ void stroke_init(void);
 void
 gschem_quit(void)
 {
-  s_clib_cache_free();
   s_clib_free();
   s_slib_free();
   s_menu_free();
