@@ -1,3 +1,10 @@
+2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: Added newest valid version.
+
+	* fileformats/fileformats.tex: Added some text that states
+	that the file format is copyright and under the GPL version 2.0.
+
 2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* cascade/cascade.tex and friends: Added RF Cascade symbols and
