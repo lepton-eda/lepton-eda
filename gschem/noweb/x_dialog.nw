@@ -4817,12 +4817,6 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
     /* Why is the entry attached to w_current ?? (Werner) */
     w_current->tsentry = combo_entry1;
 
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-    gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
-		       GTK_SIGNAL_FUNC(autonumber_text_done), w_current);
-    gtk_widget_show(buttoncancel);
-
     buttonok = gtk_button_new_from_stock (GTK_STOCK_APPLY);
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
@@ -4831,6 +4825,11 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(buttonok);
     gtk_widget_grab_default(buttonok);
 
+    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
+    gtk_box_pack_start(GTK_BOX(action_area), buttoncancel, TRUE, TRUE, 0);
+    gtk_signal_connect(GTK_OBJECT(buttoncancel), "clicked",
+		       GTK_SIGNAL_FUNC(autonumber_text_done), w_current);
+    gtk_widget_show(buttoncancel);
   }
 
   if (!GTK_WIDGET_VISIBLE(w_current->tswindow)) {

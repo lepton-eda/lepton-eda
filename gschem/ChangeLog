@@ -1,3 +1,7 @@
+2005-03-05 Werner Hoch <werner.ho@gmx.de>
+	* noweb/o_misc.nw: added error handling for missing source pages
+	* noweb/x_dialog.nw: swapped apply and close button position
+
 2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/Makefile.am: Added missing files to EXTRA_DIST
