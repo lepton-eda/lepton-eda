@@ -10,9 +10,11 @@ All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
 7/11/99 Chnaged the return values of the Scheme functions in g_*.c from
-	0 and -1 to #t and #f. (by Kazu Hirata)
+	0 and -1 to #t and #f.
 
-7/11/99 Code cleanup by Kazu Hirata (a_pan.c, a_zoom.c, g_key.c, g_funcs.c
+	Cleaned up gschem.c and i_basic.c. (by Kazu Hirata)
+
+7/11/99 Cleaned up a_pan.c, a_zoom.c, g_key.c, g_funcs.c. (by Kazu Hirata)
 
 7/10/99	Updated a few places where it's important to call set_window
 	(part of the math speed improvements)
