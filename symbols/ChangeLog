@@ -3,6 +3,8 @@
 	* maxim/max489-1.sym, micro/pic16F877-1.sym: Added updated symbols
 	from Tommi Keisala.
 
+	* analog/dual-opamp-1.sym: Added symbol by Karel Kulhavy.
+
 2002-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Bumped version to 20021031
