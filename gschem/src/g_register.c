@@ -103,7 +103,9 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("default-series-name", g_rc_default_series_name);
 	gh_new_procedure1_0 ("untitled-name", g_rc_untitled_name);
 	gh_new_procedure1_0 ("component-library", g_rc_component_library);
+	gh_new_procedure1_0 ("component-library-search", g_rc_component_library_search);
 	gh_new_procedure1_0 ("source-library", g_rc_source_library);
+	gh_new_procedure1_0 ("source-library-search", g_rc_source_library_search);
 	gh_new_procedure1_0 ("attribute-name", g_rc_attribute_name);
 	gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
 	/* gh_new_procedure2_0 ("stroke", g_rc_stroke); old way */
@@ -133,6 +135,9 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("promote-invisible", g_rc_promote_invisible);
 	gh_new_procedure1_0 ("keep-invisible", g_rc_keep_invisible);
 	gh_new_procedure1_0 ("continue-component-place", g_rc_continue_component_place);
+	gh_new_procedure1_0 ("undo-levels", g_rc_undo_levels);
+	gh_new_procedure1_0 ("undo-control", g_rc_undo_control);
+	gh_new_procedure1_0 ("undo-type", g_rc_undo_type);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
@@ -154,6 +159,8 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("file-image", g_key_file_write_png);
 	gh_new_procedure0_0 ("file-close-window", g_key_file_close);
 	gh_new_procedure0_0 ("file-quit", g_key_file_quit);
+	gh_new_procedure0_0 ("edit-undo", g_key_edit_undo);
+	gh_new_procedure0_0 ("edit-redo", g_key_edit_redo);
 	gh_new_procedure0_0 ("edit-select", g_key_edit_select);
 	gh_new_procedure0_0 ("edit-copy", g_key_edit_copy);
 	gh_new_procedure0_0 ("edit-copy-hotkey", g_key_edit_copy_hotkey);
@@ -220,6 +227,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("page-print", g_key_page_print);
 	gh_new_procedure0_0 ("add-component", g_key_add_component);
 	gh_new_procedure0_0 ("add-attribute", g_key_add_attribute);
+	gh_new_procedure0_0 ("add-attribute-hotkey", g_key_add_attribute_hotkey);
 	gh_new_procedure0_0 ("add-net", g_key_add_net);
 	gh_new_procedure0_0 ("add-net-hotkey", g_key_add_net_hotkey);
 	gh_new_procedure0_0 ("add-bus", g_key_add_bus);

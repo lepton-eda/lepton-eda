@@ -110,6 +110,9 @@ int   default_attribute_promotion = TRUE;
 int   default_promote_invisible = FALSE;
 int   default_keep_invisible = FALSE;
 int   default_continue_component_place = TRUE;
+int   default_undo_levels = 20;
+int   default_undo_control = TRUE;
+int   default_undo_type = UNDO_DISK;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -197,6 +200,9 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->promote_invisible = default_promote_invisible;
 	w_current->keep_invisible = default_keep_invisible;
 	w_current->continue_component_place = default_continue_component_place;
+	w_current->undo_levels = default_undo_levels;
+	w_current->undo_control = default_undo_control;
+	w_current->undo_type = default_undo_type;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;

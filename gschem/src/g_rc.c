@@ -20,6 +20,7 @@
 #include <config.h>
 #include <stdio.h>
 #include <string.h>
+#include <dirent.h>
 
 #ifndef __CYGWIN32__
 #include <sys/stat.h>
@@ -806,6 +807,97 @@ g_rc_component_library(SCM path)
 }
 
 SCM
+g_rc_component_library_search(SCM path)
+{
+	int ret;
+	struct stat buf;
+	DIR *top_ptr;
+        struct dirent *dptr;
+	char *string = gh_scm2newstr(path, NULL);
+	char *fullpath;
+	char *cwd, *temp;
+
+	/* TODO: don't I have to check string if it's NULL here? */
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to component-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	top_ptr = opendir(string);
+
+	if (top_ptr == NULL) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to component-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+        }
+
+        while(dptr = readdir(top_ptr)) {
+
+	  /* don't do . and .. and special case font */
+	  if ((strcmp(dptr->d_name, ".") != 0) && 
+	      (strcmp(dptr->d_name, "..") != 0) &&
+              (strcmp(dptr->d_name, "font") != 0)) {
+
+		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
+						      strlen(dptr->d_name)+2));
+		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+                stat(fullpath, &buf);
+                if (S_ISDIR(buf.st_mode)) { 
+			if (s_clib_uniq(fullpath)) {
+				if (fullpath[0] == '/') {
+					s_clib_add_entry(fullpath);
+#if DEBUG
+			printf("absolute: %s\n", fullpath);
+#endif
+				} else {
+					cwd = getcwd(NULL, 1024);
+					temp = u_basic_strdup_multiple(cwd, 
+							"/", fullpath, NULL);
+#if DEBUG
+			printf("relative: %s\n", temp);
+#endif
+					s_clib_add_entry(temp);
+					free(temp);
+					free(cwd);
+				}
+			} 
+                }
+		free(fullpath);
+            }
+        }       
+
+	if (string) {
+		free(string);
+	}
+
+	return SCM_BOOL_T;
+}
+
+SCM
 g_rc_source_library(SCM path)
 {
 	int ret;
@@ -867,6 +959,97 @@ g_rc_source_library(SCM path)
 	if (string) {
 		free(string);
 	}
+	return SCM_BOOL_T;
+}
+
+SCM
+g_rc_source_library_search(SCM path)
+{
+	int ret;
+	struct stat buf;
+	DIR *top_ptr;
+        struct dirent *dptr;
+	char *string = gh_scm2newstr(path, NULL);
+	char *fullpath;
+	char *cwd, *temp;
+
+	/* TODO: don't I have to check string if it's NULL here? */
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to source-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	top_ptr = opendir(string);
+
+	if (top_ptr == NULL) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to source-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+        }
+
+        while(dptr = readdir(top_ptr)) {
+
+	  /* don't do . and .. and special case font */
+	  if ((strcmp(dptr->d_name, ".") != 0) && 
+	      (strcmp(dptr->d_name, "..") != 0) &&
+              (strcmp(dptr->d_name, "font") != 0)) {
+
+		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
+						      strlen(dptr->d_name)+2));
+		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+                stat(fullpath, &buf);
+                if (S_ISDIR(buf.st_mode)) { 
+			if (s_slib_uniq(fullpath)) {
+				if (fullpath[0] == '/') {
+					s_slib_add_entry(fullpath);
+#if DEBUG
+			printf("absolute: %s\n", fullpath);
+#endif
+				} else {
+					cwd = getcwd(NULL, 1024);
+					temp = u_basic_strdup_multiple(cwd, 
+							"/", fullpath, NULL);
+#if DEBUG
+			printf("relative: %s\n", temp);
+#endif
+					s_slib_add_entry(temp);
+					free(temp);
+					free(cwd);
+				}
+			} 
+                }
+		free(fullpath);
+            }
+        }       
+
+	if (string) {
+		free(string);
+	}
+
 	return SCM_BOOL_T;
 }
 
@@ -1355,3 +1538,42 @@ g_rc_continue_component_place(SCM mode)
 	RETURN_G_RC_MODE("continue-component-place", default_continue_component_place, 2);
 }
 
+SCM
+g_rc_undo_levels(SCM levels)
+{
+	int val;
+
+	val = gh_scm2int(levels);
+
+	if (val == 0) {
+		fprintf(stderr, "Invalid num levels [%d] passed to undo-levels\n",
+			val);
+		val = 10; /* absolute default */
+	}
+
+	default_undo_levels = val;
+
+	return SCM_BOOL_T;
+}
+
+SCM
+g_rc_undo_control(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("undo-control", default_undo_control, 2);
+}
+
+SCM
+g_rc_undo_type(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{UNDO_DISK  , "disk"   },
+		{UNDO_MEMORY, "memory" },
+	};
+
+	RETURN_G_RC_MODE("undo-type", default_undo_type, 2);
+}
