@@ -335,6 +335,7 @@ convert_file(FILE *fp)
 	case 'Q':
 	  fprintf(stderr,"Warning 'Q' record found and not handled at"
 		  "record %d, contact maintainer\n",records_processed);
+	  do_nop(fp);
 	  break;
 
 	case 'C':  /* connected pin record */
