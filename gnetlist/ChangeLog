@@ -1,3 +1,14 @@
+2005-02-04 23:14  danmc
+
+	* configure.ac, src/g_netlist.c, src/g_rc.c, src/g_register.c,
+	  src/globals.c, src/gnetlist.c, src/i_vars.c, src/parsecmd.c,
+	  src/s_cpinlist.c, src/s_hierarchy.c, src/s_misc.c, src/s_net.c,
+	  src/s_netattrib.c, src/s_netlist.c, src/s_rename.c,
+	  src/s_traverse.c, src/vams_misc.c, utils/mk_verilog_syms.c: add
+	  support for Electric Fence debugging, enabled by --enable-efence,
+	  and dmalloc debugging, enabled by --enable-dmalloc.  Both are off
+	  by default.
+
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/g_netlist.c, src/gnetlist.c, src/i_vars.c:
