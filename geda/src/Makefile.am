@@ -5,10 +5,10 @@ INCLUDES = @GMANAGER_CFLAGS@ -I./ -I$(top_srcdir)/intl
 localedir = @datadir@/locale
 DEFS = -DPACKAGE_LOCALE_DIR=\"$(localedir)\" @DEFS@
 
+if CCISGCC
 AM_CFLAGS =\
-	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wpointer-arith -Wmissing-prototypes\
-	 -O1\
-	 -g
+	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wpointer-arith -Wmissing-prototypes
+endif
 
 bin_PROGRAMS = geda
 
