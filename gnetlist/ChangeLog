@@ -1,3 +1,23 @@
+2005-01-28 Dan McMahill <dan at mcmahill dot net>
+
+	* scheme/: gnet-futurenet2.scm, gnet-pads.scm, gnet-switcap.scm:
+	  use the new gnetlist:build-refdes-aliases and
+	  gnetlist:alias-refdes functionality to do a better job of
+	  restricting reference designators in the output netlist to ones
+	  which are valid for this netlist type.
+
+2005-01-28 Dan McMahill <dan at mcmahill dot net>
+
+	* scheme/gnetlist.scm: Add gnetlist:build-refdes-aliases,
+	  gnetlist:alias-refdes, and gnetlist:unalias-refdes functions.
+	  These are used to deal with target netlist refdes requirements
+	  which may be more restrictive than gschem/gnetlist.  A backend
+	  uses these by calling gnetlist:build-refdes-aliases at the
+	  beginning of netlisting and then gnetlist:alias-refdes whenever
+	  printing out the refdes.
+
+	  While here add missing RCS Id.
+
 2005-01-27 Stuart Brorson   <sdb@cloud9.net>
 
 	* src/gnetlist.c: Changes made to enable correct opening
