@@ -2,7 +2,7 @@
 
 bin_PROGRAMS = gnetlist 
 
-bin_SCRIPTS = gschem2pcb
+bin_SCRIPTS =
 
 # don't forget all *.h files */
 gnetlist_SOURCES = \
@@ -16,7 +16,7 @@ gnetlist_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
 
 man_MANS = gnetlist.1
 
-EXTRA_DIST = create_proto gnetlist.1 gschem2pcb
+EXTRA_DIST = create_proto gnetlist.1 
 
 CPROTO =        cproto
 CPROTOCFLAGS =  $(INCLUDES) -I. -I.. -I../include

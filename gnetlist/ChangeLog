@@ -1,3 +1,7 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/gschem2pcb: Moved script into this directory from src/
+
 2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* include/globals.h, src/globals.c, src/gnetlist.c, src/parsecmd.c:
