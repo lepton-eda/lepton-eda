@@ -4,14 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-
 README for libgeda version 2003* 
-
-
-IMPORTANT
-	Please read the file BUGS for more info on existing bugs
-	Please read the file TODO for things which are in the works
-
 
 
 - Installation
@@ -54,7 +47,7 @@ IMPORTANT
 	LibStroke 0.5.1 [OPTIONAL] - if you want stroke support.  The homepage
 	for LibStroke is: http://www.etla.net/libstroke/
 
-	libgdgeda 2.0.9 [OPTIONAL] - if you want the ability to write png 
+	libgdgeda 2.0.15 [OPTIONAL] - if you want the ability to write png 
 	images.  libgdgeda is based on gd 2.0.9  The homepage for gd 2.0.x is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist
