@@ -4,7 +4,7 @@ refdes=U?
 T 300 4050 5 10 0 0 0 0
 device=4008
 T 300 4250 5 10 0 0 0 0
-footprint=None
+footprint=DIP16
 T 300 4450 5 10 0 0 0 0
 net=VSS:8
 T 300 4650 5 10 0 0 0 0
