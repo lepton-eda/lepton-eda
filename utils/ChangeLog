@@ -14,6 +14,8 @@
 	* configure.in and others: Updated scripts to search for libgeda and
 	all the required programs.
 
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
 2002-09-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* utils/convert_sym.c: Updated code to attach pinseq= and pinnumber=
