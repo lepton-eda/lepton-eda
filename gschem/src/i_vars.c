@@ -102,6 +102,7 @@ int   default_middle_button = REPEAT;
 #endif
 int   default_net_consolidate = FALSE;
 int   default_file_preview = FALSE;
+int   default_enforce_hierarchy = TRUE;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -176,11 +177,12 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->print_color            = default_print_color;
 	w_current->print_color_background = default_print_color_background;
 
-	w_current->image_color  = default_image_color;
-	w_current->third_button = default_third_button;
-	w_current->middle_button = default_middle_button;
-	w_current->net_consolidate = default_net_consolidate;
-	w_current->file_preview = default_file_preview;
+	w_current->image_color        = default_image_color;
+	w_current->third_button       = default_third_button;
+	w_current->middle_button      = default_middle_button;
+	w_current->net_consolidate    = default_net_consolidate;
+	w_current->file_preview       = default_file_preview;
+	w_current->enforce_hierarchy  = default_enforce_hierarchy;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;

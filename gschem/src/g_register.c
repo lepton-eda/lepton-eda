@@ -125,6 +125,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("middle-button", g_rc_middle_button);
 	gh_new_procedure1_0 ("net-consolidate", g_rc_net_consolidate);
 	gh_new_procedure1_0 ("file-preview", g_rc_file_preview);
+	gh_new_procedure1_0 ("enforce-hierarchy", g_rc_enforce_hierarchy);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
@@ -161,6 +162,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-slot", g_key_edit_slot);
 	gh_new_procedure0_0 ("edit-color", g_key_edit_color);
 	gh_new_procedure0_0 ("edit-edit", g_key_edit_edit);
+	gh_new_procedure0_0 ("edit-text", g_key_edit_text);
 	gh_new_procedure0_0 ("edit-lock", g_key_edit_lock);
 	gh_new_procedure0_0 ("edit-unlock", g_key_edit_unlock);
 	gh_new_procedure0_0 ("edit-translate", g_key_edit_translate);
