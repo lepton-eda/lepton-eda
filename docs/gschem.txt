@@ -13,8 +13,8 @@ Contents:
 	4. User interface
 	5. Basic operations
 	6. Files used/created by gschem 
-	7. Dialog boxes (TBA)
-	8. Electrical connectivity
+	7. Electrical connectivity
+	8. Dialog boxes (TBA)
 	9. Components/symbols (TBA) 
 	10. Attributes (TBA)
 	11. Resource File (TBA)
@@ -25,13 +25,14 @@ Contents:
 
 	This is a very basic and crude first attempt at getting some
 real user docs written for gschem.  This document is hardly finished or
-polished but is better than no docs at all (which was the case for the
-longest time).  Please forgive the tone of this document.  I (Ales) am
-writing this just to get something done.  I am by no means a technical
-writer so I'm sure some of my sentences are truly awful.  As everybody
-says, programmers should not write documentation for their programs
-and this document is a perfect illustration of a programmer breaking
-that rule.
+polished but it is better than having no docs at all (which was the
+case for the longest time).  Please forgive the tone of this document;
+I (Ales) am writing this just to get something done.  I am by no means
+a technical writer so I am sure some of my sentences are truly awful.
+As everybody says, programmers should not write documentation for their
+programs and this document is a perfect illustration of a programmer
+breaking that rule.  Please report any errors/inconsistancies to
+ahvezda@geda.seul.org
 
 	This document assumes you know understand basic schematic capture,
 like you understand that a component represents something and that nets
@@ -46,9 +47,10 @@ in the gEDA system.
 
 	gschem is the schematic capture program in the gEDA tool suite.
 It's sole purpose is facilitate the input of circuit schematics or
-block diagrams graphically.  gschem is also used to draw symbols.
-The schematic format and symbol format exactly the same so gschem is
-also the symbol editor for gEDA.  *add some more stuff here*
+block diagrams graphically.  gschem is also the symbols editor for the
+gEDA system.  This is possible because the schematic format and symbol 
+format are exactly the same format.
+
 
 
 3. Running gschem
@@ -63,20 +65,24 @@ installed the tools correctly by running the following commands:
 	libgeda-config --version
 	gesym-config --version
 	which gschem
+	ldd `which gschem`
 
 	The first two should return the version of the installed tools
-(libgeda and the symbol library) and the last command should return
-the path to the gschem binary.  If these commands do not return the 
-expected results, then most likely the gEDA tools are not installed 
-properly.
-	
+(libgeda and the symbol library) and the next command should return
+the path to the gschem binary.	The final command (only on GNU/Linux
+systems) will return which libraries are linked to gschem; all of the
+request libraries must be found for gschem to run.  If these commands
+do not return the expected results, then most likely the gEDA tools are
+not installed properly.  Please see the appropriate INSTALL docs (which
+came with the distributions) for more info on installing the gEDA tools.
+
 	To run gschem type:
 
 	gschem 
 
 	at any shell prompt.
 
-	To look at a schematic which came with gschem run:
+	To look at an example schematic which came with gschem run:
 
 	gschem schematic_name.sch
 
@@ -92,7 +98,7 @@ at the gschem man page (man gschem).
 4. User interface
 
 	There are several ways to interact with gschem.  gschem
-requires a keyboard and mouse.  There are two ways to initiate an 
+requires a keyboard and mouse.  There are three ways to initiate an 
 operation or command:
 
 	Using the mouse to select the operation off a menu 
@@ -105,16 +111,18 @@ operation or command:
 
 	Draw the appropriate stroke (if stroke support is enabled)
 
-	To make matters more confusing, selecting an operation off of the
-menus behaves slightly differently than typing the hotkey.  Most of the
-operations operate on the currently selected object(s).  The menu selected
-operations usually require some more input (usually a mouse click) after
-they are picked off of the menu and the keyboard hotkey operations take
-that required input as the current mouse position.  This saves an extra
-click since you can position the mouse at the right place, type in the
-hotkey, and the command then executes.	Note, you can change this so that
-both menu and hotkey behavior is exactly the same.  See the section on
-the resource file for more info on how to configure this.
+	To make usage matters more confusing, selecting an operation
+off of the menus behaves slightly differently than typing the hotkey.
+Most of the operations operate on the currently selected object(s),
+hence you need to select the object first before manipulating them.
+The menu selected operations usually require some more input (usually
+a mouse click) after they are picked off of the menu.  The keyboard
+hotkey operations take that required input as the current mouse position.
+This saves an extra click since you can position the mouse at the right
+place, type in the hotkey, and the command then executes.  Note, you can
+change this so that both menu and hotkey behavior is exactly the same.
+See the section on the resource file for more info on how to configure
+this.
 
 	Most of the interaction with gschem is fairly modal (modes like
 command/editing similar to the great text editor vi).  If you select
@@ -126,7 +134,7 @@ After the operation has been executed, the user is (typically) placed
 into select mode.
 
 	The hotkeys are also modal in nature.  Most of the default
-hotkeys are for the various commands are not single keystrokes.
+hotkeys are for the various commands are not single keystrokes. 
 There are a few which are single keystrokes (like zoom in: `z' or
 pan: `x'), but most are typically two keystrokes long.	As examples,
 to execute File/Save you would type `f' and `s' (without the quotes)
@@ -135,12 +143,12 @@ picking Help/Hotkeys.  The hotkeys are defined in the resource files
 (system-gschemrc, ~/.gEDA/gschemrc, or `pwd`/gschemrc).  See the section
 on the resource file for more info.
 
-	The mouse buttons in gschem are mostly configurable.  The first
-mouse button is always used to select objects or pick points.  This button
-is not configurable.  The second mouse button is either a copy/move
-action (when held down over an object) or a repeat last command or
-draw a stroke to execute a command.  The third mouse button is either a
-mouse pan (when held down as the mouse is moved) or a popup dialog box.
+	The mouse button actions in gschem are mostly configurable.
+The first mouse button is always used to select objects or pick points.
+This button is not configurable.  The second mouse button is either a
+copy/move action (when held down over an object) or a repeat last command
+or draw a stroke to execute a command.  The third mouse button is either
+a mouse pan (when held down as the mouse is moved) or a popup dialog box.
 The behavior of the second and third mouse buttons is controlled through
 the resource file (see the section below for more info).
 
@@ -1106,10 +1114,8 @@ the resource file (see the section below for more info).
 	TBA: Suggested format for projects
 
 	
-7. Dialog boxes
-	TBA
 
-8. Electrical connectivity 
+7. Electrical connectivity 
 
 	As you draw schematics you need be aware of what is considered
 	to be electrically connected by the gEDA programs.
@@ -1118,9 +1124,9 @@ the resource file (see the section below for more info).
 	connected.  This connection may be endpoint to endpoint or
 	endpoint to midpoint.  When a single endpoint to endpoint (net
 	or pin endpoint) connection is drawn then the visual dangling
-	net cue disappears.  When an endpoint to the middle of another
-	net (or multiple endpoints coming together at a single point)
-	is drawn then a circular filled connectivity cue is drawn.
+	net cue disappears.  When an endpoint ends in the middle of
+	another net (or multiple endpoints coming together at a single
+	point) then a circular filled connectivity cue is drawn.
 	You cannot connect a net to the middle of a pin.  Nets can only
 	be connected to the endpoints of pins.	You cannot connect to
 	a net if that net is not orthogonal (horizontal or vertical).
@@ -1142,6 +1148,8 @@ the resource file (see the section below for more info).
 
 	More TBA
 
+8. Dialog boxes
+	TBA
 
 9. Components/symbols  
 	TBA
