@@ -6,7 +6,7 @@
 
 INCLUDES = \
 	$(GTK_CFLAGS)\
-	 -I../include/
+	 -I./
 
 AM_CFLAGS =\
 	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wtraditional -Wpointer-arith -Wmissing-prototypes\
@@ -16,31 +16,48 @@ AM_CFLAGS =\
 bin_PROGRAMS = geda
 
 geda_SOURCES = \
-	support.h\
-	support.c\
-	main.c\
+	callbacks.h\
+	callbacks.c\
+	config.h\
+	config.c\
+	doc.h\
+	doc.c\
+	file.h\
+	file.c\
+	filesel.h\
+	filesel.c\
+	filetool.h\
+	filetool.c\
+	global.h\
 	interface.h\
 	interface.c\
-	callbacks.h\
-	config.c\
-	doc.c\
-	file.c\
-	filesel.c\
-	filetool.c\
+	l_toolbar.h\
 	l_toolbar.c\
+	log.h\
 	log.c\
+	m_action.h\
 	m_action.c\
+	m_project.h\
 	m_project.c\
+	m_window.h\
 	m_window.c\
-	callbacks.c\
+	main.c\
+	msgbox.h\
 	msgbox.c\
+	project.h\
 	project.c\
+	support.h\
+	support.c\
+	task.h\
 	task.c\
+	tool.h\
 	tool.c\
+	txtedit.h\
 	txtedit.c\
+	window.h\
 	window.c
 
-geda_LDFLAGS = 
+geda_LDFLAGS =
 
 geda_LDADD =  \
 	$(GTK_LIBS)

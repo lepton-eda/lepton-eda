@@ -3,7 +3,7 @@
 ## If you don't want it to overwrite it,
 ## 	Please disable it in the Anjuta project configuration
 
-SUBDIRS = intl po include src pixmaps
+SUBDIRS = intl po src pixmaps
 
 gedadocdir = ${prefix}/doc/geda
 gedadoc_DATA = \
