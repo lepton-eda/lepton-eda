@@ -249,11 +249,9 @@ multiattrib_init (Multiattrib *multiattrib)
   GtkWidget *frame, *label, *scrolled_win, *treeview;
   GtkWidget *table, *entry, *combo, *optionm, *button;
   GtkTreeModel *store;
-  GtkListStore *liststore;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
   GtkTreeSelection *selection;
-  GtkTreeIter iter;
   
   /* dialog initialization */
   g_object_set (G_OBJECT (multiattrib),
@@ -960,6 +958,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
       case SHOW_VALUE:      new_snv = SHOW_NAME_VALUE; break;
       default:
         g_assert_not_reached ();
+        new_snv = SHOW_NAME_VALUE;
   }
 
   /* actually modifies the attribute */
@@ -1040,6 +1039,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
       case SHOW_VALUE:      new_snv = SHOW_NAME;       break;
       default:
         g_assert_not_reached ();
+        new_snv = SHOW_NAME_VALUE;
   }
 
   /* actually modifies the attribute */
@@ -1077,7 +1077,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
           gtk_tree_view_get_selection (multiattrib->treeview),
           &model, &iter)) {
       /* nothing selected, nothing to do */
-      return;
+      return FALSE;
     }
     
     gtk_tree_model_get (model, &iter,
@@ -1230,12 +1230,10 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
 <<x_multiattrib.c : multiattrib_callback_button_add()>>=
 static void
 multiattrib_callback_button_add (GtkButton *button,
-                                gpointer user_data)
+                                 gpointer user_data)
 {
   Multiattrib *multiattrib = (Multiattrib*)user_data;
-  GtkTreeModel *model;
   const gchar *name, *value;
-  GtkTreeIter iter;
   TOPLEVEL *toplevel;
   OBJECT *object;
   gboolean visible;

@@ -1,5 +1,8 @@
 2005-02-24  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/x_multiattrib.nw: Removed unused variables and fixed a couple 
+	of gcc warnings.
+	
 	* noweb/g_funcs.nw (hash_table_2_list): Replaced deprecated guile 
 	functions with their equivalents in the new scm interface.
 
