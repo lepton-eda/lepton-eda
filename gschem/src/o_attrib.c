@@ -381,7 +381,7 @@ o_attrib_rubberattrib(TOPLEVEL *w_current)
 		       x_get_color(w_current->bb_color));
 }
 
-int
+OBJECT *
 o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, 
 	            int show_name_value, OBJECT *o_current)
 {
@@ -416,7 +416,7 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
 
 			case(OBJ_TEXT):
 				s_log_message("Cannot attach attribute to text item\n");
-				return(TRUE);
+				return(NULL);
 			break;
 		}
 		color = w_current->attribute_color;
@@ -470,5 +470,5 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
         w_current->override_color = -1;
         w_current->page_current->CHANGED = 1;
 
-	return(FALSE);
+	return(w_current->page_current->object_tail);
 }

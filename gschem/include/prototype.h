@@ -310,7 +310,7 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, OBJECT *list, int new_
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_attrib_end(TOPLEVEL *w_current);
 void o_attrib_rubberattrib(TOPLEVEL *w_current);
-int o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *o_current);
+OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *o_current);
 /* o_basic.c */
 void o_redraw_all(TOPLEVEL *w_current);
 void o_redraw(TOPLEVEL *w_current, OBJECT *object_list);
