@@ -235,6 +235,8 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
   pr_current->scheme_directory = NULL;
   pr_current->bus_ripper_symname = NULL;
 
+  pr_current->force_boundingbox = FALSE;
+
   /* part of page mechanism addition commented out 
      pr_current->zoom_factor=0;
   */

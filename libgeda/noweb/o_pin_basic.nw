@@ -811,7 +811,7 @@ o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list, int num_pins)
   int rleft, rtop, rright, rbottom;
 
   if (object_list && num_pins) {
-    if (num_pins == 1) {
+    if (num_pins == 1 || w_current->force_boundingbox) {
       world_get_complex_bounds(w_current, object_list,
                              &left, &top, &right, &bottom);
     } else {
