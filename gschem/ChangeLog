@@ -1,3 +1,8 @@
+2001-03-02 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_copy.c: Oops lines were not being redraw selected after a 
+ 	  copy
+
 2001-03-01 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
 	* src/o_move.c: Fixed a bug (pointed out by Matt Ettus) where an

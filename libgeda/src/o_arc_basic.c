@@ -432,11 +432,15 @@ void o_arc_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     end_angle = o_current->arc->end_angle;
     color = o_current->color;
 
+#if 0 /* was causing arcs which are solid to be much thinner compared to */
+      /* lines, boxes, also of zero width */
     if (o_current->line_width > 0) {
 	arc_width = o_current->line_width;
     } else {
 	arc_width = 1;
     }
+#endif
+    arc_width = o_current->line_width;  /* Added instead of above */
     length = o_current->line_length;
     space = o_current->line_space;
 

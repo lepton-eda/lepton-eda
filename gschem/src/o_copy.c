@@ -255,9 +255,9 @@ o_copy_end(TOPLEVEL *w_current)
         o_line_translate_world(w_current,
                                diff_x, diff_y,
                                new_object);
-        o_line_draw(w_current, new_object);
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
+        o_line_draw(w_current, new_object);
         break;
 
       case(OBJ_BOX):
