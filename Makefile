@@ -61,7 +61,7 @@ all: libgeda symbols gschem gnetlist gsymcheck utils
 # This also installs gschem, gnetlist, and gsymcheck 
 install: gschem_install gnetlist_install gsymcheck_install utils_install
 
-uninstall: utils_install gsymcheck_uninstall gnetlist_uninstall \
+uninstall: utils_uninstall gsymcheck_uninstall gnetlist_uninstall \
            gschem_uninstall symbols_uninstall libgeda_uninstall 
 
 # This does a maintainer-clean removes EVERYTHING that's config/built
