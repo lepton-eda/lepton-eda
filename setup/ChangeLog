@@ -1,3 +1,11 @@
+2003-12-08 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * m4/Makefile.am: Fixed bug: nls.m4 and po.m4 are no more distributed.
+
+        * src/package.c: Fixed bug: testing if file exists have been done
+        using URL, not only the name of file (in case when full ftp path is
+        configured).
+        
 2003-12-02 Piotr Miarecki   <tertul@poczta.onet.pl>
 
         * src/comps.c: Fixed bug: Download warning instead of missing
