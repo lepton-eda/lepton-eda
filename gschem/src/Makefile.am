@@ -5,27 +5,20 @@
 #
 
 NOTANGLE=       @NOTANGLE@
-NOWEAVE=        @NOWEAVE@
+NOTANGLEROOT=	@NOTANGLEROOT@
+NOTANGLEFLAGS=  @NOTANGLEFLAGS@
 
-NOTANGLEFLAGS=  
-NOWEAVEFLAGS=   -n -index
-TEXIBACKEND=    -backend ../scripts/geda_totexi
-TEXIROOT=       ../docs/gschemdoc.texi
-
-
-MAKEINFO=       @MAKEINFO@
-TEXI2DVI=       @TEXI2DVI@
-TEXI2HTML=      @TEXI2HTML@
 INDENTBIN=      @INDENT@
 INDENTFLAG=     -kr -i2
 
-VPATH = ../noweb:../docs:src
+VPATH = ../noweb:../include:src
 
 bin_PROGRAMS = gschem
 
 BUILT_SOURCES = \
 	a_pan.nw a_zoom.nw \
-	g_key.nw g_rc.nw g_funcs.nw g_hook.nw g_register.nw \
+	g_register.nw g_hook.nw\
+	g_rc.nw g_key.nw g_funcs.nw \
 	globals.nw gschem.nw \
 	i_basic.nw i_callbacks.nw i_vars.nw \
 	o_basic.nw o_attrib.nw o_move.nw o_copy.nw o_delete.nw o_misc.nw \
@@ -48,31 +41,25 @@ gschem_LDADD = @STROKE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
 EXTRA_DIST = create_proto 
 #gschem.1
 
-TEXIFILES = $(BUILT_SOURCES:.nw=.texi)
-
 src: $(gschem_SOURCES)
 	@echo Finished building the C source
 
-info: $(TEXIFILES) $(TEXIROOT)
-	$(MAKEINFO) $(TEXIROOT)
-
-dvi: $(TEXIFILES) $(TEXIROOT)
-	$(TEXI2DVI) $(TEXIROOT)
-
-html: $(TEXIFILES) $(TEXIROOT)
-	$(TEXI2HTML) -split_chapter $(TEXIROOT)
-
-
-SUFFIXES = .nw .texi
+SUFFIXES = .nw
 
 .nw.c:
-	$(NOTANGLE) $(NOTANGLEFLAGS) -R'$@ : *' $< > ../src/$@
+	$(NOTANGLE) $(NOTANGLEFLAGS) $(NOTANGLEROOT)'$@ : *' $< > ../src/$@
 	$(INDENTBIN) $(INDENTFLAG) ../src/$@
 	rm -f ../src/$@~
 
-.nw.texi:
-	$(NOWEAVE) $(NOWEAVEFLAGS) $(TEXIBACKEND) $< > $@
+CPROTO =	cproto
+CPROTOCFLAGS = 	$(INCLUDES) -I. -I.. -I../include
+ALES_HACK =	-D__GNUC__
 
+proto: prototype.h
+
+prototype.h: $(gschem_SOURCES)
+	$(CPROTO) $(ALES_HACK) $(CPROTOCFLAGS) *.c > new_proto
+	mv new_proto ../include/prototype.h
 
 
 MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
@@ -80,6 +67,5 @@ CLEANFILES = *.log core FILE *~ prototype.bak
 DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h \
 			Makefile.in configure \
-			*.c *.html *.dvi *.texi *.info *.info-* *.aux *.fn \
-			*.fns *.cp *.ky *.pg *.toc *.tp *.vrs *.vr
+			*.c 
 
