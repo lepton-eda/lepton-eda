@@ -8,6 +8,14 @@
 
 	* tests/pins.sch: Added test schematic which exercises the pin
 	whichend flag
+	
+	* noweb/rcstrings.nw: Added file which contains all the strings 
+	which are related to the menus so that they get translated.
+	The strings are surrounded by _(" ").  This file is NOT built.
+
+	* noweb/Makefile.am: Added above file to EXTRA_DIST=
+
+	* po/*: Updates to the files from rcstrings.nw
 
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
