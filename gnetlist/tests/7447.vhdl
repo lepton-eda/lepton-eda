@@ -4,26 +4,90 @@ library IEEE;
 use IEEE.Std_Logic_1164.all;
 -- Entity declaration
 
-ENTITY top IS
+ENTITY not found IS
     PORT (
-        INPUTA : in Std_Logic;
-        INPUTB : in Std_Logic;
-        INPUTC : in Std_Logic;
-        INPUTD : in Std_Logic;
-        RIPPLE_BLANK_INn : in Std_Logic;
-        LAMP_TESTn : in Std_Logic;
-        OUTPUTAn : out Std_Logic;
-        OUTPUTBn : out Std_Logic;
-        OUTPUTCn : out Std_Logic;
-        OUTPUTDn : out Std_Logic;
-        OUTPUTEn : out Std_Logic;
-        OUTPUTFn : out Std_Logic;
-        OUTPUTGn : out Std_Logic;
-        RIPPLE_BLANK_OUTn : out Std_Logic);
-END ENTITY top;
+        P7 : in Std_Logic;
+        P6 : in Std_Logic;
+        P5 : in Std_Logic;
+        P4 : in Std_Logic;
+        P2 : in Std_Logic;
+        P1 : in Std_Logic;
+        P14 : out Std_Logic;
+        P13 : out Std_Logic;
+        P12 : out Std_Logic;
+        P11 : out Std_Logic;
+        P10 : out Std_Logic;
+        P9 : out Std_Logic;
+        P8 : out Std_Logic;
+        P3 : out Std_Logic);
+END not found;
+
 
 -- Secondary unit
-ARCHITECTURE netlist OF top IS
+ARCHITECTURE netlist OF not found IS
+    COMPONENT nand2
+    PORT (
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT and2
+    PORT (
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT nor3
+    PORT (
+        IN2 : in Std_Logic;
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT nor2
+    PORT (
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT neg
+    PORT (
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT nand6
+    PORT (
+        IN5 : in Std_Logic;
+        IN4 : in Std_Logic;
+        IN3 : in Std_Logic;
+        IN2 : in Std_Logic;
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT and4
+    PORT (
+        IN3 : in Std_Logic;
+        IN2 : in Std_Logic;
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
+    COMPONENT and3
+    PORT (
+        IN2 : in Std_Logic;
+        IN1 : in Std_Logic;
+        IN0 : in Std_Logic;
+        OUT0 : out Std_Logic);
+    END COMPONENT ;
+
     SIGNAL unnamed_net32 : Std_Logic;
     SIGNAL unnamed_net31 : Std_Logic;
     SIGNAL RIPPLE_BLANK_INn : Std_Logic;
@@ -72,14 +136,14 @@ ARCHITECTURE netlist OF top IS
     SIGNAL unnamed_net1 : Std_Logic;
 BEGIN
 -- Architecture statement part
-    U38 : ENTITY nor3
+    U38 : nor3
     PORT MAP (
         OUT0 => unnamed_net30,
         IN0 => unnamed_net32,
         IN1 => unnamed_net31,
         IN2 => unnamed_net11);
 
-    U37 : ENTITY and4
+    U37 : and4
     PORT MAP (
         OUT0 => unnamed_net28,
         IN0 => LAMP_TESTn,
@@ -87,63 +151,63 @@ BEGIN
         IN2 => unnamed_net3,
         IN3 => unnamed_net2);
 
-    U36 : ENTITY and3
+    U36 : and3
     PORT MAP (
         OUT0 => unnamed_net29,
         IN0 => unnamed_net6,
         IN1 => unnamed_net5,
         IN2 => unnamed_net4);
 
-    U35 : ENTITY and3
+    U35 : and3
     PORT MAP (
         OUT0 => unnamed_net26,
         IN0 => unnamed_net8,
         IN1 => unnamed_net3,
         IN2 => unnamed_net4);
 
-    U34 : ENTITY and3
+    U34 : and3
     PORT MAP (
         OUT0 => unnamed_net21,
         IN0 => unnamed_net6,
         IN1 => unnamed_net5,
         IN2 => unnamed_net4);
 
-    U33 : ENTITY and3
+    U33 : and3
     PORT MAP (
         OUT0 => unnamed_net22,
         IN0 => unnamed_net6,
         IN1 => unnamed_net2,
         IN2 => unnamed_net1);
 
-    U32 : ENTITY and3
+    U32 : and3
     PORT MAP (
         OUT0 => unnamed_net23,
         IN0 => unnamed_net3,
         IN1 => unnamed_net2,
         IN2 => unnamed_net4);
 
-    U31 : ENTITY and3
+    U31 : and3
     PORT MAP (
         OUT0 => unnamed_net19,
         IN0 => unnamed_net3,
         IN1 => unnamed_net5,
         IN2 => unnamed_net1);
 
-    U30 : ENTITY and3
+    U30 : and3
     PORT MAP (
         OUT0 => unnamed_net32,
         IN0 => unnamed_net6,
         IN1 => unnamed_net5,
         IN2 => unnamed_net1);
 
-    U29 : ENTITY and3
+    U29 : and3
     PORT MAP (
         OUT0 => unnamed_net31,
         IN0 => unnamed_net6,
         IN1 => unnamed_net2,
         IN2 => unnamed_net4);
 
-    U28 : ENTITY and4
+    U28 : and4
     PORT MAP (
         OUT0 => unnamed_net17,
         IN0 => unnamed_net8,
@@ -151,7 +215,7 @@ BEGIN
         IN2 => unnamed_net2,
         IN3 => unnamed_net4);
 
-    U27 : ENTITY nand6
+    U27 : nand6
     PORT MAP (
         OUT0 => RIPPLE_BLANK_OUTn,
         IN0 => LAMP_TESTn,
@@ -161,167 +225,182 @@ BEGIN
         IN4 => unnamed_net2,
         IN5 => unnamed_net1);
 
-    U26 : ENTITY neg
+    U26 : neg
     PORT MAP (
         OUT0 => unnamed_net8,
         IN0 => INPUTD);
 
-    U40 : ENTITY neg
+    U40 : neg
     PORT MAP (
         OUT0 => OUTPUTGn,
         IN0 => unnamed_net27);
 
-    U39 : ENTITY neg
+    U39 : neg
     PORT MAP (
         OUT0 => OUTPUTFn,
         IN0 => unnamed_net25);
 
-    U25 : ENTITY neg
+    U25 : neg
     PORT MAP (
         OUT0 => OUTPUTEn,
         IN0 => unnamed_net24);
 
-    U24 : ENTITY neg
+    U24 : neg
     PORT MAP (
         OUT0 => OUTPUTDn,
         IN0 => unnamed_net20);
 
-    U23 : ENTITY neg
+    U23 : neg
     PORT MAP (
         OUT0 => OUTPUTCn,
         IN0 => unnamed_net18);
 
-    U22 : ENTITY neg
+    U22 : neg
     PORT MAP (
         OUT0 => OUTPUTBn,
         IN0 => unnamed_net30);
 
-    U21 : ENTITY neg
+    U21 : neg
     PORT MAP (
         OUT0 => OUTPUTAn,
         IN0 => unnamed_net16);
 
-    U20 : ENTITY nor2
+    U20 : nor2
     PORT MAP (
         OUT0 => unnamed_net27,
         IN0 => unnamed_net28,
         IN1 => unnamed_net29);
 
-    U19 : ENTITY nor3
+    U19 : nor3
     PORT MAP (
         OUT0 => unnamed_net25,
         IN0 => unnamed_net26,
         IN1 => unnamed_net15,
         IN2 => unnamed_net14);
 
-    U18 : ENTITY nor2
+    U18 : nor2
     PORT MAP (
         OUT0 => unnamed_net24,
         IN0 => unnamed_net13,
         IN1 => unnamed_net4);
 
-    U17 : ENTITY nor3
+    U17 : nor3
     PORT MAP (
         OUT0 => unnamed_net20,
         IN0 => unnamed_net21,
         IN1 => unnamed_net22,
         IN2 => unnamed_net23);
 
-    U16 : ENTITY nor2
+    U16 : nor2
     PORT MAP (
         OUT0 => unnamed_net18,
         IN0 => unnamed_net19,
         IN1 => unnamed_net12);
 
-    U15 : ENTITY nor3
+    U15 : nor3
     PORT MAP (
         OUT0 => unnamed_net16,
         IN0 => unnamed_net17,
         IN1 => unnamed_net10,
         IN2 => unnamed_net9);
 
-    U14 : ENTITY and2
+    U14 : and2
     PORT MAP (
         OUT0 => unnamed_net15,
         IN0 => unnamed_net3,
         IN1 => unnamed_net5);
 
-    U13 : ENTITY and2
+    U13 : and2
     PORT MAP (
         OUT0 => unnamed_net14,
         IN0 => unnamed_net5,
         IN1 => unnamed_net4);
 
-    U12 : ENTITY and2
+    U12 : and2
     PORT MAP (
         OUT0 => unnamed_net13,
         IN0 => unnamed_net6,
         IN1 => unnamed_net2);
 
-    U11 : ENTITY and2
+    U11 : and2
     PORT MAP (
         OUT0 => unnamed_net12,
         IN0 => unnamed_net7,
         IN1 => unnamed_net6);
 
-    U10 : ENTITY and2
+    U10 : and2
     PORT MAP (
         OUT0 => unnamed_net11,
         IN0 => unnamed_net7,
         IN1 => unnamed_net5);
 
-    U9 : ENTITY and2
+    U9 : and2
     PORT MAP (
         OUT0 => unnamed_net10,
         IN0 => unnamed_net6,
         IN1 => unnamed_net1);
 
-    U8 : ENTITY and2
+    U8 : and2
     PORT MAP (
         OUT0 => unnamed_net9,
         IN0 => unnamed_net7,
         IN1 => unnamed_net5);
 
-    U7 : ENTITY nand2
+    U7 : nand2
     PORT MAP (
         OUT0 => unnamed_net7,
         IN0 => RIPPLE_BLANK_OUTn,
         IN1 => unnamed_net8);
 
-    U6 : ENTITY nand2
+    U6 : nand2
     PORT MAP (
         OUT0 => unnamed_net6,
         IN0 => RIPPLE_BLANK_OUTn,
         IN1 => unnamed_net3);
 
-    U5 : ENTITY nand2
+    U5 : nand2
     PORT MAP (
         OUT0 => unnamed_net5,
         IN0 => RIPPLE_BLANK_OUTn,
         IN1 => unnamed_net2);
 
-    U4 : ENTITY nand2
+    U4 : nand2
     PORT MAP (
         OUT0 => unnamed_net4,
         IN0 => RIPPLE_BLANK_OUTn,
         IN1 => unnamed_net1);
 
-    U3 : ENTITY nand2
+    U3 : nand2
     PORT MAP (
         OUT0 => unnamed_net3,
         IN0 => LAMP_TESTn,
         IN1 => INPUTC);
 
-    U2 : ENTITY nand2
+    U2 : nand2
     PORT MAP (
         OUT0 => unnamed_net2,
         IN0 => LAMP_TESTn,
         IN1 => INPUTB);
 
-    U1 : ENTITY nand2
+    U1 : nand2
     PORT MAP (
         OUT0 => unnamed_net1,
         IN0 => LAMP_TESTn,
         IN1 => INPUTA);
 
-END ARCHITECTURE netlist;
+-- Signal assignment part
+INPUTA <= P7;
+INPUTB <= P6;
+INPUTC <= P5;
+INPUTD <= P4;
+RIPPLE_BLANK_INn <= P2;
+LAMP_TESTn <= P1;
+P14 <= OUTPUTAn;
+P13 <= OUTPUTBn;
+P12 <= OUTPUTCn;
+P11 <= OUTPUTDn;
+P10 <= OUTPUTEn;
+P9 <= OUTPUTFn;
+P8 <= OUTPUTGn;
+P3 <= RIPPLE_BLANK_OUTn;
+END netlist;
