@@ -95,6 +95,7 @@ GEDA_DECLARE_SYMLIB(xilinx)
 GEDA_DECLARE_SYMLIB(dec)
 GEDA_DECLARE_SYMLIB(rf)
 GEDA_DECLARE_SYMLIB(pla)
+GEDA_DECLARE_SYMLIB(ecl)
 GEDA_DECLARE_SYMLIB(foot)
 GEDA_DECLARE_SYMLIB(IEC417)
 GEDA_DECLARE_SYMLIB(font)
@@ -166,6 +167,7 @@ AC_SUBST(datalattice)
 AC_SUBST(dataxilinx)
 AC_SUBST(datadec)
 AC_SUBST(datapla)
+AC_SUBST(dataecl)
 AC_SUBST(datarf)
 AC_SUBST(datafoot)
 AC_SUBST(dataIEC417)
@@ -188,6 +190,7 @@ AC_OUTPUT([
 	xilinx/Makefile 
 	dec/Makefile 
 	pla/Makefile 
+	ecl/Makefile 
 	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 

@@ -950,6 +950,10 @@ EOF
 	datapla=`echo $datapla`
  
 
+	dataecl=`ls -1 $srcdir/ecl | grep -v Makefile | grep -v CVS`
+	dataecl=`echo $dataecl`
+ 
+
 	datafoot=`ls -1 $srcdir/foot | grep -v Makefile | grep -v CVS`
 	datafoot=`echo $datafoot`
  
@@ -1013,6 +1017,7 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
 
 
 
@@ -1179,6 +1184,7 @@ trap 'rm -fr `echo "
 	xilinx/Makefile 
 	dec/Makefile 
 	pla/Makefile 
+	ecl/Makefile 
 	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 
@@ -1276,6 +1282,7 @@ s%@datalattice@%$datalattice%g
 s%@dataxilinx@%$dataxilinx%g
 s%@datadec@%$datadec%g
 s%@datapla@%$datapla%g
+s%@dataecl@%$dataecl%g
 s%@datarf@%$datarf%g
 s%@datafoot@%$datafoot%g
 s%@dataIEC417@%$dataIEC417%g
@@ -1334,6 +1341,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	xilinx/Makefile 
 	dec/Makefile 
 	pla/Makefile 
+	ecl/Makefile 
 	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 

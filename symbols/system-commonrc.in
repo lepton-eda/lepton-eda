@@ -43,6 +43,7 @@
 (component-library "@symdir@/rf")
 (component-library "@symdir@/bus")
 (component-library "@symdir@/pla")
+(component-library "@symdir@/ecl")
 (component-library "@symdir@/dec")
 (component-library "@symdir@/supervisor")
 
@@ -90,6 +91,7 @@
 (source-library "@symdir@/verilog")
 (source-library "@symdir@/rf")
 (source-library "@symdir@/pla")
+(source-library "@symdir@/ecl")
 (source-library "@symdir@/dec")
 (source-library "@symdir@/supervisor")
 (source-library "@symdir@/bus")

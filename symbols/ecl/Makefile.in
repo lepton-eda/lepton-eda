@@ -99,11 +99,11 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-dataverilogdir = @gedadatadir@/sym/verilog
+dataecldir = @gedadatadir@/sym/ecl
 
-dataverilog_DATA = @dataverilog@
+dataecl_DATA = @dataecl@
 
-EXTRA_DIST = $(dataverilog_DATA)
+EXTRA_DIST = $(dataecl_DATA)
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
@@ -111,7 +111,7 @@ DISTCLEANFILES = *.log *~
 MAINTAINERCLEANFILES = *.log *~
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
-DATA =  $(dataverilog_DATA)
+DATA =  $(dataecl_DATA)
 
 DIST_COMMON =  Makefile.am Makefile.in
 
@@ -123,30 +123,30 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu verilog/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu ecl/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 
-install-dataverilogDATA: $(dataverilog_DATA)
+install-dataeclDATA: $(dataecl_DATA)
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(dataverilogdir)
-	@list='$(dataverilog_DATA)'; for p in $$list; do \
+	$(mkinstalldirs) $(DESTDIR)$(dataecldir)
+	@list='$(dataecl_DATA)'; for p in $$list; do \
 	  if test -f $(srcdir)/$$p; then \
-	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataverilogdir)/$$p"; \
-	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataverilogdir)/$$p; \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataecldir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataecldir)/$$p; \
 	  else if test -f $$p; then \
-	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(dataverilogdir)/$$p"; \
-	    $(INSTALL_DATA) $$p $(DESTDIR)$(dataverilogdir)/$$p; \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(dataecldir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(dataecldir)/$$p; \
 	  fi; fi; \
 	done
 
-uninstall-dataverilogDATA:
+uninstall-dataeclDATA:
 	@$(NORMAL_UNINSTALL)
-	list='$(dataverilog_DATA)'; for p in $$list; do \
-	  rm -f $(DESTDIR)$(dataverilogdir)/$$p; \
+	list='$(dataecl_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(dataecldir)/$$p; \
 	done
 tags: TAGS
 TAGS:
@@ -154,14 +154,14 @@ TAGS:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-subdir = verilog
+subdir = ecl
 
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu verilog/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu ecl/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -183,20 +183,20 @@ installcheck: installcheck-am
 install-exec-am:
 install-exec: install-exec-am
 
-install-data-am: install-dataverilogDATA
+install-data-am: install-dataeclDATA
 install-data: install-data-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 install: install-am
-uninstall-am: uninstall-dataverilogDATA
+uninstall-am: uninstall-dataeclDATA
 uninstall: uninstall-am
 all-am: Makefile $(DATA)
 all-redirect: all-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
 installdirs:
-	$(mkinstalldirs)  $(DESTDIR)$(dataverilogdir)
+	$(mkinstalldirs)  $(DESTDIR)$(dataecldir)
 
 
 mostlyclean-generic:
@@ -230,8 +230,8 @@ maintainer-clean-am:  maintainer-clean-generic distclean-am
 
 maintainer-clean: maintainer-clean-am
 
-.PHONY: uninstall-dataverilogDATA install-dataverilogDATA tags distdir \
-info-am info dvi-am dvi check check-am installcheck-am installcheck \
+.PHONY: uninstall-dataeclDATA install-dataeclDATA tags distdir info-am \
+info dvi-am dvi check check-am installcheck-am installcheck \
 install-exec-am install-exec install-data-am install-data install-am \
 install uninstall-am uninstall all-redirect all-am all installdirs \
 mostlyclean-generic distclean-generic clean-generic \
