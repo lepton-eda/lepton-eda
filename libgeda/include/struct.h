@@ -117,7 +117,8 @@ struct st_text {
   int length;
   int size;
   int alignment;	
-  int displayed_length;
+  int displayed_width;
+  int displayed_height;
   int angle;
 
   OBJECT *prim_objs;

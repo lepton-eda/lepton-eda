@@ -1,3 +1,10 @@
+2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw, include/struct.h: Added displayed_width
+	and displayed_height variables to the st_text structure.  These
+	variables represent the actual width and height of the displayed
+	string.  This info is needed when drawing the quick text rectangles.
+	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Added multi line text postscript output.

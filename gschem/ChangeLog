@@ -1,3 +1,13 @@
+2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text.nw: Fixed the quick text rectangle to be the right
+	size using the new displayed_width and displayed_height variables
+	in the st_text structure.
+
+	* noweb/o_text.nw: Refactored the quick text rectangle rendering
+	code into its own function.  Added some #if 0'ed code in prep for a 
+	future performance enhancement.
+	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/pt_BR.po: Replaced file by new UTF version provided by 

@@ -579,6 +579,7 @@ o_text_num_lines(char *string)
 @section Function @code{o_text_height()}
 
 @defun o_text_height size
+You do not need to divide the size in half here.
 @end defun
 
 <<o_text_basic.c : o_text_height()>>=
@@ -594,7 +595,7 @@ o_text_height(char *string, int size)
   /* Get the number of lines in the string */
   line_count = o_text_num_lines(string);
   
-  /* 26 is the height of a single char */
+  /* 26 is the height of a single char (in mils) */
   /* which represents a character which is 2 pts high */
   /* So size has to be divided in half */
   /* and it's added the LINE_SPACING*character_height of each line */
@@ -608,6 +609,7 @@ o_text_height(char *string, int size)
 @section Function @code{o_text_width()}
 
 @defun o_text_width w_current string size
+You need to divide the size in half here.  FIXME consistancy.
 @end defun
 
 <<o_text_basic.c : o_text_width()>>=
@@ -1121,10 +1123,13 @@ o_text_add(TOPLEVEL *w_current, OBJECT *object_list,
       o_text_create_string(w_current, temp_list, 
                            output_string, size, color,
                            x, y, alignment, angle); 
-    object_list->text->displayed_length = strlen(output_string);
+    object_list->text->displayed_width = o_text_width(w_current,
+                                                      output_string, size/2);
+    object_list->text->displayed_height = o_text_height(output_string, size);
   } else {
     object_list->text->prim_objs = NULL;
-    object_list->text->displayed_length = 0;
+    object_list->text->displayed_width = 0;
+    object_list->text->displayed_height = 0;
     s_delete(w_current, temp_list);
   }
 
@@ -1478,12 +1483,17 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 
     o_complex_set_saved_color_only(o_current->text->prim_objs, 
                                    o_current->saved_color);
-    o_current->text->displayed_length = strlen(output_string);
+    o_current->text->displayed_width = o_text_width(w_current,
+                                                    output_string,
+                                                    o_current->text->size/2);
+    o_current->text->displayed_height = o_text_height(output_string,
+                                                      o_current->text->size);
   } else {
     /* make sure list is truely free */
     s_delete_list_fromstart(w_current, o_current->text->prim_objs);
     o_current->text->prim_objs = NULL;
-    o_current->text->displayed_length = 0;
+    o_current->text->displayed_width = 0;
+    o_current->text->displayed_height = 0;
   }
 
   w_current->page_current->object_parent = temp_parent;
