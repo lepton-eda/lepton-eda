@@ -581,7 +581,6 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 
 		w_current->page_current->page_filename = u_basic_strdup(string);
 
-		o_select_unselect_all(w_current); 
 		f_save(w_current, string);
 
 		s_log_message("Saved As [%s]\n", 
@@ -654,6 +653,7 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 			x_window_setup_world(w_current);
 			x_manual_resize(w_current);
 			a_zoom_limits(w_current, w_current->page_current->object_head);
+			o_undo_savestate(w_current, UNDO_ALL);
 
 			/* now update the scrollbars */
 			x_hscrollbar_update(w_current);
