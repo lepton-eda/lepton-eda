@@ -57,7 +57,7 @@ multi_attrib_edit_parser (GtkWidget *w,
 
 	char *newtext;
 	
-	text[1]=malloc(4);
+	text[1]=malloc(4*sizeof(char)); /* this needs to be freed somewhere? */
 	
 	window = gtk_object_get_data(GTK_OBJECT(w),"window");
 	label = gtk_object_get_data(GTK_OBJECT(window),"lab_entry");

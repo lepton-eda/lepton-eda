@@ -23,9 +23,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#ifndef __CYGWIN32__ 
 #include <sys/stat.h>
+#endif
 #include <sys/param.h>
+
+#if defined(HAVE_DIRENT_H) && !defined(__CYGWIN32__)
 #include <dirent.h>
+#endif
 
 #ifdef HAVE_STRINGS_H
 #include <strings.h>
@@ -40,6 +45,10 @@
 #define DIR_LIST_HEIGHT  180
 #define FILE_LIST_WIDTH  180
 #define FILE_LIST_HEIGHT 180
+
+#ifdef __CYGWIN32__ 
+#include <sys/stat.h>
+#endif
 
 void
 x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current)

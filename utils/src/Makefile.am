@@ -17,7 +17,7 @@ convert_sym_LDADD = -lm
 sarlacc_schem_LDADD = 
 
 EXTRA_DIST = 7474.txt 8031.txt convert_sym.awk gpstoimage mk_char_tab.pl \
-	     test.txt block.txt
+	     test.txt block.txt DM9368.txt L293.txt PCF8591.txt pic16C84.txt 
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 
