@@ -1987,6 +1987,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 				          		      w_current->
 							      page_current->
 							      object_head);
+						o_undo_savestate(w_current, 
+								 UNDO_ALL);
 					}
 
 
@@ -2106,6 +2108,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 				       w_current->page_current->page_filename);
 			a_zoom_limits(w_current, 
 				      w_current->page_current->object_head);
+			o_undo_savestate(w_current, UNDO_ALL);
 			o_redraw_all(w_current);
 			update_page_manager(NULL, w_current);
 			free(filename);

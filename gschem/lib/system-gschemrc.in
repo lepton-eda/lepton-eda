@@ -657,7 +657,11 @@
 ; The width and height parameters are in the order for landscape printing,
 ; so reversing them for portrait won't work just yet. (and that will be 
 ; implemented differently. 
-; The default paper size is set above.  All units are in inches.
+; The default paper size is set above.  All units are in inches (forgiveness
+; please).
+;
+; You MUST change this list in this file (gschem-systemrc) if you want
+; any reordering changes to take effect.
 ;
 (paper-sizes "Letter : 8.5 in x 11 in" 11.0 8.5)
 (paper-sizes "Legal : 8.5 in x 14 in" 14.0 8.5)
@@ -976,6 +980,7 @@
     ("l" . edit-lock)
     ("Shift L" . edit-unlock)
     ("w" . edit-linetype)
+    ("f" . edit-filltype)
     ("t" . edit-translate)
     ("b" . edit-embed)
     ("u" . edit-unembed)

@@ -9,6 +9,45 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Oops, forgot to save the undo state after
+	  pushing down into a hierarchy (schematic and symbol)
+
+2000-10-31  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added some comments (based on feedback
+	  from Arnim Littek).
+
+2000-10-29  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/a_pan.c src/a_zoom.c: Integrated bug fixes and much needed
+	  improvement to zoom / pan functions (patch by Werner Hoch) Thanks
+
+	* src/a_pan.c: Fixed a long standing annoyance with mouse pan: near
+	  the borders the display would jitter, very annoying
+
+	* src/g_register.c etc...: Added support for hotkey for edit_filltype
+
+	* lib/system-gschemrc.in: Added hotkey for edit_filltype
+
+	* src/x_dialog.c: Intergate slot change patch by Chris Ellec
+ 	  (change the slot attribute and a the symbol updates; with minor
+	  modifications by AVH)
+
+2000-10-26  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* examples/fill_test.sch: Added example schematic to demonstrate
+	  fill capabilities
+
+	* src/o_arc.c, o_line.c: Minor changes to line type support
+
+	* src/o_box.c, o_circle.c: Added fill (both solid and pattern)
+	  to boxes and circles (also misc line type changes).
+
+	* src/x_dialog.c, x_menu.c, i_callbacks.c: Added fill style
+	  dialog box
+
 2000-10-10  Stefan Petersen  <spe@geda.seul.org>
  	
 	* src/gschem.c, src/i_callbacks.c, src/x_fileselect.c, src/x_preview.c

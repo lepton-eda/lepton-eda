@@ -1,5 +1,7 @@
 /* a_pan.c */
 void a_pan_calc(TOPLEVEL *w_current, int x, int y);
+void a_pan_section_check(TOPLEVEL *w_current);
+void a_pan_calc_without_bordercheck(TOPLEVEL *w_current, int x, int y);
 void a_pan(TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
@@ -53,6 +55,7 @@ SCM g_key_edit_text(void);
 SCM g_key_edit_lock(void);
 SCM g_key_edit_unlock(void);
 SCM g_key_edit_linetype(void);
+SCM g_key_edit_filltype(void);
 SCM g_key_edit_translate(void);
 SCM g_key_edit_embed(void);
 SCM g_key_edit_unembed(void);
@@ -138,7 +141,6 @@ SCM g_key_misc3(void);
 SCM g_key_help_about(void);
 SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
-/* globals.c */
 /* g_rc.c */
 void g_rc_parse(void);
 SCM g_rc_gschem_version(SCM version);
@@ -219,6 +221,7 @@ SCM g_rc_undo_type(SCM mode);
 SCM g_rc_draw_grips(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
+/* globals.c */
 /* gschem.c */
 void gschem_quit(void);
 void main_prog(int argc, char *argv[]);

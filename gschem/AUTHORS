@@ -90,7 +90,14 @@ Martin Benes            - For contributing the attribute promotion code and
 			  For pointing out and providing misc bug fixes
 
 Patrick Bernaud		- For many primitive object code updates, bug
-			  fixes, and additions
+			  fixes, and additions (line types and fill types)
+
+Werner Hoch		- For providing a patch to fix some long outstanding
+			  zooming / panning bugs
+
+Chris Ellec		- For providing a patch that causes changes in the
+			  slot= attribute in the multi attrib dialog box
+			  (Add and Change) to take effect.
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

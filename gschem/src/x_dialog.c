@@ -188,6 +188,7 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 	OBJECT *object;
 	char **text;
 	GtkWidget *clist;
+	char tmpstr[20];
 
 	clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
 
@@ -198,10 +199,18 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 	if(text[0][0] == '\0' || text[0][0] == ' ')
 		return;
 
+			
 	row = gtk_clist_append(GTK_CLIST(clist),text);
 
 	object = o_select_return_first_object(w_current); 
 	attrib = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+
+	/* handle slot= attribute, it's a special case */
+	if ( (!strcmp(text[0],"slot")) & (strlen(text[2])<3) ) {
+		sprintf (tmpstr,"%s=%i",text[0],atoi(text[2]));
+		o_slot_end(w_current,tmpstr,strlen(tmpstr));
+	}
+
 	w_current->page_current->CHANGED=1;
 	o_undo_savestate(w_current, UNDO_ALL);
 
@@ -223,6 +232,7 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
 	OBJECT *attrib;
 	char **text;
 	GtkWidget *clist;
+	char tmpstr[20];
 
 	clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
 
@@ -243,6 +253,13 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
 			gtk_clist_set_text(GTK_CLIST(clist),row,2,text[2]);
 		}
 	}
+	
+	if ( (!strcmp(text[0],"slot")) & (strlen(text[2])<3) )
+	{
+		sprintf (tmpstr,"%s=%i",text[0],atoi(text[2]));
+		o_slot_end(w_current,tmpstr,strlen(tmpstr));
+	}
+
 	free(newtext);
 	free(text);
 

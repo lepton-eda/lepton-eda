@@ -158,6 +158,67 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
 #endif
 }
 
+/* Moves the section back in the allowed borders */
+void
+a_pan_section_check(TOPLEVEL *w_current)
+{
+     	if (w_current->page_current->right > w_current->init_right) {
+     		w_current->page_current->left -= w_current->page_current->right - w_current->init_right;
+     		w_current->page_current->right = w_current->init_right;
+     	}
+     	if (w_current->page_current->left < 0) {
+     		w_current->page_current->right -= w_current->page_current->left;
+     		w_current->page_current->left = 0;
+     	}
+     	if (w_current->page_current->bottom > w_current->init_bottom) {
+     		w_current->page_current->top -= w_current->page_current->bottom - w_current->init_bottom;
+     	     	w_current->page_current->bottom = w_current->init_bottom;
+     	}
+     	if (w_current->page_current->top < 0) {
+     		w_current->page_current->bottom -= w_current->page_current->top;
+     		w_current->page_current->top = 0;
+     	}
+}
+
+
+void
+a_pan_calc_without_bordercheck(TOPLEVEL *w_current, int x, int y)
+{
+	int pan_x, pan_y;
+	int ix, iy, center_x, center_y;
+
+	pan_x = mil_x(w_current, x);
+	pan_y = mil_y(w_current, y);
+
+	center_x = GET_PAGE_CENTER_X(w_current);
+	center_y = GET_PAGE_CENTER_Y(w_current);
+
+        ix = center_x - pan_x;
+	w_current->page_current->left  -= ix;
+	w_current->page_current->right -= ix;
+
+	iy = center_y - pan_y;
+	w_current->page_current->top    -= iy;
+	w_current->page_current->bottom -= iy;
+
+#if DEBUG
+	printf("left: %d, right: %d, top: %d, bottom: %d\n",
+	       left, right, top, bottom);
+	printf("aspect: %f\n",
+	       (float) fabs(right  - left) /
+	       (float) fabs(bottom - top ));
+	printf("zoomfactor: %d\n", zoom_factor);
+#endif
+
+	current_center_x = GET_PAGE_CENTER_X(w_current);
+	current_center_y = GET_PAGE_CENTER_Y(w_current);
+
+#if DEBUG
+	printf("%d %d\n", current_center_x, current_center_y);
+#endif
+}
+
+
 /* Kazu on July 8, 1999 - TODO: distill common part from a_pan() and
  * a_pan_mouse() because they are doing basically the same thing */
 void
@@ -315,6 +376,26 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 		printf("bottom normal\n");
 #endif
 	}
+
+
+	/* really bound the lower left hand corner */
+	if (w_current->page_current->left < 0) {
+		w_current->page_current->left = 0;
+	}
+	if (w_current->page_current->top < 0) {
+		w_current->page_current->top = 0;
+	}
+
+#if DEBUG 
+	printf ("init = %d %d %d %d\n", w_current->init_left,
+		w_current->init_top,
+		w_current->init_right,
+		w_current->init_bottom);
+
+	printf ("current = %d %d %d %d\n", w_current->page_current->left,
+		w_current->page_current->top, w_current->page_current->right,
+		w_current->page_current->bottom);
+#endif
 
 	if (fix != 0) {
 		correct_aspect(w_current);

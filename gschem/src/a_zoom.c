@@ -101,8 +101,10 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from)
 	}
 
 	if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
-		a_pan_calc(w_current, mouse_x, mouse_y);
+/*removing the bordercheck is nessessary for correct zooming */
+		a_pan_calc_without_bordercheck(w_current, mouse_x, mouse_y);
 	}
+	
 
 	switch(dir) {
 	case(ZOOM_IN):
@@ -110,16 +112,19 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from)
 		    w_current->max_zoom) {
 			w_current->page_current->zoom_factor =
 				w_current->max_zoom;
+/*added bordercheck */			
+			a_pan_section_check(w_current);
 			return;
 		}
 
 		i = GET_PAGE_WIDTH(w_current) / 4;
 		w_current->page_current->right  -= (int) i;
 		w_current->page_current->left   += (int) i;
-		/* rint is a hack */
 		i = GET_PAGE_HEIGHT(w_current) / 4;
 		w_current->page_current->bottom -= (int) i;
 		w_current->page_current->top    += (int) i;
+/* added the bordercheck */
+		a_pan_section_check(w_current);
 
 		break;
 
@@ -160,7 +165,18 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from)
 			}
 			return;
 		} else {
+			
 			i = GET_PAGE_WIDTH(w_current) / 2;
+			w_current->page_current->right += (int) i;
+			w_current->page_current->left -= (int) i;
+
+			i = GET_PAGE_HEIGHT(w_current) / 2;
+			w_current->page_current->bottom += (int) i;
+			w_current->page_current->top -= (int) i;
+/* added the bordercheck */
+			a_pan_section_check(w_current);
+						
+/*			i = GET_PAGE_WIDTH(w_current) / 2;
 			w_current->page_current->right =
 				(i + w_current->page_current->right >
 				 w_current->init_right
@@ -180,7 +196,7 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from)
 			w_current->page_current->top =
 				(w_current->page_current->top - i < 0
 				 ? 0 : w_current->page_current->top - i);
-		}
+*/		}
 		break;
 
 	case(ZOOM_FULL):
@@ -197,6 +213,7 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from)
 		break;
 	}
 
+		
 #if DEBUG
 	printf("-------------------\n");
 	printf("zoomfactor: %d\n", zoom_factor);

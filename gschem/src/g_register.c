@@ -185,6 +185,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-lock", g_key_edit_lock);
 	gh_new_procedure0_0 ("edit-unlock", g_key_edit_unlock);
 	gh_new_procedure0_0 ("edit-linetype", g_key_edit_linetype);
+	gh_new_procedure0_0 ("edit-filltype", g_key_edit_filltype);
 	gh_new_procedure0_0 ("edit-translate", g_key_edit_translate);
 	gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
 	gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);
