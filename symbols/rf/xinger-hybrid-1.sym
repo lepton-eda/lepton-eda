@@ -38,7 +38,7 @@ pins=4
 T 1000 1900 8 10 0 1 0 0
 class=IC
 T 1000 1300 8 10 0 1 0 0
-footprint=xinger1305
+footprint=xinger11305
 T 1000 1100 8 10 1 1 0 0
 uref=U?
 L 600 800 1900 500 3 0 0 0 -1 -1
