@@ -21,7 +21,6 @@
 /* used by various guile functions, set in x_event* functions */
 extern TOPLEVEL *global_window_current;
 
-
 /* color stuff */
 extern GdkColormap *colormap; 
 extern GdkVisual *visual; 
@@ -65,7 +64,6 @@ extern int quiet_mode;
 extern int verbose_mode;
 extern int stroke_info_mode;
 
-
 #define MAX_BUFFERS 	5
 /* Global buffers */
 extern OBJECT *object_buffer[MAX_BUFFERS];
@@ -75,6 +73,7 @@ extern SCM add_component_hook;
 extern SCM copy_component_hook;
 extern SCM move_component_hook;
 
-
 #include "gettext.h"
 
+/*EK* used by prototype.h */
+#include "../include/x_states.h"

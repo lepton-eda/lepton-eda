@@ -76,6 +76,9 @@ Egil Kvaleberg		- For providing a patch which gives gEDA gtk+ 1.1.x
 			  and Help/Component documentation searching from 
 			  within gschem" feature.
 
+			  Rewrote part of the event state / status message
+			  to implement the "Snap off" / "Show Hidden" feature.
+
 Thomas Dean		- Submitting a few useful patches for various
 			  things
 

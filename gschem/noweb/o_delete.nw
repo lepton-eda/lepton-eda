@@ -55,9 +55,8 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_states.h"
-#include "../include/prototype.h"
 #include "../include/globals.h"
+#include "../include/prototype.h"
 
 @
 
@@ -311,9 +310,8 @@ o_delete(TOPLEVEL *w_current)
   object = o_select_return_first_object(w_current);
   if (object == NULL) {
     /* TODO: error condition */
-    w_current->event_state = SELECT;
-    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
+    i_set_state(w_current, SELECT);
     return;
   }
 

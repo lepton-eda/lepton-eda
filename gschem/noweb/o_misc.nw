@@ -66,9 +66,8 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_states.h"
-#include "../include/prototype.h"
 #include "../include/globals.h"
+#include "../include/prototype.h"
 
 @
 
@@ -93,9 +92,8 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 #endif
 
   if (list == NULL) {
-    w_current->event_state = SELECT;
-    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
+    i_set_state(w_current, SELECT);
     return;
   }
 
@@ -277,9 +275,8 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
         
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
-    w_current->event_state = SELECT;
-    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
+    i_set_state(w_current, SELECT);
     return;
   }
 
@@ -615,9 +612,8 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   GList *connected_objects=NULL;
 
   if (list == NULL) {
-    w_current->event_state = SELECT;
-    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
+    i_set_state(w_current, SELECT);
     return;
   }
 
@@ -861,6 +857,7 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
   /* toggle show_hidden_text variable, which when it is true */
   /* means that hidden text IS drawn */
   w_current->show_hidden_text = !w_current->show_hidden_text;
+  i_show_state(w_current, NULL); /* update screen status */
 
   o_edit_show_hidden_lowlevel(w_current, o_list);
   o_redraw_all_fast(w_current);
@@ -1377,9 +1374,8 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
   char *new_basename;
 
   if (list == NULL) {
-    w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
     w_current->inside_action = 0;
+    i_set_state(w_current, SELECT);
     return;
   }
 

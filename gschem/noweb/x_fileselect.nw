@@ -106,9 +106,8 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_states.h"
-#include "../include/prototype.h"
 #include "../include/globals.h"
+#include "../include/prototype.h"
 
 @
 
@@ -855,8 +854,7 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
       update_page_manager(NULL, w_current);
     } else {
       s_log_message(_("Could NOT save [%s]\n"),w_current->page_current->page_filename);
-      w_current->event_state = SELECT;    
-      i_update_status(w_current, _("Error while trying to save - Select Mode"));
+      i_set_state_msg(w_current, SELECT, _("Error while trying to save"));
       i_update_toolbar(w_current);
     }
 
@@ -1765,8 +1763,7 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
   o_list_delete_rest(w_current, w_current->page_current->
                      complex_place_head);
 
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));

@@ -812,6 +812,8 @@ the resource file (see the section below for more info).
 
 		This operation is useful when drawing/debugging symbols.
 		
+		When hidden text is visible, the text "Show Hidden"
+		will appear in the lower, righthand corner.
 
 	d. View operations (Zoom/Pan/Redraw etc...)
 
@@ -1136,6 +1138,9 @@ the resource file (see the section below for more info).
 
 		Before you translate a symbol using Edit/Symbol Translate, 
 		make sure the snap is on.    
+
+		When snap mode is off, the text "Snap Off" will appear
+		in the lower, righthand corner.
 
 	Snap Grid Spacing...
 

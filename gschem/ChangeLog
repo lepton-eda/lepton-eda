@@ -5,6 +5,10 @@
 
 	* tests/oldsym2.sch: Added an old single pin symbol, to test that 
 	the auto whichend code handles the single pin correctly.
+
+	* noweb/*.nw, include/*.h: Intergrated patch from Egil for
+	"Snap Off" and "Show Hidden" status indicators (originally written
+	on 10/09/2002).
 	
 2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
@@ -22,6 +26,11 @@
 	  noweb/i_callbacks.nw, noweb/rcstrings.nw, noweb/x_menus.nw,
 	  noweb/x_multiattrib.nw: Added Egil Kvaleberg's find documentation
 	  patch.
+
+2002-10-09 Egil Kvaleberg       <egil@kvaleberg.no>
+
+	* noweb/*, include/*: Implemented "Snap Off" and "Show Hidden"
+	status indicators.
 
 2002-10-07 Egil Kvaleberg   <egil@kvaleberg.no>
 

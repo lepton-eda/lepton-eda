@@ -55,9 +55,8 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_states.h"
-#include "../include/prototype.h"
 #include "../include/globals.h"
+#include "../include/prototype.h"
 
 @
 
@@ -516,8 +515,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
          w_current->last_x = (-1);
          w_current->last_y = (-1);
          w_current->inside_action=0;
-         w_current->event_state = STARTDRAWNET;
-         i_update_status(w_current, _("Net Mode"));
+	 i_set_state(w_current, STARTDRAWNET);
          o_net_eraserubber(w_current);
          return(FALSE);
        }

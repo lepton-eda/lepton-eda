@@ -250,8 +250,10 @@ void gschem_quit(void);
 void main_prog(int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_basic.c */
-void i_update_status(TOPLEVEL *w_current, const char *string);
-void i_update_status2(TOPLEVEL *w_current, const char *string);
+void i_show_state(TOPLEVEL *w_current, const char *message);
+void i_allow_expose(void);
+void i_set_state(TOPLEVEL *w_current, enum x_states newstate);
+void i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate, const char *message);
 void i_update_left_button(const char *string);
 void i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, const char *string);
 void i_update_right_button(const char *string);

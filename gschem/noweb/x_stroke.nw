@@ -50,6 +50,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/x_states.h"
 #include "../include/prototype.h"
 
 @

@@ -200,7 +200,6 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/i_vars.h"
-#include "../include/x_states.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -314,8 +313,7 @@ text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 #if 0
   gtk_grab_remove(w_current->tiwindow);
@@ -625,8 +623,7 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   o_text_edit_end(w_current, text_string, len, text_size, new_text_alignment);
 
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->tewindow);
@@ -647,8 +644,7 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tewindow);
   gtk_widget_destroy(w_current->tewindow);
@@ -1008,8 +1004,7 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
 
   w_current->page_current->CHANGED = 1;
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->ltwindow);
@@ -1030,8 +1025,7 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 line_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->ltwindow);
   gtk_widget_destroy(w_current->ltwindow);
@@ -1405,8 +1399,7 @@ fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
 
   w_current->page_current->CHANGED = 1;
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->ftwindow);
@@ -1427,8 +1420,7 @@ fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 fill_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->ftwindow);
   gtk_widget_destroy(w_current->ftwindow);
@@ -2049,8 +2041,7 @@ translate_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 translate_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 #if 0
 	gtk_grab_remove(w_current->trwindow);
@@ -2215,8 +2206,7 @@ text_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
@@ -2381,8 +2371,7 @@ snap_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 snap_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
@@ -2536,8 +2525,7 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
     }
   }
 
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->sewindow);
@@ -2558,8 +2546,7 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 slot_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->sewindow);
   gtk_widget_destroy(w_current->sewindow);

@@ -61,7 +61,6 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/i_vars.h"
-#include "../include/x_states.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
@@ -134,8 +133,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
   int nsel=0, addto=0, replace=0, addmask=0;
   int option_index;
 
-  w_current->event_state = SELECT;
-  i_update_status(w_current, _("Select Mode"));
+  i_set_state(w_current, SELECT);
 
   value_entry =
   gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "value_entry");
@@ -308,8 +306,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 void
 attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, _("Select Mode"));
-  w_current->event_state = SELECT;
+  i_set_state(w_current, SELECT);
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
   w_current->aewindow = NULL;
@@ -339,8 +336,7 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
 
-  i_update_status(w_current, _("Select Mode"));
-  w_current->event_state = SELECT;
+  i_set_state(w_current, SELECT);
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
   w_current->aewindow = NULL;

@@ -12,7 +12,11 @@
 
 <<i_basic.c : include directives>>
 <<i_basic.c : i_update_status()>>
-<<i_basic.c : i_update_status2()>>
+<<i_basic.c : i_allow_expose()>>
+<<i_basic.c : i_status_string()>>
+<<i_basic.c : i_show_state()>>
+<<i_basic.c : i_set_state()>>
+<<i_basic.c : i_set_state_msg()>>
 <<i_basic.c : i_update_left_button()>>
 <<i_basic.c : i_update_middle_button()>>
 <<i_basic.c : i_update_right_button()>>
@@ -55,9 +59,8 @@
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_states.h"
-#include "../include/prototype.h"
 #include "../include/globals.h"
+#include "../include/prototype.h"
 @
 
 
@@ -67,7 +70,7 @@
 @end defun
 
 <<i_basic.c : i_update_status()>>=
-void
+static void
 i_update_status(TOPLEVEL *w_current, const char *string)
 {
   if (!w_current->status_label) {
@@ -75,6 +78,7 @@ i_update_status(TOPLEVEL *w_current, const char *string)
   }
 
   if (string) {
+    /* NOTE: consider optimizing this if same label */
     w_current->DONT_RESIZE=1;
     gtk_label_set(GTK_LABEL(w_current->status_label),
                   (char *) string);
@@ -85,30 +89,208 @@ i_update_status(TOPLEVEL *w_current, const char *string)
 @ %def i_update_status
 
 
-@section Function @code{i_update_status2()}
+@section Function @code{i_allow_expose()}
 
-@defun i_update_status2 w_current string
+@defun i_allow_expose
 @end defun
 
-<<i_basic.c : i_update_status2()>>=
-/* HACK: This one allows the expose events to happen. Probably should
- * create one function for both...  Now it's exactly the same as above
- * */
+<<i_basic.c : i_allow_expose()>>=
+/* Prefix to i_show_state(), i_set_state() and i_set_state_msg()
+ , Allows expose events to happen
+ * *EK* Egil Kvaleberg
+ */
 void
-i_update_status2(TOPLEVEL *w_current, const char *string)
+i_allow_expose(void)
 {
-  if (string) {
-    w_current->DONT_RESIZE = 1;
+  /* This function is probably not needed and should be deleted eventually */
 #if 0
+   /* HACK: This one allows the expose events to happen? */
     w_current->DONT_EXPOSE = 1;
 #endif
-    gtk_label_set(GTK_LABEL(w_current->status_label),
-                  (char *) string);
-  }
 }
 
 
-@ %def i_update_status2
+@ %def i_allow_expose
+
+
+@section Function @code{i_status_string()}
+
+@defun i_status_string w_current
+@end defun
+
+<<i_basic.c : i_status_string()>>=
+/* Get string corresponding to the currently selected mode
+ * The returned string will only last until the next time
+ * the function is called (which is probably just fine, really)
+ * *EK* Egil Kvaleberg
+ */
+static const char *
+i_status_string(TOPLEVEL *w_current)
+{
+  static char buf[100];
+
+  switch ( w_current->event_state ) {
+  case NONE:
+  case STARTROUTENET: /* TODO */
+  case ENDROUTENET: /* TODO */
+    return "";
+  case STARTSELECT:
+  case SELECT:
+  case SBOX:
+  case GRIPS:
+    return _("Select Mode");
+  case DRAWATTRIB:
+  case ENDATTRIB:
+    return _("Attribute Mode"); /*EK* new */
+  case DRAWCOMP:
+  case ENDCOMP:
+    return _("Component Mode"); /*EK* new */
+  case TEXTENTRY:
+  case ENDTEXT:
+  case DRAWTEXT:
+    return _("Text Mode"); /*EK* new */
+  case STARTCOPY:
+  case ENDCOPY:
+    return _("Copy Mode");
+  case STARTMOVE:
+  case ENDMOVE:
+    return _("Move Mode");
+  case ENDROTATEP:
+    return _("Rotate Mode");
+  case ENDMIRROR:
+    return _("Mirror Mode");
+  case ZOOM:
+  case ZOOMBOXEND:
+  case ZOOMBOXSTART:
+    return _("Zoom Box");
+  case STARTPAN:
+  case PAN:
+  case MOUSEPAN:
+    return _("Pan Mode");
+  case STARTPASTE:
+  case ENDPASTE:
+    snprintf(buf,sizeof(buf), _("Paste %d Mode"), w_current->buffer_number+1);
+    return buf;
+  case STARTDRAWNET:
+  case DRAWNET:
+  case NETCONT:
+    return _("Net Mode");
+  case STARTDRAWBUS:
+  case DRAWBUS:
+  case BUSCONT:
+    return _("Bus Mode");
+  case DRAWLINE:
+  case ENDLINE:
+    return _("Line Mode");
+  case DRAWBOX:
+  case ENDBOX:
+    return _("Box Mode");
+  case DRAWCIRCLE:
+  case ENDCIRCLE:
+    return _("Circle Mode");
+  case DRAWARC:
+  case ENDARC:
+    return _("Arc Mode");
+  case DRAWPIN:
+  case ENDPIN:
+    return _("Pin Mode");
+  case COPY:
+    return _("Copy");
+  case MOVE:
+    return _("Move");
+  }
+  return ""; /* should not happen */
+}
+
+@ %def i_status_string
+
+
+@section Function @code{i_show_state()}
+
+@defun i_show_state w_current message
+@end defun
+
+<<i_basic.c : i_show_state()>>=
+/* Show state field on screen,
+ * possibly with the addition of an extra message
+ * *EK* Egil Kvaleberg
+ */
+void
+i_show_state(TOPLEVEL *w_current, const char *message)
+{
+  static char buf[200];
+  int n;
+  int bufsize = 0;
+  const char *state_string = i_status_string(w_current);
+  const char *what_to_say;
+
+  if ( message && message[0] ) {
+    n = snprintf(buf,sizeof(buf), "%s - ", message);
+    if (n > 0) bufsize = n;
+  }
+
+  if ( !w_current->snap ) {
+    n = snprintf(buf+bufsize,sizeof(buf)-bufsize, "%s - ", _("Snap Off"));
+    if (n > 0) bufsize += n;
+  }
+
+  if ( w_current->show_hidden_text ) {
+    n = snprintf(buf+bufsize,sizeof(buf)-bufsize, "%s - ", _("Show Hidden"));
+    if (n > 0) bufsize += n;
+  }
+
+  if (bufsize > 0) {
+    snprintf(buf+bufsize,sizeof(buf)-bufsize, "%s", state_string);
+    what_to_say = buf;
+  } else {
+    what_to_say = state_string;
+  }
+
+  i_update_status(w_current, what_to_say);
+}
+
+
+@ %def i_show_state
+
+
+@section Function @code{i_set_state_msg()}
+
+@defun i_set_state_msg w_current newstate message
+@end defun
+
+<<i_basic.c : i_set_state_msg()>>=
+/* Set new state, then show state field including some message
+ * *EK* Egil Kvaleberg
+ */
+void
+i_set_state_msg(TOPLEVEL *w_current, enum x_states newstate,
+                const char *message)
+{
+  w_current->event_state = newstate;
+  i_show_state(w_current, message);
+}
+
+
+@ %def i_set_state_msg
+
+
+@section Function @code{i_set_state()}
+
+@defun i_set_state w_current newstate
+@end defun
+
+<<i_basic.c : i_set_state()>>=
+/* Set new state, then show state field
+ * *EK* Egil Kvaleberg
+ */
+void
+i_set_state(TOPLEVEL *w_current, enum x_states newstate)
+{
+  i_set_state_msg(w_current, newstate, NULL);
+}
+
+
+@ %def i_set_state
 
 
 @section Function @code{i_update_left_button()}
