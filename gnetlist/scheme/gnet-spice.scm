@@ -306,8 +306,7 @@
 ;;
 (define spice:write-top-header
   (lambda (port)
-    (display "* Spice netlister for gnetlist\n" port)  
-    (display "* Spice backend written by Bas Gieltjes\n" port)))
+    (display "* Spice netlister for gnetlist\n" port)))
 
 
 ;;

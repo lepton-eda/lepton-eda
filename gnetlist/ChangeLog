@@ -1,3 +1,8 @@
+2005-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-spice.scm: Removed string by request from the original
+	author.
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/gnetlist.c (main_prog): Adapted for new logging system.
