@@ -1,3 +1,12 @@
+2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* noweb/o_pin_basic.c: Added some error checking for the whichend
+	parameter on pins.
+
+	* noweb/o_pin_basic.c: Changed the get world bounding box call in
+	o_pin_update_whichend to only look at pins instead of all
+	graphics.  This fixes a bug which Werner Hoch reported.
+	
 2002-09-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/a_basic.nw: Minor performance tweek wrt the 20020825 

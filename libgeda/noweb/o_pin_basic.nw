@@ -314,14 +314,24 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
     sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2,
            &color, &pin_type, &whichend);
   }
+
+  if (whichend < -1 || whichend > 1) {
+    fprintf(stderr,
+            "Found an invalid whichend on a pin (reseting to zero): %d\n",
+            whichend);
+    s_log_message("Found an invalid whichend on a pin (reseting to zero): %d\n",
+                  whichend);
+    whichend = 0;
+  }
+  
   d_x1 = x1; 
   d_y1 = y1; 
   d_x2 = x2; 
   d_y2 = y2; 
 
   if (x1 == x2 && y1 == y2) {
-    fprintf(stderr, "Found a zero length pin [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
-    s_log_message("Found a zero length pin [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
+    fprintf(stderr, "Found a zero length pin: [ %s ]\n", buf);
+    s_log_message("Found a zero length pin: [ %s ]\n", buf);
   }
 
   if (color < 0 || color > MAX_COLORS) {
@@ -796,10 +806,37 @@ o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list)
   int d1, d2, d3, d4;
   int min0, min1;
   int min0_whichend, min1_whichend;
+  int rleft, rtop, rright, rbottom;
 
   if (object_list) {
+
+    left = rleft = w_current->init_right;
+    top = rtop = w_current->init_bottom;;
+    right = rright = 0;
+    bottom = rbottom = 0;
+
+    /* only look at the pins to calculate bounds of the symbol */
+    o_current = object_list;
+    while (o_current != NULL) {
+      if (o_current->type == OBJ_PIN) {
+        world_get_pin_bounds(w_current, o_current->line,
+                             &rleft, &rtop, &rright, &rbottom);
+      }
+
+      if (rleft < left) left = rleft;
+      if (rtop < top) top = rtop;
+      if (rright > right) right = rright;
+      if (rbottom > bottom) bottom = rbottom;
+      
+      o_current=o_current->next;
+    }
+    
+#if 0 /* don't do this since it takes all graphics into account. */
+    /* only the pins should be looked at (which is what the above code */
+    /* does). */
     world_get_complex_bounds(w_current, object_list,
                              &left, &top, &right, &bottom);
+#endif
   } else {
     return;
   }

@@ -1,3 +1,8 @@
+2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/stack.geda: Updated original netlist to take into account
+	Werner's work on the symbols.
+	
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Bumped version to 20020922, which is NOT a release.

@@ -1,3 +1,14 @@
+2002-10-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_cues.nw: Added patch by Egil Kvaleberg to prevent core
+	dumps when whichend is somehow invalid (added checks in libgeda
+	so this really should NEVER happen).
+
+	* tests/oldsym.sym: Added test .sym which tests the auto whichend
+	code in libgeda (for older <= 20020825 symbols).  The whichends on
+	all the pins should always be correct.  Do not update this file to
+	the current gEDA/gaf file format ever.
+	
 2002-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Added some missing attributes, noticed and

@@ -116,6 +116,8 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   int done = FALSE;
   int size, x2size, pinsize;
   int otherone;
+
+  if (whichone < 0 || whichone > 1) return;
   
   x = object->line->x[whichone];
   y = object->line->y[whichone];
