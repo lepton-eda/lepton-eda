@@ -465,6 +465,14 @@ suggestions by: Michael Linnemann <Linnemann@berg.net>
 - A manual keyboard search entry for entering symbols.
 - better symbol lookup searching catagorizing mechanism
 
+suggestion by: Magnus Danielson <cfmd@swipnet.se>
+- Oh, shouldn't we rewake the idea of a symbol/symbol library contribute
+button?  You know, when a user wishes to contribute a symbol, a number
+or symbols or even a full library (directory) he/she can just walk down
+the File menu and select Contribute Symbol... which will do screening,
+encapsuling and then mail/ftp the symbol to you (geda.seul.org).
+
+
 
 Future Specifications for gschem 
 -----------------------

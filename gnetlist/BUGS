@@ -21,6 +21,8 @@ Bugs (no particular order):
 	- Figure out why the post process screwed up net names when it was
 	  done in the wrong place (after every sheet), low priority
 	
+	- gnetlist doesn't handle order very well on some machines?
+	  non-linux only? 
 
 Finished stuff:
 

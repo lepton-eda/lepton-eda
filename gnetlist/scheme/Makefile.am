@@ -1,6 +1,8 @@
 
 scmdatadir = @gedadatadir@/scheme
-scmdata_DATA = gnetlist.scm 
+scmdata_DATA = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
+	       gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
+	       gnet-vhdl.scm gnetlist.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

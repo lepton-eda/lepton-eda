@@ -53,7 +53,8 @@ mode allows the user to execute guile procedures directly.
 schematic1 [... schematicN]
 At least one schematic file must be specified.  If multiple schematics are 
 specified then they are sequentially read in and parsed with the assumption 
-that they are all part of the same design.
+that they are all part of the same design.  It is important that the 
+schematic(s) follow all the options (ie last).
 
 .SH EXAMPLES 
 These examples assume that you have a stack_1.sch in the current directory.

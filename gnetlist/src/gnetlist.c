@@ -56,7 +56,7 @@ main_prog(int argc, char *argv[])
 	int i;
 	char c;
 	int done;
-	char input_str[1000];
+	char input_str[2048];
 	int argv_index;
 	int first_page=1;
 
@@ -172,6 +172,24 @@ if (!quiet_mode) {
 
 
 	if (guile_proc) {
+
+		/* load the appropriate scm file */
+		sprintf(input_str, "%s/gnet-%s.scm", pr_current->
+						     scheme_directory, 
+						     guile_proc);
+
+		if (g_read_file(input_str) != -1) {
+                	s_log_message("Read %s scm file [%s]\n", guile_proc,
+							         input_str);
+        	} else {
+               		s_log_message("Failed to read %s scm file [%s]\n", 
+				      guile_proc, input_str);
+
+               		fprintf(stderr, "Failed to read %s scm file [%s]\n", 
+				guile_proc, input_str);
+        	}
+
+
 		/* check size here hack */
 		sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
 		gh_eval_str(input_str);
