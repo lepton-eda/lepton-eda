@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -56,7 +56,8 @@ void SummaryPrepare(void)
 	
 	sprintf(szSummary + strlen(szSummary), "INSTALLATION SUMMARY\n");
 	sprintf(szSummary + strlen(szSummary), "\n");
-	
+
+	/* list components on screen */
 	sprintf(szSummary + strlen(szSummary), "List of selected components:\n");
 	sprintf(szSummary + strlen(szSummary), "\n");
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
@@ -65,7 +66,7 @@ void SummaryPrepare(void)
 			continue;
 		if (strlen(pComp->szFileName) == 0)
 			continue;
-		
+
 		if (pComp->iToBeInstalled == PACKAGE_SELECTED)
 		{
 			sprintf(szSummary + strlen(szSummary), " -\t%s\n", pComp->szFileName);
@@ -73,6 +74,7 @@ void SummaryPrepare(void)
 	}
 	sprintf(szSummary + strlen(szSummary), "\n");
 
+	/* list components not selected but required by selected ones */
 	bRequired = FALSE;
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
@@ -87,11 +89,13 @@ void SummaryPrepare(void)
 		{
 			if (pComp == get_component_by_name("SOFTWARE"))
 				continue;
-		
-			sprintf(szSummary + strlen(szSummary), " -\t%s-%s", pComp->szCodeName, pComp->szVersion);
-			if (strlen(pComp->szRelease) > 0)
-				sprintf(szSummary + strlen(szSummary), ".%s", pComp->szRelease);
-			sprintf(szSummary + strlen(szSummary), "\n");
+			if (strlen(pComp->szFileName) == 0)
+				continue;
+
+			if (pComp->iToBeInstalled == PACKAGE_REQUIRED)
+			{
+				sprintf(szSummary + strlen(szSummary), " -\t%s\n", pComp->szFileName);
+			}
 		}
 		sprintf(szSummary + strlen(szSummary), "\n");
 	}
