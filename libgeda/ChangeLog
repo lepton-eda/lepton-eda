@@ -1,3 +1,12 @@
+2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * aclocal.m4: Removed file from cvs.
+
+2002-11-04 Egil Kvaleberg       <egil@kvaleberg.no>
+
+	* noweb/o_text_basic.nw: Changed comment for swedish/finnish characters
+	since they cause (my version of nowaeve at least) to dump core.
+
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/a_basic.nw: Added code to print out a message when an old

@@ -3,6 +3,8 @@
         * lib/system-gsymcheckrc.in: Changed the variable names which hold
         the paths to the data and rc directories.
 
+        * aclocal.m4: Removed file from cvs.
+
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version to 20021103 (an official version)

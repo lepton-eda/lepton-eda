@@ -3,6 +3,10 @@
         * lib/system-gschlasrc.in: Changed the variable names which hold
         the paths to the data and rc directories.
 
+	* scripts/Makefile.am: Added gschemdoc to distclean target
+
+        * aclocal.m4: Removed file from cvs.
+
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschemdoc.sh: Added %20filetype:pdf to the google search
@@ -11,6 +15,12 @@
 
 	* scripts/gschemdoc.sh: Applied the patch by Gabriel Paubert to 
 	this file to fix the which problems reported on geda-dev.  Thanks.
+
+2002-11-04 Egil Kvaleberg       <egil@kvaleberg.no>
+
+	* configure.in: Changed AC_PROG_LEX to AM_PROG_LEX to cater for 
+	automake 1.6.3. Note that this also requires that autoreconf is
+	run.
 
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 

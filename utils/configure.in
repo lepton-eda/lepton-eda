@@ -35,12 +35,7 @@ AM_MAINTAINER_MODE
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_MAKE_SET
-AC_PROG_LEX
-    if test "$LEX" != flex; then
-      LEX="$SHELL $missing_dir/missing flex"
-      AC_SUBST(LEX_OUTPUT_ROOT, lex.yy)
-      AC_SUBST(LEXLIB, '')
-    fi
+AM_PROG_LEX
 
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT

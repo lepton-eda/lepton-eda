@@ -7,6 +7,8 @@
 	* noweb/gschem.nw: Applied Alexandre's latest patch to fix
 	the "i18n bug regarding LC_NUMERIC" caused by gtk_set_locale.
 
+        * aclocal.m4: Removed file from cvs.
+
 2002-11-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gschem/noweb.nw: Applied patch by Alexandre P. Nunes for

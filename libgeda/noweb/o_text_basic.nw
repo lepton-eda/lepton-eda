@@ -413,32 +413,32 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
       break;
 
       /* finnish / swedish characters */
-    case (196): /* Ä */
+    case (196): /* A-umlaut */
       sprintf(temp_string, "%s%cA-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (228): /* ä */
+    case (228): /* a-umlaut */
       sprintf(temp_string, "%s%ca_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (214): /* Ö */
+    case (214): /* O-umlaut */
       sprintf(temp_string, "%s%cO-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (246): /* ö */
+    case (246): /* o-umlaut */
       sprintf(temp_string, "%s%co_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (197): /* Å */
+    case (197): /* A-ring */
       sprintf(temp_string, "%s%cA-ring.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
-    case (229): /* å */
+    case (229): /* a-ring */
       sprintf(temp_string, "%s%ca-ring.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;

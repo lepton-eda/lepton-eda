@@ -8,6 +8,8 @@
 	file wasn't being found if --with-rcdir was specified (as the 
 	debian packages do).
 
+        * aclocal.m4: Removed file from cvs.
+
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-partslist[1,2,3].scm: Fixed bug reported by Koichi
