@@ -30,6 +30,7 @@ AC_CONFIG_FILES([
         Makefile 
         gTAG/Makefile 
         lightning_detector/Makefile 
+        lightning_detector/sym/Makefile 
         RF_Amp/Makefile 
         RF_Amp/model/Makefile 
         RF_Amp/sym/Makefile 

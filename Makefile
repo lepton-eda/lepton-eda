@@ -5,7 +5,7 @@ SHELL=/bin/sh
 #
 # Change this to the real version of the distribution
 #
-VERSION=20030223
+VERSION=20030525
 
 # 
 # Use this when you are building the CVS version
@@ -34,13 +34,14 @@ notarget:
 	@echo $(VERSION) $(CD_VERSION) $(DIR_PREFIX)
 	@echo "gEDA Toplevel Makefile"
 	@echo "This Makefile requires libgeda, symbols, gschem, gnetlist,"
-	@echo "gsymcheck, utils, docs source tarball packages untarred in this:"
-	@echo "`pwd` directory"
+	@echo "gsymcheck, utils, docs, and examples source tarball packages"
+	@echo "untarred in this: `pwd` directory"
 	@echo ""
-	@echo Type:
+	@echo "Type:"
 	@echo ""
-	@echo "${MAKE} install      Installs gEDA into $(prefix)"
-	@echo "${MAKE} uninstall    Uninstall everything from $(prefix)"
+	@echo "${MAKE} xinstall     Builds and runs gEDA Suite Setup" 
+	@echo "${MAKE} install      Installs gEDA/gaf into $(prefix)"
+	@echo "${MAKE} uninstall    Uninstall gEDA/gaf from $(prefix)"
 	@echo "${MAKE} clean        Simple clean only (remove all .o and bins)"
 	@echo ""
 	@echo "These targets are primarily used by the developers:"
@@ -57,22 +58,24 @@ notarget:
 	@echo ""
 	@echo ""
 	@echo "---------------------------READ THIS---------------------------"
-	@echo "Before doing anything set these shell variables!"
-	@echo "The build will fail if you do not set these variables!"
-	@echo "You will also need to set these variables to run the programs."
-	@echo "gEDA programs are going to be installed into ${prefix}"
+	@echo "Before executing any of the above targets, set the below shell"
+	@echo "variables.  The build process _will fail_ if you do not set"
+	@echo "these variables!  You will also need to set these variables to"
+	@echo "run the programs."
 	@echo ""
-	@echo For bourne shell:
+	@echo "gEDA/gaf will be installed into ${prefix}"
+	@echo ""
+	@echo "For vanilla bourne shells:"
 	@echo LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
-	@echo export LD_LIBRARY_PATH
+	@echo "export LD_LIBRARY_PATH"
 	@echo PATH=${prefix}/bin:\$$\{PATH\}
-	@echo export PATH
+	@echo "export PATH"
 	@echo ""
-	@echo For bash:
+	@echo "For bash:"
 	@echo export LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
 	@echo export PATH=${prefix}/bin:\$$\{PATH\}
 	@echo ""
-	@echo For csh/tcsh shell:
+	@echo "For csh/tcsh shell:"
 	@echo setenv LD_LIBRARY_PATH ${prefix}/lib:\$$LD_LIBRARY_PATH
 	@echo setenv PATH ${prefix}/bin:\$$PATH
 	@echo ""
@@ -80,17 +83,17 @@ notarget:
 
 
 # This installs libgeda and symbols and just builds gschem and gnetlist
-all: libgeda symbols gschem gnetlist gsymcheck geda setup utils docs
+all: libgeda symbols gschem gnetlist gsymcheck geda setup utils docs examples
 
 # libgeda_install or symbols_install is not needed since the default 
 # libgeda does a make install (ditto for symbols)
 # This also installs gschem, gnetlist, and gsymcheck 
 install: gschem_install gnetlist_install gsymcheck_install geda_install\
-	 setup_install utils_install docs_install
+	 setup_install utils_install docs_install examples_install
 
 uninstall: utils_uninstall gsymcheck_uninstall gnetlist_uninstall \
            gschem_uninstall symbols_uninstall libgeda_uninstall \
-	   geda_uninstall setup_uninstall docs_uninstall
+	   geda_uninstall setup_uninstall docs_uninstall examples_uninstall
 
 # It runs installation using setup.
 xinstall:
@@ -124,25 +127,28 @@ xinstall:
 
 # This does a maintainer-clean removes EVERYTHING that's config/built
 maint: libgeda_maint symbols_maint gschem_maint gnetlist_maint \
-       gsymcheck_maint utils_maint geda_maint setup_maint docs_maint
+       gsymcheck_maint utils_maint geda_maint setup_maint docs_maint \
+       examples_maint
 
 # This does a plain clean 
 clean: libgeda_clean symbols_clean gschem_clean gnetlist_clean \
-       gsymcheck_clean utils_clean geda_clean setup_clean docs_clean
+       gsymcheck_clean utils_clean geda_clean setup_clean docs_clean \
+       examples_clean
 
 # This does a dist clean 
 distclean: libgeda_distclean symbols_distclean gschem_distclean \
 	   gnetlist_distclean gsymcheck_distclean utils_distclean \
-	   geda_distclean setup_distclean docs_distclean
+	   geda_distclean setup_distclean docs_distclean examples_distclean
 
 # This just does the appropriate ./configure --prefix=...
 config: libgeda_config symbols_config gschem_config gnetlist_config \
-	gsymcheck_config utils_config geda_config setup_config docs_config
+	gsymcheck_config utils_config geda_config setup_config docs_config \
+        examples_config
 
 # This recreates all ./configure scripts and Makefile.in files
 reconfig: libgeda_reconfig symbols_reconfig gschem_reconfig gnetlist_reconfig \
           gsymcheck_reconfig utils_reconfig geda_reconfig setup_reconfig \
-	  docs_reconfig
+	  docs_reconfig examples_reconfig
 
 # This creates all *.c files from *.nw files
 src: libgeda_src gschem_src
@@ -151,11 +157,12 @@ src: libgeda_src gschem_src
 # for distribution (removes dependency checking)
 distconfig: libgeda_distconfig symbols_distconfig gschem_distconfig \
             gnetlist_distconfig gsymcheck_distconfig utils_distconfig \
-	    geda_distconfig setup_distconfig docs_distconfig
+	    geda_distconfig setup_distconfig docs_distconfig \
+	    examples_distconfig
 
 dist: libgeda_dist symbols_dist gschem_dist \
       gnetlist_dist gsymcheck_dist utils_dist \
-      geda_dist setup_dist docs_dist
+      geda_dist setup_dist docs_dist examples_dist
 	mv -f libgeda/libgeda*.tar.gz .
 	mv -f symbols/geda-symbols*.tar.gz .
 	mv -f gschem/geda-gschem*.tar.gz .
@@ -165,10 +172,11 @@ dist: libgeda_dist symbols_dist gschem_dist \
 	mv -f geda/geda-*.tar.gz .
 	mv -f setup/geda-setup-*.tar.gz .
 	mv -f docs/geda-docs*.tar.gz .
+	mv -f examples/geda-examples*.tar.gz .
 
 distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
            gnetlist_distcheck gsymcheck_distcheck utils_distcheck \
-	   geda_distcheck setup_distcheck docs_distcheck
+	   geda_distcheck setup_distcheck docs_distcheck examples_distcheck 
 	mv -f libgeda/libgeda*.tar.gz .
 	mv -f symbols/symbols*.tar.gz .
 	mv -f gschem/geda-gschem*.tar.gz .
@@ -178,6 +186,7 @@ distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
 	mv -f geda/geda-*.tar.gz .
 	mv -f setup/setup-*.tar.gz .
 	mv -f docs/geda-docs*.tar.gz .
+	mv -f examples/geda-examples*.tar.gz .
 
 # This recreates all ./configure scripts and Makefile.in files
 # TODO: added geda and setup
@@ -188,7 +197,8 @@ proto: libgeda_proto gschem_proto gnetlist_proto gsymcheck_proto
 ############################################################################
 
 # Symbols 
-symbols: $(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config
+symbols: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
+	$(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config
 	@echo symbols Installed 
 
 symbols_maint: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
@@ -200,13 +210,14 @@ symbols_clean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
 symbols_distclean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} distclean )
 
-symbols_install: $(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config
+symbols_install: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
+	         $(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} install )
 
 symbols_uninstall: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} uninstall )
 
-symbols_config: 
+symbols_config: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
@@ -224,11 +235,13 @@ symbols_distcheck:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} distcheck )
 
 # gschem
-gschem: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h \
+gschem: $(DIR_PREFIX)gschem$(CD_VERSION)/configure \
+	$(DIR_PREFIX)gschem$(CD_VERSION)/config.h \
 	$(DIR_PREFIX)gschem$(CD_VERSION)/src/gschem
 	@echo gschem Built 
 
 gschem_install: libgeda_install symbols_install \
+		$(DIR_PREFIX)gschem$(CD_VERSION)/configure \
 		$(DIR_PREFIX)gschem$(CD_VERSION)/config.h \
 	        $(DIR_PREFIX)gschem$(CD_VERSION)/src/gschem
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} install )
@@ -236,7 +249,8 @@ gschem_install: libgeda_install symbols_install \
 gschem_uninstall: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} uninstall )
 
-gschem_config: libgeda-config-install gesym-config-install
+gschem_config: libgeda-config-install gesym-config-install \
+	       $(DIR_PREFIX)gschem$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
@@ -269,11 +283,13 @@ gschem_proto: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION)/src; ${MAKE} proto )
 
 # gnetlist
-gnetlist: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h \
-	  $(DIR_PREFIX)gnetlist$(CD_VERSION)/src/gnetlist
+gnetlist: $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure \
+	$(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h \
+	$(DIR_PREFIX)gnetlist$(CD_VERSION)/src/gnetlist
 	@echo gnetlist Built
 
 gnetlist_install: libgeda_install symbols_install \
+		  $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure \
 		  $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h \
 	          $(DIR_PREFIX)gnetlist$(CD_VERSION)/src/gnetlist
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} install )
@@ -293,7 +309,8 @@ gnetlist_distclean: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h
 gnetlist_proto: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION)/src; ${MAKE} proto )
 
-gnetlist_config: libgeda-config-install gesym-config-install
+gnetlist_config: libgeda-config-install gesym-config-install \
+		 $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
@@ -311,19 +328,22 @@ gnetlist_distcheck:
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} distcheck )
 
 # gsymcheck
-gsymcheck: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h \
-	   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/src/gsymcheck
+gsymcheck: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure \
+	$(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h \
+	$(DIR_PREFIX)gsymcheck$(CD_VERSION)/src/gsymcheck
 	@echo gsymcheck Built 
 
 gsymcheck_install: libgeda_install symbols_install \
-		$(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h \
-	        $(DIR_PREFIX)gsymcheck$(CD_VERSION)/src/gsymcheck
+		   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure \
+		   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h \
+		   $(DIR_PREFIX)gsymcheck$(CD_VERSION)/src/gsymcheck
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} install )
 
 gsymcheck_uninstall: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} uninstall )
 
-gsymcheck_config: libgeda-config-install gesym-config-install
+gsymcheck_config: libgeda-config-install gesym-config-install \
+		  $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
@@ -353,11 +373,13 @@ gsymcheck_proto: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION)/src; ${MAKE} proto )
 
 # utils
-utils: $(DIR_PREFIX)utils$(CD_VERSION)/config.h \
-       $(DIR_PREFIX)utils$(CD_VERSION)/src/gmk_sym
+utils: $(DIR_PREFIX)utils$(CD_VERSION)/configure \
+	$(DIR_PREFIX)utils$(CD_VERSION)/config.h \
+	$(DIR_PREFIX)utils$(CD_VERSION)/src/gmk_sym
 	@echo utils Built 
 
 utils_install: libgeda_install symbols_install \
+	       $(DIR_PREFIX)utils$(CD_VERSION)/configure \
 	       $(DIR_PREFIX)utils$(CD_VERSION)/config.h \
 	       $(DIR_PREFIX)utils$(CD_VERSION)/src/gmk_sym
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} install )
@@ -365,7 +387,8 @@ utils_install: libgeda_install symbols_install \
 utils_uninstall: $(DIR_PREFIX)utils$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} uninstall )
 
-utils_config: libgeda-config-install gesym-config-install
+utils_config: libgeda-config-install gesym-config-install \
+	      $(DIR_PREFIX)utils$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
@@ -392,18 +415,20 @@ utils_distclean: $(DIR_PREFIX)utils$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} distclean )
 
 # geda
-geda: $(DIR_PREFIX)geda$(CD_VERSION)/config.h \
-      $(DIR_PREFIX)geda$(CD_VERSION)/src/geda
+geda: $(DIR_PREFIX)geda$(CD_VERSION)/configure \
+	$(DIR_PREFIX)geda$(CD_VERSION)/config.h \
+	$(DIR_PREFIX)geda$(CD_VERSION)/src/geda
 	@echo geda Built 
 
-geda_install: $(DIR_PREFIX)geda$(CD_VERSION)/config.h \
+geda_install: $(DIR_PREFIX)geda$(CD_VERSION)/configure \
+	      $(DIR_PREFIX)geda$(CD_VERSION)/config.h \
 	      $(DIR_PREFIX)geda$(CD_VERSION)/src/geda
 	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} install )
 
 geda_uninstall: $(DIR_PREFIX)geda$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} uninstall )
 
-geda_config: 
+geda_config: $(DIR_PREFIX)geda$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)geda$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
@@ -430,12 +455,14 @@ geda_distclean: $(DIR_PREFIX)geda$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)geda$(CD_VERSION); ${MAKE} distclean )
 
 # setup
-setup: $(DIR_PREFIX)setup$(CD_VERSION)/config.h \
-       $(DIR_PREFIX)setup$(CD_VERSION)/src/setup
+setup: $(DIR_PREFIX)setup$(CD_VERSION)/configure \
+	$(DIR_PREFIX)setup$(CD_VERSION)/config.h \
+	$(DIR_PREFIX)setup$(CD_VERSION)/src/setup
 	@echo setup Built 
 
 # Do not install the setup program, just build it 
-setup_install: $(DIR_PREFIX)setup$(CD_VERSION)/config.h \
+setup_install: $(DIR_PREFIX)setup$(CD_VERSION)/configure \
+	       $(DIR_PREFIX)setup$(CD_VERSION)/config.h \
 	       $(DIR_PREFIX)setup$(CD_VERSION)/src/setup
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} )
 
@@ -443,7 +470,7 @@ setup_install: $(DIR_PREFIX)setup$(CD_VERSION)/config.h \
 setup_uninstall: $(DIR_PREFIX)setup$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} )
 
-setup_config: 
+setup_config: $(DIR_PREFIX)setup$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
@@ -470,7 +497,8 @@ setup_distclean: $(DIR_PREFIX)setup$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); ${MAKE} distclean )
 
 # libgeda (has no $(DIR_PREFIX)
-libgeda: libgeda$(CD_VERSION)/config.h \
+libgeda: libgeda$(CD_VERSION)/configure \
+	 libgeda$(CD_VERSION)/config.h \
 	 libgeda$(CD_VERSION)/src/.libs/libgeda.a
 	@echo libgeda Installed 
 
@@ -486,7 +514,7 @@ libgeda_distclean: libgeda$(CD_VERSION)/config.h
 libgeda_proto: libgeda$(CD_VERSION)/config.h
 	( cd libgeda$(CD_VERSION)/src; ${MAKE} proto )
 
-libgeda_config: 
+libgeda_config: libgeda$(CD_VERSION)/configure
 	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 libgeda_reconfig: 
@@ -508,22 +536,25 @@ libgeda_distcheck:
 libgeda_uninstall: libgeda$(CD_VERSION)/config.h 
 	( cd libgeda$(CD_VERSION); ${MAKE} uninstall )
 
-libgeda_install: libgeda$(CD_VERSION)/config.h 
+libgeda_install: libgeda$(CD_VERSION)/configure \
+		 libgeda$(CD_VERSION)/config.h 
 	( cd libgeda$(CD_VERSION); ${MAKE} install )
 
 # docs
-docs: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
-      $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
+docs: $(DIR_PREFIX)docs$(CD_VERSION)/configure \
+	$(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
+	$(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
 	@echo docs Built 
 
-docs_install: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
+docs_install: $(DIR_PREFIX)docs$(CD_VERSION)/configure \
+	      $(DIR_PREFIX)docs$(CD_VERSION)/Makefile \
 	      $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} install )
 
 docs_uninstall: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} uninstall )
 
-docs_config: gesym-config-install 
+docs_config: gesym-config-install $(DIR_PREFIX)docs$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
@@ -549,6 +580,43 @@ docs_clean: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
 docs_distclean: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} distclean )
 
+# examples
+examples: $(DIR_PREFIX)examples$(CD_VERSION)/configure \
+	$(DIR_PREFIX)examples$(CD_VERSION)/Makefile 
+	@echo examples Built 
+
+examples_install: $(DIR_PREFIX)examples$(CD_VERSION)/configure \
+	      $(DIR_PREFIX)examples$(CD_VERSION)/Makefile 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} install )
+
+examples_uninstall: $(DIR_PREFIX)examples$(CD_VERSION)/Makefile
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} uninstall )
+
+examples_config: $(DIR_PREFIX)examples$(CD_VERSION)/configure
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); \
+          ./configure --prefix=$(prefix) $(opts) )
+
+examples_reconfig: 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); aclocal ; autoconf ; automake ) 
+examples_distconfig: 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); aclocal ; autoconf ; \
+	  automake --include-deps )
+
+examples_dist: 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} dist )
+
+examples_distcheck: 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} distcheck )
+
+examples_maint: $(DIR_PREFIX)examples$(CD_VERSION)/Makefile
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} maintainer-clean )
+
+examples_clean: $(DIR_PREFIX)examples$(CD_VERSION)/Makefile
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} clean )
+
+examples_distclean: $(DIR_PREFIX)examples$(CD_VERSION)/Makefile
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); ${MAKE} distclean )
+
 ############################################################################
 # Configure related targets 
 ############################################################################
@@ -556,37 +624,70 @@ docs_distclean: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
 libgeda$(CD_VERSION)/config.h:
 	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
+libgeda$(CD_VERSION)/configure:
+	( cd libgeda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+
 $(DIR_PREFIX)gschem$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
+
+$(DIR_PREFIX)gschem$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)gschem$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
 $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
+$(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); aclocal ; autoconf ; automake ) 
+
 $(DIR_PREFIX)utils$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
+
+$(DIR_PREFIX)utils$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)utils$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
 $(DIR_PREFIX)geda$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)geda$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
+$(DIR_PREFIX)geda$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)geda$(CD_VERSION); aclocal ; autoconf ; automake ) 
+
 $(DIR_PREFIX)setup$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)setup$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
+
+$(DIR_PREFIX)setup$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)setup$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
 $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h:
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
+$(DIR_PREFIX)gnetlist$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); aclocal ; autoconf ; automake ) 
 $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
+$(DIR_PREFIX)symbols$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; automake ) 
+
 $(DIR_PREFIX)docs$(CD_VERSION)/Makefile:
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
+
+$(DIR_PREFIX)docs$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)docs$(CD_VERSION); aclocal ; autoconf ; automake ) 
+
+$(DIR_PREFIX)examples$(CD_VERSION)/Makefile:
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); \
+	  ./configure --prefix=$(prefix) $(opts) )
+
+$(DIR_PREFIX)examples$(CD_VERSION)/configure: 
+	( cd $(DIR_PREFIX)examples$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
 ############################################################################
 # Executable related related targets 

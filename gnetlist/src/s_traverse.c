@@ -174,7 +174,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
           if (!temp) {
 
             fprintf(stderr,
-                    "Could not find uref on component and could not find any special attributes!\n");
+                    "Could not find refdes on component and could not find any special attributes!\n");
 
             netlist->component_uref =
               (char *) malloc(sizeof(char) * strlen("U?") +

@@ -1,3 +1,8 @@
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c, src/s_netlist.c: Renamed a couple forgotten
+	uref's to refdes.
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version

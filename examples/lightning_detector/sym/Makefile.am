@@ -1,7 +1,5 @@
-SUBDIRS = sym
 
-EXTRA_DIST = bom bom.readme lightning.net lightning.pcb lightning.sch \
-             lightning.sch.bom gnetlistrc gschemrc
+EXTRA_DIST = 2N4401.sym 2N4403.sym
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
