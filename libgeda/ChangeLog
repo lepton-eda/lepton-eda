@@ -8,6 +8,18 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-11-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added some variables the undo structure to hold
+	  hierarchy state
+
+	* src/s_undo.c: Put in code to use the above added variables
+
+	* src/s_undo.c: Added the above variables to s_undo_add
+
+	* src/u_basic.c: Oops, didn't allocate enough memory for a temp string
+	  in u_basic_breakup_string.  Fixed. 
+
 2000-11-02  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added some more gnetlist rc variables to toplevel

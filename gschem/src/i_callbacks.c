@@ -1922,10 +1922,10 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
 DEFINE_I_CALLBACK(hierarchy_down_schematic)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	char *attrib;
-	char *current_filename;
+	char *attrib=NULL;
+	char *current_filename=NULL;
 	int count=0;
-	OBJECT *object;
+	OBJECT *object=NULL;
 	PAGE *save_first_page=NULL;
 	PAGE *parent=NULL;
 	int loaded_flag=FALSE;
@@ -1973,7 +1973,6 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 					s_log_message(
 						"Searching for source [%s]\n", 
 					        current_filename);
-
 					saved_page_control = page_control;
 					page_control = 
 				           s_hierarchy_down_schematic_single(
@@ -2067,7 +2066,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 							     "source",
 							     count);
 				}
-			} 
+	} 
 
 			if (loaded_flag) {
 	

@@ -98,9 +98,8 @@ u_basic_breakup_string(char *string, int count)
 		i++;
 	}
 
-	/* this is going to be extra large, but it's only for temp usage */
-	/* anyway */
-	return_value = malloc(sizeof(char)*strlen(string));
+	/* Allocate space for temp string storage (+1 for null character) */ 
+	return_value = malloc(sizeof(char)*strlen(string) + 1);
 
 	while(!done) {
 

@@ -1,0 +1,118 @@
+/* gEDA - GNU Electronic Design Automation
+ * gnetlist - GNU Netlist
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <config.h>
+#include <stdio.h>
+#include <strings.h>
+#include <math.h>
+
+#include <libgeda/libgeda.h>
+
+#include "../include/globals.h"
+#include "../include/prototype.h"
+
+/* be sure caller free's return value */
+char *
+vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found) 
+{
+	OBJECT *o_current;
+	ATTRIB *a_current;
+	OBJECT *found;
+	int val;
+	char found_name[128]; /* limit hack */
+	char found_value[128];
+	char *return_string;
+
+	o_current = object;
+
+	if (o_current->attribs != NULL) 
+	  {
+	    a_current = o_current->attribs;
+	    
+	    while(a_current != NULL) 
+	      {
+		found = a_current->object;
+		if (found != NULL && found->text && found->text->string) 
+		  {
+		    val = o_attrib_get_name_value(
+						  found->text->string, 
+						  found_name, found_value);
+		    
+		    if (val) 
+		      {
+			*list = gh_cons( gh_str2scm (found_name, 
+						     strlen(found_name)), *list);	
+		      }	
+		    
+#if DEBUG 
+		    printf("0 _%s_\n", found->text->string);
+		    printf("1 _%s_\n", found_name);
+		    printf("2 _%s_\n", found_value);
+#endif
+		  }
+	        a_current=a_current->next;
+	      }	
+	  }
+	
+	return (NULL);
+} 
+
+SCM
+vams_get_package_attributes(SCM scm_uref)
+{
+	SCM list = SCM_EOL;
+	SCM scm_return_value;
+	NETLIST *nl_current;
+	char *uref;
+	char *return_value=NULL;
+
+        uref = gh_scm2newstr(scm_uref, NULL);
+
+	/* here is where you make it multi page aware */
+	nl_current = netlist_head;
+
+	/* search for the first instance */
+	/* through the entire list */
+	while(nl_current != NULL) {
+
+	      if (nl_current->component_uref) {
+		if (strcmp(nl_current->component_uref, uref) == 0) {
+
+			/* first search outside the symbol */
+			return_value = vams_get_attribs_list(
+						    nl_current->object_ptr, &list,NULL);
+
+			if (return_value) {
+				break;
+			}
+
+			/* now search inside the symbol */
+			return_value = vams_get_attribs_list(
+						    nl_current->object_ptr->complex->prim_objs, &list,NULL);
+			break;
+		}
+	      }
+	      nl_current = nl_current->next;
+	}
+
+	free(uref);
+
+	return(list);
+}
+

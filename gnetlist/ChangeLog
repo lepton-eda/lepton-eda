@@ -12,7 +12,18 @@
 	* docs/vams: Created directory, added vams documentation
 
 	* examples/vams/: Created directory, moved the example vams design
-	  into this directory
+	  into this directory (written by Eduard Moser and Martin Lehmann)
+
+	* scheme/gnet-vams.scm: Added scheme backend code (update Makefile.am)
+	  (written by Eduard Moser and Martin Lehmann)
+
+	* src/g_register.c: Added register call for 
+          gnetlist:vams-get-package-attributes
+
+	* src/vams_misc.c: Added file to support vams backend (updated 
+	  Makefile.am) (written by Eduard Moser and Martin Lehmann)
+
+	* examples/vams/*: Misc updates to the example files
 
 2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
 

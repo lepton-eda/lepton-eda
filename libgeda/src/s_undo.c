@@ -83,6 +83,10 @@ s_undo_new_head(void)
 	u_new->filename = NULL;
 	u_new->object_head = NULL;
 	u_new->left = u_new->right = u_new->top = u_new->bottom = -1;
+
+	u_new->page_control = 0;
+	u_new->up = -2;
+
 	u_new->prev = NULL;
 	u_new->next = NULL;
 
@@ -98,7 +102,8 @@ s_undo_destroy_head(UNDO *u_head)
 
 UNDO *
 s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
-	   int left, int top, int right, int bottom)
+	   int left, int top, int right, int bottom, int page_control,
+	   int up)
 {
 	UNDO *tail;
 	UNDO *u_new;
@@ -123,6 +128,9 @@ s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
 	u_new->top = top;
 	u_new->right = right;
 	u_new->bottom = bottom;
+
+	u_new->page_control = page_control;
+	u_new->up = up;
 
 	if (head == NULL) {
 		u_new->prev = NULL; /* setup previous link */

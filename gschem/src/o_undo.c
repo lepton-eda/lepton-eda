@@ -99,7 +99,9 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
 					 w_current->page_current->left, 
 					 w_current->page_current->top,
 					 w_current->page_current->right,
-					 w_current->page_current->bottom);
+					 w_current->page_current->bottom,
+					 w_current->page_current->page_control,
+					 w_current->page_current->up);
 
 	w_current->page_current->undo_current = 
 			w_current->page_current->undo_tos;
@@ -112,11 +114,9 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
 #if DEBUG
 	printf("\n\n---Undo----\n");
 	s_undo_print_all(w_current->page_current->undo_bottom);
-#if 0
 	printf("BOTTOM: %s\n", w_current->page_current->undo_bottom->filename);
 	printf("TOS: %s\n", w_current->page_current->undo_tos->filename);
 	printf("CURRENT: %s\n", w_current->page_current->undo_current->filename);
-#endif
 	printf("----\n");
 #endif
 
@@ -313,6 +313,8 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 
 		x_window_setup_world(w_current);
 		x_manual_resize(w_current);
+		w_current->page_current->page_control = u_current->page_control;
+		w_current->page_current->up = u_current->up;
 		w_current->page_current->CHANGED=1;
 
 	} else if (w_current->undo_type == UNDO_MEMORY && u_current->object_head) { 
@@ -332,6 +334,8 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 					w_current->page_current->object_head);
 		x_window_setup_world(w_current);
 		x_manual_resize(w_current);
+		w_current->page_current->page_control = u_current->page_control;
+		w_current->page_current->up = u_current->up;
 		w_current->page_current->CHANGED=1;
 	}
 

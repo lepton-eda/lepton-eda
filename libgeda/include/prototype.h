@@ -486,7 +486,7 @@ UNDO *s_undo_return_tail(UNDO *head);
 UNDO *s_undo_return_head(UNDO *tail);
 UNDO *s_undo_new_head(void);
 void s_undo_destroy_head(UNDO *u_head);
-UNDO *s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head, int left, int top, int right, int bottom);
+UNDO *s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head, int left, int top, int right, int bottom, int page_control, int up);
 void s_undo_print_all(UNDO *head);
 void s_undo_destroy_all(TOPLEVEL *w_current, UNDO *head);
 void s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos);

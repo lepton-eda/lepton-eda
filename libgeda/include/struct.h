@@ -240,13 +240,22 @@ struct st_selection {
 };
 
 struct st_undo {
-	
-	char *filename;
 
+	/* one of these is used, depending on if you are doing in-memory */
+	/* or file based undo state saving */	
+	char *filename;
 	OBJECT *object_head;
 
+	/* either UNDO_ALL or UNDO_VIEWPORT_ONLY */
 	int type;
+
+	/* viewport information */
 	int left, top, right, bottom;
+
+	/* up and down the hierarchy */
+	int up;
+	/* used to control which pages are viewable when moving around */
+	int page_control;
 
         UNDO *prev;
         UNDO *next;

@@ -11,6 +11,10 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* 74/7414-1.sym: Added symbol by Chris Ellec
+
 2000-11-02  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* verilog/nand2-1.sym: Added a missing line
