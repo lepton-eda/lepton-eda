@@ -42,6 +42,7 @@
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
 
+#if 0 /* not used yet... */
 typedef struct {
     int m_val;
     char *m_str;
@@ -64,6 +65,7 @@ static int vstbl_get_val(const vstbl_entry * table, int index)
 {
     return table[index].m_val;
 }
+#endif
 
 /* returned path should not be freed */
 char *
@@ -232,6 +234,7 @@ g_rc_parse(void)
   }
 }
 
+#if 0 /* not used yet... */
 static SCM
 g_rc_mode_general(SCM mode,
 		  const char *rc_name,
@@ -271,6 +274,7 @@ g_rc_mode_general(SCM mode,
 				 &(var),		\
 				 mode_table,		\
 				 size)
+#endif
 
 SCM g_rc_gsymcheck_version(SCM version)
 {
