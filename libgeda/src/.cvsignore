@@ -1,0 +1,7 @@
+*.c
+*.lo
+.deps
+.libs
+Makefile
+Makefile.in
+libgeda.la

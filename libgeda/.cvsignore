@@ -1,0 +1,11 @@
+Makefile
+Makefile.in
+stamp-h*.in
+stamp-h1
+configure
+libtool
+*.cache
+config.h
+config.log
+config.status
+libgeda-config

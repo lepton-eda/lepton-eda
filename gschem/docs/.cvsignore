@@ -1,0 +1,3 @@
+*.texi
+Makefile
+Makefile.in

@@ -1,0 +1,7 @@
+Makefile.in
+.deps
+Makefile
+convert_sym
+sarlacc_schem
+gmk_sym
+smash_megafile

@@ -1,0 +1,5 @@
+*.c
+.deps
+Makefile
+Makefile.in
+gschem
