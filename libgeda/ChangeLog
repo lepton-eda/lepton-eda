@@ -1,3 +1,29 @@
+2002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h: Added a bunch of #defines for various widths
+	and the visual cues
+
+	* noweb/f_print.nw: Fixed bug: When generating color postscript, 
+	the size of the paper wasn't being dealt with at all (wrt to the
+	background fill).	
+
+	* noweb/o_pin_basic.nw: Changed the hard coded value for pin width
+	when outputing postscript to be 1) #defined and 2) properly computed.
+
+	* noweb/o_net_basic.nw: Changed the hard coded value for net width
+	when outputing postscript to be 1) #defined and 2) properly computed.
+
+	* noweb/o_bus_basic.nw: Changed the hard coded value for bus width
+	when outputing postscript to be 1) #defined and 2) properly computed.
+
+	* noweb/o_arc_basic.nw: Fixed a long standing bug (since July 2002),
+	where arc png output would be wrong.  Turns out that the width and
+	height of an arc are not always equal.  Bug reported by Karel 
+	'Clock' Kulhavy.
+
+	* noweb/s_cues.nw: Changed the hard coded value for all cues sizes
+	when outputing postscript to be 1) #defined and 2) properly computed.
+	
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added variables for the bus ripper support

@@ -1,3 +1,11 @@
+2002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_net.nw, o_pin.nw, o_bus.nw: Fixed all hardcoded widths
+	to be #define'd
+	
+	* noweb/o_cue.nw: Fixed all hardcoded sizes for the visual cues to
+	be #define'd
+
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw, i_vars.h: Added the 
