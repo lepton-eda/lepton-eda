@@ -17,7 +17,7 @@ libgeda_la_SOURCES = \
 	o_ntext_basic.c o_pin_basic.c o_image.c \
 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c \
 	s_log.c s_page.c s_scratch.c s_passing.c s_slib.c s_stroke.c \
-	prototype1.2.h o_ales.c \
+	prototype1.2.h o_ales.c s_nethash.c \
 	funcs.h globals.h 
 
 libgeda_la_LDFLAGS = -version-info 3:0:0

@@ -145,6 +145,8 @@ if (verbose_mode) {
 
 	printf("- Pass one: \n");
 }
+
+#if 0 /* no longer needed I think */
 	while(nl_current != NULL) {
 		if (nl_current->cpins) {
 			pl_current = nl_current->cpins;		
@@ -208,6 +210,7 @@ if (verbose_mode) {
 		}
 		nl_current = nl_current->next;
 	}
+#endif
 
 if (verbose_mode) {
 	printf(" done\n"); 
@@ -229,7 +232,7 @@ if (verbose_mode) {
                                	}
 }
 
-				/* next resolve any net naming */
+				/* not quite sure why this works */
 				if (pl_current->nets_is_copy) {
 
 					if (pl_current->plid != -1) {

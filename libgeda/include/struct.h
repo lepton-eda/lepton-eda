@@ -33,10 +33,12 @@ typedef struct st_toplevel TOPLEVEL;
 /* rename to the real thing once things work right */
 typedef struct st_ales ALES;
 
+
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
 typedef struct st_net NET;
+typedef struct st_nethash NETHASH;
 
 /* sym check structures (gsymcheck) */
 typedef struct st_symcheck SYMCHECK;
@@ -147,6 +149,7 @@ struct st_ales {
 	ALES *next;
 };
 
+
 struct st_page {
 
 	int pid;
@@ -172,6 +175,10 @@ struct st_page {
 						/* which row is the page in */
 
 	GHashTable *ales_table;	/* used to maintain ales information */
+
+	/* used to maintain net/midpoint information */
+	/* used only in gnetlist */
+	GHashTable *nethash_table;
 
 	PAGE *prev;
 	PAGE *next;
@@ -461,6 +468,18 @@ struct st_net {
         NET *next;
 };
 
+/* used to resolve midpoint connections */
+struct st_nethash {
+	OBJECT *object;	/* object connected to */
+
+	int type; /* individual object type */
+
+	NETHASH *prev;
+	NETHASH *next;
+};
+
+
+/* gsymcheck structure */
 struct st_symcheck {
         int graphical_symbol;
         int missing_device_attrib;

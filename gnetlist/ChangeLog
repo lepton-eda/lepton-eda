@@ -7,6 +7,11 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+6/29/99 Got the core of nethash working with the rest of gnetlist
+
+	Things seem to be working better now.  Core traversal of nets
+	works now as well as the naming of nets.
+
 6/25/99 Added support to configure to look for optarg and friends otherwise
         include the right externs...
 

@@ -101,6 +101,8 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	/* g_hash_table_foreach_remove(hash_table, free_func, NULL);*/
 	g_hash_table_destroy(p_current->ales_table);
 
+	g_hash_table_destroy(p_current->nethash_table);
+
 	free(p_current);
 
 	p_current=NULL;
@@ -329,6 +331,9 @@ s_page_setup(PAGE *p_current)
 
 	/* new ALES stuff */
 	p_current->ales_table = g_hash_table_new(g_str_hash, g_str_equal);
+
+	/* new NETHASH stuff */
+	p_current->nethash_table = g_hash_table_new(g_str_hash, g_str_equal);
 
 	/* setup parent to point to list */
 	/* this is used for attributes so */
