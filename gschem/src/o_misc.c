@@ -255,7 +255,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				o_box_rotate(w_current, centerx, centery, 
 					     90, object);
 
-				o_box_erase(w_current, object);
+				o_box_draw(w_current, object);
 			break;
 
 			case(OBJ_CIRCLE):
