@@ -3,6 +3,8 @@
 	* noweb/o_basic.c: Added code for o_erase_selected (not used
 	currently)
 
+        * configure.in/Makefile.am: Upgraded to automake 1.6.2
+
 2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Fixed spelling mistake

@@ -2,10 +2,11 @@
 
 	* connector/aui-1.sym: Added symbol by Karel Kulhavy
 
+        * configure.in/Makefile.am: Upgraded to automake 1.6.2
+
 2002-05-31 Werner Hoch <werner.ho@gmx.de>
 
 	* micro/: startet with symbol rework to match current symbol specs
-
 
 2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
