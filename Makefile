@@ -30,7 +30,7 @@ opts=
 # Basic targets
 ############################################################################
 
-info:
+notarget:
 	@echo $(VERSION) $(CD_VERSION) $(DIR_PREFIX)
 	@echo "gEDA Toplevel Makefile"
 	@echo "This Makefile requires libgeda, symbols, gschem, gnetlist,"
