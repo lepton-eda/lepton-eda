@@ -13,6 +13,10 @@ Most recent changes are at the top of this file
 	Added some code to o_text.c to look for char_.sym for lowercase
 	characters when running CYGWIN32
 
+	Messed up above slightly, now fixed
+
+	Did not return a success (zero) in s_color_request, now fixed
+
 9/18/99	Fixed a bug in s_color_gdcolor_init, had the gd color alloc in the
 	wrong place (before a pointer was set)
 
