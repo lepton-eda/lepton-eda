@@ -1,7 +1,10 @@
 2002-02-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* analog/resistor-variable-2.sym: Checked in Bert's fix to the 
-	  misalignment.
+	  misalignment
+
+	* power/vcc-orcad-circle-1.sym: Added power symbol from Dave 
+	  Lawrence
 
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
