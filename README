@@ -34,8 +34,8 @@ README for gEDA/gaf CVS version
 - License  
 
 	gEDA/gaf (which includes libgeda, gschem, gnetlist, geda, setup,
-	gsymcheck, gschcheck, gpcb, utils and all associated files,
-	component symbols and all the file formats) are placed under the
+	gsymcheck, gschcheck, gpcb, utils, all associated files, the
+	component symbols and all the file formats) is placed under the
 	GNU Public License (GPL) version 2.0.  See the various COPYING
 	files for more information.
 
