@@ -104,6 +104,7 @@
 <<g_rc.c : g_rc_handleboxes()>>
 <<g_rc.c : g_rc_setpagedevice_orientation()>>
 <<g_rc.c : g_rc_setpagedevice_pagesize()>>
+<<g_rc.c : g_rc_bus_ripper_size()>>
 
 @
 
@@ -2725,3 +2726,31 @@ g_rc_setpagedevice_pagesize(SCM mode)
 
 
 @ %def g_rc_setpagedevice_pagesize
+
+
+@section Function @code{g_rc_bus_ripper_size()}
+
+@defun g_rc_bus_ripper_size size
+@end defun
+
+<<g_rc.c : g_rc_bus_ripper_size()>>=
+SCM
+g_rc_bus_ripper_size(SCM size)
+{
+  int val;
+
+  val = gh_scm2int(size);
+
+  if (val == 0) {
+    fprintf(stderr, _("Invalid size [%d] passed to bus-ripper-size\n"),
+            val);
+    val = 200; /* absolute default */
+  }
+
+  default_bus_ripper_size = val;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_bus_ripper_size
