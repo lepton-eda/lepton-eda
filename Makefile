@@ -19,7 +19,7 @@ DIR_PREFIX=
 #
 # Set this to the location where you want to install gEDA/gaf
 #
-prefix=
+prefix=$(HOME)/geda
 
 #
 # You can set any global options you want here to be passed to the 
