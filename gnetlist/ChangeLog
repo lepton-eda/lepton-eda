@@ -1,5 +1,10 @@
 2001-03-06  Stefan Petersen  <spe@geda.seul.org>
 
+	* configure.in, acconfig.h: In the spirit of yesterday I removed
+	  every trace of stroke and libgdgeda.
+	
+2001-03-06  Stefan Petersen  <spe@geda.seul.org>
+
 	* configure.in: Fixed typo and removed some hard coded libraries.
 	  Patch and suggestion from Bruno Schwander.
 	
