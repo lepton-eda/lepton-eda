@@ -458,17 +458,19 @@ Mark Moss		- For contributing the following symbols:
 
 Werner Hoch:		- For contribute the following symbols:	
 
+				AT43USB320A.sym AT89C51_DIP.sym
+				AT89C51_PLCC.sym AT89C51_TQFP.sym
 				AT90S1200.sym AT90S2313.sym AT90S2323.sym
 				AT90S2343.sym AT90S4433_DIP.sym
 				AT90S4433_TQFP.sym AT90S8515_DIP.sym
 				AT90S8515_PLCC.sym AT90S8515_TQFP.sym
-				AT90S8535.sym AT90S8535_DIP.sym
-				AT90S8535_PLCC.sym AT90S8535_TQFP.sym
-				ATmega103.sym ATmega161_DIP.sym
-				ATmega161_TQFP.sym ATmega163_DIP.sym
-				ATmega163_TQFP.sym ATtiny11.sym
-				ATtiny12.sym ATtiny28_DIP.sym
+				AT90S8535_DIP.sym AT90S8535_PLCC.sym
+				AT90S8535_TQFP.sym ATmega103.sym
+				ATmega161_DIP.sym ATmega161_TQFP.sym
+				ATmega163_DIP.sym ATmega163_TQFP.sym
+				ATtiny11.sym ATtiny12.sym ATtiny28_DIP.sym
 				ATtiny28_TQFP.sym
+
 
 Bruno Schwander		- For contributing the following symbols:
 

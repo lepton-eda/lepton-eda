@@ -1,3 +1,9 @@
+2002-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* micro/AT*.sym: Oops grabbed the wrong versions of Werner's symbols.
+	Got the right ones now.  Updated with Lower Right Text alignment for
+	text on the left hand side of symbols.
+
 2002-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* micro/AT90S8535.sym  AT90S8535_TQFP.sym AT90S8535_PLCC.sym:
