@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/gnetlist.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gnetlist
-VERSION=20030901
+VERSION=20030921
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 
@@ -27,29 +27,27 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_MAKE_SET
 AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
 
 #########################################################################
 # 
 # Misc win32 / mingw checks and variables start
+AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
   *cygwin*  ) AC_MSG_ERROR([Building gEDA/gaf under cygwin is not supported]) ;;
-  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW=yes ;;
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
-   MINGW_CFLAGS="-mms-bitfields -mwindows"
-   MINGW_LIBS="-lregex -liberty"
    MINGW="yes"
    PATHSEP=\\\\
    OTHERPATHSEP=/
 else
    # Unix host
-   MINGW_CFLAGS=
-   MINGW_LIBS=
    MINGW="no"
    PATHSEP=/
    OTHERPATHSEP=\\\\
