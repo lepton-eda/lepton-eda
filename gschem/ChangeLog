@@ -1,3 +1,9 @@
+2002-01-24 Stefan Petersen <spe@stacken.kth.se>
+
+	* lib/system-gschemrc.in: Fixed bug in path when loading 
+	  auto-uref. (geda-data => gedarcdir). Thanks to Cris Ellec for
+	  spotting this. Code is usually commented out.
+	
 2002-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_misc.nw: Added autonumber_text patch by Dave Lawrence.
