@@ -1,0 +1,105 @@
+gsch2pcb
+--------
+gsch2pcb is conceptually based on the gschem2pcb shell script distributed
+with gnetlist, but additionally handles multiple schematics, handles element
+file footprints, and removes pc board elements corresponding to components
+deleted from the schematics.  It also forward annotates component value
+changes.
+
+It requires that the gnet-gsch2pcb.scm file be install into the gEDA
+scheme directory.  On Debian this is /usr/share/gEDA/scheme, but see
+the INSTALL file.
+
+Typical usage
+-------------
+1) Create your custom PCB elements and save each one into its own file.
+   Some compatibility tips if you will be inserting elements into a
+   layout manually as well as with gsch2pcb:
+     *  Make the initial "Description" field of these elements the same
+        as the file name because gsch2pcb depends on this name (which is
+        the gschem footprint
+        value) to know when footprints/elements are changed.
+     *  Make the initial layout-name field (displayed when the "name on PCB"
+        menu entry is selected) empty (ie "") so that gsch2pcb
+        will not delete your element when you want it to be in the layout
+        even though it is not in the schematic.  You can later edit the
+        layout-name to be some refdes value, but I'm not sure it makes sense
+        to name a pcb element that is not referenced in the schematic.
+
+   Note: since once a layout element is named pcb won't let you reset it
+   to an empty name, a sort of kludge is that setting the first character
+   of the layout-name to a non-alphanumeric will protect the element from
+   being deleted by gsch2pcb.
+
+   These element files should be placed in a directory heirarchy that
+   gsch2pcb will search.  The default directories /usr/local/pcb_lib and
+   ./packages are searched in addition to any directories you specify with
+   --elements dirname arguments to gsch2pcb.
+
+2) Create your schematic with gschem.  Make sure each component has a
+   unique refdes attribute and a footprint attribute that matches either
+   a PCB m4 element or one of your custom element file names.  Beware of
+   element file names that collide with pcb m4 macro names.
+   Make a project file if you wish.
+
+3) Run "gsch2pcb foo.sch" or "gsch2pcb myproject" if you've created the
+   myproject file.  If you didn't specify an output name, this will generate
+   a foo.pcb and a foo.net file.
+   If you get errors about footprints not found, you need to create PCB
+   elements for them and repeat this step until you get no errors.
+   Or, just run gsch2pcb again and it will shift unfound elements to
+   foo.new.pcb and you can proceed using pcb on foo.pcb if you wish to
+   fix the errors from inside of pcb.
+
+4) Run pcb foo.pcb.  All the elements will be stacked on top of each other,
+   so move them to desired locations.  Load the netlist file foo.net and
+   proceed with using PCB.  
+
+5) Modify foo.sch and again run gsch2pcb foo.sch.
+   * If components were added, PCB elements for them will be placed in the
+     file foo.new.pcb.  If components were deleted, the elements for them
+     will be removed from foo.pcb and the original foo.pcb will be renamed
+     to a foo.pcb.bak sequence.
+   * If elements can't be found for new schematic footprints, then the
+     unfound elements will be indicated with PKG_ lines in foo.new.pcb
+     unless you run "gsch2pcb --remove-unfound foo.sch" which will omit
+     the PKG_ lines so you can go ahead and load foo.new.pcb into pcb.
+   * Note that If you have added elements to the .pcb layout which
+     will not exist on the schematics, make sure there is no "name on PCB"
+     (the gschem refdes) for them or else gsch2pcb will delete them when
+     they don't match a schematic refdes and footprint.  Or you can use the
+     --preserve option to prevent deleting any elements at all.
+
+6) Run pcb foo.pcb and clean up any dangling traces left over from removed
+   elements.  Load any new elements in foo.new.pcb with the "Load layout
+   data to paste-buffer" function.  Load the new netlist foo.net.
+
+
+Caveat
+------
+* gsch2pcb uses its own gnetlist backend gnet-gsch2pcb.scm since there
+  were problems trying to adapt to the existing gnet-PCBboard.scm backend.
+  The problems are the saving of the footprint information issue mentioned
+  above and that the PCBboard backend aborts outputting elements when it
+  encounters an unfound element and this could lead to incorrect deleting
+  of elements.
+  So, be sure when you install gsch2pcb that the gnet-gsch2pcb.scm file gets
+  installed into the right place.  Look at the INSTALL file in the tarball.
+
+* WARNING:  if you wish to start processing with gsch2pcb any existing pcb
+  files that have m4 elements and were originally generated with gschem2pcb,
+  then be sure to run first with at least gsch2pcb 0.4:
+
+     gsch2pcb --fix-elements
+
+  on the pcb file schematics or else gsch2pcb will want to delete the
+  m4 elements.
+
+* footprint information is saved into pcb element's Description fields,
+  so it's probably not a good idea to change element Description values
+  in your layout while using gsch2pcb unless it is a protected element
+  that has an empty layout-name.
+
+
+
+Bill Wilson    billw@wt.net

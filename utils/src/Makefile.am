@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem olib
+bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem olib \
+	       gsch2pcb
 
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c 
@@ -8,14 +9,18 @@ smash_megafile_SOURCES = smash_megafile.c
 convert_sym_SOURCES = convert_sym.c char_width.c
 sarlacc_schem_SOURCES = sarlacc_schem.c
 olib_SOURCES = olib.l geda_sym_format.h
+gsch2pcb_SOURCES = gsch2pcb.c
 
-INCLUDES = $(LIBGEDA_CFLAGS)
+convert_sym_CFLAGS = @GSCHLAS_CFLAGS@
+sarlacc_schem_CFLAGS = @GSCHLAS_CFLAGS@
+gsch2pcb_CFLAGS = @GSCH2PCB_CFLAGS@
 
 gmk_sym_LDADD = @MINGW_LIBS@ 
 smash_megafile_LDADD = @MINGW_LIBS@
 convert_sym_LDADD = @MINGW_LIBS@ -lm
 sarlacc_schem_LDADD = @MINGW_LIBS@
 olib_LDADD = @LEXLIB@ @MINGW_LIBS@ -lm
+gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ @MINGW_LIBS@ 
 
 EXTRA_DIST = 
 

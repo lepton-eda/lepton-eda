@@ -21,6 +21,10 @@ AM_MAINTAINER_MODE
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
+# Force a specific version of gtk+ (or in this case a specific version of
+# glib)
+AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt_gtkver=1.2])
+
 # 
 # Command line flags end
 #########################################################################
@@ -86,6 +90,50 @@ fi
 
 # 
 # Check for libgeda end
+############################################################################
+
+############################################################################
+# Check for glib 1.2 and 2.2 start
+# 
+
+# Check for pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test $PKG_CONFIG = no; then
+   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+fi
+
+# Search for glib 2.2.x first (only if we are not forcing the glib to 1.2)
+if test "$opt_gtkver" != "1.2"
+then
+   PKG_CHECK_MODULES(GLIB22, glib-2.0 >= 2.2.0, GLIB22="yes", no_GLIB22="yes")
+fi
+
+# This next bit of code figures out what glib we need to use.
+if test "$GLIB22" = "yes" -a "$opt_gtkver" != "1.2"
+then
+
+   GLIB_CFLAGS=$GLIB22_CFLAGS
+   GLIB_LIBS=$GLIB22_LIBS
+   GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
+
+else
+
+   # Search for glib 1.2 now
+   PKG_CHECK_MODULES(GLIB12, glib >= 1.2.3, GLIB12="yes", no_GLIB12="yes")
+
+   GLIB_CFLAGS=$GLIB12_CFLAGS
+   GLIB_LIBS=$GLIB12_LIBS
+   GLIB_VERSION=`$PKG_CONFIG glib --modversion`
+
+fi
+
+if test "$GLIB_VERSION" = ""
+then
+   AC_MSG_ERROR([Cannot find glib 2.2.x or glib 1.2.x, install one of them.])
+fi
+
+# 
+# Check for glib 1.2 and 2.2 end
 ############################################################################
 
 #########################################################################
@@ -159,10 +207,14 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHLAS_CFLAGS="$LIBGEDA_CFLAGS"
 GSCHLAS_LDFLAGS="$LIBGEDA_LIBS"  
+GSCH2PCB_CFLAGS="$GLIB_CFLAGS"
+GSCH2PCB_LDFLAGS="$GLIB_LIBS"  
 
 # Makefile.in variable substitution
 AC_SUBST(GSCHLAS_CFLAGS)
 AC_SUBST(GSCHLAS_LDFLAGS)
+AC_SUBST(GSCH2PCB_CFLAGS)
+AC_SUBST(GSCH2PCB_LDFLAGS)
 AC_SUBST(MINGW_LIBS)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
@@ -191,6 +243,7 @@ AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:
 
    libgeda library version:          $LIBGEDA_VERSION
+   GLIB library version:             $GLIB_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR

@@ -184,6 +184,19 @@ README for misc utilities versions 2003*
     Please see the pads_backannotate.[dvi|html|ps|pdf] documentation for more
     details.
 
+   
+    gsch2pcb 
+    Bill Wilson
+  
+    gsch2pcb is conceptually based on the gschem2pcb shell script
+    distributed with gnetlist, but additionally handles multiple
+    schematics, handles element file footprints, and removes pc board
+    elements corresponding to components deleted from the schematics.
+    It also forward annotates component value changes.
+
+    Please see the README.gsch2pcb file for more information.
+
+   
 
 - License  
 
@@ -205,6 +218,7 @@ README for misc utilities versions 2003*
         refdes_renum is Copyright 2003 by Dan McMahill
         tragesym is Copyright 2001-2003 by Werner Hoch
         pads_backannotate is Copyright 2003 by Dan McMahill
+        gsch2pcb is Copyright 2003 by Bill Wilson
 
 
 

@@ -4,6 +4,9 @@
 
 	* scripts/pads_backannotate: Added script by Dan McMahill.
 
+	* src/gsch2pcb.c and friends: Integrated gsch2pcb written by
+	Bill Wilson.  Thanks Bill!
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Removed redundant tests (gtk+, guile) and improved

@@ -1,0 +1,83 @@
+
+gsch2pcb Changelog
+------------------
+0.9
+---
+	* If a file element's coordinate (mark x or y) is > 1000 (mils), translate
+	  it to 1000 to avoid inserted file elements being scattered all over the
+	  place.  Assume that for element coordinates < 1000 the element creator
+	  was concerned with a sane initial placement...
+	* Handle spaces in file element names so PCB file element names such
+	  as "100 Pin jack" in the default pcb_lib directory can be used as
+	  gschem footprints.
+	* Search command line and project file element directories before the
+	  default directories.
+	* Give Makefile install target a gsch2pcb dependency.
+
+0.8
+---
+	* --elements-dir option single char variant renamed from -e to -d.
+	* added -f, --use-files option to force using the file element for
+	  new footprints if the file element exists even though an m4 element
+	  may have been found for the footprint.
+	* Improved statistics reporting.
+	* Some bug fixes.
+
+0.7
+---
+	* Use my own gnet-gsch2pcb.scm instead working around PCBboard problems
+	  or relying on a patch.
+	  This fixes:
+	       footprint being stored into element issue.
+	       gnetlist output doesn't abort with unfound elements so gsch2pcb
+	       won't unexpectedly delete all elements.
+	* Default install is to /usr instead of /usr/local because
+	  gnet-gsch2pcb.scm must be installed under the same dir as the  existing
+	  gnetlist, and this is more likely /usr.  See the INSTALL file.
+
+0.6
+---
+	* Forward annotate schematic component "value" attribute changes to
+	  pcb element "value" fields.
+
+0.5
+---
+	* Cleaned up the output reporting.
+
+0.4
+---
+	* project files
+	* Don't use schematic "value" attribute and element "value" in the
+	  comparison to determine when an element for a footprint already exists.
+	* include a gnet-PCBboard-patch in the distribution so people can fix
+	  gnetlist to save footprint information in m4 pcb elements.
+	* --fix-elements option so existing PCB files can have their elements
+	  Description fields updated to schematic footprint values without
+	  deleting the elements.  If the above patch is applied and there are
+	  existing pcb files with m4 elements, gsch2pcb should be run with this
+	  option to fix the pcb files.
+
+0.3
+---
+	* Add --preserve option to prevent removing .pcb file elements which
+	  are not found in the schematics.
+	* Regardless of the --preserve, don't ever delete elements which have
+	  no layout-name (refdes) because these are likey elements not intended to
+	  be on the schematic.
+
+0.2
+---
+	* When substituting values into Element() lines, put gschem "footprint"
+	  values into the PCB Element "description" position instead of
+	  gschem "device" values.  This is different from existing
+	  "gnetlist -g PCBboard" behaviour which uses the "device" value, but
+	  keeping footprint info in the layout seems far more valuable to me.
+	  Now a component can have its footprint changed and gsch2pcb will
+	  be able recognize the change and delete the old component and add in
+	  the new.  But, this only works for newly added file elements.  Any
+	  existing .pcb file will have "device" values stored so a "footprint"
+	  change cannot be recognized.  See comment at top of gsch2pcb.c.
+
+0.1
+---
+	* Initial release
