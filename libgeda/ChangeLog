@@ -1,3 +1,10 @@
+2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_pin_basic.nw: In search of the "why aren't pins which are 
+	part of embedded components not connecting" bug, discovered
+	that if an older schematic is read (with embedded components),
+	the whichone variable wasn't being reset properly (missing <= ).
+
 2003-11-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h, noweb/s_project.nw: Added unnamed_netname 

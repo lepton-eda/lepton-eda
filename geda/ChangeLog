@@ -1,3 +1,15 @@
+2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* ABOUT-NLS: Removed machine generated file from CVS
+
+	* graphman/.cvsignore, m4/.cvsignore: Added cvs ignore files to 
+	minimize cvs update's chatter.
+
+	* po/.cvsignore, intl/.cvsignore: Updated files with new files
+	from gettext 0.12.1
+
+        * configure.ac: Updated to gettext 0.12.1
+
 2003-12-11 Piotr Miarecki   <tertul@poczta.onet.pl>
 
         * src/project.c, src/doc.c, src/doc.h: Added saving project

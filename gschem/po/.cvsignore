@@ -8,3 +8,5 @@ POTFILES
 *.header
 *.sin
 Rules-quot
+Makevars.template
+stamp-po

@@ -309,7 +309,7 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
            &color, &pin_type, &whichend);
   }
 
-  if (whichend < -1 || whichend > 1) {
+  if (whichend <= -1 || whichend > 1) {
     fprintf(stderr,
             "Found an invalid whichend on a pin (reseting to zero): %d\n",
             whichend);

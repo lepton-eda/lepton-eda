@@ -494,7 +494,7 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 # Initialized gettext 
 AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION(0.11.5)
+AM_GNU_GETTEXT_VERSION(0.12.1)
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHEM_CFLAGS="$LIBSTROKE_CFLAGS $LIBGEDA_CFLAGS"

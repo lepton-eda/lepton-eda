@@ -8,3 +8,4 @@ VERSION
 *.sin
 config.charset
 locale.alias
+libgnuintl.h.in
