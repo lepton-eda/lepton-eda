@@ -40,7 +40,7 @@ int iLogVerbose = FALSE;
 void Log(int iImportance, int iModule, char *szValue)
 {
 	FILE *LogFile;
-	char szMessage[TEXTLEN], szValue1[TEXTLEN], szValue2[TEXTLEN];
+	char szMessage[TEXTLEN], szValue1[TEXTLEN]/*, szValue2[TEXTLEN]*/;
 
 	/* prepare a message */
 	strcpy(szValue1, "### ");
