@@ -9,6 +9,31 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-12-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_register.c: Added guile helper functions for netlist generation
+	  (code by Eduard Moser and Martin Lehmann)
+
+	* src/g_key.c: Guile bindings to generate netlists on the fly
+	  (code by Eduard Moser and Martin Lehmann)
+
+	* src/g_funcs.c: Added support functions for above
+	  (code by Eduard Moser and Martin Lehmann)
+
+	* scheme/generate_netlist.scm: This is the scheme code which pulls 
+          together all of the above (new file added)
+	  (code by Eduard Moser and Martin Lehmann)
+
+2000-12-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_text.c: Added o_text_place_rotate() to support the rotation
+	  of text as it is being placed
+
+	* src/x_event.c: Modified state machine to support the rotation of
+	  text as it is being placed
+
+	* src/o_text.c: More work to support above
+
 2000-12-10  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_text.c: Removed all trace of zoom_factor
