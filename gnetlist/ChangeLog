@@ -1,3 +1,8 @@
+2003-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Fixed wrong command line option (-r is not a 
+	valid option).  Pointed out by Stuart.
+
 2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/vams_misc.c: Fixed up a call to o_attrib_get_name_value to
