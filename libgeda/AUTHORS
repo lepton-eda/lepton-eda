@@ -1,7 +1,7 @@
 
 gEDA
 
-GNU Electronic Design Automation
+GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
 libgeda AUTHORS
@@ -9,6 +9,9 @@ libgeda AUTHORS
 Ales V. Hvezda
 E-mail: ahvezda@geda.seul.org
 Web: http://www.geda.seul.org/
+
+
+Contributors:
 
 Martin Benes		- For contributing the attribute promotion code,
 			  much improved text origin mirror code, and many
