@@ -5,6 +5,9 @@
 
 	* docs/gschem.1: Spent a little time fixing up the man page.
 
+	* examples/*.sch: Updated most schematics to the last file format
+	version.
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_preview.nw: Set the size of all preview windows to the
