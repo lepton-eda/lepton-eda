@@ -1,4 +1,4 @@
-# This is the template file for creating symbols with tragesym.py
+# This is the template file for creating symbols with tragesym
 # every line starting with '#' is a comment line.
 
 [options]
@@ -17,12 +17,14 @@ pinwidthhorizontal=400
 # name will be printed in the top of the symbol
 # if you have a device with slots, you'll have to use slot= and slotdef=
 # use comment= if there are special information you want to add
-version=20020922
+version=20030525
 name=
 device=
 refdes=U?
 footprint=
 description=
+documentation=
+author=
 numslots=0
 #slot=1
 #slotdef=1:
@@ -37,13 +39,13 @@ numslots=0
 # tabseparated list of pin descriptions
 # pinnr is the physical number of the pin
 # seq is the pinseq= attribute, leave it blank if it doesn't matter
-# type can be (in, out, i/o, oc, oe, pas, tp, tri, clk, pwr)
+# type can be (in, out, io, oc, oe, pas, tp, tri, clk, pwr)
 # style can be (line,dot,clk,dotclk,none). none if only want to add a net
 # posit. can be (l,r,t,b) or empty for nets
 # net specifies the name of the Vcc or GND name
 # label represents the pinlabel. 
 #	negation lines can be added with _Q_ 
-#	if you want to add a "_" or "\" use \_ and \\ as escape sequences
+#	if you want to add a "_" or "\" use "\_" and "\\" as escape sequences
 #-----------------------------------------------------
 #pinnr	seq	type	style	posit.	net	label	
 #-----------------------------------------------------

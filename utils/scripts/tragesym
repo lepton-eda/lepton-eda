@@ -1,8 +1,8 @@
 #!/usr/bin/python
 #***************************************************************************
-#    tragesym.py  - make gEDA symbols out of structured textfiles
+#    tragesym  - create gEDA symbols out of structured textfiles
 #    begin                : 2001-10-20
-#    copyright            : (C) 2001,2002 by Werner Hoch
+#    copyright            : (C) 2001,2002,2003 by Werner Hoch
 #    email                : werner.ho@gmx.de
 # ***************************************************************************
 # *                                                                         *
@@ -28,7 +28,7 @@
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.5"
+VERSION="0.0.6"
 
 CHARHIGH=26
 pre_options={"wordswap":"yes"
@@ -39,12 +39,11 @@ pre_options={"wordswap":"yes"
          ,"pinwidthvertikal":"400"
          ,"pinwidthhorizontal":"400"}
 pre_attr=["version", "name", "device", "refdes", "footprint", "numslots", "slot",
-          "slotdef","description", "comment"]
+          "slotdef","description", "comment", "author", "documentation"]
 stylelist=["line","dot","clk","dotclk","none"]
 poslist=["l","r","t","b",""]
 typelist=["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
 P_NR, P_SEQ, P_TYPE, P_STYLE, P_POS, P_NET, P_LABEL = 0,1,2,3,4,5,6
-
 
 # a dictionary (char -> charwidth)
 font={'}': 12, '{': 12, 'y': 20, '\366': 20, 'w': 28, 'u': 19, 's': 18,
@@ -277,13 +276,20 @@ def writesym(filename,options,attr,pins):
         texty=texty+200
     else:
         print "footprint attribut missing"
-    if attr.has_key(("numslots",1)):
-        value=attr[("numslots",1)]
+    if attr.has_key(("author",1)):
+        value=attr[("author",1)]
         f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
-        f.write("numslots=" + value + "\n")
+        f.write("author=" + value + "\n")
         texty=texty+200
     else:
-        print "numslots attribut missing"
+        print "author attribut missing"
+    if attr.has_key(("documentation",1)):
+        value=attr[("documentation",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("documentation=" + value + "\n")
+        texty=texty+200
+    else:
+        print "footprint attribut missing"
     if attr.has_key(("description",1)):
         value=attr[("description",1)]
         f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
@@ -291,6 +297,13 @@ def writesym(filename,options,attr,pins):
         texty=texty+200
     else:
         print "description attribut missing"
+    if attr.has_key(("numslots",1)):
+        value=attr[("numslots",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("numslots=" + value + "\n")
+        texty=texty+200
+    else:
+        print "numslots attribut missing"
     if attr.has_key(("slot",1)):
         value=attr[("slot",1)]
         f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")

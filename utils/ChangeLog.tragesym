@@ -1,3 +1,8 @@
+2003-05-25: (version 0.0.6) Werner Hoch <werner.ho@gmx.de>
+	Changes:
+	  - added attributes "documentation=" and "author="
+          - changed i/o to io in the template file
+
 2002-10-05: (version 0.0.5)
 	Changes:
 	  - changes to conform to the new gschem file format (20020922 or later)
