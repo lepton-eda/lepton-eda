@@ -1,0 +1,669 @@
+
+gEDA: gschem 
+User Guide
+
+Written by: Ales Hvezda
+-------------------------------------------------------------------------
+
+Contents:
+
+	1. Introduction
+	2. Overview
+	3. Running gschem
+	4. User interface
+	5. Basic operations
+	6. Dialog boxes
+	7. Electrical connectivity
+	8. Components/symbols  
+	9. Attributes
+	10. Resource File
+
+
+
+1. Introduction
+
+	This is a very basic and crude first attempt at getting some
+real user docs written for gschem.  This document is hardly finished or
+polished but is better than no docs at all (which was the case for the
+longest time).  Please forgive the tone of this document.  I (Ales) am
+writing this just to get something done.  I am by no means a technical
+writer so I'm sure some of my sentences are truly awful.  As everybody
+says, programmers should not write documentation for their programs
+and this document is a perfect illustration of a programmer breaking
+that rule.
+
+	This document assumes you know understand basic schematic capture,
+like you understand that a component represents something and that nets
+and buses interconnect these components to form a schematic etc...  
+Eventually this document will describe all this in more detail, but for 
+now this document is will describe how schematic capture is accomplished
+in the gEDA system.
+
+
+
+2. Overview
+
+	gschem is the schematic capture program in the gEDA tool suite.
+It's sole purpose is facilitate the input of circuit schematics or block
+diagrams graphically.  *add some more stuff here*
+
+
+3. Running gschem
+
+	Running gschem is straightforward once you have installed it
+on your GNU/Linux or UNIX system.
+
+	The first step is to build and install the gEDA tools.
+This step is not covered in this document.  You can tell if you have
+installed the tools correctly by running the following commands:
+
+	libgeda-config --version
+	gesym-config --version
+	which gschem
+
+	The first two should return the version of the installed tools
+(libgeda and the symbol library) and the last command should return
+the path to the gschem binary.  If these commands do not return the 
+expected results, then most likely the gEDA tools are not installed 
+properly.
+	
+	To run gschem type:
+
+	gschem 
+
+	at any shell prompt.
+
+	To look at a schematic which came with gschem run:
+
+	gschem schematic_name.sch
+
+	For a listing of the various command line flags type:
+
+	gschem -h
+
+	For a detailed explanation of the command line flags look
+at the gschem man page (man gschem).	
+
+
+
+4. User interface
+
+	There are several ways to interact with gschem.  gschem
+requires a keyboard and mouse.  There are two ways to initiate an 
+operation or command:
+
+	Using the mouse to select the operation off a menu 
+	
+			-- or --
+
+	Typing the keyboard hotkey(s).
+
+	To make matters more confusing, selecting an operation off of the
+menus behaves slightly differently than typing the hotkey.  Most of the
+operations operate on the currently selected object(s).  The menu selected
+operations usually require some more input (usually a mouse click) after 
+they are picked off of the menu and the keyboard hotkey operations take
+that required input as the current mouse position.  This saves an extra
+click since you can position the mouse at the right place, type in the
+hotkey, and the command then executes.  Note, you can change this so that
+both menu and hotkey behavior is exactly the same.  See the section on
+the resource file for more info on how to configure this.
+	
+	mouse buttons...	
+
+
+
+5. Basic Operations
+
+	There are five kinds of operations in gschem:
+
+	a. File related (Open/Close/Save/Print etc...)
+	b. Addition of objects (Add nets/lines/pins/components etc...)
+	c. Manipulate objects (move/copy/delete/rotate/mirror etc...)
+	d. View operations (Zoom/Pan/Redraw etc...)
+	e. Option changing (text size/gridding/snap etc...)
+
+	This section will describe each of these.
+
+	The terms page and schematic both refer to the same thing (a
+	collection of objects that are loaded and being displayed).
+	A window is that big window in which schematics are displayed
+	and manipulated.
+
+
+	a. File related operations:
+
+	New Window
+
+		Open a new window.  Each window is separate from all
+		other windows.
+
+	New Page
+
+		Open a new page.  Usually this page will be called
+		untitled_N.sch, where N is an incrementing number.
+
+	Open Page...
+
+		Open an existing page.	This will pop up a dialog box.
+		Please see the later section on how to use the more
+		advance features of this dialog box.
+
+	Close Page
+
+		Close the currently displayed page.  This will prompt
+		you to save if you modified the page.
+
+	Save Page
+
+		Save the page as long as the page has a titled name
+		(ie not untitled_N.sch).  If the page is untitled,
+		then a Save As...  dialog box will appear.
+
+	Save Page as...
+
+
+		Opens the Save As.. dialog box.  Clicking Save As will
+		save the currently displayed schematic.  The displayed
+		schematic will be called the new specified name.
+
+	Save All
+
+		Unconditionally saves all schematics loaded in memory.
+
+	Print...
+
+		Brings up the Print dialog box.  Please see the dialog
+		box section for more info on this.
+
+	Write PNG...
+	
+		Brings up the Write PNG dialog box.  Please see the
+		dialog box section for more info on this.
+
+	Close Window
+
+		Closes the current window.  If there are any modified
+		schematics, a "Are you sure" dialog box will appear.
+		Clicking OK will cause all unsaved schematics to be lost.
+
+	Quit gschem	
+
+		Like Close window, but close all opened window.  A "Are
+		you sure" dialog box will appear for each window which
+		has unsaved schematics
+
+	Page Manager
+
+		Brings up a dialog box which lets you 
+
+	Page Next
+	Page Prev
+
+		These two options allow you to move in between opened pages.
+
+	Page Discard
+
+		Closes the current schematic forcefully.  If the current
+		schematic is NOT saved then the data is lost forever.
+		You will NOT be prompted or warned if you have modified
+		the current displayed schematic.  Use with caution.
+		Useful if you want to unload a schematic quickly.
+
+
+	b. Addition of objects:
+
+	An object is any of the below listed primitives.	
+
+	Add Component
+
+		Opens up a dialog box which lets you place components from
+		the component libraries.  
+
+		To place a component do the following:
+
+			Select a Component library (which btw is specified
+			in the Resource files, see section below) from the
+			left list	
+
+			Select a Component from the right list.
+
+			Move the mouse into the main drawing window (you
+			should see an outline). 
+
+			Press the first mouse button to place the component.
+
+		If a component is already select, hitting apply and moving
+		the mouse into the main window will allow you to place 
+		that component again.  
+
+		To cancel a component place press the last mouse button or
+		the ESC key.
+
+		Please see the dialog box section for detailed information
+		on this dialog box.
+
+	Add Net
+
+		Draws a net segment.  If you select this off of the top
+		menu bar then:
+
+			1. Press the first mouse button to start the net.
+			2. Press the first mouse button to end the net.
+			3. Another net will start at the last endpoint.
+			4. Press the first mouse button to end that net etc...
+
+			Press the last mouse button or ESC to cancel
+			any net in progress.
+
+		If you started this using the menu hotkey then the net
+		start immediately at the last mouse position and then
+		it behave exactly as above (except for line #1).
+
+		After drawing a net segment (or segments) and canceling
+		the last net segment, you are automatically placed in 
+		select mode.  You must pick add net again or type the
+		hotkey to add more nets.
+
+		You can hold down the control key to draw non-orthogonal
+		nets.  Just keep in mind that you cannot connect anything
+		to the middle of a non-orthogonal net.
+
+		The boxes at the end of the nets are connectivity cues.
+		Filled boxes signified a dangling net (not connected to
+		anything).  Filled circles are midpoint connections/junctions.
+		These cues are drawn automatically and are an indicator
+		of electrical connectivity.  
+
+		See the section on electrical connectivity below for more
+		information.
+		
+	Add Bus
+
+		Basically the same thing as nets, except that it draws 
+		buses.  Buses are very new and there are many aspects which
+		are not defined yet, so keep that in mind as you uses buses.
+		*More to be added here eventually*
+
+	Add Attribute...
+
+		Brings up the add attribute dialog box.  This dialog
+		box is ONLY used to add attributes.  It does not display
+		or manipulate already placed attributes.
+
+		An attribute is nothing more than a text item which is
+		in the form name=value.  It can be either unattached or
+		attached.	
+
+		To add an unattached attribute do the following:
+
+			1a. Select an attribute name off of the top list
+					-- or --
+			1b. Type in the attribute name into the name entry
+			2. Type in a value for the attribute.
+			3. Pick any of the attribute options.
+			4. Click Apply and move the mouse into the main
+		           window (an outline of the text should be seen)
+			5. Press the first mouse button to place the 
+			   attribute.  The text will be red which signifies
+			   an unattached attribute
+
+		If you want to attach an attribute to an object then
+		select the desired object first and then press the
+		add attribute apply button.  The text should be yellow
+		which signifies an attached attribute.	If you click on
+		an object which has attached attributes, the attached
+		attributes should be selected as well.
+
+		You cannot place an incomplete attribute (an attribute without
+	   	a name and value).
+
+		To cancel an attribute place press the last mouse button or
+		the ESC key.
+
+		Please see the section on attributes below for more info
+		on how to use attributes and more details.
+
+	Add Text
+
+		Opens up the text add dialog box.  
+
+		To place text: 
+
+			1. Type in text in entry field
+			2. Hit enter or click Apply
+			3. Move the mouse into the main window (an outline of
+		 	   the text should appear and follow the mouse)
+			4. Press the first mouse button to place the text
+
+		If you leave the text add dialog box open you can place
+		the same text item again and again by just clicking apply
+		(or pressing enter) and moving the mouse into the main
+		window.
+
+		Text which is placed will be automatically capitalized.  
+		Please see the Resource file section below on how to control
+		this behavior.
+
+		To cancel a text place press the last mouse button or
+		the ESC key.
+
+	Add Line
+
+		Draws a line in the same fashion as drawing nets with the
+		following exceptions:
+
+			- A line has no electrical significance
+			- Only a single line is drawn 
+			- You keep drawing lines as long as you are in 
+			  line drawing mode.
+
+		To cancel a line rubberband in progress press the last mouse
+		button or the ESC key.
+	
+	Add Circle
+
+		To draw a circle (picking Add Circle off of a menu):
+
+			1. Pick the center of the circle with the first button
+			2. Move the mouse to see an outline of the circle
+			3. Press the first mouse button to finalize the circle
+
+		To draw a circle (typing the hotkey), same as above except
+		that the center of the circle is picked for you at the last
+		mouse position when you type the hotkey.
+
+		To cancel a circle rubberband in progress press the last mouse
+		button or the ESC key.
+
+	Add Arc
+
+		To draw an arc (picking Add Arc off of a menu):
+
+			1. Pick the center of the arc with first mouse button	
+			2. Move the mouse and pick the next point.  The
+			   rubberbanded line represents the radius
+			3. A dialog box will appear: specify the start angle
+			   (in degrees) and specify the degrees of sweep.
+			4. Press OK to finalize the values.
+
+		The start angle can be positive or negative.  The degrees
+		are specified using the standard cartesian coordinate
+		system.  The degrees of sweep can be positive or negative.
+
+		To cancel an arc in progress (while rubberband the radius)
+		press the last mouse button or the ESC key or press the
+		Cancel button in the arc dialog box.
+
+	Add Pin
+
+		Draws a pin in the same fashion as drawing nets with the
+		following exception:
+
+			- You keep drawing pins as long as you are in 
+			  pins drawing mode.
+
+		To cancel a pin rubberband in progress press the last mouse
+		button or the ESC key.
+
+
+	c. Manipulate objects:
+
+	Most of these operations are modes which operate on the current
+	selected objects.  Before you can execute the desired function
+	you must select the objects you want to rotate.
+
+	Select Mode
+
+		Select mode is initial mode gschem starts out in.
+
+		In select mode you can select objects.  
+
+		You can pick single objects by clicking on them.  If an object
+		is already selected than clicking on that object will keep
+		it selected.  If multiple objects overlap then clicking in 
+		one spot will cycle through the objects.  
+
+		If you hold down the SHIFT key and click you can select
+		and deselect multiple objects.	Doing this with multiple
+		overlapping objects will cause the selection to cycle
+		among the possible object selections.
+
+		If you hold down the CONTROL key and click you will toggle
+		the object in and out of the current selection list.
+
+		To select multiple objects press and hold the first
+		mouse button and drag the mouse till a selection
+		box appears.  Drag the mouse (selection box) till it
+		encompasses the objects you want to select completely
+		and release the first mouse button.  The objects must be
+		completely encompassed.  Using the selection box takes
+		some practice.	If any previous objects were selected,
+		they will be unselected.
+
+		If you hold down the SHIFT key while drawing a selection
+		box then you will add to the currently selected
+		objects.  Objects cannot be removed using the selection 
+		box and holding down the SHIFT key.
+
+		If you hold down the CONTROL key while drawing a selection
+		box then you will toggle any encompassed objects.
+		If an object was selected then it will be unselected
+		and vice versa.
+
+		The selection mechanisms are not obvious and do require
+		some practice.  There are some quirks so please report them
+		as you come across them. 
+
+	Edit...
+
+		Allows you to edit text items (both content and text size).
+
+			1. Select the text item to edit.
+			2. Pick or type the hotkeys for Edit/Edit...
+			3. Make the appropriate change and press OK
+
+		Note, only the first text item will be edited; bulk text
+		editing is not supported (yet).
+
+	Copy Mode
+
+		This mode allows you to copy the currently selected objects.
+
+		To copy objects (picking Edit/Copy Mode off of a menu):
+
+			1. Select the desired object(s)
+			2. Pick Edit/Copy Mode off of a menu
+			3. Pick an origin point for the copy (first button)
+			4. Pick the destination point (first button)
+
+		To copy objects using the hotkey for copy mode is almost
+		the same as above except that the origin point is selected
+		automatically for you once you hit the copy mode hotkey.
+
+		After finishing the copy, you are automatically put back
+		into to select mode.
+
+	Move Mode
+
+		Move mode is just like copy (above) except that instead
+		of copying you are actually moving the objects around.
+
+	Delete
+
+		Delete allows you to remove objects off of the page.
+	
+		To delete objects:
+
+			1. Pick the desired object(s).
+			2. Select or type the hotkey for Edit/Delete
+			3. Objects will be deleted immediately	
+
+		Use this with caution since there is no UNDO yet!	
+
+	Rotate 90 Mode
+
+		Rotate mode allows you to rotate objects 90 degrees around
+		a pivot/center point.
+
+		To rotate objects (picking Edit/Rotate 90 Mode off of a menu):
+
+			1. Pick the desired object(s).
+			2. Select Edit/Rotate 90 Mode off of a menu
+			3. Pick the pivot or center point of the rotate
+
+		Rotating objects using the hotkey is similar to above except
+		that the center point is the last mouse position at which
+		you typed the hotkey.
+		
+		The objects will be rotate 90 counter clockwise.  You
+		can keep rotate objects 90 degrees till you have them in
+		the wanted rotation.  Text will always appear upright.
+
+	Mirror Mode
+
+		Mirror mode allows you to mirror objects horizontally
+		around pivot.
+
+		To rotate objects (picking Edit/Rotate 90 Mode off of a menu):
+
+			1. Pick the desired object(s).
+			2. Select Edit/Mirror Mode off of a menu
+			3. Pick the pivot point of the mirror
+	
+		Mirroring objects using the hotkey is similar to above except
+		that the pivot point is the last mouse position at which you
+		typed the hotkey. 
+
+		Objects are mirrored horizontally about the pivot point.
+		If you want to get a vertical mirror then rotate and mirror
+		the object(s) till you get the desired position.
+
+	Stretch
+
+		Stretch allows you to change the end points of nets.
+
+		To stretch a net (picking Edit/Stretch off of a menu):
+
+			1. Pick the desired net.
+			2. Select Edit/Stretch Mode off of a menu
+			3. Click the first mouse button near the endpoint 
+	                   you want to stretch
+			4. Move the mouse and the rubberbanding net to
+			   the new location and press the first mouse button
+			   to finalize the stretch.
+
+		Stretching nets using the hotkey is similar to above
+		except that the endpoint is automatically picked based
+		on the last mouse position when you typed the hotkey.
+
+		Right now you can only stretch nets, but this will be
+		expanded to other objects eventually.  You can only stretch
+		one net at a time.
+
+	Slot...
+
+		Slot... allows you to change the slot of a multiple slot
+		component.  The component must support slotting (see the
+		Components/Symbols section for more info on this).
+
+		To change the slot:
+
+			1. Select the desired component.
+			2. Pick or type the hotkey for Edit/Slot...
+			3. Type in the new slot number 
+			4. Press OK.
+			
+		Slotting is still in development so expect some quirks.
+	
+	Color...
+
+		This option allows you to change the color of any selected
+		object (with the exception of components).
+
+		To change the color of the currently selected objects:
+
+			1. Select the desired object(s).
+			2. Pick or type the hotkey for Edit/Color...
+			3. A dialog box with a drop down menu will appear.
+			4. Pick the new color 
+			5. Press Apply.
+
+		The color change will only take effect once you press Apply.
+		The dialog box will not change to the color of the current
+		object(s) (ie it only lets you change the color and not get
+		the current color of selected object(s)).  
+
+		You can leave this dialog box up and select new objects and
+		change their color by pressing Apply.
+
+	Lock
+	Unlock
+
+		Lock and unlock allow you to lock/unlock components in a 
+		schematic.  Locking means that a component cannot be selected
+		by a single click.  This is useful for title blocks and
+		other components which should not be selectable because you
+		might have other objects inside its boundaries and clicking
+		inside the component (titleblock) would be a distraction.
+
+		To lock/unlock components:
+
+			1. Select the desired object(s)
+			2. Pick or type the hot key for lock/unlock 
+			
+		The components will not be selectable with a single click.
+		To select a locked component, use a selection box to select
+		it.  This is the only way to select a locked component.
+
+		You can lock and unlock regular objects (lines/pins/boxes...)
+		which is nice when you are drawing something and an object
+		is in the way continuously.  Just lock it and you will not 
+		have to think about it when you click to select other objects.
+		However, locking an object is not preserved in the file so
+		once you quit any locked objects (lines/pins/boxes...) will 
+		become unlocked.  The locked/unlocked state of components
+		is preserved in the files though.
+		
+	Symbol Translate...
+
+		Symbol translate is used to take whatever is drawn and
+		translate it around using a inputed value (in mils).
+		This operation is mainly used to translate symbols around
+		(mainly to the origin).
+
+		To translate a symbol, just select or type the hotkey for
+		Edit/Symbol Translate... and a dialog box will appear.
+		Enter the amount you want translate (positive or negative)
+		in the X and Y directions (the same value will be applied
+		to both directions).  
+
+		If you enter a 0, then all the objects will be translated
+		to the origin.  If you are drawing a symbol, zoom in a bit
+		and then execute this (0 for the amount), since there are
+		still some bugs in this operation.  It is a requirement
+		that snap be on and that the grid snap spacing is set
+		100 mils when creating symbols.
+
+	Embed Component
+	Unembed Component
+
+	
+
+
+6. Dialog boxes
+	TBA
+
+7. Electrical connectivity 
+	TBA
+
+8. Components/symbols  
+	TBA
+
+9. Attributes
+	TBA
+
+10. Resource File
+	TBA
+
+
