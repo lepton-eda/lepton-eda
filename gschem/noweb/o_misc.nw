@@ -953,6 +953,8 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 
 <<o_misc.c : find_max()>>=
 int current_max;
+int used_count;
+int used_list[4096];
 void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 {
 
@@ -1011,6 +1013,9 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 	if (!strncmp(stext, o_current->text->string, strlen(stext))) {
 	  if (isdigit(o_current->text->string[strlen(stext)])) {
 	    sscanf(o_current->text->string + strlen(stext), "%d", &m);
+            if (used_count < 4094) {
+              used_list[used_count++] = m;
+            }
 	    if (m > current_max) {
 	      current_max = m;
 	    }
@@ -1090,7 +1095,16 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 	  /* printf("%s %d\n", o_current->text->string, (unsigned char) o_current->text->string[strlen(stext)]); */
 	  if (o_current->text->string[strlen(stext)] == '?') {
 	    free(o_current->text->string);
-	    sprintf(ss, "%s%d", stext, ++current_max);
+
+            while (current_max > used_list[used_count]) {
+              used_count++;
+            }
+            while (current_max==used_list[used_count]) {
+              current_max++;
+              used_count++;
+            }
+
+	    sprintf(ss, "%s%d", stext, current_max++);
 	    /*            printf("%s\n", ss); */
 	    o_current->text->string =
 		(char *) malloc(sizeof(char) * (strlen(ss) + 1));
@@ -1122,9 +1136,34 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 void
 o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 {
-
+  int i, tmp,sorted=0;
   current_max = 1;
+  used_count = 0;
   find_max(w_current, o_list, stext);
+
+  if ((used_count < 4094)&&(used_count > 0)) {
+    while (!sorted) {
+      sorted = 1;
+      for (i=0;i<used_count-1;i++) {
+        if (used_list[i]>used_list[i+1]) {
+          sorted = 0;
+          tmp = used_list[i];
+          used_list[i] = used_list[i+1];
+          used_list[i+1] = tmp;
+        }
+        if (used_list[i]==used_list[i+1]) {
+          printf("Warning: two components with same uref: %d\n", used_list[i]);
+        }
+      }
+    }
+    current_max = 1;
+  } else {
+    used_list[0] = current_max;
+    used_count = 1;
+  }
+  used_list[used_count] = 1000000;
+  used_count = 0;
+
   /*    printf("max: %d\n", current_max); */
   autonumber_text(w_current, o_list, stext);
   o_redraw_all(w_current);

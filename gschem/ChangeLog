@@ -1,3 +1,17 @@
+2002-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_misc.nw: Added autonumber_text patch by Dave Lawrence.
+  	  Reference info (from Dave):
+		"Attached is a patch to the autonumber_text function that
+		I wrote a while back that numbers components starting
+		at the lowest unused component number >0 and skips
+		used component numbers.  The earlier version started
+		at the maximum used component number +1.  I assume the
+		new functionality is usually what people would want..
+		if not, I could make a checkbox that would allow people
+		to revert to the old way if you think that would
+	  	be useful."
+
 2001-11-25  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/x_dialog.nw: Corrected a bug about arc creation due to the
