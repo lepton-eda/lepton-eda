@@ -1,6 +1,6 @@
 ;; gEDA - GPL Electronic Design Automation
 ;; gschem - gEDA Schematic Capture
-;; Copyright (C) 1998-2000 Ales V. Hvezda
+;; Copyright (C) 1998-2001 Ales V. Hvezda
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,12 +24,13 @@
 
   (define (get-next-uref prefix)
     (let ((available-prefix (assoc prefix prefix-list)))
-      (cond (available-prefix
-	     (set-cdr! available-prefix 
-		       (+ (cdr available-prefix) 1))
+      (cond (available-prefix 
+	     (assoc-set! prefix-list
+			 (car available-prefix)
+			 (+ (cdr available-prefix) 1))
 	     (cdr available-prefix))
-	    (else
-	     (set! prefix-list (cons (cons prefix 1) prefix-list))
+	    (else ; First time prefix was seen
+	     (set! prefix-list (acons  prefix 1 prefix-list))
 	     1))))
   
   
