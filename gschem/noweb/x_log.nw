@@ -331,7 +331,7 @@ log_init (Log *log)
 
   /* scroll to the end of the buffer */
   mark = gtk_text_buffer_get_insert (text_buffer);
-  gtk_text_view_scroll_to_mark (text_view, mark, 0.0, TRUE, 0.0, 1.0);
+  gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW (text_view), mark, 0.0, TRUE, 0.0, 1.0);
 }
 
 @ %def log_init
