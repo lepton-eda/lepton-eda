@@ -1,3 +1,7 @@
+2003-10-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* fileformats/fileformats.tex: Split valid vs test version numbers
+
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this
@@ -5,6 +9,7 @@
 
 	* fileformats/fileformats.tex: Updated doc to talk about the new
 	fileformat version number.	
+
 
 2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
