@@ -1,3 +1,13 @@
+2002-09-06 Werner Hoch <werner.ho@gmx.de>
+	
+	* 74/: 74[56789]?-*: completed symbols (added net, pinlabels, ...)
+	       7492-1.sym, 7485-1.sym: corrected pin numbering
+	       74520-1.sym: corrected symbol, added 74520-2.sym without pwr pins
+	       74265-1.sym: marked as unrepairable, added 74265-2.sym 
+	       7491-1.sym: corrected pinnumber of clk
+	       7495-1.sym: marked as bad, added 7495-2.sym
+	       7497-1.sym: marked as bad, added 7497-2.sym
+	
 2002-09-04 Werner Hoch <werner.ho@gmx.de>
 
 	* 74/: repaired 74114-1.sym, 74123-1.sym, 74125-1.sym, 74126-1.sym 
