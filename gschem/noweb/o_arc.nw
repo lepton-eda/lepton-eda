@@ -900,6 +900,8 @@ The two angles needs to be input to fully define the arc.
 void
 o_arc_end1(TOPLEVEL *w_current, int x, int y)
 {
+  int diff_x, diff_y;
+	
   if (w_current->inside_action == 0) {
     o_redraw(w_current, w_current->page_current->object_head);
     return;
@@ -908,10 +910,16 @@ o_arc_end1(TOPLEVEL *w_current, int x, int y)
   /* erases the previous temporary radius segment */
   o_arc_rubberarc_xor(w_current);
 
-  /* compute the radius, i.e. the distance */
   w_current->last_x = fix_x(w_current, x);
   w_current->last_y = fix_y(w_current, y);
-  w_current->distance = GET_DISTANCE(w_current);
+  /* compute the radius */
+  diff_x = GET_BOX_WIDTH (w_current);
+  diff_y = GET_BOX_HEIGHT(w_current);
+  if (diff_x >= diff_y) {
+	  w_current->distance = diff_x;
+  } else {
+	  w_current->distance = diff_y;
+  }
 
   /* ack! zero length radius */
   if (w_current->distance == 0) {
@@ -1085,7 +1093,7 @@ o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle)
 				&x1, &y1);
 
   /* get the radius in world coords */
-  radius = WORLDabs(w_current, w_current->distance);
+  radius = snap_grid(w_current, WORLDabs(w_current, w_current->distance));
 
   /* create, initialize and link the new arc object */
   w_current->page_current->object_tail =

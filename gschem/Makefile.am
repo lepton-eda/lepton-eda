@@ -7,7 +7,7 @@ EXTRA_DIST = config.rpath VOCABULARY BUGS guile.m4
 #proto:
 #	(cd src ; ./create_proto)
 
-dist-clean-local:
+distclean-local:
 	-rm -rf autom4te.cache
 
 maintainer-clean-local:

@@ -582,7 +582,7 @@
 
 ; image-color string
 ;
-; Controls if image (gif) is color (enabled) or black/white (disabled)
+; Controls if image (png) is color (enabled) or black/white (disabled)
 ;
 (image-color "enabled")
 ;(image-color "disabled")
