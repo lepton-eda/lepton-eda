@@ -64,6 +64,12 @@ prototype.h: $(gschem_SOURCES)
 	$(CPROTO) $(ALES_HACK) $(CPROTOCFLAGS) *.c > new_proto
 	mv new_proto ../include/prototype.h
 
+potfiles:
+	rm -f po/$(PACKAGE).pot
+	@mv -f po/POTFILES.in po/POTFILES.in~ ; true
+	grep '\([^A-Za-z0-9_]_(\)\|\(^_(\)\|\(gettext[[:blank:]]*(\)' \
+	noweb/*.nw | cut -d: -f1 | sort -u >po/POTFILES.in
+	$(MAKE)
 
 MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
 CLEANFILES = *.log core FILE *~ prototype.bak
