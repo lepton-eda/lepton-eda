@@ -1,10 +1,8 @@
 /* g_rc.c */
-void set_static_project_current(TOPLEVEL *pr_current);
 char *g_rc_parse_path(void);
-void g_rc_parse(TOPLEVEL *pr_current);
+void g_rc_parse(void);
 SCM g_rc_gsymcheck_version(SCM version);
 SCM g_rc_default_series_name(SCM name);
-SCM g_rc_untitled_name(SCM name);
 SCM g_rc_component_library(SCM path);
 SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
@@ -12,7 +10,7 @@ SCM g_rc_source_library_search(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
 SCM g_rc_bitmap_directory(SCM path);
-SCM g_rc_paper_size(SCM width, SCM height, SCM border);
+SCM g_rc_world_size(SCM width, SCM height, SCM border);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);
@@ -22,6 +20,9 @@ void s_log_update(char *buf);
 void gsymcheck_quit(void);
 void main_prog(int argc, char *argv[]);
 int main(int argc, char *argv[]);
+/* i_vars.c */
+void i_vars_set(TOPLEVEL *pr_current);
+void i_vars_setnames(TOPLEVEL *w_current);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);

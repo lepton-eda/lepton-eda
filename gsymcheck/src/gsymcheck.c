@@ -95,10 +95,11 @@ main_prog(int argc, char *argv[])
   s_clib_init();
   s_slib_init();
 
+  g_rc_parse();
+
   s_project_add_head();
-
   pr_current = s_project_create_new();
-
+  
   i = argv_index;
   
   while (argv[i] != NULL) {

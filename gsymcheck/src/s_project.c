@@ -17,6 +17,15 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/* README README README README README README README
+ * 
+ * This file is no longer being used.  All the functionality is now in
+ * libgeda.  DO NOT EDIT... Make all s_project_* changes in
+ * libgeda/noweb/s_project.nw
+ *
+ * README README README README README README README
+ */
+
 #include <config.h>
 
 #include <stdio.h>

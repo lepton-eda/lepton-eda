@@ -1,3 +1,25 @@
+2002-09-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Update file to the one that gnetlist uses (which is
+	a little bit more polished)
+
+	* src/g_register.c: Updates to take above into account
+
+	* src/globals.c: Added variable_set_func and quit_func.  These are
+	used by libgeda and gsymcheck.
+
+	* src/gsymcheck.c: Rearranged a few function calls for the new 
+	g_rc mechanism (and the s_project_* function which are now in 
+	libgeda)
+
+	* src/s_project.c: Obsoleted file.  This file is no longer in use.
+
+	* src/i_vars.c, include/i_vars.h: Added these files, needed by the
+	new g_rc mechanism.
+
+	* lib/system-gsymcheckrc.in: Removed untitled-series keyword and
+	add world-size keyword.
+	
 2002-09-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_check.c: Put in a check for numslots=0 (slotting checks 

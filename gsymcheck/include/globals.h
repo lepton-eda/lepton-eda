@@ -39,7 +39,7 @@ extern GdkColor darkcyan;
 extern GdkColor darkblue;
 extern GdkColor darkgrey; 
 
-extern char rc_filename[256]; /* size is hack */
+extern char *rc_filename; 
 
 extern int logfile_fd;
 extern int do_logging;
