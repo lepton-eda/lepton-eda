@@ -941,6 +941,23 @@ SCM g_get_calling_flags()
 }
 
 
+/* -------------------------------------------------------------------- *
+ * This fcn returns the command line with which gnetlist was invoked.
+ * It is used to write the first line of a SPICE file when netlisting 
+ * to SPICE.
+ * SDB -- 8.22.2004.
+ * -------------------------------------------------------------------- */
+SCM g_get_command_line()
+{
+     SCM commandline;
+
+     commandline = gh_str2scm(command_line, strlen(command_line) );
+
+     return (commandline);
+}
+
+
+
 /* 
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)
  */

@@ -32,7 +32,6 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-
 void gnetlist_quit(void)
 {
     s_clib_cache_free();
@@ -74,6 +73,10 @@ void main_prog(int argc, char *argv[])
     if (guile_proc) {
 	if (strncmp(guile_proc, "spice", 5) == 0) {
 	    netlist_mode = SPICE;
+	    command_line = create_command_line(argc, argv);
+
+	    printf("Command line passed = %s \n", command_line);
+
 	}
     }
 

@@ -94,6 +94,9 @@ void g_register_funcs(void)
 
   /* SDB -- 9.1.2003 */
   gh_new_procedure0_0("gnetlist:get-calling-flags", g_get_calling_flags);
+
+  /* SDB -- 8.22.2004 */
+  gh_new_procedure0_0("gnetlist:get-command-line", g_get_command_line);
 }
 
 SCM g_quit(void)

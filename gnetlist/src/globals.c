@@ -78,4 +78,6 @@ GSList *pre_backend_list=NULL;
 /* execution of the backend procedure */
 GSList *post_backend_list=NULL;
 
+/* String holding command line */
+char *command_line;
 
