@@ -163,3 +163,32 @@
 (define (print . l)
     (apply print-to-port (cons (current-output-port) l)))
 
+;;
+;; Split a string into lines no longer than split-length
+;; (from Stefan Petersen)
+(define (split string-to-split split-length)
+  (if (> split-length (string-length string-to-split))
+      (display string-to-split) ; Last snippet of string
+      (let ((pos (string-rindex string-to-split #\space 0 split-length)))
+	(cond ((not pos)
+	       (display "Couldn't split at requested position\n"))
+	      (else
+	       (display (string-append (substring string-to-split 0 pos) 
+				       " \\"))
+	       (newline)
+	       (split (substring string-to-split (+ pos 1)) split-length))))))
+
+;; example use
+; (define (run-test test-string split-len)
+;   (display (string-append "Splitting \"" test-string "\" into "))
+;   (display split-len)
+;   (newline)
+;   (split test-string split-len)
+;   (newline)
+;   (newline))
+
+; (run-test "one two three four five six seven eight nine ten" 5)
+; (run-test "one two three four five six seven eight nine ten" 10)
+; (run-test "one two three four five six seven eight nine ten" 20)
+
+
