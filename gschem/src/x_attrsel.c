@@ -37,7 +37,7 @@ static const gchar *list_item_data_key = "list_item_data";
 void
 setup_attr_selector (TOPLEVEL *w_current)
 {
-	attrib_edit_dialog(w_current,NULL);
+	attrib_edit_dialog(w_current,NULL, FROM_MENU);
 }
 
 gint
