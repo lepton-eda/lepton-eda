@@ -282,10 +282,12 @@ setup_place_file_selector (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->cswindow);
 
+#if 0 /* this was causing the dialog box to not die */
 		gtk_signal_connect(GTK_OBJECT(w_current->cswindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->cswindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW(w_current->cswindow),
 				     "Select Component");

@@ -231,10 +231,12 @@ setup_page_selector (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->pswindow);
 
+#if 0 /* this was causing the dialog box to not die */
 		gtk_signal_connect(GTK_OBJECT (w_current->pswindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->pswindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW(w_current->pswindow),
 				     "Page Manager");

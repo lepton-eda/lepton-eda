@@ -146,10 +146,12 @@ setup_open_file_selector (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->fowindow);
 
+#if 0 /* this was causing the dialog box to not die */
 		gtk_signal_connect(GTK_OBJECT (w_current->fowindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->fowindow);
+#endif
 
 		/* TODO: consistant function names for connect
 		 * connect_object */
@@ -285,10 +287,12 @@ setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->fswindow);
 
+#if 0 /* this was causing this dialog box to not die */
 		gtk_signal_connect(GTK_OBJECT(w_current->fswindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->fswindow);
+#endif
 
 		gtk_signal_connect(GTK_OBJECT(
 			GTK_FILE_SELECTION(w_current->fswindow)->ok_button),

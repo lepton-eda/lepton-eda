@@ -201,6 +201,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->tswindow = NULL;
 	w_current->pswindow = NULL;
 	w_current->pwindow = NULL;
+	w_current->iwindow = NULL;
 	w_current->abwindow = NULL;
 	w_current->hkwindow = NULL;
 	w_current->cowindow = NULL;
@@ -795,8 +796,29 @@ x_window_close(TOPLEVEL *w_current)
 	if (w_current->pswindow)
 		gtk_widget_destroy(w_current->pswindow);
 
+	if (w_current->exwindow)
+		gtk_widget_destroy(w_current->exwindow);
+
+	if (w_current->tswindow)
+		gtk_widget_destroy(w_current->tswindow);
+
 	if (w_current->abwindow)
 		gtk_widget_destroy(w_current->abwindow);
+
+	if (w_current->iwindow)
+		gtk_widget_destroy(w_current->iwindow);
+
+	if (w_current->pwindow)
+		gtk_widget_destroy(w_current->pwindow);
+
+	if (w_current->hkwindow)
+		gtk_widget_destroy(w_current->hkwindow);
+
+	if (w_current->cowindow)
+		gtk_widget_destroy(w_current->cowindow);
+
+	if (w_current->clwindow)
+		gtk_widget_destroy(w_current->clwindow);
 
 	o_attrib_free_current(w_current);
         o_complex_free_filename(w_current);

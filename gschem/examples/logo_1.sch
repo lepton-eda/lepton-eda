@@ -1,9 +1,9 @@
-v 19990327
+v 19990919
 C 11700 15700 1 0 0 7408-1.sym
 N 11700 16400 10700 16400 4
 {
 T 10800 16500 5 20 1 0 0
-GNU
+GPL
 }
 N 11700 16000 10700 16000 4
 {
@@ -16,5 +16,5 @@ T 13300 16200 5 40 1 0 0
 gEDA
 }
 T 8600 13800 9 30 1 0 0
-GNU Electronic Design Automation
+GPL Electronic Design Automation
 C 7500 10500 0 0 0 title-A.sym

@@ -9,6 +9,17 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/21/99 Fixed all the dialog boxes so that they listened to the WM_DELETE
+	signal from the window manager
+
+	Forgot to init iwindow to NULL
+
+	Added a few gtk_widget_destroys to x_window_close which I forgot to
+	add when I created the dialog boxes 
+
+9/20/99	Changed the project logo to GPL Electronic Design Automation instead
+	of GNU ...
+
 9/19/99 Make sure gschem runs with guile-1.3.2a
 
 	Misplaced a bracket in x_event.c (gschem would not build if you

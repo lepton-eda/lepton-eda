@@ -135,10 +135,12 @@ text_input_dialog (TOPLEVEL *w_current)
 				   "destroy", GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tiwindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT (w_current->tiwindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tiwindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (w_current->tiwindow),
 				     "Enter Text");
@@ -270,13 +272,16 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size)
 				    GTK_WIN_POS_MOUSE);
 
 		gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
-				   "destroy", GTK_SIGNAL_FUNC(destroy_window),
-				   &w_current->tewindow);
-
-      		gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
-				   "delete_event",
+				   "destroy",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tewindow);
+
+#if 0 /* removed because it was causing the dialog box to not close */
+      		gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
+				   "delete_event",
+				   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
+				   &w_current->tewindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (w_current->tewindow),
 				     "Edit Text");
@@ -406,10 +411,12 @@ exit_dialog (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->exwindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT(w_current->exwindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->exwindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW(w_current->exwindow),
 				     "Discard Changes?");
@@ -509,10 +516,12 @@ arc_angle_dialog (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->aawindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT(w_current->aawindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->aawindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW(w_current->aawindow),
 				     "Arc Params");
@@ -635,10 +644,12 @@ translate_dialog (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->trwindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT (w_current->trwindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->trwindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (w_current->trwindow),
 				     "Translate");
@@ -747,10 +758,12 @@ text_size_dialog (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tswindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT (w_current->tswindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tswindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
 				     "Text Size");
@@ -860,10 +873,12 @@ snap_size_dialog (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tswindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tswindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
 				     "Snap Grid");
@@ -984,10 +999,12 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 				   "destroy", GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tewindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->tewindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (w_current->tewindow),
 				     "Edit slot number");
@@ -1081,10 +1098,12 @@ about_dialog (TOPLEVEL *w_current)
 				    "destroy", GTK_SIGNAL_FUNC(destroy_window),
                           	    &w_current->abwindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect (GTK_OBJECT (w_current->abwindow),
 				    "delete_event",
 				    GTK_SIGNAL_FUNC(destroy_window),
                           	    &w_current->abwindow);
+#endif
 
 		sprintf(string, "gEDA : GNU Electronic Design Automation");
 		label = gtk_label_new (string);
@@ -1169,10 +1188,12 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
                                     "destroy", GTK_SIGNAL_FUNC(destroy_window),
                                     &w_current->cowindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
                 gtk_signal_connect (GTK_OBJECT (w_current->cowindow),
                                     "delete_event",
                                     GTK_SIGNAL_FUNC(destroy_window),
                                     &w_current->cowindow);
+#endif
 
                 vbox2 = gtk_vbox_new (FALSE, 5);
                 gtk_container_add (GTK_CONTAINER (w_current->cowindow), vbox2);
@@ -1440,10 +1461,12 @@ color_edit_dialog (TOPLEVEL *w_current)
                                     "destroy", GTK_SIGNAL_FUNC(destroy_window),
                                     &w_current->clwindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
                 gtk_signal_connect (GTK_OBJECT (w_current->clwindow),
                                     "delete_event",
                                     GTK_SIGNAL_FUNC(destroy_window),
                                     &w_current->clwindow);
+#endif
 
 		optionmenu = gtk_option_menu_new ();
                 gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
@@ -1552,10 +1575,12 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
 				    "destroy", GTK_SIGNAL_FUNC(destroy_window),
                           	    &w_current->hkwindow);
 
+#if 0 /* removed because it was causing the dialog box to not close */
       		gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
 				    "delete_event",
 				    GTK_SIGNAL_FUNC(destroy_window),
                           	    &w_current->hkwindow);
+#endif
 
       		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
       		gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 5);

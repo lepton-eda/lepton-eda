@@ -259,9 +259,11 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 			GTK_SIGNAL_FUNC(destroy_window),
 			&w_current->iwindow);
 
+#if 0 /* this was causing the dialog box to not die */
 		gtk_signal_connect (GTK_OBJECT (w_current->iwindow), "delete_event",
 			GTK_SIGNAL_FUNC(destroy_window),
 			&w_current->iwindow);
+#endif
 
 		gtk_window_set_title (GTK_WINDOW (w_current->iwindow), "Write Image...");
 

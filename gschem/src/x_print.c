@@ -250,10 +250,12 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->pwindow);
 
+#if 0 /* this was causing the dialog box to not die */
 		gtk_signal_connect(GTK_OBJECT (w_current->pwindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->pwindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW(w_current->pwindow),
 				     "Print...");

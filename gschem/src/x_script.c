@@ -89,10 +89,12 @@ setup_script_selector (TOPLEVEL *w_current)
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->sowindow);
 
+#if 0 /* this was causing the dialog box to not die */
 		gtk_signal_connect(GTK_OBJECT(w_current->sowindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &w_current->sowindow);
+#endif
 
 		/* TODO: consistant function names for connect
 		 * connect_object */

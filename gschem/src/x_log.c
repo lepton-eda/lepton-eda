@@ -171,10 +171,12 @@ x_log_setup_win (TOPLEVEL *w_current)
 				   "destroy", GTK_SIGNAL_FUNC(destroy_window),
 				   &stwindow);
 
+#if 0 /* this was causing the dialog box to not die */
       		gtk_signal_connect(GTK_OBJECT (stwindow),
 				   "delete_event",
 				   GTK_SIGNAL_FUNC(destroy_window),
 				   &stwindow);
+#endif
 
 		gtk_window_set_title(GTK_WINDOW (stwindow),
 				     "Status");
