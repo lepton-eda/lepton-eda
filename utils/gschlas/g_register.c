@@ -43,12 +43,12 @@ void
 g_register_funcs(void)
 {
   /* general functions */
-  gh_new_procedure0_0 ("quit", g_quit);
-  gh_new_procedure0_0 ("exit", g_quit);
+  scm_c_define_gsubr ("quit", 0, 0, 0, g_quit);
+  scm_c_define_gsubr ("exit", 0, 0, 0, g_quit);
 
   /* gsymcheckrc functions */
-  gh_new_procedure1_0 ("gschlas-version", g_rc_gschlas_version);
-  gh_new_procedure1_0 ("force-boundingbox", g_rc_force_boundingbox);
+  scm_c_define_gsubr ("gschlas-version", 1, 0, 0, g_rc_gschlas_version);
+  scm_c_define_gsubr ("force-boundingbox", 1, 0, 0, g_rc_force_boundingbox);
 }
 
 SCM

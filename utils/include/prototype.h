@@ -8,7 +8,7 @@ SCM g_quit(void);
 void o_select_dummy(TOPLEVEL *w_current, OBJECT *o_current, int type, int count);
 /* gschlas.c */
 void gschlas_quit(void);
-void main_prog(int argc, char *argv[]);
+void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_vars.c */
 void i_vars_set(TOPLEVEL *pr_current);
