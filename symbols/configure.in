@@ -195,7 +195,6 @@ AC_CONFIG_FILES([
 	diode/Makefile 
 	opto/Makefile 
 	national/Makefile
-	winfonts/Makefile
 	system-commonrc
         gesym-config ])
 AC_CONFIG_COMMANDS([gesym-config],[[chmod +x gesym-config]],[[]])

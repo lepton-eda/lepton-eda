@@ -45,82 +45,87 @@ if ($numArgs < 1) {
 }
 
 foreach $filename (@ARGV) {
-   
-    rename ($filename, "$filename.old");
-    print "Updating: $filename (backup: $filename.old)\n";
 
-    open (FILE, "$filename.old") || die "Cannot open input file: $filename.old Exiting.\n";
-    open (NEWFILE, ">$filename") || die "Cannot open output file: $filename Exiting.\n";
+    if (-r "$filename.old") { 
+        print "Found backup file: $filename.old).  Not gsymUpdating $filename\n";
+    } else {
 
-    while (<FILE>) {
+        rename ($filename, "$filename.old");
+        print "gsymUpdating: $filename (backup: $filename.old)\n";
 
-        # handle text objects
-        if (/^T/) { 
+        open (FILE, "$filename.old") || die "Cannot open input file: $filename.old Exiting.\n";
+        open (NEWFILE, ">$filename") || die "Cannot open output file: $filename Exiting.\n";
 
-            $textcmd = $_;
+        while (<FILE>) {
 
-            $textline = <FILE>;
+            # handle text objects
+            if (/^T/) { 
 
-            # are we dealing with an attribute?
-            if ($textline =~ /=/) {  
+                $textcmd = $_;
 
-                # Break the attribute up into name=value
-                @attrib = split(/=/,$textline);
-                $name=@attrib[0];
-                $value=@attrib[1];
+                $textline = <FILE>;
 
-                if ($name =~ /^slot[0-9]+/) {
+                # are we dealing with an attribute?
+                if ($textline =~ /=/) {  
 
-                    # It is a slot#=# attribute
-                    @slotnum = split(/slot/,$name);
-                    print NEWFILE $textcmd;
-                    print NEWFILE "slotdef=@slotnum[1]:$value";
+                    # Break the attribute up into name=value
+                    @attrib = split(/=/,$textline);
+                    $name=@attrib[0];
+                    $value=@attrib[1];
 
-                } elsif ($name =~ /^pin[0-9]+/) {
+                    if ($name =~ /^slot[0-9]+/) {
 
-                    # It is a pin#=# attribute
-                    print NEWFILE $textcmd;
-                    print NEWFILE "pinnumber=$value";
+                        # It is a slot#=# attribute
+                        @slotnum = split(/slot/,$name);
+                        print NEWFILE $textcmd;
+                        print NEWFILE "slotdef=@slotnum[1]:$value";
 
-                    @pinseq = split(/pin/,$name);
-                    # need to post process textcmd here to hide text
-                    $newtextcmd = $textcmd;
-                    chop($newtextcmd);
-                    @textsplit = split(" ",$textcmd);
-                    
-                    # Hide this new attribute by changing the 5th value to 0
-                    # Also show both the name and value for the pinseq attrib
-                    print NEWFILE "@textsplit[0] @textsplit[1] @textsplit[2] @textsplit[3] @textsplit[4] 0 0 @textsplit[7] @textsplit[8]\n";
-                    print NEWFILE "pinseq=@pinseq[1]\n";
+                    } elsif ($name =~ /^pin[0-9]+/) {
 
-                } elsif ($name =~ /^uref/) {
+                        # It is a pin#=# attribute
+                        print NEWFILE $textcmd;
+                        print NEWFILE "pinnumber=$value";
 
-                    # It is a uref= attribute, convert to refdes=
-                    print NEWFILE $textcmd;
-                    print NEWFILE "refdes=$value";
+                        @pinseq = split(/pin/,$name);
+                        # need to post process textcmd here to hide text
+                        $newtextcmd = $textcmd;
+                        chop($newtextcmd);
+                        @textsplit = split(" ",$textcmd);
+
+                        # Hide this new attribute by changing the 5th value to 0
+                        # Also show both the name and value for the pinseq attrib
+                        print NEWFILE "@textsplit[0] @textsplit[1] @textsplit[2] @textsplit[3] @textsplit[4] 0 0 @textsplit[7] @textsplit[8]\n";
+                        print NEWFILE "pinseq=@pinseq[1]\n";
+
+                    } elsif ($name =~ /^uref/) {
+
+                        # It is a uref= attribute, convert to refdes=
+                        print NEWFILE $textcmd;
+                        print NEWFILE "refdes=$value";
+
+                    } else {
+                        # none of the above, just pass it through
+                        print NEWFILE $textcmd;
+                        print NEWFILE $textline;
+                    }
+
 
                 } else {
-                    # none of the above, just pass it through
+                    # not an attribute
                     print NEWFILE $textcmd;
                     print NEWFILE $textline;
                 }
 
-
             } else {
-                # not an attribute
-                print NEWFILE $textcmd;
-                print NEWFILE $textline;
+                # It is not a text, version, or pin object, so pass it through
+                print NEWFILE;
             }
 
-        } else {
-            # It is not a text, version, or pin object, so pass it through
-            print NEWFILE;
         }
+        close $FILE;
+        close $NEWFILE;
 
     }
-    close $FILE;
-    close $NEWFILE;
-
 }
 
 

@@ -8,11 +8,13 @@ L 700 200 800 100 3 0 0 0 -1 -1
 P 1000 100 800 100 1
 {
 T 125 36 5 10 1 1 0 0
-pin1=IOPAD
+pinnumber=IOPAD
+T 125 36 5 10 0 0 0 0
+pinseq=1
 T 125 36 5 10 0 1 0 0
 type=INOUT
 }
 T 113 221 2 10 0 1 0 0
 device=IOPAD
 T 800 100 5 10 1 1 0 0
-uref=P?
+refdes=P?

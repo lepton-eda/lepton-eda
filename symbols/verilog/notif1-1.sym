@@ -7,17 +7,23 @@ V 850 500 50 6
 P 300 500 0 500 1
 {
 T 0 550 5 8 0 1 0 0
-pin2=INW
+pinnumber=INW
+T 0 550 5 8 0 0 0 0
+pinseq=2
 }
 P 1100 500 900 500 1
 {
 T 915 550 5 8 0 1 0 0
-pin1=OUTW
+pinnumber=OUTW
+T 915 550 5 8 0 0 0 0
+pinseq=1
 }
 P 0 900 550 900 1
 {
 T 50 950 5 10 0 1 0 0
-pin3=CONTROLW
+pinnumber=CONTROLW
+T 50 950 5 10 0 0 0 0
+pinseq=3
 }
 L 550 900 550 650 3
 T 700 750 2 10 0 0 0 0
@@ -25,4 +31,4 @@ VERILOG_PORTS=POSITIONAL
 T 650 250 2 10 0 1 0 0
 device=notif1
 T 500 300 5 10 1 1 0 2
-uref=U?
+refdes=U?

@@ -43,62 +43,66 @@ if ($numArgs < 1) {
 
 foreach $filename (@ARGV) {
 
-    rename ($filename, "$filename.old");
-    print "Updating: $filename (backup: $filename.old)\n";
+    if (-r "$filename.old") { 
+      print "Found backup file: $filename.old).  Not gschUpdating $filename\n";
+    } else {
+        rename ($filename, "$filename.old");
+        print "gschUpdating: $filename (backup: $filename.old)\n";
 
-    open (FILE, "$filename.old") || die "Cannot open input file: $filename.old  Exiting.\n";
+        open (FILE, "$filename.old") || die "Cannot open input file: $filename.old  Exiting.\n";
     open (NEWFILE, ">$filename") || die "Cannot open output file: $filename Exiting.\n";
 
-    while (<FILE>) {
+        while (<FILE>) {
 
-        # handle text objects
-        if (/^T/) { 
+            # handle text objects
+            if (/^T/) { 
 
-            $textcmd = $_;
+                $textcmd = $_;
 
-            $textline = <FILE>;
+                $textline = <FILE>;
 
-            # are we dealing with an attribute?
-            if ($textline =~ /=/) {  
+                # are we dealing with an attribute?
+                if ($textline =~ /=/) {  
 
-                # Break the attribute up into name=value
-                @attrib = split(/=/,$textline);
-                $name=@attrib[0];
-                $value=@attrib[1];
+                    # Break the attribute up into name=value
+                    @attrib = split(/=/,$textline);
+                    $name=@attrib[0];
+                    $value=@attrib[1];
 
-                if ($name =~ /^label/) {
+                    if ($name =~ /^label/) {
 
-                    # It is a label attribute
-                    print NEWFILE $textcmd;
-                    print NEWFILE "netname=$value";
+                        # It is a label attribute
+                        print NEWFILE $textcmd;
+                        print NEWFILE "netname=$value";
 
-                } elsif ($name =~ /^uref/) {
+                    } elsif ($name =~ /^uref/) {
 
-                    # It is a uref= attribute, convert to refdes=
-                    print NEWFILE $textcmd;
-                    print NEWFILE "refdes=$value";
+                        # It is a uref= attribute, convert to refdes=
+                        print NEWFILE $textcmd;
+                        print NEWFILE "refdes=$value";
+
+                    } else {
+                        # none of the above, just pass it through
+                        print NEWFILE $textcmd;
+                        print NEWFILE $textline;
+                    }
 
                 } else {
-                    # none of the above, just pass it through
+                    # not an attribute
                     print NEWFILE $textcmd;
                     print NEWFILE $textline;
-		}
+                }
 
             } else {
-                # not an attribute
-                print NEWFILE $textcmd;
-                print NEWFILE $textline;
+                # It is not a text, so pass it through
+                print NEWFILE;
             }
 
-        } else {
-            # It is not a text, so pass it through
-            print NEWFILE;
         }
+        close $FILE;
+        close $NEWFILE;
 
     }
-    close $FILE;
-    close $NEWFILE;
-
 }
 
 

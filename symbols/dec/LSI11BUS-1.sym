@@ -365,4 +365,4 @@ BDAL15 L
 T 4800 15700 5 10 0 0 0 0
 device=LSI11BUS
 T 3500 15700 8 10 1 1 0 6
-uref=U?
+refdes=U?

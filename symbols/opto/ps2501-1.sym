@@ -2,28 +2,36 @@ v 20001217
 T 100 500 5 6 0 1 0 0
 device=PS2501-1
 T 100 500 5 6 1 1 0 0
-uref=ISO?
+refdes=ISO?
 P 100 400 100 300 1
 {
 T 100 200 3 6 0 1 0 0
-pin1=1
+pinnumber=1
+T 100 200 3 6 0 0 0 0
+pinseq=1
 }
 P 100 100 100 0 1
 {
 T 110 -50 3 6 0 1 0 0
-pin2=2
+pinnumber=2
+T 110 -50 3 6 0 0 0 0
+pinseq=2
 }
 P 500 400 500 300 1
 {
 T 500 200 3 6 0 1 0 0
-pin4=4
+pinnumber=4
+T 500 200 3 6 0 0 0 0
+pinseq=4
 T 137 400 3 6 0 1 0 0
 pinlabel=COLLECTOR
 }
 P 500 100 500 0 1
 {
 T 510 -50 3 6 0 1 0 0
-pin3=3
+pinnumber=3
+T 510 -50 3 6 0 0 0 0
+pinseq=3
 T 510 -50 3 6 0 1 0 0
 pinlabel=EMITTER
 }

@@ -6,20 +6,26 @@ A 700 300 300 -90 180 3
 P 1000 300 1300 300 1
 {
 T 1000 300 5 8 0 0 0 0
-pin1=OUT
+pinnumber=OUT
+T 1000 300 5 8 0 0 0 0
+pinseq=1
 }
 P 300 100 0 100 1
 {
 T 300 100 5 8 0 0 0 0
-pin2=IN0
+pinnumber=IN0
+T 300 100 5 8 0 0 0 0
+pinseq=2
 }
 P 300 500 0 500 1
 {
 T 300 500 5 8 0 0 0 0
-pin3=IN1
+pinnumber=IN1
+T 300 500 5 8 0 0 0 0
+pinseq=3
 }
 T 400 -100 5 10 1 1 0 2
-uref=U?
+refdes=U?
 T 400 100 5 8 0 0 0 0
 device=and
 T 400 200 5 8 0 0 0 0

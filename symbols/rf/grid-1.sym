@@ -22,5 +22,5 @@ S21=on
 T 800 1700 8 10 0 1 0 0
 device=VIPEC-GRID
 T 0 0 8 10 1 1 0 0
-uref=GRID1
+refdes=GRID1
 B 0 200 4400 3200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

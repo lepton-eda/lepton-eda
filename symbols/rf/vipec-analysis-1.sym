@@ -4,7 +4,9 @@ P 2200 300 2200 0 1
 T 2000 400 5 10 1 1 0 0
 name=GND
 T 2300 100 5 10 0 1 0 0
-pin1=1
+pinnumber=1
+T 2300 100 5 10 0 0 0 0
+pinseq=1
 }
 T 700 3300 8 10 1 0 0 0
 Fo=1GHz
@@ -43,4 +45,4 @@ Zo=50
 T 1800 3700 8 10 0 1 0 0
 device=VIPEC
 T 0 0 8 10 0 1 0 0
-uref=ANAL
+refdes=ANAL

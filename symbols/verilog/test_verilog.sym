@@ -9,7 +9,9 @@ INPUT
 P 300 600 0 600 1
 {
 T -280 650 5 8 1 1 0 0
-pin1=INPUT
+pinnumber=INPUT
+T -280 650 5 8 0 0 0 0
+pinseq=1
 }
 T 874 550 9 8 1 0 0 0
 OUTPUT
@@ -17,5 +19,7 @@ V 1550 600 50 6
 P 1600 600 1800 600 1
 {
 T 1600 650 5 8 1 1 0 0
-pin2=OUTPUT
+pinnumber=OUTPUT
+T 1600 650 5 8 0 0 0 0
+pinseq=2
 }

@@ -11,47 +11,59 @@ V 1050 500 50 6
 P 1100 500 1300 500 1
 {
 T 1000 500 5 8 0 0 0 0
-pin1=OUT0
+pinnumber=OUT0
+T 1000 500 5 8 0 0 0 0
+pinseq=1
 T 1000 500 5 8 0 0 0 0
 type=OUT
 }
 P 300 100 0 100 1
 {
 T 300 100 5 8 0 0 0 0
-pin2=IN0
+pinnumber=IN0
+T 300 100 5 8 0 0 0 0
+pinseq=2
 T 300 100 5 8 0 0 0 0
 type=IN
 }
 P 300 300 0 300 1
 {
 T 300 300 5 8 0 0 0 0
-pin3=IN1
+pinnumber=IN1
+T 300 300 5 8 0 0 0 0
+pinseq=3
 T 300 300 5 8 0 0 0 0
 type=IN
 }
 P 300 500 0 500 1
 {
 T 300 500 5 8 0 0 0 0
-pin4=IN2
+pinnumber=IN2
+T 300 500 5 8 0 0 0 0
+pinseq=4
 T 300 500 5 8 0 0 0 0
 type=IN
 }
 P 300 700 0 700 1
 {
 T 300 700 5 8 0 0 0 0
-pin5=IN3
+pinnumber=IN3
+T 300 700 5 8 0 0 0 0
+pinseq=5
 T 300 700 5 8 0 0 0 0
 type=IN
 }
 P 300 900 0 900 1
 {
 T 300 900 5 8 0 0 0 0
-pin6=IN4
+pinnumber=IN4
+T 300 900 5 8 0 0 0 0
+pinseq=6
 T 300 900 5 8 0 0 0 0
 type=IN
 }
 T 400 100 5 10 1 1 0 2
-uref=U?
+refdes=U?
 T 400 100 5 8 0 0 0 0
 device=xnor5
 T 400 200 5 8 0 0 0 0

@@ -10,4 +10,4 @@ device=LOW
 L 100 50 300 50 3
 L 150 0 250 0 3
 T 300 200 5 10 1 1 0 0
-uref=G?
+refdes=G?

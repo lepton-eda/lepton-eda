@@ -5,35 +5,45 @@ V 375 400 25 3 0 0 0 -1 -1 0 0 -1 -1 -1 -1
 P 0 400 300 400 1
 {
 T 178 420 3 6 1 1 0 0
-pin6=6
+pinnumber=6
+T 178 420 3 6 0 0 0 0
+pinseq=6
 T 350 400 3 6 0 1 0 0
 pinlabel=COMMON2
 }
 P 700 500 1000 500 1
 {
 T 750 520 3 6 1 1 0 0
-pin1=1
+pinnumber=1
+T 750 520 3 6 0 0 0 0
+pinseq=1
 T 650 500 3 6 0 1 0 0
 pinlabel=NC2
 }
 P 700 300 1000 300 1
 {
 T 750 320 3 6 1 1 0 0
-pin10=10
+pinnumber=10
+T 750 320 3 6 0 0 0 0
+pinseq=10
 T 650 300 3 6 0 1 0 0
 pinlabel=NO2
 }
 P 0 200 300 200 1
 {
 T 202 220 3 6 1 1 0 0
-pin2=2
+pinnumber=2
+T 202 220 3 6 0 0 0 0
+pinseq=2
 T 350 200 3 6 0 1 0 0
 pinlabel=COIL1
 }
 P 0 100 300 100 1
 {
 T 184 120 3 6 1 1 0 0
-pin9=9
+pinnumber=9
+T 184 120 3 6 0 0 0 0
+pinseq=9
 T 350 100 3 6 0 1 0 0
 pinlabel=COIL2
 }
@@ -79,4 +89,4 @@ L 350 400 300 400 3 0 0 0 -1 -1
 T 300 700 8 8 1 1 0 1
 device=OMRON G5V-1
 T 300 800 8 10 1 1 0 0
-uref=K?
+refdes=K?

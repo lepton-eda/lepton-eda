@@ -2,11 +2,13 @@ v 20001006
 T 300 1100 5 6 0 1 0 0
 device=RPAK_CTS
 T 300 1000 5 6 1 1 0 0
-uref=R?
+refdes=R?
 P 0 800 300 800 1
 {
 T 202 820 3 6 0 1 0 0
-pin1=1
+pinnumber=1
+T 202 820 3 6 0 0 0 0
+pinseq=1
 T 202 820 3 6 0 0 0 0
 pintype=PAS
 T 350 800 3 6 0 1 0 0
@@ -15,7 +17,9 @@ pinlabel=R1
 P 700 800 1000 800 1
 {
 T 750 820 3 6 0 1 0 0
-pin16=16
+pinnumber=16
+T 750 820 3 6 0 0 0 0
+pinseq=16
 T 750 820 3 6 0 0 0 0
 pintype=PAS
 T 650 800 3 6 0 1 0 0
@@ -24,7 +28,9 @@ pinlabel=R1A
 P 0 700 300 700 1
 {
 T 172 720 3 6 0 1 0 0
-pin2=2
+pinnumber=2
+T 172 720 3 6 0 0 0 0
+pinseq=2
 T 172 720 3 6 0 0 0 0
 pintype=PAS
 T 350 700 3 6 0 1 0 0
@@ -33,7 +39,9 @@ pinlabel=R2
 P 700 700 1000 700 1
 {
 T 750 720 3 6 0 1 0 0
-pin15=15
+pinnumber=15
+T 750 720 3 6 0 0 0 0
+pinseq=15
 T 750 720 3 6 0 0 0 0
 pintype=PAS
 T 650 700 3 6 0 1 0 0
@@ -42,7 +50,9 @@ pinlabel=R2A
 P 0 600 300 600 1
 {
 T 190 620 3 6 0 1 0 0
-pin3=3
+pinnumber=3
+T 190 620 3 6 0 0 0 0
+pinseq=3
 T 190 620 3 6 0 0 0 0
 pintype=PAS
 T 350 600 3 6 0 1 0 0
@@ -51,7 +61,9 @@ pinlabel=R3
 P 700 600 1000 600 1
 {
 T 750 620 3 6 0 1 0 0
-pin14=14
+pinnumber=14
+T 750 620 3 6 0 0 0 0
+pinseq=14
 T 750 620 3 6 0 0 0 0
 pintype=PAS
 T 650 600 3 6 0 1 0 0
@@ -60,7 +72,9 @@ pinlabel=R3A
 P 0 500 300 500 1
 {
 T 172 520 3 6 0 1 0 0
-pin4=4
+pinnumber=4
+T 172 520 3 6 0 0 0 0
+pinseq=4
 T 172 520 3 6 0 0 0 0
 pintype=PAS
 T 350 500 3 6 0 1 0 0
@@ -69,7 +83,9 @@ pinlabel=R4
 P 700 500 1000 500 1
 {
 T 750 520 3 6 0 1 0 0
-pin13=13
+pinnumber=13
+T 750 520 3 6 0 0 0 0
+pinseq=13
 T 750 520 3 6 0 0 0 0
 pintype=PAS
 T 650 500 3 6 0 1 0 0
@@ -78,7 +94,9 @@ pinlabel=R4A
 P 0 400 300 400 1
 {
 T 190 420 3 6 0 1 0 0
-pin5=5
+pinnumber=5
+T 190 420 3 6 0 0 0 0
+pinseq=5
 T 190 420 3 6 0 0 0 0
 pintype=PAS
 T 350 400 3 6 0 1 0 0
@@ -87,7 +105,9 @@ pinlabel=R5
 P 700 400 1000 400 1
 {
 T 750 420 3 6 0 1 0 0
-pin12=12
+pinnumber=12
+T 750 420 3 6 0 0 0 0
+pinseq=12
 T 750 420 3 6 0 0 0 0
 pintype=PAS
 T 650 400 3 6 0 1 0 0
@@ -96,7 +116,9 @@ pinlabel=R5A
 P 0 300 300 300 1
 {
 T 178 320 3 6 0 1 0 0
-pin6=6
+pinnumber=6
+T 178 320 3 6 0 0 0 0
+pinseq=6
 T 178 320 3 6 0 0 0 0
 pintype=PAS
 T 350 300 3 6 0 1 0 0
@@ -105,7 +127,9 @@ pinlabel=R6
 P 700 300 1000 300 1
 {
 T 750 320 3 6 0 1 0 0
-pin11=11
+pinnumber=11
+T 750 320 3 6 0 0 0 0
+pinseq=11
 T 750 320 3 6 0 0 0 0
 pintype=PAS
 T 650 300 3 6 0 1 0 0
@@ -114,7 +138,9 @@ pinlabel=R6A
 P 0 200 300 200 1
 {
 T 190 220 3 6 0 1 0 0
-pin7=7
+pinnumber=7
+T 190 220 3 6 0 0 0 0
+pinseq=7
 T 190 220 3 6 0 0 0 0
 pintype=PAS
 T 350 200 3 6 0 1 0 0
@@ -123,7 +149,9 @@ pinlabel=R7
 P 700 200 1000 200 1
 {
 T 750 220 3 6 0 1 0 0
-pin10=10
+pinnumber=10
+T 750 220 3 6 0 0 0 0
+pinseq=10
 T 750 220 3 6 0 0 0 0
 pintype=PAS
 T 650 200 3 6 0 1 0 0
@@ -132,7 +160,9 @@ pinlabel=R7A
 P 0 100 300 100 1
 {
 T 184 120 3 6 0 1 0 0
-pin8=8
+pinnumber=8
+T 184 120 3 6 0 0 0 0
+pinseq=8
 T 184 120 3 6 0 0 0 0
 pintype=PAS
 T 350 100 3 6 0 1 0 0
@@ -141,7 +171,9 @@ pinlabel=R8
 P 700 100 1000 100 1
 {
 T 750 120 3 6 0 1 0 0
-pin9=9
+pinnumber=9
+T 750 120 3 6 0 0 0 0
+pinseq=9
 T 750 120 3 6 0 0 0 0
 pintype=PAS
 T 650 100 3 6 0 1 0 0

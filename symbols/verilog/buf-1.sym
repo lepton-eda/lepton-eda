@@ -6,16 +6,20 @@ L 300 500 300 200 3
 P 1100 500 800 500 1
 {
 T 915 550 5 8 0 1 0 0
-pin1=OUT
+pinnumber=OUT
+T 915 550 5 8 0 0 0 0
+pinseq=1
 }
 P 300 500 0 500 1
 {
 T 100 550 5 8 0 1 0 0
-pin2=IN
+pinnumber=IN
+T 100 550 5 8 0 0 0 0
+pinseq=2
 }
 T 200 900 2 10 0 0 0 0
 VERILOG_PORTS=POSITIONAL
 T 200 1000 2 10 0 0 0 0
 device=buf
 T 500 300 5 10 1 1 0 2
-uref=U?
+refdes=U?

@@ -6,26 +6,34 @@ V 400 400 201 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 400 400 0 400 1
 {
 T 100 500 5 10 0 1 0 0
-pin1=left
+pinnumber=left
+T 100 500 5 10 0 0 0 0
+pinseq=1
 }
 P 2000 400 2200 400 1
 {
 T 2100 500 5 10 0 1 0 0
-pin3=right
+pinnumber=right
+T 2100 500 5 10 0 0 0 0
+pinseq=3
 }
 P 400 200 400 0 1
 {
 T 500 0 5 10 0 1 0 0
-pin2=left-ref
+pinnumber=left-ref
+T 500 0 5 10 0 0 0 0
+pinseq=2
 }
 P 1800 200 1800 0 1
 {
 T 1900 0 5 10 0 1 0 0
-pin4=right-ref
+pinnumber=right-ref
+T 1900 0 5 10 0 0 0 0
+pinseq=4
 }
 T 900 400 8 10 0 1 0 0
 device=T-Line
 T 1050 -50 8 10 1 1 0 0
-uref=W?
+refdes=W?
 T 200 700 8 10 1 1 0 0
 value=N=1 RLGCmodel=? L=?

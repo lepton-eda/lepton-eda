@@ -1,3 +1,8 @@
+2002-07-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* utils/gsymupdate, gschupdate: Added a check to not update if an
+	equivalant .old file is found
+
 2002-07-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/: Created new directory for non-compiled utils

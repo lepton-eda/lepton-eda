@@ -5,7 +5,9 @@ device=HIGH
 P 100 200 100 0 1
 {
 T 200 100 5 10 0 1 0 0
-pin1=HIGH
+pinnumber=HIGH
+T 200 100 5 10 0 0 0 0
+pinseq=1
 }
 T 200 200 5 10 1 1 0 0
-uref=H?
+refdes=H?

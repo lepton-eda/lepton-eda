@@ -11,22 +11,30 @@ L 500 400 400 450 3 0 0 0 -1 -1
 P 500 600 500 800 1
 {
 T 300 700 5 10 0 1 0 0
-pin1=D
+pinnumber=D
+T 300 700 5 10 0 0 0 0
+pinseq=1
 }
 P 500 400 700 400 1
 {
 T 600 500 5 10 0 1 0 0
-pin4=B
+pinnumber=B
+T 600 500 5 10 0 0 0 0
+pinseq=4
 }
 P 500 200 500 0 1
 {
 T 300 0 5 10 0 1 0 0
-pin3=S
+pinnumber=S
+T 300 0 5 10 0 0 0 0
+pinseq=3
 }
 P 200 400 0 400 1
 {
 T 0 500 5 10 0 1 0 0
-pin2=G
+pinnumber=G
+T 0 500 5 10 0 0 0 0
+pinseq=2
 }
 T 700 600 8 10 1 1 0 0
-uref=Q?
+refdes=Q?

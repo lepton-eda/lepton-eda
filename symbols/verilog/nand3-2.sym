@@ -7,28 +7,36 @@ A 600 200 400 90 -76 3
 P 1000 300 1300 300 1
 {
 T 1000 300 5 8 0 0 0 0
-pin1=OUT
+pinnumber=OUT
+T 1000 300 5 8 0 0 0 0
+pinseq=1
 }
 V 250 100 50 6
 P 200 100 0 100 1
 {
 T 300 100 5 8 0 0 0 0
-pin2=IN0
+pinnumber=IN0
+T 300 100 5 8 0 0 0 0
+pinseq=2
 }
 V 250 300 50 6
 P 200 300 0 300 1
 {
 T 300 300 5 8 0 0 0 0
-pin3=IN1
+pinnumber=IN1
+T 300 300 5 8 0 0 0 0
+pinseq=3
 }
 V 250 500 50 6
 P 200 500 0 500 1
 {
 T 300 500 5 8 0 0 0 0
-pin4=IN2
+pinnumber=IN2
+T 300 500 5 8 0 0 0 0
+pinseq=4
 }
 T 400 -100 5 10 1 1 0 2
-uref=U?
+refdes=U?
 T 400 100 5 8 0 0 0 0
 device=nand
 T 400 200 5 8 0 0 0 0
