@@ -19,6 +19,11 @@ DIR_PREFIX=
 
 
 prefix=${HOME}/geda
+
+#
+# You can set any global options you want here to be passed to the 
+# individual ./configure scripts
+#
 opts=
 
 ############################################################################
