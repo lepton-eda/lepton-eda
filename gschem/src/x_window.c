@@ -86,7 +86,6 @@ x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current)
 		w_current->prev->next = w_current->next;
 
 	s_page_free_all(w_current, w_current->page_tail);
-
 }
 
 void
@@ -733,11 +732,11 @@ x_window_create_new(void)
         set_window(w_current, w_current->init_left, w_current->init_right,
 		   w_current->init_top, w_current->init_bottom);
 
-#if 1 /* X related stuff */
+	o_undo_savestate(w_current, UNDO_ALL);
+
 	/* now update the scrollbars */
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
-#endif
 
 	global_wid++;
 	num_windows++;
