@@ -1,3 +1,11 @@
+2002-06-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_slot.nw: Plugged a small memory leak which has been
+	there for a long time.
+
+	* noweb/i_basic.nw: Added some experimental code which changes
+	the cursor image.  Something I'm playing with.
+	
 2002-06-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* TODO: A little bit of cleanup, organizing things.  I will move

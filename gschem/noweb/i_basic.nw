@@ -17,6 +17,7 @@
 <<i_basic.c : i_update_middle_button()>>
 <<i_basic.c : i_update_right_button()>>
 <<i_basic.c : i_update_toolbar()>>
+<<i_basic.c : i_update_cursor()>>
 <<i_basic.c : i_set_filename()>>
 
 @
@@ -344,3 +345,129 @@ i_set_filename(TOPLEVEL *w_current, char *string)
 
 @ %def i_set_filename
 
+
+@section Function @code{i_update_cursor()}
+
+@defun i_update_cursor w_current
+@end defun
+
+<<i_basic.c : i_update_cursor()>>=
+
+/* This data is in X bitmap format, and can be created with the 'bitmap'
+     utility. */
+  #define cursor1_width 16
+  #define cursor1_height 16
+  static unsigned char cursor1_bits[] = {
+   0x00, 0x00, 0x08, 0x38, 0x18, 0x08, 0x38, 0x18, 0x78, 0x08, 0xf8, 0x38,
+   0xf8, 0x01, 0xf8, 0x03, 0xf8, 0x07, 0xf8, 0x00, 0xd8, 0x00, 0x88, 0x01,
+   0x80, 0x01, 0x00, 0x03, 0x00, 0x03, 0x00, 0x00};
+
+  static unsigned char cursor1mask_bits[] = {
+   0x0c, 0x7c, 0x1c, 0x7c, 0x3c, 0x7c, 0x7c, 0x3c, 0xfc, 0x7c, 0xfc, 0x7d,
+   0xfc, 0x7f, 0xfc, 0x07, 0xfc, 0x0f, 0xfc, 0x0f, 0xfc, 0x01, 0xdc, 0x03,
+   0xcc, 0x03, 0x80, 0x07, 0x80, 0x07, 0x00, 0x03};
+
+void
+i_update_cursor(TOPLEVEL *w_current)
+{
+#if 0
+  if (!w_current->cursors) 
+	return;
+#endif
+
+#if 0
+GdkCursor *cursor;
+
+    GdkPixmap *source, *mask;
+    GdkColor fg = { 0, 0, 0, 0 }; /* Red. */
+    GdkColor bg = { 0, 65535, 65535, 65535 }; /* Blue. */
+
+
+    source = gdk_bitmap_create_from_data (NULL, cursor1_bits,
+                                          cursor1_width, cursor1_height);
+    mask = gdk_bitmap_create_from_data (NULL, cursor1mask_bits,
+                                        cursor1_width, cursor1_height);
+    cursor = gdk_cursor_new_from_pixmap (source, mask, &fg, &bg, 3, 1);
+    gdk_pixmap_unref (source);
+    gdk_pixmap_unref (mask);
+
+    gdk_window_set_cursor (w_current->window, cursor);
+#endif
+
+
+   GdkCursor* cursor;
+   cursor = gdk_cursor_new(GDK_ARROW);
+   gdk_window_set_cursor(w_current->window, cursor);
+   gdk_cursor_destroy(cursor);
+
+
+#if 0
+  switch(w_current->event_state) {
+ 	case(NONE):
+ 	case(SELECT):
+ 	case(STARTSELECT): 
+ 	case(TEXTENTRY): 
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_select), TRUE);
+	break;
+
+ 	case(DRAWNET): 
+ 	case(STARTDRAWNET): 
+ 	case(NETCONT): 
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_net), TRUE);
+	break;
+
+ 	case(DRAWBUS): 
+ 	case(STARTDRAWBUS): 
+ 	case(BUSCONT): 
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_bus), TRUE);
+	break;
+
+ 	case(DRAWCOMP): /* TODO */
+ 	case(DRAWLINE): /* TODO */
+ 	case(DRAWBOX): /* TODO */
+ 	case(DRAWPIN): /* TODO */
+ 	case(DRAWCIRCLE): /* TODO */
+ 	case(DRAWARC): /* TODO */
+ 	case(MOVE): /* TODO */
+ 	case(COPY): /* TODO */
+ 	case(ZOOM): /* TODO */
+ 	case(PAN): /* TODO */
+ 	case(STARTPAN): /* TODO */
+ 	case(STARTCOPY): /* TODO */
+ 	case(STARTMOVE): /* TODO */
+ 	case(ENDCOPY): /* TODO */
+ 	case(ENDMOVE): /* TODO */
+ 	case(ENDLINE): /* TODO */
+ 	case(ENDBOX): /* TODO */
+ 	case(ENDCIRCLE): /* TODO */
+ 	case(ENDARC): /* TODO */
+ 	case(ENDPIN): /* TODO */
+ 	case(ENDCOMP): /* TODO */
+ 	case(DRAWATTRIB): /* TODO */
+ 	case(ENDATTRIB): /* TODO */
+ 	case(DRAWTEXT): /* TODO */
+ 	case(ENDTEXT): /* TODO */
+ 	case(ENDROTATEP): /* TODO */
+ 	case(ENDMIRROR): /* TODO */
+ 	case(ZOOMBOXSTART): /* TODO */
+ 	case(ZOOMBOXEND): /* TODO */
+ 	case(STARTROUTENET): /* TODO */
+ 	case(ENDROUTENET): /* TODO */
+ 	case(MOUSEPAN): /* TODO */
+ 	case(STARTPASTE): /* TODO */
+ 	case(ENDPASTE): /* TODO */
+ 	case(GRIPS): /* TODO */
+	default:
+            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
+					 w_current->toolbar_select), TRUE);
+        break;
+  }
+#endif
+
+}
+
+
+@ %def i_update_cursor

@@ -103,6 +103,7 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 #endif
       slot_edit_dialog(w_current,
                        slot_text_object->text->string);
+      free(slot_value);
     } else {
       /* we didn't find an attached slot=? attribute */
 
