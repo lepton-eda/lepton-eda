@@ -1,0 +1,52 @@
+
+gEDA
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+
+README for examples version 2003* 
+
+
+This directory contains design examples done with gEDA/gaf.  All designs
+in this examples directory are covered by the GPL or equivalent license.
+
+None of the examples are installed anywhere.
+
+
+- Examples
+
+	gTAG -  USB to JTAG interface
+	-----------------------------
+	Author: Stefan Petersen 
+	Copyright (C) 2001-2003 Stefan Petersen
+	License: GPL
+	gTAG is an interface to connect your USB port of computer to talk
+	to your circuits which talks JTAG.
+
+	See gTAG/README and gTAG/ChangeLog for more information.
+	
+	gTAG shows off how to do hierachical schematics in gEDA/gaf.
+
+
+- License  
+
+        gEDA (includes gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
+        and all associated files (such as component symbols)) is placed
+        under the GNU Public License (GPL) version 2.0.  See the toplevel
+        COPYING file for more information.
+
+        Programs and associated files are:
+        Copyright 1998-2002 by Ales V. Hvezda and the respective original
+        authors (which are listed on the respective files)
+
+	All designs are copyright their respective authors. 
+
+
+- Contact information  
+
+	Ales V. Hvezda 
+        E-mail: ahvezda@seul.org
+        Web: http://www.geda.seul.org/
+
+

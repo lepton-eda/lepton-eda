@@ -1,0 +1,9 @@
+
+2003-01-11  Ales Hvezda (ahvezda@seul.org)
+
+	* Created configure.in and friends.  Added all files into cvs.
+
+	* Added gTAG to examples.
+
+	* The files contained in this directory will be the example files
+	  for gEDA/gaf.

@@ -1,0 +1,33 @@
+dnl Process this file with autoconf to produce a configure script.
+
+dnl Start of configure actions..
+AC_INIT
+AC_CONFIG_SRCDIR([gTAG/gTAG.sch])
+
+dnl Initialize automake stuff
+PACKAGE=geda-examples
+
+DATADIR=gEDA
+
+# new way of doing version
+VERSION=20021103
+
+echo Configuring examples version $VERSION
+
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
+
+HOME=`echo $HOME`
+GEDADATADIR=$datadir/$DATADIR
+
+AC_SUBST(HOME)
+AC_SUBST(VERSION)
+AC_SUBST(GEDADATADIR)
+
+AC_CONFIG_FILES([ 
+        Makefile 
+        gTAG/Makefile ])
+AC_OUTPUT 
+
