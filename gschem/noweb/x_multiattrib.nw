@@ -759,6 +759,12 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   /* actually modifies the attribute */
   o_text_change (toplevel, o_attrib,
                  newtext, o_attrib->visibility, o_attrib->show_name_value);
+
+  /* !! this code must be somewhere else !! */
+  /* handle slot= attribute, it's a special case */
+  if (g_ascii_strncasecmp (newtext, "slot=", 5) == 0) {
+    o_slot_end (toplevel, newtext, strlen (newtext));
+  }
   
   g_free (name);
   g_free (value);
@@ -842,6 +848,13 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   /* actually modifies the attribute */
   o_text_change (toplevel, o_attrib,
                  newtext, o_attrib->visibility, o_attrib->show_name_value);
+
+  /* !! this code must be somewhere else !! */
+  /* handle slot= attribute, it's a special case */
+  if (g_ascii_strncasecmp (newtext, "slot=", 5) == 0) {
+    o_slot_end (toplevel, newtext, strlen (newtext));
+  }
+  
   /* signals the modification of the row */
   gtk_tree_model_row_changed (model, path, &iter);
   

@@ -124,7 +124,7 @@ x_log_open ()
     gtk_widget_show (log_dialog);
   } else {
     g_assert (IS_LOG (log_dialog));
-    gdk_window_raise ((GdkWindow*)log_dialog);
+    gtk_window_present ((GtkWindow*)log_dialog);
   }
 
 }
@@ -259,7 +259,7 @@ log_get_type ()
 static void
 log_class_init (LogClass *klass)
 {
-  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+/*   GObjectClass *gobject_class = G_OBJECT_CLASS (klass); */
 	
 }
 

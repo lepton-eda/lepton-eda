@@ -1,3 +1,11 @@
+2005-02-28  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_multiattrib.nw (multiattrib_callback_edited_name) 
+	(multiattrib_callback_edited_value): Added code to check for changes
+	in a slot attribute.
+
+	* noweb/x_log.nw (x_log_open): Fixed to actually raise the dialog.
+
 2005-02-27  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/i_callbacks.nw (i_callback_hierarchy_down_symbol): Changed
