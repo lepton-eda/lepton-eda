@@ -311,6 +311,21 @@ o_text_load_font(TOPLEVEL *w_current, char needed_char)
 		break;
 
 		default:	
+#ifdef __CYGWIN32__
+			/* this is needed since WinNT file systems are 
+			 * case insensitive, and cannot tell the difference 
+			 * between A.sym and a.sym.  So we create a_.sym -  
+			 * z_.sym, this loads up the chars */
+			if (needed_char >= 'a' && needed_char <= 'z') {
+				sprintf(temp_string, "%s/%c_.sym", 
+					w_current->font_directory,
+				 	needed_char);
+			} else {
+				sprintf(temp_string, "%s/%c.sym", 
+					w_current->font_directory,
+				 	needed_char);
+			}
+#endif
 			sprintf(temp_string, "%s/%c.sym", 
 					w_current->font_directory,
 				 	needed_char);

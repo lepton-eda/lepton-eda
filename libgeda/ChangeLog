@@ -8,6 +8,11 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+9/19/99 Make sure libgeda works with guile-1.3.2a
+
+	Added some code to o_text.c to look for char_.sym for lowercase
+	characters when running CYGWIN32
+
 9/18/99	Fixed a bug in s_color_gdcolor_init, had the gd color alloc in the
 	wrong place (before a pointer was set)
 
