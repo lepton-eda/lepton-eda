@@ -554,7 +554,7 @@ struct st_toplevel {
   GtkWidget *cswindow;			/* component select */
   GtkWidget *clib_list;
   GtkWidget *basename_list;
-  char current_clib[256]; /* hack */
+  char *current_clib;
   char current_basename[256]; 	
 
 

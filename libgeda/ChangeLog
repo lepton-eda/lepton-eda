@@ -1,3 +1,15 @@
+2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/s_project.nw (s_project_setup_rest): Made it handle
+	initialization of field current_clib.
+
+	* include/struct.h: Changed field current_clib of st_toplevel to 
+	char*.
+
+	* noweb/s_clib.nw (s_clib_getfiles): Modified prototype and
+	simplified code: now returns a list of filenames to avoid
+	limitation on number of files in directory.
+
 2005-01-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/o_basic.nw (o_set_line_options): Moved in this function some 

@@ -424,7 +424,7 @@ void s_clib_cache_free(void);
 void s_clib_free(void);
 void s_clib_init(void);
 char *s_clib_getdir(int index);
-char *s_clib_getfiles(char *directory, int flag, char *filter, int new_current);
+GSList *s_clib_getfiles(const char *directory, const char *filter);
 int s_clib_uniq(char *path);
 /* s_color.c */
 void s_color_init(void);

@@ -274,6 +274,7 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
   pr_current->major_changed_refdes = NULL;
 
   pr_current->cswindow = NULL;
+  pr_current->current_clib = NULL;
   pr_current->aswindow = NULL;
   pr_current->fowindow = NULL;
   pr_current->fswindow = NULL;
