@@ -165,11 +165,12 @@ else
      GDGEDA_LIBS="$GDGEDA_LIBS1 $GDGEDA_LIBS2"
      GDGEDA_VERSION=`$LIBGDGEDACONFIG --version`
      GDGEDA="yes"
+
+     # This is not really used to figure out paths, but just to make 
+     # sure >= 2.0.15 is installed
+     PKG_CHECK_MODULES(libgdgeda, libgdgeda >= 2.0.15)
+     AC_DEFINE(HAS_LIBGDGEDA, 1, [If libgdgeda has been installed, define this])
    fi
-# This is not really used to figure out paths, but just to make sure >= 2.0.15
-# is installed
-   PKG_CHECK_MODULES(libgdgeda, libgdgeda >= 2.0.15)
-   AC_DEFINE(HAS_LIBGDGEDA, 1, [If libgdgeda has been installed, define this])
 fi
 
 # 

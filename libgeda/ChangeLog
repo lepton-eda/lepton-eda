@@ -2,6 +2,12 @@
 
 	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
 
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Fixed the test for libgdgeda.  It was failing if
+	it was not installed; libgdgeda is optional and should not cause
+	a configure to fail.
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Improved a bunch of the external library tests for
