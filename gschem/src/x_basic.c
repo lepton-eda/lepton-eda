@@ -99,7 +99,7 @@ x_hscrollbar_set_ranges(TOPLEVEL *w_current)
 	hadjustment =
 		gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
 
-	hadjustment->lower = 0.0;
+	hadjustment->lower = w_current->init_left;
 	hadjustment->upper = w_current->init_right;
 
 }
@@ -148,7 +148,7 @@ x_vscrollbar_set_ranges(TOPLEVEL *w_current)
 	vadjustment =
 		gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
 
-	vadjustment->lower = 0.0;
+	vadjustment->lower = w_current->init_top;
 	vadjustment->upper = w_current->init_bottom;
 }
 
@@ -192,12 +192,12 @@ x_scrollbars_update(TOPLEVEL *w_current)
 		return;
 	}
 
-        w_current->DONT_REDRAW = 1;
         w_current->DONT_RECALC = 1;
-        w_current->DONT_RESIZE = 1;
+	w_current->DONT_RESIZE = 1;
+	w_current->DONT_REDRAW = 1;
         x_hscrollbar_update(w_current);
         x_vscrollbar_update(w_current);
-        w_current->DONT_REDRAW = 0;
+	w_current->DONT_REDRAW = 0;
         w_current->DONT_RECALC = 0;
         w_current->DONT_RESIZE = 0;
 }
