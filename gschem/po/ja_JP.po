@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
-"POT-Creation-Date: 2003-01-18 10:28-0500\n"
+"POT-Creation-Date: 2003-02-24 00:39-0500\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "これ以上ズームできません。\n"
 
-#: noweb/g_funcs.nw:188
+#: noweb/g_funcs.nw:190
 msgid "Ack! something got fouled up with the keymappings!\n"
 msgstr "おっと!! キーマップの設定に間違いがあります!\n"
 
@@ -80,7 +80,7 @@ msgstr "gschemrcファイルが見付かりません!\n"
 
 #: noweb/g_rc.nw:446 noweb/g_rc.nw:1183 noweb/g_rc.nw:1216 noweb/g_rc.nw:1443
 #: noweb/g_rc.nw:1637 noweb/g_rc.nw:1673 noweb/g_rc.nw:1733 noweb/g_rc.nw:1840
-#: noweb/g_rc.nw:2797
+#: noweb/g_rc.nw:2799
 #, c-format
 msgid "%s requires a string as a parameter\n"
 msgstr "%sは文字列のパラメータでなくてはなりません。\n"
@@ -183,12 +183,12 @@ msgstr "無効なパス[%s]がfont-directoryに指定されました。\n"
 msgid "Invalid parameters to paper-sizes\n"
 msgstr "無効なパラメータがpaper-sizeに指定されました。\n"
 
-#: noweb/g_rc.nw:2461
+#: noweb/g_rc.nw:2463
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: noweb/g_rc.nw:2749
+#: noweb/g_rc.nw:2751
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
@@ -521,203 +521,203 @@ msgstr "パン"
 msgid "Update Cues"
 msgstr "キュー更新"
 
-#: noweb/i_callbacks.nw:2112
+#: noweb/i_callbacks.nw:2116
 msgid "Cannot get cwd!\n"
 msgstr "カレントディレクトリが得られません!\n"
 
-#: noweb/i_callbacks.nw:2120
+#: noweb/i_callbacks.nw:2124
 #, c-format
 msgid "New Page created [%s]\n"
 msgstr "新規ページを作成しました。[%s]\n"
 
-#: noweb/i_callbacks.nw:2158 noweb/i_callbacks.nw:2176
-#: noweb/i_callbacks.nw:2195 noweb/i_callbacks.nw:2221
-#: noweb/i_callbacks.nw:2314 noweb/i_callbacks.nw:2377
+#: noweb/i_callbacks.nw:2162 noweb/i_callbacks.nw:2180
+#: noweb/i_callbacks.nw:2199 noweb/i_callbacks.nw:2225
+#: noweb/i_callbacks.nw:2318 noweb/i_callbacks.nw:2381
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "閉じています。[%s]\n"
 
-#: noweb/i_callbacks.nw:2332 noweb/i_callbacks.nw:2350
+#: noweb/i_callbacks.nw:2336 noweb/i_callbacks.nw:2354
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "ページを破棄しています。[%s]\n"
 
-#: noweb/i_callbacks.nw:2429
+#: noweb/i_callbacks.nw:2433
 msgid "Copy 1"
 msgstr "コピー1"
 
-#: noweb/i_callbacks.nw:2452
+#: noweb/i_callbacks.nw:2456
 msgid "Copy 2"
 msgstr "コピー2"
 
-#: noweb/i_callbacks.nw:2475
+#: noweb/i_callbacks.nw:2479
 msgid "Copy 3"
 msgstr "コピー3"
 
-#: noweb/i_callbacks.nw:2498
+#: noweb/i_callbacks.nw:2502
 msgid "Copy 4"
 msgstr "コピー4"
 
-#: noweb/i_callbacks.nw:2521
+#: noweb/i_callbacks.nw:2525
 msgid "Copy 5"
 msgstr "コピー5"
 
-#: noweb/i_callbacks.nw:2544
+#: noweb/i_callbacks.nw:2548
 msgid "Cut 1"
 msgstr "カット1"
 
-#: noweb/i_callbacks.nw:2567
+#: noweb/i_callbacks.nw:2571
 msgid "Cut 2"
 msgstr "カット2"
 
-#: noweb/i_callbacks.nw:2590
+#: noweb/i_callbacks.nw:2594
 msgid "Cut 3"
 msgstr "カット3"
 
-#: noweb/i_callbacks.nw:2613
+#: noweb/i_callbacks.nw:2617
 msgid "Cut 4"
 msgstr "カット4"
 
-#: noweb/i_callbacks.nw:2636
+#: noweb/i_callbacks.nw:2640
 msgid "Cut 5"
 msgstr "カット5"
 
-#: noweb/i_callbacks.nw:2656
+#: noweb/i_callbacks.nw:2660
 msgid "Paste 1"
 msgstr "ペースト1"
 
-#: noweb/i_callbacks.nw:2664 noweb/i_callbacks.nw:2692
-#: noweb/i_callbacks.nw:2720 noweb/i_callbacks.nw:2748
-#: noweb/i_callbacks.nw:2776
+#: noweb/i_callbacks.nw:2668 noweb/i_callbacks.nw:2696
+#: noweb/i_callbacks.nw:2724 noweb/i_callbacks.nw:2752
+#: noweb/i_callbacks.nw:2780
 msgid "Empty buffer"
 msgstr "バッファが空です。"
 
-#: noweb/i_callbacks.nw:2684
+#: noweb/i_callbacks.nw:2688
 msgid "Paste 2"
 msgstr "ペースト 2"
 
-#: noweb/i_callbacks.nw:2712
+#: noweb/i_callbacks.nw:2716
 msgid "Paste 3"
 msgstr "ペースト 3"
 
-#: noweb/i_callbacks.nw:2740
+#: noweb/i_callbacks.nw:2744
 msgid "Paste 4"
 msgstr "ペースト 4"
 
-#: noweb/i_callbacks.nw:2768
+#: noweb/i_callbacks.nw:2772
 msgid "Paste 5"
 msgstr "ペースト 5"
 
-#: noweb/i_callbacks.nw:2942 noweb/x_window.nw:840 noweb/rcstrings.nw:120
+#: noweb/i_callbacks.nw:2946 noweb/x_window.nw:840 noweb/rcstrings.nw:120
 msgid "Component"
 msgstr "部品"
 
-#: noweb/i_callbacks.nw:2988 noweb/i_callbacks.nw:3013
+#: noweb/i_callbacks.nw:2992 noweb/i_callbacks.nw:3017
 #: noweb/x_attribedit.nw:432
 msgid "Attribute"
 msgstr "アトリビュート"
 
-#: noweb/i_callbacks.nw:3039 noweb/i_callbacks.nw:3066 noweb/rcstrings.nw:78
+#: noweb/i_callbacks.nw:3043 noweb/i_callbacks.nw:3070 noweb/rcstrings.nw:78
 msgid "Net"
 msgstr "ネット"
 
-#: noweb/i_callbacks.nw:3119 noweb/i_callbacks.nw:3147 noweb/x_window.nw:870
+#: noweb/i_callbacks.nw:3123 noweb/i_callbacks.nw:3151 noweb/x_window.nw:870
 #: noweb/rcstrings.nw:79
 msgid "Bus"
 msgstr "バス"
 
-#: noweb/i_callbacks.nw:3245 noweb/i_callbacks.nw:3269 noweb/rcstrings.nw:82
+#: noweb/i_callbacks.nw:3249 noweb/i_callbacks.nw:3273 noweb/rcstrings.nw:82
 msgid "Line"
 msgstr "線"
 
-#: noweb/i_callbacks.nw:3296 noweb/i_callbacks.nw:3320 noweb/rcstrings.nw:83
+#: noweb/i_callbacks.nw:3300 noweb/i_callbacks.nw:3324 noweb/rcstrings.nw:83
 msgid "Box"
 msgstr "ボックス"
 
-#: noweb/i_callbacks.nw:3347 noweb/i_callbacks.nw:3372 noweb/rcstrings.nw:84
+#: noweb/i_callbacks.nw:3351 noweb/i_callbacks.nw:3376 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "円"
 
-#: noweb/i_callbacks.nw:3399 noweb/i_callbacks.nw:3423 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3403 noweb/i_callbacks.nw:3427 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "円弧"
 
-#: noweb/i_callbacks.nw:3450 noweb/i_callbacks.nw:3474 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3454 noweb/i_callbacks.nw:3478 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "ピン"
 
-#: noweb/i_callbacks.nw:3545
+#: noweb/i_callbacks.nw:3549
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "ソース検索中[%s]\n"
 
-#: noweb/i_callbacks.nw:3578 noweb/i_callbacks.nw:3581
+#: noweb/i_callbacks.nw:3582 noweb/i_callbacks.nw:3585
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "ソースが見付かりません。[%s]\n"
 
-#: noweb/i_callbacks.nw:3682
+#: noweb/i_callbacks.nw:3686
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "シンボル検索中[%s]\n"
 
-#: noweb/i_callbacks.nw:3809 noweb/rcstrings.nw:95
+#: noweb/i_callbacks.nw:3813 noweb/rcstrings.nw:95
 msgid "Attach"
 msgstr "アタッチ"
 
-#: noweb/i_callbacks.nw:3863
+#: noweb/i_callbacks.nw:3867
 msgid "Detach"
 msgstr "アタッチ解除"
 
-#: noweb/i_callbacks.nw:3908
+#: noweb/i_callbacks.nw:3912
 msgid "ShowN"
 msgstr "N表示"
 
-#: noweb/i_callbacks.nw:3944
+#: noweb/i_callbacks.nw:3948
 msgid "ShowV"
 msgstr "表示V"
 
-#: noweb/i_callbacks.nw:3980
+#: noweb/i_callbacks.nw:3984
 msgid "ShowB"
 msgstr "表示B"
 
-#: noweb/i_callbacks.nw:4017
+#: noweb/i_callbacks.nw:4021
 msgid "VisToggle"
 msgstr "表示切替え"
 
-#: noweb/i_callbacks.nw:4043
+#: noweb/i_callbacks.nw:4047
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "機能しないメニューオプションです。\n"
 
-#: noweb/i_callbacks.nw:4107
+#: noweb/i_callbacks.nw:4111
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: noweb/i_callbacks.nw:4110
+#: noweb/i_callbacks.nw:4114
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: noweb/i_callbacks.nw:4132
+#: noweb/i_callbacks.nw:4136
 msgid "Grid OFF\n"
 msgstr "グリッド・オフ\n"
 
-#: noweb/i_callbacks.nw:4135
+#: noweb/i_callbacks.nw:4139
 msgid "Grid ON\n"
 msgstr "グリッド・オン\n"
 
-#: noweb/i_callbacks.nw:4157
+#: noweb/i_callbacks.nw:4161
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "スナップ・オフ(注意!)\n"
 
-#: noweb/i_callbacks.nw:4160
+#: noweb/i_callbacks.nw:4164
 msgid "Snap ON\n"
 msgstr "スナップ・オン\n"
 
-#: noweb/i_callbacks.nw:4184
+#: noweb/i_callbacks.nw:4188
 msgid "Rubber band OFF \n"
 msgstr "ラバーバンド・オフ\n"
 
-#: noweb/i_callbacks.nw:4187
+#: noweb/i_callbacks.nw:4191
 msgid "Rubber band ON\n"
 msgstr "ラバーバンド・オン\n"
 
@@ -1070,7 +1070,7 @@ msgstr ""
 #: noweb/x_dialog.nw:406 noweb/x_dialog.nw:2755 noweb/x_dialog.nw:2903
 #: noweb/x_dialog.nw:3243 noweb/x_dialog.nw:3440 noweb/x_fileselect.nw:2316
 #: noweb/x_image.nw:458 noweb/x_log.nw:315 noweb/x_multiattrib.nw:736
-#: noweb/x_print.nw:432 noweb/rcstrings.nw:73
+#: noweb/x_print.nw:470 noweb/rcstrings.nw:73
 msgid "Close"
 msgstr "閉じる"
 
@@ -1475,7 +1475,7 @@ msgstr "ファイル"
 msgid "Preview"
 msgstr "プレビュー"
 
-#: noweb/x_fileselect.nw:2206 noweb/x_image.nw:530 noweb/x_print.nw:501
+#: noweb/x_fileselect.nw:2206 noweb/x_image.nw:530 noweb/x_print.nw:539
 msgid "Filename"
 msgstr "ファイル名"
 
@@ -1625,49 +1625,53 @@ msgstr "マネージャを更新"
 msgid "Close Manager"
 msgstr "マネージャを閉じる"
 
-#: noweb/x_print.nw:164
+#: noweb/x_print.nw:184
 msgid "Landscape"
 msgstr "ランドスケープ"
 
-#: noweb/x_print.nw:174
+#: noweb/x_print.nw:194
 msgid "Portrait"
 msgstr "ポートレイト"
 
-#: noweb/x_print.nw:216
-msgid "Limits"
-msgstr "制限"
+#: noweb/x_print.nw:236
+msgid "Extents with margins"
+msgstr ""
 
-#: noweb/x_print.nw:226
+#: noweb/x_print.nw:245
+msgid "Extents no margins"
+msgstr ""
+
+#: noweb/x_print.nw:253
 msgid "Current Window"
 msgstr "現在のウィンドウ"
 
-#: noweb/x_print.nw:318
+#: noweb/x_print.nw:356
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
 msgstr "現在のスケマチックを印刷できません。[%s]\n"
 
-#: noweb/x_print.nw:320
+#: noweb/x_print.nw:358
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "現在のスケマチックを印刷しました。[%s]\n"
 
-#: noweb/x_print.nw:421 noweb/rcstrings.nw:11
+#: noweb/x_print.nw:459 noweb/rcstrings.nw:11
 msgid "Print..."
 msgstr "印刷..."
 
-#: noweb/x_print.nw:423
+#: noweb/x_print.nw:461
 msgid "Print"
 msgstr "印刷"
 
-#: noweb/x_print.nw:441
+#: noweb/x_print.nw:479
 msgid "Output paper size"
 msgstr "出力用紙サイズ"
 
-#: noweb/x_print.nw:525
+#: noweb/x_print.nw:563
 msgid "Type"
 msgstr "種類"
 
-#: noweb/x_print.nw:537
+#: noweb/x_print.nw:575
 msgid "Orientation"
 msgstr "オリエンテーション"
 
@@ -2138,6 +2142,9 @@ msgstr "ヘルプ"
 #: noweb/rcstrings.nw:118
 msgid "Manual..."
 msgstr "マニュアル..."
+
+#~ msgid "Limits"
+#~ msgstr "制限"
 
 #~ msgid "Saved - Select Mode"
 #~ msgstr "保存しました - 選択モード"

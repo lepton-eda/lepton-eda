@@ -5,7 +5,7 @@ GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
 
-README for gnetlist version 2002* 
+README for gnetlist version 2003* 
 (This software is ALPHA)
 
 
@@ -44,10 +44,10 @@ IMPORTANT
 
 	A C compiler (that understands ANSI, like gcc) 
 
-	GLIB version 1.2.8 or higher (and anything glib requires)
+	GLIB version 1.2.10 or higher (and anything glib requires)
 	Glib can be found at ftp://ftp.gtk.org/pub/gtk
 
-	GTK+ version 1.2.8 or higher (and anything gtk requires)
+	GTK+ version 1.2.10 or higher (and anything gtk requires)
 	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
 
 	libgeda (same version as gnetlist)
@@ -87,7 +87,7 @@ IMPORTANT
 	COPYING file for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2002 by Ales V. Hvezda and the respective original
+	Copyright 1998-2003 by Ales V. Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 
@@ -98,16 +98,16 @@ IMPORTANT
 
 	Mailing list:
 		To subscribe send an email to: majordomo@geda.seul.org  
-	 	with   subscribe geda-dev   in the body.
+	 	with   subscribe geda-user   in the body.
 		
 		To unsubscribe send an email to: majordomo@geda.seul.org
-	 	with   unsubscribe geda-dev   in the body.
+	 	with   unsubscribe geda-user   in the body.
 
 		To send email to the list use the address:
 
-			geda-dev@geda.seul.org
+			geda-user@geda.seul.org
 
-		Remember, geda-dev@geda.seul.org is for the actual traffic.  
+		Remember, geda-user@geda.seul.org is for the actual traffic.  
 		For administrative commands, use majordomo@geda.seul.org.
 
 		The mailing list archive is at:

@@ -4,8 +4,7 @@ GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
 
-README for misc utilities versions 2002*
-(This software is ALPHA)
+README for misc utilities versions 2003*
 
 
 IMPORTANT
@@ -169,7 +168,7 @@ IMPORTANT
 	COPYING file for more information.
 
 	Programs and associated files are:
-	Copyright 1998-2002 by Ales V. Hvezda and the respective original
+	Copyright 1998-2003 by Ales V. Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 	mk_sym is Copyright 1999 by Jerry O'Keefe
@@ -178,6 +177,7 @@ IMPORTANT
         All of sarlacc is Copyright 1999-2002 by Matthew Ettus
 	gschlas is Copyright 2002 by Ales Hvezda
         olib is Copyright 2002 by Mario Pascucci
+        refdes_renum is Copyright 2003 by Dan McMahill
 
 
 

@@ -5,7 +5,7 @@ GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
 
-README for docs version 2002* 
+README for docs version 2003* 
 
 
 	This directory contains documentation related to the gEDA project.
@@ -20,7 +20,7 @@ These docs are under heavy construction.
 	COPYING file for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2002 by Ales V. Hvezda and the respective
+	Copyright 1998-2003 by Ales V. Hvezda and the respective
 	original authors (which are listed on the respective files)
 
 
@@ -31,16 +31,16 @@ These docs are under heavy construction.
 
 	Mailing list:
 		To subscribe send an email to: majordomo@geda.seul.org  
-	 	with   subscribe geda-dev   in the body.
+	 	with   subscribe geda-user   in the body.
 		
 		To unsubscribe send an email to: majordomo@geda.seul.org
-	 	with   unsubscribe geda-dev   in the body.
+	 	with   unsubscribe geda-user   in the body.
 
 		To send email to the list use the address:
 
-			geda-dev@geda.seul.org
+			geda-user@geda.seul.org
 
-		Remember, geda-dev@geda.seul.org is for the actual traffic.  
+		Remember, geda-user@geda.seul.org is for the actual traffic.  
 		For administrative commands, use majordomo@geda.seul.org.
 
 		The mailing list archive is at:

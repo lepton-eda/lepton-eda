@@ -5,7 +5,7 @@ GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
 
-README for libgeda version 2002* 
+README for libgeda version 2003* 
 
 
 IMPORTANT
@@ -42,10 +42,10 @@ IMPORTANT
 
 	A C compiler (that understands ANSI, like gcc) 
 
-	GLIB version 1.2.8 or higher (and anything glib requires)
+	GLIB version 1.2.10 or higher (and anything glib requires)
 	Glib can be found at ftp://ftp.gtk.org/pub/gtk
 
-	GTK+ version 1.2.8 or higher (and anything gtk requires)
+	GTK+ version 1.2.10 or higher (and anything gtk requires)
 	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
 
 	GUILE - guile-1.4 is required (and anything guile requires).  Guile
@@ -78,7 +78,7 @@ IMPORTANT
 	COPYING file for more information.
 
 	Programs and associated files are:
-	Copyright 1998-2002 by Ales V. Hvezda and the respective original
+	Copyright 1998-2003 by Ales V. Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 
