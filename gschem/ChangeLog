@@ -9,6 +9,124 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_undo.c: DOH! Didn't #include <math.h> which caused rint to
+	  cause highly unpredictable behavior (core dumping).  Fixed
+
+	* src/o_undo.c: Added code to look for undo save data when
+	  you zoom and then make a schematic change (zoom undo does not
+	  store state of schematic), so you have to go looking for the data.
+
+	* src/g_rc.c: Added component-library-search rc keyword which 
+	  implements the automatic searching and adding of component libraries
+	  given a directory (requested feature for Steve Williams)
+
+	* src/g_register.c: Added code to support component-library-search 
+          rc keyword
+
+	* src/g_rc.c, src/g_register.c: Added very similar code to above to 
+          support source-library-search rc keyword
+
+	* src/x_dialog.c (bunch of other files): Fixed attribute add bug 
+	  where when Add/Attribute...  is execute from the menu and the
+	  attribute text location is weird.
+
+	* src/g_register.c, src/i_callbacks.c, src/g_key.c: Added new 
+	  function add-attribute-hotkey to support above
+
+	* lib/system-gschemrc.in: Added add-attribute-hotkey in the appropriate
+  	  place (in the keymapping structure)
+
+2000-06-26  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_buffer.c: Indentation nit fixed
+
+	* src/o_undo.c: Added a bunch of code to deal with the new object_head
+	  pointer in the undo struct (for doing in memory undo)
+
+	* src/g_rc.c, src/g_register.c, src/i_vars.c, include/i_vars.h:
+	  Added code to support undo-type rc keyword
+
+	* lib/system-gschemrc.in: Added undo-type rc file
+
+/***********************************************************************/
+/* NOT DONE */
+src/*.c: Removed all traces of the ADDING_SEL flag
+/* NOT DONE */
+/***********************************************************************/
+
+	* src/a_zoom.c, src/a_pan.c: Moved some of the redraw functions 
+	  around
+
+	* src/x_event.c: Changed one of the o_redraw_all_fast functions to be a
+	  plain old simple o_redraw_all
+
+	* src/o_move.c: Putzed around with the NET move code case to see if
+	  I could improve the net_conn drawing problems.  Not much success
+	  though (probably broke things) 
+
+	* src/a_pan.c, src/a_zoom.c, src/x_event.c, src/i_callbacks.c: 
+	  Removed o_undo_savestate from zoom and pan functions (for now,
+	  eventually routines need to go back in)
+
+	* src/o_undo.c: Added a flag to the save state function which allows
+	  for you to just store viewport info (and not the whole schematic);
+	  speeds up zooming/panning a lot
+
+	* src/o_undo.c: Fixed code so that zoom factor is calculated after
+	  an undo
+
+2000-06-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_fileselect.c, src/i_callbacks.c: Removed the "unselect all 
+	  before save" call since the lowlevel routines in libgeda now
+	  take care of saving primitives correctly
+
+	* src/o_undo.c: Moved undo_* pointers into page structure 
+
+	* src/o_undo.c: Moved chunks of code into libgeda/src/s_undo.c
+ 	  (init and free function)
+
+	* src/x_window.c: Removed o_undo* function calls (now the exist in
+	  s_page_* in libgeda)
+
+	* src/o_undo.c: Added global init and clean functions
+
+	* src/gschem.c: Added some global init and cleanup undo func calls
+
+	* src/g_rc.c, src/g_register.c, src/i_vars.c, include/i_vars.h:
+	  Added code to support undo-levels and undo-control rc keywords
+
+	* lib/system-gschemrc.in: Added undo-levels and undo-control to
+	  rc file
+
+	* src/gschem.c, src/i_callbacks.c, src/x_fileselect.c, src/x_window.c: 
+          Added a o_undo_savestate immediately after you open/create a new page
+
+	* src/*.c: Added an o_undo_savestate after all code which causes a 
+	  schematic change
+
+	* src/a_zoom.c, src/a_pan.c, src/x_events.c: Added an o_undo_savestate 
+	  after all zoom/pan type code 
+
+2000-06-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_undo.c: Added new file which includes higher level undo
+	  management routines
+
+	* src/x_window.c: Added undo init and free routines
+
+	* src/o_line.c: Added first call to o_undo_savestate in o_line_end
+
+	* src/g_key.c, src/i_callbacks.c: Added new key callbacks 
+          (for undo and redo)
+
+	* src/g_register.c, lib/system-gschemrc.in: Added keys U and R for 
+          undo and redo
+
+	* src/x_menus.c: Added undo and redo to the menu
+
 2000-06-08  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_buffer.c: Fixed bug which was causing buffers which are
@@ -1706,7 +1824,7 @@ into the cvs repository.
 	Fixed by adding a (few) call for draw point in o_line_draw,
 	not sure that's the best solution.
 
-	Added zero length error checking code to all primative objects
+	Added zero length error checking code to all primitive objects
 	( interesting side effect, you can end net draw by drawing a
 	  zero length net and that stops the action )
 
@@ -1796,7 +1914,7 @@ into the cvs repository.
 		- bit more paranoid code.
 		- last-command-sequence (holds what it says)
 
- 	 Change rc file guile primative version to gschem-version
+ 	 Change rc file guile primitive version to gschem-version
 
 10/18/98 Added callbacks for change Slot... code
 
@@ -1935,12 +2053,12 @@ into the cvs repository.
 
 	Removed some dead code from i_callbacks.c (old ntext stuff)
 
-	Changed o_rotate to o_rotate_primatives (fixed in all places)
+	Changed o_rotate to o_rotate_primitives (fixed in all places)
 
 	Changed menu option and rc files edit-rotate to edit-rotate-prim
 	Edit/Rotate Primative
 
-	Successfully intergrated rotate ntext into the o_rotate_primative
+	Successfully intergrated rotate ntext into the o_rotate_primitive
 	command
 
 9/21/98 Minor gschemrc changes (keymapping fixes)
@@ -2156,7 +2274,7 @@ into the cvs repository.
 8/9/98	Added page-size keyword to the rc file (lets you specify the size of
 	the drawing area)
 
-8/8/98	Removed old OBJ_TEXT primative (replaced by OBJ_NTEXT)
+8/8/98	Removed old OBJ_TEXT primitive (replaced by OBJ_NTEXT)
 
 	Changed OBJ_NTEXT's key code to T (was E so that it could coexist with
 	OBJ_TEXT)

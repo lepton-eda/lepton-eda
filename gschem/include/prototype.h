@@ -31,6 +31,8 @@ SCM g_key_file_print(void);
 SCM g_key_file_write_png(void);
 SCM g_key_file_close(void);
 SCM g_key_file_quit(void);
+SCM g_key_edit_undo(void);
+SCM g_key_edit_redo(void);
 SCM g_key_edit_select(void);
 SCM g_key_edit_copy(void);
 SCM g_key_edit_copy_hotkey(void);
@@ -95,6 +97,7 @@ SCM g_key_page_discard(void);
 SCM g_key_page_print(void);
 SCM g_key_add_component(void);
 SCM g_key_add_attribute(void);
+SCM g_key_add_attribute_hotkey(void);
 SCM g_key_add_net(void);
 SCM g_key_add_net_hotkey(void);
 SCM g_key_add_bus(void);
@@ -177,7 +180,9 @@ SCM g_rc_logging_destination(SCM mode);
 SCM g_rc_default_series_name(SCM name);
 SCM g_rc_untitled_name(SCM name);
 SCM g_rc_component_library(SCM path);
+SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
+SCM g_rc_source_library_search(SCM path);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
@@ -205,6 +210,9 @@ SCM g_rc_attribute_promotion(SCM mode);
 SCM g_rc_promote_invisible(SCM mode);
 SCM g_rc_keep_invisible(SCM mode);
 SCM g_rc_continue_component_place(SCM mode);
+SCM g_rc_undo_levels(SCM levels);
+SCM g_rc_undo_control(SCM mode);
+SCM g_rc_undo_type(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -232,6 +240,8 @@ void i_callback_file_write_png(gpointer data, guint callback_action, GtkWidget *
 void i_callback_file_close(gpointer data, guint callback_action, GtkWidget *widget);
 int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_quit(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_undo(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_redo(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_select(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
@@ -296,6 +306,7 @@ void i_callback_buffer_paste4_hotkey(gpointer data, guint callback_action, GtkWi
 void i_callback_buffer_paste5_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_component(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_attribute(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_add_attribute_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_bus(gpointer data, guint callback_action, GtkWidget *widget);
@@ -353,7 +364,7 @@ void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, SELECTION *list, int n
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_attrib_end(TOPLEVEL *w_current);
 void o_attrib_rubberattrib(TOPLEVEL *w_current);
-OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *o_current);
+OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
 void o_redraw_all(TOPLEVEL *w_current);
 void o_redraw_all_fast(TOPLEVEL *w_current);
@@ -497,6 +508,13 @@ void o_text_rubberattrib(TOPLEVEL *w_current);
 void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
 void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);
+/* o_undo.c */
+void o_undo_init(void);
+void o_undo_savestate(TOPLEVEL *w_current, int flag);
+char *o_undo_find_prev_filename(UNDO *start);
+OBJECT *o_undo_find_prev_object_head(UNDO *start);
+void o_undo_callback(TOPLEVEL *w_current, int type);
+void o_undo_cleanup(void);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
@@ -532,7 +550,7 @@ void text_input_dialog(TOPLEVEL *w_current);
 void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current);
-void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list);
+void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list, int flag);
 gint change_alignment(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
