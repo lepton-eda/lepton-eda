@@ -1,0 +1,19 @@
+Released january 13, 2003.
+
+As version 0.1 has appeared to be totally not functional, this is a first
+version that can be really used. It has only basic functions to manage
+projects, files and run tools. Commonly used actions are accessible from
+the menu. 
+
+Do not expect that all gEDA Suite tools will work good together. 
+Major problems:
+
+* PCB - is very difficult to integrate. In RedHat distribution m4 is not 
+  located in /usr/local/bin what is default location used by PCB. 
+  Gnetlisted schematics are not loaded by PCB. 
+  
+* gwave - can display only transient results.
+
+* verilog - problems with simulation "multifile" modules.
+
+etc.
