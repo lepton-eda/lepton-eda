@@ -1,0 +1,145 @@
+
+; 
+; Common init file for gEDA
+;
+
+;
+; Start of path related keywords
+;
+
+; component-library string
+; Specify where components exist.
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The order of the component-library keywords determines the order they
+; are displayed, but they are searched *backwards*, ie last one in this list
+; is searched *first*.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+; NOTE: Some of the below component libraries below are commented out.
+;       This was done because there are conflicting filenames within these
+;       libraries.  Please see Jitterbug #9 on this gEDA/gaf limitation.
+;       It will be fixed soon. AVH 01/04/2004
+;
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@IEC417")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@analog")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@linear")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@altera")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@lattice")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@xilinx")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@idt")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@misc")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@power")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@philips")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@minicircuits")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@st")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@apex")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@allegro")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@irf")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@transistor")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@io")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@titleblock")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@memory")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@micro")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@maxim")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@national")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@radio")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@tube")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@connector")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switch")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switcap")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@spice")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@rf")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@bus")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@pla")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@ecl")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@dec")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@supervisor")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@opto")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@cascade")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asicpads")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@gnetman")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
+
+; component-library-search atring
+;
+; Specifies the directory where other component libraries can be found
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The order of the component libraries found within the specified directory
+; is in inode order.  The libraries found using this keyword will be searched
+; *before* the component libraries specified above.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+; This is commented out since it will add in the above commented out
+; component libraries automatically and this will most certainly cause
+; schematics to break. AVH 01/04/2004
+;
+;(component-library-search "${GEDADATA}@PATHSEP@sym")
+
+; source-library string
+; Specify where source entities exist.
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The order of the source-library keywords determines the order they
+; are displayed, but they are searched *backwards*, ie last one in this list
+; is searched *first*.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+; Example:
+;(source-library "${HOME}@PATHSEP@projects@PATHSEP@my_schematics")
+
+; source-library-search atring
+;
+; Specifies the directory where other source libraries can be found
+; The string after this keyword should be a valid directory name.
+; You should have read access to this directory and all the files inside
+; the directory.
+; The order of the source libraries found within the specified directory
+; is in inode order.  The libraries found using this keyword will be searched
+; *before* the source libraries specified above.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+; Example:
+;(source-library-search "${HOME}@PATHSEP@projects@PATHSEP@my_schematics")
+
+; font-directory string
+; Specifies where the vector font definitions are stored.
+; You should have read access to this directory and all the files inside
+; the directory.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(font-directory "${GEDADATA}@PATHSEP@sym@PATHSEP@font")
+
+
+; scheme-directory string
+; Specifies where the supporting scheme lives
+; You should have read access to this directory and all the files inside
+; the directory.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(scheme-directory "${GEDADATA}@PATHSEP@scheme")
+
+
+; bitmap-directory string
+; Specifies where the supporting bitmaps live
+; You should have read access to this directory and all the files inside
+; the directory.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(bitmap-directory "${GEDADATA}@PATHSEP@bitmap")
+
+;
+; End of path related keywords
+;
+
