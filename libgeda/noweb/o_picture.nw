@@ -114,10 +114,19 @@ o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 
   num_conv = sscanf(buf, "%c %d %d %d %d %d %c %c\n",
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
-
+  
   if (num_conv != 8) {
     fprintf(stderr, "Error reading picture definition line: %s.\n", buf);
     s_log_message ("Error reading picture definition line: %s.\n", buf);
+  }
+
+  /* Convert from ascii character to number */
+  if (g_ascii_isdigit(mirrored)) {
+    mirrored -= 0x30;
+  }
+
+  if (g_ascii_isdigit(embedded)) {
+    embedded -= 0x30;
   }
 
   if (width == 0 || height == 0) {
@@ -245,12 +254,13 @@ o_picture_save(OBJECT *object)
   printf("picture: %d %d %d %d\n", x1, y1, width, height);
 #endif
 
-  return(g_strdup_printf("%c %d %d %d %d %d %d %d\n%s", 
+  return(g_strdup_printf("%c %d %d %d %d %d %c %c\n%s", 
 			 object->type,
 			 x1, y1, width, height,
 			 object->picture->angle,
-			 object->picture->mirrored,
-			 0, /* No embedded pictures support yet */
+			 /* Convert the (0,1) chars to ASCII */
+			 (object->picture->mirrored)+0x30, 
+			 0+0x30, /* No embedded pictures support yet */
 			 object->picture->filename));
 
 
