@@ -424,7 +424,7 @@ s_clib_cache_free()
 
 @ %def s_clib_cache_free
 
-
+/* ------------------------------------------------ */
 @section Function @code{s_clib_free()}
 
 @defun s_clib_free 
@@ -450,6 +450,7 @@ s_clib_free()
 @ %def s_clib_free
 
 
+/* ------------------------------------------------ */
 @section Function @code{s_clib_init()}
 
 @defun s_clib_init

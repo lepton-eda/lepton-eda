@@ -1,3 +1,8 @@
+2005-01-28 Stuart Brorson <sdb@cloud9.net>
+
+	*  noweb/f_basic.nw, noweb/g_rc.nw, noweb/s_page.nw, 
+	noweb/s_project.nw: incorporated patch by Patrick Bernaud.
+	
 2005-01-27 Stuart Brorson <sdb@cloud9.net>
 
 	* include/prototype.h, include/struct.h, noweb/f_basic.nw,

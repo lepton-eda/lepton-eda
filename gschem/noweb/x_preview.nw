@@ -95,7 +95,7 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 
   /* Since f_open now changes the directory, we need to 
    * use this to reset the cwd at end of fcn */
-  cwd = getcwd(NULL, 1024);  
+  cwd = g_get_current_dir ();
 
 #if DEBUG
   printf("%s %s\n", directory, filename);
@@ -128,8 +128,7 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
   chdir(cwd); /* Go back to original directory */
   free(cwd);
   free(temp);
-
-  return;
+  
 }
 
 

@@ -117,32 +117,16 @@ g_rc_parse_general(TOPLEVEL *w_current, const char *fname,
   int found_rc = 0;
   char *tmp;
   GList *found_rc_filename_element;
-  char *rc_file_directory;
-  char *msg;
 
-  if (w_current->wid == -1) {
-    /* This is a preview window. Don't do any RC file processing */
-    return;
-  }
-
-
-  /* First see if fname is in list of previously read files. */
-  found_rc_filename_element = (GList *) g_list_find_custom(w_current->RC_list, 
-                                                           (gconstpointer) fname,
-                                                           (GCompareFunc) strcmp);
+  /* First see if fname is in list of previously read RC files. */
+  found_rc_filename_element = g_list_find_custom(w_current->RC_list, 
+                                                 (gconstpointer) fname,
+                                                 (GCompareFunc) strcmp);
   if (found_rc_filename_element != NULL) {
     /* We've already read this one in. */
     found_rc = 1;
-    msg = u_basic_strdup("RC file [%s] already read in.\n");
-    s_log_message(msg, fname);
+    s_log_message("RC file [%s] already read in.\n", fname);
     return found_rc;
-  }
-
-  /* This is a new RC file.  First change directory to its directory. */
-  rc_file_directory = f_get_directory_from_path(fname);
-  if (rc_file_directory) { 
-    chdir(rc_file_directory);  
-    /* Probably should do some checking of chdir return values */
   }
 
   /* Now try to read in contents of RC file.  */

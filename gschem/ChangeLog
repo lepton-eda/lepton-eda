@@ -1,3 +1,7 @@
+2005-01-28  Stuart Brorson <sdb@cloud9.net>
+
+	* noweb/x_preview.nw:  Incorporated patch from Patrick Bernaud.
+	
 2005-01-27  Stuart Brorson <sdb@cloud9.net>
 
 	* include/prototype.h, noweb/gschem.nw, noweb/i_callbacks.nw,
