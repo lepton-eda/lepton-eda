@@ -5,6 +5,9 @@
 
 	* configure.ac: Updated version to 20040111
 
+	* symbols/symbols.tex: Applied a patch by Dan McMahill (added some
+	more footprints). Thanks Dan.
+
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* fileformats/fileformats.tex: Fixed valid/test versions
