@@ -110,7 +110,6 @@
 	* fileformats/fileformats.tex: Updated doc to talk about the new
 	fileformat version number.	
 
-
 2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gnetlist/gnetlist.tex, gschem/gschem.tex: Added conversion of

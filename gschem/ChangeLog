@@ -85,7 +85,7 @@
 	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* po/pt_BR.po: Replaced file by new UTF version provided by 
+	* po/pt_BR.po: Replaced file by new UTF-8 version provided by 
 	Antonio.
 
 	* noweb/x_multiattrib.nw: Applied a patch by Carlos to add
