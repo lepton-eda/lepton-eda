@@ -51,28 +51,31 @@
 #define DEFAULT_SCHEME_DIRECTORY "./"
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
 
-int   default_graphic_color = GREEN;
-int   default_text_color = GREEN;
+int   default_graphic_color = GRAPHIC_COLOR;
+int   default_text_color = TEXT_COLOR;
 int   default_text_size = 10;
 int   default_text_caps = LOWER;
-int   default_attribute_color = YELLOW;
-int   default_detachattr_color = RED;
-int   default_net_color = BLUE;
-int   default_bus_color = GREEN;
-int   default_net_endpoint_color = RED;
+int   default_attribute_color = ATTRIBUTE_COLOR;
+int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;
+int   default_net_color = NET_COLOR;
+int   default_bus_color = BUS_COLOR;
+int   default_net_endpoint_color = NET_ENDPOINT_COLOR;
 int   default_override_net_color = -1;
 int   default_override_bus_color = -1;
 int   default_override_pin_color = -1;
 int   default_net_endpoint_mode = FILLEDBOX;
 int   default_net_midpoint_mode = FILLED;
-int   default_pin_color = WHITE;
+int   default_pin_color = PIN_COLOR;
 int   default_pin_style = THICK;
 int   default_net_style = THICK;
 int   default_bus_style = THICK;
-int   default_grid_color = GREY;
-int   default_background_color = BLACK;
-int   default_select_color = GREY90;
-int   default_bb_color = GREY90;
+int   default_grid_color = GRID_COLOR;
+int   default_background_color = BACKGROUND_COLOR;
+int   default_select_color = SELECT_COLOR;
+int   default_bb_color = BOUNDINGBOX_COLOR;
+int   default_lock_color = LOCK_COLOR;
+int   default_zoom_box_color = ZOOM_BOX_COLOR;
+int   default_logic_bubble_color = LOGIC_BUBBLE_COLOR;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
 int   default_object_clipping = TRUE;
@@ -82,7 +85,7 @@ int   default_embed_complex = FALSE;
 int   default_include_complex = FALSE;
 int   default_text_output = VECTOR_FONTS;
 int   default_snap_size = 100;
-int   default_stroke_color = GREY90;
+int   default_stroke_color = STROKE_COLOR;
 
 int   default_paper_width = 11000; /* letter size */
 int   default_paper_height = 85000;
@@ -92,7 +95,7 @@ int   default_scrollbars_flag = TRUE;
 int   default_print_orientation = LANDSCAPE;
 int   default_image_color = FALSE;
 int   default_print_color = FALSE;
-int   default_print_color_background = WHITE;
+int   default_print_color_background = OUTPUT_BACKGROUND_COLOR;
 int   default_print_output_type = LIMITS;
 int   default_print_output_capstyle = SQUARE_CAP;
 char *default_series_name = NULL;
@@ -131,6 +134,7 @@ i_vars_set(TOPLEVEL *w_current)
 
 	w_current->attribute_color    = default_attribute_color;
 	w_current->detachedattr_color = default_detachattr_color;
+	w_current->logic_bubble_color = default_logic_bubble_color;
 
 	w_current->grid_color       = default_grid_color;
 	w_current->background_color = default_background_color;
@@ -138,6 +142,8 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->stroke_color     = default_stroke_color;
 
 	w_current->bb_color = default_bb_color;
+	w_current->zoom_box_color = default_zoom_box_color;
+	w_current->lock_color = default_lock_color;
 
 	w_current->net_color          = default_net_color;
 	w_current->net_style          = default_net_style;

@@ -48,14 +48,14 @@ int global_sid=0;
 
 #define NUMCOLORS 9
 
-struct st_colors {
+struct st_old_colors {
         char *name;
         int value;
 };
 
 /* Colors must be in alphabetical order */
 /* be sure that you update above define */
-struct st_colors colors[] = {
+struct st_old_colors old_colors[] = {
 	{ "black", 0 },
 	{ "blue", 4 },
 	{ "cyan", 6 },
@@ -670,7 +670,6 @@ string_tolower(char *in, char *out)
 	}
 }
 
-/* this routine must stay */
 int
 colornametovalue(char *string)
 {
@@ -679,7 +678,7 @@ colornametovalue(char *string)
 	int upper = NUMCOLORS - 1;
 	int middle;
 	int val;
-	struct st_colors *ptr=NULL;
+	struct st_old_colors *ptr=NULL;
 
 	if (!string) {
 		return(-1);
@@ -689,7 +688,7 @@ colornametovalue(char *string)
 	while (lower <= upper) {
 		middle = (lower + upper) / 2;
 
-		ptr = &colors[middle];
+		ptr = &old_colors[middle];
 		val = strcmp (ptr->name, string);
 
 		if (val < 0) {

@@ -23,6 +23,7 @@ extern GdkColormap *colormap;
 extern GdkVisual *visual; 
 
 /* colors */
+#if 0
 extern GdkColor white;
 extern GdkColor black;
 extern GdkColor red;
@@ -38,6 +39,7 @@ extern GdkColor darkyellow;
 extern GdkColor darkcyan;
 extern GdkColor darkblue;
 extern GdkColor darkgrey; 
+#endif
 
 extern char rc_filename[256]; /* size is hack */
 #endif
@@ -49,12 +51,14 @@ extern int logging_dest;
 /* colors which are used in o_image */
 extern int image_black;
 extern int image_white;
+#if 0 /* will be removed once image printing works */
 extern int image_red;
 extern int image_green;
 extern int image_blue;
 extern int image_yellow;
 extern int image_cyan;
 extern int image_grey;
+#endif
 
 #ifdef HAS_LIBGDGEDA
 /* I hate to include an include inside an include (ha!) however, I don't */

@@ -49,36 +49,26 @@ GdkVisual *visual;
 /* colors */
 GdkColor white;
 GdkColor black;
-GdkColor red;
-GdkColor green;
-GdkColor blue;
-GdkColor cyan;
-GdkColor yellow;
-GdkColor grey;
-GdkColor grey90;
-GdkColor darkgreen;
-GdkColor darkred;
-GdkColor darkyellow;
-GdkColor darkcyan;
-GdkColor darkblue;
-GdkColor darkgrey;
 
 int logfile_fd = -1;
 int do_logging = TRUE;
 int logging_dest = LOG_WINDOW;
 
 /* these are required by libgeda */
-void (*arc_draw_func)()     = o_arc_draw;
-void (*box_draw_func)()     = o_box_draw;
-void (*circle_draw_func)()  = o_circle_draw;
-void (*complex_draw_func)() = o_complex_draw;
-void (*line_draw_func)()    = o_line_draw;
-void (*net_draw_func)()     = o_net_draw;
-void (*bus_draw_func)()     = o_bus_draw;
-void (*text_draw_func)()    = o_text_draw;
-void (*pin_draw_func)()     = o_pin_draw;
-void (*select_func)()       = o_select;
-void (*x_log_update_func)() = x_log_update;
+void (*arc_draw_func)()      = o_arc_draw;
+void (*box_draw_func)()      = o_box_draw;
+void (*circle_draw_func)()   = o_circle_draw;
+void (*complex_draw_func)()  = o_complex_draw;
+void (*line_draw_func)()     = o_line_draw;
+void (*net_draw_func)()      = o_net_draw;
+void (*bus_draw_func)()      = o_bus_draw;
+void (*text_draw_func)()     = o_text_draw;
+void (*pin_draw_func)()      = o_pin_draw;
+void (*select_func)()        = o_select;
+void (*x_log_update_func)()  = x_log_update;
+void (*ps_color_string)()    = x_color_ps_string;
+void (*image_color_int)()    = x_color_image_int;
+void (*image_gdcolor_init)() = x_color_gdcolor_init;
 
 /* command line options */
 int quiet_mode = FALSE;

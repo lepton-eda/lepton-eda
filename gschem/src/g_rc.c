@@ -222,38 +222,69 @@ g_rc_gschem_version(SCM version)
 
 /* general color-setting function */
 static SCM
-g_rc_color_general(SCM color, const char *rc_name, int *color_var)
+g_rc_color_general(SCM index, SCM color, SCM outline_color, 
+		   SCM ps_color, SCM ir, SCM ig, SCM ib,
+		   const char *rc_name, int *color_var)
 {
-	int newcolor;
-	char *string = gh_scm2newstr(color, NULL);
+	int status;
+	int color_index = gh_scm2int(index);
+	char *color_name = gh_scm2newstr(color, NULL);
+	char *outline_color_name = gh_scm2newstr(outline_color, NULL);
+	char *ps_color_string = gh_scm2newstr(ps_color, NULL);
+	int image_red = gh_scm2int(ir);
+	int image_green = gh_scm2int(ig);
+	int image_blue = gh_scm2int(ib);
 
-	newcolor = colornametovalue(string);
+	status = x_color_request(color_index, color_name, outline_color_name,
+			         ps_color_string, 
+			         image_red, image_green, image_blue);
+
+
+#if DEBUG
+	printf("%d %s %s %s %d %d %d\n", color_index, color_name, 
+				      outline_color_name, ps_color_string,
+				      image_red, image_green, image_blue);
+#endif
 
 	/* invalid color? */
-	if (newcolor == -1) {
+	if (status == -1) {
 		fprintf(stderr,
 			"Invalid color [%s] passed to %s\n",
-			string,
+			color_name,
 			rc_name);
-		if (string) {
-			free(string);
+		if (color_name) {
+			free(color_name);
+		}
+		if (outline_color_name) {
+			free(outline_color_name);
+		}
+		if (ps_color_string) {
+			free(ps_color_string);
 		}
 		return SCM_BOOL_F;
 	}
 
-	*color_var = newcolor;
+	*color_var = color_index;
 
-	if (string) {
-		free(string);
+	if (color_name) {
+		free(color_name);
+	}
+	if (outline_color_name) {
+		free(outline_color_name);
+	}
+	if (ps_color_string) {
+		free(ps_color_string);
 	}
 	return SCM_BOOL_T;
 }
 
-#define DEFINE_G_RC_COLOR(func, rc, var)		\
-SCM							\
-func(SCM color)						\
-{							\
-	return g_rc_color_general(color, (rc), &(var));	\
+#define DEFINE_G_RC_COLOR(func, rc, var)			             \
+SCM								             \
+func(SCM index, SCM color, SCM outline_color, SCM ps_color,                  \
+     SCM ir, SCM ig, SCM ib)						     \
+{								             \
+	return g_rc_color_general(index, color, outline_color,               \
+                                  ps_color, ir, ig, ib, (rc), &(var));	     \
 }
 
 DEFINE_G_RC_COLOR(g_rc_override_net_color,
@@ -312,9 +343,29 @@ DEFINE_G_RC_COLOR(g_rc_boundingbox_color,
 		  "boundingbox-color",
 		  default_bb_color);
 
+DEFINE_G_RC_COLOR(g_rc_zoom_box_color,
+		  "zoom-box-color",
+		  default_zoom_box_color);
+
 DEFINE_G_RC_COLOR(g_rc_net_endpoint_color,
 		  "net-endpoint-color",
 		  default_net_endpoint_color);
+
+DEFINE_G_RC_COLOR(g_rc_logic_bubble_color,
+		  "logic-bubble-color",
+		  default_logic_bubble_color);
+
+DEFINE_G_RC_COLOR(g_rc_lock_color,
+		  "lock-color",
+		  default_lock_color);
+
+DEFINE_G_RC_COLOR(g_rc_output_color_background,
+		  "output-color-background",
+		  default_print_color_background);
+
+DEFINE_G_RC_COLOR(g_rc_stroke_color,
+		  "stroke-color",
+		  default_stroke_color);
 
 typedef struct {
 	int   m_val;
@@ -915,10 +966,6 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 }
 #endif
 
-DEFINE_G_RC_COLOR(g_rc_stroke_color,
-		  "stroke-color",
-		  default_stroke_color);
-
 SCM
 g_rc_font_directory(SCM path)
 {
@@ -1134,10 +1181,6 @@ g_rc_output_capstyle(SCM mode)
 
 	RETURN_G_RC_MODE("output-capstyle", default_print_output_capstyle);
 }
-
-DEFINE_G_RC_COLOR(g_rc_output_color_background,
-		  "output-color-background",
-		  default_print_color_background);
 
 SCM
 g_rc_log_window(SCM mode)

@@ -8,6 +8,35 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+9/6/99	Removed most color #defines from color.h, in prep for the new color
+	system
+
+	Temporarily broke color postscript printing
+	Temporarily broke color image writing
+
+	Put into colors.h the proper #defines for the new colors scheme
+	
+	Put a few user rc variables into the toplevel struct
+
+	Fixed color postscript printing
+	To do this, I had to create a ps_color_string global variable function
+	pointer, so every gEDA program needs to define this if it has to be
+	linked to libgeda
+
+	Fixed a coredump bug which was caused by improper attributes (ie
+	pin15=  (and no value))
+
+	Fixed o_attrib_get_name_value so that improper attributes are NOT
+	returned as proper attributes 
+
+	Started to fix the broken color image writing
+		- Re-arranged the allocation of colors in o_image.c
+
+	Got color image writing working again
+
+	Unfortunately had to create another function pointer for 
+	x_color_gdcolor_init (ugg... I need to clean all this up...)
+
 8/31/99 Renamed ntext to text (finally)
 
 	Hopefully fixed the problem that gnetlist was having with embedded

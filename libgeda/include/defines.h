@@ -17,6 +17,10 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+
+/* for color mechanism used in gschem */
+#define MAX_COLORS 20
+
 #define ZOOM_OUT 0
 #define ZOOM_IN 1
 #define ZOOM_FULL 2

@@ -563,12 +563,14 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
 
 /* non-zero if has an equals in it, hence it's a name=value attribute */
 /* both name and value must be pre allocated */
+/* And if you get an invalid attribute (improper) with a name and no */
+/* value, then it is NOT an attribute */
 int
 o_attrib_get_name_value(char *string, char *name, char *value )
 {
 	int i=0;
 	int j=0;
-	int attribute_found=0;
+	int attribute_found=FALSE;
 
 	name[0] = '\0';
 	value[0] = '\0';
@@ -576,7 +578,7 @@ o_attrib_get_name_value(char *string, char *name, char *value )
 	/* get the name */
 	while(string[i] != '\0' && !attribute_found) {
 		if (string[i] == '=') {
-			attribute_found = 1;	
+			attribute_found = TRUE;	
 		} else {
 			name[i] = string[i];
 			i++;
@@ -598,7 +600,13 @@ o_attrib_get_name_value(char *string, char *name, char *value )
 
 	value[j] = '\0';
 
-	return(attribute_found);
+	if (value[0] == '\0') {
+		fprintf(stderr, "Found an improper attribute: _%s_\n", 
+			string);
+		return(FALSE);
+	} else {
+		return(attribute_found);
+	}
 }
 
 void

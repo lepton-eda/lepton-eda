@@ -525,8 +525,9 @@ o_text_add(TOPLEVEL *w_current,
 	/* properly */ 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-	/* fix up actual string here */ if
-	(o_attrib_get_name_value(string, name, value)) {
+	/* fix up actual string here */ 
+	if (o_attrib_get_name_value(string, name, value)) {
+
 		switch(show_name_value) {
 			case(SHOW_NAME_VALUE):
 				strcpy(output_string, string);
@@ -535,18 +536,34 @@ o_text_add(TOPLEVEL *w_current,
 			case(SHOW_NAME):
 				if (name[0] != '\0') {
 					strcpy(output_string, name);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+					    "Got an improper attribute: %s\n", 
+					    string);
+					strcpy(output_string, "invalid");
+
 				}
 			break;
 
 			case(SHOW_VALUE):
 				if (value[0] != '\0') {
 					strcpy(output_string, value);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+					    "Got an improper attribute: %s\n", 
+					    string);
+					strcpy(output_string, "invalid");
 				}
 			break;
 		}
 	} else {
 		strcpy(output_string, string);
 	}
+
 
 	/* now start working on the complex */
 	temp_list = o_text_add_head();
@@ -703,12 +720,26 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 			case(SHOW_NAME):
 				if (name[0] != '\0') {
 					strcpy(output_string, name);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+					    "Got an improper attribute: %s\n", 
+					    o_current->text_string);
+					strcpy(output_string, "invalid");
 				}
 			break;
 
 			case(SHOW_VALUE):
 				if (value[0] != '\0') {
 					strcpy(output_string, value);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+					    "Got an improper attribute: %s\n", 
+					    o_current->text_string);
+					strcpy(output_string, "invalid");
 				}
 			break;
 		}
@@ -861,19 +892,31 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			case(SHOW_NAME_VALUE):
 					strcpy(output_string, 
 						o_current->text_string);
-					break;
+				break;
 
 			case(SHOW_NAME):
 					if (name[0] != '\0') {
 						strcpy(output_string, name);
+					} else {
+						fprintf(stderr, 
+					    	    "Got an improper attribute: %s\n", 
+					    	o_current->text_string);
+						strcpy(output_string, "invalid");
 					}
-					break;
+				break;
 
 			case(SHOW_VALUE):
 					if (value[0] != '\0') {
 						strcpy(output_string, value);
+					} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+						fprintf(stderr, 
+						    "Got an improper attribute: %s\n", 
+					    	o_current->text_string);
+						strcpy(output_string, "invalid");
 					}
-					break;
+				break;
 		}
 	} else {
 		strcpy(output_string, o_current->text_string);
@@ -1057,21 +1100,35 @@ o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	if (o_attrib_get_name_value(object->text_string, name, value)) {
 		switch(object->show_name_value) {
 			case(SHOW_NAME_VALUE):
-					strcpy(output_string, 
+				strcpy(output_string, 
 						object->text_string);
-					break;
+				break;
 
 			case(SHOW_NAME):
-					if (name[0] != '\0') {
-						strcpy(output_string, name);
-					}
-					break;
+				if (name[0] != '\0') {
+					strcpy(output_string, name);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+				    "Got an improper attribute: %s\n", 
+					object->text_string);
+					strcpy(output_string, "invalid");
+				}
+				break;
 
 			case(SHOW_VALUE):
-					if (value[0] != '\0') {
-						strcpy(output_string, value);
-					}
-					break;
+				if (value[0] != '\0') {
+					strcpy(output_string, value);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+				    "Got an improper attribute: %s\n", 
+					object->text_string);
+					strcpy(output_string, "invalid");
+				}
+				break;
 		}
 	} else {
 		strcpy(output_string, object->text_string);
@@ -1138,21 +1195,34 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 	if (o_attrib_get_name_value(object->text_string, name, value)) {
 		switch(object->show_name_value) {
 			case(SHOW_NAME_VALUE):
-					strcpy(output_string, 
-						object->text_string);
-					break;
+				strcpy(output_string, object->text_string);
+				break;
 
 			case(SHOW_NAME):
-					if (name[0] != '\0') {
-						strcpy(output_string, name);
-					}
-					break;
+				if (name[0] != '\0') {
+					strcpy(output_string, name);
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+				    "Got an improper attribute: %s\n", 
+					object->text_string);
+					strcpy(output_string, "invalid");
+				}
+				break;
 
 			case(SHOW_VALUE):
-					if (value[0] != '\0') {
+				if (value[0] != '\0') {
 						strcpy(output_string, value);
-					}
-					break;
+				} else {
+			/* you probably can remove this now... */
+			/* since improper attributes will never get here */
+					fprintf(stderr, 
+				    "Got an improper attribute: %s\n", 
+					object->text_string);
+					strcpy(output_string, "invalid");
+				}
+				break;
 		}
 	} else {
 		strcpy(output_string, object->text_string);

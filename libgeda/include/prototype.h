@@ -265,6 +265,22 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
 int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
 void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
+/* o_pin_basic.c */
+void get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+void world_get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
+void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
+char *o_pin_save(char *buf, OBJECT *object);
+void o_pin_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
+OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
+void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
+void o_pin_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_pin_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 /* o_text_basic.c */
 void get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 void world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
@@ -290,22 +306,6 @@ void o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_cente
 void o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
 void o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-/* o_pin_basic.c */
-void get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-void world_get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
-void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current);
-OBJECT *o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
-char *o_pin_save(char *buf, OBJECT *object);
-void o_pin_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
-void o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
-OBJECT *o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
-void o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
-void o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
-void o_pin_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
-void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_pin_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
-void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
 void s_attrib_print(void);
@@ -410,12 +410,6 @@ void s_slib_print(void);
 int s_slib_uniq(char *path);
 void s_slib_print_dirs(void);
 /* s_stroke.c */
-int s_stroke_add_entry(char *new_stroke, SCM guile_func);
-void s_stroke_print(void);
-int s_stroke_uniq(char *stroke);
-void s_stroke_free(void);
-void s_stroke_init(void);
-int s_stroke_search_execute(char *stroke);
 /* u_basic.c */
 char *u_basic_strdup(const char *p);
 char *u_basic_strdup_multiple(const char *str, ...);

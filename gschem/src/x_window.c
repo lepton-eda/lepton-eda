@@ -231,6 +231,9 @@ x_window_setup_colors(void)
 		exit(-1);
 	}
 
+	x_color_allocate_all();
+
+#if 0
 	gdk_color_parse("grey", &grey);
 	ret = gdk_color_alloc(colormap, &grey);
 	if (ret == 0) {
@@ -321,7 +324,7 @@ x_window_setup_colors(void)
 		fprintf(stderr, "Could not allocate the color darkyellow!\n");
 		exit(-1);
 	}
-
+#endif
 }
 
 /* stays the same */
@@ -345,7 +348,7 @@ x_window_setup_gc(TOPLEVEL *w_current)
 		exit(-1);
 	}
 
-	values.foreground = grey90;
+	values.foreground = white;
 	values.background = black;
 
 	values.function = GDK_XOR;
@@ -358,7 +361,7 @@ x_window_setup_gc(TOPLEVEL *w_current)
 		exit(-1);
 	}
 
-	values.foreground = grey90;
+	values.foreground = white;
 	values.background = black;
 
 	values.function = GDK_XOR;
@@ -371,13 +374,14 @@ x_window_setup_gc(TOPLEVEL *w_current)
 		exit(-1);
 	}
 
-	values.foreground = grey90;
+	values.foreground = white;
 	values.background = black;
 
 	values.function = GDK_XOR;
 	values.line_style = GDK_LINE_ON_OFF_DASH;
 	values_mask = GDK_GC_FOREGROUND | GDK_GC_BACKGROUND |
 			GDK_GC_LINE_STYLE | GDK_GC_FUNCTION;
+
 	w_current->bounding_xor_gc = gdk_gc_new_with_values(w_current->window,
 							 &values, values_mask);
 

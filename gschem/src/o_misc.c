@@ -63,7 +63,7 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 }
 
 /* This locks the entire selected list.  It does lock components, but does NOT
-change the color (of primatives of the components) though */
+/* change the color (of primatives of the components) though */
 /* this cannot be called recursively */
 void
 o_lock(TOPLEVEL *w_current)
@@ -81,7 +81,7 @@ o_lock(TOPLEVEL *w_current)
 			if (real->saved_color == -1) {
 				real->sel_func = NULL;
 				real->saved_color = real->color;
-				real->color = GREY;
+				real->color = w_current->lock_color;
 				w_current->page_current->CHANGED=1;
 			}
 		}

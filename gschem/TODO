@@ -94,7 +94,7 @@ DONE	Make sure snap spacing is set to 100 when doing symbol translates
 	Added rc keyword for pin/net thickness (the value) and for visual
 	cue size
 	
-	Fix the color scheme and make it flexable.
+DONE	Fix the color scheme and make it flexable.
 
 	Figure out if you want the net draw/add action to end when you draw
 	a zero length net (configureable?) 
@@ -290,7 +290,7 @@ easy:
 	update specs
 	crosshair
 	console
-1	color selection (better color handling)
+3	color selection (better color handling)
 1	macro/extensiable lang
 1	Make symbol (odd bug with hitting S twice then it works ? )
 1	push/pop into a symbol

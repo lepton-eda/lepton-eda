@@ -41,26 +41,54 @@
 
 #include "../include/prototype.h"
 
+
 void
 g_register_funcs(void)
 {
 	/* rc file */
 	gh_new_procedure1_0 ("gschem-version", g_rc_gschem_version);
-	gh_new_procedure1_0 ("override-net-color", g_rc_override_net_color);
-	gh_new_procedure1_0 ("override-bus-color", g_rc_override_bus_color);
-	gh_new_procedure1_0 ("override-pin-color", g_rc_override_pin_color);
-	gh_new_procedure1_0 ("attribute-color", g_rc_attribute_color);
-	gh_new_procedure1_0 ("detached-attribute-color", g_rc_detachedattr_color);
-	gh_new_procedure1_0 ("text-color", g_rc_text_color);
-	gh_new_procedure1_0 ("net-color", g_rc_net_color);
-	gh_new_procedure1_0 ("bus-color", g_rc_bus_color);
-	gh_new_procedure1_0 ("pin-color", g_rc_pin_color);
-	gh_new_procedure1_0 ("graphic-color", g_rc_graphic_color);
-	gh_new_procedure1_0 ("grid-color", g_rc_grid_color);
-	gh_new_procedure1_0 ("background-color", g_rc_background_color);
-	gh_new_procedure1_0 ("select-color", g_rc_select_color);
-	gh_new_procedure1_0 ("boundingbox-color", g_rc_boundingbox_color);
-	gh_new_procedure1_0 ("net-endpoint-color", g_rc_net_endpoint_color);
+
+	gh_new_procedure ("override-net-color", g_rc_override_net_color, 
+                          7, 0, 0);
+	gh_new_procedure ("override-bus-color", g_rc_override_bus_color,
+                          7, 0, 0);
+	gh_new_procedure ("override-pin-color", g_rc_override_pin_color,
+                          7, 0, 0);
+	gh_new_procedure ("attribute-color", g_rc_attribute_color,
+                          7, 0, 0);
+	gh_new_procedure ("detached-attribute-color", g_rc_detachedattr_color,
+                          7, 0, 0);
+	gh_new_procedure ("text-color", g_rc_text_color,
+                          7, 0, 0);
+	gh_new_procedure ("logic-bubble-color", g_rc_logic_bubble_color,
+                          7, 0, 0);
+	gh_new_procedure ("lock-color", g_rc_lock_color,
+                          7, 0, 0);
+	gh_new_procedure ("zoom-box-color", g_rc_zoom_box_color,
+                          7, 0, 0);
+	gh_new_procedure ("net-color", g_rc_net_color,
+                          7, 0, 0);
+	gh_new_procedure ("bus-color", g_rc_bus_color,
+                          7, 0, 0);
+	gh_new_procedure ("pin-color", g_rc_pin_color,
+                          7, 0, 0);
+	gh_new_procedure ("graphic-color", g_rc_graphic_color,
+                          7, 0, 0);
+	gh_new_procedure ("grid-color", g_rc_grid_color,
+                          7, 0, 0);
+	gh_new_procedure ("background-color", g_rc_background_color,
+                          7, 0, 0);
+	gh_new_procedure ("select-color", g_rc_select_color,
+                          7, 0, 0);
+	gh_new_procedure ("boundingbox-color", g_rc_boundingbox_color,
+                          7, 0, 0);
+	gh_new_procedure ("net-endpoint-color", g_rc_net_endpoint_color,
+                          7, 0, 0);
+	gh_new_procedure ("stroke-color", g_rc_stroke_color,
+                          7, 0, 0);
+	gh_new_procedure ("output-color-background", g_rc_output_color_background,
+                          7, 0, 0);
+
 	gh_new_procedure1_0 ("net-endpoint-mode", g_rc_net_endpoint_mode);
 	gh_new_procedure1_0 ("net-midpoint-mode", g_rc_net_midpoint_mode);
 	gh_new_procedure1_0 ("net-style", g_rc_net_style);
@@ -87,7 +115,6 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("attribute-name", g_rc_attribute_name);
 	gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
 	/* gh_new_procedure2_0 ("stroke", g_rc_stroke); old way */
-	gh_new_procedure1_0 ("stroke-color", g_rc_stroke_color);
 	gh_new_procedure1_0 ("font-directory", g_rc_font_directory);
 	gh_new_procedure3_0 ("world-size", g_rc_world_size);
 	gh_new_procedure2_0 ("paper-size", g_rc_paper_size);
@@ -98,7 +125,6 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("output-type", g_rc_output_type);
 	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
 	gh_new_procedure1_0 ("output-color", g_rc_output_color);
-	gh_new_procedure1_0 ("output-color-background", g_rc_output_color_background);
 	gh_new_procedure1_0 ("output-capstyle", g_rc_output_capstyle);
 	gh_new_procedure1_0 ("image-color", g_rc_image_color);
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);

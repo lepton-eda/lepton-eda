@@ -36,6 +36,7 @@
 #include "defines.h"
 #include "globals.h"
 #include "o_types.h"
+#include "funcs.h"
 
 #include "colors.h"
 
@@ -44,12 +45,14 @@
 
 int image_black;
 int image_white;
+#if 0
 int image_red;
 int image_green;
 int image_blue;
 int image_yellow;
 int image_cyan;
 int image_grey;
+#endif
 
 #ifdef HAS_LIBGDGEDA
 
@@ -67,7 +70,6 @@ o_image_create(int x, int y, int color_mode)
 {
 	gdImagePtr im_ptr;
 
-
 	im_ptr = gdImageCreate(x, y);
 
 	if (color_mode == TRUE) {
@@ -79,12 +81,9 @@ o_image_create(int x, int y, int color_mode)
 		image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
 	}
 
-	image_red = gdImageColorAllocate(im_ptr, 255, 0, 0);
-        image_green = gdImageColorAllocate(im_ptr, 0, 255, 0);
-        image_blue = gdImageColorAllocate(im_ptr, 0, 0, 255);
-	image_yellow = gdImageColorAllocate(im_ptr, 255, 255, 0 );
-	image_cyan = gdImageColorAllocate(im_ptr, 0, 255, 255 );
-	image_grey = gdImageColorAllocate(im_ptr, 190, 190, 190);
+	if (image_gdcolor_init) {
+		(*image_gdcolor_init)(im_ptr);
+	}
 
 	current_im_ptr = im_ptr;
 }
@@ -122,49 +121,19 @@ o_image_write(char *filename)
 }
 #endif
 
-
 /* this can stay in even if libgdgeda doesn't exist */
 int
 o_image_geda2gd_color(int color) 
 {
-	switch(color) {
+	int value;
 
-		case(RED):
-			return(image_red);
-			break;
+        if (image_color_int) {
 
-		case(BLUE):
-			return(image_blue);
-			break;
+		value = (*image_color_int)(color);
 
-		case(GREEN):
-			return(image_green);
-			break;
+		return(value);
+        }
 
-		case(YELLOW):
-			return(image_yellow);
-			break;
-
-		case(CYAN):
-			return(image_cyan);
-			break;
-
-		case(GREY):
-			return(image_grey);
-			break;
-
-		case(BLACK):
-			return(image_black);
-			break;
-
-		case(WHITE):
-			return(image_white); 
-			break;
-
-		default:
-			return(image_white);
-			break;
-	}
-	
+	return(0);
 }
 

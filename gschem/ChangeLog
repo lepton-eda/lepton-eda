@@ -9,6 +9,37 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/6/99	Finally fixed the very broken color system, now you can allocate
+	any color for any object type (bus, net, background, select color)
+		- Created x_color.c
+		- Removed all global colors from globals.[ch]
+		  Except black and white
+		- Fixed up x_window.c, gschem.c to call proper init functions
+		- Fixed up g_rc.c to call proper x_color functions
+		  Also fixed up g_register.c
+		- Added logic bubble color keyword / variable / init
+		- Fixed up rc file to use the new system (a lot of cleanup)
+		- Added zoom box color keyword / variable / init 
+		- Updated zoom box code to use above color
+		- Added lock color keyword / variable / init
+		- Made output-background-color an official color
+		- A few updates to make the color allocation a bit more robust
+		- Created x_color_ps_string which returns the ps string
+		- Changed the default select color to orange... 
+		- Created ptr for image color specifing 
+		
+	With the above changes, users MUST update their rc files to use the
+	new color scheme.  Things will fail badly if they try to use the old
+	system
+
+	Update all example schematic to use the text color (index for that is 
+	9)
+
+	Fixed a few -1's in the example schematics
+
+	Almost got the color edit dialog box to work with this new color scheme
+	
+	
 9/5/99	Removed some examples schematic from examples/ directory (moved them
 	to the gnetlist/examples directory)
 

@@ -11,3 +11,6 @@ extern void (*select_func)();
 extern void (*pin_conn_recalc_func)(); 
 extern void (*net_conn_recalc_func)();
 extern void (*x_log_update_func)();
+extern char * (*ps_color_string)();
+extern int (*image_color_int)();
+extern int (*image_gdcolor_init)();

@@ -41,6 +41,7 @@
 
 #include "../include/i_vars.h"
 #include "../include/x_states.h"
+#include "../include/globals.h"
 #include "../include/prototype.h"
 
 /***************** Start of Text Input dialog box *********************/
@@ -1224,64 +1225,80 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
 /***************** End of coord dialog box *********************/
 
 /***************** Start of color edit dialog box *********************/
-/* this is a kludge and will be totally replaced once the new color
- * scheme is in place */
-
 gint
-color_black(GtkWidget *w, TOPLEVEL *w_current)
+color_set(GtkWidget *w, int index)
 {
-	w_current->edit_color = BLACK;
+
+	/* hate to use this here... but I have to... */
+	global_window_current->edit_color = index;
         return(0);
 }
 
-gint
-color_white(GtkWidget *w, TOPLEVEL *w_current)
+/* be sure that the caller frees the returned string */
+static char *
+index2functionstring(int index)
 {
-	w_current->edit_color = WHITE;
-        return(0);
+	char *string;
+
+	switch(index) {
+		case(BACKGROUND_COLOR):
+			string = u_basic_strdup("background");
+			break;
+		case(PIN_COLOR):
+			string = u_basic_strdup("pin");
+			break;
+		case(NET_ENDPOINT_COLOR):
+			string = u_basic_strdup("net endpoint");
+			break;
+		case(GRAPHIC_COLOR):
+			string = u_basic_strdup("graphic");
+			break;
+		case(NET_COLOR):
+			string = u_basic_strdup("net");
+			break;
+		case(ATTRIBUTE_COLOR):
+			string = u_basic_strdup("attribute");
+			break;
+		case(LOGIC_BUBBLE_COLOR):
+			string = u_basic_strdup("logic bubble");
+			break;
+		case(GRID_COLOR):
+			string = u_basic_strdup("grid point");
+			break;
+		case(DETACHED_ATTRIBUTE_COLOR):
+			string = u_basic_strdup("detached attribute");
+			break;
+		case(TEXT_COLOR):
+			string = u_basic_strdup("text");
+			break;
+		case(BUS_COLOR):
+			string = u_basic_strdup("bus");
+			break;
+		case(SELECT_COLOR):
+			string = u_basic_strdup("select");
+			break;
+		case(BOUNDINGBOX_COLOR):
+			string = u_basic_strdup("bounding box");
+			break;
+		case(ZOOM_BOX_COLOR):
+			string = u_basic_strdup("zoom box");
+			break;
+		case(STROKE_COLOR):
+			string = u_basic_strdup("stroke");
+			break;
+		case(LOCK_COLOR):
+			string = u_basic_strdup("lock");
+			break;
+		case(OUTPUT_BACKGROUND_COLOR):
+			string = u_basic_strdup("output background");
+			break;
+		defautlt:
+			string = u_basic_strdup("unknown");
+			break;
+	}
+
 }
 
-gint
-color_red(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->edit_color = RED;
-        return(0);
-}
-
-gint
-color_green(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->edit_color = GREEN;
-        return(0);
-}
-
-gint
-color_blue(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->edit_color = BLUE;
-        return(0);
-}
-
-gint
-color_yellow(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->edit_color = YELLOW;
-        return(0);
-}
-
-gint
-color_cyan(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->edit_color = CYAN;
-        return(0);
-}
-
-gint
-color_grey(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->edit_color = GREY;
-        return(0);
-}
 
 /* this is from gtktest.c */
 static GtkWidget*
@@ -1290,85 +1307,52 @@ create_color_menu (TOPLEVEL *w_current)
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GSList *group;
-	char buf[20];
+	int index=0;
+	char buf[30]; /* should be be big enough hack */
+	char menu_string[60]; /* size is a hack */
+	char *temp=NULL;
+	int found=0;
+	int set_first=0;
 
 	menu = gtk_menu_new ();
 	group = NULL;
 
-	sprintf (buf, "Black");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_black,
-			    w_current);
+	found = x_color_get_name(index, &buf);
+	while (found != FALSE) {
 
-	gtk_widget_show (menuitem);
+		if (found == TRUE) {
 
-	sprintf (buf, "White");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_white,
-			    w_current);
-	gtk_widget_show (menuitem);
+			/* set the default to the first entry */
+			if (!set_first) {
+				global_window_current->edit_color = index;
+				set_first = 1;
+			}
 
-	sprintf (buf, "Red");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_red,
-			    w_current);
-	gtk_widget_show (menuitem);
+			temp = index2functionstring(index);
+			sprintf(menu_string, "%d | %s | %s", index, 
+							 temp,
+							 buf);
+			free(temp);
+			
+			menuitem = gtk_radio_menu_item_new_with_label (group, 
+								  menu_string);
+			group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(
+						          menuitem));
 
-	sprintf (buf, "Green");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_green,
-			    w_current);
-	gtk_widget_show (menuitem);
+			gtk_menu_append (GTK_MENU (menu), menuitem);
 
-	sprintf (buf, "Blue");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_blue,
-			    w_current);
-	gtk_widget_show (menuitem);
+			gtk_signal_connect (GTK_OBJECT (menuitem), 
+					       "activate", 
+					       (GtkSignalFunc) color_set,
+			    		       (int) index);
 
-	sprintf (buf, "Yellow");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_yellow,
-			    w_current);
-	gtk_widget_show (menuitem);
+			gtk_widget_show (menuitem);
+		}
 
-	sprintf (buf, "Cyan");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_cyan,
-			    w_current);
-	gtk_widget_show (menuitem);
+		index++;
+		found = x_color_get_name(index, &buf);
+	}
 
-	sprintf (buf, "Grey");
-	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) color_grey,
-			    w_current);
-	gtk_widget_show (menuitem);
-
-	w_current->edit_color = GREEN;
 
 	return menu;
 }
@@ -1489,3 +1473,4 @@ color_edit_dialog (TOPLEVEL *w_current)
 	}
 }
 /***************** End of color edit dialog box *********************/
+

@@ -100,7 +100,7 @@ symdir = @symdir@
 bin_PROGRAMS = gschem
 
 # don't forget all *.h files */
-gschem_SOURCES =  	a_pan.c a_zoom.c 	g_register.c 	g_rc.c g_key.c g_funcs.c 	globals.c gschem.c 	i_basic.c i_callbacks.c i_sbox.c i_vars.c 	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c 	o_slot.c o_stretch.c 	o_arc.c o_box.c o_circle.c o_complex.c 	o_line.c o_net.c o_text.c o_pin.c o_bus.c 	x_attrsel.c x_basic.c x_compsel.c x_dialog.c 	x_event.c x_filesel.c x_grid.c x_log.c x_menus.c x_script.c 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c 	prototype1.0.h prototype1.2.h 	parsecmd.c globals.h i_vars.h o_conn.c
+gschem_SOURCES =  	a_pan.c a_zoom.c 	g_register.c 	g_rc.c g_key.c g_funcs.c 	globals.c gschem.c 	i_basic.c i_callbacks.c i_sbox.c i_vars.c 	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c 	o_slot.c o_stretch.c 	o_arc.c o_box.c o_circle.c o_complex.c 	o_line.c o_net.c o_text.c o_pin.c o_bus.c 	x_attrsel.c x_basic.c x_compsel.c x_dialog.c 	x_event.c x_filesel.c x_grid.c x_log.c x_menus.c x_script.c 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c 	prototype1.0.h prototype1.2.h 	parsecmd.c globals.h i_vars.h o_conn.c
 
 
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
@@ -134,7 +134,7 @@ o_attrib.o o_move.o o_copy.o o_delete.o o_misc.o o_slot.o o_stretch.o \
 o_arc.o o_box.o o_circle.o o_complex.o o_line.o o_net.o o_text.o \
 o_pin.o o_bus.o x_attrsel.o x_basic.o x_compsel.o x_dialog.o x_event.o \
 x_filesel.o x_grid.o x_log.o x_menus.o x_script.o x_pagesel.o x_print.o \
-x_window.o x_stroke.o x_image.o parsecmd.o o_conn.o
+x_window.o x_stroke.o x_image.o x_color.o parsecmd.o o_conn.o
 gschem_DEPENDENCIES = 
 gschem_LDFLAGS = 
 CFLAGS = @CFLAGS@
@@ -161,10 +161,10 @@ DEP_FILES =  .deps/a_pan.P .deps/a_zoom.P .deps/g_funcs.P .deps/g_key.P \
 .deps/o_copy.P .deps/o_delete.P .deps/o_line.P .deps/o_misc.P \
 .deps/o_move.P .deps/o_net.P .deps/o_pin.P .deps/o_slot.P \
 .deps/o_stretch.P .deps/o_text.P .deps/parsecmd.P .deps/x_attrsel.P \
-.deps/x_basic.P .deps/x_compsel.P .deps/x_dialog.P .deps/x_event.P \
-.deps/x_filesel.P .deps/x_grid.P .deps/x_image.P .deps/x_log.P \
-.deps/x_menus.P .deps/x_pagesel.P .deps/x_print.P .deps/x_script.P \
-.deps/x_stroke.P .deps/x_window.P
+.deps/x_basic.P .deps/x_color.P .deps/x_compsel.P .deps/x_dialog.P \
+.deps/x_event.P .deps/x_filesel.P .deps/x_grid.P .deps/x_image.P \
+.deps/x_log.P .deps/x_menus.P .deps/x_pagesel.P .deps/x_print.P \
+.deps/x_script.P .deps/x_stroke.P .deps/x_window.P
 SOURCES = $(gschem_SOURCES)
 OBJECTS = $(gschem_OBJECTS)
 

@@ -198,7 +198,8 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 		/* try to use recalc here */
 		o_redraw_all(w_current);
 
-		f_image_write(w_current, filename, width, height, w_current->image_color);
+		f_image_write(w_current, filename, width, height, 
+		              w_current->image_color);
 
 		w_current->width = save_width;
 		w_current->height = save_height;

@@ -31,6 +31,7 @@
 #include "defines.h"
 #include "globals.h"
 #include "o_types.h"
+#include "funcs.h"
 
 #include "colors.h"
 
@@ -114,47 +115,19 @@ struct st_pslines footer[] = {
 void
 f_print_set_color(FILE *fp, int color) 
 {
+	char *string;
 
-	switch(color) {
-		case(RED):
-			fprintf(fp, "1 0 0 setrgbcolor\n");
-			break;
+	/* DO NOT free string... it's a reference to a malloced 
+	/* string, there is no memory leak here */
+	if (ps_color_string) {
+		string = (*ps_color_string)(color);
+	}
 
-		case(BLUE):
-			fprintf(fp, "0 0 1 setrgbcolor\n");
-			break;
-
-		case(GREEN):
-			fprintf(fp, "0 1 0 setrgbcolor\n");
-			break;
-
-		case(YELLOW):
-			fprintf(fp, "1 1 0 setrgbcolor\n");
-			break;
-
-		case(CYAN):
-			fprintf(fp, "0 1 1 setrgbcolor\n");
-			break;
-
-		case(GREY):
-			fprintf(fp, ".75 .75 .75 setrgbcolor\n");
-			break;
-
-		case(GREY90):
-			fprintf(fp, ".9 .9 .9 setrgbcolor\n");
-			break;
-
-		case(BLACK):
+	if (string) {
+			fprintf(fp, "%s setrgbcolor\n", string);
+	} else {
 			fprintf(fp, "0 0 0 setrgbcolor\n");
-			break;
 
-		case(WHITE):
-			fprintf(fp, "1 1 1 setrgbcolor\n");
-			break;
-
-		default:
-			fprintf(fp, "0 0 0 setrgbcolor\n");
-			break;
 	}
 }
 

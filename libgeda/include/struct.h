@@ -368,15 +368,18 @@ struct st_toplevel {
 	int graphic_color;
 	int pin_color;
 	int text_color;
+	int logic_bubble_color; /* not used anywhere yet, but will be */
+	int zoom_box_color; 
 	int text_caps;
 	int attribute_color;
 	int detachedattr_color;
 	int text_size;
-	int snap_size;		/* used by math funcs to the snapping */
+	int snap_size;		/* used by math funcs for the snapping */
 	int grid_color;
 	int background_color;
 	int select_color;
 	int bb_color;
+	int lock_color;
 	int net_endpoint_color;
 	int net_color;
 	int bus_color;

@@ -31,13 +31,13 @@
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
-#include <libgeda/colors.h>
 #include <libgeda/prototype.h>
 
 #include "../include/globals.h"
 #include "../include/x_event.h"
 #include "../include/prototype.h"
 
+#if 0 /* once you are sure your new color system works... delete code */
 GdkColor *
 x_get_color(int color)
 {
@@ -70,6 +70,7 @@ x_get_darkcolor(int color)
 	default:      return(&white     ); break;
 	}
 }
+#endif
 
 void
 x_repaint_background(TOPLEVEL *w_current)

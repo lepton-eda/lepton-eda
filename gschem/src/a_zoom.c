@@ -59,8 +59,9 @@
 #define GET_BOX_TOP(w)				\
 	min((w)->start_y, (w)->last_y);
 
-#define XOR_SETUP(w)						\
-	gdk_gc_set_foreground((w)->xor_gc, &white)
+#define XOR_SETUP(w)				\
+	gdk_gc_set_foreground((w)->xor_gc, 	\
+		              x_get_color(w_current->zoom_box_color))
 
 #define XOR_DRAW_BOX(w, x, y, wd, ht)				\
 	gdk_draw_rectangle((w)->window, (w)->xor_gc, FALSE,	\

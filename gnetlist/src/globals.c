@@ -45,20 +45,6 @@ GdkVisual *visual;
 /* colors */
 GdkColor white;
 GdkColor black;
-GdkColor red;
-GdkColor green;
-GdkColor blue;
-GdkColor cyan;
-GdkColor yellow;
-GdkColor grey;
-GdkColor grey90;
-GdkColor darkgreen;
-GdkColor darkred;
-GdkColor darkyellow;
-GdkColor darkcyan;
-GdkColor darkblue;
-GdkColor darkgrey; 
-
 
 int logfile_fd=-1;
 int do_logging=TRUE;
@@ -75,9 +61,10 @@ void (*bus_draw_func)() = o_bus_recalc;
 void (*text_draw_func)() = o_text_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
 void (*select_func)() = NULL;
-/* void (*pin_conn_recalc_func)() = o_pin_conn_recalc_only;
-void (*net_conn_recalc_func)() = o_net_conn_recalc_only;old CONN stuff */
 void (*x_log_update_func)() = NULL;
+void (*ps_color_string)()   = NULL;
+void (*image_color_int)()   = NULL;
+void (*image_gdcolor_init)() = NULL;
 
 
 /* netlist specific variables */

@@ -766,7 +766,15 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 {
 	int diff_x, diff_y;
 	int test_x, test_y;
+
+	/* static is highly temp */	
+	/* you have to make these static... for the once mode */
 	int rleft, rtop, rbottom, rright;
+
+	#if 0 /* this once stuff is a start at fixing bounding box mode */
+	/* highly temp */
+	 static int once=0;
+	#endif
 
 	if ((w_current->last_drawb_mode == OUTLINE) &&
 	    (w_current->actionfeedback_mode == BOUNDINGBOX)) {
@@ -946,8 +954,12 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 
 	if (w_current->actionfeedback_mode == BOUNDINGBOX) {
 		/* this slows things down quite a bit hack */
+		/* if (once == 0) {*/
 		get_complex_bounds(w_current, o_current, &rleft, &rtop,
 				   &rright, &rbottom);
+			/* printf("once\n");*/
+			/* once=1;*/
+		/* }*/
 		diff_x = w_current->last_x - w_current->start_x;
         	diff_y = w_current->last_y - w_current->start_y;
         	gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
