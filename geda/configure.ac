@@ -23,8 +23,12 @@ AM_PATH_GTK(1.2.0, ,
 dnl Checks for programs.
 dnl Checks for libraries.
 dnl Checks for header files.
+AC_CHECK_HEADERS(time.h)
+
 dnl Checks for typedefs, structures, and compiler characteristics.
 dnl Checks for library functions.
+AC_CHECK_FUNCS(nanosleep)
+
 dnl Checks for Additional stuffs.
 
 dnl Languages which your application supports

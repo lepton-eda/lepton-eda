@@ -28,6 +28,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#ifdef HAVE_TIME_H
+#include <time.h>
+#endif
 
 #include "doc.h"
 #include "global.h"
@@ -160,11 +163,26 @@ int main(int argc, char *argv[])
 }
 
 
+#ifdef HAVE_NANOSLEEP
+static void ReduceCpuSleep(unsigned long usecs)
+{
+	struct timespec rqtp;
+       	rqtp.tv_sec  = usecs / (unsigned long)  1000000;
+       	rqtp.tv_nsec = (usecs % (unsigned long) 1000000) * 1000 ;
+
+       	nanosleep(&rqtp, (struct timespec *) NULL);
+}
+#endif
+
 static void MainLoop(void)
 {
 	while (bRunning != FALSE)
 	{
 		TaskProcess();
+#ifdef HAVE_NANOSLEEP
+		/* Sleep for one microsecond (maybe more) to reduce CPU load */
+		ReduceCpuSleep(1000);
+#endif
 		while (g_main_iteration(FALSE));
 	}
 }

@@ -1,3 +1,14 @@
+2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Added checks for time.h and nanosleep.  nanosleep
+	is used in the sleep function below.
+
+	* src/main.c: Added a sleep function inside the main loop to reduce
+	the CPU load.  Without this sleep, the while loop keeps the cpu
+	100% busy.  With the sleep, the geda process spends more time 
+	sleeping, hence lower CPU load.  This sleep will only occur on 
+	systems which support nanosleep.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Bumped version to 20031231
