@@ -1,4 +1,4 @@
-v 20031231 1
+v 20040111 1
 T 1700 4300 8 10 1 1 0 6 1
 refdes=U?
 T 300 4250 9 10 1 0 0 0 1
@@ -223,3 +223,5 @@ T 350 1500 5 8 0 1 0 2 1
 pintype=in
 }
 B 300 0 2000 4200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 7450 5 10 0 0 0 0 1
+documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1480A-MAX1490B.pdf

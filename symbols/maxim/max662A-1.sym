@@ -97,6 +97,6 @@ pintype=io
 T 300 2400 8 10 0 0 0 0 1
 documentation=http://maxim-ic.com
 T 300 2800 8 10 0 0 0 0 1
-footprint=dip8
+footprint=DIP8
 T 300 2600 8 10 0 0 0 0 1
 numslots=0

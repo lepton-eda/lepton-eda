@@ -1,4 +1,4 @@
-v 20031231 1
+v 20041228 1
 B 300 300 1400 1600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 1200 100 9 10 1 1 0 0 1
 device=MAX4429
@@ -89,3 +89,5 @@ pintype=pwr
 T 900 1500 9 10 1 1 90 1 1
 pinlabel=Vdd
 }
+T 600 3000 5 10 0 0 0 0 1
+documentation=http://pdfserv.maxim-ic.com/en/ds/MAX4420-MXT429.pdf

@@ -1,4 +1,4 @@
-v 20031231 1
+v 20040111 1
 P 300 6300 0 6300 1 0 1
 {
 T 200 6350 5 8 1 1 0 6 1
@@ -466,3 +466,5 @@ pinlabel=PAD
 T 350 700 5 8 0 1 0 2 1
 pintype=pas
 }
+T 300 9650 5 10 0 0 0 0 1
+documentation=http://pdfserv.maxim-ic.com/en/ds/MAX100.pdf

@@ -1,4 +1,4 @@
-v 20031231 1
+v 20040111 1
 P 300 3900 0 3900 1 0 1
 {
 T 200 3950 5 8 1 1 0 6 1
@@ -154,3 +154,5 @@ T 300 5450 5 10 0 0 0 0 1
 net=VCCA:8
 T 300 4850 5 10 0 0 0 0 1
 footprint=QSOP16
+T 300 6050 5 10 0 0 0 0 1
+documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1005.pdf
