@@ -1,3 +1,7 @@
+2005-02-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/fr_FR.po, LINGUAS: Added French translation by Iznogood.
+
 2005-02-14 22:29  Dan McMahill <danmc>
 
 	* noweb/x_preview.nw: add missing header file needed for chdir()
