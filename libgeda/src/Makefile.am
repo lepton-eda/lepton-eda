@@ -19,7 +19,7 @@ libgeda_la_SOURCES = \
 	prototype1.2.h o_ales.c s_nethash.c \
 	funcs.h globals.h 
 
-libgeda_la_LDFLAGS = -version-info 3:0:0
+libgeda_la_LDFLAGS = -version-info 3:1:0
 
 
 include_HEADERS = 
