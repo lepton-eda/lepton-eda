@@ -7,7 +7,7 @@ PACKAGE=geda-gsymcheck
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20010722
+VERSION=20020209
 
 echo Configuring gsymcheck version $VERSION
 
