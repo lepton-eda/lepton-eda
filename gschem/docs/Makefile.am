@@ -1,0 +1,7 @@
+
+EXTRA_DIST = gschem.txt
+
+MOSTLYCLEANFILES = *.log *~
+CLEANFILES = *.log *~
+DISTCLEANFILES = *.log *~
+MAINTAINERCLEANFILES = *.log *~

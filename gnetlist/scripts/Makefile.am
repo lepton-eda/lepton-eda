@@ -1,0 +1,7 @@
+
+EXTRA_DIST =
+
+MOSTLYCLEANFILES = *.log *~
+CLEANFILES = *.log *~
+DISTCLEANFILES = *.log *~
+MAINTAINERCLEANFILES = *.log *~
