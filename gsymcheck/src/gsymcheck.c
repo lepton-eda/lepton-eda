@@ -71,7 +71,7 @@ main_prog(int argc, char *argv[])
   s_log_init(cwd, "gsymcheck.log");
   free(cwd);
 	
-
+  logging_dest=STDOUT_TTY;
   if (!quiet_mode)
   {
     s_log_message(
@@ -88,6 +88,8 @@ main_prog(int argc, char *argv[])
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif  
 
+  logging_dest=-1; /* don't output to the screen for now */
+  
   /* register guile (scheme) functions */
   g_register_funcs();
 
@@ -149,7 +151,8 @@ main_prog(int argc, char *argv[])
 #if DEBUG 
   s_page_print_all(pr_current);
 #endif
-
+  logging_dest=STDOUT_TTY;
+  
   if (verbose_mode) s_log_message("\n");
 
   errors = s_check_all(pr_current);

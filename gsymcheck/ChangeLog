@@ -1,5 +1,9 @@
 2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	* src/s_check.c: Added s_check_slotdef which checks the slot info
+	
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* include/struct.h: Added new file to hold gsymcheck specific 
 	structures
 

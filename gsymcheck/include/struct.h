@@ -16,6 +16,10 @@ struct st_symcheck {
   int found_oldpin_attrib;
   int found_oldslot_attrib;
   int unattached_attribs;
+  
+  int numpins;
+
+  int error_count;
 };
 
 

@@ -85,6 +85,9 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for pinnumber attribute (and multiples) on all pins */
   s_check_pinnumber(object_head, s_symcheck);
 
+  /* check for slotdef attribute on all pins (if numslots exists) */
+  s_check_slotdef(object_head, s_symcheck);
+
   /* check for old pin#=# attributes */
   s_check_oldpin(object_head, s_symcheck);
 
@@ -95,8 +98,8 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   errors = s_symstruct_print(s_symcheck);
 
   if (errors) {
-    s_log_message("ERROR: %s is incomplete or has errors\n",
-           p_current->page_filename);	
+    s_log_message("ERROR: %s has %d errors\n",
+           p_current->page_filename, s_symcheck->error_count);	
   } 
 
   s_symstruct_free(s_symcheck);
@@ -125,6 +128,7 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
   temp = o_attrib_search_name(o_current, "device", 0);
   if (!temp) {
     s_current->missing_device_attrib=TRUE;
+    s_current->error_count++;
   } else {
     s_current->missing_device_attrib=FALSE;
     s_current->device_attribute =
@@ -160,6 +164,8 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
     
     if (o_current->type == OBJ_PIN)
     {
+      s_current->numpins++;
+      
       missing_pinnumber_attrib_sum = 0;
       multiple_pinnumber_attrib_sum = 0;
       found_first = FALSE;
@@ -170,6 +176,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
       if (!string)
       {
         missing_pinnumber_attrib_sum++;
+        s_current->error_count++;
       }
 
       while (string)
@@ -181,6 +188,7 @@ s_check_pinnumber(OBJECT *object_head, SYMCHECK *s_current)
 
         if (found_first) {
           multiple_pinnumber_attrib_sum++;
+          s_current->error_count++;
         }
         
         /* this is the first attribute found? */
@@ -229,6 +237,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
       if (!string)
       {
         missing_pinseq_attrib_sum++;
+        s_current->error_count++;
       }
 
       while (string)
@@ -240,6 +249,7 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
 
         if (found_first) {
           multiple_pinseq_attrib_sum++;
+          s_current->error_count++;
         }
         
         /* this is the first attribute found? */
@@ -259,6 +269,136 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
     
     o_current = o_current->next;
   }
+}
+
+
+void
+s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
+{
+  char* value = NULL;
+  char* slotdef = NULL;
+  char* slotnum = NULL;
+  char* pins = NULL;
+  char* temp = NULL;
+  int numslots;
+  int slot;
+  int i,j;
+  
+  /* look for numslots to see if this symbol has slotting info */
+  value = o_attrib_search_name(object_head, "numslots", 0);
+
+  if (!value) {
+    if (verbose_mode)
+      s_log_message("- INFO: no slotting information found\n");
+
+    return;
+  }
+
+  numslots=atoi(value);
+  free(value);
+
+  if (verbose_mode)
+    s_log_message("- INFO: found numslots=%d\n", numslots);
+
+
+  i = 0;
+  /* get the slotdef attribute */
+  slotdef = o_attrib_search_name(object_head, "slotdef", 0);
+  while (slotdef != NULL)
+  {
+
+    if (i > numslots) {
+      if (verbose_mode)
+        s_log_message("- ERROR: Too many slotdef (should be %d slotdef attributes)\n", numslots);
+      s_current->error_count++;
+      return;
+    }
+    
+    if (verbose_mode)
+      s_log_message("- INFO: found slotdef=%s\n", slotdef);
+
+    slotnum = u_basic_breakup_string(slotdef, ':', 0);
+    if (!slotnum)
+    {
+      if (verbose_mode)
+        s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
+      s_current->error_count++;
+      free(slotdef);
+      return;
+    }
+    slot = atoi(slotnum);
+    free(slotnum);
+
+    /* make sure that the slot # is less than the number of slots */
+    if (slot > numslots) {
+      if (verbose_mode)
+        s_log_message("- ERROR: Slot %d is larger then maximum number (%d) of slots\n", slot, numslots);
+      s_current->error_count++;
+    }
+
+    /* skip over the : */
+    pins = index(slotdef, ':');
+    if (!pins) {
+      if (verbose_mode)
+        s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
+      s_current->error_count++;
+      free(slotdef);
+      return;
+    }
+    pins++;  /* get past that : */
+    if (!pins) {
+      if (verbose_mode)
+        s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
+      s_current->error_count++;
+      free(slotdef);
+      return;
+    }
+
+    
+    j = 0;
+    do {
+      if (temp) {
+        free(temp);
+        temp = NULL;
+      }
+        
+      temp = u_basic_breakup_string(pins, ',', j);
+
+      if (!temp && j < s_current->numpins) {
+        if (verbose_mode)
+          s_log_message("- ERROR: Not enough pins in slotdef=%s\n", slotdef);
+        s_current->error_count++;
+        break;
+      }
+
+      if (j > s_current->numpins) {
+        if (verbose_mode)
+          s_log_message("- ERROR: Too many pins in slotdef=%s\n", slotdef);
+        s_current->error_count++;
+        free(temp);
+        temp = NULL;
+        break;
+      }
+     
+      j++;
+    } while (temp); 
+
+    if (temp)
+      free(temp);
+
+    free(slotdef);
+   
+    i++;
+    slotdef = o_attrib_search_name(object_head, "slotdef", i);
+  }
+  
+  if (!slotdef && i < numslots) {
+    if (verbose_mode)
+      s_log_message("- ERROR: missing slotdef (should be %d slotdef attributes)\n", numslots);
+    s_current->error_count++;
+    return;
+  }
+    
 }
 
 

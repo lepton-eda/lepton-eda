@@ -51,6 +51,9 @@ s_symstruct_init(void)
   s_symcheck->found_oldslot_attrib=FALSE;
   s_symcheck->unattached_attribs=FALSE;
 
+  s_symcheck->numpins=0;
+  s_symcheck->error_count=0;
+
   return(s_symcheck);
 }
 
@@ -63,45 +66,49 @@ s_symstruct_print(SYMCHECK *s_current)
   
   if (s_current->device_attribute) {
     if (verbose_mode) s_log_message("- INFO: device attribute = %s\n",
-                             s_current->device_attribute);
+                                    s_current->device_attribute);
   }
   
   if (s_current->graphical_symbol) {
-    if (verbose_mode) s_log_message("  - INFO: graphical symbol\n");
+    if (verbose_mode) s_log_message("- INFO: graphical symbol\n");
   }
 
-  if (s_current->missing_device_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: missing device attribute\n");
+  if (s_current->error_count) {
     status++;
   }
-
+  
+  if (s_current->missing_device_attrib) {
+    if (verbose_mode) s_log_message("- ERROR: missing device attribute\n");
+    status++;
+  }
+  
   if (s_current->missing_pinseq_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: missing pinseq attribute(s)\n");
+    if (verbose_mode) s_log_message("- ERROR: missing pinseq attribute(s)\n");
     status++;
   }
 
   if (s_current->multiple_pinseq_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: multiple pinseq attributes on a single pin\n");
+    if (verbose_mode) s_log_message("- ERROR: multiple pinseq attributes on a single pin\n");
     status++;
   }
   
   if (s_current->missing_pinnumber_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: missing pinnumber attribute(s)\n");
+    if (verbose_mode) s_log_message("- ERROR: missing pinnumber attribute(s)\n");
     status++;
   }
 
   if (s_current->multiple_pinnumber_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: multiple pinnumber attributes on a single pin\n");
+    if (verbose_mode) s_log_message("- ERROR: multiple pinnumber attributes on a single pin\n");
     status++;
   }
 
   if (s_current->found_oldpin_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: found old pin#=# attribute(s)\n");
+    if (verbose_mode) s_log_message("- ERROR: found old pin#=# attribute(s)\n");
     status++;
   }
 
   if (s_current->found_oldslot_attrib) {
-    if (verbose_mode) s_log_message(" - ERROR: found old pin#=# attribute(s)\n");
+    if (verbose_mode) s_log_message("- ERROR: found old pin#=# attribute(s)\n");
     status++;
   }
 

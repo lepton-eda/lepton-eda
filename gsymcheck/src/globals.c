@@ -72,7 +72,15 @@ void s_log_update(char *buf)
     return;
   }
 
-  fputs(buf, stdout);
+  switch(logging_dest) {
+    case(STDOUT_TTY):
+      fputs(buf, stdout);
+      break;
+
+    default:
+      break;
+  }
+  
 }
 
 
