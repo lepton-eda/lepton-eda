@@ -384,6 +384,8 @@ int
 main (int argc, char *argv[])
 {
 #if ENABLE_NLS
+  /* work-around a gtk_set_locale bug/misbehaving */
+  putenv("LC_NUMERIC=POSIX");
   setlocale(LC_ALL, "");
   setlocale(LC_NUMERIC, "POSIX");
   bindtextdomain(PACKAGE, LOCALEDIR);

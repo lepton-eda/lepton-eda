@@ -2,7 +2,9 @@ datadocdir = @GEDADATADIR@/documentation
 
 datadoc_DATA = nc.pdf
 
-EXTRA_DIST = nc.doc geda.fig
+EXTRA_DIST = nc.doc geda.fig geda.pic
+
+BUILT_SOURCES = geda.pic
 
 #
 #  some standard rules for groff based documentation
@@ -21,7 +23,7 @@ EXTRA_DIST = nc.doc geda.fig
 	@echo "Creating ps (using groff)"
 	@rm -rf $*.tmp
 	@if which groff >/dev/null 2>/dev/null; then              \
-		groff -t -sp -ms $*.doc >$*.tmp		        ;\
+		LC_NUMERIC=C groff -t -sp -ms $*.doc >$*.tmp ;\
 	else						         \
 		echo "** Did not find groff **"                 ;\
 		echo "Some Documentation might not be correct!" ;\
@@ -46,6 +48,6 @@ EXTRA_DIST = nc.doc geda.fig
 nc.ps: geda.pic
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ *.ps *.pdf geda.pic
-DISTCLEANFILES = *.log core FILE *~ prototype.bak geda.pic
+CLEANFILES = *.log *~ *.ps *.pdf 
+DISTCLEANFILES = *.log core FILE *~ prototype.bak 
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda.pic

@@ -1,4 +1,9 @@
-2002-11-23  gettextize  <bug-gnu-gettext@gnu.org>
+2002-11-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschem/noweb.nw: Applied patch by Alexandre P. Nunes for
+	gtk_set_locale bug/misbehaving.
+
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/ru.po, LINGUAS: Added Russian translation by Andy Shevchenko.
 	Thank you.

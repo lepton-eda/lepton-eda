@@ -1,3 +1,10 @@
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* documentation/Makefile.am: Added LC_NUMERIC=C to fix build problem.
+	Not sure if this fixes the problem reported by Andy Shevchenko. Bug#42.	
+
+	* documentation/Makefile.am: Added geda.pic to the distribution.
+
 2002-11-21 Werner Hoch <werner.ho@gmx.de>
 	* 74/*sym: added documentation attribut to symbols
 	* 74/74595-1.sym: completed symbol (added footprint, pintype,...)
