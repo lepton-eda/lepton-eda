@@ -163,7 +163,7 @@ char *ConfigValue(const int iValue)
 {
 	static char *pString = NULL;
 
-	int iCount, iState, iStart = 0, iStop, i;
+	int iCount, iState, iStart = 0, iStop = 0, i;
 
 	if (pString == NULL)
 		StringCreate();
