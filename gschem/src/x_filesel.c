@@ -52,6 +52,7 @@ file_selection_ok_open (GtkWidget *w, TOPLEVEL *w_current)
 {
 	int len;
 	char *string;
+	PAGE *found_page;
 	string = gtk_file_selection_get_filename(
 		GTK_FILE_SELECTION (w_current->fowindow));
 
@@ -68,37 +69,39 @@ file_selection_ok_open (GtkWidget *w, TOPLEVEL *w_current)
   			g_print ("open: %s\n", string);
 #endif
 
-			/* don't free the current page */
-#if 0
-			s_page_free(w_current, w_current->page_current);
-#endif
+			/* only create page if it isn't open already */
+			if ( !(found_page = s_page_new(w_current, string)) ) {
 
-			s_page_new(w_current, string);
+				w_current->DONT_REDRAW = 1;
 
-			w_current->DONT_REDRAW = 1; /* highly experimental */
+				f_open(w_current, w_current->
+			       	       page_current->page_filename);
+				i_set_filename(w_current,
+				               w_current->page_current->
+					       page_filename);
 
-			f_open(w_current, w_current->
-			       page_current->page_filename);
-			i_set_filename(w_current,
-				       w_current->page_current->page_filename);
+				x_repaint_background(w_current);
+				x_window_setup_world(w_current);
+				x_manual_resize(w_current);
+				a_zoom_limits(w_current,
+				              w_current->page_current->
+					      object_head);
 
-			x_repaint_background(w_current);
-			x_window_setup_world(w_current);
-			x_manual_resize(w_current);
-			a_zoom_limits(w_current,
-				      w_current->page_current->object_head);
-			/* now update the scrollbars */
-			x_hscrollbar_update(w_current);
-			x_vscrollbar_update(w_current);
-			update_page_manager(NULL, w_current);
-			w_current->DONT_REDRAW = 0; /* highly experimental */
+				/* now update the scrollbars */
+				x_hscrollbar_update(w_current);
+				x_vscrollbar_update(w_current);
+				update_page_manager(NULL, w_current);
+				w_current->DONT_REDRAW = 0; 
 
-#if 0
-			x_hscrollbar_update(w_current);
-			x_vscrollbar_update(w_current);
-#endif
-
-			o_redraw_all(w_current);
+				o_redraw_all(w_current);
+			} else {
+				s_page_goto(w_current, found_page);
+				update_page_manager(NULL, w_current);
+        			i_set_filename(w_current, w_current->
+					       page_current->page_filename);
+        			x_scrollbars_update(w_current);
+        			o_redraw_all(w_current);
+			}
 		}
 	}
 	/* would like to move this earlier! */

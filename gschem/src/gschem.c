@@ -162,19 +162,23 @@ main_prog(int argc, char *argv[])
 			first_page = 0;
 		} else {
 			/* Much simpler	*/
-			s_page_new(w_current, argv[i]);
-			if (!quiet_mode) {
-				printf("Loading schematic [%s]\n", argv[i]);
-			}
-                	f_open(w_current,
-			       w_current->page_current->page_filename);
-			i_set_filename(w_current,
+
+			/* create new page, and only load if page not loaded */
+			if (!s_page_new(w_current, argv[i])) {
+				if (!quiet_mode) {
+					printf("Loading schematic [%s]\n", 
+					       argv[i]);
+				}
+                		f_open(w_current,
+			       		w_current->page_current->page_filename);
+				i_set_filename(w_current,
 				       w_current->page_current->page_filename);
-			a_zoom_limits(w_current,
+				a_zoom_limits(w_current,
 				      w_current->page_current->object_head);
-			/* now update the scrollbars */
-			x_hscrollbar_update(w_current);
-			x_vscrollbar_update(w_current);
+				/* now update the scrollbars */
+				x_hscrollbar_update(w_current);
+				x_vscrollbar_update(w_current);
+			}
 		}
 		i++;
 	}

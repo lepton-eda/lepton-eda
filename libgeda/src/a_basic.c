@@ -378,8 +378,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 			break;
 
 			default:
-				fprintf(stderr, "Error invalid file\n");
-				exit(-1);
+				fprintf(stderr, "Read garbage in [%s] :\n>>\n%s<<\n",
+					filename, buf);
 			break;
 		}
 

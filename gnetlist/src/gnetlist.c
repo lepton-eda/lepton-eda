@@ -128,9 +128,10 @@ if (!quiet_mode) {
 if (!quiet_mode) {
 			printf("Loading schematic [%s]\n", argv[i]);
 }
-			s_page_new(pr_current, argv[i]);
-                	f_open(pr_current, 
-				pr_current->page_current->page_filename);
+			if (!s_page_new(pr_current, argv[i])) {
+                		f_open(pr_current, pr_current->
+				                   page_current->page_filename);
+			}
 		}
 		i++;
 	}

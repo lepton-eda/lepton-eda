@@ -383,7 +383,7 @@ void s_page_print(PAGE *p_list);
 void s_page_add_head(TOPLEVEL *w_current);
 void s_page_free_head(TOPLEVEL *w_current, PAGE *p_head);
 void s_page_delete(void);
-void s_page_new(TOPLEVEL *w_current, char *page_filename);
+PAGE *s_page_new(TOPLEVEL *w_current, char *page_filename);
 void s_page_setup(PAGE *p_current);
 int s_page_check_changed(PAGE *p_head);
 void s_page_clear_changed(PAGE *p_head);

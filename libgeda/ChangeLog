@@ -8,6 +8,20 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+9/16/99	Removed the restriction that sym/sch files have to be perfect.  You
+	now can have garbage in a sym/sch file and it won't exit, but instead
+	warn the user and display what it read in.
+
+	Added a bunch of tests into o_attrib_attach to prevent:
+		- Attaching a non-text item as an attribute
+		- Attaching an attribute to more than one object
+	
+	Improved the warning that is displayed when an attribute is already
+	attached to an object
+
+	Updated f_open and s_page_new to only open a schematic/symbol if it
+	isn't opened already.
+
 9/12/99	Added a flag in s_netlist structure for net naming priority
 
 9/7/99	Added s_color.c 

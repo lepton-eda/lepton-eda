@@ -4,7 +4,6 @@ Bugs (no particular order):
 
 	Prioritize this list!
 
-OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Swedish characters don't work.
 
@@ -51,16 +50,6 @@ BETTER	Almost got that 180 postscript printing bug fixed... not perfect yet
 	there's a bug in arc visiblity clipping, just zoom around close
 	in using DB*-1.sym (the corners)
 
-FIXED	Unexplained core dump when opening another window (when compiled
-	with -lccmalloc -ldl) related to:
-	Odd behavior when quiting multiple windows and then opening another
-	schematic in existing windows (can't find a font?) 
-	Was caused by freeing common rc variables (ie each window didn't have
-	a proper copy of the string)
-
-DONE	THERE IS A SIGNIFICANT slowdown in this version (19981013 before
-	another release) delete really (with o_conn_disconnect_all with
-	big schematics)
 
 	Mirror something and then change slots... selection is wrong
 
@@ -93,11 +82,6 @@ KLUDGED	Really odd behavior with display :'s... type some :'s and then
 	View Limits is broken for a single horizontal line (at least you 
 	can't see the line because it's below the drawing area)
 
-FIXED	Zoomin far enough and lines/nets start acting really weird!!!!!!!
-	(by properly clipping the line)
-
-FIXED	pins colors are being written out as -1
-
 	When placing an invisible attribute, you get the left over image
 	that needs to be erased.
 
@@ -105,8 +89,6 @@ FIXED	pins colors are being written out as -1
 	the symbol and the attribute is visible.  It won't get properly 
 	drawn.  (need to do a redraw to see the visible results)
 
-FIXED	Gschem core dumps when I hit the special Windows key...  ha, it 
-	doesn't like microsoft keys?  :)
 
 	In o_select and o_select_many, when you try to update the tail to
 	be proper, select_many doesn't work.  I wonder what else is effected
@@ -127,24 +109,12 @@ GONE?	Got an unexplained core dump, dealing with trying to disconnect a
 	zoomed limits
 
 	Bug in arcs and large large world-size... Don't draw right.
+	I think this was caused by incorrect aspect ratio
 
-FIXED	Attaching an attribute doesn't set CHANGED flag
 
 	Minor bug dealing with zooming out of corners (the zoom factors going
 	out are different then going in)
 
-	Right now you can attached a text item as an attribute in two places.
-	Disallow that
-
-	Right now you can attach non text items as attributes.
-	Disallow that.
-
-BETTER	MAJOR PROBLEM!!!!!!!!!!!!!!!!!!!!! gschem is broken with this broken
-	Got a major annoyance... order in copying objects to get attributes
-	to attach is a problem.  How do I fix that?  by copying text last
-
-FIXED	If you try to unembed a symbol and it cannot be found in any search
-	path then things get slightly screwed up.  See a_basic.c o_unembed
 
 GONE?	Saw some odd selection behavior, ie selecting something when you were
 	not inside it's bounding box.  I think this was caused by not having
@@ -158,9 +128,6 @@ OKAY?	Found some wierdness with the symbol translate (due to snap being off)
 OKAY?	Unexplained core dump with related to object_lastplace being bogus.
 	cannot replicate this. (haven't seen this at all again)
 
-	Found another core dump bug, if you send a DELETE event to the
-	window (from the wm) then on exit gschem will core.  This is okay, 
-	since I don't deal with the DELETE event yet...
 
 	Regular objects which are locked and then saved to a file will not
 	be locked anymore... locking only seems to work on components.
@@ -171,7 +138,6 @@ OKAY?	Unexplained core dump with related to object_lastplace being bogus.
 	Select an clib from the comp list and scroll down the component pane
 	and then select another clib, other pane not starting from top
 
-BETTER	Get consistant behavior for SHIFT/CONTROL in the various modes
 
 OKAY?	Another segfault.  This one totally unexplained.  Was seeing some
 	odd behavor with the hotkeys (hotkeys not doing what they should).
@@ -206,10 +172,7 @@ OKAY	Apparently, an undocumented feature (or maybe it is documented), but
 	What happens if you attach an attribute to two places... nothing, 
 	but you should disallow that.
 	
-FIXED	AGGGG... stuff showing up in basename_list in the wrong order :(
 
-OKAY	Order in the basename_list is not based on alphabetics (it's based
-NOW	on the creation date/inode of the file) (make the order alphabetic)
 
 	Still have dangling cue blip in lower corner... 
 	now seeing it on copys/moves, related to selected drawing conns.
@@ -238,25 +201,14 @@ DONE
         get the change many ways to fix this... but all required either 1) 
 	a redraw after every major action, or 2) or a smarter "recalc" routine 
 
-	limits on complex_filename, drawing_filename, text_string etc...
-	REMOVE them (the limits that is)
-	Size of drawing_filename and friends need to be dynamic....
-DONE		drawing_filename
-		text_string
-		complex_filename
-		basename
-		clib		
 	
 	Check the issues related to visibility and if you can select it
 	and if it's an attribute
 
-DONE	Can't print )'s and spacing between chars on paper is much larger
-	than on the screen (due to postscript using )'s : filter input)
 
 	Pressing key during place causes droppings? 
 	Hitting keys and during an action (x_events.c)
 
-FIXED	Droppings with thick pins and move/copies/deletes? 
 
 	Select something, then hit 'n' instead of 'm' and you get left
 	overs from the net command  (same thing as mentioned above. inside
@@ -269,9 +221,6 @@ FIXED	Droppings with thick pins and move/copies/deletes?
 	of each of the nets )  It's caused by order dependant searching 
 	and if the old and new overlap you will get a round connection
 
-DONE	Multiconnection midpoints, should draw a circle, but doesn't for now.
-	Put warnings in documentation (ie when you draw many nets to a single
-	point you should get a circle... instead you get nothing... 
 
 	Things get really slow with huge object copies... 
 	Perhaps we don't want to be doing the o_conn_recalc_all on actions. 
@@ -280,17 +229,10 @@ DONE	Multiconnection midpoints, should draw a circle, but doesn't for now.
 	inbetween an add you get this HUGE monstrocity!
 	(transparent zooms not implemented yet)
 
-DONE	Cleanup grid/snapping so that it's more flexable so that you could
-	have half grid snaps... (MAJOR ANNOYANCE)
-
-GONE!	Related bug to above, drawing lines, first point must lock and then
-        the second can be free. doesn't work vice versa! (related to above)
 
 MUCH	Arcs are a hack by default
 BETTER	This has gotten better (a lot better).
 
-OKAY	A small bug dealing with arcs and the symbol command.  The x,y location
-	will get negative values (which may be okay actually)
 
 FIXED?	Unexplained grid locking when you draw an arc?  must have something 
 	to do with the way width+x-x and height+y-y rounds off?
@@ -302,6 +244,80 @@ FIXED?	Unexplained grid locking when you draw an arc?  must have something
 	Odd bug related to doing a objtosym (sym cmd), in that you don't get
 	an exact move to zero unless you zoom one (or more?) 
 
+
+XBUG?	Saw some serious root-window corruption and drawing_area corruption
+	because 1) of an X server bug in XF86S3V or 2) I'm not clipping lines
+	(line clipping should be done by gschem)
+
+-----------------------------------------------------------------------------
+Finished stuff:
+
+FIXED	Zoomin far enough and lines/nets start acting really weird!!!!!!!
+	(by properly clipping the line)
+
+FIXED	pins colors are being written out as -1
+
+
+FIXED	Gschem core dumps when I hit the special Windows key...  ha, it 
+	doesn't like microsoft keys?  :)
+
+DONE	THERE IS A SIGNIFICANT slowdown in this version (19981013 before
+	another release) delete really (with o_conn_disconnect_all with
+	big schematics)
+
+FIXED	Attaching an attribute doesn't set CHANGED flag
+
+FIXED	Right now you can attached a text item as an attribute in two places.
+	Disallow that
+
+FIXED	Right now you can attach non text items as attributes.
+	Disallow that.
+
+FIXED	MAJOR PROBLEM!!!!!!!!!!!!!!!!!!!!! gschem is broken with this broken
+	Got a major annoyance... order in copying objects to get attributes
+	to attach is a problem.  How do I fix that?  by copying text last
+
+FIXED	If you try to unembed a symbol and it cannot be found in any search
+	path then things get slightly screwed up.  See a_basic.c o_unembed
+
+FIXED	Found another core dump bug, if you send a DELETE event to the
+	window (from the wm) then on exit gschem will core.  This is okay, 
+	since I don't deal with the DELETE event yet...
+
+OKAY	Order in the basename_list is not based on alphabetics (it's based
+NOW	on the creation date/inode of the file) (make the order alphabetic)
+
+BETTER	Get consistant behavior for SHIFT/CONTROL in the various modes
+
+FIXED	AGGGG... stuff showing up in basename_list in the wrong order :(
+
+DONE	Can't print )'s and spacing between chars on paper is much larger
+	than on the screen (due to postscript using )'s : filter input)
+
+DONE	limits on complex_filename, drawing_filename, text_string etc...
+	REMOVE them (the limits that is)
+	Size of drawing_filename and friends need to be dynamic....
+		drawing_filename
+		text_string
+		complex_filename
+		basename
+		clib		
+
+FIXED	Droppings with thick pins and move/copies/deletes? 
+
+DONE	Multiconnection midpoints, should draw a circle, but doesn't for now.
+	Put warnings in documentation (ie when you draw many nets to a single
+	point you should get a circle... instead you get nothing... 
+
+DONE	Cleanup grid/snapping so that it's more flexable so that you could
+	have half grid snaps... (MAJOR ANNOYANCE)
+
+GONE!	Related bug to above, drawing lines, first point must lock and then
+        the second can be free. doesn't work vice versa! (related to above)
+
+OKAY	A small bug dealing with arcs and the symbol command.  The x,y location
+	will get negative values (which may be okay actually)
+
 FIXED	Roundoff errors creaping into move/copy commands 
 	( some objects would be offset too much or too little relative 
 	to the other ones ) Fixed mostly, but still need to re-examine 
@@ -309,12 +325,12 @@ FIXED	Roundoff errors creaping into move/copy commands
 	with properly. I think this is fixed now.  Did move in world coords
 	instead of screen coords
 
-XBUG?	Saw some serious root-window corruption and drawing_area corruption
-	because 1) of an X server bug in XF86S3V or 2) I'm not clipping lines
-	(line clipping should be done by gschem)
-
-
-Finished stuff:
+FIXED	Unexplained core dump when opening another window (when compiled
+	with -lccmalloc -ldl) related to:
+	Odd behavior when quiting multiple windows and then opening another
+	schematic in existing windows (can't find a font?) 
+	Was caused by freeing common rc variables (ie each window didn't have
+	a proper copy of the string)
 
 GONE!	The difference between a save (saveas) and open window is not 
 	enough.  This has cause me to nuke a schematic more than once 
@@ -747,4 +763,5 @@ DONE	Add outline toggle mode
 
 DONE	Add attribute attach/detach stuff
 
+OKAY	Missing GDK_CONFIGURE from event types wanted list?
 ----------------------

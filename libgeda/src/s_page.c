@@ -212,9 +212,18 @@ s_page_delete()
 
 }
 
-void
+PAGE *
 s_page_new(TOPLEVEL *w_current, char *page_filename)
 {
+	PAGE *return_value;
+
+	return_value = s_page_search(w_current, page_filename);
+
+	if (return_value) {
+		s_log_message("Schematic [%s] already loaded\n", page_filename);
+		return(return_value);
+	}
+
 	/* Now create a blank page */
         w_current->page_tail = s_page_add(w_current,
 					  w_current->page_tail, page_filename);
@@ -231,6 +240,7 @@ s_page_new(TOPLEVEL *w_current, char *page_filename)
                    w_current->init_top, w_current->init_bottom);
 
 	w_current->page_current->zoom_factor = 0;
+	return(NULL);
 }
 
 void
@@ -384,3 +394,4 @@ s_page_save_all(TOPLEVEL *w_current)
 
 	w_current->page_current = p_save;
 }
+

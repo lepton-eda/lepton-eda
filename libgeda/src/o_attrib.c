@@ -196,25 +196,15 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *
 
         o_current = list; /* hack get consistant names */
 
+#if 0 /* no need to have this in */
 	if (object->type == OBJ_TEXT) {
 	/* printf("Make sure first is NOT a text item"); */
 	/* messages like this need to to a error location, like a log! */
 	/* or maybe it's okay.. don't do anything if this happens */
 		return;
 	}
-
-#if 0	
-/* for now this is out... */
-/*  I suppose you can attach anything to anything */
-	while(temp2 != NULL) {
-		if (temp->type != OBJ_TEXT) {
-			printf("Cannot attach non-text object as an attribute\n");
-			return;
-		}
-		temp2 = temp2->next;
-	}
 #endif
-	
+
 	/* find the real object in the true object_list */
 	real = (OBJECT *) o_list_search(parent_list, object);	
 	/* check to make sure this is not null hack */
@@ -232,30 +222,44 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *
 			found2 = (OBJECT *) o_list_search(parent_list, o_current);	
 
 			/* check to see if found2 is not null hack */
+			if (found2) {
+				if (found2->type == OBJ_TEXT) {
 
-			if (real->attribs == NULL) 
-				real->attribs = add_attrib_head(real);
+					if (real->attribs == NULL) {
+						real->attribs = 
+							add_attrib_head(real);
+					}
 
-			o_attrib_add(w_current, real->attribs, found2);
+
+					if (found2->attached_to) {
+						fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text_string);
+					} else {
+
+						o_attrib_add(w_current, 
+					                     real-> attribs, 
+							     found2);
 
 			/* can't do this here since just selecting something */
 			/* will cause this to be set */
 			/* w_current->page_current->CHANGED=1;*/
 		
-			/* Also set the selection's color as well */
-			o_current->color = w_current->attribute_color; 
-			o_complex_set_color(w_current, o_current->color, 
-					    o_current->complex);
+				/* Also set the selection's color as well */
+						o_current->color = w_current->
+							       attribute_color; 
+						o_complex_set_color( w_current, 
+							    o_current->color,
+							    o_current->complex);
+					}
 
-#if 0
-if (real->attribs == NULL) 
-real->attribs = o_attrib_add(real->attribs,found2);
-else
-o_attrib_add(real->attribs, found2);
-#endif
-
+				} else {
+					fprintf(stderr, "You cannot attach non text items as attributes!\n");
+				}	
+			}
 		} else {
-			printf("attribute already in list\n");
+			if (o_current->text_string) { 	
+				printf("Attribute [%s] already attached\n", 
+					o_current->text_string);
+			}
 		}
 		o_current = o_current->next;
 	}

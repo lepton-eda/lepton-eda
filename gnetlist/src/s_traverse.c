@@ -63,12 +63,22 @@ s_traverse_start(TOPLEVEL *pr_current)
 		if (p_current->pid != -1) {
 
 			if (p_current->object_head) {
+				pr_current->page_current = p_current;
 				s_traverse_sheet(pr_current, p_current->object_head);
 			}
 
 		}
 
 		p_current = p_current->next;
+	}
+
+	/* now that all the sheets have been read, go through and do the */
+	/* post processing work */
+        s_netlist_post_process(pr_current, netlist_head); 
+
+	if (verbose_mode) {
+		printf("\nInternal netlist representation:\n\n");
+		s_netlist_print(netlist_head);
 	}
 }
 
@@ -191,15 +201,6 @@ if (verbose_mode) {
 	vi = 0;
 }
 
-	/* questions... when should you do this?  now or after all sheets have
-	 * been read */
-
-	s_netlist_post_process(pr_current, netlist_head); 
-
-if (verbose_mode) {
-	printf("\nInternal netlist representation:\n\n");
-	s_netlist_print(netlist_head);
-}
 
 }
 

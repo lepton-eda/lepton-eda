@@ -139,7 +139,7 @@ DONE	When you rotate a component, associated attributes get de-assosciated
 
 	Added LogFilename keyword 
 
-	Search for schematic in memory and don't load it from disk if it is.
+DONE	Search for schematic in memory and don't load it from disk if it is.
 
 	Document all the features of the dialog boxes (returns etc...)
 
@@ -149,7 +149,7 @@ DONE	When you rotate a component, associated attributes get de-assosciated
 		- Symbols are named filename.sym
 		- Schematics are named filename_#.sch  where # is sheet number
 		- Sym/Sch names need to be unique.
-		- ONE dot per filename!
+		- ONE dot per filename! 
 
 	Generalize the way source files are displayed, ie if you get a .gif
 	the program should run a image program, use mime.types and mailcap
@@ -283,36 +283,37 @@ Second TODO list
 easy:	
 0	remove all // comments
 3	newer net system
-	buses
+1	buses
 	comments in the code
 	Control-C handler
 	checks for all system calls (with perror)	
 	update specs
 	crosshair
-	console
-3	color selection (better color handling)
 1	macro/extensiable lang
 1	Make symbol (odd bug with hitting S twice then it works ? )
 1	push/pop into a symbol
+2	stretch/edit of nets
 2	cleanup printfs
 2	hierarchical design
 3	object clipping out of active window
-3	logging mechanism
-4	attributes 
 3	sloting (as in pin numbers in multpacks) of components
-3	rotate of primatives
+3	console
 3	rotate of complex
 3	mirror of primatives
 3	mirror of complex
 3	Standard place for symbols/symbol hierarchy
-4	finer grid (selectable snappage)
-4 	zoom box
+4	color selection (better color handling)
+4	logging mechanism
+4	attributes 
 4	boundingbox vs outline
-4	text (vector font)
 4	arcs
-4	page system
 4	pins (still need to check conn funcs)
+4	rotate of primatives
 4	interface cleanup
+5 	zoom box
+5	text (vector font)
+5	finer grid (selectable snappage)
+5	page system
 5	multi select box! / window select 
 5	contrained move/copy
 5	fix all return values
@@ -334,7 +335,6 @@ medium:
 
 harder:
 	transparent zooms and pans
-	stretch/edit of nets
 	multibuffers (make sure all routines don't hardcode new_sel_head)
 	client lib to do above and protocol
 	cut and paste

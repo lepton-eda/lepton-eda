@@ -26,6 +26,8 @@ Mike Jarabek		- For contributing the backend verilog netlister
 Nuno Sucena             - For contributing the TANGO gnetlist backend
 
 Bas Gieltjes            - For contributing the SPICE gnetlist backend
+			
+			  For contributing an updated version of above
 
 Matt Ettus		- For contributing the Bill of Materials guile code
 

@@ -7,7 +7,24 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
-8/14/99 Integrated Matt Ettus's Allegro and PCB gnetlist backends.  Thanks!
+9/17/99	Fixed that really nasty bug/problem that dealt with loading up 
+	multiple sheets (see below).  The postprocess was happening too
+	early and was for some odd reason nuking previously post processed
+	nets.
+
+9/16/99	Finally integrated Bas Gieltjes's latest spice netlist (sorry about
+	the delay)  (this basically consisted of adding the code to 
+	gnetlist.scm)  I'm not 100% this still works with the current 
+	gnetlist, especially the new net= attribute
+
+	Added code in gnetlist.c to only load up schematics which haven't
+	been loaded already
+
+	Found a NASTY bug/problem when you try to load up more than one
+	schematic sheet with gnetlist.  Added a line in s_traverse_start
+	which should have helped, but problem/bug still exists
+
+9/14/99 Integrated Matt Ettus's Allegro and PCB gnetlist backends.  Thanks!
 
 	Updated man page to reflect the backends
 

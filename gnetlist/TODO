@@ -8,4 +8,6 @@ tweak to gnetlist to add `instance-get-pins'
 gnetlist gave the coordinates of the component it was unhappy with and
 the component type.
 
+Put code in that deals with the opening of a schematic twice... 
+
 
