@@ -874,6 +874,10 @@ EOF
 	dataverilog=`echo $dataverilog`
  
 
+	datavhdl=`ls -1 $srcdir/vhdl | grep -v Makefile | grep -v CVS`
+	datavhdl=`echo $datavhdl`
+ 
+
 	dataspice=`ls -1 $srcdir/spice | grep -v Makefile | grep -v CVS`
 	dataspice=`echo $dataspice`
  
@@ -1084,6 +1088,7 @@ EOF
 
 
 
+
 trap '' 1 2 15
 cat > confcache <<\EOF
 # This file is a shell script that caches the results of configure
@@ -1229,6 +1234,7 @@ trap 'rm -fr `echo "
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
+	vhdl/Makefile 
 	spice/Makefile
 	diode/Makefile 
 	opto/Makefile 
@@ -1287,6 +1293,7 @@ s%@datalocal@%$datalocal%g
 s%@dataanalog@%$dataanalog%g
 s%@datamaxim@%$datamaxim%g
 s%@dataverilog@%$dataverilog%g
+s%@datavhdl@%$datavhdl%g
 s%@dataspice@%$dataspice%g
 s%@dataconnector@%$dataconnector%g
 s%@dataaltera@%$dataaltera%g
@@ -1392,6 +1399,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
+	vhdl/Makefile 
 	spice/Makefile
 	diode/Makefile 
 	opto/Makefile 

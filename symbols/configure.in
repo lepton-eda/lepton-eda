@@ -76,6 +76,7 @@ GEDA_DECLARE_SYMLIB(io)
 GEDA_DECLARE_SYMLIB(analog)
 GEDA_DECLARE_SYMLIB(maxim)
 GEDA_DECLARE_SYMLIB(verilog)
+GEDA_DECLARE_SYMLIB(vhdl)
 GEDA_DECLARE_SYMLIB(spice)
 GEDA_DECLARE_SYMLIB(connector)
 GEDA_DECLARE_SYMLIB(altera)
@@ -151,6 +152,7 @@ AC_SUBST(datalocal)
 AC_SUBST(dataanalog)
 AC_SUBST(datamaxim)
 AC_SUBST(dataverilog)
+AC_SUBST(datavhdl)
 AC_SUBST(dataspice)
 AC_SUBST(dataconnector)
 AC_SUBST(dataaltera)
@@ -220,6 +222,7 @@ AC_OUTPUT([
 	titleblock/Makefile 
 	tube/Makefile 
 	verilog/Makefile
+	vhdl/Makefile 
 	spice/Makefile
 	diode/Makefile 
 	opto/Makefile 

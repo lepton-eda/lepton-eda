@@ -11,6 +11,13 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* spice/*.sym: Replaced symbols with the latest ones from Bas
+
+	* vhdl/: Created symbol library which was contributed by 
+	  Thomas Heidel (symbols derived from the Verilog symbols by Mike)
+
 2000-12-13  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * configure.in: Added -lregex for CYGWIN32 build

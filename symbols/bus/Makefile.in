@@ -95,6 +95,7 @@ dataswitch = @dataswitch@
 datatitleblock = @datatitleblock@
 datatube = @datatube@
 dataverilog = @dataverilog@
+datavhdl = @datavhdl@
 dataxilinx = @dataxilinx@
 expandgedadatadir = @expandgedadatadir@
 gedadatadir = @gedadatadir@
