@@ -1,3 +1,7 @@
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Updated version
+
 2003-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/sarlacc_schem.c: Applied patch by Charles Lepple to fix a 

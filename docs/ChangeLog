@@ -1,3 +1,7 @@
+2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Updated version
+
 2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
  	* configure.in, Makefile.am, switcap/: Integrated Dan McMahill's 
