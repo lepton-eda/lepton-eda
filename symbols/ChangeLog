@@ -1,3 +1,9 @@
+2002-10-09 Werner Hoch <werner.ho@gmx.de>
+	* maxim/max232-1.sym: completed symbol (added net, pinlabels, ...)
+	* maxim/max232-2.sym: added symbol with rearranged pins, 1400mils block
+	* 4000/400?-*.sym: completed symbol (added net, pinlabels, ...)
+	* 4000/: 4000-2.sym, 4002-2.sym, 4006-2.sym, 4008-2.sym added
+
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* misc/interpage_bidir-1.sym, interpage_from-1.sym, 
