@@ -1,3 +1,7 @@
+2005-03-12  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* po/es_ES.po: updated spanish translation.
+	
 2005-03-09 Werner Hoch <werner.ho@gmx.de>
 	* po/de_DE.po: updated translation
 	* noweb/x_dialog.nw: added refdes=U to the list, removed

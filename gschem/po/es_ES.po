@@ -9,12 +9,12 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-08 23:57-0500\n"
-"PO-Revision-Date: 2005-02-28 22:42+0100\n"
+"PO-Revision-Date: 2005-03-11 23:41+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -115,10 +115,9 @@ msgstr ""
 "Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
 
 #: noweb/g_rc.nw:1998
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-msgstr ""
-"Número de niveles [%d] no válidos especificados a la función undo-levels\n"
+msgstr "Se ha especificado un número no válido de líneas [%d] a la función output-vector-threshold\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -191,7 +190,7 @@ msgstr "Ejecutando programa de guile [%s]\n"
 
 #: noweb/i_basic.nw:147 noweb/rcstrings.nw:20 noweb/x_window.nw:965
 msgid "Select Mode"
-msgstr "Seleccionar modo"
+msgstr "Seleccionar"
 
 #: noweb/i_basic.nw:150
 msgid "Attribute Mode"
@@ -207,23 +206,23 @@ msgstr "Modo Texto"
 
 #: noweb/i_basic.nw:160 noweb/rcstrings.nw:23
 msgid "Copy Mode"
-msgstr "Modo Copia"
+msgstr "Copiar"
 
 #: noweb/i_basic.nw:163 noweb/rcstrings.nw:24
 msgid "Move Mode"
-msgstr "Modo Movimiento"
+msgstr "Mover"
 
 #: noweb/i_basic.nw:165
 msgid "Rotate Mode"
-msgstr "Modo Rotación"
+msgstr "Rotar"
 
 #: noweb/i_basic.nw:167 noweb/rcstrings.nw:27
 msgid "Mirror Mode"
-msgstr "Modo Voltear"
+msgstr "Voltear"
 
 #: noweb/i_basic.nw:171 noweb/rcstrings.nw:61
 msgid "Zoom Box"
-msgstr "Modo Ampliación"
+msgstr "Ampliar"
 
 #: noweb/i_basic.nw:175
 msgid "Pan Mode"
@@ -251,9 +250,8 @@ msgid "Box Mode"
 msgstr "Modo Rectángulo"
 
 #: noweb/i_basic.nw:197
-#, fuzzy
 msgid "Picture Mode"
-msgstr "Modo Pin"
+msgstr "Modo Imagen"
 
 #: noweb/i_basic.nw:200
 msgid "Circle Mode"
@@ -321,7 +319,7 @@ msgid "Documentation commands not supported under MinGW.\n"
 msgstr "No se pueden utilizar los comandos de documentación bajo MinGW.\n"
 
 #: noweb/i_callbacks.nw:436
-#, fuzzy, c-format
+#, c-format
 msgid "New page created [%s]\n"
 msgstr "Se ha creado una página nueva [%s]\n"
 
@@ -713,26 +711,26 @@ msgstr "¡Tipo de relleno de rectángulo desconocido!\n"
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
 msgstr ""
-"Se ha recibido un número de bufer no válido en la función o_buffer_copy\n"
+"Se ha recibido un número de memoria intermedia no válida en la función o_buffer_copy\n"
 
 #: noweb/o_buffer.nw:120
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_cut]\n"
 msgstr ""
-"Se ha recibido un número de bufer no válido en la función o_buffer_cut\n"
+"Se ha recibido un número de memoria intermedia no válida en la función o_buffer_cut\n"
 
 #: noweb/o_buffer.nw:167
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
 msgstr ""
-"Se ha recibido un número de bufer no válido en la función "
+"Se ha recibido un número de memoria intermedia no válida en la función "
 "o_buffer_paste_start\n"
 
 #: noweb/o_buffer.nw:226
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
 msgstr ""
-"Se ha recibido un número de bufer no válido en la función "
+"Se ha recibido un número de memoria intermedia no válida en la función "
 "o_buffer_paste_end\n"
 
 #: noweb/o_bus.nw:273
@@ -822,26 +820,27 @@ msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "ERROR: en la función o_rotate_90, ¡el objeto es NULL!\n"
 
 #: noweb/o_misc.nw:553
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been embedded\n"
-msgstr "El componente ya está incrustado\n"
+msgstr "Se ha incrustado el componente [%s]\n"
 
 #: noweb/o_misc.nw:590
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
-msgstr "No se ha podido encontrar componente [%s] al intentar desincrustar.\n"
+msgstr "No se ha podido encontrar el componente [%s] al intentar desincrustar. "
+"El componente todavía está incrustado.\n"
 
 #: noweb/o_misc.nw:601 noweb/o_misc.nw:1590
 #, c-format
 msgid "More than one component found with name [%s]\n"
-msgstr ""
+msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
 
 #: noweb/o_misc.nw:609
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been successfully unembedded\n"
-msgstr "El componente ya está incrustado\n"
+msgstr "El componente [%s] se ha desincrustado satisfactoriamente\n"
 
 #: noweb/o_misc.nw:652
 #, c-format
@@ -858,12 +857,11 @@ msgstr "El texto oculto es ahora invisible\n"
 
 #: noweb/o_misc.nw:1585
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr ""
+msgstr "No se puede desincrustar el componente, no se ha podido encontrar el fichero .sym correspondiente\n"
 
 #: noweb/o_misc.nw:1586
-#, fuzzy
 msgid "Component still embedded and not updated\n"
-msgstr "El componente ya está incrustado\n"
+msgstr "El componente todavía está incrustado y no actualizado\n"
 
 #: noweb/o_move.nw:259
 #, c-format
@@ -906,7 +904,7 @@ msgstr "No se ha encontrado %s en ninguna librería de componentes\n"
 
 #: noweb/o_picture.nw:253
 msgid "Picture"
-msgstr ""
+msgstr "Imagen"
 
 #: noweb/o_picture.nw:437 noweb/x_attribedit.nw:193
 #, c-format
@@ -950,7 +948,10 @@ msgid ""
 "  -t            Print stroke information\n"
 "  -h            Help; this message\n"
 "\n"
-msgstr ""
+msgstr "Modo de uso: %s [OPCIONES] nombre_de_esquema_1·...·nombre_de_esquema_N\n"
+"  -q                No mostrar mensajes adicionales\n"
+"  -v                Mostrar mensajes adicionales\n"
+"  -r archivo   Usar archivo Rc\n"
 
 #: noweb/rcstrings.nw:2
 msgid "File"
@@ -1026,7 +1027,7 @@ msgstr "Editar texto..."
 
 #: noweb/rcstrings.nw:26
 msgid "Rotate 90 Mode"
-msgstr "Modo Rotar 90º"
+msgstr "Rotar 90º"
 
 #: noweb/rcstrings.nw:28
 msgid "Slot..."
@@ -1070,67 +1071,67 @@ msgstr "Hacer visible el texto oculto"
 
 #: noweb/rcstrings.nw:41
 msgid "Buffer"
-msgstr "Bufer"
+msgstr "Memoria intermedia"
 
 #: noweb/rcstrings.nw:42
 msgid "Copy into 1"
-msgstr "Copiar en bufer 1"
+msgstr "Copiar en memoria intermedia 1"
 
 #: noweb/rcstrings.nw:43
 msgid "Copy into 2"
-msgstr "Copiar en bufer 2"
+msgstr "Copiar en memoria intermedia 2"
 
 #: noweb/rcstrings.nw:44
 msgid "Copy into 3"
-msgstr "Copiar en bufer 3"
+msgstr "Copiar en memoria intermedia 3"
 
 #: noweb/rcstrings.nw:45
 msgid "Copy into 4"
-msgstr "Copiar en bufer 4"
+msgstr "Copiar en memoria intermedia 4"
 
 #: noweb/rcstrings.nw:46
 msgid "Copy into 5"
-msgstr "Copiar en bufer 5"
+msgstr "Copiar en memoria intermedia 5"
 
 #: noweb/rcstrings.nw:47
 msgid "Cut into 1"
-msgstr "Cortar en bufer 1"
+msgstr "Cortar en memoria intermedia 1"
 
 #: noweb/rcstrings.nw:48
 msgid "Cut into 2"
-msgstr "Cortar en bufer 2"
+msgstr "Cortar en memoria intermedia 2"
 
 #: noweb/rcstrings.nw:49
 msgid "Cut into 3"
-msgstr "Cortar en bufer 3"
+msgstr "Cortar en memoria intermedia 3"
 
 #: noweb/rcstrings.nw:50
 msgid "Cut into 4"
-msgstr "Cortar en bufer 4"
+msgstr "Cortar en memoria intermedia 4"
 
 #: noweb/rcstrings.nw:51
 msgid "Cut into 5"
-msgstr "Cortar en bufer 5"
+msgstr "Cortar en memoria intermedia 5"
 
 #: noweb/rcstrings.nw:52
 msgid "Paste from 1"
-msgstr "Pegar bufer 1"
+msgstr "Pegar memoria intermedia 1"
 
 #: noweb/rcstrings.nw:53
 msgid "Paste from 2"
-msgstr "Pegar bufer 2"
+msgstr "Pegar memoria intermedia 2"
 
 #: noweb/rcstrings.nw:54
 msgid "Paste from 3"
-msgstr "Pegar bufer 3"
+msgstr "Pegar memoria intermedia 3"
 
 #: noweb/rcstrings.nw:55
 msgid "Paste from 4"
-msgstr "Pegar bufer 4"
+msgstr "Pegar memoria intermedia 4"
 
 #: noweb/rcstrings.nw:56
 msgid "Paste from 5"
-msgstr "Pegar bufer 5"
+msgstr "Pegar memoria intermedia 5"
 
 #: noweb/rcstrings.nw:58
 msgid "View"
@@ -1207,9 +1208,8 @@ msgid "Text..."
 msgstr "Texto..."
 
 #: noweb/rcstrings.nw:84
-#, fuzzy
 msgid "Image"
-msgstr "Página"
+msgstr "Imagen"
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"
@@ -1512,7 +1512,7 @@ msgstr "Editar la alineación del texto"
 #: noweb/x_dialog.nw:1943 noweb/x_dialog.nw:1944 noweb/x_dialog.nw:1945
 #: noweb/x_dialog.nw:1946 noweb/x_dialog.nw:1947 noweb/x_dialog.nw:1955
 msgid "*unchanged*"
-msgstr ""
+msgstr "*sin modificar*"
 
 #: noweb/x_dialog.nw:1357
 msgid "Edit Line Width & Type"
@@ -1656,7 +1656,7 @@ msgstr "Editar color"
 #: noweb/x_dialog.nw:3765
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
-msgstr "No hay más espacio para el bufer de teclas rápidas...\n"
+msgstr "No hay más espacio para la memoria intermedia de teclas rápidas...\n"
 
 #: noweb/x_dialog.nw:3848
 msgid "Function : keystroke(s)"
@@ -1709,99 +1709,90 @@ msgstr "Mostrar texto que comienza por:"
 #: noweb/x_dialog.nw:4599
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr ""
+msgstr "Advertencia: no se admiten números negativos en la ventana de autonumeración de texto\n"
 
 #: noweb/x_dialog.nw:4684
 msgid "Autonumber text"
 msgstr "Autoenumerar texto"
 
 #: noweb/x_dialog.nw:4690
-#, fuzzy
 msgid "selection"
-msgstr "Seleccionar"
+msgstr "Selección"
 
 #: noweb/x_dialog.nw:4699
-#, fuzzy
 msgid "search text"
-msgstr "Mostrar texto"
+msgstr "Buscar texto"
 
 #: noweb/x_dialog.nw:4713 noweb/x_dialog.nw:4722
 msgid "refdes=C"
-msgstr ""
+msgstr "refdes=C"
 
 #: noweb/x_dialog.nw:4714
 msgid "refdes=Q"
-msgstr ""
+msgstr "refdes=Q"
 
 #: noweb/x_dialog.nw:4715
 msgid "refdes=R"
-msgstr ""
+msgstr "refdes=R"
 
 #: noweb/x_dialog.nw:4716
 msgid "refdes=X"
-msgstr ""
+msgstr "refdes=X"
 
 #: noweb/x_dialog.nw:4726
 msgid "search focus"
-msgstr ""
+msgstr "Ámbito de búsqueda"
 
 #: noweb/x_dialog.nw:4739
-#, fuzzy
 msgid "selected objects"
-msgstr "¡Seleccionado un objeto que no existe!\n"
+msgstr "objetos seleccionados"
 
 #: noweb/x_dialog.nw:4742
 msgid "current sheet"
-msgstr ""
+msgstr "hoja actual"
 
 #: noweb/x_dialog.nw:4745
 msgid "hierarchical sheets"
-msgstr ""
+msgstr "hojas jerárquicas"
 
 #: noweb/x_dialog.nw:4757
-#, fuzzy
 msgid "unnumbered"
-msgstr "Autoenumerar texto"
+msgstr "sin numerar"
 
 #: noweb/x_dialog.nw:4761
-#, fuzzy
 msgid "all"
-msgstr "Todo"
+msgstr "todo"
 
 #: noweb/x_dialog.nw:4770
-#, fuzzy
 msgid "options"
 msgstr "Opciones"
 
 #: noweb/x_dialog.nw:4777
-#, fuzzy
 msgid "start number"
-msgstr "Editar número de elemento"
+msgstr "Número inicial"
 
 #: noweb/x_dialog.nw:4790
 msgid "sort order"
-msgstr ""
+msgstr "Método de ordenación"
 
 #: noweb/x_dialog.nw:4802
-#, fuzzy
 msgid "file order"
-msgstr "Modo Círculo"
+msgstr "Orden de archivos"
 
 #: noweb/x_dialog.nw:4805
 msgid "top down"
-msgstr ""
+msgstr "de arriba a abajo"
 
 #: noweb/x_dialog.nw:4808
-#, fuzzy
 msgid "left right"
-msgstr "Abajo en el centro"
+msgstr "de izquierda a derecha"
 
 #: noweb/x_dialog.nw:4811
 msgid "diagonal"
-msgstr ""
+msgstr "diagonal"
 
 #: noweb/x_fileselect.nw:416
-#, fuzzy, c-format
+#, c-format
 msgid "Agg, could not open directory: %s\n"
 msgstr "¡Argg!, no se ha podido abrir la carpeta: %s\n"
 
@@ -1962,15 +1953,15 @@ msgstr "Estado"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
-msgstr ""
+msgstr "Se ha intentado modificar la sensibilidad de una opción de menú que no existe\n"
 
 #: noweb/x_menus.nw:448
 msgid "Popup_menu_item_factory doesn't exist!\n"
-msgstr ""
+msgstr "¡No existen menúes contextuales!\n"
 
 #: noweb/x_menus.nw:463
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
+msgstr "Se ha intentado modificar la sensibilidad de una opción de menú que no existe\n"
 
 #: noweb/x_multiattrib.nw:270
 msgid "Edit Attributes"
@@ -1989,9 +1980,8 @@ msgid "V"
 msgstr "V"
 
 #: noweb/x_multiattrib.nw:471
-#, fuzzy
 msgid "Add Attribute"
-msgstr "Añadir/Editar propiedad"
+msgstr "Añadir propiedad"
 
 #: noweb/x_multiattrib.nw:668
 msgid "Show Value only"
@@ -2003,20 +1993,19 @@ msgstr "Mostrar sólo nombre"
 
 #: noweb/x_multiattrib.nw:745
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
+msgstr "No se permiten las propiedades sin nombre. Por favor, introduzca un nombre."
 
 #: noweb/x_pagesel.nw:315
 msgid "Page Manager"
 msgstr "Administrador de páginas"
 
 #: noweb/x_pagesel.nw:387
-#, fuzzy
 msgid "Changed"
-msgstr "Cambiar"
+msgstr "Modificado"
 
 #: noweb/x_pagesel.nw:407
 msgid "Right click on the filename for more options..."
-msgstr ""
+msgstr "Pulse con el botón derecho para ver más opciones..."
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2209,90 +2198,3 @@ msgstr "Menú/Cancelar"
 msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
 
-#~ msgid "%s requires a string as a parameter\n"
-#~ msgstr "%s necesita una cadena como parámetro\n"
-
-#~ msgid "Invalid parameters to paper-sizes\n"
-#~ msgstr "Parámetros no válidos especificados a la función paper-sizes\n"
-
-#~ msgid "Cannot obtain the current directory!\n"
-#~ msgstr "¡No se ha podido obtener el directorio actual!\n"
-
-#~ msgid "Cannot get cwd!\n"
-#~ msgstr "¡No se puede obtener el directorio actual!\n"
-
-#~ msgid "ERROR: NULL object in o_embed!\n"
-#~ msgstr "ERROR: en la función o_embed, ¡el objeto es NULL!\n"
-
-#~ msgid "Warning: two components with same refdes: %d\n"
-#~ msgstr "ADVERTENCIA: dos componentes con la misma referencia: %d\n"
-
-#~ msgid "Got an unexpected NULL in o_update_component\n"
-#~ msgstr ""
-#~ "Se ha recibido NULL (no esperado) en la función o_update_component\n"
-
-#~ msgid "Solid"
-#~ msgstr "Sólido"
-
-#~ msgid "Dotted"
-#~ msgstr "Punteado"
-
-#~ msgid "Dashed"
-#~ msgstr "Discontinuo"
-
-#~ msgid "Center"
-#~ msgstr "Centrado"
-
-#~ msgid "Phantom"
-#~ msgstr "Fantasma"
-
-#~ msgid "Invalid space specified, setting to 100\n"
-#~ msgstr "Se ha especificado una separación no válida, usando 100\n"
-
-#~ msgid "Invalid length specified, setting to 100\n"
-#~ msgstr "Se ha especificado una separación no válida, usando 100\n"
-
-#~ msgid "Hollow"
-#~ msgstr "Hueco"
-
-#~ msgid "Filled"
-#~ msgstr "Relleno"
-
-#~ msgid "Mesh"
-#~ msgstr "Rejilla"
-
-#~ msgid "Hatch"
-#~ msgstr "Rayado"
-
-#~ msgid "Autonumber text starting with:"
-#~ msgstr "Autoenumerar texto que comienza por:"
-
-#~ msgid "Yes"
-#~ msgstr "Sí"
-
-#~ msgid "No"
-#~ msgstr "No"
-
-#~ msgid "NV"
-#~ msgstr "N y V"
-
-#~ msgid "SN"
-#~ msgstr "Visibilidad"
-
-#~ msgid "Add/Edit"
-#~ msgstr "Añadir/Editar"
-
-#~ msgid "Clear"
-#~ msgstr "Limpiar"
-
-#~ msgid "Open Page"
-#~ msgstr "Abrir página"
-
-#~ msgid "Discard Page"
-#~ msgstr "Descartar página"
-
-#~ msgid "Update Manager"
-#~ msgstr "Actualizar administrador"
-
-#~ msgid "Close Manager"
-#~ msgstr "Cerrar administrador"
