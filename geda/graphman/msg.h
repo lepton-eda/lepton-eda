@@ -18,96 +18,47 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#  include <config.h>
-#endif
-
-#include <gtk/gtk.h>
-
-#include "callbacks.h"
-#include "global.h"
-#include "graph.h"
-#include "interface.h"
-#include "support.h"
-#include "value.h"
-
-
-void
-MainNotebookPlotsNewButton_clicked     (GtkButton       *button,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-MainNotebookPlotsModifyButton_clicked  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-MainNotebookPlotsDeleteButton_clicked  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
-MainNotebookGraphBorderButton_clicked  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-}
-
-
-void PlotButtonOkButton_clicked(GtkButton *pButton, gpointer pUserData)
-{
-}
-
-
-void PlotButtonCancelButton_clicked(GtkButton *pButton, gpointer pUserData)
-{
-	
-}
+#ifndef __MSG_H_INCLUDED
+#define __MSG_H_INCLUDED
 
 
 
+/* error messages displayed in stderr */
+#define MSG_TOO_MANY_PARAMETERS    "Too many parameters"
+#define MSG_WRONG_PARAMETER        "Wrong parameter"
+#define MSG_MISSING_PARAMETER      "Missing parameter"
+#define MSG_UNKNOWN_OPTION         "Unknown option"
+#define MSG_FILENAME_NOT_SPECIFIED "Graph filename not specified"
+#define MSG_ACTION_NOT_SELECTED    "Action not specified"
+#define MSG_FILTER_NOT_SPECIFIED   "Import/Export filter not specified"
+#define MSG_CANNOT_CREATE_FILE     "Cannot create file"
+#define MSG_CANNOT_OPEN_FILE       "Cannot open file"
+#define MSG_WRONG_FILE             "File is wrong"
+
+/* color names */
+#define MSG_WHITE                  "White"
+#define MSG_BLACK                  "Black"
+#define MSG_YELLOW                 "Yellow"
+#define MSG_RED                    "Red"
+#define MSG_BLUE                   "Blue"
+#define MSG_GREEN                  "Green"
+#define MSG_ORANGE                 "Orange"
+#define MSG_MAGENTA                "Magenta"
+
+/* style names */
+#define MSG_SOLID                  "Solid"
+
+/* scale names */
+#define MSG_LIN                    "Linear"
+#define MSG_LOG                    "Logarithmic"
+
+/* viewer names */
+#define MSG_GWAVE                  "GNU GWave"
+
+/* identifier of checked boxes */
+#define MSG_CHECKED                "Checked"
+#define MSG_UNCHECKED              "Unchecked"
 
 
 
-void MainButtonOk_clicked(GtkButton *pButton, gpointer pUserData)
-{
-	GraphSave(szFilename);
-	gtk_main_quit();
-}
-
-
-void MainButtonCancel_clicked(GtkButton *pButton, gpointer pUserData)
-{
-	gtk_main_quit();
-}
-
-
-void MainButtonPlot_clicked(GtkButton *pButton, gpointer pUserData)
-{
-	char *pCommand = NULL;
-
-	pCommand = StringCreate();
-	StringCopy(&pCommand, Graph.szFileName);
-	StringCat(&pCommand, ".gw");
-
-	execlp("gwave", "-s", pCommand, NULL);
-}
-
-
-gboolean MainDeleteEvent_clicked(GtkWidget *pWidget, GdkEvent *pEvent, gpointer pUserData)
-{
-	gtk_main_quit();
-	return FALSE;
-}
-
-
-
+#endif /* __MSG_H_INCLUDED */

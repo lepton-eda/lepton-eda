@@ -19,11 +19,27 @@ raw2gw_SOURCES = \
 graphman_SOURCES = \
 	callbacks.c \
 	callbacks.h \
+	config.c \
+	config.h \
+	export2gwave.c \
+	export2gwave.h \
+	filetool.c \
+	filetool.h \
+	global.h \
+	graph.c \
+	graph.h \
 	interface.c \
 	interface.h \
 	main.c \
+	msg.h \
+	msgbox.c \
+	msgbox.h \
+	libstring.c \
+	libstring.h \
 	support.c \
-	support.h
+	support.h \
+	value.c \
+	value.h
 
 	
 graphman_LDFLAGS =

@@ -1,0 +1,93 @@
+Graph manager
+
+Graph manager is used for defining presentation of simulation results. Because
+of this it is always related to a simulation file. Graph file never contains 
+data, they are loaded from the reffered results file which has exactly the 
+same name as simulation file.
+
+Graph manager should support many kind of graph tools. Not all function can 
+be used with any tool. Graph parameters not allowed should be not editable 
+but saved in any case with default values. If a user enter them in context
+of one tool then switch to another one not supporting them - they will be
+saved but not used.
+
+Graph manager can be started in different ways:
+
+graphman -f <graph file> -o - opens a window for editting graph properties
+
+graphman -f <graph file> -g – generates a graph viewer file(s) pointed out in
+graph file without displaying any window
+
+graphman -f <graph file> -e <exported file> -m <filter_name> – exports a graph
+(without -m the same as -g)
+
+/* --- planned modes ---
+graphman -f <graph file> - opens a window and displays a graph following view
+definition in a graph file and data contained in a reffered results file.
+graphman -f <graph file> -d – displays a graph
+graphman -f <graph file> -i <imported file> -m <filter_name> – imports a graph
+graphman -f <graph file> -c – creates a new empty graph
+Additional switch '-p <pid number>' can be added in any case. This switch
+causes integration with running GManager instance which pid is pointed out. 
+
+Graph file
+
+Filename convention
+
+Files can have any name, even including spaces, national characters and others
+that OS can support. Simulation manager may not limit them. Mandatory extension
+for the file is *.gph.
+
+Format description
+
+Format of the files are as follows:
+
+* all lines should be ended with \n (x10),
+* line beginning with # or a blank character are ignored,
+* all parameters are saved in a form of:
+  PARAMETER ARGUMENT = VALUE1, VALUE2, VALUE3, ...
+  number of values are not limitted but at least one should be defined,
+  string values are in “”,
+  ARGUMENT is not mandatory but can appear.
+* all parameters appear in sections marked by a line:
+  [<Section_name>]
+  where <Section_name> can be one of [MAIN | XAXIS | YAXIS]
+
+List of parameters:
+
+[MAIN]
+VERSION = “<version name of graph manager like 20040111>”
+SIMULATION = “<filename without extension>”
+TOOL = [“GWAVE” | “GTKWAVE”]
+BORDER = [“WHITE” | “BLACK” | “RED” | “BLUE” | “YELLOW”]
+
+[XAXIS]
+X = [“AUTO” | [<xmin>, <xmax>]]
+SCROLL = [“NONE” | “percentage”]
+SCALE = [ “LIN” | “LOG” | “DEC”]
+XDIV = deltaX for main dividing
+COLOR = [“WHITE” | “BLACK” | “RED” | “BLUE” | “YELLOW”]
+STYLE = [“SOLID” | “DOTS” | “LINES”]
+XDIV2 = <number of additional lines>
+COLOR2 = [“WHITE” | “BLACK” | “RED” | “BLUE” | “YELLOW”] (add. lines)
+STYLE2 = [“SOLID” | “DOTS” | “LINES”] (add. lines)
+
+[YAXIS]
+Y = [“AUTO” | [<ymin>, <ymax>]]
+SCALE = [ “LIN” | “LOG” | “DEC”]
+YDIV = delta Y for main lines
+COLOR = [“WHITE” | “BLACK” | “RED” | “BLUE” | “YELLOW” | xXXXXXX]
+STYLE = [“SOLID” | “DOTS” | “LINES”]
+XDIV2 = <number of additional lines>
+COLOR2 = [“WHITE” | “BLACK” | “RED” | “BLUE” | “YELLOW” | xXXXXXX] (add. lines)
+STYLE2 = [“SOLID” | “DOTS” | “LINES”] (add. lines)
+
+[<plot1_name>]
+FORMULA = “<formula>”
+COLOR = [“WHITE” | “BLACK” | “RED” | “BLUE” | “YELLOW” | xXXXXXX]
+STYLE = [“SOLID” | “DOTS” | “LINES”]
+
+Files used
+*.esp	Simulation manager file
+*.gph	Graph manager file
+*.res	Results of simulation
