@@ -6,6 +6,10 @@
 	* lib/gschem-lightbg: Fixed the background color for images.  
 	Bug pointed out by John Eaton.
 
+	* noweb/gschem.nw: Added bug fix by Alexandre P. Nunes to get 
+	the postscript output working again when you pick a locale which
+	uses ","'s instead of "."'s.
+
 2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw: Fixed the focus on the value entry to be

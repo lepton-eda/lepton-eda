@@ -381,6 +381,7 @@ main (int argc, char *argv[])
 {
 #if ENABLE_NLS
   setlocale(LC_ALL, "");
+  setlocale(LC_NUMERIC, "POSIX");
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
 #endif
