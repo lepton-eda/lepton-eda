@@ -1,6 +1,6 @@
 
 
-SUBDIRS = src include docs
+SUBDIRS = src include docs noweb scripts
 
 bin_SCRIPTS = libgeda-config
 

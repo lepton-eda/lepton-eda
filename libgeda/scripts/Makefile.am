@@ -1,6 +1,5 @@
 
-EXTRA_DIST = ChangeLog geda_totexi geda_totexi.awk makeallimages \
-	     makeimages print.scm
+EXTRA_DIST = geda_totexi geda_totexi.awk prepnoweb
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

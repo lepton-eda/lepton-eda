@@ -344,4 +344,6 @@ AC_OUTPUT([
 	libgeda-config 
 	include/Makefile 
 	src/Makefile 
-	docs/Makefile], [chmod +x libgeda-config]) 
+	docs/Makefile
+	scripts/Makefile
+	noweb/Makefile], [chmod +x libgeda-config]) 

@@ -439,5 +439,6 @@ AC_OUTPUT( 	Makefile \
 		examples/Makefile \
 		docs/Makefile \
 		lib/Makefile \
+		noweb/Makefile \
 		lib/system-gschemrc )
 

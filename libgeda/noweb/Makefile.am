@@ -1,0 +1,14 @@
+
+EXTRA_DIST = a_basic.nw f_basic.nw f_image.nw f_print.nw g_basic.nw \
+	     g_smob.nw libgeda.nw m_basic.nw o_arc_basic.nw o_attrib.nw \
+	     o_basic.nw o_box_basic.nw o_bus_basic.nw o_circle_basic.nw \
+	     o_complex_basic.nw o_image.nw o_line_basic.nw o_list.nw \
+             o_net_basic.nw o_pin_basic.nw o_selection.nw o_text_basic.nw \
+	     s_attrib.nw s_basic.nw s_clib.nw s_color.nw s_conn.nw s_cue.nw \
+	     s_hierarchy.nw s_log.nw s_page.nw s_papersizes.nw s_scratch.nw \
+	     s_slib.nw s_stretch.nw s_tile.nw s_undo.nw u_basic.nw
+
+MOSTLYCLEANFILES = *.log *~
+CLEANFILES = *.log *~
+DISTCLEANFILES = *.log *~ Makefile.in configure
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure

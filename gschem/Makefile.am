@@ -1,5 +1,5 @@
 
-SUBDIRS = src include lib scheme scripts examples docs
+SUBDIRS = src include lib scheme scripts examples docs noweb
 
 EXTRA_DIST = VOCABULARY BUGS guile.m4
 
