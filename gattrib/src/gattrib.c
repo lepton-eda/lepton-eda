@@ -85,7 +85,7 @@ void gattrib_really_quit(void)
  *------------------------------------------------------------------*/
 void gattrib_quit(void)
 {
-  s_clib_cache_free();
+  /*   s_clib_cache_free(); */
   s_clib_free();
   s_slib_free();
   /* s_rename_destroy_all(); */
