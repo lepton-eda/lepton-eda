@@ -1,6 +1,19 @@
 
 gsch2pcb Changelog
 ------------------
+1.0
+---------
+	* Added --m4-command, --m4-pcbdir, and --m4-file options as suggested
+	  by Dan McMahill.  Updated gnet-gsch2pcb.scm to use these options
+	  via the new 20030901 gnetlist -m option.
+	* Options which can be common to all an individual users projects can
+	  be in ~/.gsch2pcb.  CAD administrators can put site wide options in
+	  /etc/gsch2pcb or /usr/local/etc/gsch2pcb.
+	* Added the project.sample file.  Read it for a description of the
+	  new m4-xxxx options.
+	* Expand a leading '~' to the home dir in elements-dir directories.
+	* Look for /usrlib/pcb_lib and /usr/local/lib/pcb_lib.
+
 0.9
 ---
 	* If a file element's coordinate (mark x or y) is > 1000 (mils), translate

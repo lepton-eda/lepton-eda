@@ -240,6 +240,7 @@ AC_CONFIG_FILES([Makefile
                  examples/Makefile 
                  examples/gmk_sym/Makefile 
                  examples/tragesym/Makefile 
+                 examples/gsch2pcb/Makefile 
                  include/Makefile 
                  scripts/Makefile 
                  scripts/config.sh 

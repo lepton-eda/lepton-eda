@@ -196,9 +196,10 @@ README for misc utilities versions 2003*
     elements corresponding to components deleted from the schematics.
     It also forward annotates component value changes.
 
-    Please see the README.gsch2pcb file for more information.
+    Please see the README.gsch2pcb file for more information.  Also see
+    examples/gsch2pcb/project.sample for an example of a project file.
 
-   
+ 
 
 - License  
 

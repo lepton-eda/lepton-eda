@@ -24,14 +24,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
+#include <sys/stat.h>
 
 #if !GLIB_CHECK_VERSION(2,0,0)
 #include "glib12-compat.c"
 #endif
 
 
-#define	GSC2PCB_VERSION		"0.9"
+#define	GSC2PCB_VERSION		"1.0"
 
+#define	DEFAULT_PCB_INC		"pcb.inc"
 
 typedef struct
 	{
@@ -45,7 +48,8 @@ typedef struct
 	gint		x,
 				y;
 	gchar		*pkg_name_fix;
-	gboolean	still_exists;
+	gboolean	still_exists,
+				new_format;
 	}
 	PcbElement;
 
@@ -61,6 +65,11 @@ static GList	*pcb_element_list,
 
 static gchar	*schematics,
 				*basename;
+
+static gchar	*m4_command,
+				*m4_pcbdir,
+				*m4_files,
+				*m4_override_file;
 
 static gint		verbose,
 				n_deleted,
@@ -82,15 +91,57 @@ static gboolean	remove_unfound_elements,
 
 
 static void
+create_m4_override_file()
+	{
+	FILE	*f;
+
+	if (!m4_command && !m4_pcbdir && !m4_files)
+		return;
+	m4_override_file = "gnet-gsch2pcb-tmp.scm";
+	f = fopen(m4_override_file, "w");
+	if (!f)
+		{
+		m4_override_file = NULL;
+		return;
+		}
+	if (m4_command)
+		fprintf(f, "(define m4-command \"%s\")\n", m4_command);
+	if (m4_pcbdir)
+		fprintf(f, "(define m4-pcbdir \"%s\")\n", m4_pcbdir);
+	if (m4_files)
+		fprintf(f, "(define m4-files \"%s\")\n", m4_files);
+	fclose(f);
+	if (verbose)
+		{
+		printf("--------\ngnet-gsch2pcb-tmp.scm override file:\n");
+		if (m4_command)
+			printf("    (define m4-command \"%s\")\n", m4_command);
+		if (m4_pcbdir)
+			printf("    (define m4-pcbdir \"%s\")\n", m4_pcbdir);
+		if (m4_files)
+			printf("    (define m4-files \"%s\")\n", m4_files);
+		}
+	}
+
+  /* Run gnetlist to generate a netlist and a PCB board file.  gnetlist
+  |  has exit status of 0 even if it's given an invalid arg, so do some
+  |  stat() hoops to decide if gnetlist successfully generated the PCB
+  |  board file (only gnetlist >= 20030901 recognizes -m).
+  */
+static void
 run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *args)
 	{
-	gchar		*command;
+	gchar		*command,
+				*s;
+	struct stat	st;
+	time_t		mtime;
 
 	if (verbose)
 		{
 		command = g_strconcat(
 					"gnetlist -g PCB -o ", net_file, " ", args, NULL);
 		printf("Running command:\n\t%s\n", command);
+		printf("--------\n");
 		}
 	else
 		command = g_strconcat(
@@ -98,18 +149,46 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *args)
 	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
 	g_free(command);
 
+	create_m4_override_file();
+	if (m4_override_file)
+		{
+		s = args;
+		args = g_strconcat("-m ", m4_override_file, " ", args, NULL);
+		g_free(s);
+		}
+
+	mtime = (stat(pcb_file, &st) == 0) ? st.st_mtime : 0;
+	
 	if (verbose)
 		{
+		printf("--------\n");
 		command = g_strconcat("gnetlist -g gsch2pcb -o ", pcb_file, 
 				" ", args, NULL);
 		printf("Running command:\n\t%s\n", command);
+		printf("--------\n");
 		}
 	else
 		command = g_strconcat("gnetlist -q -g gsch2pcb -o ", pcb_file, 
 				" ", args, NULL);
 
 	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
+
+	if (verbose)
+		printf("--------\n");
+
+	if (   stat(pcb_file, &st) != 0
+		|| mtime == st.st_mtime
+	   )
+		{
+		fprintf(stderr, "gsch2pcb: gnetlist command failed.\n");
+		if (m4_override_file)
+			fprintf(stderr,
+		"    At least gnetlist 20030901 is required for m4-xxx options.\n");
+		exit(1);
+		}
 	g_free(command);
+	if (m4_override_file)
+		unlink(m4_override_file);
 	}
 
 static gchar *
@@ -160,11 +239,23 @@ fix_spaces(gchar *str)
 			*s = '_';
 	}
 
+  /* New PCB 1.7 / 1.99 Element() line format:
+  |  Element(element_flags, description, pcb-name, value, mark_x, mark_y,
+  |			text_x, text_y, text_direction, text_scale, text_flags)
+  |  Old PCB 1.6 Element() line format:
+  |  Element(element_flags, description, pcb-name, value, 
+  |			text_x, text_y, text_direction, text_scale, text_flags)
+  |
+  |  (mark_x, mark_y) is the element position (mark) and (text_x,text_y)
+  |  is the description text position which is absolute in pre 1.7 and
+  |  is now relative.
+  */
 PcbElement *
 pcb_element_line_parse(gchar *line)
 	{
 	PcbElement	*el = NULL;
-	gchar		*s;
+	gchar		*s, *t;
+	gint		state = 0, elcount = 0;
 
 	if (strncmp(line, "Element(", 8))
 		return NULL;
@@ -173,10 +264,37 @@ pcb_element_line_parse(gchar *line)
 	el->flags = token(line + 8, NULL);
 	el->description = token(NULL, NULL);
 	el->refdes = token(NULL, NULL);
-	el->value  = token(NULL, &s);
-	el->tail = g_strdup(s ? s : "");
+	el->value  = token(NULL, NULL);
+
+	s = token(NULL, NULL);
+	el->x = atoi(s);
+	g_free(s);
+
+	s = token(NULL, &t);
+	el->y = atoi(s);
+	g_free(s);
+
+	el->tail = g_strdup(t ? t : "");
 	if ((s = strrchr(el->tail, (gint) '\n')) != NULL)
 		*s = '\0';
+
+	/* Count the tokens in tail to decide if it's new or old format.
+	|  Old format will have 3 tokens, new format will have 5 tokens.
+	*/
+	for (s = el->tail; *s && *s != ')'; ++s)
+		{
+		if (*s != ' ')
+			{
+			if (state == 0)
+				++elcount;
+			state = 1;
+			}
+		else
+			state = 0;
+		}
+	if (elcount > 4)
+		el->new_format = TRUE;
+
 	fix_spaces(el->description);
 	fix_spaces(el->refdes);
 	fix_spaces(el->value);
@@ -263,55 +381,28 @@ pcb_element_exists(PcbElement *el_test, gboolean record)
 	return NULL;
 	}
 
-  /* The element tail will be the pre PCB 1.7 style "tx ty dir scale flags"
-  |  or the new "mx my tx ty dir scale flags" where (mx,my) is the element
-  |  position (mark) and (tx,ty) is the description text position.  (tx,ty) is
-  |  absolute in pre 1.7 and now relative.  A problem is that new PCB 1.7
-  |  file elements have the (mx,my) value set to wherever the element was
-  |  created and no equivalent of a gschem translate symbol was done.  So
-  |  file elements inserted can be scattered over a big area and this is
+  /* A problem is that new PCB 1.7 file elements have the (mark_x,mark_y)
+  |  value set to wherever the element was created and no equivalent of a
+  |  gschem translate symbol was done.
+  |  So, file elements inserted can be scattered over a big area and this is
   |  bad when loading a file.new.pcb into an existing PC board.  So, do a
-  |  simple translate if (mx,my) is (arbitrarily) over 1000.  I'll assume
-  |  that for (mx,my) < 1000 the element creator was concerned with a sane
-  |  initial element placement.  Unless someone has a better idea?
+  |  simple translate if (mark_x,mark_y) is (arbitrarily) over 1000.  I'll
+  |  assume that for values < 1000 the element creator was concerned with a
+  |  sane initial element placement.  Unless someone has a better idea?
   |  Don't bother with pre PCB 1.7 formats as that would require parsing
-  |  the mark().  m4 elements use the old format but they seem to have a
-  |  reasonable initial mark().
+  |  the mark().  Current m4 elements use the old format but they seem to
+  |  have a reasonable initial mark().
   */
-static gchar *
+static void
 simple_translate(PcbElement *el)
 	{
-	gchar	*s, *new_tail;
-	gint	state = 0, elcount = 0;
-
-	/* just count the tokens in tail to decide if it's new or old format.
-	*/
-	for (s = el->tail; *s && *s != ')'; ++s)
+	if (el->new_format)
 		{
-		if (*s != ' ')
-			{
-			if (state == 0)
-				++elcount;
-			state = 1;
-			}
-		else
-			state = 0;
-		}
-	if (elcount > 6)			/* New format */
-		{
-		s = token(el->tail, NULL);
-		el->x = atoi(s);
-		g_free(s);
-		s = token(NULL, &new_tail);
-		el->y = atoi(s);
-		g_free(s);
 		if (el->x > 1000)
-			el->x = 1000;
+			el->x = 500;
 		if (el->y > 1000)
-			el->y = 1000;
-		return new_tail;
+			el->y = 500;
 		}
-	return NULL;
 	}
 
 static gboolean
@@ -320,7 +411,7 @@ insert_element(FILE *f_out, gchar *element_file,
 	{
 	FILE		*f_in;
 	PcbElement	*el;
-	gchar		*s, *new_tail, buf[1024];
+	gchar		*s, buf[1024];
 	gboolean	retval = FALSE;
 
 	if ((f_in = fopen(element_file, "r")) == NULL)
@@ -335,13 +426,10 @@ insert_element(FILE *f_out, gchar *element_file,
 			;
 		if ((el = pcb_element_line_parse(s)) != NULL)
 			{
-			if ((new_tail = simple_translate(el)) != NULL)
-				fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+			simple_translate(el);
+			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
 						el->flags, footprint, refdes, value,
-						el->x, el->y, new_tail);
-			else
-				fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\"%s\n",
-						el->flags, footprint, refdes, value, el->tail);
+						el->x, el->y, el->tail);
 			retval = TRUE;;
 			}
 		else if (*s != '#')
@@ -545,9 +633,12 @@ add_elements(gchar *pcb_file)
 					el->refdes, el->description, el->value);
 			if (verbose && is_m4 && force_element_files)
 				printf(
-			"Trying to replace m4 element %s with a file element for:  %s\n",
-					el->description, el->refdes);
+		"%s: have m4 element %s, but trying to replace with a file element.\n",
+					el->refdes, el->description);
 			p = search_element_directories(el);
+			if (!p && verbose && is_m4 && force_element_files)
+				printf("\tNo file element found.\n");
+
 			if (p && insert_element(f_out, p,
 						el->description, el->refdes, el->value))
 				{
@@ -642,9 +733,9 @@ update_element_descriptions(gchar *pcb_file, gchar *bak)
 			&& el_exists->changed_description
 		   )
 			{
-			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\"%s\n",
+			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
 						el->flags, el_exists->changed_description,
-						el->refdes, el->value, el->tail);
+						el->refdes, el->value, el->x, el->y, el->tail);
 			printf("%s: updating element Description: %s -> %s\n",
 						el->refdes, el->description,
 						el_exists->changed_description);
@@ -740,9 +831,9 @@ prune_elements(gchar *pcb_file, gchar *bak)
 			}
 		if (el_exists && el_exists->changed_value)
 			{
-			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\"%s\n",
+			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
 					el->flags, el->description, el->refdes,
-					el_exists->changed_value, el->tail);
+					el_exists->changed_value, el->x, el->y, el->tail);
 			if (verbose)
 				printf(
 					"%s: changed element %s value: %s -> %s\n",
@@ -773,12 +864,53 @@ prune_elements(gchar *pcb_file, gchar *bak)
 	}
 
 static void
+add_m4_file(gchar *arg)
+	{
+	gchar	*s;
+
+	if (!m4_files)
+		m4_files = g_strdup(arg);
+	else
+		{
+		s = m4_files;
+		m4_files = g_strconcat(m4_files, " ", arg, NULL);
+		g_free(s);
+		}
+	}
+
+static gchar *
+expand_dir(gchar *dir)
+	{
+	gchar	*s;
+
+	if (*dir == '~')
+		s = g_build_filename((gchar *) g_get_home_dir(), dir + 1, NULL);
+	else
+		s = g_strdup(dir);
+	return s;
+	}
+
+static void
+add_default_m4_files(void)
+	{
+	gchar	*path;
+
+	path = g_build_filename((gchar *) g_get_home_dir(),
+				".pcb", DEFAULT_PCB_INC, NULL);
+	if (g_file_test(path, G_FILE_TEST_IS_REGULAR))
+		add_m4_file(path);
+	g_free(path);
+
+	if (g_file_test(DEFAULT_PCB_INC, G_FILE_TEST_IS_REGULAR))
+		add_m4_file(DEFAULT_PCB_INC);
+
+	}
+
+static void
 add_schematic(gchar *sch)
 	{
 	gchar	*s;
 
-	if (verbose)
-		printf("Adding schematic(s): %s\n", sch);
 	s = schematics;
 	if (s)
 		schematics = g_strconcat(s, " ", sch, NULL);
@@ -792,6 +924,9 @@ add_schematic(gchar *sch)
 static gint
 parse_config(gchar *config, gchar *arg)
 	{
+	if (verbose)
+		printf("    %s %s\n", config, arg ? arg : "");
+
 	if (!strcmp(config, "remove-unfound") || !strcmp(config, "r"))
 		{
 		remove_unfound_elements = TRUE;
@@ -808,12 +943,18 @@ parse_config(gchar *config, gchar *arg)
 		return 0;
 		}
 	if (!strcmp(config, "elements-dir") || !strcmp(config, "d"))
-        element_directory_list =
-					g_list_prepend(element_directory_list, g_strdup(arg));
+		element_directory_list =
+				g_list_prepend(element_directory_list, expand_dir(arg));
 	else if (!strcmp(config, "output-name") || !strcmp(config, "o"))
 		basename = g_strdup(arg);
 	else if (!strcmp(config, "schematics"))
 		add_schematic(arg);
+	else if (!strcmp(config, "m4-command"))
+		m4_command = g_strdup(arg);
+	else if (!strcmp(config, "m4-pcbdir"))
+		m4_pcbdir = g_strdup(arg);
+	else if (!strcmp(config, "m4-file"))
+		add_m4_file(arg);
 	else
 		return -1;
 
@@ -829,32 +970,53 @@ load_project(gchar *path)
 	f = fopen(path, "r");
 	if (!f)
 		return;
+	if (verbose)
+		printf("Reading project file: %s\n", path);
 	while (fgets(buf, sizeof(buf), f))
 		{
 		for (s = buf; *s == ' ' || *s == '\t' || *s == '\n'; ++s)
 			;
-		if (!*s || *s == '#')
+		if (!*s || *s == '#' || *s == '/' || *s == ';')
 			continue;
 		arg[0] = '\0';
-		sscanf(s, "%32s %768[^\n]", config, arg);
+		sscanf(s, "%31s %767[^\n]", config, arg);
 		parse_config(config, arg);
 		}
     fclose(f);
     }
 
+static void
+load_extra_project_files(void)
+	{
+	gchar			*path;
+	static gboolean	done = FALSE;
+
+	if (done)
+		return;
+
+	load_project("/etc/gsch2pcb");
+	load_project("/usr/local/etc/gsch2pcb");
+
+	path = g_build_filename((gchar *) g_get_home_dir(), ".gsch2pcb", NULL);
+	load_project(path);
+	g_free(path);
+
+	done = TRUE;
+	}
+
 static gchar *usage_string =
-"usage: gsch2pcb [options] [project] foo.sch [foo1.sch ...]\n"
+"usage: gsch2pcb [options] {project | foo.sch [foo1.sch ...]}\n"
 "\n"
-"Generate a pcb layout file from a set of gschem schematics.\n"
+"Generate a PCB layout file from a set of gschem schematics.\n"
 "   gnetlist -g PCB is run to generate foo.net from the schematics.\n"
-"   gnetlist -g gsch2pcb is run to get pcb m4 derived elements which\n"
+"   gnetlist -g gsch2pcb is run to get PCB m4 derived elements which\n"
 "   match schematic footprints.  For schematic footprints which don't match\n"
-"   any pcb m4 layout elements, search a set of file element directories in\n"
-"   an attempt to find matching pcb file elements.\n"
+"   any PCB m4 layout elements, search a set of file element directories in\n"
+"   an attempt to find matching PCB file elements.\n"
 "   Output to foo.pcb if it doesn't exist.  If there is a current foo.pcb,\n"
 "   output only new elements to foo.new.pcb.\n"
 "   If any elements with a non-empty element name in the current foo.pcb\n"
-"   have no matching schematic component, then remove the elements from\n"
+"   have no matching schematic component, then remove those elements from\n"
 "   foo.pcb and rename foo.pcb to a foo.pcb.bak sequence.\n"
 "\n"
 "   \"project\" is a file (not ending in .sch) containing a list of\n"
@@ -864,8 +1026,9 @@ static gchar *usage_string =
 "       output-name myproject\n"
 "\n"
 "options (may be included in a project file):\n"
-"   -d, --elements-dir D  Search D for pcb file elements in addition to the\n"
-"                         default /usr/local/pcb_lib and packages directories.\n"
+"   -d, --elements-dir D  Search D for PCB file elements in addition to the\n"
+"                         default /usr/local/pcb_lib, /usr/lib/pcb_lib,\n"
+"                         and packages directories.\n"
 "   -o, --output-name N   Use output file names N.net, N.pcb, and N.new.pcb\n"
 "                         instead of foo.net, ... where foo is the basename\n"
 "                         of the first command line .sch file.\n"
@@ -873,18 +1036,23 @@ static gchar *usage_string =
 "                         for new footprints even though m4 elements are\n"
 "                         searched for first and may have been found.\n"
 "   -r, --remove-unfound  Don't include references to unfound elements in\n"
-"                         the generated .pcb files so that pcb will be able\n"
-"                         to load the (incomplete) .pcb file.\n"
-"   -p, --preserve        Preserve elements in pcb files which are not found\n"
+"                         the generated .pcb files.  Use if you want PCB to\n"
+"                         be able to load the (incomplete) .pcb file.\n"
+"   -p, --preserve        Preserve elements in PCB files which are not found\n"
 "                         in the schematics.  Note that elements with an empty\n"
-"                         element name (schematic refdes) are never deleted.\n"
+"                         element name (schematic refdes) are never deleted,\n"
+"                         so you really shouldn't need this option.\n"
+"       --m4-file F.inc   Use m4 file F.inc in addition to the default m4\n"
+"                         files ./pcb.inc and ~/.pcb/pcb.inc.\n"
+"       --m4-pcbdir D     Use D as the PCB m4 files install directory\n"
+"                         instead of the default /usr/X11R6/lib/X11/pcb/m4.\n"
 "\n"
 "options (not recognized in a project file):\n"
 "       --fix-elements    If a schematic component footprint is not equal\n"
 "                         to its PCB element Description, update the\n"
 "                         Description instead of replacing the element.\n"
 "                         Do this the first time gsch2pcb is used with\n"
-"                         pcb files originally created with gschem2pcb.\n"
+"                         PCB files originally created with gschem2pcb.\n"
 "   -v, --verbose\n"
 "   -V, --version\n\n"
 ;
@@ -936,13 +1104,16 @@ get_args(gint argc, gchar **argv)
 				i += r;
 				continue;
 				}
-			printf("gsch2pcb: bad arg: %s\n", argv[i]);
+			printf("gsch2pcb: bad or incomplete arg: %s\n", argv[i]);
 			usage();
 			}
 		else
 			{
 			if ((s = strstr(argv[i], ".sch")) == NULL)
+				{
+				load_extra_project_files();
 				load_project(argv[i]);
+				}
 			else
 				add_schematic(argv[i]);
 			}
@@ -965,14 +1136,24 @@ main(gint argc, gchar **argv)
 
 	get_args(argc, argv);
 
+	load_extra_project_files();
+	add_default_m4_files();
+
 	if (!schematics)
 		usage();
 
 	/* Hardwire in directories from Pcb.ad.
 	*/
 	element_directory_list = g_list_append(element_directory_list, "packages");
-	element_directory_list = g_list_append(element_directory_list,
-				"/usr/local/pcb_lib");
+	if (g_file_test("/usr/local/pcb_lib", G_FILE_TEST_IS_DIR))
+		element_directory_list = g_list_append(element_directory_list,
+					"/usr/local/pcb_lib");
+	if (g_file_test("/usr/local/lib/pcb_lib", G_FILE_TEST_IS_DIR))
+		element_directory_list = g_list_append(element_directory_list,
+					"/usr/local/lib/pcb_lib");
+	if (g_file_test("/usr/lib/pcb_lib", G_FILE_TEST_IS_DIR))
+		element_directory_list = g_list_append(element_directory_list,
+					"/usr/lib/pcb_lib");
 
 	net_file_name = g_strconcat(basename, ".net", NULL);
 	pcb_file_name = g_strconcat(basename, ".pcb", NULL);

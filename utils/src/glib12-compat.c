@@ -70,6 +70,7 @@ g_dir_close(GDir *dir)
 
 #define G_FILE_TEST_EXISTS	1
 #define	G_FILE_TEST_IS_DIR	2
+#define G_FILE_TEST_IS_REGULAR  3
 
 gboolean
 g_file_test(gchar *filename, gint test)
@@ -80,10 +81,55 @@ g_file_test(gchar *filename, gint test)
 		return TRUE;
 	if (   (test & G_FILE_TEST_IS_DIR)
 		&& stat(filename, &s) == 0
-		&& S_ISDIR (s.st_mode)
+		&& S_ISDIR(s.st_mode)
 	   )
 		return TRUE;
+	if (   (test & G_FILE_TEST_IS_REGULAR)
+		&& stat(filename, &s) == 0
+		&& S_ISREG(s.st_mode)
+	   )
+		return TRUE;
+
 	return FALSE;
+	}
+
+gchar *
+g_build_filename(gchar *first, ...)
+	{
+	gchar		*str;
+	va_list		args;
+	gchar		*s, *element, *next_element;
+	gboolean	is_first = TRUE;
+
+	va_start(args, first);
+	next_element = first;
+	str = g_strdup("");
+
+	while (1)
+		{
+		if (next_element)
+			{
+			element = next_element;
+			next_element = va_arg(args, gchar *);
+			}
+		else
+			break;
+		if (is_first)
+			{
+			is_first = FALSE;
+			g_free(str);
+			str = g_strdup(element);
+			}
+		else
+			{
+			s = str;
+			str = g_strconcat(str, G_DIR_SEPARATOR_S, element, NULL);
+			g_free(s);
+			}
+		}
+	va_end (args);
+
+	return str;
 	}
 
 void

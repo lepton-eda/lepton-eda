@@ -1,3 +1,11 @@
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* ChangeLog.gsch2pcb, README.gsch2pcb, examples/gsch2pcb/.cvsignore,
+	examples/gsch2pcb/Makefile.am, examples/gsch2pcb/project.sample,
+	examples/Makefile.am, src/glib12-compat.c, src/gsch2pcb.c, 
+	configure.ac, README: Updated Bill Wilson's gsch2pcb to his 1.0 
+	version.
+
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed MinGW cflags/ldflags

@@ -1,0 +1,62 @@
+#           Sample poject file for gsch2pcb versions >= 1.0
+#
+# A project file may be named anything that does not end in ".sch" and placed
+# in your schematics and PCB working directory.  Then, running:
+#    gsch2pcb project.sample
+# is all that is required to process gschem schematic footprint and value
+# attribute changes into usable PCB files.  See the README and/or
+# run "gsch2pcb --help" for additional information.
+#
+# Some settings (elements-dir, use-files, m4-command, m4-pcbdir, and
+# m4-file) are candidates for placing in a ~/.gsch2pcb file so they can
+# be in effect for all projects by an individual user.  CAD administrators
+# can make appropriate settings site wide for all users by placing them
+# in /etc/gsch2pcb or /usr/local/etc/gsch2pcb.
+
+# List all the schematics to be netlisted and layed out on the pc board.
+#
+schematics	first.sch second.sch third.sch
+
+# For an output-name of foo, gsch2pcb generates files foo.net, foo.pcb,
+# and foo.new.pcb.  If there is no output-name specified, the file names
+# are derived from the first listed schematic, ie first.net, etc
+#
+output-name	foo
+
+
+# ---------- Project options related to PCB file elements  ----------------
+# gsch2pcb automatically searches for PCB file elements in /usr/local/pcb_lib
+# and ./packages (which may be a symlinks).  For additional local file element
+# directories, uncomment and edit elements-dir lines.
+#
+#elements-dir  ~/gaf/pcb-elements
+#elements-dir  /usr/local/share/pcb/newlib
+
+# The default is to search for gschem footprints first in PCB m4 files and
+# if not found, then in PCB newlib style file element directories.  Uncomment
+# the use-files line to force using any found file elements even though a
+# m4 element may have been found first.
+#
+#use-files
+
+
+# ------------- Project options related to PCB m4 files -------------------
+# These options require gnetlist version >= 20030901
+#
+# The default m4 command is "m4".  This can specify a different command.
+# 
+#m4-command	gm4
+
+# The m4-pcbdir specifies where the PCB installation has its m4 database of
+# elements.  It is the directory where the PCB "common.m4" file is expected
+# to be found.  The default is /usr/X11R6/lib/X11/pcb/m4, so uncomment and
+# edit the following m4-pcbdir line if your PCB install is elsewhere.
+#
+#m4-pcbdir	/usr/X11R6/lib/X11/pcb/m4
+
+# gsch2pcb will automatically check for the additional m4 files ./pcb.inc
+# and ~/.pcb/pcb.inc, but for other local m4 files, uncomment and edit
+# m4-file lines.
+#
+#m4-file /usr/local/share/pcb/pcb.inc
+#m4-file /usr/share/pcb/pcb.inc
