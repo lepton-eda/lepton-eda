@@ -844,6 +844,13 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[],
 		break;
 	}
 
+	if (color < 0 || color > MAX_COLORS) {
+                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+                s_log_message("Found an invalid color [ %s ]\n", buf);
+		s_log_message("Setting color to WHITE\n");
+		color = WHITE;
+	}
+
 	object_list = o_text_add(w_current, object_list, type, color, x, y, 
 				alignment, angle, string, 
 				size, visibility, show_name_value);

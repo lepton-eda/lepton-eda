@@ -188,6 +188,13 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
                 s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n", type, x1, y1, width, height, color);
 	}
 
+	if (color < 0 || color > MAX_COLORS) {
+                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+                s_log_message("Found an invalid color [ %s ]\n", buf);
+		s_log_message("Setting color to WHITE\n");
+		color = WHITE;
+	}
+
 	object_list = (OBJECT *) o_box_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
 
 	return(object_list);

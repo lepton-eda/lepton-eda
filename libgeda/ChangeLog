@@ -8,6 +8,11 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_*_basic.c: Added a check to make sure the color of all read
+	  in objects is valid
+
 2000-04-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_text.c: Added some more checking when reading in text items

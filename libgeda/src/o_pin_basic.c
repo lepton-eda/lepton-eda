@@ -216,6 +216,12 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 		s_log_message("Found a zero length pin [ %c %d %d %d %d %d ]\n", type, x1, y1, x2, y2, color);
 	}
 
+	if (color < 0 || color > MAX_COLORS) {
+                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+                s_log_message("Found an invalid color [ %s ]\n", buf);
+		s_log_message("Setting color to WHITE\n");
+		color = WHITE;
+	}
 
 	if (w_current->override_pin_color != -1) {
 		color = w_current->override_pin_color;

@@ -204,7 +204,6 @@ o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
         sscanf(buf, "%c %d %d %d %d %d %d", &type,
 			&x1, &y1, &radius, &start_angle, &end_angle, &color);
 
-
 	x = x1 - radius; 
 	y = y1 + radius;
 
@@ -216,6 +215,12 @@ o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
                 s_log_message("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n", type, x1, y1, radius, start_angle, end_angle, color);
         }
 
+	if (color < 0 || color > MAX_COLORS) {
+                fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+                s_log_message("Found an invalid color [ %s ]\n", buf);
+		s_log_message("Setting color to WHITE\n");
+		color = WHITE;
+	}
 
 	object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,  x, y, 
 				width, height, 
