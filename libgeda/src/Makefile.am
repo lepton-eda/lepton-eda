@@ -1,3 +1,4 @@
+# $Id$
 #
 # NOTE: Don't forget that in the libtool distribution, files in this
 # directory are distributed by the demo_distfiles variable in the top
@@ -12,6 +13,10 @@ INDENTBIN=      @INDENT@
 INDENTFLAG=     -kr -i2
 
 VPATH = ../noweb:../include:src
+
+if CCISGCC
+AM_CFLAGS = -Wall
+endif
 
 # Build a libtool library, libhello.la for installation in libdir.
 lib_LTLIBRARIES = libgeda.la

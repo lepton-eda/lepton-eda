@@ -67,6 +67,7 @@ fi
 
 # Checks for programs.
 AC_PROG_CC
+AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
 
