@@ -1,0 +1,153 @@
+v 20030223
+B 300 300 2300 3300 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1900 100 9 10 1 1 0 0
+device=LT1162
+T 400 4100 5 10 0 0 0 0
+description=Full-bridge N-channel Power MOSFET Driver
+T 400 4300 5 10 0 0 0 0
+documentation=http://www.linear.com/pdf/11602fa.pdf
+T 400 3700 8 10 1 1 0 0
+refdes=U?
+T 400 3900 5 10 0 0 0 0
+footprint=DIP24N
+T 400 4500 5 10 0 0 0 0
+slot=1
+T 400 4700 5 10 0 0 0 0
+numslots=2
+T 400 4900 5 10 0 0 0 0
+slotdef=1:1,2,3,4,5,6,19,20,21,22,23,24
+T 400 5100 5 10 0 0 0 0
+slotdef=2:7,8,9,10,11,12,13,14,15,16,17,18
+P 300 3300 0 3300 1 0 1
+{
+T 200 3350 5 10 1 1 0 6
+pinnumber=1
+T -800 3250 5 10 0 0 0 0
+pinseq=1
+T 400 3300 9 10 1 1 0 1
+pinlabel=SV+
+T 400 3200 5 10 0 1 0 1
+pintype=pwr
+}
+P 300 1800 0 1800 1 0 1
+{
+T 200 1850 5 10 1 1 0 6
+pinnumber=2
+T -800 1750 5 10 0 0 0 0
+pinseq=2
+T 400 1800 9 10 1 1 0 1
+pinlabel=INTOP
+T 400 1700 5 10 0 1 0 1
+pintype=in
+}
+P 300 1200 0 1200 1 0 1
+{
+T 200 1250 5 10 1 1 0 6
+pinnumber=3
+T -800 1150 5 10 0 0 0 0
+pinseq=3
+T 400 1200 9 10 1 1 0 1
+pinlabel=INBOTTOM
+T 400 1100 5 10 0 1 0 1
+pintype=in
+}
+V 250 2400 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 200 2400 0 2400 1 0 1
+{
+T 200 2450 5 10 1 1 0 6
+pinnumber=4
+T -800 2350 5 10 0 0 0 0
+pinseq=4
+T 400 2400 9 10 1 1 0 1
+pinlabel=/UVOUT
+T 400 2300 5 10 0 1 0 1
+pintype=oc
+}
+P 900 300 900 0 1 0 1
+{
+T 950 100 5 10 1 1 0 0
+pinnumber=5
+T 50 100 5 10 0 0 0 0
+pinseq=5
+T 900 400 9 10 1 1 0 4
+pinlabel=GND
+T 900 600 5 10 0 1 0 1
+pintype=pwr
+}
+P 2600 900 2900 900 1 0 1
+{
+T 2700 950 5 10 1 1 0 0
+pinnumber=6
+T 3000 850 5 10 0 0 0 0
+pinseq=6
+T 1600 900 9 10 1 1 0 1
+pinlabel=BGATEFB
+T 1600 800 5 10 0 1 0 1
+pintype=in
+}
+P 2600 1200 2900 1200 1 0 1
+{
+T 2700 1250 5 10 1 1 0 0
+pinnumber=19
+T 3000 1150 5 10 0 0 0 0
+pinseq=7
+T 1600 1200 9 10 1 1 0 1
+pinlabel=BGATEDR
+T 1600 1100 5 10 0 1 0 1
+pintype=out
+}
+P 300 3000 0 3000 1 0 1
+{
+T 200 3050 5 10 1 1 0 6
+pinnumber=20
+T -800 2950 5 10 0 0 0 0
+pinseq=8
+T 400 3000 9 10 1 1 0 1
+pinlabel=PV+
+T 400 2900 5 10 0 1 0 1
+pintype=pwr
+}
+P 2600 1800 2900 1800 1 0 1
+{
+T 2700 1850 5 10 1 1 0 0
+pinnumber=21
+T 3000 1750 5 10 0 0 0 0
+pinseq=9
+T 1600 1800 9 10 1 1 0 1
+pinlabel=TSOURCE
+T 1600 1700 5 10 0 1 0 1
+pintype=pass
+}
+P 2600 2400 2900 2400 1 0 1
+{
+T 2700 2450 5 10 1 1 0 0
+pinnumber=22
+T 3000 2350 5 10 0 0 0 0
+pinseq=10
+T 1600 2400 9 10 1 1 0 1
+pinlabel=TGATEFB
+T 1600 2300 5 10 0 1 0 1
+pintype=in
+}
+P 2600 2700 2900 2700 1 0 1
+{
+T 2700 2750 5 10 1 1 0 0
+pinnumber=23
+T 3000 2650 5 10 0 0 0 0
+pinseq=11
+T 1600 2700 9 10 1 1 0 1
+pinlabel=TGATEDR
+T 1600 2600 5 10 0 1 0 1
+pintype=out
+}
+P 2600 3300 2900 3300 1 0 1
+{
+T 2700 3350 5 10 1 1 0 0
+pinnumber=24
+T 3000 3250 5 10 0 0 0 0
+pinseq=12
+T 1800 3300 9 10 1 1 0 1
+pinlabel=BOOST
+T 1800 3200 5 10 0 1 0 1
+pintype=pwr
+}

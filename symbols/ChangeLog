@@ -1,3 +1,19 @@
+2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* */*.sym: Added a bunch of symbols for the online symbol upload
+	mechanism.
+
+	* philips: Added new component library (suggestions by Walter Fetter) 
+	(and changed all required files for this addition).
+
+	* */*.sym: Updated all symbols to 20030223, including the font symbols
+
+	* configure.in: Added shell code to expand the prefix and set
+	the proper directory for documentation (${prefix}/share/doc/geda-doc)
+	
+	* documentation/Makefile.am: Changed the install dir to the right
+	one (${prefix}/share/doc/geda-doc)
+
 2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Bumped version to 20030223

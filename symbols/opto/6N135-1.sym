@@ -1,0 +1,78 @@
+v 20030223
+P 0 900 300 900 1 0 0
+{
+T 100 1000 5 8 1 1 0 0
+pinnumber=2
+T 200 800 5 10 0 0 0 0
+pinseq=1
+T 200 700 5 10 0 0 0 0
+pintype=oc
+T 400 900 9 10 1 1 0 0
+pinlabel=Anode
+}
+P 0 600 300 600 1 0 0
+{
+T 100 700 5 8 1 1 0 0
+pinnumber=3
+T 200 500 5 10 0 0 0 0
+pinseq=2
+T 200 400 5 10 0 0 0 0
+pintype=oe
+T 400 600 9 10 1 1 0 0
+pinlabel=Cathode
+}
+P 1700 600 2000 600 1 0 1
+{
+T 1800 700 5 8 1 1 0 0
+pinnumber=6
+T 2100 600 5 10 0 0 0 0
+pinseq=4
+T 2100 500 5 10 0 0 0 0
+pintype=oc
+T 1400 600 9 10 1 1 0 0
+pinlabel=Vo
+}
+P 1700 900 2000 900 1 0 1
+{
+T 1800 1000 5 8 1 1 0 0
+pinnumber=7
+T 2100 900 5 10 0 0 0 0
+pinseq=5
+T 2100 800 5 10 0 0 0 0
+pintype=pas
+T 1400 900 9 10 1 1 0 0
+pinlabel=Vb
+}
+P 1700 1200 2000 1200 1 0 1
+{
+T 1800 1300 5 8 1 1 0 0
+pinnumber=8
+T 2100 1200 5 10 0 0 0 0
+pinseq=6
+T 2100 1100 5 10 0 0 0 0
+pintype=pwr
+T 1300 1200 9 10 1 1 0 0
+pinlabel=Vcc
+}
+P 1700 300 2000 300 1 0 1
+{
+T 1800 400 5 8 1 1 0 0
+pinnumber=5
+T 2100 300 5 10 0 0 0 0
+pinseq=3
+T 2100 200 5 10 0 0 0 0
+pintype=pwr
+T 1200 300 9 10 1 1 0 0
+pinlabel=GND
+}
+B 300 0 1400 1500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 1600 9 10 1 1 0 0
+device=6N135
+T 300 2000 5 10 0 0 0 0
+footprint=DIP8
+T 1500 1600 8 10 1 1 0 0
+refdes=U?
+T 300 2200 5 10 0 0 0 0
+description=Optocoupler/Optoisolator
+T 300 1800 5 10 0 0 0 0
+numslots=0

@@ -1,4 +1,4 @@
-datadocdir = @GEDADATADIR@/documentation
+datadocdir = @GEDADOCDIR@
 
 datadoc_DATA = nc.pdf
 

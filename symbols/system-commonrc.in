@@ -29,6 +29,7 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@idt")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@misc")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@power")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@philips")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@transistor")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@io")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@titleblock")

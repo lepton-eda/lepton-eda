@@ -1,0 +1,29 @@
+v 20030223
+B 0 0 900 600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 500 700 9 10 1 1 0 0
+device=OSC
+T 0 700 8 10 1 1 0 0
+refdes=U?
+T 0 1100 5 10 0 0 0 0
+footprint=DIP8
+T 0 1300 5 10 0 0 0 0
+description=Generic Oscillator Half Can
+T 0 900 5 10 0 0 0 0
+numslots=0
+L 900 400 800 300 3 0 0 0 -1 -1
+L 800 300 900 200 3 0 0 0 -1 -1
+P 1200 300 900 300 1 0 0
+{
+T 950 350 5 10 1 1 0 0
+pinnumber=5
+T 950 50 5 10 0 0 0 0
+pinseq=5
+T 950 150 5 10 0 0 0 0
+pintype=out
+T 400 300 9 10 1 1 0 1
+pinlabel=OUT
+}
+T 208 400 3 10 0 1 0 0
+net=Vcc:8
+T 182 50 3 10 0 1 0 0
+net=GND:4

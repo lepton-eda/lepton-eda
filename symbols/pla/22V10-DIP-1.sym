@@ -1,0 +1,258 @@
+v 20030223
+B 300 0 1400 3900 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 4000 9 10 1 1 0 0
+device=22V10
+T 500 4200 8 10 1 1 0 6
+refdes=U?
+T 300 4600 5 10 0 0 0 0
+footprint=DIP24
+T 300 4800 5 10 0 0 0 0
+description=Programmable Logic Device
+T 300 4400 5 10 0 0 0 0
+numslots=0
+T 1808 3800 3 8 0 1 0 0
+net=Vcc:24
+T 1782 50 3 8 0 1 0 0
+net=GND:12
+P 300 3600 0 3600 1 0 1
+{
+T 196 3650 5 8 1 1 0 6
+pinnumber=1
+T 371 3525 5 10 0 0 0 1
+pinseq=3
+T 371 3425 5 10 0 0 0 1
+pintype=in
+T 375 3550 3 8 1 1 0 0
+pinlabel=CLK/I0
+}
+P 300 3300 0 3300 1 0 1
+{
+T 220 3350 5 8 1 1 0 6
+pinnumber=2
+T 370 3225 5 10 0 0 0 1
+pinseq=4
+T 370 3125 5 10 0 0 0 1
+pintype=in
+T 375 3250 3 8 1 1 0 0
+pinlabel=I1
+}
+P 300 3000 0 3000 1 0 1
+{
+T 196 3050 5 8 1 1 0 6
+pinnumber=3
+T 371 2925 5 10 0 0 0 1
+pinseq=5
+T 371 2825 5 10 0 0 0 1
+pintype=in
+T 375 2950 3 8 1 1 0 0
+pinlabel=I2
+}
+P 300 2700 0 2700 1 0 1
+{
+T 220 2750 5 8 1 1 0 6
+pinnumber=4
+T 370 2625 5 10 0 0 0 1
+pinseq=6
+T 370 2525 5 10 0 0 0 1
+pintype=in
+T 375 2650 3 8 1 1 0 0
+pinlabel=I3
+}
+P 300 2400 0 2400 1 0 1
+{
+T 204 2450 5 8 1 1 0 6
+pinnumber=5
+T 379 2325 5 10 0 0 0 1
+pinseq=7
+T 379 2225 5 10 0 0 0 1
+pintype=in
+T 375 2350 3 8 1 1 0 0
+pinlabel=I4
+}
+P 300 2100 0 2100 1 0 1
+{
+T 220 2150 5 8 1 1 0 6
+pinnumber=6
+T 395 2025 5 10 0 0 0 1
+pinseq=8
+T 395 1925 5 10 0 0 0 1
+pintype=in
+T 375 2050 3 8 1 1 0 0
+pinlabel=I5
+}
+P 300 1800 0 1800 1 0 1
+{
+T 196 1850 5 8 1 1 0 6
+pinnumber=7
+T 396 1725 5 10 0 0 0 1
+pinseq=9
+T 396 1625 5 10 0 0 0 1
+pintype=in
+T 375 1750 3 8 1 1 0 0
+pinlabel=I6
+}
+P 300 1500 0 1500 1 0 1
+{
+T 182 1550 5 8 1 1 0 6
+pinnumber=8
+T 407 1425 5 10 0 0 0 1
+pinseq=10
+T 407 1325 5 10 0 0 0 1
+pintype=in
+T 375 1450 3 8 1 1 0 0
+pinlabel=I7
+}
+P 300 1200 0 1200 1 0 1
+{
+T 172 1250 5 8 1 1 0 6
+pinnumber=9
+T 397 1125 5 10 0 0 0 1
+pinseq=11
+T 397 1025 5 10 0 0 0 1
+pintype=in
+T 375 1150 3 8 1 1 0 0
+pinlabel=I8
+}
+P 300 900 0 900 1 0 1
+{
+T 182 950 5 8 1 1 0 6
+pinnumber=10
+T 407 825 5 10 0 0 0 1
+pinseq=12
+T 407 725 5 10 0 0 0 1
+pintype=in
+T 375 850 3 8 1 1 0 0
+pinlabel=I9
+}
+P 300 600 0 600 1 0 1
+{
+T 206 650 5 8 1 1 0 6
+pinnumber=11
+T 406 525 5 10 0 0 0 1
+pinseq=13
+T 406 425 5 10 0 0 0 1
+pintype=in
+T 375 550 3 8 1 1 0 0
+pinlabel=I10
+}
+P 300 300 0 300 1 0 1
+{
+T 190 350 5 8 1 1 0 6
+pinnumber=13
+T 415 225 5 10 0 0 0 1
+pinseq=14
+T 415 125 5 10 0 0 0 1
+pintype=in
+T 375 250 3 8 1 1 0 0
+pinlabel=I11
+}
+P 1700 3600 2000 3600 1 0 1
+{
+T 1800 3650 5 8 1 1 0 0
+pinnumber=23
+T 2100 3650 5 10 0 0 0 1
+pinseq=15
+T 2100 3550 5 10 0 0 0 1
+pintype=tri
+T 1254 3550 3 8 1 1 0 0
+pinlabel=IOQ0
+}
+P 1700 3300 2000 3300 1 0 1
+{
+T 1800 3350 5 8 1 1 0 0
+pinnumber=22
+T 2100 3350 5 10 0 0 0 1
+pinseq=16
+T 2100 3250 5 10 0 0 0 1
+pintype=tri
+T 1294 3250 3 8 1 1 0 0
+pinlabel=IOQ1
+}
+P 1700 3000 2000 3000 1 0 1
+{
+T 1800 3050 5 8 1 1 0 0
+pinnumber=21
+T 2100 3050 5 10 0 0 0 1
+pinseq=17
+T 2100 2950 5 10 0 0 0 1
+pintype=tri
+T 1254 2950 3 8 1 1 0 0
+pinlabel=IOQ2
+}
+P 1700 2700 2000 2700 1 0 1
+{
+T 1800 2750 5 8 1 1 0 0
+pinnumber=20
+T 2100 2750 5 10 0 0 0 1
+pinseq=18
+T 2100 2650 5 10 0 0 0 1
+pintype=tri
+T 1278 2650 3 8 1 1 0 0
+pinlabel=IOQ3
+}
+P 1700 2400 2000 2400 1 0 1
+{
+T 1800 2450 5 8 1 1 0 0
+pinnumber=19
+T 2100 2450 5 10 0 0 0 1
+pinseq=19
+T 2100 2350 5 10 0 0 0 1
+pintype=tri
+T 1254 2350 3 8 1 1 0 0
+pinlabel=IOQ4
+}
+P 1700 2100 2000 2100 1 0 1
+{
+T 1800 2150 5 8 1 1 0 0
+pinnumber=18
+T 2100 2150 5 10 0 0 0 1
+pinseq=20
+T 2100 2050 5 10 0 0 0 1
+pintype=tri
+T 1278 2050 3 8 1 1 0 0
+pinlabel=IOQ5
+}
+P 1700 1800 2000 1800 1 0 1
+{
+T 1800 1850 5 8 1 1 0 0
+pinnumber=17
+T 2100 1850 5 10 0 0 0 1
+pinseq=21
+T 2100 1750 5 10 0 0 0 1
+pintype=tri
+T 1262 1750 3 8 1 1 0 0
+pinlabel=IOQ6
+}
+P 1700 1500 2000 1500 1 0 1
+{
+T 1800 1550 5 8 1 1 0 0
+pinnumber=16
+T 2100 1550 5 10 0 0 0 1
+pinseq=22
+T 2100 1450 5 10 0 0 0 1
+pintype=tri
+T 1278 1450 3 8 1 1 0 0
+pinlabel=IOQ7
+}
+P 1700 1200 2000 1200 1 0 1
+{
+T 1800 1250 5 8 1 1 0 0
+pinnumber=15
+T 2100 1250 5 10 0 0 0 1
+pinseq=23
+T 2100 1150 5 10 0 0 0 1
+pintype=tri
+T 1270 1150 3 8 1 1 0 0
+pinlabel=IOQ8
+}
+P 1700 900 2000 900 1 0 1
+{
+T 1800 950 5 8 1 1 0 0
+pinnumber=14
+T 2100 950 5 10 0 0 0 1
+pinseq=24
+T 2100 850 5 10 0 0 0 1
+pintype=tri
+T 1254 850 3 8 1 1 0 0
+pinlabel=IOQ9
+}

@@ -1,0 +1,164 @@
+v 20030223
+T 300 7300 5 10 0 0 0 0
+device=QT60040
+T 300 7000 5 10 0 0 0 0
+description=QMatrix QT60040 4-key charge-transfer IC
+T 300 6700 5 10 0 0 0 0
+documentation=http://www.qprox.com/downloads/d/qt60040_103_datasheet.pdf
+T 300 6400 5 10 0 0 0 0
+author=Jan Stap
+T 300 6100 5 10 0 0 0 0
+email=stap@dse.nl
+T 300 5800 5 10 0 0 0 0
+date=$Date$
+T 300 5500 5 10 0 0 0 0
+rev=$Revision$
+T 300 5200 5 10 0 0 0 0
+auth=$Author$
+T 300 4900 5 10 0 0 0 0
+fname=$Source$
+T 300 4600 5 10 0 0 0 0
+footprint=DIL 14 300
+T 300 4300 5 10 0 0 0 0
+numslots=0
+T 300 4000 5 10 0 0 0 0
+net=Vcc:1
+T 300 3700 5 10 0 0 0 0
+net=GND:14
+T 2293 3300 8 10 1 1 0 6
+refdes=U?
+T 300 3250 9 10 1 0 0 0
+QT60040
+B 300 0 2000 3200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 300 2200 0 2200 1 0 1
+{
+T 200 2250 5 8 1 1 0 6
+pinnumber=12
+T 200 2150 5 8 0 1 0 8
+pinseq=3
+T 350 2200 9 8 1 1 0 0
+pinlabel=X3
+T 350 2150 5 8 0 1 0 2
+pintype=in
+}
+P 300 1800 0 1800 1 0 1
+{
+T 200 1850 5 8 1 1 0 6
+pinnumber=11
+T 200 1750 5 8 0 1 0 8
+pinseq=4
+T 350 1800 9 8 1 1 0 0
+pinlabel=X4
+T 350 1750 5 8 0 1 0 2
+pintype=in
+}
+P 300 1400 0 1400 1 0 1
+{
+T 200 1450 5 8 1 1 0 6
+pinnumber=10
+T 200 1350 5 8 0 1 0 8
+pinseq=5
+T 350 1400 9 8 1 1 0 0
+pinlabel=Y
+T 350 1350 5 8 0 1 0 2
+pintype=in
+}
+P 300 1000 0 1000 1 0 1
+{
+T 200 1050 5 8 1 1 0 6
+pinnumber=9
+T 200 950 5 8 0 1 0 8
+pinseq=6
+T 350 1000 9 8 1 1 0 0
+pinlabel=Cs
+T 350 950 5 8 0 1 0 2
+pintype=in
+}
+P 300 600 0 600 1 0 1
+{
+T 200 650 5 8 1 1 0 6
+pinnumber=3
+T 200 550 5 8 0 1 0 8
+pinseq=7
+T 350 600 9 8 1 1 0 0
+pinlabel=OPT1
+T 350 550 5 8 0 1 0 2
+pintype=in
+}
+P 300 200 0 200 1 0 1
+{
+T 200 250 5 8 1 1 0 6
+pinnumber=4
+T 200 150 5 8 0 1 0 8
+pinseq=8
+T 350 200 9 8 1 1 0 0
+pinlabel=OPT2
+T 350 150 5 8 0 1 0 2
+pintype=in
+}
+P 2300 1000 2600 1000 1 0 1
+{
+T 2550 1050 5 8 1 1 0 6
+pinnumber=8
+T 2550 950 5 8 0 1 0 8
+pinseq=9
+T 2250 1000 9 8 1 1 0 6
+pinlabel=Q4
+T 2250 950 5 8 0 1 0 8
+pintype=out
+}
+P 2300 1400 2600 1400 1 0 1
+{
+T 2550 1450 5 8 1 1 0 6
+pinnumber=7
+T 2550 1350 5 8 0 1 0 8
+pinseq=10
+T 2250 1400 9 8 1 1 0 6
+pinlabel=Q3
+T 2250 1350 5 8 0 1 0 8
+pintype=out
+}
+P 300 3000 0 3000 1 0 1
+{
+T 200 3050 5 8 1 1 0 6
+pinnumber=2
+T 200 2950 5 8 0 1 0 8
+pinseq=1
+T 350 3000 9 8 1 1 0 0
+pinlabel=X1
+T 350 2950 5 8 0 1 0 2
+pintype=in
+}
+P 300 2600 0 2600 1 0 1
+{
+T 200 2650 5 8 1 1 0 6
+pinnumber=13
+T 200 2550 5 8 0 1 0 8
+pinseq=2
+T 350 2600 9 8 1 1 0 0
+pinlabel=X2
+T 350 2550 5 8 0 1 0 2
+pintype=in
+}
+P 2300 1800 2600 1800 1 0 1
+{
+T 2550 1850 5 8 1 1 0 6
+pinnumber=6
+T 2550 1750 5 8 0 1 0 8
+pinseq=11
+T 2250 1800 9 8 1 1 0 6
+pinlabel=Q2
+T 2250 1750 5 8 0 1 0 8
+pintype=out
+}
+P 2300 2200 2600 2200 1 0 1
+{
+T 2550 2250 5 8 1 1 0 6
+pinnumber=5
+T 2550 2150 5 8 0 1 0 8
+pinseq=12
+T 2250 2200 9 8 1 1 0 6
+pinlabel=Q1
+T 2250 2150 5 8 0 1 0 8
+pintype=out
+}
