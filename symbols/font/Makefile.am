@@ -6,6 +6,6 @@ EXTRA_DIST = $(datafont_DATA) ChangeLog README
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
 

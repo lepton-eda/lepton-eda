@@ -7,7 +7,7 @@ EXTRA_DIST = README commonrc gnetlistrc gschemrc gschemrc.orig
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
-DISTCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
 
 

@@ -6,5 +6,5 @@ EXTRA_DIST = system-gsymcheckrc.in
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = system-gsymcheckrc *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = system-gsymcheckrc *.log *~ Makefile.in configure

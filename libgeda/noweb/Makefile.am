@@ -10,5 +10,5 @@ EXTRA_DIST = a_basic.nw f_basic.nw f_image.nw f_print.nw g_basic.nw \
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure

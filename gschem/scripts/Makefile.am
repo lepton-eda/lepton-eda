@@ -4,5 +4,5 @@ EXTRA_DIST = ChangeLog geda_totexi geda_totexi.awk makeallimages \
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure

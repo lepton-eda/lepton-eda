@@ -5,7 +5,7 @@ EXTRA_DIST = bjt_transistor_simple_top.vhdl default_entity.vhdl \
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
-DISTCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
 
 

@@ -8,7 +8,7 @@ EXTRA_DIST = IEC417.sch adders_1.sch agile-vfo-block_1.sch all74_1.sch \
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
-DISTCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
 
 

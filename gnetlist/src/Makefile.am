@@ -25,6 +25,6 @@ EXTRA_DIST = create_proto gnetlist.1 gschem2pcb
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
 CLEANFILES = *.log *.ps core FILE *~ prototype.bak
-DISTCLEANFILES = *.log *.ps core FILE *~ prototype.bak Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure
 

@@ -42,6 +42,7 @@ info:
 	@echo "${MAKE} dist         Create distribution (using make dist)"
 	@echo "${MAKE} distcheck    Create distribution (using make distcheck)"
 	@echo "${MAKE} distconfig   Create dist ./configure (and all Makefiles)"
+	@echo "${MAKE} distclean    Does a make distclean in each subdir"
 	@echo "${MAKE} reconfig     Recreate ./configure (and all Makefiles)"
 	@echo "${MAKE} proto        Recreate all prototype.h files"
 	@echo "${MAKE} src          Create all *.c files from *.nw files"
@@ -89,6 +90,10 @@ maint: libgeda_maint symbols_maint gschem_maint gnetlist_maint \
 # This does a plain clean 
 clean: libgeda_clean symbols_clean gschem_clean gnetlist_clean \
        gsymcheck_clean utils_clean
+
+# This does a plain clean 
+distclean: libgeda_distclean symbols_distclean gschem_distclean \
+	   gnetlist_distclean gsymcheck_distclean utils_distclean
 
 # This just does the appropriate ./configure --prefix=...
 config: libgeda_config symbols_config gschem_config gnetlist_config \
@@ -140,6 +145,9 @@ symbols_maint: symbols$(CD_VERSION)/system-commonrc
 
 symbols_clean: symbols$(CD_VERSION)/system-commonrc
 	( cd symbols$(CD_VERSION); ${MAKE} clean )
+
+symbols_distclean: symbols$(CD_VERSION)/system-commonrc
+	( cd symbols$(CD_VERSION); ${MAKE} distclean )
 
 symbols_install: symbols$(CD_VERSION)/gesym-config
 	( cd symbols$(CD_VERSION); ${MAKE} install )
@@ -197,6 +205,9 @@ gschem_maint: gschem/config.h
 gschem_clean: gschem$(CD_VERSION)/config.h 
 	( cd gschem$(CD_VERSION); ${MAKE} clean )
 
+gschem_distclean: gschem$(CD_VERSION)/config.h 
+	( cd gschem$(CD_VERSION); ${MAKE} distclean )
+
 gschem_proto: gschem$(CD_VERSION)/config.h 
 	( cd gschem$(CD_VERSION); ${MAKE} proto )
 
@@ -216,6 +227,9 @@ gnetlist_maint: gnetlist$(CD_VERSION)/config.h
 
 gnetlist_clean: gnetlist$(CD_VERSION)/config.h 
 	( cd gnetlist$(CD_VERSION); ${MAKE} clean )
+
+gnetlist_distclean: gnetlist$(CD_VERSION)/config.h 
+	( cd gnetlist$(CD_VERSION); ${MAKE} distclean )
 
 gnetlist_proto: gnetlist$(CD_VERSION)/config.h 
 	( cd gnetlist$(CD_VERSION); ${MAKE} proto )
@@ -267,6 +281,9 @@ gsymcheck_maint: gsymcheck$(CD_VERSION)/config.h
 gsymcheck_clean: gsymcheck$(CD_VERSION)/config.h 
 	( cd gsymcheck$(CD_VERSION); ${MAKE} clean )
 
+gsymcheck_distclean: gsymcheck$(CD_VERSION)/config.h 
+	( cd gsymcheck$(CD_VERSION); ${MAKE} distclean )
+
 gsymcheck_proto: gsymcheck$(CD_VERSION)/config.h 
 	( cd gsymcheck$(CD_VERSION); ${MAKE} proto )
 
@@ -302,6 +319,9 @@ utils_maint: utils$(CD_VERSION)/config.h
 utils_clean: utils$(CD_VERSION)/config.h 
 	( cd utils$(CD_VERSION); ${MAKE} clean )
 
+utils_distclean: utils$(CD_VERSION)/config.h 
+	( cd utils$(CD_VERSION); ${MAKE} distclean )
+
 # libgeda
 libgeda: libgeda$(CD_VERSION)/config.h libgeda$(CD_VERSION)/src/.libs/libgeda.a
 	@echo libgeda Installed 
@@ -311,6 +331,9 @@ libgeda_maint: libgeda$(CD_VERSION)/config.h
 
 libgeda_clean: libgeda$(CD_VERSION)/config.h
 	( cd libgeda$(CD_VERSION); ${MAKE} clean )
+
+libgeda_distclean: libgeda$(CD_VERSION)/config.h
+	( cd libgeda$(CD_VERSION); ${MAKE} distclean )
 
 libgeda_proto: libgeda$(CD_VERSION)/config.h
 	( cd libgeda$(CD_VERSION); ${MAKE} proto )

@@ -12,5 +12,5 @@ EXTRA_DIST = a_pan.nw a_zoom.nw g_funcs.nw g_hook.nw g_key.nw g_rc.nw \
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure

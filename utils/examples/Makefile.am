@@ -5,6 +5,6 @@ EXTRA_DIST = 74520.txt 7474.txt 8031.txt DM9368.txt L293.txt PCF8591.txt \
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 
-DISTCLEANFILES = *.log *.ps core FILE *~  Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~  Makefile.in configure
 
