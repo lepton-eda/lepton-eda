@@ -141,7 +141,10 @@ enum {
 	EXT_OUT,
 	EXT_GW,
 	EXT_V,
-	EXT_VVP,
+	/* Commenting out this enum as it is not used anywhere else */
+	/* and it seemed to cause a crash for certain users.  Identified by */
+  	/* Werner Hoch */	
+	/* EXT_VVP, */  
 	EXT_VCD,
 	EXT_VHD,
 	EXT_DRC,

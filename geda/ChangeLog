@@ -1,3 +1,12 @@
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 
+        message if gtk+ 2.2.x is not found.
+
+	* src/tool.c: Commented out enum which was unused and caused a 
+	seg fault for certain users.  Probably because there isn't an
+	equivalent entry in the ExtList data structure.
+
 2005-03-10 22:32  Dan McMahill <danmc>
 
 	* configure.ac: add dmalloc and Electric Fence debugging support.

@@ -1,3 +1,10 @@
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* transistor/BC557-1.sym: Replaced this symbol with BC557-2.sym
+	and bumped symversion= to 1.0
+
+	* misc/PCF8563-1.sym: Removed duplicate symbol.
+
 2005-03-12  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* font/:

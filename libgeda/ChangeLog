@@ -1,3 +1,8 @@
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 
+        message if gtk+ 2.2.x is not found.
+
 2005-03-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/g_rc.nw (g_rc_map_font_character_to_file): Adapted for the

@@ -1,3 +1,7 @@
+2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 		message if gtk+ 2.2.x is not found.
+
 2005-03-11 12:30 Stuart Brorson <sdb@cloud9.net>
         * src/gtksheet*.c:  Incorporated definitions of default_border* 
 	as suggested by Carlos.  A couple other possible bugfixes also.

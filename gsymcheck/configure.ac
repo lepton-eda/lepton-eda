@@ -21,9 +21,6 @@ AM_MAINTAINER_MODE
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
-# Force a specific version of gtk+
-AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt_gtkver=1.2])
-
 # 
 # Command line flags end
 #########################################################################
@@ -74,7 +71,7 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 
 
 ############################################################################
-# Check for gtk+ 1.2 and 2.2 start
+# Check for gtk+ 2.2 start
 # 
 
 # Check for pkg-config
@@ -83,14 +80,10 @@ if test $PKG_CONFIG = no; then
    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
 fi
 
-# Search for gtk+ 2.2.x first (only if we are not forcing the gtk+ to 1.2)
-if test "$opt_gtkver" != "1.2"
-then
-   PKG_CHECK_MODULES(GTK22, gtk+-2.0 >= 2.2.0, GTK22="yes", no_GTK22="yes")
-fi
+PKG_CHECK_MODULES(GTK22, gtk+-2.0 >= 2.2.0, GTK22="yes", no_GTK22="yes")
 
 # This next bit of code figures out what gtk we need to use.
-if test "$GTK22" = "yes" -a "$opt_gtkver" != "1.2"
+if test "$GTK22" = "yes" 
 then
 
    AC_DEFINE(HAS_GTK22, 1, [If gtk+ 2.2.x has been installed, define this])
@@ -109,33 +102,16 @@ then
    GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
 else
-
-   # Search for gtk+ 1.2 now 
-   PKG_CHECK_MODULES(GTK12, gtk+ >= 1.2.3, GTK12="yes", no_GTK12="yes")
-
-   AC_DEFINE(HAS_GTK12, 1, [If gtk+ 1.2.x has been installed, define this])
-   GTK_CFLAGS=$GTK12_CFLAGS
-   GTK_LIBS=$GTK12_LIBS
-   GTK_VERSION=`$PKG_CONFIG gtk+ --modversion`
-
-   # Search for glib
-   PKG_CHECK_MODULES(GLIB12, glib >= 1.2.3, GLIB12="yes", no_GLIB12="yes")
-   if test "$GLIB12" != "yes"
-   then
-       AC_MSG_ERROR([Cannot find glib >= 1.2.3, install it and rerun ./configure.])
-   fi
-   GLIB_CFLAGS=$GLIB12_CFLAGS
-   GLIB_LIBS=$GLIB12_LIBS
-   GLIB_VERSION=`$PKG_CONFIG glib --modversion`
+   GTK_VERSION=""
 fi
 
 if test "$GTK_VERSION" = ""
 then
-   AC_MSG_ERROR([Cannot find gtk+ 2.2.x or gtk+ 1.2.x, install one of them.])
+   AC_MSG_ERROR([Cannot find gtk+ 2.2.x or later, please install gtk+.])
 fi
 
 # 
-# Check for gtk+ 1.2 and 2.2 end
+# Check for gtk+ 2.2 end
 ############################################################################
 
 ############################################################################
