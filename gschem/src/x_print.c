@@ -230,6 +230,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 	GtkWidget *scrolled_win;
 	GtkWidget *list_item;
 	GtkWidget *optionmenu;
+	GtkWidget *vbox, *action_area;
 	char *string = NULL;
 	int i;
 
@@ -237,7 +238,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 	if (!w_current->pwindow) {
 
-		w_current->pwindow = gtk_dialog_new ();
+                w_current->pwindow = x_create_dialog_box(&vbox, &action_area); 
 
 		gtk_window_position(GTK_WINDOW (w_current->pwindow),
 				    GTK_WIN_POS_MOUSE);
@@ -257,9 +258,8 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		buttonprint = gtk_button_new_with_label ("Print");
 		GTK_WIDGET_SET_FLAGS (buttonprint, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->action_area),
-			buttonprint, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(action_area),
+			           buttonprint, TRUE, TRUE, 0);
 		gtk_signal_connect(GTK_OBJECT(buttonprint), "clicked",
 				   GTK_SIGNAL_FUNC(x_print_print), w_current);
 		gtk_widget_show (buttonprint);
@@ -267,9 +267,8 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		buttoncancel = gtk_button_new_with_label ("Close");
 		GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->action_area),
-			buttoncancel, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(action_area),
+			           buttoncancel, TRUE, TRUE, 0);
 		gtk_signal_connect(GTK_OBJECT(buttoncancel),
 				   "clicked", GTK_SIGNAL_FUNC(x_print_cancel),
 				   w_current);
@@ -277,9 +276,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		label = gtk_label_new ("Output paper size");
                 gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-                gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			label, TRUE, TRUE, 0);
+                gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
                 gtk_widget_show (label);
 
@@ -289,9 +286,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 			GTK_SCROLLED_WINDOW(scrolled_win),
 			GTK_POLICY_AUTOMATIC,
 			GTK_POLICY_AUTOMATIC);
-		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			scrolled_win, TRUE, TRUE, 10);
+		gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 10);
 		gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 70);
 		gtk_widget_show (scrolled_win);
 		box2 = gtk_vbox_new (FALSE, 0);
@@ -300,9 +295,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 		gtk_widget_show(box2);
 
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			separator, FALSE, TRUE, 0);
+	        gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
   		gtk_widget_show (separator);
 
 		w_current->plib_list = gtk_list_new ();
@@ -338,9 +331,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		box = gtk_hbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
-        	gtk_container_add(
-			GTK_CONTAINER(GTK_DIALOG(w_current->pwindow)->vbox),
-			box);
+        	gtk_container_add(GTK_CONTAINER(vbox), box);
         	gtk_widget_show(box);
 
 		label = gtk_label_new ("Filename");
@@ -364,70 +355,30 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
                 gtk_widget_show (w_current->pfilename_entry);
 
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			separator, FALSE, TRUE, 0);
+	        gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
   		gtk_widget_show (separator);
-
-#if 0
-/* radio start */
-/* delete this eventually */
-
-		button = gtk_radio_button_new_with_label (NULL, "Limits");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			button, TRUE, TRUE, 0);
-		/* TODO: rewrite callbacks to use third parameter to
-		 * be clean */
-		gtk_signal_connect(GTK_OBJECT (button), "clicked",
-				   GTK_SIGNAL_FUNC (x_print_set_limits),
-				   w_current);
-  		gtk_widget_show(button);
-		group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-
-		button = gtk_radio_button_new_with_label(group,
-							 "Current Window");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			button, TRUE, TRUE, 0);
-		/* TODO: rewrite callbacks to use third parameter to
-		 * be clean */
-		gtk_signal_connect(GTK_OBJECT (button), "clicked",
-				   GTK_SIGNAL_FUNC (x_print_set_window),
-				   w_current);
-  		gtk_widget_show (button);
-/* radio end */
-#endif
 
 		label = gtk_label_new ("Type");
                 gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-                gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			label, TRUE, TRUE, 0);
+                gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
                 gtk_widget_show (label);
 		optionmenu = gtk_option_menu_new ();
 		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
 					 create_menu_type (w_current));
 		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
-		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			optionmenu, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
 		gtk_widget_show(optionmenu);
 
 		label = gtk_label_new ("Orientation");
                 gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-                gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			label, TRUE, TRUE, 0);
+                gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
                 gtk_widget_show (label);
 		optionmenu = gtk_option_menu_new ();
 		gtk_option_menu_set_menu(GTK_OPTION_MENU (optionmenu),
 					 create_menu_orient (w_current));
 		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
-		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->pwindow)->vbox),
-			optionmenu, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
 		gtk_widget_show (optionmenu);
 
 		/* set some defaults */

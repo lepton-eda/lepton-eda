@@ -10,8 +10,11 @@ E-mail: ahvezda@geda.seul.org
 Web: http://www.geda.seul.org/
 
 
-Thien-Thi Nguyen	 - Patch to gnetlist adding newlines for
-                           interactive mode
+Thien-Thi Nguyen	- Patch to gnetlist adding newlines for interactive 
+			  mode
+			
+			  For updating the BOM backend to be more scheme like
+			 	
 
 Mike Jarabek		- For contributing the backend verilog netlister
                           (for use with gnetlist)

@@ -161,13 +161,14 @@ setup_attr_selector (TOPLEVEL *w_current)
 	GtkWidget *buttonclose;
 	GtkWidget *scrolled_win;
 	GtkWidget *list_item;
+	GtkWidget *vbox, *action_area;
 	char *string = NULL;
 	int i;
 
 	/* freeze the window_current pointer so that it doesn't change */
 
 	if (!w_current->aswindow) {
-		w_current->aswindow = gtk_dialog_new();
+		w_current->aswindow = x_create_dialog_box(&vbox, &action_area);
 
 		gtk_window_position(GTK_WINDOW(w_current->aswindow),
 				    GTK_WIN_POS_NONE);
@@ -187,8 +188,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		buttonapply = gtk_button_new_with_label("Apply");
 		GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(
-			GTK_DIALOG(w_current->aswindow)->action_area),
+		gtk_box_pack_start(GTK_BOX(action_area),
 				   buttonapply, TRUE, TRUE, 0);
 		gtk_signal_connect(GTK_OBJECT(buttonapply), "clicked",
 				   GTK_SIGNAL_FUNC(attr_apply), w_current);
@@ -196,8 +196,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		buttonclose = gtk_button_new_with_label("Close");
 		GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(
-			GTK_DIALOG(w_current->aswindow)->action_area),
+		gtk_box_pack_start(GTK_BOX(action_area),
 				   buttonclose, TRUE, TRUE, 0);
 		gtk_signal_connect(GTK_OBJECT(buttonclose),
 				   "clicked", GTK_SIGNAL_FUNC(attr_cancel),
@@ -210,9 +209,8 @@ setup_attr_selector (TOPLEVEL *w_current)
 			GTK_POLICY_AUTOMATIC,
 			GTK_POLICY_AUTOMATIC);
 
-      		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			scrolled_win, TRUE, TRUE, 10);
+      		gtk_box_pack_start(GTK_BOX(vbox), 
+			           scrolled_win, TRUE, TRUE, 10);
 		gtk_widget_show (scrolled_win);
 		box2 = gtk_vbox_new (FALSE, 0);
 		gtk_scrolled_window_add_with_viewport(
@@ -254,9 +252,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		box = gtk_hbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
-        	gtk_container_add(
-			GTK_CONTAINER(GTK_DIALOG(w_current->aswindow)->vbox),
-			box);
+        	gtk_container_add(GTK_CONTAINER(vbox), box);
         	gtk_widget_show(box);
 
 		label = gtk_label_new("Name");
@@ -275,9 +271,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		box = gtk_hbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
-        	gtk_container_add(
-			GTK_CONTAINER(GTK_DIALOG(w_current->aswindow)->vbox),
-			box);
+        	gtk_container_add(GTK_CONTAINER(vbox), box);
         	gtk_widget_show(box);
 
 		label = gtk_label_new("Value");
@@ -300,15 +294,11 @@ setup_attr_selector (TOPLEVEL *w_current)
                 gtk_widget_show(w_current->asentry_value);
 
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			separator, FALSE, TRUE, 0);
+	        gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
   		gtk_widget_show(separator);
 
 		button = gtk_radio_button_new_with_label(NULL, "Show Value");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			button, TRUE, TRUE, 0);
+  		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 		/* TODO: rewrite callbacks to use third parameter to be
 		 * clean */
 		gtk_signal_connect(GTK_OBJECT (button), "clicked",
@@ -318,9 +308,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		group = gtk_radio_button_group(GTK_RADIO_BUTTON (button));
 		button = gtk_radio_button_new_with_label(group, "Show Both");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			button, TRUE, TRUE, 0);
+  		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 		/* TODO: rewrite callbacks to use third parameter to
 		 * be clean */
 		gtk_signal_connect(GTK_OBJECT (button), "clicked",
@@ -330,9 +318,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
 		button = gtk_radio_button_new_with_label(group, "Show Name");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			button, TRUE, TRUE, 0);
+  		gtk_box_pack_start( GTK_BOX(vbox), button, TRUE, TRUE, 0);
 		gtk_signal_connect(GTK_OBJECT(button),
 				   "clicked",
 				   GTK_SIGNAL_FUNC(attr_set_show_name),
@@ -340,9 +326,7 @@ setup_attr_selector (TOPLEVEL *w_current)
   		gtk_widget_show(button);
 
 		button = gtk_radio_button_new_with_label(NULL, "Visible");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			button, TRUE, TRUE, 0);
+  		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 		/* TODO: rewrite callbacks to use third parameter to
 		 * be clean */
 		gtk_signal_connect(GTK_OBJECT (button), "clicked",
@@ -352,9 +336,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 
 		group = gtk_radio_button_group(GTK_RADIO_BUTTON (button));
 		button = gtk_radio_button_new_with_label(group, "Invisible");
-  		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->aswindow)->vbox),
-			button, TRUE, TRUE, 0);
+  		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 		/* TODO: rewrite callbacks to use third parameter to
 		 * be clean */
 		gtk_signal_connect(GTK_OBJECT (button), "clicked",

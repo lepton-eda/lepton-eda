@@ -141,13 +141,16 @@ x_log_setup_win (TOPLEVEL *w_current)
 	GtkWidget *hscrollbar = NULL;
 	GtkWidget *vscrollbar = NULL;
 	GtkWidget *table = NULL;
+	GtkWidget *vbox, *action_area;
 
 	if (do_logging == FALSE) {
 		return;
 	}
 
+
 	if (!stwindow) {
-		stwindow = gtk_dialog_new();
+
+                stwindow = x_create_dialog_box(&vbox, &action_area); 
 
 		/* comment this out if you want the log window to have
 		 * wm decorations */
@@ -180,8 +183,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 		table = gtk_table_new (2, 2, FALSE);
 		gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 		gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(stwindow)->vbox),
-			table, TRUE, TRUE, 0);
+		gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 		gtk_widget_show (table);
 
 		sttext = gtk_text_new (NULL, NULL);
@@ -204,8 +206,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 
 		buttoncancel = gtk_button_new_with_label ("Close");
 		GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG(
-				    stwindow)->action_area),
+		gtk_box_pack_start (GTK_BOX (action_area),
                           	    buttoncancel, TRUE, TRUE, 0);
       		gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
 			  	    GTK_SIGNAL_FUNC(x_log_close), NULL);

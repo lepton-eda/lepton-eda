@@ -807,79 +807,49 @@
 
 (define bom
   (lambda (output-filename)
-    (let
-      ( (port (open-output-file output-filename))
-        (attriblist (bom:strip1 (bom:parseconfig (open-input-file
-"attribs"))))
-      )
-      (begin
-        (bom:printlist (cons 'package attriblist) port)
-        (bom:components port packages attriblist)
-      )
-    )
-  )
-)
+    (let ((port (open-output-file output-filename))
+	  (attriblist (bom:strip1 (bom:parseconfig
+				   (open-input-file "attribs")))))
+      (bom:printlist (cons 'package attriblist) port)
+      (bom:components port packages attriblist))))
 
 (define bom:strip1
   (lambda (ls)
-    (if (null? ls)
-      '()
-      (if (null? (cdr ls))
+    (if (or (null? ls)
+	    (null? (cdr ls)))
         '()
-         (cons (car ls) (bom:strip1 (cdr ls)))
-      )
-    )
-  )
-)
+	(cons (car ls) (bom:strip1 (cdr ls))))))
 
 (define bom:printlist
   (lambda (ls port)
     (if (null? ls)
-      (newline port)
-      (begin
-        (display (car ls) port)
-        (write-char #\tab port)
-        (bom:printlist (cdr ls) port)
-      )
-    )
-  )
-)                                          
+	(newline port)
+	(begin
+	  (display (car ls) port)
+	  (write-char #\tab port)
+	  (bom:printlist (cdr ls) port)))))
 
 (define bom:parseconfig
   (lambda (port)
     (if (not (eof-object? (peek-char port)))
-      (cons (read port) (bom:parseconfig port))
-      '()
-    )
-  )
-)
+	(cons (read port) (bom:parseconfig port))
+	'())))
 
 (define bom:components
-   (lambda (port ls attriblist)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-            (begin
-               (display package port)
-               (write-char #\tab port)
-               (bom:printlist (bom:find-attribs package attriblist)
-port)
-               (bom:components port (cdr ls) attriblist)
-            )
-         )
-      )
-   )
-)
+  (lambda (port ls attriblist)
+    (if (not (null? ls))
+	(let ((package (car ls)))
+	  (display package port)
+	  (write-char #\tab port)
+	  (bom:printlist (bom:find-attribs package attriblist) port)
+	  (bom:components port (cdr ls) attriblist)))))
 
 (define bom:find-attribs
   (lambda (package attriblist)
     (if (null? attriblist)
-      '()
-      (cons (gnetlist:get-package-attribute package (car attriblist))
-            (bom:find-attribs package (cdr attriblist))
-      )
-    )
-  )
-)
+	'()
+	(cons (gnetlist:get-package-attribute package (car attriblist))
+	      (bom:find-attribs package (cdr attriblist))))))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here

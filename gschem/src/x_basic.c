@@ -209,3 +209,42 @@ x_scrollbars_update(TOPLEVEL *w_current)
         w_current->DONT_RECALC = 0;
         w_current->DONT_RESIZE = 0;
 }
+
+GtkWidget *
+x_create_dialog_box(GtkWidget **out_vbox, GtkWidget **out_action_area)
+{
+	GtkWidget *separator;
+	GtkWidget *vbox;
+	GtkWidget *action_area;
+	GtkWidget *dialog;
+
+	if (!out_vbox)
+		return(NULL);
+
+	if (!out_action_area)
+		return(NULL);
+
+	dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_container_add (GTK_CONTAINER (dialog), vbox);
+	gtk_widget_show (vbox);
+
+	action_area = gtk_hbox_new (TRUE, 5);
+	gtk_container_set_border_width (GTK_CONTAINER (action_area), 10);
+	gtk_box_pack_end (GTK_BOX (vbox), action_area, FALSE, TRUE, 0);
+	gtk_widget_show (action_area);
+
+	separator = gtk_hseparator_new ();
+	gtk_box_pack_end (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
+	gtk_widget_show (separator);
+
+	*out_vbox = vbox;
+	*out_action_area = action_area;
+
+	return(dialog);
+}
+
+
+
+

@@ -274,6 +274,7 @@ void i_vars_setnames(TOPLEVEL *w_current);
 /* o_ales.c */
 void o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
 void o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
+void o_ales_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
 void o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object);
 void o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list);
 void o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list);
@@ -387,6 +388,7 @@ void o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current);
 void o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
 /* o_pin.c */
 void o_pin_ales_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_pin_ales_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_pin_start(TOPLEVEL *w_current, int x, int y);
@@ -421,6 +423,7 @@ void x_hscrollbar_update(TOPLEVEL *w_current);
 void x_vscrollbar_set_ranges(TOPLEVEL *w_current);
 void x_vscrollbar_update(TOPLEVEL *w_current);
 void x_scrollbars_update(TOPLEVEL *w_current);
+GtkWidget *x_create_dialog_box(GtkWidget **out_vbox, GtkWidget **out_action_area);
 /* x_compsel.c */
 gint default_components(GtkWidget *w, TOPLEVEL *w_current);
 gint embed_components(GtkWidget *w, TOPLEVEL *w_current);

@@ -266,12 +266,13 @@ setup_place_file_selector (TOPLEVEL *w_current)
 	GtkWidget *scrolled_win;
 	GtkWidget *list_item;
 	GtkWidget *optionmenu;
+	GtkWidget *vbox, *action_area;
 	char *string = NULL;
 	int i;
 
 	if (!w_current->cswindow) {
 
-		w_current->cswindow = gtk_dialog_new ();
+		w_current->cswindow = x_create_dialog_box(&vbox, &action_area); 
 
 		gtk_window_position(GTK_WINDOW(w_current->cswindow),
 				    GTK_WIN_POS_NONE);
@@ -291,8 +292,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 
 		buttonapply = gtk_button_new_with_label ("Apply");
 		GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(
-			GTK_DIALOG(w_current->cswindow)->action_area),
+		gtk_box_pack_start(GTK_BOX(action_area),
 				   buttonapply, TRUE, TRUE, 0);
 		gtk_signal_connect(GTK_OBJECT(buttonapply),
 				   "clicked",
@@ -302,8 +302,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 
 		buttonclose = gtk_button_new_with_label ("Close");
 		GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
-		gtk_box_pack_start(GTK_BOX(
-			GTK_DIALOG(w_current->cswindow)->action_area),
+		gtk_box_pack_start(GTK_BOX(action_area),
 				   buttonclose, TRUE, TRUE, 0);
 		gtk_signal_connect_object(GTK_OBJECT(buttonclose),
 					  "clicked",
@@ -317,9 +316,8 @@ setup_place_file_selector (TOPLEVEL *w_current)
 			GTK_SCROLLED_WINDOW(scrolled_win),
 			GTK_POLICY_AUTOMATIC,
 			GTK_POLICY_AUTOMATIC);
-      		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->cswindow)->vbox),
-			scrolled_win, TRUE, TRUE, 10);
+      		gtk_box_pack_start(GTK_BOX(vbox),
+			           scrolled_win, TRUE, TRUE, 10);
 	        gtk_widget_show(scrolled_win);
 		box2 = gtk_vbox_new(FALSE, 0);
 		gtk_scrolled_window_add_with_viewport(
@@ -333,9 +331,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 		 * option menu */
 #if 0
 		button = gtk_radio_button_new_with_label(NULL, "Default");
-      		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->cswindow)->vbox),
-			button, TRUE, TRUE, 0);
+      		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 
 		gtk_signal_connect(GTK_OBJECT(button),
 				   "clicked",
@@ -347,9 +343,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 		group = gtk_radio_button_group(GTK_RADIO_BUTTON (button));
 		button = gtk_radio_button_new_with_label(group,
 							 "Embed components");
-      		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->cswindow)->vbox),
-			button, TRUE, TRUE, 0);
+      		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 
 #if 0
 		if (w_current->embed_complex) {
@@ -371,9 +365,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 		group = gtk_radio_button_group(GTK_RADIO_BUTTON (button));
 		button = gtk_radio_button_new_with_label(group,
 							 "Include components");
-      		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->cswindow)->vbox),
-			button, TRUE, TRUE, 0);
+      		gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
 		if (w_current->include_complex) {
 			gtk_toggle_button_set_state(
 				GTK_TOGGLE_BUTTON (button), TRUE);
@@ -394,9 +386,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
 					 create_menu (w_current));
 		gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 4);
-		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->cswindow)->vbox),
-			optionmenu, TRUE, TRUE, 0);
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
 		gtk_widget_show (optionmenu);
 
 		w_current->clib_list = gtk_list_new ();
@@ -438,9 +428,7 @@ setup_place_file_selector (TOPLEVEL *w_current)
 			GTK_SCROLLED_WINDOW(scrolled_win),
 			GTK_POLICY_AUTOMATIC,
 			GTK_POLICY_AUTOMATIC);
-      		gtk_box_pack_start(
-			GTK_BOX(GTK_DIALOG(w_current->cswindow)->vbox),
-			scrolled_win, TRUE, TRUE, 10);
+      		gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 10);
 	        gtk_widget_show(scrolled_win);
 		box2 = gtk_vbox_new (FALSE, 0);
 		gtk_scrolled_window_add_with_viewport(

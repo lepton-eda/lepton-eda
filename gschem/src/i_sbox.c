@@ -73,20 +73,24 @@ i_sbox_search(TOPLEVEL *w_current, int flag)
 	o_current = w_current->page_current->object_head;
 
 	while (o_current != NULL) {
-		/* TODO: make this more readable! */
-		if ((o_current->left >= w_current->start_x &&
-		     o_current->top >= w_current->start_y) &&
-		    (o_current->left >= w_current->start_x &&
-		     o_current->bottom <= w_current->last_y) &&
-		    (o_current->right <= w_current->last_x &&
-		     o_current->top >= w_current->start_y) &&
-		    (o_current->right <= w_current->last_x &&
-		     o_current->bottom <= w_current->last_y)) {
+		if (o_current->type != OBJ_HEAD) {
+			/* TODO: make this more readable! */
+			if ((o_current->left >= w_current->start_x &&
+		             o_current->top >= w_current->start_y) &&
+		    	    (o_current->left >= w_current->start_x &&
+		             o_current->bottom <= w_current->last_y) &&
+		            (o_current->right <= w_current->last_x &&
+		             o_current->top >= w_current->start_y) &&
+		            (o_current->right <= w_current->last_x &&
+		             o_current->bottom <= w_current->last_y)) {
 
-			/* only if we can see it will it be selectable */
-			if (o_current->visibility == VISIBLE) {
-				o_select_many(w_current, o_current, count);
-				count++;
+				/* only if we can see it will it be 
+			         * selectable */
+				if (o_current->visibility == VISIBLE) {
+					o_select_many(w_current, 
+						      o_current, count);
+					count++;
+				}
 			}
 		}
 

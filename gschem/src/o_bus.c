@@ -280,7 +280,6 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
 		size = SCREENabs(w_current, 30);
-		/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 
 		if (size < 0)
 			size=0;
@@ -288,8 +287,6 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
 				GDK_CAP_BUTT,
 				GDK_CAP_NOT_LAST);
-				/*GDK_CAP_PROJECTING,
-				/GDK_JOIN_MITER);*/
 	}
 
 	if (w_current->override_color != -1 ) {
@@ -541,8 +538,6 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 	int x2, y2;
 	int color;
 	int size;
-	/*int temp_x, temp_y;*/
-	/* OBJECT *o_current;*/
 
 	if (w_current->inside_action == 0) {
                 o_redraw(w_current, w_current->page_current->object_head);
@@ -556,7 +551,6 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
         }
 
 	size = SCREENabs(w_current, 30);
-	/*size = return_zoom_number(w_current->page_current->zoom_factor);*/
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->bus_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, size,

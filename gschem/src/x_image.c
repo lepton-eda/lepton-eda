@@ -77,7 +77,7 @@ gint
 image_1280(GtkWidget *w, TOPLEVEL *w_current)
 {
         w_current->image_width = 1280;
-        w_current->image_height = 1024;
+        w_current->image_height = 960;
         return(0);
 }
 
@@ -140,7 +140,7 @@ create_menu_size (TOPLEVEL *w_current)
                               w_current);
 	gtk_widget_show (menuitem);
 
-	sprintf (buf, "1280x1024");
+	sprintf (buf, "1280x960");
 	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
 	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -243,12 +243,13 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 	GtkWidget *buttonwrite;
 	GtkWidget *buttoncancel;
 	GtkWidget *optionmenu;
+	GtkWidget *vbox, *action_area;
 
 	/* freeze the window_current pointer so that it doesn't change */
 
 	if (!w_current->iwindow) {
 
-		w_current->iwindow = gtk_dialog_new ();
+		w_current->iwindow = x_create_dialog_box(&vbox, &action_area); 
 
 		gtk_window_position (GTK_WINDOW (w_current->iwindow),
 			GTK_WIN_POS_MOUSE);
@@ -265,8 +266,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 
 		buttonwrite = gtk_button_new_with_label ("Write");
 		GTK_WIDGET_SET_FLAGS (buttonwrite, GTK_CAN_DEFAULT);
-		gtk_box_pack_start (GTK_BOX (
-			GTK_DIALOG(w_current->iwindow)->action_area),
+		gtk_box_pack_start (GTK_BOX (action_area),
 			buttonwrite, TRUE, TRUE, 0);
 		gtk_signal_connect (GTK_OBJECT (buttonwrite), "clicked",
 			GTK_SIGNAL_FUNC(x_image_write), w_current);
@@ -275,8 +275,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 
 		buttoncancel = gtk_button_new_with_label ("Close");
 		GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-		gtk_box_pack_start (GTK_BOX (
-			GTK_DIALOG(w_current->iwindow)->action_area),
+		gtk_box_pack_start (GTK_BOX (action_area),
 			buttoncancel, TRUE, TRUE, 0);
 		gtk_signal_connect ( GTK_OBJECT(buttoncancel),
                         "clicked", GTK_SIGNAL_FUNC(x_image_cancel),
@@ -285,14 +284,13 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 
 #if 0
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox),
-			separator, FALSE, TRUE, 0);
+	        gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
   		gtk_widget_show (separator);
 #endif
 
 		box = gtk_vbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
-        	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(w_current->iwindow)->vbox), box);
+        	gtk_container_add(GTK_CONTAINER(vbox), box);
         	gtk_widget_show(box);
 
 #if 0
@@ -365,8 +363,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                 gtk_widget_show (w_current->ifilename_entry);
 
 		separator = gtk_hseparator_new ();
-	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox),
-			separator, FALSE, TRUE, 0);
+	        gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, TRUE, 0);
   		gtk_widget_show (separator);
 
 	}
