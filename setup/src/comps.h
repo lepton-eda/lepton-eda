@@ -69,6 +69,11 @@ int set_pixmaps(GtkCTree *Tree);
 void CompsPrepare(void);
 void mark_components(struct CompsTable_s *pMaster, int iFlag);
 int is_expanded(GtkCTree *pTree, GtkCTreeNode *pNode);
+void on_ComponentTree_tree_select_row(GtkCTree *ctree, GList *node, gint column, gpointer user_data);
+void on_ComponentTree_tree_unselect_row(GtkCTree *ctree, GList *node, gint column, gpointer user_data);
+void on_ComponentTree_tree_expand(GtkCTree *ctree, GList *node, gpointer user_data);
+void on_ComponentTree_tree_collapse(GtkCTree *ctree, GList *node, gpointer user_data);
+
 
 
 
