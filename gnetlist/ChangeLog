@@ -10,6 +10,12 @@
 
         * aclocal.m4: Removed file from cvs.
 
+	* examples/vams/*.sym|sch: Ran gsymupdate/gschupdate on all vams
+	example files
+
+	* scheme/gnet-vams.scm: Fixed a type which prevented "gn" and "ge"
+	within gschem to work.
+
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-partslist[1,2,3].scm: Fixed bug reported by Koichi

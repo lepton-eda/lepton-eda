@@ -1,8 +1,8 @@
-v 20000704
+v 20021103
 C 96400 50800 1 90 0 resistor.sym
 {
 T 96100 51100 5 10 0 1 90 0
-uref=RES
+refdes=RES
 T 96400 50800 5 5 0 1 90 0
 r=RS
 }
@@ -40,7 +40,7 @@ s
 C 97800 49500 1 90 0 sp_voltage_dependend_capacitor.sym
 {
 T 97300 49700 5 10 0 1 90 0
-uref=VD_CAP
+refdes=VD_CAP
 T 97300 49800 5 10 0 1 90 0
 v_init=?0.0
 T 97300 49700 5 10 0 1 90 0
@@ -59,17 +59,17 @@ PB=PB
 C 96600 52100 1 90 0 port.sym
 {
 T 96800 52800 5 8 1 1 180 0
-uref=anode
+refdes=anode
 }
 C 96000 50000 1 270 0 port.sym
 {
 T 96100 49300 5 8 1 1 0 0
-uref=kathode
+refdes=kathode
 }
 C 96100 51100 1 270 0 current_source.sym
 {
 T 97300 50700 5 7 0 0 270 0
-uref=CS1
+refdes=CS1
 T 97000 51300 5 4 0 0 270 0
 ISS=ISS
 T 97000 50600 5 4 0 0 270 0

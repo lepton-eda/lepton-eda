@@ -1,9 +1,11 @@
-v 20000704
-V 450 300 50 6
-P 400 300 200 300 1
+v 20021103
+V 450 300 50 6 0 0 0 -1 -1 0 0 -1 -1 -1 -1
+P 400 300 200 300 1 0 1
 {
 T 200 800 5 8 0 0 0 0
-pin1=port
+pinnumber=port
+T 200 800 5 8 0 0 0 0
+pinseq=1
 T 200 1000 5 10 0 0 0 0
 port_object=terminal
 T 200 1200 5 10 0 0 0 0
@@ -12,4 +14,4 @@ port_type=electrical
 T 200 100 5 8 0 0 0 0
 device=PORT
 T 200 400 5 8 1 1 0 0
-uref=PORT
+refdes=PORT

@@ -1,48 +1,54 @@
-v 20000704
+v 20021103
 T 800 1600 5 5 0 0 0 0
 device=BJT_transistor_simple
-P 700 600 900 600 1
+P 700 600 900 600 1 0 0
 {
 T 400 850 5 3 0 0 0 0
-pin2=Base
+pinnumber=Base
+T 400 850 5 3 0 0 0 0
+pinseq=2
 T 500 700 5 3 0 0 0 0
 port_type=electrical
 T 500 800 5 3 0 0 0 0
 port_object=terminal
 }
-P 1200 1100 1200 900 1
+P 1200 1100 1200 900 1 0 0
 {
 T 1200 1150 5 3 0 0 0 0
-pin1=Collector
+pinnumber=Collector
+T 1200 1150 5 3 0 0 0 0
+pinseq=1
 T 1300 1000 5 3 0 0 0 0
 port_type=electrical
 T 1300 1100 5 3 0 0 0 0
 port_object=terminal
 }
-P 1200 300 1200 100 1
+P 1200 300 1200 100 1 0 1
 {
 T 1300 50 5 3 0 0 0 0
 port_type=electrical
 T 1300 200 5 3 0 0 0 0
-pin3=Emitter
+pinnumber=Emitter
+T 1300 200 5 3 0 0 0 0
+pinseq=3
 T 1300 100 5 3 0 0 0 0
 port_object=terminal
 }
-L 900 750 1200 900 3
-L 900 450 1200 300 3
-L 1201 300 1103 309 3
-L 1200 300 1131 373 3
-L 1103 309 1131 373 3
+L 900 750 1200 900 3 0 0 0 -1 -1
+L 900 450 1200 300 3 0 0 0 -1 -1
+L 1201 300 1103 309 3 0 0 0 -1 -1
+L 1200 300 1131 373 3 0 0 0 -1 -1
+L 1103 309 1131 373 3 0 0 0 -1 -1
 T 800 1500 8 4 0 0 0 0
-uref=BJT_TRA
+refdes=BJT_TRA
 T 1000 600 9 2 1 0 0 1
 BJT Model
-A 900 600 300 270 180 3
+A 900 600 300 270 180 3 0 0 0 -1 -1
 T 800 1300 8 3 0 0 0 0
 source=simple_trans.sch
 T 800 1400 8 3 0 0 0 0
 architecture=?simple_arc
-L 900 900 900 300 3
+L 900 900 900 300 3 0 0 0 -1 -1
 T 1500 800 8 3 0 0 0 0
 BF=?100.0
 T 1500 700 8 3 0 0 0 0

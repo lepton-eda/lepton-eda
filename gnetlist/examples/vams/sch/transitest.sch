@@ -1,4 +1,4 @@
-v 20000704
+v 20021103
 N 6900 9600 6800 9600 4
 N 4200 7700 4200 6400 4
 N 4200 6400 6800 6400 4
@@ -14,19 +14,19 @@ C 6800 6200 1 0 0 gnd_node.sym
 T 6500 6000 5 5 0 0 0 0
 value=?0
 T 7000 6000 5 10 0 1 0 0
-uref=GND
+refdes=GND
 }
 C 4700 7600 1 0 0 resistor.sym
 {
 T 5000 7900 5 10 0 1 0 0
-uref=RES_base
+refdes=RES_base
 T 4700 7600 5 5 0 1 0 0
 r=10000.0
 }
 C 6900 8000 1 90 0 resistor.sym
 {
 T 6600 8300 5 10 0 1 90 0
-uref=RES_collecter
+refdes=RES_collecter
 T 6900 8000 5 5 0 1 90 0
 r=60.0
 }
@@ -34,7 +34,7 @@ N 6300 7700 6000 7700 4
 C 6800 9400 1 0 0 voltage_source.sym
 {
 T 7100 9500 5 10 0 1 0 0
-uref=VS_collector
+refdes=VS_collector
 T 6800 9400 5 10 0 1 0 0
 k=100.0
 T 6800 9400 5 10 0 1 0 0
@@ -51,7 +51,7 @@ architecture=sinusodial
 C 5200 7900 1 180 0 voltage_source.sym
 {
 T 4900 7800 5 10 0 1 180 0
-uref=VS_base
+refdes=VS_base
 T 5200 7900 5 10 0 1 180 0
 k=150.0
 T 5200 7900 5 10 0 1 180 0
@@ -70,7 +70,7 @@ N 6800 9300 6800 9600 4
 C 5600 7100 1 0 0 BJT_transistor_simple.sym
 {
 T 6400 8600 5 4 0 0 0 0
-uref=BJT1
+refdes=BJT1
 T 6400 8400 5 3 0 0 0 0
 source=simple_trans.sch
 T 6400 8500 5 3 0 0 0 0
