@@ -20,7 +20,7 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
-;;
+;;  2005-02-11: Output to stdout if the output filename is "-".
 ;;  2005-02-08: Use a parameter instead of the quiet mode of gnetlist so 
 ;;              gnetlist doesn't return a non-zero value when there are only
 ;;              warnings. This parameter is 'ignore-warnings-in-return-value'.
@@ -49,6 +49,11 @@
 ;;        useful for Makefiles. Using this option, gnetlist will return a zero
 ;;        value if there are only DRC warnings.
 ;;
+;; Output
+;; ------
+;; By default, the backend outputs to the filename specified in the command line, or to
+;; stdout if the output filename is "-".
+;; 
 ;; Configuration
 ;; -------------
 ;; 

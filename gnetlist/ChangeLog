@@ -1,6 +1,7 @@
 2005-02-11 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/gnet-drc2.scm: Use stdout if the output filename is "-".
+	  Updated documentation showing this behaviour.
 
 2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
