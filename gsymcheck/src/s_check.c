@@ -66,7 +66,7 @@ int
 s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
 {
   SYMCHECK *s_symcheck=NULL;
-  int errors;
+  int errors=0, warnings=0;
 
   s_symcheck = s_symstruct_init();
   
@@ -149,8 +149,15 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   }
 
   errors = s_symcheck->error_count;
+  warnings = s_symcheck->warning_count;
   s_symstruct_free(s_symcheck);
-  return(errors);
+  if (errors) {
+    return(errors);
+  } else if (warnings) {
+    return(-warnings); /* return -warnings as an exit status */
+  } else {
+    return 0;
+  }
 }
 
 
