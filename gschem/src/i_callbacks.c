@@ -497,6 +497,23 @@ DEFINE_I_CALLBACK(edit_edit)
 	}
 }
 
+DEFINE_I_CALLBACK(edit_text)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_edit_text, "Edit Text");
+	if (w_current->page_current->selection_head->next != NULL) {
+
+		if (w_current->page_current->selection_head->next->type == 
+		    OBJ_TEXT) {
+			o_text_edit(w_current, w_current->page_current->
+				       selection_head->next);
+		}
+	}
+}
+
 
 DEFINE_I_CALLBACK(edit_stretch)
 {
@@ -942,8 +959,14 @@ DEFINE_I_CALLBACK(page_next)
 	if (w_current->page_current->next != NULL &&
 	    w_current->page_current->next->pid != -1) {
 
-		new_page = s_hierarchy_find_next_page(w_current->page_current, 
+		if (w_current->enforce_hierarchy == TRUE) { 
+			new_page = s_hierarchy_find_next_page(w_current->
+							      page_current, 
 					 w_current->page_current->page_control);
+		} else {
+			new_page = w_current->page_current->next;
+		}
+
 		if (new_page) {
 			w_current->page_current = new_page;
 		} else {
@@ -969,8 +992,14 @@ DEFINE_I_CALLBACK(page_prev)
 	if (w_current->page_current->prev != NULL &&
 			w_current->page_current->prev->pid != -1) {
 
-		new_page = s_hierarchy_find_prev_page(w_current->page_current, 
+		if (w_current->enforce_hierarchy == TRUE) { 
+			new_page = s_hierarchy_find_prev_page(w_current->
+							      page_current, 
 					 w_current->page_current->page_control);
+		} else {
+			new_page = w_current->page_current->prev;
+		}
+
 		if (new_page) { 
 			w_current->page_current = new_page;
 		} else {
@@ -1454,23 +1483,92 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	char *filename;
+	char *attrib;
+	int count=0;
+	char *name, *value;
+	OBJECT *object;
+	PAGE *save_first_page=NULL;
+	PAGE *parent=NULL;
+	int loaded_flag=0;
+	int page_control = 0;
 
 	exit_if_null(w_current);
 
 	if (w_current->page_current->selection_head->next != NULL) {
 		/* only allow going into symbols */
-		if (w_current->page_current->selection_head->next->
-		    type == OBJ_COMPLEX) {
-			filename = w_current->page_current->selection_head->
-				next->complex_basename;
-			s_log_message("Searching for source [%s]\n", filename);
-			s_hierarchy_down_schematic(w_current, filename,
-				 		   w_current->page_current);
-			i_set_filename(w_current,
-				       w_current->page_current->page_filename);
+		if (w_current->page_current->selection_head->next->type == 
+		     OBJ_COMPLEX) {
+			object = o_list_search(w_current->
+					       page_current->object_head, 
+					       w_current->page_current->
+					       selection_head->next);
+			if (!object) {
+				fprintf(stderr, "Oops, something is wrong, could not find original object\n");
+				return;
+			}
 
-			o_redraw_all(w_current);
-			update_page_manager(NULL, w_current);
+			parent = w_current->page_current;
+			attrib = o_attrib_search_name_single_count(object,
+							           "source",
+							           count);
+			while (attrib) {
+
+				s_log_message("Searching for source [%s]\n", 
+					      attrib);
+
+				page_control = 
+				   s_hierarchy_down_schematic_single(w_current, 
+							   attrib, parent,
+							   page_control);
+
+				a_zoom_limits(w_current, 
+				      w_current->page_current->object_head);
+
+				/* save the first page */
+				if (!loaded_flag && page_control) {
+					save_first_page = w_current->
+						page_current;
+				}
+
+				/* this only signifies that we tried */
+				loaded_flag = 1;
+				free(attrib);
+
+				count++;
+				attrib = o_attrib_search_name_single_count(
+							     object,
+							     "source",
+							     count);
+			} 
+
+			/* Try the old way (based on the name of the symbol) */
+			if (!loaded_flag) {
+				filename = w_current->page_current->
+					   selection_head->next->
+					   complex_basename;
+				s_log_message("Searching for source [%s]\n", 
+					      filename);
+				s_hierarchy_down_schematic_multiple(w_current, 
+							          filename,
+				 		                  w_current->
+							          page_current);
+				/* this only signifies that we tried */
+				loaded_flag = 1;
+			}
+
+			if (loaded_flag) {
+	
+				if (save_first_page) {
+					w_current->page_current = 
+							save_first_page;
+				}
+				i_set_filename(w_current, w_current->
+					page_current->page_filename);
+				a_zoom_limits(w_current, 
+				      w_current->page_current->object_head);
+				o_redraw_all(w_current);
+				update_page_manager(NULL, w_current);
+			}
 		}
         }
 }
