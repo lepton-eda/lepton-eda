@@ -178,21 +178,21 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 		if (src->type == OBJ_TEXT) {
 			dest->next = o_list_copy_to(w_current, NULL, src, flag,
 						    NULL);
+		
+			dest->next->prev = dest;
+			dest = dest->next;
+			dest->sid = global_sid++;
 	
         if (src->attached_to && !w_current->ADDING_SEL) {
                 if (src->attached_to->copied_to) {
                         o_attrib_attach(w_current,
                                 w_current->page_current->object_parent,
-                                dest->next, src->attached_to->copied_to);     
+                                dest, src->attached_to->copied_to);     
 
                                 /* satisfied copy request */
                                 src->attached_to->copied_to = NULL;
                 } 
         }
-		
-			dest->next->prev = dest;
-			dest = dest->next;
-			dest->sid = global_sid++;
 		}
 
 		src = src->next;
@@ -282,20 +282,19 @@ o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head,
 			dest->next = o_list_copy_to(w_current, NULL, object, 
 						    flag, NULL);
 	
+			dest->next->prev = dest;
+			dest = dest->next;
+			dest->sid = global_sid++;
+
         if (object->attached_to && !w_current->ADDING_SEL) {
                 if (object->attached_to->copied_to) {
                         o_attrib_attach(w_current,
                                 w_current->page_current->object_parent,
-                                dest->next, object->attached_to->copied_to);     
-
+                                dest, object->attached_to->copied_to);     
                                 /* satisfied copy request */
                                 object->attached_to->copied_to = NULL;
                 } 
         }
-		
-			dest->next->prev = dest;
-			dest = dest->next;
-			dest->sid = global_sid++;
 		}
 
 		/* reselect it */
