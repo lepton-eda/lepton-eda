@@ -188,6 +188,18 @@ fi
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
 GEDADATADIR=$gedatopdir
 
+# Expand the prefix variable
+# I don't like the way this is done, but it works (I hope).
+if eval "test x$prefix = xNONE"; then
+ dprefix=$ac_default_prefix
+else
+ dprefix=$prefix
+fi
+
+gedadocdir=$dprefix/share/doc/geda-doc
+expandgedadocdir=`echo $gedadocdir`
+GEDADOCDIR=$expandgedadocdir
+
 
 if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	echo Adding -liberty for MINGW32 port
@@ -218,6 +230,7 @@ AC_SUBST(PATHSEP)
 AC_SUBST(OTHERPATHSEP)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
+AC_SUBST(GEDADOCDIR)
 
 
 AC_SUBST(X_CFLAGS)
