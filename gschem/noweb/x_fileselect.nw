@@ -686,7 +686,7 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf(buf, "sch - Schematics");
+  sprintf(buf, _("sch - Schematics"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);

@@ -170,7 +170,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       break;
 
     default:
-      fprintf(stderr, "Got invalid show option; defaulting to show both\n");
+      fprintf(stderr, _("Got invalid show option; defaulting to show both\n"));
       show = SHOW_NAME_VALUE;
       break;
   }
@@ -185,7 +185,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
     while (s_current != NULL) {
       object = s_current->selected_object;
       if (object == NULL) {
-	fprintf(stderr, "ERROR: NULL object!\n");
+	fprintf(stderr, _("ERROR: NULL object!\n"));
 	exit(-1);
       }
       if (!s_current->selected_object->attached_to) {
@@ -479,25 +479,25 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 		     (GtkAttachOptions) (GTK_FILL), 0, 0);
     gtk_container_set_border_width(GTK_CONTAINER(hbox11), 3);
 
-    addtoallbutton = gtk_radio_button_new_with_label(type_group, "All");
+    addtoallbutton = gtk_radio_button_new_with_label(type_group, _("All"));
     type_group = gtk_radio_button_group(GTK_RADIO_BUTTON(addtoallbutton));
     gtk_object_set_data(GTK_OBJECT(aewindow), "addtoallbutton", addtoallbutton);
     gtk_widget_show(addtoallbutton);
     gtk_box_pack_start(GTK_BOX(hbox11), addtoallbutton, FALSE, FALSE, 0);
 
-    addtocompsbutton = gtk_radio_button_new_with_label(type_group, "Comps");
+    addtocompsbutton = gtk_radio_button_new_with_label(type_group, _("Comps"));
     type_group = gtk_radio_button_group(GTK_RADIO_BUTTON(addtocompsbutton));
     gtk_object_set_data(GTK_OBJECT(aewindow), "addtocompsbutton", addtocompsbutton);
     gtk_widget_show(addtocompsbutton);
     gtk_box_pack_start(GTK_BOX(hbox11), addtocompsbutton, FALSE, FALSE, 0);
 
-    addtonetsbutton = gtk_radio_button_new_with_label(type_group, "Nets");
+    addtonetsbutton = gtk_radio_button_new_with_label(type_group, _("Nets"));
     type_group = gtk_radio_button_group(GTK_RADIO_BUTTON(addtonetsbutton));
     gtk_object_set_data(GTK_OBJECT(aewindow), "addtonetsbutton", addtonetsbutton);
     gtk_widget_show(addtonetsbutton);
     gtk_box_pack_start(GTK_BOX(hbox11), addtonetsbutton, FALSE, FALSE, 0);
 
-    overwritebutton = gtk_check_button_new_with_label("Replace");
+    overwritebutton = gtk_check_button_new_with_label(_("Replace"));
     gtk_object_set_data(GTK_OBJECT(aewindow), "overwritebutton", overwritebutton);
     gtk_widget_show(overwritebutton);
     gtk_box_pack_start(GTK_BOX(hbox11), overwritebutton, FALSE, FALSE, 0);
@@ -700,7 +700,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 
   aewindow = gtk_window_new (GTK_WINDOW_DIALOG);
   gtk_object_set_data (GTK_OBJECT (aewindow), "aewindow", aewindow);
-  gtk_window_set_title (GTK_WINDOW (aewindow), "Single Attribute Editor");
+  gtk_window_set_title (GTK_WINDOW (aewindow), _("Single Attribute Editor"));
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
   gtk_window_set_modal (GTK_WINDOW (aewindow), TRUE);
 
@@ -739,7 +739,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_button_set_relief (GTK_BUTTON (okbutton), GTK_RELIEF_HALF);
 
   if (list) { /* gschem specific */
-    deletebutton = gtk_button_new_with_label ("Delete");
+    deletebutton = gtk_button_new_with_label (_("Delete"));
     gtk_widget_ref (deletebutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "deletebutton", deletebutton,
                               (GtkDestroyNotify) gtk_widget_unref);
@@ -749,7 +749,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     GTK_WIDGET_SET_FLAGS (deletebutton, GTK_CAN_DEFAULT);
   }
 
-  cancelbutton = gtk_button_new_with_label ("Cancel");
+  cancelbutton = gtk_button_new_with_label (_("Cancel"));
   gtk_widget_ref (cancelbutton);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "cancelbutton", cancelbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -758,7 +758,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_container_set_border_width (GTK_CONTAINER (cancelbutton), 3);
   GTK_WIDGET_SET_FLAGS (cancelbutton, GTK_CAN_DEFAULT);
 
-  frame1 = gtk_frame_new ("Add/Edit Attribute");
+  frame1 = gtk_frame_new (_("Add/Edit Attribute"));
   gtk_widget_ref (frame1);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "frame1", frame1,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -800,7 +800,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 8);
 
-  visbutton = gtk_check_button_new_with_label ("Visible");
+  visbutton = gtk_check_button_new_with_label (_("Visible"));
   gtk_widget_ref (visbutton);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "visbutton", visbutton,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -811,7 +811,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_container_set_border_width (GTK_CONTAINER (visbutton), 3);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (visbutton), TRUE);
 
-  label2 = gtk_label_new ("Value:");
+  label2 = gtk_label_new (_("Value:"));
   gtk_widget_ref (label2);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "label2", label2,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -821,7 +821,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
                     (GtkAttachOptions) (0), 0, 3);
   gtk_misc_set_alignment (GTK_MISC (label2), 0, 0.5);
 
-  label1 = gtk_label_new ("Name:");
+  label1 = gtk_label_new (_("Name:"));
   gtk_widget_ref (label1);
   gtk_object_set_data_full (GTK_OBJECT (aewindow), "label1", label1,
                             (GtkDestroyNotify) gtk_widget_unref);
@@ -843,20 +843,20 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   show_options_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label ("Show Value Only");
+  glade_menuitem = gtk_menu_item_new_with_label (_("Show Value Only"));
   gtk_widget_show (glade_menuitem);
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label ("Show Name Only");
+  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name Only"));
   gtk_widget_show (glade_menuitem);
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label ("Show Name & Value");
+  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name & Value"));
   gtk_widget_show (glade_menuitem);
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
   gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
   
   if (nsel > 1) { /* gschem specific */
-    frame2 = gtk_frame_new ("Multiple Attach");
+    frame2 = gtk_frame_new (_("Multiple Attach"));
     gtk_widget_ref (frame2);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "frame2", frame2,
                               (GtkDestroyNotify) gtk_widget_unref);
@@ -873,7 +873,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_widget_show (hbox2);
     gtk_container_add (GTK_CONTAINER (frame2), hbox2);
 
-    addtoallbutton = gtk_radio_button_new_with_label (hbox2_group, "All");
+    addtoallbutton = gtk_radio_button_new_with_label (hbox2_group, _("All"));
     hbox2_group = gtk_radio_button_group (GTK_RADIO_BUTTON (addtoallbutton));
     gtk_widget_ref (addtoallbutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "addtoallbutton", addtoallbutton,
@@ -882,7 +882,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_box_pack_start (GTK_BOX (hbox2), addtoallbutton, FALSE, FALSE, 0);
     gtk_container_set_border_width (GTK_CONTAINER (addtoallbutton), 3);
 
-    addtocompsbutton = gtk_radio_button_new_with_label (hbox2_group, "Components");
+    addtocompsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Components"));
     hbox2_group = gtk_radio_button_group (GTK_RADIO_BUTTON (addtocompsbutton));
     gtk_widget_ref (addtocompsbutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "addtocompsbutton", addtocompsbutton,
@@ -891,7 +891,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_box_pack_start (GTK_BOX (hbox2), addtocompsbutton, FALSE, FALSE, 0);
     gtk_container_set_border_width (GTK_CONTAINER (addtocompsbutton), 3);
 
-    addtonetsbutton = gtk_radio_button_new_with_label (hbox2_group, "Nets");
+    addtonetsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Nets"));
     hbox2_group = gtk_radio_button_group (GTK_RADIO_BUTTON (addtonetsbutton));
     gtk_widget_ref (addtonetsbutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "addtonetsbutton", addtonetsbutton,
@@ -899,7 +899,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_widget_show (addtonetsbutton);
     gtk_box_pack_start (GTK_BOX (hbox2), addtonetsbutton, FALSE, FALSE, 0);
 
-    overwritebutton = gtk_check_button_new_with_label ("Replace");
+    overwritebutton = gtk_check_button_new_with_label (_("Replace"));
     gtk_widget_ref (overwritebutton);
     gtk_object_set_data_full (GTK_OBJECT (aewindow), "overwritebutton", overwritebutton,
                               (GtkDestroyNotify) gtk_widget_unref);

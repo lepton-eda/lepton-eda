@@ -1,13 +1,12 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Alexandre Pereira Nunes
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2002-08-25 21:16-0400\n"
+"POT-Creation-Date: 2002-09-14 23:47-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -332,8 +331,8 @@ msgstr ""
 msgid "Move Mode"
 msgstr ""
 
-#: noweb/i_callbacks.nw:1076 noweb/x_attribedit.nw:558 noweb/x_dialog.nw:824
-#: noweb/x_window.nw:962
+#: noweb/i_callbacks.nw:1076 noweb/x_attribedit.nw:558
+#: noweb/x_attribedit.nw:742 noweb/x_dialog.nw:824 noweb/x_window.nw:962
 msgid "Delete"
 msgstr ""
 
@@ -911,7 +910,15 @@ msgstr ""
 msgid "Tried to get an invalid color: %d\n"
 msgstr ""
 
-#: noweb/x_attribedit.nw:418
+#: noweb/x_attribedit.nw:173
+msgid "Got invalid show option; defaulting to show both\n"
+msgstr ""
+
+#: noweb/x_attribedit.nw:188
+msgid "ERROR: NULL object!\n"
+msgstr ""
+
+#: noweb/x_attribedit.nw:418 noweb/x_attribedit.nw:703
 msgid "Single Attribute Editor"
 msgstr ""
 
@@ -920,8 +927,24 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: noweb/x_attribedit.nw:465 noweb/x_dialog.nw:749
+#: noweb/x_attribedit.nw:465 noweb/x_attribedit.nw:803 noweb/x_dialog.nw:749
 msgid "Visible"
+msgstr ""
+
+#: noweb/x_attribedit.nw:482 noweb/x_attribedit.nw:876
+msgid "All"
+msgstr ""
+
+#: noweb/x_attribedit.nw:488
+msgid "Comps"
+msgstr ""
+
+#: noweb/x_attribedit.nw:494 noweb/x_attribedit.nw:894 noweb/x_window.nw:853
+msgid "Nets"
+msgstr ""
+
+#: noweb/x_attribedit.nw:500 noweb/x_attribedit.nw:902
+msgid "Replace"
 msgstr ""
 
 #: noweb/x_attribedit.nw:514 noweb/x_dialog.nw:783
@@ -945,12 +968,44 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: noweb/x_attribedit.nw:564 noweb/x_dialog.nw:1465 noweb/x_dialog.nw:1858
-#: noweb/x_dialog.nw:2311 noweb/x_dialog.nw:2477 noweb/x_dialog.nw:2662
-#: noweb/x_dialog.nw:2822 noweb/x_dialog.nw:2989 noweb/x_dialog.nw:3154
-#: noweb/x_dialog.nw:3330 noweb/x_fileselect.nw:2283
+#: noweb/x_attribedit.nw:564 noweb/x_attribedit.nw:752 noweb/x_dialog.nw:1465
+#: noweb/x_dialog.nw:1858 noweb/x_dialog.nw:2311 noweb/x_dialog.nw:2477
+#: noweb/x_dialog.nw:2662 noweb/x_dialog.nw:2822 noweb/x_dialog.nw:2989
+#: noweb/x_dialog.nw:3154 noweb/x_dialog.nw:3330 noweb/x_fileselect.nw:2283
 #: noweb/x_fileselect.nw:2302 noweb/x_multimulti.nw:152
 msgid "Cancel"
+msgstr ""
+
+#: noweb/x_attribedit.nw:761
+msgid "Add/Edit Attribute"
+msgstr ""
+
+#: noweb/x_attribedit.nw:814
+msgid "Value:"
+msgstr ""
+
+#: noweb/x_attribedit.nw:824
+msgid "Name:"
+msgstr ""
+
+#: noweb/x_attribedit.nw:846
+msgid "Show Value Only"
+msgstr ""
+
+#: noweb/x_attribedit.nw:849
+msgid "Show Name Only"
+msgstr ""
+
+#: noweb/x_attribedit.nw:852
+msgid "Show Name & Value"
+msgstr ""
+
+#: noweb/x_attribedit.nw:859
+msgid "Multiple Attach"
+msgstr ""
+
+#: noweb/x_attribedit.nw:885 noweb/x_fileselect.nw:2120
+msgid "Components"
 msgstr ""
 
 #: noweb/x_dialog.nw:680 noweb/x_multimulti.nw:160
@@ -993,6 +1048,10 @@ msgid ""
 "Enter text, click apply,\n"
 "move cursor into window, click to place text.\n"
 "Middle button to rotate while placing."
+msgstr ""
+
+#: noweb/x_dialog.nw:1159
+msgid "Lower Left"
 msgstr ""
 
 #: noweb/x_dialog.nw:1169
@@ -1287,6 +1346,10 @@ msgstr ""
 msgid "Too many files! Increase MAX_FILES\n"
 msgstr ""
 
+#: noweb/x_fileselect.nw:689
+msgid "sch - Schematics"
+msgstr ""
+
 #: noweb/x_fileselect.nw:698
 msgid "sym - Symbols "
 msgstr ""
@@ -1372,10 +1435,6 @@ msgstr ""
 
 #: noweb/x_fileselect.nw:2118
 msgid "Files"
-msgstr ""
-
-#: noweb/x_fileselect.nw:2120
-msgid "Components"
 msgstr ""
 
 #: noweb/x_fileselect.nw:2162
@@ -1588,10 +1647,6 @@ msgid ""
 "Select library and component from list, move the mouse into main window, "
 "click to place\n"
 "Right mouse button to cancel"
-msgstr ""
-
-#: noweb/x_window.nw:853
-msgid "Nets"
 msgstr ""
 
 #: noweb/x_window.nw:854

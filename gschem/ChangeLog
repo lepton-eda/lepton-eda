@@ -1,3 +1,11 @@
+2002-09-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_attribedit.nw, x_dialog.nw, x_fileselect.nw: Added a few
+	missing _(" ").  Patch by Antonio and Alexandre.
+
+	* po/geda-gschem.pot, pt_BR.po: Updated these file from what 
+	Antonio and Alexandre sent me.
+
 2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* examples/flipflop_1.sch: Fixed invalid attributes and gave all

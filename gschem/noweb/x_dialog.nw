@@ -470,7 +470,7 @@ create_menu_alignment (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, "Lower Left");
+  sprintf (buf, _("Lower Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
