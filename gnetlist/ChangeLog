@@ -1,3 +1,9 @@
+2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-partslist[1,2,3].scm: Fixed bug reported by Koichi
+	Nagashima (via Debian bugs).  There was a load in the file which 
+	needed to know where to look.
+
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version to 20021103 (an official version)

@@ -15,7 +15,8 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
-(load "gnet-partslist-common.scm")
+; The /'s may not work on win32
+(load (string-append geda-data "/scheme/gnet-partslist-common.scm"))
 
 (define partslist3:write-top-header
   (lambda (port)
