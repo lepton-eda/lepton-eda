@@ -102,6 +102,7 @@ s_color_request(int color_index, char *color_name, char *outline_color_name,
 	colors[color_index].image_red = image_red;
 	colors[color_index].image_green = image_green;
 	colors[color_index].image_blue = image_blue;
+	return(0);
 }
 
 void
