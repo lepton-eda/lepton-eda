@@ -52,10 +52,19 @@ void (*net_draw_func)() = o_net_recalc;
 void (*bus_draw_func)() = o_bus_recalc;
 void (*text_draw_func)() = o_text_recalc;
 void (*pin_draw_func)() = o_pin_recalc;
-void (*select_func)() = NULL;
+void (*select_func)() = o_select_dummy;
 void (*x_log_update_func)() = NULL;
 void (*quit_func)() = gschlas_quit;
 void (*variable_set_func)() = i_vars_set;
+
+
+/* this is just a dummy function, so that compoments are saved properly */
+void
+o_select_dummy(TOPLEVEL * w_current, OBJECT * o_current,
+		int type, int count)
+{
+	// nop
+}
 
 
 /* command line arguments */
