@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([include/libgeda.h])
 AC_PREREQ(2.54)
 
 PACKAGE=libgeda
-VERSION=20030901
+VERSION=20030921
 SHARED_LIBRARY_VERSION=19:0:0
 echo Configuring $PACKAGE version $VERSION
 
@@ -47,8 +47,8 @@ case $host_os in
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
-   MINGW_CFLAGS="-mms-bitfields"
-   MINGW_LIBS=
+   MINGW_CFLAGS="-mms-bitfields -mwindows"
+   MINGW_LIBS="-lregex -liberty"
    MINGW="yes"
    PATHSEP=\\\\
    OTHERPATHSEP=/
@@ -67,6 +67,7 @@ fi
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_MAKE_SET
 
 ############################################################################
@@ -476,7 +477,7 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Currently running version of gEDA/gaf])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GDGEDA_CFLAGS $GTK_CFLAGS $X_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GDGEDA_LIBS $GLIB_LIBS $MINGW_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution
