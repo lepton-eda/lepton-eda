@@ -1,4 +1,20 @@
-2002-08-14 Chris Ellec <chris @ gtx.seul.org >
+2002-09-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* utils/convert_sym.c: Updated code to attach pinseq= and pinnumber=
+	instead of pin#=#  
+
+	* utils/convert_sym.c: Updated code to attach netname= instead of
+	label=
+
+	* utils/convert_sym.c: Updated "v %s" string to be 19991011 which
+	is the right version for the files convert_sym spits out.  This
+	should eventually be updated to the lastest version, but gschem
+	will happily read in old files.
+
+	* utils/convert_sym.c: Symbols/schematics that are outputed from
+	this tool are now current to the 20020825 attribute scheme.
+	
+2002-08-14 Chris Ellec   <chris @ gtx.seul.org >
 
 	* utils/gmk_sym.c: Check for multiple instances of the same pin 
      	number and quit when this happens, give Fatal error messsage.

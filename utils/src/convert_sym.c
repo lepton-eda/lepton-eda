@@ -5,7 +5,7 @@
  *  accept one argument, the name of the file to 
  *  convert, converted output is displayed on stdout.
  *
- *     Copyright (C) 1999  Mike Jarabek
+ *     Copyright (C) 1999-2002  Mike Jarabek
  *   
  *   This program is free software; you can redistribute it and/or
  *   modify it under the terms of the GNU General Public License
@@ -260,7 +260,7 @@ convert_file(FILE *fp)
   char buf[MAX_TEXTLEN];
 
   /* output pre-amble */
-  printf("v 20000704\n"); /* Set the version of the file to a fixed date AVH */
+  printf("v 19991011\n"); /* Set the version of the file to a fixed date AVH */
   reset_attributes();
 
 
@@ -488,12 +488,12 @@ do_attached_attribute(FILE *fp)
    *    A #X #Y #SIZE #ROTATION #ORIGIN #VISIBILITY ATTR_TEXT
    */
   if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin, 
-	 &viewvis) != 6)
-    {
-      fprintf(stderr,"Error: Invalid attached attribute record #%d"
-	      " in %s()\n", records_processed, __FUNCTION__);
-      exit(1);
-    }
+            &viewvis) != 6)
+  {
+    fprintf(stderr,"Error: Invalid attached attribute record #%d"
+            " in %s()\n", records_processed, __FUNCTION__);
+    exit(1);
+  }
 
   x *= scale;   /* correct coordinates */
   y *= scale;
@@ -506,7 +506,7 @@ do_attached_attribute(FILE *fp)
 
   /* evaluate visibility for attributes */
   switch(viewvis)
-    {
+  {
     case 0:   /* not at all visibile */
       visibility = 0;
       show_name_value = 0;
@@ -532,32 +532,60 @@ do_attached_attribute(FILE *fp)
 	      "viewlogic file at record #%d, in function %s()\n",
 	      viewvis, records_processed, __FUNCTION__);
       return;
-    }
+  }
 
   begin_attach();
   if(pin_attributes) /* are we adding to a pin ? */
+  {   
+    /* attach the pinseq and pinnumber attributes */
+    if(text[0] == '#')
     {
-      if(text[0] == '#')
-	{
-	  strncpy(text2, text, MAX_TEXTLEN);
+      strncpy(text2, text, MAX_TEXTLEN);
 #ifdef HAVE_SNPRINTF
-	  snprintf(text, MAX_TEXTLEN, "pin%d=%s",pin_count,&text2[2]);
+      snprintf(text, MAX_TEXTLEN, "pinseq=%d",pin_count);
 #else
-	  sprintf(text, "pin%d=%s",pin_count,&text2[2]);
+      sprintf(text, "pinseq=%d",pin_count);
 #endif
-	  visibility = 1;         /* overide any previous settings */
-	  show_name_value = 1;
-	}
-    }
+      /* pinseq is invisible */
+      visibility = 0;         /* overide any previous settings */
+      show_name_value = 1;
 
-  /* find name and value pair */
+      /* find name and value pair */
+      name = text;
+      index = strindex(text,'=');
+      text[index] = 0;
+      value = &text[index+1];
+      attribute_object( x, y, color, size, visibility, show_name_value,
+                        angle, name, value, origin );
+      
+#ifdef HAVE_SNPRINTF
+      snprintf(text, MAX_TEXTLEN, "pinnumber=%s", &text2[2]);
+#else
+      sprintf(text, "pinnumber=%s", &text2[2]);
+#endif
+      /* pinnumber is visible */
+      visibility = 1;         /* overide any previous settings */
+      show_name_value = 1; 
+  
+      name = text;
+      index = strindex(text,'=');
+      text[index] = 0;
+      value = &text[index+1];
+      attribute_object( x, y, color, size, visibility, show_name_value,
+                        angle, name, value, origin );
+
+      /* done attaching pin attributes */
+      return;
+    }
+  }
+  
   name = text;
   index = strindex(text,'=');
   text[index] = 0;
   value = &text[index+1];
-
+  
   attribute_object( x, y, color, size, visibility, show_name_value, angle,
-		    name, value, origin );
+                    name, value, origin );
 }
 
 void 
@@ -957,12 +985,12 @@ do_label(FILE *fp)
   get_style(fp, &color, &fillstyle, &linestyle);
 
   /* if we are inside a pin definition, mangle the pin name */
-  if(net_attributes == 1) /* a label on a net is its netname */
+  if(net_attributes == 1) /* a netname on a net is its netname */
     {
 #ifdef HAVE_SNPRINTF
-      snprintf(text, MAX_TEXTLEN, "label=%s", text2);
+      snprintf(text, MAX_TEXTLEN, "netname=%s", text2);
 #else
-      sprintf(text, "label=%s", text2);
+      sprintf(text, "netname=%s", text2);
 #endif
       show_name_value = 1;
     }
