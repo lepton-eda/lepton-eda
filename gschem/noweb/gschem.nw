@@ -132,6 +132,8 @@ main_prog(int argc, char *argv[])
 
 #if ENABLE_NLS
   gtk_set_locale();
+  /* This must be the same for all locales */
+  setlocale(LC_NUMERIC, "POSIX");
 #endif
 
   gtk_init(&argc, &argv);
@@ -179,6 +181,9 @@ main_prog(int argc, char *argv[])
   fprintf(stderr, _("This is the MINGW32 port.\n"));
 #endif  
 
+#if DEBUG
+  fprintf(stderr, _("Current locale settings: %s\n"), setlocale(LC_ALL, NULL));
+#endif
 
   /* init global buffers */
   o_buffer_init();
@@ -384,10 +389,7 @@ int
 main (int argc, char *argv[])
 {
 #if ENABLE_NLS
-  /* work-around a gtk_set_locale bug/misbehaving */
-  putenv("LC_NUMERIC=POSIX");
   setlocale(LC_ALL, "");
-  setlocale(LC_NUMERIC, "POSIX");
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
 #endif
