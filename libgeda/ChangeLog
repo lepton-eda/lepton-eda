@@ -8,6 +8,14 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+5/31/99 Fixed printing for nets visual cues
+
+	Removed all traces of the old connection system
+
+	Discovered a core dump condition in clib_cache_free
+
+	Few minor touch up to s_clib.c, but not enough to solve above
+
 5/29/99 Change the license for libgeda back to GPL (from LGPL)
 
 	Put in another check in the o_ales_update_nets function to 

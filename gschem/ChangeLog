@@ -9,6 +9,25 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+5/31/99 Found a minor bug in move, not all nets were being redrawn
+
+	Worked a bit more to reduce the flashing of nets/pins when a complex
+	is moved
+
+	Put a redraw in o_delete, just to make things look better after 
+	something is deleted
+
+	I think I got the flashing (when doing move's under control now)
+
+	A few updates to the sample schematics
+
+	Added agile-vfo-block.sch to the dist finally (as an example schematic)
+
+	Added the ability to change colors of objects from within gschem
+	(finally)
+
+	Added hotkey assignment for above dialog box
+
 5/29/99 Worked some more on the copy operation for nets
 
 	Added o_redraw_real (which redraws all objects given a list which

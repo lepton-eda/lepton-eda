@@ -605,7 +605,7 @@ o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	/* deal with stuff that has changed */
 
 	/* here you need to create a list of attributes which need to be 
-	 * CONNected to the new list, probably make an attribute list and
+	 * connected to the new list, probably make an attribute list and
 	 * fill it with sid's of the attributes */
 	a_current = o_current->attribs;
 	if (a_current && !w_current->ADDING_SEL) {
@@ -645,7 +645,7 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 	new_obj->complex = return_head(temp_list);
 
 	/* here you need to create a list of attributes which need to be 
-	 * CONNected to the new list, probably make an attribute list and
+	 * connected to the new list, probably make an attribute list and
 	 * fill it with sid's of the attributes */
 #if 1
 	a_current = o_current->attribs;
@@ -701,17 +701,9 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex)
 				o_line_translate_world(w_current, x1, y1, o_current);
 			break;
 
-			/* does this have to be in here??? can't you move it */
-			/* to o_CONN_recalc()???  */
-			/* it has to be here since, you need to change what */
-			/* the net is CONNected to, AFTER the translate */
-			/* in o_CONN_recalc, you don't have that kind of info*/
 			case(OBJ_NET):
-				/* CONNECTION one = o_current->CONNected_to_1;
-				two = o_current->CONNected_to_2;*/
 				/* same as a line, don't do this */
 				o_line_translate_world(w_current, x1, y1, o_current);
-				/* CONNECTION o_net_CONN_recalc(w_current, o_current); hell */
 				temp_color = w_current->override_color;
 				w_current->override_color = -1;
 				o_redraw_single(w_current, one); /* trying loop? hack*/
@@ -737,23 +729,7 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex)
 
 			/* same note as above */
 			case(OBJ_PIN):
-				/* CONNECTION one = o_current->CONnected_to_1;
-				two = o_current->CONNected_to_2;*/
 				o_pin_translate_world(w_current, x1, y1, o_current);
-
-/* CONNECTION 
-				if (!w_current->ADDING_SEL) {
-					o_pin_CONN_recalc(w_current, one); for now
-					o_pin_CONN_recalc(w_current, two);
-					temp_color = w_current->override_color;
-					w_current->override_color = -1; 
-					o_pin_CONN_recalc(w_current, o_current);
-					o_redraw_single(w_current, o_current); 
-					o_redraw_single(w_current, one); 
-					o_redraw_single(w_current, two);
-					w_current->override_color = temp_color;
-				}*/
-
 			break;
 
 			case(OBJ_ARC):

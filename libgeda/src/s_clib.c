@@ -276,13 +276,15 @@ s_clib_cache_free()
 	/* this has to be MAX_CLIBS_CACHE since clib_cache_index can wrap */
 	/* around */
 	for (i = 0; i < MAX_CLIBS_CACHE; i++) {
-		if (clib_cache[i].basename)
+		if (clib_cache[i].basename) {
 			free(clib_cache[i].basename);
-		clib_cache[i].basename = NULL;	
+			clib_cache[i].basename = NULL;	
+		}
 
-		if (clib_cache[i].clib)
+		if (clib_cache[i].clib) {
                		free(clib_cache[i].clib);
-		clib_cache[i].clib = NULL;	
+			clib_cache[i].clib = NULL;	
+		}
 	}
 
 	clib_cache_index=0;
@@ -294,8 +296,10 @@ s_clib_free()
 	int i;
 
 	for (i = 0; i < clib_index; i++) {
-		if (clib[i].dir_name)
+		if (clib[i].dir_name) {
                		free(clib[i].dir_name);
+			clib[i].dir_name = NULL;
+		}		
 	}
 
 	clib_index=0;

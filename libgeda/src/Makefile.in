@@ -97,7 +97,7 @@ EXTRA_DIST = BUGS TODO create_proto
 
 # Build a libtool library, libhello.la for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
-libgeda_la_SOURCES =  	a_basic.c f_basic.c f_print.c g_basic.c m_basic.c 	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c o_circle_basic.c 	o_complex_basic.c o_conn.c o_line_basic.c o_list.c o_net_basic.c 	o_ntext_basic.c o_pin_basic.c 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c 	s_log.c s_page.c s_scratch.c s_passing.c s_slib.c s_stroke.c 	prototype1.2.h o_ales.c 	funcs.h globals.h 
+libgeda_la_SOURCES =  	a_basic.c f_basic.c f_print.c g_basic.c m_basic.c 	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c o_circle_basic.c 	o_complex_basic.c o_line_basic.c o_list.c o_net_basic.c 	o_ntext_basic.c o_pin_basic.c 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c 	s_log.c s_page.c s_scratch.c s_passing.c s_slib.c s_stroke.c 	prototype1.2.h o_ales.c 	funcs.h globals.h 
 
 
 libgeda_la_LDFLAGS = -version-info 3:0:0
@@ -129,9 +129,9 @@ X_PRE_LIBS = @X_PRE_LIBS@
 libgeda_la_LIBADD = 
 libgeda_la_OBJECTS =  a_basic.lo f_basic.lo f_print.lo g_basic.lo \
 m_basic.lo o_arc_basic.lo o_attrib.lo o_basic.lo o_box_basic.lo \
-o_circle_basic.lo o_complex_basic.lo o_conn.lo o_line_basic.lo \
-o_list.lo o_net_basic.lo o_ntext_basic.lo o_pin_basic.lo s_attrib.lo \
-s_basic.lo s_clib.lo s_hierarchy.lo s_papersizes.lo s_log.lo s_page.lo \
+o_circle_basic.lo o_complex_basic.lo o_line_basic.lo o_list.lo \
+o_net_basic.lo o_ntext_basic.lo o_pin_basic.lo s_attrib.lo s_basic.lo \
+s_clib.lo s_hierarchy.lo s_papersizes.lo s_log.lo s_page.lo \
 s_scratch.lo s_passing.lo s_slib.lo s_stroke.lo o_ales.lo
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -147,15 +147,6 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = tar
 GZIP_ENV = --best
-DEP_FILES =  .deps/a_basic.P .deps/f_basic.P .deps/f_print.P \
-.deps/g_basic.P .deps/m_basic.P .deps/o_ales.P .deps/o_arc_basic.P \
-.deps/o_attrib.P .deps/o_basic.P .deps/o_box_basic.P \
-.deps/o_circle_basic.P .deps/o_complex_basic.P .deps/o_conn.P \
-.deps/o_line_basic.P .deps/o_list.P .deps/o_net_basic.P \
-.deps/o_ntext_basic.P .deps/o_pin_basic.P .deps/s_attrib.P \
-.deps/s_basic.P .deps/s_clib.P .deps/s_hierarchy.P .deps/s_log.P \
-.deps/s_page.P .deps/s_papersizes.P .deps/s_passing.P .deps/s_scratch.P \
-.deps/s_slib.P .deps/s_stroke.P
 SOURCES = $(libgeda_la_SOURCES)
 OBJECTS = $(libgeda_la_OBJECTS)
 
@@ -163,9 +154,9 @@ all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .lo .o .s
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --foreign src/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --foreign --include-deps src/Makefile
 
-Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -195,6 +186,9 @@ uninstall-libLTLIBRARIES:
 	  $(LIBTOOL)  --mode=uninstall rm -f $(DESTDIR)$(libdir)/$$p; \
 	done
 
+.c.o:
+	$(COMPILE) -c $<
+
 .s.o:
 	$(COMPILE) -c $<
 
@@ -210,6 +204,9 @@ distclean-compile:
 	-rm -f *.tab.c
 
 maintainer-clean-compile:
+
+.c.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
 
 .s.lo:
 	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
@@ -279,11 +276,6 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = src
 
 distdir: $(DISTFILES)
-	here=`cd $(top_builddir) && pwd`; \
-	top_distdir=`cd $(top_distdir) && pwd`; \
-	distdir=`cd $(distdir) && pwd`; \
-	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --foreign src/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -294,38 +286,6 @@ distdir: $(DISTFILES)
 	    || cp -p $$d/$$file $(distdir)/$$file || :; \
 	  fi; \
 	done
-
-DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
-
--include $(DEP_FILES)
-
-mostlyclean-depend:
-
-clean-depend:
-
-distclean-depend:
-	-rm -rf .deps
-
-maintainer-clean-depend:
-
-%.o: %.c
-	@echo '$(COMPILE) -c $<'; \
-	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
-	@-cp .deps/$(*F).pp .deps/$(*F).P; \
-	tr ' ' '\012' < .deps/$(*F).pp \
-	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
-	    >> .deps/$(*F).P; \
-	rm .deps/$(*F).pp
-
-%.lo: %.c
-	@echo '$(LTCOMPILE) -c $<'; \
-	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
-	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
-	  < .deps/$(*F).pp > .deps/$(*F).P; \
-	tr ' ' '\012' < .deps/$(*F).pp \
-	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
-	    >> .deps/$(*F).P; \
-	rm -f .deps/$(*F).pp
 info-am:
 info: info-am
 dvi-am:
@@ -367,27 +327,27 @@ distclean-generic:
 maintainer-clean-generic:
 	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 mostlyclean-am:  mostlyclean-libLTLIBRARIES mostlyclean-compile \
-		mostlyclean-libtool mostlyclean-tags mostlyclean-depend \
+		mostlyclean-libtool mostlyclean-tags \
 		mostlyclean-generic
 
 mostlyclean: mostlyclean-am
 
 clean-am:  clean-libLTLIBRARIES clean-compile clean-libtool clean-tags \
-		clean-depend clean-generic mostlyclean-am
+		clean-generic mostlyclean-am
 
 clean: clean-am
 
 distclean-am:  distclean-libLTLIBRARIES distclean-compile \
-		distclean-libtool distclean-tags distclean-depend \
-		distclean-generic clean-am
+		distclean-libtool distclean-tags distclean-generic \
+		clean-am
 	-rm -f libtool
 
 distclean: distclean-am
 
 maintainer-clean-am:  maintainer-clean-libLTLIBRARIES \
 		maintainer-clean-compile maintainer-clean-libtool \
-		maintainer-clean-tags maintainer-clean-depend \
-		maintainer-clean-generic distclean-am
+		maintainer-clean-tags maintainer-clean-generic \
+		distclean-am
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
@@ -400,9 +360,8 @@ distclean-compile clean-compile maintainer-clean-compile \
 mostlyclean-libtool distclean-libtool clean-libtool \
 maintainer-clean-libtool uninstall-includeHEADERS \
 install-includeHEADERS tags mostlyclean-tags distclean-tags clean-tags \
-maintainer-clean-tags distdir mostlyclean-depend distclean-depend \
-clean-depend maintainer-clean-depend info-am info dvi-am dvi check \
-check-am installcheck-am installcheck install-exec-am install-exec \
+maintainer-clean-tags distdir info-am info dvi-am dvi check check-am \
+installcheck-am installcheck install-exec-am install-exec \
 install-data-am install-data install-am install uninstall-am uninstall \
 all-redirect all-am all installdirs mostlyclean-generic \
 distclean-generic clean-generic maintainer-clean-generic clean \

@@ -579,6 +579,25 @@ i_callback_edit_slot (GtkWidget *widget, gpointer data)
 	}
 }
 
+#if GTK_DEVEL
+void 
+i_callback_edit_color (gpointer data, guint callback_action, GtkWidget *widget) 
+#else
+void 
+i_callback_edit_color (GtkWidget *widget, gpointer data)
+#endif
+{
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_edit_slot, "Color");
+
+	color_edit_dialog(w_current);
+}
+
 
 /* rotate all objects in the selection list by 90 degrees */
 #if GTK_DEVEL

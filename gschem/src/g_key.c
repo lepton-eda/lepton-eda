@@ -360,6 +360,17 @@ g_key_edit_slot (void)
 	return(gh_int2scm(0));
 }
 
+SCM 
+g_key_edit_color (void)
+{
+#if GTK_DEVEL
+	i_callback_edit_color(window_current, 0, NULL);
+#else
+	i_callback_edit_color(NULL, window_current);
+#endif
+	return(gh_int2scm(0));
+}
+
 
 SCM 
 g_key_edit_edit (void)

@@ -53,10 +53,6 @@ f_open(TOPLEVEL *w_current, char *filename)
         w_current->page_current->object_tail = (OBJECT *) 
 			return_tail(w_current->page_current->object_head); 
 
-/* CONNECTION stuff 
-	o_CONN_recalc_all(w_current, w_current->page_current->object_head);
-*/
-
 	/* new ALES stuff */
 	o_ales_disconnect_update(w_current->page_current);
 	

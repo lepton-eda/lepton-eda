@@ -160,7 +160,6 @@ add_object( OBJECT *ptr )
 	}
 
 
-	/* removed old init CONNection stuff from here */
 
 	new_node->visited = 0;
 
@@ -376,7 +375,6 @@ if (!w_current->REMOVING_SEL) {
 		/* ALES new stuff */
 		o_ales_disconnect(w_current->page_current); 
 
-	/* removed old CONNECTION stuff */
 } /* end of REMOVING_SEL */
 
 
@@ -446,14 +444,8 @@ if (!w_current->REMOVING_SEL) {
 		}
 		o_current->attribs = NULL;
 
-		/* break any links */
-		/* DO NOT update the remote net's CONNection_1 or */
-		/* CONNection_2 fields */
-		/* those are used in the net draw function to tell if there */
-	 	/* was a previous CONNection  (for erasing) */
 
-
-		free(o_current);		/* assuming it is not null */
+		free(o_current);	/* assuming it is not null */
 
 		o_current=NULL;		/* misc clean up */
 	}

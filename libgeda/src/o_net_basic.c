@@ -211,6 +211,7 @@ o_net_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
                 color = w_current->override_net_color;
         }
               
+
 	object_list = o_net_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
 	return(object_list);
 }
@@ -354,6 +355,7 @@ void
 o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	int origin_x, int origin_y)
 {
+	int cue;
 	int offset, offset2;
 	int cross;
 	int x1, y1;
@@ -396,9 +398,14 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		f_print_set_color(fp, w_current->net_endpoint_color);
 	}
 
-#if 0 /* CONNECTION stuff */
-	if (o_current->CONNected_to_1 == NULL) {
 
+	cue = o_ales_query_table(w_current->page_current->ales_table,
+				o_current->line_points->x1,
+				o_current->line_points->y1);
+
+	switch(cue) {
+
+	  case(NET_DANGLING_CUE):
 
 		switch(w_current->net_endpoint_mode) {
 
@@ -439,9 +446,32 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(stderr, "Unexpected endpoint mode\n");
 			
 		}
+	   break;
+		
+	   case(MIDPOINT_CUE):
+		if (w_current->net_midpoint_mode != NONE) {
+
+			fprintf(fp, "newpath\n");
+			fprintf(fp, "%d mils %d mils\n", x1, y1); 
+			fprintf(fp, "%d\n", offset2/2);
+        		fprintf(fp, "0 360 arc\n");
+
+			if (w_current->net_midpoint_mode == FILLED) {
+		        	fprintf(fp, "fill\n");      
+			} else if (w_current->net_midpoint_mode == EMPTY) {
+        			fprintf(fp, "stroke\n");      
+			}
+		}
+	   break;
 	}
 
-	if (o_current->CONNected_to_2 == NULL) {
+	cue = o_ales_query_table(w_current->page_current->ales_table,
+				o_current->line_points->x2,
+				o_current->line_points->y2);
+
+	switch(cue) {
+
+	  case(NET_DANGLING_CUE):
 
 		switch(w_current->net_endpoint_mode) {
 	
@@ -482,29 +512,9 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(stderr, "Unexpected endpoint mode\n");
 			
 		}
-		
-	}
+	   break;	
 
-	if (o_current->CONNected_to_1 != NULL && 
-			o_current->CONNection_1 == CONNECTION_ROUND) {
-		if (w_current->net_midpoint_mode != NONE) {
-
-			fprintf(fp, "newpath\n");
-			fprintf(fp, "%d mils %d mils\n", x1, y1); 
-			fprintf(fp, "%d\n", offset2/2);
-        		fprintf(fp, "0 360 arc\n");
-
-			if (w_current->net_midpoint_mode == FILLED) {
-		        	fprintf(fp, "fill\n");      
-			} else if (w_current->net_midpoint_mode == EMPTY) {
-        			fprintf(fp, "stroke\n");      
-			}
-		}
-	}
-
-	if (o_current->CONNected_to_2 != NULL && 
-			o_current->CONNection_2 == CONNECTION_ROUND) {
-
+	   case(MIDPOINT_CUE):
 		if (w_current->net_midpoint_mode != NONE) {
 
 			fprintf(fp, "newpath\n");
@@ -518,8 +528,9 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
         			fprintf(fp, "stroke\n");      
 			}
 		}
+           break;
 	}
-#endif
+
 }
 
 /* takes in screen coordinates for the centerx,y, and then does the rotate 

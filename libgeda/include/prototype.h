@@ -176,7 +176,6 @@ void o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex);
 OBJECT *o_complex_return_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-/* o_conn.c */
 /* o_line_basic.c */
 void get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
 void world_get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);

@@ -646,6 +646,7 @@
     ("r" . edit-rotate-90-hotkey)
     ("i" . edit-mirror-hotkey)
     ("Shift S" . edit-slot)
+    ("o" . edit-color)
     ("l" . edit-lock)
     ("Shift L" . edit-unlock)
     ("t" . edit-translate)

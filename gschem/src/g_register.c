@@ -125,6 +125,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-mirror", g_key_edit_mirror);
 	gh_new_procedure0_0 ("edit-mirror-hotkey", g_key_edit_mirror_hotkey);
 	gh_new_procedure0_0 ("edit-slot", g_key_edit_slot);
+	gh_new_procedure0_0 ("edit-color", g_key_edit_color);
 	gh_new_procedure0_0 ("edit-edit", g_key_edit_edit);
 	gh_new_procedure0_0 ("edit-lock", g_key_edit_lock);
 	gh_new_procedure0_0 ("edit-unlock", g_key_edit_unlock);

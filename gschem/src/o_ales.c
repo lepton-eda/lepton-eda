@@ -259,30 +259,3 @@ o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
 	}
 }
 
-/* this function really doesn't belong in this file, but all it does is 
-/* draw the nets and pins, used after an o_ales_erase_all typicall */
-void
-o_ales_draw_net_pin(TOPLEVEL *w_current, OBJECT *object_list)
-{
-	OBJECT *o_current;
-
-	o_current = object_list;
-
-	while (o_current != NULL) {
-
-		switch(o_current->type) {
-
-			case(OBJ_PIN):
-			case(OBJ_NET):
-				o_redraw_single(w_current, o_current);
-			break;
-
-			case(OBJ_COMPLEX):
-				o_ales_draw_net_pin(w_current, o_current->complex);
-			break;
-		}
-
-		o_current = o_current->next;
-	}
-
-}

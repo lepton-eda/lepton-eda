@@ -255,7 +255,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
 	/* ALES stuff, not sure if I'm going to leave this here */
-	/* only draw the CONNECTION points, if: */
+	/* only draw the connection points, if: */
 	/* - you are drawing regular lines, */
 	/* - you aren't redrawing selected (DONT_DRAW_CONN), */ 
 	/* - And, you are erasing them */

@@ -162,6 +162,8 @@ o_delete(TOPLEVEL *w_current)
 	/* New ALES stuff */
 	o_ales_disconnect_update(w_current->page_current);
 
+	o_redraw(w_current, w_current->page_current->object_head);
+
 	/* I don't think I like this */
-	o_ales_draw_all(w_current, w_current->page_current->object_head);
+/*	o_ales_draw_all(w_current, w_current->page_current->object_head);*/
 }

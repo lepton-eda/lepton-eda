@@ -37,6 +37,7 @@
 #include <libgeda/defines.h>
 #include <libgeda/colors.h>   
 #include <libgeda/globals.h>
+#include <libgeda/o_types.h>
 #include <libgeda/prototype.h>
 
 #include "../include/i_vars.h"
@@ -1063,6 +1064,7 @@ coord_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
 
 }
 
+void
 coord_display_update(TOPLEVEL *w_current, int x, int y)
 {
 	char string[25]; /* this should be big enough */
@@ -1156,3 +1158,271 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
 	}
 }
 /***************** End of coord dialog box *********************/
+
+/***************** Start of color edit dialog box *********************/
+/* this is a kludge and will be totally replaced once the new color scheme */
+/* is in place */
+
+gint
+color_black(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = BLACK;
+        return(0);
+}
+
+gint
+color_white(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = WHITE;
+        return(0);
+}
+
+gint
+color_red(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = RED;
+        return(0);
+}
+
+gint
+color_green(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = GREEN;
+        return(0);
+}
+
+gint
+color_blue(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = BLUE;
+        return(0);
+}
+
+gint
+color_yellow(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = YELLOW;
+        return(0);
+}
+
+gint
+color_cyan(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = CYAN;
+        return(0);
+}
+
+gint
+color_grey(GtkWidget *w, TOPLEVEL *w_current)
+{
+	w_current->edit_color = GREY;
+        return(0);
+}
+
+
+
+/* this is from gtktest.c */
+static GtkWidget*
+create_color_menu (TOPLEVEL *w_current)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GSList *group;
+	char buf[20];
+
+	menu = gtk_menu_new ();
+	group = NULL;
+
+
+	sprintf (buf, "Black");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_black,
+                              w_current);
+
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "White"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_white,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Red"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_red,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Green"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_green,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Blue"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_blue,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Yellow"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_yellow,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Cyan"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_cyan,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Grey"); 
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+                              (GtkSignalFunc) color_grey,
+                              w_current);
+	gtk_widget_show (menuitem);
+
+	w_current->edit_color = GREEN;
+
+	return menu;
+}
+
+void
+color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
+{
+	gtk_widget_destroy(w_current->clwindow);
+	w_current->clwindow=NULL;
+}
+
+void
+color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
+{
+	OBJECT *o_current=NULL;
+	OBJECT *found=NULL;
+
+	o_current = w_current->page_current->selection_head->next;
+
+	while(o_current != NULL) {
+
+		found = (OBJECT *) o_list_search(
+					w_current->page_current->object_head, 
+					o_current);
+
+		if (found == NULL) {
+			fprintf(stderr, "UGGG! you blew it... tried to delete something that didn't exist");
+			exit(-1);
+		}
+
+		switch(found->type) {
+			case(OBJ_LINE):
+			case(OBJ_NET):
+			case(OBJ_BOX):
+			case(OBJ_ARC):
+			case(OBJ_CIRCLE):
+				found->color = w_current->edit_color;
+			break;
+
+			case(OBJ_NTEXT):
+				found->color = w_current->edit_color;
+				o_complex_set_color(w_current, 
+						w_current->edit_color,
+						found->complex);
+			break;
+		}
+
+		o_current = o_current->next;
+	}
+}
+
+void
+color_edit_dialog (TOPLEVEL *w_current)
+{
+	GtkWidget *label=NULL;
+        GtkWidget *buttonclose=NULL;
+        GtkWidget *buttonapply=NULL;
+        GtkWidget *frame;
+        GtkWidget *vbox;
+	GtkWidget *optionmenu;
+
+        if (!w_current->clwindow)
+        {
+		w_current->clwindow = gtk_dialog_new ();
+                gtk_window_position (GTK_WINDOW (w_current->clwindow), 
+                                     GTK_WIN_POS_MOUSE);
+
+                gtk_window_set_title (GTK_WINDOW (w_current->clwindow), 
+                                      "Color Edit");
+                gtk_container_border_width (GTK_CONTAINER (
+                                      w_current->clwindow), 5);       
+
+                gtk_signal_connect (GTK_OBJECT (w_current->clwindow), 
+                                    "destroy", GTK_SIGNAL_FUNC(destroy_window),
+                                    &w_current->clwindow);
+
+                gtk_signal_connect (GTK_OBJECT (w_current->clwindow), 
+                                    "delete_event", 
+                                    GTK_SIGNAL_FUNC(destroy_window),
+                                    &w_current->clwindow);    
+
+
+		optionmenu = gtk_option_menu_new ();
+                gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), create_color_menu (w_current));
+                gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), 3);
+                gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->clwindow)->vbox), optionmenu, TRUE, TRUE, 0);
+                gtk_widget_show (optionmenu);
+
+
+		buttonapply = gtk_button_new_with_label ("Apply");   
+		GTK_WIDGET_SET_FLAGS (buttonapply, GTK_CAN_DEFAULT);
+		gtk_box_pack_start (GTK_BOX ( GTK_DIALOG(w_current->
+				    clwindow)->action_area),
+                          	    buttonapply, TRUE, TRUE, 0);
+      		gtk_signal_connect (GTK_OBJECT (buttonapply), "clicked",
+			            GTK_SIGNAL_FUNC(color_edit_dialog_apply), 
+				    w_current);    
+      		gtk_widget_show (buttonapply); 
+		gtk_widget_grab_default (buttonapply);
+
+		buttonclose = gtk_button_new_with_label ("Close");   
+		gtk_box_pack_start (GTK_BOX ( GTK_DIALOG(w_current->
+				    clwindow)->action_area),
+                          	    buttonclose, TRUE, TRUE, 0);
+      		gtk_signal_connect (GTK_OBJECT (buttonclose), "clicked",
+			            GTK_SIGNAL_FUNC(color_edit_dialog_close), 
+				    w_current);    
+      		gtk_widget_show (buttonclose); 
+
+        }
+
+        if (!GTK_WIDGET_VISIBLE (w_current->clwindow)) {
+                gtk_widget_show (w_current->clwindow);
+        } else {
+		gdk_window_raise(w_current->clwindow->window);
+	}
+}
+/***************** End of color edit dialog box *********************/

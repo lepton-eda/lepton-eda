@@ -330,6 +330,9 @@ struct st_toplevel {
 	GtkWidget *cowindow;
 	GtkWidget *coord_world;
 	GtkWidget *coord_screen;
+
+	GtkWidget *clwindow;
+	int edit_color;
 	/* GtkWidget *preview; for the preview widget */
 
 	/* this is the drawing_area's X drawable */

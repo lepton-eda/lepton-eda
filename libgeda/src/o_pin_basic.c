@@ -147,8 +147,8 @@ o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 #if 0
 ifed out 3/15/98 due to above 
 	if (!ADDING_SEL) {
-                o_pin_CONN_recalc(w_current, object_list);
-                /*o_net_CONN_recalc(object_list); */
+                o_pin_conn_recalc(w_current, object_list); /* old conn system */
+                /*o_net_conn_recalc(object_list); */
         }     
 #endif
 
