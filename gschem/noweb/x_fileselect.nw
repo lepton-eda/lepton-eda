@@ -2292,7 +2292,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
       optionmenu = gtk_option_menu_new ();
       gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
                                create_menu (w_current));
-      gtk_box_pack_start(GTK_BOX(searchbox), optionmenu, 
+      gtk_box_pack_start(GTK_BOX(vbox), optionmenu, 
                          FALSE, FALSE, 10);
       gtk_widget_show (optionmenu);
     }
