@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for gEDA version 2002* 
+README for gEDA/gaf CVS version 
 
 
 - Installation
@@ -37,7 +37,7 @@ README for gEDA version 2002*
 	COPYING files for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2002 by Ales V. Hvezda and the respective
+	Copyright 1998-2003 by Ales V. Hvezda and the respective
 	original authors (which are listed on the respective files)
 
 
