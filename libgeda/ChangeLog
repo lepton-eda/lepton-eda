@@ -6,6 +6,8 @@
 	  get the configure mechanism setup)
 	  
 	* scripts/*: Added noweb -> texi backend script written by Patrick B.
+
+	* src/*.c: Removed all *.c files from the repository
 	
 2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
