@@ -1,6 +1,6 @@
 
 scmdatadir = @gedadatadir@/scheme
-scmdata_DATA = gschem.scm 
+scmdata_DATA = gschem.scm list-keys.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
