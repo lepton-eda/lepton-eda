@@ -1,3 +1,13 @@
+2005-02-08 12:15  danmc
+
+	* gschlas/g_register.c, gschlas/gschlas.c, include/prototype.h:
+	  remove remaining gh_* functions.
+
+2005-02-08 12:01  danmc
+
+	* gschlas/g_rc.c: fix a typo in the last commit.  Now we check
+	  gschlas-version instead of gschem-version.
+
 2005-02-07 23:57  danmc
 
 	* configure.ac, gschlas/g_rc.c, gschlas/g_register.c,
