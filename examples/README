@@ -29,6 +29,19 @@ None of the examples are installed anywhere.
 	gTAG shows off how to do hierachical schematics in gEDA/gaf.
 
 
+	lightning_detector - A lightning detector
+	-----------------------------
+	Author: Terry Porter
+	Copyright (C) 2003 Terry Porter
+	License: GPL
+	This unit flashes a lamp, the brightness proportional to the
+	range/power of lightning.
+
+	lightning detector shows off how to use gEDA/gaf and PCB.
+	Also includes the start of a bom creator which reads sch files
+	directly.
+
+
 - License  
 
         gEDA (includes gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
