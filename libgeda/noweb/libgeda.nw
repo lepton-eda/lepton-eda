@@ -87,4 +87,3 @@ void libgeda_init(void)
 }
 
 @ %def libgeda_init
-

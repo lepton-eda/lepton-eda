@@ -470,6 +470,17 @@ void s_papersizes_free(void);
 void s_papersizes_init(void);
 char *s_papersizes_get(int counter);
 void s_papersizes_get_size(char *string, int *width, int *height);
+/* s_project.c */
+TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
+void s_project_add_head(void);
+void s_project_free_head(void);
+void s_project_delete(TOPLEVEL *w_head, TOPLEVEL *pr_current);
+void s_project_setup_world(TOPLEVEL *pr_current);
+void s_project_setup_rest(TOPLEVEL *pr_current);
+TOPLEVEL *s_project_create_new(void);
+void s_project_close(TOPLEVEL *pr_current);
+void s_project_close_all(void);
+TOPLEVEL *s_project_get_ptr(int wid);
 /* s_scratch.c */
 void s_scratch_string_init(void);
 void s_scratch_string_free(void);

@@ -6,7 +6,8 @@ EXTRA_DIST = a_basic.nw f_basic.nw f_image.nw f_print.nw g_basic.nw \
              o_net_basic.nw o_pin_basic.nw o_selection.nw o_text_basic.nw \
 	     s_attrib.nw s_basic.nw s_clib.nw s_color.nw s_conn.nw s_cue.nw \
 	     s_hierarchy.nw s_log.nw s_page.nw s_papersizes.nw s_scratch.nw \
-	     s_slib.nw s_stretch.nw s_tile.nw s_undo.nw s_menu.nw u_basic.nw 
+	     s_slib.nw s_stretch.nw s_tile.nw s_undo.nw s_menu.nw \
+	     s_project.nw u_basic.nw 
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
