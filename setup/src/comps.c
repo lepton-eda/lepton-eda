@@ -39,8 +39,7 @@ int bCompsAlwaysMarkFailed = FALSE;
 
 
 
-/* list of components and their properties */
-//struct CompsTable_s *pCompsTable = NULL;
+static char cSelectFlag = 1;
 
 /* icons for marking selection state */
 static const char *PixmapNoneXpm[] = XPM_ICON_NONE;
@@ -57,20 +56,10 @@ static GdkPixmap *pGdkPixmapPartFailed = NULL;
 static GdkPixmap *pGdkPixmapFullFailed = NULL;
 static GdkPixmap *pGdkPixmapReq = NULL;
 static GdkPixmap *pGdkPixmapReqFailed = NULL;
-//, *MaskOpened = NULL, *MaskClosed = NULL;
-
-
-
-/* static */ int ShowDesc(struct CompsTable_s *pPkg);
-/* static */ int ShowIcons(const char *szParent);
-
-
-
-extern char cSelectFlag;
-
-
 
 /* static functions */
+static int ShowDesc(struct CompsTable_s *pPkg);
+static int ShowIcons(const char *szParent);
 static int BuildTree(GtkCTree *pTree, char *szParent);
 
 
@@ -339,7 +328,7 @@ static int BuildTree(GtkCTree *pTree, char *szParent)
 
 
 
-/* static */ int ShowDesc(struct CompsTable_s *pPkg)
+static int ShowDesc(struct CompsTable_s *pPkg)
 {
 	GtkWidget *pWidget;
 	char szString[TEXTLEN];
@@ -389,7 +378,7 @@ static int BuildTree(GtkCTree *pTree, char *szParent)
 
 
 
-/* static */ int ShowIcons(const char *szParent)
+static int ShowIcons(const char *szParent)
 {
 	struct CompsTable_s *pComp, *pParent;
 	GtkCTree *pTree;
@@ -526,3 +515,90 @@ static int BuildTree(GtkCTree *pTree, char *szParent)
 
 
 
+/*
+	Module COMPONENTS - callbacks
+*/
+
+void on_ComponentTree_tree_select_row(GtkCTree *ctree, GList *node, gint column, gpointer user_data)
+{
+	struct CompsTable_s *pComp;
+	int iResult = MSGBOX_NO;
+	char szMessage[TEXTLEN], *szMissingFile;
+
+	if (cSelectFlag == 0)
+		return;
+
+	/* search component */
+	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+	{
+		if (GTK_CTREE_NODE(node) == pComp->pNode)
+			break;
+	}
+	if (pComp == NULL)
+	{
+		/* TODO: error handling */
+	}
+
+	/* toggle installation flag */
+	if (pComp->iToBeInstalled == PACKAGE_SELECTED)
+	{
+		pComp->iToBeInstalled = PACKAGE_IGNORED;
+		mark_components(pComp, MARK_UNSELECT);
+	}
+	else
+	{
+		if (!pComp->bCanBeInstalled && !bCompsAlwaysMarkFailed)
+		{
+			szMissingFile = PackageWhatIsMissing(pComp->szCodeName);
+
+			sprintf(
+				szMessage,
+				"%s cannot be installed.\nMissing file: %s !\n\nForcing installation will cause errors. Continue ?",
+				pComp->szName,
+				szMissingFile
+				);
+			iResult = MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_YES | MSGBOX_ALWAYSYES | MSGBOX_NOD
+				);
+			if (iResult == MSGBOX_ALWAYSYES)
+				bCompsAlwaysMarkFailed = TRUE;
+		}
+		/* TODO: iResult should be implicitly initialized in any case */
+		if (pComp->bCanBeInstalled == TRUE || iResult == MSGBOX_YES || bCompsAlwaysMarkFailed)
+		{
+			pComp->iToBeInstalled = PACKAGE_SELECTED;
+			mark_components(pComp, MARK_SELECT);
+		}
+	}
+
+	/* activate display changes */
+	iResult = ShowDesc(pComp);
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_FATAL, LOG_MAIN, "Cannot show COMPONENTS page");
+		return;
+	}
+}
+
+
+
+void on_ComponentTree_tree_unselect_row(GtkCTree *ctree, GList *node, gint column, gpointer user_data)
+{
+	on_ComponentTree_tree_select_row(ctree, node, column, user_data);
+}
+
+
+
+void on_ComponentTree_tree_expand(GtkCTree *ctree, GList *node, gpointer user_data)
+{
+	ShowIcons("");
+}
+
+
+void on_ComponentTree_tree_collapse(GtkCTree *ctree, GList *node, gpointer user_data)
+{
+	ShowIcons("");
+}
