@@ -408,7 +408,7 @@ BOOL GraphSave(const char *szFileName)
 	switch (Graph.bYmainAuto)
 	{
 		case FALSE:   fprintf(fp, "YDIVM = %f\n", Graph.dfYmainDiv);   break;
-		deafult:      fprintf(fp, "YDIVM = %s\n", AUTO_ON);            break;
+		default:      fprintf(fp, "YDIVM = %s\n", AUTO_ON);            break;
 	}
 	
 	fprintf(fp, "COLORM = \"%s\"\n", Graph.szYmainColor);
