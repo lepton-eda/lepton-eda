@@ -42,6 +42,9 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 
 	/* for now deal with only the first item */
 	switch(list->type) {
+	case(OBJ_COMPLEX):
+		multi_attrib_edit(w_current, list);
+		break;
 	case(OBJ_TEXT):
 		if(!strchr(list->text_string,'='))
 			o_text_edit(w_current, list);

@@ -1211,18 +1211,6 @@ DEFINE_I_CALLBACK(add_component)
 	i_update_status2(w_current, "Select Mode");
 }
 
-DEFINE_I_CALLBACK(add_matt_attribute)
-{
-	TOPLEVEL *w_current = (TOPLEVEL *) data;
-
-	exit_if_null(w_current);
-
-	setup_matt_attr_selector(w_current);
-	i_update_middle_button(w_current, i_callback_add_attribute,
-			       "Attribute");
-	i_update_status2(w_current, "Select Mode");
-}
-
 DEFINE_I_CALLBACK(add_attribute)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;

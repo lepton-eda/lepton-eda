@@ -35,11 +35,268 @@
 #include "../include/prototype.h"
 
 void
-destroy_window(GtkWidget  *widget, GtkWidget **window)
+destroy_window(GtkWidget *widget, GtkWidget **window)
 {
         *window = NULL;
 }
 
+
+/***************** Start of Multiple Attrib Edit dialog box ***********/
+
+void
+multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
+{
+        i_update_status(w_current, "Select Mode");
+        w_current->event_state = SELECT;
+        gtk_grab_remove(w_current->tewindow);
+        gtk_widget_destroy(w_current->tewindow);
+        w_current->tewindow = NULL;
+}
+
+void
+multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
+{
+
+	char *text[3];
+	char name[1000];
+	char *string;
+	int i;
+	OBJECT **attriblist=NULL;
+
+	GtkWidget *window1;
+	GtkWidget *vbox;
+	GtkWidget *scrolledwindow1;
+	GtkWidget *clist;
+	GtkWidget *attribhead;
+	GtkWidget *vishead;
+	GtkWidget *valhead;
+	GtkWidget *hbox2;
+	GtkWidget *label10;
+	GtkWidget *combo2;
+	GList *combo2_items = NULL;
+	GtkWidget *combo_entry2;
+	GtkWidget *hbox5;
+	GSList *vis_group = NULL;
+	GtkWidget *visbutton;
+	GtkWidget *hbox4;
+	GtkWidget *label11;
+	GtkWidget *entry2;
+	GtkWidget *hbox6;
+	GSList *show_group = NULL;
+	GtkWidget *radiobutton3;
+	GtkWidget *radiobutton4;
+	GtkWidget *radiobutton5;
+	GtkWidget *hbuttonbox1;
+	GtkWidget *addbutton;
+	GtkWidget *updbutton;
+	GtkWidget *delbutton;
+	GtkWidget *closebutton;
+	GtkWidget *table;
+	
+	window1 = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_object_set_data (GTK_OBJECT (window1), "window1", window1);
+	gtk_window_set_title (GTK_WINDOW (window1), "window1");
+
+	vbox = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox);
+	gtk_container_add (GTK_CONTAINER (window1), vbox);
+	
+	scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
+	gtk_widget_show (scrolledwindow1);
+	gtk_box_pack_start (GTK_BOX (vbox), scrolledwindow1, TRUE, TRUE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (scrolledwindow1), 3);
+	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1),
+		GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+	
+	clist = gtk_clist_new (3);
+	gtk_widget_show (clist);
+	gtk_container_add (GTK_CONTAINER (scrolledwindow1), clist);
+	gtk_clist_set_column_width (GTK_CLIST (clist), 0, 80);
+	gtk_clist_set_column_width (GTK_CLIST (clist), 1, 80);
+	gtk_clist_set_column_width (GTK_CLIST (clist), 2, 80);
+	gtk_clist_column_titles_show (GTK_CLIST (clist));
+	
+	attribhead = gtk_label_new ("Attribute");
+	gtk_widget_show (attribhead);
+	gtk_clist_set_column_widget (GTK_CLIST (clist), 0, attribhead);
+	
+	vishead = gtk_label_new ("Visibility");
+	gtk_widget_show (vishead);
+	gtk_clist_set_column_widget (GTK_CLIST (clist), 1, vishead);
+	
+	valhead = gtk_label_new ("Value");
+	gtk_widget_show (valhead);
+	gtk_clist_set_column_widget (GTK_CLIST (clist), 2, valhead);
+	
+	table = gtk_table_new (2,2, FALSE);
+	gtk_widget_show (table);
+	gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+/*	
+	hbox1 = gtk_hbox_new (TRUE, 0);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox1, FALSE, FALSE, 0);
+*/
+	hbox2 = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox2);
+
+gtk_table_attach (GTK_TABLE (table), hbox2,0,1,0,1,
+	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	/*gtk_box_pack_start (GTK_BOX (hbox1), hbox2, TRUE, TRUE, 0);*/
+	gtk_container_set_border_width (GTK_CONTAINER (hbox2), 3);
+
+
+	label10 = gtk_label_new ("Attribute");
+	gtk_widget_show (label10);
+	gtk_box_pack_start (GTK_BOX (hbox2), label10, TRUE, TRUE, 0);
+	
+	combo2 = gtk_combo_new ();
+	gtk_widget_show (combo2);
+	gtk_box_pack_start (GTK_BOX (hbox2), combo2, TRUE, FALSE, 0);
+	
+	combo_entry2 = GTK_COMBO (combo2)->entry;
+	gtk_widget_show (combo_entry2);
+	//gtk_entry_set_text (GTK_ENTRY (combo_entry2), "ref");
+	
+	hbox5 = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox5);
+	/*gtk_box_pack_start (GTK_BOX (hbox1), hbox5, TRUE, TRUE, 0);*/
+	
+	visbutton = gtk_check_button_new_with_label ("Visible");
+	gtk_object_set_data (GTK_OBJECT (window1), "visbutton", visbutton);
+	gtk_widget_show (visbutton);
+	gtk_box_pack_start (GTK_BOX (hbox5), visbutton, FALSE, FALSE, 0);
+	
+	/*hbox3 = gtk_hbox_new (TRUE, 0);
+	gtk_widget_show (hbox3);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox3, FALSE, TRUE, 0);
+*/
+gtk_table_attach (GTK_TABLE (table), hbox5,1,2,0,1,
+	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	
+	hbox4 = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox4);
+	/*gtk_box_pack_start (GTK_BOX (hbox3), hbox4, TRUE, TRUE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox4), 3);*/
+gtk_table_attach (GTK_TABLE (table), hbox4,0,1,1,2,
+	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+	
+	label11 = gtk_label_new ("Value");
+	gtk_widget_show (label11);
+	gtk_box_pack_start (GTK_BOX (hbox4), label11, TRUE, FALSE, 0);
+	
+	entry2 = gtk_entry_new ();
+	gtk_widget_show (entry2);
+	gtk_box_pack_start (GTK_BOX (hbox4), entry2, TRUE, TRUE, 0);
+	
+	hbox6 = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox6);
+	/*gtk_box_pack_start (GTK_BOX (hbox3), hbox6, TRUE, TRUE, 0);*/
+	
+gtk_table_attach (GTK_TABLE (table), hbox6,1,2,1,2,
+	                  (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+
+	radiobutton3 = gtk_radio_button_new_with_label (show_group, "Name");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton3));
+	gtk_widget_show (radiobutton3);
+	gtk_box_pack_start (GTK_BOX (hbox6), radiobutton3, FALSE, FALSE, 0);
+	
+	radiobutton4 = gtk_radio_button_new_with_label (show_group, "Value");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton4));
+	gtk_widget_show (radiobutton4);
+	gtk_box_pack_start (GTK_BOX (hbox6), radiobutton4, FALSE, FALSE, 0);
+	
+	radiobutton5 = gtk_radio_button_new_with_label (show_group, "Both");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton5));
+	gtk_widget_show (radiobutton5);
+	gtk_box_pack_start (GTK_BOX (hbox6), radiobutton5, FALSE, FALSE, 0);
+	
+	hbuttonbox1 = gtk_hbutton_box_new ();
+	gtk_widget_show (hbuttonbox1);
+	gtk_box_pack_end (GTK_BOX (vbox), hbuttonbox1, FALSE, FALSE, 0);
+	
+	addbutton = gtk_button_new_with_label ("Add");
+	gtk_widget_show (addbutton);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox1), addbutton);
+	GTK_WIDGET_SET_FLAGS (addbutton, GTK_CAN_DEFAULT);
+	
+	updbutton = gtk_button_new_with_label ("Update");
+	gtk_widget_show (updbutton);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox1), updbutton);
+	GTK_WIDGET_SET_FLAGS (updbutton, GTK_CAN_DEFAULT);
+	
+	delbutton = gtk_button_new_with_label ("Delete");
+	gtk_widget_show (delbutton);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox1), delbutton);
+	GTK_WIDGET_SET_FLAGS (delbutton, GTK_CAN_DEFAULT);
+	
+	closebutton = gtk_button_new_with_label ("Close");
+	gtk_widget_show (closebutton);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox1), closebutton);
+	GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
+	
+	
+	if(!w_current)return;
+	if(!w_current->page_current)return;
+	if(!w_current->page_current->object_head)return;
+	if(!w_current->page_current->selection_head)return;
+	if(!w_current->page_current->selection_head->next)return;
+	
+	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
+		w_current->page_current->selection_head->next);
+	text[0] = malloc(1000);
+	text[1] = malloc(1000);
+	text[2] = malloc(1000);
+
+	i=0;
+       	while(attriblist[i] != NULL)
+        {
+                o_attrib_get_name_value(attriblist[i]->text_string,
+			text[0],text[2]);
+                gtk_clist_append(GTK_CLIST(clist),text);
+                i++;
+        }
+
+	i = 0;
+        string = (char *) s_attrib_get(i);
+        while (string != NULL)
+        {
+                combo2_items = g_list_append (combo2_items, string);
+                i++;
+                string = (char *) s_attrib_get(i);
+        }
+        //combo2_items = g_list_prepend (combo2_items, name);
+        gtk_combo_set_popdown_strings (GTK_COMBO (combo2), combo2_items);
+        g_list_free (combo2_items);
+
+	gtk_widget_show (window1);
+	o_attrib_free_returned(attriblist);
+	w_current->tewindow=window1;
+
+        gtk_window_position(GTK_WINDOW (window1), GTK_WIN_POS_MOUSE);
+
+	gtk_signal_connect(GTK_WINDOW (window1), "destroy",
+				GTK_SIGNAL_FUNC(destroy_window),
+				&w_current->tewindow);
+
+        gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
+                        GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
+        gtk_signal_connect(GTK_OBJECT(delbutton),"clicked",
+                        GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
+        gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
+                        GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
+        gtk_signal_connect(GTK_OBJECT(updbutton),"clicked",
+                        GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
+
+
+}
+
+
+/***************** End of Multiple Attrib Edit dialog box *********************/
 
 /***************** Start of Text Input dialog box *********************/
 void
@@ -266,136 +523,134 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
 void
 attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 {
-int i;
-char *string=NULL;
-char name[1000], val[1000];
-OBJECT *attrib;
-  GtkWidget *tewindow;
-  GtkWidget *vbox2;
-  GtkWidget *table1;
-  GtkWidget *hbox7;
-  GtkWidget *label12;
-  GtkWidget *combo3;
-  GList *combo3_items = NULL;
-  GtkWidget *lab_entry;
-  GtkWidget *hbox8;
-  GtkWidget *label13;
-  GtkWidget *val_entry;
-  GtkWidget *visbutton;
-  GtkWidget *hbox10;
-  GSList *show_group = NULL;
-  GtkWidget *radiobutton8;
-  GtkWidget *radiobutton9;
-  GtkWidget *radiobutton10;
-  GtkWidget *hbuttonbox2;
-  GtkWidget *buttondelete;
-  GtkWidget *buttonok;
-  GtkWidget *buttoncancel;
+	int i;
+	char *string=NULL;
+	char name[1000], val[1000];
+	OBJECT *attrib;
+	GtkWidget *tewindow;
+	GtkWidget *vbox2;
+	GtkWidget *table1;
+	GtkWidget *hbox7;
+	GtkWidget *label12;
+	GtkWidget *combo3;
+	GList *combo3_items = NULL;
+	GtkWidget *lab_entry;
+	GtkWidget *hbox8;
+	GtkWidget *label13;
+	GtkWidget *val_entry;
+	GtkWidget *visbutton;
+	GtkWidget *hbox10;
+	GSList *show_group = NULL;
+	GtkWidget *radiobutton8;
+	GtkWidget *radiobutton9;
+	GtkWidget *radiobutton10;
+	GtkWidget *hbuttonbox2;
+	GtkWidget *buttondelete;
+	GtkWidget *buttonok;
+	GtkWidget *buttoncancel;
 
-if(w_current->tewindow)return;
+	if(w_current->tewindow)return;
 
-  tewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (tewindow), "Single Attribute Editor");
+	tewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title (GTK_WINDOW (tewindow), "Single Attribute Editor");
 
-  vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (vbox2);
-  gtk_container_add (GTK_CONTAINER (tewindow), vbox2);
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox2);
+	gtk_container_add (GTK_CONTAINER (tewindow), vbox2);
 
-  table1 = gtk_table_new (2, 2, FALSE);
-  gtk_widget_show (table1);
-  gtk_box_pack_start (GTK_BOX (vbox2), table1, TRUE, TRUE, 0);
+	table1 = gtk_table_new (2, 2, FALSE);
+	gtk_widget_show (table1);
+	gtk_box_pack_start (GTK_BOX (vbox2), table1, TRUE, TRUE, 0);
 
-  hbox7 = gtk_hbox_new (FALSE, 3);
-  gtk_widget_show (hbox7);
-  gtk_table_attach (GTK_TABLE (table1), hbox7, 0, 1, 0, 1,
+	hbox7 = gtk_hbox_new (FALSE, 3);
+	gtk_widget_show (hbox7);
+	gtk_table_attach (GTK_TABLE (table1), hbox7, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox7), 3);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox7), 3);
 
-  label12 = gtk_label_new ("Attribute");
-  gtk_widget_show (label12);
-  gtk_box_pack_start (GTK_BOX (hbox7), label12, TRUE, TRUE, 0);
+	label12 = gtk_label_new ("Attribute");
+	gtk_widget_show (label12);
+	gtk_box_pack_start (GTK_BOX (hbox7), label12, TRUE, TRUE, 0);
 
-  combo3 = gtk_combo_new ();
-  gtk_widget_show (combo3);
-  gtk_box_pack_start (GTK_BOX (hbox7), combo3, TRUE, TRUE, 0);
+	combo3 = gtk_combo_new ();
+	gtk_widget_show (combo3);
+	gtk_box_pack_start (GTK_BOX (hbox7), combo3, TRUE, TRUE, 0);
 
-  lab_entry = GTK_COMBO (combo3)->entry;
-  gtk_object_set_data (GTK_OBJECT (tewindow), "lab_entry", lab_entry);
-  gtk_widget_show (lab_entry);
+	lab_entry = GTK_COMBO (combo3)->entry;
+	gtk_object_set_data (GTK_OBJECT (tewindow), "lab_entry", lab_entry);
+	gtk_widget_show (lab_entry);
 
-  hbox8 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (hbox8);
-  gtk_table_attach (GTK_TABLE (table1), hbox8, 0, 1, 1, 2,
+	hbox8 = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox8);
+	gtk_table_attach (GTK_TABLE (table1), hbox8, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox8), 3);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox8), 3);
 
-  label13 = gtk_label_new ("Value");
-  gtk_widget_show (label13);
-  gtk_box_pack_start (GTK_BOX (hbox8), label13, TRUE, TRUE, 0);
+	label13 = gtk_label_new ("Value");
+	gtk_widget_show (label13);
+	gtk_box_pack_start (GTK_BOX (hbox8), label13, TRUE, TRUE, 0);
 
-  val_entry = gtk_entry_new ();
-  gtk_object_set_data (GTK_OBJECT (tewindow), "val_entry", val_entry);
+	val_entry = gtk_entry_new ();
+	gtk_object_set_data (GTK_OBJECT (tewindow), "val_entry", val_entry);
 
-  gtk_widget_show (val_entry);
+	gtk_widget_show (val_entry);
 
+	gtk_box_pack_start (GTK_BOX (hbox8), val_entry, TRUE, TRUE, 0);
 
-  gtk_box_pack_start (GTK_BOX (hbox8), val_entry, TRUE, TRUE, 0);
+	visbutton = gtk_check_button_new_with_label ("Visible");
+	gtk_object_set_data (GTK_OBJECT (tewindow), "visbutton", visbutton);
 
-  visbutton = gtk_check_button_new_with_label ("Visible");
-  gtk_object_set_data (GTK_OBJECT (tewindow), "visbutton", visbutton);
-
-  gtk_table_attach (GTK_TABLE (table1), visbutton, 1, 2, 0, 1,
+	gtk_table_attach (GTK_TABLE (table1), visbutton, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  gtk_widget_show (visbutton);
+	gtk_widget_show (visbutton);
 
-  hbox10 = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (hbox10);
-  gtk_table_attach (GTK_TABLE (table1), hbox10, 1, 2, 1, 2,
+	hbox10 = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox10);
+	gtk_table_attach (GTK_TABLE (table1), hbox10, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox10), 3);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox10), 3);
 
-  radiobutton8 = gtk_radio_button_new_with_label (show_group, "Name");
-  gtk_object_set_data(GTK_OBJECT(tewindow),"showlabbutton",radiobutton8);
-  show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton8));
-  gtk_widget_show (radiobutton8);
-  gtk_box_pack_start (GTK_BOX (hbox10), radiobutton8, FALSE, FALSE, 0);
+	radiobutton8 = gtk_radio_button_new_with_label (show_group, "Name");
+	gtk_object_set_data(GTK_OBJECT(tewindow),"showlabbutton",radiobutton8);
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton8));
+	gtk_widget_show (radiobutton8);
+	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton8, FALSE, FALSE, 0);
 
-  radiobutton9 = gtk_radio_button_new_with_label (show_group, "Value");
-  show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton9));
-  gtk_object_set_data(GTK_OBJECT(tewindow),"showvalbutton",radiobutton9);
-  gtk_widget_show (radiobutton9);
-  gtk_box_pack_start (GTK_BOX (hbox10), radiobutton9, FALSE, FALSE, 0);
+	radiobutton9 = gtk_radio_button_new_with_label (show_group, "Value");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton9));
+	gtk_object_set_data(GTK_OBJECT(tewindow),"showvalbutton",radiobutton9);
+	gtk_widget_show (radiobutton9);
+	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton9, FALSE, FALSE, 0);
 
-  radiobutton10 = gtk_radio_button_new_with_label (show_group, "Both");
-  show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton10));
-  gtk_object_set_data(GTK_OBJECT(tewindow),"showboth",radiobutton10);
-  gtk_widget_show (radiobutton10);
-  gtk_box_pack_start (GTK_BOX (hbox10), radiobutton10, FALSE, FALSE, 0);
+	radiobutton10 = gtk_radio_button_new_with_label (show_group, "Both");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton10));
+	gtk_object_set_data(GTK_OBJECT(tewindow),"showboth",radiobutton10);
+	gtk_widget_show (radiobutton10);
+	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton10, FALSE, FALSE, 0);
 
-  hbuttonbox2 = gtk_hbutton_box_new ();
-  gtk_widget_show (hbuttonbox2);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, FALSE, TRUE, 0);
+	hbuttonbox2 = gtk_hbutton_box_new ();
+	gtk_widget_show (hbuttonbox2);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, FALSE, TRUE, 0);
 
-  buttonok = gtk_button_new_with_label ("OK");
-  gtk_widget_show (buttonok);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
-  GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
+	buttonok = gtk_button_new_with_label ("OK");
+	gtk_widget_show (buttonok);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
+	GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
 
-  buttondelete = gtk_button_new_with_label ("Delete");
-  gtk_widget_show (buttondelete);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttondelete);
-  GTK_WIDGET_SET_FLAGS (buttondelete, GTK_CAN_DEFAULT);
+	buttondelete = gtk_button_new_with_label ("Delete");
+	gtk_widget_show (buttondelete);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttondelete);
+	GTK_WIDGET_SET_FLAGS (buttondelete, GTK_CAN_DEFAULT);
 
-
-  buttoncancel = gtk_button_new_with_label ("Cancel");
-  gtk_widget_show (buttoncancel);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttoncancel);
-  GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
+	buttoncancel = gtk_button_new_with_label ("Cancel");
+	gtk_widget_show (buttoncancel);
+	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttoncancel);
+	GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
 
 	o_attrib_get_name_value(list->text_string,name,val);
 
@@ -425,11 +680,9 @@ if(w_current->tewindow)return;
 	gtk_entry_set_text (GTK_ENTRY (val_entry), val);
 	gtk_entry_set_text (GTK_ENTRY (lab_entry), name);
 
-
 	w_current->tewindow=tewindow;
 
 	gtk_window_position(GTK_WINDOW (tewindow), GTK_WIN_POS_MOUSE);
-
 
 	gtk_signal_connect(GTK_OBJECT (tewindow), "destroy",
                                    GTK_SIGNAL_FUNC(destroy_window),
