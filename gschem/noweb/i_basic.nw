@@ -533,6 +533,11 @@ i_update_menus(TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Attributes/Show Name", TRUE);
     x_menus_sensitivity(w_current, "Attributes/Show Both", TRUE);
     x_menus_sensitivity(w_current, "Attributes/Toggle Visibility", TRUE);
+
+    /*  Menu items for hierarchy added by SDB 1.9.2005.  */
+    x_menus_popup_sensitivity(w_current, "/Down Schematic", TRUE);
+    x_menus_popup_sensitivity(w_current, "/Down Symbol", TRUE);
+
   } else {
     /* These strings should NOT be internationalized */
     x_menus_sensitivity(w_current, "Edit/Edit...", FALSE);
@@ -570,6 +575,11 @@ i_update_menus(TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Attributes/Show Name", FALSE);
     x_menus_sensitivity(w_current, "Attributes/Show Both", FALSE);
     x_menus_sensitivity(w_current, "Attributes/Toggle Visibility", FALSE);
+
+    /*  Menu items for hierarchy added by SDB 1.9.2005.  */
+    x_menus_popup_sensitivity(w_current, "/Down Schematic", FALSE);
+    x_menus_popup_sensitivity(w_current, "/Down Symbol", FALSE);
+	
   }
 }
  

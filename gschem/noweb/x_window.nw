@@ -1031,7 +1031,8 @@ x_window_create_main(TOPLEVEL *w_current)
   	gtk_widget_show (handlebox);
   }
 
-  get_main_popup(w_current, &(w_current->popup_menu));
+  /*  Try to create popup menu (appears in right mouse button  */
+  w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
 
   drawbox = gtk_hbox_new(FALSE, 0);
   gtk_container_border_width(GTK_CONTAINER(drawbox), 0);

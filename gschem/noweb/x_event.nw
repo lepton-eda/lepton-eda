@@ -112,7 +112,8 @@ x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
 #endif
 
   exit_if_null(w_current);
-  global_window_current = w_current;
+  /* nasty global variable */
+  global_window_current = (TOPLEVEL *) w_current;
 
   gdk_draw_pixmap(widget->window,
                   widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
@@ -540,6 +541,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
       if (w_current->third_button == POPUP_ENABLED) {
+	i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
       } else {
         w_current->event_state = MOUSEPAN; /* start */

@@ -121,28 +121,33 @@ void
 main_prog(int argc, char *argv[])
 {
   int i;
-  char *cwd;
+  char *cwd = NULL;
   TOPLEVEL *w_current;
   char *input_str = NULL;
   int argv_index;
   int first_page = 1;
-  char *geda_data;
+  char *geda_data = NULL;
+
+  w_current = (TOPLEVEL *) NULL;
 
 #if ENABLE_NLS
-  gtk_set_locale();  /* this should be equivalent to setlocale (LC_ALL, "") */
+  /* this should be equivalent to setlocale (LC_ALL, "") */
+/* const char *locale = gtk_set_locale(); */ 
 
   /* This must be the same for all locales */
-  setlocale(LC_NUMERIC, "POSIX");
+/*  setlocale(LC_NUMERIC, "POSIX"); */
 
   /* Disable gtk's ability to set the locale. */ 
-  /* If gtk is allowed to set the locale, then it will override the above */
+  /* If gtk is allowed to set the locale, then it will override the     */
   /* setlocale for LC_NUMERIC (which is important for proper PS output. */
   /* This may look funny here, given we make a call to gtk_set_locale() */
   /* above.  I don't know yet, if this is really the right thing to do. */
 #ifdef HAS_GTK22
-  gtk_disable_setlocale();
+/*   gtk_disable_setlocale();  */
 #endif
+
 #endif
+
 
   gtk_init(&argc, &argv);
   visual = gdk_visual_get_system();
@@ -379,8 +384,11 @@ main_prog(int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+#if 0
+
 #if ENABLE_NLS
   setlocale(LC_ALL, "");
+  setlocale(LC_NUMERIC, "POSIX");
   bindtextdomain(PACKAGE, LOCALEDIR);
   textdomain(PACKAGE);
 #ifdef HAS_GTK22
@@ -388,10 +396,15 @@ main (int argc, char *argv[])
 #endif
 #endif
 
+#endif
+
   /* disable the deprecated warnings in guile 1.6.3 */
   /* Eventually the warnings will need to be fixed */
-  if(getenv("GUILE_WARN_DEPRECATED")==NULL)
+
+#if 0
+  if(getenv("GUILE_WARN_DEPRECATED") == NULL)
     putenv("GUILE_WARN_DEPRECATED=no");
+#endif
 
   gh_enter(argc, argv, main_prog);
   return 0;
