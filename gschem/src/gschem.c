@@ -47,6 +47,7 @@ gschem_quit(void)
 	x_stroke_free_all();
 	x_dialog_hotkeys_free_all();
 	s_color_destroy_all();
+	o_undo_cleanup();
 	/* s_stroke_free(); no longer needed */
 
 	free(default_series_name);
@@ -59,7 +60,11 @@ gschem_quit(void)
 	 * condition in which window_head->... is still being refered
 	 * after this */
 
+	/* enable this to get more memory usage from glib */
+	/* You also have to enable something in glib I think */
 	/* g_mem_profile();*/
+	 
+
 	x_log_free();
 	gtk_main_quit();
 }
@@ -117,6 +122,7 @@ main_prog(int argc, char *argv[])
 
 	s_color_init();
 	g_rc_parse();
+	o_undo_init(); 
 
         colormap = gdk_colormap_get_system ();
 	x_window_setup_colors();
@@ -176,6 +182,7 @@ main_prog(int argc, char *argv[])
 
 			a_zoom_limits(w_current,
 				      w_current->page_current->object_head);
+			o_undo_savestate(w_current, UNDO_ALL);
 
 			/* now update the scrollbars */
 			x_hscrollbar_update(w_current);
@@ -197,6 +204,7 @@ main_prog(int argc, char *argv[])
 				       w_current->page_current->page_filename);
 				a_zoom_limits(w_current,
 				      w_current->page_current->object_head);
+			        o_undo_savestate(w_current, UNDO_ALL);
 				/* now update the scrollbars */
 				x_hscrollbar_update(w_current);
 				x_vscrollbar_update(w_current);
