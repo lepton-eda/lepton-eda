@@ -27,7 +27,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -38,12 +37,20 @@
 
 #include "../include/prototype.h"
 
+/* Kazu on July 16, 1999 - Added these macros to simplify the code */
+#define GET_BOX_WIDTH(w)			\
+	abs((w)->last_x - (w)->start_x)
+#define GET_BOX_HEIGHT(w)			\
+	abs((w)->last_y - (w)->start_y)
+#define GET_BOX_LEFT(w)				\
+	min((w)->start_x, (w)->last_x);
+#define GET_BOX_TOP(w)				\
+	min((w)->start_y, (w)->last_y);
 
 void
 o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int wleft, wright, wtop, wbottom; /* world bounds */
-
 
 	if (o_current->line_points == NULL) {
 		return;
@@ -51,69 +58,71 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	o_box_recalc(w_current, o_current);
 
-	/* Get read to check for visibility of this line by using it's */
-        /* bounding box */
-        world_get_box_bounds(w_current, o_current->line_points, &wleft, &wtop,
-&wright, &wbottom);
+	/* Get read to check for visibility of this line by using it's
+	 * bounding box */
+        world_get_box_bounds(w_current, o_current->line_points,
+			     &wleft  ,
+			     &wtop   ,
+			     &wright ,
+			     &wbottom);
 
         if (!visible(w_current, wleft, wtop, wright, wbottom)) {
                 return;
         }
 
-
-#if DEBUG 
+#if DEBUG
 	printf("drawing box\n\n");
 
-	printf("drawing box: %d %d %d %d\n", 
-o_current->line_points->screen_x1,
-o_current->line_points->screen_y1,
-o_current->line_points->screen_x1 + abs(o_current->line_points->screen_x2 - 
-                                        o_current->line_points->screen_x1), 
-o_current->line_points->screen_y1 + abs(o_current->line_points->screen_y2 -
-                                        o_current->line_points->screen_y1));
+	printf("drawing box: %d %d %d %d\n",
+	       o_current->line_points->screen_x1,
+	       o_current->line_points->screen_y1,
+	       o_current->line_points->screen_x1 +
+	       abs(o_current->line_points->screen_x2 -
+		   o_current->line_points->screen_x1),
+	       o_current->line_points->screen_y1 +
+	       abs(o_current->line_points->screen_y2 -
+		   o_current->line_points->screen_y1));
 #endif
 
-
 	if (w_current->override_color != -1 ) {  /* Override */
-		gdk_gc_set_foreground(w_current->gc, 
-			x_get_color(w_current->override_color));
-		gdk_draw_rectangle(w_current->window, 
-			w_current->gc, FALSE, 
-			o_current->line_points->screen_x1, 
-			o_current->line_points->screen_y1, 
-			abs(o_current->line_points->screen_x2 - 
-					o_current->line_points->screen_x1), 
-			abs(o_current->line_points->screen_y2 -
-					o_current->line_points->screen_y1)); 
-		gdk_draw_rectangle(w_current->backingstore, 
-			w_current->gc, FALSE, 
-			o_current->line_points->screen_x1, 
-			o_current->line_points->screen_y1, 
-			abs(o_current->line_points->screen_x2 - 
-					o_current->line_points->screen_x1), 
-			abs(o_current->line_points->screen_y2 -
-					o_current->line_points->screen_y1)); 
+		gdk_gc_set_foreground(w_current->gc,
+				      x_get_color(w_current->override_color));
+		gdk_draw_rectangle(w_current->window,
+				   w_current->gc, FALSE,
+				   o_current->line_points->screen_x1,
+				   o_current->line_points->screen_y1,
+				   abs(o_current->line_points->screen_x2 -
+				       o_current->line_points->screen_x1),
+				   abs(o_current->line_points->screen_y2 -
+				       o_current->line_points->screen_y1));
+		gdk_draw_rectangle(w_current->backingstore,
+				   w_current->gc, FALSE,
+				   o_current->line_points->screen_x1,
+				   o_current->line_points->screen_y1,
+				   abs(o_current->line_points->screen_x2 -
+				       o_current->line_points->screen_x1),
+				   abs(o_current->line_points->screen_y2 -
+				       o_current->line_points->screen_y1));
 	} else { /* regular */
-		gdk_gc_set_foreground(w_current->gc, 
-			x_get_color(o_current->color));
-		gdk_draw_rectangle(w_current->window, 
-			w_current->gc, FALSE, 
-			o_current->line_points->screen_x1, 
-			o_current->line_points->screen_y1, 
-			abs(o_current->line_points->screen_x2 - 
-					o_current->line_points->screen_x1), 
-			abs(o_current->line_points->screen_y2 -
-					o_current->line_points->screen_y1)); 
-		gdk_draw_rectangle(w_current->backingstore, 
-			w_current->gc, FALSE, 
-			o_current->line_points->screen_x1, 
-			o_current->line_points->screen_y1, 
-			abs(o_current->line_points->screen_x2 -
-					o_current->line_points->screen_x1), 
-			abs(o_current->line_points->screen_y2 -
-					o_current->line_points->screen_y1)); 
+		gdk_gc_set_foreground(w_current->gc,
+				      x_get_color(o_current->color));
+		gdk_draw_rectangle(w_current->window,
+				   w_current->gc, FALSE,
+				   o_current->line_points->screen_x1,
+				   o_current->line_points->screen_y1,
+				   abs(o_current->line_points->screen_x2 -
+				       o_current->line_points->screen_x1),
+				   abs(o_current->line_points->screen_y2 -
+				       o_current->line_points->screen_y1));
+		gdk_draw_rectangle(w_current->backingstore,
+				   w_current->gc, FALSE,
+				   o_current->line_points->screen_x1,
+				   o_current->line_points->screen_y1,
+				   abs(o_current->line_points->screen_x2 -
+				       o_current->line_points->screen_x1),
+				   abs(o_current->line_points->screen_y2 -
+				       o_current->line_points->screen_y1));
 	}
-
 }
 
 void
@@ -131,16 +140,15 @@ o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	screen_x2 = o_current->line_points->screen_x2;
 	screen_y2 = o_current->line_points->screen_y2;
 
-        gdk_gc_set_foreground(w_current->outline_xor_gc, 
-		x_get_darkcolor(o_current->color));
-	gdk_draw_rectangle(w_current->window, 
-			w_current->outline_xor_gc, FALSE,
-			screen_x1+dx, 
-			screen_y1+dy, 
-			abs(screen_x2-screen_x1), 
-			abs(screen_y2-screen_y1)); 
+        gdk_gc_set_foreground(w_current->outline_xor_gc,
+			      x_get_darkcolor(o_current->color));
+	gdk_draw_rectangle(w_current->window,
+			   w_current->outline_xor_gc, FALSE,
+			   screen_x1 + dx,
+			   screen_y1 + dy,
+			   abs(screen_x2 - screen_x1),
+			   abs(screen_y2 - screen_y1));
 }
-
 
 void
 o_box_start(TOPLEVEL *w_current, int x, int y)
@@ -148,20 +156,24 @@ o_box_start(TOPLEVEL *w_current, int x, int y)
 	int box_width, box_height;
 
         w_current->last_x = w_current->start_x = fix_x(w_current, x);
-        w_current->last_y = w_current->start_y = fix_y(w_current, y); 
+        w_current->last_y = w_current->start_y = fix_y(w_current, y);
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);
+	/* TODO: use a macro */
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
 
-/* 
+#if 0
 	printf("start_x,y %d %d\n", w_current->start_x, w_current->start_y);
-*/
-	
-	gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_color(w_current->select_color));
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-			FALSE, w_current->start_x, w_current->start_y,
-			box_width, box_height);
+#endif
+
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE,
+			   w_current->start_x,
+			   w_current->start_y,
+			   box_width ,
+			   box_height);
 }
 
 void
@@ -180,54 +192,61 @@ o_box_end(TOPLEVEL *w_current, int x, int y)
 	w_current->last_x = fix_x(w_current, x);
         w_current->last_y = fix_y(w_current, y);
 
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
+	box_left   = GET_BOX_LEFT  (w_current);
+	box_top    = GET_BOX_TOP   (w_current);
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);	
-
-	if( w_current->last_y < w_current->start_y )
-                box_top = w_current->last_y;
-        else
-                box_top = w_current->start_y;
-
-        if( w_current->last_x < w_current->start_x )
-                box_left = w_current->last_x;
-        else
-                box_left = w_current->start_x;
-
-
-	gdk_gc_set_foreground(w_current->xor_gc, 
-				x_get_color(w_current->select_color) );
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-			FALSE, box_left, box_top,
-                        box_width, box_height); 
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE,
+			   box_left  ,
+			   box_top   ,
+			   box_width ,
+			   box_height);
 
 	if ((box_width == 0) && (box_height == 0)) {
         	w_current->start_x = (-1);
         	w_current->start_y = (-1);
-        	w_current->last_x = (-1);
-        	w_current->last_y = (-1);
+        	w_current->last_x  = (-1);
+        	w_current->last_y  = (-1);
 		return;
 	}
 
-	gdk_gc_set_foreground(w_current->gc, 
-			x_get_color(w_current->graphic_color));
-	gdk_draw_rectangle(w_current->window, w_current->gc, 
-			FALSE, box_left, box_top,
-                        box_width, box_height); 
-	gdk_draw_rectangle(w_current->backingstore, w_current->gc, 
-			FALSE, box_left, box_top,
-			box_width, box_height); 
+	gdk_gc_set_foreground(w_current->gc,
+			      x_get_color(w_current->graphic_color));
+	gdk_draw_rectangle(w_current->window, w_current->gc,
+			   FALSE,
+			   box_left,
+			   box_top,
+			   box_width,
+			   box_height);
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc,
+			   FALSE,
+			   box_left  ,
+			   box_top   ,
+			   box_width ,
+			   box_height);
 
-        SCREENtoWORLD(w_current, box_left, box_top, &x1, &y1);
-        SCREENtoWORLD(w_current, box_left+box_width, box_top+box_height, &x2, &y2);
+        SCREENtoWORLD(w_current,
+		      box_left,
+		      box_top,
+		      &x1,
+		      &y1);
+        SCREENtoWORLD(w_current,
+		      box_left + box_width,
+		      box_top  + box_height,
+		      &x2,
+		      &y2);
 	x1 = snap_grid(w_current, x1);
 	y1 = snap_grid(w_current, y1);
 	x2 = snap_grid(w_current, x2);
 	y2 = snap_grid(w_current, y2);
 
-
-        w_current->page_current->object_tail = o_box_add(w_current, w_current->page_current->object_tail, 
-		OBJ_BOX, w_current->graphic_color, x1, y1, x2, y2);
+        w_current->page_current->object_tail =
+		o_box_add(w_current, w_current->page_current->object_tail,
+			  OBJ_BOX, w_current->graphic_color, x1, y1, x2, y2);
 
 #if DEBUG
         printf("coords: %d %d %d %d\n", x1, y2, x2, y2);
@@ -235,11 +254,11 @@ o_box_end(TOPLEVEL *w_current, int x, int y)
 
         w_current->start_x = (-1);
         w_current->start_y = (-1);
-        w_current->last_x = (-1);
-        w_current->last_y = (-1);
+        w_current->last_x  = (-1);
+        w_current->last_y  = (-1);
 
-	w_current->page_current->CHANGED=1;
-}                         
+	w_current->page_current->CHANGED = 1;
+}
 
 void
 o_box_rubberbox(TOPLEVEL *w_current, int x, int y)
@@ -252,53 +271,39 @@ o_box_rubberbox(TOPLEVEL *w_current, int x, int y)
 		return;
         }
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
+	box_left   = GET_BOX_LEFT  (w_current);
+	box_top    = GET_BOX_TOP   (w_current);
 
-	if( w_current->last_y < w_current->start_y )
-                box_top = w_current->last_y;
-        else
-                box_top = w_current->start_y;
-
-        if( w_current->last_x < w_current->start_x )
-                box_left = w_current->last_x;
-        else
-                box_left = w_current->start_x;
-
-	gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_color(w_current->select_color) );
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-			FALSE, box_left, box_top,
-			box_width, box_height);
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE, box_left, box_top,
+			   box_width, box_height);
 
         w_current->last_x = fix_x(w_current, x);
         w_current->last_y = fix_y(w_current, y);
 
-/*        if (diff_x >= diff_y) {
+#if 0
+        if (diff_x >= diff_y) {
                 last_y = start_y;
         } else {
                 last_x = start_x;
-        }*/
+        }
+#endif
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
+	box_left   = GET_BOX_LEFT  (w_current);
+	box_top    = GET_BOX_TOP   (w_current);
 
-        if( w_current->last_y < w_current->start_y )
-                box_top = w_current->last_y;
-        else
-                box_top = w_current->start_y;
-
-        if( w_current->last_x < w_current->start_x )
-                box_left = w_current->last_x;
-        else
-                box_left = w_current->start_x;
-
-
-
-	gdk_gc_set_foreground(w_current->xor_gc, 
-		x_get_color(w_current->select_color) );
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-		FALSE, box_left, box_top, 
-		box_width, box_height);
-}                                                       
-
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE,
+			   box_left  ,
+			   box_top   ,
+			   box_width ,
+			   box_height);
+}
