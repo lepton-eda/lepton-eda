@@ -66,8 +66,12 @@ void main_prog(int argc, char *argv[])
 #endif
 
     /* this is a kludge to make sure that spice mode gets set */
+    /*  Hacked by SDB to allow spice netlisters of arbitrary name
+     *	as long as they begin with "spice".  For example, this spice
+     *  netlister is valid: "spice-sdb".
+     */
     if (guile_proc) {
-	if (strcmp(guile_proc, "spice") == 0) {
+	if (strncmp(guile_proc, "spice", 5) == 0) {
 	    netlist_mode = SPICE;
 	}
     }

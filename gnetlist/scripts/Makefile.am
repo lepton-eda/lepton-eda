@@ -5,5 +5,5 @@ bin_SCRIPTS = sw2asc
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak sw2asc
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure sw2asc
