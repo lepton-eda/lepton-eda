@@ -32,6 +32,7 @@ typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
 typedef struct st_filedialog FILEDIALOG;
 typedef struct st_selection SELECTION;
+typedef struct st_undo UNDO;
 
 /* rename to the real thing once things work right */
 typedef struct st_conn CONN;
@@ -163,6 +164,19 @@ struct st_selection {
         SELECTION *next;
 };
 
+struct st_undo {
+	
+	char *filename;
+
+	OBJECT *object_head;
+
+	int type;
+	int left, top, right, bottom;
+
+        UNDO *prev;
+        UNDO *next;
+};
+
 struct st_page {
 
 	int pid;
@@ -202,17 +216,23 @@ struct st_page {
 	/* used only in gnetlist */
 	GHashTable *nethash_table;
 
+	/* Undo/Redo Stacks and pointers */	
+	/* needs to go into page mechanism actually */
+	UNDO *undo_bottom;	
+	UNDO *undo_current;
+	UNDO *undo_tos; 	/* Top Of Stack */
+
+	/* up and down the hierarchy */
+	/* this holds the pid of the parent page */
+	int up;
+	/* int down; not needed */
+
 	/* used to control which pages are viewable when moving around */
 	int page_control;
 
 	/* left to right movement */
 	PAGE *prev;
 	PAGE *next;
-
-	/* up and down the hierarchy */
-	/* this holds the pid of the parent page */
-	int up;
-	/* PAGE *down; not needed */
 };
 
 struct st_filedialog {
@@ -346,7 +366,7 @@ struct st_toplevel {
 	/* in gschem to keep track of the current buffer number */
 	int buffer_number;
 
-	/* hierarchy system */
+	
 
 	void (*last_callback)();	  	/* Last i_call* cmd executed */
 	char cwd[256]; /* size is hack */ 	/* current working directory */
@@ -405,7 +425,7 @@ struct st_toplevel {
 
 	/* misc dialogs */
 	GtkWidget *tiwindow;			/* text input */
-	GtkWidget *tientry;
+/*	GtkWidget *tientry;*/
 	GtkWidget *tewindow;			/* text edit */
 	GtkWidget *teentry;
 	GtkWidget *sewindow;			/* slot edit */
@@ -510,6 +530,9 @@ struct st_toplevel {
 	int continue_component_place; /* controls if after doing a place the */
 				      /* same component can be placed again */
 
+	int undo_levels;	/* Number of undo levels stored on disk */
+	int undo_control;	/* Controls if undo is enabled or not */
+	int undo_type;	        /* Type of undo (disk/memory) */
 
 	int print_output_type;			/* either window or limits */
 
