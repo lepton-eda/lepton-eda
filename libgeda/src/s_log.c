@@ -61,6 +61,8 @@ s_log_init(char *filename)
 	logfile_fd = open(filename, O_RDWR|O_CREAT|O_TRUNC, 0600);	
 
 	if (logfile_fd == -1) {
+		logfile_fd = -1;
+		do_logging = FALSE;
 		fprintf(stderr, "Could not open log file: %s\n", "gschem.log");
 		fprintf(stderr, "Errno was: %d\n", errno);
 	}

@@ -699,6 +699,29 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 			a_current=a_current->next;
 		}	
 	  }
+
+	/* search for attributes outside */
+
+		if (o_current->type == OBJ_NTEXT) {
+		 	val = o_attrib_get_name_value(
+					o_current->text_string, 
+					found_name, found_value);
+			if (val) {
+			   if (strcmp(name, found_name) == 0) {
+				if (counter != internal_counter) {
+					internal_counter++;	
+				} else {
+				   return_string = (char *) 
+						malloc(
+			     			 sizeof(char)*
+						 strlen(found_value)+1);
+				  strcpy(return_string, found_value);
+				  return(return_string);
+				}
+			   }
+			}	
+		}
+
 	  o_current=o_current->next;
 	}
 	
@@ -760,6 +783,28 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
 			a_current=a_current->next;
 		}	
 	  }
+
+	/* search for attributes outside */
+
+		if (o_current->type == OBJ_NTEXT) {
+		 	val = o_attrib_get_name_value(
+					o_current->text_string, 
+					found_name, found_value);
+			if (val) {
+			   if (strcmp(name, found_name) == 0) {
+				   return_string = (char *) 
+						malloc(
+			     			 sizeof(char)*
+						 strlen(found_value)+1);
+				  strcpy(return_string, found_value);
+				  if (return_found) {
+					*return_found = o_current;
+				  return(return_string);
+				}
+			   }
+			}	
+		}
+
 	  o_current=o_current->next;
 	}
 	
@@ -818,6 +863,28 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 			}
 			a_current=a_current->next;
 		}	
+
+	/* search for attributes outside */
+
+		if (o_current->type == OBJ_NTEXT) {
+		 	val = o_attrib_get_name_value(
+					o_current->text_string, 
+					found_name, found_value);
+			if (val) {
+			   if (strstr(found_name, name)) {
+				if (counter != internal_counter) {
+					internal_counter++;	
+				} else {
+				   return_string = (char *) 
+						malloc(
+			     			 sizeof(char)*
+						 strlen(found_value)+1);
+				  strcpy(return_string, found_value);
+				  return(return_string);
+				}
+			   }
+			}	
+		}
 	  }
 	
 	return (NULL);
@@ -825,6 +892,7 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 
 /* this function search for the counter'th occurance of the string attribute */
 /* be sure caller free's return value */
+/* this routine should NOT be used anywhere */
 OBJECT *
 o_attrib_search_attrib(OBJECT *list, char *attribute, int counter) 
 {
@@ -860,6 +928,11 @@ o_attrib_search_attrib(OBJECT *list, char *attribute, int counter)
 			a_current=a_current->next;
 		}	
 	  }
+
+		/* search for the attribute outside here... */
+	/* I don't think I have to do this here,  since this routine isn't
+	   used */
+
 	  o_current=o_current->next;
 	}
 	
@@ -1054,8 +1127,29 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 			}
 			a_current=a_current->next;
 		}	
+
 	}
-	
+	/* search for attributes outside */
+
+	if (o_current->type == OBJ_NTEXT) {
+	 	val = o_attrib_get_name_value(o_current->text_string, 
+					found_name, found_value);
+
+		if (val) {
+		   if (strcmp(name, found_name) == 0) {
+			   return_string = (char *) 
+					malloc(
+		     			 sizeof(char)*
+					 strlen(found_value)+1);
+			  strcpy(return_string, found_value);
+			  if (return_found) {
+			  	*return_found = found;
+			  }
+			  return(return_string);
+			}
+		}	
+	}
+
 	return (NULL);
 } 
 

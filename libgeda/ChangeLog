@@ -13,6 +13,9 @@ Most recent changes are at the top of this file
 	Put in another check in the o_ales_update_nets function to 
 	make sure we don't add duplicate objects into the ales_list's
 
+	Added in code which allows for unattached toplevel attributes
+	(o_attrib.c)
+
 5/99	See ChangeLog in gschem for all the changes related to the new
 	connection stuff
 
