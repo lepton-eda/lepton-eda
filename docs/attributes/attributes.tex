@@ -26,7 +26,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(http://www.gnu.org/copyleft/fdl.html)}
-\date{February 23rd, 2003}
+\date{September 1st, 2003}
 
 \begin{document}
 
@@ -105,23 +105,15 @@ Example: \texttt{description=4 NAND gates with 2 inputs}
 
 \subsection{\bf author\label{author}}
 The {\bf author} attribute identifies the name of the author of this
-symbol.  This attribute is optional, but it is nice to know who create
-which symbols.  This symbol is fairly free form and it can also include
-people's names who modified the symbol.
+symbol and their e-mail address.  This attribute is optional, but it is
+nice to know who created which symbols.  It also serves the purpose of
+known who to contact if there are questions about the intent(s) of the
+symbol.  This attribute is free form and it can also include people's
+names who modified the symbol as well as multiple e-mail addresses.
+It is probably also a good idea to obfuscate the e-mail address so it
+is not harvested for spam purposes.
 
-Example: \texttt{author=Ales Hvezda}
-
-
-\subsection{\bf email\label{email}}
-The {\bf email} attribute identifies the email of the author of this
-symbol.  This attribute is also optional, but keeping track of who created
-the symbol and a contact address is very useful if there are questions
-about the symbol, which only the original author might be able to answer.
-It can also include the email address of who else modified the symbol.
-It is probably also a good idea to obfuscate the address so it is not
-harvested for spam purposes.
-
-Example: \texttt{email=ahvezdaATseul.org}
+Example: \texttt{author=Ales Hvezda ahvezdaATgeda.seul.org}
 
 
 \subsection{\bf comment\label{comment}}
@@ -373,6 +365,9 @@ The {\bf type=} attribute is obsolete and cannot be used.  It was
 used to provide type information on pins. The replacement
 attribute for this is {\bf pintype} (\ref{pintype}).
 
+\subsection{\bf email\label{email}}
+The information in this attribute has been merged with {\bf author}
+(\ref{author}).
 
 \newpage
 \section{Document Revision History}

@@ -1,3 +1,8 @@
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Merged author= and email= together.
+	Suggestion by Werner Hoch.
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Improved the configuration summary message.
