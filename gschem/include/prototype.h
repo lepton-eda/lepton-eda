@@ -811,7 +811,7 @@ void x_fileselect_lib_select(GtkWidget *widget, gint row, gint column, GdkEventB
 void x_fileselect_comp_select(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
 void x_fileselect_comp_apply(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_comp_close(GtkWidget *w, FILEDIALOG *f_current);
-int x_fileselect_search_library(FILEDIALOG *f_current, char *library, char *string);
+int x_fileselect_search_library(FILEDIALOG *f_current, char *library, const char *string);
 void x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
 /* x_grid.c */
@@ -825,7 +825,7 @@ gint image_1024(GtkWidget *w, TOPLEVEL *w_current);
 gint image_1280(GtkWidget *w, TOPLEVEL *w_current);
 gint image_1600(GtkWidget *w, TOPLEVEL *w_current);
 gint image_3200(GtkWidget *w, TOPLEVEL *w_current);
-void x_image_lowlevel(TOPLEVEL *w_current, char* filename);
+void x_image_lowlevel(TOPLEVEL *w_current, const char* filename);
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 int x_image_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);

@@ -167,7 +167,7 @@ o_image_close(void)
 
 <<o_image.c : o_image_write()>>=
 int
-o_image_write(char *filename)
+o_image_write(const char *filename)
 {
   FILE *out;
 

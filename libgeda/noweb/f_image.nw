@@ -187,7 +187,7 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 
 <<f_image.c : f_image_write()>>=
 void
-f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, 
+f_image_write(TOPLEVEL *w_current, const char *filename, int width, int height, 
 	int color_mode)
 {
 

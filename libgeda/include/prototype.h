@@ -1,7 +1,7 @@
 /* a_basic.c */
 void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp);
 void o_save_write_header(FILE *fp);
-int o_save(TOPLEVEL *w_current, char *filename);
+int o_save(TOPLEVEL *w_current, const char *filename);
 OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename);
 void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale);
 
@@ -9,13 +9,13 @@ void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale);
 int f_open(TOPLEVEL *w_current, char *filename);
 void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
-int f_save(TOPLEVEL *w_current, char *filename);
+int f_save(TOPLEVEL *w_current, const char *filename);
 char* f_get_directory_from_path(char *path);
-char* f_normalize_filename(char *filename);
+char* f_normalize_filename(const gchar *filename);
 
 /* f_image.c */
 void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
-void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
+void f_image_write(TOPLEVEL *w_current, const char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
 
 /* f_print.c */
@@ -24,11 +24,11 @@ void f_print_set_color(FILE *fp, int color);
 float f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, int world_right, int world_bottom);
 void f_print_footer(FILE *fp);
 void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale);
-int f_print(TOPLEVEL *w_current, char *filename);
+int f_print(TOPLEVEL *w_current, const char *filename);
 void f_print_set_type(TOPLEVEL *w_current, int type);
 
 /* g_basic.c */
-int g_read_file(char *filename);
+int g_read_file(const gchar *filename);
 
 /* g_rc.c */
 gint g_rc_parse_general(TOPLEVEL *w_current,
@@ -289,7 +289,7 @@ void o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object);
 void o_image_init(void);
 void o_image_create(int x, int y, int color_mode);
 void o_image_close(void);
-int o_image_write(char *filename);
+int o_image_write(const char *filename);
 int o_image_geda2gd_color(int color);
 
 /* o_line_basic.c */
@@ -549,6 +549,7 @@ TOPLEVEL *s_project_create_new(void);
 void s_project_close(TOPLEVEL *pr_current);
 void s_project_close_all(void);
 TOPLEVEL *s_project_get_ptr(int wid);
+TOPLEVEL *s_project_fill_out(TOPLEVEL *pr_current);
 
 /* s_scratch.c */
 void s_scratch_string_init(void);

@@ -353,7 +353,7 @@ This is the top of the [[s_project_*]] functions
 @end defun
 
 <<s_project.c : s_project_fill_out()>>=
-int s_project_fill_out(TOPLEVEL *pr_current)
+TOPLEVEL * s_project_fill_out(TOPLEVEL *pr_current)
 {
 
   pr_current->wid = global_wid;

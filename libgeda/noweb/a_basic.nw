@@ -200,7 +200,7 @@ o_save_write_header(FILE *fp)
 
 <<a_basic.c : o_save()>>=
 int
-o_save(TOPLEVEL *w_current, char *filename)
+o_save(TOPLEVEL *w_current, const char *filename)
 {
   OBJECT *o_current=NULL;
   FILE *fp;

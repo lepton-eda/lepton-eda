@@ -503,7 +503,7 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 
 <<f_print.c : f_print()>>=
 int
-f_print(TOPLEVEL *w_current, char *filename)
+f_print(TOPLEVEL *w_current, const char *filename)
 {
   FILE *fp;
   int origin_x, origin_y, bottom, right;

@@ -846,7 +846,7 @@ void
 x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 {
   TOPLEVEL *w_current;
-  char *string;
+  const char *string;
   int len;
 
   w_current = f_current->toplevel;
@@ -1241,7 +1241,7 @@ void
 x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
 {
   TOPLEVEL *w_current;
-  char *string;
+  const char *string;
   int i;
 
   w_current = f_current->toplevel;
@@ -1869,7 +1869,7 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
 <<x_fileselect.c : x_fileselect_search_library()>>=
 int
 x_fileselect_search_library(FILEDIALOG *f_current,
-                            char *library, char *string) 
+                            char *library, const char *string) 
 {
   GSList *filenames, *filename;
   int ret;
@@ -1932,7 +1932,7 @@ void
 x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
 {
   TOPLEVEL *w_current;
-  char *string;
+  const char *string;
   int lib_count;
   int flag;
 
@@ -2447,7 +2447,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
       /* files data structure is not used for components */
       x_fileselect_setup_list_buffers(f_current,
-                                      g_slist_length (s_clib_get_directories()), 0);
+                                      g_slist_length ((GSList *) s_clib_get_directories()), 0);
       x_fileselect_comp_update_current(f_current, NULL, NULL);
       x_fileselect_comp_fill_libs(w_current, f_current);
     }	

@@ -1355,7 +1355,7 @@ o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 
   /* identify symbol name */
   if (is_embedded) {
-    GSList *clibs;
+    const GSList *clibs;
     
     /* skip over EMBEDDED word */
     basename = g_strdup (o_current->complex_basename + 8);

@@ -121,7 +121,7 @@ attrib_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event,
 void 
 attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
-  char *value, *label;
+  const char *value, *label;
   char *newtext;
   GtkEntry *value_entry, *name_entry;
   GtkWidget *visbutton, *show_options;

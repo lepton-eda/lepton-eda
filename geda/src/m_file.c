@@ -278,7 +278,8 @@ static void FileNewComplete(void)
 	GtkEntry *pFileNewTypeComboEntry, *pFileNewNameEntry;
 	BOOL bInFileNew;
 	int iId, iResult;
-	char szNameFromTable[TEXTLEN], szExt[TEXTLEN], *pNameFromEntry;
+	char szNameFromTable[TEXTLEN], szExt[TEXTLEN];
+	const char *pNameFromEntry;
 	
 	/* read extension from combo */
 	

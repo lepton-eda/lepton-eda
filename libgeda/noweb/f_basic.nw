@@ -48,6 +48,13 @@
 
 #include <stdio.h> 
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> 
+#endif
+
+#include <sys/param.h>
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 #include <libguile.h>
 
@@ -212,7 +219,7 @@ f_save_close(TOPLEVEL *w_current, char *filename)
 
 <<f_basic.c : f_save()>>=
 int
-f_save(TOPLEVEL *w_current, char *filename)
+f_save(TOPLEVEL *w_current, const char *filename)
 {
   return o_save(w_current, filename);
 }
@@ -228,9 +235,9 @@ Given a filename in any format, this returns the full, absolute resolved filenam
 @end defun
 
 <<f_basic.c : f_normalize_filename()>>=
-char* f_normalize_filename(char *filename)
+char* f_normalize_filename(const gchar *filename)
 {
-  char filename_buffer[1024];  /* nasty hack for realpath */
+  char filename_buffer[MAXPATHLEN];  /* nasty hack for realpath */
   char *full_filename;
 
   /*  Check for pathological case  */
@@ -238,7 +245,7 @@ char* f_normalize_filename(char *filename)
     return NULL;
   }
 
-  realpath(filename, &filename_buffer);  /* places reult in filename_buffer */
+  realpath(filename, filename_buffer);  /* places reult in filename_buffer */
   full_filename = u_basic_strdup(filename_buffer);
 
 #ifdef DEBUG

@@ -175,7 +175,7 @@ load_error_handler(void *data, SCM tag, SCM throw_args)
 
 <<g_basic.c : g_read_file()>>=
 int
-g_read_file(char *filename)
+g_read_file(const gchar *filename)
 {
 	SCM port;
 	SCM eval_result = SCM_BOOL_F;

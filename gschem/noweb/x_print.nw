@@ -345,7 +345,7 @@ gint
 x_print_print(GtkWidget *w, TOPLEVEL *w_current)
 {
   int status;
-  char *filename =
+  const char *filename =
   gtk_entry_get_text(GTK_ENTRY(w_current->pfilename_entry));
 
   if (filename[0] != '\0') {

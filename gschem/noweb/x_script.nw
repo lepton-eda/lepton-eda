@@ -73,7 +73,7 @@ void
 script_selection_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
   int len;
-  char *string;
+  const char *string;
 
   /* who frees this? */
   string = gtk_file_selection_get_filename(

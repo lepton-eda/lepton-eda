@@ -307,7 +307,7 @@ create_menu_size (TOPLEVEL *w_current)
 
 <<x_image.c : x_image_lowlevel()>>=
 void
-x_image_lowlevel(TOPLEVEL *w_current, char* filename)
+x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 {
   int width, height;
   int save_height, save_width;
@@ -372,7 +372,7 @@ x_image_lowlevel(TOPLEVEL *w_current, char* filename)
 gint
 x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 {
-  char *filename=NULL;
+  const char *filename=NULL;
   filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
 
   if (filename[0] != '\0') {
