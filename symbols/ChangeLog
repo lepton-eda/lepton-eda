@@ -1,3 +1,8 @@
+2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* misc/busripper-1.sym, busripper-2.sym: Added bus ripper symbols.
+	Initial version of busripper-1.sym was created by Egil Kvaleberg.
+
 2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
