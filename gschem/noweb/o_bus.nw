@@ -92,7 +92,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #endif
 
   if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
 
     if (size < 0)
       size=0;
@@ -193,7 +193,7 @@ o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 			x_get_darkcolor(color));
 
   if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -247,7 +247,7 @@ o_bus_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT 
 
 #if 0
   if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->outline_xor_gc, size+1,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -385,7 +385,7 @@ o_bus_start(TOPLEVEL *w_current, int x, int y)
 #endif
 
   if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -434,7 +434,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
     color = w_current->override_bus_color;
   }
 
-  size = SCREENabs(w_current, 30);
+  size = SCREENabs(w_current, BUS_WIDTH);
 
   if (w_current->bus_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
@@ -569,7 +569,7 @@ o_bus_rubberbus(TOPLEVEL *w_current, int x, int y)
   }
 
   if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -630,7 +630,7 @@ o_bus_eraserubber(TOPLEVEL *w_current)
   int size;
 
   if (w_current->bus_style == THICK ) {
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
 
     if (size < 0)
       size=0;
@@ -671,7 +671,7 @@ o_bus_xorrubber(TOPLEVEL *w_current)
 
   if (w_current->bus_style == THICK ) {
 
-    size = SCREENabs(w_current, 30);
+    size = SCREENabs(w_current, BUS_WIDTH);
 
     if (size < 0)
       size=0;

@@ -87,7 +87,7 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #endif
 
   if (w_current->pin_style == THICK ) {
-    size = SCREENabs(w_current, 10);
+    size = SCREENabs(w_current, PIN_WIDTH);
     gdk_gc_set_line_attributes(w_current->gc, size, GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
                                GDK_JOIN_MITER);
@@ -184,7 +184,7 @@ o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
   gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor(color));
 
   if (w_current->pin_style == THICK ) {
-    size = SCREENabs(w_current, 10);
+    size = SCREENabs(w_current, PIN_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -223,7 +223,7 @@ o_pin_start(TOPLEVEL *w_current, int x, int y)
   w_current->last_y = w_current->start_y = fix_y(w_current, y);
 
   if (w_current->pin_style == THICK ) {
-    size = SCREENabs(w_current, 10);
+    size = SCREENabs(w_current, PIN_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
                                GDK_CAP_NOT_LAST,
@@ -278,7 +278,7 @@ o_pin_end(TOPLEVEL *w_current, int x, int y)
   /* w_current->last_x = fix_x(w_current, x);
      w_current->last_y = fix_y(w_current, y);*/
 
-  size = SCREENabs(w_current, 10);
+  size = SCREENabs(w_current, PIN_WIDTH);
   if (w_current->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
                                GDK_LINE_SOLID,
@@ -376,7 +376,7 @@ o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
     return;
   }
 
-  size = SCREENabs(w_current, 10);
+  size = SCREENabs(w_current, PIN_WIDTH);
 
   if (w_current->pin_style == THICK ) {
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
@@ -434,7 +434,7 @@ o_pin_eraserubber(TOPLEVEL *w_current)
   int size;
 
   if (w_current->net_style == THICK ) {
-    size = SCREENabs(w_current, 10);
+    size = SCREENabs(w_current, PIN_WIDTH);
 
     if (size < 0)
       size=0;
