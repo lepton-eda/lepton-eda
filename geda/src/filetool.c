@@ -98,19 +98,24 @@ char *FileGetName(const char *szFilename)
 {
 	static char szName[TEXTLEN];
 	int i, j;
-	
-	szName[0] = 0;
-	for (i = strlen(szFilename) - 1; i >= 0 && szFilename[i] != '/'; i --)
+
+	/* extract only filename with extension */
+	for (i = strlen(szFilename) - 1; i >= 0 && szFilename[i] != G_DIR_SEPARATOR; i --)
 		;
-	for (j = strlen(szFilename) - 1; j >= i && szFilename[j] != '.'; j --)
-		;
-	if (j < i)
-		j = strlen(szFilename) - 1;
-	if (j - i > TEXTLEN)
-		return NULL;
-	strncpy(szName, szFilename + i + 1, j - i - 1);
-	szName[j - i - 1] = 0;
+	if (i < 0)
+		i = 0;
+	if (szFilename[i] == G_DIR_SEPARATOR)
+		i ++;
+	if (i > strlen(szFilename) - 1)
+		i = strlen(szFilename) - 1;
+	strcpy(szName, szFilename + i);
 	
+	/* remove extension */
+	for (j = strlen(szName) - 1; j >= 0 && szName[j] != '.'; j --)
+		;
+	if (j >= 0)
+		szName[j] = 0;
+
 	return szName;
 }
 
