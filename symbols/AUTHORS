@@ -579,7 +579,13 @@ richard (e-mail only)	- For contributing the following symbols:
 
 			  mc68hc908gp32cp-1.sym
 
-			   
+Stuart Brorson: 	- For contributing the following symbols:
+
+			  spice/idc-1.sym spice/spice-directive-1.sym
+			  spice/spice-include-1.sym spice/spice-model-1.sym
+			  spice/spice-options-1.sym 
+			  spice/spice-subcircuit-IO-1.sym
+			  spice/spice-subcircuit-LL-1.sym
 
 The following people contributed symbols via the online symbol upload
 (E-mails purposefully truncated):

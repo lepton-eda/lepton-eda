@@ -6,6 +6,9 @@
 	Integrated Dan McMahill's new switcap backend (the
 	symbols). switchcap/ is a new directory
 
+	* spice/*.sym: Integrated Stuart Brorson's advanced spice 
+	netlister (the symbols)
+
 2003-03-30 Werner Hoch <werner.ho@gmx.de>
 	* max/max038-1.sym completed, max/max038-2.sym added
 	* max/max100-1.sym changed (missing pins)
