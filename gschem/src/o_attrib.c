@@ -307,6 +307,8 @@ o_attrib_rubberattrib(TOPLEVEL *w_current)
 		       x_get_color(w_current->bb_color));
 }
 
+/* This function can return NULL if you try to attach an attribute to */
+/* another attribute/text item so always check for NULL */
 OBJECT *
 o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, 
 	            int show_name_value, OBJECT *o_current)
