@@ -156,3 +156,17 @@ Please see the net= attribute MINI-HOWTO for more info.  The net=
 attribute is not currently used by the symbol library, but is supported
 by gnetlist
 
+
+source
+(schematics only)
+
+The source= attribute is used to specify that a symbol has underlying
+schematics.  The source= attribute mechanism for specifing underlying
+schematics is in addition to the symbol/schematic sheet mechanism
+mentioned elsewhere.  This attribute should only be attached to
+instantiated components.  Attach the attribute to a component and specify
+the filename (not the path) of the underlying schematic (like block_1.sch)
+for the value.  The specified schematic must be in a source-library
+path.  This attribute can be attached multiple times with different values
+which basically means that there are multiple underlying schematics.
+

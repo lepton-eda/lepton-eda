@@ -197,6 +197,14 @@ the resource file (see the section below for more info).
 		Close the currently displayed page.  This will prompt
 		you to save if you modified the page.
 
+
+	Revert Page
+
+		Close and reopen the currently displayed page.  This will
+		not prompt you to save the current page, but will quickly
+		discard any changes you have made and reopen the saved 
+		schematic from disk.
+	
 	Save Page
 
 		Save the page as long as the page has a titled name
@@ -519,14 +527,34 @@ the resource file (see the section below for more info).
 
 	Edit...
 
-		Allows you to edit text items (both content and text size).
+		Allows you to edit:
+			Text - brings up a dialog box which allows you to edit
+	                the text string and size
 
-			1. Select the text item to edit.
+			Attributes - a much more sophisticated version of 
+		        above specifically for attributes.
+
+			All attributes attached to a component - brings up a
+			multi-attribute editing dialog box.
+
+			1. Select the item (text/component) to edit.
 			2. Pick or type the hotkeys for Edit/Edit...
 			3. Make the appropriate change and press OK
 
-		Note, only the first text item will be edited; bulk text
+		Note, only the item will be edited; bulk text/component
 		editing is not supported (yet).
+
+	Edit Text...
+
+		Allows you to edit text only, irregardless if that text is
+	        an attribute or just a plain text string.
+
+			1. Select the text item text to edit.
+			2. Pick or type the hotkeys for Edit/Edit Text...
+			3. Make the appropriate change and press OK
+
+		Note, only the item will be edited; bulk text editing 
+		is not supported (yet).
 
 	Copy Mode
 
@@ -847,24 +875,58 @@ the resource file (see the section below for more info).
 
 	e. Hierarchy operations (...)
 
-	Open Symbol
+	Down Schematic 
 
-		Right now this is the only option for hierarchy related
-		operations.  This option will be dropped for the more 
-		classical push/pop schematic/symbol eventually.
+		Go down into a symbol opening up any underlying
+		schematics.  Basically this will open up an underlying
+		schematic of the selected component if it exists in
+		the source library search path.  See the Resource File
+		section on how to define this path.
 
-		Basically this will open up an underlying schematic if
-		it exists in the source library search path.  See the
-		Resource File section on how to define this path.
+		There are currently two ways of specifing that a symbol
+		has an underlying schematic or schematics:
 
-		The underlying schematic must have the same name as the
-		symbol but have a .sch extension and must follow the _#
-		suffix naming convention.  See the Files section below
-		on this convention.
+		1) The underlying schematic must have the same name as the
+		   symbol but have a .sch extension and must follow the
+		   _# suffix naming convention.  See the Files section
+		   below on this convention.
 
-		It is not recommended that people use this mechanism since
-		it is still highly alpha and will be changed soon.
-		
+		2) Attach an attribute to the symbol called
+		   source=filename.sch filename.sch is not a path to
+		   the symbol, but rather the basename (last file in the
+		   path specifier) of the symbol path.	The underlying
+		   schematic will still be searched in the source-library
+		   path.  You can specify multiple source= attributes.
+		   The underlying schematics will be opened in the order
+		   that the source= attribute is found.
+
+		If there multiple underlying schematics, they will
+		be loaded.  Movement between the schematic pages
+		is restricted (to the same level of the same set
+		of underlying schematics) unless the rc keyword
+		enforce-hierarchy is modifed to allow for a freer
+		hierarchy traversal mode.  See the Resource File section
+		for more info.
+
+		It is also recommend that you maintain uniq names for the
+	 	various levels (when using the source= attribute) to avoid
+		possible confusion.  The hierarchy mechanisms are fairly
+		new so expect some odd behavior (and please report it)
+
+	Down Symbol
+
+		This option will open up the symbol of the selected component.
+
+		Once the symbol is open, the user can edit it and save it.
+
+		At this time, the toplevel schematic will not see the symbol
+		change unless the toplevel schematic is reloaded or File/Revert
+		is selected.  This will be fixed eventually.
+
+	Up
+
+		This optin will move up the hierarchy (if there are pages 
+		above the currently displayed page).  
 
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
 
