@@ -92,6 +92,7 @@ struct st_sheet_data {
   int pin_count;                              /* This cannnot change -- user must edit design using gschem */
   int pin_attrib_count;                       /* This can change in this prog if the user adds attribs */
 
+
   TABLE **component_table;                    /* points to 2d array of component attribs */
   TABLE **net_table;                          /* points to 2d array of net attribs */
   TABLE **pin_table;                          /* points to 2d array of pin attribs */

@@ -42,8 +42,12 @@ void s_sheet_data_gtksheet_to_sheetdata();
 
 /* ------------- s_string_list.c ------------- */
 STRING_LIST *s_string_list_new();
+STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list);
 void s_string_list_add_item(STRING_LIST *list, int *count, char *item);
+void s_string_list_delete_item(STRING_LIST **list, int *count, char *item);
 int s_string_list_in_list(STRING_LIST *list, char *item);
+gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index);
+
 void s_string_list_sort_master_comp_list();
 void s_string_list_sort_master_comp_attrib_list();
 void s_string_list_sort_master_net_list();
@@ -56,6 +60,10 @@ void s_string_list_sort_master_pin_attrib_list();
 TABLE **s_table_new(int rows, int cols);
 void s_table_destroy(TABLE **table, int row_count, int col_count);
 int s_table_get_index(STRING_LIST *list, char *string);
+STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
+					TABLE **table, 
+					STRING_LIST *row_list,
+					int num_attribs);
 
 void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj);
 void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj);
@@ -74,6 +82,12 @@ void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_update_page(OBJECT *start_obj);
 void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
 void s_toplevel_menubar_file_save(TOPLEVEL *pr_current);
+void s_toplevel_menubar_file_open(TOPLEVEL *pr_current);
+void s_toplevel_menubar_edit_newattrib();
+void s_toplevel_add_new_attrib(gchar *new_attrib_name);
+void s_toplevel_menubar_edit_delattrib();
+void s_toplevel_delete_attrib_col();
+void s_toplevel_menubar_unimplemented_feature();
 void s_toplevel_select_object();
 void s_toplevel_sheetdata_to_toplevel(OBJECT *start_obj);
 
@@ -128,10 +142,31 @@ void i_vars_setnames(TOPLEVEL * w_current);
 
 
 /* ------------- x_dialog.c ------------- */
-int x_dialog_about_keypress(GtkWidget * widget, GdkEventKey * event,
-			    GtkWidget * window);
+char *x_dialog_newattrib_get_name();
+int x_dialog_newattrib_keypress_callback(GtkWidget * widget, 
+					 GdkEventKey * event,
+					 GtkWidget *window);
+int x_dialog_newattrib_close_callback(GtkWidget * widget, 
+				      GtkWidget *window);
+int x_dialog_newattrib_ok_callback(GtkWidget * widget, 
+				      GtkWidget *window);
+
+int x_dialog_delattrib_confirm();
+int x_dialog_delattrib_keypress_callback(GtkWidget * widget, 
+					 GdkEventKey * event,
+					 GtkWidget *window);
+int x_dialog_delattrib_close_callback(GtkWidget *buttonclose, 
+				      GtkWidget *window);
+int x_dialog_delattrib_yes_callback(GtkWidget *buttonok, 
+				    GtkWidget *window);
+
+int x_dialog_unimplemented_feature();
+
+int x_dialog_about_keypress_callback(GtkWidget * widget, GdkEventKey * event,
+				     GtkWidget * window);
 int x_dialog_about_close_callback(GtkWidget * widget, GtkWidget *window);
 void x_dialog_about_dialog();
+
 GtkWidget *x_dialog_create_dialog_box(GtkWidget ** out_vbox,
 				      GtkWidget ** out_action_area);
 void x_dialog_close_window(GtkWidget * window);
@@ -143,6 +178,9 @@ void x_notebook_init();
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_cell_item(GtkSheet *sheet, int i, int j, char *text);
+int x_gtksheet_get_min_col(GtkSheet *sheet);
+int x_gtksheet_get_max_col(GtkSheet *sheet);
+
 
 void format_text (GtkSheet *sheet, gchar *text, gint *justification, char *label);
 void alarm_change(GtkWidget *widget, gint row, gint col,

@@ -14,7 +14,6 @@ noinst_HEADERS = \
 	gtkextra-marshal.h \
 	pixmaps.h \
 	x_menu.h
-endif
 
 
 MOSTLYCLEANFILES = *.log core FILE *~ #*#
