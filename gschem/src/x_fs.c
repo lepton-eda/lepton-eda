@@ -53,8 +53,22 @@
 void
 x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current)
 {
+
+#if DEBUG
 	printf("destroy\n");
+#endif
 	x_fileselect_free_list_buffers(f_current);
+
+	if (f_current->directory) {
+		free(f_current->directory);
+		f_current->directory = NULL;
+	}
+
+	if (f_current->filename) {
+		free(f_current->filename);
+		f_current->filename = NULL;
+	}
+
 	x_preview_close(f_current->preview);
 	gtk_grab_remove(f_current->xfwindow);
 	f_current->xfwindow = NULL;
@@ -78,28 +92,24 @@ x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
 	
 	/* this may cause problems on non POSIX complient systems */	
 	temp = getcwd(NULL, 1024);
-
+	
 	if (filename) {
-		f_current->directory = (char *)malloc(sizeof(char)*
-					(strlen(temp)+4));
+		f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
 		f_current->filename = u_basic_strdup(filename);
-		sprintf(f_current->directory, "%s/", temp);
+					
 		free(temp); 
-
-		temp = (char *) malloc(sizeof(char)*(strlen(temp)+
-			               strlen(filename)+4));
-		sprintf(temp, "%s%s", f_current->directory, 
-				      f_current->filename);
+		temp = u_basic_strdup_multiple(f_current->directory,
+				      	       f_current->filename, NULL);
 		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
 	} else {
-		f_current->directory = (char *)malloc(sizeof(char)*(strlen(temp)+4));
+		f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
+
 		if (f_current->filename) {
 			free(f_current->filename);
 			f_current->filename=NULL;
 		}
 
-		sprintf(f_current->directory, "%s/", temp);
 		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
 			   f_current->directory);
 	}
@@ -332,7 +342,6 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 #endif
 	}
 
-	printf("\n");
 	max_width = 0;
 	for (i = 0 ; i < num_files; i++) {
 		text[0] = f_current->file_entries[i]; 
@@ -721,6 +730,10 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 					   f_current->filename_entry), 0, -1);
  		gtk_box_pack_start(GTK_BOX (vbox), 
 				   f_current->filename_entry, FALSE, FALSE, 0);
+		gtk_signal_connect(GTK_OBJECT(f_current->filename_entry), 
+				   "activate", 
+				   GTK_SIGNAL_FUNC(x_fileselect_open_file),
+				   f_current);
  		gtk_widget_show(f_current->filename_entry);
 
 #if 0

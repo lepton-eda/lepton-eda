@@ -9,6 +9,12 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_fs.c: Fixed a coredump bug in x_fileselect_update_dirfile 
+
+	* src/x_fs.c: Added "enter key" callback to filename entry 
+
 1999-10-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* Started serious work on new file/component select dialog box
