@@ -8,11 +8,26 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2001-02-03  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/o_arc_basic.c: Added function o_arc_modify() 
+	
 2000-01-30  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_attrib.c: Added o_attrib_search_component which looks for
 	  an attribute both inside and outside of the component 
 
+2001-01-24  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/o_arc_basic.c: Modified the code for bounding box on arc,
+	  cleaned the translation/rotation functions, added function 
+	  o_arc_recalc_world(), changed the meaning of arc fields
+
+	* src/o_box_basic.c: Added functions to print the filling of a box
+
+	* src/o_circle_basic.c : Added functions to print the filling
+	  of a circle
+	
 2000-01-15  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_image.c: Fixed bug -- allow the background of pngs to

@@ -9,11 +9,25 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2001-02-03  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/o_arc.c: Added code to draw grips on an arc
+
+	* src/o_grips.c : Added code to handle grips on arc with
+	  o_grips_<search|start|motion|end>_arc() functions.
+	
 2001-01-27  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/i_callbacks.c: Added code to draw the grid when a new
 	  window is opened (bug)
 
+2001-01-24  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/o_arc.c: Changed the meaning of arc parameters
+
+	* src/o_circle.c: Modified the calls to arc drawing functions to
+	  match the change in the meaning of arc parameters
+	
 2001-01-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_event.c, g_key.c: Fixed a bug pointed out by Thomas Lundin

@@ -489,9 +489,13 @@ void o_delete(TOPLEVEL *w_current);
 void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
 /* o_grips.c */
 OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
+OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 int o_grips_start(TOPLEVEL *w_current, int x, int y);
+void o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int whichone);
 void o_grips_motion(TOPLEVEL *w_current, int x, int y);
+void o_grips_motion_arc(TOPLEVEL *w_current, int x, int y, int whichone);
 void o_grips_end(TOPLEVEL *w_current);
+void o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
 /* o_line.c */
 void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
