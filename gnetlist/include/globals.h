@@ -61,3 +61,5 @@ extern char *output_filename;
 extern GSList *pre_backend_list;  /* before backend loaded */
 extern GSList *post_backend_list; /* after backend loaded, before execute */
 
+/* stuff to pass command line to Scheme back end */
+extern char *command_line;
