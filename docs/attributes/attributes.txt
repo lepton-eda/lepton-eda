@@ -54,22 +54,24 @@ first # is a placeholder and increments sequentially starting at 1.
 The second # is the actual pin number.	Both #'s are required!
 The order of pin#'s is significant since the netlister will output pins
 in sequential order starting at pin1 going through pinN. Example: pin1=1,
-pin2=2, pin3=5.  These attributes can be either hidden or invisible
+pin2=2, pin3=5.  These attributes can be either hidden or invisible.
 
 
-pinlabel
-(inside symbols only)
+label
+(inside symbols attached to pins)
 
-All pins should also have the pinlabel=label attribute attached to them.
+All pins should also have the label=label attribute attached to them.
 This is visible label associated with each pin.  Please make this
 attribute green (instead of the default attribute yellow).  Right now,
-the symbol libraries do not follow this convention, but they will.
+the symbol libraries do not follow this convention, but they will.  
+This symbol was formally known as "pinlabel"; that name should not be
+used anymore.
 
 
-pintype
-(inside symbols only)
+type
+(inside symbols only attached to pins)
 
-Each pin should have a pintype=value attribute attached to it.  Here
+Each pin should have a type=value attribute attached to it.  Here
 is a list of valid values:
 
 IN              input
@@ -83,8 +85,10 @@ TRI             tristate (high impedance)
 CLK             clock
 PWR             power/ground
 
-The pintype attribute is not used in the symbol library and might change
+The type attribute is not used in the symbol library and might change
 drastically (due to some disagreements on the mailing list).
+This symbol was formally known as "pintype"; that name should not be
+used anymore.
 
 
 numslots
@@ -114,10 +118,10 @@ The default pin#=#'s should reflect the first slot.  You cannot override
 the pin#=# with a non-slot=1 when placing components (at least not yet).
 
 
-physical
+footprint
 (inside symbols only)
 
-physical=package_name should exist somewhere in the symbol which might
+footprint=package_name should exist somewhere in the symbol which might
 be used with the netlister.  Attach this attribute just like the device=
 attribute.  package_name is the pcb footprint or package type like DIP14
 or DIP40.  This is very new and so I'm not 100% sure this attribute will
@@ -128,10 +132,9 @@ None of the current libraries use this.
 label
 (schematics only)
 
-The label= attribute should not be inside any symbols.  It is used
-for net name labels only!  If you want to label a net then attach an
-attribute called label=value to the net.  All nets which have the same
-name are considered electrically connected.
+If you want to label a net then attach an attribute called label=value to
+the net.  All nets which have the same name are considered electrically
+connected.
 
 
 name
@@ -172,4 +175,12 @@ the filename (not the path) of the underlying schematic (like block_1.sch)
 for the value.  The specified schematic must be in a source-library
 path.  This attribute can be attached multiple times with different values
 which basically means that there are multiple underlying schematics.
+
+
+value
+(schematics only)
+
+Used mainly in the spice backend netlister to specify the value of the
+various elements.  No translation is done on this, and it is placed as
+is into the netlist.
 
