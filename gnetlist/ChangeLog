@@ -1,4 +1,10 @@
 
+2001-01-15  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_cpinlist.c: Fixed core dumper when pin doesn't have
+	  the required pin#=# attributed. (Pointed out by Matt, fixed by
+	  Stefan)
+
 2000-12-22  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/gnet-vams.scm: Fixed a minor bug which was uncovered by
