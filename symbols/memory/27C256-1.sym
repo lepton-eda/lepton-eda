@@ -1,4 +1,4 @@
-v 20031231 1
+v 20041228 1
 P 1700 5800 1700 6100 1 0 1
 {
 T 1750 5900 5 8 1 1 0 0 1
@@ -317,7 +317,7 @@ T 1300 550 5 8 0 1 0 3 1
 pintype=pwr
 }
 T 300 6250 5 10 0 0 0 0 1
-footprint=DIP24
+footprint=DIP28
 T 300 6650 5 10 0 0 0 0 1
 description=256K (32K*8) cmos eprom
 T 300 6450 5 10 0 0 0 0 1
@@ -328,3 +328,5 @@ T 300 7050 5 10 0 0 0 0 1
 author=Werner Hoch <werner.hoATgmx.de>
 T 300 5850 9 10 1 0 0 0 1
 27C256
+T 300 7250 5 10 0 0 0 0 1
+symversion=0.1

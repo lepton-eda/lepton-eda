@@ -1,3 +1,9 @@
+2005-01-15 Werner Hoch <werner.ho@gmx.de>
+	* memory/27C256-1.sym, memory/27512-1.sym, memory/27256-1.sym:
+	  corrected footprint
+	* maxim/max1480A-1.sym, maxim/max1011-2.sym, maxim/max1011-1.sym:
+	  corrected net attributes
+
 2005-01-06 Stuart Brorson <sdb@cloud9.net>
 	* system-commonrc.in: renamed this file system-gafrc.in.
 	* Makefile.am, configure.ac: changed to accomodate system-gafrc

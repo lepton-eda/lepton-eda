@@ -1,4 +1,4 @@
-v 20040111 1
+v 20041228 1
 T 1700 4300 8 10 1 1 0 6 1
 refdes=U?
 T 300 4250 9 10 1 0 0 0 1
@@ -26,9 +26,9 @@ net=GND1:5
 T 300 6450 5 10 0 0 0 0 1
 net=GND2:12
 T 300 6650 5 10 0 0 0 0 1
-net=ISOVCC1:22
+net=ISOVCC1:26
 T 300 6850 5 10 0 0 0 0 1
-net=ISOVCC2:14
+net=ISOVCC2:18
 T 300 7050 5 10 0 0 0 0 1
 net=ISOCOM1:20
 T 300 7250 5 10 0 0 0 0 1
@@ -225,3 +225,5 @@ pintype=in
 B 300 0 2000 4200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 300 7450 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX1480A-MAX1490B.pdf
+T 300 7650 5 10 0 0 0 0 1
+symversion=1.0
