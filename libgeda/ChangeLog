@@ -8,6 +8,16 @@
 	triangle to look a little better (angles rounded).  Suggestion by
 	Patrick.
 
+	* noweb/a_basic.nw: Fixed another bug in the handling of symversion=.
+	If the component was the last one in the file and had no attributes,
+	then it was not getting checked.
+
+	* noweb/o_complex_basic.nw: Further expanded when the placed
+	holder component is created in o_complex_add(): when the component
+	filename cannot be found.  This hopefully fixes the bug that
+	Peter reported: 1) running gschem file.sch, 2) renaming
+	a symbol, 3) doing a page revert 4) place holder not being shown.
+
 2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/defines.h, noweb/a_basic.nw, f_image.nw, f_print.nw,

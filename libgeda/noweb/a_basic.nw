@@ -521,6 +521,15 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   }
   fclose(fp);
 
+  /* Was the very last thing we read a complex and has it not been checked */
+  /* yet?  This would happen if the complex is at the very end of the file 
+  /* and had no attached attributes */
+  if (last_complex)
+  {
+        o_complex_check_symversion(w_current, last_complex);
+        last_complex = NULL;  /* no longer need to check */
+  }
+
   if (found_pin) {
     if (release_ver <= VERSION_20020825) {
       o_pin_update_whichend(w_current, return_head(object_list), found_pin);

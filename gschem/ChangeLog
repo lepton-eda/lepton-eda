@@ -3,6 +3,10 @@
 	* tests/missing.sch, Makefile.am: Added test schematic to test
 	missing component rendering.
 
+	* tests/symversion3.sch: Added components which have no attributes
+	(one in the middle of the file and one at the end).  This tests a 
+	but which has been fixed in libgeda dealing with symversion= handling.
+
 2005-01-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/x_fileselect.nw (x_fileselect_comp_fill_components): Removed 

@@ -534,88 +534,88 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
 
   if (access(filename, R_OK)) {
 
-    /* filename was NOT found */
-    loaded_normally = FALSE;
-    
+    OBJECT *save_prim_objs;
+    char *not_found_text = NULL;
+    int left, right, top, bottom;
+    int x_offset, y_offset;
+
     if (clib == NULL) {
-
-      /* no component library specified */
-
-      OBJECT *save_prim_objs;
-      char *not_found_text = NULL;
-      int left, right, top, bottom;
-      int x_offset, y_offset;
-
-      save_prim_objs = prim_objs;
-
-      /* Put placeholder into object list.  Changed by SDB on
-       * 1.19.2005 to fix problem that symbols were silently
-       * deleted by gattrib when RC files were messed up.  */
-      new_node->type = OBJ_PLACEHOLDER;
-
-      /* Mark the origin of the missing component */
-      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
-                              DETACHED_ATTRIBUTE_COLOR,
-                              x - 50, y, x + 50, y);
-      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
-                              DETACHED_ATTRIBUTE_COLOR,
-                              x, y + 50, x, y - 50); 
-
-      /* Add some useful text */
-      not_found_text = 
-        u_basic_strdup_multiple("Component not found:\n ", basename, NULL);
-      prim_objs = o_text_add(w_current, prim_objs,
-                              OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
-                              x + NOT_FOUND_TEXT_X, 
-                              y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
-                              not_found_text, 8,
-                              VISIBLE, SHOW_NAME_VALUE);
-      free(not_found_text);
-
-      /* figure out where to put the hazard triangle */
-      world_get_text_bounds(w_current, prim_objs,
-                            &left, &top, &right, &bottom);
-      x_offset = (right - left) / 4;  
-      y_offset = bottom - top + 100;  /* 100 is just an additional offset */
-
-      /* add hazard triangle */
-      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
-                              DETACHED_ATTRIBUTE_COLOR,
-                              x + NOT_FOUND_TEXT_X + x_offset, 
-                              y + NOT_FOUND_TEXT_Y + y_offset, 
-                              x + NOT_FOUND_TEXT_X + x_offset + 600, 
-                              y + NOT_FOUND_TEXT_Y + y_offset); 
-      o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
-                         50, -1, -1);
-      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
-                              DETACHED_ATTRIBUTE_COLOR,
-                              x + NOT_FOUND_TEXT_X + x_offset, 
-                              y + NOT_FOUND_TEXT_Y + y_offset, 
-                              x + NOT_FOUND_TEXT_X + x_offset + 300, 
-                              y + NOT_FOUND_TEXT_Y + y_offset + 500); 
-      o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
-                         50, -1, -1);
-      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
-                              DETACHED_ATTRIBUTE_COLOR,
-                              x + NOT_FOUND_TEXT_X + x_offset + 300, 
-                              y + NOT_FOUND_TEXT_Y + y_offset + 500, 
-                              x + NOT_FOUND_TEXT_X + x_offset + 600, 
-                              y + NOT_FOUND_TEXT_Y + y_offset); 
-      o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
-                         50, -1, -1);
-      prim_objs = o_text_add(w_current, prim_objs,
-                              OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
-                              x + NOT_FOUND_TEXT_X + x_offset + 270, 
-                              y + NOT_FOUND_TEXT_Y + y_offset + 90, 
-                              LOWER_LEFT, 0, "!", 18,
-                              VISIBLE, SHOW_NAME_VALUE);
-      prim_objs = save_prim_objs;
-            
+      s_log_message("Component library was not found or specified\n");
     } else if (basename == NULL) {
       s_log_message("Basename (component) was not found or specified\n");
     } else {
-      s_log_message("Could not open [%s]\n", filename); 
+      s_log_message("Could not open symbol file [%s]\n", filename); 
     } 
+
+    /* filename was NOT found */
+    loaded_normally = FALSE;
+
+    /* save the prim_objs pointer, since the following code modifies it */
+    save_prim_objs = prim_objs;
+
+    /* Put placeholder into object list.  Changed by SDB on
+     * 1.19.2005 to fix problem that symbols were silently
+     * deleted by gattrib when RC files were messed up.  */
+    new_node->type = OBJ_PLACEHOLDER;
+
+    /* Mark the origin of the missing component */
+    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                           DETACHED_ATTRIBUTE_COLOR,
+                           x - 50, y, x + 50, y);
+    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                           DETACHED_ATTRIBUTE_COLOR,
+                           x, y + 50, x, y - 50); 
+
+    /* Add some useful text */
+    not_found_text = 
+      u_basic_strdup_multiple("Component not found:\n ", basename, NULL);
+    prim_objs = o_text_add(w_current, prim_objs,
+                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
+                           x + NOT_FOUND_TEXT_X, 
+                           y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
+                           not_found_text, 8,
+                           VISIBLE, SHOW_NAME_VALUE);
+    free(not_found_text);
+
+    /* figure out where to put the hazard triangle */
+    world_get_text_bounds(w_current, prim_objs,
+                          &left, &top, &right, &bottom);
+    x_offset = (right - left) / 4;  
+    y_offset = bottom - top + 100;  /* 100 is just an additional offset */
+
+    /* add hazard triangle */
+    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                           DETACHED_ATTRIBUTE_COLOR,
+                           x + NOT_FOUND_TEXT_X + x_offset, 
+                           y + NOT_FOUND_TEXT_Y + y_offset, 
+                           x + NOT_FOUND_TEXT_X + x_offset + 600, 
+                           y + NOT_FOUND_TEXT_Y + y_offset); 
+    o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+                       50, -1, -1);
+    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                           DETACHED_ATTRIBUTE_COLOR,
+                           x + NOT_FOUND_TEXT_X + x_offset, 
+                           y + NOT_FOUND_TEXT_Y + y_offset, 
+                           x + NOT_FOUND_TEXT_X + x_offset + 300, 
+                           y + NOT_FOUND_TEXT_Y + y_offset + 500); 
+    o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+                       50, -1, -1);
+    prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                           DETACHED_ATTRIBUTE_COLOR,
+                           x + NOT_FOUND_TEXT_X + x_offset + 300, 
+                           y + NOT_FOUND_TEXT_Y + y_offset + 500, 
+                           x + NOT_FOUND_TEXT_X + x_offset + 600, 
+                           y + NOT_FOUND_TEXT_Y + y_offset); 
+    o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+                       50, -1, -1);
+    prim_objs = o_text_add(w_current, prim_objs,
+                           OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
+                           x + NOT_FOUND_TEXT_X + x_offset + 270, 
+                           y + NOT_FOUND_TEXT_Y + y_offset + 90, 
+                           LOWER_LEFT, 0, "!", 18,
+                           VISIBLE, SHOW_NAME_VALUE);
+    prim_objs = save_prim_objs;
+
   } else {
 
     /* filename was found */
@@ -1817,9 +1817,16 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
     inside_value = strtod(inside, &err_check);
     if (inside_value == 0 && inside == err_check)
     {
-      s_log_message("WARNING: Symbol version parse error on refdes %s:\n"
+      if (inside)
+      { 
+        s_log_message("WARNING: Symbol version parse error on refdes %s:\n"
                     "\tCould not parse symbol file symversion=%s\n",
-                    refdes, inside);
+                     refdes, inside);
+      } else {
+        s_log_message("WARNING: Symbol version parse error on refdes %s:\n"
+                    "\tCould not parse symbol file symversion=\n",
+                     refdes);
+      }
       goto done;
     }
     inside_present = TRUE;

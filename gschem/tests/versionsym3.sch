@@ -1,4 +1,4 @@
-v 20040710 1
+v 20041228 1
 C 40100 59500 1 0 0 versionsym_basic.sym
 {
 T 41100 59600 5 10 1 1 0 0 1
@@ -42,6 +42,7 @@ refdes=Uminor2
 T 41600 57100 5 10 0 0 0 0 1
 symversion=0.3
 }
+C 41800 61300 1 0 0 versionsym_major.sym
 C 40300 54900 1 0 0 versionsym_minor2.sym
 {
 T 41300 55000 5 10 1 1 0 0 1
@@ -58,3 +59,8 @@ refdes=Umajor3
 T 45200 56600 5 10 0 0 0 0 1
 symversion=2.9
 }
+C 44700 61300 1 0 0 versionsym_major.sym
+T 41100 62200 9 10 1 0 0 0 1
+This is the first unknown component
+T 44400 61100 9 10 1 0 0 0 1
+This is the second unknown component
