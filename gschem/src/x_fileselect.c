@@ -653,7 +653,9 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 			x_repaint_background(w_current);
 			x_window_setup_world(w_current);
 			x_manual_resize(w_current);
-			a_zoom_limits(w_current, w_current->page_current->object_head);
+			a_zoom_limits(w_current, 
+				      w_current->page_current->object_head,
+				      A_PAN_DONT_REDRAW);
 			o_undo_savestate(w_current, UNDO_ALL);
 
 			/* now update the scrollbars */
