@@ -71,6 +71,10 @@ fi
 	GUILE_INCLUDE="-I${guile_incdir}"
 	GUILE_LIB="-L${guile_libdir} ${guile_libs}"
 
+dnl Check that scm_make_smob_type exist in guile (ver >= 1.3.2)
+AC_CHECK_LIB(guile, scm_make_smob_type,,
+	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2))
+
 saved_cflags="$CFLAGS"
 saved_ldflags="$LDFLAGS"
 

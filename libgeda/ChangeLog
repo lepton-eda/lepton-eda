@@ -8,6 +8,11 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-08-22  Stefan Petersen  <spe@geda.seul.org>
+
+	* configure.in/configure: Made configure look for scm_make_smob_type
+	  in libguile.
+	
 2000-08-15  Stefan Petersen  <spe@geda.seul.org>
 
 	* Fixed bug causing seg fault during GC with new attribute smob.
