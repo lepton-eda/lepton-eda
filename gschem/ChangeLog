@@ -1,3 +1,14 @@
+2002-12-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_basic.nw: Added o_draw_list() and o_draw_selected() helper 
+	functions (used by below change)
+
+	* noweb/o_move.nw: Changed the behavior of move:  When you start 
+	the move, the objects are erased first and then the rubber outline
+	is drawn.  This looks a whole lot better, but the downside is that
+	it required the reordering of some operations (namely when things
+	are drawn), so the change is non-trivial.
+
 2002-12-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* m4/Makefile.am: Added Makefile.in to the maintainer-clean target.

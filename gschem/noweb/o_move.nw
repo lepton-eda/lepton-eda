@@ -76,12 +76,15 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
     w_current->last_x = w_current->start_x = fix_x(w_current, x);
     w_current->last_y = w_current->start_y = fix_y(w_current, y);
 
+    o_erase_selected(w_current);
+    
     o_drawbounding(w_current, NULL,
                    w_current->page_current->selection2_head->next,
                    x_get_darkcolor(w_current->bb_color), TRUE);
 
     if (w_current->netconn_rubberband) {
       o_move_prep_rubberband(w_current);
+      o_move_stretch_rubberband(w_current);
     }
 
     w_current->inside_action = 1;
@@ -106,221 +109,69 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
 void
 o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
 		    int diff_x, int diff_y,
-		    int screen_diff_x, int screen_diff_y)
+		    int screen_diff_x, int screen_diff_y,
+                    GList** other_objects, GList** connected_objects)
 {
   OBJECT *o_current;
   OBJECT *object;
-  GList *other_objects = NULL;
-  GList *connected_objects = NULL;
 
   o_current = list;
   while (o_current != NULL) {
-
-    g_list_free(other_objects);
-    other_objects = NULL;
-    g_list_free(connected_objects);
-    connected_objects = NULL;
 
     object = o_current;
     switch (object->type) {
 
       case (OBJ_NET):
-        /* erase the existing object */
-        o_cue_undraw(w_current, object);
-        o_net_erase(w_current, object);
-
-        if (type == SINGLE) {
-          o_line_erase_grips(w_current, object);
-        }
-
         /* save the other objects and remove object's connections */
-        other_objects = s_conn_return_others(other_objects, object);
+        *other_objects = s_conn_return_others(*other_objects, object);
         s_conn_remove(w_current, object);
-
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_net_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                         object);
-        }
 
         /* do the actual translation */
         o_net_translate_world(w_current, diff_x, diff_y, object);
         s_conn_update_object(w_current, object);
-
-        /* redraw the actual object */
-        o_net_draw(w_current, object);
-
-        /* draw the object objects */
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
-
-        /* get the other connected objects and redraw them */
-        connected_objects =
-          s_conn_return_others(connected_objects, object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
-
-        /* finally draw this objects cues */
-        o_cue_draw_single(w_current, object);
+        *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
       case (OBJ_BUS):
-        /* erase the existing object */
-        o_cue_undraw(w_current, object);
-        o_bus_erase(w_current, object);
-
-        if (type == SINGLE) {
-          o_line_erase_grips(w_current, object);
-        }
-
         /* save the other objects and remove object's connections */
-        other_objects = s_conn_return_others(other_objects, object);
+        *other_objects = s_conn_return_others(*other_objects, object);
         s_conn_remove(w_current, object);
-
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_bus_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                         object);
-        }
 
         o_bus_translate_world(w_current, diff_x, diff_y, object);
         s_conn_update_object(w_current, object);
-
-        /* redraw the actual object */
-        o_bus_draw(w_current, object);
-
-        /* draw the object objects */
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
-
-        /* get the other connected objects and redraw them */
-        connected_objects =
-          s_conn_return_others(connected_objects, object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
-
-        /* finally draw this objects cues */
-        o_cue_draw_single(w_current, object);
+        *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
       case (OBJ_PIN):
-        /* erase the existing object */
-        o_cue_undraw(w_current, object);
-        o_pin_erase(w_current, object);
-
-        if (type == SINGLE) {
-          o_line_erase_grips(w_current, object);
-        }
-
         /* save the other objects and remove object's connections */
-        other_objects = s_conn_return_others(other_objects, object);
+        *other_objects = s_conn_return_others(*other_objects, object);
         s_conn_remove(w_current, object);
-
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_pin_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                         object);
-        }
+        
         o_pin_translate_world(w_current, diff_x, diff_y, object);
         s_conn_update_object(w_current, object);
-
-        /* redraw the actual object */
-        o_pin_draw(w_current, object);
-
-        /* draw the object objects */
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
-
-        /* get the other connected objects and redraw them */
-        connected_objects =
-          s_conn_return_others(connected_objects, object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
-
-        /* finally draw this objects cues */
-        o_cue_draw_single(w_current, object);
-
+        *connected_objects = s_conn_return_others(*connected_objects, object);
         break;
 
       case (OBJ_LINE):
-        o_line_erase(w_current, object);
-
-        if (type == SINGLE) {
-          o_line_erase_grips(w_current, object);
-        }
-
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_line_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                          object);
-        }
-
         o_line_translate_world(w_current, diff_x, diff_y, object);
-
-        o_line_draw(w_current, object);
         break;
 
       case (OBJ_BOX):
-        o_box_erase(w_current, object);
-
-        if (type == SINGLE) {
-          o_box_erase_grips(w_current, object);
-        }
-
-
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_box_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                         object);
-        }
         o_box_translate_world(w_current, diff_x, diff_y, object);
-
-        o_box_draw(w_current, object);
         break;
 
       case (OBJ_CIRCLE):
-        o_circle_erase(w_current, object);
-
-        if (type == SINGLE) {
-          o_circle_erase_grips(w_current, object);
-        }
-
-
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_circle_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                            object);
-        }
         o_circle_translate_world(w_current, diff_x, diff_y, object);
-        o_circle_draw(w_current, object);
         break;
-
 
       case (OBJ_TEXT):
-        o_text_erase(w_current, object);
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_text_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                          object);
-        }
         o_text_translate_world(w_current, diff_x, diff_y, object);
-
-        o_text_draw(w_current, object);
         break;
-
 
       case (OBJ_ARC):
-        o_arc_erase(w_current, object);
-        if (w_current->actionfeedback_mode == OUTLINE
-            && type == SINGLE) {
-          o_arc_draw_xor(w_current, screen_diff_x, screen_diff_y,
-                         object);
-        }
         o_arc_translate_world(w_current, diff_x, diff_y, object);
-        o_arc_draw(w_current, object);
         break;
     }
-
 
     if (type == COMPLEX) {
       o_current = o_current->next;
@@ -328,8 +179,7 @@ o_move_end_lowlevel(TOPLEVEL * w_current, OBJECT * list, int type,
       o_current = NULL;
     }
   }
-
-
+  
 }
 
 
@@ -351,6 +201,11 @@ void o_move_end(TOPLEVEL * w_current)
   int lx, ly;
   int sx, sy;
   int left, top, right, bottom;
+  GList *other_objects = NULL;
+  GList *connected_objects = NULL;
+  GList *rubbernet_objects = NULL; 
+  GList *rubbernet_other_objects = NULL;
+  GList *rubbernet_connected_objects = NULL;
 
   object = o_select_return_first_object(w_current);
 
@@ -372,10 +227,19 @@ void o_move_end(TOPLEVEL * w_current)
   diff_x = lx - sx;
   diff_y = ly - sy;
 
-  if (w_current->netconn_rubberband) {
-    o_move_end_rubberband(w_current, diff_x, diff_y);
+  if (w_current->netconn_rubberband)
+  {
+    o_move_end_rubberband(w_current, diff_x, diff_y,
+                          &rubbernet_objects, &rubbernet_other_objects,
+                          &rubbernet_connected_objects);
   }
 
+  if (w_current->actionfeedback_mode == OUTLINE) {
+    o_drawbounding(w_current, NULL,
+                   w_current->page_current->selection2_head->next,
+                   x_get_darkcolor(w_current->bb_color), TRUE);
+  }
+  
   /* skip over head node */
   s_current = w_current->page_current->selection2_head->next;
 
@@ -398,7 +262,8 @@ void o_move_end(TOPLEVEL * w_current)
       case (OBJ_ARC):
       case (OBJ_TEXT):
         o_move_end_lowlevel(w_current, object, SINGLE, diff_x, diff_y,
-                            screen_diff_x, screen_diff_y);
+                            screen_diff_x, screen_diff_y,
+                            &other_objects, &connected_objects);
         break;
 
       case (OBJ_COMPLEX):
@@ -408,13 +273,6 @@ void o_move_end(TOPLEVEL * w_current)
           scm_run_hook(move_component_hook,
                        gh_cons(g_make_attrib_smob_list
                                (w_current, object), SCM_EOL));
-        }
-
-        if (w_current->actionfeedback_mode == OUTLINE) {
-          o_complex_draw_xor(w_current,
-                             screen_diff_x,
-                             screen_diff_y,
-                             object->complex->prim_objs);
         }
 
         /* this next section of code is from */
@@ -429,7 +287,8 @@ void o_move_end(TOPLEVEL * w_current)
 
         o_move_end_lowlevel(w_current, object->complex->prim_objs,
                             COMPLEX, diff_x, diff_y,
-                            screen_diff_x, screen_diff_y);
+                            screen_diff_x, screen_diff_y,
+                            &other_objects, &connected_objects);
 
 
         get_complex_bounds(w_current, object->complex->prim_objs,
@@ -453,9 +312,31 @@ void o_move_end(TOPLEVEL * w_current)
                    x_get_darkcolor(w_current->bb_color), FALSE);
   }
 
+  /* Draw the objects that were moved (and connected/disconnected objects) */
+  o_draw_selected(w_current);
+  o_cue_undraw_list(w_current, other_objects);
+  o_cue_draw_list(w_current, other_objects);
+  o_cue_undraw_list(w_current, connected_objects);
+  o_cue_draw_list(w_current, connected_objects);
+
+  /* Draw the connected nets/buses that were also changed */
+  o_draw_list(w_current, rubbernet_objects);
+  o_cue_undraw_list(w_current, rubbernet_objects);
+  o_cue_draw_list(w_current, rubbernet_objects);
+  o_cue_undraw_list(w_current, rubbernet_other_objects);
+  o_cue_draw_list(w_current, rubbernet_other_objects);
+  o_cue_undraw_list(w_current, rubbernet_connected_objects);
+  o_cue_draw_list(w_current, rubbernet_connected_objects);
+ 
   w_current->page_current->CHANGED = 1;
-  /*  o_redraw(w_current, w_current->page_current->object_head); */
   o_undo_savestate(w_current, UNDO_ALL);
+
+  g_list_free(other_objects);
+  g_list_free(connected_objects);
+  g_list_free(rubbernet_objects);
+  g_list_free(rubbernet_other_objects);
+  g_list_free(rubbernet_connected_objects);
+
 }
 
 
@@ -549,6 +430,11 @@ void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
                             stretch_head,
                             c_current->other_object,
                             c_current, whichone);
+            
+            if (c_current->other_object->type == OBJ_NET || 
+                c_current->other_object->type == OBJ_BUS) {
+              o_erase_single(w_current, c_current->other_object);
+            }
           }
 
         }
@@ -660,11 +546,11 @@ int o_move_zero_length(OBJECT * object)
 <<o_move.c : o_move_end_rubberband()>>=
 void
 o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
-		      int world_diff_y)
+		      int world_diff_y,
+                      GList** objects,
+                      GList** other_objects, GList** connected_objects)
 {
   STRETCH *s_current;
-  GList *other_objects = NULL;
-  GList *connected_objects = NULL;
   OBJECT *object;
   int x, y;
   int whichone;
@@ -672,31 +558,27 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
   /* skip over head */
   s_current = w_current->page_current->stretch_head->next;
 
-
   while (s_current != NULL) {
-
-    g_list_free(other_objects);
-    other_objects = NULL;
-    g_list_free(connected_objects);
-    connected_objects = NULL;
-
+    
     object = s_current->object;
     if (object) {
       whichone = s_current->whichone;
 
       switch (object->type) {
+        
         case (OBJ_NET):
-          o_cue_undraw(w_current, object);
-          o_net_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
 
+          /* save a pointer to the object being moved for later */
+          *objects = g_list_append(*objects, object);
+          
           /* save the other objects and remove object's connections */
-          other_objects =
-            s_conn_return_others(other_objects, object);
+          *other_objects =
+            s_conn_return_others(*other_objects, object);
           s_conn_remove(w_current, object);
 
           x = object->line->x[whichone];
           y = object->line->y[whichone];
+
 
 #if DEBUG
           printf("OLD: %d, %d\n", x, y);
@@ -719,14 +601,9 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           } else {
             o_net_recalc(w_current, object);
             s_tile_update_object(w_current, object);
-
             s_conn_update_object(w_current, object);
-            o_cue_undraw_list(w_current, other_objects);
-            o_cue_draw_list(w_current, other_objects);
-            connected_objects =
-              s_conn_return_others(connected_objects, object);
-            o_cue_undraw_list(w_current, connected_objects);
-            o_cue_draw_list(w_current, connected_objects);
+            *connected_objects =
+              s_conn_return_others(*connected_objects, object);
           }
 
           break;
@@ -738,13 +615,13 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           break;
 
         case (OBJ_BUS):
-          o_cue_undraw(w_current, object);
-          o_bus_erase(w_current, object);
-          o_line_erase_grips(w_current, object);
+
+          /* save a pointer to the object being moved for later */
+          *objects = g_list_append(*objects, object);
 
           /* save the other objects and remove object's connections */
-          other_objects =
-            s_conn_return_others(other_objects, object);
+          *other_objects =
+            s_conn_return_others(*other_objects, object);
           s_conn_remove(w_current, object);
 
           x = object->line->x[whichone];
@@ -768,22 +645,24 @@ o_move_end_rubberband(TOPLEVEL * w_current, int world_diff_x,
           } else {
             o_bus_recalc(w_current, object);
             s_tile_update_object(w_current, object);
-
             s_conn_update_object(w_current, object);
-            o_cue_undraw_list(w_current, other_objects);
-            o_cue_draw_list(w_current, other_objects);
-            connected_objects =
-              s_conn_return_others(connected_objects, object);
-            o_cue_undraw_list(w_current, connected_objects);
-            o_cue_draw_list(w_current, connected_objects);
+            *connected_objects =
+              s_conn_return_others(*connected_objects, object);
           }
 
           break;
       }
     }
-
+    
     s_current = s_current->next;
   }
+
+#if DEBUG
+  printf("%d\n", g_list_length(*moved_objects));
+  printf("%d\n", g_list_length(*other_objects));
+  printf("%d\n", g_list_length(*connected_objects));
+#endif
+
 }
 
 

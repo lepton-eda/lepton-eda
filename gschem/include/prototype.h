@@ -438,6 +438,8 @@ void o_redraw_all(TOPLEVEL *w_current);
 void o_redraw_all_fast(TOPLEVEL *w_current);
 void o_redraw(TOPLEVEL *w_current, OBJECT *object_list);
 void o_unselect_all(TOPLEVEL *w_current);
+void o_draw_list(TOPLEVEL *w_current, GList *list);
+void o_draw_selected(TOPLEVEL *w_current);
 void o_erase_selected(TOPLEVEL *w_current);
 void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
 void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, GdkColor *color, int firsttime);
@@ -595,13 +597,13 @@ void o_edit_show_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext)
 void o_update_component(TOPLEVEL *w_current, SELECTION *list);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
-void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, int screen_diff_x, int screen_diff_y);
+void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, int screen_diff_x, int screen_diff_y, GList **other_objects, GList **connected_objects);
 void o_move_end(TOPLEVEL *w_current);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(TOPLEVEL *w_current);
 int o_move_zero_length(OBJECT *object);
-void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y);
+void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y, GList **objects, GList **other_objects, GList **connected_objects);
 void o_move_stretch_rubberband(TOPLEVEL *w_current);
 /* o_net.c */
 void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current);

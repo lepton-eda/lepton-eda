@@ -20,6 +20,8 @@
 <<o_basic.c : o_redraw_all_fast()>>
 <<o_basic.c : o_redraw()>>
 <<o_basic.c : o_unselect_all()>>
+<<o_basic.c : o_draw_list()>>
+<<o_basic.c : o_draw_selected()>>
 <<o_basic.c : o_erase_selected()>>
 <<o_basic.c : o_erase_single()>>
 <<o_basic.c : o_drawbounding()>>
@@ -224,6 +226,71 @@ o_unselect_all(TOPLEVEL *w_current)
 
 
 @ %def o_unselect_all
+
+
+@section Function @code{o_draw_list()}
+
+@defun o_draw_list w_current
+@end defun
+
+<<o_basic.c : o_draw_list()>>=
+void
+o_draw_list(TOPLEVEL *w_current, GList* list)
+{
+  OBJECT* o_current;
+  GList *l_current;
+
+  if (w_current->inside_redraw) {
+    return;
+  }
+
+  l_current = list;
+  while (l_current != NULL) {
+
+    o_current= (OBJECT *) l_current->data;
+
+    if (o_current) {
+      o_redraw_single(w_current, o_current);
+    }
+    
+    l_current = l_current->next;
+  }
+}
+
+
+@ %def o_draw_list
+
+
+
+@section Function @code{o_draw_selected()}
+
+@defun o_draw_selected w_current
+@end defun
+
+<<o_basic.c : o_draw_selected()>>=
+void
+o_draw_selected(TOPLEVEL *w_current)
+{
+  SELECTION* s_current;
+  OBJECT* o_current;
+  if (w_current->inside_redraw) {
+    return;
+  }
+
+  s_current = w_current->page_current->selection2_head->next;
+  while (s_current != NULL) {
+    o_current=s_current->selected_object;
+
+    if (o_current) {
+      o_redraw_single(w_current, o_current);
+    }
+    
+    s_current=s_current->next;
+  }
+
+}
+
+@ %def o_draw_selected
 
 
 @section Function @code{o_erase_selected()}

@@ -91,17 +91,6 @@ NETLIST *s_netlist_return_head(NETLIST *tail);
 NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_print(NETLIST *ptr);
 void s_netlist_post_process(TOPLEVEL *pr_current, NETLIST *head);
-/* s_project.c */
-TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
-void s_project_add_head(void);
-void s_project_free_head(void);
-void s_project_delete(TOPLEVEL *w_head, TOPLEVEL *pr_current);
-void s_project_setup_world(TOPLEVEL *pr_current);
-void s_project_setup_rest(TOPLEVEL *pr_current);
-TOPLEVEL *s_project_create_new(void);
-void s_project_close(TOPLEVEL *pr_current);
-void s_project_close_all(void);
-TOPLEVEL *s_project_get_ptr(int wid);
 /* s_rename.c */
 void s_rename_init(void);
 void s_rename_destroy_all(void);

@@ -41,17 +41,6 @@ void s_check_connections(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current);
 void s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current);
-/* s_project.c */
-TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
-void s_project_add_head(void);
-void s_project_free_head(void);
-void s_project_delete(TOPLEVEL *w_head, TOPLEVEL *pr_current);
-void s_project_setup_world(TOPLEVEL *pr_current);
-void s_project_setup_rest(TOPLEVEL *pr_current);
-TOPLEVEL *s_project_create_new(void);
-void s_project_close(TOPLEVEL *pr_current);
-void s_project_close_all(void);
-TOPLEVEL *s_project_get_ptr(int wid);
 /* s_symstruct.c */
 SYMCHECK *s_symstruct_init(void);
 void s_symstruct_print(SYMCHECK *s_current);
