@@ -1,4 +1,4 @@
-v 20000220
+v 20000704
 T 0 2800 9 10 1 1 0 0
 NB=Pin numbers for SOIC/DIP only, microSOIC different
 P 2850 1700 3150 1700 1
@@ -59,3 +59,7 @@ T 1300 1400 8 10 0 1 0 0
 footprint=SO8
 T 1400 1000 8 10 0 1 0 0
 footprint2=DIP8
+T 0 0 8 10 0 1 0 0
+pins=8
+T 0 0 8 10 0 1 0 0
+class=IC
