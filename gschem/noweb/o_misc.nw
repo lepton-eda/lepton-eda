@@ -1437,8 +1437,15 @@ o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
       /* make a copy of the attribute object */
       o_list_copy_to (w_current, o_current,
                       a_current->object, NORMAL_FLAG, &o_attrib);
+      if (o_current->attribs == NULL) {
+        /* object has no attribute list: create it */
+        o_current->attribs = add_attrib_head(o_current);
+      }
       /* add the attribute to old */
       o_attrib_add (w_current, o_current->attribs, o_attrib);
+      /* redraw the attribute object */
+      o_redraw_single (w_current, o_attrib);
+      /* note: this object is unselected (not added to selection). */
     }
 
     a_current = a_current->next;
