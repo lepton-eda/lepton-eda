@@ -572,7 +572,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
 
     /* Add some useful text */
     not_found_text = 
-      g_strdup_printf ("Component not found:\n %s", basename, NULL);
+      g_strdup_printf ("Component not found:\n %s", basename);
     prim_objs = o_text_add(w_current, prim_objs,
                            OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                            x + NOT_FOUND_TEXT_X, 
@@ -1920,7 +1920,7 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
     {
       char* refdes_copy;
       fprintf(stderr, "\tMAJOR VERSION CHANGE (file %.3f, "
-              "instantiated %.3f)!\n",
+              "instantiated %.3f, %s)!\n",
               inside_value, outside_value, refdes);
       s_log_message("\tMAJOR VERSION CHANGE (file %.3f, "
                     "instantiated %.3f)!\n",
