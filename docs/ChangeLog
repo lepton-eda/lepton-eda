@@ -8,6 +8,9 @@
 	* fileformats/fileformats.tex: Added 20050313 as a valid version
 	number
 
+	* gsch2pcb_tutorial/tutorial.html: Oops forgot a minor update to
+	get background image right.
+
 2005-02-19 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* fileformats/fileformats.tex: Added picture field description.
