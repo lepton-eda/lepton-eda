@@ -1,4 +1,12 @@
 
+2000-12-17  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/gnetlist.c: Changed the repl to Guile built in one. Better
+	  error handling, work like Guile and so on.
+
+	* src/g_netlist.c, src/vams_misc.c: Added inparameter check on all 
+	  Guile routines (SCM_ASSERT(...)).
+	
 2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* examples/vams/gschemrc: Added one line suggested by Stefan to get

@@ -195,36 +195,13 @@ void main_prog(int argc, char *argv[])
 	sprintf(input_str, "(%s \"%s\")", guile_proc, output_filename);
 	gh_eval_str(input_str);
 	/* gh_eval_str_with_stack_saving_handler (input_str); */
-    }
+    } else if (interactive_mode) { 
+	    gh_eval_str("(set-repl-prompt! \"gnetlist> \")");
+	    gh_repl(0, NULL);
+    } else {
+	    fprintf(stderr, "You gave neither backend to execute nor interactive mode!\n");
 
-    if (interactive_mode) {
-	done = 0;
-	while (!done) {
-	    printf("gnetlist> ");
-
-	    i = 0;
-	    c = getchar();
-	    while (c != '\n' && i < 1000) {
-
-		if (c == EOF) {
-		    done = 1;
-		    i = 0;
-		    break;
-		}
-
-		input_str[i] = c;
-		i++;
-		c = getchar();
-	    }
-	    input_str[i] = '\0';
-
-	    if (input_str[0] != '\0') {
-		gh_display(gh_eval_str_with_stack_saving_handler
-			   (input_str));
-		gh_display(gh_str02scm("\n"));
-	    }
-	}
-    }
+    }	    
 
     gnetlist_quit();
 }
