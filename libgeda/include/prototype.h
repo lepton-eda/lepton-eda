@@ -105,8 +105,8 @@ void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target);
 int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name);
 char *o_attrib_search_toplevel_all(PAGE *page_head, char *name);
-char **o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object);
-void o_attrib_free_returned(char **found_attribs);
+OBJECT **o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object);
+void o_attrib_free_returned(OBJECT **found_objects);
 /* o_basic.c */
 int inside_region(int left, int top, int right, int bottom, int x, int y);
 void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current);

@@ -1696,31 +1696,34 @@ DEFINE_I_CALLBACK(options_show_log_window)
 	x_log_setup_win(w_current);
 }
 
-/* for now this prints out the font_set structure */
+/* this is Ales' catch all misc callback */
 DEFINE_I_CALLBACK(misc)
 {
-	char **attrib_array;
+	OBJECT **attrib_objects;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	char name[128], value[128];
 	int i=0;
 
 	if (w_current->page_current->selection_head->next != NULL) {
-		attrib_array = o_attrib_return_attribs(w_current->page_current->
+		attrib_objects = o_attrib_return_attribs(
+					      w_current->page_current->
 					      object_head,
 				              w_current->page_current->
 				              selection_head->next);
 
 
-		if (attrib_array) {
-			while(attrib_array[i] != NULL) {
-				o_attrib_get_name_value(attrib_array[i], 
-							name, value);
-                		printf("%d : %s\n", i, attrib_array[i]);
+		if (attrib_objects) {
+			while(attrib_objects[i] != NULL) {
+				o_attrib_get_name_value(
+						attrib_objects[i]->text_string, 
+						name, value);
+                		printf("%d : %s\n", i, 
+					attrib_objects[i]->text_string);
 				printf("   name: %s\n", name);
 				printf("   value: %s\n", value);
                 		i++;
 			}
-			o_attrib_free_returned(attrib_array);
+			o_attrib_free_returned(attrib_objects);
 		}
 
         }

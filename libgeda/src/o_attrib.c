@@ -1713,14 +1713,16 @@ o_attrib_search_toplevel_all(PAGE *page_head, char *name)
 	return(NULL);
 }
 
-/* This function returns all attached attributes to the specified object */
-/* The returned list is an array of chars and MUST be freed by the caller */
+/* This function returns all attached attribute objects to the specified 
+/* object */
+/* The returned list is an array of objects and should be freed using the */
+/* below function */
 /* This routine will only look for attached attributes and not unattached */
 /* free floating attribs */
-char **
+OBJECT **
 o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object) 
 {
-	char **found_attribs;
+	OBJECT **found_objects;
 	int num_attribs=0;
 	int i=0;
 	ATTRIB *a_current;	
@@ -1749,46 +1751,47 @@ o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
 		a_current = a_current->next;
 	}
 
-	found_attribs = (char **) malloc(sizeof(char *)*(num_attribs+1));
+	found_objects = (OBJECT **) malloc(sizeof(OBJECT *)*(num_attribs+1));
 
-	/* now actually fill the array of chars */
+	/* now actually fill the array of objects */
 	a_current = object->attribs->next;	
 	while(a_current != NULL) {
 		if (a_current->object != NULL) {
 			o_current = a_current->object;
 			if (o_current->type == OBJ_TEXT && 
 			    o_current->text_string) {
-				found_attribs[i] = u_basic_strdup(o_current->
-								  text_string);
+				found_objects[i] = o_current;
 				i++;
 			}
 		}
 		a_current = a_current->next;
 	}
 
-	found_attribs[i] = NULL;
+	found_objects[i] = NULL;
 
-#if DEBUG
+#if DEBUG 
 	i=0;
-	while(found_attribs[i] != NULL) {
+	while(found_objects[i] != NULL) {
 		/*for (i = 0 ; i < num_attribs; i++) {*/
-		printf("%d : %s\n", i, found_attribs[i]);
+		printf("%d : %s\n", i, found_objects[i]->text_string);
 		i++;
 	}
 #endif
 
-	return(found_attribs);
+	return(found_objects);
 }
 
 void
-o_attrib_free_returned(char **found_attribs)
+o_attrib_free_returned(OBJECT **found_objects)
 {
 	int i=0;
 
-	while(found_attribs[i] != NULL) {
-		free(found_attribs[i]);
+	/* don't free the insides of found_objects, since the contents are */
+	/* just pointers into the real object list */
+	while(found_objects[i] != NULL) {
+		found_objects[i] = NULL;
 		i++;	
 	}
 
-	free(found_attribs);
+	free(found_objects);
 }
