@@ -16,6 +16,10 @@
 	* scheme/gnet-pads.scm: Applied patch (20031216) by Dan McMahill to 
 	use the new net name modification scheme functions.
 
+	tests/powersupply.pads, tests/singlenet.pads: Updated golden files
+	to be current (take into the changes Dan's patches made to the 
+	PADS backend)
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added --with-docdir command line flag as well all	
