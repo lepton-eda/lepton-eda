@@ -1,4 +1,4 @@
-v 20031231 1
+v 20041228 1
 T 2600 1300 8 10 1 1 180 0 1
 refdes=U?
 T 300 1340 5 10 0 0 0 0 1
@@ -74,9 +74,9 @@ pinlabel=GP0
 T 2550 800 5 8 0 1 0 8 1
 pintype=io
 }
-T 700 -400 5 10 0 0 0 0 1
+T 300 2350 5 10 0 0 0 0 1
 net=Vdd:1
-T -300 -500 5 10 0 0 0 0 1
+T 300 2550 5 10 0 0 0 0 1
 net=Vss:8
 T 300 1950 5 10 0 0 0 0 1
 description=8-bit CMOS microcontroller
@@ -84,7 +84,5 @@ T 300 2150 5 10 0 0 0 0 1
 documentation=http://www.microchip.com/download/lit/pline/picmicro/families/12c5xx/40139e.pdf
 T 300 1150 9 10 1 0 0 0 1
 PIC12C5xx
-T 300 2350 5 10 0 0 0 0 1
-net=GND:8
-T 300 2550 5 10 0 0 0 0 1
-net=Vcc:1
+T 300 2750 5 10 0 0 0 0 1
+symversion=0.1

@@ -1,3 +1,6 @@
+2005-03-06 Werner Hoch <werner.ho@gmx.de>
+	* micro/pic12c5xx-1.sym: removed accidently added power nets
+
 2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
         * system-gafrc.in: Include font character to file map.
 	
