@@ -138,6 +138,7 @@ SCM g_key_misc3(void);
 SCM g_key_help_about(void);
 SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
+/* globals.c */
 /* g_rc.c */
 void g_rc_parse(void);
 SCM g_rc_gschem_version(SCM version);
@@ -218,7 +219,6 @@ SCM g_rc_undo_type(SCM mode);
 SCM g_rc_draw_grips(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
-/* globals.c */
 /* gschem.c */
 void gschem_quit(void);
 void main_prog(int argc, char *argv[]);
@@ -266,6 +266,7 @@ void i_callback_edit_embed(gpointer data, guint callback_action, GtkWidget *widg
 void i_callback_edit_unembed(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_hidden(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_linetype(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_filltype(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_redraw(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_full(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_limits(gpointer data, guint callback_action, GtkWidget *widget);
@@ -353,11 +354,11 @@ void i_vars_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
-void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(TOPLEVEL *w_current, int x, int y);
@@ -388,6 +389,10 @@ void o_box_draw_dotted(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle c
 void o_box_draw_dashed(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
 void o_box_draw_center(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
 void o_box_draw_phantom(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
+void o_box_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(TOPLEVEL *w_current, int x, int y);
@@ -417,6 +422,10 @@ void o_bus_eraserubber(TOPLEVEL *w_current);
 void o_bus_xorrubber(TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
+void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(TOPLEVEL *w_current, int x, int y);
@@ -586,6 +595,10 @@ gint change_linetype(GtkWidget *w, TOPLEVEL *w_current);
 void line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void line_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void line_type_dialog(TOPLEVEL *w_current, OBJECT *object);
+gint change_filltype(GtkWidget *w, TOPLEVEL *w_current);
+void fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
+void fill_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
+void fill_type_dialog(TOPLEVEL *w_current, OBJECT *object);
 void exit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void exit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void exit_dialog(TOPLEVEL *w_current);

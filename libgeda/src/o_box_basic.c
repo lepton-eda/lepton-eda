@@ -183,6 +183,7 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	int d_x2, d_y2;
 	int color;
 	int box_width, box_space, box_length;
+	int fill_width, angle1, pitch1, angle2, pitch2;
 	OBJECT_END box_end;
 	OBJECT_TYPE box_type;
 	OBJECT_FILLING box_filling;
@@ -198,17 +199,21 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 		box_width   = 0;
 		box_end     = END_NONE;
 		box_type    = TYPE_SOLID;
-		box_filling = FILLING_HOLLOW;
 		box_length  = -1;
 		box_space   = -1;
+
+		box_filling = FILLING_HOLLOW;		
+		fill_width  = 0;
+		angle1      = -1;
+		pitch1      = -1;
+		angle2      = -1;
+		pitch2      = -1;
 	} else {
 		sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
 			   &type, &x1, &y1, &width, &height, &color,
 			   &box_width, &box_end, &box_type, &box_length, 
 			   &box_space, &box_filling,
-			   &tmp, &tmp, &tmp, &tmp, &tmp);
-			   /* box_fillwidth box_angle1 box_pitch1 box_angle2 */
-			   /* box_pitch2 */
+			   &fill_width, &angle1, &pitch1, &angle2, &pitch2);			   
 	}
 
 	d_x1 = x1;
@@ -239,7 +244,8 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 					   box_end, box_type, box_width, 
 					   box_length, box_space);
 	o_set_fill_options(w_current, object_list,
-					   box_filling, -1, -1, -1, -1, -1);
+					   box_filling, fill_width,
+					   pitch1, angle1, pitch2, angle2);
 
 	return(object_list);
 }
@@ -251,6 +257,7 @@ o_box_save(char *buf, OBJECT *object)
 	int width, height;
 	int color;
 	int box_width, box_space, box_length;
+	int fill_width, angle1, pitch1, angle2, pitch2;
 	OBJECT_END box_end;
 	OBJECT_TYPE box_type;
 	OBJECT_FILLING box_fill;
@@ -273,21 +280,25 @@ o_box_save(char *buf, OBJECT *object)
 	}
 
 /* PB : new fields are saved */
-	box_end   = object->line_end;
-	box_width = object->line_width;
-	box_type  = object->line_type;
-	box_length= object->line_length;
-	box_space = object->line_space;
-	box_fill  = object->fill_type;
+	box_end    = object->line_end;
+	box_width  = object->line_width;
+	box_type   = object->line_type;
+	box_length = object->line_length;
+	box_space  = object->line_space;
 	
+	box_fill   = object->fill_type;
+	fill_width = object->fill_width;
+	angle1     = object->fill_angle1;
+	pitch1     = object->fill_pitch1;
+	angle2     = object->fill_angle2;
+	pitch2     = object->fill_pitch2;
+
 	sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
 			object->type,
 			x1, y1, width, height, color,
 			box_width, box_end, box_type, box_length, box_space, 
 			box_fill,
-			-1, -1, -1, -1, -1);
-			/* box_fillwidth box_angle1 box_pitch1 box_angle2 */
-			/* box_pitch2 */
+			fill_width, angle1, pitch1, angle2, pitch2);
 			
 	return(buf);
 }

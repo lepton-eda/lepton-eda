@@ -1720,6 +1720,399 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
 }
 /***************** End of Line Type / Width dialog box *********************/
 
+/***************** Start of Fill Type dialog box *********************/
+gint
+change_filltype(GtkWidget *w, TOPLEVEL *w_current)
+{
+	char *filltype;
+	filltype = gtk_object_get_data(GTK_OBJECT(w),"filltype");
+	w_current->fill_type = (int) filltype;
+	
+	return(0);
+}
+
+static GtkWidget*
+create_menu_filltype (TOPLEVEL *w_current)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GSList *group;
+	char buf[100];
+
+	menu = gtk_menu_new ();
+	group = NULL;
+
+	sprintf (buf, "Hollow");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_HOLLOW);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_filltype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Filled");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_FILL);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_filltype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Mesh");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_MESH);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_filltype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Hatch");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_HATCH);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_filltype,
+			   w_current);
+	gtk_widget_show (menuitem);
+	
+	return(menu);
+}
+
+
+void
+fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
+{
+	int width, angle1, pitch1, angle2, pitch2;
+	OBJECT *object;
+	GtkWidget *width_entry, *angle1_entry, *pitch1_entry, *angle2_entry, *pitch2_entry;
+	char *fill_width_string = NULL;
+	char *fill_angle1_string = NULL;
+	char *fill_pitch1_string = NULL;
+	char *fill_angle2_string = NULL;
+	char *fill_pitch2_string = NULL;
+
+	object = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),"object");
+
+	width_entry = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),
+		       "width_entry");
+	angle1_entry = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),
+											"angle1_entry");
+	pitch1_entry = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),
+											"pitch1_entry");
+	angle2_entry = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),
+											"angle2_entry");
+	pitch2_entry = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),
+											"pitch2_entry");
+
+	fill_width_string = gtk_entry_get_text(GTK_ENTRY(width_entry));
+	fill_angle1_string = gtk_entry_get_text(GTK_ENTRY(angle1_entry));
+	fill_pitch1_string = gtk_entry_get_text(GTK_ENTRY(pitch1_entry));
+	fill_angle2_string = gtk_entry_get_text(GTK_ENTRY(angle2_entry));
+	fill_pitch2_string = gtk_entry_get_text(GTK_ENTRY(pitch2_entry));
+
+	if ((fill_width_string[0] != '\0')) {
+		width = atoi(fill_width_string);
+	}
+
+	if ((fill_angle1_string[0] != '\0')) {
+		angle1 = atoi(fill_angle1_string);
+	}
+
+	if ((fill_pitch1_string[0] != '\0')) {
+		pitch1 = atoi(fill_pitch1_string);
+	}
+
+	if ((fill_angle2_string[0] != '\0')) {
+		angle2 = atoi(fill_angle2_string);
+	}
+
+	if ((fill_pitch2_string[0] != '\0')) {
+		pitch2 = atoi(fill_pitch2_string);
+	}
+
+	/* do some error checking / correcting */
+	switch(w_current->fill_type) {
+
+		case(FILLING_HOLLOW):
+		case(FILLING_FILL):
+			angle1 = -1; pitch1 = 1;
+			angle2 = -1; pitch2 = 1;
+			width = -1;
+			break;
+
+		case(FILLING_HATCH):
+			angle2 = -1; pitch2 = 1;
+			break;
+
+		case(FILLING_MESH):
+			break;
+
+	}
+
+	o_erase_single(w_current, object);
+
+#if DEBUG
+	printf("fill_type_dialog_ok() : type: %d, width: %d\n",
+		   w_current->fill_type, width);
+	printf("\tpitch1: %d, angle1: %d\n", pitch1, angle1);
+	printf("\tpitch2: %d, angle2: %d\n", pitch2, angle2);
+#endif	
+
+	o_set_fill_options(w_current, object,
+					   w_current->fill_type, width,
+					   pitch1, angle1, pitch2, angle2);
+
+	o_object_recalc(w_current, object);
+
+	o_redraw_single(w_current, object);
+
+
+	w_current->page_current->CHANGED = 1;
+	w_current->event_state = SELECT;
+	i_update_status(w_current, "Select Mode");
+
+	gtk_grab_remove(w_current->ftwindow);
+	gtk_widget_destroy(w_current->ftwindow);
+	w_current->ftwindow = NULL;
+}
+
+void
+fill_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
+{
+	i_update_status(w_current, "Select Mode");
+	w_current->event_state = SELECT;
+	gtk_grab_remove(w_current->ftwindow);
+	gtk_widget_destroy(w_current->ftwindow);
+	w_current->ftwindow = NULL;
+}
+
+void
+fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
+{
+	GtkWidget *label = NULL;
+	GtkWidget *buttonok     = NULL;
+	GtkWidget *buttoncancel = NULL;
+	GtkWidget *vbox, *action_area;
+	GtkWidget *optionmenu = NULL;
+	GtkWidget *fill_type_menu = NULL;
+	GtkWidget *width_entry, *angle1_entry, *pitch1_entry, *angle2_entry, *pitch2_entry;
+	char string[10];
+	int len;
+
+	if (!w_current->ftwindow) {
+		w_current->ftwindow = x_create_dialog_box(&vbox, &action_area);
+
+		gtk_window_position(GTK_WINDOW (w_current->ftwindow),
+							GTK_WIN_POS_MOUSE);
+
+		gtk_signal_connect(GTK_OBJECT (w_current->ftwindow),
+						   "destroy",
+						   GTK_SIGNAL_FUNC(destroy_window),
+						   &w_current->ftwindow);
+
+		gtk_window_set_title(GTK_WINDOW (w_current->ftwindow),
+							 "Edit Fill Type");
+		gtk_container_border_width(GTK_CONTAINER(w_current->ftwindow), 0);
+
+		gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),"object",
+							(gpointer) object);
+
+		label = gtk_label_new ("Fill Type");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+      		gtk_widget_show (label);
+
+		optionmenu = gtk_option_menu_new ();
+		fill_type_menu = create_menu_filltype (w_current);
+		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
+								 fill_type_menu);
+		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 
+									object->fill_type);
+		w_current->fill_type = object->fill_type;
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+		gtk_widget_grab_focus(optionmenu);
+		gtk_widget_show(optionmenu);
+
+		label = gtk_label_new ("Line Width");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+      		gtk_widget_show (label);
+
+		width_entry = gtk_entry_new();
+      		gtk_editable_select_region(
+			GTK_EDITABLE(width_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			width_entry, TRUE, TRUE, 10);
+		
+		gtk_signal_connect(GTK_OBJECT(width_entry), "activate",
+						   GTK_SIGNAL_FUNC(fill_type_dialog_ok),
+						   w_current);
+		gtk_widget_show (width_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),
+							"width_entry",
+							(gpointer) width_entry);
+
+
+		label = gtk_label_new ("Angle1");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+		gtk_widget_show (label);
+
+		angle1_entry = gtk_entry_new();
+		gtk_editable_select_region(
+			GTK_EDITABLE(angle1_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			angle1_entry, TRUE, TRUE, 10);
+		
+		gtk_signal_connect(GTK_OBJECT(angle1_entry), "activate",
+						   GTK_SIGNAL_FUNC(fill_type_dialog_ok),
+						   w_current);
+		gtk_widget_show (angle1_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),
+							"angle1_entry",
+							(gpointer) angle1_entry);
+
+		
+		label = gtk_label_new ("Pitch1");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+		gtk_widget_show (label);
+
+		pitch1_entry = gtk_entry_new();
+		gtk_editable_select_region(
+			GTK_EDITABLE(pitch1_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			pitch1_entry, TRUE, TRUE, 10);
+		
+		gtk_signal_connect(GTK_OBJECT(pitch1_entry), "activate",
+						   GTK_SIGNAL_FUNC(fill_type_dialog_ok),
+						   w_current);
+		gtk_widget_show (pitch1_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),
+							"pitch1_entry",
+							(gpointer) pitch1_entry);
+		
+
+		label = gtk_label_new ("Angle2");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+		gtk_widget_show (label);
+
+		angle2_entry = gtk_entry_new();
+		gtk_editable_select_region(
+			GTK_EDITABLE(angle2_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			angle2_entry, TRUE, TRUE, 10);
+		
+		gtk_signal_connect(GTK_OBJECT(angle2_entry), "activate",
+						   GTK_SIGNAL_FUNC(fill_type_dialog_ok),
+						   w_current);
+		gtk_widget_show (angle2_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),
+							"angle2_entry",
+							(gpointer) angle2_entry);
+
+
+		label = gtk_label_new ("Pitch2");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+		gtk_widget_show (label);
+
+		pitch2_entry = gtk_entry_new();
+		gtk_editable_select_region(
+			GTK_EDITABLE(pitch2_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			pitch2_entry, TRUE, TRUE, 10);
+		
+		gtk_signal_connect(GTK_OBJECT(pitch2_entry), "activate",
+						   GTK_SIGNAL_FUNC(fill_type_dialog_ok),
+						   w_current);
+		gtk_widget_show (pitch2_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),
+							"pitch2_entry",
+							(gpointer) pitch2_entry);
+
+		
+		buttonok = gtk_button_new_with_label ("OK");
+		GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(
+			GTK_BOX(action_area),
+			buttonok, TRUE, TRUE, 0);
+      		gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
+				   GTK_SIGNAL_FUNC(fill_type_dialog_ok),
+				   w_current);
+      		gtk_widget_show(buttonok);
+		gtk_widget_grab_default(buttonok);
+
+		buttoncancel = gtk_button_new_with_label ("Cancel");
+		GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(
+			GTK_BOX(action_area),
+			buttoncancel, TRUE, TRUE, 0);
+      		gtk_signal_connect(GTK_OBJECT (buttoncancel), "clicked",
+			           GTK_SIGNAL_FUNC(fill_type_dialog_cancel),
+				   w_current);
+      		gtk_widget_show(buttoncancel);
+
+	}
+
+  	if (!GTK_WIDGET_VISIBLE (w_current->ftwindow)) {
+		gtk_widget_show (w_current->ftwindow);
+
+		sprintf(string, "%d", object->fill_width);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(width_entry),
+						   string);
+		gtk_entry_select_region(GTK_ENTRY(width_entry), 0, len);
+
+		sprintf(string, "%d", object->fill_angle1);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(angle1_entry),
+						   string);
+		gtk_entry_select_region(GTK_ENTRY(angle1_entry), 0, len);
+
+		sprintf(string, "%d", object->fill_pitch1);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(pitch1_entry),
+						   string);
+		gtk_entry_select_region(GTK_ENTRY(pitch1_entry), 0, len);
+
+		sprintf(string, "%d", object->fill_angle2);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(angle2_entry),
+						   string);
+		gtk_entry_select_region(GTK_ENTRY(angle2_entry), 0, len);
+
+		sprintf(string, "%d", object->fill_pitch2);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(pitch2_entry),
+						   string);
+		gtk_entry_select_region(GTK_ENTRY(pitch2_entry), 0, len);
+
+		gtk_widget_grab_focus(width_entry);
+		gtk_grab_add (w_current->ftwindow);
+	}
+}
+/***************** End of Fill Type dialog box *********************/
+
 /***************** Start of Exit dialog box *********************/
 void
 exit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
@@ -3091,6 +3484,9 @@ x_dialog_raise_all(TOPLEVEL *w_current)
 	}
         if(w_current->ltwindow) {
 		gdk_window_raise(w_current->ltwindow->window);
+	}
+        if(w_current->ftwindow) {
+		gdk_window_raise(w_current->ftwindow->window);
 	}
 
 }

@@ -166,8 +166,8 @@ struct st_object {
 
 	OBJECT_FILLING fill_type;
 	int fill_width, screen_fill_width;
-	int fill_angle1, fill_pitch1;
-	int fill_angle2, fill_pitch2;
+	int fill_angle1, fill_pitch1, screen_fill_pitch1;
+	int fill_angle2, fill_pitch2, screen_fill_pitch2;
 /* PB : change end */	
 	
 	int visited;		/* used in gnetlist for travesal purposes */
@@ -403,7 +403,8 @@ struct st_toplevel {
 
 	int line_type;				/* location to hold current */
 						/* line type selection */
-
+	int fill_type;				/* location to hold current */
+						/* fill type selection (PB) */
 
 	int override_color;			/* used in doing selections */
 	int inside_redraw;			/* complex vs list redrawing */
@@ -506,6 +507,7 @@ struct st_toplevel {
 	GtkWidget *tewindow;			/* text edit */
 	GtkWidget *teentry;
 	GtkWidget *ltwindow;			/* line type / width edit */
+	GtkWidget *ftwindow;			/* fill type edit (PB) */
 	GtkWidget *sewindow;			/* slot edit */
 	GtkWidget *seentry;
 	GtkWidget *exwindow;			/* exit confirm */

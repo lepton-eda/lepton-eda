@@ -212,6 +212,7 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
 	int radius;
 	int color;
 	int circle_width, circle_space, circle_length;
+	int fill_width, angle1, pitch1, angle2, pitch2;
 	OBJECT_END circle_end;
 	OBJECT_TYPE circle_type;
 	OBJECT_FILLING circle_fill;
@@ -228,16 +229,20 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
 		circle_type  = TYPE_SOLID;
 		circle_length= -1;
 		circle_space = -1;
+
 		circle_fill  = FILLING_HOLLOW;
+		fill_width  = 0;
+		angle1      = -1;
+		pitch1      = -1;
+		angle2      = -1;
+		pitch2      = -1;
 	} else {
 /* PB : change */
 		sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
 			   &type, &x1, &y1, &radius, &color,
 			   &circle_width, &circle_end, &circle_type,
 			   &circle_length, &circle_space, &circle_fill,
-			   &tmp, &tmp, &tmp, &tmp, &tmp);
-			   /* circle_fillwidth circle_angle1 circle_pitch1 */
-			   /* circle_angle2 circle_pitch2*/
+			   &fill_width, &angle1, &pitch1, &angle2, &pitch2);
 	}
 
 	if (radius == 0) {
@@ -262,7 +267,7 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
 				circle_end, circle_type, circle_width, 
 				circle_length, circle_space);
 	o_set_fill_options(w_current, object_list,
-				circle_fill, -1, -1, -1, -1, -1);
+				circle_fill, fill_width, pitch1, angle1, pitch2, angle2);
 	
 	return(object_list);
 }
@@ -274,6 +279,7 @@ o_circle_save(char *buf, OBJECT *object)
 	int radius;
 	int color;
 	int circle_width, circle_space, circle_length;
+	int fill_width, angle1, pitch1, angle2, pitch2;
 	OBJECT_END circle_end;
 	OBJECT_TYPE circle_type;
 	OBJECT_FILLING circle_fill;
@@ -288,7 +294,13 @@ o_circle_save(char *buf, OBJECT *object)
 	circle_type  = object->line_type;
 	circle_length= object->line_length;
 	circle_space = object->line_space;
+
 	circle_fill  = object->fill_type;
+	fill_width   = object->fill_width;
+	angle1       = object->fill_angle1;
+	pitch1       = object->fill_pitch1;
+	angle2       = object->fill_angle2;
+	pitch2       = object->fill_pitch2;
 
 #if 0 /* old system */
 	radius = abs(x2 - x1)/2;
@@ -312,9 +324,7 @@ o_circle_save(char *buf, OBJECT *object)
 			object->type, x, y, radius, color,
 			circle_width, circle_end, circle_type, circle_length, 
 			circle_space, circle_fill,
-			-1, -1, -1, -1, -1);
-			/* circle_fillwidth circle_angle1 circle_pitch1 */
-			/* circle_angle2 circle_pitch2 */
+			fill_width, angle1, pitch1, angle2, pitch2);
 
 	return(buf);
 }

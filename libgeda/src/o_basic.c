@@ -157,7 +157,7 @@ o_set_fill_options(TOPLEVEL *w_current, OBJECT *o_current,
 void
 o_object_recalc(TOPLEVEL *w_current, OBJECT *o_current) 
 {
-	int width, length, space;
+	int width, length, space, pitch;
 	
 	if(o_current == NULL) {
 		return;
@@ -171,4 +171,12 @@ o_object_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 	space = SCREENabs(w_current, o_current->line_space);
 	o_current->screen_line_space = space;
+
+	width = SCREENabs(w_current, o_current->fill_width);
+	o_current->screen_fill_width = width;
+	pitch = SCREENabs(w_current, o_current->fill_pitch1);
+	o_current->screen_fill_pitch1 = pitch;
+	pitch = SCREENabs(w_current, o_current->fill_pitch2);
+	o_current->screen_fill_pitch2 = pitch;
+
 }

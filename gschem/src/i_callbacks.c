@@ -774,6 +774,21 @@ DEFINE_I_CALLBACK(edit_linetype)
 	}
 }
 
+/* PB : support for fill dialog */
+DEFINE_I_CALLBACK(edit_filltype)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
+
+	exit_if_null(w_current);
+	
+	i_update_middle_button(w_current, i_callback_edit_color, "Edit Fill Type");
+
+	if ( (object = o_select_return_first_object(w_current)) ) {
+		fill_type_dialog(w_current, object);
+	}
+}
+
 /* View menu */
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right
@@ -1219,7 +1234,7 @@ DEFINE_I_CALLBACK(page_revert)
 
 	/* now re open it */
 	w_current->DONT_REDRAW = 1;
-        (void)f_open(w_current, w_current->page_current->page_filename);
+        f_open(w_current, w_current->page_current->page_filename);
         i_set_filename(w_current, w_current->page_current->page_filename);
 
 	/* make sure we maintain the hierarchy info */
