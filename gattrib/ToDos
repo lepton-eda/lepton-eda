@@ -1,0 +1,64 @@
+Gattrib todos.
+
+Updated 8.06.2004 -- SDB
+
+--------------------------------------------------------------------
+This is a running list of things left to be done with gattrib.  Items
+already completed are marked with  #####. 
+
+*  Fix key_press event handling so that arrow keys work intelligently
+   when using gtk-2.2.
+*  Decide what to do about "pins" editing:  How to save out chages?
+   Right now "pins" are only displayed, they cannot be changed.
+*  #####  Add "component pins" page to allow users to edit component pin attributes.
+   This is useful to make sure that the pin attributess are correctly 
+   set for use with PCB & other layout packages.
+*  #####  Create separate comp_attrib and net_attrib variables. 
+*  #####  Handle saving out of multi-page design so that it correctly saves
+   individual pages back to their destination (i.e. page1.sch ->
+   page1.sch, page2.sch -> page2.sch.)  Currently smashes all pages
+   together.
+*  Find out why it leaves "xterm" on the command prompt when you
+   invoke the prog with no files on the cmd line.  
+*  Change save menus to:  save project, save as, which cycles through
+   pages and saves objects out on a page by page basis.
+*  Incorporate a "close" item on the menu to close out the current
+   project without quitting the whole application. 
+*  flesh out net handling functions.  Need to more fully understand
+   how nets work.  Note that they must be read in differently from
+   components -- you need to read the whole project in before handling
+   nets because each net segment is separate, but the net itself can span
+   many components and pages. 
+*  Add info about NETS and net attribs into NOTES.  
+*  #####  Go over OBJECT struct data in NOTES -- is (ATTRIB
+   *attached_to) info correct? 
+*  ##### Implement sort of master lists.
+*  Install text_entry widget below menu & above spreadsheet (like in Excel).
+   Use this widget for text entry into cell, like in Excel.
+*  #####  Fix problem where pages read at different times are not merged.
+*  #####  re-write NOTES and documentation for project.
+*  #####  Include gnumeric spreadsheet into DIST_EXTRA
+*  make sure comments in each fcn are true
+*  #####  Make sure all DEBUG printfs are accurate & give the correct fcn name.
+*  Re-introduce I18N stuff where I took it out.
+*  ##### clean out i_basic.c -- there are too many "if 0" regions in there.
+*  ##### Change attrib update algorithm to write out both old, updated
+   attribs as well as new ones for each component. 
+*  #####  Fix segfault when run on OpticalReceiver without valgrind or
+   GDB.  (Fix: free in wrong place was moved to correct place in
+   gattrib.c) 
+*  Eventually re-introduce hierarchy.  Important for nets.
+*  Add in fcns dealing with nets spanning pages.
+*  #####  Incorporate Dan's changes, including Makefile changes, warning
+   stuff, and make sure prog doesn't segfault if no attributes are
+   found. 
+*  #####  gattribrc should be installed in RC dir as part of "make install".
+*  #####  Enable horizontal resizing of window.  Currently can't shrink window
+   to less than initial width.
+*  Fix cells so that a long attrib string doesn't bleed into/overwrite 
+   adjacent cells.  Maybe automatically size cell to fit text?  Problem is that
+   "file" attributes can be very long.   
+*  Per Ales, use the gtksheet stuff as a library instead of a bunch of source
+   files.  Is this necessary?
+*  User should be able to set attrib visibility.  How to implement & show?
+*  Incorporate ability to add attrib columns.

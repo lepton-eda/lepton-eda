@@ -1,0 +1,17 @@
+gEDA-gattrib: A spreadsheet based attribute editor for gEDA.
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+gattrib AUTHORS
+
+Primary author: Stuart Brorson mailto:sdb@cloud9.net
+
+Large sections of code "borrowed" from geda-gnetlist, as well as gtksheet.
+Credit to the authors of those programs is gratefully extended.
+
+geda-getnetlist:  http://www.geda.seul.org/
+
+gtksheet:  http://gtkextra.sourceforge.net/
+
+
