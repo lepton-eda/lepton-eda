@@ -1,3 +1,8 @@
+2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_attrib.nw: Added a comment to a line which was using
+	uref= which is now deprecated (replaced by refdes=)
+	
 2002-07-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Fixed the crash when you try to display

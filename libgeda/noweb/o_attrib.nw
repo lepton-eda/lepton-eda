@@ -147,7 +147,7 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current) {
   char *index_list;
   int index_list_len=1;
 
-  if (strncmp(o_current->text->string,"uref=",5))
+  if (strncmp(o_current->text->string,"uref=",5))  // deprecated
   return;
 
   len=strlen(o_current->text->string);
