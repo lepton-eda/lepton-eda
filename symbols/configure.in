@@ -5,7 +5,7 @@ dnl Initialize automake stuff
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990919
+VERSION=19991011
 
 echo Configuring symbols version $VERSION
 
@@ -114,8 +114,17 @@ datamisc=`echo $datamisc`
 data74=`ls -1 74 | grep -v Makefile | grep -v CVS`
 data74=`echo $data74`
 
+dataxilinx=`ls -1 xilinx | grep -v Makefile | grep -v CVS`
+dataxilinx=`echo $dataxilinx`
+
+datadec=`ls -1 dec | grep -v Makefile | grep -v CVS`
+datadec=`echo $datadec`
+
 datarf=`ls -1 rf | grep -v Makefile | grep -v CVS`
 datarf=`echo $datarf`
+
+datapla=`ls -1 pla | grep -v Makefile | grep -v CVS`
+datapla=`echo $datapla`
 
 datafoot=`ls -1 foot | grep -v Makefile | grep -v CVS`
 datafoot=`echo $datafoot`
@@ -188,6 +197,9 @@ AC_SUBST(datamemory)
 AC_SUBST(datamicro)
 AC_SUBST(datamisc)
 AC_SUBST(data74)
+AC_SUBST(dataxilinx)
+AC_SUBST(datadec)
+AC_SUBST(datapla)
 AC_SUBST(datarf)
 AC_SUBST(datafoot)
 AC_SUBST(dataIEC417)
@@ -204,6 +216,9 @@ AC_OUTPUT([
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	xilinx/Makefile 
+	dec/Makefile 
+	pla/Makefile 
 	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 

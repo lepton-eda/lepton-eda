@@ -302,7 +302,9 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
       (begin
-	(gnetlist:set-netlist-mode "SPICE")  ;; don't want 'duplicate' nets
+
+;;      Following is no longer needed
+;;	(gnetlist:set-netlist-mode "SPICE")  ;; don't want 'duplicate' nets
 	(verilog:write-top-header port)
 	(verilog:write-wires port)
 	(verilog:write-continuous-assigns port)

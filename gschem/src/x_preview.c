@@ -115,6 +115,7 @@ x_preview_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
                         event->area.x, event->area.y,
                         event->area.width, event->area.height);
 
+	return(0);
 }
 
 gint
@@ -136,6 +137,7 @@ x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	} else if (event->button == 3) {
 		i_callback_view_zoom_out_hotkey(w_current, 0, NULL);
 	}
+	return(0);
 }
 
 gint
@@ -147,6 +149,7 @@ x_preview_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 #if DEBUG
 	printf("preview motion\n");
 #endif
+	return(0);
 }
 
 #if 0
@@ -162,10 +165,10 @@ x_preview_button_released(GtkWidget *widget, GdkEventButton *event,
 #endif
 
 
+#if 0
 gint
 x_preview_key_press (GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current)
 {
-	char *string;
         exit_if_null(w_current);
         global_window_current = w_current;
 
@@ -174,6 +177,7 @@ x_preview_key_press (GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current)
         }
 
 }
+#endif
 
 void
 x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)

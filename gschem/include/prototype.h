@@ -441,13 +441,6 @@ void x_color_allocate_all(void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
 int x_color_get_name(int index, char *string);
-/* x_compsel.c */
-gint default_components(GtkWidget *w, TOPLEVEL *w_current);
-gint embed_components(GtkWidget *w, TOPLEVEL *w_current);
-gint include_components(GtkWidget *w, TOPLEVEL *w_current);
-gint change_clib(GtkWidget *gtklist, TOPLEVEL *w_current);
-gint change_basename(GtkWidget *gtklist, TOPLEVEL *w_current);
-void setup_place_file_selector(TOPLEVEL *w_current);
 /* x_dialog.c */
 void destroy_window(GtkWidget *widget, GtkWidget **window);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
@@ -499,15 +492,7 @@ void x_event_hschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 void x_event_vschanged(GtkAdjustment *adj, TOPLEVEL *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_current);
 gint x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-/* x_filesel.c */
-void destroy_window(GtkWidget *widget, GtkWidget **window);
-void file_selection_ok_open(GtkWidget *w, TOPLEVEL *w_current);
-void file_selection_cancel_open(GtkWidget *w, TOPLEVEL *w_current);
-void setup_open_file_selector(TOPLEVEL *w_current);
-void file_selection_ok_saveas(GtkWidget *w, TOPLEVEL *w_current);
-void file_selection_cancel_saveas(GtkWidget *w, TOPLEVEL *w_current);
-void setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename);
-/* x_fs.c */
+/* x_fileselect.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
 void x_fileselect_init_list_buffers(FILEDIALOG *f_current);
 void x_fileselect_free_list_buffers(FILEDIALOG *f_current);
@@ -540,6 +525,8 @@ void x_fileselect_lib_select(GtkWidget *widget, gint row, gint column, GdkEventB
 void x_fileselect_comp_select(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
 void x_fileselect_comp_apply(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_comp_close(GtkWidget *w, FILEDIALOG *f_current);
+int x_fileselect_search_library(FILEDIALOG *f_current, char *library, char *string);
+void x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);

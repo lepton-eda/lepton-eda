@@ -32,43 +32,21 @@ Bas Gieltjes            - For contributing the SPICE gnetlist backend
 			
 			  For contributing an updated version of above
 
+			  For continuing to update the SPICE backend
+
 Matt Ettus		- For contributing the Bill of Materials backend 
 
 			  For contributing the Allegro gnetlist backend
 			
 			  For contributing the PCB gnetlist backend
 
+			  For contributing the Vipec backend
+
 Magnus Danielson	- For contributing the VHDL backend
 
+			  For continuing to update the VHDL backend
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
 the subscribers provided good suggestions which are greatly appreciated
-(and even implemented :-).  I'll be listing some of the contributers
-here once I get my act together.  Here's a start of a list of the many
-geda-dev contributers (in no particular order):
-
-Magnus Danielson
-Manu Rouat
-Stephen Tell
-Ron Van Dam 
-Erick Britis Ortiz
-Stefan Petersen
-Eric Busta
-Michael Linnemann
-Marius Vollmer 
-Børge Strand
-Andrew Dyer
-John White
-Hamish Moffatt
-Simon Peacock 
-Geoff Harland 
-James Swonger
-Roger Williams 
-Arnim Littek 
-Matt Ettus 
-Nick Bastin
-
-And anybody else who spoke up and let their opinion be heard.
-
-
+(and even implemented :-).  
 

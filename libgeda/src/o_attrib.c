@@ -431,7 +431,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 	char string[1024];
 	char objtype;
 	int ATTACH=FALSE;
-	int saved_color;
+	int saved_color=-1;
 
 	object_list = object_to_get_attribs;
 

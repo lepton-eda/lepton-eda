@@ -232,7 +232,6 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 	int max_width=0;
 	int width;
 	int first, last, j, done=0;
-	int pass_count = 0;
 
 	directory = opendir(f_current->directory);
 
@@ -515,8 +514,6 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
 int
 x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
 {
-	TOPLEVEL *w_current;
-
 	if (f_current == NULL) {
 		fprintf(stderr, "x_fileselect_preview_checkbox: Oops got a null f_current!\n");
 		exit(-1);
@@ -532,13 +529,12 @@ x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
 			 	 f_current->directory,
 			         f_current->filename);
 	}
+	return(0);
 }
 
 void
 x_fileselect_saveas_close (GtkWidget *w, FILEDIALOG *f_current)
 {
-	TOPLEVEL *w_current;
-
 	gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
 
 #if 0 /* this isn't relavent anymore */
@@ -565,7 +561,6 @@ void
 x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 {
         TOPLEVEL *w_current;
-        PAGE *found_page;
         char *string;
 	int len;
 
@@ -578,7 +573,6 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
         }
 
 	len = strlen(string);
-	printf("%s\n", string);
 
 	if (string[len - 1] != '/') {
 		if (w_current->page_current->page_filename) {
@@ -685,7 +679,7 @@ void
 x_fileselect_dir_button (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
 {
-	char *filename, *temp = NULL;
+	char *temp = NULL;
 
 	gtk_clist_get_text (GTK_CLIST (f_current->dir_list), row, 0, &temp);
 
@@ -712,7 +706,7 @@ void
 x_fileselect_file_button (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
 {
-	char *filename, *temp = NULL;
+	char *temp = NULL;
 
 	gtk_clist_get_text (GTK_CLIST (f_current->file_list), row, 0, &temp);
 
@@ -748,7 +742,6 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
 {
 	char *temp=NULL;
 	char *ptr=NULL;
-	char *new=NULL;
 	char *filename=NULL;
 	char *directory=NULL;
 	int i;
@@ -834,10 +827,8 @@ void
 x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
 {
 	TOPLEVEL *w_current;
-	PAGE *found_page;
 	char *string;
 	int i;
-	int row;
 
 	w_current = f_current->toplevel;
 
@@ -983,21 +974,12 @@ create_menu (TOPLEVEL *w_current)
 void
 x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
 {
-	char *string;
-	int num_files=0;
-	int num_directories=0;
-	int file_count = 0;
-	int dir_count = 0;
-	struct stat stat_en;
-	char path_buf[MAXPATHLEN*2];
 	char *text[2];
 	char *temp;
+	char *string;
 	int i;
 	int max_width=0;
 	int width;
-	int first, last, j, done=0;
-	int pass_count = 0;
-
 
 	gtk_clist_freeze (GTK_CLIST (f_current->dir_list));
 	gtk_clist_clear (GTK_CLIST (f_current->dir_list));
@@ -1032,7 +1014,7 @@ x_fileselect_comp_fill_libs(FILEDIALOG *f_current)
 	}
 
 	gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
-	f_current->last_search = -1;
+	f_current->last_search_lib = -1;
 }
 
 void
@@ -1050,13 +1032,13 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 	strcpy(f_current->toplevel->current_clib, 
 	       f_current->directory_entries[row]);
 	
-	s_clib_getfiles(f_current->directory_entries[row], OPEN_DIR);
+	s_clib_getfiles(f_current->directory_entries[row], OPEN_DIR, -1);
 
 	text[0] = NULL;
 	text[1] = NULL;
 	max_width = 0;
 	file = (char *) s_clib_getfiles(f_current->directory_entries[row], 
-					READ_DIR);
+					READ_DIR, -1);
         while(file != NULL) {
 		if (strstr(file, ".sym")) {
 #if DEBUG
@@ -1075,12 +1057,12 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 		}
 		file = (char *) s_clib_getfiles(
 					f_current->directory_entries[row], 
-					READ_DIR);
+					READ_DIR, -1);
 	}
 
 	gtk_clist_thaw (GTK_CLIST (f_current->file_list));
 
-        s_clib_getfiles(NULL, CLOSE_DIR);
+        s_clib_getfiles(NULL, CLOSE_DIR, -1);
 }
 
 /* don't pass in f_current->filename or f_current->directory for component */
@@ -1090,8 +1072,6 @@ x_fileselect_comp_update_current(FILEDIALOG *f_current,
 				 char *library, char *component)
 {
 	char *temp=NULL;
-	int i;
-
 
 	/* component */
 	if (f_current->filename) {
@@ -1150,7 +1130,7 @@ void
 x_fileselect_lib_select (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
 {
-	char *filename, *temp = NULL;
+	char *temp = NULL;
 
 	gtk_clist_get_text (GTK_CLIST (f_current->dir_list), row, 0, &temp);
 
@@ -1177,7 +1157,6 @@ void
 x_fileselect_comp_select (GtkWidget *widget, gint row, gint column,
                          GdkEventButton *bevent, FILEDIALOG *f_current)
 {
-	char *filename;
 	char *comp=NULL;
 	int diff_x, diff_y;
 	TOPLEVEL *w_current;
@@ -1268,24 +1247,152 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
         /* do nothing if close is pressed for SAVEAS_CLOSE case */
 }
 
+int
+x_fileselect_search_library(FILEDIALOG *f_current, char *library, char *string) 
+{
+	char *file;
+
+	s_clib_getfiles(library, OPEN_DIR, -1);
+
+	if (f_current->last_search != -1) {
+		s_clib_getfiles(library, SET_COUNT, f_current->last_search);
+	} else {
+		f_current->last_search = 0;
+	}
+
+	file = (char *) s_clib_getfiles(library, READ_DIR, -1);
+        while(file != NULL) {
+		if (strstr(file, ".sym")) {
+			if (strstr(file, string)) {
+#if DEBUG
+				printf("found: %s %s %d\n", file, string, f_current->last_search - 1);
+#endif
+        			s_clib_getfiles(NULL, CLOSE_DIR, -1);
+				f_current->last_search++;
+				return(f_current->last_search - 1);
+			}
+		}
+		f_current->last_search++;
+		file = (char *) s_clib_getfiles( library, READ_DIR, -1);
+	}
+
+        s_clib_getfiles(NULL, CLOSE_DIR, -1);
+	f_current->last_search = -1;
+	return(-1);
+}
+
+/* don't use widget, since it can be NULL */
+void
+x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
+{
+	TOPLEVEL *w_current;
+	char *string;
+	int lib_count;
+	int flag;
+
+	w_current = f_current->toplevel;
+
+	string = gtk_entry_get_text(GTK_ENTRY(f_current->search_entry));
+	
+	if (!string) {
+		return;
+	}
+
+	gtk_entry_select_region(GTK_ENTRY(f_current->search_entry), 0, -1);
+
+	if (f_current->last_search_lib != -1) {
+		lib_count = f_current->last_search_lib;	
+		gtk_label_set(GTK_LABEL(f_current->search_label),
+                              "Search in Components"); 
+	} else {
+		lib_count = 0;
+		gtk_label_set(GTK_LABEL(f_current->search_label),
+                              "Search in Components"); 
+	}
+
+	while(f_current->directory_entries[lib_count] != NULL) {
+		flag = x_fileselect_search_library(f_current, 
+				   f_current->directory_entries[lib_count], 
+				   string);
+		if (flag != -1) {
+			gtk_clist_select_row(GTK_CLIST(f_current->dir_list), 
+					     lib_count, 0);
+
+			gtk_clist_moveto(GTK_CLIST(
+						  f_current->dir_list), 
+                       				  lib_count, 0, -1, -1);
+
+			x_fileselect_change_clib(f_current, 
+					    f_current->
+					    directory_entries[lib_count],
+					    lib_count);
+
+			gtk_clist_select_row(GTK_CLIST(f_current->file_list), 
+					     flag, 0);
+
+			gtk_clist_moveto(GTK_CLIST(
+						  f_current->file_list), 
+                       				  flag, 0, -1, -1);
+
+			f_current->last_search_lib = lib_count; 
+			return;
+		} else {
+			lib_count++;
+		}
+	}
+
+
+	f_current->last_search_lib = -1;
+	f_current->last_search = -1;
+
+#if 0 /* I'm not sure this is worth the effort and the confusion it causes */
+	/* now search the library names */
+	lib_count = 0;
+	while(f_current->directory_entries[lib_count] != NULL) {
+		if (strstr(f_current->directory_entries[lib_count], string)) {
+
+			printf("%s %s\n", f_current->directory_entries[lib_count], string);
+
+			gtk_clist_select_row(GTK_CLIST(f_current->dir_list), 
+					     lib_count, 0);
+
+			gtk_clist_moveto(GTK_CLIST(
+						  f_current->dir_list), 
+                       				  lib_count, 0, -1, -1);
+
+			x_fileselect_change_clib(f_current, 
+					    f_current->
+					    directory_entries[lib_count],
+					    lib_count);
+
+			gtk_label_set(GTK_LABEL(f_current->search_label),
+                              "Search in Components - Found library only"); 
+			return;
+		}
+		lib_count++;
+	}
+	f_current->last_search_lib = -1;
+#endif
+
+	gtk_label_set(GTK_LABEL(f_current->search_label),
+                              "Search in Components - End of list"); 
+
+}
 
 /*********** Component Place specific code ends here **************/
 
 void
 x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 {
-	GtkWidget *buttonapply;
-	GtkWidget *buttonclose;
+	GtkWidget *buttonapply = NULL;
+	GtkWidget *buttonclose = NULL;
 	GtkWidget *scrolled_win;
-	GtkWidget *list_item;
-	GtkWidget *hbox, *action_area;
-	GtkWidget *scroll_box;
+	GtkWidget *action_area;
 	GtkWidget *separator;
 	GtkWidget *optionmenu;
 	GtkWidget *drawbox;
 	GtkWidget *label;
 	GtkWidget *searchbox;
-	int left, top, right, bottom;
 	
 	FILEDIALOG *f_current;
 
@@ -1294,8 +1401,6 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	char *dir_title [2];
 	char *file_title [2];
 
-	char *string = NULL;
-	int i;
 
 	if (type < 0 || type > 2) {
 		return;
@@ -1497,13 +1602,14 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
 
 		if (f_current->type == FILESELECT) {
-			label=gtk_label_new("Search in Files");
+			f_current->search_label=gtk_label_new("Search in Files");
 		} else {
-			label=gtk_label_new("Search in Components");
+			f_current->search_label=gtk_label_new("Search in Components");
 		}
-		gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-  		gtk_box_pack_start(GTK_BOX(searchbox), label, FALSE, FALSE, 5);
-		gtk_widget_show(label);
+		gtk_misc_set_alignment(GTK_MISC(f_current->search_label), 0, 0);
+  		gtk_box_pack_start(GTK_BOX(searchbox), f_current->search_label,
+				   FALSE, FALSE, 5);
+		gtk_widget_show(f_current->search_label);
 
 
  		f_current->search_entry = gtk_entry_new_with_max_length (255);
@@ -1511,10 +1617,17 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 					   f_current->search_entry), 0, -1);
  		gtk_box_pack_start(GTK_BOX (searchbox), 
 				   f_current->search_entry, FALSE, FALSE, 0);
-		gtk_signal_connect(GTK_OBJECT(f_current->search_entry), 
+		if (type == FILESELECT) { 
+			gtk_signal_connect(GTK_OBJECT(f_current->search_entry), 
 				   "activate", 
 				   GTK_SIGNAL_FUNC(x_fileselect_search),
 				   f_current);
+		} else {
+			gtk_signal_connect(GTK_OBJECT(f_current->search_entry), 
+				   "activate", 
+				   GTK_SIGNAL_FUNC(x_fileselect_comp_search),
+				   f_current);
+		}
 		gtk_widget_grab_focus(f_current->search_entry);
  		gtk_widget_show(f_current->search_entry);
 

@@ -179,7 +179,7 @@
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
          (begin
-            (gnetlist:set-netlist-mode "gEDA")
+;;;         (gnetlist:set-netlist-mode "gEDA") No longer needed
             (geda:write-top-header port)
             (geda:start-components port)
             (geda:components port packages)

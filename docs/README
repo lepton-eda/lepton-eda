@@ -1,0 +1,59 @@
+
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+
+README for docs version 1999* 
+
+
+	This directory contains documentation related to the gEDA project.
+These docs are under heavy construction. 
+
+
+- License  
+
+	gEDA (libgeda/gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
+	and all associated files (such as component symbols)) is placed
+	under the GNU Public License (GPL) version 2.0.  See the toplevel
+	COPYING file for more information.
+
+	Programs and associated files are: 
+	Copyright 1998,1999 by Ales V. Hvezda and the respective original
+	authors (which are listed on the respective files)
+
+
+
+- gEDA Internet resources
+
+	Homepage: http://www.geda.seul.org
+
+	Mailing list:
+		To subscribe send an email to: majordomo@geda.seul.org  
+	 	with   subscribe geda-dev   in the body.
+		
+		To unsubscribe send an email to: majordomo@geda.seul.org
+	 	with   unsubscribe geda-dev   in the body.
+
+		To send email to the list use the address:
+
+			geda-dev@geda.seul.org
+
+		Remember, geda-dev@geda.seul.org is for the actual traffic.  
+		For administrative commands, use majordomo@geda.seul.org.
+
+		The mailing list archive is at:
+
+			http://www.geda.seul.org/mailinglist 
+
+	Many thanks to the SEUL project for hosting gEDA!
+
+
+
+- Contact information  
+
+	Ales V. Hvezda 
+	E-mail: ahvezda@geda.seul.org
+	Web: http://www.geda.seul.org/
+

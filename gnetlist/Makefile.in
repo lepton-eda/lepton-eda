@@ -98,7 +98,7 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-SUBDIRS = src include utils lib scheme examples
+SUBDIRS = src include utils lib scheme examples tests
 
 EXTRA_DIST = 
 

@@ -9,7 +9,6 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin);
 SCM g_get_pins_nets(SCM scm_uref);
 SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
-SCM g_set_netlist_mode(SCM mode);
 /* g_rc.c */
 void set_static_project_current(TOPLEVEL *pr_current);
 void g_rc_parse(TOPLEVEL *pr_current);

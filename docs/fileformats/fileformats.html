@@ -1,0 +1,276 @@
+<HTML>
+<HEAD> <TITLE> gEDA File Formats </TITLE> </HEAD>
+<BODY>
+
+
+<font face="arial,helvetica"> 
+
+
+This document is ALPHA quality and is under construction.
+<CENTER>   
+<H1>
+File Formats in gEDA
+</H1>
+</CENTER>
+
+This file is the official documentation for the file formats in gEDA.
+The primary file format used in gEDA is the schematic/symbol format.
+Files which end with .sch or .sym are schematics or symbol files. This
+file format is current as of gEDA version 19990327.  
+<p>
+
+<OL TYPE="I">
+<H3>
+<LI> Schematic/Symbol File Format </LI>
+</H3>
+<p>
+
+
+<OL TYPE="A">
+<H4> <LI> Basic Info </LI> </H4>
+<p>
+
+All coords are in mils (1/1000 or an inch).   <br>
+Origin is in lower left hand corner.<br>
+Files should end in either .sch or .sym
+<p>
+
+<H4> <LI> Coordinate system </LI> </H4>
+<p>
+
+</font>
+<pre>
+   ^
+ ^ |
+ | |
+ y |
+   +-------->
+ 0,0  x->
+</pre>
+<font face="arial,helvetica"> 
+
+	Origin in the lower left hand corner.  X increases going to the right.
+Y increase going up.  Coordinate system is landscape and corresponds to a
+sheet of paper turned on its side.
+<p>
+
+<H4> <LI> Object types </LI> </H4>
+<p>
+
+The object type letter <strong>must</strong> start in the first
+column.  Schematic/Symbol files are case sensitive. <p>
+
+<strong> Version number </strong> <p>
+
+Example:<br>
+v 19990327<p>
+
+type versionnumber <p>
+
+<UL>
+	type = v<br>
+	versionnumber = version of gEDA which created this file<br>
+</UL>
+<p>
+
+<strong> Components </strong> <p>
+
+Example:<br>
+C 18600 19900 1 0 0 7400-1.sym<p>
+
+type x y selectable angle mirror basename <p>
+
+<UL>
+        type = C<br>
+        x y = location of lower left corner point<br>
+        selectable = 1 if selectable or 0 if not<br>
+        angle = rotation, 0, 90, 180, 270 (only)<br>
+        mirror = 0 if not mirrored or 1 if mirrored<br>
+        basename = component name, does not include any path!<br>
+</UL>
+<p>
+
+<strong> Text </strong> <p>
+
+Example:<br>
+T 16900 35800 3 10 1 0 0<br>
+I'm a string!<p>
+
+type x y color size visibility show_name_value angle<br>
+string<p>
+
+<UL>
+        type = T<br>
+        x y = same as above<br>
+        color = see include/colors.h<br>
+	size = height in points of the text<br>
+        visibility = 0 if invisible or 1 if visible<br>
+        show_name_value = show both name and value 0<br>
+<UL>
+                          show value only 1<br>
+                          show name only 2<br>
+</UL>
+        angle = rotation, 0, 90, 180, 270 (only)<br>
+        string = text string<br>
+</UL>
+<p>
+
+<strong>
+Net<br>
+Pin<br>
+Line<p>
+Bus<p>
+</strong>
+
+Examples:<br>
+N 12700 29400 32900 29400 4<br>
+P 17800 33100 22300 33100 1<br>
+L 27300 37400 37200 35300 3<p>
+U 27300 37400 37200 35300 3<p>
+
+type x1 y1 x2 y2 color<p>
+
+<UL>
+        type = N L P U (net line pin bus respectively)<br>
+        x1 y1 = first point<br>
+        x2 y2 = second point<br>
+        color = see include/colors.h<br>
+</UL>
+<p>
+
+<strong> Arc </strong><p>
+
+Example:<br>
+A 0 500 400 -50 90 3<p>
+
+type x y radius start_angle sweep_angle color<p>
+
+<UL>
+        type = A<br>
+        x y = center of arc<br>
+        radius = radius of arc<br>
+        start_angle = starting angle in degrees / Standard cartesian layout<br>
+        sweep_angle = degrees to sweep arc<br>
+        color = see include/colors.h<br>
+</UL>
+<p>
+
+<strong> Box </strong><p>
+
+Example:<br>
+B 300 300 1400 2900 3<p>
+
+type x y width height color<p>
+
+<UL>
+        type = B<br>
+        x y = lower left hand corner<br>
+        width height = width and height of the box<br>
+        color = see include/colors.h<br>
+</UL>
+<p>
+
+<strong> Circle </strong><p>
+
+Example:<br>
+V 250 700 50 6<p>
+
+type x y radius color<p>
+
+<UL>
+        type = V<br>
+        x y = center of circle<br>
+        radius = radius of the circle<br>
+        color = see include/colors.h<br>
+</UL>
+<p>
+
+<strong>Special font definition object</strong><p>
+
+Example:<br>
+F A 29<p>
+
+type character width [optional_flag]<p>
+
+<UL>
+	type = F<br>
+	character = the character being defined<br>
+	width = the width of the character in mils<br>
+	optional_flag = is only used in space char definition<p>
+
+	This is a special tag and should ONLY show up in font definition 
+	files.  The space character is special and is defined as follows:<p>
+
+	F _ 11 1<p>
+
+
+	The last one signifies that this definition is the space character.<p>
+	
+</UL>
+
+<H4> <LI> Attributes </LI> </H4>
+<p>
+
+Attributes are enclosed in { } and can only be text.  Attributes are text
+items which take on the form name=value.  If it doesn't have name=value
+it's not an attribute.  Attributes are attached to the previous object.
+Here's an example:<p>
+
+P 988 500 1300 500 1<br>
+{<br>
+T 1000 550 5 8 1 1 0<br>
+pin3=3<br>
+}<p>
+
+        The object is a pin which has an attribute pin3=3 (name=value).
+You can have multiple text objects (both the T ... and text string are
+required) in between the { } <p>
+
+	You can also have "toplevel" attributes.  These attributes are not
+attached to any object, but instead are just text objects that take on the
+form name=value.  These attributes are useful when you need to convey
+some info about a schematic page and need the netlister to have access to 
+this info.<p>
+
+
+<H4> <LI> Embedded objects </LI> </H4>
+<p>
+
+	Embedded objects take on the following form:<p>
+
+C 18600 21500 1 0 0 EMBEDDED555-1.sym<br>
+[<br>
+...<br>
+... Embedded primitive objects<br>
+...<br>
+]<p>
+
+Where the basename is EMBEDDEDcomponent_name.sym  In the example
+above 555-1.sym is the basename.  The EMBEDDED tag and the [ ] are the
+distinguishing characteristics of embedded components.  component_name.sym
+must exist in one of the specified component-libraries if you want to
+unembed a component.<p>
+
+
+<H4> <LI> Extra info </LI> </H4>
+<p>
+
+Currently, nets and other components should NOT be inside components.<p>
+
+gschem and friends do not like bad schematic/symbol files, ie file syntax 
+checking is non-existent and gschem and friends will exit if they find an
+invalid file.  <p>
+
+
+
+</OL>
+</OL>
+<p> 
+
+<H3>
+<A HREF="./index.html">Up one level</A>
+</H3>  
+</font>
+
+</BODY>
+</HTML>

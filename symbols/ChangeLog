@@ -11,6 +11,27 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* 4000/4538-1.sym: Translated symbol to origin. 
+	
+	* 4000/4046-1.sym: Translated symbol to origin.
+
+	* pla/: Added symbol library (Makefile.am/configure.in/*commonrc.in)
+
+	* pla/N82S100N-1.sym: Added symbol drawn Magnus
+
+	* 74/74373-1.sym, 74/74374-1.sym: Added symbol drawn by Magnus
+
+	* dec/: Added symbol library (Makefile.am/configure.in/*commonrc.in)
+	
+	* xilinx/: Added symbol library (Makefile.am/configure.in/*commonrc.in)
+
+	* 74/74574-1.sym: Changed CLOCK to CLK
+
+	* 74/74374-1.sym: Removed logic bubble from clock line and moved that
+	  pin so that you can connect to it (on the 100 mil grid)
+
 10/6/99 ETTUS:  Added rf directory, and symbols in it.
 
 9/17/99 Changed a few of the IEC417 symbols (again) to use color 15

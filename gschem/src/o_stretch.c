@@ -333,6 +333,61 @@ o_stretch_end(TOPLEVEL *w_current)
 			break;
 #endif
 
+			case(OBJ_PIN):
+	
+	        		/* don't allow zero length nets 
+        			 * this ends the net drawing behavior 
+			         * we want this? hack */
+        			if ((w_current->start_x == w_current->last_x) &&
+             			    (w_current->start_y == w_current->last_y)) {
+                			w_current->start_x = (-1);
+                			w_current->start_y = (-1);
+                			w_current->last_x = (-1);
+                			w_current->last_y = (-1);
+                			w_current->inside_action=0;
+                			w_current->event_state = SELECT;
+                			i_update_status(w_current, 
+							"Select Mode");
+
+                			o_pin_eraserubber(w_current);
+                			return;
+        			}
+
+				
+        			SCREENtoWORLD(w_current, 
+					      w_current->last_x, 
+					      w_current->last_y, 
+					      &x, &y);
+
+        			x = snap_grid(w_current, x);
+        			y = snap_grid(w_current, y);
+
+#if DEBUG
+		printf("previous endpoints: %d %d %d %d\n", 
+				found->line_points->x1,
+				found->line_points->y1,  
+				found->line_points->x2,
+				found->line_points->y2);  
+
+		printf("new end points: %d %d\n", x, y);
+#endif
+
+				o_pin_modify(w_current, found, 
+					     x, y, whichone_changing);
+				o_pin_modify(w_current, o_current, 
+					     x, y, whichone_changing);
+
+#if DEBUG
+		printf("final endpoints: %d %d %d %d\n", 
+				found->line_points->x1,
+				found->line_points->y1,  
+				found->line_points->x2,
+				found->line_points->y2);  
+#endif
+
+			break;
+
+
 			case(OBJ_BOX):
 
 			break;
@@ -346,10 +401,6 @@ o_stretch_end(TOPLEVEL *w_current)
 			break;
 
 			case(OBJ_TEXT):
-
-			break;
-
-			case(OBJ_PIN):
 
 			break;
 

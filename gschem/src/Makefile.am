@@ -19,7 +19,7 @@ gschem_SOURCES = \
 	x_attrsel.c x_basic.c x_dialog.c \
 	x_event.c x_grid.c x_log.c x_menus.c x_script.c \
 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c \
-	x_fs.c x_preview.c \
+	x_fileselect.c x_preview.c \
 	prototype1.0.h prototype1.2.h \
 	parsecmd.c globals.h i_vars.h o_conn.c
 

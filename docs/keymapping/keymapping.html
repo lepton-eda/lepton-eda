@@ -1,0 +1,373 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD><TITLE>How To Setup Keymapping In gschem</TITLE>
+<META http-equiv="Content-Type" content="text/html; charset= ISO-8859-1">
+</HEAD>
+<BODY BGCOLOR=silver TEXT=black>
+<!--HTMLHEAD-->
+<!--ENDHTML-->
+<!--CUT DEF section 1 -->
+<BR>
+<BR>
+
+<H1 ALIGN=center>How To Setup Keymapping In gschem</H1>
+<H3 ALIGN=center>Stefan Petersen, spe@geda.seul.org<BR>	<FONT SIZE=1>This document is released under GPL 
+	(http://www.fsf.org/copyleft/gpl.html)</FONT><BR>
+<BR>
+1999-07-24
+</H3><BR><BR><BR><BR>
+<BR>
+<!--TOC section About this document-->
+
+<H2>About this document</H2>
+The purpose of this document is to try to explain how key mapping 
+works in gEDA/gschem schematic entry program. It uses the langauge
+Scheme a lot, which is a Lisp-dialect and is used in gschem as a
+scripting language. If you're not familiar with this language, please
+see the dictionary (see appendix <A HREF="#dict">A</A>, page <A HREF="#dict">X</A>,
+for a short description of common data structures used in Scheme.<BR>
+<BR>
+<!--TOC section Functionality-->
+
+<H2>1&nbsp;&nbsp; Functionality</H2>
+When you press a button in gschem, a Scheme function is called.
+This function (<TT>press-key</TT>) accepts one argument, the name of 
+the pressed key. Then there are Scheme routines to evaluate which key 
+you pressed and call the appropriate action.<BR>
+<BR>
+Since the evaluation routines are written in Scheme it's simple to change
+the behaviour of what happens when you presses a key. You can 
+implement macros or do several things at each key press. For example,
+the ``repeat-last-key´´ command is implemented completly in Scheme.<BR>
+<BR>
+<!--TOC section Keymaps-->
+
+<H2>2&nbsp;&nbsp; Keymaps</H2>
+The current implementation is built-up around ``keymaps''. A keymap is
+a list with pairs. Each pairs first element (the car-element) is which 
+key to react on, and the second element (cdr) is a ``what-to-do-next''. 
+This can either be an action, a function to call or another keymap.<BR>
+<BR>
+<!--TOC subsection An example on keymaps-->
+
+<H3>2.1&nbsp;&nbsp; An example on keymaps</H3>
+Two simple examples of keymaps is seen in figure <A HREF="#example1">1</A> and
+figure <A HREF="#example2">2</A>.<BR>
+<BR>
+<BLOCKQUOTE><HR  SIZE=2>
+<PRE>
+(define global-keymap
+  '(("Escape" . cancel)
+    ("a" . add-keymap)))
+</PRE>
+
+<A NAME="example1"></A>
+<DIV ALIGN=center>Figure 1: First example of an simple keymap</DIV>
+<HR  SIZE=2></BLOCKQUOTE>In figure <A HREF="#example1">1</A> is the keymap called <TT>global-keymap</TT>. 
+This keymap is the first keymap used. If you for example press the 'a'-key,
+<TT>global-keymap</TT> tells us that next key pressed will be interpreted
+by <TT>add-keymap</TT> (see figure <A HREF="#example2">2</A>).<BR>
+<BR>
+<BLOCKQUOTE><HR  SIZE=2>
+<PRE>
+(define add-keymap
+  '(("c" . add-component)
+    ("a" . add-attribute)
+    ("n" . add-net-hotkey)))
+</PRE>
+
+<A NAME="example2"></A>
+<DIV ALIGN=center>Figure 2: Second example of an simple keymap</DIV>
+<HR  SIZE=2></BLOCKQUOTE>If you, after you pressed 'a', press a 'c' the built-in action 
+<TT>add-component</TT> comes to live. This is exactly what had happend
+if you had selected Add, Component...in the menubar.<BR>
+<BR>
+When an action has been performed the current keymap is reset back to<BR><TT>global-keymap</TT>.<BR>
+<BR>
+Available built-in actions are listed in appendix <A HREF="#builtins">B</A>.<BR>
+<BR>
+<!--TOC subsection Description of keys-->
+
+<H3>2.2&nbsp;&nbsp; Description of keys</H3>
+The key are described as:<BR>
+<BR>
+
+<TABLE CELLSPACING=2 CELLPADDING=0>
+<TR><TD  ALIGN=left NOWRAP>For a</TD>
+<TD  ALIGN=center NOWRAP>--</TD>
+<TD  ALIGN=left NOWRAP>``a''</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>For Shift-A</TD>
+<TD  ALIGN=center NOWRAP>--</TD>
+<TD  ALIGN=left NOWRAP>``Shift A''</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>For Control-a</TD>
+<TD  ALIGN=center NOWRAP>--</TD>
+<TD  ALIGN=left NOWRAP>``Control a''</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>For Alt-a</TD>
+<TD  ALIGN=center NOWRAP>--</TD>
+<TD  ALIGN=left NOWRAP>``Alt a''</TD>
+</TR></TABLE><BR>
+There are a few simple rules to follow when keys for a new keymap is
+defined:
+<UL>
+<LI>
+Everything is case sensitive
+
+<LI>At this point in time you can only have one modifier 
+ (shift, control, alt) at a time.
+
+<LI>Keys must be unique in each keymap, especially the global one 
+
+<LI>Strings (without any modifers) are the same strings specified
+ for the keys in the file /usr/lib/X11/XKeysymDB (at least on 
+ a linux box)
+</UL><!--TOC subsection Actions-->
+
+<H3>2.3&nbsp;&nbsp; Actions</H3>
+The built-in actions that can be called are listed in appendix 
+<A HREF="#builtins">B</A>.<BR>
+<BR>
+Sometimes you may notice that there are similar actions, like
+<TT> edit-rotate-90</TT> and <TT> edit-rotate-90-hotkey</TT>.
+They do the same thing, just that the <TT>-hotkey</TT> actions is
+run immediately, while the other wait for you to select 
+something.<BR>
+<BR>
+<!--TOC subsection Function calls-->
+
+<H3>2.4&nbsp;&nbsp; Function calls</H3>
+If the cdr-element is an ordinary Scheme function that function is called. 
+The function can't receive any arguments.<BR>
+<BR>
+This can be used if you want to do complex tasks, like several actions
+in a row or do some calculation. You can do rather advanced actions since
+the Guile dialect of Scheme used in gschem is extended from plain Scheme.
+For further information on Guile, please see the Guile documentation.<BR>
+<BR>
+<!--TOC subsection Another keymap-->
+
+<H3>2.5&nbsp;&nbsp; Another keymap</H3>
+If the cdr-element is another keymap then that command is a multi-key command,
+ie you need to press at least two keys to cause an action. The first key is
+desribed in the first keymap, which points to the next keymap. The 
+second keymap describes what should happen when the second key is pressed.<BR>
+<BR>
+<!--TOC section Where are the key mappings stored-->
+
+<H2>3&nbsp;&nbsp; Where are the key mappings stored</H2>
+The keymap is stored in the startup file for gschem, namely<BR><TT>&lt;startpath, typically /usr/local&gt;/share/gEDA/system-gschemrc</TT>.<BR>
+<BR>
+You can then redefine or add keymaps as you like (I think) in your local
+setup file for gschem,<BR><TT>~/.gEDA/gschemrc</TT><BR>
+<BR>
+The Scheme functions used to resolve keypresses to actions are stored at<BR><TT>&lt;startpath, typically /usr/local&gt;/share/gEDA/scheme/gschem.scm</TT>.<BR>This is configurable in the <TT>gschemrc</TT> files.<BR>
+<BR>
+<!--TOC section Dictionary<A NAME="dict"></A>-->
+
+<H2>A&nbsp;&nbsp; Dictionary<A NAME="dict"></A></H2>
+<TABLE CELLSPACING=2 CELLPADDING=0>
+<TR><TD  ALIGN=left NOWRAP><B>function</B></TD>
+<TD  VALIGN=top ALIGN=left>A subprogram in Scheme, C or other programming 
+languages.</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP><B>action</B></TD>
+<TD  VALIGN=top ALIGN=left>What gschem (in this case) does when you press a key or a set
+of keys.</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP><B>list</B></TD>
+<TD  VALIGN=top ALIGN=left>A data structure very common in Lisp-looking languages like 
+Scheme. Simply put, a long list of values.</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP><B>pair</B></TD>
+<TD  VALIGN=top ALIGN=left>(also dotted pair) A datstructure also very common in 
+Lisp-looking languages.</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP><B>car element</B></TD>
+<TD  VALIGN=top ALIGN=left>First element in a pair. Since lists are decendents 
+from pairs, <TT>car</TT> is also the first element in a list.</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP><B>cdr element</B></TD>
+<TD  VALIGN=top ALIGN=left>(pronounced <EM>cudr</EM>) The second element in a pair. 
+In the list case it denotes the rest of list.</TD>
+</TR></TABLE><BR>
+<!--TOC section Built-in actions in gschem<A NAME="builtins"></A>-->
+
+<H2>B&nbsp;&nbsp; Built-in actions in gschem<A NAME="builtins"></A></H2>
+Run 
+<PRE>
+grep gh_register_procedure_0_0 gschem/src/g_register.c
+</PRE>
+and do some work in emacsen.<BR>
+<BR>
+
+<TABLE CELLSPACING=2 CELLPADDING=0>
+<TR><TD  ALIGN=left NOWRAP>file-new-window</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-new</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-open</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-script</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-save</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-save-as</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-save-all</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-print</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-image</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-close-window</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>file-quit</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-select</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-copy</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-copy-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-move</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-move-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-delete</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-rotate-90</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-rotate-90-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-mirror</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-mirror-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-slot</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-color</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-edit</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-lock</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-unlock</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-translate</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-embed</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-unembed</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>edit-hidden</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-redraw</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-zoom-full</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-zoom-limits</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-zoom-in</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-zoom-out</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-zoom-box</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-zoom-box-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-pan</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-pan-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>view-update-nets</TD>
+</TR></TABLE>
+
+<TABLE CELLSPACING=2 CELLPADDING=0>
+<TR><TD  ALIGN=left NOWRAP>page-manager</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>page-next</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>page-prev</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>page-new</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>page-close</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>page-discard</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>page-print</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-component</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-attribute</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-net</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-net-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-text</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-line</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-line-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-box</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-box-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-circle</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-circle-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-arc</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-arc-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-pin</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>add-pin-hotkey</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>hierarchy-open-symbol</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>attributes-attach</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>attributes-detach</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>attributes-show-name</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>attributes-show-value</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>attributes-show-both</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>attributes-visibility-toggle</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-text-size</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-snap-size</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-action-feedback</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-grid</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-snap</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-show-log-window</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>options-show-coord-window</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>misc-misc</TD>
+</TR>
+<TR><TD  ALIGN=left NOWRAP>cancel</TD>
+</TR></TABLE>
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+
+<!--FOOTER-->
+<HR  SIZE=2>
+<BLOCKQUOTE><EM>This document was translated from L<sup>A</sup>T<sub>E</sub>X by </EM><A HREF="http://para.inria.fr/~maranget/hevea/index.html"><EM>H</EM><EM><FONT SIZE=2><sup>E</sup></FONT></EM><EM>V</EM><EM><FONT SIZE=2><sup>E</sup></FONT></EM><EM>A</EM></A><EM>.
+</EM></BLOCKQUOTE></BODY>
+</HTML>
+

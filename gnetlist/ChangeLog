@@ -1,3 +1,19 @@
+1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/*.scm: Removed all gnetlist:set-netlist-mode
+
+	* src/g_register.c: Removed register call to gnetlist:set-netlist-mode
+
+	* src/g_netlist.c: Removed gnetlist:set-netlist-mode
+
+	* scheme/gnet-spice.scm: Integrated latest spice backend by Bas 
+          Gieltjes
+
+	* tests/: Created directory to hold gnetlist tests
+	
+	* tests/*: Populated tests directory with output from correct netlist
+	  runs
+
 1999-10-10  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* gnetlist/gnetlist.c: Fixed up s_log_init to use the new prototype

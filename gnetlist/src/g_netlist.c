@@ -565,6 +565,7 @@ g_get_toplevel_attribute(SCM scm_wanted_attrib)
 	return(scm_return_value);
 }
 
+#if 0 /* No longer needed, but the netlist_mode variable is still used */
 SCM 
 g_set_netlist_mode(SCM mode) 
 {
@@ -590,6 +591,7 @@ g_set_netlist_mode(SCM mode)
 
 	return(gh_int2scm(0)); 
 }
+#endif
 
 /* 
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)

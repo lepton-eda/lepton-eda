@@ -1,0 +1,24 @@
+* Spice netlister for gnetlist
+* Spice backend written by Bas Gieltjes
+VCC 10 GND DC 15V
+RL 9 GND 10K
+C3 7 9 10 uF
+RF 2 11 25K
+CF 11 8 10 uF
+RC2 10 7 6.8K
+RE2 8 GND 3.6K
+C2 4 6 10 uF
+R4 6 GND 30K
+RE1 5 GND 3.6K
+RS 12 2 150
+C1 2 3 10 uF
+R2 3 GND 50K
+R1 10 3 200K
+VIN 1 GND AC 1MV
+R3 10 6 120K
+VX 1 12 DC 0V
+CE1 5 GND 15 uF
+RC1 10 4 12K
+Q2 7 6 8 QM
+Q1 4 3 5 QM
+.END

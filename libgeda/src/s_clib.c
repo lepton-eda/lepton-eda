@@ -344,7 +344,7 @@ s_clib_getdir(int index)
 /* CLOSE_DIR closes the directory */
 /* this function is not reentrant */
 char *
-s_clib_getfiles(char *directory, int flag)
+s_clib_getfiles(char *directory, int flag, int new_current)
 {
 	static DIR *ptr;
         static struct dirent *dptr;
@@ -374,6 +374,13 @@ s_clib_getfiles(char *directory, int flag)
 			}
 			count = current = 0 ;
 
+			return(NULL);
+		break;
+
+		case(SET_COUNT):
+			if (new_current != -1) {
+				current = new_current;
+			} 
 			return(NULL);
 		break;
 
@@ -417,6 +424,8 @@ s_clib_getfiles(char *directory, int flag)
 				}	
 
 				if (dptr->d_name != NULL) {
+
+				  if (strstr(dptr->d_name, ".sym")) {
 					len = strlen(dptr->d_name);
 
 					/* hack */
@@ -432,6 +441,7 @@ s_clib_getfiles(char *directory, int flag)
 				"uggg. too many files in s_clib_getfiles!\n");
 						exit(-1);
 					}
+                                   }
 				}
 
 				dptr = readdir(ptr);
@@ -483,7 +493,6 @@ s_clib_getfiles(char *directory, int flag)
 		printf("string: %s\n", whole_dir[j]);
 	}
 #endif
-
 }
 
 int

@@ -26,6 +26,7 @@
 (component-library "@symdir@/analog")
 (component-library "@symdir@/linear")
 (component-library "@symdir@/altera")
+(component-library "@symdir@/xilinx")
 (component-library "@symdir@/idt")
 (component-library "@symdir@/misc")
 (component-library "@symdir@/io")
@@ -40,6 +41,8 @@
 (component-library "@symdir@/verilog")
 (component-library "@symdir@/spice")
 (component-library "@symdir@/rf")
+(component-library "@symdir@/pla")
+(component-library "@symdir@/dec")
 
 ; source-library string
 ; Specify where source entities exist.
@@ -57,6 +60,7 @@
 (source-library "@symdir@/4000")
 (source-library "@symdir@/analog")
 (source-library "@symdir@/altera")
+(source-library "@symdir@/xilinx")
 (source-library "@symdir@/idt")
 (source-library "@symdir@/local")
 (source-library "@symdir@/memory")
@@ -70,6 +74,8 @@
 (source-library "@symdir@/switch")
 (source-library "@symdir@/verilog")
 (source-library "@symdir@/rf")
+(source-library "@symdir@/pla")
+(source-library "@symdir@/dec")
 ; out for now (source-library "@sourcedir@")
 
 ; font-directory string

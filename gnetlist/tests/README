@@ -1,0 +1,26 @@
+
+
+Tests for gnetlist
+----------------------------------------------------------------------------
+
+The tests in this directory are basically just diffs against known good
+output.  Fairly simplistic, but for now it's enough.  I have NOT verified
+that the known good output is correct. 
+
+
+	You must install gnetlist before you can run these tests.  You 
+must also run the tests with all of the gEDA packages in ../..
+
+To run the tests type:
+
+	make tests
+
+	The diffs should NOT generate any output.
+
+
+Eventually the tests here will become a bit sophisticated.
+
+If anybody has some sample schematics which can be netlisted, please (if you
+can) submit them to me so I can put them into this test suite.
+
+ahvezda@geda.seul.org

@@ -8,6 +8,31 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_clib.c: Added the ability to set the count in s_clib_getfiles
+
+	* include/struct.h: Added another search related var to FILEDIALOG 
+
+	* include/defines.h: Added SET_COUNT #define for s_clib_getfiles
+
+	* include/struct.h: Added search_label gtk widget to FILEDIALOG struct
+
+	* ../*/configure.in: Changed version number to today's date 
+
+	* src/Makefile.am: Incremented libgeda.so version number
+
+	* src/o_attrib.c: Fixed -Wall warnings
+
+	* src/s_clib.c: Fixed -Wall warnings
+
+	* src/s_page.c: Fixed -Wall warnings
+
+	* src/s_clib.c: Fixed s_clib_getfiles so that *only* files which .sym
+	  suffix get read in as valid symbol files
+
+	* src/o_pin_basic.c: Added o_pin_modify() 
+
 1999-10-10  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/defines.h: Added a few more defines to support SAVEAS_*

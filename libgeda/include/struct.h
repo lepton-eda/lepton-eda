@@ -201,7 +201,9 @@ struct st_filedialog {
 	int filter_type;
 
 	GtkWidget *search_entry;
-	int last_search;
+	GtkWidget *search_label;
+	int last_search_lib;
+	int last_search;		
 
 	GtkWidget *filename_entry;
 

@@ -503,3 +503,48 @@ o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 	o_pin_translate_world(w_current, world_centerx, world_centery, object);
 }
 
+void
+o_pin_modify(TOPLEVEL *w_current, OBJECT *object, 
+	     int x, int y, int whichone)
+{
+	int screen_x, screen_y;
+	int left, right, top, bottom;
+
+	switch(whichone) {
+
+	case(1):
+		object->line_points->x1 = x;
+		object->line_points->y1 = y;
+
+		WORLDtoSCREEN(w_current, 
+		              object->line_points->x1, 
+			      object->line_points->y1, 
+		  	      &screen_x, &screen_y);  
+	
+		object->line_points->screen_x1 = screen_x;
+		object->line_points->screen_y1 = screen_y;
+		break;
+
+	case(2):
+		object->line_points->x2 = x;
+		object->line_points->y2 = y;
+
+		WORLDtoSCREEN(w_current, 
+		  	      object->line_points->x2, 
+			      object->line_points->y2, 
+		  	      &screen_x,
+                              &screen_y);  
+
+		object->line_points->screen_x2 = screen_x;
+		object->line_points->screen_y2 = screen_y;
+		break;
+	}
+
+	get_pin_bounds(w_current, object->line_points, 
+			&left, &top, &right, &bottom);
+	
+	object->left = left;
+	object->top = top;
+	object->right = right;
+	object->bottom = bottom;	
+}

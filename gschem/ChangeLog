@@ -9,6 +9,45 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-10-11  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/x_fs.c: Got the component search working
+
+	* src/x_fs.c: Changed all calls to s_clib_getfiles to use the new
+	  prototype (the extra param at the end)
+
+	* src/x_filesel.c: Removed file from cvs repository
+
+	* src/x_compsel.c: Removed file from cvs repository
+
+	* src/x_fs.c: Renamed to x_fileselect.c
+
+	* src/x_fileselect.c: Fixed all -Wall warnings
+
+	* src/x_preview.c: Fixed all -Wall warnings
+
+	* general: You can only place *.sym files as components.
+
+	* src/o_pin.c: added o_pin_eraserubber()
+	
+	* src/o_stretch.c: Updated _end function to allow for the stretching
+	  of pins
+
+	* src/x_window.c: Used the appropriate #defines for filedialog box init
+	
+1999-10-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_fs.c: Lots of changes related to getting filedialog to act as
+	  the component place dialog box
+
+	* src/i_callback.c: Made the new component place dialog box the 
+	  default
+	
+	* src/x_log.c: Fixed memory leak (added x_log_free)
+		
+	* src/gschem.c: Added some free()'s for some vars which were allocated
+	  but never freed (in gschem_quit)
+
 1999-10-09  Ales Hvezda  <ahvezda@geda.seul.org>
 	
 	* src/gschem.c: Added full path to page_filename (if filename doesn't
@@ -28,17 +67,6 @@ into the cvs repository.
 	* src/x_dialog.c: Added x_destroy_window 
 
 	* src/x_fs.c: Made sure you can't open up a directory
-
-	* src/x_fs.c: Lots of changes related to getting filedialog to act as
-	  the component place dialog box
-
-	* src/i_callback.c: Made the new component place dialog box the 
-	  default
-	
-	* src/x_log.c: Fixed memory leak (added x_log_free)
-		
-	* src/gschem.c: Added some free()'s for some vars which were allocated
-	  but never freed (in gschem_quit)
 
 1999-10-05  Ales Hvezda  <ahvezda@geda.seul.org>
 

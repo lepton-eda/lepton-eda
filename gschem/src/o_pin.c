@@ -451,3 +451,33 @@ o_pin_rubberpin(TOPLEVEL *w_current, int x, int y)
 	}
 }
 
+
+/* used in o_stretch.c */
+void
+o_pin_eraserubber(TOPLEVEL *w_current)
+{
+	int size;
+
+	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+		size = SCREENabs(w_current, 10);
+
+		if (size < 0)
+			size=0;
+
+		gdk_gc_set_line_attributes(w_current->gc, size,
+				GDK_LINE_SOLID,
+				GDK_CAP_NOT_LAST,
+				GDK_JOIN_MITER);
+        }
+
+	gdk_gc_set_foreground(w_current->gc,
+			x_get_color(w_current->background_color) );
+	gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+
+	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
+		gdk_gc_set_line_attributes(w_current->gc, 0,
+				GDK_LINE_SOLID,
+				GDK_CAP_NOT_LAST,
+				GDK_JOIN_MITER);
+	}
+}

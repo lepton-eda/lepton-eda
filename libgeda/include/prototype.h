@@ -346,7 +346,7 @@ void s_clib_cache_free(void);
 void s_clib_free(void);
 void s_clib_init(void);
 char *s_clib_getdir(int index);
-char *s_clib_getfiles(char *directory, int flag);
+char *s_clib_getfiles(char *directory, int flag, int new_current);
 int s_clib_uniq(char *path);
 /* s_color.c */
 void s_color_init(void);

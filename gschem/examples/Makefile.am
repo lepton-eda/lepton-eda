@@ -6,7 +6,7 @@ EXTRA_DIST = \
 		embedded_1.sch filter_1.sch flipflop_1.sch \
 		grey_counter_1.sch hierarchy_1.sch letters_1.sch \
 		logo_1.sch multiplex_1.sch radio_1.sch \
-		stack_1.sch states_1.sch all74_1.sch
+		stack_1.sch states_1.sch all74_1.sch 
 
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
