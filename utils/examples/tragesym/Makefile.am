@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = gmk_sym tragesym
+EXTRA_DIST = 4099.src AT90S8535_TQFP.src alltest template.src test1.src \
+             test2.src test3.src
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 

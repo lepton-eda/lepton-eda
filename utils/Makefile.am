@@ -1,7 +1,7 @@
 
 SUBDIRS = src gschlas scripts lib include examples 
 
-EXTRA_DIST = README.olib
+EXTRA_DIST = README.olib ChangeLog.tragesym README.tragesym 
 
 distclean-local:
 	-rm -rf autom4te.cache

@@ -1,0 +1,93 @@
+# This is the template file for creating symbols with tragesym.py
+# every line starting with '#' is a comment line.
+
+[options]
+# rotate_labels rotates the pintext of top and bottom pins
+# wordswap swaps labels if the pin is on the right side an looks like this:
+# "PB1 (CLK)"
+wordswap=yes
+rotate_labels=no
+sort_labels=yes
+generate_pinseq=yes
+sym_width=2000
+pinwidthvertikal=400
+pinwidthhorizontal=500
+
+[geda_attr]
+# name will be printed in the top of the symbol
+# if you have a device with slots, you'll have to use slot= and slotdef=
+# use comment= if there are special information you want to add
+version=20020922
+name=AT90S8535
+device=AT90S8535_TQFP
+refdes=U?
+footprint=TQFP44
+description=8-bit RISC micro controller (Atmel)
+numslots=0
+#slot=1
+#slotdef=1:
+#slotdef=2:
+#slotdef=3:
+#slotdef=4:
+comment=this is comment1
+comment=this one is comment2
+comment=and comment3
+
+[pins]
+# tabseparated list of pin descriptions
+# pinnr is the physical number of the pin
+# seq is the pinseq= attribute, leave it blank if it doesn't matter
+# type can be (in, out, i/o, oc, oe, pas, tp, tri, clk, pwr)
+# style can be (line,dot,clk,dotclk,none). none if only want to add a net
+# posit. can be (l,r,t,b) or empty for nets
+# net specifies the name of the Vcc or GND name
+# label represents the pinlabel. 
+#	negation lines can be added with _Q_ 
+#	if you want to add a "_" or "\" use \_ and \\ as escape sequences
+#-----------------------------------------------------
+#pinnr	seq	type	style	posit.	net	label	
+#-----------------------------------------------------
+1		io	line	l		PB5 (MOSI)
+2		io	line	l		PB6 (MISO)
+3		io	line	l		PB7 (SCK)
+4		in	dot	b		_Reset_
+5		pwr	none		Vcc
+6		pwr	none		GND
+7		out	line	b		XTAL2
+8		in	line	b		XTAL1
+9		io	line	l		PD0 (RXD)
+10		io	line	l		PD1 (TXD)
+11		io	line	l		PD2 (INT0)
+12		io	line	l		PD3 (INT1)
+13		io	line	l		PD4 (OC1B)
+14		io	line	l		PD5 (OC1A)
+15		io	line	l		PD6 (ICP)
+16		io	line	l		PD7 (OC2)
+17		pwr	none		Vcc
+18		pwr	none		GND
+19		io	line	r		PC0
+20		io	line	r		PC1
+21		io	line	r		PC2
+22		io	line	r		PC3
+23		io	line	r		PC4
+24		io	line	r		PC5
+25		io	line	r		PC6 (TOSC1)
+26		io	line	r		PC7 (TOSC2)
+27		pwr	none		AVcc
+28		pwr	none		AGND
+29		in	line	b		AREF
+30		io	line	r		PA7 (ADC7)
+31		io	line	r		PA6 (ADC6)
+32		io	line	r		PA5 (ADC5)
+33		io	line	r		PA4 (ADC4)
+34		io	line	r		PA3 (ADC3)
+35		io	line	r		PA2 (ADC2)
+36		io	line	r		PA1 (ADC1)
+37		io	line	r		PA0 (ADC0)
+38		pwr	none		Vcc
+39		pwr	none		GND
+40		io	line	l		PB0 (T0)
+41		io	line	l		PB1 (T1)
+42		io	line	l		PB2 (AIN0)
+43		io	line	l		PB3 (AIN1)
+44		io	line	l		PB4 (_SS_)

@@ -1,3 +1,15 @@
+2003-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/tragesym, README: Added tragesym 0.0.5 by Werner Hoch.
+	Ales renamed script from tragesym.py to tragesym (to be consistent
+	with the rest of the scripts in the utils package).
+
+	* README.tragesym, ChangeLog.tragesym: Added info files which are
+	part of tragesym.  Minor updates here and there.
+
+	* examples/tragesym, examples/gmk_sym: Reoganized the examples
+	directory to include tragesym.
+
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/sarlacc_schem.c: Initalized some variables to make compiler 

@@ -1,0 +1,20 @@
+
+tragesym is a small script to create geda symbols out of structured
+textfiles.
+
+For creating a sourcefile use an editor and the template.src file.
+some examples are in the examples/tragesym directory.
+
+usage is:
+  tragesym <sourcefile> <symbolfile>
+
+After you have translated the sourcefile to the symbolfile you have to
+rearrange some pins with gschem, translate the symbol to the origin
+and save it in an appropriate symbol directory.  Make the attributes
+visible while doing that (edit->show hidden text) and hide the text
+again before saving.
+
+tragesym requires python (versions greater 1.5 should work).
+
+Send any questions to
+Werner Hoch (werner.ho@gmx.de)

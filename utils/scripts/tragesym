@@ -1,0 +1,515 @@
+#!/usr/bin/python
+#***************************************************************************
+#    tragesym.py  - make gEDA symbols out of structured textfiles
+#    begin                : 2001-10-20
+#    copyright            : (C) 2001,2002 by Werner Hoch
+#    email                : werner.ho@gmx.de
+# ***************************************************************************
+# *                                                                         *
+# *   This program is free software; you can redistribute it and/or modify  *
+# *   it under the terms of the GNU General Public License as published by  *
+# *   the Free Software Foundation; either version 2 of the License, or     *
+# *   (at your option) any later version.                                   *
+# *                                                                         *
+# ***************************************************************************
+
+# FEATURES:
+# - create pins and their elements
+# - sort pins alphabetical
+# - swap words of the pinlabels
+# - negation lines if label is in "_","\" is for escape
+# - rotate top and bottom pinlabels if wished
+
+# TODO:
+# - make a nicer comandline interface including stdin /stdout
+# - write cleaner code (variables, constants, structure)
+# - handle the fontwidth, negation line is over spacing. (cosmetic)
+
+import sys, string
+
+##################### GLOBALS ############################################
+VERSION="0.0.5"
+
+CHARHIGH=26
+pre_options={"wordswap":"yes"
+         ,"rotate_labels":"no"
+         ,"sort_labels":"yes"
+         ,"generate_pinseq":"yes"    
+         ,"sym_width":"1400"
+         ,"pinwidthvertikal":"400"
+         ,"pinwidthhorizontal":"400"}
+pre_attr=["version", "name", "device", "refdes", "footprint", "numslots", "slot",
+          "slotdef","description", "comment"]
+stylelist=["line","dot","clk","dotclk","none"]
+poslist=["l","r","t","b",""]
+typelist=["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
+P_NR, P_SEQ, P_TYPE, P_STYLE, P_POS, P_NET, P_LABEL = 0,1,2,3,4,5,6
+
+
+# a dictionary (char -> charwidth)
+font={'}': 12, '{': 12, 'y': 20, '\366': 20, 'w': 28, 'u': 19, 's': 18,
+      'q': 24, 'o': 20, 'm': 32, 'k': 19, 'i': 8, 'g': 24, '\344': 24,
+      'e': 20, 'c': 22, 'a': 24, '_': 25, ']': 12, '[': 12, 'Y': 25,
+      '\326': 32, 'W': 37, 'U': 27, 'S': 25, 'Q': 32, 'O': 32, 'M': 32,
+      'K': 27, 'I': 9, 'G': 30, '\304': 29, 'E': 29, 'C': 28, 'A': 29,
+      '?': 20, '=': 20, ';': 12, '9': 26, '7': 20, '5': 20, '3': 22,
+      '1': 16, '/': 18, '-': 20, '+': 20, ')': 12, "'": 10, '%': 28,
+      '#': 22, '!': 14, '~': 22, '|': 10, 'z': 21, 'x': 19, 'v': 20,
+      't': 12, 'r': 14, 'p': 20, 'n': 20, 'l': 9, 'j': 10, 'h': 20,'f': 12,
+      'd': 20, '\345': 24, 'b': 22, '`': 10, '^': 20, '\\': 14, 'Z': 27,
+      'X': 27, 'V': 27, 'T': 23, 'R': 26, 'P': 25, 'N': 28, 'L': 22,
+      'J': 21, 'H': 29, 'F': 21, 'D': 26, '\305': 29, 'B': 29, '@': 36,
+      '>': 20, '<': 20, ':': 12, '8': 22, '6': 24, '4': 26, '2': 26,
+      '0': 26, '.': 12, ',': 14, '*': 16, '(': 12, '&': 24, '$': 28,
+      '"': 14, ' ': 11}
+
+################################# FUNCTIONS ##############################
+def parselabel(str):
+    # returns the striped label, the negation lines, and textlength
+    neg, esc, length= 0, 0, 0
+    textout=""
+    neglines=[]
+    for letter in str:
+        if letter == "_" and neg == 0 and esc == 0:
+            neg=1
+            startneg=length
+        elif letter == "_" and esc == 0:
+            neg=0
+            neglines.append((startneg,length))
+        elif letter == '\\' and esc == 0:
+            esc=1
+        elif letter == '\\' and esc == 1:
+            esc=0
+            textout=textout+letter
+            length=length+font[letter]
+        else:
+            textout=textout+letter
+            length=length+font[letter]
+            esc=0
+    if esc == 1 or neg == 1:
+        print "unbalanced underlining or escaping: ", str
+        sys.exit()
+    return textout, neglines, length
+
+## returns the words in reverse order    
+def swapwords(str): 
+    list=string.split(str," ")
+    back=list[0]
+    for i in list[1:]:
+        back=i+" "+back
+    return back
+
+## returns 2 dicts: (options, attr) and 2 arrays: (devices, pins)
+def readsrc(filename):
+    geda_attr={}
+    options={}
+    pins=[]
+    f = open(filename,"r")
+    content= f.readlines()
+    section=""
+    linenr=0
+    for line in content:
+        linenr=linenr+1
+        if line[0]=="[":        # find a section 
+            section=string.split(line[1:],"]")[0]
+            continue
+        elif section=="" or line[0]=="#" \
+             or len(string.strip(line)) == 0:  # comment, empty line or no section started
+            continue
+        if section=="options":
+            element=string.split(line,"=",1)
+            if len(element) > 1:
+                options[string.strip(element[0])]=string.strip(element[1])
+        elif section=="geda_attr":
+            element=string.split(line,"=",1)
+            nr=1
+            while geda_attr.has_key((element[0],nr)):
+                nr=nr+1
+            geda_attr[(string.strip(element[0]),nr)]=string.strip(element[1])
+        elif section=="pins":
+            element=string.split(line,"\t")
+            if len(element) > 2:
+                for j in xrange(len(element)):
+                    element[j]=string.strip(element[j])
+                while len(element) < 7:
+                    element.append("")
+                pins.append(element)
+        else:
+            print linenr, ": illegal section name: ", section
+            sys.exit()
+    return options, geda_attr, pins
+
+def checkpins(pinlist):
+    for pin in pinlist:
+        try:
+            if pin[P_STYLE] != "none":
+                string.atoi(pin[P_SEQ])
+        except:
+            print "pinseq needs to be a number: \n", pin
+            sys.exit()
+        if pin[P_TYPE] not in typelist:
+            print "Pintype not allowed: \n", pin
+            sys.exit()
+        if pin[P_STYLE] not in stylelist:
+            print "Style is not allowed: \n", pin
+            sys.exit()
+        if pin[P_POS] not in poslist:
+            print "Position is not allowed: \n", pin
+            sys.exit()
+        if pin[P_POS] == "" and pin[P_NET] == "":
+            print "There must be either position or a netlabel: \n", pin
+            sys.exit()
+
+def checkattr(attr):
+    for attr,value in attr.items():
+        attr,nr=attr
+        if attr not in pre_attr:
+            print "this attribute is not allowed: ", attr, value
+            sys.exit()
+
+## makes a list out of a string: "3abc345x?" --> ["","3","abc","345","x?"]
+def splitspecial(str):
+    isletter=1
+    list=[""]
+    for letter in str:
+        if letter not in string.digits:
+            if isletter == 1:
+                list[-1]=list[-1] + letter
+            else:
+                list.append(letter)
+                isletter=1
+        else:
+            if isletter == 0:
+                list[-1]=list[-1] + letter
+            else:
+                list.append(letter)
+                isletter=0
+    return list
+    
+def pinsort(pin1,pin2):
+    ## rules: nets first, positions second, labels last
+    ## net
+    if pin1[P_NET] != "" and pin2[P_NET] != "":
+        return 0
+    elif pin2[P_NET] != "":
+        return 1
+    elif pin1[P_NET] != "":
+        return -1
+    ## position
+    if pin1[P_POS] > pin2[P_POS]:
+        return -1
+    elif pin1[P_POS] < pin2[P_POS]:
+        return 1
+    ## pinlabel
+    label1, skip, skip2 = parselabel(pin1[P_LABEL])
+    label2, skip, skip2 = parselabel(pin2[P_LABEL])
+    l1 = splitspecial(label1)
+    l2 = splitspecial(label2)
+    minlen = len(l1)
+    if len(l2) < minlen:
+        minlen = len(l2)
+    for i in xrange(minlen):
+        if i % 2 == 1:
+            ret= sort(string.atoi(l1[i]),string.atoi(l2[i]))
+        else:
+            ret= sort(l1[i],l2[i])
+        if ret != 0:
+            return ret
+    ret=sort(len(l1),len(l2))
+    return ret
+
+def sort(item1,item2):
+    if item1 < item2:
+        return -1
+    elif item1 > item2:
+        return 1
+    return 0
+
+def writesym(filename,options,attr,pins):
+    o_symwidth=string.atoi(options["sym_width"])
+    o_hdist=string.atoi(options["pinwidthhorizontal"])
+    o_vdist=string.atoi(options["pinwidthvertikal"])
+    o_wordswap=options["wordswap"]
+    o_rotate=options["rotate_labels"]
+    o_sort=options["sort_labels"]
+
+    pinlength = 300
+    topleftx, toplefty = 50000, 30000  ## top left of the box
+    textx, texty= topleftx , toplefty + 50
+    urefx, urefy= topleftx + o_symwidth, toplefty + 100
+    prightx, prighty= topleftx + pinlength + o_symwidth, toplefty - o_vdist
+    pleftx, plefty= topleftx - pinlength, toplefty - o_vdist
+    ptopx, ptopy= topleftx + o_symwidth + 1000, toplefty + pinlength
+    pbottomx, pbottomy= topleftx + o_symwidth + 1000, toplefty - 2000 
+    
+    f = open(filename, "w")
+    texty_basis=texty
+
+    if attr.has_key(("version",1)):
+        value=attr[("version",1)]
+        f.write("v " + value + "\n")
+    else:
+        print "version attribut missing"
+    if attr.has_key(("refdes",1)):
+        value=attr[("refdes",1)]
+        f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6\n")
+        f.write("refdes=" + value + "\n")
+    else:
+        print "refdes attribut missing"
+    if attr.has_key(("name",1)):
+        value=attr[("name",1)]
+        f.write("T %i" %textx + " %i"% texty + " 9 10 1 0 0 0\n")
+        f.write(value + "\n")
+        texty=texty+200
+    else:
+        print "name attribut missing"
+    if attr.has_key(("device",1)):
+        value=attr[("device",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("device=" + value + "\n")
+        texty=texty+200
+    else:
+        print "device attribut missing"
+    if attr.has_key(("footprint",1)):
+        value=attr[("footprint",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("footprint=" + value + "\n")
+        texty=texty+200
+    else:
+        print "footprint attribut missing"
+    if attr.has_key(("numslots",1)):
+        value=attr[("numslots",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("numslots=" + value + "\n")
+        texty=texty+200
+    else:
+        print "numslots attribut missing"
+    if attr.has_key(("description",1)):
+        value=attr[("description",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("description=" + value + "\n")
+        texty=texty+200
+    else:
+        print "description attribut missing"
+    if attr.has_key(("slot",1)):
+        value=attr[("slot",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("slot=" + value + "\n")
+        texty=texty+200
+    i = 1
+    while attr.has_key(("slotdef",i)):
+        value=attr[("slotdef",i)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("slotdef=" + value + "\n")
+        texty=texty+200
+        i = i + 1
+    i = 1
+    while attr.has_key(("comment",i)):
+        value=attr[("comment",i)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("comment=" + value + "\n")
+        texty=texty+200
+        i = i + 1
+    
+    nets={}
+    for pin in pins:
+        if pin[P_STYLE] == "none":
+            if not nets.has_key(pin[P_NET]):
+                nets[pin[P_NET]] = pin[P_NR]
+            else:
+                nets[pin[P_NET]] = nets[pin[P_NET]] + ","+ pin[P_NR]
+    for key,value in nets.items():
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0\n")
+        f.write("net=" + key + ":" + value + "\n")
+        texty=texty+200
+
+    if o_sort == "yes":
+        pins.sort(pinsort)
+
+    for pin in pins:
+        if pin[P_STYLE] == "none": #
+            continue
+### decide which pindirection to use
+        ## TODO: put all constants into a dictionary         
+        if pin[P_POS] == "l": #left pin
+            basex, basey= pleftx, plefty  #where to draw this pin
+            xf, yf= 1, 0  # orientation factors  
+            pint=(200,50,6,0) # dx, dy, alignment, angle
+            pinl=(350,0,0,0)  # """"
+            pina=(350,0,2,0)  # """"
+            pinq=(200,-50,8,0)  # """"
+            negl=(0, CHARHIGH*4+20,0,0) # dx,dy,vert,rotate (base is label)
+            swap=0   # swap words in label ?
+            plefty=plefty - o_vdist  #where to draw the _next_ pin
+        elif pin[P_POS] == "r": #right pin
+            basex, basey = prightx, prighty 
+            xf, yf= -1, 0
+            pint=(-200,50,0,0)
+            pinl=(-350,0,6,0)
+            pina=(-350,0,8,0)
+            pinq=(-200,-50,2,0)
+            negl=(0, CHARHIGH*4+20,2,0)
+            swap=1
+            prighty=prighty - o_vdist
+        elif pin[P_POS] == "b": # bottom pin
+            basex, basey=pbottomx, pbottomy
+            xf, yf= 0, 1
+            if o_rotate == "yes": # bottom pin with 90° text
+                pint=(-50,200,6,90)
+                pinl=(0,350,0,90)
+                pina=(0,350,2,90)
+                pinq=(50,200,8,90)
+                negl=(CHARHIGH*4+20,0,0,1)
+            else:
+                pint=(50,100,0,0)
+                pinl=(0,350,3,0)
+                pina=(0,500,3,0)
+                pinq=(50,100,2,0)
+                negl=(0,CHARHIGH*4+20,1,0)
+            swap=0
+            pbottomx=pbottomx + o_hdist
+        elif pin[P_POS] == "t": # top pin
+            basex, basey=ptopx, ptopy
+            xf, yf= 0, -1
+            if o_rotate == "yes": # with 90° text
+                pint=(-50,-200,0,90)
+                pinl=(0,-350,6,90)
+                pina=(0,-350,8,90)
+                pinq=(50,-200,2,90)
+                negl=(CHARHIGH*4+20,0,2,1)
+                swap=1
+            else:
+                pint=(50,-200,0,0)
+                pinl=(0,-350,5,0)
+                pina=(0,-500,5,0)
+                pinq=(50,-200,2,0)
+                negl=(0,20,1,0)
+                swap=0
+            ptopx=ptopx + o_hdist
+### draw the pin
+        if (pin[P_STYLE]=="dot" or  #short pin and dot?
+            pin[P_STYLE]=="dotclk"):
+            x=basex + xf*200
+            y=basey + yf*200
+        else:
+            x=basex + xf*300
+            y=basey + yf*300
+        f.write("P %i"%basex+" %i"%basey+" %i"%x + " %i"%y+ " 1 0 0\n")
+        f.write("{\n")
+### draw pinnumber
+        pintx, pinty, pinta, pintr=pint
+        x=basex+pintx
+        y=basey+pinty
+        f.write("T %i"%x+" %i"%y+" 5 8 1 1 %i"%pintr+" %i\n"%pinta)
+        f.write("pinnumber="+pin[P_NR]+"\n")
+### draw pinseq
+        pintx, pinty, pinta, pintr=pinq
+        x=basex+pintx
+        y=basey+pinty
+        f.write("T %i"%x+" %i"%y+" 5 8 0 1 %i"%pintr+" %i\n"%pinta)
+        f.write("pinseq="+pin[P_SEQ]+"\n")
+### draw pinlabel and pintype
+        pinlx, pinly, pinla, pinlr=pinl
+        pinax, pinay, pinaa, pinar=pina
+        if (pin[P_STYLE]=="clk" or  #move label if clocksign
+            pin[P_STYLE]=="dotclk"):
+            pinlx=pinlx + xf*75
+            pinly=pinly + yf*75
+            pinax=pinax + xf*75
+            pinay=pinay + yf*75
+        pinlx=pinlx + basex
+        pinly=pinly + basey 
+        pinax=pinax + basex
+        pinay=pinay + basey
+        if o_wordswap=="yes" and swap==1:
+            label=swapwords(pin[P_LABEL])
+        else:
+            label=pin[P_LABEL]
+        label, neglines, wordlength = parselabel(label)
+        f.write("T %i"%pinlx+" %i"%pinly+" 9 8 1 1 %i"%pinlr+" %i\n"%pinla)
+        f.write("pinlabel="+label+"\n")
+        f.write("T %i"%pinax+" %i"%pinay+" 5 8 0 1 %i"%pinar+" %i\n"%pinaa)
+        f.write("pintype="+pin[P_TYPE]+"\n")
+        f.write("}\n")
+### draw negation lines
+        neglx, negly, neglv, neglr = negl
+        for start, stop in neglines:
+            if neglr == 1:
+                x1= pinlx - neglx
+                y1= pinly + negly + start*4 - wordlength*4*neglv/2
+                x2= x1
+                y2= y1 - start*4 + stop*4
+            else:
+                x1= pinlx - neglx - wordlength*4*neglv/2 + start*4
+                y1=y2= pinly + negly
+                x2= x1 - start*4 + stop*4
+            f.write("L %i"%x1+" %i"%y1+" %i"%x2+" %i"%y2+" 3 0 0 0 -1 -1\n")
+### draw the negation bubble
+        if (pin[P_STYLE]=="dot" or pin[P_STYLE]=="dotclk"):
+            x=basex + xf*250
+            y=basey + yf*250
+            f.write("V %i"%x+" %i"%y +" 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n")
+### draw the clocksign
+        if (pin[P_STYLE]=="clk" or
+            pin[P_STYLE]=="dotclk"):
+            x1=basex+ xf*400
+            y1=basey+ yf*400
+            x2=x1- xf*100 +yf*75
+            y2=y1- yf*100 +xf*75
+            x3=x1- xf*100 -yf*75
+            y3=y1- yf*100 -xf*75
+            f.write("L %i"%x1+" %i"%y1+" %i"%x2+" %i"%y2 + " 3 0 0 0 -1 -1\n")
+            f.write("L %i"%x1+" %i"%y1+" %i"%x3+" %i"%y3 + " 3 0 0 0 -1 -1\n")
+### draw a box 
+    width=o_symwidth
+    if plefty < prighty:
+        high=toplefty - plefty 
+    else:
+        high=toplefty - prighty
+    bottomy = toplefty - high
+    f.write("B %i"%topleftx+" %i"%bottomy+" %i"%width+" %i"%high+
+            " 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n")
+    return 0
+
+def mergeoptions(source_opt,pre_opt):
+    ret=pre_opt
+    for item in source_opt.keys():
+        if ret.has_key(item):
+            ret[item]=source_opt[item]
+        else:
+            print "This option is not allowed:", item
+            sys.exit()
+    return ret
+
+def generate_pinseq(pins):
+    seq=1
+    for nr in xrange(len(pins)):
+        if pins[nr][P_STYLE] != "none":
+            pins[nr][P_SEQ] = "%i"%seq
+            seq = seq + 1
+    return pins
+
+###################### MAIN #################################################
+
+## TODO: use getopt
+try:
+    file_in=sys.argv[1]
+    file_out=sys.argv[2]
+except:
+    print "tragesym version " + VERSION
+    print "Bad arguments, usage is: ", sys.argv[0] ,"infile outfile"
+    sys.exit()
+    
+## read sourcefile
+opts,attr,pins=readsrc(file_in)
+
+options=mergeoptions(opts,pre_options)
+
+if options["generate_pinseq"] == "yes":
+    pins=generate_pinseq(pins)
+
+checkpins(pins)
+checkattr(attr)
+
+writesym(file_out,options,attr,pins)
+

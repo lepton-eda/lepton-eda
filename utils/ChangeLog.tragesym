@@ -1,0 +1,49 @@
+2002-10-05: (version 0.0.5)
+	Changes:
+	  - changes to conform to the new gschem file format (20020922 or later)
+	  - changed pin# to pinnumber, added pinseq
+	  - added numslots
+	  - changed slot# to slotdef, uref to refdes
+	
+2002-06-06: (version 0.0.4)
+	Changes:
+	  - changed "label" to "pinlabel=", "type" to "pintype"
+	  - added attribute "description="
+	  - corrected bug: not all attributs had added to the symbol
+
+2002-04-07: (version 0.0.3)
+	Changes:
+	  - corrected net-attribute for multiple equal net entries
+	  - corrected color of pinlabels 
+	  - cleanups in the template.src
+	
+2002-02-25: (version 0.0.2)
+	Changes:
+	  - corrected attribute color of uref was 2 instead of 8
+	  - changed textalignment of left pinnumbers from bottom left to bottom 
+	    right. Same with rotated bottom pinnumbers
+
+2001-11-15: (version 0.0.1)
+	Changes:
+	  - corrected sorting for (A1, A2, A10), alphabetic is not useful here
+	  - fixed sorting bugs
+	  - added some syntax checks
+	  - internal (draw pins top down instead of bottom up)
+	  - attributes are on the top of the symbols
+
+2001-10-30: (no version number) --> 0.0.0
+	First anounce at the geda mailing list
+	Features:
+	  - create pins (line, dot, clk and dotclk)
+	  - pinnumbers, pinlabels, pintype
+	  - rotates the top and bottom pinlabel, if wished
+	  - draws negation lines
+	  - wordswap for rightsided and topsided pinlabels
+	  - space between pins can be defined
+	  - define nets, and write attributes
+	  - sort the labels
+	Known BUGS:
+	  - sorting error if there are negation lines
+	  - sorting error for adresspins (A8, A9, A10)
+	  - negation lines seem not to be exactly over the letters
+	  - right text and neg.lines has an error of 40 mils (gschem-bug?)

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+../scripts/tragesym 4099.src 4099.sym
+../scripts/tragesym test1.src test1.sym
+../scripts/tragesym test2.src test2.sym
+../scripts/tragesym test3.src test3.sym
+../scripts/tragesym AT90S8535_TQFP.src AT90S8535_TQFP.sym

@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum
+bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum \
+	      tragesym
 
 EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl \
 	     sarlacc_sym gschupdate gsymupdate refdes_renum \

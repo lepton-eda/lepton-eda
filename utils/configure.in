@@ -248,6 +248,8 @@ AC_SUBST(GLIB)
 
 AC_CONFIG_FILES([Makefile \
 		examples/Makefile \
+		examples/gmk_sym/Makefile \
+		examples/tragesym/Makefile \
                 include/Makefile \
   	  	scripts/Makefile \
 		scripts/config.sh \

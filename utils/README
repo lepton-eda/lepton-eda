@@ -3,18 +3,13 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-
 README for misc utilities versions 2003*
-
-
-IMPORTANT
-	Please read the file NEWS for details on specifics for this release
 
 
 - Installation
 
-	See the toplevel INSTALL for more instructions on general install
-	instructions
+   See the toplevel INSTALL for more instructions on general install
+   instructions
 
 - Utilities
 
@@ -80,7 +75,7 @@ IMPORTANT
 	smash_megafile is installed when make install is run.
 
 
-   convert_sym.c
+   convert_sym
    Written by: Mike Jarabek, mjarabek@playground.net
 
 	convert_sym converts Viewlogic schematics and symbols into
@@ -157,7 +152,27 @@ IMPORTANT
 
     Run the program with no parameters or with --help to see usage 
     information.
+
+
+    tragesym
+    Werner Hoch
+
+    tragesym is a symbol creator for gEDA/gaf.  The aim of this python
+    script is to make it easier (and faster) to create symbols for gEDA.
+
+    Program features:
+
+    * create pins and arrange their elements (clocksign, dot, type, pinnumber, 
+      label)
+    * sort pins alphabetical and numerical
+    * swap words of pinlabels if wished
+    * draw negation lines on the labels
+    * rotate pinlabels if wished
+    * some syntax check to the input file
  
+    Please see the README.tragesym and ChangeLog.tragesym for more info.  
+    Be sure to look at the examples in examples/tragesym.  There you will
+    find the template.src file referenced in the README.tragesym file.
 
 
 - License  
@@ -178,6 +193,7 @@ IMPORTANT
 	gschlas is Copyright 2002 by Ales Hvezda
         olib is Copyright 2002 by Mario Pascucci
         refdes_renum is Copyright 2003 by Dan McMahill
+        tragesym is Copyright 2001-2003 by Werner Hoch
 
 
 
