@@ -9,6 +9,10 @@
 	* examples/*.sch: Moved some of the developer only schematics into
 	the test/ directory
 
+	* tests/ext_chars.sch: Added a simple little schematic to test the
+	loading of the extended characters.  This should not crash gschem
+	anymore. :)
+
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* examples/*.sch: Updated all schematics to use netname instead of
