@@ -1,3 +1,8 @@
+2002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure and friends: Ran "autoreconf --force --install -v" 
+	to really upgrade to the newest version of the auto* tools.
+
 2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54

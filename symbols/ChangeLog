@@ -1,3 +1,8 @@
+2002-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure and friends: Ran "autoreconf --force --install -v" 
+        to really upgrade to the auto* tools.
+
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* misc/busripper-1.sym, busripper-2.sym: Added bus ripper symbols.

@@ -467,7 +467,7 @@ if test -z "$show_help"; then
       pic_mode=default
       ;;
     esac
-    if test "$pic_mode" = no && test "$deplibs_check_method" != pass_all; then
+    if test $pic_mode = no && test "$deplibs_check_method" != pass_all; then
       # non-PIC code in shared libraries is not supported
       pic_mode=default
     fi

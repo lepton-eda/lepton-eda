@@ -23,6 +23,9 @@
 
 	* noweb/s_cues.nw: Changed the hard coded value for all cues sizes
 	when outputing postscript to be 1) #defined and 2) properly computed.
+
+	 * configure and friends: Ran "autoreconf --force --install -v" 
+        to really upgrade to the newest version of the auto* tools.
 	
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
