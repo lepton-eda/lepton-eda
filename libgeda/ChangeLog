@@ -3,6 +3,8 @@
 	* noweb/a_basic.nw: Added code to print out a message when an old
 	file is read in.
 
+        * configure.in: Updated version to 20021103 (an official version)
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Added libgeda-config-install target

@@ -82,6 +82,8 @@
 	* font/*.sym: Very carefully updated all font defs to the latest
 	version using gsymupdate (used fontupdate)
 
+        * configure.in: Updated version to 20021103 (an official version)
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Added gesym-config-install target
