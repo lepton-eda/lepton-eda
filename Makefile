@@ -2,6 +2,20 @@
 
 SHELL=/bin/sh
 
+#
+# Change this to the real version of the distribution
+#
+VERSION=20010304
+
+# 
+# Use this when you are building the CVS version
+CD_VERSION=
+
+#
+# Use this when you are building the Released version (comment out above)
+#CD_VERSION=-$(VERSION)
+
+
 prefix=${HOME}/geda
 opts=
 
@@ -10,6 +24,7 @@ opts=
 ############################################################################
 
 info:
+	@echo $(VERSION) $(CD_VERSION)
 	@echo "gEDA Toplevel Makefile"
 	@echo "This Makefile requires libgeda, symbols, gschem, gnetlist,"
 	@echo "gsymcheck, and utils source tarball packages untarred in this:"
@@ -24,8 +39,10 @@ info:
 	@echo "These targets are primarily used by the developers:"
 	@echo "${MAKE} config       Just do the ./configure --prefix=${prefix}"
 	@echo "${MAKE} maint        Total maintenance clean"
-	@echo "${MAKE} reconfig     Recreate ./configure (and all Makefiles)"
+	@echo "${MAKE} dist         Create distribution (using make dist)"
+	@echo "${MAKE} distcheck    Create distribution (using make distcheck)"
 	@echo "${MAKE} distconfig   Create dist ./configure (and all Makefiles)"
+	@echo "${MAKE} reconfig     Recreate ./configure (and all Makefiles)"
 	@echo "${MAKE} proto        Recreate all prototype.h files"
 	@echo "${MAKE} all          Just build. Do not use! Run make install"
 	@echo ""
@@ -85,6 +102,24 @@ reconfig: libgeda_reconfig symbols_reconfig gschem_reconfig gnetlist_reconfig \
 distconfig: libgeda_distconfig symbols_distconfig gschem_distconfig \
             gnetlist_distconfig gsymcheck_distconfig utils_distconfig
 
+dist: libgeda_dist symbols_dist gschem_dist \
+      gnetlist_dist gsymcheck_dist utils_dist
+	mv -f libgeda/libgeda*.tar.gz .
+	mv -f symbols/symbols*.tar.gz .
+	mv -f gschem/gschem*.tar.gz .
+	mv -f gnetlist/gnetlist*.tar.gz .
+	mv -f gsymcheck/gsymcheck*.tar.gz .
+	mv -f utils/utils*.tar.gz .
+
+distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
+           gnetlist_distcheck gsymcheck_distcheck utils_distcheck
+	mv -f libgeda/libgeda*.tar.gz .
+	mv -f symbols/symbols*.tar.gz .
+	mv -f gschem/gschem*.tar.gz .
+	mv -f gnetlist/gnetlist*.tar.gz .
+	mv -f gsymcheck/gsymcheck*.tar.gz .
+	mv -f utils/utils*.tar.gz .
+
 # This recreates all ./configure scripts and Makefile.in files
 proto: libgeda_proto gschem_proto gnetlist_proto gsymcheck_proto
 
@@ -93,212 +128,248 @@ proto: libgeda_proto gschem_proto gnetlist_proto gsymcheck_proto
 ############################################################################
 
 # Symbols 
-symbols: symbols/gesym-config
+symbols: symbols$(CD_VERSION)/gesym-config
 	@echo symbols Installed 
 
-symbols_maint: symbols/system-commonrc
-	( cd symbols; ${MAKE} maintainer-clean )
+symbols_maint: symbols$(CD_VERSION)/system-commonrc
+	( cd symbols$(CD_VERSION); ${MAKE} maintainer-clean )
 
-symbols_clean: symbols/system-commonrc
-	( cd symbols; ${MAKE} clean )
+symbols_clean: symbols$(CD_VERSION)/system-commonrc
+	( cd symbols$(CD_VERSION); ${MAKE} clean )
 
-symbols_install: symbols/gesym-config
-	( cd symbols; ${MAKE} install )
+symbols_install: symbols$(CD_VERSION)/gesym-config
+	( cd symbols$(CD_VERSION); ${MAKE} install )
 
-symbols_uninstall: symbols/system-commonrc
-	( cd symbols; ${MAKE} uninstall )
+symbols_uninstall: symbols$(CD_VERSION)/system-commonrc
+	( cd symbols$(CD_VERSION); ${MAKE} uninstall )
 
 symbols_config: 
-	( cd symbols; ./configure --prefix=$(prefix) $(opts) )
+	( cd symbols$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 symbols_reconfig: 
-	( cd symbols; autoreconf --force ; automake )
+	( cd symbols$(CD_VERSION); autoreconf --force ; automake )
 
 symbols_distconfig: 
-	( cd symbols; autoreconf --force ; automake --include-deps )
+	( cd symbols$(CD_VERSION); autoreconf --force ; automake --include-deps )
+
+symbols_dist: 
+	( cd symbols$(CD_VERSION); ${MAKE} dist )
+
+symbols_distcheck: 
+	( cd symbols$(CD_VERSION); ${MAKE} distcheck )
 
 # gschem
-gschem: gschem/config.h gschem/src/gschem
+gschem: gschem$(CD_VERSION)/config.h gschem$(CD_VERSION)/src/gschem
 	@echo gschem Built 
 
 gschem_install: libgeda_install symbols_install \
-		gschem/config.h gschem/src/gschem
-	( cd gschem; ${MAKE} install )
+		gschem$(CD_VERSION)/config.h gschem$(CD_VERSION)/src/gschem
+	( cd gschem$(CD_VERSION); ${MAKE} install )
 
-gschem_uninstall: gschem/config.h 
-	( cd gschem; ${MAKE} uninstall )
+gschem_uninstall: gschem$(CD_VERSION)/config.h 
+	( cd gschem$(CD_VERSION); ${MAKE} uninstall )
 
 gschem_config: 
-	( cd gschem; ./configure --prefix=$(prefix) $(opts) )
+	( cd gschem$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 gschem_reconfig: 
-	( cd gschem; autoreconf --force ; automake )
+	( cd gschem$(CD_VERSION); autoreconf --force ; automake )
 
 gschem_distconfig: 
-	( cd gschem; autoreconf --force ; automake --include-deps )
+	( cd gschem$(CD_VERSION); autoreconf --force ; automake --include-deps )
+
+gschem_dist: 
+	( cd gschem$(CD_VERSION); ${MAKE} dist )
+
+gschem_distcheck: 
+	( cd gschem$(CD_VERSION); ${MAKE} distcheck )
 
 gschem_maint: gschem/config.h 
-	( cd gschem; ${MAKE} maintainer-clean )
+	( cd gschem$(CD_VERSION); ${MAKE} maintainer-clean )
 
-gschem_clean: gschem/config.h 
-	( cd gschem; ${MAKE} clean )
+gschem_clean: gschem$(CD_VERSION)/config.h 
+	( cd gschem$(CD_VERSION); ${MAKE} clean )
 
-gschem_proto: gschem/config.h 
-	( cd gschem; ${MAKE} proto )
+gschem_proto: gschem$(CD_VERSION)/config.h 
+	( cd gschem$(CD_VERSION); ${MAKE} proto )
 
 # gnetlist
-gnetlist: gnetlist/config.h gnetlist/src/gnetlist
+gnetlist: gnetlist$(CD_VERSION)/config.h gnetlist$(CD_VERSION)/src/gnetlist
 	@echo gnetlist Built
 
 gnetlist_install: libgeda_install symbols_install \
-		  gnetlist/config.h gnetlist/src/gnetlist
-	( cd gnetlist; ${MAKE} install )
+		  gnetlist$(CD_VERSION)/config.h gnetlist$(CD_VERSION)/src/gnetlist
+	( cd gnetlist$(CD_VERSION); ${MAKE} install )
 
-gnetlist_uninstall: gnetlist/config.h 
-	( cd gnetlist; ${MAKE} uninstall )
+gnetlist_uninstall: gnetlist$(CD_VERSION)/config.h 
+	( cd gnetlist$(CD_VERSION); ${MAKE} uninstall )
 
-gnetlist_maint: gnetlist/config.h 
-	( cd gnetlist; ${MAKE} maintainer-clean )
+gnetlist_maint: gnetlist$(CD_VERSION)/config.h 
+	( cd gnetlist$(CD_VERSION); ${MAKE} maintainer-clean )
 
-gnetlist_clean: gnetlist/config.h 
-	( cd gnetlist; ${MAKE} clean )
+gnetlist_clean: gnetlist$(CD_VERSION)/config.h 
+	( cd gnetlist$(CD_VERSION); ${MAKE} clean )
 
-gnetlist_proto: gnetlist/config.h 
-	( cd gnetlist; ${MAKE} proto )
+gnetlist_proto: gnetlist$(CD_VERSION)/config.h 
+	( cd gnetlist$(CD_VERSION); ${MAKE} proto )
 
 gnetlist_config: 
-	( cd gnetlist; ./configure --prefix=$(prefix) $(opts) )
+	( cd gnetlist$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 gnetlist_reconfig: 
-	( cd gnetlist; autoreconf --force ; automake )
+	( cd gnetlist$(CD_VERSION); autoreconf --force ; automake )
 
 gnetlist_distconfig: 
-	( cd gnetlist; autoreconf --force ; automake --include-deps )
+	( cd gnetlist$(CD_VERSION); autoreconf --force ; automake --include-deps )
+
+gnetlist_dist: 
+	( cd gnetlist$(CD_VERSION); ${MAKE} dist )
+
+gnetlist_distcheck: 
+	( cd gnetlist$(CD_VERSION); ${MAKE} distcheck )
 
 # gsymcheck
-gsymcheck: gsymcheck/config.h gsymcheck/src/gsymcheck
+gsymcheck: gsymcheck$(CD_VERSION)/config.h gsymcheck$(CD_VERSION)/src/gsymcheck
 	@echo gsymcheck Built 
 
 gsymcheck_install: libgeda_install symbols_install \
-		gsymcheck/config.h gsymcheck/src/gsymcheck
-	( cd gsymcheck; ${MAKE} install )
+		gsymcheck$(CD_VERSION)/config.h gsymcheck$(CD_VERSION)/src/gsymcheck
+	( cd gsymcheck$(CD_VERSION); ${MAKE} install )
 
-gsymcheck_uninstall: gsymcheck/config.h
-	( cd gsymcheck; ${MAKE} uninstall )
+gsymcheck_uninstall: gsymcheck$(CD_VERSION)/config.h
+	( cd gsymcheck$(CD_VERSION); ${MAKE} uninstall )
 
 gsymcheck_config: 
-	( cd gsymcheck; ./configure --prefix=$(prefix) $(opts) )
+	( cd gsymcheck$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 gsymcheck_reconfig: 
-	( cd gsymcheck; autoreconf --force ; automake )
+	( cd gsymcheck$(CD_VERSION); autoreconf --force ; automake )
 
 gsymcheck_distconfig: 
-	( cd gsymcheck; autoreconf --force ; automake --include-deps )
+	( cd gsymcheck$(CD_VERSION); autoreconf --force ; automake --include-deps )
 
-gsymcheck_maint: gsymcheck/config.h 
-	( cd gsymcheck; ${MAKE} maintainer-clean )
+gsymcheck_dist: 
+	( cd gsymcheck$(CD_VERSION); ${MAKE} dist )
 
-gsymcheck_clean: gsymcheck/config.h 
-	( cd gsymcheck; ${MAKE} clean )
+gsymcheck_distcheck: 
+	( cd gsymcheck$(CD_VERSION); ${MAKE} distcheck )
 
-gsymcheck_proto: gsymcheck/config.h 
-	( cd gsymcheck; ${MAKE} proto )
+gsymcheck_maint: gsymcheck$(CD_VERSION)/config.h 
+	( cd gsymcheck$(CD_VERSION); ${MAKE} maintainer-clean )
+
+gsymcheck_clean: gsymcheck$(CD_VERSION)/config.h 
+	( cd gsymcheck$(CD_VERSION); ${MAKE} clean )
+
+gsymcheck_proto: gsymcheck$(CD_VERSION)/config.h 
+	( cd gsymcheck$(CD_VERSION); ${MAKE} proto )
 
 # utils
-utils: utils/config.h utils/src/gmk_sym
+utils: utils$(CD_VERSION)/config.h utils$(CD_VERSION)/src/gmk_sym
 	@echo utils Built 
 
 utils_install: libgeda_install symbols_install \
-	       utils/config.h utils/src/gmk_sym
-	( cd utils; ${MAKE} install )
+	       utils$(CD_VERSION)/config.h utils$(CD_VERSION)/src/gmk_sym
+	( cd utils$(CD_VERSION); ${MAKE} install )
 
-utils_uninstall: utils/config.h 
-	( cd utils; ${MAKE} uninstall )
+utils_uninstall: utils$(CD_VERSION)/config.h 
+	( cd utils$(CD_VERSION); ${MAKE} uninstall )
 
 utils_config: 
-	( cd utils; ./configure --prefix=$(prefix) $(opts) )
+	( cd utils$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 utils_reconfig: 
-	( cd utils; autoreconf --force ; automake )
+	( cd utils$(CD_VERSION); autoreconf --force ; automake )
 
 utils_distconfig: 
-	( cd utils; autoreconf --force ; automake --include-deps )
+	( cd utils$(CD_VERSION); autoreconf --force ; automake --include-deps )
 
-utils_maint: utils/config.h 
-	( cd utils; ${MAKE} maintainer-clean )
+utils_dist: 
+	( cd utils$(CD_VERSION); ${MAKE} dist )
 
-utils_clean: utils/config.h 
-	( cd utils; ${MAKE} clean )
+utils_distcheck: 
+	( cd utils$(CD_VERSION); ${MAKE} distcheck )
+
+utils_maint: utils$(CD_VERSION)/config.h 
+	( cd utils$(CD_VERSION); ${MAKE} maintainer-clean )
+
+utils_clean: utils$(CD_VERSION)/config.h 
+	( cd utils$(CD_VERSION); ${MAKE} clean )
 
 # libgeda
-libgeda: libgeda/config.h libgeda/src/.libs/libgeda.a
+libgeda: libgeda$(CD_VERSION)/config.h libgeda$(CD_VERSION)/src/.libs/libgeda.a
 	@echo libgeda Installed 
 
-libgeda_maint: libgeda/config.h
-	( cd libgeda; ${MAKE} maintainer-clean )
+libgeda_maint: libgeda$(CD_VERSION)/config.h
+	( cd libgeda$(CD_VERSION); ${MAKE} maintainer-clean )
 
-libgeda_clean: libgeda/config.h
-	( cd libgeda; ${MAKE} clean )
+libgeda_clean: libgeda$(CD_VERSION)/config.h
+	( cd libgeda$(CD_VERSION); ${MAKE} clean )
 
-libgeda_proto: libgeda/config.h
-	( cd libgeda; ${MAKE} proto )
+libgeda_proto: libgeda$(CD_VERSION)/config.h
+	( cd libgeda$(CD_VERSION); ${MAKE} proto )
 
 libgeda_config: 
-	( cd libgeda; ./configure --prefix=$(prefix) $(opts) )
+	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 libgeda_reconfig: 
-	( cd libgeda; autoreconf --force ; automake )
+	( cd libgeda$(CD_VERSION); autoreconf --force ; automake )
 
 libgeda_distconfig: 
-	( cd libgeda; autoreconf --force ; automake --include-deps )
+	( cd libgeda$(CD_VERSION); autoreconf --force ; automake --include-deps )
 
-libgeda_uninstall: libgeda/config.h 
-	( cd libgeda; ${MAKE} uninstall )
+libgeda_dist: 
+	( cd libgeda$(CD_VERSION); ${MAKE} dist )
 
-libgeda_install: libgeda/config.h 
-	( cd libgeda; ${MAKE} install )
+libgeda_distcheck: 
+	( cd libgeda$(CD_VERSION); ${MAKE} distcheck )
+
+libgeda_uninstall: libgeda$(CD_VERSION)/config.h 
+	( cd libgeda$(CD_VERSION); ${MAKE} uninstall )
+
+libgeda_install: libgeda$(CD_VERSION)/config.h 
+	( cd libgeda$(CD_VERSION); ${MAKE} install )
 
 ############################################################################
 # Configure related targets 
 ############################################################################
 
-libgeda/config.h:
-	( cd libgeda; ./configure --prefix=$(prefix) $(opts) )
+libgeda$(CD_VERSION)/config.h:
+	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
-gschem/config.h:
-	( cd gschem; ./configure --prefix=$(prefix) $(opts) )
+gschem$(CD_VERSION)/config.h:
+	( cd gschem$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
-gsymcheck/config.h:
-	( cd gsymcheck; ./configure --prefix=$(prefix) $(opts) )
+gsymcheck$(CD_VERSION)/config.h:
+	( cd gsymcheck$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
-utils/config.h:
-	( cd utils; ./configure --prefix=$(prefix) $(opts) )
+utils$(CD_VERSION)/config.h:
+	( cd utils$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
-gnetlist/config.h:
-	( cd gnetlist; ./configure --prefix=$(prefix) $(opts) )
+gnetlist$(CD_VERSION)/config.h:
+	( cd gnetlist$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
-symbols/system-commonrc:
-	( cd symbols; ./configure --prefix=$(prefix) $(opts) )
+symbols$(CD_VERSION)/system-commonrc:
+	( cd symbols$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
 
 ############################################################################
 # Executable related related targets 
 ############################################################################
 
-gschem/src/gschem:
-	(cd gschem; ${MAKE} )
+gschem$(CD_VERSION)/src/gschem:
+	(cd gschem$(CD_VERSION); ${MAKE} )
 
-gsymcheck/src/gsymcheck:
-	(cd gsymcheck; ${MAKE} )
+gsymcheck$(CD_VERSION)/src/gsymcheck:
+	(cd gsymcheck$(CD_VERSION); ${MAKE} )
 
-gnetlist/src/gnetlist:
-	(cd gnetlist; ${MAKE} )
+gnetlist$(CD_VERSION)/src/gnetlist:
+	(cd gnetlist$(CD_VERSION); ${MAKE} )
 
-utils/src/gmk_sym:
-	(cd utils; ${MAKE} )
+utils$(CD_VERSION)/src/gmk_sym:
+	(cd utils$(CD_VERSION); ${MAKE} )
 
-libgeda/src/.libs/libgeda.a:
-	( cd libgeda; ${MAKE} install )
+libgeda$(CD_VERSION)/src/.libs/libgeda.a:
+	( cd libgeda$(CD_VERSION); ${MAKE} install )
 
-symbols/gesym-config:
-	( cd symbols; ./configure --prefix=$(prefix) $(opts) ; ${MAKE} install )
+symbols$(CD_VERSION)/gesym-config:
+	( cd symbols$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) ; ${MAKE} install )
 
