@@ -13,7 +13,12 @@ into the cvs repository.
 
 2000-04-21  Ales Hvezda  <ahvezda@geda.seul.org>
 	
-	* src/*.sym: Changed all physical attributes to footprint
+	* */*.sym: Changed all physical attributes to footprint
+
+	* local/dac08sm-1.sym: Changed some of the attributes to be green
+	
+	* local/EPF10K-1.sym and altera/EPC1LC20-1.sym : Color changes and 
+	  minor cosmetic updates 
 
 2000-04-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
