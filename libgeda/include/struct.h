@@ -220,6 +220,9 @@ struct st_object {
   int show_name_value;
   int visibility; 
 
+  int whichend;    /* for pins only, either 0 or 1 */
+  int pin_type;    /* for pins only, either NET or BUS */  
+
   OBJECT *prev;
   OBJECT *next;
 }; 

@@ -296,7 +296,7 @@ void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichon
 /* o_pin_basic.c */
 void get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 void world_get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
-OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
+OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichone);
 void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_pin_save(char *buf, OBJECT *object);

@@ -4,6 +4,38 @@
 	error condition where an invalid attribute is found.  A premptive
 	fix for a possible core dump in gschem's multi attribute dialog box.
 
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
+	* include/struct.h: Added whichend and pin_type to the st_object
+	structure.  These are pin specific variables.
+
+	* include/defines.h: Added #defines to support pin_type.  Not in use
+	yet.
+
+	* noweb/o_pin_basic.nw: Added o_pin_update_whichend, which figures out
+	which end is the active connection end point.  It does not work on
+	angled pins.
+
+	* noweb/a_basic.nw: Added a call to o_pin_update_whichend (in 
+	o_read) which is called when an old symbol/schematic is read
+	in to update the pin's which end variable.  This code is only
+	called if a pin is read in.
+	
+	* noweb/o_pin_basic.nw: Added code to read and write the new file
+	pin fields (pin_type and whichend).  libgeda will still read all the
+  	old formats just fine.
+
+	* noweb/o_pin_basic.nw: Updated o_pin_add to take pin_type and
+	whichend as parameters.
+
+	* noweb/s_basic.nw: Inited pin_type and whichend in st_object.	
+
+	* noweb/s_conn.nw: Added code to control which end point of a pin
+	can have a connection attached to it.  This is control via the
+	whichend variable.  A 0 in whichend is the first end point, while
+	a 1 is the second end point.  You can now draw a net through a pin
+	and libgeda will only register one connection (at the active end).
+
 2002-09-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/s_project.nw: Added new file.  Basically the s_project.c

@@ -281,6 +281,10 @@
 #define VERTICAL_LEFT		5
 #define VERTICAL_RIGHT		6
 
+/* for pin_type */
+#define PIN_TYPE_NET		0
+#define PIN_TYPE_BUS		1
+
 /* gnetlist: hierarchy_*_order */
 #define APPEND			0
 #define PREPEND			1

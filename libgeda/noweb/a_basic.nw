@@ -11,6 +11,7 @@
 /* DO NOT read or edit this file ! Use ../noweb/a_basic.nw instead */
 
 <<a_basic.c : include directives>>
+<<a_basic.c : macros>>
 <<a_basic.c : o_save_embedded()>>
 <<a_basic.c : o_save_write_header()>>
 <<a_basic.c : o_save()>>
@@ -62,6 +63,12 @@
 #include "../include/prototype.h"
 
 @
+
+<<a_basic.c : macros>>=
+#define VERSION_20020825 20020825
+
+@ %def VERSION_20020825
+
 
 
 @section Function @code{o_save_embedded()}
@@ -327,6 +334,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   OBJECT *temp_tail=NULL;
   OBJECT *temp_parent=NULL;
   OBJECT *object_before_attr=NULL;
+  long int ver;
+  int found_pin = 0;
 
   /* fill version with default string, the current version */
   strcpy(version, VERSION); 
@@ -380,6 +389,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
       case(OBJ_PIN):
         object_list = (OBJECT *) o_pin_read(w_current, object_list, buf, version);
+        found_pin++;
         break;
 
       case(OBJ_ARC):
@@ -456,6 +466,12 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
   }
   fclose(fp);
+
+  ver = strtol(version, NULL, 10);
+  if (found_pin && ver <= VERSION_20020825) {
+    o_pin_update_whichend(w_current, return_head(object_list));
+  }
+  
   return(object_list);
 }
 

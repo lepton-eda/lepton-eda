@@ -11,6 +11,7 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_pin_basic.nw instead */
 
 <<o_pin_basic.c : include directives>>
+<<o_pin_basic.c : macros>>
 <<o_pin_basic.c : get_pin_bounds()>>
 <<o_pin_basic.c : world_get_pin_bounds()>>
 <<o_pin_basic.c : o_pin_add()>>
@@ -27,6 +28,7 @@
 <<o_pin_basic.c : o_pin_mirror()>>
 <<o_pin_basic.c : o_pin_mirror_world()>>
 <<o_pin_basic.c : o_pin_modify()>>
+<<o_pin_basic.c : o_pin_update_whichend()>>
 
 @
 
@@ -77,6 +79,11 @@
 #include "../include/prototype.h"
 
 @
+
+<<o_pin_basic.c : macros>>=
+#define VERSION_20020825 20020825
+
+@ %def VERSION_20020825
 
 
 @section Function @code{get_pin_bounds()}
@@ -153,7 +160,7 @@ world_get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
 <<o_pin_basic.c : o_pin_add()>>=
 OBJECT *
 o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color,
-          int x1, int y1, int x2, int y2)
+          int x1, int y1, int x2, int y2, int pin_type, int whichend)
 {
   int screen_x, screen_y;
   int left, right, top, bottom;
@@ -198,6 +205,9 @@ o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color,
   /* TODO: questionable cast */
   new_node->sel_func = (void *) select_func;  
 
+  new_node->pin_type = pin_type;
+  new_node->whichend = whichend;
+  
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
   /* this mod causes shadow pins to appear at 0,0 if you copy a complex
@@ -291,8 +301,19 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
   int d_x1, d_y1;
   int d_x2, d_y2;
   int color;
+  int pin_type;
+  int whichend;
+  long int ver;
 
-  sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);	
+  ver = strtol(version, NULL, 10);
+  if(ver <= VERSION_20020825) {
+    sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
+    pin_type = PIN_TYPE_NET;
+    whichend = -1;     
+  } else {
+    sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2,
+           &color, &pin_type, &whichend);
+  }
   d_x1 = x1; 
   d_y1 = y1; 
   d_x2 = x2; 
@@ -314,7 +335,8 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
     color = w_current->override_pin_color;
   }
 
-  object_list = o_pin_add(w_current, object_list, type, color, d_x1, d_y1, d_x2, d_y2);
+  object_list = o_pin_add(w_current, object_list, type, color, d_x1, d_y1,
+                          d_x2, d_y2, pin_type, whichend);
   return(object_list);
 }
 
@@ -333,11 +355,13 @@ o_pin_save(char *buf, OBJECT *object)
 {
   int x1, x2, y1, y2;
   int color;
+  int pin_type, whichend;
+  
   x1 = object->line->x[0];
   y1 = object->line->y[0];
   x2 = object->line->x[1];
   y2 = object->line->y[1];
-	
+  
   /* Use the right color */
   if (object->saved_color == -1) {
     color = object->color;
@@ -345,8 +369,11 @@ o_pin_save(char *buf, OBJECT *object)
     color = object->saved_color;
   }
 
-  sprintf(buf, "%c %d %d %d %d %d", object->type,
-          x1, y1, x2, y2, color);
+  pin_type = object->pin_type;
+  whichend = object->whichend;
+  
+  sprintf(buf, "%c %d %d %d %d %d %d %d", object->type,
+          x1, y1, x2, y2, color, pin_type, whichend);
   return(buf);
 }
 
@@ -473,7 +500,8 @@ o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
   new_obj = o_pin_add(w_current, list_tail, OBJ_PIN, color, 
                       o_current->line->x[0], o_current->line->y[0],
-                      o_current->line->x[1], o_current->line->y[1]);
+                      o_current->line->x[1], o_current->line->y[1],
+                      o_current->pin_type, o_current->whichend);
 
   /* why is this here ? */
   /* because they all have it, and it is used during outline actions */
@@ -750,4 +778,122 @@ o_pin_modify(TOPLEVEL *w_current, OBJECT *object,
 
 
 @ %def o_pin_modify
+
+
+
+@section Function @code{o_pin_update_whichend-()}
+
+@defun o_pin_modify w_current object_list
+@end defun
+
+<<o_pin_basic.c : o_pin_update_whichend()>>=
+void
+o_pin_update_whichend(TOPLEVEL *w_current, OBJECT *object_list)
+{
+  OBJECT *o_current;
+  int top, left;
+  int right, bottom;
+  int d1, d2, d3, d4;
+  int min0, min1;
+  int min0_whichend, min1_whichend;
+
+  if (object_list) {
+    world_get_complex_bounds(w_current, object_list,
+                             &left, &top, &right, &bottom);
+  } else {
+    return;
+  }
+
+  o_current = object_list;
+  while (o_current != NULL) {
+    if (o_current->type == OBJ_PIN && o_current->whichend == -1) {
+      if (o_current->line->y[0] == o_current->line->y[1]) {
+        /* horizontal */
+        
+        if (o_current->line->x[0] == left) {
+          o_current->whichend = 0;
+        } else if (o_current->line->x[1] == left) {
+          o_current->whichend = 1;        
+        } else if (o_current->line->x[0] == right) {
+          o_current->whichend = 0;        
+        } else if (o_current->line->x[1] == right) {
+          o_current->whichend = 1;
+        } else {
+            
+          d1 = abs(o_current->line->x[0] - left);
+          d2 = abs(o_current->line->x[1] - left);
+          d3 = abs(o_current->line->x[0] - right);
+          d4 = abs(o_current->line->x[1] - right);
+
+          if (d1 <= d2) {
+            min0 = d1;
+            min0_whichend = 0;
+          } else {
+            min0 = d2;
+            min0_whichend = 1;
+          }
+
+          if (d3 <= d4) {
+            min1 = d3;
+            min1_whichend = 0;
+          } else {
+            min1 = d4;
+            min1_whichend = 1;
+          }
+
+          if (min0 <= min1) {
+            o_current->whichend = min0_whichend;
+          } else {
+            o_current->whichend = min1_whichend;
+          }
+        }
+           
+      } else if (o_current->line->x[0] == o_current->line->x[1]) {
+        /* vertical */
+        
+        if (o_current->line->y[0] == top) {
+          o_current->whichend = 0;
+        } else if (o_current->line->y[1] == top) {
+          o_current->whichend = 1;        
+        } else if (o_current->line->x[0] == bottom) {
+          o_current->whichend = 0;        
+        } else if (o_current->line->x[1] == bottom) {
+          o_current->whichend = 1;
+        } else {
+            
+          d1 = abs(o_current->line->y[0] - top);
+          d2 = abs(o_current->line->y[1] - top);
+          d3 = abs(o_current->line->y[0] - bottom);
+          d4 = abs(o_current->line->y[1] - bottom);
+
+          if (d1 <= d2) {
+            min0 = d1;
+            min0_whichend = 0;
+          } else {
+            min0 = d2;
+            min0_whichend = 1;
+          }
+
+          if (d3 <= d4) {
+            min1 = d3;
+            min1_whichend = 0;
+          } else {
+            min1 = d4;
+            min1_whichend = 1;
+          }
+
+          if (min0 <= min1) {
+            o_current->whichend = min0_whichend;
+          } else {
+            o_current->whichend = min1_whichend;
+          }
+        }
+      }
+    }
+    o_current = o_current->next;
+  }
+}
+
+
+@ %def o_pin_update_whichend
 

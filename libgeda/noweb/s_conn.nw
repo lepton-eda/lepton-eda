@@ -337,15 +337,18 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
   CONN *new_conn;
   int i, j;
   int k;
+  int add_conn;
 
   /* loop over all tiles which object appears in */
   tloc_list = object->tile_locs;
   while (tloc_list != NULL) {
     tl_current = (TILE_LOC *) tloc_list->data;
 
+    add_conn = FALSE;
+    
     i = tl_current->i;
     j = tl_current->j;
-    
+
 #if DEBUG
     printf("\nInside tile: %d %d\n\n", i, j);
 #endif
@@ -362,77 +365,150 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
       /* here is where you check the end points */
       for (k = 0; k < 2; k++) {
         /* do first end point */
+
         if (object->line->x[0] == other_object->line->x[k] &&
             object->line->y[0] == other_object->line->y[k] &&
             object != other_object) {
 
-          new_conn =
-            s_conn_return_new(other_object, CONN_ENDPOINT,
-                              other_object->line->x[k],
-                              other_object->line->y[k], 0, k);
-
-          /* do uniqness check */
-          if (s_conn_uniq(object->conn_list, new_conn)) {
-            object->conn_list =
-              g_list_append(object->conn_list, new_conn);
+          if (object->type == OBJ_PIN) {
+            if (0 == object->whichend) {
+              if (other_object->type == OBJ_PIN && /* new addition */
+                  k != other_object->whichend ) { /* was 0 */
+                add_conn = FALSE; 
+              } else {
+                add_conn = TRUE;
+              }
+            } else {
+              add_conn = FALSE;
+            }
+          } else if (other_object->type == OBJ_PIN) {
+            if (k == other_object->whichend) {
+              if (object->type == OBJ_PIN && /* new addition */
+                  k != object->whichend ) {
+                add_conn = FALSE; 
+              } else {
+                add_conn = TRUE;
+              }
+            } else {
+              add_conn = FALSE;
+            }
           } else {
-            free(new_conn);
-          }
-
-
-
-          new_conn = s_conn_return_new(object, CONN_ENDPOINT,
-                                       object->line->x[0],
-                                       object->line->y[0], k, 0);
-
-          /* do uniqness check */
-          if (s_conn_uniq(other_object->conn_list, new_conn)) {
-            other_object->conn_list =
-              g_list_append(other_object->conn_list,
-                            new_conn);
-          } else {
-            free(new_conn);
+            add_conn = TRUE;
           }
 
 #if DEBUG
-          printf("first end point -> %d\n", k);
+          if (add_conn) {
+            printf("0\n");
+            printf("k: %d\n", k);
+            printf("object: %d\n", object->whichend);
+            printf("other: %d\n\n", other_object->whichend);
+          }
 #endif
+
+          if (add_conn) {
+            new_conn =
+              s_conn_return_new(other_object, CONN_ENDPOINT,
+                                other_object->line->x[k],
+                                other_object->line->y[k], 0, k);
+
+            /* do uniqness check */
+            if (s_conn_uniq(object->conn_list, new_conn)) {
+              object->conn_list =
+                g_list_append(object->conn_list, new_conn);
+            } else {
+              free(new_conn);
+            }
+
+            new_conn = s_conn_return_new(object, CONN_ENDPOINT,
+                                         object->line->x[0],
+                                         object->line->y[0], k, 0);
+
+            /* do uniqness check */
+            if (s_conn_uniq(other_object->conn_list, new_conn)) {
+              other_object->conn_list =
+                g_list_append(other_object->conn_list,
+                              new_conn);
+            } else {
+              free(new_conn);
+            }
+
+#if DEBUG
+            printf("first end point -> %d\n", k);
+#endif
+          }
         }
 
         /* do second end point */
         if (object->line->x[1] == other_object->line->x[k] &&
             object->line->y[1] == other_object->line->y[k] &&
             object != other_object) {
-
-          new_conn =
-            s_conn_return_new(other_object, CONN_ENDPOINT,
-                              other_object->line->x[k],
-                              other_object->line->y[k], 1, k);
-
-          /* do uniqness check */
-          if (s_conn_uniq(object->conn_list, new_conn)) {
-            object->conn_list =
-              g_list_append(object->conn_list, new_conn);
+          
+          if (object->type == OBJ_PIN) {
+            if (1 == object->whichend) {
+              if (other_object->type == OBJ_PIN && /* new addition */
+                  k != other_object->whichend ) { /* was 1 */
+                add_conn = FALSE; 
+              } else {
+                add_conn = TRUE;
+              }
+            } else {
+              add_conn = FALSE;
+            }
+          } else if (other_object->type == OBJ_PIN) {
+            if (k == other_object->whichend) {
+              if (object->type == OBJ_PIN && /* new addition */
+                  k != object->whichend ) {
+                add_conn = FALSE; 
+              } else {
+                add_conn = TRUE;
+              }       
+            } else {
+              add_conn = FALSE;
+            }
           } else {
-            free(new_conn);
-          }
-
-          new_conn = s_conn_return_new(object, CONN_ENDPOINT,
-                                       object->line->x[1],
-                                       object->line->y[1], k, 1);
-
-          /* do uniqness check */
-          if (s_conn_uniq(other_object->conn_list, new_conn)) {
-            other_object->conn_list =
-              g_list_append(other_object->conn_list,
-                            new_conn);
-          } else {
-            free(new_conn);
+            add_conn = TRUE;
           }
 
 #if DEBUG
-          printf("second end point -> %d\n", k);
+          if (add_conn) {
+            printf("1\n");
+            printf("k: %d\n", k);
+            printf("object: %d\n", object->whichend);
+            printf("other: %d\n\n", other_object->whichend);
+          }
 #endif
+          
+          if (add_conn) {
+            new_conn =
+              s_conn_return_new(other_object, CONN_ENDPOINT,
+                                other_object->line->x[k],
+                                other_object->line->y[k], 1, k);
+
+            /* do uniqness check */
+            if (s_conn_uniq(object->conn_list, new_conn)) {
+              object->conn_list =
+                g_list_append(object->conn_list, new_conn);
+            } else {
+              free(new_conn);
+            }
+
+            new_conn = s_conn_return_new(object, CONN_ENDPOINT,
+                                         object->line->x[1],
+                                         object->line->y[1], k, 1);
+
+            /* do uniqness check */
+            if (s_conn_uniq(other_object->conn_list, new_conn)) {
+              other_object->conn_list =
+                g_list_append(other_object->conn_list,
+                              new_conn);
+            } else {
+              free(new_conn);
+            }
+
+#if DEBUG
+            printf("second end point -> %d\n", k);
+#endif
+          }
         }
         
 
@@ -450,34 +526,49 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
                  found->name);
 #endif          
 
-          /* First do the other object and put it in the current object list */
-          new_conn =
-            s_conn_return_new(other_object, CONN_MIDPOINT,
-                              object->line->x[k],
-                              object->line->y[k], k, -1);
-
-          /* do uniqness check */
-          if (s_conn_uniq(object->conn_list, new_conn)) {
-            object->conn_list =
-              g_list_append(object->conn_list, new_conn);
+          if (object->type == OBJ_PIN) {
+            if (k == object->whichend) {
+              add_conn = TRUE;
+            } else {
+              add_conn = FALSE;
+            }
           } else {
-            free(new_conn);
+            add_conn = TRUE;
           }
+          
 
-          /* New do the current object and put it into the other object list */
-          new_conn = s_conn_return_new(object, CONN_MIDPOINT,
-                                       object->line->x[k],
-                                       object->line->y[k], -1, k);
+          if (add_conn) {
+            /* First do the other object and put it in the current */
+            /* object list */
+            new_conn =
+              s_conn_return_new(other_object, CONN_MIDPOINT,
+                                object->line->x[k],
+                                object->line->y[k], k, -1);
 
-          /* do uniqness check */
-          if (s_conn_uniq(other_object->conn_list, new_conn)) {
-            other_object->conn_list =
-              g_list_append(other_object->conn_list,
-                            new_conn);
-          } else {
-            free(new_conn);
+            /* do uniqness check */
+            if (s_conn_uniq(object->conn_list, new_conn)) {
+              object->conn_list =
+                g_list_append(object->conn_list, new_conn);
+            } else {
+              free(new_conn);
+            }
+
+            /* Next do the current object and put it into the other */
+            /* object list */
+            new_conn = s_conn_return_new(object, CONN_MIDPOINT,
+                                         object->line->x[k],
+                                         object->line->y[k], -1, k);
+
+            /* do uniqness check */
+            if (s_conn_uniq(other_object->conn_list, new_conn)) {
+              other_object->conn_list =
+                g_list_append(other_object->conn_list,
+                              new_conn);
+            } else {
+              free(new_conn);
+            }
+
           }
-
         }
         
         /****/
@@ -498,40 +589,53 @@ void s_conn_update_object(TOPLEVEL * w_current, OBJECT * object)
                  found->name);
 #endif          
 
-          /* First do the other object and put it in the current object list */
-          new_conn =
-            s_conn_return_new(other_object, CONN_MIDPOINT,
-                              other_object->line->x[k],
-                              other_object->line->y[k], -1, k);
-
-          /* do uniqness check */
-          if (s_conn_uniq(object->conn_list, new_conn)) {
-            object->conn_list =
-              g_list_append(object->conn_list, new_conn);
+          if (other_object->type == OBJ_PIN) {
+            if (k == other_object->whichend) {
+              add_conn = TRUE;
+            } else {
+              add_conn = FALSE;
+            }
           } else {
-            free(new_conn);
+            add_conn = TRUE;
           }
 
-          /* New do the current object and put it into the other object list */
-          new_conn = s_conn_return_new(object, CONN_MIDPOINT,
-                                       other_object->line->x[k],
-                                       other_object->line->y[k], k, -1);
+          
+          if (add_conn) {
+            /* First do the other object and put it in the current */
+            /* object list */
+            new_conn =
+              s_conn_return_new(other_object, CONN_MIDPOINT,
+                                other_object->line->x[k],
+                                other_object->line->y[k], -1, k);
 
-          /* do uniqness check */
-          if (s_conn_uniq(other_object->conn_list, new_conn)) {
-            other_object->conn_list =
-              g_list_append(other_object->conn_list,
-                            new_conn);
-          } else {
-            free(new_conn);
+            /* do uniqness check */
+            if (s_conn_uniq(object->conn_list, new_conn)) {
+              object->conn_list =
+                g_list_append(object->conn_list, new_conn);
+            } else {
+              free(new_conn);
+            }
+
+            /* Next do the current object and put it into the other */
+            /* object list */
+            new_conn = s_conn_return_new(object, CONN_MIDPOINT,
+                                         other_object->line->x[k],
+                                         other_object->line->y[k], k, -1);
+
+            /* do uniqness check */
+            if (s_conn_uniq(other_object->conn_list, new_conn)) {
+              other_object->conn_list =
+                g_list_append(other_object->conn_list,
+                              new_conn);
+            } else {
+              free(new_conn);
+            }
+
           }
-
-
           /* **** */
           
         } /* found midpoint */
 
-        
       } /* end of for over endpoints */
 
       object_list = object_list->next;
