@@ -106,7 +106,7 @@
   (lambda (module-name port-list p)
     (begin
       (display "module " p)
-      (display module-name p)
+      (verilog:display-escaped-identifier module-name p)
       (display " (" p)
       (newline p)
       (let ((the-pins ( append (car port-list)     ; build up list of pins
@@ -144,21 +144,24 @@
 	(for-each (lambda (pin)
 		    (begin
 		      (display "input " p)
-		      (display (verilog:netname pin) p)
+		      (verilog:display-escaped-identifier 
+		       (verilog:netname pin) p)
 		      (display " ;" p)
 		      (newline p))) in)       ; do each input
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "output " p)
-		      (display (verilog:netname pin) p)
+		      (verilog:display-escaped-identifier 
+		       (verilog:netname pin) p)
 		      (display " ;" p)
 		      (newline p))) out)      ; do each output
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "inout " p)
-		      (display (verilog:netname pin) p)
+		      (verilog:display-escaped-identifier 
+		       (verilog:netname pin) p)
 		      (display " ;" p)
 		      (newline p))) inout)    ; do each inout
 		      
@@ -246,6 +249,37 @@
 	(newline)
 	(list netname (list 0 0 #f #f netname)))
        ))))
+
+;;
+;; Return #t if the passed name is something that might pass as a
+;; verilog identifier.
+;;
+(define verilog:identifier?
+  (lambda (netname)
+    (let 
+	((bit-range (regexp-exec bit-range-reg netname))
+	 (single-bit (regexp-exec single-bit-reg netname))
+	 (simple-id (regexp-exec simple-id-reg netname)))
+
+      ;; check over each expression type, return
+      ;; result
+      ;(display netname) (display ": ")
+      (cond
+       (bit-range  `#t )
+       (single-bit `#t )
+       (simple-id  `#t )
+       (else       `#f )
+       ))))
+
+;;
+;; Display a verilog identifier that is escaped if needed 
+;;
+(define verilog:display-escaped-identifier
+  (lambda (netname port)
+    (if (verilog:identifier? netname)
+	(display netname port) ; just display the identifier
+	(display (string-append "\\" netname " ") port)))) ; need to escape
+    
 
 ;;
 ;; return just the netname part of a verilog identifier
@@ -408,7 +442,7 @@
 ;;
 ;;  Display wires from the design
 ;;
-;;  Display a net a legal verilog format, based on the object passed
+;;  Display a net in a legal verilog format, based on the object passed
 (define verilog:display-wire
   (lambda (wire p)
     ;; figure out if we need a bit range
@@ -420,14 +454,14 @@
       (if (not (and (zero? n1) (zero? n2)))
 	  (begin     ;; yes, print it
 	    (display "[ " p)
-	    (display (car (cadr wire)) p)
+	    (display n1 p)
 	    (display " : " p)
-	    (display (cadr (cadr wire)) p)
+	    (display n2 p)
 	    (display " ] " p)
 	  )
 	)
     ;; print the wire name
-      (display name p))))
+      (verilog:display-escaped-identifier name p))))
 
 ;;
 ;;  Loop over the list of nets in the design, writing one by one
@@ -444,8 +478,10 @@
 	      verilog:get-nets ) 
     (newline p)))
 
+;;
 ;;  Output any continuous assignment statements generated
 ;; by placing `high' and `low' components on the board 
+;;
 (define verilog:write-continuous-assigns
   (lambda (p)
     (display "/* continuous assignments */" p) (newline p)
@@ -453,7 +489,8 @@
 		(begin
 		  (display "assign " p) 	
 		  ;; XXX fixme, multiple bit widths!
-		  (display wire p) (display " = 1'b1;" p) 
+		  (verilog:display-escaped-identifier wire p) 
+		  (display " = 1'b1;" p) 
 		  (newline p)))
 	      (verilog:get-matching-nets "device" "HIGH"))
 
@@ -461,7 +498,8 @@
 		(begin
 		  (display "assign " p) 
 		  ;; XXX fixme, multiple bit widths!
-		  (display wire p) (display " = 1'b0;" p)
+		  (verilog:display-escaped-identifier wire p)
+		  (display " = 1'b0;" p)
 		  (newline p)))
 	      (verilog:get-matching-nets "device" "LOW"))
     (newline p))
@@ -495,9 +533,10 @@
  					  (list "IOPAD" "IPAD" "OPAD"
  						"HIGH" "LOW"))))
  			  (begin
- 			    (display (get-device package) port)
+ 			    (verilog:display-escaped-identifier 
+			     (get-device package) port)
  			    (display " " port)
- 			    (display package port)
+ 			    (verilog:display-escaped-identifier package port)
  			    (display " ( " port)
 			    ; if this module wants positional pins, 
 			    ; then output that format, otherwise
@@ -514,6 +553,7 @@
  		packages)))
 )
 
+;;
 ;; output a module connection for the package given to us with named ports
 ;;
 (define verilog:display-connections
@@ -538,7 +578,6 @@
  	      (newline port))))))
 )
 
-
 ;;
 ;; Display the individual net connections
 ;;  in this format if positional is true:
@@ -560,21 +599,13 @@
 	      (display (cdr pin) port))
 	    (begin    ; else output a named port instance 
 	      (display "    ." port)
-	      (display (car pin) port) ; name of pin 
+	      ; Display the escaped version of the identifier
+	      (verilog:display-escaped-identifier (car pin) port)
 	      (display " ( " port)
-	      (display (cdr pin) port)
+	      (verilog:display-escaped-identifier (cdr pin) port)
 	      (display " )" port))))))
     
 	 
-;; display a pin only if it is not "unconnected_pin"
-;(define verilog:display-conditional-pin
-;  (lambda (pin port)
-;    (begin
-;      (if (not (string=? "unconnected_pin" (cdr pin)))
-;	  (display (cdr pin) port))))
-;)
-
-
 
 ;;; Highest level function
 ;;; Write Structural verilog representation of the schematic
@@ -583,9 +614,6 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
       (begin
-
-;;      Following is no longer needed
-;;	(gnetlist:set-netlist-mode "SPICE")  ;; don't want 'duplicate' nets
 	(verilog:write-top-header port)
 	(verilog:write-wires port)
 	(verilog:write-continuous-assigns port)
