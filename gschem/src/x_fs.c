@@ -178,6 +178,39 @@ x_fileselect_setup_list_buffers(FILEDIALOG *f_current,
 	}
 }
 
+/* returns TRUE if the file should be included (passes the filter) */
+/* else returns FALSE */
+int
+x_fileselect_include_file(char *filename, int filter_type)
+{
+	switch(filter_type) {
+		case(FILEDIALOG_SCH_ONLY):
+			if (strstr(filename, ".sch")) {
+				return(TRUE);
+			}
+			break;
+
+		case(FILEDIALOG_SYM_ONLY):
+			if (strstr(filename, ".sym")) {
+				return(TRUE);
+			}
+			break;
+
+		case(FILEDIALOG_SCH_SYM):
+			if (strstr(filename, ".sch") || 
+			     strstr(filename, ".sym")) {
+				return(TRUE);
+			}
+			break;
+
+		case(FILEDIALOG_ALL_FILES):
+			return(TRUE);
+			break;
+	}
+
+	return(FALSE);
+}
+
 void
 x_fileselect_fill_lists(FILEDIALOG *f_current)
 {
@@ -244,12 +277,15 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 			dir_count++;
 
 		} else {
-			f_current->file_entries[file_count] = (char *)
+			if (x_fileselect_include_file(dirent_ptr->d_name,
+			       f_current->filter_type)) {	
+				f_current->file_entries[file_count] = (char *)
 					malloc(sizeof(char)*(strlen(
 							dirent_ptr->d_name)+1));
-			strcpy(f_current->file_entries[file_count], 
-			       dirent_ptr->d_name);
-			file_count++;
+				strcpy(f_current->file_entries[file_count], 
+			       	       dirent_ptr->d_name);
+				file_count++;
+			} 
 		}
 	}
 
@@ -324,7 +360,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 	text[0] = NULL;
 	text[1] = NULL;
 	max_width = 0;
-	for (i = 0 ; i < num_directories; i++) {
+	for (i = 0 ; i < dir_count; i++) {
 		temp = u_basic_strdup_multiple(f_current->directory_entries[i],
 					      "/", NULL);
 		text[0] = temp; 
@@ -343,7 +379,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 	}
 
 	max_width = 0;
-	for (i = 0 ; i < num_files; i++) {
+	for (i = 0 ; i < file_count; i++) {
 		text[0] = f_current->file_entries[i]; 
 		gtk_clist_append (GTK_CLIST (f_current->file_list), text);
 		width = gdk_string_width(f_current->dir_list->style->font,
@@ -362,6 +398,110 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 	closedir(directory);
 	gtk_clist_thaw (GTK_CLIST (f_current->file_list));
 	gtk_clist_thaw (GTK_CLIST (f_current->dir_list));
+}
+
+gint
+x_fileselect_sch_files(GtkWidget *w, FILEDIALOG *f_current)
+{
+        f_current->filter_type = FILEDIALOG_SCH_ONLY;
+	x_fileselect_fill_lists(f_current);
+        return(0);
+}
+
+gint
+x_fileselect_sym_files(GtkWidget *w, FILEDIALOG *f_current)
+{
+        f_current->filter_type = FILEDIALOG_SYM_ONLY;
+	x_fileselect_fill_lists(f_current);
+        return(0);
+}
+
+gint
+x_fileselect_both_files(GtkWidget *w, FILEDIALOG *f_current)
+{
+        f_current->filter_type = FILEDIALOG_SCH_SYM;
+	x_fileselect_fill_lists(f_current);
+        return(0);
+}
+
+gint
+x_fileselect_all_files(GtkWidget *w, FILEDIALOG *f_current)
+{
+        f_current->filter_type = FILEDIALOG_ALL_FILES;
+	x_fileselect_fill_lists(f_current);
+        return(0);
+}
+
+
+
+/* this is from gtktest.c */
+static GtkWidget*
+x_fileselect_filter_menu (FILEDIALOG *f_current)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GSList *group;
+	char buf[100];
+
+	menu = gtk_menu_new ();
+	group = NULL;
+
+	sprintf(buf, "sch - Schematics");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) x_fileselect_sch_files,
+			   f_current);
+	gtk_widget_show(menuitem);
+
+	sprintf(buf, "sym - Symbols ");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) x_fileselect_sym_files,
+			   f_current);
+	gtk_widget_show(menuitem);
+
+	sprintf(buf, "sym/sch - Schematics and Symbols");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) x_fileselect_both_files,
+			   f_current);
+	gtk_widget_show(menuitem);
+
+	sprintf(buf, "* - All Files");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) x_fileselect_all_files,
+			   f_current);
+	gtk_widget_show(menuitem);
+
+	switch(f_current->filter_type) {
+
+		case(FILEDIALOG_SCH_ONLY):
+			gtk_menu_set_active(GTK_MENU (menu),0);
+			break;
+
+		case(FILEDIALOG_SYM_ONLY):
+			gtk_menu_set_active(GTK_MENU (menu),1);
+			break;
+
+		case(FILEDIALOG_SCH_SYM):
+			gtk_menu_set_active(GTK_MENU (menu),2);
+			break;
+
+		case(FILEDIALOG_ALL_FILES):
+			gtk_menu_set_active(GTK_MENU (menu),3);
+			break;
+	}
+
+	return menu;
 }
 
 
@@ -529,7 +669,6 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	GtkWidget *buttonclose;
 	GtkWidget *scrolled_win;
 	GtkWidget *list_item;
-	GtkWidget *optionmenu;
 	GtkWidget *hbox, *action_area;
 	GtkWidget *scroll_box;
 	GtkWidget *separator;
@@ -613,13 +752,29 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
   		gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 		gtk_widget_show(label);
 
+#if 0 /* no longer used */
  		f_current->filter_entry = gtk_entry_new_with_max_length (255);
  		gtk_editable_select_region(GTK_EDITABLE(
 					   f_current->filter_entry), 0, -1);
  		gtk_box_pack_start(GTK_BOX (vbox), 
 				   f_current->filter_entry, FALSE, FALSE, 0);
  		gtk_widget_show(f_current->filter_entry);
+#endif
 
+		if (type == FILESELECT) {
+			f_current->filter_type = FILEDIALOG_SCH_ONLY;
+		} else {
+			f_current->filter_type = FILEDIALOG_SYM_ONLY;
+		}
+
+		f_current->filter = gtk_option_menu_new ();
+		gtk_option_menu_set_menu(GTK_OPTION_MENU(f_current->filter),
+                                         x_fileselect_filter_menu(f_current));
+                /* gtk_option_menu_set_history(GTK_OPTION_MENU(f_current->filter),
+					    4);*/
+                gtk_box_pack_start(GTK_BOX(vbox), f_current->filter, 
+				   FALSE, FALSE, 0);
+                gtk_widget_show (f_current->filter);
 
   		list_hbox = gtk_hbox_new (FALSE, 5);
   		gtk_box_pack_start (GTK_BOX (vbox), list_hbox, TRUE, TRUE, 0);
@@ -802,7 +957,10 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 		gtk_widget_show(f_current->xfwindow);
 		gdk_window_raise(f_current->xfwindow->window);
 		x_preview_setup_rest(f_current->preview);
-		gtk_grab_add (f_current->xfwindow);
+
+		if (type == FILESELECT) {
+			gtk_grab_add (f_current->xfwindow);
+		}
 
 		/* need to delay this till the drawing area is created and
 		 * is showing */

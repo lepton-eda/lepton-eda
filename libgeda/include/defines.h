@@ -74,6 +74,12 @@
 #define FILESELECT	0
 #define COMPSELECT	1
 
+/* for FILEDIALOG filter_type var */
+#define FILEDIALOG_SCH_ONLY	0
+#define FILEDIALOG_SYM_ONLY	1
+#define FILEDIALOG_SCH_SYM	2
+#define FILEDIALOG_ALL_FILES	3
+
 /* for s_clib_getfilename() */
 #define OPEN_DIR	0
 #define READ_DIR	1

@@ -9,6 +9,13 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-10-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_fs.c: Changed filter entry to a filter option box 
+
+	* examples/filter_1.sch: misc updates (moved some symbols around so
+	  that they are connected to the right place)
+
 1999-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_fs.c: Fixed a coredump bug in x_fileselect_update_dirfile 
