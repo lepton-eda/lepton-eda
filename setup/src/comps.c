@@ -70,6 +70,7 @@ static int BuildTree(GtkCTree *pTree, char *szParent);
 
 int ComponentsInitialize(void)
 {
+	struct CompsTable_s *pComp;
 	GtkStyle *pStyle;
 	GtkCTree *pTree;
 	GtkPixmap *pPixmapComponents;
@@ -143,6 +144,14 @@ int ComponentsInitialize(void)
 		/* TODO: make error handling */
 	}
 	BuildTree(pTree, "");
+
+	/* unmark components that are never displayed, never required and marked as selected */
+	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+	{
+		if (pComp->iToBeInstalled == PACKAGE_SELECTED && pComp->pNode == NULL)
+			pComp->iToBeInstalled = PACKAGE_IGNORED;
+	}
+
 /* here was set_pixmaps() */
 	ShowIcons("");
 	gtk_widget_show(GTK_WIDGET(pTree));
