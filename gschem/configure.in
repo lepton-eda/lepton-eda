@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(src/gschem.c)
+AC_INIT(noweb/gschem.nw)
 
 dnl Initialize automake stuff
 PACKAGE=gschem

@@ -27,12 +27,14 @@ gschem_SOURCES = \
 INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@  
 gschem_LDADD = @STROKE_LIB@ @GUILE_LDFLAGS@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ 
 
-man_MANS = gschem.1
+#man_MANS = gschem.1
 
-EXTRA_DIST = create_proto gschem.1
+EXTRA_DIST = create_proto 
+
+#gschem.1
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
 CLEANFILES = *.log *.ps core FILE *~ prototype.bak
 DISTCLEANFILES = *.log *.ps core FILE *~ prototype.bak Makefile.in configure
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure *.c
 
