@@ -11,11 +11,73 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-06-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* memory/*.sym: Updated all symbols to have default uref
+
+	* micro/*.sym: Updated all symbols to have default uref
+
+	* xilinx/*.sym: Updated all symbols to have default uref
+
+	* dec/*.sym: Updated all symbols to have default uref
+
+	* lattice/*.sym: Updated all symbols to have default uref
+
+	* national/*.sym: Updated all symbols to have default uref
+
+	* pla/*.sym: Updated all symbols to have default uref
+
+	* switch/*.sym: Updated all symbols to have default uref
+
+	* radio/*.sym: Updated all symbols to have default uref
+
+	* tube/*.sym: Updated all symbols to have default uref
+
+2000-06-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* maxim/*.sym: Updated all symbols to have default uref
+
+	* local/*.sym: Updated all symbols to have default uref
+
+	* linear/*.sym: Updated all symbols to have default uref
+
+	* linear/lm555.sym: Had to retranslate symbol to origin because
+	  of text location change (this breaks any existing schematics 
+	  which use this symbol)
+
+	* idt/*.sym: Updated all symbols to have default uref
+
+	* connector/*.sym: Updated all symbols to have default uref
+
+	* analog/*.sym: Updated all symbols to have default uref
+	 
+	* analog/voltage-3.sym: Rotated symbol to be like all the other
+	  voltage sources
+
+	* analog/beeper-1.sym: Rotated symbol to be like all the other
+	  symbols 
+
+	* 74/*.sym: Updated all symbols to have default uref
+	  Also moved some labels around, minor cleanup
+
+	* 4000/*.sym: Updated all symbols to have default uref
+
+	* altera/*.sym: Updated all symbols to have default uref
+
 2000-06-19  Matt Ettus  <matt@ettus.com>
 
 	* connector/DB37-1.sym:  Added DB37
 
 	* connector/header10-1.sym:  Added uref=J?
+
+	* connector/header10-2.sym, connector/header20-1.sym, 
+	  connector/header20-2.sym: Added symbol
+
+	* maxim/max233-1.sym: Added symbol
+
+	* maxim/max488-1.sym: Added symbol
+
+	* supervisor/adm707.sym: Added symbol
 
 2000-05-29  Ales Hvezda  <ahvezda@geda.seul.org>
 
