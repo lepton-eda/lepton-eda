@@ -1,19 +1,19 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Alexandre Pereira Nunes
+# translation of ru.po to Russian
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) YEAR Alexandre Pereira Nunes
+# Andy Shevchenko <andy@smile.org.ua>, 2003
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 20021103\n"
+"Project-Id-Version: ru\n"
 "POT-Creation-Date: 2003-01-18 10:28-0500\n"
-"PO-Revision-Date: 2002-11-19 17:59+0200\n"
+"PO-Revision-Date: 2003-01-21 17:49+0200\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.6\n"
+"X-Generator: KBabel 1.0\n"
 
 #: noweb/a_zoom.nw:294
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -96,8 +96,7 @@ msgstr ""
 "[%s]\n"
 
 #: noweb/g_rc.nw:457
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "gschem находится в стадии ALPHA, проверьте наличие последней версии rc-"
 "файла.\n"
@@ -205,12 +204,10 @@ msgstr "Версия gEDA/gschem %s\n"
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
-msgstr ""
-"gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
+msgstr "gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
 
 #: noweb/gschem.nw:165 noweb/gschem.nw:175
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Это свободное программное обеспечение, и его можно распространять при "
 "известных\n"
@@ -230,7 +227,7 @@ msgstr "Это MINGW32 версия.\n"
 #: noweb/gschem.nw:185
 #, c-format
 msgid "Current locale settings: %s\n"
-msgstr ""
+msgstr "Текущие установки локализации: %s\n"
 
 #: noweb/gschem.nw:214
 #, c-format
@@ -773,9 +770,8 @@ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
 msgstr "Получен неверный buffer_number [o_buffer_paste_end]\n"
 
 #: noweb/o_bus.nw:269
-#, fuzzy
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr "Неверный"
+msgstr "Получен неверный параметр в o_bus_draw_xor_single\n"
 
 #: noweb/o_bus.nw:340 noweb/o_bus.nw:373 noweb/o_net.nw:383 noweb/o_net.nw:416
 msgid "selected a nonexistant object!\n"
@@ -892,7 +888,7 @@ msgstr "Получен объект не линия в o_move_check_endpoint\n"
 
 #: noweb/o_net.nw:312
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr ""
+msgstr "Получен неверный параметр в o_net_draw_xor_single\n"
 
 #: noweb/o_net.nw:885 noweb/o_net.nw:922 noweb/o_net.nw:993
 #: noweb/o_net.nw:1029
@@ -955,7 +951,7 @@ msgstr "Попытка получения неверного цвета: %d\n"
 #: noweb/x_attribedit.nw:171 noweb/x_multiattrib.nw:150
 #, fuzzy
 msgid "Got invalid show option; defaulting to show both\n"
-msgstr "Получена неверная опция показа, выставляется показ"
+msgstr "Получена неверная опция просмотра, выставляется показ"
 
 #: noweb/x_attribedit.nw:186
 msgid "ERROR: NULL object!\n"
@@ -1267,8 +1263,7 @@ msgstr "О..."
 
 #: noweb/x_dialog.nw:2734
 msgid "gEDA : GPL Electronic Design Automation"
-msgstr ""
-"gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
+msgstr "gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
 
 #: noweb/x_dialog.nw:2741
 #, c-format
@@ -2124,7 +2119,7 @@ msgstr "Шаг сетки привязки..."
 #: noweb/rcstrings.nw:111
 #, fuzzy
 msgid "Toggle Outline/Box"
-msgstr "Переключение "
+msgstr "Переключение внешний контур/бокс"
 
 #: noweb/rcstrings.nw:112
 msgid "Toggle Net Rubberband"
@@ -2145,3 +2140,4 @@ msgstr "Помощь"
 #: noweb/rcstrings.nw:118
 msgid "Manual..."
 msgstr "Руководство..."
+
