@@ -57,6 +57,8 @@
                   (display footprint port))
                (display "! " port)
                (display (gnetlist:get-package-attribute package "device") port)
+               (display "! " port)
+               (display (get-component-text package) port)
                (display "; " port )
                (display package port)
                (newline port))

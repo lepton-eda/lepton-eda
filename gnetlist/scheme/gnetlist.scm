@@ -41,11 +41,22 @@
    (lambda (package)
       (gnetlist:get-package-attribute package "device")))
 
-;; ETTUS
 ;; Shorthand for get component values
 (define get-value
    (lambda (package)
       (gnetlist:get-package-attribute package "value")))
+
+(define get-component-text
+   (lambda (package)
+      (let ((value (gnetlist:get-package-attribute package "value"))
+            (label (gnetlist:get-package-attribute package "label"))
+            (device (gnetlist:get-package-attribute package "device")))
+         (if (not (string=? "unknown" value))
+            value
+            (if (not (string=? "unknown" label))
+               label
+               device)))))
+
 
 ;; return all pins for a particular package 
 (define pins

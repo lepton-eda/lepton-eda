@@ -1,3 +1,12 @@
+2000-07-12  Matt Ettus  <matt@ettus.com>
+
+	* Fixed autoconf/automake stuff to install protel and bae backends
+
+	* scheme/gnetlist.scm:  New function get-component-text to look
+	  for value, label, and device text in that order
+
+	* scheme/gnet-allegro.scm:  Use the above function
+
 2000-07-05  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* scheme/gnet-bae.scm, scheme/gnet-pads.scm, scheme/gnet-protelII.scm:
