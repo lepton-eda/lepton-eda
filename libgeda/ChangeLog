@@ -8,6 +8,11 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-08-26  Stefan Petersen  <spe@geda.seul.org>
+
+	* Cleaned up configure stuff and added guile.m4 to enhance
+	  guile configuration.
+	
 2000-08-22  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/f_image.c: Oops found a core dumping bug which was

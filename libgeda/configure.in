@@ -55,28 +55,34 @@ dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
 
-dnl Check for guile-config; use it to set 
-dnl GUILE_INCLUDE and GUILE_LIB.
-dnl Issue: Is it OK to include "-L" in GUILE_LIB?
+dnl Check for guile
+GUILE_FLAGS
 
-AC_PATH_PROG(GUILE_CONFIG_PROG, guile-config)
+dnl Check that SCM_RETURN_NEW_SMOB exist
+AC_CHECK_LIB(guile, SCM_RETURN_NEW_SMOB,
+	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
 
-if test ! -n "$GUILE_CONFIG_PROG" ; then
-		AC_MSG_ERROR(Cannot find guile-config -- Install GUILE 1.3 and run ./configure again)
-fi
-
-	guile_incdir=`$GUILE_CONFIG_PROG info includedir`
-	guile_libdir=`$GUILE_CONFIG_PROG info libdir`
-	guile_libs=`$GUILE_CONFIG_PROG link`
-	GUILE_INCLUDE="-I${guile_incdir}"
-	GUILE_LIB="-L${guile_libdir} ${guile_libs}"
-
-dnl Check that scm_make_smob_type exist in guile (ver >= 1.3.2)
+dnl Check that scm_make_smob_type exist
 AC_CHECK_LIB(guile, scm_make_smob_type,,
-	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2))
+	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
 
-saved_cflags="$CFLAGS"
-saved_ldflags="$LDFLAGS"
+dnl Check that scm_set_smob_mark exist
+AC_CHECK_LIB(guile, scm_set_smob_mark,,
+	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
+
+dnl Check that scm_set_smob_free exist
+AC_CHECK_LIB(guile, scm_set_smob_free,,
+	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
+
+dnl Check that scm_set_smob_print exist
+AC_CHECK_LIB(guile, scm_set_smob_print,,
+	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),
+	$GUILE_LDFLAGS)
+
 
 dnl Checks for header files.
 AC_PATH_X
@@ -285,8 +291,8 @@ AC_SUBST(X_LDFLAGS)
 AC_SUBST(X_LIBS)
 AC_SUBST(STROKE_LIB)
 AC_SUBST(GD_LIB)
-AC_SUBST(GUILE_LIB)
-AC_SUBST(GUILE_INCLUDE)
+AC_SUBST(GUILE_LDFLAGS)
+AC_SUBST(GUILE_CFLAGS)
 AC_SUBST(DL_LIB)
 AC_SUBST(GTK)
 AC_SUBST(GDK)
