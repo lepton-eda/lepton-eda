@@ -1,3 +1,8 @@
+2005-01-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/o_basic.nw (o_set_line_options): Moved in this function some 
+	error checking and correcting that previously was in gschem code.
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228, update shared library

@@ -186,9 +186,31 @@ o_set_line_options(TOPLEVEL *w_current, OBJECT *o_current,
     return;
   }
 
-  o_current->line_width= width;
-  o_current->line_end  = end;
-  o_current->line_type = type;
+  /* do some error checking / correcting */
+  switch(type) {
+    case(TYPE_DOTTED):
+    if (space < 1) {
+      space = 100;
+      s_log_message ("Invalid space specified, setting to 100\n");
+    }
+    break;
+    case(TYPE_DASHED):
+    case(TYPE_CENTER):
+    case(TYPE_PHANTOM):
+    if (length < 1) {
+      length = 100;
+      s_log_message ("Invalid length specified, setting to 100\n");
+    }
+    if (space < 1) {
+      space = 100;
+      s_log_message ("Invalid space specified, setting to 100\n");
+    }
+    break;
+  }
+  
+  o_current->line_width = width;
+  o_current->line_end   = end;
+  o_current->line_type  = type;
 
   o_current->line_length = length;
   o_current->line_space  = space;
