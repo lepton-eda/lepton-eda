@@ -15,7 +15,7 @@ gmk_sym_LDADD = $(LIBERTY)
 smash_megafile_LDADD = 
 convert_sym_LDADD = $(LIBERTY) -lm
 sarlacc_schem_LDADD = 
-olib_LDADD = @LEXLIB@
+olib_LDADD = @LEXLIB@ -lm
 
 EXTRA_DIST = 
 

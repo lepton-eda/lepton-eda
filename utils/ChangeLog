@@ -7,6 +7,8 @@
 
         * aclocal.m4: Removed file from cvs.
 
+	* src/Makefile.am: Added -lm to olib LD_FLAGS
+
 2002-11-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschemdoc.sh: Added %20filetype:pdf to the google search
