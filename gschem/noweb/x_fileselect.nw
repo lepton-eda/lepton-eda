@@ -697,13 +697,14 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList *group;
-  char buf[100];
+  char *buf;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf(buf, _("sch - Schematics"));
+  buf = g_strdup_printf(_("sch - Schematics"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -711,8 +712,9 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
                      f_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, _("sym - Symbols "));
+  buf = g_strdup_printf( _("sym - Symbols "));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -720,8 +722,9 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
                      f_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, _("sym/sch - Schematics and Symbols"));
+  buf = g_strdup_printf(_("sym/sch - Schematics and Symbols"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -729,8 +732,9 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
                      f_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, _("* - All Files"));
+  buf = g_strdup_printf( _("* - All Files"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -1335,13 +1339,14 @@ create_menu (TOPLEVEL *w_current)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList *group;
-  char buf[100];
+  char *buf;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf(buf, _("Default behavior - reference component"));
+  buf = g_strdup_printf(_("Default behavior - reference component"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -1350,8 +1355,9 @@ create_menu (TOPLEVEL *w_current)
 
   gtk_widget_show(menuitem);
 
-  sprintf(buf, _("Embed component in schematic"));
+  buf = g_strdup_printf(_("Embed component in schematic"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
@@ -1359,8 +1365,9 @@ create_menu (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, _("Include component as individual objects"));
+  buf = g_strdup_printf(_("Include component as individual objects"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect(GTK_OBJECT (menuitem), "activate",

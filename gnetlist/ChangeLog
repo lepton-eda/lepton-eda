@@ -1,3 +1,21 @@
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/vams_misc.c: Fixed up a call to o_attrib_get_name_value to
+	use the new function signature.
+
+	* src/g_rc.nw: Added the words optional and required to the 
+	*rc log find messages.
+
+	* src/s_rename.c, src/s_net.c, src/s_traverse.c: Removed all //
+	comments (replaced with C comments).
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* examples/*.sch: Updated all example schematics
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this

@@ -107,7 +107,7 @@ main_prog(int argc, char *argv[])
     if (stat(argv[i], &buf) != 0) {
       s_log_message("Could not open [%s]\n", argv[i]);
       s_log_message("Exiting...\n");
-      exit(2); // error      
+      exit(2); /* error */
     } else {
     
       if (first_page) {

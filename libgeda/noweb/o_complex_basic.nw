@@ -456,7 +456,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   OBJECT *temp_parent=NULL;
   int save_adding_sel = 0;
 	
-  char filename[256]; /* hack */
+  char *filename;
 
   new_node = s_basic_init_object("complex");
   new_node->type = type;
@@ -506,7 +506,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   /* reason this works is because it has a head, see add_head above */
 
   /* check for validity */
-  sprintf(filename, "%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
+  filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
 
   if (access(filename, R_OK)) {
     fprintf(stderr, "Could not open [%s]\n", filename); 
@@ -582,6 +582,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
     s_conn_update_complex(w_current, prim_objs);
   }
 
+  free(filename);
   return(object_list);
 }
 
@@ -692,7 +693,7 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
   char type; 
   int x1, y1;
   int angle;
-  char filename[256]; /* hack */
+  char *filename;
 
   char basename[256]; /* hack */
   char *clib=NULL;
@@ -759,14 +760,14 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
     /* do something here? hack */
     s_log_message("Complex [%s] not in library\n", basename);
   } else {
-    /* check size? hack */
-    sprintf(filename, "%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
+    filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
 
     object_list = o_complex_add(w_current, object_list, type, 
                                 WHITE, 
                                 x1, y1, 
                                 angle, mirror,
                                 clib, basename, selectable, FALSE);
+    free(filename);
     free(clib);
   }
 
@@ -780,9 +781,10 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
 
 <<o_complex_basic.c : o_complex_save()>>=
 char *
-o_complex_save(char *buf, OBJECT *object)
+o_complex_save(OBJECT *object)
 {
   int selectable;
+  char *buf;
 
   if (object->sel_func != NULL) 
   selectable = 1;
@@ -790,10 +792,10 @@ o_complex_save(char *buf, OBJECT *object)
   selectable = 0;
 	
 	
-  sprintf(buf, "%c %d %d %d %d %d %s", object->type,
-          object->complex->x, object->complex->y, selectable, 
-          object->complex->angle, object->complex->mirror, 
-          object->complex_basename);
+  buf = g_strdup_printf("%c %d %d %d %d %d %s", object->type,
+			object->complex->x, object->complex->y, selectable, 
+			object->complex->angle, object->complex->mirror, 
+			object->complex_basename);
   return(buf);
 }
 

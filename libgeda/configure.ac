@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([include/libgeda.h])
 AC_PREREQ(2.54)
 
 PACKAGE=libgeda
-VERSION=20031004
+VERSION=20031019
 SHARED_LIBRARY_VERSION=20:0:0
 echo Configuring $PACKAGE version $VERSION
 
@@ -84,7 +84,7 @@ fi
 AC_SUBST(GUILE_CONFIG)
 
 # must have guile flags in CFLAGS for AC_COMPILE_IFELSE to work right
-svead_CFLAGS="${CFLAGS}"
+saved_CFLAGS="${CFLAGS}"
 CFLAGS="${CFLAGS} ${GUILE_CFLAGS}"
 
 # 1-argument scm_eval_x (guile-1.4) or 2-argument form (guile-1.6)?

@@ -154,13 +154,13 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
   char *slot_value;
   char *numslots_value;
   OBJECT *slot_text_object;
-  char name[50]; /* hack */
-  char value[10]; /* hack */
+  char *name = NULL;
+  char *value = NULL;
   int numslots;
   int new_slot_number;
   int status;
 
-  status = o_attrib_get_name_value(string, name, value);
+  status = o_attrib_get_name_value(string, &name, &value);
   if (!status) {
     s_log_message(_("Slot attribute malformed\n"));
     return;
@@ -176,6 +176,8 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
       s_log_message(_("numslots attribute missing\n"));
       s_log_message(
                     _("Slotting not allowed for this component\n"));
+      if (name) free(name);
+      if (value) free(value);
       return;
     }
 
@@ -190,6 +192,8 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
     if (new_slot_number > numslots || new_slot_number <=0 ) {
       s_log_message(_("New slot number out of range\n"));
+      if (name) free(name);
+      if (value) free(value);
       return;
     }
 
@@ -258,8 +262,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
     /* erase the selection list */
     o_erase_selected(w_current);
 
-    o_attrib_slot_copy(
-                       w_current, object,
+    o_attrib_slot_copy(w_current, object,
                        w_current->page_current->selection_head->next);
     o_redraw_single(w_current,object);
 #endif
@@ -268,9 +271,14 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
     w_current->page_current->CHANGED = 1;
     o_undo_savestate(w_current, UNDO_ALL);
+    if (name) free(name);
+    if (value) free(value);
+
   } else {
     fprintf(stderr,
             _("uggg! you tried to slot edit something that doesn't exist!\n"));
+    if (name) free(name);
+    if (value) free(value);
     exit(-1);
   }
 }

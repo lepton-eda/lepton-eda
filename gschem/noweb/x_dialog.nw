@@ -160,6 +160,11 @@
 <<x_dialog.c : autonumber_text_done()>>
 <<x_dialog.c : autonumber_text_dialog()>>
 /*********** End of autonumber text dialog box *******/
+
+/*********** Start of some Gtk utils  *******/
+<<x_dialog.c : select_all_text_in_textview()>>
+<<x_dialog.c : text_view_calculate_real_tab_width()>>
+/*********** End of some Gtk utils *******/
 @
 
 
@@ -205,6 +210,76 @@
 
 @
 
+@section Function @code{select_all_text_in_textview()}
+
+@defun select_all_text_in_textview textview
+@end defun
+     	/* Select all the text in the GtkTextView entry */
+
+<<x_dialog.c : select_all_text_in_textview()>>=
+#if HAS_GTK22
+void 
+select_all_text_in_textview(GtkTextView *textview) 
+{
+  GtkTextBuffer *textbuffer;
+  GtkTextIter start, end;
+  GtkTextMark *mark;
+	
+  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
+  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+  gtk_text_buffer_place_cursor(textbuffer, &start);
+  mark = gtk_text_buffer_get_selection_bound(textbuffer);
+  gtk_text_buffer_move_mark(textbuffer, mark, &end);
+}
+#endif
+
+@ %def select_all_text_in_textview
+
+@section Function @code{select_all_text_in_textview()}
+
+@defun select_all_text_in_textview textview
+@end defun
+
+/* Calculate tab width in pango units. Taken from gedit. */
+<<x_dialog.c : text_view_calculate_real_tab_width()>>=
+#if HAS_GTK22
+int
+text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size) 
+{
+  PangoLayout *layout;
+  gchar *tab_string;
+  gint counter = 0;
+  gint tab_width = 0;
+
+  if (tab_size == 0)
+  return -1;
+
+  tab_string = g_malloc (tab_size + 1);
+
+  while (counter < tab_size) {
+    tab_string [counter] = ' ';
+    counter++;
+  }
+
+  tab_string [tab_size] = 0;
+
+  layout = gtk_widget_create_pango_layout (
+                                           GTK_WIDGET (textview), 
+                                           tab_string);
+  g_free (tab_string);
+
+  if (layout != NULL) {
+    pango_layout_get_pixel_size (layout, &tab_width, NULL);
+    g_object_unref (G_OBJECT (layout));
+  } else
+  tab_width = -1;
+
+  return tab_width;
+
+}
+#endif
+
+@ %def text_view_calculate_real_tab_width
 
 @section Function @code{destroy_window()}
 
@@ -253,44 +328,53 @@ text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
   int len;
   char *string = NULL;
   GtkWidget *tientry;
+#ifdef HAS_GTK22
+  GtkTextBuffer *textbuffer;
+  GtkTextIter start, end;
+#endif
 
   tientry = gtk_object_get_data(GTK_OBJECT(w_current->tiwindow),"tientry");
+
+#ifdef HAS_GTK22
+  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tientry));
+  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+  string =  gtk_text_iter_get_text (&start, &end);
+#else
   string = gtk_entry_get_text(GTK_ENTRY(tientry));
+#endif
 
   if (string[0] != '\0' ) {
     len = strlen(string);
 #if DEBUG
     printf("text was: _%s_ %d\n", string, len);
 #endif
-    /* TODO: length is hack */
-    if (len < 80) {
-      switch(w_current->text_caps) {
-        case(LOWER):
-          string_tolower(string, string);
-          break;
+    switch(w_current->text_caps) {
+      case(LOWER):
+        string_tolower(string, string);
+        break;
 
-        case(UPPER):
-          string_toupper(string, string);
-          break;
+      case(UPPER):
+        string_toupper(string, string);
+        break;
 
-        case(BOTH):
-        default:
+      case(BOTH):
+      default:
 				/* do nothing */
-          break;
-      }
-
-      o_attrib_set_string(w_current, string);
-      w_current->page_current->CHANGED=1;
-      gtk_entry_set_text(GTK_ENTRY(tientry),
-                         w_current->current_attribute);
-      gtk_entry_select_region(GTK_ENTRY(tientry),
-                              0, len);
-      gtk_widget_grab_focus(tientry);
-
-    } else {
-      /* TODO: you should have limits */
-      fprintf(stderr, _("String too long... hack!\n"));
+        break;
     }
+
+    o_attrib_set_string(w_current, string);
+    w_current->page_current->CHANGED=1;
+#ifdef HAS_GTK22
+    gtk_text_buffer_set_text(textbuffer, w_current->current_attribute, -1);
+    select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
+#else
+    gtk_entry_set_text(GTK_ENTRY(tientry),
+                       w_current->current_attribute);
+    gtk_entry_select_region(GTK_ENTRY(tientry),
+                            0, len);
+#endif
+    gtk_widget_grab_focus(tientry);
 
     w_current->event_state = DRAWTEXT;
     w_current->inside_action = 1;
@@ -343,6 +427,11 @@ text_input_dialog (TOPLEVEL *w_current)
   GtkWidget *buttonok     = NULL;
   GtkWidget *buttoncancel = NULL;
   GtkWidget *vbox, *action_area;
+#ifdef HAS_GTK22
+  GtkWidget *scrolled_window = NULL;
+  PangoTabArray *tab_array;
+  int real_tab_width;
+#endif
 
   if (!w_current->tiwindow) {
     w_current->tiwindow = x_create_dialog_box(&vbox, &action_area);
@@ -378,18 +467,47 @@ text_input_dialog (TOPLEVEL *w_current)
                                GTK_CONTAINER (w_current->tiwindow), 5);
 
     label = gtk_label_new (_("Enter text, click apply,\nmove cursor into window, click to place text.\nMiddle button to rotate while placing."));
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 5);
     gtk_widget_show (label);
 
+#ifdef HAS_GTK22
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+				   GTK_POLICY_AUTOMATIC, 
+				   GTK_POLICY_AUTOMATIC);
+    gtk_box_pack_start( GTK_BOX(vbox), scrolled_window, TRUE, TRUE, 10);
+    gtk_widget_show(scrolled_window);
+
+    tientry = gtk_text_view_new();
+    gtk_text_view_set_editable(GTK_TEXT_VIEW(tientry), TRUE);
+    select_all_text_in_textview(GTK_TEXT_VIEW(tientry));
+
+    /* Set the tab width, using pango tab array */
+    /* FIXME: This doesn't work. Why? */
+    tab_array = pango_tab_array_new (1, TRUE);
+    real_tab_width = text_view_calculate_real_tab_width(GTK_TEXT_VIEW(tientry),
+							tab_in_chars);
+    if (real_tab_width >= 0) {
+      pango_tab_array_set_tab (tab_array, 0, PANGO_TAB_LEFT, real_tab_width);
+      /* printf("Real tab width: %i\n", real_tab_width);*/
+      gtk_text_view_set_tabs (GTK_TEXT_VIEW (tientry), 
+			      tab_array);
+    }
+    else {
+      g_warning ("text_input_dialog: Impossible to set tab width.\n");
+    }
+    pango_tab_array_free (tab_array);
+    gtk_container_add(GTK_CONTAINER(scrolled_window), tientry);
+#else
     tientry = gtk_entry_new_with_max_length (79);
+    gtk_editable_select_region(GTK_EDITABLE(tientry),
+			       0, -1);
     gtk_signal_connect(GTK_OBJECT(tientry), "activate",
                        GTK_SIGNAL_FUNC(text_input_dialog_apply),
                        w_current);
-    gtk_box_pack_start( GTK_BOX(vbox), tientry, TRUE, TRUE, 10);
-    gtk_editable_select_region(GTK_EDITABLE(tientry),
-                               0, -1);
+    gtk_box_pack_start(GTK_BOX(vbox), tientry, TRUE, TRUE, 10);
+#endif
+
     gtk_widget_show(tientry);
     gtk_widget_grab_focus(tientry);
     gtk_object_set_data(GTK_OBJECT(w_current->tiwindow),
@@ -466,13 +584,14 @@ create_menu_alignment (TOPLEVEL *w_current)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList *group;
-  char buf[100];
+  char *buf;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, _("Lower Left"));
+  buf = g_strdup_printf( _("Lower Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "0");
@@ -481,8 +600,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Middle Left"));
+  buf = g_strdup_printf( _("Middle Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "1");
@@ -491,8 +611,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Upper Left"));
+  buf = g_strdup_printf( _("Upper Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "2");
@@ -501,8 +622,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Lower Middle"));
+  buf = g_strdup_printf( _("Lower Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "3");
@@ -511,8 +633,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Middle Middle"));
+  buf = g_strdup_printf( _("Middle Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "4");
@@ -521,8 +644,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Upper Middle"));
+  buf = g_strdup_printf( _("Upper Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "5");
@@ -531,8 +655,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Lower Right"));
+  buf = g_strdup_printf( _("Lower Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "6");
@@ -541,8 +666,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Middle Right"));
+  buf = g_strdup_printf( _("Middle Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "7");
@@ -551,8 +677,9 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Upper Right"));
+  buf = g_strdup_printf( _("Upper Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "8");
@@ -603,15 +730,25 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   char *text_size_string = NULL;
   int new_text_alignment;
   int num_selected;
+#ifdef HAS_GTK22
+  GtkTextBuffer *textbuffer;
+  GtkTextIter start, end;
+#endif
 
   num_selected = o_selection_return_num(w_current->page_current->selection2_head);
 
   /* text string entry will only show up if one object is selected */
   if (num_selected == 1) {
-    text_string = gtk_entry_get_text(GTK_ENTRY(w_current->teentry));
+#ifdef HAS_GTK22
+    textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w_current->teentry));
+    gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+    text_string =  gtk_text_iter_get_text (&start, &end);
+#else
+    text_string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->teentry));
+#endif
   } /* else the string will be null which is okay */
   
-  text_size_string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  text_size_string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
   if (text_string) {
     len = strlen(text_string);
@@ -677,7 +814,11 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
   GtkWidget *vbox, *action_area;
   GtkWidget *optionmenu = NULL;
   GtkWidget *align_menu = NULL;
-  char text_size_string[10];
+#ifdef HAS_GTK22
+  GtkWidget *scrolled_window = NULL;
+  GtkTextBuffer *textbuffer;
+#endif
+  char *text_size_string;
   int len;
   int num_selected;
 
@@ -713,29 +854,36 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
 
     if (num_selected == 1) {
       label = gtk_label_new (_("Edit Text"));
-      gtk_box_pack_start(
-                         GTK_BOX(vbox),
-                         label, TRUE, TRUE, 0);
+      gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
+#ifdef HAS_GTK22
+      scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+      gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+				     GTK_POLICY_AUTOMATIC, 
+				     GTK_POLICY_AUTOMATIC);
+      gtk_box_pack_start( GTK_BOX(vbox), scrolled_window, TRUE, TRUE, 10);
+      gtk_widget_show(scrolled_window);
+      
+      w_current->teentry = gtk_text_view_new();
+      gtk_text_view_set_editable(GTK_TEXT_VIEW(w_current->teentry), TRUE);
+      select_all_text_in_textview(GTK_TEXT_VIEW(w_current->teentry));
+      gtk_container_add(GTK_CONTAINER(scrolled_window), w_current->teentry);
+#else
       w_current->teentry = gtk_entry_new();
-      gtk_editable_select_region(
-                                 GTK_EDITABLE(w_current->teentry), 0, -1);
-      gtk_box_pack_start(
-                         GTK_BOX(vbox),
-                         w_current->teentry, TRUE, TRUE, 10);
-
+      gtk_editable_select_region(GTK_EDITABLE(w_current->teentry), 0, -1);
       gtk_signal_connect(GTK_OBJECT(w_current->teentry), "activate",
                          GTK_SIGNAL_FUNC(text_edit_dialog_ok),
                          w_current);
+      gtk_box_pack_start(GTK_BOX(vbox), w_current->teentry, TRUE, TRUE, 10);
+#endif
+
       gtk_widget_show (w_current->teentry);
       gtk_widget_grab_focus(w_current->teentry);
     }
 
     label = gtk_label_new (_("Edit Text Size"));
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
     gtk_widget_show (label);
 
     w_current->tsentry = gtk_entry_new_with_max_length (10);
@@ -751,9 +899,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
 
 		
     label = gtk_label_new (_("Edit Text Alignment"));
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 5);
     gtk_widget_show (label);
 
     optionmenu = gtk_option_menu_new ();
@@ -763,7 +909,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 
                                 text_alignment);
     w_current->text_alignment = text_alignment;
-    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
     gtk_widget_show(optionmenu);
 
 
@@ -795,16 +941,23 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     if (string != NULL) {
       len = strlen(string);
       if (num_selected == 1) { /* only if one thing is selected */
+#ifdef HAS_GTK22
+	textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(w_current->teentry));
+	gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), string, -1);
+	select_all_text_in_textview(GTK_TEXT_VIEW(w_current->teentry));
+#else
         gtk_entry_set_text(GTK_ENTRY(w_current->teentry),
-                         string);
-      gtk_entry_select_region(GTK_ENTRY(w_current->teentry),
-                              0, len);
+			   string);
+	gtk_entry_select_region(GTK_ENTRY(w_current->teentry),
+				0, len);
+#endif
       }
     }
 
-    sprintf(text_size_string, "%d", text_size);
+    text_size_string = g_strdup_printf("%d", text_size);
     gtk_entry_set_text(GTK_ENTRY(w_current->tsentry),
                        text_size_string);
+    free(text_size_string);
 
     gtk_grab_add (w_current->tewindow);
   }
@@ -846,13 +999,14 @@ create_menu_linetype (TOPLEVEL *w_current)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList *group;
-  char buf[100];
+  char *buf;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, _("Solid"));
+  buf = g_strdup_printf(_("Solid"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_SOLID);
@@ -861,8 +1015,9 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Dotted"));
+  buf = g_strdup_printf(_("Dotted"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_DOTTED);
@@ -871,8 +1026,9 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Dashed"));
+  buf = g_strdup_printf(_("Dashed"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_DASHED);
@@ -881,8 +1037,9 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Center"));
+  buf = g_strdup_printf( _("Center"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_CENTER);
@@ -891,8 +1048,9 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Phantom"));
+  buf = g_strdup_printf( _("Phantom"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_PHANTOM);
@@ -953,9 +1111,9 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   space_entry = gtk_object_get_data(GTK_OBJECT(w_current->ltwindow),
                                     "space_entry");
 
-  line_width_string = gtk_entry_get_text(GTK_ENTRY(width_entry));
-  line_length_string = gtk_entry_get_text(GTK_ENTRY(length_entry));
-  line_space_string = gtk_entry_get_text(GTK_ENTRY(space_entry));
+  line_width_string = (char *) gtk_entry_get_text(GTK_ENTRY(width_entry));
+  line_length_string = (char *) gtk_entry_get_text(GTK_ENTRY(length_entry));
+  line_space_string = (char *) gtk_entry_get_text(GTK_ENTRY(space_entry));
 
   if ((line_width_string[0] != '\0')) {
     width = atoi(line_width_string);
@@ -1063,7 +1221,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
   GtkWidget *length_entry = NULL;
   GtkWidget *space_entry = NULL;
   GtkWidget *width_entry = NULL;
-  char string[10];
+  char *string;
   int len;
 
   if (!w_current->ltwindow) {
@@ -1096,8 +1254,8 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
     gtk_widget_show (label);
 
     width_entry = gtk_entry_new();
-    gtk_editable_select_region(
-                               GTK_EDITABLE(width_entry), 0, -1);
+    /*    gtk_editable_select_region(
+	  GTK_EDITABLE(width_entry), 0, -1); */
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        width_entry, TRUE, TRUE, 10);
@@ -1187,21 +1345,24 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
   if (!GTK_WIDGET_VISIBLE (w_current->ltwindow)) {
     gtk_widget_show (w_current->ltwindow);
 
-    sprintf(string, "%d", object->line_width);
+    string = g_strdup_printf("%d", object->line_width);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(width_entry),
                        string);
     gtk_entry_select_region(GTK_ENTRY(width_entry), 0, len);
+    free(string);
 
-    sprintf(string, "%d", object->line_space);
+    string = g_strdup_printf("%d", object->line_space);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(space_entry),
                        string);
+    free(string);
 
-    sprintf(string, "%d", object->line_length);
+    string = g_strdup_printf("%d", object->line_length);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(length_entry),
                        string);
+    free(string);
 
     gtk_widget_grab_focus(width_entry);
     gtk_grab_add (w_current->ltwindow);
@@ -1244,13 +1405,14 @@ create_menu_filltype (TOPLEVEL *w_current)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList *group;
-  char buf[100];
+  char *buf;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, _("Hollow"));
+  buf = g_strdup_printf(_("Hollow"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_HOLLOW);
@@ -1259,8 +1421,9 @@ create_menu_filltype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Filled"));
+  buf = g_strdup_printf(_("Filled"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_FILL);
@@ -1269,8 +1432,9 @@ create_menu_filltype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Mesh"));
+  buf = g_strdup_printf(_("Mesh"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_MESH);
@@ -1279,8 +1443,9 @@ create_menu_filltype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, _("Hatch"));
+  buf = g_strdup_printf( _("Hatch"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_object_set_data (GTK_OBJECT(menuitem), "filltype", (gpointer) FILLING_HATCH);
@@ -1347,11 +1512,11 @@ fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   pitch2_entry = gtk_object_get_data(GTK_OBJECT(w_current->ftwindow),
                                      "pitch2_entry");
 
-  fill_width_string = gtk_entry_get_text(GTK_ENTRY(width_entry));
-  fill_angle1_string = gtk_entry_get_text(GTK_ENTRY(angle1_entry));
-  fill_pitch1_string = gtk_entry_get_text(GTK_ENTRY(pitch1_entry));
-  fill_angle2_string = gtk_entry_get_text(GTK_ENTRY(angle2_entry));
-  fill_pitch2_string = gtk_entry_get_text(GTK_ENTRY(pitch2_entry));
+  fill_width_string = (char *) gtk_entry_get_text(GTK_ENTRY(width_entry));
+  fill_angle1_string = (char *) gtk_entry_get_text(GTK_ENTRY(angle1_entry));
+  fill_pitch1_string = (char *) gtk_entry_get_text(GTK_ENTRY(pitch1_entry));
+  fill_angle2_string = (char *) gtk_entry_get_text(GTK_ENTRY(angle2_entry));
+  fill_pitch2_string = (char *) gtk_entry_get_text(GTK_ENTRY(pitch2_entry));
 
   if ((fill_width_string[0] != '\0')) {
     width = atoi(fill_width_string);
@@ -1463,7 +1628,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
   GtkWidget *pitch1_entry = NULL;
   GtkWidget *angle2_entry = NULL;
   GtkWidget *pitch2_entry = NULL;
-  char string[10];
+  char *string;
   int len;
 
   if (!w_current->ftwindow) {
@@ -1602,9 +1767,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
     pitch2_entry = gtk_entry_new();
     gtk_editable_select_region(
                                GTK_EDITABLE(pitch2_entry), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       pitch2_entry, TRUE, TRUE, 10);
+    gtk_box_pack_start(GTK_BOX(vbox), pitch2_entry, TRUE, TRUE, 10);
 		
     gtk_signal_connect(GTK_OBJECT(pitch2_entry), "activate",
                        GTK_SIGNAL_FUNC(fill_type_dialog_ok),
@@ -1641,35 +1804,40 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
   if (!GTK_WIDGET_VISIBLE (w_current->ftwindow)) {
     gtk_widget_show (w_current->ftwindow);
 
-    sprintf(string, "%d", object->fill_width);
+    string = g_strdup_printf("%d", object->fill_width);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(width_entry),
                        string);
     gtk_entry_select_region(GTK_ENTRY(width_entry), 0, len);
+    free(string);
 
-    sprintf(string, "%d", object->fill_angle1);
+    string = g_strdup_printf( "%d", object->fill_angle1);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(angle1_entry),
                        string);
     gtk_entry_select_region(GTK_ENTRY(angle1_entry), 0, len);
+    free(string);
 
-    sprintf(string, "%d", object->fill_pitch1);
+    string = g_strdup_printf( "%d", object->fill_pitch1);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(pitch1_entry),
                        string);
     gtk_entry_select_region(GTK_ENTRY(pitch1_entry), 0, len);
+    free(string);
 
-    sprintf(string, "%d", object->fill_angle2);
+    string = g_strdup_printf("%d", object->fill_angle2);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(angle2_entry),
                        string);
     gtk_entry_select_region(GTK_ENTRY(angle2_entry), 0, len);
+    free(string);
 
-    sprintf(string, "%d", object->fill_pitch2);
+    string = g_strdup_printf("%d", object->fill_pitch2);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(pitch2_entry),
                        string);
     gtk_entry_select_region(GTK_ENTRY(pitch2_entry), 0, len);
+    free(string);
 
     gtk_widget_grab_focus(width_entry);
     gtk_grab_add (w_current->ftwindow);
@@ -1864,8 +2032,8 @@ arc_angles_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   char *string_start = NULL;
   char *string_sweep = NULL;
 
-  string_start = gtk_entry_get_text(GTK_ENTRY(w_current->aaentry_start));
-  string_sweep = gtk_entry_get_text(GTK_ENTRY(w_current->aaentry_sweep));
+  string_start = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->aaentry_start));
+  string_sweep = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->aaentry_sweep));
 
   if ( (string_start[0] != '\0') && (string_sweep[0] != '\0') ) {
     /* TODO: put error detection */
@@ -1967,8 +2135,7 @@ arc_angle_dialog (TOPLEVEL *w_current)
     w_current->aaentry_sweep = gtk_entry_new_with_max_length (4);
     gtk_editable_select_region(
                                GTK_EDITABLE(w_current->aaentry_sweep), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
+    gtk_box_pack_start(GTK_BOX(vbox),
                        w_current->aaentry_sweep, FALSE, FALSE, 5);
     gtk_signal_connect(GTK_OBJECT(w_current->aaentry_sweep),
                        "activate",
@@ -2039,7 +2206,7 @@ translate_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
   char *string=NULL;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->trentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->trentry));
 
   if ((string[0] != '\0')) {
     /* TODO: put error detection */
@@ -2130,8 +2297,7 @@ translate_dialog (TOPLEVEL *w_current)
     w_current->trentry = gtk_entry_new_with_max_length (10);
     gtk_editable_select_region(GTK_EDITABLE(w_current->trentry),
                                0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
+    gtk_box_pack_start(GTK_BOX(vbox),
                        w_current->trentry, FALSE, FALSE, 5);
     gtk_signal_connect(GTK_OBJECT(w_current->trentry), "activate",
                        GTK_SIGNAL_FUNC(translate_dialog_ok),
@@ -2205,7 +2371,7 @@ text_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   char *string = NULL;
   int size;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
   if ((string[0] != '\0')) {
     size = atoi(string);
@@ -2254,7 +2420,7 @@ text_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_size_dialog (TOPLEVEL *w_current)
 {
-  char string[10];
+  char *string;
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok = NULL;
@@ -2298,8 +2464,7 @@ text_size_dialog (TOPLEVEL *w_current)
     w_current->tsentry = gtk_entry_new_with_max_length (10);
     gtk_editable_select_region(
                                GTK_EDITABLE(w_current->tsentry), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
+    gtk_box_pack_start(GTK_BOX(vbox),
                        w_current->tsentry, FALSE, FALSE, 5);
     gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
                        GTK_SIGNAL_FUNC(text_size_dialog_ok),
@@ -2330,12 +2495,13 @@ text_size_dialog (TOPLEVEL *w_current)
   }
 
   if (!GTK_WIDGET_VISIBLE (w_current->tswindow)) {
-    sprintf(string, "%d", w_current->text_size);
+    string = g_strdup_printf("%d", w_current->text_size);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), string);
     gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
     gtk_widget_show (w_current->tswindow);
     gtk_grab_add(w_current->tswindow);
+    free(string);
   }
 }
 
@@ -2375,7 +2541,7 @@ snap_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   char *string = NULL;
   int size;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
   if ((string[0] != '\0')) {
     size = atoi(string);
@@ -2422,7 +2588,7 @@ snap_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 void
 snap_size_dialog (TOPLEVEL *w_current)
 {
-  char string[10];
+  char *string;
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok     = NULL;
@@ -2465,8 +2631,7 @@ snap_size_dialog (TOPLEVEL *w_current)
     w_current->tsentry = gtk_entry_new_with_max_length (10);
     gtk_editable_select_region(GTK_EDITABLE(w_current->tsentry),
                                0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
+    gtk_box_pack_start(GTK_BOX(vbox),
                        w_current->tsentry, FALSE, FALSE, 5);
     gtk_signal_connect(GTK_OBJECT(w_current->tsentry), "activate",
                        GTK_SIGNAL_FUNC(snap_size_dialog_ok),
@@ -2498,12 +2663,13 @@ snap_size_dialog (TOPLEVEL *w_current)
   }
 
   if (!GTK_WIDGET_VISIBLE (w_current->tswindow)) {
-    sprintf(string, "%d", w_current->snap_size);
+    string = g_strdup_printf("%d", w_current->snap_size);
     len = strlen(string);
     gtk_entry_set_text(GTK_ENTRY(w_current->tsentry), string);
     gtk_entry_select_region(GTK_ENTRY(w_current->tsentry), 0, len);
     gtk_widget_show (w_current->tswindow);
     gtk_grab_add (w_current->tswindow);
+    free(string);
   }
 }
 
@@ -2542,7 +2708,7 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   int len;
   char *string = NULL;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->seentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->seentry));
 
   if (string[0] != '\0') {
     len = strlen(string);
@@ -2641,8 +2807,7 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
     w_current->seentry = gtk_entry_new();
     gtk_editable_select_region(
                                GTK_EDITABLE (w_current->seentry), 0, -1);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
+    gtk_box_pack_start( GTK_BOX(vbox),
                        w_current->seentry, TRUE, TRUE, 10);
 
     gtk_signal_connect(GTK_OBJECT(w_current->seentry), "activate",
@@ -2740,7 +2905,7 @@ about_dialog (TOPLEVEL *w_current)
   GtkWidget *label = NULL;
   GtkWidget *buttonclose = NULL;
   GtkWidget *vbox, *action_area;
-  char string[100];
+  char *string;
 
   if (!w_current->abwindow) {
     w_current->abwindow = x_create_dialog_box(&vbox, &action_area);
@@ -2768,22 +2933,25 @@ about_dialog (TOPLEVEL *w_current)
                         &w_current->abwindow);
 #endif
 
-    sprintf(string, _("gEDA : GPL Electronic Design Automation"));
+    string = g_strdup_printf( _("gEDA : GPL Electronic Design Automation"));
     label = gtk_label_new (string);
+    free(string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
-    sprintf(string, _("gschem version %s"), VERSION);
+    string = g_strdup_printf(_("gschem version %s"), VERSION);
     label = gtk_label_new (string);
+    free(string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
-    sprintf(string, _("Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)"));
+    string = g_strdup_printf( _("Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)"));
     label = gtk_label_new (string);
+    free(string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -2856,16 +3024,18 @@ coord_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
 void
 coord_display_update(TOPLEVEL *w_current, int x, int y)
 {
-  char string[25]; /* this should be big enough */
+  char *string;
   int world_x, world_y;
 
-  sprintf(string, "(%d, %d)", x, y);
+  string = g_strdup_printf("(%d, %d)", x, y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_screen), string );
+  free(string);
 
   SCREENtoWORLD(w_current, x, y, &world_x, &world_y);
 
-  sprintf(string, "(%d, %d)", world_x, world_y);
+  string = g_strdup_printf("(%d, %d)", world_x, world_y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_world), string );
+  free(string);
 }
 
 
@@ -3076,7 +3246,7 @@ create_color_menu (TOPLEVEL *w_current)
   GSList *group;
   int index=0;
   char buf[30]; /* should be be big enough hack */
-  char menu_string[60]; /* size is a hack */
+  char *menu_string;
   char *temp=NULL;
   int found=0;
   int set_first=0;
@@ -3096,13 +3266,14 @@ create_color_menu (TOPLEVEL *w_current)
       }
 
       temp = index2functionstring(index);
-      sprintf(menu_string, "%d | %s | %s", index, 
-              temp,
-              buf);
+      menu_string = g_strdup_printf("%d | %s | %s", index, 
+				    temp,
+				    buf);
       free(temp);
 			
       menuitem = gtk_radio_menu_item_new_with_label (group, 
                                                      menu_string);
+      free(menu_string);
       group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(
                                                             menuitem));
 
@@ -3630,7 +3801,7 @@ void generic_text_input_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
 
   gtk_grab_remove(w_current->tswindow);
@@ -3745,7 +3916,7 @@ void find_text_ok(GtkWidget * w, TOPLEVEL * w_current)
   char *string = NULL;
   int done;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
   /* descend = gtk_object_get_data(GTK_OBJECT(w_current->tsentry),"descend");*/
 
@@ -3917,7 +4088,7 @@ void hide_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
 
   o_edit_hide_specific_text(w_current,
@@ -4045,7 +4216,7 @@ void show_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
 
   o_edit_show_specific_text(w_current,
@@ -4168,7 +4339,7 @@ void autonumber_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
 
-  string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
+  string = (char *) gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
 
   o_edit_autonumber_text(w_current, w_current->page_current->object_head,

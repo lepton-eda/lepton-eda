@@ -177,6 +177,9 @@
 #define MIDDLE_RIGHT	7
 #define UPPER_RIGHT	8
 
+/* maximum single line length when reading in text strings */
+#define MAX_TEXT_LINE_LENGTH  1024
+
 /* These modes are for net_endpoint_mode */
 #define NONE		0
 #define FILLEDBOX	1

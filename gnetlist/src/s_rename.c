@@ -157,9 +157,9 @@ void s_rename_add(char *src, char *dest)
     flag = s_rename_search(src, dest, FALSE);
 
     if (flag) {
-        // Rename_counter may be incremented within this loop, so it cannot
-	// be used in the loop exit condition.  Just iterate over the number
-	// of renames that were in the list at the start of the loop.
+        /* Rename_counter may be incremented within this loop, so it cannot */
+	/* be used in the loop exit condition.  Just iterate over the number */
+	/* of renames that were in the list at the start of the loop. */
         int orig_rename_counter = rename_counter;
 	for (i = 0; i < orig_rename_counter; i++) {
 	    if (rename_pairs[cur_set][i].src

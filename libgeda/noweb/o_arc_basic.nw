@@ -381,18 +381,20 @@ Depending on the version of the file format used to describe this arc, the buffe
 @defun o_arc_save buf object
 This function formats a string in the buffer [[*buff]] to describe the arc object [[*object]].
 It follows the post-20000704 release file format that handle the line type and filling options.
-A pointer on the formated string is returned.
+A pointer to the new allocated and formated string is returned.  The
+string must be freed at some point.
 @end defun
 
 <<o_arc_basic.c : o_arc_save()>>=
 /* EEK! there is a nasty non-snap bug here! */
 /* Basically the center isn't being snapped */
 /* in complex objects only it seems... */
-char *o_arc_save(char *buf, OBJECT *object)
+char *o_arc_save(OBJECT *object)
 {
   int color;
   int x, y, radius, start_angle, end_angle;
   int arc_width, arc_length, arc_space;
+  char *buf;
   OBJECT_END arc_end;
   OBJECT_TYPE arc_type;
 
@@ -432,9 +434,9 @@ if (object->saved_color == -1) {
 
 
 <<o_arc_save() : describe a circle with post-20000704 file format>>=
-sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
-		x, y, radius, start_angle, end_angle, color,
-		arc_width, arc_end, arc_type, arc_length, arc_space);
+buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
+		      x, y, radius, start_angle, end_angle, color,
+		      arc_width, arc_end, arc_type, arc_length, arc_space);
 
 @ 
 

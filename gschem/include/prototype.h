@@ -687,6 +687,10 @@ GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
 int x_color_get_name(int index, char *string);
 /* x_dialog.c */
+#ifdef HAS_GTK22
+int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
+void select_all_text_in_textview(GtkTextView *textview);
+#endif
 void destroy_window(GtkWidget *widget, GtkWidget **window);
 int text_input_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);

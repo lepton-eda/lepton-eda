@@ -436,16 +436,18 @@ o_set_fill_options(w_current, object_list,
 @defun o_line_save buf object
 The function formats a string in the buffer [[*buff]] to describe the box object [[*object]].
 It follows the post-20000704 release file format that handle the line type and fill options - filling is irrelevant here.
-A pointer on the formated string is returned.
+A pointer to the new allocated and formated string is returned.  The
+string must be freed at some point.
 @end defun
 
 <<o_line_basic.c : o_line_save()>>=
 char *
-o_line_save(char *buf, OBJECT *object)
+o_line_save(OBJECT *object)
 {
   int x1, x2, y1, y2;
   int color;
   int line_width, line_space, line_length;
+  char *buf;
   OBJECT_END line_end;
   OBJECT_TYPE line_type;
 
@@ -484,7 +486,7 @@ if (object->saved_color == -1) {
 
 
 <<o_line_save() : describe a line with post-20000704 file format>>=
-sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d", object->type,
+buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d", object->type,
 		x1, y1, x2, y2, color,
 		line_width, line_end, line_type, line_length, line_space);
 

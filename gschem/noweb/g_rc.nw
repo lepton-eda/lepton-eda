@@ -276,7 +276,7 @@ g_rc_parse_system_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 _("Read system-gschemrc file [%s]\n"),
-                                _("Did not find system-gschemrc file [%s]\n"));
+                                _("Did not find required system-gschemrc file [%s]\n"));
 
   free(filename);
 
@@ -318,7 +318,7 @@ g_rc_parse_home_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 _("Read ~/.gEDA/gschemrc file [%s]\n"),
-                                _("Did not find ~/.gEDA/gschemrc file [%s]\n"));
+                                _("Did not find optional ~/.gEDA/gschemrc file [%s]\n"));
 
   free(filename);
 
@@ -350,7 +350,7 @@ g_rc_parse_local_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 _("Read local gschemrc file [%s]\n"),
-                                _("Did not find local gschemrc file [%s]\n"));
+                                _("Did not find optional local gschemrc file [%s]\n"));
 
   free(filename);
 

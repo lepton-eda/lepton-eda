@@ -128,7 +128,7 @@ g_rc_parse_system_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read system-gnetlistrc file [%s]\n",
-                                "Did not find system-gnetlistrc file [%s]\n");
+                                "Did not find required system-gnetlistrc file [%s]\n");
 
   free(filename);
 
@@ -159,7 +159,7 @@ g_rc_parse_home_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read ~/.gEDA/gnetlistrc file [%s]\n",
-                                "Did not find ~/.gEDA/gnetlistrc file [%s]\n");
+                                "Did not find optional ~/.gEDA/gnetlistrc file [%s]\n");
 
   free(filename);
 
@@ -181,7 +181,7 @@ g_rc_parse_local_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read local gnetlistrc file [%s]\n",
-                                "Did not find local gnetlistrc file [%s]\n");
+                                "Did not find optional local gnetlistrc file [%s]\n");
 
   free(filename);
 

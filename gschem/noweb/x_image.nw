@@ -214,13 +214,14 @@ create_menu_size (TOPLEVEL *w_current)
   GtkWidget *menu;
   GtkWidget *menuitem;
   GSList *group;
-  char buf[100];
+  char *buf;
 
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, "320x240");
+  buf = g_strdup_printf("320x240");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -229,8 +230,9 @@ create_menu_size (TOPLEVEL *w_current)
 
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "640x480");
+  buf = g_strdup_printf("640x480");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -239,8 +241,9 @@ create_menu_size (TOPLEVEL *w_current)
 
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "800x600");
+  buf = g_strdup_printf("800x600");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -248,8 +251,9 @@ create_menu_size (TOPLEVEL *w_current)
                       w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "1024x768");
+  buf = g_strdup_printf("1024x768");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -257,8 +261,9 @@ create_menu_size (TOPLEVEL *w_current)
                       w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "1280x960");
+  buf = g_strdup_printf("1280x960");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -266,8 +271,9 @@ create_menu_size (TOPLEVEL *w_current)
                       w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "1600x1200");
+  buf = g_strdup_printf("1600x1200");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -275,8 +281,9 @@ create_menu_size (TOPLEVEL *w_current)
                       w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "3200x2400");
+  buf = g_strdup_printf("3200x2400");
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+  free(buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
   gtk_signal_connect (GTK_OBJECT (menuitem), "activate",

@@ -1,29 +1,29 @@
-v 20030901
-T 0 2300 9 10 1 0 0 0
+v 20031011 1
+T 0 2300 9 10 1 0 0 0 1
 This schematic is free software; you can redistribute it and/or modify
-T 0 2100 9 10 1 0 0 0
+T 0 2100 9 10 1 0 0 0 1
  it under the terms of the GNU General Public License as published by
-T 0 1900 9 10 1 0 0 0
+T 0 1900 9 10 1 0 0 0 1
 the Free Software Foundation; either version 2 of the License, or
-T 0 1700 9 10 1 0 0 0
+T 0 1700 9 10 1 0 0 0 1
 (at your option) any later version.
-T 0 1400 9 10 1 0 0 0
+T 0 1400 9 10 1 0 0 0 1
 This schematic is distributed in the hope that it will be useful,
-T 0 1200 9 10 1 0 0 0
+T 0 1200 9 10 1 0 0 0 1
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-T 0 1000 9 10 1 0 0 0
+T 0 1000 9 10 1 0 0 0 1
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-T 0 700 9 10 1 0 0 0
+T 0 700 9 10 1 0 0 0 1
 GNU General Public License for more details.
-T 0 500 9 10 1 0 0 0
+T 0 500 9 10 1 0 0 0 1
 You should have received a copy of the GNU General Public License
-T 0 300 9 10 1 0 0 0
+T 0 300 9 10 1 0 0 0 1
 along with this program; if not, write to the Free Software
-T 0 100 9 10 1 0 0 0
+T 0 100 9 10 1 0 0 0 1
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
-T 0 2700 9 10 1 0 0 0
+T 0 2700 9 10 1 0 0 0 1
 (C) 2001 Stefan Petersen (spe@stacken.kth.se)
-T 2300 3400 8 10 0 0 0 0
+T 2300 3400 8 10 0 0 0 0 1
 graphical=1
-T 2300 3200 8 10 0 0 0 0
+T 2300 3200 8 10 0 0 0 0 1
 device=none

@@ -81,7 +81,6 @@ void
 o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 {
   OBJECT *o_current=NULL;
-  char buf[1024];
   char *out;
 
   /* make sure you init net_consolide to false (default) in all */
@@ -101,27 +100,27 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
         switch (o_current->type) {
 
           case(OBJ_LINE):
-            out = (char *) o_line_save(buf, o_current);
+            out = (char *) o_line_save(o_current);
             break;
 	
           case(OBJ_NET):
-            out = (char *) o_net_save(buf, o_current);
+            out = (char *) o_net_save(o_current);
             break;
 
           case(OBJ_BUS):
-            out = (char *) o_bus_save(buf, o_current);
+            out = (char *) o_bus_save(o_current);
             break;
 	
           case(OBJ_BOX):
-            out = (char *) o_box_save(buf, o_current);
+            out = (char *) o_box_save(o_current);
             break;
 			
           case(OBJ_CIRCLE):
-            out = (char *) o_circle_save(buf, o_current);
+            out = (char *) o_circle_save(o_current);
             break;
 
           case(OBJ_COMPLEX):
-            out = (char *) o_complex_save(buf, o_current);
+            out = (char *) o_complex_save(o_current);
             if (strncmp(
                         o_current->complex_clib, 
                         "EMBEDDED", 8) == 0) {
@@ -138,15 +137,15 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
             break;
 
           case(OBJ_TEXT):
-            out = (char *) o_text_save(buf, o_current);
+            out = (char *) o_text_save(o_current);
             break;
 
           case(OBJ_PIN):
-            out = (char *) o_pin_save(buf, o_current);
+            out = (char *) o_pin_save(o_current);
             break;
 	
           case(OBJ_ARC):
-            out = (char *) o_arc_save(buf, o_current);
+            out = (char *) o_arc_save(o_current);
             break;
 
           default:
@@ -155,10 +154,11 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
             break;
         }
 
-				/* output the line */
+	/* output the line */
         fprintf(fp, "%s\n", out);
+	free(out);
 
-				/* save those attributes */
+        /* save those attributes */
         if (o_current->attribs != NULL) {
           if (o_current->attribs->next != NULL) {
             o_save_attribs(fp, o_current->attribs->next);
@@ -202,7 +202,6 @@ o_save(TOPLEVEL *w_current, char *filename)
 {
   OBJECT *o_current=NULL;
   FILE *fp;
-  char buf[200];
   char *out;
   int already_wrote=0;
 	
@@ -233,27 +232,27 @@ o_save(TOPLEVEL *w_current, char *filename)
         switch (o_current->type) {
 
           case(OBJ_LINE):
-            out = (char *) o_line_save(buf, o_current);
+            out = (char *) o_line_save(o_current);
             break;
 	
           case(OBJ_NET):
-            out = (char *) o_net_save(buf, o_current);
+            out = (char *) o_net_save(o_current);
             break;
 
           case(OBJ_BUS):
-            out = (char *) o_bus_save(buf, o_current);
+            out = (char *) o_bus_save(o_current);
             break;
 	
           case(OBJ_BOX):
-            out = (char *) o_box_save(buf, o_current);
+            out = (char *) o_box_save(o_current);
             break;
 			
           case(OBJ_CIRCLE):
-            out = (char *) o_circle_save(buf, o_current);
+            out = (char *) o_circle_save(o_current);
             break;
 
           case(OBJ_COMPLEX):
-            out = (char *) o_complex_save(buf, o_current);
+            out = (char *) o_complex_save(o_current);
             fprintf(fp, "%s\n", out);
             already_wrote=1;
             if (strncmp(
@@ -272,15 +271,15 @@ o_save(TOPLEVEL *w_current, char *filename)
             break;
 
           case(OBJ_TEXT):
-            out = (char *) o_text_save(buf, o_current);
+            out = (char *) o_text_save(o_current);
             break;
 
           case(OBJ_PIN):
-            out = (char *) o_pin_save(buf, o_current);
+            out = (char *) o_pin_save(o_current);
             break;
 	
           case(OBJ_ARC):
-            out = (char *) o_arc_save(buf, o_current);
+            out = (char *) o_arc_save(o_current);
             break;
 
           default:
@@ -292,6 +291,7 @@ o_save(TOPLEVEL *w_current, char *filename)
 				/* output the line */
         if (!already_wrote) {
           fprintf(fp, "%s\n", out);
+	  free(out);
         } else {
           already_wrote=0;
         }
@@ -327,7 +327,6 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 {
   FILE *fp;
   char buf[1024];
-  char string[1024];
   char objtype;
   OBJECT *object_list_save=NULL;
   OBJECT *temp_tail=NULL;
@@ -390,9 +389,9 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;
 
       case(OBJ_TEXT):
-        fgets(string, 1024, fp); /* check if invalid */
+        /* fgets(string, 1024, fp); string lines are now read inside: */
         object_list = (OBJECT *) o_text_read(w_current, object_list, buf,
-                                             string,
+                                             fp,
                                              release_ver, fileformat_ver);
         break;
 
@@ -463,7 +462,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         itemsread = sscanf(buf, "v %u %u\n", &release_ver, &fileformat_ver);
 
 	/* 20030921 was the last version which did not have a fileformat */
-	/* version.  The below latter test should not happen, but it is here 
+	/* version.  The below latter test should not happen, but it is here */
 	/* just in in case. */
 	if (release_ver <= VERSION_20030921 || itemsread == 1)
         { 
@@ -472,11 +471,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         
 	if (fileformat_ver < current_fileformat_ver)
         {
-          s_log_message("The file %s has a file format version of %d.\n"
-                        "The current file format version is: %d\n"
-                        "Please run g[sym|sch]update on %s to update.\n", 
-                        filename, fileformat_ver, current_fileformat_ver, 
-                        filename);
+       	  s_log_message("Read an old format sym/sch file!\n"
+                        "Please run g[sym|sch]update on:\n[%s]\n", filename);
 	}
         break;
 

@@ -131,7 +131,7 @@ g_rc_parse_system_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read system-gsymcheckrc file [%s]\n",
-                                "Did not find system-gsymcheckrc file [%s]\n");
+                                "Did not find required system-gsymcheckrc file [%s]\n");
 
   free(filename);
 
@@ -162,7 +162,7 @@ g_rc_parse_home_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read ~/.gEDA/gsymcheckrc file [%s]\n",
-                                "Did not find ~/.gEDA/gsymcheckrc file [%s]\n");
+                                "Did not find optional ~/.gEDA/gsymcheckrc file [%s]\n");
 
   free(filename);
 
@@ -184,7 +184,7 @@ g_rc_parse_local_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read local gsymcheckrc file [%s]\n",
-                                "Did not find local gsymcheckrc file [%s]\n");
+                                "Did not find optional local gsymcheckrc file [%s]\n");
 
   free(filename);
 

@@ -759,8 +759,8 @@ x_window_create_main(TOPLEVEL *w_current)
   if (w_current->toolbars) {
 #ifdef HAS_GTK22
 	toolbar = gtk_toolbar_new();
-	gtk_toolbar_set_orientation (toolbar, GTK_ORIENTATION_HORIZONTAL);
-	gtk_toolbar_set_style (toolbar, GTK_TOOLBAR_ICONS);
+	gtk_toolbar_set_orientation (GTK_TOOLBAR(toolbar), GTK_ORIENTATION_HORIZONTAL);
+	gtk_toolbar_set_style (GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
 #else
   	toolbar = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, 
 				   GTK_TOOLBAR_ICONS);

@@ -1,3 +1,188 @@
+2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* a_basic.nw, g_smob.nw, m_basic.nw, o_arc_basic.nw, o_attrib.nw,
+	o_box_basic.nw, o_bus_basic.nw, o_circle_basic.nw, o_complex_basic.nw,
+	o_line_basic.nw, o_net_basic.nw, o_pin_basic.nw, o_text_basic.nw,
+	s_basic.nw, s_slib.nw: Applied Carlos Nieves Onega's multi-line text
+	patch.	Thank you Carlos!  The next items are the all changes from
+	Carlos' patch and my integration changes.  The changes happened
+	over a period of a few weeks, but were checked in on the above
+	date.
+
+	* noweb/a_basic.nw: Removed fixed size buffer from o_save_embedded() 
+	and o_save().  Also changed the function signature (removed buf)
+	of all o_*_save functions.
+
+	* noweb/a_basic.nw: Changed call to o_text_read to take file pointer.
+	string(s) is now read inside o_text_read().
+
+	* noweb/a_basic.nw: Removed old string[...] variable.
+
+	* noweb/a_basic.nw: Added missing free() in o_save_embedded().
+
+	* noweb/a_basic.nw: Simplified the update sym/sch message
+
+	* noweb/g_smob.nw: Fixed up call to o_attrib_get_name_value (which
+	now it's own memory allocation of the parameters).
+
+	* noweb/g_smob.nw: Added if's around free's since
+	o_attrib_get_name_value can return null in certain cases.
+
+	* noweb/m_basic.nw: Removed unnecessary calculation from
+	set_window()
+
+	* noweb/o_arc_basic.nw: Changed signature of o_arc_save to just
+	take an object pointer.
+
+	* noweb/o_attrib.nw: Removed fixed size character buffer in
+	o_read_attribs.
+
+	* noweb/o_attrib.nw: Changed o_save_attribs to call new signature
+	save functions.
+
+	* noweb/o_attrib.nw: Changed o_attrib_get_name_value to return
+	allocated character buffers (instead of having to pre-allocate
+	them).  This change had significant impact on lots of other code.
+	If instability occurs, then look at all instances of
+	o_attrib_get_name_value to make sure memory is allocated properly
+	and freed.  Name and value must be freed eventually.
+
+	* noweb/o_attrib.nw: o_attrib_get_name_value() was rewritten to 
+	use g_strsplit to break up the string into name and value.
+
+	* noweb/o_attrib.nw: o_attrib_search_name(),
+	o_attrib_search_string_partial(), o_attrib_search_attrib_value(),
+	o_attrib_search_attrib_name(), o_attrib_search_toplevel(),
+	o_attrib_search_name_single(), o_attrib_search_name_single_count():
+	All modified to use the newly changed o_attrib_get_name_value().
+
+	* noweb/o_attrib.nw: Added a bunch of frees in certain places to
+	prevent memory leaks.   
+
+	* noweb/o_attrib.nw: Rearranged o_attrib_get_name_value() so that
+	a memory leak does not occur (check the input up front as possible
+	before splitting the attribute)
+
+	* noweb/o_attrib.nw: Added extra checks to prevent possible core
+	dumps.
+
+	* noweb/o_attrib.nw: Removed an extra malloc which was causing a
+	memory leak.
+
+	* noweb/o_attrib.nw: Changed the "Found an improper attribute: ..."
+	message to be logged to the log file instead of stderr.
+
+	* noweb/o_box_basic.nw: Changed signature of o_box_save to just
+	take an object pointer.
+
+	* noweb/o_bus_basic.nw: Changed signature of o_bus_save to just
+	take an object pointer.
+
+	* noweb/o_circle_basic.nw: Changed signature of o_circle_save to just
+	take an object pointer.
+
+	* noweb/o_complex_basic.nw: Removed fixed size character buffer
+	from: o_complex_add(), o_complex_read(), o_complex_save().
+	Changed signature of o_complex_save to just take an object pointer.
+
+	* noweb/o_line_basic.nw: Changed signature of o_line_save to just
+	take an object pointer.
+
+	* noweb/o_net_basic.nw: Changed signature of o_net_save to just
+	take an object pointer.
+	
+	* noweb/o_pin_basic.nw: Changed signature of o_pin_save to just
+	take an object pointer.
+
+	* noweb/s_basic.nw: Add null check in nl_remove().  Added
+	remove_last_nl().
+
+	* noweb/s_slib.nw: Removed fixed size character buffer.
+
+	* noweb/o_text_basic.nw: Added o_text_num_lines()
+
+	* noweb/o_text_basic.nw: In o_text_load_font removed fixed size 
+	character buffer.  Added code to set the width of the new line
+	character (a nop really) and set the width of characters that 
+	cannot be identified.
+
+	* noweb/o_text_basic.nw: Rewrote o_text_height() and
+	o_text_width() to handle multiple line text objects.  o_text_height
+	takes the input string (since it can be multiple lines long) as
+	a parameter now.
+
+	* noweb/o_text_basic.nw: Removed a size adjustment hack when
+	calculating the width of a string. 
+
+	* noweb/o_text_basic.nw: Added code to o_text_create_string to
+	handle multi-line text objects.  Also added code to handle 
+	tab characters within text lines.
+	
+	* noweb/o_text_basic.nw: Added code to o_text_create_string to 
+	not add newline or tabs to the lowlevel text list 
+
+	* noweb/o_text_basic.nw: Removed fixed size character buffers in
+	o_text_add().  Removed 1024 limit on text lines.  Fixed up a call
+	to o_attrib_get_name_value to use the new function signature.
+
+	* noweb/o_text_basic.nw: Changed o_text_read() to take the file
+	pointer as an argument.  This function now reads in the multiple
+	lines of text.  Added code to handle the reading in of multi-line
+	text items when the file format is 1.
+
+	* noweb/o_text_basic.nw: Added log message when using gtk+ 1.2.x and
+	a multi-line text item is read in.
+
+	* noweb/o_text_basic.nw: In o_text_set_info_font(), added code to
+	set the width of the special newline character correctly.
+
+	* noweb/o_text_basic.nw: Added code to set the text width of 
+	character not found (loaded the ? char instead)
+
+	* noweb/o_text_basic.nw: Changed signature of o_net_save to just
+	take an object pointer.  Changed file format to save the number
+	of lines in the text item.
+
+	* noweb/o_text_basic.nw: In o_text_recreate(), o_text_print(),
+	o_text_mirror_old(), fixed the usage of o_attrib_get_name_value().
+
+	* noweb/o_text_basic.nw: Removed the w_current parameter from
+	o_text_height() since it is not used.
+
+	* noweb/g_smob.nw, o_attrib.nw, o_text_basic.nw: Added some checks
+	to make sure valid pointers are freed (everywhere 
+	o_attrib_get_name_value) is called.
+
+	* noweb/*.nw: misc code format cleanup
+
+	* include/prototype.h: Changed string to file pointer to
+	o_text_read()
+
+	* include/defines.h: Added #define for max single line length.  
+	The text line can spawn multiple 1024 length lines, but a single
+	line can only be 1024 characters long.
+
+	* include/globals.h: Added tab_in_chars global variable.
+ 	
+	* noweb/o_attrib.nw: Removed old string[...] variable.
+
+	* noweb/o_attrib.nw: Added code to make sure that attributes are 
+	only a single line.
+
+	* noweb/o_box_basic.nw, noweb/o_circle_basic.nw: Removed all //
+	comments (replaced them with C comments) 
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+
+2003-10-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Oops, misspelled saved_CFLAGS and therefore libgeda
+	wasn't being built with -O2 -g which probably caused the code to be
+	rather un-optimal.  Fixed.
+
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this

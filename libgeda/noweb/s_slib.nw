@@ -387,7 +387,7 @@ s_slib_search(char *filename, int flag)
   char *processed_name=NULL;
   char *new_filename=NULL;
   char *string=NULL;
-  char number_suffix[50]; /* a reasonablly large number hack ? */
+  char *number_suffix;
   int len;
   int len2;
   static int count;
@@ -413,7 +413,7 @@ s_slib_search(char *filename, int flag)
       /* for now only look for .sch's */
       /* this needs to be *MUCH* more flexible */
       /* number_suffix is large enough ? */
-      sprintf(number_suffix, "_%d.sch", count); 
+      number_suffix = g_strdup_printf("_%d.sch", count); 
       len2 = strlen(number_suffix);
       new_filename = (char *) 
         malloc (sizeof(char)*(len+len2+1));
@@ -422,6 +422,7 @@ s_slib_search(char *filename, int flag)
       string = s_slib_search_lowlevel(new_filename);
 
       free(new_filename);
+      free(number_suffix);
       break;
 
     case(SLIB_SEARCH_DONE):

@@ -128,7 +128,7 @@ i_allow_expose(void)
 static const char *
 i_status_string(TOPLEVEL *w_current)
 {
-  static char buf[100];
+  static char *buf = 0;
 
   switch ( w_current->event_state ) {
   case NONE:
@@ -170,7 +170,8 @@ i_status_string(TOPLEVEL *w_current)
     return _("Pan Mode");
   case STARTPASTE:
   case ENDPASTE:
-    snprintf(buf,sizeof(buf), _("Paste %d Mode"), w_current->buffer_number+1);
+    if (buf) free(buf);
+    buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
     return buf;
   case STARTDRAWNET:
   case DRAWNET:
@@ -219,35 +220,43 @@ i_status_string(TOPLEVEL *w_current)
 void
 i_show_state(TOPLEVEL *w_current, const char *message)
 {
-  static char buf[200];
-  int n;
-  int bufsize = 0;
+  static char *buf = 0;
+  char *aux = 0;
   const char *state_string = i_status_string(w_current);
   const char *what_to_say;
 
+  buf = g_strdup_printf("");
+  aux = buf;
+
   if ( message && message[0] ) {
-    n = snprintf(buf,sizeof(buf), "%s - ", message);
-    if (n > 0) bufsize = n;
+    buf = g_strdup_printf("%s - ", message);
+    if (aux) free(aux);
+    aux = buf;
   }
 
   if ( !w_current->snap ) {
-    n = snprintf(buf+bufsize,sizeof(buf)-bufsize, "%s - ", _("Snap Off"));
-    if (n > 0) bufsize += n;
+    buf = g_strdup_printf("%s%s - ", buf, _("Snap Off"));
+    if (aux) free(aux);
+    aux = buf;
   }
 
   if ( w_current->show_hidden_text ) {
-    n = snprintf(buf+bufsize,sizeof(buf)-bufsize, "%s - ", _("Show Hidden"));
-    if (n > 0) bufsize += n;
+    buf = g_strdup_printf("%s%s - ", buf, _("Show Hidden"));
+    if (aux) free(aux);
+    aux = buf;
   }
 
-  if (bufsize > 0) {
-    snprintf(buf+bufsize,sizeof(buf)-bufsize, "%s", state_string);
+  if (strlen(buf) > 0) {
+    buf = g_strdup_printf("%s%s", buf, state_string);
+    if (aux) free(aux);
+    aux = buf;
     what_to_say = buf;
   } else {
     what_to_say = state_string;
   }
 
   i_update_status(w_current, what_to_say);
+  free(buf);
 }
 
 

@@ -75,7 +75,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
   int x1, y1, x2, y2; /* screen coords */
 
 #if NET_DEBUG /* debug */
-  char tempstring[64];
+  char *tempstring;
   GdkFont *font;
 #endif
 
@@ -137,7 +137,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #if NET_DEBUG
     /* temp debug only */
     font = gdk_fontset_load ("10x20");
-    sprintf(tempstring, "%s", o_current->name);
+    tempstring = g_strdup_printf("%s", o_current->name);
     gdk_draw_text (w_current->window,
                    font,
                    w_current->gc,
@@ -151,6 +151,7 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
                    tempstring,
                    strlen(tempstring));
     gdk_font_unref(font);
+    free(tempstring);
 #endif
   }
 

@@ -340,10 +340,11 @@ OBJECT *o_net_read(TOPLEVEL * w_current, OBJECT * object_list, char buf[],
 @end defun
 
 <<o_net_basic.c : o_net_save()>>=
-char *o_net_save(char *buf, OBJECT * object)
+char *o_net_save(OBJECT * object)
 {
   int x1, x2, y1, y2;
   int color;
+  char *buf;
 
   x1 = object->line->x[0];
   y1 = object->line->y[0];
@@ -357,7 +358,7 @@ char *o_net_save(char *buf, OBJECT * object)
     color = object->saved_color;
   }
 
-  sprintf(buf, "%c %d %d %d %d %d", object->type, x1, y1, x2, y2, color);
+  buf = g_strdup_printf("%c %d %d %d %d %d", object->type, x1, y1, x2, y2, color);
   return (buf);
 }
 

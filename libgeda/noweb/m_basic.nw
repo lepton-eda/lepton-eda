@@ -459,7 +459,6 @@ void set_window(TOPLEVEL *w_current, int xmin, int xmax, int ymin, int ymax)
   w_current->page_current->to_screen_x_constant = fs / (f1 - f0);
 
   /* pix_y */
-  f0 = w_current->page_current->left;
   f0 = w_current->page_current->top;
   f1 = w_current->page_current->bottom;
   fs = w_current->height;

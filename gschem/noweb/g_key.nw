@@ -94,42 +94,12 @@ set_window_current_key(TOPLEVEL *w_current)
 void
 g_key_execute(int state, int keyval)
 {
-  /* TODO: the size is hack */
-  char guile_string[50];
-  char modifier[10];
+  char *guile_string = NULL;
+  char *modifier = NULL;
 
   if (keyval == 0) {
     return;
   }
-
-  if (state & GDK_SHIFT_MASK) {
-    strcpy(modifier, "\"Shift ");
-  } else if (state & GDK_CONTROL_MASK) {
-    strcpy(modifier, "\"Control ");
-  } else if (state & GDK_MOD1_MASK) {
-    strcpy(modifier, "\"Alt ");
-  } else {
-    modifier[0] = '\"';
-    modifier[1] = '\0';
-  }
-
-#if 0 /* old non-portable way */
-  /* don't pass the raw modifier key presses to the guile code */
-  if (strstr(XKeysymToString(keyval), "Alt")) {
-    return;
-  }
-
-  if (strstr(XKeysymToString(keyval), "Shift")) {
-    return;
-  }
-
-  if (strstr(XKeysymToString(keyval), "Control")) {
-    return;
-  }
-
-  sprintf(guile_string, "(press-key %s%s\")",
-          modifier, XKeysymToString (keyval));
-#endif
 
   /* don't pass the raw modifier key presses to the guile code */
   if (strstr(gdk_keyval_name(keyval), "Alt")) {
@@ -144,13 +114,25 @@ g_key_execute(int state, int keyval)
     return;
   }
 
-  sprintf(guile_string, "(press-key %s%s\")",
-          modifier, gdk_keyval_name (keyval));
+  if (state & GDK_SHIFT_MASK) {
+    modifier = g_strdup_printf("\"Shift ");
+  } else if (state & GDK_CONTROL_MASK) {
+    modifier = g_strdup_printf("\"Control ");
+  } else if (state & GDK_MOD1_MASK) {
+    modifier = g_strdup_printf("\"Alt ");
+  } else {
+    modifier = g_strdup_printf("\"");
+  }
+
+  guile_string = g_strdup_printf("(press-key %s%s\")",
+				 modifier, gdk_keyval_name (keyval));
 
 #if DEBUG 
   printf("_%s_\n", guile_string);
 #endif
   gh_eval_str(guile_string);
+  free(guile_string);
+  free(modifier);
 
 #if 0 /* playing with thi's guile stuff */
   gh_eval_str("(display (reverse last-command-sequence))");

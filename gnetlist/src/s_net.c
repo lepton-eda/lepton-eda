@@ -163,7 +163,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     if (!temp_uref)
     {
       temp_uref =
-	o_attrib_search_name_single(head->complex_parent, "uref", NULL); // deprecated
+	o_attrib_search_name_single(head->complex_parent, "uref", NULL); /* deprecated */
       if (temp_uref) {
         printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
       }

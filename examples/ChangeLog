@@ -1,3 +1,12 @@
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * */*.sch: Updated all example schematics
+
+        * */gschlasrc: Added in all subdirs
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this

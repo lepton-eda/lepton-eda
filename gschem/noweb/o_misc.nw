@@ -90,6 +90,7 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
   SELECTION *s_current;
   int object_count=0;
 #endif
+  int num_lines = 0;
 
   if (list == NULL) {
     w_current->inside_action = 0;
@@ -148,14 +149,19 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
        */
       equal_ptr = strchr(o_current->text->string, '=');
 
+      /* and also make sure it is only a single line */
+      num_lines = o_text_num_lines(o_current->text->string);
+
       /* there is a possiblity for core dump yes? */
       /* by exceeding the size of the text_string? */
       /* or maybe not, since if the ='s is at the end of */
       /* the string, there better be a null after it! */
       if ( (*(equal_ptr + 1) != ' ') &&
-           (*(equal_ptr - 1) != ' ') ) {
-        attrib_edit_dialog(w_current,o_current, 
-                           FROM_MENU);
+           (*(equal_ptr - 1) != ' ') &&
+           (num_lines == 1) ) {
+	        attrib_edit_dialog(w_current,o_current, FROM_MENU); 
+	/*	multi_attrib_edit(w_current, o_current); */
+
       } else {
         o_text_edit(w_current, o_current);
       } 
@@ -811,10 +817,10 @@ o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
   while(o_current != NULL) {
     if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
 
-      // don't toggle the visibility flag
+      /* don't toggle the visibility flag */
 
       if (w_current->show_hidden_text) {
-        // draw the text object if it hidden 
+        /* draw the text object if it hidden  */
         if (o_current->text->prim_objs == NULL) {
           o_text_recreate(w_current, o_current);
         }
@@ -1006,7 +1012,8 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 #endif
           a_zoom(w_current, ZOOM_FULL, HOTKEY, A_PAN_DONT_REDRAW);
           text_screen_height =  SCREENabs(w_current,
-                                          o_text_height(w_current,
+                                          o_text_height(o_current->
+							text->string,
                                                         o_current->
                                                         text->size));
           /* this code will zoom/pan till the text screen height is about */
@@ -1017,7 +1024,8 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
             a_pan_general(w_current, o_current->text->x, o_current->text->y, 
                           1, A_PAN_DONT_REDRAW);
             text_screen_height =  SCREENabs(w_current,
-                                            o_text_height(w_current,
+                                            o_text_height(o_current->
+							  text->string,
                                                           o_current->
                                                           text->size));
           }
@@ -1145,7 +1153,7 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
   int page_control = 0;
   int pcount = 0;
 
-  unsigned char ss[256];
+  unsigned char *ss;
   int l;
 
   o_current = o_list;
@@ -1200,11 +1208,12 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
               used_count++;
             }
 
-	    sprintf(ss, "%s%d", stext, current_max++);
+	    ss = g_strdup_printf("%s%d", stext, current_max++);
 	    /*            printf("%s\n", ss); */
 	    o_current->text->string =
 		(char *) malloc(sizeof(char) * (strlen(ss) + 1));
 	    strcpy(o_current->text->string, ss);
+	    free(ss);
 	    o_text_erase(w_current, o_current);
 	    o_text_recreate(w_current, o_current);
 	    o_text_draw(w_current, o_current);

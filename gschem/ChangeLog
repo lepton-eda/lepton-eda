@@ -11,6 +11,133 @@
 	* noweb/g_funcs.nw: Added new gschem command: gschem-image 
 	which outputs a png to a file.
 
+        * noweb/g_key.nw, g_rc.nw, gschem.nw, i_basic.nw, o_misc.nw, 
+	o_net.nw, o_slot.nw, o_text.nw, o_undo.nw, x_attribedit.nw, 
+	x_dialog.nw, x_fileselect.nw, x_grid.nw, x_image.nw, x_menus.nw, 
+	x_multiattrib.nw, x_print.nw, x_stroke.nw, x_window.nw: 
+	Applied Carlos Nieves Onega's multi-line text patch.  Thank you
+	Carlos!  The next items are the all changes from Carlos' patch
+	and my integration changes.  The changes happened over a period
+	of a few weeks, but were checked in on the above date.
+
+	* noweb/g_key.nw: Removed a couple fixed sized character buffers.
+
+	* noweb/g_key.nw: Rearranged g_key_execute() to avoid a possible
+	memory leak.  Removed some ancient code.
+
+	* noweb/g_rc.nw: Added the word "optional" to the ~/.gEDA/gschemrc
+	and local gschemrc warning message if these files are not found.
+	Added "required" to the system-gschemrc message.
+
+        * noweb/gschem.nw: Fixed memory leak due to default_bus_ripper_symname
+        not being freed on exit.
+
+	* noweb/gschem.nw: Removed a fixed size character buffer.
+
+	* noweb/i_basic.nw: Removed a few fixed size character buffers.
+	Fixed a possible core dump.
+
+	* noweb/o_misc.nw: Fixed the attribute edit detection code to 
+	only start the attribute editor for one line text attributes.
+
+	* noweb/o_misc.nw: Fixed up references to o_text_height (takes
+	string and does not take w_current anymore).
+
+	* noweb/o_misc.nw: Removed fixed size character buffer.
+
+	* noweb/o_net.nw: Removed fixed size character buffer.
+
+	* noweb/o_slot.nw: Fixed up a call to o_attrib_get_name_value to
+	use the new function signature.
+
+        * noweb/o_slot.nw x_multiattrib.nw x_attribedit.nw: Added some checks
+        to make sure valid pointers are freed (everywhere
+        o_attrib_get_name_value) is called.
+
+	* noweb/o_text.nw: Changed the quick text drawing code to draw
+	a rectangle instead of a single line now that text can be multiple
+	lines long.
+
+	* noweb/o_text.nw: Fixed a minor typo (was outline_xor_gc instead
+	of just gc).
+
+	* noweb/o_undo.nw: Removed fixed size character buffer.
+
+	* noweb/x_attribedit.nw: Fixed up a few of calls to 
+	o_attrib_get_name_value to use the new function signature.
+	Also initalized two pointers to null, so they wouldn't be
+	attempted to be freed.
+
+	* noweb/x_dialog.nw: Added select_all_text_in_textview and
+	text_view_calculate_real_tab_width utillity functions.
+	
+	* noweb/x_dialog.nw: Converted the text_input_dialog and
+	text_edit_dialog boxes to use the new gtk+ 2.2.x GtkText API to
+	provide a way of entering multiple lines of text.  This is only
+	available when using gtk+ 2.2.x.  The old single line interface
+	is still there for users of gtk+ 1.2.x.
+
+	* noweb/x_dialog.nw: Remove a fixed size character buffer in the
+	alignment menu, linetype menu, line type dialog box, fill type
+	menu, fill type dialog box, text size dialog box, snap size dialog
+	box, about dialog box, coord update dialog box, and color menu.
+
+        * noweb/x_dialog.nw: Moved a few activate signal connects to
+        GTK1.2 only #ifdef sections.  This fixes a warning when using
+	gtk+ 2.2.x.
+
+	* noweb/x_dialog.nw: Fixed a warning from gtk+ 1.2.x where a non
+	scrolled widget (text entry) was being added to a scrolled window.
+	Fixed by making the scrolled window for text input and text edit
+	dialog boxes specific to gtk+ 2.2.x.
+
+	* noweb/x_image.nw: Removed fixed size character buffer in image
+	write size menu.
+
+	* noweb/x_menus.nw: Removed fixed size character buffer in
+	guile menu execute function (g_menu_execute), and get main menu
+	function (get_main_menu).
+
+	* noweb/x_multiattrib.nw: Fixed up a call to
+	o_attrib_get_name_value to use the new function signature.
+
+        * noweb/x_multiattrib.nw: Fixed a core dump in a free call.  If a
+        component with no attribute was edited, the text array would never
+        be allocated, but an attempt would be made to free it.  Moved free
+	code to the right spot.
+
+	* noweb/x_multiattrib.nw: Removed two printfs
+
+	* noweb/x_print.nw: Removed fixed size character buffer in
+	orientation menu and type menu.
+
+	* noweb/x_stroke.nw: Removed fixed size character buffer in
+	x_stroke_search_execute (stroke execute function).
+
+	* noweb/x_window.nw: Added casts around gtk+ toolbar functions.
+
+        * examples/*.sch: Updated all example schematics
+
+	* noweb/x_attribedit.nw, noweb/x_dialog.nw, noweb/o_grips.nw,
+	noweb/x_multiattrib.nw, noweb/o_misc.nw, noweb/o_text.nw:
+	Removed all // comments (replaced with proper C comments)
+
+	* tests/multiline.sch: Added new test schematic.
+
+2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+	
+2003-10-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/prototype.h: Added #ifdef HAS_GTK22 around gtk+ 2.2.x 
+	specific functions.  This means the prototype file is no longer
+	machine generated.
+
+	* noweb/x_dialog.nw: Added some more #ifdef HAS_GTK22 around 
+	gtk+ 2.2.x specific functions.
+
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this

@@ -513,7 +513,7 @@ o_grips_end(TOPLEVEL *w_current)
     if (o_net_add_busrippers(w_current, object, connected_objects)) {
       
       o_net_erase(w_current, object);
-      //o_line_erase_grips(w_current, object);
+      /*o_line_erase_grips(w_current, object); */
       
       if (w_current->net_style == THICK ) {
         size = SCREENabs(w_current, 10);

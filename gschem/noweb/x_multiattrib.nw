@@ -174,8 +174,8 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
   GtkWidget *visbutton;
   GtkWidget *show_options;
 
-  char name[1000];
-  char value[1000];
+  char *name = NULL;
+  char *value = NULL;
   int len;
 
   name_entry = gtk_object_get_data(GTK_OBJECT(window),"attrib_combo_entry");
@@ -205,7 +205,7 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
       gtk_option_menu_set_history(GTK_OPTION_MENU(show_options), 2);
     }
     
-    o_attrib_get_name_value(attrib->text->string, name, value);
+    o_attrib_get_name_value(attrib->text->string, &name, &value);
     if (name) {
       gtk_entry_set_text (GTK_ENTRY (name_entry), name);
     }
@@ -218,6 +218,8 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
         gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
       }
     }
+    if (name) free(name);
+    if (value) free(value);
   }
 }
 
@@ -402,7 +404,7 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
   OBJECT *object;
   char **text;
   GtkWidget *clist;
-  char tmpstr[20];
+  char *tmpstr;
 
   clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
 
@@ -419,8 +421,9 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 
   /* handle slot= attribute, it's a special case */
   if ( (!strcmp(text[0],"slot")) & (strlen(text[1]) < 3) ) {
-    sprintf (tmpstr,"%s=%i",text[0],atoi(text[1]));
+    tmpstr = g_strdup_printf("%s=%i",text[0],atoi(text[1]));
     o_slot_end(w_current,tmpstr,strlen(tmpstr));
+    free(tmpstr);
   }
 
   w_current->page_current->CHANGED=1;
@@ -432,7 +435,7 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
   }
 
   free(newtext);
-  free(text); // is this correct?  I think so
+  free(text); /* is this correct?  I think so */
 }
 
 
@@ -455,7 +458,7 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
   char **text;
   GtkWidget *clist;
   GtkWidget *value_entry;
-  char tmpstr[20];
+  char *tmpstr;
   int len;
 
   clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
@@ -483,8 +486,9 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
 
   if ( (!strcmp(text[0],"slot")) & (strlen(text[1]) < 3) )
   {
-    sprintf (tmpstr,"%s=%i",text[0],atoi(text[1]));
+    tmpstr = g_strdup_printf("%s=%i",text[0],atoi(text[1]));
     o_slot_end(w_current,tmpstr,strlen(tmpstr));
+    free(tmpstr);
   }
 
   /* highlight the value text */
@@ -497,7 +501,7 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
   }
 
   free(newtext);
-  free(text); // is this correct?  I think so.
+  free(text); /* is this correct?  I think so. */
   
   if (gtk_object_get_data(GTK_OBJECT(w), "close")) {
     multi_attrib_edit_close (w,w_current);
@@ -907,35 +911,36 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_signal_connect(GTK_OBJECT(value_entry), "changed",
                      GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
 
-  /* allocate memory, gschem specific */
-  text[0] = malloc(sizeof(char)*512);
-  text[1] = malloc(sizeof(char)*512);
-  text[2] = malloc(sizeof(char)*8);
-  text[3] = malloc(sizeof(char)*8);
-
   /* fill clist, gschem specific */
   i=0;
   if (attriblist) {
     while(attriblist[i] != NULL)
     {
       o_attrib_get_name_value(attriblist[i]->text->string,
-                              text[0], text[1]);
+                              &(text[0]), &(text[1]));
       if(attriblist[i]->visibility == VISIBLE) {
-        strcpy(text[2], _("Yes"));
+        text[2] = g_strdup(_("Yes"));
       } else {
-        strcpy(text[2], _("No"));
+        text[2] = g_strdup(_("No"));
       }
 
       if(attriblist[i]->show_name_value == SHOW_NAME) {
-        strcpy(text[3], _("N"));
+        text[3] = g_strdup(_("N"));
       } else if(attriblist[i]->show_name_value == SHOW_VALUE) {
-        strcpy(text[3], _("V"));
+        text[3] = g_strdup(_("V"));
       } else {
-        strcpy(text[3], _("NV"));
+        text[3] = g_strdup(_("NV"));
       }
       row = gtk_clist_append(GTK_CLIST(clist),text);
       gtk_clist_set_row_data (GTK_CLIST(clist),row,attriblist[i]);
       i++;
+    }
+
+    /* now free the text array, don't try to do this later as some */
+    /* components do not have attributes and the free will core dump */
+    for (i = 0; i < NUM_COLUMNS; i++) { 
+      if (text[i])
+          free(text[i]);
     }
   }
 
@@ -963,10 +968,6 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   o_attrib_free_returned(attriblist);
   multi_attrib_edit_clear(NULL,GTK_WINDOW(mawindow));
   
-  for (i = 0; i < NUM_COLUMNS; i++) { 
-    if (text[i])
-        free(text[i]);
-  }
 }
 
 

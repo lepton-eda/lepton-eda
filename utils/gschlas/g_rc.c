@@ -128,7 +128,7 @@ g_rc_parse_system_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read system-gschlasrc file [%s]\n",
-                                "Did not find system-gschlasrc file [%s]\n");
+                                "Did not find required system-gschlasrc file [%s]\n");
 
   free(filename);
 
@@ -159,7 +159,7 @@ g_rc_parse_home_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read ~/.gEDA/gschlasrc file [%s]\n",
-                                "Did not find ~/.gEDA/gschlasrc file [%s]\n");
+                                "Did not find optional ~/.gEDA/gschlasrc file [%s]\n");
 
   free(filename);
 
@@ -181,7 +181,7 @@ g_rc_parse_local_rc()
   found_rc = g_rc_parse_general(
                                 filename,
                                 "Read local gschlasrc file [%s]\n",
-                                "Did not find local gschlasrc file [%s]\n");
+                                "Did not find optional local gschlasrc file [%s]\n");
 
   free(filename);
 

@@ -93,7 +93,7 @@ gschem_quit(void)
   free(default_font_directory);
   free(default_scheme_directory);
   free(default_bitmap_directory);
-
+  free(default_bus_ripper_symname);
 
   /* x_window_free_head(); can't do this since it causes a
    * condition in which window_head->... is still being refered
@@ -124,8 +124,7 @@ main_prog(int argc, char *argv[])
   int i;
   char *cwd;
   TOPLEVEL *w_current;
-  /* TODO: should the size be flexible? */
-  char input_str[256];
+  char *input_str = NULL;
   int argv_index;
   int first_page = 1;
   char *geda_data;
@@ -208,8 +207,8 @@ main_prog(int argc, char *argv[])
   g_rc_parse();
 
   
-  sprintf(input_str, "%s%cgschem.scm", default_scheme_directory, 
-	  PATH_SEPARATER_CHAR);
+  input_str = g_strdup_printf("%s%cgschem.scm", default_scheme_directory, 
+			      PATH_SEPARATER_CHAR);
   if (g_read_file(input_str) != -1) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
@@ -220,6 +219,7 @@ main_prog(int argc, char *argv[])
     fprintf(stderr,
             _("Failed to read init scm file [%s]\n"), input_str);
   }
+  free(input_str);
 
   colormap = gdk_colormap_get_system ();
   x_window_setup_colors();

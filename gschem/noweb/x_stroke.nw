@@ -189,12 +189,13 @@ x_stroke_free_all(void)
 int 
 x_stroke_search_execute(char *sequence)
 {
-  char guile_string[50]; /* Size hack */
+  char *guile_string; 
   SCM eval;
 
-  sprintf(guile_string, "(eval-stroke \"%s\")", sequence);
+  guile_string = g_strdup_printf("(eval-stroke \"%s\")", sequence);
 
   eval = gh_eval_str(guile_string);
+  free(guile_string);
 
   return gh_scm2bool(eval);
 }

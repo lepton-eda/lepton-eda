@@ -193,7 +193,7 @@ x_draw_tiles(TOPLEVEL *w_current)
   int x1, y1, x2, y2;
   int screen_x, screen_y;
   int width, height;
-  char tempstring[32];
+  char *tempstring;
 
   gdk_gc_set_foreground(w_current->gc, x_get_color(w_current->lock_color));
 
@@ -225,7 +225,7 @@ x_draw_tiles(TOPLEVEL *w_current)
                          FALSE, screen_x, screen_y,
                          width, height);
 
-      sprintf(tempstring, "%d %d", i, j);
+      tempstring = g_strdup_printf("%d %d", i, j);
       gdk_draw_text (w_current->window,
                      font,
                      w_current->gc,
@@ -239,6 +239,7 @@ x_draw_tiles(TOPLEVEL *w_current)
                      screen_x+10, screen_y+10, 
                      tempstring,
                      strlen(tempstring));
+      free(tempstring);
     }
   }
 

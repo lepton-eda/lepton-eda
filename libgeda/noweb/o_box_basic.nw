@@ -489,12 +489,13 @@ o_set_fill_options(w_current, object_list,
 @defun o_box_save buf object
 This function formats a string in the buffer [[*buff]] to describe the box object [[*object]].
 It follows the post-20000704 release file format that handle the line type and fill options. 
-A pointer on the formated string is returned.
+A pointer to the new allocated and formated string is returned. The
+string must be freed at some point.
 @end defun
 
 <<o_box_basic.c : o_box_save()>>=
 char *
-o_box_save(char *buf, OBJECT *object)
+o_box_save(OBJECT *object)
 {
   int x1, y1; 
   int width, height;
@@ -504,6 +505,7 @@ o_box_save(char *buf, OBJECT *object)
   OBJECT_END box_end;
   OBJECT_TYPE box_type;
   OBJECT_FILLING box_fill;
+  char *buf;
 
   <<o_box_save() : prepare the description of the box>>
 
@@ -556,12 +558,12 @@ if (object->saved_color == -1) {
 
 
 <<o_box_save() : describe a box with post-20000704 file format>>=
-sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
-		object->type,
-		x1, y1, width, height, color,
-		box_width, box_end, box_type, box_length, box_space, 
-		box_fill,
-		fill_width, angle1, pitch1, angle2, pitch2);
+buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+		      object->type,
+		      x1, y1, width, height, color,
+		      box_width, box_end, box_type, box_length, box_space, 
+		      box_fill,
+		      fill_width, angle1, pitch1, angle2, pitch2);
 
 @ 
 
@@ -1093,7 +1095,7 @@ if(o_current->fill_type != FILLING_HOLLOW) {
 			fill_func = (void *) o_box_print_filled;
 			break;
                 case(FILLING_HOLLOW):
-                  // nop
+                  /* nop */
                   break;
 
     }

@@ -129,7 +129,7 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int screen_x1, screen_y1;
   int small_dist, offset;
-  int length, dx=0, dy=0;
+  int length, height, dx=0, dy=0;
 
   if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
     return;
@@ -138,8 +138,8 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
   if (!w_current->fast_mousepan || !w_current->doing_pan) {
     o_text_draw_lowlevel(w_current, o_current);
 
-    // Indicate on the schematic that the text is invisible by
-    // drawing a little I on the screen at the origin
+    /* Indicate on the schematic that the text is invisible by */
+    /* drawing a little I on the screen at the origin */
     if (o_current->visibility == INVISIBLE && w_current->show_hidden_text) {
       if (w_current->override_color != -1 ) {
         gdk_gc_set_foreground(w_current->gc, 
@@ -154,7 +154,7 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
       small_dist = SCREENabs(w_current, 20);
       screen_x1 = o_current->text->screen_x + offset;
       screen_y1 = o_current->text->screen_y + offset;
-      // Top part of the I
+      /* Top part of the I */
       gdk_draw_line(w_current->window, w_current->gc,
                         screen_x1,
                         screen_y1,
@@ -165,7 +165,7 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
                         screen_y1,
                         screen_x1+small_dist,
                         screen_y1);
-      // Middle part of the I
+      /* Middle part of the I */
       gdk_draw_line(w_current->window, w_current->gc,
                         screen_x1+small_dist/2,
                         screen_y1,
@@ -176,7 +176,7 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
                         screen_y1,
                         screen_x1+small_dist/2,
                         screen_y1+small_dist);
-      // Bottom part of the I
+      /* Bottom part of the I */
       gdk_draw_line(w_current->window, w_current->gc,
                         screen_x1,
                         screen_y1+small_dist,
@@ -203,17 +203,14 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
       gdk_gc_set_foreground(w_current->gc,
                             x_get_color(o_current->color));
 
-#if 0 /* new way, but doesn't always look so good */	
       length = SCREENabs(w_current, 
                          o_text_width(w_current, 
                                       o_current->text->string,
                                       o_current->text->size/2)); 
-#endif
-
-      length = SCREENabs(w_current,
-                         o_current->text->displayed_length*10*
-                         o_current->text->size);
-
+      height = SCREENabs(w_current, o_text_height(o_current->text->string,
+						  o_current->text->size));
+      
+      
 #if DEBUG
       printf("%d %d %d\n",
              o_current->text->displayed_length,
@@ -223,39 +220,43 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
       switch(o_current->text->angle) {
         case(0):
-          gdk_draw_line(w_current->window,
-                        w_current->gc,
-                        screen_x1+dx,
-                        screen_y1+dy,
-                        screen_x1+dx+length,
-                        screen_y1+dy);
+	  gdk_draw_rectangle(w_current->window,
+			     w_current->gc,
+			     FALSE,
+			     screen_x1+dx,
+			     screen_y1+dy-height,
+			     length,
+			     height);
           break;
 	
         case(90):
-          gdk_draw_line(w_current->window,
-                        w_current->gc,
-                        screen_x1+dx,
-                        screen_y1+dy,
-                        screen_x1+dx,
-                        screen_y1+dy-length);
+	  gdk_draw_rectangle(w_current->window,
+			     w_current->gc,
+			     FALSE,
+			     screen_x1+dx-height,
+			     screen_y1+dy-length,
+			     height,
+			     length);
           break;
-	
-        case(180):
-          gdk_draw_line(w_current->window,
-                        w_current->gc,
-                        screen_x1+dx,
-                        screen_y1+dy,
-                        screen_x1+dx-length,
-                        screen_y1+dy);
+	  
+      case(180):
+	  gdk_draw_rectangle(w_current->window,
+			     w_current->gc,
+			     FALSE,
+			     screen_x1+dx-length,
+			     screen_y1+dy,
+			     length,
+			     height);
           break;
 	
         case(270):
-          gdk_draw_line(w_current->window,
-                        w_current->gc,
-                        screen_x1+dx,
-                        screen_y1+dy,
-                        screen_x1+dx,
-                        screen_y1+dy+length);
+	  gdk_draw_rectangle(w_current->window,
+			     w_current->gc,
+			     FALSE,
+			     screen_x1+dx,
+			     screen_y1+dy,
+			     height,
+			     length);
           break;
       }
       return;
@@ -343,7 +344,7 @@ void
 o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   int screen_x1, screen_y1;
-  int length;
+  int length, height;
   int color, factor;
 
   if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
@@ -372,15 +373,11 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
     gdk_gc_set_foreground(w_current->outline_xor_gc,
                           x_get_darkcolor(color));
 
-    length = SCREENabs(w_current,
-                       o_current->text->displayed_length*10*
-                       o_current->text->size);
-
-#if 0 /* new way, but doesn't look so good */
     length = SCREENabs(w_current, o_text_width(w_current, 
                                                o_current->text->string,
                                                o_current->text->size/2)); 
-#endif
+    height = SCREENabs(w_current, o_text_height(o_current->text->string,
+						o_current->text->size));
 
 
 #if DEBUG
@@ -392,39 +389,44 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 
     switch(o_current->text->angle) {
       case(0):
-        gdk_draw_line(w_current->window,
-                      w_current->outline_xor_gc,
-                      screen_x1+dx,
-                      screen_y1+dy,
-                      screen_x1+dx+length,
-                      screen_y1+dy);
+	gdk_draw_rectangle(w_current->window,
+			   w_current->outline_xor_gc,
+			   FALSE,
+			   screen_x1+dx,
+			   screen_y1+dy-height,
+			   length,
+			   height);
         break;
 
       case(90):
-        gdk_draw_line(w_current->window,
-                      w_current->outline_xor_gc,
-                      screen_x1+dx,
-                      screen_y1+dy,
-                      screen_x1+dx,
-                      screen_y1+dy-length);
+	gdk_draw_rectangle(w_current->window,
+			   w_current->outline_xor_gc,
+			   FALSE,
+			   screen_x1+dx-height,
+			   screen_y1+dy-length,
+			   height,
+			   length);
         break;
 
       case(180):
-        gdk_draw_line(w_current->window,
-                      w_current->outline_xor_gc,
-                      screen_x1+dx,
-                      screen_y1+dy,
-                      screen_x1+dx-length,
-                      screen_y1+dy);
+	gdk_draw_rectangle(w_current->window,
+			   w_current->outline_xor_gc,
+			   FALSE,
+			   screen_x1+dx-length,
+			   screen_y1+dy,
+			   length,
+			   height);
+
         break;
 
       case(270):
-        gdk_draw_line(w_current->window,
-                      w_current->outline_xor_gc,
-                      screen_x1+dx,
-                      screen_y1+dy,
-                      screen_x1+dx,
-                      screen_y1+dy+length);
+	gdk_draw_rectangle(w_current->window,
+			   w_current->outline_xor_gc,
+			   FALSE,
+			   screen_x1+dx,
+			   screen_y1+dy,
+			   height,
+			   length);
         break;
     }
   }

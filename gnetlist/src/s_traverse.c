@@ -136,7 +136,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 
         if (!temp_uref) {
           temp_uref =
-            o_attrib_search_name_single(o_current, "uref", NULL); // deprecated
+            o_attrib_search_name_single(o_current, "uref", NULL); /* deprecated */
 
           if (temp_uref) {
             printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);

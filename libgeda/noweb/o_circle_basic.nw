@@ -461,18 +461,20 @@ o_set_fill_options(w_current, object_list,
 @defun o_circle_save buf object
 This function formats a string in the buffer [[*buff]] to describe the circle object [[*object]].
 It follows the post-20000704 release file format that handle the line type and fill options.
-A pointer on the formated string is returned.
+A pointer to the new allocated and formated string is returned. The
+string must be freed at some point.
 @end defun
 
 <<o_circle_basic.c : o_circle_save()>>=
 char *
-o_circle_save(char *buf, OBJECT *object)
+o_circle_save(OBJECT *object)
 {
   int x,y;
   int radius;
   int color;
   int circle_width, circle_space, circle_length;
   int fill_width, angle1, pitch1, angle2, pitch2;
+  char *buf;
   OBJECT_END circle_end;
   OBJECT_TYPE circle_type;
   OBJECT_FILLING circle_fill;
@@ -529,11 +531,11 @@ if (object->saved_color == -1) {
 
 
 <<o_circle_save() : describe a circle with post-20000704 file format>>=
-sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
-		object->type, x, y, radius, color,
-		circle_width, circle_end, circle_type, circle_length, 
-		circle_space, circle_fill,
-		fill_width, angle1, pitch1, angle2, pitch2);
+buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+		      object->type, x, y, radius, color,
+		      circle_width, circle_end, circle_type, circle_length, 
+		      circle_space, circle_fill,
+		      fill_width, angle1, pitch1, angle2, pitch2);
 
 @ 
 
@@ -1061,7 +1063,7 @@ The case where [[pitch1]] and [[pitch2]] are null or negative is avoided as it l
         break;
         
       case(FILLING_HOLLOW):
-        // nop
+        /* nop */
         break;
     }
 

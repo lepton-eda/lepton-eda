@@ -160,7 +160,8 @@ SCM
 g_get_attrib_name_value(SCM attrib_smob)
 {
   struct st_attrib_smob *attribute;
-  char *name, *value;
+  char *name = NULL;
+  char *value = NULL;
   SCM returned = SCM_EOL;
 
 
@@ -174,14 +175,11 @@ g_get_attrib_name_value(SCM attrib_smob)
       attribute->attribute &&
       attribute->attribute->object &&
       attribute->attribute->object->text->string ) {
-    name  = malloc(strlen(attribute->attribute->object->text->string));
-    value = malloc(strlen(attribute->attribute->object->text->string));
-    o_attrib_get_name_value(
-                            attribute->attribute->object->text->string, 
-                            name, value );
+    o_attrib_get_name_value(attribute->attribute->object->text->string, 
+                            &name, &value );
     returned = gh_cons( gh_str02scm(name), gh_str02scm(value) );
-    free(name);
-    free(value);
+    if (name) free(name);
+    if (value) free(value);
   }
 
   return returned;
@@ -201,7 +199,9 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 			    TOPLEVEL **world, OBJECT **o_attrib, char *new_string[])
 {
   struct st_attrib_smob *attribute;
-  char *name, *value, *old_value;
+  char *name = NULL;
+  char *value = NULL;
+  char *old_value = NULL;
 
   SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
                (SCM_CAR(attrib_smob) == attrib_smob_tag),
@@ -217,23 +217,20 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
       attribute->attribute->object &&
       attribute->attribute->object->text &&
       attribute->attribute->object->text->string ) {
-    name  = malloc(strlen(attribute->attribute->object->text->string));
-    old_value = malloc(strlen(attribute->attribute->object->text->string));
 
-    o_attrib_get_name_value(
-                            attribute->attribute->object->text->string, 
-                            name, old_value );
+    o_attrib_get_name_value(attribute->attribute->object->text->string, 
+                            &name, &old_value );
 
     *new_string = u_basic_strdup_multiple(name, "=", value, NULL);
 		
     *world = attribute->world;
     *o_attrib = attribute->attribute->object;
 
-    free(name);
-    free(old_value);
+    if (name) free(name);
+    if (old_value) free(old_value);
   }
 
-  free(value);
+  if (value) free(value);
   return SCM_UNDEFINED;
 }
 

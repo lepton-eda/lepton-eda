@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/gmk_sym.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-utils
-VERSION=20031004
+VERSION=20031019
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 

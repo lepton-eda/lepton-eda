@@ -19,6 +19,7 @@
 <<o_text_basic.c : o_text_init()>>
 <<o_text_basic.c : o_text_print_set()>>
 <<o_text_basic.c : o_text_load_font()>>
+<<o_text_basic.c : o_text_num_lines()>>
 <<o_text_basic.c : o_text_height()>>
 <<o_text_basic.c : o_text_width()>>
 <<o_text_basic.c : o_text_create_string()>>
@@ -83,6 +84,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <sys/stat.h>
+#include <assert.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
@@ -117,6 +119,9 @@
 
 <<o_text_basic.c : global variable>>=
 OBJECT font_set[NUM_CHARS];
+
+/* Size of a tab in characters */
+int tab_in_chars = 8;
 
 @ %def font_set
 
@@ -242,233 +247,238 @@ o_text_print_set(void)
 OBJECT *
 o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 {
-  char temp_string[256]; /* remove me HACK !!!!!!!!!!!!!!!!!!!!! */
+  char *temp_string = NULL;
   OBJECT *temp_parent;
+  int not_found = FALSE;
 
   switch(needed_char) {
 		
     case(' '):
-      sprintf(temp_string, "%s%cspace.sym", 
+      temp_string = g_strdup_printf("%s%cspace.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
+
+    case('\n'):
+      temp_string = g_strdup_printf("%s%cnewline.sym", 
+              w_current->font_directory, PATH_SEPARATER_CHAR);
 		
     case('!'):
-      sprintf(temp_string, "%s%cexcl.sym", 
+      temp_string = g_strdup_printf("%s%cexcl.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 		
     case(','):
-      sprintf(temp_string, "%s%ccomma.sym", 
+      temp_string = g_strdup_printf("%s%ccomma.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('('):
-      sprintf(temp_string, "%s%clparen.sym", 
+      temp_string = g_strdup_printf("%s%clparen.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case(')'):
-      sprintf(temp_string, "%s%crparen.sym", 
+      temp_string = g_strdup_printf("%s%crparen.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('-'):
-      sprintf(temp_string, "%s%cminus.sym", 
+      temp_string = g_strdup_printf("%s%cminus.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('+'):
-      sprintf(temp_string, "%s%cplus.sym", 
+      temp_string = g_strdup_printf("%s%cplus.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('#'):
-      sprintf(temp_string, "%s%cpound.sym", 
+      temp_string = g_strdup_printf("%s%cpound.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('?'):
-      sprintf(temp_string, "%s%cquest.sym", 
+      temp_string = g_strdup_printf("%s%cquest.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('"'):
-      sprintf(temp_string, "%s%cquote.sym", 
+      temp_string = g_strdup_printf("%s%cquote.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case(':'):
-      sprintf(temp_string, "%s%ccolon.sym", 
+      temp_string = g_strdup_printf("%s%ccolon.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('@'):
-      sprintf(temp_string, "%s%cat.sym", 
+      temp_string = g_strdup_printf("%s%cat.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('='):
-      sprintf(temp_string, "%s%cequal.sym", 
+      temp_string = g_strdup_printf("%s%cequal.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('>'):
-      sprintf(temp_string, "%s%cmore.sym", 
+      temp_string = g_strdup_printf("%s%cmore.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('<'):
-      sprintf(temp_string, "%s%cless.sym", 
+      temp_string = g_strdup_printf("%s%cless.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('/'):
-      sprintf(temp_string, "%s%cslash.sym", 
+      temp_string = g_strdup_printf("%s%cslash.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('$'):
-      sprintf(temp_string, "%s%cdollar.sym", 
+      temp_string = g_strdup_printf("%s%cdollar.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case(';'):
-      sprintf(temp_string, "%s%csemi.sym", 
+      temp_string = g_strdup_printf("%s%csemi.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('&'):
-      sprintf(temp_string, "%s%camper.sym", 
+      temp_string = g_strdup_printf("%s%camper.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('\\'):
-      sprintf(temp_string, "%s%cbackslash.sym", 
+      temp_string = g_strdup_printf("%s%cbackslash.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('{'):
-      sprintf(temp_string, "%s%clbrace.sym", 
+      temp_string = g_strdup_printf("%s%clbrace.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('}'):
-      sprintf(temp_string, "%s%crbrace.sym", 
+      temp_string = g_strdup_printf("%s%crbrace.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('\''):
-      sprintf(temp_string, "%s%capost.sym", 
+      temp_string = g_strdup_printf("%s%capost.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('`'):
-      sprintf(temp_string, "%s%cbacktick.sym", 
+      temp_string = g_strdup_printf("%s%cbacktick.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('^'):
-      sprintf(temp_string, "%s%ccaret.sym", 
+      temp_string = g_strdup_printf("%s%ccaret.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('%'):
-      sprintf(temp_string, "%s%cpercent.sym", 
+      temp_string = g_strdup_printf("%s%cpercent.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('['):
-      sprintf(temp_string, "%s%clbrack.sym", 
+      temp_string = g_strdup_printf("%s%clbrack.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case(']'):
-      sprintf(temp_string, "%s%crbrack.sym", 
+      temp_string = g_strdup_printf("%s%crbrack.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('*'):
-      sprintf(temp_string, "%s%castericks.sym", 
+      temp_string = g_strdup_printf("%s%castericks.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('.'):
-      sprintf(temp_string, "%s%cperiod.sym", 
+      temp_string = g_strdup_printf("%s%cperiod.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('_'):
-      sprintf(temp_string, "%s%cunder.sym", 
+      temp_string = g_strdup_printf("%s%cunder.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('~'):
-      sprintf(temp_string, "%s%ctilde.sym", 
+      temp_string = g_strdup_printf("%s%ctilde.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case('|'):
-      sprintf(temp_string, "%s%cvbar.sym", 
+      temp_string = g_strdup_printf("%s%cvbar.sym", 
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (196): /* A-umlaut finnish/swedish/german */
-      sprintf(temp_string, "%s%cA-diaeresis.sym",
+      temp_string = g_strdup_printf("%s%cA-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (197): /* A-ring finnish/swedish/danish/norwegian */
-      sprintf(temp_string, "%s%cA-ring.sym",
+      temp_string = g_strdup_printf("%s%cA-ring.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (198): /* AE-diphtong danish/norwegian */
-      sprintf(temp_string, "%s%cAE-lig.sym",
+      temp_string = g_strdup_printf("%s%cAE-lig.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (214): /* O-umlaut finnish/swedish/german */
-      sprintf(temp_string, "%s%cO-diaeresis.sym",
+      temp_string = g_strdup_printf("%s%cO-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (216): /* O-slash danish/norwegian */
-      sprintf(temp_string, "%s%cO-slash.sym",
+      temp_string = g_strdup_printf("%s%cO-slash.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (220): /* U-umlaut german */
-      sprintf(temp_string, "%s%cU-diaeresis.sym",
+      temp_string = g_strdup_printf("%s%cU-diaeresis.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (228): /* a-umlaut finnish/swedish/german */
-      sprintf(temp_string, "%s%ca_-diaeresis.sym",
+      temp_string = g_strdup_printf("%s%ca_-diaeresis.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (229): /* a-ring finnish/swedish/danish/norwegian */
-      sprintf(temp_string, "%s%ca_-ring.sym",
+      temp_string = g_strdup_printf("%s%ca_-ring.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (230): /* ae-diphtong danish/norwegian */
-      sprintf(temp_string, "%s%cae_-lig.sym",
+      temp_string = g_strdup_printf("%s%cae_-lig.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (246): /* o-umlaut finnish/swedish/german */
-      sprintf(temp_string, "%s%co_-diaeresis.sym",
+      temp_string = g_strdup_printf("%s%co_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (248): /* o-slash danish/norwegian */
-      sprintf(temp_string, "%s%co_-slash.sym",
+      temp_string = g_strdup_printf("%s%co_-slash.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
 
     case (252): /* u-umlaut german */
-      sprintf(temp_string, "%s%cu_-diaeresis.sym",
+      temp_string = g_strdup_printf("%s%cu_-diaeresis.sym",
               w_current->font_directory, PATH_SEPARATER_CHAR);
       break;
       
@@ -480,11 +490,11 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
        * z_.sym, this loads up the chars 
        */
       if (needed_char >= 'a' && needed_char <= 'z') {
-        sprintf(temp_string, "%s%c%c_.sym", 
+        temp_string = g_strdup_printf("%s%c%c_.sym", 
                 w_current->font_directory, PATH_SEPARATER_CHAR,
                 needed_char);
       } else {
-        sprintf(temp_string, "%s%c%c.sym", 
+        temp_string = g_strdup_printf("%s%c%c.sym", 
                 w_current->font_directory, PATH_SEPARATER_CHAR,
                 needed_char);
       }
@@ -494,11 +504,13 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 
   if ( access(temp_string, R_OK) != 0 ) {
     s_log_message("Could not find character %c definition\n",needed_char, temp_string);
-    sprintf(temp_string, "%s%cquest.sym", w_current->font_directory, PATH_SEPARATER_CHAR);
+    free(temp_string);
+    temp_string = g_strdup_printf("%s%cquest.sym", w_current->font_directory, PATH_SEPARATER_CHAR);
     if ( access(temp_string, R_OK) != 0 ) {
       fprintf(stderr, "Could not load question font char -- check font-directory keyword\n");
       exit(-1);
     }
+    not_found = TRUE; 
   }
 
   /* printf("loading: %s\n", temp_string);*/
@@ -516,6 +528,14 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 
   font_set[(unsigned char) needed_char].font_prim_objs =
   return_head(font_set[(unsigned char) needed_char].font_prim_objs);
+
+  if (not_found == TRUE) {
+    /* set the font text size (width) to the question mark's size */
+    /* yes, the question mark character was loaded instead of the real char */
+    /* 63 == question mark character */
+    font_set[(unsigned char) needed_char].font_text_size = 
+	font_set[63].font_text_size;
+  }
 	
   return(font_set[(unsigned char) needed_char].font_prim_objs);
 }
@@ -524,20 +544,59 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 @ %def o_text_load_font
 
 
+@section Function @code{o_text_num_lines()}
+
+@defun o_text_num_lines string
+@end defun
+
+<<o_text_basic.c : o_text_num_lines()>>=
+int
+o_text_num_lines(char *string) 
+{
+  int i, line_count = 0;
+
+  if (string == NULL) {
+    return 0;
+  }
+  
+  /* if it's not null, then we have at least one line */
+  line_count++;
+  /* Count how many \n are in the string */
+  for (i = 0; i <= strlen(string); i++) {
+    if (string[i] == '\n')
+      line_count++;
+  }
+
+  return (line_count);
+}
+
+
+@ %def o_text_num_lines
+
+
 @section Function @code{o_text_height()}
 
-@defun o_text_height w_current size
+@defun o_text_height size
 @end defun
 
 <<o_text_basic.c : o_text_height()>>=
 int
-o_text_height(TOPLEVEL *w_current, int size) 
+o_text_height(char *string, int size) 
 {
+  int i, line_count = 0;
+
+  if (string == NULL) {
+    return 0;
+  }
+
+  /* Get the number of lines in the string */
+  line_count = o_text_num_lines(string);
+  
   /* 26 is the height of a single char */
   /* which represents a character which is 2 pts high */
   /* So size has to be divided in half */
-  return(26*size/2);
-
+  /* and it's added the 1.5*character_height of each line */
+  return(26*size/2*(1+1.5*(line_count-1)));
 }
 
 
@@ -554,28 +613,45 @@ int
 o_text_width(TOPLEVEL *w_current, char *string, int size) 
 {
   int i;
-  int len;
-  int width=0;
+  int len, char_pos = 0;
+  int width=0, max_width=0;
 
+  if (string == NULL)
+  return 0;
   len = strlen(string);
-
   for (i = 0 ; i < len ; i++ ) {
+    if (string[i] == '\n') {
+      char_pos = 0;
+      width = 0;    
+      continue;
+    }
+    if (string[i] == '\t') {
+      /* FIXME: Why the width of a space (size=10) is 55, and the width
+         of a letter b or c is 110, for example ? */
+      /* Remove the multiplier 2 if width of a space is the width of a
+         char */
+      width += (tab_in_chars - (char_pos % tab_in_chars)) * 2 *
+        size*font_set[(unsigned char) ' '].font_text_size ;
+      char_pos += (tab_in_chars - (char_pos % tab_in_chars)) ;
+      continue;
+      
+    }
+
     if (font_set[(unsigned char) string[i]].font_prim_objs == NULL) {
       o_text_load_font(w_current, (unsigned char) string[i]);
     }
-
-    /* if (string[i] == ' ') {
-       width = width + size*14; 
-       } else { 
-       }*/
-
+    
+    char_pos ++;
     width = width + size*font_set[(unsigned char) string[i]].font_text_size;
+    if (width > max_width)
+      max_width = width;
   }
 
-  /* the size is a fudge factor.  I don't think this fudge factor is */
-  /* correct.  Removed on 09/27/2003 */
-  /* return(width - size*10); */
-  return (width);
+  /* the size is a fudge factor */
+  /* Changed the return value according to a suggestion of Ales. */
+  /* Yes, the -size*10 fudge factor should be removed. */
+  /* return(max_width - size*10); */
+  return(max_width);
 }
 
 
@@ -602,6 +678,8 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   int y_offset;
   int text_width;
   int text_height;
+  int char_height;
+  int line_start_x, line_start_y;
   int sign=1;
 
   temp_list = object_list;
@@ -616,7 +694,8 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   /* now read in the chars */
   temp_tail = w_current->page_current->object_tail;
 
-  text_height = o_text_height(w_current, size);
+  text_height = o_text_height(string, size); 
+  char_height = o_text_height("a", size);
   text_width = o_text_width(w_current, string, size/2);
 
   switch(angle) {
@@ -635,6 +714,8 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   }
 
   if (angle == 0 || angle == 180) {
+    y = y - o_text_height("a", size) + text_height;
+    
     switch(alignment) {
 
       case(LOWER_LEFT):
@@ -693,6 +774,8 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
       break;
     }
   } else { /* angle is 90 or 270 */
+    x = x + sign*(o_text_height("a", size) - text_height);
+
     switch(alignment) {
 
       case(LOWER_LEFT):
@@ -766,6 +849,9 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   printf("1 %d %d\n", x_offset, y_offset);
 #endif
 
+  line_start_x = x_offset;
+  line_start_y = y_offset;
+
   for (i = 0 ; i < len ; i++ ) {
 		
     if (font_set[(unsigned char) string[i]].font_prim_objs == NULL) {
@@ -775,10 +861,81 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
     start_of_char = temp_list;
 
     if (font_set[(unsigned char) string[i]].font_prim_objs->next) {
-      temp_list = o_list_copy_all(w_current, 
+      int char_pos;
+      /* FIXME: Why the width of a space (size=10) is 55, and the width of a letter b or c is 110, for example ? */
+      /*  In the following line, it should be size/2 instead of size */
+      int size_of_char = o_text_width(w_current, " ", size);
+
+      if (string[i] != '\n' && string[i] != '\t') {
+         /* only add the character if it is not a newline or tab character */
+         temp_list = o_list_copy_all(w_current, 
                                   font_set[(unsigned char) string[i]].font_prim_objs->next, 
                                   temp_list, NORMAL_FLAG);
-      start_of_char = start_of_char->next;
+         start_of_char = start_of_char->next;
+      }
+
+      /* if the character is a newline or tab, this code will "continue" */
+      switch (string[i]) {
+      case '\n':
+	switch (angle) {
+	case 0:
+	  x_offset = line_start_x;
+	  y_offset = line_start_y - char_height * 1.5;
+	  line_start_x = x_offset;
+	  line_start_y = y_offset;
+	  continue;	
+	  break;
+	case 90:
+	  x_offset = line_start_x + char_height * 1.5;
+	  y_offset = line_start_y;
+	  line_start_x = x_offset;
+	  line_start_y = y_offset;
+	  continue;	
+	  break;
+	case 180:
+	  x_offset = line_start_x;
+	  y_offset = line_start_y + char_height * 1.5;
+	  line_start_x = x_offset;
+	  line_start_y = y_offset;
+	  continue;	
+	  break;
+	case 270:
+	  x_offset = line_start_x - char_height * 1.5;
+	  y_offset = line_start_y;
+	  line_start_x = x_offset;
+	  line_start_y = y_offset;
+	  continue;	
+	  break;
+	default:
+	  fprintf(stderr, "o_text_create_string: Angle not supported\n");
+	  break;
+	}
+      case '\t':
+	switch (angle) {
+	case 0:
+	case 180:
+	  char_pos = (x_offset - line_start_x)/(size_of_char);
+	  x_offset += (tab_in_chars - (char_pos % tab_in_chars)) * size_of_char;
+	  continue;	
+	  break;
+	case 90:
+	  char_pos = (y_offset - line_start_y)/(size_of_char);
+	  y_offset += (tab_in_chars - (char_pos % tab_in_chars)) * size_of_char;
+	  continue;	
+	  break;
+	case 270:
+	  char_pos = (line_start_y - y_offset)/(size_of_char);
+	  y_offset -= (tab_in_chars - (char_pos % tab_in_chars)) * size_of_char;
+	  continue;	
+	  break;
+	default:
+	  fprintf(stderr, "o_text_create_string: Angle not supported\n");
+	  break;
+	}
+      }
+
+      /* does not get here if the character was a newline or tab.  This is */
+      /* correct. */ 
       o_complex_set_color(start_of_char, color);	
       o_scale(w_current, start_of_char, size/2, size/2);
 		
@@ -834,8 +991,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
 <<o_text_basic.c : o_text_add()>>=
 OBJECT *
-o_text_add(TOPLEVEL *w_current, 
-           OBJECT *object_list, 
+o_text_add(TOPLEVEL *w_current, OBJECT *object_list, 
            char type, int color, int x, int y, int alignment,
            int angle, char *string, int size, 
            int visibility, int show_name_value)
@@ -845,19 +1001,13 @@ o_text_add(TOPLEVEL *w_current,
   OBJECT *temp_parent=NULL;
   TEXT *text;
   int left, right, top, bottom;
-  char name[1025];
-  char value[1025]; /* ugg hack */
-  char output_string[1025];
+  char *name = NULL;
+  char *value = NULL; 
+  char *output_string = NULL;
 
   if (string == NULL) {
     return(NULL);
   }
-
-  /* TODO remove the 1024 max string limitation somehow? */
-  if ( strlen(string) > 1024 ) {
-    fprintf(stderr, "text string too long!\n");
-    return(NULL);
-  } 
 
   new_node = s_basic_init_object("text");
   new_node->type = type;
@@ -891,42 +1041,42 @@ o_text_add(TOPLEVEL *w_current,
   object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
   /* fix up actual string here */ 
-  if (o_attrib_get_name_value(string, name, value)) {
+  if (o_attrib_get_name_value(string, &name, &value)) {
 
     switch(show_name_value) {
       case(SHOW_NAME_VALUE):
-        strcpy(output_string, string);
+        output_string = g_strdup(string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          strcpy(output_string, name);
+          output_string = g_strdup(name);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
 
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          strcpy(output_string, value);
+          output_string = g_strdup (value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    strcpy(output_string, string);
+    output_string = g_strdup(string);
   }
 
 
@@ -960,6 +1110,9 @@ o_text_add(TOPLEVEL *w_current,
   object_list->right = right;
   object_list->bottom = bottom;
 
+  if (name) free(name);
+  if (value) free(value);
+  if (output_string) free(output_string);
   return(object_list);
 }
 
@@ -1007,7 +1160,7 @@ o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 <<o_text_basic.c : o_text_read()>>=
 OBJECT *
 o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
-            char buf[], char string[], unsigned int release_ver,
+            char buf[], FILE *fp, unsigned int release_ver,
             unsigned int fileformat_ver)
 {
   char type; 
@@ -1018,22 +1171,34 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   int show_name_value;
   int angle;
   int alignment;
+  int num_lines = 0;
+  int i;
+  char* string = NULL;
+  char* temp = NULL;
+  char buffer[MAX_TEXT_LINE_LENGTH]; 
+  int strsize;
 
-  string = remove_nl(string);	
 
-  /* yes, less than (not less than and equal) is correct.  This format */
-  /* change occurred in 20000220 */
-  if (release_ver < VERSION_20000220) {
+  if (fileformat_ver == 1) {
+    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
+           &color, &size,
+           &visibility, &show_name_value, 
+           &angle, &alignment, &num_lines);	
+  } else if (release_ver < VERSION_20000220) {
+    /* yes, above less than (not less than and equal) is correct. The format */
+    /* change occurred in 20000220 */
     sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 
            &angle);	
     alignment = LOWER_LEFT; /* older versions didn't have this */
+    num_lines = 1; /* only support a single line */
   } else {
     sscanf(buf, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 
            &angle, &alignment);	
+    num_lines = 1; /* only support a single line */
   }
 
   if (size == 0) {
@@ -1086,9 +1251,31 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
     color = WHITE;
   }
 
+#ifdef HAS_GTK12
+  if (num_lines > 1) { 
+    s_log_message("Found a multi-line text item which is fully supported when using gtk+ 2.2.x.\n");
+  }
+#endif
+
+  assert(num_lines && num_lines > 0);  
+  for (i = 0; i < num_lines; i++)
+  {
+    fgets(buffer, 1024, fp);
+
+    if (string == 0) {
+      string = u_basic_strdup(buffer);
+    } else {
+      temp = u_basic_strdup_multiple(string, buffer, NULL);
+      free(string);
+      string = temp;
+    }
+  }
+
+  string = remove_last_nl(string);	
   object_list = o_text_add(w_current, object_list, type, color, x, y, 
                            alignment, angle, string, 
                            size, visibility, show_name_value);
+  free(string);
 
   return(object_list);
 }
@@ -1111,20 +1298,25 @@ o_text_set_info_font(char buf[])
   char character;
   unsigned int temp;
   int special=0;
-  char string[81]; /* not sure if this is right ? hack */
+  char *string; 
 	
-  strcpy(string, remove_nl(buf));	
+  string = g_strdup(remove_nl(buf));	
 
   /* the right way to do this is to use the ascii code in the character
    * field hack
    */ 
   sscanf(string, "%c %c %d %d\n", &type, &character, &width, &special); 
 
-  if (special == 1) {
+  /* space */
+  if (special == 1 && character == '_') {
     character = 32;
   }
 
-  
+  /* newline */
+  if (special == 1 && character == 'n') {
+    character = 10;
+  }
+
   temp = (unsigned char) character;
   if ( temp >= 0 && temp <= 255) {
     font_set[(unsigned char) character].font_text_size = width;
@@ -1142,12 +1334,14 @@ o_text_set_info_font(char buf[])
 
 <<o_text_basic.c : o_text_save()>>=
 char *
-o_text_save(char *buf, OBJECT *object)
+o_text_save(OBJECT *object)
 {
   int x, y;
   int color;
   int size;
   char *string;
+  char *buf;
+  int num_lines;
 
   x = object->text->x;
   y = object->text->y;
@@ -1162,10 +1356,13 @@ o_text_save(char *buf, OBJECT *object)
     color = object->saved_color;
   }
 
-  sprintf(buf, "%c %d %d %d %d %d %d %d %d\n%s", object->type, x, y, 
-          color, size,  object->visibility, 
-          object->show_name_value, object->text->angle, 
-          object->text->alignment, string);
+  /* string can have multiple lines (seperated by \n's) */
+  num_lines = o_text_num_lines(string);
+
+  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
+                        x, y, color, size, object->visibility, 
+			object->show_name_value, object->text->angle, 
+			object->text->alignment, num_lines, string);
 
   return(buf);
 }
@@ -1184,44 +1381,44 @@ void
 o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 {
   OBJECT *temp_parent;
-  char name[1025];
-  char value[1025]; /* ugg hack */
-  char output_string[1025]; /* uggg hack */
+  char *name = NULL;
+  char *value = NULL;
+  char *output_string = NULL;
 
-  if (o_attrib_get_name_value(o_current->text->string, name, value)) {
+  if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
     switch(o_current->show_name_value) {
       case(SHOW_NAME_VALUE):
-        strcpy(output_string, o_current->text->string);
+        output_string = g_strdup(o_current->text->string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          strcpy(output_string, name);
+          output_string = g_strdup(name);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   o_current->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          strcpy(output_string, value);
+          output_string = g_strdup(value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   o_current->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    strcpy(output_string, o_current->text->string);
+    output_string = g_strdup(o_current->text->string);
   }
 
   o_list_delete_rest(w_current, o_current->text->prim_objs);
@@ -1260,6 +1457,9 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   w_current->page_current->object_parent = temp_parent;
+  if (name) free(name);
+  if (value) free(value);
+  if (output_string) free(output_string);
 }
 
 
@@ -1420,9 +1620,9 @@ void
 o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
              int origin_x, int origin_y)
 {
-  char output_string[1025]; /* hack */
-  char name[1025]; /* hack */
-  char value[1025]; /* hack */
+  char *output_string = NULL;
+  char *name = NULL;
+  char *value = NULL;
   int sign=1;
   int len;
   int i;
@@ -1444,39 +1644,38 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
   /* fprintf(fp, "newpath\n");*/
 
-  if (o_attrib_get_name_value(o_current->text->string, name, value)) {
+  if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
     switch(o_current->show_name_value) {
       case(SHOW_NAME_VALUE):
-        strcpy(output_string, 
-               o_current->text->string);
+        output_string = g_strdup(o_current->text->string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          strcpy(output_string, name);
+          output_string = g_strdup(name);
         } else {
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   o_current->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          strcpy(output_string, value);
+          output_string = g_strdup(value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   o_current->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    strcpy(output_string, o_current->text->string);
+    output_string = g_strdup(o_current->text->string);
   }
 
   switch(o_current->text->angle) {
@@ -1711,7 +1910,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     fprintf(fp, "(");
     len = strlen(output_string);
     for (i = 0 ; i < len; i++) {  
-      if (output_string[i] == '(' || output_string[i] == ')' || output_string[i] == '\\' ) {
+      if (output_string[i] == '(' || output_string[i] == ')' || 
+	  output_string[i] == '\\' ) {
         fprintf(fp, "\\");
       }
 
@@ -1729,7 +1929,8 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     /* 0.0139 is 1/72 points per inch */
     /* 1000 mils per inch */
     fprintf(fp, "%d mils moveto\n", 
-            o_current->text->y-origin_y - (int) rint(o_current->text->size*1.1*0.0139*1000));
+            o_current->text->y-origin_y - 
+	    (int) rint(o_current->text->size*1.1*0.0139*1000));
     /* old way of doing 180 rotated text */
 #endif
 
@@ -1764,6 +1965,11 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   fprintf(fp, ".1 setlinewidth\n");
   fprintf(fp, "fill\n");
 #endif
+
+  if (output_string) free(output_string);
+  if (name) free(name);
+  if (value) free(value);
+
 }
 
 
@@ -1904,9 +2110,9 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   int origx, origy;
   int world_centerx, world_centery;
   int x, y;
-  char output_string[1025]; /* hack */
-  char name[1025]; /* hack */
-  char value[1025]; /* hack */
+  char *output_string = NULL;
+  char *name = NULL;
+  char *value = NULL;
   int height_mod=0;
   int sign=1;
 	
@@ -1920,41 +2126,40 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   x = origx + (-world_centerx);
   y = origy + (-world_centery);
 
-  if (o_attrib_get_name_value(object->text->string, name, value)) {
+  if (o_attrib_get_name_value(object->text->string, &name, &value)) {
     switch(object->show_name_value) {
       case(SHOW_NAME_VALUE):
-        strcpy(output_string, 
-               object->text->string);
+        output_string = g_strdup(object->text->string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          strcpy(output_string, name);
+          output_string = g_strdup(name);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   object->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          strcpy(output_string, value);
+          output_string = g_strdup(value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   object->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    strcpy(output_string, object->text->string);
+    output_string = g_strdup(object->text->string);
   }
 
   switch(object->text->alignment) {
@@ -1972,7 +2177,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
       sign = 1;
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
-      height_mod = o_text_height(w_current, 
+      height_mod = o_text_height(object->text->string,
                                  object->text->size);
     }
     break;
@@ -1982,7 +2187,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
       sign = 1;
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
-      height_mod = 2*o_text_height(w_current, 
+      height_mod = 2*o_text_height(object->text->string,
                                    object->text->size);
     }
     break;
@@ -2003,7 +2208,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = o_text_height(w_current, 
+      height_mod = o_text_height(object->text->string,
                                  object->text->size);
     }
     break;
@@ -2014,7 +2219,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = 2*o_text_height(w_current, 
+      height_mod = 2*o_text_height(object->text->string,
                                    object->text->size);
     }
     break;
@@ -2035,7 +2240,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = o_text_height(w_current, 
+      height_mod = o_text_height(object->text->string,
                                  object->text->size);
     }
     break;
@@ -2046,7 +2251,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = 2*o_text_height(w_current, 
+      height_mod = 2*o_text_height(object->text->string,
                                    object->text->size);
     }
     break;
@@ -2061,19 +2266,19 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
     break;
 
     case(90):
-    newx = -(x - sign*o_text_height(w_current, 
+    newx = -(x - sign*o_text_height(object->text->string,
                                     object->text->size)+
              height_mod);
     break;
 
     case(180):
-    newx = -(x - sign*o_text_width(w_current, 
+    newx = -(x - sign*o_text_width(w_current,
                                    output_string, 
                                    object->text->size/2)); 
     break;
 
     case(270):
-    newx = -(x + sign*o_text_height(w_current, 
+    newx = -(x + sign*o_text_height(object->text->string,
                                     object->text->size)-
              height_mod);
     break;
@@ -2095,6 +2300,9 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery,
   o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
 
   o_text_recreate(w_current, object);
+  if (output_string) free(output_string);
+  if (name) free(name);
+  if (value) free(value);
 }
 
 
@@ -2114,9 +2322,9 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
   int newx=0, newy=0;
   int origx, origy;
   int x, y;
-  char output_string[1025]; /* hack */
-  char name[1025]; /* hack */
-  char value[1025]; /* hack */
+  char *output_string = NULL;
+  char *name = NULL;
+  char *value = NULL;
   int sign=1;
   int height_mod=0;
 	
@@ -2128,40 +2336,40 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
   y = origy + (-world_centery);
 
 
-  if (o_attrib_get_name_value(object->text->string, name, value)) {
+  if (o_attrib_get_name_value(object->text->string, &name, &value)) {
     switch(object->show_name_value) {
       case(SHOW_NAME_VALUE):
-        strcpy(output_string, object->text->string);
+        output_string = g_strdup(object->text->string);
         break;
 
       case(SHOW_NAME):
         if (name[0] != '\0') {
-          strcpy(output_string, name);
+          output_string = g_strdup(name);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   object->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
 
       case(SHOW_VALUE):
         if (value[0] != '\0') {
-          strcpy(output_string, value);
+          output_string = g_strdup(value);
         } else {
           /* you probably can remove this now... */
           /* since improper attributes will never get here */
           fprintf(stderr, 
                   "Got an improper attribute: %s\n", 
                   object->text->string);
-          strcpy(output_string, "invalid");
+          output_string = g_strdup("invalid");
         }
         break;
     }
   } else {
-    strcpy(output_string, object->text->string);
+    output_string = g_strdup(object->text->string);
   }
 
   switch(object->text->alignment) {
@@ -2179,7 +2387,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
       sign = 1;
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
-      height_mod = o_text_height(w_current, 
+      height_mod = o_text_height(object->text->string,
                                  object->text->size);
     }
     break;
@@ -2189,7 +2397,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
       sign = 1;
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
-      height_mod = 2*o_text_height(w_current, 
+      height_mod = 2*o_text_height(object->text->string,
                                    object->text->size);
     }
     break;
@@ -2210,7 +2418,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = o_text_height(w_current, 
+      height_mod = o_text_height(object->text->string,
                                  object->text->size);
     }
     break;
@@ -2221,7 +2429,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = 2*o_text_height(w_current, 
+      height_mod = 2*o_text_height(object->text->string,
                                    object->text->size);
     }
     break;
@@ -2242,7 +2450,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = o_text_height(w_current, 
+      height_mod = o_text_height(object->text->string,
                                  object->text->size);
     }
     break;
@@ -2253,7 +2461,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
       height_mod = 0;
     } else if (object->text->angle == 90 || object->text->angle == 270) {
       sign = 1;
-      height_mod = 2*o_text_height(w_current, 
+      height_mod = 2*o_text_height(object->text->string,
                                    object->text->size);
     }
     break;
@@ -2269,7 +2477,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
     break;
 
     case(90):
-    newx = -(x - sign*o_text_height(w_current, 
+    newx = -(x - sign*o_text_height(object->text->string,
                                     object->text->size)+height_mod);
     break;
 
@@ -2280,7 +2488,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
     break;
 
     case(270):
-    newx = -(x + sign*o_text_height(w_current, 
+    newx = -(x + sign*o_text_height(object->text->string,
                                     object->text->size)+height_mod);
     break;
 
@@ -2302,6 +2510,9 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx,
   /* don't know if this is needed ?*/	
   /* o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);*/
   o_text_recreate(w_current, object);
+  if (output_string) free(output_string);
+  if (name) free(name);
+  if (value) free(value);
 }
 
 
@@ -2321,7 +2532,8 @@ o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current,
   int text_height; 
   int text_width;
 
-  text_height = o_text_height(w_current, o_current->text->size);
+  text_height = o_text_height(o_current->text->string,
+			      o_current->text->size);
 
   /* this will NOT NOT NOT work with attributes */
   text_width = o_text_width(w_current, o_current->text->string, 

@@ -365,7 +365,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 {
   int i;
   char *string = NULL;
-  char name[1000], val[1000];
+  char *name = NULL, *val = NULL;
   OBJECT *attrib = NULL;
   GtkWidget *aewindow = NULL;
   GtkWidget *vbox2 = NULL;
@@ -547,7 +547,8 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 		      (gpointer) flag);
 
 #if 0				/* highly temp change which Ales will eventually finish up to allow */
-/* this dialog to stay open *//* out for now */
+/* this dialog to stay open */
+/* out for now */
   buttonapply = gtk_button_new_with_label(_("Apply"));
   gtk_widget_show(buttonapply);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttonapply);
@@ -568,7 +569,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 
 
   if (list) {
-    o_attrib_get_name_value(list->text->string, name, val);
+    o_attrib_get_name_value(list->text->string, &name, &val);
     attrib = list;
     if (attrib->visibility == VISIBLE)
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
@@ -584,8 +585,6 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
     OBJECT *object;
 
     attrib = NULL;
-    name[0] = 0;
-    val[0] = 0;
 
     if ((object = o_select_return_first_object(w_current))) {
       if (object->type == OBJ_NET)
@@ -636,6 +635,9 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 
   gtk_grab_add(w_current->aewindow);
   gtk_widget_grab_focus(val_entry);
+
+  if (name) free(name);
+  if (val) free(val);
 }
 @ %def attrib_edit_dialog_orig
 
@@ -682,7 +684,8 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   GList *combo_items = NULL;
   char* string = NULL;
   int nsel=0, i, len;
-  char name[1024], val[1024]; /* hack size */
+  char *name = NULL;
+  char *val = NULL;
   OBJECT *attrib = NULL;
   
   /* gschem specific */
@@ -912,7 +915,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 
   /* gschem specific */
   if (list) {
-    o_attrib_get_name_value(list->text->string, name, val);
+    o_attrib_get_name_value(list->text->string, &name, &val);
     attrib = list;
     if (attrib->visibility == VISIBLE) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
@@ -931,12 +934,10 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     OBJECT *object;
 
     attrib = NULL;
-    name[0] = 0;
-    val[0] = 0;
 
     if ((object = o_select_return_first_object(w_current))) {
       if (object->type == OBJ_NET)
-	strcpy(name, "netname");
+	name = g_strdup("netname");
     }
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
@@ -944,12 +945,13 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
   }
   gtk_object_set_data(GTK_OBJECT(aewindow), "attrib", attrib);
-  gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
-  gtk_entry_set_text(GTK_ENTRY(value_entry), val);
-  len = strlen(val);
-  if (len) {
-    gtk_entry_select_region(GTK_ENTRY(value_entry),
-                            0, len);
+  if (name) {
+    gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
+  }
+  if (val) {
+    gtk_entry_set_text(GTK_ENTRY(value_entry), val);
+    len = strlen(val);
+    gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
   }
   gtk_object_set_data(GTK_OBJECT(aewindow), "invocation_flag",
                       (gpointer) flag);
@@ -998,6 +1000,10 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   } else {  
     gtk_widget_grab_focus(attrib_combo_entry);
   }
+
+  if (name) free(name);
+  if (val) free(val);
+
 }
 
 

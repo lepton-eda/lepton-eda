@@ -95,13 +95,14 @@ int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
 <<x_menus.c : g_menu_execute()>>=
 static void g_menu_execute(char *func)
 {
-  char guile_string[128];
+  char *guile_string;
   
-  sprintf(guile_string, "(%s)", func);
+  guile_string = g_strdup_printf("(%s)", func);
 #if DEBUG
   printf("%s\n", guile_string);
 #endif
   gh_eval_str(guile_string);
+  free(guile_string);
 }
 
 @ %def g_menu_execute
@@ -116,7 +117,7 @@ static void g_menu_execute(char *func)
 
 void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 {
-  char buf[256];  /* size is hack */
+  char *buf;
   GtkWidget *menu_item;
   GtkWidget *root_menu;
   GtkWidget *menu_bar;
@@ -200,8 +201,9 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         menu_item = gtk_menu_item_new();
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else { 
-        sprintf(buf, "(find-key '%s)", menu_item_hotkey_func);
+        buf = g_strdup_printf("(find-key '%s)", menu_item_hotkey_func);
         scm_keys = gh_eval_str(buf);
+	free(buf);
         if (scm_keys == SCM_BOOL_F) {
           menu_item_keys = malloc(sizeof(char)*2);
           menu_item_keys[0] = ' ';
@@ -229,7 +231,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         spaces = malloc(sizeof(char)*(pad+1));
         memset(spaces, ' ', pad);
         spaces[pad] = '\0';
-        sprintf(buf, "%s%s%s", menu_item_name, spaces, menu_item_keys);
+        buf = g_strdup_printf("%s%s%s", menu_item_name, spaces, menu_item_keys);
 
 #if DEBUG
         printf("%s :\n %d %d %d = %d\n", buf, name_len, pad, key_len,
@@ -237,6 +239,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 #endif
       
         menu_item = gtk_menu_item_new_with_label(buf);
+	free(buf);
         gtk_menu_append(GTK_MENU(menu), menu_item);
         gtk_signal_connect_object(GTK_OBJECT(menu_item), "activate",
                                   GTK_SIGNAL_FUNC(g_menu_execute),
@@ -276,8 +279,9 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 
       /* add a handle to the menu_bar object to get access to widget objects */
       /* This string should NOT be internationalized */
-      sprintf(buf, "%s/%s", *raw_menu_name, raw_menu_item_name);
+      buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
       gtk_object_set_data(GTK_OBJECT(menu_bar), buf, menu_item);
+      free(buf);
       
       free(raw_menu_item_name);
       free(menu_item_func);

@@ -28,6 +28,7 @@
 <<s_basic.c : string_tolower()>>
 <<s_basic.c : colornametovalue()>>
 <<s_basic.c : remove_nl()>>
+<<s_basic.c : remove_last_nl()>>
 
 #ifndef HAVE_VSNPRINTF
 <<s_basic.c : vsnprintf()>>
@@ -770,7 +771,10 @@ char *
 remove_nl(char *string)
 {
   int i;
-		
+
+  if (!string)
+    return NULL;
+  
   i = 0;
   while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
     i++; 
@@ -782,6 +786,31 @@ remove_nl(char *string)
 }
 
 @ %def remove_nl
+
+
+@section Function @code{remove_nl()}
+
+@defun remove_last_nl string
+@end defun
+
+<<s_basic.c : remove_last_nl()>>=
+/* used by o_text_read */
+char *
+remove_last_nl(char *string)
+{
+  int len;
+
+  if (!string)
+    return NULL;		
+
+  len = strlen(string);
+  if (string[len-1] == '\n' || string[len-1] == '\r')
+    string[len-1] = '\0';
+     
+  return(string);
+}
+
+@ %def remove_last_nl
 
 
 @section Function @code{vsnprintf()}

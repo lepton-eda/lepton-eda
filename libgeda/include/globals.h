@@ -64,4 +64,7 @@ extern int image_white;
 extern gdImagePtr current_im_ptr;
 #endif
 
+/* Size of a tab in characters */
+extern int tab_in_chars;
+
 #endif
