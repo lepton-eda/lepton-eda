@@ -1,3 +1,8 @@
+2002-11-23  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* po/ru.po, LINGUAS: Added Russian translation by Andy Shevchenko.
+	Thank you.
+
 2002-11-03  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* configure.in (AM_GNU_GETTEXT_VERSION): Bump to 0.11.5.
@@ -128,10 +133,10 @@
 	the current gEDA/gaf file format ever.
 
 	* configure.in, docs/gschem.txt, include/prototype.h, 
-          lib/system-gschemrc.in, noweb/g_key.nw, noweb/g_register.nw,
-	  noweb/i_callbacks.nw, noweb/rcstrings.nw, noweb/x_menus.nw,
-	  noweb/x_multiattrib.nw: Added Egil Kvaleberg's find documentation
-	  patch.
+        lib/system-gschemrc.in, noweb/g_key.nw, noweb/g_register.nw,
+	noweb/i_callbacks.nw, noweb/rcstrings.nw, noweb/x_menus.nw,
+	noweb/x_multiattrib.nw: Added Egil Kvaleberg's find documentation
+	patch.
 
 2002-10-09 Egil Kvaleberg       <egil@kvaleberg.no>
 
