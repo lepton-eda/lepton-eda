@@ -1,4 +1,7 @@
 2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
+	* noweb/g_rc.nw: Removed deprecated guile functions.
+	
+2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
 	* noweb/g_rc.nw, noweb/g_register.nw, noweb/libgeda.nw,
 	  noweb/o_text_basic.nw, include/prototype.h, include/defines.h,
 	  noweb/s_toplevel.nw:

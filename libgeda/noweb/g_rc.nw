@@ -983,8 +983,8 @@ g_rc_reset_source_library(void)
 SCM
 g_rc_map_font_character_to_file(SCM character_param, SCM file_param)
 {
-  gchar *file = gh_scm2newstr(file_param, NULL);
-  gchar *character = gh_scm2newstr(character_param, NULL);
+  gchar *file =  g_strdup (SCM_STRING_CHARS (file_param));
+  gchar *character = g_strdup (SCM_STRING_CHARS (character_param));
 
   if ( (file == NULL) || (character == NULL) ) {
     fprintf(stderr,
