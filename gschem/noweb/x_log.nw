@@ -19,6 +19,7 @@
 <<x_log.c : x_log_update()>>
 <<x_log.c : x_log_close()>>
 <<x_log.c : x_log_free()>>
+<<x_log.c : x_log_keypress()>>
 <<x_log.c : x_log_setup_win()>>
 
 @
@@ -76,11 +77,17 @@
 
 <<x_log.c : global variables>>=
 GtkWidget *stwindow = NULL;
+
+#ifdef HAS_GTK22
+static GtkTextBuffer *sttextbuf = NULL;
+static GtkTextView   *sttextview = NULL;
+#else
 static GtkWidget *sttext = NULL;
+#endif
 
 static char *logfilename;
 
-@ %def stwindow sttext logfilename
+@ %def stwindow sttextbuf sttextview logfilename
 
 
 @section Function @code{x_log_init()}
@@ -128,9 +135,13 @@ x_log_read(void)
   while ((len = read(tmp_fd, &buf, 198)) != 0) {
     /* not sure if this nukes the last char or not... */
     buf[len] = '\0'; /* null terminate the buffer */
+#ifdef HAS_GTK22
+    gtk_text_buffer_insert_at_cursor(sttextbuf, buf, len);
+#else
     gtk_text_insert (GTK_TEXT (sttext),
                      NULL, NULL, NULL,
                      buf, len);
+#endif
   }
 
   close(tmp_fd);
@@ -166,9 +177,13 @@ x_log_update(char *buf)
     }
 
     nchars = strlen(buf);
+#ifdef HAS_GTK22
+    gtk_text_buffer_insert_at_cursor(sttextbuf, buf, nchars);
+#else
     gtk_text_insert(GTK_TEXT (sttext),
                     NULL, NULL, NULL,
                     buf, nchars);
+#endif
     break;
 
     case(STDOUT_TTY):
@@ -183,9 +198,13 @@ x_log_update(char *buf)
     }
 
     nchars = strlen(buf);
+#if HAS_GTK22
+    gtk_text_buffer_insert_at_cursor(sttextbuf, buf, nchars);
+#else
     gtk_text_insert(GTK_TEXT (sttext),
                     NULL, NULL, NULL,
                     buf, nchars);
+#endif
     break;
   }
 }
@@ -233,6 +252,28 @@ x_log_free(void)
 @ %def x_log_free
 
 
+@section Function @code{x_log_keypress()}
+ 
+@defun x_log_keypress w event w_current
+@end defun
+ 
+<<x_log.c : x_log_keypress()>>=
+int
+x_log_keypress(GtkWidget * widget, GdkEventKey * event,
+               TOPLEVEL * w_current)
+{
+  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+    x_log_close(NULL, w_current);
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+@ %def x_log_keypress
+
+
 @section Function @code{x_log_setup_win()}
 
 @defun x_log_setup_win w_current
@@ -243,11 +284,15 @@ void
 x_log_setup_win (TOPLEVEL *w_current)
 {
   GtkWidget *buttoncancel = NULL;
+#ifdef HAS_GTK12 
   GtkWidget *hscrollbar = NULL;
   GtkWidget *vscrollbar = NULL;
+#endif
   GtkWidget *table = NULL;
   GtkWidget *vbox, *action_area;
-
+#ifdef HAS_GTK22
+  GtkScrolledWindow *swin;
+#endif
 
   if (do_logging == FALSE) {
     return;
@@ -294,14 +339,37 @@ x_log_setup_win (TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
     gtk_widget_show (table);
 
+#ifdef HAS_GTK22
+    sttextbuf = gtk_text_buffer_new(gtk_text_tag_table_new());
+    sttextview= gtk_text_view_new_with_buffer(sttextbuf);
+    gtk_text_view_set_editable (sttextview, FALSE);
+
+    swin=gtk_scrolled_window_new(sttextview->hadjustment,
+                               sttextview->vadjustment);
+    gtk_scrolled_window_set_policy(swin, GTK_POLICY_AUTOMATIC, 
+                                       GTK_POLICY_AUTOMATIC);
+#else
     sttext = gtk_text_new (NULL, NULL);
     gtk_text_set_editable (GTK_TEXT (sttext), FALSE);
+#endif
+
+#ifdef HAS_GTK22
+    gtk_table_attach (GTK_TABLE (table), GTK_WIDGET(swin),
+#else
     gtk_table_attach (GTK_TABLE (table), sttext,
+#endif
                       0, 1, 0, 1,
                       GTK_EXPAND | GTK_SHRINK | GTK_FILL,
                       GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+#ifdef HAS_GTK22
+    gtk_container_add(GTK_CONTAINER(swin), GTK_WIDGET(sttextview));
+    gtk_widget_show (GTK_WIDGET(swin));
+    gtk_widget_show (GTK_WIDGET(sttextview));
+#else
     gtk_widget_show (sttext);
+#endif
 
+#ifdef HAS_GTK12 
     hscrollbar = gtk_hscrollbar_new (GTK_TEXT (sttext)->hadj);
     gtk_table_attach (GTK_TABLE (table), hscrollbar, 0, 1, 1, 2,
                       GTK_EXPAND | GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
@@ -311,6 +379,7 @@ x_log_setup_win (TOPLEVEL *w_current)
     gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
                       GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (vscrollbar);
+#endif
 
     buttoncancel = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
@@ -319,6 +388,9 @@ x_log_setup_win (TOPLEVEL *w_current)
     gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
                         GTK_SIGNAL_FUNC(x_log_close), NULL);
     gtk_widget_show (buttoncancel);
+
+    gtk_signal_connect(GTK_OBJECT(stwindow), "key_press_event",
+                     (GtkSignalFunc) x_log_keypress, w_current);
   }
 
   if (!GTK_WIDGET_VISIBLE (stwindow)) {

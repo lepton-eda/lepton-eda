@@ -395,13 +395,16 @@ x_image_cancel(GtkWidget *w, TOPLEVEL *w_current)
 @end defun
 
 <<x_image.c : x_image_keypress()>>=
-void
+int
 x_image_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
     x_image_cancel(NULL, w_current);	
+    return TRUE;
   }
+
+  return FALSE;
 }
 
 

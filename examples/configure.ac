@@ -1,28 +1,21 @@
-dnl Process this file with autoconf to produce a configure script.
-
-dnl Start of configure actions..
+# Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([gTAG/gTAG.sch])
 
-dnl Initialize automake stuff
 PACKAGE=geda-examples
+VERSION=20030901
+echo Configuring $PACKAGE version $VERSION
 
-DATADIR=gEDA
-
-# new way of doing version
-VERSION=20030525
-
-echo Configuring examples version $VERSION
-
+# Initialize automake 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
-dnl Initialize maintainer mode
+# Initialize maintainer mode
 AM_MAINTAINER_MODE
 
 HOME=`echo $HOME`
+DATADIR=gEDA
 GEDADATADIR=$datadir/$DATADIR
 
-AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(GEDADATADIR)
 
@@ -38,4 +31,8 @@ AC_CONFIG_FILES([
         TwoStageAmp/sym/Makefile ])
 
 AC_OUTPUT 
+
+AC_MSG_RESULT([
+** Configuration complete for $PACKAGE $VERSION
+])
 

@@ -1,8 +1,23 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Removed redundant tests (gtk+, guile) and improved
+	the configuration summary message. 
+
 2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/parsecmd.c: Cleaned up help message a little.
 
 	* src/gsymcheck.1: Updated manpage a little 
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in.
+
+	* configure.ac: Bunch of cleanup to start using pkg-config for all
+	libraries.  Unfortunately, gsymcheck now links against libgtk*.  I 
+	might fix that in the future.
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
 
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 

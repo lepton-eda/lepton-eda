@@ -7,5 +7,5 @@ libtool
 config.h
 config.log
 config.status
-libgeda-config
+libgeda.pc
 aclocal.m4

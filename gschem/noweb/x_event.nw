@@ -777,7 +777,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       }
       break;
 
-#if HAS_LIBSTROKE
+#ifdef HAS_LIBSTROKE
       case(STROKE):
 
       DOING_STROKE = FALSE;
@@ -864,7 +864,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
   /* printf("MOTION!\n");*/
 #endif
 
-#if HAS_LIBSTROKE
+#ifdef HAS_LIBSTROKE
   if (DOING_STROKE == TRUE) {
     x_stroke_add_point(w_current, (int) event->x, (int) event->y);
 

@@ -34,8 +34,8 @@ BUILT_SOURCES = \
 
 gschem_SOURCES = $(BUILT_SOURCES:.nw=.c)
 
-INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@
-gschem_LDADD = @STROKE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
+INCLUDES = -I$(top_srcdir)/include @GSCHEM_CFLAGS@
+gschem_LDADD = @GSCHEM_LDFLAGS@
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

@@ -1,18 +1,14 @@
 
 SUBDIRS = src include noweb scripts docs
 
-bin_SCRIPTS = libgeda-config
+EXTRA_DIST = HACKING BUGS
 
-EXTRA_DIST = guile.m4 HACKING BUGS
+pkgconfigdir            = $(libdir)/pkgconfig
+pkgconfig_DATA          = libgeda.pc
 
-#proto:
-#	(cd src ; ./create_proto)
-
-libgeda-config-install: libgeda-config
-	chmod +x libgeda-config	
-	$(mkinstalldirs) $(DESTDIR)$(bindir)
-	$(binSCRIPT_INSTALL) libgeda-config $(DESTDIR)$(bindir)
-	
+libgeda-pc-install: libgeda.pc
+	$(mkinstalldirs) $(DESTDIR)$(pkgconfigdir)
+	$(INSTALL_DATA) libgeda.pc $(DESTDIR)$(pkgconfigdir)
 
 distclean-local:
 	-rm -rf autom4te.cache

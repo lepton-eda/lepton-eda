@@ -1,3 +1,15 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Improved the configuration summary message.
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in
+
+	* configure.ac: Minor tweeks to get this file up to snuff.
+	
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/symbols/symbols.tex: Added blurb about pin order (LSB to MSB)

@@ -5,16 +5,8 @@ SUBDIRS = \
 	verilog rf pla ecl dec xilinx lattice national supervisor bus \
 	opto diode relay vhdl power philips transistor switcap documentation
 
-bin_SCRIPTS = gesym-config
-
 rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-commonrc 
-
-
-gesym-config-install: gesym-config
-	chmod +x gesym-config
-	$(mkinstalldirs) $(DESTDIR)$(bindir)
-	$(binSCRIPT_INSTALL) gesym-config $(DESTDIR)$(bindir)
 
 distclean-local:
 	-rm -rf autom4te.cache

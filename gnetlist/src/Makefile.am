@@ -2,8 +2,6 @@
 
 bin_PROGRAMS = gnetlist 
 
-bin_SCRIPTS =
-
 # don't forget all *.h files */
 gnetlist_SOURCES = \
 		i_vars.c g_netlist.c g_rc.c g_register.c globals.c \
@@ -11,8 +9,8 @@ gnetlist_SOURCES = \
 		s_netlist.c s_netattrib.c s_traverse.c \
 		s_rename.c s_hierarchy.c s_misc.c vams_misc.c
 
-INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@  
-gnetlist_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
+INCLUDES = -I$(top_srcdir)/include @GNETLIST_CFLAGS@
+gnetlist_LDADD = @GNETLIST_LDFLAGS@
 
 man_MANS = gnetlist.1
 

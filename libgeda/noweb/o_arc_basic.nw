@@ -1667,10 +1667,8 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	
 #ifdef HAS_LIBGDGEDA
 
-#ifdef HAS_LIBGDGEDA2
   gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
                                                 o_current->line_width));
-#endif
 
   gdImageArc(current_im_ptr, 
              x, y, width, height, start_angle, end_angle, color);

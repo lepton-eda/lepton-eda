@@ -5,7 +5,7 @@ SHELL=/bin/sh
 #
 # Change this to the real version of the distribution
 #
-VERSION=20030525
+VERSION=20030901
 
 # 
 # Use this when you are building the CVS version
@@ -70,14 +70,18 @@ notarget:
 	@echo "export LD_LIBRARY_PATH"
 	@echo PATH=${prefix}/bin:\$$\{PATH\}
 	@echo "export PATH"
+	@echo PKG_CONFIG_PATH=${prefix}/lib/pkgconfig:\$$PKG_CONFIG_PATH
+	@echo "export PKG_CONFIG_PATH"
 	@echo ""
 	@echo "For bash:"
 	@echo export LD_LIBRARY_PATH=${prefix}/lib:\$$LD_LIBRARY_PATH
 	@echo export PATH=${prefix}/bin:\$$\{PATH\}
+	@echo export PKG_CONFIG_PATH=${prefix}/lib/pkgconfig:\$$PKG_CONFIG_PATH
 	@echo ""
 	@echo "For csh/tcsh shell:"
 	@echo setenv LD_LIBRARY_PATH ${prefix}/lib:\$$LD_LIBRARY_PATH
 	@echo setenv PATH ${prefix}/bin:\$$PATH
+	@echo setenv PKG_CONFIG_PATH ${prefix}/lib/pkgconfig:\$$PKG_CONFIG_PATH
 	@echo ""
 	@echo "---------------------------READ THIS---------------------------"
 
@@ -197,8 +201,7 @@ proto: libgeda_proto gschem_proto gnetlist_proto gsymcheck_proto
 ############################################################################
 
 # Symbols 
-symbols: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
-	$(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config
+symbols: $(DIR_PREFIX)symbols$(CD_VERSION)/configure
 	@echo symbols Installed 
 
 symbols_maint: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
@@ -211,7 +214,7 @@ symbols_distclean: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} distclean )
 
 symbols_install: $(DIR_PREFIX)symbols$(CD_VERSION)/configure \
-	         $(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config
+	         $(DIR_PREFIX)symbols$(CD_VERSION)/Makefile 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} install )
 
 symbols_uninstall: $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc
@@ -249,7 +252,7 @@ gschem_install: libgeda_install symbols_install \
 gschem_uninstall: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} uninstall )
 
-gschem_config: libgeda-config-install gesym-config-install \
+gschem_config: libgeda-pc-install \
 	       $(DIR_PREFIX)gschem$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
@@ -309,7 +312,7 @@ gnetlist_distclean: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h
 gnetlist_proto: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION)/src; ${MAKE} proto )
 
-gnetlist_config: libgeda-config-install gesym-config-install \
+gnetlist_config: libgeda-pc-install \
 		 $(DIR_PREFIX)gnetlist$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
@@ -342,7 +345,7 @@ gsymcheck_install: libgeda_install symbols_install \
 gsymcheck_uninstall: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} uninstall )
 
-gsymcheck_config: libgeda-config-install gesym-config-install \
+gsymcheck_config: libgeda-pc-install \
 		  $(DIR_PREFIX)gsymcheck$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
@@ -387,7 +390,7 @@ utils_install: libgeda_install symbols_install \
 utils_uninstall: $(DIR_PREFIX)utils$(CD_VERSION)/config.h 
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); ${MAKE} uninstall )
 
-utils_config: libgeda-config-install gesym-config-install \
+utils_config: libgeda-pc-install \
 	      $(DIR_PREFIX)utils$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)utils$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
@@ -554,7 +557,7 @@ docs_install: $(DIR_PREFIX)docs$(CD_VERSION)/configure \
 docs_uninstall: $(DIR_PREFIX)docs$(CD_VERSION)/Makefile
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); ${MAKE} uninstall )
 
-docs_config: gesym-config-install $(DIR_PREFIX)docs$(CD_VERSION)/configure
+docs_config: $(DIR_PREFIX)docs$(CD_VERSION)/configure
 	( cd $(DIR_PREFIX)docs$(CD_VERSION); \
           ./configure --prefix=$(prefix) $(opts) )
 
@@ -671,6 +674,10 @@ $(DIR_PREFIX)symbols$(CD_VERSION)/system-commonrc:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
 	  ./configure --prefix=$(prefix) $(opts) )
 
+$(DIR_PREFIX)symbols$(CD_VERSION)/Makefile: 
+	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
+	  ./configure --prefix=$(prefix) $(opts) )
+
 $(DIR_PREFIX)symbols$(CD_VERSION)/configure: 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; automake ) 
 
@@ -716,17 +723,10 @@ $(DIR_PREFIX)docs$(CD_VERSION)/attributes/attributes.pdf:
 libgeda$(CD_VERSION)/src/.libs/libgeda.a:
 	( cd libgeda$(CD_VERSION); ${MAKE} install )
 
-$(DIR_PREFIX)symbols$(CD_VERSION)/gesym-config:
-	( cd $(DIR_PREFIX)symbols$(CD_VERSION); \
-	  ./configure --prefix=$(prefix) $(opts) ; ${MAKE} install )
-
 ############################################################################
 # Script related related targets 
 ############################################################################
 
-libgeda-config-install:
-	( cd libgeda$(CD_VERSION); ${MAKE} libgeda-config-install )
-
-gesym-config-install:
-	( cd $(DIR_PREFIX)symbols$(CD_VERSION); ${MAKE} gesym-config-install )
+libgeda-pc-install:
+	( cd libgeda$(CD_VERSION); ${MAKE} libgeda-pc-install )
 

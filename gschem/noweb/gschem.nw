@@ -152,7 +152,7 @@ main_prog(int argc, char *argv[])
   x_log_init(cwd, "gschem.log");
   s_log_init(cwd, "gschem.log");
 
-#if HAS_LIBSTROKE
+#ifdef HAS_LIBSTROKE
   stroke_init(); /* libstroke function */
   /* s_stroke_init(); no longer needed libgeda function */
 #endif

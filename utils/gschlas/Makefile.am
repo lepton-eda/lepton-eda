@@ -8,8 +8,8 @@ gschlas_SOURCES = \
 		gschlas.c parsecmd.c 
 
 
-INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@
-gschlas_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
+INCLUDES = @GSCHLAS_CFLAGS@ 
+gschlas_LDADD = @GSCHLAS_LDFLAGS@
 
 EXTRA_DIST = create_proto 
 

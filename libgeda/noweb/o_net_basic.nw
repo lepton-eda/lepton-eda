@@ -621,14 +621,12 @@ o_net_image_write(TOPLEVEL * w_current, OBJECT * o_current,
   /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
 
-#ifdef HAS_LIBGDGEDA2
   if (w_current->net_style == THICK) {
     gdImageSetThickness(current_im_ptr, SCREENabs(w_current,
                                                   NET_WIDTH));
   } else {
     gdImageSetThickness(current_im_ptr, 0);
   }
-#endif
 
   gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
 #endif

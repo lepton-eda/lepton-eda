@@ -2,6 +2,9 @@
 
 	* scripts/gschem2pcb: Moved script into this directory from src/
 
+        * configure.ac: Removed redundant tests (gtk+, guile) and improved
+        the configuration summary message.
+
 2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* include/globals.h, src/globals.c, src/gnetlist.c, src/parsecmd.c:
@@ -11,6 +14,16 @@
         * src/parsecmd.c: Cleaned up help message a little.
 
         * src/gnetlist.1: Updated manpage a little
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in.
+
+	* configure.ac: Bunch of cleanup to start using pkg-config for all
+	libraries.  Unfortunately, gnetlist now links against libgtk*.  I 
+	might fix that in the future.
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
 
 2003-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 

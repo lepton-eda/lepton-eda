@@ -86,7 +86,7 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 {
   char *equal_ptr;
   OBJECT *o_current;
-#ifdef HAS_LIBGTKEXTRA
+#if 0 /* was HAS_LIBGTKEXTRA, no longer user */
   SELECTION *s_current;
   int object_count=0;
 #endif
@@ -103,7 +103,7 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
     exit(-1);
   }
 
-#ifdef HAS_LIBGTKEXTRA
+#if 0 /* was HAS_LIBGTKEXTRA, no longer used */
   /* count up how many non-text objects exist in the selection */
   /* list.  Why?  Because if there are multiple objects, invoke the */
   /* multi_multi_edit dialog box */

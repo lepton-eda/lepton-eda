@@ -1,24 +1,16 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
 
-VERSION=20030525
+VERSION=20030901
 PACKAGE=geda-docs
+echo Configuring $PACKAGE version $VERSION
 
 # Init automake
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 
-# Checks for programs.
-# search for gesym-config
-AC_PATH_PROG(GESYMCONFIG, gesym-config, no, ${PATH})
-
-if test $GESYMCONFIG = "no"; then
-   AC_MSG_ERROR(Cannot find gesym-config -- be sure that the symbols are installed)
-fi
-
-gesym_version=`$GESYMCONFIG --version`
-if test $gesym_version != $VERSION; then
-	AC_MSG_ERROR(Found a different version of gesym-config: $GESYMCONFIG -- Make sure your PATH variable is correct)
-fi
+############################################################################
+# Check for various doc processing programs start
+# 
 
 # latex
 AC_PATH_PROG(LATEX, latex, no, ${PATH})
@@ -47,6 +39,11 @@ if test $PS2PDF = "no"; then
    echo "Install pdf2ps or install the prepared geda-docs package"
 fi
 
+# 
+# Check for various doc processing programs end
+############################################################################
+
+
 # Checks for libraries.
 
 # Checks for header files.
@@ -68,7 +65,7 @@ else
 fi
 
 gedadocdir=$dprefix/share/doc/geda-doc
-dnl --with-docdir : tells where to store documentation if not default
+# --with-docdir : tells where to store documentation if not default
 AC_ARG_WITH(docdir,
     [  --with-docdir      Where to store documentation if not default.],
 	gedadocdir=$withval)
@@ -76,17 +73,26 @@ expandgedadocdir=`echo $gedadocdir`
 GEDADOCDIR=$expandgedadocdir
 AC_SUBST(GEDADOCDIR)
 
-AC_CONFIG_FILES([Makefile \
-	         attributes/Makefile \
-		 symbols/Makefile \
-	         fileformats/Makefile \
-                 hooks/Makefile \
-                 keymapping/Makefile \
-                 netattrib/Makefile \
-		 gschem/Makefile \
-		 gnetlist/Makefile \
-		 switcap/Makefile \
-		 spice-sdb/Makefile \
-		 toplevel/Makefile \
-                 templates/Makefile])
+AC_CONFIG_FILES([Makefile 
+	         attributes/Makefile 
+		 symbols/Makefile 
+	         fileformats/Makefile 
+                 hooks/Makefile 
+                 keymapping/Makefile 
+                 netattrib/Makefile 
+		 gschem/Makefile 
+		 gnetlist/Makefile 
+		 switcap/Makefile 
+		 spice-sdb/Makefile 
+		 toplevel/Makefile 
+                 templates/Makefile ])
 AC_OUTPUT
+
+expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
+
+AC_MSG_RESULT([
+** Configuration summary for $PACKAGE $VERSION:
+
+   documentation directory:          $expandedGEDADOCDIR
+])
+

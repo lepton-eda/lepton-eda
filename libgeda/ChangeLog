@@ -1,3 +1,57 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Improved a bunch of the external library tests for
+	gtk+, guile.
+	
+	* configure.ac: Improved the configuration summary message.
+
+	* configure.ac: Oops forgot to AC_SUBST the LIBTOOL_FLAGS variable,
+	shared library was being build with the wrong version
+	
+	* configure.ac: Added --with-gtk12 flag so that users can force
+	libgeda to use gtk+ 1.2 instead of gtk+ 2.2.x (if it is found)
+
+	* configure.ac: Removed gtk+ and the X libraries from LIBGEDA_LDFLAGS
+	variable so that programs that don't need gtk+ or X, don't link those
+	libraries.  gschem is the only program which should be linking gtk+
+	and X.
+
+2003-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac and friends: Rewrote the configure scripts to be sane,
+	much simpler, and up-to-date.
+
+	* configure.in, acconfig.h, and others: Removed a whole bunch of 
+	obsolete files.
+
+	* noweb/o_arc_basic.nw, o_box_basic.nw o_bus_basic.nw 
+	o_circle_basic.nw, o_line_basic.nw, o_net_basic.nw, o_pin_basic.nw:
+	Obsoleted the HAS_LIBGDGEDA2 #define.  libgdgeda 2.0.15 is now
+	required.
+
+	* libgeda.pc.in: Added new file which is used with pkg-config.  
+	libgeda now requires pkg-config to configure and the other tools will
+	need pkg-config to link to libgeda.
+
+	* libgeda-config.in: Remove this file in favor to using pkg-config.
+
+	* Toplevel Makefile: Added PKG_CONFIG_PATH environment variable to
+	the help message.  This variable is now required.
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+
+	* Toplevel Makefile: Changed the libgeda-config-install to 
+	libgeda-pc-install (for the libgeda.pc file)
+
+	* Toplevel Makefile: Removed all traces of gesym-config*, since
+	this script is no longer used.
+
+2003-06-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, Makefile.am's etc: Applied gtk+-2.x patch by Ye Ma
+
+	* noweb/*.nw: A few tweaks to get the above to build.
+
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_arc_basic.nw, o_circle_basic.nw: Added missing break; 

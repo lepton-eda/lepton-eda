@@ -1,6 +1,7 @@
 #!/bin/sh
 
-CFLAGS="`guile-config compile` `gtk-config --cflags` `libgeda-config --cflags`" 
+#CFLAGS="`guile-config compile` `gtk-config --cflags` `libgeda-config --cflags`" 
+CFLAGS="`guile-config compile` `pkg-config --cflags gtk+-2.0` `libgeda-config --cflags`" 
 
 MISC_FLAGS="-I/usr/X11R6/include -I../include -I. -I.."
 

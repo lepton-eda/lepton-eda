@@ -78,13 +78,16 @@
 @end defun
 
 <<x_multiattrib.c : multi_attrib_edit_keypress()>>=
-void
+int
 multi_attrib_edit_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
     multi_attrib_edit_close(NULL, w_current);	
+    return TRUE;
   }
+  
+  return FALSE;
 }
 @ %def multi_attrib_edit_keypress
 
@@ -622,13 +625,21 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
                                      object);	
 
+#ifdef HAS_GTK22
+  mawindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+#else
   mawindow = gtk_window_new (GTK_WINDOW_DIALOG);
+#endif
   w_current->mawindow = mawindow; /* gschem specific */
   gtk_object_set_data (GTK_OBJECT (mawindow), "mawindow", mawindow);
   gtk_window_set_title (GTK_WINDOW (mawindow), _("Edit Attributes"));
   gtk_window_set_position (GTK_WINDOW (mawindow), GTK_WIN_POS_MOUSE);
   gtk_window_set_modal (GTK_WINDOW (mawindow), TRUE);
+#ifdef HAS_GTK22
+  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 370);
+#else
   gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 350);
+#endif
   gtk_window_set_policy (GTK_WINDOW (mawindow), FALSE, TRUE, TRUE);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
@@ -805,7 +816,12 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "hbuttonbox1", hbuttonbox1,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbuttonbox1);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, FALSE, TRUE, 0);
+#ifdef HAS_GTK22
+  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, TRUE, TRUE, 3);
+  gtk_box_set_spacing (GTK_BOX (hbuttonbox1), 6);
+#else
+  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, TRUE, TRUE, 0);
+#endif
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
 
   changebutton = gtk_button_new_with_label (_("Change"));
@@ -841,7 +857,12 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "hbuttonbox2", hbuttonbox2,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (hbuttonbox2);
+#ifdef HAS_GTK22
+  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, TRUE, TRUE, 3);
+  gtk_box_set_spacing (GTK_BOX (hbuttonbox2), 6);
+#else
   gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, TRUE, TRUE, 0);
+#endif
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox2), GTK_BUTTONBOX_END);
 
   clearbutton = gtk_button_new_with_label (_("Clear"));

@@ -1,3 +1,16 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Added a configuration complete message just to be
+	consistent.
+
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in 
+
+	* configure.ac: Minor tweeks to get this file up to snuff.
+	
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lightning_detector/: Added sch/pcb example by Terry Porter.

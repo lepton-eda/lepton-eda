@@ -163,13 +163,16 @@ x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current)
 @end defun
 
 <<x_fileselect.c : x_fileselect_keypress()>>=
-void
+int
 x_fileselect_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              FILEDIALOG* f_current)
 {
   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
     x_fileselect_close (NULL, f_current);
+    return TRUE;
   }
+
+  return FALSE;
 }
 @ %def x_fileselect_keypress
 
@@ -554,8 +557,15 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
                                    PATH_SEPARATER_STRING, NULL);
     text[0] = temp; 
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
+
+#ifdef HAS_GTK22
+    width = gdk_string_width(gtk_style_get_font(f_current->dir_list->style),
+                             f_current->directory_entries[i]);
+#else
     width = gdk_string_width(f_current->dir_list->style->font,
                              f_current->directory_entries[i]);
+#endif
+
     if (width > max_width) {
       gtk_clist_set_column_width(GTK_CLIST(f_current->
                                            dir_list), 0, width);
@@ -572,8 +582,15 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
   for (i = 0 ; i < file_count; i++) {
     text[0] = f_current->file_entries[i]; 
     gtk_clist_append (GTK_CLIST (f_current->file_list), text);
+
+#ifdef HAS_GTK22
+    width = gdk_string_width(gtk_style_get_font(f_current->dir_list->style), 
+                             f_current->file_entries[i]);
+#else
     width = gdk_string_width(f_current->dir_list->style->font,
                              f_current->file_entries[i]);
+#endif
+
     if (width > max_width) {
       gtk_clist_set_column_width(GTK_CLIST(f_current->
                                            file_list), 0, width);
@@ -1403,8 +1420,15 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
                                                               NULL);
 		
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
+
+#ifdef HAS_GTK22
+    width = gdk_string_width(gtk_style_get_font(f_current->dir_list->style), 
+                             text[0]);
+#else
     width = gdk_string_width(f_current->dir_list->style->font,
                              text[0]);
+#endif
+
     if (width > max_width) {
       gtk_clist_set_column_width(GTK_CLIST(f_current->
                                            dir_list), 0, width);
@@ -1486,9 +1510,14 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 #endif
       text[0] = file;
       gtk_clist_append(GTK_CLIST(f_current->file_list), text);
-      width = gdk_string_width(
-                               f_current->file_list->style->font,
+#ifdef HAS_GTK22
+      width = gdk_string_width(gtk_style_get_font(f_current->file_list->style),
                                text[0]);
+#else
+      width = gdk_string_width(f_current->file_list->style->font,
+                               text[0]);
+#endif
+
       if (width > max_width) {
         gtk_clist_set_column_width(GTK_CLIST(f_current->
                                              file_list), 0, width);

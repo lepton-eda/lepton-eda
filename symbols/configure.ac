@@ -1,66 +1,63 @@
-dnl Process this file with autoconf to produce a configure script.
-
-
-dnl Some of our own macros
-AC_DEFUN(GEDA_DECLARE_SYMLIB,
- [
-	data$1=`ls -1 $srcdir/$1 | grep -v Makefile \
-				 | grep -v CVS | grep -v "\\.cvsignore" \
-				 | grep -v "\\~" | grep -v "\\.orig"`
-	data$1=`echo $data$1`
- ])
-
-
-dnl Start of configure actions..
+# Process this file with autoconf to produce a configure script.
 AC_INIT
 AC_CONFIG_SRCDIR([74/7400-1.sym])
+AC_PREREQ(2.54)
 
-dnl Initialize automake stuff
 PACKAGE=geda-symbols
+VERSION=20030901
+SHARED_LIBRARY_VERSION=19:0:0
+echo Configuring $PACKAGE version $VERSION
 
-DATADIR=gEDA
-
-# new way of doing version
-VERSION=20030525
-
-echo Configuring symbols version $VERSION
-
-dnl Change default location for rc files
-AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
-
-dnl Initialize automake stuff
-dnl AM_INIT_AUTOMAKE($PACKAGE, $GEDA_VER_MAJOR.$GEDA_VER_MINOR.$GEDA_VER_MICRO, no-define)
+# Initialize automake stuff
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
-dnl Create a configuration header
-dnl AM_CONFIG_HEADER(config.h)
-
-dnl Build time sanity check...
-dnl AM_SANITY_CHECK
-
-dnl Initialize maintainer mode
+# Init maintainer mode
 AM_MAINTAINER_MODE
 
-dnl Checks for programs.
-dnl AC_PROG_CC
-dnl AC_PROG_LEX
-dnl AC_PROG_LEX()
-dnl AC_PROG_MAKE_SET
+#########################################################################
+# Command line flags start
+# 
+# Change default location for rc files
+AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
-AC_CANONICAL_HOST()
+# --with-docdir : tells where to store documentation if not default
+# defined below 
+# 
+# Command line flags end
+#########################################################################
+
+#########################################################################
+# 
+# Misc win32 / mingw checks and variables start
+
+# Figure out if we are building on win32 and what environment.
 case $host_os in
-  *cygwin*  ) AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported) ;;
-  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+  *cygwin*  ) AC_MSG_ERROR([Building gEDA/gaf under cygwin is not supported]) ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW=yes ;;
 esac
 
-if test "$MINGW32" = "no" -o "$MINGW32"x = x; then
-	PATHSEP=/
-	OTHERPATHSEP=\\\\ 
+if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
+   MINGW_CFLAGS="-mms-bitfields"
+   MINGW_LIBS=
+   MINGW="yes"
+   PATHSEP=\\\\
+   OTHERPATHSEP=/
 else
-	PATHSEP=\\\\
-	OTHERPATHSEP=/ 
+   # Unix host
+   MINGW_CFLAGS=
+   MINGW_LIBS=
+   MINGW="no"
+   PATHSEP=/
+   OTHERPATHSEP=\\\\
 fi
 
+# 
+# Misc win32 / mingw checks and variables end
+#########################################################################
+
+#########################################################################
+# Check for fig2dev, groff, ps2pdf start
+# 
 # search for fig2dev
 AC_PATH_PROG(FIG2DEV, fig2dev, no, ${PATH})
 if test $FIG2DEV = "no"; then
@@ -79,9 +76,24 @@ if test $PS2PDF = "no"; then
 	echo "Cannot find ps2pdf, some documentation will not be created."
 fi
 
+# 
+# Check for fig2dev, groff, ps2pdf end
+#########################################################################
 
-# Do individual library files
-  
+#########################################################################
+# Do individual library files start
+# 
+
+# Some of our own macros for setting up library files
+AC_DEFUN(GEDA_DECLARE_SYMLIB,
+ [
+	data$1=`ls -1 $srcdir/$1 | grep -v Makefile \
+				 | grep -v CVS | grep -v "\\.cvsignore" \
+				 | grep -v "\\~" | grep -v "\\.orig"`
+	data$1=`echo $data$1`
+        AC_SUBST(data$1)
+ ])
+
 GEDA_DECLARE_SYMLIB(4000)
 GEDA_DECLARE_SYMLIB(national)
 GEDA_DECLARE_SYMLIB(local)
@@ -122,8 +134,14 @@ GEDA_DECLARE_SYMLIB(font)
 GEDA_DECLARE_SYMLIB(idt)
 GEDA_DECLARE_SYMLIB(diode)
 GEDA_DECLARE_SYMLIB(opto)
+# 
+# Do individual library files start
+#########################################################################
 
-HOME=`echo $HOME`
+#########################################################################
+# gEDA/gaf specify setup start
+#
+DATADIR=gEDA
 GEDADATADIR=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
@@ -143,54 +161,13 @@ else
 fi
 
 gedadocdir=$dprefix/share/doc/geda-doc
-dnl --with-docdir : tells where to store documentation if not default
-AC_ARG_WITH(docdir,
-    [  --with-docdir      Where to store documentation if not default.],
-	gedadocdir=$withval)
+AC_ARG_WITH(docdir, [  --with-docdir          Where to store documentation if not default.], gedadocdir=$withval)
 expandgedadocdir=`echo $gedadocdir`
 GEDADOCDIR=$expandgedadocdir
+#
+# gEDA/gaf specify setup end
+#########################################################################
 
-
-AC_SUBST(datalocal)
-AC_SUBST(dataanalog)
-AC_SUBST(datamaxim)
-AC_SUBST(dataverilog)
-AC_SUBST(datavhdl)
-AC_SUBST(dataspice)
-AC_SUBST(dataconnector)
-AC_SUBST(dataaltera)
-AC_SUBST(datalinear)
-AC_SUBST(dataio)
-AC_SUBST(dataswitch)
-AC_SUBST(dataswitcap)
-AC_SUBST(datatitleblock)
-AC_SUBST(data4000)
-AC_SUBST(datanational)
-AC_SUBST(datatube)
-AC_SUBST(dataradio)
-AC_SUBST(datamemory)
-AC_SUBST(datamicro)
-AC_SUBST(datapower)
-AC_SUBST(dataphilips)
-AC_SUBST(datamisc)
-AC_SUBST(datatransistor)
-AC_SUBST(data74)
-AC_SUBST(datarelay)
-AC_SUBST(datadiode)
-AC_SUBST(dataopto)
-AC_SUBST(databus)
-AC_SUBST(datasupervisor)
-AC_SUBST(datalattice)
-AC_SUBST(dataxilinx)
-AC_SUBST(datadec)
-AC_SUBST(datapla)
-AC_SUBST(dataecl)
-AC_SUBST(datarf)
-AC_SUBST(dataIEC417)
-AC_SUBST(datafont)
-AC_SUBST(dataidt)
-
-AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDADOCDIR)
@@ -239,8 +216,20 @@ AC_CONFIG_FILES([
 	opto/Makefile 
 	national/Makefile
 	documentation/Makefile
-	system-commonrc
-        gesym-config ])
-AC_CONFIG_COMMANDS([gesym-config-chmod],[[chmod +x gesym-config]],[[]])
+	system-commonrc ])
+
 AC_OUTPUT 
+
+expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
+expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
+expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
+
+AC_MSG_RESULT([
+** Configuration summary for $PACKAGE $VERSION:
+
+   data directory:                   $expandedGEDADATADIR
+   rc directory:                     $expandedGEDARCDIR
+   documentation directory:          $expandedGEDADOCDIR
+   mingw build:                      $MINGW
+])
 

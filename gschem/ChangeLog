@@ -1,3 +1,20 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_multiattrib.nw: Oops wasn't return true or false in the
+	keypress routine, so no input was going to the entries.  Fixed.
+
+	* noweb/x_attribedit.nw, x_dialog.nw, x_fileselect.nw, x_image.nw
+	x_log.nw, x_menus.nw, x_multiattrib.nw, x_pagesel.nw, x_print.nw,
+	x_window.nw: 
+        Add #ifdef HAS_GTK?2 depending on the gtk version so
+	that the code base builds for both gtk+ 1.2.x and 2.2.x.
+
+	* noweb/g_rc.nw, gschem.nw, x_event.nw, x_window.nw: 
+	Changed a few #if ... to #ifdef ...
+
+	* noweb/x_attribedit.nw: Improved the looks of the bottom buttons
+	in gtk+ 2.2.x while preserving the 1.2.x look.
+
 2003-08-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/prototype.h, noweb/x_multiattrib.nw: Applied 
@@ -9,6 +26,19 @@
 
         * docs/gschem.1: Updated manpage a little
 
+2003-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Renamed from configure.in.
+
+	* configure.ac: A whole bunch of changes to support both
+	gtk+-1.2.x and gtk+-2.2.x.  
+
+	* configure.ac: Lots of cleanup and moved to the use of pkg-config 
+	for the configuration of almost all libraries (most importantly
+	libgeda).
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_basic.nw: Removed unused variable

@@ -13,7 +13,6 @@ INDENTFLAG=     -kr -i2
 
 VPATH = ../noweb:../include:src
 
-
 # Build a libtool library, libhello.la for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
 
@@ -29,11 +28,9 @@ BUILT_SOURCES = \
 
 libgeda_la_SOURCES = $(BUILT_SOURCES:.nw=.c)
 
-libgeda_la_LDFLAGS = -version-info 18:0:0
+INCLUDES = -I$(top_srcdir)/include @LIBGEDA_CFLAGS@
+libgeda_la_LDFLAGS = @LIBTOOL_FLAGS@ @LIBGEDA_LDFLAGS@
 
-include_HEADERS = 
-
-INCLUDES = -I$(top_srcdir)/include @GUILE_CFLAGS@ @X_CFLAGS@  
 
 EXTRA_DIST = create_proto 
 
@@ -41,7 +38,6 @@ TEXIFILES = $(BUILT_SOURCES:.nw=.texi)
 
 src: $(libgeda_la_SOURCES)
 	@echo Finished building the C source
-
 
 SUFFIXES = .nw
 

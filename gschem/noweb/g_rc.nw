@@ -1786,7 +1786,7 @@ g_rc_bitmap_directory(SCM path)
 SCM
 g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 {
-#if HAS_LIBSTROKE
+#ifdef HAS_LIBSTROKE
   char *stroke = gh_scm2newstr(scm_stroke, NULL);
 
   if (!s_stroke_uniq(stroke)) {

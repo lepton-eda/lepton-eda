@@ -397,13 +397,16 @@ x_print_cancel(GtkWidget *w, TOPLEVEL *w_current)
 @end defun
 
 <<x_print.c : x_print_keypress()>>=
-void
+int
 x_print_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
     x_print_cancel(NULL, w_current);	
+    return TRUE;
   }
+
+  return FALSE;
 }
 
 

@@ -1,3 +1,19 @@
+2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Improved the configuration summary message.
+
+2003-07-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Created new configure file from configure.in
+	(remvoed configure.in).  Removed all unnecessary auto* files.
+
+	* gesym-config.in: Removed file, since it will not longer be used
+	in the install process.
+
+	* configure.ac: Cleaned up file quite a bit (simplified)
+
+	* *.in, *.h, etc: Removed a bunch of old unneeded auto* files.
+	
 2003-06-01 Werner Hoch <werner.ho@gmx.de>
 	* 74/74520-3.sym, 74/74189-2.sym, 74673A-2.sym: Added with swapped
 	LSB/MSB order. (hint of Magnus Danielson)

@@ -228,13 +228,16 @@ destroy_window(GtkWidget *widget, GtkWidget **window)
 @end defun
 
 <<x_dialog.c : text_input_dialog_keypress()>>=
-void
+int
 text_input_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	text_input_dialog_close(NULL, w_current);	
+ 	return TRUE;
    }
+
+   return FALSE;
 }
 @ %def text_input_dialog_keypress
 
@@ -571,13 +574,16 @@ create_menu_alignment (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : text_edit_dialog_keypress()>>=
-void
+int
 text_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	text_edit_dialog_cancel(NULL, w_current);	
+ 	return TRUE;
    }
+
+   return FALSE;
 }
 @ %def text_edit_dialog_keypress
 
@@ -908,13 +914,16 @@ create_menu_linetype (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : line_type_dialog_keypress()>>=
-void
+int
 line_type_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	line_type_dialog_cancel(NULL, w_current);	
+ 	return TRUE;
    }
+
+   return FALSE;
 }
 @ %def line_type_dialog_keypress
 
@@ -1293,13 +1302,16 @@ create_menu_filltype (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : fill_type_dialog_keypress()>>=
-void
+int
 fill_type_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	fill_type_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def fill_type_dialog_keypress
 
@@ -1674,13 +1686,16 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
 @end defun
 
 <<x_dialog.c : exit_dialog_keypress()>>=
-void
+int
 exit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	exit_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def exit_dialog_keypress
 
@@ -1820,13 +1835,16 @@ exit_dialog (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : arc_angles_dialog_keypress()>>=
-void
+int
 arc_angles_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	arc_angles_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def arc_angles_dialog_keypress
 
@@ -1992,13 +2010,16 @@ arc_angle_dialog (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : translate_dialog_keypress()>>=
-void
+int
 translate_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	translate_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def translate_dialog_keypress
 
@@ -2154,13 +2175,16 @@ translate_dialog (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : text_size_dialog_keypress()>>=
-void
+int
 text_size_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	text_size_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def text_size_dialog_keypress
 
@@ -2321,13 +2345,16 @@ text_size_dialog (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : snap_size_dialog_keypress()>>=
-void
+int
 snap_size_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	snap_size_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def snap_size_dialog_keypress
 
@@ -2486,13 +2513,16 @@ snap_size_dialog (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : slot_edit_dialog_keypress()>>=
-void
+int
 slot_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	slot_edit_dialog_cancel(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def slot_edit_dialog_keypress
 
@@ -2663,13 +2693,16 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 @end defun
 
 <<x_dialog.c : about_dialog_keypress()>>=
-void
+int
 about_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	about_dialog_close(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def about_dialog_keypress
 
@@ -2779,13 +2812,16 @@ about_dialog (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : coord_dialog_keypress()>>=
-void
+int
 coord_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	coord_dialog_close(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def coord_dialog_keypress
 
@@ -3099,13 +3135,16 @@ create_color_menu (TOPLEVEL *w_current)
 @end defun
 
 <<x_dialog.c : color_edit_dialog_keypress()>>=
-void
+int
 color_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	color_edit_dialog_close(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def color_edit_dialog_keypress
 
@@ -3276,13 +3315,16 @@ static int hotkey_counter=0;
 @end defun
 
 <<x_dialog.c : x_dialog_hotkeys_keypress()>>=
-void
+int
 x_dialog_hotkeys_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	x_dialog_hotkeys_close(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 
 @ %def x_dialog_hotkeys_keypress
@@ -3671,13 +3713,16 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
 @end defun
 
 <<x_dialog.c : find_text_keypress()>>=
-void
+int
 find_text_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	find_text_done(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def find_text_keypress
 
@@ -3844,13 +3889,16 @@ void find_text_dialog(TOPLEVEL * w_current)
 @end defun
 
 <<x_dialog.c : hide_text_keypress()>>=
-void
+int
 hide_text_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	hide_text_done(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def hide_text_keypress
 
@@ -3974,13 +4022,16 @@ void hide_text_dialog(TOPLEVEL * w_current)
 @end defun
 
 <<x_dialog.c : show_text_keypress()>>=
-void
+int
 show_text_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	show_text_done(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def show_text_keypress
 
@@ -4090,13 +4141,16 @@ void show_text_dialog(TOPLEVEL * w_current)
 @end defun
 
 <<x_dialog.c : autonumber_text_keypress()>>=
-void
+int
 autonumber_text_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
    if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
 	autonumber_text_done(NULL, w_current);	
+        return TRUE;
    }
+
+   return FALSE;
 }
 @ %def autonumber_text_keypress
 

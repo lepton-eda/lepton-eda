@@ -98,13 +98,16 @@ page_manager_close(GtkWidget *w, TOPLEVEL *w_current)
 @end defun
 
 <<x_pagesel.c : page_manager_keypress()>>=
-void
+int
 page_manager_keypress(GtkWidget * widget, GdkEventKey * event, 
 	              TOPLEVEL * w_current)
 {
   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
     page_manager_close(NULL, w_current);	
+    return TRUE;
   }
+
+  return FALSE;
 }
 
 

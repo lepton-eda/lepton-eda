@@ -536,10 +536,6 @@ struct st_toplevel {
   GtkWidget *toolbar_rotate;
   GtkWidget *toolbar_mirror;
 
-  GtkMenuFactory *factory;
-  GtkMenuFactory *subfactory[2];
-  GHashTable *entry_ht;
-
   /* Dialog boxes */
   GtkWidget *fowindow;			/* File open */
   GtkWidget *fswindow;			/* File save */

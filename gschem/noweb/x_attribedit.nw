@@ -96,13 +96,16 @@ option_menu_get_history (GtkOptionMenu *option_menu)
 @end defun
 
 <<x_attribedit.c : attrib_edit_dialog_keypress()>>=
-void
+int
 attrib_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
-	              TOPLEVEL * w_current)
+	                    TOPLEVEL * w_current)
 {
   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
     attrib_edit_dialog_cancel(NULL, w_current);	
+    return TRUE;
   }
+  
+  return FALSE;
 }
 
 
@@ -694,8 +697,11 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
     }
     s_current = s_current->next;
   }
-
+#ifdef HAS_GTK22
+  aewindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+#else
   aewindow = gtk_window_new (GTK_WINDOW_DIALOG);
+#endif
   gtk_object_set_data (GTK_OBJECT (aewindow), "aewindow", aewindow);
   gtk_window_set_title (GTK_WINDOW (aewindow), _("Single Attribute Editor"));
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);

@@ -1,40 +1,19 @@
-/* config.h.in.  Generated from configure.in by autoheader.  */
+/* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* Define the location of GEDADATADIR */ 
-#define GEDADATADIR none
+/* gEDA/gaf's data directory */
+#undef GEDADATADIR
 
-/* Define the location of GEDARCDIR */ 
-#define GEDARCDIR none
+/* If gtk+ 1.2.x has been installed, define this */
+#undef HAS_GTK12
 
-/* Define if you have optarg in unistd.h */
-#undef OPTARG_IN_UNISTD
+/* If gtk+ 2.2.x has been installed, define this */
+#undef HAS_GTK22
 
-/* Define if you have the gdgeda library   */
+/* If libgdgeda has been installed, define this */
 #undef HAS_LIBGDGEDA
 
-/* Define if you have the new 2.0.x gdgeda (above will also be defined) */
-#undef HAS_LIBGDGEDA2
-
-/* Define if you have the zlib (libz) library   */
-#undef HAS_LIBZ
-
-/* Define if you have the png library   */
-#undef HAS_LIBPNG
-
-/* Define if you have rint in the math library   */
-#undef HAS_RINT  
-
-/* Define if you are using gtk+ 1.1.x */
-#undef GTK_DEVEL
-
-/* Define the version (mainly used in sym/sch/rc version compat. testing) */
-#define VERSION none  
-
-/* Define if you have tcl installed */
-#undef HAS_TCL 
-
-/* Define the gtk version */ 
-#define GTKVERSION none
+/* If your math library has rint in it, define this */
+#undef HAS_RINT
 
 /* Define to 1 if you have the <assert.h> header file. */
 #undef HAVE_ASSERT_H
@@ -114,6 +93,9 @@
 /* Define to 1 if you have the `vsnprintf' function. */
 #undef HAVE_VSNPRINTF
 
+/* Define if you have optarg in unistd.h */
+#undef OPTARG_IN_UNISTD
+
 /* Define to the address where bug reports for this package should be sent. */
 #undef PACKAGE_BUGREPORT
 
@@ -135,8 +117,8 @@
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
-/* Define to 1 if the X Window System is missing or not being used. */
-#undef X_DISPLAY_MISSING
+/* Currently running version of gEDA/gaf */
+#undef VERSION
 
 /* Define to empty if `const' does not conform to ANSI C. */
 #undef const
