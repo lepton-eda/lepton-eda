@@ -52,7 +52,7 @@ s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename,
 	string = s_slib_search_single(filename);
 
 	if (!string) {
-		return(0);
+		return(-1);
 	}
 
 	found = s_page_new(w_current, string);
@@ -60,9 +60,13 @@ s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename,
 	if (found) {
 		w_current->page_current = found;
 		s_page_goto(w_current, found);
+		if (page_control != 0) {
+			w_current->page_current->page_control = page_control;
+		}
+		w_current->page_current->up = parent->pid;
 		if (string) 
 			free(string);
-		return(0);
+		return(w_current->page_current->page_control);
 	}
 
 	f_open(w_current, w_current->page_current->page_filename);
@@ -181,6 +185,7 @@ s_hierarchy_up(TOPLEVEL *w_current, int pid)
 	PAGE *p_current;
 
 	if (pid < 0) {
+		s_log_message("There are no schematics above the current one!\n");
 		return;
 	}
 
@@ -189,7 +194,8 @@ s_hierarchy_up(TOPLEVEL *w_current, int pid)
 	if (p_current) {
 		s_page_goto(w_current, p_current);
 	} else {
-		s_log_message("There are no schematics above the current one!\n");
+		s_log_message("Cannot find any schematics above the current one!\n");
+		s_log_message("Maybe toplevel schematic page was closed/discarded?\n");
 	}
 }
 

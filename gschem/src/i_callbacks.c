@@ -1068,6 +1068,24 @@ DEFINE_I_CALLBACK(page_close)
 		return;
 	}
 
+	/* Can we go up in the hierarchy first? */
+	p_current = s_hierarchy_find_page(w_current->page_head, 
+					  w_current->page_current->up);
+	if (p_current) {
+		s_log_message("Closing [%s]\n",
+			      w_current->page_current->page_filename);
+		s_page_free(w_current, w_current->page_current);
+		w_current->page_current = p_current;
+
+		s_page_goto(w_current, w_current->page_current);
+		i_set_filename(w_current,
+			       w_current->page_current->page_filename);
+		x_scrollbars_update(w_current);
+		o_redraw_all(w_current);
+		update_page_manager(NULL, w_current);
+		return;
+	}
+
 	if (w_current->page_current->prev) {
 		if (w_current->page_current->prev->pid != -1) {
 			p_current = w_current->page_current->prev;
@@ -1135,10 +1153,16 @@ DEFINE_I_CALLBACK(page_revert)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	char *filename;
+	int page_control;
+	int up;
 
 	exit_if_null(w_current);
 
 	filename = u_basic_strdup(w_current->page_current->page_filename);
+
+	/* save this for later */
+	page_control = w_current->page_current->page_control;
+	up = w_current->page_current->up;
 
 	s_page_free(w_current, w_current->page_current);
 	s_page_new(w_current, filename);
@@ -1147,6 +1171,10 @@ DEFINE_I_CALLBACK(page_revert)
 	w_current->DONT_REDRAW = 1;
         f_open(w_current, w_current->page_current->page_filename);
         i_set_filename(w_current, w_current->page_current->page_filename);
+
+	/* make sure we maintain the hierarchy info */
+	w_current->page_current->page_control = page_control;
+	w_current->page_current->up = up;
 
 	x_repaint_background(w_current);
 	x_window_setup_world(w_current);
@@ -1170,6 +1198,24 @@ DEFINE_I_CALLBACK(page_discard)
 	PAGE *p_save;
 
 	exit_if_null(w_current);
+
+	/* Can we go up in the hierarchy first? */
+	p_current = s_hierarchy_find_page(w_current->page_head, 
+					  w_current->page_current->up);
+	if (p_current) {
+		s_log_message("Closing [%s]\n",
+			      w_current->page_current->page_filename);
+		s_page_free(w_current, w_current->page_current);
+		w_current->page_current = p_current;
+
+		s_page_goto(w_current, w_current->page_current);
+		i_set_filename(w_current,
+			       w_current->page_current->page_filename);
+		x_scrollbars_update(w_current);
+		o_redraw_all(w_current);
+		update_page_manager(NULL, w_current);
+		return;
+	}
 
 	if (w_current->page_current->prev) {
 		if (w_current->page_current->prev->pid != -1) {
@@ -1521,8 +1567,11 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 							   attrib, parent,
 							   page_control);
 
-				a_zoom_limits(w_current, 
-				      w_current->page_current->object_head);
+
+				if (page_control != -1)  {
+					a_zoom_limits(w_current, 
+				          w_current->page_current->object_head);
+				}
 
 				/* save the first page */
 				if (!loaded_flag && page_control) {

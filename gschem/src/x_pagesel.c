@@ -34,7 +34,7 @@
 gint change_page(GtkWidget *widget, gint row, gint column,
 		 GdkEventButton * bevent);
 
-#define NUM_ROWS 2
+#define NUM_COLS 3
 
 /* Do NOT use the widget parameter. It is set to NULL most of the
  * time. */
@@ -42,8 +42,8 @@ void
 update_page_manager(GtkWidget *widget, TOPLEVEL *w_current)
 {
 	PAGE *p_current;
-	char text[NUM_ROWS][512]; /* size is hack */
-	char *texts[NUM_ROWS];
+	char text[NUM_COLS][512]; /* size is hack */
+	char *texts[NUM_COLS];
 	int row;
 	int i;
 
@@ -66,7 +66,7 @@ update_page_manager(GtkWidget *widget, TOPLEVEL *w_current)
 	/* First clear the list */
 	gtk_clist_clear(GTK_CLIST(w_current->page_clist));
 
-	for (i = 0; i < NUM_ROWS; i++) {
+	for (i = 0; i < NUM_COLS; i++) {
 		texts[i] = text[i];
 	}
 
@@ -78,11 +78,15 @@ update_page_manager(GtkWidget *widget, TOPLEVEL *w_current)
 		}
 
 		sprintf (text[0], "%s", p_current->page_filename);
+
+		sprintf (text[1], "%d", p_current->page_control);
+
 		if (p_current->CHANGED) {
-			sprintf (text[1], "YES");
+			sprintf (text[2], "Y");
 		} else {
-			sprintf (text[1], "-");
+			sprintf (text[2], "-");
 		}
+
 		gtk_clist_append (GTK_CLIST (w_current->page_clist), texts);
 		p_current->clist_row = i++;
 
@@ -192,12 +196,13 @@ setup_page_selector (TOPLEVEL *w_current)
 	int i;
 	int row;
 
-	char text[NUM_ROWS][512]; /* size is hack */
-	char *texts[NUM_ROWS];
+	char text[NUM_COLS][512]; /* size is hack */
+	char *texts[NUM_COLS];
 
 	static char *titles[] = {
     		"Filename",
-    		"Changed",
+    		"H",
+    		"C",
   	};
 
 	if (!w_current->pswindow) {
@@ -212,7 +217,7 @@ setup_page_selector (TOPLEVEL *w_current)
 		w_current->pswindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 		gtk_container_border_width(
 			GTK_CONTAINER(w_current->pswindow), 0);
-		gtk_widget_set_usize(w_current->pswindow, 500, 220);
+		gtk_widget_set_usize(w_current->pswindow, 515, 220);
 
 		gtk_window_position(GTK_WINDOW(w_current->pswindow),
 				    GTK_WIN_POS_NONE);
@@ -239,7 +244,7 @@ setup_page_selector (TOPLEVEL *w_current)
 
 		/* change to clist */
 		w_current->page_clist =
-			gtk_clist_new_with_titles (NUM_ROWS, titles);
+			gtk_clist_new_with_titles (NUM_COLS, titles);
 
 		gtk_widget_show(w_current->page_clist);
 		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -254,7 +259,12 @@ setup_page_selector (TOPLEVEL *w_current)
 		gtk_clist_set_row_height(GTK_CLIST(w_current->page_clist),
 					 20);
 		gtk_clist_set_column_width(GTK_CLIST(w_current->page_clist),
-					   0, 400);
+					   0, 435);
+		gtk_clist_set_column_width(GTK_CLIST(w_current->page_clist),
+					   1, 10);
+		gtk_clist_set_column_width(GTK_CLIST(w_current->page_clist),
+					   2, 10);
+
 
 		gtk_clist_set_selection_mode(GTK_CLIST(w_current->page_clist),
 					     GTK_SELECTION_BROWSE);
@@ -265,21 +275,28 @@ setup_page_selector (TOPLEVEL *w_current)
 		gtk_clist_set_column_justification(
 			GTK_CLIST (w_current->page_clist),
 			1, GTK_JUSTIFY_CENTER);
+		gtk_clist_set_column_justification(
+			GTK_CLIST (w_current->page_clist),
+			2, GTK_JUSTIFY_CENTER);
 
-		for (i = 0; i < NUM_ROWS; i++) {
+		for (i = 0; i < NUM_COLS; i++) {
           		texts[i] = text[i];
         	}
 
 		i = 0;
 		string = p_current->page_filename;
 		while(p_current != NULL && string != NULL) {
+
 			sprintf (text[0], "%s", p_current->page_filename);
 
+			sprintf(text[1], "%d", p_current->page_control);
+
 			if (p_current->CHANGED) {
-	      			sprintf (text[1], "YES");
+	      			sprintf (text[2], "Y");
 			} else {
-	      			sprintf (text[1], "-");
+	      			sprintf (text[2], "-");
 			}
+
 
 			gtk_clist_append(GTK_CLIST(w_current->page_clist),
 					 texts);

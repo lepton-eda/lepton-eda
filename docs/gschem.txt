@@ -31,7 +31,7 @@ I (Ales) am writing this just to get something done.  I am by no means
 a technical writer so I am sure some of my sentences are truly awful.
 As everybody says, programmers should not write documentation for their
 programs and this document is a perfect illustration of a programmer
-breaking that rule.  Please report any errors/inconsistancies to
+breaking that rule.  Please report any errors/inconsistencies to
 ahvezda@geda.seul.org
 
 	This document assumes you know understand basic schematic capture,
@@ -49,7 +49,7 @@ in the gEDA system.
 It's sole purpose is facilitate the input of circuit schematics or
 block diagrams graphically.  gschem is also the symbols editor for the
 gEDA system.  This is possible because the schematic format and symbol 
-format are exactly the same format.
+format are exactly the same.
 
 
 
@@ -74,7 +74,7 @@ systems) will return which libraries are linked to gschem; all of the
 request libraries must be found for gschem to run.  If these commands
 do not return the expected results, then most likely the gEDA tools are
 not installed properly.  Please see the appropriate INSTALL docs (which
-came with the distributions) for more info on installing the gEDA tools.
+came with the distribution) for more info on installing the gEDA tools.
 
 	To run gschem type:
 
@@ -119,7 +119,7 @@ The menu selected operations usually require some more input (usually
 a mouse click) after they are picked off of the menu.  The keyboard
 hotkey operations take that required input as the current mouse position.
 This saves an extra click since you can position the mouse at the right
-place, type in the hotkey, and the command then executes.  Note, you can
+place, type in the hotkey(s), and the command then executes.  Note, you can
 change this so that both menu and hotkey behavior is exactly the same.
 See the section on the resource file for more info on how to configure
 this.
@@ -127,11 +127,9 @@ this.
 	Most of the interaction with gschem is fairly modal (modes like
 command/editing similar to the great text editor vi).  If you select
 operations off of the menu, the you are placed into corresponding mode
-(like copy/move mode).	In these modes gschem expects the user to pick a
-point to continue the requested operation and that the object(s) is/are
-already selected before the operation (off of the menu) is initiated.
-After the operation has been executed, the user is (typically) placed
-into select mode.
+(like copy/move mode).  You must then select an anchor point (or whatever
+the appropriate point is) to continue the operation.  Most of the commands
+off of the menu expect the objects to be already selected.
 
 	The hotkeys are also modal in nature.  Most of the default
 hotkeys are for the various commands are not single keystrokes. 
@@ -156,13 +154,13 @@ the resource file (see the section below for more info).
 
 5. Basic Operations
 
-	There are five kinds of operations in gschem:
+	There are seven kinds of operations in gschem:
 
 	a. File related (Open/Close/Save/Print etc...)
 	b. Addition of objects (Add nets/lines/pins/components etc...)
 	c. Manipulate objects (move/copy/delete/rotate/mirror etc...)
 	d. View operations (Zoom/Pan/Redraw etc...)
-	e. Hierarchy operations (...)
+	e. Hierarchy operations (Down Schematic/Down Symbol/Up)
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
 	g. Option changing (text size/gridding/snap etc...)
 
@@ -178,8 +176,8 @@ the resource file (see the section below for more info).
 
 	New Window
 
-		Open a new window.  Each window is separate from all
-		other windows.
+		Open a new window.  Each window is totally separate from 
+		all other windows.
 
 	New Page
 
@@ -188,14 +186,14 @@ the resource file (see the section below for more info).
 
 	Open Page...
 
-		Open an existing page.	This will pop up a dialog box.
+		Open an page from disk.  This will pop up a dialog box.
 		Please see the later section on how to use the more
 		advance features of this dialog box.
 
 	Close Page
 
 		Close the currently displayed page.  This will prompt
-		you to save if you modified the page.
+		you to save if you have modified the page.
 
 
 	Revert Page
@@ -203,16 +201,15 @@ the resource file (see the section below for more info).
 		Close and reopen the currently displayed page.  This will
 		not prompt you to save the current page, but will quickly
 		discard any changes you have made and reopen the saved 
-		schematic from disk.
+		schematic from disk.  Use with caution.
 	
 	Save Page
 
-		Save the page as long as the page has a titled name
-		(ie not untitled_N.sch).  If the page is untitled,
-		then a Save As...  dialog box will appear.
+		Save the page current page.  If the page is called
+		untitled_N.sch (where N is a integer), then a Save
+		As... dialog box will appear.
 
 	Save Page as...
-
 
 		Opens the Save As.. dialog box.  Clicking Save As will
 		save the currently displayed schematic.  The displayed
@@ -246,7 +243,9 @@ the resource file (see the section below for more info).
 
 	Page Manager
 
-		Brings up a dialog box which lets you 
+		Brings up a dialog box which lets you pick pages as well
+		as see various info about the pages loaded in memory.
+		Please see the dialog box section for more info on this.
 
 	Page Next
 	Page Prev
@@ -286,9 +285,9 @@ the resource file (see the section below for more info).
 
 			Press the first mouse button to place the component.
 
-		If a component is already select, hitting apply and moving
-		the mouse into the main window will allow you to place 
-		that component again.  
+		If a component is already selected, hitting apply and
+		moving the mouse into the main window will allow you to
+		place that component again.
 
 		To cancel a component place press the last mouse button or
 		the ESC key.
@@ -342,11 +341,14 @@ the resource file (see the section below for more info).
 
 		Brings up the add attribute dialog box.  This dialog
 		box is ONLY used to add attributes.  It does not display
-		or manipulate already placed attributes.
+		or manipulate already placed attributes.  This behavior will
+		be changing shortly to be attribute edit as well.
+		*This section of this doc is slightly dated*
 
 		An attribute is nothing more than a text item which is
-		in the form name=value.  It can be either unattached or
-		attached.	
+		in the form name=value (there cannot be any spaced to
+		the left or right of the name,value pair).  It can be
+		either unattached or attached.
 
 		To add an unattached attribute do the following:
 
@@ -408,7 +410,6 @@ the resource file (see the section below for more info).
 		the current attribute color (which is also called the
 		attached attribute color) to signify that this text item
 		is an attribute.
-
 
 	Add Line
 
@@ -486,22 +487,22 @@ the resource file (see the section below for more info).
 		it selected.  If multiple objects overlap then clicking in 
 		one spot will cycle through the objects.  
 
-		If you hold down the SHIFT key and click you can select
+		If you hold down the SHIFT key and click, you can select
 		and deselect multiple objects.	Doing this with multiple
 		overlapping objects will cause the selection to cycle
 		among the possible object selections.
 
-		If you hold down the CONTROL key and click you will toggle
-		the object in and out of the current selection list.
+		If you hold down the CONTROL key and click, you will
+		toggle the object in and out of the current selection
+		list.
 
 		To select multiple objects press and hold the first
 		mouse button and drag the mouse till a selection
 		box appears.  Drag the mouse (selection box) till it
-		encompasses the objects you want to select completely
-		and release the first mouse button.  The objects must be
-		completely encompassed.  Using the selection box takes
-		some practice.	If any previous objects were selected,
-		they will be unselected.
+		encompasses the objects and release the first mouse
+		button.  The objects must be completely encompassed.
+		Using the selection box takes some practice.  If any
+		previous objects were selected, they will be unselected.
 
 		If you hold down the SHIFT key while drawing a selection
 		box then you will add to the currently selected
@@ -594,7 +595,7 @@ the resource file (see the section below for more info).
 			2. Select or type the hotkey for Edit/Delete
 			3. Objects will be deleted immediately	
 
-		Use this with caution since there is no UNDO yet!	
+		Use this with caution since there is NO undo yet!	
 
 	Rotate 90 Mode
 
@@ -633,6 +634,8 @@ the resource file (see the section below for more info).
 		Objects are mirrored horizontally about the pivot point.
 		If you want to get a vertical mirror then rotate and mirror
 		the object(s) till you get the desired position.
+
+		Mirroring of embedded components is not supported.
 
 	Stretch
 
@@ -684,10 +687,10 @@ the resource file (see the section below for more info).
 			4. Pick the new color 
 			5. Press Apply.
 
-		The color change will only take effect once you press Apply.
-		The dialog box will not change to the color of the current
-		object(s) (ie it only lets you change the color and not get
-		the current color of selected object(s)).  
+		The color change will only take effect once you press
+		Apply.	The dialog box will not change to the color of the
+		current object(s) (ie it only lets you change the color
+		and does not get the current color of selected object(s)).
 
 		You can leave this dialog box up and select new objects and
 		change their color by pressing Apply.
@@ -711,15 +714,16 @@ the resource file (see the section below for more info).
 		To select a locked component, use a selection box to select
 		it.  This is the only way to select a locked component.
 
-		You can lock and unlock regular objects (lines/pins/boxes...)
-		which is nice when you are drawing something and an object
-		is in the way continuously.  Just lock it and you will not 
-		have to think about it when you click to select other objects.
-		However, locking an object is not preserved in the file so
-		once you quit any locked objects (lines/pins/boxes...) will 
+		You can lock and unlock regular objects
+		(lines/pins/boxes...)  which is nice when you are drawing
+		something and an object is in the way continuously.
+		Just lock it and you will not have to think about it when
+		you click to select other objects.  However, locking
+		an object is not preserved in the file format so once
+		you quit any locked objects (lines/pins/boxes...) will
 		become unlocked.  The locked/unlocked state of components
-		is preserved in the files though.
-		
+		is preserved in the file format though.
+
 	Symbol Translate...
 
 		Symbol translate is used to take whatever is drawn and
@@ -750,8 +754,8 @@ the resource file (see the section below for more info).
 		schematic file.  This causes schematic files to be
 		significantly larger, but it makes it easy to share
 		schematics with other people or archive schematics away,
-		since you don't need any dependencies on symbol files.
-		You should only embed components when absolutely necessary.
+		since you have any dependencies on symbol files.  You
+		should only embed components when absolutely necessary.
 
 		Embed Component and Unembed component work exactly alike:
 
@@ -877,13 +881,13 @@ the resource file (see the section below for more info).
 
 	Down Schematic 
 
-		Go down into a symbol opening up any underlying
+		Go down into a symbol, opening up any underlying
 		schematics.  Basically this will open up an underlying
 		schematic of the selected component if it exists in
 		the source library search path.  See the Resource File
 		section on how to define this path.
 
-		There are currently two ways of specifing that a symbol
+		There are currently two ways of specifying that a symbol
 		has an underlying schematic or schematics:
 
 		1) The underlying schematic must have the same name as the
@@ -904,7 +908,7 @@ the resource file (see the section below for more info).
 		be loaded.  Movement between the schematic pages
 		is restricted (to the same level of the same set
 		of underlying schematics) unless the rc keyword
-		enforce-hierarchy is modifed to allow for a freer
+		enforce-hierarchy is modified to allow for a freer
 		hierarchy traversal mode.  See the Resource File section
 		for more info.
 
@@ -921,11 +925,11 @@ the resource file (see the section below for more info).
 
 		At this time, the toplevel schematic will not see the symbol
 		change unless the toplevel schematic is reloaded or File/Revert
-		is selected.  This will be fixed eventually.
+		is executed.  This will be fixed eventually.
 
 	Up
 
-		This optin will move up the hierarchy (if there are pages 
+		This option will move up the hierarchy (if there are pages 
 		above the currently displayed page).  
 
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
