@@ -6,3 +6,4 @@ Makefile.in
 *.log
 *.toc
 *.ps
+*.pdf
