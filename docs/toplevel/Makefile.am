@@ -1,4 +1,4 @@
-docsdir = @GEDADATADIR@/documentation
+docsdir = @GEDADOCDIR@
 
 docs_DATA = gedadocs.html 
 

@@ -1,4 +1,4 @@
-docsdir = @GEDADATADIR@/documentation/gnetlist
+docsdir = @GEDADOCDIR@/gnetlist
 
 docs_DATA = gnetlist.txt 
 

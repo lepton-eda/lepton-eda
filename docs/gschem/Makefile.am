@@ -1,4 +1,4 @@
-docsdir = @GEDADATADIR@/documentation/gschem
+docsdir = @GEDADOCDIR@/gschem
 
 docs_DATA = gschem.txt 
 

@@ -1,4 +1,4 @@
-docsdir = @GEDADATADIR@/documentation/netattrib
+docsdir = @GEDADOCDIR@/netattrib
 
 docs_DATA = netattrib.txt 
 

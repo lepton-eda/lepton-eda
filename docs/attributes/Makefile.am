@@ -1,5 +1,5 @@
 docname=attributes
-docsdir = @GEDADATADIR@/documentation/$(docname)
+docsdir = @GEDADOCDIR@/$(docname)
 docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
 
 BUILT_SOURCES = $(docname).dvi $(docname).ps $(docname).pdf \

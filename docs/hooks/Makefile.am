@@ -1,4 +1,4 @@
-docsdir = @GEDADATADIR@/documentation/hooks
+docsdir = @GEDADOCDIR@/hooks
 
 docs_DATA = hooks_and_scheme.txt
 

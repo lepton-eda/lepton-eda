@@ -1,4 +1,4 @@
-docsdir = @GEDADATADIR@/documentation/keymapping
+docsdir = @GEDADOCDIR@/keymapping
 
 docs_DATA = keymapping.html
 

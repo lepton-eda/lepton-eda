@@ -26,7 +26,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(http://www.gnu.org/copyleft/fdl.html)}
-\date{February 11th, 2002}
+\date{February 23rd, 2003}
 
 \begin{document}
 
@@ -97,10 +97,39 @@ Example: \texttt{graphical=1}
 
 
 \subsection{\bf description\label{description}}
-The description attribute provides a simple one line description of what 
+The {\bf description} attribute provides a simple one line description of what 
 the symbol is supposed to represent.  
 
 Example: \texttt{description=4 NAND gates with 2 inputs}
+
+
+\subsection{\bf author\label{author}}
+The {\bf author} attribute identifies the name of the author of this
+symbol.  This attribute is optional, but it is nice to know who create
+which symbols.  This symbol is fairly free form and it can also include
+people's names who modified the symbol.
+
+Example: \texttt{author=Ales Hvezda}
+
+
+\subsection{\bf email\label{email}}
+The {\bf email} attribute identifies the email of the author of this
+symbol.  This attribute is also optional, but keeping track of who created
+the symbol and a contact address is very useful if there are questions
+about the symbol, which only the original author might be able to answer.
+It can also include the email address of who else modified the symbol.
+It is probably also a good idea to obfuscate the address so it is not
+harvested for spam purposes.
+
+Example: \texttt{email=ahvezdaATseul.org}
+
+
+\subsection{\bf comment\label{comment}}
+The {\bf comment} attribute can contain anything.  This attribute can
+convey any additional information which might not fit into any other
+attribute.  There can be multiple instances of this attribute.
+
+Example: \texttt{comment=This is a comment inside a symbol}
 
 
 \subsection{\bf pinseq\label{pinseq}}
@@ -356,6 +385,7 @@ August 25th, 2002 & Added obsolete type= attribute. \\ \hline
 September 14, 2002 & Added description= attribute. Minor fixes\\ \hline
 October 7, 2002 & Added doc= attribute; Egil Kvaleberg.\\ \hline
 February 11, 2002 & Added reference to footprint conventions.\\ \hline
+February 23, 2002 & Added author=, email=, and comment= attributes.\\ \hline
 
 \end{tabular}
 \end{table}
