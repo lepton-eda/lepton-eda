@@ -144,6 +144,15 @@ SCM g_key_help_hotkeys(void);
 SCM g_key_cancel(void);
 SCM g_get_selected_filename(void);
 SCM g_get_selected_component_attributes(void);
+/* globals.c */
+/* g_object.c */
+SCM g_make_arc_smob(SCM s_center, SCM s_radius, SCM s_angle1, SCM s_angle2);
+SCM g_make_box_smob(SCM s_point1, SCM s_point2);
+SCM g_make_circle_smob(SCM s_center, SCM s_radius);
+SCM g_make_complex_smob(void);
+SCM g_make_line_smob(SCM s_point1, SCM s_point2);
+SCM g_redraw_all(void);
+void g_init_object_smob(TOPLEVEL *w_curr);
 /* g_rc.c */
 void g_rc_parse(void);
 SCM g_rc_gschem_version(SCM version);
@@ -225,7 +234,7 @@ SCM g_rc_draw_grips(SCM mode);
 SCM g_rc_netconn_rubberband(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
-/* globals.c */
+void g_register_smobs(TOPLEVEL *w_current);
 /* gschem.c */
 void gschem_quit(void);
 void main_prog(int argc, char *argv[]);
@@ -361,17 +370,19 @@ void i_vars_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
-void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
-void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint width, gint height, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
+void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(TOPLEVEL *w_current, int x, int y);
 void o_arc_end2(TOPLEVEL *w_current, int start_angle, int end_angle);
 void o_arc_rubberline(TOPLEVEL *w_current, int x, int y);
+void o_arc_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current);
+void o_arc_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_attrib.c */
 void o_attrib_add_selected(TOPLEVEL *w_current, OBJECT *selected);
 void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list);
