@@ -1,3 +1,9 @@
+2005-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Fixed a minor typo that was causing the linking of
+	both glib 1.2.x and glib 2.x into the same executable.  This caused
+	gschem and friends to segfault upon startup.
+
 2005-02-23  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac, noweb/o_picture.nw:

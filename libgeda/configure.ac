@@ -281,7 +281,7 @@ fi
 # Search for gdk (only if we are not forcing the gtk+ to 1.2)
 if test "$opt_gtkver" != "1.2"
 then
-   PKG_CHECK_MODULES(GDK, gdk >= 0.15.0, GDK="yes", no_GDK="yes")
+   PKG_CHECK_MODULES(GDK, gdk-2.0 >= 2.2.0, GDK="yes", no_GDK="yes")
 fi
 
 # This next bit of code figures out what gtk we need to use.
