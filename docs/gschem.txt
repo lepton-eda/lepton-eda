@@ -12,12 +12,12 @@ Contents:
 	3. Running gschem
 	4. User interface
 	5. Basic operations
-	6. Files
-	7. Dialog boxes
+	6. Files used/created by gschem 
+	7. Dialog boxes (TBA)
 	8. Electrical connectivity
-	9. Components/symbols  
-	10. Attributes
-	11. Resource File
+	9. Components/symbols (TBA) 
+	10. Attributes (TBA)
+	11. Resource File (TBA)
 
 
 
@@ -45,8 +45,10 @@ in the gEDA system.
 2. Overview
 
 	gschem is the schematic capture program in the gEDA tool suite.
-It's sole purpose is facilitate the input of circuit schematics or block
-diagrams graphically.  *add some more stuff here*
+It's sole purpose is facilitate the input of circuit schematics or
+block diagrams graphically.  gschem is also used to draw symbols.
+The schematic format and symbol format exactly the same so gschem is
+also the symbol editor for gEDA.  *add some more stuff here*
 
 
 3. Running gschem
@@ -99,20 +101,48 @@ operation or command:
 
 	Typing the keyboard hotkey(s).
 
+			-- or --
+
+	Draw the appropriate stroke (if stroke support is enabled)
+
 	To make matters more confusing, selecting an operation off of the
 menus behaves slightly differently than typing the hotkey.  Most of the
 operations operate on the currently selected object(s).  The menu selected
-operations usually require some more input (usually a mouse click) after 
+operations usually require some more input (usually a mouse click) after
 they are picked off of the menu and the keyboard hotkey operations take
 that required input as the current mouse position.  This saves an extra
 click since you can position the mouse at the right place, type in the
-hotkey, and the command then executes.  Note, you can change this so that
+hotkey, and the command then executes.	Note, you can change this so that
 both menu and hotkey behavior is exactly the same.  See the section on
 the resource file for more info on how to configure this.
-	
-	mouse buttons...	
-	modal ops
-	keymapping help
+
+	Most of the interaction with gschem is fairly modal (modes like
+command/editing similar to the great text editor vi).  If you select
+operations off of the menu, the you are placed into corresponding mode
+(like copy/move mode).	In these modes gschem expects the user to pick a
+point to continue the requested operation and that the object(s) is/are
+already selected before the operation (off of the menu) is initiated.
+After the operation has been executed, the user is (typically) placed
+into select mode.
+
+	The hotkeys are also modal in nature.  Most of the default
+hotkeys are for the various commands are not single keystrokes.
+There are a few which are single keystrokes (like zoom in: `z' or
+pan: `x'), but most are typically two keystrokes long.	As examples,
+to execute File/Save you would type `f' and `s' (without the quotes)
+or Add/Line is `a' and `l'.  You can get a listing of the hotkeys by
+picking Help/Hotkeys.  The hotkeys are defined in the resource files
+(system-gschemrc, ~/.gEDA/gschemrc, or `pwd`/gschemrc).  See the section
+on the resource file for more info.
+
+	The mouse buttons in gschem are mostly configurable.  The first
+mouse button is always used to select objects or pick points.  This button
+is not configurable.  The second mouse button is either a copy/move
+action (when held down over an object) or a repeat last command or
+draw a stroke to execute a command.  The third mouse button is either a
+mouse pan (when held down as the mouse is moved) or a popup dialog box.
+The behavior of the second and third mouse buttons is controlled through
+the resource file (see the section below for more info).
 
 
 
@@ -218,7 +248,9 @@ the resource file for more info on how to configure this.
 
 	b. Addition of objects:
 
-	An object is any of the below listed primitives.	
+	An object is one of the following: line, circle, pin, net,
+	box, bus, text/attribute, and component.  A component is a
+	collection of lines, circles, pins, boxes, text, and attributes.
 
 	Add Component
 
@@ -353,6 +385,15 @@ the resource file for more info on how to configure this.
 		To cancel a text place press the last mouse button or
 		the ESC key.
 
+		If you create text in the form name=value, then you are
+		creating attributes.  gEDA allows for general attributes
+		to be free floating (or unattached).  It is a good idea
+		to change the color of these floating attributes to
+		the current attribute color (which is also called the
+		attached attribute color) to signify that this text item
+		is an attribute.
+
+
 	Add Line
 
 		Draws a line in the same fashion as drawing nets with the
@@ -420,7 +461,7 @@ the resource file for more info on how to configure this.
 
 	Select Mode
 
-		Select mode is initial mode gschem starts out in.
+		Select mode is the initial mode gschem starts up in.
 
 		In select mode you can select objects.  
 
@@ -456,6 +497,14 @@ the resource file for more info on how to configure this.
 		If an object was selected then it will be unselected
 		and vice versa.
 
+		If you pick an object which has attributes which are
+		attached to it, then these attributes will be selected
+		as well.  If you just want to select the object, you must
+		deselect the attributes.  Invisible attached attributes
+		are also selected when you pick the object This behavior
+		is handy if you want to manipulate/change an object and
+		all of its attributes (moving/copying the object around).
+
 		The selection mechanisms are not obvious and do require
 		some practice.  There are some quirks so please report them
 		as you come across them. 
@@ -480,7 +529,8 @@ the resource file for more info on how to configure this.
 			1. Select the desired object(s)
 			2. Pick Edit/Copy Mode off of a menu
 			3. Pick an origin point for the copy (first button)
-			4. Pick the destination point (first button)
+			4. Move the outline to the desired position
+			5. Pick the destination point (first button)
 
 		To copy objects using the hotkey for copy mode is almost
 		the same as above except that the origin point is selected
@@ -488,6 +538,10 @@ the resource file for more info on how to configure this.
 
 		After finishing the copy, you are automatically put back
 		into to select mode.
+
+		Holding down the CONTROL key as you move the outline
+		around will constrain the movement to be either horizontal
+		or vertical.
 
 	Move Mode
 
@@ -679,6 +733,16 @@ the resource file for more info on how to configure this.
 		You can also place embedded components directly in the 
 		Add Component... dialog box.
 
+	Show Hidden Text
+
+		This operation makes all hidden/invisible text visible.
+		To use it, simply pick the option (or type its hotkeys)
+		and all the invisible text will appear.  Visible text
+		is unaffected by this operation.  
+
+		This operation is useful when drawing/debugging symbols.
+		
+
 	d. View operations (Zoom/Pan/Redraw etc...)
 
 	Redraw
@@ -795,16 +859,289 @@ the resource file for more info on how to configure this.
 		
 
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
+
+	An attribute is nothing more than a text item which is
+	in the form name=value.  It can be either unattached or
+	attached.	
+
+	The operations in this group manipulate attributes only.
+	Most of these operations have no effect on plain text objects.
+
+	Attach
+
+		The Attach command allows you to take a text item (in the
+		proper form; name=value) and attach it to another object.
+
+		To use Attributes/Attach: 
+		
+			1. Select the object which will receive the attributes
+			2. Select the text object(s) which will be attached
+			   to the above object
+			3. Pick or type the hotkeys for Attributes/Attach
+
+		The order of the sequence of selecting the object and
+		then the text items is important; gschem will not allow
+		you to select the text items first and then the object.
+		After going through the above sequence the text item will
+		turn yellow (or the current attached attribute color)
+		signifying that the text item is an attached attribute.
+
+		You cannot attach a single attribute to several different
+		objects.  You cannot attach non-text items as attributes.
+
+	Detach
+
+		Detach allows you to deassociate attributes from objects.
+
+		To deselect an object of all attributes:
+
+			1. Select the object of interest
+			2. Pick or type the hotkeys for Attributes/Detach
+		
+		All the attached attributes (even if they are not selected)
+		will be detached from the object.  This behavior is probably
+		broken and will eventually be fixed (so that only selected
+		attributes are detached).
+
+		When you detach attributes then they turn red (or the
+		current detached attribute color).  This color changes
+		allows you to spot text which was an attribute and is
+		now dangling (unattached).
+
+	Show Value
+	Show Name
+	Show Both
+
+		These operations allow you to control which part of the
+		attribute string is visible.  Usually you are just interested
+		in seeing the value of the attribute, but there are 
+		circumstances where seeing the name and value (or maybe just
+		the name) would be useful.  
+
+		To use the options:
+
+			1. Select the attribute(s) of interest
+			2. Pick or type the hotkeys for Attributes/Show *
+	
+		The text item(s) should immediately change.  
+
+		These operations only work on text items which are in the
+		form name=value
+
+	Toggle Vis
+
+		This operation allows you to toggle the visibility of 
+		attributes.  
+
+		To use this option:
+
+			1. Select the text item(s) of interest
+			2. Pick or type the hotkeys for Attributes/Toggle Vis
+
+		The text item(s) should change their visibility immediately.
+		
+		If you make an attached attribute invisible, then you can 
+		simply select the parent object and select Toggle Vis and
+		the attribute will be come visible (likewise any visible
+		attributes attached to that object will become invisible).
+
+		If you make a free floating (unattached) attribute invisible,
+		then the only way to make it visible (and all other invisible
+		attributes) is to use the Edit/Show Hidden Text option.
+
 	g. Option changing (text size/gridding/snap etc...)
 
-6. Files
-	TBA
+	Text Size...
 
+		This command pops up a dialog box which allows you to specify
+		the text size of all text (including attributes placed with
+		the Add/Attribute... dialog box).
+
+		The text size is in points (1/72").  The default text size
+		is 10 point text.  The smallest text size is 2 points. 
+
+	Toggle Grid
+
+		Toggles the visible grid
+
+	Toggle Snap 
+
+		Toggles the snap.  Be very careful using this.
+		Connections between pins and nets (and nets to nets)
+		depends on being exactly connected.  Turning of the grid
+		will almost guarantee that nets/pins do not connect.
+
+		Before you translate a symbol using Edit/Symbol Translate, 
+		make sure the snap is on.    
+
+	Snap Grid Spacing...
+
+		This option brings up a dialog box which allows you to
+		change the snap grid spacing (not the grid spacing).
+		The units for this spacing are mils.
+
+		Before you translate a symbol using Edit/Symbol Translate,
+		make sure this spacing is set to 100.
+
+	Toggle Outline
+
+		Toggles between drawing the outline of the
+		current selection or just drawing a box when doing
+		moves/copies/component and text places.  The outline
+		mode looks better, but tends to be significantly slower
+		than using the box (bounding box) mode.
+
+	Show Log Window
+
+		This option displays the log window if it has been closed
+		or disabled from being displayed when you start up gschem.
+
+	Show Coord Window
+
+		This option displays a dialog box which displays the
+		current x, y location of the mouse pointer in screen
+		(pixels) and world coordinates (mils)
+
+
+6. Files used/created by gschem 
+
+	There are several files which gschem uses.  Here is a list and
+	a brief explanation of each:
+
+	*.sch 
+		Schematic files.  These files contain components, nets,
+		text, and sometimes primitive objects (like lines,
+		circles, box etc...)  Schematics do not contain pins.
+		Schematic filenames should follow this convention:
+
+			name_#.sch
+
+			where:
+
+				name is a text string which describes
+				what this schematic contains.
+
+				_# is an underscore and a number (like
+				_1, _2, _7, _13, etc...)  This number
+				is used to sequence schematic pages in
+				a multiple page schematic.
+
+				.sch is the schematic extension/suffix.
+				It is important the schematic pages have
+				this extension.
+
+		Schematic files are pure ASCII and will always be pure ASCII.
+		gEDA does not support any binary file formats.  The file
+		format for schematics is described in the gEDA file formats
+		document.	
+
+	*.sym
+		Symbol files.  The schematic and symbol file formats are 
+		identical.  gschem (or a text editor) is used to create
+		symbol files as well as schematics.  Symbol files contain
+		lines, circles, boxes, arcs, pins, text, and attributes.
+
+		The naming convention for symbol files is:
+
+			name-#.sym
+
+			where
+			
+				name is a text string which describes
+				what the symbol represents.
+
+				-# is a dash and a number (like -1,
+				-2 etc...)  The number is used to allow
+				for a symbols to have the same name
+				yet different contents.  There might be
+				multiple representations for resistors
+				so these symbols should be called:
+				resistor-1.sym, resistor-2.sym, and
+				resister-3.sym.
+
+				.sym is the symbol extension/suffix.
+				It is important the symbols have this
+				extension.
+
+		For toplevel symbols which have underlying schematics
+		(for a schematics hierarchy) there is a naming convention
+		(it's basically what's described above).  This naming
+		convection is best described by an silly example:
+
+		Suppose you have a symbol called ales-1.sym (which
+		represents an alcoholic beverage generating black box).
+		Now this alcoholic beverage black box has a bunch of
+		underlying schematics.	These schematics are called
+		ales_1.sch, ales_2.sch, ales_3.sch etc...
+
+		So basically the name of the symbol and the name
+		schematics is the same (only the sequence numbers
+		change).  Now this also means that ales-2.sym has
+		the same underlying schematics (ales_1.sch, ales_2.sch,
+		ales_3.sch etc...).
+
+		The hierarchy mechanism is still in heavy flux, but the
+		naming conventions will probably stay the same.
+
+	system-gschemrc
+	~/.gEDA/gschemrc
+	gschemrc
+		Resource files.  These contain guile (scheme) keywords
+		which control the various configurable parameters.
+		All three files may exist and are searched in the
+		above listed order.  system-gschemrc contains system
+		wide defaults.	~/.gEDA/gschemrc lives in each users
+		home directory and contains project wide defaults.
+		gschemrc lives in each project directory and contains
+		project specific defaults.  See the section below on 
+		the resource file for more info.
+
+	gschem.log
+		Log file.  This file contains informative, error, warnings
+		etc... messages when gschem was run.  This file is created
+		in the working directory that gschem was started in.
+		This allows the user to preserve log files between
+		independent projects.
+
+	TBA: Suggested format for projects
+
+	
 7. Dialog boxes
 	TBA
 
 8. Electrical connectivity 
-	TBA
+
+	As you draw schematics you need be aware of what is considered
+	to be electrically connected by the gEDA programs.
+
+	Nets which are visually connected to other nets are electrically
+	connected.  This connection may be endpoint to endpoint or
+	endpoint to midpoint.  When a single endpoint to endpoint (net
+	or pin endpoint) connection is drawn then the visual dangling
+	net cue disappears.  When an endpoint to the middle of another
+	net (or multiple endpoints coming together at a single point)
+	is drawn then a circular filled connectivity cue is drawn.
+	You cannot connect a net to the middle of a pin.  Nets can only
+	be connected to the endpoints of pins.	You cannot connect to
+	a net if that net is not orthogonal (horizontal or vertical).
+	The visual cues are the primary way of telling if nets/pins
+	are connected.
+
+	Bus are similar to nets with the exception that you cannot
+	connect a net to the endpoint of a bus (only to the middle).
+	If you do try to connect a net to the end of a bus you will see
+	a big red X at the invalid endpoint connection.  Buses are still
+	very new so there are still many quirks.
+
+	Nets which have the same attribute label= attached to them are
+	also considered electrically connected.  You will not get any
+	indication of this connection by gschem, but the netlister
+	(gnetlist) considers nets with the same label= attribute
+	electrically connected.  The naming convention for buses has not
+	been formalized yet.
+
+	More TBA
+
 
 9. Components/symbols  
 	TBA
