@@ -5822,11 +5822,12 @@ gtk_sheet_key_press(GtkWidget *widget,
 #ifdef DEBUG
       printf("In gtk_sheet_key_press, after switch, found default case.\n");
 #endif
-      if(in_selection) GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
-      /* Need to find way to return only if this is a shift, ctrl, etc key pressed */
-      /* if(extend_selection) return TRUE; */
+      if(in_selection) {
+	GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
+	if(extend_selection) return TRUE; 
+      }
       if(state == GTK_SHEET_ROW_SELECTED) 
-        sheet->active_cell.col=MIN_VISIBLE_COLUMN(sheet);
+	  sheet->active_cell.col=MIN_VISIBLE_COLUMN(sheet);
       if(state == GTK_SHEET_COLUMN_SELECTED)
         sheet->active_cell.row=MIN_VISIBLE_ROW(sheet);
       return FALSE;
