@@ -205,9 +205,9 @@ g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf ("Read system-%s file [\%s]\n",
+  ok_msg  = g_strdup_printf ("Read system-%s file [%%s]\n",
                              rcname);
-  err_msg = g_strdup_printf ("Did not find required system-%s file [\%s]\n",
+  err_msg = g_strdup_printf ("Did not find required system-%s file [%%s]\n",
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
 
@@ -254,9 +254,9 @@ g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf ("Read ~/.gEDA/%s file [\%s]\n",
+  ok_msg  = g_strdup_printf ("Read ~/.gEDA/%s file [%%s]\n",
                              rcname);
-  err_msg = g_strdup_printf ("Did not find optional ~/.gEDA/%s file [\%s]\n",
+  err_msg = g_strdup_printf ("Did not find optional ~/.gEDA/%s file [%%s]\n",
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
   
@@ -294,9 +294,9 @@ g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf ("Read local %s file [\%s]\n",
+  ok_msg  = g_strdup_printf ("Read local %s file [%%s]\n",
                              rcname);
-  err_msg = g_strdup_printf ("Did not find optional local %s file [\%s]\n",
+  err_msg = g_strdup_printf ("Did not find optional local %s file [%%s]\n",
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
 
@@ -334,9 +334,9 @@ g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcname)
 
   filename = f_normalize_filename (rcname);
 
-  ok_msg  = g_strdup_printf ("Read specified %s file [\%s]\n",
+  ok_msg  = g_strdup_printf ("Read specified %s file [%%s]\n",
                              rcname);
-  err_msg = g_strdup_printf ("Did not find specified %s file [\%s]\n",
+  err_msg = g_strdup_printf ("Did not find specified %s file [%%s]\n",
                              rcname);  
   found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
   
