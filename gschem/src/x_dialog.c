@@ -804,6 +804,9 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_ok),w_current);
 	gtk_signal_connect(GTK_OBJECT(buttoncancel),"clicked",
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_cancel),w_current);
+
+	gtk_signal_connect(GTK_OBJECT(val_entry),"activate",
+			GTK_SIGNAL_FUNC(attrib_edit_dialog_ok),w_current);
 	if(list)
 		gtk_signal_connect(GTK_OBJECT(buttondelete),"clicked",
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_delete),w_current);
