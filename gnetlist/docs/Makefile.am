@@ -32,5 +32,5 @@ gnetlist.html: gnetlist.1
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ gnetlist.html
-DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlist.html
+DISTCLEANFILES = *.log core FILE *~ prototype.bak 
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure gnetlist.html

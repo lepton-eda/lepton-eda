@@ -10,6 +10,9 @@
 	Added Eagle PCB scheme backend and cleanup script.   The backend
 	and script were written by Braddock Gaskill. 
 
+	* docs/gnetlist.1: Added information on -s (from the usage of 
+	gnetlist)
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
