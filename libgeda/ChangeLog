@@ -6,6 +6,12 @@
 	* noweb/o_attrib.nw: Added a bit more output to o_attrib_print
 	to help in debugging.
 
+	* noweb/o_complex_basic.nw: Removed an extra / when reading in
+	embedded components
+
+	* noweb/o_attrib.nw: Removed a log message which is not an error:
+	( Did not find slot= attribute )
+
 2002-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/u_basic.nw: Changed u_basic_breakup_string to take a

@@ -2168,7 +2168,8 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
   string = o_attrib_search_slot(o_current, &o_slot_attrib);
 	
   if (!string) {
-    s_log_message("Did not find slot= attribute\n");
+    /* s_log_message("Did not find slot= attribute\n"); */
+    /* not a serious error */
     return;
   } 
   slot = atoi(string);
@@ -2267,7 +2268,8 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
   string = o_attrib_search_slot(o_current, &o_slot_attrib);
 	
   if (!string) {
-    s_log_message("Did not find slot= attribute\n");
+    /* s_log_message("Did not find slot= attribute\n"); */
+    /* not a serious error */
     return;
   } 
   slot = atoi(string);

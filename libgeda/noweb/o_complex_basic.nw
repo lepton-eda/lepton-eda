@@ -746,7 +746,7 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
   object_list = o_complex_add_embedded(w_current, 
                                        object_list, type, 
                                        WHITE, x1, y1, angle,
-                                       "EMBEDDED/", basename, 
+                                       "EMBEDDED", basename, 
                                        selectable);
 
 @ 
