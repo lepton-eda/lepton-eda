@@ -329,10 +329,8 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   GtkWidget *root_menu;
   GtkWidget *menu_bar;
   GtkWidget *menu;
-#ifdef __MINGW32__      
   GdkFont *font=NULL;
   GtkStyle *style;
-#endif
   char **menu_name = malloc (sizeof(char *));
   int scm_items_len;
   SCM scm_items;
@@ -349,6 +347,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   char *spaces;
   int i, j;
   int name_len, key_len, pad;
+  int sum, diff, max_size, space_size;
 
   menu_bar = gtk_menu_bar_new ();
   for (i = 0 ; i < s_menu_return_num(); i++) {
@@ -364,6 +363,17 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     menu_item = gtk_tearoff_menu_item_new ();
     gtk_menu_append(GTK_MENU(menu), menu_item);
     gtk_widget_show(menu_item);
+
+    /* get info for style/font */
+    style = gtk_rc_get_style(w_current->main_window);
+    if (style) {
+       font = style->font;
+    } else {
+       font = GTK_WIDGET (w_current->main_window)->style->font;
+    }
+    space_size = gdk_string_width(font, " ");
+    max_size = gdk_string_width(font, "123456789012345678901234567890");
+	
 
     scm_items_len = gh_length(scm_items);
     for (j = 0 ; j < scm_items_len; j++) {
@@ -394,7 +404,19 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
 
         name_len = strlen(menu_item_name);
         key_len = strlen(menu_item_keys);
+
+#if 0 /* old way of calculating pad, assumes fixed width font */
         pad = 30 - (name_len + key_len);
+#endif
+
+        /* new way of calculating pad */
+        sum = gdk_string_width(font, menu_item_name) + 
+              gdk_string_width(font, menu_item_keys);
+	diff = max_size - sum;
+	pad = diff/space_size;
+	if (pad < 0) { 
+           pad = 1;
+	} 
 
         spaces = malloc(sizeof(char)*(pad+1));
         memset(spaces, ' ', pad);
@@ -418,7 +440,8 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       
       gtk_widget_show(menu_item);
 
-#ifdef __MINGW32__      
+/* __MINGW32__ old */
+#if 0  
       if (GTK_BIN (menu_item)->child) {
         GtkWidget *child = GTK_BIN (menu_item)->child;
         

@@ -5,6 +5,12 @@
 
 	* lib/system-gschemrc.in: Added warp-cursor rc keyword
 
+	* noweb/x_menus.nw: Got rid of the requirement to use a fixed width
+	font for the menus etc...  Properly calculated the space pad between
+	the item name and hotkey.  Also removed code for mingw32 port
+
+	* lib/gschem-gtkrc: Commented out the setting of the font
+
 2002-04-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_dialog.nw: Added the rest of the signal connects for
