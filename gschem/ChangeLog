@@ -9,6 +9,8 @@
 
         * aclocal.m4: Removed file from cvs.
 
+	* m4/Makefile.in: Removed machine generated file from cvs.
+
 2002-11-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gschem/noweb.nw: Applied patch by Alexandre P. Nunes for
