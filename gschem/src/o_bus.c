@@ -444,7 +444,6 @@ o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 void
 o_bus_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current)
 {
-	int size;
 	int color;
 	int dx1, dy1, dx2, dy2;
 

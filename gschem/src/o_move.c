@@ -409,8 +409,7 @@ o_move_check_midpoint(TOPLEVEL *w_current, OBJECT *object)
 	NETHASH *nethash_list;
 	NETHASH *nh_current;
 	CONN *c_current;
-	int i, whichone;
-	char *key;
+	int whichone;
 
 	if (!object)
 		return;

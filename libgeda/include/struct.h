@@ -642,7 +642,7 @@ struct st_toplevel {
 	int draw_grips;	        /* Controls if grips are enabled or not */
 
 	int netconn_rubberband;			/* controls if nets are */
-						/* rubberbanded as you move 
+						/* rubberbanded as you move */
 						/* them (or connecting comps) */
 
 

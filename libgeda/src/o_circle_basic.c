@@ -217,7 +217,6 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
 	OBJECT_TYPE circle_type;
 	OBJECT_FILLING circle_fill;
 	long int ver;
-	int tmp;
 
 /* PB : check of the version of the file before read */
 	ver = strtol(version, NULL, 10);

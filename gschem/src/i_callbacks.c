@@ -2361,9 +2361,9 @@ DEFINE_I_CALLBACK(options_show_log_window)
 /* this is Ales' catch all misc callback */
 DEFINE_I_CALLBACK(misc)
 {
+#if 0 /* testing of stretch of nets while moving */
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
-#if 0 /* testing of stretch of nets while moving */
 	s_nethash_build(w_current->page_current->nethash_table, 
 			w_current->page_current->conn_table, 
 			w_current->page_current->object_head);

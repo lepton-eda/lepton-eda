@@ -414,7 +414,6 @@ o_box_fill_hatch (GdkDrawable * w, GdkGC * gc, GdkColor * color,
 		  gint fill_width,
 		  gint angle1, gint pitch1, gint angle2, gint pitch2)
 {
-  int i;
   int x3, y3, x4, y4;
   double cos_a_, sin_a_;
   double x0, y0, r;

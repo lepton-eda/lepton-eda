@@ -368,6 +368,95 @@ s_nethash_query_table(GHashTable *nethash_table, char *key)
 	return(0);
 }
 
+struct st_nethash_params {
+	GHashTable * nethash_table;
+	GHashTable * conn_table;
+	OBJECT * object;
+};
+
+void
+s_nethash_build_func(gpointer key, gpointer value, gpointer user_data)
+{
+	struct st_nethash_params *nethash_params;
+	OBJECT *o_current;
+	CONN *conn_list, *c_current;
+	GHashTable * nethash_table;
+
+	nethash_params = (struct st_nethash_params *) user_data;
+	o_current = nethash_params->object;
+	nethash_table = nethash_params->nethash_table;
+
+	conn_list = c_current = (CONN *) value;
+	while (c_current != NULL) {
+	/* yes we found object in list? */
+	/* now look for midpoints */
+#if DEBUG
+		printf("%p %p\n", c_current->object, o_current);
+#endif
+		if (c_current->object == o_current) {
+			if (!conn_list) {
+				printf("NULL conn_list\n");
+			}
+			if (conn_list) {
+				if (conn_list->visual_cue == MIDPOINT_CUE) {
+				    while (conn_list != NULL) {
+
+					if (conn_list->object != o_current
+					    && conn_list->type !=
+					    CONN_HEAD) {
+
+					    s_nethash_add_new
+						(nethash_table,
+						 conn_list->object,
+						 o_current->name,
+						 conn_list->type,
+						 conn_list);
+
+#if DEBUG
+					    printf
+						("yeah found equiv midpoint connected net\n");
+					    printf("object: %s\n",
+						   conn_list->object->
+						   name);
+					    printf("when looking at: %s\n",
+						   o_current->name);
+#endif
+
+					}
+
+					conn_list = conn_list->next;
+				   }
+				}
+			}
+		}
+		c_current = c_current->next;
+	}
+}
+
+void
+s_nethash_build(GHashTable * nethash_table, GHashTable * conn_table, 
+		OBJECT * start)
+{
+	struct st_nethash_params params;
+	OBJECT *o_current;
+
+	params.nethash_table = nethash_table;
+	params.conn_table = conn_table;
+
+	o_current = start;
+	while (o_current != NULL) {
+		params.object = o_current;
+		g_hash_table_foreach(conn_table, s_nethash_build_func, &params);
+		o_current = o_current->next;
+	}
+
+#if DEBUG
+        s_nethash_print_hash(nethash_table);
+#endif
+}
+
+
+#if 0 /* this is the original, badly written function, can be eventually del */
 /* unfortunately I need to include this from glib-1.2.x/ghash.c */
 /* since I need to implement my own foreach function */
 typedef struct _GHashNode GHashNode;
@@ -386,9 +475,8 @@ struct _GHashTable {
     GHashFunc hash_func;
     GCompareFunc key_compare_func;
 };
-
 void
-s_nethash_build(GHashTable * nethash_table, GHashTable * conn_table, 
+s_nethash_buildORIG(GHashTable * nethash_table, GHashTable * conn_table, 
 		OBJECT * start)
 {
     OBJECT *o_current;
@@ -459,3 +547,4 @@ s_nethash_build(GHashTable * nethash_table, GHashTable * conn_table,
 #endif
 
 }
+#endif
