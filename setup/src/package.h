@@ -181,7 +181,9 @@ int PackageFirst(void);
 int PackageNext(void);
 int PackageGetValue(int iName, void *pValue);
 char *PackageWhatIsMissing(const char *szTestedCodeName);
+int PackageTestIfInstalled(struct CompsTable_s *pPkg);
 int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName);
+struct CompsTable_s *get_component_by_name(const char *szName);
 
 
 
