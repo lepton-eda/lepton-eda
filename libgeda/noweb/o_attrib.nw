@@ -1007,6 +1007,7 @@ o_attrib_get_name_value(char *string, char *name, char *value )
   }
 
   if (!attribute_found) {
+    name[i] = '\0';
     return(FALSE);
   }
 
