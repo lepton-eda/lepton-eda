@@ -40,6 +40,9 @@
 /*     3rd value: visible name location on package,			 */
 /*     4th value: box's hoz size, in pins spacings    		         */
 /*     5th value: box's ver size, in pins spacings			 */
+/*     6th value: uref prefix, like U or J               		 */
+/*     7th value: Footprint						 */
+/*     8th value: Total number of pins on device (including hidden)	 */
 /*  3. All other valid lines describes the symbol's pins		 */
 /*     1st value: pin name						 */
 /*     2nd value: pin number						 */
@@ -319,24 +322,42 @@ int make_box(int fldcnt,char *pFields[])
   char uref[100],class[100];
   int pin_width,pin_height,font_size=10;
   int name_size=0;
-  int len = 0;
+  int pincount;
+  char footprint[100];
 
   strcpy(device,pFields[0]);
   strcpy(name,pFields[1]);
   strcpy(name_pos,pFields[2]); 
   pin_width  = atoi(pFields[3]); 
   pin_height = atoi(pFields[4]); 
-  strcpy(uref,pFields[5]);
-  strcat(uref,"?"); 
-  if(uref[0]=='U' || uref[0]=='u')strcpy(class,"IC");
-  if(uref[0]=='J' || uref[0]=='j')strcpy(class,"IO");
-  if(uref[0]=='C' || uref[0]=='c')strcpy(class,"IO");
-//  U is for ICs, J or CONN for IO.  We assume no discretes with this tool
+ 
   pin_0_x  = pin_spacing; 
   pin_0_y  = pin_spacing*(pin_height + 1); 
-
   BoxWidth = pin_width * pin_spacing;
   BoxHeight = pin_height * pin_spacing;
+
+  if(fldcnt >=8)
+  {
+  	strcpy(uref,pFields[5]);
+  	strcat(uref,"?"); 
+  	if(uref[0]=='U' || uref[0]=='u')strcpy(class,"IC");
+  	if(uref[0]=='J' || uref[0]=='j')strcpy(class,"IO");
+  	if(uref[0]=='C' || uref[0]=='c')strcpy(class,"IO");
+	//  U is for ICs, J or CONN for IO.  We assume no discretes with this tool
+	strcpy(footprint,pFields[6]);
+	pincount = atoi(pFields[7]);
+        printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1100,YELLOW,font_size);
+        printf("footprint=%s\n",footprint);
+        printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1300,YELLOW,font_size);
+        printf("pins=%d\n",pincount);
+  }
+  else
+  {
+	strcpy(class,"IC");
+	strcpy(uref,"U?");
+  }
+
+
   printf("B %d %d %d %d %d\n",pos_x,pos_y,BoxWidth,BoxHeight,GREEN);
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+700,YELLOW,font_size);
   printf("device=%s\n",device);
