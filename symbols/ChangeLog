@@ -10,6 +10,17 @@
 	national/DS75176-1.sym: Checked in another set of user contributed
 	symbols
 
+	* misc/osc-3.sym: Added another symbol by Karel
+
+	* asic/*.sym: Removed old asic library symbols and replaced with
+ 	Peter's Jun 2004 asic_spice_primitive symbols.
+
+	* system-commonrc.in: Commented back in the asic library now that
+	the symbols have unique names.
+
+	* asicpads asicpads/*.sym: Added new symbol library for Peter's
+	asic_pad symbol library
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228

@@ -64,7 +64,8 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@cascade")
-;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asicpads")
 ;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@gnetman")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
 

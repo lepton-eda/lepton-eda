@@ -133,6 +133,7 @@ GEDA_DECLARE_SYMLIB(diode)
 GEDA_DECLARE_SYMLIB(opto)
 GEDA_DECLARE_SYMLIB(cascade)
 GEDA_DECLARE_SYMLIB(asic)
+GEDA_DECLARE_SYMLIB(asicpads)
 GEDA_DECLARE_SYMLIB(gnetman)
 GEDA_DECLARE_SYMLIB(minicircuits)
 GEDA_DECLARE_SYMLIB(st)
@@ -222,6 +223,7 @@ AC_CONFIG_FILES([
 	national/Makefile
 	cascade/Makefile 
 	asic/Makefile 
+	asicpads/Makefile 
 	gnetman/Makefile 
 	minicircuits/Makefile
 	st/Makefile 

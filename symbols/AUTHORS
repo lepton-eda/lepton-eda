@@ -451,6 +451,8 @@ Karel 'Clock' Kulhavy	- For contributing the following symbols:
 				2N3906-1.sym
 				BC547-3.sym (renamed to -3, -2 was in use)
 
+				osc-3.sym
+
 			- For repairing the following symbols:
 
 				switch-spdt-2.sym
