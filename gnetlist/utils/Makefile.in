@@ -98,23 +98,14 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-bin_PROGRAMS = gnetlist 
+bin_PROGRAMS = mk_verilog_syms
 
-# don't forget all *.h files */
-gnetlist_SOURCES =  		g_netlist.c g_rc.c g_register.c globals.c 		gnetlist.c parsecmd.c s_cpinlist.c s_net.c 		s_netlist.c s_project.c s_traverse.c
+mk_verilog_syms_SOURCES =  		mk_verilog_syms.c
 
-
-#INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
 
 INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
-gnetlist_LDADD = @GUILE_LIB@ @GLIB@ @X_LDFLAGS@ 
 
-# original gnetlist which links in everything
-#gnetlist_LDADD = @STROKE_LIB@ @GUILE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ 
-
-man_MANS = gnetlist.1
-
-EXTRA_DIST = create_proto gnetlist.1
+mk_verilog_syms_LDADD = -lm 
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
 CLEANFILES = *.log *.ps core FILE *~ prototype.bak
@@ -132,19 +123,14 @@ LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
 X_EXTRA_LIBS = @X_EXTRA_LIBS@
 X_PRE_LIBS = @X_PRE_LIBS@
-gnetlist_OBJECTS =  g_netlist.o g_rc.o g_register.o globals.o gnetlist.o \
-parsecmd.o s_cpinlist.o s_net.o s_netlist.o s_project.o s_traverse.o
-gnetlist_DEPENDENCIES = 
-gnetlist_LDFLAGS = 
+mk_verilog_syms_OBJECTS =  mk_verilog_syms.o
+mk_verilog_syms_DEPENDENCIES = 
+mk_verilog_syms_LDFLAGS = 
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
-man1dir = $(mandir)/man1
-MANS = $(man_MANS)
-
-NROFF = nroff
 DIST_COMMON =  Makefile.am Makefile.in
 
 
@@ -152,14 +138,14 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = tar
 GZIP_ENV = --best
-SOURCES = $(gnetlist_SOURCES)
-OBJECTS = $(gnetlist_OBJECTS)
+SOURCES = $(mk_verilog_syms_SOURCES)
+OBJECTS = $(mk_verilog_syms_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
 .SUFFIXES: .S .c .lo .o .s
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps src/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps utils/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) \
@@ -229,48 +215,9 @@ distclean-libtool:
 
 maintainer-clean-libtool:
 
-gnetlist: $(gnetlist_OBJECTS) $(gnetlist_DEPENDENCIES)
-	@rm -f gnetlist
-	$(LINK) $(gnetlist_LDFLAGS) $(gnetlist_OBJECTS) $(gnetlist_LDADD) $(LIBS)
-
-install-man1:
-	$(mkinstalldirs) $(DESTDIR)$(man1dir)
-	@list='$(man1_MANS)'; \
-	l2='$(man_MANS)'; for i in $$l2; do \
-	  case "$$i" in \
-	    *.1*) list="$$list $$i" ;; \
-	  esac; \
-	done; \
-	for i in $$list; do \
-	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
-	  else file=$$i; fi; \
-	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
-	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
-	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
-	  echo " $(INSTALL_DATA) $$file $(DESTDIR)$(man1dir)/$$inst"; \
-	  $(INSTALL_DATA) $$file $(DESTDIR)$(man1dir)/$$inst; \
-	done
-
-uninstall-man1:
-	@list='$(man1_MANS)'; \
-	l2='$(man_MANS)'; for i in $$l2; do \
-	  case "$$i" in \
-	    *.1*) list="$$list $$i" ;; \
-	  esac; \
-	done; \
-	for i in $$list; do \
-	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
-	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
-	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
-	  echo " rm -f $(DESTDIR)$(man1dir)/$$inst"; \
-	  rm -f $(DESTDIR)$(man1dir)/$$inst; \
-	done
-install-man: $(MANS)
-	@$(NORMAL_INSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) install-man1
-uninstall-man:
-	@$(NORMAL_UNINSTALL)
-	$(MAKE) $(AM_MAKEFLAGS) uninstall-man1
+mk_verilog_syms: $(mk_verilog_syms_OBJECTS) $(mk_verilog_syms_DEPENDENCIES)
+	@rm -f mk_verilog_syms
+	$(LINK) $(mk_verilog_syms_LDFLAGS) $(mk_verilog_syms_OBJECTS) $(mk_verilog_syms_LDADD) $(LIBS)
 
 tags: TAGS
 
@@ -303,7 +250,7 @@ maintainer-clean-tags:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-subdir = src
+subdir = utils
 
 distdir: $(DISTFILES)
 	@for file in $(DISTFILES); do \
@@ -327,20 +274,20 @@ installcheck: installcheck-am
 install-exec-am: install-binPROGRAMS
 install-exec: install-exec-am
 
-install-data-am: install-man
+install-data-am:
 install-data: install-data-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 install: install-am
-uninstall-am: uninstall-binPROGRAMS uninstall-man
+uninstall-am: uninstall-binPROGRAMS
 uninstall: uninstall-am
-all-am: Makefile $(PROGRAMS) $(MANS)
+all-am: Makefile $(PROGRAMS)
 all-redirect: all-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
 installdirs:
-	$(mkinstalldirs)  $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1
+	$(mkinstalldirs)  $(DESTDIR)$(bindir)
 
 
 mostlyclean-generic:
@@ -386,14 +333,13 @@ maintainer-clean: maintainer-clean-am
 maintainer-clean-binPROGRAMS uninstall-binPROGRAMS install-binPROGRAMS \
 mostlyclean-compile distclean-compile clean-compile \
 maintainer-clean-compile mostlyclean-libtool distclean-libtool \
-clean-libtool maintainer-clean-libtool install-man1 uninstall-man1 \
-install-man uninstall-man tags mostlyclean-tags distclean-tags \
-clean-tags maintainer-clean-tags distdir info-am info dvi-am dvi check \
-check-am installcheck-am installcheck install-exec-am install-exec \
-install-data-am install-data install-am install uninstall-am uninstall \
-all-redirect all-am all installdirs mostlyclean-generic \
-distclean-generic clean-generic maintainer-clean-generic clean \
-mostlyclean distclean maintainer-clean
+clean-libtool maintainer-clean-libtool tags mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir info-am info \
+dvi-am dvi check check-am installcheck-am installcheck install-exec-am \
+install-exec install-data-am install-data install-am install \
+uninstall-am uninstall all-redirect all-am all installdirs \
+mostlyclean-generic distclean-generic clean-generic \
+maintainer-clean-generic clean mostlyclean distclean maintainer-clean
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

@@ -356,5 +356,6 @@ AC_OUTPUT( 	Makefile \
 		scheme/Makefile \
 		examples/Makefile \
 		lib/Makefile \
+		utils/Makefile \
 		lib/system-gnetlistrc )
 

@@ -1,5 +1,5 @@
 
-SUBDIRS = src include lib scheme examples
+SUBDIRS = src include utils lib scheme examples
 
 EXTRA_DIST = 
 

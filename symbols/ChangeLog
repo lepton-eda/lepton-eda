@@ -11,6 +11,8 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+8/8/99	Renamed some of the verilog symbols to be named *-1.sym
+
 8/3/99	Added a whole bunch of verilog symbols by Mike Jarabek
 
 7/5/99 	Removed numslots=1 from switch-dip[4|8]-1.sym (isn't needed)

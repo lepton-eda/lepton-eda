@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = gnetlist mk_verilog_syms
+bin_PROGRAMS = gnetlist 
 
 # don't forget all *.h files */
 gnetlist_SOURCES = \
@@ -8,15 +8,10 @@ gnetlist_SOURCES = \
 		gnetlist.c parsecmd.c s_cpinlist.c s_net.c \
 		s_netlist.c s_project.c s_traverse.c
 
-mk_verilog_syms_SOURCES = \
-		mk_verilog_syms.c
-
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
 
 INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
 gnetlist_LDADD = @GUILE_LIB@ @GLIB@ @X_LDFLAGS@ 
-
-mk_verilog_syms_LDADD = -lm 
 
 # original gnetlist which links in everything
 #gnetlist_LDADD = @STROKE_LIB@ @GUILE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ 

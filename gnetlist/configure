@@ -4229,6 +4229,7 @@ trap 'rm -fr `echo "Makefile \
 		scheme/Makefile \
 		examples/Makefile \
 		lib/Makefile \
+		utils/Makefile \
 		lib/system-gnetlistrc  config.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
@@ -4366,6 +4367,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile \
 		scheme/Makefile \
 		examples/Makefile \
 		lib/Makefile \
+		utils/Makefile \
 		lib/system-gnetlistrc "}
 EOF
 cat >> $CONFIG_STATUS <<\EOF
