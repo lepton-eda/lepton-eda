@@ -1,8 +1,19 @@
+2005-02-24 01:21  Dan McMahill <danmc>
+
+	* src/gsch2pcb.c: when parsing the project file, remove trailing
+	  whitespace.  Otherwise strange things can happen.  This is
+	  especially true if the "output-name" has trailing whitespace.
+
 2005-02-22  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* configure.ac, gschlas/gschlas.c: Removed call to gtk_init().
 	  GDK is now initialized in libgeda if it's a non-graphical app.
 	
+2005-02-22 22:13  Dan McMahill <danmc>
+
+	* configure.ac, src/Makefile.am: if we're using gcc then turn on
+	  -Wall
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* gschlas/gschlas.c (main_prog): Adapted for new logging system.
