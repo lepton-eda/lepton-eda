@@ -58,43 +58,42 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 
 	/* search for the real object */
 	real = (OBJECT *) o_list_search(w_current->page_current->object_head,
-                                                list);
+					list);
 
 	/* single object for now */
 	if (real->type == OBJ_COMPLEX) {
-
 		/* first see if slot attribute already exists outside
-	         * complex
-		 */
+	         * complex */
 		slot_value = o_attrib_search_slot(real, &slot_text_object);
 
 		if (slot_value) {
-
 #if DEBUG
 			printf("slot=%s\n", slot_value);
-			printf("text string : %s\n", slot_text_object->text_string);
+			printf("text string : %s\n",
+			       slot_text_object->text_string);
 #endif
-			slot_edit_dialog(w_current, slot_text_object->text_string);
+			slot_edit_dialog(w_current,
+					 slot_text_object->text_string);
 		} else {
-
 			/* we didn't find an attached slot=? attribute */
 
 			/* See if there is a default value */
-			default_slot_value = o_attrib_search_default_slot(real);
+			default_slot_value =
+				o_attrib_search_default_slot(real);
 
 			if (default_slot_value) {
 				/* two is for null and equals sign */
 				slot_value = (char *) malloc(sizeof(char)*(
-						  strlen("slot")+
-						  strlen(default_slot_value)+
-						  2));
-				sprintf(slot_value, "slot=%s", default_slot_value);
+					strlen("slot")+
+					strlen(default_slot_value)+
+					2));
+				sprintf(slot_value, "slot=%s",
+					default_slot_value);
 			} else {
 				/* no default, make something up? */
-				/* for now.. this is an error condition */
-				slot_value = (char *) malloc(sizeof(char)*(
-						  strlen("slot=1")+1));
-				strcpy(slot_value, "slot=1");
+				/* for now.. this is an error
+                                   condition */
+				slot_value = u_basic_strdup("slot=1");
 			}
 
 #if DEBUG
@@ -129,16 +128,18 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 	}
 
 	/* find the real object */
-	real = (OBJECT *) o_list_search(w_current->page_current->object_head, w_current->page_current->selection_head->next);
+	real = (OBJECT *) o_list_search(
+		w_current->page_current->object_head,
+		w_current->page_current->selection_head->next);
 
 	/* now find the slot attribute on the outside first */
 	if (real != NULL) {
-
 		numslots_value = o_attrib_search_numslots(real, NULL);
 
 		if (!numslots_value) {
 			s_log_message("numslots attribute missing\n");
-			s_log_message("Slotting not allowed for this component\n");
+			s_log_message(
+				"Slotting not allowed for this component\n");
 			return;
 		}
 
@@ -157,19 +158,15 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 		}
 
 		/* first see if slot attribute already exists outside
-	         * complex
-		 */
+	         * complex */
 		slot_value = o_attrib_search_slot(real, &slot_text_object);
 
 		if (slot_value) {
-
 			if (slot_text_object->text_string) {
 				free(slot_text_object->text_string);
 			}
 
-			slot_text_object->text_string = malloc(sizeof(char)*
-							(len+1));
-			strcpy(slot_text_object->text_string, string);
+			slot_text_object->text_string = u_basic_strdup(string);
 
 			temp = slot_text_object;
 
@@ -179,7 +176,8 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
 			o_ntext_recreate(w_current, temp);
 
-			/* this doesn't deal with the selection list item */
+			/* this doesn't deal with the selection list
+                         * item */
 			if (temp->visibility == VISIBLE) {
 				o_redraw_single(w_current,temp);
 			}
@@ -187,13 +185,15 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 			free(slot_value);
 
 		} else {
-			/* here you need to do the add the slot attribute */
-			/* since it doesn't exist */
-			w_current->page_current->object_tail = (OBJECT *)
-					o_ntext_add(w_current,
+			/* here you need to do the add the slot
+                           attribute since it doesn't exist */
+			w_current->page_current->object_tail =
+				(OBJECT *) o_ntext_add(
+					w_current,
 					w_current->page_current->object_tail,
 					OBJ_NTEXT, w_current->text_color,
-					real->x, real->y, 0, /* zero is angle */
+					real->x, real->y,
+					0, /* zero is angle */
 					string,
 					10,
 					INVISIBLE, SHOW_NAME_VALUE);
@@ -204,7 +204,8 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 					w_current->page_current->object_tail,
 					real);
 
-			slot_text_object = w_current->page_current->object_tail;
+			slot_text_object =
+				w_current->page_current->object_tail;
 		}
 
 		o_attrib_slot_update(w_current, real);
@@ -212,16 +213,18 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 		/* erase the selection list */
 		o_erase_selected(w_current);
 
-		o_attrib_slot_copy(w_current, real, w_current->page_current->selection_head->next);
+		o_attrib_slot_copy(
+			w_current, real,
+			w_current->page_current->selection_head->next);
 		o_redraw_single(w_current,real);
 
 		o_redraw_selected(w_current);
 
 		w_current->page_current->CHANGED = 1;
 	} else {
-
-		fprintf(stderr, "uggg! you tried to slot edit something that doesn't exist!\n");
+		fprintf(stderr,
+			"uggg! you tried to slot edit something "
+			"that doesn't exist!\n");
 		exit(-1);
 	}
-
 }
