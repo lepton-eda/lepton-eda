@@ -3,15 +3,15 @@ L 4100 1300 4100 700 15 0 0 0 -1 -1
 B 600 700 7600 1400 15 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 L 600 1300 8200 1300 15 0 0 0 -1 -1
 T 1200 1100 9 10 1 1 0 0
-date=$Date: 2000/11/30 20:59:29 $
+date=$Date$
 T 5100 1100 9 10 1 1 0 0
-rev=$Revision: 1.15 $
+rev=$Revision$
 T 6600 800 9 10 1 1 0 0
-auth=$Author: matt $
+auth=$Author$
 T 1400 1400 9 10 1 1 0 0
-fname=$Source: /projects/cvsroot/af5000/hardware/power_supply/ps.sch,v $
+fname=$Source$
 T 2700 1800 9 14 1 1 0 0
-title=Tractor Power Supply Board
+title=TITLE
 T 700 1400 15 8 1 0 0 0
 FILE:
 T 4200 1100 15 8 1 0 0 0
