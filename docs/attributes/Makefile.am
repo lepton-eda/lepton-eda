@@ -28,10 +28,19 @@ tgz: $(docname).tex $(docname).dvi $(docname).ps $(docname).pdf \
 	tar cvfz $(docname).tgz $(docname).tex $(docname).ps $(docname).pdf \
 	         $(docname).dvi $(docname)
 
-maintainer-clean-local:
-dist-clean-local:
 clean-local:
 	rm -f $(docname).aux $(docname).dvi $(docname).log \
-	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
-	      Makefile.in
+	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz 
 	rm -rf $(docname)
+
+maintainer-clean-local:
+	rm -f $(docname).aux $(docname).dvi $(docname).log \
+	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
+              Makefile.in Makefile
+	rm -rf $(docname)
+dist-clean-local:
+	rm -f $(docname).aux $(docname).dvi $(docname).log \
+	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
+	      Makefile
+	rm -rf $(docname)
+
