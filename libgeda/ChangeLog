@@ -1,3 +1,8 @@
+2003-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_page.nw: Fixed debian Bug#175718: geda-gschem: schematic
+	silently discarded by adding code into s_page_save_all().
+
 2002-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Fixed a minor typo by applying Egil's latest

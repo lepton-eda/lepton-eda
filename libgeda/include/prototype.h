@@ -463,7 +463,7 @@ void s_page_goto(TOPLEVEL *w_current, PAGE *p_new);
 PAGE *s_page_search(TOPLEVEL *w_current, char *filename);
 int s_page_search_row(TOPLEVEL *w_current, PAGE *p_findme);
 void s_page_print_all(TOPLEVEL *w_current);
-void s_page_save_all(TOPLEVEL *w_current);
+int s_page_save_all(TOPLEVEL *w_current);
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);
 void s_papersizes_print(void);

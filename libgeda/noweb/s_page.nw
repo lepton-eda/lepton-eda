@@ -26,7 +26,7 @@
 <<s_page.c : s_page_check_changed()>>
 <<s_page.c : s_page_clear_changed()>>
 <<s_page.c : s_page_goto()>>
-<<s_page.c : s_apge_search()>>
+<<s_page.c : s_page_search()>>
 <<s_page.c : s_page_search_row()>>
 <<s_page.c : s_page_print_all()>>
 <<s_page.c : s_page_save_all()>>
@@ -553,12 +553,12 @@ s_page_goto(TOPLEVEL *w_current, PAGE *p_new)
 @ %def s_page_goto
 
 
-@section Function @code{s_apge_search()}
+@section Function @code{s_page_search()}
 
-@defun s_apge_search w_current filename
+@defun s_page_search w_current filename
 @end defun
 
-<<s_page.c : s_apge_search()>>=
+<<s_page.c : s_page_search()>>=
 PAGE *
 s_page_search(TOPLEVEL *w_current, char *filename)
 {
@@ -579,7 +579,7 @@ s_page_search(TOPLEVEL *w_current, char *filename)
 }
 
 
-@ %def s_apge_search
+@ %def s_page_search
 
 
 @section Function @code{s_page_search_row()}
@@ -644,11 +644,12 @@ s_page_print_all(TOPLEVEL *w_current)
 @end defun
 
 <<s_page.c : s_page_save_all()>>=
-void
+int
 s_page_save_all(TOPLEVEL *w_current)
 {
   PAGE *p_current;
   PAGE *p_save;
+  int status = 0;
 
   p_save = w_current->page_current;
   p_current = w_current->page_head;
@@ -657,15 +658,22 @@ s_page_save_all(TOPLEVEL *w_current)
 
     if (p_current->pid != -1) {
       w_current->page_current = p_current;
-      f_save(w_current, p_current->page_filename);
-      s_log_message("Saved [%s]\n", w_current->page_current->page_filename);
-      p_current->CHANGED = 0;
+
+      if (f_save(w_current, p_current->page_filename)) {
+      	s_log_message("Saved [%s]\n", w_current->page_current->page_filename);
+        p_current->CHANGED = 0;
+      } else {
+	status++;
+      	s_log_message("Could NOT save [%s]\n", 
+                       w_current->page_current->page_filename);
+      }
     }
 
     p_current = p_current->next;
   }
 
   w_current->page_current = p_save;
+  return status;
 }
 
 
