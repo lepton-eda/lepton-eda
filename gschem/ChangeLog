@@ -1,7 +1,11 @@
 2005-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/nl_NL.po: Checked in updated Dutch translation from 
-	Bert Timmerman.  Thanks Bert.
+	Bert Timmerman.  Thanks Bert.  
+
+	* po/nl_NL.po: Also converted file to UTF-8, even though there
+	was no conversion necessary.  This is to be consistent with the other
+	translations.
 
 2005-03-12  Carlos Nieves Onega <cnieves@iespana.es>
 
