@@ -186,11 +186,11 @@ Install gtk+, gdk, and glib per these instructions:
 
 * Copy cygpn2.dll and cygz.dll into /geda/bin (You only have to do this if
   you want to create a standalone /geda directory; really only for binary
-  package creators).  These *.dll live in /usr/bin
+  package creators).  These *.dll normally live in /usr/bin
 
 * touch /geda/src/gtk+/gdk/gdkx.h into existance (empty file).  This file
-  really should be used in the gEDA sources, I will eventually remove the
-  reference.
+  should not be used at all.  I will eventually remove the reference
+  from the gEDA sources eventually.
 
 * Edit /geda/src/glib/gwin32.h  and comment out the lines which define
   the glib dirent interface (this conflicts with the cygwin one).  
