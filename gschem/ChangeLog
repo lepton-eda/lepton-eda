@@ -3,6 +3,9 @@
 	* scheme/auto-uref.scm: Fixed left over "uref".  Pointed out/fixed
 	by Antonio A Todo Bom.  Thanks.
 
+	* lib/gschem-lightbg: Fixed the background color for images.  
+	Bug pointed out by John Eaton.
+
 2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw: Fixed the focus on the value entry to be

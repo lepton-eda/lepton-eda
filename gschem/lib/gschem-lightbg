@@ -58,7 +58,7 @@
 ; Set the default background color.  
 ; DO NOT change the value of the index (first number)
 ;
-(background-color 0 "grey94" "null" "null" -1 -1 -1)  	; light background
+(background-color 0 "grey94" "null" "1 1 1" 255 255 255) ; light background
 
 ; pin-color index color_name outline_color ps_color_string 
 ;           int_red int_green int_blue 
