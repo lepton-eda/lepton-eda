@@ -121,6 +121,15 @@ pix_x(TOPLEVEL *w_current, int val)
 	j = i;
 #endif
 
+	/* this is a temp solution to fix the wrapping associated with */
+	/* X coords being greated/less than than 2^15 */
+	if (j >= 32768) {
+		j = 32767;
+	}
+	if (j <= -32768) {
+		j = -32767;
+	}
+
 	return(j);
 }
 
@@ -146,6 +155,15 @@ pix_y(TOPLEVEL *w_current, int val)
 #else
 	j = i;
 #endif
+
+	/* this is a temp solution to fix the wrapping associated with */
+	/* X coords being greated/less than than 2^15 */
+	if (j >= 32768) {
+		j = 32767;
+	}
+	if (j <= -32768) {
+		j = -32767;
+	}
 
 	return(j);
 }
@@ -826,6 +844,7 @@ PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom)
 
 /* this function returns the # of zoom's we have done, since zoom_factor */
 /* is actually the magnification level */
+#if 0 /* no longer used at all */
 int
 return_zoom_number(int zoom_factor)
 {
@@ -854,4 +873,32 @@ return_zoom_number(int zoom_factor)
 		return(1);
 	}
 #endif
+}
+#endif
+
+/* rounds for example 1235 to 1000, 670 to 500, 0.234 to 0.2 ...
+int would be enough if there are no numbers smaller 1 (hw)*/
+double
+round_5_2_1(double unrounded)
+{
+	int digits;
+	double betw_1_10;
+	
+	/*only using the automatic cast */
+	digits = log10(unrounded);
+	/* creates numbers between 1 and 10 */
+	betw_1_10 = unrounded / pow(10,digits);
+	
+	if (betw_1_10 < 1.5) {
+		return(pow(10,digits));
+	}
+	if (betw_1_10 > 1.4 && betw_1_10 < 3.5 ) {
+		return(2*pow(10,digits));
+	}
+	if (betw_1_10 > 3.4 && betw_1_10 < 7.5 ) {
+		return(5*pow(10,digits));
+	}
+	else {
+		return(10*pow(10,digits));
+	}
 }
