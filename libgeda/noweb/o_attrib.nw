@@ -1007,10 +1007,6 @@ o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
     return(FALSE);
   }
 
-  if (o_text_num_lines(string) != 1) {
-    return(FALSE);
-  }
-
   /* make sure there are no spaces in between equals */
   equal_ptr = strchr(string, '=');
   if (equal_ptr == NULL) {

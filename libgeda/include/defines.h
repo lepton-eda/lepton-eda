@@ -184,6 +184,9 @@
 /* Warning: it MUST be a string. */
 #define TAB_CHAR_MODEL "b"
 
+/* multi text line spacing (multipled times character height) */
+#define LINE_SPACING    2
+
 /* These modes are for net_endpoint_mode */
 #define NONE		0
 #define FILLEDBOX	1

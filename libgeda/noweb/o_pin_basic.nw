@@ -309,7 +309,12 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
            &color, &pin_type, &whichend);
   }
 
-  if (whichend <= -1 || whichend > 1) {
+  if (whichend == -1) {
+    fprintf(stderr,
+            "Loaded a symbol which did not have the whichone field set\nSome pins may be incorrect. Verify and correct them manually.\n");
+    s_log_message("Loaded a symbol which did not have the whichone field set\nSome pins may be incorrect. Verify and correct them manully.\n");
+    whichend = 0;
+  } else if (whichend < -1 || whichend > 1) {
     fprintf(stderr,
             "Found an invalid whichend on a pin (reseting to zero): %d\n",
             whichend);

@@ -1,3 +1,27 @@
+2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Added multi line text postscript output.
+	It works mostly, but there are still some unexplained
+	inaccuracies.
+
+	* noweb/o_pin_basic.nw: Further refined the fix to the embedded
+	pins not having the right whichone set.
+
+	* noweb/o_text_basic.nw: Partially applied a UTF patch by Carlos.
+	This patch started adding unicode support to the internal font
+	table.  Since I cannot test this change right now, I have decided
+	to not apply this patch completely.  I did apply all the 1.5 to 2
+	changes as well as the memory leak plug.
+
+	* noweb/o_text_basic.nw: Included in the above patch was the
+	change to make the multi line spacing 2 instead of 1.5.  I made
+	this line spacing parameter a #define (in defines.h) to make 
+	changing it easier.  Eventually this will have to become a rc files
+	parameter.
+
+	* noweb/o_attrib.nw: Applied another patch by Carlos to remove
+	the restriction that attributes cannot be multi line text objects.
+
 2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_pin_basic.nw: In search of the "why aren't pins which are 
