@@ -222,7 +222,7 @@ gschem_distclean: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} distclean )
 
 gschem_proto: $(DIR_PREFIX)gschem$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)gschem$(CD_VERSION); ${MAKE} proto )
+	( cd $(DIR_PREFIX)gschem$(CD_VERSION)/src; ${MAKE} proto )
 
 # gnetlist
 gnetlist: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h \
@@ -247,7 +247,7 @@ gnetlist_distclean: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} distclean )
 
 gnetlist_proto: $(DIR_PREFIX)gnetlist$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); ${MAKE} proto )
+	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION)/src; ${MAKE} proto )
 
 gnetlist_config: 
 	( cd $(DIR_PREFIX)gnetlist$(CD_VERSION); \
@@ -306,7 +306,7 @@ gsymcheck_distclean: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h
 	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} distclean )
 
 gsymcheck_proto: $(DIR_PREFIX)gsymcheck$(CD_VERSION)/config.h 
-	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION); ${MAKE} proto )
+	( cd $(DIR_PREFIX)gsymcheck$(CD_VERSION)/src; ${MAKE} proto )
 
 # utils
 utils: $(DIR_PREFIX)utils$(CD_VERSION)/config.h \
@@ -362,7 +362,7 @@ libgeda_distclean: libgeda$(CD_VERSION)/config.h
 	( cd libgeda$(CD_VERSION); ${MAKE} distclean )
 
 libgeda_proto: libgeda$(CD_VERSION)/config.h
-	( cd libgeda$(CD_VERSION); ${MAKE} proto )
+	( cd libgeda$(CD_VERSION)/src; ${MAKE} proto )
 
 libgeda_config: 
 	( cd libgeda$(CD_VERSION); ./configure --prefix=$(prefix) $(opts) )
