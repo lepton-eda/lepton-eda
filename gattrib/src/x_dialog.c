@@ -406,7 +406,7 @@ int x_dialog_delattrib_yes_callback(GtkWidget *buttonyes,
  * It offers the user the chance to close the project without
  * saving because he read a schematic with a missing symbol file.
  * --------------------------------------------------------- */
-int x_dialog_missing_sym(OBJECT *object)
+int x_dialog_missing_sym()
 {
   GtkWidget *missing_sym_window;
   GtkWidget *label;
@@ -447,33 +447,17 @@ int x_dialog_missing_sym(OBJECT *object)
 		     GTK_WIDGET(missing_sym_window) );
   gtk_window_set_modal(GTK_WINDOW(missing_sym_window), TRUE);
   
-  /*  Get refdes of object  */
-  refdes = s_attrib_get_refdes(object);
-
   /*  Create a text label for the dialog window */
   string =
-    g_strdup_printf(_("Warning!  The component with refdes %s is missing a symbol file!\n"), refdes);
+    g_strdup_printf(_("Warning!  One or more components have been found with missing symbol files!\n"), refdes);
   string =
     g_strdup_printf(_("%s\n"), string);
-
-#if 0
-  /* Don't need this part of the warning now because I have created placeholders. Maybe delete it?*/
-  string =
-    g_strdup_printf(_("%sIf you save out a design with a missing symbol file, gattrib could\n"), string);
-  string =
-    g_strdup_printf(_("%spermanently remove this component from your design!  You probably\n"), string);
-  string =
-    g_strdup_printf(_("%sdon't want this!\n"), string);
-  string =
-    g_strdup_printf(_("%s\n"), string);
-#endif
-
   string =
     g_strdup_printf(_("%sThis probably happened because gattrib couldn't find your component libraries,\n"), string);
   string =
     g_strdup_printf(_("%sperhaps because your gafrc or gattribrc files are misconfigured.\n"), string);
   string =
-    g_strdup_printf(_("%sChose \"Abort program\" to leave gattrib and fix the problem, or\n"), string);
+    g_strdup_printf(_("%sChose \"Abort\" to leave gattrib and fix the problem, or\n"), string);
   string =
     g_strdup_printf(_("%s\"Continue\" to continue working with gattrib.\n"), string);
 
@@ -482,7 +466,7 @@ int x_dialog_missing_sym(OBJECT *object)
   gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
   /* Now create "Abort program" and "Continue" buttons */
-  buttonabort = gtk_button_new_with_label("Abort program");
+  buttonabort = gtk_button_new_with_label("Abort");
   GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
   gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
   gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",

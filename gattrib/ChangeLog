@@ -1,9 +1,13 @@
 2005-01-22 (Later in same day) Stuart Brorson   <sdb@cloud9.net>
 
+	* x_dialog.c, s_toplevel.c:  Rewrote missing symbol dialog box
+	so that only one box is thrown up in event of missing symbols.
+	
+2005-01-22 (Later in same day) Stuart Brorson   <sdb@cloud9.net>
+
 	* include/prototype.h, src/(s_attrib.c, s_sheet_data.c,
 	s_table.c, s_toplevel.c,  x_dialog.c): New feature -- gattrib
 	now handles slotted components correctly.
-	
 	
 2005-01-22 Stuart Brorson   <sdb@cloud9.net>
 

@@ -166,7 +166,7 @@ int x_dialog_delattrib_close_callback(GtkWidget *buttonclose,
 int x_dialog_delattrib_yes_callback(GtkWidget *buttonok, 
 				    GtkWidget *window);
 
-int x_dialog_missing_sym(OBJECT *object);
+int x_dialog_missing_sym();
 int x_dialog_missing_sym_donothing_callback(GtkWidget * widget,
 					    GdkEventKey * event,
 					    GtkWidget *window);

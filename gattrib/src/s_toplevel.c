@@ -108,6 +108,7 @@ int s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
   OBJECT *o_current;
   PAGE *p_current;
+  int missing_sym_flag = 0;
 
 #ifdef DEBUG
    printf("In s_toplevel_verify_design, about to check that all components have sym files.\n");
@@ -120,13 +121,19 @@ int s_toplevel_verify_design(TOPLEVEL *pr_current)
        while (o_current != NULL) { 
 	 /* --- look for object, and verify that it has a symbol file attached. ---- */
 	 if (o_current->type == OBJ_PLACEHOLDER) {  
-	   x_dialog_missing_sym(o_current);  /* dialog gives user option to quit */
+	   missing_sym_flag = 1;  /* flag to signal that problem exists.  */
 	 }
 	 o_current = o_current->next;
        }
      }  /* if (p_current->pid != -1) */
      p_current = p_current->next;
    }
+
+   if (missing_sym_flag) {
+     x_dialog_missing_sym();  /* dialog gives user option to quit */
+   }
+
+   return;
 }
 
 
