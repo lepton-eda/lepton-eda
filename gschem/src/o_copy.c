@@ -236,7 +236,8 @@ o_copy_end(TOPLEVEL *w_current)
 					o_complex_draw_xor(w_current,
 							   screen_diff_x,
 					                   screen_diff_y,
-						           object->complex);
+						           object->complex->
+							   prim_objs);
 				}
 				o_complex_world_translate_toplevel(w_current,
 								   diff_x,
@@ -390,7 +391,8 @@ o_copy_end(TOPLEVEL *w_current)
 				o_selection_add(temp_list, new_object);
 				new_object->saved_color = color;
                                 o_complex_set_saved_color_only(
-                                                new_object->complex, color);
+                                                new_object->text->prim_objs, 
+						color);
 			break;
 		}
 

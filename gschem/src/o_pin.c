@@ -34,8 +34,8 @@ o_pin_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 			x_get_color(w_current->background_color));
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x1,
-				o_current->line_points->y1);
+				o_current->line->x[0],
+				o_current->line->y[0]);
 
 	switch(cue) {
 
@@ -43,46 +43,46 @@ o_pin_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
 			o_conn_draw_endpoint(w_current, w_current->gc,
-                                    o_current->line_points->screen_x1,
-                                    o_current->line_points->screen_y1);
+                                    o_current->line->screen_x[0],
+                                    o_current->line->screen_y[0]);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_conn_draw_midpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x1,
-                                 o_current->line_points->screen_y1);
+                                 o_current->line->screen_x[0],
+                                 o_current->line->screen_y[0]);
 		break;
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-                                    o_current->line_points->screen_x1,
-                                    o_current->line_points->screen_y1);
+                                    o_current->line->screen_x[0],
+                                    o_current->line->screen_y[0]);
 		break;
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				 o_current->line_points->x2,
-				 o_current->line_points->y2);
+				 o_current->line->x[1],
+				 o_current->line->y[1]);
 	switch(cue) {
 
 		case(PIN_DANGLING_CUE):
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
 			o_conn_draw_endpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                 o_current->line->screen_x[1],
+                                 o_current->line->screen_y[1]);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_conn_draw_midpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                 o_current->line->screen_x[1],
+                                 o_current->line->screen_y[1]);
 		break;
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-                                    o_current->line_points->screen_x2,
-                                    o_current->line_points->screen_y2);
+                                    o_current->line->screen_x[1],
+                                    o_current->line->screen_y[1]);
 		break;
 	}
 }
@@ -105,8 +105,8 @@ o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		x_get_color(w_current->net_endpoint_color));
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x1,
-				o_current->line_points->y1);
+				o_current->line->x[0],
+				o_current->line->y[0]);
 
 #if DEBUG
 	printf("dfirst: %d\n", cue);
@@ -116,14 +116,14 @@ o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-                                    o_current->line_points->screen_x1,
-                                    o_current->line_points->screen_y1);
+                                    o_current->line->screen_x[0],
+                                    o_current->line->screen_y[0]);
 		break;
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				 o_current->line_points->x2,
-				 o_current->line_points->y2);
+				 o_current->line->x[1],
+				 o_current->line->y[1]);
 
 #if DEBUG
 	printf("dsecond: %d\n", cue);
@@ -132,8 +132,8 @@ o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-                                    o_current->line_points->screen_x2,
-                                    o_current->line_points->screen_y2);
+                                    o_current->line->screen_x[1],
+                                    o_current->line->screen_y[1]);
 		break;
 	}
 }
@@ -145,15 +145,14 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	int x1, y1, x2, y2; /* screen coords */
 	int cue;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->line == NULL) {
 		return;
 	}
 
 	o_pin_recalc(w_current, o_current);
 
 	/* reuse line's routine */
-        if (!o_line_visible(w_current, o_current->line_points,
-		&x1, &y1, &x2, &y2)) {
+        if (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) {
                 return;
         }
 
@@ -207,36 +206,32 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
                 }
 
 		cue = o_conn_query_table(w_current->page_current->conn_table,
-					 o_current->line_points->x1,
-					 o_current->line_points->y1);
+					 o_current->line->x[0],
+					 o_current->line->y[0]);
 		switch(cue) {
 			case(INVALID_CUE):
 				o_conn_draw_invalid(w_current, 
 						    w_current->gc,
                                                     o_current->
-		 				    line_points->
-					            screen_x1,
+		 				    line->screen_x[0],
                                     		    o_current->
-						    line_points->
-						    screen_y1);
+						    line->screen_y[0]);
 			break;
 
 		}
 
 		cue = o_conn_query_table(w_current->page_current->conn_table,
-					 o_current->line_points->x2,
-					 o_current->line_points->y2);
+					 o_current->line->x[1],
+					 o_current->line->y[1]);
 		switch(cue) {
 
 			case(INVALID_CUE):
 				o_conn_draw_invalid(w_current, 
 						    w_current->gc,
                                     		    o_current->
-						    line_points->
-						    screen_x2,
+						    line->screen_x[1],
                                     		    o_current->
-						    line_points->
-						    screen_y2);
+						    line->screen_y[1]);
 			break;
 		}
 	}
@@ -259,7 +254,7 @@ o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	int size;
 	int color;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->line == NULL) {
 		return;
 	}
 
@@ -281,10 +276,10 @@ o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	}
 
 	gdk_draw_line(w_current->window, w_current->xor_gc,
-			       o_current->line_points->screen_x1+dx,
-			       o_current->line_points->screen_y1+dy,
-			       o_current->line_points->screen_x2+dx,
-			       o_current->line_points->screen_y2+dy);
+			       o_current->line->screen_x[0]+dx,
+			       o_current->line->screen_y[0]+dy,
+			       o_current->line->screen_x[1]+dx,
+			       o_current->line->screen_y[1]+dy);
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
 		gdk_gc_set_line_attributes(w_current->xor_gc, 0,

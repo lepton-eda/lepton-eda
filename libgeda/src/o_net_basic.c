@@ -43,22 +43,22 @@
 
 
 void
-get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom)
+get_net_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom)
 {
 	*left = w_current->width;
 	*top = w_current->height;
 	*right = 0;
 	*bottom = 0;
 
-	if (points->screen_x1 < *left) *left = points->screen_x1;
-	if (points->screen_x1 > *right) *right = points->screen_x1;
-	if (points->screen_y1 < *top) *top = points->screen_y1;
-	if (points->screen_y1 > *bottom) *bottom = points->screen_y1;
+	if (line->screen_x[0] < *left) *left = line->screen_x[0];
+	if (line->screen_x[0] > *right) *right = line->screen_x[0];
+	if (line->screen_y[0] < *top) *top = line->screen_y[0];
+	if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
 
-	if (points->screen_x2 < *left) *left = points->screen_x2;
-	if (points->screen_x2 > *right) *right = points->screen_x2;
-	if (points->screen_y2 < *top) *top = points->screen_y2;
-	if (points->screen_y2 > *bottom) *bottom = points->screen_y2;
+	if (line->screen_x[1] < *left) *left = line->screen_x[1];
+	if (line->screen_x[1] > *right) *right = line->screen_x[1];
+	if (line->screen_y[1] < *top) *top = line->screen_y[1];
+	if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
 
 	*left = *left - 4;
 	*top = *top - 4;
@@ -68,22 +68,22 @@ get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *r
 }
 
 void
-world_get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom)
+world_get_net_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom)
 {
 	*left = w_current->init_right;
         *top = w_current->init_bottom;
         *right = 0;
         *bottom = 0;
 
-	if (points->x1 < *left) *left = points->x1;
-	if (points->x1 > *right) *right = points->x1;
-	if (points->y1 < *top) *top = points->y1;
-	if (points->y1 > *bottom) *bottom = points->y1;
+	if (line->x[0] < *left) *left = line->x[0];
+	if (line->x[0] > *right) *right = line->x[0];
+	if (line->y[0] < *top) *top = line->y[0];
+	if (line->y[0] > *bottom) *bottom = line->y[0];
 
-	if (points->x2 < *left) *left = points->x2;
-	if (points->x2 > *right) *right = points->x2;
-	if (points->y2 < *top) *top = points->y2;
-	if (points->y2 > *bottom) *bottom = points->y2;
+	if (line->x[1] < *left) *left = line->x[1];
+	if (line->x[1] > *right) *right = line->x[1];
+	if (line->y[1] < *top) *top = line->y[1];
+	if (line->y[1] > *bottom) *bottom = line->y[1];
 
 }
 
@@ -99,32 +99,31 @@ o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 	new_node->type = type;
 	new_node->color = color;
 
-	new_node->line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
+	new_node->line = (LINE *) malloc(sizeof(LINE));
 /* check for null */	
 
-	new_node->line_points->x1 = x1;
-	new_node->line_points->y1 = y1;
-	new_node->line_points->x2 = x2;
-	new_node->line_points->y2 = y2;
+	new_node->line->x[0] = x1;
+	new_node->line->y[0] = y1;
+	new_node->line->x[1] = x2;
+	new_node->line->y[1] = y2;
 
 	WORLDtoSCREEN(w_current, 
-		  new_node->line_points->x1, new_node->line_points->y1, 
+		  new_node->line->x[0], new_node->line->y[0], 
 		  &screen_x,
                   &screen_y);  
 	
-	new_node->line_points->screen_x1 = screen_x;
-	new_node->line_points->screen_y1 = screen_y;
+	new_node->line->screen_x[0] = screen_x;
+	new_node->line->screen_y[0] = screen_y;
 
 	WORLDtoSCREEN(w_current, 
-		  new_node->line_points->x2, new_node->line_points->y2, 
+		  new_node->line->x[1], new_node->line->y[1], 
 		  &screen_x,
                   &screen_y);  
 
-	new_node->line_points->screen_x2 = screen_x;
-	new_node->line_points->screen_y2 = screen_y;
+	new_node->line->screen_x[1] = screen_x;
+	new_node->line->screen_y[1] = screen_y;
 
-	get_net_bounds(w_current, new_node->line_points, 
-			&left, &top, &right, &bottom);
+	get_net_bounds(w_current, new_node->line, &left, &top, &right, &bottom);
 	
 	new_node->left = left;
 	new_node->top = top;
@@ -157,27 +156,27 @@ o_net_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 		return;
 	}
 
-	if (o_current->line_points == NULL) {
+	if (o_current->line == NULL) {
 		return;
 	}
 
-	WORLDtoSCREEN(w_current, o_current->line_points->x1, 
-		  o_current->line_points->y1, 
+	WORLDtoSCREEN(w_current, o_current->line->x[0], 
+		  o_current->line->y[0], 
 		  &screen_x1,
                   &screen_y1);  
 
-	o_current->line_points->screen_x1 = screen_x1;
-	o_current->line_points->screen_y1 = screen_y1;
+	o_current->line->screen_x[0] = screen_x1;
+	o_current->line->screen_y[0] = screen_y1;
 
-	WORLDtoSCREEN(w_current, o_current->line_points->x2, 
-		  o_current->line_points->y2, 
+	WORLDtoSCREEN(w_current, o_current->line->x[1], 
+		  o_current->line->y[1], 
 		  &screen_x2,
                   &screen_y2);  
 
-	o_current->line_points->screen_x2 = screen_x2;
-	o_current->line_points->screen_y2 = screen_y2;
+	o_current->line->screen_x[1] = screen_x2;
+	o_current->line->screen_y[1] = screen_y2;
 
-	get_net_bounds(w_current, o_current->line_points, &left, &top, &right, &bottom);
+	get_net_bounds(w_current, o_current->line, &left, &top, &right, &bottom);
 
 	o_current->left = left;
 	o_current->top = top;
@@ -231,10 +230,10 @@ o_net_save(char *buf, OBJECT *object)
 	int x1, x2, y1, y2;
 	int color;
 
-        x1 = object->line_points->x1;
-        y1 = object->line_points->y1;
-        x2 = object->line_points->x2;
-        y2 = object->line_points->y2;
+        x1 = object->line->x[0];
+        y1 = object->line->y[0];
+        x2 = object->line->x[1];
+        y2 = object->line->y[1];
 
 	/* Use the right color */
 	if (object->saved_color == -1) {
@@ -258,27 +257,27 @@ o_net_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 
 
 	/* Do world coords */
-	object->line_points->screen_x1 = object->line_points->screen_x1 + dx;
-	object->line_points->screen_y1 = object->line_points->screen_y1 + dy;
-	object->line_points->screen_x2 = object->line_points->screen_x2 + dx;
-	object->line_points->screen_y2 = object->line_points->screen_y2 + dy;
+	object->line->screen_x[0] = object->line->screen_x[0] + dx;
+	object->line->screen_y[0] = object->line->screen_y[0] + dy;
+	object->line->screen_x[1] = object->line->screen_x[1] + dx;
+	object->line->screen_y[1] = object->line->screen_y[1] + dy;
 
 	/* do we want snap grid here? */
-	SCREENtoWORLD(w_current, object->line_points->screen_x1, 
-		  object->line_points->screen_y1, 
+	SCREENtoWORLD(w_current, object->line->screen_x[0], 
+		  object->line->screen_y[0], 
 		  &x,
                   &y);  
 	
-	object->line_points->x1 = snap_grid(w_current, x);
-	object->line_points->y1 = snap_grid(w_current, y);
+	object->line->x[0] = snap_grid(w_current, x);
+	object->line->y[0] = snap_grid(w_current, y);
 	
-	SCREENtoWORLD(w_current, object->line_points->screen_x2, 
-		  object->line_points->screen_y2, 
+	SCREENtoWORLD(w_current, object->line->screen_x[1], 
+		  object->line->screen_y[1], 
 		  &x,
                   &y);  
 	
-	object->line_points->x2 = snap_grid(w_current, x);
-	object->line_points->y2 = snap_grid(w_current, y);
+	object->line->x[1] = snap_grid(w_current, x);
+	object->line->y[1] = snap_grid(w_current, y);
 }
 
 
@@ -293,30 +292,30 @@ o_net_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 
 
 	/* Do world coords */
-	object->line_points->x1 = object->line_points->x1 + x1;
-	object->line_points->y1 = object->line_points->y1 + y1;
-	object->line_points->x2 = object->line_points->x2 + x1;
-	object->line_points->y2 = object->line_points->y2 + y1;
+	object->line->x[0] = object->line->x[0] + x1;
+	object->line->y[0] = object->line->y[0] + y1;
+	object->line->x[1] = object->line->x[1] + x1;
+	object->line->y[1] = object->line->y[1] + y1;
 
 	/* update screen coords */
-	WORLDtoSCREEN(w_current, object->line_points->x1, 
-		  object->line_points->y1, 
+	WORLDtoSCREEN(w_current, object->line->x[0], 
+		  object->line->y[0], 
 		  &screen_x1,
                   &screen_y1);  
 
-	object->line_points->screen_x1 = screen_x1;
-	object->line_points->screen_y1 = screen_y1;
+	object->line->screen_x[0] = screen_x1;
+	object->line->screen_y[0] = screen_y1;
 
-	WORLDtoSCREEN(w_current, object->line_points->x2, 
-		  object->line_points->y2, 
+	WORLDtoSCREEN(w_current, object->line->x[1], 
+		  object->line->y[1], 
 		  &screen_x2,
                   &screen_y2);  
 
-	object->line_points->screen_x2 = screen_x2;
-	object->line_points->screen_y2 = screen_y2;
+	object->line->screen_x[1] = screen_x2;
+	object->line->screen_y[1] = screen_y2;
 
 	/* update bounding box */
-	get_net_bounds(w_current, object->line_points, &left, &top, &right, &bottom);
+	get_net_bounds(w_current, object->line, &left, &top, &right, &bottom);
 
 	object->left = left;
 	object->top = top;
@@ -345,15 +344,15 @@ o_net_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	/* I think for now I'll disable the update and manually update */
 	new_obj = o_net_add(w_current, list_tail, OBJ_NET, color, 0,0,0,0);
 
-	new_obj->line_points->screen_x1 = o_current->line_points->screen_x1;
-	new_obj->line_points->screen_y1 = o_current->line_points->screen_y1;
-	new_obj->line_points->screen_x2 = o_current->line_points->screen_x2;
-	new_obj->line_points->screen_y2 = o_current->line_points->screen_y2;
+	new_obj->line->screen_x[0] = o_current->line->screen_x[0];
+	new_obj->line->screen_y[0] = o_current->line->screen_y[0];
+	new_obj->line->screen_x[1] = o_current->line->screen_x[1];
+	new_obj->line->screen_y[1] = o_current->line->screen_y[1];
 
-	new_obj->line_points->x1 = o_current->line_points->x1;
-	new_obj->line_points->y1 = o_current->line_points->y1;
-	new_obj->line_points->x2 = o_current->line_points->x2;
-	new_obj->line_points->y2 = o_current->line_points->y2;
+	new_obj->line->x[0] = o_current->line->x[0];
+	new_obj->line->y[0] = o_current->line->y[0];
+	new_obj->line->x[1] = o_current->line->x[1];
+	new_obj->line->y[1] = o_current->line->y[1];
 
 	a_current = o_current->attribs;
 
@@ -402,10 +401,10 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		fprintf(fp, "1.5 setlinewidth\n");	
 	}
 
-	x1 = o_current->line_points->x1-origin_x,
-	y1 = o_current->line_points->y1-origin_y;
-	x2 = o_current->line_points->x2-origin_x,
-	y2 = o_current->line_points->y2-origin_y;
+	x1 = o_current->line->x[0]-origin_x,
+	y1 = o_current->line->y[0]-origin_y;
+	x2 = o_current->line->x[1]-origin_x,
+	y2 = o_current->line->y[1]-origin_y;
 
 	fprintf(fp, "%d mils %d mils moveto\n", x1, y1);
 	fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
@@ -419,8 +418,8 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x1,
-				o_current->line_points->y1);
+				o_current->line->x[0],
+				o_current->line->y[0]);
 
 	switch(cue) {
 
@@ -489,9 +488,9 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 							      page_current->
 							      conn_table,
 							      o_current->
-							      line_points->x1,
+							      line->x[0],
 							      o_current->
-							      line_points->y1);
+							      line->y[0]);
 
 			
 			if (!bus_object) {
@@ -500,20 +499,20 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_conn_print_busmidpoint(w_current, bus_object,
 							fp, 
 						        o_current->
-						        line_points->x1,
+						        line->x[0],
 							o_current->
-						        line_points->y1,
+						        line->y[0],
 							o_current->
-							line_points->x2,
+							line->x[1],
 							o_current->
-							line_points->y2);
+							line->y[1]);
 			}
 	   break;
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x2,
-				o_current->line_points->y2);
+				o_current->line->x[1],
+				o_current->line->y[1]);
 
 	switch(cue) {
 
@@ -582,9 +581,9 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 							      page_current->
 							      conn_table,
 							      o_current->
-							      line_points->x2,
+							      line->x[1],
 							      o_current->
-							      line_points->y2);
+							      line->y[1]);
 
 			
 			if (!bus_object) {
@@ -593,13 +592,13 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_conn_print_busmidpoint(w_current, bus_object,
 							fp, 
 						        o_current->
-						        line_points->x2,
+						        line->x[1],
 							o_current->
-						        line_points->y2,
+						        line->y[1],
 							o_current->
-							line_points->x1,
+							line->x[0],
 							o_current->
-							line_points->y1);
+							line->y[0]);
 			}
 
 
@@ -648,10 +647,10 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 	cross = offset;
 
-	x1 = o_current->line_points->screen_x1;
-	y1 = o_current->line_points->screen_y1;
-	x2 = o_current->line_points->screen_x2;
-	y2 = o_current->line_points->screen_y2;
+	x1 = o_current->line->screen_x[0];
+	y1 = o_current->line->screen_y[0];
+	x2 = o_current->line->screen_x[1];
+	y2 = o_current->line->screen_y[1];
 
         /* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
@@ -659,8 +658,8 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 #endif
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x1,
-				o_current->line_points->y1);
+				o_current->line->x[0],
+				o_current->line->y[0]);
 
 	if (color_mode == TRUE) {
 		endpoint_color = o_image_geda2gd_color(w_current->net_endpoint_color);
@@ -743,9 +742,9 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 							      page_current->
 							      conn_table,
 							      o_current->
-							      line_points->x1,
+							      line->x[0],
 							      o_current->
-							      line_points->y1);
+							      line->y[0]);
 
 			
 			if (!bus_object) {
@@ -754,16 +753,16 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 				o_conn_image_busmidpoint(w_current, bus_object,
 						        x1, y1,
 							o_current->
-							line_points->x2,
+							line->x[1],
 							o_current->
-							line_points->y2);
+							line->y[1]);
 			}
 	   break;
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x2,
-				o_current->line_points->y2);
+				o_current->line->x[1],
+				o_current->line->y[1]);
 
 	switch(cue) {
 
@@ -842,9 +841,9 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 							      page_current->
 							      conn_table,
 							      o_current->
-							      line_points->x2,
+							      line->x[1],
 							      o_current->
-							      line_points->y2);
+							      line->y[1]);
 
 			
 			if (!bus_object) {
@@ -853,9 +852,9 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 				o_conn_image_busmidpoint(w_current, bus_object,
 						        x2, y2,
 							o_current->
-							line_points->x1,
+							line->x[0],
 							o_current->
-							line_points->y1);
+							line->y[0]);
 			}
 	   break;
 	}
@@ -881,17 +880,17 @@ o_net_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 	/* translate object to origin */
 	o_net_translate_world(w_current, -world_centerx, -world_centery, object);
 
-	rotate_point_90(object->line_points->x1, object->line_points->y1, angle,
+	rotate_point_90(object->line->x[0], object->line->y[0], angle,
 			&newx, &newy);
 
-	object->line_points->x1 = newx;
-	object->line_points->y1 = newy;
+	object->line->x[0] = newx;
+	object->line->y[0] = newy;
 
-	rotate_point_90(object->line_points->x2, object->line_points->y2, angle,
+	rotate_point_90(object->line->x[1], object->line->y[1], angle,
 			&newx, &newy);
 
-	object->line_points->x2 = newx;
-	object->line_points->y2 = newy;
+	object->line->x[1] = newx;
+	object->line->y[1] = newy;
 
 	o_net_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -909,17 +908,17 @@ o_net_rotate_world(TOPLEVEL *w_current,
 	/* translate object to origin */
 	o_net_translate_world(w_current, -world_centerx, -world_centery, object);
 
-	rotate_point_90(object->line_points->x1, object->line_points->y1, angle,
+	rotate_point_90(object->line->x[0], object->line->y[0], angle,
 			&newx, &newy);
 
-	object->line_points->x1 = newx;
-	object->line_points->y1 = newy;
+	object->line->x[0] = newx;
+	object->line->y[0] = newy;
 
-	rotate_point_90(object->line_points->x2, object->line_points->y2, angle,
+	rotate_point_90(object->line->x[1], object->line->y[1], angle,
 			&newx, &newy);
 
-	object->line_points->x2 = newx;
-	object->line_points->y2 = newy;
+	object->line->x[1] = newx;
+	object->line->y[1] = newy;
 
 	o_net_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -937,9 +936,9 @@ o_net_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	/* translate object to origin */
 	o_net_translate_world(w_current, -world_centerx, -world_centery, object);
 
-	object->line_points->x1 = -object->line_points->x1;
+	object->line->x[0] = -object->line->x[0];
 
-	object->line_points->x2 = -object->line_points->x2;
+	object->line->x[1] = -object->line->x[1];
 
 	o_net_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -950,9 +949,9 @@ o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 	/* translate object to origin */
 	o_net_translate_world(w_current, -world_centerx, -world_centery, object);
 
-	object->line_points->x1 = -object->line_points->x1;
+	object->line->x[0] = -object->line->x[0];
 
-	object->line_points->x2 = -object->line_points->x2;
+	object->line->x[1] = -object->line->x[1];
 
 	o_net_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -961,11 +960,11 @@ o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 int
 o_net_orientation(OBJECT *object)
 {
-	if (object->line_points->y1 == object->line_points->y2) {
+	if (object->line->y[0] == object->line->y[1]) {
 		return(HORIZONTAL);
 	}
 
-	if (object->line_points->x1 == object->line_points->x2) {
+	if (object->line->x[0] == object->line->x[1]) {
 		return(VERTICAL);
 	}
 
@@ -984,54 +983,54 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 	ATTRIB *tail;
 
 #if DEBUG
-	printf("o %d %d %d %d\n", object->line_points->x1, object->line_points->y1, object->line_points->x2, object->line_points->y2);
-	printf("d %d %d %d %d\n", del_object->line_points->x1, del_object->line_points->y1, del_object->line_points->x2, del_object->line_points->y2);
+	printf("o %d %d %d %d\n", object->line->x[0], object->line->y[0], object->line->x[1], object->line->y[1]);
+	printf("d %d %d %d %d\n", del_object->line->x[0], del_object->line->y[0], del_object->line->x[1], del_object->line->y[1]);
 #endif
 
 
 	if (orient == HORIZONTAL) {
 
-		temp1 = min(object->line_points->x1, 
-				      del_object->line_points->x1);
-		temp2 = min(object->line_points->x2, 
-				      del_object->line_points->x2);
+		temp1 = min(object->line->x[0], 
+				      del_object->line->x[0]);
+		temp2 = min(object->line->x[1], 
+				      del_object->line->x[1]);
 
 		final1 = min(temp1, temp2);
 
-		temp1 = max(object->line_points->x1, 
-				      del_object->line_points->x1);
-		temp2 = max(object->line_points->x2, 
-				      del_object->line_points->x2);
+		temp1 = max(object->line->x[0], 
+				      del_object->line->x[0]);
+		temp2 = max(object->line->x[1], 
+				      del_object->line->x[1]);
 
 		final2 = max(temp1, temp2);
 
-		object->line_points->x1 = final1;
-		object->line_points->x2 = final2;
+		object->line->x[0] = final1;
+		object->line->x[1] = final2;
 		changed=1;
 	}
 
 	if (orient == VERTICAL) {
-		temp1 = min(object->line_points->y1, 
-				      del_object->line_points->y1);
-		temp2 = min(object->line_points->y2, 
-				      del_object->line_points->y2);
+		temp1 = min(object->line->y[0], 
+				      del_object->line->y[0]);
+		temp2 = min(object->line->y[1], 
+				      del_object->line->y[1]);
 
 		final1 = min(temp1, temp2);
 
-		temp1 = max(object->line_points->y1, 
-				      del_object->line_points->y1);
-		temp2 = max(object->line_points->y2, 
-				      del_object->line_points->y2);
+		temp1 = max(object->line->y[0], 
+				      del_object->line->y[0]);
+		temp2 = max(object->line->y[1], 
+				      del_object->line->y[1]);
 
 		final2 = max(temp1, temp2);
 
-		object->line_points->y1 = final1;
-		object->line_points->y2 = final2;
+		object->line->y[0] = final1;
+		object->line->y[1] = final2;
 		changed=1;
 	}
 
 #if DEBUG
-	printf("fo %d %d %d %d\n", object->line_points->x1, object->line_points->y1, object->line_points->x2, object->line_points->y2);
+	printf("fo %d %d %d %d\n", object->line->x[0], object->line->y[0], object->line->x[1], object->line->y[1]);
 #endif
 
 	if (changed) {
@@ -1129,8 +1128,8 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	object_orient = o_net_orientation(object);
 
-	key = o_conn_return_key(object->line_points->x1,
-                                object->line_points->y1);
+	key = o_conn_return_key(object->line->x[0],
+                                object->line->y[0]);
 
 	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
@@ -1199,8 +1198,8 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 
 	free(key);
 
-	key = o_conn_return_key(object->line_points->x2,
-                                object->line_points->y2);
+	key = o_conn_return_key(object->line->x[1],
+                                object->line->y[1]);
 
 	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
@@ -1305,35 +1304,34 @@ o_net_modify(TOPLEVEL *w_current, OBJECT *object,
 	switch(whichone) {
 
 	case(1):
-		object->line_points->x1 = x;
-		object->line_points->y1 = y;
+		object->line->x[0] = x;
+		object->line->y[0] = y;
 
 		WORLDtoSCREEN(w_current, 
-		              object->line_points->x1, 
-			      object->line_points->y1, 
+		              object->line->x[0], 
+			      object->line->y[0], 
 		  	      &screen_x, &screen_y);  
 	
-		object->line_points->screen_x1 = screen_x;
-		object->line_points->screen_y1 = screen_y;
+		object->line->screen_x[0] = screen_x;
+		object->line->screen_y[0] = screen_y;
 		break;
 
 	case(2):
-		object->line_points->x2 = x;
-		object->line_points->y2 = y;
+		object->line->x[1] = x;
+		object->line->y[1] = y;
 
 		WORLDtoSCREEN(w_current, 
-		  	      object->line_points->x2, 
-			      object->line_points->y2, 
+		  	      object->line->x[1], 
+			      object->line->y[1], 
 		  	      &screen_x,
                               &screen_y);  
 
-		object->line_points->screen_x2 = screen_x;
-		object->line_points->screen_y2 = screen_y;
+		object->line->screen_x[1] = screen_x;
+		object->line->screen_y[1] = screen_y;
 		break;
 	}
 
-	get_net_bounds(w_current, object->line_points, 
-			&left, &top, &right, &bottom);
+	get_net_bounds(w_current, object->line, &left, &top, &right, &bottom);
 	
 	object->left = left;
 	object->top = top;

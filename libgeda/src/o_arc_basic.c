@@ -49,18 +49,19 @@ get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *ri
 	*right = 0;
 	*bottom = 0;
 
-	*left = object->screen_x  - 4;
-	*top = object->screen_y - 4;
+	*left = object->arc->screen_x  - 4;
+	*top = object->arc->screen_y - 4;
 
-	if (object->line_points->x2 < 0 || 
-	    object->line_points->x2 >= 180*64 || 
-	    object->line_points->y2 >= 180*64) { 
-		*right = object->line_points->screen_x1 + 4;
-		*bottom = object->line_points->screen_y1 + 4;
+	if (object->arc->start_angle < 0 || 
+	    object->arc->start_angle >= 180*64 || 
+	    object->arc->end_angle >= 180*64) { 
+		*right = object->arc->screen_width + 4;
+		*bottom = object->arc->screen_height + 4;
 	} else {
 		/* top half of box only */
-		*right = object->line_points->screen_x1;
-		*bottom = object->screen_y + abs(object->screen_y-object->line_points->screen_y1)/2;
+		*right = object->arc->screen_width;
+		*bottom = object->arc->screen_y + 
+		    abs(object->arc->screen_y - object->arc->screen_height)/2;
 	}
 }
 
@@ -72,31 +73,23 @@ world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, i
         *right = 0;
         *bottom = 0;
 
-	*left = object->x;
-	*top = object->y;
+	*left = object->arc->x;
+	*top = object->arc->y;
 
 	/* whole box if angle is less than 0 and sweep_angle is 180 
 	 * or greater 
 	 */
-	if (object->line_points->x2 < 0 || 
-	    object->line_points->x2 >= 180*64 || 
-	    object->line_points->y2 >= 180*64) { 
-		*right = object->line_points->x1;
-		*bottom = object->line_points->y1;
+	if (object->arc->start_angle < 0 || 
+	    object->arc->start_angle >= 180*64 || 
+	    object->arc->end_angle >= 180*64) { 
+		*right = object->arc->width;
+		*bottom = object->arc->height;
 	} else {
 		/* top half of box only */
-		*right = object->line_points->x1;
-		*bottom = object->y - abs(object->y-object->line_points->y1)/2;
+		*right = object->arc->width;
+		*bottom = object->arc->y - 
+			abs(object->arc->y - object->arc->height)/2;
 	}
-
-
-/* Possible fix for getting arc bounding boxes on the way to being right... 
-        *left = min(object->x, object->line_points->x1);
-        *top = min(object->y, object->->line_points->y1);
-        *right = max(object->x, object->->line_points->x1);
-        *bottom = max(object->y, object->->line_points->y1);
-*/
-
 }
 
 /* now fixed for world_coords */
@@ -106,33 +99,34 @@ o_arc_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x,
 
 	int left, right, top, bottom;
 	OBJECT *new_node;
+	ARC *arc;
 	int screen_x, screen_y;
 
 	new_node = s_basic_init_object("arc");
         new_node->type = type;
 	new_node->color = color;
-	
-	new_node->line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
+
+	arc = (ARC *) malloc(sizeof(ARC));	
 
 	/* Screen */	
-	new_node->line_points->x1 = width;
-	new_node->line_points->y1 = height;
-	new_node->line_points->x2 = start_angle;
-	new_node->line_points->y2 = end_angle;
-
-	new_node->x = x;
-	new_node->y = y;
+	arc->width = width;
+	arc->height = height;
+	arc->start_angle = start_angle;
+	arc->end_angle = end_angle;
+	arc->x = x; 
+	arc->y = y; 
 
 	WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-        new_node->screen_x = screen_x;
-        new_node->screen_y = screen_y;
+        arc->screen_x = screen_x;
+        arc->screen_y = screen_y;
 
 	WORLDtoSCREEN(w_current, width, height, &screen_x, &screen_y);
-	new_node->line_points->screen_x1 = screen_x; /* dist */  
-	new_node->line_points->screen_y1 = screen_y; /* height */
+	arc->screen_width = screen_x; /* width */  
+	arc->screen_height = screen_y; /* height */
 
-	new_node->line_points->screen_x2 = start_angle ; /* start_angle */
-	new_node->line_points->screen_y2 = end_angle ; /* end_angle */
+	new_node->arc = arc;
+
+	/* new_node->graphical = arc; eventually */
 
 	/* TODO: questionable cast */
 	new_node->draw_func = (void *) arc_draw_func;  
@@ -160,25 +154,23 @@ o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	int left, right, top, bottom;
 	
 
-	if (o_current->line_points == NULL) {
+	if (o_current->arc == NULL) {
 		return;
 	}
 
-	WORLDtoSCREEN(w_current, o_current->x, 
-		  o_current->y, 
+	WORLDtoSCREEN(w_current, o_current->arc->x, o_current->arc->y, 
 		  &screen_x,
                   &screen_y);  
 
-	o_current->screen_x = screen_x; /* x and y coords */
-	o_current->screen_y = screen_y;
+	o_current->arc->screen_x = screen_x; /* x and y coords */
+	o_current->arc->screen_y = screen_y;
 
-	WORLDtoSCREEN(w_current, o_current->line_points->x1, 
-		  o_current->line_points->y1, 
+	WORLDtoSCREEN(w_current, o_current->arc->width, o_current->arc->height, 
 		  &width,
                   &height);  
 
-	o_current->line_points->screen_x1 = width; /* width and height */
-	o_current->line_points->screen_y1 = height; /* was height */
+	o_current->arc->screen_width = width; /* width and height */
+	o_current->arc->screen_height = height; /* was height */
 	/* with x and y added in */
 
 	get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
@@ -241,16 +233,16 @@ o_arc_save(char *buf, OBJECT *object)
 	int width, height;
 	int radius;
 
-        width = object->line_points->x1;
-        height = object->line_points->y1;
+        width = object->arc->width;
+        height = object->arc->height;
 
-	radius = abs(height - object->y)/2;
+	radius = abs(height - object->arc->y)/2;
 
-	x = object->x+radius;
-	y = object->y-radius;
+	x = object->arc->x+radius;
+	y = object->arc->y-radius;
 
-        start_angle = object->line_points->x2/64;
-        end_angle = object->line_points->y2/64;
+        start_angle = object->arc->start_angle/64;
+        end_angle = object->arc->end_angle/64;
 	
 	/* Use the right color */
 	if (object->saved_color == -1) {
@@ -292,34 +284,26 @@ o_arc_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 
 
 	/* Do screen coords */
-	object->screen_x = object->screen_x + dx;
-	object->screen_y = object->screen_y + dy;
-	object->line_points->screen_x1 = object->line_points->screen_x1 + dx;
-	object->line_points->screen_y1 = object->line_points->screen_y1 + dy;
+	object->arc->screen_x = object->arc->screen_x + dx;
+	object->arc->screen_y = object->arc->screen_y + dy;
+	object->arc->screen_width = object->arc->screen_width + dx;
+	object->arc->screen_height = object->arc->screen_height + dy;
 
-	SCREENtoWORLD(w_current, object->screen_x, 
-		  object->screen_y, 
+	SCREENtoWORLD(w_current, object->arc->screen_x, 
+		  object->arc->screen_y, 
 		  &x,
                   &y);  
 
-/* highly temp out 
-	object->x = snap_grid(w_current, x);
-	object->y = snap_grid(w_current, y);
-*/
-	object->x = x; 
-	object->y = y; 
+	object->arc->x = x; 
+	object->arc->y = y; 
 	
-	SCREENtoWORLD(w_current, object->line_points->screen_x1, 
-		  object->line_points->screen_y1, 
+	SCREENtoWORLD(w_current, object->arc->screen_width, 
+		  object->arc->screen_height, 
 		  &x,
                   &y);  
 	
-/* highly temp out 
-	object->line_points->x1 = snap_grid(w_current, x);
-	object->line_points->y1 = snap_grid(w_current, y);
-*/
-	object->line_points->x1 = x;
-	object->line_points->y1 = y;
+	object->arc->width = x;
+	object->arc->height = y;
 }
 
 
@@ -333,27 +317,27 @@ o_arc_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 
 
 	/* Do world coords */
-	object->x = object->x + x1;
-	object->y = object->y + y1;
-	object->line_points->x1 = object->line_points->x1 + x1;
-	object->line_points->y1 = object->line_points->y1 + y1;
+	object->arc->x = object->arc->x + x1;
+	object->arc->y = object->arc->y + y1;
+	object->arc->width = object->arc->width + x1;
+	object->arc->height = object->arc->height + y1;
 
 	/* update screen coords */
-	WORLDtoSCREEN(w_current, object->x, 
-		  object->y, 
+	WORLDtoSCREEN(w_current, object->arc->x, 
+		  object->arc->y, 
 		  &screen_x,
                   &screen_y);  
 
-	object->screen_x = screen_x;
-	object->screen_y = screen_y;
+	object->arc->screen_x = screen_x;
+	object->arc->screen_y = screen_y;
 
-	WORLDtoSCREEN(w_current, object->line_points->x1, 
-		  object->line_points->y1, 
+	WORLDtoSCREEN(w_current, object->arc->width, 
+		  object->arc->height, 
 		  &screen_x,
                   &screen_y);  
 
-	object->line_points->screen_x1 = screen_x;
-	object->line_points->screen_y1 = screen_y;
+	object->arc->screen_width = screen_x;
+	object->arc->screen_height = screen_y;
 
 	/* update bounding box */
 	get_arc_bounds(w_current, object, &left, &top, &right, &bottom);
@@ -378,31 +362,12 @@ o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	}
 
 	new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, color,
-				o_current->x, o_current->y, 
-				o_current->line_points->x1,
-				o_current->line_points->y1,
-				o_current->line_points->x2,
-				o_current->line_points->y2);
+				o_current->arc->x, o_current->arc->y, 
+				o_current->arc->width,
+				o_current->arc->height,
+				o_current->arc->start_angle,
+				o_current->arc->end_angle);
 
-#if 0
-	new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, o_current->color,
-				o_current->screen_x, o_current->screen_y, 
-				o_current->line_points->screen_x1,
-				o_current->line_points->screen_y1,
-				o_current->line_points->screen_x2,
-				o_current->line_points->screen_y2);
-#endif
-				
-
-	/* agg... copy won't work till I figure out how to copy everything..*/
-	/* or maybe it is all copied.. looks like it is... */
-
-	/* new_obj->line_points->screen_x1 = o_current->line_points->screen_x1;
-	new_obj->line_points->screen_y1 = o_current->line_points->screen_y1;
-	new_obj->line_points->screen_x2 = o_current->line_points->screen_x2;
-	new_obj->line_points->screen_y2 = o_current->line_points->screen_y2;*/
-
-/*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
 	if (a_current) {
 		while ( a_current ) {
@@ -436,10 +401,10 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		f_print_set_color(fp, o_current->color);
 	}
 
-        awidth = o_current->line_points->x1;
-        aheight = o_current->line_points->y1;
+        awidth = o_current->arc->width;
+        aheight = o_current->arc->height;
 
-	radius = abs(aheight - o_current->y)/2;
+	radius = abs(aheight - o_current->arc->y)/2;
 
 	/* hack hack hack */
 	/* the snap_grid here is a safety for arcs inside complex objects */
@@ -452,11 +417,11 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	/*x = snap_grid(w_current, o_current->x+radius);
 	y = snap_grid(w_current, o_current->y-radius);*/
 
-	x = (o_current->x+radius);
-	y = (o_current->y-radius);
+	x = (o_current->arc->x+radius);
+	y = (o_current->arc->y-radius);
 
-	start_angle = o_current->line_points->x2/64;
-       	end_angle = o_current->line_points->y2/64;
+	start_angle = o_current->arc->start_angle/64;
+       	end_angle = o_current->arc->end_angle/64;
 
 	if ( end_angle < 0) {
 
@@ -502,8 +467,8 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 		color = image_black;
 	}
 
-	start_angle = o_current->line_points->x2/64;
-       	end_angle = o_current->line_points->y2/64;
+	start_angle = o_current->arc->start_angle/64;
+       	end_angle = o_current->arc->end_angle/64;
 
 	if ( end_angle < 0) {
 
@@ -523,9 +488,9 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 #if DEBUG
 	printf("%d %d -- %d %d -- %d %d\n", 
-			o_current->screen_x, o_current->screen_y,
-			o_current->line_points->screen_x1-o_current->screen_x,
-			o_current->line_points->screen_y1-o_current->screen_y,
+			o_current->arc->screen_x, o_current->arc->screen_y,
+			o_current->arc->screen_width-o_current->arc->screen_x,
+			o_current->arc->screen_height-o_current->arc->screen_y,
                         start_angle, end_angle);
 #endif
 
@@ -536,20 +501,20 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 #if DEBUG
 	printf("%d %d -- %d %d -- %d %d\n", 
-			o_current->screen_x, o_current->screen_y,
-			o_current->line_points->screen_x1-o_current->screen_x,
-			o_current->line_points->screen_y1-o_current->screen_y,
+			o_current->arc->screen_x, o_current->arc->screen_y,
+			o_current->arc->screen_width-o_current->arc->screen_x,
+			o_current->arc->screen_height-o_current->arc->screen_y,
                         start_angle, end_angle);
 #endif
 
 
-	width = o_current->line_points->screen_x1-o_current->screen_x;
-	height =  o_current->line_points->screen_y1-o_current->screen_y;
+	width = o_current->arc->screen_width - o_current->arc->screen_x;
+	height = o_current->arc->screen_height - o_current->arc->screen_y;
 
 	final = max(width, height);
 
-	x = o_current->screen_x + (final)/2;
-	y = o_current->screen_y + (final)/2;
+	x = o_current->arc->screen_x + (final)/2;
+	y = o_current->arc->screen_y + (final)/2;
 
 #ifdef HAS_LIBGDGEDA
 	gdImageArc(current_im_ptr, 
@@ -580,33 +545,30 @@ o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 		  &world_centerx,
                   &world_centery);  
 
-        width = object->line_points->x1;
-        height = object->line_points->y1;
+        width = object->arc->width;
+        height = object->arc->height;
 
-	radius = abs(height - object->y)/2;
+	radius = abs(height - object->arc->y)/2;
 
 	/* translate object to origin */
 	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
 
 	/* get center */
-	x = object->x+radius;
-	y = object->y-radius;
+	x = object->arc->x+radius;
+	y = object->arc->y-radius;
 
 	rotate_point_90(x, y, angle, &newx, &newy);
 
-	object->x = newx - radius;
-	object->y = newy + radius;
+	object->arc->x = newx - radius;
+	object->arc->y = newy + radius;
 
 	/* change angle values next... */
 
-	object->line_points->x1 = newx + radius;
-	object->line_points->y1 = newy - radius;
+	object->arc->width = newx + radius;
+	object->arc->height = newy - radius;
 
-        object->line_points->x2 = (object->line_points->x2 + 90*64) % (360*64);
-        /* object->line_points->y2 = (object->line_points->y2); */
-
-        object->line_points->screen_x2 = object->line_points->x2;
-        object->line_points->screen_y2 = object->line_points->y2; 
+        object->arc->start_angle = (object->arc->start_angle + 90*64) % (360*64);
+        /* object->arc->end_angle = (object->arc->end_angle); */
 
 	o_arc_translate_world(w_current, world_centerx, world_centery, object);
 }                                   
@@ -621,33 +583,31 @@ o_arc_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery,
 	int radius;
 	int x, y;
 	
-        width = object->line_points->x1;
-        height = object->line_points->y1;
+        width = object->arc->width;
+        height = object->arc->height;
 
-	radius = abs(height - object->y)/2;
+	radius = abs(height - object->arc->y)/2;
 
 	/* translate object to origin */
 	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
 
 	/* get center */
-	x = object->x+radius;
-	y = object->y-radius;
+	x = object->arc->x+radius;
+	y = object->arc->y-radius;
 
 	rotate_point_90(x, y, angle, &newx, &newy);
 
-	object->x = newx - radius;
-	object->y = newy + radius;
+	object->arc->x = newx - radius;
+	object->arc->y = newy + radius;
 
 	/* change angle values next... */
 
-	object->line_points->x1 = newx + radius;
-	object->line_points->y1 = newy - radius;
+	object->arc->width = newx + radius;
+	object->arc->height = newy - radius;
 
-        object->line_points->x2 =  (object->line_points->x2 + angle*64) % (360*64);
-        /* object->line_points->y2 = (object->line_points->y2); */
+        object->arc->start_angle =  (object->arc->start_angle + angle*64) % (360*64);
+        /* object->arc->end_angle = (object->arc->end_angle); */
 
-        object->line_points->screen_x2 = object->line_points->x2;
-        object->line_points->screen_y2 = object->line_points->y2; 
 
 	o_arc_translate_world(w_current, world_centerx, world_centery, object);
 }                                   
@@ -667,17 +627,17 @@ o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 		  &world_centerx,
                   &world_centery);  
 
-        width = object->line_points->x1;
-        height = object->line_points->y1;
+        width = object->arc->width;
+        height = object->arc->height;
 
-	radius = abs(height - object->y)/2;
+	radius = abs(height - object->arc->y)/2;
 
 	/* translate object to origin */
 	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
 
 	/* get center */
-	x = object->x+radius;
-	y = object->y-radius;
+	x = object->arc->x+radius;
+	y = object->arc->y-radius;
 
 #if 1 /* vertical */
 	newx = -x;
@@ -689,36 +649,34 @@ o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	newy = -y;
 #endif
 
-	object->x = newx - radius;
-	object->y = newy + radius;
+	object->arc->x = newx - radius;
+	object->arc->y = newy + radius;
 
 	/* change angle values next... */
 
-	object->line_points->x1 = newx + radius;
-	object->line_points->y1 = newy - radius;
+	object->arc->width = newx + radius;
+	object->arc->height = newy - radius;
 
 
 #if 1 /* vertical */
-	start = 180 - object->line_points->x2/64; 
+	start = 180 - object->arc->start_angle/64; 
 #endif
 
 
 #if 0 /* horizontal */
-	start = -object->line_points->x2/64; 
+	start = -object->arc->start_angle/64; 
 #endif
 
 
 	if (start <0) {
-		object->line_points->x2 = (360 - (-start % 360)) % 360;
+		object->arc->start_angle = (360 - (-start % 360)) % 360;
 	} else { 
-		object->line_points->x2 = start % 360;
+		object->arc->start_angle = start % 360;
 	}
 
-	object->line_points->x2 = object->line_points->x2*64;
-	object->line_points->y2 = -object->line_points->y2;
+	object->arc->start_angle = object->arc->start_angle*64;
+	object->arc->end_angle = -object->arc->end_angle;
 	
-        object->line_points->screen_x2 = object->line_points->x2;
-        object->line_points->screen_y2 = object->line_points->y2; 
 
 	o_arc_translate_world(w_current, world_centerx, world_centery, object);
 }                                   
@@ -733,17 +691,17 @@ o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 	int x, y;
 	int start;
 
-        width = object->line_points->x1;
-        height = object->line_points->y1;
+        width = object->arc->width;
+        height = object->arc->height;
 
-	radius = abs(height - object->y)/2;
+	radius = abs(height - object->arc->y)/2;
 
 	/* translate object to origin */
 	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
 
 	/* get center */
-	x = object->x+radius;
-	y = object->y-radius;
+	x = object->arc->x+radius;
+	y = object->arc->y-radius;
 
 #if 1 /* vertical */
 	newx = -x;
@@ -755,36 +713,34 @@ o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 	newy = -y;
 #endif
 
-	object->x = newx - radius;
-	object->y = newy + radius;
+	object->arc->x = newx - radius;
+	object->arc->y = newy + radius;
 
 	/* change angle values next... */
 
-	object->line_points->x1 = newx + radius;
-	object->line_points->y1 = newy - radius;
+	object->arc->width = newx + radius;
+	object->arc->height = newy - radius;
 
 
 #if 1 /* vertical */
-	start = 180 - object->line_points->x2/64; 
+	start = 180 - object->arc->start_angle/64; 
 #endif
 
 
 #if 0 /* horizontal */
-	start = -object->line_points->x2/64; 
+	start = -object->arc->start_angle/64; 
 #endif
 
 
 	if (start <0) {
-		object->line_points->x2 = (360 - (-start % 360)) % 360;
+		object->arc->start_angle = (360 - (-start % 360)) % 360;
 	} else { 
-		object->line_points->x2 = start % 360;
+		object->arc->start_angle = start % 360;
 	}
 
-	object->line_points->x2 = object->line_points->x2*64;
-	object->line_points->y2 = -object->line_points->y2;
+	object->arc->start_angle = object->arc->start_angle*64;
+	object->arc->end_angle = -object->arc->end_angle;
 	
-        object->line_points->screen_x2 = object->line_points->x2;
-        object->line_points->screen_y2 = object->line_points->y2; 
 
 	o_arc_translate_world(w_current, world_centerx, world_centery, object);
 }                                   

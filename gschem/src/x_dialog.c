@@ -150,7 +150,7 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
 		else gtk_toggle_button_set_active 
 			(GTK_TOGGLE_BUTTON(showbothbutton),TRUE);
 
-		o_attrib_get_name_value(attrib->text_string,name,value);
+		o_attrib_get_name_value(attrib->text->string,name,value);
 		gtk_entry_set_text (GTK_ENTRY (val_entry), value);
 		gtk_entry_set_text (GTK_ENTRY (lab_entry), name);
 		gtk_widget_grab_focus(val_entry);
@@ -522,7 +522,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 	if (attriblist) {
        		while(attriblist[i] != NULL)
         	{
-               		o_attrib_get_name_value(attriblist[i]->text_string,
+               		o_attrib_get_name_value(attriblist[i]->text->string,
 				text[0],text[2]);
 			if(attriblist[i]->visibility == VISIBLE)
 				text[1][0]='V';
@@ -804,8 +804,8 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 #endif
 		if (invocation_flag == FROM_HOTKEY) { 
 		  SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
-		  new->x=world_x;
-		  new->y=world_y;
+		  new->text->x=world_x;
+		  new->text->y=world_y;
                   o_text_erase(w_current, new);
                   o_text_recreate(w_current, new);
                   o_text_draw(w_current, new);
@@ -1008,7 +1008,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list, int flag)
 
 	if(list)
 	{
-		o_attrib_get_name_value(list->text_string,name,val);
+		o_attrib_get_name_value(list->text->string,name,val);
 		attrib=list;
 		if(attrib->visibility == VISIBLE)
 			gtk_toggle_button_set_active 
@@ -2454,7 +2454,8 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 
 			case(OBJ_TEXT):
 				object->saved_color = w_current->edit_color;	
-				o_complex_set_saved_color_only(object->complex,
+				o_complex_set_saved_color_only(
+						    object->text->prim_objs,
 					            w_current->edit_color);
 				w_current->page_current->CHANGED = 1;
 				break;

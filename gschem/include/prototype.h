@@ -501,6 +501,7 @@ int o_stretch_start(TOPLEVEL *w_current, int x, int y);
 void o_stretch_end(TOPLEVEL *w_current);
 void o_stretch_motion(TOPLEVEL *w_current, int x, int y);
 /* o_text.c */
+void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -718,5 +719,3 @@ void x_window_close(TOPLEVEL *w_current);
 void x_window_close_all(void);
 TOPLEVEL *x_window_get_ptr(int wid);
 TOPLEVEL *x_window_search_page_clist(GtkWidget *findme);
-
-

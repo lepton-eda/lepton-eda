@@ -61,44 +61,19 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 				whichone_changing = 1;
 
 				w_current->last_x = closest->
-						    line_points->
-						    screen_x1;
+						    line->screen_x[0];
 				w_current->last_y = closest->
-						    line_points->
-						    screen_y1;
+						    line->screen_y[0];
 				w_current->start_x = closest->
-						    line_points->
-						    screen_x2;
+						    line->screen_x[1];
 				w_current->start_y = closest->
-						    line_points->
-						    screen_y2;
-#if 0
-				w_current->last_x = fix_x(w_current, 
-							  closest->
-							  line_points->
-							  screen_x1);
-
-				w_current->last_y = fix_x(w_current, 
-							  closest->
-							  line_points->
-							  screen_y1);
-
-				w_current->start_x = fix_x(w_current, 
-							   closest->
-							   line_points->
-							   screen_x2);
-
-				w_current->start_y = fix_y(w_current, 
-							   closest->
-							   line_points->
-							   screen_y2);
-#endif
+						    line->screen_y[1];
 
 #if DEBUG
 				gdk_draw_arc(w_current->window, 
 					     w_current->gc, FALSE,
-                                       	     closest->line_points->screen_x1,
-                                       	     closest->line_points->screen_y1,
+                                       	     closest->line->screen_x[0],
+                                       	     closest->line->screen_y[0],
                                        	     100, 100, 0, FULL_CIRCLE);
 #endif
 
@@ -109,45 +84,19 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 				whichone_changing = 2;
 
 				w_current->last_x = closest->
-						    line_points->
-						    screen_x2;
+						    line->screen_x[1];
 				w_current->last_y = closest->
-						    line_points->
-						    screen_y2;
+						    line->screen_y[1];
 				w_current->start_x = closest->
-						    line_points->
-						    screen_x1;
+						    line->screen_x[0];
 				w_current->start_y = closest->
-						    line_points->
-						    screen_y1;
-
-#if 0
-				w_current->last_x = fix_x(w_current, 
-							  found->
-							  line_points->
-							  screen_x2);
-
-				w_current->last_y = fix_x(w_current, 
-							  found->
-							  line_points->
-							  screen_y2);
-
-				w_current->start_x = fix_x(w_current, 
-							   found->
-							   line_points->
-							   screen_x1);
-
-				w_current->start_y = fix_y(w_current, 
-							   found->
-							   line_points->
-							   screen_y1);
-#endif
+						    line->screen_y[0];
 
 #if DEBUG
 				gdk_draw_arc(w_current->window, 
 					     w_current->gc, FALSE,
-                                       	     closest->line_points->screen_x2,
-                                       	     closest->line_points->screen_y2,
+                                       	     closest->line->screen_x[1],
+                                       	     closest->line->screen_y[1],
                                        	     100, 100, 0, FULL_CIRCLE);
 #endif
 				break;
@@ -234,10 +183,10 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("previous endpoints: %d %d %d %d\n", 
-				object->line_points->x1,
-				object->line_points->y1,  
-				object->line_points->x2,
-				object->line_points->y2);  
+				object->line->x[0],
+				object->line->y[0],  
+				object->line->x[1],
+				object->line->y[1]);  
 
 		printf("new end points: %d %d\n", x, y);
 #endif
@@ -247,10 +196,10 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("final endpoints: %d %d %d %d\n", 
-				object->line_points->x1,
-				object->line_points->y1,  
-				object->line_points->x2,
-				object->line_points->y2);  
+				object->line->x[0],
+				object->line->y[0],  
+				object->line->x[1],
+				object->line->y[1]);  
 #endif
 			break;
 
@@ -285,10 +234,10 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("previous endpoints: %d %d %d %d\n", 
-				object->line_points->x1,
-				object->line_points->y1,  
-				object->line_points->x2,
-				object->line_points->y2);  
+				object->line->x[0],
+				object->line->y[0],  
+				object->line->x[1],
+				object->line->y[1]);  
 
 		printf("new end points: %d %d\n", x, y);
 #endif
@@ -298,10 +247,10 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("final endpoints: %d %d %d %d\n", 
-				found->line_points->x1,
-				found->line_points->y1,  
-				found->line_points->x2,
-				found->line_points->y2);  
+				found->line->x[0],
+				found->line->y[0],  
+				found->line->x[1],
+				found->line->y[1]);  
 #endif
 			break;
 #endif
@@ -337,10 +286,10 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("previous endpoints: %d %d %d %d\n", 
-				object->line_points->x1,
-				object->line_points->y1,  
-				object->line_points->x2,
-				object->line_points->y2);  
+				object->line->x[0],
+				object->line->y[0],  
+				object->line->x[1],
+				object->line->y[1]);  
 
 		printf("new end points: %d %d\n", x, y);
 #endif
@@ -350,10 +299,10 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("final endpoints: %d %d %d %d\n", 
-				object->line_points->x1,
-				object->line_points->y1,  
-				object->line_points->x2,
-				object->line_points->y2);  
+				object->line->x[0],
+				object->line->y[0],  
+				object->line->x[1],
+				object->line->y[1]);  
 #endif
 
 			break;

@@ -40,7 +40,7 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int wleft, wright, wtop, wbottom; /* world bounds */
 
-	if (o_current->line_points == NULL) {
+	if (o_current->box == NULL) {
 		return;
 	}
 
@@ -48,7 +48,7 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	/* Get read to check for visibility of this line by using it's
 	 * bounding box */
-        world_get_box_bounds(w_current, o_current->line_points,
+        world_get_box_bounds(w_current, o_current->box,
 			     &wleft  ,
 			     &wtop   ,
 			     &wright ,
@@ -62,14 +62,14 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing box\n\n");
 
 	printf("drawing box: %d %d %d %d\n",
-	       o_current->line_points->screen_x1,
-	       o_current->line_points->screen_y1,
-	       o_current->line_points->screen_x1 +
-	       abs(o_current->line_points->screen_x2 -
-		   o_current->line_points->screen_x1),
-	       o_current->line_points->screen_y1 +
-	       abs(o_current->line_points->screen_y2 -
-		   o_current->line_points->screen_y1));
+	       o_current->box->screen_upper_x,
+	       o_current->box->screen_upper_y,
+	       o_current->box->screen_upper_x +
+	       abs(o_current->box->screen_lower_x -
+		   o_current->box->screen_upper_x),
+	       o_current->box->screen_upper_y +
+	       abs(o_current->box->screen_lower_y -
+		   o_current->box->screen_upper_y));
 #endif
 
 	if (w_current->override_color != -1 ) {  /* Override */
@@ -77,39 +77,39 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 				      x_get_color(w_current->override_color));
 		gdk_draw_rectangle(w_current->window,
 				   w_current->gc, FALSE,
-				   o_current->line_points->screen_x1,
-				   o_current->line_points->screen_y1,
-				   abs(o_current->line_points->screen_x2 -
-				       o_current->line_points->screen_x1),
-				   abs(o_current->line_points->screen_y2 -
-				       o_current->line_points->screen_y1));
+				   o_current->box->screen_upper_x,
+				   o_current->box->screen_upper_y,
+				   abs(o_current->box->screen_lower_x -
+				       o_current->box->screen_upper_x),
+				   abs(o_current->box->screen_lower_y -
+				       o_current->box->screen_upper_y));
 		gdk_draw_rectangle(w_current->backingstore,
 				   w_current->gc, FALSE,
-				   o_current->line_points->screen_x1,
-				   o_current->line_points->screen_y1,
-				   abs(o_current->line_points->screen_x2 -
-				       o_current->line_points->screen_x1),
-				   abs(o_current->line_points->screen_y2 -
-				       o_current->line_points->screen_y1));
+				   o_current->box->screen_upper_x,
+				   o_current->box->screen_upper_y,
+				   abs(o_current->box->screen_lower_x -
+				       o_current->box->screen_upper_x),
+				   abs(o_current->box->screen_lower_y -
+				       o_current->box->screen_upper_y));
 	} else { /* regular */
 		gdk_gc_set_foreground(w_current->gc,
 				      x_get_color(o_current->color));
 		gdk_draw_rectangle(w_current->window,
 				   w_current->gc, FALSE,
-				   o_current->line_points->screen_x1,
-				   o_current->line_points->screen_y1,
-				   abs(o_current->line_points->screen_x2 -
-				       o_current->line_points->screen_x1),
-				   abs(o_current->line_points->screen_y2 -
-				       o_current->line_points->screen_y1));
+				   o_current->box->screen_upper_x,
+				   o_current->box->screen_upper_y,
+				   abs(o_current->box->screen_lower_x -
+				       o_current->box->screen_upper_x),
+				   abs(o_current->box->screen_lower_y -
+				       o_current->box->screen_upper_y));
 		gdk_draw_rectangle(w_current->backingstore,
 				   w_current->gc, FALSE,
-				   o_current->line_points->screen_x1,
-				   o_current->line_points->screen_y1,
-				   abs(o_current->line_points->screen_x2 -
-				       o_current->line_points->screen_x1),
-				   abs(o_current->line_points->screen_y2 -
-				       o_current->line_points->screen_y1));
+				   o_current->box->screen_upper_x,
+				   o_current->box->screen_upper_y,
+				   abs(o_current->box->screen_lower_x -
+				       o_current->box->screen_upper_x),
+				   abs(o_current->box->screen_lower_y -
+				       o_current->box->screen_upper_y));
 	}
 }
 
@@ -128,14 +128,14 @@ o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	int screen_x2, screen_y2;
 	int color;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->box == NULL) {
 		return;
 	}
 
-	screen_x1 = o_current->line_points->screen_x1;
-	screen_y1 = o_current->line_points->screen_y1;
-	screen_x2 = o_current->line_points->screen_x2;
-	screen_y2 = o_current->line_points->screen_y2;
+	screen_x1 = o_current->box->screen_upper_x;
+	screen_y1 = o_current->box->screen_upper_y;
+	screen_x2 = o_current->box->screen_lower_x;
+	screen_y2 = o_current->box->screen_lower_y;
 
         if (o_current->saved_color != -1) {
                 color = o_current->saved_color;

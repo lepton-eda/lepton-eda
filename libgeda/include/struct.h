@@ -21,11 +21,18 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#if 0 /* commented out because it conflicts with st_box */
 #include "pcb_struct.h"
+#endif
 
 /* gschem structures (gschem) */
-typedef struct st_linepts LINEPTS;
+typedef struct st_complex COMPLEX;
+typedef struct st_line LINE;
 typedef struct st_circle CIRCLE;
+typedef struct st_arc ARC;
+typedef struct st_box BOX;
+typedef struct st_text TEXT;
+
 typedef struct st_attrib ATTRIB;
 typedef struct st_object OBJECT;
 typedef struct st_page PAGE;
@@ -50,27 +57,73 @@ typedef struct st_symcheck SYMCHECK;
 /* sch check structures (gschcheck) */
 typedef struct st_schcheck SCHCHECK;
 typedef struct st_chkerrs CHKERRS;
- 
-/* gschem/gnetlist structure definitions */
-struct st_linepts {
-	int x1, y1;
-	int snap_1;
-	int x2, y2;
-	int snap_2;
-	int screen_x1, screen_y1;
-	int screen_x2, screen_y2;
-}; 
+
+
+struct st_line {
+	int x[2];
+	int y[2];
+
+	int screen_x[2];
+	int screen_y[2];
+};
+
+struct st_arc {
+	int x, y; /* world */
+	int screen_x, screen_y;
+
+	int width;
+	int height;
+	int screen_width, screen_height;
+
+	int start_angle;
+	int end_angle;
+};
+
+struct st_box {
+	/* upper is considered the origin */
+	int upper_x, upper_y; /* world */	
+	int lower_x, lower_y;
+
+	int screen_upper_x, screen_upper_y;
+	int screen_lower_x, screen_lower_y;
+};
+
+struct st_text {
+	int x, y;		/* world origin */
+	int screen_x, screen_y;
+
+	char *string;			/* text stuff */
+	int length;
+	int size;
+	int alignment;	
+	int displayed_length;
+	int angle;
+
+	OBJECT *prim_objs;
+};
+
+struct st_complex {
+	int x, y;		/* world origin */
+	int screen_x, screen_y;
+
+	int angle;				/* orientation, only multiples
+					   	 * of 90 degrees allowed */   
+						/* in degrees */
+	int mirror;
+
+	OBJECT *prim_objs;			/* Primitive objects */
+						/* objects which make up the */
+						/* complex */
+};
 
 struct st_circle {
-	int center_x, center_y;
+	int center_x, center_y; /* world */
 	int radius;
 
 	int screen_x, screen_y;
 	int screen_left, screen_top;
 	int screen_radius;
-
 };
-
 
 struct st_object {
 	int type;				/* Basic information */
@@ -82,19 +135,19 @@ struct st_object {
 	int right;
 	int bottom;
 
-	LINEPTS *line_points;		/* Describes a line */
-	CIRCLE *circle;			/* Describes a circle */
+	COMPLEX *complex;
+	LINE *line; 
+	CIRCLE *circle; 
+	ARC *arc;
+	BOX *box;
+	TEXT *text;
 
 	int visited;		/* used in gnetlist for travesal purposes */
 
 	char *complex_basename;			/* Complex basename */
 	char *complex_clib;			/* Complex Component Library */
-	OBJECT *complex;		/* Complex pointer */
 	OBJECT *complex_parent;		/* Complex parent object pointer */
 					/* used only in complex head nodes */
-	int x, y;		/* complex/text/arc origin */
-				
-	int screen_x, screen_y;	/* complex/text/arc screen origin */
 
 	/* unused for now */
 	void (*action_func)();			/* Execute function */
@@ -108,19 +161,9 @@ struct st_object {
 	int locked_color; 			/* Locked color (used to save */
 						/* the object's real color */
 						/* when the object is locked) */
-	
-	int angle;				/* orientation, only multiples
-					   	 * of 90 degrees allowed */   
-						/* in degrees */
-	int mirror;
 
-	char *text_string;			/* text stuff */
-	int text_size;
-	int text_len;
-	int text_alignment;	
-	int displayed_text_len;
-
-        int snap_size;                          /* snap grid size */
+	int font_text_size;			/* used only with fonts defs */
+	OBJECT *font_prim_objs;			/* used only with fonts defs */
 
 	ATTRIB *attribs;		/* attribute stuff */
 	ATTRIB *attached_to;	  /* when object is an attribute */
@@ -185,9 +228,6 @@ struct st_page {
 	OBJECT *object_head;
 	OBJECT *object_tail;
 	OBJECT *object_parent;
-	/* old selection mechanism */
-	/* OBJECT *selection_head;	    
-	OBJECT *selection_tail; OLDSEL */
 	SELECTION *selection2_head; /* new selection mechanism */
 	SELECTION *selection2_tail; 
 	OBJECT *complex_place_head;  /* used to place complex's and text */
@@ -275,9 +315,9 @@ struct st_filedialog {
 
 struct st_toplevel {
 
-	int wid;				/* Window id, always unique */
+	int wid;			/* Window id, always unique */
 
-	int num_untitled;			/* keep track of untitled wins */
+	int num_untitled;		/* keep track of untitled wins */
 	
 	int start_x;
 	int start_y;
@@ -356,7 +396,7 @@ struct st_toplevel {
 	int doing_pan;				/* mouse pan status flag */
 
 /* Page system used by gPCB */
-	PAGE_T *current_page;
+/*	PAGE_T *current_page; commented out */
 
 	/* page system */
 	PAGE *page_head;	

@@ -57,10 +57,12 @@ g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object)
         a_current = object->attribs->next;      
         while(a_current != NULL) {
 		if (a_current->object->type == OBJ_TEXT && 
-		    a_current->object->text_string) {
-			smob_list = gh_cons (
+		    a_current->object->text) {
+			if (a_current->object->text->string) {
+			  smob_list = gh_cons (
 				g_make_attrib_smob(curr_w, a_current), 
 				smob_list);
+                        }
 		} else {
 			printf("Attribute failed ot find.\n");
 		}

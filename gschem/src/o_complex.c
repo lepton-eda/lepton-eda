@@ -36,9 +36,9 @@ o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int left, right, top, bottom;
 
-	o_redraw(w_current, o_current->complex);
+	o_redraw(w_current, o_current->complex->prim_objs);
 
-	get_complex_bounds(w_current, o_current->complex,
+	get_complex_bounds(w_current, o_current->complex->prim_objs,
 			   &left, &top, &right, &bottom);
 	o_current->left   = left;
 	o_current->top    = top;
@@ -46,10 +46,10 @@ o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	o_current->bottom = bottom;
 
 	WORLDtoSCREEN(w_current,
-		      o_current->x,
-		      o_current->y,
-		      &o_current->screen_x,
-		      &o_current->screen_y);
+		      o_current->complex->x,
+		      o_current->complex->y,
+		      &o_current->complex->screen_x,
+		      &o_current->complex->screen_y);
 }
 
 void
@@ -358,8 +358,8 @@ o_complex_translate_display(TOPLEVEL *w_current,
 			break;
 
 		case(OBJ_COMPLEX):
-			o_complex_draw_xor(w_current,
-					   x1, y1, o_current->complex);
+			o_complex_draw_xor(w_current, x1, y1, 
+					   o_current->complex->prim_objs);
 			break;
 
 		case(OBJ_TEXT):
@@ -416,8 +416,8 @@ o_complex_translate_display_selection(TOPLEVEL *w_current,
 			break;
 
 		case(OBJ_COMPLEX):
-			o_complex_draw_xor(w_current,
-					   x1, y1, o_current->complex);
+			o_complex_draw_xor(w_current, x1, y1, 
+					   o_current->complex->prim_objs);
 			break;
 
 		case(OBJ_TEXT):
@@ -544,8 +544,8 @@ o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery,
 		      &world_centerx,
 		      &world_centery);
 
-	x = object->x + (-world_centerx);
-	y = object->y + (-world_centery);
+	x = object->complex->x + (-world_centerx);
+	y = object->complex->y + (-world_centery);
 
 	rotate_point_90(x, y, 90, &newx, &newy);
 
@@ -553,16 +553,17 @@ o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery,
 	y = newy + (world_centery);
 
 	o_complex_world_translate_toplevel(w_current,
-					   -object->x, -object->y, object);
+					   -object->complex->x, 
+					   -object->complex->y, object);
 	o_complex_rotate_lowlevel(w_current,
 				  0, 0, angle, angle_change, object);
 
-	object->x = 0;
-	object->y = 0;
+	object->complex->x = 0;
+	object->complex->y = 0;
 
 	o_complex_world_translate_toplevel(w_current, x, y, object);
 
-	object->angle = angle;
+	object->complex->angle = angle;
 
 #if DEBUG
 	printf("setting final rotated angle to: %d\n\n", object->angle);
@@ -585,11 +586,11 @@ o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
 		      &world_centerx,
 		      &world_centery);
 
-	origx = object->x;
-	origy = object->y;
+	origx = object->complex->x;
+	origy = object->complex->y;
 
-	x = object->x + (-world_centerx);
-	y = object->y + (-world_centery);
+	x = object->complex->x + (-world_centerx);
+	y = object->complex->y + (-world_centery);
 
 	newx = -x;
 	newy = y;
@@ -598,49 +599,50 @@ o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
 	y = newy + (world_centery);
 
 	o_complex_world_translate_toplevel(w_current,
-					   -object->x, -object->y, object);
+					   -object->complex->x, 
+					   -object->complex->y, object);
 
 	o_complex_mirror_lowlevel(w_current, 0, 0, object);
 
-	switch(object->angle) {
+	switch(object->complex->angle) {
 	case(90):
-		object->angle = 270;
+		object->complex->angle = 270;
 #if 0
-		o_text_change_angle(w_current, object->complex,
-				     object->angle);
+		o_text_change_angle(w_current, object->complex->prim_objs,
+				     object->complex->angle);
 #endif
 
 		change = 1;
 		break;
 
 	case(270):
-		object->angle = 90;
+		object->complex->angle = 90;
 #if 0
-		o_text_change_angle(w_current, object->complex,
-				     object->angle);
+		o_text_change_angle(w_current, object->complex->prim_objs
+				     object->complex->angle);
 #endif
 		change = 1;
 		break;
 
 	}
 #if 0
-	object->angle = (object->angle + 180) % 360;
+	object->complex->angle = (object->complex->angle + 180) % 360;
 #endif
 
-	object->mirror = !object->mirror;
+	object->complex->mirror = !object->complex->mirror;
 #if 0
-	object->x = 0;
-	object->y = 0;
+	object->complex->x = 0;
+	object->complex->y = 0;
 #endif
 
 	o_complex_world_translate_toplevel(w_current, x, y, object);
 
 #if DEBUG
-	printf("final res %d %d\n", object->x,  object->y);
+	printf("final res %d %d\n", object->complex->x,  object->complex->y);
 #endif
 #if 0
-	object->x = x;
-	object->y = y;
+	object->complex->x = x;
+	object->complex->y = y;
 #endif
 	return(change);
 }
@@ -667,11 +669,11 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 		      &world_centerx,
 		      &world_centery);
 
-	origx = object->x;
-	origy = object->y;
+	origx = object->complex->x;
+	origy = object->complex->y;
 
-	x = object->x + (-world_centerx);
-	y = object->y + (-world_centery);
+	x = object->complex->x + (-world_centerx);
+	y = object->complex->y + (-world_centery);
 
 	newx = -x;
 	newy = y;
@@ -679,28 +681,28 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 
-	switch(object->angle) {
+	switch(object->complex->angle) {
 	case(90):
-		object->angle = 270;
+		object->complex->angle = 270;
 #if 0
-		o_text_change_angle(w_current, object->complex,
-				     object->angle);
+		o_text_change_angle(w_current, object->complex->prim_objs,
+				     object->complex->angle);
 #endif
 		change = 1;
 		break;
 
 	case(270):
-		object->angle = 90;
+		object->complex->angle = 90;
 #if 0
-		o_text_change_angle(w_current, object->complex,
-				     object->angle);
+		o_text_change_angle(w_current, object->complex->prim_objs,
+				     object->complex->angle);
 #endif
 		change=1;
 		break;
 
 	}
 
-	object->mirror = !object->mirror;
+	object->complex->mirror = !object->complex->mirror;
 
 	if (object->saved_color == -1) {
 		color = object->color;
@@ -713,7 +715,8 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 				list, OBJ_COMPLEX,
 				color,
 				x, y,
-				object->angle, object->mirror,
+				object->complex->angle, 
+				object->complex->mirror,
 				object->complex_clib, object->complex_basename,
 				1, FALSE);
 

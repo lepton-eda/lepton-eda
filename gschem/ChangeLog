@@ -13,7 +13,61 @@ into the cvs repository.
 
 	* configure.in/configure: Made configure look for scm_run_hook
 	  in libguile.
-	
+
+2000-08-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_text.c: Converted all complex references to use the new
+	  complex pointer inside text structure
+
+	* src/o_text.c: Added o_text_draw_lowlevel
+
+	* src/o_complex.c *.c: Converted all complex references to use the new
+	  complex structure
+
+	* src/*.c: Went through all code and made sure code compiles with 
+	  all the renamed variables
+
+2000-08-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_arc.c: Converted all line_points references to use the new
+	  arc structure
+
+	* src/o_box.c: Converted all line_points references to use the new
+	  box structure
+
+	* src/o_text.c: Converted all text_* references to use the new
+	  text structure
+
+	* src/o_text.c: Found a long hidden bug, wasn't properly recomputing
+	  screen_x and screen_y for text items
+
+	* src/*.c: Converted all text_* references to use the new text 
+	  structure
+
+	* src/o_line.c: Converted all line_points references to use the new
+	  line structure
+
+	* src/o_net.c, o_pin.c, o_bus.c: Changed o_line_visible's parameters
+	  to be correct (use line structure). 
+
+	* src/o_pin.c: Converted all line_points references to use the new
+	  line structure
+
+	* src/o_net.c: Converted all line_points references to use the new
+	  line structure
+
+	* src/o_bus.c: Converted all line_points references to use the new
+	  line structure
+
+	* src/o_stretch.c: Converted all line_points references to use the new
+	  line structure
+
+	* src/o_attrib.c: Converted all line_points references to use the new
+	  line structure
+
+	* src/o_conn.c: Converted all line_points references to use the new
+	  line structure
+
 2000-08-17  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_dialog.c: Fixed a bug pointed out by Martin Benes.

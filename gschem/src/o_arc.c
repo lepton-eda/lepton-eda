@@ -37,7 +37,7 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	int wleft, wright, wtop, wbottom;
 	int width, height;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->arc == NULL) {
 		return;
 	}
 
@@ -50,68 +50,75 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
                 return;
         }
 
-#if DEBUG
-        printf("drawing arc %d %d\n",
-	       o_current->screen_x,
-	       o_current->screen_y);
+	width  = o_current->arc->screen_width - o_current->arc->screen_x;
+	height = o_current->arc->screen_height - o_current->arc->screen_y;
+
+#if DEBUG 
+        printf("drawing arc x: %d y: %d sa: %d ea: %d width: %d height: %d\n",
+	       o_current->arc->screen_x,
+	       o_current->arc->screen_y, 
+	       o_current->arc->start_angle/64, 
+	       o_current->arc->end_angle/64,
+	       o_current->arc->screen_width, 
+	       o_current->arc->screen_height);
+	printf("Computed width height: %d %d\n", width, height);
 #endif
 
-	width  = o_current->line_points->screen_x1 - o_current->screen_x;
-	height = o_current->line_points->screen_y1 - o_current->screen_y;
 	if (w_current->override_color != -1) {
+
 		gdk_gc_set_foreground(w_current->gc,
 				      x_get_color(w_current->override_color));
 		gdk_draw_arc(w_current->window, w_current->gc, FALSE,
 			     /* x and y */
-			     o_current->screen_x,
-			     o_current->screen_y,
+			     o_current->arc->screen_x,
+			     o_current->arc->screen_y,
 
 			     /* width and height */
 			     width ,
 			     height,
 
 			     /* Start and end */
-			     o_current->line_points->screen_x2,
-			     o_current->line_points->screen_y2);
+			     o_current->arc->start_angle,
+			     o_current->arc->end_angle);
 		gdk_draw_arc(w_current->backingstore, w_current->gc, FALSE,
 			     /* x and y */
-			     o_current->screen_x,
-			     o_current->screen_y,
+			     o_current->arc->screen_x,
+			     o_current->arc->screen_y,
 
 			     /* width and height */
 			     width ,
 			     height,
 
 			     /* Start and end */
-			     o_current->line_points->screen_x2,
-			     o_current->line_points->screen_y2);
+			     o_current->arc->start_angle,
+			     o_current->arc->end_angle);
 	} else {
 		gdk_gc_set_foreground(w_current->gc,
 				      x_get_color(o_current->color));
 		gdk_draw_arc(w_current->window, w_current->gc, FALSE,
 			     /* x and y */
-			     o_current->screen_x,
-			     o_current->screen_y,
+			     o_current->arc->screen_x,
+			     o_current->arc->screen_y,
 
 			     /* width and height */
 			     width ,
 			     height,
 
 			     /* Start and end */
-			     o_current->line_points->screen_x2,
-			     o_current->line_points->screen_y2);
+			     o_current->arc->start_angle,
+			     o_current->arc->end_angle);
 		gdk_draw_arc(w_current->backingstore, w_current->gc, FALSE,
 			     /* x and y */
-			     o_current->screen_x,
-			     o_current->screen_y,
+			     o_current->arc->screen_x,
+			     o_current->arc->screen_y,
 
 			     /* width and height */
 			     width ,
 			     height,
 
 			     /* Start and end */
-			     o_current->line_points->screen_x2,
-			     o_current->line_points->screen_y2);
+			     o_current->arc->start_angle,
+			     o_current->arc->end_angle);
 	}
 
 #if DEBUG
@@ -133,24 +140,24 @@ o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	int width, height;
 	int color;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->arc == NULL) {
 		return;
 	}
 
 	width  =
-		(o_current->line_points->screen_x1 + dx) -
-		(o_current->screen_x + dx);
+		(o_current->arc->screen_width + dx) -
+		(o_current->arc->screen_x + dx);
 	height =
-		(o_current->line_points->screen_y1 + dy) -
-		(o_current->screen_y + dy);
+		(o_current->arc->screen_height + dy) -
+		(o_current->arc->screen_y + dy);
 
 #if 0
 	width  = 100;
 	height = 100;
 #endif
 #if 0
-	width  = o_current->line_points->screen_x1;
-	height = o_current->line_points->screen_y1;
+	width  = o_current->arc->screen_width;
+	height = o_current->arc->screen_height;
 #endif
 
 	if (height < 1) {
@@ -171,16 +178,16 @@ o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	gdk_draw_arc(w_current->window, w_current->outline_xor_gc,
 		     FALSE,
 		     /* x and y */
-		     o_current->screen_x + dx,
-		     o_current->screen_y + dy,
+		     o_current->arc->screen_x + dx,
+		     o_current->arc->screen_y + dy,
 
 		     /* width and height */
 		     width ,
 		     height,
 
 		     /* Start and end */
-		     o_current->line_points->screen_x2,
-		     o_current->line_points->screen_y2);
+		     o_current->arc->start_angle,
+		     o_current->arc->end_angle);
 	/* backing store? not appropriate here  */
 }
 

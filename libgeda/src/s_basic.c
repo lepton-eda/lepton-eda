@@ -147,21 +147,19 @@ s_basic_init_object( char *name )
 	new_node->bottom = 0;
 
 	/* Setup line/circle structs */
-	new_node->line_points = NULL;
+	new_node->line = NULL;
 	new_node->circle = NULL;
+	new_node->arc = NULL;
+	new_node->box = NULL;
+	new_node->text = NULL;
+	new_node->complex = NULL;
+
 	new_node->visited = 0;
 	
 	new_node->complex_basename = NULL;
 	new_node->complex_clib = NULL;
-	new_node->complex = NULL;
 	new_node->complex_parent = NULL;
 		
-	new_node->x = -1;
-	new_node->y = -1;
-
-	new_node->screen_x = -1;
-	new_node->screen_y = -1;
-
 	/* Setup the color */
 	new_node->color = WHITE;
 	new_node->saved_color = -1;
@@ -172,17 +170,6 @@ s_basic_init_object( char *name )
 	new_node->sel_func = error_if_called; 
 	new_node->draw_func = error_if_called; 
 	
-	/* Set the angle */
-	new_node->angle = 0;
-	new_node->mirror = 0;
-
-	new_node->text_string = NULL;
-	new_node->text_size = -1;
-	new_node->text_len = -1;
-	new_node->text_alignment = -1;
-	new_node->displayed_text_len = -1;
-
-
 	new_node->attribs = NULL;
 	new_node->attached_to = NULL;
 	new_node->attribute = 0; 
@@ -233,15 +220,9 @@ print_struct_forw(OBJECT *ptr)
 		printf("Name: %s\n", o_current->name);
 		printf("Type: %d\n", o_current->type);
 		printf("Sid: %d\n", o_current->sid);
-/*		if (o_current->line_points != NULL) {
-			printf("Line points.x1: %d\n", o_current->line_points->x1);
-			printf("Line points.y1: %d\n", o_current->line_points->y1);
-			printf("Line points.x2: %d\n", o_current->line_points->x2);
-			printf("Line points.y2: %d\n", o_current->line_points->y2);
-		}*/
 
 		if (o_current->type == OBJ_COMPLEX) {
-                        print_struct_forw(o_current->complex);
+                        print_struct_forw(o_current->complex->prim_objs);
                 }
 
 	
@@ -271,12 +252,6 @@ print_struct_back(OBJECT *ptr)
 		printf("Name: %s\n", o_current->name);
 		printf("Type: %d\n", o_current->type);
 		printf("Sid: %d\n", o_current->sid);
-/*		if (o_current->line_points != NULL) {
-			printf("Line points.x1: %d\n", o_current->line_points->x1);
-			printf("Line points.y1: %d\n", o_current->line_points->y1);
-			printf("Line points.x2: %d\n", o_current->line_points->x2);
-			printf("Line points.y2: %d\n", o_current->line_points->y2);
-		}*/
 		printf("----\n");
 		o_current = o_current->prev;
 	}
@@ -295,11 +270,11 @@ print_struct(OBJECT *ptr)
 		printf("Name: %s\n", o_current->name);
 		printf("Type: %d\n", o_current->type);
 		printf("Sid: %d\n", o_current->sid);
-		if (o_current->line_points != NULL) {
-			printf("Line points.x1: %d\n", o_current->line_points->x1);
-			printf("Line points.y1: %d\n", o_current->line_points->y1);
-			printf("Line points.x2: %d\n", o_current->line_points->x2);
-			printf("Line points.y2: %d\n", o_current->line_points->y2);
+		if (o_current->line != NULL) {
+			printf("Line points.x1: %d\n", o_current->line->x[0]);
+			printf("Line points.y1: %d\n", o_current->line->y[0]);
+			printf("Line points.x2: %d\n", o_current->line->x[1]);
+			printf("Line points.y2: %d\n", o_current->line->y[1]);
 		}
 
 		if (o_current->attribs) {
@@ -364,11 +339,11 @@ if (!w_current->REMOVING_SEL) {
 			w_current->page_current->object_lastplace = NULL; 
 		}
 
-		if (o_current->line_points) {
-		/*	printf("sdeleting line_points\n");*/
-			free(o_current->line_points);
+		if (o_current->line) {
+		/*	printf("sdeleting line\n");*/
+			free(o_current->line);
 		}
-		o_current->line_points = NULL;
+		o_current->line = NULL;
 
 		if (o_current->circle) {
 		/*	printf("sdeleting circle\n");*/
@@ -376,17 +351,43 @@ if (!w_current->REMOVING_SEL) {
 		}
 		o_current->circle = NULL;
 
+		if (o_current->arc) {
+		/*	printf("sdeleting arc\n");*/
+			free(o_current->arc);
+		}
+		o_current->arc = NULL;
+
+		if (o_current->box) {
+		/*	printf("sdeleting box\n");*/
+			free(o_current->box);
+		}
+		o_current->box = NULL;
+
+		if (o_current->text) {
+			if (o_current->text->string) {
+				/*printf("sdeleting text->string\n");*/
+                       		free(o_current->text->string); 
+			}
+			o_current->text->string = NULL;
+
+			if (o_current->text->prim_objs) {
+				/*printf("sdeleting text complex\n");*/
+				s_delete_list_fromstart(w_current, 
+						o_current->text->prim_objs);
+			}
+			o_current->text->prim_objs = NULL;
+
+		/*	printf("sdeleting text\n");*/
+			free(o_current->text);
+		}
+		o_current->text = NULL;
+
 		if (o_current->name) {
 		/*	printf("sdeleting name\n");*/
 			free(o_current->name);
 		}
 		o_current->name = NULL;
 
-		if (o_current->text_string) {
-		/*	printf("sdeleting text_string\n");*/
-                       free(o_current->text_string); 
-		}
-		o_current->text_string = NULL;
 
 		if (o_current->complex_basename) {
 		/*	printf("sdeleting complex_basename\n");*/
@@ -401,12 +402,17 @@ if (!w_current->REMOVING_SEL) {
 		o_current->complex_clib = NULL;
 
 		if (o_current->complex) {
-		/*	printf("sdeleting complex\n");*/
-			s_delete_list_fromstart(w_current, o_current->complex);
+
+			if (o_current->complex->prim_objs) {
+			/* printf("sdeleting complex->primitive_objects\n");*/
+				s_delete_list_fromstart(w_current, 
+					o_current->complex->prim_objs);
+			}
+			o_current->complex->prim_objs = NULL;
+
+			free(o_current->complex);
+			o_current->complex = NULL;
 		}
-		o_current->complex = NULL;
-
-
 
 		if (o_current->attribs) {
 			o_attrib_free_all(w_current, o_current->attribs);
@@ -420,67 +426,6 @@ if (!w_current->REMOVING_SEL) {
 	}
 }
 
-#if 0
-void
-s_delete_head(TOPLEVEL *w_current, OBJECT *head)
-{
-	if (head != NULL) {
-
-		/* deleted the object_lastplace thingy -> it happend */
-	
-		/*printf("dhead: %s\n", head->name);*/
-
-		/* This was part of an early warning, but isn't relevant */
-		/* anymore */
-		/* if (head->next) {
-			printf("head->next wasn't freed!!!!!!!!!!!!!\n");	
-		} */
-
-		if (head->line_points) {
-/*			printf("freeing line_points\n");*/
-			free(head->line_points);
-		}
-
-		if (head->circle) {
-/*			printf("freeing circle\n");*/
-			free(head->circle);
-		}
-
-		if (head->name) { 
-/*			printf("freeing name\n");*/
-			free(head->name);
-		}
-
-		if (head->text_string) {
-		/*	printf("freeing text_string\n");*/
-                       free(head->text_string); 
-		}
-
-		if (head->complex_basename) {
-		/*	printf("freeing complex_basename\n");*/
-                        free(head->complex_basename); 
-		}
-
-		if (head->complex_clib) {
-		/*	printf("freeing complex_clib\n");*/
-                        free(head->complex_clib); 
-		}
-	
-		if (head->complex) {
-		/*	printf("freeing complex\n");*/
-			/* is this the right thing to do ? */
-			/* UGGGGG.. move this out of here... TRANSFORM hack */
-			s_delete_list_fromstart(w_current, head->complex);
-                        free(head->complex);
-		}
-
-		free(head);		/* assuming it is not null */
-
-		head=NULL;		/* misc clean up */
-	}
-
-}
-#endif
 
 /* deletes everything include the head */
 void

@@ -52,13 +52,13 @@ OBJECT font_set[NUM_CHARS];
 void
 get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom)
 {
-	get_complex_bounds(w_current, o_current->complex, left, top, right, bottom);
+	get_complex_bounds(w_current, o_current->text->prim_objs, left, top, right, bottom);
 }
 
 void
 world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom)
 {
-	world_get_complex_bounds(w_current, o_current->complex, left, top, right, bottom);
+	world_get_complex_bounds(w_current, o_current->text->prim_objs, left, top, right, bottom);
 }
 
 OBJECT *
@@ -80,8 +80,8 @@ o_text_init(void)
 	int i;
 
 	for (i = 0 ; i < NUM_CHARS; i++) {
-		font_set[i].complex = NULL;
-		font_set[i].text_size = 100;
+		font_set[i].font_prim_objs = NULL;
+		font_set[i].font_text_size = 100;
 	}
 }
 
@@ -92,11 +92,11 @@ o_text_print_set(void)
 	int i;
 	
 	for (i = 'A' ; i < 'Z'+1; i++) {
-		if (font_set[i].complex != NULL) {
+		if (font_set[i].font_prim_objs != NULL) {
 			printf("%c: LOADED\n", i);	
-			/* for (o_current=font_set[i].complex; o_current; 
+			/* for (o_current=font_set[i].font_prim_objs; o_current; 
 					o_current=o_current->next) */
-			for (o_current=return_tail(font_set[i].complex); o_current; 
+			for (o_current=return_tail(font_set[i].font_prim_objs); o_current; 
 					o_current=o_current->prev) 
 			{
 				printf("  %s\n", o_current->name);	
@@ -345,18 +345,18 @@ o_text_load_font(TOPLEVEL *w_current, char needed_char)
 
 	/* printf("loading: %s\n", temp_string);*/
 
-	font_set[(int) needed_char].complex = o_text_add_head();
+	font_set[(int) needed_char].font_prim_objs = o_text_add_head();
 
         temp_parent = w_current->page_current->object_parent;
 	/* set the addition of attributes to the head node */
-	w_current->page_current->object_parent = font_set[(int) needed_char].complex;
+	w_current->page_current->object_parent = font_set[(int) needed_char].font_prim_objs;
 
-	font_set[(int) needed_char].complex = o_read(w_current, font_set[(int) needed_char].complex, temp_string);
+	font_set[(int) needed_char].font_prim_objs = o_read(w_current, font_set[(int) needed_char].font_prim_objs, temp_string);
 	w_current->page_current->object_parent = temp_parent;
 
-	font_set[(int) needed_char].complex = return_head(font_set[(int) needed_char].complex);
+	font_set[(int) needed_char].font_prim_objs = return_head(font_set[(int) needed_char].font_prim_objs);
 	
-	return(font_set[(int) needed_char].complex);
+	return(font_set[(int) needed_char].font_prim_objs);
 }
 
 int
@@ -379,7 +379,7 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
 	len = strlen(string);
 
 	for (i = 0 ; i < len ; i++ ) {
-		if (font_set[(int) string[i]].complex == NULL) {
+		if (font_set[(int) string[i]].font_prim_objs == NULL) {
 			o_text_load_font(w_current, string[i]);
 		}
 
@@ -388,7 +388,7 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
 		} else { 
 		}*/
 
-			width = width + size*font_set[(int) string[i]].text_size;
+			width = width + size*font_set[(int) string[i]].font_text_size;
 	}
 
 	/* the size is a fudge factor */
@@ -576,15 +576,15 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
 	for (i = 0 ; i < len ; i++ ) {
 		
-		if (font_set[(int) string[i]].complex == NULL) {
+		if (font_set[(int) string[i]].font_prim_objs == NULL) {
 			o_text_load_font(w_current, string[i]);
 		}
 
 		start_of_char = temp_list;
 
-		if (font_set[(int) string[i]].complex->next) {
+		if (font_set[(int) string[i]].font_prim_objs->next) {
 			temp_list = o_list_copy_all(w_current, 
-				    font_set[(int) string[i]].complex->next, 
+				    font_set[(int) string[i]].font_prim_objs->next, 
 				    temp_list, NORMAL_FLAG);
 			start_of_char = start_of_char->next;
 			o_complex_set_color(start_of_char, color);	
@@ -601,22 +601,22 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 		switch(angle) {
 			case(0):	
 				x_offset = (x_offset) + 
-			 	  size/2*font_set[(int) string[i]].text_size;
+			 	  size/2*font_set[(int) string[i]].font_text_size;
 			break;
 		
 			case(90):
 				y_offset = (y_offset) + 
-				  size/2*font_set[(int) string[i]].text_size;
+				  size/2*font_set[(int) string[i]].font_text_size;
 			break;
 
 			case(180):
 				x_offset = (x_offset) - 
-			 	  size/2*font_set[(int) string[i]].text_size;
+			 	  size/2*font_set[(int) string[i]].font_text_size;
 			break;
 		
 			case(270):
 				y_offset = (y_offset) - 
-				  size/2*font_set[(int) string[i]].text_size;
+				  size/2*font_set[(int) string[i]].font_text_size;
 			break;
 		}
 	}
@@ -641,6 +641,7 @@ o_text_add(TOPLEVEL *w_current,
 	OBJECT *new_node=NULL;
 	OBJECT *temp_list=NULL;
         OBJECT *temp_parent=NULL;
+	TEXT *text;
 	int screen_x, screen_y;
 	int left, right, top, bottom;
 	char name[1025];
@@ -659,17 +660,19 @@ o_text_add(TOPLEVEL *w_current,
 
 	new_node = s_basic_init_object("text");
 	new_node->type = type;
-	new_node->text_string = strdup(string);
-	new_node->text_len = strlen(string);
-	new_node->text_size = size;
-	new_node->text_alignment = alignment;
-	new_node->x = x;
-	new_node->y = y;
-	new_node->angle = angle;
 
-	WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-	new_node->screen_x = screen_x;
-	new_node->screen_y = screen_y;
+	text = (TEXT *) malloc(sizeof(TEXT));
+
+	text->string = u_basic_strdup(string);
+	text->length = strlen(string);
+	text->size = size;
+	text->alignment = alignment;
+	text->x = x;
+	text->y = y;
+	WORLDtoSCREEN(w_current, x, y, &text->screen_x, &text->screen_y);
+	text->angle = angle;
+
+	new_node->text = text;
 
 	/* TODO: questionable cast */
 	new_node->draw_func = (void *) text_draw_func;  
@@ -734,14 +737,14 @@ o_text_add(TOPLEVEL *w_current,
 	w_current->page_current->object_parent = temp_list;
 
 	if (visibility == VISIBLE) {
-		object_list->complex = 
+		object_list->text->prim_objs = 
 			o_text_create_string(w_current, temp_list, 
 					      output_string, size, color,
 					      x, y, alignment, angle); 
-			object_list->displayed_text_len = strlen(output_string);
+			object_list->text->displayed_length = strlen(output_string);
 	} else {
-		object_list->complex = NULL;
-		object_list->displayed_text_len = 0;
+		object_list->text->prim_objs = NULL;
+		object_list->text->displayed_length = 0;
 		s_delete(w_current, temp_list);
 	}
 
@@ -761,13 +764,23 @@ o_text_add(TOPLEVEL *w_current,
 void
 o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
-	
+	int left, right, top, bottom;
+
 	if (o_current->visibility == INVISIBLE) {
 		return;
 	}
 
-	/* libhack */
-	/* o_complex_recalc(w_current, o_current);*/
+	get_complex_bounds(w_current, o_current->text->prim_objs, 
+	                   &left, &top, &right, &bottom);
+	o_current->left = left;
+	o_current->top = top;
+	o_current->right = right;
+	o_current->bottom = bottom;
+
+	WORLDtoSCREEN(w_current, o_current->text->x,
+                  o_current->text->y,
+                  &o_current->text->screen_x,
+                  &o_current->text->screen_y);
 }
 
 
@@ -881,7 +894,7 @@ o_text_set_info_font(char buf[])
 
 	temp = character;
 	if ( temp >= 0 && temp <= 255) {
-		font_set[(int) character].text_size = width;
+		font_set[(int) character].font_text_size = width;
 	}
 }
 
@@ -893,11 +906,11 @@ o_text_save(char *buf, OBJECT *object)
 	int size;
 	char *string;
 
-        x = object->x;
-        y = object->y;
+        x = object->text->x;
+        y = object->text->y;
 
-	string = object->text_string;
-	size = object->text_size;
+	string = object->text->string;
+	size = object->text->size;
 
 	/* Use the right color */
 	if (object->saved_color == -1) {
@@ -908,8 +921,8 @@ o_text_save(char *buf, OBJECT *object)
 
         sprintf(buf, "%c %d %d %d %d %d %d %d %d\n%s", object->type, x, y, 
 		color, size,  object->visibility, 
-	        object->show_name_value, object->angle, 
-		object->text_alignment, string);
+	        object->show_name_value, object->text->angle, 
+		object->text->alignment, string);
 
         return(buf);
 }
@@ -923,10 +936,10 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 	char value[1025]; /* ugg hack */
 	char output_string[1025]; /* uggg hack */
 
-	if (o_attrib_get_name_value(o_current->text_string, name, value)) {
+	if (o_attrib_get_name_value(o_current->text->string, name, value)) {
 		switch(o_current->show_name_value) {
 			case(SHOW_NAME_VALUE):
-				strcpy(output_string, o_current->text_string);
+				strcpy(output_string, o_current->text->string);
 			break;
 
 			case(SHOW_NAME):
@@ -937,7 +950,7 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 			/* since improper attributes will never get here */
 					fprintf(stderr, 
 					    "Got an improper attribute: %s\n", 
-					    o_current->text_string);
+					    o_current->text->string);
 					strcpy(output_string, "invalid");
 				}
 			break;
@@ -950,54 +963,50 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 			/* since improper attributes will never get here */
 					fprintf(stderr, 
 					    "Got an improper attribute: %s\n", 
-					    o_current->text_string);
+					    o_current->text->string);
 					strcpy(output_string, "invalid");
 				}
 			break;
 		}
 	} else {
-		strcpy(output_string, o_current->text_string);
+		strcpy(output_string, o_current->text->string);
 	}
 
-	o_list_delete_rest(w_current, o_current->complex);
+	o_list_delete_rest(w_current, o_current->text->prim_objs);
 
 	temp_parent = w_current->page_current->object_parent;
 	/* set the addition of attributes to the head node */
-	w_current->page_current->object_parent = o_current->complex;
+	w_current->page_current->object_parent = o_current->text->prim_objs;
 
 	if (o_current->visibility == VISIBLE) {
 
 		/* need to create that head node if complex is null */
-		if (o_current->complex == NULL) {
-			o_current->complex = o_text_add_head();
+		if (o_current->text->prim_objs == NULL) {
+			o_current->text->prim_objs = o_text_add_head();
 		}
 
-		o_current->complex = 
-			o_text_create_string(w_current, o_current->complex, 
+		o_current->text->prim_objs = 
+			o_text_create_string(w_current, 
+					      o_current->text->prim_objs, 
 					      output_string, 
-					      o_current->text_size, 
+					      o_current->text->size, 
 					      o_current->color, 
-					      o_current->x, o_current->y,
-					      o_current->text_alignment,
-					      o_current->angle); 
+					      o_current->text->x, 
+					      o_current->text->y,
+					      o_current->text->alignment,
+					      o_current->text->angle); 
 
-		o_complex_set_saved_color_only(o_current->complex, 
+		o_complex_set_saved_color_only(o_current->text->prim_objs, 
 					       o_current->saved_color);
-		o_current->displayed_text_len = strlen(output_string);
+		o_current->text->displayed_length = strlen(output_string);
 	} else {
 		/* make sure list is truely free */
-		s_delete_list_fromstart(w_current, o_current->complex);
-		o_current->complex = NULL;
-		o_current->displayed_text_len = 0;
+		s_delete_list_fromstart(w_current, o_current->text->prim_objs);
+		o_current->text->prim_objs = NULL;
+		o_current->text->displayed_length = 0;
 	}
 
 	w_current->page_current->object_parent = temp_parent;
-}
-
-void
-o_text_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-	o_complex_translate(w_current, dx, dy, object);	
 }
 
 void
@@ -1007,17 +1016,17 @@ o_text_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current)
 	int left, right, top, bottom;
 	
 	
-	o_current->x = o_current->x + x1;
-	o_current->y = o_current->y + y1;
+	o_current->text->x = o_current->text->x + x1;
+	o_current->text->y = o_current->text->y + y1;
 			
 	/* update screen coords */
-	WORLDtoSCREEN(w_current, o_current->x, o_current->y, 
+	WORLDtoSCREEN(w_current, o_current->text->x, o_current->text->y, 
 			&screen_x, &screen_y);
 
-	o_current->screen_x = screen_x;
-	o_current->screen_y = screen_y;
+	o_current->text->screen_x = screen_x;
+	o_current->text->screen_y = screen_y;
 						
-	o_complex_world_translate(w_current, x1, y1, o_current->complex);
+	o_complex_world_translate(w_current, x1, y1, o_current->text->prim_objs);
 
 	/* update bounding box */
 	/* do it */
@@ -1043,11 +1052,11 @@ o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
 	new_obj = o_text_add(w_current, list_tail, OBJ_TEXT, 
 	                     color, 
-		             o_current->x, o_current->y, 
-	                     o_current->text_alignment, 
-	                     o_current->angle,
-		             o_current->text_string, 
-			     o_current->text_size, 
+		             o_current->text->x, o_current->text->y, 
+	                     o_current->text->alignment, 
+	                     o_current->text->angle,
+		             o_current->text->string, 
+			     o_current->text->size, 
 		             o_current->visibility, 
 			     o_current->show_name_value); 
 
@@ -1060,9 +1069,9 @@ o_text_freeallfonts(TOPLEVEL *w_current)
 	int i;
 
 	for (i = 0 ; i < NUM_CHARS; i++) {
-		if (font_set[i].complex != NULL) {
-	 		s_delete_list_fromstart(w_current, font_set[i].complex);
-			font_set[i].complex = NULL;
+		if (font_set[i].font_prim_objs != NULL) {
+	 		s_delete_list_fromstart(w_current, font_set[i].font_prim_objs);
+			font_set[i].font_prim_objs = NULL;
 		}
 	}
 
@@ -1107,7 +1116,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	int x, y;
 
 
-	if (!o_current->text_string) {
+	if (!o_current->text->string) {
 		return;
 	}
 
@@ -1116,17 +1125,17 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	}
 
 	fprintf(fp, "/Helvetica findfont\n");
-        fprintf(fp, "%f scalefont\n", (float) o_current->text_size*1.4);
+        fprintf(fp, "%f scalefont\n", (float) o_current->text->size*1.4);
         fprintf(fp, "setfont\n");
         fprintf(fp, "\n");
 
 	/* fprintf(fp, "newpath\n");*/
 
-	if (o_attrib_get_name_value(o_current->text_string, name, value)) {
+	if (o_attrib_get_name_value(o_current->text->string, name, value)) {
 		switch(o_current->show_name_value) {
 			case(SHOW_NAME_VALUE):
 					strcpy(output_string, 
-						o_current->text_string);
+						o_current->text->string);
 				break;
 
 			case(SHOW_NAME):
@@ -1135,7 +1144,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 					} else {
 						fprintf(stderr, 
 					    	    "Got an improper attribute: %s\n", 
-					    	o_current->text_string);
+					    	o_current->text->string);
 						strcpy(output_string, "invalid");
 					}
 				break;
@@ -1148,16 +1157,16 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			/* since improper attributes will never get here */
 						fprintf(stderr, 
 						    "Got an improper attribute: %s\n", 
-					    	o_current->text_string);
+					    	o_current->text->string);
 						strcpy(output_string, "invalid");
 					}
 				break;
 		}
 	} else {
-		strcpy(output_string, o_current->text_string);
+		strcpy(output_string, o_current->text->string);
 	}
 
-	switch(o_current->angle) {
+	switch(o_current->text->angle) {
 		case(0):
 			sign = -1;
 			break;
@@ -1172,11 +1181,11 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			break;
 	}
 
-	x = o_current->x;
-	y = o_current->y;
-	if (o_current->angle == 0 || o_current->angle == 180 ) {
+	x = o_current->text->x;
+	y = o_current->text->y;
+	if (o_current->text->angle == 0 || o_current->text->angle == 180 ) {
 
-		switch(o_current->text_alignment) {
+		switch(o_current->text->alignment) {
 			case(LOWER_LEFT):
 				fprintf(fp, "%d mils %d mils moveto\n", x, y);
 /*				x_offset = x; */
@@ -1185,7 +1194,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 			case(MIDDLE_LEFT):
 				fprintf(fp, "%d mils %d mils\n", x, y);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
 /*				x_offset = x; */
 /*				y_offset = y + sign*0.5*text_height; */
@@ -1193,7 +1202,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 			case(UPPER_LEFT):
 				fprintf(fp, "%d mils %d mils\n", x, y);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "%d mul add moveto\n", sign);
 /*				x_offset = x; */
 /*				y_offset = y + sign*text_height; */
@@ -1216,7 +1225,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
 /*				x_offset = x + sign*0.5*text_width; */
 /*				y_offset = y + sign*0.5*text_height; */
@@ -1228,7 +1237,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "%d mul add moveto\n", sign);
 /*				x_offset = x + sign*0.5*text_width; */
 /*				y_offset = y + sign*text_height; */
@@ -1251,7 +1260,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
 /*				x_offset = x + sign*text_width; */
 /*				y_offset = y + sign*0.5*text_height; */
@@ -1263,7 +1272,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				o_text_print_text_width(fp, output_string);
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "%d mul add moveto\n", sign);
 /*				x_offset = x + sign*text_width; */
 /*				y_offset = y + sign*text_height; */
@@ -1271,13 +1280,13 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		}
 
 #if 0 /* no longer needed */
-		if (o_current->angle != 0) {
-			fprintf(fp, "%d rotate\n", o_current->angle); 
+		if (o_current->text->angle != 0) {
+			fprintf(fp, "%d rotate\n", o_current->text->angle); 
 		}
 #endif
 
-	} else if (o_current->angle == 90 || o_current->angle == 270) {
-		switch(o_current->text_alignment) {
+	} else if (o_current->text->angle == 90 || o_current->text->angle == 270) {
+		switch(o_current->text->alignment) {
 
 			case(LOWER_LEFT):
 				fprintf(fp, "%d mils %d mils moveto\n", x, y);
@@ -1288,7 +1297,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			case(MIDDLE_LEFT):
 				fprintf(fp, "%d mils\n", x); 
 						
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils moveto\n", y);
 /*				x_offset = x + sign*0.5*text_height; */
@@ -1298,7 +1307,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			case(UPPER_LEFT):
 				fprintf(fp, "%d mils\n", x); 
 						
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils moveto\n", y);
 /*				x_offset = x + sign*text_height; */
@@ -1316,7 +1325,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	
 			case(MIDDLE_MIDDLE):
 				fprintf(fp, "%d mils\n", x);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "0.5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
@@ -1327,7 +1336,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	
 			case(UPPER_MIDDLE):
 				fprintf(fp, "%d mils\n", x);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
@@ -1348,7 +1357,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	
 			case(MIDDLE_RIGHT):
 				fprintf(fp, "%d mils\n", x);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "0.5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
@@ -1359,7 +1368,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	
 			case(UPPER_RIGHT):
 				fprintf(fp, "%d mils\n", x);
-				o_text_print_text_height(fp, o_current->text_size);
+				o_text_print_text_height(fp, o_current->text->size);
 				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_width(fp, output_string);
@@ -1369,12 +1378,12 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			break;
 		}
 
-		if (o_current->angle) {
-			fprintf(fp, "%d rotate\n", o_current->angle); 
+		if (o_current->text->angle) {
+			fprintf(fp, "%d rotate\n", o_current->text->angle); 
 		}
 	} 
 	
-	if (o_current->angle == 180) {
+	if (o_current->text->angle == 180) {
 
 /* old way of doing 180 rotated text */
 #if 0
@@ -1383,7 +1392,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		/* do the rotation */
 
 #if DEBUG 
-		printf("tangle: %f\n", (float) o_current->text_size*1.4*0.0139*1000);	
+		printf("tangle: %f\n", (float) o_current->text->size*1.4*0.0139*1000);	
 #endif
 		fprintf(fp, "%%%% 180 rotated text\n");
 		fprintf(fp, "(");
@@ -1401,20 +1410,20 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		fprintf(fp, ") stringwidth pop 72 div 1000 mul .95 mul\n");
 
 		fprintf(fp, "%d exch sub mils\n",
-				o_current->x-origin_x);
+				o_current->text->x-origin_x);
 
 		/* the 1.1 is a fudge factor */
 		/* 0.0139 is 1/72 points per inch */
 		/* 1000 mils per inch */
 		fprintf(fp, "%d mils moveto\n", 
-			o_current->y-origin_y - (int) rint(o_current->text_size*1.1*0.0139*1000));
+			o_current->text->y-origin_y - (int) rint(o_current->text->size*1.1*0.0139*1000));
 /* old way of doing 180 rotated text */
 #endif
 
 
 		o_text_print_text_width(fp, output_string); 
 		fprintf(fp, "-1.0 mul\n"); /* x distance back */
-		o_text_print_text_height(fp, o_current->text_size);
+		o_text_print_text_height(fp, o_current->text->size);
 		fprintf(fp, "-1.0 mul\n"); /* y distance down */
 		fprintf(fp, "rmoveto\n");
 	}
@@ -1453,7 +1462,7 @@ o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery
 	/* translate object to origin */
 	/* o_text_translate_world(w_current, -world_centerx, -world_centery, object);*/
 
-	/* rotate_point_90(object->x, object->y, &newx, &newy);*/
+	/* rotate_point_90(object->text->x, object->text->y, &newx, &newy);*/
 	
 	/* o_text_translate_world(w_current, world_centerx, world_centery, object);*/
 	
@@ -1476,15 +1485,15 @@ o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, i
 	int origx, origy;
 	int x, y;
 	
-	origx = object->x;
-	origy = object->y;
+	origx = object->text->x;
+	origy = object->text->y;
 
-	object->angle = ( object->angle + angle_change ) % 360;
+	object->text->angle = ( object->text->angle + angle_change ) % 360;
 
 #if DEBUG 
 	printf("rotating text angle: %d\n", angle);
 	printf("rotating text angle_change: %d\n", angle_change);
-	printf("final text angle: %d\n",  object->angle);
+	printf("final text angle: %d\n",  object->text->angle);
 #endif
 
 	x = origx + (-world_centerx);
@@ -1495,7 +1504,7 @@ o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, i
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 	
-	o_text_translate_world(w_current, x-object->x, y-object->y, object);
+	o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
 
 	o_text_recreate(w_current, object);
 }
@@ -1513,10 +1522,10 @@ o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angl
 			&world_centery);
 	
 
-	origx = object->x;
-	origy = object->y;
+	origx = object->text->x;
+	origy = object->text->y;
 
-	object->angle = angle;
+	object->text->angle = angle;
 
 	x = origx + (-world_centerx);
 	y = origy + (-world_centery);
@@ -1526,7 +1535,7 @@ o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angl
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 	
-	o_text_translate_world(w_current, x-object->x, y-object->y, object);
+	o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
 
 	o_text_recreate(w_current, object);
 }
@@ -1549,18 +1558,17 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 			&world_centerx,
 			&world_centery);
 
-	origx = object->x;
-	origy = object->y;
+	origx = object->text->x;
+	origy = object->text->y;
 
 	x = origx + (-world_centerx);
 	y = origy + (-world_centery);
 
-
-	if (o_attrib_get_name_value(object->text_string, name, value)) {
+	if (o_attrib_get_name_value(object->text->string, name, value)) {
 		switch(object->show_name_value) {
 			case(SHOW_NAME_VALUE):
 				strcpy(output_string, 
-						object->text_string);
+						object->text->string);
 				break;
 
 			case(SHOW_NAME):
@@ -1571,7 +1579,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 			/* since improper attributes will never get here */
 					fprintf(stderr, 
 				    "Got an improper attribute: %s\n", 
-					object->text_string);
+					object->text->string);
 					strcpy(output_string, "invalid");
 				}
 				break;
@@ -1584,133 +1592,133 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 			/* since improper attributes will never get here */
 					fprintf(stderr, 
 				    "Got an improper attribute: %s\n", 
-					object->text_string);
+					object->text->string);
 					strcpy(output_string, "invalid");
 				}
 				break;
 		}
 	} else {
-		strcpy(output_string, object->text_string);
+		strcpy(output_string, object->text->string);
 	}
 
-	switch(object->text_alignment) {
+	switch(object->text->alignment) {
 		case(LOWER_LEFT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				height_mod = 0;
 			}
 		break;
 
 		case(MIDDLE_LEFT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				height_mod = o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(UPPER_LEFT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				height_mod = 2*o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(LOWER_MIDDLE):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 0.5;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 0;
 			}
 		break;
 
 		case(MIDDLE_MIDDLE): 
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 0.5;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(UPPER_MIDDLE): 
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 0.5;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 2*o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(LOWER_RIGHT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = -1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 0;
 			}
 		break;
 
 		case(MIDDLE_RIGHT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = -1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(UPPER_RIGHT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = -1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 2*o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 	}
 
-	switch (object->angle) {
+	switch (object->text->angle) {
 
 		case(0): 
 			newx = -(x + sign*o_text_width(w_current, 
 						   output_string, 
-						   object->text_size/2)); 
+						   object->text->size/2)); 
 		break;
 
 		case(90):
 			newx = -(x - sign*o_text_height(w_current, 
-				                        object->text_size)+
+				                        object->text->size)+
 							height_mod);
 		break;
 
 		case(180):
 			newx = -(x - sign*o_text_width(w_current, 
 						   output_string, 
-						   object->text_size/2)); 
+						   object->text->size/2)); 
 		break;
 
 		case(270):
 			newx = -(x + sign*o_text_height(w_current, 
-						        object->text_size)-
+						        object->text->size)-
 							height_mod);
 		break;
 
@@ -1728,7 +1736,7 @@ o_text_mirror_old(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	y = newy + (world_centery);
 	
 	/* don't know if this is needed? */	
-	o_text_translate_world(w_current, x-object->x, y-object->y, object);
+	o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);
 
 	o_text_recreate(w_current, object);
 }
@@ -1745,18 +1753,18 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx, int world_center
 	int sign=1;
 	int height_mod=0;
 	
-	origx = object->x;
-	origy = object->y;
+	origx = object->text->x;
+	origy = object->text->y;
 
 	/* translate to origin */
 	x = origx + (-world_centerx);
 	y = origy + (-world_centery);
 
 
-	if (o_attrib_get_name_value(object->text_string, name, value)) {
+	if (o_attrib_get_name_value(object->text->string, name, value)) {
 		switch(object->show_name_value) {
 			case(SHOW_NAME_VALUE):
-				strcpy(output_string, object->text_string);
+				strcpy(output_string, object->text->string);
 				break;
 
 			case(SHOW_NAME):
@@ -1767,7 +1775,7 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx, int world_center
 			/* since improper attributes will never get here */
 					fprintf(stderr, 
 				    "Got an improper attribute: %s\n", 
-					object->text_string);
+					object->text->string);
 					strcpy(output_string, "invalid");
 				}
 				break;
@@ -1780,133 +1788,133 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx, int world_center
 			/* since improper attributes will never get here */
 					fprintf(stderr, 
 				    "Got an improper attribute: %s\n", 
-					object->text_string);
+					object->text->string);
 					strcpy(output_string, "invalid");
 				}
 				break;
 		}
 	} else {
-		strcpy(output_string, object->text_string);
+		strcpy(output_string, object->text->string);
 	}
 
-	switch(object->text_alignment) {
+	switch(object->text->alignment) {
 		case(LOWER_LEFT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				height_mod = 0;
 			}
 		break;
 
 		case(MIDDLE_LEFT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				height_mod = o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(UPPER_LEFT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				height_mod = 2*o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(LOWER_MIDDLE): 
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 0.5;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 0;
 			}
 		break;
 
 		case(MIDDLE_MIDDLE): 
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 0.5;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(UPPER_MIDDLE): 
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = 0.5;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 2*o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(LOWER_RIGHT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = -1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 0;
 			}
 		break;
 
 		case(MIDDLE_RIGHT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = -1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 
 		case(UPPER_RIGHT):
-			if (object->angle == 0 || object->angle == 180) {
+			if (object->text->angle == 0 || object->text->angle == 180) {
 				sign = -1;
 				height_mod = 0;
-			} else if (object->angle == 90 || object->angle == 270) {
+			} else if (object->text->angle == 90 || object->text->angle == 270) {
 				sign = 1;
 				height_mod = 2*o_text_height(w_current, 
-				                           object->text_size);
+				                           object->text->size);
 			}
 		break;
 	}
 
-	switch (object->angle) {
+	switch (object->text->angle) {
 
 		case(0): 
 			newx = -(x + sign*o_text_width(w_current, 
 						   output_string, 
-						   object->text_size/2)); 
+						   object->text->size/2)); 
 
 		break;
 
 		case(90):
 			newx = -(x - sign*o_text_height(w_current, 
-					object->text_size)+height_mod);
+					object->text->size)+height_mod);
 		break;
 
 		case(180):
 			newx = -(x - sign*o_text_width(w_current, 
 						   output_string, 
-						   object->text_size/2)); 
+						   object->text->size/2)); 
 		break;
 
 		case(270):
 			newx = -(x + sign*o_text_height(w_current, 
-					object->text_size)+height_mod);
+					object->text->size)+height_mod);
 		break;
 
 		default:
@@ -1921,11 +1929,11 @@ o_text_mirror_world_old(TOPLEVEL *w_current, int world_centerx, int world_center
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 
-	object->x = x;
-	object->y = y;
+	object->text->x = x;
+	object->text->y = y;
 
 	/* don't know if this is needed ?*/	
-	/* o_text_translate_world(w_current, x-object->x, y-object->y, object);*/
+	/* o_text_translate_world(w_current, x-object->text->x, y-object->text->y, object);*/
 	o_text_recreate(w_current, object);
 }
 #endif
@@ -1937,46 +1945,46 @@ o_text_return_center(TOPLEVEL *w_current, OBJECT *o_current, int *centerx, int *
 	int text_height; 
 	int text_width;
 
-	text_height = o_text_height(w_current, o_current->text_size);
+	text_height = o_text_height(w_current, o_current->text->size);
 
 	/* this will NOT NOT NOT work with attributes */
-	text_width = o_text_width(w_current, o_current->text_string, 
-				   o_current->text_size/2); 
+	text_width = o_text_width(w_current, o_current->text->string, 
+				   o_current->text->size/2); 
 	
-	switch(o_current->angle) {
+	switch(o_current->text->angle) {
 		case(0):
-			*centerx = o_current->x + text_width/2;
-			*centery = o_current->y + text_height/2;
+			*centerx = o_current->text->x + text_width/2;
+			*centery = o_current->text->y + text_height/2;
 		break;
 
 		case(90):
-			*centerx = o_current->x - text_height/2;
-			*centery = o_current->y + text_width/2;
+			*centerx = o_current->text->x - text_height/2;
+			*centery = o_current->text->y + text_width/2;
 		break;
 
 		case(180):
-			*centerx = o_current->x - text_width/2;
-			*centery = o_current->y - text_height/2;
+			*centerx = o_current->text->x - text_width/2;
+			*centery = o_current->text->y - text_height/2;
 		break;
 
 		case(270):
-			*centerx = o_current->x + text_height/2;
-			*centery = o_current->y - text_width/2;
+			*centerx = o_current->text->x + text_height/2;
+			*centery = o_current->text->y - text_width/2;
 		break;
 	}	
 }
 
 /* the complex here is the complex of a complex object */
-o_text_change_angle(TOPLEVEL *w_current, OBJECT *complex, int new_angle)
+o_text_change_angle(TOPLEVEL *w_current, OBJECT *prim_objs, int new_angle)
 {
 	OBJECT *o_current;
 	int centerx, centery;
 
-	o_current = complex;
+	o_current = prim_objs;
 
 	while (o_current != NULL) {
 		if (o_current->type == OBJ_TEXT) {
-			o_current->angle = new_angle;
+			o_current->text->angle = new_angle;
 
 			/* change world to non */
 			o_text_return_center(w_current, o_current, &centerx, &centery);
@@ -1998,7 +2006,7 @@ o_text_change_angle(TOPLEVEL *w_current, OBJECT *complex, int new_angle)
 						centerx, centery, o_current);
 
 /* 			o_text_rotate_lowlevel(w_current, 
-				0, 0, new_angle, 180, o_current->complex);*/
+				0, 0, new_angle, 180, o_current->text->prim_objs);*/
 
 #if 0
 			w_current->override_color =
@@ -2020,65 +2028,65 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 	int origx, origy;
 	int x, y;
 	
-	origx = object->x;
-	origy = object->y;
+	origx = object->text->x;
+	origy = object->text->y;
 
 	x = origx + (-world_centerx);
 	y = origy + (-world_centery);
 
-	if ((object->angle%180)==0) {
-	  switch(object->text_alignment) {
+	if ((object->text->angle%180)==0) {
+	  switch(object->text->alignment) {
 	  case(LOWER_LEFT):
-	    object->text_alignment=LOWER_RIGHT;
+	    object->text->alignment=LOWER_RIGHT;
 	    break;
 
 	  case(MIDDLE_LEFT):
-	    object->text_alignment=MIDDLE_RIGHT;
+	    object->text->alignment=MIDDLE_RIGHT;
 	    break;
 
 	  case(UPPER_LEFT):
-	    object->text_alignment=UPPER_RIGHT;
+	    object->text->alignment=UPPER_RIGHT;
 	    break;
 
 	  case(LOWER_RIGHT):
-	    object->text_alignment=LOWER_LEFT;
+	    object->text->alignment=LOWER_LEFT;
 	    break;
 
 	  case(MIDDLE_RIGHT):
-	    object->text_alignment=MIDDLE_LEFT;
+	    object->text->alignment=MIDDLE_LEFT;
 	    break;
 
 	  case(UPPER_RIGHT):
-	    object->text_alignment=UPPER_LEFT;
+	    object->text->alignment=UPPER_LEFT;
 	    break;
 
 	  default:
 	    break;
 	  }
 	} else {
-	  switch(object->text_alignment) {
+	  switch(object->text->alignment) {
 	  case(LOWER_LEFT):
-	    object->text_alignment=UPPER_LEFT;
+	    object->text->alignment=UPPER_LEFT;
 	    break;
 
 	  case(UPPER_LEFT):
-	    object->text_alignment=LOWER_LEFT;
+	    object->text->alignment=LOWER_LEFT;
 	    break;
 
 	  case(LOWER_RIGHT):
-	    object->text_alignment=UPPER_RIGHT;
+	    object->text->alignment=UPPER_RIGHT;
 	    break;
 
 	  case(UPPER_RIGHT):
-	    object->text_alignment=LOWER_RIGHT;
+	    object->text->alignment=LOWER_RIGHT;
 	    break;
 
 	  case(LOWER_MIDDLE):
-	    object->text_alignment=UPPER_MIDDLE;
+	    object->text->alignment=UPPER_MIDDLE;
 	    break;
 
 	  case(UPPER_MIDDLE):
-	    object->text_alignment=LOWER_MIDDLE;
+	    object->text->alignment=LOWER_MIDDLE;
 	    break;
 
 	  default:
@@ -2086,8 +2094,8 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 	  }
 	}
 
-	object->x = -x + (world_centerx);
-	object->y =  y + (world_centery);
+	object->text->x = -x + (world_centerx);
+	object->text->y =  y + (world_centery);
 	
 	o_text_recreate(w_current, object);
 }

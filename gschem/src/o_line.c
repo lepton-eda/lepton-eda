@@ -30,14 +30,14 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int x1, y1, x2, y2;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->line == NULL) {
 		return;
 	}
 
 	/* goes before visible, clipfixme */
 	o_line_recalc(w_current, o_current);
 
-	if (!o_line_visible(w_current, o_current->line_points,
+	if (!o_line_visible(w_current, o_current->line,
 			&x1, &y1, &x2, &y2)) {
 		return;
 	}
@@ -113,7 +113,7 @@ o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int color;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->line == NULL) {
 		return;
 	}
 
@@ -127,10 +127,10 @@ o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	gdk_gc_set_foreground(w_current->outline_xor_gc,
 		x_get_darkcolor(color));
 	gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-		       o_current->line_points->screen_x1+dx,
-		       o_current->line_points->screen_y1+dy,
-		       o_current->line_points->screen_x2+dx,
-		       o_current->line_points->screen_y2+dy);
+		       o_current->line->screen_x[0]+dx,
+		       o_current->line->screen_y[0]+dy,
+		       o_current->line->screen_x[1]+dx,
+		       o_current->line->screen_y[1]+dy);
 
 	/* backing store? nope not here */
 }

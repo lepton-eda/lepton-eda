@@ -99,9 +99,9 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
 			} else {
 				object->visibility = VISIBLE;
 
-				/* you must do this since real->complex */
+				/* you must do this since real->text->complex */
 				/* might be null when text is invisible */
-				if (object->complex == NULL)
+				if (object->text->prim_objs == NULL)
 					o_text_recreate(w_current, object);
 
 				o_text_draw(w_current, object);
@@ -330,9 +330,14 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
         	/* get coordinates of where to place the text object */
         	switch(o_current->type) {
 			case(OBJ_COMPLEX):
+				world_x = o_current->complex->x;
+				world_y = o_current->complex->y;
+				color = w_current->attribute_color;
+			break;
+
 			case(OBJ_ARC):
-				world_x = o_current->x;
-				world_y = o_current->y;
+				world_x = o_current->arc->x;
+				world_y = o_current->arc->y;
 				color = w_current->attribute_color;
 			break;
 
@@ -342,21 +347,25 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
 				color = w_current->attribute_color;
 			break;
 
+			case(OBJ_BOX):
+				world_x = o_current->box->upper_x;
+				world_y = o_current->box->upper_y;
+				color = w_current->attribute_color;
+			break;
 
 			case(OBJ_LINE):
 			case(OBJ_NET):
-			case(OBJ_BOX):
 			case(OBJ_PIN):
 			case(OBJ_BUS):
-				world_x = o_current->line_points->x1;
-				world_y = o_current->line_points->y1;
+				world_x = o_current->line->x[0];
+				world_y = o_current->line->y[0];
 				color = w_current->attribute_color;
 			break;
 
 			case(OBJ_TEXT):
 
-				world_x = o_current->x;
-				world_y = o_current->y;
+				world_x = o_current->text->x;
+				world_y = o_current->text->y;
 			
 				color = w_current->detachedattr_color;
 				o_current = NULL;	

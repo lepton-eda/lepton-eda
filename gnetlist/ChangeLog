@@ -1,4 +1,8 @@
 
+2000-08-21  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Got gnetlist to build with all the libgeda modifications
+
 2000-07-12  Matt Ettus  <matt@ettus.com>
 
 	* Fixed autoconf/automake stuff to install protel and bae backends

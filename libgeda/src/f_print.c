@@ -318,7 +318,7 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 					fprintf(fp, "gsave\n");
 
 					f_print_objects(w_current, fp, 
-						o_current->complex,
+						o_current->complex->prim_objs,
 						origin_x, origin_y, scale);
 					fprintf(fp, "grestore\n");
 				break;
@@ -330,8 +330,10 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 					if (w_current->text_output == VECTOR_FONTS) {	
 						f_print_objects(w_current, 
 							fp, 
-							o_current->complex,
-							origin_x, origin_y, scale);
+							o_current->text->
+							prim_objs,
+							origin_x, origin_y, 
+							scale);
 					} else {
 
 						o_text_print(w_current, fp, 

@@ -43,13 +43,13 @@
 #include "../include/prototype.h"
 
 void
-get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int
+get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int
 *bottom)
 {
-	*left = points->screen_x1;
-	*top = points->screen_y1;
-	*right = points->screen_x2;
-	*bottom = points->screen_y2;
+	*left = box->screen_upper_x;
+	*top = box->screen_upper_y;
+	*right = box->screen_lower_x;
+	*bottom = box->screen_lower_y;
 
         *left = *left - 4;
         *top = *top - 4;
@@ -59,12 +59,12 @@ get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *r
 }
 
 void
-world_get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom)
+world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom)
 {
-	*left = min(points->x1, points->x2);
-	*top = min(points->y1, points->y2);
-	*right = max(points->x1, points->x2);
-	*bottom = max(points->y1, points->y2);
+	*left = min(box->upper_x, box->lower_x);
+	*top = min(box->upper_y, box->lower_y);
+	*right = max(box->upper_x, box->lower_x);
+	*bottom = max(box->upper_y, box->lower_y);
 
 
 #if DEBUG 
@@ -82,35 +82,30 @@ o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 	int screen_x, screen_y;
 	int left, top, right, bottom;
 	OBJECT *new_node;
+	BOX *box;
 
 	new_node = s_basic_init_object("box");
         new_node->type = type;
 	new_node->color = color;
 
-	new_node->line_points = (LINEPTS *) malloc(sizeof(LINEPTS));
+	box = (BOX *) malloc(sizeof(BOX));
 
-	new_node->line_points->x1 = x1;
-	new_node->line_points->y1 = y1;
-	new_node->line_points->x2 = x2;
-	new_node->line_points->y2 = y2;
+	box->upper_x = x1;
+	box->upper_y = y1;
+	box->lower_x = x2;
+	box->lower_y = y2;
 
-	WORLDtoSCREEN(w_current, new_node->line_points->x1,
-                  new_node->line_points->y1,
-                  &screen_x,
-                  &screen_y);   
+	WORLDtoSCREEN(w_current, 
+		      box->upper_x, box->upper_y,
+		      &box->screen_upper_x, &box->screen_upper_y);   
 
-	new_node->line_points->screen_x1 = screen_x;
-        new_node->line_points->screen_y1 = screen_y;    
+	WORLDtoSCREEN(w_current, 
+		      box->lower_x, box->lower_y,
+		      &box->screen_lower_x, &box->screen_lower_y);   
 
-	WORLDtoSCREEN(w_current, new_node->line_points->x2,
-                  new_node->line_points->y2,
-                  &screen_x,
-                  &screen_y);  
+	new_node->box = box;
 
-	new_node->line_points->screen_x2 = screen_x;
-        new_node->line_points->screen_y2 = screen_y; 
-
-	get_box_bounds(w_current, new_node->line_points, 
+	get_box_bounds(w_current, new_node->box, 
 			&left, &top, &right, &bottom);
 
 	new_node->left = left;
@@ -134,27 +129,27 @@ o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	int screen_x1, screen_y1;
 	int screen_x2, screen_y2;
 
-	if (o_current->line_points == NULL) {
+	if (o_current->box == NULL) {
 		return;
 	}
 
-	WORLDtoSCREEN(w_current, o_current->line_points->x1, 
-		  o_current->line_points->y1, 
+	WORLDtoSCREEN(w_current, o_current->box->upper_x, 
+		  o_current->box->upper_y, 
 		  &screen_x1,
                   &screen_y1);  
 
-	o_current->line_points->screen_x1 = screen_x1;
-	o_current->line_points->screen_y1 = screen_y1;
+	o_current->box->screen_upper_x = screen_x1;
+	o_current->box->screen_upper_y = screen_y1;
 
-	WORLDtoSCREEN(w_current, o_current->line_points->x2, 
-		  o_current->line_points->y2, 
+	WORLDtoSCREEN(w_current, o_current->box->lower_x, 
+		  o_current->box->lower_y, 
 		  &screen_x2,
                   &screen_y2);  
 
-	o_current->line_points->screen_x2 = screen_x2;
-	o_current->line_points->screen_y2 = screen_y2;
+	o_current->box->screen_lower_x = screen_x2;
+	o_current->box->screen_lower_y = screen_y2;
 	
-	get_box_bounds(w_current, o_current->line_points, &left, &top, &right, &bottom);
+	get_box_bounds(w_current, o_current->box, &left, &top, &right, &bottom);
 
 	o_current->left = left;
 	o_current->top = top;
@@ -208,11 +203,11 @@ o_box_save(char *buf, OBJECT *object)
 	int color;
 
 		
-	width = abs(object->line_points->x2 - object->line_points->x1); 
-	height = abs(object->line_points->y1 - object->line_points->y2);
+	width = abs(object->box->lower_x - object->box->upper_x); 
+	height = abs(object->box->upper_y - object->box->lower_y);
 
-	x1 = object->line_points->x1;
-	y1 = object->line_points->y1-height; /* move the origin to 0, 0*/
+	x1 = object->box->upper_x;
+	y1 = object->box->upper_y-height; /* move the origin to 0, 0*/
 
 #if DEBUG
 	printf("box: %d %d %d %d\n", x1, y1, width, height);
@@ -241,31 +236,30 @@ o_box_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 	
 
 	/* Do screen coords */
-        object->line_points->screen_x1 = object->line_points->screen_x1 + dx;
-        object->line_points->screen_y1 = object->line_points->screen_y1 + dy;
-        object->line_points->screen_x2 = object->line_points->screen_x2 + dx;
-        object->line_points->screen_y2 = object->line_points->screen_y2 + dy;
+        object->box->screen_upper_x = object->box->screen_upper_x + dx;
+        object->box->screen_upper_y = object->box->screen_upper_y + dy;
+        object->box->screen_lower_x = object->box->screen_lower_x + dx;
+        object->box->screen_lower_y = object->box->screen_lower_y + dy;
 
 	/* printf("box: trans: %d %d\n", dx, dy);*/
 
-	 SCREENtoWORLD(w_current, object->line_points->screen_x1,
-                   object->line_points->screen_y1,
+	 SCREENtoWORLD(w_current, object->box->screen_upper_x,
+                   object->box->screen_upper_y,
                    &x,
                    &y);
 
-        object->line_points->x1 = snap_grid(w_current, x);
-        object->line_points->y1 = snap_grid(w_current, y);
+        object->box->upper_x = snap_grid(w_current, x);
+        object->box->upper_y = snap_grid(w_current, y);
 
-        SCREENtoWORLD(w_current, object->line_points->screen_x2,
-                  object->line_points->screen_y2,
+        SCREENtoWORLD(w_current, object->box->screen_lower_x,
+                  object->box->screen_lower_y,
                   &x,
                   &y);
 
-        object->line_points->x2 = snap_grid(w_current, x);
-        object->line_points->y2 = snap_grid(w_current, y);
+        object->box->lower_x = snap_grid(w_current, x);
+        object->box->lower_y = snap_grid(w_current, y);
 }
 
-/* same as line really */
 void
 o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 {
@@ -277,28 +271,28 @@ o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 
 
         /* Do world coords */
-        object->line_points->x1 = object->line_points->x1 + x1;
-        object->line_points->y1 = object->line_points->y1 + y1;
-        object->line_points->x2 = object->line_points->x2 + x1;
-        object->line_points->y2 = object->line_points->y2 + y1;     
+        object->box->upper_x = object->box->upper_x + x1;
+        object->box->upper_y = object->box->upper_y + y1;
+        object->box->lower_x = object->box->lower_x + x1;
+        object->box->lower_y = object->box->lower_y + y1;     
 
-	WORLDtoSCREEN(w_current, object->line_points->x1, 
-		  object->line_points->y1, 
+	WORLDtoSCREEN(w_current, object->box->upper_x, 
+		  object->box->upper_y, 
 		  &screen_x1,
                   &screen_y1);  
 
-	object->line_points->screen_x1 = screen_x1;
-	object->line_points->screen_y1 = screen_y1;
+	object->box->screen_upper_x = screen_x1;
+	object->box->screen_upper_y = screen_y1;
 
-	WORLDtoSCREEN(w_current, object->line_points->x2, 
-		  object->line_points->y2, 
+	WORLDtoSCREEN(w_current, object->box->lower_x, 
+		  object->box->lower_y, 
 		  &screen_x2,
                   &screen_y2);  
 
-	object->line_points->screen_x2 = screen_x2;
-	object->line_points->screen_y2 = screen_y2;
+	object->box->screen_lower_x = screen_x2;
+	object->box->screen_lower_y = screen_y2;
 
-	get_box_bounds(w_current, object->line_points, &left, &top, &right, &bottom);
+	get_box_bounds(w_current, object->box, &left, &top, &right, &bottom);
 
 	object->left = left;
 	object->top = top;
@@ -321,15 +315,15 @@ o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
         new_obj = o_box_add(w_current, list_tail, OBJ_BOX, color, 0, 0, 0, 0);
 
-	new_obj->line_points->screen_x1 = o_current->line_points->screen_x1;
-        new_obj->line_points->screen_y1 = o_current->line_points->screen_y1;
-        new_obj->line_points->screen_x2 = o_current->line_points->screen_x2;
-        new_obj->line_points->screen_y2 = o_current->line_points->screen_y2;  
+	new_obj->box->screen_upper_x = o_current->box->screen_upper_x;
+        new_obj->box->screen_upper_y = o_current->box->screen_upper_y;
+        new_obj->box->screen_lower_x = o_current->box->screen_lower_x;
+        new_obj->box->screen_lower_y = o_current->box->screen_lower_y;  
 
-	new_obj->line_points->x1 = o_current->line_points->x1;
-        new_obj->line_points->y1 = o_current->line_points->y1;
-        new_obj->line_points->x2 = o_current->line_points->x2;
-        new_obj->line_points->y2 = o_current->line_points->y2;  
+	new_obj->box->upper_x = o_current->box->upper_x;
+        new_obj->box->upper_y = o_current->box->upper_y;
+        new_obj->box->lower_x = o_current->box->lower_x;
+        new_obj->box->lower_y = o_current->box->lower_y;  
 
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
@@ -363,11 +357,11 @@ o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	}
 
 
-	width = abs(o_current->line_points->x2 - o_current->line_points->x1); 
-	height = abs(o_current->line_points->y1 - o_current->line_points->y2);
+	width = abs(o_current->box->lower_x - o_current->box->upper_x); 
+	height = abs(o_current->box->upper_y - o_current->box->lower_y);
 
-	x1 = o_current->line_points->x1;
-	y1 = o_current->line_points->y1-height; /* move the origin to 0, 0*/
+	x1 = o_current->box->upper_x;
+	y1 = o_current->box->upper_y-height; /* move the origin to 0, 0*/
 
 	fprintf(fp, "newpath\n");
 	fprintf(fp, "%d mils %d mils moveto\n", x1-origin_x, y1-origin_y);
@@ -396,10 +390,10 @@ o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	/* assumes screen coords are already calculated correctly */
 #ifdef HAS_LIBGDGEDA
  	gdImageRectangle(current_im_ptr, 
-			o_current->line_points->screen_x1,
-			o_current->line_points->screen_y1,
-			o_current->line_points->screen_x2,
-			o_current->line_points->screen_y2, 
+			o_current->box->screen_upper_x,
+			o_current->box->screen_upper_y,
+			o_current->box->screen_lower_x,
+			o_current->box->screen_lower_y, 
 			color);
 #endif
 
@@ -424,23 +418,23 @@ o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 		  &world_centerx,
                   &world_centery);  
 
-	width = abs(object->line_points->x1 - object->line_points->x2);
-	height = abs(object->line_points->y1 - object->line_points->y2);
+	width = abs(object->box->upper_x - object->box->lower_x);
+	height = abs(object->box->upper_y - object->box->lower_y);
 
 	/* translate object to origin */
 	o_box_translate_world(w_current, -world_centerx, -world_centery, object);
-	rotate_point_90(object->line_points->x1, object->line_points->y1, angle,
+	rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
 			&newx1, &newy1);
 
-	rotate_point_90(object->line_points->x2, object->line_points->y2, angle,
+	rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
 			&newx2, &newy2);
 
 
 
-	object->line_points->x1 = min(newx1,newx2);
-	object->line_points->y1 = max(newy1,newy2);
-	object->line_points->x2 = max(newx1,newx2);
-	object->line_points->y2 = min(newy1,newy2);
+	object->box->upper_x = min(newx1,newx2);
+	object->box->upper_y = max(newy1,newy2);
+	object->box->lower_x = max(newx1,newx2);
+	object->box->lower_y = min(newy1,newy2);
 	
  	o_box_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -458,21 +452,21 @@ o_box_rotate_world(TOPLEVEL *w_current,
 		return;
 		
 
-	width = abs(object->line_points->x1 - object->line_points->x2);
-	height = abs(object->line_points->y1 - object->line_points->y2);
+	width = abs(object->box->upper_x - object->box->lower_x);
+	height = abs(object->box->upper_y - object->box->lower_y);
 
 	/* translate object to origin */
 	o_box_translate_world(w_current, -world_centerx, -world_centery, object);
-	rotate_point_90(object->line_points->x1, object->line_points->y1, angle,
+	rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
 			&newx1, &newy1);
 
-	rotate_point_90(object->line_points->x2, object->line_points->y2, angle,
+	rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
 			&newx2, &newy2);
 
-	object->line_points->x1 = min(newx1,newx2);
-	object->line_points->y1 = max(newy1,newy2);
-	object->line_points->x2 = max(newx1,newx2);
-	object->line_points->y2 = min(newy1,newy2);
+	object->box->upper_x = min(newx1,newx2);
+	object->box->upper_y = max(newy1,newy2);
+	object->box->lower_x = max(newx1,newx2);
+	object->box->lower_y = min(newy1,newy2);
 	
  	o_box_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -490,21 +484,21 @@ o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 		  &world_centerx,
                   &world_centery);  
 
-	width = abs(object->line_points->x1 - object->line_points->x2);
-	height = abs(object->line_points->y1 - object->line_points->y2);
+	width = abs(object->box->upper_x - object->box->lower_x);
+	height = abs(object->box->upper_y - object->box->lower_y);
 
 	/* translate object to origin */
 	o_box_translate_world(w_current, -world_centerx, -world_centery, object);
 
-	newx1 = -object->line_points->x1;
-	newy1 = object->line_points->y1;
-	newx2 = -object->line_points->x2;
-	newy2 = object->line_points->y2;
+	newx1 = -object->box->upper_x;
+	newy1 = object->box->upper_y;
+	newx2 = -object->box->lower_x;
+	newy2 = object->box->lower_y;
 
-	object->line_points->x1 = min(newx1,newx2);
-	object->line_points->y1 = max(newy1,newy2);
-	object->line_points->x2 = max(newx1,newx2);
-	object->line_points->y2 = min(newy1,newy2);
+	object->box->upper_x = min(newx1,newx2);
+	object->box->upper_y = max(newy1,newy2);
+	object->box->lower_x = max(newx1,newx2);
+	object->box->lower_y = min(newy1,newy2);
 	
  	o_box_translate_world(w_current, world_centerx, world_centery, object);
 }
@@ -516,21 +510,21 @@ o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OB
 	int newx2, newy2;
 	int width, height;
 
-	width = abs(object->line_points->x1 - object->line_points->x2);
-	height = abs(object->line_points->y1 - object->line_points->y2);
+	width = abs(object->box->upper_x - object->box->lower_x);
+	height = abs(object->box->upper_y - object->box->lower_y);
 
 	/* translate object to origin */
 	o_box_translate_world(w_current, -world_centerx, -world_centery, object);
 
-	newx1 = -object->line_points->x1;
-	newy1 = object->line_points->y1;
-	newx2 = -object->line_points->x2;
-	newy2 = object->line_points->y2;
+	newx1 = -object->box->upper_x;
+	newy1 = object->box->upper_y;
+	newx2 = -object->box->lower_x;
+	newy2 = object->box->lower_y;
 
-	object->line_points->x1 = min(newx1,newx2);
-	object->line_points->y1 = max(newy1,newy2);
-	object->line_points->x2 = max(newx1,newx2);
-	object->line_points->y2 = min(newy1,newy2);
+	object->box->upper_x = min(newx1,newx2);
+	object->box->upper_y = max(newy1,newy2);
+	object->box->lower_x = max(newx1,newx2);
+	object->box->lower_y = min(newy1,newy2);
 	
  	o_box_translate_world(w_current, world_centerx, world_centery, object);
 }

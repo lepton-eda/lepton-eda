@@ -1916,7 +1916,9 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
 			/* if above is null, then look inside symbol */
 			if (attrib == NULL) {
-				attrib = o_attrib_search_name(object->complex,
+				attrib = o_attrib_search_name(object->
+							      complex->
+	 						      prim_objs,
 							      "source", 
 							      count);
 				looking_inside = TRUE;
@@ -2026,7 +2028,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 					printf("looking inside\n");
 #endif
 					attrib = o_attrib_search_name(
-							     object->complex,
+							     object->complex->
+							     prim_objs,
 							     "source",
 							     count);
 				}
@@ -2378,10 +2381,10 @@ DEFINE_I_CALLBACK(misc)
 		if (attrib_objects) {
 			while(attrib_objects[i] != NULL) {
 				o_attrib_get_name_value(
-						attrib_objects[i]->text_string, 
+						attrib_objects[i]->text->string, 
 						name, value);
                 		printf("%d : %s\n", i, 
-					attrib_objects[i]->text_string);
+					attrib_objects[i]->text->string);
 				printf("   name: %s\n", name);
 				printf("   value: %s\n", value);
                 		i++;
@@ -2406,7 +2409,7 @@ DEFINE_I_CALLBACK(misc)
 
 
  	/* for debugging purposes */
-	printf("%d %s %s\n", object->sid, object->name, object->text_string);
+	printf("%d %s %s\n", object->sid, object->name, object->text->string);
 	/*o_conn_print_hash(w_current->page_current->conn_table);*/
 	/* o_text_print_set();*/
 #endif

@@ -57,10 +57,10 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 #if DEBUG
 			printf("slot=%s\n", slot_value);
 			printf("text string : %s\n",
-			       slot_text_object->text_string);
+			       slot_text_object->text->string);
 #endif
 			slot_edit_dialog(w_current,
-					 slot_text_object->text_string);
+					 slot_text_object->text->string);
 		} else {
 			/* we didn't find an attached slot=? attribute */
 
@@ -146,11 +146,11 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 		slot_value = o_attrib_search_slot(object, &slot_text_object);
 
 		if (slot_value) {
-			if (slot_text_object->text_string) {
-				free(slot_text_object->text_string);
+			if (slot_text_object->text->string) {
+				free(slot_text_object->text->string);
 			}
 
-			slot_text_object->text_string = u_basic_strdup(string);
+			slot_text_object->text->string = u_basic_strdup(string);
 
 			temp = slot_text_object;
 
@@ -176,7 +176,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 					w_current,
 					w_current->page_current->object_tail,
 					OBJ_TEXT, w_current->text_color,
-					object->x, object->y,
+					object->text->x, object->text->y,
 					LOWER_LEFT,
 					0, /* zero is angle */
 					string,

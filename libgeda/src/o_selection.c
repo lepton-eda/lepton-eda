@@ -109,17 +109,6 @@ o_selection_add(SELECTION *head, OBJECT *o_selected)
 		fprintf(stderr, "Got NULL passed to o_selection_new\n");
 	}
 
-
-#if 0
-/*o_selected->selected = TRUE;*/
-/*o_selected->saved_color = o_selected->color;*/
-/*o_selected->color = SELECT_COLOR; */
-/* write a function to do this */
-/*if (o_selected->type == OBJ_COMPLEX || o_selected->type == OBJ_TEXT) {*/
-/*o_complex_set_color(o_selected->complex, SELECT_COLOR);*/
-/*}*/
-#endif
-	/* replaces above */
 	o_selection_select(o_selected, SELECT_COLOR);
 
 	if (head == NULL) {
@@ -161,15 +150,6 @@ o_selection_remove(SELECTION *head, OBJECT *o_selected)
 			else
 				s_current->prev = NULL;
 
-#if 0
-/* write a function to do this */
-/*s_current->selected_object->selected = FALSE;*/
-/*s_current->selected_object->color = */
-/*s_current->selected_object->saved_color;*/
-/*s_current->selected_object->saved_color = -1;*/
-/*write a function to do this */
-#endif
-			/* this function replaces above */
 			o_selection_unselect(s_current->selected_object);
 
 			s_current->selected_object = NULL;
@@ -193,13 +173,6 @@ o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head)
 		if (s_current->selected_object != NULL) {
 			s_prev = s_current->prev;	
 
-#if 0
-/*s_current->selected_object->selected = FALSE;*/
-/*s_current->selected_object->color = */
-/*s_current->selected_object->saved_color; */
-/*s_current->selected_object->saved_color = -1;*/
-#endif
-			/* this function replaces above */
 			o_selection_unselect(s_current->selected_object);
 
 			o_redraw_single(w_current,  
@@ -270,8 +243,10 @@ o_selection_select(OBJECT *object, int color)
 	object->selected = TRUE;
 	object->saved_color = object->color;
 	object->color = color;
-        if (object->type == OBJ_COMPLEX || object->type == OBJ_TEXT) {
-        	o_complex_set_color_save(object->complex, color);
+        if (object->type == OBJ_COMPLEX) { 
+        	o_complex_set_color_save(object->complex->prim_objs, color);
+	} else if (object->type == OBJ_TEXT) {
+        	o_complex_set_color_save(object->text->prim_objs, color);
 	}
 }
 
@@ -282,9 +257,12 @@ o_selection_unselect(OBJECT *object)
 {
 	object->selected = FALSE;
 	object->color = object->saved_color;
-        if (object->type == OBJ_COMPLEX || object->type == OBJ_TEXT) {
-        	o_complex_unset_color(object->complex);
+        if (object->type == OBJ_COMPLEX) { 
+        	o_complex_unset_color(object->complex->prim_objs);
+	} else if (object->type == OBJ_TEXT) {
+        	o_complex_unset_color(object->text->prim_objs);
 	}
+
 	object->saved_color = -1;
 }
 

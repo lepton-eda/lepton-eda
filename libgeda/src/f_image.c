@@ -80,7 +80,7 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 				case(OBJ_COMPLEX):
 
 					f_image_write_objects(w_current, 
-						o_current->complex,
+						o_current->complex->prim_objs,
 						origin_x, origin_y, scale, color_mode);
 				break;
 
@@ -89,7 +89,8 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 			
 					/*if (w_current->text_output == VECTOR_FONTS) {	*/
 						f_image_write_objects(w_current, 
-							o_current->complex,
+							o_current->text->
+							prim_objs,
 							origin_x, origin_y, scale, color_mode);
 					/*} else {*/
 #if 0

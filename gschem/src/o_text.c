@@ -37,6 +37,27 @@
 #define NUM_CHARS 255
 
 void
+o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
+{
+	int left, right, top, bottom;
+
+	o_redraw(w_current, o_current->text->prim_objs);
+
+	get_complex_bounds(w_current, o_current->text->prim_objs,
+			   &left, &top, &right, &bottom);
+	o_current->left   = left;
+	o_current->top    = top;
+	o_current->right  = right;
+	o_current->bottom = bottom;
+
+	WORLDtoSCREEN(w_current,
+		      o_current->text->x,
+		      o_current->text->y,
+		      &o_current->text->screen_x,
+		      &o_current->text->screen_y);
+}
+
+void
 o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
@@ -48,16 +69,16 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
 	if (!w_current->fast_mousepan || !w_current->doing_pan) {
-		o_complex_draw(w_current, o_current);
+		o_text_draw_lowlevel(w_current, o_current);
 	} else {
 		if (w_current->doing_pan) {
-			o_complex_recalc(w_current, o_current);
-		
+			o_text_recalc(w_current, o_current);
+
 			/* text is too small so go through and draw a line in
 	 		   it's place */
 	
-			screen_x1 = o_current->screen_x;
-			screen_y1 = o_current->screen_y;
+			screen_x1 = o_current->text->screen_x;
+			screen_y1 = o_current->text->screen_y;
 	
 			gdk_gc_set_foreground(w_current->gc,
 					      x_get_color(o_current->color));
@@ -65,22 +86,22 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #if 0 /* new way, but doesn't always look so good */	
 			length = SCREENabs(w_current, 
 					   o_text_width(w_current, 
-					   o_current->text_string,
-					   o_current->text_size/2)); 
+					   o_current->text->string,
+					   o_current->text->size/2)); 
 #endif
 
 			length = SCREENabs(w_current,
-					   o_current->displayed_text_len*10*
-					   o_current->text_size);
+					   o_current->text->displayed_length*10*
+					   o_current->text->size);
 
 #if DEBUG
 			printf("%d %d %d\n",
-			       o_current->displayed_text_len,
-			       o_current->displayed_text_len * 20 *
-			       o_current->text_size, length);
+			       o_current->text->displayed_length,
+			       o_current->text->displayed_length * 20 *
+			       o_current->text->size, length);
 #endif
 
-			switch(o_current->angle) {
+			switch(o_current->text->angle) {
 			case(0):
 				gdk_draw_line(w_current->window,
 					      w_current->gc,
@@ -128,8 +149,8 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	small_dist = SCREENabs(w_current, 10);
 
-	screen_x1 = o_current->screen_x;
-	screen_y1 = o_current->screen_y;
+	screen_x1 = o_current->text->screen_x;
+	screen_y1 = o_current->text->screen_y;
 
 
    	if (w_current->override_color != -1 ) {
@@ -186,15 +207,15 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	/* always display text which is 12 or larger */
 	if ((w_current->page_current->zoom_factor >
 	     w_current->text_display_zoomfactor) ||
-	    o_current->text_size >= 12 ||
+	    o_current->text->size >= 12 ||
 	    w_current->text_feedback == ALWAYS) {
-		o_complex_draw_xor(w_current, dx, dy, o_current->complex);
+		o_complex_draw_xor(w_current, dx, dy, o_current->text->prim_objs);
 	} else {
 		/* text is too small so go through and draw a line in
 	 	   it's place */
 
-		screen_x1 = o_current->screen_x;
-		screen_y1 = o_current->screen_y;
+		screen_x1 = o_current->text->screen_x;
+		screen_y1 = o_current->text->screen_y;
 
 	        if (o_current->saved_color != -1) {
        	        	color = o_current->saved_color;
@@ -206,24 +227,24 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 				      x_get_darkcolor(color));
 
 		length = SCREENabs(w_current,
-				   o_current->displayed_text_len*10*
-				   o_current->text_size);
+				   o_current->text->displayed_length*10*
+				   o_current->text->size);
 
 #if 0 /* new way, but doesn't look so good */
 		length = SCREENabs(w_current, o_text_width(w_current, 
-					   o_current->text_string,
-					   o_current->text_size/2)); 
+					   o_current->text->string,
+					   o_current->text->size/2)); 
 #endif
 
 
 #if DEBUG
 		printf("%d %d %d\n",
-		       o_current->displayed_text_len,
-		       o_current->displayed_text_len * 20 *
-		       o_current->text_size, length);
+		       o_current->text->displayed_length,
+		       o_current->text->displayed_length * 20 *
+		       o_current->text->size, length);
 #endif
 
-		switch(o_current->angle) {
+		switch(o_current->text->angle) {
 		case(0):
 			gdk_draw_line(w_current->window,
 				      w_current->outline_xor_gc,
@@ -420,8 +441,8 @@ o_text_edit(TOPLEVEL *w_current, OBJECT *o_current)
 	/* you need to check to make sure only one object is selected */
 	/* no actually this is okay... not here in o_edit */
 	text_edit_dialog(w_current,
-			 o_current->text_string, o_current->text_size,
-			 o_current->text_alignment);
+			 o_current->text->string, o_current->text->size,
+			 o_current->text->alignment);
 }
 
 void
@@ -433,22 +454,22 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
 	object = o_select_return_first_object(w_current);
 
 	if (object != NULL) {
-		if (object->text_string) {
-			free(object->text_string);
+		if (object->text->string) {
+			free(object->text->string);
 		}
 
 		/* Kazu <kazu@seul.org> on August 5, 1999 - I am not
                    sure if strlen(string) == len. If so, activate the
                    second part of this "if".*/
 #if 1
-		object->text_string = malloc(sizeof(char) * len + 1);
-		strcpy(object->text_string, string);
+		object->text->string = malloc(sizeof(char) * len + 1);
+		strcpy(object->text->string, string);
 #else
-		object->text_string = u_basic_strdup(string);
+		object->text->string = u_basic_strdup(string);
 #endif
 
-		object->text_size = text_size;
-		object->text_alignment = text_alignment;
+		object->text->size = text_size;
+		object->text->alignment = text_alignment;
 		
 		o_text_erase(w_current, object);
 		o_text_recreate(w_current, object);
@@ -481,11 +502,11 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 	o_text_erase(w_current, object);
 
 	/* second change the real object */
-	if (object->text_string) {
-		free(object->text_string);
+	if (object->text->string) {
+		free(object->text->string);
 	}
 
-	object->text_string = u_basic_strdup(string);
+	object->text->string = u_basic_strdup(string);
 	object->visibility = visibility;
 	object->show_name_value = show;
 	o_text_recreate(w_current, object);

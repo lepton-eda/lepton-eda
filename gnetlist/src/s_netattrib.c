@@ -166,7 +166,8 @@ s_netattrib_handle(TOPLEVEL *pr_current, OBJECT *o_current,
 	int counter=0;
 
 	/* for now just look inside the component */
-        value = o_attrib_search_name(o_current->complex, "net", counter);
+        value = o_attrib_search_name(o_current->complex->prim_objs, 
+				     "net", counter);
 	while(value != NULL) {
         	if (value) {
 			s_netattrib_create_pins(pr_current, o_current, 
@@ -174,7 +175,8 @@ s_netattrib_handle(TOPLEVEL *pr_current, OBJECT *o_current,
 			free(value);
         	}
 		counter++;
-        	value = o_attrib_search_name(o_current->complex, "net", counter);
+        	value = o_attrib_search_name(o_current->complex->prim_objs, 
+					     "net", counter);
 	}
 
 	
@@ -214,7 +216,8 @@ s_netattrib_net_search(OBJECT *o_current, char *wanted_pin)
 	int counter=0;
 
 	/* for now just look inside the component */
-        value = o_attrib_search_name(o_current->complex, "net", counter);
+        value = o_attrib_search_name(o_current->complex->prim_objs,
+				     "net", counter);
 	while(value != NULL) {
         	if (value) {
 			char_ptr = strchr(value, ':');
@@ -243,7 +246,8 @@ printf("looking at: %s\n", current_pin);
 			free(value);
         	}
 		counter++;
-        	value = o_attrib_search_name(o_current->complex, "net", counter);
+        	value = o_attrib_search_name(o_current->complex->prim_objs, 
+					     "net", counter);
 	}
 
 	

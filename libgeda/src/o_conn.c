@@ -533,32 +533,32 @@ o_conn_find_midpoint(OBJECT *object_list, int x, int y)
 			case(OBJ_NET):
 			case(OBJ_BUS):
 
-				min_y = min(o_current->line_points->y1, 
-					    o_current->line_points->y2);
-                                max_y = max(o_current->line_points->y1, 
-	 				    o_current->line_points->y2);
+				min_y = min(o_current->line->y[0], 
+					    o_current->line->y[1]);
+                                max_y = max(o_current->line->y[0], 
+	 				    o_current->line->y[1]);
 
 				/* vertical */
-                                if ( (o_current->line_points->x1 == x) &&
+                                if ( (o_current->line->x[0] == x) &&
                                         (y > min_y) && (y < max_y) &&
-                                        (o_current->line_points->x1 ==
-                                                o_current->line_points->x2) ) {
+                                        (o_current->line->x[0] ==
+                                                o_current->line->x[1]) ) {
 #if DEBUG
 					printf("Found vertical point\n");
 #endif
 					return(o_current);
                                 }
 
-				min_x = min(o_current->line_points->x1, 
-					    o_current->line_points->x2);
-                                max_x = max(o_current->line_points->x1, 
-					    o_current->line_points->x2);
+				min_x = min(o_current->line->x[0], 
+					    o_current->line->x[1]);
+                                max_x = max(o_current->line->x[0], 
+					    o_current->line->x[1]);
 
 				/* horizontal */
-				if ( (o_current->line_points->y1 == y) &&
+				if ( (o_current->line->y[0] == y) &&
                                         (x > min_x) && (x < max_x) &&
-                                        (o_current->line_points->y1 ==
-                                                o_current->line_points->y2) ) {
+                                        (o_current->line->y[0] ==
+                                                o_current->line->y[1]) ) {
 #if DEBUG
 					printf("Found horizontal point\n");
 #endif
@@ -919,38 +919,39 @@ o_conn_update(PAGE *p_current, OBJECT *o_current)
 		case(OBJ_NET):
 
 			o_conn_update_net(p_current, o_current, 
-					  o_current->line_points->x1,
-					  o_current->line_points->y1);
+					  o_current->line->x[0],
+					  o_current->line->y[0]);
 
 			o_conn_update_net(p_current, o_current, 
-					  o_current->line_points->x2,
-					  o_current->line_points->y2);
+					  o_current->line->x[1],
+					  o_current->line->y[1]);
 		break;
 
 		case(OBJ_BUS):
 			o_conn_update_bus(p_current, o_current, 
-					  o_current->line_points->x1,
-					  o_current->line_points->y1);
+					  o_current->line->x[0],
+					  o_current->line->y[0]);
 
 			o_conn_update_bus(p_current, o_current, 
-					  o_current->line_points->x2,
-					  o_current->line_points->y2);
+					  o_current->line->x[1],
+					  o_current->line->y[1]);
 		break;
 
 		case(OBJ_PIN):
 			o_conn_update_pin(p_current, o_current, 
-					  o_current->line_points->x1,
-					  o_current->line_points->y1);
+					  o_current->line->x[0],
+					  o_current->line->y[0]);
 
 			o_conn_update_pin(p_current, o_current, 
-					  o_current->line_points->x2,
-					  o_current->line_points->y2);
+					  o_current->line->x[1],
+					  o_current->line->y[1]);
 
 		break;
 
 		case(OBJ_COMPLEX):
 
-			o_conn_update(p_current, o_current->complex);
+			o_conn_update(p_current, 	
+				      o_current->complex->prim_objs);
 		break;
 	}
 }
@@ -976,7 +977,8 @@ o_conn_update_all(PAGE *p_current, OBJECT *object_list)
 
 			case(OBJ_COMPLEX):
 
-				o_conn_update_all(p_current, o_current->complex);
+				o_conn_update_all(p_current, 
+						o_current->complex->prim_objs);
 			break;
 		}
 
@@ -1105,8 +1107,8 @@ o_conn_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 
 	orient = o_bus_orientation(bus_object);	
 
-	bus_wx = bus_x = bus_object->line_points->x1;
-	bus_wy = bus_y = bus_object->line_points->y1;
+	bus_wx = bus_x = bus_object->line->x[0];
+	bus_wy = bus_y = bus_object->line->y[0];
 
 	switch(orient) {
 
@@ -1189,11 +1191,11 @@ o_conn_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 
 	orient = o_bus_orientation(bus_object);	
 
-	bus_wx = bus_object->line_points->x1;
-	bus_wy = bus_object->line_points->y1;
+	bus_wx = bus_object->line->x[0];
+	bus_wy = bus_object->line->y[0];
 
-	bus_x = bus_object->line_points->screen_x1;
-	bus_y = bus_object->line_points->screen_y1; 
+	bus_x = bus_object->line->screen_x[0];
+	bus_y = bus_object->line->screen_y[0]; 
 
 	switch(orient) {
 

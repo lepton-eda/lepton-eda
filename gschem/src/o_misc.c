@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <libgeda/libgeda.h>
 
@@ -89,12 +90,12 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 		break;
 
 	case(OBJ_TEXT):
-		if(strchr(o_current->text_string,'=')) {
+		if(strchr(o_current->text->string,'=')) {
 
 			/* now really make sure it's an attribute by 
                          * checking that there are NO spaces around the ='s 
                          */
-			equal_ptr = strchr(o_current->text_string, '=');
+			equal_ptr = strchr(o_current->text->string, '=');
 
 			/* there is a possiblity for core dump yes? */
 			/* by exceeding the size of the text_string? */
@@ -285,7 +286,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				o_complex_erase(w_current, object);
 
                                 w_current->ADDING_SEL=1; /* NEWSEL: needed? */
-				new_angle = (object->angle + 90) % 360;
+				new_angle = (object->complex->angle + 90) % 360;
 				o_complex_rotate(w_current, centerx, centery,
 					         new_angle, 90, object);
 				w_current->ADDING_SEL = 0; /* NEWSEL: needed? */
@@ -297,7 +298,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				/* erase the current selection */
 				o_text_erase(w_current, object);
 
-				new_angle = (object->angle + 90) % 360;
+				new_angle = (object->text->angle + 90) % 360;
 				o_text_rotate(w_current, centerx, centery,
 				              new_angle, 90, object);
 
@@ -516,8 +517,8 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				} else {
 					/* component is not embedded */
 					/* crude hack */
-					if (object->angle == 90 || 
-					    object->angle == 270) {
+					if (object->complex->angle == 90 || 
+					    object->complex->angle == 270) {
 
 						/*erase the current selection*/
                	        			o_complex_erase(w_current, 
@@ -621,7 +622,7 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 			if (o_current->visibility == INVISIBLE) {
 				o_current->visibility = VISIBLE;
 
-				if (o_current->complex == NULL) {
+				if (o_current->text->prim_objs == NULL) {
 					o_text_recreate(w_current, o_current);
 				}
 

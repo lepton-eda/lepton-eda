@@ -87,7 +87,8 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 								
 							o_save_embedded(
 							   w_current,
-							   o_current->complex,
+							   o_current->
+							   complex->prim_objs,
 							   fp);
 
 						     fprintf(fp, "]\n");
@@ -116,8 +117,10 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 				fprintf(fp, "%s\n", out);
 
 				/* save those attributes */
-				if (o_current->attribs != NULL && o_current->attribs->next != NULL) {
+				if (o_current->attribs != NULL) {
+				   if (o_current->attribs->next != NULL) {
 					o_save_attribs(fp, o_current->attribs->next);
+				   }
 				}
 
 			}
@@ -198,7 +201,8 @@ o_save(TOPLEVEL *w_current, char *filename)
 								
 							o_save_embedded(
 							   w_current,
-							   o_current->complex,
+							   o_current->
+							   complex->prim_objs,
 							   fp);
 
 						     fprintf(fp, "]\n");
@@ -231,8 +235,10 @@ o_save(TOPLEVEL *w_current, char *filename)
 				}
 
 				/* save those attributes */
-				if (o_current->attribs != NULL && o_current->attribs->next != NULL) {
+				if (o_current->attribs != NULL) {
+				  if (o_current->attribs->next != NULL) {
 					o_save_attribs(fp, o_current->attribs->next);
+				  }
 				}
 
 			}
@@ -333,7 +339,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
 			case(START_EMBEDDED): 
 				object_list_save = object_list;
-				object_list = object_list_save->complex;
+				object_list = object_list_save->complex->
+								prim_objs;
 				
 				temp_tail =
 					w_current->page_current->object_tail;

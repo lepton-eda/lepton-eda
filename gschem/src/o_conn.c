@@ -235,8 +235,8 @@ o_conn_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 
 	/* be sure to carefully free this key only when it's not
 	 * inserted into the list */
-	key = o_conn_return_key(object->line_points->x1,
-				object->line_points->y1);
+	key = o_conn_return_key(object->line->x[0],
+				object->line->y[0]);
 
 	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
@@ -254,8 +254,8 @@ o_conn_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 
 	/* be sure to carefully free this key only when it's not
 	 * inserted into the list */
-	key = o_conn_return_key(object->line_points->x2,
-				object->line_points->y2);
+	key = o_conn_return_key(object->line->x[1],
+				object->line->y[1]);
 
 	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
                                         key);
@@ -295,7 +295,7 @@ o_conn_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 			break;
 
 		case(OBJ_COMPLEX):
-			o_conn_draw_all(w_current, o_current->complex);
+			o_conn_draw_all(w_current, o_current->complex->prim_objs);
 			break;
 		}
 		o_current = o_current->next;
@@ -318,7 +318,7 @@ o_conn_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
 			break;
 
 		case(OBJ_COMPLEX):
-			o_conn_erase_all(w_current, o_current->complex);
+			o_conn_erase_all(w_current, o_current->complex->prim_objs);
 			break;
 		}
 		o_current = o_current->next;
@@ -347,23 +347,19 @@ o_conn_find_closest(OBJECT *object_list, int x, int y,
 		switch(o_current->type) {
 			case(OBJ_PIN):
 			case(OBJ_NET):
-				if (o_current->line_points) {
+				if (o_current->line) {
 					temp_dist1 = dist(
 							o_current->
-						    	line_points->
-							screen_x1,
+						    	line->screen_x[0],
 							o_current->
-							line_points->
-							screen_y1,
+							line->screen_y[0],
 							x, y);
 	
 					temp_dist2 = dist(
 							o_current->
-							line_points->
-							screen_x2,
+							line->screen_x[1],
 							o_current->
-							line_points->
-							screen_y2,
+							line->screen_y[1],
 							x, y);
 
 					if (temp_dist1 < temp_dist2) {
@@ -422,11 +418,11 @@ o_conn_find_closest(OBJECT *object_list, int x, int y,
 		if (which_point == 1) {
 #if 0
 			if (new_x) {
-				*new_x = closest->line_points->screen_x1;
+				*new_x = closest->line->screen_x[0];
 			}
 
 			if (new_y) {
-				*new_y = closest->line_points->screen_y1;
+				*new_y = closest->line->screen_y[0];
 
 			}
 #endif
@@ -438,11 +434,11 @@ o_conn_find_closest(OBJECT *object_list, int x, int y,
 		} else if (which_point == 2) {
 #if 0
 			if (new_x) {
-				*new_x = closest->line_points->screen_x2;
+				*new_x = closest->line->screen_x[1];
 			}
 
 			if (new_y) {
-				*new_y = closest->line_points->screen_y2;
+				*new_y = closest->line->screen_y[1];
 
 			}
 #endif
@@ -486,11 +482,11 @@ o_conn_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object,
 
 	orient = o_bus_orientation(bus_object);	
 
-	bus_x = bus_object->line_points->screen_x1;
-	bus_y = bus_object->line_points->screen_y1;
+	bus_x = bus_object->line->screen_x[0];
+	bus_y = bus_object->line->screen_y[0];
 
-	bus_wx = bus_object->line_points->x1;
-	bus_wy = bus_object->line_points->y1;
+	bus_wx = bus_object->line->x[0];
+	bus_wy = bus_object->line->y[0];
 
 	switch(orient) {
 

@@ -57,13 +57,17 @@ g_print_attrib_smob(SCM attrib_smob, SCM port, scm_print_state *pstate)
 {
 	struct st_attrib_smob *attribute = 
 		(struct st_attrib_smob *)SCM_CDR(attrib_smob);
-	
+
+	/* I don't think this is valid, because C does not support this sort
+	 * of evaluation, it will eval ALL the statements unlike pascal which
+	 * will stop after the first FALSE -Ales */	
 	if (attribute &&
 	    attribute->attribute &&
 	    attribute->attribute->object &&
-	    attribute->attribute->object->text_string ) {
+	    attribute->attribute->object->text &&
+	    attribute->attribute->object->text->string ) {
 		scm_puts("#<attribute ", port);
-		scm_display(gh_str02scm(attribute->attribute->object->text_string), port);
+		scm_display(gh_str02scm(attribute->attribute->object->text->string), port);
 		scm_puts(">", port);
 	}
 	
@@ -106,11 +110,11 @@ g_get_attrib_name_value(SCM attrib_smob)
 	if (attribute &&
 	    attribute->attribute &&
 	    attribute->attribute->object &&
-	    attribute->attribute->object->text_string ) {
-		name  = malloc(strlen(attribute->attribute->object->text_string));
-		value = malloc(strlen(attribute->attribute->object->text_string));
+	    attribute->attribute->object->text->string ) {
+		name  = malloc(strlen(attribute->attribute->object->text->string));
+		value = malloc(strlen(attribute->attribute->object->text->string));
 		o_attrib_get_name_value(
-			attribute->attribute->object->text_string, 
+			attribute->attribute->object->text->string, 
 			name, value );
 		returned = gh_cons( gh_str02scm(name), gh_str02scm(value) );
 		free(name);
@@ -140,12 +144,13 @@ g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 	if (attribute &&
 	    attribute->attribute &&
 	    attribute->attribute->object &&
-	    attribute->attribute->object->text_string ) {
-		name  = malloc(strlen(attribute->attribute->object->text_string));
-		old_value = malloc(strlen(attribute->attribute->object->text_string));
+	    attribute->attribute->object->text &&
+	    attribute->attribute->object->text->string ) {
+		name  = malloc(strlen(attribute->attribute->object->text->string));
+		old_value = malloc(strlen(attribute->attribute->object->text->string));
 
 		o_attrib_get_name_value(
-			attribute->attribute->object->text_string, 
+			attribute->attribute->object->text->string, 
 			name, old_value );
 
 		*new_string = u_basic_strdup_multiple(name, "=", value, NULL);

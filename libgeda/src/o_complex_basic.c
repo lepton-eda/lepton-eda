@@ -60,21 +60,21 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
 			case(OBJ_LINE):
-					get_line_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_line_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_NET):
 					/* same as a line (diff name)*/
-					get_net_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_net_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_BUS):
 					/* same as a line (diff name)*/
-					get_bus_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_bus_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 	
 			case(OBJ_BOX):
-					get_box_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_CIRCLE):
@@ -83,7 +83,7 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 
 			case(OBJ_COMPLEX):
 					/* recursive objects ?*/
-					get_complex_bounds(w_current, o_current->complex, &rleft, &rtop, &rright, &rbottom);
+					get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_TEXT):
@@ -95,7 +95,7 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 			break;
 
 			case(OBJ_PIN):
-					get_pin_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 					break;
 
 /* experimental mod */
@@ -153,21 +153,21 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
 
 		switch(o_current->type) {
 			case(OBJ_LINE):
-					get_line_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_line_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_NET):
 					/* same as a line (diff name)*/
-					get_net_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_net_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_BUS):
 					/* same as a line (diff name)*/
-					get_bus_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_bus_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 	
 			case(OBJ_BOX):
-					get_box_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_CIRCLE):
@@ -176,7 +176,7 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
 
 			case(OBJ_COMPLEX):
 					/* recursive objects ?*/
-					get_complex_bounds(w_current, o_current->complex, &rleft, &rtop, &rright, &rbottom);
+					get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_TEXT):
@@ -188,7 +188,7 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
 			break;
 
 			case(OBJ_PIN):
-					get_pin_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 					break;
 
 /* experimental mod */
@@ -237,22 +237,22 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
 			case(OBJ_LINE):
-					world_get_line_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					world_get_line_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_NET):
 					/* same as a line (diff name)*/
-					world_get_net_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					world_get_net_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_BUS):
 					/* same as a line (diff name)*/
-					world_get_bus_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					world_get_bus_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 	
 	
 			case(OBJ_BOX):
-					world_get_box_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					world_get_box_bounds(w_current, o_current->box, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_CIRCLE):
@@ -261,7 +261,7 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 
 			case(OBJ_COMPLEX):
 					/* recursive objects ?*/
-					world_get_complex_bounds(w_current, o_current->complex, &rleft, &rtop, &rright, &rbottom);
+					world_get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 			case(OBJ_TEXT):
@@ -273,7 +273,7 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 			break;
 
 			case(OBJ_PIN):
-					world_get_pin_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					world_get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 			break;
 
 /* experimental mod */
@@ -332,9 +332,9 @@ o_complex_is_eligible_attribute (OBJECT *object, int promote_invisible)
   }
 
   if (object->type==OBJ_TEXT && !object->attribute && !object->attached_to) { 
-    ptr=strchr(object->text_string,'=');
+    ptr=strchr(object->text->string,'=');
     if (ptr && ptr[1]!='\0' && ptr[1]!=' ' && 
-         strncmp(object->text_string,"device=",7)!=0) {
+         strncmp(object->text->string,"device=",7)!=0) {
       return 1;
     }
   }
@@ -346,7 +346,7 @@ OBJECT *
 o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable, int attribute_promotion)
 {
 	OBJECT *new_node=NULL;
-	OBJECT *complex=NULL;
+	OBJECT *prim_objs=NULL;
 	OBJECT *temp_tail=NULL;
 	OBJECT *temp_parent=NULL;
 	
@@ -354,11 +354,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 
 	new_node = s_basic_init_object("complex");
 	new_node->type = type;
-	new_node->x = x;
-	new_node->y = y;
 
-	WORLDtoSCREEN(w_current, x, y, 
-			&new_node->screen_x, &new_node->screen_y);    
 	
 
 	new_node->complex_basename = strdup(basename);
@@ -366,8 +362,16 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 
 	new_node->color = color;
 	
-	new_node->angle = angle;
-	new_node->mirror = mirror;
+	new_node->complex = (COMPLEX *) malloc(sizeof(COMPLEX));
+	
+	new_node->complex->angle = angle;
+	new_node->complex->mirror = mirror;
+
+	new_node->complex->x = x;
+	new_node->complex->y = y;
+	WORLDtoSCREEN(w_current, x, y, 
+		      &new_node->complex->screen_x, 
+		      &new_node->complex->screen_y);    
 
 	/* TODO: questionable caste? */
 	new_node->draw_func = (void *) complex_draw_func;  
@@ -379,10 +383,10 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	}
 
 	/* this was at the beginning and p_complex was = to complex */
-	complex = (OBJECT *) add_head();
+	prim_objs = (OBJECT *) add_head();
 	
 	/* set the parent field now */
-	complex->complex_parent = new_node;
+	prim_objs->complex_parent = new_node;
 
 	/* is the bit with the temp and object_tail needed? */
 	/* I don't like this at all hack */
@@ -392,7 +396,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	/* on the main list */
 	temp_tail = w_current->page_current->object_tail;
 	temp_parent = w_current->page_current->object_parent;	
-	w_current->page_current->object_parent = complex;
+	w_current->page_current->object_parent = prim_objs;
 	/* reason this works is because it has a head, see add_head above */
 
 	/* check for validity */
@@ -401,14 +405,14 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	if (access(filename, R_OK)) {
 		fprintf(stderr, "Could not open [%s]\n", filename); 
 	} else {
-		o_read(w_current, complex, filename);
+		o_read(w_current, prim_objs, filename);
 	}
 
 	if (w_current->attribute_promotion) { /* controlled through rc file */
 
 	  OBJECT *tmp,*next;
 
-	  for (tmp=complex->next;tmp;tmp=next) {
+	  for (tmp=prim_objs->next;tmp;tmp=next) {
 
 	    next=tmp->next;
 
@@ -453,7 +457,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	w_current->page_current->object_parent = temp_parent;
 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-	object_list->complex = complex;
+	object_list->complex->prim_objs = prim_objs;
 
 	if (mirror) {
 		o_complex_mirror_lowlevel(w_current, x, y, object_list);
@@ -461,7 +465,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 
 	o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list);
 
-	o_complex_world_translate(w_current, x, y, complex);
+	o_complex_world_translate(w_current, x, y, prim_objs);
 	
 	return(object_list);
 }
@@ -469,22 +473,26 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 OBJECT *
 o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable)
 {
-	OBJECT *complex=NULL;
+	OBJECT *prim_objs=NULL;
 	OBJECT *new_node=NULL;
 
 	new_node = s_basic_init_object("complex");
 	new_node->type = type;
-	new_node->x = x;
-	new_node->y = y;
 
+	new_node->complex = (COMPLEX *) malloc(sizeof(COMPLEX));
+	new_node->complex->x = x;
+	new_node->complex->y = y;
 	WORLDtoSCREEN(w_current, x, y, 
-			&new_node->screen_x, &new_node->screen_y);    
+			&new_node->complex->screen_x, 
+			&new_node->complex->screen_y);    
+
+	new_node->complex->angle = angle;
+	new_node->complex->mirror = -1;
 	
 	new_node->complex_basename = strdup(basename);
 	new_node->complex_clib = strdup(clib);
 
 	new_node->color = color;
-	new_node->angle = angle;
 
 	/* TODO: questionable cast */
 	new_node->draw_func = (void *) complex_draw_func;  
@@ -499,11 +507,11 @@ o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
 	/* this was at the beginning and p_complex was = to complex */
-	complex = (OBJECT *) add_head();
-	object_list->complex = complex;
+	prim_objs = (OBJECT *) add_head();
+	object_list->complex->prim_objs = prim_objs;
 	
 	/* set the parent field now */
-	complex->complex_parent = object_list;
+	prim_objs->complex_parent = object_list;
 
 	/* don't have to translate/rotate/mirror here at all since the */
 	/* object is in place */
@@ -519,16 +527,17 @@ o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 	/* libhack */
 	/* o_recalc(w_current, o_current->complex);*/
 
-	get_complex_bounds(w_current, o_current->complex, &left, &top, &right, &bottom);
+	get_complex_bounds(w_current, o_current->complex->prim_objs, &left, &top, &right, &bottom);
 	o_current->left = left;
 	o_current->top = top;
 	o_current->right = right;
 	o_current->bottom = bottom;
 
-	WORLDtoSCREEN(w_current, o_current->x,
-                  o_current->y,
-                  &o_current->screen_x,
-                  &o_current->screen_y);
+	WORLDtoSCREEN(w_current, 
+			o_current->complex->x, 
+			o_current->complex->y,
+                	&o_current->complex->screen_x, 
+			&o_current->complex->screen_y);
 }
 
 OBJECT *
@@ -618,8 +627,9 @@ o_complex_save(char *buf, OBJECT *object)
 	
 	
         sprintf(buf, "%c %d %d %d %d %d %s", object->type,
-                        object->x, object->y, selectable, 
-			object->angle, object->mirror, object->complex_basename);
+                        object->complex->x, object->complex->y, selectable, 
+			object->complex->angle, object->complex->mirror, 
+			object->complex_basename);
         return(buf);
 }
      
@@ -683,22 +693,21 @@ o_complex_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 		return;
 	}
 
-	object->screen_x = object->screen_x + dx;
-	object->screen_y = object->screen_y + dy;
+	object->complex->screen_x = object->complex->screen_x + dx;
+	object->complex->screen_y = object->complex->screen_y + dy;
 
 
 	/* this fixing makes me nervious hack */
-	SCREENtoWORLD(w_current, object->screen_x,
-                  object->screen_y,
-                  &x,
-                  &y);
+	SCREENtoWORLD(w_current, object->complex->screen_x,
+                  object->complex->screen_y, &x, &y);
 
-	prevx = object->x;
-	prevy = object->y;
-	object->x = snap_grid(w_current, x);
-	object->y = snap_grid(w_current, y);
+	prevx = object->complex->x;
+	prevy = object->complex->y;
+	object->complex->x = snap_grid(w_current, x);
+	object->complex->y = snap_grid(w_current, y);
 
-	o_complex_world_translate(w_current, x - prevx,y - prevy, object->complex);
+	o_complex_world_translate(w_current, x - prevx,y - prevy, 
+				  object->complex->prim_objs);
 }
 
 OBJECT *
@@ -722,8 +731,8 @@ o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	}
 
 	new_obj = o_complex_add(w_current, list_tail, OBJ_COMPLEX, color,
-			o_current->x, o_current->y, 
-			o_current->angle, o_current->mirror,
+			o_current->complex->x, o_current->complex->y, 
+			o_current->complex->angle, o_current->complex->mirror,
 			o_current->complex_clib, o_current->complex_basename, 
 			selectable, FALSE); 
 			/* 1 for sel is a hack */
@@ -774,16 +783,18 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 
 	new_obj = o_complex_add_embedded(w_current, list_tail, OBJ_COMPLEX, 
 			color,
-			o_current->x, o_current->y, o_current->angle, 
+			o_current->complex->x, o_current->complex->y, 
+			o_current->complex->angle, 
 			o_current->complex_clib, o_current->complex_basename, 
 			selectable); 
 	/* deal with stuff that has changed */
 	
 	temp_list = o_list_copy_all(w_current,
-			         	o_current->complex->next,
-					new_obj->complex, NORMAL_FLAG);
+			         	o_current->complex->prim_objs->next,
+					new_obj->complex->prim_objs, 
+					NORMAL_FLAG);
 	
-	new_obj->complex = return_head(temp_list);
+	new_obj->complex->prim_objs = return_head(temp_list);
 
 	/* here you need to create a list of attributes which need to be 
 	 * connected to the new list, probably make an attribute list and
@@ -809,14 +820,18 @@ o_complex_delete(TOPLEVEL *w_current, OBJECT *delete)
 {
 	/* first remove complex pointer */
 	if (delete->complex) {
-		s_delete_list_fromstart(w_current, delete->complex);
-		delete->complex = NULL;
+		if (delete->complex->prim_objs) {
+			s_delete_list_fromstart(w_current, 
+					delete->complex->prim_objs);
+		}
+		delete->complex->prim_objs = NULL;
 	}
 
 	/* then remove the actual node */	
 	s_delete(w_current, delete);
 	delete = NULL;
-	w_current->page_current->object_tail = (OBJECT *) return_tail(w_current->page_current->object_head);
+	w_current->page_current->object_tail = (OBJECT *) 
+		return_tail(w_current->page_current->object_head);
 }
 
 /* this needs work remove display stuff */
@@ -824,14 +839,15 @@ o_complex_delete(TOPLEVEL *w_current, OBJECT *delete)
 /* and recalc stuff */
 /* this function takes in a complex list */
 void
-o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex)
+o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, 
+			  OBJECT *prim_objs)
 {
 	OBJECT *o_current=NULL;
 	OBJECT *one=NULL;
 	OBJECT *two=NULL;
 	unsigned long temp_color;
 
-	o_current = complex;
+	o_current = prim_objs;
 
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
@@ -895,17 +911,19 @@ o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *
 {
 	int left, right, top, bottom;
 
-	object->x = object->x + x1;
-	object->y = object->y + y1;
+	object->complex->x = object->complex->x + x1;
+	object->complex->y = object->complex->y + y1;
 
-	WORLDtoSCREEN(w_current, object->x,
-                  object->y,
-                  &object->screen_x,
-                  &object->screen_y);
+	WORLDtoSCREEN(w_current, object->complex->x,
+                  object->complex->y,
+                  &object->complex->screen_x,
+                  &object->complex->screen_y);
 
-	o_complex_world_translate(w_current, x1, y1, object->complex);
+	o_complex_world_translate(w_current, x1, y1, 
+					object->complex->prim_objs);
 
-	get_complex_bounds(w_current, object->complex, &left, &top, &right, &bottom);
+	get_complex_bounds(w_current, object->complex->prim_objs, 
+				&left, &top, &right, &bottom);
 	
 	object->left = left;
 	object->top = top;
@@ -914,11 +932,11 @@ o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *
 }
 
 void
-o_complex_set_color(OBJECT *complex, int color)
+o_complex_set_color(OBJECT *prim_objs, int color)
 {
 	OBJECT *o_current=NULL;
 
-	o_current = complex;
+	o_current = prim_objs;
 
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
@@ -933,9 +951,14 @@ o_complex_set_color(OBJECT *complex, int color)
 			break;
 
 			case(OBJ_TEXT):
+				o_current->color = color;
+				o_complex_set_color(o_current->text->prim_objs, color);
+			break;
+
 			case(OBJ_COMPLEX):
 				o_current->color = color;
-				o_complex_set_color(o_current->complex, color);
+				o_complex_set_color(
+					o_current->complex->prim_objs, color);
 			break;
 
 		}
@@ -958,9 +981,14 @@ o_complex_set_color_single(OBJECT *o_current, int color)
 		break;
 
 		case(OBJ_TEXT):
+			o_current->color = color;
+			o_complex_set_color(o_current->text->prim_objs, color);
+		break;
+
 		case(OBJ_COMPLEX):
 			o_current->color = color;
-			o_complex_set_color(o_current->complex, color);
+			o_complex_set_color(o_current->complex->prim_objs, 
+						color);
 		break;
 
 	}
@@ -987,10 +1015,18 @@ o_complex_set_color_save(OBJECT *complex, int color)
 			break;
 
 			case(OBJ_TEXT):
+				o_current->saved_color = o_current->color;
+				o_current->color = color;
+				o_complex_set_color_save(
+						o_current->text->prim_objs, 
+						color);
+			break;
+
 			case(OBJ_COMPLEX):
 				o_current->saved_color = o_current->color;
 				o_current->color = color;
-				o_complex_set_color_save(o_current->complex, 
+				o_complex_set_color_save(o_current->complex->
+							 prim_objs,
 							 color);
 			break;
 
@@ -1020,10 +1056,16 @@ o_complex_unset_color(OBJECT *complex)
 			break;
 
 			case(OBJ_TEXT):
+				o_current->color = o_current->saved_color;
+				o_current->saved_color = -1;
+				o_complex_unset_color(o_current->text->prim_objs);
+			break;
+
 			case(OBJ_COMPLEX):
 				o_current->color = o_current->saved_color;
 				o_current->saved_color = -1;
-				o_complex_unset_color(o_current->complex);
+				o_complex_unset_color(o_current->complex->
+							prim_objs);
 
 			break;
 
@@ -1048,10 +1090,15 @@ o_complex_unset_color_single(OBJECT *o_current)
 		break;
 
 		case(OBJ_TEXT):
+			o_current->color = o_current->saved_color;
+			o_current->saved_color = -1;
+			o_complex_unset_color(o_current->text->prim_objs);
+		break;
+
 		case(OBJ_COMPLEX):
 			o_current->color = o_current->saved_color;
 			o_current->saved_color = -1;
-			o_complex_unset_color(o_current->complex);
+			o_complex_unset_color(o_current->complex->prim_objs);
 
 		break;
 	}
@@ -1077,10 +1124,17 @@ o_complex_set_saved_color_only(OBJECT *complex, int color)
 			break;
 
 			case(OBJ_TEXT):
+				o_current->saved_color = color;
+				o_complex_set_saved_color_only(
+						o_current->text->prim_objs, 
+						color);
+			break;
+
 			case(OBJ_COMPLEX):
 				o_current->saved_color = color;
 				o_complex_set_saved_color_only(
-							o_current->complex, 
+							o_current->complex->
+							prim_objs, 
 							color);
 			break;
 
@@ -1131,7 +1185,7 @@ o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
 #endif
 
 /* do individual complex objects */
-	o_current = object->complex;
+	o_current = object->complex->prim_objs;
 
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
@@ -1186,7 +1240,7 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 	OBJECT *o_current=NULL;
 
 /* do individual complex objects */
-	o_current = object->complex;
+	o_current = object->complex->prim_objs;
 
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
@@ -1245,7 +1299,7 @@ o_complex_return_pin_object(OBJECT *object, char *pin)
 	OBJECT *found;
 
 	/* go inside complex objects */
-	o_current = object->complex;
+	o_current = object->complex->prim_objs;
 
 	while ( o_current != NULL ) {
 		switch(o_current->type) {
@@ -1259,7 +1313,7 @@ o_complex_return_pin_object(OBJECT *object, char *pin)
 				if (found) {
 #if DEBUG
 					printf("%s: %s\n", found->name,
-						       found->text_string);
+						       found->text->string);
 #endif
 					return(o_current);
 				}

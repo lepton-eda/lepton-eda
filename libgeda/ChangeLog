@@ -8,11 +8,117 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-08-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/f_image.c: Oops found a core dumping bug which was
+	  introduced in this latest variable reorg (wrong structure
+	  passed f_image_write_objects)
+
+	* src/f_print.c: Oops found a core dumping bug which was
+	  introduced in this latest variable reorg (wrong structure
+	  passed f_print_objects)
+
 2000-08-22  Stefan Petersen  <spe@geda.seul.org>
 
 	* configure.in/configure: Made configure look for scm_make_smob_type
 	  in libguile.
 	
+
+2000-08-21  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/o_text_basic.c: #if'ed 0 out o_text_translate (since it is
+	  unused) 
+
+	* include/struct.h: Put a complex pointer into the TEXT item 
+
+	* src/o_text.c: Changed all complex to use the above new pointer
+
+	* src/o_text.c: Added o_text_recalc to work on the text complex 
+	  pointer
+	
+	* src/s_basic.c: Added free of text->complex structure to s_delete
+
+	* include/struct.h: Added COMPLEX structure/typedef (includes private
+	  complex pointer, x (and screen), y (and screen) mirror, and
+	  angle variables)
+
+	* src/*.c: Removed all traces of the old complex pointer and changed
+	  them to use the new above pointer
+
+	* include/struct.h: Renamed complex (inside COMPLEX *) to be called
+	  prim_objs instead of complex.  Better name (I hope).
+
+	* src/s_basic.c: Removed some dead code
+
+	* src/o_text_basic.c: Removed some dead code
+
+	* src/*.c: Temporarily called complex (COMPLEX *) complex2 (for 
+	  easy search)
+
+	* include/struct.h: Renamed text->complex to text->prim_objs
+
+2000-08-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Started the conversion from LINEPTS/CIRCLE to
+	  a more generic representation 
+
+	* include/struct.h: Added LINE, BOX, ARC structure/typedef
+
+	* include/struct.h: Added void *graphical to OBJECT structure.
+	  which for now is commented out
+
+	* src/o_arc_basic.c: Converted all line_points to arc
+
+	* src/s_basic.c: Add ARC structure to various basic init / free
+	  functions
+
+	* src/o_box_basic.c: Converted all line_points to box
+
+	* src/s_basic.c: Add BOX structure to various basic init / free
+	  functions
+
+	* src/o_complex_basic.c: Made sure you call get_box_bounds with the
+	  right (box) parameters
+
+	* include/struct.h: Had to comment out all gpcb related structures 
+          (eventually these will be rewritten and put back into production)
+
+	* include/struct.h: Moved all text parameters into TEXT structure
+
+	* src/o_text_basic.c: Converted all graphical paramters to text
+
+	* src/s_basic.c: Add TEXT structure to various basic init / free
+	  functions
+
+	* src/g_smob.c: Changed text_string to text->string
+
+	* src/o_attrib.c: Found a whole bunch of instances where an if
+	  was checking for a null, but in the same if that same item was
+	  being dereferenced (for another value).  Bad.  Fixed.
+
+	* src/a_basic.c: Found another 2 instances of above, Fixed.
+
+	* src/o_circle.c: Removed some dead code
+
+	* src/s_basic.c: Add LINE structure to various basic init / free
+	  functions
+
+	* src/o_complex_basic.c: Made sure you call get_line_bounds with the
+	  right (line) parameters
+
+	* src/o_box_basic.c: Converted all line_points to line structure
+
+	* src/o_net_basic.c: Converted all line_points to line structure
+
+	* src/o_pin_basic.c: Converted all line_points to line structure
+
+	* src/o_bus_basic.c: Converted all line_points to line structure
+
+	* src/s_basic.c: Removed all traces of line_points
+
+	* include/struct.h: Removed *line_points variable, structure, and
+	  typedef
+
 2000-08-15  Stefan Petersen  <spe@geda.seul.org>
 
 	* Fixed bug causing seg fault during GC with new attribute smob.

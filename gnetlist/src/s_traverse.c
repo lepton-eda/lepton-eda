@@ -120,7 +120,8 @@ if (verbose_mode) {
 			}
 
 			/* look for special tag */
-			temp = o_attrib_search_name(o_current->complex, "graphical", 0);
+			temp = o_attrib_search_name(o_current->complex->
+						    prim_objs, "graphical", 0);
 			if (temp) {
 			/* don't want to traverse graphical elements */
 				free(temp);
@@ -140,7 +141,8 @@ if (verbose_mode) {
 				if (!netlist->component_uref) {
 
 					temp = o_attrib_search_name(o_current->
-								    complex, 
+								    complex-> 
+								    prim_objs,
 								    "footprint",
 								    0);
 					if (temp) {
@@ -206,7 +208,7 @@ s_traverse_component(TOPLEVEL *pr_current, OBJECT *component)
 	CONN *conn_list;
 	CONN *c_current;
 
-	o_current = component->complex;
+	o_current = component->complex->prim_objs;
 
 	cpinlist_head = cpins = s_cpinlist_add(NULL);
 	cpins->plid = -1;
@@ -238,8 +240,8 @@ if (verbose_mode) {
 
 
 			/* search for line_ptr->[x|y]1 */
-			key = o_conn_return_key(o_current->line_points->x1, 
-					o_current->line_points->y1);	
+			key = o_conn_return_key(o_current->line->x[0], 
+					o_current->line->y[0]);	
 		
 			conn_list = g_hash_table_lookup(
 					pr_current->page_current->conn_table,
@@ -290,8 +292,8 @@ if (verbose_mode) {
 			free(key);
 
 			/* search for line_ptr->[x|y]2 */
-			key = o_conn_return_key(o_current->line_points->x2, 
-					o_current->line_points->y2);	
+			key = o_conn_return_key(o_current->line->x[1], 
+					o_current->line->y[1]);	
 
 			conn_list = g_hash_table_lookup(
 					pr_current->page_current->conn_table,
@@ -371,8 +373,10 @@ s_traverse_clear_all_visited(OBJECT *object_head)
 
 		o_current->visited = 0;
 
-		if (o_current->type == OBJ_COMPLEX && o_current->complex) {
-			s_traverse_clear_all_visited(o_current->complex);
+		if (o_current->type == OBJ_COMPLEX && 
+		    o_current->complex->prim_objs) {
+			s_traverse_clear_all_visited(o_current->complex->
+						     prim_objs);
 		}
 
 		o_current = o_current->next;
@@ -458,8 +462,8 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 
 	
 	/* search for line_ptr->[x|y]1 */
-	key = o_conn_return_key(o_current->line_points->x1, 
-				o_current->line_points->y1);	
+	key = o_conn_return_key(o_current->line->x[0],
+				o_current->line->y[0]);	
 		
 #if DEBUG
 	printf("looking at 1: %s\n", key);
@@ -496,8 +500,8 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	free(key);
 
 	/* search for line_ptr->[x|y]2 */
-	key = o_conn_return_key(o_current->line_points->x2, 
-				o_current->line_points->y2);	
+	key = o_conn_return_key(o_current->line->x[1], 
+				o_current->line->y[1]);	
 		
 #if DEBUG
 	printf("looking at 2: %s\n", key);

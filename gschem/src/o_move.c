@@ -204,7 +204,8 @@ o_move_end(TOPLEVEL *w_current)
 					o_complex_draw_xor(w_current, 
 							   screen_diff_x, 
 							   screen_diff_y, 
-							   object->complex);
+							   object->complex->
+							   prim_objs);
 				}
 
 				o_complex_world_translate_toplevel(w_current, 
@@ -216,8 +217,10 @@ o_move_end(TOPLEVEL *w_current)
 
 				o_redraw_single(w_current, object);
 
-				o_conn_erase_all(w_current, object->complex);
-				o_conn_draw_all(w_current, object->complex);
+				o_conn_erase_all(w_current, object->complex->
+							   prim_objs);
+				o_conn_draw_all(w_current, object->complex->
+							   prim_objs);
 
 			break;
 

@@ -39,8 +39,8 @@ o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 			x_get_color(w_current->background_color));
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x1,
-				o_current->line_points->y1);
+				o_current->line->x[0],
+				o_current->line->y[0]);
 
 #if DEBUG
 	printf("efirst: %d\n",cue);
@@ -50,20 +50,20 @@ o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
 			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x1,
-                                             o_current->line_points->screen_y1);
+                                             o_current->line->screen_x[0],
+                                             o_current->line->screen_y[0]);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x1,
-                                             o_current->line_points->screen_y1);
+                                             o_current->line->screen_x[0],
+                                             o_current->line->screen_y[0]);
 		break;
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line_points->screen_x1,
-				            o_current->line_points->screen_y1);
+			                    o_current->line->screen_x[0],
+				            o_current->line->screen_y[0]);
                 break;
 
 		case(BUS_MIDPOINT_CUE):
@@ -71,27 +71,27 @@ o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 						              page_current->
 						              conn_table,
                                 		 	      o_current->
-							      line_points->x1,
+							      line->x[0],
                                 		 	      o_current->
-							      line_points->y1);
+							      line->y[0]);
 
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
 				o_conn_draw_busmidpoint(w_current, bus_object, 
 					    w_current->bus_gc,
-			                    o_current->line_points->screen_x1,
-				            o_current->line_points->screen_y1,
-			                    o_current->line_points->x2,
-				            o_current->line_points->y2);
+			                    o_current->line->screen_x[0],
+				            o_current->line->screen_y[0],
+			                    o_current->line->x[1],
+				            o_current->line->y[1]);
 			}
                 break;
 
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				 o_current->line_points->x2,
-				 o_current->line_points->y2);
+				 o_current->line->x[1],
+				 o_current->line->y[1]);
 #if DEBUG
 	printf("esecond: %d\n",cue);
 #endif
@@ -100,20 +100,20 @@ o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 		case(NET_DANGLING_CUE):
 		case(NO_CUE):
 			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x2,
-                                             o_current->line_points->screen_y2);
+                                             o_current->line->screen_x[1],
+                                             o_current->line->screen_y[1]);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x2,
-                                             o_current->line_points->screen_y2);
+                                             o_current->line->screen_x[1],
+                                             o_current->line->screen_y[1]);
 		break;
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line_points->screen_x2,
-				            o_current->line_points->screen_y2);
+			                    o_current->line->screen_x[1],
+				            o_current->line->screen_y[1]);
                 break;
 
 		case(BUS_MIDPOINT_CUE):
@@ -122,19 +122,19 @@ o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
 						              page_current->
 						              conn_table,
                                 		 	      o_current->
-							      line_points->x2,
+							      line->x[1],
                                 		 	      o_current->
-							      line_points->y2);
+							      line->y[1]);
 
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
 				o_conn_draw_busmidpoint(w_current, bus_object, 
 					    w_current->bus_gc,
-			                    o_current->line_points->screen_x2,
-				            o_current->line_points->screen_y2,
-			                    o_current->line_points->x1,
-				            o_current->line_points->y1);
+			                    o_current->line->screen_x[1],
+				            o_current->line->screen_y[1],
+			                    o_current->line->x[0],
+				            o_current->line->y[0]);
 			}
                 break;
 	}
@@ -165,41 +165,41 @@ o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
 	o_conn_draw_endpoint(w_current, w_current->gc,
-       				o_current->line_points->screen_x1,
-                                o_current->line_points->screen_y1);
+       				o_current->line->screen_x[0],
+                                o_current->line->screen_y[0]);
 
 	o_conn_draw_endpoint(w_current, w_current->gc,
-                                 o_current->line_points->screen_x2,
-                                 o_current->line_points->screen_y2);
+                                 o_current->line->screen_x[1],
+                                 o_current->line->screen_y[1]);
 
 	bus_object = o_conn_return_bus_object(w_current->page_current->
 					      conn_table,
                                 	      o_current->
-					      line_points->x1,
+					      line->x[0],
                                 	      o_current->
-					      line_points->y1);
+					      line->y[0]);
 	if (bus_object) {
 		o_conn_draw_busmidpoint(w_current, bus_object, 
 					w_current->bus_gc,
-			                o_current->line_points->screen_x1,
-				        o_current->line_points->screen_y1,
-			                o_current->line_points->x2,
-				        o_current->line_points->y2);
+			                o_current->line->screen_x[0],
+				        o_current->line->screen_y[0],
+			                o_current->line->x[1],
+				        o_current->line->y[1]);
 	}
 
 	bus_object = o_conn_return_bus_object(w_current->page_current->
 					      conn_table,
                                 	      o_current->
-					      line_points->x2,
+					      line->x[1],
                                 	      o_current->
-					      line_points->y2);
+					      line->y[1]);
 	if (bus_object) {
 		o_conn_draw_busmidpoint(w_current, bus_object, 
 					w_current->bus_gc,
-			                o_current->line_points->screen_x2,
-				        o_current->line_points->screen_y2,
-			                o_current->line_points->x1,
-				        o_current->line_points->y1);
+			                o_current->line->screen_x[1],
+				        o_current->line->screen_y[1],
+			                o_current->line->x[0],
+				        o_current->line->y[0]);
 	}
 
         /* yes zero is right for the width -> use hardware lines */
@@ -235,8 +235,8 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line_points->x1,
-				o_current->line_points->y1);
+				o_current->line->x[0],
+				o_current->line->y[0]);
 
 #if DEBUG 
 	printf("dfirst: %d\n", cue);
@@ -249,20 +249,20 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x1,
-                                             o_current->line_points->screen_y1);
+                                             o_current->line->screen_x[0],
+                                             o_current->line->screen_y[0]);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x1,
-                                             o_current->line_points->screen_y1);
+                                             o_current->line->screen_x[0],
+                                             o_current->line->screen_y[0]);
 		break;
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line_points->screen_x1,
-				            o_current->line_points->screen_y1);
+			                    o_current->line->screen_x[0],
+				            o_current->line->screen_y[0]);
                 break;
 
 		case(BUS_MIDPOINT_CUE):
@@ -271,26 +271,26 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 						              page_current->
 						              conn_table,
                                 		 	      o_current->
-							      line_points->x1,
+							      line->x[0],
                                 		 	      o_current->
-							      line_points->y1);
+							      line->y[0]);
 
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
 				o_conn_draw_busmidpoint(w_current, bus_object, 
 					    w_current->bus_gc,
-			                    o_current->line_points->screen_x1,
-				            o_current->line_points->screen_y1,
-			                    o_current->line_points->x2,
-				            o_current->line_points->y2);
+			                    o_current->line->screen_x[0],
+				            o_current->line->screen_y[0],
+			                    o_current->line->x[1],
+				            o_current->line->y[1]);
 			}
                 break;
 	}
 
 	cue = o_conn_query_table(w_current->page_current->conn_table,
-				 o_current->line_points->x2,
-				 o_current->line_points->y2);
+				 o_current->line->x[1],
+				 o_current->line->y[1]);
 
 #if DEBUG
 	printf("dsecond: %d\n", cue);
@@ -303,20 +303,20 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 		case(NET_DANGLING_CUE):
 			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x2,
-                                             o_current->line_points->screen_y2);
+                                             o_current->line->screen_x[1],
+                                             o_current->line->screen_y[1]);
 		break;
 
 		case(MIDPOINT_CUE):
 			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line_points->screen_x2,
-                                             o_current->line_points->screen_y2);
+                                             o_current->line->screen_x[1],
+                                             o_current->line->screen_y[1]);
 		break;
 
 		case(INVALID_CUE):
 			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line_points->screen_x2,
-				            o_current->line_points->screen_y2);
+			                    o_current->line->screen_x[1],
+				            o_current->line->screen_y[1]);
                 break;
 
 		case(BUS_MIDPOINT_CUE):
@@ -324,19 +324,19 @@ o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 						              page_current->
 						              conn_table,
                                 		 	      o_current->
-							      line_points->x2,
+							      line->x[1],
                                 		 	      o_current->
-							      line_points->y2);
+							      line->y[1]);
 
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
 				o_conn_draw_busmidpoint(w_current, bus_object, 
 					    w_current->bus_gc,
-			                    o_current->line_points->screen_x2,
-				            o_current->line_points->screen_y2,
-			                    o_current->line_points->x1,
-				            o_current->line_points->y1);
+			                    o_current->line->screen_x[1],
+				            o_current->line->screen_y[1],
+			                    o_current->line->x[0],
+				            o_current->line->y[0]);
 			}
                 break;
 	}
@@ -361,15 +361,14 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		return;
 	}
 
-	if (o_current->line_points == NULL) {
+	if (o_current->line == NULL) {
 		return;
 	}
 
 	o_net_recalc(w_current, o_current);
 
 	/* reuse line's routine */
-        if (!o_line_visible(w_current, o_current->line_points,
-	     &x1, &y1, &x2, &y2)) {
+        if (!o_line_visible(w_current, o_current->line, &x1, &y1, &x2, &y2)) {
                 return;
         }
 
@@ -438,8 +437,8 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
                 }
 
 		cue = o_conn_query_table(w_current->page_current->conn_table,
-					 o_current->line_points->x1,
-					 o_current->line_points->y1);
+					 o_current->line->x[0],
+					 o_current->line->y[0]);
 		switch(cue) {
 
 			case(NO_CUE):
@@ -448,26 +447,26 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 			case(NET_DANGLING_CUE):
 				o_conn_draw_endpoint(w_current, w_current->gc,
-                                          	     o_current->line_points->
-						     screen_x1,
-                                          	     o_current->line_points->
-						     screen_y1);
+                                          	     o_current->line->
+						     screen_x[0],
+                                          	     o_current->line->
+						     screen_y[0]);
 			break;
 
 			case(MIDPOINT_CUE):
 				o_conn_draw_midpoint(w_current, w_current->gc,
-                                          	     o_current->line_points->
-						     screen_x1,
-                                          	     o_current->line_points->
-						     screen_y1);
+                                          	     o_current->line->
+						     screen_x[0],
+                                          	     o_current->line->
+						     screen_y[0]);
 			break;
 
 			case(INVALID_CUE):
 				o_conn_draw_invalid(w_current, w_current->gc,
-			                            o_current->line_points->
-						    screen_x1,
-				                    o_current->line_points->
-						    screen_y1);
+			                            o_current->line->
+						    screen_x[0],
+				                    o_current->line->
+						    screen_y[0]);
                 	break;
 
 			case(BUS_MIDPOINT_CUE):
@@ -476,19 +475,19 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 						              page_current->
 						              conn_table,
                                 		 	      o_current->
-							      line_points->x1,
+							      line->x[0],
                                 		 	      o_current->
-							      line_points->y1);
+							      line->y[0]);
 
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
 				o_conn_draw_busmidpoint(w_current, bus_object, 
 					    w_current->bus_gc,
-			                    o_current->line_points->screen_x1,
-				            o_current->line_points->screen_y1,
-			                    o_current->line_points->x2,
-				            o_current->line_points->y2);
+			                    o_current->line->screen_x[0],
+				            o_current->line->screen_y[0],
+			                    o_current->line->x[1],
+				            o_current->line->y[1]);
 			}
 
                 	break;
@@ -496,8 +495,8 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		}
 
 		cue = o_conn_query_table(w_current->page_current->conn_table,
-					 o_current->line_points->x2,
-					 o_current->line_points->y2);
+					 o_current->line->x[1],
+					 o_current->line->y[1]);
 		switch(cue) {
 
 			case(NO_CUE):
@@ -506,26 +505,26 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 			case(NET_DANGLING_CUE):
 				o_conn_draw_endpoint(w_current, w_current->gc,
-                                          	     o_current->line_points->
-						     screen_x2,
-                                                     o_current->line_points->
-						     screen_y2);
+                                          	     o_current->line->
+						     screen_x[1],
+                                                     o_current->line->
+						     screen_y[1]);
 			break;
 
 			case(MIDPOINT_CUE):
 				o_conn_draw_midpoint(w_current, w_current->gc,
-                                          	     o_current->line_points->
-						     screen_x2,
-                                           	     o_current->line_points->
-						     screen_y2);
+                                          	     o_current->line->
+						     screen_x[1],
+                                           	     o_current->line->
+						     screen_y[1]);
 			break;
 
 			case(INVALID_CUE):
 				o_conn_draw_invalid(w_current, w_current->gc,
-			                            o_current->line_points->
-						    screen_x2,
-				                    o_current->line_points->
-						    screen_y2);
+			                            o_current->line->
+						    screen_x[1],
+				                    o_current->line->
+						    screen_y[1]);
                 	break;
 
 			case(BUS_MIDPOINT_CUE):
@@ -533,19 +532,19 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 						              page_current->
 						              conn_table,
                                 		 	      o_current->
-							      line_points->x2,
+							      line->x[1],
                                 		 	      o_current->
-							      line_points->y2);
+							      line->y[1]);
 
 			if (!bus_object) {
 				fprintf(stderr, "Got a null bus_object!\n");
 			} else {
 				o_conn_draw_busmidpoint(w_current, bus_object, 
 					    w_current->bus_gc,
-			                    o_current->line_points->screen_x2,
-				            o_current->line_points->screen_y2,
-			                    o_current->line_points->x1,
-				            o_current->line_points->y1);
+			                    o_current->line->screen_x[1],
+				            o_current->line->screen_y[1],
+			                    o_current->line->x[0],
+				            o_current->line->y[0]);
 			}
                 	break;
 		}
@@ -584,7 +583,7 @@ o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	int size;
 	int color;
 
-        if (o_current->line_points == NULL) {
+        if (o_current->line == NULL) {
                 return;
         }
 
@@ -607,10 +606,10 @@ o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	}
 
         gdk_draw_line(w_current->window, w_current->outline_xor_gc,
-                       o_current->line_points->screen_x1+dx,
-                       o_current->line_points->screen_y1+dy,
-                       o_current->line_points->screen_x2+dx,
-                       o_current->line_points->screen_y2+dy);
+                       o_current->line->screen_x[0]+dx,
+                       o_current->line->screen_y[0]+dy,
+                       o_current->line->screen_x[1]+dx,
+                       o_current->line->screen_y[1]+dy);
 
 	/* backing store ? not approriate here */
 
@@ -655,7 +654,7 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 	o_current = w_current->page_current->selection_head->next;
 	if (o_current != NULL && w_current->event_state == STARTDRAWNET) {
 		if (o_current->type == OBJ_NET) {
-			if (o_current->line_points) {
+			if (o_current->line) {
 
 			   real = o_list_sear( /* ch */ 
 					w_current->page_current->object_head,
@@ -666,27 +665,27 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 				exit(-1);
 			   }
 			   distance1 = dist(
-				      real->line_points->screen_x1,
-				      real->line_points->screen_y1,
+				      real->line->screen_x[0],
+				      real->line->screen_y[0],
 				      w_current->start_x, w_current->start_y);
 
 			   distance2 = dist(
-				      real->line_points->screen_x2,
-				      real->line_points->screen_y2,
+				      real->line->screen_x[1],
+				      real->line->screen_y[1],
 				      w_current->start_x, w_current->start_y);
 
 			   printf("%d %d\n", distance1, distance2);
 
 			   if (distance1 < distance2) {
 			 	w_current->last_x = w_current->start_x =
-			 	   real->line_points->screen_x1;
+			 	   real->line->screen_x[0];
 				w_current->last_y = w_current->start_y =
-				   real->line_points->screen_y1;
+				   real->line->screen_y[0];
 			   } else {
 				w_current->last_x = w_current->start_x =
-			  	   real->line_points->screen_x2;
+			  	   real->line->screen_x[1];
 				w_current->last_y = w_current->start_y =
-				   real->line_points->screen_y2;
+				   real->line->screen_y[1];
 			   }
 			}
 		} else if (o_current->type == OBJ_COMPLEX) {

@@ -26,8 +26,7 @@ int g_read_file(char *filename);
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, ATTRIB *curr_attr);
 SCM g_get_attrib_name_value(SCM attrib_smob);
-SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, 
-				TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
+SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
 void g_init_attrib_smob(void);
 /* m_basic.c */
 int mil_x(TOPLEVEL *w_current, int val);
@@ -121,8 +120,8 @@ int inside_region(int left, int top, int right, int bottom, int x, int y);
 void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current);
 void o_recalc(TOPLEVEL *w_current, OBJECT *object_list);
 /* o_box_basic.c */
-void get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-void world_get_box_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+void get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom);
+void world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom);
 OBJECT *o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
@@ -137,8 +136,8 @@ void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_center
 void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 /* o_bus_basic.c */
-void get_bus_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-void world_get_bus_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+void get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
+void world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
@@ -191,9 +190,9 @@ void o_complex_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 OBJECT *o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_complex_delete(TOPLEVEL *w_current, OBJECT *delete);
-void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
+void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *prim_objs);
 void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
-void o_complex_set_color(OBJECT *complex, int color);
+void o_complex_set_color(OBJECT *prim_objs, int color);
 void o_complex_set_color_single(OBJECT *o_current, int color);
 void o_complex_set_color_save(OBJECT *complex, int color);
 void o_complex_unset_color(OBJECT *complex);
@@ -241,9 +240,9 @@ void o_image_close(void);
 int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
 /* o_line_basic.c */
-void get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-void world_get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-int o_line_visible(TOPLEVEL *w_current, LINEPTS *points, int *x1, int *y1, int *x2, int *y2);
+void get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
+void world_get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
+int o_line_visible(TOPLEVEL *w_current, LINE *line, int *x1, int *y1, int *x2, int *y2);
 OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
@@ -266,8 +265,8 @@ OBJECT *o_list_search(OBJECT *list, OBJECT *current);
 void o_list_delete(TOPLEVEL *w_current, OBJECT *list, OBJECT *delete);
 void o_list_delete_rest(TOPLEVEL *w_current, OBJECT *list);
 /* o_net_basic.c */
-void get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-void world_get_net_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+void get_net_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
+void world_get_net_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 OBJECT *o_net_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 void o_net_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_net_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
@@ -287,8 +286,8 @@ int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
 void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_pin_basic.c */
-void get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
-void world_get_pin_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);
+void get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
+void world_get_pin_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 OBJECT *o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
 void o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
@@ -333,7 +332,6 @@ OBJECT *o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char s
 void o_text_set_info_font(char buf[]);
 char *o_text_save(char *buf, OBJECT *object);
 void o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current);
-void o_text_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_text_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current);
 OBJECT *o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_text_freeallfonts(TOPLEVEL *w_current);

@@ -512,7 +512,8 @@ g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 
 			/* now search inside the symbol */
 			return_value = o_attrib_search_name(
-					   nl_current->object_ptr->complex, 	
+					   nl_current->object_ptr->complex->
+					   prim_objs,
 					   wanted_attrib, 0);
 
 			break;

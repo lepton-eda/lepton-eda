@@ -466,8 +466,6 @@ o_circle_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 	/* fix up other points... */
 	object->circle->center_x = newx;
 	object->circle->center_y = newy;
-	/* object->line_points->x2 = newx+radius;
-	object->line_points->y2 = newy-radius;*/
 
 	o_circle_translate_world(w_current, world_centerx, world_centery, object);
 
@@ -500,9 +498,6 @@ o_circle_rotate_world(TOPLEVEL *w_current,
 	object->circle->center_x = newx;
 	object->circle->center_y = newy;
 
-	/* object->line_points->x2 = newx+radius;
-	object->line_points->y2 = newy-radius;*/
-
 	o_circle_translate_world(w_current, world_centerx, world_centery, object);
 
 }
@@ -533,14 +528,6 @@ o_circle_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 	newx = object->circle->center_x = -x;	
 	newy = object->circle->center_y = y; 
 
-	/* fix up other points... */
-/* 
-	object->circle->x1 = newx-radius;
-	object->circle->y1 = newy+radius;
-	object->line_points->x2 = newx+radius;
-	object->line_points->y2 = newy-radius;
-*/
-
 	o_circle_translate_world(w_current, world_centerx, world_centery, object);
 
 }
@@ -564,12 +551,6 @@ o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery,
 	/* mirror it */
 	newx = object->circle->center_x = -x;	
 	newy = object->circle->center_y = y; 
-
-	/* fix up other points... */
-	/* object->line_points->x1 = newx-radius;
-	object->line_points->y1 = newy+radius;
-	object->line_points->x2 = newx+radius;
-	object->line_points->y2 = newy-radius;*/
 
 	o_circle_translate_world(w_current, world_centerx, world_centery, object);
 

@@ -60,15 +60,15 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current) {
   char *index_list;
   int index_list_len=1;
 
-  if (strncmp(o_current->text_string,"uref=",5))
+  if (strncmp(o_current->text->string,"uref=",5))
     return;
 
-  len=strlen(o_current->text_string);
+  len=strlen(o_current->text->string);
   uref=malloc(len+10);
-  strcpy(uref,o_current->text_string);
+  strcpy(uref,o_current->text->string);
 
-  while (o_current->text_string[len-1]<='9' && 
-	 o_current->text_string[len-1]>='0')
+  while (o_current->text->string[len-1]<='9' && 
+	 o_current->text->string[len-1]>='0')
     --len;
 
   list_head=return_head(o_current);
@@ -82,11 +82,11 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current) {
 
   for (obj=list_head->next;obj;obj=obj->next) {
     if (obj->type==OBJ_TEXT && obj->attribute && obj!=o_current) {
-      if (strncmp(uref,obj->text_string,len)==0) {
-	if (strcmp(uref+len,obj->text_string+len)==0) {
+      if (strncmp(uref,obj->text->string,len)==0) {
+	if (strcmp(uref+len,obj->text->string+len)==0) {
 	  name_conflict=1;
 	}
-	i=atoi(obj->text_string+len);
+	i=atoi(obj->text->string+len);
 	if (i<index_list_len)
 	  index_list[i]=1;
       }
@@ -96,8 +96,8 @@ void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current) {
   if (name_conflict) {
     for (i=0;index_list[i];++i);
     sprintf(uref+len,"%d", i);
-    free(o_current->text_string);
-    o_current->text_string=uref;
+    free(o_current->text->string);
+    o_current->text->string=uref;
     o_text_recreate(w_current, o_current);
   }
 
@@ -187,8 +187,14 @@ o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
 	new->object->attribute = 1; /* Set the attribute to true, hack define */
 	/* Show that that item is an attribute */
 	new->object->color = w_current->attribute_color; 
-	/* this is assuming item is text */
-	o_complex_set_color(new->object->complex, new->object->color);
+
+	if (new->object->type == OBJ_TEXT) {
+		o_complex_set_color(new->object->text->prim_objs,
+		                    new->object->color);
+	} else if (new->object->type == OBJ_COMPLEX) {
+		o_complex_set_color(new->object->complex->prim_objs,
+		                    new->object->color);
+	}
 
 	/* Add link from item to attrib listing */
 	new->object->attached_to = new;
@@ -214,14 +220,23 @@ o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
 			current->object->attribute = 0;	
 			current->object->attached_to=NULL;
 			current->object->color = w_current->detachedattr_color;	
-			o_complex_set_color(current->object->complex, 
-					    current->object->color);
+
+			if (current->object->type == OBJ_TEXT) {
+				o_complex_set_color(current->object->text->prim_objs, 
+						    current->object->color);
+			} else {
+				printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 1\n");
+			}
 
 			/* not sure on this */
 			if (current->object->saved_color != -1) {
-				o_complex_set_saved_color_only(
-						current->object->complex, 
+				if (current->object->type == OBJ_TEXT) {
+					o_complex_set_saved_color_only(
+						current->object->text->prim_objs, 
 						w_current->detachedattr_color);
+				} else {
+					printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 2\n");
+				}
 				current->object->saved_color = w_current->
 							detachedattr_color;
 			}
@@ -275,7 +290,7 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
 
 
 				if (found2->attached_to) {
-					fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text_string);
+					fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text->string);
 				} else {
 
 					o_attrib_add(w_current, 
@@ -284,13 +299,15 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
 
 					o_current->color = w_current->
 							   attribute_color; 
-					o_complex_set_color(o_current->complex,
-							    o_current->color);
+
+					o_complex_set_color(
+						     o_current->text->prim_objs,
+						     o_current->color);
 
 					if (o_current->saved_color != -1) {
 						o_complex_set_saved_color_only(
-						        o_current->complex, 
-							o_current->color);
+						      o_current->text->prim_objs, 
+						      o_current->color);
 						o_current->saved_color = 
 							o_current->color;
 					}
@@ -307,9 +324,9 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
 			}	
 		}
 	} else {
-		if (o_current->text_string) { 	
+		if (o_current->text->string) { 	
 			printf("Attribute [%s] already attached\n", 
-				o_current->text_string);
+				o_current->text->string);
 		}
 	}
 }
@@ -580,8 +597,14 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 			/* check color to set it to the right value */
 			if (object_list->color != saved_color) {
 				object_list->color = saved_color;
-				o_complex_set_color(object_list->complex,
-                                                    object_list->color);
+
+				if (object_list->type == OBJ_TEXT) {	
+					o_complex_set_color(
+						object_list->text->prim_objs,
+                                                object_list->color);
+				} else {
+					printf("Tried to set the color on a complex in libgeda/src/o_read_attribs\n");
+				}
 			}
 			ATTACH=FALSE;
 		} else {
@@ -801,9 +824,10 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 
 		while(a_current != NULL) {
 			found = a_current->object;
-			if (found != NULL && found->text_string) {
+			if (found != NULL) {
+                           if (found->type == OBJ_TEXT) {
 				val = o_attrib_get_name_value(
-					found->text_string, 
+					found->text->string, 
 					found_name, found_value);
 
 				if (val) {
@@ -822,10 +846,11 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 				}	
 
 #if DEBUG 
-				printf("0 _%s_\n", found->text_string);
+				printf("0 _%s_\n", found->text->string);
 				printf("1 _%s_\n", found_name);
 				printf("2 _%s_\n", found_value);
 #endif
+                           }
 			}
 			a_current=a_current->next;
 		}	
@@ -835,7 +860,7 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 
 		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
-					o_current->text_string, 
+					o_current->text->string, 
 					found_name, found_value);
 			if (val) {
 			   if (strcmp(name, found_name) == 0) {
@@ -887,9 +912,10 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
 
 		while(a_current != NULL) {
 			found = a_current->object;
-			if (found != NULL && found->text_string) {
+			if (found != NULL) {
+			   if (found->type == OBJ_TEXT) {
 				val = o_attrib_get_name_value(
-					found->text_string, 
+					found->text->string, 
 					found_name, found_value);
 
 				if (val) {
@@ -907,10 +933,11 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
 				}	
 
 #if DEBUG 
-				printf("0 _%s_\n", found->text_string);
+				printf("0 _%s_\n", found->text->string);
 				printf("1 _%s_\n", found_name);
 				printf("2 _%s_\n", found_value);
 #endif
+                           }
 			}
 			a_current=a_current->next;
 		}	
@@ -920,7 +947,7 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
 
 		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
-					o_current->text_string, 
+					o_current->text->string, 
 					found_name, found_value);
 			if (val) {
 			   if (strcmp(name, found_name) == 0) {
@@ -967,9 +994,10 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 
 		while(a_current != NULL) {
 			found = a_current->object;
-			if (found != NULL && found->text_string) {
+			if (found != NULL) {
+                           if (found->type == OBJ_TEXT) {
 				val = o_attrib_get_name_value(
-					found->text_string, 
+					found->text->string, 
 					found_name, found_value);
 
 				if (val) {
@@ -988,10 +1016,11 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 				}	
 
 #if DEBUG 
-				printf("0 _%s_\n", found->text_string);
+				printf("0 _%s_\n", found->text->string);
 				printf("1 _%s_\n", found_name);
 				printf("2 _%s_\n", found_value);
 #endif
+                           }
 			}
 			a_current=a_current->next;
 		}	
@@ -1000,7 +1029,7 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 
 		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
-					o_current->text_string, 
+					o_current->text->string, 
 					found_name, found_value);
 			if (val) {
 			   if (strstr(found_name, name)) {
@@ -1048,8 +1077,9 @@ o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
 
 	while(a_current != NULL) {
 		found = a_current->object;
-		if (found != NULL && found->text_string) {
-			val = o_attrib_get_name_value(found->text_string, 
+		if (found != NULL) {
+		   if (found->type == OBJ_TEXT) {
+			val = o_attrib_get_name_value(found->text->string, 
 				                      found_name, found_value);
 
 			if (val) {
@@ -1068,6 +1098,7 @@ o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
 				}
 			}	
 
+                   }
 		}
 		a_current=a_current->next;
 	 }
@@ -1094,8 +1125,9 @@ o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter)
 
 	while(a_current != NULL) {
 		found = a_current->object;
-		if (found != NULL && found->text_string) {
-			val = o_attrib_get_name_value(found->text_string, 
+		if (found != NULL) {
+                   if (found->type == OBJ_TEXT) {
+			val = o_attrib_get_name_value(found->text->string, 
 				                      found_name, found_value);
 
 			if (val) {
@@ -1117,7 +1149,7 @@ o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter)
 					}
 				}
 			}	
-
+                    }
 		}
 		a_current=a_current->next;
 	 }
@@ -1151,7 +1183,7 @@ o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
 
 		if (o_current->type == OBJ_TEXT) {
 		 	val = o_attrib_get_name_value(
-					o_current->text_string, 
+					o_current->text->string, 
 					found_name, found_value);
 			if (val) {
 			   if (strcmp(name, found_name) == 0) {
@@ -1174,57 +1206,6 @@ o_attrib_search_toplevel(OBJECT *list, char *name, int counter)
 	
 	return (NULL);
 } 
-
-/* this function search for the counter'th occurance of the string attribute */
-/* be sure caller free's return value */
-/* this routine should NOT be used anywhere */
-#if 0
-OBJECT *
-o_attrib_search_attrib(OBJECT *list, char *attribute, int counter) 
-{
-	OBJECT *o_current;
-	ATTRIB *a_current;
-	OBJECT *found;
-	int internal_counter=0;
-
-	o_current = list;
-
-	while(o_current != NULL) {
-	   if (o_current->attribs != NULL) {
-		a_current = o_current->attribs;
-
-		while(a_current != NULL) {
-			found = a_current->object;
-			if (found != NULL && found->text_string) {
-
-			       if (strcmp(attribute, found->text_string) == 0) {
-					if (counter != internal_counter) {
-						internal_counter++;	
-					} else {
-					  return(found);
-					}
-			   	}
-
-#if DEBUG
-				printf("0 _%s_\n", found->text_string);
-				printf("1 _%s_\n", found_name);
-				printf("2 _%s_\n", found_value);
-#endif
-			}
-			a_current=a_current->next;
-		}	
-	  }
-
-		/* search for the attribute outside here... */
-	/* I don't think I have to do this here,  since this routine isn't
-	   used */
-
-	  o_current=o_current->next;
-	}
-	
-	return (NULL);
-} 
-#endif
 
 
 OBJECT *
@@ -1333,7 +1314,7 @@ o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes)
 		if (a_current->object) {	
 			
 			if (a_current->object->type == OBJ_TEXT &&
-			     a_current->object->complex) {
+			     a_current->object->text->prim_objs) {
 
 				/* I'm not terribly happy with this */
 		
@@ -1342,20 +1323,20 @@ o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes)
 					/* if the object is selected, make */
 					/* sure it it say selected */
 					o_complex_set_color(
-						a_current->object->complex,
+						a_current->object->text->prim_objs,
 						SELECT_COLOR);
 			        	a_current->object->color = 
 						SELECT_COLOR;
 
 					o_complex_set_saved_color_only(
-						a_current->object->complex,
+						a_current->object->text->prim_objs,
 						w_current->attribute_color); 
 			        	a_current->object->saved_color = w_current->
 							attribute_color;
 
 				} else {
 					o_complex_set_color(
-						a_current->object->complex,
+						a_current->object->text->prim_objs,
 						w_current->attribute_color); 
 			        	a_current->object->color = 
 						 w_current->attribute_color;
@@ -1373,13 +1354,15 @@ o_attrib_search_special(OBJECT *o_current)
 {
 	char *return_value;
 
-	return_value = o_attrib_search_name(o_current->complex, "gnd", 0);
+	return_value = o_attrib_search_name(o_current->complex->prim_objs, 
+					    "gnd", 0);
 
 	if (return_value) {
 		return(return_value);
 	}
 
-	return_value = o_attrib_search_name(o_current->complex, "vdd", 0);
+	return_value = o_attrib_search_name(o_current->complex->prim_objs, 
+					    "vdd", 0);
 
 	if (return_value) {
 		return(return_value);
@@ -1408,9 +1391,10 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 
 		while(a_current != NULL) {
 			found = a_current->object;
-			if (found != NULL && found->text_string) {
+			if (found != NULL) {
+                           if (found->type == OBJ_TEXT) {
 				val = o_attrib_get_name_value(
-					found->text_string, 
+					found->text->string, 
 					found_name, found_value);
 
 				if (val) {
@@ -1428,19 +1412,20 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 				}	
 
 #if DEBUG 
-				printf("0 _%s_\n", found->text_string);
+				printf("0 _%s_\n", found->text->string);
 				printf("1 _%s_\n", found_name);
 				printf("2 _%s_\n", found_value);
 #endif
+                            }
 			}
 			a_current=a_current->next;
 		}	
-
 	}
 	/* search for attributes outside */
 
 	if (o_current->type == OBJ_TEXT) {
-	 	val = o_attrib_get_name_value(o_current->text_string, 
+		printf("here %c\n", o_current->type);
+	 	val = o_attrib_get_name_value(o_current->text->string, 
 					found_name, found_value);
 
 		if (val) {
@@ -1485,9 +1470,10 @@ o_attrib_search_name_single_count(OBJECT *object, char *name,
 
 		while(a_current != NULL) {
 			found = a_current->object;
-			if (found != NULL && found->text_string) {
+			if (found != NULL) {
+                           if (found->type == OBJ_TEXT) {
 				val = o_attrib_get_name_value(
-					found->text_string, 
+					found->text->string, 
 					found_name, found_value);
 
 				if (val) {
@@ -1507,10 +1493,11 @@ o_attrib_search_name_single_count(OBJECT *object, char *name,
 				}	
 
 #if DEBUG 
-				printf("0 _%s_\n", found->text_string);
+				printf("0 _%s_\n", found->text->string);
 				printf("1 _%s_\n", found_name);
 				printf("2 _%s_\n", found_value);
 #endif
+			   }
 			}
 			a_current=a_current->next;
 		}	
@@ -1519,7 +1506,7 @@ o_attrib_search_name_single_count(OBJECT *object, char *name,
 	/* search for attributes outside */
 
 	if (o_current->type == OBJ_TEXT) {
-	 	val = o_attrib_get_name_value(o_current->text_string, 
+	 	val = o_attrib_get_name_value(o_current->text->string, 
 					found_name, found_value);
 
 		if (val) {
@@ -1567,7 +1554,8 @@ o_attrib_search_numslots(OBJECT *object, OBJECT **return_found)
 	char *return_value;
 
 	/* search for numslots attribute buried inside the complex */
-	return_value = o_attrib_search_name(object->complex, "numslots", 0);
+	return_value = o_attrib_search_name(object->complex->prim_objs, 
+					    "numslots", 0);
 
 	if (return_value) {
 		return(return_value);
@@ -1586,7 +1574,8 @@ o_attrib_search_default_slot(OBJECT *object)
 	char *return_value;
 
 	/* search for default value attribute buried inside the complex */
-	return_value = o_attrib_search_name(object->complex, "slot", 0);
+	return_value = o_attrib_search_name(object->complex->prim_objs, 
+					    "slot", 0);
 
 	if (return_value) {
 		return(return_value);
@@ -1643,7 +1632,8 @@ o_attrib_search_slot_number(OBJECT *object, int slotnumber)
 	printf("slotnumber: _%s_\n", search_for); 
 #endif
 	/* search for default value attribute buried inside the complex */
-	return_value = o_attrib_search_name(object->complex, search_for, 0);
+	return_value = o_attrib_search_name(object->complex->prim_objs, 
+					    search_for, 0);
 	free(search_for);
 
 	if (return_value) {
@@ -1706,15 +1696,17 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 	current_pin = strtok(slot_num, DELIMITERS);
 	while(current_pin != NULL) {
 
-		string = o_attrib_search_pin_number(o_current->complex, pin_counter, &o_pin_attrib);
+		string = o_attrib_search_pin_number(
+			o_current->complex->prim_objs, 
+			pin_counter, &o_pin_attrib);
 
 		if (string) {
 
 			/* don't care about the value */
 			free(string);
 
-			if (o_pin_attrib->text_string) {
-				free(o_pin_attrib->text_string);	
+			if (o_pin_attrib->text->string) {
+				free(o_pin_attrib->text->string);	
 			}
 
 			/* current_pin_int is the new pin value assigned */	
@@ -1722,18 +1714,18 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 			/* current_pin_int = atoi(current_pin);	*/
 
 			/* 9 is the size of one number plus null character */
-			o_pin_attrib->text_string = (char *) malloc(
+			o_pin_attrib->text->string = (char *) malloc(
 				sizeof(char)*(strlen("pin=")+
 					      strlen(current_pin)+9));
 
 			/* removed _int from current_pin */
-			sprintf(o_pin_attrib->text_string, "pin%d=%s", 
+			sprintf(o_pin_attrib->text->string, "pin%d=%s", 
 					pin_counter, current_pin); 
 
 			o_text_recreate(w_current, o_pin_attrib);
 
 #if DEBUG 
-			printf("full object string %s\n", o_pin_attrib->text_string);
+			printf("full object string %s\n", o_pin_attrib->text->string);
 #endif
 			pin_counter++;
 		} else {
@@ -1794,15 +1786,16 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 	current_pin = strtok(slot_num, DELIMITERS);
 	while(current_pin != NULL) {
 
-		string = o_attrib_search_pin_number(target->complex, pin_counter, &o_pin_attrib);
+		string = o_attrib_search_pin_number(target->complex->prim_objs,
+						pin_counter, &o_pin_attrib);
 
 		if (string) {
 
 			/* don't care about the value */
 			free(string);
 
-			if (o_pin_attrib->text_string) {
-				free(o_pin_attrib->text_string);	
+			if (o_pin_attrib->text->string) {
+				free(o_pin_attrib->text->string);	
 			}
 
 			/* current_pin_int is the new pin value assigned */	
@@ -1810,18 +1803,18 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 			/* current_pin_int = atoi(current_pin);	*/
 
 			/* 9 is the size of one number plus null character */
-			o_pin_attrib->text_string = (char *) malloc(
+			o_pin_attrib->text->string = (char *) malloc(
 				sizeof(char)*(strlen("pin=")+
 					      strlen(current_pin)+9));
 
 			/* changed current_pin_int to current_pin (a string) */
-			sprintf(o_pin_attrib->text_string, "pin%d=%s", 
+			sprintf(o_pin_attrib->text->string, "pin%d=%s", 
 					pin_counter, current_pin); 
 
 			o_text_recreate(w_current, o_pin_attrib);
 
 #if DEBUG 
-			printf("full object string %s\n", o_pin_attrib->text_string);
+			printf("full object string %s\n", o_pin_attrib->text->string);
 #endif
 			pin_counter++;
 		} else {
@@ -1945,7 +1938,7 @@ o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
 		if (a_current->object != NULL) {
 			o_current = a_current->object;
 			if (o_current->type == OBJ_TEXT && 
-			    o_current->text_string) {
+			    o_current->text->string) {
 				found_objects[i] = o_current;
 				i++;
 			}
@@ -1959,7 +1952,7 @@ o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
 	i=0;
 	while(found_objects[i] != NULL) {
 		/*for (i = 0 ; i < num_attribs; i++) {*/
-		printf("%d : %s\n", i, found_objects[i]->text_string);
+		printf("%d : %s\n", i, found_objects[i]->text->string);
 		i++;
 	}
 #endif
