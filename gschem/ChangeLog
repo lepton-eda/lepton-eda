@@ -9,6 +9,50 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/17/99	Put some code into i_set_filename which truncates extra long
+	files, so that the window size isn't affected.
+
+	Changed the botton status bar a bit.
+		- Removed the "Mouse buttons" label
+		- Change the buttons to labels
+
+	Added the "middle-button" keywork which allows you to control what
+	the middle button is assigned to do.  (also added keyword to system
+	rc file)
+
+	Added code to support the "move" mode of middle-button, which
+	allows you to move stuff around by just clicking the middle button
+	and moving the object.  This only work on single objects, unless
+	you select the objects ahead of time and then hold the shift key
+	down and click somewhere OUTSIDE of an object.
+
+	Renamed [left|middle|right]_button to _label
+
+	Simplifed i_update_middle_button with using the new middle_button
+	variable
+
+	Added w_current->ALTKEY (so we know if the alt key is being pressed
+	or not)
+
+	If middle-button is "action" and you hold down the ALT key, the 
+	object will be copied instead of moved.
+
+	Fixed the RETURN_G_RC_MODE macro.  Added a number of entries 
+	parameter (size), since gschem was core dumping when you passed
+	an unknown string to the mode functions.  (sizeof(mode_table) 
+	was always returning # of bytes, not entries.
+
+	Made the "action" mode the default for the middle-button
+
+	Created freestyle-color which allows the user to create generic
+	colors which can be used in the schematic.  This should be used
+	with great care, since these colors are not attached to any type
+	of object.
+
+	Fixed a bug in the color scheme used by the symbols, using the
+	freestyle-color (color 7 which is the grid color, should not be
+	used by symbols, created color 17)
+
 9/16/99	Updated all the schematic/symbol opening functions so that only
 	sch's/sym's which are not loaded are actually opened up.  If a 
 	schematic is loaded and an attempt is made to open it again, gschem

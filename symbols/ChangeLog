@@ -11,6 +11,9 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/17/99	Changed a few of the IEC417 symbols to use color 17 as the grey
+	color: ac-ac.sym ac-dc.sym adc.sym dac.sym dc-ac.sym dc-dc.sym
+
 9/16/99	Created a spice symbol library which hold some of the special
 	spice symbols by Bas Gieltjes
 		- Added spice to all the required configure/Makefiles 

@@ -55,6 +55,9 @@
 #include <sys/stat.h>
 #endif
 
+/* a random int, used only as a place holder */
+int default_dummy;
+
 static int
 g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)
 {
@@ -367,6 +370,10 @@ DEFINE_G_RC_COLOR(g_rc_stroke_color,
 		  "stroke-color",
 		  default_stroke_color);
 
+DEFINE_G_RC_COLOR(g_rc_freestyle_color,
+		  "freestyle-color",
+		  default_dummy);
+
 typedef struct {
 	int   m_val;
 	char *m_str;
@@ -430,7 +437,7 @@ g_rc_mode_general(SCM mode,
 	index = vstbl_lookup_str(table, table_size, string);
 
 	/* no match? */
-	if(index == sizeof(table)) {
+	if(index == table_size) {
 		fprintf(stderr,
 			"Invalid mode [%s] passed to %s\n",
 			string,
@@ -449,12 +456,12 @@ g_rc_mode_general(SCM mode,
 	return SCM_BOOL_T;
 }
 
-#define RETURN_G_RC_MODE(rc, var)			\
+#define RETURN_G_RC_MODE(rc, var, size)			\
 	return g_rc_mode_general(mode,			\
 				 (rc),			\
 				 &(var),		\
 				 mode_table,		\
-				 sizeof(mode_table))
+				 size)
 
 SCM
 g_rc_net_endpoint_mode(SCM mode)
@@ -466,7 +473,7 @@ g_rc_net_endpoint_mode(SCM mode)
 		{NONE     , "none"     }
 	};
 
-	RETURN_G_RC_MODE("net-endpoint-mode", default_net_endpoint_mode);
+	RETURN_G_RC_MODE("net-endpoint-mode", default_net_endpoint_mode, 4);
 }
 
 SCM
@@ -478,7 +485,7 @@ g_rc_net_midpoint_mode(SCM mode)
 		{NONE  , "none"  }
 	};
 
-	RETURN_G_RC_MODE("net-midpoint-mode", default_net_midpoint_mode);
+	RETURN_G_RC_MODE("net-midpoint-mode", default_net_midpoint_mode, 3);
 }
 
 SCM
@@ -489,7 +496,7 @@ g_rc_net_style(SCM mode)
 		{THICK, "thick"}
 	};
 
-	RETURN_G_RC_MODE("net-style", default_net_style);
+	RETURN_G_RC_MODE("net-style", default_net_style, 2);
 }
 
 SCM
@@ -500,7 +507,7 @@ g_rc_bus_style(SCM mode)
 		{THICK, "thick"}
 	};
 
-	RETURN_G_RC_MODE("bus-style", default_bus_style);
+	RETURN_G_RC_MODE("bus-style", default_bus_style, 2);
 }
 
 SCM
@@ -511,7 +518,7 @@ g_rc_pin_style(SCM mode)
 		{THICK, "thick"}
 	};
 
-	RETURN_G_RC_MODE("pin-style", default_pin_style);
+	RETURN_G_RC_MODE("pin-style", default_pin_style, 2);
 }
 
 SCM
@@ -522,7 +529,7 @@ g_rc_action_feedback_mode(SCM mode)
 		{BOUNDINGBOX, "boudingbox"}
 	};
 
-	RETURN_G_RC_MODE("action-feedback-mode", default_actionfeedback_mode);
+	RETURN_G_RC_MODE("action-feedback-mode",default_actionfeedback_mode,2);
 }
 
 SCM
@@ -533,7 +540,7 @@ g_rc_zoom_with_pan(SCM mode)
 		{FALSE, "disabled"}
 	};
 
-	RETURN_G_RC_MODE("zoom-with-pan", default_zoom_with_pan);
+	RETURN_G_RC_MODE("zoom-with-pan", default_zoom_with_pan, 2);
 }
 
 SCM
@@ -544,7 +551,7 @@ g_rc_text_feedback(SCM mode)
 		{ONLY_WHEN_READABLE, "only-when-readable"}
 	};
 
-	RETURN_G_RC_MODE("text-feedback", default_text_feedback);
+	RETURN_G_RC_MODE("text-feedback", default_text_feedback, 2);
 }
 
 SCM
@@ -614,7 +621,7 @@ g_rc_object_clipping(SCM mode)
 		{FALSE, "disabled"}
 	};
 
-	RETURN_G_RC_MODE("object-clipping", default_object_clipping);
+	RETURN_G_RC_MODE("object-clipping", default_object_clipping, 2);
 }
 
 SCM
@@ -625,7 +632,7 @@ g_rc_logging(SCM mode)
 		{FALSE, "disabled"}
 	};
 
-	RETURN_G_RC_MODE("logging", default_do_logging);
+	RETURN_G_RC_MODE("logging", default_do_logging, 2);
 }
 
 SCM
@@ -636,7 +643,7 @@ g_rc_embed_components(SCM mode)
 		{FALSE, "disabled"}
 	};
 
-	RETURN_G_RC_MODE("embed-components", default_embed_complex);
+	RETURN_G_RC_MODE("embed-components", default_embed_complex, 2);
 }
 
 SCM
@@ -669,7 +676,7 @@ g_rc_text_caps_style(SCM mode)
 		{BOTH , "both"  }
 	};
 
-	RETURN_G_RC_MODE("text-caps-style", default_text_caps);
+	RETURN_G_RC_MODE("text-caps-style", default_text_caps, 3);
 }
 
 SCM
@@ -699,7 +706,7 @@ g_rc_logging_destination(SCM mode)
 		{BOTH_LOGWIN_STDOUT , "both"       }
 	};
 
-	RETURN_G_RC_MODE("logging-destination", logging_dest);
+	RETURN_G_RC_MODE("logging-destination", logging_dest, 3);
 }
 
 SCM
@@ -1065,7 +1072,7 @@ g_rc_scrollbars(SCM mode)
 		{FALSE, "disabled"},
 	};
 
-	RETURN_G_RC_MODE("scrollbars", default_scrollbars_flag);
+	RETURN_G_RC_MODE("scrollbars", default_scrollbars_flag, 2);
 }
 
 SCM
@@ -1121,7 +1128,7 @@ g_rc_output_text(SCM mode)
 		{PS_FONTS     , "ps"     },
 	};
 
-	RETURN_G_RC_MODE("output-text", default_text_output);
+	RETURN_G_RC_MODE("output-text", default_text_output, 2);
 }
 
 /* this keyword needs a better name ... */
@@ -1133,7 +1140,7 @@ g_rc_output_type(SCM mode)
 		{LIMITS, "limits" },
 	};
 
-	RETURN_G_RC_MODE("output-type", default_print_output_type);
+	RETURN_G_RC_MODE("output-type", default_print_output_type, 2);
 }
 
 SCM
@@ -1144,7 +1151,7 @@ g_rc_output_orientation(SCM mode)
 		{LANDSCAPE, "landscape"},
 	};
 
-	RETURN_G_RC_MODE("output-orientation", default_print_orientation);
+	RETURN_G_RC_MODE("output-orientation", default_print_orientation, 2);
 }
 
 SCM
@@ -1155,7 +1162,7 @@ g_rc_image_color(SCM mode)
 		{FALSE, "disabled"},
 	};
 
-	RETURN_G_RC_MODE("image-color", default_image_color);
+	RETURN_G_RC_MODE("image-color", default_image_color, 2);
 }
 
 SCM
@@ -1167,7 +1174,7 @@ g_rc_output_color(SCM mode)
 	};
 
 	/* this variable is inconsistantly named with the rest */
-	RETURN_G_RC_MODE("output-color", default_print_color);
+	RETURN_G_RC_MODE("output-color", default_print_color, 2);
 }
 
 SCM
@@ -1179,7 +1186,7 @@ g_rc_output_capstyle(SCM mode)
 		{SQUARE_CAP, "square"},
 	};
 
-	RETURN_G_RC_MODE("output-capstyle", default_print_output_capstyle);
+	RETURN_G_RC_MODE("output-capstyle", default_print_output_capstyle, 3);
 }
 
 SCM
@@ -1190,7 +1197,7 @@ g_rc_log_window(SCM mode)
 		{MAP_LATER     , "later"   },
 	};
 
-	RETURN_G_RC_MODE("log-window", default_log_window);
+	RETURN_G_RC_MODE("log-window", default_log_window, 2);
 }
 
 SCM
@@ -1201,7 +1208,7 @@ g_rc_log_window_type(SCM mode)
 		{DECORATED, "decorated" },
 	};
 
-	RETURN_G_RC_MODE("log-window-type", default_log_window_type);
+	RETURN_G_RC_MODE("log-window-type", default_log_window_type, 2);
 }
 
 SCM
@@ -1212,7 +1219,19 @@ g_rc_third_button(SCM mode)
 		{MOUSEPAN_ENABLED, "mousepan"},
 	};
 
-	RETURN_G_RC_MODE("third-button", default_third_button);
+	RETURN_G_RC_MODE("third-button", default_third_button, 2);
+}
+
+SCM
+g_rc_middle_button(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{STROKE, "stroke"},
+		{REPEAT, "repeat"},
+		{ACTION, "action"},
+	};
+
+	RETURN_G_RC_MODE("middle-button", default_middle_button, 3);
 }
 
 SCM
@@ -1223,5 +1242,5 @@ g_rc_net_consolidate(SCM mode)
 		{FALSE, "disabled"},
 	};
 
-	RETURN_G_RC_MODE("net-consolidate", default_net_consolidate);
+	RETURN_G_RC_MODE("net-consolidate", default_net_consolidate, 2);
 }

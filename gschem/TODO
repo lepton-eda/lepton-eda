@@ -89,6 +89,9 @@ DONE	Code to have all attributes visible
 DONE	Make sure snap spacing is set to 100 when doing symbol translates
 	(warn user in log window)
 
+	Simplify i_update_* so that static strings are being re-set 
+	constantly
+
 	Agg! get rid of all window_current's and global_window_current
 
 	Added rc keyword for pin/net thickness (the value) and for visual

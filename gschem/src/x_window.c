@@ -582,32 +582,56 @@ x_window_create_main(TOPLEVEL *w_current)
 	gtk_box_pack_start (GTK_BOX (main_box), bottom_box, FALSE, FALSE, 0);
         gtk_widget_show(bottom_box);
 
-	label = gtk_label_new ("Mouse buttons:");
+/*	label = gtk_label_new ("Mouse buttons:");
         gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 10);
         gtk_widget_show (label);
+*/
 
-	w_current->left_button = gtk_button_new_with_label ("Pick");
-	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->left_button,
+	label = gtk_label_new (" ");
+        gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 2);
+        gtk_widget_show (label);
+
+	w_current->left_label = gtk_label_new ("Pick");
+	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->left_label,
 			    FALSE, FALSE, 0);
-        gtk_widget_show (w_current->left_button);
+        gtk_widget_show (w_current->left_label);
 
+	label = gtk_label_new ("|");
+        gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
+        gtk_widget_show (label);
+
+	if (w_current->middle_button == STROKE) {
 #if HAS_LIBSTROKE
-	w_current->middle_button = gtk_button_new_with_label ("Stroke/none");
+		w_current->middle_label = gtk_label_new ("Stroke");
 #else
-	w_current->middle_button = gtk_button_new_with_label ("none");
+		w_current->middle_label = gtk_label_new ("none");
 #endif
-	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->middle_button,
+	} else if (w_current->middle_button == ACTION) {
+		w_current->middle_label = gtk_label_new ("Action");
+	} else {
+		w_current->middle_label = gtk_label_new ("Repeat/none");
+	}
+
+	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->middle_label,
 			    FALSE, FALSE, 0);
-        gtk_widget_show (w_current->middle_button);
+        gtk_widget_show (w_current->middle_label);
+
+	label = gtk_label_new ("|");
+        gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
+        gtk_widget_show (label);
 
 	if (default_third_button == POPUP_ENABLED) {
-		w_current->right_button = gtk_button_new_with_label ("Menu/Cancel");
+		w_current->right_label = gtk_label_new ("Menu/Cancel");
 	} else {
-		w_current->right_button = gtk_button_new_with_label ("Pan/Cancel");
+		w_current->right_label = gtk_label_new ("Pan/Cancel");
 	}
-	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_button,
+	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_label,
                        	    FALSE, FALSE, 0);
-        gtk_widget_show (w_current->right_button);
+        gtk_widget_show (w_current->right_label);
+
+	label = gtk_label_new (" ");
+        gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
+        gtk_widget_show (label);
 
 	w_current->filename_label = gtk_label_new (" ");
         gtk_box_pack_start (GTK_BOX (bottom_box), w_current->filename_label,

@@ -266,6 +266,7 @@ struct st_toplevel {
 
 	int CONTROLKEY;				/* control key pressed? */
 	int SHIFTKEY;				/* shift key pressed? */
+	int ALTKEY;				/* alt key pressed? */
 
 /* Page system used by gPCB */
 	PAGE_T *current_page;
@@ -288,9 +289,9 @@ struct st_toplevel {
 	GtkWidget *v_scrollbar;    
 	GtkObject *h_adjustment;
 	GtkObject *v_adjustment;
-	GtkWidget *left_button;
-	GtkWidget *middle_button;
-	GtkWidget *right_button;
+	GtkWidget *left_label;
+	GtkWidget *middle_label;
+	GtkWidget *right_label;
 	GtkWidget *filename_label;
 	GtkWidget *status_label;
 
@@ -411,6 +412,7 @@ struct st_toplevel {
 	int log_window; /* controls if the log windows mapped on startup */
 	int log_window_type; /* controls if the log window is decorated or not */
 	int third_button; /* controls what the third mouse button does */
+	int middle_button; /* controls what the third mouse button does */
 	int net_consolidate; /* controls if the net consolidation code is used */ 
 
 	int print_output_type;			/* either window or limits */

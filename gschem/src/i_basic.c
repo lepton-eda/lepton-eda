@@ -65,59 +65,101 @@ i_update_left_button(char *string)
 void
 i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
 {
-#ifndef HAS_LIBSTROKE
-	if (func_ptr != NULL) {
-		if (string) {
-#if 0
-			DONT_EXPOSE = 1;
-#endif
-			w_current->DONT_RESIZE = 1;
-			gtk_label_set(
-				GTK_LABEL(GTK_BUTTON(
-					w_current->middle_button)->child),
-				string);
-			w_current->last_callback = func_ptr;
-		}
+	char *temp_string;
+
+	if (func_ptr == NULL) {
+		return;
 	}
-#else
-	if (func_ptr != NULL) {
-		if (string) {
-			char *temp_string;
+
+	if (string == NULL) {
+		return;
+	}	
+
+	switch(w_current->middle_button) {
+
+		/* remove this case eventually and make it a null case */
+		case(ACTION):
+			w_current->DONT_RESIZE = 1;
+			gtk_label_set(GTK_LABEL(w_current->middle_label),
+				      "Action");
+			break;
+
+#ifdef HAS_LIBSTROKE
+		case(STROKE):
+			w_current->DONT_RESIZE = 1;
+
+			gtk_label_set(GTK_LABEL(w_current->middle_label),
+				      "Stroke");
+			break;
+#else 
+		/* remove this case eventually and make it a null case */
+		case(STROKE):
+			w_current->DONT_RESIZE = 1;
+			gtk_label_set(GTK_LABEL(w_current->middle_label),
+				      "none");
+			break;
+#endif
+		
+		case(REPEAT):
+			w_current->DONT_RESIZE = 1;
 
 			temp_string = u_basic_strdup_multiple(
-				"Stroke/", string, NULL);
+				"Repeat/", string, NULL);
 
-			w_current->DONT_RESIZE = 1;
-			gtk_label_set(GTK_LABEL(GTK_BUTTON(
-				w_current->middle_button)->child),
+			gtk_label_set(GTK_LABEL(w_current->middle_label),
 				      temp_string);
 			w_current->last_callback = func_ptr;
 			free(temp_string);
-		}
+			break;
+
 	}
-#endif
+
 }
 
 void
 i_update_right_button(char *string)
 {
-#if 0
- 	if (string) {
-		DONT_RESIZE = 1;
-		gtk_label_set(GTK_LABEL(right_button), (char *) string);
-	}
-#endif
 }
 
 void
 i_set_filename(TOPLEVEL *w_current, char *string)
 {
+	char trunc_string[41];
+	int len;
+	int i;
+
+
 	if (string) {
+		len = strlen(string);
                 w_current->DONT_RESIZE = 1;
 
 		if (w_current->filename_label) {
-                	gtk_label_set(GTK_LABEL(w_current->filename_label),
-				      (char *) string);
+			if (len > 40) {
+
+				trunc_string[0] = '.';
+				trunc_string[1] = '.';
+				trunc_string[2] = '.';
+
+				trunc_string[40] = '\0';
+				for (i = 39 ; i > 2; i--) {
+					if (len >= 0) {
+						trunc_string[i] = string[len];
+					} else {
+						break;
+					}
+					len--;
+				}
+
+	                	gtk_label_set(GTK_LABEL(w_current->
+							filename_label),
+				      			trunc_string);
+
+			} else {
+
+	                	gtk_label_set(GTK_LABEL(w_current->
+							filename_label),
+				      			(char *) string);
+			}
 		}
         }
 }

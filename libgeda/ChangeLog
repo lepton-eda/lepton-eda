@@ -8,6 +8,8 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+9/17/99	Added/changed a few variables the various structures in struct.h
+
 9/16/99	Removed the restriction that sym/sch files have to be perfect.  You
 	now can have garbage in a sym/sch file and it won't exit, but instead
 	warn the user and display what it read in.

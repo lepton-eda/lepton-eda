@@ -1295,7 +1295,7 @@ index2functionstring(int index)
 		case(OUTPUT_BACKGROUND_COLOR):
 			string = u_basic_strdup("output background");
 			break;
-		defautlt:
+		default:
 			string = u_basic_strdup("unknown");
 			break;
 	}

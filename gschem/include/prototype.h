@@ -130,6 +130,7 @@ SCM g_rc_logic_bubble_color(SCM index, SCM color, SCM outline_color, SCM ps_colo
 SCM g_rc_lock_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_output_color_background(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_stroke_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
+SCM g_rc_freestyle_color(SCM index, SCM color, SCM outline_color, SCM ps_color, SCM ir, SCM ig, SCM ib);
 SCM g_rc_net_endpoint_mode(SCM mode);
 SCM g_rc_net_midpoint_mode(SCM mode);
 SCM g_rc_net_style(SCM mode);
@@ -167,6 +168,7 @@ SCM g_rc_output_capstyle(SCM mode);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_log_window_type(SCM mode);
 SCM g_rc_third_button(SCM mode);
+SCM g_rc_middle_button(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);

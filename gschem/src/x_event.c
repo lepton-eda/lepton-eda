@@ -113,6 +113,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 	w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
 	w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+	w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
 	if (event->button == 1) {
 		switch(w_current->event_state) {
@@ -382,22 +383,66 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			i_callback_cancel(w_current, 0, NULL);
 		}
 
-#ifndef HAS_LIBSTROKE
-		if (w_current->last_callback != NULL) {
-			(*w_current->last_callback)(w_current, 0, NULL);
-		}
-#else
-		/* if the last_callback isn't null and the control key
-		 * is pressed */
-		if ((w_current->last_callback != NULL &&
-		     w_current->CONTROLKEY)) {
-			/* execute it */
-			(*w_current->last_callback)(w_current, 0, NULL);
-		} else {
-			/* else we are doing as stroke */
-			DOING_STROKE=TRUE;
-		}
+		switch(w_current->middle_button) {
+
+			case(ACTION): 
+				/* determine here if copy or move */
+				/* for now do move only */
+				/* make sure the list is not empty */
+				if (w_current->page_current->
+					selection_head->next == NULL) {
+					o_find(w_current, 
+					       (int) event->x, 
+					       (int) event->y);
+				} else {
+					o_unselect_all(w_current);
+					o_find(w_current, 
+					       (int) event->x, 
+					       (int) event->y);
+				}
+
+				if (w_current->page_current->selection_head->
+					next == NULL) {
+					/* this means the above find did not 
+					 * find anything */
+					w_current->event_state = SELECT;
+				 	w_current->inside_action = 0;
+					i_update_status(w_current,
+							"Select Mode");
+					return(0);
+				}
+
+
+				if (w_current->ALTKEY) {
+					o_copy_start(w_current,
+				     		     (int) event->x,
+				                     (int) event->y);
+				 	w_current->event_state = COPY;
+					i_update_status(w_current, "Copy");
+				 	w_current->inside_action = 1;
+				} else {
+					o_move_start(w_current,
+				     		     (int) event->x,
+				                     (int) event->y);
+				 	w_current->event_state = MOVE;
+					i_update_status(w_current, "Move");
+				 	w_current->inside_action = 1;
+				}
+				break;
+
+			case(REPEAT):	
+				if (w_current->last_callback != NULL) {
+					(*w_current->last_callback)(w_current, 	
+								    0, NULL);
+				}
+				break;
+#ifdef HAS_LIBSTROKE
+			case(STROKE):
+				DOING_STROKE=TRUE;
+				break;
+
 #endif
+		}
 
 	} else if (event->button == 3) {
 		if (!w_current->inside_action) {
@@ -452,6 +497,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
 	w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
 	w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+	w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
 	if (event->button == 1) {
 		switch(w_current->event_state) {
@@ -529,42 +575,59 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 		}
 	} else if (event->button == 2) {
 
+		switch(w_current->middle_button) { 
+			case(ACTION): 	
+				switch(w_current->event_state) {
+					case(MOVE):
+						o_move_end(w_current);
+						w_current->event_state = SELECT;
+						i_update_status(w_current, 
+							"Select Mode");
+						w_current->inside_action = 0;
+					break;
+
+					case(COPY):
+						o_copy_end(w_current);
+						w_current->event_state = SELECT;
+						i_update_status(w_current, 
+							"Select Mode");
+						w_current->inside_action = 0;
+					break;
+				}
+				break;
+
 #if HAS_LIBSTROKE
-		DOING_STROKE = FALSE;
+			case(STROKE):
 
-		if (stroke_trans (sequence) == TRUE) {
-			if (stroke_info_mode) {
-				printf ("LibStroke Translation succeeded: ");
-			}
-		} else {
-			if (stroke_info_mode) {
-				printf ("LibStroke Translation failed: ");
-			}
+				DOING_STROKE = FALSE;
+
+				if (stroke_trans (sequence) == TRUE) {
+					if (stroke_info_mode) {
+						printf ("LibStroke Translation"
+							" succeeded: ");
+					}
+				} else {
+					if (stroke_info_mode) {
+						printf ("LibStroke Translation"
+						 	" failed: ");
+					}
+				}
+	
+				if (stroke_info_mode) {
+					printf ("Sequence=\"%s\"\n",sequence);
+				}
+	
+				/* new way written by Stefan Petersen */ 
+				/* much better */
+				if (x_stroke_search_execute(sequence)) {
+
+					if (stroke_info_mode) {
+						printf("Sequence understood\n");
+					}
+                       			x_stroke_erase_all(w_current);
+				}
+				break;
 		}
-
-		if (stroke_info_mode) {
-			printf ("Sequence=\"%s\"\n",sequence);
-		}
-
-#if 0 /* old way written by AVH */
-		/* if it finds a stroke, erase the stroke, else leave
-		 * it drawn */
-		if (s_stroke_search_execute(sequence)) {
-			if (stroke_info_mode) {
-				printf ("Sequence understood\n");
-			}
-			x_stroke_erase_all(w_current);
-		}
-#endif
-
-	/* new way written by Stefan Petersen, much better */
-	if (x_stroke_search_execute(sequence)) {
-
-		if (stroke_info_mode) {
-                        printf ("Sequence understood\n");
-		}
-                        x_stroke_erase_all(w_current);
-	}
 #endif
 
 	} else if (event->button == 3) {
@@ -588,6 +651,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 
 	w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
 	w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+	w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
 	mouse_x = (int) event->x;
 	mouse_y = (int) event->y;

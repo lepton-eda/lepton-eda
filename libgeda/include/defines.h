@@ -168,6 +168,11 @@
 #define POPUP_ENABLED		0
 #define MOUSEPAN_ENABLED	1
 
+/* for middle-mouse */
+#define STROKE			0
+#define REPEAT			1
+#define ACTION			2
+
 /* for selected_from */
 #define DONTCARE		0
 #define MENU			1

@@ -51,6 +51,7 @@
 ; STROKE_COLOR                    14
 ; LOCK_COLOR    	          15
 ; OUTPUT_BACKGROUND_COLOR         16
+; Freestyle color		  17 (grey)
 ;
 ; OVERRIDE_NET_COLOR              4
 ; OVERRIDE_PIN_COLOR              1
@@ -124,7 +125,6 @@
 ; DO NOT change the value of the index (first number)
 ;
 (grid-color 7 "grey" "null" "null" -1 -1 -1)
-;(grid-color 7 "grey" "darkgrey" ".75 .75 .75" 190 190 190)
 
 ; detached-attribute-color index color_name outline_color ps_color_string 
 ;                          int_red int_green int_blue 
@@ -227,6 +227,18 @@
 ; DO NOT change the value of the index (first number)
 ; 
 ;(override-bus-color 10 "green" "green3" "0 1 0" 0 255 0)
+
+; freestyle-color index color_name outline_color ps_color_string 
+;            int_red int_green int_blue 
+; Set a freestyle color which can be used in whatever context you want.
+; However, care should be taken with this facility since users might 
+; change this colors at will.
+; Do not change color index 17 (it's used in the IEC417 library).
+;
+(freestyle-color 17 "grey" "darkgrey" ".75 .75 .75" 190 190 190)
+;(freestyle-color 18 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+;(freestyle-color 19 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
+;(freestyle-color 20 "color_name" "dark_color_name" "0.0 0.0 0.0" 0 0 0)
 
 ;
 ; End of color related keywords
@@ -580,6 +592,16 @@
 ;
 (image-color "enabled")
 ;(image-color "disabled")
+
+; middle-button string
+;
+; Controls if the middle mouse button draws strokes, repeats the last 
+; command, or does an action (move and copy (holding down the ALT key) 
+; are supported) on a single objects.
+;
+(middle-button "action")
+;(middle-button "stroke")
+;(middle-button "repeat")
 
 ; third-button string
 ;

@@ -88,6 +88,9 @@ g_register_funcs(void)
                           7, 0, 0);
 	gh_new_procedure ("output-color-background", g_rc_output_color_background,
                           7, 0, 0);
+	gh_new_procedure ("freestyle-color", g_rc_freestyle_color,
+                          7, 0, 0);
+
 
 	gh_new_procedure1_0 ("net-endpoint-mode", g_rc_net_endpoint_mode);
 	gh_new_procedure1_0 ("net-midpoint-mode", g_rc_net_midpoint_mode);
@@ -130,6 +133,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);
 	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
 	gh_new_procedure1_0 ("third-button", g_rc_third_button);
+	gh_new_procedure1_0 ("middle-button", g_rc_middle_button);
 	gh_new_procedure1_0 ("net-consolidate", g_rc_net_consolidate);
 
 	/* general guile functions */
