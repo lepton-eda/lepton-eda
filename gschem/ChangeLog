@@ -1,3 +1,9 @@
+2002-09-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_menus.nw: Fixed the code so that toplevel menu names are
+	now translated.  Also fixed it so that "Help" gets translated as 
+	well.
+
 2002-09-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/de_DE.po: Updated the Project-Id-Version so that gettext is

@@ -332,7 +332,6 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   GtkWidget *menu;
   GdkFont *font=NULL;
   GtkStyle *style;
-  char **menu_name = malloc (sizeof(char *));
   int scm_items_len;
   SCM scm_items;
   SCM scm_item;
@@ -341,12 +340,15 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   SCM scm_item_hotkey_func;
   SCM scm_index;
   SCM scm_keys;
+  char *menu_name;
+  char **raw_menu_name = malloc (sizeof(char *));
   char *menu_item_name;
   char *raw_menu_item_name;
   char *menu_item_func;
   char *menu_item_hotkey_func;
   char *menu_item_keys;
   char *spaces;
+  char *help_string;
   int i, j;
   int name_len, key_len, pad;
   int sum, diff, max_size, space_size;
@@ -354,8 +356,8 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   menu_bar = gtk_menu_bar_new ();
   for (i = 0 ; i < s_menu_return_num(); i++) {
     
-    scm_items = s_menu_return_entry(i, menu_name);   
-    if (*menu_name == NULL) {
+    scm_items = s_menu_return_entry(i, raw_menu_name);   
+    if (*raw_menu_name == NULL) {
       fprintf(stderr, "Oops.. got a NULL menu name in get_main_menu()\n");
       exit(-1);
     }
@@ -476,9 +478,12 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       
     }
 
-    
-    root_menu = gtk_menu_item_new_with_label (*menu_name);
-    if (strcmp(*menu_name, "Help") == 0) {
+    menu_name = (char *) gettext(*raw_menu_name);
+    root_menu = gtk_menu_item_new_with_label (menu_name);
+    /* do not free *raw_menu_name */
+
+    help_string = gettext("Help");
+    if (strcmp(menu_name, help_string) == 0) {
       gtk_menu_item_right_justify (GTK_MENU_ITEM(root_menu));
     }
     gtk_widget_show (root_menu);
@@ -486,7 +491,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), root_menu);
   }
   
-  free(menu_name);
+  free(raw_menu_name);
   *menubar = menu_bar;
 }
 
