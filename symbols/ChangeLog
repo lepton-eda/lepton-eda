@@ -1,6 +1,12 @@
 2003-08-31 Werner Hoch <werner.ho@gmx.de>
 	* memory/*.sym: repaired and completed all symbols
 	
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* maxim/max3223e-1.sym, micro/M41T00-SO8-1.sym, micro/tiny-tiger-1.sym,
+	misc/FND5148-1.sym, misc/QT60040-1.sym: Merged author= and email=
+	attributes together.
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Improved the configuration summary message.

@@ -6,9 +6,7 @@ description=Dual 7-segment + dot red led display
 T 400 7400 5 10 0 0 0 0
 documentation=Unknown
 T 400 7100 5 10 0 0 0 0
-author=Jan Stap
-T 400 6800 5 10 0 0 0 0
-email=stap@dse.nl
+author=Jan Stap stapATdse.nl
 T 400 6500 5 10 0 0 0 0
 date=$Date$
 T 400 6200 5 10 0 0 0 0

@@ -6,9 +6,7 @@ description=QMatrix QT60040 4-key charge-transfer IC
 T 300 6700 5 10 0 0 0 0
 documentation=http://www.qprox.com/downloads/d/qt60040_103_datasheet.pdf
 T 300 6400 5 10 0 0 0 0
-author=Jan Stap
-T 300 6100 5 10 0 0 0 0
-email=stap@dse.nl
+author=Jan Stap stapATdse.nl
 T 300 5800 5 10 0 0 0 0
 date=$Date$
 T 300 5500 5 10 0 0 0 0

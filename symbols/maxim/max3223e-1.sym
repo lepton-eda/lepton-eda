@@ -6,9 +6,7 @@ description=Maxim RS-232 transceiver with autoshutdown and ESD protection
 T 350 8000 5 10 0 0 0 0
 documentation=http://pdfserv.maxim-ic.com/arpdf/MAX3221E-MAX3243E.pdf
 T 400 7700 5 10 0 0 0 0
-author=Jan Stap
-T 400 7400 5 10 0 0 0 0
-email=stap@dse.nl
+author=Jan Stap stapATdse.nl
 T 400 7100 5 10 0 0 0 0
 date=$Date$
 T 400 6800 5 10 0 0 0 0

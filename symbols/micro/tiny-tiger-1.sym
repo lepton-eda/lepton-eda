@@ -6,9 +6,7 @@ description=TINY-Tiger multi-tasking MPU by Wilke Technology
 T 400 11700 5 10 0 0 0 0
 documentation=http://www.wilke.de/multi.htm#tinytiger
 T 400 11400 5 10 0 0 0 0
-author=Jan Stap
-T 400 11100 5 10 0 0 0 0
-email=stap@dse.nl
+author=Jan Stap stapATdse.nl
 T 400 10800 5 10 0 0 0 0
 date=$Date$
 T 400 10500 5 10 0 0 0 0
