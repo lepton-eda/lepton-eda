@@ -214,25 +214,6 @@ extern int iQueueId;
 
 
 
-
-gboolean
-on_ComponentTree_show                  (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data)
-{
-
-  return FALSE;
-}
-
-
-void
-on_ComponentTree_draw                  (GtkWidget       *widget,
-                                        GdkRectangle    *area,
-                                        gpointer         user_data)
-{
-
-}
-
 void
 on_InstallLocalButton_clicked          (GtkButton       *button,
                                         gpointer         user_data)

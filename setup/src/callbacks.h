@@ -1,4 +1,6 @@
 #include <gtk/gtk.h>
+#include "comps.h"
+
 
 
 void
@@ -52,7 +54,7 @@ on_DismissButton_clicked               (GtkButton       *button,
 
 void
 on_InstallDirectoryEntry_changed       (GtkEditable     *editable,
-                                        gpointer         user_data)
+                                        gpointer         user_data);
 
 gboolean
 on_MainWindow_delete_event             (GtkWidget       *widget,
