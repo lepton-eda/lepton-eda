@@ -53,7 +53,7 @@
 
 (define gossip:list-pins
    (lambda (allnets uref pin port)
-      (let ((pinname (gnetlist:get-pin-attribute uref (number->string pin) "label")))
+      (let ((pinname (gnetlist:get-pin-attribute2 uref (number->string pin) "label")))
          (if (string=? "unknown" pinname)
             (display ")\n" port)
             (begin

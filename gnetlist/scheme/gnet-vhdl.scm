@@ -386,10 +386,10 @@
 (define vhdl:get-device-matching-pins
   (lambda (device pin-list value)
     (cond ((null? pin-list) '())
-	  ((string=? (gnetlist:get-pin-attribute device (car pin-list) "type" )
+	  ((string=? (gnetlist:get-pin-attribute2 device (car pin-list) "type" )
                      value)
 	   (cons 
-            (cons (car pin-list) (gnetlist:get-pin-attribute device (car pin-list) "width"))  
+            (cons (car pin-list) (gnetlist:get-pin-attribute2 device (car pin-list) "width"))  
 	    (vhdl:get-device-matching-pins device (cdr pin-list) value))
            )
 	  (else (vhdl:get-device-matching-pins device (cdr pin-list) value))

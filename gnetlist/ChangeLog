@@ -3,6 +3,15 @@
 	* lib/system-gnetlistrc.in: Fixed the load of the commonrc file to 
 	work with --with-rcdir again.
 
+	* src/g_netlist.c, g_register.c: Renamed gnetlist:get-pin-attribute
+	to gnetlist:get-pin-attribute2
+
+	* src/g_netlist.c, g_register.c: Renamed 
+	gnetlist:get-pin-attribute-seq to gnetlist:get-pin-attribute
+
+	* scheme/gnet-gossip.scm, gnet-spice.scm, gnet-vams.scm,
+	gnet-vhdl.scm, gnet-vipec.scm: Update code to reflect above renames
+
 2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_hierarchy.c: Updated all u_basic_breakup_string calls
