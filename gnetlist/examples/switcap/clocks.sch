@@ -1,4 +1,4 @@
-v 20030525
+v 20030901
 C 31700 40700 0 0 0 title-A.sym
 C 32500 44700 1 0 0 switcap-clock-1.sym
 {
