@@ -31,21 +31,21 @@
   (define (read-code-chunk)
     (let loop ((line (read-line (current-input-port) 'concat)))
       (if (not (eof-object? line))
-          (let ((res (regexp-exec end-regexp line)))
-            ;; code chunk ends at line that match end-regexp (^@\ ?)
-            (if (regexp-match? res)
-                ;; reached end of chunk
-                '()
-                ;; end not yet reached, continues the analyze
-                (append (list line) 
-                        (loop (read-line (current-input-port) 'concat))))))))
+          ;; code chunk ends at line that match end-regexp (^@\ ?)
+          (if (regexp-exec end-regexp line)
+              ;; reached end of chunk
+              '()
+              ;; end not yet reached, continues the analyze
+              (append (list line) 
+                      (loop (read-line (current-input-port) 'concat)))))))
 
   ;; identifies code chunk and adds them to the association table
   (let loop ((line ""))
     (if (not (eof-object? line))
-        (let ((m (regexp-exec def-regexp line)))
-          (if (regexp-match? m)
-              (add-code-chunk (match:substring m 1) (read-code-chunk)))
+        (begin
+          (and=> (regexp-exec def-regexp line)
+                 (lambda (m)
+                   (add-code-chunk (match:substring m 1) (read-code-chunk))))
           (loop (read-line))))))
 
 (define (tangle-step2)
@@ -65,19 +65,19 @@
              (if (not first) (display offset) (set! first #f))
              ;; search for one (or more) chunk reference in the current line
              (let loop ((l line))
-               (let ((m (regexp-exec ref-regexp l)))
-                 (if (regexp-match? m)
-                     ;; found a reference in the line, process it
-                     (begin
-                       (display (match:prefix m))
-                       (output-code-chunk (match:substring m 1)
-                                          (string-append offset
-                                                         (make-string
-                                                          (match:start m)
-                                                          #\space)))
-                       (loop (match:suffix m)))
-                     ;; no reference found, output the full line
-                     (display l)))))
+               (cond ((regexp-exec ref-regexp l)
+                      ;; found a reference in the line, process it
+                      => (lambda (m)
+                           (display (match:prefix m))
+                           (output-code-chunk (match:substring m 1)
+                                              (string-append offset
+                                                             (make-string
+                                                              (match:start m)
+                                                              #\space)))
+                           (loop (match:suffix m))))
+                     (else
+                      ;; no reference found, output the full line
+                      (display l)))))
            code)
           (error (format #f "undefined chunk name: \<\<~a\>\>~%" name)))))
 
@@ -161,8 +161,7 @@
   (if (string? noweb-filename)
       ;; work on a file
       (with-input-from-file noweb-filename
-        (lambda ()
-          (tangle-noweb)))
+        tangle-noweb)
       ;; no file specified, work on current input port
       (tangle-noweb)))
 

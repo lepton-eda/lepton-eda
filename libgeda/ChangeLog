@@ -1,3 +1,8 @@
+2005-02-28  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* scripts/notangle_guile.in: Improved script with changes suggested
+	by Thien-Thi Nguyen.
+
 2005-02-24  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* scripts/notangle_guile.in: New version.

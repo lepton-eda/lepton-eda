@@ -1,5 +1,8 @@
 2005-02-28  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* scripts/notangle_guile.in: Improved script with changes suggested
+	by Thien-Thi Nguyen.
+
 	* noweb/x_multiattrib.nw (multiattrib_callback_edited_name) 
 	(multiattrib_callback_edited_value): Added code to check for changes
 	in a slot attribute.
