@@ -585,21 +585,24 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
                               y + NOT_FOUND_TEXT_Y + y_offset, 
                               x + NOT_FOUND_TEXT_X + x_offset + 600, 
                               y + NOT_FOUND_TEXT_Y + y_offset); 
-      prim_objs->line_width = 50;
+      o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+                         50, -1, -1);
       prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
                               DETACHED_ATTRIBUTE_COLOR,
                               x + NOT_FOUND_TEXT_X + x_offset, 
                               y + NOT_FOUND_TEXT_Y + y_offset, 
                               x + NOT_FOUND_TEXT_X + x_offset + 300, 
                               y + NOT_FOUND_TEXT_Y + y_offset + 500); 
-      prim_objs->line_width = 50;
+      o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+                         50, -1, -1);
       prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
                               DETACHED_ATTRIBUTE_COLOR,
                               x + NOT_FOUND_TEXT_X + x_offset + 300, 
                               y + NOT_FOUND_TEXT_Y + y_offset + 500, 
                               x + NOT_FOUND_TEXT_X + x_offset + 600, 
                               y + NOT_FOUND_TEXT_Y + y_offset); 
-      prim_objs->line_width = 50;
+      o_set_line_options(w_current, prim_objs, END_ROUND, TYPE_SOLID, 
+                         50, -1, -1);
       prim_objs = o_text_add(w_current, prim_objs,
                               OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
                               x + NOT_FOUND_TEXT_X + x_offset + 270, 

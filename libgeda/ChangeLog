@@ -4,6 +4,10 @@
 	missing rotated/mirror components will cause gschem to render the
 	"missing component symbol" out in la la land.
 
+	* noweb/o_complex_basic.nw: Changed the appearance of the hazard
+	triangle to look a little better (angles rounded).  Suggestion by
+	Patrick.
+
 2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/defines.h, noweb/a_basic.nw, f_image.nw, f_print.nw,
