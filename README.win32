@@ -7,7 +7,7 @@ To run the binary distribution of gEDA/gaf - MinGW:
 Remove any previous version of gEDA/gaf - Cygwin (or older build of the
 mingw version).
 
-You should not have to install anything else than the .zip or .exe for 
+You should not have to install anything else other than the .zip or .exe for 
 gEDA/gaf.  gEDA/gaf - MinGW is fairly self contained.
 
 1) Grab geda-mingw32-VERSION.zip and unzip it into c:\   At this stage
@@ -18,7 +18,7 @@ gEDA/gaf.  gEDA/gaf - MinGW is fairly self contained.
 	TMP	(some temp directory, say C:\TEMP , make sure this dir exists)
 	HOME	(some home directory, say C:\ , make sure this dir exists)
 
-3) Added c:\geda\bin to your PATH variable
+3) Add c:\geda\bin to your PATH variable
 
 4) Run gschem by typing: gschem  in a cmd window.  It should run.  If not
    please e-mail ahvezda@geda.seul.org with the error message.  You can
@@ -35,7 +35,7 @@ Recommended (but optional if you install into c:\geda)
 Required (if you install into some other directory than c:\geda)
 
 If you want to put the geda directory somewhere else, then you can do
-that too, but you will need to set then environment variable:
+that too, but you will need to set the environment variable:
 
 GEDADATA 
 to 
