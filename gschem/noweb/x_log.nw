@@ -70,6 +70,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -285,7 +286,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (stwindow),
-                         "Status");
+                         _("Status"));
     gtk_container_border_width (GTK_CONTAINER (stwindow), 0);
 
     table = gtk_table_new (2, 2, FALSE);
@@ -312,7 +313,7 @@ x_log_setup_win (TOPLEVEL *w_current)
                       GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (vscrollbar);
 
-    buttoncancel = gtk_button_new_with_label ("Close");
+    buttoncancel = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
                         buttoncancel, TRUE, TRUE, 0);

@@ -70,6 +70,7 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @ 
 
@@ -187,7 +188,7 @@ The combination [[length]] == 0 and [[space]] == 0 is avoided as it lead to an e
     case END_NONE:   box_end = GDK_CAP_BUTT;       break;
     case END_SQUARE: box_end = GDK_CAP_PROJECTING; break;
     case END_ROUND:  box_end = GDK_CAP_ROUND;      break;
-    default: fprintf(stderr, "Unknown end for box (%d)\n", o_current->line_end);
+    default: fprintf(stderr, _("Unknown end for box (%d)\n"), o_current->line_end);
     box_end = GDK_CAP_BUTT;
     break;
   }
@@ -227,7 +228,7 @@ The combination [[length]] == 0 and [[space]] == 0 is avoided as it lead to an e
       space = -1;
       line_width = 0; /* just to be careful */
       draw_func = (void *) o_box_draw_solid;
-      fprintf(stderr, "Unknown type for box !\n");
+      fprintf(stderr, _("Unknown type for box !\n"));
       break;
   }
 
@@ -306,7 +307,7 @@ The combination [[pitch1]] <= 0 and [[pitch2]] <= 0 is avoided as it lead to an 
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
       fill_func = (void *) o_box_fill_hollow;
-      fprintf(stderr, "Unknown type for box (fill) !\n");
+      fprintf(stderr, _("Unknown type for box (fill)!\n"));
   }
 
   if((pitch1 <= 0) || (pitch2 <= 0)) {

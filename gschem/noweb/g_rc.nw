@@ -248,7 +248,7 @@ g_rc_parse_system_rc()
   char *path_to_rc;
 
   if (geda_data == NULL) {
-    fprintf(stderr, "You must set the GEDADATA environment variable!\n");
+    fprintf(stderr, _("You must set the GEDADATA environment variable!\n"));
     exit(-1);
   }
 
@@ -265,8 +265,8 @@ g_rc_parse_system_rc()
 
   found_rc = g_rc_parse_general(
                                 filename,
-                                "Read system-gschemrc file [%s]\n",
-                                "Did not find system-gschemrc file [%s]\n");
+                                _("Read system-gschemrc file [%s]\n"),
+                                _("Did not find system-gschemrc file [%s]\n"));
 
   free(filename);
 
@@ -307,8 +307,8 @@ g_rc_parse_home_rc()
 
   found_rc = g_rc_parse_general(
                                 filename,
-                                "Read ~/.gEDA/gschemrc file [%s]\n",
-                                "Did not find ~/.gEDA/gschemrc file [%s]\n");
+                                _("Read ~/.gEDA/gschemrc file [%s]\n"),
+                                _("Did not find ~/.gEDA/gschemrc file [%s]\n"));
 
   free(filename);
 
@@ -339,8 +339,8 @@ g_rc_parse_local_rc()
 
   found_rc = g_rc_parse_general(
                                 filename,
-                                "Read local gschemrc file [%s]\n",
-                                "Did not find local gschemrc file [%s]\n");
+                                _("Read local gschemrc file [%s]\n"),
+                                _("Did not find local gschemrc file [%s]\n"));
 
   free(filename);
 
@@ -397,14 +397,14 @@ g_rc_parse(void)
       g_read_file(rc_filename);
       found_rc = 1;
       s_log_message(
-                    "Read specified rc file [%s]\n",
+                    _("Read specified rc file [%s]\n"),
                     rc_filename);
     } else {
       fprintf(stderr,
-              "Did not find specified gschemrc file [%s]\n",
+              _("Did not find specified gschemrc file [%s]\n"),
               rc_filename);
       s_log_message(
-                    "Did not find specified gschemrc file [%s]\n",
+                    _("Did not find specified gschemrc file [%s]\n"),
                     rc_filename);
     }
   }
@@ -413,8 +413,8 @@ g_rc_parse(void)
   if (!found_rc) {
     /* TODO: these two are basically the
      * same. Inefficient! */
-    s_log_message("Could not find any gschemrc file!\n");
-    fprintf(stderr, "Could not find a gschemrc file\n");
+    s_log_message(_("Could not find any gschemrc file!\n"));
+    fprintf(stderr, _("Could not find a gschemrc file\n"));
     exit(-1);
   }
 }
@@ -436,7 +436,7 @@ g_rc_gschem_version(SCM version)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "gschem-version"
             );
     return SCM_BOOL_F;
@@ -444,11 +444,11 @@ g_rc_gschem_version(SCM version)
 
   if (strcmp(string, VERSION) != 0) {
     fprintf(stderr,
-            "Found a version [%s] gschemrc file:\n[%s]\n",
+            _("Found a version [%s] gschemrc file:\n[%s]\n"),
             string, rc_filename);
     fprintf(stderr,
-            "While gschem is in ALPHA, "
-            "please be sure that you have the latest rc file.\n");
+            _("While gschem is in ALPHA, "
+            "please be sure that you have the latest rc file.\n"));
     free(string);
     return SCM_BOOL_F;
   }
@@ -496,7 +496,7 @@ g_rc_color_general(SCM index, SCM color, SCM outline_color,
   /* invalid color? */
   if (status == -1) {
     fprintf(stderr,
-            "Invalid color [%s] passed to %s\n",
+            _("Invalid color [%s] passed to %s\n"),
             color_name,
             rc_name);
     if (color_name) {
@@ -728,7 +728,7 @@ g_rc_mode_general(SCM mode,
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
-            "Invalid mode [%s] passed to %s\n",
+            _("Invalid mode [%s] passed to %s\n"),
             string,
             rc_name);
     if (string) {
@@ -930,7 +930,7 @@ g_rc_text_display_zoomfactor(SCM zoomfactor)
 
   if (val == 0) {
     fprintf(stderr,
-            "Invalid zoomfactor [%d] passed to %s\n",
+            _("Invalid zoomfactor [%d] passed to %s\n"),
             val,
             "text-display-zoom-factor");
     val = 10; /* absolute default */
@@ -975,7 +975,7 @@ g_rc_scrollbar_update(SCM mode)
                                  GTK_UPDATE_DELAYED);
   } else {
     fprintf(stderr,
-            "Invalid mode [%s] passed to scrollbar-update\n",
+            _("Invalid mode [%s] passed to scrollbar-update\n"),
             string);
     if (string) {
       free(string);
@@ -1072,7 +1072,7 @@ g_rc_text_size(SCM size)
 
   if (val == 0) {
     fprintf(stderr,
-            "Invalid size [%d] passed to text-size\n",
+            _("Invalid size [%d] passed to text-size\n"),
             val);
     val = 10; /* absolute default */
   }
@@ -1124,7 +1124,7 @@ g_rc_snap_size(SCM size)
   val = gh_scm2int(size);
 
   if (val == 0) {
-    fprintf(stderr, "Invalid size [%d] passed to snap-size\n",
+    fprintf(stderr, _("Invalid size [%d] passed to snap-size\n"),
             val);
     val = 100; /* absolute default */
   }
@@ -1173,7 +1173,7 @@ g_rc_default_series_name(SCM name)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "series-name"
             );
     return SCM_BOOL_F;
@@ -1206,7 +1206,7 @@ g_rc_untitled_name(SCM name)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "untitled-name"
             );
     return SCM_BOOL_F;
@@ -1251,7 +1251,7 @@ g_rc_component_library(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to component-library\n",
+            _("Invalid path [%s] passed to component-library\n"),
             string);
     if (string) {
       free(string);
@@ -1331,7 +1331,7 @@ g_rc_component_library_search(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to component-library-search\n",
+            _("Invalid path [%s] passed to component-library-search\n"),
             string);
     if (string) {
       free(string);
@@ -1351,7 +1351,7 @@ g_rc_component_library_search(SCM path)
 
   if (top_ptr == NULL) {
     fprintf(stderr,
-            "Invalid path [%s] passed to component-library-search\n",
+            _("Invalid path [%s] passed to component-library-search\n"),
             string);
     if (string) {
       free(string);
@@ -1433,7 +1433,7 @@ g_rc_source_library(SCM path)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "source-library"
             );
     return SCM_BOOL_F;
@@ -1447,7 +1447,7 @@ g_rc_source_library(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to %s\n",
+            _("Invalid path [%s] passed to %s\n"),
             string,
             "source-library");
     if (string) {
@@ -1528,7 +1528,7 @@ g_rc_source_library_search(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to source-library-search\n",
+            _("Invalid path [%s] passed to source-library-search\n"),
             string);
     if (string) {
       free(string);
@@ -1548,7 +1548,7 @@ g_rc_source_library_search(SCM path)
 
   if (top_ptr == NULL) {
     fprintf(stderr,
-            "Invalid path [%s] passed to source-library-search\n",
+            _("Invalid path [%s] passed to source-library-search\n"),
             string);
     if (string) {
       free(string);
@@ -1627,7 +1627,7 @@ g_rc_attribute_name(SCM path)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "attribute-name");
     return SCM_BOOL_F;
   }
@@ -1663,7 +1663,7 @@ g_rc_scheme_directory(SCM path)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "scheme-directory"
             );
     return SCM_BOOL_F;
@@ -1677,7 +1677,7 @@ g_rc_scheme_directory(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to scheme-directory\n",
+            _("Invalid path [%s] passed to scheme-directory\n"),
             string);
     if (string) {
       free(string);
@@ -1723,7 +1723,7 @@ g_rc_bitmap_directory(SCM path)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "bitmap-directory"
             );
     return SCM_BOOL_F;
@@ -1737,7 +1737,7 @@ g_rc_bitmap_directory(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to bitmap-directory\n",
+            _("Invalid path [%s] passed to bitmap-directory\n"),
             string);
     if (string) {
       free(string);
@@ -1782,11 +1782,11 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 
   if (!s_stroke_uniq(stroke)) {
     if (stroke_info_mode) {
-      s_log_message("Duplicate stroke definition "
-                    "passed to stroke! [%s]\n",
+      s_log_message(_("Duplicate stroke definition "
+                    "passed to stroke! [%s]\n"),
                     stroke);
-      printf("Duplicate stroke definition "
-             "passed to stroke! [%s]\n",
+      printf(_("Duplicate stroke definition "
+             "passed to stroke! [%s]\n"),
              stroke);
     }
     if (stroke) {
@@ -1802,9 +1802,9 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
   }
 #else
   if (stroke_info_mode) {
-    printf("A stroke keyword has been found in an rc file, but gschem\n"
+    printf(_("A stroke keyword has been found in an rc file, but gschem\n"
            "is not compiled to support strokes, please recompile gschem\n"
-           "with LibStroke\n");
+           "with LibStroke\n"));
   }
 #endif
 
@@ -1830,7 +1830,7 @@ g_rc_font_directory(SCM path)
 
   if (string == NULL) {
     fprintf(stderr,
-            "%s requires a string as a parameter\n",
+            _("%s requires a string as a parameter\n"),
             "font-direcoty"
             );
     return SCM_BOOL_F;
@@ -1844,7 +1844,7 @@ g_rc_font_directory(SCM path)
   /* invalid path? */
   if (ret < 0) {
     fprintf(stderr,
-            "Invalid path [%s] passed to font-directory\n",
+            _("Invalid path [%s] passed to font-directory\n"),
             string);
     if (string) {
       free(string);
@@ -1989,7 +1989,7 @@ g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
   height = (int) (gh_scm2double(scm_height) * MILS_PER_INCH);
 
   if (string == NULL) {
-    fprintf(stderr, "Invalid parameters to paper-sizes\n");
+    fprintf(stderr, _("Invalid parameters to paper-sizes\n"));
     return SCM_BOOL_F;
   }
 
@@ -2451,7 +2451,7 @@ g_rc_undo_levels(SCM levels)
   val = gh_scm2int(levels);
 
   if (val == 0) {
-    fprintf(stderr, "Invalid num levels [%d] passed to undo-levels\n",
+    fprintf(stderr, _("Invalid num levels [%d] passed to undo-levels\n"),
             val);
     val = 10; /* absolute default */
   }

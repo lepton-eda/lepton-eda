@@ -69,6 +69,7 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @ 
 
@@ -166,7 +167,7 @@ The combination [[length]] == 0 and [[space]] == 0 is avoided as it leads to an 
     case END_NONE:   arc_end = GDK_CAP_BUTT;       break;
     case END_SQUARE: arc_end = GDK_CAP_PROJECTING; break;
     case END_ROUND:  arc_end = GDK_CAP_ROUND;      break;
-    default: fprintf(stderr, "Unknown end for arc (%d)\n", o_current->line_end); 
+    default: fprintf(stderr, _("Unknown end for arc (%d)\n"), o_current->line_end); 
     arc_end = GDK_CAP_BUTT; 
     break;
   }
@@ -207,7 +208,7 @@ The combination [[length]] == 0 and [[space]] == 0 is avoided as it leads to an 
       space = -1;
       arc_width = 0; /* just to be careful */
       draw_func = (void *) o_arc_draw_solid;
-      fprintf(stderr, "Unknown type for arc !\n");
+      fprintf(stderr, _("Unknown type for arc !\n"));
       break;
   }
 

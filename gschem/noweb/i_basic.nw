@@ -57,7 +57,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
-
+#include "../include/globals.h"
 @
 
 
@@ -155,7 +155,7 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
     case(ACTION):
     w_current->DONT_RESIZE = 1;
     gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  "Action");
+                  _("Action"));
     break;
 
 #ifdef HAS_LIBSTROKE
@@ -163,14 +163,14 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
     w_current->DONT_RESIZE = 1;
 
     gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  "Stroke");
+                  _("Stroke"));
     break;
 #else 
     /* remove this case eventually and make it a null case */
     case(STROKE):
     w_current->DONT_RESIZE = 1;
     gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  "none");
+                  _("none"));
     break;
 #endif
 		
@@ -178,7 +178,7 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
     w_current->DONT_RESIZE = 1;
 
     temp_string = u_basic_strdup_multiple(
-                                          "Repeat/", string, NULL);
+                                          _("Repeat/"), string, NULL);
 
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   temp_string);

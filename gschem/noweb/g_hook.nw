@@ -97,7 +97,7 @@ g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object)
                              smob_list);
       }
     } else {
-      printf("Attribute failed ot find.\n");
+      printf(_("Attribute failed ot find.\n"));
     }
     a_current = a_current->next;
   }

@@ -69,7 +69,7 @@ gint change_page(GtkWidget *widget, gint row, gint column,
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
-
+#include "../include/globals.h"
 @
 
 
@@ -349,7 +349,7 @@ setup_page_selector (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->pswindow),
-                         "Page Manager");
+                         _("Page Manager"));
 
     box = gtk_vbox_new (FALSE, 2);
     gtk_container_border_width (GTK_CONTAINER (box), 2);
@@ -465,7 +465,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (box2);
 
     /* new page */
-    buttonnew = gtk_button_new_with_label ("New Page");
+    buttonnew = gtk_button_new_with_label (_("New Page"));
     GTK_WIDGET_SET_FLAGS (buttonnew, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX (hbox),
                        buttonnew, TRUE, TRUE, 0);
@@ -474,7 +474,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (buttonnew);
 
     /* open page */
-    buttonopen = gtk_button_new_with_label ("Open Page");
+    buttonopen = gtk_button_new_with_label (_("Open Page"));
     GTK_WIDGET_SET_FLAGS (buttonopen, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (hbox),
                         buttonopen, TRUE, TRUE, 0);
@@ -483,7 +483,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (buttonopen);
 
     /* save page */
-    buttonsave = gtk_button_new_with_label ("Save Page");
+    buttonsave = gtk_button_new_with_label (_("Save Page"));
     GTK_WIDGET_SET_FLAGS (buttonsave, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (hbox),
                         buttonsave, TRUE, TRUE, 0);
@@ -492,7 +492,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (buttonsave);
 
     /* close page */
-    buttonclose = gtk_button_new_with_label ("Close Page");
+    buttonclose = gtk_button_new_with_label (_("Close Page"));
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (hbox),
                         buttonclose, TRUE, TRUE, 0);
@@ -501,7 +501,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (buttonclose);
 
     /* discard page */
-    buttondiscard = gtk_button_new_with_label ("Discard Page");
+    buttondiscard = gtk_button_new_with_label (_("Discard Page"));
     GTK_WIDGET_SET_FLAGS (buttondiscard, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (hbox),
                         buttondiscard, TRUE, TRUE, 0);
@@ -510,7 +510,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (buttondiscard);
 
     /* This is a window control */
-    buttonupdatewin = gtk_button_new_with_label ("Update Manager");
+    buttonupdatewin = gtk_button_new_with_label (_("Update Manager"));
     gtk_box_pack_start (GTK_BOX (box2),
                         buttonupdatewin, TRUE, TRUE, 10);
     gtk_signal_connect (GTK_OBJECT (buttonupdatewin), "clicked",
@@ -519,7 +519,7 @@ setup_page_selector (TOPLEVEL *w_current)
     gtk_widget_show (buttonupdatewin);
 
     /* This is a window control */
-    buttonclosewin = gtk_button_new_with_label ("Close Manager");
+    buttonclosewin = gtk_button_new_with_label (_("Close Manager"));
     gtk_box_pack_start (GTK_BOX (box2),
                         buttonclosewin, TRUE, TRUE, 10);
     gtk_signal_connect_object(GTK_OBJECT(buttonclosewin),

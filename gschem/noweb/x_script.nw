@@ -59,6 +59,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -83,7 +84,7 @@ script_selection_ok(GtkWidget *w, TOPLEVEL *w_current)
     len = strlen(string);
 
     if (string[len - 1] != PATH_SEPARATER_CHAR) {
-      s_log_message("Executing guile script [%s]\n", string);
+      s_log_message(_("Executing guile script [%s]\n"), string);
       g_read_file(string);
     }
   }
@@ -126,7 +127,7 @@ setup_script_selector (TOPLEVEL *w_current)
 {
   if (!w_current->sowindow) {
     w_current->sowindow =
-    gtk_file_selection_new("Script Execute...");
+    gtk_file_selection_new(_("Script Execute..."));
     gtk_window_position(GTK_WINDOW(w_current->sowindow),
                         GTK_WIN_POS_MOUSE);
     /* added 4/6/98 */

@@ -67,6 +67,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -326,9 +327,9 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
     o_redraw_all(w_current);
 
     if (w_current->image_color == TRUE) {
-      s_log_message("Wrote color image to [%s] [%d x %d]\n", filename, width, height);
+      s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
     } else {
-      s_log_message("Wrote black and white image to [%s] [%d x %d]\n", filename, width, height);
+      s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
     }
   }
 
@@ -396,9 +397,9 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 			&w_current->iwindow);
 #endif
 
-    gtk_window_set_title (GTK_WINDOW (w_current->iwindow), "Write Image...");
+    gtk_window_set_title (GTK_WINDOW (w_current->iwindow), _("Write Image..."));
 
-    buttonwrite = gtk_button_new_with_label ("Write");
+    buttonwrite = gtk_button_new_with_label (_("Write"));
     GTK_WIDGET_SET_FLAGS (buttonwrite, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
 			buttonwrite, TRUE, TRUE, 0);
@@ -407,7 +408,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show (buttonwrite);
     gtk_widget_grab_default (buttonwrite);
 
-    buttoncancel = gtk_button_new_with_label ("Close");
+    buttoncancel = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
 			buttoncancel, TRUE, TRUE, 0);
@@ -428,7 +429,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show(box);
 
 #if 0
-    label = gtk_label_new ("Width");
+    label = gtk_label_new (_("Width"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
     gtk_box_pack_start (GTK_BOX (box),
@@ -447,7 +448,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     */
     gtk_widget_show (w_current->iwidth_entry);
 
-    label = gtk_label_new ("Height");
+    label = gtk_label_new (_("Height"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
     gtk_box_pack_start (GTK_BOX (box),
@@ -466,7 +467,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     */
     gtk_widget_show (w_current->iheight_entry);
 #endif
-    label = gtk_label_new ("Width x Height");
+    label = gtk_label_new (_("Width x Height"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
     gtk_box_pack_start (GTK_BOX (box),
@@ -479,7 +480,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
     gtk_box_pack_start (GTK_BOX (box), optionmenu, TRUE, TRUE, 0);
     gtk_widget_show (optionmenu);
 
-    label = gtk_label_new ("Filename");
+    label = gtk_label_new (_("Filename"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
     gtk_box_pack_start (GTK_BOX (box),

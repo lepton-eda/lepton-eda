@@ -68,6 +68,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -93,14 +94,14 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 
   if (list == NULL) {
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
 
   o_current = list->selected_object;	
   if (o_current == NULL) {
-    fprintf(stderr, "Got an unexpected NULL in o_edit\n");
+    fprintf(stderr, _("Got an unexpected NULL in o_edit\n"));
     exit(-1);
   }
 
@@ -202,7 +203,7 @@ o_lock(TOPLEVEL *w_current)
         object->color = w_current->lock_color;
         w_current->page_current->CHANGED=1;
       } else {
-        s_log_message("Object alreadly locked\n");
+        s_log_message(_("Object alreadly locked\n"));
       }
     }
 
@@ -245,7 +246,7 @@ o_unlock(TOPLEVEL *w_current)
         object->locked_color = -1;
         w_current->page_current->CHANGED = 1;
       } else {
-        s_log_message("Object alreadly unlocked\n");
+        s_log_message(_("Object alreadly unlocked\n"));
       }
     }
 
@@ -277,7 +278,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -288,7 +289,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
     object = s_current->selected_object;
 
     if (!object) {
-      fprintf(stderr, "ERROR: NULL object in o_rotate_90!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
       return;
     }
 
@@ -495,7 +496,7 @@ o_embed(TOPLEVEL *w_current)
     object = s_current->selected_object;
 
     if (!object) {
-      fprintf(stderr, "ERROR: NULL object in o_embed!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_embed!\n"));
       return;
     }
 
@@ -552,7 +553,7 @@ o_unembed(TOPLEVEL *w_current)
     object = s_current->selected_object;
 
     if (!object) {
-      fprintf(stderr, "ERROR: NULL object in o_embed!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_embed!\n"));
       return;
     }
 
@@ -572,10 +573,10 @@ o_unembed(TOPLEVEL *w_current)
           (char *) s_clib_search(new_basename);
 
         if (!new_clib) {
-          fprintf(stderr, "Could not find component [%s], while trying to unembed.\n",
+          fprintf(stderr, _("Could not find component [%s], while trying to unembed.\n"),
                   object->complex_basename);
           fprintf(stderr,
-                  "Component is still embedded\n");
+                  _("Component is still embedded\n"));
         } else {
           free(object->complex_basename);
 
@@ -615,7 +616,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
   if (list == NULL) {
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -627,7 +628,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
     object = s_current->selected_object;
 
     if (!object) {
-      fprintf(stderr, "ERROR: NULL object in o_mirror!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_mirror!\n"));
       return;
     }
     
@@ -865,9 +866,9 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
   o_redraw_all_fast(w_current);
 
   if (w_current->show_hidden_text) {
-    s_log_message("Hidden text is now visible\n");
+    s_log_message(_("Hidden text is now visible\n"));
   } else {
-    s_log_message("Hidden text is now invisible\n");
+    s_log_message(_("Hidden text is now invisible\n"));
   }
 }
 
@@ -988,7 +989,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 
     if (o_current->type == OBJ_TEXT) {
       if (!strcmp(stext, o_current->text->string)) {
-	/*            printf("Found %s\n", stext);
+	/*            printf(_("Found %s\n"), stext);
 	   if (!o_current->selected&&(!descend)) {
 	   o_selection_add(w_current->page_current->selection2_head,
 	   o_current);
@@ -1232,7 +1233,7 @@ o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
           used_list[i+1] = tmp;
         }
         if (used_list[i]==used_list[i+1]) {
-          printf("Warning: two components with same refdes: %d\n", used_list[i]);
+          printf(_("Warning: two components with same refdes: %d\n"), used_list[i]);
         }
       }
     }
@@ -1368,7 +1369,7 @@ o_update_component(TOPLEVEL *w_current, SELECTION *list)
 
   o_current = list->selected_object;	
   if (o_current == NULL) {
-    fprintf(stderr, "Got an unexpected NULL in o_update\n");
+    fprintf(stderr, _("Got an unexpected NULL in o_update_component\n"));
     exit(-1);
   }
   s_current = list;

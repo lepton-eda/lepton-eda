@@ -291,7 +291,7 @@ a_zoom_box(TOPLEVEL *w_current, int pan_flags)
   /*test if there is really a box*/
   if (w_current->start_x == w_current->last_x ||
       w_current->start_y == w_current->last_y) {
-    s_log_message("Zoom too small!  Cannot zoom further.\n");
+    s_log_message(_("Zoom too small!  Cannot zoom further.\n"));
     return;
   }
 	

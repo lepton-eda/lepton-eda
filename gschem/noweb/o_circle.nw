@@ -65,6 +65,7 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @ 
 
@@ -174,7 +175,7 @@ The combination [[length]] == 0 and [[space]] == 0 is avoided as it lead to an e
     case END_NONE:   circle_end = GDK_CAP_BUTT;       break;
     case END_SQUARE: circle_end = GDK_CAP_PROJECTING; break;
     case END_ROUND:  circle_end = GDK_CAP_ROUND;      break;
-    default: fprintf(stderr, "Unknown end for circle\n");
+    default: fprintf(stderr, _("Unknown end for circle\n"));
       circle_end = GDK_CAP_BUTT;
       break;
   }
@@ -210,7 +211,7 @@ The combination [[length]] == 0 and [[space]] == 0 is avoided as it lead to an e
     length = -1;
     space = -1;
     circle_width = 0; /* just to be careful */
-    fprintf(stderr, "Unknown type for circle !\n");
+    fprintf(stderr, _("Unknown type for circle!\n"));
     draw_func = (void *) o_arc_draw_solid;			
     break;
   }
@@ -286,7 +287,7 @@ The combination [[pitch1]] <= 0 and [[pitch2]] <= 0 is avoided as it lead to an 
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
       fill_func = (void *) o_circle_fill_hollow;			
-      fprintf(stderr, "Unknown type for circle (fill) !\n");
+      fprintf(stderr, _("Unknown type for circle (fill)!\n"));
   }
 
   if((pitch1 <= 0) || (pitch2 <= 0)) {

@@ -252,7 +252,7 @@ o_erase_selected(TOPLEVEL *w_current)
     
     s_current=s_current->next;
   }
-  
+
 }
 
 

@@ -57,6 +57,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -308,7 +309,7 @@ o_net_draw_xor_single(TOPLEVEL *w_current, int dx, int dy, int whichone,
     dx1 = 0;
     dy1 = 0;
   } else {
-    fprintf(stderr, "Got an invalid which one in o_net_draw_xor_single\n");
+    fprintf(stderr, _("Got an invalid which one in o_net_draw_xor_single\n"));
   }
 
   gdk_draw_line(w_current->window, w_current->outline_xor_gc,
@@ -379,7 +380,7 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
                            o_current);
 
         if (!real) {
-          fprintf(stderr, "selected a nonexistant object!\n");
+          fprintf(stderr, _("selected a nonexistant object!\n"));
           exit(-1);
         }
         distance1 = dist(
@@ -412,7 +413,7 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
                          o_current);
 
       if (!real) {
-        fprintf(stderr, "selected a nonexistant object!\n");
+        fprintf(stderr, _("selected a nonexistant object!\n"));
         exit(-1);
       }
 
@@ -516,7 +517,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
          w_current->last_y = (-1);
          w_current->inside_action=0;
          w_current->event_state = STARTDRAWNET;
-         i_update_status(w_current, "Net Mode");
+         i_update_status(w_current, _("Net Mode"));
          o_net_eraserubber(w_current);
          return(FALSE);
        }

@@ -67,6 +67,7 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @ 
 
@@ -146,7 +147,7 @@ Finally the function takes care of the grips.
     case END_NONE:   line_end = GDK_CAP_BUTT;       break;
     case END_SQUARE: line_end = GDK_CAP_PROJECTING; break;
     case END_ROUND:  line_end = GDK_CAP_ROUND;      break;
-    default: fprintf(stderr, "Unknown end for line (%d)\n",
+    default: fprintf(stderr, _("Unknown end for line (%d)\n"),
                      o_current->line_end);
     line_end = GDK_CAP_BUTT; 
     break;
@@ -186,7 +187,7 @@ Finally the function takes care of the grips.
       length = -1;
       space = -1;
       line_width = 0; /* just to be careful */
-      fprintf(stderr, "Unknown type for line (%d) !\n",
+      fprintf(stderr, _("Unknown type for line (%d) !\n"),
               o_current->line_type);
       draw_func = (void *) o_line_draw_solid;
       break;

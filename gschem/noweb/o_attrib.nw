@@ -70,6 +70,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -142,7 +143,7 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
   while(s_current != NULL) {
     object = s_current->selected_object;
     if (object == NULL) {
-      fprintf(stderr, "Got NULL in o_attrib_toggle_visibility\n");	
+      fprintf(stderr, _("Got NULL in o_attrib_toggle_visibility\n"));
       exit(-1);
     }
 
@@ -213,7 +214,7 @@ o_attrib_toggle_show_name_value(TOPLEVEL *w_current,
     object = s_current->selected_object;
 
     if (object == NULL) {
-      fprintf(stderr, "Got NULL in o_attrib_toggle_show_name_value\n");	
+      fprintf(stderr, _("Got NULL in o_attrib_toggle_show_name_value\n"));
       exit(-1);
     }
 
@@ -270,7 +271,7 @@ o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
   if (value == NULL) {
     fprintf(stderr,
-            "ERROR! you can't get an attribute without an ='s\n");
+            _("ERROR! you can't get an attribute without an ='s\n"));
     exit(-1);
   }
 

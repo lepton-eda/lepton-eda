@@ -37,6 +37,9 @@ gschem_SOURCES = $(BUILT_SOURCES:.nw=.c)
 INCLUDES = @GUILE_CFLAGS@ @X_CFLAGS@
 gschem_LDADD = @STROKE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
 
+localedir = @datadir@/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+
 #man_MANS = gschem.1
 EXTRA_DIST = create_proto 
 #gschem.1

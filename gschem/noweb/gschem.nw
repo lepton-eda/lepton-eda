@@ -152,27 +152,27 @@ main_prog(int argc, char *argv[])
 #endif
 	
   s_log_message(
-                "gEDA/gschem version %s\n", VERSION);
+                _("gEDA/gschem version %s\n"), VERSION);
   s_log_message(
-                "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+                _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
   s_log_message(
-                "This is free software, and you are welcome to redistribute it under certain\n");
+                _("This is free software, and you are welcome to redistribute it under certain\n"));
   s_log_message(
-                "conditions; please see the COPYING file for more details.\n\n"); 
+                _("conditions; please see the COPYING file for more details.\n\n")); 
 
   if (!quiet_mode) {
     fprintf(stderr, 
-            "gEDA/gschem version %s\n", VERSION);
+            _("gEDA/gschem version %s\n"), VERSION);
     fprintf(stderr, 
-            "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+            _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
     fprintf(stderr, 
-            "This is free software, and you are welcome to redistribute it under certain\n");
+            _("This is free software, and you are welcome to redistribute it under certain\n"));
     fprintf(stderr, 
-            "conditions; please see the COPYING file for more details.\n\n"); 
+            _("conditions; please see the COPYING file for more details.\n\n")); 
   }
 
 #ifdef __MINGW32__
-  fprintf(stderr, "This is the MINGW32 port.\n");
+  fprintf(stderr, _("This is the MINGW32 port.\n"));
 #endif  
 
 
@@ -191,7 +191,7 @@ main_prog(int argc, char *argv[])
 
   geda_data = getenv("GEDADATA");
   if (geda_data == NULL) {
-    fprintf(stderr, "You must set the GEDADATA environment variable!\n");
+    fprintf(stderr, _("You must set the GEDADATA environment variable!\n"));
     exit(-1);
   }
 
@@ -202,14 +202,14 @@ main_prog(int argc, char *argv[])
   sprintf(input_str, "%s%cgschem.scm", default_scheme_directory, 
 	  PATH_SEPARATER_CHAR);
   if (g_read_file(input_str) != -1) {
-    s_log_message("Read init scm file [%s]\n", input_str);
+    s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
     /* TODO: These two messages are the same. Should be
      * integrated. */
-    s_log_message("Failed to read init scm file [%s]\n",
+    s_log_message(_("Failed to read init scm file [%s]\n"),
                   input_str);
     fprintf(stderr,
-            "Failed to read init scm file [%s]\n", input_str);
+            _("Failed to read init scm file [%s]\n"), input_str);
   }
 
   colormap = gdk_colormap_get_system ();
@@ -254,7 +254,7 @@ main_prog(int argc, char *argv[])
       }
 
       if (!quiet_mode) {
-        printf("Loading schematic [%s]\n", argv[i]);
+        printf(_("Loading schematic [%s]\n"), argv[i]);
       }
 
       (void)f_open(w_current,
@@ -280,7 +280,7 @@ main_prog(int argc, char *argv[])
       /* create new page, and only load if page not loaded */
       if (!s_page_new(w_current, argv[i])) {
         if (!quiet_mode) {
-          printf("Loading schematic [%s]\n", 
+          printf(_("Loading schematic [%s]\n"), 
                  argv[i]);
         }
         (void)f_open(w_current,
@@ -345,14 +345,14 @@ main_prog(int argc, char *argv[])
 #endif
 
   if (w_current->scheme_directory == NULL) {
-    fprintf(stderr, "Scheme directory NOT set!\n");
+    fprintf(stderr, _("Scheme directory NOT set!\n"));
     exit(-1);
   }
 
 
   /* Execute a script if it exists */
   if (script_filename) {
-    s_log_message("Executing guile script [%s]\n",
+    s_log_message(_("Executing guile script [%s]\n"),
                   script_filename);
     g_read_file(script_filename);
   }
@@ -379,6 +379,11 @@ main_prog(int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+#if ENABLE_NLS
+  setlocale(LC_ALL, "");
+  bindtextdomain(PACKAGE, LOCALEDIR);
+  textdomain(PACKAGE);
+#endif
   gh_enter(argc, argv, main_prog);
   return 0;
 }

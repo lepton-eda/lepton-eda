@@ -62,6 +62,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -350,7 +351,7 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   char *save_filename;
 	
   if (w_current->undo_control == FALSE) {
-    s_log_message("Undo/Redo disabled in rc file\n");
+    s_log_message(_("Undo/Redo disabled in rc file\n"));
     return;	
   }
 

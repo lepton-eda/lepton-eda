@@ -84,15 +84,15 @@ extern int optind;
 void
 usage(char *cmd)
 {
-  printf("Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n", cmd);
-  printf("  -q  	  Quiet mode\n");
-  printf("  -v  	  Verbose mode on\n");
-  printf("  -r filename   Rc filename\n");
-  printf("  -s filename   Script (guile) filename\n");
-  printf("  -o filename   Output filename (for printing)\n");
-  printf("  -t            Print stroke information\n");
-  printf("  -h            Help; this message\n");
-  printf("\n");
+  printf(_("Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
+         "  -q  	  Quiet mode\n"
+         "  -v  	  Verbose mode on\n"
+         "  -r filename   Rc filename\n"
+         "  -s filename   Script (guile) filename\n"
+         "  -o filename   Output filename (for printing)\n"
+         "  -t            Print stroke information\n"
+         "  -h            Help; this message\n"
+         "\n"), cmd);
   exit(0);
 }
 

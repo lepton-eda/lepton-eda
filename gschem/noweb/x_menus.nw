@@ -341,6 +341,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   SCM scm_index;
   SCM scm_keys;
   char *menu_item_name;
+  char *raw_menu_item_name;
   char *menu_item_func;
   char *menu_item_hotkey_func;
   char *menu_item_keys;
@@ -384,9 +385,11 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       scm_item_func = gh_cadr(scm_item);
       scm_item_hotkey_func = gh_caddr(scm_item);
 
-      menu_item_name = gh_scm2newstr(scm_item_name, NULL);
+      raw_menu_item_name = gh_scm2newstr(scm_item_name, NULL);
       menu_item_func = gh_scm2newstr(scm_item_func, NULL);
       menu_item_hotkey_func = gh_scm2newstr(scm_item_hotkey_func, NULL);
+
+      menu_item_name = (char *) gettext(raw_menu_item_name);
 
       if (strcmp(menu_item_name, "SEPARATOR") == 0) {
         menu_item = gtk_menu_item_new();
@@ -466,7 +469,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       }
 #endif
 
-      free(menu_item_name);
+      free(raw_menu_item_name);
       free(menu_item_func);
       free(menu_item_hotkey_func);
       

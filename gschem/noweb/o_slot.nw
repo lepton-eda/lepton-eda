@@ -53,6 +53,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -82,7 +83,7 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
   if (list == NULL) {
     /* this is an error condition hack */
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -163,7 +164,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
   status = o_attrib_get_name_value(string, name, value);
   if (!status) {
-    s_log_message("Slot attribute malformed\n");
+    s_log_message(_("Slot attribute malformed\n"));
     return;
   }
 
@@ -174,9 +175,9 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
     numslots_value = o_attrib_search_numslots(object, NULL);
 
     if (!numslots_value) {
-      s_log_message("numslots attribute missing\n");
+      s_log_message(_("numslots attribute missing\n"));
       s_log_message(
-                    "Slotting not allowed for this component\n");
+                    _("Slotting not allowed for this component\n"));
       return;
     }
 
@@ -190,7 +191,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 #endif
 
     if (new_slot_number > numslots || new_slot_number <=0 ) {
-      s_log_message("New slot number out of range\n");
+      s_log_message(_("New slot number out of range\n"));
       return;
     }
 
@@ -271,8 +272,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     fprintf(stderr,
-            "uggg! you tried to slot edit something "
-            "that doesn't exist!\n");
+            _("uggg! you tried to slot edit something that doesn't exist!\n"));
     exit(-1);
   }
 }

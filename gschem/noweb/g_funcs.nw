@@ -185,7 +185,7 @@ SCM g_funcs_key_value(SCM keystring)
 
 
   if (key_value_string == NULL) {
-    fprintf(stderr, "Ack! something got fouled up with the keymappings!\n");
+    fprintf(stderr, _("Ack! something got fouled up with the keymappings!\n"));
     exit(-1);
   }
 

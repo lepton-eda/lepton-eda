@@ -358,7 +358,7 @@ void o_move_end(TOPLEVEL * w_current)
   if (!object) {
     /* actually this is an error condition hack */
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -384,7 +384,7 @@ void o_move_end(TOPLEVEL * w_current)
   while (s_current != NULL) {
 
     if (s_current->selected_object == NULL) {
-      fprintf(stderr, "ERROR: NULL object in o_move_end!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_move_end!\n"));
       exit(-1);
     }
 
@@ -481,7 +481,7 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
   }
 
   fprintf(stderr,
-          "DOH! tried to find the whichone, but didn't find it!\n");
+          _("DOH! tried to find the whichone, but didn't find it!\n"));
   return (-1);
 }
 
@@ -507,7 +507,7 @@ void o_move_check_endpoint(TOPLEVEL * w_current, OBJECT * object)
   if (object->type != OBJ_NET && object->type != OBJ_PIN &&
       object->type != OBJ_BUS) {
     fprintf(stderr,
-            "Got a non line object in o_move_check_endpoint\n");
+            _("Got a non line object in o_move_check_endpoint\n"));
     return;
   }
 

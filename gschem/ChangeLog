@@ -1,3 +1,17 @@
+2002-08-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/*: Added gettext patch by Alexandre P. Nunes.  Thank you for
+	the work on i18n.
+
+	* intl/ m4/ po/ ABOUT-NLS config.rpath: Added directories / files 
+	to support above
+
+	* configure.in: Updated to support above
+
+	* include/gettext.h: Added include file to support above
+
+	* include/globals.h: Added #include for gettext.h
+
 2002-07-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw: Changed the show options to be an option

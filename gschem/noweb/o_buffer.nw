@@ -70,7 +70,7 @@ o_buffer_copy(TOPLEVEL *w_current, int buf_num)
   SELECTION *s_current = NULL;
 
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, "Got an invalid buffer_number [o_buffer_copy]\n");
+    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_copy]\n"));
     return;
   }
 
@@ -114,7 +114,7 @@ o_buffer_cut(TOPLEVEL *w_current, int buf_num)
   SELECTION *s_current = NULL;
 
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, "Got an invalid buffer_number [o_buffer_cut]\n");
+    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_cut]\n"));
     return;
   }
 
@@ -161,7 +161,7 @@ o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
   int x, y;
 
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, "Got an invalid buffer_number [o_buffer_paste_start]\n");
+    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_paste_start]\n"));
     return;
   }
 
@@ -220,7 +220,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   GList *connected_objects = NULL;
 
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, "Got an invalid buffer_number [o_buffer_paste_end]\n");
+    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_paste_end]\n"));
     return;
   }
 

@@ -1,0 +1,1705 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Alexandre Pereira Nunes
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: geda-schem-CVS-2002-06-12\n"
+"POT-Creation-Date: 2002-06-14 14:42-0300\n"
+"PO-Revision-Date: 2002-06-13 13:55+BRT\n"
+"Last-Translator: Alexandre Pereira Nunes <alex@projetos.etc.br>\n"
+"Language-Team: geda-pt@seul.org \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: noweb/a_zoom.nw:294
+msgid "Zoom too small!  Cannot zoom further.\n"
+msgstr "Zoom muito pequeno! Não posso diminuir. \n"
+
+#: noweb/g_funcs.nw:188
+msgid "Ack! something got fouled up with the keymappings!\n"
+msgstr ""
+
+#: noweb/g_hook.nw:100
+msgid "Attribute failed ot find.\n"
+msgstr ""
+
+#: noweb/g_rc.nw:251 noweb/gschem.nw:194
+msgid "You must set the GEDADATA environment variable!\n"
+msgstr "Você precisa acertar a variável de ambiente GEDADATA.\n"
+
+#: noweb/g_rc.nw:268
+#, c-format
+msgid "Read system-gschemrc file [%s]\n"
+msgstr "Lido o arquivo system-gschemrc [%s]\n"
+
+#: noweb/g_rc.nw:269
+#, c-format
+msgid "Did not find system-gschemrc file [%s]\n"
+msgstr "Arquivo system-gschemrc [%s] não encontrado\n"
+
+#: noweb/g_rc.nw:310
+#, c-format
+msgid "Read ~/.gEDA/gschemrc file [%s]\n"
+msgstr "Lendo arquivo ~/.gEDA/gschemrc [%s]\n"
+
+#: noweb/g_rc.nw:311
+#, c-format
+msgid "Did not find ~/.gEDA/gschemrc file [%s]\n"
+msgstr "Arquivo ~/.gEDA/gschemrc [%s] não encontrado\n"
+
+#: noweb/g_rc.nw:342
+#, c-format
+msgid "Read local gschemrc file [%s]\n"
+msgstr "Lendo arquivo local gschemrc [%s]\n"
+
+#: noweb/g_rc.nw:343
+#, c-format
+msgid "Did not find local gschemrc file [%s]\n"
+msgstr "Arquivo local gschemrc [%s] não encontrado\n"
+
+#: noweb/g_rc.nw:400
+#, c-format
+msgid "Read specified rc file [%s]\n"
+msgstr "Lendo arquivo rc especificado [%s]\n"
+
+#: noweb/g_rc.nw:404 noweb/g_rc.nw:407
+#, c-format
+msgid "Did not find specified gschemrc file [%s]\n"
+msgstr "Arquivo especificado rc [%s] não encontrado\n"
+
+#: noweb/g_rc.nw:416
+msgid "Could not find any gschemrc file!\n"
+msgstr "Nenhum arquivo gschmrc encontrado!\n"
+
+#: noweb/g_rc.nw:417
+msgid "Could not find a gschemrc file\n"
+msgstr "Não encontrado um arquivo gschrm\n"
+
+#: noweb/g_rc.nw:439 noweb/g_rc.nw:1176 noweb/g_rc.nw:1209 noweb/g_rc.nw:1436
+#: noweb/g_rc.nw:1630 noweb/g_rc.nw:1666 noweb/g_rc.nw:1726 noweb/g_rc.nw:1833
+#, c-format
+msgid "%s requires a string as a parameter\n"
+msgstr "%s requer uma string como parâmetro\n"
+
+#: noweb/g_rc.nw:447
+#, c-format
+msgid ""
+"Found a version [%s] gschemrc file:\n"
+"[%s]\n"
+msgstr ""
+"Encontrado um arquivo gschemrc versão [%s]:\n"
+"[%s]\n"
+
+#: noweb/g_rc.nw:450
+msgid ""
+"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgstr "Enquanto o gschem for versão ALPHA, assegure que você tem a última versão de arquivo rc.\n"
+
+#: noweb/g_rc.nw:499
+#, c-format
+msgid "Invalid color [%s] passed to %s\n"
+msgstr "Cor [%s] inválida passada para %s\n"
+
+#: noweb/g_rc.nw:731
+#, c-format
+msgid "Invalid mode [%s] passed to %s\n"
+msgstr "Modo [%s] inválido passado para %s\n"
+
+#: noweb/g_rc.nw:933
+#, c-format
+msgid "Invalid zoomfactor [%d] passed to %s\n"
+msgstr "Fator de Zoom [%d] inválido passado para %s\n"
+
+#: noweb/g_rc.nw:978
+#, c-format
+msgid "Invalid mode [%s] passed to scrollbar-update\n"
+msgstr "Modo [%s] inválido passado para scrollbar-update\n"
+
+#: noweb/g_rc.nw:1075
+#, c-format
+msgid "Invalid size [%d] passed to text-size\n"
+msgstr "Tamanho [%d] inválido (text-size)\n"
+
+#: noweb/g_rc.nw:1127
+#, c-format
+msgid "Invalid size [%d] passed to snap-size\n"
+msgstr "Tamanho [%d] inválido passado tamanho de grade\n"
+
+#: noweb/g_rc.nw:1254
+#, c-format
+msgid "Invalid path [%s] passed to component-library\n"
+msgstr "Caminho para biblioteca de componentes [%s] inválido (component-library)\n"
+
+#: noweb/g_rc.nw:1334 noweb/g_rc.nw:1354
+#, c-format
+msgid "Invalid path [%s] passed to component-library-search\n"
+msgstr "Caminho para pesquisa de componentes [%s] inválido (component-library-search)\n"
+
+#: noweb/g_rc.nw:1450
+#, c-format
+msgid "Invalid path [%s] passed to %s\n"
+msgstr "Caminho [%s] inválido passado para %s\n"
+
+#: noweb/g_rc.nw:1531 noweb/g_rc.nw:1551
+#, c-format
+msgid "Invalid path [%s] passed to source-library-search\n"
+msgstr "Caminho [%s] inválido passado para source-library-search\n"
+
+#: noweb/g_rc.nw:1680
+#, c-format
+msgid "Invalid path [%s] passed to scheme-directory\n"
+msgstr "Caminho inválido [%s] passado para scheme-directory\n"
+
+#: noweb/g_rc.nw:1740
+#, c-format
+msgid "Invalid path [%s] passed to bitmap-directory\n"
+msgstr "Caminho [%s] inválido passado para bitmap-directory\n"
+
+#: noweb/g_rc.nw:1785 noweb/g_rc.nw:1788
+#, c-format
+msgid "Duplicate stroke definition passed to stroke! [%s]\n"
+msgstr "Definição stroke duplicada passada para stroke! [%s]\n"
+
+#: noweb/g_rc.nw:1805
+msgid ""
+"A stroke keyword has been found in an rc file, but gschem\n"
+"is not compiled to support strokes, please recompile gschem\n"
+"with LibStroke\n"
+msgstr ""
+"Uma palavra-chave stroke foi encontrada num arquivo rc,\n"
+"mas o gschem não está com suporte a strokes, recompile\n"
+"o gschem com a biblioteca LibStroke\n"
+
+#: noweb/g_rc.nw:1847
+#, c-format
+msgid "Invalid path [%s] passed to font-directory\n"
+msgstr "Caminho [%s] inválido passado para font-directory\n"
+
+#: noweb/g_rc.nw:1992
+msgid "Invalid parameters to paper-sizes\n"
+msgstr ""
+
+#: noweb/g_rc.nw:2454
+#, c-format
+msgid "Invalid num levels [%d] passed to undo-levels\n"
+msgstr "Número de níveis [%d] inválido para função desfaz passado para undo-level\n"
+
+#: noweb/gschem.nw:155 noweb/gschem.nw:165
+#, c-format
+msgid "gEDA/gschem version %s\n"
+msgstr "gEDA/gschem versão %s\n"
+
+#: noweb/gschem.nw:157 noweb/gschem.nw:167
+msgid ""
+"gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+"details.\n"
+msgstr ""
+"gEDA/gschem vem com ABSOLUTAMENTE NENHUMA GARANTIA; leia o arquivo COPYING "
+"para maiores detalhes.\n"
+
+#: noweb/gschem.nw:159 noweb/gschem.nw:169
+msgid ""
+"This is free software, and you are welcome to redistribute it under certain\n"
+msgstr ""
+"Este programa é um software livre, e você é convidado a redistribui-"
+"lo sob certas\n"
+
+#: noweb/gschem.nw:161 noweb/gschem.nw:171
+msgid ""
+"conditions; please see the COPYING file for more details.\n"
+"\n"
+msgstr "condições; Leia o arquivo COPYING para maiores detalhes.\n"
+
+#: noweb/gschem.nw:175
+msgid "This is the MINGW32 port.\n"
+msgstr "Esta é a versão portada para MINGW32.\n"
+
+#: noweb/gschem.nw:205
+#, c-format
+msgid "Read init scm file [%s]\n"
+msgstr "Lendo o arquivo scm [%s]\n"
+
+#: noweb/gschem.nw:209 noweb/gschem.nw:212
+#, c-format
+msgid "Failed to read init scm file [%s]\n"
+msgstr "Falhou ao ler o arquivo scm [%s]\n"
+
+#: noweb/gschem.nw:257 noweb/gschem.nw:283
+#, c-format
+msgid "Loading schematic [%s]\n"
+msgstr "Carregando o diagrama [%s]\n"
+
+#: noweb/gschem.nw:348
+msgid "Scheme directory NOT set!\n"
+msgstr "Diretório Scheme NÃO ajustado!\n"
+
+#: noweb/gschem.nw:355 noweb/x_script.nw:87
+#, c-format
+msgid "Executing guile script [%s]\n"
+msgstr "Executando script guile [%s]\n"
+
+#: noweb/i_basic.nw:157 noweb/x_window.nw:1099
+msgid "Action"
+msgstr "Ação"
+
+#: noweb/i_basic.nw:165 noweb/x_window.nw:1094
+msgid "Stroke"
+msgstr ""
+
+#: noweb/i_basic.nw:172 noweb/x_window.nw:1096
+msgid "none"
+msgstr "nenhum"
+
+#: noweb/i_basic.nw:180
+msgid "Repeat/"
+msgstr "Repetir/"
+
+#: noweb/i_callbacks.nw:466
+msgid "Cannot obtain the current directory!\n"
+msgstr "Impossível determinar o diretório atual!\n"
+
+#: noweb/i_callbacks.nw:469
+msgid "New Window created\n"
+msgstr "Nova janela criada\n"
+
+#: noweb/i_callbacks.nw:578
+#, c-format
+msgid "Saved [%s]\n"
+msgstr "Salvo [%s]\n"
+
+#: noweb/i_callbacks.nw:582
+msgid "Saved - Select Mode"
+msgstr "Salvo - Modo de Seleção"
+
+#: noweb/i_callbacks.nw:586 noweb/x_fileselect.nw:839
+#, c-format
+msgid "Could NOT save [%s]\n"
+msgstr "Não foi possível salvar [%s]\n"
+
+#: noweb/i_callbacks.nw:589 noweb/x_fileselect.nw:841
+msgid "Error while trying to save - Select Mode"
+msgstr "Erro tentando salvar - Modo de Seleção"
+
+#: noweb/i_callbacks.nw:639
+msgid "Saved All - Select"
+msgstr "Todos salvados - modo seleção"
+
+#: noweb/i_callbacks.nw:735 noweb/i_callbacks.nw:738
+msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
+msgstr ""
+"A libgdgeda não foi instalada ou foi desabilitada, este recurso está "
+"indisponível\n"
+
+#: noweb/i_callbacks.nw:791
+msgid "Closing Window\n"
+msgstr "Fechando Janela\n"
+
+#: noweb/i_callbacks.nw:930 noweb/i_callbacks.nw:1084
+#: noweb/i_callbacks.nw:1878 noweb/i_callbacks.nw:2918
+#: noweb/i_callbacks.nw:2943 noweb/i_callbacks.nw:3131
+#: noweb/i_callbacks.nw:4165 noweb/o_copy.nw:111 noweb/o_delete.nw:315
+#: noweb/o_grips.nw:434 noweb/o_grips.nw:475 noweb/o_grips.nw:533
+#: noweb/o_grips.nw:592 noweb/o_grips.nw:1057 noweb/o_grips.nw:1227
+#: noweb/o_grips.nw:1382 noweb/o_misc.nw:96 noweb/o_misc.nw:280
+#: noweb/o_misc.nw:618 noweb/o_move.nw:361 noweb/o_slot.nw:86
+#: noweb/x_dialog.nw:595 noweb/x_dialog.nw:1012 noweb/x_dialog.nw:1162
+#: noweb/x_dialog.nw:1245 noweb/x_dialog.nw:1277 noweb/x_dialog.nw:1731
+#: noweb/x_dialog.nw:1753 noweb/x_dialog.nw:2114 noweb/x_dialog.nw:2136
+#: noweb/x_dialog.nw:2511 noweb/x_dialog.nw:2533 noweb/x_dialog.nw:3155
+#: noweb/x_dialog.nw:3321 noweb/x_dialog.nw:3487 noweb/x_dialog.nw:3642
+#: noweb/x_dialog.nw:3664 noweb/x_event.nw:382 noweb/x_event.nw:394
+#: noweb/x_event.nw:404 noweb/x_event.nw:420 noweb/x_event.nw:431
+#: noweb/x_event.nw:441 noweb/x_event.nw:456 noweb/x_event.nw:514
+#: noweb/x_event.nw:675 noweb/x_event.nw:684 noweb/x_event.nw:693
+#: noweb/x_event.nw:708 noweb/x_event.nw:722 noweb/x_event.nw:791
+#: noweb/x_event.nw:799 noweb/x_event.nw:849 noweb/x_fileselect.nw:1751
+#: noweb/x_window.nw:1130
+msgid "Select Mode"
+msgstr "Modo de Seleção"
+
+#: noweb/i_callbacks.nw:977 noweb/i_callbacks.nw:1002 noweb/x_event.nw:524
+#: noweb/x_window.nw:947
+msgid "Copy"
+msgstr "Copiar"
+
+#: noweb/i_callbacks.nw:979
+msgid "Copy Mode"
+msgstr "Modo de Cópia"
+
+#: noweb/i_callbacks.nw:982 noweb/i_callbacks.nw:1031
+msgid "Select objs first"
+msgstr "Selecione objetos antes"
+
+#: noweb/i_callbacks.nw:1026 noweb/i_callbacks.nw:1051 noweb/x_event.nw:531
+#: noweb/x_window.nw:932
+msgid "Move"
+msgstr "Mover"
+
+#: noweb/i_callbacks.nw:1028
+msgid "Move Mode"
+msgstr "Modo de Movimentação"
+
+#: noweb/i_callbacks.nw:1075 noweb/x_dialog.nw:832 noweb/x_dialog.nw:1434
+#: noweb/x_window.nw:962
+msgid "Delete"
+msgstr "Deletar"
+
+#: noweb/i_callbacks.nw:1105 noweb/x_window.nw:917
+msgid "Edit"
+msgstr "Editar"
+
+#: noweb/i_callbacks.nw:1126 noweb/x_dialog.nw:1810 noweb/x_dialog.nw:1815
+msgid "Edit Text"
+msgstr "Editar Texto"
+
+#: noweb/i_callbacks.nw:1154
+msgid "Slot"
+msgstr ""
+
+#: noweb/i_callbacks.nw:1176
+msgid "Color"
+msgstr "Cor"
+
+#: noweb/i_callbacks.nw:1198
+msgid "Rotate Mode"
+msgstr "Modo de Rotação"
+
+#: noweb/i_callbacks.nw:1199 noweb/i_callbacks.nw:1225 noweb/x_window.nw:977
+msgid "Rotate"
+msgstr "Rotacionar"
+
+#: noweb/i_callbacks.nw:1250
+msgid "Mirror Mode"
+msgstr "Modo espelho"
+
+#: noweb/i_callbacks.nw:1251 noweb/i_callbacks.nw:1277 noweb/x_window.nw:992
+msgid "Mirror"
+msgstr "Espelhar"
+
+#: noweb/i_callbacks.nw:1306
+msgid "Lock"
+msgstr "Bloquear"
+
+#: noweb/i_callbacks.nw:1330
+msgid "Unlock"
+msgstr "Desbloquear"
+
+#: noweb/i_callbacks.nw:1353 noweb/x_dialog.nw:3205
+msgid "Translate"
+msgstr "Transladar"
+
+#: noweb/i_callbacks.nw:1356
+msgid "WARNING: Do not translate with snap off!\n"
+msgstr "ATENÇÃO: Não translade com o agarre (snap) desligado!\n"
+
+#: noweb/i_callbacks.nw:1357
+msgid "WARNING: Turning snap on and continuing with translate.\n"
+msgstr "ATENÇÃO: Ligando o agarre e continuando o translado.\n"
+
+#: noweb/i_callbacks.nw:1363
+msgid "WARNING: Snap grid size is not equal to 100!\n"
+msgstr "ATENÇÃO: A grade de agarre não está em 100!\n"
+
+#: noweb/i_callbacks.nw:1365
+msgid ""
+"WARNING: If you are translating a symbol to the origin, the snap grid size "
+"should be set to 100\n"
+msgstr "ATENÇÃO: Se transladar um símbolo para origem, a grade deve estar em 100\n"
+
+#: noweb/i_callbacks.nw:1390
+msgid "Embed"
+msgstr "Embutir"
+
+#: noweb/i_callbacks.nw:1413
+msgid "Unembed"
+msgstr "Desembutir"
+
+#: noweb/i_callbacks.nw:1442
+msgid "ShowHidden"
+msgstr "Mostrar Oculto"
+
+#: noweb/i_callbacks.nw:1470
+msgid "MakeVisible"
+msgstr "Deixar Visível"
+
+#: noweb/i_callbacks.nw:1585
+msgid "Edit Line Type"
+msgstr "Editar Tipo de Linha"
+
+#: noweb/i_callbacks.nw:1610 noweb/x_dialog.nw:2583
+msgid "Edit Fill Type"
+msgstr "Editar Tipo de Preenchimento"
+
+#: noweb/i_callbacks.nw:1702 noweb/i_callbacks.nw:1722
+msgid "Zoom Box"
+msgstr "Caixa de Zoom"
+
+#: noweb/i_callbacks.nw:1836
+msgid "Pan Mode"
+msgstr "Modo Pan"
+
+#: noweb/i_callbacks.nw:1839 noweb/i_callbacks.nw:1860
+msgid "Pan"
+msgstr "Pan"
+
+#: noweb/i_callbacks.nw:1899
+msgid "Update Cues"
+msgstr "Atualiza dicas"
+
+#: noweb/i_callbacks.nw:2044
+msgid "Cannot get cwd!\n"
+msgstr "Impossível determinar diretório corrente!\n"
+
+#: noweb/i_callbacks.nw:2051
+#, c-format
+msgid "New Page created [%s]\n"
+msgstr "Criada Nova Página [%s]\n"
+
+#: noweb/i_callbacks.nw:2089 noweb/i_callbacks.nw:2106
+#: noweb/i_callbacks.nw:2124 noweb/i_callbacks.nw:2149
+#: noweb/i_callbacks.nw:2240 noweb/i_callbacks.nw:2300
+#, c-format
+msgid "Closing [%s]\n"
+msgstr "Fechando [%s]\n"
+
+#: noweb/i_callbacks.nw:2257 noweb/i_callbacks.nw:2274
+#, c-format
+msgid "Discarding page [%s]\n"
+msgstr "Descartando página [%s]\n"
+
+#: noweb/i_callbacks.nw:2351
+msgid "Copy 1"
+msgstr "Copiar para 1"
+
+#: noweb/i_callbacks.nw:2374
+msgid "Copy 2"
+msgstr "Copiar para 2"
+
+#: noweb/i_callbacks.nw:2397
+msgid "Copy 3"
+msgstr "Copiar para 3"
+
+#: noweb/i_callbacks.nw:2420
+msgid "Copy 4"
+msgstr "Copiar para 4"
+
+#: noweb/i_callbacks.nw:2443
+msgid "Copy 5"
+msgstr "Copiar para 5"
+
+#: noweb/i_callbacks.nw:2466
+msgid "Cut 1"
+msgstr "Cortar para 1"
+
+#: noweb/i_callbacks.nw:2489
+msgid "Cut 2"
+msgstr "Cortar para 2"
+
+#: noweb/i_callbacks.nw:2512
+msgid "Cut 3"
+msgstr "Cortar para 3"
+
+#: noweb/i_callbacks.nw:2535
+msgid "Cut 4"
+msgstr "Cortar para 4"
+
+#: noweb/i_callbacks.nw:2558
+msgid "Cut 5"
+msgstr "Cortar para 5"
+
+#: noweb/i_callbacks.nw:2578
+msgid "Paste 1"
+msgstr "Colar de 1"
+
+#: noweb/i_callbacks.nw:2581
+msgid "Paste 1 Mode "
+msgstr "Modo Colar de 1"
+
+#: noweb/i_callbacks.nw:2587 noweb/i_callbacks.nw:2616
+#: noweb/i_callbacks.nw:2645 noweb/i_callbacks.nw:2674
+#: noweb/i_callbacks.nw:2703
+msgid "Empty buffer"
+msgstr "Buffer vazio"
+
+#: noweb/i_callbacks.nw:2607
+msgid "Paste 2"
+msgstr "Colar de 2"
+
+#: noweb/i_callbacks.nw:2610
+msgid "Paste 2 Mode "
+msgstr "Modo Colar de 2"
+
+#: noweb/i_callbacks.nw:2636
+msgid "Paste 3"
+msgstr "Colar de 3"
+
+#: noweb/i_callbacks.nw:2639
+msgid "Paste 3 Mode "
+msgstr "Modo Colar de 3"
+
+#: noweb/i_callbacks.nw:2665
+msgid "Paste 4"
+msgstr "Colar de 4"
+
+#: noweb/i_callbacks.nw:2668
+msgid "Paste 4 Mode "
+msgstr "Modo Colar de 4"
+
+#: noweb/i_callbacks.nw:2694
+msgid "Paste 5"
+msgstr "Colar de 5"
+
+#: noweb/i_callbacks.nw:2697
+msgid "Paste 5 Mode "
+msgstr "Modo Colar de 5"
+
+#: noweb/i_callbacks.nw:2869 noweb/x_window.nw:838
+msgid "Component"
+msgstr "Componente"
+
+#: noweb/i_callbacks.nw:2915 noweb/i_callbacks.nw:2940 noweb/x_dialog.nw:714
+#: noweb/x_dialog.nw:742 noweb/x_dialog.nw:1344
+msgid "Attribute"
+msgstr "Atributo"
+
+#: noweb/i_callbacks.nw:2967 noweb/i_callbacks.nw:2995
+msgid "Net"
+msgstr "Conexão"
+
+#: noweb/i_callbacks.nw:2968 noweb/i_callbacks.nw:2996 noweb/o_net.nw:520
+#: noweb/x_event.nw:569
+msgid "Net Mode"
+msgstr "Modo conexão"
+
+#: noweb/i_callbacks.nw:3049 noweb/i_callbacks.nw:3078 noweb/x_window.nw:868
+msgid "Bus"
+msgstr "Barramento"
+
+#: noweb/i_callbacks.nw:3050 noweb/i_callbacks.nw:3079 noweb/o_bus.nw:474
+#: noweb/x_event.nw:578
+msgid "Bus Mode"
+msgstr "Modo Barramento"
+
+#: noweb/i_callbacks.nw:3177 noweb/i_callbacks.nw:3200
+msgid "Line"
+msgstr "Linha"
+
+#: noweb/i_callbacks.nw:3178 noweb/i_callbacks.nw:3201 noweb/x_event.nw:594
+msgid "Line Mode"
+msgstr "Modo Linha"
+
+#: noweb/i_callbacks.nw:3228 noweb/i_callbacks.nw:3251
+msgid "Box"
+msgstr "Caixa"
+
+#: noweb/i_callbacks.nw:3229 noweb/i_callbacks.nw:3252 noweb/x_event.nw:602
+msgid "Box Mode"
+msgstr "Modo Caixa"
+
+#: noweb/i_callbacks.nw:3279 noweb/i_callbacks.nw:3303
+msgid "Circle"
+msgstr "Círculo"
+
+#: noweb/i_callbacks.nw:3280 noweb/i_callbacks.nw:3304 noweb/x_event.nw:610
+msgid "Circle Mode"
+msgstr "Modo Círculo"
+
+#: noweb/i_callbacks.nw:3331 noweb/i_callbacks.nw:3354
+msgid "Arc"
+msgstr "Arco"
+
+#: noweb/i_callbacks.nw:3332 noweb/i_callbacks.nw:3355 noweb/x_event.nw:618
+msgid "Arc Mode"
+msgstr "Modo Arco"
+
+#: noweb/i_callbacks.nw:3382 noweb/i_callbacks.nw:3405
+msgid "Pin"
+msgstr "Pino"
+
+#: noweb/i_callbacks.nw:3383 noweb/i_callbacks.nw:3406 noweb/x_event.nw:586
+msgid "Pin Mode"
+msgstr "Modo Pino"
+
+#: noweb/i_callbacks.nw:3477
+#, c-format
+msgid "Searching for source [%s]\n"
+msgstr "Procurando por origem [%s]\n"
+
+#: noweb/i_callbacks.nw:3510 noweb/i_callbacks.nw:3513
+#, c-format
+msgid "Cannot find source [%s]\n"
+msgstr "Impossível encontrar origem [%s]\n"
+
+#: noweb/i_callbacks.nw:3620
+#, c-format
+msgid "Searching for symbol [%s]\n"
+msgstr "Procurando por símbolo [%s]\n"
+
+#: noweb/i_callbacks.nw:3686
+msgid "Attach"
+msgstr "Anexar"
+
+#: noweb/i_callbacks.nw:3740
+msgid "Detach"
+msgstr "Desanexar"
+
+#: noweb/i_callbacks.nw:3785
+msgid "ShowN"
+msgstr "Mostrar N"
+
+#: noweb/i_callbacks.nw:3821
+msgid "ShowV"
+msgstr "Mostrar V"
+
+#: noweb/i_callbacks.nw:3857
+msgid "ShowB"
+msgstr "Mostrar V"
+
+#: noweb/i_callbacks.nw:3894
+msgid "VisToggle"
+msgstr "Comuta Visibilidade"
+
+#: noweb/i_callbacks.nw:3920
+msgid "Sorry but this is a non-functioning menu option\n"
+msgstr "Desculpe, mas esta é uma opção de menu sem função\n"
+
+#: noweb/i_callbacks.nw:3984
+msgid "Action feedback mode set to OUTLINE\n"
+msgstr "Retorno de ação ajustado para silhueta\n"
+
+#: noweb/i_callbacks.nw:3987
+msgid "Action feedback mode set to BOUNDINGBOX\n"
+msgstr "Retorno de ação ajustado para caixa completa\n"
+
+#: noweb/i_callbacks.nw:4009
+msgid "Grid OFF\n"
+msgstr "Grade DESLIGADA\n"
+
+#: noweb/i_callbacks.nw:4012
+msgid "Grid ON\n"
+msgstr "Grade LIGADA\n"
+
+#: noweb/i_callbacks.nw:4034
+msgid "Snap OFF (CAUTION!)\n"
+msgstr "Agarre desligado\n"
+
+#: noweb/i_callbacks.nw:4037
+msgid "Snap ON\n"
+msgstr "Agarre ligado\n"
+
+#: noweb/i_callbacks.nw:4060
+msgid "Rubber band OFF \n"
+msgstr "Elástico desligado\n"
+
+#: noweb/i_callbacks.nw:4063
+msgid "Rubber band ON\n"
+msgstr ""
+
+#: noweb/o_arc.nw:170
+#, c-format
+msgid "Unknown end for arc (%d)\n"
+msgstr "Fim de arco desconhecido:(%d)\n"
+
+#: noweb/o_arc.nw:211
+msgid "Unknown type for arc !\n"
+msgstr "Tipo para arco desconhecido!\n"
+
+#: noweb/o_attrib.nw:141
+msgid "Got NULL in o_attrib_toggle_visibility\n"
+msgstr "tem NULO em o_attrib_toggle_visibility\n"
+
+#: noweb/o_attrib.nw:212
+msgid "Got NULL in o_attrib_toggle_show_name_value\n"
+msgstr "Tem NULO em o_attrib_toggle_show_name_value\n"
+
+#: noweb/o_attrib.nw:269
+msgid "ERROR! you can't get an attribute without an ='s\n"
+msgstr "ERRO! Você não tem atributo sem um sinal = (igual)\n"
+
+#: noweb/o_box.nw:191
+#, c-format
+msgid "Unknown end for box (%d)\n"
+msgstr "Fim desconhecido para caixa (%d)\n"
+
+#: noweb/o_box.nw:231
+msgid "Unknown type for box !\n"
+msgstr "Tipo desconhecido para caixa!\n"
+
+#: noweb/o_box.nw:310
+msgid "Unknown type for box (fill)!\n"
+msgstr "Tipo desconhecido para enchimento da caixa!\n"
+
+#: noweb/o_buffer.nw:73
+msgid "Got an invalid buffer_number [o_buffer_copy]\n"
+msgstr ""
+
+#: noweb/o_buffer.nw:117
+msgid "Got an invalid buffer_number [o_buffer_cut]\n"
+msgstr ""
+
+#: noweb/o_buffer.nw:164
+msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
+msgstr ""
+
+#: noweb/o_buffer.nw:223
+msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
+msgstr ""
+
+#: noweb/o_bus.nw:270
+msgid "Got an invalid which one in o_bus_draw_xor_single\n"
+msgstr ""
+
+#: noweb/o_bus.nw:341 noweb/o_bus.nw:374 noweb/o_net.nw:383 noweb/o_net.nw:416
+msgid "selected a nonexistant object!\n"
+msgstr "Selecionado um objeto inexistente!\n"
+
+#: noweb/o_circle.nw:178
+msgid "Unknown end for circle\n"
+msgstr "Fim para arco desconhecido\n"
+
+#: noweb/o_circle.nw:214
+msgid "Unknown type for circle!\n"
+msgstr "Tipo para arco desconhecido!\n"
+
+#: noweb/o_circle.nw:290
+msgid "Unknown type for circle (fill)!\n"
+msgstr "Tipo desconhecido para enchimento de arco!\n"
+
+#: noweb/o_complex.nw:265
+msgid "Could not find complex in new componet placement!\n"
+msgstr ""
+
+#: noweb/o_complex.nw:615
+msgid "Got NULL in o_complex_translate_display_selection\n"
+msgstr ""
+
+#: noweb/o_complex.nw:730 noweb/o_complex.nw:736
+#, c-format
+msgid "Translating schematic [%d %d]\n"
+msgstr "Transladando diagrama [%d %d]\n"
+
+#: noweb/o_complex.nw:785
+msgid "Got NULL in o_complex_translate_selection!\n"
+msgstr ""
+
+#: noweb/o_copy.nw:140 noweb/o_copy.nw:383
+msgid "ERROR: NULL object in o_copy_end!\n"
+msgstr ""
+
+#: noweb/o_delete.nw:329
+msgid "ERROR: NULL object in o_delete_end!\n"
+msgstr ""
+
+#: noweb/o_line.nw:150
+#, c-format
+msgid "Unknown end for line (%d)\n"
+msgstr "Fim desconhecido para linha (%d)!\n"
+
+#: noweb/o_line.nw:190
+#, c-format
+msgid "Unknown type for line (%d) !\n"
+msgstr "Tipo desconhecido para linha (%d)!\n"
+
+#: noweb/o_misc.nw:103
+msgid "Got an unexpected NULL in o_edit\n"
+msgstr ""
+
+#: noweb/o_misc.nw:205
+msgid "Object alreadly locked\n"
+msgstr ""
+
+#: noweb/o_misc.nw:248
+msgid "Object alreadly unlocked\n"
+msgstr "Objeto já desbloqueado\n"
+
+#: noweb/o_misc.nw:291
+msgid "ERROR: NULL object in o_rotate_90!\n"
+msgstr "ERRO: NENHUM objeto na rotação 90!\n"
+
+#: noweb/o_misc.nw:498 noweb/o_misc.nw:555
+msgid "ERROR: NULL object in o_embed!\n"
+msgstr "ERRO: NENHUM objeto no embutir!\n"
+
+#: noweb/o_misc.nw:575
+#, c-format
+msgid "Could not find component [%s], while trying to unembed.\n"
+msgstr "Componente [%s] não encontrado ao desembutir.\n"
+
+#: noweb/o_misc.nw:578
+msgid "Component is still embedded\n"
+msgstr "O componente ainda está embutido\n"
+
+#: noweb/o_misc.nw:630
+msgid "ERROR: NULL object in o_mirror!\n"
+msgstr "ERRO: NENHUM objeto ao espelhar!\n"
+
+#: noweb/o_misc.nw:868
+msgid "Hidden text is now visible\n"
+msgstr "Texto oculto agora está visível\n"
+
+#: noweb/o_misc.nw:870
+msgid "Hidden text is now invisible\n"
+msgstr "Texto oculto agora está invisível\n"
+
+#: noweb/o_misc.nw:1235
+#, c-format
+msgid "Warning: two components with same uref: %d\n"
+msgstr "ATENÇÃO: dois componentes com mesmo UREF: %d\n"
+
+#: noweb/o_move.nw:387
+msgid "ERROR: NULL object in o_move_end!\n"
+msgstr ""
+
+#: noweb/o_move.nw:484
+msgid "DOH! tried to find the whichone, but didn't find it!\n"
+msgstr ""
+
+#: noweb/o_move.nw:510
+msgid "Got a non line object in o_move_check_endpoint\n"
+msgstr ""
+
+#: noweb/o_net.nw:312
+msgid "Got an invalid which one in o_net_draw_xor_single\n"
+msgstr ""
+
+#: noweb/o_slot.nw:166
+msgid "Slot attribute malformed\n"
+msgstr "Atributo Slot mau feito\n"
+
+#: noweb/o_slot.nw:177
+msgid "numslots attribute missing\n"
+msgstr "Sem atributo NUMSLOTS\n"
+
+#: noweb/o_slot.nw:179
+msgid "Slotting not allowed for this component\n"
+msgstr "Slots não disponível para este componente\n"
+
+#: noweb/o_slot.nw:193
+msgid "New slot number out of range\n"
+msgstr "Número de slot fora dos limites\n"
+
+#: noweb/o_slot.nw:274
+msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+msgstr "Você tentou editar o slot de algo que não existe!\n"
+
+#: noweb/o_undo.nw:354
+msgid "Undo/Redo disabled in rc file\n"
+msgstr "Desfaz e Refaz desabilitado no arquivo rc\n"
+
+#: noweb/x_attrsel.nw:326
+msgid "Add Attribute"
+msgstr "Adicionar Atributo"
+
+#: noweb/x_attrsel.nw:328 noweb/x_dialog.nw:1091 noweb/x_dialog.nw:1426
+#: noweb/x_dialog.nw:4347 noweb/x_fileselect.nw:2245
+msgid "Apply"
+msgstr "Aplicar"
+
+#: noweb/x_attrsel.nw:336 noweb/x_dialog.nw:837 noweb/x_dialog.nw:1102
+#: noweb/x_dialog.nw:3870 noweb/x_dialog.nw:4018 noweb/x_dialog.nw:4358
+#: noweb/x_dialog.nw:4555 noweb/x_fileselect.nw:2298 noweb/x_image.nw:411
+#: noweb/x_log.nw:316 noweb/x_print.nw:413
+msgid "Close"
+msgstr "Fechar"
+
+#: noweb/x_attrsel.nw:397 noweb/x_dialog.nw:791 noweb/x_dialog.nw:1390
+msgid "Name"
+msgstr "Nome"
+
+#: noweb/x_attrsel.nw:416 noweb/x_dialog.nw:722 noweb/x_dialog.nw:773
+#: noweb/x_dialog.nw:797 noweb/x_dialog.nw:1363 noweb/x_dialog.nw:1396
+msgid "Value"
+msgstr "Valor"
+
+#: noweb/x_attrsel.nw:439
+msgid "Show Value"
+msgstr "Mostrar Valor"
+
+#: noweb/x_attrsel.nw:449
+msgid "Show Both"
+msgstr "Mostrar ambos"
+
+#: noweb/x_attrsel.nw:459
+msgid "Show Name"
+msgstr "Mostrar Nome"
+
+#: noweb/x_attrsel.nw:467 noweb/x_dialog.nw:757 noweb/x_dialog.nw:1374
+msgid "Visible"
+msgstr "Visível"
+
+#: noweb/x_attrsel.nw:477
+msgid "Invisible"
+msgstr "Invisível"
+
+#: noweb/x_color.nw:92 noweb/x_color.nw:129
+#, c-format
+msgid "Could not find the color %s!\n"
+msgstr "Impossível encontrar a cor %s!\n"
+
+#: noweb/x_color.nw:95 noweb/x_color.nw:132
+msgid "Defaulting color to white\n"
+msgstr "Cor padrão para branco\n"
+
+#: noweb/x_color.nw:102 noweb/x_color.nw:139
+msgid "Ack! Cannot allocate white!\n"
+msgstr "Ih! Não consigo alocar o branco!\n"
+
+#: noweb/x_color.nw:113 noweb/x_color.nw:161 noweb/x_window.nw:346
+#: noweb/x_window.nw:353
+#, c-format
+msgid "Could not allocate the color %s!\n"
+msgstr "Impossível alocar a cor %s!\n"
+
+#: noweb/x_color.nw:186 noweb/x_color.nw:208
+#, c-format
+msgid "Tried to get an invalid color: %d\n"
+msgstr "Tentou ter cor inválida: %d\n"
+
+#: noweb/x_dialog.nw:688 noweb/x_multimulti.nw:160
+msgid "Edit Component"
+msgstr "Editar Componente"
+
+#: noweb/x_dialog.nw:718
+msgid "Visibility"
+msgstr "Visibilidade"
+
+#: noweb/x_dialog.nw:803 noweb/x_dialog.nw:1402
+msgid "Both"
+msgstr "Ambos"
+
+#: noweb/x_dialog.nw:813
+msgid "Add"
+msgstr "Adicionar"
+
+#: noweb/x_dialog.nw:820
+msgid "Change"
+msgstr "Alterar"
+
+#: noweb/x_dialog.nw:827
+msgid "Clear"
+msgstr "Limpar"
+
+#: noweb/x_dialog.nw:984 noweb/x_dialog.nw:3637
+msgid "String too long... hack!\n"
+msgstr "String muito longa... abrevie!\n"
+
+#: noweb/x_dialog.nw:1069
+msgid "Text Entry..."
+msgstr "Entrada de texto..."
+
+#: noweb/x_dialog.nw:1073
+msgid ""
+"Enter text, click apply,\n"
+"move cursor into window, click to place text.\n"
+"Middle button to rotate while placing."
+msgstr ""
+"Entre com o texto e clique em Aplicar,\n"
+"cursor na janela, clique para deixar o texto.\n"
+"Use botão do meio para rotacionar enquanto posiciona"
+
+#: noweb/x_dialog.nw:1327
+msgid "Single Attribute Editor"
+msgstr "Editor de um atributo"
+
+#: noweb/x_dialog.nw:1412 noweb/x_dialog.nw:1870 noweb/x_dialog.nw:2263
+#: noweb/x_dialog.nw:2716 noweb/x_dialog.nw:2884 noweb/x_dialog.nw:3067
+#: noweb/x_dialog.nw:3228 noweb/x_dialog.nw:3394 noweb/x_dialog.nw:3559
+#: noweb/x_dialog.nw:3735 noweb/x_dialog.nw:4762 noweb/x_dialog.nw:5058
+#: noweb/x_dialog.nw:5182 noweb/x_dialog.nw:5304
+msgid "OK"
+msgstr ""
+
+#: noweb/x_dialog.nw:1440 noweb/x_dialog.nw:1881 noweb/x_dialog.nw:2274
+#: noweb/x_dialog.nw:2727 noweb/x_dialog.nw:2893 noweb/x_dialog.nw:3078
+#: noweb/x_dialog.nw:3238 noweb/x_dialog.nw:3405 noweb/x_dialog.nw:3570
+#: noweb/x_dialog.nw:3746 noweb/x_fileselect.nw:2262
+#: noweb/x_fileselect.nw:2281 noweb/x_multimulti.nw:152
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: noweb/x_dialog.nw:1585
+msgid "Middle Left"
+msgstr "Centro Esq"
+
+#: noweb/x_dialog.nw:1595
+msgid "Upper Left"
+msgstr "Alto Esq"
+
+#: noweb/x_dialog.nw:1605
+msgid "Lower Middle"
+msgstr "Baixo Centro"
+
+#: noweb/x_dialog.nw:1615
+msgid "Middle Middle"
+msgstr "Centro Centro"
+
+#: noweb/x_dialog.nw:1625
+msgid "Upper Middle"
+msgstr "Alto Centro"
+
+#: noweb/x_dialog.nw:1635
+msgid "Lower Right"
+msgstr "Baixo Dir"
+
+#: noweb/x_dialog.nw:1645
+msgid "Middle Right"
+msgstr "Centro Dir"
+
+#: noweb/x_dialog.nw:1655
+msgid "Upper Right"
+msgstr "Alto Dir"
+
+#: noweb/x_dialog.nw:1835
+msgid "Edit Text Size"
+msgstr "Editar Tamanho do Texto"
+
+#: noweb/x_dialog.nw:1853
+msgid "Edit Text Alignment"
+msgstr "Editar Alinhamento do Texto"
+
+#: noweb/x_dialog.nw:1954
+msgid "Solid"
+msgstr "Solido"
+
+#: noweb/x_dialog.nw:1964
+msgid "Dotted"
+msgstr "Pontilhado"
+
+#: noweb/x_dialog.nw:1974
+msgid "Dashed"
+msgstr "Tracejado"
+
+#: noweb/x_dialog.nw:1984
+msgid "Center"
+msgstr "Centro"
+
+#: noweb/x_dialog.nw:1994
+msgid "Phantom"
+msgstr "Fantasma"
+
+#: noweb/x_dialog.nw:2082 noweb/x_dialog.nw:2096
+msgid "Invalid space specified, setting to 100\n"
+msgstr "Espaço inválido, ajustado para 100\n"
+
+#: noweb/x_dialog.nw:2091
+msgid "Invalid length specified, setting to 100\n"
+msgstr "Comprimento inválido, ajustado para 100\n"
+
+#: noweb/x_dialog.nw:2184
+msgid "Edit Line Width & Type"
+msgstr "Editar Largura e Tipo de Linha"
+
+#: noweb/x_dialog.nw:2191 noweb/x_dialog.nw:2606
+msgid "Line Width"
+msgstr "Largura da Linha"
+
+#: noweb/x_dialog.nw:2213
+msgid "Line Type"
+msgstr "Tipo da Linha"
+
+#: noweb/x_dialog.nw:2229
+msgid "Line Dash Length"
+msgstr "Comprimento de traço de linha"
+
+#: noweb/x_dialog.nw:2246
+msgid "Line Dash Space"
+msgstr "Comp. de espaço"
+
+#: noweb/x_dialog.nw:2351
+msgid "Hollow"
+msgstr ""
+
+#: noweb/x_dialog.nw:2361
+msgid "Filled"
+msgstr "Preenchida"
+
+#: noweb/x_dialog.nw:2371
+msgid "Mesh"
+msgstr ""
+
+#: noweb/x_dialog.nw:2381
+msgid "Hatch"
+msgstr ""
+
+#: noweb/x_dialog.nw:2589
+msgid "Fill Type"
+msgstr "Tipo de Preenchimento"
+
+#: noweb/x_dialog.nw:2628
+msgid "Angle1"
+msgstr "Ângulo1"
+
+#: noweb/x_dialog.nw:2650
+msgid "Pitch1"
+msgstr ""
+
+#: noweb/x_dialog.nw:2672
+msgid "Angle2"
+msgstr "Ângulo2"
+
+#: noweb/x_dialog.nw:2694
+msgid "Pitch2"
+msgstr ""
+
+#: noweb/x_dialog.nw:2880
+msgid "Discard Changes?"
+msgstr "Descartar Alterações?"
+
+#: noweb/x_dialog.nw:2905
+msgid ""
+"There are schematics which are unsaved!\n"
+"\n"
+"Are you sure?\n"
+"OK will discard ALL changes!\n"
+msgstr ""
+"Existem arquivos não salvos!\n"
+"\n"
+"Você tem certeza?\n"
+"Um OK vai descartar todas as mudanças!\n"
+
+#: noweb/x_dialog.nw:3030
+msgid "Arc Params"
+msgstr "Parametros do Arco"
+
+#: noweb/x_dialog.nw:3034
+msgid "Start Angle"
+msgstr "Ângulo Inicial"
+
+#: noweb/x_dialog.nw:3049
+msgid "Degrees of Sweep"
+msgstr "Graus de comprimento"
+
+#: noweb/x_dialog.nw:3209
+msgid ""
+"Offset to translate?\n"
+"(0 for origin)"
+msgstr ""
+"OffSet a transladar?\n"
+"(0 para origem)"
+
+#: noweb/x_dialog.nw:3371
+msgid "Text Size"
+msgstr "Tamanho do Texto"
+
+#: noweb/x_dialog.nw:3375
+msgid "Enter new text size"
+msgstr "Entre com novo tamanho de texto"
+
+#: noweb/x_dialog.nw:3536
+msgid "Snap Grid"
+msgstr "Grade de agarre"
+
+#: noweb/x_dialog.nw:3540
+msgid "Enter new snap grid spacing"
+msgstr "Entre com novo tamanho de grade"
+
+#: noweb/x_dialog.nw:3712 noweb/x_dialog.nw:3716
+msgid "Edit slot number"
+msgstr "Editar número de SLOT"
+
+#: noweb/x_dialog.nw:3830
+msgid "About..."
+msgstr "Sobre..."
+
+#: noweb/x_dialog.nw:3849
+msgid "gEDA : GPL Electronic Design Automation"
+msgstr "gEDA : GPL Electronic Design Automation"
+
+#: noweb/x_dialog.nw:3856
+#, c-format
+msgid "gschem version %s"
+msgstr "gschem versão %s"
+
+#: noweb/x_dialog.nw:3863
+msgid ""
+"Written by:\n"
+"Ales V. Hvezda\n"
+"ahvezda@geda.seul.org\n"
+"And many others (See AUTHORS file)\n"
+msgstr ""
+"Escrito por:\n"
+"Ales V. Hvezda ahvezda@geda.seul.org\n"
+"e outros autores (ver arquivo AUTHORS)\n"
+"Traduçao: Antonio Todo Bom antonio@projetos.etc.br\n"
+
+#: noweb/x_dialog.nw:3969
+msgid "Coords"
+msgstr "Coordenadas"
+
+#: noweb/x_dialog.nw:3993
+msgid "Screen"
+msgstr "Janela"
+
+#: noweb/x_dialog.nw:4006
+msgid "World"
+msgstr "Universo"
+
+#: noweb/x_dialog.nw:4264
+msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
+msgstr ""
+
+#: noweb/x_dialog.nw:4319
+msgid "Color Edit"
+msgstr "Editar Cor"
+
+#: noweb/x_dialog.nw:4454
+msgid "Ran out of space in the hotkey buffer...\n"
+msgstr ""
+
+#: noweb/x_dialog.nw:4492
+msgid "Hotkeys..."
+msgstr "Atalhos..."
+
+#: noweb/x_dialog.nw:4537
+msgid "Function : keystroke(s)"
+msgstr "Função : atalho(s)"
+
+#: noweb/x_dialog.nw:4746
+msgid "Generic String"
+msgstr "String geral"
+
+#: noweb/x_dialog.nw:4749
+msgid "Enter new string."
+msgstr "Entre a string"
+
+#: noweb/x_dialog.nw:4903
+msgid "Find text"
+msgstr "Localizar"
+
+#: noweb/x_dialog.nw:4906
+msgid "Text to find:"
+msgstr "Loc. Texto:"
+
+#: noweb/x_dialog.nw:4919
+msgid "Find"
+msgstr "Localizar"
+
+#: noweb/x_dialog.nw:4925
+msgid "Done"
+msgstr "Concluído"
+
+#: noweb/x_dialog.nw:4933
+msgid "descend into hierarchy"
+msgstr ""
+
+#: noweb/x_dialog.nw:5042
+msgid "Hide text"
+msgstr "Ocultar texto"
+
+#: noweb/x_dialog.nw:5045
+msgid "Hide text starting with:"
+msgstr "Ocultar texto iniciado com:"
+
+#: noweb/x_dialog.nw:5166
+msgid "Show text"
+msgstr "Mostrar Texto"
+
+#: noweb/x_dialog.nw:5169
+msgid "Show text starting with:"
+msgstr "Mostrar texto iniciado com:"
+
+#: noweb/x_dialog.nw:5288
+msgid "Autonumber text"
+msgstr "Automuerar texto"
+
+#: noweb/x_dialog.nw:5291
+msgid "Autonumber text starting with:"
+msgstr "Autonumerar texto iniciado com:"
+
+#: noweb/x_fileselect.nw:391
+#, c-format
+msgid "Agg, could open directory: %s\n"
+msgstr "Nâo pode abrir diretório %s\n"
+
+#: noweb/x_fileselect.nw:418
+msgid "Too many directories! Increase MAX_DIRS\n"
+msgstr "Muitos diretórios! Aumentar MAX_DIRS\n"
+
+#: noweb/x_fileselect.nw:423
+msgid "Too many files! Increase MAX_FILES\n"
+msgstr "Muitos arquivos! Aumentar MAX_FILES\n"
+
+#: noweb/x_fileselect.nw:680
+msgid "sym - Symbols "
+msgstr "sym - Símbolos"
+
+#: noweb/x_fileselect.nw:689
+msgid "sym/sch - Schematics and Symbols"
+msgstr "sym/sch - Símbolos e diagramas"
+
+#: noweb/x_fileselect.nw:698
+msgid "* - All Files"
+msgstr "* - Todos arquivos"
+
+#: noweb/x_fileselect.nw:743
+msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
+msgstr ""
+
+#: noweb/x_fileselect.nw:831
+#, c-format
+msgid "Saved As [%s]\n"
+msgstr "Salvo Como [%s]\n"
+
+#: noweb/x_fileselect.nw:858 noweb/x_fileselect.nw:949
+msgid "Specify a Filename!\n"
+msgstr "Especifique um nome!\n"
+
+#: noweb/x_fileselect.nw:1206 noweb/x_fileselect.nw:1209
+#: noweb/x_fileselect.nw:2150
+msgid "Search in Files"
+msgstr "Localizar em arquivos"
+
+#: noweb/x_fileselect.nw:1231
+msgid "Search in Files - End of list"
+msgstr "Localizar em arquivos - Fim de lista"
+
+#: noweb/x_fileselect.nw:1310
+msgid "Default behavior - reference component"
+msgstr "Uso normal, referenciar componente"
+
+#: noweb/x_fileselect.nw:1320
+msgid "Embed component in schematic"
+msgstr "Embutir componente no diagrama"
+
+#: noweb/x_fileselect.nw:1329
+msgid "Include component as individual objects"
+msgstr "Incluir componente como objeto individual"
+
+#: noweb/x_fileselect.nw:1835 noweb/x_fileselect.nw:1839
+#: noweb/x_fileselect.nw:2152
+msgid "Search in Components"
+msgstr "Procurar em componentes"
+
+#: noweb/x_fileselect.nw:1898
+msgid "Search in Components - Found library only"
+msgstr "Procurar em componentes - Encontrado só biblioteca"
+
+#: noweb/x_fileselect.nw:1907
+msgid "Search in Components - End of list"
+msgstr "Procurar em componentes - Fim de lista"
+
+#: noweb/x_fileselect.nw:1966
+msgid "Open..."
+msgstr "Abrir..."
+
+#: noweb/x_fileselect.nw:1970 noweb/x_fileselect.nw:1974
+msgid "Save As..."
+msgstr "Salvar Como..."
+
+#: noweb/x_fileselect.nw:1980
+msgid "Select Component..."
+msgstr "Selecionar Componente"
+
+#: noweb/x_fileselect.nw:2018
+msgid "Filter"
+msgstr "Filtro"
+
+#: noweb/x_fileselect.nw:2058
+msgid "Directories"
+msgstr "Diretórios"
+
+#: noweb/x_fileselect.nw:2060
+msgid "Libraries"
+msgstr "Bibliotecas"
+
+#: noweb/x_fileselect.nw:2097
+msgid "Files"
+msgstr "Arquivos"
+
+#: noweb/x_fileselect.nw:2099
+msgid "Components"
+msgstr "Componentes"
+
+#: noweb/x_fileselect.nw:2141
+msgid "Preview"
+msgstr "Prévia"
+
+#: noweb/x_fileselect.nw:2188 noweb/x_image.nw:483 noweb/x_print.nw:482
+msgid "Filename"
+msgstr "Nome do arquivo"
+
+#: noweb/x_fileselect.nw:2229 noweb/x_window.nw:783
+msgid "Open"
+msgstr "Abrir"
+
+#: noweb/x_fileselect.nw:2239
+msgid "SaveAs"
+msgstr "Salvar Como"
+
+#: noweb/x_image.nw:330
+#, c-format
+msgid "Wrote color image to [%s] [%d x %d]\n"
+msgstr "Salva imagem colorida [%s] [%d x %d]\n"
+
+#: noweb/x_image.nw:332
+#, c-format
+msgid "Wrote black and white image to [%s] [%d x %d]\n"
+msgstr "Salva imagem em Preto e branco [%s] [%d x %d]\n"
+
+#: noweb/x_image.nw:400
+msgid "Write Image..."
+msgstr "Salvar Imagem..."
+
+#: noweb/x_image.nw:402
+msgid "Write"
+msgstr "Salvar"
+
+#: noweb/x_image.nw:432
+msgid "Width"
+msgstr "Largura"
+
+#: noweb/x_image.nw:451
+msgid "Height"
+msgstr "Altura"
+
+#: noweb/x_image.nw:470
+msgid "Width x Height"
+msgstr "Largura x Altura"
+
+#: noweb/x_log.nw:289
+msgid "Status"
+msgstr ""
+
+#: noweb/x_multimulti.nw:149
+msgid "Ok"
+msgstr ""
+
+#: noweb/x_multimulti.nw:156
+msgid "Test Sheet"
+msgstr "Testar folha"
+
+#: noweb/x_pagesel.nw:352
+msgid "Page Manager"
+msgstr "Gerenciador de Páginas"
+
+#: noweb/x_pagesel.nw:468
+msgid "New Page"
+msgstr "Nova"
+
+#: noweb/x_pagesel.nw:477
+msgid "Open Page"
+msgstr "Abrir"
+
+#: noweb/x_pagesel.nw:486
+msgid "Save Page"
+msgstr "Salvar"
+
+#: noweb/x_pagesel.nw:495
+msgid "Close Page"
+msgstr "Fechar"
+
+#: noweb/x_pagesel.nw:504
+msgid "Discard Page"
+msgstr "Descartar"
+
+#: noweb/x_pagesel.nw:513
+msgid "Update Manager"
+msgstr "Atualizar"
+
+#: noweb/x_pagesel.nw:522
+msgid "Close Manager"
+msgstr "Fechar Ger."
+
+#: noweb/x_print.nw:164
+msgid "Landscape"
+msgstr "Paisagem"
+
+#: noweb/x_print.nw:174
+msgid "Portrait"
+msgstr "Retrato"
+
+#: noweb/x_print.nw:216
+msgid "Limits"
+msgstr "Limites"
+
+#: noweb/x_print.nw:226
+msgid "Current Window"
+msgstr "Janela Atual"
+
+#: noweb/x_print.nw:318
+#, c-format
+msgid "Cannot print current schematic to [%s]\n"
+msgstr "Não consigo imprimir para arquivo [%s]\n"
+
+#: noweb/x_print.nw:320
+#, c-format
+msgid "Printed current schematic to [%s]\n"
+msgstr "Diagrama atual impresso para [%s]\n"
+
+#: noweb/x_print.nw:402
+msgid "Print..."
+msgstr "Imprimir..."
+
+#: noweb/x_print.nw:404
+msgid "Print"
+msgstr "Imprimir"
+
+#: noweb/x_print.nw:422
+msgid "Output paper size"
+msgstr "Tamanho do papel"
+
+#: noweb/x_print.nw:506
+msgid "Type"
+msgstr "Origem da Imagem"
+
+#: noweb/x_print.nw:518
+msgid "Orientation"
+msgstr "Orientação"
+
+#: noweb/x_script.nw:130
+msgid "Script Execute..."
+msgstr "Executar Script..."
+
+#: noweb/x_window.nw:346
+msgid "black"
+msgstr "preta"
+
+#: noweb/x_window.nw:353
+msgid "white"
+msgstr "branca"
+
+#: noweb/x_window.nw:488
+msgid "Couldn't allocate gc\n"
+msgstr ""
+
+#: noweb/x_window.nw:501
+msgid "Couldn't allocate xor_gc\n"
+msgstr ""
+
+#: noweb/x_window.nw:514
+msgid "Couldn't allocate outline_xor_gc\n"
+msgstr ""
+
+#: noweb/x_window.nw:530
+msgid "Couldn't allocate bounding_xor_gc\n"
+msgstr ""
+
+#: noweb/x_window.nw:537
+msgid "Couldn't allocate bus_gc\n"
+msgstr ""
+
+#: noweb/x_window.nw:770
+msgid "New"
+msgstr "Novo"
+
+#: noweb/x_window.nw:771
+msgid "New file"
+msgstr "Novo arquivo"
+
+#: noweb/x_window.nw:784
+msgid "Open file..."
+msgstr "Abrir arquivo..."
+
+#: noweb/x_window.nw:796
+msgid "Save"
+msgstr "Salvar"
+
+#: noweb/x_window.nw:797
+msgid "Save file"
+msgstr "Salvar arquivo"
+
+#: noweb/x_window.nw:810
+msgid "Undo"
+msgstr "Desfazer"
+
+#: noweb/x_window.nw:811
+msgid "Undo last operation"
+msgstr "Desfazer última operação"
+
+#: noweb/x_window.nw:823
+msgid "Redo"
+msgstr "Refazer"
+
+#: noweb/x_window.nw:824
+msgid "Redo last undo"
+msgstr "Refaz o último Desfaz"
+
+#: noweb/x_window.nw:839
+msgid ""
+"Add component...\n"
+"Select library and component from list, move the mouse into main window, "
+"click to place\n"
+"Right mouse button to cancel"
+msgstr ""
+"Insira um componente...\n"
+"Selecione a biblioteca e componente da lista, vá para a janela mãe, "
+" clique para colcoar o componente\n"
+"Botão Direito para cancelar"
+
+#: noweb/x_window.nw:853
+msgid "Nets"
+msgstr "Conexões"
+
+#: noweb/x_window.nw:854
+msgid ""
+"Add nets mode\n"
+"Right mouse button to cancel"
+msgstr "Modo de conexões\n"
+"Botão Direito para cancelar"
+
+#: noweb/x_window.nw:869
+msgid ""
+"Add buses mode\n"
+"Right mouse button to cancel"
+msgstr ""
+"Modo de Barramentos\n"
+"Botão Direito do mouse para cancelar"
+
+#: noweb/x_window.nw:882
+msgid "Text"
+msgstr "Texto"
+
+#: noweb/x_window.nw:883
+msgid "Add Text..."
+msgstr "Adicionar Texto..."
+
+#: noweb/x_window.nw:900
+msgid "Select"
+msgstr "Selecionar"
+
+#: noweb/x_window.nw:901
+msgid "Select mode"
+msgstr "Selecionar modo"
+
+#: noweb/x_window.nw:918
+msgid "Edit mode"
+msgstr "Editar modo"
+
+#: noweb/x_window.nw:933
+msgid "Move mode"
+msgstr "Mover modo"
+
+#: noweb/x_window.nw:948
+msgid "Copy mode"
+msgstr "Copiar modo"
+
+#: noweb/x_window.nw:963
+msgid "Delete mode"
+msgstr "Apagar modo"
+
+#: noweb/x_window.nw:978
+msgid "Rotate mode"
+msgstr "Rotacionar modo"
+
+#: noweb/x_window.nw:993
+msgid "Mirror mode"
+msgstr "Espelhar modo"
+
+#: noweb/x_window.nw:1083
+msgid "Pick"
+msgstr "Pegar"
+
+#: noweb/x_window.nw:1101
+msgid "Repeat/none"
+msgstr "Repetir/nenhum"
+
+#: noweb/x_window.nw:1113
+msgid "Menu/Cancel"
+msgstr "Menu/Cancelar"
+
+#: noweb/x_window.nw:1115
+msgid "Pan/Cancel"
+msgstr "Pan/Cancelar"

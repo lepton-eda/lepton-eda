@@ -464,10 +464,10 @@ DEFINE_I_CALLBACK(file_new_window)
     /* TODO: shouldn't this part do the same thing as
      * what's equivalent in i_callback_file_new()? This is
      * not nice to user. */
-    fprintf(stderr, "Cannot obtain the current directory!\n");
+    fprintf(stderr, _("Cannot obtain the current directory!\n"));
   }
 
-  s_log_message("New Window created\n");
+  s_log_message(_("New Window created\n"));
   i_set_filename(w_current, w_current->page_current->page_filename);
   x_repaint_background(w_current);
 }
@@ -576,18 +576,18 @@ DEFINE_I_CALLBACK(file_save)
   } else {
 
     if (f_save(w_current, w_current->page_current->page_filename) ) {
-	    s_log_message("Saved [%s]\n",w_current->page_current->page_filename);
+	    s_log_message(_("Saved [%s]\n"),w_current->page_current->page_filename);
 	    /* don't know if should be kept going to select mode... */
 	    w_current->event_state = SELECT;
 	    w_current->page_current->CHANGED = 0;
-	    i_update_status(w_current, "Saved - Select Mode");
+	    i_update_status(w_current, _("Saved - Select Mode"));
 	    i_update_toolbar(w_current);
 	    update_page_manager(NULL, w_current);
     } else {
-      	    s_log_message("Could NOT save [%s]\n", w_current->page_current->page_filename);
+      	    s_log_message(_("Could NOT save [%s]\n"), w_current->page_current->page_filename);
 
 	    w_current->event_state = SELECT;    
-	    i_update_status(w_current, "Error while trying to save - Select Mode");
+	    i_update_status(w_current, _("Error while trying to save - Select Mode"));
 	    i_update_toolbar(w_current);
     } 
   }
@@ -637,7 +637,7 @@ DEFINE_I_CALLBACK(file_save_all)
   s_page_save_all(w_current);
 
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Saved All - Select");
+  i_update_status(w_current, _("Saved All - Select"));
   i_update_toolbar(w_current);
   update_page_manager(NULL, w_current);
 }
@@ -733,11 +733,11 @@ DEFINE_I_CALLBACK(file_write_png)
 #ifndef HAS_LIBGDGEDA
   /* TODO: integrate these to messages */
   fprintf(stderr,
-          "libgdgeda not installed or disabled, "
-          "so this feature is disabled\n");
+          _("libgdgeda not installed or disabled, "
+          "so this feature is disabled\n"));
   s_log_message(
-		"libgdgeda not installed or disabled, "
-		"so this feature is disabled\n");
+		_("libgdgeda not installed or disabled, "
+		"so this feature is disabled\n"));
   return;
 #endif
 
@@ -789,7 +789,7 @@ DEFINE_I_CALLBACK(file_close)
 
   exit_if_null(w_current);
 
-  s_log_message("Closing Window\n");
+  s_log_message(_("Closing Window\n"));
   x_window_close(w_current);
 }
 
@@ -928,7 +928,7 @@ DEFINE_I_CALLBACK(edit_select)
 
   /* this is probably the only place this should be */
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   w_current->inside_action = 0;
 }
@@ -975,12 +975,12 @@ DEFINE_I_CALLBACK(edit_copy)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_copy, "Copy");
+  i_update_middle_button(w_current, i_callback_edit_copy, _("Copy"));
   if (o_select_return_first_object(w_current)) {
-    i_update_status(w_current, "Copy Mode");
+    i_update_status(w_current, _("Copy Mode"));
     w_current->event_state = STARTCOPY;
   } else {
-    i_update_status(w_current, "Select objs first");
+    i_update_status(w_current, _("Select objs first"));
   }
 }
 
@@ -1000,7 +1000,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_copy_hotkey, "Copy");
+  i_update_middle_button(w_current, i_callback_edit_copy_hotkey, _("Copy"));
   if (o_select_return_first_object(w_current)) {
     o_copy_start(w_current, mouse_x, mouse_y);
     w_current->event_state = ENDCOPY;
@@ -1024,12 +1024,12 @@ DEFINE_I_CALLBACK(edit_move)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_move, "Move");
+  i_update_middle_button(w_current, i_callback_edit_move, _("Move"));
   if (o_select_return_first_object(w_current)) {
-    i_update_status(w_current, "Move Mode");
+    i_update_status(w_current, _("Move Mode"));
     w_current->event_state = STARTMOVE;
   } else {
-    i_update_status(w_current, "Select objs first");
+    i_update_status(w_current, _("Select objs first"));
   }
 }
 
@@ -1049,7 +1049,7 @@ DEFINE_I_CALLBACK(edit_move_hotkey)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_move_hotkey, "Move");
+  i_update_middle_button(w_current, i_callback_edit_move_hotkey, _("Move"));
   if (o_select_return_first_object(w_current)) {
     o_move_start(w_current, mouse_x, mouse_y);
     w_current->event_state = ENDMOVE;
@@ -1073,7 +1073,7 @@ DEFINE_I_CALLBACK(edit_delete)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_delete, "Delete");
+  i_update_middle_button(w_current, i_callback_edit_delete, _("Delete"));
 
   if (o_select_return_first_object(w_current)) {
     o_delete(w_current);
@@ -1082,7 +1082,7 @@ DEFINE_I_CALLBACK(edit_delete)
      * mode after the delete */
     w_current->event_state = SELECT;
     w_current->inside_action = 0;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     i_update_toolbar(w_current);
   }
 }
@@ -1103,7 +1103,7 @@ DEFINE_I_CALLBACK(edit_edit)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_edit, "Edit");
+  i_update_middle_button(w_current, i_callback_edit_edit, _("Edit"));
   o_edit(w_current, w_current->page_current->selection2_head->next);
 }
 
@@ -1124,7 +1124,7 @@ DEFINE_I_CALLBACK(edit_text)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_text, "Edit Text");
+  i_update_middle_button(w_current, i_callback_edit_text, _("Edit Text"));
   object = o_select_return_first_object(w_current);
   if (object) {
     if (object->type == OBJ_TEXT) {
@@ -1152,7 +1152,7 @@ DEFINE_I_CALLBACK(edit_slot)
 
   object = o_select_return_first_object(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_slot, "Slot");
+  i_update_middle_button(w_current, i_callback_edit_slot, _("Slot"));
   if (object) {
     o_slot_start(w_current, object);
   }
@@ -1174,7 +1174,7 @@ DEFINE_I_CALLBACK(edit_color)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_color, "Color");
+  i_update_middle_button(w_current, i_callback_edit_color, _("Color"));
 
   color_edit_dialog(w_current);
 }
@@ -1196,8 +1196,8 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 
   exit_if_null(w_current);
 
-  i_update_status(w_current, "Rotate Mode");
-  i_update_middle_button(w_current, i_callback_edit_rotate_90, "Rotate");
+  i_update_status(w_current, _("Rotate Mode"));
+  i_update_middle_button(w_current, i_callback_edit_rotate_90, _("Rotate"));
 
   w_current->event_state = ENDROTATEP;
 }
@@ -1223,7 +1223,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   if (w_current->page_current->selection2_head) {
     s_current = w_current->page_current->selection2_head->next;
     i_update_middle_button(w_current,
-                           i_callback_edit_rotate_90_hotkey, "Rotate");
+                           i_callback_edit_rotate_90_hotkey, _("Rotate"));
     o_rotate_90(w_current, s_current, mouse_x, mouse_y);
   }
 
@@ -1248,8 +1248,8 @@ DEFINE_I_CALLBACK(edit_mirror)
 
   exit_if_null(w_current);
 
-  i_update_status(w_current, "Mirror Mode");
-  i_update_middle_button(w_current, i_callback_edit_mirror, "Mirror");
+  i_update_status(w_current, _("Mirror Mode"));
+  i_update_middle_button(w_current, i_callback_edit_mirror, _("Mirror"));
 
   w_current->event_state = ENDMIRROR;
 }
@@ -1275,7 +1275,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 
   if (object) {
     i_update_middle_button(w_current,
-                           i_callback_edit_mirror_hotkey, "Mirror");
+                           i_callback_edit_mirror_hotkey, _("Mirror"));
 
     o_mirror(w_current, 
              w_current->page_current->selection2_head->next, 
@@ -1304,7 +1304,7 @@ DEFINE_I_CALLBACK(edit_lock)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_lock, "Lock");
+  i_update_middle_button(w_current, i_callback_edit_lock, _("Lock"));
 
   if (o_select_return_first_object(w_current)) {
     o_lock(w_current);
@@ -1328,7 +1328,7 @@ DEFINE_I_CALLBACK(edit_unlock)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_unlock, "Unlock");
+  i_update_middle_button(w_current, i_callback_edit_unlock, _("Unlock"));
   if (o_select_return_first_object(w_current)) {
     o_unlock(w_current);
   }
@@ -1351,21 +1351,21 @@ DEFINE_I_CALLBACK(edit_translate)
   exit_if_null(w_current);
 
   i_update_middle_button(w_current,
-                         i_callback_edit_translate, "Translate");
+                         i_callback_edit_translate, _("Translate"));
 
   if (w_current->snap == 0) {
-    s_log_message("WARNING: Do not translate with snap off!\n");
-    s_log_message("WARNING: Turning snap on and continuing "
-                  "with translate.\n");
+    s_log_message(_("WARNING: Do not translate with snap off!\n"));
+    s_log_message(_("WARNING: Turning snap on and continuing "
+                  "with translate.\n"));
     w_current->snap = 1;
   }
 
   if (w_current->snap_size != 100) {
-    s_log_message("WARNING: Snap grid size is "
-                  "not equal to 100!\n");
-    s_log_message("WARNING: If you are translating a symbol "
+    s_log_message(_("WARNING: Snap grid size is "
+                  "not equal to 100!\n"));
+    s_log_message(_("WARNING: If you are translating a symbol "
                   "to the origin, the snap grid size should be "
-                  "set to 100\n");
+                  "set to 100\n"));
   }
 
   translate_dialog(w_current);
@@ -1388,7 +1388,7 @@ DEFINE_I_CALLBACK(edit_embed)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_embed, "Embed");
+  i_update_middle_button(w_current, i_callback_edit_embed, _("Embed"));
   if (o_select_return_first_object(w_current)) {
     o_embed(w_current);
   }
@@ -1411,7 +1411,7 @@ DEFINE_I_CALLBACK(edit_unembed)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_unembed, "Unembed");
+  i_update_middle_button(w_current, i_callback_edit_unembed, _("Unembed"));
   if (o_select_return_first_object(w_current)) {
     o_unembed(w_current);
   }
@@ -1434,7 +1434,7 @@ DEFINE_I_CALLBACK(edit_update)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_update, "Update");
+  i_update_middle_button(w_current, i_callback_edit_update, _("Update"));
   if (o_select_return_first_object(w_current)) {
   	o_update_component(w_current,
                      w_current->page_current->selection2_head->next);
@@ -1464,7 +1464,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 
   i_update_middle_button(w_current,
                          i_callback_edit_show_hidden,
-                         "ShowHidden");
+                         _("ShowHidden"));
 
   o_edit_show_hidden(w_current, w_current->page_current->object_head);
 }
@@ -1492,7 +1492,7 @@ DEFINE_I_CALLBACK(edit_make_visible)
 
   i_update_middle_button(w_current,
                          i_callback_edit_make_visible,
-                         "MakeVisible");
+                         _("MakeVisible"));
 
   o_edit_make_visible(w_current, w_current->page_current->object_head);
 }
@@ -1607,7 +1607,7 @@ DEFINE_I_CALLBACK(edit_linetype)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_edit_color, "Edit Line Type");
+  i_update_middle_button(w_current, i_callback_edit_color, _("Edit Line Type"));
 
   if ( (object = o_select_return_first_object(w_current)) ) {
     line_type_dialog(w_current, object);
@@ -1632,7 +1632,7 @@ DEFINE_I_CALLBACK(edit_filltype)
 
   exit_if_null(w_current);
 	
-  i_update_middle_button(w_current, i_callback_edit_color, "Edit Fill Type");
+  i_update_middle_button(w_current, i_callback_edit_color, _("Edit Fill Type"));
 
   if ( (object = o_select_return_first_object(w_current)) ) {
     fill_type_dialog(w_current, object);
@@ -1724,7 +1724,7 @@ DEFINE_I_CALLBACK(view_zoom_box)
   exit_if_null(w_current);
 
   w_current->event_state = ZOOMBOXSTART;
-  i_update_status2(w_current, "Zoom Box");
+  i_update_status2(w_current, _("Zoom Box"));
   w_current->inside_action = 0;
 }
 
@@ -1744,7 +1744,7 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
 
   exit_if_null(w_current);
 
-  i_update_status2(w_current, "Zoom Box");
+  i_update_status2(w_current, _("Zoom Box"));
 
   a_zoom_box_start(w_current, mouse_x, mouse_y);
 
@@ -1858,10 +1858,10 @@ DEFINE_I_CALLBACK(view_pan)
   exit_if_null(w_current);
 
   w_current->event_state = STARTPAN;
-  i_update_status(w_current, "Pan Mode");
+  i_update_status(w_current, _("Pan Mode"));
 
   /* I don't know if this would get in the way */
-  i_update_middle_button(w_current, i_callback_view_pan, "Pan");
+  i_update_middle_button(w_current, i_callback_view_pan, _("Pan"));
   w_current->inside_action = 0;
 }
 
@@ -1882,7 +1882,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
   exit_if_null(w_current);
 
   /* I don't know if this would get in the way */
-  i_update_middle_button(w_current, i_callback_view_pan_hotkey, "Pan");
+  i_update_middle_button(w_current, i_callback_view_pan_hotkey, _("Pan"));
 
   /* I have NO idea what ramifications removing the next line has,
    * only that it makes the code work when drawing a net and panning
@@ -1900,7 +1900,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
        w_current->event_state == NETCONT ||
        w_current->event_state == STARTDRAWNET )) {
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     i_update_toolbar(w_current);
   }
   o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
@@ -1921,7 +1921,7 @@ DEFINE_I_CALLBACK(view_update_cues)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   i_update_middle_button(w_current,
-                         i_callback_view_update_cues, "Update Cues");
+                         i_callback_view_update_cues, _("Update Cues"));
 
   o_redraw_all(w_current);
 }
@@ -2066,14 +2066,14 @@ DEFINE_I_CALLBACK(page_new)
             w_current->num_untitled);
 
   } else {
-    fprintf(stderr, "Cannot get cwd!\n");
+    fprintf(stderr, _("Cannot get cwd!\n"));
   }
 
   s_page_new(w_current, filename);
 
   update_page_manager(NULL, w_current);
   i_set_filename(w_current, w_current->page_current->page_filename);
-  s_log_message("New Page created [%s]\n",
+  s_log_message(_("New Page created [%s]\n"),
                 w_current->page_current->page_filename);
   o_redraw_all(w_current);
 }
@@ -2111,7 +2111,7 @@ DEFINE_I_CALLBACK(page_close)
   p_current = s_hierarchy_find_page(w_current->page_head, 
                                     w_current->page_current->up);
   if (p_current) {
-    s_log_message("Closing [%s]\n",
+    s_log_message(_("Closing [%s]\n"),
                   w_current->page_current->page_filename);
     s_page_free(w_current, w_current->page_current);
     w_current->page_current = p_current;
@@ -2128,7 +2128,7 @@ DEFINE_I_CALLBACK(page_close)
   if (w_current->page_current->prev) {
     if (w_current->page_current->prev->pid != -1) {
       p_current = w_current->page_current->prev;
-      s_log_message("Closing [%s]\n",
+      s_log_message(_("Closing [%s]\n"),
                     w_current->page_current->page_filename);
       s_page_free(w_current, w_current->page_current);
       w_current->page_current = p_current;
@@ -2146,7 +2146,7 @@ DEFINE_I_CALLBACK(page_close)
   if (w_current->page_current->next) {
     if (w_current->page_current->next->pid != -1) {
       p_current = w_current->page_current->next;
-      s_log_message("Closing [%s]\n",
+      s_log_message(_("Closing [%s]\n"),
                     w_current->page_current->page_filename);
       s_page_free(w_current, w_current->page_current);
       w_current->page_current = p_current;
@@ -2171,7 +2171,7 @@ DEFINE_I_CALLBACK(page_close)
   if (w_current->page_current->next) {
     if (w_current->page_current->next->pid != -1) {
       p_current = w_current->page_current->next;
-      s_log_message("Closing [%s]\n",
+      s_log_message(_("Closing [%s]\n"),
                     w_current->page_current->page_filename);
       s_page_free(w_current, w_current->page_current);
       w_current->page_current = p_current;
@@ -2262,7 +2262,7 @@ DEFINE_I_CALLBACK(page_discard)
   p_current = s_hierarchy_find_page(w_current->page_head, 
                                     w_current->page_current->up);
   if (p_current) {
-    s_log_message("Closing [%s]\n",
+    s_log_message(_("Closing [%s]\n"),
                   w_current->page_current->page_filename);
     s_page_free(w_current, w_current->page_current);
     w_current->page_current = p_current;
@@ -2279,7 +2279,7 @@ DEFINE_I_CALLBACK(page_discard)
   if (w_current->page_current->prev) {
     if (w_current->page_current->prev->pid != -1) {
       p_current = w_current->page_current->prev;
-      s_log_message("Discarding page [%s]\n",
+      s_log_message(_("Discarding page [%s]\n"),
                     w_current->page_current->page_filename);
       s_page_free(w_current, w_current->page_current);
       w_current->page_current = p_current;
@@ -2296,7 +2296,7 @@ DEFINE_I_CALLBACK(page_discard)
   if (w_current->page_current->next) {
     if (w_current->page_current->next->pid != -1) {
       p_current = w_current->page_current->next;
-      s_log_message("Discarding page [%s]\n",
+      s_log_message(_("Discarding page [%s]\n"),
                     w_current->page_current->page_filename);
       s_page_free(w_current, w_current->page_current);
       w_current->page_current = p_current;
@@ -2322,7 +2322,7 @@ DEFINE_I_CALLBACK(page_discard)
   if (w_current->page_current->next) {
     if (w_current->page_current->next->pid != -1) {
       p_current = w_current->page_current->next;
-      s_log_message("Closing [%s]\n",
+      s_log_message(_("Closing [%s]\n"),
                     w_current->page_current->page_filename);
       s_page_free(w_current, w_current->page_current);
       w_current->page_current = p_current;
@@ -2373,7 +2373,7 @@ DEFINE_I_CALLBACK(buffer_copy1)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy1, "Copy 1");
+  i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
   o_buffer_copy(w_current, 0);
 }
 
@@ -2396,7 +2396,7 @@ DEFINE_I_CALLBACK(buffer_copy2)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy2, "Copy 2");
+  i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
   o_buffer_copy(w_current, 1);
 }
 
@@ -2419,7 +2419,7 @@ DEFINE_I_CALLBACK(buffer_copy3)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy3, "Copy 3");
+  i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
   o_buffer_copy(w_current, 2);
 }
 
@@ -2442,7 +2442,7 @@ DEFINE_I_CALLBACK(buffer_copy4)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy4, "Copy 4");
+  i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
   o_buffer_copy(w_current, 3);
 }
 
@@ -2465,7 +2465,7 @@ DEFINE_I_CALLBACK(buffer_copy5)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy5, "Copy 5");
+  i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
   o_buffer_copy(w_current, 4);
 }
 
@@ -2488,7 +2488,7 @@ DEFINE_I_CALLBACK(buffer_cut1)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_cut1, "Cut 1");
+  i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
   o_buffer_cut(w_current, 0);
 }
 
@@ -2511,7 +2511,7 @@ DEFINE_I_CALLBACK(buffer_cut2)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_cut2, "Cut 2");
+  i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
   o_buffer_cut(w_current, 1);
 }
 
@@ -2534,7 +2534,7 @@ DEFINE_I_CALLBACK(buffer_cut3)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_cut3, "Cut 3");
+  i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
   o_buffer_cut(w_current, 2);
 }
 
@@ -2557,7 +2557,7 @@ DEFINE_I_CALLBACK(buffer_cut4)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_cut4, "Cut 4");
+  i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
   o_buffer_cut(w_current, 3);
 }
 
@@ -2580,7 +2580,7 @@ DEFINE_I_CALLBACK(buffer_cut5)
   if (w_current->page_current->selection2_head->next == NULL)
   return;
 
-  i_update_middle_button(w_current, i_callback_buffer_cut5, "Cut 5");
+  i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));
   o_buffer_cut(w_current, 4);
 }
 
@@ -2600,16 +2600,16 @@ DEFINE_I_CALLBACK(buffer_paste1)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_buffer_paste1, "Paste 1");
+  i_update_middle_button(w_current, i_callback_buffer_paste1, _("Paste 1"));
   if (object_buffer[0] != NULL) {
     if (object_buffer[0]->next != NULL) {
-      i_update_status(w_current, "Paste 1 Mode ");
+      i_update_status(w_current, _("Paste 1 Mode "));
       w_current->event_state = STARTPASTE;
       w_current->buffer_number = 0;
       w_current->inside_action = 1;
     }
   } else { 
-    i_update_status(w_current, "Empty buffer");
+    i_update_status(w_current, _("Empty buffer"));
   }
 }
 
@@ -2629,16 +2629,16 @@ DEFINE_I_CALLBACK(buffer_paste2)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_buffer_paste2, "Paste 2");
+  i_update_middle_button(w_current, i_callback_buffer_paste2, _("Paste 2"));
   if (object_buffer[1] != NULL) {
     if (object_buffer[1]->next != NULL) {
-      i_update_status(w_current, "Paste 2 Mode ");
+      i_update_status(w_current, _("Paste 2 Mode "));
       w_current->event_state = STARTPASTE;
       w_current->buffer_number = 1;
       w_current->inside_action = 1;
     }
   } else {
-    i_update_status(w_current, "Empty buffer");
+    i_update_status(w_current, _("Empty buffer"));
   }
 }
 
@@ -2658,16 +2658,16 @@ DEFINE_I_CALLBACK(buffer_paste3)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_buffer_paste3, "Paste 3");
+  i_update_middle_button(w_current, i_callback_buffer_paste3, _("Paste 3"));
   if (object_buffer[2] != NULL) {
     if (object_buffer[2]->next != NULL) {
-      i_update_status(w_current, "Paste 3 Mode ");
+      i_update_status(w_current, _("Paste 3 Mode "));
       w_current->event_state = STARTPASTE;
       w_current->buffer_number = 2;
       w_current->inside_action = 1;
     }
   } else { 
-    i_update_status(w_current, "Empty buffer");
+    i_update_status(w_current, _("Empty buffer"));
   }
 }
 
@@ -2687,16 +2687,16 @@ DEFINE_I_CALLBACK(buffer_paste4)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_buffer_paste4, "Paste 4");
+  i_update_middle_button(w_current, i_callback_buffer_paste4, _("Paste 4"));
   if (object_buffer[3] != NULL) {
     if (object_buffer[3]->next != NULL) {
-      i_update_status(w_current, "Paste 4 Mode ");
+      i_update_status(w_current, _("Paste 4 Mode "));
       w_current->event_state = STARTPASTE;
       w_current->buffer_number = 3;
       w_current->inside_action = 1;
     }
   } else {
-    i_update_status(w_current, "Empty buffer");
+    i_update_status(w_current, _("Empty buffer"));
   }
 }
 
@@ -2716,16 +2716,16 @@ DEFINE_I_CALLBACK(buffer_paste5)
 
   exit_if_null(w_current);
 
-  i_update_middle_button(w_current, i_callback_buffer_paste5, "Paste 5");
+  i_update_middle_button(w_current, i_callback_buffer_paste5, _("Paste 5"));
   if (object_buffer[4] != NULL) {
     if (object_buffer[4]->next != NULL) {
-      i_update_status(w_current, "Paste 5 Mode ");
+      i_update_status(w_current, _("Paste 5 Mode "));
       w_current->event_state = STARTPASTE;
       w_current->buffer_number = 4;
       w_current->inside_action = 1;
     }
   } else {
-    i_update_status(w_current, "Empty buffer");
+    i_update_status(w_current, _("Empty buffer"));
   }
 }
 
@@ -2891,10 +2891,10 @@ DEFINE_I_CALLBACK(add_component)
   setup_place_file_selector(w_current);
 #endif
   i_update_middle_button(w_current,
-                         i_callback_add_component, "Component");
+                         i_callback_add_component, _("Component"));
 
   w_current->event_state = SELECT;
-  i_update_status2(w_current, "Select Mode");
+  i_update_status2(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 }
 
@@ -2937,10 +2937,10 @@ DEFINE_I_CALLBACK(add_attribute)
 
   attrib_edit_dialog(w_current, NULL, FROM_MENU);
   i_update_middle_button(w_current, i_callback_add_attribute,
-                         "Attribute");
+                         _("Attribute"));
 
   w_current->event_state = SELECT;
-  i_update_status2(w_current, "Select Mode");
+  i_update_status2(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 }
 
@@ -2962,10 +2962,10 @@ DEFINE_I_CALLBACK(add_attribute_hotkey)
 
   attrib_edit_dialog(w_current, NULL, FROM_HOTKEY);
   i_update_middle_button(w_current, i_callback_add_attribute_hotkey,
-                         "Attribute");
+                         _("Attribute"));
 
   w_current->event_state = SELECT;
-  i_update_status2(w_current, "Select Mode");
+  i_update_status2(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 }
 
@@ -2989,8 +2989,8 @@ DEFINE_I_CALLBACK(add_net)
 
   /* need to click */
   w_current->event_state = STARTDRAWNET;
-  i_update_middle_button(w_current, i_callback_add_net, "Net");
-  i_update_status2(w_current, "Net Mode");
+  i_update_middle_button(w_current, i_callback_add_net, _("Net"));
+  i_update_status2(w_current, _("Net Mode"));
   i_update_toolbar(w_current);
   /* somewhere you need to nearest point locking... */
   w_current->inside_action = 0;
@@ -3017,8 +3017,8 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   w_current->event_state = STARTDRAWNET;
 
   /* need to click */
-  i_update_middle_button(w_current, i_callback_add_net_hotkey, "Net");
-  i_update_status2(w_current, "Net Mode");
+  i_update_middle_button(w_current, i_callback_add_net_hotkey, _("Net"));
+  i_update_status2(w_current, _("Net Mode"));
   i_update_toolbar(w_current);
 
   o_net_start(w_current, mouse_x, mouse_y);
@@ -3071,8 +3071,8 @@ DEFINE_I_CALLBACK(add_bus)
   w_current->event_state = STARTDRAWBUS;
 
   /* need to click */
-  i_update_middle_button(w_current, i_callback_add_bus, "Bus");
-  i_update_status2(w_current, "Bus Mode");
+  i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
+  i_update_status2(w_current, _("Bus Mode"));
   i_update_toolbar(w_current);
 
   /* somewhere you need to nearest point locking... */
@@ -3100,8 +3100,8 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
   w_current->event_state = STARTDRAWBUS;
 
   /* need to click */
-  i_update_middle_button(w_current, i_callback_add_bus_hotkey, "Bus");
-  i_update_status2(w_current, "Bus Mode");
+  i_update_middle_button(w_current, i_callback_add_bus_hotkey, _("Bus"));
+  i_update_status2(w_current, _("Bus Mode"));
   i_update_toolbar(w_current);
 
   o_bus_start(w_current, mouse_x, mouse_y);
@@ -3153,7 +3153,7 @@ DEFINE_I_CALLBACK(add_text)
 
   w_current->inside_action = 0;
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   text_input_dialog(w_current);
@@ -3199,8 +3199,8 @@ DEFINE_I_CALLBACK(add_line)
   o_erase_rubber(w_current);
 
   w_current->event_state = DRAWLINE;
-  i_update_middle_button(w_current, i_callback_add_line, "Line");
-  i_update_status2(w_current, "Line Mode");
+  i_update_middle_button(w_current, i_callback_add_line, _("Line"));
+  i_update_status2(w_current, _("Line Mode"));
   w_current->inside_action = 0;
 }
 
@@ -3222,8 +3222,8 @@ DEFINE_I_CALLBACK(add_line_hotkey)
 
   o_erase_rubber(w_current);
 
-  i_update_middle_button(w_current, i_callback_add_line_hotkey, "Line");
-  i_update_status2(w_current, "Line Mode");
+  i_update_middle_button(w_current, i_callback_add_line_hotkey, _("Line"));
+  i_update_status2(w_current, _("Line Mode"));
 
   o_line_start(w_current, mouse_x, mouse_y);
 
@@ -3250,8 +3250,8 @@ DEFINE_I_CALLBACK(add_box)
   o_erase_rubber(w_current);
 
   w_current->event_state = DRAWBOX;
-  i_update_middle_button(w_current, i_callback_add_box, "Box");
-  i_update_status2(w_current, "Box Mode");
+  i_update_middle_button(w_current, i_callback_add_box, _("Box"));
+  i_update_status2(w_current, _("Box Mode"));
   w_current->inside_action = 0;
 }
 
@@ -3273,8 +3273,8 @@ DEFINE_I_CALLBACK(add_box_hotkey)
 
   o_erase_rubber(w_current);
 
-  i_update_middle_button(w_current, i_callback_add_box_hotkey, "Box");
-  i_update_status2(w_current, "Box Mode");
+  i_update_middle_button(w_current, i_callback_add_box_hotkey, _("Box"));
+  i_update_status2(w_current, _("Box Mode"));
 
   o_box_start(w_current, mouse_x, mouse_y);
 
@@ -3301,8 +3301,8 @@ DEFINE_I_CALLBACK(add_circle)
   o_erase_rubber(w_current);
 
   w_current->event_state = DRAWCIRCLE;
-  i_update_middle_button(w_current, i_callback_add_circle, "Circle");
-  i_update_status2(w_current, "Circle Mode");
+  i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
+  i_update_status2(w_current, _("Circle Mode"));
   w_current->inside_action = 0;
 }
 
@@ -3325,8 +3325,8 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_circle_hotkey,
-                         "Circle");
-  i_update_status2(w_current, "Circle Mode");
+                         _("Circle"));
+  i_update_status2(w_current, _("Circle Mode"));
 
   o_circle_start(w_current, mouse_x, mouse_y);
 
@@ -3353,8 +3353,8 @@ DEFINE_I_CALLBACK(add_arc)
   o_erase_rubber(w_current);
 
   w_current->event_state = DRAWARC;
-  i_update_middle_button(w_current, i_callback_add_arc, "Arc");
-  i_update_status2(w_current, "Arc Mode");
+  i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
+  i_update_status2(w_current, _("Arc Mode"));
   w_current->inside_action = 0;
 }
 
@@ -3376,8 +3376,8 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
 
   o_erase_rubber(w_current);
 
-  i_update_middle_button(w_current, i_callback_add_arc_hotkey, "Arc");
-  i_update_status2(w_current, "Arc Mode");
+  i_update_middle_button(w_current, i_callback_add_arc_hotkey, _("Arc"));
+  i_update_status2(w_current, _("Arc Mode"));
 
   o_arc_start(w_current, mouse_x, mouse_y);
 
@@ -3404,8 +3404,8 @@ DEFINE_I_CALLBACK(add_pin)
   o_erase_rubber(w_current);
 
   w_current->event_state = DRAWPIN;
-  i_update_middle_button(w_current, i_callback_add_pin, "Pin");
-  i_update_status2(w_current, "Pin Mode");
+  i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
+  i_update_status2(w_current, _("Pin Mode"));
   w_current->inside_action = 0;
 }
 
@@ -3427,8 +3427,8 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
 
   o_erase_rubber(w_current);
 
-  i_update_middle_button(w_current, i_callback_add_pin_hotkey, "Pin");
-  i_update_status2(w_current, "Pin Mode");
+  i_update_middle_button(w_current, i_callback_add_pin_hotkey, _("Pin"));
+  i_update_status2(w_current, _("Pin Mode"));
 
   o_pin_start(w_current, mouse_x, mouse_y);
 
@@ -3498,7 +3498,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
         while(current_filename != NULL) {
 
           s_log_message(
-                        "Searching for source [%s]\n", 
+                        _("Searching for source [%s]\n"), 
                         current_filename);
           saved_page_control = page_control;
           page_control = 
@@ -3531,10 +3531,10 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
           /* now do some error fixing */
           if (page_control == -1) {
             s_log_message(
-                          "Cannot find source [%s]\n", 
+                          _("Cannot find source [%s]\n"), 
                           current_filename);
             fprintf(stderr, 
-                    "Cannot find source [%s]\n", 
+                    _("Cannot find source [%s]\n"), 
                     current_filename); 
 
             /* restore this for the next */
@@ -3634,7 +3634,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
                                          object->complex_clib, 
 					 PATH_SEPARATER_STRING, 
                                          object->complex_basename, NULL);
-      s_log_message("Searching for symbol [%s]\n", filename);
+      s_log_message(_("Searching for symbol [%s]\n"), filename);
       s_hierarchy_down_symbol(w_current, filename, 
                               w_current->page_current);
       i_set_filename(w_current,
@@ -3700,7 +3700,7 @@ DEFINE_I_CALLBACK(attributes_attach)
   /* do we want to update the shortcut outside of the ifs? */
   /* probably, if this fails the user may want to try again */
   i_update_middle_button(w_current, i_callback_attributes_attach,
-                         "Attach");
+                         _("Attach"));
 
   /* skip over head */
   s_current = w_current->page_current->selection2_head->next;
@@ -3754,7 +3754,7 @@ DEFINE_I_CALLBACK(attributes_detach)
 
   /* same note as above on i_update_middle_button */
   i_update_middle_button(w_current, i_callback_attributes_detach,
-                         "Detach");
+                         _("Detach"));
 
   /* skip over head */
   s_current = w_current->page_current->selection2_head->next;
@@ -3799,7 +3799,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
   }
 
   i_update_middle_button(w_current, i_callback_attributes_show_name,
-                         "ShowN");
+                         _("ShowN"));
 
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current, 
@@ -3835,7 +3835,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
   }
 
   i_update_middle_button(w_current, i_callback_attributes_show_value,
-                         "ShowV");
+                         _("ShowV"));
 
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current, 
@@ -3871,7 +3871,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
   }
 
   i_update_middle_button(w_current, i_callback_attributes_show_both,
-                         "ShowB");
+                         _("ShowB"));
 
   if (object != NULL) {
     o_attrib_toggle_show_name_value(w_current, 
@@ -3908,7 +3908,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
 
   i_update_middle_button(w_current,
                          i_callback_attributes_visibility_toggle,
-                         "VisToggle");
+                         _("VisToggle"));
 
   if (object != NULL) {
     o_attrib_toggle_visibility(w_current, 
@@ -3934,7 +3934,7 @@ DEFINE_I_CALLBACK(script_console)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
-  printf("Sorry but this is a non-functioning menu option\n");
+  printf(_("Sorry but this is a non-functioning menu option\n"));
 }
 
 
@@ -3998,10 +3998,10 @@ DEFINE_I_CALLBACK(options_afeedback)
 
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     w_current->actionfeedback_mode = OUTLINE;
-    s_log_message("Action feedback mode set to OUTLINE\n");
+    s_log_message(_("Action feedback mode set to OUTLINE\n"));
   } else {
     w_current->actionfeedback_mode = BOUNDINGBOX;
-    s_log_message("Action feedback mode set to BOUNDINGBOX\n");
+    s_log_message(_("Action feedback mode set to BOUNDINGBOX\n"));
   }
 }
 
@@ -4023,10 +4023,10 @@ DEFINE_I_CALLBACK(options_grid)
 
   if (w_current->grid) {
     w_current->grid = 0;
-    s_log_message("Grid OFF\n");
+    s_log_message(_("Grid OFF\n"));
   } else {
     w_current->grid = 1;
-    s_log_message("Grid ON\n");
+    s_log_message(_("Grid ON\n"));
   }
 
   o_redraw_all(w_current);
@@ -4048,10 +4048,10 @@ DEFINE_I_CALLBACK(options_snap)
 
   if (w_current->snap) {
     w_current->snap = 0;
-    s_log_message("Snap OFF (CAUTION!)\n");
+    s_log_message(_("Snap OFF (CAUTION!)\n"));
   } else {
     w_current->snap = 1;
-    s_log_message("Snap ON\n");
+    s_log_message(_("Snap ON\n"));
   }
 }
 
@@ -4074,10 +4074,10 @@ DEFINE_I_CALLBACK(options_rubberband)
 
   if (w_current->netconn_rubberband) {
     w_current->netconn_rubberband = 0;
-    s_log_message("Rubber band OFF \n");
+    s_log_message(_("Rubber band OFF \n"));
   } else {
     w_current->netconn_rubberband = 1;
-    s_log_message("Rubber band ON\n");
+    s_log_message(_("Rubber band ON\n"));
   }
 }
 
@@ -4179,7 +4179,7 @@ DEFINE_I_CALLBACK(cancel)
   /* this is problematic since we don't know what the right mode */
   /* (when you cancel inside an action) should be */
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   /* clear the key guile command-sequence */

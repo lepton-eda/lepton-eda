@@ -56,6 +56,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -70,7 +71,7 @@ void
 /*multi_multi_edit_close(GtkWidget *w,TOPLEVEL *w_current) */
 multi_multi_edit_close(GtkWidget *w,GtkWidget *window)
 {
-  /*	i_update_status(w_current, "Select Mode");
+  /*	i_update_status(w_current, _("Select Mode"));
         w_current->event_state = SELECT;
         gtk_grab_remove(w_current->mawindow); */
   gtk_widget_destroy(window);
@@ -145,18 +146,18 @@ multi_multi_edit(TOPLEVEL *w_current, SELECTION *list)
   gtk_box_pack_end(GTK_BOX(vbox),buttonbox,FALSE,FALSE,3);
   gtk_widget_show(buttonbox);
 
-  okbutton = gtk_button_new_with_label("Ok");
+  okbutton = gtk_button_new_with_label(_("Ok"));
   gtk_container_add(GTK_CONTAINER(buttonbox),okbutton);
   gtk_widget_show(okbutton);
-  cancelbutton = gtk_button_new_with_label("Cancel");
+  cancelbutton = gtk_button_new_with_label(_("Cancel"));
   gtk_container_add(GTK_CONTAINER(buttonbox),cancelbutton);
   gtk_widget_show(cancelbutton);
 
-  sheet=GTK_SHEET(gtk_sheet_new(rowcount,5,"Test Sheet"));
+  sheet=GTK_SHEET(gtk_sheet_new(rowcount,5,_("Test Sheet")));
   gtk_container_add(GTK_CONTAINER(scrolledwindow),GTK_WIDGET(sheet));
   gtk_widget_show(GTK_WIDGET(sheet));
 
-  gtk_window_set_title (GTK_WINDOW (window), "Edit Component");
+  gtk_window_set_title (GTK_WINDOW (window), _("Edit Component"));
   gtk_widget_set_usize(window, 645, 400);
 
   gtk_window_position(GTK_WINDOW (window), GTK_WIN_POS_MOUSE);

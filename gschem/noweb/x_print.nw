@@ -64,7 +64,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
-
+#include "../include/globals.h"
 @
 
 
@@ -161,7 +161,7 @@ create_menu_orient (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, "Landscape");
+  sprintf (buf, _("Landscape"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -171,7 +171,7 @@ create_menu_orient (TOPLEVEL *w_current)
 
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Portrait");
+  sprintf (buf, _("Portrait"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -213,7 +213,7 @@ create_menu_type (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, "Limits");
+  sprintf (buf, _("Limits"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -223,7 +223,7 @@ create_menu_type (TOPLEVEL *w_current)
 
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Current Window");
+  sprintf (buf, _("Current Window"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -315,9 +315,9 @@ x_print_print(GtkWidget *w, TOPLEVEL *w_current)
     status = f_print(w_current, filename);
 
     if (status) {
-      s_log_message("Cannot print current schematic to [%s]\n", filename);
+      s_log_message(_("Cannot print current schematic to [%s]\n"), filename);
     } else {
-      s_log_message("Printed current schematic to [%s]\n", filename);
+      s_log_message(_("Printed current schematic to [%s]\n"), filename);
     }
   }
 
@@ -399,9 +399,9 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->pwindow),
-                         "Print...");
+                         _("Print..."));
 
-    buttonprint = gtk_button_new_with_label ("Print");
+    buttonprint = gtk_button_new_with_label (_("Print"));
     GTK_WIDGET_SET_FLAGS (buttonprint, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttonprint, TRUE, TRUE, 0);
@@ -410,7 +410,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_widget_show (buttonprint);
     gtk_widget_grab_default (buttonprint);
 
-    buttoncancel = gtk_button_new_with_label ("Close");
+    buttoncancel = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttoncancel, TRUE, TRUE, 0);
@@ -419,7 +419,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
                        w_current);
     gtk_widget_show (buttoncancel);
 
-    label = gtk_label_new ("Output paper size");
+    label = gtk_label_new (_("Output paper size"));
     gtk_misc_set_padding (GTK_MISC (label), 5, 5);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
@@ -479,7 +479,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_container_add(GTK_CONTAINER(vbox), box);
     gtk_widget_show(box);
 
-    label = gtk_label_new ("Filename");
+    label = gtk_label_new (_("Filename"));
     gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
     gtk_misc_set_padding (GTK_MISC (label), 0, 0);
     gtk_box_pack_start (GTK_BOX (box),
@@ -503,7 +503,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
     gtk_widget_show (separator);
 
-    label = gtk_label_new ("Type");
+    label = gtk_label_new (_("Type"));
     gtk_misc_set_padding (GTK_MISC (label), 5, 5);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show (label);
@@ -515,7 +515,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
     gtk_widget_show(optionmenu);
 
-    label = gtk_label_new ("Orientation");
+    label = gtk_label_new (_("Orientation"));
     gtk_misc_set_padding (GTK_MISC (label), 5, 5);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 

@@ -134,7 +134,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
   int option_index;
 
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
 
   value_entry =
   gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "value_entry");
@@ -307,7 +307,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 void
 attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   w_current->event_state = SELECT;
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
@@ -338,7 +338,7 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
 
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   w_current->event_state = SELECT;
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
@@ -414,7 +414,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
   }
 
   aewindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(aewindow), "Single Attribute Editor");
+  gtk_window_set_title(GTK_WINDOW(aewindow), _("Single Attribute Editor"));
 
   vbox2 = gtk_vbox_new(FALSE, 0);
   gtk_widget_show(vbox2);
@@ -431,7 +431,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 		   (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
   gtk_container_set_border_width(GTK_CONTAINER(hbox7), 3);
 
-  label12 = gtk_label_new("Attribute");
+  label12 = gtk_label_new(_("Attribute"));
   gtk_widget_show(label12);
   gtk_box_pack_start(GTK_BOX(hbox7), label12, TRUE, TRUE, 0);
 
@@ -450,7 +450,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 		   (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
   gtk_container_set_border_width(GTK_CONTAINER(hbox8), 3);
 
-  label13 = gtk_label_new("Value");
+  label13 = gtk_label_new(_("Value"));
   gtk_widget_show(label13);
   gtk_box_pack_start(GTK_BOX(hbox8), label13, TRUE, TRUE, 0);
 
@@ -461,7 +461,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 
   gtk_box_pack_start(GTK_BOX(hbox8), val_entry, TRUE, TRUE, 0);
 
-  visbutton = gtk_check_button_new_with_label("Visible");
+  visbutton = gtk_check_button_new_with_label(_("Visible"));
   gtk_object_set_data(GTK_OBJECT(aewindow), "visbutton", visbutton);
 
   gtk_table_attach(GTK_TABLE(table1), visbutton, 1, 2, 0, 1,
@@ -510,19 +510,19 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 		   (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_container_set_border_width(GTK_CONTAINER(hbox10), 3);
 
-  namebutton = gtk_radio_button_new_with_label(show_group, "Name");
+  namebutton = gtk_radio_button_new_with_label(show_group, _("Name"));
   gtk_object_set_data(GTK_OBJECT(aewindow), "showlabbutton", namebutton);
   show_group = gtk_radio_button_group(GTK_RADIO_BUTTON(namebutton));
   gtk_widget_show(namebutton);
   gtk_box_pack_start(GTK_BOX(hbox10), namebutton, FALSE, FALSE, 0);
 
-  valbutton = gtk_radio_button_new_with_label(show_group, "Value");
+  valbutton = gtk_radio_button_new_with_label(show_group, _("Value"));
   show_group = gtk_radio_button_group(GTK_RADIO_BUTTON(valbutton));
   gtk_object_set_data(GTK_OBJECT(aewindow), "showvalbutton", valbutton);
   gtk_widget_show(valbutton);
   gtk_box_pack_start(GTK_BOX(hbox10), valbutton, FALSE, FALSE, 0);
 
-  showbothbutton = gtk_radio_button_new_with_label(show_group, "Both");
+  showbothbutton = gtk_radio_button_new_with_label(show_group, _("Both"));
   show_group = gtk_radio_button_group(GTK_RADIO_BUTTON(showbothbutton));
   gtk_object_set_data(GTK_OBJECT(aewindow), "showboth", showbothbutton);
   gtk_widget_show(showbothbutton);
@@ -532,7 +532,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
   gtk_widget_show(hbuttonbox2);
   gtk_box_pack_start(GTK_BOX(vbox2), hbuttonbox2, FALSE, TRUE, 0);
 
-  buttonok = gtk_button_new_with_label("OK");
+  buttonok = gtk_button_new_with_label(_("OK"));
   gtk_widget_show(buttonok);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttonok);
   GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
@@ -547,20 +547,20 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 
 #if 0				/* highly temp change which Ales will eventually finish up to allow */
 /* this dialog to stay open *//* out for now */
-  buttonapply = gtk_button_new_with_label("Apply");
+  buttonapply = gtk_button_new_with_label(_("Apply"));
   gtk_widget_show(buttonapply);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttonapply);
   GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
 #endif
 
   if (list) {
-    buttondelete = gtk_button_new_with_label("Delete");
+    buttondelete = gtk_button_new_with_label(_("Delete"));
     gtk_widget_show(buttondelete);
     gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttondelete);
     GTK_WIDGET_SET_FLAGS(buttondelete, GTK_CAN_DEFAULT);
   }
 
-  buttoncancel = gtk_button_new_with_label("Cancel");
+  buttoncancel = gtk_button_new_with_label(_("Cancel"));
   gtk_widget_show(buttoncancel);
   gtk_container_add(GTK_CONTAINER(hbuttonbox2), buttoncancel);
   GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);

@@ -65,6 +65,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -322,9 +323,9 @@ setup_attr_selector (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->aswindow),
-                         "Add Attribute");
+                         _("Add Attribute"));
 
-    buttonapply = gtk_button_new_with_label("Apply");
+    buttonapply = gtk_button_new_with_label(_("Apply"));
     GTK_WIDGET_SET_FLAGS(buttonapply, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttonapply, TRUE, TRUE, 0);
@@ -332,7 +333,7 @@ setup_attr_selector (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(attr_apply), w_current);
     gtk_widget_show(buttonapply);
 
-    buttonclose = gtk_button_new_with_label("Close");
+    buttonclose = gtk_button_new_with_label(_("Close"));
     GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area),
                        buttonclose, TRUE, TRUE, 0);
@@ -393,7 +394,7 @@ setup_attr_selector (TOPLEVEL *w_current)
     gtk_container_add(GTK_CONTAINER(vbox), box);
     gtk_widget_show(box);
 
-    label = gtk_label_new("Name");
+    label = gtk_label_new(_("Name"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_misc_set_padding(GTK_MISC(label), 0, 0);
     gtk_box_pack_start(GTK_BOX (box),
@@ -412,7 +413,7 @@ setup_attr_selector (TOPLEVEL *w_current)
     gtk_container_add(GTK_CONTAINER(vbox), box);
     gtk_widget_show(box);
 
-    label = gtk_label_new("Value");
+    label = gtk_label_new(_("Value"));
     gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
     gtk_misc_set_padding(GTK_MISC (label), 0,0);
     gtk_box_pack_start(GTK_BOX (box),
@@ -435,7 +436,7 @@ setup_attr_selector (TOPLEVEL *w_current)
     gtk_box_pack_start(GTK_BOX(vbox), separator, FALSE, TRUE, 0);
     gtk_widget_show(separator);
 
-    button = gtk_radio_button_new_with_label(NULL, "Show Value");
+    button = gtk_radio_button_new_with_label(NULL, _("Show Value"));
     gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
     /* TODO: rewrite callbacks to use third parameter to be
      * clean */
@@ -445,7 +446,7 @@ setup_attr_selector (TOPLEVEL *w_current)
     gtk_widget_show(button);
 
     group = gtk_radio_button_group(GTK_RADIO_BUTTON (button));
-    button = gtk_radio_button_new_with_label(group, "Show Both");
+    button = gtk_radio_button_new_with_label(group, _("Show Both"));
     gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
     /* TODO: rewrite callbacks to use third parameter to
      * be clean */
@@ -455,7 +456,7 @@ setup_attr_selector (TOPLEVEL *w_current)
     gtk_widget_show(button);
 
     group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-    button = gtk_radio_button_new_with_label(group, "Show Name");
+    button = gtk_radio_button_new_with_label(group, _("Show Name"));
     gtk_box_pack_start( GTK_BOX(vbox), button, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(button),
                        "clicked",
@@ -463,7 +464,7 @@ setup_attr_selector (TOPLEVEL *w_current)
                        w_current);
     gtk_widget_show(button);
 
-    button = gtk_radio_button_new_with_label(NULL, "Visible");
+    button = gtk_radio_button_new_with_label(NULL, _("Visible"));
     gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
     /* TODO: rewrite callbacks to use third parameter to
      * be clean */
@@ -473,7 +474,7 @@ setup_attr_selector (TOPLEVEL *w_current)
     gtk_widget_show(button);
 
     group = gtk_radio_button_group(GTK_RADIO_BUTTON (button));
-    button = gtk_radio_button_new_with_label(group, "Invisible");
+    button = gtk_radio_button_new_with_label(group, _("Invisible"));
     gtk_box_pack_start(GTK_BOX(vbox), button, TRUE, TRUE, 0);
     /* TODO: rewrite callbacks to use third parameter to
      * be clean */

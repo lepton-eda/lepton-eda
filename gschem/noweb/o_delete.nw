@@ -57,6 +57,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -311,7 +312,7 @@ o_delete(TOPLEVEL *w_current)
   if (object == NULL) {
     /* TODO: error condition */
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -325,7 +326,7 @@ o_delete(TOPLEVEL *w_current)
     object = s_current->selected_object;
     if (object == NULL) {
       fprintf(stderr, 
-              "ERROR: NULL object in o_delete_end!\n");
+              _("ERROR: NULL object in o_delete_end!\n"));
       exit(-1);
     }
 

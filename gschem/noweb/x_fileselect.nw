@@ -107,6 +107,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -387,7 +388,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 #endif
 
   if (!directory) {
-    fprintf(stderr, "Agg, could open directory: %s\n", f_current->directory);
+    fprintf(stderr, _("Agg, could open directory: %s\n"), f_current->directory);
     return;
   }
 
@@ -414,12 +415,12 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 
 
   if (num_directories > MAX_DIRS) {
-    fprintf(stderr, "Too many directories! Increase MAX_DIRS\n");
+    fprintf(stderr, _("Too many directories! Increase MAX_DIRS\n"));
     exit(-1);
   }
 
   if (num_files > MAX_FILES) {
-    fprintf(stderr, "Too many files! Increase MAX_FILES\n");
+    fprintf(stderr, _("Too many files! Increase MAX_FILES\n"));
     exit(-1);
   }
 
@@ -676,7 +677,7 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
                      f_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, "sym - Symbols ");
+  sprintf(buf, _("sym - Symbols "));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -685,7 +686,7 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
                      f_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, "sym/sch - Schematics and Symbols");
+  sprintf(buf, _("sym/sch - Schematics and Symbols"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -694,7 +695,7 @@ x_fileselect_filter_menu (FILEDIALOG *f_current)
                      f_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, "* - All Files");
+  sprintf(buf, _("* - All Files"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -739,7 +740,7 @@ int
 x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
 {
   if (f_current == NULL) {
-    fprintf(stderr, "x_fileselect_preview_checkbox: Oops got a null f_current!\n");
+    fprintf(stderr, _("x_fileselect_preview_checkbox: Oops got a null f_current!\n"));
     exit(-1);
   }
 
@@ -827,7 +828,7 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
     w_current->page_current->page_filename = u_basic_strdup(string);
 
     if (f_save(w_current, string)) {
-      s_log_message("Saved As [%s]\n", 
+      s_log_message(_("Saved As [%s]\n"), 
                     w_current->page_current->page_filename);
     
       i_set_filename(w_current, string);
@@ -835,9 +836,9 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
       w_current->page_current->CHANGED = 0;
       update_page_manager(NULL, w_current);
     } else {
-      s_log_message("Could NOT save [%s]\n",w_current->page_current->page_filename);
+      s_log_message(_("Could NOT save [%s]\n"),w_current->page_current->page_filename);
       w_current->event_state = SELECT;    
-      i_update_status(w_current, "Error while trying to save - Select Mode");
+      i_update_status(w_current, _("Error while trying to save - Select Mode"));
       i_update_toolbar(w_current);
     }
 
@@ -854,7 +855,7 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 
     /* do nothing if SAVEAS_NONE */
   } else {
-    s_log_message("Specify a Filename!\n");
+    s_log_message(_("Specify a Filename!\n"));
   }
 }
 
@@ -945,7 +946,7 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
     }
     gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
   } else {
-    s_log_message("Specify a Filename!\n");
+    s_log_message(_("Specify a Filename!\n"));
   }
 }
 
@@ -1202,10 +1203,10 @@ x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
   if (f_current->last_search != -1) {
     i = f_current->last_search;	
     gtk_label_set(GTK_LABEL(f_current->search_label), 
-                  "Search in Files"); 
+                  _("Search in Files")); 
   } else {
     gtk_label_set(GTK_LABEL(f_current->search_label), 
-                  "Search in Files"); 
+                  _("Search in Files")); 
     i = 0;
   }
 
@@ -1227,7 +1228,7 @@ x_fileselect_search(GtkWidget *w, FILEDIALOG *f_current)
   }
   f_current->last_search = -1;
   gtk_label_set(GTK_LABEL(f_current->search_label), 
-		"Search in Files - End of list"); 
+		_("Search in Files - End of list")); 
 }
 
 
@@ -1306,7 +1307,7 @@ create_menu (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf(buf, "Default behavior - reference component");
+  sprintf(buf, _("Default behavior - reference component"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1316,7 +1317,7 @@ create_menu (TOPLEVEL *w_current)
 
   gtk_widget_show(menuitem);
 
-  sprintf(buf, "Embed component in schematic");
+  sprintf(buf, _("Embed component in schematic"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1325,7 +1326,7 @@ create_menu (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show(menuitem);
 
-  sprintf(buf, "Include component as individual objects");
+  sprintf(buf, _("Include component as individual objects"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1747,7 +1748,7 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
                      complex_place_head);
 
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
@@ -1831,11 +1832,11 @@ x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
   if (f_current->last_search_lib != -1) {
     lib_count = f_current->last_search_lib;	
     gtk_label_set(GTK_LABEL(f_current->search_label),
-                  "Search in Components"); 
+                  _("Search in Components")); 
   } else {
     lib_count = 0;
     gtk_label_set(GTK_LABEL(f_current->search_label),
-                  "Search in Components"); 
+                  _("Search in Components")); 
   }
 
   while(f_current->directory_entries[lib_count] != NULL) {
@@ -1894,7 +1895,7 @@ x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
                                lib_count);
 
       gtk_label_set(GTK_LABEL(f_current->search_label),
-                    "Search in Components - Found library only"); 
+                    _("Search in Components - Found library only")); 
       return;
     }
     lib_count++;
@@ -1903,7 +1904,7 @@ x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
 #endif
 
   gtk_label_set(GTK_LABEL(f_current->search_label),
-                "Search in Components - End of list"); 
+                _("Search in Components - End of list")); 
 
 }
 
@@ -1962,21 +1963,21 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
       if (filesel_type == OPEN) {
         gtk_window_set_title(GTK_WINDOW(
                                         f_current->xfwindow),
-                             "Open...");
+                             _("Open..."));
       } else if (filesel_type == SAVEAS) {
         gtk_window_set_title(GTK_WINDOW(
                                         f_current->xfwindow),
-                             "Save As...");
+                             _("Save As..."));
       } else if (filesel_type == SAVEAS_CLOSE) {
         gtk_window_set_title(GTK_WINDOW(
                                         f_current->xfwindow),
-                             "Save As...");
+                             _("Save As..."));
       }
     } else {
       gtk_window_position(GTK_WINDOW(f_current->xfwindow),
                           GTK_WIN_POS_NONE);
       gtk_window_set_title(GTK_WINDOW(f_current->xfwindow),
-                           "Select Component...");
+                           _("Select Component..."));
     }
 
     gtk_signal_connect(GTK_OBJECT(f_current->xfwindow),
@@ -2014,7 +2015,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     }
 
     if (type == FILESELECT) {
-      label=gtk_label_new("Filter");
+      label=gtk_label_new(_("Filter"));
       gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
       gtk_box_pack_start(GTK_BOX(vbox), label, 
                          FALSE, FALSE, 0);
@@ -2054,9 +2055,9 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_widget_show (searchbox);
 
     if (type == FILESELECT) {
-      dir_title[0] = u_basic_strdup("Directories");
+      dir_title[0] = u_basic_strdup(_("Directories"));
     } else {
-      dir_title[0] = u_basic_strdup("Libraries");
+      dir_title[0] = u_basic_strdup(_("Libraries"));
     }
     dir_title[1] = NULL;
     f_current->dir_list = gtk_clist_new_with_titles(1, 
@@ -2093,9 +2094,9 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
     /* The files clist */
     if (type == FILESELECT) {
-      file_title[0] = u_basic_strdup("Files");
+      file_title[0] = u_basic_strdup(_("Files"));
     } else {
-      file_title[0] = u_basic_strdup("Components");
+      file_title[0] = u_basic_strdup(_("Components"));
     }
     file_title[1] = NULL;
     f_current->file_list = gtk_clist_new_with_titles(1, 
@@ -2137,7 +2138,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
                                          drawbox);
 
     f_current->preview_checkbox = gtk_check_button_new_with_label(
-                                                                  "Preview");
+                                                                  _("Preview"));
     gtk_box_pack_start(GTK_BOX(searchbox), 
                        f_current->preview_checkbox, 
                        FALSE, FALSE, 0);
@@ -2146,9 +2147,9 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
 
     if (f_current->type == FILESELECT) {
-      f_current->search_label=gtk_label_new("Search in Files");
+      f_current->search_label=gtk_label_new(_("Search in Files"));
     } else {
-      f_current->search_label=gtk_label_new("Search in Components");
+      f_current->search_label=gtk_label_new(_("Search in Components"));
     }
     gtk_misc_set_alignment(GTK_MISC(f_current->search_label), 0, 0);
     gtk_box_pack_start(GTK_BOX(searchbox), f_current->search_label,
@@ -2184,7 +2185,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
       gtk_widget_show (optionmenu);
     }
 
-    label=gtk_label_new("Filename");
+    label=gtk_label_new(_("Filename"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 5);
     gtk_widget_show(label);
@@ -2225,7 +2226,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     gtk_widget_show(f_current->filename_entry);
 
     if (filesel_type == OPEN) {
-      buttonapply = gtk_button_new_with_label ("Open");
+      buttonapply = gtk_button_new_with_label (_("Open"));
       gtk_signal_connect(GTK_OBJECT(buttonapply),
                          "clicked",
                          GTK_SIGNAL_FUNC(x_fileselect_open_file),
@@ -2235,13 +2236,13 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
                (filesel_type == SAVEAS_OPEN) ||
                (filesel_type == SAVEAS_CLOSE) ||
                (filesel_type == SAVEAS_NEW)) { 
-      buttonapply = gtk_button_new_with_label ("SaveAs");
+      buttonapply = gtk_button_new_with_label (_("SaveAs"));
       gtk_signal_connect(GTK_OBJECT(buttonapply),
                          "clicked",
                          GTK_SIGNAL_FUNC(x_fileselect_saveas),
                          f_current);
     } else if (type == COMPSELECT) {
-      buttonapply = gtk_button_new_with_label ("Apply");
+      buttonapply = gtk_button_new_with_label (_("Apply"));
       gtk_signal_connect(GTK_OBJECT(buttonapply),
                          "clicked",
                          GTK_SIGNAL_FUNC(x_fileselect_comp_apply),
@@ -2258,7 +2259,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     if (type == FILESELECT) {
       if (filesel_type == OPEN) {
         buttonclose = gtk_button_new_with_label (
-                                                 "Cancel");
+                                                 _("Cancel"));
         GTK_WIDGET_SET_FLAGS(buttonclose, 
                              GTK_CAN_DEFAULT);
         gtk_box_pack_start(GTK_BOX(action_area),
@@ -2277,7 +2278,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
                  (filesel_type == SAVEAS_CLOSE) ||
                  (filesel_type == SAVEAS_NEW)) { 
         buttonclose = gtk_button_new_with_label (
-                                                 "Cancel");
+                                                 _("Cancel"));
         GTK_WIDGET_SET_FLAGS(buttonclose, 
                              GTK_CAN_DEFAULT);
         gtk_box_pack_start(GTK_BOX(action_area),
@@ -2294,7 +2295,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
         x_fileselect_fill_lists(f_current);
       }
     } else {
-      buttonclose = gtk_button_new_with_label ("Close");
+      buttonclose = gtk_button_new_with_label (_("Close"));
       GTK_WIDGET_SET_FLAGS(buttonclose, GTK_CAN_DEFAULT);
       gtk_box_pack_start(GTK_BOX(action_area),
                          buttonclose, TRUE, TRUE, 0);

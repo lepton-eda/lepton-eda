@@ -108,7 +108,7 @@ o_copy_end(TOPLEVEL *w_current)
   if (object == NULL) {
     /* TODO: error condition */
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -137,7 +137,7 @@ o_copy_end(TOPLEVEL *w_current)
   while(s_current != NULL) {
 
     if (s_current->selected_object == NULL) {
-      fprintf(stderr, "ERROR: NULL object in o_copy_end!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_copy_end!\n"));
       exit(-1);
     }
 
@@ -380,7 +380,7 @@ o_copy_end(TOPLEVEL *w_current)
   while(s_current != NULL) {
 
     if (s_current->selected_object == NULL) {
-      fprintf(stderr, "ERROR: NULL object in o_copy_end!\n");
+      fprintf(stderr, _("ERROR: NULL object in o_copy_end!\n"));
       exit(-1);
     }
 

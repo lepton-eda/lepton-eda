@@ -262,7 +262,7 @@ o_complex_place_rotate(TOPLEVEL *w_current)
   }
 
   if (screen_x_local == -1) {
-    printf("Could not find complex in new componet placement!\n");
+    printf(_("Could not find complex in new componet placement!\n"));
     return;
   }
 
@@ -613,7 +613,7 @@ o_complex_translate_display_selection(TOPLEVEL *w_current,
     o_current = s_current->selected_object;
 
     if (!o_current) {
-      fprintf(stderr, "Got NULL in o_complex_translate_display_selection\n");
+      fprintf(stderr, _("Got NULL in o_complex_translate_display_selection\n"));
       exit(-1);
     }
 
@@ -728,13 +728,13 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
   }
         
   if (offset == 0) {
-    s_log_message("Translating schematic [%d %d]\n", -x, -y);
+    s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
     o_complex_world_translate(
                               w_current,
                               -x, -y,
                               w_current->page_current->object_head);
   } else {
-    s_log_message("Translating schematic [%d %d]\n",
+    s_log_message(_("Translating schematic [%d %d]\n"),
                   offset, offset);
     o_complex_world_translate(
                               w_current,
@@ -783,7 +783,7 @@ o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy,
 			      SELECTION *head)
 {
   if (head == NULL)  {
-    printf("Got NULL in o_complex_translate_selection!\n");
+    printf(_("Got NULL in o_complex_translate_selection!\n"));
     return;
   }
 

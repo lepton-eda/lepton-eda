@@ -584,7 +584,7 @@ void
 multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->mawindow);
   gtk_widget_destroy(w_current->mawindow);
@@ -677,7 +677,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 #endif
 	
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title (GTK_WINDOW (window), "Edit Component");
+  gtk_window_set_title (GTK_WINDOW (window), _("Edit Component"));
   gtk_widget_set_usize(window, 545, 200);
   
   gtk_window_position(GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
@@ -703,15 +703,15 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 
   gtk_clist_column_titles_show (GTK_CLIST (clist));
 
-  attribhead = gtk_label_new ("Attribute");
+  attribhead = gtk_label_new (_("Attribute"));
   gtk_widget_show (attribhead);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 0, attribhead);
 	
-  vishead = gtk_label_new ("Visibility");
+  vishead = gtk_label_new (_("Visibility"));
   gtk_widget_show (vishead);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 1, vishead);
 	
-  valhead = gtk_label_new ("Value");
+  valhead = gtk_label_new (_("Value"));
   gtk_widget_show (valhead);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 2, valhead);
 	
@@ -731,7 +731,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_container_set_border_width (GTK_CONTAINER (hbox2), 3);
 
 
-  label10 = gtk_label_new ("Attribute");
+  label10 = gtk_label_new (_("Attribute"));
   gtk_widget_show (label10);
   gtk_box_pack_start (GTK_BOX (hbox2), label10, TRUE, TRUE, 0);
 	
@@ -746,7 +746,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   hbox5 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox5);
 	
-  visbutton = gtk_check_button_new_with_label ("Visible");
+  visbutton = gtk_check_button_new_with_label (_("Visible"));
   gtk_object_set_data (GTK_OBJECT (window), "visbutton", visbutton);
   gtk_widget_show (visbutton);
   gtk_box_pack_start (GTK_BOX (hbox5), visbutton, FALSE, FALSE, 0);
@@ -762,7 +762,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                     (GtkAttachOptions) ( GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 	
-  label11 = gtk_label_new ("Value");
+  label11 = gtk_label_new (_("Value"));
   gtk_widget_show (label11);
   gtk_box_pack_start (GTK_BOX (hbox4), label11, TRUE, FALSE, 0);
 	
@@ -780,19 +780,19 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
 
-  namebutton = gtk_radio_button_new_with_label (show_group, "Name");
+  namebutton = gtk_radio_button_new_with_label (show_group, _("Name"));
   show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (namebutton));
   gtk_widget_show (namebutton);
   gtk_box_pack_start (GTK_BOX (hbox6), namebutton, FALSE, FALSE, 0);
   gtk_object_set_data(GTK_OBJECT(window),"shownamebutton",namebutton);
 	
-  valbutton = gtk_radio_button_new_with_label (show_group, "Value");
+  valbutton = gtk_radio_button_new_with_label (show_group, _("Value"));
   show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (valbutton));
   gtk_widget_show (valbutton);
   gtk_box_pack_start (GTK_BOX (hbox6), valbutton, FALSE, FALSE, 0);
   gtk_object_set_data(GTK_OBJECT(window),"showvalbutton",valbutton);
 	
-  bothbutton = gtk_radio_button_new_with_label (show_group, "Both");
+  bothbutton = gtk_radio_button_new_with_label (show_group, _("Both"));
   show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (bothbutton));
   gtk_widget_show (bothbutton);
   gtk_box_pack_start (GTK_BOX (hbox6), bothbutton, FALSE, FALSE, 0);
@@ -802,31 +802,31 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_widget_show (hbuttonbox1);
   gtk_box_pack_end (GTK_BOX (vbox), hbuttonbox1, FALSE, FALSE, 0);
 	
-  addbutton = gtk_button_new_with_label ("Add");
+  addbutton = gtk_button_new_with_label (_("Add"));
   gtk_widget_show (addbutton);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), addbutton);
   GTK_WIDGET_SET_FLAGS (addbutton, GTK_CAN_DEFAULT);
 
   gtk_object_set_data(GTK_OBJECT(addbutton),"window",window);
 
-  changebutton = gtk_button_new_with_label ("Change");
+  changebutton = gtk_button_new_with_label (_("Change"));
   gtk_widget_show (changebutton);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), changebutton);
   GTK_WIDGET_SET_FLAGS (changebutton, GTK_CAN_DEFAULT);
 
   gtk_object_set_data(GTK_OBJECT(changebutton),"window",window);
 
-  clearbutton = gtk_button_new_with_label ("Clear");
+  clearbutton = gtk_button_new_with_label (_("Clear"));
   gtk_widget_show (clearbutton);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), clearbutton);
   GTK_WIDGET_SET_FLAGS (clearbutton, GTK_CAN_DEFAULT);
 	
-  delbutton = gtk_button_new_with_label ("Delete");
+  delbutton = gtk_button_new_with_label (_("Delete"));
   gtk_widget_show (delbutton);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), delbutton);
   GTK_WIDGET_SET_FLAGS (delbutton, GTK_CAN_DEFAULT);
 	
-  closebutton = gtk_button_new_with_label ("Close");
+  closebutton = gtk_button_new_with_label (_("Close"));
   gtk_widget_show (closebutton);
   gtk_container_add (GTK_CONTAINER (hbuttonbox1), closebutton);
   GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
@@ -973,7 +973,7 @@ text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 
     } else {
       /* TODO: you should have limits */
-      fprintf(stderr, "String too long... hack!\n");
+      fprintf(stderr, _("String too long... hack!\n"));
     }
 
     w_current->event_state = DRAWTEXT;
@@ -1001,7 +1001,7 @@ void
 text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 #if 0
   gtk_grab_remove(w_current->tiwindow);
@@ -1058,11 +1058,11 @@ text_input_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->tiwindow),
-                         "Text Entry...");
+                         _("Text Entry..."));
     gtk_container_border_width(
                                GTK_CONTAINER (w_current->tiwindow), 5);
 
-    label = gtk_label_new ("Enter text, click apply,\nmove cursor into window, click to place text.\nMiddle button to rotate while placing.");
+    label = gtk_label_new (_("Enter text, click apply,\nmove cursor into window, click to place text.\nMiddle button to rotate while placing."));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -1080,7 +1080,7 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_object_set_data(GTK_OBJECT(w_current->tiwindow),
                         "tientry",tientry);
 
-    buttonok = gtk_button_new_with_label("Apply");
+    buttonok = gtk_button_new_with_label(_("Apply"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1091,7 +1091,7 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Close");
+    buttoncancel = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1166,7 +1166,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Middle Left");
+  sprintf (buf, _("Middle Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1176,7 +1176,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Upper Left");
+  sprintf (buf, _("Upper Left"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1186,7 +1186,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Lower Middle");
+  sprintf (buf, _("Lower Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1196,7 +1196,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Middle Middle");
+  sprintf (buf, _("Middle Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1206,7 +1206,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Upper Middle");
+  sprintf (buf, _("Upper Middle"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1216,7 +1216,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Lower Right");
+  sprintf (buf, _("Lower Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1226,7 +1226,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Middle Right");
+  sprintf (buf, _("Middle Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1236,7 +1236,7 @@ create_menu_alignment (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Upper Right");
+  sprintf (buf, _("Upper Right"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1312,7 +1312,7 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   o_text_edit_end(w_current, text_string, len, text_size, new_text_alignment);
 
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->tewindow);
@@ -1334,7 +1334,7 @@ void
 text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tewindow);
   gtk_widget_destroy(w_current->tewindow);
@@ -1391,12 +1391,12 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->tewindow),
-                         "Edit Text");
+                         _("Edit Text"));
     gtk_container_border_width(
                                GTK_CONTAINER(w_current->tewindow), 0);
 
     if (num_selected == 1) {
-      label = gtk_label_new ("Edit Text");
+      label = gtk_label_new (_("Edit Text"));
       gtk_box_pack_start(
                          GTK_BOX(vbox),
                          label, TRUE, TRUE, 0);
@@ -1416,7 +1416,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
       gtk_widget_grab_focus(w_current->teentry);
     }
 
-    label = gtk_label_new ("Edit Text Size");
+    label = gtk_label_new (_("Edit Text Size"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -1434,7 +1434,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_widget_show (w_current->tsentry);
 
 		
-    label = gtk_label_new ("Edit Text Alignment");
+    label = gtk_label_new (_("Edit Text Alignment"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -1451,7 +1451,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_widget_show(optionmenu);
 
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1462,7 +1462,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_widget_show(buttonok);
     gtk_widget_grab_default(buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1535,7 +1535,7 @@ create_menu_linetype (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, "Solid");
+  sprintf (buf, _("Solid"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1545,7 +1545,7 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Dotted");
+  sprintf (buf, _("Dotted"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1555,7 +1555,7 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Dashed");
+  sprintf (buf, _("Dashed"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1565,7 +1565,7 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Center");
+  sprintf (buf, _("Center"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1575,7 +1575,7 @@ create_menu_linetype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Phantom");
+  sprintf (buf, _("Phantom"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1663,7 +1663,7 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
     if (space < 1) {
       space = 100;
-      s_log_message("Invalid space specified, setting to 100\n");
+      s_log_message(_("Invalid space specified, setting to 100\n"));
     }
     break;
 
@@ -1672,12 +1672,12 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
     case(TYPE_PHANTOM):
     if (length < 1) {
       length = 100;
-      s_log_message("Invalid length specified, setting to 100\n");
+      s_log_message(_("Invalid length specified, setting to 100\n"));
     }
 
     if (space < 1) {
       space = 100;
-      s_log_message("Invalid space specified, setting to 100\n");
+      s_log_message(_("Invalid space specified, setting to 100\n"));
     }
     break;
 
@@ -1695,7 +1695,7 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   w_current->page_current->CHANGED = 1;
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->ltwindow);
@@ -1717,7 +1717,7 @@ void
 line_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->ltwindow);
   gtk_widget_destroy(w_current->ltwindow);
@@ -1765,14 +1765,14 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
                      (GtkSignalFunc) line_type_dialog_keypress, w_current);
 
     gtk_window_set_title(GTK_WINDOW (w_current->ltwindow),
-                         "Edit Line Width & Type");
+                         _("Edit Line Width & Type"));
     gtk_container_border_width(
                                GTK_CONTAINER(w_current->ltwindow), 0);
 
     gtk_object_set_data(GTK_OBJECT(w_current->ltwindow),"object",
                         (gpointer) object);
 
-    label = gtk_label_new ("Line Width");
+    label = gtk_label_new (_("Line Width"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -1794,7 +1794,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
                         "width_entry",
                         (gpointer) width_entry);
 
-    label = gtk_label_new ("Line Type");
+    label = gtk_label_new (_("Line Type"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -1810,7 +1810,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
     gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
     gtk_widget_show(optionmenu);
 
-    label = gtk_label_new ("Line Dash Length");
+    label = gtk_label_new (_("Line Dash Length"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -1827,7 +1827,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
                         "length_entry",
                         (gpointer) length_entry);
 
-    label = gtk_label_new ("Line Dash Space");
+    label = gtk_label_new (_("Line Dash Space"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
@@ -1844,7 +1844,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
                         "space_entry",
                         (gpointer) space_entry);
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1855,7 +1855,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
     gtk_widget_show(buttonok);
     gtk_widget_grab_default(buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -1932,7 +1932,7 @@ create_menu_filltype (TOPLEVEL *w_current)
   menu = gtk_menu_new ();
   group = NULL;
 
-  sprintf (buf, "Hollow");
+  sprintf (buf, _("Hollow"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1942,7 +1942,7 @@ create_menu_filltype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Filled");
+  sprintf (buf, _("Filled"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1952,7 +1952,7 @@ create_menu_filltype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Mesh");
+  sprintf (buf, _("Mesh"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -1962,7 +1962,7 @@ create_menu_filltype (TOPLEVEL *w_current)
                      w_current);
   gtk_widget_show (menuitem);
 
-  sprintf (buf, "Hatch");
+  sprintf (buf, _("Hatch"));
   menuitem = gtk_radio_menu_item_new_with_label (group, buf);
   group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
   gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -2092,7 +2092,7 @@ fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   w_current->page_current->CHANGED = 1;
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->ftwindow);
@@ -2114,7 +2114,7 @@ void
 fill_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->ftwindow);
   gtk_widget_destroy(w_current->ftwindow);
@@ -2164,13 +2164,13 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                      (GtkSignalFunc) fill_type_dialog_keypress, w_current);
 
     gtk_window_set_title(GTK_WINDOW (w_current->ftwindow),
-                         "Edit Fill Type");
+                         _("Edit Fill Type"));
     gtk_container_border_width(GTK_CONTAINER(w_current->ftwindow), 0);
 
     gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),"object",
                         (gpointer) object);
 
-    label = gtk_label_new ("Fill Type");
+    label = gtk_label_new (_("Fill Type"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2187,7 +2187,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
     gtk_widget_grab_focus(optionmenu);
     gtk_widget_show(optionmenu);
 
-    label = gtk_label_new ("Line Width");
+    label = gtk_label_new (_("Line Width"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2209,7 +2209,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                         (gpointer) width_entry);
 
 
-    label = gtk_label_new ("Angle1");
+    label = gtk_label_new (_("Angle1"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2231,7 +2231,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                         (gpointer) angle1_entry);
 
 		
-    label = gtk_label_new ("Pitch1");
+    label = gtk_label_new (_("Pitch1"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2253,7 +2253,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                         (gpointer) pitch1_entry);
 		
 
-    label = gtk_label_new ("Angle2");
+    label = gtk_label_new (_("Angle2"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2275,7 +2275,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                         (gpointer) angle2_entry);
 
 
-    label = gtk_label_new ("Pitch2");
+    label = gtk_label_new (_("Pitch2"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2297,7 +2297,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                         (gpointer) pitch2_entry);
 
 		
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2308,7 +2308,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
     gtk_widget_show(buttonok);
     gtk_widget_grab_default(buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2461,11 +2461,11 @@ exit_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->exwindow),
-                         "Discard Changes?");
+                         _("Discard Changes?"));
     gtk_container_border_width(GTK_CONTAINER(w_current->exwindow),
                                0);
 
-    button = gtk_button_new_with_label ("OK");
+    button = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2474,7 +2474,7 @@ exit_dialog (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(exit_dialog_ok), w_current);
     gtk_widget_show (button);
 
-    button = gtk_button_new_with_label ("Cancel");
+    button = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2486,10 +2486,10 @@ exit_dialog (TOPLEVEL *w_current)
     gtk_widget_grab_default (button);
 
     label = gtk_label_new(
-                          "There are schematics which are unsaved!\n"
+                          _("There are schematics which are unsaved!\n"
                           "\n"
                           "Are you sure?\n"
-                          "OK will discard ALL changes!");
+                          "OK will discard ALL changes!"));
     gtk_misc_set_padding (GTK_MISC (label), 10, 10);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
@@ -2611,11 +2611,11 @@ arc_angle_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->aawindow),
-                         "Arc Params");
+                         _("Arc Params"));
     gtk_container_border_width(GTK_CONTAINER(w_current->aawindow),
                                0);
 
-    label = gtk_label_new ("Start Angle");
+    label = gtk_label_new (_("Start Angle"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2630,7 +2630,7 @@ arc_angle_dialog (TOPLEVEL *w_current)
     gtk_widget_show(w_current->aaentry_start);
     gtk_widget_grab_focus(w_current->aaentry_start);
 
-    label = gtk_label_new("Degrees of Sweep");
+    label = gtk_label_new(_("Degrees of Sweep"));
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
@@ -2648,7 +2648,7 @@ arc_angle_dialog (TOPLEVEL *w_current)
                        w_current);
     gtk_widget_show(w_current->aaentry_sweep);
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start (
 			GTK_BOX(action_area),
@@ -2659,7 +2659,7 @@ arc_angle_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
                         buttoncancel, TRUE, TRUE, 0);
@@ -2736,7 +2736,7 @@ void
 translate_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 #if 0
 	gtk_grab_remove(w_current->trwindow);
@@ -2786,11 +2786,11 @@ translate_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->trwindow),
-                         "Translate");
+                         _("Translate"));
     gtk_container_border_width (GTK_CONTAINER (
                                                w_current->trwindow), 0);
 
-    label = gtk_label_new("Offset to translate?\n(0 for origin)");
+    label = gtk_label_new(_("Offset to translate?\n(0 for origin)"));
     gtk_misc_set_padding(GTK_MISC (label), 10, 10);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
@@ -2809,7 +2809,7 @@ translate_dialog (TOPLEVEL *w_current)
     gtk_widget_show (w_current->trentry);
     gtk_widget_grab_focus(w_current->trentry);
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area),
                         buttonok, TRUE, TRUE, 0);
@@ -2819,7 +2819,7 @@ translate_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2902,7 +2902,7 @@ void
 text_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
@@ -2952,11 +2952,11 @@ text_size_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
-                         "Text Size");
+                         _("Text Size"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
                                0);
 
-    label = gtk_label_new ("Enter new text size");
+    label = gtk_label_new (_("Enter new text size"));
     gtk_misc_set_padding (GTK_MISC (label), 10, 10);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
@@ -2975,7 +2975,7 @@ text_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show (w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -2986,7 +2986,7 @@ text_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3068,7 +3068,7 @@ void
 snap_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
@@ -3117,11 +3117,11 @@ snap_size_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
-                         "Snap Grid");
+                         _("Snap Grid"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
                                0);
 
-    label = gtk_label_new("Enter new snap grid spacing");
+    label = gtk_label_new(_("Enter new snap grid spacing"));
     gtk_misc_set_padding(GTK_MISC (label), 10, 10);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
@@ -3140,7 +3140,7 @@ snap_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3151,7 +3151,7 @@ snap_size_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3218,12 +3218,12 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
       o_slot_end(w_current, string, len);
     } else {
       /* TODO: you should NOT have limits */
-      fprintf(stderr, "String too long... hack!\n");
+      fprintf(stderr, _("String too long... hack!\n"));
     }
   }
 
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->sewindow);
@@ -3245,7 +3245,7 @@ void
 slot_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
   w_current->event_state = SELECT;
-  i_update_status(w_current, "Select Mode");
+  i_update_status(w_current, _("Select Mode"));
   i_update_toolbar(w_current);
   gtk_grab_remove(w_current->sewindow);
   gtk_widget_destroy(w_current->sewindow);
@@ -3293,11 +3293,11 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->sewindow),
-                         "Edit slot number");
+                         _("Edit slot number"));
     gtk_container_border_width(
                                GTK_CONTAINER(w_current->sewindow), 0);
 
-    label = gtk_label_new ("Edit slot number");
+    label = gtk_label_new (_("Edit slot number"));
     gtk_box_pack_start(
                        GTK_BOX (vbox),
                        label, TRUE, TRUE, 0);
@@ -3316,7 +3316,7 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_widget_show (w_current->seentry);
     gtk_widget_grab_focus(w_current->seentry);
 
-    buttonok = gtk_button_new_with_label ("OK");
+    buttonok = gtk_button_new_with_label (_("OK"));
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3327,7 +3327,7 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_widget_show (buttonok);
     gtk_widget_grab_default (buttonok);
 
-    buttoncancel = gtk_button_new_with_label ("Cancel");
+    buttoncancel = gtk_button_new_with_label (_("Cancel"));
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start (GTK_BOX (action_area), buttoncancel, 
                         TRUE, TRUE, 0);
@@ -3411,7 +3411,7 @@ about_dialog (TOPLEVEL *w_current)
                          GTK_WIN_POS_MOUSE);
 
     gtk_window_set_title (GTK_WINDOW (w_current->abwindow),
-                          "About...");
+                          _("About..."));
     gtk_container_border_width (GTK_CONTAINER (
                                                w_current->abwindow), 5);
 
@@ -3430,28 +3430,28 @@ about_dialog (TOPLEVEL *w_current)
                         &w_current->abwindow);
 #endif
 
-    sprintf(string, "gEDA : GPL Electronic Design Automation");
+    sprintf(string, _("gEDA : GPL Electronic Design Automation"));
     label = gtk_label_new (string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
-    sprintf(string, "gschem version %s", VERSION);
+    sprintf(string, _("gschem version %s"), VERSION);
     label = gtk_label_new (string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
-    sprintf(string, "Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)");
+    sprintf(string, _("Written by:\nAles V. Hvezda\nahvezda@geda.seul.org\nAnd many others (See AUTHORS file)"));
     label = gtk_label_new (string);
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
-    buttonclose = gtk_button_new_with_label ("Close");
+    buttonclose = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3550,7 +3550,7 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
                          GTK_WIN_POS_MOUSE);
 
     gtk_window_set_title (GTK_WINDOW (w_current->cowindow),
-                          "Coords");
+                          _("Coords"));
     gtk_container_border_width (GTK_CONTAINER (
                                                w_current->cowindow), 5);
 
@@ -3574,7 +3574,7 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
     gtk_container_add (GTK_CONTAINER (w_current->cowindow), vbox2);
     gtk_widget_show(vbox2);
 
-    frame = gtk_frame_new ("Screen");
+    frame = gtk_frame_new (_("Screen"));
     w_current->coord_screen =
       gtk_label_new("(########, ########)");
     gtk_label_set_justify(
@@ -3587,7 +3587,7 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
     gtk_widget_show(w_current->coord_screen);
     gtk_widget_show(frame);
 
-    frame = gtk_frame_new ("World");
+    frame = gtk_frame_new (_("World"));
     w_current->coord_world =
       gtk_label_new ("(########, ########)");
     gtk_misc_set_padding(GTK_MISC(w_current->coord_world), 10, 10);
@@ -3599,7 +3599,7 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
     gtk_widget_show(w_current->coord_world);
     gtk_widget_show(frame);
 
-    buttonclose = gtk_button_new_with_label ("Close");
+    buttonclose = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX ( vbox2 ),
                        buttonclose, TRUE, TRUE, 0);
@@ -3845,7 +3845,7 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 
     object = s_current->selected_object;
     if (object == NULL) {
-      fprintf(stderr, "ERROR: NULL object in color_edit_dialog_apply!\n");
+      fprintf(stderr, _("ERROR: NULL object in color_edit_dialog_apply!\n"));
       exit(-1);
     }
 
@@ -3900,7 +3900,7 @@ color_edit_dialog (TOPLEVEL *w_current)
                          GTK_WIN_POS_MOUSE);
 
     gtk_window_set_title (GTK_WINDOW (w_current->clwindow),
-                          "Color Edit");
+                          _("Color Edit"));
     gtk_container_border_width(
                                GTK_CONTAINER(w_current->clwindow), 5);
 
@@ -3928,7 +3928,7 @@ color_edit_dialog (TOPLEVEL *w_current)
                        optionmenu, TRUE, TRUE, 0);
     gtk_widget_show (optionmenu);
 
-    buttonapply = gtk_button_new_with_label ("Apply");
+    buttonapply = gtk_button_new_with_label (_("Apply"));
     GTK_WIDGET_SET_FLAGS (buttonapply, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -3939,7 +3939,7 @@ color_edit_dialog (TOPLEVEL *w_current)
     gtk_widget_show (buttonapply);
     gtk_widget_grab_default(buttonapply);
 
-    buttonclose = gtk_button_new_with_label ("Close");
+    buttonclose = gtk_button_new_with_label (_("Close"));
     gtk_box_pack_start(
                        GTK_BOX(action_area),
                        buttonclose, TRUE, TRUE, 0);
@@ -4035,7 +4035,7 @@ x_dialog_hotkeys_fill(char *string)
 {
 
   if (hotkey_counter > 127) {
-    printf("Ran out of space in the hotkey buffer...\n");
+    printf(_("Ran out of space in the hotkey buffer...\n"));
     return;
   }	
 
@@ -4073,7 +4073,7 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
                          GTK_WIN_POS_MOUSE);
 
     gtk_window_set_title (GTK_WINDOW (w_current->hkwindow),
-                          "Hotkeys...");
+                          _("Hotkeys..."));
     gtk_container_border_width (GTK_CONTAINER (
                                                w_current->hkwindow), 5);
 
@@ -4118,7 +4118,7 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
     gtk_widget_show(list);
 
     item = gtk_list_item_new_with_label (
-                                         "Function : keystroke(s)");
+                                         _("Function : keystroke(s)"));
     gtk_container_add (GTK_CONTAINER (list), item);
     gtk_widget_show(item);
 
@@ -4136,7 +4136,7 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
       }
     }
 
-    buttonclose = gtk_button_new_with_label ("Close");
+    buttonclose = gtk_button_new_with_label (_("Close"));
     GTK_WIDGET_SET_FLAGS (buttonclose, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
@@ -4327,10 +4327,10 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow),
-			 "Generic String");
+			 _("Generic String"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
 
-    label = gtk_label_new("Enter new string.");
+    label = gtk_label_new(_("Enter new string."));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show(label);
@@ -4343,7 +4343,7 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label("OK");
+    buttonok = gtk_button_new_with_label(_("OK"));
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4484,10 +4484,10 @@ void find_text_dialog(TOPLEVEL * w_current)
 		       &w_current->tswindow);
 #endif
 
-    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), "Find text");
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Find text"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
 
-    label = gtk_label_new("Text to find:");
+    label = gtk_label_new(_("Text to find:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show(label);
@@ -4500,13 +4500,13 @@ void find_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label("Find");
+    buttonok = gtk_button_new_with_label(_("Find"));
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
 		       GTK_SIGNAL_FUNC(find_text_ok), w_current);
 
-    buttondone = gtk_button_new_with_label("Done");
+    buttondone = gtk_button_new_with_label(_("Done"));
     GTK_WIDGET_SET_FLAGS(buttondone, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttondone, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttondone), "clicked",
@@ -4514,7 +4514,7 @@ void find_text_dialog(TOPLEVEL * w_current)
 
 
     checkdescend =
-	gtk_check_button_new_with_label("descend into hierarchy");
+	gtk_check_button_new_with_label(_("descend into hierarchy"));
     /*          gtk_object_set_data (GTK_OBJECT (w_current->tswindow), "descend", w_current->preview_checkbox);*/
 
     gtk_box_pack_start(GTK_BOX(action_area), checkdescend, TRUE, TRUE, 0);
@@ -4623,10 +4623,10 @@ void hide_text_dialog(TOPLEVEL * w_current)
 		       &w_current->tswindow);
 #endif
 
-    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), "Hide text");
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Hide text"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
 
-    label = gtk_label_new("Hide text starting with:");
+    label = gtk_label_new(_("Hide text starting with:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show(label);
@@ -4639,7 +4639,7 @@ void hide_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label("OK");
+    buttonok = gtk_button_new_with_label(_("OK"));
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4747,10 +4747,10 @@ void show_text_dialog(TOPLEVEL * w_current)
 		       &w_current->tswindow);
 #endif
 
-    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), "Show text");
+    gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Show text"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
 
-    label = gtk_label_new("Show text starting with:");
+    label = gtk_label_new(_("Show text starting with:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show(label);
@@ -4763,7 +4763,7 @@ void show_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label("OK");
+    buttonok = gtk_button_new_with_label(_("OK"));
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",
@@ -4869,10 +4869,10 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow),
-			 "Autonumber text");
+			 _("Autonumber text"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
 
-    label = gtk_label_new("Autonumber text starting with:");
+    label = gtk_label_new(_("Autonumber text starting with:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show(label);
@@ -4885,7 +4885,7 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
 
-    buttonok = gtk_button_new_with_label("OK");
+    buttonok = gtk_button_new_with_label(_("OK"));
     GTK_WIDGET_SET_FLAGS(buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(GTK_BOX(action_area), buttonok, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(buttonok), "clicked",

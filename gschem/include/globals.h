@@ -74,3 +74,7 @@ extern OBJECT *object_buffer[MAX_BUFFERS];
 extern SCM add_component_hook;
 extern SCM copy_component_hook;
 extern SCM move_component_hook;
+
+
+#include "gettext.h"
+

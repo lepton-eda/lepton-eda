@@ -78,6 +78,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 @
 
@@ -430,7 +431,7 @@ o_grips_end(TOPLEVEL *w_current)
   if (!object) {
     /* actually this is an error condition hack */
     w_current->event_state = SELECT;
-    i_update_status(w_current, "Select Mode");
+    i_update_status(w_current, _("Select Mode"));
     w_current->inside_action = 0;
     return;
   }
@@ -471,7 +472,7 @@ o_grips_end(TOPLEVEL *w_current)
       w_current->event_state = SELECT;
       o_net_eraserubber(w_current);
       o_redraw_single(w_current, object);
-      i_update_status(w_current, "Select Mode");
+      i_update_status(w_current, _("Select Mode"));
       i_update_toolbar(w_current);
       return;
     }
@@ -529,7 +530,7 @@ o_grips_end(TOPLEVEL *w_current)
       w_current->inside_action=0;
       o_redraw_single(w_current, object);
       w_current->event_state = SELECT;
-      i_update_status(w_current, "Select Mode");
+      i_update_status(w_current, _("Select Mode"));
       i_update_toolbar(w_current);
       return;
     }
@@ -588,7 +589,7 @@ o_grips_end(TOPLEVEL *w_current)
       o_net_eraserubber(w_current);
       o_redraw_single(w_current, object);
       w_current->event_state = SELECT;
-      i_update_status(w_current, "Select Mode");
+      i_update_status(w_current, _("Select Mode"));
       i_update_toolbar(w_current);
       return;
     }
@@ -1053,7 +1054,7 @@ if ((box_width == 0) && (box_height == 0))
 	w_current->event_state = SELECT;
 	
 	o_redraw_single(w_current, o_current);
-	i_update_status(w_current, "Select Mode");
+	i_update_status(w_current, _("Select Mode"));
         i_update_toolbar(w_current);
 	
 	return;
@@ -1223,7 +1224,7 @@ o_grips_end_circle(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 
 		/* return to select mode */
 		w_current->event_state = SELECT;
-		i_update_status(w_current, "Select Mode");
+		i_update_status(w_current, _("Select Mode"));
                 i_update_toolbar(w_current);
 
 		o_redraw_single(w_current, o_current);
@@ -1378,7 +1379,7 @@ o_grips_end_line(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 
 		  /* return to select mode */
           w_current->event_state = SELECT;
-          i_update_status(w_current, "Select Mode");
+          i_update_status(w_current, _("Select Mode"));
           i_update_toolbar(w_current);
 		  
           o_redraw_single(w_current, o_current);
