@@ -8,6 +8,8 @@
 	* 74/7408-2.sym, 74/7409-2.sym: These two symbols were partially
 	swapped.  Fixed.  Pointed out by Mario Klebsch.
 
+	* 74/7432-2.sym: Added new symbol by Mario Klebsch.
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version
