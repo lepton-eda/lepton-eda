@@ -2,6 +2,11 @@
 
 	* po/es_ES.po: updated spanish translation.
 	
+2005-03-10  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_multiattrib.nw: Made it close the dialog on a key press
+	of Escape.
+
 2005-03-09 Werner Hoch <werner.ho@gmx.de>
 	* po/de_DE.po: updated translation
 	* noweb/x_dialog.nw: added refdes=U to the list, removed

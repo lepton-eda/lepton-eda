@@ -160,6 +160,8 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
 <<x_multiattrib.c : multiattrib_callback_popup_menu()>>
 <<x_multiattrib.c : multiattrib_callback_popup_*()>>
 
+<<x_multiattrib.c : multiattrib_callback_dialog_key_pressed()>>
+  
 <<x_multiattrib.c : multiattrib_callback_value_key_pressed()>>
 <<x_multiattrib.c : multiattrib_callback_button_add()>>
 
@@ -281,6 +283,12 @@ multiattrib_init (Multiattrib *multiattrib)
   multiattrib->toplevel = NULL;
   multiattrib->object   = NULL;
 
+  /* connect to the key-press-event of dialog */
+  g_signal_connect (multiattrib,
+                    "key-press-event",
+                    G_CALLBACK (multiattrib_callback_dialog_key_pressed),
+                    multiattrib);
+  
   <<multiattrib_init() : create the frame with the list of attributes>>
 
   <<multiattrib_init() : create the 'add attribute' frame>>
@@ -1270,6 +1278,33 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
 }
 
 @ %def multiattrib_callback_popup_delete
+
+
+@subsection Function @code{multiattrib_callback_dialog_key_pressed()}
+
+@defun multiattrib_callback_dialog_key_pressed widget event user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_dialog_key_pressed()>>=
+static gboolean
+multiattrib_callback_dialog_key_pressed (GtkWidget   *widget,
+                                         GdkEventKey *event,
+                                         gpointer     user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)widget;
+  gboolean retval = FALSE;
+
+  /* close the dialog if the Escape key is pressed */
+  if (event->keyval == GDK_Escape) {
+    gtk_dialog_response ((GtkDialog*)multiattrib,
+                         MULTIATTRIB_RESPONSE_CLOSE);
+    retval = TRUE;
+  }
+
+  return retval;
+}
+
+@ %def multiattrib_callback_dialog_key_pressed
 
 
 @subsection Function @code{multiattrib_callback_value_key_pressed()}
