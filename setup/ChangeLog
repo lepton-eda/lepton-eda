@@ -1,3 +1,7 @@
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* auto* files: Updated to newer auto* tools 
+
 2003-09-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version to 20030901
