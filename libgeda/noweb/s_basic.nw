@@ -268,6 +268,8 @@ s_basic_init_object( char *name )
   new_node->locked_color = -1;
   new_node->draw_grips = FALSE;
 
+  new_node->bus_ripper_direction = 0;
+
   new_node->action_func = error_if_called; 
   new_node->sel_func = error_if_called; 
   new_node->draw_func = error_if_called; 
