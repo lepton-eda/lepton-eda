@@ -140,6 +140,8 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("undo-control", g_rc_undo_control);
 	gh_new_procedure1_0 ("undo-type", g_rc_undo_type);
 
+	gh_new_procedure1_0 ("draw-grips", g_rc_draw_grips);
+
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
 	gh_new_procedure1_0 ("gschem-key-name", g_funcs_key_name);
@@ -182,6 +184,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-text", g_key_edit_text);
 	gh_new_procedure0_0 ("edit-lock", g_key_edit_lock);
 	gh_new_procedure0_0 ("edit-unlock", g_key_edit_unlock);
+	gh_new_procedure0_0 ("edit-linetype", g_key_edit_linetype);
 	gh_new_procedure0_0 ("edit-translate", g_key_edit_translate);
 	gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
 	gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);

@@ -131,9 +131,6 @@ o_circle_add(TOPLEVEL *w_current, OBJECT *object_list,
 			 char type, int color,
 			 int x, int y, int radius)
 {
-	int screen_x, screen_y;
-	int screen_width;
-	int left, right, top, bottom;
 	OBJECT *new_node;	
 
 	new_node = s_basic_init_object("circle");
@@ -619,4 +616,30 @@ o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery,
 
 	o_circle_translate_world(w_current, world_centerx, world_centery, object);
 
+}
+
+void
+o_circle_modify(TOPLEVEL *w_current, OBJECT *object, 
+	     int x, int y, int whichone)
+{
+	int left, right, top, bottom;
+	int radius;
+
+	radius = snap_grid(w_current, WORLDabs(w_current, w_current->distance));
+
+	if (radius == 0) {
+		s_log_message("Request radius is too small for current grid snap\n"); 
+		s_log_message("Please change the Snap Grid Spacing...\n"); 
+		s_log_message("Circle might not be snapped on the grid\n");
+		radius = WORLDabs(w_current, w_current->distance);
+	}
+
+	object->circle->radius = radius;
+
+	get_circle_bounds(w_current, object->circle, &left, &top, &right, &bottom);
+	
+	object->left = left;
+	object->top = top;
+	object->right = right;
+	object->bottom = bottom;	
 }

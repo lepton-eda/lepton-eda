@@ -239,7 +239,7 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing pin\n");
 #endif
 
-	if (o_current->draw_grips) {	
+	if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
 		
 		if (!o_current->selected) {
 			/* erase the grips */

@@ -141,6 +141,8 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->snap=1;
 	w_current->grid=1;
 
+	w_current->complex_rotate=0;
+
 	w_current->current_attribute=NULL;
 	w_current->current_visible=-1; /* not sure on these */
 	w_current->current_show=-1;
@@ -203,6 +205,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->hkwindow = NULL;
 	w_current->cowindow = NULL;
 	w_current->clwindow = NULL;
+	w_current->ltwindow = NULL;
 	w_current->sewindow = NULL;
 	w_current->fileselect[FILESELECT].xfwindow = NULL;
 	w_current->fileselect[FILESELECT].directory = NULL;
@@ -833,6 +836,9 @@ x_window_close(TOPLEVEL *w_current)
 
 	if (w_current->clwindow)
 		gtk_widget_destroy(w_current->clwindow);
+
+	if (w_current->ltwindow)
+		gtk_widget_destroy(w_current->ltwindow);
 
 	if (w_current->sewindow)
 		gtk_widget_destroy(w_current->sewindow);

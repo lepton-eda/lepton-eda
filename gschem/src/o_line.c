@@ -68,6 +68,8 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		case END_ROUND:  line_end = GDK_CAP_ROUND;      break;
 		default: fprintf(stderr, "Unknown end for line (%d)\n",
 						 o_current->line_end);
+			 line_end = GDK_CAP_BUTT; 
+			 break;
 	}
 
 	length = o_current->screen_line_length;
@@ -101,8 +103,13 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			break;
 			
 		default:
+			length = -1;
+			space = -1;
+			line_width = 0; /* just to be careful */
 			fprintf(stderr, "Unknown type for line (%d) !\n",
 					o_current->line_type);
+			draw_func = (void *) o_line_draw_solid;
+			break;
 	}
 
 	if((length == 0) || (space == 0))
@@ -115,7 +122,7 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 				 x1, y1, x2, y2,
 				 line_width, length, space);
 
-	if (o_current->draw_grips) {	
+	if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
 		
 		if (!o_current->selected) {
 			/* erase the grips */
@@ -125,6 +132,8 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		} else {
 			gdk_gc_set_foreground(w_current->gc, color);
 		}
+		gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
+				   	   line_end, GDK_JOIN_MITER);
 
 		o_line_draw_grips(w_current, w_current->window, o_current);
 		o_line_draw_grips(w_current, w_current->backingstore, o_current);
@@ -613,6 +622,9 @@ o_line_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current)
 {
 	int size, x2size;
 
+	if (w_current->draw_grips == FALSE) 
+		return;
+
 	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
 		size = SCREENabs(w_current, GRIP_SIZE1); 
 	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
@@ -639,6 +651,9 @@ void
 o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
 	int size, x2size;
+
+	if (w_current->draw_grips == FALSE) 
+		return;
 
 	gdk_gc_set_foreground(w_current->gc, 
 			      x_get_color(w_current->background_color));

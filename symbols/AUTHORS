@@ -354,10 +354,7 @@ Marcus Isaksson		- For contribute the following gmk_sym generated
 JM Routoure 		- For contributing the following symbols:
 
 				4093-1.sym 4N25-1.sym 
-			
-			  These not integrated yet:	
-
-				AD633JN-1.sym AD633JR-1.sym aop-spice-1.sym 
+				ad633jn-2.sym ad633jr-1.sym aop-spice-1.sym 
 				aop-std-1.sym zener-2.sym
 
 Luke Stras		- For contribute the following symbols:
@@ -366,6 +363,15 @@ Luke Stras		- For contribute the following symbols:
 
 Matt Ettus		- For contributing and fixing a bunch of symbol(s)
  			  (See ChangeLog for which ones)
+
+
+Bob Smith		- For contributing the following symbols 
+
+				4015-1.sym 4024-1.sym 4047-1.sym 4052-1.sym
+				4518-1.sym
+
+			  Ales did some minor changes to all with slightly
+	 		  more work done on 4047-1.sym (bigger box)
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

@@ -46,6 +46,7 @@ o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
 	SELECTION *s_current;
 	int top, left, right, bottom;
 	int size, x2size;
+	int x1, y1;
 
 	if (!whichone) {
 		return(NULL);
@@ -146,7 +147,24 @@ o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
 					*whichone = 3;
 					return(object);
 				}
+			break;
 
+			case(OBJ_CIRCLE):
+				x1 = object->circle->screen_x + 
+					object->circle->screen_radius;
+				y1 = object->circle->screen_y + 
+					object->circle->screen_radius;
+				left = x1 - size;
+				top = y1 - size;
+				right = left + x2size;
+				bottom = top + x2size;
+
+				if (inside_region(left, top, right, bottom, 
+					x, y)) {
+					/* printf("found something 0!\n"); */
+					*whichone = 0;
+					return(object);
+				}
 			break;
 		}
 	  }
@@ -160,9 +178,13 @@ int
 o_grips_start(TOPLEVEL *w_current, int x, int y)
 {
 	OBJECT *object;
-	OBJECT *closest;
 	int whichone;
+	int x1, y1;
 	int box_width, box_height, box_top, box_left;
+
+	if (w_current->draw_grips == FALSE) {
+		return(FALSE);
+	}
 
 	object = o_grips_search(w_current, x, y, &whichone);
 
@@ -310,6 +332,35 @@ o_grips_start(TOPLEVEL *w_current, int x, int y)
 		object_changing = object;
 		return(TRUE);
             break;
+
+	    case(OBJ_CIRCLE): 
+		x1 = object->circle->screen_x + object->circle->screen_radius;
+		y1 = object->circle->screen_y; 
+		w_current->last_x = x1;
+		w_current->last_y = y1;
+		w_current->start_x = object->circle->screen_x;
+		w_current->start_y = object->circle->screen_y;
+
+		w_current->distance = dist(w_current->start_x, 
+					   w_current->start_y, 
+					   w_current->last_x, 
+					   w_current->last_y);
+
+        	gdk_gc_set_foreground(w_current->xor_gc, 
+                              x_get_color(w_current->select_color) );
+
+		gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
+			     w_current->start_x - w_current->distance,
+			     w_current->start_y - w_current->distance,
+			     w_current->distance * 2, w_current->distance * 2,
+			     0, FULL_CIRCLE);
+
+		o_circle_erase_grips(w_current, object);
+
+		whichone_changing = whichone;
+		object_changing = object;
+		return(TRUE);
+	    break;
 	  }
 	}
 
@@ -321,7 +372,6 @@ void
 o_grips_motion(TOPLEVEL *w_current, int x, int y)
 {
 	int diff_x, diff_y;
-        int size;
 	int box_height, box_width, box_left, box_top;
 
         if (w_current->inside_action == 0) {
@@ -429,6 +479,50 @@ o_grips_motion(TOPLEVEL *w_current, int x, int y)
 				   box_top   ,
 				   box_width ,
 				   box_height);
+		break;
+
+		case(OBJ_CIRCLE):
+
+			w_current->distance = dist(w_current->start_x, 
+					   w_current->start_y, 
+					   w_current->last_x, 
+					   w_current->last_y);
+
+        		gdk_gc_set_foreground(w_current->xor_gc, 
+                              x_get_color(w_current->select_color) );
+
+			gdk_draw_arc(w_current->window, w_current->xor_gc, 
+				     FALSE,
+			     	     w_current->start_x - w_current->distance,
+			             w_current->start_y - w_current->distance,
+			             w_current->distance * 2, 
+				     w_current->distance * 2,
+			             0, FULL_CIRCLE);
+
+			w_current->last_x = fix_x(w_current, x);
+			w_current->last_y = fix_y(w_current, y);
+
+			diff_x = GET_BOX_WIDTH (w_current);
+			diff_y = GET_BOX_HEIGHT(w_current);
+
+			if (diff_x >= diff_y) {
+				w_current->last_y = w_current->start_y; 
+			} else {
+				w_current->last_x = w_current->start_x;
+			}
+
+        		w_current->distance = dist(w_current->start_x, 
+						w_current->start_y, 
+						w_current->last_x, 
+						w_current->last_y); 
+
+			gdk_draw_arc(w_current->window, w_current->xor_gc, 
+				     FALSE,
+			     	     w_current->start_x - w_current->distance,
+			             w_current->start_y - w_current->distance,
+			             w_current->distance * 2, 
+				     w_current->distance * 2,
+			             0, FULL_CIRCLE);
 		break;
 	}
 
@@ -661,12 +755,69 @@ o_grips_end(TOPLEVEL *w_current)
 			o_box_modify(w_current, object, x, y, 
 				      whichone_changing);
 		break;
+
+		case(OBJ_CIRCLE):
+
+	       		/* don't allow zero length nets / lines / pins
+        		 * this ends the net drawing behavior 
+		         * we want this? hack */
+        		if ((w_current->start_x == w_current->last_x) &&
+             		    (w_current->start_y == w_current->last_y)) {
+               			w_current->start_x = (-1);
+               			w_current->start_y = (-1);
+               			w_current->last_x = (-1);
+               			w_current->last_y = (-1);
+               			w_current->inside_action=0;
+               			w_current->event_state = SELECT;
+               			i_update_status(w_current, 
+						"Select Mode");
+               			return;
+        		}
+
+        		SCREENtoWORLD(w_current, 
+				      w_current->last_x, 
+				      w_current->last_y, &x, &y);
+
+        		x = snap_grid(w_current, x);
+        		y = snap_grid(w_current, y);
+
+			o_circle_erase(w_current, object);
+
+			w_current->distance = dist(w_current->start_x, 
+					   w_current->start_y, 
+					   w_current->last_x, 
+					   w_current->last_y);
+
+        		gdk_gc_set_foreground( w_current->xor_gc, 
+                              x_get_color(w_current->select_color) );
+
+			gdk_draw_arc(w_current->window, w_current->xor_gc, 
+				     FALSE,
+			     	     w_current->start_x - w_current->distance,
+			             w_current->start_y - w_current->distance,
+			             w_current->distance * 2, 
+				     w_current->distance * 2,
+			             0, FULL_CIRCLE);
+
+			o_circle_erase_grips(w_current, object);
+
+			o_circle_modify(w_current, object, x, y, 
+				      whichone_changing);
+		break;
 	}
 
 			
-	o_redraw_single(w_current, object);
+	w_current->page_current->CHANGED=1;
+
+	o_conn_disconnect_update(w_current->page_current);
+
+	//o_redraw_single(w_current, object);
+
+	/* not sure I want to do this.. but let's try it */	
+	o_redraw(w_current, w_current->page_current->object_head);
 
 	whichone_changing = -1;
 	object_changing = NULL;
 	o_undo_savestate(w_current, UNDO_ALL);
 }
+

@@ -172,6 +172,8 @@ o_move_end(TOPLEVEL *w_current)
 
 			case(OBJ_BOX):
 				o_box_erase(w_current, object);
+				o_box_erase_grips(w_current, object);
+
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_box_draw_xor(w_current, 
 						       screen_diff_x, 
@@ -185,6 +187,7 @@ o_move_end(TOPLEVEL *w_current)
 
 			case(OBJ_CIRCLE):
 				o_circle_erase(w_current, object);
+				o_circle_erase_grips(w_current, object);
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_circle_draw_xor(w_current, 
 							  screen_diff_x, 

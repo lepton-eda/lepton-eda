@@ -272,6 +272,13 @@
 (undo-type "disk")
 ;(undo-type "memory")
 
+; draw-grips string
+;
+; Controls if the editing grips are drawn when selecting objects
+;
+(draw-grips "enabled")
+;(draw-grips "disabled")
+
 ; net-endpoint-mode string
 ;
 ; Set to none if you don't want any indicators of unconnected nets
@@ -968,6 +975,7 @@
     ("o" . edit-color)
     ("l" . edit-lock)
     ("Shift L" . edit-unlock)
+    ("w" . edit-linetype)
     ("t" . edit-translate)
     ("b" . edit-embed)
     ("u" . edit-unembed)

@@ -372,7 +372,7 @@ o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current)
 	printf("drawing bus\n");
 #endif
 
-	if (o_current->draw_grips) {	
+	if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
 		
 		if (!o_current->selected) {
 			/* erase the grips */
@@ -550,7 +550,7 @@ o_bus_start(TOPLEVEL *w_current, int x, int y)
         }
 }
 
-void
+int
 o_bus_end(TOPLEVEL *w_current, int x, int y)
 {
 	int x1, y1;
@@ -560,7 +560,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 
 	if (w_current->inside_action == 0) {
                 o_redraw(w_current, w_current->page_current->object_head);
-                return;
+                return(FALSE);
         }
 
 	if (w_current->override_bus_color == -1) {
@@ -605,7 +605,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
                 w_current->event_state = SELECT;
                 i_update_status(w_current, "Select Mode");
 		o_bus_eraserubber(w_current);
-                return;
+                return(FALSE);
         }
 
 #if 0 /* not ready for prime time use */
@@ -667,6 +667,7 @@ o_bus_end(TOPLEVEL *w_current, int x, int y)
 	w_current->start_x = w_current->save_x;
         w_current->start_y = w_current->save_y;
 	o_undo_savestate(w_current, UNDO_ALL);
+	return(TRUE);
 }
 
 void

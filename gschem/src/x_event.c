@@ -114,7 +114,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		switch(w_current->event_state) {
 
 		case(SELECT):
-			/* first look for grips */
+			/* look for grips or fall through if not enabled */
 			if (!o_grips_start(
 				w_current, (int) event->x, (int) event->y)) {
 				/* now go into normal SELECT */
@@ -276,24 +276,26 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 		case(DRAWNET):
 		case(NETCONT):
-			o_net_end(w_current,
-				  (int) event->x,
-				  (int) event->y);
-			o_net_start(w_current,
-				    (int) w_current->save_x,
-				    (int) w_current->save_y);
-			w_current->event_state=NETCONT;
+			/* Only continue the net if net end worked */
+			if (o_net_end(w_current, (int) event->x,
+			    (int) event->y)) {
+				o_net_start(w_current,
+					    (int) w_current->save_x,
+					    (int) w_current->save_y);
+				w_current->event_state=NETCONT;
+			}
 			break;
 
 		case(DRAWBUS):
 		case(BUSCONT):
-			o_bus_end(w_current,
-				  (int) event->x,
-				  (int) event->y);
-			o_bus_start(w_current,
+			/* Only continue the net if net end worked */
+			if (o_bus_end(w_current, (int) event->x,
+			    (int) event->y)) {
+				o_bus_start(w_current,
 				    (int) w_current->save_x,
 				    (int) w_current->save_y);
-			w_current->event_state=BUSCONT;
+				w_current->event_state=BUSCONT;
+			}
 			break;
 
 #if 0 /* old way with the text dialog box which was around only once */
@@ -406,7 +408,12 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 		/* try this out and see how it behaves */
 		if (w_current->inside_action) {
-			i_callback_cancel(w_current, 0, NULL);
+			if (w_current->event_state == ENDCOMP) {
+				return;
+			} else {
+				i_callback_cancel(w_current, 0, NULL);
+				return;
+			}
 		}
 
 		switch(w_current->middle_button) {
@@ -629,6 +636,26 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
 		}
 	} else if (event->button == 2) {
+
+		if (w_current->inside_action) {
+			if (w_current->event_state == ENDCOMP) {
+				o_drawbounding(w_current,
+					w_current->page_current->
+					complex_place_head->next, 
+					NULL, x_get_color(w_current->bb_color));
+
+				w_current->complex_rotate = 
+				 	(w_current->complex_rotate + 90) % 360;
+
+				o_complex_place_rotate(w_current);
+
+				o_drawbounding(w_current,
+					w_current->page_current->
+					complex_place_head->next, 
+					NULL, x_get_color(w_current->bb_color));
+				return;
+			} 
+		}
 
 		switch(w_current->middle_button) { 
 			case(ACTION): 	
@@ -860,6 +887,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		break;
 
 	case(DRAWCOMP):
+		w_current->complex_rotate = 0; /* rest to known state */
 		o_complex_start(w_current,
 				(int) event->x,
 				(int) event->y);

@@ -1,4 +1,4 @@
-/* -*- geda-c -*-
+/* -*- geda-c -*- */
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
@@ -116,11 +116,7 @@ void
 o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
 	int x, y;
-#if 0
-	OBJECT *o_current;
-	int new_angle;
-	int screen_x_local=-1, screen_y_local=-1;
-#endif
+	int i, temp;
 
 	w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
 	w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
@@ -147,7 +143,27 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 	w_current->ADDING_SEL = 0;
 	w_current->DONT_DRAW_CONN = 0;
 
-#if 0 /* in place rotate */
+	if (w_current->complex_rotate) {
+		temp = w_current->complex_rotate / 90;
+		for (i = 0; i < temp; i++) {
+			o_complex_place_rotate(w_current);
+		}
+	}
+
+	o_drawbounding(w_current, 
+		       w_current->page_current->complex_place_head->next,
+		       NULL,
+		       x_get_color(w_current->bb_color));
+}
+
+void
+o_complex_place_rotate(TOPLEVEL *w_current)
+{
+	OBJECT *o_current;
+	int screen_x_local;
+	int screen_y_local;
+	int new_angle;
+
 	o_current = w_current->page_current->complex_place_head->next;
 	while(o_current) {
 		switch(o_current->type) {	
@@ -183,12 +199,7 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		}
 		o_current = o_current->next;
 	}
-#endif
 
-	o_drawbounding(w_current, 
-		       w_current->page_current->complex_place_head->next,
-		       NULL,
-		       x_get_color(w_current->bb_color));
 }
 
 void
@@ -199,7 +210,9 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	int rleft, rtop, rbottom, rright;
 	OBJECT *o_current;
 	OBJECT *o_start;
+	OBJECT *o_temp;
 	char *include_filename;
+	int temp, new_angle, i;
 
 	diff_x = w_current->last_x - w_current->start_x;
         diff_y = w_current->last_y - w_current->start_y;
@@ -270,12 +283,32 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 		return;
 	}
 
+	o_temp = w_current->page_current->object_tail;
 	w_current->page_current->object_tail = o_complex_add(
 		w_current,
 		w_current->page_current->object_tail,
-		OBJ_COMPLEX, WHITE, x, y, 0, 0,
+		OBJ_COMPLEX, WHITE, x, y, w_current->complex_rotate, 0,
 		w_current->internal_clib,
 		w_current->internal_basename, 1, TRUE);
+
+	/* complex rotate post processing */
+	o_temp = o_temp->next; /* skip over last object */
+	while (o_temp != NULL) {
+		switch(o_temp->type) {
+			case(OBJ_TEXT):
+				temp = w_current->complex_rotate / 90;
+				for (i = 0; i < temp; i++) {
+					new_angle = (o_temp->
+						     text->angle + 90) % 360;
+			        	o_text_rotate(w_current, 
+						screen_x, screen_y,
+						new_angle, 90, o_temp);
+				}
+			break;
+		}
+		
+		o_temp = o_temp->next;
+	}
 
 	/* 1 should be define fix everywhere hack */
 	

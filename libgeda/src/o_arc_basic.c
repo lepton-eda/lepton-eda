@@ -109,9 +109,7 @@ o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
 		  int x, int y, int width, int height, int start_angle, int end_angle)
 {
 
-	int left, right, top, bottom;
 	OBJECT *new_node;
-	int screen_x, screen_y;
 
 	new_node = s_basic_init_object("arc");
 	new_node->type = type;

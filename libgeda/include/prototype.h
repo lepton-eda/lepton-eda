@@ -183,6 +183,7 @@ void o_circle_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, O
 void o_circle_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_circle_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_circle_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_complex_basic.c */
 void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);

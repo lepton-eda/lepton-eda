@@ -8,6 +8,15 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-10-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_circle_basic.c: Added o_circle_modify
+
+	* src/*.c: Fixed most -Wall warnings
+
+	* include/struct.h: Added some variables for new line type / width
+   	  dialog box
+
 2000-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added draw_grips variable to OBJECT structure
@@ -25,6 +34,8 @@ Most recent changes are at the top of this file
 	* src/o_pin_basic.c: Made o_pin_modify look like o_line_modify
 
 	* src/o_bus_basic.c: Made o_bus_modify look like o_line_modify
+
+	* src/o_box_basic.c: Added o_box_modify
 
 2000-10-02  Ales Hvezda  <ahvezda@geda.seul.org>
 

@@ -124,9 +124,6 @@ o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
 		   char type, int color, 
 		   int x1, int y1, int x2, int y2)
 {
-	int screen_x, screen_y;
-	int screen_width;
-	int left, right, top, bottom;
 	OBJECT *new_node;
 
 	new_node = s_basic_init_object("line");
@@ -162,7 +159,6 @@ o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
 	int screen_x2, screen_y2;
-	int screen_width;
 	int left, right, top, bottom;
 
 	if (o_current->line == NULL) {
@@ -503,6 +499,10 @@ o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 					   o_current->line_length,
 					   o_current->line_space,
 					   origin_x, origin_y);
+
+		break;
+
+		case(TYPE_ERASE):
 
 		break;
 

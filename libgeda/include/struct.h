@@ -401,6 +401,9 @@ struct st_toplevel {
 	int text_alignment;			/* location to hold current */
 						/* alignment of text */
 
+	int line_type;				/* location to hold current */
+						/* line type selection */
+
 
 	int override_color;			/* used in doing selections */
 	int inside_redraw;			/* complex vs list redrawing */
@@ -438,7 +441,9 @@ struct st_toplevel {
 	/* in gschem to keep track of the current buffer number */
 	int buffer_number;
 
-	
+
+	/* Variable to keep track of what value the complex is at */
+	int complex_rotate;	
 
 	void (*last_callback)();	  	/* Last i_call* cmd executed */
 	char cwd[256]; /* size is hack */ 	/* current working directory */
@@ -500,6 +505,7 @@ struct st_toplevel {
 /*	GtkWidget *tientry;*/
 	GtkWidget *tewindow;			/* text edit */
 	GtkWidget *teentry;
+	GtkWidget *ltwindow;			/* line type / width edit */
 	GtkWidget *sewindow;			/* slot edit */
 	GtkWidget *seentry;
 	GtkWidget *exwindow;			/* exit confirm */
@@ -605,6 +611,8 @@ struct st_toplevel {
 	int undo_levels;	/* Number of undo levels stored on disk */
 	int undo_control;	/* Controls if undo is enabled or not */
 	int undo_type;	        /* Type of undo (disk/memory) */
+
+	int draw_grips;	        /* Controls if grips are enabled or not */
 
 	int print_output_type;			/* either window or limits */
 

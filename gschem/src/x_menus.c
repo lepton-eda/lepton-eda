@@ -79,6 +79,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Edit/Color...", NULL, i_callback_edit_color, 0, NULL},
 	{"/Edit/Lock", NULL, i_callback_edit_lock, 0, NULL},
 	{"/Edit/Unlock", NULL, i_callback_edit_unlock, 0, NULL},
+	{"/Edit/Line Width & Type...", NULL, i_callback_edit_linetype, 0, NULL},
 	{"/Edit/Symbol Translate...", NULL, i_callback_edit_translate, 0, NULL},
 	{"/Edit/Embed Component", NULL, i_callback_edit_embed, 0, NULL},
 	{"/Edit/Unembed Component", NULL, i_callback_edit_unembed, 0, NULL},

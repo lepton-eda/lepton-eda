@@ -85,7 +85,9 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		case END_NONE:   arc_end = GDK_CAP_BUTT;       break;
 		case END_SQUARE: arc_end = GDK_CAP_PROJECTING; break;
 		case END_ROUND:  arc_end = GDK_CAP_ROUND;      break;
-		default: fprintf(stderr, "Unknown end for arc (%d)\n", o_current->line_end);
+		default: fprintf(stderr, "Unknown end for arc (%d)\n", o_current->line_end); 
+			 arc_end = GDK_CAP_BUTT; 
+			 break;
 	}
 
 	length = o_current->screen_line_length;
@@ -120,6 +122,10 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			break;
 			
 		default:
+			length = -1;
+			space = -1;
+			arc_width = 0; /* just to be careful */
+			draw_func = (void *) o_arc_draw_solid;
 			fprintf(stderr, "Unknown type for arc !\n");
 			break;
 	}
@@ -226,7 +232,6 @@ o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 				  gint arc_width, gint length, gint space)
 {
 	double radius;
-	double x1, y1; /* coordinate of center */
 	int da, db, a1, a2, d;
 
 	gdk_gc_set_foreground(gc, color);	

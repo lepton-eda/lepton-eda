@@ -101,8 +101,6 @@ o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
 		  char type, int color,
 		  int x1, int y1, int x2, int y2)
 {
-	int screen_x, screen_y;
-	int left, top, right, bottom;
 	OBJECT *new_node;
 	BOX *box;
 
@@ -501,6 +499,10 @@ o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 					   o_current->line_length,
 					   o_current->line_space,
 					   origin_x, origin_y);
+		break;
+
+		case(TYPE_ERASE):
+
 		break;
 
 	}

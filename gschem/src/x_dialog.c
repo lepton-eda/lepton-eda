@@ -1093,8 +1093,9 @@ change_alignment(GtkWidget *w, TOPLEVEL *w_current)
 	char *alignment;
 	alignment = gtk_object_get_data(GTK_OBJECT(w),"alignment");
 	w_current->text_alignment = atoi(alignment);
-	w_current->page_current->CHANGED=1;
-	o_undo_savestate(w_current, UNDO_ALL);
+
+	/*w_current->page_current->CHANGED=1; I don't think this belongs */
+	/* o_undo_savestate(w_current, UNDO_ALL); I don't think this belongs */
 	
 	return(0);
 }
@@ -1393,6 +1394,331 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
 	}
 }
 /***************** End of Text Edit dialog box *********************/
+
+/***************** Start of Line Type/width dialog box *********************/
+gint
+change_linetype(GtkWidget *w, TOPLEVEL *w_current)
+{
+	char *linetype;
+	linetype = gtk_object_get_data(GTK_OBJECT(w),"linetype");
+	w_current->line_type = (int) linetype;
+	
+	return(0);
+}
+
+static GtkWidget*
+create_menu_linetype (TOPLEVEL *w_current)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GSList *group;
+	char buf[100];
+
+	menu = gtk_menu_new ();
+	group = NULL;
+
+	sprintf (buf, "Solid");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_SOLID);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_linetype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Dotted");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_DOTTED);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_linetype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Dashed");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_DASHED);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_linetype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Center");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_CENTER);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_linetype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Phantom");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "linetype", (gpointer) TYPE_PHANTOM);
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_linetype,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	return(menu);
+}
+
+
+void
+line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
+{
+	int width, length, space;
+	OBJECT *object;
+	GtkWidget *length_entry, *space_entry, *width_entry;
+	char *line_width_string = NULL;
+	char *line_length_string = NULL;
+	char *line_space_string = NULL;
+
+	object = gtk_object_get_data(GTK_OBJECT(w_current->ltwindow),"object");
+
+	width_entry = gtk_object_get_data(GTK_OBJECT(w_current->ltwindow),
+		       "width_entry");
+	length_entry = gtk_object_get_data(GTK_OBJECT(w_current->ltwindow),
+		       "length_entry");
+	space_entry = gtk_object_get_data(GTK_OBJECT(w_current->ltwindow),
+		       "space_entry");
+
+	line_width_string = gtk_entry_get_text(GTK_ENTRY(width_entry));
+	line_length_string = gtk_entry_get_text(GTK_ENTRY(length_entry));
+	line_space_string = gtk_entry_get_text(GTK_ENTRY(space_entry));
+
+	if ((line_width_string[0] != '\0')) {
+		width = atoi(line_width_string);
+	}
+
+	if ((line_width_string[0] != '\0')) {
+		length = atoi(line_length_string);
+	}
+
+	if ((line_width_string[0] != '\0')) {
+		space = atoi(line_space_string);
+	}
+
+	/* do some error checking / correcting */
+	switch(w_current->line_type) {
+
+		case(TYPE_SOLID):
+			length = -1;
+			space = -1;
+		break;
+
+		case(TYPE_DOTTED):
+			length = -1;
+
+			if (space < 1) {
+				space = 100;
+				s_log_message("Invalid space specified, setting to 100\n");
+			}
+		break;
+
+		case(TYPE_DASHED):
+		case(TYPE_CENTER):
+		case(TYPE_PHANTOM):
+			if (length < 1) {
+				length = 100;
+				s_log_message("Invalid length specified, setting to 100\n");
+			}
+
+			if (space < 1) {
+				space = 100;
+				s_log_message("Invalid space specified, setting to 100\n");
+			}
+		break;
+
+	}
+
+	o_erase_single(w_current, object);
+
+	o_set_line_options(w_current, object, object->line_end, 
+			   w_current->line_type, width, length, space);
+
+	o_object_recalc(w_current, object);
+
+	o_redraw_single(w_current, object);
+
+
+	w_current->page_current->CHANGED = 1;
+	w_current->event_state = SELECT;
+	i_update_status(w_current, "Select Mode");
+
+	gtk_grab_remove(w_current->ltwindow);
+	gtk_widget_destroy(w_current->ltwindow);
+	w_current->ltwindow = NULL;
+}
+
+void
+line_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
+{
+	i_update_status(w_current, "Select Mode");
+	w_current->event_state = SELECT;
+	gtk_grab_remove(w_current->ltwindow);
+	gtk_widget_destroy(w_current->ltwindow);
+	w_current->ltwindow = NULL;
+}
+
+void
+line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
+{
+	GtkWidget *label = NULL;
+	GtkWidget *buttonok     = NULL;
+	GtkWidget *buttoncancel = NULL;
+	GtkWidget *vbox, *action_area;
+	GtkWidget *optionmenu = NULL;
+	GtkWidget *line_type_menu = NULL;
+	GtkWidget *length_entry, *space_entry, *width_entry;
+	char string[10];
+	int len;
+
+	if (!w_current->ltwindow) {
+		w_current->ltwindow = x_create_dialog_box(&vbox, &action_area);
+
+		gtk_window_position(GTK_WINDOW (w_current->ltwindow),
+				    GTK_WIN_POS_MOUSE);
+
+		gtk_signal_connect(GTK_OBJECT (w_current->ltwindow),
+				   "destroy",
+				   GTK_SIGNAL_FUNC(destroy_window),
+				   &w_current->ltwindow);
+
+		gtk_window_set_title(GTK_WINDOW (w_current->ltwindow),
+				     "Edit Line Width & Type");
+                gtk_container_border_width(
+			GTK_CONTAINER(w_current->ltwindow), 0);
+
+		gtk_object_set_data(GTK_OBJECT(w_current->ltwindow),"object",
+					(gpointer) object);
+
+		label = gtk_label_new ("Line Width");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 0);
+      		gtk_widget_show (label);
+
+		width_entry = gtk_entry_new();
+      		gtk_editable_select_region(
+			GTK_EDITABLE(width_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			width_entry, TRUE, TRUE, 10);
+
+		gtk_signal_connect(GTK_OBJECT(width_entry), "activate",
+                       	           GTK_SIGNAL_FUNC(line_type_dialog_ok),
+                       	           w_current);
+      		gtk_widget_show (width_entry);
+		gtk_widget_grab_focus(width_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ltwindow),
+				    "width_entry",
+				    (gpointer) width_entry);
+
+		label = gtk_label_new ("Line Type");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 5);
+      		gtk_widget_show (label);
+
+		optionmenu = gtk_option_menu_new ();
+		line_type_menu = create_menu_linetype (w_current);
+		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
+					 line_type_menu);
+		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 
+					    object->line_type);
+		w_current->line_type = object->line_type;
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+										                gtk_widget_show(optionmenu);
+
+		label = gtk_label_new ("Line Dash Length");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 5);
+      		gtk_widget_show (label);
+		length_entry = gtk_entry_new();
+      		gtk_editable_select_region(
+			GTK_EDITABLE(length_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			length_entry, TRUE, TRUE, 10);
+      		gtk_widget_show (length_entry);
+		gtk_widget_grab_focus(length_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ltwindow),
+				    "length_entry",
+				    (gpointer) length_entry);
+
+		label = gtk_label_new ("Line Dash Space");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 5);
+      		gtk_widget_show (label);
+		space_entry = gtk_entry_new();
+      		gtk_editable_select_region(
+			GTK_EDITABLE(space_entry), 0, -1);
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			space_entry, TRUE, TRUE, 10);
+      		gtk_widget_show (space_entry);
+		gtk_widget_grab_focus(space_entry);
+		gtk_object_set_data(GTK_OBJECT(w_current->ltwindow),
+				    "space_entry",
+				    (gpointer) space_entry);
+
+		buttonok = gtk_button_new_with_label ("OK");
+		GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(
+			GTK_BOX(action_area),
+			buttonok, TRUE, TRUE, 0);
+      		gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
+				   GTK_SIGNAL_FUNC(line_type_dialog_ok),
+				   w_current);
+      		gtk_widget_show(buttonok);
+		gtk_widget_grab_default(buttonok);
+
+		buttoncancel = gtk_button_new_with_label ("Cancel");
+		GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
+		gtk_box_pack_start(
+			GTK_BOX(action_area),
+			buttoncancel, TRUE, TRUE, 0);
+      		gtk_signal_connect(GTK_OBJECT (buttoncancel), "clicked",
+			           GTK_SIGNAL_FUNC(line_type_dialog_cancel),
+				   w_current);
+      		gtk_widget_show(buttoncancel);
+
+	}
+
+  	if (!GTK_WIDGET_VISIBLE (w_current->ltwindow)) {
+		gtk_widget_show (w_current->ltwindow);
+
+		sprintf(string, "%d", object->line_width);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(width_entry),
+				   string);
+		gtk_entry_select_region(GTK_ENTRY(width_entry), 0, len);
+
+		sprintf(string, "%d", object->line_space);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(space_entry),
+				   string);
+
+		sprintf(string, "%d", object->line_length);
+		len = strlen(string);
+		gtk_entry_set_text(GTK_ENTRY(length_entry),
+				   string);
+
+		gtk_widget_grab_focus(width_entry);
+		gtk_grab_add (w_current->ltwindow);
+	}
+}
+/***************** End of Line Type / Width dialog box *********************/
 
 /***************** Start of Exit dialog box *********************/
 void
@@ -2679,9 +3005,13 @@ extern GtkWidget *stwindow;
 void
 x_dialog_raise_all(TOPLEVEL *w_current)
 {
+
+#if 0 /* don't raise the log window */
 	if (stwindow) {
 		gdk_window_raise(stwindow->window);
 	}
+#endif
+
         if(w_current->fowindow) {
 		gdk_window_raise(w_current->fowindow->window);
 	}
@@ -2713,9 +3043,13 @@ x_dialog_raise_all(TOPLEVEL *w_current)
         if(w_current->iwindow) {
 		gdk_window_raise(w_current->iwindow->window);
 	}
+
+#if 0 /* don't raise the page manager window */
         if(w_current->pswindow) {
 		gdk_window_raise(w_current->pswindow->window);
 	}
+#endif
+
         if(w_current->tiwindow) {
 		gdk_window_raise(w_current->tiwindow->window);
 	}
@@ -2754,6 +3088,9 @@ x_dialog_raise_all(TOPLEVEL *w_current)
 	}
         if(w_current->clwindow) {
 		gdk_window_raise(w_current->clwindow->window);
+	}
+        if(w_current->ltwindow) {
+		gdk_window_raise(w_current->ltwindow->window);
 	}
 
 }

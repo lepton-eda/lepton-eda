@@ -29,6 +29,8 @@ static void
 o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_line_erase(w_current, obj);
+	o_line_erase_grips(w_current, obj);
+
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -40,7 +42,7 @@ o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 	int removing_sel_save;
 
 	o_net_erase(w_current, obj);
-
+	o_line_erase_grips(w_current, obj);
 	o_net_conn_erase_force(w_current, obj);
 
 	removing_sel_save = w_current->REMOVING_SEL;
@@ -59,6 +61,7 @@ o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
 
 	o_bus_erase(w_current, obj);
 	o_bus_conn_erase_force(w_current, obj);
+	o_line_erase_grips(w_current, obj);
 
 	removing_sel_save = w_current->REMOVING_SEL;
 	w_current->REMOVING_SEL = 1;
@@ -73,6 +76,8 @@ static void
 o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_box_erase(w_current, obj);
+	o_box_erase_grips(w_current, obj);
+
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -82,7 +87,10 @@ static void
 o_delete_circle(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_circle_erase(w_current, obj);
+	o_circle_erase_grips(w_current, obj);
+
 	s_delete(w_current, obj);
+
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
 }
@@ -92,6 +100,7 @@ o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_complex_erase(w_current, obj);
 	o_complex_delete(w_current, obj);
+
 	/* TODO: special case hack no return_tail. why? */
 }
 
@@ -99,6 +108,8 @@ static void
 o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_pin_erase(w_current, obj);
+	o_line_erase_grips(w_current, obj);
+
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -108,6 +119,7 @@ void
 o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_text_erase(w_current, obj);
+
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -117,6 +129,7 @@ static void
 o_delete_arc(TOPLEVEL *w_current, OBJECT *obj)
 {
 	o_arc_erase(w_current, obj);
+
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);

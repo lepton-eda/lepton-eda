@@ -75,6 +75,9 @@ Reinhard Kotucha        - For suggesting the use of setlinecap in the
 			  postscript output.  Output looks much better
 			  with some sort of cap style set.
 
+			  One of many who suggested rotation of component	
+			  before it is placed	
+
 Matt Ettus		- For greatly rewritting the attribute edit
 		  	  attribute dialog box
 

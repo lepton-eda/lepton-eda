@@ -760,6 +760,20 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 	o_edit_show_hidden(w_current, w_current->page_current->object_head);
 }
 
+DEFINE_I_CALLBACK(edit_linetype)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_edit_color, "Edit Line Type");
+
+        if ( (object = o_select_return_first_object(w_current)) ) {
+		line_type_dialog(w_current, object);
+	}
+}
+
 /* View menu */
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right
@@ -2398,9 +2412,9 @@ DEFINE_I_CALLBACK(misc)
         }
 #endif
 	/*o_selection_print_all(w_current->page_current->selection2_head);*/
-	printf("\n\nUNDO:\n");
-	s_undo_print_all(w_current->page_current->undo_bottom);
-	
+	/* printf("\n\nUNDO:\n"); */
+	/* s_undo_print_all(w_current->page_current->undo_bottom);*/
+
 
 #if 0 /* no longer needed and old */
 	/* In this case w_current->page_current->next can be safely null */	

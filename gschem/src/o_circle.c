@@ -87,6 +87,8 @@ o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		case END_SQUARE: circle_end = GDK_CAP_PROJECTING; break;
 		case END_ROUND:  circle_end = GDK_CAP_ROUND;      break;
 		default: fprintf(stderr, "Unknown end for circle\n");
+			 circle_end = GDK_CAP_BUTT;
+			 break;
 	}
 
 	switch(o_current->line_type) {
@@ -117,7 +119,12 @@ o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
 			break;
 			
 		default:
+			length = -1;
+			space = -1;
+			circle_width = 0; /* just to be careful */
 			fprintf(stderr, "Unknown type for circle !\n");
+			draw_func = (void *) o_arc_draw_solid;			
+			break;
 	}
 
 	if((length == 0) || (space == 0))
@@ -141,6 +148,24 @@ o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current)
 #if DEBUG
 	printf("drawing circle\n");
 #endif
+
+	if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
+		
+		if (!o_current->selected) {
+			/* erase the grips */
+			o_current->draw_grips = FALSE;
+			gdk_gc_set_foreground(w_current->gc, 
+				x_get_color(w_current->background_color));
+		} else {
+			gdk_gc_set_foreground(w_current->gc, color);
+		}
+		gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
+					   circle_end, GDK_JOIN_MITER);
+
+
+		o_circle_draw_grips(w_current, w_current->window, o_current);
+		o_circle_draw_grips(w_current, w_current->backingstore, o_current);
+	}
 }
 
 void
@@ -358,4 +383,61 @@ o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y)
 		     w_current->distance * 2,
 		     w_current->distance * 2,
 		     0, FULL_CIRCLE);
+}
+
+
+void
+o_circle_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current) 
+{
+	int size, x2size;
+	int x, y;
+
+	if (w_current->draw_grips == FALSE) 
+		return;
+
+	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1); 
+	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2); 
+	} else {
+		size = SCREENabs(w_current, GRIP_SIZE3); 
+	}
+	x2size = size * 2;
+
+	x = o_current->circle->screen_x + o_current->circle->screen_radius;
+	y = o_current->circle->screen_y + o_current->circle->screen_radius;
+
+	gdk_draw_rectangle(w, w_current->gc, FALSE,
+		x - size, y - size, x2size, x2size);
+}
+
+void
+o_circle_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
+{
+	int size, x2size;
+	int x, y;
+
+	if (w_current->draw_grips == FALSE) 
+		return;
+
+	gdk_gc_set_foreground(w_current->gc, 
+			      x_get_color(w_current->background_color));
+
+	if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR1) {
+		size = SCREENabs(w_current, GRIP_SIZE1); 
+	} else if (w_current->page_current->zoom_factor > SMALL_ZOOMFACTOR2) {
+		size = SCREENabs(w_current, GRIP_SIZE2); 
+	} else {
+		size = SCREENabs(w_current, GRIP_SIZE3); 
+	}
+	x2size = 2 * size;
+
+	x = o_current->circle->screen_x + o_current->circle->screen_radius;
+	y = o_current->circle->screen_y + o_current->circle->screen_radius;
+
+	gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
+		x - size, y - size, x2size, x2size);
+
+	gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
+		x - size, y - size, x2size, x2size);
 }

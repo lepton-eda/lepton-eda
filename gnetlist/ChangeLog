@@ -1,4 +1,9 @@
 
+2000-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_net.c: Fixed a lame error message to be a little more 
+	  descripting (when you forget uref or pin number attributes)
+
 2000-08-21  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Got gnetlist to build with all the libgeda modifications

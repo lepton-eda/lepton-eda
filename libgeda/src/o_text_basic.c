@@ -642,7 +642,6 @@ o_text_add(TOPLEVEL *w_current,
 	OBJECT *temp_list=NULL;
         OBJECT *temp_parent=NULL;
 	TEXT *text;
-	int screen_x, screen_y;
 	int left, right, top, bottom;
 	char name[1025];
 	char value[1025]; /* ugg hack */
