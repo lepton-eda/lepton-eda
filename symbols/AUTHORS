@@ -423,10 +423,35 @@ Bert Timmerman		- For contributing the following symbols:
 				switch-pushbutton-no-1.sym
 				TC5516AP-1.sym
 
-Karel Kulhavy			- For contribute the following symbols:
+Karel Kulhavy		- For contributing the following symbols:
 
 					HSDL7000-1.sym NE-592-1.sym 
 					MAC160-1.sym
+
+Mark Moss		- For contributing the following symbols:
+
+				40103-1.sym  40192-1.sym  40374-1.sym
+				4510-1.sym   4522-1.sym	  4556-1.sym
+				40105-1.sym  40193-1.sym  4062-1.sym
+				4511-1.sym   4527-1.sym	  4572-1.sym
+				40160-1.sym  40194-1.sym  4316-1.sym
+				4512-1.sym   4528-1.sym	  4580-1.sym
+				40161-1.sym  40195-1.sym  4352-1.sym
+				4513-1.sym   4531-1.sym	  4582-1.sym
+				40162-1.sym  40208-1.sym  4353-1.sym
+				4514-1.sym   4532-1.sym	  4585-1.sym
+				40163-1.sym  40240-1.sym  4501-1.sym
+				4515-1.sym   4534-1.sym	  4723-1.sym
+				40174-1.sym  40244-1.sym  4502-1.sym
+				4516-1.sym   4536-1.sym	  4724-1.sym
+				40175-1.sym  40245-1.sym  4503-1.sym
+				4517-1.sym   4541-1.sym	  4737-1.sym
+				40181-1.sym  40257-1.sym  4504-1.sym
+				4520-1.sym   4543-1.sym   40182-1.sym
+				40373-1.sym  4508-1.sym   4521-1.sym
+				4555-1.sym
+
+	
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

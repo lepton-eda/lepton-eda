@@ -6,6 +6,8 @@
 	* power/vcc-orcad-circle-1.sym: Added power symbol from Dave 
 	  Lawrence
 
+	* 4000/*.sym: Added a bunch of symbols by Mark Moss.
+
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* */Makefile.am, configure.in: A bunch of cleanup and changes to 
