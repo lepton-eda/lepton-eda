@@ -631,16 +631,16 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	}
 
 	/* test a package */
-	if (strlen(pTestedComp->szFileName) > 0 /*&& PackageTestIfInstalled(pTestedComp) != SUCCESS*/)
+	if (strlen(pTestedComp->szFileName) > 0)
 	{
 		/* check existence of package and patch files */
-		if (strlen(pTestedComp->szFileName) > 0 && FileTest(pTestedComp->szFileName) != SUCCESS)
+		if (strlen(FileGetFilename(pTestedComp->szFileName)) > 0 && FileTest(FileGetFilename(pTestedComp->szFileName)) != SUCCESS)
 		{
 			szMissingFile = (char *) malloc(strlen(pTestedComp->szFileName) + 1);
 			strcpy(szMissingFile, pTestedComp->szFileName);
 			return szMissingFile;
 		}
-		if (strlen(pTestedComp->szPatch) > 0 && FileTest(pTestedComp->szPatch) != SUCCESS)
+		if (strlen(pTestedComp->szPatch) > 0 && FileTest(FileGetFilename(pTestedComp->szPatch)) != SUCCESS)
 		{
 			szMissingFile = (char *) malloc(strlen(pTestedComp->szPatch) + 1);
 			strcpy(szMissingFile, pTestedComp->szPatch);
