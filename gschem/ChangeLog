@@ -1,5 +1,8 @@
 2005-02-27  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/i_callbacks.nw (i_callback_hierarchy_down_symbol): Changed
+	to exclude embedded symbols from the hierarchy feature.
+	
 	* noweb/x_multiattrib.nw: Modified dialog to make it possible to
 	set multi-line values at adding of attributes.
 	Changed the behavior of the value column to stop edition when

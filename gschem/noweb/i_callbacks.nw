@@ -3811,7 +3811,8 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   object = o_select_return_first_object(w_current);
   if (object != NULL) {
     /* only allow going into symbols */
-    if (object->type == OBJ_COMPLEX) {
+    if (object->type == OBJ_COMPLEX &&
+        !o_complex_is_embedded (object)) {
       filename = g_strconcat (object->complex_clib, 
                               G_DIR_SEPARATOR_S,
                               object->complex_basename, NULL);
