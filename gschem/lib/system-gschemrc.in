@@ -18,12 +18,12 @@
 ;
 (gschem-version "@VERSION@")
 
-; Load up commonrc
+; Load up gafrc
 ;
-; Contains all paths needed for all programs
+; Contains paths needed for all gaf programs
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
-(load (string-append gedadatarc "@PATHSEP@system-commonrc"))
+(load (string-append gedadatarc "@PATHSEP@system-gafrc"))
 
 ;
 ; Start of color section 
@@ -757,6 +757,8 @@
 (attribute-name "documentation")
 (attribute-name "symversion")
 (attribute-name "comment")
+(attribute-name "file")
+(attribute-name "model-name")
 
 ;
 ; End of path related keywords

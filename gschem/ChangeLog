@@ -23,6 +23,10 @@
 	* noweb/o_misc.nw (o_update_component): Added initialization of
 	attribute list and a redraw for each new attribute object.
 
+2005-01-04 Stuart Broson   <sdb@cloud9.net>
+
+	* lib/system-gschemrc: Changed system-commonrc to system-gafrc.
+
 2005-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/i_vars.h, prototype.h, noweb/g_rc.nw, g_register.nw,
