@@ -1,3 +1,8 @@
+2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/singlenet.pads: Updated test file with new fixes to the pads
+	backend.
+
 2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Applied Gabriel Paubert's warning reducing patch with
