@@ -311,8 +311,8 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 
   if (whichend == -1) {
     fprintf(stderr,
-            "Loaded a symbol which did not have the whichone field set\nSome pins may be incorrect. Verify and correct them manually.\n");
-    s_log_message("Loaded a symbol which did not have the whichone field set\nSome pins may be incorrect. Verify and correct them manully.\n");
+            "Loaded a symbol which did not have the pin whichone field set\nSome pins may be incorrect. Verify and correct them manually.\n");
+    s_log_message("Loaded a symbol which did not have the pin whichone field set\nSome pins may be incorrect. Verify and correct them manully.\n");
     whichend = 0;
   } else if (whichend < -1 || whichend > 1) {
     fprintf(stderr,

@@ -7,6 +7,12 @@
 	to the new spice-sdb backend version (version and spaces at the end
 	of certain lines).  
 
+	* tests/multiequal.sch, multiequal.spice-sdb: Added tests
+	to make sure that attributes that have multiple equal signs netlist
+	properly.
+
+        * configure.ac: Bumped version to 20031231
+
 2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-spice-sdb.scm, gnet-protelII.scm: Replaced with new

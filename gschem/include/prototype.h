@@ -643,6 +643,7 @@ void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);
 /* o_text.c */
 void o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current);
+void o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);

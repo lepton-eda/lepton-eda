@@ -7,6 +7,8 @@
 	correction to make make xinstall work correctly (forces the use
 	of --with-gtk12).
 
+        * configure.ac: Bumped version to 20031231
+
 2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * ABOUT-NLS: Removed machine generated file from CVS

@@ -8,7 +8,8 @@ EXTRA_DIST = 7447.vhdl README amp.spice darlington.spice netattrib.geda \
              powersupply.pads powersupply.protelII powersupply.sch \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
              singlenet.protel singlenet.sch stack.geda amp.spice-sdb \
-	     darlington.spice-sdb skt.switcap test.ana
+	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
+	     multiequal.spice-sdb
 
 tests:
 # cleanup
@@ -65,6 +66,10 @@ tests:
 		../examples/switcap/clocks.sch ../examples/switcap/analysis.sch
 	diff skt.switcap new_skt.switcap
 	diff new_skt.switcap ../examples/switcap/example.scn
+# multiple equals in attributes SPICE-SDB 
+	gnetlist -o new_multiequal.spice-sdb -g spice-sdb \
+		./multiequal.sch
+	diff multiequal.spice-sdb new_multiequal.spice-sdb
 
 
 # These tests are internal to Ales and will not work without the schematics

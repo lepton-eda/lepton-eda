@@ -1,3 +1,15 @@
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_multiattrib.nw: Moved some code around to fix a memory 
+	leak.
+
+        * include/prototype.h: Added missing function prototype.
+
+	* tests/attributes.sch: Added test schematic specifically for all 
+	the different types of valid/invalid attributes.
+
+        * configure.ac: Bumped version to 20031231
+
 2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text.nw: Fixed the quick text rectangle to be the right
@@ -16,8 +28,6 @@
 	the file list and they will all be opened.  Use the shift and 
 	control keys to pick the individual files.
 
-	* noweb/x_multiattrib.nw: Moved some code around to fix a memory 
-	leak.
 	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 

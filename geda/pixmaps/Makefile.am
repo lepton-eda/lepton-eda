@@ -14,4 +14,7 @@
 #
 #EXTRA_DIST = $(geda_pixmaps_DATA)
 
-EXTRA_DIST = geda.xpm
+EXTRA_DIST = bin_document.xpm cir_document.xpm esp_document.xpm \
+             folder_closed.xpm folder_open.xpm geda.xpm geda_logo.xpm \
+             geda_title.xpm graph.xpm html_document.xpm pcb_document.xpm \
+	     pdf_document.xpm sch_document.xpm text_document.xpm

@@ -348,6 +348,8 @@ OBJECT *o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_text_freeallfonts(TOPLEVEL *w_current);
 void o_text_print_text_width(FILE *fp, char *output_string);
 void o_text_print_text_height(FILE *fp, int size);
+void o_text_print_text_height_full(FILE *fp, char *string, int size);
+void o_text_print_text_string(FILE *fp, char *string);
 void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);

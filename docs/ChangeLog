@@ -1,3 +1,10 @@
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* spice-sdb/*.html: Added a few missing "'s in key places and 
+	removed all absolute a href (replaced with local references)
+
+	* configure.ac: Bumped version to 20031231
+
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* README: Updated license text to cover everything

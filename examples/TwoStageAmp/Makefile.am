@@ -1,7 +1,8 @@
 
 SUBDIRS = sym
 
-EXTRA_DIST = Simulation.cmd TwoStageAmp.sch gnetlistrc gschemrc spice.netlist
+EXTRA_DIST = Simulation.cmd TwoStageAmp.sch gnetlistrc gschemrc gschlasrc \
+	     spice.netlist 
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~

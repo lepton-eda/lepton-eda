@@ -7,7 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-11-09 15:56-0500\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-12-31 21:18-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +30,7 @@ msgstr ""
 msgid "gEDA"
 msgstr ""
 
-#: src/interface.c:93
+#: src/interface.c:93 src/interface.c:506
 msgid "Project"
 msgstr ""
 
@@ -41,8 +42,8 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: src/interface.c:121 src/interface.c:171
-msgid "Save"
+#: src/interface.c:121
+msgid "Properties"
 msgstr ""
 
 #: src/interface.c:128 src/interface.c:185
@@ -53,12 +54,16 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
-#: src/interface.c:150
+#: src/interface.c:150 src/interface.c:708
 msgid "File"
 msgstr ""
 
 #: src/interface.c:164
 msgid "Edit"
+msgstr ""
+
+#: src/interface.c:171
+msgid "Save"
 msgstr ""
 
 #: src/interface.c:178
@@ -89,14 +94,50 @@ msgstr ""
 msgid "Window"
 msgstr ""
 
-#: src/interface.c:341
+#: src/interface.c:343
 msgid "Modules"
 msgstr ""
 
-#: src/interface.c:365
+#: src/interface.c:367
 msgid "Files"
 msgstr ""
 
-#: src/interface.c:396
+#: src/interface.c:398
 msgid "Status"
+msgstr ""
+
+#: src/interface.c:494
+msgid "Project Properties"
+msgstr ""
+
+#: src/interface.c:524 src/interface.c:763
+msgid "Name"
+msgstr ""
+
+#: src/interface.c:535
+msgid "Directory"
+msgstr ""
+
+#: src/interface.c:546
+msgid "Author"
+msgstr ""
+
+#: src/interface.c:557
+msgid "Description"
+msgstr ""
+
+#: src/interface.c:635 src/interface.c:782
+msgid "Ok"
+msgstr ""
+
+#: src/interface.c:644 src/interface.c:791
+msgid "Cancel"
+msgstr ""
+
+#: src/interface.c:696
+msgid "New file ..."
+msgstr ""
+
+#: src/interface.c:753
+msgid "Type"
 msgstr ""
