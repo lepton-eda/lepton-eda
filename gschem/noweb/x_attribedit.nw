@@ -716,6 +716,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (table1);
   gtk_container_add (GTK_CONTAINER (aewindow), table1);
+  gtk_container_set_border_width (GTK_CONTAINER (aewindow), 5);
 
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_ref (hbox1);

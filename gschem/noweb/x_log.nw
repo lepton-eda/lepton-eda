@@ -293,8 +293,9 @@ x_log_setup_win (TOPLEVEL *w_current)
   GtkWidget *vscrollbar = NULL;
 #endif
   GtkWidget *table = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *vbox, *action_area, *hbuttonbox1;
 #ifdef HAS_GTK22
+  GtkWidget *viewport1;
   GtkWidget *textView;
   GtkWidget *scrolledWin;
   GtkScrolledWindow *swin;
@@ -322,7 +323,7 @@ x_log_setup_win (TOPLEVEL *w_current)
                            GTK_WIN_POS_NONE);
     }
 
-    gtk_widget_set_usize(stwindow, 600, 150);
+    gtk_widget_set_usize(stwindow, 600, 200);
 
     gtk_signal_connect(GTK_OBJECT (stwindow),
                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
@@ -337,7 +338,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 
     gtk_window_set_title(GTK_WINDOW (stwindow),
                          _("Status"));
-    gtk_container_border_width (GTK_CONTAINER (stwindow), 0);
+    gtk_container_border_width (GTK_CONTAINER (stwindow), 10);
 
     table = gtk_table_new (2, 2, FALSE);
     gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
@@ -356,13 +357,17 @@ x_log_setup_win (TOPLEVEL *w_current)
     swin = GTK_SCROLLED_WINDOW(scrolledWin);
     gtk_scrolled_window_set_policy(swin, GTK_POLICY_AUTOMATIC, 
                                        GTK_POLICY_AUTOMATIC);
+
+    viewport1 = gtk_viewport_new (NULL, NULL);
+    gtk_widget_show (viewport1);
+    gtk_container_add (GTK_CONTAINER (viewport1), scrolledWin);
 #else
     sttext = gtk_text_new (NULL, NULL);
     gtk_text_set_editable (GTK_TEXT (sttext), FALSE);
 #endif
 
 #ifdef HAS_GTK22
-    gtk_table_attach (GTK_TABLE (table), GTK_WIDGET(swin),
+    gtk_table_attach (GTK_TABLE (table), GTK_WIDGET(viewport1),
 #else
     gtk_table_attach (GTK_TABLE (table), sttext,
 #endif
@@ -388,11 +393,20 @@ x_log_setup_win (TOPLEVEL *w_current)
                       GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
     gtk_widget_show (vscrollbar);
 #endif
+                      
+    hbuttonbox1 = gtk_hbutton_box_new ();
+    gtk_widget_show (hbuttonbox1);
+    gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1),
+                               GTK_BUTTONBOX_END);
+    gtk_box_pack_start (GTK_BOX (action_area), hbuttonbox1, TRUE, TRUE, 3);
 
     buttoncancel = gtk_button_new_with_label (_("Close"));
+    gtk_container_add (GTK_CONTAINER (hbuttonbox1), buttoncancel);
     GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
+#if 0                  
     gtk_box_pack_start (GTK_BOX (action_area),
-                        buttoncancel, TRUE, TRUE, 0);
+                        buttoncancel, FALSE, FALSE, 0);
+#endif
     gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
                         GTK_SIGNAL_FUNC(x_log_close), NULL);
     gtk_widget_show (buttoncancel);

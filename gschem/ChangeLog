@@ -1,3 +1,34 @@
+2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/pt_BR.po: Replaced file by new UTF version provided by 
+	Antonio.
+
+	* noweb/x_multiattrib.nw: Applied a patch by Carlos to add
+	multi line attribute editing.  This work should also be 
+	ported to the single attribute add/edit dialog box.
+
+	* noweb/x_multiattrib.nw: Improved the appearance of the 
+	new GtkTextView by placing it into a GtkViewport which provides
+	a nice border.  Not sure this is the most correct way of doing
+	this, but it does work.
+
+	* noweb/x_dialog.nw: Applied the same appearance fix to the 
+	add text and edit text dialog box.  Put some white space around
+	the edit text dialog box to make it look a little better.  The
+	edit text dialog box needs a major overhaul.  
+
+	* noweb/x_log.nw: Also added a viewport to the log/status dialog box.
+	Changed the large close button to an edge aligned button and
+	increased the size of the log/status dialog box.
+
+	* noweb/x_print.nw, x_attribedit.nw: Various appearance improvements.
+
+	* noweb/x_dialog.nw: Added border space to almost all most 
+	dialog boxes.  They look a little better now.
+
+	* tests/multiline.sch, multiline2.sch: Added and improved these
+	test schematics to test the postscript printing code.
+	
 2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * ABOUT-NLS: Removed machine generated file from CVS

@@ -428,6 +428,7 @@ text_input_dialog (TOPLEVEL *w_current)
   GtkWidget *buttoncancel = NULL;
   GtkWidget *vbox, *action_area;
 #ifdef HAS_GTK22
+  GtkWidget *viewport1 = NULL;
   GtkWidget *scrolled_window = NULL;
   PangoTabArray *tab_array;
   int real_tab_width;
@@ -471,11 +472,15 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_widget_show (label);
 
 #ifdef HAS_GTK22
+    viewport1 = gtk_viewport_new (NULL, NULL);
+    gtk_widget_show (viewport1);
+    
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
 				   GTK_POLICY_AUTOMATIC, 
 				   GTK_POLICY_AUTOMATIC);
-    gtk_box_pack_start( GTK_BOX(vbox), scrolled_window, TRUE, TRUE, 10);
+    gtk_container_add (GTK_CONTAINER (viewport1), scrolled_window);
+    gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 10);
     gtk_widget_show(scrolled_window);
 
     tientry = gtk_text_view_new();
@@ -815,6 +820,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
   GtkWidget *optionmenu = NULL;
   GtkWidget *align_menu = NULL;
 #ifdef HAS_GTK22
+  GtkWidget *viewport1 = NULL;
   GtkWidget *scrolled_window = NULL;
   GtkTextBuffer *textbuffer;
 #endif
@@ -826,6 +832,8 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
   
   if (!w_current->tewindow) {
     w_current->tewindow = x_create_dialog_box(&vbox, &action_area);
+    
+    gtk_window_set_default_size (GTK_WINDOW (w_current->tewindow), 250, 300);
 
     gtk_window_position(GTK_WINDOW (w_current->tewindow),
                         GTK_WIN_POS_MOUSE);
@@ -850,19 +858,23 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     gtk_window_set_title(GTK_WINDOW (w_current->tewindow),
                          _("Edit Text"));
     gtk_container_border_width(
-                               GTK_CONTAINER(w_current->tewindow), 0);
+                               GTK_CONTAINER(w_current->tewindow), 10);
 
     if (num_selected == 1) {
       label = gtk_label_new (_("Edit Text"));
-      gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
+      gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 3);
       gtk_widget_show (label);
 
 #ifdef HAS_GTK22
+      viewport1 = gtk_viewport_new (NULL, NULL);
+      gtk_widget_show (viewport1);
+
       scrolled_window = gtk_scrolled_window_new(NULL, NULL);
       gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
 				     GTK_POLICY_AUTOMATIC, 
 				     GTK_POLICY_AUTOMATIC);
-      gtk_box_pack_start( GTK_BOX(vbox), scrolled_window, TRUE, TRUE, 10);
+      gtk_container_add (GTK_CONTAINER (viewport1), scrolled_window);
+      gtk_box_pack_start( GTK_BOX(vbox), viewport1, TRUE, TRUE, 10);
       gtk_widget_show(scrolled_window);
       
       w_current->teentry = gtk_text_view_new();
@@ -924,7 +936,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
-                       buttonok, TRUE, TRUE, 0);
+                       buttonok, TRUE, TRUE, 5);
     gtk_signal_connect(GTK_OBJECT (buttonok), "clicked",
                        GTK_SIGNAL_FUNC(text_edit_dialog_ok),
                        w_current);
@@ -935,7 +947,7 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
     GTK_WIDGET_SET_FLAGS(buttoncancel, GTK_CAN_DEFAULT);
     gtk_box_pack_start(
                        GTK_BOX(action_area),
-                       buttoncancel, TRUE, TRUE, 0);
+                       buttoncancel, TRUE, TRUE, 5);
     gtk_signal_connect(GTK_OBJECT (buttoncancel), "clicked",
                        GTK_SIGNAL_FUNC(text_edit_dialog_cancel),
                        w_current);
@@ -1249,7 +1261,7 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
     gtk_window_set_title(GTK_WINDOW (w_current->ltwindow),
                          _("Edit Line Width & Type"));
     gtk_container_border_width(
-                               GTK_CONTAINER(w_current->ltwindow), 0);
+                               GTK_CONTAINER(w_current->ltwindow), 10);
 
     gtk_object_set_data(GTK_OBJECT(w_current->ltwindow),"object",
                         (gpointer) object);
@@ -1655,7 +1667,7 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
 
     gtk_window_set_title(GTK_WINDOW (w_current->ftwindow),
                          _("Edit Fill Type"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->ftwindow), 0);
+    gtk_container_border_width(GTK_CONTAINER(w_current->ftwindow), 10);
 
     gtk_object_set_data(GTK_OBJECT(w_current->ftwindow),"object",
                         (gpointer) object);
@@ -2116,7 +2128,7 @@ arc_angle_dialog (TOPLEVEL *w_current)
     gtk_window_set_title(GTK_WINDOW(w_current->aawindow),
                          _("Arc Params"));
     gtk_container_border_width(GTK_CONTAINER(w_current->aawindow),
-                               0);
+                               10);
 
     label = gtk_label_new (_("Start Angle"));
     gtk_box_pack_start(
@@ -2292,7 +2304,7 @@ translate_dialog (TOPLEVEL *w_current)
     gtk_window_set_title(GTK_WINDOW (w_current->trwindow),
                          _("Translate"));
     gtk_container_border_width (GTK_CONTAINER (
-                                               w_current->trwindow), 0);
+                                               w_current->trwindow), 10);
 
     label = gtk_label_new(_("Offset to translate?\n(0 for origin)"));
     gtk_misc_set_padding(GTK_MISC (label), 10, 10);
@@ -2459,7 +2471,7 @@ text_size_dialog (TOPLEVEL *w_current)
     gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
                          _("Text Size"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
-                               0);
+                               10);
 
     label = gtk_label_new (_("Enter new text size"));
     gtk_misc_set_padding (GTK_MISC (label), 10, 10);
@@ -2626,7 +2638,7 @@ snap_size_dialog (TOPLEVEL *w_current)
     gtk_window_set_title(GTK_WINDOW (w_current->tswindow),
                          _("Snap Grid"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
-                               0);
+                               10);
 
     label = gtk_label_new(_("Enter new snap grid spacing"));
     gtk_misc_set_padding(GTK_MISC (label), 10, 10);
@@ -2803,7 +2815,7 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
     gtk_window_set_title(GTK_WINDOW (w_current->sewindow),
                          _("Edit slot number"));
     gtk_container_border_width(
-                               GTK_CONTAINER(w_current->sewindow), 0);
+                               GTK_CONTAINER(w_current->sewindow), 10);
 
     label = gtk_label_new (_("Edit slot number"));
     gtk_box_pack_start(
@@ -3853,7 +3865,7 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow),
 			 _("Generic String"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 10);
 
     label = gtk_label_new(_("Enter new string."));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
@@ -4013,7 +4025,7 @@ void find_text_dialog(TOPLEVEL * w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Find text"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 10);
 
     label = gtk_label_new(_("Text to find:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
@@ -4155,7 +4167,7 @@ void hide_text_dialog(TOPLEVEL * w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Hide text"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 10);
 
     label = gtk_label_new(_("Hide text starting with:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
@@ -4282,7 +4294,7 @@ void show_text_dialog(TOPLEVEL * w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Show text"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 10);
 
     label = gtk_label_new(_("Show text starting with:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);
@@ -4407,7 +4419,7 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow),
 			 _("Autonumber text"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 0);
+    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 10);
 
     label = gtk_label_new(_("Autonumber text starting with:"));
     gtk_misc_set_padding(GTK_MISC(label), 20, 20);

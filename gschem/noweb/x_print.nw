@@ -445,6 +445,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
   if (!w_current->pwindow) {
 
     w_current->pwindow = x_create_dialog_box(&vbox, &action_area); 
+    gtk_container_border_width(GTK_CONTAINER(w_current->pwindow), 5);
 
     gtk_window_position(GTK_WINDOW (w_current->pwindow),
                         GTK_WIN_POS_MOUSE);

@@ -108,6 +108,10 @@ multi_attrib_edit_parser (GtkWidget *w, char **text, int *vis, int *show)
   GtkWidget *show_options;
   int option_index;
   char *newtext;
+#ifdef HAS_GTK22
+  GtkTextBuffer *textbuffer;
+  GtkTextIter start, end;
+#endif
 	
   text[2]=malloc(sizeof(char)*8); /* this needs to be freed somewhere? */
   text[3]=malloc(sizeof(char)*8); /* this needs to be freed somewhere? */
@@ -118,10 +122,17 @@ multi_attrib_edit_parser (GtkWidget *w, char **text, int *vis, int *show)
   show_options = gtk_object_get_data(GTK_OBJECT(window), "show_options");
   visbutton = gtk_object_get_data(GTK_OBJECT(window),"visbutton");
 
-  text[0]=gtk_entry_get_text(GTK_ENTRY(name));
-  text[1]=gtk_entry_get_text(GTK_ENTRY(value));
+  text[0]= (char *) gtk_entry_get_text(GTK_ENTRY(name));
 
-  newtext = u_basic_strdup_multiple(text[0],"=",text[1],NULL);
+#ifdef HAS_GTK22
+  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value));
+  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+  text[1] =  gtk_text_iter_get_text (&start, &end);
+#else
+  text[1] = (char *) gtk_entry_get_text(GTK_ENTRY(value));
+#endif
+
+  newtext = u_basic_strdup_multiple(text[0],"=",text[1],NULL); 
 
   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton))) {
     *vis = VISIBLE;
@@ -178,6 +189,10 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
   char *value = NULL;
   int len;
 
+#ifdef HAS_GTK22
+  GtkTextBuffer *textbuffer;
+#endif
+
   name_entry = gtk_object_get_data(GTK_OBJECT(window),"attrib_combo_entry");
   value_entry = gtk_object_get_data(GTK_OBJECT(window),"value_entry");
   show_options = gtk_object_get_data(GTK_OBJECT(window), "show_options");
@@ -186,7 +201,12 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
   if(!attrib)
   {
     gtk_entry_set_text(GTK_ENTRY(name_entry),"");
-    gtk_entry_set_text(GTK_ENTRY(value_entry),"");
+#ifdef HAS_GTK22
+    textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
+    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), "", -1);
+#else
+    gtk_entry_set_text(GTK_ENTRY(value_entry), "");
+#endif
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton),TRUE);
     gtk_option_menu_set_history(GTK_OPTION_MENU(show_options), 0);
   }
@@ -211,11 +231,21 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
     }
 
     if (value) {
-      gtk_entry_set_text (GTK_ENTRY (value_entry), value);
+#ifdef HAS_GTK22
+      textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
+      gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), value, -1);
+#else
+      gtk_entry_set_text(GTK_ENTRY(value_entry), value);
+#endif
+
       gtk_widget_grab_focus(value_entry);
       len = strlen(value);
       if (len) {
+#ifdef HAS_GTK22
+	select_all_text_in_textview(GTK_TEXT_VIEW(value_entry));
+#else
         gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
+#endif 
       }
     }
     if (name) free(name);
@@ -250,17 +280,33 @@ void multi_attrib_parse_attribute (GtkWidget *w, GtkWidget *w_current)
   int special_attrib_found;
   GSList *tmp;
 
+#ifdef HAS_GTK22
+  GtkTextBuffer *textbuffer;
+  GtkTextIter start, end;
+#endif
 
+#ifdef HAS_GTK22
+  top_window = gtk_widget_get_ancestor(GTK_WIDGET(w_current), GTK_TYPE_WINDOW);
+#else
   top_window = gtk_widget_get_ancestor(w, GTK_TYPE_WINDOW);
+#endif
+
 
   /* Get combo with attribute name */
   combo_entry =
       gtk_object_get_data(GTK_OBJECT(top_window), "attrib_combo_entry");
-  attrib_name = gtk_entry_get_text(GTK_ENTRY(combo_entry));
+
+  attrib_name = (char *) gtk_entry_get_text(GTK_ENTRY(combo_entry));
 
   /* Get entry with value of the attribute */
   value_entry = gtk_object_get_data(GTK_OBJECT(top_window), "value_entry");
+#ifdef HAS_GTK22
+  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
+  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
+  value =  gtk_text_iter_get_text (&start, &end);
+#else
   value = gtk_entry_get_text(GTK_ENTRY(value_entry));
+#endif
 
   /* Get clist with the attribute list */
   clist = gtk_object_get_data(GTK_OBJECT(top_window), "clist");
@@ -495,8 +541,13 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
   if (text[1]) {
     len = strlen(text[1]);
     if (len) {
+      
       gtk_widget_grab_focus(value_entry);
+#ifdef HAS_GTK22
+      select_all_text_in_textview(GTK_TEXT_VIEW(value_entry));
+#else
       gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
+#endif
     }
   }
 
@@ -608,6 +659,10 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   GtkWidget *hbuttonbox2;
   GtkWidget *clearbutton;
   GtkWidget *closebutton;
+#ifdef HAS_GTK22
+  GtkWidget *viewport1;
+  GtkTextBuffer *value_textbuffer;
+#endif
 
   /* gschem specific variables */
   GList *combo1_items = NULL;
@@ -776,14 +831,28 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (attrib_combo_entry);
 
+#ifdef HAS_GTK22
+  value_entry = gtk_text_view_new();
+#else
   value_entry = gtk_entry_new ();
+#endif
   gtk_widget_ref (value_entry);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "value_entry", value_entry,
                             (GtkDestroyNotify) gtk_widget_unref);
   gtk_widget_show (value_entry);
+
+#ifdef HAS_GTK22
+  viewport1 = gtk_viewport_new (NULL, NULL);
+  gtk_widget_show (viewport1);
+  gtk_container_add (GTK_CONTAINER (viewport1), value_entry);
+  gtk_table_attach (GTK_TABLE (table1), viewport1, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 6, 3);
+#else  
   gtk_table_attach (GTK_TABLE (table1), value_entry, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 6, 3);
+#endif
   /* gschem specific */
   gtk_object_set_data(GTK_OBJECT(value_entry),"mawindow",mawindow);
   gtk_object_set_data(GTK_OBJECT(value_entry),"close",(void *)1);
@@ -890,8 +959,10 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                      GTK_SIGNAL_FUNC(destroy_window), &w_current->mawindow);
   gtk_signal_connect(GTK_OBJECT(w_current->mawindow), "key_press_event",
                      (GtkSignalFunc) multi_attrib_edit_keypress, w_current);
+#ifdef HAS_GTK12
   gtk_signal_connect(GTK_OBJECT(value_entry), "activate",
                      GTK_SIGNAL_FUNC(multi_attrib_edit_change),w_current);
+#endif
   gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
                      GTK_SIGNAL_FUNC(multi_attrib_edit_add),w_current);
   gtk_signal_connect(GTK_OBJECT(changebutton),"clicked",
@@ -906,10 +977,18 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                      GTK_SIGNAL_FUNC(multi_attrib_edit_select_row),w_current);
   gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
                      GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
+#ifdef HAS_GTK22
+  value_textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
+  gtk_signal_connect(GTK_OBJECT(attrib_combo_entry), "changed",
+                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), attrib_combo_entry);
+  g_signal_connect(value_textbuffer, "changed",
+                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), value_entry);   
+#else
   gtk_signal_connect(GTK_OBJECT(attrib_combo_entry), "changed",
                      GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
   gtk_signal_connect(GTK_OBJECT(value_entry), "changed",
                      GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
+#endif
 
   /* fill clist, gschem specific */
   i=0;
