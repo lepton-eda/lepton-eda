@@ -1,3 +1,9 @@
+2005-01-23  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_fileselect.nw (x_fileselect_comp_fill_components): Removed 
+	the duplicate message of failure to open directory. It also fix the 
+	problem reported by Bob Paddock.
+
 2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_attrib.nw, o_buffer.nw, o_bus.nw, o_complex.nw, o_copy.nw,

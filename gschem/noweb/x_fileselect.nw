@@ -1550,11 +1550,6 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 
   /* get the list of filenames in directory */
   filenames = s_clib_getfiles (f_current->directory_entries[row], ".sym");
-  if (filenames == NULL) {
-    s_log_message (_("Failed to open directory [%s].\n"),
-                     f_current->directory_entries[row]);
-    return;
-  }
 
   filename = filenames;
   while (filename != NULL) {
