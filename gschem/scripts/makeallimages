@@ -1,0 +1,27 @@
+#!/bin/sh
+
+./makeimages /home/ahvezda/gEDA/devel/symbols/4000
+./makeimages /home/ahvezda/gEDA/devel/symbols/74
+./makeimages /home/ahvezda/gEDA/devel/symbols/IEC417
+./makeimages /home/ahvezda/gEDA/devel/symbols/altera
+./makeimages /home/ahvezda/gEDA/devel/symbols/analog
+./makeimages /home/ahvezda/gEDA/devel/symbols/connector
+./makeimages /home/ahvezda/gEDA/devel/symbols/idt
+./makeimages /home/ahvezda/gEDA/devel/symbols/linear
+./makeimages /home/ahvezda/gEDA/devel/symbols/local
+./makeimages /home/ahvezda/gEDA/devel/symbols/maxim
+./makeimages /home/ahvezda/gEDA/devel/symbols/memory
+./makeimages /home/ahvezda/gEDA/devel/symbols/micro
+./makeimages /home/ahvezda/gEDA/devel/symbols/misc
+./makeimages /home/ahvezda/gEDA/devel/symbols/radio
+./makeimages /home/ahvezda/gEDA/devel/symbols/switch
+./makeimages /home/ahvezda/gEDA/devel/symbols/tube
+./makeimages /home/ahvezda/gEDA/devel/symbols/verilog
+./makeimages /home/ahvezda/gEDA/devel/symbols/rf
+./makeimages /home/ahvezda/gEDA/devel/symbols/spice
+./makeimages /home/ahvezda/gEDA/devel/symbols/pla
+./makeimages /home/ahvezda/gEDA/devel/symbols/lattice
+./makeimages /home/ahvezda/gEDA/devel/symbols/titleblock
+./makeimages /home/ahvezda/gEDA/devel/symbols/io
+./makeimages /home/ahvezda/gEDA/devel/symbols/xilinx
+./makeimages /home/ahvezda/gEDA/devel/symbols/dec

@@ -1,0 +1,178 @@
+#!/bin/sh
+
+# This script requires the following packages :
+#	- gschem (located the your PATH )
+# 	- ghostscript (I use aladdin gs)
+#	- Netpbm tools (namely ppmtogif)
+#
+
+if [ "$1" == "" ] 
+then
+	echo "usage: makeimages path_to_libary" 
+	exit 1
+fi
+
+version=20000220
+basedir=`basename $1`
+
+echo Creating $basedir
+
+if [ -e $basedir ]
+then
+	echo Removing old $basedir 
+	rm -rf $basedir/*
+else 
+	mkdir $basedir
+fi
+
+# do basic html stuff 
+echo "<HTML> <HEAD> <TITLE> gEDA: $basedir library symbols </TITLE> </HEAD>" > ${basedir}/index.html
+echo "<BODY BGCOLOR=\"#000000\" TEXT=\"#FFFFFF\" LINK=\"#00FF00\" VLINK=\"#00DDDD\">" >> ${basedir}/index.html
+echo "" >> ${basedir}/index.html
+echo "<font face=\"arial,helvetica\">" >> ${basedir}/index.html 
+echo "" >> ${basedir}/index.html
+echo "<CENTER><H1>$basedir library</H1></CENTER>" >> ${basedir}/index.html
+echo "" >> ${basedir}/index.html
+
+# setup small.html
+echo "<HTML> <HEAD> <TITLE> gEDA: $basedir library symbols </TITLE> </HEAD>" > ${basedir}/small.html
+echo "<BODY BGCOLOR=\"#000000\" TEXT=\"#FFFFFF\" LINK=\"#00FF00\" VLINK=\"#00DDDD\">" >> ${basedir}/small.html
+echo "" >> ${basedir}/small.html
+echo "<font face=\"arial,helvetica\">" >> ${basedir}/small.html 
+echo "" >> ${basedir}/small.html
+echo "<CENTER><H1>$basedir library</H1></CENTER>" >> ${basedir}/small.html
+echo "" >> ${basedir}/small.html
+echo "" >> ${basedir}/small.html
+echo "<H3>Click on the symbol for detailed information</H3>" >> ${basedir}/small.html
+echo "" >> ${basedir}/small.html
+
+# Clear textlist.html
+echo "" > ${basedir}/textlist.html
+
+# now start going over each .sym file in the library
+for i in $1/*.sym
+do
+	symname=`basename $i .sym`
+	echo $i $symname ${basedir}/${symname}.ps
+
+	# Create a copy of the .sym for the directory (refenced by the per 
+	# symbol .html page 
+	cp -f $i $basedir 
+
+	# First create postscript file using gschem and print.scm
+	gschem  -o ${basedir}/${symname}.ps \
+		-s print.scm \
+		$i 
+
+	# Then take postscript file and create thumbnail ppm
+	# GNU ghostscript:
+	# use this if you have Aladdin 5.50 ghostscript: 
+	#gs -q -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
+	gs -q \
+		-dNOPAUSE -sOutputFile=${basedir}/${symname}_tn.ppm \
+		-r20 -sDEVICE=ppm \
+		${basedir}/${symname}.ps quit.ps
+
+	# ppm to gif
+	ppmtogif ${basedir}/${symname}_tn.ppm > ${basedir}/${symname}_tn_temp.gif
+	convert -crop 0x0 ${basedir}/${symname}_tn_temp.gif ${basedir}/${symname}_tn.gif
+	echo Running giftool to reduce ${basedir}/${symname}_tn.gif
+	giftool -B ${basedir}/${symname}_tn.gif
+	rm -f ${basedir}/${symname}_tn_temp.gif
+
+
+	#
+	# make a really really small thumbnail
+	#
+	gs -q \
+		-dNOPAUSE -sOutputFile=${basedir}/${symname}_stn.ppm \
+		-r5 -sDEVICE=ppm \
+		${basedir}/${symname}.ps quit.ps
+
+	# ppm to gif
+	ppmtogif ${basedir}/${symname}_stn.ppm > ${basedir}/${symname}_stn_temp.gif
+	convert -crop 0x0 ${basedir}/${symname}_stn_temp.gif ${basedir}/${symname}_stn.gif
+	echo Running giftool to reduce ${basedir}/${symname}_stn.gif
+	giftool -B ${basedir}/${symname}_stn.gif
+	rm -f ${basedir}/${symname}_stn_temp.gif
+
+
+	# Then take original postscript file and convert to ppm 
+	# GNU ghostscript: 
+	# use this if you have Aladdin 5.50 ghostscript: 
+	#gs -q -dTextAlphaBits=4 -dGraphicsAlphaBits=4 \
+	gs -q -r100 \
+		-dNOPAUSE -sOutputFile=${basedir}/${symname}.ppm \
+		-sDEVICE=ppm \
+		${basedir}/${symname}.ps quit.ps
+	
+	# finally convert this ppm to gif
+	ppmtogif ${basedir}/${symname}.ppm > ${basedir}/${symname}_temp.gif
+	convert -crop 0x0 ${basedir}/${symname}_temp.gif ${basedir}/${symname}.gif
+	echo Running giftool to reduce ${basedir}/${symname}.gif
+	giftool -B ${basedir}/${symname}.gif
+	rm -f ${basedir}/${symname}_temp.gif
+
+	# Add entry to index.html
+	echo "<IMG SRC=\"./${symname}_tn.gif\">" >> ${basedir}/index.html
+	echo "<H3><A HREF=\"./${symname}.sym\">${symname}.sym</A>" >> ${basedir}/index.html
+	echo "<A HREF="./${symname}.gif">GIF</A>  <A HREF="./${symname}.ps">PS</A></H3>" >> ${basedir}/index.html
+	echo "<p><br>" >> ${basedir}/index.html
+
+	# Add entry to small.html
+	echo -n "<A HREF=\"./${symname}.html\">" >> ${basedir}/small.html
+	echo -n "<IMG SRC=\"./${symname}_stn.gif\" alt=\"${symname}\" border=0>" >> ${basedir}/small.html
+	echo "</A>" >> ${basedir}/small.html
+
+	# Create per sym html file
+	echo "<HTML> <HEAD> <TITLE> gEDA: $basedir/$symname symbol </TITLE> </HEAD>" > ${basedir}/$symname.html
+	echo "<BODY BGCOLOR=\"#000000\" TEXT=\"#FFFFFF\" LINK=\"#00FF00\" VLINK=\"#00DDDD\">" >> ${basedir}/$symname.html
+	echo "" >> ${basedir}/$symname.html
+	echo "<font face=\"arial,helvetica\">" >> ${basedir}/${symname}.html 
+	echo "" >> ${basedir}/$symname.html
+	echo "<CENTER><H1>$basedir/$symname library</H1></CENTER>" >> ${basedir}/$symname.html
+	echo "" >> ${basedir}/$symname.html
+
+	echo "<IMG SRC=\"./${symname}_tn.gif\">" >> ${basedir}/$symname.html
+	echo "<H3><A HREF=\"./${symname}.sym\">${symname}.sym</A>" >> ${basedir}/$symname.html
+	echo "<A HREF="./${symname}.gif">GIF</A>  <A HREF="./${symname}.ps">PS</A></H3>" >> ${basedir}/$symname.html
+	echo "<p><br>" >> ${basedir}/$symname.html
+
+	echo ""  >> ${basedir}/$symname.html
+	echo "<H5>Automatically extracted from symbol library: ${basedir} version ${version}</H5>"  >> ${basedir}/$symname.html
+	echo "" >> ${basedir}/$symname.html
+	echo "<H3> <A HREF=\"small.html\">Up one level</A> </H3>" >> ${basedir}/$symname.html
+	echo "" >> ${basedir}/$symname.html
+	echo "</BODY> </HTML>" >> ${basedir}/$symname.html
+
+	# Added text link to small.html (added after everything is done)
+	echo "<A HREF=\"$symname.html\">$symname</A>" >> ${basedir}/textlist.html
+	
+	rm -f ${basedir}/*.ppm
+
+done
+
+
+# basic html
+echo ""  >> ${basedir}/index.html
+echo "<H5>Automatically extracted from symbol library: ${basedir} version ${version}</H5>"  >> ${basedir}/index.html
+echo "" >> ${basedir}/index.html
+echo "<H3> <A HREF=\"../index.html\">Up one level</A> </H3>" >> ${basedir}/index.html
+echo "" >> ${basedir}/index.html
+echo "</BODY> </HTML>" >> ${basedir}/index.html
+
+# small.html
+echo ""  >> ${basedir}/small.html
+echo "<H3>" >> ${basedir}/small.html
+cat ${basedir}/textlist.html >> ${basedir}/small.html
+echo "</H3>" >> ${basedir}/small.html
+echo "<H5>Automatically extracted from symbol library: ${basedir} version ${version}</H5>"  >> ${basedir}/small.html
+#echo "<p><br>" >> ${basedir}/small.html
+echo "" >> ${basedir}/small.html
+echo "<H3> <A HREF=\"../index.html\">Up one level</A> </H3>" >> ${basedir}/small.html
+echo "" >> ${basedir}/small.html
+echo "</BODY> </HTML>" >> ${basedir}/small.html
+
+
+rm ${basedir}/textlist.html
+
