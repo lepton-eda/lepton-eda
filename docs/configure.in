@@ -1,0 +1,69 @@
+# Process this file with autoconf to produce a configure script.
+AC_INIT
+
+VERSION=20021031
+PACKAGE=geda-docs
+
+# Init automake
+AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+
+# Checks for programs.
+# search for gesym-config
+AC_PATH_PROG(GESYMCONFIG, gesym-config, no, ${PATH})
+
+if test $GESYMCONFIG = "no"; then
+   AC_MSG_ERROR(Cannot find gesym-config -- be sure that the symbols are installed)
+fi
+
+gesym_version=`$GESYMCONFIG --version`
+if test $gesym_version != $VERSION; then
+	AC_MSG_ERROR(Found a different version of gesym-config: $GESYMCONFIG -- Make sure your PATH variable is correct)
+fi
+
+# latex
+AC_PATH_PROG(LATEX, latex, no, ${PATH})
+if test $LATEX = "no"; then
+   echo "Cannot find latex -- documentation cannot be created"
+   AC_MSG_ERROR(Install latex or install prepared geda-docs package)
+fi
+
+AC_PATH_PROG(DVIPS, dvips, no, ${PATH})
+AC_PATH_PROG(DVI2PS, dvi2ps, no, ${PATH})
+
+if test $DVIPS = "no" -a $DVI2PS = "no"; then
+   echo "Cannot find dvips or dvi2ps -- documentation cannot be created" 
+   AC_MSG_ERROR(Install dvips or dvi2ps or install prepared geda-docs package)
+fi
+
+AC_PATH_PROG(LATEX2HTML, latex2html, no, ${PATH})
+if test $LATEX2HTML = "no"; then 
+   echo "Cannot find latex2html -- documentation cannot be created" 
+   AC_MSG_ERROR(Install latex2html or install prepared geda-docs package)
+fi
+
+AC_PATH_PROG(PS2PDF, ps2pdf, no, ${PATH})
+if test $PS2PDF = "no"; then 
+   echo "Cannot find pdf2ps -- documentation cannot be created" 
+   AC_MSG_ERROR(Install pdf2ps or install prepared geda-docs package)
+fi
+
+# Checks for libraries.
+
+# Checks for header files.
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+# Checks for library functions.
+
+
+# Other variables
+gedatopdir=`$GESYMCONFIG --toplevel`
+GEDADATADIR=$gedatopdir
+AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
+
+AC_SUBST(GEDADATADIR)
+
+AC_CONFIG_FILES([Makefile \
+	         attributes/Makefile \
+		 symbols/Makefile ])
+AC_OUTPUT

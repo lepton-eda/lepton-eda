@@ -1,0 +1,5 @@
+2002-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in and friends: Started using automake and autoconf
+	for the docs directory
+
