@@ -262,6 +262,9 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
   int new_width = 0;
   int char_width;
   
+  /* Leave if no items to add are available */
+  if ((count == 0) || (list_head == NULL)) return;
+
   /* Get character width based upon "X", which is a large char.
    * font_combo is a global.  Where is it set?  */
 #ifdef HAS_GTK22
@@ -303,6 +306,9 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
   gchar *text;
   int j;
 
+  /* Leave if no items to add are available */
+  if ((count == 0) || (list_head == NULL)) return;
+
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
     text = (gchar *) g_strdup(string_list_item->data);
@@ -317,9 +323,7 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
   
 
 /*------------------------------------------------------------------
- * x_gtksheet_add_cell_item:  First construct the rest of the spreadsheet
- * widget, then insert data into sheet's cells, then finally display
- * the sheet window.  
+ * x_gtksheet_add_cell_item:  
  *------------------------------------------------------------------*/
 void
 x_gtksheet_add_cell_item(GtkSheet *sheet, int i, int j, gchar *text)

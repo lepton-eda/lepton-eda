@@ -258,10 +258,15 @@ x_window_add_items()
     exit(0);
   }
 
+  if (sheet_head->pin_count == 0) {
+    fprintf(stderr, "\n\nNo pins found on any components!  \nPlease check your design.  \nExiting. . . .\n");
+    exit(0);
+  }
+
+
+
   /* Since we have passed the sanity checking, initialize the gtksheet. */
 #ifdef DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In x_window_add_items, about to call x_gtksheet_init.\n");
 #endif
   x_gtksheet_init();  /* this creates a new gtksheet having dimensions specified
@@ -271,18 +276,21 @@ x_window_add_items()
 #ifdef DEBUG
   printf("In x_window_add_items, now load up the row and column labels.\n");
 #endif
-  x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]), sheet_head->comp_count, sheet_head->master_comp_list_head);
-  x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
+  if (sheet_head->comp_count > 0 ) {
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]), sheet_head->comp_count, sheet_head->master_comp_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
+  }
 
-#if 0
+
+  /* This is not ready.  I need to implement net attributes */
   if (sheet_head->net_count > 0 ) {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), sheet_head->net_count, sheet_head->master_net_list_head);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), sheet_head->net_attrib_count, sheet_head->master_net_attrib_list_head);
   } else {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 1, 1);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 1, 1);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 1, NULL);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 1, NULL);
   }  
-#endif  
+
 
   if (sheet_head->pin_count > 0 ) {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[2]), sheet_head->pin_count, sheet_head->master_pin_list_head);

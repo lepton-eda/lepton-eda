@@ -75,6 +75,10 @@
 #define DEFAULT_FONT_ASCENT(widget) (widget->style->font->ascent)
 #define DEFAULT_FONT_DESCENT(widget) (widget->style->font->descent)
 
+static GtkBorder default_border = { 1, 1, 1, 1 };
+static GtkBorder default_outside_border = { 0, 0, 0, 0 };
+
+
 /*-----------------------------------------------------------------------------*/
 /* scrollbar spacing class macro */
 #define SCROLLBAR_SPACING(w) (GTK_SHEET_CLASS (GTK_OBJECT (w)->klass)->scrollbar_spacing)

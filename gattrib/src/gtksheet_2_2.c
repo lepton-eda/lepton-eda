@@ -102,6 +102,9 @@ enum
 #define CELLOFFSET 4
 #define DEFAULT_COLUMN_WIDTH 80
 
+static GtkBorder default_border = { 1, 1, 1, 1 };
+static GtkBorder default_outside_border = { 0, 0, 0, 0 };
+
 static inline guint DEFAULT_ROW_HEIGHT(GtkWidget *widget) 
 { 
   if(!widget->style->font_desc) return 24;
