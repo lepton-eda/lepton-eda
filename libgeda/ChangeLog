@@ -8,6 +8,13 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-06-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_attrib.c: Added Martin Benes' uref renaming patch.  The 
+	  one call to the function which does all the work was #if'ed 
+	  out.  o_attrib_update_urefMB has some side effects which makes
+	  it problematic to have in the mainstream release. 
+
 2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
 	
 	* src/o_text_basic.c: Oops, found an old memory leak; made the

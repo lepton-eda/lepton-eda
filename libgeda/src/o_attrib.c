@@ -51,6 +51,60 @@
 /* signifies that this is an attribute (really? why?) */
 
 /* return pointer from attrib_list */
+
+/* Martin Benes' auto uref renumber code */
+void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current) {
+  OBJECT *list_head,*obj;
+  ATTRIB *attr;
+  char *uref;
+  int i=-1,name_conflict,len;
+  char *index_list;
+  int index_list_len=1;
+
+  if (strncmp(o_current->text_string,"uref=",5))
+    return;
+
+  len=strlen(o_current->text_string);
+  uref=malloc(len+10);
+  strcpy(uref,o_current->text_string);
+
+  while (o_current->text_string[len-1]<='9' && 
+	 o_current->text_string[len-1]>='0')
+    --len;
+
+  list_head=return_head(o_current);
+  for (obj=list_head->next;obj;obj=obj->next) {
+    if (obj->type==OBJ_TEXT && obj->attribute)
+      ++index_list_len;
+  }
+
+  index_list=calloc(index_list_len,1);
+  name_conflict=0;
+
+  for (obj=list_head->next;obj;obj=obj->next) {
+    if (obj->type==OBJ_TEXT && obj->attribute && obj!=o_current) {
+      if (strncmp(uref,obj->text_string,len)==0) {
+	if (strcmp(uref+len,obj->text_string+len)==0) {
+	  name_conflict=1;
+	}
+	i=atoi(obj->text_string+len);
+	if (i<index_list_len)
+	  index_list[i]=1;
+      }
+    }
+  }
+
+  if (name_conflict) {
+    for (i=0;index_list[i];++i);
+    sprintf(uref+len,"%d", i);
+    free(o_current->text_string);
+    o_current->text_string=uref;
+    o_text_recreate(w_current, o_current);
+  }
+
+  free(index_list);
+}
+
 ATTRIB *
 o_attrib_search(ATTRIB *list, OBJECT *item)
 {
@@ -244,6 +298,10 @@ o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list,
 /* can't do this here since just selecting something */
 /* will cause this to be set */
 /* w_current->page_current->CHANGED=1;*/
+
+#ifdef MARTIN_BENES
+					o_attrib_update_urefBM (w_current, o_current);
+#endif
 				}
 			} else {
 				fprintf(stderr, "You cannot attach non text items as attributes!\n");
