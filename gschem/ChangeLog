@@ -2,6 +2,9 @@
 
 	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
 
+	* noweb/x_dialog.nw: Rewrote the exit dialog box to look better
+	under gtk+ 2.2.x and 1.2.x
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Oops wasn't return true or false in the

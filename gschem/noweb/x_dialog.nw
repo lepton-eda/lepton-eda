@@ -1755,68 +1755,72 @@ exit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 void
 exit_dialog (TOPLEVEL *w_current)
 {
-  GtkWidget *label= NULL;
-  GtkWidget *button = NULL;
-  GtkWidget *vbox, *action_area;
+  GtkWidget *exit_dialog;
+  GtkWidget *vbox1;
+  GtkWidget *label1;
+  GtkWidget *hseparator1;
+  GtkWidget *hbuttonbox1;
+  GtkWidget *button1;
+  GtkWidget *button2;
 
-  if (!w_current->exwindow) {
-    w_current->exwindow = x_create_dialog_box(&vbox, &action_area);
+  if (!w_current->exwindow)
+  {
 
-    gtk_window_position(GTK_WINDOW(w_current->exwindow),
-                        GTK_WIN_POS_MOUSE);
+    exit_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    w_current->exwindow = exit_dialog;
+    gtk_window_set_title (GTK_WINDOW (exit_dialog), "Discard Changes?");
+    gtk_window_set_position (GTK_WINDOW (exit_dialog), GTK_WIN_POS_MOUSE);
+    gtk_window_set_modal (GTK_WINDOW (exit_dialog), TRUE);
+    gtk_window_set_default_size (GTK_WINDOW (exit_dialog), 240, 160);
+    gtk_widget_show (exit_dialog);
 
     gtk_signal_connect(GTK_OBJECT(w_current->exwindow),
                        "destroy",
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->exwindow);
-
+    
     gtk_signal_connect(GTK_OBJECT(w_current->exwindow),
-                     "key_press_event",
-                     (GtkSignalFunc) exit_dialog_keypress, w_current);
+                       "key_press_event",
+                       (GtkSignalFunc) exit_dialog_keypress, w_current);
 
-#if 0 /* removed because it was causing the dialog box to not close */
-    gtk_signal_connect(GTK_OBJECT(w_current->exwindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &w_current->exwindow);
-#endif
+    vbox1 = gtk_vbox_new (FALSE, 0);
+    gtk_widget_show (vbox1);
+    gtk_container_add (GTK_CONTAINER (exit_dialog), vbox1);
 
-    gtk_window_set_title(GTK_WINDOW(w_current->exwindow),
-                         _("Discard Changes?"));
-    gtk_container_border_width(GTK_CONTAINER(w_current->exwindow),
-                               0);
+    label1 = gtk_label_new(
+                           _("There are unsaved schematics!\n"
+                             "\n"
+                             "Are you sure?\n"
+                             "OK will discard ALL changes!"));
+    gtk_label_set_justify (GTK_LABEL (label1), GTK_JUSTIFY_CENTER);
+    gtk_widget_show (label1);
+    gtk_box_pack_start (GTK_BOX (vbox1), label1, TRUE, TRUE, 0);
+    hseparator1 = gtk_hseparator_new ();
+    gtk_widget_show (hseparator1);
+    gtk_box_pack_start (GTK_BOX (vbox1), hseparator1, FALSE, FALSE, 0);
 
-    button = gtk_button_new_with_label (_("OK"));
-    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       button, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (button), "clicked",
+    hbuttonbox1 = gtk_hbutton_box_new ();
+    gtk_widget_show (hbuttonbox1);
+    gtk_box_pack_start (GTK_BOX (vbox1), hbuttonbox1, FALSE, FALSE, 0);
+    gtk_container_set_border_width (GTK_CONTAINER (hbuttonbox1), 10);
+
+    button1 = gtk_button_new_with_label (_("OK"));
+    gtk_widget_show (button1);
+    gtk_container_add (GTK_CONTAINER (hbuttonbox1), button1);
+    GTK_WIDGET_SET_FLAGS (button1, GTK_CAN_DEFAULT);
+    gtk_signal_connect(GTK_OBJECT (button1), "clicked",
                        GTK_SIGNAL_FUNC(exit_dialog_ok), w_current);
-    gtk_widget_show (button);
 
-    button = gtk_button_new_with_label (_("Cancel"));
-    GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-    gtk_box_pack_start(
-                       GTK_BOX(action_area),
-                       button, TRUE, TRUE, 0);
-    gtk_signal_connect(GTK_OBJECT (button), "clicked",
+    button2 = gtk_button_new_with_label (_("Cancel"));
+    gtk_widget_show (button2);
+    gtk_container_add (GTK_CONTAINER (hbuttonbox1), button2);
+    GTK_WIDGET_SET_FLAGS (button2, GTK_CAN_DEFAULT);
+    gtk_signal_connect(GTK_OBJECT (button2), "clicked",
                        GTK_SIGNAL_FUNC(exit_dialog_cancel),
                        w_current);
-    gtk_widget_show (button);
-    gtk_widget_grab_default (button);
 
-    label = gtk_label_new(
-                          _("There are schematics which are unsaved!\n"
-                          "\n"
-                          "Are you sure?\n"
-                          "OK will discard ALL changes!"));
-    gtk_misc_set_padding (GTK_MISC (label), 10, 10);
-    gtk_box_pack_start(
-                       GTK_BOX(vbox),
-                       label, TRUE, TRUE, 10);
-    gtk_widget_show (label);
-
+    gtk_widget_grab_focus (button2);
+    gtk_widget_grab_default (button2);
   }
 
   if (!GTK_WIDGET_VISIBLE (w_current->exwindow)) {
