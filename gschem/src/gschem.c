@@ -130,7 +130,6 @@ main_prog(int argc, char *argv[])
 
 	x_repaint_background(w_current);
 
-
 	i = argv_index;
 	while (argv[i] != NULL) {
 		if (first_page) {

@@ -114,10 +114,12 @@ else
  	AC_PATH_PROG(GTKCONFIG, gtk-config, no, ${PATH})
 fi
 
+if test $GTKCONFIG = "no"; then
+	AC_MSG_ERROR(Cannot find gtk-config -- be sure that gtk >= 0.99.7 is installed)
+fi
 
-	if test $GTKCONFIG = "no"; then
-   	  AC_MSG_ERROR(Cannot find gtk-config -- be sure that gtk >= 0.99.7 is installed)
-	fi
+        gtk_ldflags="`$GTKCONFIG --libs`"
+        gtk_cflags="`$GTKCONFIG --cflags`"
 
 # search for libgdgeda-config
 AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
@@ -132,6 +134,8 @@ else
 fi
 
 AC_CHECK_LIB(gdgeda, gdImageColorAllocate, GDGEDA_LIB="-lgdgeda", GDGEDA_LIB=no, $GD_EXTRA)
+
+
 
 if test $GDGEDA_LIB = no; then
         GDGEDA_LIB=""
@@ -160,6 +164,23 @@ else
         fi
 fi
 
+# search for gtkextra-config
+AC_PATH_PROG(GTKEXTRACONFIG, gtkextra-config, no, ${PATH})
+
+if test $GTKEXTRACONFIG = "no"; then
+	gtkextra_ldflags=""
+	gtkextra_cflags=""
+else
+	gtkextra_ldflags=`$GTKEXTRACONFIG --libs`
+	gtkextra_cflags=`$GTKEXTRACONFIG --cflags`
+	GTK_EXTRA="$gtk_cflags $gtkextra_cflags $gtkextra_ldflags $gtk_ldflags -lm"
+	AC_CHECK_LIB(gtkextra, gtk_sheet_new, GTKEXTRA_LIB="-lgtkextra", GTKEXTRA_LIB=no, $GTK_EXTRA)
+	if test $GTKEXTRA_LIB = "no"; then
+		AC_MSG_ERROR(gtkextra library improperly installed)
+	else	
+		AC_DEFINE(HAS_LIBGTKEXTRA)
+	fi
+fi
 
 # search for libgeda-config
 AC_PATH_PROG(LIBGEDACONFIG, libgeda-config, no, ${PATH})
@@ -175,13 +196,14 @@ if test $GESYMCONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find gesym-config -- be sure that the symbols are installed)
 	fi
 
+# here is where the final X ld/c flags get set
 LDEXTRA=
 CFEXTRA=
 GTK=
 GDK=
 GLIB=
-X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags `$GTKCONFIG --libs`"
-X_CFLAGS="`$GTKCONFIG --cflags` $libgdgeda_cflags `$LIBGEDACONFIG --cflags`"
+X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags $gtkextra_ldflags $gtk_ldflags"
+X_CFLAGS="$gtk_cflags $libgdgeda_cflags $gtkextra_cflags `$LIBGEDACONFIG --cflags`"
 gtkversion=`$GTKCONFIG --version | cut -d. -f1,2`
 
 AC_DEFINE_UNQUOTED(GTKVERSION, "$gtkversion")
