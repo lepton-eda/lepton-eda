@@ -533,8 +533,8 @@ static int TestIfInstall(const char *szPackage)
 
 	if (iOverWrite == OVERWRITE_ASK)
 	{
-		pQuestion = (char *) malloc(strlen(MSG_OVERWRITE_Q) + strlen(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) + 1);
-		strcpy(pQuestion, FileGetFilename(PackageValueGet(PACKAGE_NAME, 0, szPackage)));
+		pQuestion = (char *) malloc(strlen(MSG_OVERWRITE_Q) + strlen(PackageValueGet(PACKAGE_NAME, 0, szPackage)) + 1);
+		strcpy(pQuestion, PackageValueGet(PACKAGE_NAME, 0, szPackage));
 		strcat(pQuestion, MSG_OVERWRITE_Q);
 			
 		iResult = MsgBox(

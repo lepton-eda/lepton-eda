@@ -1,3 +1,12 @@
+2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/install.c: Replaced with file provided by Piotr.  Fixes a 
+	core dump.
+
+	* src/setup.cfg: Replaced with file provided by Piotr.  Misc 
+	correction to make make xinstall work correctly (forces the use
+	of --with-gtk12).
+
 2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * ABOUT-NLS: Removed machine generated file from CVS
