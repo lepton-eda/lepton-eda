@@ -35,7 +35,7 @@ install-data-hook: $(docname)/index.html
 uninstall-hook:
 	( cd $(docname) ; $(INSTALL) -d $(DESTDIR)$(docsdir); \
           for i in *; do \
-		-rm -f $(DESTDIR)$(docsdir)/$$i; \
+		rm -f $(DESTDIR)$(docsdir)/$$i; \
 	  done; \
 	  rmdir $(DESTDIR)$(docsdir) )
 

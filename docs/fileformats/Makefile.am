@@ -36,7 +36,7 @@ install-data-hook: $(docname)/index.html
 uninstall-hook:
 	( cd $(docname) ; $(INSTALL) -d $(DESTDIR)$(docsdir); \
           for i in *; do \
-		-rm -f $(DESTDIR)$(docsdir)/$$i; \
+		rm -f $(DESTDIR)$(docsdir)/$$i; \
 	  done; \
 	  rmdir $(DESTDIR)$(docsdir) )
 
@@ -46,19 +46,19 @@ tgz: $(docname).tex $(docname).dvi $(docname).ps $(docname).pdf \
 	         $(docname).dvi $(docname)
 
 clean-local:
-	-rm -f $(docname).aux $(docname).dvi $(docname).log \
+	rm -f $(docname).aux $(docname).dvi $(docname).log \
 	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
 	      $(docname).out 
-	-rm -rf $(docname)
+	rm -rf $(docname)
 
 maintainer-clean-local:
-	-rm -f $(docname).aux $(docname).dvi $(docname).log \
+	rm -f $(docname).aux $(docname).dvi $(docname).log \
 	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
               $(docname).out Makefile.in Makefile
-	-rm -rf $(docname)
+	rm -rf $(docname)
 dist-clean-local:
-	-rm -f $(docname).aux $(docname).dvi $(docname).log \
+	rm -f $(docname).aux $(docname).dvi $(docname).log \
 	      $(docname).pdf $(docname).ps *~ $(docname).toc $(docname).tgz \
 	      $(docname).out Makefile
-	-rm -rf $(docname)
+	rm -rf $(docname)
 
