@@ -508,6 +508,7 @@ AC_CONFIG_FILES([Makefile            \
 		docs/Makefile       \
 		lib/Makefile        \
 		noweb/Makefile      \
+		tests/Makefile      \
 		lib/system-gschemrc \
 		scripts/geda_totexi \
 		scripts/notangle_guile.scm ])
