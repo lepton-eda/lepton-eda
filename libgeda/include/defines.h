@@ -300,4 +300,16 @@
 #define FLOAT_PIN               2
 #define DUP_NET_NAME            4
 
+#if defined(__MINGW32__) && !defined(M_PI)
+#define M_PI  3.14159265358979323846
+#endif
+
+#if defined(__MINGW32__)
+#define PATH_SEPARATER_CHAR '\\'
+#define PATH_SEPARATER_STRING "\\"
+#else
+#define PATH_SEPARATER_CHAR '/'
+#define PATH_SEPARATER_STRING "/"
+#endif
+
 #endif

@@ -50,6 +50,7 @@
 
 <<o_delete.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 
 #include <libgeda/libgeda.h>

@@ -49,8 +49,8 @@
 <<x_menus.c : include directives>>=
 #include <config.h>
 
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #include <libgeda/libgeda.h>
@@ -329,7 +329,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   GtkWidget *root_menu;
   GtkWidget *menu_bar;
   GtkWidget *menu;
-#ifdef __CYGWIN32__      
+#ifdef __MINGW32__      
   GdkFont *font=NULL;
   GtkStyle *style;
 #endif
@@ -418,7 +418,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       
       gtk_widget_show(menu_item);
 
-#ifdef __CYGWIN32__      
+#ifdef __MINGW32__      
       if (GTK_BIN (menu_item)->child) {
         GtkWidget *child = GTK_BIN (menu_item)->child;
         

@@ -41,15 +41,19 @@
 
 <<libgeda.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+#ifdef HAVE_STRARG_H
 #include <stdarg.h>
+#endif
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"

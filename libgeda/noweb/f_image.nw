@@ -44,27 +44,23 @@
 
 <<f_image.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 #include <math.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
+#include <guile/gh.h>
 
 #ifdef HAS_LIBGDGEDA
 #include <gdgeda/gd.h>
 #endif
 
-#include <guile/gh.h>
-
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
 #include "o_types.h"
-
 #include "colors.h"
 
-#include "../include/globals.h"
 #include "../include/prototype.h"
 
 @ 

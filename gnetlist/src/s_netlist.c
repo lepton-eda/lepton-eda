@@ -18,10 +18,15 @@
  */
 
 #include <config.h>
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 #include <ctype.h>
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_ASSERT_H
+#include <assert.h>
+#endif
 
 #include <libgeda/libgeda.h>
 

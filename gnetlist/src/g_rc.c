@@ -18,19 +18,19 @@
  */
 
 #include <config.h>
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdlib.h>
 
-#if defined(HAVE_DIRENT_H) 
+#include <stdio.h>
+#include <ctype.h>
+#include <sys/stat.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
-
-#ifndef __CYGWIN32__
-#include <sys/stat.h>
-#endif
-
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -40,12 +40,6 @@
 #include "../include/globals.h"
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
-
-/* for some really odd reason, the cygnus sys/stat.h doesn't want to work */
-/* if it's included before the gtk stuff, so here it is */
-#ifdef __CYGWIN32__
-#include <sys/stat.h>
-#endif
 
 typedef struct {
     int m_val;
@@ -124,7 +118,8 @@ g_rc_parse_system_rc()
         path_to_rc = g_rc_parse_path(); /* do not free path_to_rc */
 
 	filename = u_basic_strdup_multiple(path_to_rc,
-					   "/system-gnetlistrc",
+					   PATH_SEPARATER_STRING, 
+					   "system-gnetlistrc",
 					   NULL);
 	if (filename == NULL) {
 		return 0;
@@ -153,7 +148,8 @@ g_rc_parse_home_rc()
 	}
 
 	filename = u_basic_strdup_multiple(HOME,
-					   "/.gEDA/gnetlistrc",
+					   PATH_SEPARATER_STRING,
+					   ".gEDA/gnetlistrc",
 					   NULL);
 	if (filename == NULL) {
 		return 0;
@@ -362,11 +358,16 @@ g_rc_component_library(SCM path)
 	}
 
 
-	if (string[0] == '/') {
+#ifdef __MINGW32__
+	if (string[1] == ':' && string[2] == PATH_SEPARATER_CHAR) {
+#else
+	if (string[0] == PATH_SEPARATER_CHAR) {
+#endif
 		s_clib_add_entry(string);
 	} else {
 		cwd = getcwd(NULL, 1024);
-		temp = u_basic_strdup_multiple(cwd, "/", string, NULL);
+		temp = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, 
+					       string, NULL);
 		s_clib_add_entry(temp);
 		free(temp);
 		free(cwd);
@@ -437,11 +438,17 @@ g_rc_component_library_search(SCM path)
 
 		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
 						      strlen(dptr->d_name)+2));
-		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+		sprintf(fullpath, "%s%c%s", string, PATH_SEPARATER_CHAR,
+					    dptr->d_name);
                 stat(fullpath, &buf);
                 if (S_ISDIR(buf.st_mode)) { 
 			if (s_clib_uniq(fullpath)) {
-				if (fullpath[0] == '/') {
+#ifdef __MINGW32__
+				if (fullpath[1] == ':' && 
+				    fullpath[2] == PATH_SEPARATER_CHAR) {
+#else
+				if (fullpath[0] == PATH_SEPARATER_CHAR) {
+#endif
 					s_clib_add_entry(fullpath);
 #if DEBUG
 			printf("absolute: %s\n", fullpath);
@@ -449,7 +456,8 @@ g_rc_component_library_search(SCM path)
 				} else {
 					cwd = getcwd(NULL, 1024);
 					temp = u_basic_strdup_multiple(cwd, 
-							"/", fullpath, NULL);
+							PATH_SEPARATER_STRING, 
+							fullpath, NULL);
 #if DEBUG
 			printf("relative: %s\n", temp);
 #endif
@@ -519,11 +527,16 @@ g_rc_source_library(SCM path)
 		return SCM_BOOL_F;
 	}
 
-	if (string[0] == '/') {
+#ifdef __MINGW32__
+	if (string[1] == ':' && string[2] == PATH_SEPARATER_CHAR) {
+#else
+	if (string[0] == PATH_SEPARATER_CHAR) {
+#endif
 		s_slib_add_entry(string);
 	} else {
 		cwd = getcwd(NULL, 1024);
-		temp = u_basic_strdup_multiple(cwd, "/", string, NULL);
+		temp = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, 
+					       string, NULL);
 		s_slib_add_entry(temp);
 		free(temp);
 		free(cwd);
@@ -593,11 +606,17 @@ g_rc_source_library_search(SCM path)
 
 		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
 						      strlen(dptr->d_name)+2));
-		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+		sprintf(fullpath, "%s%c%s", string, PATH_SEPARATER_CHAR,
+					    dptr->d_name);
                 stat(fullpath, &buf);
                 if (S_ISDIR(buf.st_mode)) { 
 			if (s_slib_uniq(fullpath)) {
-				if (fullpath[0] == '/') {
+#ifdef __MINGW32__
+				if (fullpath[1] == ':' && 
+				    fullpath[2] == PATH_SEPARATER_CHAR) {
+#else
+				if (fullpath[0] == PATH_SEPARATER_CHAR) {
+#endif
 					s_slib_add_entry(fullpath);
 #if DEBUG
 			printf("absolute: %s\n", fullpath);
@@ -605,7 +624,8 @@ g_rc_source_library_search(SCM path)
 				} else {
 					cwd = getcwd(NULL, 1024);
 					temp = u_basic_strdup_multiple(cwd, 
-							"/", fullpath, NULL);
+							PATH_SEPARATER_STRING, 
+							fullpath, NULL);
 #if DEBUG
 			printf("relative: %s\n", temp);
 #endif

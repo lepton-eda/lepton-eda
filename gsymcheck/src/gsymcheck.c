@@ -18,11 +18,11 @@
  */
 
 #include <config.h>
+
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
-#include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -84,9 +84,8 @@ main_prog(int argc, char *argv[])
             "conditions; please see the COPYING file for more details.\n\n"); 
   }
 
-#ifdef __CYGWIN32__
-  fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
-  fprintf(stderr, "USE AT YOUR OWN RISK!\n");
+#ifdef __MINGW32__
+  fprintf(stderr, "This is the MINGW32 port.\n");
 #endif  
 
   /* register guile (scheme) functions */

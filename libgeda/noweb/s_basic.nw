@@ -66,33 +66,32 @@
 
 <<s_basic.c : include directives>>=
 #include <config.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <ctype.h>
 
+#include <stdio.h>
+#include <ctype.h>
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_ASSERT_H
+#include <assert.h>
+#endif
 #ifndef HAVE_VSNPRINTF
 #include <stdarg.h>
 #endif
-
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-
 #include "o_types.h"
+#include "colors.h"
 
-#include "../include/colors.h"
 #include "../include/prototype.h"
 
 @ 

@@ -43,11 +43,11 @@
 
 <<gschem.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
-#include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -167,9 +167,8 @@ main_prog(int argc, char *argv[])
             "conditions; please see the COPYING file for more details.\n\n"); 
   }
 
-#ifdef __CYGWIN32__
-  fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
-  fprintf(stderr, "USE AT YOUR OWN RISK!\n");
+#ifdef __MINGW32__
+  fprintf(stderr, "This is the MINGW32 port.\n");
 #endif  
 
 
@@ -196,7 +195,8 @@ main_prog(int argc, char *argv[])
   g_rc_parse();
 
   
-  sprintf(input_str, "%s/gschem.scm", default_scheme_directory);
+  sprintf(input_str, "%s%cgschem.scm", default_scheme_directory, 
+	  PATH_SEPARATER_CHAR);
   if (g_read_file(input_str) != -1) {
     s_log_message("Read init scm file [%s]\n", input_str);
   } else {
@@ -235,21 +235,18 @@ main_prog(int argc, char *argv[])
        * so, just set the filename and open the
        * schematic for the first page */
 
-      if (argv[i][0] == '/') {
+#ifdef __MINGW32__
+      if (argv[i][1] == ':' && argv[i][2] == PATH_SEPARATER_CHAR) {
+#else
+      if (argv[i][0] == PATH_SEPARATER_CHAR) {
+#endif
         w_current->page_current->page_filename = 
           u_basic_strdup_multiple(argv[i], NULL);
       } else {
         w_current->page_current->page_filename = 
-          u_basic_strdup_multiple(cwd, "/", argv[i], 
+          u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, argv[i], 
                                   NULL);
       }
-
-#if 0 /* now done above */
-      w_current->page_current->page_filename =
-        malloc(sizeof(char) * strlen(argv[i]) + 5);
-      strcpy(w_current->page_current->page_filename,
-             argv[i]);
-#endif
 
       if (!quiet_mode) {
         printf("Loading schematic [%s]\n", argv[i]);
@@ -318,8 +315,8 @@ main_prog(int argc, char *argv[])
 
     w_current->num_untitled++;
     sprintf(w_current->page_current->page_filename,
-            "%s/%s_%d.sch",
-            w_current->cwd,
+            "%s%c%s_%d.sch",
+            w_current->cwd, PATH_SEPARATER_CHAR,
             w_current->untitled_name,
             w_current->num_untitled);
 

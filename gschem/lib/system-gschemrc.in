@@ -472,7 +472,7 @@
 ; promote-invisible string
 ;
 ; If attribute-promotion is enabled, then this controls if invisible floating
-; attributes are promoted (attached to the outside of the attribute) if the 
+; attributes are promoted (attached to the outside of the component) if the 
 ; text string is invisible.  There are cases where it is undesirable, so the 
 ; default is disabled.
 ;

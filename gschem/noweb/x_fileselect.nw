@@ -88,18 +88,16 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <sys/types.h>
-#ifndef __CYGWIN32__ 
-#include <sys/stat.h>
-#endif
 #include <sys/param.h>
-
-#if defined(HAVE_DIRENT_H) 
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
-
-#ifdef HAVE_STRINGS_H
+#ifdef HAVE_STRING_H
 #include <string.h>
 #endif
 
@@ -107,10 +105,6 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
-
-#ifdef __CYGWIN32__ 
-#include <sys/stat.h>
-#endif
 
 @
 
@@ -240,7 +234,8 @@ x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
   temp = getcwd(NULL, 1024);
 	
   if (filename) {
-    f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
+    f_current->directory = u_basic_strdup_multiple(temp, 
+					 	   PATH_SEPARATER_STRING, NULL);
     f_current->filename = u_basic_strdup(filename);
 					
     free(temp); 
@@ -249,7 +244,8 @@ x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
     gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
   } else {
-    f_current->directory = u_basic_strdup_multiple(temp, "/", NULL);
+    f_current->directory = u_basic_strdup_multiple(temp, 
+						   PATH_SEPARATER_STRING, NULL);
 
     if (f_current->filename) {
       free(f_current->filename);
@@ -503,7 +499,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
   max_width = 0;
   for (i = 0 ; i < dir_count; i++) {
     temp = u_basic_strdup_multiple(f_current->directory_entries[i],
-                                   "/", NULL);
+                                   PATH_SEPARATER_STRING, NULL);
     text[0] = temp; 
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
     width = gdk_string_width(f_current->dir_list->style->font,
@@ -788,7 +784,7 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 
   len = strlen(string);
 
-  if (string[len - 1] != '/') {
+  if (string[len - 1] != PATH_SEPARATER_CHAR) {
     if (w_current->page_current->page_filename) {
       free(w_current->page_current->page_filename);
     }
@@ -880,7 +876,7 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
   printf("opening: %s\n", string);
 #endif
 
-  if (string[len - 1] != '/') {
+  if (string[len - 1] != PATH_SEPARATER_CHAR) {
     if ( !(found_page = s_page_new(w_current, string)) ) {
       w_current->DONT_REDRAW = 1;
       (void)f_open(w_current, 
@@ -1037,7 +1033,7 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
   filename = (char *) malloc(sizeof(char)*(strlen(new_filename)+1));
 
   ptr = new_filename;	
-  temp = strrchr(new_filename, '/');	
+  temp = strrchr(new_filename, PATH_SEPARATER_CHAR);	
   if (temp) {
     i = 0;
     while(ptr != temp && ptr[0] != '\0') {
@@ -1066,7 +1062,7 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
 
   if (directory) {
     f_current->directory = u_basic_strdup_multiple(directory, 
-                                                   "/", NULL);
+                                                   PATH_SEPARATER_STRING, NULL);
     free(directory);
   }
 
@@ -1336,7 +1332,7 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
   max_width = 0;
   string = (char *) s_clib_getdir(i);
   while (string != NULL) {
-    temp = strrchr(string, '/');
+    temp = strrchr(string, PATH_SEPARATER_CHAR);
     if (temp) {
       temp++; /* get past last '/' */
       text[0] = temp;
@@ -1346,7 +1342,7 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
 
     f_current->directory_entries[i] = u_basic_strdup_multiple(
                                                               string,
-                                                              "/", NULL);
+                                                              PATH_SEPARATER_STRING, NULL);
 		
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
     width = gdk_string_width(f_current->dir_list->style->font,

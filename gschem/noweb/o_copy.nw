@@ -42,6 +42,7 @@
 
 <<o_copy.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 #include <string.h>
 

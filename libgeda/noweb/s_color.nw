@@ -48,24 +48,21 @@
 
 <<s_color.c : include directives>>=
 #include <config.h>
-#include <stdio.h>
-#include <signal.h>
-#include <math.h>
 
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#include <stdio.h>
+#include <math.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
-#include "prototype.h"
+
+#include "../include/prototype.h"
 
 @
 

@@ -57,20 +57,19 @@
 #include <config.h>
 
 #include <stdio.h>
-#include <stdlib.h> 
-#include <string.h> 
 #include <sys/types.h>
-
-#if defined(HAVE_DIRENT_H) 
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
-
 
 #include "defines.h"
 #include "struct.h"

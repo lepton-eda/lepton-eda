@@ -45,17 +45,17 @@
 
 <<x_multimulti.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 
 #include <libgeda/libgeda.h>
 
-#include "../include/x_states.h"
-#include "../include/prototype.h"
-
-
 #ifdef HAS_LIBGTKEXTRA
 #include <gtkextra/gtksheet.h>
 #endif
+
+#include "../include/x_states.h"
+#include "../include/prototype.h"
 
 @
 

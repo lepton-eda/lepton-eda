@@ -64,13 +64,11 @@
 
 <<m_basic.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 #include <math.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"

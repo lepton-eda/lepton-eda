@@ -47,6 +47,7 @@
 
 <<o_pin.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 #include <math.h>
 

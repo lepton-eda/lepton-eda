@@ -55,6 +55,7 @@
 
 <<o_complex.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 #include <math.h>
 #ifdef HAVE_UNISTD_H
@@ -328,7 +329,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
   if (w_current->include_complex) {
     include_filename = u_basic_strdup_multiple(
                                                w_current->internal_clib,
-                                               "/",
+                                               PATH_SEPARATER_STRING,
                                                w_current->internal_basename,
                                                NULL);
 

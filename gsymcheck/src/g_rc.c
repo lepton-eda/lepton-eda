@@ -19,15 +19,18 @@
 
 #include <config.h>
 #include <stdio.h> 
-#include <string.h>
-#include <ctype.h>
-#include <stdlib.h>
-#include <sys/stat.h>
 
-#if defined(HAVE_DIRENT_H) 
+#include <sys/stat.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#include <ctype.h>
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
-
 #ifdef HAVE_UNISTD_H
 #include <unistd.h> 
 #endif

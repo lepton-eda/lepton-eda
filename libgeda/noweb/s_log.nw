@@ -44,32 +44,41 @@
 
 <<s_log.c : include directives>>=
 #include <config.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdarg.h>
-#include <fcntl.h>
-#include <errno.h>
 
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_ASSERT_H
+#include <assert.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_STDARG_H
+#include <stdarg.h>
+#endif
+#ifdef HAVE_FCNTL_H
+#include <fcntl.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"
 #include "struct.h"
 #include "defines.h"
 #include "globals.h"
-
 #include "funcs.h"
 #include "o_types.h"
+
 #include "../include/prototype.h"
 
 @
@@ -100,7 +109,7 @@ s_log_init(char *cwd, char *filename)
     return;
   }
 
-  path = u_basic_strdup_multiple(cwd, "/", filename, NULL);
+  path = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, filename, NULL);
 
   /* create log file */
   logfile_fd = open(path, O_RDWR|O_CREAT|O_TRUNC, 0600);	

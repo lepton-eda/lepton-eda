@@ -60,9 +60,11 @@
 #include <config.h>
 
 #include <stdio.h>
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #include <libgeda/libgeda.h>
@@ -95,7 +97,8 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 #if DEBUB
   printf("%s %s\n", directory, filename);
 #endif
-  temp = u_basic_strdup_multiple(directory, filename, NULL);
+  temp = u_basic_strdup_multiple(directory, PATH_SEPARATER_STRING, 
+				 filename, NULL);
 
   s_page_free(preview, preview->page_current);
 

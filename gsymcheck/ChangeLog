@@ -1,3 +1,15 @@
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Added -liberty for the Mingw32 port
+
+2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, config.h.in: Added a few checks for some
+	non-portable #includes
+	
+	* configure.in: Added checks for mingw32 and disabled the
+	cygwin port
+	
 2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/Makefile.am utils/Makefile.am: Andrew Dyer found a GUILE_* bug. 

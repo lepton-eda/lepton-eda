@@ -1,3 +1,36 @@
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Added -liberty for the Mingw32 port
+
+	* noweb/g_rc.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+	* noweb/gschem.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+	* noweb/i_callbacks.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+	* noweb/o_complex.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+	* noweb/x_filesel.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+	* noweb/x_log.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+	* noweb/x_preview.nw: Used new path separater #defines in a few
+        sprintf/u_strdup_multiple
+
+2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, config.h.in: Added a few checks for some
+	non-portable #includes
+	
+	* configure.in: Added checks for mingw32 and disabled the
+	cygwin port
+	
 2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Removed all trace of GUILE_LIB and GUILE_INCLUDE

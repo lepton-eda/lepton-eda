@@ -91,21 +91,20 @@
 
 <<o_attrib.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
 #include <math.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
 #include "o_types.h"
-
 #include "colors.h"
 
 #include "../include/prototype.h"

@@ -18,9 +18,10 @@
  */
 
 #include <config.h>
+
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

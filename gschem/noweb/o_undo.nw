@@ -48,16 +48,17 @@
 
 <<o_undo.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#include <math.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <libgeda/libgeda.h>
-#include <math.h>
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
@@ -140,7 +141,8 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
     filename = malloc(sizeof(char)*(strlen("/gschem.save_.sch")+
 	              strlen(TMP)+32));
 
-    sprintf(filename, "%s/gschem.save%d_%d.sch", TMP, prog_pid, 
+    sprintf(filename, "%s%cgschem.save%d_%d.sch", TMP, PATH_SEPARATER_CHAR,
+            prog_pid, 
             undo_file_index++);
 
     f_save(w_current, filename);
@@ -531,7 +533,8 @@ o_undo_cleanup(void)
   char filename[128];
 
   for (i = 0 ; i < undo_file_index; i++) {
-    sprintf(filename, "/tmp/gschem.save%d_%d.sch", prog_pid, i);
+    sprintf(filename, "%s%cgschem.save%d_%d.sch", TMP, PATH_SEPARATER_CHAR, 
+	    prog_pid, i);
     unlink(filename);
   }
 

@@ -61,13 +61,11 @@
 
 <<o_net_basic.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
 #include <math.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #ifdef HAS_LIBGDGEDA
@@ -78,7 +76,6 @@
 #include "struct.h"
 #include "globals.h"
 #include "o_types.h"
-
 #include "colors.h"
 #include "funcs.h"
 

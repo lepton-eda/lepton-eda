@@ -49,11 +49,8 @@
 
 <<o_move.c : include directives>>=
 #include <config.h>
-#include <stdio.h>
 
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
+#include <stdio.h>
 
 #include <libgeda/libgeda.h>
 

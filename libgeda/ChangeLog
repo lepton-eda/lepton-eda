@@ -1,3 +1,39 @@
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h: Added a #if and a #define for M_PI
+
+	* include/defines.h: Put in #defines for path separater for unix vs
+	mingw
+
+	* noweb/o_complex.nw: Used above path separater #defines in a few
+	sprintf/u_strdup_multiple
+
+	* noweb/o_text.nw: Used above path separater #defines in a few
+	sprintf/u_strdup_multiple
+
+	* noweb/s_log.nw: Used above path separater #defines in a few
+	sprintf/u_strdup_multiple
+
+	* noweb/s_page.nw: Used above path separater #defines in a few
+	sprintf/u_strdup_multiple
+
+	* noweb/s_clib.nw: Used above path separater #defines in a few
+	sprintf/u_strdup_multiple
+
+	* noweb/s_slib.nw: Used above path separater #defines in a few
+	sprintf/u_strdup_multiple
+
+2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, config.h.in: Added a few checks for some
+	non-portable #includes
+
+	* noweb/*.nw: Reworked the #include section to use the above
+	checks.
+
+	* configure.in: Added checks for mingw32 and disabled the
+	cygwin port
+	
 2002-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/Makefile.am: Andrew Dyer found a GUILE_* bug. Fixed.

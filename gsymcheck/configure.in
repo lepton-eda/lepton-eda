@@ -57,7 +57,15 @@ dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
 
 dnl Check to see if we are building in the cygnus win32 environment
+dnl not supported anymore
 AC_CYGWIN
+
+if test "$CYGWIN" = "yes"; then
+          AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)       
+fi
+
+dnl Check to see if we are building in the mingw32 environment
+AC_MINGW32
 
 dnl Guile stuff
 GUILE_FLAGS
@@ -65,10 +73,11 @@ GUILE_FLAGS
 saved_cflags="$CFLAGS"
 saved_ldflags="$LDFLAGS"
 
-if ! test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
-        echo Including -fnative-struct in CFLAGS for CYGWIN port
+if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
+        echo Including -fnative-struct in CFLAGS for MINGW32 port
+        echo Including -lregex in LDFLAGS for MINGW32 port
         CFLAGS="$CFLAGS -fnative-struct"
-        X_LDFLAGS="-lregex $X_LDFLAGS"
+        X_LDFLAGS="-lregex -liberty $X_LDFLAGS"
 fi
 
 if test "$debug" = "yes"; then
@@ -88,12 +97,12 @@ AC_CHECK_LIB(X11, XOpenDisplay, X_LIBS="-lX11", X_LIBS=no, $X_EXTRA_LIBS)
 AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", X_EXT=no, $X_EXTRA_LIBS)
 dnl AC_CHECK_LIB(Xext, XShmAttach, X_LIBS="-lXext $X_LIBS", XEXT=no, $X_EXTRA_LIBS)
 
-if test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
+if test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	if test "$X_LIBS" = no; then
           AC_MSG_ERROR(Cannot find -lX11 library)
         fi
 else 
-	echo X11 not require for CYGWIN port
+	echo X11 not require for MINGW32 port
 fi
 
 dnl Checking for rint in math library
@@ -234,7 +243,8 @@ fi
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
-AC_CHECK_HEADERS(fcntl.h unistd.h strings.h)
+AC_CHECK_HEADERS(unistd.h string.h stdlib.h \
+                 stdarg.h assert.h fcntl.h errno.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

@@ -59,22 +59,26 @@
 
 <<s_page.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_ASSERT_H
 #include <assert.h>
+#endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
-
 #include "o_types.h"
+
 #include "../include/prototype.h"
 
 @
@@ -245,17 +249,19 @@ s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
   p_new->CHANGED = 0;
   pwd = getcwd(NULL, 1024);
 
-  if (page_filename[0] == '/') {
+  /* big assumption here that page_filename isn't null */
+#ifdef __MINGW32__
+  if (page_filename[1] == ':' && page_filename[2] == PATH_SEPARATER_CHAR) {
+#else
+  if (page_filename[0] == PATH_SEPARATER_CHAR) {
+#endif
     p_new->page_filename = u_basic_strdup_multiple(page_filename, 
                                                    NULL);
   } else {
-    p_new->page_filename = u_basic_strdup_multiple(pwd, "/", 
+    p_new->page_filename = u_basic_strdup_multiple(pwd, PATH_SEPARATER_STRING, 
                                                    page_filename, NULL);
   }
-#if 0 /* now done in above line */
-  p_new->page_filename = malloc(sizeof(char)*strlen(page_filename)+1);
-  strcpy(p_new->page_filename, page_filename);
-#endif
+
   free(pwd);
 	
   p_new->coord_aspectratio = (float) w_current->init_right /

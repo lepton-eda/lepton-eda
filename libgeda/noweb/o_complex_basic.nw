@@ -69,24 +69,23 @@
 
 <<o_complex_basic.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
 #include <guile/gh.h>
 
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
 #include "o_types.h"
-
 #include "colors.h"
 #include "funcs.h"
 
@@ -507,7 +506,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   /* reason this works is because it has a head, see add_head above */
 
   /* check for validity */
-  sprintf(filename, "%s/%s", clib, basename);
+  sprintf(filename, "%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
 
   if (access(filename, R_OK)) {
     fprintf(stderr, "Could not open [%s]\n", filename); 
@@ -760,7 +759,7 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
     s_log_message("Complex [%s] not in library\n", basename);
   } else {
     /* check size? hack */
-    sprintf(filename, "%s/%s", clib, basename);
+    sprintf(filename, "%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
 
     object_list = o_complex_add(w_current, object_list, type, 
                                 WHITE, 

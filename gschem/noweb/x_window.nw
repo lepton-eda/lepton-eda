@@ -59,8 +59,8 @@
 
 <<x_window.c : include directives>>=
 #include <config.h>
+
 #include <stdio.h>
-#include <signal.h>
 
 #include <libgeda/libgeda.h>
 

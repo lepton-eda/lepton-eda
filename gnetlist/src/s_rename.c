@@ -18,13 +18,18 @@
  */
 
 #include <config.h>
+
 #include <stdio.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
-#include <stdlib.h>
-#include <assert.h>
 #include <ctype.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_ASSERT_H
+#include <assert.h>
+#endif
 
 #include <libgeda/libgeda.h>
 

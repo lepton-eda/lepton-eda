@@ -1,7 +1,7 @@
 
 #include "config.h"
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
 #endif
 
 #define CHAR_POINTS 2
