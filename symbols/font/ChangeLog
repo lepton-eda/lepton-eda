@@ -4,6 +4,10 @@ ChangeLog for font defs for gEDA (top level)
 See ChangeLog in gschem for more gschem specific changes
 Most recent changes are at the top of this file
 
+2001-07-05 Increased the width of the 3 digit
+
+---------------------------------------------------------------------------
+
 11/15/98 Found a bug in the space.sym (my little hack wasn't working for 
 	 using _ as the space char), had to add the special field for 
 	 space only

@@ -388,6 +388,35 @@ Chris Ellec		- For contributing the follwing symbol:
 			  Ales had to minorly tweek some of them /
 			  renamed 7805-1.sym (to lm7805-1.sym)
 
+Eduardo Tavares      	- For contributing the following symbols:
+
+				6n137-1.sym AT89S8252-24PC.sym LM628N-6.sym 
+			        max865EUA-1.sym AN82527.sym HCPL4701-1.sym
+			        max3226-1.sym si9200-1.sym
+
+Bert Timmerman		- For contributing the following symbols:
+
+				27C256-1.sym 62256-2.sym MAX807-1.sym 
+				SAB80C537-1.sym ULN2801A-1.sym 
+				connector20-1.sym diode-bridge-1.sym 
+				header26-1.sym header3-1.sym led-2.sym 
+				switch-dip4-2.sym switch-dip5-1.sym 
+				switch-dip5-2.sym switch-dip6-2.sym 
+				switch-dip8-2.sym
+				74HCT01-1.sym 74HCT03-1.sym 74HCT05-1.sym 
+				74HCT08-1.sym 74HCT245-1.sym 74HCT541-1.sym
+				max189-1.sym max237-1.sym max478-1.sym 
+				max492-1.sym max531-1.sym max663-1.sym 
+				max664-1.sym
+				lm2822m-1.sym lm741-1.sym lm7905-1.sym
+				DB31-1.sym DB9-2.sym
+				resistor-variable-2.sym resistorpack8-1.sym
+				zener-4.sym
+				ADC0804-1.sym DAC0808-1.sym
+				CS5396-1.sym HA5221-1.sym TDA2822M-1.sym
+				PCM2702E-1.sym UAA170-1.sym
+
+
 Also thanks go to all the people on the geda-dev mailing list.  Many of
 the subscribers provided good suggestions which are greatly appreciated
 (and even implemented :-).  

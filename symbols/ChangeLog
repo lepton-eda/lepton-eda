@@ -6,6 +6,9 @@
 	* Removed all trace of libtool, libtool is certainly not required
 	  to install the symbols
 
+	* maxim/max6314-1.sym, max535-1.sym: Cleaned up symbols to be more
+	  consistant with the rest of the max* symbols
+
 2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * Removed all Makefile.in files and configure
