@@ -3,6 +3,15 @@
         * configure and friends: Ran "autoreconf --force --install -v" 
         to really upgrade to the auto* tools.
 
+	* connector/*.sym: gsymupdate'd all symbols in this library.
+
+	* 74/74595-1.sym linear/lt1782-1.sym maxim/max1407-1.sym
+	maxim/max489-1.sym maxim/max6018-1.sym micro/ATmega323-1.sym
+	micro/MSP430x11x1.sym micro/MSP430x11x2.sym micro/MSP430x12x.sym
+	micro/MSP430x12x2.sym micro/MSP430x15-6x.sym micro/pic16F877-1.sym
+	micro/pic16F877A-1.sym: Added symbols via the web upload mechanism.
+  	Some cleanup.
+
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* misc/busripper-1.sym, busripper-2.sym: Added bus ripper symbols.
