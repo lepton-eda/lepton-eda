@@ -134,10 +134,9 @@ int make_box(int fldcnt,char *pFields[]);
 static char *strLabel(char *p, char *pTemp);
 void strtrail(char *wrk);
 int line_chk(char *pBuf);
-#ifndef __CYGWIN32__
+#ifndef __MINGW32__
 int stricmp(char *s, char *p);
 #endif
-
 
 int pin_len=300;
 int pin_spacing =300;
@@ -614,7 +613,7 @@ int line_chk(char *pBuf)
 /************************************************/
 /* Compare two string without regard for case   */
 /************************************************/
-#ifndef __CYGWIN32__
+#ifndef __MINGW32__
 int stricmp(char *s, char *p)
 {
   for (; toupper(*s) == toupper(*p); s++, p++)

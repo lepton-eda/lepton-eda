@@ -171,7 +171,8 @@ void main_prog(int argc, char *argv[])
 
     /* temporarly reuse input_str */
 
-    sprintf(input_str, "%s/gnetlist.scm", pr_current->scheme_directory);
+    sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory, 
+            PATH_SEPARATER_CHAR);
 
 /* don't need either of these */
 /*	gh_eval_str ("(primitive-load-path \"ice-9/boot-9.scm\")");*/
@@ -188,8 +189,8 @@ void main_prog(int argc, char *argv[])
     if (guile_proc) {
 
 	/* load the appropriate scm file */
-	sprintf(input_str, "%s/gnet-%s.scm", pr_current->scheme_directory,
-		guile_proc);
+	sprintf(input_str, "%s%cgnet-%s.scm", pr_current->scheme_directory,
+		PATH_SEPARATER_CHAR, guile_proc);
 
 	if (g_read_file(input_str) != -1) {
 	    s_log_message("Read %s scm file [%s]\n", guile_proc,

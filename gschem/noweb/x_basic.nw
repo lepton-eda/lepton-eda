@@ -26,6 +26,7 @@
 <<x_basic.c : x_scrollbars_update()>>
 <<x_basic.c : x_create_dialog_box()>>
 <<x_basic.c : x_create_dialog_box_horiz()>>
+<<x_basic.c : x_warp_cursor()>>
 
 @
 
@@ -414,5 +415,22 @@ x_create_dialog_box_horiz(GtkWidget **out_hbox, GtkWidget **out_action_area)
   return(dialog);
 }
 
+
+@ %def x_create_dialog_box_horiz
+
+
+@section Function @code{x_warp_cursor()}
+
+@defun warp_cursor widget x y relative 
+@end defun
+
+<<x_basic.c : x_warp_cursor()>>=
+void x_basic_warp_cursor(GtkWidget* widget, gint x, gint y, gboolean relative)
+{
+#ifndef __MINGW32__
+   XWarpPointer(GDK_WINDOW_XDISPLAY(widget->window),None, 
+                GDK_WINDOW_XWINDOW(widget->window),0,0,0,0,x,y);
+#endif
+}
 
 @ %def x_create_dialog_box_horiz

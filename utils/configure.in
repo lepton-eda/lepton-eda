@@ -1,5 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(src/char_width.c)
+AC_INIT
+AC_CONFIG_SRCDIR([src/char_width.c])
 
 dnl Initialize automake stuff
 PACKAGE=geda-utils
@@ -7,7 +8,7 @@ PACKAGE=geda-utils
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20020209
+VERSION=20020414
 
 echo Configuring utils version $VERSION
 
@@ -49,6 +50,14 @@ if test $optarg_found = yes; then
 		AC_DEFINE(OPTARG_IN_UNISTD)
 fi
 
+AC_CYGWIN
+
+if test "$CYGWIN" = "yes"; then
+          AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)       
+fi
+
+AC_MINGW32
+
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 
 # search for libgeda-config
@@ -61,11 +70,21 @@ fi
 LIBGEDA_CFLAGS=`$LIBGEDACONFIG --cflags`
 #LIBGEDA_LDFLAGS = `$LIBGEDACONFIG --libs`
 
+if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
+	echo Adding -liberty for MINGW32 port
+	LIBERTY="$LDFLAGS -liberty"
+	PATHSEP=\\\\
+else
+	PATHSEP=/
+fi 
+
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(LIBGEDA_CFLAGS)
+AC_SUBST(LIBERTY)
 
-AC_OUTPUT( 	Makefile \
+AC_CONFIG_FILES([Makefile \
 		examples/Makefile \
-		src/Makefile )
+		src/Makefile ])
+AC_OUTPUT
 

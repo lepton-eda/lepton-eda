@@ -1,3 +1,64 @@
+2002-04-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_dialog.nw: Added the rest of the signal connects for
+	keypresses
+
+	* lib/system-gschemrc.in: Moved some attribute related items from
+	the Edit/ menu to the Attribute/ menu (Find Specific Text, Hide
+	Specific Text, Show Specific Text)
+	
+	* lib/system-gschemrc.in: Changed the hotkeys for the above items
+ 	to be under the Attribute/ menu)
+
+2002-04-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_dialog.nw: Added a key binding to each dialog box so that
+	Escape closes the dialog box. Suggestion by Mauricio de Alencar.
+
+2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw: Missed a few hardcoded /'s, fixed.
+
+	* noweb/x_event.nw: Added a few lines of code to support the double
+	click on an object to open up the edit dialog box.  Suggestion by
+	Mauricio de Alencar.
+
+	* noweb/x_dialog.nw: Added a few lines of code to automatically select
+  	the value entry on open in the attrib edit dialog box.  Suggestion by
+        Mauricio de Alencar.
+
+	* noweb/o_text.nw: Changed the default color of the little x that
+	marks the origin to red (the detached attribute color).  Suggestion by
+        Mauricio de Alencar.
+
+	* configure.in: Changed the function which is search for libpng.
+	This was needed for the win32 port.
+
+	* noweb/x_basic.nw: Added x_warp_cursor utility function.
+
+	* noweb/a_zoom.nw: Used above x_warp_cursor to move the cursor to the
+	right place after a zoom in/out. Suggestion by Mauricio de Alencar.
+
+2002-04-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_fileselect.c: More work getting file dialog boxes to work
+	with the new path separater.
+
+2002-04-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_fileselect.c: Removed a / which was confusing the mingw32
+	port
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
 2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Added -liberty for the Mingw32 port
@@ -22,6 +83,9 @@
 
 	* noweb/x_preview.nw: Used new path separater #defines in a few
         sprintf/u_strdup_multiple
+
+	* configure.in and friends: Upgraded to autoconf 2.53, libtool 1.5,
+        and automake 1.5.  Lots of changes in various places for this upgrade.
 
 2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -284,7 +284,7 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
   } else {
 
     gdk_gc_set_foreground(w_current->gc, 
-                          x_get_color(o_current->color));
+                          x_get_color(w_current->detachedattr_color));
   }
 
   gdk_draw_line(w_current->window, w_current->gc, 

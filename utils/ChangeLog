@@ -1,3 +1,17 @@
+2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gmk_sym.c: Fixed a #ifndef to be MINGW32 correct 
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
 2002-02-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/sarlacc_schem.c: Put in placed the updated files from 

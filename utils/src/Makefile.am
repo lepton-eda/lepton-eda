@@ -11,9 +11,9 @@ sarlacc_schem_SOURCES = sarlacc_schem.c
 
 INCLUDES = $(LIBGEDA_CFLAGS)
 
-gmk_sym_LDADD = 
+gmk_sym_LDADD = $(LIBERTY)
 smash_megafile_LDADD = 
-convert_sym_LDADD = -lm
+convert_sym_LDADD = $(LIBERTY) -lm
 sarlacc_schem_LDADD = 
 
 EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl sarlacc_sym

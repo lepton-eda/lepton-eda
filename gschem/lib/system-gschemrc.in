@@ -22,7 +22,7 @@
 ;
 ; Contains all paths needed for all programs
 (define gedarcdir (getenv "GEDADATARC"))
-(load (string-append gedarcdir "/system-commonrc"))
+(load (string-append gedarcdir "@PATHSEP@system-commonrc"))
 
 ;
 ; Start of color related keywords
@@ -1016,11 +1016,7 @@
     ("b" . edit-embed)
     ("u" . edit-unembed)
     ("n" . edit-show-hidden)
-    ("v" . edit-make-text-visible)
-    ("Shift F" . edit-find-text)
-    ("h" . edit-hide-text)
-    ("Shift H" . edit-show-text)
-    ("a" . edit-autonumber)))
+    ("v" . edit-make-text-visible)))
 
 
 ;;;    ("h" . edit-stretch-hotkey)  Obsolete
@@ -1079,7 +1075,11 @@
     ("n" . attributes-show-name)
     ("v" . attributes-show-value)
     ("b" . attributes-show-both)
-    ("t" . attributes-visibility-toggle)))
+    ("t" . attributes-visibility-toggle)
+    ("Shift F" . edit-find-text)
+    ("h" . edit-hide-text)
+    ("Shift H" . edit-show-text)
+    ("a" . edit-autonumber)))
 
 ; All keys in this keymap *must* be unique
 (define options-keymap
@@ -1205,11 +1205,7 @@
            ("Embed Component"   edit-embed              edit-embed)
            ("Unembed Componnent" edit-unembed           edit-unembed)
 	   ("Show/Hide Inv Text" edit-show-hidden 	edit-show-hidden)
-	   ("Make Inv Text Vis"	 edit-make-text-visible edit-make-text-visible)
-	   ("Find Specific Text..."  edit-find-text 	edit-find-text)
-	   ("Hide Specific Text..."  edit-hide-text 	edit-hide-text)
-	   ("Show Specific Text..."  edit-show-text 	edit-show-text)
-	   ("Autonumber Text"   edit-autonumber		edit-autonumber)))
+	   ("Make Inv Text Vis"	 edit-make-text-visible edit-make-text-visible)))
 
 (define buffer-menu-items 
 ;;
@@ -1293,7 +1289,11 @@
 	   ("Show Name"		attributes-show-name    attributes-show-name)
 	   ("Show Both"		attributes-show-both    attributes-show-both)
 	   ("Toggle Visibility"	attributes-visibility-toggle    
-				attributes-visibility-toggle)))
+				attributes-visibility-toggle)
+	   ("Find Specific Text..."  edit-find-text 	edit-find-text)
+	   ("Hide Specific Text..."  edit-hide-text 	edit-hide-text)
+	   ("Show Specific Text..."  edit-show-text 	edit-show-text)
+	   ("Autonumber Text..."     edit-autonumber	edit-autonumber)))
 
 (define options-menu-items 
 ;;

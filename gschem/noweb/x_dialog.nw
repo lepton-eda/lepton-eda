@@ -16,6 +16,7 @@
 <<x_dialog.c : destroy_window()>>
 
 /***************** Start of Multiple Attrib Edit dialog box ***********/
+<<x_dialog.c : multi_attrib_edit_keypress()>>
 <<x_dialog.c : multi_attrib_edit_parser()>>
 <<x_dialog.c : multi_attrib_edit_set_values()>>
 <<x_dialog.c : multi_attrib_edit_clear()>>
@@ -28,12 +29,14 @@
 /***************** End of Multiple Attrib Edit dialog box *************/
 
 /***************** Start of Text Input dialog box *********************/
+<<x_dialog.c : text_input_dialog_keypress()>>
 <<x_dialog.c : text_input_dialog_apply()>>
 <<x_dialog.c : text_input_dialog_close()>>
 <<x_dialog.c : text_input_dialog()>>
 /***************** End of Text Input dialog box ***********************/
 
 /***************** Start of Attrib Edit dialog box ********************/
+<<x_dialog.c : attrib_edit_dialog_keypress()>>
 <<x_dialog.c : attrib_edit_dialog_ok()>>
 <<x_dialog.c : attrib_edit_dialog_cancel()>>
 <<x_dialog.c : attrib_edit_dialog_delete()>>
@@ -43,6 +46,7 @@
 /***************** Start of Text Edit dialog box **********************/
 <<x_dialog.c : change_alignement()>>
 <<x_dialog.c : create_menu_alignement()>>
+<<x_dialog.c : text_edit_dialog_keypress()>>
 <<x_dialog.c : text_edit_dialog_ok()>>
 <<x_dialog.c : text_edit_dialog_cancel()>>
 <<x_dialog.c : text_edit_dialog()>>
@@ -51,6 +55,7 @@
 /***************** Start of Line Type/width dialog box ****************/
 <<x_dialog.c : change_linetype()>>
 <<x_dialog.c : create_menu_linetype()>>
+<<x_dialog.c : line_type_dialog_keypress()>>
 <<x_dialog.c : line_type_dialog_ok()>>
 <<x_dialog.c : line_type_dialog_cancel()>>
 <<x_dialog.c : line_type_dialog()>>
@@ -59,53 +64,62 @@
 /***************** Start of Fill Type dialog box **********************/
 <<x_dialog.c : change_filltype()>>
 <<x_dialog.c : create_menu_filltype()>>
+<<x_dialog.c : fill_type_dialog_keypress()>>
 <<x_dialog.c : fill_type_dialog_ok()>>
 <<x_dialog.c : fill_type_dialog_cancel()>>
 <<x_dialog.c : fill_type_dialog()>>
 /***************** End of Fill Type dialog box ***********************/
 
 /***************** Start of Exit dialog box **************************/
+<<x_dialog.c : exit_dialog_keypress()>>
 <<x_dialog.c : exit_dialog_ok()>>
 <<x_dialog.c : exit_dialog_cancel()>>
 <<x_dialog.c : exit_dialog()>>
 /***************** End of Exit dialog box ****************************/
 
 /***************** Start of Arc dialog box ***************************/
+<<x_dialog.c : arc_angles_dialog_keypress()>>
 <<x_dialog.c : arc_angles_dialog_ok()>>
 <<x_dialog.c : arc_angles_dialog_cancel()>>
 <<x_dialog.c : arc_angle_dialog()>>
 /***************** End of Arc dialog box *****************************/
 
 /***************** Start of Translate dialog box *********************/
+<<x_dialog.c : translate_dialog_keypress()>>
 <<x_dialog.c : translate_dialog_ok()>>
 <<x_dialog.c : translate_dialog_cancel()>>
 <<x_dialog.c : translate_dialog()>>
 /***************** End of Translate dialog box ***********************/
 
 /***************** Start of Text size dialog box *********************/
+<<x_dialog.c : text_size_dialog_keypress()>>
 <<x_dialog.c : text_size_dialog_ok()>>
 <<x_dialog.c : text_size_dialog_cancel()>>
 <<x_dialog.c : text_size_dialog()>>
 /***************** End of Text size dialog box ***********************/
 
 /***************** Start of Snap size dialog box *********************/
+<<x_dialog.c : snap_size_dialog_keypress()>>
 <<x_dialog.c : snap_size_dialog_ok()>>
 <<x_dialog.c : snap_size_dialog_cancel()>>
 <<x_dialog.c : snap_size_dialog()>>
 /***************** End of Snap size dialog box ***********************/
 
 /***************** Start of slot edit dialog box *********************/
+<<x_dialog.c : slot_edit_dialog_keypress()>>
 <<x_dialog.c : slot_edit_dialog_ok()>>
 <<x_dialog.c : slot_edit_dialog_cancel()>>
 <<x_dialog.c : slot_edit_dialog()>>
 /***************** End of Slot Edit dialog box ***********************/
 
 /***************** Start of help/about dialog box ********************/
+<<x_dialog.c : about_dialog_keypress()>>
 <<x_dialog.c : about_dialog_close()>>
 <<x_dialog.c : about_dialog()>>
 /***************** End of help/about dialog box *********************/
 
 /***************** Start of coord dialog box ************************/
+<<x_dialog.c : coord_dialog_keypress()>>
 <<x_dialog.c : coord_dialog_close()>>
 <<x_dialog.c : coord_display_update()>>
 <<x_dialog.c : coord_dialog()>>
@@ -115,6 +129,7 @@
 <<x_dialog.c : color_set()>>
 <<x_dialog.c : index2functionstring()>>
 <<x_dialog.c : create_color_menu()>>
+<<x_dialog.c : color_edit_dialog_keypress()>>
 <<x_dialog.c : color_edit_dialog_close()>>
 <<x_dialog.c : color_edit_dialog_apply()>>
 <<x_dialog.c : color_edit_dialog()>>
@@ -122,7 +137,8 @@
 
 /***************** Start of help/keymapping dialog box **************/
 <<x_dialog.c : global variables for help/keymapping dialog box>>
-<<x_dialog.c : x_dialog_hotkey_close()>>
+<<x_dialog.c : x_dialog_hotkeys_keypress()>>
+<<x_dialog.c : x_dialog_hotkeys_close()>>
 <<x_dialog.c : x_dialog_hotkeys_free_all()>>
 <<x_dialog.c : x_dialog_hotkeys_fill()>>
 <<x_dialog.c : x_dialog_hotkeys()>>
@@ -139,23 +155,30 @@
 /*********** End of generic text input dialog box *******/
 
 /*********** Start of find text dialog box *******/
+<<x_dialog.c : find_text_keypress()>>
 <<x_dialog.c : find_text_ok()>>
 <<x_dialog.c : find_text_done()>>
 <<x_dialog.c : find_text_dialog()>>
 /*********** End of find text dialog box *******/
 
 /*********** Start of hide text dialog box *******/
+<<x_dialog.c : hide_text_keypress()>>
 <<x_dialog.c : hide_text_ok()>>
+<<x_dialog.c : hide_text_done()>>
 <<x_dialog.c : hide_text_dialog()>>
 /*********** End of hide text dialog box *******/
 
 /*********** Start of show text dialog box *******/
+<<x_dialog.c : show_text_keypress()>>
 <<x_dialog.c : show_text_ok()>>
+<<x_dialog.c : show_text_done()>>
 <<x_dialog.c : show_text_dialog()>>
 /*********** End of show text dialog box *******/
 
 /*********** Start of autonumber text dialog box *******/
+<<x_dialog.c : autonumber_text_keypress()>>
 <<x_dialog.c : autonumber_text_ok()>>
+<<x_dialog.c : autonumber_text_done()>>
 <<x_dialog.c : autonumber_text_dialog()>>
 /*********** End of autonumber text dialog box *******/
 @
@@ -219,6 +242,23 @@ destroy_window(GtkWidget *widget, GtkWidget **window)
 
 
 @ %def destroy_window
+
+
+@section Function @code{multi_attrib_edit_keypress()}
+
+@defun multi_attrib_edit_keypress w w_current
+@end defun
+
+<<x_dialog.c : multi_attrib_edit_keypress()>>=
+void
+multi_attrib_edit_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	multi_attrib_edit_close(NULL, w_current);	
+   }
+}
+@ %def multi_attrib_edit_keypress
 
 
 @section Function @code{multi_attrib_edit_parser()}
@@ -840,9 +880,13 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 
   gtk_window_position(GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect(GTK_OBJECT (window), "destroy",
+  gtk_signal_connect(GTK_OBJECT (w_current->mawindow), "destroy",
                      GTK_SIGNAL_FUNC(destroy_window),
                      &w_current->mawindow);
+
+  gtk_signal_connect(GTK_OBJECT(w_current->mawindow),
+                     "key_press_event",
+                     (GtkSignalFunc) multi_attrib_edit_keypress, w_current);
 
   gtk_signal_connect(GTK_OBJECT(val_entry), "activate",
                      GTK_SIGNAL_FUNC(multi_attrib_edit_change),w_current);
@@ -871,6 +915,22 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 
 @ %def multi_attrib_edit
 
+
+@section Function @code{text_input_dialog_keypress()}
+
+@defun text_input_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : text_input_dialog_keypress()>>=
+void
+text_input_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	text_input_dialog_close(NULL, w_current);	
+   }
+}
+@ %def text_input_dialog_keypress
 
 @section Function @code{text_input_dialog_apply()}
 
@@ -992,6 +1052,10 @@ text_input_dialog (TOPLEVEL *w_current)
                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->tiwindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->tiwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) text_input_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT (w_current->tiwindow),
                        "delete_event",
@@ -1056,6 +1120,22 @@ text_input_dialog (TOPLEVEL *w_current)
 
 
 @ %def text_input_dialog
+
+@section Function @code{attrib_edit_dialog_keypress()}
+
+@defun attrib_edit_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : attrib_edit_dialog_keypress()>>=
+void
+attrib_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	attrib_edit_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def attrib_edit_dialog_keypress
 
 
 @section Function @code{attrib_edit_dialog_ok()}
@@ -1201,7 +1281,7 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
 void
 attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list, int flag)
 {
-  int i;
+  int i, len;
   char *string=NULL;
   char name[1000], val[1000];
   OBJECT *attrib=NULL;
@@ -1410,6 +1490,10 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list, int flag)
                      GTK_SIGNAL_FUNC(destroy_window),
                      &w_current->aewindow);
 
+  gtk_signal_connect(GTK_OBJECT(w_current->aewindow),
+                     "key_press_event",
+                     (GtkSignalFunc) attrib_edit_dialog_keypress, w_current);
+
   gtk_signal_connect(GTK_OBJECT(buttonok),"clicked",
                      GTK_SIGNAL_FUNC(attrib_edit_dialog_ok),w_current);
   gtk_signal_connect(GTK_OBJECT(buttoncancel),"clicked",
@@ -1423,6 +1507,10 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list, int flag)
 
   gtk_widget_show(aewindow);
 
+  if (val) {
+     len = strlen(val);
+     gtk_entry_select_region(GTK_ENTRY(val_entry), 0, len);
+  }
   gtk_grab_add(w_current->aewindow);
   gtk_widget_grab_focus(val_entry);
 }
@@ -1568,6 +1656,23 @@ create_menu_alignment (TOPLEVEL *w_current)
 @ %def create_menu_alignement
 
 
+@section Function @code{text_edit_dialog_keypress()}
+
+@defun text_edit_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : text_edit_dialog_keypress()>>=
+void
+text_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	text_edit_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def text_edit_dialog_keypress
+
+
 @section Function @code{text_edit_dialog_ok()}
 
 @defun text_edit_dialog_ok w w_current
@@ -1673,6 +1778,11 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
                        "destroy",
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->tewindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tewindow),
+                     "key_press_event",
+                     (GtkSignalFunc) text_edit_dialog_keypress, w_current);
+
 
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT (w_current->tewindow),
@@ -1883,6 +1993,23 @@ create_menu_linetype (TOPLEVEL *w_current)
 @ %def create_menu_linetype
 
 
+@section Function @code{line_type_dialog_keypress()}
+
+@defun line_type_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : line_type_dialog_keypress()>>=
+void
+line_type_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	line_type_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def line_type_dialog_keypress
+
+
 @section Function @code{line_type_dialog_ok()}
 
 @defun line_type_dialog_ok w w_current
@@ -2031,6 +2158,10 @@ line_type_dialog (TOPLEVEL *w_current, OBJECT *object)
                        "destroy",
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->ltwindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->ltwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) line_type_dialog_keypress, w_current);
 
     gtk_window_set_title(GTK_WINDOW (w_current->ltwindow),
                          "Edit Line Width & Type");
@@ -2247,6 +2378,22 @@ create_menu_filltype (TOPLEVEL *w_current)
 @ %def create_menu_filltype
 
 
+@section Function @code{fill_type_dialog_keypress()}
+
+@defun fill_type_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : fill_type_dialog_keypress()>>=
+void
+fill_type_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	fill_type_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def fill_type_dialog_keypress
+
 
 @section Function @code{fill_type_dialog_ok()}
 
@@ -2408,6 +2555,10 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
                        "destroy",
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->ftwindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->ftwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) fill_type_dialog_keypress, w_current);
 
     gtk_window_set_title(GTK_WINDOW (w_current->ftwindow),
                          "Edit Fill Type");
@@ -2608,6 +2759,23 @@ fill_type_dialog(TOPLEVEL *w_current, OBJECT *object)
 @ %def fill_type_dialog
 
 
+@section Function @code{exit_dialog_keypress()}
+
+@defun exit_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : exit_dialog_keypress()>>=
+void
+exit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	exit_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def exit_dialog_keypress
+
+
 @section Function @code{exit_dialog_ok()}
 
 @defun exit_dialog_ok w w_current
@@ -2678,6 +2846,10 @@ exit_dialog (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->exwindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->exwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) exit_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->exwindow),
                        "delete_event",
@@ -2732,6 +2904,22 @@ exit_dialog (TOPLEVEL *w_current)
 
 @ %def exit_dialog
 
+
+@section Function @code{arc_angles_dialog_keypress()}
+
+@defun arc_angles_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : arc_angles_dialog_keypress()>>=
+void
+arc_angles_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	arc_angles_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def arc_angles_dialog_keypress
 
 @section Function @code{arc_angles_dialog_ok()}
 
@@ -2812,6 +3000,10 @@ arc_angle_dialog (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->aawindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->aawindow),
+                     "key_press_event",
+                     (GtkSignalFunc) arc_angles_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->aawindow),
                        "delete_event",
@@ -2891,6 +3083,23 @@ arc_angle_dialog (TOPLEVEL *w_current)
 @ %def arc_angle_dialog
 
 
+@section Function @code{translate_dialog_keypress()}
+
+@defun translate_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : translate_dialog_keypress()>>=
+void
+translate_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	translate_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def translate_dialog_keypress
+
+
 @section Function @code{translate_dialog_ok()}
 
 @defun translate_dialog_ok w w_current
@@ -2967,6 +3176,10 @@ translate_dialog (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->trwindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->trwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) translate_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT (w_current->trwindow),
                        "delete_event",
@@ -3030,6 +3243,23 @@ translate_dialog (TOPLEVEL *w_current)
 
 
 @ %def translate_dialog
+
+
+@section Function @code{text_size_dialog_keypress()}
+
+@defun text_size_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : text_size_dialog_keypress()>>=
+void
+text_size_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	text_size_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def text_size_dialog_keypress
 
 
 @section Function @code{text_size_dialog_ok()}
@@ -3111,6 +3341,10 @@ text_size_dialog (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->tswindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+                     "key_press_event",
+                     (GtkSignalFunc) text_size_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT (w_current->tswindow),
                        "delete_event",
@@ -3176,6 +3410,23 @@ text_size_dialog (TOPLEVEL *w_current)
 
 
 @ %def text_size_dialog
+
+
+@section Function @code{snap_size_dialog_keypress()}
+
+@defun snap_size_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : snap_size_dialog_keypress()>>=
+void
+snap_size_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	snap_size_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def snap_size_dialog_keypress
 
 
 @section Function @code{snap_size_dialog_ok()}
@@ -3254,6 +3505,10 @@ snap_size_dialog (TOPLEVEL *w_current)
                        GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->tswindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+                     "key_press_event",
+                     (GtkSignalFunc) snap_size_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
                        "delete_event",
@@ -3321,6 +3576,22 @@ snap_size_dialog (TOPLEVEL *w_current)
 
 @ %def snap_size_dialog
 
+
+@section Function @code{slot_edit_dialog_keypress()}
+
+@defun slot_edit_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : slot_edit_dialog_keypress()>>=
+void
+slot_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	slot_edit_dialog_cancel(NULL, w_current);	
+   }
+}
+@ %def slot_edit_dialog_keypress
 
 @section Function @code{slot_edit_dialog_ok()}
 
@@ -3408,6 +3679,10 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
                        "destroy", GTK_SIGNAL_FUNC(destroy_window),
                        &w_current->sewindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->sewindow),
+                     "key_press_event",
+                     (GtkSignalFunc) slot_edit_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT (w_current->sewindow),
                        "delete_event",
@@ -3479,6 +3754,23 @@ slot_edit_dialog (TOPLEVEL *w_current, char *string)
 @ %def slot_edit_dialog
 
 
+@section Function @code{about_dialog_keypress()}
+
+@defun about_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : about_dialog_keypress()>>=
+void
+about_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	about_dialog_close(NULL, w_current);	
+   }
+}
+@ %def about_dialog_keypress
+
+
 @section Function @code{about_dialog_close()}
 
 @defun about_dialog_close w w_current
@@ -3524,6 +3816,10 @@ about_dialog (TOPLEVEL *w_current)
     gtk_signal_connect (GTK_OBJECT (w_current->abwindow),
                         "destroy", GTK_SIGNAL_FUNC(destroy_window),
                         &w_current->abwindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->abwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) about_dialog_keypress, w_current);
 
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect (GTK_OBJECT (w_current->abwindow),
@@ -3572,6 +3868,23 @@ about_dialog (TOPLEVEL *w_current)
 
 
 @ %def about_dialog
+
+
+@section Function @code{coord_dialog_keypress()}
+
+@defun coord_dialog_keypress w w_current
+@end defun
+
+<<x_dialog.c : coord_dialog_keypress()>>=
+void
+coord_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	coord_dialog_close(NULL, w_current);	
+   }
+}
+@ %def coord_dialog_keypress
 
 
 @section Function @code{coord_dialog_close()}
@@ -3649,6 +3962,11 @@ coord_dialog (TOPLEVEL *w_current, int x, int y)
                         GTK_SIGNAL_FUNC(destroy_window),
                         &w_current->cowindow);
 #endif
+
+    gtk_signal_connect(GTK_OBJECT(w_current->cowindow),
+                     "key_press_event",
+                     (GtkSignalFunc) coord_dialog_keypress, w_current);
+
 
     vbox2 = gtk_vbox_new (FALSE, 5);
     gtk_container_add (GTK_CONTAINER (w_current->cowindow), vbox2);
@@ -3872,7 +4190,24 @@ create_color_menu (TOPLEVEL *w_current)
 @ %def create_color_menu
 
 
+@section Function @code{color_edit_dialog_keypress()}
+
+@defun color_edit_dialog_keypress w event w_current
+@end defun
+
+<<x_dialog.c : color_edit_dialog_keypress()>>=
+void
+color_edit_dialog_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	color_edit_dialog_close(NULL, w_current);	
+   }
+}
+@ %def color_edit_dialog_keypress
+
 @section Function @code{color_edit_dialog_close()}
+
 
 @defun color_edit_dialog_close w w_current
 @end defun
@@ -3971,6 +4306,10 @@ color_edit_dialog (TOPLEVEL *w_current)
                         "destroy", GTK_SIGNAL_FUNC(destroy_window),
                         &w_current->clwindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->clwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) color_edit_dialog_keypress, w_current);
+
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect (GTK_OBJECT (w_current->clwindow),
                         "delete_event",
@@ -4028,12 +4367,29 @@ static int hotkey_counter=0;
 @ %def hotkey_strings hotkey_counter
 
 
-@section Function @code{x_dialog_hotkey_close()}
+@section Function @code{x_dialog_hotkeys_keypress()}
 
-@defun x_dialog_hotkey_close w w_current
+@defun x_dialog_hotkeys_keypress w event w_current
 @end defun
 
-<<x_dialog.c : x_dialog_hotkey_close()>>=
+<<x_dialog.c : x_dialog_hotkeys_keypress()>>=
+void
+x_dialog_hotkeys_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	x_dialog_hotkeys_close(NULL, w_current);	
+   }
+}
+
+@ %def x_dialog_hotkeys_keypress
+
+@section Function @code{x_dialog_hotkeys_close()}
+
+@defun x_dialog_hotkeys_close w w_current
+@end defun
+
+<<x_dialog.c : x_dialog_hotkeys_close()>>=
 void
 x_dialog_hotkeys_close (GtkWidget *w, TOPLEVEL *w_current)
 {
@@ -4041,8 +4397,7 @@ x_dialog_hotkeys_close (GtkWidget *w, TOPLEVEL *w_current)
   w_current->hkwindow = NULL;
 }
 
-
-@ %def x_dialog_hotkey_close
+@ %def x_dialog_hotkeys_close
 
 
 @section Function @code{x_dialog_hotkeys_free_all()}
@@ -4125,6 +4480,10 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
     gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
                         "destroy", GTK_SIGNAL_FUNC(destroy_window),
                         &w_current->hkwindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->hkwindow),
+                     "key_press_event",
+                     (GtkSignalFunc) x_dialog_hotkeys_keypress, w_current);
 
 #if 0 /* removed because it was causing the dialog box to not close */
     gtk_signal_connect (GTK_OBJECT (w_current->hkwindow),
@@ -4357,6 +4716,7 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
 		       GTK_SIGNAL_FUNC(destroy_window),
 		       &w_current->tswindow);
 
+
 #if 0				/* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
 		       "delete_event",
@@ -4400,6 +4760,23 @@ void generic_text_input_dialog(TOPLEVEL * w_current)
 }
 
 @ %def generic_text_input_dialog
+
+
+@section Function @code{find_text_keypress()}
+
+@defun find_text_keypress w event w_current
+@end defun
+
+<<x_dialog.c : find_text_keypress()>>=
+void
+find_text_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	find_text_done(NULL, w_current);	
+   }
+}
+@ %def find_text_keypress
 
 
 @section Function @code{ find_text_ok()}
@@ -4494,6 +4871,10 @@ void find_text_dialog(TOPLEVEL * w_current)
 		       GTK_SIGNAL_FUNC(destroy_window),
 		       &w_current->tswindow);
 
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+                     "key_press_event",
+                     (GtkSignalFunc) find_text_keypress, w_current);
+
 #if 0				/* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
 		       "delete_event",
@@ -4554,6 +4935,23 @@ void find_text_dialog(TOPLEVEL * w_current)
 @ %def find_text_dialog
 
 
+@section Function @code{hide_text_keypress()}
+
+@defun hide_text_keypress w event w_current
+@end defun
+
+<<x_dialog.c : hide_text_keypress()>>=
+void
+hide_text_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	hide_text_done(NULL, w_current);	
+   }
+}
+@ %def hide_text_keypress
+
+
 @section Function @code{ hide_text_ok()}
 
 @defun hide_text_ok w_current
@@ -4578,6 +4976,16 @@ void hide_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 @ %def hide_text_ok
 
 
+<<x_dialog.c : hide_text_done()>>=
+void hide_text_done(GtkWidget * w, TOPLEVEL * w_current)
+{
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def hide_text_done
+
 @section Function @code{ hide_text_dialog()}
 
 @defun hide_text_dialog w_current
@@ -4601,6 +5009,10 @@ void hide_text_dialog(TOPLEVEL * w_current)
 		       "destroy",
 		       GTK_SIGNAL_FUNC(destroy_window),
 		       &w_current->tswindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+                     "key_press_event",
+                     (GtkSignalFunc) hide_text_keypress, w_current);
 
 #if 0				/* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
@@ -4651,6 +5063,25 @@ void hide_text_dialog(TOPLEVEL * w_current)
 @defun show_text_ok w_current
 @end defun
 
+
+
+@section Function @code{show_text_keypress()}
+
+@defun show_text_keypress w event w_current
+@end defun
+
+<<x_dialog.c : show_text_keypress()>>=
+void
+show_text_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	show_text_done(NULL, w_current);	
+   }
+}
+@ %def show_text_keypress
+
+
 <<x_dialog.c : show_text_ok()>>=
 void show_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
@@ -4669,6 +5100,15 @@ void show_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 
 @ %def show_text_ok
 
+<<x_dialog.c : show_text_done()>>=
+void show_text_done(GtkWidget * w, TOPLEVEL * w_current)
+{
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def show_text_done
 
 @section Function @code{ show_text_dialog()}
 
@@ -4693,6 +5133,10 @@ void show_text_dialog(TOPLEVEL * w_current)
 		       "destroy",
 		       GTK_SIGNAL_FUNC(destroy_window),
 		       &w_current->tswindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+                     "key_press_event",
+                     (GtkSignalFunc) show_text_keypress, w_current);
 
 #if 0				/* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
@@ -4734,8 +5178,24 @@ void show_text_dialog(TOPLEVEL * w_current)
     gtk_grab_add(w_current->tswindow);
   }
 }
-@ %def XXX
+@ %def show_text_dialog
 
+
+@section Function @code{autonumber_text_keypress()}
+
+@defun autonumber_text_keypress w event w_current
+@end defun
+
+<<x_dialog.c : autonumber_text_keypress()>>=
+void
+autonumber_text_keypress(GtkWidget * widget, GdkEventKey * event, 
+	              TOPLEVEL * w_current)
+{
+   if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
+	autonumber_text_done(NULL, w_current);	
+   }
+}
+@ %def autonumber_text_keypress
 
 @section Function @code{ autonumber_text_ok()}
 
@@ -4760,6 +5220,15 @@ void autonumber_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 
 @ %def autonumber_text_ok
 
+<<x_dialog.c : autonumber_text_done()>>=
+void autonumber_text_done(GtkWidget * w, TOPLEVEL * w_current)
+{
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
+}
+
+@ %def autonumber_text_done
 
 @section Function @code{ autonumber_text_dialog()}
 
@@ -4784,6 +5253,11 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 		       "destroy",
 		       GTK_SIGNAL_FUNC(destroy_window),
 		       &w_current->tswindow);
+
+    gtk_signal_connect(GTK_OBJECT(w_current->tswindow),
+                       "key_press_event",
+                       (GtkSignalFunc) autonumber_text_keypress, 
+		       w_current);
 
 #if 0				/* removed because it was causing the dialog box to not close */
     gtk_signal_connect(GTK_OBJECT(w_current->tswindow),

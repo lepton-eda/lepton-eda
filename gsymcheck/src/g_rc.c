@@ -94,8 +94,8 @@ g_rc_parse(TOPLEVEL *pr_current)
         putenv(geda_rcdata);
 
 	/* Let's try a the system one - GEDADATA/system-gsymcheck */
-	filename2 = u_basic_strdup_multiple(rc_path, 
-			"/system-gsymcheckrc", NULL);
+	filename2 = u_basic_strdup_multiple(rc_path, PATH_SEPARATER_STRING,
+			"system-gsymcheckrc", NULL);
 
 	if ( access(filename2, R_OK) == 0 ) {
 		strcpy(rc_filename, filename2); /* size verify hack */
@@ -110,7 +110,8 @@ g_rc_parse(TOPLEVEL *pr_current)
 	/* now search the proper rc location (in ~/.gEDA) */
 	HOME = (char *)  getenv("HOME");
 	if (HOME) {
-		sprintf(filename, "%s/.gEDA/gsymcheckrc", HOME);
+		sprintf(filename, "%s%c.gEDA%cgsymcheckrc", HOME, 
+			PATH_SEPARATER_CHAR, PATH_SEPARATER_CHAR);
 		if ( access(filename, R_OK) == 0) {
 			strcpy(rc_filename, filename); /* size verify hack */
 			g_read_file(filename);
@@ -122,7 +123,7 @@ g_rc_parse(TOPLEVEL *pr_current)
 	}
 
 	/* try the local directory for a gsymcheck */ 
-	sprintf(filename, "./gsymcheckrc");
+	sprintf(filename, ".%cgsymcheckrc", PATH_SEPARATER_CHAR);
 	if ( access(filename, R_OK) == 0 ) {
 		strcpy(rc_filename, filename); /* size verify hack */
 		g_read_file(filename);
@@ -305,11 +306,18 @@ g_rc_component_library_search(SCM path)
 
 		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
 						      strlen(dptr->d_name)+2));
-		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+		sprintf(fullpath, "%s%c%s", string, PATH_SEPARATER_CHAR,
+			dptr->d_name);
                 stat(fullpath, &buf);
                 if (S_ISDIR(buf.st_mode)) { 
 			if (s_clib_uniq(fullpath)) {
-				if (fullpath[0] == '/') {
+#ifdef __MINGW32__
+				if (fullpath[1] == ':' &&
+				    fullpath[2] == PATH_SEPARATER_CHAR) {
+#else
+				if (fullpath[0] == PATH_SEPARATER_CHAR) {
+#endif
+
 					s_clib_add_entry(fullpath);
 #if DEBUG
 			printf("absolute: %s\n", fullpath);
@@ -317,7 +325,8 @@ g_rc_component_library_search(SCM path)
 				} else {
 					cwd = getcwd(NULL, 1024);
 					temp = u_basic_strdup_multiple(cwd, 
-							"/", fullpath, NULL);
+						PATH_SEPARATER_STRING, 
+						fullpath, NULL);
 #if DEBUG
 			printf("relative: %s\n", temp);
 #endif
@@ -433,11 +442,17 @@ g_rc_source_library_search(SCM path)
 
 		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
 						      strlen(dptr->d_name)+2));
-		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+		sprintf(fullpath, "%s%c%s", string, PATH_SEPARATER_CHAR,
+			dptr->d_name);
                 stat(fullpath, &buf);
                 if (S_ISDIR(buf.st_mode)) { 
 			if (s_slib_uniq(fullpath)) {
-				if (fullpath[0] == '/') {
+#ifdef __MINGW32__
+				if (fullpath[1] == ':' &&
+				    fullpath[2] == PATH_SEPARATER_CHAR) {
+#else
+				if (fullpath[0] == PATH_SEPARATER_CHAR) {
+#endif
 					s_slib_add_entry(fullpath);
 #if DEBUG
 			printf("absolute: %s\n", fullpath);
@@ -445,7 +460,8 @@ g_rc_source_library_search(SCM path)
 				} else {
 					cwd = getcwd(NULL, 1024);
 					temp = u_basic_strdup_multiple(cwd, 
-							"/", fullpath, NULL);
+						PATH_SEPARATER_STRING, 
+						fullpath, NULL);
 #if DEBUG
 			printf("relative: %s\n", temp);
 #endif

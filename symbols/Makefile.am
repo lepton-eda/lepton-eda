@@ -10,7 +10,13 @@ bin_SCRIPTS = gesym-config
 rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-commonrc 
 
+dist-clean-local:
+	-rm -rf autom4te.cache
+
+maintainer-clean-local:
+	-rm -rf autom4te.cache
+
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ prototype.bak 
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure config.status

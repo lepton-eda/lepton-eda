@@ -89,7 +89,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -234,20 +236,18 @@ x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename)
   temp = getcwd(NULL, 1024);
 	
   if (filename) {
-    f_current->directory = u_basic_strdup_multiple(temp, 
-					 	   PATH_SEPARATER_STRING, NULL);
+    f_current->directory = u_basic_strdup(temp); 
     f_current->filename = u_basic_strdup(filename);
 					
     free(temp); 
-    temp = u_basic_strdup_multiple(f_current->directory,
+    temp = u_basic_strdup_multiple(f_current->directory, PATH_SEPARATER_STRING,
                                    f_current->filename, NULL);
     gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
   } else {
-    f_current->directory = u_basic_strdup_multiple(temp, 
-						   PATH_SEPARATER_STRING, NULL);
+    f_current->directory = u_basic_strdup(temp);
 
-    if (f_current->filename) {
+    if (f_current->filename) { 
       free(f_current->filename);
       f_current->filename=NULL;
     }
@@ -375,12 +375,13 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 
 
   while((dirent_ptr = readdir(directory)) != NULL) {
-    sprintf(path_buf, "%s%s", f_current->directory, dirent_ptr->d_name);
+    sprintf(path_buf, "%s%c%s", f_current->directory, PATH_SEPARATER_CHAR,
+	    dirent_ptr->d_name);
     if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode)) {
-      /*	printf("dir: %s\n", path_buf);	 */
+/*     	printf("dir: %s\n", path_buf);	 */
       num_directories++;	
     } else {
-      /*	printf("file: %s\n", path_buf);	*/
+/*     	printf("file: %s\n", path_buf);	*/
       num_files++;	
     }
   }
@@ -401,7 +402,8 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
   rewinddir(directory);
 
   while((dirent_ptr = readdir(directory)) != NULL) {
-    sprintf(path_buf, "%s%s", f_current->directory, dirent_ptr->d_name);
+    sprintf(path_buf, "%s%c%s", f_current->directory, PATH_SEPARATER_CHAR,
+	    dirent_ptr->d_name);
     if(stat(path_buf, &stat_en) >= 0 && S_ISDIR(stat_en.st_mode) &&
        (strcmp(dirent_ptr->d_name, ".") != 0)) {
 
@@ -1061,8 +1063,7 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
   }
 
   if (directory) {
-    f_current->directory = u_basic_strdup_multiple(directory, 
-                                                   PATH_SEPARATER_STRING, NULL);
+    f_current->directory = u_basic_strdup(directory);
     free(directory);
   }
 
@@ -1070,8 +1071,8 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG *f_current, char *new_filename)
     f_current->filename = u_basic_strdup(filename);
     free(filename);
   }
-					
-  temp = u_basic_strdup_multiple(f_current->directory, 
+				
+  temp = u_basic_strdup_multiple(f_current->directory, PATH_SEPARATER_STRING,
                                  f_current->filename, NULL);
   gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
@@ -1340,9 +1341,8 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
       text[0] = string;
     }
 
-    f_current->directory_entries[i] = u_basic_strdup_multiple(
-                                                              string,
-                                                              PATH_SEPARATER_STRING, NULL);
+    f_current->directory_entries[i] = u_basic_strdup_multiple(string,
+                                                              NULL);
 		
     gtk_clist_append (GTK_CLIST (f_current->dir_list), text);
     width = gdk_string_width(f_current->dir_list->style->font,
@@ -1490,7 +1490,7 @@ x_fileselect_comp_update_current(FILEDIALOG *f_current,
   }
 
   if (f_current->directory && f_current->filename) {
-    temp = u_basic_strdup_multiple(f_current->directory, 
+    temp = u_basic_strdup_multiple(f_current->directory, PATH_SEPARATER_STRING,
                                    f_current->filename, NULL);
     gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
     free(temp);

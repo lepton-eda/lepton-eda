@@ -149,7 +149,8 @@ g_rc_parse_home_rc()
 
 	filename = u_basic_strdup_multiple(HOME,
 					   PATH_SEPARATER_STRING,
-					   ".gEDA/gnetlistrc",
+					   ".gEDA", PATH_SEPARATER_STRING,
+					   "gnetlistrc",
 					   NULL);
 	if (filename == NULL) {
 		return 0;
@@ -171,7 +172,8 @@ g_rc_parse_local_rc()
 	int found_rc;
 	char *filename;
 
-	filename = u_basic_strdup("./gnetlistrc");
+	filename = u_basic_strdup_multiple(".", PATH_SEPARATER_STRING, 
+				           "gnetlistrc", NULL);
 	if (filename == NULL) {
 		return 0;
 	}

@@ -1,9 +1,29 @@
+2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Missed a few hardcoded /'s, fixed.
+
+	* configure.in: Changed the function which is search for libpng.
+	This was needed for the win32 port.
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
 2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Added -liberty for the Mingw32 port
 
         * src/g_rc.c: Used new path separater #defines in a few
         sprintf/u_strdup_multiple
+
+        * configure.in and friends: Upgraded to autoconf 2.53, libtool 1.5,
+        and automake 1.5.  Lots of changes in various places for this upgrade.
 
 2002-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
 

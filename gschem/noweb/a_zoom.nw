@@ -209,6 +209,10 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
     w_current->last_x = lx;
     w_current->last_y = ly;
   }
+
+  /* warp the cursor to the right position */ /* make this configurable hack */
+  WORLDtoSCREEN(w_current, world_pan_center_x, world_pan_center_y, &sx, &sy);
+  x_basic_warp_cursor(w_current->drawing_area, sx, sy, 0);
 }
 
 

@@ -10,7 +10,8 @@ AC_DEFUN(GEDA_DECLARE_SYMLIB,
 
 
 dnl Start of configure actions..
-AC_INIT(74/7400-1.sym)
+AC_INIT
+AC_CONFIG_SRCDIR([74/7400-1.sym])
 
 dnl Initialize automake stuff
 PACKAGE=geda-symbols
@@ -18,7 +19,7 @@ PACKAGE=geda-symbols
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20020209
+VERSION=20020414
 
 echo Configuring symbols version $VERSION
 
@@ -41,8 +42,22 @@ AM_MAINTAINER_MODE
 dnl Checks for programs.
 dnl AC_PROG_CC
 dnl AC_PROG_LEX
-dnl AC_DECL_YYTEXT
+dnl AC_PROG_LEX()
 dnl AC_PROG_MAKE_SET
+
+AC_CYGWIN
+if test "$CYGWIN" = "yes"; then
+	AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)
+fi
+
+AC_MINGW32
+
+if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
+	PATHSEP=\\\\
+else
+	PATHSEP=/
+fi
+
 
 # Do individual library files
   
@@ -97,7 +112,6 @@ else
 	GEDARCDIR="$opt_rcdir"
 fi
 
-
 AC_SUBST(datalocal)
 AC_SUBST(dataanalog)
 AC_SUBST(datamaxim)
@@ -140,8 +154,9 @@ AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDARCDIR)
+AC_SUBST(PATHSEP)
 
-AC_OUTPUT([ 
+AC_CONFIG_FILES([ 
         Makefile 
 	4000/Makefile
 	74/Makefile 
@@ -182,5 +197,7 @@ AC_OUTPUT([
 	national/Makefile
 	winfonts/Makefile
 	system-commonrc
-        gesym-config ], [chmod +x gesym-config]) 
+        gesym-config ])
+AC_CONFIG_COMMANDS([gesym-config],[[chmod +x gesym-config]],[[]])
+AC_OUTPUT 
 

@@ -1,5 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(noweb/gschem.nw)
+AC_INIT
+AC_CONFIG_SRCDIR([noweb/gschem.nw])
 
 dnl Initialize automake stuff
 PACKAGE=geda-gschem
@@ -7,7 +8,7 @@ PACKAGE=geda-gschem
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20020209
+VERSION=20020414
 
 echo Configuring gschem version $VERSION
 
@@ -60,18 +61,15 @@ AM_MAINTAINER_MODE
 dnl Checks for programs.
 AC_PROG_CC
 dnl AC_PROG_LEX
-dnl AC_DECL_YYTEXT
+dnl AC_PROG_LEX()
 AC_PROG_MAKE_SET
 
-dnl Check to see if we are building in the cygnus win32 environment
-dnl not supported anymore
 AC_CYGWIN
 
 if test "$CYGWIN" = "yes"; then
           AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)       
 fi
 
-dnl Check to see if we are building in the mingw32 environment
 AC_MINGW32
 
 dnl Guile stuff
@@ -162,7 +160,7 @@ else
 	 else
 
 		PNG_EXTRA="-lz -lm"
-                AC_CHECK_LIB(png, png_read_init, PNG_LIB="-lpng", PNG_LIB=no, $PNG_EXTRA)
+                AC_CHECK_LIB(png, png_read_png, PNG_LIB="-lpng", PNG_LIB=no, $PNG_EXTRA)
 
                 if test $PNG_LIB = no; then
                         AC_MSG_ERROR(Cannot find libpng, be sure to install png; it is required for libgdgeda)
@@ -276,6 +274,9 @@ if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
         echo Include -lregex in LDFLAGS for MINGW32 port
 	CFLAGS="$CFLAGS -fnative-struct"
         X_LDFLAGS="-lregex -liberty $X_LDFLAGS"
+	PATHSEP=\\\\
+else
+	PATHSEP=/
 fi
 
 if test "$debug" = "yes"; then
@@ -430,7 +431,7 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(unistd.h string.h stdlib.h \
-                 stdarg.h assert.h fcntl.h errno.h)
+                 stdarg.h assert.h fcntl.h errno.h sys/param.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -475,6 +476,7 @@ AC_SUBST(HOME)
 AC_SUBST(GTKVERSION)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
+AC_SUBST(PATHSEP)
 
 AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LDFLAGS)
@@ -493,9 +495,7 @@ AC_SUBST(NOWEAVE)
 AC_SUBST(TEXI2HTML)
 AC_SUBST(INDENT)
 
-AC_OUTPUT_COMMANDS([chmod +x scripts/geda_totexi])
-AC_OUTPUT_COMMANDS([chmod +x scripts/notangle_guile.scm])
-AC_OUTPUT( 	Makefile            \
+AC_CONFIG_FILES([Makefile            \
 		src/Makefile        \
 		include/Makefile    \
 		scheme/Makefile     \
@@ -506,4 +506,7 @@ AC_OUTPUT( 	Makefile            \
 		noweb/Makefile      \
 		lib/system-gschemrc \
 		scripts/geda_totexi \
-		scripts/notangle_guile.scm )
+		scripts/notangle_guile.scm ])
+AC_CONFIG_COMMANDS([geda_totexi],[[chmod +x scripts/geda_totexi]],[[]])
+AC_CONFIG_COMMANDS([notangle_guile.scm],[[chmod +x scripts/notangle_guile.scm]],[[]])
+AC_OUTPUT

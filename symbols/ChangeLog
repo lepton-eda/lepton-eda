@@ -1,3 +1,27 @@
+2002-05-12 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* font/[a-z].sym: Removed these obsolete symbol files
+
+2002-04-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* font/period.sym: Changed the graphical representation to be a little
+	larger.  Mauricio de Alencar did the actual work.
+
+2002-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in and friends: More work on getting the upgrade of 
+	autoconf, automake, and libtool to behave correctly.
+
+	* configure.in: Added PATHSEP variable which holds the proper path
+	separater depending on the platform.
+
+	* lib/system-*.in: Work on getting rc files to use above variable.
+
+2002-04-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in and friends: Upgraded to autoconf 2.53, libtool 1.5,
+        and automake 1.5.  Lots of changes in various places for this upgrade.
+
 2002-02-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* power/*.sym: Made sure all the power symbols have the net= attribute

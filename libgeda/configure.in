@@ -1,5 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(noweb/s_basic.nw)
+AC_INIT
+AC_CONFIG_SRCDIR([noweb/s_basic.nw])
 
 dnl Initialize automake stuff
 PACKAGE=libgeda
@@ -7,7 +8,7 @@ PACKAGE=libgeda
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20020209
+VERSION=20020414
 
 echo Configuring libgeda version $VERSION
 
@@ -54,18 +55,15 @@ AM_MAINTAINER_MODE
 dnl Checks for programs.
 AC_PROG_CC
 dnl AC_PROG_LEX
-dnl AC_DECL_YYTEXT
+dnl AC_PROG_LEX()
 AC_PROG_MAKE_SET
 
-dnl Check to see if we are building in the cygnus win32 environment
-dnl not supported anymore
 AC_CYGWIN
 
 if test "$CYGWIN" = "yes"; then
           AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)       
 fi
 
-dnl Check to see if we are building in the mingw32 environment
 AC_MINGW32
 
 dnl Check for guile
@@ -203,7 +201,7 @@ else
 		AC_MSG_ERROR(Cannot find libz (zlib), be sure to install zlib; it is required for libgdgeda)
 	else
 		PNG_EXTRA="-lz -lm"
-		AC_CHECK_LIB(png, png_read_init, PNG_LIB="-lpng", PNG_LIB=no, $PNG_EXTRA)
+		AC_CHECK_LIB(png, png_read_png, PNG_LIB="-lpng", PNG_LIB=no, $PNG_EXTRA)
 	        if test $PNG_LIB = no; then
         		AC_MSG_ERROR(Cannot find libpng, be sure to install png; it is required for libgdgeda)
         	else
@@ -225,6 +223,9 @@ fi
 if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	echo Including -fnative-struct in CFLAGS for MINGW32 port
 	CFLAGS="$CFLAGS -fnative-struct"
+        PATHSEP=\\\\
+else
+        PATHSEP=/
 fi
 
 if test "$debug" = "yes"; then
@@ -422,6 +423,7 @@ HOME=`echo $HOME`
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(GTKVERSION)
+AC_SUBST(PATHSEP)
 
 AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LDFLAGS)
@@ -445,9 +447,7 @@ AC_SUBST(NOWEAVE)
 AC_SUBST(TEXI2HTML)
 AC_SUBST(INDENT)
 
-AC_OUTPUT_COMMANDS([chmod +x scripts/geda_totexi])
-AC_OUTPUT_COMMANDS([chmod +x scripts/notangle_guile.scm])
-AC_OUTPUT([ 
+AC_CONFIG_FILES([ 
 	Makefile 
 	libgeda-config 
 	include/Makefile 
@@ -456,4 +456,8 @@ AC_OUTPUT([
 	scripts/Makefile
 	noweb/Makefile
 	scripts/geda_totexi
-	scripts/notangle_guile.scm], [chmod +x libgeda-config]) 
+	scripts/notangle_guile.scm])
+AC_CONFIG_COMMANDS([geda_totexi],[[chmod +x scripts/geda_totexi]],[[]])
+AC_CONFIG_COMMANDS([notangle_guile.scm],[[chmod +x scripts/notangle_guile.scm]],[[]])
+AC_CONFIG_COMMANDS([libgeda-config],[[chmod +x libgeda-config]],[[]])
+AC_OUTPUT 

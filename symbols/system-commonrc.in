@@ -17,41 +17,41 @@
 ; is searched *first*.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(component-library "${GEDADATA}/sym/local")
-(component-library "${GEDADATA}/sym/74")
-(component-library "${GEDADATA}/sym/4000")
-(component-library "${GEDADATA}/sym/IEC417")
-(component-library "${GEDADATA}/sym/analog")
-(component-library "${GEDADATA}/sym/linear")
-(component-library "${GEDADATA}/sym/altera")
-(component-library "${GEDADATA}/sym/lattice")
-(component-library "${GEDADATA}/sym/xilinx")
-(component-library "${GEDADATA}/sym/idt")
-(component-library "${GEDADATA}/sym/misc")
-(component-library "${GEDADATA}/sym/power")
-(component-library "${GEDADATA}/sym/transistor")
-(component-library "${GEDADATA}/sym/io")
-(component-library "${GEDADATA}/sym/titleblock")
-(component-library "${GEDADATA}/sym/memory")
-(component-library "${GEDADATA}/sym/micro")
-(component-library "${GEDADATA}/sym/maxim")
-(component-library "${GEDADATA}/sym/national")
-(component-library "${GEDADATA}/sym/radio")
-(component-library "${GEDADATA}/sym/tube")
-(component-library "${GEDADATA}/sym/connector")
-(component-library "${GEDADATA}/sym/switch")
-(component-library "${GEDADATA}/sym/verilog")
-(component-library "${GEDADATA}/sym/vhdl")
-(component-library "${GEDADATA}/sym/spice")
-(component-library "${GEDADATA}/sym/rf")
-(component-library "${GEDADATA}/sym/bus")
-(component-library "${GEDADATA}/sym/pla")
-(component-library "${GEDADATA}/sym/ecl")
-(component-library "${GEDADATA}/sym/dec")
-(component-library "${GEDADATA}/sym/supervisor")
-(component-library "${GEDADATA}/sym/opto")
-(component-library "${GEDADATA}/sym/diode")
-(component-library "${GEDADATA}/sym/relay")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@IEC417")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@analog")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@linear")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@altera")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@lattice")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@xilinx")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@idt")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@misc")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@power")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@transistor")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@io")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@titleblock")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@memory")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@micro")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@maxim")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@national")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@radio")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@tube")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@connector")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switch")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@spice")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@rf")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@bus")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@pla")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@ecl")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@dec")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@supervisor")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@opto")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
 
 ; component-library-search atring
 ;
@@ -64,7 +64,7 @@
 ; *before* the component libraries specified above.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(component-library-search "${GEDADATA}/sym")
+(component-library-search "${GEDADATA}@PATHSEP@sym")
 
 ; source-library string
 ; Specify where source entities exist.
@@ -76,37 +76,37 @@
 ; is searched *first*.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(source-library "${GEDADATA}/sym/74")
-(source-library "${GEDADATA}/sym/4000")
-(source-library "${GEDADATA}/sym/analog")
-(source-library "${GEDADATA}/sym/altera")
-(source-library "${GEDADATA}/sym/lattice")
-(source-library "${GEDADATA}/sym/xilinx")
-(source-library "${GEDADATA}/sym/idt")
-(source-library "${GEDADATA}/sym/local")
-(source-library "${GEDADATA}/sym/memory")
-(source-library "${GEDADATA}/sym/micro")
-(source-library "${GEDADATA}/sym/linear")
-(source-library "${GEDADATA}/sym/maxim")
-(source-library "${GEDADATA}/sym/national")
-(source-library "${GEDADATA}/sym/misc")
-(source-library "${GEDADATA}/sym/power")
-(source-library "${GEDADATA}/sym/transistor")
-(source-library "${GEDADATA}/sym/radio")
-(source-library "${GEDADATA}/sym/tube")
-(source-library "${GEDADATA}/sym/connector")
-(source-library "${GEDADATA}/sym/switch")
-(source-library "${GEDADATA}/sym/verilog")
-(source-library "${GEDADATA}/sym/vhdl")
-(source-library "${GEDADATA}/sym/rf")
-(source-library "${GEDADATA}/sym/pla")
-(source-library "${GEDADATA}/sym/ecl")
-(source-library "${GEDADATA}/sym/dec")
-(source-library "${GEDADATA}/sym/supervisor")
-(source-library "${GEDADATA}/sym/bus")
-(source-library "${GEDADATA}/sym/opto")
-(source-library "${GEDADATA}/sym/diode")
-(source-library "${GEDADATA}/sym/relay")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@analog")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@altera")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@lattice")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@xilinx")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@idt")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@memory")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@micro")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@linear")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@maxim")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@national")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@misc")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@power")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@transistor")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@radio")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@tube")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@connector")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switch")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@rf")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@pla")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@ecl")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@dec")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@supervisor")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@bus")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@opto")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
+(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
 
 ; source-library-search atring
 ;
@@ -119,7 +119,7 @@
 ; *before* the source libraries specified above.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(source-library-search "${GEDADATA}/sym")
+(source-library-search "${GEDADATA}@PATHSEP@sym")
 
 ; font-directory string
 ; Specifies where the vector font definitions are stored.
@@ -127,7 +127,7 @@
 ; the directory.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(font-directory "${GEDADATA}/sym/font")
+(font-directory "${GEDADATA}@PATHSEP@sym@PATHSEP@font")
 
 
 ; scheme-directory string
@@ -136,7 +136,7 @@
 ; the directory.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(scheme-directory "${GEDADATA}/scheme")
+(scheme-directory "${GEDADATA}@PATHSEP@scheme")
 
 ;
 ; End of path related keywords
