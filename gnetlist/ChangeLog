@@ -1,3 +1,11 @@
+2004-08-23 SDB   <sdb@cloud9.net>
+
+	* Added fcns to pass the invoking command line to the Scheme backend
+	as a string.  This allows the invoking command to be placed into
+	a SPICE netlist in the first line.  Affected files:
+	src/g_register.c, parsecmd.c, globals.c, g_netlist.c, gnetlist.c
+	include/globals.h prototype.h
+
 2004-08-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/Makefile.am: Removed gschem2pcb from bin_SCRIPTS, as
