@@ -537,6 +537,12 @@ o_arc_print_solid(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	x1 = (double) x + radius;
 	y1 = (double) y - radius;
 
+	/* PB/AVH inverting angle2 if < 0 and changing angle1 accordingly */
+	if (angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+	}
+
 	f_print_set_line_width(fp, arc_width);
 
 	fprintf(fp, "newpath\n");
