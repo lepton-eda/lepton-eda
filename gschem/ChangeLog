@@ -15,6 +15,11 @@ into the cvs repository.
 
 	* src/i_vars.c: Made net_consolidate variable enabled (TRUE)
 
+	* src/x_dialog.c: Added an if to make sure returned object from
+	  o_attrib_add_attrib isn't NULL (that can happen if you try to
+	  attach an attribute to another text item).  This bug caused at 
+	  least one core dump.
+
 2000-06-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/g_rc.c, src/i_vars.c: Added continue-component-place *rc keyword
