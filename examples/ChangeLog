@@ -1,3 +1,7 @@
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* *.sch/*.sym: Updated all sch/sym files to 20030901
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Added a configuration complete message just to be
