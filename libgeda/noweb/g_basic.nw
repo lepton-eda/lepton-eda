@@ -142,26 +142,26 @@ load_error_handler(void *data, SCM tag, SCM throw_args)
 	 */
 
     if (!scm_eq_p (tag, scm_str2symbol ("misc-error"))) {
-               scm_display(MEM02STR("Error : "), cur_out);
+               scm_display(scm_makfrom0str("Error : "), cur_out);
 		scm_display(tag, cur_out);
 			
-		scm_display(MEM02STR(" [C:"), cur_out);
+		scm_display(scm_makfrom0str(" [C:"), cur_out);
 		scm_display(scm_port_column(load_port), cur_out );
-		scm_display(MEM02STR(" L:"), cur_out);
+		scm_display(scm_makfrom0str(" L:"), cur_out);
 		scm_display(scm_port_line(load_port), cur_out );
-		scm_display(MEM02STR("]"), cur_out);
+		scm_display(scm_makfrom0str("]"), cur_out);
 	} else {
-		scm_display(MEM02STR("Probably parenthesis mismatch"), 
+		scm_display(scm_makfrom0str("Probably parenthesis mismatch"), 
 			    cur_out);
 
 	}
 
-	scm_display(MEM02STR(" in "), cur_out);
+	scm_display(scm_makfrom0str(" in "), cur_out);
 	scm_display(filename, cur_out);
 	scm_newline(cur_out);
 
 	if (most_recently_read_form != SCM_BOOL_F) {
-		scm_display(MEM02STR ("Most recently read form: "),
+		scm_display(scm_makfrom0str ("Most recently read form: "),
 			    cur_out);
 		scm_display(most_recently_read_form, cur_out);
 		scm_newline(cur_out);
@@ -195,7 +195,7 @@ g_read_file(const gchar *filename)
 		return(-1);
   	}
 
-	port = scm_open_file(MEM02STR(filename), MEM02STR("r"));
+	port = scm_open_file(scm_makfrom0str(filename), scm_makfrom0str("r"));
 
 	eval_result = scm_internal_catch (SCM_BOOL_T,
                                       (scm_t_catch_body)load,
