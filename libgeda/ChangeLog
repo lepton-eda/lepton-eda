@@ -24,6 +24,10 @@
 	read/save the bus_ripper_direction flag to disk.  Also handled old
 	versioned files (variable defaults to zero).
 
+	* noweb/s_project.nw: Oops, missed override_bus_color in the init
+	of the toplevel variable.  Important since the color of buses was 
+	being set to zero by gschlas.
+
 2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_pin_basic.nw: Oops, broke the single pin case.  Added
