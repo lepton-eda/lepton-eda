@@ -261,7 +261,12 @@ o_circle_save(char *buf, OBJECT *object)
 	y = y1 - radius; /* careful */
 #endif
 
-	color = object->color;
+	/* Use the right color */
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
 
 	sprintf(buf, "%c %d %d %d %d", object->type, x, y, radius, color);
 
@@ -343,9 +348,16 @@ o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj;
 	ATTRIB *a_current;
+	int color;
+
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
 
 	new_obj = o_circle_add(w_current, list_tail, OBJ_CIRCLE, 
-			o_current->color, 
+			color, 
 			o_current->circle->center_x, 
 			o_current->circle->center_y, 
 			o_current->circle->radius);
@@ -358,7 +370,7 @@ o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */

@@ -144,7 +144,7 @@ o_pin_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 	 * completely either... hack */
 #if 0
 ifed out 3/15/98 due to above 
-	if (!ADDING_SEL) {
+	if (!adding_sel) {
                 o_pin_conn_recalc(w_current, object_list); /* old conn system */
                 /*o_net_conn_recalc(object_list); */
         }     
@@ -152,8 +152,8 @@ ifed out 3/15/98 due to above
 
 	/* we'll try this here */
 	if (!w_current->ADDING_SEL) {
-                o_conn_update(w_current->page_current, object_list);
-        }
+		o_conn_update(w_current->page_current, object_list);
+	}
 
 	return(object_list);
 }
@@ -241,7 +241,12 @@ o_pin_save(char *buf, OBJECT *object)
         x2 = object->line_points->x2;
         y2 = object->line_points->y2;
 	
-	color = object->color;
+	/* Use the right color */
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
 
         sprintf(buf, "%c %d %d %d %d %d", object->type,
                         x1, y1, x2, y2, color);
@@ -328,8 +333,15 @@ o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj;
 	ATTRIB *a_current;
+	int color;
 
-	new_obj = o_pin_add(w_current, list_tail, OBJ_PIN, o_current->color, 0, 0, 0, 0);
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
+
+	new_obj = o_pin_add(w_current, list_tail, OBJ_PIN, color, 0, 0, 0, 0);
 
 	/* why is this here ? */
 	/* because they all have it, and it is used during outline actions */
@@ -346,7 +358,7 @@ o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */

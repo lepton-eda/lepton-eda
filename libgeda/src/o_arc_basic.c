@@ -251,14 +251,19 @@ o_arc_save(char *buf, OBJECT *object)
 
         start_angle = object->line_points->x2/64;
         end_angle = object->line_points->y2/64;
-	color = object->color;
+	
+	/* Use the right color */
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
 
         sprintf(buf, "%c %d %d %d %d %d %d", object->type,
 			x, y, radius, start_angle, end_angle, color);
         return(buf);
 }
        
-
 
 /* this routine is a hack and should be taken out and shot */
 int
@@ -364,8 +369,15 @@ o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj;
 	ATTRIB *a_current;
+	int color;
 
-	new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, o_current->color,
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
+
+	new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, color,
 				o_current->x, o_current->y, 
 				o_current->line_points->x1,
 				o_current->line_points->y1,
@@ -392,7 +404,7 @@ o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */

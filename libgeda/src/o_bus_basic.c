@@ -237,7 +237,12 @@ o_bus_save(char *buf, OBJECT *object)
         x2 = object->line_points->x2;
         y2 = object->line_points->y2;
 
-	color = object->color;
+	/* Use the right color */
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
 
         sprintf(buf, "%c %d %d %d %d %d", object->type,
                         x1, y1, x2, y2, color);
@@ -326,14 +331,20 @@ o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj;
 	ATTRIB *a_current;
+	int color;
+
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
 
 	/* CONN stuff... */
 	/* make sure you fix this in pin and bus as well */
 	/* still doesn't work... you need to pass in the new values */
 	/* or don't update and update later */
 	/* I think for now I'll disable the update and manually update */
-	new_obj = o_bus_add(w_current, list_tail, OBJ_BUS, o_current->color, 
-			0,0,0,0);
+	new_obj = o_bus_add(w_current, list_tail, OBJ_BUS, color, 0,0,0,0);
 
 	new_obj->line_points->screen_x1 = o_current->line_points->screen_x1;
 	new_obj->line_points->screen_y1 = o_current->line_points->screen_y1;
@@ -347,7 +358,7 @@ o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
 	a_current = o_current->attribs;
 
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */

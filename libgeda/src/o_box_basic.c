@@ -217,7 +217,13 @@ o_box_save(char *buf, OBJECT *object)
 #if DEBUG
 	printf("box: %d %d %d %d\n", x1, y1, width, height);
 #endif
-	color = object->color;
+
+	/* Use the right color */
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
 
 	sprintf(buf, "%c %d %d %d %d %d", object->type, 
 			x1, y1, width, height, color);
@@ -305,8 +311,15 @@ o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
         OBJECT *new_obj;
 	ATTRIB *a_current;
+	int color;
 
-        new_obj = o_box_add(w_current, list_tail, OBJ_BOX,  o_current->color, 0, 0, 0, 0);
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
+
+        new_obj = o_box_add(w_current, list_tail, OBJ_BOX, color, 0, 0, 0, 0);
 
 	new_obj->line_points->screen_x1 = o_current->line_points->screen_x1;
         new_obj->line_points->screen_y1 = o_current->line_points->screen_y1;
@@ -320,7 +333,7 @@ o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 
 /*	new_obj->attribute = 0;*/
 	a_current = o_current->attribs;
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */
