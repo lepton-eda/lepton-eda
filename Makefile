@@ -2,8 +2,6 @@
 # gEDA/gaf Toplevel Makefile
 #
 
-SHELL=/bin/sh
-
 #
 # Change this to the real version of the distribution
 #
@@ -11,11 +9,13 @@ VERSION=20041228
 
 # 
 # Use this when you are building the CVS version
+#
 CD_VERSION=
 DIR_PREFIX=
 
 #
 # Use this when you are building the Released version (comment out above)
+#
 #CD_VERSION=-$(VERSION)
 #DIR_PREFIX=geda-
 
@@ -29,6 +29,12 @@ prefix=$(HOME)/geda
 # individual ./configure scripts
 #
 opts=
+
+#
+# Set this to the shell that you want the various commands to run in.
+# For most people the default should work just fine.
+#
+SHELL=/bin/sh
 
 ############################################################################
 # Basic targets
