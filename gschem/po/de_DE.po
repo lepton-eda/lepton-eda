@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "POT-Creation-Date: 2002-11-03 21:13-0500\n"
-"PO-Revision-Date: 2002-09-27 16:04GMT\n"
+"PO-Revision-Date: 2002-12-03 16:04GMT\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -199,9 +199,9 @@ msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Eine ungültige Ebenenanzahl [%d] wurde an undo-levels übergeben.\n"
 
 #: noweb/g_rc.nw:2749
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
-msgstr "Eine ungültige Größe [%d] wurde an snap-size übergeben.\n"
+msgstr "Eine ungültige Größe [%d] wurde an bus-ripper-size übergeben.\n"
 
 #: noweb/gschem.nw:159 noweb/gschem.nw:169
 #, c-format
@@ -262,19 +262,16 @@ msgid "Select Mode"
 msgstr "Auswahl Modus"
 
 #: noweb/i_basic.nw:144
-#, fuzzy
 msgid "Attribute Mode"
-msgstr "Attribut"
+msgstr "Attribut Modus"
 
 #: noweb/i_basic.nw:147
-#, fuzzy
 msgid "Component Mode"
-msgstr "Bauteil"
+msgstr "Bauteil Modus"
 
 #: noweb/i_basic.nw:151
-#, fuzzy
 msgid "Text Mode"
-msgstr "Netz Modus"
+msgstr "Text Modus"
 
 #: noweb/i_basic.nw:154 noweb/rcstrings.nw:23
 msgid "Copy Mode"
@@ -301,9 +298,9 @@ msgid "Pan Mode"
 msgstr "Ausschnitt Modus"
 
 #: noweb/i_basic.nw:172
-#, fuzzy, c-format
+#, c-format
 msgid "Paste %d Mode"
-msgstr "Einfügen 5 Modus"
+msgstr "Einfügen %d Modus"
 
 #: noweb/i_basic.nw:177
 msgid "Net Mode"
@@ -344,12 +341,10 @@ msgid "Move"
 msgstr "Verschieben"
 
 #: noweb/i_basic.nw:233
-#, fuzzy
 msgid "Snap Off"
-msgstr "Am Raster ausrichten\n"
+msgstr "Am Raster ausrichten aus"
 
 #: noweb/i_basic.nw:238
-#, fuzzy
 msgid "Show Hidden"
 msgstr "Zeige Unsichbares"
 
@@ -372,17 +367,16 @@ msgstr "Wiederhole/"
 #: noweb/i_callbacks.nw:350
 #, c-format
 msgid "Documentation for [%s,%s,%s,%s]\n"
-msgstr ""
+msgstr "Dokumentation von [%s,%s,%s,%s]\n"
 
 #: noweb/i_callbacks.nw:354
-#, fuzzy
 msgid "Could not fork\n"
 msgstr "Die Farbe %s wurde nicht gefunden.\n"
 
 #: noweb/i_callbacks.nw:364
-#, fuzzy, c-format
+#, c-format
 msgid "Could not invoke %s\n"
-msgstr "Die Farbe %s wurde nicht gefunden.\n"
+msgstr "Konnte %s nicht aufrufen\n"
 
 #: noweb/i_callbacks.nw:514
 msgid "Cannot obtain the current directory!\n"
@@ -398,9 +392,8 @@ msgid "Saved [%s]\n"
 msgstr "Gespeichert [%s]\n"
 
 #: noweb/i_callbacks.nw:629
-#, fuzzy
 msgid "Saved"
-msgstr "Speichern"
+msgstr "Gespeichert"
 
 #: noweb/i_callbacks.nw:633 noweb/x_fileselect.nw:856
 #, c-format
@@ -408,14 +401,12 @@ msgid "Could NOT save [%s]\n"
 msgstr "[%s] konnte nicht gespeichert werden.\n"
 
 #: noweb/i_callbacks.nw:635 noweb/x_fileselect.nw:857
-#, fuzzy
 msgid "Error while trying to save"
-msgstr "Fehler während des Speicherns - Auswahl Modus"
+msgstr "Fehler während des Speicherns"
 
 #: noweb/i_callbacks.nw:684
-#, fuzzy
 msgid "Saved All"
-msgstr "Alles speichern"
+msgstr "Alles gespeichert"
 
 #: noweb/i_callbacks.nw:780 noweb/i_callbacks.nw:783
 msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
@@ -918,12 +909,13 @@ msgstr ""
 #: noweb/o_net.nw:1029
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
+"Interner gschem Fehler: Versuchte mehr als zwei Bus Abzweigungen "
+"hinzuzufügen\n"
 
 #: noweb/o_net.nw:1096
-#, fuzzy, c-format
+#, c-format
 msgid "Could not find %s in any component-library\n"
-msgstr ""
-"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr "Konnte %s in keiner Bauteilbibliothek finden\n"
 
 #: noweb/o_slot.nw:165
 msgid "Slot attribute malformed\n"
@@ -1547,28 +1539,27 @@ msgstr "Status"
 
 #: noweb/x_multiattrib.nw:126 noweb/x_multiattrib.nw:781
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: noweb/x_multiattrib.nw:129 noweb/x_multiattrib.nw:783
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: noweb/x_multiattrib.nw:136 noweb/x_multiattrib.nw:789
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: noweb/x_multiattrib.nw:141 noweb/x_multiattrib.nw:787
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: noweb/x_multiattrib.nw:146 noweb/x_multiattrib.nw:791
 msgid "NV"
-msgstr ""
+msgstr "NV"
 
 #: noweb/x_multiattrib.nw:509
-#, fuzzy
 msgid "Edit Attributes"
-msgstr "Attribut neu/bearbeiten"
+msgstr "Attribute bearbeiten"
 
 #: noweb/x_multiattrib.nw:523 noweb/rcstrings.nw:94
 msgid "Attributes"
@@ -1576,40 +1567,35 @@ msgstr "Attribut"
 
 #: noweb/x_multiattrib.nw:567
 msgid "Vis?"
-msgstr ""
+msgstr "Zeigen?"
 
 #: noweb/x_multiattrib.nw:574
 msgid "SN"
-msgstr ""
+msgstr "SN"
 
 #: noweb/x_multiattrib.nw:582
-#, fuzzy
 msgid "Add/Edit"
-msgstr "Bearbeiten"
+msgstr "Bearbeiten/Hinzufügen"
 
 #: noweb/x_multiattrib.nw:666
-#, fuzzy
 msgid "Show Value only"
 msgstr "Nur Wert anzeigen"
 
 #: noweb/x_multiattrib.nw:669
-#, fuzzy
 msgid "Show Name only"
 msgstr "Nur Name anzeigen"
 
 #: noweb/x_multiattrib.nw:692
-#, fuzzy
 msgid "Change"
-msgstr "Abbrechen"
+msgstr "Ändern"
 
 #: noweb/x_multiattrib.nw:702 noweb/rcstrings.nw:76
 msgid "Add"
 msgstr "Einfügen"
 
 #: noweb/x_multiattrib.nw:728
-#, fuzzy
 msgid "Clear"
-msgstr "Schließen"
+msgstr "Entfernen"
 
 #: noweb/x_multimulti.nw:147
 msgid "Ok"
@@ -2086,9 +2072,8 @@ msgid "Up"
 msgstr "Hinauf"
 
 #: noweb/rcstrings.nw:92
-#, fuzzy
 msgid "Documentation"
-msgstr "Ausrichtung"
+msgstr "Dokumentation"
 
 #: noweb/rcstrings.nw:96
 msgid "Deattach"
@@ -2167,24 +2152,5 @@ msgid "Help"
 msgstr "Hilfe"
 
 #: noweb/rcstrings.nw:118
-#, fuzzy
 msgid "Manual..."
-msgstr "Manager..."
-
-#~ msgid "Saved - Select Mode"
-#~ msgstr "Gespeichert - Auswahl Modus"
-
-#~ msgid "Saved All - Select"
-#~ msgstr "Alles gespeichert - Auswahl Modus"
-
-#~ msgid "Paste 1 Mode "
-#~ msgstr "Einfügen 1 Modus"
-
-#~ msgid "Paste 2 Mode "
-#~ msgstr "Einfügen 2 Modus"
-
-#~ msgid "Paste 3 Mode "
-#~ msgstr "Einfügen 3 Modus"
-
-#~ msgid "Paste 4 Mode "
-#~ msgstr "Einfügen 4 Modus"
+msgstr "Handbuch..."
