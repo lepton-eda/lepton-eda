@@ -1,7 +1,4 @@
-2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
-
-	* attributes/attributes.tex: Merged author= and email= together.
-	Suggestion by Werner Hoch.
+2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* pads_backannotate: Added Dan's documentation for the
 	backannotation script (by Dan McMahill).
@@ -10,6 +7,13 @@
 
 	* spice-sdb: Updated to Stuart's latest doc (split into multiple
 	html files).  Thanks Stuart!
+
+	* fileformats/fileformats.tex: Added valid version to version list
+
+2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Merged author= and email= together.
+	Suggestion by Werner Hoch.
 
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
