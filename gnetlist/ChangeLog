@@ -13,6 +13,9 @@
 	* docs/gnetlist.1: Added information on -s (from the usage of 
 	gnetlist)
 
+	* tests/*.spice-sdb: Update various regression files with the new
+	output from spice-sdb
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
