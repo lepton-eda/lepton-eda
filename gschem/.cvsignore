@@ -7,3 +7,11 @@ configure
 stamp-h1
 *.cache
 aclocal.m4
+config.guess
+config.rpath
+config.sub
+depcomp
+install-sh
+missing
+mkinstalldirs
+

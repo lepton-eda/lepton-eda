@@ -7,3 +7,8 @@ configure
 gesym-config
 system-commonrc
 aclocal.m4
+install-sh
+missing
+mkinstalldirs
+config.guess
+config.sub

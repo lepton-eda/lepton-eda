@@ -7,3 +7,6 @@ configure
 stamp-h1
 *.cache
 aclocal.m4
+install-sh
+missing
+mkinstalldirs

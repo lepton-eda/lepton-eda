@@ -9,3 +9,11 @@ config.log
 config.status
 libgeda.pc
 aclocal.m4
+config.guess
+config.sub
+ltmain.sh
+depcomp
+install-sh
+missing
+mkinstalldirs
+

@@ -7,3 +7,11 @@ config.log
 config.status
 stamp-h1
 aclocal.m4
+confdefs.h
+config.guess
+config.sub
+depcomp
+install-sh
+missing
+mkinstalldirs
+

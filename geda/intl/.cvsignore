@@ -1,1 +1,10 @@
+ChangeLog
 Makefile
+Makefile.in
+*.c 
+*.h
+*.sin 
+*.y
+VERSION
+config.charset
+locale.alias

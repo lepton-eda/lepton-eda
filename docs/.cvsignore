@@ -7,3 +7,6 @@ config.h
 config.log
 config.status
 aclocal.m4
+install-sh
+missing
+mkinstalldirs
