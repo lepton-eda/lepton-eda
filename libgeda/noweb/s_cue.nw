@@ -93,8 +93,8 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
   int offset2;
 
   /* hard coded values */
-  offset = 7 * 6;
-  offset2 = 7;
+  offset = CUE_BOX_SIZE;
+  offset2 = offset*2;
 
   if (w_current->print_color) {
     f_print_set_color(fp, w_current->net_endpoint_color);
@@ -102,7 +102,7 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
 
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d mils %d mils moveto\n", x - offset, y - offset);
-  fprintf(fp, "%d %d fbox\n", offset2, offset2);
+  fprintf(fp, "%d mils %d mils fbox\n", offset2, offset2);
 }
 
 
@@ -121,15 +121,14 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
   int offset2;
 
   if (!size_flag) {
-    offset2 = 7;
+    offset2 = CUE_CIRCLE_LARGE_SIZE;
   } else {
-    offset2 = 3.5;
+    offset2 = CUE_CIRCLE_SMALL_SIZE;
   }
-
 
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d mils %d mils\n", x, y);
-  fprintf(fp, "%d\n", offset2 / 2);
+  fprintf(fp, "%d mils\n", offset2 / 2);
   fprintf(fp, "0 360 arc\n");
   fprintf(fp, "fill\n");
 }
@@ -160,7 +159,7 @@ void s_cue_image_fillbox(TOPLEVEL * w_current, OBJECT * object, int world_x,
 
   WORLDtoSCREEN(w_current, world_x, world_y, &x, &y);
 
-  offset = SCREENabs(w_current, 30);
+  offset = SCREENabs(w_current, CUE_BOX_SIZE);
   offset2 = offset * 2;
 
   gdImageFilledRectangle(current_im_ptr,
@@ -196,10 +195,11 @@ void s_cue_image_fillcircle(TOPLEVEL * w_current, int world_x, int world_y,
 
   WORLDtoSCREEN(w_current, world_x, world_y, &x, &y);
 
+  /* this needs to be rewritten to be much cleaner */
   if (!size_flag) {
-    offset = SCREENabs(w_current, 30);
+    offset = SCREENabs(w_current, 30); /* large size */
   } else {
-    offset = SCREENabs(w_current, 10);
+    offset = SCREENabs(w_current, 10);  /* small size */
   }
   offset2 = offset * 2;
 
