@@ -40,6 +40,9 @@
 #include "../include/globals.h"
 #include "../include/i_vars.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
 
 /* GtkWidget *w_main; */
 

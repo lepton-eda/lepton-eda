@@ -51,6 +51,10 @@
 #include "gtksheet_1_2.h"
 #include "gtkitementry_1_2.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 #define CELL_SPACING 1
 #define DRAG_WIDTH 6

@@ -41,6 +41,10 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 /*------------------------------------------------------------------
  * This fcn is the sheet_data creator.  It returns a pointer to 

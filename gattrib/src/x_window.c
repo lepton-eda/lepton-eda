@@ -64,6 +64,10 @@
 #include "../include/globals.h"
 #include "../include/x_menu.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 /* ======================  Public functions  ======================== */
 

@@ -64,6 +64,9 @@
 #include "../include/globals.h"
 /* #include "../include/x_menu.h" */
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
 
 /*------------------------------------------------------------------
  * gattrib_really_quit callback -- called when user selects "quit"

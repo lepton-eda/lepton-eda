@@ -30,6 +30,10 @@
 #include <gtk/gtkentry.h>
 #include "gtkitementry_1_2.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 #define MIN_ENTRY_WIDTH  150
 #define DRAW_TIMEOUT     20
 #define INNER_BORDER     4

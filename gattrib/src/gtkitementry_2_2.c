@@ -51,6 +51,10 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 #define MIN_ENTRY_WIDTH  150
 #define DRAW_TIMEOUT     20

@@ -33,6 +33,10 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 /*------------------------------------------------------------------
  * The below fcns identical to those defined in

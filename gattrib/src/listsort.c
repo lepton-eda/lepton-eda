@@ -58,6 +58,10 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 /*----------------------------------------------------------------*
  * Comparison function -- compare values of string data.

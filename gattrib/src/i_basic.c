@@ -37,6 +37,10 @@
 /* --- This is necessary for i_basic.c --- */
 #include "../include/x_states.h"
 
+#ifdef HAVE_LIBDMALLOC
+#include <dmalloc.h>
+#endif
+
 
 /* ------------------------------------------------------------- *
  *
