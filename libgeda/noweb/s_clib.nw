@@ -485,10 +485,13 @@ s_clib_init()
 char *
 s_clib_getdir(int index)
 {
+  if (index < 0 || index >= clib_index) 
+    return(NULL);
+   
   if (clib[index].dir_name != NULL)
-  return(clib[index].dir_name);
+    return(clib[index].dir_name);
   else 
-  return(NULL);
+    return(NULL);
 }
 
 

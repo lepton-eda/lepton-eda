@@ -1,3 +1,8 @@
+2003-02-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_clib.nw: Added a little more error checking to 
+	s_clib_add_entry().
+
 2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Bumped version to 20030223
