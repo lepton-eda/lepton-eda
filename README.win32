@@ -1,14 +1,13 @@
-
-gEDA / gaf - Cygwin
+gEDA / gaf - MinGW32
 
 GPL Electronic Design Automation  
 --------------------------------------------------------------------------
-To run the binary distribution of gEDA/gaf - Cygwin:
+To run the binary distribution of gEDA/gaf - MinGW32:
 
-You should not have to install the cygwin distribution.  gEDA/gaf - Cygwin
-is fairly self contained.
+You should not have to install anything else than the .zip or .exe for 
+gEDA/gaf.  gEDA/gaf - MinGW32 is fairly self contained.
 
-1) Grab geda-cygwin-VERSION.zip and unzip it into c:\   At this stage
+1) Grab geda-mingw32-VERSION.zip and unzip it into c:\   At this stage
    in the game, it really should be in c:\  Unzipping the zip file
    should create a directory called "geda" (c:\geda)
 
@@ -31,21 +30,18 @@ that too, but you will need to set then environment variable:
 
 GEDADATA 
 to 
-[new_path_to_geda]/geda/share/gEDA       
+[new_path_to_geda]\geda\share\gEDA       
 
-You have to be careful with this path, some examples will help:
-/cygdrive/c/gnu/geda/share/gEDA    for c:\gnu\geda\share\gEDA
-/cygdrive/d/geda/share/gEDA        for d:\geda\share\gEDA
+Examples:
+set GEDADATA=c:\gnu\geda\share\gEDA
+set GEDADATA=d:\geda\share\gEDA
 
-The /cygdrive/[letter] is necessary since gschem uses the cygwin emulation
-library, which is a little quirky when it comes to paths.
-
-Do not forget to put [new_path_to_geda_using_std_notation_\geda\bin into 
+Do not forget to put [new_path_to_geda]\geda\bin into 
 your PATH.  You also need to set: 
 
 GUILE_LOAD_PATH 
 to 
-[new_path_to_geda]\geda\share\guile\1.4
+[new_path_to_geda]\geda\share\guile\1.4.1
 
 Getting these environment variables right is best done by trial and error.
 You will know when you got it right when 1) gschem starts and doesn't 
@@ -53,361 +49,396 @@ complain, and 2) you can place components (via Add/Component...).
 
 ---------------------------------------------------------------------------
 
-
-Please keep in mind that this port is really new and may do really stupid
-things.  PLEASE BACKUP ANY DATA YOU VALUE.  gEDA/Cygwin (or any gEDA software)
-comes with NO WARRANTY (I hate having to say this).  Please let me know
-if there are any problems.
-
-
+Please keep in mind that this port is really new and may do really
+stupid things.  PLEASE BACKUP ANY DATA YOU VALUE.  gEDA/gaf - MinGW32
+(or any gEDA software) comes with NO WARRANTY (I hate having to say this).
+Please let me know if there are any problems.
 
 --------------------------------------------------------------------------
-Build instructions for gEDA/Cygwin (gEDA running on Win32 machines)
+The rest of this readme describes how to build gEDA/gaf (gschem and
+friends) on a win32 machine (WinNT/Win2K/WinXP).  It uses mingw32 as the
+layer between win32 and the unix world (ie gcc, make etc...).
 
-First an important warning:
+gEDA/gaf should build and run out of the box if you follow these
+instructions.  
 
-These instructions assume the user has a significant amount of knowledge of 
-build unix programs under cygwin.  You need to be familiar with the 
-./configure process, installing cygwin properly, and resolving the occasional
-build bug.  
+* If any part of this document is unclear, please post on geda-dev. 
+* If any part of this document is wrong, please post on geda-dev. 
+* If you are not familiar with compiling programs, please use a 
+  binary distribution of gEDA/gaf - MinGW32.
 
-If you don't understand any part of this document, then 1) ask Ales, it 
-might be a valid question, and/or 2) Just run the binary distribution of 
-gEDA/Cygwin.   
+It is recommend that gEDA/gaf and all libraries are installed into c:/geda
+If you want an alternative location, make sure all dependancies are installed
+into the new location as well.
 
---------------------------------------------------------------------------
-Install cygwin-1.x using one of the approved methods (setup.exe etc...)
-	You many need WININET.DLL and SHLWAPI.DLL from some Windows machine
-	if these dll are not already on your machine
-	I installed cygwin 1.x to c:\cygwin  (I recommend you do the same)
-	It is recommend that install so that the directories are mounted
-	in textmode.  Do this by selecting "DOS" for "Default Text File Type"
- 	when you run setup.exe
+For this doc, a "%" is the bash shell prompt from msys.
+Build instructions for gEDA/gaf - MinGW32 (gEDA running on Win32 machines)
 
-Here is a list of all the cygwin packages I installed (some are old, just
-grab the latest versions):
+But first an important warning:
 
-ash-20000627.tar.gz       gzip.tar.gz
-bash-2.04.1.tar.gz        README
-binutils-20000625.tar.gz  inetutils-1.3.2-4.tar.gz
-bison.tar.gz              less.tar.gz
-bootstrap.zip             m4.tar.gz
-byacc.tar.gz              make-3.79-3.tar.gz
-bzip2.tar.gz              patch.tar.gz
-cygwin-1.1.6-1.tar.gz     regex-4.4.tar.gz
-diff.tar.gz               sed-3.02-1.tar.gz
-fileutils.tar.gz          setup.exe
-findutils.tar.gz          shellutils.tar.gz
-flex.tar.gz               tar.tar.gz
-gawk-3.0.4.tar.gz         texinfo.tar.gz
-gcc-2.95.2-5.tar.gz       textutils.tar.gz
-gdb-20000610.tar.gz       w32api-20001111-1.tar.gz
-grep.tar.gz
-
-	It is important to get regex-*.tar.gz so that some of the gnetlist
-backends and other scheme scripts in gEDA run.  You also need to install
-cvs-win32 if you want to checkout gEDA from the CVS repository.  Also, 
-if you plan to build the cvs version, you need automake and autoconf.  
-I do not really recommend building the cvs version, instead grab a snapshot
-and work from that (the cvs version requires the Makefiles* to be built, 
-which sometimes works with the cygwin version of automake/autoconf).
-
-	You will also need the following libraries (from the cygwin contrib
-directory) if you want to build libgdgeda-1.8:
-
-libpng-1.0.8-2.tar.gz  zlib-1.1.3-5-src.tar.gz 
-
-
-*	set MAKEFLAGS to --unix
-
-*	set HOME to something useful (c:\devel)
-
-*	set TMP to something useful (c:\tmp)
-
-* 	I had to remount / in textmode so that I wouldn't get syntax errors
-	umount /
-	mount c:/cygwin /
-	mount will show the flags on / to be textmode (like this:
-
-bash-2.04$ mount
-Device              Directory           Type         Flags
-C:\cygwin\bin       /usr/bin            user         textmode
-C:\cygwin\lib       /usr/lib            user         textmode
-c:\cygwin           /                   user         textmode
-
-	Do the same thing for the other directories.  If you install cygwin
-with "DOS" being the "Default Text File Type" then you will get the above
-mounts with textmode
-
-* mkdir /geda		(You should create this inside a cygwin env; the 
-			 Windows path to this will be: c:\cygwin\geda)
-
-* Added /geda/bin to your path (either in the cygwin environment by editing
-  a shell init file (.bashrc) or set it for all windows with My Computer/
-  Properties/Environment/PATH.  You have to set globally if you want to 
-  gschem and friends outside of the cygwin environment.  If you do use the
-  Windows environment dialog box, make sure you give it a windows path,
-  ie c:\cygwin\geda\bin  (not /geda/bin). 
+These instructions assume the user has a significant amount of knowledge
+of build unix programs under mingw32.  You need to be familiar with
+the ./configure process, installing mingw32 properly, and resolving the
+occasional build bug.
 
 --------------------------------------------------------------------------
 
+1) Download:
 
-Installed guile-1.4:
+   Build environment
+	* MSYS-1.0.7-i686-2.exe	(http://www.mingw.org)
+                                (use the proper ?86 version for your CPU!)
+	* MinGW-1.1.tar.gz	(http://www.mingw.org)
 
-* Untar guile-1.4.tar.gz. 
-	You will get a complaint about and-let*.scm 
-	Get this file from a unix host and call it and-letstar.scm
+   External libraries part of build environment
+	* zlib-1.1.3-1.zip	(https://sourceforge.net/projects/mingwrep/)
+	* readline-4.2-20010727.zip
+	* regex-0.12-20010123.zip
+	* rx-1.5-20010502.zip
+	* libpng-1.0.6-20000724.zip 
+	* libpng-devel-1.0.6-20000724.zip
+	          ---OR---
+	Grab the corresponding .tar.gz files for the above .zips from:
+	http://www.geda.seul.org/devel/win32/build
+	
+  gEDA/gaf guile library (from http://www.geda.seul.org/devel/win32/mingw)
+	guile-1.4.1-gaf.tar.gz  
 
-* Run bash (via c:\cygwin\cygwin.bat)
+  gEDA/gaf gtk/glib libs (from http://www.geda.seul.org/devel/win32/mingw)
+	gtk+-1.3.0-20020313-gaf.tar.gz  
 
-* cd guile-1.4
+  gEDA/gaf itself (http://www.geda.seul.org/devel)
+	geda-gnetlist-VERSION.tar.gz
+	geda-gschem-VERSION.tar.gz
+	geda-gsymcheck-VERSION.tar.gz
+	geda-symbols-VERSION.tar.gz
+	geda-utils-VERSION.tar.gz
+	libgeda-VERSION.tar.gz
+	Makefile
 
-* edit Makefile.in in ice-9 and replace the * in and-let*.scm with star,
-	add file to ice-9 dir: and-letstar.scm 
+  Any VERSION >= 20020527 should build under MinGW32.
 
-* edit libguile/net_db.c and #if 0 out the line:
-	extern int h_errno;
+2) Install MSYS by running:
 
-  so that it reads: 
+	MSYS-1.0.7-i686-2.exe
 
-#if 0
-	extern int h_errno;
-#endif
+3) Double click on the Msys icon on the desktop to get a shell (bash prompt)
 
-* ./configure --prefix=/geda 
+4) Install Mingw (the compilers, development environment, and libraries)
+	% cd /
+	% mkdir mingw
+	% cd mingw	!! This step is important; do not untar in / !!
+	% tar xvfz MinGW-1.1.tar.gz
 
-* make 
+   Unzip the other .zip files using winzip or use the .tar.gz I provided.
+   If you decide to unzip the .zip files, then unzip directly into
+   c:/msys/1.0/mingw (the mingw directory).
 
-* cd libguile
+	% cd /mingw     !! This step is important; do not untar into / !!
+	% tar xvfz zlib-1.1.3-1.tar.gz
+	% tar xvfz readline-4.2-20010727.tar.gz
+	% tar xvfz regex-0.12-20010123.tar.gz
+	% tar xvfz rx-1.5-20010502.tar.gz
+	% tar xvfz libpng-1.0.6-20000724.tar.gz 
+	% tar xvfz libpng-devel-1.0.6-20000724.tar.gz
+	% cd bin
+	% mv make.exe makeold.exe
 
-* edit libguile.la and added -lregex to the dependency_libs='' line so that 
-  it reads:
+5) Build a test program (like hellow) to test the compilers
+   You can use vi to input the code or your favorite editor.
 
-dependency_libs='-lregex'
+--- Cut here for hellow.c ---
+#include <stdio.h>
 
-* rm guile.exe 
+int
+main(int argc, char **argv)
+{
+   printf("Hello World!\n");
+   return 0;
+}
+--- Cut here for hellow.c ---
 
-* cd ..
+   Build it like this: 
+	% gcc -o hellow hellow.c
+   Run it: 
+	% ./hellow  
 
-* make install
+   If this does not work.  Do not continue until you have fixed any problems.
+
+6) Create the destination install directory
+	% mkdir c:/geda
+	% ls c:/geda
+
+7) Build guile-1.4.1-gaf
+
+   guile-1.4.1-gaf is a hacked version of guile-1.4.1 for gEDA/gaf 
+   and the Mingw port.  Please don't use it unless you are building gEDA/gaf.
+   For the real thing (real guile), please see http://www.gnu.org
+
+   Make sure you have installed all the *.tar.gz library files mentioned
+   above before doing this step. 
+
+	% cd
+	% tar xvfz guile-1.4.1-mingwgeda.tar.gz
+	% cd guile-1.4.1
+	% ./configure --prefix=c:/geda --enable-posix --enable-regex --without-modules --enable-guile-debug --without-threads --disable-networking --enable-ltdl-convenience 
+	% cd ../libltdl 
+	% make
+	% cd ice-9
+	% make install
+
+	You might get an error about and-let-star.scm or and-let-*.scm; 
+	I ignored it.
+
+	% cd ../guile-config
+	% cp guile-config.geda guile-config
+	% cd ../libguile
+	% make libpath.h
+	% make -f Makefile.Win32 install
+
+   Guile errors and workarounds.  You may or may not see these.
+
+	* ./configure error:
+
+checking whether make sets ${MAKE}..... ./configure: eval: line 1: unexpected EOF while looking for matching `"'
+./configure: eval: line 2: syntax error: unexpected end of file
+no
+	I ignored it. :-)
+	
+8) Post guile install steps and test
+
+   Copy a few dlls into c:\geda\bin
+   	
+	% cd /mingw/bin
+	% cp librx.dll c:/geda/bin
+	% cp libreadline.dll c:/geda/bin
+	% cp libregex.dll c:/geda/bin
+	% cp libz.dll c:/geda/bin
+	% cp libpng.2.1.dll c:/geda/bin	
+
+	Make sure that libguile.dll got installed in c:\geda\bin
  
-* Run guile, make sure it basically works:
-	(display "I am a working guile.exe") (newline)
+   Open up a cmd shell (dos command box) and do the following:
 
-  It is also useful to check to make sure that the regexp code in libguile
-  works.  Here's a simple scheme script:
+	Add c:/geda/bin to your path:
+	c:\> set PATH=%PATH%;c:\geda\bin 
+	c:\> guile.exe
 
-(use-modules (ice-9 regex))
+   At this point you should see a guile> prompt.
+  
+	guile> (display "Hello World!") (newline)
+	guile> (quit)
 
-(define pattern "^TEST*")
-(display (string-match pattern "TESTblah")) (newline)
-(display (string-match pattern "blahTEST")) (newline)
+   Try building a very basic guile program:
 
-  This script should run without error.
+-- Cut here for gtest.c --
+#include <guile/gh.h>
 
---------------------------------------------------------------------------
+void main_prog(int argc, char *argv[])
+{
+  scm_shell(argc, argv);
+}
 
-
-Install gtk+, gdk, and glib per these instructions:
-
-* Unzip gtk+-dev-VERSION.zip into /geda  (which would be in c:\cygwin\geda)
-   (so that you end up with stuff in c:\cygwin\geda\src)
-
-* Unzip glib-dev-VERSION.zip into /geda  (which would be in c:\cygwin\geda)
-   (so that you end up with stuff in c:\cygwin\geda\src)
-
-* Unzip libiconv-dev-VERSION.zip into /geda 
-  You can get this library from:   
-     http://www.gimp.org/win32/libiconv-dev-20000821.zip.
-
-* Grab a copy of my hacked glib-config and gtk-config  Modify them 
-  appropriately to your setup.  If you used c:\cygwin\geda as the unzip spot
-  then you probably won't have to change them.  Put these scripts in 
-  /geda/bin
-
-* Copy all the *.dll from 
-	/geda/src/gtk+/gtk 
-	/geda/src/gtk+/gdk  
-  	/geda/src/glib
-  	/geda/src/glib/gmodule
-	/geda/src/intl
-	/geda/src/libiconv-1.3/src
-  into /geda/bin (which is in your path)
-
-* Copy all the *.a from 
-	/geda/src/gtk+/gtk
-	/geda/src/gtk+/gdk
-	/geda/src/glib
-	/geda/src/glib/gmodule
-	/geda/src/intl
-	/geda/src/libiconv-1.3/src
-
-  Rename each of the *.a file to be libPACKAGE.a (not libPACKAGE-1.3.a, get 
-  rid of the version)
-
-* Copy cygpn2.dll and cygz.dll into /geda/bin (You only have to do this if
-  you want to create a standalone /geda directory; really only for binary
-  package creators).  These *.dll normally live in /usr/bin
-
-* touch /geda/src/gtk+/gdk/gdkx.h into existance (empty file).  This file
-  should not be used at all.  I will eventually remove the reference
-  from the gEDA sources eventually.
-
-* Edit /geda/src/glib/gwin32.h  and comment out the lines which define
-  the glib dirent interface (this conflicts with the cygwin one).  
-  Approximately lines 67-100.  If you do this, don't use this include for 
-  any other gtk+/win32 programs.  You have been warned.
-
-* Also in /geda/src/glib/gwin32.h comment out MAXPATHLEN #define (line 39)
-  (it conflicts with something in cygwin install)
-
-
---------------------------------------------------------------------------
-
-Get gEDA from CVS 
-
-* Install CVS (make sure cvs.exe is in your path)
-
-* Set CVSROOT to: :pserver:anoncvs@cvs.seul.org:/home/cvspsrv/cvsroot
-
-* cd <to some good toplevel directory like devel>
-
-* cvs login
-
-* cvs co geda/devel
-
-* cvs co support/libgdgeda-1.8
-
-Alternatively, you can grab all the development tarballs and use those
-instead of checking stuff out of CVS
-
---------------------------------------------------------------------------
-
-Building libgdgeda-1.8
-
-This step is OPTIONAL.  Build and install libgdgeda if you want PNG output
-support.  
-
-Make sure you have installed libpng and zlib from the cygwin site and not
-the version that came with gtk+
-
-* cd geda/support/libgdgeda-1.8	
-
-* ./configure --prefix=/geda
-
-* make install
-
---------------------------------------------------------------------------
-
-Building and Installing gEDA
-
-
-For those that like adventures, you can try to use my toplevel Makefile.
-Before you can use it, make sure you have untarred (or checked out) all the
-gEDA packages.  Also go and copy over the winfonts (all the *.sym files)
-into symbols/font (see the winfont step below).
-
-Run the following commands to make sure that they exist and look fairly
-correct:
-	guile-config link
-	guile-config compile
-	gtk-config --cflags
-	gtk-config --libs
-	glib-config --cflags
-	glib-config --libs
-
-Edit the toplevel Makefile to set the prefix to /geda and then type: 
-
-make install 
-
-
-Or if you would rather do each package seperately, do the next steps:
-
-
---------------------------------------------------------------------------
-
-libgeda:
-
-* Make sure you have a working/complete gtk/glib/guile environment (see
-  the above *config commands, run them and make sure everything looks okay)
-
-* cd libgeda (where you got the stuff from CVS)
-
-* ./configure --prefix=/geda
-
-* make install
-
-* cd ..
-
---------------------------------------------------------------------------
-
-winfonts:
-
-* cd winfonts
-
-* cp *.sym ../symbols/font
-
-* cd ..
-
---------------------------------------------------------------------------
-
-symbols:
-
-* cd symbols
-
-* ./configure --prefix=/geda 
- 
-* make install
-
-* cd ..
-
---------------------------------------------------------------------------
-
-gschem:
-
-* cd gschem
-
-* ./configure --prefix=/geda
-
-* make install
- 
-* cd ..
-
---------------------------------------------------------------------------
-
-gnetlist:
-
-* cd gnetlist
-
-* ./configure --prefix=/geda
-
-* make install
-
-* cd ..
+int
+main(int argc, char **argv)
+{
+  gh_enter(argc, argv, main_prog);
+  return 0;
+
+}
+-- Cut here for gtest.c --
+
+   Build it like this:
+
+   % gcc -o gtest gtest.c `guile-config compile` `guile-config link`
+
+   Run it:
+
+   % ./gtest
+   guile> (display "gtest") (newline)
+   guile> (quit)
+
+   If the above steps do not work, please go back and get this working,
+   otherwise the following steps will not work either.
+
+
+9) Untar gtk
+
+	% cd $HOME
+	% tar xvfz gtk+-1.3.0-20020313-gaf.tar.gz
+
+   This will create $HOME/gtk.  If you untar in a different location you 
+   will need to change gtk/bin/gtk-config and gtk/bin/glib-config. 
+
+   gtk+-1.3.0-20020313-gaf.tar.gz is a repackaged version of Tor Lillqvist's 
+   "gtk+ for Win32".  I (Ales) repackaged to make build life easier for
+   gEDA/gaf users.  Without Tor's work, gEDA/gaf - MinGW32 would NOT
+   be possible.
+
+	% cd gtk/lib
+	% cp *.dll c:/geda/bin
+	% cd ../bin
+	% cp gtk-config glib-config c:/geda/bin
+
+10) Add c:/geda/bin to your path
+
+ 	% export PATH=/c/geda/bin:$PATH
+
+	Use /c/... not c:/...
+
+11) Test gtk
+
+	Use the following test program (ghellow.c) to test gtk on your system.
+(This test program came from the gtk-1.2 tutorial, helloworld.c)  You can
+find ghellow.c in $HOME/gtk. 
+
+-- Cut here for ghellow.c -- 
+      #include <gtk/gtk.h>
+
+      /* This is a callback function. The data arguments are ignored
+       * in this example. More on callbacks below. */
+      void hello( GtkWidget *widget,
+                  gpointer   data )
+      {
+          g_print ("Hello World\n");
+      }
+
+      gint delete_event( GtkWidget *widget,
+                         GdkEvent  *event,
+                         gpointer   data )
+      {
+          /* If you return FALSE in the "delete_event" signal handler,
+           * GTK will emit the "destroy" signal. Returning TRUE means
+           * you don't want the window to be destroyed.
+           * This is useful for popping up 'are you sure you want to quit?'
+           * type dialogs. */
+
+          g_print ("delete event occurred\n");
+
+          /* Change TRUE to FALSE and the main window will be destroyed with
+           * a "delete_event". */
+
+          return(TRUE);
+      }
+
+      /* Another callback */
+      void destroy( GtkWidget *widget,
+                    gpointer   data )
+      {
+          gtk_main_quit();
+      }
+
+      int main( int   argc,
+                char *argv[] )
+      {
+          /* GtkWidget is the storage type for widgets */
+          GtkWidget *window;
+          GtkWidget *button;
+          
+          /* This is called in all GTK applications. Arguments are parsed
+           * from the command line and are returned to the application. */
+          gtk_init(&argc, &argv);
+          
+          /* create a new window */
+          window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+          
+          /* When the window is given the "delete_event" signal (this is given
+           * by the window manager, usually by the "close" option, or on the
+           * titlebar), we ask it to call the delete_event () function
+           * as defined above. The data passed to the callback
+           * function is NULL and is ignored in the callback function. */
+          gtk_signal_connect (GTK_OBJECT (window), "delete_event",
+                              GTK_SIGNAL_FUNC (delete_event), NULL);
+          
+          /* Here we connect the "destroy" event to a signal handler.  
+           * This event occurs when we call gtk_widget_destroy() on the window,
+           * or if we return FALSE in the "delete_event" callback. */
+          gtk_signal_connect (GTK_OBJECT (window), "destroy",
+                              GTK_SIGNAL_FUNC (destroy), NULL);
+          
+          /* Sets the border width of the window. */
+          gtk_container_set_border_width (GTK_CONTAINER (window), 10);
+          
+          /* Creates a new button with the label "Hello World". */
+          button = gtk_button_new_with_label ("Hello World");
+          
+          /* When the button receives the "clicked" signal, it will call the
+           * function hello() passing it NULL as its argument.  The hello()
+           * function is defined above. */
+          gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                              GTK_SIGNAL_FUNC (hello), NULL);
+          
+          /* This will cause the window to be destroyed by calling
+           * gtk_widget_destroy(window) when "clicked".  Again, the destroy
+           * signal could come from here, or the window manager. */
+          gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+                                     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+                                     GTK_OBJECT (window));
+          
+          /* This packs the button into the window (a gtk container). */
+          gtk_container_add (GTK_CONTAINER (window), button);
+          
+          /* The final step is to display this newly created widget. */
+          gtk_widget_show (button);
+          
+          /* and the window */
+          gtk_widget_show (window);
+          
+          /* All GTK applications must have a gtk_main(). Control ends here
+           * and waits for an event to occur (like a key press or
+           * mouse event). */
+          gtk_main ();
+          
+          return(0);
+      }
+-- Cut here for ghellow.c -- 
+
+   Build it:
+
+	% gcc -o ghellow ghellow.c `gtk-config --cflags --libs`
+
+   Run it:
 	
---------------------------------------------------------------------------
+	% ./hellow
 
-gsymcheck:
+   If it fails to run, the fix the problem before continuing.  As usual, if
+   the test program does not link and run, then you will NOT be able to build
+   and run gEDA/gaf.
 
-* cd gsymcheck
+12) Build/install gEDA/gaf itself
+
+    Untar all of the gEDA/gaf tarballs into a directory.
+    Put that Makefile into this toplevel directory.
+
+    Edit the Makefile so that: 
+
+CD_VERSION=-$(VERSION)
+DIR_PREFIX=geda-
+
+    is commented in.  And that:
+
+prefix=c:/geda
+
+    Start the build:
+
+ 	% make install
+
+    You may see the following errors:
+
+	* ./configure error:
+
+checking whether make sets ${MAKE}..... ./configure: eval: line 1: unexpected EOF while looking for matching `"'
+./configure: eval: line 2: syntax error: unexpected end of file
+no
+	I ignored it everytime.
 	
-* ./configure --prefix=/geda
 
-* make install
+   If everything completes okay (no FATAL errors), then 
+gEDA/gaf - MinGW32 has build successfully.  Congratulations.
 
-* cd ..
-	
---------------------------------------------------------------------------
-
-utils:
-
-* cd utils
-	
-* ./configure --prefix=/geda
-
-* make install
-
-* cd ..
 
 --------------------------------------------------------------------------
+   The MinGW32 port has been brought to you by many many months of work, 
+several crashed Windows machines (seriously), and a few close calls where
+I almost gave up on the port. :->
 
