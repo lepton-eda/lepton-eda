@@ -1,0 +1,6 @@
+attributes
+*.aux
+*.dvi
+*.log
+*.toc
+*.ps
