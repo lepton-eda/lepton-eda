@@ -1,3 +1,5 @@
-*.texi
 Makefile
 Makefile.in
+*.texi
+gschemdoc.info
+gschemdoc.info-*
