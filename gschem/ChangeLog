@@ -1,3 +1,10 @@
+2003-01-10 Chris Ellec
+
+     * noweb/o_misc.nw: Find Specific Text, replaced the strcmp used
+     to search for the text with a strstr so that we can search for
+     C12 instead of having to seach for refdes=C12. That way the user 
+     doesn't have to know what the symbol internal names are.
+
 2003-01-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_basic.nw: Hierarchy/Up should never be greyed out. Fixed.

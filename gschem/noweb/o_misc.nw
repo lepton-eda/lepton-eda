@@ -987,7 +987,8 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
     }
 
     if (o_current->type == OBJ_TEXT) {
-      if (!strcmp(stext, o_current->text->string)) {
+     /* replaced strcmp with strstr to simplify the search */
+      if (strstr(o_current->text->string,stext)) {
 	/*            printf(_("Found %s\n"), stext);
 	   if (!o_current->selected&&(!descend)) {
 	   o_selection_add(w_current->page_current->selection2_head,
