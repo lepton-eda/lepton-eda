@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-08 23:57-0500\n"
+"POT-Creation-Date: 2005-03-14 13:12-0500\n"
 "PO-Revision-Date: 2003-04-21 02:59+0000\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
 "Language-Team: geda em Portugues Brasil <geda-pt@seul.org>\n"
@@ -1205,7 +1205,7 @@ msgstr "Subir"
 msgid "Documentation"
 msgstr "Documentação"
 
-#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:301
+#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:309
 msgid "Attributes"
 msgstr "Atributos"
 
@@ -1307,12 +1307,12 @@ msgid "Single Attribute Editor"
 msgstr "Editor de um atributo"
 
 #: noweb/x_attribedit.nw:458 noweb/x_attribedit.nw:524
-#: noweb/x_multiattrib.nw:395
+#: noweb/x_multiattrib.nw:403
 msgid "Value"
 msgstr "Valor"
 
 #: noweb/x_attribedit.nw:469 noweb/x_attribedit.nw:842
-#: noweb/x_multiattrib.nw:530
+#: noweb/x_multiattrib.nw:538
 msgid "Visible"
 msgstr "Visível"
 
@@ -1332,7 +1332,7 @@ msgstr "Conexões"
 msgid "Replace"
 msgstr "Substituir"
 
-#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:371
+#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:379
 msgid "Name"
 msgstr "Nome"
 
@@ -1365,11 +1365,11 @@ msgstr "Cancelar"
 msgid "Add/Edit Attribute"
 msgstr "Inserir/Editar Atributo"
 
-#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:505
+#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:513
 msgid "Value:"
 msgstr "Valor:"
 
-#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:486
+#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:494
 msgid "Name:"
 msgstr "Nome:"
 
@@ -1381,7 +1381,7 @@ msgstr "Mostra apenas Valor"
 msgid "Show Name Only"
 msgstr "Mostra apenas Nome"
 
-#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:666
+#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:674
 msgid "Show Name & Value"
 msgstr "Mostra Nome e Valor"
 
@@ -1698,79 +1698,67 @@ msgstr "Selecionar"
 msgid "search text"
 msgstr "Mostrar Texto"
 
-#: noweb/x_dialog.nw:4713 noweb/x_dialog.nw:4722
+#: noweb/x_dialog.nw:4723
 msgid "refdes=C"
 msgstr ""
 
-#: noweb/x_dialog.nw:4714
-msgid "refdes=Q"
-msgstr ""
-
-#: noweb/x_dialog.nw:4715
-msgid "refdes=R"
-msgstr ""
-
-#: noweb/x_dialog.nw:4716
-msgid "refdes=X"
-msgstr ""
-
-#: noweb/x_dialog.nw:4726
+#: noweb/x_dialog.nw:4727
 msgid "search focus"
 msgstr ""
 
-#: noweb/x_dialog.nw:4739
+#: noweb/x_dialog.nw:4740
 #, fuzzy
 msgid "selected objects"
 msgstr "Selecionado um objeto inexistente!\n"
 
-#: noweb/x_dialog.nw:4742
+#: noweb/x_dialog.nw:4743
 #, fuzzy
 msgid "current sheet"
 msgstr "Testar folha"
 
-#: noweb/x_dialog.nw:4745
+#: noweb/x_dialog.nw:4746
 msgid "hierarchical sheets"
 msgstr ""
 
-#: noweb/x_dialog.nw:4757
+#: noweb/x_dialog.nw:4758
 #, fuzzy
 msgid "unnumbered"
 msgstr "Autonumerar texto"
 
-#: noweb/x_dialog.nw:4761
+#: noweb/x_dialog.nw:4762
 #, fuzzy
 msgid "all"
 msgstr "Todos"
 
-#: noweb/x_dialog.nw:4770
+#: noweb/x_dialog.nw:4771
 #, fuzzy
 msgid "options"
 msgstr "Opções"
 
-#: noweb/x_dialog.nw:4777
+#: noweb/x_dialog.nw:4778
 #, fuzzy
 msgid "start number"
 msgstr "Editar número de SLOT"
 
-#: noweb/x_dialog.nw:4790
+#: noweb/x_dialog.nw:4791
 msgid "sort order"
 msgstr ""
 
-#: noweb/x_dialog.nw:4802
+#: noweb/x_dialog.nw:4803
 #, fuzzy
 msgid "file order"
 msgstr "Modo de Círculo"
 
-#: noweb/x_dialog.nw:4805
+#: noweb/x_dialog.nw:4806
 msgid "top down"
 msgstr ""
 
-#: noweb/x_dialog.nw:4808
+#: noweb/x_dialog.nw:4809
 #, fuzzy
 msgid "left right"
 msgstr "Dir Centro"
 
-#: noweb/x_dialog.nw:4811
+#: noweb/x_dialog.nw:4812
 msgid "diagonal"
 msgstr ""
 
@@ -1944,36 +1932,36 @@ msgstr ""
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:270
+#: noweb/x_multiattrib.nw:272
 msgid "Edit Attributes"
 msgstr "Editar Atributos"
 
-#: noweb/x_multiattrib.nw:417
+#: noweb/x_multiattrib.nw:425
 msgid "Vis?"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:437
+#: noweb/x_multiattrib.nw:445
 msgid "N"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:457
+#: noweb/x_multiattrib.nw:465
 msgid "V"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:471
+#: noweb/x_multiattrib.nw:479
 #, fuzzy
 msgid "Add Attribute"
 msgstr "Inserir/Editar Atributo"
 
-#: noweb/x_multiattrib.nw:668
+#: noweb/x_multiattrib.nw:676
 msgid "Show Value only"
 msgstr "Mostra apenas Valor"
 
-#: noweb/x_multiattrib.nw:670
+#: noweb/x_multiattrib.nw:678
 msgid "Show Name only"
 msgstr "Mostra apenas Nome"
 
-#: noweb/x_multiattrib.nw:745
+#: noweb/x_multiattrib.nw:753
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 

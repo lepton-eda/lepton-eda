@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-08 23:57-0500\n"
+"POT-Creation-Date: 2005-03-14 13:12-0500\n"
 "PO-Revision-Date: 2005-03-11 23:41+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -117,7 +117,9 @@ msgstr ""
 #: noweb/g_rc.nw:1998
 #, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-msgstr "Se ha especificado un número no válido de líneas [%d] a la función output-vector-threshold\n"
+msgstr ""
+"Se ha especificado un número no válido de líneas [%d] a la función output-"
+"vector-threshold\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -711,13 +713,15 @@ msgstr "¡Tipo de relleno de rectángulo desconocido!\n"
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
 msgstr ""
-"Se ha recibido un número de memoria intermedia no válida en la función o_buffer_copy\n"
+"Se ha recibido un número de memoria intermedia no válida en la función "
+"o_buffer_copy\n"
 
 #: noweb/o_buffer.nw:120
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_cut]\n"
 msgstr ""
-"Se ha recibido un número de memoria intermedia no válida en la función o_buffer_cut\n"
+"Se ha recibido un número de memoria intermedia no válida en la función "
+"o_buffer_cut\n"
 
 #: noweb/o_buffer.nw:167
 #, c-format
@@ -829,8 +833,9 @@ msgstr "Se ha incrustado el componente [%s]\n"
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
-msgstr "No se ha podido encontrar el componente [%s] al intentar desincrustar. "
-"El componente todavía está incrustado.\n"
+msgstr ""
+"No se ha podido encontrar el componente [%s] al intentar desincrustar. El "
+"componente todavía está incrustado.\n"
 
 #: noweb/o_misc.nw:601 noweb/o_misc.nw:1590
 #, c-format
@@ -857,7 +862,9 @@ msgstr "El texto oculto es ahora invisible\n"
 
 #: noweb/o_misc.nw:1585
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr "No se puede desincrustar el componente, no se ha podido encontrar el fichero .sym correspondiente\n"
+msgstr ""
+"No se puede desincrustar el componente, no se ha podido encontrar el "
+"fichero .sym correspondiente\n"
 
 #: noweb/o_misc.nw:1586
 msgid "Component still embedded and not updated\n"
@@ -948,7 +955,8 @@ msgid ""
 "  -t            Print stroke information\n"
 "  -h            Help; this message\n"
 "\n"
-msgstr "Modo de uso: %s [OPCIONES] nombre_de_esquema_1·...·nombre_de_esquema_N\n"
+msgstr ""
+"Modo de uso: %s [OPCIONES] nombre_de_esquema_1·...·nombre_de_esquema_N\n"
 "  -q                No mostrar mensajes adicionales\n"
 "  -v                Mostrar mensajes adicionales\n"
 "  -r archivo   Usar archivo Rc\n"
@@ -1231,7 +1239,7 @@ msgstr "Arriba"
 msgid "Documentation"
 msgstr "Documentación"
 
-#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:301
+#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:309
 msgid "Attributes"
 msgstr "Propiedades"
 
@@ -1334,12 +1342,12 @@ msgid "Single Attribute Editor"
 msgstr "Editor de una única propiedad"
 
 #: noweb/x_attribedit.nw:458 noweb/x_attribedit.nw:524
-#: noweb/x_multiattrib.nw:395
+#: noweb/x_multiattrib.nw:403
 msgid "Value"
 msgstr "Valor"
 
 #: noweb/x_attribedit.nw:469 noweb/x_attribedit.nw:842
-#: noweb/x_multiattrib.nw:530
+#: noweb/x_multiattrib.nw:538
 msgid "Visible"
 msgstr "Visible"
 
@@ -1359,7 +1367,7 @@ msgstr "Conexiones"
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:371
+#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:379
 msgid "Name"
 msgstr "Nombre"
 
@@ -1392,11 +1400,11 @@ msgstr "Cancelar"
 msgid "Add/Edit Attribute"
 msgstr "Añadir/Editar propiedad"
 
-#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:505
+#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:513
 msgid "Value:"
 msgstr "Valor:"
 
-#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:486
+#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:494
 msgid "Name:"
 msgstr "Nombre:"
 
@@ -1408,7 +1416,7 @@ msgstr "Mostrar sólo valor"
 msgid "Show Name Only"
 msgstr "Mostrar sólo nombre"
 
-#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:666
+#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:674
 msgid "Show Name & Value"
 msgstr "Mostrar nombre y valor"
 
@@ -1709,7 +1717,9 @@ msgstr "Mostrar texto que comienza por:"
 #: noweb/x_dialog.nw:4599
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr "Advertencia: no se admiten números negativos en la ventana de autonumeración de texto\n"
+msgstr ""
+"Advertencia: no se admiten números negativos en la ventana de autonumeración "
+"de texto\n"
 
 #: noweb/x_dialog.nw:4684
 msgid "Autonumber text"
@@ -1723,71 +1733,59 @@ msgstr "Selección"
 msgid "search text"
 msgstr "Buscar texto"
 
-#: noweb/x_dialog.nw:4713 noweb/x_dialog.nw:4722
+#: noweb/x_dialog.nw:4723
 msgid "refdes=C"
 msgstr "refdes=C"
 
-#: noweb/x_dialog.nw:4714
-msgid "refdes=Q"
-msgstr "refdes=Q"
-
-#: noweb/x_dialog.nw:4715
-msgid "refdes=R"
-msgstr "refdes=R"
-
-#: noweb/x_dialog.nw:4716
-msgid "refdes=X"
-msgstr "refdes=X"
-
-#: noweb/x_dialog.nw:4726
+#: noweb/x_dialog.nw:4727
 msgid "search focus"
 msgstr "Ámbito de búsqueda"
 
-#: noweb/x_dialog.nw:4739
+#: noweb/x_dialog.nw:4740
 msgid "selected objects"
 msgstr "objetos seleccionados"
 
-#: noweb/x_dialog.nw:4742
+#: noweb/x_dialog.nw:4743
 msgid "current sheet"
 msgstr "hoja actual"
 
-#: noweb/x_dialog.nw:4745
+#: noweb/x_dialog.nw:4746
 msgid "hierarchical sheets"
 msgstr "hojas jerárquicas"
 
-#: noweb/x_dialog.nw:4757
+#: noweb/x_dialog.nw:4758
 msgid "unnumbered"
 msgstr "sin numerar"
 
-#: noweb/x_dialog.nw:4761
+#: noweb/x_dialog.nw:4762
 msgid "all"
 msgstr "todo"
 
-#: noweb/x_dialog.nw:4770
+#: noweb/x_dialog.nw:4771
 msgid "options"
 msgstr "Opciones"
 
-#: noweb/x_dialog.nw:4777
+#: noweb/x_dialog.nw:4778
 msgid "start number"
 msgstr "Número inicial"
 
-#: noweb/x_dialog.nw:4790
+#: noweb/x_dialog.nw:4791
 msgid "sort order"
 msgstr "Método de ordenación"
 
-#: noweb/x_dialog.nw:4802
+#: noweb/x_dialog.nw:4803
 msgid "file order"
 msgstr "Orden de archivos"
 
-#: noweb/x_dialog.nw:4805
+#: noweb/x_dialog.nw:4806
 msgid "top down"
 msgstr "de arriba a abajo"
 
-#: noweb/x_dialog.nw:4808
+#: noweb/x_dialog.nw:4809
 msgid "left right"
 msgstr "de izquierda a derecha"
 
-#: noweb/x_dialog.nw:4811
+#: noweb/x_dialog.nw:4812
 msgid "diagonal"
 msgstr "diagonal"
 
@@ -1953,7 +1951,9 @@ msgstr "Estado"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
-msgstr "Se ha intentado modificar la sensibilidad de una opción de menú que no existe\n"
+msgstr ""
+"Se ha intentado modificar la sensibilidad de una opción de menú que no "
+"existe\n"
 
 #: noweb/x_menus.nw:448
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -1961,39 +1961,42 @@ msgstr "¡No existen menúes contextuales!\n"
 
 #: noweb/x_menus.nw:463
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr "Se ha intentado modificar la sensibilidad de una opción de menú que no existe\n"
+msgstr ""
+"Se ha intentado modificar la sensibilidad de una opción de menú que no "
+"existe\n"
 
-#: noweb/x_multiattrib.nw:270
+#: noweb/x_multiattrib.nw:272
 msgid "Edit Attributes"
 msgstr "Editar propiedades"
 
-#: noweb/x_multiattrib.nw:417
+#: noweb/x_multiattrib.nw:425
 msgid "Vis?"
 msgstr "Visible?"
 
-#: noweb/x_multiattrib.nw:437
+#: noweb/x_multiattrib.nw:445
 msgid "N"
 msgstr "N"
 
-#: noweb/x_multiattrib.nw:457
+#: noweb/x_multiattrib.nw:465
 msgid "V"
 msgstr "V"
 
-#: noweb/x_multiattrib.nw:471
+#: noweb/x_multiattrib.nw:479
 msgid "Add Attribute"
 msgstr "Añadir propiedad"
 
-#: noweb/x_multiattrib.nw:668
+#: noweb/x_multiattrib.nw:676
 msgid "Show Value only"
 msgstr "Mostrar sólo valor"
 
-#: noweb/x_multiattrib.nw:670
+#: noweb/x_multiattrib.nw:678
 msgid "Show Name only"
 msgstr "Mostrar sólo nombre"
 
-#: noweb/x_multiattrib.nw:745
+#: noweb/x_multiattrib.nw:753
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr "No se permiten las propiedades sin nombre. Por favor, introduzca un nombre."
+msgstr ""
+"No se permiten las propiedades sin nombre. Por favor, introduzca un nombre."
 
 #: noweb/x_pagesel.nw:315
 msgid "Page Manager"
@@ -2198,3 +2201,11 @@ msgstr "Menú/Cancelar"
 msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
 
+#~ msgid "refdes=Q"
+#~ msgstr "refdes=Q"
+
+#~ msgid "refdes=R"
+#~ msgstr "refdes=R"
+
+#~ msgid "refdes=X"
+#~ msgstr "refdes=X"

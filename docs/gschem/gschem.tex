@@ -80,22 +80,19 @@ This step is not covered in this document.  You can tell if you have
 installed the tools correctly by running the following commands:
 \begin{verbatim}
 
-        libgeda-config --version
-        gesym-config --version
         which gschem
         ldd `which gschem`
 
 \end{verbatim}
-The first two should return the version of the installed tools
-(libgeda and the symbol library) and the next command should return
-the path to the {\tt gschem} binary.    The final command (only on
-unix-like operating systems which include the {\tt ldd} utility for
-listing dynamic dependencies of executibles or shared objects)
-will return which libraries are linked to {\tt gschem}; all of the
-request libraries must be found for {\tt gschem} to run.  If these commands
-do not return the expected results, then most likely the gEDA tools are
-not installed properly.  Please see the appropriate INSTALL docs (which
-came with the distribution) for more info on installing the gEDA tools.
+The first command should return the path to the {\tt gschem} binary and the
+second command (only on unix-like operating systems which include the {\tt
+ldd} utility for listing dynamic dependencies of executibles or shared
+objects) will return which libraries are linked to {\tt gschem}; all of
+the request libraries must be found for {\tt gschem} to run.  If these
+commands do not return the expected results, then most likely the gEDA
+tools are not installed properly.  Please see the appropriate INSTALL
+docs (which came with the distribution) for more info on installing the
+gEDA tools.
 
 
 To run gschem execute ``{\tt gschem}'' at any shell prompt (without

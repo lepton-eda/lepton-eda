@@ -1,3 +1,7 @@
+2005-03-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschem/gschem.tex: Removed obsolete install tests
+
 2005-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Changed script so that configure stops when one

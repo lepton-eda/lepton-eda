@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-08 23:57-0500\n"
+"POT-Creation-Date: 2005-03-14 13:12-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1186,7 +1186,7 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:301
+#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:309
 msgid "Attributes"
 msgstr ""
 
@@ -1288,12 +1288,12 @@ msgid "Single Attribute Editor"
 msgstr ""
 
 #: noweb/x_attribedit.nw:458 noweb/x_attribedit.nw:524
-#: noweb/x_multiattrib.nw:395
+#: noweb/x_multiattrib.nw:403
 msgid "Value"
 msgstr ""
 
 #: noweb/x_attribedit.nw:469 noweb/x_attribedit.nw:842
-#: noweb/x_multiattrib.nw:530
+#: noweb/x_multiattrib.nw:538
 msgid "Visible"
 msgstr ""
 
@@ -1313,7 +1313,7 @@ msgstr ""
 msgid "Replace"
 msgstr ""
 
-#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:371
+#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:379
 msgid "Name"
 msgstr ""
 
@@ -1346,11 +1346,11 @@ msgstr ""
 msgid "Add/Edit Attribute"
 msgstr ""
 
-#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:505
+#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:513
 msgid "Value:"
 msgstr ""
 
-#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:486
+#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:494
 msgid "Name:"
 msgstr ""
 
@@ -1362,7 +1362,7 @@ msgstr ""
 msgid "Show Name Only"
 msgstr ""
 
-#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:666
+#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:674
 msgid "Show Name & Value"
 msgstr ""
 
@@ -1663,71 +1663,59 @@ msgstr ""
 msgid "search text"
 msgstr ""
 
-#: noweb/x_dialog.nw:4713 noweb/x_dialog.nw:4722
+#: noweb/x_dialog.nw:4723
 msgid "refdes=C"
 msgstr ""
 
-#: noweb/x_dialog.nw:4714
-msgid "refdes=Q"
-msgstr ""
-
-#: noweb/x_dialog.nw:4715
-msgid "refdes=R"
-msgstr ""
-
-#: noweb/x_dialog.nw:4716
-msgid "refdes=X"
-msgstr ""
-
-#: noweb/x_dialog.nw:4726
+#: noweb/x_dialog.nw:4727
 msgid "search focus"
 msgstr ""
 
-#: noweb/x_dialog.nw:4739
+#: noweb/x_dialog.nw:4740
 msgid "selected objects"
 msgstr ""
 
-#: noweb/x_dialog.nw:4742
+#: noweb/x_dialog.nw:4743
 msgid "current sheet"
 msgstr ""
 
-#: noweb/x_dialog.nw:4745
+#: noweb/x_dialog.nw:4746
 msgid "hierarchical sheets"
 msgstr ""
 
-#: noweb/x_dialog.nw:4757
+#: noweb/x_dialog.nw:4758
 msgid "unnumbered"
 msgstr ""
 
-#: noweb/x_dialog.nw:4761
+#: noweb/x_dialog.nw:4762
 msgid "all"
 msgstr ""
 
-#: noweb/x_dialog.nw:4770
+#: noweb/x_dialog.nw:4771
 msgid "options"
 msgstr ""
 
-#: noweb/x_dialog.nw:4777
+#: noweb/x_dialog.nw:4778
 msgid "start number"
 msgstr ""
 
-#: noweb/x_dialog.nw:4790
+#: noweb/x_dialog.nw:4791
 msgid "sort order"
 msgstr ""
 
-#: noweb/x_dialog.nw:4802
+#: noweb/x_dialog.nw:4803
 msgid "file order"
 msgstr ""
 
-#: noweb/x_dialog.nw:4805
+#: noweb/x_dialog.nw:4806
 msgid "top down"
 msgstr ""
 
-#: noweb/x_dialog.nw:4808
+#: noweb/x_dialog.nw:4809
 msgid "left right"
 msgstr ""
 
-#: noweb/x_dialog.nw:4811
+#: noweb/x_dialog.nw:4812
 msgid "diagonal"
 msgstr ""
 
@@ -1901,35 +1889,35 @@ msgstr ""
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:270
+#: noweb/x_multiattrib.nw:272
 msgid "Edit Attributes"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:417
+#: noweb/x_multiattrib.nw:425
 msgid "Vis?"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:437
+#: noweb/x_multiattrib.nw:445
 msgid "N"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:457
+#: noweb/x_multiattrib.nw:465
 msgid "V"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:471
+#: noweb/x_multiattrib.nw:479
 msgid "Add Attribute"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:668
+#: noweb/x_multiattrib.nw:676
 msgid "Show Value only"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:670
+#: noweb/x_multiattrib.nw:678
 msgid "Show Name only"
 msgstr ""
 
-#: noweb/x_multiattrib.nw:745
+#: noweb/x_multiattrib.nw:753
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 

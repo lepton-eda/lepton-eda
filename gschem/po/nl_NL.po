@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-08 23:57-0500\n"
+"POT-Creation-Date: 2005-03-14 13:12-0500\n"
 "PO-Revision-Date: 2002-09-06 20:11+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
@@ -43,7 +43,8 @@ msgstr ""
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
-"Verzeker je ervan dat je het laatste rc bestand gebruikt zolang gschem in het ALPHA stadium is.\n"
+"Verzeker je ervan dat je het laatste rc bestand gebruikt zolang gschem in "
+"het ALPHA stadium is.\n"
 
 #: noweb/g_rc.nw:302
 #, c-format
@@ -109,7 +110,8 @@ msgstr "Ongeldige waarde [%d] overgedragen aan grid-dot-size\n"
 #: noweb/g_rc.nw:1998
 #, fuzzy, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-msgstr "Ongeldig aantal regels [%d] overgedragen naar output-vector-threshold.\n"
+msgstr ""
+"Ongeldig aantal regels [%d] overgedragen naar output-vector-threshold.\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -130,7 +132,8 @@ msgstr ""
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
-"Dit is vrije software, en je wordt aangemoedigt dit te herdistribueren onder bepaalde\n"
+"Dit is vrije software, en je wordt aangemoedigt dit te herdistribueren onder "
+"bepaalde\n"
 
 #: noweb/gschem.nw:185 noweb/gschem.nw:195
 #, c-format
@@ -359,7 +362,9 @@ msgstr "Alles Opgeslagen"
 #: noweb/i_callbacks.nw:772 noweb/i_callbacks.nw:775
 #, c-format
 msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
-msgstr "libgdgeda is niet geinstalleerd of uitgeschakeld, deze mogelijkheid is niet beschikbaar\n"
+msgstr ""
+"libgdgeda is niet geinstalleerd of uitgeschakeld, deze mogelijkheid is niet "
+"beschikbaar\n"
 
 #: noweb/i_callbacks.nw:828
 msgid "Closing Window\n"
@@ -428,8 +433,8 @@ msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
 msgstr ""
-"ATTENTIE: Als je een symbool naar de oorsprong verschuift, dan moet de snap grip "
-"waarde op 100 gezet worden\n"
+"ATTENTIE: Als je een symbool naar de oorsprong verschuift, dan moet de snap "
+"grip waarde op 100 gezet worden\n"
 
 #: noweb/i_callbacks.nw:1420
 msgid "Embed"
@@ -821,8 +826,8 @@ msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
 msgstr ""
-"Kan component [%s] niet vinden, tijdens een poging om uit te sluiten. Component is nog steeds "
-"ingesloten\n"
+"Kan component [%s] niet vinden, tijdens een poging om uit te sluiten. "
+"Component is nog steeds ingesloten\n"
 
 #: noweb/o_misc.nw:601 noweb/o_misc.nw:1590
 #, c-format
@@ -880,7 +885,8 @@ msgstr "Ontving er een die ongeldig is in o_net_draw_xor_single\n"
 #: noweb/o_net.nw:1035
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
-msgstr "Probeerde meer dan twee busrippers toe te voegen. Interne gschem fout.\n"
+msgstr ""
+"Probeerde meer dan twee busrippers toe te voegen. Interne gschem fout.\n"
 
 #: noweb/o_net.nw:1105
 #, fuzzy, c-format
@@ -1273,7 +1279,7 @@ msgstr "Omhoog"
 msgid "Documentation"
 msgstr "Documentatie"
 
-#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:301
+#: noweb/rcstrings.nw:95 noweb/x_multiattrib.nw:309
 #, fuzzy
 msgid "Attributes"
 msgstr "Attributen"
@@ -1382,12 +1388,12 @@ msgid "Single Attribute Editor"
 msgstr "Enkelvoudige Attribuur Bewerker"
 
 #: noweb/x_attribedit.nw:458 noweb/x_attribedit.nw:524
-#: noweb/x_multiattrib.nw:395
+#: noweb/x_multiattrib.nw:403
 msgid "Value"
 msgstr "Waarde"
 
 #: noweb/x_attribedit.nw:469 noweb/x_attribedit.nw:842
-#: noweb/x_multiattrib.nw:530
+#: noweb/x_multiattrib.nw:538
 msgid "Visible"
 msgstr "Zichtbaar"
 
@@ -1408,7 +1414,7 @@ msgstr "Draden"
 msgid "Replace"
 msgstr "Vervangen"
 
-#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:371
+#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:379
 msgid "Name"
 msgstr "Naam"
 
@@ -1442,12 +1448,12 @@ msgstr "Afbreken"
 msgid "Add/Edit Attribute"
 msgstr "Plaats/Bewerk Attribuut"
 
-#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:505
+#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:513
 #, fuzzy
 msgid "Value:"
 msgstr "Waarde"
 
-#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:486
+#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:494
 #, fuzzy
 msgid "Name:"
 msgstr "Naam:"
@@ -1462,7 +1468,7 @@ msgstr "Toon Alleen Waarde"
 msgid "Show Name Only"
 msgstr "Toon Alleen Naam"
 
-#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:666
+#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:674
 #, fuzzy
 msgid "Show Name & Value"
 msgstr "Toon Naam & Waarde"
@@ -1766,7 +1772,9 @@ msgstr "Toon tekst beginnend met:"
 #: noweb/x_dialog.nw:4599
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr "Waarschuwing: negatieve nummers niet toegestaan in de Autonumber_text dialoog\n"
+msgstr ""
+"Waarschuwing: negatieve nummers niet toegestaan in de Autonumber_text "
+"dialoog\n"
 
 #: noweb/x_dialog.nw:4684
 msgid "Autonumber text"
@@ -1782,78 +1790,66 @@ msgstr "Selectie"
 msgid "search text"
 msgstr "zoek tekst"
 
-#: noweb/x_dialog.nw:4713 noweb/x_dialog.nw:4722
+#: noweb/x_dialog.nw:4723
 msgid "refdes=C"
 msgstr "refdes=C"
 
-#: noweb/x_dialog.nw:4714
-msgid "refdes=Q"
-msgstr "refdes=Q"
-
-#: noweb/x_dialog.nw:4715
-msgid "refdes=R"
-msgstr "refdes=R"
-
-#: noweb/x_dialog.nw:4716
-msgid "refdes=X"
-msgstr "refdes=X"
-
-#: noweb/x_dialog.nw:4726
+#: noweb/x_dialog.nw:4727
 msgid "search focus"
 msgstr "zoek instelling"
 
-#: noweb/x_dialog.nw:4739
+#: noweb/x_dialog.nw:4740
 #, fuzzy
 msgid "selected objects"
 msgstr "geselecteerde objecten"
 
-#: noweb/x_dialog.nw:4742
+#: noweb/x_dialog.nw:4743
 #, fuzzy
 msgid "current sheet"
 msgstr "huidig blad"
 
-#: noweb/x_dialog.nw:4745
+#: noweb/x_dialog.nw:4746
 msgid "hierarchical sheets"
 msgstr "hierarchische bladen"
 
-#: noweb/x_dialog.nw:4757
+#: noweb/x_dialog.nw:4758
 #, fuzzy
 msgid "unnumbered"
 msgstr "ongenummerd"
 
-#: noweb/x_dialog.nw:4761
+#: noweb/x_dialog.nw:4762
 msgid "all"
 msgstr "alle"
 
-#: noweb/x_dialog.nw:4770
+#: noweb/x_dialog.nw:4771
 #, fuzzy
 msgid "options"
 msgstr "aktie"
 
-#: noweb/x_dialog.nw:4777
+#: noweb/x_dialog.nw:4778
 #, fuzzy
 msgid "start number"
 msgstr "start nummer"
 
-#: noweb/x_dialog.nw:4790
+#: noweb/x_dialog.nw:4791
 msgid "sort order"
 msgstr "sorteer volgorde"
 
-#: noweb/x_dialog.nw:4802
+#: noweb/x_dialog.nw:4803
 #, fuzzy
 msgid "file order"
 msgstr "bestand volgorde"
 
-#: noweb/x_dialog.nw:4805
+#: noweb/x_dialog.nw:4806
 msgid "top down"
 msgstr "boven onder"
 
-#: noweb/x_dialog.nw:4808
+#: noweb/x_dialog.nw:4809
 #, fuzzy
 msgid "left right"
 msgstr "links rechts"
 
-#: noweb/x_dialog.nw:4811
+#: noweb/x_dialog.nw:4812
 msgid "diagonal"
 msgstr "diagonaal"
 
@@ -2018,7 +2014,8 @@ msgstr "Status"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
-msgstr "Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item\n"
+msgstr ""
+"Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item\n"
 
 #: noweb/x_menus.nw:448
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -2026,41 +2023,43 @@ msgstr "Popup_menu_item_factory bestaat niet!\n"
 
 #: noweb/x_menus.nw:463
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr "Probeerde de gevoeligheid in te stellen op een niet bestaand popup menu_item\n"
+msgstr ""
+"Probeerde de gevoeligheid in te stellen op een niet bestaand popup "
+"menu_item\n"
 
-#: noweb/x_multiattrib.nw:270
+#: noweb/x_multiattrib.nw:272
 #, fuzzy
 msgid "Edit Attributes"
 msgstr "Berwerk Attribuut"
 
-#: noweb/x_multiattrib.nw:417
+#: noweb/x_multiattrib.nw:425
 msgid "Vis?"
 msgstr "Zichtbaar?"
 
-#: noweb/x_multiattrib.nw:437
+#: noweb/x_multiattrib.nw:445
 msgid "N"
 msgstr "N"
 
-#: noweb/x_multiattrib.nw:457
+#: noweb/x_multiattrib.nw:465
 msgid "V"
 msgstr "V"
 
-#: noweb/x_multiattrib.nw:471
+#: noweb/x_multiattrib.nw:479
 #, fuzzy
 msgid "Add Attribute"
 msgstr "Plaats Attribuut"
 
-#: noweb/x_multiattrib.nw:668
+#: noweb/x_multiattrib.nw:676
 #, fuzzy
 msgid "Show Value only"
 msgstr "Toon alleen Waarde"
 
-#: noweb/x_multiattrib.nw:670
+#: noweb/x_multiattrib.nw:678
 #, fuzzy
 msgid "Show Name only"
 msgstr "Toon alleen Naam"
 
-#: noweb/x_multiattrib.nw:745
+#: noweb/x_multiattrib.nw:753
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr "Attributen met een lege naam zijn niet toegestaan. Geef een naam."
 
@@ -2268,6 +2267,15 @@ msgstr "Menu/Afbreken"
 msgid "Pan/Cancel"
 msgstr "Schuif/Afbreken"
 
+#~ msgid "refdes=Q"
+#~ msgstr "refdes=Q"
+
+#~ msgid "refdes=R"
+#~ msgstr "refdes=R"
+
+#~ msgid "refdes=X"
+#~ msgstr "refdes=X"
+
 #~ msgid "%s requires a string as a parameter\n"
 #~ msgstr "%s vereist een text als parameter.\n"
 
@@ -2431,4 +2439,3 @@ msgstr "Schuif/Afbreken"
 
 #~ msgid "Invisible"
 #~ msgstr "Onzichtbaar"
-

@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for libgeda version 2004* 
+README for libgeda version 2005* 
 
 
 - Installation
@@ -35,13 +35,16 @@ README for libgeda version 2004*
 
 	A C compiler (that understands ANSI, like gcc) 
 
-	GLIB version 1.2.10 or higher (and anything glib requires)
+	GLIB version 2.2.x or later (and anything glib requires)
+	GLIB version 1.2.x is no longer supported.
 	Glib can be found at ftp://ftp.gtk.org/pub/gtk
 
-	GTK+ version 1.2.10 or higher (and anything gtk requires)
+	GTK+ version 2.2.x or later (and anything gtk requires)
+	GTK+ version 1.2.x is no longer supported.
 	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
 
-	GUILE - guile-1.4 or 1.6 is required (and anything guile requires).  
+	GUILE - guile-1.6.x or later is required (and anything guile
+	requires).  Guile 1.4.x is no longer supported.
 	Guile can be found at: ftp://ftp.gnu.org/pub/gnu/guile
 
 	LibStroke 0.5.1 [OPTIONAL] - if you want stroke support.  The homepage
@@ -72,7 +75,7 @@ README for libgeda version 2004*
         COPYING files for more information.
 
 	Programs and associated files are:
-	Copyright 1998-2004 by Ales V. Hvezda and the respective original
+	Copyright 1998-2005 by Ales V. Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 
