@@ -9,6 +9,22 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-08-12  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/g_hook.c: Added. Contains hook support functions.
+
+	* src/Makefile.am: Added above source file. -> 
+	  all Makefile* and configure are regenerated.
+	
+	* src/globals.c, include/globals.h: Defined three hooks; 
+	  *_component_hook
+
+	* src/g_register.c: Init attrib smob stuff and defines hooks
+
+	* src/o_complex.c, src/o_copy.c, src/o_move.c: Calls to hooks added
+
+	* include/prototype.h: two hook support functions.
+	
 2000-07-20  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_event.c: Fixed a bug in the middle mouse button move when
