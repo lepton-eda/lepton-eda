@@ -472,6 +472,9 @@ Werner Hoch:		- For contribute the following symbols:
 				ATtiny11.sym ATtiny12.sym ATtiny28_DIP.sym
 				ATtiny28_TQFP.sym
 
+			- For *SIGNIFICANT* cleanup of the symbol
+			  libraries (74, 4000, maxim, others).  This is
+			  greatly appreciated!
 
 Bruno Schwander		- For contributing the following symbols:
 
