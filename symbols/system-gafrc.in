@@ -219,161 +219,64 @@
 (map-font-character-to-file "|" (string-append default-font-directory "@PATHSEP@" 
 					       "vbar.sym"))
 
-; A-umlaut finnish/swedish/german 
-(map-font-character-to-file 
- (string (integer->char 196))
- (string-append default-font-directory "@PATHSEP@" 
-		"A-diaeresis.sym"))
-
-; A-ring finnish/swedish/danish/norwegian
-(map-font-character-to-file 
- (string (integer->char 197))
- (string-append default-font-directory "@PATHSEP@" 
-		"A-ring.sym"))
-
-; AE-diphtong danish/norwegian 
-(map-font-character-to-file 
- (string (integer->char 198))
- (string-append default-font-directory "@PATHSEP@" 
-		"AE-lig.sym"))
-
-; O-umlaut finnish/swedish/german
-(map-font-character-to-file 
- (string (integer->char 214))
- (string-append default-font-directory "@PATHSEP@" 
-		"O-diaeresis.sym"))
-
-; O-slash danish/norwegian
-(map-font-character-to-file 
- (string (integer->char 216))
- (string-append default-font-directory "@PATHSEP@" 
-		"O-slash.sym"))
-
-; U-umlaut german
-(map-font-character-to-file 
- (string (integer->char 220))
- (string-append default-font-directory "@PATHSEP@" 
-		"U-diaeresis.sym"))
-
-; a-umlaut finnish/swedish/german 
-(map-font-character-to-file 
- (string (integer->char 228))
- (string-append default-font-directory "@PATHSEP@" 
-		"a_-diaeresis.sym"))
-
-; a-ring finnish/swedish/danish/norwegian
-(map-font-character-to-file 
- (string (integer->char 229))
- (string-append default-font-directory "@PATHSEP@" 
-		"a_-ring.sym"))
-
-; ae-diphtong danish/norwegian 
-(map-font-character-to-file 
- (string (integer->char 230))
- (string-append default-font-directory "@PATHSEP@" 
-		"ae_-lig.sym"))
-
-; o-umlaut finnish/swedish/german 
-(map-font-character-to-file 
- (string (integer->char 246))
- (string-append default-font-directory "@PATHSEP@" 
-		"o_-diaeresis.sym"))
-
-; o-slash danish/norwegian 
-(map-font-character-to-file 
- (string (integer->char 248))
- (string-append default-font-directory "@PATHSEP@" 
-		"o_-slash.sym"))
-
-; u-umlaut german 
-(map-font-character-to-file 
- (string (integer->char 252))
- (string-append default-font-directory "@PATHSEP@" 
-		"u_-diaeresis.sym"))
-
-; a-acute_accent spanish 
-(map-font-character-to-file 
- (string (integer->char 225))
- (string-append default-font-directory "@PATHSEP@" 
-		"a_-acute-accent.sym"))
-
-; e-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 233))
- (string-append default-font-directory "@PATHSEP@" 
-		"e_-acute-accent.sym"))
-
-; i-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 237))
- (string-append default-font-directory "@PATHSEP@" 
-		"i_-acute-accent.sym"))
-
-; o-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 243))
- (string-append default-font-directory "@PATHSEP@" 
-		"o_-acute-accent.sym"))
-
-; u-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 250))
- (string-append default-font-directory "@PATHSEP@" 
-		"u_-acute-accent.sym"))
-
-; A-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 193))
- (string-append default-font-directory "@PATHSEP@" 
-		"A-acute-accent.sym"))
-
-; E-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 201))
- (string-append default-font-directory "@PATHSEP@" 
-		"E-acute-accent.sym"))
-
-; I-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 205))
- (string-append default-font-directory "@PATHSEP@" 
-		"I-acute-accent.sym"))
-
-; O-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 211))
- (string-append default-font-directory "@PATHSEP@" 
-		"O-acute-accent.sym"))
-
-; U-acute_accent spanish
-(map-font-character-to-file 
- (string (integer->char 218))
- (string-append default-font-directory "@PATHSEP@" 
-		"U-acute-accent.sym"))
-
-; n-tilde spanish
-(map-font-character-to-file 
- (string (integer->char 241))
- (string-append default-font-directory "@PATHSEP@" 
-		"n_-tilde.sym"))
-
-; N-tilde spanish
-(map-font-character-to-file 
- (string (integer->char 209))
- (string-append default-font-directory "@PATHSEP@" 
-		"N-tilde.sym"))
-
-; open exclamation spanish 
-(map-font-character-to-file 
- (string (integer->char 161))
- (string-append default-font-directory "@PATHSEP@" 
-		"excl-open.sym"))
-
-; open question spanish
-(map-font-character-to-file 
- (string (integer->char 191))
- (string-append default-font-directory "@PATHSEP@" 
-		"quest-open.sym"))
+(let ((dir (string-append default-font-directory "@PATHSEP@")))
+  (for-each
+   (lambda (c)
+     (map-font-character-to-file (car c) (string-append dir (cdr c))))
+   '(
+     ;; A-umlaut finnish/swedish/german 
+     ("Ä" . "A-diaeresis.sym")
+     ;; A-ring finnish/swedish/danish/norwegian
+     ("Å" . "A-ring.sym")
+     ;; AE-diphtong danish/norwegian 
+     ("Æ" . "AE-lig.sym")
+     ;; O-umlaut finnish/swedish/german
+     ("Ö" . "O-diaeresis.sym")
+     ;; O-slash danish/norwegian
+     ("Ø" . "O-slash.sym")
+     ;; U-umlaut german
+     ("Ü" . "U-diaeresis.sym")
+     ;; a-umlaut finnish/swedish/german 
+     ("ä" . "a_-diaeresis.sym")
+     ;; a-ring finnish/swedish/danish/norwegian
+     ("å" . "a_-ring.sym")
+     ;; ae-diphtong danish/norwegian 
+     ("æ" . "ae_-lig.sym")
+     ;; o-umlaut finnish/swedish/german 
+     ("ö" . "o_-diaeresis.sym")
+     ;; o-slash danish/norwegian 
+     ("ø" . "o_-slash.sym")
+     ;; u-umlaut german 
+     ("ü" . "u_-diaeresis.sym")
+     ;; a-acute_accent spanish 
+     ("á" . "a_-acute-accent.sym")
+     ;; e-acute_accent spanish
+     ("é" . "e_-acute-accent.sym")
+     ;; i-acute_accent spanish
+     ("í" . "i_-acute-accent.sym")
+     ;; o-acute_accent spanish
+     ("ó" . "o_-acute-accent.sym")
+     ;; u-acute_accent spanish
+     ("ú" . "u_-acute-accent.sym")
+     ;; A-acute_accent spanish
+     ("Á" . "A-acute-accent.sym")
+     ;; E-acute_accent spanish
+     ("É" . "E-acute-accent.sym")
+     ;; I-acute_accent spanish
+     ("Í" . "I-acute-accent.sym")
+     ;; O-acute_accent spanish
+     ("Ó" . "O-acute-accent.sym")
+     ;; U-acute_accent spanish
+     ("Ú" . "U-acute-accent.sym")
+     ;; n-tilde spanish
+     ("ñ" . "n_-tilde.sym")
+     ;; N-tilde spanish
+     ("Ñ" . "N-tilde.sym")
+     ;; open exclamation spanish 
+     ("¡" . "excl-open.sym")
+     ;; open question spanish
+     ("¿" . "quest-open.sym")
+     )))
 
 ;
 ; End of font related keywords
