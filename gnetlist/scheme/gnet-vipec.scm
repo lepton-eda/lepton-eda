@@ -39,75 +39,77 @@
       (write-char #\space port)
       (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
       (display (get-value package) port)
+      (display "\t" port)
+      (display package port)
       (newline port)))
 
 ;;(write-net-name-of-node package (gnetlist:get-pins package) port)
 
 
-;; write a current controlled voltage source and implement the necessary 
-;;   current measuring voltage source
-
-(define vipec:write-ccvs
-	(lambda (package port)					  
-		( begin
-			(display "* begin ccvs implementation ( h<name> ... )" port) 
-			(newline port)
-;;				implement the controlled current source ... the user should create the uref label begining with a h
-			(display (string-append package " ") port)
-			(display (car (gnetlist:get-nets package (gnetlist:get-package-attribute package "pin1"))) port)
-			(write-char #\space port)
-			(display (car (gnetlist:get-nets package (gnetlist:get-package-attribute package "pin2"))) port)
-			(display (string-append " v-measure-" package  " " (get-value package) ) port)
-			(newline port)
-;;				implement the current measuring voltage source
-			(display (string-append "v-measure-" package " ") port)
-			(display (car (gnetlist:get-nets package (gnetlist:get-package-attribute package "pin3"))) port)
-			(write-char #\space port)
-			(display (car (gnetlist:get-nets package (gnetlist:get-package-attribute package "pin4"))) port)
-			(display " dc 0" port)
-			(newline port)
-;; 				now it is possible to leave the output voltage source unconnected
-;;				i.e. vipec won't complain about unconnected nodes
-			(display (string-append "i-out-" package " ") port)
-			(display (car (gnetlist:get-nets package (gnetlist:get-package-attribute package "pin1"))) port)
-			(write-char #\space port)
-			(display (car (gnetlist:get-nets package (gnetlist:get-package-attribute package "pin2"))) port)
-			(display " dc 0" port)
-			(newline port)
-			(display "* end ccvs implementation" port)
-			(newline port))))
-
 (define vipec:write-resistor
    (lambda (package port netnumbers)
-      (begin
-         (display "RES\t" port)
-         (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-         (display "\t" port)
-         (display "R=" port)
-         (display (get-value package) port)
-         (newline port))))
+      (display "RES\t" port)
+      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
+      (display "\t" port)
+      (display "R=" port)
+      (display (get-value package) port)
+      (display "\t" port)
+      (display package port)
+      (newline port)))
 
 (define vipec:write-capacitor
    (lambda (package port netnumbers)
-      (begin
-         (display "CAP\t" port)
-         (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-         (display "\t" port)
-         (display "C=" port)
-         (display (get-value package) port)
-         (newline port))))
+      (display "CAP\t" port)
+      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
+      (display "\t" port)
+      (display "C=" port)
+      (display (get-value package) port)
+      (display "\t" port)
+      (display package port)
+      (newline port)))
 
 (define vipec:write-inductor
    (lambda (package port netnumbers)
-      (begin
-         (display "IND\t" port)
-         (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
-         (display "\t" port)
-         (display "L=" port)
-         (display (get-value package) port)
-         (display "  Q=" port)
-         (display (gnetlist:get-package-attribute package "Q") port)
-         (newline port))))
+      (display "IND\t" port)
+      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
+      (display "\t" port)
+      (display "L=" port)
+      (display (get-value package) port)
+      (display "\t" port)
+      (let ((Q (gnetlist:get-package-attribute package "Q")))
+         (if (not (string=? Q "unknown"))
+            (begin
+               (display "Q=" port)
+               (display Q port)
+               (display "\t" port))))
+      (display package port)
+      (newline port)))
+
+(define vipec:write-tlin
+   (lambda (package port netnumbers)
+      (display "TLIN\t" port)
+      (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
+      (display "\t" port)
+      (let ((Z (gnetlist:get-package-attribute package "Z"))
+            (E (gnetlist:get-package-attribute package "len"))
+            (F (gnetlist:get-package-attribute package "freq")))
+         (if (not (string=? Z "unknown"))
+            (begin
+               (display "Z=" port)
+               (display Z port)
+               (display "\t" port)))
+         (if (not (string=? E "unknown"))
+            (begin
+               (display "E=" port)
+               (display E port)
+               (display "\t" port)))
+         (if (not (string=? F "unknown"))
+            (begin
+               (display "F=" port)
+               (display F port)
+               (display "\t" port))))
+      (display package port)
+      (newline port)))
 
 (define vipec:component-writing
    (lambda (port ls netnumbers)
@@ -142,6 +144,7 @@
       (let ((port (open-output-file output-filename))
             (netnumbers (number-nets all-unique-nets 1)))
          (vipec:header port)
+         (display "CKT\n" port)
          (vipec:component-writing port packages netnumbers)
          (close-output-port port))))
 
