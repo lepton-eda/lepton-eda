@@ -200,7 +200,7 @@ gschem_reconfig:
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); autoconf ; automake )
 
 gschem_src: 
-	( cd $(DIR_PREFIX)gschem$(CD_VERSION)/src; make src )
+	( cd $(DIR_PREFIX)gschem$(CD_VERSION)/src; ${MAKE} src )
 
 gschem_distconfig: 
 	( cd $(DIR_PREFIX)gschem$(CD_VERSION); autoconf ; \
@@ -371,7 +371,7 @@ libgeda_reconfig:
 	( cd libgeda$(CD_VERSION); autoconf ; automake )
 
 libgeda_src: 
-	( cd libgeda$(CD_VERSION)/src; make src )
+	( cd libgeda$(CD_VERSION)/src; ${MAKE} src )
 
 libgeda_distconfig: 
 	( cd libgeda$(CD_VERSION); autoconf ; \
