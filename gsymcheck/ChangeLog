@@ -7,6 +7,10 @@ ChangeLog for gsymcheck (renamed gsymbol)
 
 Most recent changes (version wise) are at the top of this file 
 
+2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Slightly rearranged things to make cygwin port happy
+
 2000-12-02  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * src/gsymcheck.c: Changed Cygwin warning message

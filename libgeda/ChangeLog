@@ -8,6 +8,10 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Slightly rearranged things to make cygwin port happy
+
 2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_nethash.c: Rewrote s_nethash_build to not use the internals

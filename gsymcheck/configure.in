@@ -156,6 +156,9 @@ if test $GLIB_CONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find lib-config -- be sure that gtk >= 0.99.7 is installed)
 fi
 
+LDFLAGS="$saved_ldflags $LDEXTRA"
+CFLAGS="$saved_cflags $CFEXTRA"
+
 # search for libgdgeda-config
 AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
 
@@ -253,8 +256,6 @@ else
 	fi
 fi
 
-LDFLAGS="$saved_ldflags $LDEXTRA"
-CFLAGS="$saved_cflags $CFEXTRA"
 
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT

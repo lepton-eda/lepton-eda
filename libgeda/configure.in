@@ -172,8 +172,10 @@ if test $gtk_found = no; then
 	AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
 fi
 
-AC_CHECK_LIB(stroke, stroke_init, STROKE_LIB="-lstroke", STROKE_LIB=no)
+LDFLAGS="$saved_ldflags $LDEXTRA"
+CFLAGS="$saved_cflags $CFEXTRA"
 
+AC_CHECK_LIB(stroke, stroke_init, STROKE_LIB="-lstroke", STROKE_LIB=no)
 
 if test $STROKE_LIB = no; then
 	STROKE_LIB=""
@@ -226,9 +228,6 @@ else
                 AC_DEFINE(HAS_LIBGDGEDA)
         fi
 fi
-
-LDFLAGS="$saved_ldflags $LDEXTRA"
-CFLAGS="$saved_cflags $CFEXTRA"
 
 if ! test "$CYGWIN"x = x; then
 	echo Including -fnative-struct in CFLAGS for CYGWIN port

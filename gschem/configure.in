@@ -127,6 +127,9 @@ fi
         gtk_ldflags="`$GTK_CONFIG --libs`"
         gtk_cflags="`$GTK_CONFIG --cflags`"
 
+LDFLAGS="$saved_ldflags $LDEXTRA"
+CFLAGS="$saved_cflags $CFEXTRA"
+
 # search for libgdgeda-config
 AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
 
@@ -245,8 +248,6 @@ else
 	fi
 fi
 
-LDFLAGS="$saved_ldflags $LDEXTRA"
-CFLAGS="$saved_cflags $CFEXTRA"
 
 if ! test "$CYGWIN"x = x; then
 	echo Including -fnative-struct in CFLAGS for CYGWIN port
