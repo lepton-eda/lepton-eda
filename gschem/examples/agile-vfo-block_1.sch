@@ -237,7 +237,7 @@ N 10500 20800 8500 20800 4
 N 13100 14700 8500 14700 4
 {
 T 9000 14800 5 10 1 1 0 0
-label=30 MHz fref
+netname=30 MHz fref
 }
 N 8900 17600 8500 17600 4
 C 21900 18100 1 0 0 atten-var.sym
@@ -351,13 +351,13 @@ N 10400 8000 10400 8700 4
 N 10400 8700 11200 8700 4
 {
 T 10400 8800 5 10 1 1 0 0
-label=Vstby
+netname=Vstby
 }
 N 10400 8000 10600 8000 4
 N 13200 8000 14000 8000 4
 {
 T 13200 8100 5 10 1 1 0 0
-label=+9V
+netname=+9V
 }
 C 8400 7800 1 0 0 EMBEDDEDcon-rect.sym
 [
@@ -418,7 +418,7 @@ Harmonics < -40 dBc
 N 11800 10700 12600 10700 4
 {
 T 11800 10800 5 10 1 1 0 0
-label=Control
+netname=Control
 }
 T 22400 9700 9 10 1 0 0 0
 Prototype release date: January 1999
