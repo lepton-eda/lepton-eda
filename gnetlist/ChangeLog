@@ -1,3 +1,8 @@
+2004-12-28 Stuart Brorson   <sdb@cloud9.net>
+
+	* lib/system-gnetlistrc: Changed to refer to system-gafrc instead
+	of system-commonrc
+
 2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-cascade.scm: Applied patch by Dan McMahill to fix

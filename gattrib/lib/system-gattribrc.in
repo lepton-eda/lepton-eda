@@ -17,10 +17,10 @@
 ;
 (gattrib-version "@VERSION@")
 
-; Load up commonrc
+; Load up gafrc
 ;
 ; Contains all paths needed for gattrib
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
-(load (string-append gedadatarc "@PATHSEP@system-commonrc"))
+(load (string-append gedadatarc "@PATHSEP@system-gafrc"))
 

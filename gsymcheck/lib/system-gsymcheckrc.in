@@ -17,12 +17,12 @@
 ;
 (gsymcheck-version "@VERSION@")
 
-; Load up commonrc
+; Load up gafrc -- which loads common stuff for all gaf programs
 ;
 ; Contains all paths needed for gsymcheck
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
-(load (string-append gedadatarc "@PATHSEP@system-commonrc"))
+(load (string-append gedadatarc "@PATHSEP@system-gafrc"))
 
 ;  default-series-name string
 ;  Specify the default series name (of new schematics)
