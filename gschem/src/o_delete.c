@@ -26,7 +26,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -37,15 +36,14 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
-
 void
 o_delete(TOPLEVEL *w_current)
 {
-	OBJECT *current=NULL;
-	OBJECT *found=NULL;
+	OBJECT *current = NULL;
+	OBJECT *found = NULL;
 	int removing_sel_save;
 
-	if (w_current->page_current->selection_head->next == NULL) { 
+	if (w_current->page_current->selection_head->next == NULL) {
 		/* error condition hack */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
@@ -53,13 +51,16 @@ o_delete(TOPLEVEL *w_current)
 		return;
 	}
 
-	current = w_current->page_current->selection_head->next; /* skip over head */
+	/* skip over head */
+	current = w_current->page_current->selection_head->next;
 
-	while(current != NULL) {	
-
-		found = (OBJECT *) o_list_search(w_current->page_current->object_head, current);
+	while(current != NULL) {
+		found = (OBJECT *) o_list_search(
+			w_current->page_current->object_head, current);
 		if (found == NULL) {
-			fprintf(stderr, "UGGG! you blew it... tried to delete something that didn't exist");	
+			fprintf(stderr,
+				"UGGG! you blew it... tried "
+				"to delete something that didn't exist");
 			exit(-1);
 		}
 
@@ -70,11 +71,15 @@ o_delete(TOPLEVEL *w_current)
 				o_line_draw(w_current, found);
 				w_current->override_color = -1;
 				s_delete(w_current, found);
-				w_current->page_current->object_tail = (OBJECT *) return_tail(w_current->page_current->object_head);
+				w_current->page_current->object_tail =
+					(OBJECT *) return_tail(
+						w_current->page_current->
+						object_head);
 			break;
-	
+
 			case(OBJ_NET):
-				w_current->override_color = w_current->background_color;
+				w_current->override_color =
+					w_current->background_color;
 				o_net_draw(w_current, found);
 				w_current->override_color = -1;
 
@@ -85,27 +90,36 @@ o_delete(TOPLEVEL *w_current)
 				s_delete(w_current, found);
 				w_current->REMOVING_SEL = removing_sel_save;
 
-				w_current->page_current->object_tail = (OBJECT *) return_tail(w_current->page_current->object_head);
+				w_current->page_current->object_tail =
+					(OBJECT *) return_tail(
+						w_current->page_current->
+						object_head);
 			break;
-	
+
 			case(OBJ_BOX):
-				w_current->override_color = w_current->background_color;
+				w_current->override_color =
+					w_current->background_color;
 				o_box_draw(w_current, found);
 				w_current->override_color = -1;
 				s_delete(w_current, found);
-				w_current->page_current->object_tail = (OBJECT *) return_tail(w_current->page_current->object_head);
+				w_current->page_current->object_tail =
+					(OBJECT *) return_tail(
+						w_current->page_current->
+						object_head);
 			break;
-	
+
 			case(OBJ_CIRCLE):
-				w_current->override_color = 
+				w_current->override_color =
 					w_current->background_color;
 				o_circle_draw(w_current, found);
 				w_current->override_color = -1;
 				s_delete(w_current, found);
-				w_current->page_current->object_tail = (OBJECT *) 
-					return_tail(w_current->page_current->object_head);
+				w_current->page_current->object_tail =
+					(OBJECT *) return_tail(
+						w_current->page_current->
+						object_head);
 			break;
-	
+
 			case(OBJ_COMPLEX):
 				w_current->override_color = w_current->background_color;
 				o_redraw_single(w_current, found);
@@ -114,35 +128,35 @@ o_delete(TOPLEVEL *w_current)
 				/* special case hack  no return_tail */
 				/* why? hack */
 			break;
-	
+
 			case(OBJ_PIN):
 				w_current->override_color = w_current->background_color;
 				o_pin_draw(w_current, found);
 				w_current->override_color = -1;
 				s_delete(w_current, found);
 
-				w_current->page_current->object_tail = (OBJECT *) 
+				w_current->page_current->object_tail = (OBJECT *)
 				    return_tail(w_current->page_current->object_head);
 			break;
-	
+
 			case(OBJ_NTEXT):
 				w_current->override_color =
 					 w_current->background_color;
 				o_ntext_draw(w_current, found);
 				w_current->override_color = -1;
 				s_delete(w_current, found);
-				w_current->page_current->object_tail = (OBJECT *) 
+				w_current->page_current->object_tail = (OBJECT *)
 				  return_tail(w_current->page_current->object_head);
 
 			break;
-	
+
 			case(OBJ_ARC):
 				w_current->override_color =
 					w_current->background_color;
 				o_arc_draw(w_current, found);
 				w_current->override_color = -1;
 				s_delete(w_current, found);
-				w_current->page_current->object_tail = (OBJECT *) 
+				w_current->page_current->object_tail = (OBJECT *)
 			  	    return_tail(w_current->page_current->object_head);
 				break;
 		}

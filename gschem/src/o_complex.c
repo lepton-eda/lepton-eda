@@ -17,7 +17,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
@@ -31,7 +30,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -41,6 +39,17 @@
 
 #include "../include/prototype.h"
 
+/* Kazu Hirata <kazu@seul.org> on July 17, 1999 - My own version of
+ * strdup(). */
+static char *
+my_strdup(const char* p)
+{
+	char *q = (char *) malloc(strlen(p) + 1);
+	if (q != NULL) {
+		strcpy(q, p);
+	}
+	return q;
+}
 
 void
 o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
@@ -49,68 +58,69 @@ o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	o_redraw(w_current, o_current->complex);
 
-	get_complex_bounds(w_current, o_current->complex, &left, &top, &right, &bottom);
-	o_current->left = left;
-	o_current->top = top;
-	o_current->right = right;
+	get_complex_bounds(w_current, o_current->complex,
+			   &left, &top, &right, &bottom);
+	o_current->left   = left;
+	o_current->top    = top;
+	o_current->right  = right;
 	o_current->bottom = bottom;
 
-	WORLDtoSCREEN(w_current, o_current->x,
-                  o_current->y,
-                  &o_current->screen_x,
-                  &o_current->screen_y);
+	WORLDtoSCREEN(w_current,
+		      o_current->x,
+		      o_current->y,
+		      &o_current->screen_x,
+		      &o_current->screen_y);
 }
-
 
 void
 o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
 {
-	OBJECT *o_current=NULL;
-
-	o_current = complex;
+	OBJECT *o_current = complex;
 
 	while(o_current != NULL) {
 		switch(o_current->type) {
-			case(OBJ_LINE):
-				o_line_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_LINE):
+			o_line_draw_xor(w_current, dx, dy, o_current);
 			break;
 
-			case(OBJ_NET):
-				o_net_draw_xor(w_current, dx, dy, o_current);
-			break;
-	
-			case(OBJ_BOX):
-				o_box_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_NET):
+			o_net_draw_xor(w_current, dx, dy, o_current);
 			break;
 
-			case(OBJ_CIRCLE):
-				o_circle_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_BOX):
+			o_box_draw_xor(w_current, dx, dy, o_current);
 			break;
 
-			case(OBJ_COMPLEX):
-				/* complex inside a complex? */
-				/* not supported yet hack */	
-/*				o_complex_draw_xor(w_current, dx, dy, o_current->complex);*/
-			break;
-	
-			case(OBJ_NTEXT):
-				o_ntext_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_CIRCLE):
+			o_circle_draw_xor(w_current, dx, dy, o_current);
 			break;
 
-			case(OBJ_PIN):
-				o_pin_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_COMPLEX):
+				/* TODO: complex inside a complex? -
+                                 * not supported yet */
+#if 0
+			o_complex_draw_xor(w_current, dx, dy,
+					   o_current->complex);
+#endif
 			break;
 
-			case(OBJ_ARC):
-				o_arc_draw_xor(w_current, dx, dy, o_current);
+		case(OBJ_NTEXT):
+			o_ntext_draw_xor(w_current, dx, dy, o_current);
+			break;
+
+		case(OBJ_PIN):
+			o_pin_draw_xor(w_current, dx, dy, o_current);
+			break;
+
+		case(OBJ_ARC):
+			o_arc_draw_xor(w_current, dx, dy, o_current);
 			break;
 		}
 		o_current = o_current->next;
-	}	
+	}
 }
 
-
-void 
+void
 o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
 	int x, y;
@@ -120,44 +130,52 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
 	w_current->last_drawb_mode = -1;
 
-	/* make sure list is null first, so that you don't have a mem leak */
-        SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x, &y);
+	/* make sure list is null first, so that you don't have a mem
+	 * leak */
+        SCREENtoWORLD(w_current,
+		      w_current->start_x,
+		      w_current->start_y,
+		      &x,
+		      &y);
 
 	w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
 	w_current->DONT_DRAW_CONN = 1;
-	w_current->page_current->complex_place_tail = (OBJECT *) o_complex_add(
-					w_current, 	
-					w_current->page_current->complex_place_head, 
-					OBJ_COMPLEX, WHITE, x, y, 0, 0, 
-					w_current->internal_clib,
-					w_current->internal_basename, 1);
+	w_current->page_current->complex_place_tail =
+		(OBJECT *) o_complex_add(
+			w_current,
+			w_current->page_current->complex_place_head,
+			OBJ_COMPLEX, WHITE, x, y, 0, 0,
+			w_current->internal_clib,
+			w_current->internal_basename, 1);
 	w_current->ADDING_SEL = 0;
 	w_current->DONT_DRAW_CONN = 0;
 
-	o_drawbounding(w_current, w_current->page_current->complex_place_head->next, 
-			x_get_color(w_current->bb_color));
+	o_drawbounding(w_current,
+		       w_current->page_current->complex_place_head->next,
+		       x_get_color(w_current->bb_color));
 }
 
-
-void 
+void
 o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
 	int diff_x, diff_y;
 	int x, y;
 	int rleft, rtop, rbottom, rright;
-	OBJECT *selection_list=NULL;
+	OBJECT *selection_list = NULL;
 	OBJECT *o_current;
 	OBJECT *o_start;
 	char *new_basename;
 	char *include_filename;
 
 	diff_x = w_current->last_x - w_current->start_x;
-        diff_y = w_current->last_y - w_current->start_y;   
+        diff_y = w_current->last_y - w_current->start_y;
 
-	SCREENtoWORLD(w_current, screen_x, screen_y, &x, &y); 
+	SCREENtoWORLD(w_current, screen_x, screen_y, &x, &y);
 
-	/* x = snap_grid(w_current, x);
-	y = snap_grid(w_current, y);*/
+#if 0
+	x = snap_grid(w_current, x);
+	y = snap_grid(w_current, y);
+#endif
 
 #if DEBUG
 	printf("place_basename: %s\n",internal_basename);
@@ -165,17 +183,21 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 
 	if (w_current->include_complex) {
-		include_filename = (char *) malloc(sizeof(char)*(
-					strlen(w_current->internal_basename)+
-					strlen(w_current->internal_clib)+2));
+		/* TODO: use my_strdups() */
+		include_filename =
+			(char *) malloc(sizeof(char) * (
+				strlen(w_current->internal_basename) +
+				strlen(w_current->internal_clib) +
+				2));
 
-		sprintf(include_filename, "%s/%s", w_current->internal_clib, 
-						  w_current->internal_basename);
+		sprintf(include_filename, "%s/%s", w_current->internal_clib,
+			w_current->internal_basename);
 
 		o_start = w_current->page_current->object_tail;
-		w_current->page_current->object_tail = o_read(w_current, 
-					w_current->page_current->object_tail,
-					include_filename);
+		w_current->page_current->object_tail =
+			o_read(w_current,
+			       w_current->page_current->object_tail,
+			       include_filename);
 		o_start = o_start->next;
 
 		o_complex_world_translate(w_current, x, y, o_start);
@@ -183,90 +205,116 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 		free(include_filename);
 
 		if (w_current->actionfeedback_mode == OUTLINE) {
-			/*printf("inside draw outline here\n");*/
+#if 0
+			printf("inside draw outline here\n");
+#endif
 			/* erase outline */
-			o_complex_translate_display(w_current, diff_x, diff_y, w_current->page_current->complex_place_head->next);
+			o_complex_translate_display(
+				w_current,
+				diff_x, diff_y,
+				w_current->page_current->
+				complex_place_head->next);
         	} else {
-			/*printf("inside draw bounding here\n");*/
-			get_complex_bounds(w_current, 
-			w_current->page_current->complex_place_head->next, 
+#if 0
+			printf("inside draw bounding here\n");
+#endif
+			get_complex_bounds(
+				w_current,
+				w_current->page_current->
+				complex_place_head->next,
 				&rleft, &rtop, &rright, &rbottom);
-        		gdk_gc_set_foreground(w_current->gc, 
+        		gdk_gc_set_foreground(
+				w_current->gc,
 				x_get_color(w_current->background_color));
-                	gdk_draw_rectangle(w_current->window, w_current->gc, 
-					FALSE,
-                        rleft+diff_x, rtop+diff_y, rright-rleft, rbottom-rtop);
+                	gdk_draw_rectangle(w_current->window, w_current->gc,
+					   FALSE,
+					   rleft   + diff_x,
+					   rtop    + diff_y,
+					   rright  - rleft,
+					   rbottom - rtop);
 		}
 
 		o_redraw(w_current, o_start);
-		w_current->page_current->CHANGED=1;
+		w_current->page_current->CHANGED = 1;
 		return;
 	}
-		
-		
 
-	w_current->page_current->object_tail = o_complex_add(w_current, 
-				w_current->page_current->object_tail,
-				OBJ_COMPLEX, WHITE, x, y, 0, 0,
-				w_current->internal_clib, 
-				w_current->internal_basename, 1); 
+	w_current->page_current->object_tail = o_complex_add(
+		w_current,
+		w_current->page_current->object_tail,
+		OBJ_COMPLEX, WHITE, x, y, 0, 0,
+		w_current->internal_clib,
+		w_current->internal_basename, 1);
 
 	/* 1 should be define fix everywhere hack */
-	
+
 	o_current = w_current->page_current->object_tail;
 	/* put code here to deal with emebedded stuff */
 	if (w_current->embed_complex) {
 		free(o_current->complex_clib);
 
-		o_current->complex_clib = (char *) malloc(sizeof(char)*(
-					strlen("EMBEDDED")+1));
+		o_current->complex_clib = my_strdup("EMBEDDED");
 
-		strcpy(o_current->complex_clib, "EMBEDDED");
-		
-		new_basename = (char *) malloc(sizeof(char)*(
-				        strlen("EMBEDDED")+
-					strlen(o_current->complex_basename)+
-					1));
-		
-		sprintf(new_basename, "EMBEDDED%s", o_current->complex_basename);
-					
+		/* TODO: use my_strdups() */
+		new_basename = (char *) malloc(sizeof(char) * (
+			strlen("EMBEDDED")+
+			strlen(o_current->complex_basename) +
+			1));
+		sprintf(new_basename,
+			"EMBEDDED%s",
+			o_current->complex_basename);
+
 		free(o_current->complex_basename);
-								
-		o_current->complex_basename = (char *) malloc(sizeof(char)*(
-					strlen(new_basename)+1));
-		
-		strcpy(o_current->complex_basename, new_basename);
-		
+
+		o_current->complex_basename = my_strdup(new_basename);
+
 		free(new_basename);
-	} 
+	}
 
 	/* check for nulls in all this hack */
 	if (w_current->actionfeedback_mode == OUTLINE) {
-		/*printf("inside draw outline here\n");*/
+#if 0
+		printf("inside draw outline here\n");
+#endif
 		/* erase outline */
-		o_complex_translate_display(w_current, diff_x, diff_y, w_current->page_current->complex_place_head->next);
+		o_complex_translate_display(
+			w_current,
+			diff_x, diff_y,
+			w_current->page_current->complex_place_head->next);
         } else {
-		/*printf("inside draw bounding here\n");*/
-		get_complex_bounds(w_current, w_current->page_current->complex_place_head->next, &rleft, &rtop,
-                                                &rright, &rbottom);
-        	gdk_gc_set_foreground(w_current->gc, x_get_color(w_current->background_color));
+#if 0
+		printf("inside draw bounding here\n");
+#endif
+		get_complex_bounds(
+			w_current,
+			w_current->page_current->complex_place_head->next,
+			&rleft, &rtop,
+			&rright, &rbottom);
+        	gdk_gc_set_foreground(
+			w_current->gc,
+			x_get_color(w_current->background_color));
                 gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
-                        rleft+diff_x, rtop+diff_y, rright-rleft, rbottom-rtop);
+				   rleft   + diff_x,
+				   rtop    + diff_y,
+				   rright  - rleft,
+				   rbottom - rtop);
 	}
 
-	/* redraw has to happen at the end of all this hack */
-	/* or maybe not? */
-	o_list_delete_rest(w_current, w_current->page_current->complex_place_head);
+	/* TODO: redraw has to happen at the end of all this hack or
+	 * maybe not? */
+	o_list_delete_rest(w_current,
+			   w_current->page_current->complex_place_head);
 
-	/* This doesn't allow anything else to be in the selection list when
-	   you add a component */
+	/* This doesn't allow anything else to be in the selection
+	 * list when you add a component */
 
-	selection_list = (OBJECT *)
-                                o_list_copy_to(w_current, 
-				selection_list, w_current->page_current->object_tail, SELECTION);
+	selection_list = (OBJECT *) o_list_copy_to(
+		w_current,
+		selection_list,
+		w_current->page_current->object_tail, SELECTION);
 
-	/* addon maybe later... press shift when adding an object to add it */
-	/* to the current selection list? */
+	/* addon maybe later... press shift when adding an object to
+	 * add it to the current selection list? */
 	o_unredraw_selected(w_current);
 	o_list_delete_rest(w_current, w_current->page_current->selection_head);
 	w_current->page_current->selection_head->next = selection_list;
@@ -277,68 +325,68 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
 	o_ales_disconnect_update(w_current->page_current);
 	o_ales_erase_all(w_current, w_current->page_current->object_tail);
-        /* o_ales_draw_all(w_current, w_current->page_current->object_head);*/
+#if 0
+        o_ales_draw_all(w_current, w_current->page_current->object_head);
+#endif
 	o_redraw(w_current, w_current->page_current->object_head);
 
         o_redraw_real(w_current, w_current->page_current->selection_head);
 
-	w_current->page_current->CHANGED=1;
+	w_current->page_current->CHANGED = 1;
 }
-
-
-void 
-o_complex_rubbercomplex(TOPLEVEL *w_current)
-{
-	o_drawbounding(w_current, w_current->page_current->complex_place_head->next, 
-			x_get_color(w_current->bb_color));
-}
-
 
 void
-o_complex_translate_display(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex)
+o_complex_rubbercomplex(TOPLEVEL *w_current)
 {
-	OBJECT *o_current=NULL;
-
-	o_current = complex;
-
-	while ( o_current != NULL ) {
-		switch(o_current->type) {
-			case(OBJ_LINE):
-				o_line_draw_xor(w_current, x1, y1, o_current);
-			break;
-
-			case(OBJ_NET):
-				o_net_draw_xor(w_current, x1, y1, o_current);
-			break;
-	
-			case(OBJ_BOX):
-				o_box_draw_xor(w_current, x1, y1, o_current);
-			break;
-
-			case(OBJ_CIRCLE):
-				o_circle_draw_xor(w_current, x1, y1, o_current);
-			break;
-	
-			case(OBJ_COMPLEX):
-				o_complex_draw_xor(w_current, x1, y1, o_current->complex);
-			break;
-	
-			case(OBJ_NTEXT):
-				o_ntext_draw_xor(w_current, x1, y1, o_current);
-			break;
-
-			case(OBJ_PIN):
-				o_pin_draw_xor(w_current, x1, y1, o_current);
-			break;
-
-			case(OBJ_ARC):
-				o_arc_draw_xor(w_current, x1, y1, o_current);
-			break;
-		}
-		o_current=o_current->next;
-	}
+	o_drawbounding(w_current,
+		       w_current->page_current->complex_place_head->next,
+		       x_get_color(w_current->bb_color));
 }
 
+void
+o_complex_translate_display(TOPLEVEL *w_current,
+			    int x1, int y1, OBJECT *complex)
+{
+	OBJECT *o_current = complex;
+
+	while (o_current != NULL) {
+		switch(o_current->type) {
+		case(OBJ_LINE):
+			o_line_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_NET):
+			o_net_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_BOX):
+			o_box_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_CIRCLE):
+			o_circle_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_COMPLEX):
+			o_complex_draw_xor(w_current,
+					   x1, y1, o_current->complex);
+			break;
+
+		case(OBJ_NTEXT):
+			o_ntext_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_PIN):
+			o_pin_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_ARC):
+			o_arc_draw_xor(w_current, x1, y1, o_current);
+			break;
+		}
+		o_current = o_current->next;
+	}
+}
 
 /* don't know if this belongs yet */
 void
@@ -349,38 +397,58 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
 #if 0	 /* these warnings have been moved into i_callback_edit_translate */
 	if (w_current->snap == 0) {
-		s_log_message("WARNING: Do not translate with snap off!\n"); 
-		s_log_message("WARNING: Turning snap on and continuing with translate.\n"); 
-		w_current->snap = 1;	
+		s_log_message("WARNING: Do not translate with snap off!\n");
+		s_log_message(
+			"WARNING: Turning snap on and "
+			"continuing with translate.\n");
+		w_current->snap = 1;
 	}
 
 	if (w_current->snap_size != 100) {
-		s_log_message("WARNING: Snap grid size is not equal to 100!\n");
-		s_log_message("WARNING: If you are translating a symbol to the origin, the snap grid size should be set to 100\n");
+		s_log_message(
+			"WARNING: Snap grid size is not equal to 100!\n");
+		s_log_message(
+			"WARNING: If you are translating a symbol "
+			"to the origin, the snap grid size should be "
+			"set to 100\n");
 	}
 #endif
 
-	get_complex_bounds(w_current, w_current->page_current->object_head, &rleft, &rtop, &rright, &rbottom);
+	get_complex_bounds(w_current, w_current->page_current->object_head,
+			   &rleft,
+			   &rtop,
+			   &rright,
+			   &rbottom);
 
 	/* do we want snap grid here hack ? */
-	SCREENtoWORLD(w_current, fix_x(w_current, rleft),
-                  fix_y(w_current, rbottom),
-                  &x,
-                  &y);
+	SCREENtoWORLD(w_current,
+		      fix_x(w_current, rleft  ),
+		      fix_y(w_current, rbottom),
+		      &x,
+		      &y);
 
 	if (offset == 0) {
-		s_log_message("Translating schematic [%d %d]\n", -x, -y); 
-		o_complex_world_translate(w_current, -x, -y, w_current->page_current->object_head); 
+		s_log_message("Translating schematic [%d %d]\n", -x, -y);
+		o_complex_world_translate(
+			w_current,
+			-x, -y,
+			w_current->page_current->object_head);
 	} else {
-		s_log_message("Translating schematic [%d %d]\n", offset, offset); 
-		o_complex_world_translate(w_current, offset, offset, w_current->page_current->object_head); 
+		s_log_message("Translating schematic [%d %d]\n",
+			      offset, offset);
+		o_complex_world_translate(
+			w_current,
+			offset, offset,
+			w_current->page_current->object_head);
 	}
 
-
-/* this is an experimental mod, to be able to translate to all places */
-/*o_complex_world_translate(1000, 1000, object_head);*/
-/*printf("symbol -%d -%d\n", x, y);*/
-/*o_complex_world_translate(-x, -y, object_head); to zero, zero */
+	/* this is an experimental mod, to be able to translate to all
+	 * places */
+#if 0
+	o_complex_world_translate(1000, 1000, object_head);
+	printf("symbol -%d -%d\n", x, y);
+	o_complex_world_translate(-x, -y, object_head); /* to zero, zero */
+#endif
 
 	o_unselect_all(w_current);
 	o_redraw_all(w_current);
@@ -400,27 +468,32 @@ o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 }
 
 void
-o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery, 
-	int angle, int angle_change, OBJECT *object)
+o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery,
+		 int angle, int angle_change, OBJECT *object)
 {
 	int x, y;
 	int newx, newy;
 	int world_centerx, world_centery;
-	
-	SCREENtoWORLD(w_current, centerx, centery, 
-			&world_centerx, &world_centery);
+
+	SCREENtoWORLD(w_current,
+		      centerx,
+		      centery,
+		      &world_centerx,
+		      &world_centery);
 
 	x = object->x + (-world_centerx);
 	y = object->y + (-world_centery);
-			
+
 	rotate_point_90(x, y, 90, &newx, &newy);
-				
+
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 
-	o_complex_world_translate_toplevel(w_current, -object->x, -object->y, object);
-	o_complex_rotate_lowlevel(w_current, 0, 0, angle, angle_change, object);
-	
+	o_complex_world_translate_toplevel(w_current,
+					   -object->x, -object->y, object);
+	o_complex_rotate_lowlevel(w_current,
+				  0, 0, angle, angle_change, object);
+
 	object->x = 0;
 	object->y = 0;
 
@@ -428,148 +501,170 @@ o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery,
 
 	object->angle = angle;
 
-#if DEBUG 
+#if DEBUG
 	printf("setting final rotated angle to: %d\n\n", object->angle);
 #endif
 }
 
 int
-o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery, 
-	OBJECT *object)
+o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery,
+		 OBJECT *object)
 {
 	int x, y;
 	int newx, newy;
 	int origx, origy;
 	int world_centerx, world_centery;
-	int change=0;
-	
-	SCREENtoWORLD(w_current, centerx, centery, 
-			&world_centerx, &world_centery);
+	int change = 0;
+
+	SCREENtoWORLD(w_current,
+		      centerx,
+		      centery,
+		      &world_centerx,
+		      &world_centery);
 
 	origx = object->x;
 	origy = object->y;
 
 	x = object->x + (-world_centerx);
 	y = object->y + (-world_centery);
-			
+
 	newx = -x;
 	newy = y;
-				
+
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 
-
-	o_complex_world_translate_toplevel(w_current, -object->x, -object->y, object);
+	o_complex_world_translate_toplevel(w_current,
+					   -object->x, -object->y, object);
 
 	o_complex_mirror_lowlevel(w_current, 0, 0, object);
 
 	switch(object->angle) {
-		case(90):
-			object->angle = 270;
-			/* o_ntext_change_angle(w_current, object->complex, 
-					     object->angle);*/
-			change=1;
+	case(90):
+		object->angle = 270;
+#if 0
+		o_ntext_change_angle(w_current, object->complex,
+				     object->angle);
+#endif
+
+		change = 1;
 		break;
 
-		case(270):
-			object->angle = 90;
-			/* o_ntext_change_angle(w_current, object->complex,  
-					     object->angle);*/
-			change=1;
+	case(270):
+		object->angle = 90;
+#if 0
+		o_ntext_change_angle(w_current, object->complex,
+				     object->angle);
+#endif
+		change = 1;
 		break;
-	
+
 	}
-	/*object->angle = (object->angle + 180) % 360;*/
+#if 0
+	object->angle = (object->angle + 180) % 360;
+#endif
 
 	object->mirror = !object->mirror;
-	/* object->x = 0;
-	object->y = 0;*/
+#if 0
+	object->x = 0;
+	object->y = 0;
+#endif
 
 	o_complex_world_translate_toplevel(w_current, x, y, object);
 
-#if DEBUG 
+#if DEBUG
 	printf("final res %d %d\n", object->x,  object->y);
 #endif
-	/* object->x = x;
-	object->y = y;*/
+#if 0
+	object->x = x;
+	object->y = y;
+#endif
 	return(change);
 }
 
-
-/* this is a special mirror which doesn't mirror the object in memory, but
-read the new "correctly mirrored/rotated" object from disk */
-/* yes this is aweful, and I will eventually fix it, but for now it has
-to do hack HACK */
+/* this is a special mirror which doesn't mirror the object in memory,
+ * but read the new "correctly mirrored/rotated" object from disk */
+/* TODO: yes this is aweful, and I will eventually fix it, but for now
+ * it has to do hack */
 OBJECT *
-o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery, 
-	OBJECT *object)
+o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
+		  OBJECT *object)
 {
-	OBJECT *new_obj=NULL;
+	OBJECT *new_obj = NULL;
 	int x, y;
 	int newx, newy;
 	int origx, origy;
 	int world_centerx, world_centery;
 	int change=0;
-	
-	SCREENtoWORLD(w_current, centerx, centery, 
-			&world_centerx, &world_centery);
+
+	SCREENtoWORLD(w_current,
+		      centerx,
+		      centery,
+		      &world_centerx,
+		      &world_centery);
 
 	origx = object->x;
 	origy = object->y;
 
 	x = object->x + (-world_centerx);
 	y = object->y + (-world_centery);
-			
+
 	newx = -x;
 	newy = y;
-				
+
 	x = newx + (world_centerx);
 	y = newy + (world_centery);
 
 	switch(object->angle) {
-		case(90):
-			object->angle = 270;
-			/* o_ntext_change_angle(w_current, object->complex, 
-					     object->angle);*/
-			change=1;
+	case(90):
+		object->angle = 270;
+#if 0
+		o_ntext_change_angle(w_current, object->complex,
+				     object->angle);
+#endif
+		change = 1;
 		break;
 
-		case(270):
-			object->angle = 90;
-			/* o_ntext_change_angle(w_current, object->complex,  
-					     object->angle);*/
-			change=1;
+	case(270):
+		object->angle = 90;
+#if 0
+		o_ntext_change_angle(w_current, object->complex,
+				     object->angle);
+#endif
+		change=1;
 		break;
-	
+
 	}
 
 	object->mirror = !object->mirror;
 
-	new_obj = o_complex_add(w_current, 
-			list, OBJ_COMPLEX, 
-			object->color,
-			x, y, 
-			object->angle, object->mirror,
-			object->complex_clib, object->complex_basename, 
-			1); 
+	new_obj = o_complex_add(w_current,
+				list, OBJ_COMPLEX,
+				object->color,
+				x, y,
+				object->angle, object->mirror,
+				object->complex_clib, object->complex_basename,
+				1);
 
-	/* fix up name sometime ... hack */	
+	/* fix up name sometime ... hack */
 	new_obj->sid = object->sid;
-	
-	new_obj->attribs = o_attrib_copy_all(w_current, new_obj, object->attribs);
+
+	new_obj->attribs = o_attrib_copy_all(
+		w_current, new_obj, object->attribs);
 
 	o_attrib_slot_update(w_current, new_obj);
-	
+
 	o_complex_delete(w_current, object);
 
 	/* need to do the following, because delete severs links */
 	o_attrib_reattach(new_obj->attribs);
  	o_attrib_set_color(w_current, new_obj->attribs);
-	
-/* 	w_current->page_current->object_tail = (OBJECT *)
-		       return_tail(w_current->page_current->object_head);*/
-	
+
+#if 0
+ 	w_current->page_current->object_tail = (OBJECT *)
+		return_tail(w_current->page_current->object_head);
+#endif
+
 	return(new_obj);
 }
-
 
