@@ -249,7 +249,7 @@ main_prog(void *closure, int argc, char *argv[])
   set_window_current_key(w_current);
 
   /* o_text_init(); goes away */
-  o_text_init();
+  /* o_text_init(); Moved inside libgeda_init() */
 
   x_repaint_background(w_current);
 

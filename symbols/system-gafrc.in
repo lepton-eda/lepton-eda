@@ -119,7 +119,8 @@
 ; the directory.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(font-directory "${GEDADATA}@PATHSEP@sym@PATHSEP@font")
+(define default-font-directory "${GEDADATA}@PATHSEP@sym@PATHSEP@font")
+(font-directory default-font-directory)
 
 
 ; scheme-directory string
@@ -143,3 +144,238 @@
 ; End of path related keywords
 ;
 
+;
+; Start of font related keywords
+;
+
+(map-font-character-to-file " " (string-append default-font-directory "@PATHSEP@" 
+					       "space.sym"))
+; The newline.sym symbol is not used!!. Use excl.sym or the newline
+; will not be handled correctly!!. 
+(map-font-character-to-file "\n" (string-append default-font-directory "/" 
+						"excl.sym"))
+
+(map-font-character-to-file "!" (string-append default-font-directory "@PATHSEP@" 
+					       "excl.sym"))
+(map-font-character-to-file "," (string-append default-font-directory "@PATHSEP@" 
+					       "comma.sym"))
+(map-font-character-to-file "(" (string-append default-font-directory "@PATHSEP@" 
+					       "lparen.sym"))
+(map-font-character-to-file ")" (string-append default-font-directory "@PATHSEP@" 
+					       "rparen.sym"))
+(map-font-character-to-file "-" (string-append default-font-directory "@PATHSEP@" 
+					       "minus.sym"))
+(map-font-character-to-file "+" (string-append default-font-directory "@PATHSEP@" 
+					       "plus.sym"))
+(map-font-character-to-file "#" (string-append default-font-directory "@PATHSEP@" 
+					       "pound.sym"))
+(map-font-character-to-file "?" (string-append default-font-directory "@PATHSEP@" 
+					       "quest.sym"))
+(map-font-character-to-file "\"" (string-append default-font-directory "@PATHSEP@" 
+						"quote.sym"))
+(map-font-character-to-file ":" (string-append default-font-directory "@PATHSEP@" 
+					       "colon.sym"))
+(map-font-character-to-file "@" (string-append default-font-directory "@PATHSEP@" 
+					       "at.sym"))
+(map-font-character-to-file "=" (string-append default-font-directory "@PATHSEP@" 
+					       "equal.sym"))
+(map-font-character-to-file ">" (string-append default-font-directory "@PATHSEP@" 
+					       "more.sym"))
+(map-font-character-to-file "<" (string-append default-font-directory "@PATHSEP@" 
+					       "less.sym"))
+(map-font-character-to-file "/" (string-append default-font-directory "@PATHSEP@" 
+					       "slash.sym"))
+(map-font-character-to-file "$" (string-append default-font-directory "@PATHSEP@" 
+					       "dollar.sym"))
+(map-font-character-to-file ";" (string-append default-font-directory "@PATHSEP@" 
+					       "semi.sym"))
+(map-font-character-to-file "&" (string-append default-font-directory "@PATHSEP@" 
+					       "amper.sym"))
+(map-font-character-to-file "\\" (string-append default-font-directory "@PATHSEP@" 
+						"backslash.sym"))
+(map-font-character-to-file "{" (string-append default-font-directory "@PATHSEP@" 
+					       "lbrace.sym"))
+(map-font-character-to-file "}" (string-append default-font-directory "@PATHSEP@" 
+					       "rbrace.sym"))
+(map-font-character-to-file "'" (string-append default-font-directory "@PATHSEP@" 
+					       "apost.sym"))
+(map-font-character-to-file "`" (string-append default-font-directory "@PATHSEP@" 
+					       "backtick.sym"))
+(map-font-character-to-file "^" (string-append default-font-directory "@PATHSEP@" 
+					       "caret.sym"))
+(map-font-character-to-file "%" (string-append default-font-directory "@PATHSEP@" 
+					       "percent.sym"))
+(map-font-character-to-file "[" (string-append default-font-directory "@PATHSEP@" 
+					       "lbrack.sym"))
+(map-font-character-to-file "]" (string-append default-font-directory "@PATHSEP@" 
+					       "rbrack.sym"))
+(map-font-character-to-file "*" (string-append default-font-directory "@PATHSEP@" 
+					       "astericks.sym"))
+(map-font-character-to-file "." (string-append default-font-directory "@PATHSEP@" 
+					       "period.sym"))
+(map-font-character-to-file "_" (string-append default-font-directory "@PATHSEP@" 
+					       "under.sym"))
+(map-font-character-to-file "~" (string-append default-font-directory "@PATHSEP@" 
+					       "tilde.sym"))
+(map-font-character-to-file "|" (string-append default-font-directory "@PATHSEP@" 
+					       "vbar.sym"))
+
+; A-umlaut finnish/swedish/german 
+(map-font-character-to-file 
+ (string (integer->char 196))
+ (string-append default-font-directory "@PATHSEP@" 
+		"A-diaeresis.sym"))
+
+; A-ring finnish/swedish/danish/norwegian
+(map-font-character-to-file 
+ (string (integer->char 197))
+ (string-append default-font-directory "@PATHSEP@" 
+		"A-ring.sym"))
+
+; AE-diphtong danish/norwegian 
+(map-font-character-to-file 
+ (string (integer->char 198))
+ (string-append default-font-directory "@PATHSEP@" 
+		"AE-lig.sym"))
+
+; O-umlaut finnish/swedish/german
+(map-font-character-to-file 
+ (string (integer->char 214))
+ (string-append default-font-directory "@PATHSEP@" 
+		"O-diaeresis.sym"))
+
+; O-slash danish/norwegian
+(map-font-character-to-file 
+ (string (integer->char 216))
+ (string-append default-font-directory "@PATHSEP@" 
+		"O-slash.sym"))
+
+; U-umlaut german
+(map-font-character-to-file 
+ (string (integer->char 220))
+ (string-append default-font-directory "@PATHSEP@" 
+		"U-diaeresis.sym"))
+
+; a-umlaut finnish/swedish/german 
+(map-font-character-to-file 
+ (string (integer->char 228))
+ (string-append default-font-directory "@PATHSEP@" 
+		"a_-diaeresis.sym"))
+
+; a-ring finnish/swedish/danish/norwegian
+(map-font-character-to-file 
+ (string (integer->char 229))
+ (string-append default-font-directory "@PATHSEP@" 
+		"a_-ring.sym"))
+
+; ae-diphtong danish/norwegian 
+(map-font-character-to-file 
+ (string (integer->char 230))
+ (string-append default-font-directory "@PATHSEP@" 
+		"ae_-lig.sym"))
+
+; o-umlaut finnish/swedish/german 
+(map-font-character-to-file 
+ (string (integer->char 246))
+ (string-append default-font-directory "@PATHSEP@" 
+		"o_-diaeresis.sym"))
+
+; o-slash danish/norwegian 
+(map-font-character-to-file 
+ (string (integer->char 248))
+ (string-append default-font-directory "@PATHSEP@" 
+		"o_-slash.sym"))
+
+; u-umlaut german 
+(map-font-character-to-file 
+ (string (integer->char 252))
+ (string-append default-font-directory "@PATHSEP@" 
+		"u_-diaeresis.sym"))
+
+; a-acute_accent spanish 
+(map-font-character-to-file 
+ (string (integer->char 225))
+ (string-append default-font-directory "@PATHSEP@" 
+		"a_-acute-accent.sym"))
+
+; e-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 233))
+ (string-append default-font-directory "@PATHSEP@" 
+		"e_-acute-accent.sym"))
+
+; i-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 237))
+ (string-append default-font-directory "@PATHSEP@" 
+		"i_-acute-accent.sym"))
+
+; o-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 243))
+ (string-append default-font-directory "@PATHSEP@" 
+		"o_-acute-accent.sym"))
+
+; u-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 250))
+ (string-append default-font-directory "@PATHSEP@" 
+		"u_-acute-accent.sym"))
+
+; A-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 193))
+ (string-append default-font-directory "@PATHSEP@" 
+		"A-acute-accent.sym"))
+
+; E-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 201))
+ (string-append default-font-directory "@PATHSEP@" 
+		"E-acute-accent.sym"))
+
+; I-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 205))
+ (string-append default-font-directory "@PATHSEP@" 
+		"I-acute-accent.sym"))
+
+; O-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 211))
+ (string-append default-font-directory "@PATHSEP@" 
+		"O-acute-accent.sym"))
+
+; U-acute_accent spanish
+(map-font-character-to-file 
+ (string (integer->char 218))
+ (string-append default-font-directory "@PATHSEP@" 
+		"U-acute-accent.sym"))
+
+; n-tilde spanish
+(map-font-character-to-file 
+ (string (integer->char 241))
+ (string-append default-font-directory "@PATHSEP@" 
+		"n_-tilde.sym"))
+
+; N-tilde spanish
+(map-font-character-to-file 
+ (string (integer->char 209))
+ (string-append default-font-directory "@PATHSEP@" 
+		"N-tilde.sym"))
+
+; open exclamation spanish 
+(map-font-character-to-file 
+ (string (integer->char 161))
+ (string-append default-font-directory "@PATHSEP@" 
+		"excl-open.sym"))
+
+; open question spanish
+(map-font-character-to-file 
+ (string (integer->char 191))
+ (string-append default-font-directory "@PATHSEP@" 
+		"quest-open.sym"))
+
+;
+; End of font related keywords
+;

@@ -508,7 +508,8 @@ s_toplevel_delete (TOPLEVEL *toplevel)
   /* free all fonts */
   /* if you close a window, then you free the font set... */
   /* this is probably a bad idea... */
-  o_text_freeallfonts (toplevel);
+  /* The font set can ONLY be freed when exiting!!! */
+  /*  o_text_freeallfonts (toplevel); */
 
   /* delete all pages */
   s_page_delete_list (toplevel);

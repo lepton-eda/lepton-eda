@@ -1,3 +1,7 @@
+2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
+	* noweb/gschem.nw:
+	  Removing call to o_text_init, since it's now called in libgeda_init.
+
 2005-02-28  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* po/es_ES.po: updated spanish translation.

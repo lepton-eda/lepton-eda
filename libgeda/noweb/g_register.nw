@@ -100,6 +100,7 @@ static struct gsubr_t libgeda_funcs[] = {
   { "bitmap-directory",         1, 0, 0, g_rc_bitmap_directory },
   { "font-directory",           1, 0, 0, g_rc_font_directory },
   { "bus-ripper-symname",       1, 0, 0, g_rc_bus_ripper_symname },
+  { "map-font-character-to-file", 2, 0, 0, g_rc_map_font_character_to_file },
   { NULL,                       0, 0, 0, NULL } };
 
 @ %def libgeda_funcs

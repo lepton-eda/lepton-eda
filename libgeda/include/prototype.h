@@ -54,6 +54,7 @@ SCM g_rc_font_directory(SCM path);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
+SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
 
 /* g_register.c */
 void g_register_libgeda_funcs(void);
@@ -420,7 +421,7 @@ void world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, in
 OBJECT *o_text_add_head(void);
 void o_text_init(void);
 void o_text_print_set(void);
-OBJECT *o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char);
+OBJECT *o_text_load_font(TOPLEVEL *w_current, gunichar needed_char);
 int o_text_num_lines(char *string);
 int o_text_height(char *string, int size);
 int o_text_width(TOPLEVEL *w_current, char *string, int size);

@@ -36,6 +36,7 @@
 <<g_rc.c : g_rc_reset_component_library()>>
 <<g_rc.c : g_rc_reset_source_library()>>
 
+<<g_rc.c : g_rc_map_font_character_to_file()>>
 
 @
 
@@ -98,6 +99,8 @@
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
+
+extern GHashTable *font_char_to_file;
 
 @
 
@@ -970,3 +973,37 @@ g_rc_reset_source_library(void)
 
 
 @ %def g_rc_reset_source_library
+
+@section Function @code{g_rc_map_font_character_to_file()}
+
+@defun g_rc_map_font_character_to_file
+@end defun
+
+<<g_rc.c : g_rc_map_font_character_to_file()>>=
+SCM
+g_rc_map_font_character_to_file(SCM character_param, SCM file_param)
+{
+  gchar *file = gh_scm2newstr(file_param, NULL);
+  gchar *character = gh_scm2newstr(character_param, NULL);
+
+  if ( (file == NULL) || (character == NULL) ) {
+    fprintf(stderr,
+            "%s requires two strings as parameters\n",
+            "map-font-character-to-file"
+            );
+    return SCM_BOOL_F;
+  }
+
+  /* take care of any shell variables */
+  file = expand_env_variables(file);
+
+  /* Insert the new entry */
+ g_hash_table_insert (font_char_to_file, g_strdup(character),
+		       g_strdup(file));
+
+ return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_map_font_character_to_file
+

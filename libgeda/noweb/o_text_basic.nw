@@ -25,6 +25,7 @@
 <<o_text_basic.c : o_text_create_string()>>
 <<o_text_basic.c : o_text_add()>>
 <<o_text_basic.c : o_text_recalc()>>
+<<o_text_basic.c : o_text_convert_to_utf8()>>
 <<o_text_basic.c : o_text_read()>>
 <<o_text_basic.c : o_text_set_info_font()>>
 <<o_text_basic.c : o_text_save()>>
@@ -118,13 +119,18 @@
 #define BACKING 2
 
 /* font storage and friends are staying global so that all can access */
-#define NUM_CHARS 256
 
 @ %def WINONLY BACKING NUM_CHARS
 
 
 <<o_text_basic.c : global variable>>=
-OBJECT font_set[NUM_CHARS];
+/* Stores a list with font data */
+GSList *font_set = NULL;
+/* Hashtable storing font_character (string) as a key, and pointer to data */
+GHashTable *font_loaded = NULL;
+
+/* Hashtable storing mapping between character and font definition file */
+GHashTable *font_char_to_file = NULL;
 
 /* Size of a tab in characters */
 int tab_in_chars = 8;
@@ -200,12 +206,30 @@ o_text_add_head(void)
 void
 o_text_init(void)
 {
-  int i;
-
-  for (i = 0 ; i < NUM_CHARS; i++) {
-    font_set[i].font_prim_objs = NULL;
-    font_set[i].font_text_size = 100;
+  /*  font_set = NULL; */
+  if (font_loaded == NULL) {
+#ifndef HAS_GTK12
+    font_loaded = g_hash_table_new_full (g_str_hash, g_str_equal, free, free);
+#else
+    font_loaded = g_hash_table_new (g_str_hash, g_str_equal);
+#endif
   }
+  else {
+    fprintf (stderr, "o_text_init: Tried to initialize an already initialized font_loaded hash table!!\n");
+  }
+  if (font_char_to_file == NULL) {
+#ifndef HAS_GTK12
+    font_char_to_file = g_hash_table_new_full (g_str_hash, g_str_equal, free, free);
+#else
+    font_char_to_file = g_hash_table_new (g_str_hash, g_str_equal);
+#endif
+  }
+  else {
+    fprintf (stderr, "o_text_init: Tried to initialize an already initialized font_char_to_file hash table!!\n");
+  }
+  
+  return;
+
 }
 
 
@@ -221,15 +245,19 @@ o_text_init(void)
 void
 o_text_print_set(void)
 {
-  OBJECT *o_current;
-  int i;
+  OBJECT *o_current, *o_font_set;
+  char i;
+  gchar *aux_str;
 	
   for (i = 'A' ; i < 'Z'+1; i++) {
-    if (font_set[i].font_prim_objs != NULL) {
+    aux_str = g_strdup_printf("%c", i);
+    o_font_set = g_hash_table_lookup (font_loaded, aux_str);
+    free(aux_str);
+    if (o_font_set != NULL) {
       printf("%c: LOADED\n", i);	
       /* for (o_current=font_set[i].font_prim_objs; o_current; 
          o_current=o_current->next) */
-      for (o_current=return_tail(font_set[i].font_prim_objs); o_current; 
+      for (o_current=return_tail(o_font_set->font_prim_objs); o_current; 
            o_current=o_current->prev) 
       {
         printf("  %s\n", o_current->name);	
@@ -251,314 +279,16 @@ o_text_print_set(void)
 
 <<o_text_basic.c : o_text_load_font()>>=
 OBJECT *
-o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
+o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
 {
-  char *temp_string = NULL;
-  OBJECT *temp_parent;
+  gchar *temp_string = NULL;
+  OBJECT *temp_parent, *o_font_set;
   int not_found = FALSE;
+  gchar *aux_str;
+  gchar *aux_str2;
 
-  switch(needed_char) {
-		
-    case(' '):
-      temp_string = g_strdup_printf("%s%cspace.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('\n'):
-      temp_string = g_strdup_printf("%s%cnewline.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-		
-    case('!'):
-      temp_string = g_strdup_printf("%s%cexcl.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-		
-    case(','):
-      temp_string = g_strdup_printf("%s%ccomma.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('('):
-      temp_string = g_strdup_printf("%s%clparen.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case(')'):
-      temp_string = g_strdup_printf("%s%crparen.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('-'):
-      temp_string = g_strdup_printf("%s%cminus.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('+'):
-      temp_string = g_strdup_printf("%s%cplus.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('#'):
-      temp_string = g_strdup_printf("%s%cpound.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('?'):
-      temp_string = g_strdup_printf("%s%cquest.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('"'):
-      temp_string = g_strdup_printf("%s%cquote.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case(':'):
-      temp_string = g_strdup_printf("%s%ccolon.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('@'):
-      temp_string = g_strdup_printf("%s%cat.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('='):
-      temp_string = g_strdup_printf("%s%cequal.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('>'):
-      temp_string = g_strdup_printf("%s%cmore.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('<'):
-      temp_string = g_strdup_printf("%s%cless.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('/'):
-      temp_string = g_strdup_printf("%s%cslash.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('$'):
-      temp_string = g_strdup_printf("%s%cdollar.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case(';'):
-      temp_string = g_strdup_printf("%s%csemi.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('&'):
-      temp_string = g_strdup_printf("%s%camper.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('\\'):
-      temp_string = g_strdup_printf("%s%cbackslash.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('{'):
-      temp_string = g_strdup_printf("%s%clbrace.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('}'):
-      temp_string = g_strdup_printf("%s%crbrace.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('\''):
-      temp_string = g_strdup_printf("%s%capost.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('`'):
-      temp_string = g_strdup_printf("%s%cbacktick.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('^'):
-      temp_string = g_strdup_printf("%s%ccaret.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('%'):
-      temp_string = g_strdup_printf("%s%cpercent.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('['):
-      temp_string = g_strdup_printf("%s%clbrack.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case(']'):
-      temp_string = g_strdup_printf("%s%crbrack.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('*'):
-      temp_string = g_strdup_printf("%s%castericks.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('.'):
-      temp_string = g_strdup_printf("%s%cperiod.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('_'):
-      temp_string = g_strdup_printf("%s%cunder.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('~'):
-      temp_string = g_strdup_printf("%s%ctilde.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case('|'):
-      temp_string = g_strdup_printf("%s%cvbar.sym", 
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (196): /* A-umlaut finnish/swedish/german */
-      temp_string = g_strdup_printf("%s%cA-diaeresis.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (197): /* A-ring finnish/swedish/danish/norwegian */
-      temp_string = g_strdup_printf("%s%cA-ring.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (198): /* AE-diphtong danish/norwegian */
-      temp_string = g_strdup_printf("%s%cAE-lig.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (214): /* O-umlaut finnish/swedish/german */
-      temp_string = g_strdup_printf("%s%cO-diaeresis.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (216): /* O-slash danish/norwegian */
-      temp_string = g_strdup_printf("%s%cO-slash.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (220): /* U-umlaut german */
-      temp_string = g_strdup_printf("%s%cU-diaeresis.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (228): /* a-umlaut finnish/swedish/german */
-      temp_string = g_strdup_printf("%s%ca_-diaeresis.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (229): /* a-ring finnish/swedish/danish/norwegian */
-      temp_string = g_strdup_printf("%s%ca_-ring.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (230): /* ae-diphtong danish/norwegian */
-      temp_string = g_strdup_printf("%s%cae_-lig.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (246): /* o-umlaut finnish/swedish/german */
-      temp_string = g_strdup_printf("%s%co_-diaeresis.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (248): /* o-slash danish/norwegian */
-      temp_string = g_strdup_printf("%s%co_-slash.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (252): /* u-umlaut german */
-      temp_string = g_strdup_printf("%s%cu_-diaeresis.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (225): /* a-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%ca_-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (233): /* e-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%ce_-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (237): /* i-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%ci_-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (243): /* o-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%co_-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (250): /* u-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%cu_-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (193): /* A-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%cA-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (201): /* E-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%cE-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (205): /* I-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%cI-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (211): /* O-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%cO-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (218): /* U-acute_accent spanish */
-      temp_string = g_strdup_printf("%s%cU-acute-accent.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (241): /* n-tilde spanish */
-      temp_string = g_strdup_printf("%s%cn_-tilde.sym",
-	      w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (209): /* N-tilde spanish */
-      temp_string = g_strdup_printf("%s%cN-tilde.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (161): /* open exclamation spanish */
-      temp_string = g_strdup_printf("%s%cexcl-open.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-
-    case (191): /* open question spanish */
-      temp_string = g_strdup_printf("%s%cquest-open.sym",
-              w_current->font_directory, G_DIR_SEPARATOR);
-      break;
-     
-    default:	
+  aux_str = g_strdup_printf("%c", needed_char);
+  if ((aux_str2 = g_hash_table_lookup(font_char_to_file, aux_str)) == NULL) {
       /* this is needed since WinNT file systems are 
        * case insensitive, and cannot tell the difference 
        * between A.sym and a.sym.  So we create a_.sym -  
@@ -573,9 +303,12 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
                 w_current->font_directory, G_DIR_SEPARATOR,
                 needed_char);
       }
-      break;
-
   }
+  else {
+    temp_string = g_strdup_printf("%s", aux_str2);
+  }
+  aux_str2 = NULL;
+  free(aux_str);
 
   if ( access(temp_string, R_OK) != 0 ) {
     s_log_message("Could not find character %c definition.  %s\n",needed_char, temp_string);
@@ -588,31 +321,68 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
     not_found = TRUE; 
   }
 
-  /* printf("loading: %s\n", temp_string);*/
+  /* Make new object for the font set list */
+  o_font_set = (OBJECT *) malloc(sizeof(OBJECT));	
 
-  font_set[(unsigned char) needed_char].font_prim_objs = o_text_add_head();
+  if (o_font_set == NULL) {
+    fprintf(stderr, "Could not perform malloc; something is broken or increase your process limits\n");
+    exit(-1);
+  }
+  
+  o_font_set->font_prim_objs = NULL;
+  o_font_set->font_text_size = 100;
 
-  temp_parent = w_current->page_current->object_parent;
-  /* set the addition of attributes to the head node */
-  w_current->page_current->object_parent = font_set[(unsigned char) needed_char].font_prim_objs;
+  /* Add it to the list and hash table. Some functions will need it */
+  aux_str = g_strdup_printf("%c", needed_char);
+  g_hash_table_insert(font_loaded, aux_str, o_font_set);
+  if (g_hash_table_lookup(font_loaded, aux_str) == NULL) {
+    fprintf(stderr, "Can't find the node that was just inserted!!!\n");
+    exit(-1);
+  }
+  /* aux_str will only be freed when removing the entry in the hash table */
 
-  font_set[(unsigned char) needed_char].font_prim_objs =
-  o_read(w_current, font_set[(unsigned char) needed_char].font_prim_objs,
-         temp_string);
-  w_current->page_current->object_parent = temp_parent;
+  font_set = g_slist_append (font_set, o_font_set);
 
-  font_set[(unsigned char) needed_char].font_prim_objs =
-  return_head(font_set[(unsigned char) needed_char].font_prim_objs);
+  o_font_set->name = NULL;
+  o_font_set->font_prim_objs = o_text_add_head();
+
+  /* Modify name of the text so we can free the hashtable entry later */
+  if (o_font_set->name != NULL) {
+    free(o_font_set->name);
+  }
+  o_font_set->name = aux_str;
+  
 
   if (not_found == TRUE) {
     /* set the font text size (width) to the question mark's size */
     /* yes, the question mark character was loaded instead of the real char */
     /* 63 == question mark character */
-    font_set[(unsigned char) needed_char].font_text_size = 
-	font_set[63].font_text_size;
+
+    OBJECT *aux_obj;
+    
+    aux_str = g_strdup_printf("?");
+    aux_obj = g_hash_table_lookup (font_loaded, aux_str);
+    if (aux_obj == NULL) {
+      o_text_load_font(w_current, (gunichar) '?');
+      aux_obj = g_hash_table_lookup (font_loaded, aux_str);      
+    }
+    free (aux_str);
+
+    o_font_set->font_text_size = aux_obj->font_text_size;
   }
 	
-  return(font_set[(unsigned char) needed_char].font_prim_objs);
+
+  temp_parent = w_current->page_current->object_parent;
+  /* set the addition of attributes to the head node */
+  w_current->page_current->object_parent = o_font_set->font_prim_objs;
+
+  o_font_set->font_prim_objs = o_read(w_current, o_font_set->font_prim_objs,
+				      temp_string);
+  w_current->page_current->object_parent = temp_parent;
+
+  o_font_set->font_prim_objs = return_head(o_font_set->font_prim_objs);
+
+  return(o_font_set->font_prim_objs);
 }
 
 
@@ -628,7 +398,9 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
 int
 o_text_num_lines(char *string) 
 {
-  int i, line_count = 0;
+  int line_count = 0;
+  gchar *aux;
+  gunichar current_char;
 
   if (string == NULL) {
     return 0;
@@ -637,9 +409,12 @@ o_text_num_lines(char *string)
   /* if it's not null, then we have at least one line */
   line_count++;
   /* Count how many \n are in the string */
-  for (i = 0; i <= strlen(string); i++) {
-    if (string[i] == '\n')
+  aux = string;
+  while (aux && ((gunichar) (*aux) != 0) ) {
+    current_char = g_utf8_get_char_validated(aux, -1);
+    if (current_char == '\n')
       line_count++;
+    aux = g_utf8_find_next_char(aux, NULL);
   }
 
   return (line_count);
@@ -689,40 +464,57 @@ You need to divide the size in half here.  FIXME consistancy.
 int
 o_text_width(TOPLEVEL *w_current, char *string, int size) 
 {
-  int i;
-  int len;
   int width=0, max_width=0;
   int size_of_tab_in_coord;
+  gchar *aux;
+  gunichar current_char;
+  OBJECT *o_font_set;
+  gchar *aux_str;
   
+  aux_str = g_strdup_printf("%c", TAB_CHAR_MODEL[0]);
+  o_font_set = g_hash_table_lookup (font_loaded, aux_str);
+
   /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
   /* size */
-  if (font_set[(unsigned char) TAB_CHAR_MODEL[0]].font_prim_objs == NULL) {
-    o_text_load_font(w_current, (unsigned char) TAB_CHAR_MODEL[0]);
+  if (o_font_set == NULL) {
+    o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
+    o_font_set = (OBJECT *) g_hash_table_lookup (font_loaded, aux_str);
   }
+  free (aux_str);
+  
   /* Get the maximum tab width's in coordinates */
   size_of_tab_in_coord = tab_in_chars * size * 
-              font_set[(unsigned char) TAB_CHAR_MODEL[0]].font_text_size ;
-
+  o_font_set->font_text_size ;
+  
   if (string == NULL) {
     return 0;
   }
-  len = strlen(string);
-  for (i = 0 ; i < len ; i++ ) {
-    if (string[i] == '\n') {
+
+  aux = string;
+  while (aux && ((gunichar) (*aux) != 0) ) {
+    current_char = g_utf8_get_char_validated(aux, -1);
+    aux = g_utf8_find_next_char(aux, NULL);
+
+    if (current_char == '\n') {
       width = 0;    
       continue;
     }
-    if (string[i] == '\t') {
+    if (current_char == '\t') {
       width += (size_of_tab_in_coord - (width % size_of_tab_in_coord));
       continue;
       
     }
 
-    if (font_set[(unsigned char) string[i]].font_prim_objs == NULL) {
-      o_text_load_font(w_current, (unsigned char) string[i]);
+    /* Find current_char */
+    aux_str = g_strdup_printf("%c", current_char);
+    o_font_set = g_hash_table_lookup (font_loaded, aux_str);
+    if (o_font_set == NULL) {
+      o_text_load_font(w_current, (gunichar) current_char);
+      o_font_set = g_hash_table_lookup (font_loaded, aux_str);
     }
-    
-    width = width + size*font_set[(unsigned char) string[i]].font_text_size;
+    free (aux_str);
+
+    width = width + size*o_font_set->font_text_size;
     if (width > max_width)
       max_width = width;
   }
@@ -752,8 +544,6 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   OBJECT *temp_tail=NULL;
   OBJECT *temp_list;
   OBJECT *start_of_char;
-  int i;
-  int len;
   int x_offset;
   int y_offset;
   int text_width;
@@ -761,6 +551,10 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   int char_height;
   int line_start_x, line_start_y;
   int sign=1;
+  gchar *aux;
+  gunichar current_char;
+  gchar *aux_str;
+  OBJECT *o_font_set;
 
   temp_list = object_list;
 
@@ -770,7 +564,6 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
     return(NULL);
   }
 	
-  len = strlen(string);
   /* now read in the chars */
   temp_tail = w_current->page_current->object_tail;
 
@@ -932,37 +725,52 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   line_start_x = x_offset;
   line_start_y = y_offset;
 
-  for (i = 0 ; i < len ; i++ ) {
-		
-    if (font_set[(unsigned char) string[i]].font_prim_objs == NULL) {
-      o_text_load_font(w_current, (unsigned char) string[i]);
+  aux = string;
+  while (aux && ((gunichar) (*aux) != 0) ) {
+    
+    current_char = g_utf8_get_char_validated(aux, -1);
+    aux = g_utf8_find_next_char(aux, NULL);    
+        
+    aux_str = g_strdup_printf("%c", current_char);
+    o_font_set = g_hash_table_lookup(font_loaded, aux_str);
+    if (o_font_set == NULL) {
+      o_text_load_font(w_current, (gunichar) current_char);
+      o_font_set = g_hash_table_lookup(font_loaded, aux_str);
     }
+    free(aux_str);
 
     start_of_char = temp_list;
 
-    if (font_set[(unsigned char) string[i]].font_prim_objs->next) {
+    if (o_font_set->font_prim_objs->next != NULL) {
       int rel_char_coord;
       int size_of_tab_in_coord;
+      OBJECT *o_font_set_aux;
 
       /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
       /* size */
-      if (font_set[(unsigned char) TAB_CHAR_MODEL[0]].font_prim_objs == NULL) {
-         o_text_load_font(w_current, (unsigned char) TAB_CHAR_MODEL[0]);
-      }
+      aux_str = g_strdup_printf("%c", TAB_CHAR_MODEL[0]);
+      o_font_set_aux = g_hash_table_lookup(font_loaded, aux_str);
+      if (o_font_set_aux == NULL) {
+         o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
+	 o_font_set_aux = g_hash_table_lookup(font_loaded, aux_str);
+       }
+      free (aux_str);
+    
       /* Get the maximum tab width's in coordinates */
       size_of_tab_in_coord = tab_in_chars * 
                  o_text_width(w_current, TAB_CHAR_MODEL, size/2);
 
-      if (string[i] != '\n' && string[i] != '\t') {
+      if (current_char != '\n' && current_char != '\t') {
          /* only add the character if it is not a newline or tab character */
          temp_list = o_list_copy_all(w_current, 
-                                  font_set[(unsigned char) string[i]].font_prim_objs->next, 
-                                  temp_list, NORMAL_FLAG);
-         start_of_char = start_of_char->next;
+				     o_font_set->font_prim_objs->next, 
+				     temp_list, NORMAL_FLAG);
+	 if (start_of_char != NULL)
+	   start_of_char = start_of_char->next;
       }
 
       /* if the character is a newline or tab, this code will "continue" */
-      switch (string[i]) {
+      switch (current_char) {
       case '\n':
 	switch (angle) {
 	case 0:
@@ -1052,22 +860,22 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
     switch(angle) {
       case(0):	
         x_offset = (x_offset) + 
-          size/2*font_set[(unsigned char) string[i]].font_text_size;
+          size/2*o_font_set->font_text_size;
         break;
 		
       case(90):
         y_offset = (y_offset) + 
-          size/2*font_set[(unsigned char) string[i]].font_text_size;
+          size/2*o_font_set->font_text_size;
         break;
 
       case(180):
         x_offset = (x_offset) - 
-          size/2*font_set[(unsigned char) string[i]].font_text_size;
+          size/2*o_font_set->font_text_size;
         break;
 		
       case(270):
         y_offset = (y_offset) - 
-          size/2*font_set[(unsigned char) string[i]].font_text_size;
+          size/2*o_font_set->font_text_size;
         break;
     }
   }
@@ -1256,6 +1064,60 @@ o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 @ %def o_text_recalc
 
+@section Function @code{o_text_convert_to_utf8()}
+
+@defun o_text_convert_to_utf8 string
+@end defun
+
+<<o_text_basic.c : o_text_convert_to_utf8()>>=
+gchar *
+o_text_convert_to_utf8 (gchar *string)
+{
+  GSList *codenames = NULL, *aux_ptr;  
+  gchar *out_str = NULL;
+  gsize b_written;
+ 
+#ifdef HAS_GTK22
+  codenames = g_slist_append(codenames, g_strdup("UTF-8"));
+  codenames = g_slist_append(codenames, g_strdup("ISO_8859-15"));
+  
+  aux_ptr = codenames;
+  while (aux_ptr != NULL) {
+    out_str = g_convert (string, strlen(string), "UTF-8", aux_ptr->data,
+			 NULL, &b_written, NULL);
+    
+    aux_ptr = aux_ptr->next;
+   if (out_str != NULL) {
+      break;
+    }
+    
+  }
+  
+  /* Free the list */
+  aux_ptr = codenames;
+  while (aux_ptr != NULL) {
+    free (aux_ptr->data);
+    aux_ptr = aux_ptr->next;
+  }
+  g_slist_free(codenames);
+#endif
+
+ if (out_str != NULL) {
+    return (out_str);
+  }
+  else {
+#ifdef HAS_GTK22
+    fprintf (stderr, "o_text_convert_to_utf8: Can't convert string to utf8: %s.\n", string);
+#endif
+    return(g_strdup(string));
+  }
+}
+
+
+@ %def o_text_convert_to_utf8
+
+
+
 
 @section Function @code{o_text_read()}
 
@@ -1363,15 +1225,20 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   assert(num_lines && num_lines > 0);  
   for (i = 0; i < num_lines; i++)
   {
+    gchar *utf_str;
+
     fgets(buffer, 1024, fp);
 
+    utf_str = o_text_convert_to_utf8(buffer);
+
     if (string == 0) {
-      string = g_strdup (buffer);
+      string = g_strdup (utf_str);
     } else {
-      temp = g_strconcat (string, buffer, NULL);
+      temp = g_strconcat (string, utf_str, NULL);
       free(string);
       string = temp;
     }
+    free (utf_str);
   }
 
   string = remove_last_nl(string);	
@@ -1399,10 +1266,11 @@ o_text_set_info_font(char buf[])
   char type; 
   int width;
   char character;
-  unsigned int temp;
   int special=0;
   char *string; 
-	
+  gchar *aux_str;
+  OBJECT *o_font_set;
+
   string = g_strdup(remove_nl(buf));	
 
   /* the right way to do this is to use the ascii code in the character
@@ -1420,11 +1288,17 @@ o_text_set_info_font(char buf[])
     character = 10;
   }
 
-  temp = (unsigned char) character;
-  if ( temp >= 0 && temp <= 255) {
-    font_set[(unsigned char) character].font_text_size = width;
+  aux_str = g_strdup_printf("%c", character);
+  o_font_set = g_hash_table_lookup (font_loaded, aux_str);
+  free (aux_str);
+  
+  if (o_font_set != NULL) {
+    o_font_set->font_text_size = width;
   }
-
+  else {
+    fprintf(stderr, "o_text_set_info_font: character %c not found!!!\n", character);
+   }
+  
   free(string);
 }
 
@@ -1656,19 +1530,54 @@ o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 @end defun
 
 <<o_text_basic.c : o_text_freeallfonts()>>=
+#ifdef HAS_GTK12
+/* Function called by g_hash_table_foreach_remove to free 
+   each value/entry of the hash table */
+gboolean o_text_free_hashtable_entry (gpointer key, gpointer value, gpointer user_data) {
+  free (value);
+  free (key);
+  return (TRUE);
+}
+#endif
+
 void
 o_text_freeallfonts(TOPLEVEL *w_current)
 {
-  int i;
+  OBJECT *aux;
 
-  for (i = 0 ; i < NUM_CHARS; i++) {
-    if (font_set[i].font_prim_objs != NULL) {
-      s_delete_list_fromstart(w_current, font_set[i].font_prim_objs);
-      font_set[i].font_prim_objs = NULL;
+  aux = (OBJECT *) font_set;
+  while ((aux = (OBJECT *) g_slist_nth_data(font_set,0)) != NULL) {
+    if (aux->font_prim_objs != NULL) {
+      s_delete_list_fromstart(w_current, aux->font_prim_objs);
+      aux->font_prim_objs = NULL;
     }
-  }
+    /* Remove the entry from the hash table */
+    /* (OBJECT *)->name = key of font_loaded, so it will be freed later */
+#ifdef HAS_GTK12
+    /* GTK12 needs the data in the hash table to be freed */
+    if ((entry = g_hash_table_lookup (font_loaded, aux->name)) != NULL) {
+      free (entry);
+     }
+    free (aux->name);
+#endif
+    /* Remove from the list the node with data pointed by aux */
+    font_set = g_slist_remove(font_set, aux);
 
+  }
+  g_slist_free (font_set);
+
+  /* Destroy the font to file hashtable */
+  g_hash_table_destroy(font_loaded);
+
+  /* Destroy the font to file hashtable */
+#ifdef HAS_GTK12
+  /* GTK12 needs the data in the hash table to be freed */
+  g_hash_table_foreach_remove (font_char_to_file, o_text_free_hashtable_entry, NULL);
+#endif
+  g_hash_table_destroy(font_char_to_file);
+ 
 }
+
 
 
 @ %def o_text_freeallfonts

@@ -1,3 +1,10 @@
+2005-03-05 Carlos Nieves Onega <cnieves@iespana.es>
+	* noweb/g_rc.nw, noweb/g_register.nw, noweb/libgeda.nw,
+	  noweb/o_text_basic.nw, include/prototype.h, include/defines.h,
+	  noweb/s_toplevel.nw:
+	  Added Unicode support, character to font file mapping by hashtable,
+	  and font mapping definition using system-gafrc.
+	
 2005-02-28  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* scripts/notangle_guile.in: Improved script with changes suggested
