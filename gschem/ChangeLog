@@ -1,3 +1,8 @@
+2005-02-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_log.nw: Added code to scroll to the end of the text buffer
+	when the log window is opened up.
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/i_callbacks.nw, noweb/gschem.nw: Adapted for new logging 

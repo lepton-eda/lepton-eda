@@ -277,6 +277,7 @@ log_init (Log *log)
 {
   GtkWidget *scrolled_win, *text_view;
   GtkTextBuffer *text_buffer;
+  GtkTextMark *mark;
 
   /* dialog initialization */
   g_object_set (G_OBJECT (log),
@@ -327,7 +328,10 @@ log_init (Log *log)
   /* now add the close button to the action area */
   gtk_dialog_add_button (GTK_DIALOG (log),
                          GTK_STOCK_CLOSE, LOG_RESPONSE_CLOSE);
-  
+
+  /* scroll to the end of the buffer */
+  mark = gtk_text_buffer_get_insert (text_buffer);
+  gtk_text_view_scroll_to_mark (text_view, mark, 0.0, TRUE, 0.0, 1.0);
 }
 
 @ %def log_init
