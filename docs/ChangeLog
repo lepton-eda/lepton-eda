@@ -1,3 +1,11 @@
+2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Added details on the symversion= 
+	attribute
+
+	* symbols/symbols.tex: Added info on the symversion= attribute and
+	some more hints/details on proper pin usage.
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20040710

@@ -29,7 +29,7 @@
 	\\
 	This document is released under GFDL\\ 
         (\url{http://www.gnu.org/copyleft/fdl.html})}
-\date{September 1st, 2003}
+\date{July 6th, 2004}
 
 \begin{document}
 
@@ -252,7 +252,7 @@ See the {\it Footprint naming conventions} in the
 {\it gEDA/gaf Symbol Creation Document}.
 
 If the symbol does not have a footprint, then the value of {\bf
-footprint}= should be set to none.  If the footprint must be overriden
+footprint}= should be set to none.  If the footprint must be overridden
 in a schematic, then the value of {\bf footprint}= should be set to none.
 If the footprint is not known, then the value of {\bf footprint}= should
 be set to unknown.
@@ -337,6 +337,43 @@ is into the netlist.
 Examples: \texttt{value=1K value=10V}
 
 
+\subsection{{\bf symversion}\label{symversion}}
+The {\bf symversion}= attribute is used to version the contents of
+symbols.  Normally this attribute is not present, but once a symbol has
+been accepted into the main gEDA symbol library and there are changes
+to it, this attribute must be placed into the symbol file and properly
+incremented.  The value of this attribute takes the following form:
+
+\texttt{major.minor}
+
+where major and minor are just plain integers (separated by a period).
+The major number is incremented when a symbol has some sort of a change
+which will break or might break an existing schematic.  The minor number
+is only incremented when a cosmetic or very minor change is made to
+the symbol.  The major and minor numbers are not coupled in any way,
+however, when making major version changes, the minor version number
+can be reset to zero.
+
+If this attribute is inside of a symbol and that symbol is placed onto
+a schematic, then the {\bf symversion}= attribute will be automatically
+promoted and attached to the outside of the symbol.  During the load
+of the symbol from disk, the value of the {\bf symversion}= inside the
+symbol file (if any) and the {\bf symversion}= attached to the symbol
+(if any) are compared.  If the values are the same then the placed symbol
+matches the disk symbol file, however if the values do not match, then
+libgeda will output a warning/error message (based on whether it is a 
+major or minor version change).
+
+New symbols should not receive this attribute at all.  Only when the
+symbol is change should this attribute be placed into the symbol file
+and maintained.  Users should not attach this attribute manually to
+instantiated symbols.  This attribute should normally be made invisible
+when placed inside of a symbol file.  This attribute is always promoted
+when it is found inside of a symbol (during component placement).
+
+Examples: \texttt{symversion=1.1} 
+
+
 \section{Obsolete Attributes}
 
 \subsection{{\bf uref}\label{uref}}
@@ -388,8 +425,9 @@ July 14th, 2002 & Updated doc to be in sync with post-20020527. \\ \hline
 August 25th, 2002 & Added obsolete type= attribute. \\ \hline
 September 14, 2002 & Added description= attribute. Minor fixes\\ \hline
 October 7, 2002 & Added doc= attribute; Egil Kvaleberg.\\ \hline
-February 11, 2002 & Added reference to footprint conventions.\\ \hline
-February 23, 2002 & Added author=, email=, and comment= attributes.\\ \hline
+February 11, 2003 & Added reference to footprint conventions.\\ \hline
+February 23, 2003 & Added author=, email=, and comment= attributes.\\ \hline
+July 6th, 2004 & Added symversion= attributes.\\ \hline
 
 \end{tabular}
 \end{table}

@@ -30,7 +30,7 @@
 	\\
 	This document is released under GFDL\\ 
 	(\url{http://www.gnu.org/copyleft/fdl.html})}
-\date{September 27th, 2003}
+\date{July 6th, 2004}
 
 \begin{document}
 
@@ -213,6 +213,10 @@ symbol library.
       Attributes inside a symbol do not have to be attached to anything.
       In order to see hidden attributes in gschem select Edit/Show/Hide Inv
       Text.
+\item There is a symbol content versioning system in libgeda which is
+      based on the {\bf symversion}= attribute.  Please see the Master
+      Attribute Document for more information on using this versioning 
+      scheme.
 
 
 \end{itemize}
@@ -223,12 +227,27 @@ symbol library.
 \item Lines, boxes, arcs, and any other graphics should be color number 3 
       (graphic | green).
 \item Polarity bubbles should be color number 6 (logic bubble | cyan) 
+\item If you are unsure on how to make a new symbol look or how big to
+      make a new symbol, look at the existing symbols to get a feel for
+      the appropriate appearance and size.
 \end{itemize}
 
 \subsection{Pins}
 
 \begin{itemize}
 \item Pins should all be 300 mils (3 grid spaces) long.
+\item For pins which are next to a logic bubble, make the pins 200 mils 
+      (2 grid spaces) long and then make the logic bubble 100 mils in
+      diameter.  In order to draw a 100 mil diameter circle, you will need
+      to change the snap spacing to 50.
+\item A pin has two ends: one end has a red endpoint and one end that does
+      not.  The red endpoint is where nets can be connected.  You can
+      either rotate the pin so that this active end is in the right place 
+      or manually edit the symbol file changing the "whichend" parameter
+      on the pin object.  See the File Format document for more info.
+\item Be that all endpoints of pins which are meant to be connected to are on
+      the 100 mil grid.  The endpoint which is not active can be off the 
+      grid if necessary.
 \item Pins should be color number 1 (pins | white).
 \item Leave 400 mils (4 grid spaces) between (vertically) pins, unless
       you are drawing a special symbol, then just try to make it look
@@ -247,6 +266,9 @@ symbol library.
       the other pins).  Look at 74/74181-1.sym for a correct example
       of this order (A0 on top through A3 and B0 on top through B3).
       Violating this rule will make connecting buses much more difficult.
+\item When placing pins on logic gates, be sure to place the smallest
+      pin numbers toward the top (or left) and then increment going down
+      (or across).
 
 \end{itemize}
 
@@ -637,6 +659,7 @@ September 14th, 2002 & Created symbol.tex from symbols.html \\ \hline
 October 31st, 2002 & Fixed bad example symbol \\ \hline
 February 11th, 2003 & Footprint naming conventions added \\ \hline
 September 27th, 2003 & Applied Dan McMahill's QFP and QFN patch \\ \hline
+July 6th, 2004 & Added a bunch more details/hints to the pin section \\ \hline
 
 \end{tabular}
 \end{table}
