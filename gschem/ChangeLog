@@ -1,3 +1,12 @@
+2001-06-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/*: Added .nw files from Patrick B.
+
+	* Started down the path toward using noweb (still need to integrated
+	  noweb tools into the configure mechanism)
+
+	* scripts/*: Added noweb -> texi backed written by Patrick B.
+
 2001-05-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Commented out a debugging printf

@@ -223,6 +223,19 @@ gesym_version=`$GESYMCONFIG --version`
 if test $gesym_version != $VERSION; then                                                AC_MSG_ERROR(Found a different version of gesym-config: $GESYMCONFIG -- Make sure your PATH variable is correct)
 fi
 
+AC_CHECK_LIB(stroke, stroke_init, STROKE_LIB="-lstroke", STROKE_LIB=no)
+
+if test $STROKE_LIB = no; then
+	STROKE_LIB=""
+else 
+	if test "$no_strokes" = "yes"; then
+		echo found libstroke, but disabling strokes
+		STROKE_LIB=""
+	else 
+		AC_DEFINE(HAS_LIBSTROKE)
+	fi
+fi
+
 # here is where the final X ld/c flags get set
 LDEXTRA=
 CFEXTRA=
@@ -239,7 +252,7 @@ dnl old way of doing this, see if new way works
 dnl CFLAGS="$CFLAGS $CFEXTRA `$GTK_CONFIG --cflags`"
 
 CFLAGS="`$GTK_CONFIG --cflags` $CFLAGS $CFEXTRA"
-LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS -lm"
+LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS"
 
 AC_MSG_CHECKING([for the rest of gtk])
 AC_TRY_COMPILE(
@@ -253,18 +266,6 @@ if test $gtk_found = no; then
 	AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
 fi
 
-AC_CHECK_LIB(stroke, stroke_init, STROKE_LIB="-lstroke", STROKE_LIB=no)
-
-if test $STROKE_LIB = no; then
-	STROKE_LIB=""
-else 
-	if test "$no_strokes" = "yes"; then
-		echo found libstroke, but disabling strokes
-		STROKE_LIB=""
-	else 
-		AC_DEFINE(HAS_LIBSTROKE)
-	fi
-fi
 
 
 if ! test "$CYGWIN"x = x; then
@@ -276,7 +277,6 @@ fi
 if test "$debug" = "yes"; then
 	CFLAGS="$CFLAGS -g"
 fi
-
 
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT

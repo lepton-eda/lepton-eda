@@ -1,0 +1,106 @@
+@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+
+@node File globals.c,,,Top
+@chapter File @file{globals.c}
+
+@section File header
+
+<<globals.c : *>>=
+<<globals.c : copyright and license>>
+
+/* DO NOT read or edit this file ! Use ../noweb/globals.nw instead */
+
+<<globals.c : include directives>>
+<<globals.c : global variables>>
+
+@
+
+
+<<globals.c : copyright and license>>=
+/* -*- geda-c -*-
+ * gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+@ 
+
+
+<<globals.c : include directives>>=
+#include <config.h>
+#include <stdio.h>
+
+#include <libgeda/libgeda.h>
+
+#include "../include/x_states.h"
+#include "../include/globals.h"
+#include "../include/prototype.h"
+
+@
+
+
+@section Global variables
+
+<<globals.c : global variables>>=
+/* this is needed since guile scripts only deal with the current
+ * window set in x_event* functions */
+TOPLEVEL *global_window_current = NULL;
+
+char *rc_filename     = NULL;
+char *script_filename = NULL;
+char *output_filename = NULL;
+
+/* color stuff */
+GdkColormap *colormap;
+GdkVisual *visual;
+
+/* colors */
+GdkColor white;
+GdkColor black;
+
+int logfile_fd = -1;
+int do_logging = TRUE;
+int logging_dest = LOG_WINDOW;
+
+/* these are required by libgeda */
+void (*arc_draw_func)()      = o_arc_draw;
+void (*box_draw_func)()      = o_box_draw;
+void (*circle_draw_func)()   = o_circle_draw;
+void (*complex_draw_func)()  = o_complex_draw;
+void (*line_draw_func)()     = o_line_draw;
+void (*net_draw_func)()      = o_net_draw;
+void (*bus_draw_func)()      = o_bus_draw;
+void (*text_draw_func)()     = o_text_draw;
+void (*pin_draw_func)()      = o_pin_draw;
+void (*select_func)()        = o_select_object; /* NEW SELECTION code */
+void (*x_log_update_func)()  = x_log_update;
+
+/* command line options */
+int quiet_mode = FALSE;
+int verbose_mode = FALSE;
+int stroke_info_mode = FALSE;
+
+/* Global buffers */
+OBJECT *object_buffer[MAX_BUFFERS];
+
+/* Hooks */
+SCM add_component_hook;
+SCM copy_component_hook;
+SCM move_component_hook;
+
+
+@ %def global_window_current rc_filename script_filename output_filename colormap visual white black logfile_fd do_logging logging_dest arc_draw_func box_draw_func circle_draw_func complex_draw_func line_draw_func net_draw_func bus_draw_func text_draw_func pin_draw_func select_func x_log_update_func quiet_mode verbose_mode stroke_info_mode object_buffer add_component_hook copy_component_hook move_component_hook

@@ -1,0 +1,136 @@
+@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+
+@node File o_find.c,,,Top
+@chapter File @file{o_find.c}
+
+@section File header
+
+<<o_find.c : *>>=
+<<o_find.c : copyright and license>>
+
+/* DO NOT read or edit this file ! Use ../noweb/o_find.nw instead */
+
+<<o_find.c : include directives>>
+<<o_find.c : o_find_object()>>
+
+@
+
+
+<<o_find.c : copyright and license>>=
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+@ 
+
+
+<<o_find.c : include directives>>=
+#include <config.h>
+#include <math.h>
+#include <stdio.h>
+
+#include <libgeda/libgeda.h>
+
+#include "../include/prototype.h"
+
+@
+
+
+@section Function @code{o_find_object()}
+
+@defun o_find_object w_current screen_x screen_y
+@end defun
+
+<<o_find.c : o_find_object()>>=
+void
+o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
+{
+  OBJECT *o_current=NULL;
+				
+  if (w_current->page_current->object_lastplace == NULL) {
+    o_current = w_current->page_current->object_head;
+  } else {
+    o_current = w_current->page_current->object_lastplace;
+  }
+
+  /* do first search */
+  while (o_current != NULL) {
+    if (inside_region(o_current->left, o_current->top,
+                      o_current->right, o_current->bottom, 
+                      screen_x, screen_y)) {
+			if (o_current->sel_func != NULL &&
+                            o_current->visibility == VISIBLE &&
+                            o_current->type != OBJ_HEAD) {
+                              (*o_current->sel_func)(
+                                                     w_current, o_current, 
+                                                     SINGLE, 0); /* 0 is count */
+                              w_current->page_current->
+                              object_lastplace = 
+                              o_current->next;
+                              return;
+                            }
+                      }
+
+    o_current = o_current->next;
+  } 
+
+#if DEBUG
+  printf("SEARCHING AGAIN\n");
+#endif
+
+  /* now search again since we didn't find anything starting at start
+     just in case we started last time at object_lastplace */
+  o_current = w_current->page_current->object_head;
+  while (o_current != NULL && 
+         o_current != w_current->page_current->object_lastplace) {
+    if (inside_region(o_current->left, o_current->top,
+                      o_current->right, o_current->bottom, 
+                      screen_x, screen_y)) {
+      if (o_current->sel_func != NULL &&
+          o_current->visibility == VISIBLE &&
+          o_current->type != OBJ_HEAD) {
+        (*o_current->sel_func)(
+                               w_current, o_current, 
+                               SINGLE, 0); /* 0 is count */
+        w_current->page_current->
+          object_lastplace = o_current;
+
+        return;
+      }
+    }
+    o_current = o_current->next;
+  }
+
+  /* didn't find anything.... reset lastplace */
+  w_current->page_current->object_lastplace = NULL;
+
+  /* deselect everything only if shift key isn't pressed */	
+  if (!w_current->SHIFTKEY) {
+
+#if DEBUG
+    o_selection_print_all( w_current->page_current->selection2_head);
+#endif
+    o_selection_remove_most(w_current, 
+                            w_current->page_current->selection2_head);
+  }
+}
+
+
+@ %def o_find_object
+
+

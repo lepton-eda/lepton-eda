@@ -1,0 +1,354 @@
+@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+
+@node File gschem.c,,,Top
+@chapter File @file{gschem.c}
+
+@section File header
+
+<<gschem.c : *>>=
+<<gschem.c : copyright and license>>
+
+/* DO NOT read or edit this file ! Use ../noweb/gschem.nw instead */
+
+<<gschem.c : include directives>>
+<<gschem.c : gschem_quit()>>
+<<gschem.c : main_func()>>
+<<gschem.c : main()>>
+
+@
+
+
+<<gschem.c : copyright and license>>=
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+@ 
+
+
+<<gschem.c : include directives>>=
+#include <config.h>
+#include <stdio.h>
+#include <signal.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <libgeda/libgeda.h>
+
+#include "../include/globals.h"
+#include "../include/i_vars.h"
+#include "../include/prototype.h"
+
+#ifdef HAS_LIBSTROKE
+/* libstroke prototype */
+void stroke_init(void);
+#endif
+
+@
+
+
+@section Function @code{gschem_quit()}
+
+@defun gschem_quit 
+@end defun
+
+<<gschem.c : gschem_quit()>>=
+void
+gschem_quit(void)
+{
+  s_clib_cache_free();
+  s_clib_free();
+  s_slib_free();
+  /* o_text_freeallfonts();*/
+  s_attrib_free();
+  s_papersizes_free();
+  x_stroke_free_all();
+  x_dialog_hotkeys_free_all();
+  s_color_destroy_all();
+  o_undo_cleanup();
+  /* s_stroke_free(); no longer needed */
+
+  free(default_series_name);
+  free(default_untitled_name);
+  free(default_scheme_directory);
+  free(default_font_directory);
+
+
+  /* x_window_free_head(); can't do this since it causes a
+   * condition in which window_head->... is still being refered
+   * after this */
+
+  /* enable this to get more memory usage from glib */
+  /* You also have to enable something in glib I think */
+  /* g_mem_profile();*/
+	 
+
+  x_log_free();
+  gtk_main_quit();
+}
+
+
+@ %def gschem_quit
+
+
+@section Function @code{main_func()}
+
+@defun main_func argc argv
+@end defun
+
+<<gschem.c : main_func()>>=
+void
+main_prog(int argc, char *argv[])
+{
+  int i;
+  char *cwd;
+  TOPLEVEL *w_current;
+  /* TODO: should the size be flexible? */
+  char input_str[256];
+  int argv_index;
+  int first_page = 1;
+
+  gtk_init(&argc, &argv);
+  visual = gdk_visual_get_system();
+
+  argv_index = parse_commandline(argc, argv);
+  cwd = getcwd(NULL, 1024);
+
+  /* TODO: Probably the file name shuold be defined elsewhere */
+  /* create log file right away even if logging is enabled */
+  x_log_init(cwd, "gschem.log");
+  s_log_init(cwd, "gschem.log");
+
+  s_log_message("gEDA: gschem version %s - THIS IS AN ALPHA RELEASE!\n",
+                VERSION);
+
+#if HAS_LIBSTROKE
+  stroke_init(); /* libstroke function */
+  /* s_stroke_init(); no longer needed libgeda function */
+#endif
+
+  if (!quiet_mode) {
+    fprintf(stderr,
+            "THIS IS AN ALPHA RELEASE! version %s\n", VERSION);
+  }
+
+#ifdef __CYGWIN32__
+  fprintf(stderr, "This is the CYGWIN port.  It is unstable.\n");
+  fprintf(stderr, "USE AT YOUR OWN RISK!\n");
+#endif  
+
+
+  /* init global buffers */
+  o_buffer_init();
+
+  /* register guile (scheme) functions */
+  g_register_funcs();
+
+  s_clib_init();
+  s_slib_init();
+  s_attrib_init();
+
+  s_color_init();
+  g_rc_parse();
+  o_undo_init(); 
+
+  colormap = gdk_colormap_get_system ();
+  x_window_setup_colors();
+
+  x_window_add_head();
+
+  w_current = x_window_create_new();
+  global_window_current = w_current;
+
+  /* so we can call key funcs from guile */
+  set_window_current_key(w_current);
+
+  /* o_text_init(); goes away */
+  o_text_init();
+
+  x_repaint_background(w_current);
+
+  i = argv_index;
+  while (argv[i] != NULL) {
+    if (first_page) {
+      if (w_current->page_current->page_filename) {
+        free(w_current->page_current->page_filename);
+      }
+
+      /* Page structure has already been created...
+       * so, just set the filename and open the
+       * schematic for the first page */
+
+      if (argv[i][0] == '/') {
+        w_current->page_current->page_filename = 
+          u_basic_strdup_multiple(argv[i], NULL);
+      } else {
+        w_current->page_current->page_filename = 
+          u_basic_strdup_multiple(cwd, "/", argv[i], 
+                                  NULL);
+      }
+
+#if 0 /* now done above */
+      w_current->page_current->page_filename =
+        malloc(sizeof(char) * strlen(argv[i]) + 5);
+      strcpy(w_current->page_current->page_filename,
+             argv[i]);
+#endif
+
+      if (!quiet_mode) {
+        printf("Loading schematic [%s]\n", argv[i]);
+      }
+
+      (void)f_open(w_current,
+                   w_current->page_current->page_filename);
+      i_set_filename(w_current,
+                     w_current->page_current->page_filename);
+
+      a_zoom_limits(w_current,
+                    w_current->page_current->object_head,
+                    A_PAN_DONT_REDRAW);
+      o_undo_savestate(w_current, UNDO_ALL);
+
+#if 0
+      /* now update the scrollbars */
+      x_hscrollbar_update(w_current);
+      x_vscrollbar_update(w_current);
+#endif
+
+      first_page = 0;
+    } else {
+      /* Much simpler	*/
+
+      /* create new page, and only load if page not loaded */
+      if (!s_page_new(w_current, argv[i])) {
+        if (!quiet_mode) {
+          printf("Loading schematic [%s]\n", 
+                 argv[i]);
+        }
+        (void)f_open(w_current,
+                     w_current->page_current->page_filename);
+        i_set_filename(w_current,
+                       w_current->page_current->page_filename);
+        a_zoom_limits(w_current,
+                      w_current->page_current->object_head,
+                      A_PAN_DONT_REDRAW);
+        o_undo_savestate(w_current, UNDO_ALL);
+
+				/* now update the scrollbars */
+#if 0
+        x_hscrollbar_update(w_current);
+        x_vscrollbar_update(w_current);
+#endif
+      }
+    }
+    i++;
+  }
+
+  free(cwd);	
+
+  if (argv[argv_index] == NULL) {
+    if (w_current->page_current->page_filename) {
+      free(w_current->page_current->page_filename);
+    }
+
+    getcwd(w_current->cwd, 256);
+
+    w_current->page_current->page_filename =
+      malloc(sizeof(char) * (
+                             strlen(w_current->cwd) +
+                             strlen(w_current->untitled_name) +
+                             strlen("/_##########.sch") +
+                             1));
+
+    w_current->num_untitled++;
+    sprintf(w_current->page_current->page_filename,
+            "%s/%s_%d.sch",
+            w_current->cwd,
+            w_current->untitled_name,
+            w_current->num_untitled);
+
+    i_set_filename(w_current,
+                   w_current->page_current->page_filename);
+
+    /* update the scrollbars */
+#if 0
+    x_hscrollbar_update(w_current);
+    x_vscrollbar_update(w_current);
+#endif
+  }
+
+  o_redraw_all_fast(w_current);
+
+#if DEBUG
+  gh_eval_str ("(display \"hello guile\n\")");
+#endif
+
+  if (w_current->scheme_directory == NULL) {
+    fprintf(stderr, "Scheme directory NOT set!\n");
+    exit(-1);
+  }
+
+  sprintf(input_str, "%s/gschem.scm", w_current->scheme_directory);
+  if (g_read_file(input_str) != -1) {
+    s_log_message("Read init scm file [%s]\n", input_str);
+  } else {
+    /* TODO: These two messages are the same. Should be
+     * integrated. */
+    s_log_message("Failed to read init scm file [%s]\n",
+                  input_str);
+    fprintf(stderr,
+            "Failed to read init scm file [%s]\n", input_str);
+  }
+
+  /* Execute a script if it exists */
+  if (script_filename) {
+    s_log_message("Executing guile script [%s]\n",
+                  script_filename);
+    g_read_file(script_filename);
+  }
+
+  /* open up log window on startup */
+  if (w_current->log_window == MAP_ON_STARTUP) {
+    x_log_setup_win(w_current);
+  }
+
+  /* enter main loop */
+  gtk_main();
+}
+
+
+@ %def main_func
+
+
+@section Function @code{main()}
+
+@defun main argc argv
+@end defun
+
+<<gschem.c : main()>>=
+int
+main (int argc, char *argv[])
+{
+  gh_enter(argc, argv, main_prog);
+  return 0;
+}
+
+
+@ %def main
+
