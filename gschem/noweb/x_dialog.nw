@@ -3339,7 +3339,11 @@ color_set(GtkWidget *w, gpointer data)
 {
   int index;
 
-  index = (int) data;
+  /* 
+   * here we really are passing an int sized piece of data, the index rather
+   * than a pointer and we shouldn't have issues as long as sizeof(void *) >= sizeof(int)
+   */
+  index = GPOINTER_TO_INT( data );
 
   /* hate to use this here... but I have to... */
   global_window_current->edit_color = index;
@@ -3476,12 +3480,12 @@ create_color_menu (TOPLEVEL *w_current)
       gtk_signal_connect (GTK_OBJECT (menuitem), 
                           "activate", 
                           (GtkSignalFunc) color_set,
-                          (int *) index);
+                          GINT_TO_POINTER( index ));
 
       /* I have no idea if doing the above cast is valid, */
       /* since index isn't a pointer, it's just being */
       /* treated as one, it's then cast to an int in */
-      /* color_set */
+      /* color_set.  This should be ok as long as sizeof(void *) >= sizeof(int) */
 
       gtk_widget_show (menuitem);
     }
