@@ -3,7 +3,7 @@
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
 ;;; FutureNet2 backend
-;;; Copyright (C) 2003 Dan McMahill
+;;; Copyright (C) 2003, 2005 Dan McMahill
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -85,6 +85,26 @@
     )
   )
 
+;; This procedure takes a refdes as determined by gnetlist and
+;; modifies it to be a valid FutureNet2 refdes.
+;;
+(define futurenet2:map-refdes
+  (lambda (refdes)
+    (let ((refdes-alias refdes)
+          )
+
+      ;; XXX do we need to truncate to 8 characters
+      ;; like with net names?
+;;      (if (> (string-length refdes-alias) 8)
+;;	  (set! refdes-alias (substring refdes-alias 0 8))
+;;	  )
+
+      ;; Convert to all upper case
+      (string-upcase refdes-alias)
+      )
+    )
+  )
+
 ;; write out the pins for a particular component
 (define futurenet2:component_pins
   (lambda (port package pins)
@@ -130,7 +150,7 @@
 
 	      ;; write the reference designator
 	      (display "\nDATA,2," port)
-	      (display package port)
+	      (display (gnetlist:alias-refdes package) port)
 	      
 	      ;; If there is a "value" attribute, output that.
 	      ;; Otherwise output the "device" attribute (the symbol name).
@@ -205,6 +225,9 @@
 	
 	;; initialize the net-name aliasing
         (gnetlist:build-net-aliases futurenet2:map-net-names all-unique-nets)
+
+	;; initialize the refdes aliasing
+        (gnetlist:build-refdes-aliases futurenet2:map-refdes packages)
 
 	;; write the header
 	(display "PINLIST,2\n" port)

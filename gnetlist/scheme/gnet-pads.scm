@@ -35,6 +35,22 @@
     )
   )
 
+;; This procedure takes a refdes as determined by gnetlist and
+;; modifies it to be a valid pads refdes.
+;;
+(define pads:map-refdes
+  (lambda (refdes)
+    (let ((refdes-alias refdes)
+          )
+      ;; Convert to all upper case because Pads seems
+      ;; to do that internally anyway and we'd rather do
+      ;; it here to catch name clashes created by not preserving
+      ;; case.
+      (string-upcase refdes-alias)
+      )
+    )
+  )
+
 (define pads:components
    (lambda (port packages)
       (if (not (null? packages))
@@ -45,7 +61,10 @@
                   (package (car packages)))
                (if (not (string=? pattern "unknown"))
                   (display pattern port))
-               (display package port)
+
+	       ;; print out the refdes with aliasing
+               (display (gnetlist:alias-refdes package) port)
+
 	       (write-char #\tab port) 
                (display (gnetlist:get-package-attribute package "footprint") port)
                (newline port))
@@ -56,7 +75,7 @@
     (for-each (lambda (in-string)
                 (set! k (string-append k in-string)))
               (map (lambda (net)
-                     (string-append " " (car net) "." (car (cdr net))))
+                     (string-append " " (gnetlist:alias-refdes (car net)) "." (car (cdr net))))
                    nets))
     (string-append k "\n")))
 
@@ -93,6 +112,9 @@
 	;; initialize the net-name aliasing
 	(gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
 	
+	;; initialize the refdes aliasing
+	(gnetlist:build-refdes-aliases pads:map-refdes packages)
+
 	;; print out the header
 	(display "!PADS-POWERPCB-V3.0-MILS!\n" port)
 	(display "\n*PART*\n" port)

@@ -2,7 +2,7 @@
 ;;;
 ;;; gEDA - GNU Electronic Design Automation
 ;;;
-;;; Copyright (C) 2003 Dan McMahill
+;;; Copyright (C) 2003, 2005 Dan McMahill
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -59,6 +59,69 @@
     )
   )
 
+;; This procedure takes a refdes as determined by gnetlist and
+;; modifies it to be a valid SWITCAP refdes.  In particular,
+;; we need to make sure that
+;;
+;; - the first character is correct for the component type
+;;
+;; - we do not exceed 8 characters.  Note the 8 comes from
+;;   the first character which denotes component type plus
+;;   7 for the unique identifier part.
+;;
+;; - we are all caps (switcap is not case sensitive)
+;;
+(define switcap:map-refdes
+  (lambda (refdes)
+    (let ((refdes-alias refdes)
+          )
+
+      ;; Convert to all upper case
+      (string-upcase refdes-alias)
+
+      ;; Make sure the first character is correct for
+      ;; this component type
+      (cond   
+       ( (string=? (get-device refdes) "SWITCAP-switch")
+	 (if (not (string=? (substring refdes-alias 0 1) "S"))
+	     (set! refdes-alias (string-append "S" refdes-alias))))
+
+       ( (string=? (get-device refdes) "SWITCAP-capacitor") 
+	 (if (not (string=? (substring refdes-alias 0 1) "C"))
+	     (set! refdes-alias (string-append "C" refdes-alias))))
+
+       ( (string=? (get-device refdes) "SWITCAP-vcvs") 
+	 (if (not (string=? (substring refdes-alias 0 1) "E"))
+	     (set! refdes-alias (string-append "E" refdes-alias))))
+
+       ( (string=? (get-device refdes) "SWITCAP-vsrc") 
+	 (if (not (string=? (substring refdes-alias 0 1) "V"))
+	     (set! refdes-alias (string-append "V" refdes-alias))))
+
+       )
+      
+      ;; Truncate to 8 characters (1 for the first character and 
+      ;; 7 for the identifier)
+      (if (> (string-length refdes-alias) 8)
+	  (set! refdes-alias (substring refdes-alias 0 8))
+	  )
+
+      ;; set to #t for debugging
+      (if #f
+	  (let ()
+	    (display "(switcap:map-refdes ")
+	    (display refdes)
+	    (display ") ===> " )
+	    (display refdes-alias )
+	    (display "\n")
+	    )
+	  )
+
+      refdes-alias
+      )
+    )
+  )
+
 ;; 
 ;; Given a reference designator, pin number, and output port
 ;; write out the net name
@@ -107,7 +170,7 @@
     ( begin
       ;; Write out the refdes
       (display "     " port)
-      (display package port)
+      (display (gnetlist:alias-refdes package) port)
       (display " " port)
 
       ;; Write out the nodes
@@ -138,7 +201,7 @@
     ( begin
       ;; Write out the refdes
       (display "     " port)
-      (display package port)
+      (display (gnetlist:alias-refdes package) port)
       (display " " port)
 
       ;; Write out the nodes
@@ -168,7 +231,7 @@
     ( begin
       ;; Write out the refdes
       (display "     " port)
-      (display package port)
+      (display (gnetlist:alias-refdes package) port)
       (display " " port)
 
       ;; Write out the nodes
@@ -202,7 +265,7 @@
     ( begin
       ;; Write out the refdes
       (display "     " port)
-      (display package port)
+      (display (gnetlist:alias-refdes package) port)
       (display " " port)
 
       ;; Write out the nodes
@@ -409,8 +472,13 @@
 (define switcap
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
+
       ;; initialize the net-name aliasing
       (gnetlist:build-net-aliases switcap:map-net-names all-unique-nets)
+
+      ;; initialize the refdes aliasing
+      (gnetlist:build-refdes-aliases switcap:map-refdes packages)
+
       (switcap:write-top-header port)
       (switcap:write-title-block port packages)
       (display "TIMING;\n" port)
