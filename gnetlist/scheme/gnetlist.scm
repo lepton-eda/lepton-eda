@@ -241,3 +241,70 @@
 ; (run-test "one two three four five six seven eight nine ten" 20)
 
 
+;;
+;; Functions for dealing with naming requirements for different
+;; output netlist formats which may be more restrictive than
+;; gEDA's internals.
+;;
+
+;; These will become hash tables which provide the mapping
+;; from gEDA net name to netlist net name and from netlist
+;; net name to gEDA net name.
+(define gnetlist:net-hash-forward (make-hash-table  (length all-nets)))
+(define gnetlist:net-hash-reverse (make-hash-table  (length all-nets)))
+
+;; build the hash tables with the net name mappings and 
+;; while doing so, check for any shorts which are created
+;; by modifying the netnames.  If a short occurs, error out
+;; with a descriptive message.
+;;
+;; This function should be called as one of the first steps
+;; in a netlister which needs to alias nets.
+(define gnetlist:build-net-aliases
+  (lambda (mapfn nets)
+    (if (not (null? nets))
+	(begin
+	  (let ( (net (car nets))
+		 (alias (mapfn (car nets)))
+		 )
+	    
+            (if (hash-ref gnetlist:net-hash-reverse alias)
+                (begin
+                  (display "***** ERROR *****\n")
+                  (display "There is a net name collision!\n")
+                  (display "The net called \"")
+                  (display net)
+                  (display "\" will be remapped\nto \"")
+                  (display alias)
+                  (display "\" which is already used\n")
+                  (display "by the net called \"")
+                  (display (hash-ref gnetlist:net-hash-reverse alias))
+                  (display "\".\n")
+                  (display "This may be caused by netname attributes colliding with other netnames\n")
+                  (display "due to truncation of the name, case insensitivity, or\n")
+                  (display "other limitations imposed by this netlist format.\n")
+                  (error)
+                  )
+                )
+            (hash-create-handle! gnetlist:net-hash-forward net   alias)
+            (hash-create-handle! gnetlist:net-hash-reverse alias net  )
+            (gnetlist:build-net-aliases mapfn (cdr nets))
+	    )
+          )
+        )
+    )
+  )
+
+;; convert a gEDA netname into an output netlist net name
+(define gnetlist:alias-net
+  (lambda (net)
+    (hash-ref gnetlist:net-hash-forward net)
+    )
+  )
+
+;; convert an output netlist net name into a gEDA netname
+(define gnetlist:unalias-net
+  (lambda (net)
+    (hash-ref gnetlist:net-hash-reverse net)
+    )
+  )

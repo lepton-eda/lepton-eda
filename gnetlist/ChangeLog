@@ -3,6 +3,19 @@
         * scheme/gnet-gsch2pcb.scm: Upgraded to Bill Wilson's latest
         version (1.2)
 
+	* scheme/gnet-PCBboard.scm: Applied patch by Dan McMahill to fix
+	some m4 quoting issues. Thanks.
+
+	* scheme/gnetlist.scm: Applied patch (20031216) by Dan McMahill to
+	add various scheme functions to handle net name modification
+	for various netlist targets. Thanks.
+
+	* scheme/futurenet2.scm: Added new backend for futernet2 by Dan
+	McMahill.  Thanks.  (20031216)
+
+	* scheme/gnet-pads.scm: Applied patch (20031216) by Dan McMahill to 
+	use the new net name modification scheme functions.
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added --with-docdir command line flag as well all	

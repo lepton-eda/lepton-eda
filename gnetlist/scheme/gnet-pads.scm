@@ -18,6 +18,23 @@
 
 ;; PADS netlist format
 
+;; This procedure takes a net name as determined by gnetlist and
+;; modifies it to be a valid pads net name.
+;;
+(define pads:map-net-names
+  (lambda (net-name)
+    (let ((net-alias net-name)
+          )
+      ;; Convert to all upper case because Pads seems
+      ;; to do that internally anyway and we'd rather do
+      ;; it here to catch shorts created by not preserving
+      ;; case.  Plus we can eliminate lots of ECO changes
+      ;; that will show up during backannotation.
+      (string-upcase net-alias)
+      )
+    )
+  )
+
 (define pads:components
    (lambda (port packages)
       (if (not (null? packages))
@@ -60,7 +77,7 @@
       (if (not (null? netnames))
          (let ((netname (car netnames)))
 	    (display "*SIGNAL* " port)
-	    (display netname port)
+	    (display (gnetlist:alias-net netname) port)
 	    (newline port)
             (display (gnetlist:wrap 
 		      (pads:display-connections 
@@ -73,11 +90,21 @@
 (define pads 
    (lambda (filename)
       (let ((port (open-output-file filename)))
-         (display "!PADS-POWERPCB-V3.0-MILS!\n" port)
-         (display "\n*PART*\n" port)
-         (pads:components port packages)
-         (display "\n*NET*\n" port)
-         (pads:write-net port (gnetlist:get-all-unique-nets "dummy"))
-         (display "\n*END*\n" port)
-         (close-output-port port))))
+	;; initialize the net-name aliasing
+	(gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
+	
+	;; print out the header
+	(display "!PADS-POWERPCB-V3.0-MILS!\n" port)
+	(display "\n*PART*\n" port)
+	
+	;; print out the parts
+	(pads:components port packages)
+	
+	;; print out the net information
+	(display "\n*NET*\n" port)
+	(pads:write-net port (gnetlist:get-all-unique-nets "dummy"))
+	
+	;; print out the footer
+	(display "\n*END*\n" port)
+	(close-output-port port))))
 
