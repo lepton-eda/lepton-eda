@@ -28,11 +28,13 @@
 #  include <config.h>
 #endif
 #include <gtk/gtk.h>
+#include <libintl.h>
 #include "global.h"
 #include "interface.h"
 #include "msgbox.h"
 #include "project.h"
 #include "tool.h"
+#include "window.h"
 
 
 
@@ -78,6 +80,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	ProjectInitialize();
+	DocViewInitialize();
 	TaskInitialize();
    
 	/* main loop */
