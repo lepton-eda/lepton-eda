@@ -25,7 +25,7 @@ SCM g_key_file_save(void);
 SCM g_key_file_save_as(void);
 SCM g_key_file_save_all(void);
 SCM g_key_file_print(void);
-SCM g_key_file_image_write(void);
+SCM g_key_file_write_png(void);
 SCM g_key_file_close_window(void);
 SCM g_key_file_quit(void);
 SCM g_key_edit_select(void);
@@ -175,7 +175,7 @@ void i_callback_file_save(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_file_save_all(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_save_as(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_print(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_file_image_write(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_file_write_png(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_close(gpointer data, guint callback_action, GtkWidget *widget);
 int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_quit(gpointer data, guint callback_action, GtkWidget *widget);

@@ -116,7 +116,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("file-save-as", g_key_file_save_as);
 	gh_new_procedure0_0 ("file-save-all", g_key_file_save_all);
 	gh_new_procedure0_0 ("file-print", g_key_file_print);
-	gh_new_procedure0_0 ("file-image", g_key_file_image_write);
+	gh_new_procedure0_0 ("file-image", g_key_file_write_png);
 	gh_new_procedure0_0 ("file-close-window", g_key_file_close_window);
 	gh_new_procedure0_0 ("file-quit", g_key_file_quit);
 	gh_new_procedure0_0 ("edit-select", g_key_edit_select);

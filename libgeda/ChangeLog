@@ -8,6 +8,13 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/15/99 Added support for libgdgeda 1.6 (mainly means searching for libpng)
+
+	Removed all traces of old libgdgeda 1.5 gif support
+
+	Changed the check for zlib (uncompress is the function it searches
+	for)
+
 7/10/99 Started to improve the performance of the math functions
 	(was doing to much math everytime I was calling pix_x/pix_y)
 

@@ -353,7 +353,7 @@ DEFINE_I_CALLBACK(file_print)
 	}
 }
 
-DEFINE_I_CALLBACK(file_image_write)
+DEFINE_I_CALLBACK(file_write_png)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	/* don't fix the size hack */
@@ -376,10 +376,11 @@ DEFINE_I_CALLBACK(file_image_write)
 	/* TODO: use strdupts */
 	/* TODO: perform a NULL check */
 	/* + 1 is for null character */
-	/* this will be plenty of space since .sch is being replaced by .ps */
-	len = strlen(w_current->page_current->page_filename) +
-		strlen(".gif") +
-		1;
+	/* this will be plenty of space since .sch is being replaced by .png */ 
+	len = strlen(w_current->page_current->page_filename) + 
+              strlen(".png") + 
+	      1;
+
 	img_filename = (char *) malloc(sizeof(char) * len);
 
 	strcpy(img_filename, w_current->page_current->page_filename);
@@ -390,10 +391,10 @@ DEFINE_I_CALLBACK(file_image_write)
 		/* filename didn't have .sch extension, so append a
 		 * .ps, string should be big enough */
 		len = strlen(w_current->page_current->page_filename);
-		strcpy(&img_filename[len], ".gif");
+		strcpy(&img_filename[len], ".png");
 	} else {
 		/* found .sch extension, replace it with .ps */
-		strcpy(c_ptr, ".gif");
+		strcpy(c_ptr, ".png");
 	}
 
 	if (output_filename) {

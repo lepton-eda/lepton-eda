@@ -33,6 +33,9 @@
 /* Define if you have the zlib (libz) library   */
 #undef HAS_LIBZ
 
+/* Define if you have the png library   */
+#undef HAS_LIBPNG
+
 /* Define if you have rint in the math library   */
 #undef HAS_RINT  
 

@@ -200,13 +200,19 @@ else
          	libgdgeda_ldflags=""
          	libgdgeda_cflags=""
         else
-                AC_CHECK_LIB(z, zlibVersion, Z_LIB="-lz", Z_LIB=no)
+                AC_CHECK_LIB(z, uncompress, Z_LIB="-lz", Z_LIB=no)
                 if test $Z_LIB = no; then
                         AC_MSG_ERROR(Cannot find libz (zlib), be sure to install zlib; it is required for libgdgeda)
-                else
-                        AC_DEFINE(HAS_LIBZ)
-                        AC_DEFINE(HAS_LIBGDGEDA)
+		fi
+		
+                AC_CHECK_LIB(png, png_read_init, PNG_LIB="-lpng", PNG_LIB=no)
+                if test $PNG_LIB = no; then
+                        AC_MSG_ERROR(Cannot find libpng, be sure to install png; it is required for libgdgeda)
                 fi
+
+                AC_DEFINE(HAS_LIBZ)
+                AC_DEFINE(HAS_LIBPNG)
+                AC_DEFINE(HAS_LIBGDGEDA)
         fi
 fi
 

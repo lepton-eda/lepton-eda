@@ -205,16 +205,15 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 		w_current->width = save_width;
 		w_current->height = save_height;
 
-        
-		/* try to use recalc here... */
-		o_redraw_all(w_current);
-
 		/* need to do this every time you change width / height */
 		set_window(w_current, 
 			w_current->page_current->left, 
 			w_current->page_current->right,
                    	w_current->page_current->top, 
 			w_current->page_current->bottom);
+
+		/* try to use recalc here... */
+		o_redraw_all(w_current);
 
 		if (w_current->image_color == TRUE) {
 	        	s_log_message("Wrote color image to [%s] [%d x %d]\n", filename, width, height);

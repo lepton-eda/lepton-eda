@@ -125,7 +125,7 @@ DEFINE_G_KEY(file_save)
 DEFINE_G_KEY(file_save_as)
 DEFINE_G_KEY(file_save_all)
 DEFINE_G_KEY(file_print)
-DEFINE_G_KEY(file_image_write)
+DEFINE_G_KEY(file_write_png)
 
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */

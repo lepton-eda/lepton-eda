@@ -116,7 +116,7 @@ o_image_write(char *filename)
 		return(-1);
 	}
 
-	gdImageGif(current_im_ptr, out);
+	gdImagePng(current_im_ptr, out);
 
 	fclose(out);
 	return(0);

@@ -60,7 +60,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/File/Save Page as....", NULL, i_callback_file_save_as, 0, NULL},
 	{"/File/Save All", NULL, i_callback_file_save_all, 0, NULL},
 	{"/File/Print...", NULL, i_callback_file_print, 0, NULL},
-	{"/File/Write Image...", NULL, i_callback_file_image_write, 0, NULL},
+	{"/File/Write PNG...", NULL, i_callback_file_write_png, 0, NULL},
 	{"/File/sep1",     NULL,         NULL, 0, "<Separator>"},
 	{"/File/Script Execute...", NULL, i_callback_file_script, 0, NULL},
 	{"/File/sep2",     NULL,         NULL, 0, "<Separator>"},

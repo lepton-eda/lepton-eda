@@ -14,6 +14,9 @@
 /* Define if you have the zlib library   */
 #undef HAS_LIBZ
 
+/* Define if you have the png library   */
+#undef HAS_LIBPNG
+
 /* Define if you have optarg in unistd */
 #undef OPTARG_IN_UNISTD
 
