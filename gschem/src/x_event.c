@@ -389,7 +389,8 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 		/* try this out and see how it behaves */
 		if (w_current->inside_action) {
-			if (w_current->event_state == ENDCOMP) {
+			if (w_current->event_state == ENDCOMP ||
+			    w_current->event_state == ENDTEXT ) {
 				return;
 			} else {
 				i_callback_cancel(w_current, 0, NULL);
@@ -621,7 +622,24 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 					complex_place_head->next, 
 					NULL, x_get_color(w_current->bb_color));
 				return;
-			} 
+			} else if (w_current->event_state == ENDTEXT) {
+				o_drawbounding(w_current,
+					w_current->page_current->
+					attrib_place_head->next, 
+					NULL, x_get_color(w_current->bb_color));
+
+				w_current->complex_rotate = 
+				 	(w_current->complex_rotate + 90) % 360;
+
+				o_text_place_rotate(w_current);
+
+				o_drawbounding(w_current,
+					w_current->page_current->
+					attrib_place_head->next, 
+					NULL, x_get_color(w_current->bb_color));
+				return;
+
+			}
 		}
 
 		switch(w_current->middle_button) { 
@@ -849,7 +867,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		break;
 
 	case(DRAWCOMP):
-		w_current->complex_rotate = 0; /* rest to known state */
+		w_current->complex_rotate = 0; /* reset to known state */
 		o_complex_start(w_current,
 				(int) event->x,
 				(int) event->y);
@@ -878,6 +896,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		break;
 
 	case(DRAWTEXT):
+		w_current->complex_rotate = 0; /* reset to known state */
 		o_text_start(w_current, (int) event->x, (int) event->y);
 		w_current->event_state = ENDTEXT;
 		w_current->inside_action = 1;

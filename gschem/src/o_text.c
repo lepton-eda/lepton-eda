@@ -300,6 +300,7 @@ void
 o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 {
 	int x, y;
+	int temp, i;
 	char *value;
 
 	w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
@@ -350,6 +351,13 @@ o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 			/* visibility is set when you create the object */
 			VISIBLE, SHOW_NAME_VALUE);
 
+	if (w_current->complex_rotate) {
+		temp = w_current->complex_rotate / 90;
+		for (i = 0; i < temp; i++) {
+			o_text_place_rotate(w_current);
+		}
+	}
+
 	o_drawbounding(w_current,
 		       w_current->page_current->attrib_place_head->next,
 		       NULL,
@@ -378,7 +386,8 @@ o_text_end(TOPLEVEL *w_current)
 				/* type changed from TEXT to TEXT */
 			    OBJ_TEXT,
 			    w_current->text_color,
-			    world_x, world_y, LOWER_LEFT, 0, /* zero is angle */
+			    world_x, world_y, LOWER_LEFT, 
+			    w_current->complex_rotate,
 			    w_current->current_attribute,
 			    w_current->text_size,
 			    VISIBLE, SHOW_NAME_VALUE);
@@ -521,3 +530,40 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 	w_current->page_current->CHANGED = 1;
 }
 
+void
+o_text_place_rotate(TOPLEVEL *w_current)
+{
+	OBJECT *o_current;
+	int screen_x_local=-1;
+	int screen_y_local=-1;
+	int new_angle;
+
+	o_current = w_current->page_current->attrib_place_head->next;
+	while(o_current) {
+		switch(o_current->type) {	
+			case(OBJ_TEXT):
+				screen_x_local = o_current->text->screen_x; 
+				screen_y_local = o_current->text->screen_y;
+			break;
+		}
+		o_current = o_current->next;
+	}
+
+	if (screen_x_local == -1) {
+		printf("Could not find text obj in new text placement!\n");
+		return;
+	}
+
+	o_current = w_current->page_current->attrib_place_head->next;
+	while(o_current) {
+		switch(o_current->type) {	
+
+			case(OBJ_TEXT):
+				new_angle = (o_current->text->angle + 90) % 360;
+			        o_text_rotate(w_current, screen_x_local, screen_y_local,
+					new_angle, 90, o_current);
+			break;
+		}
+		o_current = o_current->next;
+	}
+}
