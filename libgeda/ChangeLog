@@ -1,3 +1,29 @@
+2002-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added bus_ripper_direction variable to objects.
+	Only valid for buses. 
+
+	* include/struct.h: Added st_bus_ripper structure.  Used in the
+	auto creation of bus rippers when connecting a net to a bus.
+
+	* noweb/s_cue.nw: Changed code to draw the new smaller circles
+	when connecting a net to a bus.
+
+	* noweb/s_conn.nw: Added some restrictions on connections between
+	nets / pins and buses.  You cannot connect a pin to a bus period.
+	You cannot connect a net to the end of a bus (only to the middle).
+
+	* noweb/s_basic.nw: Init of the bus_ripper_direction variable,
+	which holds a value (0 = no connection, -1, or 1) to decide which
+	direction the rippers are drawn.
+
+	* noweb/o_line_basic.nw: Added o_line_length (returns the length
+	of a line).
+
+	* noweb/o_bus_basic.nw: Added code to the read/save functions to
+	read/save the bus_ripper_direction flag to disk.  Also handled old
+	versioned files (variable defaults to zero).
+
 2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_pin_basic.nw: Oops, broke the single pin case.  Added

@@ -160,7 +160,7 @@ void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int
 /* o_bus_basic.c */
 void get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 void world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
-OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
+OBJECT *o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2, int bus_ripper_direction);
 void o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_bus_save(char *buf, OBJECT *object);
@@ -264,6 +264,7 @@ void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2,
 void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale, OBJECT *object);
 int o_line_visible(TOPLEVEL *w_current, LINE *line, int *x1, int *y1, int *x2, int *y2);
+double o_line_length(OBJECT *object);
 /* o_list.c */
 OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag, OBJECT **return_end);
 OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);
@@ -417,9 +418,9 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object);
 GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *w_current, FILE *fp, int x, int y);
-void s_cue_postscript_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y);
+void s_cue_postscript_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y, int size_flag);
 void s_cue_image_fillbox(TOPLEVEL *w_current, OBJECT *object, int world_x, int world_y);
-void s_cue_image_fillcircle(TOPLEVEL *w_current, int world_x, int world_y);
+void s_cue_image_fillcircle(TOPLEVEL *w_current, int world_x, int world_y, int size_flag);
 void s_cue_output_all(TOPLEVEL *w_current, OBJECT *head, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int output_type);
