@@ -52,13 +52,45 @@
             (newline p)
             (gossip:get-libraries p (cdr components) (cons lib done))))))))
 
-(define gossip:blocks
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-            (display "   (" port)
-            (display package port)
-            (gossip:blocks port (cdr ls))))))
+(define gossip:list-pins
+   (lambda (allnets uref pin port)
+      (let ((pinname (gnetlist:get-pin-attribute uref pin "label")))
+         (if (string=? "unknown" pinname)
+            (display ")\n" port)
+            (begin
+               (display " :" port)
+               (display pinname port)
+               (write-char #\space port)
+               (display (find-net uref pin allnets) port)
+               (gossip:list-pins allnets uref (+ 1 pin) port))))))
+      
+
+;(define gossip:reverse-netlist
+   ;(lambda (allnets)
+      ;(if (null? allnets)
+         ;'()
+         ;(let ((connections (gnetlist:get-all-connections (car allnets))))
+            ;(cons (gossip:connectionlist connections)
+                  ;(gossip:reverse-netlist (cdr allnets))))))
+;
+;(define gossip:connectionlist
+   ;(lambda (connections)
+      
+(define gossip:find-net
+   (lambda (uref pin allnets)
+      (cond
+         ((null? allnets) '() )
+         ((gossip:finder uref pin (gnetlist:get-all-connections (car allnets)))(car allnets))
+         (#t (gossip:find-net uref pin (cdr allnets))))))
+
+(define gossip:finder
+   (lambda (uref pin list)
+      (cond
+         ((null? list)'())
+         ((and (string=? uref (caar list)) (string=? pin (cadar list))) #t)
+         (#t (gossip:finder uref pin (cdr list))))))
+         ;;((match? uref pin (car list)) #t)
+
 
 (define gossip:display-connections
    (lambda (nets port)
@@ -90,25 +122,30 @@
                (gossip:display-name-nets port (gnetlist:get-all-connections netname))
 	       (gossip:write-net port (cdr netnames))))))) 
 
-(define gossip:nets
-   (lambda (port)
-      (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-         (gossip:write-net port all-uniq-nets))))
-
-(define gossip:write-block-header
-   (lambda (port)
-      (let ((blockname (gnetlist:get-toplevel-attribute "blockname")))
-         (display "(define-block (" port)
-         (display blockname port)
-         (display " (" port))
-         (newline port)))
 ;;  Need to add code to find all input and output ports
+
+(define gossip:blocks
+   (lambda (port ls allnets)
+      (if (not (null? ls))
+         (let ((package (car ls)))
+            (display "   (" port)
+            (display package port)
+            (gossip:list-pins allnets package 1 port)
+            (gossip:blocks port (cdr ls) allnets)))))
 
 (define gossip:signals
    (lambda (port)
       (display "(signals " port)
       (display (gnetlist:get-all-unique-nets "dummy") port)
       (display ")\n" port)))
+
+(define gossip:write-block-header
+   (lambda (port)
+      (let ((blockname (gnetlist:get-toplevel-attribute "blockname")))
+         (display "(define-block (" port)
+         (display blockname port)
+         (display " (" port)
+         (newline port))))
 
 (define gossip 
    (lambda (output-filename)
@@ -118,6 +155,7 @@
             (gossip:get-libraries port packages '())
             (gossip:write-block-header port)
             (gossip:signals port)
-            (gossip:blocks port packages))
+            (gossip:blocks port packages (gnetlist:get-all-unique-nets "dummy")))
          (close-output-port port))))
+
 
