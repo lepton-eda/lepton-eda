@@ -11,6 +11,9 @@ into the cvs repository.
 
 9/19/99 Make sure gschem runs with guile-1.3.2a
 
+	Misplaced a bracket in x_event.c (gschem would not build if you
+	did not have libstroke installed)
+
 9/18/99	Increased world size to be much much larger.  Hopefully this won't
 	break anything.
 
