@@ -1,0 +1,4 @@
+(define current-working-directory (getenv 'PWD))
+
+(component-library current-working-directory)
+(source-library  current-working-directory)

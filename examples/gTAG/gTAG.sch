@@ -1,0 +1,101 @@
+v 20021103
+C 44300 51500 0 0 0 title-A2.sym
+N 52800 59800 54100 59800 4
+{
+T 53300 59900 5 10 1 1 0 0
+netname=tdi_ttl
+}
+N 52800 59400 54100 59400 4
+{
+T 53300 59500 5 10 1 1 0 0
+netname=tdo_ttl
+}
+N 52800 59000 54100 59000 4
+{
+T 53300 59100 5 10 1 1 0 0
+netname=tms_ttl
+}
+N 52800 58600 54100 58600 4
+{
+T 53300 58700 5 10 1 1 0 0
+netname=tck_ttl
+}
+N 52800 58200 54100 58200 4
+{
+T 53300 58300 5 10 1 1 0 0
+netname=trst_ttl
+}
+N 53900 62300 51200 62300 4
+N 51200 62300 51200 60300 4
+{
+T 50200 61200 5 10 1 1 0 0
+netname=jtag_power
+}
+N 57100 62300 60100 62300 4
+N 60100 62300 60100 60300 4
+{
+T 60200 61200 5 10 1 1 0 0
+netname=usb_power
+}
+T 51100 57400 9 10 1 0 0 0
+JTAG (IEEE1149.1) consist of tdi, tdo, tck, tms, (trst)
+N 57300 59100 58600 59100 4
+{
+T 57500 59200 5 10 1 1 0 0
+netname=usb_io+
+}
+N 57300 58800 58600 58800 4
+{
+T 57500 58900 5 10 1 1 0 0
+netname=usb_io-
+}
+C 54100 58000 1 0 0 gTAG-ucont.sym
+{
+T 54400 60100 5 10 1 1 0 0
+refdes=S1
+T 54900 57800 5 10 1 1 0 0
+source=gTAG-ucont.sch
+}
+C 49900 58000 1 0 0 gTAG-jtagio.sym
+{
+T 49900 60100 5 10 1 1 0 0
+refdes=S2
+T 50500 57800 5 10 1 1 0 0
+source=gTAG-jtagio.sch
+}
+C 58600 58000 1 0 0 gTAG-consio.sym
+{
+T 58900 60100 5 10 1 1 0 0
+refdes=S3
+T 59600 57800 5 10 1 1 0 0
+source=gTAG-consio.sch
+}
+C 53900 61700 1 0 0 gTAG-psu.sym
+{
+T 54200 63600 5 10 1 1 0 0
+refdes=S4
+T 54800 61500 5 10 1 1 0 0
+source=gTAG-psu.sch
+}
+T 62200 51600 9 10 1 0 0 0
+5
+T 60700 51600 9 10 1 0 0 0
+1
+T 48500 65200 9 50 1 0 0 0
+gTAG - usb to jtag interface
+T 61500 52400 9 20 1 0 0 0
+gTAG - top level
+T 60700 51900 9 10 1 0 0 0
+gTAG.sch
+T 64500 51600 9 10 1 0 0 0
+Stefan Petersen (spe@stacken.kth.se)
+T 64500 51900 9 10 1 0 0 0
+$Revision$
+C 44600 51700 1 0 0 copyleft.sym
+N 57300 59800 57400 59800 4
+N 57400 59800 57400 61900 4
+{
+T 57500 60900 5 10 1 1 0 0
+netname=pon_reset#
+}
+N 57400 61900 57100 61900 4
