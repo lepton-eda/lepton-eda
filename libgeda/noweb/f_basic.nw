@@ -79,7 +79,8 @@ f_open(TOPLEVEL *w_current, char *filename)
   char *full_rcfilename;
   char *file_directory;
   char *saved_cwd;
-  int current_clib_index, new_clib_index;
+  int current_clib_index;
+  int new_clib_index;
   int i;
 
   /* has the head been freed yet? */
@@ -97,7 +98,7 @@ f_open(TOPLEVEL *w_current, char *filename)
    */
   if (w_current->wid == -1) {
     saved_cwd = getcwd(NULL, 1024);
-    current_clib_index = s_clib_get_index();
+    current_clib_index = s_clib_get_index(); /* This points to next empty slot in clib */
   }
 
   /* get full, absolute path to file */
@@ -163,11 +164,11 @@ f_open(TOPLEVEL *w_current, char *filename)
    * is actually selected, they will be re-read later. */
   if (w_current->wid == -1) {
     chdir(saved_cwd);
-    free(saved_cwd);
     new_clib_index = s_clib_get_index();
     for (i = new_clib_index; i > current_clib_index ; i--) {
       s_clib_pop();
     }
+    free(saved_cwd);
   }
 
   if (!opened) {

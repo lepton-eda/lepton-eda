@@ -586,9 +586,8 @@ s_clib_uniq(char *path)
 int
 s_clib_get_index() 
 {
-  int local_clib_index;
-  local_clib_index = clib_index;
-  return local_clib_index;
+  /* This hack fcn returns the current clib index */
+  return(clib_index);
 }
 @ %def s_clib_get_index
 
@@ -603,12 +602,11 @@ s_clib_get_index()
 void
 s_clib_pop() 
 {
-  int i = clib_index;
-    
-  if (clib[i].dir_name) {
-    free(clib[i].dir_name);
-    clib[i].dir_name = NULL;
-    clib_index--;
+
+  clib_index--;
+  if (clib[clib_index].dir_name) {
+    free(clib[clib_index].dir_name);
+    clib[clib_index].dir_name = NULL;
   }		
 
   return;
