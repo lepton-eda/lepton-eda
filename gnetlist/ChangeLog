@@ -1,3 +1,9 @@
+2002-01-08 Stefan Petersen   <spe@geda.seul.org>
+
+	* scheme/gnet-pads.scm, scheme/gnet-PCB.scm : 
+	  display-connections functions rewritten to non-recursive since
+	  it caused guile stack overflow when the schematics grew very big.
+
 2002-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-maxascii.scm:  Checked in new backed by Dave Lawrence

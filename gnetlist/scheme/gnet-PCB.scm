@@ -19,11 +19,24 @@
 ;;  PCB format
 
 (define (PCB:display-connections nets)
-  (if (not (null? nets))
-      (string-append
-       (car (car nets)) "-" (car (cdr (car nets))) " " 
-       (PCB:display-connections (cdr nets)))
-      "\n"))
+  (let ((k ""))
+    (for-each (lambda (in-string)
+                (set! k (string-append k in-string)))
+              (map (lambda (net)
+                     (string-append (car net) "-" (car (cdr net)) " "))
+                   nets))
+    (string-append k "\n")))
+
+
+; This function is replaced with the above one. Due to non existent
+; verification, this function is left commented out.
+; /spe, 2002-01-08
+;(define (PCB:display-connections nets)
+;  (if (not (null? nets))
+;      (string-append
+;       (car (car nets)) "-" (car (cdr (car nets))) " " 
+;       (PCB:display-connections (cdr nets)))
+;      "\n"))
 
 
 (define (PCB:write-net netnames port)
