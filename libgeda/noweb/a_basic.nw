@@ -329,16 +329,18 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   char buf[1024];
   char string[1024];
   char objtype;
-  char version[20]; /* 20 should be big enough hack */
+  char version[20];         /* 20 should be big enough hack */
   OBJECT *object_list_save=NULL;
   OBJECT *temp_tail=NULL;
   OBJECT *temp_parent=NULL;
   OBJECT *object_before_attr=NULL;
   long int ver;
+  long int current_ver;
   int found_pin = 0;
 
   /* fill version with default string, the current version */
   strcpy(version, VERSION); 
+  current_ver = strtol(version, NULL, 10);	
 
   fp = fopen(filename, "r");
 
@@ -452,10 +454,13 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
       case(VERSION_CHAR):
         sscanf(buf, "v %s\n", version);
 
+	ver = strtol(version, NULL, 10);	
+	if (ver < current_ver) {
+	   s_log_message("The file %s has a version of %s.\nPlease run g[sym|sch]update on %s to update.\n", filename, version, filename);
+	}
 #if DEBUG 
         printf("Found version: %s\n", version);
 #endif
-				/* do nothing for now */
         break;
 
       default:

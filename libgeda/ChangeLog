@@ -1,3 +1,8 @@
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/a_basic.nw: Added code to print out a message when an old
+	file is read in.
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Added libgeda-config-install target
