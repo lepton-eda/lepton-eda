@@ -1,9 +1,18 @@
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
+	* examples/*.sch: Updated all schematics to use netname instead of
+	label
+
+	* noweb/x_attribedit.nw: Changed all occurrances of label to netname
+
+        * lib/system-gschemrc.in Changed all occurrances of label to netname
+
+2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
 	* noweb/o_basic.c: Added code for o_erase_selected (not used
 	currently)
 
-        * configure.in/Makefile.am: Upgraded to automake 1.6.2
+        * configure.in and Makefile.am: Upgraded to automake 1.6.2
 
 	* noweb/x_dialog.nw: Removed attrib edit dialog box from this file
 

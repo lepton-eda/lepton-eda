@@ -630,7 +630,7 @@
 ; The order of the attribute-name keywords determines the order they
 ; are displayed.
 ;
-(attribute-name "label")
+(attribute-name "netname")
 (attribute-name "uref")
 (attribute-name "slot")
 (attribute-name "value")

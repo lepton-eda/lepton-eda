@@ -552,7 +552,7 @@ attrib_edit_dialog_orig(TOPLEVEL * w_current, OBJECT * list, int flag)
 
     if ((object = o_select_return_first_object(w_current))) {
       if (object->type == OBJ_NET)
-	strcpy(name, "label");
+	strcpy(name, "netname");
     }
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
@@ -895,7 +895,7 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 
     if ((object = o_select_return_first_object(w_current))) {
       if (object->type == OBJ_NET)
-	strcpy(name, "label");
+	strcpy(name, "netname");
     }
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
@@ -940,8 +940,8 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
 		       w_current);
   }
 
-  //gtk_grab_add(w_current->aewindow);
-  //gtk_widget_grab_focus(val_entry);
+  gtk_grab_add(w_current->aewindow);
+  gtk_widget_grab_focus(value_entry);
 }
 
 
