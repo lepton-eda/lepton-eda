@@ -104,5 +104,7 @@ net=GND:9
 T 300 2140 9 10 1 0 0 0
 74124
 L 350 1925 500 1925 3 0 0 0 -1 -1
-T 900 1250 8 10 1 1 0 0
+T 900 1250 5 10 1 1 0 0
 comment=DONT_USE this symbol, impossible to repair
+T 300 3350 5 10 0 0 0 0
+numslots=0
