@@ -1,3 +1,11 @@
+2004-05-31 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Removed a false comment from the comment 
+	block around sort-components-library.  Pointed out by Andreas Fester.
+
+	* noweb/gschem.nw: Added an #ifdef HAS_GTK22 around the call to
+	gtk_disable_locale call, since it is gtk+ 2.2.x specific.
+
 2004-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/gschem.nw: Applied patch (with additional comments) to 

@@ -134,7 +134,7 @@ main_prog(int argc, char *argv[])
   char *geda_data;
 
 #if ENABLE_NLS
-  gtk_set_locale();
+  gtk_set_locale();  /* this should be equivalent to setlocale (LC_ALL, "") */
 
   /* This must be the same for all locales */
   setlocale(LC_NUMERIC, "POSIX");
@@ -142,7 +142,11 @@ main_prog(int argc, char *argv[])
   /* Disable gtk's ability to set the locale. */ 
   /* If gtk is allowed to set the locale, then it will override the above */
   /* setlocale for LC_NUMERIC (which is important for proper PS output. */
+  /* This may look funny here, given we make a call to gtk_set_locale() */
+  /* above.  I don't know yet, if this is really the right thing to do. */
+#ifdef HAS_GTK22
   gtk_disable_setlocale();
+#endif
 #endif
 
   gtk_init(&argc, &argv);
