@@ -21,6 +21,7 @@ SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
+SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_net_naming_priority(SCM mode);
 SCM g_rc_hierarchy_traversal(SCM mode);
@@ -33,7 +34,6 @@ SCM g_rc_hierarchy_uref_separator(SCM name);
 SCM g_rc_hierarchy_netattrib_order(SCM mode);
 SCM g_rc_hierarchy_netname_order(SCM mode);
 SCM g_rc_hierarchy_uref_order(SCM mode);
-SCM g_rc_bitmap_directory(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);

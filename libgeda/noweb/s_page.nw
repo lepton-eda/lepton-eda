@@ -251,7 +251,8 @@ s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
 
   /* big assumption here that page_filename isn't null */
 #ifdef __MINGW32__
-  if (page_filename[1] == ':' && page_filename[2] == PATH_SEPARATER_CHAR) {
+  if (page_filename[1] == ':' && (page_filename[2] == PATH_SEPARATER_CHAR ||
+				  page_filename[2] == OTHER_PATH_SEPARATER_CHAR)) {
 #else
   if (page_filename[0] == PATH_SEPARATER_CHAR) {
 #endif

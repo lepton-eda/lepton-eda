@@ -238,8 +238,10 @@ if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
         CFLAGS="$CFLAGS -fnative-struct"
 	X_LDFLAGS="-lregex -liberty $X_LDFLAGS"
 	PATHSEP=\\\\
+	OTHERPATHSEP=/
 else 
 	PATHSEP=/
+	OTHERPATHSEP=\\\\
 fi
 
 if test "$debug" = "yes"; then
@@ -295,6 +297,7 @@ AC_SUBST(GTKVERSION)
 AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(PATHSEP)
+AC_SUBST(OTHERPATHSEP)
 
 AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LDFLAGS)

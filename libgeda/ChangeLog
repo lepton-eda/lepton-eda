@@ -1,3 +1,10 @@
+2002-05-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h: Added OTHER_* seperater #defines.  Mainly for
+	mingw32 port.
+
+	* configure.in: Added OTHERPATHSEP 
+
 2002-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/libgeda.h: Removed the last reference to gdkx.h

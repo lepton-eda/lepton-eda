@@ -74,14 +74,18 @@ if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	echo Adding -liberty for MINGW32 port
 	LIBERTY="$LDFLAGS -liberty"
 	PATHSEP=\\\\
+	OTHERPATHSEP=/
 else
 	PATHSEP=/
+	OTHERPATHSEP=\\\\
 fi 
 
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(LIBGEDA_CFLAGS)
 AC_SUBST(LIBERTY)
+AC_SUBST(PATHSEP)
+AC_SUBST(OTHERPATHSEP)
 
 AC_CONFIG_FILES([Makefile \
 		examples/Makefile \

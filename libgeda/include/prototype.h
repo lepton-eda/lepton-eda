@@ -10,7 +10,6 @@ void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 int f_save(TOPLEVEL *w_current, char *filename);
 /* f_image.c */
-void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
@@ -233,10 +232,6 @@ void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
 /* o_image.c */
-void o_image_init(void);
-void o_image_create(int x, int y, int color_mode);
-void o_image_close(void);
-int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
 /* o_line_basic.c */
 OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
@@ -415,8 +410,6 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *w_current, FILE *fp, int x, int y);
 void s_cue_postscript_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y);
-void s_cue_image_fillbox(TOPLEVEL *w_current, OBJECT *object, int world_x, int world_y);
-void s_cue_image_fillcircle(TOPLEVEL *w_current, int world_x, int world_y);
 void s_cue_output_all(TOPLEVEL *w_current, OBJECT *head, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int output_type);

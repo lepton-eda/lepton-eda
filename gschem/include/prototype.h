@@ -398,6 +398,7 @@ void o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap
 void o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x, gint y, gint radius, gint angle1, gint angle2, gint arc_width, gint length, gint space);
 void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_arc_eraserubber(TOPLEVEL *w_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(TOPLEVEL *w_current, int x, int y);
@@ -425,6 +426,7 @@ void o_erase_selected(TOPLEVEL *w_current);
 void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
 void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, GdkColor *color, int firsttime);
 void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list);
+int o_erase_rubber(TOPLEVEL *w_current);
 /* o_box.c */
 void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);
@@ -437,6 +439,7 @@ void o_box_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y,
 void o_box_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint width, gint height, gint fill_width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_box_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_box_eraserubber(TOPLEVEL *w_current);
 void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(TOPLEVEL *w_current, int x, int y);
 void o_box_end(TOPLEVEL *w_current, int x, int y);
@@ -469,6 +472,7 @@ void o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint
 void o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color, gint x, gint y, gint radius, gint width, gint angle1, gint pitch1, gint angle2, gint pitch2);
 void o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_circle_eraserubber(TOPLEVEL *w_current);
 void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(TOPLEVEL *w_current, int x, int y);
 void o_circle_end(TOPLEVEL *w_current, int x, int y);
@@ -546,6 +550,7 @@ void o_line_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle ca
 void o_line_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint x1, gint y1, gint x2, gint y2, gint line_width, gint length, gint space);
 void o_line_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_line_eraserubber(TOPLEVEL *w_current);
 void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(TOPLEVEL *w_current, int x, int y);
 void o_line_end(TOPLEVEL *w_current, int x, int y);

@@ -6,6 +6,8 @@
 	* src/g_rc.c, g_register.c, i_vars.c, s_project.c: Added the missing
 	bitmap-directory keyword
 
+	* src/Makefile.am: Added proto target (for making prototype.h)
+
 2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/g_rc.c: Missed a few hardcoded /'s, fixed.

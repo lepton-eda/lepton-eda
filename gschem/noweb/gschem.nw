@@ -237,7 +237,8 @@ main_prog(int argc, char *argv[])
        * schematic for the first page */
 
 #ifdef __MINGW32__
-      if (argv[i][1] == ':' && argv[i][2] == PATH_SEPARATER_CHAR) {
+      if (argv[i][1] == ':' && (argv[i][2] == PATH_SEPARATER_CHAR ||
+			        argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) {
 #else
       if (argv[i][0] == PATH_SEPARATER_CHAR) {
 #endif

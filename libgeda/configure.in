@@ -224,8 +224,10 @@ if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	echo Including -fnative-struct in CFLAGS for MINGW32 port
 	CFLAGS="$CFLAGS -fnative-struct"
         PATHSEP=\\\\
+        OTHERPATHSEP=/
 else
         PATHSEP=/
+        OTHERPATHSEP=\\\\
 fi
 
 if test "$debug" = "yes"; then
@@ -424,6 +426,7 @@ AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(GTKVERSION)
 AC_SUBST(PATHSEP)
+AC_SUBST(OTHERPATHSEP)
 
 AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LDFLAGS)
