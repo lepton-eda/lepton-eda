@@ -202,6 +202,8 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 
 	object = o_select_return_first_object(w_current); 
 	attrib = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+	w_current->page_current->CHANGED=1;
+	o_undo_savestate(w_current, UNDO_ALL);
 
 	if (attrib != NULL) {
 		gtk_clist_set_row_data(GTK_CLIST(clist),row,attrib);
@@ -234,6 +236,7 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
 		{
 			attrib = gtk_clist_get_row_data(GTK_CLIST(clist),row);
 			o_text_change(w_current,attrib,newtext,vis,show);
+			o_undo_savestate(w_current, UNDO_ALL);
 /*			multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));*/
 			gtk_clist_set_text(GTK_CLIST(clist),row,0,text[0]);
 			gtk_clist_set_text(GTK_CLIST(clist),row,1,text[1]);
@@ -266,6 +269,8 @@ multi_attrib_edit_delete (GtkWidget *w, TOPLEVEL *w_current)
 	gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)-1);
 	
 	o_delete_text(w_current,attrib);
+	w_current->page_current->CHANGED=1;
+	o_undo_savestate(w_current, UNDO_ALL);
 	
 	multi_attrib_edit_clear (NULL,GTK_WINDOW(w_current->mawindow));
 /* Tell System about change! */
@@ -589,8 +594,10 @@ text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 {
 	int len;
 	char *string = NULL;
+	GtkWidget *tientry;
 
-	string = gtk_entry_get_text(GTK_ENTRY(w_current->tientry));
+	tientry = gtk_object_get_data(GTK_OBJECT(w_current->tiwindow),"tientry");
+	string = gtk_entry_get_text(GTK_ENTRY(tientry));
 
 	if (string[0] != '\0' ) {
 		len = strlen(string);
@@ -615,11 +622,12 @@ text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 			}
 
 			o_attrib_set_string(w_current, string);
-			gtk_entry_set_text(GTK_ENTRY(w_current->tientry),
+			w_current->page_current->CHANGED=1;
+			gtk_entry_set_text(GTK_ENTRY(tientry),
 					   w_current->current_attribute);
-			gtk_entry_select_region(GTK_ENTRY(w_current->tientry),
+			gtk_entry_select_region(GTK_ENTRY(tientry),
 						0, len);
-			gtk_widget_grab_focus(w_current->tientry);
+			gtk_widget_grab_focus(tientry);
 
 		} else {
 			/* TODO: you should have limits */
@@ -653,6 +661,7 @@ void
 text_input_dialog (TOPLEVEL *w_current)
 {
 	GtkWidget *label = NULL;
+	GtkWidget *tientry = NULL;
 	GtkWidget *buttonok     = NULL;
 	GtkWidget *buttoncancel = NULL;
 	GtkWidget *vbox, *action_area;
@@ -692,18 +701,17 @@ text_input_dialog (TOPLEVEL *w_current)
 			label, TRUE, TRUE, 0);
       		gtk_widget_show (label);
 
-		w_current->tientry = gtk_entry_new_with_max_length (79);
-		gtk_signal_connect(GTK_OBJECT(w_current->tientry), "activate",
+		tientry = gtk_entry_new_with_max_length (79);
+		gtk_signal_connect(GTK_OBJECT(tientry), "activate",
                        		   GTK_SIGNAL_FUNC(text_input_dialog_apply),
                                    w_current);
-    		gtk_box_pack_start(
-			GTK_BOX(vbox),
-			w_current->tientry,
-			TRUE, TRUE, 10);
-      		gtk_editable_select_region(GTK_EDITABLE(w_current->tientry),
+    		gtk_box_pack_start( GTK_BOX(vbox), tientry, TRUE, TRUE, 10);
+      		gtk_editable_select_region(GTK_EDITABLE(tientry),
 					   0, -1);
-    		gtk_widget_show(w_current->tientry);
-		gtk_widget_grab_focus(w_current->tientry);
+    		gtk_widget_show(tientry);
+		gtk_widget_grab_focus(tientry);
+		gtk_object_set_data(GTK_OBJECT(w_current->tiwindow),
+				    "tientry",tientry);
 
 		buttonok = gtk_button_new_with_label("Apply");
 		GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
@@ -750,6 +758,7 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	OBJECT *attribptr;
 	OBJECT *object;
 	int vis,show;
+	int invocation_flag;
 
         w_current->event_state = SELECT;
         i_update_status(w_current, "Select Mode");
@@ -785,15 +794,26 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 		object = o_select_return_first_object(w_current);
 		new=o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
-		SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
-		new->x=world_x;
-		new->y=world_y;
-                o_text_erase(w_current, new);
-                o_text_recreate(w_current, new);
-                o_text_draw(w_current, new);
+		invocation_flag = (int) gtk_object_get_data(
+			GTK_OBJECT(w_current->aewindow),"invocation_flag");
 
+#if DEBUG
+		printf("invocation flag: %d\n", invocation_flag);
+#endif
+		if (invocation_flag == FROM_HOTKEY) { 
+		  SCREENtoWORLD(w_current, mouse_x, mouse_y, &world_x, &world_y);
+		  new->x=world_x;
+		  new->y=world_y;
+                  o_text_erase(w_current, new);
+                  o_text_recreate(w_current, new);
+                  o_text_draw(w_current, new);
+		  w_current->page_current->CHANGED=1;
+		  o_undo_savestate(w_current, UNDO_ALL);
+               }
 	} else {
 		o_text_change(w_current,attribptr,newtext,vis,show);
+		w_current->page_current->CHANGED=1;
+		o_undo_savestate(w_current, UNDO_ALL);
 	}
         gtk_grab_remove(w_current->aewindow);
         gtk_widget_destroy(w_current->aewindow);
@@ -822,6 +842,8 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
 
 	object = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"attrib");
 	o_delete_text(w_current, object);
+	w_current->page_current->CHANGED=1;
+	o_undo_savestate(w_current, UNDO_ALL);
 
 	i_update_status(w_current, "Select Mode");
         w_current->event_state = SELECT;
@@ -831,7 +853,7 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
 }
 
 void
-attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
+attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list, int flag)
 {
 	int i;
 	char *string=NULL;
@@ -953,6 +975,13 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
 	GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
 
+
+#if DEBUG
+	printf("Adding flag: %d\n", flag);
+#endif
+
+	gtk_object_set_data(GTK_OBJECT(aewindow),"invocation_flag", (gpointer) flag);
+
 #if 0 /* highly temp change which Ales will eventually finish up to allow */
       /* this dialog to stay open */ /* out for now */
 	buttonapply = gtk_button_new_with_label ("Apply");
@@ -1062,6 +1091,8 @@ change_alignment(GtkWidget *w, TOPLEVEL *w_current)
 	char *alignment;
 	alignment = gtk_object_get_data(GTK_OBJECT(w),"alignment");
 	w_current->text_alignment = atoi(alignment);
+	w_current->page_current->CHANGED=1;
+	o_undo_savestate(w_current, UNDO_ALL);
 	
 	return(0);
 }
@@ -1714,6 +1745,8 @@ text_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 		size = atoi(string);
 		if (size) {
 			w_current->text_size = size;
+			w_current->page_current->CHANGED=1;
+			o_undo_savestate(w_current, UNDO_ALL);
 		}
 	}
 
@@ -2427,6 +2460,7 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 
 		s_current = s_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
