@@ -1,0 +1,129 @@
+\input texinfo @c -*-texinfo-*-
+@c %** start of header
+@setfilename libgeda.info
+@settitle 
+@c %**end of header
+
+@dircategory Libgeda source documentation
+@direntry
+* libgeda: (libgeda).         Libgeda source documentation.
+@end direntry
+
+
+@c PART 2 : Summary Description and Copyright
+@ifinfo
+
+Copyright @copyright{} xxxx XXXX.
+@end ifinfo
+
+
+@c PART 3 : Titlepage and Copyright
+@titlepage
+@sp 10
+@comment The title is printed in a large font.
+@center @titlefont{Libgeda source documentation}
+
+@c The following two commands start the copyight page.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} xxxx XXXX.
+@end titlepage
+
+
+@c PART 4 : 'Top' Node and Master Menu
+@node Top,, (dir), (dir)
+@top
+
+@menu
+* File a_basic.c:: file a_basic.c.
+* File f_basic.c:: file f_basic.c.
+* File f_image.c:: file f_image.c.
+* File f_print.c:: file f_print.c.
+* File g_basic.c:: file g_basic.c.
+* File g_smob.c:: file g_smob.c.
+* File m_basic.c:: file m_basic.c.
+* File o_arc_basic.c:: file o_arc_basic.c.
+* File o_attrib.c:: file o_attrib.c.
+* File o_basic.c:: file o_basic.c.
+* File o_box_basic.c:: file o_box_basic.c.
+* File o_bus_basic.c:: file o_bus_basic.c.
+* File o_circle_basic.c:: file o_circle_basic.c.
+* File o_complex_basic.c:: file o_complex_basic.c.
+* File o_image.c:: file o_image.c.
+* File o_line_basic.c:: file o_line_basic.c.
+* File o_list.c:: file o_list.c.
+* File o_net_basic.c:: file o_net_basic.c.
+* File o_pin_basic.c:: file o_pin_basic.c.
+* File o_selection.c:: file o_selection.c.
+* File o_text_basic.c:: file o_text_basic.c.
+* File s_attrib.c:: file s_attrib.c.
+* File s_basic.c:: file s_basic.c.
+* File s_clib.c:: file s_clib.c.
+* File s_color.c:: file s_color.c.
+* File s_conn.c:: file s_conn.c.
+* File s_cue.c:: file s_cue.c.
+* File s_hierarchy.c:: file s_hierarchy.c.
+* File s_log.c:: file s_log.c.
+* File s_page.c:: file s_page.c.
+* File s_papersizes.c:: file s_papersizes.c.
+* File s_scratch.c:: file s_scratch.c.
+* File s_slib.c:: file s_slib.c.
+* File s_stretch.c:: file s_stretch.c.
+* File s_tile.c:: file s_tile.c.
+* File s_undo.c:: file s_undo.c.
+* File u_basic.c:: file o_basic.c.
+
+* Fonction Index:: all function names.
+@end menu
+
+
+
+@c PART 5 :C-source files
+@include a_basic.texi
+@include f_basic.texi
+@include f_image.texi
+@include f_print.texi
+@include g_basic.texi
+@include g_smob.texi
+@include m_basic.texi
+@include o_arc_basic.texi
+@include o_attrib.texi
+@include o_basic.texi
+@include o_box_basic.texi
+@include o_bus_basic.texi
+@include o_circle_basic.texi
+@include o_complex_basic.texi
+@include o_image.texi
+@include o_line_basic.texi
+@include o_list.texi
+@include o_net_basic.texi
+@include o_pin_basic.texi
+@include o_selection.texi
+@include o_text_basic.texi
+@include s_attrib.texi
+@include s_basic.texi
+@include s_clib.texi
+@include s_color.texi
+@include s_conn.texi
+@include s_cue.texi
+@include s_hierarchy.texi
+@include s_log.texi
+@include s_page.texi
+@include s_papersizes.texi
+@include s_scratch.texi
+@include s_slib.texi
+@include s_stretch.texi
+@include s_tile.texi
+@include s_undo.texi
+@include u_basic.texi
+
+
+@c PART 6 : The End of the Document
+@node Fonction Index,,,Top
+@unnumbered Fonction Index
+
+@printindex fn
+
+@contents
+@bye
+

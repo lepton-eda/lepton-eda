@@ -1,0 +1,1467 @@
+@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+
+@node File o_line_basic.c,,,Top
+@chapter File @file{o_line_basic.c}
+
+@section File header
+
+<<o_line_basic.c : *>>=
+<<o_line_basic.c : copyright and license>>
+
+/* DO NOT read or edit this file ! Use ../noweb/o_line_basic.nw instead */
+
+<<o_line_basic.c : include directives>>
+<<o_line_basic.c : macros>>
+<<o_line_basic.c : get_line_bounds()>>
+<<o_line_basic.c : world_get_line_bounds()>>
+<<o_line_basic.c : o_line_visible()>>
+<<o_line_basic.c : o_line_add()>>
+<<o_line_basic.c : o_line_recalc()>>
+<<o_line_basic.c : o_line_read()>>
+<<o_line_basic.c : o_line_save()>>
+<<o_line_basic.c : o_line_translate()>>
+<<o_line_basic.c : o_line_translate_world()>>
+<<o_line_basic.c : o_line_copy()>>
+<<o_line_basic.c : o_line_print()>>           /* done */
+<<o_line_basic.c : o_line_print_solid()>>     /* done */
+<<o_line_basic.c : o_line_print_dotted()>>    /* done */
+<<o_line_basic.c : o_line_print_dashed()>>    /* done */
+<<o_line_basic.c : o_line_print_center()>>    /* done */
+<<o_line_basic.c : o_line_print_phantom()>>   /* done */
+
+#if 0 /* original way of printing line, no longer used */
+<<o_line_basic.c : o_line_print_old()>>
+#endif
+
+<<o_line_basic.c : o_line_image_write()>>
+<<o_line_basic.c : o_line_scale_world()>>
+<<o_line_basic.c : o_line_rotate()>>
+<<o_line_basic.c : o_line_rotate_world()>>
+<<o_line_basic.c : o_line_mirror()>>
+<<o_line_basic.c : o_line_mirror_world()>>
+<<o_line_basic.c : o_line_modify()>>
+
+
+@
+
+<<o_line_basic.c : copyright and license>>=
+/* gEDA - GPL Electronic Design Automation
+ * libgeda - gEDA's library
+ * Copyright (C) 1998-2000 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+@ 
+
+<<o_line_basic.c : include directives>>=
+#include <config.h>
+#include <stdio.h>
+#include <math.h>
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
+#endif
+
+#include "defines.h"
+#include "struct.h"
+#include "globals.h"
+#include "o_types.h"
+
+#include "colors.h"
+#include "funcs.h"
+
+#include "../include/globals.h"
+#include "../include/prototype.h"
+
+@ 
+
+<<o_line_basic.c : macros>>=
+#define VERSION_20000704 20000704
+
+@ %def VERSION_20000704
+
+
+@section Function @code{get_line_bounds()}
+
+@defun get_line_bounds w_current line left top right bottom
+@end defun
+
+<<o_line_basic.c : get_line_bounds()>>=
+void
+get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
+                int *right, int *bottom)
+{
+  *left = w_current->width;
+  *top = w_current->height;
+  *right = 0;
+  *bottom = 0;
+	
+  if (line->screen_x[0] < *left) *left = line->screen_x[0];
+  if (line->screen_x[0] > *right) *right = line->screen_x[0];
+  if (line->screen_y[0] < *top) *top = line->screen_y[0];
+  if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
+
+  if (line->screen_x[1] < *left) *left = line->screen_x[1];
+  if (line->screen_x[1] > *right) *right = line->screen_x[1];
+  if (line->screen_y[1] < *top) *top = line->screen_y[1];
+  if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
+
+  /* PB : need to take into account the width of the line in the bounding box */
+  /* PB : but how translating width to screen ? */
+  /* PB : moreover, the width is not in any of the parameters */	
+	
+  *left = *left - 4;
+  *top = *top - 4;
+		
+  *right = *right + 4;
+  *bottom = *bottom + 4;
+	
+}
+
+@ %def get_line_bounds
+
+
+@section Function @code{world_get_line_bounds()}
+
+@defun world_get_line_bounds w_current line left top right bottom
+@end defun
+
+<<o_line_basic.c : world_get_line_bounds()>>=
+void
+world_get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
+                      int *right, int *bottom)
+{
+  *left = w_current->init_right;
+  *top = w_current->init_bottom;
+  *right = 0;
+  *bottom = 0;
+	
+  if (line->x[0] < *left) *left = line->x[0];
+  if (line->x[0] > *right) *right = line->x[0];
+  if (line->y[0] < *top) *top = line->y[0];
+  if (line->y[0] > *bottom) *bottom = line->y[0];
+
+  if (line->x[1] < *left) *left = line->x[1];
+  if (line->x[1] > *right) *right = line->x[1];
+  if (line->y[1] < *top) *top = line->y[1];
+  if (line->y[1] > *bottom) *bottom = line->y[1];
+}
+
+@ %def world_get_line_bounds
+
+
+@section Function @code{o_line_visible()}
+
+@defun o_line_visible w_current line x1 y1 x2 y2
+@end defun
+
+<<o_line_basic.c : o_line_visible()>>=
+int 
+o_line_visible(TOPLEVEL *w_current, LINE *line, 
+	       int *x1, int *y1, int *x2, int *y2)
+{
+  int visible=0;
+
+
+  /* don't do clipping if this is false */
+  if (!w_current->object_clipping) {
+    return(TRUE);
+  }
+
+  *x1 = line->screen_x[0];
+  *y1 = line->screen_y[0];
+  *x2 = line->screen_x[1];
+  *y2 = line->screen_y[1];
+
+  visible = SCREENclip_change(w_current, x1, y1, x2, y2);
+
+  return(visible);
+}
+
+@ %def o_line_visible
+
+
+@section Function @code{o_line_add()}
+
+@defun o_line_add w_current object_list type color x1 y1 x2 y2
+@end defun
+
+<<o_line_basic.c : o_line_add()>>=
+OBJECT *
+o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
+           char type, int color, 
+           int x1, int y1, int x2, int y2)
+{
+  OBJECT *new_node;
+
+  new_node = s_basic_init_object("line");
+  new_node->type = type;
+  new_node->color = color;
+
+  new_node->line = (LINE *) malloc(sizeof(LINE));
+
+  new_node->line->x[0] = x1;
+  new_node->line->y[0] = y1;
+  new_node->line->x[1] = x2;
+  new_node->line->y[1] = y2;
+
+  /* Init */
+  o_set_line_options(w_current, new_node,
+                     END_NONE, TYPE_SOLID, 0, -1, -1);
+  o_set_fill_options(w_current, new_node,
+                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+	
+  o_line_recalc(w_current, new_node);
+
+  /* TODO: questionable cast */
+  new_node->draw_func = (void *) line_draw_func;
+  /* TODO: questionable cast */
+  new_node->sel_func = (void *) select_func;  
+
+  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
+  return(object_list);
+}
+
+@ %def o_line_add
+
+
+@section Function @code{o_line_recalc()}
+
+@defun o_line_recalc w_current o_current
+@end defun
+
+<<o_line_basic.c : o_line_recalc()>>=
+void
+o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  int screen_x1, screen_y1;
+  int screen_x2, screen_y2;
+  int left, right, top, bottom;
+
+  if (o_current->line == NULL) {
+    return;
+  }
+
+  WORLDtoSCREEN(w_current, o_current->line->x[0], 
+                o_current->line->y[0], 
+                &screen_x1,
+                &screen_y1);  
+
+  o_current->line->screen_x[0] = screen_x1;
+  o_current->line->screen_y[0] = screen_y1;
+
+  WORLDtoSCREEN(w_current, o_current->line->x[1], 
+                o_current->line->y[1], 
+                &screen_x2,
+                &screen_y2);  
+
+  o_current->line->screen_x[1] = screen_x2;
+  o_current->line->screen_y[1] = screen_y2;
+	
+  get_line_bounds(w_current, o_current->line, 
+                  &left, &top, &right, &bottom);
+
+  o_current->left = left;
+  o_current->top = top;
+  o_current->right = right;
+  o_current->bottom = bottom;
+
+  o_object_recalc(w_current, o_current);
+}
+
+@ %def o_line_recalc
+
+
+@section Function @code{o_line_read()}
+
+@defun o_line_read w_current object_list buf version
+@end defun
+
+<<o_line_basic.c : o_line_read()>>=
+OBJECT *
+o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+            char *version)
+{
+  char type; 
+  int x1, y1;
+  int x2, y2;
+  int d_x1, d_y1;
+  int d_x2, d_y2;
+  int line_width, line_space, line_length;
+  OBJECT_END line_end;
+  OBJECT_TYPE line_type;
+  int color;
+  long int ver;
+
+  ver = strtol(version, NULL, 10);
+  if(ver <= VERSION_20000704) {
+    sscanf(buf, "%c %d %d %d %d %d\n", &type,
+           &x1, &y1, &x2, &y2, &color);
+
+    line_width = 0;
+    line_end   = END_NONE;
+    line_type  = TYPE_SOLID;
+    line_length= -1;
+    line_space = -1;
+
+  } else {
+    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
+           &x1, &y1, &x2, &y2, &color,
+           &line_width, &line_end, &line_type, &line_length, &line_space);
+  }
+
+  d_x1 = x1; /* PB : Needed ? */
+  d_y1 = y1; 
+  d_x2 = x2; 
+  d_y2 = y2; 
+	
+  if (x1 == x2 && y1 == y2) {
+    fprintf(stderr, "Found a zero length line [ %c %d %d %d %d %d ]\n",
+            type, x1, y1, x2, y2, color);
+    s_log_message("Found a zero length line [ %c %d %d %d %d %d ]\n",
+                  type, x1, y1, x2, y2, color);
+  }
+	
+  if (color < 0 || color > MAX_COLORS) {
+    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+    s_log_message("Found an invalid color [ %s ]\n", buf);
+    s_log_message("Setting color to WHITE\n");
+    color = WHITE;
+  }
+
+	
+  object_list = o_line_add(w_current, object_list,
+                           type, color, d_x1, d_y1, d_x2, d_y2);
+  o_set_line_options(w_current, object_list,
+                     line_end, line_type, line_width, line_length, 
+                     line_space);
+  o_set_fill_options(w_current, object_list,
+                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+	
+  return(object_list);
+}
+
+@ %def o_line_read
+
+
+@section Function @code{o_line_save()}
+
+@defun o_line_save buf object
+@end defun
+
+<<o_line_basic.c : o_line_save()>>=
+char *
+o_line_save(char *buf, OBJECT *object)
+{
+  int x1, x2, y1, y2;
+  int color;
+  int line_width, line_space, line_length;
+  OBJECT_END line_end;
+  OBJECT_TYPE line_type;
+		
+  x1 = object->line->x[0];
+  y1 = object->line->y[0];
+  x2 = object->line->x[1];
+  y2 = object->line->y[1];
+
+  /* Use the right color */
+  if (object->saved_color == -1) {
+    color = object->color;
+  } else {
+    color = object->saved_color;
+  }
+
+  line_width = object->line_width;
+  line_end   = object->line_end;
+  line_type  = object->line_type;
+  line_length= object->line_length;
+  line_space = object->line_space;
+	
+  sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d", object->type,
+          x1, y1, x2, y2, color,
+          line_width, line_end, line_type, line_length, line_space);
+	
+  return(buf);
+}
+      
+@ %def o_line_save
+
+
+@section Function @code{o_line_translate()}
+
+@defun o_line_translate w_current dx dy object
+@end defun
+
+<<o_line_basic.c : o_line_translate()>>=
+void
+o_line_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+{
+  int x, y;
+
+  if (object == NULL) printf("lt NO!\n");
+
+
+  /* Do screen coords */
+  object->line->screen_x[0] = object->line->screen_x[0] + dx;
+  object->line->screen_y[0] = object->line->screen_y[0] + dy;
+  object->line->screen_x[1] = object->line->screen_x[1] + dx;
+  object->line->screen_y[1] = object->line->screen_y[1] + dy;
+
+  /* do we want snap grid here? hack */
+  SCREENtoWORLD(w_current, object->line->screen_x[0], 
+                object->line->screen_y[0], 
+                &x,
+                &y);  
+
+  object->line->x[0] = snap_grid(w_current, x);
+  object->line->y[0] = snap_grid(w_current, y);
+	
+  SCREENtoWORLD(w_current, object->line->screen_x[1], 
+                object->line->screen_y[1], 
+                &x,
+                &y);  
+	
+  object->line->x[1] = snap_grid(w_current, x);
+  object->line->y[1] = snap_grid(w_current, y);
+}
+
+@ %def o_line_translate
+
+
+@section Function @code{o_line_translate_world()}
+
+@defun o_line_translate_world w_current x1 y1 object
+@end defun
+
+<<o_line_basic.c : o_line_translate_world()>>=
+void
+o_line_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
+{
+  int screen_x1, screen_y1;
+  int screen_x2, screen_y2;	
+  int left, right, top, bottom;
+
+  if (object == NULL) printf("ltw NO!\n");
+
+
+  /* Do world coords */
+  object->line->x[0] = object->line->x[0] + x1;
+  object->line->y[0] = object->line->y[0] + y1;
+  object->line->x[1] = object->line->x[1] + x1;
+  object->line->y[1] = object->line->y[1] + y1;
+
+  /* update screen coords */
+  WORLDtoSCREEN(w_current, object->line->x[0], 
+                object->line->y[0], 
+                &screen_x1,
+                &screen_y1);  
+
+  object->line->screen_x[0] = screen_x1;
+  object->line->screen_y[0] = screen_y1;
+
+  WORLDtoSCREEN(w_current, object->line->x[1], 
+                object->line->y[1], 
+                &screen_x2,
+                &screen_y2);  
+	
+  object->line->screen_x[1] = screen_x2;
+  object->line->screen_y[1] = screen_y2;
+
+  /* update bounding box */
+  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
+
+  object->left = left;
+  object->top = top;
+  object->right = right;
+  object->bottom = bottom;
+}
+
+@ %def o_line_translate_world
+
+
+@section Function @code{o_line_copy()}
+
+@defun o_line_copy w_current list_tail o_current
+@end defun
+
+<<o_line_basic.c : o_line_copy()>>=
+OBJECT *
+o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+{
+  OBJECT *new_obj;
+  ATTRIB *a_current;
+  int color;
+
+  if (o_current->saved_color == -1) {
+    color = o_current->color;
+  } else {
+    color = o_current->saved_color;
+  }
+
+  new_obj = o_line_add(w_current, list_tail,
+                       OBJ_LINE, color,
+                       0, 0, 0, 0);
+
+  new_obj->line->screen_x[0] = o_current->line->screen_x[0];
+  new_obj->line->screen_y[0] = o_current->line->screen_y[0];
+  new_obj->line->screen_x[1] = o_current->line->screen_x[1];
+  new_obj->line->screen_y[1] = o_current->line->screen_y[1];
+
+  new_obj->line->x[0] = o_current->line->x[0];
+  new_obj->line->y[0] = o_current->line->y[0];
+  new_obj->line->x[1] = o_current->line->x[1];
+  new_obj->line->y[1] = o_current->line->y[1];
+
+  o_set_line_options(w_current, new_obj, o_current->line_end,
+                     o_current->line_type, o_current->line_width,
+                     o_current->line_length, o_current->line_space);
+  o_set_fill_options(w_current, new_obj,
+                     o_current->fill_type, o_current->fill_width,
+                     o_current->fill_pitch1, o_current->fill_angle1,
+                     o_current->fill_pitch2, o_current->fill_angle2);
+
+  /*	new_obj->attribute = 0;*/
+  a_current = o_current->attribs;
+  if (a_current) {
+    while ( a_current ) {
+
+      /* head attrib node has prev = NULL */
+      if (a_current->prev != NULL) {
+        a_current->copied_to = new_obj;
+      }
+      a_current = a_current->next;
+    }
+  }
+
+  return(new_obj);
+}
+
+@ %def o_line_copy
+
+
+@section Function @code{o_line_print()}
+
+@defun o_line_print w_current fp o_current origin_x origin_y
+This function writes in a postscript file the line described by the [[o_current]] pointed object.
+The postscript resulting file is described by the [[fp]] file pointer.
+@end defun
+
+Parameters of the line are extracted from object pointed by [[o_current]].
+
+<<o_line_basic.c : o_line_print()>>=
+void
+o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			 int origin_x, int origin_y)
+{
+  int x1, y1, x2, y2;
+  int color;
+  int line_width, length, space;
+  void (*outl_func)() = NULL;
+	
+  if (o_current == NULL) {
+    printf("got null in o_line_print\n");
+    return;
+  }
+
+  x1    = o_current->line->x[0];
+  y1    = o_current->line->y[0];
+  x2    = o_current->line->x[1];
+  y2    = o_current->line->y[1];
+  color = o_current->color;
+
+  <<o_line_print() : printing line>>
+
+}
+
+@ %def o_line_print
+
+
+Depending on the type of the line for this particular line, the appropriate function is chosen among [[o_line_print_solid()]], [[o_line_print_dotted()]], [[o_line_print_dashed()]], [[o_line_print_center]] and [[o_line_print_phantom()]].
+
+The needed parameters for each of these types are extracted from the [[o_current]] object. Depending on the type, unused parameters are set to -1.
+
+In the eventuality of a length and/or space null, the line is printed solid to avoid and endless loop produced by other functions.
+
+<<o_line_print() : printing line>>=
+	line_width = o_current->line_width;
+	length = o_current->line_length;
+	space  = o_current->line_space;
+	
+	switch(o_current->line_type) {
+		case(TYPE_SOLID):
+			length = -1; space = -1;
+			outl_func = (void *) o_line_print_solid;
+			break;
+
+		case(TYPE_DOTTED):
+			length = -1;
+			outl_func = (void *) o_line_print_dotted;
+			break;
+
+		case(TYPE_DASHED):
+			outl_func = (void *) o_line_print_dashed;
+			break;
+
+		case(TYPE_CENTER):
+			outl_func = (void *) o_line_print_center;
+			break;
+
+		case(TYPE_PHANTOM):
+			outl_func = (void *) o_line_print_phantom;
+			break;
+
+		case(TYPE_ERASE):
+			/* Unused for now, print it solid */
+			length = -1; space = -1;
+			outl_func = (void *) o_line_print_solid;
+			break;
+	}
+
+	if((length == 0) || (space == 0)) {
+		length = -1; space = -1;
+		outl_func = (void *) o_line_print_solid;
+	}
+
+	(*outl_func)(w_current, fp,
+				 x1 - origin_x, y1 - origin_y,
+				 x2 - origin_x, y2 - origin_y,
+				 color,
+				 line_width, length, space,
+				 origin_x, origin_y);
+
+@
+
+
+@section Function @code{o_line_print_solid()}
+
+@defun o_line_print_solid w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
+This function prints a line when a solid line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
+The postscript file is defined by the file pointer [[fp]].
+The parameters [[length]] and [[space]] are ignored whereas [[line_width]] specifies the width of the printed line.
+@end defun
+
+All dimensions are in mils.
+
+<<o_line_basic.c : o_line_print_solid()>>=
+void
+o_line_print_solid(TOPLEVEL *w_current, FILE *fp,
+				   int x1, int y1, int x2, int y2,
+				   int color,
+				   int line_width, int length, int space,
+				   int origin_x, int origin_y)
+{
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, line_width);
+
+	fprintf(fp, "newpath\n");
+	fprintf(fp, "%d mils %d mils moveto\n", x1, y1);
+	fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
+	fprintf(fp, "stroke\n");
+	fprintf(fp, "grestore\n");
+	
+}
+
+@ %def o_line_print_solid
+
+
+@section Function @code{o_line_print_dotted()}
+
+@defun o_line_print_dotted w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
+This function prints a line when a dotted line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
+The postscript file is defined by the file pointer [[fp]].
+The parameter [[length]] is ignored whereas [[line_width]] specifies the diameter of the dots and [[space]] the distance between two dots.
+@end defun
+
+A negative value for [[space]] leads to an endless loop.
+
+All dimensions are in mils.
+
+The function sets the color in which the line will be printed with.
+
+<<o_line_basic.c : o_line_print_dotted()>>=
+void
+o_line_print_dotted(TOPLEVEL *w_current, FILE *fp,
+					int x1, int y1, int x2, int y2,
+					int color,
+					int line_width, int length, int space,
+					int origin_x, int origin_y)
+{
+
+	double dx, dy, l, d;
+	double dx1, dy1;
+	double xa, ya;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	/* PB : is the width relevant for a dot (circle) ? */
+	f_print_set_line_width(fp, line_width);
+
+@ %def o_line_print_dotted
+
+
+Depending on the slope of the line the space parameter is projected on each of the two directions x and y resulting in [[dx1]] and [[dy1]]. Starting from one end by increments of space the dots are printed.
+
+<<o_line_basic.c : o_line_print_dotted()>>=
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * space) / l;
+	dy1 = (dy * space) / l;
+
+	d = 0;
+	xa = x1; ya = y1;
+	while(d < l) {
+
+		<<o_line_print_dotted() : printing a dot>>
+
+		d = d + space;
+		xa = xa + dx1;
+		ya = ya + dy1;
+	}
+
+	fprintf(fp, "grestore\n");
+	
+}
+
+@
+
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[line_width]] parameter.
+
+<<o_line_print_dotted() : printing a dot>>=
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils\n", 
+				(int) xa, (int) ya);
+		if(line_width <= 1) {
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils\n", line_width/2);
+		}
+		fprintf(fp, "0 360 arc\n");
+		fprintf(fp, "fill\n");
+
+@ 
+
+
+
+@section Function @code{o_line_print_dashed()}
+
+@defun o_line_print_dashed w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
+This function prints a line when a dashed line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
+The postscript file is defined by the file pointer [[fp]].
+@end defun
+
+A negative value for [[space]] or [[length]]  leads to an endless loop.
+
+All dimensions are in mils.
+
+The function sets the color in which the line will be printed and the width of the line - that is the width of the dashes.
+
+<<o_line_basic.c : o_line_print_dashed()>>=
+void
+o_line_print_dashed(TOPLEVEL *w_current, FILE *fp,
+					int x1, int y1, int x2, int y2,
+					int color,
+					int line_width, int length, int space,
+					int origin_x, int origin_y)
+{
+	double dx, dy, l, d;
+	double dx1, dy1, dx2, dy2;
+	double xa, ya, xb, yb;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, line_width);
+
+@ %def o_line_print_dashed
+
+
+Depending on the slope of the line the [[length]] (resp. [[space]]) parameter is projected on each of the two directions x and y resulting in [[dx1]] and [[dy1]] (resp. [[dx2]] and [[dy2]]). Starting from one end and incrementing alternatively by [[space]] and [[length]] the dashes are printed.
+
+It prints as many dashes of length [[length]] as possible.
+
+<<o_line_basic.c : o_line_print_dashed()>>=
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * length) / l;
+	dy1 = (dy * length) / l;
+
+	dx2 = (dx * space) / l;
+	dy2 = (dy * space) / l;
+	
+	d = 0;
+	xa = x1; ya = y1;
+	while((d + length + space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+
+		<<o_line_print_dashed() : printing a dash>>
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+	}
+
+@ 
+
+
+When the above condition is no more satisfied, then it is not possible to print a dash of length [[length]]. However it may be possible to print the complete dash or a shorter one.
+
+<<o_line_basic.c : o_line_print_dashed()>>=
+	if((d + length) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+	} else {
+		xb = x2;
+		yb = y2;
+	}
+
+	<<o_line_print_dashed() : printing a dash>>
+
+	fprintf(fp, "grestore\n");
+	
+}
+
+@
+
+
+<<o_line_print_dashed() : printing a dash>>=
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
+		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
+		fprintf(fp, "stroke\n");
+
+@ 
+
+
+@section Function @code{o_line_print_center()}
+
+@defun o_line_print_center w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
+This function prints a line when a centered line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
+The postscript file is defined by the file pointer [[fp]].
+@end defun
+
+A negative value for [[space]] or [[length]]  leads to an endless loop.
+
+All dimensions are in mils.
+
+The function sets the color in which the line will be printed and the width of the line - that is the width of the dashes and the diameter of the dots.
+
+<<o_line_basic.c : o_line_print_center()>>=
+void
+o_line_print_center(TOPLEVEL *w_current, FILE *fp,
+					int x1, int y1, int x2, int y2,
+					int color,
+					int line_width, int length, int space,
+					int origin_x, int origin_y)
+{
+	double dx, dy, l, d;
+	double dx1, dy1, dx2, dy2;
+	double xa, ya, xb, yb;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, line_width);
+
+@ %def o_line_print_center
+
+
+Depending on the slope of the line the [[length]] (resp. [[space]]) parameter is projected on each of the two directions x and y resulting in [[dx1]] and [[dy1]] (resp. [[dx2]] and [[dy2]]). Starting from one end and incrementing alternatively by [[space]] and [[length]] the dashes and dots are printed.
+
+It prints as many sets of dash and dot as possible.
+
+<<o_line_basic.c : o_line_print_center()>>=	
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * length) / l;
+	dy1 = (dy * length) / l;
+
+	dx2 = (dx * space) / l;
+	dy2 = (dy * space) / l;
+	
+	d = 0;
+	xa = x1; ya = y1;
+	while((d + length + 2 * space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+
+		<<o_line_print_center() : printing a dash>>
+
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+
+		<<o_line_print_center() : printing a dot>>
+		
+		d = d + space;
+		xa = xa + dx2;
+		ya = ya + dy2;
+	}
+
+@ 
+
+
+When the above condition is no more satisfied, then it is not possible to print a dash of length @code{length}. However two cases are possible :
+@itemize @bullet
+@item
+it is possible to print the dash and the dot ;
+@item
+it is possible to print the dash or a part of the original dash ;
+@end itemize
+
+<<o_line_basic.c : o_line_print_center()>>=
+	if((d + length + space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+
+		<<o_line_print_center() : printing a dash>>
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+
+		<<o_line_print_center() : printing a dot>>
+		
+	} else {
+		if(d + length < l) {
+			xb = xa + dx1;
+			yb = ya + dy1;
+		} else {
+			xb = x2;
+			yb = y2;
+		}
+
+		<<o_line_print_center() : printing a dash>>
+	
+	}
+
+	fprintf(fp, "grestore\n");
+}
+
+@
+
+
+<<o_line_print_center() : printing a dash>>=
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
+		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
+		fprintf(fp, "stroke\n");
+
+@ 
+
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius by the [[line_width]] parameter.
+
+<<o_line_print_center() : printing a dot>>=
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+		if(line_width <= 1) {
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils\n", line_width/2);
+		}
+		fprintf(fp, "0 360 arc\n");
+		fprintf(fp, "fill\n");
+
+@ 
+
+
+@section Function @code{o_line_print_phantom()}
+
+@defun o_line_print_phantom w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
+This function prints a line when a phantom line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
+The postscript file is defined by the file pointer [[fp]].
+@end defun
+
+A negative value for [[space]] or [[length]]  leads to an endless loop.
+
+All dimensions are in mils.
+
+The function sets the color in which the line will be printed and the width of the line - that is the width of the dashes and the diameter of the dots.
+
+<<o_line_basic.c : o_line_print_phantom()>>=
+void
+o_line_print_phantom(TOPLEVEL *w_current, FILE *fp,
+					 int x1, int y1, int x2, int y2,
+					 int color,
+					 int line_width, int length, int space,
+					 int origin_x, int origin_y)
+{
+	double dx, dy, l, d;
+	double dx1, dy1, dx2, dy2;
+	double xa, ya, xb, yb;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, line_width);
+
+@ %def o_line_print_phantom	
+
+
+Depending on the slope of the line the [[length]] (resp. [[space]]) parameter is projected on each of the two directions x and y resulting in [[dx1]] and [[dy1]] (resp. [[dx2]] and [[dy2]]). Starting from one end and incrementing alternatively by [[space]] and [[length]] the dashes and dots are printed.
+
+It prints as many sets of dash-dot-dot as possible.
+
+<<o_line_basic.c : o_line_print_phantom()>>=
+	dx = (double) (x2 - x1);
+	dy = (double) (y2 - y1);
+	l = sqrt((dx * dx) + (dy * dy));
+
+	dx1 = (dx * length) / l;
+	dy1 = (dy * length) / l;
+
+	dx2 = (dx * space) / l;
+	dy2 = (dy * space) / l;
+	
+	d = 0;
+	xa = x1; ya = y1;
+	while((d + length + 3 * space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+
+		<<o_line_print_phantom() : printing a dash>>
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+
+		<<o_line_print_phantom() : printing a dot>>
+
+		d = d + space;
+		xa = xa + dx2;
+		ya = ya + dy2;
+
+		<<o_line_print_phantom() : printing a dot>>
+
+		d = d + space;
+		xa = xa + dx2;
+		ya = ya + dy2;
+	}
+
+@ 
+
+
+When the above condition is no more satisfied, then it is not possible to print a complete set of dash-dot-dot. However three cases are possible :
+@itemize @bullet
+@item
+it is possible to print a dash and a dot and a dot ;
+@item
+it is possible to print a dash and a dot ;
+@item
+it is possible to print the dash or a part of the original dash ;
+@end itemize
+
+<<o_line_basic.c : o_line_print_phantom()>>=	
+	if((d + length + 2 * space) < l) {
+		d = d + length;
+		xb = xa + dx1;
+		yb = ya + dy1;
+
+		<<o_line_print_phantom() : printing a dash>>
+		
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+
+		<<o_line_print_phantom() : printing a dot>>
+
+		d = d + space;
+		xa = xb + dx2;
+		ya = yb + dy2;
+
+		<<o_line_print_phantom() : printing a dot>>
+
+	} else {
+		if(d + length + space < l) {
+			d = d + length;
+			xb = xa + dx1;
+			yb = ya + dy1;
+
+			<<o_line_print_phantom() : printing a dash>>
+
+			d = d + space;
+			xa = xb + dx2;
+			ya = yb + dy2;
+
+			<<o_line_print_phantom() : printing a dot>>
+
+		} else {
+			if(d + length < l) {
+				xb = xa + dx1;
+				yb = ya + dy1;
+			} else {
+				xb = x2;
+				yb = y2;
+			}
+
+			<<o_line_print_phantom() : printing a dash>>
+			
+		}
+	}
+
+
+	fprintf(fp, "grestore\n");
+}
+
+@
+
+
+<<o_line_print_phantom() : printing a dash>>=
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
+		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
+		fprintf(fp, "stroke\n");
+
+@ 
+
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius by the [[line_width]] parameter.
+
+<<o_line_print_phantom() : printing a dot>>=
+		fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+		if(line_width <= 1) {
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils\n", line_width/2);
+		}
+		fprintf(fp, "0 360 arc\n");
+		fprintf(fp, "fill\n");
+
+@ 
+
+
+@section Function @code{o_line_print_old()}
+
+@defun o_line_print_old w_current fp o_current origin_x origin_y
+@end defun
+
+<<o_line_basic.c : o_line_print_old()>>=
+void
+o_line_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+	int origin_x, int origin_y)
+{
+  if (o_current == NULL) {
+    printf("got null in o_line_print\n");
+    return;
+  }
+
+  if (w_current->print_color) {
+    f_print_set_color(fp, o_current->color);
+  }
+
+  fprintf(fp, "newpath\n");
+
+  fprintf(fp, "%d mils %d mils moveto\n",
+          o_current->line_points->x1-origin_x,
+          o_current->line_points->y1-origin_y);
+  fprintf(fp, "%d mils %d mils lineto\n", 
+          o_current->line_points->x2-origin_x,
+          o_current->line_points->y2-origin_y);
+  fprintf(fp, "stroke\n");
+	
+}
+
+@ %def o_line_print_old
+
+
+@section Function @code{o_line_image_write()}
+
+@defun o_line_image_write w_current o_current origin_x origin_y color_mode
+@end defun
+
+<<o_line_basic.c : o_line_image_write()>>=
+void
+o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
+	int origin_x, int origin_y, int color_mode)
+{
+  int color;
+
+  if (o_current == NULL) {
+    printf("got null in o_line_print\n");
+    return;
+  }
+
+  if (color_mode == TRUE) {
+    color = o_image_geda2gd_color(o_current->color);
+  } else {
+    color = image_black;
+  }
+
+  /* assumes screen coords are already calculated correctly */
+#ifdef HAS_LIBGDGEDA
+  gdImageLine(current_im_ptr, 
+              o_current->line->screen_x[0],
+              o_current->line->screen_y[0],
+              o_current->line->screen_x[1],
+              o_current->line->screen_y[1], 
+              color);
+#endif
+}
+
+@ %def o_line_image_write
+
+
+@section Function @code{o_line_scale_world()}
+
+@defun o_line_scale_world w_current x_scale y_scale object
+@end defun
+
+<<o_line_basic.c : o_line_scale_world()>>=
+void
+o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale, OBJECT *object)
+{
+  int screen_x1, screen_y1;
+  int screen_x2, screen_y2;	
+  int left, right, top, bottom;
+
+  if (object == NULL) printf("lsw NO!\n");
+
+
+  /* Do world coords */
+  object->line->x[0] = object->line->x[0] * x_scale;
+  object->line->y[0] = object->line->y[0] * y_scale;
+  object->line->x[1] = object->line->x[1] * x_scale;
+  object->line->y[1] = object->line->y[1] * y_scale;
+
+  /* update screen coords */
+  WORLDtoSCREEN(w_current, object->line->x[0], 
+                object->line->y[0], 
+                &screen_x1,
+                &screen_y1);  
+	
+  object->line->screen_x[0] = screen_x1;
+  object->line->screen_y[0] = screen_y1;
+	
+  WORLDtoSCREEN(w_current, object->line->x[1], 
+                object->line->y[1], 
+                &screen_x2,
+                &screen_y2);  
+	
+  object->line->screen_x[1] = screen_x2;
+  object->line->screen_y[1] = screen_y2;
+
+  /* PB : have a problem here */
+  /* PB : do not know how to make scale on object_width */	
+
+  /* update bounding box */
+  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
+
+  object->left = left;
+  object->top = top;
+  object->right = right;
+  object->bottom = bottom;
+}
+
+@ %def o_line_scale_world
+
+
+@section Function @code{o_line_rotate()}
+
+@defun o_line_rotate w_current centerx centery angle object
+@end defun
+
+<<o_line_basic.c : o_line_rotate()>>=
+/* takes in screen coordinates for the centerx,y, and then does the rotate 
+ * in world space */
+/* also ignores angle argument... for now, rotate only in 90 degree 
+ * increments */
+void
+o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
+	OBJECT *object)
+{
+  int world_centerx, world_centery;
+  int newx, newy;
+
+  SCREENtoWORLD(w_current, centerx, centery, 
+                &world_centerx,
+                &world_centery);  
+	
+  /* translate object to origin */
+  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+	
+  rotate_point_90(object->line->x[0], object->line->y[0], angle,
+                  &newx, &newy);
+
+  object->line->x[0] = newx;
+  object->line->y[0] = newy;
+
+  rotate_point_90(object->line->x[1], object->line->y[1], angle,
+                  &newx, &newy);
+
+  object->line->x[1] = newx;
+  object->line->y[1] = newy;
+
+  o_line_translate_world(w_current, world_centerx, world_centery, object);
+}
+
+@ %def o_line_rotate
+
+
+@section Function @code{o_line_rotate_world()}
+
+@defun o_line_rotate_world w_current world_centerx world_centery angle object
+@end defun
+
+<<o_line_basic.c : o_line_rotate_world()>>=
+void
+o_line_rotate_world(TOPLEVEL *w_current, 
+	int world_centerx, int world_centery, int angle,
+	OBJECT *object)
+{
+  int newx, newy;
+	
+  if (angle == 0) 
+  return;
+
+
+  /* translate object to origin */
+  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+
+  rotate_point_90(object->line->x[0], object->line->y[0], angle,
+                  &newx, &newy);
+
+  object->line->x[0] = newx;
+  object->line->y[0] = newy;
+
+  rotate_point_90(object->line->x[1], object->line->y[1], angle,
+                  &newx, &newy);
+
+  object->line->x[1] = newx;
+  object->line->y[1] = newy;
+
+  o_line_translate_world(w_current, world_centerx, world_centery, object);
+}
+
+@ %def o_line_rotate_world
+
+
+@section Function @code{o_line_mirror()}
+
+@defun o_line_mirror w_current centerx centery object
+@end defun
+
+<<o_line_basic.c : o_line_mirror()>>=
+void
+o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
+{
+  int world_centerx, world_centery;
+
+  SCREENtoWORLD(w_current, centerx, centery, 
+                &world_centerx,
+                &world_centery);  
+
+  /* translate object to origin */
+  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+
+  object->line->x[0] = -object->line->x[0];
+
+  object->line->x[1] = -object->line->x[1];
+
+  o_line_translate_world(w_current, world_centerx, world_centery, object);
+}
+
+@ %def o_line_mirror
+
+
+@section Function @code{o_line_mirror_world()}
+
+@defun o_line_mirror_world w_current world_centerx world_centery object
+@end defun
+
+<<o_line_basic.c : o_line_mirror_world()>>=
+void
+o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
+                    int world_centery, OBJECT *object)
+{
+  /* translate object to origin */
+  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+
+  object->line->x[0] = -object->line->x[0];
+
+  object->line->x[1] = -object->line->x[1];
+
+  o_line_translate_world(w_current, world_centerx, world_centery, object);
+}
+
+@ %def o_line_mirror_world
+
+
+@section Function @code{o_line_modify()}
+
+@defun o_line_modify w_current object x y whichone
+@end defun
+
+<<o_line_basic.c : o_line_modify()>>=
+void
+o_line_modify(TOPLEVEL *w_current, OBJECT *object, 
+	     int x, int y, int whichone)
+{
+  int screen_x, screen_y;
+  int left, right, top, bottom;
+
+  object->line->x[whichone] = x;
+  object->line->y[whichone] = y;
+
+  WORLDtoSCREEN(w_current, 
+                object->line->x[whichone], object->line->y[whichone], 
+                &screen_x, &screen_y);  
+	
+  object->line->screen_x[whichone] = screen_x;
+  object->line->screen_y[whichone] = screen_y;
+
+  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
+	
+  object->left = left;
+  object->top = top;
+  object->right = right;
+  object->bottom = bottom;	
+}
+
+@ %def o_line_modify

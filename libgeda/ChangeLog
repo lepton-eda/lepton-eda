@@ -1,3 +1,12 @@
+2001-06-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/*: Added all the .nw files that were done by Patrick B.
+
+	* Started the slow switch to noweb (almost there, just have to 
+	  get the configure mechanism setup)
+	  
+	* scripts/*: Added noweb -> texi backend script written by Patrick B.
+	
 2001-03-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * Removed all Makefile.in files and configure

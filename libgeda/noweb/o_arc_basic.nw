@@ -1,0 +1,1713 @@
+@c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+
+@node File o_arc_basic.c,,,Top
+@chapter File @file{o_arc_basic.c}
+
+@section File header
+
+<<o_arc_basic.c : *>>=
+<<o_arc_basic.c : copyright and license>>
+
+/* DO NOT read or edit this file ! Use ../noweb/o_arc_basic.nw instead */
+
+<<o_arc_basic.c : include directives>>
+<<o_arc_basic.c : macros>>
+<<o_arc_basic.c : get_arc_bounds()>>        /* done */
+<<o_arc_basic.c : world_get_arc_bounds()>>  /* done */
+<<o_arc_basic.c : o_arc_add()>>             /* done */
+<<o_arc_basic.c : o_arc_recalc()>>          /* done */
+<<o_arc_basic.c : o_arc_recalc_world()>>    /* done */
+<<o_arc_basic.c : o_arc_read()>>            /* done */
+<<o_arc_basic.c : o_arc_save()>>
+<<o_arc_basic.c : enter_number()>>
+<<o_arc_basic.c : o_arc_copy()>>            /* done */
+<<o_arc_basic.c : o_arc_print()>>           /* done */
+<<o_arc_basic.c : o_arc_print_solid()>>     /* done */
+<<o_arc_basic.c : o_arc_print_dotted()>>    /* done */
+<<o_arc_basic.c : o_arc_print_dashed()>>    /* done */
+<<o_arc_basic.c : o_arc_print_center()>>    /* done */
+<<o_arc_basic.c : o_arc_print_phantom()>>   /* done */
+
+#if 0 /* original way of printing arcs, no longer used */
+<<o_arc_basic.c : o_arc_print_old()>>       /* done */
+#endif
+
+<<o_arc_basic.c : o_arc_image_write()>>
+<<o_arc_basic.c : o_arc_translate()>>       /* done */
+<<o_arc_basic.c : o_arc_translate_world()>> /* done */
+<<o_arc_basic.c : o_arc_rotate()>>          /* done */
+<<o_arc_basic.c : o_arc_rotate_world()>>    /* done */
+<<o_arc_basic.c : o_arc_mirror()>>          /* done */
+<<o_arc_basic.c : o_arc_mirror_world()>>    /* done */
+<<o_arc_basic.c : o_arc_modify()>>          /* done */
+
+@
+
+<<o_arc_basic.c : copyright and license>>=
+/* gEDA - GPL Electronic Design Automation
+ * libgeda - gEDA's library
+ * Copyright (C) 1998-2000 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+@ 
+
+<<o_arc_basic.c : include directives>>=
+#include <config.h>
+#include <stdio.h>
+#include <math.h>
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
+#endif
+
+#include "defines.h"
+#include "struct.h"
+#include "globals.h"
+#include "o_types.h"
+
+#include "colors.h"
+#include "funcs.h"
+
+#include "../include/prototype.h"
+
+@ 
+
+<<o_arc_basic.c : macros>>=
+#define VERSION_20000704 20000704
+
+@ %def VERSION_20000704
+
+
+@section Function @code{get_arc_bounds()}
+
+@defun get_arc_bounds w_current object left top right bottom
+This function calculates the smallest rectangle the arc can be drawn into. The [[OBJECT]] pointed by object is assumed to be an arc. The [[left]], [[top]], [[right]] and [[bottom]] pointed integers define this rectangle at the end of the function. It is expressed in screen units.
+@end defun
+
+The process is divided into two steps : the first step is to calculate the coordinates of the two ends of the arc and the coordinates of the center. They forms a first rectangle but (depending on the start angle and the sweep of the arc) not the right.
+
+<<o_arc_basic.c : get_arc_bounds()>>=
+void
+get_arc_bounds(TOPLEVEL *w_current, OBJECT *object,
+               int *left, int *top, int *right, int *bottom)
+{
+  int x1, y1, x2, y2, x3, y3;
+  int radius, start_angle, end_angle;
+  int i, angle;
+
+  radius      = object->arc->screen_width / 2;
+  start_angle = object->arc->start_angle % 360;
+  end_angle   = object->arc->end_angle   % 360;
+
+  x1 = object->arc->screen_x;
+  y1 = object->arc->screen_y;
+  x2 = x1 + radius * cos(start_angle * M_PI / 180);
+  y2 = y1 - radius * sin(start_angle * M_PI / 180);
+  x3 = x1 + radius * cos((start_angle + end_angle) * M_PI / 180);
+  y3 = y1 - radius * sin((start_angle + end_angle) * M_PI / 180);
+
+  *left   = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
+  *right  = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
+  *top    = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
+  *bottom = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
+
+@ %def get_arc_bounds
+
+
+The previous rectangle is extended to the final one by checking whether the arc is over a main axis (vertical or horizontal). If so, the rectangle is extended in these directions.
+
+<<o_arc_basic.c : get_arc_bounds()>>=
+
+  angle = ((int) (start_angle / 90)) * 90;
+  for(i = 0; i < 4; i++) {
+    angle = angle + 90;
+    if(angle < start_angle + end_angle) {
+      if(angle % 360 == 0)   *right  = x1 + radius;
+      if(angle % 360 == 90)  *top    = y1 - radius;
+      if(angle % 360 == 180) *left   = x1 - radius;
+      if(angle % 360 == 270) *bottom = y1 + radius;
+    } else {
+      break;
+    }
+  }
+
+  /* PB : bounding box has to take into account the width of the line it is
+     composed with, ie adding/substracting half the width to this box */
+  /* PB : but width is unknown here */	
+   
+}
+
+@
+
+
+@section Function @code{world_get_arc_bounds()}
+
+@defun world_get_arc_bounds w_current object left top right bottom
+This function calculates the smallest rectangle the arc can be drawn into. The [[OBJECT]] pointed by object is assumed to be an arc. The [[left]], [[top]], [[right]] and [[bottom]] pointed integers define this rectangle at the end of the function. It is expressed in world units.
+@end defun
+
+The process is divided into two steps : the first step is to calculate the coordinates of the two ends of the arc and the coordinates of the center. They forms a first rectangle but (depending on the start angle and the sweep of the arc) not the right.
+
+<<o_arc_basic.c : world_get_arc_bounds()>>=
+void
+world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left,
+                     int *top, int *right, int *bottom)
+{
+  int x1, y1, x2, y2, x3, y3;
+  int radius, start_angle, end_angle;
+  int i, angle;
+
+  radius      = object->arc->width / 2;
+  start_angle = object->arc->start_angle % 360;
+  end_angle   = object->arc->end_angle   % 360;
+
+  x1 = object->arc->x;
+  y1 = object->arc->y;
+  x2 = x1 + radius * cos(start_angle * M_PI / 180);
+  y2 = y1 + radius * sin(start_angle * M_PI / 180);
+  x3 = x1 + radius * cos((start_angle + end_angle) * M_PI / 180);
+  y3 = y1 + radius * sin((start_angle + end_angle) * M_PI / 180);
+
+  *left   = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
+  *right  = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
+  *bottom = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
+  *top    = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
+
+@ %def world_get_arc_bounds
+
+
+The previous rectangle is extended to the final one by checking whether the arc is over a main axis (vertical or horizontal). If so, the rectangle is extended in these directions.
+
+<<o_arc_basic.c : world_get_arc_bounds()>>=	
+  angle = ((int) (start_angle / 90)) * 90;
+  for(i = 0; i < 4; i++) {
+    angle = angle + 90;
+    if(angle < start_angle + end_angle) {
+      if(angle % 360 == 0)   *right  = x1 + radius;
+      if(angle % 360 == 90)  *top    = y1 + radius;
+      if(angle % 360 == 180) *left   = x1 - radius;
+      if(angle % 360 == 270) *bottom = y1 - radius;
+    } else {
+      break;
+    }
+  }
+
+  /* PB : same problem as above */
+	
+}
+
+@
+
+
+@section Function @code{o_arc_add()}
+
+@defun o_arc_add w_current object_list type color x y radius start_angle end_angle
+The function creates a new object of type arc and links it with the object pointed by parameter [[object_list]]. As the new object is then the last object of the list, its pointer is returned to update the end of list pointer in the calling function.
+The arc is defined by its center in parameters [[x]] and [[y]]. The [[radius]] parameter specifies the radius of the arc. The start angle is given by [[start_angle]] and the end angle by [[end_angle]].
+The line and fill type of the created arc are set to default.
+@end defun
+
+All dimensions are in world unit, except [[start_angle]] and [[end_angle]] in degrees.
+
+A new object of type [[OBJECT]] is allocated. Its type and color are initilized. The description of the arc characteristics are stored in a new [[ARC]] structure.
+
+<<o_arc_basic.c : o_arc_add()>>=
+/* now fixed for world_coords */
+OBJECT *
+o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
+          char type, int color,
+          int x, int y, int radius, int start_angle, int end_angle)
+{
+
+  OBJECT *new_node;
+
+  new_node = s_basic_init_object("arc");
+  new_node->type = type;
+  new_node->color = color;
+
+  new_node->arc = (ARC *) malloc(sizeof(ARC));
+
+@ %def o_arc_add
+
+
+The [[ARC]] structure is initialized with the parameters. A default initialization is performed for the line and fill type to avoid misunderstood.
+
+The functions relative to the use of the object are sets.
+	
+<<o_arc_basic.c : o_arc_add()>>=
+  /* World coordinates */
+  new_node->arc->x      = x; 
+  new_node->arc->y      = y; 
+  new_node->arc->width  = 2 * radius;
+  new_node->arc->height = 2 * radius;
+
+	/* PB : must check the sign of start_angle, end_angle ... */
+  if(end_angle < 0) {
+    start_angle = start_angle + end_angle;
+    end_angle = -end_angle;
+  }
+  if(start_angle < 0) start_angle = 360 + start_angle;
+  
+  new_node->arc->start_angle = start_angle;
+  new_node->arc->end_angle   = end_angle;
+
+	/* Default init */
+  o_set_line_options(w_current, new_node,
+                     END_NONE, TYPE_SOLID, 0, -1, -1);
+  o_set_fill_options(w_current, new_node,
+                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+	
+  o_arc_recalc(w_current, new_node);
+
+	/* new_node->graphical = arc; eventually */
+	
+	/* TODO: questionable cast */
+  new_node->draw_func = (void *) arc_draw_func;  
+  /* TODO: questionable cast */
+  new_node->sel_func = (void *) select_func;
+
+@ 
+
+
+The new object is linked to the object given in parameter [[object_list]] and then returned as a pointer to the calling function.
+
+<<o_arc_basic.c : o_arc_add()>>=	
+  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
+	
+  return(object_list);
+}
+
+@
+
+
+@section Function @code{o_arc_recalc()}
+
+@defun o_arc_recalc w_current o_current
+This function recalculates internal parameters in screen units of an object containing an arc. The object is given as parameters [[o_current]]. The calculation is done according to the zoom factor detailed in the [[w_current]] pointed structure.
+It also recalculates the [[OBJECT]] specific fields and the bounding box of the arc.
+@end defun
+
+The [[OBJECT]] specific fields are handled by the function [[o_object_recalc()]] whereas bounding box - in screen units - is recalculated with the [[get_arc_bounds()]] function.
+
+<<o_arc_basic.c : o_arc_recalc()>>=
+void
+o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  int screen_x1, screen_y1, screen_x2, screen_y2;	
+  int left, right, top, bottom;
+	
+  if (o_current->arc == NULL) {
+    return;
+  }
+
+  /* update the screen_x and screen_y fields of the arc */
+  WORLDtoSCREEN(w_current, o_current->arc->x, o_current->arc->y, 
+                &screen_x1, &screen_y1);  
+
+  o_current->arc->screen_x = screen_x1; /* x coord */
+  o_current->arc->screen_y = screen_y1; /* y coord */
+
+  /* update the screen_width and screen_height fields of the arc */
+  WORLDtoSCREEN(w_current,
+                o_current->arc->x + o_current->arc->width,
+                o_current->arc->y - o_current->arc->height, 
+                &screen_x2, &screen_y2);  
+
+  o_current->arc->screen_width  = screen_x2 - screen_x1; /* width */
+  o_current->arc->screen_height = screen_y2 - screen_y1; /* height */
+
+  /* recalculates the line type information in o_current */
+  o_object_recalc(w_current, o_current);
+
+  /* recalculates the bounding box */
+  get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  o_current->left   = left;
+  o_current->top    = top;
+  o_current->right  = right;
+  o_current->bottom = bottom;
+
+}
+
+@ %def o_arc_recalc
+
+
+@section Function @code{o_arc_recalc_world()}
+
+@defun o_arc_recalc_world w_current o_current
+This function recalculates internal parameters in world units of an object containing an arc. The object is given as parameters [[o_current]]. The calculation is done according to the zoom factor detailed in the [[w_current]] pointed structure.
+@end defun
+
+The bounding box of the arc is recalculated and expressed in screen units.
+
+<<o_arc_basic.c : o_arc_recalc_world()>>=
+void
+o_arc_recalc_world(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  int world_x1, world_y1, world_x2, world_y2;	
+  int left, right, top, bottom;
+	
+  if (o_current->arc == NULL) {
+    return;
+  }
+
+  /* update the x and y fields of the arc */
+  SCREENtoWORLD(w_current, 
+                o_current->arc->screen_x, o_current->arc->screen_y, 
+                &world_x1, &world_y1);  
+  o_current->arc->x = world_x1; /* x coord */
+  o_current->arc->y = world_y1; /* y coord */
+
+  /* update the width and height fields of the arc */
+  SCREENtoWORLD(w_current,
+                o_current->arc->screen_x + o_current->arc->screen_width,
+                o_current->arc->screen_y + o_current->arc->screen_height,
+                &world_x2, &world_y2);  
+  o_current->arc->width  = world_x2 - world_x1; /* width */
+  o_current->arc->height = world_y1 - world_y2; /* height */
+
+  /* recalculates the bounding box in screen units */
+  get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  o_current->left   = left;
+  o_current->top    = top;
+  o_current->right  = right;
+  o_current->bottom = bottom;
+
+}
+
+@ %def o_arc_recalc_world
+
+
+@section Function @code{o_arc_read()}
+
+@defun o_arc_read w_current object_list buf version
+This function reads a formatted text buffer describing an arc in the gEDA file format and initializes the corresponding object. This arc is linked to the end of the [[object_list]] pointed list.
+Depending on the version of the file format the data extraction is performed differently : currently pre-20000704 and 20000704 on one hand and post-20000704 file format version on the other hand are supported. The version is specified in string pointed by [[version]].
+@end defun
+
+To get information on the various file formats have a look to the @file{fileformats.html} document.
+
+The object is initialized with the functions [[o_set_line_options()]] and [[o_set_fill_options()]]. The second one is only used to put initialize unused values for an arc as an arc can not be filled.
+
+The arc is allocated initialized and linked with the function [[o_arc_add()]].
+
+A negative or null radius is not allowed.
+
+<<o_arc_basic.c : o_arc_read()>>=
+OBJECT *
+o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+		   char *version)
+{
+  char type; 
+  int x1, y1;
+  int radius;
+  int start_angle, end_angle;
+  int color;
+  int arc_width, arc_length, arc_space;
+  OBJECT_TYPE arc_type;
+  OBJECT_END arc_end;
+  long int ver;
+
+  <<o_arc_read() : file format version compatibility>>
+
+  /* Error check */
+  if (radius <= 0) {
+    fprintf(stderr,
+            "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+            type, x1, y1, radius, start_angle, end_angle, color);
+    s_log_message
+      ("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+       type, x1, y1, radius, start_angle, end_angle, color);
+  }
+	
+  if (color < 0 || color > MAX_COLORS) {
+    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+    s_log_message("Found an invalid color [ %s ]\n", buf);
+    s_log_message("Setting color to WHITE\n");
+    color = WHITE;
+  }
+
+  /* Allocation and initialization */
+  object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,
+                          x1, y1, radius, start_angle, end_angle);
+  o_set_line_options(w_current, object_list,
+                     arc_end, arc_type, arc_width, arc_length,
+                     arc_space);
+  o_set_fill_options(w_current, object_list,
+                     FILLING_HOLLOW, -1, -1, -1,
+                     -1, -1);
+
+  return(object_list);
+}
+
+@ %def o_arc_read
+
+
+Depending on the version of the file format used to describe this arc, the buffer is parsed differently. The unknown parameters of the less restrictive - the oldest - file format are set to common values.
+
+<<o_arc_read() : file format version compatibility>>=
+
+  ver = strtol(version, NULL, 10);
+  if(ver <= VERSION_20000704) {
+    sscanf(buf, "%c %d %d %d %d %d %d", &type,
+           &x1, &y1, &radius, &start_angle, &end_angle, &color);
+
+    arc_width = 0;
+    arc_end   = END_NONE;
+    arc_type  = TYPE_SOLID;
+    arc_space = -1;
+    arc_length= -1;
+  } else {
+    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
+           &x1, &y1, &radius, &start_angle, &end_angle, &color,
+           &arc_width, &arc_end, &arc_type, &arc_length, &arc_space);
+
+  }
+
+@ 
+
+
+@section Function @code{o_arc_save()}
+
+@defun o_arc_save buf object
+@end defun
+
+<<o_arc_basic.c : o_arc_save()>>=
+/* EEK! there is a nasty non-snap bug here! */
+/* Basically the center isn't being snapped */
+/* in complex objects only it seems... */
+char *o_arc_save(char *buf, OBJECT *object)
+{
+  int x, y;
+  int radius;
+  int color;
+  int start_angle, end_angle;
+  int arc_width, arc_length, arc_space;
+  OBJECT_END arc_end;
+  OBJECT_TYPE arc_type;
+
+  radius = object->arc->width / 2;
+  x      = object->arc->x;
+  y      = object->arc->y;
+  start_angle = object->arc->start_angle;
+  end_angle   = object->arc->end_angle;
+	
+  /* Save the right color */
+  if (object->saved_color == -1) {
+    color = object->color;
+  } else {
+    color = object->saved_color;
+  }
+
+  arc_width  = object->line_width;
+  arc_end    = object->line_end;
+  arc_type   = object->line_type;
+  arc_length = object->line_length;
+  arc_space  = object->line_space;
+	
+  sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
+          x, y, radius, start_angle, end_angle, color,
+          arc_width, arc_end, arc_type, arc_length, arc_space);
+  return(buf);
+}
+
+@ %def o_arc_save
+
+
+@section Function @code{enter_number()}
+
+@defun enter_number
+@end defun
+
+<<o_arc_basic.c : enter_number()>>=
+/* this routine is a hack and should be taken out and shot */
+int
+enter_number()
+{
+  int i;
+  char c;
+  char string[90];
+
+  i = 0;
+  c = getchar();
+  while( c != '\n') {
+    string[i++] = c;
+    c = getchar();
+  }
+  string[i] = '\0';
+  return(atoi(string));
+}
+           
+@ %def enter_number
+
+
+@section Function @code{o_arc_copy()}
+
+@defun o_arc_copy w_current list_tail o_current
+This function creates a new object representing an arc. The values of the [[o_current]] pointed [[OBJECT]] are then copied to the new object. The arc, the line options are initialized whereas the fill options are initialized to passive values - as an arc can not be filled.
+The new object is added to the end of the object list given by [[list_tail]]. A pointer on it is returned for update purpose in the calling function.
+@end defun
+
+<<o_arc_basic.c : o_arc_copy()>>=
+OBJECT *
+o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail,
+		   OBJECT *o_current)
+{
+  OBJECT *new_obj;
+  ATTRIB *a_current;
+  int color;
+
+  if (o_current->saved_color == -1) {
+    color = o_current->color;
+  } else {
+    color = o_current->saved_color;
+  }
+
+  new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, color,
+                      o_current->arc->x, o_current->arc->y, 
+                      o_current->arc->width / 2,
+                      o_current->arc->start_angle,
+                      o_current->arc->end_angle);
+  o_set_line_options(w_current, new_obj,
+                     o_current->line_end, o_current->line_type,
+                     o_current->line_width,
+                     o_current->line_length, o_current->line_space);
+  o_set_fill_options(w_current, new_obj,
+                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+	
+  a_current = o_current->attribs;
+  if (a_current) {
+    while (a_current) {
+
+      /* head attrib node has prev = NULL */
+      if (a_current->prev != NULL) {
+        a_current->copied_to = new_obj;
+      }
+      a_current = a_current->next;
+    }
+  }
+
+  return(new_obj);
+}
+
+@ %def o_arc_copy
+
+
+@section Function @code{o_arc_print()}
+
+@defun o_arc_print w_current fp o_current origin_x origin_y
+This function writes in a postscript file the arc described by the [[o_current]] pointed object.
+The postscript resulting file is described by the [[fp]] file pointer.
+@end defun
+
+Parameters of the arc are extracted from object pointed by [[o_current]] and formatted to suit future calls to specialized arc printing functions.
+
+<<o_arc_basic.c : o_arc_print()>>=
+void
+o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+			int origin_x, int origin_y)
+{
+  int x, y, radius, start_angle, end_angle;
+  int color;
+  int arc_width, space, length;
+  void (*outl_func)() = NULL;
+
+  if (o_current == NULL) {
+    printf("got null in o_arc_print\n");
+    return;
+  }
+	
+  x      = o_current->arc->x;
+  y      = o_current->arc->y;
+  radius = o_current->arc->width / 2;
+  start_angle = o_current->arc->start_angle;
+  end_angle   = o_current->arc->end_angle;
+  color  = o_current->color;
+
+  <<o_arc_print() : printing outline>>
+
+}
+
+@ %def o_arc_print
+
+
+Depending on the type of the line for this particular arc, the appropriate function is chosen among [[o_arc_print_solid()]], [[o_arc_print_dotted()]], [[o_arc_print_dashed()]], [[o_arc_print_center]] and [[o_arc_print_phantom()]].
+
+The needed parameters for each of these types are extracted from the [[o_current]] object. Depending on the type, unused parameters are set to -1.
+
+In the eventuality of a length and/or space null, the arc is printed solid to avoid and endless loop produced by other functions.
+
+<<o_arc_print() : printing outline>>=
+
+#if 0  /* was causing arcs which are solid to be much thinner compared to */
+  /* lines, boxes, also of zero width */
+  if (o_current->line_width > 0) {
+    arc_width = o_current->line_width;
+  } else {
+    arc_width = 1;
+  }
+#endif
+  arc_width = o_current->line_width;	/* Added instead of above */
+  length = o_current->line_length;
+  space  = o_current->line_space;
+	
+  switch(o_current->line_type) {
+    case(TYPE_SOLID):
+      length = -1; space = -1;
+      outl_func = (void *) o_arc_print_solid;
+      break;
+			
+    case(TYPE_DOTTED):
+      length = -1;
+      outl_func = (void *) o_arc_print_dotted;
+      break;
+			
+    case(TYPE_DASHED):
+      outl_func = (void *) o_arc_print_dashed;
+      break;
+			
+    case(TYPE_CENTER):
+      outl_func = (void *) o_arc_print_center;
+      break;
+			
+    case(TYPE_PHANTOM):
+      outl_func = (void *) o_arc_print_phantom;
+      break;
+			
+    case(TYPE_ERASE):
+      /* Unused for now, print it solid */
+      length = -1; space = -1;
+      outl_func = (void *) o_arc_print_solid;
+      break;
+  }
+
+  if((space == 0) || (length == 0)) {
+    length = -1; space = -1;
+    outl_func = (void *) o_arc_print_solid;
+  }
+
+  (*outl_func)(w_current, fp,
+               x - origin_x, y - origin_x, radius,
+               start_angle, end_angle,
+               color, arc_width, length, space, origin_x, origin_y);
+
+@ 
+
+
+@section Function @code{o_arc_print_solid()}
+
+@defun o_arc_print_solid w_current fp x y radius angle1 angle2 color arc_width length space origin_x origin_y
+This function prints an arc when a solid line type is required. The arc is defined by its center in [[x]] and [[y]], its radius in [[radius]] and the start and end angles of the arc on the circle.
+The postscript file is defined by the file pointer [[fp]].
+The parameters [[length]] and [[space]] are ignored whereas [[arc_width]] specifies the width of the printed line.
+@end defun
+
+All dimensions are in mils, except [[angle1]] and [[angle2]] in degrees.
+
+<<o_arc_basic.c : o_arc_print_solid()>>=
+void
+o_arc_print_solid(TOPLEVEL *w_current, FILE *fp,
+                  int x, int y, int radius,
+                  int angle1, int angle2,
+                  int color,
+                  int arc_width, int length, int space,
+                  int origin_x, int origin_y)
+{
+  fprintf(fp, "gsave\n");
+  if (w_current->print_color) {
+    f_print_set_color(fp, color);
+  }
+
+  /* PB/AVH inverting angle2 if < 0 and changing angle1 accordingly */
+  if (angle2 < 0) {
+    angle1 = angle1 + angle2;
+    angle2 = -angle2;
+  }
+	
+  f_print_set_line_width(fp, arc_width);
+
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", x, y);
+  fprintf(fp, "%d mils\n", radius);
+  fprintf(fp, "%d %d arc\n", angle1, angle1 + angle2);
+  fprintf(fp, "stroke\n");
+
+  fprintf(fp, "grestore\n");
+}
+
+@ %def o_arc_print_solid
+
+
+@section Function @code{o_arc_print_dotted()}
+
+@defun o_arc_print_dotted w_current fp x y radius angle1 angle2 color arc_width length space origin_x origin_y
+This function prints an arc when a dotted line type is required. The arc is defined by its center in [[x]] and [[y]], its radius in [[radius]] and the start and end angles of the arc on the circle.
+The postscript file is defined by the file pointer [[fp]].
+The parameter [[length]] is ignored whereas [[arc_width]] specifies the diameter of the dots of the printed line and [[space]] the distance between two dots.
+@end defun
+
+A negative value for [[space]] leads to an endless loop.
+
+All dimensions are in mils, except [[angle1]] and [[angle2]] in degrees.
+
+The function sets the color the line will be printed with.
+
+<<o_arc_basic.c : o_arc_print_dotted()>>=
+void
+o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
+                   int x, int y, int radius,
+                   int angle1, int angle2,
+                   int color,				   
+                   int arc_width, int length, int space,
+                   int origin_x, int origin_y)
+{
+  double xa, ya;
+  int da, d;
+
+
+  fprintf(fp, "gsave\n");
+  if (w_current->print_color) {
+    f_print_set_color(fp, color);
+  }
+
+  /* PB : is the width relevant for a dot (circle) ? */	
+  f_print_set_line_width(fp, arc_width);
+
+@ %def o_arc_print_dotted
+
+
+Depending on the radius of the arc, the [[space]] parameter is changed into a small angle [[da]]. Starting from [[angle1]] - the start angle - the dots are printed along the arc by increments of this new angle.
+
+As [[da]] is rounded as an integer, it can take a null value which will make the function enter an endless loop. In such a case, the arc is printed solid. The [[da]] variable should never be negative except if [[space]] is negative.
+
+<<o_arc_basic.c : o_arc_print_dotted()>>=  
+  /* Inverting angle2 if < 0 and changing angle1 accordingly */
+  /* the loop test assume that da > 0 */
+  if (angle2 < 0) {
+    angle1 = angle1 + angle2;
+    angle2 = -angle2;
+  }
+  da = (int) ((space * 180) / (M_PI * ((double) radius)));
+
+	/* If da or db too small for arc to be displayed as dotted,
+           draw a solid arc */
+  if (da <= 0) {
+    o_arc_print_solid(w_current, fp,
+                      x, y, radius,
+                      angle1, angle2,
+                      color,
+                      arc_width, length, space, origin_x, origin_y);
+    return;
+  }
+
+  d = angle1;
+  while (d < (angle2 + angle1)) {
+    xa = ((double) x) + ((double) radius) * cos(d * M_PI / 180);
+    ya = ((double) y) + ((double) radius) * sin(d * M_PI / 180);
+
+    <<o_arc_print_dotted() : printing a dot>>
+
+        d = d + da;
+  }
+
+  fprintf(fp, "grestore\n");
+	
+}
+
+@ %def o_arc_print_dotted
+
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[arc_width]] parameter.
+
+<<o_arc_print_dotted() : printing a dot>>=
+  /* PB : problem corrected : diameter of printed dots */
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+  if (arc_width <= 1) {
+    fprintf(fp, "2 mils\n");
+  } else {
+    fprintf(fp, "%d mils\n", (int) arc_width/2);
+  }
+  fprintf(fp, "0 360 arc\n");
+  fprintf(fp, "fill\n");
+
+/* PB : end */		
+
+@ 
+
+@section Function @code{o_arc_print_dashed()}
+
+@defun o_arc_print_dashed w_current fp x y radius angle1 angle2 color arc_width length space origin_x origin_y
+This function prints an arc when a dashed line type is required. The arc is defined by its center in [[x]] and [[y]], its radius in [[radius]] and the start and end angles of the arc on the circle.
+The postscript file is defined by the file pointer [[fp]].
+The parameter [[arc_width]] specifies the diameter of the dots of the printed line.
+@end defun
+
+A negative value for [[space]] or [[length]] leads to an endless loop.
+
+All dimensions are in mils, except [[angle1]] and [[angle2]] in degrees.
+
+The function sets the color the line will be printed with.
+
+<<o_arc_basic.c : o_arc_print_dashed()>>=
+void
+o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
+                   int x, int y, int radius,
+                   int angle1, int angle2,
+                   int color,				   
+                   int arc_width, int length, int space,
+                   int origin_x, int origin_y)
+{
+  int da, db, a1, a2, d;
+
+  fprintf(fp, "gsave\n");
+  if (w_current->print_color) {
+    f_print_set_color(fp, color);
+  }
+
+  f_print_set_line_width(fp, arc_width);
+
+@ %def o_arc_print_dashed
+
+
+Depending on the radius of the arc, the [[space]] (resp. [[length]]) parameter is changed into a small angle [[da]] (resp. [[db]]). Starting from [[angle1]] - the start angle - the dashes are printed along the arc by increments of these new angles.
+
+As [[da]] (resp. [[db]]) is rounded as an integer, it can take a null value which will make the function enter an endless loop. In such a case, the arc is printed solid. The [[da]] (resp. [[db]]) variable should never be negative except if [[space]] (resp. [[length]]) is negative.
+
+It prints as many dashes of length [[length]] as possible.
+
+<<o_arc_basic.c : o_arc_print_dashed()>>=
+
+  /* Inverting angle2 if < 0 and changing angle1 accordingly */
+  /* the loop test assume that da > 0 */
+  if (angle2 < 0) {
+    angle1 = angle1 + angle2;
+    angle2 = -angle2;
+  }
+  da = (int) ((length * 180) / (M_PI * ((double) radius)));
+  db = (int) ((space  * 180) / (M_PI * ((double) radius)));
+
+  /* If da or db too small for arc to be displayed as dotted,
+           draw a solid arc */
+  if ((da <= 0) || (db <= 0)) {
+    o_arc_print_solid(w_current, fp,
+                      x, y, radius, 
+                      angle1, angle2,
+                      color,
+                      arc_width, length, space, origin_x, origin_y);
+    return;
+  }
+	
+  d = angle1;
+  while ((d + da + db) < (angle1 + angle2)) {
+    a1 = d;
+    d = d + da;
+
+    <<o_arc_print_dashed() : printing a dash>>
+
+        d = d + db;
+  }
+
+@ 
+
+
+When the above condition is no more satisfied, then it is not possible to print a dash of length [[length]] and the following [[space]]. However it may be possible to print the complete dash or a shorter one.
+
+<<o_arc_basic.c : o_arc_print_dashed()>>=
+
+  if ((d + da) < (angle1 + angle2)) {
+    a1 = d;
+    a2 = da;
+  } else {
+    a1 = d;
+    a2 = (angle1 + angle2) - d;
+  }
+
+  <<o_arc_print_dashed() : printing a dash>>
+
+  fprintf(fp, "grestore\n");
+
+}
+
+@
+
+<<o_arc_print_dashed() : printing a dash>>=
+
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", x, y);
+  fprintf(fp, "%d mils\n", radius);
+  fprintf(fp, "%d %d arc\n", a1, a1 + da);
+  fprintf(fp, "stroke\n");
+@ 
+
+
+@section Function @code{o_arc_print_center()}
+
+@defun o_arc_print_center w_current fp x y radius angle1 angle2 color arc_width length space origin_x origin_y
+This function prints an arc when a centered line type is required. The arc is defined by its center in [[x]] and [[y]], its radius in [[radius]] and the start and end angles of the arc on the circle.
+The postscript file is defined by the file pointer [[fp]].
+The parameter [[arc_width]] specifies the diameter of the dots and the width of the dashes of the printed line.
+@end defun
+
+A negative value for [[space]] or [[length]] leads to an endless loop.
+
+All dimensions are in mils, except [[angle1]] and [[angle2]] in degrees.
+
+The function sets the color in which the line will be printed with.
+
+<<o_arc_basic.c : o_arc_print_center()>>=
+void
+o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
+                   int x, int y, int radius, 
+                   int angle1, int angle2,
+                   int color,				   
+                   int arc_width, int length, int space,
+                   int origin_x, int origin_y)
+{
+  double xa, ya;
+  int da, db, a1, a2, d;
+
+  fprintf(fp, "gsave\n");
+  if (w_current->print_color) {
+    f_print_set_color(fp, color);
+  }
+
+  f_print_set_line_width(fp, arc_width);
+
+@ %def o_arc_print_center
+
+
+Depending on the radius of the arc, the [[space]] (resp. [[length]]) parameter is changed into a small angle [[da]] (resp. [[db]]). Starting from [[angle1]] - the start angle - the dashes are printed along the arc by increments of these new angles.
+
+As [[da]] (resp. [[db]]) is rounded as an integer, it can take a null value which will make the function enter an endless loop. In such a case, the arc is printed solid. The [[da]] (resp. [[db]]) variable should never be negative except if [[space]] (resp. [[length]]) is negative.
+
+It prints as many sets of dash-dot as possible.
+
+<<o_arc_basic.c : o_arc_print_center()>>=
+ 
+    /* Inverting angle2 if < 0 and changing angle1 accordingly */
+    /* the loop test assume that da > 0 */
+    if (angle2 < 0) {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
+
+    da = (int) ((length * 180) / (M_PI * ((double) radius)));
+    db = (int) ((space  * 180) / (M_PI * ((double) radius)));
+
+    /* If da or db too small to be displayed, draw an arc */
+    if ((da <= 0) || (db <= 0)) {
+      o_arc_print_solid(w_current, fp,
+                        x, y, radius,
+                        angle1, angle2,
+                        color,
+                        arc_width, length, space, origin_x, origin_y);
+      return;
+    }
+
+    d = angle1;
+    while ((d + da + 2 * db) < (angle1 + angle2)) {
+      a1 = d;
+      d = d + da;
+
+      <<o_arc_print_center() : printing a dash>>
+		
+          d = d + db;
+      xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+
+      <<o_arc_print_center() : printing a dot>>
+		
+          d = d + db;
+    }
+
+@ 
+
+
+When the above condition is no more satisfied, then it is not possible to print a dash of length [[length]]. However two cases are possible :
+@itemize @bullet
+@item
+it is possible to print the dash and the dot ;
+@item
+it is possible to print the dash or a part of the original dash ;
+@end itemize
+
+<<o_arc_basic.c : o_arc_print_center()>>=
+ 
+    if ((d + da) < (angle1 + angle2)) {
+      a1 = d;
+      a2 = da;
+		
+      d = d + da;
+    } else {
+      a1 = d;
+      a2 = (angle1 + angle2) - d;
+		
+      d = d + da;
+    }
+
+    <<o_arc_print_center() : printing a dash>>
+	
+    if ((d + db) < (angle1 + angle2)) {
+      xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+
+      <<o_arc_print_center() : printing a dot>>
+		
+    }
+
+    fprintf(fp, "grestore\n");
+}
+
+@ 
+
+
+<<o_arc_print_center() : printing a dash>>=
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", x, y);
+  fprintf(fp, "%d mils\n", radius);
+  fprintf(fp, "%d %d arc\n", (int) a1, (int) a1 + da);
+  fprintf(fp, "stroke\n");
+
+@ 
+
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[arc_width]] parameter.
+
+<<o_arc_print_center() : printing a dot>>=
+  /* PB : problem corrected : diameter of printed dots */
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+  if (arc_width <= 1) {
+    fprintf(fp, "2 mils\n");
+  } else {
+    fprintf(fp, "%d mils\n", (int) arc_width/2);
+  }
+  fprintf(fp, "0 360 arc\n");
+  fprintf(fp, "fill\n");
+  /* PB : end */		
+
+@ 
+
+
+@section Function @code{o_arc_print_phantom()}
+
+@defun o_arc_print_phantom w_current fp x y radius angle1 angle2 color arc_width length space origin_x origin_y
+This function prints an arc when a phantom line type is required. The arc is defined by its center in [[x]] and [[y]], its radius in [[radius]] and the start and end angles of the arc on the circle.
+The postscript file is defined by the file pointer [[fp]].
+The parameter [[arc_width]] specifies the diameter of the dots and the width of the dashes of the printed line.
+@end defun
+
+A negative value for [[space]] or [[length]] leads to an endless loop.
+
+All dimensions are in mils, except [[angle1]] and [[angle2]] in degrees.
+
+The function sets the color in which the line will be printed with.
+
+<<o_arc_basic.c : o_arc_print_phantom()>>=
+void
+o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp,
+                    int x, int y, int radius,
+                    int angle1, int angle2,
+                    int color,
+                    int arc_width, int length, int space,
+                    int origin_x, int origin_y)
+{
+  double xa, ya;
+  int da, db, a1, a2, d;
+
+  fprintf(fp, "gsave\n");
+  if (w_current->print_color) {
+    f_print_set_color(fp, color);
+  }
+
+  f_print_set_line_width(fp, arc_width);
+
+@ %def o_arc_print_phantom
+
+
+Depending on the radius of the arc, the [[space]] (resp. [[length]]) parameter is changed into a small angle [[da]] (resp. [[db]]). Starting from [[angle1]] - the start angle - the dashes are printed along the arc by increments of these new angles.
+
+As [[da]] (resp. [[db]]) is rounded as an integer, it can take a null value which will make the function enter an endless loop. In such a case, the arc is printed solid. The [[da]] (resp. [[db]]) variable should never be negative except if [[space]] (resp. [[length]]) is negative.
+
+It prints as many sets of dash-dot-dot as possible.
+
+<<o_arc_basic.c : o_arc_print_phantom()>>=
+    /* Inverting angle2 if < 0 and changing angle1 accordingly */
+    /* the loop test assume that da > 0 */
+    if (angle2 < 0) {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
+    da = (int) ((length * 180) / (((double) radius) * M_PI));
+    db = (int) ((space  * 180) / (((double) radius) * M_PI));
+
+    /* If da or db too small for arc to be displayed as dotted,
+           draw a solid arc */
+    if ((da <= 0) || (db <= 0)) {
+      o_arc_print_solid(w_current, fp,
+                        x, y, radius,
+                        angle1, angle2,
+                        color,						  
+                        arc_width, length, space, origin_x, origin_y);
+      return;
+    }
+
+    d = angle1;
+    while ((d + da + 3 * db) < (angle1 + angle2)) {
+      a1 = d;
+      d = d + da;
+
+      <<o_arc_print_phantom() : printing a dash>>
+
+          d = d + db;
+      xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+
+      <<o_arc_print_phantom() : printing a dot>>
+
+          d = d + db;
+
+      xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+
+      <<o_arc_print_phantom() : printing a dot>>
+
+          d = d + db;
+    }
+
+@ 
+
+
+When the above condition is no more satisfied, then it is not possible to print a dash of length [[length]]. However two cases are possible :
+@itemize @bullet
+@item
+it is possible to print a dash and a dot and a dot ;
+@item
+it is possible to print a dash and a dot ;
+@item
+it is possible to print the dash or a part of the original dash ;
+@end itemize
+
+<<o_arc_basic.c : o_arc_print_phantom()>>=  
+    if ((d + da) < (angle1 + angle2)) {
+      a1 = d;
+      a2 = da;
+      d = d + da;
+    } else {
+      a1 = d;
+      a2 = (angle1 + angle2) - d;
+      d = d + da;
+    }
+
+    <<o_arc_print_phantom() : printing a dash>>
+
+    if ((d + db) < (angle1 + angle2)) {
+      d = d + db;
+		
+      xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+
+      <<o_arc_print_phantom() : printing a dot>>
+    }
+
+    if ((d + db) < (angle1 + angle2)) {
+      d = d + db;
+		
+      xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+		
+      <<o_arc_print_phantom() : printing a dot>>
+		
+    }
+
+    fprintf(fp, "grestore\n");
+}
+
+@
+
+
+<<o_arc_print_phantom() : printing a dash>>=
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", x, y);
+  fprintf(fp, "%d mils\n",(int) radius);
+  fprintf(fp, "%d %d arc\n", (int) a1, (int) a1 + da);
+  fprintf(fp, "stroke\n");
+@ 
+
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[arc_width]] parameter.
+
+<<o_arc_print_phantom() : printing a dot>>=
+  /* PB : problem corrected : diameter of printed dots */
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+  if (arc_width <= 1) {
+    fprintf(fp, "2 mils\n");
+  } else {
+    fprintf(fp, "%d mils\n", (int) arc_width/2);
+  }
+  fprintf(fp, "0 360 arc\n");
+  fprintf(fp, "fill\n");
+  /* PB : end */
+
+@ 
+
+
+@section Function @code{o_arc_print_old()}
+
+@defun o_arc_print_old w_current fp o_current origin_x origin_y
+This function prints a solid arc in a Postscript file indepedentely of its line type. It is basically the old way to manage the arc printing.
+This function is now replaced by the [[o_arc_print()]] function.
+@end defun
+
+<<o_arc_basic.c : o_arc_print_old()>>=
+void
+o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+                int origin_x, int origin_y)
+{
+  int radius;
+  int start_angle, end_angle;
+  int awidth, aheight;
+  int x, y;
+
+  if (o_current == NULL) {
+    printf("got null in o_arc_print\n");
+    return;
+  }
+
+  fprintf(fp, "gsave\n");
+  if (w_current->print_color) {
+    f_print_set_color(fp, o_current->color);
+  }
+
+  f_print_set_line_width(fp, o_current->line_width);
+
+  awidth = o_current->arc->width;
+  aheight = o_current->arc->height;
+
+  radius = abs(aheight - o_current->arc->y)/2;
+
+  /* hack hack hack */
+  /* the snap_grid here is a safety for arcs inside complex objects */
+  /* which are not snapped to the grid */
+  /* ALL arcs centers will be snapped to the center */
+  /* hack hack hack */
+  /* Geee I wish there was a better solution */
+  /* well for now, if you print the complex structure that's in memory */
+  /* then the arc will be properly snapped */
+  /*x = snap_grid(w_current, o_current->x+radius);
+    y = snap_grid(w_current, o_current->y-radius);*/
+
+  x = (o_current->arc->x+radius);
+  y = (o_current->arc->y-radius);
+
+  start_angle = o_current->arc->start_angle/64;
+  end_angle = o_current->arc->end_angle/64;
+
+  if ( end_angle < 0) {
+		
+    if (end_angle >= 180) {
+      start_angle = (start_angle - (end_angle)) % 360;
+    } else {
+      start_angle = (start_angle + (end_angle)) % 360;
+    }
+
+    end_angle = abs(end_angle);
+		
+  }
+
+  end_angle = start_angle + end_angle;
+		
+
+  fprintf(fp, "newpath\n");
+  fprintf(fp, "%d mils %d mils\n", x-origin_x, y-origin_y);
+  fprintf(fp, "%d mils\n", radius);
+  fprintf(fp, "%d %d arc\n", start_angle, end_angle);
+  fprintf(fp, "stroke\n");
+  fprintf(fp, "grestore\n");
+}
+
+@ %def o_arc_print_old
+
+
+@section Function @code{o_arc_image_write()}
+
+@defun o_arc_image_write w_current o_current origin_x origin_y color_mode
+@end defun
+
+<<o_arc_basic.c : o_arc_image_write()>>=
+void
+o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
+                  int origin_x, int origin_y, int color_mode)
+{
+  int start_angle, end_angle;
+  int width, height;
+  int final;
+  int color;
+  int x, y;
+
+  if (o_current == NULL) {
+    printf("got null in o_arc_image_write\n");
+    return;
+  }
+
+  if (color_mode == TRUE) {
+    color = o_image_geda2gd_color(o_current->color);
+  } else {
+    color = image_black;
+  }
+
+  start_angle = o_current->arc->start_angle;
+  end_angle   = o_current->arc->end_angle;
+
+  if ( end_angle < 0) {
+
+    if (end_angle >= 180) {
+      start_angle = (start_angle - (end_angle)) % 360;
+    } else {
+      start_angle = (start_angle + (end_angle)) % 360;
+    }
+
+    end_angle = abs(end_angle);
+
+  }
+
+  end_angle = start_angle + end_angle;
+
+
+
+#if DEBUG
+  printf("%d %d -- %d %d -- %d %d\n", 
+         o_current->arc->screen_x, o_current->arc->screen_y,
+         o_current->arc->screen_width-o_current->arc->screen_x,
+         o_current->arc->screen_height-o_current->arc->screen_y,
+         start_angle, end_angle);
+#endif
+
+  if (start_angle < end_angle) {
+
+    start_angle = start_angle + 360;
+  }
+
+#if DEBUG
+  printf("%d %d -- %d %d -- %d %d\n", 
+         o_current->arc->screen_x, o_current->arc->screen_y,
+         o_current->arc->screen_width-o_current->arc->screen_x,
+         o_current->arc->screen_height-o_current->arc->screen_y,
+         start_angle, end_angle);
+#endif
+
+
+  width  = o_current->arc->screen_width;
+  height = o_current->arc->screen_height;
+
+  final = max(width, height);
+
+  x = o_current->arc->screen_x;
+  y = o_current->arc->screen_y;
+	
+#ifdef HAS_LIBGDGEDA
+  gdImageArc(current_im_ptr, 
+             x, y, final, final, start_angle, end_angle, color);
+#endif
+	
+}
+
+@ %def o_arc_image_write
+
+
+@section Function @code{o_arc_translate()}
+
+@defun o_arc_translate w_current dx dy object
+This function translates the arc described in the [[object]] pointed structure by [[dx]] horizontally and [[dy]] vertically.
+[[dx]] and [[dy]] are in screen unit.
+The fields of the arc in world unit are recalculated after the translation with the [[o_arc_recalc()]] function.
+@end defun
+
+<<o_arc_basic.c : o_arc_translate()>>=
+void
+o_arc_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+{
+  if (object == NULL) {
+    return;
+  }
+
+  /* Do screen coords */
+  object->arc->screen_x = object->arc->screen_x + dx;
+  object->arc->screen_y = object->arc->screen_y + dy;
+
+  /* Recalculate world coords from new screen coords */
+  o_arc_recalc_world(w_current, object);
+	
+}
+
+@ %def o_arc_translate
+
+
+@section Function @code{o_arc_translate_world()}
+
+@defun o_arc_translate_world w_current dx dy object
+This function translates the arc described in the [[object]] pointed structure by [[dx]] horizontally and [[dy]] vertically.
+[[dx]] and [[dy]] are in world unit.
+The fields of the arc in screen unit are recalculated after the translation with the [[o_arc_recalc()]] function.
+@end defun
+
+<<o_arc_basic.c : o_arc_translate_world()>>=
+void
+o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy,
+					  OBJECT *object)
+{
+  if (object == NULL) {
+    return;
+  }
+
+  /* Do world coords */
+  object->arc->x = object->arc->x + dx;
+  object->arc->y = object->arc->y + dy;
+
+  /* Recalculate screen coords from new world coords */
+  o_arc_recalc(w_current, object);
+	
+}
+
+@ %def o_arc_translate_world
+
+
+@section Function @code{o_arc_rotate()}
+
+@defun o_arc_rotate w_current centerx centery angle object
+This function rotates the screen coordinates of an arc of an angle specified by [[angle]]. The center of the rotation is given by ([[centerx]],[[centery]]).
+@end defun
+
+The arc is translated in order to put the center of the rotation on the origin. The center of the arc is then rotated of the angle specified by [[angle]]. The start angle of the arc is incremented by [[angle]].
+
+The arc is finally back translated to its previous location on the page.
+
+[[centerx]] and [[centery]] are in screen units, [[angle]] is in degrees.
+
+<<o_arc_basic.c : o_arc_rotate()>>=
+void
+o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery,
+             int angle, OBJECT *object)
+{
+  int world_centerx, world_centery;
+
+  SCREENtoWORLD(w_current, centerx, centery,
+                &world_centerx, &world_centery);
+
+  o_arc_rotate_world(w_current, world_centerx, world_centery,
+                     angle, object);
+}                                   
+
+@ %def o_arc_rotate
+
+
+@section Function @code{o_arc_rotate_world()}
+
+@defun o_arc_rotate_world w_current world_centerx world_centery angle object
+This function rotates the world coordinates of an arc of an angle specified by [[angle]]. The center of the rotation is given by ([[world_centerx]],[[world_centery]]).
+@end defun
+
+The arc is translated in order to put the center of the rotation on the origin. The center of the arc is then rotated of the angle specified by [[angle]]. The start angle of the arc is incremented by [[angle]].
+
+The arc is finally back translated to its previous location on the page.
+
+[[world_centerx]] and [[world_centery]] are in world units, [[angle]] is in degrees.
+
+<<o_arc_basic.c : o_arc_rotate_world()>>=
+void
+o_arc_rotate_world(TOPLEVEL *w_current,
+                   int world_centerx, int world_centery, int angle,
+                   OBJECT *object)
+{
+  int x, y, newx, newy;
+
+  /* translate object to origin */
+  o_arc_translate_world(w_current, -world_centerx, -world_centery,
+                        object);
+
+  /* get center, and rotate center */
+  x = object->arc->x;
+  y = object->arc->y;
+
+  if(angle % 90 == 0)
+  rotate_point_90(x, y, angle % 360, &newx, &newy);
+  else
+  rotate_point(x, y, angle % 360, &newx, &newy);
+
+  object->arc->x = newx;
+  object->arc->y = newy;
+
+  /* apply rotation to angles */
+  object->arc->start_angle = (object->arc->start_angle + angle) % 360;
+  /* end_angle is unchanged as it is the sweep of the arc */
+  /* object->arc->end_angle = (object->arc->end_angle); */
+
+  /* translate object to its previous place */
+  o_arc_translate_world(w_current, world_centerx, world_centery, object);
+	
+}                                   
+
+@ %def o_arc_rotate_world
+
+
+@section Function @code{o_arc_mirror()}
+
+@defun o_arc_mirror w_current centerx centery object
+This function mirrors the screen coordinates of an arc. The symetry axis is given by the vertical line going through the point ([[centerx]],[[centery]]).
+[[centerx]] and [[centery]] are in screen unit.
+@end defun
+
+The arc is translated in order to put the point ([[centerx]],[[centery]]) on the origin. The center of the arc is then mirrored. The start angle of the arc and the sweep of the arc are also mirrored.
+
+The arc is finally back translated to its previous location on the page.
+
+<<o_arc_basic.c : o_arc_mirror()>>=
+void
+o_arc_mirror(TOPLEVEL *w_current,
+             int centerx, int centery, OBJECT *object)
+{
+  int world_centerx, world_centery;
+
+  SCREENtoWORLD(w_current, centerx, centery,
+                &world_centerx, &world_centery);
+
+  o_arc_mirror_world(w_current, world_centerx, world_centery, object);
+}
+
+@ %def o_arc_mirror
+
+
+@section Function @code{o_arc_mirror_world()}
+
+@defun o_arc_mirror_world w_current world_centerx world_centery object
+This function mirrors the world coordinates of an arc. The symetry axis is given by the vertical line going through the point ([[world_centerx]],[[world_centery]]).
+[[world_centerx]] and [[world_centery]] are in world unit.
+@end defun
+
+The arc is translated in order to put the point ([[world_centerx]],[[world_centery]]) on the origin. The center of the arc is then mirrored. The start angle of the arc and the sweep of the arc are also mirrored.
+
+The arc is finally back translated to its previous location on the page.
+
+<<o_arc_basic.c : o_arc_mirror_world()>>=
+void
+o_arc_mirror_world(TOPLEVEL *w_current,
+                   int world_centerx, int world_centery,
+                   OBJECT *object)
+{
+  int x, y, newx, newy;
+  int start, end;
+
+  /* translate object to origin */
+  o_arc_translate_world(w_current, -world_centerx, -world_centery,
+                        object);
+
+  /* get center, and mirror it*/
+  x = object->arc->x;
+  y = object->arc->y;
+
+#if 1 /* vertical */
+  newx = -x;
+  newy = y;
+#else /* horizontal */
+  newx = x;
+  newy = -y;
+#endif
+
+  object->arc->x = newx;
+  object->arc->y = newy;
+
+  /* apply mirror to angles */
+  start = object->arc->start_angle;
+  end   = object->arc->end_angle;
+	
+#if 1 /* vertical */
+  start = 180 - start; 
+#else /* horizontal */
+  start = -start; 
+#endif
+
+  if (start <0) start = (360 - (-start % 360)) % 360;
+  else          start = start % 360;
+
+  object->arc->start_angle = start;
+  object->arc->end_angle   = -end;
+	
+  /* translate object back to its previous position */
+  o_arc_translate_world(w_current, world_centerx, world_centery, object);
+	
+}
+
+@ %def o_arc_mirror_world
+
+
+@section Function @code{o_arc_modify()}
+
+@defun o_arc_modify w_current object x y whichone
+This function modifies the internal values of an arc according to the [[whichone]] parameter. The new values are given by [[x]] and/or [[y]]. Their meaning depends on the value of [[whichone]].
+If [[whichone]] is equal to 0, the [[x]] parameter is taken to be the radius of the arc in world unit. The [[y]] parameter is not significant.
+If [[whichone]] is equal to 1 or 2, the [[x]] and [[y]] parameters are respectively the starting angle and the ending angle of the arc in degrees.
+@end defun
+
+The screen coordinates of the arc and its bounding box are computed again after the change in world coordinates.
+
+<<o_arc_basic.c : o_arc_modify()>>=
+void
+o_arc_modify(TOPLEVEL *w_current, OBJECT *object, 
+             int x, int y, int whichone)
+{
+  int left, right, top, bottom;
+
+  switch(whichone) {
+    case 0:
+      object->arc->width  = 2 * x;
+      object->arc->height = 2 * x;
+      break;
+
+    case 1:
+    case 2:
+      y = y - x;
+      /* PB : must check the sign of x and y */
+      if(y < 0) {
+        x = x + y;
+        y = -y;
+      }
+      if(x < 0) x = 360 + x;
+		
+      object->arc->start_angle = x;
+      object->arc->end_angle   = y;
+      break;
+  }
+
+  o_arc_recalc(w_current, object);
+
+  get_arc_bounds(w_current, object, &left, &top, &right, &bottom);
+
+  object->left   = left;
+  object->right  = right;
+  object->top    = top;
+  object->bottom = bottom;
+	
+}
+
+@ %def o_arc_modify

@@ -1,0 +1,84 @@
+#!/usr/bin/perl
+
+$_ = <STDIN>;                   # Get input
+
+while ($_)
+{
+
+	if (/\@c/) 
+	{
+		$linedone = 1;
+	}
+
+	if (/\@node/) 
+	{
+		$linedone = 1;
+	}
+
+	if (/copyright and license>>=|include directives>>=/ ) 
+	{
+		print "<H5>\n";
+
+		while (!(/^@/)) {
+			print $_;
+			$_ = <STDIN>;  # Get input
+		}
+
+		while ((/^@/)) {
+			print $_;
+			$_ = <STDIN>;  # Get input
+		}
+
+		print "</H5>\n";
+	}
+
+	
+
+	s/\@section Function//g;
+	s%\@end defun%</p>%g;
+
+	if (/\@defun/) {
+
+#	s/\@defun/<p>/g;
+
+	@blah = split(/ /);
+
+	print "<p>\n";	
+	print "<strong>\n";
+		foreach $j (@blah) 
+		{
+			if (!($j =~ /\@defun/)) {
+				printf("%s ", $j);
+			}
+		}
+	print "</p>\n";
+	print "</strong>\n";
+	$linedone = 1;	
+	}
+
+	if (/\@code/) {
+		@sentance = split(/ /);
+
+		foreach $i (@sentance) 
+		{
+			if ($i =~ /\@code/) {
+				@parts = split(/[{}]/, $i);
+				printf("<H3> %s </H3>", @parts[1]);
+			} else {
+				printf("%s ", $i);
+			}
+		}
+		$linedone = 1;	
+	} 
+
+	if ($linedone != 1) {
+		print $_;
+	}
+
+	$linedone = 0;
+
+
+	
+	$_ = <STDIN>;                   # Get input
+	
+}

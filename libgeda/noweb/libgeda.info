@@ -1,0 +1,74 @@
+This is libgeda.info, produced by makeinfo version 4.0 from
+libgeda.texi.
+
+INFO-DIR-SECTION Libgeda source documentation
+START-INFO-DIR-ENTRY
+* libgeda: (libgeda).         Libgeda source documentation.
+END-INFO-DIR-ENTRY
+
+   Copyright (C) xxxx XXXX.
+
+
+Indirect:
+libgeda.info-1: 251
+libgeda.info-2: 45650
+libgeda.info-3: 76448
+libgeda.info-4: 130091
+libgeda.info-5: 191918
+libgeda.info-6: 197754
+libgeda.info-7: 245332
+libgeda.info-8: 269566
+libgeda.info-9: 309108
+libgeda.info-10: 355616
+libgeda.info-11: 396826
+libgeda.info-12: 435630
+libgeda.info-13: 464061
+libgeda.info-14: 527866
+libgeda.info-15: 573329
+libgeda.info-16: 611485
+libgeda.info-17: 655732
+libgeda.info-18: 683420
+
+Tag Table:
+(Indirect)
+Node: Top251
+Node: File a_basic.c1762
+Node: File f_basic.c14495
+Node: File f_image.c17768
+Node: File f_print.c24830
+Node: File g_basic.c39772
+Node: File g_smob.c45650
+Node: File m_basic.c52469
+Node: File o_arc_basic.c76448
+Node: File o_attrib.c130091
+Node: File o_basic.c191918
+Node: File o_box_basic.c197754
+Node: File o_bus_basic.c245332
+Node: File o_circle_basic.c269566
+Node: File o_complex_basic.c309108
+Node: File o_image.c351332
+Node: File o_line_basic.c355616
+Node: File o_list.c396826
+Node: File o_net_basic.c407998
+Node: File o_pin_basic.c435630
+Node: File o_selection.c453975
+Node: File o_text_basic.c464061
+Node: File s_attrib.c527866
+Node: File s_basic.c531794
+Node: File s_clib.c553203
+Node: File s_color.c566738
+Node: File s_conn.c573329
+Node: File s_cue.c590146
+Node: File s_hierarchy.c599089
+Node: File s_log.c607789
+Node: File s_page.c611485
+Node: File s_papersizes.c625145
+Node: File s_scratch.c630126
+Node: File s_slib.c633298
+Node: File s_stretch.c648180
+Node: File s_tile.c655732
+Node: File s_undo.c670114
+Node: File u_basic.c679045
+Node: Fonction Index683420
+
+End Tag Table
