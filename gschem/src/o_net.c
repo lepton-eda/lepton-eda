@@ -813,6 +813,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	w_current->save_x = w_current->last_x;
 	w_current->save_y = w_current->last_y;
 
+
 	w_current->page_current->object_tail = o_net_add(w_current, w_current->page_current->object_tail, OBJ_NET, color, x1, y1, x2, y2);
 
 	/* conn stuff */
@@ -822,7 +823,9 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	o_net_conn_draw(w_current, w_current->page_current->object_tail);
 	o_conn_draw_objects(w_current, w_current->page_current->object_tail);
 
-	if (w_current->net_consolidate == TRUE) {
+
+	/* you don't want to consolidate nets which are drawn non-ortho */
+	if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
         	o_net_consolidate_segments(w_current, 
 				           w_current->page_current->object_tail);
 	}

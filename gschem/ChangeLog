@@ -9,6 +9,17 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+1999-11-11  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_fileselect.c: Fixed the dialog box title for the SAVEAS_CLOSE
+	  case
+
+	* src/o_net.c: Fixed a nasty bug when enabling net consolidation 
+	  and drawing non-ortho nets (non-ortho nets would disappear, since
+	  gschem thought it could consolidate them; it cannot not)
+
+	* src/x_menu.c: Change Edit/Stretch to read Edit/Stretch Mode
+
 1999-11-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_fileselect.c: Fixed all calls to s_clib_getfiles with the

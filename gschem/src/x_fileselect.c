@@ -1444,6 +1444,10 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 				gtk_window_set_title(GTK_WINDOW(
 						     f_current->xfwindow),
                                      		     "Save As...");
+			} else if (filesel_type == SAVEAS_CLOSE) {
+				gtk_window_set_title(GTK_WINDOW(
+						     f_current->xfwindow),
+                                     		     "Save As...");
 			}
 		} else {
 			gtk_window_position(GTK_WINDOW(f_current->xfwindow),
