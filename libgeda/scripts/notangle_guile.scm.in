@@ -1,0 +1,222 @@
+#! @GUILEINTERP@ \
+-e main -s
+!#
+
+;;; Copyright 2001 by Patrick Bernaud. All rights reserved
+;;; See file COPYRIGHT for more information.
+
+;;; This scripts is supposed to do the same things as notangle do.
+;;; Its purpose it to avoid the need of a complete noweb installation
+;;; to simply get the sources from a noweb file, provided the user
+;;; has a Guile interpreter.
+
+
+(use-modules (ice-9 getopt-long)
+             (ice-9 regex))
+
+(debug-enable 'backtrace)
+
+(define option-spec
+  '((rootname (required? #f) (single-char #\R) (value #t))
+    (help     (required? #f) (single-char #\h))
+    (version  (required? #f) (single-char #\v))
+;;; pb20010901 - unsupported notangle options
+;    (filter   (required? #f) (value #t))
+;    (tabsl    (required? #f) (value #optionnal))
+))
+
+
+;;; pb20010901 - taken from getopt-long example in Guile Reference Manual
+(define (display-usage)
+  (display "Usage: notangle_guile [options...] [file]\n")
+  (display "  --help, -h                  Show this usage information\n")
+  (display "  --version, -v               Show version information\n")
+  (display "  --rootname=value, -Rvalue   Set root code chunk name to value\n")
+  (exit))
+
+(define (display-version)
+  (display "notangle_guile 20010901\n")
+  (exit))
+
+
+(define (display-error msg)
+  (display msg (current-error-port)))
+
+
+(define noweb-rootname     "*")
+(define noweb-file         "")
+(define code-chunks        '())
+(define current-chunk-name "")
+(define current-code-chunk '())
+
+
+(define def-regexp  (make-regexp "^\<\<[A-Za-z0-9_/\*:\ ()\.\,\-]*\>\>="))
+(define ref-regexp  (make-regexp "\<\<[A-Za-z0-9_/\*:\ ()\.\,\-]*\>\>"))
+(define end-regexp  (make-regexp "^@"))
+(define crlf-regexp (make-regexp "[\n\r]"))
+
+
+(define (tangle-step1 fdes)
+  (let ((inside-code #f))
+    (do ((line (read-line fdes 'concat) (read-line fdes 'concat)))
+        ((eof-object? line) line)
+      (if inside-code 
+          ;;; when inside a code chunk, look for its end
+          (let ((res (regexp-exec end-regexp line)))
+            (if (regexp-match? res)
+                ;;; found the end of the current code chunk
+                (begin 
+                  ;;; remove the crlf from last line of current-code-chunk
+                  (remove-last-crlf current-code-chunk)
+                  ;;; add the code chunk to the global association list
+                  (add-code-chunk current-chunk-name current-code-chunk)
+                  ;;; switch to a 'inside documentation chunk" status
+                  (set! inside-code #f)
+                  ;;; reset toplevel variables
+                  (set! current-chunk-name "")
+                  (set! current-code-chunk '()))
+                ;;; not found, so line is part of the current code chunk
+                (begin 
+                  ;;; add the line to the current-code-chunk
+                  (set! current-code-chunk 
+                        (append current-code-chunk (list line))))))
+          ;;; when outside of a code chunk, look for the start of one
+          (let ((res (regexp-exec def-regexp line)))
+            (if (regexp-match? res)
+                ;;; found the start of a new code chunk
+                ;;;   -> extract its name frome the match
+                (let ((name (match:substring res)))
+                  ;;; remove the beginning and trailing sequences around name
+                  (set! current-chunk-name 
+                        (substring name 2 (- (string-length name) 3)))
+                  ;;; switch to a 'inside code chunk' status
+                  (set! inside-code #t))))))))
+
+
+;;; pb20010901 - taken from getopt-long example in Guile Reference Manual
+(define (display-usage)
+  (display "Usage: notangle_guile [options...] [file]\n")
+  (display "  --help, -h                  Show this usage information\n")
+  (display "  --version, -v               Show version information\n")
+  (display "  --rootname=value, -Rvalue   Set root code chunk name to value\n")
+  (exit))
+
+(define (display-version)
+  (display "notangle_guile 20010901\n")
+  (exit))
+
+
+(define (add-code-chunk name code)
+  ;;; check if chunk already defined
+  (let ((code-prev (assoc-ref code-chunks name)))
+    (if (list? code-prev)
+        ;;; chunk already defined
+        ;;;  -> append the previous lines and the new lines
+        (set! code (append code-prev code))))
+  ;;; place the code chunk in the association list
+  (set! code-chunks (assoc-set! code-chunks name code)))
+
+
+(define (tangle-step2 name offset) 
+  ;;; check if the chunk exists in the association list
+  (let ((first-line #t)
+        (code (assoc-ref code-chunks name)))
+    (if (list? code)
+        (begin
+          ;;; remove the crlf from last line of current-code-chunk
+          (remove-last-crlf code)
+          ;;; the code chunk exists
+          ;;;  -> for each line in list, search for a chunk reference
+          (for-each
+           (lambda (x)
+             (let ((noff offset))
+               (if (not first-line)
+                   ;;; display the horizontal offset
+                   (display offset (current-output-port))
+                   ;;; change the flag after first line
+                   (set! first-line #f))
+
+               ;;; repeat for all references on the line
+               (do ((tmp (regexp-exec ref-regexp x)
+                         (regexp-exec ref-regexp x)))
+                   ((not (regexp-match? tmp)) tmp)
+                 (begin
+                   ;;; output chars before the reference
+                   (display (match:prefix tmp) (current-output-port))
+                   ;;; expand the code chunk referenced
+                   (let* ((tmp2 (match:substring tmp))
+                          ;;; get the code chunk name
+                          (tmp3 (substring tmp2 2 
+                                           (- (string-length tmp2) 2))))
+                     ;;; update the horizontal offset
+                     ;;; with the length of chars before the reference
+                     (set! noff (string-append noff (make-string 
+                                                     (string-length 
+                                                      (match:prefix tmp)) 
+                                                     #\ )))
+                     ;;; expand the code chunk 'tmp3' at the current position
+                     (tangle-step2 tmp3 noff)
+                     ;;; update the horizontal offset
+                     ;;; with the length of the reference for next tangling
+                     (set! noff (string-append noff (make-string 
+                                                     (+ (string-length tmp3) 4)
+                                                     #\ ))))
+                   ;;; change x to become the remaining of the line
+                   ;;; and launch a new search for a chunk reference
+                   (set! x (match:suffix tmp))))
+
+
+               ;;; display the remaining chars from the line
+               (display x (current-output-port))))
+          code))
+        ;;; the code chunk does not exist
+        ;;;  -> displays an error and exits
+        (display-error (string-append "undefined chunk name: <<" name
+                                      ">>\n")))))
+
+
+(define (tangle-noweb-file)
+  (if (file-exists? noweb-file)
+      ;;; if file exists, open it and start tangling
+      (begin 
+        (let ((fdes (open-input-file noweb-file)))
+          (tangle-step1 fdes)
+          (close fdes)
+          (tangle-step2 noweb-rootname "")))
+      ;;; if not, display an error and exit
+      (display-error (string-append "couldn't open file" noweb-file "\n"))))
+
+
+(define (remove-last-crlf chunk)
+  (if (list? chunk)
+      (let* ((index-last-element (- (length chunk) 1))
+             (last-element       (list-ref chunk index-last-element)))
+        (let ((res (regexp-exec crlf-regexp last-element)))
+          (if (regexp-match? res)
+              (list-set! chunk index-last-element (match:prefix res)))))))
+
+
+(define (main args)
+  ;;; processing command line
+  (let* ((opts           (getopt-long args option-spec))
+         (help-wanted    (option-ref opts 'help     #f))
+         (version-wanted (option-ref opts 'version  #f))
+         (rootname       (option-ref opts 'rootname #f))
+         (filename       (option-ref opts '()       #f)))
+    ;;; display version if -v flag
+    (if version-wanted (display-version))
+    ;;; display usage   if -h flag
+    (if help-wanted    (display-usage))
+    ;;; if a filename is given, filename is a string
+    ;;; else, filename is set to #f
+    (if (string? (car filename))
+         (set! noweb-file (car filename)))
+    ;;; if rootname is given, rootname is a string
+    ;;; else, rootname is set to #f
+    (if (string? rootname)
+        (set! noweb-rootname rootname)))
+
+  ;;; start tangling noweb-file
+  (tangle-noweb-file))
+
+
