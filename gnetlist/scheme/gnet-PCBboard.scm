@@ -136,7 +136,9 @@
 
 (define *m4-pcbdir* "/usr/X11R6/lib/X11/pcb/m4")
 
-;;(use-modules (ice-9 popen)) ;; To emulate popen. Guileish again.
+;; To emulate popen. Guileish again.
+; Needed after guile ver. 1.3.2. To save 1.3a users, wrap it in.
+(false-if-exception (use-modules (ice-9 popen)))
 
 (define (PCBboard output-filename)
   (let ((port (open-output-file output-filename)))
