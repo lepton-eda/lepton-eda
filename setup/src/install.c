@@ -355,7 +355,7 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Fatal error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_FATAL | MSGBOX_OKD
 			);
 		return FAILURE;
@@ -367,7 +367,7 @@ static int InstallComponent(struct CompsTable_s *pComp)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Fatal error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_FATAL | MSGBOX_OKD
 			);
 		return FAILURE;
@@ -491,7 +491,7 @@ static int InstallComponent(struct CompsTable_s *pComp)
 			MsgBox(
 				GTK_WINDOW(pWindowMain),
 				"Error !",
-				szMessage, 
+				szMessage,
 				MSGBOX_ERROR | MSGBOX_OKD
 				);
 			iErrorFlag = TRUE;
@@ -611,7 +611,7 @@ static int InstallComponent(struct CompsTable_s *pComp)
 					iErrorFlag = TRUE;
 					goto LABEL;
 				}
-						
+
 				/* install the tool */
 				iResult = InstallComponent(pCount);
 				if (iResult != SUCCESS)
@@ -731,7 +731,7 @@ LABEL:
 			MsgBox(
 				GTK_WINDOW(pWindowMain),
 				"Error !",
-				szMessage, 
+				szMessage,
 				MSGBOX_ERROR | MSGBOX_OKD
 				);
 			iErrorFlag = TRUE;
@@ -1033,19 +1033,24 @@ static int get_percentage(void)
 	struct CompsTable_s *pComp;
 	float fPercentage;
 	int iTotal = 0, iDone = 0;
-	
+
 	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
 	{
 		if (pComp->iToBeInstalled == PACKAGE_SELECTED || pComp->iToBeInstalled == PACKAGE_REQUIRED)
 		{
+			if (pComp == get_component_by_name("SOFTWARE"))
+				continue;
+			if (strlen(pComp->szFileName) == 0)
+				continue;
+
 			iTotal ++;
-			
 			if (pComp->bInstalled == TRUE)
 				iDone ++;
 		}
 	}
-	
+
 	fPercentage = 100.0 * (float)iDone / (float)iTotal;
+
 	return (int)fPercentage;
 }
 
