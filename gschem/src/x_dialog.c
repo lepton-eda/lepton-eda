@@ -146,8 +146,7 @@ multi_attrib_edit_clear (GtkWidget *w, GtkWindow *window)
 void
 multi_attrib_edit_delete (GtkWidget *w, GtkCList *clist)
 {
-	char *text[]= { "","V V","" };
-	gtk_clist_append(clist,text);
+	
 }
 
 void
