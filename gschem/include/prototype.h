@@ -643,6 +643,13 @@ void o_undo_cleanup(void);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
+/* x_attribedit.c */
+void attrib_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
+void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
+void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
+void attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current);
+void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list, int flag);
+void attrib_edit_dialog_orig(TOPLEVEL *w_current, OBJECT *list, int flag);
 /* x_attrsel.c */
 /* x_basic.c */
 void x_repaint_background(TOPLEVEL *w_current);
@@ -675,11 +682,6 @@ void text_input_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL 
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void text_input_dialog(TOPLEVEL *w_current);
-void attrib_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
-void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
-void attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current);
-void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list, int flag);
 gint change_alignment(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);

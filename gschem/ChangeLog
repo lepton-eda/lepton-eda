@@ -1,3 +1,8 @@
+2002-07-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_attribedit.nw: Changed the show options to be an option
+	menu instead of a combo box
+
 2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_misc.nw, x_dialog.nw, lib/system-gschemrc.in: Renamed 
