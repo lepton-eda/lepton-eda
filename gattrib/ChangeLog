@@ -1,3 +1,9 @@
+2005-02-13 01:40  Dan McMahill <danmc>
+
+	* src/s_string_list.c: fix 2 places where a pointer to an int was
+	  being cast to an int and used as an int when we really wanted to
+	  dereference the pointer instead.
+
 2005-02-12  Stuart Brorson <sdb@cloud9.net>
 
 	* src/gattrib.c, src/i_vars.c, src/s_toplevel.c, src/x_dialog.c,

@@ -1,3 +1,8 @@
+2005-02-13 01:38  Dan McMahill <danmc>
+
+	* include/prototype.h, noweb/s_slib.nw: fix up const usage to be
+	  consistant.  Gets rid of several gcc warnings.
+
 2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/f_basic.nw, noweb/libgeda.nw, s_hierarchy.nw: Adapted for 
