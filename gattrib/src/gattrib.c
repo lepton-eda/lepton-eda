@@ -206,6 +206,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   while(argv[i] != NULL) {
 
     gchar *temp_filename;
+    gchar *filename;
 #ifdef __MINGW32__
     if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
                               argv[i][2] == OTHER_PATH_SEPARATER_CHAR))
@@ -219,7 +220,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
       temp_filename = g_build_path (G_DIR_SEPARATOR_S, cwd, argv[i], NULL);
     }
 
-    gchar *filename = f_normalize_filename(temp_filename);
+    filename = f_normalize_filename(temp_filename);
     g_free(temp_filename);
 
     s_log_message("Loading file [%s]\n", filename);

@@ -1,3 +1,8 @@
+2005-04-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gattrib.c: Moved a variable decl to the top of the function to
+	make gcc 2.96 happy.  
+
 2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 		message if gtk+ 2.2.x is not found.
