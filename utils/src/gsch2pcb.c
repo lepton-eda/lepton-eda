@@ -32,7 +32,7 @@
 #endif
 
 
-#define	GSC2PCB_VERSION		"1.1"
+#define	GSC2PCB_VERSION		"1.2"
 
 #define	DEFAULT_PCB_INC		"pcb.inc"
 
@@ -61,9 +61,9 @@ typedef struct
 	}
 	ElementMap;
 
-
 static GList	*pcb_element_list,
-				*element_directory_list;
+				*element_directory_list,
+				*extra_gnetlist_list;
 
 static gchar	*schematics,
 				*basename;
@@ -133,10 +133,13 @@ create_m4_override_file()
   |  board file (only gnetlist >= 20030901 recognizes -m).
   */
 static void
-run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *args)
+run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 	{
 	gchar		*command,
+				*out_file,
+				*args1,
 				*s;
+	GList		*list;
 	struct stat	st;
 	time_t		mtime;
 
@@ -155,11 +158,9 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *args)
 
 	create_m4_override_file();
 	if (m4_override_file)
-		{
-		s = args;
-		args = g_strconcat("-m ", m4_override_file, " ", args, NULL);
-		g_free(s);
-		}
+		args1 = g_strconcat("-m ", m4_override_file, " ", args, NULL);
+	else
+		args1 = g_strdup(args);
 
 	mtime = (stat(pcb_file, &st) == 0) ? st.st_mtime : 0;
 	
@@ -167,13 +168,13 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *args)
 		{
 		printf("--------\n");
 		command = g_strconcat("gnetlist -g gsch2pcb -o ", pcb_file, 
-				" ", args, NULL);
+				" ", args1, NULL);
 		printf("Running command:\n\t%s\n", command);
 		printf("--------\n");
 		}
 	else
 		command = g_strconcat("gnetlist -q -g gsch2pcb -o ", pcb_file, 
-				" ", args, NULL);
+				" ", args1, NULL);
 
 	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
 
@@ -191,8 +192,36 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *args)
 		exit(1);
 		}
 	g_free(command);
+	g_free(args1);
 	if (m4_override_file)
 		unlink(m4_override_file);
+
+	for (list = extra_gnetlist_list; list; list = list->next)
+		{
+		s = (gchar *) list->data;
+		if (!strstr(s, " -o "))
+			out_file = g_strconcat(" -o ", basename, ".", s, NULL);
+		else
+			out_file = g_strdup(" ");
+
+		if (verbose)
+			{
+			printf("--------\n");
+			command = g_strconcat("gnetlist -g ", s, out_file,
+							" ", args, NULL);
+			printf("Running command:\n\t%s\n", command);
+			printf("--------\n");
+			}
+		else
+			command = g_strconcat("gnetlist -q -g ", s, out_file,
+							" ", args, NULL);
+
+		g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
+		g_free(command);
+		g_free(out_file);
+		if (verbose)
+			printf("--------\n");
+		}
 	}
 
 static gchar *
@@ -231,16 +260,17 @@ token(gchar *string, gchar **next)
 	return ret;
 	}
 
-static void
+static gchar *
 fix_spaces(gchar *str)
 	{
 	gchar	*s;
 
 	if (!str)
-		return;
+		return NULL;
 	for (s = str; *s; ++s)
 		if (*s == ' ' || *s == '\t')
 			*s = '_';
+	return str;
 	}
 
   /* New PCB 1.7 / 1.99 Element() line format:
@@ -491,19 +521,41 @@ gchar *
 search_element_directories( PcbElement	*el)
 	{
 	GList		*list;
-	gchar		*s, *elname, *dir_path, *path = NULL;
+	gchar		*s, *elname = NULL, *dir_path, *path = NULL;
 	gint		n1, n2;
 
 	/* See comment before pkg_to_element() */
 	if (el->pkg_name_fix)
 		{
-		n1 = strlen(el->description);
-		n2 = strlen(el->pkg_name_fix);
-		s = g_strndup(el->description, n1 - n2 - 1);
-		elname = g_strconcat(s, " ", el->pkg_name_fix, NULL);
-		g_free(s);
+		if (strchr(el->description, '-'))
+			{
+			n1 = strlen(el->description);
+			n2 = strlen(el->pkg_name_fix);
+			s = el->description + n1 - n2 - 1;
+
+// printf("n1=%d n2=%d desc:%s fix:%s s:%s\n",
+//	n1, n2, el->description, el->pkg_name_fix, s);
+
+			if (   n1 > 0  && n2 < n1
+				&& *s == '-'
+				&& *(s + 1) == *el->pkg_name_fix
+			   )
+				{
+				s = g_strndup(el->description, n1 - n2 - 1);
+				elname = g_strconcat(s, " ", el->pkg_name_fix, NULL);
+				g_free(s);
+				}
+			}
+		if (!elname)
+			{
+			printf("Warning: argument passing may have been confused by\n");
+			printf("         a comma in a component value:\n");
+			printf("         Check %s %s %s\n",
+					el->refdes, el->description, el->value);
+			printf("         Maybe just use a space instead of a comma?\n");
+			}
 		}
-	else
+	if (!elname)
 		elname = g_strdup(el->description);
 
 	if (!strcmp(elname, "unknown"))
@@ -551,7 +603,7 @@ pkg_to_element(FILE *f, gchar *pkg_line)
 	{
 	PcbElement	*el;
 	gchar		**args, *s;
-	gint		n;
+	gint		n, n_extra_args, n_dashes;
 
 	if (   strncmp(pkg_line, "PKG_", 4)
 		|| (s = strchr(pkg_line, (gint) '(')) == NULL
@@ -575,10 +627,35 @@ pkg_to_element(FILE *f, gchar *pkg_line)
 	if ((s = strchr(el->value, (gint) ')')) != NULL)
 		*s = '\0';
 
-	if (args[3])
+	/* If the component value has a comma, eg "1k, 1%", the gnetlist generated
+	|  PKG line will be PKG_XXX(`R0w8',`R100',`1k, 1%'), but after processed
+	|  by m4, the input to gsch2pcb will be PKG_XXX(R0w8,R100,1k, 1%).  So the
+	|  quoting info has been lost when processing for file elements.  So here
+	|  try to detect and fix this.  But I can't handle the situation where
+	|  the description has a '-' and the value has a comma because
+	|  gnet-gsch2pcb.scm munges the description with '-' when there are
+	|  extra args.
+	*/
+	for (n_extra_args = 0; args[3 + n_extra_args] != NULL; ++n_extra_args)
+		;
+	s = el->description;
+	for (n_dashes = 0; (s = strchr(s + 1, '-')) != NULL; ++n_dashes)
+		;
+
+	n = 3;
+	if (n_extra_args == n_dashes + 1)
+		{	/* Assume there was a comma in the value, eg "1K, 1%" */
+		s = el->value;
+		el->value = g_strconcat(s, ",", fix_spaces(args[n]), NULL);
+		g_free(s);
+		if ((s = strchr(el->value, (gint) ')')) != NULL)
+			*s = '\0';
+		n = 4;
+		}
+	if (args[n])
 		{
-		el->pkg_name_fix = g_strdup(args[3]);
-		for (n = 4; args[n] != NULL; ++n)
+		el->pkg_name_fix = g_strdup(args[n]);
+		for (n += 1; args[n] != NULL; ++n)
 			{
 			s = el->pkg_name_fix;
 			el->pkg_name_fix = g_strconcat(s, " ", args[n], NULL);
@@ -975,6 +1052,9 @@ parse_config(gchar *config, gchar *arg)
 		m4_pcbdir = g_strdup(arg);
 	else if (!strcmp(config, "m4-file"))
 		add_m4_file(arg);
+	else if (!strcmp(config, "gnetlist"))
+		extra_gnetlist_list =
+				g_list_append(extra_gnetlist_list, g_strdup(arg));
 	else
 		return -1;
 
@@ -1070,6 +1150,11 @@ static gchar *usage_string0 =
 "                         instead of the default:\n";
 
 static gchar *usage_string1 =
+"\n"
+"       --gnetlist backend  A convenience run of extra gnetlist -g commands.\n"
+"                         Example:  gnetlist partslist3\n"
+"                         Creates:  myproject.partslist3\n"
+"\n"
 "options (not recognized in a project file):\n"
 "       --fix-elements    If a schematic component footprint is not equal\n"
 "                         to its PCB element Description, update the\n"
@@ -1084,7 +1169,7 @@ static void
 usage()
 	{
 	printf(usage_string0);
-	printf("                         %s\n\n", default_m4_pcbdir);
+	printf("                         %s\n", default_m4_pcbdir);
 	printf(usage_string1);
 	exit(0);
 	}
@@ -1223,7 +1308,7 @@ main(gint argc, gchar **argv)
 	else
 		pcb_new_file_name = g_strdup(pcb_file_name);
 
-	run_gnetlist(net_file_name, pcb_new_file_name, schematics);
+	run_gnetlist(net_file_name, pcb_new_file_name, basename, schematics);
 
 	if (add_elements(pcb_new_file_name) == 0)
 		{

@@ -1,3 +1,8 @@
+2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsch2pcb.c, examples/gsch2pcb/project.sample: Upgraded to 
+	Bill Wilson's latest version (1.2)
+
 2004-01-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added --with-docdir command line flag as well all

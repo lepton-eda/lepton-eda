@@ -1,6 +1,19 @@
 
 gsch2pcb Changelog
 ------------------
+1.2
+---------
+	* Dan McMahill updated the gnet-gsch2pcb.scm file to quote the m4
+	  PKG_ args to prevent arg expansions and to allow commas in component
+	  values.  M4 processing removes that quoting, however, so that info
+	  is lost when processing for file elements.  I fixed gsch2pcb to try to
+	  adjust for that, but there still might be a rare case where using a comma
+	  in a component value will cause a file element search to fail.
+	* Added "gnetlist" option so you can have other gnetlist commands run
+	  from the project file.  For example, put in the project file:
+	      gnetlist partslist3
+	  to create myproject.partslist3 when gsch2pcb myproject is run.
+
 1.1
 ---------
 	* Automatically check for PCB install of the m4 and newlib directories

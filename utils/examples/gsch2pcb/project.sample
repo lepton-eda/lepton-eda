@@ -60,3 +60,15 @@ output-name	foo
 #
 #m4-file /usr/local/share/pcb/pcb.inc
 #m4-file /usr/share/pcb/pcb.inc
+
+
+# ------------- Other project options -------------------
+#
+# As a convenience gsch2pcb can run extra gnetlist backend commands.
+# For example, to create a partslist file myproject.partslist3:
+#
+#gnetlist partslist3
+
+# To create a partslist with a specified output file name board.parts:
+#
+#gnetlist partslist3 -o board.parts
