@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -35,8 +35,8 @@
 
 
 int bShowIconsHidden = FALSE;
-int bCompsAlwaysMarkFailed = FALSE;
-
+BOOL bAlwaysMarkFailed = FALSE;
+BOOL bAlwaysMarkDownloadable = FALSE;
 
 
 static char cSelectFlag = 1;
@@ -531,6 +531,7 @@ static int ShowIcons(const char *szParent)
 void on_ComponentTree_tree_select_row(GtkCTree *ctree, GList *node, gint column, gpointer user_data)
 {
 	struct CompsTable_s *pComp;
+	BOOL bCanBeDownloaded = FALSE;
 	int iResult = MSGBOX_NO;
 	char szMessage[TEXTLEN], *szMissingFile;
 
@@ -556,15 +557,27 @@ void on_ComponentTree_tree_select_row(GtkCTree *ctree, GList *node, gint column,
 	}
 	else
 	{
-		if (!pComp->bCanBeInstalled && !bCompsAlwaysMarkFailed)
+		if (!pComp->bCanBeInstalled)
 		{
 			szMissingFile = PackageWhatIsMissing(pComp->szCodeName);
-
+			bCanBeDownloaded = !strncmp(szMissingFile, "ftp:", 4);
+		}
+		
+		if (!pComp->bCanBeInstalled 
+			&& (
+				(!bCanBeDownloaded && !bAlwaysMarkFailed)
+				|| (bCanBeDownloaded && !bAlwaysMarkDownloadable)
+				)
+			)
+		{
 			sprintf(
 				szMessage,
-				"%s cannot be installed.\nMissing file: %s !\n\nForcing installation will cause errors. Continue ?",
-				pComp->szName,
-				szMissingFile
+				"%s cannot be installed.Missing file: %s %s\nContinue ?",
+				(char *) PackageValueGet(PACKAGE_NAME, 0, pComp->szCodeName),
+				FileGetFilename(szMissingFile),
+				(bCanBeDownloaded)
+					? "can be downloaded."
+					: ". Forcing installation can cause errors."
 				);
 			iResult = MsgBox(
 				GTK_WINDOW(pWindowMain),
@@ -573,10 +586,20 @@ void on_ComponentTree_tree_select_row(GtkCTree *ctree, GList *node, gint column,
 				MSGBOX_ERROR | MSGBOX_YES | MSGBOX_ALWAYSYES | MSGBOX_NOD
 				);
 			if (iResult == MSGBOX_ALWAYSYES)
-				bCompsAlwaysMarkFailed = TRUE;
+			{
+				if (bCanBeDownloaded)
+					bAlwaysMarkDownloadable = TRUE;
+				else
+					bAlwaysMarkFailed = TRUE;
+			}
 		}
 		/* TODO: iResult should be implicitly initialized in any case */
-		if (pComp->bCanBeInstalled == TRUE || iResult == MSGBOX_YES || bCompsAlwaysMarkFailed)
+		if (pComp->bCanBeInstalled == TRUE || iResult == MSGBOX_YES 
+			|| (
+				(!bCanBeDownloaded && bAlwaysMarkFailed)
+				|| (bCanBeDownloaded && bAlwaysMarkDownloadable)
+				)
+			)
 		{
 			pComp->iToBeInstalled = PACKAGE_SELECTED;
 			mark_components(pComp, MARK_SELECT);
