@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -45,7 +45,8 @@ static int get_percentage(void);
 static int InstallComponent(struct CompsTable_s *pComp);
 static int VerifyFiles(struct CompsTable_s *pPkg);
 static int CopyFiles(struct CompsTable_s *pPkg);
-static int AddVariable(const char *szVariable, const char *szValue);	
+static int VariableAdd(const char *szVariable, const char *szValue);
+static int VariableCheck(const char *szVariable, const char *szValue);
 static int iErrorFlag = FALSE;
 
 #define OVERWRITE_ASK        0
@@ -64,8 +65,8 @@ int InstallSoftware(void)
 	struct CompsTable_s *pComp;
 	GtkWidget *pWidget;
 	GtkLabel *pName, *pAction, *pCompleted;
-	char szName[TEXTLEN], szValue[TEXTLEN], *szVariable, szMessage[TEXTLEN], *pResult;
-	int iPreviouslyToBeInstalled = -1, iToBeInstalled, iResult, i;
+	char szValue[TEXTLEN], *szVariable, szMessage[TEXTLEN], *pResult;
+	int iPreviouslyToBeInstalled = -1, bUpdatePath = FALSE, bUpdateLdLibraryPath = FALSE, iToBeInstalled, iResult;
 	
 	/* clear setup log */
 	if (FileTest(SETUP_LOGFILE) == SUCCESS)
@@ -134,66 +135,84 @@ int InstallSoftware(void)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Fatal error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_FATAL | MSGBOX_OKD
 			);
 		return FAILURE;
 	}
-		
+
+	/* check PATH */
+	sprintf(szValue, "%s/bin", szInstallDirectory);
+	bUpdatePath = (VariableCheck("PATH", szValue) != SUCCESS)
+		? TRUE
+		: FALSE;
+
 	/* set PATH */
-	szVariable = getenv("PATH");
-	if (szVariable == NULL)
+	if (bUpdatePath)
 	{
-		sprintf(szMessage, "Cannot get PATH variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
+		szVariable = getenv("PATH");
+		if (szVariable == NULL)
+		{
+			sprintf(szMessage, "Cannot get PATH variable");
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
+			_exit(0);
+		}
+		sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "bin", szVariable);
+		iResult = setenv("PATH", szValue, 1);
+		if (iResult != 0)
+		{
+			sprintf(szMessage, "Cannot set PATH variable");
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
+			_exit(0);
+		}
 	}
-	sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "bin", szVariable);
-	iResult = setenv("PATH", szValue, 1);
-	if (iResult != 0)
-	{
-		sprintf(szMessage, "Cannot set PATH variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
-	}
-		
+
+	/* check LD_LIBRARY_PATH */
+	sprintf(szValue, "%s/lib", szInstallDirectory);
+	bUpdateLdLibraryPath = (VariableCheck("LD_LIBRARY_PATH", szValue) != SUCCESS)
+		? TRUE
+		: FALSE;
+
 	/* set LD_LIBRARY_PATH */
-	szVariable = getenv("LD_LIBRARY_PATH");
-	if (szVariable == NULL)
+	if (bUpdateLdLibraryPath)
 	{
-		sprintf(szMessage, "Cannot get LD_LIBRARY_PATH variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
+		szVariable = getenv("LD_LIBRARY_PATH");
+		if (szVariable == NULL)
+		{
+			sprintf(szMessage, "Cannot get LD_LIBRARY_PATH variable");
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
+			_exit(0);
+		}
+		sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "lib", szVariable);
+		iResult = setenv("LD_LIBRARY_PATH", szValue, 1);
+		if (iResult != 0)
+		{
+			sprintf(szMessage, "Cannot set LD_LIBRARY_PATH variable");
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
+			_exit(0);
+		}
 	}
-	sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "lib", szVariable);
-	iResult = setenv("LD_LIBRARY_PATH", szValue, 1);
-	if (iResult != 0)
-	{
-		sprintf(szMessage, "Cannot set LD_LIBRARY_PATH variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
-	}
-		
+
 	/* set CFLAGS */
 	sprintf(szValue, "-I%s/include -L%s/lib", szInstallDirectory, szInstallDirectory);
 	iResult = setenv("CFLAGS", szValue, 1);
@@ -251,10 +270,10 @@ int InstallSoftware(void)
 			);
 		_exit(0);
 	}
-			
+
 	/* check dependencies and mark components to be installed */
 	mark_to_be_installed();
-	
+
 	while (iPreviouslyToBeInstalled > 0 || iPreviouslyToBeInstalled == -1)
 	{
 		iToBeInstalled = 0;
@@ -288,53 +307,55 @@ int InstallSoftware(void)
 	}
 
 	/* adding variables */
-	iResult = MsgBox(
-		GTK_WINDOW(pWindowMain),
-		"Question ...",
-		"Update your environment variables ?\nChanges will be active after you login next time.", 
-		MSGBOX_QUESTION | MSGBOX_OK | MSGBOX_CANCELD
-		);
-	switch (iResult)
+	if (bUpdatePath || bUpdateLdLibraryPath)
 	{
-		case MSGBOX_OK:
-			
-			for (i = 0; i < strlen(Software.szDirname); i ++)
-				szName[i] = toupper(Software.szDirname[i]);
-			szName[i] = 0;
-			strcat(szName, "_PATH");
-			sprintf(szValue, "%s", szInstallDirectory);
-			AddVariable(szName, szValue);
-			
-			sprintf(szValue, "%s/bin", szInstallDirectory);
-			AddVariable("PATH", szValue);
-			
-			sprintf(szValue, "%s/lib", szInstallDirectory);
-			AddVariable("LD_LIBRARY_PATH", szValue);
-			
-			break;
+		iResult = MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Question ...",
+			"Update your environment variables ?\nChanges will be active after you login next time.",
+			MSGBOX_QUESTION | MSGBOX_OK | MSGBOX_CANCELD
+			);
+		switch (iResult)
+		{
+			case MSGBOX_OK:
+
+				if (bUpdateLdLibraryPath)
+				{
+					sprintf(szValue, "%s/lib", szInstallDirectory);
+					VariableAdd("LD_LIBRARY_PATH", szValue);
+				}
+
+				if (bUpdatePath)
+				{
+					sprintf(szValue, "%s/bin", szInstallDirectory);
+					VariableAdd("PATH", szValue);
+				}
+
+				break;
+		}
 	}
-	
+
 	/* display message and prepare to end */
 	if (!iErrorFlag)
 		gtk_label_set_text(pCompleted, "Installation completed.");
-	else 
+	else
 	{
 		sprintf(szMessage, "Installation completed with errors !\nCheck installation log (file '%s')", SETUP_LOGFILE);
 		gtk_label_set_text(pCompleted, szMessage);
 	}
 	while (g_main_iteration(FALSE));
-		
+
 	pWidget = lookup_widget(pWindowMain, "OkButton");
 	gtk_widget_set_sensitive(pWidget, TRUE);
-	
+
 	pWidget = lookup_widget(pWindowMain, "NextButton");
 	gtk_widget_set_sensitive(pWidget, FALSE);
-	
+
 	pWidget = lookup_widget(pWindowMain, "PreviousButton");
 	gtk_widget_set_sensitive(pWidget, FALSE);
 
 	iSoftwareInstalled = TRUE;
-	
+
 	return SUCCESS;
 }
 
@@ -969,7 +990,7 @@ static int are_requirements_met(struct CompsTable_s *pComp)
 			continue;
 		}
 		
-		if (pCount->bInstalled == FALSE)
+		if (pCount->bInstalled == FALSE && PackageTestIfInstalled(pCount) != SUCCESS)
 			iResult = FALSE;
 	}
 	
@@ -1055,41 +1076,20 @@ static int get_percentage(void)
 }
 
 
-static int AddVariable(const char *szVariable, const char *szValue)
+static int VariableAdd(const char *szVariable, const char *szValue)
 {
 	FILE *hFileOrig, *hFileTmp;
-	int i, j;
-	char szPath[TEXTLEN], szEntry[TEXTLEN], szMessage[TEXTLEN], szFileNameOrig[TEXTLEN], szFileNameTmp[TEXTLEN], *pResult;
+	int i;
+	char szMessage[TEXTLEN], szFileNameOrig[TEXTLEN], szFileNameTmp[TEXTLEN], *pResult;
 	
 	sprintf(szMessage, "Updating environment variable %s to %s", szVariable, szValue);
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	
-	/* check existence of an entry in a path */
-	pResult = getenv(szVariable);
-	if (pResult != NULL)
-	{
-		strcpy(szPath, pResult);
-		for (i = 0; i < strlen(szPath); i ++)
-		{
-			/* read path entry */
-			for (j = 0; i < strlen(szPath) && szPath[i] != ':'; i ++, j ++)
-				szEntry[j] = szPath[i];
-			szEntry[j] = 0;
-
-			/* checking entry */
-			if (strcmp(szEntry, szValue) == 0)
-			{
-				Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Update not needed.");
-				return SUCCESS;
-			}
-		}
-	}
 
 	/* determining file names */
 	switch (iDirsType)
 	{
-		case DIRS_LOCAL:    
-			
+		case DIRS_LOCAL:
+
 			pResult = getenv("HOME");
 			if (pResult == NULL)
 			{
@@ -1097,7 +1097,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 				MsgBox(
 					GTK_WINDOW(pWindowMain),
 					"Error !",
-					szMessage, 
+					szMessage,
 					MSGBOX_ERROR | MSGBOX_OKD
 					);
 				_exit(0);
@@ -1105,19 +1105,19 @@ static int AddVariable(const char *szVariable, const char *szValue)
 			strcpy(szFileNameOrig, pResult);
 			strcat(szFileNameOrig, "/.bash_profile");
 			break;
-			
+
 		case DIRS_GLOBAL:
-			
+
 			strcpy(szFileNameOrig, "/etc/profile");
 			break;
-		
+
 		case DIRS_CUSTOM:
-			
+
 			Log(LOG_WARNING, LOG_MODULE_INSTALL, "Cannot modify environment for custom installation.");
 			return SUCCESS;
 	}
 	sprintf(szFileNameTmp, "%s.back", szFileNameOrig);
-	
+
 	/* copy .bash_profile to a unique file in /tmp, test if  */
 	hFileTmp = fopen(szFileNameTmp, "w");
 	if (hFileTmp == NULL)
@@ -1127,7 +1127,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		return FAILURE;
@@ -1141,7 +1141,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		return FAILURE;
@@ -1156,7 +1156,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 	}
 	fclose(hFileTmp);
 	fclose(hFileOrig);
-	
+
 	/* adding value to .bash_profile */
 	hFileOrig = fopen(szFileNameOrig, "w");
 	if (hFileOrig == NULL)
@@ -1166,7 +1166,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		return FAILURE;
@@ -1179,7 +1179,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		return FAILURE;
@@ -1192,7 +1192,7 @@ static int AddVariable(const char *szVariable, const char *szValue)
 		i = fgetc(hFileTmp);
 		if (i < 0)
 			break;
-		
+
 		fputc(i, hFileOrig);
 	}
 	fclose(hFileOrig);
@@ -1200,6 +1200,34 @@ static int AddVariable(const char *szVariable, const char *szValue)
 
 	sprintf(szMessage, "File %s successfully updated", szFileNameOrig);
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	
+
 	return SUCCESS;
+}
+
+
+
+static int VariableCheck(const char *szVariable, const char *szValue)
+{
+	char *pResult, szEntry[TEXTLEN], szPath[TEXTLEN];
+	int i, j;
+
+	/* check existence of an entry in a path */
+	pResult = getenv(szVariable);
+	if (pResult != NULL)
+	{
+		strcpy(szPath, pResult);
+		for (i = 0; i < strlen(szPath); i ++)
+		{
+			/* read path entry */
+			for (j = 0; i < strlen(szPath) && szPath[i] != ':'; i ++, j ++)
+				szEntry[j] = szPath[i];
+			szEntry[j] = 0;
+
+			/* checking entry */
+			if (strcmp(szEntry, szValue) == 0)
+				return SUCCESS;
+		}
+	}
+
+	return FAILURE;
 }
