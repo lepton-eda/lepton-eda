@@ -12,3 +12,5 @@ pin1=IOPAD
 }
 T 113 221 2 10 0 1 0 0
 device=IOPAD
+T 800 100 5 10 1 1 0 0
+uref=P?

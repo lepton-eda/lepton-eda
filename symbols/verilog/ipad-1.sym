@@ -11,3 +11,5 @@ pin1=IPAD
 }
 T 84 221 2 10 0 1 0 0
 device=IPAD
+T 700 100 5 10 1 1 0 0
+uref=P?
