@@ -129,6 +129,10 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("text-origin-marker", g_rc_text_origin_marker);
 	gh_new_procedure1_0 ("fast-mousepan", g_rc_fast_mousepan);
 	gh_new_procedure1_0 ("raise-dialog-boxes-on-expose", g_rc_raise_dialog_boxes_on_expose);
+	gh_new_procedure1_0 ("attribute-promotion", g_rc_attribute_promotion);
+	gh_new_procedure1_0 ("promote-invisible", g_rc_promote_invisible);
+	gh_new_procedure1_0 ("keep-invisible", g_rc_keep_invisible);
+	gh_new_procedure1_0 ("continue-component-place", g_rc_continue_component_place);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);

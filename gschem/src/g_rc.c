@@ -1310,3 +1310,48 @@ g_rc_raise_dialog_boxes_on_expose(SCM mode)
 
 	RETURN_G_RC_MODE("raise-dialog-boxes-on-expose", default_raise_dialog_boxes, 2);
 }
+
+SCM
+g_rc_attribute_promotion(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("attribute-promotion", default_attribute_promotion, 2);
+}
+
+SCM
+g_rc_promote_invisible(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("promote-invisible", default_promote_invisible, 2);
+}
+
+SCM
+g_rc_keep_invisible(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("keep-invisible", default_keep_invisible, 2);
+}
+
+SCM
+g_rc_continue_component_place(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("continue-component-place", default_continue_component_place, 2);
+}
+
