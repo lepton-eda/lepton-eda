@@ -172,7 +172,7 @@ s_slib_search_for_dirname(char *dir_name)
 <<s_slib.c : s_slib_search_dirs()>>=
 /* don't forget to free slib_path */ 
 char *
-s_slib_search_dirs(char *basename)
+s_slib_search_dirs(const char *basename)
 {
   int i;
   int len;
@@ -241,7 +241,7 @@ s_slib_search_dirs(char *basename)
 
 <<s_slib.c : s_slib_search_lowlevel()>>=
 char *
-s_slib_search_lowlevel(char *basename) 
+s_slib_search_lowlevel(const char *basename) 
 {
   char *slib_path=NULL;
   char *full_path=NULL;
@@ -293,7 +293,7 @@ s_slib_search_lowlevel(char *basename)
 /* 	- removed any _# (where # is any number of digits */
 /* returned_filename has to be freed somewhere */
 char *
-s_slib_getbasename(char *rawname)
+s_slib_getbasename(const char *rawname)
 {
   char *return_filename;
   char *copy;
@@ -386,7 +386,7 @@ s_slib_getbasename(char *rawname)
 /* the required stripping (up to the first period) */
 /* don't forget to free the returned string hack */
 char *
-s_slib_search(char *filename, int flag)
+s_slib_search(const char *filename, int flag)
 {
   char *processed_name=NULL;
   char *new_filename=NULL;
@@ -462,7 +462,7 @@ s_slib_search(char *filename, int flag)
 /* this routine only looks for the filename as is and does no other changes */
 /* to the filename*/
 char *
-s_slib_search_single(char *filename)
+s_slib_search_single(const char *filename)
 {
   char *string=NULL;
 

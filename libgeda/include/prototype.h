@@ -544,11 +544,11 @@ int s_scratch_non_unique_string_fill(char *string);
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);
 int s_slib_search_for_dirname(char *dir_name);
-char *s_slib_search_dirs(char *basename);
-char *s_slib_search_lowlevel(char *basename);
-char *s_slib_getbasename(char *rawname);
-char *s_slib_search(char *filename, int flag);
-char *s_slib_search_single(char *filename);
+char *s_slib_search_dirs(const char *basename);
+char *s_slib_search_lowlevel(const char *basename);
+char *s_slib_getbasename(const char *rawname);
+char *s_slib_search(const char *filename, int flag);
+char *s_slib_search_single(const char *filename);
 void s_slib_free(void);
 void s_slib_init(void);
 char *s_slib_getdir(int index);
