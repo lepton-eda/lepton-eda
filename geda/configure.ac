@@ -235,6 +235,61 @@ AC_CHECK_FUNCS(nanosleep)
 dnl Checks for Additional stuffs.
 
 dnl Languages which your application supports
+
+#########################################################################
+#
+
+# ------------- dmalloc -------------------
+dnl dmalloc checks
+with_dmalloc="no"
+AC_MSG_CHECKING([if dmalloc debugging should be enabled])
+AC_ARG_ENABLE([dmalloc],
+[  --enable-dmalloc        Compile and link with dmalloc for malloc debugging [[default=no]]],
+[
+if test "X$enable_dmalloc" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+        AC_CHECK_HEADER(dmalloc.h,,
+                AC_ERROR([You have requested dmalloc debugging but dmalloc.h could not be found]))
+        AC_CHECK_LIB(dmalloc,main,,
+                AC_ERROR([You have requested dmalloc debugging but -ldmalloc could not be found]))
+        DMALLOC_LIBS="-ldmalloc"
+        with_dmalloc="yes"
+else
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+fi
+],
+[
+        AC_MSG_RESULT([no])
+        DMALLOC_LIBS=""
+])
+
+# ------------- ElectricFence -------------------
+dnl ElectricFence checks
+with_efence="no"
+AC_MSG_CHECKING([if ElectricFence debugging should be enabled])
+AC_ARG_ENABLE([efence],
+[  --enable-efence         Link with ElectricFence for malloc debugging [[default=no]]],
+[
+if test "X$enable_efence" != "Xno" ; then
+        AC_MSG_RESULT([yes])
+	if test "X$with_dmalloc" = "Xyes" ; then
+		AC_ERROR([You have requested both dmalloc and Electric Fence, however only 1 is allowed.])
+	fi
+        AC_CHECK_LIB(efence,main,,
+                AC_ERROR([You have requested ElectricFence debugging but -lefence could not be found]))
+        with_efence="yes"
+else
+        AC_MSG_RESULT([no])
+fi
+],
+[
+AC_MSG_RESULT([no])
+])
+
+#
+#########################################################################
+
 ALL_LINGUAS=""
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION(0.12.1)
@@ -318,4 +373,6 @@ AC_MSG_RESULT([
    GLIB library version:             $GLIB_VERSION
    GTK+ library version:             $GTK_VERSION
    mingw build:                      $MINGW
+   dmalloc debugging:                $with_dmalloc
+   ElectricFence debugging:          $with_efence
 ])
