@@ -1488,8 +1488,9 @@ delete_font_set (gpointer key, gpointer value, gpointer user_data)
     }
     /* do not use s_delete() as tmp is not fully initialized */
     g_free (tmp->name);
-    g_free (tmp);
-    
+
+    /* Do not free tmp here since it will be freed with the function */
+    /* that was specified when the hash table was created. */
   }
 
   return TRUE;
