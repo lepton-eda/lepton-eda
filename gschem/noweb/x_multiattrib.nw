@@ -12,19 +12,10 @@
 
 <<x_multiattrib.c : include directives>>
 
-/***************** Start of Multiple Attrib Edit dialog box ***********/
-<<x_multiattrib.c : multi_attrib_edit_keypress()>>
-<<x_multiattrib.c : multi_attrib_edit_parser()>>
-<<x_multiattrib.c : multi_attrib_edit_set_values()>>
-<<x_multiattrib.c : multi_attrib_edit_clear()>>
-<<x_multiattrib.c : multi_attrib_parse_attribute()>>
-<<x_multiattrib.c : multi_attrib_edit_select_row()>>
-<<x_multiattrib.c : multi_attrib_edit_add()>>
-<<x_multiattrib.c : multi_attrib_edit_change()>>
-<<x_multiattrib.c : multi_attrib_edit_delete()>>
-<<x_multiattrib.c : multi_attrib_edit_close()>>
-<<x_multiattrib.c : multi_attrib_edit()>>
-/***************** End of Multiple Attrib Edit dialog box *************/
+
+<<x_multiattrib.c : x_multiattrib_open()>>
+
+<<x_multiattrib.c : Multiattrib widget>>
 
 @
 
@@ -73,1041 +64,1422 @@
 #include <dmalloc.h>
 #endif
 
-#define NUM_COLUMNS 4
+#include <gdk/gdkkeysyms.h>
+#include "../include/x_multiattrib.h"
+
 @
 
-@section Function @code{multi_attrib_edit_keypress()}
 
-@defun multi_attrib_edit_keypress w w_current
+@section Function @code{x_multiattrib_open()}
+
+@defun x_multiattrib_open toplevel object
+Opens the multiple attribute editor dialog for [[object]] in the context of [[toplevel]].
+
+The dialog is modal and this function does not return until the user closes the dialog.
 @end defun
 
-<<x_multiattrib.c : multi_attrib_edit_keypress()>>=
-int
-multi_attrib_edit_keypress(GtkWidget * widget, GdkEventKey * event, 
-	              TOPLEVEL * w_current)
+<<x_multiattrib.c : x_multiattrib_open()>>=
+void
+x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-    multi_attrib_edit_close(NULL, w_current);	
-    return TRUE;
+  GtkWidget *dialog;
+
+  dialog = GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
+                                     "toplevel", toplevel,
+                                     "object", object,
+                                     NULL));
+  gtk_widget_show (dialog);
+  switch (gtk_dialog_run ((GtkDialog*)dialog)) {
+      case MULTIATTRIB_RESPONSE_CLOSE:
+      case GTK_RESPONSE_DELETE_EVENT:
+        break;
+      default:
+        g_assert_not_reached ();
+  }
+  gtk_widget_destroy (dialog);
+  
+}
+
+@ %def x_multiattrib_open
+
+
+@section Widget @code{Multiattrib}
+
+<<x_multiattrib.c : Multiattrib widget>>=
+enum {
+  PROP_TOPLEVEL=1,
+  PROP_OBJECT
+};
+
+enum {
+  COLUMN_ATTRIBUTE,
+  NUM_COLUMNS
+};
+
+
+static void multiattrib_class_init (MultiattribClass *class);
+static void multiattrib_init       (Multiattrib *multiattrib);
+static void multiattrib_set_property (GObject *object,
+                                      guint property_id,
+                                      const GValue *value,
+                                      GParamSpec *pspec);
+static void multiattrib_get_property (GObject *object,
+                                      guint property_id,
+                                      GValue *value,
+                                      GParamSpec *pspec);
+
+static void multiattrib_popup_menu (Multiattrib *multiattrib,
+                                    GdkEventButton *event);
+
+
+<<x_multiattrib.c : multiattrib_action_add_attribute()>>
+<<x_multiattrib.c : multiattrib_action_duplicate_attribute()>>
+<<x_multiattrib.c : multiattrib_action_delete_attribute()>>
+
+<<x_multiattrib.c : multiattrib_column_set_data_name()>>
+<<x_multiattrib.c : multiattrib_column_set_data_value()>>
+<<x_multiattrib.c : multiattrib_column_set_data_visible()>>
+<<x_multiattrib.c : multiattrib_column_set_data_show_name()>>
+<<x_multiattrib.c : multiattrib_column_set_data_show_value()>>
+
+<<x_multiattrib.c : multiattrib_callback_edited_name()>>
+<<x_multiattrib.c : multiattrib_callback_edited_value()>>
+<<x_multiattrib.c : multiattrib_callback_toggled_visible()>>
+<<x_multiattrib.c : multiattrib_callback_toggled_show_name()>>
+<<x_multiattrib.c : multiattrib_callback_toggled_show_value()>>
+
+<<x_multiattrib.c : multiattrib_callback_key_pressed()>>
+<<x_multiattrib.c : multiattrib_callback_button_pressed()>>
+<<x_multiattrib.c : multiattrib_callback_popup_menu()>>
+<<x_multiattrib.c : multiattrib_callback_popup_*()>>
+
+<<x_multiattrib.c : multiattrib_callback_button_add()>>
+
+<<x_multiattrib.c : multiattrib_init_attrib_names()>>
+<<x_multiattrib.c : multiattrib_init_visible_types()>>
+<<x_multiattrib.c : multiattrib_popup_menu()>>
+
+<<x_multiattrib.c : multiattrib_get_type()>>
+<<x_multiattrib.c : multiattrib_class_init()>>
+<<x_multiattrib.c : multiattrib_init()>>
+<<x_multiattrib.c : multiattrib_set_property()>>
+<<x_multiattrib.c : multiattrib_get_property()>>
+
+<<x_multiattrib.c : multiattrib_update()>>
+
+@ 
+
+
+@subsection Function [[page_get_type()]]
+
+@defun multiattrib_get_type
+@end defun
+
+<<x_multiattrib.c : multiattrib_get_type()>>=
+GType
+multiattrib_get_type ()
+{
+  static GType multiattrib_type = 0;
+  
+  if (!multiattrib_type) {
+    static const GTypeInfo multiattrib_info = {
+      sizeof(MultiattribClass),
+      NULL, /* base_init */
+      NULL, /* base_finalize */
+      (GClassInitFunc) multiattrib_class_init,
+      NULL, /* class_finalize */
+      NULL, /* class_data */
+      sizeof(Multiattrib),
+      0,    /* n_preallocs */
+      (GInstanceInitFunc) multiattrib_init,
+    };
+		
+    multiattrib_type = g_type_register_static (GTK_TYPE_DIALOG,
+                                               "Multiattrib",
+                                               &multiattrib_info, 0);
   }
   
+  return multiattrib_type;
+}
+
+@ %def multiattrib_get_type
+
+
+@subsection Function [[multiattrib_class_init()]]
+
+@defun multiattrib_class_init klass
+@end defun
+
+<<x_multiattrib.c : multiattrib_class_init()>>=
+static void
+multiattrib_class_init (MultiattribClass *klass)
+{
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  gobject_class->set_property = multiattrib_set_property;
+  gobject_class->get_property = multiattrib_get_property;
+
+  g_object_class_install_property (
+    gobject_class, PROP_TOPLEVEL,
+    g_param_spec_pointer ("toplevel",
+                          "",
+                          "",
+                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
+  g_object_class_install_property (
+    gobject_class, PROP_OBJECT,
+    g_param_spec_pointer ("object",
+                          "",
+                          "",
+                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE));
+	
+}
+
+@ %def multiattrib_class_init
+
+
+@subsection Function @code{multiattrib_init()}
+
+@defun multiattrib_init multiattrib
+@end defun
+
+<<x_multiattrib.c : multiattrib_init()>>=
+static void
+multiattrib_init (Multiattrib *multiattrib)
+{
+  GtkWidget *frame, *label, *scrolled_win, *treeview;
+  GtkWidget *table, *entry, *combo, *optionm, *button;
+  GtkTreeModel *store;
+  GtkListStore *liststore;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  
+  /* dialog initialization */
+  g_object_set (G_OBJECT (multiattrib),
+                /* GtkContainer */
+                "border-width",    0,
+                /* GtkWindow */
+                "type",            GTK_WINDOW_TOPLEVEL,
+                "title",           _("Edit Attributes"),
+                "default-width",   320,
+                "default-height",  350,
+                "modal",           TRUE,
+                "window-position", GTK_WIN_POS_MOUSE,
+                "allow-grow",      TRUE,
+                "allow-shrink",    FALSE,
+                /* GtkDialog */
+                "has-separator",   TRUE,
+                NULL);
+
+  multiattrib->toplevel = NULL;
+  multiattrib->object   = NULL;
+
+  <<multiattrib_init() : create the frame with the list of attributes>>
+
+  <<multiattrib_init() : create the 'add attribute' frame>>
+
+  /* now add the close button to the action area */
+  gtk_dialog_add_button (GTK_DIALOG (multiattrib),
+                         GTK_STOCK_CLOSE,   MULTIATTRIB_RESPONSE_CLOSE);
+  
+}
+
+@ %def multiattrib_init
+
+
+<<multiattrib_init() : create the frame with the list of attributes>>=
+/* create the attribute list frame */
+frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                  /* GtkFrame */
+                                  "label", _("Attributes"),
+                                  NULL));
+/*   - create the model for the treeview */
+store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
+                                           G_TYPE_POINTER); /* attribute */
+/*   - create a scrolled window for the treeview */
+scrolled_win = GTK_WIDGET (
+  g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                /* GtkContainer */
+                "border-width",      3,
+                /* GtkScrolledWindow */
+                "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                "shadow-type",       GTK_SHADOW_ETCHED_IN,
+                NULL));
+/*   - create the treeview */
+treeview = GTK_WIDGET (g_object_new (GTK_TYPE_TREE_VIEW,
+                                     /* GtkTreeView */
+                                     "model",      store,
+                                     "rules-hint", TRUE,
+                                     NULL));
+g_signal_connect (treeview,
+                  "key-press-event",
+                  G_CALLBACK (multiattrib_callback_key_pressed),
+                  multiattrib);
+g_signal_connect (treeview,
+                  "button-press-event",
+                  G_CALLBACK (multiattrib_callback_button_pressed),
+                  multiattrib);
+g_signal_connect (treeview,
+                  "popup-menu",
+                  G_CALLBACK (multiattrib_callback_popup_menu),
+                  multiattrib);
+selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
+gtk_tree_selection_set_mode (selection,
+                             GTK_SELECTION_SINGLE);
+
+<<multiattrib_init() : add columns to the treeview>>
+
+/* add the treeview to the scrolled window */
+gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
+/* set treeview of multiattrib */
+multiattrib->treeview = GTK_TREE_VIEW (treeview);
+/* add the scrolled window to frame */
+gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
+/* pack the frame */
+gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), frame,
+                    TRUE, TRUE, 1);
+gtk_widget_show_all (frame);
+
+@ 
+
+
+<<multiattrib_init() : add columns to the treeview>>=
+/*   - and now the columns of the treeview */
+/*       - column 1: attribute name */
+renderer = GTK_CELL_RENDERER (
+  g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                /* GtkCellRendererText */
+                "editable",  TRUE,
+/* unknown in GTK 2.4 */
+/*                 "ellipsize", PANGO_ELLIPSIZE_END, */
+                NULL));
+g_signal_connect (renderer,
+                  "edited",
+                  G_CALLBACK (multiattrib_callback_edited_name),
+                  multiattrib);
+column = GTK_TREE_VIEW_COLUMN (
+  g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                /* GtkTreeViewColumn */
+                "title", _("Name"),
+                "min-width", 100,
+                "resizable", TRUE,
+                NULL));
+gtk_tree_view_column_pack_start (column, renderer, TRUE);
+gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                         multiattrib_column_set_data_name,
+                                         NULL, NULL);
+gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+/*       - column 2: attribute value */
+renderer = GTK_CELL_RENDERER (
+  g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
+                /* GtkCellRendererText */
+                "editable",  TRUE,
+/* unknown in GTK 2.4 */
+/*                 "ellipsize", PANGO_ELLIPSIZE_END, */
+                NULL));
+g_signal_connect (renderer,
+                  "edited",
+                  G_CALLBACK (multiattrib_callback_edited_value),
+                  multiattrib);
+column = GTK_TREE_VIEW_COLUMN (
+  g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                /* GtkTreeViewColumn */
+                "title", _("Value"),
+                "min-width", 140,
+                "resizable", TRUE,
+                NULL));
+gtk_tree_view_column_pack_start (column, renderer, TRUE);
+gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                         multiattrib_column_set_data_value,
+                                         NULL, NULL);
+gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+/*       - column 3: visibility */
+renderer = GTK_CELL_RENDERER (
+  g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
+                /* GtkCellRendererToggle */
+                "activatable", TRUE,
+                NULL));
+g_signal_connect (renderer,
+                  "toggled",
+                  G_CALLBACK (multiattrib_callback_toggled_visible),
+                  multiattrib);
+column = GTK_TREE_VIEW_COLUMN (
+  g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                /* GtkTreeViewColumn */
+                "title", _("Vis?"),
+                NULL));
+gtk_tree_view_column_pack_start (column, renderer, TRUE);
+gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                         multiattrib_column_set_data_visible,
+                                         NULL, NULL);
+gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+/*       - column 4: show name */
+renderer = GTK_CELL_RENDERER (
+  g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
+                /* GtkCellRendererToggle */
+                "activatable", TRUE,
+                NULL));
+g_signal_connect (renderer,
+                  "toggled",
+                  G_CALLBACK (multiattrib_callback_toggled_show_name),
+                  multiattrib);
+column = GTK_TREE_VIEW_COLUMN (
+  g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                /* GtkTreeViewColumn */
+                "title", _("N"),
+                NULL));
+gtk_tree_view_column_pack_start (column, renderer, TRUE);
+gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                         multiattrib_column_set_data_show_name,
+                                         NULL, NULL);
+gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+/*       - column 5: show value */
+renderer = GTK_CELL_RENDERER (
+  g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
+                /* GtkCellRendererToggle */
+                "activatable", TRUE,
+                NULL));
+g_signal_connect (renderer,
+                  "toggled",
+                  G_CALLBACK (multiattrib_callback_toggled_show_value),
+                  multiattrib);
+column = GTK_TREE_VIEW_COLUMN (
+  g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
+                /* GtkTreeViewColumn */
+                "title", _("V"),
+                NULL));
+gtk_tree_view_column_pack_start (column, renderer, TRUE);
+gtk_tree_view_column_set_cell_data_func (column, renderer,
+                                         multiattrib_column_set_data_show_value,
+                                         NULL, NULL);
+gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+
+@ 
+
+
+<<multiattrib_init() : create the 'add attribute' frame>>=
+/* create the add/edit frame */
+frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                  "label", _("Add Attribute"),
+                                  NULL));
+table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
+                                  /* GtkTable */
+                                  "n-rows",      4,
+                                  "n-columns",   2,
+                                  "homogeneous", FALSE,
+                                  NULL));
+
+/*   - the name entry: a GtkComboBoxEntry */
+label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                  /* GtkMisc */
+                                  "xalign", 0.0,
+                                  "yalign", 0.5,
+                                  /* GtkLabel */
+                                  "label",  _("Name:"),
+                                  NULL));
+combo = GTK_WIDGET (g_object_new (GTK_TYPE_COMBO,
+                                  /* GtkCombo */
+                                  "value-in-list", FALSE,
+                                  NULL));
+multiattrib_init_attrib_names (GTK_COMBO (combo));
+multiattrib->combo_name = GTK_COMBO (combo);
+gtk_table_attach (GTK_TABLE (table), label,
+                  0, 1, 0, 1, 0, 0, 0, 0);
+gtk_table_attach (GTK_TABLE (table), combo,
+                  1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 6, 3);
+
+/*   - the value entry: a GtkEntry */
+label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                  /* GtkMisc */
+                                  "xalign", 0.0,
+                                  "yalign", 0.5,
+                                  /* GtkLabel */
+                                  "label",  _("Value:"),
+                                  NULL));
+entry = GTK_WIDGET (g_object_new (GTK_TYPE_ENTRY,
+                                  NULL));
+multiattrib->entry_value = GTK_ENTRY (entry);
+gtk_table_attach (GTK_TABLE (table), label,
+                  0, 1, 1, 2, 0, 0, 0, 0);
+gtk_table_attach (GTK_TABLE (table), entry,
+                  1, 2, 1, 2, GTK_EXPAND | GTK_FILL, 0, 6, 3);
+
+
+/*   - the visible status */
+button = GTK_WIDGET (g_object_new (GTK_TYPE_CHECK_BUTTON,
+                                   /* GtkButton */
+                                   "label", _("Visible"),
+                                   "active", TRUE,
+                                   NULL));
+multiattrib->button_visible = GTK_CHECK_BUTTON (button);
+gtk_table_attach (GTK_TABLE (table), button,
+                  0, 1, 2, 3, GTK_FILL, 0, 3, 0);
+
+/*   - the visibility type */
+optionm = GTK_WIDGET (g_object_new (GTK_TYPE_OPTION_MENU,
+                                    NULL));
+multiattrib_init_visible_types (GTK_OPTION_MENU (optionm));
+multiattrib->optionmenu_shownv = GTK_OPTION_MENU (optionm);
+gtk_table_attach (GTK_TABLE (table), optionm,
+                  1, 2, 2, 3, GTK_EXPAND | GTK_FILL, 0, 6, 3);
+gtk_widget_show_all (table);
+
+/* create the add button */
+button = gtk_button_new_from_stock (GTK_STOCK_ADD);
+g_signal_connect (button,
+                  "clicked",
+                  G_CALLBACK (multiattrib_callback_button_add),
+                  multiattrib);
+gtk_table_attach (GTK_TABLE (table), button,
+                  2, 3, 0, 3, 0, 0, 6, 3);
+
+/* add the table to the frame */
+gtk_container_add (GTK_CONTAINER (frame), table);
+/* pack the frame in the dialog */
+gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), frame,
+                    FALSE, TRUE, 4);
+gtk_widget_show_all (frame);
+
+@ 
+
+
+@subsection Function [[multiattrib_set_property()]]
+
+@defun multiattrib_set_property object property_id value pspec
+@end defun
+
+<<x_multiattrib.c : multiattrib_set_property()>>=
+static void
+multiattrib_set_property (GObject *object,
+                      guint property_id,
+                      const GValue *value,
+                      GParamSpec *pspec)
+{
+  Multiattrib *multiattrib = MULTIATTRIB (object);
+
+  switch(property_id) {
+      case PROP_TOPLEVEL:
+        multiattrib->toplevel = (TOPLEVEL*)g_value_get_pointer (value);
+        break;
+      case PROP_OBJECT:
+        multiattrib->object = (OBJECT*)g_value_get_pointer (value);
+        multiattrib_update (multiattrib);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+
+}
+
+@ %def multiattrib_set_property
+
+
+@subsection Function [[multiattrib_get_property()]]
+
+@defun multiattrib_get_property object property_id value pspec
+@end defun
+
+<<x_multiattrib.c : multiattrib_get_property()>>=
+static void
+multiattrib_get_property (GObject *object,
+                      guint property_id,
+                      GValue *value,
+                      GParamSpec *pspec)
+{
+  Multiattrib *multiattrib = MULTIATTRIB (object);
+
+  switch(property_id) {
+      case PROP_TOPLEVEL:
+        g_value_set_pointer (value, (gpointer)multiattrib->toplevel);
+        break;
+      case PROP_OBJECT:
+        g_value_set_pointer (value, (gpointer)multiattrib->object);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+
+}
+
+@ %def multiattrib_get_property
+
+
+@subsection Function @code{multiattrib_init_attrib_names()}
+
+@defun multiattrib_init_attrib_names combo
+@end defun
+
+<<x_multiattrib.c : multiattrib_init_attrib_names()>>=
+static void
+multiattrib_init_attrib_names (GtkCombo *combo)
+{
+  GList *items = NULL;
+  const gchar *string;
+  gint i;
+  
+  for (i = 0, string = s_attrib_get (i);
+       string != NULL;
+       i++, string = s_attrib_get (i)) {
+    items = g_list_append (items, (gpointer)string);
+  }
+
+  gtk_combo_set_popdown_strings (GTK_COMBO (combo), items);
+
+  g_list_free (items);
+  
+}
+
+@ %def multiattrib_init_attrib_names
+
+
+@subsection Function @code{multiattrib_init_visible_types()}
+
+@defun multiattrib_init_visible_types optionmenu
+@end defun
+
+<<x_multiattrib.c : multiattrib_init_visible_types()>>=
+static void
+multiattrib_init_visible_types (GtkOptionMenu *optionmenu)
+{
+  GtkWidget *menu, *item;
+
+  menu = gtk_menu_new ();
+  item = gtk_menu_item_new_with_label (_("Show Name & Value"));
+  gtk_menu_append (menu, item);
+  item = gtk_menu_item_new_with_label (_("Show Value only"));
+  gtk_menu_append (menu, item);
+  item = gtk_menu_item_new_with_label (_("Show Name only"));
+  gtk_menu_append (menu, item);
+
+  gtk_option_menu_set_menu (optionmenu, menu);
+  
+}
+
+@ %def multiattrib_init_visible_types
+
+
+@subsection Function @code{multiattrib_column_set_data_name()}
+
+@defun multiattrib_column_set_data_name tree_column cell tree_model iter data
+@end defun
+
+<<x_multiattrib.c : multiattrib_column_set_data_name()>>=
+static void
+multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
+                                  GtkCellRenderer *cell,
+                                  GtkTreeModel *tree_model,
+                                  GtkTreeIter *iter,
+                                  gpointer data)
+{
+  OBJECT *o_attrib;
+  gchar *name, *value;
+
+  gtk_tree_model_get (tree_model, iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  
+  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  g_object_set (cell,
+                "text", name,
+                NULL);
+  g_free (name);
+  g_free (value);
+  
+}
+
+@ %def multiattrib_column_set_data_name
+
+
+@subsection Function @code{multiattrib_column_callback_edited_name()}
+
+@defun multiattrib_column_callbackset_data_name tree_column cell tree_model iter data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_edited_name()>>=
+static void
+multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
+                                  gchar *arg1,
+                                  gchar *arg2,
+                                  gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  OBJECT *o_attrib;
+  TOPLEVEL *toplevel;
+  gchar *name, *value, *newtext;
+
+  model = gtk_tree_view_get_model (multiattrib->treeview);
+  toplevel = multiattrib->toplevel;
+
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
+    return;
+  }
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+
+  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  newtext = g_strdup_printf ("%s=%s", arg2, value);
+  
+  /* actually modifies the attribute */
+  o_text_change (toplevel, o_attrib,
+                 newtext, o_attrib->visibility, o_attrib->show_name_value);
+  
+  g_free (name);
+  g_free (value);
+  g_free (newtext);
+  
+}
+
+@ %def multiattrib_callback_edited_name
+
+
+@subsection Function @code{multiattrib_column_set_data_value()}
+
+@defun multiattrib_column_set_data_value tree_column cell tree_model iter data
+@end defun
+
+<<x_multiattrib.c : multiattrib_column_set_data_value()>>=
+static void
+multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
+                                   GtkCellRenderer *cell,
+                                   GtkTreeModel *tree_model,
+                                   GtkTreeIter *iter,
+                                   gpointer data)           
+{
+  OBJECT *o_attrib;
+  gchar *name, *value;
+
+  gtk_tree_model_get (tree_model, iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  
+  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  g_object_set (cell,
+                "text", value,
+                NULL);
+  g_free (name);
+  g_free (value);
+  
+}
+
+@ %def multiattrib_column_set_data_value
+
+
+@subsection Function @code{multiattrib_column_callback_edited_value()}
+
+@defun multiattrib_column_callback_edited_value cell_render arg1 arg2 user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_edited_value()>>=
+static void
+multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
+                                   gchar *arg1,
+                                   gchar *arg2,
+                                   gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  OBJECT *o_attrib;
+  TOPLEVEL *toplevel;
+  gchar *name, *value, *newtext;
+
+  model = gtk_tree_view_get_model (multiattrib->treeview);
+  toplevel = multiattrib->toplevel;
+
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, arg1)) {
+    return;
+  }
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+
+  o_attrib_get_name_value (o_attrib->text->string, &name, &value);
+  newtext = g_strdup_printf ("%s=%s", name, arg2);
+  
+  /* actually modifies the attribute */
+  o_text_change (toplevel, o_attrib,
+                 newtext, o_attrib->visibility, o_attrib->show_name_value);
+  
+  g_free (name);
+  g_free (value);
+  g_free (newtext);
+  
+}
+
+@ %def multiattrib_callback_edited_value
+
+
+@subsection Function @code{multiattrib_column_set_data_visible()}
+
+@defun multiattrib_column_set_data_visible tree_column cell tree_model iter data
+@end defun
+
+<<x_multiattrib.c : multiattrib_column_set_data_visible()>>=
+static void
+multiattrib_column_set_data_visible (GtkTreeViewColumn *tree_column,
+                                     GtkCellRenderer *cell,
+                                     GtkTreeModel *tree_model,
+                                     GtkTreeIter *iter,
+                                     gpointer data)           
+{
+  OBJECT *o_attrib;
+
+  gtk_tree_model_get (tree_model, iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  
+  g_object_set (cell,
+                "active", (o_attrib->visibility == VISIBLE),
+                NULL);
+  
+}
+
+@ %def multiattrib_column_set_data_visible
+
+
+@subsection Function @code{multiattrib_callback_toggled_visible()}
+
+@defun multiattrib_callback_toggled_visible cell_renderer path user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_toggled_visible()>>=
+static void
+multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
+                                      gchar *path,
+                                      gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  OBJECT *o_attrib;
+  TOPLEVEL *toplevel;
+  gint visibility;
+
+  model = gtk_tree_view_get_model (multiattrib->treeview);
+  toplevel = multiattrib->toplevel;
+
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
+    return;
+  }
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  o_text_erase (toplevel, o_attrib);
+
+  visibility = o_attrib->visibility == VISIBLE ? INVISIBLE : VISIBLE;
+
+  /* actually modifies the attribute */
+  o_attrib->visibility = visibility;
+  o_text_recreate (toplevel, o_attrib);
+  o_text_draw (toplevel, o_attrib);
+  o_undo_savestate (toplevel, UNDO_ALL);
+  
+}
+
+@ %def multiattrib_callback_toggled_visible
+
+
+@subsection Function @code{multiattrib_column_set_data_show_name()}
+
+@defun multiattrib_column_set_data_show_name tree_column cell tree_model iter data
+@end defun
+
+<<x_multiattrib.c : multiattrib_column_set_data_show_name()>>=
+static void
+multiattrib_column_set_data_show_name (GtkTreeViewColumn *tree_column,
+                                       GtkCellRenderer *cell,
+                                       GtkTreeModel *tree_model,
+                                       GtkTreeIter *iter,
+                                       gpointer data)           
+{
+  OBJECT *o_attrib;
+
+  gtk_tree_model_get (tree_model, iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  
+  g_object_set (cell,
+                "active", (o_attrib->show_name_value == SHOW_NAME_VALUE ||
+                           o_attrib->show_name_value == SHOW_NAME),
+                NULL);
+  
+}
+
+@ %def multiattrib_column_set_data_show_name
+
+
+@subsection Function @code{multiattrib_callback_toggled_show_name()}
+
+@defun multiattrib_callback_toggled_show_name cell_renderer path user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_toggled_show_name()>>=
+static void
+multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
+                                        gchar *path,
+                                        gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  OBJECT *o_attrib;
+  TOPLEVEL *toplevel;
+  gint new_snv;
+
+  model = gtk_tree_view_get_model (multiattrib->treeview);
+  toplevel = multiattrib->toplevel;
+
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
+    return;
+  }
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  o_text_erase (toplevel, o_attrib);
+
+  switch (o_attrib->show_name_value) {
+      case SHOW_NAME_VALUE: new_snv = SHOW_VALUE;      break;
+      case SHOW_NAME:       new_snv = SHOW_VALUE;      break;
+      case SHOW_VALUE:      new_snv = SHOW_NAME_VALUE; break;
+      default:
+        g_assert_not_reached ();
+  }
+
+  /* actually modifies the attribute */
+  o_attrib->show_name_value = new_snv;
+  o_text_recreate (toplevel, o_attrib);
+  o_text_draw (toplevel, o_attrib);
+  o_undo_savestate (toplevel, UNDO_ALL);
+  
+}
+
+@ %def multiattrib_callback_toggled_show_name
+
+
+@subsection Function @code{multiattrib_column_set_data_show_value()}
+
+@defun multiattrib_column_set_data_show_value tree_column cell tree_model iter data
+@end defun
+
+<<x_multiattrib.c : multiattrib_column_set_data_show_value()>>=
+static void
+multiattrib_column_set_data_show_value (GtkTreeViewColumn *tree_column,
+                                        GtkCellRenderer *cell,
+                                        GtkTreeModel *tree_model,
+                                        GtkTreeIter *iter,
+                                        gpointer data)           
+{
+  OBJECT *o_attrib;
+
+  gtk_tree_model_get (tree_model, iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  
+  g_object_set (cell,
+                "active", (o_attrib->show_name_value == SHOW_NAME_VALUE ||
+                           o_attrib->show_name_value == SHOW_VALUE),
+                NULL);
+  
+}
+
+@ %def multiattrib_column_set_data_show_value
+
+
+@subsection Function @code{multiattrib_callback_toggled_show_value()}
+
+@defun multiattrib_callback_toggled_show_value cell_renderer path user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_toggled_show_value()>>=
+static void
+multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
+                                         gchar *path,
+                                         gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  OBJECT *o_attrib;
+  TOPLEVEL *toplevel;
+  gint new_snv;
+
+  model = gtk_tree_view_get_model (multiattrib->treeview);
+  toplevel = multiattrib->toplevel;
+
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
+    return;
+  }
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+  o_text_erase (toplevel, o_attrib);
+
+  switch (o_attrib->show_name_value) {
+      case SHOW_NAME_VALUE: new_snv = SHOW_NAME;       break;
+      case SHOW_NAME:       new_snv = SHOW_NAME_VALUE; break;
+      case SHOW_VALUE:      new_snv = SHOW_NAME;       break;
+      default:
+        g_assert_not_reached ();
+  }
+
+  /* actually modifies the attribute */
+  o_attrib->show_name_value = new_snv;
+  o_text_recreate (toplevel, o_attrib);
+  o_text_draw (toplevel, o_attrib);
+  o_undo_savestate (toplevel, UNDO_ALL);
+  
+}
+
+@ %def multiattrib_callback_toggled_show_value
+
+
+@subsection Function @code{multiattrib_callback_key_pressed()}
+
+@defun multiattrib_callback_key_pressed widget event user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_key_pressed()>>=
+static gboolean
+multiattrib_callback_key_pressed (GtkWidget *widget,
+                                  GdkEventKey *event,
+                                  gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+
+  if (event->state == 0 &&
+      (event->keyval == GDK_Delete || event->keyval == GDK_KP_Delete)) {
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+    OBJECT *o_attrib;
+    /* delete the currently selected attribute */
+
+    if (!gtk_tree_selection_get_selected (
+          gtk_tree_view_get_selection (multiattrib->treeview),
+          &model, &iter)) {
+      /* nothing selected, nothing to do */
+      return;
+    }
+    
+    gtk_tree_model_get (model, &iter,
+                        COLUMN_ATTRIBUTE, &o_attrib,
+                        -1);
+    g_assert (o_attrib->type == OBJ_TEXT);
+    
+    multiattrib_action_delete_attribute (multiattrib->toplevel,
+                                         o_attrib);
+    
+    /* update the treeview contents */
+    multiattrib_update (multiattrib);
+  }
+
   return FALSE;
 }
-@ %def multi_attrib_edit_keypress
+
+@ %def multiattrib_callback_key_pressed
 
 
-@section Function @code{multi_attrib_edit_parser()}
+@subsection Function @code{multiattrib_callback_button_pressed()}
 
-@defun multi_attrib_edit_parser w text vis show
+@defun multiattrib_callback_button_pressed widget event user_data
 @end defun
 
-<<x_multiattrib.c : multi_attrib_edit_parser()>>=
-char*
-multi_attrib_edit_parser (GtkWidget *w, char **text, int *vis, int *show)
+<<x_multiattrib.c : multiattrib_callback_button_pressed()>>=
+static gboolean
+multiattrib_callback_button_pressed (GtkWidget *widget,
+                                     GdkEventButton *event,
+                                     gpointer user_data)
 {
-  GtkWidget *window;
-  GtkWidget *name;
-  GtkWidget *value;
-  GtkWidget *visbutton;
-  GtkWidget *show_options;
-  int option_index;
-  char *newtext;
-#ifdef HAS_GTK22
-  GtkTextBuffer *textbuffer;
-  GtkTextIter start, end;
-#endif
-	
-  text[2]=malloc(sizeof(char)*8); /* this needs to be freed somewhere? */
-  text[3]=malloc(sizeof(char)*8); /* this needs to be freed somewhere? */
-	
-  window = gtk_object_get_data(GTK_OBJECT(w),"mawindow");
-  name = gtk_object_get_data(GTK_OBJECT(window),"attrib_combo_entry");
-  value = gtk_object_get_data(GTK_OBJECT(window),"value_entry");
-  show_options = gtk_object_get_data(GTK_OBJECT(window), "show_options");
-  visbutton = gtk_object_get_data(GTK_OBJECT(window),"visbutton");
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  gboolean ret = FALSE;
 
-  text[0]= (char *) gtk_entry_get_text(GTK_ENTRY(name));
-
-#ifdef HAS_GTK22
-  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value));
-  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
-  text[1] =  gtk_text_iter_get_text (&start, &end);
-#else
-  text[1] = (char *) gtk_entry_get_text(GTK_ENTRY(value));
-#endif
-
-  newtext = g_strconcat (text[0],"=",text[1],NULL); 
-
-  if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton))) {
-    *vis = VISIBLE;
-    strcpy(text[2], _("Yes"));
-  } else {
-    *vis = INVISIBLE;
-    strcpy(text[2], _("No"));
+  if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
+    multiattrib_popup_menu (multiattrib, event);
+    ret = TRUE;
   }
 
-  option_index = option_menu_get_history(GTK_OPTION_MENU(show_options));
-  switch (option_index) {
-    case (0):
-      *show = SHOW_VALUE;
-      strcpy(text[3], _("V"));
-      break;
+  return ret;
+}
 
-    case (1):
-      *show = SHOW_NAME;
-      strcpy(text[3], _("N"));
-      break;
+@ %def multiattrib_callback_button_pressed
 
-    case (2):
-      *show = SHOW_NAME_VALUE;
-      strcpy(text[3], _("NV"));
-      break;
 
-    default:
-      fprintf(stderr, _("Got invalid show option; defaulting to show both\n"));
-      *show = SHOW_NAME_VALUE;
-      break;
-  }
+@subsection Function @code{multiattrib_callback_popup_menu()}
+
+@defun multiattrib_callback_popup_menu widget user_data
+@end defun
+
+<<x_multiattrib.c : multiattrib_callback_popup_menu()>>=
+static gboolean
+multiattrib_callback_popup_menu (GtkWidget *widget,
+                                 gpointer user_data)
+{
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+
+  multiattrib_popup_menu (multiattrib, NULL);
   
-  return newtext;
+  return TRUE;
 }
 
-@ %def multi_attrib_edit_parser
+@ %def multiattrib_callback_popup_menu
 
 
-@section Function @code{multi_attrib_edit_set_values()}
+@subsection Function @code{multiattrib_callback_popup_*()}
 
-@defun multi_attrib_edit_set_values window attrib
+@defun multiattrib_callback_popup_duplicate menuitem user_data
 @end defun
 
-<<x_multiattrib.c : multi_attrib_edit_set_values()>>=
-void
-multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
+<<x_multiattrib.c : multiattrib_callback_popup_*()>>=
+static void
+multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
+                                      gpointer user_data)
 {
-  GtkWidget *name_entry;
-  GtkWidget *value_entry;
-  GtkWidget *visbutton;
-  GtkWidget *show_options;
-
-  char *name = NULL;
-  char *value = NULL;
-  int len;
-
-#ifdef HAS_GTK22
-  GtkTextBuffer *textbuffer;
-#endif
-
-  name_entry = gtk_object_get_data(GTK_OBJECT(window),"attrib_combo_entry");
-  value_entry = gtk_object_get_data(GTK_OBJECT(window),"value_entry");
-  show_options = gtk_object_get_data(GTK_OBJECT(window), "show_options");
-  visbutton = gtk_object_get_data(GTK_OBJECT(window),"visbutton");
-
-  if(!attrib)
-  {
-    gtk_entry_set_text(GTK_ENTRY(name_entry),"");
-#ifdef HAS_GTK22
-    textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
-    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), "", -1);
-#else
-    gtk_entry_set_text(GTK_ENTRY(value_entry), "");
-#endif
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton),TRUE);
-    gtk_option_menu_set_history(GTK_OPTION_MENU(show_options), 0);
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  TOPLEVEL *toplevel;
+  OBJECT *object, *o_attrib;
+  
+  if (!gtk_tree_selection_get_selected (
+        gtk_tree_view_get_selection (multiattrib->treeview),
+        &model, &iter)) {
+    /* nothing selected, nothing to do */
+    return;
   }
-  else
-  {
-    if(attrib->visibility == VISIBLE)
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (visbutton), TRUE);
-    else
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON (visbutton), FALSE);
-    
-    if (attrib->show_name_value == SHOW_VALUE) {
-      gtk_option_menu_set_history(GTK_OPTION_MENU(show_options), 0);
-    } else if (attrib->show_name_value == SHOW_NAME) {
-      gtk_option_menu_set_history(GTK_OPTION_MENU(show_options), 1);
-    } else {
-      gtk_option_menu_set_history(GTK_OPTION_MENU(show_options), 2);
-    }
-    
-    o_attrib_get_name_value(attrib->text->string, &name, &value);
-    if (name) {
-      gtk_entry_set_text (GTK_ENTRY (name_entry), name);
-    }
 
-    if (value) {
-#ifdef HAS_GTK22
-      textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
-      gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), value, -1);
-#else
-      gtk_entry_set_text(GTK_ENTRY(value_entry), value);
-#endif
+  toplevel = multiattrib->toplevel;
+  object   = multiattrib->object;
+  
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
 
-      gtk_widget_grab_focus(value_entry);
-      len = strlen(value);
-      if (len) {
-#ifdef HAS_GTK22
-	select_all_text_in_textview(GTK_TEXT_VIEW(value_entry));
-#else
-        gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
-#endif 
-      }
-    }
-    if (name) free(name);
-    if (value) free(value);
-  }
+  multiattrib_action_duplicate_attribute (toplevel, object, o_attrib);
+
+  /* update the treeview contents */
+  multiattrib_update (multiattrib);
+  
 }
 
-
-@ %def multi_attrib_edit_set_values
-
-
-@section Function @code{multi_attrib_parse_attribute()}
- 
-@defun multi_attrib_parse_attribute w w_current
-@end defun
- 
-<<x_multiattrib.c : multi_attrib_parse_attribute()>>=
-void multi_attrib_parse_attribute (GtkWidget *w, GtkWidget *w_current)
-{
-  GtkWidget *top_window;
-  GtkWidget *combo_entry;
-  GtkWidget *add_button;
-  GtkWidget *change_button;
-  GtkWidget *value_entry;
-  GtkWidget *clist;
-  char *attrib_name;
-  char *value;
-  int row, attrib_def_row;
-  char attrib_defined;
-  char *row_attrib_name;
-  GSList *special_attrib_list = NULL;
-  int special_attrib_found;
-  GSList *tmp;
-
-#ifdef HAS_GTK22
-  GtkTextBuffer *textbuffer;
-  GtkTextIter start, end;
-#endif
-
-#ifdef HAS_GTK22
-  top_window = gtk_widget_get_ancestor(GTK_WIDGET(w_current), GTK_TYPE_WINDOW);
-#else
-  top_window = gtk_widget_get_ancestor(w, GTK_TYPE_WINDOW);
-#endif
+@ %def multiattrib_callback_popup_duplicate
 
 
-  /* Get combo with attribute name */
-  combo_entry =
-      gtk_object_get_data(GTK_OBJECT(top_window), "attrib_combo_entry");
-
-  attrib_name = (char *) gtk_entry_get_text(GTK_ENTRY(combo_entry));
-
-  /* Get entry with value of the attribute */
-  value_entry = gtk_object_get_data(GTK_OBJECT(top_window), "value_entry");
-#ifdef HAS_GTK22
-  textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
-  gtk_text_buffer_get_bounds (textbuffer, &start, &end);
-  value =  gtk_text_iter_get_text (&start, &end);
-#else
-  value = gtk_entry_get_text(GTK_ENTRY(value_entry));
-#endif
-
-  /* Get clist with the attribute list */
-  clist = gtk_object_get_data(GTK_OBJECT(top_window), "clist");
-
-  /* Check if the attribute is already defined */
-  attrib_defined = FALSE;
-  attrib_def_row = -1;
-  row = 0;
-  while (gtk_clist_get_text(GTK_CLIST(clist), row, 0, &row_attrib_name) == 1) {
-    if (strcmp(row_attrib_name, attrib_name) == 0) {
-      attrib_defined = TRUE;
-      attrib_def_row = row;
-    }
-    row++;
-  }
-
-  /* Create a list with the attributes which can be attached multiple times */
-  special_attrib_list = g_slist_append(special_attrib_list, "comment");
-  special_attrib_list = g_slist_append(special_attrib_list, "source");
-  special_attrib_list = g_slist_append(special_attrib_list, "net");
-
-  add_button = gtk_object_get_data(GTK_OBJECT(top_window), "addbutton");
-  change_button =
-      gtk_object_get_data(GTK_OBJECT(top_window), "changebutton");
-
-
-  /* Search the attrib_name in the special list.  */
-  special_attrib_found = FALSE;
-  tmp = special_attrib_list;
-  while (tmp != NULL)
-  {
-    if (strcmp(attrib_name, tmp->data) == 0)
-    special_attrib_found = TRUE;
-    tmp = g_slist_next(tmp);
-  }
- 
- 
-  /* Select the attribute's row if it's not selected and it can be attached 
-     only once. */
-  if ((attrib_defined == TRUE) &&
-      (!special_attrib_found) ) {
-
-    /* Get the selected row */
-    GList *list;
-    gint row = -1;
-    for (list = GTK_CLIST(clist)->selection; list; list = list->next) {
-      row = GPOINTER_TO_INT(list->data);
-    }
-    /* Select the attribute's row if it's not selected */
-    if (row != attrib_def_row) {
-      gtk_clist_select_row(GTK_CLIST(clist), attrib_def_row, -1);
-    }
-  }
-
-  /* Unselect all if the attribute is not defined */
-  if (!attrib_defined) {
-    gtk_clist_unselect_all(GTK_CLIST(clist));
-  }
-
-  /* Enable/Disable Add and Change buttons */
-  if ((strlen(attrib_name) == 0) || (strlen(value) == 0)) {
-    /* Disable buttons when there is no name or value */
-    gtk_widget_set_sensitive(add_button, FALSE);
-    gtk_widget_set_sensitive(change_button, FALSE);
-  } else {
-    if (!attrib_defined) {
-      /* If the attribute is not defined, then only Add button is enabled. */
-      gtk_widget_set_sensitive(add_button, TRUE);
-      gtk_widget_set_sensitive(change_button, FALSE);
-    } else {
-      /* If it's defined, then the Change button is enabled. */
-      gtk_widget_set_sensitive(change_button, TRUE);
-
-      /* If it's in the list, then the Add button should be enabled.  */
-      if (!special_attrib_found) {
-         gtk_widget_set_sensitive(add_button, FALSE);
-      } else
-         gtk_widget_set_sensitive(add_button, TRUE);
-    }
-  }
-  g_slist_free(special_attrib_list);
-}   
-
-@ %def multi_attrib_parse_attribute
-
-
-@section Function @code{multi_attrib_edit_clear()}
-
-@defun multi_attrib_edit_clear w window
+@defun multiattrib_callback_popup_delete menuitem user_data
 @end defun
 
-<<x_multiattrib.c : multi_attrib_edit_clear()>>=
-void
-multi_attrib_edit_clear (GtkWidget *w, GtkWindow *window)
+<<x_multiattrib.c : multiattrib_callback_popup_*()>>=
+static void
+multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
+                                   gpointer user_data)
 {
-  multi_attrib_edit_set_values(window,NULL);
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  TOPLEVEL *toplevel;
+  OBJECT *o_attrib;
+  
+  if (!gtk_tree_selection_get_selected (
+        gtk_tree_view_get_selection (multiattrib->treeview),
+        &model, &iter)) {
+    /* nothing selected, nothing to do */
+    return;
+  }
+
+  toplevel = multiattrib->toplevel;
+  
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+
+  multiattrib_action_delete_attribute (toplevel, o_attrib);
+
+  /* update the treeview contents */
+  multiattrib_update (multiattrib);
+  
 }
 
+@ %def multiattrib_callback_popup_delete
 
-@ %def multi_attrib_edit_clear
 
+@subsection Function @code{multiattrib_callback_button_add()}
 
-@section Function @code{multi_attrib_edit_select_row()}
-
-@defun multi_attrib_edit_select_row clist row col event w_current
+@defun multiattrib_callback_button_add button user_data
 @end defun
 
-<<x_multiattrib.c : multi_attrib_edit_select_row()>>=
-void
-multi_attrib_edit_select_row (GtkCList *clist, gint row, gint col,
-				GdkEventButton *event, TOPLEVEL *w_current)
+<<x_multiattrib.c : multiattrib_callback_button_add()>>=
+static void
+multiattrib_callback_button_add (GtkButton *button,
+                                gpointer user_data)
 {
-  GtkWidget *window;
-  OBJECT *attrib;
-
-  window = w_current->mawindow;
-  clist = gtk_object_get_data(GTK_OBJECT(window),"clist");
-
-  gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)row);
-  attrib = gtk_clist_get_row_data(clist,row);
-  multi_attrib_edit_set_values (GTK_WINDOW(window), attrib);
-}
-
-
-@ %def multi_attrib_edit_select_row
-
-
-@section Function @code{multi_attrib_edit_add()}
-
-@defun multi_attrib_edit_add w w_current
-@end defun
-
-<<x_multiattrib.c : multi_attrib_edit_add()>>=
-void
-multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
-{
-  int vis,show;
-  char *newtext;
-  gint row;
-  OBJECT *attrib;
+  Multiattrib *multiattrib = (Multiattrib*)user_data;
+  GtkTreeModel *model;
+  const gchar *name, *value;
+  GtkTreeIter iter;
+  TOPLEVEL *toplevel;
   OBJECT *object;
-  char **text;
-  GtkWidget *clist;
-  char *tmpstr;
+  gboolean visible;
+  gint shownv;
 
-  clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
+  toplevel = multiattrib->toplevel;
+  object   = multiattrib->object;
 
-  text=malloc(NUM_COLUMNS*sizeof(char*));
+  /* retrieve information from the Add/Edit frame */
+  /*   - attribute's name */
+  name = gtk_entry_get_text (
+    GTK_ENTRY (GTK_COMBO (multiattrib->combo_name)->entry));
+  /*   - attribute's value */
+  value = gtk_entry_get_text (multiattrib->entry_value);
+  /*   - attribute's visibility status */
+  visible = gtk_toggle_button_get_active (
+    (GtkToggleButton*)multiattrib->button_visible);
+  /*   - visibility type */
+  shownv = (gint)gtk_option_menu_get_history (multiattrib->optionmenu_shownv);
 
-  newtext = multi_attrib_edit_parser (w,text,&vis,&show);
+  if (name[0] == '\0' || name[0] == ' ') {
+    /* name not allowed for an attribute */
+    return;
+  }
 
-  if(text[0][0] == '\0' || text[0][0] == ' ') return;
-			
-  row = gtk_clist_append(GTK_CLIST(clist),text);
+  multiattrib_action_add_attribute (toplevel, object,
+                                    name, value,
+                                    visible, shownv);
+  
+  /* clear fields of lower frame */
+  /*   - resets entry for name */
+  gtk_list_select_item (GTK_LIST (multiattrib->combo_name->list), 0);
+  /*   - resets entry for value */
+  g_object_set (multiattrib->entry_value,
+                "text", "",
+                NULL);
+  /*   - resets entry for visibility */
+  g_object_set (multiattrib->button_visible,
+                "active", TRUE,
+                NULL);
+  /*   - resets entry for show name/value */
+  gtk_option_menu_set_history (multiattrib->optionmenu_shownv,
+                               0);
+  
+  multiattrib_update (multiattrib);
+  
+}
 
-  object = o_select_return_first_object(w_current); 
-  attrib = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+@ %def multiattrib_callback_button_add
 
+
+@subsection Function @code{multiattrib_popup_menu()}
+
+@defun multiattrib_popup_menu multiattrib event
+Pops up a context-sensitive menu.
+
+[[event]] can be NULL if the popup is triggered by a key binding instead of a mouse click.
+@end defun
+
+<<x_multiattrib.c : multiattrib_popup_menu()>>=
+static void
+multiattrib_popup_menu (Multiattrib *multiattrib,
+                        GdkEventButton *event)
+{
+  GtkTreePath *path;
+  GtkWidget *menu;
+  struct menuitem_t {
+    gchar *label;
+    void (*callback)(void);
+  };
+  struct menuitem_t menuitems[] = {
+    { "Duplicate", G_CALLBACK (multiattrib_callback_popup_duplicate) },
+    { "Delete",    G_CALLBACK (multiattrib_callback_popup_delete)    },
+    { NULL,        NULL                                              } };
+  struct menuitem_t *tmp;
+  
+  if (event != NULL &&
+      gtk_tree_view_get_path_at_pos (multiattrib->treeview,
+                                     (gint)event->x, 
+                                     (gint)event->y,
+                                     &path, NULL, NULL, NULL)) {
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection (multiattrib->treeview);
+    gtk_tree_selection_unselect_all (selection);
+    gtk_tree_selection_select_path (selection, path);
+    gtk_tree_path_free (path);
+  }
+
+  /* create the context menu */
+  menu = gtk_menu_new();
+  for (tmp = menuitems; tmp->label != NULL; tmp++) {
+    GtkWidget *menuitem;
+    if (g_strcasecmp (tmp->label, "-") == 0) {
+      menuitem = gtk_separator_menu_item_new ();
+    } else {
+      menuitem = gtk_menu_item_new_with_label (_(tmp->label));
+      g_signal_connect (menuitem,
+                        "activate",
+                        tmp->callback,
+                        multiattrib);
+    }
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+  }
+  gtk_widget_show_all (menu);
+  /* make menu a popup menu */
+  gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+                  (event != NULL) ? event->button : 0,
+                  gdk_event_get_time ((GdkEvent*)event));
+  
+}
+
+@ %def multiattrib_popup_menu
+
+
+@subsection Function @code{multiattrib_action_add_attribute()}
+
+@defun multiattrib_action_add_attribute toplevel object name value visible show_name_value
+@end defun
+
+<<x_multiattrib.c : multiattrib_action_add_attribute()>>=
+static void
+multiattrib_action_add_attribute (TOPLEVEL *toplevel, OBJECT *object,
+                                  const gchar *name, const gchar *value,
+                                  gint visible, gint show_name_value) 
+{
+  OBJECT *o_attrib;
+  gchar *newtext;
+  
+  newtext = g_strdup_printf ("%s=%s", name, value);
+
+  /* create a new attribute and link it */
+  o_attrib = o_attrib_add_attrib (toplevel, newtext,
+                                  visible, show_name_value, object);
+
+  /* !! this code must be somewhere else !! */
   /* handle slot= attribute, it's a special case */
-  if ( (!strcmp(text[0],"slot")) & (strlen(text[1]) < 3) ) {
-    tmpstr = g_strdup_printf("%s=%i",text[0],atoi(text[1]));
-    o_slot_end(w_current,tmpstr,strlen(tmpstr));
-    free(tmpstr);
+  if ((!strcmp (name, "slot")) & (strlen (value) < 3)) {
+    gchar *tmpstr = g_strdup_printf ("%s=%i", name, atoi (value));
+    o_slot_end (toplevel, tmpstr, strlen (tmpstr));
+    g_free (tmpstr);
   }
+  
+  toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (toplevel, UNDO_ALL);
 
-  w_current->page_current->CHANGED=1;
-  o_undo_savestate(w_current, UNDO_ALL);
+  g_free (newtext);
 
-  if (attrib != NULL) {
-    gtk_clist_set_row_data(GTK_CLIST(clist),row,attrib);
-    multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));
-  }
-
-  free(newtext);
-  free(text); /* is this correct?  I think so */
 }
 
+@ %def multiattrib_action_add_attribute
 
-@ %def multi_attrib_edit_add
 
+@subsection Function @code{multiattrib_action_duplicate_attribute()}
 
-@section Function @code{multi_attrib_edit_change()}
-
-@defun multi_attrib_edit_change w w_current
+@defun multiattrib_action_duplicate_attribute toplevel object o_attrib
 @end defun
 
-<<x_multiattrib.c : multi_attrib_edit_change()>>=
-void
-multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
+<<x_multiattrib.c : multiattrib_action_duplicate_attribute()>>=
+static void
+multiattrib_action_duplicate_attribute (TOPLEVEL *toplevel,
+                                        OBJECT *object, OBJECT *o_attrib) 
 {
-  int vis,show;
-  char *newtext;
-  gint row;
-  OBJECT *attrib;
-  char **text;
-  GtkWidget *clist;
-  GtkWidget *value_entry;
-  char *tmpstr;
-  int len;
+  OBJECT *o_new;
+  
+  o_new = o_attrib_add_attrib (toplevel,
+                               o_attrib->text->string,
+                               o_attrib->visibility,
+                               o_attrib->show_name_value,
+                               object);
+  toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (toplevel, UNDO_ALL);
 
-  clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
-  value_entry = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),
-                                    "value_entry");
+}
 
-  text=malloc(NUM_COLUMNS*sizeof(char*));
-  newtext = multi_attrib_edit_parser (w,text,&vis,&show);
+@ %def multiattrib_action_duplicate_attribute
 
-  if(text && text[0] && text[0][0] != '\0' && text[0][0] != ' ')
-  {
-    row = (int)gtk_object_get_data(GTK_OBJECT(clist),"selected");
-    if(row != -1)
-    {
-      attrib = gtk_clist_get_row_data(GTK_CLIST(clist),row);
-      o_text_change(w_current,attrib,newtext,vis,show);
-      o_undo_savestate(w_current, UNDO_ALL);
-      /*			multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));*/
-      gtk_clist_set_text(GTK_CLIST(clist),row,0,text[0]);
-      gtk_clist_set_text(GTK_CLIST(clist),row,1,text[1]);
-      gtk_clist_set_text(GTK_CLIST(clist),row,2,text[2]);
-      gtk_clist_set_text(GTK_CLIST(clist),row,3,text[3]);
+
+@subsection Function @code{multiattrib_action_delete_attribute()}
+
+@defun multiattrib_action_delete_attribute toplevel o_attrib
+@end defun
+
+<<x_multiattrib.c : multiattrib_action_delete_attribute()>>=
+static void
+multiattrib_action_delete_attribute (TOPLEVEL *toplevel, OBJECT *o_attrib) 
+{
+  /* actually deletes the attribute */
+  o_selection_remove (toplevel->page_current->selection2_head, o_attrib);
+  o_delete_text (toplevel, o_attrib);
+  toplevel->page_current->CHANGED=1;
+  o_undo_savestate (toplevel, UNDO_ALL);
+
+}
+
+@ %def multiattrib_action_delete_attribute
+
+
+@subsection Function @code{multiattrib_update()}
+
+@defun multiattrib_update multiattrib
+Updates the tree model of [[multiattrib]]\'s treeview.
+
+It rebuilds the list store with the attributes of the current object.
+@end defun
+
+<<x_multiattrib.c : multiattrib_update()>>=
+void
+multiattrib_update (Multiattrib *multiattrib)
+{
+  GtkListStore *liststore;
+  GtkTreeIter iter;
+  OBJECT **object_attribs, *o_current;
+  gint i;
+  
+  if (multiattrib->toplevel == NULL ||
+      multiattrib->object   == NULL) {
+    /* we can not do anything until both toplevel and object are set */
+    return;
+  }
+
+  liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
+
+  /* clear the list of attributes */
+  gtk_list_store_clear (liststore);
+ 
+  /* get list of attributes */
+  object_attribs = o_attrib_return_attribs (
+    multiattrib->toplevel->page_current->object_head,
+    multiattrib->object);
+  /* populate the store with attributes */
+  if (object_attribs) {
+    for (i = 0, o_current = object_attribs[i];
+         o_current != NULL;
+         i++, o_current = object_attribs[i]) {
+      gtk_list_store_append (liststore, &iter);
+      gtk_list_store_set (liststore, &iter,
+                          COLUMN_ATTRIBUTE, o_current,
+                          -1);
     }
   }
-
-  if ( (!strcmp(text[0],"slot")) & (strlen(text[1]) < 3) )
-  {
-    tmpstr = g_strdup_printf("%s=%i",text[0],atoi(text[1]));
-    o_slot_end(w_current,tmpstr,strlen(tmpstr));
-    free(tmpstr);
-  }
-
-  /* highlight the value text */
-  if (text[1]) {
-    len = strlen(text[1]);
-    if (len) {
-      
-      gtk_widget_grab_focus(value_entry);
-#ifdef HAS_GTK22
-      select_all_text_in_textview(GTK_TEXT_VIEW(value_entry));
-#else
-      gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
-#endif
-    }
-  }
-
-  free(newtext);
-  free(text); /* is this correct?  I think so. */
-  
-  if (gtk_object_get_data(GTK_OBJECT(w), "close")) {
-    multi_attrib_edit_close (w,w_current);
-  }
-}
-
-
-@ %def multi_attrib_edit_change
-
-
-@section Function @code{multi_attrib_edit_delete()}
-
-@defun multi_attrib_edit_delete w w_current
-@end defun
-
-<<x_multiattrib.c : multi_attrib_edit_delete()>>=
-void
-multi_attrib_edit_delete (GtkWidget *w, TOPLEVEL *w_current)
-{
-  OBJECT *attrib;
-  GtkCList *clist;
-  gint selected;
-
-  /* if you delete the slot= attribute, the symbol is not updated. HACK */
-  /* not sure if there is an easy way to fix this, since deleting the slot */
-  /* attribute is not a very nice thing todo */
-  
-  clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
-
-  selected = (gint)gtk_object_get_data(GTK_OBJECT(clist),"selected");
-  if(selected == -1) return;
-
-  attrib = gtk_clist_get_row_data(clist, selected);
-  gtk_clist_remove(clist, selected);
-  gtk_object_set_data(GTK_OBJECT(clist), "selected", (gpointer)-1);
-
-  o_selection_remove(w_current->page_current->selection2_head, attrib);
-  o_delete_text(w_current,attrib);
-  w_current->page_current->CHANGED=1;
-  o_undo_savestate(w_current, UNDO_ALL);
-
-  multi_attrib_edit_clear (NULL, GTK_WINDOW(w_current->mawindow));
-  /* Tell System about change! */
-}
-
-
-@ %def multi_attrib_edit_delete
-
-
-@section Function @code{multi_attrib_edit_close()}
-
-@defun multi_attrib_edit_close w w_current
-@end defun
-
-<<x_multiattrib.c : multi_attrib_edit_close()>>=
-void
-multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
-{
-  i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
-  /* gtk_grab_remove(w_current->mawindow); not needed ? */
-  gtk_widget_destroy(w_current->mawindow);
-  w_current->mawindow = NULL;
-}
-
-
-@ %def multi_attrib_edit_close
-
-
-@section Function @code{multi_attrib_edit()}
-
-@defun multi_attrib_edit w_current list
-@end defun
-
-<<x_multiattrib.c : multi_attrib_edit()>>=
-void
-multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
-{
-  GtkWidget *mawindow;
-  GtkWidget *vbox1;   /* vbox for text stuff */
-
-  GtkWidget *frame0;  /* frame for symbol name */
-  GtkWidget *label0;
-
-  GtkWidget *frame1;  /* frame for attribs */
-  GtkWidget *scrolledwindow1;
-  GtkWidget *clist;
-  GtkWidget *label1;
-  GtkWidget *label2;
-  GtkWidget *label3a;
-  GtkWidget *label3b;
-
-  GtkWidget *frame3;
-  GtkWidget *table1;
-  GtkWidget *label4;
-  GtkWidget *label5;
-  GtkWidget *visbutton;
-  GtkWidget *combo1;
-  GtkWidget *attrib_combo_entry;
-  GtkWidget *value_entry;
-  GtkWidget *show_options;
-  GtkWidget *show_options_menu;
-  GtkWidget *glade_menuitem;
-
-  GtkWidget *vbox2;     /* vbox for buttons */
-  GtkWidget *hbuttonbox1;
-  GtkWidget *changebutton;
-  GtkWidget *addbutton;
-  GtkWidget *deletebutton;
-  GtkWidget *hbuttonbox2;
-  GtkWidget *clearbutton;
-  GtkWidget *closebutton;
-#ifdef HAS_GTK22
-  GtkWidget *viewport1;
-  GtkTextBuffer *value_textbuffer;
-#endif
-
-  /* gschem specific variables */
-  GList *combo1_items = NULL;
-  char *text[NUM_COLUMNS];
-  char *string;
-  int i, j;
-  int row;
-  OBJECT **attriblist=NULL;
-  OBJECT *object=NULL;
-
-  /* Do basic checks first, gschem specific */	
-  if(!w_current) return;
-  if(!w_current->page_current) return;
-  if(!w_current->page_current->object_head) return;
-  object = list->selected_object;
-  if (!object) return;
-
-  /* get attribute list, gschem specific */
-  attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
-                                     object);	
-
-/* ========== Define top level of window ========== */
-#ifdef HAS_GTK22
-  mawindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-#else
-  mawindow = gtk_window_new (GTK_WINDOW_DIALOG);
-#endif
-  w_current->mawindow = mawindow; /* gschem specific */
-  gtk_object_set_data (GTK_OBJECT (mawindow), "mawindow", mawindow);
-  gtk_window_set_title (GTK_WINDOW (mawindow), _("Edit Attributes"));
-  gtk_window_set_position (GTK_WINDOW (mawindow), GTK_WIN_POS_MOUSE);
-  gtk_window_set_modal (GTK_WINDOW (mawindow), TRUE);
-#ifdef HAS_GTK22
-  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 400);
-#else
-  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 380);
-#endif
-  gtk_window_set_policy (GTK_WINDOW (mawindow), FALSE, TRUE, TRUE);
-
-/* ========== Create vbox to hold all the text widgets ========== */
-  vbox1 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_ref (vbox1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "vbox1", vbox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (vbox1);
-  gtk_container_add (GTK_CONTAINER (mawindow), vbox1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox1), 5);
-
-
-/* ========== Define frame holding symbol name ========== */
-  frame0 = gtk_frame_new (_("Symbol Name"));
-  gtk_widget_ref (frame0);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame0", frame0,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_box_pack_start (GTK_BOX (vbox1), frame0, FALSE, TRUE, 1);
-  gtk_widget_show (frame0);
-
-  /* Place text in frame */
-  if (object->complex_basename) {
-    label0 = gtk_label_new (object->complex_basename);
-  } else {
-    label0 = gtk_label_new ("unknown");
-  }
-  gtk_widget_ref (label0);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label0", label0,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_container_add (GTK_CONTAINER (frame0), label0);
-  gtk_widget_show (label0);
-
-
-/* ========== Define attribute list frame ========== */
-  frame1 = gtk_frame_new (_("Attributes"));
-  gtk_widget_ref (frame1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame1", frame1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (frame1);
-  gtk_box_pack_start (GTK_BOX (vbox1), frame1, TRUE, TRUE, 1);
-
-  scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_ref (scrolledwindow1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "scrolledwindow1", scrolledwindow1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (scrolledwindow1);
-  gtk_container_add (GTK_CONTAINER (frame1), scrolledwindow1);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolledwindow1), 3);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolledwindow1), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-
-  clist = gtk_clist_new (NUM_COLUMNS);
-  gtk_widget_ref (clist);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "clist", clist,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (clist);
-  gtk_container_add (GTK_CONTAINER (scrolledwindow1), clist);
-  gtk_clist_set_column_width (GTK_CLIST (clist), 0, 80); /* "documentation" should fit */
-  gtk_clist_set_column_width (GTK_CLIST (clist), 1, 140);
-  gtk_clist_set_column_width (GTK_CLIST (clist), 2, 25);
-  gtk_clist_set_column_width (GTK_CLIST (clist), 3, 10);
-  gtk_clist_column_titles_show (GTK_CLIST (clist));
-  /* gschem specific */
-  gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)-1);
-
-  label1 = gtk_label_new (_("Name"));
-  gtk_widget_ref (label1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label1", label1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label1);
-  gtk_clist_set_column_widget (GTK_CLIST (clist), 0, label1);
-
-  label2 = gtk_label_new (_("Value"));
-  gtk_widget_ref (label2);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label2", label2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label2);
-  gtk_clist_set_column_widget (GTK_CLIST (clist), 1, label2);
-
-  label3a = gtk_label_new (_("Vis?"));
-  gtk_widget_ref (label3a);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label3", label3a,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label3a);
-  gtk_clist_set_column_widget (GTK_CLIST (clist), 2, label3a);
-
-  label3b = gtk_label_new (_("SN"));
-  gtk_widget_ref (label3b);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label3", label3b,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label3b);
-  gtk_clist_set_column_widget (GTK_CLIST (clist), 3, label3b);
-
-/* ========== Define add/edit frame ========== */  
-  frame3 = gtk_frame_new (_("Add/Edit"));
-  gtk_widget_ref (frame3);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame3", frame3,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (frame3);
-  gtk_box_pack_start (GTK_BOX (vbox1), frame3, FALSE, TRUE, 4);
-
-  table1 = gtk_table_new (3, 2, FALSE);
-  gtk_widget_ref (table1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "table1", table1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (table1);
-  gtk_container_add (GTK_CONTAINER (frame3), table1);
-  gtk_container_set_border_width(GTK_CONTAINER(table1), 4);
-
-  label4 = gtk_label_new (_("Name:"));
-  gtk_widget_ref (label4);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label4", label4,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label4);
-  gtk_table_attach (GTK_TABLE (table1), label4, 0, 1, 0, 1,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
-
-  label5 = gtk_label_new (_("Value:"));
-  gtk_widget_ref (label5);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label5", label5,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (label5);
-  gtk_table_attach (GTK_TABLE (table1), label5, 0, 1, 1, 2,
-                    (GtkAttachOptions) (0),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
-
-  visbutton = gtk_check_button_new_with_label (_("Visible"));
-  gtk_widget_ref (visbutton);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "visbutton", visbutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (visbutton);
-  gtk_table_attach (GTK_TABLE (table1), visbutton, 0, 1, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 3, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (visbutton), TRUE);
-  /* gschem specific */
-  gtk_object_set_data (GTK_OBJECT (mawindow), "visbutton", visbutton);
-
-  combo1 = gtk_combo_new ();
-  gtk_widget_ref (combo1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "combo1", combo1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (combo1);
-  gtk_table_attach (GTK_TABLE (table1), combo1, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 6, 3);
-
-  attrib_combo_entry = GTK_COMBO (combo1)->entry;
-  gtk_widget_ref (attrib_combo_entry);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "attrib_combo_entry",
-                            attrib_combo_entry,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (attrib_combo_entry);
-
-#ifdef HAS_GTK22
-  value_entry = gtk_text_view_new();
-#else
-  value_entry = gtk_entry_new ();
-#endif
-  gtk_widget_ref (value_entry);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "value_entry", value_entry,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (value_entry);
-
-#ifdef HAS_GTK22
-  viewport1 = gtk_viewport_new (NULL, NULL);
-  gtk_widget_show (viewport1);
-  gtk_container_add (GTK_CONTAINER (viewport1), value_entry);
-  gtk_table_attach (GTK_TABLE (table1), viewport1, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 6, 3);
-#else  
-  gtk_table_attach (GTK_TABLE (table1), value_entry, 1, 2, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 6, 3);
-#endif
-  /* gschem specific */
-  gtk_object_set_data(GTK_OBJECT(value_entry),"mawindow",mawindow);
-  gtk_object_set_data(GTK_OBJECT(value_entry),"close",(void *)1);
-  
-  show_options = gtk_option_menu_new ();
-  gtk_widget_ref (show_options);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "show_options", show_options,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (show_options);
-  gtk_table_attach (GTK_TABLE (table1), show_options, 1, 2, 2, 3,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 6, 3);
-  show_options_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label (_("Show Value only"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name only"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name & Value"));
-  gtk_widget_show (glade_menuitem);
-  gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
-
-/* ========== Create second vbox to hold all the buttons ========== */
-  vbox2 = gtk_vbox_new (FALSE, 0);
-  gtk_widget_ref (vbox2);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "vbox2", vbox2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (vbox2);
-  gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, TRUE, 3);
-
-  hbuttonbox1 = gtk_hbutton_box_new ();
-  gtk_widget_ref (hbuttonbox1);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "hbuttonbox1", hbuttonbox1,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hbuttonbox1);
-#ifdef HAS_GTK22
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, TRUE, TRUE, 3);
-  gtk_box_set_spacing (GTK_BOX (hbuttonbox1), 6);
-#else
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox1, TRUE, TRUE, 0);
-#endif
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_END);
-
-#ifdef HAS_GTK12
-  changebutton = gtk_button_new_with_label (_("Change"));
-#else
-  changebutton = gtk_button_new_from_stock (GTK_STOCK_APPLY);
-#endif
-  gtk_widget_ref (changebutton);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "changebutton", changebutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (changebutton);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), changebutton);
-  GTK_WIDGET_SET_FLAGS (changebutton, GTK_CAN_DEFAULT);
-  /* gschem specific */
-  gtk_object_set_data(GTK_OBJECT(changebutton), "mawindow", mawindow);
-
-#ifdef HAS_GTK12
-  addbutton = gtk_button_new_with_label (_("Add"));
-#else
-  addbutton = gtk_button_new_from_stock (GTK_STOCK_ADD);
-#endif
-  gtk_widget_ref (addbutton);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "addbutton", addbutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (addbutton);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), addbutton);
-  GTK_WIDGET_SET_FLAGS (addbutton, GTK_CAN_DEFAULT);
-  /* gschem specific */
-  gtk_object_set_data(GTK_OBJECT(addbutton), "mawindow", mawindow); 
-
-#ifdef HAS_GTK12
-  deletebutton = gtk_button_new_with_label (_("Delete"));
-#else
-  deletebutton = gtk_button_new_from_stock (GTK_STOCK_DELETE);
-#endif
-  gtk_widget_ref (deletebutton);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "deletebutton", deletebutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (deletebutton);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox1), deletebutton);
-  GTK_WIDGET_SET_FLAGS (deletebutton, GTK_CAN_DEFAULT);
-
-  hbuttonbox2 = gtk_hbutton_box_new ();
-  gtk_widget_ref (hbuttonbox2);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "hbuttonbox2", hbuttonbox2,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (hbuttonbox2);
-#ifdef HAS_GTK22
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, TRUE, TRUE, 3);
-  gtk_box_set_spacing (GTK_BOX (hbuttonbox2), 6);
-#else
-  gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, TRUE, TRUE, 0);
-#endif
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox2), GTK_BUTTONBOX_END);
-
-#ifdef HAS_GTK12
-  clearbutton = gtk_button_new_with_label (_("Clear"));
-#else
-  clearbutton = gtk_button_new_from_stock (GTK_STOCK_CLEAR);
-#endif
-  gtk_widget_ref (clearbutton);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "clearbutton", clearbutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (clearbutton);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox2), clearbutton);
-  GTK_WIDGET_SET_FLAGS (clearbutton, GTK_CAN_DEFAULT);
-
-#ifdef HAS_GTK12
-  closebutton = gtk_button_new_with_label (_("Close"));
-#else
-  closebutton = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-#endif
-  gtk_widget_ref (closebutton);
-  gtk_object_set_data_full (GTK_OBJECT (mawindow), "closebutton", closebutton,
-                            (GtkDestroyNotify) gtk_widget_unref);
-  gtk_widget_show (closebutton);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox2), closebutton);
-  GTK_WIDGET_SET_FLAGS (closebutton, GTK_CAN_DEFAULT);
-
-  /* connect signals, gschem specific */
-  gtk_signal_connect(GTK_OBJECT (w_current->mawindow), "destroy",
-                     GTK_SIGNAL_FUNC(destroy_window), &w_current->mawindow);
-  gtk_signal_connect(GTK_OBJECT(w_current->mawindow), "key_press_event",
-                     (GtkSignalFunc) multi_attrib_edit_keypress, w_current);
-#ifdef HAS_GTK12
-  gtk_signal_connect(GTK_OBJECT(value_entry), "activate",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_change),w_current);
-#endif
-  gtk_signal_connect(GTK_OBJECT(addbutton),"clicked",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_add),w_current);
-  gtk_signal_connect(GTK_OBJECT(changebutton),"clicked",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_change),w_current);
-  gtk_signal_connect(GTK_OBJECT(clearbutton),"clicked",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_clear),mawindow);
-  gtk_signal_connect(GTK_OBJECT(deletebutton),"clicked",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_delete),w_current);
-  gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
-  gtk_signal_connect(GTK_OBJECT(clist),"select-row",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_select_row),w_current);
-  gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
-                     GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
-#ifdef HAS_GTK22
-  value_textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(value_entry));
-  gtk_signal_connect(GTK_OBJECT(attrib_combo_entry), "changed",
-                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), attrib_combo_entry);
-  g_signal_connect(value_textbuffer, "changed",
-                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), value_entry);   
-#else
-  gtk_signal_connect(GTK_OBJECT(attrib_combo_entry), "changed",
-                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
-  gtk_signal_connect(GTK_OBJECT(value_entry), "changed",
-                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
-#endif
-
-  /* fill clist, gschem specific */
-  i=0;
-  if (attriblist) {
-    while(attriblist[i] != NULL)
-    {
-      o_attrib_get_name_value(attriblist[i]->text->string,
-                              &(text[0]), &(text[1]));
-      if(attriblist[i]->visibility == VISIBLE) {
-        text[2] = g_strdup(_("Yes"));
-      } else {
-        text[2] = g_strdup(_("No"));
-      }
-
-      if(attriblist[i]->show_name_value == SHOW_NAME) {
-        text[3] = g_strdup(_("N"));
-      } else if(attriblist[i]->show_name_value == SHOW_VALUE) {
-        text[3] = g_strdup(_("V"));
-      } else {
-        text[3] = g_strdup(_("NV"));
-      }
-      row = gtk_clist_append(GTK_CLIST(clist),text);
-      gtk_clist_set_row_data (GTK_CLIST(clist),row,attriblist[i]);
-      i++;
-
-      /* Now free the text array, don't try to do this later as some */
-      /* components do not have attributes and the free will core dump. */
-      /* You have to free here, since you will be filling up text with */
-      /* another row. */
-      for (j = 0; j < NUM_COLUMNS; j++) { 
-        if (text[j]) {
-            free(text[j]);
-        }
-      }
-    }
-  }
-
-  /* center justify the last two columns, gschem specific */
-  gtk_clist_set_column_justification(GTK_CLIST(clist), 2, GTK_JUSTIFY_CENTER);
-  gtk_clist_set_column_justification(GTK_CLIST(clist), 3, GTK_JUSTIFY_CENTER);
-  
-  /* set name combo items, gschem specific */
-  i = 0;
-  string = (char *) s_attrib_get(i);
-  while (string != NULL)
-  {
-    combo1_items = g_list_append (combo1_items, string);
-    i++;
-    string = (char *) s_attrib_get(i);
-  }
-  combo1_items = g_list_prepend (combo1_items, NULL);
-  gtk_combo_set_popdown_strings (GTK_COMBO (combo1), combo1_items);
-  g_list_free (combo1_items);
-  
-  /* show window, gschem specific */
-  gtk_widget_show (mawindow);
-
-  /* gschem specific */
-  o_attrib_free_returned(attriblist);
-  multi_attrib_edit_clear(NULL,GTK_WINDOW(mawindow));
+  /* delete the list of attribute objects */
+  o_attrib_free_returned (object_attribs);
   
 }
 
-
-@ %def multi_attrib_edit
+@ %def multiattrib_update
 

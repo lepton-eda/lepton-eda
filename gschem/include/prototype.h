@@ -880,17 +880,7 @@ gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
 void x_menus_sensitivity(TOPLEVEL *w_current, const char *buf, int flag);
 void x_menus_popup_sensitivity(TOPLEVEL *w_current, const char *buf, int flag);
 /* x_multiattrib.c */
-int multi_attrib_edit_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
-char *multi_attrib_edit_parser(GtkWidget *w, char **text, int *vis, int *show);
-void multi_attrib_edit_set_values(GtkWindow *window, OBJECT *attrib);
-void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
-void multi_attrib_edit_select_row(GtkCList *clist, gint row, gint col, GdkEventButton *event, TOPLEVEL *w_current);
-void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit(TOPLEVEL *w_current, SELECTION *list);
-void multi_attrib_parse_attribute(GtkWidget *w, GtkWidget *w_current);
+void x_multiattrib_open (TOPLEVEL *toplevel, OBJECT *object);
 /* x_multimulti.c */
 /* x_pagesel.c */
 void x_pagesel_open (TOPLEVEL *toplevel);

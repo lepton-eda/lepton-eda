@@ -3,7 +3,7 @@
 noinst_HEADERS = \
 	globals.h i_vars.h prototype.h x_event.h x_states.h \
 	gettext.h \
-	x_log.h x_pagesel.h
+	x_log.h x_multiattrib.h x_pagesel.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
