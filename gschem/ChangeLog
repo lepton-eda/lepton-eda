@@ -1,3 +1,8 @@
+2002-08-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/auto-uref.scm: Fixed left over "uref".  Pointed out/fixed
+	by Antonio A Todo Bom.  Thanks.
+
 2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw: Fixed the focus on the value entry to be
@@ -95,7 +100,7 @@
 
 	* noweb/x_attribedit.nw: Changed all occurrances of label to netname
 
-        * lib/system-gschemrc.in Changed all occurrances of label to netname
+        * lib/system-gschemrc.in: Changed all occurrances of label to netname
 
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
