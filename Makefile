@@ -98,35 +98,39 @@ uninstall: utils_uninstall gsymcheck_uninstall gnetlist_uninstall \
            gschem_uninstall symbols_uninstall libgeda_uninstall \
 	   geda_uninstall setup_uninstall docs_uninstall examples_uninstall
 
-# It runs installation using setup.
+# It runs X installation using setup files from:
+# 1) CVS directory
+# 2) local tgz archive
+# 3) downloaded archive (not yet fully functional)
+# 4) current directory (not yet fully functional)
+# Files necessary to start setup: geda-setup, setup.sh, setup.cfg
 xinstall:
 	( \
-		if ! test -f setup.sh ; then \
-			if test -x $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh; then \
-				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
-			elif test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
+		if test -x $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh; then \
+			echo "Using CVS version of setup.sh ..."; \
+			cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
+		elif test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
+			echo "Using distributed version of setup.sh (from existing $(DIR_PREFIX)setup$(CD_VERSION).tar.gz) ..."; \
+			tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh ; \
+			cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
+			rm -Rf $(DIR_PREFIX)setup$(CD_VERSION) ; \
+		else \
+			echo "Trying to download $(DIR_PREFIX)setup$(CD_VERSION).tar.gz ..." ; \
+			wget -c -t0 ftp://ftp.seul.org/geda/devel/${GAF_VERSION}/${DIR_PREFIX}setup${CD_VERSION}.tar.gz >/dev/null 2>/dev/null ; \
+			if test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
+				echo "Using distributed version of setup.sh (from downloaded $(DIR_PREFIX)setup$(CD_VERSION).tar.gz)..."; \
 				tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh ; \
 				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
+				rm -Rf $(DIR_PREFIX)setup$(CD_VERSION) ; \
+			elif test -x setup.sh; then \
+				echo "Using setup.sh existing in current directory ..."; \
 			else \
-				echo "ERROR ! Cannot find setup.sh ..." >&2 ; \
+				echo "ERROR ! Cannot find setup.sh, installation cannnot be continued !" >&2 ; \
 				exit 0 ; \
 			fi ; \
-		fi \
+		fi ; \
 	)
-	( \
-		if ! test -f setup.cfg ; then \
-			if test -f $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg; then \
-				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg . ; \
-			elif test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
-				tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg ; \
-				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg . ; \
-			else \
-				echo "ERROR ! Cannot find setup.cfg ..." >&2 ; \
-				exit 0 ; \
-			fi ; \
-		fi \
-	)
-	./setup.sh
+	./setup.sh ${VERSION} ${DIR_PREFIX} ${CD_VERSION}
 
 # This does a maintainer-clean removes EVERYTHING that's config/built
 maint: libgeda_maint symbols_maint gschem_maint gnetlist_maint \
