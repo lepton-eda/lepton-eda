@@ -77,6 +77,8 @@ SHEET_DATA *s_sheet_data_new()
   new_sheet->pin_count = 0;
   new_sheet->pin_attrib_count = 0;
 
+  new_sheet->CHANGED = FALSE;
+
   return (new_sheet);
 
 }

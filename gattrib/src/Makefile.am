@@ -28,6 +28,7 @@ gattrib_SOURCES = \
 		s_sheet_data.c \
 		s_table.c \
 		s_object.c \
+		s_attrib.c \
 		s_toplevel.c \
 		gattrib.c 
 else
@@ -51,6 +52,7 @@ gattrib_SOURCES = \
 		s_sheet_data.c \
 		s_table.c \
 		s_object.c \
+		s_attrib.c \
 		s_toplevel.c \
 		gattrib.c 
 endif

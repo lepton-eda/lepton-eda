@@ -226,6 +226,8 @@ void s_toplevel_menubar_file_save(TOPLEVEL *pr_current)
   s_toplevel_gtksheet_to_toplevel();
   s_page_save_all(pr_current);  /* saves all pages in design */
 
+  sheet_head->CHANGED = FALSE;
+
   return;
 }
 
@@ -717,16 +719,18 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");
 #endif
 
-  /* To remove dead attribs from o_current, we need to form a complete list of attribs
-   * by taking the union of the new attribs from the SHEET_DATA, and the old attribs
-   * living on o_current.  That's what we're doing here.
+  /* 
+   * To remove dead attribs from o_current, we need to form a complete list of unique 
+   * attribs by taking the union of the new attribs from the SHEET_DATA, and 
+   * the old attribs living on o_current.  That's what we're doing here.
    * Later, we can delete those attribs in o_current which don't apear in 
    * new_comp_attrib_list.
    */
   /* First duplicate new_comp_attrib_list */
   complete_comp_attrib_list = s_string_list_duplicate_string_list(new_comp_attrib_list);
 
-  /* Next augment complete_attrib_list with the attribs attached to o_current */
+  /* Now create a complete list of unique attribute names.  This will be used in
+  *  the loop below when updating attributes.  */
   a_current = o_current->attribs;
   while (a_current != NULL) {
     if (a_current->object->type == OBJ_TEXT
@@ -734,7 +738,10 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       /* may need to check more thoroughly here. . . . */
       old_name_value_pair = u_basic_strdup(a_current->object->text->string);
       old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
-      if (strcmp(old_attrib_name, "refdes") != 0) {
+      /* Don't put refdes into list.  Don't put old name=value pair into list if a new
+       * one is already in there. */
+      if ( (strcmp(old_attrib_name, "refdes") != 0) &&
+	   (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
 	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
       }
       free(old_name_value_pair);
@@ -744,9 +751,10 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   }  /* while (a_current != NULL) */
 
 
-  /* Now the main business of this fcn:  updating the attribs attached to this o_current.
+  /* 
+   *Now the main business of this fcn:  updating the attribs attached to this o_current.
    * Loop on name=value pairs held in complete_comp_attrib_list , and then use this to get the
-   * name=value pairs out of new_comp_attrib_list and old_comp_attrib_list.
+   * name=value pairs out of new_comp_attrib_list and from o_current.
    */
 
   /* First handle a special case: the component has no attribs (beside refdes). */
@@ -758,28 +766,34 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   while (local_list != NULL) {
 
 #if DEBUG
-  printf("        In s_toplevel_update_component_attribs_in_toplevel, handling entry in master list %s .\n", 
+  printf("        In s_toplevel_update_component_attribs_in_toplevel, handling entry in complete list %s .\n", 
 	 local_list->data);
 #endif
 
-    /*  Now get the name=value pair off of o_current  */
+  /*  Now get the old attrib name & value from complete_comp_attrib_list 
+   *  and value from o_current  */
   old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
   old_attrib_value = o_attrib_search_name_single_count(o_current, old_attrib_name, 0);
-  
-  /* Next try to get this attrib from the list of new attribs */
+#if DEBUG
+  printf("        In s_toplevel_update_component_attribs_in_toplevel, old name = \"%s\" .\n", 
+	 old_attrib_name);
+  printf("        In s_toplevel_update_component_attribs_in_toplevel, old value = \"%s\" .\n", 
+	 old_attrib_value);
+#endif
+
+
+  /*  Next try to get this attrib from new_comp_attrib_list  */
   new_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);      
   if (s_string_list_in_list(new_comp_attrib_list, local_list->data)) {
     new_attrib_value = u_basic_breakup_string(local_list->data, '=', 1);      
   } else {
     new_attrib_value = NULL;
   }
-  
-
 #if DEBUG
-      printf("In s_toplevel_update_component_attribs_in_toplevel, old_attrib_name = %s, old_attrib_value = %s\n",
-	     old_attrib_name, old_attrib_value);
-      printf("In s_toplevel_update_component_attribs_in_toplevel, new_attrib_name = %s, new_attrib_value = %s\n",
-	     new_attrib_name, new_attrib_value);
+  printf("        In s_toplevel_update_component_attribs_in_toplevel, new name = \"%s\" .\n", 
+	 new_attrib_name);
+  printf("        In s_toplevel_update_component_attribs_in_toplevel, new value = \"%s\" .\n", 
+	 new_attrib_value);
 #endif
 
 
@@ -787,7 +801,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
       /* simply write new attrib into place of old one. */
 #if DEBUG
-      printf("In s_toplevel_update_component_attribs_in_toplevel, about to replace old attrib with name= %s, value= %s\n",
+      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to replace old attrib with name= %s, value= %s\n",
 	     new_attrib_name, new_attrib_value);
 #endif
       s_object_replace_attrib_in_object(o_current, new_attrib_name, new_attrib_value);
@@ -797,7 +811,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
     else if ( (old_attrib_value != NULL) && (new_attrib_value == NULL) ) {
       /* remove attrib from component*/
 #if DEBUG
-      printf("In s_toplevel_update_component_attribs_in_toplevel, about to remove old attrib with name= %s, value= %s\n",
+      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to remove old attrib with name= %s, value= %s\n",
 	     old_attrib_name, old_attrib_value);
 #endif
       s_object_remove_attrib_in_object(o_current, old_attrib_name);
@@ -808,7 +822,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       /* add new attrib to component. */
 
 #if DEBUG
-      printf("In s_toplevel_update_component_attribs_in_toplevel, about to add new attrib with name= %s, value= %s\n",
+      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to add new attrib with name= %s, value= %s\n",
 	     new_attrib_name, new_attrib_value);
 #endif 
 
@@ -818,7 +832,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
     } else {
       /* Do nothing. */
 #if DEBUG
-      printf("In s_toplevel_update_component_attribs_in_toplevel, nothing needs to be done.\n");
+      printf("     -- In s_toplevel_update_component_attribs_in_toplevel, nothing needs to be done.\n");
 #endif
     }
 
