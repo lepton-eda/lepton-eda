@@ -122,9 +122,9 @@ main(int argc, char **argv)
 	  }
 
 	/* and finally add the device attribute */
-	fprintf(fp,"T 400 0 5 8 0 0 0\ndevice=%s\n",generate[i].name);
+	fprintf(fp,"T 400 0 5 8 0 0 0 0\ndevice=%s\n",generate[i].name);
 	/* and the positional pin directive */
-	fprintf(fp,"T 400 100 5 8 0 0 0\nVERILOG_PORTS=POSITIONAL\n");
+	fprintf(fp,"T 400 100 5 8 0 0 0 0\nVERILOG_PORTS=POSITIONAL\n");
 
 	fclose(fp);
       }
@@ -475,7 +475,7 @@ PinAttribute(FILE *fp, int x, int y, unsigned int n, char *value)
     }
 
   fprintf(fp, "{\n");
-  fprintf(fp, "T %d %d %u %u 0 0 0\n",x, y, YELLOW, 8);
+  fprintf(fp, "T %d %d %u %u 0 0 0 0\n",x, y, YELLOW, 8);
   fprintf(fp, "pin%u=%s\n",n, value);
   fprintf(fp, "}\n");
   
