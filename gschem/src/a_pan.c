@@ -37,6 +37,8 @@
 
 #include "../include/prototype.h"
 
+int current_center_x = 0;
+int current_center_y = 0;
 
 void
 a_pan(TOPLEVEL *w_current, int x, int y)
@@ -177,8 +179,137 @@ a_pan(TOPLEVEL *w_current, int x, int y)
            w_current->start_y = sy;
            w_current->last_x = lx;
            w_current->last_y = ly;
-
    }
 
+	current_center_x =
+                (w_current->page_current->right -
+                 w_current->page_current->left)/2 +
+                w_current->page_current->left;
+
+	current_center_y =
+                (w_current->page_current->bottom -
+                 w_current->page_current->top)/2 +
+                w_current->page_current->top;
+
+#if DEBUG
+	printf("%d %d\n", current_center_x, current_center_y);
+#endif
 }
 
+void
+a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
+{
+	int pan_x, pan_y;
+	int ix, iy, center_x, center_y;
+	int fix=0;
+
+	int sx, sy, lx, ly;
+
+	pan_x = WORLDabs(w_current, diff_x);
+	pan_y = WORLDabs(w_current, diff_y);
+
+#if 0
+	printf("inside pan: %d %d\n", pan_x, pan_y);
+
+	printf("before: %d %d %d %d\n", w_current->page_current->left,
+					w_current->page_current->top,
+					w_current->page_current->right,
+					w_current->page_current->bottom);
+#endif
+
+#if 0 
+	w_current->page_current->right = w_current->page_current->right-(pan_x);
+	w_current->page_current->left = w_current->page_current->left-(pan_x);
+	w_current->page_current->top = w_current->page_current->top+(pan_y);
+	w_current->page_current->bottom = w_current->page_current->bottom+(pan_y);
+#endif
+
+	if ( w_current->page_current->left-(pan_x) <= w_current->init_left) {
+		w_current->page_current->left = w_current->init_left;
+
+#if DEBUG
+		printf("LEFT\n");
+#endif
+		fix++;
+	} else {
+		w_current->page_current->right = w_current->page_current->right-(pan_x);
+#if DEBUG
+		printf("left normal\n");
+#endif
+	}
+
+	if ( w_current->page_current->right-(pan_x) >= w_current->init_right) {
+		w_current->page_current->right = w_current->init_right;
+#if DEBUG
+		printf("RIGHT\n");
+#endif
+		fix++;
+	} else {
+		w_current->page_current->left = w_current->page_current->left-(pan_x);
+#if DEBUG
+		printf("right normal\n");
+#endif
+	}
+
+	if ( w_current->page_current->top+(pan_y) <= w_current->init_top) {
+		w_current->page_current->top = w_current->init_top;
+#if DEBUG
+		printf("TOP\n");
+#endif
+		fix++;
+	} else {
+		w_current->page_current->bottom = w_current->page_current->bottom+(pan_y);
+#if DEBUG
+		printf("top normal\n");
+#endif
+	}
+
+	if ( w_current->page_current->bottom+(pan_y) >= w_current->init_bottom) {
+		w_current->page_current->bottom = w_current->init_bottom;
+#if DEBUG
+		printf("BOTTOM\n");
+#endif
+		fix++;
+	} else {
+		w_current->page_current->top = w_current->page_current->top+(pan_y);
+#if DEBUG
+		printf("bottom normal\n");
+#endif
+	}
+
+	if (fix) {
+		correct_aspect(w_current);
+	}
+
+	set_window(w_current, 
+                w_current->page_current->left, 
+                w_current->page_current->right, 
+                w_current->page_current->top, 
+                w_current->page_current->bottom);
+
+#if 0
+	printf("after: %d %d %d %d\n", w_current->page_current->left,
+					w_current->page_current->top,
+					w_current->page_current->right,
+					w_current->page_current->bottom);
+#endif
+
+	w_current->DONT_REDRAW=1;
+	w_current->DONT_RECALC=1;
+	w_current->DONT_RESIZE=1;
+	x_hscrollbar_update(w_current);
+	x_vscrollbar_update(w_current);
+	o_redraw_all(w_current);
+	w_current->DONT_REDRAW=0;
+	w_current->DONT_RECALC=0;
+	w_current->DONT_RESIZE=0;
+
+#if DEBUG
+	printf("left: %d, right: %d, top: %d, bottom: %d\n", 
+			left, right, top, bottom); 
+	printf("aspect: %f\n", (float) fabs(right - left) / (float) 
+			fabs(bottom-top));
+	printf("zoomfactor: %d\n", zoom_factor);
+#endif
+
+}

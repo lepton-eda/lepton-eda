@@ -436,12 +436,20 @@
 (output-color-background "black")
 ;(output-color-background "white")
 
-; image-orientation string
+; image-color string
 ;
-; Controls which way the image is layed out (landscape or portrait)
+; Controls if image (gif) is color (enabled) or black/white (disabled)
 ;
-;(image-orientation "portrait")
-(image-orientation "landscape")
+(image-color "enabled")
+;(image-color "disabled")
+
+; third-button string
+;
+; Controls if the third mouse button performs the popup ("popup") or 
+; if it does the mouse panning ("mousepan")
+;
+(third-button "popup")
+;(third-button "mousepan")
 
 ;
 ; End of mode related keywords
@@ -659,7 +667,8 @@
     ("Shift L" . edit-unlock)
     ("t" . edit-translate)
     ("b" . edit-embed)
-    ("u" . edit-unembed)))
+    ("u" . edit-unembed)
+    ("h" . edit-hidden)))
 
 ; All keys in this keymap *must* be unique
 (define view-keymap

@@ -145,6 +145,10 @@
 #define DECORATED		0 
 #define TRANSIENT		1 
 
+/* for third-mouse */
+#define POPUP_ENABLED		0
+#define MOUSEPAN_ENABLED	1
+
 /* gnetlist: netlist_mode */
 #define gEDA			0
 #define SPICE			1

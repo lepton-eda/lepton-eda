@@ -361,11 +361,7 @@ exit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	/* go through and change ALL changed flags to 0 */	
 	/* w_current->page_current->CHANGED=0;*/
 	s_page_clear_changed(w_current->page_head);
-#if GTK_DEVEL
 	i_callback_file_close(w_current, 0, NULL);
-#else
-	i_callback_file_close(NULL,w_current);
-#endif
 }
 
 void
@@ -1075,20 +1071,12 @@ coord_display_update(TOPLEVEL *w_current, int x, int y)
 	int world_x, world_y;
 
 	sprintf(string, "(%d, %d)", x, y);
-#ifdef GTK_DEVEL
  	gtk_label_set_text(GTK_LABEL(w_current->coord_screen), string );
-#else
- 	gtk_label_set(GTK_LABEL(w_current->coord_screen), string );
-#endif
 
 	SCREENtoWORLD(w_current, x, y, &world_x, &world_y);
 
 	sprintf(string, "(%d, %d)", world_x, world_y);
-#ifdef GTK_DEVEL
  	gtk_label_set_text(GTK_LABEL(w_current->coord_world), string );
-#else
- 	gtk_label_set(GTK_LABEL(w_current->coord_world), string );
-#endif
 
 }
 

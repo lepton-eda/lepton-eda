@@ -8,6 +8,13 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+6/25/99 Added the ability to generate black and white gifs
+
+	Moved a o_redraw_all from libgeda into gschem where it belongs
+	(f_image.c)
+
+	Removed all traces of GTK_DEVEL 
+
 6/24/99 Got all the object primatives outputing to the image (including
 	the rather painful arcs) 
 

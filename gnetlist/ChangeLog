@@ -7,6 +7,9 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+6/25/99 Added support to configure to look for optarg and friends otherwise
+        include the right externs...
+
 6/17/99 Finally put all the changes in to make gnetlist work with the 
 	new connection system 
 

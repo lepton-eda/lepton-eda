@@ -161,9 +161,7 @@ x_log_setup_win (TOPLEVEL *w_current)
 		/* decorations */
 
 		if (w_current->log_window_type == TRANSIENT) {
-#ifdef GTK_DEVEL
 			gtk_window_set_transient_for (GTK_WINDOW (stwindow), GTK_WINDOW (w_current->main_window));
-#endif
 			gtk_window_position (GTK_WINDOW (stwindow), 
                                      GTK_WIN_POS_MOUSE);
 		} else {

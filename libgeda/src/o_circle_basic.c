@@ -392,11 +392,19 @@ o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 void
 o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-	int origin_x, int origin_y)
+	int origin_x, int origin_y, int color_mode)
 {
+        int color;
+
 	if (o_current == NULL) {
 		printf("got null in o_circle_image_write\n");
 		return;
+	}
+
+	if (color_mode == TRUE) {
+		color = o_image_geda2gd_color(o_current->color);
+	} else {
+		color = image_black;
 	}
 
 	gdImageArc(current_im_ptr, 
@@ -405,7 +413,7 @@ o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
                         SCREENabs(w_current, o_current->circle->radius)*2,
                         SCREENabs(w_current, o_current->circle->radius)*2,
                         0, 360, 
-			o_image_geda2gd_color(o_current->color));
+			color);
 	
 }
 

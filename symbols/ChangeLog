@@ -11,6 +11,8 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+6/25/99 Integrated changes to some of the analog symbols by Arno Peters
+
 5/29/99 Changed all symbols so that the top level attributes are no longer
 	attached to an object.  This is a new symbol standard
 

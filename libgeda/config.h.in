@@ -21,7 +21,10 @@
 /* Define if you have the stroke library   */
 #undef HAS_LIBSTROKE
 
-/* Define if you have the stroke library   */
+/* Define if you have optarg in unistd.h */
+#undef OPTARG_IN_UNISTD
+
+/* Define if you have the gd library   */
 #undef HAS_LIBGD
 
 /* Define if you have rint in the math library   */

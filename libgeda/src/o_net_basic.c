@@ -538,7 +538,7 @@ o_net_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 void
 o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-        int origin_x, int origin_y)
+        int origin_x, int origin_y, int color_mode)
 {
 	int offset, offset2;
 	int cross;
@@ -546,12 +546,19 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	int x2, y2;
 	int cue;
 	int endpoint_color;
+        int color;
 	int i;
 
         if (o_current == NULL) {
                 printf("got null in o_net_image_write\n");
                 return;
         }
+
+	if (color_mode == TRUE) {
+		color = o_image_geda2gd_color(o_current->color);
+	} else {
+		color = image_black;
+	}
 
 	offset = SCREENabs(w_current, 30);
 
@@ -573,14 +580,17 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	y2 = o_current->line_points->screen_y2;
 
         /* assumes screen coords are already calculated correctly */
-        gdImageLine(current_im_ptr, x1, y1, x2, y2,
-                        o_image_geda2gd_color(o_current->color));
+        gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
 				o_current->line_points->x1,
 				o_current->line_points->y1);
 
-	endpoint_color = o_image_geda2gd_color(w_current->net_endpoint_color);
+	if (color_mode == TRUE) {
+		endpoint_color = o_image_geda2gd_color(w_current->net_endpoint_color);
+	} else {
+		endpoint_color = image_black;
+	}
 
 	switch(cue) {
 
@@ -655,18 +665,18 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			/* clean this up so that you save some code */	
 			case(FILLEDBOX):
 				gdImageFilledRectangle(current_im_ptr, 
-						 x2-offset, y2-offset, 
-					         x2-offset+offset2, 
-						 y2-offset+offset2,
-				o_image_geda2gd_color(w_current->net_endpoint_color));
+						x2-offset, y2-offset, 
+					        x2-offset+offset2, 
+						y2-offset+offset2,
+						endpoint_color);
 				break;
 
 			case(EMPTYBOX): 
 				gdImageRectangle(current_im_ptr, 
-						 x2-offset, y2-offset, 
-					         x2-offset+offset2, 
-						 y2-offset+offset2,
-				o_image_geda2gd_color(w_current->net_endpoint_color));
+						x2-offset, y2-offset, 
+					        x2-offset+offset2, 
+						y2-offset+offset2,
+						endpoint_color);
 			break;
 
 			case(X):

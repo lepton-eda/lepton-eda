@@ -683,3 +683,104 @@ a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
 		 box_width, box_height);
 }                                                       
 
+void
+correct_aspect(TOPLEVEL *w_current)
+{
+	float i;
+	double new_aspect;
+	int diff_x, diff_y;
+	int zoom_scale;
+	int sx,lx, sy, ly, last_factor;
+
+	new_aspect = (float) fabs(w_current->page_current->right - 
+			w_current->page_current->left) / 
+		     (float) fabs(w_current->page_current->bottom - 
+			w_current->page_current->top);
+
+	/* Make sure aspect ratio is correct */
+	if (fabs(new_aspect - w_current->page_current->coord_aspectratio)) {
+
+/* sign was > */
+		if (new_aspect > w_current->page_current->coord_aspectratio) {
+#if DEBUG 
+			printf("new larger then coord\n");	
+			printf("implies that height is too large\n"); 
+#endif
+			/* calculate neccesary padding on Y */
+
+			w_current->page_current->bottom = 
+				w_current->page_current->top + (
+				w_current->page_current->right - 
+				w_current->page_current->left) /
+				w_current->page_current->coord_aspectratio; 
+
+#if 0 /* ER's original zoom limits code */
+			pad_y = (delta_y - delta_x*
+				w_current->page_current->coord_aspectratio)/2;
+			w_current->page_current->bottom = 
+				w_current->page_current->bottom + pad_y;
+			w_current->page_current->top = 
+				w_current->page_current->top - pad_y; 
+#endif
+
+		} else {
+
+#if DEBUG 
+			printf("new smaller then coord\n");
+			printf("implies that width is too small\n"); 
+#endif
+			/* calculate necessary padding on X */
+			w_current->page_current->right = 
+				w_current->page_current->left + (
+				w_current->page_current->bottom - 
+				w_current->page_current->top) * 
+				w_current->page_current->coord_aspectratio; 
+
+#if 0 /* ER's original zoom limits code */
+			pad_x = (delta_x - delta_y * 
+				w_current->page_current->coord_aspectratio)/2;	
+
+			w_current->page_current->right = 
+					w_current->page_current->right - pad_x; 
+			w_current->page_current->left = 
+					w_current->page_current->left + pad_x; 
+#endif
+
+                }
+#if DEBUG
+                printf("invalid aspectratio corrected\n");
+#endif
+        }
+	
+	new_aspect = (float) fabs(
+		w_current->page_current->right - 
+		w_current->page_current->left) / 
+		(float) fabs(w_current->page_current->bottom - 
+			     w_current->page_current->top);
+
+#if DEBUG 
+	printf("final %f\n", new_aspect);
+#endif
+
+#if 1
+	diff_x = fabs(w_current->page_current->right - 
+		      w_current->page_current->left);
+	
+#ifdef HAS_RINT
+	zoom_scale = (int) rint(w_current->init_right / diff_x);
+#else 
+	zoom_scale = (int) w_current->init_right / diff_x;
+#endif
+	
+	if (zoom_scale > w_current->max_zoom) {
+		zoom_scale = w_current->max_zoom;	
+	}
+	
+	if (zoom_scale < w_current->min_zoom) {
+		zoom_scale = w_current->min_zoom;	
+	}
+
+	w_current->page_current->zoom_factor = zoom_scale;
+#endif
+
+}

@@ -45,34 +45,6 @@
 
 static const   gchar   *list_item_data_key="list_item_data";	
 
-gint
-image_landscape(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->image_orientation = LANDSCAPE;
-	return(0);
-}
-
-gint
-image_portrait(GtkWidget *w, TOPLEVEL *w_current)
-{
-	w_current->image_orientation = PORTRAIT;
-	return(0);
-}
-
-
-gint
-x_image_set_window(GtkWidget *w, TOPLEVEL *w_current)
-{
-	f_image_set_type(w_current, WINDOW);
-	return(0);
-}
-
-gint
-x_image_set_limits(GtkWidget *w, TOPLEVEL *w_current )
-{
-	f_image_set_type(w_current, LIMITS);
-	return(0);
-}
 
 #if 0
 /* this is from gtktest.c and only used in this file, */
@@ -211,6 +183,7 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 	char *c_width;
 	char *c_height;
 	int width, height;
+	int save_height, save_width;
 
 	filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
 
@@ -222,8 +195,30 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 		width = atoi(c_width);
 		height = atoi(c_height);
 
-		f_image_write(w_current, filename, width, height);
-	        s_log_message("Wrote current schematic to [%s] [%d x %d]\n", filename, width, height);
+		save_width = w_current->width;
+        	save_height = w_current->height;
+
+        	w_current->width = width;
+        	w_current->height = height;
+
+		/* try to use recalc here */
+		o_redraw_all(w_current);
+
+		f_image_write(w_current, filename, width, height, w_current->image_color);
+
+		w_current->width = save_width;
+		w_current->height = save_height;
+        
+		/* try to use recalc here... */
+		o_redraw_all(w_current);
+
+
+		
+		if (w_current->image_color == TRUE) {
+	        	s_log_message("Wrote color image to [%s] [%d x %d]\n", filename, width, height);
+		} else {
+	        	s_log_message("Wrote black and white image to [%s] [%d x %d]\n", filename, width, height);
+		}
 	}
 
 	gtk_widget_destroy(w_current->iwindow);
@@ -247,9 +242,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 	GtkWidget *label;
 	GtkWidget *separator;
 	GtkWidget *box;
-#if GTK_DEVEL
 	GtkWidget *box2;
-#endif
 	GtkWidget *buttonwrite;
 	GtkWidget *buttoncancel;
 	GtkWidget *scrolled_win;
@@ -297,92 +290,13 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                         w_current);
 		gtk_widget_show (buttoncancel);
 
-#if 0
-		label = gtk_label_new ("Output paper size");
-                gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-                gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox),
-                          label, TRUE, TRUE, 0);
 
-                gtk_widget_show (label); 
-
-		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-
-#if GTK_DEVEL
-		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
-				scrolled_win),
-				GTK_POLICY_AUTOMATIC,
-				GTK_POLICY_AUTOMATIC);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox),
-				scrolled_win, TRUE, TRUE, 10);
-		gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 70);
-		gtk_widget_show (scrolled_win);
-		box2 = gtk_vbox_new (FALSE, 0);
-		gtk_scrolled_window_add_with_viewport(
-			GTK_SCROLLED_WINDOW (scrolled_win), box2);
-		gtk_widget_show(box2);
-#endif
-#endif
-
-
-
-
-#ifndef GTK_DEVEL 
-		gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 70);
-      		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
-				      scrolled_win),
-                                      GTK_POLICY_AUTOMATIC,
-                                      GTK_POLICY_AUTOMATIC);
-      		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox), 
-			scrolled_win, TRUE, TRUE, 5);
-	        gtk_widget_show (scrolled_win);
-#endif
 
 		separator = gtk_hseparator_new ();
 	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->iwindow)->vbox), 
 			separator, FALSE, TRUE, 0);
   		gtk_widget_show (separator); 
 
-
-#if 0
-		w_current->plib_list = gtk_list_new ();
-#endif
-
-#if 0
-#if GTK_DEVEL
-		gtk_container_add (GTK_CONTAINER (box2), w_current->plib_list);
-#else
-		gtk_container_add (GTK_CONTAINER (scrolled_win), w_current->plib_list);
-#endif
-		gtk_widget_show (w_current->plib_list);
-#endif
-
-#if 0
-		i = 0;
-		string = (char *) s_papersizes_get(i);
-		while ( string != NULL ) {
-			GtkWidget       *label;
-
-			label=gtk_label_new(string);
-			gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-
-		        list_item=gtk_list_item_new();
-			gtk_container_add(GTK_CONTAINER(list_item), label);
-			gtk_widget_show(label);
-          		gtk_container_add(GTK_CONTAINER (w_current->plib_list), list_item);
-          		gtk_widget_show (list_item);
-			gtk_label_get(GTK_LABEL(label), &string);
-            		gtk_object_set_data(GTK_OBJECT(list_item),
-                                list_item_data_key,
-                                string);
-			i++;
-			string = (char *) s_papersizes_get(i);
-        	}
-
-		gtk_signal_connect(GTK_OBJECT(w_current->plib_list),
-                           "selection_changed",
-                           GTK_SIGNAL_FUNC(x_image_change_size),
-                           w_current);
-#endif
 
 		box = gtk_vbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
@@ -477,9 +391,6 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 		gtk_widget_show (optionmenu);
 #endif
 
-		/* set some defaults */
-		/* this should be whatever the last value was set to??? hack */
-		f_image_set_type(w_current, LIMITS);
 	}
 
 	if (!GTK_WIDGET_VISIBLE (w_current->iwindow)) {

@@ -204,6 +204,18 @@ dnl Checks for library functions.
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
 
+AC_MSG_CHECKING([for optarg in unistd.h])
+AC_TRY_COMPILE(
+[#include <unistd.h>],
+[char *string = optarg; int i = optind;],
+optarg_found=yes,
+optarg_found=no)
+AC_MSG_RESULT($optarg_found)
+
+if test $optarg_found = yes; then
+		AC_DEFINE(OPTARG_IN_UNISTD)
+fi
+
 #
 # Defs for libary symbol files
 #

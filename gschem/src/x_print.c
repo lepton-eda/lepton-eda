@@ -231,9 +231,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 	GtkWidget *label;
 	GtkWidget *separator;
 	GtkWidget *box;
-#if GTK_DEVEL
 	GtkWidget *box2;
-#endif
 	GtkWidget *buttonprint;
 	GtkWidget *buttoncancel;
 	GtkWidget *scrolled_win;
@@ -290,7 +288,6 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
 
-#if GTK_DEVEL
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
 				scrolled_win),
 				GTK_POLICY_AUTOMATIC,
@@ -303,20 +300,8 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 		gtk_scrolled_window_add_with_viewport(
 			GTK_SCROLLED_WINDOW (scrolled_win), box2);
 		gtk_widget_show(box2);
-#endif
 
 
-
-#ifndef GTK_DEVEL 
-		gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 70);
-      		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
-				      scrolled_win),
-                                      GTK_POLICY_AUTOMATIC,
-                                      GTK_POLICY_AUTOMATIC);
-      		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->pwindow)->vbox), 
-			scrolled_win, TRUE, TRUE, 5);
-	        gtk_widget_show (scrolled_win);
-#endif
 
 		separator = gtk_hseparator_new ();
 	        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->pwindow)->vbox), 
@@ -326,11 +311,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
 		w_current->plib_list = gtk_list_new ();
 
-#if GTK_DEVEL
 		gtk_container_add (GTK_CONTAINER (box2), w_current->plib_list);
-#else
-		gtk_container_add (GTK_CONTAINER (scrolled_win), w_current->plib_list);
-#endif
 		gtk_widget_show (w_current->plib_list);
 
 		i = 0;

@@ -48,63 +48,14 @@
 /* hack deal with this !!!!!!!! */
 void
 f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, 
-	int start_x, int start_y, float scale)
+	int start_x, int start_y, float scale, int color_mode)
 {
 	OBJECT *o_current=NULL;
 	int origin_x, origin_y, bottom, right;
 	
-	if (start_x == -1 && start_y == -1) {
-		world_get_complex_bounds(w_current, head, &origin_x, &origin_y, 
-			&right, &bottom);
-
-
-/* right, bottom b-o r-o*/
-		if (w_current->image_orientation == PORTRAIT) {
-
-		/*temp remove if (origin_x != 0 && origin_y != 0) { */
-			origin_x = origin_x - (int)  ((w_current->paper_height - (float) (right-origin_x) * (float) scale)/2 / (float) scale);
-			origin_y = origin_y - (int) ((w_current->paper_width - (float) (bottom-origin_y) * (float) scale)/2 / (float) scale);
-
-		/*}*/
-		} else { /* landscape */
-
-			origin_x = origin_x - (int)  ((w_current->paper_width - (float) (right-origin_x) * (float) scale)/2 / (float) scale);
-			origin_y = origin_y - (int) ((w_current->paper_height - (float) (bottom-origin_y) * (float) scale)/2 / (float) scale);
-
-		}
-	} else {
-		origin_x = start_x;
-		origin_y = start_y;
-	}
-
 	if (head == NULL) {
 		return;
 	}
-
-#if 0
-	/* highly temp, might break everything */
-	/* what a hack!!!!!!!!!! fix this... (by removing the dead code that */
-	/* deals with the origin_x, and origin_y stuff */
-	if (origin_x != 0 && origin_y != 0) {
-		fprintf(fp, "\n%% Translate origin to the right place...\n");
-
-		if (origin_x < 0) {
-			fprintf(fp, "%d mils ", -origin_x);
-		} else {
-			fprintf(fp, "-%d mils ", origin_x);
-		}
-
-		if (origin_y < 0) {
-			fprintf(fp, "%d mils ", -origin_y);
-		} else {
-			fprintf(fp, "-%d mils ", origin_y);
-		}
-
-		fprintf(fp, "translate\n\n");
-		/*fprintf(fp, "-%d mils -%d mils translate\n\n", origin_x, origin_y); */
-	} 
-#endif
-
 
 	origin_x = 0;
 	origin_y = 0;
@@ -119,35 +70,35 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 			switch (o_current->type) {
 				case(OBJ_LINE):
 					o_line_image_write(w_current, o_current,
-						origin_x, origin_y);
+						origin_x, origin_y, color_mode);
 				break;
 
 				case(OBJ_PIN):
 					o_pin_image_write(w_current, o_current,
-						origin_x, origin_y);
+						origin_x, origin_y, color_mode);
 				break;
 
 				case(OBJ_COMPLEX):
 
 					f_image_write_objects(w_current, 
 						o_current->complex,
-						origin_x, origin_y, scale);
+						origin_x, origin_y, scale, color_mode);
 				break;
 
 				case(OBJ_NTEXT):
 					if (o_current->visibility == VISIBLE) {
 			
-					//if (w_current->text_output == VECTOR_FONTS) {	
+					/*if (w_current->text_output == VECTOR_FONTS) {	*/
 						f_image_write_objects(w_current, 
 							o_current->complex,
-							origin_x, origin_y, scale);
-					//} else {
+							origin_x, origin_y, scale, color_mode);
+					/*} else {*/
 #if 0
 						o_ntext_image_write(w_current, fp, 
 						o_current,
 						origin_x, origin_y);
 
-					//}
+					/*}*/
 #endif
 
 					}
@@ -155,24 +106,24 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 
 				case(OBJ_NET):
 					o_net_image_write(w_current, o_current,
-						origin_x, origin_y);
+						origin_x, origin_y, color_mode);
 
 				break;
 
 				case(OBJ_CIRCLE):
 					o_circle_image_write(w_current, 
 						o_current,
-						origin_x, origin_y);
+						origin_x, origin_y, color_mode);
 				break;
 
 				case(OBJ_ARC):
 					o_arc_image_write(w_current, o_current,
-						origin_x, origin_y);
+						origin_x, origin_y, color_mode);
 				break;
 
 				case(OBJ_BOX):
 					o_box_image_write(w_current, o_current,
-						origin_x, origin_y);
+						origin_x, origin_y, color_mode);
 				break;
 			
 				default:
@@ -189,11 +140,11 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 }
 
 void
-f_image_write(TOPLEVEL *w_current, char *filename, int width, int height)
+f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, 
+	int color_mode)
 {
 	int origin_x, origin_y, bottom, right;
 	float scale;
-	int save_height, save_width;
 
 	/* new ALES stuff */
 	o_ales_disconnect_update(w_current->page_current);
@@ -209,65 +160,15 @@ f_image_write(TOPLEVEL *w_current, char *filename, int width, int height)
 			&right, &bottom);
 
 
-	save_width = w_current->width;
-	save_height = w_current->height;
-
-	w_current->width = width;
-	w_current->height = height;
-
-	o_image_create(width, height);
-
-	/* try to use recalc here */
-	o_redraw_all(w_current);
-
-#if 0
-	if (w_current->image_output_type == LIMITS) {
-
-		if (w_current->print_orientation == LANDSCAPE) {
-			scale = f_print_header(w_current, fp, 
-				w_current->paper_width, 
-				w_current->paper_height,  
-			 	right-origin_x, bottom-origin_y);	
-		} else {
-			scale = f_print_header(w_current, fp, 
-				w_current->paper_height,  
-				w_current->paper_width, 
-			 	right-origin_x, bottom-origin_y);	
-		}
-
-#if DEBUG
-		printf("scale: %f\n", scale);
-#endif
-
-		f_image_write_objects(w_current, fp, 
-			w_current->page_current->object_head,
-			-1, -1, scale);
-	} else {
-
-#if DEBUG 
-		printf("scale: %f\n", scale);
-#endif	
-		f_image_write_objects(w_current, fp, 
-			w_current->page_current->object_head,
-			w_current->page_current->left,
-			w_current->page_current->top, scale);
-	} 
-#endif
+	o_image_create(width, height, color_mode);
 
 	f_image_write_objects(w_current,
 			w_current->page_current->object_head,
 			w_current->page_current->left,
-			w_current->page_current->top, scale);
+			w_current->page_current->top, scale, color_mode);
 	
 	o_image_write(filename);
 	o_image_close();
-
-	w_current->width = save_width;
-	w_current->height = save_height;
-
-	/* try to use recalc here... */
-	o_redraw_all(w_current);
-
 
 }
 

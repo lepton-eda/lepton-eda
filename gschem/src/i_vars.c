@@ -76,7 +76,7 @@ int default_init_right=WIDTH_C;
 int default_init_bottom=HEIGHT_C;
 int default_scrollbars_flag=TRUE;
 int default_print_orientation=LANDSCAPE; 
-int default_image_orientation=PORTRAIT; 
+int default_image_color=FALSE; 
 int default_print_color=FALSE; 
 int default_print_color_background=WHITE; 
 int default_print_output_type=LIMITS; 
@@ -86,6 +86,7 @@ char *default_scheme_directory=NULL;
 char *default_font_directory=NULL;
 int default_log_window=MAP_ON_STARTUP;
 int default_log_window_type=DECORATED;
+int default_third_button=POPUP_ENABLED;
 
 void
 i_vars_set(TOPLEVEL *w_current)
@@ -142,8 +143,8 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->print_color = default_print_color;
 	w_current->print_color_background = default_print_color_background;
 
-	w_current->image_orientation = default_image_orientation;
-
+	w_current->image_color = default_image_color;
+	w_current->third_button = default_third_button;
 
 	w_current->paper_width=default_paper_width; 
 	w_current->paper_height=default_paper_height;

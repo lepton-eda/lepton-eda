@@ -8,6 +8,8 @@ OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Swedish characters don't work.
 
+	Mouse pan crashed my X server once
+
 	Select some text while a symbol is at 0,0 and you will see something
 	being erased at 0,0.  I haven't got a clue as to what is being 
 	erased.  Actually I do, it's the selection list's copy of the text.

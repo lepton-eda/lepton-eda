@@ -1263,18 +1263,18 @@ g_rc_output_orientation(SCM mode)
 }
 
 SCM 
-g_rc_image_orientation(SCM mode) 
+g_rc_image_color(SCM mode) 
 {
 	char *string;
 
 	string = gh_scm2newstr(mode, NULL);
 
-	if ( strcmp(string, "portrait") == 0 ) {
-		default_image_orientation = PORTRAIT;		
-	} else if ( strcmp(string, "landscape") == 0 ) {
-		default_image_orientation = LANDSCAPE;		
+	if ( strcmp(string, "enabled") == 0 ) {
+		default_image_color = TRUE;		
+	} else if ( strcmp(string, "disabled") == 0 ) {
+		default_image_color = FALSE;		
 	} else {
-		fprintf(stderr, "Invalid mode [%s] passed to image-orientation\n", string);
+		fprintf(stderr, "Invalid mode [%s] passed to image-color\n", string);
 		if (string) free(string);
 		return(gh_int2scm(-1)); 
 	}
@@ -1373,6 +1373,30 @@ g_rc_log_window_type(SCM mode)
 		default_log_window_type = DECORATED;		
 	} else {
 		fprintf(stderr, "Invalid mode [%s] passed to log-window-type\n", string);
+		if (string) free(string);
+		return(gh_int2scm(-1)); 
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+SCM 
+g_rc_third_button(SCM mode) 
+{
+	char *string;
+
+	string = gh_scm2newstr(mode, NULL);
+
+	if ( strcmp(string, "popup") == 0 ) {
+		default_third_button = POPUP_ENABLED;		
+	} else if ( strcmp(string, "mousepan") == 0 ) {
+		default_third_button = MOUSEPAN_ENABLED;		
+	} else {
+		fprintf(stderr, "Invalid mode [%s] passed to image-color\n", string);
 		if (string) free(string);
 		return(gh_int2scm(-1)); 
 	}

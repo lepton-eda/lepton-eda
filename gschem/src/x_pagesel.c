@@ -125,11 +125,7 @@ save_page (GtkWidget *gtklist, TOPLEVEL *w_current)
 {
 	/* Don't need to search for any rows or whatever since page_current */
       	/* already points to the page we want to save */ 
-#if GTK_DEVEL
 	i_callback_file_save(w_current, 0, NULL);
-#else
-	i_callback_file_save(NULL, w_current);
-#endif
 	
 	return(0);
 }
@@ -137,11 +133,7 @@ save_page (GtkWidget *gtklist, TOPLEVEL *w_current)
 gint
 file_new (GtkWidget *gtklist, TOPLEVEL *w_current)
 {
-#if GTK_DEVEL
 	i_callback_file_new(w_current, 0, NULL);
-#else
-	i_callback_file_new(NULL, w_current);
-#endif
 	
 	return(0);
 }
@@ -149,11 +141,7 @@ file_new (GtkWidget *gtklist, TOPLEVEL *w_current)
 gint
 file_open (GtkWidget *gtklist, TOPLEVEL *w_current)
 {
-#if GTK_DEVEL
 	i_callback_file_open(w_current, 0, NULL);
-#else
-	i_callback_file_open(NULL, w_current);
-#endif
 	
 	return(0);
 }
@@ -161,11 +149,7 @@ file_open (GtkWidget *gtklist, TOPLEVEL *w_current)
 gint
 page_close (GtkWidget *gtklist, TOPLEVEL *w_current)
 {
-#if GTK_DEVEL
 	i_callback_page_close(w_current, 0, NULL);
-#else
-	i_callback_page_close(NULL, w_current);
-#endif
 	
 	return(0);
 }
@@ -173,11 +157,7 @@ page_close (GtkWidget *gtklist, TOPLEVEL *w_current)
 gint
 page_discard (GtkWidget *gtklist, TOPLEVEL *w_current)
 {
-#if GTK_DEVEL
 	i_callback_page_discard(w_current, 0, NULL);
-#else
-	i_callback_page_discard(NULL, w_current);
-#endif
 	
 	return(0);
 }
@@ -213,9 +193,7 @@ void
 setup_page_selector (TOPLEVEL *w_current)
 {
 	GtkWidget *buttonnew;
-#if GTK_DEVEL
 	GtkWidget *scrolled_win;
-#endif
 	GtkWidget *buttonopen;
 	GtkWidget *buttonsave;
 	GtkWidget *buttonclose;
@@ -276,7 +254,6 @@ setup_page_selector (TOPLEVEL *w_current)
 		/* change to clist*/
 		w_current->page_clist = gtk_clist_new_with_titles (NUM_ROWS, titles);
 
-#ifdef GTK_DEVEL
 		gtk_widget_show(w_current->page_clist);
 		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
       		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
@@ -285,7 +262,6 @@ setup_page_selector (TOPLEVEL *w_current)
                                       GTK_POLICY_AUTOMATIC);
 		gtk_widget_show(scrolled_win);
       		gtk_container_add (GTK_CONTAINER (scrolled_win), w_current->page_clist);
-#endif
 
 
 		gtk_clist_set_row_height (GTK_CLIST (w_current->page_clist), 
@@ -295,13 +271,6 @@ setup_page_selector (TOPLEVEL *w_current)
 
 		gtk_clist_set_selection_mode (GTK_CLIST (w_current->page_clist),
 					 GTK_SELECTION_BROWSE);
-
-/* gtk_clist_set_policy is gone in gtk 1.2.x */
-#ifndef GTK_DEVEL
-		gtk_clist_set_policy (GTK_CLIST (w_current->page_clist),
-                            GTK_POLICY_AUTOMATIC,
-                            GTK_POLICY_AUTOMATIC);
-#endif
 
 		gtk_clist_set_column_justification (GTK_CLIST (
 				w_current->page_clist), 0, GTK_JUSTIFY_LEFT);
@@ -349,14 +318,9 @@ setup_page_selector (TOPLEVEL *w_current)
 
 		gtk_container_border_width (GTK_CONTAINER (
 			w_current->page_clist), 0);
-#ifndef GTK_DEVEL
-      		gtk_box_pack_start (GTK_BOX (box), w_current->page_clist, 
-			TRUE, TRUE, 0);
-      		gtk_widget_show (w_current->page_clist);
-#else 
+
 		gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 5);
-		gtk_box_pack_start (GTK_BOX (box), scrolled_win, TRUE, TRUE, 0);
-#endif
+                gtk_box_pack_start (GTK_BOX (box), scrolled_win, TRUE, TRUE, 0);
 
 		row = s_page_search_row(w_current, w_current->page_current);
 		gtk_clist_select_row(GTK_CLIST(w_current->page_clist), row, 1);	

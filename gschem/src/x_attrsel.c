@@ -159,9 +159,7 @@ setup_attr_selector (TOPLEVEL *w_current)
 	GtkWidget *label;
 	GtkWidget *separator;
 	GtkWidget *box;
-#if GTK_DEVEL
 	GtkWidget *box2;
-#endif
 	GSList *group;
 	GtkWidget *button;
 	GtkWidget *buttonapply;
@@ -209,7 +207,6 @@ setup_attr_selector (TOPLEVEL *w_current)
 		gtk_widget_show (buttonclose);
 
 		scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-#if GTK_DEVEL
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 			GTK_POLICY_AUTOMATIC,
 			GTK_POLICY_AUTOMATIC);
@@ -222,26 +219,10 @@ setup_attr_selector (TOPLEVEL *w_current)
 			GTK_SCROLLED_WINDOW (scrolled_win), box2);
 
 		gtk_widget_show(box2);
-#endif
-
-#ifndef GTK_DEVEL
-		gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 300, 70);
-      		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (
-				      scrolled_win),
-                                      GTK_POLICY_AUTOMATIC,
-                                      GTK_POLICY_AUTOMATIC);
-      		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (w_current->aswindow)->vbox), 
-			scrolled_win, TRUE, TRUE, 10);
-	        gtk_widget_show (scrolled_win);
-#endif
 
 		w_current->attr_list = gtk_list_new ();
 
-#if GTK_DEVEL
 		gtk_container_add (GTK_CONTAINER (box2), w_current->attr_list);
-#else
-		gtk_container_add (GTK_CONTAINER (scrolled_win), w_current->attr_list);
-#endif
 		gtk_widget_show (w_current->attr_list);
 
 		i = 0;

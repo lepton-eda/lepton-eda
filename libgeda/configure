@@ -3525,6 +3525,35 @@ fi
 done
 
 
+echo $ac_n "checking for optarg in unistd.h""... $ac_c" 1>&6
+echo "configure:3530: checking for optarg in unistd.h" >&5
+cat > conftest.$ac_ext <<EOF
+#line 3532 "configure"
+#include "confdefs.h"
+#include <unistd.h>
+int main() {
+char *string = optarg; int i = optind;
+; return 0; }
+EOF
+if { (eval echo configure:3539: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+  rm -rf conftest*
+  optarg_found=yes
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+  optarg_found=no
+fi
+rm -f conftest*
+echo "$ac_t""$optarg_found" 1>&6
+
+if test $optarg_found = yes; then
+		cat >> confdefs.h <<\EOF
+#define OPTARG_IN_UNISTD 1
+EOF
+
+fi
+
 #
 # Defs for libary symbol files
 #

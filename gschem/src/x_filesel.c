@@ -204,27 +204,15 @@ file_selection_ok_saveas (GtkWidget *w, TOPLEVEL *w_current)
         }         
 
 	if (w_current->saveas_flag == OPEN) {
-#if GTK_DEVEL
                  i_callback_file_open(w_current, 0, NULL);
-#else
-                 i_callback_file_open(NULL, w_current);
-#endif
 	}
 
 	if (w_current->saveas_flag == NEW) {
-#if GTK_DEVEL
                  i_callback_file_new(w_current, 0, NULL);
-#else
-                 i_callback_file_new(NULL, w_current);
-#endif
 	}
 
 	if (w_current->saveas_flag == CLOSE) {
-#if GTK_DEVEL
                  i_callback_page_close(w_current, 0, NULL);
-#else
-                 i_callback_page_close(NULL, w_current);
-#endif
 	}
 
 	/* Do nothing if it is SAVEAS */
@@ -249,11 +237,7 @@ file_selection_cancel_saveas (GtkWidget *w, TOPLEVEL *w_current)
 	/* or maybe not? NOT, since pages are replaced, new ones added only */
 	if (w_current->saveas_flag == NEW) {
 		w_current->page_current->CHANGED=0;
-#if GTK_DEVEL
 		i_callback_file_new(w_current, 0, NULL);
-#else
-		i_callback_file_new(NULL, w_current);
-#endif
 	}
 
 	/* do nothing if cancel is pressed for CLOSE case */

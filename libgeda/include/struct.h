@@ -380,12 +380,13 @@ struct st_toplevel {
 	int text_output; /* controls how text is printed (vector / PS font) */ 
 	int scrollbars_flag; /* controls if scrollbars are displayed */ 
 	int print_orientation; /* either landscape or portrait */
-	int image_orientation; /* either landscape or portrait */
+	int image_color; /* either TRUE or FALSE (color or no color) */
 	int print_color; /* either TRUE or FALSE (color or no color) */
 	int print_color_background; /* color used color ouput for background */ 
 	int stroke_color; /* color of the stroke points */
 	int log_window; /* controls if the log windows mapped on startup */
 	int log_window_type; /* controls if the log window is decorated or not */
+	int third_button; /* controls what the third mouse button does */
 
 	/* fixed init variables */
 	int print_output_type;			/* either window or limits */

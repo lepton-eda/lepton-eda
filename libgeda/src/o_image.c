@@ -20,6 +20,13 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+
 
 #ifdef HAS_LIBGD
 #include <gd/gd.h>
@@ -48,15 +55,22 @@ o_image_init(void)
 
 /* background color ? */
 void
-o_image_create(int x, int y)
+o_image_create(int x, int y, int color_mode)
 {
 	gdImagePtr im_ptr;
 
 
 	im_ptr = gdImageCreate(x, y);
 
-	image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
-	image_white = gdImageColorAllocate(im_ptr, 255, 255, 255);
+	if (color_mode == TRUE) {
+		image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
+		image_white = gdImageColorAllocate(im_ptr, 255, 255, 255);
+	} else {
+		/* set the background to white */
+		image_white = gdImageColorAllocate(im_ptr, 255, 255, 255);
+		image_black = gdImageColorAllocate(im_ptr, 0, 0, 0);
+	}
+
 	image_red = gdImageColorAllocate(im_ptr, 255, 0, 0);
         image_green = gdImageColorAllocate(im_ptr, 0, 255, 0);
         image_blue = gdImageColorAllocate(im_ptr, 0, 0, 255);
@@ -100,7 +114,7 @@ o_image_write(char *filename)
 }
 
 
-gdImagePtr
+int
 o_image_geda2gd_color(int color) 
 {
 	switch(color) {

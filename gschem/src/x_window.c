@@ -481,10 +481,6 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
 void
 x_window_create_main(TOPLEVEL *w_current)
 {
-#ifndef GTK_DEVEL
-        GtkAcceleratorTable *accel;
-        GtkAcceleratorTable *popup_accel;
-#endif
 	GtkWidget *label;
 	GtkWidget *main_box;
 	GtkWidget *menubar;
@@ -525,23 +521,11 @@ x_window_create_main(TOPLEVEL *w_current)
         gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
         gtk_widget_show(main_box);
 
-#if GTK_DEVEL
         get_main_menu(w_current, &menubar);
-#else
-        get_main_menu(w_current, &menubar, &accel);
-        gtk_window_add_accelerator_table(GTK_WINDOW(w_current->main_window), 
-					 accel);
-#endif
         gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
         gtk_widget_show(menubar);
 
-#if GTK_DEVEL
 	get_main_popup(w_current, &(w_current->popup_menu));
-#else
-	get_main_popup(w_current, &(w_current->popup_menu), &popup_accel);
-        gtk_window_add_accelerator_table(GTK_WINDOW(w_current->main_window), 
-					 popup_accel);
-#endif
 
         drawbox = gtk_hbox_new(FALSE, 0);
         gtk_container_border_width(GTK_CONTAINER(drawbox), 0);
@@ -620,7 +604,11 @@ x_window_create_main(TOPLEVEL *w_current)
 			    FALSE, FALSE, 0); 
         gtk_widget_show (w_current->middle_button);
 
-	w_current->right_button = gtk_button_new_with_label ("Menu/Cancel");
+	if (default_third_button == POPUP_ENABLED) {
+		w_current->right_button = gtk_button_new_with_label ("Menu/Cancel");
+	} else {
+		w_current->right_button = gtk_button_new_with_label ("Pan/Cancel");
+	}
 	gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_button, 
                        	    FALSE, FALSE, 0); 
         gtk_widget_show (w_current->right_button);

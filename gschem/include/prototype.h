@@ -1,5 +1,6 @@
 /* a_pan.c */
 void a_pan(TOPLEVEL *w_current, int x, int y);
+void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(TOPLEVEL *w_current, int dir);
 void a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current);
@@ -7,6 +8,7 @@ void a_zoom_box(TOPLEVEL *w_current);
 void a_zoom_box_start(TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_end(TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y);
+void correct_aspect(TOPLEVEL *w_current);
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);
 SCM g_funcs_exit(void);
@@ -138,11 +140,12 @@ SCM g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height);
 SCM g_rc_output_text(SCM mode);
 SCM g_rc_output_type(SCM mode);
 SCM g_rc_output_orientation(SCM mode);
-SCM g_rc_image_orientation(SCM mode);
+SCM g_rc_image_color(SCM mode);
 SCM g_rc_output_color(SCM mode);
 SCM g_rc_output_color_background(SCM color);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_log_window_type(SCM mode);
+SCM g_rc_third_button(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -451,10 +454,6 @@ void setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);
 /* x_image.c */
-gint image_landscape(GtkWidget *w, TOPLEVEL *w_current);
-gint image_portrait(GtkWidget *w, TOPLEVEL *w_current);
-gint x_image_set_window(GtkWidget *w, TOPLEVEL *w_current);
-gint x_image_set_limits(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void x_image_setup(TOPLEVEL *w_current, char *filename);

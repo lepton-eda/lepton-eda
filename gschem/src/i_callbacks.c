@@ -57,13 +57,8 @@
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current hack) */ 
 /* This should be renamed to page_new perhaps... */
-#if GTK_DEVEL
 void 
 i_callback_file_new (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_new (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 	char *temp_filename;
@@ -111,13 +106,8 @@ i_callback_file_new (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void
 i_callback_file_new_window (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_file_new_window (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -154,13 +144,8 @@ i_callback_file_new_window (GtkWidget *widget, gpointer data)
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */ 
 /* This should be renamed to page_open perhaps... */
-#if GTK_DEVEL
 void 
 i_callback_file_open (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_open (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -171,13 +156,8 @@ i_callback_file_open (GtkWidget *widget, gpointer data)
 	setup_open_file_selector(w_current);
 }
 
-#if GTK_DEVEL
 void 
 i_callback_file_script (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_script (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -191,13 +171,8 @@ i_callback_file_script (GtkWidget *widget, gpointer data)
 
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */ 
-#if GTK_DEVEL
 void 
 i_callback_file_save (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_save (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -229,13 +204,8 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */ 
-#if GTK_DEVEL
 void 
 i_callback_file_save_all (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_save_all (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -251,13 +221,8 @@ i_callback_file_save_all (GtkWidget *widget, gpointer data)
 	
 }
 
-#if GTK_DEVEL
 void 
 i_callback_file_save_as (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_save_as (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -269,13 +234,8 @@ i_callback_file_save_as (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_file_print (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_print (GtkWidget *widget, gpointer data) 
-#endif
 {
 	/* don't fix the size hack */
         char *ps_filename=NULL;
@@ -329,13 +289,8 @@ i_callback_file_print (GtkWidget *widget, gpointer data)
 		free(ps_filename);
 }
 
-#if GTK_DEVEL
 void 
 i_callback_file_image_write (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_file_image_write (GtkWidget *widget, gpointer data) 
-#endif
 {
 	/* don't fix the size hack */
         char *img_filename=NULL;
@@ -395,13 +350,8 @@ i_callback_file_image_write (GtkWidget *widget, gpointer data)
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */ 
 /* this function closes a window */
-#if GTK_DEVEL
 void
 i_callback_file_close (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_file_close (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -418,13 +368,8 @@ i_callback_file_close (GtkWidget *widget, gpointer data)
 /* Also DON'T ref the widget parameter since they can be null */
 /* need a cleaner way of doing this hack */
 /* this routine is used by the delete event signals */
-#if GTK_DEVEL
 int
 i_callback_close (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-int
-i_callback_close (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -432,22 +377,13 @@ i_callback_close (GtkWidget *widget, gpointer data)
 
 	exit_if_null(w_current);
 
-#if GTK_DEVEL
 	i_callback_file_close(w_current, 0, widget);
-#else
-	i_callback_file_close(widget, w_current);
-#endif
 	return(FALSE);
 }
 
 
-#if GTK_DEVEL
 void
 i_callback_file_quit (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_file_quit (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -462,13 +398,8 @@ i_callback_file_quit (GtkWidget *widget, gpointer data)
 /* Edit menu */
 
 /* Select also does not update the middle button shortcut */
-#if GTK_DEVEL
 void
 i_callback_edit_select (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_edit_select (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -481,13 +412,8 @@ i_callback_edit_select (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_edit_copy (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_edit_copy (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -505,13 +431,8 @@ i_callback_edit_copy (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_edit_copy_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_copy_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -527,13 +448,8 @@ i_callback_edit_copy_hotkey (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void 
 i_callback_edit_move (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_edit_move (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -553,13 +469,8 @@ i_callback_edit_move (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_edit_move_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_move_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -575,13 +486,8 @@ i_callback_edit_move_hotkey (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void 
 i_callback_edit_delete (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_edit_delete (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -604,13 +510,8 @@ i_callback_edit_delete (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_edit_edit (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_edit_edit (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -625,13 +526,8 @@ i_callback_edit_edit (GtkWidget *widget, gpointer data)
 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_edit_slot (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_slot (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -645,13 +541,8 @@ i_callback_edit_slot (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void 
 i_callback_edit_color (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_color (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -659,20 +550,15 @@ i_callback_edit_color (GtkWidget *widget, gpointer data)
 
 	exit_if_null(w_current);
 
-	i_update_middle_button(w_current, i_callback_edit_slot, "Color");
+	i_update_middle_button(w_current, i_callback_edit_color, "Color");
 
 	color_edit_dialog(w_current);
 }
 
 
 /* rotate all objects in the selection list by 90 degrees */
-#if GTK_DEVEL
 void
 i_callback_edit_rotate_90 (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
-#endif
 {
         TOPLEVEL *w_current;
 
@@ -691,13 +577,8 @@ i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
 
 
 /* rotate all objects in the selection list by 90 degrees */
-#if GTK_DEVEL
 void
 i_callback_edit_rotate_90_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_edit_rotate_90_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
         TOPLEVEL *w_current;
 
@@ -714,13 +595,8 @@ i_callback_edit_rotate_90_hotkey (GtkWidget *widget, gpointer data)
         w_current->inside_action = 0;
 }
 
-#if GTK_DEVEL
 void
 i_callback_edit_mirror (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_edit_mirror (GtkWidget *widget, gpointer data)
-#endif
 {
         TOPLEVEL *w_current;
 
@@ -734,13 +610,8 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
         w_current->event_state = ENDMIRROR;
 }
 
-#if GTK_DEVEL
 void
 i_callback_edit_mirror_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_edit_mirror_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
         TOPLEVEL *w_current;
 
@@ -758,13 +629,8 @@ i_callback_edit_mirror_hotkey (GtkWidget *widget, gpointer data)
 }
 
 /* locks all objects in selection list */
-#if GTK_DEVEL
 void 
 i_callback_edit_lock (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_lock (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -781,13 +647,8 @@ i_callback_edit_lock (GtkWidget *widget, gpointer data)
 
 
 /* unlocks all objects in selection list */
-#if GTK_DEVEL
 void 
 i_callback_edit_unlock (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_unlock (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -804,13 +665,8 @@ i_callback_edit_unlock (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_edit_translate (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_translate (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -835,13 +691,8 @@ i_callback_edit_translate (GtkWidget *widget, gpointer data)
 }
 
 /* embedds all objects in selection list */
-#if GTK_DEVEL
 void 
 i_callback_edit_embed (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_embed (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -856,13 +707,8 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
 }
 
 /* unembedds all objects in selection list */
-#if GTK_DEVEL
 void 
 i_callback_edit_unembed (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_unembed (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -876,13 +722,8 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void 
 i_callback_edit_show_hidden (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -903,13 +744,8 @@ i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
 /* View menu */
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right button */
-#if GTK_DEVEL
 void 
 i_callback_view_redraw (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_redraw (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -922,13 +758,8 @@ i_callback_view_redraw (GtkWidget *widget, gpointer data)
 
 
 /* repeat middle shortcut would get into the way of what user is try to do */
-#if GTK_DEVEL
 void 
 i_callback_view_zoom_full (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_zoom_full (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -950,13 +781,8 @@ i_callback_view_zoom_full (GtkWidget *widget, gpointer data)
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
-#if GTK_DEVEL
 void 
 i_callback_view_zoom_limits (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_zoom_limits (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -978,13 +804,8 @@ i_callback_view_zoom_limits (GtkWidget *widget, gpointer data)
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
-#if GTK_DEVEL
 void 
 i_callback_view_zoom_box (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_zoom_box (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -997,13 +818,8 @@ i_callback_view_zoom_box (GtkWidget *widget, gpointer data)
         w_current->inside_action = 0; 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_view_zoom_box_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_zoom_box_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1021,13 +837,8 @@ i_callback_view_zoom_box_hotkey (GtkWidget *widget, gpointer data)
 
 
 /* repeat middle shortcut would get into the way of what user is try to do */
-#if GTK_DEVEL
 void 
 i_callback_view_zoom_in (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_zoom_in (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1048,13 +859,8 @@ i_callback_view_zoom_in (GtkWidget *widget, gpointer data)
 }
 
 /* repeat middle shortcut would get into the way of what user is try to do */
-#if GTK_DEVEL
 void 
 i_callback_view_zoom_out (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_zoom_out (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1074,13 +880,8 @@ i_callback_view_zoom_out (GtkWidget *widget, gpointer data)
 	w_current->DONT_REDRAW=0;
 }
 
-#if GTK_DEVEL
 void 
 i_callback_view_pan (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_pan (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1096,13 +897,8 @@ i_callback_view_pan (GtkWidget *widget, gpointer data)
 	w_current->inside_action = 0;
 }
 
-#if GTK_DEVEL
 void 
 i_callback_view_pan_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_view_pan_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1134,13 +930,8 @@ i_callback_view_pan_hotkey (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void  
 i_callback_view_updatenets (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_view_updatenets (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1153,13 +944,8 @@ i_callback_view_updatenets (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void  
 i_callback_page_manager (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_manager (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1170,13 +956,8 @@ i_callback_page_manager (GtkWidget *widget, gpointer data)
 	setup_page_selector(w_current);
 }
 
-#if GTK_DEVEL
 void  
 i_callback_page_next (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_next (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1199,13 +980,8 @@ i_callback_page_next (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void  
 i_callback_page_prev (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_prev (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1227,13 +1003,8 @@ i_callback_page_prev (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void  
 i_callback_page_new (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_new (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 	char *filename=NULL;
@@ -1267,13 +1038,8 @@ i_callback_page_new (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void  
 i_callback_page_close (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_close (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 	PAGE *p_current;
@@ -1326,13 +1092,8 @@ i_callback_page_close (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void  
 i_callback_page_discard (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_discard (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 	PAGE *p_current;
@@ -1377,13 +1138,8 @@ i_callback_page_discard (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void  
 i_callback_page_print (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_page_print (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1393,13 +1149,8 @@ i_callback_page_print (GtkWidget *widget, gpointer data)
 }
 
 /* Add menu */ 
-#if GTK_DEVEL
 void 
 i_callback_add_component (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_add_component (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1412,13 +1163,8 @@ i_callback_add_component (GtkWidget *widget, gpointer data)
 	i_update_status2(w_current, "Select Mode");
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_attribute (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_add_attribute (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1431,13 +1177,8 @@ i_callback_add_attribute (GtkWidget *widget, gpointer data)
 	i_update_status2(w_current, "Select Mode");
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_net (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_add_net (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1454,13 +1195,8 @@ i_callback_add_net (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_add_net_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_net_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1481,13 +1217,8 @@ i_callback_add_net_hotkey (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_add_text (gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void 
-i_callback_add_text (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1500,13 +1231,8 @@ i_callback_add_text (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_add_line (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_line (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1521,13 +1247,8 @@ i_callback_add_line (GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_add_line_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_line_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1544,13 +1265,8 @@ i_callback_add_line_hotkey (GtkWidget *widget, gpointer data)
 	w_current->inside_action = 1;
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_box (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_box (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1564,13 +1280,8 @@ i_callback_add_box (GtkWidget *widget, gpointer data)
         w_current->inside_action = 0; 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_box_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_box_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1587,13 +1298,8 @@ i_callback_add_box_hotkey (GtkWidget *widget, gpointer data)
 	w_current->inside_action = 1;
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_circle (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_circle (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1607,13 +1313,8 @@ i_callback_add_circle (GtkWidget *widget, gpointer data)
 	w_current->inside_action = 0;  
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_circle_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_circle_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1631,13 +1332,8 @@ i_callback_add_circle_hotkey (GtkWidget *widget, gpointer data)
 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_arc (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_arc (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1651,13 +1347,8 @@ i_callback_add_arc (GtkWidget *widget, gpointer data)
 	w_current->inside_action = 0;  
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_arc_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_arc_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1674,13 +1365,8 @@ i_callback_add_arc_hotkey (GtkWidget *widget, gpointer data)
 	w_current->inside_action = 1;
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_pin (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_pin (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1694,13 +1380,8 @@ i_callback_add_pin (GtkWidget *widget, gpointer data)
         w_current->inside_action = 0; 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_add_pin_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_add_pin_hotkey (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1719,13 +1400,8 @@ i_callback_add_pin_hotkey (GtkWidget *widget, gpointer data)
 
 
 /* Hierarchy menu */
-#if GTK_DEVEL
 void 
 i_callback_hierarchy_open_symbol (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_hierarchy_open_symbol (GtkWidget *widget, gpointer data)
-#endif
 {
 	char *filename;
 	TOPLEVEL *w_current;
@@ -1752,13 +1428,8 @@ i_callback_hierarchy_open_symbol (GtkWidget *widget, gpointer data)
 }
 
 /* Attributes menu */
-#if GTK_DEVEL
 void  
 i_callback_attributes_attach (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_attributes_attach (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1786,13 +1457,8 @@ i_callback_attributes_attach (GtkWidget *widget, gpointer data)
 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_attributes_detach (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_attributes_detach (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1820,13 +1486,8 @@ i_callback_attributes_detach (GtkWidget *widget, gpointer data)
 
 }
 
-#if GTK_DEVEL
 void 
 i_callback_attributes_show_name (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1846,13 +1507,8 @@ i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
         }  
 }
 
-#if GTK_DEVEL
 void 
 i_callback_attributes_show_value (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1873,13 +1529,8 @@ i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
 	
 }
 
-#if GTK_DEVEL
 void 
 i_callback_attributes_show_both (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1899,13 +1550,8 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
         }  
 }
 
-#if GTK_DEVEL
 void 
 i_callback_attributes_visibility_toggle (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1928,13 +1574,8 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 
 /* Script menu */
 /* not currently implemented */
-#if GTK_DEVEL
 void 
 i_callback_script_console (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_script_console (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1950,13 +1591,8 @@ i_callback_script_console (GtkWidget *widget, gpointer data)
 /* Options menu */
 
 /* repeat last command doesn't make sense on options either??? (does it?) */
-#if GTK_DEVEL
 void
 i_callback_options_text_size (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_options_text_size (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1967,13 +1603,8 @@ i_callback_options_text_size (GtkWidget *widget, gpointer data)
 	text_size_dialog(w_current);
 }     
 
-#if GTK_DEVEL
 void
 i_callback_options_snap_size (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_options_snap_size (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -1985,13 +1616,8 @@ i_callback_options_snap_size (GtkWidget *widget, gpointer data)
 }     
 
 /* repeat last command doesn't make sense on options either??? (does it?) */
-#if GTK_DEVEL
 void
 i_callback_options_afeedback (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_options_afeedback (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2008,13 +1634,8 @@ i_callback_options_afeedback (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void
 i_callback_options_grid (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_options_grid (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2033,13 +1654,8 @@ i_callback_options_grid (GtkWidget *widget, gpointer data)
         o_redraw_all(w_current);  
 }
 
-#if GTK_DEVEL
 void
 i_callback_options_snap (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void
-i_callback_options_snap (GtkWidget *widget, gpointer data) 
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2054,13 +1670,8 @@ i_callback_options_snap (GtkWidget *widget, gpointer data)
 	}
 }
 
-#if GTK_DEVEL
 void 
 i_callback_options_show_status (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_options_show_status (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2072,13 +1683,8 @@ i_callback_options_show_status (GtkWidget *widget, gpointer data)
 }
 
 /* for now this prints out the font_set structure */
-#if GTK_DEVEL
 void  
 i_callback_misc (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void  
-i_callback_misc (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2091,13 +1697,8 @@ i_callback_misc (GtkWidget *widget, gpointer data)
 /* be sure that you don't use the widget parameter in this one, since it is 
 being called with a null, I suppose we should call it with the right param.
 hack */
-#if GTK_DEVEL
 void
 i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget)
-#else
-void
-i_callback_cancel(GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2134,13 +1735,8 @@ i_callback_cancel(GtkWidget *widget, gpointer data)
 }
 
 
-#if GTK_DEVEL
 void 
 i_callback_help_about (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_help_about (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2151,13 +1747,8 @@ i_callback_help_about (GtkWidget *widget, gpointer data)
 	about_dialog(w_current);
 }
 
-#if GTK_DEVEL
 void 
 i_callback_options_show_coord (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_options_show_coord (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 
@@ -2169,13 +1760,8 @@ i_callback_options_show_coord (GtkWidget *widget, gpointer data)
 }
 
 #if 0 /* experimental */
-#if GTK_DEVEL
 void 
 i_callback_preview (gpointer data, guint callback_action, GtkWidget *widget) 
-#else
-void 
-i_callback_preview (GtkWidget *widget, gpointer data)
-#endif
 {
 	TOPLEVEL *w_current;
 

@@ -384,14 +384,20 @@ o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 void
 o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-        int origin_x, int origin_y)
+        int origin_x, int origin_y, int color_mode)
 {
+        int color;
 
         if (o_current == NULL) {
                 printf("got null in o_pin_image_write\n");
                 return;
         }
 
+	if (color_mode == TRUE) {
+		color = o_image_geda2gd_color(o_current->color);
+	} else {
+		color = image_black;
+	}
 
         /* assumes screen coords are already calculated correctly */
         gdImageLine(current_im_ptr,
@@ -399,7 +405,7 @@ o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
                         o_current->line_points->screen_y1,
                         o_current->line_points->screen_x2,
                         o_current->line_points->screen_y2,
-                        o_image_geda2gd_color(o_current->color));
+                        color);
 }
 
 

@@ -33,6 +33,7 @@
 #endif
 
 #include <libgeda/struct.h>
+#include <libgeda/defines.h>
 #include <libgeda/globals.h>
 #include <libgeda/colors.h>
 #include <libgeda/prototype.h>
@@ -45,6 +46,12 @@
 /* used in key_press, since it isn't passed this information */
 /* filled in x_event_motion */
 int mouse_x, mouse_y; 
+
+/* used by mouse pan */
+extern int current_center_x, current_center_y;
+int start_pan_x, start_pan_y;
+int throttle=0;
+
 
 /* used for the stroke stuff */
 #ifdef HAS_LIBSTROKE
@@ -342,20 +349,12 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 		/* try this out and see how it behaves */
 		if (w_current->inside_action) {
-#if GTK_DEVEL
 			i_callback_cancel(w_current, 0, NULL);
-#else
-			i_callback_cancel(NULL, w_current);
-#endif
 		}
 
 #ifndef HAS_LIBSTROKE 
 		if (w_current->last_callback != NULL) {
-#if GTK_DEVEL
 			(*w_current->last_callback)(w_current, 0, NULL);	
-#else
-			(*w_current->last_callback)(NULL, w_current);	
-#endif
 		}
 #else
 		/* if the last_callback isn't null and the control key is */
@@ -363,11 +362,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		if ((w_current->last_callback != NULL && 
 		     w_current->CONTROLKEY)) {
 			/* execute it */
-#if GTK_DEVEL
 			(*w_current->last_callback)(w_current, 0, NULL);	
-#else
-			(*w_current->last_callback)(NULL, w_current);	
-#endif
 		} else {
 			/* else we are doing as stroke */
 			DOING_STROKE=TRUE;
@@ -377,7 +372,20 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 	} else if (event->button == 3) {
 
 		if (!w_current->inside_action) {
-			do_popup(w_current, event);
+
+			if (w_current->third_button == POPUP_ENABLED) {
+
+				do_popup(w_current, event);
+
+			} else {
+
+				w_current->event_state = MOUSEPAN; /* start */
+				w_current->inside_action = 1;
+				start_pan_x = (int) event->x;
+				start_pan_y = (int) event->y;
+				throttle=0;
+			}
+
 		} else {
 
 			switch (w_current->event_state) {
@@ -393,11 +401,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			/* go and seperate each draw to call the 
 			 * currect eraserubber hack */
                         	default:
-#if GTK_DEVEL
 					i_callback_cancel(w_current, 0, NULL);
-#else
-					i_callback_cancel(NULL, w_current);
-#endif
                         	break;       
 
 			}
@@ -525,6 +529,9 @@ if (stroke_info_mode) {
 		}
 #endif	
 
+	} else if (event->button == 3) {
+                w_current->event_state = SELECT;
+                w_current->inside_action = 0;
 	}
 	return(0);
 }
@@ -533,6 +540,7 @@ gint
 x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 {
 	int temp_x, temp_y;
+	int pdiff_x, pdiff_y;
 
 	int zoom_scale;
 	int diff_x;
@@ -573,6 +581,29 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 		return(0);
 	}
 #endif
+ 
+	if (w_current->third_button == MOUSEPAN_ENABLED) {
+	  if (w_current->event_state == MOUSEPAN && w_current->inside_action) {
+
+		pdiff_x = mouse_x - start_pan_x;
+		pdiff_y = mouse_y - start_pan_y;
+
+#if 0
+		printf("current center: %d %d\n", current_center_x, current_center_y);
+		printf("pdiff: %d %d\n", pdiff_x, pdiff_y);
+#endif
+
+		if (!(throttle % 5)) {
+			a_pan_mouse(w_current, pdiff_x*5, pdiff_y*5);
+
+			start_pan_x = (int) event->x;
+			start_pan_y = (int) event->y;
+		}
+		throttle++;
+	  	return;
+	  }
+        }
+
 
 	switch(w_current->event_state) {
 
@@ -738,6 +769,9 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 	TOPLEVEL *w_current)
 {
 	int new_height, new_width;
+	int diff_height, diff_width;
+	int diff_x, diff_y;
+	float new_aspect;
 
 	/* this callback is for drawing areas only! */	
 	/* things like changing a label causes a resize */
@@ -756,6 +790,65 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
     	    new_height == w_current->win_height) {
 		return(0);
 	}
+
+#if 0 /* my experiments with getting resize to work differently */
+	diff_width = (new_width - w_current->win_width)*100;
+	diff_height = (new_height - w_current->win_height)*100;
+
+	printf("diff %d %d\n", diff_width, diff_height);
+
+	printf("world %d %d\n", SCREENabs(w_current, diff_width),
+				SCREENabs(w_current, diff_height));
+	
+	w_current->page_current->right = w_current->page_current->right + diff_width;
+	w_current->page_current->bottom = w_current->page_current->bottom + diff_height; 
+
+
+	diff_x = w_current->page_current->right - 
+			w_current->page_current->left;		
+	diff_y = w_current->page_current->bottom - 
+			w_current->page_current->top;		
+
+	new_aspect = (float) fabs(w_current->page_current->right - 
+			w_current->page_current->left) / 
+		     (float) fabs(w_current->page_current->bottom - 
+			w_current->page_current->top);
+
+#if DEBUG
+	printf("wxh: %d %d\n", diff_x, diff_y);
+        printf("diff is: %f\n", fabs(new_aspect - coord_aspectratio));
+#endif
+
+	/* Make sure aspect ratio is correct */
+	if (fabs(new_aspect - w_current->page_current->coord_aspectratio)) {
+
+		if (new_aspect > w_current->page_current->coord_aspectratio) {
+#if DEBUG
+			printf("new larger then coord\n");	
+			printf("implies that height is too large\n"); 
+#endif
+			w_current->page_current->bottom = 
+				w_current->page_current->top + 
+				(w_current->page_current->right - 
+				 w_current->page_current->left) / 
+				w_current->page_current->coord_aspectratio; 
+		} else {
+#if DEBUG
+			printf("new smaller then coord\n");
+			printf("implies that width is too small\n"); 
+#endif
+			w_current->page_current->right = 
+				w_current->page_current->left + 
+				(w_current->page_current->bottom - 
+				 w_current->page_current->top) * 
+				w_current->page_current->coord_aspectratio; 
+                }
+#if DEBUG 
+                printf("invalid aspectratio corrected\n");
+#endif
+        }
+
+#endif
 
 	/* of the actual win window (drawing_area) */
 	w_current->win_width = widget->allocation.width;

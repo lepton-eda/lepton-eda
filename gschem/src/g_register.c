@@ -99,9 +99,10 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("output-orientation", g_rc_output_orientation);
 	gh_new_procedure1_0 ("output-color", g_rc_output_color);
 	gh_new_procedure1_0 ("output-color-background", g_rc_output_color_background);
-	gh_new_procedure1_0 ("image-orientation", g_rc_image_orientation);
+	gh_new_procedure1_0 ("image-color", g_rc_image_color);
 	gh_new_procedure1_0 ("log-window", g_rc_log_window);
 	gh_new_procedure1_0 ("log-window-type", g_rc_log_window_type);
+	gh_new_procedure1_0 ("third-button", g_rc_third_button);
 	
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);
@@ -138,6 +139,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-translate", g_key_edit_translate);
 	gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
 	gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);
+	gh_new_procedure0_0 ("edit-hidden", g_key_edit_show_hidden);
 	gh_new_procedure0_0 ("view-redraw", g_key_view_redraw);
 	gh_new_procedure0_0 ("view-zoom-full", g_key_view_zoom_full);
 	gh_new_procedure0_0 ("view-zoom-limits", g_key_view_zoom_limits);

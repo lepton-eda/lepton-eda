@@ -43,6 +43,15 @@ Arno Peters		- For contributing a bunch of analog/network symbols
 
 				cmos-invert.sch cmos-nor.sch cmos-nand.sch
 
+			- For sending in some updates to the following symbols
+
+				battery-1.sym battery-2.sym battery-3.sym 
+				coil-1.sym coil-2.sym inamp-1.sym 
+				inductor-1.sym nmos-1.sym nmos-2.sym 
+				npn-1.sym npn-2.sym npn-3.sym opamp-1.sym 
+				pmos-1.sym pmos-2.sym pnp-1.sym pnp-2.sym 
+				pnp-3.sym
+
 
 Roger Williams 		- For contributing the IE417 symbol set.  Lots of
 			  of symbols, see lib/sym/IE417

@@ -472,18 +472,25 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 void
 o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-	int origin_x, int origin_y)
+	int origin_x, int origin_y, int color_mode)
 {
 	int start_angle, end_angle;
 	int width, height;
 	int radius;
 	int screen_radius;
 	int final;
+	int color;
 	int x, y;
 
 	if (o_current == NULL) {
 		printf("got null in o_arc_image_write\n");
 		return;
+	}
+
+	if (color_mode == TRUE) {
+		color = o_image_geda2gd_color(o_current->color);
+	} else {
+		color = image_black;
 	}
 
 	start_angle = o_current->line_points->x2/64;
@@ -539,7 +546,7 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 			x, y,
 			final, final,
                         start_angle, end_angle,
-			o_image_geda2gd_color(o_current->color));
+			color);
 	
 }
 

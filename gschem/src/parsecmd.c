@@ -43,6 +43,11 @@
 
 #define OPTIONS "qvr:s:o:t"
 
+#ifndef OPTARG_IN_UNISTD
+extern char *optarg;
+extern int optind;
+#endif
+
 void
 usage(char *cmd)
 {

@@ -47,10 +47,6 @@
 #include "o_types.h"
 #include "../include/prototype.h"
 
-#ifndef GTK_DEVEL
-extern char* g_vsprintf (const gchar *fmt, va_list *args, va_list *args2);
-#endif
-
 /* This function goes and finds the associated source files and loads ALL up */
 /* only works for schematic files though */
 void
@@ -79,11 +75,8 @@ s_log_init(char *filename)
 void
 s_log_message(const gchar *format, ...)
 {
-#if GTK_DEVEL
 	va_list args;
-#else
-	va_list args; 
-#endif
+
 	char *buf=NULL;
 	int len;
 	int status;
@@ -92,22 +85,6 @@ s_log_message(const gchar *format, ...)
 		return;
 	}
 
-#if 0 /* blah I don't like any of this. */
-/* delete it soon */
-#if GTK_DEVEL
-	printf("here!\n");
-        va_start (args, format);
-        buf = g_strdup_vprintf (format, &args);
-        va_end (args);
-#else
-	va_start (args, format);
-	va_start (args2, format);
-	buf = g_vsprintf (format, &args, &args2);
-	va_end (args);
-	va_end (args2);
-#endif
-#endif
-	
 	buf = (char *) malloc(sizeof(char)*MSG_MAXLEN);	
 
 	va_start(args, format);	
