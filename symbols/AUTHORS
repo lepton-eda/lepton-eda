@@ -487,6 +487,9 @@ Bruno Schwander		- For contributing the following symbols:
 				AT90S8535J-1.sym AT90S8535P-1.sym
 				gnd-2.sym mct9001-1.sym
 
+Vladimir Dergachev	- For contributing the following symbols:
+
+				switch-spdt-1.sym ltc1799-1.sym
 
 
 

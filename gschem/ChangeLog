@@ -3,6 +3,15 @@
 	* lib/system-gschemrc.in: Fixed incorrect environment variable name
         "GEDADATARC" to be GEDADATA. 
 
+	* lib/system-gschemrc.in: After reading all the negative opinions of
+	a light colored background, changed default back to a black
+        background.
+
+	* noweb/x_window.nw: Improved tooltip for Add Component...
+
+	* noweb/x_dialog.nw: Improved the appearance of the Add Text...
+	dialog box.
+
 2002-05-23 Ales Hvezda   <ahvezda@geda.seul.org>
  
 	* noweb/i_basic.nw, o_grips.nw, x_fileselect.nw, i_callbacks.nw,

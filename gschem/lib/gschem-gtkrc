@@ -12,7 +12,7 @@
 #}
 #widget_class "*" style "default"
 
-#old way commented out
+#old way commented out, still works, but use the above block.
 #style "defaultfont"
 #{
 #  font = "fixed"

@@ -1043,7 +1043,7 @@ text_input_dialog (TOPLEVEL *w_current)
                         GTK_WIN_POS_MOUSE);
 #endif
 
-    gtk_widget_set_usize(w_current->tiwindow, 400,130);
+    /*gtk_widget_set_usize(w_current->tiwindow, 400,130); no longer fixed size*/
 
     gtk_window_position(GTK_WINDOW (w_current->tiwindow),
                         GTK_WIN_POS_NONE);
@@ -1066,12 +1066,12 @@ text_input_dialog (TOPLEVEL *w_current)
     gtk_window_set_title(GTK_WINDOW (w_current->tiwindow),
                          "Text Entry...");
     gtk_container_border_width(
-                               GTK_CONTAINER (w_current->tiwindow), 0);
+                               GTK_CONTAINER (w_current->tiwindow), 5);
 
     label = gtk_label_new ("Enter text, Click apply,\nMove cursor into window, click to place text.");
     gtk_box_pack_start(
                        GTK_BOX(vbox),
-                       label, TRUE, TRUE, 0);
+                       label, TRUE, TRUE, 5);
     gtk_widget_show (label);
 
     tientry = gtk_entry_new_with_max_length (79);

@@ -836,7 +836,7 @@ x_window_create_main(TOPLEVEL *w_current)
   	/* not part of any radio button group */
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   "Component", 
-			   "Add component...", 
+			   "Add component...\nSelect library and component from list, move the mouse into main window, click to place\nRight mouse button to cancel", 
 			   "toolbar/component", 
   			   x_window_new_pixmap (filename,
 				       w_current->main_window->window, 

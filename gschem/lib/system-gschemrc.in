@@ -31,8 +31,8 @@
 ; Comment out the first line and comment in the second line for a
 ; dark (black) background.  The dark background is the original look. 
 ; 
-(load (string-append gedarcdir "@PATHSEP@gschem-lightbg")) ; light background
-;(load (string-append gedarcdir "@PATHSEP@gschem-darkbg")) ; dark background
+(load (string-append gedarcdir "@PATHSEP@gschem-darkbg")) ; dark background
+;(load (string-append gedarcdir "@PATHSEP@gschem-lightbg")) ; light background
 
 ;
 ; End of color section
