@@ -36,12 +36,12 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
-#define INIT_STR(w, name, str) {				\
-	if ((w)->name) {					\
-		free((w)->name);				\
-	}							\
-	(w)->name = my_strdup(((default_ ## name) != NULL) ?	\
-				(default_ ## name) : (str));	\
+#define INIT_STR(w, name, str) {					\
+	if ((w)->name) {						\
+		free((w)->name);					\
+	}								\
+	(w)->name = u_basic_strdup(((default_ ## name) != NULL) ?	\
+				(default_ ## name) : (str));		\
 }
 
 /* Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
@@ -103,20 +103,6 @@ int   default_third_button = POPUP_ENABLED;
 int   default_text_display_zoomfactor = 4;
 
 int default_text_feedback = ONLY_WHEN_READABLE;
-
-/* TODO: this function is everywhere, so move it to another file and
- * share it! */
-/* Kazu Hirata <kazu@seul.org> on July 18, 1999 - My own version of
- * strdup(). */
-static char *
-my_strdup(const char* p)
-{
-	char *q = (char *) malloc(strlen(p) + 1);
-	if (q != NULL) {
-		strcpy(q, p);
-	}
-	return q;
-}
 
 void
 i_vars_set(TOPLEVEL *w_current)
@@ -197,8 +183,8 @@ i_vars_set(TOPLEVEL *w_current)
 void
 i_vars_setnames(TOPLEVEL *w_current)
 {
-	w_current->series_name      = my_strdup(DEFAULT_SERIES_NAME     );
-	w_current->untitled_name    = my_strdup(DEFAULT_UNTITLED_NAME   );
-	w_current->scheme_directory = my_strdup(DEFAULT_SCHEME_DIRECTORY);
-	w_current->font_directory   = my_strdup(DEFAULT_FONT_DIRECTORY  );
+	w_current->series_name      = u_basic_strdup(DEFAULT_SERIES_NAME     );
+	w_current->untitled_name    = u_basic_strdup(DEFAULT_UNTITLED_NAME   );
+	w_current->scheme_directory = u_basic_strdup(DEFAULT_SCHEME_DIRECTORY);
+	w_current->font_directory   = u_basic_strdup(DEFAULT_FONT_DIRECTORY  );
 }

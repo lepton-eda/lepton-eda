@@ -39,7 +39,7 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
-static const   gchar   *list_item_data_key="list_item_data";
+static const gchar *list_item_data_key = "list_item_data";
 
 gint
 change_attr(GtkWidget *gtklist, TOPLEVEL *w_current)
@@ -115,7 +115,6 @@ attr_apply(GtkWidget *w, TOPLEVEL *w_current)
 {
 	char *current_value = NULL;
 	char *current_name = NULL;
-	char *combined = NULL;
 #if 0
 	int name_len;
 	int value_len;
@@ -127,21 +126,9 @@ attr_apply(GtkWidget *w, TOPLEVEL *w_current)
 		gtk_entry_get_text(GTK_ENTRY(w_current->asentry_value));
 
 	if ((current_value[0] != '\0') && (current_name[0] != '\0')) {
-#if 0
-		value_len = strlen(current_value);
-		name_len  = strlen(current_name);
-
-		/* the 2 is (1) equals sign (2) null terminator */
-		combined = (char *) malloc(sizeof(char)*
-					(value_len + name_len) + 2);
-
-		sprintf(combined, "%s=%s", current_name, current_value);
-#else
-		combined = u_basic_strdup_multiple(current_value,
-						   "=",
-						   current_name,
-						   NULL);
-#endif
+		char *combined =
+			u_basic_strdup_multiple(current_value, "=",
+						current_name, NULL);
 
 		o_attrib_set_string(w_current, combined);
 		w_current->event_state = DRAWATTRIB;

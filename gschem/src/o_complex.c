@@ -39,18 +39,6 @@
 
 #include "../include/prototype.h"
 
-/* Kazu Hirata <kazu@seul.org> on July 17, 1999 - My own version of
- * strdup(). */
-static char *
-my_strdup(const char* p)
-{
-	char *q = (char *) malloc(strlen(p) + 1);
-	if (q != NULL) {
-		strcpy(q, p);
-	}
-	return q;
-}
-
 void
 o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
@@ -164,7 +152,6 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	OBJECT *selection_list = NULL;
 	OBJECT *o_current;
 	OBJECT *o_start;
-	char *new_basename;
 	char *include_filename;
 
 	diff_x = w_current->last_x - w_current->start_x;
@@ -183,15 +170,11 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 
 	if (w_current->include_complex) {
-		/* TODO: use my_strdups() */
-		include_filename =
-			(char *) malloc(sizeof(char) * (
-				strlen(w_current->internal_basename) +
-				strlen(w_current->internal_clib) +
-				2));
-
-		sprintf(include_filename, "%s/%s", w_current->internal_clib,
-			w_current->internal_basename);
+		include_filename = u_basic_strdup_multiple(
+			w_current->internal_clib,
+			"/",
+			w_current->internal_basename,
+			NULL);
 
 		o_start = w_current->page_current->object_tail;
 		w_current->page_current->object_tail =
@@ -251,22 +234,20 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	o_current = w_current->page_current->object_tail;
 	/* put code here to deal with emebedded stuff */
 	if (w_current->embed_complex) {
+		char* new_basename;
+
 		free(o_current->complex_clib);
 
-		o_current->complex_clib = my_strdup("EMBEDDED");
+		o_current->complex_clib = u_basic_strdup("EMBEDDED");
 
-		/* TODO: use my_strdups() */
-		new_basename = (char *) malloc(sizeof(char) * (
-			strlen("EMBEDDED")+
-			strlen(o_current->complex_basename) +
-			1));
-		sprintf(new_basename,
-			"EMBEDDED%s",
-			o_current->complex_basename);
+		new_basename = u_basic_strdup_multiple(
+			"EMBEDDED",
+			o_current->complex_basename,
+			NULL);
 
 		free(o_current->complex_basename);
 
-		o_current->complex_basename = my_strdup(new_basename);
+		o_current->complex_basename = u_basic_strdup(new_basename);
 
 		free(new_basename);
 	}
@@ -321,7 +302,8 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	selection_list->prev = w_current->page_current->selection_head;
 	w_current->page_current->selection_tail = return_tail(
 		w_current->page_current->selection_head);
-	/* the o_redraw_selected is in x_events.c after this call returns */
+	/* the o_redraw_selected is in x_events.c after this call
+	 * returns */
 
 	o_ales_disconnect_update(w_current->page_current);
 	o_ales_erase_all(w_current, w_current->page_current->object_tail);
@@ -395,7 +377,9 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 	int rleft, rtop, rright, rbottom;
 	int x, y;
 
-#if 0	 /* these warnings have been moved into i_callback_edit_translate */
+#if 0
+	/* these warnings have been moved into
+         * i_callback_edit_translate */
 	if (w_current->snap == 0) {
 		s_log_message("WARNING: Do not translate with snap off!\n");
 		s_log_message(
@@ -420,7 +404,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 			   &rright,
 			   &rbottom);
 
-	/* do we want snap grid here hack ? */
+	/* TODO: do we want snap grid here? */
 	SCREENtoWORLD(w_current,
 		      fix_x(w_current, rleft  ),
 		      fix_y(w_current, rbottom),
@@ -646,7 +630,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 				object->complex_clib, object->complex_basename,
 				1);
 
-	/* fix up name sometime ... hack */
+	/* TODO: fix up name sometime ... */
 	new_obj->sid = object->sid;
 
 	new_obj->attribs = o_attrib_copy_all(
