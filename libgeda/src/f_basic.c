@@ -70,8 +70,6 @@ f_open(TOPLEVEL *w_current, char *filename)
 		o_net_consolidate(w_current);
 	}
 
-	w_current->page_current->zoom_factor = 0;
-
 	w_current->page_current->CHANGED=0; /* added 4/7/98 */
 
 	if (!opened) {
