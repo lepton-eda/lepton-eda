@@ -57,9 +57,11 @@
   (lambda (port ls attriblist)
     (if (not (null? ls))
 	(let ((package (car ls)))
-	  (display package port)
-	  (write-char #\tab port)
-	  (bom:printlist (bom:find-attribs package attriblist) port)
+          (if (not (string=? "1" (gnetlist:get-package-attribute package "nobom")))
+	    (begin
+              (display package port)
+	      (write-char #\tab port)
+              (bom:printlist (bom:find-attribs package attriblist) port)))
 	  (bom:components port (cdr ls) attriblist)))))
 
 (define bom:find-attribs

@@ -34,7 +34,7 @@ device=TOKO4DFA
 T 0 0 8 10 0 1 0 0
 class=IC
 T 0 0 8 10 0 1 0 0
-pins=3
+pins=5
 P 700 200 700 0 1
 {
 T 600 0 5 10 0 1 0 0
@@ -49,3 +49,7 @@ pin3=3
 T 300 200 5 10 0 1 0 0
 label=GND
 }
+T 400 1100 8 10 1 1 0 0
+uref=FIL?
+T 0 0 8 10 0 1 0 0
+footprint=TOKO_4DFA_12

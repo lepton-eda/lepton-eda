@@ -48,3 +48,5 @@ label=GND
 T 800 200 5 10 0 1 0 0
 pin1=1
 }
+T 0 0 8 10 0 1 0 0
+footprint=QQQ
