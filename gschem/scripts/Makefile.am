@@ -1,9 +1,9 @@
 
 EXTRA_DIST = ChangeLog geda_totexi.in makeallimages \
-	     makeimages print.scm image.scm notangle_guile.scm.in
+	     makeimages print.scm image.scm notangle_guile.in
 
 MOSTLYCLEANFILES =	*.log *~
 CLEANFILES = 		*.log *~
 DISTCLEANFILES = 	*.log core FILE *~ prototype.bak \
-			geda_totexi notangle_guile.scm
+			geda_totexi notangle_guile
 MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure
