@@ -1,3 +1,12 @@
+2003-12-11 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/filetool.c: Bug fixed: project was saved with wrong filename
+        (last letter disappeared).
+        
+        * graphman directory, graphman/raw2gw.c, graphman/Makefile.am,
+        Makefile.am, configure.ac: Added graphman directory, temporarly
+        with only an obsolete raw2gw.
+        
 2003-12-09 Piotr Miarecki   <tertul@poczta.onet.pl>
 
         * src/interface.c, src/interface.h, src/m_project.c, src/m_project.h,
