@@ -12,8 +12,8 @@ pinnumber=1
 T 0 200 3 6 0 0 0 0 1
 pinseq=1
 T 200 500 3 6 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 T 176 600 3 6 0 0 0 0 1
-pinname=PWR
+pinlabel=PWR
 }
 V 0 200 100 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1

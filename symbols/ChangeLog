@@ -1,3 +1,12 @@
+2004-12-13 Werner Hoch <werner.ho@gmx.de>
+	* linear/lt1782-1.sym: duplicate pinnumber repaired
+	* pintype corrected to [in,out,io,...]
+	* misc file format corrections
+	
+2004-12-10 Werner Hoch <werner.ho@gmx.de>
+	* opto/hcpl-2430-1.sym added
+	* repaired pinlabels, repaired some file format errors
+	
 2004-11-07 Werner Hoch <werner.ho@gmx.de>
 	* 4000/4006-2.sym: added missing pin, symversion, repaired wrong pinnames
 	* 4000/4042-1.sym, 4000/4042-2.sym, 4000/40147-1.sym, 4000/4352-1.sym,

@@ -12,7 +12,7 @@ pinnumber=1
 T 800 650 9 8 0 1 180 0 1
 pinlabel=CATHODE
 T 900 850 5 8 0 0 180 0 1
-pintype=pass
+pintype=pas
 T 600 950 5 8 0 0 180 0 1
 pinseq=1
 }
@@ -23,7 +23,7 @@ pinnumber=2
 T 1400 150 9 8 0 1 180 0 1
 pinlabel=ANODE
 T 1000 350 5 8 0 0 180 8 1
-pintype=pass
+pintype=pas
 T 1000 250 5 8 0 0 180 8 1
 pinseq=2
 }

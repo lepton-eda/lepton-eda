@@ -12,7 +12,7 @@ pinseq=1
 T 200 400 5 10 0 1 0 0 1
 pinlabel=IN
 T 200 400 5 10 0 1 0 0 1
-pintype=i
+pintype=in
 }
 P 1400 400 1600 400 1 0 1
 {
@@ -23,7 +23,7 @@ pinseq=2
 T 1400 400 5 10 0 1 0 0 1
 pinlabel=OUT
 T 1400 400 5 10 0 1 0 0 1
-pintype=o
+pintype=out
 }
 L 200 0 200 1000 3 0 0 0 -1 -1
 L 200 1000 1400 1000 3 0 0 0 -1 -1

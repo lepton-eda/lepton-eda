@@ -8,7 +8,7 @@ pinseq=1
 T 400 1200 9 8 1 1 0 0 1
 pinlabel=C1+
 T 0 1200 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 }
 P 0 600 300 600 1 0 0
 {
@@ -19,7 +19,7 @@ pinseq=3
 T 400 600 9 8 1 1 0 0 1
 pinlabel=C2+
 T 0 600 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 }
 P 0 900 300 900 1 0 0
 {
@@ -30,7 +30,7 @@ pinseq=2
 T 400 900 9 8 1 1 0 0 1
 pinlabel=C1-
 T 0 900 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 }
 T 300 1540 9 10 1 0 0 0 1
 MAX865EUA
@@ -43,7 +43,7 @@ pinseq=4
 T 400 300 9 8 1 1 0 0 1
 pinlabel=C2-
 T 0 300 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 }
 P 1700 600 2000 600 1 0 1
 {
@@ -54,7 +54,7 @@ pinseq=5
 T 1500 600 9 8 1 1 0 0 1
 pinlabel=V-
 T 1700 600 5 8 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 }
 P 1700 900 2000 900 1 0 1
 {
@@ -65,7 +65,7 @@ pinseq=6
 T 1500 900 9 8 1 1 0 0 1
 pinlabel=V+
 T 1700 900 5 8 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 }
 B 300 0 1400 1500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 1729 1543 8 10 1 1 0 6 1

@@ -19,7 +19,7 @@ pinseq=1
 T 250 1250 5 8 1 1 0 6 1
 pinnumber=1
 T -100 1200 5 8 0 0 0 7 1
-pintype=IN
+pintype=in
 T 400 1200 3 8 1 1 0 1 1
 pinlabel=SA
 }
@@ -30,7 +30,7 @@ pinseq=2
 T 250 950 5 8 1 1 0 6 1
 pinnumber=2
 T -100 900 5 8 0 0 0 7 1
-pintype=PWR
+pintype=pwr
 T 400 900 3 8 1 1 0 1 1
 pinlabel=GND
 }
@@ -41,7 +41,7 @@ pinseq=3
 T 250 650 5 8 1 1 0 6 1
 pinnumber=3
 T -100 600 5 8 0 0 0 7 1
-pintype=PWR
+pintype=pwr
 T 400 600 3 8 1 1 0 1 1
 pinlabel=VDD
 }
@@ -52,7 +52,7 @@ pinseq=4
 T 250 350 5 8 1 1 0 6 1
 pinnumber=4
 T -100 300 5 8 0 0 0 7 1
-pintype=IN
+pintype=in
 T 400 300 3 8 1 1 0 1 1
 pinlabel=SB
 }
@@ -63,7 +63,7 @@ pinseq=5
 T 1550 1250 5 8 1 1 0 0 1
 pinnumber=8
 T 1900 1200 5 8 0 0 0 1 1
-pintype=OUT
+pintype=out
 T 1400 1200 3 8 1 1 0 7 1
 pinlabel=OUTA
 }
@@ -74,7 +74,7 @@ pinseq=6
 T 1550 950 5 8 1 1 0 0 1
 pinnumber=7
 T 1900 900 5 8 0 0 0 1 1
-pintype=IN
+pintype=in
 T 1400 900 3 8 1 1 0 7 1
 pinlabel=INA
 }
@@ -85,7 +85,7 @@ pinseq=7
 T 1550 650 5 8 1 1 0 0 1
 pinnumber=6
 T 1900 600 5 8 0 0 0 1 1
-pintype=IN
+pintype=in
 T 1400 600 3 8 1 1 0 7 1
 pinlabel=INB
 }
@@ -96,7 +96,7 @@ pinseq=8
 T 1550 350 5 8 1 1 0 0 1
 pinnumber=5
 T 1900 300 5 8 0 0 0 1 1
-pintype=OUT
+pintype=out
 T 1400 300 3 8 1 1 0 7 1
 pinlabel=OUTA
 }

@@ -6,7 +6,7 @@ pinnumber=2
 T 100 1000 5 8 0 0 0 0 1
 pinseq=1
 T -700 1000 5 10 0 0 0 0 1
-pintype=OC
+pintype=oc
 T 400 900 9 10 1 1 0 0 1
 pinlabel=Anode
 }
@@ -17,7 +17,7 @@ pinnumber=3
 T 100 700 5 8 0 0 0 0 1
 pinseq=2
 T -700 600 5 10 0 0 0 0 1
-pintype=OE
+pintype=oe
 T 400 600 9 10 1 1 0 0 1
 pinlabel=Cathode
 }
@@ -28,7 +28,7 @@ pinnumber=6
 T 1800 700 5 8 0 0 0 0 1
 pinseq=4
 T 1700 600 5 10 0 0 0 0 1
-pintype=OC
+pintype=oc
 T 1400 600 9 10 1 1 0 0 1
 pinlabel=Vo
 }
@@ -39,7 +39,7 @@ pinnumber=7
 T 1800 1000 5 8 0 0 0 0 1
 pinseq=5
 T 1700 900 5 10 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 1400 900 9 10 1 1 0 0 1
 pinlabel=Vb
 }
@@ -50,7 +50,7 @@ pinnumber=8
 T 1800 1300 5 8 0 0 0 0 1
 pinseq=6
 T 1700 1200 5 10 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 T 1300 1200 9 10 1 1 0 0 1
 pinlabel=Vcc
 }
@@ -61,7 +61,7 @@ pinnumber=5
 T 1800 400 5 8 0 0 0 0 1
 pinseq=3
 T 1700 300 5 10 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 T 1200 300 9 10 1 1 0 0 1
 pinlabel=GND
 }

@@ -8,7 +8,7 @@ pinseq=33
 T 350 7700 9 8 1 1 0 0 1
 pinlabel=D0
 T 350 7700 5 8 0 1 0 2 1
-pintype=IO
+pintype=io
 }
 P 300 7300 0 7300 1 0 1
 {

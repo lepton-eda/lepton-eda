@@ -8,7 +8,7 @@ pinseq=1
 T 400 1200 9 8 1 1 0 0 1
 pinlabel=TxD
 T 0 1200 5 8 0 0 0 0 1
-pintype=IN
+pintype=in
 }
 P 0 600 300 600 1 0 0
 {
@@ -19,7 +19,7 @@ pinseq=3
 T 400 600 9 8 1 1 0 0 1
 pinlabel=Ref
 T 0 600 5 8 0 0 0 0 1
-pintype=IN
+pintype=in
 }
 P 0 900 300 900 1 0 0
 {
@@ -30,7 +30,7 @@ pinseq=2
 T 400 900 9 8 1 1 0 0 1
 pinlabel=RxD
 T 0 900 5 8 0 0 0 0 1
-pintype=OUT
+pintype=out
 }
 T 300 1540 9 10 1 0 0 0 1
 SI 9200
@@ -43,7 +43,7 @@ pinseq=4
 T 400 300 9 8 1 1 0 0 1
 pinlabel=Gnd
 T 0 300 5 8 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 }
 P 1700 1200 2000 1200 1 0 1
 {
@@ -54,7 +54,7 @@ pinseq=8
 T 1400 1200 9 8 1 1 0 0 1
 pinlabel=Vcc
 T 1700 1200 5 8 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 }
 P 1700 600 2000 600 1 0 1
 {
@@ -65,7 +65,7 @@ pinseq=6
 T 1300 600 9 8 1 1 0 0 1
 pinlabel=CanL
 T 1700 600 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 }
 P 1700 900 2000 900 1 0 1
 {
@@ -76,7 +76,7 @@ pinseq=7
 T 1300 900 9 8 1 1 0 0 1
 pinlabel=CanH
 T 1700 900 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 }
 P 1700 300 2000 300 1 0 1
 {
@@ -87,7 +87,7 @@ pinseq=5
 T 1400 300 9 8 1 1 0 0 1
 pinlabel=Gnd
 T 1700 300 5 8 0 0 0 0 1
-pintype=PWR
+pintype=pwr
 }
 B 300 0 1400 1500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 1700 1543 8 10 1 1 0 6 1

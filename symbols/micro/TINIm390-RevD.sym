@@ -635,7 +635,7 @@ pinnumber=61
 T 2300 3850 5 8 0 0 0 1 1
 pinseq=61
 T 3100 3850 5 8 0 0 0 1 1
-pintype=oute
+pintype=out
 T 1610 3800 9 8 1 1 0 1 1
 pinlabel=A17
 }
@@ -690,7 +690,7 @@ pinnumber=66
 T 140 4950 5 8 0 0 0 1 1
 pinseq=66
 T 940 4950 5 8 0 0 0 1 1
-pintype=oute
+pintype=out
 T 450 5000 9 8 1 1 0 1 1
 pinlabel=ETH1
 }

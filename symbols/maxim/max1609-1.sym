@@ -19,7 +19,7 @@ pinseq=1
 T 250 2450 5 8 1 1 0 6 1
 pinnumber=1
 T -100 2400 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 2400 3 8 1 1 0 1 1
 pinlabel=IO0
 }
@@ -30,7 +30,7 @@ pinseq=2
 T 250 2150 5 8 1 1 0 6 1
 pinnumber=2
 T -100 2100 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 2100 3 8 1 1 0 1 1
 pinlabel=IO1
 }
@@ -41,7 +41,7 @@ pinseq=3
 T 250 1850 5 8 1 1 0 6 1
 pinnumber=3
 T -100 1800 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 1800 3 8 1 1 0 1 1
 pinlabel=IO2
 }
@@ -52,7 +52,7 @@ pinseq=4
 T 250 1550 5 8 1 1 0 6 1
 pinnumber=4
 T -100 1500 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 1500 3 8 1 1 0 1 1
 pinlabel=IO3
 }
@@ -63,7 +63,7 @@ pinseq=5
 T 250 1250 5 8 1 1 0 6 1
 pinnumber=5
 T -100 1200 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 1200 3 8 1 1 0 1 1
 pinlabel=IO4
 }
@@ -74,7 +74,7 @@ pinseq=6
 T 250 950 5 8 1 1 0 6 1
 pinnumber=6
 T -100 900 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 900 3 8 1 1 0 1 1
 pinlabel=IO5
 }
@@ -85,7 +85,7 @@ pinseq=7
 T 250 650 5 8 1 1 0 6 1
 pinnumber=7
 T -100 600 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 600 3 8 1 1 0 1 1
 pinlabel=IO6
 }
@@ -96,7 +96,7 @@ pinseq=8
 T 250 350 5 8 1 1 0 6 1
 pinnumber=8
 T -100 300 5 8 0 0 0 7 1
-pintype=IO
+pintype=io
 T 400 300 3 8 1 1 0 1 1
 pinlabel=IO7
 }
@@ -107,7 +107,7 @@ pinseq=9
 T 1850 2450 5 8 1 1 0 0 1
 pinnumber=16
 T 2200 2400 5 8 0 0 0 1 1
-pintype=PWR
+pintype=pwr
 T 1700 2400 3 8 1 1 0 7 1
 pinlabel=Vpp
 }
@@ -119,7 +119,7 @@ pinseq=10
 T 1850 2150 5 8 1 1 0 0 1
 pinnumber=15
 T 2200 2100 5 8 0 0 0 1 1
-pintype=IN
+pintype=in
 T 1700 2100 3 8 1 1 0 7 1
 pinlabel=SMBSUS
 }
@@ -132,7 +132,7 @@ pinseq=11
 T 1850 1850 5 8 1 1 0 0 1
 pinnumber=14
 T 2200 1800 5 8 0 0 0 1 1
-pintype=IN
+pintype=in
 T 1700 1800 3 8 1 1 0 7 1
 pinlabel=SMBCLK
 }
@@ -144,7 +144,7 @@ pinseq=12
 T 1850 1550 5 8 1 1 0 0 1
 pinnumber=13
 T 2200 1500 5 8 0 0 0 1 1
-pintype=OUT
+pintype=out
 T 1700 1500 3 8 1 1 0 7 1
 pinlabel=ALERT
 }
@@ -155,7 +155,7 @@ pinseq=13
 T 1850 1250 5 8 1 1 0 0 1
 pinnumber=12
 T 2200 1200 5 8 0 0 0 1 1
-pintype=IO
+pintype=io
 T 1700 1200 3 8 1 1 0 7 1
 pinlabel=SMBDATA
 }
@@ -166,7 +166,7 @@ pinseq=14
 T 1850 950 5 8 1 1 0 0 1
 pinnumber=11
 T 2200 900 5 8 0 0 0 1 1
-pintype=IN
+pintype=in
 T 1700 900 3 8 1 1 0 7 1
 pinlabel=ADD1
 }
@@ -177,7 +177,7 @@ pinseq=15
 T 1850 650 5 8 1 1 0 0 1
 pinnumber=10
 T 2200 600 5 8 0 0 0 1 1
-pintype=IN
+pintype=in
 T 1700 600 3 8 1 1 0 7 1
 pinlabel=ADD0
 }
@@ -188,7 +188,7 @@ pinseq=16
 T 1850 350 5 8 1 1 0 0 1
 pinnumber=9
 T 2200 300 5 8 0 0 0 1 1
-pintype=PWR
+pintype=pwr
 T 1700 300 3 8 1 1 0 7 1
 pinlabel=GND
 }

@@ -116,7 +116,7 @@ pinseq=9
 T 1600 1800 9 10 1 1 0 1 1
 pinlabel=TSOURCE
 T 1600 1700 5 10 0 1 0 1 1
-pintype=pass
+pintype=pas
 }
 P 2600 2400 2900 2400 1 0 1
 {

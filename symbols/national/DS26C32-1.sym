@@ -161,7 +161,7 @@ pinnumber=16
 T 500 3500 5 8 0 0 0 1 1
 pinseq=16
 T 400 3400 5 10 0 1 0 0 1
-pintype=PWR
+pintype=pwr
 T 300 3400 5 10 1 1 0 2 1
 pinlabel=vcc
 }
@@ -172,7 +172,7 @@ pinnumber=8
 T 500 100 5 8 0 0 0 1 1
 pinseq=8
 T 400 0 5 10 0 1 0 0 1
-pintype=PWR
+pintype=pwr
 T 300 300 5 10 1 1 0 1 1
 pinlabel=gnd
 }

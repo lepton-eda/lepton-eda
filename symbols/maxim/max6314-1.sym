@@ -8,7 +8,7 @@ pinnumber=1
 T 1210 100 5 10 0 0 0 0 1
 pinseq=1
 T 1110 250 5 6 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 1099 475 9 10 1 1 0 3 1
 pinlabel=GND
 }
@@ -19,7 +19,7 @@ pinnumber=2
 T 2025 1045 5 10 0 0 0 0 1
 pinseq=2
 T 1950 1020 5 6 0 0 0 0 1
-pintype=I/O
+pintype=io
 T 1825 1000 9 10 1 1 0 7 1
 pinlabel=/RESET
 }
@@ -30,7 +30,7 @@ pinnumber=3
 T 240 1045 5 10 0 0 0 0 1
 pinseq=3
 T 290 1020 5 6 0 0 0 0 1
-pintype=IN
+pintype=in
 T 475 1000 9 10 1 1 0 1 1
 pinlabel=/MR
 }
@@ -41,7 +41,7 @@ pinnumber=4
 T 1225 1675 5 10 0 0 0 0 1
 pinseq=4
 T 1100 1400 5 6 0 0 0 0 1
-pintype=IN
+pintype=in
 T 1100 1450 9 10 1 1 0 5 1
 pinlabel=Vcc
 }

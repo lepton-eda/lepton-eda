@@ -6,7 +6,7 @@ pinnumber=2
 T 100 2350 5 8 0 0 0 0 1
 pinseq=1
 T 0 2300 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 400 2250 9 8 1 1 0 0 1
 pinlabel=C1+
 }
@@ -17,7 +17,7 @@ pinnumber=4
 T 100 2050 5 8 0 0 0 0 1
 pinseq=2
 T 0 2000 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 400 1950 9 8 1 1 0 0 1
 pinlabel=C1-
 }
@@ -28,7 +28,7 @@ pinnumber=5
 T 100 1750 5 8 0 0 0 0 1
 pinseq=3
 T 0 1700 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 400 1650 9 8 1 1 0 0 1
 pinlabel=C2+
 }
@@ -39,7 +39,7 @@ pinnumber=6
 T 100 1450 5 8 0 0 0 0 1
 pinseq=4
 T 0 1400 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 400 1350 9 8 1 1 0 0 1
 pinlabel=C2-
 }
@@ -50,7 +50,7 @@ pinnumber=11
 T 100 1150 5 8 0 0 0 0 1
 pinseq=5
 T 0 1100 5 8 0 0 0 0 1
-pintype=IN
+pintype=in
 T 400 1050 9 8 1 1 0 0 1
 pinlabel=T1in
 }
@@ -61,7 +61,7 @@ pinnumber=1
 T 150 550 5 8 0 0 0 0 1
 pinseq=7
 T 0 500 5 8 0 0 0 0 1
-pintype=OUT
+pintype=out
 T 400 450 9 8 1 1 0 0 1
 pinlabel=Ready
 }
@@ -72,7 +72,7 @@ pinnumber=12
 T 50 250 5 8 0 0 0 0 1
 pinseq=8
 T 0 200 5 8 0 0 0 0 1
-pintype=IN
+pintype=in
 T 400 150 9 8 1 1 0 0 1
 pinlabel=FrcOn
 }
@@ -83,7 +83,7 @@ pinnumber=3
 T 1800 2350 5 8 0 0 0 0 1
 pinseq=14
 T 1700 2300 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 1450 2250 9 8 1 1 0 0 1
 pinlabel=V+
 }
@@ -94,7 +94,7 @@ pinnumber=7
 T 1800 1750 5 8 0 0 0 0 1
 pinseq=13
 T 1700 1700 5 8 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 1450 1650 9 8 1 1 0 0 1
 pinlabel=V-
 }
@@ -105,7 +105,7 @@ pinnumber=13
 T 1750 1150 5 8 0 0 0 0 1
 pinseq=12
 T 1700 1100 5 8 0 0 0 0 1
-pintype=OUT
+pintype=out
 T 1250 1050 9 8 1 1 0 0 1
 pinlabel=T1out
 }
@@ -116,7 +116,7 @@ pinnumber=8
 T 1800 850 5 8 0 0 0 0 1
 pinseq=11
 T 1700 800 5 8 0 0 0 0 1
-pintype=IN
+pintype=in
 T 1350 750 9 8 1 1 0 0 1
 pinlabel=R1in
 }
@@ -127,7 +127,7 @@ pinnumber=10
 T 1750 550 5 8 0 0 0 0 1
 pinseq=10
 T 1700 500 5 8 0 0 0 0 1
-pintype=OUT
+pintype=out
 T 1200 450 9 8 1 1 0 0 1
 pinlabel=Invalid
 }
@@ -138,7 +138,7 @@ pinnumber=16
 T 1750 250 5 8 0 0 0 0 1
 pinseq=9
 T 1700 200 5 10 0 0 0 0 1
-pintype=PAS
+pintype=pas
 T 1150 150 9 8 1 1 0 0 1
 pinlabel=FrcOff
 }
@@ -150,7 +150,7 @@ pinnumber=9
 T 100 850 5 8 0 0 0 0 1
 pinseq=6
 T 0 800 5 8 0 0 0 0 1
-pintype=OUT
+pintype=out
 T 400 750 9 8 1 1 0 0 1
 pinlabel=R1out
 }

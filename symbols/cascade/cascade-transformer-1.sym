@@ -20,7 +20,7 @@ pinseq=1
 T 200 1900 5 10 0 1 0 0 1
 pinlabel=1
 T 200 1900 5 10 0 1 0 0 1
-pintype=i
+pintype=in
 }
 P 1500 1900 1300 1900 1 0 0
 {
@@ -31,7 +31,7 @@ pinseq=2
 T 1500 1900 5 10 0 1 0 0 1
 pinlabel=2
 T 1500 1900 5 10 0 1 0 0 1
-pintype=o
+pintype=out
 }
 T 300 2050 8 10 1 1 0 0 1
 refdes=T?

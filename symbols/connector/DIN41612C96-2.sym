@@ -8,7 +8,7 @@ pinlabel=A1
 T 600 12750 5 8 0 0 0 0 1
 pinseq=1
 T 600 12750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 12300 200 12300 1 0 1
 {
@@ -19,7 +19,7 @@ pinlabel=A2
 T 600 12350 5 8 0 0 0 0 1
 pinseq=2
 T 600 12350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 11900 200 11900 1 0 1
 {
@@ -30,7 +30,7 @@ pinlabel=A3
 T 600 11950 5 8 0 0 0 0 1
 pinseq=3
 T 600 11950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 11500 200 11500 1 0 1
 {
@@ -41,7 +41,7 @@ pinlabel=A4
 T 600 11550 5 8 0 0 0 0 1
 pinseq=4
 T 600 11550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 11100 200 11100 1 0 1
 {
@@ -52,7 +52,7 @@ pinlabel=A5
 T 600 11150 5 8 0 0 0 0 1
 pinseq=5
 T 600 11150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 10700 200 10700 1 0 1
 {
@@ -63,7 +63,7 @@ pinlabel=A6
 T 600 10750 5 8 0 0 0 0 1
 pinseq=6
 T 600 11150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 10300 500 10300 1 0 0
 {
@@ -74,7 +74,7 @@ pinlabel=A7
 T 600 10350 5 8 0 0 0 0 1
 pinseq=7
 T 600 10350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 9900 200 9900 1 0 1
 {
@@ -85,7 +85,7 @@ pinlabel=A8
 T 600 9950 5 8 0 0 0 0 1
 pinseq=8
 T 600 9950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 9500 200 9500 1 0 1
 {
@@ -96,7 +96,7 @@ pinlabel=A9
 T 600 9550 5 8 0 0 0 0 1
 pinseq=9
 T 600 9550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 9100 200 9100 1 0 1
 {
@@ -107,7 +107,7 @@ pinlabel=A10
 T 600 9150 5 8 0 0 0 0 1
 pinseq=10
 T 600 9150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 8700 200 8700 1 0 1
 {
@@ -118,7 +118,7 @@ pinlabel=A11
 T 600 8750 5 8 0 0 0 0 1
 pinseq=11
 T 600 8750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 8300 500 8300 1 0 0
 {
@@ -129,7 +129,7 @@ pinlabel=A12
 T 600 8350 5 8 0 0 0 0 1
 pinseq=12
 T 600 8350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 7900 200 7900 1 0 1
 {
@@ -140,7 +140,7 @@ pinlabel=A13
 T 600 7950 5 8 0 0 0 0 1
 pinseq=13
 T 600 7950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 7500 500 7500 1 0 0
 {
@@ -151,7 +151,7 @@ pinlabel=A14
 T 600 7550 5 8 0 0 0 0 1
 pinseq=14
 T 600 7550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 7100 200 7100 1 0 1
 {
@@ -162,7 +162,7 @@ pinlabel=A15
 T 600 7150 5 8 0 0 0 0 1
 pinseq=15
 T 600 7150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 6700 500 6700 1 0 0
 {
@@ -173,7 +173,7 @@ pinlabel=A16
 T 600 6750 5 8 0 0 0 0 1
 pinseq=16
 T 600 6750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 6300 200 6300 1 0 1
 {
@@ -184,7 +184,7 @@ pinlabel=A17
 T 600 6350 5 8 0 0 0 0 1
 pinseq=17
 T 600 6350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 5900 500 5900 1 0 0
 {
@@ -195,7 +195,7 @@ pinlabel=A18
 T 600 5950 5 8 0 0 0 0 1
 pinseq=18
 T 600 5950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 5500 200 5500 1 0 1
 {
@@ -206,7 +206,7 @@ pinlabel=A19
 T 600 5550 5 8 0 0 0 0 1
 pinseq=19
 T 600 5550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 5100 500 5100 1 0 0
 {
@@ -217,7 +217,7 @@ pinlabel=A20
 T 600 5150 5 8 0 0 0 0 1
 pinseq=20
 T 600 5150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 4700 200 4700 1 0 1
 {
@@ -228,7 +228,7 @@ pinlabel=A21
 T 600 4750 5 8 0 0 0 0 1
 pinseq=21
 T 600 4750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 4300 500 4300 1 0 0
 {
@@ -239,7 +239,7 @@ pinlabel=A22
 T 600 4350 5 8 0 0 0 0 1
 pinseq=22
 T 600 4350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 3900 200 3900 1 0 1
 {
@@ -250,7 +250,7 @@ pinlabel=A23
 T 600 3950 5 8 0 0 0 0 1
 pinseq=23
 T 600 3950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 3500 500 3500 1 0 0
 {
@@ -261,7 +261,7 @@ pinlabel=A24
 T 600 3550 5 8 0 0 0 0 1
 pinseq=24
 T 600 3550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 3100 200 3100 1 0 1
 {
@@ -272,7 +272,7 @@ pinlabel=A25
 T 600 3150 5 8 0 0 0 0 1
 pinseq=25
 T 600 3150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 2700 500 2700 1 0 0
 {
@@ -283,7 +283,7 @@ pinlabel=A26
 T 600 2750 5 8 0 0 0 0 1
 pinseq=26
 T 600 2750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 2300 200 2300 1 0 1
 {
@@ -294,7 +294,7 @@ pinlabel=A27
 T 600 2350 5 8 0 0 0 0 1
 pinseq=27
 T 600 2350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 1900 500 1900 1 0 0
 {
@@ -305,7 +305,7 @@ pinlabel=A28
 T 600 1950 5 8 0 0 0 0 1
 pinseq=28
 T 600 1950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 1500 200 1500 1 0 1
 {
@@ -316,7 +316,7 @@ pinlabel=A29
 T 600 1550 5 8 0 0 0 0 1
 pinseq=29
 T 600 1550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 1100 500 1100 1 0 0
 {
@@ -327,7 +327,7 @@ pinlabel=A30
 T 600 1150 5 8 0 0 0 0 1
 pinseq=30
 T 600 1150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 500 700 200 700 1 0 1
 {
@@ -338,7 +338,7 @@ pinlabel=A31
 T 600 750 5 8 0 0 0 0 1
 pinseq=31
 T 600 750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 200 300 500 300 1 0 0
 {
@@ -349,7 +349,7 @@ pinlabel=A32
 T 600 350 5 8 0 0 0 0 1
 pinseq=32
 T 600 350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 12700 3800 12700 1 0 1
 {
@@ -360,7 +360,7 @@ pinlabel=B1
 T 3200 12750 5 8 0 0 0 0 1
 pinseq=33
 T 3200 12750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 12500 3800 12500 1 0 1
 {
@@ -371,7 +371,7 @@ pinlabel=C1
 T 3200 12550 5 8 0 0 0 0 1
 pinseq=34
 T 3200 12550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 12300 3800 12300 1 0 1
 {
@@ -382,7 +382,7 @@ pinlabel=B2
 T 3200 12350 5 8 0 0 0 0 1
 pinseq=35
 T 3200 12350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 12100 3800 12100 1 0 1
 {
@@ -393,7 +393,7 @@ pinlabel=C2
 T 3200 12150 5 8 0 0 0 0 1
 pinseq=36
 T 3200 12150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 11900 3800 11900 1 0 1
 {
@@ -404,7 +404,7 @@ pinlabel=B3
 T 3200 11950 5 8 0 0 0 0 1
 pinseq=37
 T 3200 11950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 11700 3800 11700 1 0 1
 {
@@ -415,7 +415,7 @@ pinlabel=C3
 T 3200 11750 5 8 0 0 0 0 1
 pinseq=38
 T 3200 11750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 11500 3800 11500 1 0 1
 {
@@ -426,7 +426,7 @@ pinlabel=B4
 T 3200 11550 5 8 0 0 0 0 1
 pinseq=39
 T 3200 11550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 11300 3800 11300 1 0 1
 {
@@ -437,7 +437,7 @@ pinlabel=C4
 T 3200 11350 5 8 0 0 0 0 1
 pinseq=40
 T 3200 11350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 11100 3800 11100 1 0 1
 {
@@ -448,7 +448,7 @@ pinlabel=B5
 T 3200 11150 5 8 0 0 0 0 1
 pinseq=41
 T 3200 11150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 10900 3800 10900 1 0 1
 {
@@ -459,7 +459,7 @@ pinlabel=C5
 T 3200 10950 5 8 0 0 0 0 1
 pinseq=42
 T 3200 10950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 10700 3800 10700 1 0 1
 {
@@ -470,7 +470,7 @@ pinlabel=B6
 T 3200 10750 5 8 0 0 0 0 1
 pinseq=43
 T 3200 10750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 10500 3800 10500 1 0 1
 {
@@ -481,7 +481,7 @@ pinlabel=C6
 T 3200 10550 5 8 0 0 0 0 1
 pinseq=44
 T 3200 10550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 10300 3500 10300 1 0 0
 {
@@ -492,7 +492,7 @@ pinlabel=B7
 T 3200 10350 5 8 0 0 0 0 1
 pinseq=45
 T 3200 10350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 10100 3800 10100 1 0 1
 {
@@ -503,7 +503,7 @@ pinlabel=C7
 T 3200 10150 5 8 0 0 0 0 1
 pinseq=46
 T 3200 10150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 9900 3500 9900 1 0 0
 {
@@ -514,7 +514,7 @@ pinlabel=B8
 T 3200 9950 5 8 0 0 0 0 1
 pinseq=47
 T 3200 9950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 9700 3800 9700 1 0 1
 {
@@ -525,7 +525,7 @@ pinlabel=C8
 T 3200 9750 5 8 0 0 0 0 1
 pinseq=48
 T 3200 9750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 9500 3500 9500 1 0 0
 {
@@ -536,7 +536,7 @@ pinlabel=B9
 T 3200 9550 5 8 0 0 0 0 1
 pinseq=49
 T 3200 9550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 9300 3800 9300 1 0 1
 {
@@ -547,7 +547,7 @@ pinlabel=C9
 T 3200 9350 5 8 0 0 0 0 1
 pinseq=50
 T 3200 9350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 9100 3500 9100 1 0 0
 {
@@ -558,7 +558,7 @@ pinlabel=B10
 T 3100 9150 5 8 0 0 0 0 1
 pinseq=51
 T 3100 9150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 8900 3500 8900 1 0 0
 {
@@ -569,7 +569,7 @@ pinlabel=C10
 T 3100 8950 5 8 0 0 0 0 1
 pinseq=52
 T 3100 8950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 8700 3800 8700 1 0 1
 {
@@ -580,7 +580,7 @@ pinlabel=B11
 T 3100 8750 5 8 0 0 0 0 1
 pinseq=53
 T 3100 8750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 8500 3500 8500 1 0 0
 {
@@ -591,7 +591,7 @@ pinlabel=C11
 T 3100 8550 5 8 0 0 0 0 1
 pinseq=54
 T 3100 8550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 8300 3800 8300 1 0 1
 {
@@ -602,7 +602,7 @@ pinlabel=B12
 T 3100 8350 5 8 0 0 0 0 1
 pinseq=55
 T 3100 8350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 8100 3500 8100 1 0 0
 {
@@ -613,7 +613,7 @@ pinlabel=C12
 T 3100 8150 5 8 0 0 0 0 1
 pinseq=56
 T 3100 8150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 7900 3800 7900 1 0 1
 {
@@ -624,7 +624,7 @@ pinlabel=B13
 T 3100 7950 5 8 0 0 0 0 1
 pinseq=57
 T 3100 7950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 7700 3500 7700 1 0 0
 {
@@ -635,7 +635,7 @@ pinlabel=C13
 T 3100 7750 5 8 0 0 0 0 1
 pinseq=58
 T 3100 7750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 7500 3800 7500 1 0 1
 {
@@ -646,7 +646,7 @@ pinlabel=B14
 T 3100 7550 5 8 0 0 0 0 1
 pinseq=59
 T 3100 7550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 7300 3500 7300 1 0 0
 {
@@ -657,7 +657,7 @@ pinlabel=C14
 T 3100 7350 5 8 0 0 0 0 1
 pinseq=60
 T 3100 7350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 7100 3800 7100 1 0 1
 {
@@ -668,7 +668,7 @@ pinlabel=B15
 T 3100 7150 5 8 0 0 0 0 1
 pinseq=61
 T 3100 7150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 6900 3500 6900 1 0 0
 {
@@ -679,7 +679,7 @@ pinlabel=C15
 T 3100 6950 5 8 0 0 0 0 1
 pinseq=62
 T 3100 6950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 6700 3800 6700 1 0 1
 {
@@ -690,7 +690,7 @@ pinlabel=B16
 T 3100 6750 5 8 0 0 0 0 1
 pinseq=63
 T 3100 6750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 6500 3500 6500 1 0 0
 {
@@ -701,7 +701,7 @@ pinlabel=C16
 T 3100 6550 5 8 0 0 0 0 1
 pinseq=64
 T 3100 6550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 6300 3800 6300 1 0 1
 {
@@ -712,7 +712,7 @@ pinlabel=B17
 T 3100 6350 5 8 0 0 0 0 1
 pinseq=65
 T 3100 6350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 6100 3500 6100 1 0 0
 {
@@ -723,7 +723,7 @@ pinlabel=C17
 T 3100 6150 5 8 0 0 0 0 1
 pinseq=66
 T 3100 6150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 5900 3800 5900 1 0 1
 {
@@ -734,7 +734,7 @@ pinlabel=B18
 T 3100 5950 5 8 0 0 0 0 1
 pinseq=67
 T 3100 5950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 5700 3500 5700 1 0 0
 {
@@ -745,7 +745,7 @@ pinlabel=C18
 T 3100 5750 5 8 0 0 0 0 1
 pinseq=68
 T 3100 5750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 5500 3800 5500 1 0 1
 {
@@ -756,7 +756,7 @@ pinlabel=B19
 T 3100 5550 5 8 0 0 0 0 1
 pinseq=69
 T 3100 5550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 5300 3500 5300 1 0 0
 {
@@ -767,7 +767,7 @@ pinlabel=C19
 T 3100 5350 5 8 0 0 0 0 1
 pinseq=70
 T 3100 5350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 5100 3800 5100 1 0 1
 {
@@ -778,7 +778,7 @@ pinlabel=B20
 T 3100 5150 5 8 0 0 0 0 1
 pinseq=71
 T 3100 5150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 4900 3500 4900 1 0 0
 {
@@ -789,7 +789,7 @@ pinlabel=C20
 T 3100 4950 5 8 0 0 0 0 1
 pinseq=72
 T 3100 4950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 4700 3800 4700 1 0 1
 {
@@ -800,7 +800,7 @@ pinlabel=B21
 T 3100 4750 5 8 0 0 0 0 1
 pinseq=73
 T 3100 4750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 4500 3500 4500 1 0 0
 {
@@ -811,7 +811,7 @@ pinlabel=C21
 T 3100 4550 5 8 0 0 0 0 1
 pinseq=74
 T 3100 4550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 4300 3800 4300 1 0 1
 {
@@ -822,7 +822,7 @@ pinlabel=B22
 T 3100 4350 5 8 0 0 0 0 1
 pinseq=75
 T 3100 4350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 4100 3500 4100 1 0 0
 {
@@ -833,7 +833,7 @@ pinlabel=C22
 T 3100 4150 5 8 0 0 0 0 1
 pinseq=76
 T 3100 4150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 3900 3800 3900 1 0 1
 {
@@ -844,7 +844,7 @@ pinlabel=B23
 T 3100 3950 5 8 0 0 0 0 1
 pinseq=77
 T 3100 3950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 3700 3500 3700 1 0 0
 {
@@ -855,7 +855,7 @@ pinlabel=C23
 T 3100 3750 5 8 0 0 0 0 1
 pinseq=78
 T 3100 3750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 3500 3800 3500 1 0 1
 {
@@ -866,7 +866,7 @@ pinlabel=B24
 T 3100 3550 5 8 0 0 0 0 1
 pinseq=79
 T 3100 3550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 3300 3500 3300 1 0 0
 {
@@ -877,7 +877,7 @@ pinlabel=C24
 T 3100 3350 5 8 0 0 0 0 1
 pinseq=80
 T 3100 3350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 3100 3800 3100 1 0 1
 {
@@ -888,7 +888,7 @@ pinlabel=B25
 T 3100 3150 5 8 0 0 0 0 1
 pinseq=81
 T 3100 3150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 2900 3500 2900 1 0 0
 {
@@ -899,7 +899,7 @@ pinlabel=C25
 T 3100 2950 5 8 0 0 0 0 1
 pinseq=82
 T 3100 2950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 2700 3800 2700 1 0 1
 {
@@ -910,7 +910,7 @@ pinlabel=B26
 T 3100 2750 5 8 0 0 0 0 1
 pinseq=83
 T 3100 2750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 2500 3500 2500 1 0 0
 {
@@ -921,7 +921,7 @@ pinlabel=C26
 T 3100 2550 5 8 0 0 0 0 1
 pinseq=84
 T 3100 2550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 2300 3800 2300 1 0 1
 {
@@ -932,7 +932,7 @@ pinlabel=27
 T 3100 2350 5 8 0 0 0 0 1
 pinseq=85
 T 3100 2350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 2100 3800 2100 1 0 1
 {
@@ -943,7 +943,7 @@ pinlabel=C27
 T 3100 2150 5 8 0 0 0 0 1
 pinseq=86
 T 3100 2150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 1900 3500 1900 1 0 0
 {
@@ -954,7 +954,7 @@ pinlabel=B28
 T 3100 1950 5 8 0 0 0 0 1
 pinseq=87
 T 3100 1950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 1700 3800 1700 1 0 1
 {
@@ -965,7 +965,7 @@ pinlabel=C28
 T 3100 1750 5 8 0 0 0 0 1
 pinseq=88
 T 3100 1750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 1500 3500 1500 1 0 0
 {
@@ -976,7 +976,7 @@ pinlabel=B29
 T 3100 1550 5 8 0 0 0 0 1
 pinseq=89
 T 3100 1550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 1300 3800 1300 1 0 1
 {
@@ -987,7 +987,7 @@ pinlabel=C29
 T 3100 1350 5 8 0 0 0 0 1
 pinseq=90
 T 3100 1350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 1100 3500 1100 1 0 0
 {
@@ -998,7 +998,7 @@ pinlabel=B30
 T 3100 1150 5 8 0 0 0 0 1
 pinseq=91
 T 3100 1150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 900 3800 900 1 0 1
 {
@@ -1009,7 +1009,7 @@ pinlabel=C30
 T 3100 950 5 8 0 0 0 0 1
 pinseq=92
 T 3100 950 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 700 3500 700 1 0 0
 {
@@ -1020,7 +1020,7 @@ pinlabel=B31
 T 3100 750 5 8 0 0 0 0 1
 pinseq=93
 T 3100 750 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 500 3800 500 1 0 1
 {
@@ -1031,7 +1031,7 @@ pinlabel=C31
 T 3100 550 5 8 0 0 0 0 1
 pinseq=94
 T 3100 550 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3800 300 3500 300 1 0 0
 {
@@ -1042,7 +1042,7 @@ pinlabel=B32
 T 3100 350 5 8 0 0 0 0 1
 pinseq=95
 T 3100 350 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 P 3500 100 3800 100 1 0 1
 {
@@ -1053,7 +1053,7 @@ pinlabel=C32
 T 3100 150 5 8 0 0 0 0 1
 pinseq=96
 T 3100 150 5 8 0 0 0 0 1
-pintype=pass
+pintype=pas
 }
 B 500 0 3000 12900 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 2700 13100 5 10 0 0 0 0 1
