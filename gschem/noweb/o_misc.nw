@@ -1074,7 +1074,6 @@ int used_count;
 int used_list[4096];
 void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 {
-
   OBJECT *o_current = NULL;
   char *attrib = NULL;
   int count = 0;
@@ -1082,9 +1081,7 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
   char *current_filename = NULL;
   int page_control = 0;
   int pcount = 0;
-
   int l, m;
-
 
   if (o_list == NULL)
     return;
@@ -1168,8 +1165,6 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 
   o_current = o_list;
   while (o_current != NULL) {
-
-
     if (o_current->type == OBJ_COMPLEX) {
 
       parent = w_current->page_current;
@@ -1218,6 +1213,9 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
               used_count++;
             }
 
+	    /* printf("autonumber_text: used_count %d, current_max %d\n",
+	       used_count,current_max);*/
+
 	    ss = g_strdup_printf("%s%d", stext, current_max++);
 	    /*            printf("%s\n", ss); */
 	    o_current->text->string =
@@ -1229,8 +1227,6 @@ autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 	    o_text_draw(w_current, o_current);
 	    w_current->page_current->CHANGED = 1;
 	  }
-
-
 	}
       }
     }
@@ -1252,10 +1248,14 @@ void
 o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 {
   int i, tmp,sorted=0;
-  int current_max = 0; /* AVH 8/18/2002 changed to 0, so 1 would be used */
-  int used_count = 0;
+
+  current_max = 0; /* these are global variables, (Werner) */
+  used_count = 0;
 
   find_max(w_current, o_list, stext);
+
+  /*  printf("o_edit_autonumber_text: used_count %d, current_max %d\n",
+      used_count,current_max);*/
 
   if ((used_count < 4094)&&(used_count > 0)) {
     while (!sorted) {
@@ -1280,7 +1280,9 @@ o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
   used_list[used_count] = 1000000;
   used_count = 0;
 
-  /*    printf("max: %d\n", current_max); */
+  /*  printf("o_edit_autonumber_text: used_count %d, current_max %d\n",
+      used_count,current_max);*/
+
   autonumber_text(w_current, o_list, stext);
   o_redraw_all(w_current);
 
