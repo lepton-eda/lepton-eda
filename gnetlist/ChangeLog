@@ -1,3 +1,8 @@
+2004-08-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/Makefile.am: Removed gschem2pcb from bin_SCRIPTS, as
+	gsch2pcb is now the prefered tool.
+
 2004-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-spice-sdb.scm: Added Stuart's latest backend
