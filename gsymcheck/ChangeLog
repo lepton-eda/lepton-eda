@@ -1,6 +1,15 @@
+2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: Applied Gabriel Paubert's warning reducing patch with
+        a few minor mods.
+
 2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Fixed the distclean-local target.
+
+        * configure.in: Changed -fnative-struct to -mms-bitfields for
+        gcc 3.2 mingw compiler (older mingw compilers are no longer 
+        supported)
 
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 

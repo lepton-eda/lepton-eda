@@ -47,20 +47,21 @@ dnl AC_PROG_LEX
 dnl AC_PROG_LEX()
 dnl AC_PROG_MAKE_SET
 
-AC_CYGWIN
-if test "$CYGWIN" = "yes"; then
-	AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)
-fi
+AC_CANONICAL_HOST()
+case $host_os in
+  *cygwin*  ) AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported) ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+esac
 
-AC_MINGW32
-
-if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
-	PATHSEP=\\\\
-	OTHERPATHSEP=/
-else
+if test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	PATHSEP=/
-	OTHERPATHSEP=\\\\
+	OTHERPATHSEP=\\\\ 
+else
+	PATHSEP=\\\\
+	OTHERPATHSEP=/ 
 fi
+
+echo $PATHSEP $OTHERPATHSEP
 
 # search for fig2dev
 AC_PATH_PROG(FIG2DEV, fig2dev, no, ${PATH})

@@ -96,7 +96,8 @@ msgstr ""
 "[%s]\n"
 
 #: noweb/g_rc.nw:457
-msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid ""
+"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "gschem находится в стадии ALPHA, проверьте наличие последней версии rc-"
 "файла.\n"
@@ -204,10 +205,12 @@ msgstr "Версия gEDA/gschem %s\n"
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
-msgstr "gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
+msgstr ""
+"gEDA/gschem поставляется БЕЗ ГАРАНТИЙ; смотрите COPYING для подробностей.\n"
 
 #: noweb/gschem.nw:165 noweb/gschem.nw:175
-msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgid ""
+"This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Это свободное программное обеспечение, и его можно распространять при "
 "известных\n"
@@ -1263,7 +1266,8 @@ msgstr "О..."
 
 #: noweb/x_dialog.nw:2734
 msgid "gEDA : GPL Electronic Design Automation"
-msgstr "gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
+msgstr ""
+"gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
 
 #: noweb/x_dialog.nw:2741
 #, c-format
@@ -2140,4 +2144,3 @@ msgstr "Помощь"
 #: noweb/rcstrings.nw:118
 msgid "Manual..."
 msgstr "Руководство..."
-

@@ -23,6 +23,8 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
+AC_CANONICAL_HOST()
+
 dnl Create a configuration header
 AM_CONFIG_HEADER(config.h)
 
@@ -60,13 +62,10 @@ if test $optarg_found = yes; then
 		AC_DEFINE(OPTARG_IN_UNISTD)
 fi
 
-AC_CYGWIN
-
-if test "$CYGWIN" = "yes"; then
-          AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)       
-fi
-
-AC_MINGW32
+case $host_os in
+  *cygwin*  ) AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported) ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+esac
 
 dnl Guile stuff
 GUILE_FLAGS

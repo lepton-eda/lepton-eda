@@ -40,6 +40,8 @@ dnl Initialize automake stuff
 dnl AM_INIT_AUTOMAKE($PACKAGE, $GEDA_VER_MAJOR.$GEDA_VER_MINOR.$GEDA_VER_MICRO, no-define)
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
+AC_CANONICAL_HOST()
+
 dnl Create a configuration header
 AM_CONFIG_HEADER(config.h)
 
@@ -58,13 +60,10 @@ dnl AC_PROG_LEX
 dnl AC_PROG_LEX()
 AC_PROG_MAKE_SET
 
-AC_CYGWIN
-
-if test "$CYGWIN" = "yes"; then
-          AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported)       
-fi
-
-AC_MINGW32
+case $host_os in
+  *cygwin*  ) AC_MSG_ERROR(Building gEDA/gaf under cygwin is not supported) ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+esac
 
 dnl Check for guile
 GUILE_FLAGS
@@ -226,8 +225,8 @@ else
 fi
 
 if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
-	echo Including -fnative-struct in CFLAGS for MINGW32 port
-	CFLAGS="$CFLAGS -fnative-struct"
+	echo Including -mms-bitfields in CFLAGS for MINGW32 port
+	CFLAGS="$CFLAGS -mms-bitfields"
         PATHSEP=\\\\
         OTHERPATHSEP=/
 else
