@@ -531,7 +531,7 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	}
 
 	/* test a package */
-	if (strlen(pTestedComp->szFileName) > 0)
+	if (strlen(pTestedComp->szFileName) > 0 && !PackageTestIfInstalled(pTestedComp))
 	{
 		/* check existence of package and patch files */
 		if (strlen(pTestedComp->szFileName) > 0 && FileTest(pTestedComp->szFileName) != SUCCESS)
@@ -603,7 +603,7 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	}
 
 	/* packages only to be checked */
-	else
+	else if (!PackageTestIfInstalled(pTestedComp))
 	{
 		szMissingFile = (char *) malloc(strlen(EXPECTED_IN_SYSTEM) + strlen(szTestedCodeName) + 1);
 		sprintf(szMissingFile, EXPECTED_IN_SYSTEM, szTestedCodeName);
@@ -613,6 +613,120 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	szMissingFile = (char *) malloc(1);
 	strcpy(szMissingFile, "");
 	return szMissingFile;
+}
+
+
+
+int PackageTestIfInstalled(struct CompsTable_s *pPkg)
+{
+	int iFileType = PACKAGE_FILE_UNKNOWN, iTotalResult = SUCCESS, iResult, i, j;
+	char szName[TEXTLEN], szPreDir[TEXTLEN], szValue[TEXTLEN], szFileDest[TEXTLEN], szMessage[TEXTLEN], *pPath, *pValue, szLdLibraryPath[TEXTLEN];
+
+	/* get PATH variable */
+	pPath = getenv("PATH");
+	if (pPath == NULL)
+	{
+		sprintf(szMessage, "Cannot get PATH variable");
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
+		_exit(0);
+	}
+
+	/* get LD_LIBRARY_PATH */
+	strcpy(szLdLibraryPath, "");
+	pValue = getenv("LD_AOUT_LIBRARY_PATH");
+	if (pValue != NULL)
+		strcat(szLdLibraryPath, pValue);
+	pValue = getenv("LD_LIBRARY_PATH");
+	if (pValue != NULL)
+		strcat(szLdLibraryPath, pValue);
+	strcat(szLdLibraryPath, ":/usr/lib:/lib");
+
+	/* scan file list */
+	for (i = 0; i < strlen(FILES(pPkg)); )
+	{
+		/* get a type of the next file */
+		for (; i < strlen(FILES(pPkg)) && isspace(FILES(pPkg)[i]); i ++)
+			;
+		for (j = 0; i < strlen(FILES(pPkg)) && isalnum(FILES(pPkg)[i]); i ++, j ++)
+			szValue[j] = toupper(FILES(pPkg)[i]);
+		szValue[j] = 0;
+		if (strcmp(szValue, PACKAGE_TAG_BINARY) == 0)
+			iFileType = PACKAGE_FILE_BINARY;
+		else if (strcmp(szValue, PACKAGE_TAG_LIBRARY) == 0)
+			iFileType = PACKAGE_FILE_LIBRARY;
+		else if (strcmp(szValue, PACKAGE_TAG_DATA) == 0)
+			iFileType = PACKAGE_FILE_DATA;
+		else if (strcmp(szValue, PACKAGE_TAG_LINK) == 0)
+			iFileType = PACKAGE_FILE_LINK;
+
+		/* omit file attribute */
+		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
+			;
+		i ++;
+		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
+			;
+		i ++;
+
+		/* omit source file name */
+		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
+			;
+		i ++;
+		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
+			;
+		i ++;
+
+		/* get destination file name */
+		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
+			;
+		i ++;
+		for (j = 0; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++, j ++)
+			szFileDest[j] = FILES(pPkg)[i];
+		szFileDest[j] = 0;
+		i ++;
+
+		/* test file existence */
+		switch (iFileType)
+		{
+			case PACKAGE_FILE_BINARY:
+
+				iResult = FileSearch(pPath, szFileDest);
+				if (iResult != SUCCESS)
+					return FAILURE;
+				break;
+
+			case PACKAGE_FILE_LIBRARY:
+
+				FileGetDir(szFileDest, szPreDir);
+				if (strlen(szPreDir) > 0)
+					strcpy(szName, szFileDest + strlen(szPreDir) + 1);
+
+				iResult = FileSearch(szLdLibraryPath, szName/*szFileDest*/);
+				if (iResult != SUCCESS)
+					return FAILURE;
+				break;
+
+			case PACKAGE_FILE_DATA:
+
+				iResult = FileSearch(szInstallDirectory, szFileDest);
+				if (iResult != SUCCESS)
+					return FAILURE;
+				break;
+
+			case PACKAGE_FILE_LINK:
+
+				iResult = FileSearch(szInstallDirectory, szFileDest);
+				if (iResult != SUCCESS)
+					return FAILURE;
+				break;
+		}
+	}
+
+	return iTotalResult;
 }
 
 
@@ -639,4 +753,32 @@ int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName)
 	szName[j] = 0;
 
 	return i;
+}
+
+
+
+struct CompsTable_s *get_component_by_name(const char *szName)
+{
+	struct CompsTable_s *pComp = NULL;
+	char szValue1[TEXTLEN], szValue2[TEXTLEN];
+	int i;
+
+	if (strlen(szName) == 0)
+		return NULL;
+
+	for (i = 0; i < strlen(szName); i ++)
+		szValue1[i] = toupper(szName[i]);
+	szValue1[i] = 0;
+
+	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+	{
+		for (i = 0; i < strlen(pComp->szCodeName); i ++)
+			szValue2[i] = toupper(pComp->szCodeName[i]);
+		szValue2[i] = 0;
+
+		if (!strcmp(szValue1, szValue2))
+			break;
+	}
+
+	return pComp;
 }
