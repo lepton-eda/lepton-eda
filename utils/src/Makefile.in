@@ -1,4 +1,4 @@
-# Makefile.in generated automatically by automake 1.4 from Makefile.am
+# Makefile.in generated automatically by automake 1.4a from Makefile.am
 
 # Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
@@ -46,9 +46,10 @@ AUTOMAKE = @AUTOMAKE@
 AUTOHEADER = @AUTOHEADER@
 
 INSTALL = @INSTALL@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_STRIP_FLAG =
 transform = @program_transform_name@
 
 NORMAL_INSTALL = :
@@ -64,20 +65,22 @@ MAKEINFO = @MAKEINFO@
 PACKAGE = @PACKAGE@
 VERSION = @VERSION@
 
-bin_PROGRAMS = gmk_sym smash_megafile convert_sym 
+bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem
 
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c 
 smash_megafile_SOURCES = smash_megafile.c 
 convert_sym_SOURCES = convert_sym.c 
+sarlacc_schem_SOURCES = sarlacc_schem.c
 
 INCLUDES = 
 
 gmk_sym_LDADD = 
 smash_megafile_LDADD = 
 convert_sym_LDADD = -lm
+sarlacc_schem_LDADD = 
 
-EXTRA_DIST = 7474.txt 8031.txt convert_sym.awk gpstoimage mk_char_tab.pl 	     test.txt block.txt
+EXTRA_DIST = 7474.txt 8031.txt convert_sym.awk gpstoimage mk_char_tab.pl 	     test.txt block.txt sarlacc_sym
 
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
@@ -103,6 +106,9 @@ smash_megafile_LDFLAGS =
 convert_sym_OBJECTS =  convert_sym.o
 convert_sym_DEPENDENCIES = 
 convert_sym_LDFLAGS = 
+sarlacc_schem_OBJECTS =  sarlacc_schem.o
+sarlacc_schem_DEPENDENCIES = 
+sarlacc_schem_LDFLAGS = 
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
@@ -112,12 +118,12 @@ DIST_COMMON =  Makefile.am Makefile.in
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
-TAR = tar
+TAR = gtar
 GZIP_ENV = --best
 DEP_FILES =  .deps/char_width.P .deps/convert_sym.P .deps/gmk_sym.P \
-.deps/smash_megafile.P
-SOURCES = $(gmk_sym_SOURCES) $(smash_megafile_SOURCES) $(convert_sym_SOURCES)
-OBJECTS = $(gmk_sym_OBJECTS) $(smash_megafile_OBJECTS) $(convert_sym_OBJECTS)
+.deps/sarlacc_schem.P .deps/smash_megafile.P
+SOURCES = $(gmk_sym_SOURCES) $(smash_megafile_SOURCES) $(convert_sym_SOURCES) $(sarlacc_schem_SOURCES)
+OBJECTS = $(gmk_sym_OBJECTS) $(smash_megafile_OBJECTS) $(convert_sym_OBJECTS) $(sarlacc_schem_OBJECTS)
 
 all: all-redirect
 .SUFFIXES:
@@ -144,8 +150,8 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
 	@list='$(bin_PROGRAMS)'; for p in $$list; do \
 	  if test -f $$p; then \
-	    echo "  $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
-	     $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
+	    echo "  $(INSTALL_PROGRAM) $(INSTALL_STRIP_FLAG) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
+	     $(INSTALL_PROGRAM) $(INSTALL_STRIP_FLAG) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	  else :; fi; \
 	done
 
@@ -182,6 +188,10 @@ smash_megafile: $(smash_megafile_OBJECTS) $(smash_megafile_DEPENDENCIES)
 convert_sym: $(convert_sym_OBJECTS) $(convert_sym_DEPENDENCIES)
 	@rm -f convert_sym
 	$(LINK) $(convert_sym_LDFLAGS) $(convert_sym_OBJECTS) $(convert_sym_LDADD) $(LIBS)
+
+sarlacc_schem: $(sarlacc_schem_OBJECTS) $(sarlacc_schem_DEPENDENCIES)
+	@rm -f sarlacc_schem
+	$(LINK) $(sarlacc_schem_LDFLAGS) $(sarlacc_schem_OBJECTS) $(sarlacc_schem_LDADD) $(LIBS)
 
 tags: TAGS
 
@@ -225,7 +235,7 @@ distdir: $(DISTFILES)
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
-	    cp -pr $$/$$file $(distdir)/$$file; \
+	    cp -pr $$d/$$file $(distdir)/$$file; \
 	  else \
 	    test -f $(distdir)/$$file \
 	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
@@ -286,7 +296,7 @@ uninstall: uninstall-am
 all-am: Makefile $(PROGRAMS)
 all-redirect: all-am
 install-strip:
-	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
 installdirs:
 	$(mkinstalldirs)  $(DESTDIR)$(bindir)
 

@@ -1,0 +1,374 @@
+#!/usr/bin/perl
+
+##  Library version 0.92
+##  This program is released under the terms of the GNU GPL
+##  See www.fsf.org for a copy of the license
+
+## Copyright 1999 Matthew Ettus
+## For more info, email matt@ettus.com
+
+## This program will convert ORCAD text libraries to gEDA components
+
+$linecolor = 3;
+$textcolor = 5;
+$pincolor = 1;
+$pinnumcolor = 3;
+
+$pinnumsize = 6;
+$partnamesize = 6;
+
+@char_width=(
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     11,14,14,22,28,28,24,10,12,12,16,20,14,20,12,18,
+     26,16,26,20,26,20,24,20,22,26,12,12,20,20,20,20,
+     36,29,29,28,26,29,21,30,29,9,21,27,22,32,28,32,
+     25,32,26,25,23,27,27,37,27,25,27,12,14,12,20,25,
+     10,24,22,22,20,20,12,24,20,8,10,19,9,32,20,20,
+     20,24,14,18,12,19,20,28,19,20,21,12,10,12,22,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,29,29,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,32,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,24,24,0,0,0,0,0,0,0,0,0,0,
+     0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0
+);                                           
+
+## Unread a line from the input file
+## Usage:  unread_line ( FILE, line)
+sub unread_line
+{
+	seek LIBRARY, -length($line), 1;
+}
+
+sub string_len 
+{ 
+    $char_points = 2;
+    $width=0;
+    @expanded = unpack "C*",$_[0];
+    foreach $char (@expanded)
+    {
+        $width += $char_width[$char];
+    }
+    $width = ($_[1]*$width)/$char_points;
+    return $width;
+}         
+
+open(LIBRARY,$ARGV[0] ) or die "Can't open $ARGV[0]:  $!\n";
+
+$line = <LIBRARY>;
+if ( not ($line =~ /Compiled/ ))
+{
+	print $line;
+        print "Not a Library File\n";
+        die;           
+}
+
+while (not (<LIBRARY> =~ /PREFIX/)){};
+while (not (<LIBRARY> =~ /END/)){};
+
+while (1)
+{
+while (not (($component = <LIBRARY>) =~ /\'/))
+{
+	if (eof LIBRARY)
+	{
+		exit;
+	}
+}
+
+$component =~ s/\'//g;
+chomp $component;
+$component =~ s/\r//g;
+$component =~ s/\ /_/g;
+
+open(COMPONENT,">$component-1.sym");
+print COMPONENT "v 19990705\n";
+
+#  BAD Do we need both copies?  other libraries have both for some reason 
+#print COMPONENT "T 100 100 $textcolor $partnamesize 1 0 0\n";
+#print COMPONENT $component, "\n";
+
+print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0\n";
+print COMPONENT "device=$component\n";
+
+print $component, "\n";
+
+
+# Handle components with multiple names....
+
+@namelist = ();
+while (($line = <LIBRARY>) =~ /^\'/)
+{
+	$line =~ s/\'//g;
+	chomp $line;
+	$line =~ s/\r//g;
+	$line =~ s/\ /_/g;
+	push @namelist ,( $line);
+}
+
+if($line =~ /REFERENCE/)
+{
+	($dummy,$ref) = split("\'",$line);
+	$line=<LIBRARY>;
+	print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0\n";
+	print COMPONENT "refdes=$ref\n";
+}
+
+($dummy,$x,$y,$parts)=split("=}",$line);
+($xsize)=split(" ",$x);
+($ysize)=split(" ",$y);
+$xsize*=100;$ysize*=100;
+
+chomp $parts;
+
+$fakenum = 1;
+while (( $line = <LIBRARY>) =~ /^[LRTB]/)
+{
+    if ( $parts <=1 )
+    {
+	$count=($place,$pinnumber,$modifier,$pintype,$pinlabel)=split(" ",$line);
+	$pinname = 0;
+	if (($count != 5) && ($count != 6))
+	{
+		print "$count  Malformed Pin Definition:\n$line\n";
+		exit;
+	}
+	elsif ($count == 5)  # regular pin
+	{
+		$pinlabel=$pintype;
+		$pintype=$modifier;
+		if(($pinnumber =~ /SHORT/) or ($pinnumber =~ /DOT/) )
+			 #Its a no-number pin!
+		{
+			$modifier = $pinnumber;
+			$pinnumber = $fakenum++;
+		}
+		elsif($pinnumber =~ /\'/)
+		{
+			$pinname = $pinnumber;
+			$pinname =~ tr/\'//d;
+			$pinnumber = $fakenum++;
+		}
+		elsif($pinnumber =~ /A-Za-z/)
+		{
+			print "Unrecognized Modifier $modifier\n";
+                	exit;      
+		}
+	}
+	elsif ($count == 6)  #modified pin
+	{
+		if($pinnumber =~ /\'/)
+		{
+			$pinname = $pinnumber;
+                        $pinname =~ tr/\'//d;          
+			$pinnumber = $fakenum++;
+		}
+	}
+# BAD  need more pin modifiers
+	$dotsize=0;
+	if ($modifier eq "DOT")
+	{
+		$len = 250;
+		$visibility=1;
+		$dotsize=50;
+	}
+	if ($modifier eq "SHORT")
+	{
+		$len = 100;
+		$visibility=0;
+	}
+	else
+	{
+		$len=300;
+		$visibility=1;
+	}
+    }
+    else   #  BAD Multicomponent Packages
+    {
+	$length=@array=split(" ",$line);
+	print "HERE $length\n";
+	if ($length == 3+$parts)
+	{
+		print "+3\n";
+	}
+	elsif ($length == 4+$parts)
+	{
+		print "+4\n";
+	}
+	else
+	{
+		print "error $length \n";
+		exit;
+	}
+    }
+# BAD  Gotta be a better way to do this
+	$letter=$num=$place;
+	$letter =~tr/0-9//d;
+	$num=~ tr/LRTB//d;
+	$pinlabel =~ tr/\'//d;
+	$spacing = 50;
+
+# BAD  better label sizing
+
+	if ($letter eq "L")
+	{
+	    $x1=-$len; $x2=-$dotsize; $y1=$y2=-$num*100;
+	    $textx = -string_len($pinnumber,$pinnumsize)-$spacing; 
+	    $texty = $y1+20;
+	    $namex = $spacing; 
+	    $namey = $y1;
+	    if( $dotsize )
+	    {
+		$rad=$dotsize/2;
+		print COMPONENT "V -$rad $y1 $rad $linecolor\n";
+	    }
+	}
+	elsif ($letter eq "R")
+	{
+	    $x1=$xsize+$dotsize; $x2=$xsize+$len; $y1=$y2=-$num*100;
+	    $textx = $xsize+$spacing;
+	    $texty=$y1+20;
+	    $namex = $xsize-string_len($pinlabel,$pinnumsize)-$spacing;
+	    $namey=$y1;
+	    if( $dotsize )
+	    {
+		$rad=$dotsize/2;
+		print COMPONENT "V ",$xsize+$rad," $y1 $rad $linecolor\n";
+	    }
+	}
+	elsif ($letter eq "T")
+	{
+	    $y1=$len; $y2=$dotsize; $x1=$x2=$num*100;
+	    $texty = -100; $textx=$x1;
+	    $namex = $x1-string_len($pinlabel,$pinnumsize)/2; $namey = 100;
+	    if( $dotsize )
+	    {
+		$rad=$dotsize/2;
+		print COMPONENT "V $x1 -$rad $rad $linecolor\n";
+	    }
+	}
+	elsif ($letter eq "B")
+	{
+	    $y1=-$dotsize-$ysize; $y2=-$len-$ysize; $x1=$x2=$num*100;
+	    $texty = -$ysize-150; $textx=$x1+10;
+	    $namex = $x1-string_len($pinlabel,$pinnumsize)/2;
+	    $namey = -$ysize + 50;
+	    if( $dotsize )
+	    {
+		$rad=$dotsize/2;
+		print COMPONENT "V $x1 ",-$ysize-$rad," $rad $linecolor\n";
+	    }
+	}
+	else
+	{
+		print "P $letter $num test  $x1 $y1 $x2 $y2\n";
+		print "Unrecognized pin position: $letter\n";
+		exit;
+	}
+#  BAD  Must set color somehow
+	print COMPONENT "P $x1 $y1 $x2 $y2 $pincolor\n";
+	print COMPONENT "{\n";
+	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize $visibility 1 0\n";
+	print COMPONENT "pin$pinnumber=$pinnumber\n";
+
+	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 0 0\n";
+	print COMPONENT "pintype=$pintype\n";
+
+	if ( not ($pinlabel =~ /\$/) )
+	{
+		print COMPONENT "T $namex $namey $pinnumcolor ",
+		"$pinnumsize $visibility 1 0\n";
+		print COMPONENT "pinlabel=$pinlabel\n";
+	}
+	if ($pinname)
+	{
+		print COMPONENT "T $namex $namey $pinnumcolor ",
+                "$pinnumsize 0 0 0\n";
+                print COMPONENT "pinname=$pinname\n"; 
+	}
+	print COMPONENT "}\n";
+}
+
+#Check for Orcad bitmaps
+while ($line =~ /\{/)
+{
+	$line = <LIBRARY>;
+}
+
+if (( $line = <LIBRARY>) =~ /VECTOR/ )
+{
+	while (not (( $line = <LIBRARY>) =~ /END/))
+	{
+		if ($line =~ /LINE/)
+		{
+			($dummy,$x1,$y1,$x2,$y2)=
+				split(" ",$line);
+			$x1*=100; $y1*=-100; $x2*=100; $y2*=-100;
+			print COMPONENT "L $x1 $y1 $x2 $y2 $linecolor\n";
+		}
+		elsif($line =~ /TEXT/)
+		{
+# BAD set textsize properly , check multi-line text
+			($dummy,$x1,$y1,$textsize)=split(" ",$line); 
+			($dummy,$text)=split("\'",$line);
+			$x1*=100; $y1*=-100; $textsize *= 6; 
+			$text=~ tr/\'//d;
+			print COMPONENT "T $x1 $y1 $linecolor $textsize 1 0 0\n";
+			print COMPONENT "$text\n";
+		}
+		elsif ($line =~ /CIRCLE/)
+		{
+			($dummy,$x1,$y1,$radius)=split(" ",$line);
+			$x1*=100;$y1*=-100;$radius*=100;
+			print COMPONENT "V $x1 $y1 $radius $linecolor\n";
+		}
+		elsif ($line =~ /ARC/)
+		{
+			($dummy,$xcenter,$ycenter,$dx1,$dy1,$dx2,$dy2,$rad) =
+				split(" ",$line);
+			$ycenter *= -1;
+			$dy1 *= -1;
+			$dy2 *= -1;
+			$factor = 180 / atan2(1,1) / 4;
+			$startangle = int ( $factor * atan2 ($dy1, $dx1));
+			$endangle = int ( $factor * atan2 ($dy2, $dx2));
+			$sweepangle = $endangle - $startangle;
+			$sweepangle = - abs ($sweepangle);
+			$xcenter *= 100;
+			$ycenter *= 100;
+			$rad *= 100;
+			print COMPONENT "A $xcenter $ycenter $rad",
+				" $startangle $sweepangle $linecolor\n";
+		}
+		elsif ($line =~ /FILL/)
+		{
+			print "FILL\n";
+		}
+		else
+		{
+			print "Unrecognized Tag! \n $line \n";
+			exit;
+		}
+	}
+}
+else
+{
+	unread_line (LIBRARY, $line);
+	print COMPONENT "B 0 -$ysize $xsize $ysize $linecolor\n";
+
+}
+close(COMPONENT);
+
+# BAD make copies for multiple component names.  device= doesn't change
+# should it??
+
+foreach $duplicate (@namelist)
+{
+	`cp $component-1.sym $duplicate-1.sym`;
+}
+}
+
+

@@ -10,6 +10,8 @@ All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
 
+10/6/99	Moved Project Sarlacc into CVS
+
 8/27/99 Set the program version to 19990829 to force Ales to release
         on the 29th :)
 
