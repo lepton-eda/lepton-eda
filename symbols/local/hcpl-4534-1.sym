@@ -66,4 +66,4 @@ slot2=4,3,6
 T 1609 2409 5 10 0 0 0 0
 slot=1
 T 1609 2609 5 10 0 0 0 0
-physical=DIP8
+footprint=DIP8

@@ -4,7 +4,7 @@ device=N82S100N
 T 2000 6300 5 10 0 0 0 0
 slot=1
 T 2000 6500 5 10 0 0 0 0
-physical=DIP28
+footprint=DIP28
 B 300 0 1400 6800 3
 P 300 6500 0 6500 1
 {

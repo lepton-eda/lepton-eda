@@ -30,7 +30,7 @@ pinlabel=4C
 T 1550 3640 5 10 0 0 0 0
 device=ULN2003
 T 1550 3440 5 10 0 0 0 0
-physical=DIP16
+footprint=DIP16
 T 300 3340 9 10 1 0 0 0
 ULN2003
 P 300 3000 0 3000 1
