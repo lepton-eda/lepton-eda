@@ -632,14 +632,19 @@ void
 multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 {
   GtkWidget *mawindow;
-  GtkWidget *vbox1;
-  GtkWidget *frame1;
+  GtkWidget *vbox1;   /* vbox for text stuff */
+
+  GtkWidget *frame0;  /* frame for symbol name */
+  GtkWidget *label0;
+
+  GtkWidget *frame1;  /* frame for attribs */
   GtkWidget *scrolledwindow1;
   GtkWidget *clist;
   GtkWidget *label1;
   GtkWidget *label2;
   GtkWidget *label3a;
   GtkWidget *label3b;
+
   GtkWidget *frame3;
   GtkWidget *table1;
   GtkWidget *label4;
@@ -651,7 +656,8 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   GtkWidget *show_options;
   GtkWidget *show_options_menu;
   GtkWidget *glade_menuitem;
-  GtkWidget *vbox2;
+
+  GtkWidget *vbox2;     /* vbox for buttons */
   GtkWidget *hbuttonbox1;
   GtkWidget *changebutton;
   GtkWidget *addbutton;
@@ -684,6 +690,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
                                      object);	
 
+/* ========== Define top level of window ========== */
 #ifdef HAS_GTK22
   mawindow = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 #else
@@ -695,12 +702,13 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_window_set_position (GTK_WINDOW (mawindow), GTK_WIN_POS_MOUSE);
   gtk_window_set_modal (GTK_WINDOW (mawindow), TRUE);
 #ifdef HAS_GTK22
-  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 370);
+  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 400);
 #else
-  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 350);
+  gtk_window_set_default_size (GTK_WINDOW (mawindow), 320, 380);
 #endif
   gtk_window_set_policy (GTK_WINDOW (mawindow), FALSE, TRUE, TRUE);
 
+/* ========== Create vbox to hold all the text widgets ========== */
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_ref (vbox1);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "vbox1", vbox1,
@@ -709,6 +717,29 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_container_add (GTK_CONTAINER (mawindow), vbox1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox1), 5);
 
+
+/* ========== Define frame holding symbol name ========== */
+  frame0 = gtk_frame_new (_("Symbol Name"));
+  gtk_widget_ref (frame0);
+  gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame0", frame0,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_box_pack_start (GTK_BOX (vbox1), frame0, FALSE, TRUE, 1);
+  gtk_widget_show (frame0);
+
+  /* Place text in frame */
+  if (object->complex_basename) {
+    label0 = gtk_label_new (object->complex_basename);
+  } else {
+    label0 = gtk_label_new ("unknown");
+  }
+  gtk_widget_ref (label0);
+  gtk_object_set_data_full (GTK_OBJECT (mawindow), "label0", label0,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_container_add (GTK_CONTAINER (frame0), label0);
+  gtk_widget_show (label0);
+
+
+/* ========== Define attribute list frame ========== */
   frame1 = gtk_frame_new (_("Attributes"));
   gtk_widget_ref (frame1);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame1", frame1,
@@ -767,7 +798,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_widget_show (label3b);
   gtk_clist_set_column_widget (GTK_CLIST (clist), 3, label3b);
 
-  
+/* ========== Define add/edit frame ========== */  
   frame3 = gtk_frame_new (_("Add/Edit"));
   gtk_widget_ref (frame3);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "frame3", frame3,
@@ -877,6 +908,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
 
+/* ========== Create second vbox to hold all the buttons ========== */
   vbox2 = gtk_vbox_new (FALSE, 0);
   gtk_widget_ref (vbox2);
   gtk_object_set_data_full (GTK_OBJECT (mawindow), "vbox2", vbox2,
