@@ -7,7 +7,7 @@ DEFS = -DPACKAGE_LOCALE_DIR=\"$(localedir)\" @DEFS@
 
 if CCISGCC
 AM_CFLAGS =\
-	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wpointer-arith -Wmissing-prototypes
+	 -Wall -Wimplicit -Wreturn-type -Wunused -Wswitch -Wcomment -Wuninitialized -Wparentheses -Wpointer-arith -Wmissing-prototypes -g -O
 endif
 
 bin_PROGRAMS = graphman raw2gw
