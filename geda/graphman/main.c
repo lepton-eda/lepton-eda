@@ -19,7 +19,7 @@
 /*******************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#  include "../config.h"
 #endif
 
 #include <gtk/gtk.h>
@@ -34,7 +34,7 @@
 #include "interface.h"
 #include "libstring.h"
 #include "support.h"
-
+#include "value.h"
 
 
 /*******************************************************************************/

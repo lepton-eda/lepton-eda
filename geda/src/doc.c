@@ -38,6 +38,7 @@
 #include "filetool.h"
 #include "global.h"
 #include "m_action.h"
+#include "m_project.h"
 #include "msgbox.h"
 #include "project.h"
 #include "support.h"

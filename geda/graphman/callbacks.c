@@ -19,7 +19,11 @@
 /*******************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#  include <config.h>
+#  include "../config.h"
+#endif
+
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
 #endif
 
 #include <gtk/gtk.h>
@@ -28,6 +32,7 @@
 #include "global.h"
 #include "graph.h"
 #include "interface.h"
+#include "libstring.h"
 #include "support.h"
 #include "value.h"
 
