@@ -1,3 +1,14 @@
+2002-07-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/convert_sym.awk, convert_sym.c, gmk_sym.c, sarlacc_schem.c, 
+	sarlacc_sym:  Changed all user visible references of uref to
+	refdes.
+
+	* gsymupdate, gschupdate: Added code to convert uref= to refdes=
+	
+	* gsymupdate, gschupdate: Bunch of code to make these programs
+	a lot more robust and useful.
+	
 2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gsymupdate, gschupdate: Added simple perl scripts to convert

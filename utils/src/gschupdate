@@ -29,9 +29,25 @@
 # either version 20020527 or earlier.
 #
 
+print "gEDA/gschupdate version 0.1\n";
+print "gEDA/gschupdate comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n";
+print "This is free software, and you are welcome to redistribute it under certain\n";
+print "conditions; please see the COPYING file for more details.\n\n";
+
+$numArgs = $#ARGV + 1;
+if ($numArgs < 1) {
+    print "Usage: gschupdate filename1 filename2 ... filenameN\n";
+    exit;
+}
+
+
 foreach $filename (@ARGV) {
 
-    open (FILE, $filename) || die "Cannot open input file: $filename $!\n";
+    rename ($filename, "$filename.old");
+    print "Updating: $filename (backup: $filename.old)\n";
+
+    open (FILE, "$filename.old") || die "Cannot open input file: $filename.old  Exiting.\n";
+    open (NEWFILE, ">$filename") || die "Cannot open output file: $filename Exiting.\n";
 
     while (<FILE>) {
 
@@ -53,28 +69,35 @@ foreach $filename (@ARGV) {
                 if ($name =~ /^label/) {
 
                     # It is a label attribute
-                    print $textcmd;
-                    print "netname=$value";
+                    print NEWFILE $textcmd;
+                    print NEWFILE "netname=$value";
 
+                } elsif ($name =~ /^uref/) {
+
+                    # It is a uref= attribute, convert to refdes=
+                    print NEWFILE $textcmd;
+                    print NEWFILE "refdes=$value";
 
                 } else {
                     # none of the above, just pass it through
-                    print $textcmd;
-                    print $textline;
+                    print NEWFILE $textcmd;
+                    print NEWFILE $textline;
 		}
 
             } else {
                 # not an attribute
-                print $textcmd;
-                print $textline;
+                print NEWFILE $textcmd;
+                print NEWFILE $textline;
             }
 
         } else {
             # It is not a text, so pass it through
-            print;
+            print NEWFILE;
         }
 
     }
+    close $FILE;
+    close $NEWFILE;
 
 }
 

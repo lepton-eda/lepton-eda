@@ -264,7 +264,7 @@ void parse_component(int fd1,int fd2)
     fprintf(stdout,"T %d %d %d %d %d 1 0\nrotation=%d\n",
     refx,refy,TEXTCOLOR,TEXTSIZE,0,angle);*/
     if (refdes[0] != 0) {
-      fprintf(stdout,"T %d %d %d %d %d 1 0\nuref=%s\n",
+      fprintf(stdout,"T %d %d %d %d %d 1 0\nrefdes=%s\n",
 	      refx,refy,TEXTCOLOR,TEXTSIZE,ref_vis,refdes);
     }
 

@@ -412,7 +412,7 @@ int make_box(int fldcnt,char *pFields[])
   printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+900,YELLOW,font_size);
   printf("class=%s\n",class);
   printf("T %d %d %d %d 1 1 0 0\n",pos_x,pos_y+BoxHeight+500,RED,font_size);
-  printf("uref=%s\n",uref);
+  printf("refdes=%s\n",uref);
 
 #if 0
   /* Display pin locations */

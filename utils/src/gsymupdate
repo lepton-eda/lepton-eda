@@ -33,9 +33,24 @@
 # either version 20020527 or earlier.
 #
 
-foreach $filename (@ARGV) {
+print "gEDA/gsymupdate version 0.1\n";
+print "gEDA/gsymupdate comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n";
+print "This is free software, and you are welcome to redistribute it under certain\n";
+print "conditions; please see the COPYING file for more details.\n\n";
 
-    open (FILE, $filename) || die "Cannot open input file: $filename $!\n";
+$numArgs = $#ARGV + 1;
+if ($numArgs < 1) {
+    print "Usage: gsymupdate filename1 filename2 ... filenameN\n";
+    exit;
+}
+
+foreach $filename (@ARGV) {
+   
+    rename ($filename, "$filename.old");
+    print "Updating: $filename (backup: $filename.old)\n";
+
+    open (FILE, "$filename.old") || die "Cannot open input file: $filename.old Exiting.\n";
+    open (NEWFILE, ">$filename") || die "Cannot open output file: $filename Exiting.\n";
 
     while (<FILE>) {
 
@@ -58,14 +73,14 @@ foreach $filename (@ARGV) {
 
                     # It is a slot#=# attribute
                     @slotnum = split(/slot/,$name);
-                    print $textcmd;
-                    print "slotdef=@slotnum[1]:$value";
+                    print NEWFILE $textcmd;
+                    print NEWFILE "slotdef=@slotnum[1]:$value";
 
                 } elsif ($name =~ /^pin[0-9]+/) {
 
                     # It is a pin#=# attribute
-                    print $textcmd;
-                    print "pinnumber=$value";
+                    print NEWFILE $textcmd;
+                    print NEWFILE "pinnumber=$value";
 
                     @pinseq = split(/pin/,$name);
                     # need to post process textcmd here to hide text
@@ -75,34 +90,36 @@ foreach $filename (@ARGV) {
                     
                     # Hide this new attribute by changing the 5th value to 0
                     # Also show both the name and value for the pinseq attrib
-                    print "@textsplit[0] @textsplit[1] @textsplit[2] @textsplit[3] @textsplit[4] 0 0 @textsplit[7] @textsplit[8]\n";
-                    print "pinseq=@pinseq[1]\n";
+                    print NEWFILE "@textsplit[0] @textsplit[1] @textsplit[2] @textsplit[3] @textsplit[4] 0 0 @textsplit[7] @textsplit[8]\n";
+                    print NEWFILE "pinseq=@pinseq[1]\n";
 
+                } elsif ($name =~ /^uref/) {
 
-                    } else {
-                        # none of the above, just pass it through
-                        print $textcmd;
-                        print $textline;
-                    }
+                    # It is a uref= attribute, convert to refdes=
+                    print NEWFILE $textcmd;
+                    print NEWFILE "refdes=$value";
+
+                } else {
+                    # none of the above, just pass it through
+                    print NEWFILE $textcmd;
+                    print NEWFILE $textline;
+                }
 
 
             } else {
                 # not an attribute
-                print $textcmd;
-                print $textline;
+                print NEWFILE $textcmd;
+                print NEWFILE $textline;
             }
-
-        } elsif (/^P /) {
-            
-            # handle pins
-            print;
 
         } else {
             # It is not a text, version, or pin object, so pass it through
-            print;
+            print NEWFILE;
         }
 
     }
+    close $FILE;
+    close $NEWFILE;
 
 }
 

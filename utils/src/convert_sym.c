@@ -104,7 +104,7 @@ struct Translation translations[] =
   {"LEVEL",    "",         KILL},
   {"P/D_NUM",  "",         KILL},
   {"NC",       "",         KILL},
-  {"REFDES",   "uref",     REPLACE_NAME},
+  {"REFDES",   "refdes",     REPLACE_NAME},
   /*{"PINTYPE",  "",         KILL},*/
   {"NAME",     "",         KILL},
   {"LABEL",    "",         KILL},
@@ -970,9 +970,9 @@ do_label(FILE *fp)
   else if(complex_attributes == 1) /* a label on a complex is its designator */
     {
 #ifdef HAVE_SNPRINTF
-      snprintf(text, MAX_TEXTLEN, "uref=%s", text2);
+      snprintf(text, MAX_TEXTLEN, "refdes=%s", text2);
 #else
-      sprintf(text, "uref=%s", text2);
+      sprintf(text, "refdes=%s", text2);
 #endif
       show_name_value = 1;
     }

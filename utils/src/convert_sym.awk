@@ -422,7 +422,7 @@ $1 == "L" {
     text = "net=" text;               # a label on a net is the net name
     show_name_value = 1;
   } else if(complex_attributes == 1) {
-    text = "uref=" text;            # a label on a complex is its designator
+    text = "refdes=" text;            # a label on a complex is its designator
     show_name_value = 1;
   }
 

@@ -114,7 +114,7 @@ if($line =~ /REFERENCE/)
 	($dummy,$ref) = split("\'",$line);
 	$line=<LIBRARY>;
 	print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0 0\n";
-	print COMPONENT "uref=$ref?\n";
+	print COMPONENT "refdes=$ref?\n";
 }
 
 ($dummy,$x,$y,$parts)=split("=}",$line);
