@@ -118,6 +118,57 @@ then
     
    X_EXTRA_LIBS="$X_EXTRA_LIBS"
    X_LDFLAGS="$X_LDFLAGS $X_LIBS $X_EXTRA_LIBS $X_PRE_LIBS -lX11 -lm"
+
+   _use_rpath=no
+   AC_MSG_CHECKING([if hardcoding of the X11 runtime library path is desired])
+   AC_ARG_ENABLE([rpath],
+       [  --enable-rpath         Enable hardcoding the X11 runtime library path [default=disabled]],
+       [
+        if test "X$enable_rpath" = "Xno" ; then
+           AC_MSG_RESULT([no])
+	   _use_rpath=no
+        else
+           AC_MSG_RESULT([yes])
+           _use_rpath=yes
+        fi
+       ],
+       [
+           AC_MSG_RESULT([no])
+           _use_rpath=no
+       ])
+
+   if test "X$_use_rpath" = "Xyes" ; then
+      # Try to figure out if we need -Rpath for finding X11 libs
+      # at runtime.  Why autoconf doesn't already do this, I don't
+      # know...
+      xlib_path=""
+      for p in $X_LDFLAGS ; do
+            case $p in
+	    -L*)
+		xlib_path="$xlib_path $p"
+		;;
+		esac
+      done
+
+      _save_LIBS=$LIBS
+      LIBS="$LIBS $X_LDFLAGS"
+      rpath=""
+      for fl in "-Wl,-rpath " "-Wl,--rpath " "-rpath " "--rpath " "-Wl,-R" "-R" "-R " ; do
+	  xlib_rpath=`echo $xlib_path | sed "s/-L/$fl/g"`
+	  LIBS="$_save_LIBS $X_LIBS $xlib_rpath"
+	  AC_MSG_CHECKING([if the compiler accepts ${fl}path for runtime libraries])
+	  AC_LINK_IFELSE([AC_LANG_PROGRAM()],
+	  AC_MSG_RESULT([yes])
+            rpath=$fl, 
+	    AC_MSG_RESULT([no]))
+	    test -n "$rpath" && break
+      done
+      if test -n "$rpath"; then
+	 X_LDFLAGS="$X_LDFLAGS $xlib_rpath"
+      fi
+      LIBS=$_save_LIBS
+   fi
+
 fi
 
 # 
