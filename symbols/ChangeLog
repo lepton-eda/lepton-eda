@@ -8,6 +8,8 @@
 
 	* 74/*.sym: Ran gsymupdate on all symbols
 
+	* IEC417/*.sym: Ran gsymupdate on all symbols
+
 	* altera/*.sym: Ran gsymupdate on all symbols
 
 	* analog/*.sym: Ran gsymupdate on all symbols
