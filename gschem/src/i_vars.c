@@ -158,8 +158,9 @@ i_vars_set(TOPLEVEL *w_current)
 	if (default_series_name != NULL) {
 		w_current->series_name = malloc(sizeof(char)*(strlen(default_series_name)+1));
 		strcpy(w_current->series_name, default_series_name);
-		free(default_series_name);
-		default_series_name=NULL;
+		/* you cannot free this here since new windows need it */
+		/*free(default_series_name);
+		default_series_name=NULL;*/
 	} else {
 		w_current->series_name = malloc(sizeof(char)*(strlen("untitled")+1));
 		strcpy(w_current->series_name, "untitled");
@@ -172,8 +173,9 @@ i_vars_set(TOPLEVEL *w_current)
 	if (default_untitled_name != NULL) {
 		w_current->untitled_name = malloc(sizeof(char)*(strlen(default_untitled_name)+1));
 		strcpy(w_current->untitled_name, default_untitled_name);
-		free(default_untitled_name);
-		default_untitled_name=NULL;
+		/* you cannot free this here since new windows need it */
+		/*free(default_untitled_name);
+		default_untitled_name=NULL;*/
 	} else {
 		w_current->untitled_name = malloc(sizeof(char)*(strlen("untitled")+1));
 		strcpy(w_current->untitled_name, "untitled");
@@ -186,8 +188,9 @@ i_vars_set(TOPLEVEL *w_current)
 	if (default_scheme_directory != NULL) {
 		w_current->scheme_directory = malloc(sizeof(char)*(strlen(default_scheme_directory)+1));
 		strcpy(w_current->scheme_directory, default_scheme_directory);
-		free(default_scheme_directory);
-		default_scheme_directory=NULL;
+		/* you cannot free this here since new windows need it */
+		/* free(default_scheme_directory); 
+		default_scheme_directory=NULL;*/
 	} else {
 		w_current->scheme_directory = malloc(sizeof(char)*(strlen("./")+1));
 		strcpy(w_current->scheme_directory, "./");
@@ -200,8 +203,9 @@ i_vars_set(TOPLEVEL *w_current)
 	if (default_font_directory != NULL) {
 		w_current->font_directory = malloc(sizeof(char)*(strlen(default_font_directory)+1));
 		strcpy(w_current->font_directory, default_font_directory);
-		free(default_font_directory);
-		default_font_directory=NULL;
+		/* you cannot free this here since new windows need it */
+/*		free(default_font_directory);
+		default_font_directory=NULL;*/
 	} else {
 		w_current->font_directory = malloc(sizeof(char)*(strlen("../lib/sym/font")+1));
 		strcpy(w_current->font_directory, "../lib/sym/font");

@@ -885,13 +885,48 @@ o_ntext_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	} else {
 		strcpy(output_string, o_current->text_string);
 	}
-	
-	fprintf(fp, "%d mils %d mils moveto\n", 
+
+	if (o_current->angle != 180) {
+		fprintf(fp, "%d mils %d mils moveto\n", 
 			o_current->x-origin_x,
 			o_current->y-origin_y);
 
-	if (o_current->angle) {
-		fprintf(fp, "%d rotate\n", o_current->angle); 
+		if (o_current->angle) {
+			fprintf(fp, "%d rotate\n", o_current->angle); 
+		}
+	} else {
+
+		/* 180 degree rotated text is special... */
+		/* subtract width and height from origin and don't */
+		/* do the rotation */
+
+#if DEBUG 
+		printf("tangle: %f\n", (float) o_current->text_size*1.4*0.0139*1000);	
+#endif
+		fprintf(fp, "%%%% 180 rotated text\n");
+		fprintf(fp, "(");
+		len = strlen(output_string);
+		for (i = 0 ; i < len; i++) {  
+		    if (output_string[i] == '(' || output_string[i] == ')' || output_string[i] == '\\' ) {
+				fprintf(fp, "\\");
+			}
+
+			fprintf(fp, "%c", output_string[i]);
+		}
+
+		/* convert width to mils */
+		/* .90 is a fudge factor */
+		fprintf(fp, ") stringwidth pop 72 div 1000 mul .95 mul\n");
+
+		fprintf(fp, "%d exch sub mils\n",
+				o_current->x-origin_x);
+
+		/* the 1.1 is a fudge factor */
+		/* 0.0139 is 1/72 points per inch */
+		/* 1000 mils per inch */
+		fprintf(fp, "%d mils moveto\n", 
+			o_current->y-origin_y - (int) rint(o_current->text_size*1.1*0.0139*1000));
+
 	}
 
 	/* fprintf(fp, "(%s) show\n", output_string);*/

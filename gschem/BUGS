@@ -8,6 +8,8 @@ OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Swedish characters don't work.
 
+	Almost got that 180 postscript printing bug fixed... not perfect yet
+
 	Mouse pan crashed my X server once
 
 	Select some text while a symbol is at 0,0 and you will see something

@@ -9,6 +9,9 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+6/26/99 Fixed a bug dealing with the font-directory/scheme-directory/etc...
+	which broke opening up a second window
+
 6/25/99 Added the rc keyword "image-color" which controls if image is 
 	in color (enabled) or black and white (disabled)
 

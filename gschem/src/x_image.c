@@ -268,7 +268,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 			GTK_SIGNAL_FUNC(destroy_window),
 			&w_current->iwindow);
 
-		gtk_window_set_title (GTK_WINDOW (w_current->iwindow), "Image Write...");
+		gtk_window_set_title (GTK_WINDOW (w_current->iwindow), "Write Image...");
 
 		buttonwrite = gtk_button_new_with_label ("Write");
 		GTK_WIDGET_SET_FLAGS (buttonwrite, GTK_CAN_DEFAULT);
