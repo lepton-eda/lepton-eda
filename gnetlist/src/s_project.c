@@ -182,6 +182,7 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->pwindow = NULL;	
 	pr_current->iwindow = NULL;	
 	pr_current->abwindow = NULL;	
+	pr_current->hkwindow = NULL;	
 	pr_current->cowindow = NULL;	
 
 	pr_current->coord_world = NULL;

@@ -172,7 +172,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-translate", g_key_edit_translate);
 	gh_new_procedure0_0 ("edit-embed", g_key_edit_embed);
 	gh_new_procedure0_0 ("edit-unembed", g_key_edit_unembed);
-	gh_new_procedure0_0 ("edit-hidden", g_key_edit_show_hidden);
+	gh_new_procedure0_0 ("edit-show-hidden", g_key_edit_show_hidden);
 	gh_new_procedure0_0 ("view-redraw", g_key_view_redraw);
 	gh_new_procedure0_0 ("view-zoom-full", g_key_view_zoom_full);
 	gh_new_procedure0_0 ("view-zoom-limits", g_key_view_zoom_limits);

@@ -202,6 +202,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->pswindow = NULL;
 	w_current->pwindow = NULL;
 	w_current->abwindow = NULL;
+	w_current->hkwindow = NULL;
 	w_current->cowindow = NULL;
 	w_current->clwindow = NULL;
 

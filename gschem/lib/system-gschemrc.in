@@ -804,7 +804,7 @@
     ("t" . edit-translate)
     ("b" . edit-embed)
     ("u" . edit-unembed)
-    ("h" . edit-hidden)))
+    ("n" . edit-show-hidden)))
 
 ; All keys in this keymap *must* be unique
 (define view-keymap

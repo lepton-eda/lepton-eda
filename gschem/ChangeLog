@@ -9,6 +9,16 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+9/13/99	Inited hkwindow in all x_window.c and s_project.c (all other programs) 
+
+	Fixed all example schematics to make sure they display the v*-1.sym
+	symbols properly
+
+	Remove attribute_1.sch example schematic
+
+	Fixed a keymapping error with show hidden text (renamed show hidden
+	text keymap to "n")
+
 9/12/99	Added g_funcs_key_name which is used in the list-keys.scm script
 	and in the list keys dialog box
 	

@@ -2,8 +2,7 @@
 
 EXTRA_DIST = \
 		IEC417.sch adders_1.sch all_1.sch agile-vfo-block_1.sch \
-		attributes_1.sch README.agile \
-		cmos-invert.sch cmos-nand.sch cmos-nor.sch \
+		README.agile cmos-invert.sch cmos-nand.sch cmos-nor.sch \
 		embedded_1.sch filter_1.sch flipflop_1.sch \
 		grey_counter_1.sch hierarchy_1.sch letters_1.sch \
 		logo_1.sch multiplex_1.sch radio_1.sch \
