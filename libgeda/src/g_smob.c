@@ -167,7 +167,7 @@ g_init_attrib_smob(void)
 {
 
         attrib_smob_tag = scm_make_smob_type("attribute", sizeof (struct st_attrib_smob));
-	scm_set_smob_mark(attrib_smob_tag, scm_markcdr);
+	scm_set_smob_mark(attrib_smob_tag, 0);
 	scm_set_smob_free(attrib_smob_tag, g_free_attrib_smob);
 	scm_set_smob_print(attrib_smob_tag, g_print_attrib_smob);
 
