@@ -94,7 +94,8 @@ static gint		verbose,
 				n_none,
 				n_empty;
 
-static gboolean	remove_unfound_elements,
+static gboolean	  remove_unfound_elements = TRUE,
+                                quiet_mode = FALSE,
 				force_element_files,
 				preserve,
 				fix_elements,
@@ -1086,7 +1087,18 @@ parse_config(gchar *config, gchar *arg)
 
 	if (!strcmp(config, "remove-unfound") || !strcmp(config, "r"))
 		{
+		/* This is default behavior set in header section */
 		remove_unfound_elements = TRUE;
+		return 0;
+		}
+	if (!strcmp(config, "keep-unfound") || !strcmp(config, "k"))
+		{
+		remove_unfound_elements = FALSE;
+		return 0;
+		}
+	if (!strcmp(config, "quiet") || !strcmp(config, "q"))
+		{
+		quiet_mode = TRUE;
 		return 0;
 		}
 	if (!strcmp(config, "preserve") || !strcmp(config, "p"))
@@ -1202,13 +1214,20 @@ static gchar *usage_string0 =
 "   -r, --remove-unfound  Don't include references to unfound elements in\n"
 "                         the generated .pcb files.  Use if you want PCB to\n"
 "                         be able to load the (incomplete) .pcb file.\n"
+"                         This is the default behavior.\n"
+"   -k, --keep-unfound    Keep include references to unfound elements in\n"
+"                         the generated .pcb files.  Use if you want to hand\n"
+"                         edit or otherwise preprocess the generated .pcb file\n"
+"                         before running pcb.\n"
 "   -p, --preserve        Preserve elements in PCB files which are not found\n"
 "                         in the schematics.  Note that elements with an empty\n"
 "                         element name (schematic refdes) are never deleted,\n"
 "                         so you really shouldn't need this option.\n"
-"       --m4-file F.inc   Use m4 file F.inc in addition to the default m4\n"
+"   -q, --quiet           Don't tell the user what to do next after running gsch2pcb.\n"
+"\n"
+"   --m4-file F.inc       Use m4 file F.inc in addition to the default m4\n"
 "                         files ./pcb.inc and ~/.pcb/pcb.inc.\n"
-"       --m4-pcbdir D     Use D as the PCB m4 files install directory\n"
+"   --m4-pcbdir D         Use D as the PCB m4 files install directory\n"
 "                         instead of the default:\n";
 
 static gchar *usage_string1 =
@@ -1218,7 +1237,7 @@ static gchar *usage_string1 =
 " --empty-footprint name  See the project.sample file.\n"
 "\n"
 "options (not recognized in a project file):\n"
-"       --fix-elements    If a schematic component footprint is not equal\n"
+"   --fix-elements        If a schematic component footprint is not equal\n"
 "                         to its PCB element Description, update the\n"
 "                         Description instead of replacing the element.\n"
 "                         Do this the first time gsch2pcb is used with\n"
@@ -1390,8 +1409,11 @@ main(gint argc, gchar **argv)
 		update_element_descriptions(pcb_file_name, bak_file_name);
 	prune_elements(pcb_file_name, bak_file_name);
 
+        /* Report work done during processing */
 	if (verbose)
 		printf("\n");
+	printf("\n----------------------------------\n");
+	printf("Done processing.  Work performed:\n");
 	if (n_deleted > 0 || n_fixed > 0 || need_PKG_purge || n_changed_value > 0)
 		printf("%s is backed up as %s.\n",
 				pcb_file_name, bak_file_name);
@@ -1401,8 +1423,8 @@ main(gint argc, gchar **argv)
 	if (n_added_ef + n_added_m4 > 0)
 		printf("%d file elements and %d m4 elements added to %s.\n",
 					n_added_ef, n_added_m4, pcb_new_file_name);
-	else if (n_not_found == 0)
-		printf("No elements to add so not creating %s\n", pcb_new_file_name);
+	    else if (n_not_found == 0)
+		    printf("No elements to add so not creating %s\n", pcb_new_file_name);
 	if (n_not_found > 0)
 		{
 		printf("%d not found elements added to %s.\n",
@@ -1432,5 +1454,29 @@ main(gint argc, gchar **argv)
 		printf("%d elements not in the schematic preserved in %s.\n",
 				n_preserved, pcb_file_name);
 
+        /* Tell user what to do next */
+	if (verbose)
+		printf("\n");
+
+	if ((n_added_ef + n_added_m4 > 0) && (initial_pcb == FALSE) && (quiet_mode == FALSE))
+	   {
+	     printf("\nNext steps:\n");
+	     printf("1.  Run pcb on your file %s.\n", pcb_file_name);
+             printf("2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n");
+             printf("    and select %s to load the new footprints into your existing layout.\n", 
+		          pcb_new_file_name);
+             printf("3.  From within PCB, select \"File -> Load netlist file\" and select \n");
+             printf("    %s to load the updated netlist.\n\n", net_file_name);
+	   }
+	else if ((n_added_ef + n_added_m4 > 0) && (initial_pcb == TRUE))
+	   {
+	     printf("\nNext steps:\n");
+	     printf("1.  Run pcb on your file %s.\n", pcb_file_name);
+             printf("    You will find all your footprints in a bundle ready for you to place.\n\n");
+	   }
+	else 
+	   {
+	     printf("\n");
+	   }
 	return 0;
 	}
