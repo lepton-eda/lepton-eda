@@ -567,10 +567,13 @@ o_bus_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
   fprintf(fp, "stroke\n");
 
+#if 0 /* completely redundant, not quite sure why this is here */
   /* maybe move this inside, so it doesn't clutter the ps file */
   if (w_current->print_color) {
     f_print_set_color(fp, w_current->net_endpoint_color);
   }
+#endif
+
   fprintf(fp, "grestore\n");
 }
 

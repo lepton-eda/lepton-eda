@@ -126,6 +126,10 @@ void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
     offset2 = CUE_CIRCLE_SMALL_SIZE;
   }
 
+  if (w_current->print_color) {
+    f_print_set_color(fp, w_current->net_endpoint_color);
+  }
+
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d mils %d mils\n", x, y);
   fprintf(fp, "%d mils\n", offset2 / 2);
