@@ -131,10 +131,26 @@ while (( $line = <LIBRARY>) =~ /^[LRTB]/)
     {
 	$count=($place,$pinnumber,$modifier,$pintype,$pinlabel)=split(" ",$line);
 	$pinname = 0;
-	if (($count != 5) && ($count != 6))
+	if (($count < 4) || ($count > 6))
 	{
 		print "$count  Malformed Pin Definition:\n$line\n";
 		exit;
+	}
+	elsif ($count == 4)
+	{
+		if($modifier =~ /\'/)	
+		{
+			$pinname = $modifier;
+			$pinname =~ tr/\'//d;
+			$pintype = $pinnumber;
+			$pinnumber = $fakenum++;
+			$pinlabel = $pinnumber;
+		}
+		else
+		{
+			print "Error: Place $place number $pinnumber mod $modifier type $pintype label $pinlabel\n";
+			exit;
+		}
 	}
 	elsif ($count == 5)  # regular pin
 	{
