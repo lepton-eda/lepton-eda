@@ -1,3 +1,9 @@
+2003-02-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added comment to sort-component-library
+	keyword that it is broken and that users should not use it.
+	Filed bug #53.
+
 2003-02-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_callbacks.nw: Fixed the annoying flicker if you keep

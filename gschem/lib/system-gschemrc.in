@@ -192,6 +192,8 @@
 ; order.  Enabling this will hide the search order for components, keep
 ; that in mind.
 ;
+; This is currently BROKEN.  DO NOT USE!  Always leave this disabled.
+; 
 (sort-component-library "disabled")
 ;(sort-component-library "enabled")
 
