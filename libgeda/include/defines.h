@@ -291,8 +291,8 @@
 #define TANGO			2
 
 /* gnetlist: net-naming-priority */
-#define NET_ATTRIBUTE		0
-#define LABEL_ATTRIBUTE		1
+#define NETATTRIB_ATTRIBUTE	0
+#define NETNAME_ATTRIBUTE	1
 
 /* gschcheck: Error types */
 #define NO_ERR                  0

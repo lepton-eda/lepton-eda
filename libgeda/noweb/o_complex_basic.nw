@@ -1624,12 +1624,11 @@ o_complex_return_pin_object(OBJECT *object, char *pin)
   while ( o_current != NULL ) {
     switch(o_current->type) {
       case(OBJ_PIN):
-				
-				/* Search for the pin making sure that */
-				/* any found attribute starts with "pinseq" */
-        found = o_attrib_search_attrib_value(
-                                             o_current->attribs, 
-                                             pin, "pinseq", 0);
+
+        /* Search for the pin making sure that */
+        /* any found attribute starts with "pinnumber" */
+        found = o_attrib_search_attrib_value(o_current->attribs, pin,
+                                             "pinnumber", 0);
         if (found) {
 #if DEBUG
           printf("%s: %s\n", found->name,

@@ -1,3 +1,12 @@
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_complex_basic.nw: Changed o_complex_return_pin_object()
+	to look for things using the pinnumber= attribute (instead of
+	pinseq)
+
+	* include/defines.h: Renamed a few #defines to slowly migrate away
+	from the word "label"
+	
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in/Makefile.am: Upgraded to automake 1.6.2
