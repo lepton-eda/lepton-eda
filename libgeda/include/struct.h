@@ -503,6 +503,14 @@ struct st_toplevel {
 
 	int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
 
+	int attribute_promotion; /*controls if attribute promotion happens */
+	int promote_invisible; /* controls if invisible attribs are promoted */
+	int keep_invisible;   /* controls if invisible attribs are kept and */
+			      /* not deleted */
+	int continue_component_place; /* controls if after doing a place the */
+				      /* same component can be placed again */
+
+
 	int print_output_type;			/* either window or limits */
 
 	int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */

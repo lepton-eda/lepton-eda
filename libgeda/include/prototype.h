@@ -172,7 +172,8 @@ void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *to
 void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 OBJECT *add_head(void);
-OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable);
+int o_complex_is_eligible_attribute(OBJECT *object, int promote_invisible);
+OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable, int attribute_promotion);
 OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable);
 void o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 OBJECT *o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
@@ -335,8 +336,8 @@ void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x
 void o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
-void o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_text_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
 void s_attrib_print(void);
