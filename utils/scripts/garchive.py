@@ -215,7 +215,7 @@ class CmdLineArgs:
     UserDir = Directory holding files to archive.  (Directory where garchive was invoked.)
     ScratchDir = "/tmp" by default
     FileArchiveDir = "gschem-files"  by default
-    GedaDataDir = directory holding GEDA data & files such as "system-commonrc"
+    GedaDataDir = directory holding GEDA data & files such as "system-gafrc"
     """
     def __init__(self):
         """
@@ -319,13 +319,13 @@ class CmdLineArgs:
 def GetLibraryPath(Args):
     """
     This fcn takes the library search path from the local dir and the system
-    gschem-commonrc.
+    gschem-gafrc.
     """
     DebugSpew(Args, "Now in GetLibraryPath.")
     LibraryPathList = []
 
     LocalRCFileName = Args.UserDir+"/"+Args.GschemRcFileName
-    SystemRCFileName = Args.GedaDataDir+"/system-commonrc"
+    SystemRCFileName = Args.GedaDataDir+"/system-gafrc"
 
     # Now read in system rc file and create sym lib path
     DebugSpew(Args, "Processing system resource file "+SystemRCFileName)
