@@ -66,7 +66,7 @@
   (lambda (port)
     (let ((read-from-file (read port)))
       (if (not (eof-object? read-from-file))
-          (cons read-from-file (bom2:parseconfig port))
+          (cons (symbol->string read-from-file) (bom2:parseconfig port))
           '()))))
 
 (define bom2:match-list?
