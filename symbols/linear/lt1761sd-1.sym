@@ -40,7 +40,7 @@ B 200 200 1200 1100 3
 T 700 1400 8 10 1 1 0 0
 uref=U?
 T 0 0 8 10 0 1 0 0
-footprint=SOT23
+footprint=SOT23-5
 T 0 0 8 10 0 1 0 0
 class=IC
 T 0 0 8 10 0 1 0 0
