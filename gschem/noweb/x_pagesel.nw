@@ -17,7 +17,6 @@
 <<x_pagesel.c : x_pagesel_close()>>
 <<x_pagesel.c : x_pagesel_update()>>
 <<x_pagesel.c : x_pagesel_callback_response()>>
-<<x_pagesel.c : e_gtk_button_new_with_icon()>>
 
 <<x_pagesel.c : Pagesel widget>>
 
@@ -209,8 +208,16 @@ static void pagesel_get_property (GObject *object,
                                   GValue *value,
                                   GParamSpec *pspec);
 
-<<x_pagesel.c : pagesel_callback_button_*()>>
+static void pagesel_popup_menu (Pagesel *pagesel,
+                                GdkEventButton *event);
+
+
 <<x_pagesel.c : pagesel_callback_selection_changed()>>
+<<x_pagesel.c : pagesel_callback_button_pressed()>>
+<<x_pagesel.c : pagesel_callback_popup_menu()>>
+<<x_pagesel.c : pagesel_callback_popup_*()>>
+
+<<x_pagesel.c : pagesel_popup_menu()>>
 
 <<x_pagesel.c : pagesel_get_type()>>
 <<x_pagesel.c : pagesel_class_init()>>
@@ -293,50 +300,11 @@ pagesel_class_init (PageselClass *klass)
 static void
 pagesel_init (Pagesel *pagesel)
 {
-  GtkWidget *scrolled_win, *treeview, *bbox, *button;
+  GtkWidget *scrolled_win, *treeview, *label;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
   GtkTreeSelection *selection;
-  struct button_t {
-    gchar *label;
-    void (*callback)(void);
-#ifndef HAS_GTK12
-    const gchar *stock_id;
-#endif
-  };
-  struct button_t buttons[] = {
-    { "New Page",     G_CALLBACK (pagesel_callback_button_new_page)
-#ifndef HAS_GTK12
-      , GTK_STOCK_NEW     
-#endif
-    },
-    { "Open Page",    G_CALLBACK (pagesel_callback_button_open_page)
-#ifndef HAS_GTK12
-      , GTK_STOCK_OPEN    
-#endif
-    },
-    { "Save Page",    G_CALLBACK (pagesel_callback_button_save_page)
-#ifndef HAS_GTK12
-      , GTK_STOCK_SAVE
-#endif
-    },
-    { "Close Page",   G_CALLBACK (pagesel_callback_button_close_page)
-#ifndef HAS_GTK12
-      , GTK_STOCK_CLOSE
-#endif
-    },
-/*     { "Discard Page", G_CALLBACK (pagesel_callback_button_discard_page) */
-/* #ifndef HAS_GTK12 */
-/*       , GTK_STOCK_CANCEL */
-/* #endif */
-/*     }, */
-    { NULL,           NULL                                             
-#ifndef HAS_GTK12
-      , NULL
-#endif
-    } };
-  struct button_t *tmp;
 
   /* dialog initialization */
   g_object_set (G_OBJECT (pagesel),
@@ -345,7 +313,7 @@ pagesel_init (Pagesel *pagesel)
                 /* GtkWindow */
                 "type",            GTK_WINDOW_TOPLEVEL,
                 "title",           _("Page Manager"),
-                "default-height",  220, 
+                "default-height",  180,
                 "default-width",   515,
                 "modal",           FALSE,
                 "window-position", GTK_WIN_POS_NONE,
@@ -367,7 +335,7 @@ pagesel_init (Pagesel *pagesel)
                   "border-width",      5,
                   /* GtkScrolledWindow */
                   "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
-                  "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "vscrollbar-policy", GTK_POLICY_ALWAYS,
                   "shadow-type",       GTK_SHADOW_ETCHED_IN,
                   NULL));
   /* create the treeview */
@@ -376,13 +344,21 @@ pagesel_init (Pagesel *pagesel)
                                        "model",      store,
                                        "rules-hint", TRUE,
                                        NULL));
+  g_signal_connect (treeview,
+                    "button-press-event",
+                    G_CALLBACK (pagesel_callback_button_pressed),
+                    pagesel);
+  g_signal_connect (treeview,
+                    "popup-menu",
+                    G_CALLBACK (pagesel_callback_popup_menu),
+                    pagesel);
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
   gtk_tree_selection_set_mode (selection,
                                GTK_SELECTION_SINGLE);
   g_signal_connect (selection,
                     "changed",
                     G_CALLBACK (pagesel_callback_selection_changed),
-                    pagesel);
+                    pagesel); 
   /*   - first column: page name */
   renderer = GTK_CELL_RENDERER (
     g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
@@ -393,7 +369,7 @@ pagesel_init (Pagesel *pagesel)
     g_object_new (GTK_TYPE_TREE_VIEW_COLUMN,
                   /* GtkTreeViewColumn */
                   "title", _("Filename"),
-                  "min-width", 435,
+                  "min-width", 400,
                   "resizable", TRUE,
                   NULL));
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
@@ -420,40 +396,19 @@ pagesel_init (Pagesel *pagesel)
   /* set treeview of pagesel */
   pagesel->treeview = GTK_TREE_VIEW (treeview);
 
-  /* create the button array for actions */
-  bbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBUTTON_BOX,
-                                   /* GtkContainer */
-                                   "border-width", 5,
-                                   /* GtkButtonBox */
-                                   "layout-style", GTK_BUTTONBOX_EDGE,
-                                   NULL));
-  for (tmp = buttons; tmp->label != NULL; tmp++) {
-#ifdef HAS_GTK12
-    button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
-                                       /* GtkButton */
-                                       "label", _(tmp->label),
-                                       NULL));
-#else
-    button = gtk_button_new_from_stock(tmp->stock_id);
-    /* Comment the above line, and uncomment the line below if buttons with
-       the right label, like "Add page" or "Close page", are preferred */
-    /*    button = e_gtk_button_new_with_icon(_(tmp->label), tmp->stock_id);*/
-#endif
-    g_signal_connect (button,
-                      "clicked",
-                      tmp->callback,
-                      pagesel);
-    gtk_container_add (GTK_CONTAINER (bbox), button);
-  }
-
-  /* add scrolled window and action buttons to the dialog vbox */
+  /* add the scrolled window to the dialog vbox */
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), scrolled_win,
                       TRUE, TRUE, 0);
   gtk_widget_show_all (scrolled_win);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), bbox,
-                      FALSE, TRUE, 0);
-  gtk_widget_show_all (bbox);
 
+  /* add a label below the scrolled window */
+  label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
+                                    /* GtkLabel */
+                                    "label", _("Right click on the filename for more options..."),
+                                    NULL));
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pagesel)->vbox), label,
+                      FALSE, TRUE, 5);
+  gtk_widget_show (label);
 
   /* now add buttons in the action area */
   gtk_dialog_add_buttons (GTK_DIALOG (pagesel),
@@ -523,6 +478,73 @@ pagesel_get_property (GObject *object,
 @ %def pagesel_get_property
 
 
+@subsection Function @code{pagesel_popup_menu()}
+
+@defun pagesel_popup_menu pagesel event
+Pops up a context-sensitive menu.
+
+[[event]] can be NULL if the popup is triggered by a key binding instead of a mouse click.
+@end defun
+
+<<x_pagesel.c : pagesel_popup_menu()>>=
+static void
+pagesel_popup_menu (Pagesel *pagesel,
+                    GdkEventButton *event)
+{
+  GtkTreePath *path;
+  GtkWidget *menu;
+  struct menuitem_t {
+    gchar *label;
+    void (*callback)(void);
+  };
+  struct menuitem_t menuitems[] = {
+    { "New Page",     G_CALLBACK (pagesel_callback_popup_new_page)     },
+    { "Open Page...", G_CALLBACK (pagesel_callback_popup_open_page)    },
+    { "-",            NULL                                             },
+    { "Save Page",    G_CALLBACK (pagesel_callback_popup_save_page)    },
+    { "Close Page",   G_CALLBACK (pagesel_callback_popup_close_page)   },
+    { "Discard Page", G_CALLBACK (pagesel_callback_popup_discard_page) },
+    { NULL,           NULL                                             } };
+  struct menuitem_t *tmp;
+  
+  if (event != NULL &&
+      gtk_tree_view_get_path_at_pos (pagesel->treeview,
+                                     (gint)event->x, 
+                                     (gint)event->y,
+                                     &path, NULL, NULL, NULL)) {
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection (pagesel->treeview);
+    gtk_tree_selection_unselect_all (selection);
+    gtk_tree_selection_select_path (selection, path);
+    gtk_tree_path_free (path);
+  }
+
+  /* create the context menu */
+  menu = gtk_menu_new();
+  for (tmp = menuitems; tmp->label != NULL; tmp++) {
+    GtkWidget *menuitem;
+    if (g_strcasecmp (tmp->label, "-") == 0) {
+      menuitem = gtk_separator_menu_item_new ();
+    } else {
+      menuitem = gtk_menu_item_new_with_label (_(tmp->label));
+      g_signal_connect (menuitem,
+                        "activate",
+                        tmp->callback,
+                        pagesel);
+    }
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+  }
+  gtk_widget_show_all (menu);
+  /* make menu a popup menu */
+  gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
+                  (event != NULL) ? event->button : 0,
+                  gdk_event_get_time ((GdkEvent*)event));
+  
+}
+
+@ %def pagesel_popup_menu
+
+
 @subsection Function @code{pagesel_callback_selection_changed()}
 
 @defun pagesel_callback_selection_changed selection user_data
@@ -542,7 +564,7 @@ pagesel_callback_selection_changed (GtkTreeSelection *selection,
   if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
     return;
   }
-  
+
   toplevel = pagesel->toplevel;
   gtk_tree_model_get (model, &iter,
                       COLUMN_PAGE, &page,
@@ -559,27 +581,72 @@ pagesel_callback_selection_changed (GtkTreeSelection *selection,
 @ %def pagesel_callback_selection_changed
 
 
-@subsection Function @code{pagesel_callback_button_*()}
+@subsection Function @code{pagesel_callback_button_pressed()}
 
-@defun pagesel_callback_button_* button user_data
+@defun pagesel_callback_button_pressed widget event user_data
 @end defun
 
-<<x_pagesel.c : pagesel_callback_button_*()>>=
-#define DEFINE_BUTTON_CALLBACK(name, action)                      \
+<<x_pagesel.c : pagesel_callback_button_pressed()>>=
+static gboolean
+pagesel_callback_button_pressed (GtkWidget *widget,
+                                 GdkEventButton *event,
+                                 gpointer user_data)
+{
+  Pagesel *pagesel = (Pagesel*)user_data;
+  gboolean ret = FALSE;
+
+  if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
+    pagesel_popup_menu (pagesel, event);
+    ret = TRUE;
+  }
+
+  return ret;
+}
+
+@ %def pagesel_callback_button_pressed
+
+
+@subsection Function @code{pagesel_callback_popup_menu()}
+
+@defun pagesel_callback_popup_menu widget user_data
+@end defun
+
+<<x_pagesel.c : pagesel_callback_popup_menu()>>=
+static gboolean
+pagesel_callback_popup_menu (GtkWidget *widget,
+                             gpointer user_data)
+{
+  Pagesel *pagesel = (Pagesel*)user_data;
+
+  pagesel_popup_menu (pagesel, NULL);
+  
+  return TRUE;
+}
+
+@ %def pagesel_callback_popup_menu
+
+
+@subsection Function @code{pagesel_callback_popup_*()}
+
+@defun pagesel_callback_popup_* menuitem user_data
+@end defun
+
+<<x_pagesel.c : pagesel_callback_popup_*()>>=
+#define DEFINE_POPUP_CALLBACK(name, action)                       \
 static void                                                       \
-pagesel_callback_button_ ## name (GtkButton *button,              \
-                                  gpointer user_data)             \
+pagesel_callback_popup_ ## name (GtkMenuItem *menuitem,           \
+                                 gpointer user_data)              \
 {                                                                 \
   i_callback_ ## action (PAGESEL (user_data)->toplevel, 0, NULL); \
 }
 
-DEFINE_BUTTON_CALLBACK (new_page,     file_new);
-DEFINE_BUTTON_CALLBACK (open_page,    file_open);
-DEFINE_BUTTON_CALLBACK (save_page,    file_save);
-DEFINE_BUTTON_CALLBACK (close_page,   page_close);
-DEFINE_BUTTON_CALLBACK (discard_page, page_discard);
+DEFINE_POPUP_CALLBACK (new_page,     file_new);
+DEFINE_POPUP_CALLBACK (open_page,    file_open);
+DEFINE_POPUP_CALLBACK (save_page,    file_save);
+DEFINE_POPUP_CALLBACK (close_page,   page_close);
+DEFINE_POPUP_CALLBACK (discard_page, page_discard);
 
-@ %def pagesel_callback_button_new_page pagesel_callback_button_open_page pagesel_callback_button_save_page pagesel_callback_button_close_page pagesel_callback_button_discard_page
+@ %def pagesel_callback_popup_new_page pagesel_callback_popup_open_page pagesel_callback_popup_save_page pagesel_callback_popup_close_page pagesel_callback_popup_discard_page
 
 
 @subsection Function @code{pagesel_update()}
@@ -592,8 +659,8 @@ Right now, each time it is called, it rebuilds all the model from the list of pa
 
 <<x_pagesel.c : pagesel_update()>>=
 /* recursive function to populate the tree store */
-static
-void add_page (GtkTreeModel *model, GtkTreeIter *parent,
+static void
+add_page (GtkTreeModel *model, GtkTreeIter *parent,
           PAGE *page)
 {
   GtkTreeIter iter;
@@ -622,8 +689,8 @@ void add_page (GtkTreeModel *model, GtkTreeIter *parent,
 }
 
 /* recursive function to select the current page in the treeview */
-static
-void select_page (GtkTreeView *treeview, GtkTreeIter *parent, PAGE *page)
+static void
+select_page (GtkTreeView *treeview, GtkTreeIter *parent, PAGE *page)
 {
   GtkTreeModel *treemodel = gtk_tree_view_get_model (treeview);
   GtkTreeIter iter;
@@ -685,6 +752,7 @@ pagesel_update (Pagesel *pagesel)
 }
 
 @ %def pagesel_update
+
 
 @section Function @code{e_gtk_button_new_with_icon()}
 

@@ -1,3 +1,8 @@
+2005-02-21  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_pagesel.nw: Added a context-sensitive menu to the list of 
+	pages and a label below for information.
+
 2005-02-21 04:11  Dan McMahill <danmc>
 
 	* noweb/x_fileselect.nw: remove unused variable
