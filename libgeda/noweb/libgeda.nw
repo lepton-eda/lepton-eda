@@ -80,8 +80,18 @@ other libgeda functions are called.
 <<libgeda.c : libgeda_init()>>=
 void libgeda_init(void)
 {
-  /* set GEDADATA if not already set */
-  g_setenv ("GEDADATA", GEDADATADIR, FALSE);
+  char *new_data=NULL;
+  char *geda_data = getenv("GEDADATA");
+
+  /* This stuff reverted on 2.17.2005 by SDB in response to W. Hoch. */
+  if (geda_data == NULL) {
+    new_data = g_strdup_printf("GEDADATA=%s", GEDADATADIR);
+    putenv(new_data);
+    /*free(new_data); putenv takes over the memory? */
+
+    /* We'll use this someday. . . . . */
+    /* g_setenv ("GEDADATA", GEDADATADIR, FALSE); */ /* requires glib-2.4.* */
+  }
 
   s_toplevel_init ();
   s_clib_init();

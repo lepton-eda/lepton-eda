@@ -1,3 +1,7 @@
+2005-02-17 20:00  Stuart Brorson <sdb@cloud9.net>
+	* noweb/g_rc.nw, noweb/libgeda.nw: Reverted to putenv after
+	W. Hoch had problems with compiling g_setenv.
+
 2005-02-14 22:32  Dan McMahill <danmc>
 
 	* noweb/o_complex_basic.nw: fix a couple of format string not

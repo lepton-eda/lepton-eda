@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
+#include <glib.h>
 
 #include <stdio.h>
 #include <libguile.h>
