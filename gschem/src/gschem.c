@@ -144,10 +144,10 @@ main_prog(int argc, char *argv[])
 
 			if (argv[1][0] == '/') {
 				w_current->page_current->page_filename = 
-				   u_basic_strdup_multiple(argv[1], NULL);
+				   u_basic_strdup_multiple(argv[i], NULL);
 			} else {
 				w_current->page_current->page_filename = 
-				   u_basic_strdup_multiple(cwd, "/", argv[1], 
+				   u_basic_strdup_multiple(cwd, "/", argv[i], 
 						        NULL);
 			}
 
@@ -165,6 +165,7 @@ main_prog(int argc, char *argv[])
 			if (!quiet_mode) {
 				printf("Loading schematic [%s]\n", argv[i]);
 			}
+
                 	f_open(w_current,
 			       w_current->page_current->page_filename);
 			i_set_filename(w_current,

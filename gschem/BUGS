@@ -7,6 +7,9 @@ Bugs (no particular order):
 	Relative paths are not displayed properly in the component add 
 	dialog box
 
+	Try opening a file called untitled_1.sch, doesn't work since
+	you have an untitled_1 (the default) already open.
+
 	Swedish characters don't work.
 
 	still have some core problems with net extension and selections
