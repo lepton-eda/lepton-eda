@@ -195,6 +195,12 @@ o_arc_draw_dotted(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	x1 = (double) x + radius;
 	y1 = (double) y + radius;
 
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if(angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+	}
 	da = (int) (((space * 180) / (M_PI * radius)) * 64);
 
 	/* If da or db too small for arc to be displayed as dotted,
@@ -240,6 +246,12 @@ o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 
 	radius = ((double) width) / 2;
 
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if(angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+	}
 	da = (int) ((length * 180) / (M_PI * radius)) * 64;
 	db = (int) ((space * 180) / (M_PI * radius)) * 64;
 
@@ -251,7 +263,7 @@ o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	}
 	
 	d = angle1;
-	while((d + da + db) < angle2) {
+	while((d + da + db) < (angle1 + angle2)) {
 		a1 = d;
 		d = d + da;
 		gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
@@ -260,12 +272,12 @@ o_arc_draw_dashed(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 		
 	}
 
-	if((d + da) < angle2) {
+	if((d + da) < (angle1 + angle2)) {
 		a1 = d;
 		a2 = da;
 	} else {
 		a1 = d;
-		a2 = angle2 - d;
+		a2 = (angle1 + angle2) - d;
 	}
 	gdk_draw_arc(w, gc, filled, x, y, width, height, a1, a2);
 	
@@ -292,7 +304,13 @@ o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	/* Center coordinates of the arc */
 	x1 = (double) x + radius;
 	y1 = (double) y + radius;
-	
+
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if(angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+	}
 	da = (int) ((length * 180) / (M_PI * radius)) * 64;
 	db = (int) ((space * 180) / (M_PI * radius)) * 64;
 
@@ -303,7 +321,7 @@ o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	}
 	
 	d = angle1;
-	while((d + da + 2 * db) < angle2) {
+	while((d + da + 2 * db) < (angle1 + angle2)) {
 		a1 = d;
 		d = d + da;
 		gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
@@ -323,20 +341,20 @@ o_arc_draw_center(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 		d = d + db;
 	}
 
-	if((d + da) < angle2) {
+	if((d + da) < (angle1 + angle2)) {
 		a1 = d;
 		a2 = da;
 		
 		d = d + da;
 	} else {
 		a1 = d;
-		a2 = angle2 - d;
+		a2 = (angle1 + angle2) - d;
 
 		d = d + da;
 	}
 	gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
 
-	if((d + db) < angle2) {
+	if((d + db) < (angle1 + angle2)) {
 		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
 		ya = y1 - radius * sin((d / 64) * (M_PI / 180));
 
@@ -373,7 +391,13 @@ o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	/* Center coordinates of the arc */
 	x1 = (double) x + radius;
 	y1 = (double) y + radius;
-	
+
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if(angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+	}
 	da = (int) ((length * 180) / (M_PI * radius)) * 64;
 	db = (int) ((space * 180) / (M_PI * radius)) * 64;
 
@@ -385,7 +409,7 @@ o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 	}
 	
 	d = angle1;
-	while((d + da + 3 * db) < angle2) {
+	while((d + da + 3 * db) < (angle1 + angle2)) {
 		a1 = d;
 		d = d + da;
 		gdk_draw_arc(w, gc, filled, x, y, width, height, a1, da);
@@ -417,18 +441,18 @@ o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 		d = d + db;
 	}
 
-	if((d + da) < angle2) {
+	if((d + da) < (angle1 + angle2)) {
 		a1 = d;
 		a2 = da;
 		d = d + da;
 	} else {
 		a1 = d;
-		a2 = angle2 - d;
+		a2 = (angle1 + angle2) - d;
 		d = d + da;
 	}
 	gdk_draw_arc(w, gc, filled, x, y, width, height, a1, a2);
 
-	if((d + db) < angle2) {
+	if((d + db) < (angle1 + angle2)) {
 		d = d + db;
 
 		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
@@ -444,7 +468,7 @@ o_arc_draw_phantom(GdkWindow *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap,
 		}
 	}
 
-	if((d + db) < angle2) {
+	if((d + db) < (angle1 + angle2)) {
 		d = d + db;
 
 		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
