@@ -4,7 +4,8 @@
 ## If you don't want it to overwrite it,
 ## 	Please disable it in the Anjuta project configuration
 
-EXTRA_DIST=setup.cfg
+EXTRA_DIST=setup.cfg\
+	setup.sh
 
 INCLUDES = \
 	`gtk-config --cflags`
