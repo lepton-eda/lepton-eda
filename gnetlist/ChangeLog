@@ -1,3 +1,12 @@
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gschem2pcb: Intergrated patch from Dan Mcmahill to make this
+	script a lot more portable (replacing long options with short ones,
+	gawk->awk, bash->sh)
+
+	* src/s_project.c: Disabled all the draw events as gnetlist doesn't
+	do any drawing
+
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in/Makefile.am: Upgraded to automake 1.6.2
