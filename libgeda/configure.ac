@@ -85,7 +85,6 @@ AC_SUBST(GUILE_CONFIG)
 
 # must have guile flags in CFLAGS for AC_COMPILE_IFELSE to work right
 saved_CFLAGS="${CFLAGS}"
-GUILE_CFLAGS=`$GUILE_CONFIG compile`
 CFLAGS="${CFLAGS} ${GUILE_CFLAGS}"
 
 # 1-argument scm_eval_x (guile-1.4) or 2-argument form (guile-1.6)?
@@ -100,7 +99,7 @@ CFLAGS="${saved_CFLAGS}"
 
 # Check that scm_make_smob_type exist
 AC_CHECK_LIB(guile, scm_make_smob_type,,
-   AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2]),
+   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
    $GUILE_LDFLAGS)
 
 # Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
@@ -108,7 +107,7 @@ LIBS="$ac_save_LIBS"
 
 # Check that scm_set_smob_mark exist
 AC_CHECK_LIB(guile, scm_set_smob_mark,,
-   AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2]),
+   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
    $GUILE_LDFLAGS)
 
 # Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
@@ -116,7 +115,7 @@ LIBS="$ac_save_LIBS"
 
 # Check that scm_set_smob_free exist
 AC_CHECK_LIB(guile, scm_set_smob_free,,
-   AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2]),
+   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
    $GUILE_LDFLAGS)
 
 # Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
@@ -124,7 +123,7 @@ LIBS="$ac_save_LIBS"
 
 # Check that scm_set_smob_print exist
 AC_CHECK_LIB(guile, scm_set_smob_print,,
-   AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2]),
+   [AC_MSG_ERROR([Upgrade Guile, At least version >= 1.3.2])],
    $GUILE_LDFLAGS)
 
 # Restore LIBS. Apperantly AC_CHECK_LIB destroys it.
