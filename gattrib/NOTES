@@ -6,7 +6,7 @@ The were also useful when architecting the workings of gattrib.
  
 A spreadsheet holding function names is held in the file
 called "ProgramArchitecture.gnumeric", which should live in the
-toplevel directory.  This spreadsheet should help you wade
+design directory.  This spreadsheet should help you wade
 through the various fcns used during processing.
 
 No guarantee is made that these notes are accurate, useful,
