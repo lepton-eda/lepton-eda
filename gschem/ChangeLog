@@ -1,5 +1,9 @@
 2005-02-13  Carlos Nieves Onega <cnieves@iespana.es>
 
+        * po/es_ES.po, po/LINGUAS: Added first version of spanish translation.
+	
+2005-02-13  Carlos Nieves Onega <cnieves@iespana.es>
+
 	* include/prototype.h, noweb/x_pagesel.nw:
 	  Commented out the code defining the "Discard page" button,
 	  so it doesn't appear in the page manager.
