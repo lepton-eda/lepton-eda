@@ -320,8 +320,11 @@ s_delete(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	if (o_current != NULL) {
 
-		/*printf("sdel: %s\n", o_current->name);
-		printf("sdel: %d\n", o_current->sid);*/
+
+#if DEBUG
+		printf("sdel: %s\n", o_current->name);
+		printf("sdel: %d\n", o_current->sid);
+#endif
 
 		if (o_current->next) 
 			o_current->next->prev = o_current->prev;
