@@ -104,8 +104,6 @@ Installed guile-1.4:
 * edit Makefile.in in ice-9 and replace the * in and-let*.scm with star,
 	add file to ice-9 dir: and-letstar.scm 
 
-* ./configure --prefix=/geda 
-
 * edit libguile/net_db.c and #if 0 out the line:
 	extern int h_errno;
 
@@ -114,6 +112,8 @@ Installed guile-1.4:
 #if 0
 	extern int h_errno;
 #endif
+
+* ./configure --prefix=/geda 
 
 * make 
 
@@ -129,9 +129,20 @@ dependency_libs='-lregex'
 * cd ..
 
 * make install
-
+ 
 * Run guile, make sure it basically works:
 	(display "I am a working guile.exe") (newline)
+
+  It is also useful to check to make sure that the regexp code in libguile
+  works.  Here's a simple scheme script:
+
+(use-modules (ice-9 regex))
+
+(define pattern "^TEST*")
+(display (string-match pattern "TESTblah")) (newline)
+(display (string-match pattern "blahTEST")) (newline)
+
+  This script should run without error.
 
 --------------------------------------------------------------------------
 
