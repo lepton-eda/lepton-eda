@@ -64,6 +64,8 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("gnetlist:get-packages", g_get_packages);
 	gh_new_procedure1_0 ("gnetlist:get-pins", g_get_pins);
 	gh_new_procedure1_0 ("gnetlist:get-all-nets", g_get_all_nets);
+	gh_new_procedure1_0 ("gnetlist:get-all-unique-nets", g_get_all_unique_nets);
+	gh_new_procedure1_0 ("gnetlist:get-all-connections", g_get_all_connections);
 	gh_new_procedure2_0 ("gnetlist:get-nets", g_get_nets);
 	gh_new_procedure2_0 ("gnetlist:get-package-attribute", g_get_package_attribute);
 	gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode);

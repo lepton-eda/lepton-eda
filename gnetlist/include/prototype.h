@@ -3,6 +3,8 @@ void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_get_packages(SCM scm_level);
 SCM g_get_pins(SCM uref);
 SCM g_get_all_nets(SCM scm_level);
+SCM g_get_all_unique_nets(SCM scm_level);
+SCM g_get_all_connections(SCM scm_netname);
 SCM g_get_nets(SCM scm_uref, SCM scm_pin);
 SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_set_netlist_mode(SCM mode);

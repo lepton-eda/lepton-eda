@@ -7,6 +7,33 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+7/3/99	Removed almost all executing traces of connected_to_[1|2] (these
+	was replaced by connected_to)
+
+	Added gnetlist:get-all-unique-nets which returns all the unique
+	nets in the design
+
+	Added gnetlist:get-all-connections which returns all connections
+	which are associated with the argument netname 
+
+	Worked on gnetlist.scm to use above functions.
+
+	Got geda netlist format to use above functions correctly.
+
+	Got tango netlist format to use above functions correctly.
+	(all others are okay)
+
+	Reformated the tango backend scheme code to be more scheme like
+	Reformated the gEDA backend scheme code to be more scheme like
+
+	Went through all the code removing old obsolete variables from
+	the internal representation.
+
+	As of the today gnetlisting works again :-)
+
+7/2/99  Fixed the ./configure stuff dealing with libgdgeda so that it works
+        when libgdgeda isn't installed in a system directory
+
 7/1/99 	Got support for gdgeda in configure.in (required because you
 	are linking against libgeda)
 

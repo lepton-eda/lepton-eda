@@ -137,26 +137,6 @@ fi
    	  AC_MSG_ERROR(Cannot find gtk-config -- be sure that gtk >= 0.99.7 is installed)
 	fi
 
-GD_EXTRA="-lz -lm"
-AC_CHECK_LIB(gdgeda, gdImageColorAllocate, GDGEDA_LIB="-lgdgeda", GDGEDA_LIB=no, $GD_EXTRA)
-
-if test $GDGEDA_LIB = no; then
-        GDGEDA_LIB=""
-else
-        if test "$no_gdgeda" = "yes"; then
-                echo found libgdgeda, but disabling gdgeda
-                GDGEDA_LIB=""
-        else
-		AC_CHECK_LIB(z, zlibVersion, Z_LIB="-lz", Z_LIB=no)
-                if test $Z_LIB = no; then
-                        AC_MSG_ERROR(Cannot find libz (zlib), be sure to install zlib; it is required for libgdgeda)
-		else
-			AC_DEFINE(HAS_LIBZ)
-                	AC_DEFINE(HAS_LIBGDGEDA)
-		fi
-        fi
-fi
-
 # search for libgdgeda-config
 AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
 
@@ -166,7 +146,29 @@ if test $LIBGDGEDACONFIG = "no"; then
 else
          libgdgeda_ldflags=`$LIBGDGEDACONFIG --libs`
          libgdgeda_cflags=`$LIBGDGEDACONFIG --cflags`
+         GD_EXTRA="$libgdgeda_cflags $libgdgeda_ldflags -lm"
+         X_CFLAGS="$libgdgeda_cflags `$GTKCONFIG --cflags`"
 fi
+
+AC_CHECK_LIB(gdgeda, gdImageColorAllocate, GDGEDA_LIB="-lgdgeda", GDGEDA_LIB=no, $GD_EXTRA)
+
+if test $GDGEDA_LIB = no; then
+        GDGEDA_LIB=""
+else
+        if test "$no_gdgeda" = "yes"; then
+                echo found libgdgeda, but disabling gdgeda
+                GDGEDA_LIB=""
+        else
+                AC_CHECK_LIB(z, zlibVersion, Z_LIB="-lz", Z_LIB=no)
+                if test $Z_LIB = no; then
+                        AC_MSG_ERROR(Cannot find libz (zlib), be sure to install zlib; it is required for libgdgeda)
+                else
+                        AC_DEFINE(HAS_LIBZ)
+                        AC_DEFINE(HAS_LIBGDGEDA)
+                fi
+        fi
+fi
+
 
 # search for libgeda-config
 AC_PATH_PROG(LIBGEDACONFIG, libgeda-config, no, ${PATH})

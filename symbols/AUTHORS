@@ -114,6 +114,14 @@ Arnim Littek		- For contributing the following symbols:
 
 				AD633JN-1.sym resistor-variable-1.sym
 
+			  For contributing the following symbols:
+
+				2tri-1.sym 3tri-1.sym beeper-1.sym
+				connector4-1.sym jumper-1.sym lt1181-1.sym
+				ltc2400-1.sym max232-1.sym pic16c5x-1.sym
+				vcc-1.sym
+
+
 Jerry O'Keefe		- For contributing the following symbols:
 			  (Ales renamed and did some minor touch ups)
 			  (Lines touching arcs, moved pins in BNC-1.sym,
@@ -191,6 +199,11 @@ ssheikh@erols.com
 				relay-1.sym switch-spst-1.sym
 				vcc-1.sym vcc-minus-1.sym
 
+José Daniel Muñoz Daniel Frías
+			- For contributing the following symbols:
+
+				hcpl-4534-1.sym lm358-1.sym
+			 	resistor-variable-1.sym	
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of

@@ -432,20 +432,9 @@ struct st_cpinlist {
         int plid;
 
 	char *pin_number;
-
         char *net_name;			/* this is resolved at very end */
 
         NET *nets;
-	int post_resolve_nets_needed; 	
-					/* usually 0, but if there is a nets 
-					 * which needs to be resolved, it will
-					 * hold the sid of the connected net */
-
-	int nets_is_copy;		/* TRUE when the nets pointer points
-					 * to another duplicate net */
-
-	CPINLIST *original;		/* if above is true, this hold the 
-					 * cpinlist parent */
 
         CPINLIST *prev;
         CPINLIST *next;
@@ -458,12 +447,8 @@ struct st_net {
 
         char *net_name;
 
-        char *connected_to_1;
-        char *connected_to_2;
         char *connected_to; /* new to replace above */
 
-	int net_is_duplicate;		/* normally 0, but if the net is 
-					   described elsewhere this is true */
         NET *prev;
         NET *next;
 };

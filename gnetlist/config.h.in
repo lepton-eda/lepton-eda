@@ -24,7 +24,13 @@
 /* Define if you have the stroke library   */
 #undef HAS_LIBSTROKE
 
-/* Define if you have optarg in unistd.h */
+/* Define if you have the libgdgeda library   */
+#undef HAS_LIBGDGEDA
+
+/* Define if you have the zlib library   */
+#undef HAS_LIBZ
+
+/* Define if you have optarg in unistd */
 #undef OPTARG_IN_UNISTD
 
 /* Define if you have rint in the math library   */

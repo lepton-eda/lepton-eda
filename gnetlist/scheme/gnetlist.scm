@@ -27,8 +27,7 @@
 ;; eventually placeholder will be either the hierarchical level or something 
 ;; of the sort
 (define packages 
-  (gnetlist:get-packages "placeholder")
-)
+  (gnetlist:get-packages "placeholder"))
 
 ;; return a list of all the nets in the design
 (define all-nets
@@ -38,54 +37,41 @@
 ;; Given a uref, returns the device attribute value (unknown if not defined)
 ;;
 (define get-device
-	(lambda (package)
-		(gnetlist:get-package-attribute package "device")
-	)
-)
+   (lambda (package)
+      (gnetlist:get-package-attribute package "device")))
 
 ;; return all pins for a particular package 
 (define pins
-	(lambda (package)
-		(gnetlist:get-pins package)
-	)
-)
+   (lambda (package)
+      (gnetlist:get-pins package)))
 
 ;; not very useful, but amusing 
 (define all-pins
-	(map gnetlist:get-pins packages)
-)
+   (map gnetlist:get-pins packages))
 
 ;; this is really crude, but I'm tired... :)
 (define display-nl
-	(lambda (list)
-		(display list) 
-		(newline)
-	)
-)
+   (lambda (list)
+      (display list) 
+      (newline)))
 
 
 ;; ah.. wonder what use this is...
 (define display-pin
-	(lambda (pin-list)
-		(for-each display-nl pin-list)
-	)
-)
+   (lambda (pin-list)
+      (for-each display-nl pin-list)))
 
 
 ;; ha. I'm playing with scheme here.. don't mind me
 (define display-all-pins
-	( lambda ()
-		(for-each display-pin all-pins)
-	)
-)
+   (lambda ()
+      (for-each display-pin all-pins)))
 
 
 ;; another misc function
 (define print-packages
-	( lambda (plist)
-		(for-each display-nl plist)
-	)
-)
+   (lambda (plist)
+      (for-each display-nl plist)))
 
 ;; --------------------------------------------------------------------------
 ;;
@@ -96,86 +82,71 @@
 ;; Top level header
 ;;
 (define geda:write-top-header
-	(lambda (p)
-		(display "START header" p) 
-		(newline p)
-		(newline p)
-		(display "gEDA's netlist format" p)
-		(newline p)
-		(display "Created specifically for testing of gnetlist" p)
-		(newline p)
-		(newline p)
-		(display "END header" p)
-		(newline p)
-		(newline p)
-	)
-)
+   (lambda (p)
+      (display "START header" p) 
+      (newline p)
+      (newline p)
+      (display "gEDA's netlist format" p)
+      (newline p)
+      (display "Created specifically for testing of gnetlist" p)
+      (newline p)
+      (newline p)
+      (display "END header" p)
+      (newline p)
+      (newline p)))
 
 ;;
 ;; header for components section
 ;;
 (define geda:start-components
-	(lambda (p)
-		(display "START components" p)
-		(newline p)
-		(newline p)
-	)
-)
+   (lambda (p)
+      (display "START components" p)
+      (newline p)
+      (newline p)))
 
 ;;
 ;; footer for components section
 ;;
 (define geda:end-components
-	(lambda (p)
-		(newline p)
-		(display "END components" p)
-		(newline p)
-		(newline p)
-	)
-)
+   (lambda (p)
+      (newline p)
+      (display "END components" p)
+      (newline p)
+      (newline p)))
 
 ;;
 ;; header for nets section
 ;;
 (define geda:start-nets
-	(lambda (p)
-		(display "START nets" p)
-		(newline p)
-		(newline p)
-	)
-)
+   (lambda (p)
+      (display "START nets" p)
+      (newline p)
+      (newline p)))
 
 ;;
 ;; footer for net section
 ;;
 (define geda:end-nets
-	(lambda (p)
-		(newline p)
-		(display "END nets" p)
-		(newline p)
-		(newline p)
-	)
-)
+   (lambda (p)
+      (newline p)
+      (display "END nets" p)
+      (newline p)
+      (newline p)))
 	
 ;;
 ;; Top level component writing 
 ;;
 (define geda:components
-	(lambda (port ls)
-		(if (not (null? ls))
-			(let ((package (car ls)))
-				(begin
-				   (display package port)
-				   (write-char #\space port)
-				   (display "device=" port)
-				   (display (get-device package) port)
-				   (newline port)
-				   (geda:components port (cdr ls))
-				)
-			)
-		)
-	)
-)
+   (lambda (port ls)
+      (if (not (null? ls))
+         (let ((package (car ls)))
+            (begin
+               (display package port)
+               (write-char #\space port)
+               (display "device=" port)
+               (display (get-device package) port)
+               (newline port)
+               (geda:components port (cdr ls)))))))
 
 ;;
 ;; Display the individual net connections
@@ -184,114 +155,67 @@
    (lambda (nets port)
       (if (not (null? nets))
 	 (begin
-	   (display (car (car nets)) port)
-	   (write-char #\space port) 
-	   (display (car (cdr (car nets))) port)
-;	   (newline port)
-	   (if (not (null? (cdr nets)))
-		(begin
+	    (display (car (car nets)) port)
+	    (write-char #\space port) 
+	    (display (car (cdr (car nets))) port)
+	    (if (not (null? (cdr nets)))
+               (begin
 	   	  (write-char #\, port) 
-	          (write-char #\space port) 
-		)
-	   )
-	   (geda:display-connections (cdr nets) port)
-	 )
-      )
-   )
-)
+	          (write-char #\space port)))
+	       (geda:display-connections (cdr nets) port)))))
 
 ;;
-;; Properly format the name of the net and the actual net connections
+;; Display all nets 
 ;;
 (define geda:display-name-nets
-   (lambda (port net)
-      (let ((netname (car net)) (nets (cdr net)))
-         (if (and 
-		(not (string=? "duplicate" netname))
-		(not (string=? "unconnected pin" netname)))
+   (lambda (port nets)
+      (begin
+         (geda:display-connections nets port)
+         (write-char #\space port) 
+         (newline port))))
+
+;;
+;; Write netname : uref pin, uref pin, ...
+;;
+(define geda:write-net
+   (lambda (port netnames)
+      (if (not (null? netnames))
+         (let ((netname (car netnames)))
 	    (begin
 	       (display netname port)
 	       (display " : " port)
-; (newline port)
-	       (geda:display-connections nets port)
-	       (write-char #\space port) 
-	       (newline port)
-	    )
-         )
-      )
-   )
-)
+               (geda:display-name-nets port (gnetlist:get-all-connections netname))
+	       (geda:write-net port (cdr netnames))))))) 
 
 ;;
-;; Write out a net associated with a particular package and pin
-;;
-(define geda:write-net
-   (lambda (port package pins)
-      (if (not (null? pins))
-         (let ((pin (car pins)))
-	    (begin
-	       (geda:display-name-nets port (gnetlist:get-nets package pin))
-	       (geda:write-net port package (cdr pins))
-	    )
-         )
-      )
-   )
-) 
-
-
-;;
-;; Top level function to write out nets associated with a particular component
+;; Write the net part of the gEDA format
 ;;
 (define geda:nets
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-	    (begin
-	       (let ((package-pins (gnetlist:get-pins package)))
-
-;; temporary 
-;;		  (display package port) 
-;;		  (write-char #\space port) 
-;;		  (display package-pins port)
-;;		  (newline port)
-
-                  (geda:write-net port package package-pins)
-               )
-	       (geda:nets port (cdr ls))
-	    )
-         )
-      )
-   )
-)
-
+   (lambda (port)
+      (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
+         (geda:write-net port all-uniq-nets))))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
 (define geda 
-	(lambda (output-filename)
-		(let ((port (open-output-file output-filename)))
-			(begin
-				(display "WARNING: gnetlist still has some serious bugs -- bogus netlists are possible!") (newline)
-				(gnetlist:set-netlist-mode "gEDA")
-				(geda:write-top-header port)
-				(geda:start-components port)
-				(geda:components port packages)
-				(geda:end-components port)
-				(geda:start-nets port)
-				(geda:nets port packages)
-				(geda:end-nets port)
-			)
-		(close-output-port port)
-		)
-	)
-)
+   (lambda (output-filename)
+      (let ((port (open-output-file output-filename)))
+         (begin
+            (gnetlist:set-netlist-mode "gEDA")
+            (geda:write-top-header port)
+            (geda:start-components port)
+            (geda:components port packages)
+            (geda:end-components port)
+            (geda:start-nets port)
+            (geda:nets port)
+            (geda:end-nets port))
+         (close-output-port port))))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends 
 ;;
 ;; --------------------------------------------------------------------------
-
 
 
 
@@ -433,82 +357,69 @@
 ;; Given a uref, returns the device attribute value (for tango-netlist)
 ;;
 (define tango:get-device
-	(lambda (package)
-		(gnetlist:get-package-attribute package "device")
-	)
-)
+   (lambda (package)
+      (gnetlist:get-package-attribute package "device")))
 
 ;;
 ;; Given a uref, returns the pattern attribute value (PATTERN if not defined)
 ;;
 (define tango:get-pattern
-	(lambda (package)
-   	     (define pattern (gnetlist:get-package-attribute package "pattern"))
-	     (if (string=? "unknown" pattern)
-		    "PATTERN"
-		    pattern)
+   (lambda (package)
+      (define pattern (gnetlist:get-package-attribute package "pattern"))
+      (if (string=? "unknown" pattern)
+         "PATTERN"
+         pattern)))
 ; how do i return "PATTERN" if not defined? humm... need to read some
 ; guile stuff... i did, and see the result :)
-	)
-)
 
 ;;
 ;; Given a uref, returns the value attribute (empty if not defined)
 ;;
 (define tango:get-value
-        (lambda (package)
-	        (define value (gnetlist:get-package-attribute package "value"))
-		(if (string=? "unknown" value)
-		    ""
-		    value)
-	)
-)
+   (lambda (package)
+      (define value (gnetlist:get-package-attribute package "value"))
+      (if (string=? "unknown" value)
+         ""
+	 value)))
  
 ;;
 ;; Top level header
 ;;
 (define tango:write-top-header
-	(lambda (p)
-		(display "START header" p) 
-		(newline p)
-		(newline p)
-		(display "TANGO netlist for gnetlist" p)
-		(newline p)
-                (display "TANGO gnetlist backend written by Nuno Sucena" port)
-		(newline p)
-		(display "END header" p)
-		(newline p)
-		(newline p)
-	)
-)
+   (lambda (p)
+      (display "START header" p) 
+      (newline p)
+      (newline p)
+      (display "TANGO netlist for gnetlist" p)
+      (newline p)
+      (display "TANGO gnetlist backend written by Nuno Sucena" port)
+      (newline p)
+      (display "END header" p)
+      (newline p)
+      (newline p)))
 
 ;;
 ;; Top level component writing 
 ;;
 (define tango:components
-	(lambda (port ls)
-		(if (not (null? ls))
-			(let ((package (car ls)))
-				(begin
-					(display "[" port)
-					(newline port)
-					(display package port)
-					(newline port)
-					(display (tango:get-pattern package) port)
-					(newline port)
-					(display (tango:get-device package) port)
-					(newline port)
-					(display (tango:get-value package) port)
-					(newline port)
-					(newline port)
-					(display "]" port)
-					(newline port)
-					(tango:components port (cdr ls))
-				)
-			)
-		)
-	)
-)
+   (lambda (port ls)
+      (if (not (null? ls))
+         (let ((package (car ls)))
+	    (begin
+	       (display "[" port)
+	       (newline port)
+	       (display package port)
+	       (newline port)
+	       (display (tango:get-pattern package) port)
+	       (newline port)
+	       (display (tango:get-device package) port)
+	       (newline port)
+	       (display (tango:get-value package) port)
+	       (newline port)
+	       (newline port)
+	       (display "]" port)
+	       (newline port)
+	       (tango:components port (cdr ls)))))))
 
 ;;
 ;; Display the individual net connections
@@ -520,107 +431,59 @@
 	   (display (car (car nets)) port)
 	   (display "-" port) 
 	   (display (car (cdr (car nets))) port)
-;	   (newline port)
 	   (if (not (null? (cdr nets)))
 		(begin
-		  (newline port)
-		)
-	   )
-	   (tango:display-connections (cdr nets) port)
-	 )
-      )
-   )
-)
+		  (newline port)))
+	          (tango:display-connections (cdr nets) port)))))
 
 
 ;;
 ;; Properly format the name of the net and the actual net connections
 ;;
 (define tango:display-name-nets
-   (lambda (port net)
-      (let ((netname (car net)) (nets (cdr net)))
-         (if (and 
-		(not (string=? "duplicate" netname))
-		(not (string=? "unconnected pin" netname)))
-	    (begin
-	       (display "(" port)
-	       (newline port)
-	       (display netname port)
-	       (newline port)
-	       (tango:display-connections nets port)
-	       (newline port)
-	       (display ")" port)
-	       (newline port)
-	    )
-         )
-      )
-   )
-)
+   (lambda (port nets)
+      (begin
+         (tango:display-connections nets port))))
 
 ;;
 ;; Write out a net associated with a particular package and pin
 ;;
 (define tango:write-net
-   (lambda (port package pins)
-      (if (not (null? pins))
-         (let ((pin (car pins)))
+   (lambda (port netnames)
+      (if (not (null? netnames))
+         (let ((netname (car netnames)))
 	    (begin
-	       (tango:display-name-nets port (gnetlist:get-nets package pin))
-	       (tango:write-net port package (cdr pins))
-	    )
-         )
-      )
-   )
-) 
+	       (display "(" port)
+               (newline port)
+               (display netname port)
+               (newline port)
+
+	       (tango:display-name-nets port (gnetlist:get-all-connections netname))
+	       (newline port)
+	       (display ")" port)
+	       (newline port)
+	       (tango:write-net port (cdr netnames))))))) 
 
 
 ;;
 ;; Top level function to write out nets associated with a particular component
 ;;
 (define tango:nets
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-	    (begin
-	       (let ((package-pins (gnetlist:get-pins package)))
-
-;; temporary 
-;;		  (display package port) 
-;;		  (write-char #\space port) 
-;;		  (display package-pins port)
-;;		  (newline port)
-
-                  (tango:write-net port package package-pins)
-               )
-	       (tango:nets port (cdr ls))
-	    )
-         )
-      )
-   )
-)
-
+   (lambda (port)
+      (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
+         (tango:write-net port all-uniq-nets))))
 
 ;;; Highest level function
 ;;; Write tango netlist format
 ;;;
 (define tango
-	(lambda (output-filename)
-		(let ((port (open-output-file output-filename)))
-			(begin
-				(display "WARNING: gnetlist still has some serious bugs -- bogus netlists are possible!") (newline)
-				(gnetlist:set-netlist-mode "TANGO")
-;				(tango:write-top-header port)
-;				(geda:start-components port)
-				(tango:components port packages)
-;				(geda:end-components port)
-;				(geda:start-nets port)
-				(tango:nets port packages)
-;				(geda:end-nets port)
-			)
-		(close-output-port port)
-		)
-	)
-)
+   (lambda (output-filename)
+      (let ((port (open-output-file output-filename)))
+         (begin
+	    (gnetlist:set-netlist-mode "TANGO")
+	    (tango:components port packages)
+	    (tango:nets port))
+	 (close-output-port port))))
 
 ;;
 ;; TANGO netlist backend written by Nuno Sucena ends here

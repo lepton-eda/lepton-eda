@@ -88,9 +88,6 @@ s_cpinlist_add ( CPINLIST *ptr )
 	new_node->pin_number = NULL;
 	new_node->net_name = NULL;
 	new_node->nets = NULL;
-	new_node->post_resolve_nets_needed = 0;
-	new_node->nets_is_copy = 0;
-	new_node->original = NULL;
 
 	/* Setup link list stuff */
 	new_node->next = NULL;
@@ -126,10 +123,6 @@ s_cpinlist_print(CPINLIST *ptr)
 				printf(" %s", pl_current->net_name);
 			} else {
 				printf(" null net name");
-			}
-
-			if (pl_current->nets_is_copy) {
-				printf(" (duplicate)");
 			}
 
 			printf("\n");

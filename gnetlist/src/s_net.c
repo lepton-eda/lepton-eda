@@ -89,9 +89,7 @@ s_net_add ( NET *ptr )
 	/* setup node information */
 	new_node->net_name = NULL;
 	new_node->nid = 0;
-	new_node->connected_to_1=NULL;
-	new_node->connected_to_2=NULL;
-	new_node->net_is_duplicate=0;
+	new_node->connected_to=NULL;
 
 	/* Setup link list stuff */
 	new_node->next = NULL;
@@ -127,13 +125,6 @@ s_net_print(NET *ptr)
 			}
 #endif
 
-			if (n_current->connected_to_1) {
-				printf("		%s\n", n_current->connected_to_1);
-			} 
-
-			if (n_current->connected_to_2) {
-				printf("		%s\n", n_current->connected_to_2);
-			} 
 			if (n_current->connected_to) {
 				printf("		%s\n", n_current->connected_to);
 			} 
@@ -244,6 +235,9 @@ s_net_post_resolve( NETLIST *head, int nid, CPINLIST **cpinlist_parent )
 	}
 }
 
+/* this is no longer used */
+/* and obsolete */
+#if 0
 void
 s_net_resolve_duplicates(NETLIST *head, CPINLIST *cpinlist_head)
 {
@@ -281,6 +275,7 @@ s_net_resolve_duplicates(NETLIST *head, CPINLIST *cpinlist_head)
 	}
 
 }
+#endif
 
 char *
 s_net_name(NET *net_head)

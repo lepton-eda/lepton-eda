@@ -178,7 +178,6 @@ g_get_all_nets(SCM scm_level)
   while(nl_current != NULL) {
     pl_current = nl_current->cpins;
     while(pl_current != NULL) {
-      if (!pl_current->nets_is_copy) {  /* only report original nets */
 	if (pl_current->net_name) {
      
 	  net_name = pl_current->net_name;
@@ -189,13 +188,148 @@ g_get_all_nets(SCM scm_level)
 	    list = gh_cons( gh_str2scm( net_name, strlen(net_name)),list);
 	  }
 	}
-      }
       pl_current = pl_current->next;
     }
     nl_current = nl_current->next;
   }
 
   return list;
+}
+
+SCM
+g_get_all_unique_nets(SCM scm_level)
+{
+
+  SCM list = SCM_EOL;
+  SCM x = SCM_EOL;
+  SCM is_member = SCM_EOL;
+  NETLIST *nl_current;
+  CPINLIST *pl_current;
+  char *net_name;
+  char *level;
+  
+  level = gh_scm2newstr(scm_level, NULL);
+  free(level);
+
+
+  nl_current = netlist_head;
+
+  /* walk through the list of components, and through the list
+   * of individual pins on each, adding net names to the list
+   * being careful to ignore duplicates, and unconnected pins 
+   */
+  while(nl_current != NULL) {
+    pl_current = nl_current->cpins;
+    while(pl_current != NULL) {
+	if (pl_current->net_name) {
+     
+	  net_name = pl_current->net_name;
+	  /* filter off unconnected pins */
+	  if(strcmp(net_name, "unconnected_pin") != 0) {
+	    /* add the net name to the list */
+	    /*printf("Got net: `%s'\n",net_name); */
+
+	    x = gh_str2scm(net_name, strlen(net_name));
+	    is_member = scm_member(x, list);
+
+	    if (is_member == SCM_BOOL_F) {
+	       list = gh_cons( gh_str2scm( net_name, strlen(net_name)),list);
+            }
+	  }
+	}
+      pl_current = pl_current->next;
+    }
+    nl_current = nl_current->next;
+  }
+
+  return list;
+}
+
+/* given a net name, return all connections */
+SCM
+g_get_all_connections(SCM scm_netname)
+{
+
+  SCM list = SCM_EOL;
+  SCM x = SCM_EOL;
+  SCM is_member = SCM_EOL;
+  SCM connlist = SCM_EOL;
+  SCM pairlist = SCM_EOL;
+  NETLIST *nl_current;
+  CPINLIST *pl_current;
+  NET *n_current;
+  char *wanted_net_name;
+  char *net_name;
+  char *level;
+  char *pin;
+  char *uref;
+
+  wanted_net_name = gh_scm2newstr(scm_netname, NULL);
+
+  if (wanted_net_name == NULL) {
+  	return list;
+  }
+
+
+  nl_current = netlist_head;
+
+  /* walk through the list of components, and through the list
+   * of individual pins on each, adding net names to the list
+   * being careful to ignore duplicates, and unconnected pins 
+   */
+  while(nl_current != NULL) {
+    pl_current = nl_current->cpins;
+    while(pl_current != NULL) {
+	if (pl_current->net_name) {
+     
+	  net_name = pl_current->net_name;
+	  /* filter off unconnected pins */
+	  if(strcmp(net_name, wanted_net_name) == 0) {
+	    /* add the net name to the list */
+
+#if DEBUG
+	    printf("found net: `%s'\n", net_name); 
+#endif
+
+  	    n_current = pl_current->nets;
+	    while (n_current != NULL) {
+  
+	       if (n_current->connected_to) { 
+
+	          pairlist = SCM_EOL;
+		  pin = (char *) malloc(sizeof(char)*
+			strlen(n_current->connected_to));
+		  uref = (char *) malloc(sizeof(char)*
+		        strlen(n_current->connected_to));
+
+		  sscanf(n_current->connected_to, 
+			"%s %s", uref, pin);	
+
+		  pairlist = gh_list( 
+			  gh_str2scm (uref, strlen(uref)),
+		 	  gh_str2scm (pin, strlen(pin)),
+			  SCM_UNDEFINED);
+
+	          x = pairlist;
+	          is_member = scm_member(x, connlist);
+
+	          if (is_member == SCM_BOOL_F) {
+		     connlist = gh_cons(pairlist, connlist); 
+                  }
+
+		  free(uref);
+		  free(pin);
+	       }
+	    n_current = n_current->next;
+	    }
+	  }
+	}
+      pl_current = pl_current->next;
+    }
+    nl_current = nl_current->next;
+  }
+
+  return connlist;
 }
 
 SCM
@@ -232,18 +366,8 @@ g_get_nets(SCM scm_uref, SCM scm_pin)
 
 		  if (pl_current->pin_number) {
 	    	   if (strcmp(pl_current->pin_number, wanted_pin) == 0) {
-		     if (pl_current->nets_is_copy && netlist_mode != SPICE) {
-			outerlist = gh_cons( gh_str2scm ("duplicate", 
-					 	strlen("duplicate")),
-						outerlist);	
-
-			free(wanted_uref);
-			free(wanted_pin);
-			return(outerlist);
-		     } else {
 
 			n_current = pl_current->nets;
-		/*	pinslist = SCM_EOL;*/
 
 			if (pl_current->net_name) {
 				net_name = pl_current->net_name;
@@ -251,15 +375,15 @@ g_get_nets(SCM scm_uref, SCM scm_pin)
 			   
 		   	while (n_current != NULL) {
 
-			   if (n_current->connected_to_1) { 
+			   if (n_current->connected_to) { 
 
 				pairlist = SCM_EOL;
 				pin = (char *) malloc(sizeof(char)*
-					strlen(n_current->connected_to_1));
+					strlen(n_current->connected_to));
 				uref = (char *) malloc(sizeof(char)*
-					strlen(n_current->connected_to_1));
+					strlen(n_current->connected_to));
 
-				sscanf(n_current->connected_to_1, 
+				sscanf(n_current->connected_to, 
 				       "%s %s", uref, pin);	
 
 			   	pairlist = gh_list( 
@@ -271,41 +395,18 @@ g_get_nets(SCM scm_uref, SCM scm_pin)
 
 				free(uref);
 				free(pin);
-
-			   } else if (n_current->connected_to_2) {
-
-				pin = (char *) malloc(sizeof(char)*
-					strlen(n_current->connected_to_2));
-				uref = (char *) malloc(sizeof(char)*
-					strlen(n_current->connected_to_2));
-
-				sscanf(n_current->connected_to_2, 
-				       "%s %s", uref, pin);	
-
-			   	pairlist = gh_list( 
-						gh_str2scm (uref, strlen(uref)),
-						gh_str2scm (pin, strlen(pin)),
-						SCM_UNDEFINED);
-
-				free(uref);
-				free(pin);
-
-			   	pinslist = gh_cons(pairlist, pinslist); 
 			   }
 			   n_current = n_current->next;
 			}
-                      }
                     }
 	           }
 		   pl_current = pl_current->next;
 	        }
-	/*	netslist = gh_list(pinslist, netslist, SCM_UNDEFINED);*/
 	     }
 	  }
 	  nl_current = nl_current->next;
  	}
 
-	/* pins list was nets list */
 	if (net_name != NULL) {
 		outerlist = gh_cons(gh_str2scm(net_name, strlen(net_name)), pinslist);
 	} else {

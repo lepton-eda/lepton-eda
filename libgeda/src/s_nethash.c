@@ -90,7 +90,7 @@ o_nethash_add(NETHASH *list_head, OBJECT *object, int type)
 	new->object = object;
 	new->type = type;
 
-#if 1 
+#if DEBUG 
 	if (new->type == ALES_MIDPOINT) {
 		printf("finally adding midpoint!!!\n");
 	}
@@ -276,7 +276,9 @@ o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current,
 	if (g_hash_table_lookup_extended(nethash_table, key,
 		(gpointer) orig_key, (gpointer) nethash_list)) {
 
+#if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
+#endif
 
 		/* Search for o_current in st_ales list */
 		found = o_nethash_search(*nethash_list, o_current);
@@ -293,8 +295,10 @@ o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current,
 
 	} else {
 
+#if DEBUG
 		printf("key not found!\n");
 		printf("creating nethash_list : _%s_\n", key);
+#endif
 
 		/* not found */
 		/* create st_nethash node head */
@@ -324,10 +328,8 @@ o_nethash_query_table(GHashTable *nethash_table, char *key)
 
 	if (nethash_list) {
 		return(nethash_list);
-		printf("yeah found it\n");
 	} else {
 		return(NULL);
-		printf("else didn't find it!\n");
 	}
 
 	return(0);

@@ -64,7 +64,7 @@ config:
 	for i in $(SUBDIRS) ;\
 	do \
 	echo "making" all "in $$i..."; \
-	(cd $$i ; autoreconf --force ; automake ; ./configure --prefix=$(prefix)); \
+	(cd $$i ; autoreconf --force ; automake ); \
 	done
 	@echo Finished!
 

@@ -142,82 +142,12 @@ s_netlist_post_resolve(NETLIST *head)
 
 if (verbose_mode) {
 	printf("- Staring post processing\n");
-
-	printf("- Pass one: \n");
-}
-
-#if 0 /* no longer needed I think */
-	while(nl_current != NULL) {
-		if (nl_current->cpins) {
-			pl_current = nl_current->cpins;		
-			while(pl_current != NULL) {
-
-				/* first resolve any nets which need post
-				 * resolving */
-				if (pl_current->post_resolve_nets_needed) {
-
-if (verbose_mode) {
-					printf(".");
-                                	if (i++ == 78) {
-                                       		printf("\n");
-                                        	i = 0;
-                                	}
-}
-
-
-					pl_current->nets = 
-						s_net_post_resolve(
-							head, 
-							pl_current->post_resolve_nets_needed, &pinlist_parent);
-					pl_current->nets_is_copy=1;
-					pl_current->original = pinlist_parent; 
-				}
-
-				pl_current = pl_current->next;
-			}
-		}
-		nl_current = nl_current->next;
-	}
-
-if (verbose_mode) {
-	printf(" done\n"); 
-
-	printf("- Pass two:\n");
+	printf("- Pass one:\n");
 	i = 0;
 }
 
-	nl_current = head;
-
-	while(nl_current != NULL) {
-
-		if (nl_current->cpins) {
-			pl_current = nl_current->cpins;		
-			while(pl_current != NULL) {
-
-if (verbose_mode) {
-				printf(".");
-                               	if (i++ == 78) {
-                               		printf("\n");
-                                      	i = 0;
-                               	}
-}
-
-				/* now resolve those mid point connections */	
-				s_net_resolve_duplicates(head, pl_current);
-			
-				pl_current = pl_current->next;
-			}
-		}
-		nl_current = nl_current->next;
-	}
-#endif
-
-if (verbose_mode) {
-	printf(" done\n"); 
-	printf("- Pass three:\n");
-	i = 0;
-}
-
+	/* this pass gives all nets a name, whether specified or creates a 
+	/* name */
 	nl_current = head;
 	while(nl_current != NULL) {
 		if (nl_current->cpins) {
@@ -232,20 +162,15 @@ if (verbose_mode) {
                                	}
 }
 
-				/* not quite sure why this works */
-				if (pl_current->nets_is_copy) {
+				if (pl_current->plid != -1 && 
+					pl_current->nets) {
 
-					if (pl_current->plid != -1) {
-						pl_current->net_name = pl_current->original->net_name;
+				 	if (pl_current->net_name) {
+						free(pl_current->net_name);
 					}
-				} else {
 
-					if (pl_current->plid != -1 && pl_current->nets) {
-
-					 	if (pl_current->net_name)
-							free(pl_current->net_name);
-						pl_current->net_name = s_net_name(pl_current->nets);
-					}
+					pl_current->net_name = 
+						s_net_name(pl_current->nets);
 				}
 			
 				pl_current = pl_current->next;
