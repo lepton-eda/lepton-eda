@@ -338,7 +338,7 @@ DEFINE_G_KEYS(cancel)
 /*help for generate-netlist hot key*/
 SCM g_get_selected_filename(void)                     
 {                                                     
-	return (get_selected_filename(global_window_current, 0, NULL));
+	return (get_selected_filename(global_window_current));
 }
 
 
@@ -352,8 +352,8 @@ SCM g_get_selected_filename(void)
 
 <<g_keys.c : g_get_selected_component_attributes()>>=
 SCM g_get_selected_component_attributes(void)                 
-{                                                     
-	return (get_selected_component_attributes(global_window_current, 0, NULL));
+{
+  return (get_selected_component_attributes(global_window_current));
 }
 
 

@@ -19,8 +19,8 @@ SCM g_funcs_use_rc_values(void);
 SCM g_funcs_key_name(SCM keystring);
 SCM g_funcs_key_value(SCM keystring);
 SCM g_funcs_key_done(void);
-SCM get_selected_component_attributes(gpointer data, guint callback_action, GtkWidget *widget);
-SCM get_selected_filename(gpointer data, guint callback_action, GtkWidget *widget);
+SCM get_selected_component_attributes(TOPLEVEL *toplevel);
+SCM get_selected_filename(TOPLEVEL *toplevel);
 /* g_hook.c */
 SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object);
 SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value);

@@ -1,3 +1,15 @@
+2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/g_keys.nw (g_get_selected_component_attributes): Adapted for 
+	new prototype of get_selected_component_attributes.
+	(g_get_selected_filename): Adapted for new prototype of 
+	get_selected_filename;
+
+	* noweb/g_funcs.nw (get_selected_component_attributes): Rewritten to 
+	use a GLib hash table instead of the libgeda s_scratch code. Also 
+	reduced number of parameters.
+	(get_selected_filename): Reduced number of parameters.
+
 2005-02-13  Carlos Nieves Onega <cnieves@iespana.es>
 
         * po/es_ES.po, po/LINGUAS: Added first version of spanish translation.

@@ -236,7 +236,8 @@ SCM g_funcs_key_done(void)
 
 @section Function @code{get_selected_component_attributes()}
 
-@defun get_selected_component_attributes data callback_action widget
+@defun get_selected_component_attributes toplevel
+Gets names from all objects of current page which selected-flags are true.
 @end defun
 
 <<g_funcs.c : get_selected_component_attributes()>>=
@@ -245,56 +246,41 @@ SCM g_funcs_key_done(void)
  * I don't really know, whether this all are necessary or not, but 
  * it works :-). */
 
-/* get names from all objects of current_page, which */
-/* selected-flags are true. */
-
-SCM get_selected_component_attributes(gpointer data,		
-				      guint callback_action,	
-				      GtkWidget *widget)
+static void
+hash_table_2_list (gpointer key,
+                   gpointer value,
+                   gpointer user_data)
 {
-  OBJECT *obj;
-  PAGE *p;
-  
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  SCM *plist = (SCM*)user_data;
+  *plist = gh_cons(gh_str2scm((char*)value, strlen ((char*)value)),
+                   *plist);
+}
+
+SCM get_selected_component_attributes(TOPLEVEL *toplevel)
+{
   SCM list = SCM_EOL;
-  /*NETLIST *nl_current = NULL; */
+  OBJECT *obj;
+  GHashTable *ht;
+ 
+  /* build a hash table */
+  ht = g_hash_table_new (g_str_hash, g_str_equal);
+  for (obj = toplevel->page_current->object_head; obj != NULL;
+       obj = obj->next) {
+    if (obj->selected &&
+        obj->type == OBJ_TEXT &&
+        obj->text->string != NULL) {
+      /* add text string in the hash table */
+      g_hash_table_insert (ht,
+                           obj->text->string,
+                           obj->text->string);
+     }
+   }
+  /* now create a scheme list of the entries in the hash table */
+  g_hash_table_foreach (ht, hash_table_2_list, &list);
+  /* and get ride of the hast table */
+  g_hash_table_destroy (ht);
 
-  /*nl_current = netlist_head; */
-  p = w_current->page_current;
-  obj = p->object_head;
-
-  s_scratch_string_init();
-  
-  while (obj != NULL)
-  {
-    if (obj->selected) 
-    {
-	  
-      /*if (obj->type == OBJ_COMPLEX)
-        {
-        if (s_scratch_string_fill(obj->complex_basename)) 
-        {
-        list = gh_cons( gh_str2scm (obj->complex_basename, 
-        strlen(obj->complex_basename)), 
-        list);	
-        }
-        }
-        else*/
-      {
-        if (obj->text && obj->text->string)
-        {
-          if (s_scratch_string_fill(obj->text->string))
-          {
-            list = scm_cons (scm_makfrom0str (obj->text->string),
-                             list);	
-          } 
-        }
-      }
-    }
-    obj = obj->next;
-  }
-  s_scratch_string_free();
-  return(list);
+  return list;
 }
 
 
@@ -303,19 +289,16 @@ SCM get_selected_component_attributes(gpointer data,
 
 @section Function @code{get_selected_filename()}
 
-@defun get_selected_filename data callback_action widget
+@defun get_selected_filename w_current
+This function returns the whole filename of the current schematic. 
+Specially, the [[page_filename]] of the current page.
 @end defun
 
 <<g_funcs.c : get_selected_filename()>>=
-/* this function returns the whole filename of the current schematic. */
-/* specially, the page_filename of the current_page */
 
-SCM get_selected_filename(gpointer data,		
-			  guint callback_action,	
-			  GtkWidget *widget)
+SCM get_selected_filename(TOPLEVEL *w_current)
 {
   SCM return_value;
-  TOPLEVEL *w_current = (TOPLEVEL *) data;
   
   exit_if_null(w_current);
   
