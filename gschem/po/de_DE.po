@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-08 23:57-0500\n"
-"PO-Revision-Date: 2005-01-15 17:52+0100\n"
+"PO-Revision-Date: 2005-03-09 22:22+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
-msgstr "Bereich zu klein! Weiteres Vergrößern nicht möglich.\n"
+msgstr "Bereich zu klein! Eine weitere Vergrößerung ist nicht möglich.\n"
 
 #: noweb/g_funcs.nw:202
 #, c-format
@@ -38,16 +38,14 @@ msgid ""
 "[%s]\n"
 msgstr ""
 "Die Version der gschemrc Datei ist [%s].\n"
-"gschemrc Datei: [%s]\n"
+"Dateiname: [%s]\n"
 
 #: noweb/g_rc.nw:235
 #, c-format
-msgid ""
-"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
-"Solange gschem im ALPHA-Stadium ist, stelle sicher, daß die neueste rc "
-"Datei \n"
-"verwendet wird.\n"
+"Solange gschem im ALPHA-Stadium ist, sollte unbedingt die neueste rc Datei \n"
+"verwendet werden.\n"
 
 #: noweb/g_rc.nw:302
 #, c-format
@@ -113,9 +111,9 @@ msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 
 #: noweb/g_rc.nw:1998
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-msgstr "Eine ungültige Ebenenanzahl [%d] wurde an undo-levels übergeben.\n"
+msgstr "Eine falsche Zeilenzahl [%d] wurde an output-vector-threshold übergeben.\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -128,23 +126,20 @@ msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 msgstr ""
-"gEDA/gschem kommt OHNE JEGLICHE GARANTIE. Lies die Datei COPYING für "
-"nähere \n"
-"Informationen.\n"
+"gEDA/gschem kommt OHNE JEGLICHE GARANTIE. Bitte lies die Datei COPYING für"
+"nähere Informationen.\n"
 
 #: noweb/gschem.nw:183 noweb/gschem.nw:193
 #, c-format
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
-msgstr ""
-"Dies ist Freie Software. Sie darf unter gewissen Bestimmungen weitergegeben\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgstr "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies die\n"
 
 #: noweb/gschem.nw:185 noweb/gschem.nw:195
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
-msgstr "werden. Lesen Sie die Datei COPYING für nähere Informationen.\n"
+msgstr "Lizenzbestimmungen in der Datei COPYING für nähere Informationen.\n\n"
 
 #: noweb/gschem.nw:199
 #, c-format
@@ -159,7 +154,7 @@ msgstr "Aktuelle Spracheinstellungen: %s\n"
 #: noweb/gschem.nw:216
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
-msgstr "Die Umgebungsvariable GEDADATA muß definiert werden!\n"
+msgstr "Die Umgebungsvariable GEDADATA muß gesetzt werden!\n"
 
 #: noweb/gschem.nw:231
 #, c-format
@@ -248,9 +243,8 @@ msgid "Box Mode"
 msgstr "Rechteck Modus"
 
 #: noweb/i_basic.nw:197
-#, fuzzy
 msgid "Picture Mode"
-msgstr "Anschluß Modus"
+msgstr "Bild Modus"
 
 #: noweb/i_basic.nw:200
 msgid "Circle Mode"
@@ -318,7 +312,7 @@ msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Die Funktion \"Dokumentation\" wird unter MinGW nicht unterstützt.\n"
 
 #: noweb/i_callbacks.nw:436
-#, fuzzy, c-format
+#, c-format
 msgid "New page created [%s]\n"
 msgstr "Neue Seite erzeugt [%s]\n"
 
@@ -410,8 +404,7 @@ msgstr "Verschieben nach"
 
 #: noweb/i_callbacks.nw:1385
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr ""
-"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: noweb/i_callbacks.nw:1386
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -709,8 +702,7 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: noweb/o_buffer.nw:76
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr ""
-"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: noweb/o_buffer.nw:120
 #, c-format
@@ -727,14 +719,12 @@ msgstr ""
 #: noweb/o_buffer.nw:226
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr ""
-"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: noweb/o_bus.nw:273
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr ""
-"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: noweb/o_bus.nw:344 noweb/o_bus.nw:378 noweb/o_net.nw:388 noweb/o_net.nw:422
 #, c-format
@@ -759,8 +749,7 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: noweb/o_complex.nw:272
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr ""
-"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
 #: noweb/o_complex.nw:631
 #, c-format
@@ -816,27 +805,28 @@ msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "FEHLER: NULL Objekt innerhalb von o_rotate_90!\n"
 
 #: noweb/o_misc.nw:553
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been embedded\n"
-msgstr "Bauteil ist noch eingebettet.\n"
+msgstr "Das Bauteil [%s] wurde eingebettet.\n"
 
 #: noweb/o_misc.nw:590
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
 msgstr ""
 "Konnte Bauteil nicht finden [%s], während versucht wurde es auszubetten.\n"
+"Das Bauteil bleibt eingebettet.\n"
 
 #: noweb/o_misc.nw:601 noweb/o_misc.nw:1590
 #, c-format
 msgid "More than one component found with name [%s]\n"
-msgstr ""
+msgstr "Es wurde mehr als ein Bauteil mit dem Namen [%s] gefunden.\n"
 
 #: noweb/o_misc.nw:609
-#, fuzzy, c-format
+#, c-format
 msgid "Component [%s] has been successfully unembedded\n"
-msgstr "Bauteil ist noch eingebettet.\n"
+msgstr "Das Bauteil [%s] wurde erfolgreich ausgebettet.\n"
 
 #: noweb/o_misc.nw:652
 #, c-format
@@ -853,12 +843,11 @@ msgstr "Verborgener Text ist jetzt unsichbar.\n"
 
 #: noweb/o_misc.nw:1585
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
-msgstr ""
+msgstr "Konnte Bauteil nicht ausbetten. Es wurde keine passende .sym Datei gefunden.\n"
 
 #: noweb/o_misc.nw:1586
-#, fuzzy
 msgid "Component still embedded and not updated\n"
-msgstr "Bauteil ist noch eingebettet.\n"
+msgstr "Das Bauteil ist noch eingebettet und wurde nicht aktualisiert.\n"
 
 #: noweb/o_move.nw:259
 #, c-format
@@ -880,8 +869,7 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: noweb/o_net.nw:317
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr ""
-"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #: noweb/o_net.nw:891 noweb/o_net.nw:928 noweb/o_net.nw:999
 #: noweb/o_net.nw:1035
@@ -898,7 +886,7 @@ msgstr "Konnte %s in keiner Bauteilbibliothek finden\n"
 
 #: noweb/o_picture.nw:253
 msgid "Picture"
-msgstr ""
+msgstr "Bild"
 
 #: noweb/o_picture.nw:437 noweb/x_attribedit.nw:193
 #, c-format
@@ -943,6 +931,15 @@ msgid ""
 "  -h            Help; this message\n"
 "\n"
 msgstr ""
+"Aufruf: %s [Optionen] Schaltplan_Datei1 ... Schaltplan_DateiN\n"
+"  -q            keine Standardausgabe\n"
+"  -v            viele Standardausgaben\n"
+"  -r Dateiname  Rc Dateiname\n"
+"  -s Dateiname  Skript (guile) Dateiname\n"
+"  -o Dateiname  Ausgabe Dateiname (für den Ausdruck)\n"
+"  -t            Tastaturkürzel ausgeben\n"
+"  -h            Hilfe (diese Ausgabe)\n"
+"\n"
 
 #: noweb/rcstrings.nw:2
 msgid "File"
@@ -1199,9 +1196,8 @@ msgid "Text..."
 msgstr "Text..."
 
 #: noweb/rcstrings.nw:84
-#, fuzzy
 msgid "Image"
-msgstr "Seite"
+msgstr "Bild"
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"
@@ -1502,7 +1498,7 @@ msgstr "Text Ausrichtung"
 #: noweb/x_dialog.nw:1943 noweb/x_dialog.nw:1944 noweb/x_dialog.nw:1945
 #: noweb/x_dialog.nw:1946 noweb/x_dialog.nw:1947 noweb/x_dialog.nw:1955
 msgid "*unchanged*"
-msgstr ""
+msgstr "*unverändert*"
 
 #: noweb/x_dialog.nw:1357
 msgid "Edit Line Width & Type"
@@ -1699,21 +1695,19 @@ msgstr "Zeige Text, der beginnt mit:"
 #: noweb/x_dialog.nw:4599
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
-msgstr ""
+msgstr "Warnung: negative Zahlen sind im Dialog für automatische Textnummerierung nicht erlaubt.\n"
 
 #: noweb/x_dialog.nw:4684
 msgid "Autonumber text"
 msgstr "Nummeriere Text automatisch"
 
 #: noweb/x_dialog.nw:4690
-#, fuzzy
 msgid "selection"
-msgstr "Auswählen"
+msgstr "Auswahl"
 
 #: noweb/x_dialog.nw:4699
-#, fuzzy
 msgid "search text"
-msgstr "Zeige Text"
+msgstr "Suchtext"
 
 #: noweb/x_dialog.nw:4713 noweb/x_dialog.nw:4722
 msgid "refdes=C"
@@ -1733,67 +1727,60 @@ msgstr ""
 
 #: noweb/x_dialog.nw:4726
 msgid "search focus"
-msgstr ""
+msgstr "Suchbereich"
 
 #: noweb/x_dialog.nw:4739
-#, fuzzy
 msgid "selected objects"
-msgstr "Ein nicht existierende Objekt wurde ausgewählt.\n"
+msgstr "ausgewählte Objekte"
 
 #: noweb/x_dialog.nw:4742
 msgid "current sheet"
-msgstr ""
+msgstr "aktuelle Seite"
 
 #: noweb/x_dialog.nw:4745
 msgid "hierarchical sheets"
-msgstr ""
+msgstr "gesamte Hierarchie"
 
 #: noweb/x_dialog.nw:4757
-#, fuzzy
 msgid "unnumbered"
-msgstr "Nummeriere Text automatisch"
+msgstr "nicht nummerierte"
 
 #: noweb/x_dialog.nw:4761
-#, fuzzy
 msgid "all"
-msgstr "Alle"
+msgstr "alle"
 
 #: noweb/x_dialog.nw:4770
-#, fuzzy
 msgid "options"
 msgstr "Optionen"
 
 #: noweb/x_dialog.nw:4777
-#, fuzzy
 msgid "start number"
-msgstr "Editiere slot Nummer"
+msgstr "Startnummer"
 
 #: noweb/x_dialog.nw:4790
 msgid "sort order"
-msgstr ""
+msgstr "Sortierung"
 
 #: noweb/x_dialog.nw:4802
-#, fuzzy
 msgid "file order"
-msgstr "Kreis Modus"
+msgstr "Dateireihenfolge"
 
 #: noweb/x_dialog.nw:4805
 msgid "top down"
-msgstr ""
+msgstr "von oben nach unten"
 
 #: noweb/x_dialog.nw:4808
-#, fuzzy
 msgid "left right"
-msgstr "Mitte Rechts"
+msgstr "von links nach rechts"
 
 #: noweb/x_dialog.nw:4811
 msgid "diagonal"
-msgstr ""
+msgstr "diagonal"
 
 #: noweb/x_fileselect.nw:416
-#, fuzzy, c-format
+#, c-format
 msgid "Agg, could not open directory: %s\n"
-msgstr "Ups! Konnte Verzeichnis nicht öffnen: %s\n"
+msgstr "Ups! Konnte Verzeichnis [%s] nicht öffnen.\n"
 
 #: noweb/x_fileselect.nw:443
 #, c-format
@@ -1824,8 +1811,7 @@ msgstr "* - Alle Dateien"
 #: noweb/x_fileselect.nw:786
 #, c-format
 msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
-msgstr ""
-"x_fileselect_preview_checkbox: Der Rückgabewert von f_current ist NULL!\n"
+msgstr "x_fileselect_preview_checkbox: Der Rückgabewert von f_current ist NULL!\n"
 
 #: noweb/x_fileselect.nw:874
 #, c-format
@@ -1860,7 +1846,7 @@ msgstr "Füge Bauteil als Einzelkomponenten ein."
 #: noweb/x_fileselect.nw:1957 noweb/x_fileselect.nw:1961
 #: noweb/x_fileselect.nw:2289
 msgid "Search in Components"
-msgstr "Suche in Komponenten"
+msgstr "Bauteil suchen"
 
 #: noweb/x_fileselect.nw:2020
 msgid "Search in Components - Found library only"
@@ -1951,15 +1937,15 @@ msgstr "Status"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
-msgstr ""
+msgstr "Es wurde versucht die Sensibilität für einen nichtexistierenden Menueintrag zu setzen\n"
 
 #: noweb/x_menus.nw:448
 msgid "Popup_menu_item_factory doesn't exist!\n"
-msgstr ""
+msgstr "Popup_menu_item_factory existiert nicht\n"
 
 #: noweb/x_menus.nw:463
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
+msgstr "Es wurde versucht die Sensibilität für einen nichtexistierenden Menueintrag zu setzen\n"
 
 #: noweb/x_multiattrib.nw:270
 msgid "Edit Attributes"
@@ -1978,9 +1964,8 @@ msgid "V"
 msgstr "V"
 
 #: noweb/x_multiattrib.nw:471
-#, fuzzy
 msgid "Add Attribute"
-msgstr "Attribut neu/bearbeiten"
+msgstr "Attribut hinzufügen"
 
 #: noweb/x_multiattrib.nw:668
 msgid "Show Value only"
@@ -1992,20 +1977,19 @@ msgstr "Nur Name anzeigen"
 
 #: noweb/x_multiattrib.nw:745
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
+msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: noweb/x_pagesel.nw:315
 msgid "Page Manager"
 msgstr "Seiten Manager"
 
 #: noweb/x_pagesel.nw:387
-#, fuzzy
 msgid "Changed"
-msgstr "Ändern"
+msgstr "Geändert"
 
 #: noweb/x_pagesel.nw:407
 msgid "Right click on the filename for more options..."
-msgstr ""
+msgstr "Rechtsklick auf den Dateinamen für mehr Optionen..."
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2350,3 +2334,4 @@ msgstr "Ausschnitt/Cancel"
 
 #~ msgid "Discard Changes?"
 #~ msgstr "Verwerfe Änderungen?"
+

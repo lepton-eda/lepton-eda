@@ -4710,10 +4710,11 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 		      (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
 		      (GtkAttachOptions) (0), 0, 0);
     /* gtk_combo_set_value_in_list (GTK_COMBO (combo1), TRUE, TRUE);*/
-    combo1_items = g_list_append (combo1_items, (gpointer) _("refdes=C"));
-    combo1_items = g_list_append (combo1_items, (gpointer) _("refdes=Q"));
-    combo1_items = g_list_append (combo1_items, (gpointer) _("refdes=R"));
-    combo1_items = g_list_append (combo1_items, (gpointer) _("refdes=X"));
+    combo1_items = g_list_append (combo1_items, (gpointer) "refdes=C");
+    combo1_items = g_list_append (combo1_items, (gpointer) "refdes=Q");
+    combo1_items = g_list_append (combo1_items, (gpointer) "refdes=R");
+    combo1_items = g_list_append (combo1_items, (gpointer) "refdes=U");
+    combo1_items = g_list_append (combo1_items, (gpointer) "refdes=X");
     gtk_combo_set_popdown_strings (GTK_COMBO (combo1), combo1_items);
     g_list_free (combo1_items);
 
