@@ -21,19 +21,86 @@
 ;; what when not defined?
 ;;      problem is slotted components e.g. ../examples/singlenet_1.sch
 
+(define vipec:templates
+   (list
+      (cons 
+         (cons "RESISTOR" "RES")
+         (list 
+            (list "value" "R=" #t)))
+      (cons
+         (cons "INDUCTOR" "IND")
+         (list
+            (list "value" "L=" #t)
+            (list "Q" "Q=" #f)))
+      (cons
+         (cons "CAPACITOR" "CAP")
+         (list
+            (list "value" "C=" #t)))
+      (cons
+         (cons "TLIN" "TLIN")
+         (list
+            (list "Z" "Z=" #t 50)
+            (list "E" "E=" #t)
+            (list "F" "F=" #t)))
+      (cons
+         (cons "CLIN" "CLIN")
+         (list
+            (list "ZE" "ZE=" #t)
+            (list "ZO" "ZO=" #t)
+            (list "E" "E=" #t)
+            (list "F" "F=" #t)))
+            
+))
+
+(define vipec:get-template
+   (lambda (templates device)
+      (if (not (null? templates))
+         (if (string=? device (car (car (car templates))))
+            (car templates)
+            (vipec:get-template (cdr templates) device))
+         (begin
+            (display "Template not found   ")
+            (display device)
+            (newline)
+            (cons (cons device "error") '())))))
+
 (define vipec:write-net-name-of-node 
    (lambda (uref number-of-pin netnumbers port)
       (if (> number-of-pin 0)
-         (begin          ;; generate a pin-name e.g. pin1, pin2, pin3 ...
+         (begin          
             (vipec:write-net-name-of-node uref (- number-of-pin 1) netnumbers port)
             (let ((pin-name (string-append "pin" (number->string number-of-pin))))
                (display (get-net-number (car (gnetlist:get-nets uref (gnetlist:get-package-attribute uref pin-name))) netnumbers) port)
                (write-char #\space port))))))
 
+(define vipec:write-attribs
+   (lambda (package attribs port)
+      (if (not (null? attribs))
+         (let ((attrib (car attribs))
+               (value (gnetlist:get-package-attribute package (car(car attribs)))))
+            (if (not (string=? value "unknown"))
+               (begin
+                  (display (car (cdr attrib)) port)
+                  (display value port)
+                  (display "\t" port))
+               (if (and (caddr attrib)(not (null? (cdddr attrib))))
+                  (begin
+                     (display (cadr attrib) port)
+                     (display (cadddr attrib) port)
+                     (display "\t" port))))))))
 
-;; write the uref, to the pin# connected net and component value
+(define vipec:write-gen-component
+   (lambda (package port netnumbers)
+      (let ((template (vipec:get-template vipec:templates (get-device package))))
+         (display "\t" port)
+         (display (cdr (car template)) port)
+         (display "\t" port)
+         (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
+         (vipec:write-attribs package (cdr template) port)
+         (display package port)
+         (newline port))))
 
-(define vipec:write-one-component
+(define vipec:write-component
    (lambda (package port netnumbers)
       (display package port)
       (write-char #\space port)
@@ -43,12 +110,9 @@
       (display package port)
       (newline port)))
 
-;;(write-net-name-of-node package (gnetlist:get-pins package) port)
-
-
 (define vipec:write-resistor
    (lambda (package port netnumbers)
-      (display "RES\t" port)
+      (display "   RES\t" port)
       (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
       (display "\t" port)
       (display "R=" port)
@@ -59,7 +123,7 @@
 
 (define vipec:write-capacitor
    (lambda (package port netnumbers)
-      (display "CAP\t" port)
+      (display "   CAP\t" port)
       (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
       (display "\t" port)
       (display "C=" port)
@@ -70,7 +134,7 @@
 
 (define vipec:write-inductor
    (lambda (package port netnumbers)
-      (display "IND\t" port)
+      (display "   IND\t" port)
       (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
       (display "\t" port)
       (display "L=" port)
@@ -87,7 +151,7 @@
 
 (define vipec:write-tlin
    (lambda (package port netnumbers)
-      (display "TLIN\t" port)
+      (display "   TLIN\t" port)
       (vipec:write-net-name-of-node package (length (gnetlist:get-pins package)) netnumbers port)
       (display "\t" port)
       (let ((Z (gnetlist:get-package-attribute package "Z"))
@@ -116,21 +180,9 @@
       (if (not (null? ls))
          (let ((package (car ls)))
             (cond 	
-               ((string=? (get-device package) "RESISTOR") 
-                  (vipec:write-resistor package port netnumbers))
-               ((string=? (get-device package) "CAPACITOR") 
-                  (vipec:write-capacitor package port netnumbers))
-               ((string=? (get-device package) "INDUCTOR") 
-                  (vipec:write-inductor package port netnumbers))
-               ((string=? (get-device package) "TLIN") 
-                  (vipec:write-tlin package port netnumbers))
-               ((string=? (get-device package) "TLIN4") 
-                  (vipec:write-tlin4 package port netnumbers))
-               ((string=? (get-device package) "CLIN") 
-                  (vipec:write-clin package port netnumbers))
                ((string=? (get-device package) "SPARAMBLOCK") 
                   (vipec:write-block package port netnumbers))
-               ( else (vipec:write-one-component package port netnumbers)))
+               ( else (vipec:write-gen-component package port netnumbers)))
             (vipec:component-writing port (cdr ls) netnumbers)))))
 
 (define vipec:header
