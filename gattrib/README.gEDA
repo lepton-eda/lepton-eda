@@ -1,0 +1,135 @@
+
+gEDA
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+
+README for gnetlist version 2003* 
+(This software is ALPHA)
+
+
+IMPORTANT
+	Please read the file NEWS for details on specifics for this release
+	Please read the file BUGS for more info on existing bugs
+	Please read the file TODO for things which are in the works
+
+
+
+- Installation
+
+	See the file INSTALL for more instructions on how to build gnetlist
+
+
+
+- System Requirements
+
+	A computer:
+   	   - at least the processing power of a i486/66
+	   - Enough RAM for X (usually 16 Mbytes but 32 Mbytes recommended)
+
+	Running UNIX:
+	   - Semi recent version of UNIX
+	   - Compiled on:
+		FreeBSD (2.2.5) 	
+		Linux (2.0, 2.2)	(and highly tested) 
+		Solaris (2.5)		
+		SunOS (4.1.3)	
+		HP-UX (9.07)	
+
+	The X window system 	
+		- A resolution of at least 800x600
+		- A color display
+		- 3 button mouse (2 button works, but 3 button is better)
+
+	A C compiler (that understands ANSI, like gcc) 
+
+	GLIB version 1.2.10 or higher (and anything glib requires)
+	Glib can be found at ftp://ftp.gtk.org/pub/gtk
+
+	GTK+ version 1.2.10 or higher (and anything gtk requires)
+	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
+
+	libgeda (same version as gnetlist)
+	This can be found on the gEDA website/ftpsite
+
+	symbols (same version as gnetlist)
+	This can be found on the gEDA website/ftpsite
+		
+	GUILE - guile-1.4 or 1.6 is required (and anything guile requires).  
+	Guile can be found at: ftp://ftp.gnu.org/pub/gnu/guile
+
+	LibStroke 0.5.1 [OPTIONAL] - if you want stroke support.  The homepage
+	for LibStroke is: http://www.etla.net/libstroke/
+
+	libgdgeda 2.0.9 [OPTIONAL] - if you want the ability to write png
+	images.  libgdgeda is based on gd 2.0.9  The homepage for gd 2.0.x is
+	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
+	website: http://www.geda.seul.org/dist
+
+	If you use libgdgeda then you also need zlib.  zlib can be found at:
+	http://www.cdrom.com/pub/infozip/zlib  zlib can also be found on
+	the gEDA website: http://www.geda.seul.org/dist 
+
+	If you use libgdgeda then you also need libpng.  libpng can be found 
+ 	at: http://www.libpng.org/pub/png/pngcode.html  libpng can also be 
+	found on the gEDA website: http://www.geda.seul.org/dist 
+
+	An understanding that this software is ALPHA release quality :)
+
+
+
+- License  
+
+	gEDA (libgeda/gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
+	and all associated files (such as component symbols)) is placed
+	under the GNU Public License (GPL) version 2.0.  See the toplevel
+	COPYING file for more information.
+
+	Programs and associated files are: 
+	Copyright 1998-2003 by Ales V. Hvezda and the respective original
+	authors (which are listed on the respective files)
+
+
+
+- gEDA Internet resources
+
+	Homepage: http://www.geda.seul.org
+
+	Mailing list:
+		To subscribe send an email to: majordomo@geda.seul.org  
+	 	with   subscribe geda-user   in the body.
+		
+		To unsubscribe send an email to: majordomo@geda.seul.org
+	 	with   unsubscribe geda-user   in the body.
+
+		To send email to the list use the address:
+
+			geda-user@geda.seul.org
+
+		Remember, geda-user@geda.seul.org is for the actual traffic.  
+		For administrative commands, use majordomo@geda.seul.org.
+
+		The mailing list archive is at:
+
+			http://www.geda.seul.org/mailinglist 
+
+	Many thanks to the SEUL project for hosting gEDA!
+
+
+
+- Notes
+ 
+	* For anybody developing guile scripts using guile 1.6.x really should
+	  set GUILE_WARN_DEPRECATED=detailed   to see if they are using any
+	  deprecated guile functions in their scripts.  gnetlist disables the
+	  guile deprecated function warnings by default.
+
+
+
+- Contact information  
+
+	Ales V. Hvezda 
+	E-mail: ahvezda@geda.seul.org
+	Web: http://www.geda.seul.org/
+

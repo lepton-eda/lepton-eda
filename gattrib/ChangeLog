@@ -1,0 +1,67 @@
+2004-07-27  Stuart Brorson  <sdb@cloud9.net>
+
+        *  Ported code to GTK+-2.X.  Re-wrote Makefile.am & configure.ac.  Split
+	   gtksheet.c into two versions, one for GTK-1.2 and one for GTK-2.X.
+	   (Both copied from gtkextra.sf.net.)
+	
+	*  Many fixes related to moving to GTK-2.X
+
+	*  Incorporated Ales' fix for "for" loop which had i=i++ construct.
+
+2004-07-13  Stuart Brorson  <sdb@cloud9.net>
+
+	*  Eliminated spurious GTK warnings by testing for NULL in arguments 
+	   before calling functions in gtksheet.c.
+
+	*  Removed several extraneous files originally bundled with GtkSheet.
+
+2004-06-25  Ales Hvezda  (Noted by SDB)
+
+	*  Modified gattrib to work with soon-to-be-released libgeda 20040710.
+	
+2004-03-13  Stuart Brorson  <sdb@cloud9.net>
+
+	*  Implemented alphabetic sort of master_comp_list.
+	
+	*  Placed references to g_rc_reset_component_library and other
+	   Guile fcns into g_register to enable Sri's RC customized files.
+	
+2004-03-11  Stuart Brorson  <sdb@cloud9.net>
+
+        *  Fixed bug in which a loop was terminating early, causing
+	   large portions of some designs to be not processed.
+
+	*  Added code to catch a cond where a design with no components
+	   (i.e. no refdeses) or no modifiable attributes (i.e. no attribs
+	   other than refdes) would cause a segfault.  Now program just
+	   exits with an error message.
+	
+2004-03-06  Stuart Brorson  <sdb@cloud9.net>
+
+	*  Fixed bug in which graphical objects were not discarded
+	   during the "add master list" loop.  This generated a 
+	   spurious warning message.
+
+	*  Fixed configure.ac to fix the GTK-1.2 vs. GTK-2.X problem
+	   originally identified by Dan, and seen again by Sribalan 
+	   Santhanam in rel 20040304.  Hopefully I fixed the bug this 
+	   time! 
+	
+2004-03-04  Stuart Brorson  <sdb@cloud9.net>
+	
+	*  Fixed some compilation issues related to GTK-1.2 vs. GTK-2.X.
+	   Dan McMahill discovered the problem, and also provided the
+	   patches fixing it.  Thanks, Dan!
+
+	*  "make install" now correctly installs system-gattribrc into
+	   the place where the gEDA RC files live.  I had forgotten to
+	   include this into the last release, and you had to do it by
+	   hand. 
+
+2004-02-21  Stuart Brorson  <sdb@cloud9.net>
+	
+	*  Initial release.
+
+2003-12-05  Stuart Brorson  <sdb@cloud9.net>
+
+	* Started hacking.

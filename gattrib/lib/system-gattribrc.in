@@ -1,0 +1,26 @@
+
+; 
+; Init file for gattrib
+;
+
+;  ;'s are comments
+;  keywords are case sensitive (guile feature)
+;  mode strings are case sensitive
+;  colors are not case sensitive 
+;  
+
+; gattrib-version string
+;
+; Specifies the version of this file.  This number is used to make sure 
+; that the rc file is compatible with the version of gschem that is 
+; being run. The end user should *not* change this value.
+;
+(gattrib-version "@VERSION@")
+
+; Load up commonrc
+;
+; Contains all paths needed for gattrib
+(define gedadata (getenv "GEDADATA"))
+(define gedadatarc (getenv "GEDADATARC"))
+(load (string-append gedadatarc "@PATHSEP@system-commonrc"))
+

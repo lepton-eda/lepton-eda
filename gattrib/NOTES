@@ -1,0 +1,389 @@
+-----------------------------------------------------------------------
+This file contains a few notes I made while creating
+gattrib.  These notes were useful to me in coming to grips with
+understanding gEDA's data structures and gnetlist's operation.
+The were also useful when architecting the workings of gattrib.
+ 
+A spreadsheet holding function names is held in the file
+called "ProgramArchitecture.gnumeric", which should live in the
+toplevel directory.  This spreadsheet should help you wade
+through the various fcns used during processing.
+
+No guarantee is made that these notes are accurate, useful,
+or even understandable to anybody else.  -- SDB 12.5.2003
+                                            sdb@cloud9.net
+
+Updated on 7.17.2004.  SDB.
+
+
+-----------------------------------------------------------------------
+gattrib algorithm:
+1.  Input sheets as in gnetlist.  Use fcns from libgeda.  Result is 
+    linked list of TOPLEVEL entries.  (*pr_current)  This data structure
+    comes from libgeda.
+
+    The file is opened and read using:
+	libgeda/noweb/f_basic.nw:f_open(TOPLEVEL *w_current, char *filename)
+
+    f_open invokes o_read, which fills out the objects:
+	libgeda/noweb/a_basic.nw:o_read(TOPLEVEL *w_current, 
+			                OBJECT *object_list, char *filename)
+	
+    At the end of this process, we have filled out (TOPLEVEL pr_current).
+
+2.  Create (SHEET_DATA *sheet_head), which is the data structure intermediating
+    between gEDA's TOPLEVEL and GtkSheet's gtk_sheet.  It holds all info
+    important to drive the spreadsheet app in a form easy to access.  
+
+3.  Build master lists which are part of SHEET_DATA.  The master lists
+    are used when building the row and column label cells, and for
+    keeping track of which components and attribtues are in play.
+
+    Master lists are built for each of these objects:
+    *  Component refdeses found in the design.  
+	sheet_head->master_comp_list_head
+    *  Component attributes found in the design.  
+	sheet_head->master_comp_attrib_list_head
+    *  Netnames found in the design.   
+	sheet_head->master_net_list_head  (TBD) 
+    *  Net attributes found in the design.  
+	sheet_head->master_net_attrib_list_head (TBD)
+    *  Component pins found in the design (TBD)
+
+    *  Component pins attributes found in the design (TBD)
+
+    Each master list is stored using a STRING_DATA struct.
+    Attach pointers to these master lists inside SHEET_DATA.
+    This stage of processing also counts up the number of each
+    item.  These lists are used to index the table entries, and form the 
+    row and column labels on the gtk_sheet.
+
+4.  Create TABLE, which is the data structure holding the info to be displayed
+    in the gtk_sheet cells.  TABLE is basically a 2D array of structs.  
+
+    Tables are built for the following types of objects:
+    *  Component refdeses & attached attributes.
+	sheet_head->component_table
+    *  Netnames and attached attributes.  (TBD)
+	sheet_head->net_table 
+    *  Component pins and attached attributes.  (TBD)
+
+    After creation, attach TABLE inside SHEET_DATA.  The fcns which add components
+    and nets to the internal data structs are called s_*_set_*"  Items in the table
+    are referenced using a construct like:
+    sheet_head->component_table)[i][j].attrib_value
+
+5.  Then build gtk_sheet using fcns available in x_gtksheet.  They 
+    take the data from SHEET_DATA and stick them into the gtk_sheet
+    widget for display on the spreadsheet.
+
+6.  Run gtk_main.  Wait for user clicks & invoke appropriate callbacks. 
+    Callback fcns are specified in include/menu.h
+
+7.  The save callback is x_fileselect_*.  Upon a save/saveas event invoked
+    from the menu, take all data out of gtk_sheet and stick it into SHEET_DATA
+    using various fcns named "s_*_update_*".  Then take data out of SHEET_DATA
+    and stick it into (TOPLEVEL *pr_current).  Then use standard gEDA
+    fcns to save out the data in .sch format.
+
+
+
+-----------------------------------------------------------------------
+gattrib data structures:
+
+TOPLEVEL: 
+  Toplevel holds page info, and is a linked list with one entry per page/window.
+  Defined in libgeda/include/struct.h, fcns to manipulate TOPLEVEL data live in 
+  libgeda/src/s_project.c
+
+
+SHEET_DATA:
+  Holds data taken from TOPLEVEL in form relevant for display in spreadsheet.
+  Definition:
+
+struct st_sheet_data {
+  STRING_LIST *master_comp_list_head;           /* Sorted list of all components used in design */
+  int comp_count;                               /* number of components in design */
+  STRING_LIST *master_comp_attrib_list_head;    /* Sorted list of all component attribs used in design */
+  int comp_attrib_count;                        /* number of component attribs in design */
+
+  STRING_LIST *master_net_list_head;            /* Sorted list of all nets used in design */
+  int net_count;                                /* number of nets in design */
+  STRING_LIST *master_net_attrib_list_head;     /* Sorted list of all net attribss used in design */
+  int net_attrib_count;                         /* number of net attribss in design */
+
+  STRING_LIST *master_pin_list_head;            /* Sorted list of all pins used in design */
+  int pin_count;                                /* number of pins in design */
+  STRING_LIST *master_pin_attrib_list_head;     /* Sorted list of all pin attribss used in design */
+  int pin_attrib_count;                         /* number of pin attribss in design */
+
+  TABLE **component_table;                      /* points to 2d array of component attribs */ 
+  TABLE **net_table;                            /* points to 2d array of net attribs */
+  TABLE **pin_table;                            /* points to 2d array of pin attribs */
+};
+
+
+TABLE:
+  Is 2D array of structs.  Each struct member holds info about
+  one particular attrib.
+
+STRING_LIST:
+  A linked list of strings.  Used to create the component and net
+  master lists.
+
+GtkWidget **sheets:
+  These are the spreadsheet widgets themselves.  There are thre of them:
+  1.  Comp attribs
+  2.  Net attribs (currently TBD)
+  3.  Pin attribs (i.e. pinseq and so on).
+
+
+---------------------------------------------------------------------------------
+********         How data gets from TOPLEVEL into GtkSheet               ********
+---------------------------------------------------------------------------------
+Here's what happens when the program starts, or file->save is invoked from the menu
+and the data is read in.  (I handle data structure initialization elsewhere.)  Keep
+in mind that gattrib is a thin layer between GtkSheet and TOPLEVEL.  When you read
+in a design, libgeda functions are used to fill out the TOPLEVEL data structure.  The
+the purpose of gattrib is to take all teh stuff out of TOPLEVEL and stick it into
+GtkSheet for user manipulation.
+
+1.  Loop on each page.  For each page in the design, read it in using 
+    s_toplevel_read_page.  Then invoke s_sheet_data_add_master_*_list items.
+
+2.  Create the tables using s_table_new.
+
+3.  Load the tables using s_sheet_data_add_*_table_items.
+
+
+
+
+
+
+---------------------------------------------------------------------------------
+********  How data gets from GtkSheet into TOPLEVEL upon saving a sheet  ********
+---------------------------------------------------------------------------------
+Here's what happens when file->save is invoked from the menu.  Please keep in 
+mind that gattrib is a thin layer between GtkSheet and TOPLEVEL.  When you save
+out a design, the purpose of gattrib is to take all the stuff out of GtkSheet
+and stick it into TOPLEVEL and then save it.
+
+1.  Selecting "save" from the menubar invokes the callback s_toplevel_menubar_file_save.
+    (callbacks are defined in includes/x_menu.h)
+    This calls s_toplevel_gtksheet_to_toplevel.  
+
+2.  s_toplevel_gtksheet_to_toplevel calls s_sheet_data_gtksheet_to_sheetdata. 
+    Then it loops on all pages and calls s_toplevel_sheetdata_to_toplevel.  (Described 
+    starting in item 6 below.)
+
+3.  s_sheet_data_gtksheet_to_sheetdata calls s_table_gtksheet_to_all_tables.
+
+4.  s_table_gtksheet_to_all_tables calls s_table_gtksheet_to_table individually 
+    for each sheet (comps, nets, pins)
+
+5.  s_table_gtksheet_to_table loops on the gtksheet and loads all the stuff it 
+    finds back into TABLE (part of sheet_data).
+
+6.  Back in s_toplevel_gtksheet_to_toplevel.  Now that the tables are loaded, 
+    we loop on all pages and call s_toplevel_sheetdata_to_toplevel with a pointer
+    to the first obj on the page as the calling arg.
+
+7.  Inside s_toplevel_sheetdata_to_toplevel, we loop on all objs in teh page, 
+    find the corresponding entry in TABLE, and then copy all attribs out of
+    TABLE and back into the object's attrib list.
+
+8.  Finally, the libgeda fcn s_page_save_all is called.  This saves out all
+    pages in the design.
+
+
+-----------------------------------------------------------------------
+Data structures used in gEDA.
+
+These notes attempt to document the data structures used in gEDA.  I
+present them here because they may not be familiar to those interested
+in hacking gattrib.  I also want to record these findings somewhere
+because it took me some time to figure this out. 
+
+TOPLEVEL: 	The basic data structure in gschem.  Basically holds info
+		about the entire design.
+PAGE:		Self explanatory.  The entire design is held as a
+		doubly linked list of PAGEs under TOPLEVEL.
+OBJECT:		A graphical object on the gschem page.  Can be a net
+		segment, a component complex, a bit of text, a
+		component's pin, or whatever.  Each page holds a
+		doubly linked list of OBJECTs present on that page.
+TILE:		A section of the graphical page.  Important in
+		gschem, a TILE holds a single linked list of OBJECTs
+		present in its subsection of the page.  Each page
+		holds a two dimensional doubly linked list of TILEs.  
+		A TILE is used to quickly locate a particular object 
+		when handling the graphical drawing of a schematic.
+NETLIST:	Important in gnetlist.  This is a doubly linked list
+		of component objects and pins.
+
+
+-----------------------------------------------------------------------------
+Represenatation of components, component attributes, & pins in gattrib & gEDA.
+
+
+From the top down to a particular graphical object on a schematic page:
+
+(TOPLEVEL *pr_current)->(PAGE page_current)->(OBJECT o_current) 
+
+That is, all objects in the design are graphical objects, and are held 
+in a linked list.  Note that an object is any graphical object, 
+such as text, a component (COMPLEX), an attribute, a line, a net, etc.
+Stuff attached below the OBJECT level determine
+what kind of object the graphic is, its visibility, its name, etc. etc. etc.  
+
+
+----  Components with attributes  ----
+Starting from a component (COMPLEX), an attribute is represented like this:
+(OBJECT *component)->(ATTRIB *attribs)->(OBJECT *attrib_graphic)->(TEXT *text)->(char *string) // name=value string
+                                                                              ->(int x, y)     // which coords?
+                                                                              ->(int screen_x) // ???
+                                                                                etc . . .
+                                                                ->(int type)   // types defined in o_types.h
+                                                                ->(int sid)    // unique identifier
+                                                                ->(char *name) // something like text.3732
+
+Note that ATTRIB is a linked list of (pointers to) attributes.
+(OBJECT *component) points to the ATTRIB list, and "attrib_graphic" points
+to the attrib OBJECT itself (which is a graphical element like everything else).  
+
+
+----  Attributes  ----
+Since each attribute is itself a graphical object present in the design, 
+an attribute graphic is represented like this:
+(OBJECT *attribute)->(TEXT *text)->(char *string) // name=value string
+                                 ->(int x, y)     // which coords?
+                                 ->(int screen_x) // ???
+                                    etc . . .
+                   ->(int type)  // for attribute, type is text
+                                 // #define OBJ_TEXT       'T'
+                   ->(int sid)
+                   ->(char *name)
+                   ->(ATTRIB *attached_to)  // points back to (OBJECT *component)
+                   ->(int attribute)        // = 1 for attribute, = 0 otherwise.
+                   ->(int show_name_value)  // #define SHOW_NAME_VALUE         0
+                                            // #define SHOW_VALUE              1
+                                            // #define SHOW_NAME               2
+                   ->(int visibility)       // #define INVISIBLE       0
+                                            // #define VISIBLE         1
+
+Attrib_graphic is stored internally as a "name=value" string, and is disassembled
+by various fcns when needed.
+
+
+----  Pins  ----
+As for pins, they are attached to components (COMPLEX) in the following way.
+Starting from the component:
+(OBJECT *component)->(COMPLEX *complex)->(OBJECT *prim_objs)->(int type)        // #define OBJ_PIN  'P'
+                                                            ->(ATTRIB *attribs) // pin attrib list.
+                                                            ->(int sid)         // unique identifier
+                                                            ->(char *name)      // something like pin.3372
+
+
+Pins also are held in the NETLIST data structure, which is a separate data structure.
+NETLIST is more important in gnetlist than in gschem.  A pin is held in the following 
+way:
+(NETLIST *node)->(OBJECT *object_ptr)
+               ->(CPINLIST *cpins)->(char *pin_number)
+                                  ->(char *net_name)
+                                  ->(char *pin_label)
+
+
+
+----  Example  ----
+Component objects (COMPLEX) have lots of other other fields in teh struct.
+Here's an example taken  from a real design:
+
+(OBJECT *component)->name                                 = complex.188       // unique ID of component
+
+                   ->attribs->object->name                = complex.188       // first "attribs" points back to component
+                   ->attribs->next->object->name          = text.272          // attrib text
+                   ->attribs->next->object->text->string  = refdes=C1         // actual attrib
+                   
+                   ->complex->prim_objs->name             = complex-head.189  // head of prim_objs list                      
+                   ->complex->prim_objs->next->name       = pin.190           // actual object
+
+Each list attached to a component has a head, followed by the actual list
+items.
+
+
+-----------------------------------------------------------------------
+From include/struct.h:
+
+/* ----------- SDB note about philosophy behind globals -------------- *
+ * I made the "TOPLEVEL project" and all the GTK window stuff into
+ * global variables.  I know that this is supposedly bad programming form.    
+ * However, here are some observations:
+ * -- I wanted to use gEDA's TOPLEVEL structure as much as possible, at
+ *    least to hold info about the design's netlist & components.  
+ *    The TOPLEVEL strucuture is architected to hold info about gschem's 
+ *    window also.  HOwever, gschem's windows are architected differently
+ *    than mine in gattrib.  This is because my windowing system does
+ *    completely different things, and also uses the GtkSheet widget, which
+ *    is architected completely differently from TOPLEVEL.
+ * -- Since I couldn't easily or naturally cram my windowing scheme into 
+ *    TOPLEVEL (or so I think), I decided to use a separate set of windows 
+ *    from those defined under TOPLEVEL for my application.
+ * -- The problem arises when using callbacks.  Callbacks from GTK allow
+ *    only one argument to be passed.  Given the way I set up the menu bar, 
+ *    I didn't have easy acces to the information inside both the GtkSHeet
+ *    objects *and* the TOPLEVEL stuff while only having one callback
+ *    argument.  This makes it hard to have access to e.g. a GtkSheet window 
+ *    and a list of files (in TOPLEVEL) simultaneously.
+ * -- Therefore, I decided to make both the window stuff and TOPLEVEL 
+ *    globals.
+ * -- Similarly, because I couldn't cram the SHEET_DATA struct into any
+ *    hook in TOPLEVEL, I just made it a global also.
+ * -- Finally, in my defense, in gschem and gnetlist, (TOPLEVEL *w_current 
+ *    or pr_current) is passed  to almost every function.  Since it 
+ *    is just a pointer to a huge struct of stuff, manipulating 
+ *    the stuff in the struct has a global
+ *    effect.  That is, manipulating w_current (or pr_current) has side 
+ *    effects, so it is basically a global anyway.  The real problem with 
+ *    globals occurs when you have a global variable caled "i" or "temp"
+ *    which conflicts with a global in a module written by somebody else.
+ *    Since pr_current is a very uncommon name, this should not be a 
+ *    problem here.  Therefore, I decided 
+ *    to make life easy for myself dealing with callbacks by making both 
+ *    the windows and TOPLEVEL global variables.
+ * If there is a better way to solve this problem, I'd like to hear it.
+ * ------------------------------------------------------------------ */
+
+
+-----------------------------------------------------------------------
+To be done:
+1.  Before building spreadsheet, create and sort component and net 
+    master lists.  They are used to index components in the TABLE,
+    and also label the gtk_sheet rows and cols.
+2.  How to handle attribute visibility?  Maybe right-click on cell & set 
+    vis.  Default = invisible and "both name and value".
+3.  Need fcns to allow for adding and deleting of entire attrib
+    columns.  Don't need to allow for adding/deleting components
+    -- users should use gschem to add/delete components because 
+    gattrib can't do anything about the graphical position data
+    required for this.
+
+
+
+-----------------------------------------------------------------------
+Here's what the filename prefix letters mean:
+
+        a_ : Action (this was a really poor choice, and will be removed)
+        g_ : Guile related functions
+        i_ : Interface related functions
+        o_ : graphic Object related functions
+        x_ : X related functions
+        f_ : File related functions
+        m_ : Math related functions
+        s_ : data Structure related functions
+
+        I've tried to keep the function names in the files correct, but
+        sometimes I failed.  (look at libgeda/a_basic.c for an example of
+        a file which has a bunch of functions which shouldn't be in there)
+
+                                                                -Ales
+-----------------------------------------------------------------------
