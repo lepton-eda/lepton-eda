@@ -183,12 +183,18 @@ x_print_change_size (GtkWidget *gtklist, TOPLEVEL *w_current)
 gint
 x_print_print(GtkWidget *w, TOPLEVEL *w_current)
 {
+	int status;
 	char *filename =
 		gtk_entry_get_text(GTK_ENTRY(w_current->pfilename_entry));
 
 	if (filename[0] != '\0') {
-		f_print(w_current, filename);
-	        s_log_message("Printed current schematic to [%s]\n", filename);
+		status = f_print(w_current, filename);
+
+		if (status) {
+	        	s_log_message("Cannot print current schematic to [%s]\n", filename);
+		} else {
+	        	s_log_message("Printed current schematic to [%s]\n", filename);
+		}
 	}
 
 #if 0

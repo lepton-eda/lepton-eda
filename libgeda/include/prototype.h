@@ -18,7 +18,7 @@ void f_print_set_color(FILE *fp, int color);
 float f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, int world_right, int world_bottom);
 void f_print_footer(FILE *fp);
 void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale);
-void f_print(TOPLEVEL *w_current, char *filename);
+int f_print(TOPLEVEL *w_current, char *filename);
 void f_print_set_type(TOPLEVEL *w_current, int type);
 /* g_basic.c */
 int ORIG_g_read_file(char *filename);
@@ -282,6 +282,7 @@ void o_pin_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJE
 void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_pin_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_text_basic.c */
 void get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 void world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);

@@ -367,19 +367,25 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 	return;
 }
 
-void
+int
 f_print(TOPLEVEL *w_current, char *filename)
 {
 	FILE *fp;
 	int origin_x, origin_y, bottom, right;
 	float scale;
 
+	/* dots are breaking my filename selection hack hack !!!! */
+	fp = fopen(filename, "w");
+
+	/* check to see if it worked */ 
+        if (fp == NULL) {
+		s_log_message("Could not open [%s] for printing\n", filename);
+		return(-1);
+	}
+
 	/* new CONN stuff */
 	o_conn_disconnect_update(w_current->page_current);
 
-	/* dots are breaking my filename selection hack hack !!!! */
-	fp = fopen(filename, "w");
-	/* check to see if it worked */ 
 
 /*	printf("%d %d\n", w_current->paper_width, w_current->paper_height);*/
 
@@ -430,6 +436,7 @@ f_print(TOPLEVEL *w_current, char *filename)
 	f_print_footer(fp);
 
 	fclose(fp);
+	return(0);
 }
 
 
