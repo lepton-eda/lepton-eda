@@ -1,3 +1,26 @@
+2005-02-04 04:39  danmc
+
+	* configure.ac, noweb/a_basic.nw, noweb/f_basic.nw,
+	  noweb/f_image.nw, noweb/f_print.nw, noweb/g_basic.nw,
+	  noweb/g_rc.nw, noweb/g_register.nw, noweb/g_smob.nw,
+	  noweb/i_vars.nw, noweb/libgeda.nw, noweb/m_basic.nw,
+	  noweb/o_arc_basic.nw, noweb/o_attrib.nw, noweb/o_basic.nw,
+	  noweb/o_box_basic.nw, noweb/o_bus_basic.nw,
+	  noweb/o_circle_basic.nw, noweb/o_complex_basic.nw,
+	  noweb/o_image.nw, noweb/o_line_basic.nw, noweb/o_list.nw,
+	  noweb/o_net_basic.nw, noweb/o_pin_basic.nw, noweb/o_selection.nw,
+	  noweb/o_text_basic.nw, noweb/s_attrib.nw, noweb/s_basic.nw,
+	  noweb/s_clib.nw, noweb/s_color.nw, noweb/s_conn.nw,
+	  noweb/s_cue.nw, noweb/s_hierarchy.nw, noweb/s_log.nw,
+	  noweb/s_menu.nw, noweb/s_page.nw, noweb/s_papersizes.nw,
+	  noweb/s_project.nw, noweb/s_scratch.nw, noweb/s_slib.nw,
+	  noweb/s_stretch.nw, noweb/s_tile.nw, noweb/s_undo.nw,
+	  noweb/u_basic.nw: - add dmalloc debugging support, enabled by
+	  --enable-dmalloc - add Electric Fence debugging support, enabled
+	  by --enable-efence
+
+	  Both are off by default
+
 2005-02-03 23:04  danmc
 
 	* include/prototype.h, noweb/a_basic.nw, noweb/f_basic.nw,
