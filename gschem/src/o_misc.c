@@ -31,6 +31,8 @@
 void
 o_edit(TOPLEVEL *w_current, OBJECT *list)
 {
+	char *equal_ptr;
+
 	/* shouldn't happen */
 	if (list == NULL) {
 		/* TODO: this is an error condition */
@@ -42,14 +44,32 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 
 	/* for now deal with only the first item */
 	switch(list->type) {
+
+	/* also add the ability to multi attrib edit: nets, busses, pins */
 	case(OBJ_COMPLEX):
 		multi_attrib_edit(w_current, list);
 		break;
 	case(OBJ_TEXT):
-		if(!strchr(list->text_string,'='))
+		if(strchr(list->text_string,'=')) {
+
+			/* now really make sure it's an attribute by 
+                         * checking that there are NO spaces around the ='s 
+                         */
+			equal_ptr = strchr(list->text_string, '=');
+
+			/* there is a possiblity for core dump yes? */
+			/* by exceeding the size of the text_string? */
+			/* or maybe not, since if the ='s is at the end of */
+			/* the string, there better be a null after it! */
+			if ( (*(equal_ptr + 1) != ' ') &&
+			     (*(equal_ptr - 1) != ' ') ) {
+				attrib_edit_dialog(w_current,list);
+			} else {
+				o_text_edit(w_current, list);
+			} 
+		} else {
 			o_text_edit(w_current, list);
-		else
-			attrib_edit_dialog(w_current,list);
+		}
 		break;
 	}
 
