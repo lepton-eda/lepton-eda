@@ -334,6 +334,8 @@ o_circle_modify(TOPLEVEL *w_current, OBJECT *object,
 		  object->circle->radius = x;
 		  break;
 	  default:
+	
+	  break;
   }
 
   /* recalculate the screen coords and the boundings */

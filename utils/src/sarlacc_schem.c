@@ -218,10 +218,10 @@ void parse_component(int fd1,int fd2)
     char full_filename[1024];
     int size;
     int x,y;
-    int xpos,ypos,xpossav,ypossav;
+    int xpos = 0,ypos = 0,xpossav,ypossav;
     int xgeda,ygeda;
     int angle,mirror;
-    int i;
+    int i = 0;
     int sarlacc_xsize = 0, sarlacc_ysize = 0;
     int sarlacc_xoffset = 0, sarlacc_yoffset = 0;
     int attribcnt;

@@ -3,6 +3,8 @@
 	* src/s_traverse.c, src/s_netlist.c: Renamed a couple forgotten
 	uref's to refdes.
 
+	* src/s_cpinlist.c: Added #include <string.h>
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version

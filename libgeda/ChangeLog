@@ -1,3 +1,12 @@
+2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_arc_basic.nw, o_circle_basic.nw: Added missing break; 
+        to make compiler happy.
+
+	* noweb/o_bus_basic.nw: Removed unused variable.
+
+	* noweb/s_page.nw: Added missing string.h include.
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version

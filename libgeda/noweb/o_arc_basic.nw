@@ -283,6 +283,7 @@ o_arc_modify(TOPLEVEL *w_current, OBJECT *object,
 		break;
 
 		default:
+		break;
 	}
 
 	/* update the screen coords and the bounding box */

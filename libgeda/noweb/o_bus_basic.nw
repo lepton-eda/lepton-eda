@@ -597,7 +597,6 @@ o_bus_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   int x1, y1;
   int x2, y2;
   int color;
-  int orient;
 
   if (o_current == NULL) {
     printf("got null in o_bus_image_write\n");

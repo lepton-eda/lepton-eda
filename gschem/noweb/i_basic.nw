@@ -482,8 +482,6 @@ i_update_toolbar(TOPLEVEL *w_current)
 void
 i_update_menus(TOPLEVEL *w_current)
 {
-  GtkWidget* item;
-
   /* This is very simplistic.  Eventually what gets enabled/disabled */
   /* should be based on what is in the selection list */
   
