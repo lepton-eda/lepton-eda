@@ -1,3 +1,8 @@
+2005-02-08 22:28  Dan McMahill <danmc>
+
+	* noweb/g_register.nw: replace deprecated guile functions with
+	  approved guile-1.6.6 ones
+
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/*.nw: Made it use GLib's G_DIR_SEPARATOR* instead of 

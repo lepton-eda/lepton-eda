@@ -1,3 +1,9 @@
+2005-02-08 22:30  Dan McMahill <danmc>
+
+	* include/prototype.h, src/g_rc.c, src/g_register.c,
+	  src/gsymcheck.c: replace deprecated guile functions with approved
+	  guile-1.6.6 ones
+
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/gsymcheck.c, src/s_check.c: Replaced u_basic_strdup() and 
