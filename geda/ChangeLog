@@ -1,3 +1,9 @@
+2004-09-19 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * configure.ac, src/*, graphman/*: Update for compiling with both Gtk 1.2 and 2.2
+
+        * graphman/ directory: a new tool for managing graphs (first attempt without plot definition).
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20040710
