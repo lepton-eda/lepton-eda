@@ -22,7 +22,11 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+
+#ifndef __CYGWIN32__
 #include <sys/stat.h>
+#endif
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h> 
 #endif
@@ -41,6 +45,11 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+/* for some really odd reason, the cygnus sys/stat.h doesn't want to work */
+/* if it's included before the gtk stuff, so here it is */
+#ifdef __CYGWIN32__
+#include <sys/stat.h>
+#endif
 
 /* this is needed so that these routines know which window they are changing */
 static TOPLEVEL *project_current;
