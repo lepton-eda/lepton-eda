@@ -444,8 +444,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
     o_current->complex_clib = u_basic_strdup("EMBEDDED");
 
-    new_basename = u_basic_strdup_multiple(
-                                           "EMBEDDED",
+    new_basename = u_basic_strdup_multiple("EMBEDDED",
                                            o_current->complex_basename,
                                            NULL);
 
@@ -573,6 +572,7 @@ o_complex_translate_display(TOPLEVEL *w_current,
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_complex_draw_xor(w_current, x1, y1, 
                            o_current->complex->prim_objs);
         break;
@@ -641,6 +641,7 @@ o_complex_translate_display_selection(TOPLEVEL *w_current,
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_complex_draw_xor(w_current, x1, y1, 
                            o_current->complex->prim_objs);
         break;
@@ -721,7 +722,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   o_current = w_current->page_current->object_head;
   while(o_current != NULL) {
-    if (o_current->type != OBJ_COMPLEX) {
+    if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
       s_conn_remove(w_current, o_current);
     } else {
       s_conn_remove_complex(w_current, o_current);
@@ -746,7 +747,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   o_current = w_current->page_current->object_head;
   while(o_current != NULL) {
-    if (o_current->type != OBJ_COMPLEX) {
+    if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
       s_conn_update_object(w_current, o_current);
     } else {
       s_conn_update_complex(w_current, o_current->complex->prim_objs);
@@ -1005,7 +1006,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 
 
   new_obj = o_complex_add(w_current,
-                          list, OBJ_COMPLEX,
+                          list, object->type,
                           color,
                           x, y,
                           object->complex->angle, 

@@ -86,6 +86,11 @@
 #define SMALL_ZOOMFACTOR1	150 
 #define SMALL_ZOOMFACTOR2	30 
 
+
+/* For text location on component not found graphics */
+#define NOT_FOUND_TEXT_X	100
+#define NOT_FOUND_TEXT_Y	100
+
 /* for bus_ripper_type */
 #define COMP_BUS_RIPPER         0
 #define NET_BUS_RIPPER          1

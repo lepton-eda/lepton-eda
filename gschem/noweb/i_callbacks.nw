@@ -3804,8 +3804,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   if (object != NULL) {
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX) {
-      filename = u_basic_strdup_multiple( 
-                                         object->complex_clib, 
+      filename = u_basic_strdup_multiple(object->complex_clib, 
 					 PATH_SEPARATER_STRING, 
                                          object->complex_basename, NULL);
       s_log_message(_("Searching for symbol [%s]\n"), filename);

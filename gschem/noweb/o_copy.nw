@@ -237,32 +237,29 @@ o_copy_end(TOPLEVEL *w_current)
         break;
         
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         w_current->ADDING_SEL=1; 
-        if (strncmp(object->complex_clib, 
-                    "EMBEDDED", 8) == 0) {
+        if (object->complex_clib && 
+            strncmp(object->complex_clib, "EMBEDDED", 8) == 0) {
 
           new_object = (OBJECT *) 
-            o_complex_copy_embedded(w_current,
-                                    w_current->
-                                    page_current->
-                                    object_tail, object);
+            o_complex_copy_embedded(w_current, 
+                                    w_current->page_current->object_tail, 
+                                    object);
 
         } else {
           new_object = (OBJECT *) o_complex_copy(w_current,
-                                                 w_current->
-                                                 page_current->
-                                                 object_tail, object);
+                                                 w_current-> 
+                                                 page_current->object_tail, 
+                                                 object);
         }
         w_current->ADDING_SEL=0; 
 				
         complex_object = new_object;
 
         if (w_current->actionfeedback_mode == OUTLINE) {
-          o_complex_draw_xor(w_current,
-                             screen_diff_x,
-                             screen_diff_y,
-                             object->complex->
-                             prim_objs);
+          o_complex_draw_xor(w_current, screen_diff_x, screen_diff_y,
+                             object->complex->prim_objs);
         }
         o_complex_world_translate_toplevel(w_current,
                                            diff_x,

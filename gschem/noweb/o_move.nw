@@ -267,6 +267,7 @@ void o_move_end(TOPLEVEL * w_current)
         break;
 
       case (OBJ_COMPLEX):
+      case (OBJ_PLACEHOLDER):
 
         if (scm_hook_empty_p(move_component_hook) == SCM_BOOL_F &&
             object != NULL) {
@@ -485,6 +486,7 @@ void o_move_prep_rubberband(TOPLEVEL * w_current)
           break;
 
         case (OBJ_COMPLEX):
+        case (OBJ_PLACEHOLDER):
           o_current = object->complex->prim_objs;
           while (o_current != NULL) {
 

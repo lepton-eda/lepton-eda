@@ -241,6 +241,7 @@ void s_cue_output_all(TOPLEVEL * w_current, OBJECT * head, FILE * fp,
         break;
 
       case (OBJ_COMPLEX):
+      case (OBJ_PLACEHOLDER):
         s_cue_output_all(w_current, o_current->complex->prim_objs, fp,
                          type);
         break;

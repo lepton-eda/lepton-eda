@@ -86,6 +86,7 @@ o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_cue_redraw_all(w_current, o_current->complex->prim_objs);
 	break;
 
@@ -528,7 +529,7 @@ o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object)
   CONN *conn;
   OBJECT *o_current;
 
-  if (object->type != OBJ_COMPLEX) {
+  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
     return;
   }
 

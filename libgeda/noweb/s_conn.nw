@@ -258,7 +258,7 @@ void s_conn_remove_complex(TOPLEVEL * w_current, OBJECT * to_remove)
 {
   OBJECT *o_current;
   
-  if (to_remove->type != OBJ_COMPLEX) {
+  if (to_remove->type != OBJ_COMPLEX && to_remove->type != OBJ_PLACEHOLDER) {
     return;
   }
 
@@ -871,7 +871,7 @@ s_conn_return_complex_others(GList *input_list, OBJECT *object)
   GList *cl_current;
   GList *return_list=NULL;
 
-  if (object->type != OBJ_COMPLEX) {
+  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
     return(NULL);
   }
 

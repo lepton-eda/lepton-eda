@@ -1,3 +1,8 @@
+2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Removed system-commonrc.in from CVS as system-gafrc.in has replaced
+	it
+
 2005-01-15 Werner Hoch <werner.ho@gmx.de>
 	* memory/27C256-1.sym, memory/27512-1.sym, memory/27256-1.sym:
 	  corrected footprint

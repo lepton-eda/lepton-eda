@@ -260,7 +260,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   while (o_current != NULL) {
     o_selection_add(temp_list, o_current);
     s_conn_update_object(w_current, o_current);
-    if (o_current->type == OBJ_COMPLEX) {
+    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       connected_objects = s_conn_return_complex_others(
                                                        connected_objects,
                                                        o_current);

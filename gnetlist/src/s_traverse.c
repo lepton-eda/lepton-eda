@@ -112,6 +112,10 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 
     netlist = s_netlist_return_tail(netlist_head);
 
+    if (o_current->type == OBJ_PLACEHOLDER) {
+      printf("WARNING: Found a placeholder/missing component, are you missing a symbol file? [%s]\n", o_current->complex_basename);
+    }
+
     if (o_current->type == OBJ_COMPLEX) {
 
 #if DEBUG

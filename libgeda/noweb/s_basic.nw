@@ -364,7 +364,7 @@ print_struct_forw(OBJECT *ptr)
     printf("Type: %d\n", o_current->type);
     printf("Sid: %d\n", o_current->sid);
 
-    if (o_current->type == OBJ_COMPLEX) {
+    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       print_struct_forw(o_current->complex->prim_objs);
     }
 

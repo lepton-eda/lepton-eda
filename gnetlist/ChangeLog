@@ -1,4 +1,9 @@
-2004-01-22 Carlos Nieves Onega <cnieves@iespana.es>
+2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Added a output message if a component is missing
+	its symbol file.
+
+2005-01-22 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/g_register.c, src/g_netlist.c, include/prototype.h: 
 	Added function g_get_non_unique_packages so backends 
@@ -9,6 +14,8 @@
 
 	* src/gnetlist.c: Remind the user to check the schematic
 	has no errors using drc2 backend. 
+
+        (above patch applied by Stuart Brorson)
 	
 2004-12-28 Stuart Brorson   <sdb@cloud9.net>
 

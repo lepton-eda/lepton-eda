@@ -350,6 +350,7 @@ o_delete(TOPLEVEL *w_current)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_delete_complex(w_current, object);
         break;
 

@@ -20,7 +20,6 @@
 <<f_print.c : f_print()>>
 <<f_print.c : f_print_set_type()>>
 
-<<f_print.c : outside of a function>>
 
 @
 
@@ -433,16 +432,13 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
           break;
 
         case(OBJ_COMPLEX):
+        case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
           fprintf(fp, "gsave\n");
 
           f_print_objects(w_current, fp, 
                           o_current->complex->prim_objs,
                           origin_x, origin_y, scale);
           fprintf(fp, "grestore\n");
-          break;
-
-        case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
-          fprintf(fp, "Found object placeholder.  Doing nothing.\n");
           break;
 
         case(OBJ_TEXT):
@@ -593,28 +589,3 @@ f_print_set_type(TOPLEVEL *w_current, int type)
 @ %def f_print_set_type
 
 
-<<f_print.c : outside of a function>>=
-/* don't comment this in, since it is outside of a function... */
-#if 0
-				case(OBJ_COMPLEX):
-					fprintf(fp, "gsave\n");
-					fprintf(fp, "%d mils %d mils translate\n",
-						o_current->y, o_current->x);
-
-					temp_tail = object_tail;
-        				temp_parent = object_parent;
-        				object_parent = o_complex;
-					o_complex = add_head();
-        				o_complex = o_read(o_complex, o_current->complex_filename);
-					o_complex = return_head(o_complex);
-        				object_tail = temp_tail;
-        				object_parent = temp_parent;   
-
-					f_print_objects(fp, o_complex);
-					s_delete_list_fromstart(o_complex);
-					o_complex=NULL;
-					fprintf(fp, "grestore\n");
-					break;
-#endif
-
-@

@@ -368,7 +368,7 @@ o_selection_select(OBJECT *object, int color)
   object->draw_grips = TRUE;
   object->saved_color = object->color;
   object->color = color;
-  if (object->type == OBJ_COMPLEX) { 
+  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) { 
     o_complex_set_color_save(object->complex->prim_objs, color);
   } else if (object->type == OBJ_TEXT) {
     o_complex_set_color_save(object->text->prim_objs, color);
@@ -394,7 +394,7 @@ o_selection_unselect(OBJECT *object)
   /* draw_grips is cleared in the individual draw functions after the */
   /* grips are erase */
   object->color = object->saved_color;
-  if (object->type == OBJ_COMPLEX) { 
+  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) { 
     o_complex_unset_color(object->complex->prim_objs);
   } else if (object->type == OBJ_TEXT) {
     o_complex_unset_color(object->text->prim_objs);

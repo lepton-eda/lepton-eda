@@ -119,13 +119,12 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected,
       break;
 
     case(OBJ_COMPLEX):
-      if (strncmp(selected->complex_clib, "EMBEDDED", 8)
-          == 0) {
-        end = (OBJECT *) o_complex_copy_embedded(
-                                                 w_current, end, selected);	
+    case(OBJ_PLACEHOLDER):
+      if (selected->complex_clib && 
+          strncmp(selected->complex_clib, "EMBEDDED", 8) == 0) {
+        end = (OBJECT *) o_complex_copy_embedded(w_current, end, selected);	
       } else {
-        end = (OBJECT *) o_complex_copy(
-                                        w_current, end, selected);	
+        end = (OBJECT *) o_complex_copy(w_current, end, selected);	
       }
       break;
 

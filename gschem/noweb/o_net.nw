@@ -408,7 +408,8 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
             real->line->screen_y[1];
         }
       }
-    } else if (o_current->type == OBJ_COMPLEX) {
+    } else if (o_current->type == OBJ_COMPLEX || 
+               o_current->type == OBJ_PLACEHOLDER) {
       real = o_list_sear( /* ch */
                          w_current->page_current->object_head,
                          o_current);

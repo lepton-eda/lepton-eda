@@ -152,6 +152,7 @@ o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_complex_recalc(w_current, o_current);
         break;
 

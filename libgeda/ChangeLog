@@ -1,3 +1,12 @@
+2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/defines.h, noweb/a_basic.nw, f_image.nw, f_print.nw,
+	o_attrib.nw, o_basic.nw, o_complex_basic.nw, o_list.nw, o_selection.nw,
+	s_basic.nw, s_clib.nw, s_conn.nw, s_cue.nw:  Slightly refactored
+	and rearranged Stuart's OBJ_PLACEHOLDER code to make it a first
+	class object within libgeda.  Added a graphical representation and
+	a few bits of code here and there to make it manipulatable in gschem.
+
 2005-01-22  Carlos Nieves Onega <cnieves@iespana.es>
 	* noweb/prototype.h, noweb/s_scratch.nw: Added function
 	s_scratch_non_unique_string_fill. This can enable gnetlist
@@ -18,6 +27,12 @@
 	* noweb/s_log.nw, prototype.h: changed s_log_init 
 	to take const char as arg since it's always called 
 	with a quoted string.
+
+2005-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * noweb/a_basic.nw: Fixed the symbol version checking code to
+        handle the case when no attribute are attached to component.  The
+        symbol version wasn't being checked in this case in the past.
 
 2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 

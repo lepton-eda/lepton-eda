@@ -135,6 +135,7 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 
     /* also add the ability to multi attrib edit: nets, busses, pins */
     case(OBJ_COMPLEX):
+    case(OBJ_PLACEHOLDER):
     case(OBJ_NET):
     case(OBJ_PIN):
     case(OBJ_BUS):
@@ -805,7 +806,7 @@ o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list)
       }    
     }
 
-    if (o_current->type == OBJ_COMPLEX) {
+    if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
       o_complex_recalc(w_current, o_current);
     }

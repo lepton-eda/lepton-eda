@@ -5,7 +5,7 @@ config.log
 config.status
 configure
 gesym-config
-system-commonrc
+system-gafrc
 aclocal.m4
 install-sh
 missing

@@ -121,9 +121,7 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 
           case(OBJ_COMPLEX):
             out = (char *) o_complex_save(o_current);
-            if (strncmp(
-                        o_current->complex_clib, 
-                        "EMBEDDED", 8) == 0) {
+            if (strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
               fprintf(fp, "[\n");
 								
               o_save_embedded(
@@ -259,9 +257,7 @@ o_save(TOPLEVEL *w_current, char *filename)
             out = (char *) o_complex_save(o_current);
             fprintf(fp, "%s\n", out);
             already_wrote=1;
-            if (strncmp(
-                        o_current->complex_clib, 
-                        "EMBEDDED", 8) == 0) {
+            if (strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
               fprintf(fp, "[\n");
 								
               o_save_embedded(
@@ -360,6 +356,21 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   while ( fgets(buf, 1024, fp) != NULL) {
 
     sscanf(buf, "%c", &objtype);
+
+    /* Do we need to check the symbol version?  Yes, but only if */
+    /* 1) the last object read was a complex and */
+    /* 2) the next object isn't the start of attributes.  */
+    /* If the next object is the start of attributes, then check the */
+    /* symbol version after the attributes have been read in, see the */
+    /* STARTATTACH_ATTR case */
+    if (last_complex && objtype != STARTATTACH_ATTR)
+    {
+        /* yes */
+        /* verify symbol version (not file format but rather contents) */
+        o_complex_check_symversion(w_current, last_complex);
+        last_complex = NULL;  /* no longer need to check */
+    }
+
     switch (objtype) {
 
       case(OBJ_LINE):
@@ -389,6 +400,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         object_list = (OBJECT *) o_complex_read(w_current, object_list, buf,
                                                 release_ver, fileformat_ver);
 
@@ -436,7 +448,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         }
         
 	/* slots only apply to complex objects */
-        if (object_before_attr->type == OBJ_COMPLEX) {
+        if (object_before_attr->type == OBJ_COMPLEX || 
+	    object_before_attr->type == OBJ_PLACEHOLDER) {
           o_attrib_slot_update(w_current, object_before_attr);	
         }
 

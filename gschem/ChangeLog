@@ -1,3 +1,10 @@
+2005-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_attrib.nw, o_buffer.nw, o_bus.nw, o_complex.nw, o_copy.nw,
+	o_cue.nw, o_delete.nw, o_misc.nw, o_move.nw, o_net.nw, x_attribedit.nw:
+	Added code to make OBJ_PLACEHOLDER a first class object/citizen
+	(it is rendered and can be manipulated to some degree in gschem)
+
 2005-01-16  Stuart Brorson <sdb@cloud9.net>
 	* noweb/i_basic.nw, noweb/x_menus.nw: incorporated right
 	mouse button bring-up of "up hierarchy", as requested.

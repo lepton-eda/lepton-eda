@@ -142,6 +142,7 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         /* recursive objects ?*/
         get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
         break;
@@ -235,6 +236,7 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         /* recursive objects ?*/
         get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
         break;
@@ -320,6 +322,7 @@ world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         /* recursive objects ?*/
         world_get_complex_bounds(w_current, o_current->complex->prim_objs, &rleft, &rtop, &rright, &rbottom);
         break;
@@ -440,7 +443,8 @@ o_complex_is_embedded(OBJECT *o_current)
   if(o_current->complex == NULL)
   return 0;
 
-  if(strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
+  if (o_current->complex_clib && 
+      strncmp(o_current->complex_clib, "EMBEDDED", 8) == 0) {
     return 1;
   } else {
     return 0;
@@ -467,16 +471,18 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   OBJECT *temp_tail=NULL;
   OBJECT *temp_parent=NULL;
   int save_adding_sel = 0;
+  int loaded_normally = FALSE;
 	
   char *filename;
 
   new_node = s_basic_init_object("complex");
   new_node->type = type;
 
-	
-
   new_node->complex_basename = strdup(basename);
-  new_node->complex_clib = strdup(clib);
+  if (clib)
+    new_node->complex_clib = strdup(clib);
+  else
+    new_node->complex_clib = NULL;
 
   new_node->color = color;
 	
@@ -518,18 +524,105 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   /* reason this works is because it has a head, see add_head above */
 
   /* check for validity */
-  filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
+  if (clib && basename)
+    filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
+  else 
+    filename = g_strdup("unknown");
+
+  save_adding_sel = w_current->ADDING_SEL;
+  w_current->ADDING_SEL = 1;	/* name is hack, don't want to */
 
   if (access(filename, R_OK)) {
-    fprintf(stderr, "o_complex_add: Could not open [%s]\n", filename); 
+
+    /* filename was NOT found */
+    loaded_normally = FALSE;
+    
+    if (clib == NULL) {
+
+      /* no component library specified */
+
+      OBJECT *save_prim_objs;
+      char *not_found_text = NULL;
+      int left, right, top, bottom;
+      int x_offset, y_offset;
+
+      save_prim_objs = prim_objs;
+
+      /* Put placeholder into object list.  Changed by SDB on
+       * 1.19.2005 to fix problem that symbols were silently
+       * deleted by gattrib when RC files were messed up.  */
+      new_node->type = OBJ_PLACEHOLDER;
+
+      /* Mark the origin of the missing component */
+      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                              DETACHED_ATTRIBUTE_COLOR,
+                              x - 50, y, x + 50, y);
+      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                              DETACHED_ATTRIBUTE_COLOR,
+                              x, y + 50, x, y - 50); 
+
+      /* Add some useful text */
+      not_found_text = 
+        u_basic_strdup_multiple("Component not found:\n ", basename, NULL);
+      prim_objs = o_text_add(w_current, prim_objs,
+                              OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
+                              x + NOT_FOUND_TEXT_X, 
+                              y + NOT_FOUND_TEXT_Y, LOWER_LEFT, 0, 
+                              not_found_text, 8,
+                              VISIBLE, SHOW_NAME_VALUE);
+      free(not_found_text);
+
+      /* figure out where to put the hazard triangle */
+      world_get_text_bounds(w_current, prim_objs,
+                            &left, &top, &right, &bottom);
+      x_offset = (right - left) / 4;  
+      y_offset = bottom - top + 100;  /* 100 is just an additional offset */
+
+      /* add hazard triangle */
+      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                              DETACHED_ATTRIBUTE_COLOR,
+                              x + NOT_FOUND_TEXT_X + x_offset, 
+                              y + NOT_FOUND_TEXT_Y + y_offset, 
+                              x + NOT_FOUND_TEXT_X + x_offset + 600, 
+                              y + NOT_FOUND_TEXT_Y + y_offset); 
+      prim_objs->line_width = 50;
+      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                              DETACHED_ATTRIBUTE_COLOR,
+                              x + NOT_FOUND_TEXT_X + x_offset, 
+                              y + NOT_FOUND_TEXT_Y + y_offset, 
+                              x + NOT_FOUND_TEXT_X + x_offset + 300, 
+                              y + NOT_FOUND_TEXT_Y + y_offset + 500); 
+      prim_objs->line_width = 50;
+      prim_objs = o_line_add(w_current, prim_objs, OBJ_LINE, 
+                              DETACHED_ATTRIBUTE_COLOR,
+                              x + NOT_FOUND_TEXT_X + x_offset + 300, 
+                              y + NOT_FOUND_TEXT_Y + y_offset + 500, 
+                              x + NOT_FOUND_TEXT_X + x_offset + 600, 
+                              y + NOT_FOUND_TEXT_Y + y_offset); 
+      prim_objs->line_width = 50;
+      prim_objs = o_text_add(w_current, prim_objs,
+                              OBJ_TEXT, DETACHED_ATTRIBUTE_COLOR, 
+                              x + NOT_FOUND_TEXT_X + x_offset + 270, 
+                              y + NOT_FOUND_TEXT_Y + y_offset + 90, 
+                              LOWER_LEFT, 0, "!", 18,
+                              VISIBLE, SHOW_NAME_VALUE);
+      prim_objs = save_prim_objs;
+            
+    } else if (basename == NULL) {
+      s_log_message("Basename (component) was not found or specified\n");
+    } else {
+      s_log_message("Could not open [%s]\n", filename); 
+    } 
   } else {
-    save_adding_sel = w_current->ADDING_SEL;
-    w_current->ADDING_SEL = 1;	/* name is hack, don't want to */
+
+    /* filename was found */
+    loaded_normally = TRUE;
+    
     /* add connections till translated */
     o_read(w_current, prim_objs, filename);
-    /* name is hack, rename later */
-    w_current->ADDING_SEL = save_adding_sel;
+    
   }
+  w_current->ADDING_SEL = save_adding_sel;
 
   if (w_current->attribute_promotion) { /* controlled through rc file */
 
@@ -587,7 +680,13 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
 
   o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list);
 
-  o_complex_world_translate(w_current, x, y, prim_objs);
+  /* do not translate the primitive objects if the component was not loaded
+   * via o_read
+   */
+  if (loaded_normally == TRUE)
+  {
+    o_complex_world_translate(w_current, x, y, prim_objs);
+  }
 
   if (!w_current->ADDING_SEL) {
     s_conn_update_complex(w_current, prim_objs);
@@ -628,7 +727,10 @@ o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list,
   new_node->complex->mirror = 0;
 	
   new_node->complex_basename = strdup(basename);
-  new_node->complex_clib = strdup(clib);
+  if (clib)
+    new_node->complex_clib = strdup(clib);
+  else
+    new_node->complex_clib = NULL;
 
   new_node->color = color;
 
@@ -704,7 +806,6 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
   char type; 
   int x1, y1;
   int angle;
-  char *filename;
 
   char basename[256]; /* hack */
   char *clib=NULL;
@@ -765,35 +866,23 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
 
 <<o_complex_read() : add a complex from library>>=
 
-  clib = (char *) s_clib_search(basename); 
-  if (clib == NULL) {
-    /* Put placeholder into object list.  Changed by SDB on
-     * 1.19.2005 to fix problem that symbols were silently
-     * deleted by gattrib when RC files were messed up.  */
-    s_log_message("Complex [%s] not in library\n", basename);
-    s_log_message("Putting placeholder into object list.\n");
-
-    /*
-     * Put placeholder into obj list.
-     * All parameters are present, except for clib.
-     */ 
-    object_list = o_complex_add(w_current, object_list, OBJ_PLACEHOLDER, 
-                                WHITE, 
-                                x1, y1, 
-                                angle, mirror,
-                                "", basename, selectable, FALSE);
-
-  } else {
-    filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
+    clib = (char *) s_clib_search(basename); 
+ 
+    if (clib == NULL)
+    {
+      s_log_message("Component [%s] was not found in any component library\n", 
+                      basename);
+      fprintf(stderr,
+              "Component [%s] was not found in any component library\n", 
+              basename);
+    }
 
     object_list = o_complex_add(w_current, object_list, type, 
                                 WHITE, 
                                 x1, y1, 
                                 angle, mirror,
                                 clib, basename, selectable, FALSE);
-    free(filename);
     free(clib);
-  }
 
 @ 
 
@@ -992,6 +1081,7 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1,
         break;
 	
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_complex_world_translate_toplevel(w_current, x1, y1, o_current);
         break;
 
@@ -1077,12 +1167,11 @@ o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
     selectable = FALSE;	
   }
 
-  new_obj = o_complex_add(w_current, list_tail, OBJ_COMPLEX, color,
+  new_obj = o_complex_add(w_current, list_tail, o_current->type, color,
                           o_current->complex->x, o_current->complex->y, 
                           o_current->complex->angle, o_current->complex->mirror,
                           o_current->complex_clib, o_current->complex_basename, 
                           selectable, FALSE); 
-  /* 1 for sel is a hack */
 
   o_attrib_slot_copy(w_current, o_current, new_obj);
 
@@ -1137,11 +1226,12 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
     selectable = FALSE;	
   }
 
-  new_obj = o_complex_add_embedded(w_current, list_tail, OBJ_COMPLEX, 
+  new_obj = o_complex_add_embedded(w_current, list_tail, o_current->type, 
                                    color,
                                    o_current->complex->x, o_current->complex->y, 
                                    o_current->complex->angle, 
-                                   o_current->complex_clib, o_current->complex_basename, 
+                                   o_current->complex_clib, 
+                                   o_current->complex_basename, 
                                    selectable); 
   /* deal with stuff that has changed */
 	
@@ -1233,9 +1323,9 @@ o_complex_set_color(OBJECT *prim_objs, int color)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_current->color = color;
-        o_complex_set_color(
-                            o_current->complex->prim_objs, color);
+        o_complex_set_color(o_current->complex->prim_objs, color);
         break;
 
     }
@@ -1272,6 +1362,7 @@ o_complex_set_color_single(OBJECT *o_current, int color)
     break;
 
     case(OBJ_COMPLEX):
+    case(OBJ_PLACEHOLDER):
     o_current->color = color;
     o_complex_set_color(o_current->complex->prim_objs, 
                         color);
@@ -1318,6 +1409,7 @@ o_complex_set_color_save(OBJECT *complex, int color)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_current->saved_color = o_current->color;
         o_current->color = color;
         o_complex_set_color_save(o_current->complex->
@@ -1366,6 +1458,7 @@ o_complex_unset_color(OBJECT *complex)
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_current->color = o_current->saved_color;
         o_current->saved_color = -1;
         o_complex_unset_color(o_current->complex->
@@ -1409,6 +1502,7 @@ o_complex_unset_color_single(OBJECT *o_current)
     break;
 
     case(OBJ_COMPLEX):
+    case(OBJ_PLACEHOLDER):
     o_current->color = o_current->saved_color;
     o_current->saved_color = -1;
     o_complex_unset_color(o_current->complex->prim_objs);
@@ -1447,17 +1541,13 @@ o_complex_set_saved_color_only(OBJECT *complex, int color)
 
       case(OBJ_TEXT):
         o_current->saved_color = color;
-        o_complex_set_saved_color_only(
-                                       o_current->text->prim_objs, 
-                                       color);
+        o_complex_set_saved_color_only(o_current->text->prim_objs, color);
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         o_current->saved_color = color;
-        o_complex_set_saved_color_only(
-                                       o_current->complex->
-                                       prim_objs, 
-                                       color);
+        o_complex_set_saved_color_only(o_current->complex->prim_objs, color);
         break;
 
     }
@@ -1557,6 +1647,7 @@ o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
 
 #if 0	/* complex within a complex? not right now */
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
         break;
 #endif
 
@@ -1620,7 +1711,7 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 
 #if 0	/* complex within a complex? not right now */
       case(OBJ_COMPLEX):
-
+      case(OBJ_PLACEHOLDER):
         break;
 #endif
 
@@ -1701,7 +1792,7 @@ o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object)
   double inside_major, inside_minor;
   double outside_major, outside_minor;
   
-  if (object->type != OBJ_COMPLEX)
+  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER)
   {
     return;
   }

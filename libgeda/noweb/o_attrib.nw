@@ -313,7 +313,8 @@ o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
   if (new->object->type == OBJ_TEXT) {
     o_complex_set_color(new->object->text->prim_objs,
                         new->object->color);
-  } else if (new->object->type == OBJ_COMPLEX) {
+  } else if (new->object->type == OBJ_COMPLEX || 
+             new->object->type == OBJ_PLACEHOLDER) {
     o_complex_set_color(new->object->complex->prim_objs,
                         new->object->color);
   }
@@ -816,6 +817,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs,
         break;
 
       case(OBJ_COMPLEX):
+      case(OBJ_PLACEHOLDER):
 			
         object_list = (OBJECT *) o_complex_read(
                                                 w_current, 
@@ -941,9 +943,6 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
           break;
 
         case(OBJ_COMPLEX):
-          out = (char *) o_complex_save(o_current);
-          break;
-
         case(OBJ_PLACEHOLDER):  /* new type -- SDB 1.20.2005 */
           out = (char *) o_complex_save(o_current);
           break;
@@ -2202,7 +2201,7 @@ o_attrib_search_component(OBJECT *object, char *name)
     return(NULL);
   }
 
-  if (object->type != OBJ_COMPLEX) {
+  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
     return(NULL);
   }
 

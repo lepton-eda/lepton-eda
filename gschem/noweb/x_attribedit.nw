@@ -233,7 +233,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 	object = s_current->selected_object;
 	if (object && !object->attached_to && object->type != OBJ_TEXT ) {
 	  addmask = 4;
-	  if (object->type == OBJ_COMPLEX) {
+	  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
 	    addmask = 2;
 	  }
 	  if (object->type == OBJ_NET) {
