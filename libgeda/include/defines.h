@@ -355,16 +355,6 @@
 #define M_PI  3.14159265358979323846
 #endif
 
-/* Since we use Unicode, which isn't supported in GTK 1.2, define
-   the equivalent of the used functions here. 
-   GTK 1.2 always deal with chars, instead of multibyte characters
-   as Unicode. */
-#ifdef HAS_GTK12
-typedef unsigned char gunichar;
-#define g_utf8_get_char_validated(string, len) (*((char *)string))
-#define g_utf8_find_next_char(string, len) ((char*)string+1)
-#endif
-
 
 /* inspired of GLib's g_message() (gmessages.h) - LGPL */
 #ifdef G_HAVE_ISO_VARARGS

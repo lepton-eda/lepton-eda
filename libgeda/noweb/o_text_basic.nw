@@ -25,7 +25,6 @@
 <<o_text_basic.c : o_text_create_string()>>
 <<o_text_basic.c : o_text_add()>>
 <<o_text_basic.c : o_text_recalc()>>
-<<o_text_basic.c : o_text_convert_to_utf8()>>
 <<o_text_basic.c : o_text_read()>>
 <<o_text_basic.c : o_text_set_info_font()>>
 <<o_text_basic.c : o_text_save()>>
@@ -124,8 +123,6 @@
 
 
 <<o_text_basic.c : global variable>>=
-/* Stores a list with font data */
-GSList *font_set = NULL;
 /* Hashtable storing font_character (string) as a key, and pointer to data */
 GHashTable *font_loaded = NULL;
 
@@ -135,7 +132,7 @@ GHashTable *font_char_to_file = NULL;
 /* Size of a tab in characters */
 int tab_in_chars = 8;
 
-@ %def font_set
+@ %def font_loader font_char_to_file tab_in_chars
 
 
 @section Function @code{get_text_bounds()}
@@ -206,23 +203,19 @@ o_text_add_head(void)
 void
 o_text_init(void)
 {
-  /*  font_set = NULL; */
   if (font_loaded == NULL) {
-#ifndef HAS_GTK12
-    font_loaded = g_hash_table_new_full (g_str_hash, g_str_equal, free, free);
-#else
-    font_loaded = g_hash_table_new (g_str_hash, g_str_equal);
-#endif
-  }
-  else {
+    font_loaded = g_hash_table_new_full (g_direct_hash,
+                                         g_direct_equal,
+                                         NULL,
+                                         g_free);
+  } else {
     fprintf (stderr, "o_text_init: Tried to initialize an already initialized font_loaded hash table!!\n");
   }
   if (font_char_to_file == NULL) {
-#ifndef HAS_GTK12
-    font_char_to_file = g_hash_table_new_full (g_str_hash, g_str_equal, free, free);
-#else
-    font_char_to_file = g_hash_table_new (g_str_hash, g_str_equal);
-#endif
+    font_char_to_file = g_hash_table_new_full (g_direct_hash,
+                                               g_direct_equal,
+                                               NULL,
+                                               g_free);
   }
   else {
     fprintf (stderr, "o_text_init: Tried to initialize an already initialized font_char_to_file hash table!!\n");
@@ -247,16 +240,12 @@ o_text_print_set(void)
 {
   OBJECT *o_current, *o_font_set;
   char i;
-  gchar *aux_str;
 	
   for (i = 'A' ; i < 'Z'+1; i++) {
-    aux_str = g_strdup_printf("%c", i);
-    o_font_set = g_hash_table_lookup (font_loaded, aux_str);
-    free(aux_str);
+    o_font_set = g_hash_table_lookup (font_loaded,
+                                      GUINT_TO_POINTER ((gunichar)i));
     if (o_font_set != NULL) {
       printf("%c: LOADED\n", i);	
-      /* for (o_current=font_set[i].font_prim_objs; o_current; 
-         o_current=o_current->next) */
       for (o_current=return_tail(o_font_set->font_prim_objs); o_current; 
            o_current=o_current->prev) 
       {
@@ -284,11 +273,12 @@ o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
   gchar *temp_string = NULL;
   OBJECT *temp_parent, *o_font_set;
   int not_found = FALSE;
-  gchar *aux_str;
   gchar *aux_str2;
 
-  aux_str = g_strdup_printf("%c", needed_char);
-  if ((aux_str2 = g_hash_table_lookup(font_char_to_file, aux_str)) == NULL) {
+  /* retrieve the name of the file where the char is defined */
+  aux_str2 = g_hash_table_lookup (font_char_to_file,
+                                  GUINT_TO_POINTER (needed_char));
+  if (aux_str2 == NULL) {
       /* this is needed since WinNT file systems are 
        * case insensitive, and cannot tell the difference 
        * between A.sym and a.sym.  So we create a_.sym -  
@@ -303,16 +293,21 @@ o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
                 w_current->font_directory, G_DIR_SEPARATOR,
                 needed_char);
       }
-  }
-  else {
+  } else {
     temp_string = g_strdup_printf("%s", aux_str2);
   }
   aux_str2 = NULL;
-  free(aux_str);
 
   if ( access(temp_string, R_OK) != 0 ) {
-    s_log_message("Could not find character %c definition.  %s\n",needed_char, temp_string);
-    free(temp_string);
+    gchar outbuf[7];
+    gint l;
+
+    /* convert needed_char to a utf-8 string */
+    l = g_unichar_to_utf8 (needed_char, outbuf);
+    outbuf[l] = '\0';
+    s_log_message("Could not find character '%s' definition.\n", outbuf);
+    
+    g_free (temp_string);
     temp_string = g_strdup_printf("%s%cquest.sym", w_current->font_directory, G_DIR_SEPARATOR);
     if ( access(temp_string, R_OK) != 0 ) {
       fprintf(stderr, "Could not load question font char -- check font-directory keyword\n");
@@ -322,36 +317,17 @@ o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
   }
 
   /* Make new object for the font set list */
-  o_font_set = (OBJECT *) malloc(sizeof(OBJECT));	
-
-  if (o_font_set == NULL) {
-    fprintf(stderr, "Could not perform malloc; something is broken or increase your process limits\n");
-    exit(-1);
-  }
+  o_font_set = (OBJECT*)g_new (OBJECT, 1);	
   
   o_font_set->font_prim_objs = NULL;
   o_font_set->font_text_size = 100;
 
-  /* Add it to the list and hash table. Some functions will need it */
-  aux_str = g_strdup_printf("%c", needed_char);
-  g_hash_table_insert(font_loaded, aux_str, o_font_set);
-  if (g_hash_table_lookup(font_loaded, aux_str) == NULL) {
-    fprintf(stderr, "Can't find the node that was just inserted!!!\n");
-    exit(-1);
-  }
-  /* aux_str will only be freed when removing the entry in the hash table */
-
-  font_set = g_slist_append (font_set, o_font_set);
-
-  o_font_set->name = NULL;
+  o_font_set->name = g_strdup_printf ("%c", needed_char);
   o_font_set->font_prim_objs = o_text_add_head();
-
-  /* Modify name of the text so we can free the hashtable entry later */
-  if (o_font_set->name != NULL) {
-    free(o_font_set->name);
-  }
-  o_font_set->name = aux_str;
   
+  /* Add it to the list and hash table. Some functions will need it */
+  g_hash_table_insert (font_loaded,
+                       GUINT_TO_POINTER (needed_char), o_font_set);
 
   if (not_found == TRUE) {
     /* set the font text size (width) to the question mark's size */
@@ -360,13 +336,13 @@ o_text_load_font(TOPLEVEL *w_current, gunichar needed_char)
 
     OBJECT *aux_obj;
     
-    aux_str = g_strdup_printf("?");
-    aux_obj = g_hash_table_lookup (font_loaded, aux_str);
+    aux_obj = g_hash_table_lookup (font_loaded,
+                                   GUINT_TO_POINTER ((gunichar)'?'));
     if (aux_obj == NULL) {
       o_text_load_font(w_current, (gunichar) '?');
-      aux_obj = g_hash_table_lookup (font_loaded, aux_str);      
+      aux_obj = g_hash_table_lookup (font_loaded,
+                                     GUINT_TO_POINTER ((gunichar)'?'));
     }
-    free (aux_str);
 
     o_font_set->font_text_size = aux_obj->font_text_size;
   }
@@ -466,64 +442,65 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
 {
   int width=0, max_width=0;
   int size_of_tab_in_coord;
-  gchar *aux;
-  gunichar current_char;
   OBJECT *o_font_set;
-  gchar *aux_str;
-  
-  aux_str = g_strdup_printf("%c", TAB_CHAR_MODEL[0]);
-  o_font_set = g_hash_table_lookup (font_loaded, aux_str);
+  gchar *ptr;
 
-  /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
-  /* size */
-  if (o_font_set == NULL) {
-    o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
-    o_font_set = (OBJECT *) g_hash_table_lookup (font_loaded, aux_str);
-  }
-  free (aux_str);
-  
-  /* Get the maximum tab width's in coordinates */
-  size_of_tab_in_coord = tab_in_chars * size * 
-  o_font_set->font_text_size ;
-  
   if (string == NULL) {
     return 0;
   }
+  
+  /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
+  /* size */
+  o_font_set = g_hash_table_lookup (
+    font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
+  if (o_font_set == NULL) {
+    o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
+    o_font_set = (OBJECT *) g_hash_table_lookup (
+      font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
+  }
+ 
+  /* Get the maximum tab width's in coordinates */
+  size_of_tab_in_coord = tab_in_chars * size * o_font_set->font_text_size;
 
-  aux = string;
-  while (aux && ((gunichar) (*aux) != 0) ) {
-    current_char = g_utf8_get_char_validated(aux, -1);
-    aux = g_utf8_find_next_char(aux, NULL);
+  for (ptr = string;
+       ptr != NULL && *ptr != 0;
+       ptr = g_utf8_find_next_char (ptr, NULL))
+  {
+    gunichar c = g_utf8_get_char_validated (ptr, -1);
 
-    if (current_char == '\n') {
-      width = 0;    
-      continue;
+    switch (c) {
+        case ((gunichar)'\n'):
+          width = 0;
+          break;
+        case ((gunichar)'\t'):
+          width += (size_of_tab_in_coord - (width % size_of_tab_in_coord));
+          break;
+        default:
+          /* find current_char */
+          o_font_set = g_hash_table_lookup (font_loaded,
+                                            GUINT_TO_POINTER (c));
+          if (o_font_set == NULL) {
+            o_text_load_font (w_current, (gunichar)c);
+            /* let do a new search for character c */
+            o_font_set = g_hash_table_lookup (font_loaded,
+                                              GUINT_TO_POINTER (c));
+          }
+
+          if (o_font_set != NULL) {
+            width = width + size*o_font_set->font_text_size;
+          }
+
+          if (width > max_width) {
+            max_width = width;
+          }
     }
-    if (current_char == '\t') {
-      width += (size_of_tab_in_coord - (width % size_of_tab_in_coord));
-      continue;
-      
-    }
-
-    /* Find current_char */
-    aux_str = g_strdup_printf("%c", current_char);
-    o_font_set = g_hash_table_lookup (font_loaded, aux_str);
-    if (o_font_set == NULL) {
-      o_text_load_font(w_current, (gunichar) current_char);
-      o_font_set = g_hash_table_lookup (font_loaded, aux_str);
-    }
-    free (aux_str);
-
-    width = width + size*o_font_set->font_text_size;
-    if (width > max_width)
-      max_width = width;
   }
 
   /* the size is a fudge factor */
   /* Changed the return value according to a suggestion of Ales. */
   /* Yes, the -size*10 fudge factor should be removed. */
   /* return(max_width - size*10); */
-  return(max_width);
+  return max_width;
 }
 
 
@@ -551,9 +528,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   int char_height;
   int line_start_x, line_start_y;
   int sign=1;
-  gchar *aux;
-  gunichar current_char;
-  gchar *aux_str;
+  gchar *ptr;
   OBJECT *o_font_set;
 
   temp_list = object_list;
@@ -725,19 +700,16 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   line_start_x = x_offset;
   line_start_y = y_offset;
 
-  aux = string;
-  while (aux && ((gunichar) (*aux) != 0) ) {
-    
-    current_char = g_utf8_get_char_validated(aux, -1);
-    aux = g_utf8_find_next_char(aux, NULL);    
-        
-    aux_str = g_strdup_printf("%c", current_char);
-    o_font_set = g_hash_table_lookup(font_loaded, aux_str);
+  for (ptr = string;
+       ptr != NULL && *ptr != 0;
+       ptr = g_utf8_find_next_char (ptr, NULL)) {
+    gunichar c = g_utf8_get_char_validated (ptr, -1);
+
+    o_font_set = g_hash_table_lookup (font_loaded, GUINT_TO_POINTER (c));
     if (o_font_set == NULL) {
-      o_text_load_font(w_current, (gunichar) current_char);
-      o_font_set = g_hash_table_lookup(font_loaded, aux_str);
+      o_text_load_font(w_current, (gunichar) c);
+      o_font_set = g_hash_table_lookup (font_loaded, GUINT_TO_POINTER (c));
     }
-    free(aux_str);
 
     start_of_char = temp_list;
 
@@ -748,102 +720,102 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 
       /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
       /* size */
-      aux_str = g_strdup_printf("%c", TAB_CHAR_MODEL[0]);
-      o_font_set_aux = g_hash_table_lookup(font_loaded, aux_str);
+      o_font_set_aux = g_hash_table_lookup (
+        font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
       if (o_font_set_aux == NULL) {
          o_text_load_font(w_current, (gunichar) TAB_CHAR_MODEL[0]);
-	 o_font_set_aux = g_hash_table_lookup(font_loaded, aux_str);
+         o_font_set_aux = g_hash_table_lookup (
+           font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
        }
-      free (aux_str);
     
       /* Get the maximum tab width's in coordinates */
       size_of_tab_in_coord = tab_in_chars * 
                  o_text_width(w_current, TAB_CHAR_MODEL, size/2);
 
-      if (current_char != '\n' && current_char != '\t') {
+      if (c != '\n' && c != '\t') {
          /* only add the character if it is not a newline or tab character */
          temp_list = o_list_copy_all(w_current, 
 				     o_font_set->font_prim_objs->next, 
 				     temp_list, NORMAL_FLAG);
-	 if (start_of_char != NULL)
-	   start_of_char = start_of_char->next;
+         if (start_of_char != NULL)
+           start_of_char = start_of_char->next;
       }
 
       /* if the character is a newline or tab, this code will "continue" */
-      switch (current_char) {
+      switch (c) {
       case '\n':
-	switch (angle) {
-	case 0:
-	  x_offset = line_start_x;
-	  y_offset = line_start_y - char_height * LINE_SPACING;
-	  line_start_x = x_offset;
-	  line_start_y = y_offset;
-	  continue;	
-	  break;
-	case 90:
-	  x_offset = line_start_x + char_height * LINE_SPACING;
-	  y_offset = line_start_y;
-	  line_start_x = x_offset;
-	  line_start_y = y_offset;
-	  continue;	
-	  break;
-	case 180:
-	  x_offset = line_start_x;
-	  y_offset = line_start_y + char_height * LINE_SPACING;
-	  line_start_x = x_offset;
-	  line_start_y = y_offset;
-	  continue;	
-	  break;
-	case 270:
-	  x_offset = line_start_x - char_height * LINE_SPACING;
-	  y_offset = line_start_y;
-	  line_start_x = x_offset;
-	  line_start_y = y_offset;
-	  continue;	
-	  break;
-	default:
-	  fprintf(stderr, "o_text_create_string: Angle not supported\n");
-	  break;
-	}
-      case '\t':
+        switch (angle) {
+            case 0:
+              x_offset = line_start_x;
+              y_offset = line_start_y - char_height * LINE_SPACING;
+              line_start_x = x_offset;
+              line_start_y = y_offset;
+              continue;	
+              break;
+            case 90:
+              x_offset = line_start_x + char_height * LINE_SPACING;
+              y_offset = line_start_y;
+              line_start_x = x_offset;
+              line_start_y = y_offset;
+              continue;	
+              break;
+            case 180:
+              x_offset = line_start_x;
+              y_offset = line_start_y + char_height * LINE_SPACING;
+              line_start_x = x_offset;
+              line_start_y = y_offset;
+              continue;	
+              break;
+            case 270:
+              x_offset = line_start_x - char_height * LINE_SPACING;
+              y_offset = line_start_y;
+              line_start_x = x_offset;
+              line_start_y = y_offset;
+              continue;	
+              break;
+            default:
+              fprintf(stderr, "o_text_create_string: Angle not supported\n");
+              break;
+        }
+          case '\t':
 #if DEBUG
-	printf("Found tab character.\n");
-	printf("Tab size in coord: %i\n", size_of_tab_in_coord);
-	printf("Line start: %i,%i\n", line_start_x, line_start_y);
-	printf("Position: %i, %i\n", x_offset, y_offset);
+            printf("Found tab character.\n");
+            printf("Tab size in coord: %i\n", size_of_tab_in_coord);
+            printf("Line start: %i,%i\n", line_start_x, line_start_y);
+            printf("Position: %i, %i\n", x_offset, y_offset);
 #endif
-	switch (angle) {
-	case 0:
-	case 180:
-	  rel_char_coord = x_offset - line_start_x;
+            switch (angle) {
+                case 0:
+                case 180:
+                  rel_char_coord = x_offset - line_start_x;
 #if DEBUG
-	  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
+                  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
 #endif
-	  x_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
-	  continue;	
-	  break;
-	case 90:
-	  rel_char_coord = y_offset - line_start_y;
+                  x_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
+                  continue;	
+                  break;
+                case 90:
+                  rel_char_coord = y_offset - line_start_y;
 #if DEBUG
-	  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
+                  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
 #endif
-	  y_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
-	  continue;	
-	  break;
-	case 270:
-	  rel_char_coord = line_start_y - y_offset;
+                  y_offset += (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
+                  continue;	
+                  break;
+                case 270:
+                  rel_char_coord = line_start_y - y_offset;
 #if DEBUG
-	  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
+                  printf("Add: %i\n", (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord)));
 #endif
-	  y_offset -= (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
-	  continue;	
-	  break;
-	default:
-	  fprintf(stderr, "o_text_create_string: Angle not supported\n");
-	  break;
-	}
+                  y_offset -= (size_of_tab_in_coord - (rel_char_coord % size_of_tab_in_coord));
+                  continue;	
+                  break;
+                default:
+                  fprintf(stderr, "o_text_create_string: Angle not supported\n");
+                  break;
+            }
       }
-
+      
       /* does not get here if the character was a newline or tab.  This is */
       /* correct. */ 
       o_complex_set_color(start_of_char, color);	
@@ -1064,60 +1036,6 @@ o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 @ %def o_text_recalc
 
-@section Function @code{o_text_convert_to_utf8()}
-
-@defun o_text_convert_to_utf8 string
-@end defun
-
-<<o_text_basic.c : o_text_convert_to_utf8()>>=
-gchar *
-o_text_convert_to_utf8 (gchar *string)
-{
-  GSList *codenames = NULL, *aux_ptr;  
-  gchar *out_str = NULL;
-  gsize b_written;
- 
-#ifdef HAS_GTK22
-  codenames = g_slist_append(codenames, g_strdup("UTF-8"));
-  codenames = g_slist_append(codenames, g_strdup("ISO_8859-15"));
-  
-  aux_ptr = codenames;
-  while (aux_ptr != NULL) {
-    out_str = g_convert (string, strlen(string), "UTF-8", aux_ptr->data,
-			 NULL, &b_written, NULL);
-    
-    aux_ptr = aux_ptr->next;
-   if (out_str != NULL) {
-      break;
-    }
-    
-  }
-  
-  /* Free the list */
-  aux_ptr = codenames;
-  while (aux_ptr != NULL) {
-    free (aux_ptr->data);
-    aux_ptr = aux_ptr->next;
-  }
-  g_slist_free(codenames);
-#endif
-
- if (out_str != NULL) {
-    return (out_str);
-  }
-  else {
-#ifdef HAS_GTK22
-    fprintf (stderr, "o_text_convert_to_utf8: Can't convert string to utf8: %s.\n", string);
-#endif
-    return(g_strdup(string));
-  }
-}
-
-
-@ %def o_text_convert_to_utf8
-
-
-
 
 @section Function @code{o_text_read()}
 
@@ -1141,8 +1059,7 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   int num_lines = 0;
   int i;
   char* string = NULL;
-  char* temp = NULL;
-  char buffer[MAX_TEXT_LINE_LENGTH]; 
+  GString *textstr;
 
   if (fileformat_ver == 1) {
     sscanf(buf, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
@@ -1216,36 +1133,41 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
     color = WHITE;
   }
 
-#ifdef HAS_GTK12
-  if (num_lines > 1) { 
-    s_log_message("Found a multi-line text item which is fully supported when using gtk+ 2.2.x.\n");
+  assert(num_lines && num_lines > 0);
+
+  textstr = g_string_new ("");
+  for (i = 0; i < num_lines; i++) {
+    gchar buffer[MAX_TEXT_LINE_LENGTH];
+    
+    fgets (buffer, MAX_TEXT_LINE_LENGTH, fp);
+
+    textstr = g_string_append (textstr, buffer);
   }
-#endif
-
-  assert(num_lines && num_lines > 0);  
-  for (i = 0; i < num_lines; i++)
-  {
-    gchar *utf_str;
-
-    fgets(buffer, 1024, fp);
-
-    utf_str = o_text_convert_to_utf8(buffer);
-
-    if (string == 0) {
-      string = g_strdup (utf_str);
-    } else {
-      temp = g_strconcat (string, utf_str, NULL);
-      free(string);
-      string = temp;
-    }
-    free (utf_str);
-  }
+  /* retrieve the character string from the GString */
+  string = g_string_free (textstr, FALSE);
 
   string = remove_last_nl(string);	
+
+  /* convert the character string to UTF-8 if necessary */
+  if (!g_utf8_validate (string, -1, NULL)) {
+    /* if it is not utf-8, it is ISO_8859-15 */
+    gchar *tmp = g_convert (string, strlen (string),
+                            "UTF-8", "ISO_8859-15",
+                            NULL, NULL, NULL);
+    if (tmp == NULL) {
+      fprintf (stderr, "Failed to convert text string to UTF-8: %s.\n",
+               string);
+    } else {
+      /* successfully converted string, now use tmp as string */
+      g_free (string);
+      string = tmp;
+    }
+  }
+  
   object_list = o_text_add(w_current, object_list, type, color, x, y, 
                            alignment, angle, string, 
                            size, visibility, show_name_value);
-  free(string);
+  g_free(string);
 
   return(object_list);
 }
@@ -1265,41 +1187,64 @@ o_text_set_info_font(char buf[])
 {
   char type; 
   int width;
-  char character;
+  gunichar character=0;
+  gchar *buf_ptr;
   int special=0;
   char *string; 
-  gchar *aux_str;
   OBJECT *o_font_set;
 
-  string = g_strdup(remove_nl(buf));	
+  string = remove_nl (buf);	
 
-  /* the right way to do this is to use the ascii code in the character
-   * field hack
-   */ 
-  sscanf(string, "%c %c %d %d\n", &type, &character, &width, &special); 
-
-  /* space */
-  if (special == 1 && character == '_') {
-    character = 32;
+  /* parse the font info: */
+  buf_ptr = (gchar*)string;
+  /*   - type */
+  type = *buf_ptr++;
+  g_assert (type == INFO_FONT);
+  while (buf_ptr != NULL && *buf_ptr == ' ') buf_ptr++;
+  /*   - character */
+  if (buf_ptr != NULL && *buf_ptr != '\0') {
+    character = g_utf8_get_char_validated (buf_ptr, -1);
+    if (character == (gunichar)-1) {
+      s_log_message (
+        "Failed to validate utf-8 character in font definition: \"%s\".\n",
+        string);
+      return;
+    }
+    /* move buf_ptr just after character */
+    buf_ptr = g_utf8_find_next_char (buf_ptr, NULL);
+  }
+  while (buf_ptr != NULL && *buf_ptr == ' ') buf_ptr++;
+  /*   - width and special */
+  if (buf_ptr != NULL) {
+    sscanf (buf_ptr, "%d %d\n", &width, &special);
   }
 
-  /* newline */
-  if (special == 1 && character == 'n') {
-    character = 10;
+  /* deal with special characters */
+  if (special == 1) {
+    switch (character) {
+      case ((gunichar)'_'):
+      /* space */
+      character = (gunichar)' ';
+      break;
+      case ((gunichar)'n'):
+      /* newline */
+      character = (gunichar)'\n';
+      break;
+    }
   }
 
-  aux_str = g_strdup_printf("%c", character);
-  o_font_set = g_hash_table_lookup (font_loaded, aux_str);
-  free (aux_str);
-  
+  o_font_set = g_hash_table_lookup (font_loaded,
+                                    GUINT_TO_POINTER ((gunichar)character));
   if (o_font_set != NULL) {
     o_font_set->font_text_size = width;
+  } else {
+    gchar outbuf[7];
+    gint l = g_unichar_to_utf8 (character, outbuf);
+    outbuf[l] = '\0';
+    fprintf(stderr,
+            "o_text_set_info_font: character %s not found!!!\n", outbuf);
   }
-  else {
-    fprintf(stderr, "o_text_set_info_font: character %c not found!!!\n", character);
-   }
   
-  free(string);
 }
 
 
@@ -1530,51 +1475,39 @@ o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 @end defun
 
 <<o_text_basic.c : o_text_freeallfonts()>>=
-#ifdef HAS_GTK12
-/* Function called by g_hash_table_foreach_remove to free 
-   each value/entry of the hash table */
-gboolean o_text_free_hashtable_entry (gpointer key, gpointer value, gpointer user_data) {
-  free (value);
-  free (key);
-  return (TRUE);
+static gboolean
+delete_font_set (gpointer key, gpointer value, gpointer user_data)
+{
+  OBJECT *tmp = (OBJECT*)value;
+  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
+
+  if (tmp != NULL) {
+    if (tmp->font_prim_objs != NULL) {
+      s_delete_list_fromstart (toplevel, tmp->font_prim_objs);
+      tmp->font_prim_objs = NULL;
+    }
+    /* do not use s_delete() as tmp is not fully initialized */
+    g_free (tmp->name);
+    g_free (tmp);
+    
+  }
+
+  return TRUE;
 }
-#endif
 
 void
 o_text_freeallfonts(TOPLEVEL *w_current)
 {
-  OBJECT *aux;
+  /* destroy the char-to-objects hastable */
+  g_hash_table_foreach_remove (font_loaded,
+                               delete_font_set,
+                               w_current);
+  g_hash_table_destroy (font_loaded);
+  font_loaded = NULL;
 
-  aux = (OBJECT *) font_set;
-  while ((aux = (OBJECT *) g_slist_nth_data(font_set,0)) != NULL) {
-    if (aux->font_prim_objs != NULL) {
-      s_delete_list_fromstart(w_current, aux->font_prim_objs);
-      aux->font_prim_objs = NULL;
-    }
-    /* Remove the entry from the hash table */
-    /* (OBJECT *)->name = key of font_loaded, so it will be freed later */
-#ifdef HAS_GTK12
-    /* GTK12 needs the data in the hash table to be freed */
-    if ((entry = g_hash_table_lookup (font_loaded, aux->name)) != NULL) {
-      free (entry);
-     }
-    free (aux->name);
-#endif
-    /* Remove from the list the node with data pointed by aux */
-    font_set = g_slist_remove(font_set, aux);
-
-  }
-  g_slist_free (font_set);
-
-  /* Destroy the font to file hashtable */
-  g_hash_table_destroy(font_loaded);
-
-  /* Destroy the font to file hashtable */
-#ifdef HAS_GTK12
-  /* GTK12 needs the data in the hash table to be freed */
-  g_hash_table_foreach_remove (font_char_to_file, o_text_free_hashtable_entry, NULL);
-#endif
-  g_hash_table_destroy(font_char_to_file);
+  /* destroy the font-to-filename hashtable */
+  g_hash_table_destroy (font_char_to_file);
+  font_char_to_file = NULL;
  
 }
 

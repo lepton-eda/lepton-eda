@@ -1,7 +1,21 @@
+2005-03-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/g_rc.nw (g_rc_map_font_character_to_file): Adapted for the
+	new char-to-file hash table.
+
+	* noweb/o_text_basic.nw: Improved memory use and global efficiency
+	in the unicode support: hash tables now takes a gunichar as key.
+	Also removed GTK 1.2 specific code.
+
 2005-03-11 7:05 Sturt Brorson <sdb@cloud9.net>
 	* noweb/s_toplevel.nw: Added initialization of toplevel_head->next 
 	in s_toplevel_init() to fix possible uninitialized jump in 
 	s_toplevel_new().
+	
+2005-03-10  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/g_rc.nw (g_rc_map_font_character_to_file): Added validation of 
+	SCM parameters (SCM_ASSERT).
 
 2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
