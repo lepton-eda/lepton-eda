@@ -954,7 +954,7 @@ o_complex_set_saved_color_only(OBJECT *complex, int color)
 /* returns the counter'th pin in o_list */
 /* NULL if there is no more pins */
 OBJECT *
-o_complex_return_pin(OBJECT *o_list, int counter)
+o_complex_return_nth_pin(OBJECT *o_list, int counter)
 {
 	OBJECT *o_current;
 	int internal_counter=0;
@@ -974,7 +974,6 @@ o_complex_return_pin(OBJECT *o_list, int counter)
 	}
 	
 	return(NULL);
-
 }
 
 
@@ -1096,6 +1095,40 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
 
 	/* mirror origin point */
 /*	object->x = -object->x;*/
+}
+
+
+/* pass in top level object */
+OBJECT *
+o_complex_return_pin_object(OBJECT *object, char *pin) 
+{
+	OBJECT *o_current=NULL;
+	OBJECT *found;
+
+	/* go inside complex objects */
+	o_current = object->complex;
+
+	while ( o_current != NULL ) {
+		switch(o_current->type) {
+			case(OBJ_PIN):
+				
+				/* Search for the pin making sure that */
+				/* any found attribute starts with "pin" */
+				found = o_attrib_search_attrib_value(
+							o_current->attribs, 
+							pin, "pin", 0);
+				if (found) {
+#if DEBUG
+					printf("%s: %s\n", found->name,
+						       found->text_string);
+#endif
+					return(o_current);
+				}
+			break;
+		}
+		o_current=o_current->next;
+	}
+	return(NULL);
 }
 
 

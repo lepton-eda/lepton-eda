@@ -965,6 +965,110 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 	return (NULL);
 } 
 
+/* return is the OBJECT */
+/* counter is the nth occurance of the attribute, starts from ZERO! */
+/* zero being the first occurance */
+/* The value is what is search for, however name is also partially */
+/* compared to make sure you get the attribute you really want */
+OBJECT *
+o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name, 
+			     int counter) 
+{
+	OBJECT *found;
+	ATTRIB *a_current;
+	int val;
+	int internal_counter=0;
+	char found_name[128]; /* limit hack */
+	char found_value[128];
+	char *return_string;
+
+	a_current = list;
+	
+	if (!value) 
+		return(NULL);
+
+	if (!name) 
+		return(NULL);
+
+	while(a_current != NULL) {
+		found = a_current->object;
+		if (found != NULL && found->text_string) {
+			val = o_attrib_get_name_value(found->text_string, 
+				                      found_name, found_value);
+
+			if (val) {
+#if DEBUG
+				printf("found value: %s\n", found_value);
+				printf("looking for: %s\n", value);
+#endif
+				if (strcmp(value, found_value) == 0) {
+					if (counter != internal_counter) {
+						internal_counter++;	
+					} else {
+				   		if (strstr(found_name, name)) {
+							return(found);
+						}
+					}
+				}
+			}	
+
+		}
+		a_current=a_current->next;
+	 }
+
+	return (NULL);
+} 
+
+/* it is the responsibility of the caller to free the returned string */
+/* returned string is the value of the attribute */
+/* counter is the nth occurance of the attribute, starts from ZERO! */
+/* zero being the first occurance */
+char *
+o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter) 
+{
+	OBJECT *found;
+	ATTRIB *a_current;
+	int val;
+	int internal_counter=0;
+	char found_name[128]; /* limit hack */
+	char found_value[128];
+	char *return_string;
+
+	a_current = list;
+
+	while(a_current != NULL) {
+		found = a_current->object;
+		if (found != NULL && found->text_string) {
+			val = o_attrib_get_name_value(found->text_string, 
+				                      found_name, found_value);
+
+			if (val) {
+#if DEBUG
+				printf("found name: %s\n", found_name);
+				printf("looking for: %s\n", name);
+#endif
+				if (strcmp(name, found_name) == 0) {
+					if (counter != internal_counter) {
+						internal_counter++;	
+					} else {
+						return_string = (char *) 
+								malloc(
+							sizeof(char)*
+							strlen(found_value)+1);
+							strcpy(return_string,
+							       found_value);
+						return(return_string);
+					}
+				}
+			}	
+
+		}
+		a_current=a_current->next;
+	 }
+
+	return (NULL);
+} 
+
 /* it is the responsibility of the caller to free the returned string */
 /* returned string is the value */
 /* counter is the nth occurance of the attribute, starts from ZERO! */

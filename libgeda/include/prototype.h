@@ -10,7 +10,6 @@ void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 void f_save(TOPLEVEL *w_current, char *filename);
 /* f_image.c */
-void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
@@ -67,7 +66,7 @@ ATTRIB *o_attrib_return_tail(ATTRIB *head);
 ATTRIB *add_attrib_head(OBJECT *parent);
 ATTRIB *o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item);
 void o_attrib_free(TOPLEVEL *w_current, ATTRIB *current);
-void o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *object);
+void o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *text_object, OBJECT *object);
 void o_attrib_detach_test(TOPLEVEL *w_current, OBJECT *list, OBJECT *items);
 void o_attrib_edit(OBJECT *list, OBJECT *item);
 void o_attrib_select_draw(ATTRIB *list);
@@ -88,6 +87,8 @@ void o_attrib_set_string(TOPLEVEL *w_current, char *string);
 char *o_attrib_search_name(OBJECT *list, char *name, int counter);
 char *o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found);
 char *o_attrib_search_name_partial(OBJECT *object, char *name, int counter);
+OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name, int counter);
+char *o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter);
 char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter);
 OBJECT *o_attrib_return_parent(ATTRIB *attribute);
 ATTRIB *o_attrib_copy_all(TOPLEVEL *w_current, OBJECT *attached_to, ATTRIB *attributes);
@@ -187,9 +188,10 @@ void o_complex_set_color(OBJECT *complex, int color);
 void o_complex_set_color_save(OBJECT *complex, int color);
 void o_complex_unset_color(OBJECT *complex);
 void o_complex_set_saved_color_only(OBJECT *complex, int color);
-OBJECT *o_complex_return_pin(OBJECT *o_list, int counter);
+OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
 /* o_conn.c */
 CONN *o_conn_return_tail(CONN *head);
 CONN *o_conn_add_head(OBJECT *parent, int x, int y);
@@ -222,10 +224,6 @@ void o_conn_disconnect(PAGE *p_current);
 void o_conn_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, FILE *fp, int x, int y, int other_wx, int other_wy);
 void o_conn_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, int x, int y, int other_wx, int other_wy);
 /* o_image.c */
-void o_image_init(void);
-void o_image_create(int x, int y, int color_mode);
-void o_image_close(void);
-int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
 /* o_line_basic.c */
 void get_line_bounds(TOPLEVEL *w_current, LINEPTS *points, int *left, int *top, int *right, int *bottom);

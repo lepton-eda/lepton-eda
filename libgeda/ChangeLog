@@ -8,6 +8,23 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-04-15  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex.c: Renamed o_complex_return_pin to 
+	  o_complex_return_nth_pin
+
+	* src/o_complex.c: Created new o_complex_return_pin_object to support 
+	  gnetlist's g_get_pin_attribute
+
+	* src/create_proto: Updated prototype.h creation script to use gtk/glib
+          paths from my machine (installed in /usr/local ...)
+
+	* src/o_attrib.c: Added o_attrib_search_attrib_value to support 
+	  o_complex_return_pin_object
+
+	* src/o_attrib.c: Added o_attrib_search_attrib_name to support 
+	  gnetlist's g_get_pin_attribute
+
 2000-03-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_net.c: Started fixing the broken code in o_net_consolidate*
