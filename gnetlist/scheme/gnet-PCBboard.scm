@@ -148,7 +148,11 @@
 ;;  (let ((pipe (open-output-pipe (string-append "m4 " *m4-pcbdir* "/common.m4 - | sed '/^PKG/d' - >> " output-filename))))
 ;;  leave the packages that have not been found in the file.pcb
 ;;  will be process in the script gschem2pcb
-  (let ((pipe (open-output-pipe (string-append "m4 " *m4-pcbdir* "/common.m4 - >> " output-filename))))
+;; Original pipe command commented out by AVH (bugfix by Rich Walker)
+;;  (let ((pipe (open-output-pipe (string-append "m4 " *m4-pcbdir* "/common.m4 - >> " output-filename))))
+;; Fixed pipe command (AVH 1/27/02)
+   (let ((pipe (open-output-pipe (string-append "m4 -d -I" *m4-pcbdir* " " *m4-pcbdir* "/common.m4 - >> " output-filename))))
+
 
        ;; packages is a list with the different uref value
     (PCBboard:write-value-footprint pipe packages)
