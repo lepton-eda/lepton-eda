@@ -359,7 +359,7 @@ if(w_current->tewindow)return;
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox10), 3);
 
-  radiobutton8 = gtk_radio_button_new_with_label (show_group, "Label");
+  radiobutton8 = gtk_radio_button_new_with_label (show_group, "Name");
   gtk_object_set_data(GTK_OBJECT(tewindow),"showlabbutton",radiobutton8);
   show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton8));
   gtk_widget_show (radiobutton8);
@@ -381,15 +381,16 @@ if(w_current->tewindow)return;
   gtk_widget_show (hbuttonbox2);
   gtk_box_pack_start (GTK_BOX (vbox2), hbuttonbox2, FALSE, TRUE, 0);
 
+  buttonok = gtk_button_new_with_label ("OK");
+  gtk_widget_show (buttonok);
+  gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
+  GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
+
   buttondelete = gtk_button_new_with_label ("Delete");
   gtk_widget_show (buttondelete);
   gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttondelete);
   GTK_WIDGET_SET_FLAGS (buttondelete, GTK_CAN_DEFAULT);
 
-  buttonok = gtk_button_new_with_label ("OK");
-  gtk_widget_show (buttonok);
-  gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
-  GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
 
   buttoncancel = gtk_button_new_with_label ("Cancel");
   gtk_widget_show (buttoncancel);
@@ -429,6 +430,7 @@ if(w_current->tewindow)return;
 
 	gtk_window_position(GTK_WINDOW (tewindow), GTK_WIN_POS_MOUSE);
 
+
 	gtk_signal_connect(GTK_OBJECT (tewindow), "destroy",
                                    GTK_SIGNAL_FUNC(destroy_window),
                                    &w_current->tewindow);
@@ -441,6 +443,8 @@ if(w_current->tewindow)return;
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_delete),w_current);
 
 	gtk_widget_show(tewindow);
+
+	gtk_widget_grab_focus(tewindow);
 }
 
 
