@@ -111,16 +111,21 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
 
 @section Function @code{s_cue_postscript_fillcircle()}
 
-@defun s_cue_postscript_fillcircle w_current fp x y
+@defun s_cue_postscript_fillcircle w_current fp x y size_flag
 @end defun
 
 <<s_cue.c : s_cue_postscript_fillcircle()>>=
-void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp, int x,
-				 int y)
+void s_cue_postscript_fillcircle(TOPLEVEL * w_current, FILE * fp,
+                                 int x, int y, int size_flag)
 {
   int offset2;
 
-  offset2 = 7;
+  if (!size_flag) {
+    offset2 = 7;
+  } else {
+    offset2 = 3.5;
+  }
+
 
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d mils %d mils\n", x, y);
@@ -174,7 +179,8 @@ void s_cue_image_fillbox(TOPLEVEL * w_current, OBJECT * object, int world_x,
 @end defun
 
 <<s_cue.c : s_cue_image_fillcircle()>>=
-void s_cue_image_fillcircle(TOPLEVEL * w_current, int world_x, int world_y)
+void s_cue_image_fillcircle(TOPLEVEL * w_current, int world_x, int world_y,
+                            int size_flag)
 {
   int endpoint_color;
   int offset, offset2;
@@ -190,7 +196,11 @@ void s_cue_image_fillcircle(TOPLEVEL * w_current, int world_x, int world_y)
 
   WORLDtoSCREEN(w_current, world_x, world_y, &x, &y);
 
-  offset = SCREENabs(w_current, 30);
+  if (!size_flag) {
+    offset = SCREENabs(w_current, 30);
+  } else {
+    offset = SCREENabs(w_current, 10);
+  }
   offset2 = offset * 2;
 
   gdImageArc(current_im_ptr, x, y,
@@ -256,6 +266,7 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
   CONN *conn;
   int type, count = 0;
   int done = FALSE;
+  int bus_involved = FALSE;
 
   x = object->line->x[whichone];
   y = object->line->y[whichone];
@@ -271,12 +282,26 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
 
         case (CONN_ENDPOINT):
           count++;
+          if (conn->other_object &&
+              ((object->type == OBJ_NET &&
+                conn->other_object->type == OBJ_BUS) ||
+               (object->type == OBJ_BUS &&
+                conn->other_object->type == OBJ_NET))) {
+            bus_involved=TRUE;
+          }
           break;
 
         case (CONN_MIDPOINT):
           type = CONN_MIDPOINT;
           done = TRUE;
           count = 0;
+          if (conn->other_object &&
+              ((object->type == OBJ_NET &&
+                conn->other_object->type == OBJ_BUS) ||
+               (object->type == OBJ_BUS &&
+                conn->other_object->type == OBJ_NET))) {
+            bus_involved=TRUE;
+          }
           break;
       }
     }
@@ -304,10 +329,18 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
 
         } else if (count >= 2) {
           if (output_type == POSTSCRIPT) {
-            s_cue_postscript_fillcircle(w_current, fp, x, y);
+            if (!bus_involved) {
+              s_cue_postscript_fillcircle(w_current, fp, x, y, FALSE);
+            } else {
+              s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
+            }
 #ifdef HAS_LIBGDGEDA
           } else if (output_type == PNG) {
-            s_cue_image_fillcircle(w_current, x, y);
+            if (!bus_involved) {
+              s_cue_image_fillcircle(w_current, x, y, FALSE);
+            } else {
+              s_cue_image_fillcircle(w_current, x, y, TRUE);
+            }
 #endif
           }
         }
@@ -316,10 +349,18 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
 
     case (CONN_MIDPOINT):
       if (output_type == POSTSCRIPT) {
-        s_cue_postscript_fillcircle(w_current, fp, x, y);
+        if (!bus_involved) {
+          s_cue_postscript_fillcircle(w_current, fp, x, y, FALSE);
+        } else {
+          s_cue_postscript_fillcircle(w_current, fp, x, y, TRUE);
+        }
 #ifdef HAS_LIBGDGEDA
       } else if (output_type == PNG) {
-        s_cue_image_fillcircle(w_current, x, y);
+        if (!bus_involved) {
+          s_cue_image_fillcircle(w_current, x, y, FALSE);
+        } else {
+          s_cue_image_fillcircle(w_current, x, y, TRUE);
+        }
 #endif
       }
   }
@@ -343,6 +384,7 @@ s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
   int x, y;
   GList *cl_current;
   CONN *conn;
+  int size_flag;
 
   cl_current = object->conn_list;
   while (cl_current != NULL) {
@@ -353,11 +395,23 @@ s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
 
         x = conn->x;
         y = conn->y;
+
+        if (conn->other_object &&
+          ( (object->type == OBJ_BUS &&
+             conn->other_object->type == OBJ_NET) ||
+            (object->type == OBJ_NET &&
+             conn->other_object->type == OBJ_BUS))) {
+        size_flag = TRUE;
+      } else {
+        size_flag = FALSE;
+      }
+
+        
         if (output_type == POSTSCRIPT) {
-          s_cue_postscript_fillcircle(w_current, fp, x, y);
+          s_cue_postscript_fillcircle(w_current, fp, x, y, size_flag);
 #ifdef HAS_LIBGDGEDA
         } else if (output_type == PNG) {
-          s_cue_image_fillcircle(w_current, x, y);
+          s_cue_image_fillcircle(w_current, x, y, size_flag);
 #endif
         }
         break;
