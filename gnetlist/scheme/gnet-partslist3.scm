@@ -1,3 +1,5 @@
+;;; $Id$
+;;;
 ; Copyright (C) 2001 MIYAMOTO Takanori
 ; gnet-partslist3.scm
 ; 
