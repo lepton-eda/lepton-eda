@@ -25,6 +25,8 @@
 
 	* examples/vams/*: Misc updates to the example files
 
+	* docs/gnetlist.txt: Moved file into docs directory
+
 2000-11-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/gnetlist.1: Updated manual with all the various backend formats
