@@ -450,6 +450,7 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
     case (229): /* a-ring finnish/swedish/danish/norwegian */
       sprintf(temp_string, "%s%ca_-ring.sym",
 	      w_current->font_directory, PATH_SEPARATER_CHAR);
+      break;
 
     case (230): /* ae-diphtong danish/norwegian */
       sprintf(temp_string, "%s%cae_-lig.sym",

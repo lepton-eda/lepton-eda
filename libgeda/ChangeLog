@@ -1,3 +1,8 @@
+2002-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text_basic.nw: Fixed a minor typo by applying Egil's latest
+	extended character patch (missing break; statement).  
+
 2002-12-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* acconfig.h, config.h.in, configure.in.h: Added tests to look for
