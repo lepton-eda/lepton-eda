@@ -27,7 +27,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -38,63 +37,66 @@
 
 #include "../include/prototype.h"
 
+/* Kazu Hirata <kazu@seul.org> on July 16, 1999 - added these macros
+ * to simplify the code */
+#define GET_BOX_WIDTH(w)			\
+	abs((w)->last_x - (w)->start_x)
+#define GET_BOX_HEIGHT(w)			\
+	abs((w)->last_y - (w)->start_y)
+#define GET_BOX_LEFT(w)				\
+	min((w)->start_x, (w)->last_x);
+#define GET_BOX_TOP(w)				\
+	min((w)->start_y, (w)->last_y);
+
+#define SWAP_INT(a, b)				\
+	{ int tmp = a; a = b; b = tmp; }
+#define SORT2_INT(a, b)				\
+	{ if((b) < (a)) { SWAP_INT(a, b); }}
 
 /* remove or add */
 /* #define REMOVE 0
-#define ADD 1*/
+#define ADD 1 */
 
 void
-i_sbox_search(TOPLEVEL *w_current, int flag) /* for now, but this needs to be more general hack */
+/* TODO: for now, but this needs to be more general */
+i_sbox_search(TOPLEVEL *w_current, int flag)
 {
-	/* use selection_head as the list to put into  */
-	/* and use object_head as the list to search */
-	/* get rid of start_x_y, last_x_y ???  */
+	/* use selection_head as the list to put into and use
+	 * object_head as the list to search get rid of start_x_y,
+	 * last_x_y ??? */
 
 	OBJECT *o_current=NULL;
 	int count = 0; /* object count */
-	
-	int tmp;
-	
-	if( w_current->last_x < w_current->start_x ) {
-		tmp = w_current->last_x;
-		w_current->last_x = w_current->start_x;
-		w_current->start_x = tmp;
-	}
-	if( w_current->last_y < w_current->start_y ) {
-		tmp = w_current->last_y;
-		w_current->last_y = w_current->start_y;
-		w_current->start_y = tmp;
-	}
+
+	SORT2_INT(w_current->start_x, w_current->last_x);
+	SORT2_INT(w_current->start_y, w_current->last_y);
 
 	o_current = w_current->page_current->object_head;
 
 	while (o_current != NULL) {
-
-
-		if ( (o_current->left >= w_current->start_x && 
-		      o_current->top >= w_current->start_y) &&
-		     (o_current->left >= w_current->start_x && 
-	              o_current->bottom <= w_current->last_y) &&
-		     (o_current->right <= w_current->last_x && 
-		      o_current->top >= w_current->start_y ) &&
-	  	     (o_current->right <= w_current->last_x && 
-		      o_current->bottom <= w_current->last_y) ) {
+		/* TODO: make this more readable! */
+		if ((o_current->left >= w_current->start_x &&
+		     o_current->top >= w_current->start_y) &&
+		    (o_current->left >= w_current->start_x &&
+		     o_current->bottom <= w_current->last_y) &&
+		    (o_current->right <= w_current->last_x &&
+		     o_current->top >= w_current->start_y) &&
+		    (o_current->right <= w_current->last_x &&
+		     o_current->bottom <= w_current->last_y)) {
 
 			/* only if we can see it will it be selectable */
-			if (o_current->visibility == VISIBLE) { 
+			if (o_current->visibility == VISIBLE) {
 				o_select_many(w_current, o_current, count);
 				count++;
 			}
 		}
 
-
 		o_current = o_current->next;
 	}
 
- 
-	if (count == 0) 
+	if (count == 0) {
 		o_unselect_all(w_current);
-
+	}
 }
 
 void
@@ -102,18 +104,21 @@ i_sbox_start(TOPLEVEL *w_current, int x, int y)
 {
 	int box_width, box_height;
 
-        w_current->last_x = w_current->start_x; /* don't set these to the passed in x, y */
-        w_current->last_y = w_current->start_y; 
+	/* don't set these to the passed in x, y */
+        w_current->last_x = w_current->start_x;
+        w_current->last_y = w_current->start_y;
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
 
-
-	gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_color(w_current->select_color));
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-		   FALSE, w_current->start_x, w_current->start_y, 
-			box_width, box_height);
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE,
+			   w_current->start_x,
+			   w_current->start_y,
+			   box_width,
+			   box_height);
 }
 
 void
@@ -127,38 +132,36 @@ i_sbox_end(TOPLEVEL *w_current, int x, int y)
 		return;
         }
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);	
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
 
-	if( w_current->last_y < w_current->start_y )
-		box_top = w_current->last_y;
-	else
-		box_top = w_current->start_y;
+	box_left = GET_BOX_LEFT(w_current);
+	box_top  = GET_BOX_TOP (w_current);
 
-	if( w_current->last_x < w_current->start_x )
-		box_left = w_current->last_x;
-	else
-		box_left = w_current->start_x;
-	
-	gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_color(w_current->select_color) );
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-			FALSE, box_left, box_top,
-                        box_width, box_height); 
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE,
+			   box_left,
+			   box_top,
+			   box_width,
+			   box_height);
 
 	/* erase the box */
 #if 0
-	gdk_gc_set_foreground(w_current->gc, 
+	gdk_gc_set_foreground(w_current->gc,
 			      x_get_color(w_current->background_color));
-	gdk_draw_rectangle(w_current->window, w_current->gc, 
-			FALSE, box_left, box_top,
-                        box_width, box_height); 
+	gdk_draw_rectangle(w_current->window, w_current->gc,
+			   FALSE,
+			   box_left  ,
+			   box_top   ,
+			   box_width ,
+			   box_height);
 #endif
 
 	/* the zero is irrelavent remove it hack */
- 	i_sbox_search(w_current, 0);	
-
-}                         
+ 	i_sbox_search(w_current, 0);
+}
 
 void
 i_sbox_rubberbox(TOPLEVEL *w_current, int x, int y)
@@ -171,59 +174,58 @@ i_sbox_rubberbox(TOPLEVEL *w_current, int x, int y)
 		return;
         }
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
 
-	if( w_current->last_y < w_current->start_y )
-		box_top = w_current->last_y;
-	else
-		box_top = w_current->start_y;
+	box_left = GET_BOX_LEFT(w_current);
+	box_top  = GET_BOX_TOP (w_current);
 
-	if( w_current->last_x < w_current->start_x )
-		box_left = w_current->last_x;
-	else
-		box_left = w_current->start_x;
-
-	gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_color(w_current->select_color) );
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-		    FALSE, box_left, box_top, 
-			box_width, box_height);
+	gdk_gc_set_foreground(w_current->xor_gc,
+			      x_get_color(w_current->select_color));
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE,
+			   box_left  ,
+			   box_top   ,
+			   box_width ,
+			   box_height);
 
 /* this was an attempt at the all purpose select box (all directions */
 #if 0
-	temp_width = last_x - start_x;
+	temp_width  = last_x - start_x;
 	temp_height = last_y - start_y;
-	box_width = abs(temp_width);
+	box_width  = abs(temp_width);
 	box_height = abs(temp_height);
 
-	gdk_gc_set_foreground(xor_gc, x_get_color(select_color) );
+	gdk_gc_set_foreground(xor_gc, x_get_color(select_color));
 	if (temp_width < 0 && temp_height < 0) {
-		gdk_draw_rectangle(window, xor_gc, FALSE, start_x, start_y, 
-			box_width, box_height);
-	} else {	
-		gdk_draw_rectangle(window, xor_gc, FALSE, last_x, last_y, 
-			box_width, box_height);
+		gdk_draw_rectangle(window, xor_gc, FALSE,
+				   start_x,
+				   start_y,
+				   box_width,
+				   box_height);
+	} else {
+		gdk_draw_rectangle(window, xor_gc, FALSE,
+				   last_x,
+				   last_y,
+				   box_width,
+				   box_height);
 	}
 #endif
 
-       w_current->last_x = (int) x; /* removed fix_x, fix_y to unrestrict sels */
-       w_current->last_y = (int) y;
+	/* removed fix_x, fix_y to unrestrict sels */
+	w_current->last_x = (int) x;
+	w_current->last_y = (int) y;
 
-	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);
+	box_width  = GET_BOX_WIDTH (w_current);
+	box_height = GET_BOX_HEIGHT(w_current);
 
-	if( w_current->last_y < w_current->start_y )
-		box_top = w_current->last_y;
-	else
-		box_top = w_current->start_y;
-
-	if( w_current->last_x < w_current->start_x )
-		box_left = w_current->last_x;
-	else
-		box_left = w_current->start_x;
+	box_left = GET_BOX_LEFT(w_current);
+	box_top  = GET_BOX_TOP (w_current);
 
 	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
-		 FALSE, box_left, box_top, 
-		 box_width, box_height);
-}                                                       
+			   FALSE,
+			   box_left,
+			   box_top,
+			   box_width,
+			   box_height);
+}

@@ -26,7 +26,6 @@
 
 #include <guile/gh.h>
 
-
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
 #include <libgeda/globals.h>
@@ -38,7 +37,6 @@
 #include "../include/prototype.h"
 #include "../include/x_states.h"
 
-
 void
 o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
@@ -47,57 +45,80 @@ o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 
 #if 0 /* old way  */
 	int zoom_num;
-	zoom_num = return_zoom_number(w_current->page_current->zoom_factor)+1;
+	zoom_num =
+		return_zoom_number(w_current->page_current->zoom_factor) +
+		1;
 
 	if (zoom_num <= 1) {
-		zoom_num = 5;	
+		zoom_num = 5;
 	}
-
 	if (zoom_num == 2) {
-		zoom_num = 4;	
+		zoom_num = 4;
 	}
 
 	size = zoom_num;
 #endif
 
-
 	size = SCREENabs(w_current, 30);
 
-	/* had +2 */
-        /* size = (return_zoom_number(w_current->page_current->zoom_factor);*/
-        x2size = 2*size;
+	/* had + 2 */
+#if 0
+	size = (return_zoom_number(w_current->page_current->zoom_factor));
+#endif
+
+	x2size = 2 * size;
 
 	if (w_current->net_endpoint_mode == FILLEDBOX) {
-		gdk_draw_rectangle(w_current->window, 
-				local_gc, TRUE, x-size, y-size, 
-				x2size, x2size);
-		gdk_draw_rectangle(w_current->backingstore, 
-				local_gc, TRUE, x-size, y-size, 
-				x2size, x2size);
+		gdk_draw_rectangle(w_current->window,
+				   local_gc, TRUE,
+				   x - size,
+				   y - size,
+				   x2size  ,
+				   x2size  );
+		gdk_draw_rectangle(w_current->backingstore,
+				   local_gc, TRUE,
+				   x - size,
+				   y - size,
+				   x2size  ,
+				   x2size  );
 	} else if (w_current->net_endpoint_mode == EMPTYBOX) {
-
-		gdk_draw_rectangle(w_current->window, 
-				local_gc, FALSE, 
-				x-size, y-size, x2size, x2size);
-		gdk_draw_rectangle(w_current->backingstore, 
-				local_gc, FALSE, 
-				x-size, y-size, x2size, x2size);
-
+		gdk_draw_rectangle(w_current->window,
+				   local_gc, FALSE,
+				   x - size,
+				   y - size,
+				   x2size  ,
+				   x2size  );
+		gdk_draw_rectangle(w_current->backingstore,
+				   local_gc, FALSE,
+				   x - size,
+				   y - size,
+				   x2size  ,
+				   x2size  );
 	} else if (w_current->net_endpoint_mode == X) {
-
-		gdk_draw_line(w_current->window, 
-			local_gc, x-size, y-size, x+size, 
-			y+size);
-		gdk_draw_line(w_current->backingstore, 
-			local_gc, x-size, y-size, x+size, 
-			y+size);
-		gdk_draw_line(w_current->window, 
-				local_gc, x+size, y-size, 
-				x-size, y+size);
-		gdk_draw_line(w_current->backingstore, 
-				local_gc, x+size, y-size, 
-				x-size, y+size);
-
+		gdk_draw_line(w_current->window,
+			      local_gc,
+			      x - size,
+			      y - size,
+			      x + size,
+			      y + size);
+		gdk_draw_line(w_current->backingstore,
+			      local_gc,
+			      x - size,
+			      y - size,
+			      x + size,
+			      y + size);
+		gdk_draw_line(w_current->window,
+			      local_gc,
+			      x + size,
+			      y - size,
+			      x - size,
+			      y + size);
+		gdk_draw_line(w_current->backingstore,
+			      local_gc,
+			      x + size,
+			      y - size,
+			      x - size,
+			      y + size);
 	} /* Else mode was set to NONE or garbage */
 }
 
@@ -105,7 +126,6 @@ void
 o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 {
 	int size;
-
 
 #if DEBUG
 	printf("zn %d\n", zoom_num);
@@ -117,13 +137,13 @@ o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 	zoom_num = return_zoom_number(w_current->page_current->zoom_factor);
 
 	if (zoom_num <= 0) {
-		zoom_num = 1;	
-        	size = 3 * (zoom_num); 
+		zoom_num = 1;
+        	size = 3 * (zoom_num);
 	} else if (zoom_num == 1) {
-		zoom_num = 2;	
-        	size = 4; 
+		zoom_num = 2;
+        	size = 4;
 	} else {
-        	size = 3 * (zoom_num); 
+        	size = 3 * (zoom_num);
 	}
 #endif
 
@@ -134,22 +154,29 @@ o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y)
 #endif
 
 	if (w_current->net_midpoint_mode == FILLED) {
-		gdk_draw_arc(w_current->window, local_gc, 
-			TRUE, x-size/2, y-size/2, 
-			size, size, 0, FULL_CIRCLE);  	
-		gdk_draw_arc(w_current->backingstore, 
-			local_gc, TRUE, x-size/2, y-size/2, 
-			size, size, 0, FULL_CIRCLE);  	
+		gdk_draw_arc(w_current->window, local_gc,
+			     TRUE,
+			     x - size / 2,
+			     y - size / 2,
+			     size, size, 0, FULL_CIRCLE);
+		gdk_draw_arc(w_current->backingstore,
+			     local_gc, TRUE,
+			     x - size / 2,
+			     y - size / 2,
+			     size, size, 0, FULL_CIRCLE);
 	} else if (w_current->net_midpoint_mode == EMPTY) {
-		gdk_draw_arc(w_current->window, 
-			local_gc, FALSE, x-size/2, y-size/2, 
-			size, size, 0, FULL_CIRCLE);  	
-		gdk_draw_arc(w_current->backingstore, 
-			local_gc, FALSE, x-size/2, y-size/2, 
-			size, size, 0, FULL_CIRCLE);  	
+		gdk_draw_arc(w_current->window,
+			     local_gc, FALSE,
+			     x - size / 2,
+			     y - size / 2,
+			     size, size, 0, FULL_CIRCLE);
+		gdk_draw_arc(w_current->backingstore,
+			     local_gc, FALSE,
+			     x - size / 2,
+			     y - size / 2,
+			     size, size, 0, FULL_CIRCLE);
 	} /* Else mode was set to NONE or garbage */
 }
-
 
 /* draw the other objects which connect to points specified by object */
 void
@@ -158,12 +185,11 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 	ALES *ales_list;
 	ALES *c_current;
 
-
 	char *key;
 
-	/* be sure to carefully free this key */
-	/* only when it's not inserted into the list */
-	key = o_ales_return_key(object->line_points->x1, 
+	/* be sure to carefully free this key only when it's not
+	 * inserted into the list */
+	key = o_ales_return_key(object->line_points->x1,
 				object->line_points->y1);
 
 	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
@@ -174,15 +200,15 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 			if (c_current->object != NULL) {
 				o_redraw_single(w_current, c_current->object);
 			}
-			c_current=c_current->next;
+			c_current = c_current->next;
 		}
 	}
 
 	free(key);
 
-	/* be sure to carefully free this key */
-	/* only when it's not inserted into the list */
-	key = o_ales_return_key(object->line_points->x2, 
+	/* be sure to carefully free this key only when it's not
+	 * inserted into the list */
+	key = o_ales_return_key(object->line_points->x2,
 				object->line_points->y2);
 
 	ales_list = g_hash_table_lookup(w_current->page_current->ales_table,
@@ -193,7 +219,7 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 			if (c_current->object != NULL) {
 				o_redraw_single(w_current, c_current->object);
 			}
-			c_current=c_current->next;
+			c_current = c_current->next;
 		}
 	}
 
@@ -203,30 +229,25 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 void
 o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 {
-
-	OBJECT *o_current;
-
-	o_current = object_list;
+	OBJECT *o_current = object_list;
 
 	while (o_current != NULL) {
-
 		switch(o_current->type) {
-
-	/* pins don't have visual cues...  
-			case(OBJ_PIN):
-				o_pin_ales_draw(w_current, o_current);
+#if 0
+		case(OBJ_PIN):
+			/* pins don't have visual cues... */
+			o_pin_ales_draw(w_current, o_current);
 			break;
-	*/
+#endif
 
-			case(OBJ_NET):
-				o_net_ales_draw(w_current, o_current);
+		case(OBJ_NET):
+			o_net_ales_draw(w_current, o_current);
 			break;
 
-			case(OBJ_COMPLEX):
-				o_ales_draw_all(w_current, o_current->complex);
+		case(OBJ_COMPLEX):
+			o_ales_draw_all(w_current, o_current->complex);
 			break;
 		}
-
 		o_current = o_current->next;
 	}
 }
@@ -234,29 +255,22 @@ o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list)
 void
 o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
 {
-
-	OBJECT *o_current;
-
-	o_current = object_list;
+	OBJECT *o_current = object_list;
 
 	while (o_current != NULL) {
-
 		switch(o_current->type) {
-
-			case(OBJ_PIN):
-				o_pin_ales_erase(w_current, o_current);
+		case(OBJ_PIN):
+			o_pin_ales_erase(w_current, o_current);
 			break;
 
-			case(OBJ_NET):
-				o_net_ales_erase(w_current, o_current);
+		case(OBJ_NET):
+			o_net_ales_erase(w_current, o_current);
 			break;
 
-			case(OBJ_COMPLEX):
-				o_ales_erase_all(w_current, o_current->complex);
+		case(OBJ_COMPLEX):
+			o_ales_erase_all(w_current, o_current->complex);
 			break;
 		}
-
 		o_current = o_current->next;
 	}
 }
-

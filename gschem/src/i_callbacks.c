@@ -67,7 +67,7 @@ my_strdup(const char* p)
  * returns NULL. If you want to change the extention using the return
  * value of the function, you need to do pointer arithmetic, assuming
  * your fname is defined as a constant. :-) */
-const char *
+static const char *
 fnameext_get(const char* fname)
 {
 	const char *p = strrchr(fname, '.');
@@ -85,7 +85,7 @@ fnameext_get(const char* fname)
  * newly allocated memory. If there is no '.' after the first
  * character, then the function simply returns a copy of fname. If
  * memory allocation fails, the function returns NULL. */
-char *
+static char *
 fnameext_remove(const char *fname)
 {
 	const char *p = fnameext_get(fname);
@@ -111,7 +111,8 @@ fnameext_remove(const char *fname)
  * memory. ext must not have '.'  as the first character unless you
  * wish an extention like '..c'. If memory allocation fails, the
  * function returns NULL. */
-char *fnameext_add(const char *fname, const char* ext)
+static char *
+fnameext_add(const char *fname, const char* ext)
 {
 	char *p;
 	
