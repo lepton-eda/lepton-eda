@@ -343,8 +343,9 @@ s_clib_getdir(int index)
 /* READ_DIR returns the next none "." element */
 /* CLOSE_DIR closes the directory */
 /* this function is not reentrant */
+/* filter is normally null except with OPEN_DIR */
 char *
-s_clib_getfiles(char *directory, int flag, int new_current)
+s_clib_getfiles(char *directory, int flag, char *filter, int new_current)
 {
 	static DIR *ptr;
         static struct dirent *dptr;
@@ -391,6 +392,16 @@ s_clib_getfiles(char *directory, int flag, int new_current)
 				closedir(ptr);
 			}
 
+			if (!directory) {
+				fprintf(stderr, "Got a NULL directory to open in s_clib_getfiles");
+				return(NULL);
+			}
+
+			if (!filter) {
+				fprintf(stderr, "Got a NULL filter to open in s_clib_getfiles");
+				return(NULL);
+			}
+
 			ptr = NULL;
 
 			for (j = 0 ; j < count ;j++) {
@@ -425,7 +436,7 @@ s_clib_getfiles(char *directory, int flag, int new_current)
 
 				if (dptr->d_name != NULL) {
 
-				  if (strstr(dptr->d_name, ".sym")) {
+				  if (strstr(dptr->d_name, filter)) {
 					len = strlen(dptr->d_name);
 
 					/* hack */

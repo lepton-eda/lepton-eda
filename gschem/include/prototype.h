@@ -398,6 +398,7 @@ void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_pin_start(TOPLEVEL *w_current, int x, int y);
 void o_pin_end(TOPLEVEL *w_current, int x, int y);
 void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y);
+void o_pin_eraserubber(TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);
@@ -567,7 +568,6 @@ void x_preview_close(TOPLEVEL *w_current);
 gint x_preview_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
 gint x_preview_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current);
-gint x_preview_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current);
 void x_preview_setup_rest(TOPLEVEL *preview);
 TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox);

@@ -1029,13 +1029,14 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 	strcpy(f_current->toplevel->current_clib, 
 	       f_current->directory_entries[row]);
 	
-	s_clib_getfiles(f_current->directory_entries[row], OPEN_DIR, -1);
+	s_clib_getfiles(f_current->directory_entries[row], OPEN_DIR, 
+	                ".sym", -1);
 
 	text[0] = NULL;
 	text[1] = NULL;
 	max_width = 0;
 	file = (char *) s_clib_getfiles(f_current->directory_entries[row], 
-					READ_DIR, -1);
+					READ_DIR, NULL, -1);
         while(file != NULL) {
 		if (strstr(file, ".sym")) {
 #if DEBUG
@@ -1054,12 +1055,12 @@ x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 		}
 		file = (char *) s_clib_getfiles(
 					f_current->directory_entries[row], 
-					READ_DIR, -1);
+					READ_DIR, NULL, -1);
 	}
 
 	gtk_clist_thaw (GTK_CLIST (f_current->file_list));
 
-        s_clib_getfiles(NULL, CLOSE_DIR, -1);
+        s_clib_getfiles(NULL, CLOSE_DIR, NULL, -1);
 }
 
 /* don't pass in f_current->filename or f_current->directory for component */
@@ -1263,31 +1264,32 @@ x_fileselect_search_library(FILEDIALOG *f_current, char *library, char *string)
 {
 	char *file;
 
-	s_clib_getfiles(library, OPEN_DIR, -1);
+	s_clib_getfiles(library, OPEN_DIR, ".sym", -1);
 
 	if (f_current->last_search != -1) {
-		s_clib_getfiles(library, SET_COUNT, f_current->last_search);
+		s_clib_getfiles(library, SET_COUNT, NULL, 
+	                        f_current->last_search);
 	} else {
 		f_current->last_search = 0;
 	}
 
-	file = (char *) s_clib_getfiles(library, READ_DIR, -1);
+	file = (char *) s_clib_getfiles(library, READ_DIR, ".sym", -1);
         while(file != NULL) {
 		if (strstr(file, ".sym")) {
 			if (strstr(file, string)) {
 #if DEBUG
 				printf("found: %s %s %d\n", file, string, f_current->last_search - 1);
 #endif
-        			s_clib_getfiles(NULL, CLOSE_DIR, -1);
+        			s_clib_getfiles(NULL, CLOSE_DIR, NULL, -1);
 				f_current->last_search++;
 				return(f_current->last_search - 1);
 			}
 		}
 		f_current->last_search++;
-		file = (char *) s_clib_getfiles( library, READ_DIR, -1);
+		file = (char *) s_clib_getfiles( library, READ_DIR, NULL, -1);
 	}
 
-        s_clib_getfiles(NULL, CLOSE_DIR, -1);
+        s_clib_getfiles(NULL, CLOSE_DIR, NULL, -1);
 	f_current->last_search = -1;
 	return(-1);
 }

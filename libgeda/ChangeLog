@@ -8,6 +8,14 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+1999-11-09  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_clib.c: Fixed s_clib_getfiles to filter files based on 
+	  the filter (new argument) passed in
+
+	* src/s_slib.c: Fixed a debugging routine to call the right functions
+	  for slib
+
 1999-10-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_basic.c: Added some checks in the object malloc, just for

@@ -10,6 +10,12 @@ Bugs (no particular order):
 	Try opening a file called untitled_1.sch, doesn't work since
 	you have an untitled_1 (the default) already open.
 
+	Change the color of an attached attribute, and then copy it (color
+	changes to yellow oops).
+
+	Zoom in a lot and try to select something with the select box. 
+	Not easy to do.
+
 	Swedish characters don't work.
 
 	still have some core problems with net extension and selections

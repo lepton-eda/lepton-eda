@@ -537,18 +537,18 @@ s_slib_print_dirs(void)
 	string = s_slib_getdir(i);
 	while(string != NULL) {
 
-		s_clib_getfiles(string, OPEN_DIR, -1);
+		s_slib_getfiles(string, OPEN_DIR);
 		printf("Opened %s\n", string);
 
-		file = (char *) s_clib_getfiles(string, READ_DIR, -1);
+		file = (char *) s_slib_getfiles(string, READ_DIR);
 
 		while(file != NULL) {
 			printf("file: %s\n", file);
-			file = (char *) s_clib_getfiles(string, READ_DIR, -1);
+			file = (char *) s_slib_getfiles(string, READ_DIR);
 		}
 
 		printf("Closed %s\n", string);
-		s_clib_getfiles(string, CLOSE_DIR, -1);
+		s_slib_getfiles(string, CLOSE_DIR);
 		i++;
 		string = s_slib_getdir(i);
 	}

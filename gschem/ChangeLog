@@ -11,6 +11,11 @@ into the cvs repository.
 
 1999-11-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
+	* src/x_fileselect.c: Fixed all calls to s_clib_getfiles with the
+	  right number of arguments (new filter argument)
+
+1999-11-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
 	* examples/adders_1.sch: Fixed a label= attribute which was
 	  incorrectly spelled (1abel)
 
