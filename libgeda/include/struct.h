@@ -806,6 +806,7 @@ struct st_toplevel {
   int hierarchy_netattrib_order;
   int hierarchy_netname_order;
   int hierarchy_uref_order;
+  char *unnamed_netname;
 
   TOPLEVEL *next;
   TOPLEVEL *prev; 

@@ -308,6 +308,7 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
   pr_current->hierarchy_netattrib_separator = NULL;
   pr_current->hierarchy_netname_separator = NULL;
   pr_current->hierarchy_uref_separator = NULL;
+  pr_current->unnamed_netname = NULL;
 }
 
 @ %def s_project_setup_rest

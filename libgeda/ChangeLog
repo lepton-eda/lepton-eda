@@ -1,3 +1,9 @@
+2003-11-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h, noweb/s_project.nw: Added unnamed_netname 
+	variable to TOPLEVEL (and initialized to NULL).  This is for
+	gnetlist.
+
 2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* config.guess config.sub depcomp install-sh ltmain.sh missing
