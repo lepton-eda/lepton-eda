@@ -1,0 +1,15 @@
+This is the block diagram for an actual commercial product being
+developed with gEDA.  It is a agile VFO which will serve as part of
+the reference hardware implementation for an open-source encrypted
+frequency-hopping spread-spectrum communication protocol.
+
+Most of the symbols in this diagram may be found in the IEC417 libary
+provided with gEDA (the rest of the symbols are embedded, as they come
+from local libraries).
+
+As this product is being developed as part of an open-source (GPL)
+project, final schematics (being drawn with gschem) will also be
+released to the gEDA community.
+
+Roger Williams <roger@coelacanth.com>
+1 November 1998
