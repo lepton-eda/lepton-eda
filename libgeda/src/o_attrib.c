@@ -1730,7 +1730,6 @@ o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object)
 	object = (OBJECT *) o_list_search(object_list, sel_object);
 
 	if (!object) {
-		printf("null object\n");
 		return(NULL);	
 	}
 
