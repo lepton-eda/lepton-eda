@@ -247,6 +247,31 @@
 ; Start of mode related keywords
 ;
 
+; undo-control string
+;
+; Controls if the undo is enabled or not
+;
+(undo-control "enabled")
+;(undo-control "disabled")
+
+; undo-levels number
+;
+; Determines the number of levels of undo.  Basically this number decides 
+; how many backup schematics are saved on disk.
+;
+(undo-levels 10)
+
+; undo-type string
+;
+; Controls which kind of undo is used.  The default is to use the disk as 
+; the storing medium (ie after every action the undo information is stored
+; to disk).  The other mechanism uses only memory.  The disk mechanism is
+; nice because you get undo-level number of backups of the schematic written
+; to disk as backups so you should never lose a schematic due to a crash.
+;
+(undo-type "disk")
+;(undo-type "memory")
+
 ; net-endpoint-mode string
 ;
 ; Set to none if you don't want any indicators of unconnected nets
@@ -929,7 +954,9 @@
 
 ; All keys in this keymap *must* be unique
 (define edit-keymap
-  '(("s" . edit-select)
+  '(("Shift U" . edit-undo)
+    ("Shift R" . edit-redo)
+    ("s" . edit-select)
     ("c" . edit-copy-hotkey)    ; This can also just be edit-copy and then
     ("e" . edit-edit)           ; you must pick the anchor point
     ("x" . edit-text)           
@@ -977,7 +1004,7 @@
 ; All keys in this keymap *must* be unique
 (define add-keymap
   '(("c" . add-component)
-    ("a" . add-attribute)
+    ("a" . add-attribute-hotkey)
     ("n" . add-net-hotkey)
     ("u" . add-bus-hotkey)
     ("t" . add-text)
@@ -1056,6 +1083,8 @@
     ("Shift less" . page-prev)
     ("Alt q" . file-quit)
     ("Shift H" . hierarchy-keymap)
+    ("Shift U" . edit-undo)
+    ("Shift R" . edit-redo)
     ("Shift Z" . view-zoom-out-hotkey)))
 
 ; finally set the keymap point to the newly created datastructure 

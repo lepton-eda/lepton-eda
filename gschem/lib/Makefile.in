@@ -67,22 +67,22 @@ GDK = @GDK@
 GESYMCONFIG = @GESYMCONFIG@
 GLIB = @GLIB@
 GTK = @GTK@
-GTKCONFIG = @GTKCONFIG@
 GTKEXTRACONFIG = @GTKEXTRACONFIG@
 GTKVERSION = @GTKVERSION@
+GTK_CFLAGS = @GTK_CFLAGS@
+GTK_CONFIG = @GTK_CONFIG@
 GTK_DEVEL = @GTK_DEVEL@
+GTK_LIBS = @GTK_LIBS@
 GUILE_CONFIG_PROG = @GUILE_CONFIG_PROG@
 GUILE_INCLUDE = @GUILE_INCLUDE@
 GUILE_LIB = @GUILE_LIB@
 HOME = @HOME@
-LD = @LD@
 LIBGDGEDACONFIG = @LIBGDGEDACONFIG@
 LIBGEDACONFIG = @LIBGEDACONFIG@
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
-NM = @NM@
 OBJDUMP = @OBJDUMP@
 PACKAGE = @PACKAGE@
 RANLIB = @RANLIB@
@@ -122,9 +122,9 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu lib/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu --include-deps lib/Makefile
 
-Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -158,11 +158,6 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 subdir = lib
 
 distdir: $(DISTFILES)
-	here=`cd $(top_builddir) && pwd`; \
-	top_distdir=`cd $(top_distdir) && pwd`; \
-	distdir=`cd $(distdir) && pwd`; \
-	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu lib/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
