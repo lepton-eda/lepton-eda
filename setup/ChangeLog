@@ -1,7 +1,13 @@
+2004-04-18 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/callbacks.c, src/callbacks.h, src/dirs.c, src/dirs.h, 
+        src/install.c, src/log.c, src/log.h: Fixed warnings during 
+        compilation on RH9.
+
 2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * config.h.in: Remove machine generated file.
-
+ 
 2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20040111

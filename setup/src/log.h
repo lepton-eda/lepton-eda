@@ -27,7 +27,7 @@
 
 
 /* public functions */
-void Log(int iImportance, int iModule, char *pValue);
+void Log(const int iImportance, const int iModule, const char *pValue);
 
 /* public variables */
 extern char szLogMessage[];

@@ -1,3 +1,24 @@
+/*******************************************************************************/
+/*                                                                             */
+/* Setup                                                                       */
+/*                                                                             */
+/* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
+/*                                                                             */
+/* This program is free software; you can redistribute it and/or               */
+/* modify it under the terms of the GNU General Public License                 */
+/* as published by the Free Software Foundation version 2.                     */
+/*                                                                             */
+/* This program is distributed in the hope that it will be useful,             */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of              */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               */
+/* GNU General Public License for more details.                                */
+/*                                                                             */
+/* You should have received a copy of the GNU General Public License           */
+/* along with this program; if not, write to the Free Software                 */
+/* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. */
+/*                                                                             */
+/*******************************************************************************/
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -24,7 +45,6 @@
 
 
 /* TODO: remove it */
-extern int iQueueId;
 #define WINDOW_START         0x0100
 #define WINDOW_COMPONENTS    0x0200
 #define WINDOW_LICENSE       0x0400
@@ -78,10 +98,6 @@ void on_next_clicked(GtkButton *pButton, gpointer user_data)
 		case 5: /* installation status */
 			
 			break;
-		
-		default:
-		
-			/* TODO: error handling */
 	}
 	
 	setup_buttons(GTK_WIDGET(pButton));
@@ -132,10 +148,6 @@ void on_previous_clicked(GtkButton *pButton, gpointer user_data)
 		case 5: /* installation status */
 			
 			break;
-		
-		default:
-		
-			/* TODO: error handling */
 	}
 	
 	setup_buttons(GTK_WIDGET(pButton));
@@ -144,7 +156,6 @@ void on_previous_clicked(GtkButton *pButton, gpointer user_data)
 }
 
 extern int iSoftwareInstalled;
-//extern int OkPressed;
 void on_ok_clicked(GtkButton *pButton, gpointer user_data)
 {
 	GtkNotebook *pNotebook;
@@ -186,14 +197,6 @@ void on_cancel_clicked(GtkButton *pButton, gpointer user_data)
 
 
 
-
-
-
-
-
-
-
-
 void
 on_optionmenu1_enter                   (GtkButton       *button,
                                         gpointer         user_data)
@@ -207,43 +210,6 @@ on_help_clicked                        (GtkButton       *button,
                                         gpointer         user_data)
 {
 
-}
-
-
-extern int iQueueId;
-
-
-
-void
-on_InstallLocalButton_clicked          (GtkButton       *button,
-                                        gpointer         user_data)
-{
-	GtkWidget *w;
-	w = lookup_widget(GTK_WIDGET(button), "InstallDirectoryEntry");
-
-	dirs_local(w);
-}
-
-
-void
-on_InstallGlobalButton_clicked         (GtkButton       *button,
-                                        gpointer         user_data)
-{
-	GtkWidget *w;
-	w = lookup_widget(GTK_WIDGET(button), "InstallDirectoryEntry");
-
-	dirs_global(w);
-}
-
-
-void
-on_InstallCustomButton_clicked         (GtkButton       *button,
-                                        gpointer         user_data)
-{
-	GtkWidget *w;
-	w = lookup_widget(GTK_WIDGET(button), "InstallDirectoryEntry");
-
-	dirs_custom(w);
 }
 
 
@@ -268,22 +234,6 @@ on_DismissButton_clicked               (GtkButton       *button,
 
 extern GtkPixmap *PixmapNone, *PixmapFull;
 
-
-
-void
-on_InstallDirectoryEntry_changed       (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-	GtkEntry *pEntry;
-	
-	pEntry = GTK_ENTRY(lookup_widget(GTK_WIDGET(editable), "InstallDirectoryEntry"));
-	if (pEntry == NULL)
-	{
-		/* TODO: error handling */
-	}
-
-	strcpy(szInstallDirectory, gtk_entry_get_text(pEntry));
-}
 
 
 gboolean

@@ -151,7 +151,7 @@ void DirectoryHide(GtkWidget *pMainWindow)
 	Callback functions
 */
 
-void InstallLocalButton_clicked(GtkButton *pButton, gpointer pUserData)
+void on_InstallLocalButton_clicked(GtkButton *pButton, gpointer pUserData)
 {
 	GtkWidget *pWidget;
 	pWidget = lookup_widget(GTK_WIDGET(pButton), "InstallDirectoryEntry");
@@ -160,7 +160,7 @@ void InstallLocalButton_clicked(GtkButton *pButton, gpointer pUserData)
 }
 
 
-void InstallGlobalButton_clicked(GtkButton *pButton, gpointer pUserData)
+void on_InstallGlobalButton_clicked(GtkButton *pButton, gpointer pUserData)
 {
 	GtkWidget *pWidget;
 	pWidget = lookup_widget(GTK_WIDGET(pButton), "InstallDirectoryEntry");
@@ -169,10 +169,26 @@ void InstallGlobalButton_clicked(GtkButton *pButton, gpointer pUserData)
 }
 
 
-void InstallCustomButton_clicked(GtkButton *pButton, gpointer pUserData)
+void on_InstallCustomButton_clicked(GtkButton *pButton, gpointer pUserData)
 {
 	GtkWidget *pWidget;
 	pWidget = lookup_widget(GTK_WIDGET(pButton), "InstallDirectoryEntry");
 
 	dirs_custom(pWidget);
 }
+
+
+void on_InstallDirectoryEntry_changed(GtkEditable *pEditable, gpointer pUserData)
+{
+	GtkEntry *pEntry;
+	
+	pEntry = GTK_ENTRY(lookup_widget(GTK_WIDGET(pEditable), "InstallDirectoryEntry"));
+	if (pEntry == NULL)
+	{
+		/* TODO: error handling */
+	}
+
+	strcpy(szInstallDirectory, gtk_entry_get_text(pEntry));
+}
+
+

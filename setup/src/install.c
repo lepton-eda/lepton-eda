@@ -451,13 +451,13 @@ LABEL:
 	{
 		char szCommand[TEXTLEN];
 		
-		sprintf(szMessage, "Removing directory %s", PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		sprintf(szMessage, "Removing directory %s", (char *) PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
 		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-		sprintf(szCommand, "rm -Rf %s", PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		sprintf(szCommand, "rm -Rf %s", (char *) PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
 		iResult = FileExec(szCommand);
 		if (iResult != SUCCESS)
 		{
-			sprintf(szMessage, "Cannot remove directory: %s", PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+			sprintf(szMessage, "Cannot remove directory: %s", (char *) PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
 			MsgBox(
 				GTK_WINDOW(pWindowMain),

@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -38,6 +38,12 @@ void dirs_global(GtkWidget *Entry);
 void dirs_custom(GtkWidget *Entry);
 void DirectoryShow(GtkWidget *pMainWindow);
 void DirectoryHide(GtkWidget *pMainWindow);
+
+/* callback functions */
+void on_InstallLocalButton_clicked(GtkButton *pButton, gpointer pUserData);
+void on_InstallGlobalButton_clicked(GtkButton *pButton, gpointer pUserData);
+void on_InstallCustomButton_clicked(GtkButton *pButton, gpointer pUserData);
+void on_InstallDirectoryEntry_changed(GtkEditable *pEditable, gpointer pUserData);
 
 
 

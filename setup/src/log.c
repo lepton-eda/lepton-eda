@@ -37,7 +37,7 @@ int iLogVerbose = FALSE;
 	logging to a file and standard output
 */
 
-void Log(int iImportance, int iModule, char *szValue)
+void Log(const int iImportance, const int iModule, const char *szValue)
 {
 	FILE *LogFile;
 	char szMessage[TEXTLEN], szValue1[TEXTLEN]/*, szValue2[TEXTLEN]*/;
