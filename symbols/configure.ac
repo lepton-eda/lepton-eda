@@ -81,7 +81,7 @@ fi
 # 
 
 # Some of our own macros for setting up library files
-AC_DEFUN(GEDA_DECLARE_SYMLIB,
+AC_DEFUN([GEDA_DECLARE_SYMLIB],
  [
 	data$1=`ls -1 $srcdir/$1 | grep -v Makefile | grep -v ChangeLog \
 				 | grep -v CVS | grep -v "\\.cvsignore" \
