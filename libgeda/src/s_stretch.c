@@ -104,9 +104,23 @@ s_stretch_add(STRETCH *head, OBJECT *object, CONN *connection, int whichone)
 {
 	STRETCH *tail;
 	STRETCH *s_new;
+	STRETCH *s_current;
 	
-	s_new = (STRETCH *) malloc(sizeof(STRETCH));
+	s_current = head;
+	while (s_current != NULL) {
+		if (s_current->object) {
+		/*printf("%d %d\n", s_current->object->sid, object->sid);*/
+			if (s_current->object->sid == object->sid) {
+				/* printf("already inside\n");*/
+				return(s_stretch_return_tail(head));
+			}
+		}
+		
+		s_current = s_current->next;
+	}
+	/*printf("Adding: %s\n", object->name);*/
 
+	s_new = (STRETCH *) malloc(sizeof(STRETCH));
 	s_new->object = object;
 	s_new->connection = connection;
 	s_new->whichone = whichone;

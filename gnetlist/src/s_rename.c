@@ -142,7 +142,6 @@ void s_rename_add(char *src, char *dest)
 		rename_counter++;
 	    }
 	}
-	//return;
     } else {
 
 	rename_pairs[rename_counter].src = (char *) malloc(sizeof(char) *

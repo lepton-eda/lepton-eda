@@ -8,6 +8,25 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-11-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_nethash.c: Added creation function (from 
+	  gnetlist/src/s_traverse.c)
+
+	* src/s_nethash.c: Renamed all functions to s_nethash_*
+
+	* src/s_page.c: Put in the calls to destroy the nethash data structure
+	  when a page is deleted
+
+	* src/s_nethash.c: Added s_nethash_delete_all function
+
+	* include/struct.h: Added conn_list function to st_nethash 
+
+	* src/s_nethash.c: Added conn_list variable usage code 
+
+	* src/s_stretch.c: Added code to check the uniqueness of midpoint
+	  connections when they are added to the stretch structure
+
 2000-11-12  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added st_stretch structure (and typdef)

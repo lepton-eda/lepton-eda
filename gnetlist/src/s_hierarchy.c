@@ -87,8 +87,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 		verbose_reset_index();
 
 		netlist->composite_component = TRUE;
-		// can't do the following, don't know why... HACK TODO*/
-		//netlist->hierarchy_tag = u_basic_strdup (netlist->component_uref);
+		/* can't do the following, don't know why... HACK TODO */
+		/*netlist->hierarchy_tag = u_basic_strdup (netlist->component_uref);*/
 		s_traverse_sheet(pr_current,
 				 pr_current->page_current->object_head,
 				 netlist->component_uref);

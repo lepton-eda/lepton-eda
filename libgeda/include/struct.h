@@ -722,6 +722,8 @@ struct st_net {
 struct st_nethash {
 	OBJECT *object;	/* object connected to */
 
+	CONN *conn_list;
+
 	int type; /* individual object type */
 
 	NETHASH *prev;

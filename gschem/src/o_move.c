@@ -314,7 +314,7 @@ o_move_return_whichone(OBJECT *object, int x, int y)
 		return(1);
 	}
 
-	printf("DOH! tried to find the whichone, but didn't find it!\n");
+	fprintf(stderr, "DOH! tried to find the whichone, but didn't find it!\n");
 	return(0);
 }
 
@@ -364,7 +364,7 @@ o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object)
 					w_current->page_current->stretch_tail =
 					       	s_stretch_add(w_current->
 							      page_current->
-							      stretch_tail, 
+							      stretch_head, 
 							      c_current->
 							      object, 
 							      c_current, 
@@ -380,6 +380,72 @@ o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object)
 
 }
 
+void
+o_move_check_midpoint(TOPLEVEL *w_current, OBJECT *object)
+{
+	NETHASH *nethash_list;
+	NETHASH *nh_current;
+	CONN *c_current;
+	int i, whichone;
+	char *key;
+
+	if (!object)
+		return;
+
+	if (object->type != OBJ_NET && object->type != OBJ_PIN && 
+	    object->type != OBJ_BUS) {
+		fprintf(stderr, "Got a non line object in o_move_check_midpoint\n");
+		return;
+	}
+
+	nethash_list = s_nethash_query_table(w_current->
+					     page_current->nethash_table,
+					     object->name);
+
+	if (nethash_list == NULL) {
+		/* printf("list was null\n");*/
+		return;
+	} 
+
+#if DEBUG
+	s_nethash_print(nethash_list);
+#endif
+
+	nh_current = nethash_list;
+	while(nh_current != NULL) {
+
+		c_current = nh_current->conn_list;
+		while (c_current != NULL) {
+			if (c_current->object) {
+			  if (c_current->object->sid != object->sid &&
+				(c_current->type == CONN_NET || 
+				 c_current->type == CONN_BUS) && 
+				c_current->object->saved_color == -1) {
+
+				whichone = o_move_return_whichone(
+						c_current->object,
+						c_current->x, 
+						c_current->y);
+
+				w_current->page_current->stretch_tail =
+				       	s_stretch_add(w_current->
+						      page_current->
+						      stretch_head, 
+						      c_current->
+						      object, 
+						      c_current, 
+						      whichone);
+			  }
+
+		      }
+		      c_current = c_current->next;
+		}
+
+		nh_current = nh_current->next;
+	}
+
+}
+
 
 void
 o_move_prep_rubberband(TOPLEVEL *w_current)
@@ -391,6 +457,11 @@ o_move_prep_rubberband(TOPLEVEL *w_current)
 	s_stretch_remove_most(w_current, w_current->page_current->stretch_head);
 	w_current->page_current->stretch_tail = 
 		w_current->page_current->stretch_head;
+
+	s_nethash_delete_all(w_current->page_current->nethash_table);
+	s_nethash_build(w_current->page_current->nethash_table, 
+			w_current->page_current->conn_table,
+			w_current->page_current->object_head);
 
 #if DEBUG
 	printf("\n\n\n");
@@ -408,6 +479,7 @@ o_move_prep_rubberband(TOPLEVEL *w_current)
 				case(OBJ_PIN):
 				case(OBJ_BUS):
 					o_move_check_endpoint(w_current, object);
+					o_move_check_midpoint(w_current, object);
 				break;
 				
 				case(OBJ_COMPLEX):
@@ -431,7 +503,10 @@ o_move_prep_rubberband(TOPLEVEL *w_current)
 		s_current = s_current->next;
 	}
 
-	/*s_stretch_print_all(w_current->page_current->stretch_head);*/
+#if DEBUG
+	printf("\n\n\n\nfinished building scretch list:\n");
+	s_stretch_print_all(w_current->page_current->stretch_head);
+#endif
 }
 
 int 
@@ -498,8 +573,11 @@ o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y)
 
 						o_net_recalc(w_current, object);
 						o_conn_update(w_current->page_current, object); 
-						o_net_draw(w_current, object);
-				       		o_net_conn_draw(w_current, object);
+
+				/* These are not needed, and in fact cause */
+				/* the wrong visual cue to show up */
+				/*	o_net_draw(w_current, object); */
+				/*	o_net_conn_draw(w_current, object); */
 					}
 
 					break;

@@ -103,9 +103,15 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
     char *temp_uref;
     int page_control = 0;
 
-    s_traverse_build_nethash(pr_current->page_current->nethash_table,
-			     pr_current->page_current->conn_table, start);
 
+    if (verbose_mode) {
+	printf("- Creating nethash table\n");
+    }
+
+    s_nethash_build(pr_current->page_current->nethash_table,
+		    pr_current->page_current->conn_table, start);
+
+    verbose_done();
 
     if (verbose_mode) {
 	printf("- Starting internal netlist creation\n");
@@ -265,8 +271,8 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 					o_current->line->y[endpoint]);
 
 		conn_list =
-		    g_hash_table_lookup(pr_current->
-					page_current->conn_table, key);
+		    g_hash_table_lookup(pr_current->page_current->
+					conn_table, key);
 
 		if (conn_list) {
 
@@ -309,8 +315,8 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 						   hierarchy_tag);
 
 				s_traverse_clear_all_visited
-				    (pr_current->
-				     page_current->object_head);
+				    (pr_current->page_current->
+				     object_head);
 			    }
 
 			}
@@ -329,8 +335,8 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 	       indent: Standard input:519: Error:Stmt nesting error.
 	       in page_current in top level func */
 	}
-	s_traverse_clear_all_visited(pr_current->
-				     page_current->object_head);
+	s_traverse_clear_all_visited(pr_current->page_current->
+				     object_head);
 
 	o_current = o_current->next;
     }
@@ -510,13 +516,13 @@ NET *s_traverse_midpoints(TOPLEVEL * pr_current, OBJECT * object,
 #endif
 
     nh_current = nethash_list =
-	o_nethash_query_table(pr_current->page_current->nethash_table,
+	s_nethash_query_table(pr_current->page_current->nethash_table,
 			      object->name);
 
 #if DEBUG
     if (nethash_list) {
 	printf("Found list...\n");
-	o_nethash_print(nethash_list);
+	s_nethash_print(nethash_list);
     }
 #endif
 
@@ -537,101 +543,3 @@ NET *s_traverse_midpoints(TOPLEVEL * pr_current, OBJECT * object,
     return (nets);
 }
 
-/* unfortunately I need to include this from glib-1.2.x/ghash.c */
-/* since I need to implement my own foreach function */
-typedef struct _GHashNode GHashNode;
-
-struct _GHashNode {
-    gpointer key;
-    gpointer value;
-    GHashNode *next;
-};
-
-struct _GHashTable {
-    gint size;
-    gint nnodes;
-    guint frozen;
-    GHashNode **nodes;
-    GHashFunc hash_func;
-    GCompareFunc key_compare_func;
-};
-
-void
-s_traverse_build_nethash(GHashTable * nethash_table,
-			 GHashTable * conn_table, OBJECT * start)
-{
-    OBJECT *o_current;
-    GHashNode *node;
-    CONN *conn_list, *c_current;
-    int i, vi = 0;
-
-    if (verbose_mode) {
-	printf("- Creating nethash table\n");
-    }
-
-    o_current = start;
-
-    while (o_current != NULL) {
-
-
-	if (o_current->type == OBJ_NET) {
-
-	    verbose_print("n");
-
-	    for (i = 0; i < conn_table->size; i++) {
-		for (node = conn_table->nodes[i]; node; node = node->next) {
-
-		    conn_list = c_current = (CONN *) node->value;
-		    while (c_current != NULL) {
-
-			/* yes we found object in list? */
-			/* now look for midpoints */
-			if (c_current->object == o_current) {
-
-			    if (conn_list) {
-				if (conn_list->visual_cue == MIDPOINT_CUE) {
-				    while (conn_list != NULL) {
-
-					if (conn_list->object != o_current
-					    && conn_list->type !=
-					    CONN_HEAD) {
-
-					    o_nethash_add_new
-						(nethash_table,
-						 conn_list->object,
-						 o_current->name,
-						 conn_list->type);
-
-#if DEBUG
-					    printf
-						("yeah found equiv midpoint connected net\n");
-					    printf("object: %s\n",
-						   conn_list->
-						   object->name);
-					    printf("when looking at: %s\n",
-						   o_current->name);
-#endif
-
-					}
-
-					conn_list = conn_list->next;
-				    }
-				}
-			    }
-
-			}
-			c_current = c_current->next;
-		    }
-		}
-	    }
-	}
-
-	o_current = o_current->next;
-    }
-
-#if DEBUG
-    o_nethash_print_hash(nethash_table);
-#endif
-
-    verbose_done();
-}

@@ -38,7 +38,7 @@
 #include "../include/prototype.h"
 
 NETHASH *
-o_nethash_return_tail(NETHASH *head) 
+s_nethash_return_tail(NETHASH *head) 
 {
 	NETHASH *nh_current=NULL;
         NETHASH *current=NULL;
@@ -53,7 +53,7 @@ o_nethash_return_tail(NETHASH *head)
 
 /* rename to be consistant */
 NETHASH *
-o_nethash_add_head(OBJECT *parent)
+s_nethash_add_head(OBJECT *parent)
 {
 	NETHASH *head = NULL;
 
@@ -61,6 +61,7 @@ o_nethash_add_head(OBJECT *parent)
 	head->next = NULL;
 
 	head->object = parent; 
+	head->conn_list = NULL; 
 	head->type = -1;
 
 	return(head);
@@ -69,13 +70,13 @@ o_nethash_add_head(OBJECT *parent)
 /* list_head is the list where you want to add item to */
 /* item is the item you want to add as an nethash */
 NETHASH *
-o_nethash_add(NETHASH *list_head, OBJECT *object, int type)
+s_nethash_add(NETHASH *list_head, OBJECT *object, int type, CONN *conn_list)
 {
 	NETHASH *end = NULL;
 	NETHASH *new = NULL;
 
 	/* get tail of list_head */
-	end = o_nethash_return_tail(list_head);
+	end = s_nethash_return_tail(list_head);
 
 	/* create an new st_attrib object */
 	new = (NETHASH *) malloc(sizeof(NETHASH));
@@ -84,6 +85,7 @@ o_nethash_add(NETHASH *list_head, OBJECT *object, int type)
 	new->next = NULL;
 	new->prev = end;
 	new->object = object;
+	new->conn_list = conn_list;
 	new->type = type;
 
 #if DEBUG 
@@ -104,12 +106,13 @@ o_nethash_add(NETHASH *list_head, OBJECT *object, int type)
 /* this routine is not nice to next and prev */
 /* this routine is only called from free_all */
 void
-o_nethash_free(NETHASH *current)
+s_nethash_free(NETHASH *current)
 {
 	if (current != NULL) {
 
 		/* do we need to do something with the object */
 		current->object=NULL;
+		current->conn_list=NULL;
 
 		free(current);
 
@@ -117,11 +120,11 @@ o_nethash_free(NETHASH *current)
 }
 
 
-/* this routine uses o_nethash_free (which isn't nice to next, prev) */
+/* this routine uses s_nethash_free (which isn't nice to next, prev) */
 /* so it should only be used when an object is being destroyed */
 /* goes backwards */
 void
-o_nethash_free_all(NETHASH *list)
+s_nethash_free_all(NETHASH *list)
 {
         NETHASH *nh_current; 
 	NETHASH *c_next;
@@ -130,13 +133,13 @@ o_nethash_free_all(NETHASH *list)
 
 	while (nh_current != NULL) {
 		c_next = nh_current->next;
-		o_nethash_free(nh_current);
+		s_nethash_free(nh_current);
                 nh_current = c_next;
        	}
 }
 
 void
-o_nethash_print(NETHASH *nethash) 
+s_nethash_print(NETHASH *nethash) 
 {
 	NETHASH *nh_current;
 
@@ -168,6 +171,12 @@ o_nethash_print(NETHASH *nethash)
 		}
 		printf("\n");
 
+		if (nh_current->conn_list) {
+			printf("Conn list ----------\n");
+			o_conn_print(nh_current->conn_list);
+			printf("--------------------\n");
+		}
+
 		nh_current = nh_current->next;
 	}
 #if 0
@@ -176,7 +185,7 @@ o_nethash_print(NETHASH *nethash)
 }
 
 void 
-o_nethash_print_hash_func(gpointer key, gpointer value, gpointer user_data)
+s_nethash_print_hash_func(gpointer key, gpointer value, gpointer user_data)
 {
 	char *orig_key;
 	NETHASH *nethash_list;
@@ -186,7 +195,7 @@ o_nethash_print_hash_func(gpointer key, gpointer value, gpointer user_data)
 
 	printf("item in nethash: %s type: %d\n", orig_key, nethash_list->type);
 
- 	o_nethash_print(nethash_list);
+ 	s_nethash_print(nethash_list);
 
 	printf("--\n");
 }
@@ -194,17 +203,46 @@ o_nethash_print_hash_func(gpointer key, gpointer value, gpointer user_data)
 
 
 void
-o_nethash_print_hash(GHashTable *nethash_table)
+s_nethash_print_hash(GHashTable *nethash_table)
 {
 	printf("\n\nStarting to print out entire hash table\n");
-	g_hash_table_foreach(nethash_table, o_nethash_print_hash_func, NULL);
+	g_hash_table_foreach(nethash_table, s_nethash_print_hash_func, NULL);
 }
+
+int
+s_nethash_delete_func( gpointer key, gpointer value, gpointer user_data)
+{
+	char *orig_key;
+	NETHASH *nethash_list;
+
+	orig_key = key;
+	nethash_list = (NETHASH *) value;
+
+#if DEBUG
+	printf("Inside func: Freeing nethash_table all elements\n");
+#endif
+
+	s_nethash_free_all(nethash_list);
+
+	free(orig_key);
+	return(TRUE);
+}
+
+void
+s_nethash_delete_all(GHashTable *nethash_table)
+{
+#if DEBUG
+	printf("Going to delete stuff inside table\n");
+#endif
+	g_hash_table_foreach_remove(nethash_table, s_nethash_delete_func, NULL);
+}
+
 
 /* this routine goes out and removes the current nethash, while */
 /* preserving the next, prev pointers */
 /* this routine should be used when removing st_nethash nodes from a list */
 void
-o_nethash_delete(NETHASH *nh_current)
+s_nethash_delete(NETHASH *nh_current)
 {
 	if (nh_current != NULL) {
 
@@ -226,7 +264,7 @@ o_nethash_delete(NETHASH *nh_current)
 }
 
 NETHASH *
-o_nethash_search(NETHASH *nethash_list, OBJECT *o_current)
+s_nethash_search(NETHASH *nethash_list, OBJECT *o_current)
 {
 	NETHASH *nh_current;
 
@@ -243,8 +281,8 @@ o_nethash_search(NETHASH *nethash_list, OBJECT *o_current)
 }
 
 void
-o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current, 
-	char *new_key, int type)
+s_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current, 
+	char *new_key, int type, CONN *conn_list)
 {
 	NETHASH **nethash_list = NULL;
 	char **orig_key = NULL;
@@ -277,12 +315,12 @@ o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current,
 #endif
 
 		/* Search for o_current in st_conn list */
-		found = o_nethash_search(*nethash_list, o_current);
+		found = s_nethash_search(*nethash_list, o_current);
 
 		/* if found, do nothing */
 
 		if (!found) {
-			o_nethash_add(*nethash_list, o_current, type);
+			s_nethash_add(*nethash_list, o_current, type, conn_list);
 		}
 
 		/* key wasn't inserted, nothing inserted into nethash table */
@@ -298,10 +336,10 @@ o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current,
 
 		/* not found */
 		/* create st_nethash node head */
-		*nethash_list = o_nethash_add_head(NULL);
+		*nethash_list = s_nethash_add_head(NULL);
 
 		/* added st_nethash node for o_current */
-		o_nethash_add(*nethash_list, o_current, type);
+		s_nethash_add(*nethash_list, o_current, type, conn_list);
 
 		/* add st_nethash list into nethash_table */ 
 		g_hash_table_insert(nethash_table, key, *nethash_list);
@@ -314,7 +352,7 @@ o_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current,
 }
 
 NETHASH *
-o_nethash_query_table(GHashTable *nethash_table, char *key)
+s_nethash_query_table(GHashTable *nethash_table, char *key)
 {
 	NETHASH *nethash_list;
 
@@ -330,84 +368,94 @@ o_nethash_query_table(GHashTable *nethash_table, char *key)
 	return(0);
 }
 
+/* unfortunately I need to include this from glib-1.2.x/ghash.c */
+/* since I need to implement my own foreach function */
+typedef struct _GHashNode GHashNode;
 
-/* delete stuff after this line */
-#if 0
-o_conn_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
+struct _GHashNode {
+    gpointer key;
+    gpointer value;
+    GHashNode *next;
+};
+
+struct _GHashTable {
+    gint size;
+    gint nnodes;
+    guint frozen;
+    GHashNode **nodes;
+    GHashFunc hash_func;
+    GCompareFunc key_compare_func;
+};
+
+void
+s_nethash_build(GHashTable * nethash_table, GHashTable * conn_table, 
+		OBJECT * start)
 {
-	GHashTable *conn_table;
-	char *key = NULL;
-	OBJECT *midpoint_object=NULL;
-	CONN **conn_list = NULL;
-	char **orig_key = NULL;
-	CONN *found = NULL;
-	int ret_value=0;
+    OBJECT *o_current;
+    GHashNode *node;
+    CONN *conn_list, *c_current;
+    int i, vi = 0;
 
-	conn_table = p_current->conn_table;
+    o_current = start;
 
-	conn_list = (CONN **) malloc(sizeof(CONN *));
-	orig_key = (char **) malloc(sizeof(char *));
+    while (o_current != NULL) {
 
-	/* be sure to carefully free this key */
-	/* only when it's not inserted into the list */
-	key = o_conn_return_key(x, y);
+	if (o_current->type == OBJ_NET) {
 
-	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(conn_table, key,
-		(gpointer) orig_key, (gpointer) conn_list)) {
+	    for (i = 0; i < conn_table->size; i++) {
+		for (node = conn_table->nodes[i]; node; node = node->next) {
+
+		    conn_list = c_current = (CONN *) node->value;
+		    while (c_current != NULL) {
+
+			/* yes we found object in list? */
+			/* now look for midpoints */
+			if (c_current->object == o_current) {
+
+			    if (conn_list) {
+				if (conn_list->visual_cue == MIDPOINT_CUE) {
+				    while (conn_list != NULL) {
+
+					if (conn_list->object != o_current
+					    && conn_list->type !=
+					    CONN_HEAD) {
+
+					    s_nethash_add_new
+						(nethash_table,
+						 conn_list->object,
+						 o_current->name,
+						 conn_list->type,
+						 conn_list);
 
 #if DEBUG
-		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
+					    printf
+						("yeah found equiv midpoint connected net\n");
+					    printf("object: %s\n",
+						   conn_list->object->
+						   name);
+					    printf("when looking at: %s\n",
+						   o_current->name);
 #endif
-		/* o_conn_print(*conn_list);*/
 
-		/* Search for o_current in st_conn list */
-		found = o_conn_search(*conn_list, o_current);
+					}
 
-		/* if found, do nothing */
+					conn_list = conn_list->next;
+				    }
+				}
+			    }
 
-		if (!found) {
-
-			/* you need to check here to make sure connection */
-			/* is valid ie (cannot connect a net to a bus */
-			/* endpoint) */
-
-			o_conn_add(*conn_list, o_current, NULL, CONN_PIN, x, y);
-			o_conn_update_cues_info(*conn_list);
+			}
+			c_current = c_current->next;
+		    }
 		}
-
-		/* key wasn't inserted, nothing re-inserted into conn table */
-		/* safe to free */
-		free(key);
-
-#if DEBUG 
-		o_conn_print(*conn_list);
-#endif
-
-	} else {
-
-#if DEBUG 
-		printf("key not found!\n");
-#endif
-
-		/* not found */
-		/* create st_conn node head */
-		*conn_list = o_conn_add_head(NULL, x, y);
-
-		/* added st_conn node for o_current */
-		o_conn_add(*conn_list, o_current, NULL, CONN_PIN, x, y);
-
-		/* update *conn_list for the various conditions */
-		o_conn_update_cues_info(*conn_list);
-
-		/* add st_conn list into conn_table */ 
-		g_hash_table_insert(conn_table, key, *conn_list);
-
-		/* key was used so you can't remove it */
+	    }
 	}
 
-	free(conn_list);
-	free(orig_key);
-}
+	o_current = o_current->next;
+    }
 
+#if DEBUG
+    s_nethash_print_hash(nethash_table);
 #endif
+
+}

@@ -1,4 +1,11 @@
 
+2000-11-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Move s_traverse_nethash_build to libgeda
+
+	* src/s_traverse.c: Renamed all o_nethash functions to s_nethash
+	  (in accordance to the changes made in libgeda)
+
 2000-11-12  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Fixed the misspelling of separator (pointed out by Stefan)

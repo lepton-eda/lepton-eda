@@ -71,6 +71,7 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	w_current->REMOVING_SEL = 0;  
 
 	s_stretch_destroy_all(p_current->stretch_head);
+	s_nethash_delete_all(p_current->nethash_table);
 
 	/* free current page undo structs */
 	s_undo_free_all(w_current, p_current); 

@@ -2363,6 +2363,13 @@ DEFINE_I_CALLBACK(misc)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
+#if 0 /* testing of stretch of nets while moving */
+	s_nethash_build(w_current->page_current->nethash_table, 
+			w_current->page_current->conn_table, 
+			w_current->page_current->object_head);
+	s_nethash_print_hash(w_current->page_current->nethash_table);
+#endif
+
 #if 0 /* old demonstration code on getting all attribs from an object */
 	if (w_current->page_current->selection_head->next != NULL) {
 		attrib_objects = o_attrib_return_attribs(
