@@ -142,7 +142,7 @@ main_prog(int argc, char *argv[])
                          * so, just set the filename and open the
                          * schematic for the first page */
 
-			if (argv[1][0] == '/') {
+			if (argv[i][0] == '/') {
 				w_current->page_current->page_filename = 
 				   u_basic_strdup_multiple(argv[i], NULL);
 			} else {
