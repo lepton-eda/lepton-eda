@@ -105,7 +105,7 @@ void gattrib_quit(void)
 /*------------------------------------------------------------------
  * gattrib_main -- main gattrib fcn.
  *------------------------------------------------------------------*/
-void gattrib_main(int argc, char *argv[])
+void gattrib_main(void *closure, int argc, char *argv[])
 {
   /* TOPLEVEL *pr_current is a global */
   /* SHEET_DATA *sheet_head is a global */
@@ -396,7 +396,7 @@ int main(int argc, char *argv[])
   if(getenv("GUILE_WARN_DEPRECATED")==NULL)
     putenv("GUILE_WARN_DEPRECATED=no");
   
-  gh_enter(argc, argv, gattrib_main);
+  scm_boot_guile( argc, argv, gattrib_main, NULL);
 
 #ifdef DEBUG
   fflush(stderr);

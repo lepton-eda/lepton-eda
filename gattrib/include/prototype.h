@@ -6,7 +6,7 @@
 /* ---------------- gattrib.c ---------------- */
 void gattrib_really_quit(void);
 void gattrib_quit(void);
-void gattrib_main(int argc, char *argv[]);
+void gattrib_main(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 
 

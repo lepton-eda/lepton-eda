@@ -65,29 +65,23 @@ int default_dummy;
  *------------------------------------------------------------------*/
 SCM g_rc_gattrib_version(SCM version)
 {
-  char *string = gh_scm2newstr(version, NULL);
-
-  if (string == NULL) {
-    fprintf(stderr,
-	    "%s requires a string as a parameter\n", "gattrib-version");
-    return SCM_BOOL_F;
-  }
-
-  if (strcmp(string, VERSION) != 0) {
+  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+	      SCM_ARG1, "gattrib-version");
+  
+  if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
     fprintf(stderr,
 	    "You are running gEDA version [%s],\n", VERSION);
     fprintf(stderr,
 	    "but you have a version [%s] gattribrc file:\n[%s]\n",
-	    string, rc_filename);
+	    SCM_STRING_CHARS (version), rc_filename);
     fprintf(stderr,
 	    "While gattrib is in ALPHA, "
-	      "please be sure that you have the latest rc file.\n");
-    free(string);
+	    "please be sure that you have the latest rc file.\n");
     return SCM_BOOL_F;
   }
-
-  free(string);
+  
   return SCM_BOOL_T;
+
 }
 
 
