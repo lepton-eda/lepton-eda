@@ -191,6 +191,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
   OBJECT *o_current;
+  int world_centerx, world_centery;
         
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
@@ -362,9 +363,13 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
       case(OBJ_ARC):
         o_arc_erase(w_current, object);
 
-        o_arc_rotate(w_current, centerx, centery, 
-                     90, object);
+#if 0 /* not needed anymore */
+	SCREENtoWORLD(w_current, centerx, centery, 
+		      &world_centerx, &world_centery);
+        o_arc_rotate_world(w_current, world_centerx, world_centery, 90, object);
+#endif
 
+        o_arc_rotate(w_current, centerx, centery, 90, object);
         o_arc_draw(w_current, object);
         break;
 
@@ -496,6 +501,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   OBJECT *o_current = NULL;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
+  int world_centerx, world_centery;
 
   if (list == NULL) {
     w_current->event_state = SELECT;
@@ -651,8 +657,11 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
       case(OBJ_ARC):
         o_arc_erase(w_current, object);
-        o_arc_mirror(w_current,
-                     centerx, centery, object);
+#if 0 /* not needed anymore */
+	SCREENtoWORLD(w_current, centerx, centery, 
+		      &world_centerx, &world_centery);
+#endif
+        o_arc_mirror(w_current, centerx, centery, object);
         o_arc_draw(w_current, object);
         break;
 

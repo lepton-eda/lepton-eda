@@ -460,25 +460,20 @@ SCM
 g_rc_net_endpoint_mode(SCM mode)
 {
 	static const vstbl_entry mode_table[] = {
-		{FILLEDBOX, "filledbox"},
-		{EMPTYBOX , "emptybox" },
-		{X        , "x"        },
-		{NONE     , "none"     }
+		{FILLEDBOX, "filledbox"}
 	};
 
-	RETURN_G_RC_MODE("net-endpoint-mode", default_net_endpoint_mode, 4);
+	RETURN_G_RC_MODE("net-endpoint-mode", default_net_endpoint_mode, 1);
 }
 
 SCM
 g_rc_net_midpoint_mode(SCM mode)
 {
 	static const vstbl_entry mode_table[] = {
-		{FILLED, "filled"},
-		{EMPTY , "empty" },
-		{NONE  , "none"  }
+		{FILLED, "filled"}
 	};
 
-	RETURN_G_RC_MODE("net-midpoint-mode", default_net_midpoint_mode, 3);
+	RETURN_G_RC_MODE("net-midpoint-mode", default_net_midpoint_mode, 1);
 }
 
 SCM

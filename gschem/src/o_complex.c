@@ -551,6 +551,11 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
         OBJECT *o_current;
 	int x, y;
 
+	/* first zoom limits */
+	a_zoom_limits(w_current, w_current->page_current->object_head, 
+		      A_PAN_DONT_REDRAW);
+	o_redraw_all(w_current);
+
 	get_complex_bounds(w_current, w_current->page_current->object_head,
 			   &rleft,
 			   &rtop,
@@ -599,6 +604,8 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 	o_complex_world_translate(-x, -y, object_head); /* to zero, zero */
 #endif
 
+	a_zoom_limits(w_current, w_current->page_current->object_head, 
+		      A_PAN_DONT_REDRAW);
 	o_unselect_all(w_current);
 	o_redraw_all(w_current);
 	w_current->page_current->CHANGED=1;

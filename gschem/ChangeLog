@@ -1,3 +1,22 @@
+2001-03-04 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_complex.c: Fixed the symbol translate code to do a zoom limits
+	  first and then the translate, fixes a bug where symbol didn't always
+	  get to the origin
+
+	* src/o_misc.c: Put back the code to call the screen coord version of
+	  arc mirror/rotate
+
+	* lib/system-gschemrc: Removed some old unused keyword options 
+
+	* src/g_rc.c: Removed some old unused keyword options
+
+2001-03-03 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* configure.in: Fixed a few bugs dealing with the enabling and 
+	  disabling of features via the command line (pointed out by 
+	  Karel Kulhavy)
+
 2001-03-02 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
 	* src/o_copy.c: Oops lines were not being redraw selected after a 

@@ -281,29 +281,13 @@
 
 ; net-endpoint-mode string
 ;
-; Set to none if you don't want any indicators of unconnected nets
-; Set to filledbox if you want filled squares at the end of unconnected nets
-; Set to emptybox if you want hollow squares at the end of unconnected nets
-; Set to x if you want x shaped crosses at the end of unconnected nets
-; This mode also determines which type of endpoint gets printed
-; Comment out if you want the default mode
-;
-;(net-endpoint-mode "none")
+; Not user changable.
 (net-endpoint-mode "filledbox")
-;(net-endpoint-mode "emptybox")
-;(net-endpoint-mode "x")
 
 ;  net-midpoint-mode string
 ;
-;  Set to none if you don't want any indicators of mid connected nets
-;  Set to filled if you want filled circles at the end of mid connected nets
-;  Set to empty if you want empty circles at the end of mid connected nets
-;  This mode also determines which type of midpoint gets printed
-;  Comment out if you want the default mode
-;
-;(net-midpoint-mode "none")
+; Not user changable.
 (net-midpoint-mode "filled")
-;(net-midpoint-mode "empty")
 
 ;  net-consolidate string
 ;
