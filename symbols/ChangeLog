@@ -1,3 +1,7 @@
+2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* memory/am9128-1.sym: Cosmetic improvements to this symbol
+
 2003-03-30 Werner Hoch <werner.ho@gmx.de>
 	* max/max038-1.sym completed, max/max038-2.sym added
 	* max/max100-1.sym changed (missing pins)
