@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([noweb/gschem.nw])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gschem
-VERSION=20030901
+VERSION=20030921
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 
@@ -43,23 +43,20 @@ AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt
 #########################################################################
 # 
 # Misc win32 / mingw checks and variables start
+AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
   *cygwin*  ) AC_MSG_ERROR([Building gEDA/gaf under cygwin is not supported]) ;;
-  *mingw32* ) echo "Configuring for mingw"; MINGW32=yes ;;
+  *mingw32* ) echo "Configuring for mingw"; MINGW=yes ;;
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
-   MINGW_CFLAGS="-mms-bitfields -mwindows"
-   MINGW_LIBS="-lregex -liberty"
    MINGW="yes"
    PATHSEP=\\\\
    OTHERPATHSEP=/
 else
    # Unix host
-   MINGW_CFLAGS=
-   MINGW_LIBS=
    MINGW="no"
    PATHSEP=/
    OTHERPATHSEP=\\\\
@@ -71,6 +68,7 @@ fi
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CPP
 AC_PROG_MAKE_SET
 
 ############################################################################
@@ -213,7 +211,7 @@ fi
 
 haslibgdgeda=`echo $LIBGEDA_LIBS | grep gdgeda`
 if test "$haslibgdgeda" != ""; then
-   # Check disable-stroke command line flag value
+   # Check disable-gdgeda command line flag value
    if test "$no_gdgeda" = "yes"; then
       echo found libgdgeda, but disabling gdgeda support
       LIBGDGEDA=no
@@ -474,7 +472,7 @@ AM_GNU_GETTEXT_VERSION(0.11.5)
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHEM_CFLAGS="$LIBGEDA_CFLAGS"
-GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GTK_LIBS $X_LDFLAGS"  
+GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GTK_LIBS $X_LDFLAGS" 
 
 # Makefile.in variable substitution
 AC_SUBST(GSCHEM_CFLAGS)

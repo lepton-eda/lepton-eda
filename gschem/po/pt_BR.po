@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
-"POT-Creation-Date: 2003-09-01 22:51-0400\n"
+"POT-Creation-Date: 2003-09-06 22:42-0400\n"
 "PO-Revision-Date: 2003-04-21 02:59+0000\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
 "Language-Team: Portugues Brasil <pt@li.org>\n"
@@ -332,12 +332,12 @@ msgstr "Modo de Arco"
 msgid "Pin Mode"
 msgstr "Modo de Pino"
 
-#: noweb/i_basic.nw:199 noweb/i_callbacks.nw:1028 noweb/i_callbacks.nw:1052
+#: noweb/i_basic.nw:199 noweb/i_callbacks.nw:1035 noweb/i_callbacks.nw:1059
 #: noweb/x_window.nw:960
 msgid "Copy"
 msgstr "Copiar"
 
-#: noweb/i_basic.nw:201 noweb/i_callbacks.nw:1076 noweb/i_callbacks.nw:1100
+#: noweb/i_basic.nw:201 noweb/i_callbacks.nw:1083 noweb/i_callbacks.nw:1107
 #: noweb/x_window.nw:945
 msgid "Move"
 msgstr "Mover"
@@ -366,362 +366,366 @@ msgstr "nenhum"
 msgid "Repeat/"
 msgstr "Repetir/"
 
-#: noweb/i_callbacks.nw:350
+#: noweb/i_callbacks.nw:353
 #, c-format
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Documentação para [%s,%s,%s,%s]\n"
 
-#: noweb/i_callbacks.nw:354
+#: noweb/i_callbacks.nw:358
 msgid "Could not fork\n"
 msgstr ""
 
-#: noweb/i_callbacks.nw:364
+#: noweb/i_callbacks.nw:368
 #, c-format
 msgid "Could not invoke %s\n"
 msgstr "Impossível invocar %s!\n"
 
-#: noweb/i_callbacks.nw:515
+#: noweb/i_callbacks.nw:372
+msgid "Documentation commands not supported under MINGW."
+msgstr ""
+
+#: noweb/i_callbacks.nw:522
 msgid "Cannot obtain the current directory!\n"
 msgstr "Impossível determinar o diretório atual!\n"
 
-#: noweb/i_callbacks.nw:518
+#: noweb/i_callbacks.nw:525
 msgid "New Window created\n"
 msgstr "Nova janela criada\n"
 
-#: noweb/i_callbacks.nw:627
+#: noweb/i_callbacks.nw:634
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Salvo [%s]\n"
 
-#: noweb/i_callbacks.nw:630
+#: noweb/i_callbacks.nw:637
 msgid "Saved"
 msgstr "Salvo"
 
-#: noweb/i_callbacks.nw:635 noweb/x_fileselect.nw:873
+#: noweb/i_callbacks.nw:642 noweb/x_fileselect.nw:873
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "NÃO foi possível salvar [%s] !\n"
 
-#: noweb/i_callbacks.nw:637 noweb/x_fileselect.nw:874
+#: noweb/i_callbacks.nw:644 noweb/x_fileselect.nw:874
 msgid "Error while trying to save"
 msgstr "Erro tentando salvar"
 
-#: noweb/i_callbacks.nw:686
+#: noweb/i_callbacks.nw:693
 msgid "Failed to Save All"
 msgstr "Falha ao salvar tudo"
 
-#: noweb/i_callbacks.nw:688
+#: noweb/i_callbacks.nw:695
 msgid "Saved All"
 msgstr "Salvar Tudo"
 
-#: noweb/i_callbacks.nw:787 noweb/i_callbacks.nw:790
+#: noweb/i_callbacks.nw:794 noweb/i_callbacks.nw:797
 msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
 msgstr ""
 "A libgdgeda não foi instalada ou foi desabilitada, este recurso está "
 "indisponível\n"
 
-#: noweb/i_callbacks.nw:843
+#: noweb/i_callbacks.nw:850
 msgid "Closing Window\n"
 msgstr "Fechando Janela\n"
 
-#: noweb/i_callbacks.nw:1032 noweb/i_callbacks.nw:1080
+#: noweb/i_callbacks.nw:1039 noweb/i_callbacks.nw:1087
 msgid "Select objs first"
 msgstr "Selecione objetos antes"
 
-#: noweb/i_callbacks.nw:1124 noweb/x_attribedit.nw:558
+#: noweb/i_callbacks.nw:1131 noweb/x_attribedit.nw:558
 #: noweb/x_attribedit.nw:745 noweb/x_multiattrib.nw:847 noweb/x_window.nw:975
 #: noweb/rcstrings.nw:25
 msgid "Delete"
 msgstr "Apagar"
 
-#: noweb/i_callbacks.nw:1153 noweb/x_window.nw:930 noweb/rcstrings.nw:17
+#: noweb/i_callbacks.nw:1160 noweb/x_window.nw:930 noweb/rcstrings.nw:17
 msgid "Edit"
 msgstr "Editar"
 
-#: noweb/i_callbacks.nw:1174 noweb/x_dialog.nw:710 noweb/x_dialog.nw:715
+#: noweb/i_callbacks.nw:1181 noweb/x_dialog.nw:710 noweb/x_dialog.nw:715
 msgid "Edit Text"
 msgstr "Editar Texto"
 
-#: noweb/i_callbacks.nw:1202
+#: noweb/i_callbacks.nw:1209
 msgid "Slot"
 msgstr ""
 
-#: noweb/i_callbacks.nw:1224
+#: noweb/i_callbacks.nw:1231
 msgid "Color"
 msgstr "Cor"
 
-#: noweb/i_callbacks.nw:1247 noweb/i_callbacks.nw:1271 noweb/x_window.nw:990
+#: noweb/i_callbacks.nw:1254 noweb/i_callbacks.nw:1278 noweb/x_window.nw:990
 msgid "Rotate"
 msgstr "Rotacionar"
 
-#: noweb/i_callbacks.nw:1297 noweb/i_callbacks.nw:1321 noweb/x_window.nw:1005
+#: noweb/i_callbacks.nw:1304 noweb/i_callbacks.nw:1328 noweb/x_window.nw:1005
 msgid "Mirror"
 msgstr "Espelhar"
 
-#: noweb/i_callbacks.nw:1350 noweb/rcstrings.nw:30
+#: noweb/i_callbacks.nw:1357 noweb/rcstrings.nw:30
 msgid "Lock"
 msgstr "Bloquear"
 
-#: noweb/i_callbacks.nw:1374 noweb/rcstrings.nw:31
+#: noweb/i_callbacks.nw:1381 noweb/rcstrings.nw:31
 msgid "Unlock"
 msgstr "Desbloquear"
 
-#: noweb/i_callbacks.nw:1397 noweb/x_dialog.nw:2119
+#: noweb/i_callbacks.nw:1404 noweb/x_dialog.nw:2119
 msgid "Translate"
 msgstr "Transladar"
 
-#: noweb/i_callbacks.nw:1400
+#: noweb/i_callbacks.nw:1407
 msgid "WARNING: Do not translate with snap off!\n"
 msgstr "ATENÇÃO: Não translade com o agarre (snap) desligado!\n"
 
-#: noweb/i_callbacks.nw:1401
+#: noweb/i_callbacks.nw:1408
 msgid "WARNING: Turning snap on and continuing with translate.\n"
 msgstr "ATENÇÃO: Ligando o agarre e continuando o translado.\n"
 
-#: noweb/i_callbacks.nw:1408
+#: noweb/i_callbacks.nw:1415
 msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "ATENÇÃO: A grade de agarre não está em 100!\n"
 
-#: noweb/i_callbacks.nw:1410
+#: noweb/i_callbacks.nw:1417
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
 msgstr ""
 "ATENÇÃO: Se transladar um símbolo para origem, a grade deve estar em 100\n"
 
-#: noweb/i_callbacks.nw:1435
+#: noweb/i_callbacks.nw:1442
 msgid "Embed"
 msgstr "Embutir"
 
-#: noweb/i_callbacks.nw:1458
+#: noweb/i_callbacks.nw:1465
 msgid "Unembed"
 msgstr "Desembutir"
 
-#: noweb/i_callbacks.nw:1481
+#: noweb/i_callbacks.nw:1488
 msgid "Update"
 msgstr "Atualizar"
 
-#: noweb/i_callbacks.nw:1511
+#: noweb/i_callbacks.nw:1518
 msgid "ShowHidden"
 msgstr "Mostrar Oculto"
 
-#: noweb/i_callbacks.nw:1539
+#: noweb/i_callbacks.nw:1546
 msgid "MakeVisible"
 msgstr "Deixar Visível"
 
-#: noweb/i_callbacks.nw:1654
+#: noweb/i_callbacks.nw:1661
 msgid "Edit Line Type"
 msgstr "Editar Tipo de Linha"
 
-#: noweb/i_callbacks.nw:1679 noweb/x_dialog.nw:1485
+#: noweb/i_callbacks.nw:1686 noweb/x_dialog.nw:1485
 msgid "Edit Fill Type"
 msgstr "Editar Preenchimento"
 
-#: noweb/i_callbacks.nw:1907 noweb/i_callbacks.nw:1927 noweb/rcstrings.nw:60
+#: noweb/i_callbacks.nw:1914 noweb/i_callbacks.nw:1934 noweb/rcstrings.nw:60
 msgid "Pan"
 msgstr ""
 
-#: noweb/i_callbacks.nw:1965
+#: noweb/i_callbacks.nw:1972
 msgid "Update Cues"
 msgstr "Atualiza dicas"
 
-#: noweb/i_callbacks.nw:2116
+#: noweb/i_callbacks.nw:2123
 msgid "Cannot get cwd!\n"
 msgstr "Impossível determinar diretório corrente!\n"
 
-#: noweb/i_callbacks.nw:2124
+#: noweb/i_callbacks.nw:2131
 #, c-format
 msgid "New Page created [%s]\n"
 msgstr "Criada Nova Página [%s]\n"
 
-#: noweb/i_callbacks.nw:2162 noweb/i_callbacks.nw:2180
-#: noweb/i_callbacks.nw:2199 noweb/i_callbacks.nw:2225
-#: noweb/i_callbacks.nw:2318 noweb/i_callbacks.nw:2381
+#: noweb/i_callbacks.nw:2169 noweb/i_callbacks.nw:2187
+#: noweb/i_callbacks.nw:2206 noweb/i_callbacks.nw:2232
+#: noweb/i_callbacks.nw:2325 noweb/i_callbacks.nw:2388
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Fechando [%s]\n"
 
-#: noweb/i_callbacks.nw:2336 noweb/i_callbacks.nw:2354
+#: noweb/i_callbacks.nw:2343 noweb/i_callbacks.nw:2361
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Descartando página [%s]\n"
 
-#: noweb/i_callbacks.nw:2433
+#: noweb/i_callbacks.nw:2440
 msgid "Copy 1"
 msgstr "Copiar para 1"
 
-#: noweb/i_callbacks.nw:2456
+#: noweb/i_callbacks.nw:2463
 msgid "Copy 2"
 msgstr "Copiar para 2"
 
-#: noweb/i_callbacks.nw:2479
+#: noweb/i_callbacks.nw:2486
 msgid "Copy 3"
 msgstr "Copiar para 3"
 
-#: noweb/i_callbacks.nw:2502
+#: noweb/i_callbacks.nw:2509
 msgid "Copy 4"
 msgstr "Copiar para 4"
 
-#: noweb/i_callbacks.nw:2525
+#: noweb/i_callbacks.nw:2532
 msgid "Copy 5"
 msgstr "Copiar para 5"
 
-#: noweb/i_callbacks.nw:2548
+#: noweb/i_callbacks.nw:2555
 msgid "Cut 1"
 msgstr "Cortar para 1"
 
-#: noweb/i_callbacks.nw:2571
+#: noweb/i_callbacks.nw:2578
 msgid "Cut 2"
 msgstr "Cortar para 2"
 
-#: noweb/i_callbacks.nw:2594
+#: noweb/i_callbacks.nw:2601
 msgid "Cut 3"
 msgstr "Cortar para 3"
 
-#: noweb/i_callbacks.nw:2617
+#: noweb/i_callbacks.nw:2624
 msgid "Cut 4"
 msgstr "Cortar para 4"
 
-#: noweb/i_callbacks.nw:2640
+#: noweb/i_callbacks.nw:2647
 msgid "Cut 5"
 msgstr "Cortar para 5"
 
-#: noweb/i_callbacks.nw:2660
+#: noweb/i_callbacks.nw:2667
 msgid "Paste 1"
 msgstr "Colar de 1"
 
-#: noweb/i_callbacks.nw:2668 noweb/i_callbacks.nw:2696
-#: noweb/i_callbacks.nw:2724 noweb/i_callbacks.nw:2752
-#: noweb/i_callbacks.nw:2780
+#: noweb/i_callbacks.nw:2675 noweb/i_callbacks.nw:2703
+#: noweb/i_callbacks.nw:2731 noweb/i_callbacks.nw:2759
+#: noweb/i_callbacks.nw:2787
 msgid "Empty buffer"
 msgstr "Buffer vazio"
 
-#: noweb/i_callbacks.nw:2688
+#: noweb/i_callbacks.nw:2695
 msgid "Paste 2"
 msgstr "Colar de 2"
 
-#: noweb/i_callbacks.nw:2716
+#: noweb/i_callbacks.nw:2723
 msgid "Paste 3"
 msgstr "Colar de 3"
 
-#: noweb/i_callbacks.nw:2744
+#: noweb/i_callbacks.nw:2751
 msgid "Paste 4"
 msgstr "Colar de 4"
 
-#: noweb/i_callbacks.nw:2772
+#: noweb/i_callbacks.nw:2779
 msgid "Paste 5"
 msgstr "Colar de 5"
 
-#: noweb/i_callbacks.nw:2946 noweb/x_window.nw:851 noweb/rcstrings.nw:120
+#: noweb/i_callbacks.nw:2953 noweb/x_window.nw:851 noweb/rcstrings.nw:120
 msgid "Component"
 msgstr "Componente"
 
-#: noweb/i_callbacks.nw:2992 noweb/i_callbacks.nw:3017
+#: noweb/i_callbacks.nw:2999 noweb/i_callbacks.nw:3024
 #: noweb/x_attribedit.nw:435
 msgid "Attribute"
 msgstr "Atributo"
 
-#: noweb/i_callbacks.nw:3043 noweb/i_callbacks.nw:3070 noweb/rcstrings.nw:78
+#: noweb/i_callbacks.nw:3050 noweb/i_callbacks.nw:3077 noweb/rcstrings.nw:78
 msgid "Net"
 msgstr "Conexão"
 
-#: noweb/i_callbacks.nw:3123 noweb/i_callbacks.nw:3151 noweb/x_window.nw:881
+#: noweb/i_callbacks.nw:3130 noweb/i_callbacks.nw:3158 noweb/x_window.nw:881
 #: noweb/rcstrings.nw:79
 msgid "Bus"
 msgstr "Barramento"
 
-#: noweb/i_callbacks.nw:3249 noweb/i_callbacks.nw:3273 noweb/rcstrings.nw:82
+#: noweb/i_callbacks.nw:3256 noweb/i_callbacks.nw:3280 noweb/rcstrings.nw:82
 msgid "Line"
 msgstr "Linha"
 
-#: noweb/i_callbacks.nw:3300 noweb/i_callbacks.nw:3324 noweb/rcstrings.nw:83
+#: noweb/i_callbacks.nw:3307 noweb/i_callbacks.nw:3331 noweb/rcstrings.nw:83
 msgid "Box"
 msgstr "Caixa"
 
-#: noweb/i_callbacks.nw:3351 noweb/i_callbacks.nw:3376 noweb/rcstrings.nw:84
+#: noweb/i_callbacks.nw:3358 noweb/i_callbacks.nw:3383 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Círculo"
 
-#: noweb/i_callbacks.nw:3403 noweb/i_callbacks.nw:3427 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3410 noweb/i_callbacks.nw:3434 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Arco"
 
-#: noweb/i_callbacks.nw:3454 noweb/i_callbacks.nw:3478 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3461 noweb/i_callbacks.nw:3485 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Pino"
 
-#: noweb/i_callbacks.nw:3549
+#: noweb/i_callbacks.nw:3556
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Procurando por origem [%s]\n"
 
-#: noweb/i_callbacks.nw:3582 noweb/i_callbacks.nw:3585
+#: noweb/i_callbacks.nw:3589 noweb/i_callbacks.nw:3592
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Impossível encontrar origem [%s]\n"
 
-#: noweb/i_callbacks.nw:3686
+#: noweb/i_callbacks.nw:3693
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Procurando por símbolo [%s]\n"
 
-#: noweb/i_callbacks.nw:3813 noweb/rcstrings.nw:95
+#: noweb/i_callbacks.nw:3820 noweb/rcstrings.nw:95
 msgid "Attach"
 msgstr "Anexar"
 
-#: noweb/i_callbacks.nw:3867
+#: noweb/i_callbacks.nw:3874
 msgid "Detach"
 msgstr "Desanexar"
 
-#: noweb/i_callbacks.nw:3912
+#: noweb/i_callbacks.nw:3919
 msgid "ShowN"
 msgstr "Mostrar N"
 
-#: noweb/i_callbacks.nw:3948
+#: noweb/i_callbacks.nw:3955
 msgid "ShowV"
 msgstr "Mostrar V"
 
-#: noweb/i_callbacks.nw:3984
+#: noweb/i_callbacks.nw:3991
 msgid "ShowB"
 msgstr "Mostrar T"
 
-#: noweb/i_callbacks.nw:4021
+#: noweb/i_callbacks.nw:4028
 msgid "VisToggle"
 msgstr "Comuta Visibilidade"
 
-#: noweb/i_callbacks.nw:4047
+#: noweb/i_callbacks.nw:4054
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Desculpe, mas esta é uma opção de menu sem função\n"
 
-#: noweb/i_callbacks.nw:4111
+#: noweb/i_callbacks.nw:4118
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Retorno de ação ajustado para silhueta\n"
 
-#: noweb/i_callbacks.nw:4114
+#: noweb/i_callbacks.nw:4121
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Retorno de ação ajustado para caixa completa\n"
 
-#: noweb/i_callbacks.nw:4136
+#: noweb/i_callbacks.nw:4143
 msgid "Grid OFF\n"
 msgstr "Grade DESLIGADA\n"
 
-#: noweb/i_callbacks.nw:4139
+#: noweb/i_callbacks.nw:4146
 msgid "Grid ON\n"
 msgstr "Grade LIGADA\n"
 
-#: noweb/i_callbacks.nw:4161
+#: noweb/i_callbacks.nw:4168
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Agarre desligado (CUIDADO!)\n"
 
-#: noweb/i_callbacks.nw:4164
+#: noweb/i_callbacks.nw:4171
 msgid "Snap ON\n"
 msgstr "Agarre ligado\n"
 
-#: noweb/i_callbacks.nw:4188
+#: noweb/i_callbacks.nw:4195
 msgid "Rubber band OFF \n"
 msgstr "Elástico desligado\n"
 
-#: noweb/i_callbacks.nw:4191
+#: noweb/i_callbacks.nw:4198
 msgid "Rubber band ON\n"
 msgstr "Elástico ligado\n"
 

@@ -339,6 +339,9 @@ initiate_gschemdoc(const char* documentation,const char *device,
 		   const char *value,
 		   const char* symfile, const char *sympath)
 {
+
+#ifndef __MINGW32__
+
   int pid;
 
   if (!documentation) documentation="";
@@ -349,6 +352,7 @@ initiate_gschemdoc(const char* documentation,const char *device,
 
   s_log_message( _("Documentation for [%s,%s,%s,%s]\n"),
 		    documentation,device,value,symfile);
+
 
   if ((pid = fork()) < 0) {
     fprintf(stderr, _("Could not fork\n"));
@@ -364,6 +368,9 @@ initiate_gschemdoc(const char* documentation,const char *device,
     fprintf(stderr, _("Could not invoke %s\n"), gschemdoc);
     _exit(0);
   }
+#else
+  s_log_message(_("Documentation commands not supported under MINGW."));
+#endif
 }
 
 @ %def initiate_gschemdoc

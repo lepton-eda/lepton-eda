@@ -1,3 +1,17 @@
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed MinGW cflags/ldflags
+
+        * auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
+	* noweb/i_callbacks.nw: Disabled the use of gschemdoc under MinGW
+
+	* noweb/gschem.nw: Added a call to bind_textdomain_codeset to fix
+	the i18n support when using gtk+ 2.2.x
+
+	* src/Makefile.am: Added -I and -l for libintl when using the
+	supplied libintl library.
+
 2003-08-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
