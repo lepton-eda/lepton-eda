@@ -31,7 +31,7 @@
 
 #include <guile/gh.h>
 
-#if defined(HAVE_DIRENT_H) && !defined(WIN32)
+#if defined(HAVE_DIRENT_H) && !defined(__CYGWIN32__)
 #include <dirent.h>
 #endif
 
