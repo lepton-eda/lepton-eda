@@ -546,7 +546,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990529
+VERSION=19990601
 
 echo Configuring gschem version $VERSION
 

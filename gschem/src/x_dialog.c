@@ -1345,6 +1345,7 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 			case(OBJ_ARC):
 			case(OBJ_CIRCLE):
 				found->color = w_current->edit_color;
+				w_current->page_current->CHANGED = 1;
 			break;
 
 			case(OBJ_NTEXT):
@@ -1352,6 +1353,7 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 				o_complex_set_color(w_current, 
 						w_current->edit_color,
 						found->complex);
+				w_current->page_current->CHANGED = 1;
 			break;
 		}
 

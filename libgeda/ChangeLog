@@ -8,11 +8,19 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+6/1/99	Fixed a few minor things in s_page.c and s_basic.c (p_circle stuff)
+
+	Put some checks to prevent the coredump condition described below
+
+	Put some casts to make make happy (less warnings)
+
 5/31/99 Fixed printing for nets visual cues
 
 	Removed all traces of the old connection system
 
 	Discovered a core dump condition in clib_cache_free
+	(caused by reading in swedish/non-standard-ascii character font
+	 files, okay for now)
 
 	Few minor touch up to s_clib.c, but not enough to solve above
 

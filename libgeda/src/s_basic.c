@@ -150,16 +150,14 @@ add_object( OBJECT *ptr )
 	if (p_line_points) {
 	 	new_node->line_points = p_line_points;
 	} else {
-	 	new_node->line_points = p_line_points;
+	 	new_node->line_points = NULL;
 	}
 	
 	if (p_circle) {
 		new_node->circle = p_circle;
 	} else {
-	 	new_node->circle = p_circle;
+	 	new_node->circle = NULL;
 	}
-
-
 
 	new_node->visited = 0;
 

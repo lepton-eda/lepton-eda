@@ -17,6 +17,9 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  */
 
+#ifndef _COLORS_H_INCL
+#define _COLORS_H_INCL
+
 /* this is a shared file */
 #define BLACK		0
 #define WHITE		1
@@ -29,3 +32,5 @@
 
 /* Internal colors, please don't use these in schematics */
 #define GREY90		8
+
+#endif

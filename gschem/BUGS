@@ -6,6 +6,8 @@ Bugs (no particular order):
 
 	Missing GDK_CONFIGURE from event types wanted list?
 
+	Swedish characters don't work.
+
 	If a symbol isn't found, it's removed from the schematic.... 
 	Is this the behavior we want?
 

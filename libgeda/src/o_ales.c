@@ -478,7 +478,8 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 	key = o_ales_return_key(x, y);
 
 	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(ales_table, key, orig_key, ales_list)) {
+	if (g_hash_table_lookup_extended(ales_table, key, 
+		(gpointer) orig_key, (gpointer) ales_list)) {
 
 #if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);
@@ -594,7 +595,8 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 	key = o_ales_return_key(x, y);
 
 	/* search for key in hash table */
-	if (g_hash_table_lookup_extended(ales_table, key, orig_key, ales_list)) {
+	if (g_hash_table_lookup_extended(ales_table, key,
+		(gpointer) orig_key, (gpointer) ales_list)) {
 
 #if DEBUG
 		printf("key found: %s %p %p\n", *orig_key, *orig_key, key);

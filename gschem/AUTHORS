@@ -43,6 +43,8 @@ Manu Rouat		- For pointing out my inconsistant license headers
 Roger Williams 		- For supplying a patch with provides variable snap
 			  grid spacing
 
+			  For contributing the agile-vfo-block_1.sch schematic
+
 Mike Jarabek 		- For contributing code which displays grid points 
 			  at negative coordinates. 
 
@@ -53,6 +55,10 @@ Egil Kvaleberg		- For providing a patch which gives gEDA gtk+ 1.1.x
 			  compatibility (integrated by AVH)
 
 			  As well as a sample schematic (filter_1.sch)
+
+Thomas Dean		- Submitting a few useful patches for various
+			  things
+
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
 the subscribers provided good suggestions which are greatly appreciated

@@ -47,7 +47,7 @@
 #define BACKING 2
 
 /* font storage and friends are staying global so that all can access */
-#define NUM_CHARS 255
+#define NUM_CHARS 256
 
 OBJECT font_set[NUM_CHARS];
 
@@ -643,6 +643,7 @@ o_ntext_set_info_font(char buf[])
 	char type; 
 	int width;
 	char character;
+	int temp;
 	int special=0;
 	char string[81]; /* not sure if this is right ? hack */
 	
@@ -657,7 +658,10 @@ o_ntext_set_info_font(char buf[])
 		character = 32;
 	}
 
-	font_set[(int) character].text_size = width;
+	temp = character;
+	if ( temp >= 0 && temp <= 255) {
+		font_set[(int) character].text_size = width;
+	}
 }
 
 char *

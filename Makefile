@@ -3,7 +3,7 @@ SUBDIRS=libgeda symbols gschem
 
 prefix=${HOME}/geda
 
-all: build
+all: targets
 
 install::
 	for i in $(SUBDIRS) ;\
@@ -82,3 +82,16 @@ justinstall::
 	done
 	@echo Finished!
 
+targets::
+	@echo ""
+	@echo Type:
+	@echo ""
+	@echo "make install      Installs into $(prefix) directory"
+	@echo "make build        Just builds, doesn't install"
+	@echo "make clean        Simple clean only"
+	@echo "make maint        Total maintenance clean"
+	@echo "make config       Standard ./configure --prefix=$(prefix) in each dir"
+	@echo "make distconfig   Distribution ./configure"
+	@echo "make justinstall  Just install, no building \(if not needed\)"
+	@echo "make uninstall    Install everything from $(prefix)"
+	@echo ""

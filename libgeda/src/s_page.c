@@ -242,6 +242,7 @@ s_page_setup(PAGE *p_current)
 	p_type = OBJ_HEAD;
 	p_action_func = NULL;
         p_line_points = NULL;
+        p_circle = NULL;
 	p_action_func = error_if_called;
 	p_sel_func = error_if_called;
 	p_draw_func = error_if_called;
@@ -261,6 +262,7 @@ s_page_setup(PAGE *p_current)
 	strcpy(p_name, "sel_head");
 	p_type = OBJ_HEAD;
 	p_line_points = NULL;
+        p_circle = NULL;
 	p_action_func = error_if_called;
 	p_sel_func = error_if_called;
 	p_draw_func = error_if_called;
@@ -281,7 +283,7 @@ s_page_setup(PAGE *p_current)
 	strcpy(p_name, "complex_place_head");
 	p_type = OBJ_HEAD;
 	p_line_points = NULL;
-	p_action_func = NULL;
+        p_circle = NULL;
 	p_action_func = error_if_called;
 	p_sel_func = error_if_called;
 	p_draw_func = error_if_called;
@@ -302,7 +304,7 @@ s_page_setup(PAGE *p_current)
 	strcpy(p_name, "attrib_place_head");
 	p_type = OBJ_HEAD;
 	p_line_points = NULL;
-	p_action_func = NULL;
+	p_circle = NULL;
 	p_action_func = error_if_called;
 	p_sel_func = error_if_called;
 	p_draw_func = error_if_called;
