@@ -96,11 +96,11 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-data74dir = @gedadatadir@/sym/74
+datanationaldir = @gedadatadir@/sym/national
 
-data74_DATA = @data74@
+datanational_DATA = @datanational@
 
-EXTRA_DIST = $(data74_DATA)
+EXTRA_DIST = $(datanational_DATA)
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
@@ -108,7 +108,7 @@ DISTCLEANFILES = gschem.log *~
 MAINTAINERCLEANFILES = gschem.log *~
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
-DATA =  $(data74_DATA)
+DATA =  $(datanational_DATA)
 
 DIST_COMMON =  Makefile.am Makefile.in
 
@@ -120,30 +120,30 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu 74/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu national/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 
-install-data74DATA: $(data74_DATA)
+install-datanationalDATA: $(datanational_DATA)
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(data74dir)
-	@list='$(data74_DATA)'; for p in $$list; do \
+	$(mkinstalldirs) $(DESTDIR)$(datanationaldir)
+	@list='$(datanational_DATA)'; for p in $$list; do \
 	  if test -f $(srcdir)/$$p; then \
-	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(data74dir)/$$p"; \
-	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(data74dir)/$$p; \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datanationaldir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datanationaldir)/$$p; \
 	  else if test -f $$p; then \
-	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(data74dir)/$$p"; \
-	    $(INSTALL_DATA) $$p $(DESTDIR)$(data74dir)/$$p; \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(datanationaldir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(datanationaldir)/$$p; \
 	  fi; fi; \
 	done
 
-uninstall-data74DATA:
+uninstall-datanationalDATA:
 	@$(NORMAL_UNINSTALL)
-	list='$(data74_DATA)'; for p in $$list; do \
-	  rm -f $(DESTDIR)$(data74dir)/$$p; \
+	list='$(datanational_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(datanationaldir)/$$p; \
 	done
 tags: TAGS
 TAGS:
@@ -151,14 +151,14 @@ TAGS:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-subdir = 74
+subdir = national
 
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu 74/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu national/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -180,20 +180,20 @@ installcheck: installcheck-am
 install-exec-am:
 install-exec: install-exec-am
 
-install-data-am: install-data74DATA
+install-data-am: install-datanationalDATA
 install-data: install-data-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 install: install-am
-uninstall-am: uninstall-data74DATA
+uninstall-am: uninstall-datanationalDATA
 uninstall: uninstall-am
 all-am: Makefile $(DATA)
 all-redirect: all-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
 installdirs:
-	$(mkinstalldirs)  $(DESTDIR)$(data74dir)
+	$(mkinstalldirs)  $(DESTDIR)$(datanationaldir)
 
 
 mostlyclean-generic:
@@ -227,8 +227,8 @@ maintainer-clean-am:  maintainer-clean-generic distclean-am
 
 maintainer-clean: maintainer-clean-am
 
-.PHONY: uninstall-data74DATA install-data74DATA tags distdir info-am \
-info dvi-am dvi check check-am installcheck-am installcheck \
+.PHONY: uninstall-datanationalDATA install-datanationalDATA tags distdir \
+info-am info dvi-am dvi check check-am installcheck-am installcheck \
 install-exec-am install-exec install-data-am install-data install-am \
 install uninstall-am uninstall all-redirect all-am all installdirs \
 mostlyclean-generic distclean-generic clean-generic \

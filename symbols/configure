@@ -850,6 +850,9 @@ EOF
 data4000=`ls -1 4000 | grep -v Makefile | grep -v CVS`
 data4000=`echo $data4000`
 
+datanational=`ls -1 national | grep -v Makefile | grep -v CVS`
+datanational=`echo $datanational`
+
 datalocal=`ls -1 local | grep -v Makefile | grep -v CVS`
 datalocal=`echo $datalocal`
 
@@ -975,6 +978,7 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
 
 
 
@@ -1157,6 +1161,7 @@ trap 'rm -fr `echo "
 	tube/Makefile 
 	verilog/Makefile
 	spice/Makefile
+	national/Makefile
 	system-commonrc
         gesym-config " | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
@@ -1219,6 +1224,7 @@ s%@dataio@%$dataio%g
 s%@dataswitch@%$dataswitch%g
 s%@datatitleblock@%$datatitleblock%g
 s%@data4000@%$data4000%g
+s%@datanational@%$datanational%g
 s%@datatube@%$datatube%g
 s%@dataradio@%$dataradio%g
 s%@datamemory@%$datamemory%g
@@ -1306,6 +1312,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makefile
 	tube/Makefile 
 	verilog/Makefile
 	spice/Makefile
+	national/Makefile
 	system-commonrc
         gesym-config "}
 EOF

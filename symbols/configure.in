@@ -63,6 +63,9 @@ AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 data4000=`ls -1 4000 | grep -v Makefile | grep -v CVS`
 data4000=`echo $data4000`
 
+datanational=`ls -1 national | grep -v Makefile | grep -v CVS`
+datanational=`echo $datanational`
+
 datalocal=`ls -1 local | grep -v Makefile | grep -v CVS`
 datalocal=`echo $datalocal`
 
@@ -194,6 +197,7 @@ AC_SUBST(dataio)
 AC_SUBST(dataswitch)
 AC_SUBST(datatitleblock)
 AC_SUBST(data4000)
+AC_SUBST(datanational)
 AC_SUBST(datatube)
 AC_SUBST(dataradio)
 AC_SUBST(datamemory)
@@ -245,6 +249,7 @@ AC_OUTPUT([
 	tube/Makefile 
 	verilog/Makefile
 	spice/Makefile
+	national/Makefile
 	system-commonrc
         gesym-config ], [chmod +x gesym-config]) 
 

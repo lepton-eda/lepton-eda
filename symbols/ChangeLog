@@ -11,6 +11,14 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-04-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* Added the contributed symbols by JM Routoure 
+
+	* sym/national: Created new symbol library  
+
+	* Added the contributed symbols by Luke Stras 
+
 2000-02-20  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* local/ micro/: Added a four symbols created by Marcus Isaksson
