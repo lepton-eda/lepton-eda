@@ -65,5 +65,10 @@ AC_SUBST(GEDADATADIR)
 
 AC_CONFIG_FILES([Makefile \
 	         attributes/Makefile \
-		 symbols/Makefile ])
+		 symbols/Makefile \
+	         fileformats/Makefile \
+                 hooks/Makefile \
+                 keymapping/Makefile \
+                 netattrib/Makefile \
+                 templates/Makefile])
 AC_OUTPUT

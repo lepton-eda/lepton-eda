@@ -2,6 +2,8 @@ docname=attributes
 docsdir = @GEDADATADIR@/documentation/$(docname)
 docs_DATA = $(docname).dvi $(docname).ps $(docname).pdf $(docname)/index.html
 
+EXTRA_DIST = $(docname).tex
+
 $(docname).dvi: $(docname).tex
 	latex $(docname)
 	latex $(docname)

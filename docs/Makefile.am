@@ -1,5 +1,5 @@
 
-SUBDIRS = attributes symbols 
+SUBDIRS = attributes symbols fileformats hooks keymapping netattrib templates
 
 EXTRA_DIST = 
 

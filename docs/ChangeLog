@@ -9,6 +9,10 @@
 	
 	* symbols/Makefile.am, attributes.am: Further refined clean rules
 
+	* Makefile and friends: Added a bunch of subdirs with other docs
+
+	* gschem/ and gnetlist/: Added directory and appropriate txt files
+
 2002-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in and friends: Started using automake and autoconf
