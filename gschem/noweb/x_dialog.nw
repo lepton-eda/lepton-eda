@@ -2746,7 +2746,8 @@ arc_angles_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   if ( (string_start[0] != '\0') && (string_sweep[0] != '\0') ) {
     /* TODO: put error detection */
-    o_arc_end2(w_current, atoi(string_start), atoi(string_sweep));
+	  /* pb20011125 - o_arc_end4 accepts the final angles as param */
+    o_arc_end4(w_current, atoi(string_start), atoi(string_sweep));
   }
 
 #if 0
