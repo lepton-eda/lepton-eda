@@ -816,18 +816,20 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 #if DEBUG
       printf("In x_fileselect_open_file, opening string = %s\n", string);
 #endif
-    
+
+      if (!quiet_mode) {
+	s_log_message("Loading file [%s]\n", string);
+      }
+      
+      s_page_goto (pr_current,
+		   s_page_new (pr_current, string));
+      
+      return_code = 0;
       if (first_page == 1) {
-	if (pr_current->page_current->page_filename) {
-	  /* Page structure & first page has already been created in 
-	   * s_project_create_new.  Therefore, just rename the first page
-	   * and open the project.  */
-	  free(pr_current->page_current->page_filename);
-	}
-	return_code |= s_toplevel_read_page(string); /* read in first page, or in return code */
+	return_code |= s_toplevel_read_page(string);
 	first_page = 0;
       } else {
-	return_code |= s_toplevel_read_page(string); /* read in secondary page, or in return code */
+	return_code |= s_toplevel_read_page(string);
       }
       free(string);
       
@@ -1211,10 +1213,17 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   printf("We have just entered x_fileselect_setup.\n");
 #endif
 
-  /*  ----- Create main top-level window  -----  */
+  /*  ----- Create main fileselect popup window  -----  */
   gtk_window_position(GTK_WINDOW(f_current->xfwindow),
 		      GTK_WIN_POS_MOUSE);
-    
+
+  /* This places window on top and forces user to interact with it. */
+  gtk_window_set_modal(GTK_WINDOW(f_current->xfwindow), TRUE);
+  gtk_grab_add(GTK_WIDGET(f_current->xfwindow));
+  gtk_window_set_transient_for(GTK_WINDOW(f_current->xfwindow),
+                               GTK_WINDOW(window)); /* window is global */
+
+  /* Set window title depending upon which type it is */
   if (filesel_type == OPEN) {
     gtk_window_set_title(GTK_WINDOW(f_current->xfwindow),
 			 "Open...");

@@ -76,17 +76,17 @@ void i_vars_set(TOPLEVEL * pr_current)
 void i_window_vars_set(TOPLEVEL * pr_current)
 {
 
-  /*    i_vars_libgeda_set(pr_current);  */
+  i_vars_libgeda_set(pr_current); 
 
-    pr_current->graphic_color = default_graphic_color;
-    pr_current->text_color = default_text_color;
-    pr_current->text_size = default_text_size;
-    pr_current->text_caps = default_text_caps;
-                                                                                                    
-    pr_current->attribute_color = default_attribute_color;
-    pr_current->paper_width = default_paper_width;
-    pr_current->paper_height = default_paper_height;
-    pr_current->init_right = default_init_right;
-    pr_current->init_bottom = default_init_bottom;
- 
+  pr_current->graphic_color = default_graphic_color;
+  pr_current->text_color = default_text_color;
+  pr_current->text_size = default_text_size;
+  pr_current->text_caps = default_text_caps;
+  
+  pr_current->attribute_color = default_attribute_color;
+  pr_current->paper_width = default_paper_width;
+  pr_current->paper_height = default_paper_height;
+  pr_current->init_right = default_init_right;
+  pr_current->init_bottom = default_init_bottom;
+  
 }

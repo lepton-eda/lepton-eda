@@ -1,3 +1,11 @@
+2005-02-12  Stuart Brorson <sdb@cloud9.net>
+
+	* src/gattrib.c, src/i_vars.c, src/s_toplevel.c, src/x_dialog.c,
+	* src/x_fileselect.c:  Fixed program to compile and run after 
+	Patrick's refactoring of libgeda.  Also made fileselect
+	dialog stay on top of main window when gattrib is invoked with
+	no args on cmd line.
+	
 2005-02-12  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/x_dialog.c, src/x_fileselect.c: Beautify buttons (use GTK stock).

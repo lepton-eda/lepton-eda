@@ -448,7 +448,7 @@ int x_dialog_missing_sym()
   gtk_window_set_modal(GTK_WINDOW(missing_sym_window), TRUE);
 
   gtk_window_set_transient_for(GTK_WINDOW(missing_sym_window),
-                               GTK_WINDOW(window))   /* window is gloabl main window */;
+                               GTK_WINDOW(window));   /* window is gloabl main window */
 
   /* This works to make dialog maintain focus */
   gtk_grab_add(GTK_WIDGET(missing_sym_window));
@@ -603,7 +603,7 @@ int x_dialog_unsaved_data()
   gtk_window_set_modal(GTK_WINDOW(unsaved_data_window), TRUE);
 
   gtk_window_set_transient_for(GTK_WINDOW(unsaved_data_window),
-                               GTK_WINDOW(window))   /* window is gloabl main window */;
+                               GTK_WINDOW(window));   /* window is gloabl main window */
 
 
   /* This works to make dialog maintain focus */

@@ -47,19 +47,6 @@
 
 /* ===================  Public Functions  ====================== */
 
-/*------------------------------------------------------------------
- * This fcn inits the toplevel data struct pr_current.  It basically
- * calls a fcn to initialize the window variables.
- *------------------------------------------------------------------*/
-void
-s_toplevel_init(TOPLEVEL *pr_current)
-{
-  i_window_vars_set(pr_current);   /* The window vars are used in gschem,
-                                      but we need to set them here because
-                                      graphical information is used
-                                      when introducing new attributes. */
-  return;
-}
 
 /*------------------------------------------------------------------
  * This fcn reads in a page & calls f_open, which fills out the 
@@ -69,33 +56,14 @@ int s_toplevel_read_page(char *filename)
 {
   PAGE local_page;
   int file_return_code;
-
-
-  /* If this is not the first page, try to create a new page. */
-  if (first_page != 1) {
-    if (s_page_new(pr_current, filename) ) {
-      printf("Schematic page [%s] already loaded!\n", filename);
-      return;
-    } else {
-      /* if we get here, it's because this is a new page */
-      if (!quiet_mode) {
-	printf("Loading schematic [%s]\n", filename);
-      }
-    }
-  } else {
-    /* if we get here, it's because this is the first page */
-    if (!quiet_mode) {
-      printf("Loading schematic [%s]\n", filename);
-    }
-  }
     
-  /* Now that we have a new page, set the new filename and read in the page */
+  /* Set the new filename */
   pr_current->page_current->page_filename = g_strdup(filename);
   
   /* read in and fill out pr_current using f_open and its callees */
   file_return_code = f_open(pr_current, filename);
-  if (!file_return_code) {        /* 1 = success reading in page */
-    /* 0 = failure reading in page */
+  if (!file_return_code) {     /* 1 = success reading in page */
+                               /* 0 = failure reading in page */
     fprintf(stderr, "Couldn't load schematic [%s]\n", filename);
   }
   return file_return_code;

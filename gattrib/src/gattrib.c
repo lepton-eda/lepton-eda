@@ -112,10 +112,9 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* GtkWidget *main_window is a global */
 
   int i;
-  int return_code = 0;  /* used when invoking s_toplevel_read_page */
+  int return_code;  /* used when invoking s_toplevel_read_page */
   int argv_index;
   char *cwd;
-  char *filename;
   char *input_str;
   PAGE *p_local;
   
@@ -158,33 +157,22 @@ void gattrib_main(void *closure, int argc, char *argv[])
 
   /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
   g_register_funcs();
-#if DEBUG
-  printf("In gattrib_main -- we have just registered the guile functions.\n");
-#endif  
-
-
-  /* ------  These libraries are defined in libgeda  ------ */
-#if DEBUG
-  printf("In gattrib_main -- we have just initialized the component and source libs.\n");
-#endif  
-  
 
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
-  pr_current = s_project_alloc();
+  pr_current = s_toplevel_new();
 
   /* ----- Read in RC files.   ----- */
-  /*
-   * This step must happen after creation of pr_current, but before it is 
-   * filled out in order for guile stuff to take effect.  (Specifically
-   * fonts.)
-   */
   g_rc_parse(pr_current, "gattribrc", rc_filename);
-#if DEBUG
-  printf("In gattrib_main -- we have just read in and parsed the RC files.\n");
-#endif  
 
-  s_project_fill_out(pr_current);    /* pr_current declared in globals.h */
-  s_toplevel_init(pr_current); 
+  /*
+  i_vars_set(pr_current);
+  */
+
+  i_window_vars_set(pr_current);   /* The window vars are used in gschem,
+                                      but we need to set them here because
+                                      graphical information is used
+                                      when introducing new attributes. */
+
 #if DEBUG
   printf("In gattrib_main -- we have just created and init'ed a new pr_current\n");
 #endif  
@@ -207,34 +195,34 @@ void gattrib_main(void *closure, int argc, char *argv[])
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
 
 
-  /* ---------- Now loop on the files specified on the cmd line & read them in ---------- */
+  /* ----- Now loop on the files specified on the cmd line & read them in ---- */
   /* argv[0] = name of this prog (gattrib).  argv_index holds the 
    * position of the first filename  */
   i = argv_index;
-  while(argv[i]) {
-    
-    filename = g_strconcat(cwd,
-                           G_DIR_SEPARATOR_S, 
-                           argv[i],
-                           NULL);
+  while(argv[i] != NULL) {
+    PAGE *page;
+    gchar *temp_filename = g_build_path (G_DIR_SEPARATOR_S,
+					 cwd,
+					 argv[i],
+					 NULL);
+    gchar *filename = f_normalize_filename(temp_filename);
+    g_free(temp_filename);
 
-#if DEBUG
-    printf("In gattrib_main, we want to open filename = %s\n", filename);
-#endif
+    s_log_message("Loading file [%s]\n", filename);
+    if (!quiet_mode) {
+      printf ("Loading file [%s]\n", filename);
+    }
+
+    s_page_goto (pr_current,
+		 s_page_new (pr_current, filename));
     
+    return_code = 0;
     if (first_page == 1) {
-      if (pr_current->page_current->page_filename) {
-	/* Page structure & first page has already been created in 
-	 * s_project_create_new.  Therefore, just rename the first page
-	 * and open the project.  First free "unknown" name.  */
-	free(pr_current->page_current->page_filename);
-      }
-      return_code |= s_toplevel_read_page(filename); /* read in first page */
+      return_code |= s_toplevel_read_page(filename);
       first_page = 0;
     } else {
-      return_code |= s_toplevel_read_page(filename); /* read in secondary page */
-    }  
-    free(filename);
+      return_code |= s_toplevel_read_page(filename);
+    }
     
     /* Now add all items found to the master lists */
     s_sheet_data_add_master_comp_list_items(pr_current->page_current->object_head); 
@@ -252,7 +240,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
     s_sheet_data_add_master_pin_attrib_list_items(pr_current->page_current->object_head); 
 
     i++;
-    
+    g_free(filename);
   }  /* while(argv[i])  */
   free(cwd);
 
@@ -301,18 +289,12 @@ void gattrib_main(void *closure, int argc, char *argv[])
       p_local = p_local->next;  /* iterate to next schematic page */
     }
 #if DEBUG
-    fflush(stderr);
-    fflush(stdout);
     printf("In gattrib_main -- we have just returned from adding to the tables.\n");
-    fflush(stderr);
-    fflush(stdout);
 #endif  
 
 
 #if DEBUG
     /*  -----  Make debug printout of entire object list  -----  */
-    fflush(stderr);
-    fflush(stdout);
     printf("In gattrib_main -- we have just read in the project and filled out pr_current\n");
     printf("----------------------------  Object list -----------------------------\n");
     s_page_print_all(pr_current);
@@ -325,8 +307,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
 			      * and then calls another fcn to update
 			      * the GtkSheet itself.  */
 #if DEBUG
-    fflush(stderr);
-    fflush(stdout);
     printf("In gattrib_main -- we have just returned from x_window_add_items.\n");
 #endif  
     
@@ -334,8 +314,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
   else {
     /* no filename found on command line, therefore we are still on the first page */
 #if DEBUG
-    fflush(stderr);
-    fflush(stdout);
     printf("In gattrib_main -- no files specified on command line.  Throw up filedialog.\n");
 #endif
     x_fileselect_setup(pr_current, OPEN);
@@ -364,8 +342,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
 
   /* ---------- Spreadsheet has been killed; we are quitting.  ---------- */
 #ifdef DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main, we have exited gtk_main. \n");
 #endif  
 
@@ -399,8 +375,6 @@ int main(int argc, char *argv[])
   scm_boot_guile( argc, argv, gattrib_main, NULL);
 
 #ifdef DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("Now exiting main . . . Bye!\n");
 #endif
   /* return 0 */

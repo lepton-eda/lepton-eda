@@ -80,7 +80,6 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
 			      TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
-void s_toplevel_init();
 int s_toplevel_read_page(char *filename);
 int s_toplevel_verify_design(TOPLEVEL *pr_current);
 int s_toplevel_empty_project();
