@@ -240,6 +240,7 @@ o_circle_end(TOPLEVEL *w_current, int x, int y)
         w_current->loc_y   = (-1);
         w_current->distance = (-1);
         w_current->page_current->CHANGED = 1;
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void

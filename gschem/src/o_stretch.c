@@ -391,6 +391,7 @@ o_stretch_end(TOPLEVEL *w_current)
 	o_redraw(w_current, w_current->page_current->object_head);
 
 	whichone_changing = -1;
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 /* this also needs support for bus and the other objects... */

@@ -200,6 +200,7 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
 	y1 = snap_grid(w_current, y1);
 	x2 = snap_grid(w_current, x2);
 	y2 = snap_grid(w_current, y2);
+	
 
 	w_current->page_current->object_tail = o_line_add(w_current,
 			w_current->page_current->object_tail,
@@ -211,6 +212,8 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
         w_current->last_x = (-1);
         w_current->last_y = (-1);
 	w_current->page_current->CHANGED=1;
+
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void

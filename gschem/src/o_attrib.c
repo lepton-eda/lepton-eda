@@ -110,6 +110,7 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
 		}
 		s_current = s_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
@@ -142,6 +143,7 @@ o_attrib_toggle_show_name_value(TOPLEVEL *w_current,
 		}
 		s_current = s_current->next;
 	}
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
@@ -296,6 +298,7 @@ o_attrib_end(TOPLEVEL *w_current)
 
 	o_selection_add(w_current->page_current->selection2_head,
 			w_current->page_current->object_tail);
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void

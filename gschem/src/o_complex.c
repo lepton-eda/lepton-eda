@@ -127,8 +127,8 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 		      &x,
 		      &y);
 
-	w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
 	w_current->DONT_DRAW_CONN = 1;
+	w_current->ADDING_SEL = 1; /* reuse this flag, rename later hack */
 	w_current->page_current->complex_place_tail =
 		(OBJECT *) o_complex_add(
 			w_current,
@@ -138,6 +138,7 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 			w_current->internal_basename, 1, TRUE);
 	w_current->ADDING_SEL = 0;
 	w_current->DONT_DRAW_CONN = 0;
+
 
 	o_drawbounding(w_current, 
 		       w_current->page_current->complex_place_head->next,
@@ -221,6 +222,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
 		o_redraw(w_current, o_start);
 		w_current->page_current->CHANGED = 1;
+		o_undo_savestate(w_current, UNDO_ALL);
 		return;
 	}
 
@@ -307,6 +309,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	o_redraw(w_current, w_current->page_current->object_head);
 
 	w_current->page_current->CHANGED = 1;
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
@@ -504,6 +507,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 	o_unselect_all(w_current);
 	o_redraw_all(w_current);
 	w_current->page_current->CHANGED=1;
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void

@@ -402,6 +402,7 @@ o_text_end(TOPLEVEL *w_current)
         }
 
 	w_current->override_color = -1;
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 void
@@ -454,6 +455,7 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
 		o_text_draw(w_current, object);
 
 		w_current->page_current->CHANGED = 1;
+		o_undo_savestate(w_current, UNDO_ALL);
 	} else {
 		fprintf(stderr, "uggg! you tried to text edit something "
 			"that doesn't exist!\n");

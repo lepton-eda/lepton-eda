@@ -418,4 +418,5 @@ o_copy_end(TOPLEVEL *w_current)
 	o_conn_draw_all(w_current, w_current->page_current->object_head);
 #endif
 	o_redraw(w_current, w_current->page_current->object_head);
+	o_undo_savestate(w_current, UNDO_ALL);
 }

@@ -205,4 +205,5 @@ o_delete(TOPLEVEL *w_current)
 #if 0
 	o_conn_draw_all(w_current, w_current->page_current->object_head);
 #endif
+	o_undo_savestate(w_current, UNDO_ALL);
 }

@@ -223,6 +223,8 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 		w_current->last_x  = lx;
 		w_current->last_y  = ly;
 	}
+	/* not needed */
+	/* o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); */
 }
 
 void

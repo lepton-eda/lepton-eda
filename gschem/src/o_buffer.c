@@ -83,8 +83,6 @@ o_buffer_cut(TOPLEVEL *w_current, int buf_num)
 				   object_buffer[buf_num], NORMAL_FLAG);
 	o_delete(w_current);
 
-	w_current->page_current->CHANGED = 1;
-
 #if DEBUG
 	o_current = object_buffer[buf_num];
 	while(o_current != NULL) {
@@ -172,8 +170,8 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 	p_current = w_current->page_current;
 
 	o_saved = p_current->object_tail;	
-		o_list_copy_all(w_current, o_current, p_current->object_tail, 
-			       	NORMAL_FLAG);
+	o_list_copy_all(w_current, o_current, p_current->object_tail, 
+			NORMAL_FLAG);
 
 	p_current->object_tail = return_tail(p_current->object_head);
 	o_current = o_saved->next;
@@ -195,6 +193,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 	w_current->page_current->CHANGED = 1;
         o_conn_disconnect_update(w_current->page_current);
 	o_redraw(w_current, w_current->page_current->object_head);
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num)

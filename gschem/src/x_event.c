@@ -650,6 +650,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 		if (w_current->doing_pan) {
 			w_current->doing_pan=FALSE;
 			o_redraw_all_fast(w_current);
+			o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 		}
 	}
 	return(0);

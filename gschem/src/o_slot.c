@@ -214,6 +214,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 		o_redraw_single(w_current,object);
 
 		w_current->page_current->CHANGED = 1;
+		o_undo_savestate(w_current, UNDO_ALL);
 	} else {
 		fprintf(stderr,
 			"uggg! you tried to slot edit something "

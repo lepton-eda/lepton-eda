@@ -288,6 +288,7 @@ o_arc_end2(TOPLEVEL *w_current, int start_angle, int end_angle)
 	w_current->loc_y    = -1;
 	w_current->distance = -1;
 	w_current->page_current->CHANGED = 1;
+	o_undo_savestate(w_current, UNDO_ALL);
 }
 
 /* for the radius */
