@@ -9,6 +9,15 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-07-12  Matt Ettus  <matt@ettus.com>
+
+	* gmk_sym.c:  Pin Labels now properly attached to pins
+	  All text now has text origin info.  (Not intelligent yet)
+	  Added class and pins attributes for allegro netlister
+	  Added uref attribute and optional footprint
+	  Dots and clock symbols for pins are now attached to pin, 
+	  in preparation for (hoping for :) gschem handling this.
+
 2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * configure.in: Bumped version up to 20000704

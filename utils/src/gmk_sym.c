@@ -11,6 +11,8 @@
 /*          and improved text spacing                                    */
 /* 99/05/02 Add char_width.c support					 */
 /*									 */
+/* 00/07/12 Major changes to match new styles for text and attributes	 */
+/*									 */
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
 /* it under the terms of the GNU General Public License as published by  */
@@ -258,52 +260,54 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name)
     case T_SIDE: xdir =  0; ydir = -1;
 	    break;
     }
-  if (strlen(name))
-     {
-     name_size = GetStringDisplayLength(name,font_size);
-     switch (dir)
-       {
-       case L_SIDE: printf("T %d %d %d %d 1 0 0\n",pos_x+75+shape_offset,pos_y-50,GREEN,font_size);
-	       break;
-       case R_SIDE: printf("T %d %d %d %d 1 0 0\n",pos_x-name_size-50-shape_offset,pos_y-50,GREEN,font_size);
-	       break;
-       case B_SIDE: printf("T %d %d %d %d 1 0 0\n",pos_x-name_size/2,pos_y+50,GREEN,font_size);
-	       break;
-       case T_SIDE: printf("T %d %d %d %d 1 0 0\n",pos_x-name_size/2,pos_y-150,GREEN,font_size);
-	       break;
-       }
-     printf("%s\n",name);
-     }
 
   if (shape == LINE_SHAPE)
      {
      printf("P %d %d %d %d %d\n",pos_x,pos_y,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
 			         WHITE);
+     printf("{\n");
      }
   else if (shape == DOT_SHAPE)
      {
-     printf("V %d %d 50 %d\n",pos_x-50*xdir,pos_y-50*ydir,CYAN);
      printf("P %d %d %d %d %d\n",pos_x-100*xdir,pos_y-100*ydir,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
 			         WHITE);
+     printf("{\n");
+     printf("V %d %d 50 %d\n",pos_x-50*xdir,pos_y-50*ydir,CYAN);
      }
   else if (shape == CLOCK_SHAPE)
      {
+     printf("P %d %d %d %d %d\n",pos_x,pos_y,
+                                 pos_x-pin_len*xdir,pos_y-pin_len*ydir,
+				 WHITE);
+     printf("{\n");
      printf("L %d %d %d %d %d\n",pos_x-100*ydir,pos_y-100*xdir,
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
      printf("L %d %d %d %d %d\n",pos_x+100*ydir,pos_y+100*xdir,
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
-     printf("P %d %d %d %d %d\n",pos_x,pos_y,
-                                 pos_x-pin_len*xdir,pos_y-pin_len*ydir,
-				 WHITE);
      }
    x = pos_x;
    y = pos_y;
    pin_xy(dir,pin,font_size,&x,&y);
-   printf("{\n");
-   printf("T %d %d %d %d 1 1 0\n",x,y,YELLOW,font_size);
+   printf("T %d %d %d %d 1 1 0 0\n",x,y,YELLOW,font_size);
    printf("pin%d=%s\n",++net_pin,pin);
+   if (strlen(name))
+     {
+     name_size = GetStringDisplayLength(name,font_size);
+     switch (dir)
+       {
+       case L_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x+75+shape_offset,pos_y-50,GREEN,font_size);
+	       break;
+       case R_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size-50-shape_offset,pos_y-50,GREEN,font_size);
+	       break;
+       case B_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y+50,GREEN,font_size);
+	       break;
+       case T_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y-150,GREEN,font_size);
+	       break;
+       }
+     printf("%s\n",name);
+     }
    printf("}\n");
 }
 
@@ -327,7 +331,7 @@ int make_box(int fldcnt,char *pFields[])
   BoxHeight = pin_height * pin_spacing;
   printf("B %d %d %d %d %d\n",pos_x,pos_y,BoxWidth,BoxHeight,GREEN);
   printf("{\n");
-  printf("T %d %d %d %d 0 0 0\n",pin_0_x+BoxWidth+200,pin_0_y-125,YELLOW,font_size);
+  printf("T %d %d %d %d 0 0 0 0\n",pin_0_x+BoxWidth+200,pin_0_y-125,YELLOW,font_size);
   printf("device=%s\n",device);
   printf("}\n");
 
@@ -380,7 +384,7 @@ int make_box(int fldcnt,char *pFields[])
         pos_x = pin_0_x;
         pos_y = pin_0_y+50;
         }
-     printf("T %d %d %d %d 1 0 0\n",pos_x,pos_y,GREEN,font_size);
+     printf("T %d %d %d %d 1 0 0 0\n",pos_x,pos_y,GREEN,font_size);
      printf("%s\n",name);
      }
   return 0;
