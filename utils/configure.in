@@ -233,6 +233,7 @@ AC_CONFIG_FILES([Makefile \
 		examples/Makefile \
                 include/Makefile \
   	  	scripts/Makefile \
+		scripts/config.sh \
 	        lib/Makefile \
 	        lib/system-gschlasrc \
 	        gschlas/Makefile \
