@@ -470,7 +470,6 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
   /* OBJECT *o_current;*/
   GList *other_objects = NULL;
   OBJECT *new_net = NULL;
-  int made_changes = 0;
   
   if (w_current->inside_action == 0) {
     o_redraw(w_current, w_current->page_current->object_head);
@@ -783,7 +782,6 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
 {
   int color;
   GList *cl_current = NULL;
-  GList *cl_current2 = NULL;
   OBJECT *bus_object = NULL;
   CONN *found_conn = NULL;
   int done;

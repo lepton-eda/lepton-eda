@@ -281,7 +281,6 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
   char **text;
   GtkWidget *clist;
   char tmpstr[20];
-  int i;
 
   clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
 
@@ -335,7 +334,7 @@ multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
   GtkWidget *clist;
   GtkWidget *value_entry;
   char tmpstr[20];
-  int i, len;
+  int len;
 
   clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
   value_entry = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),

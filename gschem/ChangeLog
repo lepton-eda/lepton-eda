@@ -5,6 +5,9 @@
 
         * configure.in: Updated version to 20021103 (an official version)
 
+	* noweb/o_net.nw, noweb/x_multiattrib.nw: Got rid of some unused
+	variables.
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/gschem.txt: Move this file into ../docs/gschem
