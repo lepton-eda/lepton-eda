@@ -1712,3 +1712,84 @@ o_attrib_search_toplevel_all(PAGE *page_head, char *name)
 
 	return(NULL);
 }
+
+/* This function returns all attached attributes to the specified object */
+/* The returned list is an array of chars and MUST be freed by the caller */
+/* This routine will only look for attached attributes and not unattached */
+/* free floating attribs */
+char **
+o_attrib_return_attribs(OBJECT *object_list, OBJECT *sel_object) 
+{
+	char **found_attribs;
+	int num_attribs=0;
+	int i=0;
+	ATTRIB *a_current;	
+	OBJECT *o_current;
+	OBJECT *object;
+
+	object = (OBJECT *) o_list_search(object_list, sel_object);
+
+	if (!object) {
+		printf("null object\n");
+		return(NULL);	
+	}
+
+	if (!object->attribs) {
+		return(NULL);
+	}
+
+	if (!object->attribs->next) {
+		return(NULL);
+	}
+
+
+	/* first go through and count the number of attribs */
+	a_current = object->attribs->next;	
+	while(a_current != NULL) {
+		num_attribs++;
+		a_current = a_current->next;
+	}
+
+	found_attribs = (char **) malloc(sizeof(char *)*(num_attribs+1));
+
+	/* now actually fill the array of chars */
+	a_current = object->attribs->next;	
+	while(a_current != NULL) {
+		if (a_current->object != NULL) {
+			o_current = a_current->object;
+			if (o_current->type == OBJ_TEXT && 
+			    o_current->text_string) {
+				found_attribs[i] = u_basic_strdup(o_current->
+								  text_string);
+				i++;
+			}
+		}
+		a_current = a_current->next;
+	}
+
+	found_attribs[i] = NULL;
+
+#if DEBUG
+	i=0;
+	while(found_attribs[i] != NULL) {
+		/*for (i = 0 ; i < num_attribs; i++) {*/
+		printf("%d : %s\n", i, found_attribs[i]);
+		i++;
+	}
+#endif
+
+	return(found_attribs);
+}
+
+void
+o_attrib_free_returned(char **found_attribs)
+{
+	int i=0;
+
+	while(found_attribs[i] != NULL) {
+		free(found_attribs[i]);
+		i++;	
+	}
+
+	free(found_attribs);
+}

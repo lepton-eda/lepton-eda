@@ -1699,9 +1699,33 @@ DEFINE_I_CALLBACK(options_show_log_window)
 /* for now this prints out the font_set structure */
 DEFINE_I_CALLBACK(misc)
 {
+	char **attrib_array;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	char name[128], value[128];
+	int i=0;
 
-	o_conn_print_hash(w_current->page_current->conn_table);
+	if (w_current->page_current->selection_head->next != NULL) {
+		attrib_array = o_attrib_return_attribs(w_current->page_current->
+					      object_head,
+				              w_current->page_current->
+				              selection_head->next);
+
+
+		if (attrib_array) {
+			while(attrib_array[i] != NULL) {
+				o_attrib_get_name_value(attrib_array[i], 
+							name, value);
+                		printf("%d : %s\n", i, attrib_array[i]);
+				printf("   name: %s\n", name);
+				printf("   value: %s\n", value);
+                		i++;
+			}
+			o_attrib_free_returned(attrib_array);
+		}
+
+        }
+
+	/*o_conn_print_hash(w_current->page_current->conn_table);*/
 	/* o_text_print_set();*/
 }
 

@@ -322,6 +322,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 			w_current->inside_action = 0;
 			w_current->event_state = SELECT;
+			i_update_status(w_current, "Select Mode");
 			break;
 
 		case(ENDMIRROR):
@@ -331,6 +332,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 			w_current->inside_action = 0;
 			w_current->event_state = SELECT;
+			i_update_status(w_current, "Select Mode");
 			break;
 
 		case(ENDTEXT):

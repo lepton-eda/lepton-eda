@@ -9,6 +9,16 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-01-03  Ales Hvezda  <ahvezda@geda.seul.org>
+        
+        * src/i_callbacks.c: Changed misc-misc callback to test out the
+          o_attrib_return_attribs functions
+
+2000-01-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Minor bug fix deal with rotate/mirror modes
+	  not updating the status message on the bottom of the screen	
+
 1999-12-27  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_menus.c: Added File/Revert Page to make Magnus happy. :-)
