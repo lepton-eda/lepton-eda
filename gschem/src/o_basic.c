@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@
 void
 o_redraw_all(TOPLEVEL *w_current)
 {
-	OBJECT *object;
 #if 0
  	struct timeval tv1;
 	struct timeval tv2;
@@ -136,8 +135,6 @@ o_unselect_all(TOPLEVEL *w_current)
 void
 o_erase_selected(TOPLEVEL *w_current)
 {
-	OBJECT *o_current = NULL;
-
 	if (w_current->inside_redraw) {
 		return;
 	}

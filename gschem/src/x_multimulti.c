@@ -1,3 +1,22 @@
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 2000 Matt Ettus
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
 #include <config.h>
 #include <stdio.h>
 
@@ -12,14 +31,14 @@
 #include <gtkextra/gtksheet.h>
 
 void
-//multi_multi_edit_close(GtkWidget *w,TOPLEVEL *w_current)
+/*multi_multi_edit_close(GtkWidget *w,TOPLEVEL *w_current) */
 multi_multi_edit_close(GtkWidget *w,GtkWidget *window)
 {
-//	i_update_status(w_current, "Select Mode");
-//      w_current->event_state = SELECT;
-//      gtk_grab_remove(w_current->mawindow);
+/*	i_update_status(w_current, "Select Mode");
+        w_current->event_state = SELECT;
+        gtk_grab_remove(w_current->mawindow); */
         gtk_widget_destroy(window);
-//      w_current->mawindow = NULL;
+/*      w_current->mawindow = NULL; */
 	
 }
 
@@ -42,8 +61,8 @@ multi_multi_edit(TOPLEVEL *w_current, SELECTION *list)
 	int rowcount = 1;
 
 	components = g_ptr_array_new();
-	//type = list->type;
-	//g_ptr_array_add(components,list);
+	/*type = list->type;*/
+	/*g_ptr_array_add(components,list);*/
 
 	s_current=list;
 	while(s_current != NULL)
@@ -61,10 +80,10 @@ multi_multi_edit(TOPLEVEL *w_current, SELECTION *list)
 		s_current=s_current->next;
 	}
 
-//	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
-//		w_current->page_current->selection_head->next);
-//	o_attrib_get_name_value(attriblist[i]->text_string,
-//		text[0],text[2]);
+/*	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
+		w_current->page_current->selection_head->next);
+	o_attrib_get_name_value(attriblist[i]->text_string,
+		text[0],text[2]);*/
                         
 	
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);

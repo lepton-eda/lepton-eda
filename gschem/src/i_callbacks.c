@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1323,8 +1323,6 @@ DEFINE_I_CALLBACK(page_print)
 DEFINE_I_CALLBACK(buffer_copy1)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1338,8 +1336,6 @@ DEFINE_I_CALLBACK(buffer_copy1)
 DEFINE_I_CALLBACK(buffer_copy2)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1353,8 +1349,6 @@ DEFINE_I_CALLBACK(buffer_copy2)
 DEFINE_I_CALLBACK(buffer_copy3)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1368,8 +1362,6 @@ DEFINE_I_CALLBACK(buffer_copy3)
 DEFINE_I_CALLBACK(buffer_copy4)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1383,8 +1375,6 @@ DEFINE_I_CALLBACK(buffer_copy4)
 DEFINE_I_CALLBACK(buffer_copy5)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1398,8 +1388,6 @@ DEFINE_I_CALLBACK(buffer_copy5)
 DEFINE_I_CALLBACK(buffer_cut1)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1413,8 +1401,6 @@ DEFINE_I_CALLBACK(buffer_cut1)
 DEFINE_I_CALLBACK(buffer_cut2)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1428,8 +1414,6 @@ DEFINE_I_CALLBACK(buffer_cut2)
 DEFINE_I_CALLBACK(buffer_cut3)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1443,8 +1427,6 @@ DEFINE_I_CALLBACK(buffer_cut3)
 DEFINE_I_CALLBACK(buffer_cut4)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1458,8 +1440,6 @@ DEFINE_I_CALLBACK(buffer_cut4)
 DEFINE_I_CALLBACK(buffer_cut5)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
 
 	exit_if_null(w_current);
 
@@ -1910,7 +1890,6 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
 DEFINE_I_CALLBACK(hierarchy_down_schematic)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	char *filename;
 	char *attrib;
 	char *current_filename;
 	int count=0;
@@ -2385,7 +2364,6 @@ DEFINE_I_CALLBACK(options_show_log_window)
 /* this is Ales' catch all misc callback */
 DEFINE_I_CALLBACK(misc)
 {
-	OBJECT *object;
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
 #if 0 /* old demonstration code on getting all attribs from an object */
@@ -2437,9 +2415,9 @@ DEFINE_I_CALLBACK(misc)
 /* this is Ales' second catch all misc callback */
 DEFINE_I_CALLBACK(misc2)
 {
+#if 0
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
-#if 0
 	SELECTION *s_current = NULL;
 	OBJECT *o_current = NULL;
 
@@ -2454,9 +2432,9 @@ DEFINE_I_CALLBACK(misc2)
 /* this is Ales' third catch all misc callback */
 DEFINE_I_CALLBACK(misc3)
 {
+#if 0
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
-#if 0
 	OBJECT *o_current;
 	PAGE *p_current;
 	OBJECT *new_object;

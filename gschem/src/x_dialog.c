@@ -1,8 +1,6 @@
-/* STILL NEED to clean up line lengths in aa and tr */
-
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/* STILL NEED to clean up line lengths in aa and tr */
 
 #include <config.h>
 
@@ -1029,7 +1029,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list, int flag)
 		name[0]=0;
 		val[0]=0;
 
-	        if (object = o_select_return_first_object(w_current)) { 
+	        if ((object = o_select_return_first_object(w_current))) { 
 		  if (object->type==OBJ_NET)
 		    strcpy(name,"label");
 		}
@@ -2133,7 +2133,7 @@ about_dialog (TOPLEVEL *w_current)
                           	    &w_current->abwindow);
 #endif
 
-		sprintf(string, "gEDA : GNU Electronic Design Automation");
+		sprintf(string, "gEDA : GPL Electronic Design Automation");
 		label = gtk_label_new (string);
 		gtk_box_pack_start(
 			GTK_BOX(vbox),
@@ -2673,6 +2673,7 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
 
 extern GtkWidget *stwindow;
 
+void
 x_dialog_raise_all(TOPLEVEL *w_current)
 {
 	if (stwindow) {

@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
+/* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998 Ales V. Hvezda
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -181,7 +181,7 @@ o_selection_remove(SELECTION *head, OBJECT *o_selected)
 }
 
 /* removes all but the head node */
-SELECTION *
+void
 o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head)
 {
 	SELECTION *s_current;
@@ -217,7 +217,7 @@ o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head)
 	head->next=NULL;
 }
 
-SELECTION *
+void
 o_selection_print_all( SELECTION *head )
 {
 	SELECTION *s_current;
@@ -323,4 +323,5 @@ o_selection_return_nth_object(SELECTION *head, int count)
 
 		s_current = s_current->next;
 	}
+	return(NULL);
 }

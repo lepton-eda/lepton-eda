@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
+/* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998 Ales V. Hvezda
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -136,8 +136,8 @@ s_basic_init_object( char *name )
 	new_node->type = -1;
 
 	/* Setup the name */
-	/* TODO: get rid of magic number 10 that's the size of new_node->sid, */
-	new_node->name = (char *) malloc(sizeof(char)*(strlen(name)+10));
+	/* TODO: get rid of magic number 16 that's the size of new_node->sid, */
+	new_node->name = (char *) malloc(sizeof(char)*(strlen(name)+16));
 	sprintf(new_node->name, "%s.%d", name, new_node->sid);
 
 	/* Setup the bounding box */

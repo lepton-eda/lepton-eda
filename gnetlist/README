@@ -44,10 +44,10 @@ IMPORTANT
 
 	A C compiler (that understands ANSI, like gcc) 
 
-	GLIB version 1.2.x (and anything glib requires)
+	GLIB version 1.2.3 or higher (and anything glib requires)
 	Glib can be found at ftp://ftp.gtk.org/pub/gtk
 
-	GTK+ version 1.2.x (and anything gtk requires)
+	GTK+ version 1.2.3 or higher (and anything gtk requires)
 	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
 
 	libgeda (same version as gnetlist)

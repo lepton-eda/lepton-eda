@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -152,7 +152,6 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	int diff_x, diff_y;
 	int x, y;
 	int rleft, rtop, rbottom, rright;
-	OBJECT *selection_list = NULL;
 	OBJECT *o_current;
 	OBJECT *o_start;
 	char *include_filename;

@@ -1,8 +1,6 @@
-/* CLEAN up line length in this file */
-
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/* CLEAN up line length in this file */
 
 #include <config.h>
 

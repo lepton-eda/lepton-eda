@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
+/* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998 Ales V. Hvezda
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <ctype.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -134,7 +137,7 @@ s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
 	}
 }
 
-UNDO *
+void
 s_undo_print_all( UNDO *head )
 {
 	UNDO *u_current;
@@ -218,10 +221,10 @@ s_undo_remove(TOPLEVEL *w_current, UNDO *head, UNDO *u_tos)
 			}
 
 			if (u_current->object_head) {
-				//w_current->REMOVING_SEL = 1;
+				/*w_current->REMOVING_SEL = 1; */
 				s_delete_list_fromstart(w_current, 
 							u_current->object_head);
-				//w_current->REMOVING_SEL = 0;
+				/*w_current->REMOVING_SEL = 0;*/
 				u_current->object_head = NULL;
 			}
 

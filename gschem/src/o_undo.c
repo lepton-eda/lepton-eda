@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 
 #include <config.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <libgeda/libgeda.h>
 #include <math.h>
@@ -34,7 +37,7 @@ static int undo_file_index=0;
 static int prog_pid=0;
 
 
-/* this is additional number of levels (or history) at which point the
+/* this is additional number of levels (or history) at which point the */
 /* undo stack will be trimmed, it's used a safety to prevent running out */ 
 /* of entries to free */
 #define UNDO_PADDING  5
@@ -236,10 +239,8 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 	UNDO *save_tos;
 	UNDO *save_current;
 	int save_logging;
-	int zoom_scale;
 	int diff_x;
 	int find_prev_data=FALSE;
-	char *filename; 
 
 	char *save_filename;
 	

@@ -15,9 +15,9 @@ Contents:
 	6. Files used/created by gschem 
 	7. Electrical connectivity
 	8. Dialog boxes (TBA)
-	9. Components/symbols (TBA) 
-	10. Attributes (TBA)
-	11. Resource File (TBA)
+	9. Components/symbols 
+	10. Attributes 
+	11. Resource File 
 
 
 
@@ -162,7 +162,8 @@ the resource file (see the section below for more info).
 	d. View operations (Zoom/Pan/Redraw etc...)
 	e. Hierarchy operations (Down Schematic/Down Symbol/Up)
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
-	g. Option changing (text size/gridding/snap etc...)
+	g. Buffer operations
+	h. Option changing (text size/gridding/snap etc...)
 
 	This section will describe each of these.
 
@@ -285,9 +286,12 @@ the resource file (see the section below for more info).
 
 			Press the first mouse button to place the component.
 
-		If a component is already selected, hitting apply and
-		moving the mouse into the main window will allow you to
-		place that component again.
+			Keep pressing the first mouse button to place 
+			additional instances of the component.
+
+		If a component name is already selected, hitting apply
+		and moving the mouse into the main window will allow
+		you to place that component again.
 
 		To cancel a component place press the last mouse button or
 		the ESC key.
@@ -341,9 +345,7 @@ the resource file (see the section below for more info).
 
 		Brings up the add attribute dialog box.  This dialog
 		box is ONLY used to add attributes.  It does not display
-		or manipulate already placed attributes.  This behavior will
-		be changing shortly to be attribute edit as well.
-		*This section of this doc is slightly dated*
+		or manipulate already placed attributes.  
 
 		An attribute is nothing more than a text item which is
 		in the form name=value (there cannot be any spaced to
@@ -352,16 +354,12 @@ the resource file (see the section below for more info).
 
 		To add an unattached attribute do the following:
 
-			1a. Select an attribute name off of the top list
+			1a. Select an attribute name off of the pulldown list
 					-- or --
 			1b. Type in the attribute name into the name entry
 			2. Type in a value for the attribute.
 			3. Pick any of the attribute options.
-			4. Click Apply and move the mouse into the main
-		           window (an outline of the text should be seen)
-			5. Press the first mouse button to place the 
-			   attribute.  The text will be red which signifies
-			   an unattached attribute
+			4. Click Apply and the attribute will be placed.
 
 		If you want to attach an attribute to an object then
 		select the desired object first and then press the
@@ -370,11 +368,16 @@ the resource file (see the section below for more info).
 		an object which has attached attributes, the attached
 		attributes should be selected as well.
 
+		If you select Add/Attribute... off of the pull down menus
+		then you do not have much control as to where the attribute 
+		gets placed (it gets places either at the lower left hand
+	 	corner of the object extents or at the origin of any selected
+		object).  However, if you execute Add/Attribute using the
+		hot key then the current mouse position is used as the anchor
+		point for the attribute item.
+		
 		You cannot place an incomplete attribute (an attribute without
 	   	a name and value).
-
-		To cancel an attribute place press the last mouse button or
-		the ESC key.
 
 		Please see the section on attributes below for more info
 		on how to use attributes and more details.
@@ -476,6 +479,28 @@ the resource file (see the section below for more info).
 	selected objects.  Before you can execute the desired function
 	you must select the objects you want to rotate.
 
+
+	Undo/Redo
+
+		Undo does exactly that, it undos the last action which changed
+		the schematic.  
+
+		Here is how gschem implements undo:  Basically after
+		every action (including zooming and panning) the schematic
+	  	is saved to disk (in /tmp).  Gschem do clean up after itself
+		when you exit.  Should gschem crash, the saved files are 
+		left alone in /tmp.
+
+		Redo only applies when you do an Undo.	You can undo
+		something and then immediately redo it.  However if
+		you do anything in between you will lose the undo info.
+		You can undo and redo to your hearts desire up and down
+		till you reach the max undo levels.
+
+		You can change the behavior of undo and redo by changing
+		the defaults in one of the *gschemrc files.  Please see
+		the system-gschemrc for more info.
+
 	Select Mode
 
 		Select mode is the initial mode gschem starts up in.
@@ -547,7 +572,7 @@ the resource file (see the section below for more info).
 
 	Edit Text...
 
-		Allows you to edit text only, irregardless if that text is
+		Allows you to edit text only, regardless if that text is
 	        an attribute or just a plain text string.
 
 			1. Select the text item text to edit.
@@ -912,7 +937,7 @@ the resource file (see the section below for more info).
 		hierarchy traversal mode.  See the Resource File section
 		for more info.
 
-		It is also recommend that you maintain uniq names for the
+		It is also recommend that you maintain unique names for the
 	 	various levels (when using the source= attribute) to avoid
 		possible confusion.  The hierarchy mechanisms are fairly
 		new so expect some odd behavior (and please report it)
@@ -1023,7 +1048,35 @@ the resource file (see the section below for more info).
 		then the only way to make it visible (and all other invisible
 		attributes) is to use the Edit/Show Hidden Text option.
 
-	g. Option changing (text size/gridding/snap etc...)
+	g. Buffer operations
+
+	Gschem supports 5 copy/cut/paste buffers which are visible across all
+	opened pages and windows.	
+
+	Copy
+
+		To copy something into a buffer:
+
+			1. Select the objects you want to copy.
+			2. Select Buffer/Copy/Copy into buffer #.	
+
+	Cut
+		
+		Cut is like copy in that it removes the objects from the
+		schematic
+
+	Paste
+
+		To paste a buffer into the current schematic:
+
+			1. Fill the buffer using the above Copy or Cut.
+			2. Go to the new schematic page/window.
+			3. Select Buffer/Paste/Paste from buffer #.
+			4. Click the first mouse button to pick an anchor point.
+			5. Move the mouse to the final spot.
+			6. Click the first mouse button again.
+
+	h. Option changing (text size/gridding/snap etc...)
 
 	Text Size...
 
@@ -1156,7 +1209,7 @@ the resource file (see the section below for more info).
 		ales_3.sch etc...).
 #endif 
 	
-		The new way of specifing hierarchy is by using the source=
+		The new way of specifying hierarchy is by using the source=
 		attribute.  Please see the master attribute document for info
 	 	on this mechanism.
 
@@ -1224,12 +1277,123 @@ the resource file (see the section below for more info).
 	TBA
 
 9. Components/symbols  
-	TBA
+
+	A component or symbol represents something.  Usually it represents
+	a gate, a black box or block, or an entire device.  A symbol is
+	a collection of primitives which are grouped together.	You can
+	use lines, boxes, circles, arcs, text, attributes and pins as
+	the primitives for building symbols.  You cannot have nets,
+	buses, or other symbols inside a component.
+
+	Components are searched for by specifying (component-library "...")
+	inside one of the *rc files.  See below for more info. 
+
+	More to TBA
 
 10. Attributes
-	TBA
+
+	An attribute is nothing more than a text item which is in the form
+	name=value (there cannot be any spaced to the left or right of
+	the name,value pair).  It can be either unattached or attached.
+	Attributes are used extensively in the gEDA project to convey
+	information.  Things like device name, pin numbers, hidden nets,
+	and unit reference numbers are specified using attributes.  For
+	a list of attributes be sure to look at the attributes.txt document.
+
+	There are two kinds of attributes:
+
+		1) Regular attached attributes.  These are attributes which
+		   take on the standard form and are attached to some object
+		   (pin, net, component, or box etc...).  These attributes
+		   are usually yellow in color.
+		
+		2) Unattached attributes.  These are attributes which take
+		   on the standard form, but are not attached to any object. 
+		   These attributes are also known as floating or toplevel
+		   attributes.
+
+	Regular attached attributes are attached to an object to
+	associate the info with a specific object.  For example: a pin
+	number associated with a pin.  Unattached attributes usually
+	convey some information which is global in nature.  For example:
+	a device= attribute (which lives inside symbols) and specifies
+	what device the entire symbol represents.
+
+	There is a third type of attribute which is a special case of #2
+	but turns into #1.  This special type of attribute is known as a
+	prompted attribute.  If you place an unattached visible attribute
+	inside a symbol and then instantiate that symbol, then that
+	unattached attribute gets "promoted" to an attached attribute.
+	This newly promoted attribute gets attached to the symbol.
+	This mechanism of attribute reattachement (from within a symbol)
+	is known as attribute promotion.  
+
+	There are some gotchas about attribute promotion:
+
+        * Promotion *only* happens when the symbol is placed.  That means
+          that if you place a symbol (sym1) and then change it on disk
+          (by adding or removing floating attributes), existing sym1's
+          will not reflect these new floating attributes (ie they won't
+          be promoted) in any schematic. 
+
+        * The device= attribute is not promoted. 
+
+        * Invisible attributes are not promoted by default.  If you attach
+          a floating attribute (like numslots=#) and make it invisible, it 
+          will not be promoted.  Now, in order to make everybody happy, this
+          behavior is configurable.  If you add:
+
+                (promote-invisible "enabled")
+
+          to the *gschemrc files (or editing system-gschemrc), invisible  
+          floating attributes will also be promoted (and in memory removed)
+
+          However, if you enable this, then component slotting will break,
+          because gschem expects certain floating attributes to be inside
+          the symbol (in memory even though they are invisible).  So you
+          can add:
+
+                (keep-invisible "enabled")
+
+          to the *gschemrc files (or editing system-gschemrc).  This is
+          enabled by default, but has no effect unless promote-invisible
+          is enabled.  
+
+        So, to summarize, attribute promotion takes floating
+        attributes inside symbols and attaches them to the outside of
+        a placed symbol.  Three *rc keywords control this behavior:
+        attribute-promotion, promote-invisible, and keep-invisible.
 
 11. Resource File
-	TBA
 
 
+	Gschem is highly configurable.  All configuration is handled through
+	a scheme based rc file.  Gschem looks for three rc files:
+
+		* system-gschemrc:  This is usually installed in 
+		  /usr/share/share/gEDA and is required for gschem to run.
+
+		* $HOME/.gEDA/gschemrc: A per user file.  Users should put
+		  defaults in this file they want to apply to all sessions. 
+
+		* local directory gschemrc: This file holds the per project
+		  defaults.  Things like component-library or source-library
+		  keywords go into this file.
+
+	The order of searching for these three files is as above (first
+	system-gschemrc, then $HOME/.gEDA/gschemrc, and finally the local
+	gschemrc).
+
+	A few rules about changing the files:
+
+	- Don't break any syntax rules.  Doing so will cause the scheme
+	  interpreter (guile) to stop interpreting.
+
+	- Keywords/defaults always override what came before, with the
+	  exception of cumulative keywords (like component-library).
+
+	For more info as to what can be configured, please look in 
+	system-gschemrc.  
+
+	More TBA.
+	

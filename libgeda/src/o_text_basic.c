@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
+/* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998 Ales V. Hvezda
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -922,7 +922,6 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 	char name[1025];
 	char value[1025]; /* ugg hack */
 	char output_string[1025]; /* uggg hack */
-	int color;
 
 	if (o_attrib_get_name_value(o_current->text_string, name, value)) {
 		switch(o_current->show_name_value) {
@@ -2020,8 +2019,6 @@ o_text_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, O
 {
 	int origx, origy;
 	int x, y;
-	int height_mod=0;
-	int sign=1;
 	
 	origx = object->x;
 	origy = object->y;

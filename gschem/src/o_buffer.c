@@ -1,7 +1,6 @@
-
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,10 +26,10 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+void
 o_buffer_copy(TOPLEVEL *w_current, int buf_num)
 {
 	SELECTION *s_current = NULL;
-        OBJECT *o_current = NULL;
 
 	if (buf_num < 0 || buf_num > MAX_BUFFERS) {
 		fprintf(stderr, "Got an invalid buffer_number [o_buffer_copy]\n");
@@ -59,10 +58,10 @@ o_buffer_copy(TOPLEVEL *w_current, int buf_num)
 #endif
 }
 
+void
 o_buffer_cut(TOPLEVEL *w_current, int buf_num)
 {
 	SELECTION *s_current = NULL;
-        OBJECT *o_current = NULL;
 
 	if (buf_num < 0 || buf_num > MAX_BUFFERS) {
 		fprintf(stderr, "Got an invalid buffer_number [o_buffer_cut]\n");
@@ -92,6 +91,7 @@ o_buffer_cut(TOPLEVEL *w_current, int buf_num)
 #endif
 }
 
+void
 o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y, 
 		     int buf_num)
 {
@@ -130,6 +130,7 @@ o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
                        x_get_color(w_current->bb_color));
 }
 
+void
 o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y, 
 		   int buf_num)
 {
@@ -196,6 +197,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 	o_undo_savestate(w_current, UNDO_ALL);
 }
 
+void
 o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num)
 {
         o_drawbounding(w_current,

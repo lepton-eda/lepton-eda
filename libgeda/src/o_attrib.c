@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
+/* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library
- * Copyright (C) 1998 Ales V. Hvezda
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,7 +55,6 @@
 /* Martin Benes' auto uref renumber code */
 void o_attrib_update_urefBM (TOPLEVEL *w_current, OBJECT *o_current) {
   OBJECT *list_head,*obj;
-  ATTRIB *attr;
   char *uref;
   int i=-1,name_conflict,len;
   char *index_list;
@@ -1038,7 +1037,6 @@ o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name,
 	int internal_counter=0;
 	char found_name[128]; /* limit hack */
 	char found_value[128];
-	char *return_string;
 
 	a_current = list;
 	
@@ -1323,7 +1321,6 @@ void
 o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes) 
 {
 	ATTRIB *a_current;
-	int color;
 
 	a_current = attributes;
 

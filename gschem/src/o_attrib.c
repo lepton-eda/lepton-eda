@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -317,9 +317,11 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
 	            int show_name_value, OBJECT *object)
 {
         int world_x=-1, world_y=-1;
-	int color;
+	int color; 
 	int left, right, top, bottom;
 	OBJECT *o_current;
+
+	color = w_current->detachedattr_color;
 
 	o_current = object;
 

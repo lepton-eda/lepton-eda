@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 /* could be removed/merged, but I purposely didn't do so to keep the code */
 /* readable */
 
-/* the count == 0 stuff really only applies to when you are coming from a
+/* the count == 0 stuff really only applies to when you are coming from a */
 /* multi select case */
 
 
@@ -314,7 +314,7 @@ o_select_box_search(TOPLEVEL *w_current)
 		o_current = o_current->next;
 	}
 
-	/* if there were no objects to be found in select box, count will be 
+	/* if there were no objects to be found in select box, count will be */
 	/* zero, and you need to deselect anything remaining */
 	if (count == 0) 
 		o_selection_remove_most(w_current,

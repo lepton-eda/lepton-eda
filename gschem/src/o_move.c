@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +51,6 @@ o_move_start(TOPLEVEL *w_current, int x, int y)
 void
 o_move_end(TOPLEVEL *w_current)
 {
-	SELECTION *temp_list=NULL;
 	SELECTION *s_current=NULL;
 	OBJECT *object;
 	int diff_x, diff_y;

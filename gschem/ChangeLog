@@ -9,6 +9,21 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Updated copyright info in each file
+
+	* src/*.c: Changed all GNU to GPL in the appropriate places
+
+	* src/x_multimulti.c: Added copyright banner to file
+
+	* src/g_rc.c: Added a #ifdef to the #include <dirent.h> to make
+	  Cygwin builds happy
+
+	* configure.in: Bumped version up to 20000704
+
+	* src/*.c: Removed all warnings
+
 2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_undo.c: DOH! Didn't #include <math.h> which caused rint to

@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gschem - GNU Schematic Capture
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gschem - gEDA Schematic Capture
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,10 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 {
 	char *equal_ptr;
 	OBJECT *o_current;
-	SELECTION *s_current;
-	int object_count=0;
+#ifdef HAS_LIBGTKEXTRA
+        SELECTION *s_current;
+        int object_count=0;
+#endif
 
 	if (list == NULL) {
 		w_current->event_state = SELECT;
@@ -51,7 +53,7 @@ o_edit(TOPLEVEL *w_current, SELECTION *list)
 
 #ifdef HAS_LIBGTKEXTRA
 	/* count up how many non-text objects exist in the selection */
-	/* list.  Why?  Because if there are multiple objects, invoke the 
+	/* list.  Why?  Because if there are multiple objects, invoke the */
 	/* multi_multi_edit dialog box */
 	s_current = list;
 	while (s_current != NULL) {
@@ -184,7 +186,6 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 {
 	OBJECT *object;
 	SELECTION *s_current;
-	OBJECT *temp = NULL;
 	int new_angle;
 
 	/* this is okay if you just hit rotate and have nothing selected */
@@ -598,7 +599,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 	o_conn_disconnect_update(w_current->page_current);
 	o_undo_savestate(w_current, UNDO_ALL);
 
-/* NEWSEL needed? *?
+/* NEWSEL needed? */
 /*o_conn_draw_all(w_current, w_current->page_current->object_head); */
 /*o_redraw_real(w_current, w_current->page_current->selection_head); */
 /*o_redraw_selected(w_current); */

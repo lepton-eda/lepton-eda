@@ -1,3 +1,18 @@
+2000-07-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/*.c: Updated copyright info in each file
+
+        * src/*.c: Changed all GNU to GPL in the appropriate places
+
+	* configure.in: Bumped version up to 20000704
+	
+	* src/g_rc.c: Added an #if around #include <dirent.h> to make 	
+	  Cygwin builds work
+
+	* tests/test_verilog.verilog, tests/7447.verilog: Updated to reflect 
+	  new backend revision (must not have done it right the last time)
+
+	* src/*.c: Fixed all warnings	
 
 2000-06-27  Ales Hvezda  <ahvezda@geda.seul.org>
 

@@ -382,11 +382,11 @@ void o_box_start(TOPLEVEL *w_current, int x, int y);
 void o_box_end(TOPLEVEL *w_current, int x, int y);
 void o_box_rubberbox(TOPLEVEL *w_current, int x, int y);
 /* o_buffer.c */
-int o_buffer_copy(TOPLEVEL *w_current, int buf_num);
-int o_buffer_cut(TOPLEVEL *w_current, int buf_num);
-int o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y, int buf_num);
-int o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y, int buf_num);
-int o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num);
+void o_buffer_copy(TOPLEVEL *w_current, int buf_num);
+void o_buffer_cut(TOPLEVEL *w_current, int buf_num);
+void o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y, int buf_num);
+void o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y, int buf_num);
+void o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num);
 void o_buffer_init(void);
 void o_buffer_free(TOPLEVEL *w_current);
 /* o_bus.c */
@@ -587,7 +587,7 @@ void x_dialog_hotkeys_close(GtkWidget *w, TOPLEVEL *w_current);
 void x_dialog_hotkeys_free_all(void);
 void x_dialog_hotkeys_fill(char *string);
 void x_dialog_hotkeys(TOPLEVEL *w_current);
-int x_dialog_raise_all(TOPLEVEL *w_current);
+void x_dialog_raise_all(TOPLEVEL *w_current);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);

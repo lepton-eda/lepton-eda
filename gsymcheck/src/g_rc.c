@@ -1,6 +1,6 @@
-/* gEDA - GNU Electronic Design Automation
- * gsymcheck - GNU Symbol Check 
- * Copyright (C) 1998 Ales V. Hvezda
+/* gEDA - GPL Electronic Design Automation
+ * gsymcheck - gEDA Symbol Check 
+ * Copyright (C) 1998-2000 Ales V. Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,11 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+
+#if defined(HAVE_DIRENT_H) && !defined(__CYGWIN32__)
 #include <dirent.h>
+#endif
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h> 
 #endif
@@ -255,7 +259,7 @@ g_rc_component_library_search(SCM path)
 		return SCM_BOOL_F;
         }
 
-        while(dptr = readdir(top_ptr)) {
+        while((dptr = readdir(top_ptr))) {
 
 	  /* don't do . and .. and special case font */
 	  if ((strcmp(dptr->d_name, ".") != 0) && 
@@ -383,7 +387,7 @@ g_rc_source_library_search(SCM path)
 		return SCM_BOOL_F;
         }
 
-        while(dptr = readdir(top_ptr)) {
+        while((dptr = readdir(top_ptr))) {
 
 	  /* don't do . and .. and special case font */
 	  if ((strcmp(dptr->d_name, ".") != 0) && 

@@ -528,7 +528,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=20000220
+VERSION=20000704
 
 echo Configuring utils version $VERSION
 
