@@ -1,3 +1,8 @@
+2002-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* micro/ AT90S8535.sym  AT90S8535_TQFP.sym AT90S8535_PLCC.sym:
+	  Added symbols by Werner Hoch (minor tweeks).
+
 2002-02-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* analog/resistor-variable-2.sym: Checked in Bert's fix to the 
