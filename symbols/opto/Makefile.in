@@ -102,19 +102,19 @@ gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@
 symdir = @symdir@
 
-datamaximdir = @gedadatadir@/sym/maxim
+dataoptodir = @gedadatadir@/sym/opto
 
-datamaxim_DATA = @datamaxim@
+dataopto_DATA = @dataopto@
 
-EXTRA_DIST = $(datamaxim_DATA)
+EXTRA_DIST = $(dataopto_DATA)
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~
-MAINTAINERCLEANFILES = *.log *~
+MOSTLYCLEANFILES = gschem.log *~
+CLEANFILES = gschem.log *~
+DISTCLEANFILES = gschem.log *~
+MAINTAINERCLEANFILES = gschem.log *~
 mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
 CONFIG_CLEAN_FILES = 
-DATA =  $(datamaxim_DATA)
+DATA =  $(dataopto_DATA)
 
 DIST_COMMON =  Makefile.am Makefile.in
 
@@ -126,30 +126,30 @@ GZIP_ENV = --best
 all: all-redirect
 .SUFFIXES:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
-	cd $(top_srcdir) && $(AUTOMAKE) --gnu maxim/Makefile
+	cd $(top_srcdir) && $(AUTOMAKE) --gnu opto/Makefile
 
 Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 
-install-datamaximDATA: $(datamaxim_DATA)
+install-dataoptoDATA: $(dataopto_DATA)
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(datamaximdir)
-	@list='$(datamaxim_DATA)'; for p in $$list; do \
+	$(mkinstalldirs) $(DESTDIR)$(dataoptodir)
+	@list='$(dataopto_DATA)'; for p in $$list; do \
 	  if test -f $(srcdir)/$$p; then \
-	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datamaximdir)/$$p"; \
-	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(datamaximdir)/$$p; \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataoptodir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(dataoptodir)/$$p; \
 	  else if test -f $$p; then \
-	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(datamaximdir)/$$p"; \
-	    $(INSTALL_DATA) $$p $(DESTDIR)$(datamaximdir)/$$p; \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(dataoptodir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(dataoptodir)/$$p; \
 	  fi; fi; \
 	done
 
-uninstall-datamaximDATA:
+uninstall-dataoptoDATA:
 	@$(NORMAL_UNINSTALL)
-	list='$(datamaxim_DATA)'; for p in $$list; do \
-	  rm -f $(DESTDIR)$(datamaximdir)/$$p; \
+	list='$(dataopto_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(dataoptodir)/$$p; \
 	done
 tags: TAGS
 TAGS:
@@ -157,14 +157,14 @@ TAGS:
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 
-subdir = maxim
+subdir = opto
 
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
 	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
-	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu maxim/Makefile
+	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu opto/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
@@ -186,20 +186,20 @@ installcheck: installcheck-am
 install-exec-am:
 install-exec: install-exec-am
 
-install-data-am: install-datamaximDATA
+install-data-am: install-dataoptoDATA
 install-data: install-data-am
 
 install-am: all-am
 	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 install: install-am
-uninstall-am: uninstall-datamaximDATA
+uninstall-am: uninstall-dataoptoDATA
 uninstall: uninstall-am
 all-am: Makefile $(DATA)
 all-redirect: all-am
 install-strip:
 	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
 installdirs:
-	$(mkinstalldirs)  $(DESTDIR)$(datamaximdir)
+	$(mkinstalldirs)  $(DESTDIR)$(dataoptodir)
 
 
 mostlyclean-generic:
@@ -233,8 +233,8 @@ maintainer-clean-am:  maintainer-clean-generic distclean-am
 
 maintainer-clean: maintainer-clean-am
 
-.PHONY: uninstall-datamaximDATA install-datamaximDATA tags distdir \
-info-am info dvi-am dvi check check-am installcheck-am installcheck \
+.PHONY: uninstall-dataoptoDATA install-dataoptoDATA tags distdir info-am \
+info dvi-am dvi check check-am installcheck-am installcheck \
 install-exec-am install-exec install-data-am install-data install-am \
 install uninstall-am uninstall all-redirect all-am all installdirs \
 mostlyclean-generic distclean-generic clean-generic \

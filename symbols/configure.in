@@ -87,6 +87,8 @@ GEDA_DECLARE_SYMLIB(radio)
 GEDA_DECLARE_SYMLIB(micro)
 GEDA_DECLARE_SYMLIB(memory)
 GEDA_DECLARE_SYMLIB(74)
+GEDA_DECLARE_SYMLIB(diode)
+GEDA_DECLARE_SYMLIB(opto)
 GEDA_DECLARE_SYMLIB(bus)
 GEDA_DECLARE_SYMLIB(supervisor)
 GEDA_DECLARE_SYMLIB(lattice)
@@ -100,6 +102,8 @@ GEDA_DECLARE_SYMLIB(foot)
 GEDA_DECLARE_SYMLIB(IEC417)
 GEDA_DECLARE_SYMLIB(font)
 GEDA_DECLARE_SYMLIB(idt)
+GEDA_DECLARE_SYMLIB(diode)
+GEDA_DECLARE_SYMLIB(opto)
 
 symdir=$gedatopdir/sym
 sourcedir=$gedatopdir/source
@@ -161,6 +165,8 @@ AC_SUBST(datamemory)
 AC_SUBST(datamicro)
 AC_SUBST(datamisc)
 AC_SUBST(data74)
+AC_SUBST(datadiode)
+AC_SUBST(dataopto)
 AC_SUBST(databus)
 AC_SUBST(datasupervisor)
 AC_SUBST(datalattice)
@@ -212,6 +218,8 @@ AC_OUTPUT([
 	tube/Makefile 
 	verilog/Makefile
 	spice/Makefile
+	diode/Makefile 
+	opto/Makefile 
 	national/Makefile
 	system-commonrc
         gesym-config ], [chmod +x gesym-config]) 

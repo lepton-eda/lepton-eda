@@ -2,7 +2,8 @@
 SUBDIRS = \
 	4000 74 IEC417 altera analog connector font foot idt io linear \
 	local maxim memory micro misc radio switch titleblock tube spice \
-	verilog rf pla ecl dec xilinx lattice national supervisor bus
+	verilog rf pla ecl dec xilinx lattice national supervisor bus \
+	opto diode
 
 bin_SCRIPTS = gesym-config
 

@@ -46,6 +46,8 @@
 (component-library "@symdir@/ecl")
 (component-library "@symdir@/dec")
 (component-library "@symdir@/supervisor")
+(component-library "@symdir@/opto")
+(component-library "@symdir@/diode")
 
 ; component-library-search atring
 ;
@@ -95,6 +97,8 @@
 (source-library "@symdir@/dec")
 (source-library "@symdir@/supervisor")
 (source-library "@symdir@/bus")
+(source-library "@symdir@/opto")
+(source-library "@symdir@/diode")
 
 ; source-library-search atring
 ;
