@@ -54,6 +54,9 @@ struct Message_s
 
 #define COMPS_NUMBER 8
 #endif
+extern int bCompsShowHidden;
+extern int bCompsAlwaysMarkFailed;
+
 
 
 /* public functions */
@@ -63,7 +66,7 @@ int ComponentsShow(struct CompsTable_s *pPkg);
 int ComponentsHide(void);
 int CompsShow(char *szParent);
 int set_pixmaps(GtkCTree *Tree);
-int ComponentsPrepare(struct CompsTable_s *pPkg);
+void CompsPrepare(void);
 void mark_components(struct CompsTable_s *pMaster, int iFlag);
 int is_expanded(GtkCTree *pTree, GtkCTreeNode *pNode);
 
