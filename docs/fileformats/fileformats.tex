@@ -43,9 +43,10 @@
 This file is the official documentation for the file formats in gEDA/gaf
 (Gschem And Friends).  The primary file format used in gEDA/gaf is the
 schematic/symbol format.  Files which end with .sch or .sym are schematics
-or symbol files. This file format is current as of gEDA version 20021103.
-Until there is another file type in gEDA/gaf, then this document will
-only cover the symbol/schematic file format.
+or symbol files.  Until there is another file type in gEDA/gaf, then this
+document will only cover the symbol/schematic file format.  
+
+This file format document is current as of gEDA/gaf version 20021103.
 
 
 \section{Coordinate Space}
@@ -70,10 +71,15 @@ on its side.
 
 \section{Filenames}
 
-Symbols end in .sym and schematics end in .sch.  The only filename convention 
-that is used in gEDA/gaf is that if there are multiple instances of a symbol
-with the same name (like a 7400), then a -1, -2, -3, ... -N suffix is added
-to the end of the filename.  Example: 7400-1.sym, 7400-2.sym, 7400-3.sym...
+Symbols end in .sym.  The only symbol filename convention that is used in
+gEDA/gaf is that if there are multiple instances of a symbol with the
+same name (like a 7400), then a -1, -2, -3, ... -N suffix is added to
+the end of the filename.  Example: 7400-1.sym, 7400-2.sym, 7400-3.sym...
+
+Schematics end in .sch.  There used to be a schematic filename convention
+(adding a -1 .. -N to the end of the basename), but this convention is now
+obsolete.  Schematic filenames can be anything that makes sense to the 
+creator.
 
 \section{Object types}
 
@@ -92,11 +98,19 @@ A schematic/symbol file for gEDA/gaf consists of:
 The "object type" id is a single letter and this id {\bf must} start in the 
 first column.  The object type id is case sensitive.
 
+The schematic and symbol files share the same file layout.  A symbol
+is nothing more than a collection of primitive objects (lines, boxes,
+circles, arcs, text, and pins).  A schematic is a collection of symbols
+(components), nets, and buses.
+
 The following sections describe the specifics of each recognized object 
 type.  Each section has the name of the object, which file type (sch/sym)
 the object can appear in, the format of the data, a description of
 each individual field, details and caveats of the fields, and finally
-an example.
+an example with description.
+
+For information on the color index (which is used in practically all objects),
+see the Color section.
 
 \subsection{version}
 
@@ -105,10 +119,11 @@ Valid in: Schematic and Symbol files
 {\bf type version}
 
 \begin{table}[h]
-\begin{tabular}{|l|l|} \hline
-Field & Description \\ \hline \hline
-{\bf type} & v \\ \hline
-{\bf version} & version of gEDA/gaf file \\ \hline
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& v \\ \hline
+{\bf version} 	& int 		& version of gEDA/gaf file \\ \hline
 \end{tabular}
 \end{table}
 
@@ -140,19 +155,20 @@ Valid in: Schematic and Symbol files
 {\bf type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace}
 
 \begin{table}[h]
-\begin{tabular}{|l|l|} \hline
-Field & Description \\ \hline \hline
-{\bf type} & L \\ \hline
-{\bf x1} & First X coordinate (mils) \\ \hline
-{\bf y1} & First Y coordinate (mils) \\ \hline
-{\bf x2} & Second X coordinate (mils) \\ \hline
-{\bf y2} & Second Y coordinate (mils) \\ \hline
-{\bf color} & Color index (See color section) \\ \hline
-{\bf width} & Width of line (mils) \\ \hline
-{\bf capstyle} & Line cap style: 0, 1, or 2. \\ \hline
-{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
-{\bf dashlength} & Length of dash (mils) \\ \hline
-{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& L \\ \hline
+{\bf x1} 	& int/mils 	& First X coordinate \\ \hline
+{\bf y1} 	& int/mils 	& First Y coordinate \\ \hline
+{\bf x2} 	& int/mils 	& Second X coordinate \\ \hline
+{\bf y2} 	& int/mils 	& Second Y coordinate \\ \hline
+{\bf color} 	& int 		& Color index \\ \hline
+{\bf width} 	& int/mils 	& Width of line \\ \hline
+{\bf capstyle} 	& int 		& Line cap style \\ \hline
+{\bf dashstyle} & int 		& Type of dash style \\ \hline
+{\bf dashlength}& int 		& Length of dash \\ \hline
+{\bf dashspace} & int 		& Space inbetween dashes \\ \hline
 \end{tabular}
 \end{table}
 
@@ -192,25 +208,26 @@ Valid in: Schematic and Symbol files
 {\bf type x y width height color width capstyle dashtype dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 }
 
 \begin{table}[h]
-\begin{tabular}{|l|l|} \hline
-Field & Description \\ \hline \hline
-{\bf type} & B \\ \hline
-{\bf x} & Lower left hand X coordinate (mils) \\ \hline 
-{\bf y} & Lower left hand Y coordinate  (mils)\\ \hline
-{\bf width} & Width of the box (x direction) (mils) \\ \hline
-{\bf height} & Height of the box (y direction) (mils) \\ \hline
-{\bf color} & Color index (See color section) \\ \hline
-{\bf width} & Width of lines (mils) \\ \hline
-{\bf capstyle} & Line cap style: 0, 1, or 2. \\ \hline
-{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
-{\bf dashlength} & Length of dash (mils) \\ \hline
-{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
-{\bf filltype} & Type of fill \\ \hline
-{\bf fillwidth} & Width of the fill lines (mils) \\ \hline
-{\bf angle1} & First angle of fill (degrees) \\ \hline
-{\bf pitch1} & First pitch/spacing of fill (mils) \\ \hline
-{\bf angle2} & Second angle of fill (degrees) \\ \hline
-{\bf pitch2} & Second pitch/spacing of fill (mils) \\ \hline
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char		& B \\ \hline
+{\bf x} 	& int/mils	& Lower left hand X coordinate \\ \hline 
+{\bf y} 	& int/mils	& Lower left hand Y coordinate \\ \hline
+{\bf width} 	& int/mils 	& Width of the box (x direction) \\ \hline
+{\bf height} 	& int/mils 	& Height of the box (y direction) \\ \hline
+{\bf color} 	& int 		& Color index \\ \hline
+{\bf width} 	& int/mils 	& Width of lines \\ \hline
+{\bf capstyle} 	& int/mils	& Line cap style \\ \hline
+{\bf dashstyle} & int 		& Type of dash style \\ \hline
+{\bf dashlength}& int/mils	& Length of dash \\ \hline
+{\bf dashspace} & int/mils	& Space inbetween dashes \\ \hline
+{\bf filltype}  & int		& Type of fill \\ \hline
+{\bf fillwidth} & int/mils	& Width of the fill lines \\ \hline
+{\bf angle1} 	& int/degrees	& First angle of fill \\ \hline
+{\bf pitch1} 	& int/mils	& First pitch/spacing of fill \\ \hline
+{\bf angle2} 	& int/degrees 	& Second angle of fill \\ \hline
+{\bf pitch2} 	& int/mils	& Second pitch/spacing of fill \\ \hline
 \end{tabular}
 \end{table}
 
@@ -265,24 +282,25 @@ Valid in: Schematic and Symbol files
 {\bf type x y radius color width capstyle dashtype dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 }
 
 \begin{table}[h]
-\begin{tabular}{|l|l|} \hline
-Field & Description \\ \hline \hline
-{\bf type} & V \\ \hline
-{\bf x} & Center X coordinate (mils) \\ \hline 
-{\bf y} & Center Y coordinate (mils)\\ \hline
-{\bf radius} & Radius of the circle (mils) \\ \hline
-{\bf color} & Color index (See color section) \\ \hline
-{\bf width} & Width of circle line (mils) \\ \hline
-{\bf capstyle} & Should be 0 {\bf unused} \\ \hline
-{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
-{\bf dashlength} & Length of dash (mils) \\ \hline
-{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
-{\bf filltype} & Type of fill \\ \hline
-{\bf fillwidth} & Width of the fill lines (mils) \\ \hline
-{\bf angle1} & First angle of fill (degrees) \\ \hline
-{\bf pitch1} & First pitch/spacing of fill (mils) \\ \hline
-{\bf angle2} & Second angle of fill (degrees) \\ \hline
-{\bf pitch2} & Second pitch/spacing of fill (mils) \\ \hline
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char		& V \\ \hline
+{\bf x} 	& int/mils 	& Center X coordinate \\ \hline 
+{\bf y} 	& int/mils	& Center Y coordinate \\ \hline
+{\bf radius} 	& int/mils	& Radius of the circle \\ \hline
+{\bf color} 	& int		& Color index \\ \hline
+{\bf width} 	& int/mils	& Width of circle line \\ \hline
+{\bf capstyle} 	& int/mils  	& 0 {\bf unused} \\ \hline
+{\bf dashstyle} & int		& Type of dash style \\ \hline
+{\bf dashlength}& int/mils	& Length of dash \\ \hline
+{\bf dashspace} & int/mils	& Space inbetween dashes \\ \hline
+{\bf filltype} 	& int		& Type of fill \\ \hline
+{\bf fillwidth} & int/mils	& Width of the fill lines \\ \hline
+{\bf angle1} 	& int/degrees	& First angle of fill \\ \hline
+{\bf pitch1} 	& int/mils	& First pitch/spacing of fill \\ \hline
+{\bf angle2} 	& int/degrees	& Second angle of fill \\ \hline
+{\bf pitch2} 	& int/mils	& Second pitch/spacing of fill \\ \hline
 \end{tabular}
 \end{table}
 
@@ -333,24 +351,27 @@ Valid in: Schematic and Symbol files
 {\bf type x y radius startangle sweepangle color width capstyle dashtype dashlength dashspace }
 
 \begin{table}[h]
-\begin{tabular}{|l|l|} \hline
-Field & Description \\ \hline \hline
-{\bf type} & A \\ \hline
-{\bf x} & Center X coordinate (mils) \\ \hline 
-{\bf y} & Center Y coordinate (mils)\\ \hline
-{\bf radius} & Radius of the arc (mils) \\ \hline
-{\bf startangle} & Starting angle of the arc (degrees) \\ \hline
-{\bf sweepangle} & Amount the arc sweeps (degrees) \\ \hline
-{\bf color} & Color index (See color section) \\ \hline
-{\bf width} & Width of circle line (mils) \\ \hline
-{\bf capstyle} & Cap style: 0, 1, or 2. \\ \hline
-{\bf dashstyle} & Type of dash style: 0, 1, 2, 3, or 4 \\ \hline
-{\bf dashlength} & Length of dash (mils) \\ \hline
-{\bf dashspace} & Space inbetween dashes (mils) \\ \hline
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& A \\ \hline
+{\bf x} 	& int/mils	& Center X coordinate \\ \hline 
+{\bf y} 	& int/mils	& Center Y coordinate \\ \hline
+{\bf radius} 	& int/mils	& Radius of the arc \\ \hline
+{\bf startangle}& int/degrees 	& Starting angle of the arc \\ \hline
+{\bf sweepangle}& int/degrees	& Amount the arc sweeps \\ \hline
+{\bf color} 	& int		& Color index \\ \hline
+{\bf width} 	& int/mils	& Width of circle line \\ \hline
+{\bf capstyle} 	& int		& Cap style \\ \hline
+{\bf dashstyle} & int		& Type of dash style \\ \hline
+{\bf dashlength}& int/mils	& Length of dash \\ \hline
+{\bf dashspace} & int/mils	& Space inbetween dashes \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
+\item The startangle can be negative, but not recommended.
+\item The sweepangle can be negative, but not recommended.
 \item The capstyle is an enumerated type: 
 \begin{itemize}
 	\item END\_NONE = 0
@@ -388,25 +409,26 @@ Valid in: Schematic and Symbol files
 {\bf string}
 
 \begin{table}[h]
-\begin{tabular}{|l|l|} \hline
-Field & Description \\ \hline \hline
-{\bf type} & T \\ \hline
-{\bf x} & First X coordinate (mils) \\ \hline
-{\bf y} & First Y coordinate (mils) \\ \hline
-{\bf color} & Color index (See color section) \\ \hline
-{\bf size} & Size of text (points, 1/72 of an inch) \\ \hline
-{\bf visibility} & Visibility of text either 0 or 1 \\ \hline
-{\bf show\_name\_value} & Attribute visibility control, either 0, 1, or 2 \\ \hline
-{\bf angle} & Angle of the text, either 0, 90, 180, or 270 \\ \hline
-{\bf alignment} & Alignment/origin of the text (see below) \\ \hline
-{\bf string} & The text string, on a seperate line \\ \hline
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& T \\ \hline
+{\bf x} 	& int/mils	& First X coordinate \\ \hline
+{\bf y} 	& int/mils	& First Y coordinate \\ \hline
+{\bf color} 	& int		& Color index \\ \hline
+{\bf size} 	& int/points	& Size of text \\ \hline
+{\bf visibility}& int		& Visibility of text \\ \hline
+{\bf show\_name\_value} & int	& Attribute visibility control \\ \hline
+{\bf angle} 	& int/degrees	& Angle of the text \\ \hline
+{\bf alignment} & int		& Alignment/origin of the text \\ \hline
+{\bf string} 	& string	& The text string, on a seperate line \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
 \item This object is a multi line object.  The first line contains all the 
       text parameters and the second line is the text string.
-\item The minimum size is 2 points.
+\item The minimum size is 2 points (1/72 of an inch).
 \item There is no maximum size.
 \item The coordinate pair is the origin of the text item.
 \item The visibility field is an enumerated type:
@@ -443,12 +465,279 @@ A text object with the origin at (16900, 35800), color index 3, 10 points in
 size, visible, attribute flags not valid (not an attribute), origin at lower
 left, string: Text string!
 
+\subsection{net}
+
+Valid in: Schematic files ONLY
+
+{\bf type x1 y1 x2 y2 color}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& N \\ \hline
+{\bf x1} 	& int/mils	& First X coordinate \\ \hline
+{\bf y1} 	& int/mils	& First Y coordinate \\ \hline
+{\bf x2} 	& int/mils	& Second X coordinate \\ \hline
+{\bf y2} 	& int/mils	& Second Y coordinate \\ \hline
+{\bf color} 	& int		& Color index \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item Nets can only appear in schematic files.
+\item You cannot have a zero length net (the tools will throw them away).
+\end{itemize}
+
+Example:\newline
+{\tt N 12700 29400 32900 29400 4}
+
+A net segment from (12700, 29400) to (32900, 29400) with color index 4.
+
+\subsection{bus}
+
+Valid in: Schematic files ONLY
+
+{\bf type x1 y1 x2 y2 color ripperdir}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char		& U \\ \hline
+{\bf x1} 	& int/mils 	& First X coordinate \\ \hline
+{\bf y1} 	& int/mils	& First Y coordinate \\ \hline
+{\bf x2} 	& int/mils	& Second X coordinate \\ \hline
+{\bf y2} 	& int/mils	& Second Y coordinate \\ \hline
+{\bf color} 	& int		& Color index \\ \hline
+{\bf ripperdir} & int 		& Direction of bus rippers \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The ripperdir field for an brand new bus is 0.
+\item The ripperdir field takes on a value of 1 or -1 when a net is connected
+      to the bus for the first time.  This value indicates the direction of
+      the ripper symbol.  The ripper direction is set to the same value for the
+      entire life of the bus object. 
+\item Buses can only appear in schematic files.
+\item You cannot have a zero length bus (the tools will throw them away).
+\end{itemize}
+
+Example:\newline
+{\tt U 27300 37400 27300 35300 3 0}
+
+A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and
+no nets have been connected to this bus segment..
+
+
+\subsection{pin}
+
+Valid in: Symbol files ONLY
+
+{\bf type x1 y1 x2 y2 color pintype whichend}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char		& P \\ \hline
+{\bf x1} 	& int/mils	& First X coordinate \\ \hline
+{\bf y1} 	& int/mils	& First Y coordinate \\ \hline
+{\bf x2} 	& int/mils	& Second X coordinate \\ \hline
+{\bf y2} 	& int/mils	& Second Y coordinate \\ \hline
+{\bf color} 	& int		& Color index \\ \hline
+{\bf pintype} 	& int		& Type of pin \\ \hline
+{\bf whichend} 	& int		& Specifies the active end \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The pintype is an enumerated type:
+\begin{itemize}
+\item NORMAL\_PIN = 0
+\item BUS\_PIN = 1 {\bf unused}
+\end{itemize}
+\item The whichend specifies which end point of the pin is the active 
+      connection port.  Only this end point can have other pins or nets 
+      connected to it.
+\item To make the first end point active, whichend should be 0, else to
+      specify the other end, whichend should be 1.
+\item Pins can only appear in symbol files.
+\item You cannot have a zero length pen (the tools will throw them away).
+\end{itemize}
+
+Example:\newline
+{\tt P 0 200 200 200 1 0 0}
+
+A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the
+first point being the active connection end.
+
+
+\subsection{component}
+
+Valid in: Schematic files ONLY
+
+{\bf type x y selectable angle mirror basename}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& C \\ \hline
+{\bf x} 	& int/mils	& Origin X coordinate \\ \hline
+{\bf y} 	& int/mils	& Origin Y coordinate \\ \hline
+{\bf selectable}& int		& Selectable flag \\ \hline
+{\bf angle} 	& int/degrees	& Angle of the component \\ \hline
+{\bf mirror} 	& int 		& Mirror around Y axis \\ \hline
+{\bf basename}  & string	& The filename of the component \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item The selectable field is either 1 for selectable or 0 if not selectable.
+\item The angle field can only take on the following values: 0, 90, 180, 270.
+\item The angle field can only be positive.
+\item The mirror flag is 0 if the component is not mirrored (around the Y axis).
+\item The mirror flag is 1 if the component is mirrored (around the Y axis).
+\item The just basename is the filename of the component.  This filename is 
+      not the full path. 
+\end{itemize}
+
+Example:\newline
+{\tt C 18600 19900 1 0 0 7400-1.sym}
+
+A component whos origin is at (18600,19900), is selectable, not rotated, not
+mirrored, and the basename of the component is 7400-1.sym.
+
+
+\subsection{font}
+
+Valid in: Special font files ONLY
+
+{\bf type character width flag}
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|} \hline
+Field 		& Type/unit 	& Description \\ \hline 
+\hline
+{\bf type} 	& char 		& F \\ \hline
+{\bf character} & char		& The character being defined \\ \hline
+{\bf width} 	& int/mils	& Width of the character (mils)  \\ \hline
+{\bf flag} 	& int		& Special space flag \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item This is a special tag and should ONLY show up in font definition files.
+\item If the font character being defined is the space character (32) then 
+      flag should be 1, otherwise 0.
+\end{itemize}
+
+
+Example:\newline
+{\tt F \_ 11 1}
+
+The above font definition is for the space character.
+
+\section{Colors}
+
+In the gEDA/gaf schematic and symbol file format colors are specified via
+an integer index.  The relationship between integer and color is based on
+object type.  Each object type typically has one or more colors.  Here is 
+a table of color index to object type:
+
+
+\begin{table}[h]
+\begin{tabular}{|l|l|} \hline
+Color Index	& Object type \\ \hline
+\hline
+0 		& BACKGROUND\_COLOR 		\\ \hline 
+1 		& PIN\_COLOR 			\\ \hline
+2 		& NET\_ENDPOINT\_COLOR 		\\ \hline 
+3 		& GRAPHIC\_COLOR		\\ \hline
+4 		& NET\_COLOR 			\\ \hline                      
+5 		& ATTRIBUTE\_COLOR  		\\ \hline
+6 		& LOGIC\_BUBBLE\_COLOR 		\\ \hline 
+7 		& GRID\_COLOR 			\\ \hline 
+8 		& DETACHED\_ATTRIBUTE\_COLOR    \\ \hline 
+9 		& TEXT\_COLOR			\\ \hline 
+10 		& BUS\_COLOR 			\\ \hline 
+11		& SELECT\_COLOR			\\ \hline
+12 		& BOUNDINGBOX\_COLOR		\\ \hline
+13 		& ZOOM\_BOX\_COLOR 		\\ \hline 
+14 		& STROKE\_COLOR			\\ \hline
+15 		& LOCK\_COLOR			\\ \hline
+16 		& OUTPUT\_BACKGROUND\_COLOR     \\ \hline 
+\end{tabular}
+\end{table}
+
+The actual color associated with the color index is defined on a per
+tool bases.  Objects are typically assigned their corresponding color
+index, but it is permissible (sometimes) to assign other color index
+values to different object types.
+
+
+\section{Attributes}
+
+Attributes are enclosed in \{ \} and can only be text.  Attributes are text
+items which take on the form name=value.  If it doesn't have name=value,
+it's not an attribute.  Attributes are attached to the previous object.
+Here's an example:
+       
+{\tt 
+P 988 500 1300 500 1\newline
+\{\newline
+T 1000 570 5 8 1 1 0\newline
+pinseq=3\newline
+T 1000 550 5 8 1 1 0\newline
+pinnumber=3\newline
+\}\newline
+}
+
+        The object is a pin which has an attribute pinnumber=3 and
+pinseq=3 (name=value).  You can have multiple text objects (both the T
+... and text string are required) in between the \{ \}.  As of 20021103,
+you can only attached text items as attributes.  Attaching other object
+types as attributes is unsupported.
+
+        You can also have "toplevel" attributes.  These attributes are not
+attached to any object, but instead are just text objects that take
+on the form name=value.  These attributes are useful when you need to
+convey some info about a schematic page or symbol and need the netlister
+to have access to this info.
+
+
+\section{Embedded Components}
+
+	Embedded components are components which have all of their definition
+stored within the schematic file.  When a users place a component onto a
+schematic page, they have the option of making the component embedded.  Other
+than storing all the symbol information inside of the schematic, an embedded
+component is just any other component.  Embedded components are defined as:
+
+{\tt
+C 18600 21500 1 0 0 EMBEDDED555-1.sym \newline
+[ \newline
+... \newline
+... Embedded primitive objects \newline
+... \newline
+] \newline
+}
+
+In the example above, 555-1.sym is the component.  The EMBEDDED tag and
+the [ ] are the distinguishing characteristics of embedded components.
+componentname.sym must exist in one of the specified component-libraries
+if you want to unembed the component.
+
+
 \newpage
 \section{Document Revision History}
 
 \begin{table}[h]
 \begin{tabular}{|l|l|} \hline
-November 30th, 2002 & Created fileformats.tex from fileformats.txt. \\ \hline
+November 30th, 2002 & Created fileformats.tex from fileformats.html. \\ \hline
+December 1st, 2002 & Continued work on this document. \\ \hline
 \end{tabular}
 \end{table}
 
