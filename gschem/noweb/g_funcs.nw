@@ -252,8 +252,7 @@ hash_table_2_list (gpointer key,
                    gpointer user_data)
 {
   SCM *plist = (SCM*)user_data;
-  *plist = gh_cons(gh_str2scm((char*)value, strlen ((char*)value)),
-                   *plist);
+  *plist = scm_cons (scm_makfrom0str ((char*)value), *plist);
 }
 
 SCM get_selected_component_attributes(TOPLEVEL *toplevel)

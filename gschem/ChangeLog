@@ -1,5 +1,8 @@
 2005-02-24  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/g_funcs.nw (hash_table_2_list): Replaced deprecated guile 
+	functions with their equivalents in the new scm interface.
+
 	* scripts/notangle_guile.in: New version.
 	
 	* configure.ac, scripts/Makefile.am: Adapted for renaming of script.
