@@ -5,9 +5,9 @@ datadoc_DATA = nc.pdf
 EXTRA_DIST = nc.doc
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ *.ps *.pdf
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+CLEANFILES = *.log *~ *.ps *.pdf geda.pic
+DISTCLEANFILES = *.log core FILE *~ prototype.bak geda.pic
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda.pic
 
 #
 #  some standard rules for groff based documentation
