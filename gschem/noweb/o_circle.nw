@@ -13,16 +13,22 @@
 <<o_circle.c : include directives>>
 <<o_circle.c : macros>>
 
-<<o_circle.c : o_circle_draw()>>        /* done */
-<<o_circle.c : o_circle_fill_hollow()>> /* done */
-<<o_circle.c : o_circle_fill_fill()>>   /* done */
-<<o_circle.c : o_circle_fill_hatch()>>  /* done */
-<<o_circle.c : o_circle_fill_mesh()>>   /* done */
+<<o_circle.c : o_circle_draw()>>
+<<o_circle.c : o_circle_fill_hollow()>>
+<<o_circle.c : o_circle_fill_fill()>>
+<<o_circle.c : o_circle_fill_hatch()>>
+<<o_circle.c : o_circle_fill_mesh()>>
+
 <<o_circle.c : o_circle_erase()>>
+
 <<o_circle.c : o_circle_draw_xor()>>
+
 <<o_circle.c : o_circle_start()>>
 <<o_circle.c : o_circle_end()>>
+
 <<o_circle.c : o_circle_rubbercircle()>>
+<<o_circle.c : o_circle_rubbercircle_xor()>>
+
 <<o_circle.c : o_circle_draw_grips()>>
 <<o_circle.c : o_circle_erase_grips()>>
 
@@ -71,13 +77,13 @@
 @ %def GET_BOX_WIDTH GET_BOX_HEIGHT
 
 
-@section Function @code{o_circle_draw()}
+@section Function [[o_circle_draw()]]
 
 @defun o_circle_draw w_current o_current
 This function is used to draw a circle on screen. The circle is described by 
-the OBJECT which is referred by @code{o_current}. The display is done 
+the OBJECT which is referred by [[o_current]]. The display is done 
 according to the current state, given by the TOPLEVEL object pointed by 
-@code{w_current}.
+[[w_current]].
 @end defun
 
 It first checks if the OBJECT pointed is valid or not. If not it returns and 
@@ -147,11 +153,11 @@ Finally the function takes care of the grips.
 
 @ 
 
-The values describing the line type are extracted from the @code{o_current} pointed structure. These are the width of the line, the field called length and the field called space and the desired end type for the line.
+The values describing the line type are extracted from the [[o_current]] pointed structure. These are the width of the line, the field called length and the field called space and the desired end type for the line.
 
-Depending on the type of the line that has to be used to draw the circle the appropriate function is called. Values of space and length are adapted to the type of line. The possible functions are the following : @code{o_arc_draw_solid}, @code{o_arc_draw_dotted}, @code{o_arc_draw_dashed} and @code{o_arc_draw_phantom}. Therefore it reuses the code from arc primitive.
+Depending on the type of the line that has to be used to draw the circle the appropriate function is called. Values of space and length are adapted to the type of line. The possible functions are the following : [[o_arc_draw_solid]], [[o_arc_draw_dotted]], [[o_arc_draw_dashed]] and [[o_arc_draw_phantom]]. Therefore it reuses the code from arc primitive.
 
-The combination @code{length} == 0 and @code{space} == 0 is avoided as it lead to an endless loop in function called after. If such a case is encountered the circle is drawn as a solid circle independently of its initial type.
+The combination [[length]] == 0 and [[space]] == 0 is avoided as it lead to an endless loop in function called after. If such a case is encountered the circle is drawn as a solid circle independently of its initial type.
 
 <<o_circle_draw() : drawing outline>>=
   if(o_current->screen_line_width > 0) {
@@ -228,13 +234,13 @@ The combination @code{length} == 0 and @code{space} == 0 is avoided as it lead t
 
 @ 
 
-The values needed for the fill operation are taken from the @code{o_current} pointed OBJECT. It include the type of fill required, the width of the lines (if the fill use line) and angles and pitchs for hatch based filling.
+The values needed for the fill operation are taken from the [[o_current]] pointed OBJECT. It include the type of fill required, the width of the lines (if the fill use line) and angles and pitchs for hatch based filling.
 
 Once again the width of the line is important as if it is equal to 0 it may not be displayed. That is definetely not what we are looking for.
 
-Depending on the type of fill that has to be used inside the circle the right function is called. Values of @code{angle1}, @code{angle2}, @code{pitch1} and @code{pitch2} are adapted to the type of filling. The possible functions are the following : @code{o_circle_fill_hollow}, @code{o_circle_fill_fill}, @code{o_circle_fill_mesh} and @code{o_circle_fill_hatch}.
+Depending on the type of fill that has to be used inside the circle the right function is called. Values of [[angle1]], [[angle2]], [[pitch1]] and [[pitch2]] are adapted to the type of filling. The possible functions are the following : [[o_circle_fill_hollow]], [[o_circle_fill_fill]], [[o_circle_fill_mesh]] and [[o_circle_fill_hatch]].
 
-The combination @code{pitch1} <= 0 and @code{pitch2} <= 0 is avoided as it lead to an endless loop in function called after. It happens when the zoom factor is too small for two lines separated by the pitch to be distinct. If such a case is encountered the circle is filled hollow (e.q. not filled).
+The combination [[pitch1]] <= 0 and [[pitch2]] <= 0 is avoided as it lead to an endless loop in function called after. It happens when the zoom factor is too small for two lines separated by the pitch to be distinct. If such a case is encountered the circle is filled hollow (e.q. not filled).
 
 <<o_circle_draw() : filling>>=
   if(o_current->screen_fill_width > 0) {
@@ -304,35 +310,30 @@ The combination @code{pitch1} <= 0 and @code{pitch2} <= 0 is avoided as it lead 
 @ 
 
 <<o_circle_draw() : grip specific stuff>>=
-  if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
-		
+if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
+
+	/* pb20011010 - modified to use the new o_circle_[draw|erase]_grips() */
     if (!o_current->selected) {
-      /* erase the grips */
-      o_current->draw_grips = FALSE;
-      gdk_gc_set_foreground(w_current->gc, 
-                            x_get_color(w_current->background_color));
+		/* object is no more selected, erase the grips */
+		o_current->draw_grips = FALSE;
+		o_circle_erase_grips(w_current, o_current);
     } else {
-      gdk_gc_set_foreground(w_current->gc, color);
+		/* object is selected, draw the grips */
+		o_circle_draw_grips(w_current, o_current);
     }
-    gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
-                               circle_end, GDK_JOIN_MITER);
-
-
-    o_circle_draw_grips(w_current, w_current->window, o_current);
-    o_circle_draw_grips(w_current, w_current->backingstore, o_current);
-  }
+}
 
 @ 
 
 
 
-@section Function @code{o_circle_fill_hollow()}
+@section Function [[o_circle_fill_hollow()]]
 
 @defun o_circle_fill_hollow w gc color x y radius width angle1 pitch1 angle2 pitch2
-This function does nothing. It has the same prototype as all the filling functions. It prevent from making a difference between filling in function @code{o_circle_draw()}.
+This function does nothing. It has the same prototype as all the filling functions. It prevent from making a difference between filling in function [[o_circle_draw()]].
 @end defun
 
-The unit for @code{width}, @code{pitch1} and @code{pitch2} is pixel and unit for @code{angle1} and @code{angle2} is degree.
+The unit for [[width]], [[pitch1]] and [[pitch2]] is pixel and unit for [[angle1]] and [[angle2]] is degree.
 
 <<o_circle.c : o_circle_fill_hollow()>>=
 void
@@ -347,17 +348,17 @@ o_circle_fill_hollow(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 @ %def o_circle_fill_hollow
 
 
-@section Function @code{o_circle_fill_fill()}
+@section Function [[o_circle_fill_fill()]]
 
 @defun o_circle_fill_fill w gc color x y radius width angle1 pitch1 angle2 pitch2
-This function fills the inside of the circle with a solid pattern. Parameters @code{angle1}, @code{pitch1} and @code{angle2}, @code{pitch2} and @code{width} are unused here but kept for compatibility with other circle filling functions.
+This function fills the inside of the circle with a solid pattern. Parameters [[angle1]], [[pitch1]] and [[angle2]], [[pitch2]] and [[width]] are unused here but kept for compatibility with other circle filling functions.
 @end defun
 
 The circle is described by the coordinates of its center and its radius. Please not that it is not the way GDK take it. Translation is made afterward.
 
-The unit for @code{width}, @code{pitch1} and @code{pitch2} is pixel and unit for @code{angle1} and @code{angle2} is degree.
+The unit for [[width]], [[pitch1]] and [[pitch2]] is pixel and unit for [[angle1]] and [[angle2]] is degree.
 
-The solid fill is done with the @code{gdk_draw_arc()} function and its parameters @code{filled} set. The circle is filled with the color @code{color} given as a parameter to the function.
+The solid fill is done with the [[gdk_draw_arc()]] function and its parameters [[filled]] set. The circle is filled with the color [[color]] given as a parameter to the function.
 
 <<o_circle.c : o_circle_fill_fill()>>=
 void
@@ -378,20 +379,20 @@ o_circle_fill_fill(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 @ %def o_circle_fill_fill
 
 
-@section Function @code{o_circle_fill_hatch()}
+@section Function [[o_circle_fill_hatch()]]
 
 @defun o_circle_fill_hatch w gc color x y radius width angle1 pitch1 angle2 pitch2
-This function fills the inside of the circle with a pattern made of lines. The lines are drawn inside the circle with an angle @code{angle1} from the horizontal. The distance between two of these lines is given by @code{pitch1} and their width by @code{width}.
-Parameters @code{angle2}, @code{pitch2} are unused here but kept for compatibility with other circle filling functions.
+This function fills the inside of the circle with a pattern made of lines. The lines are drawn inside the circle with an angle [[angle1]] from the horizontal. The distance between two of these lines is given by [[pitch1]] and their width by [[width]].
+Parameters [[angle2]], [[pitch2]] are unused here but kept for compatibility with other circle filling functions.
 @end defun
 
 The circle is described by the coordinates of its center and its radius. Please not that it is not the way GDK take it. Translation is made afterward. 
 
-The unit for @code{width}, @code{pitch1} and @code{pitch2} is pixel and unit for @code{angle1} and @code{angle2} is degree.
+The unit for [[width]], [[pitch1]] and [[pitch2]] is pixel and unit for [[angle1]] and [[angle2]] is degree.
 
-The only attribute of line here is its width from the parameter @code{width}.
+The only attribute of line here is its width from the parameter [[width]].
 
-Negative or null values for @code{pitch1} are not allowed as it leads to an endless loop.
+Negative or null values for [[pitch1]] are not allowed as it leads to an endless loop.
 
 <<o_circle.c : o_circle_fill_hatch()>>=
 void
@@ -408,7 +409,7 @@ o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 
 @ %def o_circle_fill_hatch
 
-  The function use a matrix. Its elements are obtained from the sinus and cosinus of the angle @code{angle1}. It represent the rotation matrix that when applied to a point, rotate it of @code{angle1}.
+  The function use a matrix. Its elements are obtained from the sinus and cosinus of the angle [[angle1]]. It represent the rotation matrix that when applied to a point, rotate it of [[angle1]].
 
 <<o_circle.c : o_circle_fill_hatch()>>=	
   cos_a_ = cos(((double) angle1) * M_PI/180);
@@ -421,7 +422,7 @@ o_circle_fill_hatch(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 
 When drawing a line in a circle there is two intersections. It looks for the coordinates of one of these points when the line is horizontal. The second one can be easily obtained by symmetry in relation to the vertical axis going through the centre of the circle.
 
-These two points are then rotated of angle @code{angle1} using the elements of the rotation matrix previously computed.
+These two points are then rotated of angle [[angle1]] using the elements of the rotation matrix previously computed.
 
 The corresponding line can be drawn providing that the coordinates are rounded.
 
@@ -458,17 +459,17 @@ The function use the symetry in relation to the centre of the circle. It avoid r
 @
 
 
-@section Function @code{o_circle_fill_mesh()}
+@section Function [[o_circle_fill_mesh()]]
 
 @defun o_circle_fill_mesh w gc color x y radius width angle1 pitch1 angle2 pitch2
-This function fills the inside of the circle with a pattern made of set of parallel lines in two directions. The first set is drawn inside the circle with an angle @code{angle1} from the horizontal. The distance between two of these lines is given by @code{pitch1}.
-The second set is drawn inside the circle with an angle @code{angle2} from the horizontal. The distance between two of these lines is given by @code{pitch2}.
-Every lines have the same width given by @code{width}.
+This function fills the inside of the circle with a pattern made of set of parallel lines in two directions. The first set is drawn inside the circle with an angle [[angle1]] from the horizontal. The distance between two of these lines is given by [[pitch1]].
+The second set is drawn inside the circle with an angle [[angle2]] from the horizontal. The distance between two of these lines is given by [[pitch2]].
+Every lines have the same width given by [[width]].
 @end defun
 
-The unit for @code{width}, @code{pitch1} and @code{pitch2} is pixel and unit for @code{angle1} and @code{angle2} is degree.
+The unit for [[width]], [[pitch1]] and [[pitch2]] is pixel and unit for [[angle1]] and [[angle2]] is degree.
 
-This function simply makes two successive calls to the function @code{o_circle_fill_hatch()} respectively with @code{angle1}, @code{pitch1} and @code{angle2}, @code{pitch2} for parameters.
+This function simply makes two successive calls to the function [[o_circle_fill_hatch()]] respectively with [[angle1]], [[pitch1]] and [[angle2]], [[pitch2]] for parameters.
 
 <<o_circle.c : o_circle_fill_mesh()>>=
 void
@@ -489,10 +490,13 @@ o_circle_fill_mesh(GdkDrawable *w, GdkGC *gc, GdkColor *color,
 @ %def o_circle_fill_mesh
 
 
-@section Function @code{o_circle_erase()}
+@section Function [[o_circle_erase()]]
 
 @defun o_circle_erase w_current o_current
+This function erases a circle described in a [[OBJECT]] structure pointed by [[o_current]].
 @end defun
+
+It makes a call to the function [[o_circle_draw()]] after setting the special color. Therefore a circle is drawn with background color over the previous one.
 
 <<o_circle.c : o_circle_erase()>>=
 void
@@ -506,92 +510,116 @@ o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current)
 @ %def o_circle_erase
 
 
-@section Function @code{o_circle_draw_xor()}
+@section Function [[o_circle_draw_xor()]]
 
 @defun o_circle_draw_xor w_current dx dy o_current
+This function draws the circle object described by [[*o_current]] translated by the vector ([[dx]],[[dy]]) with an xor-function over the current sheet.
+The translation vector is in screen unit.
 @end defun
+
+The circle is displayed with the color of the object.
 
 <<o_circle.c : o_circle_draw_xor()>>=
 /* add in offsets, get rid of global diffs_x,y */
 void
 o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int temp;
+  int x, y, radius;
   int color;
 
   if (o_current->circle == NULL) {
     return;
   }
 
-  temp = SCREENabs(w_current,o_current->circle->radius) * 2;
+  <<o_circle_draw_xor() : get the translated coords of the circle>>
 
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
-  } else {
-    color = o_current->color;
-  }
+  <<o_circle_draw_xor() : xor-draw the translated arc>>
 
-  /* To draw be sure to setup width height */
-  gdk_gc_set_foreground(w_current->outline_xor_gc,
-                        x_get_darkcolor(color));
-  gdk_draw_arc(w_current->window, w_current->outline_xor_gc,
-               FALSE,
-               o_current->circle->screen_left + dx,
-               o_current->circle->screen_top  + dy,
-               temp, temp, 0, FULL_CIRCLE);
-
-  /* backing store ?  not appropriate here */
 }
 
 @ %def o_circle_draw_xor
 
 
-@section Function @code{o_circle_start()}
+<<o_circle_draw_xor() : get the translated coords of the circle>>=
+if (o_current->saved_color != -1) {
+    color = o_current->saved_color;
+} else {
+    color = o_current->color;
+}
+
+/* radius of the circle */
+radius = o_current->circle->screen_radius;
+/* upper left corner of the square the circle is inscribed in */
+/* gdk coords system */
+x = o_current->circle->screen_x - o_current->circle->screen_radius;
+y = o_current->circle->screen_y - o_current->circle->screen_radius;
+
+/* translate the upper left corner */
+x = x + dx;
+y = y + dy;
+
+@ 
+
+
+<<o_circle_draw_xor() : xor-draw the translated arc>>=
+/* To draw be sure to setup width height */
+gdk_gc_set_foreground(w_current->outline_xor_gc,
+					  x_get_darkcolor(color));
+gdk_draw_arc(w_current->window, w_current->outline_xor_gc,
+			 FALSE,
+			 x, y,
+			 2 * radius, 2 * radius,
+			 0, FULL_CIRCLE);
+
+/* backing store ?  not appropriate here */
+
+@ 
+
+
+@section Function [[o_circle_start()]]
 
 @defun o_circle_start w_current x y
+This function starts the process to input a new circle. Parameters for this circle are pu into/extracted from the [[w_current]] toplevel structure.
+[[x]] and [[y]] are current coordinates of the mouse pointer in screen unit.
 @end defun
+
+The first step of the circle input is to set the center of the arc. This center is kept in ([[w_current->start_x]],[[w_current->start_y]]). 
 
 <<o_circle.c : o_circle_start()>>=
 void
 o_circle_start(TOPLEVEL *w_current, int x, int y)
 {
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+	/* center of circle */
+	w_current->last_x = w_current->start_x = fix_x(w_current, x);
+	w_current->last_y = w_current->start_y = fix_y(w_current, y);
+	/* radius */
+	w_current->distance = 0;
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_color(w_current->select_color));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                             GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-                             GDK_JOIN_MITER);
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-                w_current->start_x,
-                w_current->start_y,
-                w_current->last_x ,
-                w_current->last_y );
+	/* first temporary circle */
+	o_circle_rubbercircle_xor(w_current);
 
-#if 0
-  gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
-               w_current->start_x,
-               w_current->start_y,
-               1, 1, 0, FULL_CIRCLE);
-#endif
-
-  w_current->distance = 0;
 }
 
 @ %def o_circle_start
 
 
-@section Function @code{o_circle_end()}
+@section Function [[o_circle_end()]]
 
 @defun o_circle_end w_current x y
+This function ends the input of the radius of the circle. The ([[x]],[[y]]) point is taken as the other end of the radius segment, i.e. on the circle. The distance between this point and the center is the radius of the circle.
+[[x]] and [[y]] are in screen coords.
 @end defun
+
+The center has previously been input and saved as ([[w_current->start_x]],[[w_current->start_y]]).
+
+The temporary circle drawn during the input of the radius is erased. A new object is allocated, initialized and linked in the object list. This new object is finally drawn.
 
 <<o_circle.c : o_circle_end()>>=
 void
 o_circle_end(TOPLEVEL *w_current, int x, int y)
 {
   int center_x, center_y;
+  int fx, fy;
   int radius;
 
   if (w_current->inside_action == 0) {
@@ -599,76 +627,45 @@ o_circle_end(TOPLEVEL *w_current, int x, int y)
     return;
   }
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_color(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-                w_current->start_x,
-                w_current->start_y,
-                w_current->last_x ,
-                w_current->last_y );
+  /* erase the temporary circle */
+  o_circle_rubbercircle_xor(w_current);
+  
+  /* get the last coords of the pointer */
+  fx = fix_x(w_current, x);
+  fy = fix_y(w_current, y);
+  /* compute the radius in screen unit */
+  w_current->distance = dist(w_current->start_x, w_current->start_y,
+                             fx, fy);
 
-  gdk_gc_set_foreground(w_current->gc,
-                        x_get_color(w_current->select_color));
-
-  gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
-               w_current->start_x - w_current->distance,
-               w_current->start_y - w_current->distance,
-               w_current->distance * 2,
-               w_current->distance * 2,
-               0, FULL_CIRCLE);
-
-  w_current->distance = dist(w_current->start_x,
-                             w_current->start_y,
-                             w_current->last_x,
-                             w_current->last_y);
-
-  gdk_gc_set_foreground(w_current->gc,
-                        x_get_color(w_current->graphic_color));
-
-  gdk_draw_arc(w_current->window, w_current->gc, FALSE,
-               w_current->start_x - w_current->distance,
-               w_current->start_y - w_current->distance,
-               w_current->distance * 2,
-               w_current->distance * 2,
-               0, FULL_CIRCLE);
-
-  gdk_draw_arc(w_current->backingstore, w_current->gc, FALSE,
-               w_current->start_x - w_current->distance,
-               w_current->start_y - w_current->distance,
-               w_current->distance * 2,
-               w_current->distance * 2,
-               0, FULL_CIRCLE);
-
-#if 0
-  sqrt(pow(w_current->start_x - w_current->last_x, 2) +
-       pow(w_current->start_y - w_current->last_y, 2));
-#endif
-
-  /* ack! zero length radius */
+  /* circle with null radius are not allowed */
   if (w_current->distance == 0) {
-    return;
+	  /* cancel the object creation */
+	  w_current->start_x  = -1;
+	  w_current->start_y  = -1;
+	  w_current->last_x   = -1;
+	  w_current->last_y   = -1;
+	  w_current->distance = -1;
+	  return;
   }
 
-#if 0
-  w_current->loc_x = w_current->start_x - w_current->distance;
-  w_current->loc_y = w_current->start_y - w_current->distance;
-#endif
-
+  /* get center coords in world unit */
   SCREENtoWORLD(w_current,
-                w_current->start_x,
-                w_current->start_y,
-                &center_x,
-                &center_y);
-
+                w_current->start_x, w_current->start_y,
+                &center_x, &center_y);
+  /* get radius in world unit */
   radius = snap_grid(w_current,
                      WORLDabs(w_current, w_current->distance));
 
+  /* create the object */
   w_current->page_current->object_tail =
   o_circle_add(w_current,
                w_current->page_current->object_tail,
                OBJ_CIRCLE, w_current->graphic_color,
                center_x, center_y, radius);
 
+  /* draw it */
+  o_redraw_single(w_current, w_current->page_current->object_tail);
+  
   w_current->start_x = (-1);
   w_current->start_y = (-1);
   w_current->last_x  = (-1);
@@ -676,17 +673,31 @@ o_circle_end(TOPLEVEL *w_current, int x, int y)
   w_current->loc_x   = (-1);
   w_current->loc_y   = (-1);
   w_current->distance = (-1);
+  
   w_current->page_current->CHANGED = 1;
+
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
 @ %def o_circle_end
 
 
-@section Function @code{o_circle_rubbercircle()}
+@section Function [[o_circle_rubbercircle()]]
 
 @defun o_circle_rubbercircle w_current x y
+This function draws a circle according to its internal representation and allows the modification of its radius. The radius is updated according to the current mouse position in [[x]] and [[y]].
+It draws a full circle and the horizontal segment of the radius in the right half of the circle.
 @end defun
+
+The previous temporary circle is erased, the radius is then computed and updated and finally a new temporary circle is drawn.
+
+The arc is internally described by :
+@itemize @bullet
+@item
+([[w_current->start_x]],[[w_current->start_y]]) as its center ;
+@item
+[[w_current->distance]] as its radius.
+@end itemize
 
 <<o_circle.c : o_circle_rubbercircle()>>=
 void
@@ -699,130 +710,121 @@ o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y)
     return;
   }
 
-  /* erase the old one */
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_color(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-                w_current->start_x,
-                w_current->start_y,
-                w_current->last_x ,
-                w_current->last_y );
+  /* erase the previous temporary circle */
+  o_circle_rubbercircle_xor(w_current);
 
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  <<o_circle_rubbercircle() : compute the radius from the (x,y) position>>
 
-  diff_x = GET_BOX_WIDTH (w_current);
-  diff_y = GET_BOX_HEIGHT(w_current);
+  /* draw the new temporary circle */
+  o_circle_rubbercircle_xor(w_current);
 
-  if (diff_x >= diff_y) {
-    w_current->last_y = w_current->start_y;
-  } else {
-    w_current->last_x = w_current->start_x;
-  }
-
-  gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
-               w_current->start_x - w_current->distance,
-               w_current->start_y - w_current->distance,
-               w_current->distance * 2,
-               w_current->distance * 2,
-               0, FULL_CIRCLE);
-
-  w_current->distance = dist(w_current->start_x,
-                             w_current->start_y,
-                             w_current->last_x,
-                             w_current->last_y);
-
-  /* draw a new one */
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_color(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-                w_current->start_x,
-                w_current->start_y,
-                w_current->last_x,
-                w_current->last_y);
-  gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
-               w_current->start_x - w_current->distance,
-               w_current->start_y - w_current->distance,
-               w_current->distance * 2,
-               w_current->distance * 2,
-               0, FULL_CIRCLE);
 }
 
 @ %def o_circle_rubbercircle
 
 
-@section Function @code{o_circle_draw_grips()}
+The radius is taken as the biggest distance on the x and y axis between the center of the circle and the mouse position.
+
+<<o_circle_rubbercircle() : compute the radius from the (x,y) position>>=
+/* update the radius */
+w_current->last_x = fix_x(w_current, x);
+w_current->last_y = fix_y(w_current, y);
+
+diff_x = GET_BOX_WIDTH (w_current);
+diff_y = GET_BOX_HEIGHT(w_current);
+if (diff_x >= diff_y) {
+    w_current->last_y   = w_current->start_y;
+	w_current->distance = diff_x;
+} else {
+    w_current->last_x   = w_current->start_x;
+	w_current->distance = diff_y;
+}
+
+@ 
+
+
+@section Function [[o_circle_rubbercircle_xor()]]
+
+@defun o_circle_rubbercircle_xor w_current
+This function draws the circle from the variables in the toplevel structure [[*w_current]].
+The center of the circle is at ([[w_current->start_x]],[[w_current->start_y]]) and its radius is in [[w_current->distance]].
+@end defun
+
+It draws a horizontal radius segment on the right half of the circle and the circle with the selection color and an xor-function over the current sheet..
+
+<<o_circle.c : o_circle_rubbercircle_xor()>>=
+void
+o_circle_rubbercircle_xor(TOPLEVEL *w_current)
+{
+	/* draw the circle from the w_current variables */
+	gdk_gc_set_foreground(w_current->xor_gc,
+						  x_get_color(w_current->select_color));
+	gdk_draw_line(w_current->window, w_current->xor_gc,
+				  w_current->start_x, w_current->start_y,
+				  w_current->start_x + w_current->distance,
+				  w_current->start_y);
+	gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
+				 w_current->start_x - w_current->distance,
+				 w_current->start_y - w_current->distance,
+				 w_current->distance * 2,
+				 w_current->distance * 2,
+				 0, FULL_CIRCLE);
+	
+}
+
+@ %def o_circle_rubbercircle_xor
+
+
+@section Function [[o_circle_draw_grips()]]
 
 @defun o_circle_draw_grips w_current w o_current
+This function draws the grip that match the circle object [[*o_current]].
 @end defun
 
 <<o_circle.c : o_circle_draw_grips()>>=
 void
-o_circle_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current) 
+o_circle_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
-  int size, x2size;
   int x, y;
-  int factor;
 
-  if (w_current->draw_grips == FALSE) 
-  return;
+  if (w_current->draw_grips == FALSE)
+	  return;
 
-  factor = (int) w_current->page_current->to_world_x_constant;
-  if (factor > SMALL_ZOOMFACTOR1) {
-    size = SCREENabs(w_current, GRIP_SIZE1); 
-  } else if (factor > SMALL_ZOOMFACTOR2) {
-    size = SCREENabs(w_current, GRIP_SIZE2); 
-  } else {
-    size = SCREENabs(w_current, GRIP_SIZE3); 
-  }
-  x2size = size * 2;
-
+  /* coords of the lower right corner of the square */
   x = o_current->circle->screen_x + o_current->circle->screen_radius;
   y = o_current->circle->screen_y + o_current->circle->screen_radius;
+  
+  /* grip on lower right corner of the square */
+  o_grips_draw(w_current, x, y);
 
-  gdk_draw_rectangle(w, w_current->gc, FALSE,
-                     x - size, y - size, x2size, x2size);
 }
 
 @ %def o_circle_draw_grips
 
 
-@section Function @code{o_circle_erase_grips}
+@section Function [[o_circle_erase_grips]]
 
 @defun o_circle_erase_grips w_current o_current
+The function erases the grips displayed on a circle object.
 @end defun
+
+A circle has a single grip on the lower right corner of the square it is inscribed in.
 
 <<o_circle.c : o_circle_erase_grips()>>=
 void
 o_circle_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
-  int size, x2size;
   int x, y;
-  int factor;
 
-  if (w_current->draw_grips == FALSE) 
-  return;
+  if (w_current->draw_grips == FALSE)
+	  return;
 
-  gdk_gc_set_foreground(w_current->gc, 
-                        x_get_color(w_current->background_color));
-
-  factor = (int) w_current->page_current->to_world_x_constant;
-  if (factor > SMALL_ZOOMFACTOR1) {
-    size = SCREENabs(w_current, GRIP_SIZE1); 
-  } else if (factor > SMALL_ZOOMFACTOR2) {
-    size = SCREENabs(w_current, GRIP_SIZE2); 
-  } else {
-    size = SCREENabs(w_current, GRIP_SIZE3); 
-  }
-  x2size = 2 * size;
-
+  /* coords of the lower right corner of square */
   x = o_current->circle->screen_x + o_current->circle->screen_radius;
   y = o_current->circle->screen_y + o_current->circle->screen_radius;
+  
+  /* grip on lower right corner of the square */
+  o_grips_erase(w_current, x, y);
 
-  gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
-                     x - size, y - size, x2size, x2size);
-
-  gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
-                     x - size, y - size, x2size, x2size);
 }
 @ %def o_circle_erase_grips

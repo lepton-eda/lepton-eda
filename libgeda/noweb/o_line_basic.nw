@@ -12,35 +12,47 @@
 
 <<o_line_basic.c : include directives>>
 <<o_line_basic.c : macros>>
-<<o_line_basic.c : get_line_bounds()>>
-<<o_line_basic.c : world_get_line_bounds()>>
-<<o_line_basic.c : o_line_visible()>>
+
+
 <<o_line_basic.c : o_line_add()>>
-<<o_line_basic.c : o_line_recalc()>>
+
+<<o_line_basic.c : o_line_copy()>>
+
+<<o_line_basic.c : o_line_modify()>>
+
 <<o_line_basic.c : o_line_read()>>
 <<o_line_basic.c : o_line_save()>>
+
 <<o_line_basic.c : o_line_translate()>>
 <<o_line_basic.c : o_line_translate_world()>>
-<<o_line_basic.c : o_line_copy()>>
-<<o_line_basic.c : o_line_print()>>           /* done */
-<<o_line_basic.c : o_line_print_solid()>>     /* done */
-<<o_line_basic.c : o_line_print_dotted()>>    /* done */
-<<o_line_basic.c : o_line_print_dashed()>>    /* done */
-<<o_line_basic.c : o_line_print_center()>>    /* done */
-<<o_line_basic.c : o_line_print_phantom()>>   /* done */
+
+<<o_line_basic.c : o_line_rotate()>>
+<<o_line_basic.c : o_line_rotate_world()>>
+
+<<o_line_basic.c : o_line_mirror()>>
+<<o_line_basic.c : o_line_mirror_world()>>
+
+<<o_line_basic.c : o_line_recalc()>>
+
+<<o_line_basic.c : get_line_bounds()>>
+<<o_line_basic.c : world_get_line_bounds()>>
+
+<<o_line_basic.c : o_line_print()>>
+<<o_line_basic.c : o_line_print_solid()>>
+<<o_line_basic.c : o_line_print_dotted()>>
+<<o_line_basic.c : o_line_print_dashed()>>
+<<o_line_basic.c : o_line_print_center()>>
+<<o_line_basic.c : o_line_print_phantom()>>
 
 #if 0 /* original way of printing line, no longer used */
 <<o_line_basic.c : o_line_print_old()>>
 #endif
 
 <<o_line_basic.c : o_line_image_write()>>
-<<o_line_basic.c : o_line_scale_world()>>
-<<o_line_basic.c : o_line_rotate()>>
-<<o_line_basic.c : o_line_rotate_world()>>
-<<o_line_basic.c : o_line_mirror()>>
-<<o_line_basic.c : o_line_mirror_world()>>
-<<o_line_basic.c : o_line_modify()>>
 
+<<o_line_basic.c : o_line_scale_world()>>
+
+<<o_line_basic.c : o_line_visible()>>
 
 @
 
@@ -100,110 +112,21 @@
 @ %def VERSION_20000704
 
 
-@section Function @code{get_line_bounds()}
-
-@defun get_line_bounds w_current line left top right bottom
-@end defun
-
-<<o_line_basic.c : get_line_bounds()>>=
-void
-get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
-                int *right, int *bottom)
-{
-  *left = w_current->width;
-  *top = w_current->height;
-  *right = 0;
-  *bottom = 0;
-	
-  if (line->screen_x[0] < *left) *left = line->screen_x[0];
-  if (line->screen_x[0] > *right) *right = line->screen_x[0];
-  if (line->screen_y[0] < *top) *top = line->screen_y[0];
-  if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
-
-  if (line->screen_x[1] < *left) *left = line->screen_x[1];
-  if (line->screen_x[1] > *right) *right = line->screen_x[1];
-  if (line->screen_y[1] < *top) *top = line->screen_y[1];
-  if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
-
-  /* PB : need to take into account the width of the line in the bounding box */
-  /* PB : but how translating width to screen ? */
-  /* PB : moreover, the width is not in any of the parameters */	
-	
-  *left = *left - 4;
-  *top = *top - 4;
-		
-  *right = *right + 4;
-  *bottom = *bottom + 4;
-	
-}
-
-@ %def get_line_bounds
-
-
-@section Function @code{world_get_line_bounds()}
-
-@defun world_get_line_bounds w_current line left top right bottom
-@end defun
-
-<<o_line_basic.c : world_get_line_bounds()>>=
-void
-world_get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
-                      int *right, int *bottom)
-{
-  *left = w_current->init_right;
-  *top = w_current->init_bottom;
-  *right = 0;
-  *bottom = 0;
-	
-  if (line->x[0] < *left) *left = line->x[0];
-  if (line->x[0] > *right) *right = line->x[0];
-  if (line->y[0] < *top) *top = line->y[0];
-  if (line->y[0] > *bottom) *bottom = line->y[0];
-
-  if (line->x[1] < *left) *left = line->x[1];
-  if (line->x[1] > *right) *right = line->x[1];
-  if (line->y[1] < *top) *top = line->y[1];
-  if (line->y[1] > *bottom) *bottom = line->y[1];
-}
-
-@ %def world_get_line_bounds
-
-
-@section Function @code{o_line_visible()}
-
-@defun o_line_visible w_current line x1 y1 x2 y2
-@end defun
-
-<<o_line_basic.c : o_line_visible()>>=
-int 
-o_line_visible(TOPLEVEL *w_current, LINE *line, 
-	       int *x1, int *y1, int *x2, int *y2)
-{
-  int visible=0;
-
-
-  /* don't do clipping if this is false */
-  if (!w_current->object_clipping) {
-    return(TRUE);
-  }
-
-  *x1 = line->screen_x[0];
-  *y1 = line->screen_y[0];
-  *x2 = line->screen_x[1];
-  *y2 = line->screen_y[1];
-
-  visible = SCREENclip_change(w_current, x1, y1, x2, y2);
-
-  return(visible);
-}
-
-@ %def o_line_visible
-
-
-@section Function @code{o_line_add()}
+@section Function [[o_line_add()]]
 
 @defun o_line_add w_current object_list type color x1 y1 x2 y2
+This function creates a new object representing a line. This object is added to the end of the list [[object_list]] pointed object belongs to.
+The line is described by its two ends - [[x1]],[[y1]] and [[x2]],[[y2]].
+The [[type]] parameter must be equal to [[OBJ_LINE]]. The [[color]] parameter corresponds to the color the box will be drawn with.
 @end defun
+
+The [[OBJECT]] structure is allocated with the [[s_basic_init_object()]] function. The structure describing the line is allocated and initialized with the parameters given to the function.
+
+Both the line type and the filling type are set to default values : solid line type with a width of 0, and no filling. It can be changed after with the [[o_set_line_options()]] and [[o_set_fill_options()]].
+
+The object is added to the end of the list described by the [[object_list]] parameter by the [[s_basic_link_object()]].
+
+The function returns a new pointer on the new end of the object list.
 
 <<o_line_basic.c : o_line_add()>>=
 OBJECT *
@@ -213,88 +136,206 @@ o_line_add(TOPLEVEL *w_current, OBJECT *object_list,
 {
   OBJECT *new_node;
 
-  new_node = s_basic_init_object("line");
-  new_node->type = type;
-  new_node->color = color;
+  <<o_line_add() : allocate memory for the new line>>
 
-  new_node->line = (LINE *) malloc(sizeof(LINE));
+  <<o_line_add() : initialize the line>>
 
-  new_node->line->x[0] = x1;
-  new_node->line->y[0] = y1;
-  new_node->line->x[1] = x2;
-  new_node->line->y[1] = y2;
+  <<o_line_add() : calculate the screen coords and the bounding box>>
 
-  /* Init */
-  o_set_line_options(w_current, new_node,
-                     END_NONE, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(w_current, new_node,
-                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
-	
-  o_line_recalc(w_current, new_node);
-
-  /* TODO: questionable cast */
-  new_node->draw_func = (void *) line_draw_func;
-  /* TODO: questionable cast */
-  new_node->sel_func = (void *) select_func;  
-
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
+  <<o_line_add() : add the object to the list>>
+  
   return(object_list);
 }
 
 @ %def o_line_add
 
 
-@section Function @code{o_line_recalc()}
+<<o_line_add() : allocate memory for the new line>>=
+/* create the object */
+new_node        = s_basic_init_object("line");
+new_node->type  = type;
+new_node->color = color;
 
-@defun o_line_recalc w_current o_current
+new_node->line  = (LINE *) malloc(sizeof(LINE));
+
+@ 
+
+
+<<o_line_add() : initialize the line>>=
+/* describe the line with its two ends */
+new_node->line->x[0] = x1;
+new_node->line->y[0] = y1;
+new_node->line->x[1] = x2;
+new_node->line->y[1] = y2;
+
+/* line type and filling initialized to default */
+o_set_line_options(w_current, new_node,
+				   END_NONE, TYPE_SOLID, 0, -1, -1);
+o_set_fill_options(w_current, new_node,
+				   FILLING_HOLLOW, -1, -1, -1, -1, -1);
+
+/* TODO: questionable cast */
+new_node->draw_func = (void *) line_draw_func;
+/* TODO: questionable cast */
+new_node->sel_func = (void *) select_func;  
+
+@ 
+
+
+<<o_line_add() : calculate the screen coords and the bounding box>>=
+/* compute bounding box and screen coords */
+o_line_recalc(w_current, new_node);
+
+@ 
+
+
+<<o_line_add() : add the object to the list>>=
+object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
+
+@ 
+
+
+@section Function [[o_line_copy()]]
+
+@defun o_line_copy w_current list_tail o_current
+The function [[o_line_copy()]] creates a verbatim copy of the object pointed by [[o_current]] describing a line. The new object is added at the end of the list following the [[list_tail]] pointed object.
 @end defun
 
-<<o_line_basic.c : o_line_recalc()>>=
-void
-o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
-{
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
-  int left, right, top, bottom;
+The function returns a new pointer on the end of the object list.
 
-  if (o_current->line == NULL) {
-    return;
+<<o_line_basic.c : o_line_copy()>>=
+OBJECT *
+o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+{
+  OBJECT *new_obj;
+  ATTRIB *a_current;
+  int color;
+
+  if (o_current->saved_color == -1) {
+    color = o_current->color;
+  } else {
+    color = o_current->saved_color;
   }
 
-  WORLDtoSCREEN(w_current, o_current->line->x[0], 
-                o_current->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
+  <<o_line_copy() : create and insert a new object in the list>>
 
-  o_current->line->screen_x[0] = screen_x1;
-  o_current->line->screen_y[0] = screen_y1;
+  <<o_line_copy() : modify the fields of the new object>>
 
-  WORLDtoSCREEN(w_current, o_current->line->x[1], 
-                o_current->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
+  <<o_line_copy() : copy the attributes>>
 
-  o_current->line->screen_x[1] = screen_x2;
-  o_current->line->screen_y[1] = screen_y2;
-	
-  get_line_bounds(w_current, o_current->line, 
-                  &left, &top, &right, &bottom);
-
-  o_current->left = left;
-  o_current->top = top;
-  o_current->right = right;
-  o_current->bottom = bottom;
-
-  o_object_recalc(w_current, o_current);
+  /* return the new tail of the object list */
+  return(new_obj);
 }
 
-@ %def o_line_recalc
+@ %def o_line_copy
 
 
-@section Function @code{o_line_read()}
+A new line object is added a the end of the object list with [[o_line_add()]]. Values for its fields are default and need to be modified.
+
+<<o_line_copy() : create and insert a new object in the list>>=
+/* create a new line object */
+new_obj = o_line_add(w_current, list_tail,
+					 OBJ_LINE, color,
+					 0, 0, 0, 0);
+
+@ 
+
+
+The coordinates of the ends of the new line are set with the ones of the original line. The two lines have the sale line type and filling options.
+
+The coordinates and the values in screen unit are computed with [[o_line_recalc()]].
+
+<<o_line_copy() : modify the fields of the new object>>=
+/* modify the line ends of the new line */
+new_obj->line->x[0] = o_current->line->x[0];
+new_obj->line->y[0] = o_current->line->y[0];
+new_obj->line->x[1] = o_current->line->x[1];
+new_obj->line->y[1] = o_current->line->y[1];
+
+/* copy the line type and filling options */
+o_set_line_options(w_current, new_obj, o_current->line_end,
+				   o_current->line_type, o_current->line_width,
+				   o_current->line_length, o_current->line_space);
+o_set_fill_options(w_current, new_obj,
+				   o_current->fill_type, o_current->fill_width,
+				   o_current->fill_pitch1, o_current->fill_angle1,
+				   o_current->fill_pitch2, o_current->fill_angle2);
+
+/* calc the screen coords */
+o_line_recalc(w_current, o_current);
+
+@ 
+
+
+<<o_line_copy() : copy the attributes>>=
+/*	new_obj->attribute = 0;*/
+a_current = o_current->attribs;
+if (a_current) {
+    while ( a_current ) {
+		
+			/* head attrib node has prev = NULL */
+		if (a_current->prev != NULL) {
+			a_current->copied_to = new_obj;
+		}
+		a_current = a_current->next;
+    }
+}
+
+@ 
+
+
+@section Function [[o_line_modify()]]
+
+@defun o_line_modify w_current object x y whichone
+This function modifies the coordinates of one of the two ends of the line described by [[*object]]. The new coordinates of this end, identified by [[whichone]], are given by [[x]] and [[y]] in world unit.
+@end defun
+
+The coordinates of the end of line is modified in the world coordinate system. Screen coordinates and boundings are then updated.
+
+<<o_line_basic.c : o_line_modify()>>=
+/* pb20011009 - modified */
+void
+o_line_modify(TOPLEVEL *w_current, OBJECT *object, 
+			  int x, int y, int whichone)
+{
+	/* change one of the end of the line */
+	switch(whichone) {
+		case LINE_END1:
+		object->line->x[0] = x;
+		object->line->y[0] = y;
+		break;
+		
+		case LINE_END2:
+		object->line->x[1] = x;
+		object->line->y[1] = y;
+		break;
+		
+		default:
+		return;
+	}
+	
+	/* recalculate the screen coords and the boundings */
+	o_line_recalc(w_current, object);
+	
+}
+
+@ %def o_line_modify
+
+
+@section Function [[o_line_read()]]
 
 @defun o_line_read w_current object_list buf version
+The function [[o_line_read()]] gets from the character string [[*buf]] the description of a box. The new box is added to the list of objects of which [[*object_list]] is the last element before the call.
+The function returns a pointer on the new last element, that is the added line object.
 @end defun
+
+Depending on [[*version]], the correct file format is considered. Currently two file format revisions are supported :
+@itemize @bullet
+@item
+the file format used until 20010704 release ;
+@item
+the file format used for the releases after 20010704.
+@end itemize
 
 <<o_line_basic.c : o_line_read()>>=
 OBJECT *
@@ -314,48 +355,21 @@ o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 
   ver = strtol(version, NULL, 10);
   if(ver <= VERSION_20000704) {
-    sscanf(buf, "%c %d %d %d %d %d\n", &type,
-           &x1, &y1, &x2, &y2, &color);
-
-    line_width = 0;
-    line_end   = END_NONE;
-    line_type  = TYPE_SOLID;
-    line_length= -1;
-    line_space = -1;
+	  <<o_line_read() : old geda file format>>
 
   } else {
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
-           &x1, &y1, &x2, &y2, &color,
-           &line_width, &line_end, &line_type, &line_length, &line_space);
+	  <<o_line_read() : geda file format after release 20000704>>
+	  
   }
 
   d_x1 = x1; /* PB : Needed ? */
   d_y1 = y1; 
   d_x2 = x2; 
   d_y2 = y2; 
-	
-  if (x1 == x2 && y1 == y2) {
-    fprintf(stderr, "Found a zero length line [ %c %d %d %d %d %d ]\n",
-            type, x1, y1, x2, y2, color);
-    s_log_message("Found a zero length line [ %c %d %d %d %d %d ]\n",
-                  type, x1, y1, x2, y2, color);
-  }
-	
-  if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-    s_log_message("Found an invalid color [ %s ]\n", buf);
-    s_log_message("Setting color to WHITE\n");
-    color = WHITE;
-  }
 
-	
-  object_list = o_line_add(w_current, object_list,
-                           type, color, d_x1, d_y1, d_x2, d_y2);
-  o_set_line_options(w_current, object_list,
-                     line_end, line_type, line_width, line_length, 
-                     line_space);
-  o_set_fill_options(w_current, object_list,
-                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  <<o_line_read() : check the values of the parameters>>
+
+  <<o_line_read() : add the new line to the list of objects>>
 	
   return(object_list);
 }
@@ -363,9 +377,76 @@ o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 @ %def o_line_read
 
 
-@section Function @code{o_line_save()}
+The old geda file format, i.e. releases 20000704 and older, does not handle the line type and the filling - here filling is irrelevant. They are set to default.
+
+<<o_line_read() : old geda file format>>=
+sscanf(buf, "%c %d %d %d %d %d\n", &type,
+	   &x1, &y1, &x2, &y2, &color);
+
+line_width = 0;
+line_end   = END_NONE;
+line_type  = TYPE_SOLID;
+line_length= -1;
+line_space = -1;
+
+@ 
+
+
+The current line format to describe a line is a space separated list of characters and numbers in plain ASCII on a single line. The meaning of each item is described in the file format documentation.
+
+<<o_line_read() : geda file format after release 20000704>>=
+sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
+	   &x1, &y1, &x2, &y2, &color,
+	   &line_width, &line_end, &line_type, &line_length, &line_space);
+
+@ 
+
+
+Null length line are not allowed. If such a line is detected a message is issued.
+
+It also checks is the required color is valid.
+
+<<o_line_read() : check the values of the parameters>>=
+if (x1 == x2 && y1 == y2) {
+    fprintf(stderr, "Found a zero length line [ %c %d %d %d %d %d ]\n",
+            type, x1, y1, x2, y2, color);
+    s_log_message("Found a zero length line [ %c %d %d %d %d %d ]\n",
+                  type, x1, y1, x2, y2, color);
+}
+
+if (color < 0 || color > MAX_COLORS) {
+    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+    s_log_message("Found an invalid color [ %s ]\n", buf);
+    s_log_message("Setting color to WHITE\n");
+    color = WHITE;
+}
+
+@ 
+
+
+A line is internally described by its two ends. A new object is allocated, initialized and added to the list of objects. Its line type is set according to the values of the fields on the line.
+
+<<o_line_read() : add the new line to the list of objects>>=
+/* create and add the line to the list */
+object_list = o_line_add(w_current, object_list,
+						 type, color, d_x1, d_y1, d_x2, d_y2);
+/* set its line options */
+o_set_line_options(w_current, object_list,
+				   line_end, line_type, line_width, line_length, 
+				   line_space);
+/* filling is irrelevant for line, just set to default */
+o_set_fill_options(w_current, object_list,
+				   FILLING_HOLLOW, -1, -1, -1, -1, -1);
+
+@
+
+
+@section Function [[o_line_save()]]
 
 @defun o_line_save buf object
+The function formats a string in the buffer [[*buff]] to describe the box object [[*object]].
+It follows the post-20000704 release file format that handle the line type and fill options - filling is irrelevant here.
+A pointer on the formated string is returned.
 @end defun
 
 <<o_line_basic.c : o_line_save()>>=
@@ -377,28 +458,10 @@ o_line_save(char *buf, OBJECT *object)
   int line_width, line_space, line_length;
   OBJECT_END line_end;
   OBJECT_TYPE line_type;
-		
-  x1 = object->line->x[0];
-  y1 = object->line->y[0];
-  x2 = object->line->x[1];
-  y2 = object->line->y[1];
 
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
+  <<o_line_save() : prepare the description of the line>>
 
-  line_width = object->line_width;
-  line_end   = object->line_end;
-  line_type  = object->line_type;
-  line_length= object->line_length;
-  line_space = object->line_space;
-	
-  sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d", object->type,
-          x1, y1, x2, y2, color,
-          line_width, line_end, line_type, line_length, line_space);
+  <<o_line_save() : describe a line with post-20000704 file format>>
 	
   return(buf);
 }
@@ -406,9 +469,42 @@ o_line_save(char *buf, OBJECT *object)
 @ %def o_line_save
 
 
-@section Function @code{o_line_translate()}
+<<o_line_save() : prepare the description of the line>>=
+/* get the two ends */
+x1 = object->line->x[0];
+y1 = object->line->y[0];
+x2 = object->line->x[1];
+y2 = object->line->y[1];
+
+/* description of the line type */
+line_width = object->line_width;
+line_end   = object->line_end;
+line_type  = object->line_type;
+line_length= object->line_length;
+line_space = object->line_space;
+
+/* Use the right color */
+if (object->saved_color == -1) {
+    color = object->color;
+} else {
+    color = object->saved_color;
+}
+
+@ 
+
+
+<<o_line_save() : describe a line with post-20000704 file format>>=
+sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d", object->type,
+		x1, y1, x2, y2, color,
+		line_width, line_end, line_type, line_length, line_space);
+
+@ 
+
+
+@section Function [[o_line_translate()]]
 
 @defun o_line_translate w_current dx dy object
+This function applies a translation of ([[dx]],[[dy]]) to the line described by [[*object]]. [[dx]] and [[dy]] are in screen unit.
 @end defun
 
 <<o_line_basic.c : o_line_translate()>>=
@@ -419,37 +515,46 @@ o_line_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 
   if (object == NULL) printf("lt NO!\n");
 
+  <<o_line_translate() : translate the line>>
 
-  /* Do screen coords */
-  object->line->screen_x[0] = object->line->screen_x[0] + dx;
-  object->line->screen_y[0] = object->line->screen_y[0] + dy;
-  object->line->screen_x[1] = object->line->screen_x[1] + dx;
-  object->line->screen_y[1] = object->line->screen_y[1] + dy;
-
-  /* do we want snap grid here? hack */
-  SCREENtoWORLD(w_current, object->line->screen_x[0], 
-                object->line->screen_y[0], 
-                &x,
-                &y);  
-
-  object->line->x[0] = snap_grid(w_current, x);
-  object->line->y[0] = snap_grid(w_current, y);
-	
-  SCREENtoWORLD(w_current, object->line->screen_x[1], 
-                object->line->screen_y[1], 
-                &x,
-                &y);  
-	
-  object->line->x[1] = snap_grid(w_current, x);
-  object->line->y[1] = snap_grid(w_current, y);
+  <<o_line_translate() : update the world coordinates>>
+  
 }
 
 @ %def o_line_translate
 
 
-@section Function @code{o_line_translate_world()}
+<<o_line_translate() : translate the line>>=
+/* Do screen coords */
+object->line->screen_x[0] = object->line->screen_x[0] + dx;
+object->line->screen_y[0] = object->line->screen_y[0] + dy;
+object->line->screen_x[1] = object->line->screen_x[1] + dx;
+object->line->screen_y[1] = object->line->screen_y[1] + dy;
+
+@ 
+
+
+<<o_line_translate() : update the world coordinates>>=
+/* do we want snap grid here? hack */
+SCREENtoWORLD(w_current,
+			  object->line->screen_x[0], object->line->screen_y[0], 
+			  &x, &y);  
+object->line->x[0] = snap_grid(w_current, x);
+object->line->y[0] = snap_grid(w_current, y);
+
+SCREENtoWORLD(w_current,
+			  object->line->screen_x[1], object->line->screen_y[1], 
+			  &x, &y);  
+object->line->x[1] = snap_grid(w_current, x);
+object->line->y[1] = snap_grid(w_current, y);
+
+@
+
+
+@section Function [[o_line_translate_world()]]
 
 @defun o_line_translate_world w_current x1 y1 object
+This function applies a translation of ([[x1]],[[y1]]) to the box described by [[*object]]. [[x1]] and [[y1]] are in world unit.
 @end defun
 
 <<o_line_basic.c : o_line_translate_world()>>=
@@ -462,103 +567,349 @@ o_line_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 
   if (object == NULL) printf("ltw NO!\n");
 
+  <<o_line_translate_world() : translate the box>>
 
-  /* Do world coords */
-  object->line->x[0] = object->line->x[0] + x1;
-  object->line->y[0] = object->line->y[0] + y1;
-  object->line->x[1] = object->line->x[1] + x1;
-  object->line->y[1] = object->line->y[1] + y1;
-
-  /* update screen coords */
-  WORLDtoSCREEN(w_current, object->line->x[0], 
-                object->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
-
-  object->line->screen_x[0] = screen_x1;
-  object->line->screen_y[0] = screen_y1;
-
-  WORLDtoSCREEN(w_current, object->line->x[1], 
-                object->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
-	
-  object->line->screen_x[1] = screen_x2;
-  object->line->screen_y[1] = screen_y2;
-
-  /* update bounding box */
-  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
-
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;
+  <<o_line_translate_world() : update the screen coordinates>>
+  
 }
 
 @ %def o_line_translate_world
 
 
-@section Function @code{o_line_copy()}
+<<o_line_translate_world() : translate the box>>=
+/* Do world coords */
+object->line->x[0] = object->line->x[0] + x1;
+object->line->y[0] = object->line->y[0] + y1;
+object->line->x[1] = object->line->x[1] + x1;
+object->line->y[1] = object->line->y[1] + y1;
 
-@defun o_line_copy w_current list_tail o_current
+@ 
+
+
+<<o_line_translate_world() : update the screen coordinates>>=
+/* update screen coords */
+WORLDtoSCREEN(w_current, object->line->x[0], 
+			  object->line->y[0], 
+			  &screen_x1,
+			  &screen_y1);  
+object->line->screen_x[0] = screen_x1;
+object->line->screen_y[0] = screen_y1;
+
+WORLDtoSCREEN(w_current, object->line->x[1], 
+			  object->line->y[1], 
+			  &screen_x2,
+			  &screen_y2);  
+object->line->screen_x[1] = screen_x2;
+object->line->screen_y[1] = screen_y2;
+
+/* update bounding box */
+get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
+
+object->left   = left;
+object->top    = top;
+object->right  = right;
+object->bottom = bottom;
+
+@ 
+
+
+@section Function [[o_line_rotate()]]
+
+@defun o_line_rotate w_current centerx centery angle object
+This function applies a rotation of center ([[centerx]],[[centery]]) and angle [[angle]] to the line object [[*object]].
+The coordinates of the rotation center are in screen units.
+[[angle]] mst be a 90 degree multiple. If not, no rotation is applied.
 @end defun
 
-<<o_line_basic.c : o_line_copy()>>=
-OBJECT *
-o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+The rotation is made by the [[o_line_rotate_world()]] function that perform a rotation of angle [[angle]] and center ([[world_centerx]],[[world_centery]]) in world unit.
+
+<<o_line_basic.c : o_line_rotate()>>=
+/* takes in screen coordinates for the centerx,y, and then does the rotate 
+ * in world space */
+/* also ignores angle argument... for now, rotate only in 90 degree 
+ * increments */
+void
+o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
+	OBJECT *object)
 {
-  OBJECT *new_obj;
-  ATTRIB *a_current;
-  int color;
+  int world_centerx, world_centery;
+  int newx, newy;
 
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
+  /* convert the center of rotation to world unit */
+  SCREENtoWORLD(w_current, centerx, centery, 
+                &world_centerx,
+                &world_centery);  
 
-  new_obj = o_line_add(w_current, list_tail,
-                       OBJ_LINE, color,
-                       0, 0, 0, 0);
-
-  new_obj->line->screen_x[0] = o_current->line->screen_x[0];
-  new_obj->line->screen_y[0] = o_current->line->screen_y[0];
-  new_obj->line->screen_x[1] = o_current->line->screen_x[1];
-  new_obj->line->screen_y[1] = o_current->line->screen_y[1];
-
-  new_obj->line->x[0] = o_current->line->x[0];
-  new_obj->line->y[0] = o_current->line->y[0];
-  new_obj->line->x[1] = o_current->line->x[1];
-  new_obj->line->y[1] = o_current->line->y[1];
-
-  o_set_line_options(w_current, new_obj, o_current->line_end,
-                     o_current->line_type, o_current->line_width,
-                     o_current->line_length, o_current->line_space);
-  o_set_fill_options(w_current, new_obj,
-                     o_current->fill_type, o_current->fill_width,
-                     o_current->fill_pitch1, o_current->fill_angle1,
-                     o_current->fill_pitch2, o_current->fill_angle2);
-
-  /*	new_obj->attribute = 0;*/
-  a_current = o_current->attribs;
-  if (a_current) {
-    while ( a_current ) {
-
-      /* head attrib node has prev = NULL */
-      if (a_current->prev != NULL) {
-        a_current->copied_to = new_obj;
-      }
-      a_current = a_current->next;
-    }
-  }
-
-  return(new_obj);
+  /* rotate the line */
+  /* the check on the rotation angle is in o_line_rotate_world() */
+  o_line_rotate_world(w_current,
+					  world_centerx, world_centery, angle,
+					  object);
+  
 }
 
-@ %def o_line_copy
+@ %def o_line_rotate
 
 
-@section Function @code{o_line_print()}
+@section Function [[o_line_rotate_world()]]
+
+@defun o_line_rotate_world w_current world_centerx world_centery angle object
+The function [[o_line_rotate_world()]] rotates the box described by [[*object]] around the ([[world_centerx]],[[world_centery]]) point by [[angle]] degrees.
+The center of rotation is in world unit.
+@end defun
+
+<<o_line_basic.c : o_line_rotate_world()>>=
+void
+o_line_rotate_world(TOPLEVEL *w_current, 
+					int world_centerx, int world_centery, int angle,
+					OBJECT *object)
+{
+  int newx, newy;
+	
+  if (angle == 0) 
+  return;
+
+  <<o_line_rotate_world() : check the rotation angle>>
+
+  <<o_line_rotate_world() : rotate the line world coords>>
+
+}
+
+@ %def o_line_rotate_world
+
+
+<<o_line_rotate_world() : check the rotation angle>>=
+/* angle must be positive */
+if(angle < 0) angle = -angle;
+/* angle must be 90 multiple or no rotation performed */
+if((angle % 90) != 0) return;
+
+@ 
+
+
+The center of rotation ([[world_centerx]],[[world_centery]]) is translated to the origin. The rotation of the two ends of the line is performed. FInally, the rotated line is translated back to its previous location.
+
+<<o_line_rotate_world() : rotate the line world coords>>=
+/* translate object to origin */
+o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+
+/* rotate line end 1 */
+rotate_point_90(object->line->x[0], object->line->y[0], angle,
+				&newx, &newy);
+
+object->line->x[0] = newx;
+object->line->y[0] = newy;
+
+/* rotate line end 2 */
+rotate_point_90(object->line->x[1], object->line->y[1], angle,
+				&newx, &newy);
+
+object->line->x[1] = newx;
+object->line->y[1] = newy;
+
+/* translate object back to normal position */
+o_line_translate_world(w_current, world_centerx, world_centery, object);
+
+@ 
+
+
+@section Function [[o_line_mirror()]]
+
+@defun o_line_mirror w_current centerx centery object
+This function mirrors the line from the point ([[centerx]],[[centery]]) in screen unit.
+@end defun
+
+The origin of the mirror in screen unit is converted in world unit. The line is mirrored with the function [[o_line_mirror_world()]] for which the origin of the mirror must be given in world unit.
+
+<<o_line_basic.c : o_line_mirror()>>=
+void
+o_line_mirror(TOPLEVEL *w_current,
+			  int centerx, int centery,
+			  OBJECT *object)
+{
+  int world_centerx, world_centery;
+
+  /* convert the origin of mirror */
+  SCREENtoWORLD(w_current, centerx, centery, 
+                &world_centerx,
+                &world_centery);  
+
+  /* apply the mirror in world coords */
+  o_line_mirror_world(w_current,
+					  world_centerx, world_centery,
+					  object);
+  
+}
+
+@ %def o_line_mirror
+
+
+@section Function [[o_line_mirror_world()]]
+
+@defun o_line_mirror_world w_current world_centerx world_centery object
+This function mirrors the line from the point ([[world_centerx]],[[world_centery]]) in world unit.
+@end defun
+
+The line if first translated to the origin, then mirrored and finally translated back at its previous position.
+
+<<o_line_basic.c : o_line_mirror_world()>>=
+void
+o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
+                    int world_centery, OBJECT *object)
+{
+  /* translate object to origin */
+  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
+
+  /* mirror the line ends */
+  object->line->x[0] = -object->line->x[0];
+  object->line->x[1] = -object->line->x[1];
+
+  /* translate back in position */
+  o_line_translate_world(w_current, world_centerx, world_centery, object);
+  
+}
+
+@ %def o_line_mirror_world
+
+
+@section Function [[o_line_recalc()]]
+
+@defun o_line_recalc w_current o_current
+This function recalculate the screen coords of the [[o_current]] pointed line object from its world coords.
+@end defun
+
+The line ends coordinates and its bounding box are recalculated as well as the OBJECT specific fields (line width, filling ...).
+
+<<o_line_basic.c : o_line_recalc()>>=
+void
+o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  int screen_x1, screen_y1;
+  int screen_x2, screen_y2;
+  int left, right, top, bottom;
+
+  if (o_current->line == NULL) {
+    return;
+  }
+
+  <<o_line_recalc() : update the screen coords from world coords>>
+
+  <<o_line_recalc() : update the bounding box in screen unit>>
+
+  <<o_line_recalc() : update the object general fields>>
+  
+}
+
+@ %def o_line_recalc
+
+
+<<o_line_recalc() : update the screen coords from world coords>>=
+/* update the screen coords of end 1 of the line */
+WORLDtoSCREEN(w_current,
+			  o_current->line->x[0], o_current->line->y[0], 
+			  &screen_x1, &screen_y1);  
+o_current->line->screen_x[0] = screen_x1;
+o_current->line->screen_y[0] = screen_y1;
+
+/* update the screen coords of end 2 of the line */
+WORLDtoSCREEN(w_current,
+			  o_current->line->x[1], o_current->line->y[1], 
+			  &screen_x2, &screen_y2);  
+o_current->line->screen_x[1] = screen_x2;
+o_current->line->screen_y[1] = screen_y2;
+
+@ 
+
+
+<<o_line_recalc() : update the bounding box in screen unit>>=
+/* update the bounding box - screen unit */
+get_line_bounds(w_current, o_current->line, 
+				&left, &top, &right, &bottom);
+o_current->left   = left;
+o_current->top    = top;
+o_current->right  = right;
+o_current->bottom = bottom;
+
+@ 
+
+
+<<o_line_recalc() : update the object general fields>>=
+/* recalc OBJECT specific parameters */
+o_object_recalc(w_current, o_current);
+
+@ 
+
+
+@section Function [[get_line_bounds()]]
+
+@defun get_line_bounds w_current line left top right bottom
+The [[get_box_bounds()]] function set the [[left]], [[top]], [[right]] and [[bottom]] pointed variables to the boundings of the line object described by [[*line]] in screen unit.
+@end defun
+
+<<o_line_basic.c : get_line_bounds()>>=
+void
+get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
+                int *right, int *bottom)
+{
+  *left   = w_current->width;
+  *top    = w_current->height;
+  *right  = 0;
+  *bottom = 0;
+	
+  if (line->screen_x[0] < *left)   *left   = line->screen_x[0];
+  if (line->screen_x[0] > *right)  *right  = line->screen_x[0];
+  if (line->screen_y[0] < *top)    *top    = line->screen_y[0];
+  if (line->screen_y[0] > *bottom) *bottom = line->screen_y[0];
+
+  if (line->screen_x[1] < *left)   *left   = line->screen_x[1];
+  if (line->screen_x[1] > *right)  *right  = line->screen_x[1];
+  if (line->screen_y[1] < *top)    *top    = line->screen_y[1];
+  if (line->screen_y[1] > *bottom) *bottom = line->screen_y[1];
+
+  /* PB : bounding box has to take into account the width of the line */
+  /* PB : but line width is unknown here */
+	
+  *left   = *left   - 4;
+  *top    = *top    - 4;
+  *right  = *right  + 4;
+  *bottom = *bottom + 4;
+}
+
+@ %def get_line_bounds
+
+
+@section Function [[world_get_line_bounds()]]
+
+@defun world_get_line_bounds w_current line left top right bottom
+The [[world_get_line_bounds()]] function sets the [[left]], [[top]], [[right]] and [[bottom]] pointed variables to the boundings of the line object described in [[*line]] in world unit.
+@end defun
+
+<<o_line_basic.c : world_get_line_bounds()>>=
+void
+world_get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top,
+                      int *right, int *bottom)
+{
+  *left   = w_current->init_right;
+  *top    = w_current->init_bottom;
+  *right  = 0;
+  *bottom = 0;
+	
+  if (line->x[0] < *left)   *left   = line->x[0];
+  if (line->x[0] > *right)  *right  = line->x[0];
+  if (line->y[0] < *top)    *top    = line->y[0];
+  if (line->y[0] > *bottom) *bottom = line->y[0];
+
+  if (line->x[1] < *left)   *left   = line->x[1];
+  if (line->x[1] > *right)  *right  = line->x[1];
+  if (line->y[1] < *top)    *top    = line->y[1];
+  if (line->y[1] > *bottom) *bottom = line->y[1];
+  
+}
+
+@ %def world_get_line_bounds
+
+
+@section Function [[o_line_print()]]
 
 @defun o_line_print w_current fp o_current origin_x origin_y
 This function writes in a postscript file the line described by the [[o_current]] pointed object.
@@ -651,7 +1002,7 @@ In the eventuality of a length and/or space null, the line is printed solid to a
 @
 
 
-@section Function @code{o_line_print_solid()}
+@section Function [[o_line_print_solid()]]
 
 @defun o_line_print_solid w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
 This function prints a line when a solid line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
@@ -688,7 +1039,7 @@ o_line_print_solid(TOPLEVEL *w_current, FILE *fp,
 @ %def o_line_print_solid
 
 
-@section Function @code{o_line_print_dotted()}
+@section Function [[o_line_print_dotted()]]
 
 @defun o_line_print_dotted w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
 This function prints a line when a dotted line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
@@ -772,7 +1123,7 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
 
 
 
-@section Function @code{o_line_print_dashed()}
+@section Function [[o_line_print_dashed()]]
 
 @defun o_line_print_dashed w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
 This function prints a line when a dashed line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
@@ -869,7 +1220,7 @@ When the above condition is no more satisfied, then it is not possible to print 
 @ 
 
 
-@section Function @code{o_line_print_center()}
+@section Function [[o_line_print_center()]]
 
 @defun o_line_print_center w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
 This function prints a line when a centered line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
@@ -942,7 +1293,7 @@ It prints as many sets of dash and dot as possible.
 @ 
 
 
-When the above condition is no more satisfied, then it is not possible to print a dash of length @code{length}. However two cases are possible :
+When the above condition is no more satisfied, then it is not possible to print a dash of length [[length]]. However two cases are possible :
 @itemize @bullet
 @item
 it is possible to print the dash and the dot ;
@@ -1008,7 +1359,7 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
 @ 
 
 
-@section Function @code{o_line_print_phantom()}
+@section Function [[o_line_print_phantom()]]
 
 @defun o_line_print_phantom w_current fp x1 y1 x2 y2 color line_width length space origin_x origin_y
 This function prints a line when a phantom line type is required. The line is defined by the coordinates of its two ends in ([[x1]],[[y1]]) and ([[x2]],[[y2]]).
@@ -1177,9 +1528,10 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
 @ 
 
 
-@section Function @code{o_line_print_old()}
+@section Function [[o_line_print_old()]]
 
 @defun o_line_print_old w_current fp o_current origin_x origin_y
+This function is the old function to print a line. It does not handle line type.
 @end defun
 
 <<o_line_basic.c : o_line_print_old()>>=
@@ -1211,9 +1563,10 @@ o_line_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 @ %def o_line_print_old
 
 
-@section Function @code{o_line_image_write()}
+@section Function [[o_line_image_write()]]
 
 @defun o_line_image_write w_current o_current origin_x origin_y color_mode
+This function draws a line in an image with the libgdgeda function [[gdImageLine()]].
 @end defun
 
 <<o_line_basic.c : o_line_image_write()>>=
@@ -1248,7 +1601,7 @@ o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 @ %def o_line_image_write
 
 
-@section Function @code{o_line_scale_world()}
+@section Function [[o_line_scale_world()]]
 
 @defun o_line_scale_world w_current x_scale y_scale object
 @end defun
@@ -1257,211 +1610,50 @@ o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 void
 o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale, OBJECT *object)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;	
-  int left, right, top, bottom;
-
   if (object == NULL) printf("lsw NO!\n");
 
-
-  /* Do world coords */
+  /* scale the line world coords */
   object->line->x[0] = object->line->x[0] * x_scale;
   object->line->y[0] = object->line->y[0] * y_scale;
   object->line->x[1] = object->line->x[1] * x_scale;
   object->line->y[1] = object->line->y[1] * y_scale;
 
   /* update screen coords */
-  WORLDtoSCREEN(w_current, object->line->x[0], 
-                object->line->y[0], 
-                &screen_x1,
-                &screen_y1);  
-	
-  object->line->screen_x[0] = screen_x1;
-  object->line->screen_y[0] = screen_y1;
-	
-  WORLDtoSCREEN(w_current, object->line->x[1], 
-                object->line->y[1], 
-                &screen_x2,
-                &screen_y2);  
-	
-  object->line->screen_x[1] = screen_x2;
-  object->line->screen_y[1] = screen_y2;
-
-  /* PB : have a problem here */
-  /* PB : do not know how to make scale on object_width */	
-
-  /* update bounding box */
-  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
-
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;
+  o_line_recalc(w_current, object);
+  
 }
 
 @ %def o_line_scale_world
 
 
-@section Function @code{o_line_rotate()}
 
-@defun o_line_rotate w_current centerx centery angle object
+
+@section Function [[o_line_visible()]]
+
+@defun o_line_visible w_current line x1 y1 x2 y2
 @end defun
 
-<<o_line_basic.c : o_line_rotate()>>=
-/* takes in screen coordinates for the centerx,y, and then does the rotate 
- * in world space */
-/* also ignores angle argument... for now, rotate only in 90 degree 
- * increments */
-void
-o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
-	OBJECT *object)
+<<o_line_basic.c : o_line_visible()>>=
+int 
+o_line_visible(TOPLEVEL *w_current, LINE *line, 
+	       int *x1, int *y1, int *x2, int *y2)
 {
-  int world_centerx, world_centery;
-  int newx, newy;
+  int visible=0;
 
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-	
-  /* translate object to origin */
-  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
-	
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
-                  &newx, &newy);
 
-  object->line->x[0] = newx;
-  object->line->y[0] = newy;
+  /* don't do clipping if this is false */
+  if (!w_current->object_clipping) {
+    return(TRUE);
+  }
 
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
-                  &newx, &newy);
+  *x1 = line->screen_x[0];
+  *y1 = line->screen_y[0];
+  *x2 = line->screen_x[1];
+  *y2 = line->screen_y[1];
 
-  object->line->x[1] = newx;
-  object->line->y[1] = newy;
+  visible = SCREENclip_change(w_current, x1, y1, x2, y2);
 
-  o_line_translate_world(w_current, world_centerx, world_centery, object);
+  return(visible);
 }
 
-@ %def o_line_rotate
-
-
-@section Function @code{o_line_rotate_world()}
-
-@defun o_line_rotate_world w_current world_centerx world_centery angle object
-@end defun
-
-<<o_line_basic.c : o_line_rotate_world()>>=
-void
-o_line_rotate_world(TOPLEVEL *w_current, 
-	int world_centerx, int world_centery, int angle,
-	OBJECT *object)
-{
-  int newx, newy;
-	
-  if (angle == 0) 
-  return;
-
-
-  /* translate object to origin */
-  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  rotate_point_90(object->line->x[0], object->line->y[0], angle,
-                  &newx, &newy);
-
-  object->line->x[0] = newx;
-  object->line->y[0] = newy;
-
-  rotate_point_90(object->line->x[1], object->line->y[1], angle,
-                  &newx, &newy);
-
-  object->line->x[1] = newx;
-  object->line->y[1] = newy;
-
-  o_line_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_line_rotate_world
-
-
-@section Function @code{o_line_mirror()}
-
-@defun o_line_mirror w_current centerx centery object
-@end defun
-
-<<o_line_basic.c : o_line_mirror()>>=
-void
-o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
-{
-  int world_centerx, world_centery;
-
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  /* translate object to origin */
-  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  object->line->x[0] = -object->line->x[0];
-
-  object->line->x[1] = -object->line->x[1];
-
-  o_line_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_line_mirror
-
-
-@section Function @code{o_line_mirror_world()}
-
-@defun o_line_mirror_world w_current world_centerx world_centery object
-@end defun
-
-<<o_line_basic.c : o_line_mirror_world()>>=
-void
-o_line_mirror_world(TOPLEVEL *w_current, int world_centerx,
-                    int world_centery, OBJECT *object)
-{
-  /* translate object to origin */
-  o_line_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  object->line->x[0] = -object->line->x[0];
-
-  object->line->x[1] = -object->line->x[1];
-
-  o_line_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_line_mirror_world
-
-
-@section Function @code{o_line_modify()}
-
-@defun o_line_modify w_current object x y whichone
-@end defun
-
-<<o_line_basic.c : o_line_modify()>>=
-void
-o_line_modify(TOPLEVEL *w_current, OBJECT *object, 
-	     int x, int y, int whichone)
-{
-  int screen_x, screen_y;
-  int left, right, top, bottom;
-
-  object->line->x[whichone] = x;
-  object->line->y[whichone] = y;
-
-  WORLDtoSCREEN(w_current, 
-                object->line->x[whichone], object->line->y[whichone], 
-                &screen_x, &screen_y);  
-	
-  object->line->screen_x[whichone] = screen_x;
-  object->line->screen_y[whichone] = screen_y;
-
-  get_line_bounds(w_current, object->line, &left, &top, &right, &bottom);
-	
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;	
-}
-
-@ %def o_line_modify
+@ %def o_line_visible

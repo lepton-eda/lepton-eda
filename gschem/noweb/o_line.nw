@@ -13,17 +13,23 @@
 <<o_line.c : include directives>>
 <<o_line.c : macros>>
 
-<<o_line.c : o_line_draw()>>         /* done */
-<<o_line.c : o_line_draw_solid()>>   /* done */
-<<o_line.c : o_line_draw_dotted()>>  /* done */
-<<o_line.c : o_line_draw_dashed()>>  /* done */
-<<o_line.c : o_line_draw_center()>>  /* done */
-<<o_line.c : o_line_draw_phantom()>> /* done */
+<<o_line.c : o_line_draw()>>
+<<o_line.c : o_line_draw_solid()>>
+<<o_line.c : o_line_draw_dotted()>>
+<<o_line.c : o_line_draw_dashed()>>
+<<o_line.c : o_line_draw_center()>>
+<<o_line.c : o_line_draw_phantom()>>
+
 <<o_line.c : o_line_erase()>>
+
 <<o_line.c : o_line_draw_xor()>>
+
 <<o_line.c : o_line_start()>>
 <<o_line.c : o_line_end()>>
+
 <<o_line.c : o_line_rubberline()>>
+<<o_line.c : o_line_rubberline_xor()>>
+
 <<o_line.c : o_line_draw_grips()>>
 <<o_line.c : o_line_erase_grips()>>
 
@@ -63,13 +69,14 @@
 @ 
 
 <<o_line.c : macros>>=
+
 @ 
 
 
-@section Function @code{o_line_draw()}
+@section Function [[o_line_draw()]]
 
 @defun o_line_draw w_current o_current
-This function is used to draw a line on screen. The line is described in the object which is referred by @code{o_current}. The line is displayed according to the current state, described in the TOPLEVEL object pointed by @code{w_current}.
+This function is used to draw a line on screen. The line is described in the object which is referred by [[o_current]]. The line is displayed according to the current state, described in the TOPLEVEL object pointed by [[w_current]].
 @end defun
 
 It first checks if the object is valid or not. If not it returns and do not output anything. That should never happen though.
@@ -113,11 +120,11 @@ It also recalculates the bounding box of the object and check whether this objec
 
 As a line is definetely not a closed shape there is no need to define and call any filling function. Another way to say that is that a line can not be filled. It simply draws the line according to the type.
 
-The values describing the line type are extracted from the @code{o_current} pointed structure. These are the width of the line, the field called length and the field called space and the desired end type for the line.
+The values describing the line type are extracted from the [[o_current]] pointed structure. These are the width of the line, the field called length and the field called space and the desired end type for the line.
 
-Depending on the type of the line that has to be used to draw the box the appropriate function is called. Values of space and length are adapted to the type of line. The possible functions are the following : @code{o_line_draw_solid()}, @code{o_line_draw_dotted()}, @code{o_line_draw_dashed()} and @code{o_line_draw_phantom()}.
+Depending on the type of the line that has to be used to draw the box the appropriate function is called. Values of space and length are adapted to the type of line. The possible functions are the following : [[o_line_draw_solid()]], [[o_line_draw_dotted()]], [[o_line_draw_dashed()]] and [[o_line_draw_phantom()]].
 
-The combination @code{length} == 0 and @code{space} == 0 is avoided as it leads to an endless loop in function called after. If such a case is encountered the line is drawn as a solid line independently of its initial type.
+The combination [[length]] == 0 and [[space]] == 0 is avoided as it leads to an endless loop in function called after. If such a case is encountered the line is drawn as a solid line independently of its initial type.
 
 Finally the function takes care of the grips.
 
@@ -198,21 +205,16 @@ Finally the function takes care of the grips.
 
 <<o_line_draw() : grip specific stuff>>=
 if (o_current->draw_grips && w_current->draw_grips == TRUE) {	
-		
-  if (!o_current->selected) {
-    /* erase the grips */
-    o_current->draw_grips = FALSE;
-    gdk_gc_set_foreground(w_current->gc, 
-                          x_get_color
-                          (w_current->background_color));
-  } else {
-    gdk_gc_set_foreground(w_current->gc, color);
-  }
-  gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
-                             line_end, GDK_JOIN_MITER);
 
-  o_line_draw_grips(w_current, w_current->window, o_current);
-  o_line_draw_grips(w_current, w_current->backingstore, o_current);
+	/* pb20011010 - modified to use the new o_line_[draw|erase]_grips() */
+	if (!o_current->selected) {
+		/* object is no more selected, erase the grips */
+		o_current->draw_grips = FALSE;
+		o_line_erase_grips(w_current, o_current);
+	} else {
+		/* object is selected, draw the grips */
+		o_line_draw_grips(w_current, o_current);
+	}
 }
 
 #if DEBUG
@@ -222,10 +224,10 @@ printf("drawing line\n");
 @
 
 
-@section Function @code{o_line_draw_solid()}
+@section Function [[o_line_draw_solid()]]
 
 @defun o_line_draw_solid w gc color cap x1 y1 x2 y2 line_width length space
-This function draws a line with a solid line type. The line is defined by the coordinates of its two extremities. The parameters @code{length} and @code{space} are unused here.
+This function draws a line with a solid line type. The line is defined by the coordinates of its two extremities. The parameters [[length]] and [[space]] are unused here.
 @end defun
 
 The line attributes are settled. Then it simply make a call to the gdk original function.
@@ -250,13 +252,13 @@ o_line_draw_solid(GdkWindow *w, GdkGC *gc, GdkColor *color,
 @ %def o_line_draw_solid
 
 
-@section Function @code{o_line_draw_dotted()}
+@section Function [[o_line_draw_dotted()]]
 
 @defun o_line_draw_dotted w gc color cap x1 y1 x2 y2 line_width length space
-This function draw a line with a dotted line type. The parameter @code{space} represents the distance between two of the dots. The parameter @code{length} is unused. The diameter of the dots is given by the width of the line given by @code{line_width}.
+This function draw a line with a dotted line type. The parameter [[space]] represents the distance between two of the dots. The parameter [[length]] is unused. The diameter of the dots is given by the width of the line given by [[line_width]].
 @end defun
 
-The unit of @code{x1}, @code{y1} and @code{x2}, @code{y2} and @code{line_width}, @code{length}, @code{space} is pixel.
+The unit of [[x1]], [[y1]] and [[x2]], [[y2]] and [[line_width]], [[length]], [[space]] is pixel.
 
 A negative of null value for length or space leads to an endless loop.
 
@@ -301,7 +303,7 @@ Starting from one of the end of the line and incrementing the position gives the
 
 @
 
-Depending on the width of the line, dots has to be drawn in a different manner : if the real world width is equal to 0, then the width is translated to 1 in screen coordinates. Drawing a circle with a 1-diameter and the GDK function @code{gdk_draw_arc()} is not possible. So we needs to test whether the width is 1 or not.
+Depending on the width of the line, dots has to be drawn in a different manner : if the real world width is equal to 0, then the width is translated to 1 in screen coordinates. Drawing a circle with a 1-diameter and the GDK function [[gdk_draw_arc()]] is not possible. So we needs to test whether the width is 1 or not.
 
 <<o_line_draw_dotted() : drawing the dot>>=
   if(line_width == 1) {
@@ -316,13 +318,13 @@ Depending on the width of the line, dots has to be drawn in a different manner :
 @ 
 
 
-@section Function @code{o_line_draw_dashed()}
+@section Function [[o_line_draw_dashed()]]
 
 @defun o_line_draw_dashed w gc color cap x1 y1 x2 y2 line_width length space
-This function draws a line with a dashed line type. The parameter @code{space} respresents the distance between two of the dashes. The parameter @code{length} represents the length of a dash.
+This function draws a line with a dashed line type. The parameter [[space]] respresents the distance between two of the dashes. The parameter [[length]] represents the length of a dash.
 @end defun
 
-The unit of @code{x1}, @code{y1} and @code{x2}, @code{y2} and @code{line_width}, @code{length}, @code{space} is pixel.
+The unit of [[x1]], [[y1]] and [[x2]], [[y2]] and [[line_width]], [[length]], [[space]] is pixel.
 
 A negative of null value for length or space leads to an endless loop.
 
@@ -346,7 +348,7 @@ The function determines the increments on x and y axis that match the space on t
 
 Starting from one of the end of the line and incrementing the position gives the coordinates of every dots on the line providing that the second extremities is not exceeded. This is checked by first computing the distance between the two extremities and then checking whether this limit is exceeded by a new dash or not.
 
-It draws as many dashes of length @code{length} as possible.
+It draws as many dashes of length [[length]] as possible.
 
 <<o_line.c : o_line_draw_dashed()>>=	
   dx = (double) (x2 - x1);
@@ -375,7 +377,7 @@ It draws as many dashes of length @code{length} as possible.
 
 @ 
 
-When the above condition is not satisfied, then it is not possible to draw a dash of length @code{length}. However it may be possible to draw a shorter dash.
+When the above condition is not satisfied, then it is not possible to draw a dash of length [[length]]. However it may be possible to draw a shorter dash.
 
 <<o_line.c : o_line_draw_dashed()>>=
   if((d + length) < l) {
@@ -394,13 +396,13 @@ When the above condition is not satisfied, then it is not possible to draw a das
 @
 
 
-@section Function @code{o_line_draw_center()}
+@section Function [[o_line_draw_center()]]
 
 @defun o_line_draw_center w gc color cap x1 y1 x2 y2 line_width length space
-This function draws a line with a centered line type. The parameter @code{space} represents the distance between a dot and the dash. The parameter @code{length} represents the length of a dash.
+This function draws a line with a centered line type. The parameter [[space]] represents the distance between a dot and the dash. The parameter [[length]] represents the length of a dash.
 @end defun
 
-The unit of @code{x1}, @code{y1} and @code{x2}, @code{y2} and @code{line_width}, @code{length}, @code{space} is pixel.
+The unit of [[x1]], [[y1]] and [[x2]], [[y2]] and [[line_width]], [[length]], [[space]] is pixel.
 
 A negative of null value for length or space leads to an endless loop.
 
@@ -424,7 +426,7 @@ The function determines the increments on x and y axis that match the space on t
 
 Starting from one of the end of the line and incrementing the position gives the coordinates of every dots and dashes on the line providing that the second extremity is not exceeded. This is checked by first computing the distance between the two extremities and then checking whether this limit is exceeded by a new dash or not.
 
-It draws as many sets of 'dash of length @code{length} and dot' as possible.
+It draws as many sets of 'dash of length [[length]] and dot' as possible.
 
 <<o_line.c : o_line_draw_center()>>=
   dx = (double) (x2 - x1);
@@ -497,7 +499,7 @@ it is possible to draw a dash or a part of the original dash ;
 
 @
 
-Depending on the width of the line, dots has to be drawn in a different manner : if the real world width is equal to 0, then the width is translated to 1 in screen coordinates. Drawing a circle with a 1-diameter and the GDK function @code{gdk_draw_arc()} is not possible. So we needs to test whether the width is 1 or not.
+Depending on the width of the line, dots has to be drawn in a different manner : if the real world width is equal to 0, then the width is translated to 1 in screen coordinates. Drawing a circle with a 1-diameter and the GDK function [[gdk_draw_arc()]] is not possible. So we needs to test whether the width is 1 or not.
 
 <<o_line_draw_center() : drawing a dot>>=
   if(line_width == 1) {
@@ -512,13 +514,13 @@ Depending on the width of the line, dots has to be drawn in a different manner :
 @ 
 
 
-@section Function @code{o_line_draw_phantom()}
+@section Function [[o_line_draw_phantom()]]
 
 @defun o_line_draw_phantom w gc color cap x1 y1 x2 y2 line_width length space
-This function draws a line with a phantom line type. The parameter @code{space} represents the distance between a dot and a dash. The parameter @code{length} represents the length of a dash.
+This function draws a line with a phantom line type. The parameter [[space]] represents the distance between a dot and a dash. The parameter [[length]] represents the length of a dash.
 @end defun
 
-The unit of @code{x1}, @code{y1} and @code{x2}, @code{y2} and @code{line_width}, @code{length}, @code{space} is pixel.
+The unit of [[x1]], [[y1]] and [[x2]], [[y2]] and [[line_width]], [[length]], [[space]] is pixel.
 
 A negative of null value for length or space leads to an endless loop.
 
@@ -543,7 +545,7 @@ The function determines the increments on x and y axis that match the space on t
 
 Starting from one of the end of the line and incrementing the position gives the coordinates of every dots and dashes on the line providing that the second extremity is not exceeded. This is checked by first computing the distance between the two extremities and then checking whether this limit is exceeded by a new dash or not.
 
-It draws as many sets of 'dash of length @code{length} and two dots' as possible.
+It draws as many sets of 'dash of length [[length]] and two dots' as possible.
 
 <<o_line.c : o_line_draw_phantom()>>=
   dx = (double) (x2 - x1);
@@ -643,7 +645,7 @@ if((d + length + 2 * space) < l) {
 
 @
 
-Depending on the width of the line, dots has to be drawn in a different manner : if the real world width is equal to 0, then the width is translated to 1 in screen coordinates. Drawing a circle with a 1-diameter and the GDK function @code{gdk_draw_arc()} is not possible. So we needs to test whether the width is 1 or not.
+Depending on the width of the line, dots has to be drawn in a different manner : if the real world width is equal to 0, then the width is translated to 1 in screen coordinates. Drawing a circle with a 1-diameter and the GDK function [[gdk_draw_arc()]] is not possible. So we needs to test whether the width is 1 or not.
 
 <<o_line_draw_phantom() : drawing a dot>>=
   if(line_width == 1) {
@@ -658,10 +660,13 @@ Depending on the width of the line, dots has to be drawn in a different manner :
 @ 
 
 
-@section Function @code{o_line_erase()}
+@section Function [[o_line_erase()]]
 
 @defun o_line_erase w_current o_current
+The [[o_line_erase()]] function erases the box object described by [[*o_current]].
 @end defun
+
+It draws the box over the sheet with the background color.
 
 <<o_line.c : o_line_erase()>>=
 void
@@ -675,9 +680,10 @@ o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
 @ %def o_line_erase
 
 
-@section Function @code{o_line_draw_xor()}
+@section Function [[o_line_draw_xor()]]
 
 @defun o_line_draw_xor w_current dx dy o_current
+This function is used to draw the line object described by [[*o_current]] after applying a translation on the two directions of [[dx]] and [[dy]] in screen unit. It uses and XOR function to draw the translated line over the current sheet.
 @end defun
 
 <<o_line.c : o_line_draw_xor()>>=
@@ -711,36 +717,39 @@ o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 @ %def o_line_draw_xor
 
 
-@section Function @code{o_line_start()}
+@section Function [[o_line_start()]]
 
 @defun o_line_start w_current x y
+This function starts the process of interactively adding a line to the current sheet.
 @end defun
+
+During all the process, the line is internally represented by the two ends of the line as ([[w_current->start_x]],[[w_current->start_y]]) and ([[w_current->last_x]],[[w_current->last_y]]).
+
+A temporary line is xor-drawn during the process with the selection color and changed according to the position of the mouse pointer.
 
 <<o_line.c : o_line_start()>>=
 void
 o_line_start(TOPLEVEL *w_current, int x, int y)
 {
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
-
-  /* draw init xor */
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->select_color));
-  gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                             GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
-                             GDK_JOIN_MITER);
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->last_x, w_current->last_y);
+	/* init start_[x|y], last_[x|y] to describe line */
+	w_current->last_x = w_current->start_x = fix_x(w_current, x);
+	w_current->last_y = w_current->start_y = fix_y(w_current, y);
+	
+	/* draw init xor */
+	o_line_rubberline_xor(w_current);
+  
 }
 
 @ %def o_line_start
 
 
-@section Function @code{o_line_end()}
+@section Function [[o_line_end()]]
 
 @defun o_line_end w_current x y
+This function ends the process of interactively adding a line to the current sheet.
 @end defun
+
+It first erases the last temporary line displayed, calculates the corresponding world coordinates of the two ends of the line and finally adds a new initialized line object to the list of object of the current sheet.
 
 <<o_line.c : o_line_end()>>=
 void
@@ -761,11 +770,7 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
   */
 
   /* erase xor image */
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-		w_current->last_x, w_current->last_y);
+  o_line_rubberline_xor(w_current);
 
   /* don't allow zero length lines */
   if ( (w_current->start_x == w_current->last_x) &&
@@ -777,37 +782,33 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
     return;
   }
 
-  /* draw the real one */
-  gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->graphic_color));
-  gdk_draw_line(w_current->window, w_current->gc,
-                w_current->start_x, w_current->start_y,
-                w_current->last_x, w_current->last_y);
-  gdk_draw_line(w_current->backingstore, w_current->gc,
-                w_current->start_x, w_current->start_y,
-                w_current->last_x, w_current->last_y);
-
-  SCREENtoWORLD(w_current, w_current->start_x,w_current->start_y, &x1,
-                &y1);
-  SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2,
-                &y2);
-
+  /* calculate the world coords of the two ends of the line */
+  SCREENtoWORLD(w_current,
+				w_current->start_x, w_current->start_y,
+				&x1, &y1);
+  SCREENtoWORLD(w_current,
+				w_current->last_x, w_current->last_y,
+				&x2, &y2);
   x1 = snap_grid(w_current, x1);
   y1 = snap_grid(w_current, y1);
   x2 = snap_grid(w_current, x2);
   y2 = snap_grid(w_current, y2);
 	
-
+  /* create the object */
   /* PB : modification in o_line_add() prototype */	
   w_current->page_current->object_tail =
   o_line_add(w_current,
              w_current->page_current->object_tail,
              OBJ_LINE, w_current->graphic_color, x1, y1, x2, y2);
 
+  /* draw it */
+  o_redraw_single(w_current, w_current->page_current->object_tail);
+  
   w_current->start_x = (-1);
   w_current->start_y = (-1);
   w_current->last_x = (-1);
   w_current->last_y = (-1);
+  
   w_current->page_current->CHANGED=1;
 
   o_undo_savestate(w_current, UNDO_ALL);
@@ -816,144 +817,160 @@ o_line_end(TOPLEVEL *w_current, int x, int y)
 @ %def o_line_end
 
 
-@section Function @code{o_line_rubberline()}
+@section Function [[o_line_rubberline()]]
 
 @defun o_line_rubberline w_current x y
+This function manages the erase/update/draw process of temporary line when modifying one end of the line.
+The line is described by four [[*w_current]] variables : the first end of the line is ([[start_x]],[[start_y]]), the second end is ([[last_x]],[[last_y]]).
+The first end is constant. The second end is updated to the ([[x]],[[y]]).
 @end defun
 
 <<o_line.c : o_line_rubberline()>>=
 void
 o_line_rubberline(TOPLEVEL *w_current, int x, int y)
 {
-
   int diff_x, diff_y;
 
-#if 0 /* should never happen*/
   if (w_current->inside_action == 0) {
-    o_redraw(w_current->page_current->object_head);
+    o_redraw(w_current, w_current->page_current->object_head);
     return;
   }
-#endif
 
-  gdk_gc_set_foreground(w_current->xor_gc,
-                        x_get_color(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-		w_current->start_x, w_current->start_y,
-                w_current->last_x, w_current->last_y);
+  <<o_line_rubberline() : xor-draw the current temporary line>>
 
-  w_current->last_x = fix_x(w_current, x);
-  w_current->last_y = fix_y(w_current, y);
+  <<o_line_rubberline() : update the line with the x and y parameters>>
 
-  /* if the control key was pressed then draw ortho lines */
-  if (w_current->CONTROLKEY) {
-    diff_x = abs(w_current->last_x - w_current->start_x);
-    diff_y = abs(w_current->last_y - w_current->start_y);
-
-    if (diff_x >= diff_y) {
-      w_current->last_y = w_current->start_y;
-    } else {
-      w_current->last_x = w_current->start_x;
-    }
-  }
-
-  gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_color(w_current->select_color));
-  gdk_draw_line(w_current->window, w_current->xor_gc,
-                w_current->start_x, w_current->start_y,
-                w_current->last_x, w_current->last_y);
+  <<o_line_rubberline() : xor-draw the modified temporary line>>
+  
 }
 
 @ %def o_line_rubberline
 
 
-@section Function @code{o_line_draw_grips()}
+The current temporary line is described by the two points ([[w_current->start_x]],[[w_current->start_y]]) and ([[w_current->last_x]],[[w_current->last_y]]) as end of the line.
+
+This line is xor-drawn : if the line was already displayed, it is erased. If the line was not already displayed it is drawn.
+
+<<o_line_rubberline() : xor-draw the current temporary line>>=
+/* xor-draw a line at the old location */
+o_line_rubberline_xor(w_current);
+
+@ 
+
+
+The coordinates of the moving end of the line are updated. Its new coordinates are in [[x]] and [[y]] parameters and saved to [[w_current->last_x]] and [[w_current->last_y]] respectively - after being snapped to grid.
+
+<<o_line_rubberline() : update the line with the x and y parameters>>=
+/* update the coordinate of the modified end */
+w_current->last_x = fix_x(w_current, x);
+w_current->last_y = fix_y(w_current, y);
+
+/* if the control key was pressed then draw ortho lines */
+if (w_current->CONTROLKEY) {
+    diff_x = abs(w_current->last_x - w_current->start_x);
+    diff_y = abs(w_current->last_y - w_current->start_y);
+	
+    if (diff_x >= diff_y) {
+		w_current->last_y = w_current->start_y;
+    } else {
+		w_current->last_x = w_current->start_x;
+    }
+}
+
+@ 
+
+
+The updated line is finally again xor-drawn : before the call to this function, if the line was displayed, it has been erased, updated and displayed again.
+
+<<o_line_rubberline() : xor-draw the modified temporary line>>=
+/* xor-draw the updated line */
+o_line_rubberline_xor(w_current);
+
+@ 
+
+
+@section Function [[o_line_rubberline_xor()]]
+
+@defun o_line_rubberline_xor w_current
+This function draws a line with an exclusive or function over the sheet. The color of the box is [[w_current->select_color]]. The line is described by the two points ([[w_current->start_x]],[[w_current->start_y]]) and ([[w_current->last_x]],[[w_current->last_y]]).
+@end defun
+
+This function can either be used to draw a temporary box or to erase a previously drawn temporary box by drawing over - XOR function.
+
+<<o_line.c : o_line_rubberline_xor()>>=
+void
+o_line_rubberline_xor(TOPLEVEL *w_current)
+{
+	/* draw the circle from the w_current variables */
+	/* with xor-function */
+	gdk_gc_set_foreground(w_current->xor_gc,
+						  x_get_color(w_current->select_color));
+	gdk_gc_set_line_attributes(w_current->xor_gc, 0,
+							   GDK_LINE_SOLID, GDK_CAP_NOT_LAST, 
+							   GDK_JOIN_MITER);
+	gdk_draw_line(w_current->window, w_current->xor_gc,
+				  w_current->start_x, w_current->start_y,
+				  w_current->last_x,  w_current->last_y);
+	
+}
+
+@ %def o_line_rubberline_xor
+
+
+@section Function [[o_line_draw_grips()]]
 
 @defun o_line_draw_grips w_current w o_current
+This function draws the grips on the line object [[o_current]].
 @end defun
+
+A line has a grip at each end.
 
 <<o_line.c : o_line_draw_grips()>>=
 void
-o_line_draw_grips(TOPLEVEL *w_current, GdkWindow *w, OBJECT *o_current) 
+o_line_draw_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
-  int size, x2size;
-  int factor;
+  if (w_current->draw_grips == FALSE)
+	  return;
 
-  if (w_current->draw_grips == FALSE) 
-  return;
+  /* draw the grip on line end 1 */
+  o_grips_draw(w_current, 
+			   o_current->line->screen_x[LINE_END1], 
+			   o_current->line->screen_y[LINE_END1]);
 
-  factor = (int) w_current->page_current->to_world_x_constant;
-  if (factor > SMALL_ZOOMFACTOR1) {
-    size = SCREENabs(w_current, GRIP_SIZE1); 
-  } else if (factor > SMALL_ZOOMFACTOR2) {
-    size = SCREENabs(w_current, GRIP_SIZE2); 
-  } else {
-    size = SCREENabs(w_current, GRIP_SIZE3); 
-  }
-  x2size = size * 2;
-
-  /*printf("zf %d  size %d  x2 %d\n", w_current->page_current->zoom_factor, size, x2size); */
-
-  gdk_draw_rectangle(w, w_current->gc, FALSE,
-                     o_current->line->screen_x[0] - size, 
-                     o_current->line->screen_y[0] - size,
-                     x2size, x2size);
-
-  gdk_draw_rectangle(w, w_current->gc, FALSE,
-                     o_current->line->screen_x[1] - size, 
-                     o_current->line->screen_y[1] - size,
-                     x2size, x2size);
+  /* draw the grip on line end 2 */
+  o_grips_draw(w_current,
+			   o_current->line->screen_x[LINE_END2], 
+			   o_current->line->screen_y[LINE_END2]);
 }
 
 @ %def o_line_draw_grips
 
 
-@section Function @code{o_line_erase_grips()}
+@section Function [[o_line_erase_grips()]]
 
 @defun o_line_erase_grips w_current o_current
+This function erases the grips on the line object [[o_current]].
 @end defun
+
+A line has a grip at each end.
 
 <<o_line.c : o_line_erase_grips()>>=
 void
 o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current) 
 {
-  int size, x2size;
-  int factor;
+	if (w_current->draw_grips == FALSE)
+		return;
 
-  if (w_current->draw_grips == FALSE) 
-  return;
+	/* erase the grip on line end 1 */
+	o_grips_erase(w_current, 
+				  o_current->line->screen_x[LINE_END1],
+				  o_current->line->screen_y[LINE_END1]);
 
-  gdk_gc_set_foreground(w_current->gc, 
-                        x_get_color(w_current->background_color));
-
-  factor = (int) w_current->page_current->to_world_x_constant;
-  if (factor > SMALL_ZOOMFACTOR1) {
-    size = SCREENabs(w_current, GRIP_SIZE1); 
-  } else if (factor > SMALL_ZOOMFACTOR2) {
-    size = SCREENabs(w_current, GRIP_SIZE2); 
-  } else {
-    size = SCREENabs(w_current, GRIP_SIZE3); 
-  }
-  x2size = 2 * size;
-
-  gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
-                     o_current->line->screen_x[0] - size, 
-                     o_current->line->screen_y[0] - size,
-                     x2size, x2size);
-
-  gdk_draw_rectangle(w_current->window, w_current->gc, FALSE,
-                     o_current->line->screen_x[1] - size, 
-                     o_current->line->screen_y[1] - size,
-                     x2size, x2size);
-
-  gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
-                     o_current->line->screen_x[0] - size, 
-                     o_current->line->screen_y[0] - size,
-                     x2size, x2size);
-
-  gdk_draw_rectangle(w_current->backingstore, w_current->gc, FALSE,
-                     o_current->line->screen_x[1] - size, 
-                     o_current->line->screen_y[1] - size,
-                     x2size, x2size);
+	/* erase the grip on line end 2 */
+	o_grips_erase(w_current,
+				  o_current->line->screen_x[LINE_END2],
+				  o_current->line->screen_y[LINE_END2]);
+  
 }
 
 @ %def o_line_erase_grips

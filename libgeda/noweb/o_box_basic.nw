@@ -12,35 +12,46 @@
 
 <<o_box_basic.c : include directives>>
 <<o_box_basic.c : macros>>
-<<o_box_basic.c : get_box_bounds()>>
-<<o_box_basic.c : world_get_box_bounds()>>
+
+
 <<o_box_basic.c : o_box_add()>>
-<<o_box_basic.c : o_box_recalc()>>
+
+<<o_box_basic.c : o_box_copy()>>
+
+<<o_box_basic.c : o_box_modify()>>
+
 <<o_box_basic.c : o_box_read()>>
 <<o_box_basic.c : o_box_save()>>
+
 <<o_box_basic.c : o_box_translate()>>
 <<o_box_basic.c : o_box_translate_world()>>
-<<o_box_basic.c : o_box_copy()>>
-<<o_box_basic.c : o_box_print()>>         /* done */
-<<o_box_basic.c : o_box_print_solid()>>   /* done */
-<<o_box_basic.c : o_box_print_dotted()>>  /* done */
-<<o_box_basic.c : o_box_print_dashed()>>  /* done */
-<<o_box_basic.c : o_box_print_center()>>  /* done */
-<<o_box_basic.c : o_box_print_phantom()>> /* done */
-<<o_box_basic.c : o_box_print_filled()>>  /* done */
-<<o_box_basic.c : o_box_print_mesh()>>    /* done */
-<<o_box_basic.c : o_box_print_hatch()>>   /* done */
+
+<<o_box_basic.c : o_box_rotate()>>
+<<o_box_basic.c : o_box_rotate_world()>>
+
+<<o_box_basic.c : o_box_mirror()>>
+<<o_box_basic.c : o_box_mirror_world()>>
+
+<<o_box_basic.c : o_box_recalc()>>
+
+<<o_box_basic.c : get_box_bounds()>>
+<<o_box_basic.c : world_get_box_bounds()>>
+
+<<o_box_basic.c : o_box_print()>>
+<<o_box_basic.c : o_box_print_solid()>>
+<<o_box_basic.c : o_box_print_dotted()>>
+<<o_box_basic.c : o_box_print_dashed()>>
+<<o_box_basic.c : o_box_print_center()>>
+<<o_box_basic.c : o_box_print_phantom()>>
+<<o_box_basic.c : o_box_print_filled()>>
+<<o_box_basic.c : o_box_print_mesh()>>
+<<o_box_basic.c : o_box_print_hatch()>>
 
 #if 0 /* original way of printing box, no longer used */
 <<o_box_basic.c : o_box_print_old()>>
 #endif
 
 <<o_box_basic.c : o_box_image_write()>>
-<<o_box_basic.c : o_box_rotate()>>
-<<o_box_basic.c : o_box_rotate_world()>>
-<<o_box_basic.c : o_box_mirror()>>
-<<o_box_basic.c : o_box_mirror_world()>>
-<<o_box_basic.c : o_box_modify()>>
 
 @
 
@@ -109,66 +120,21 @@
 @ %def GET_BOX_WIDTH GET_BOX_HEIGHT GET_BOX_LEFT GET_BOX_TOP VERSION_20000704
 
 
-@section Function @code{get_box_bounds()}
-
-@defun get_box_bounds w_current object left top right bottom
-@end defun
-
-<<o_box_basic.c : get_box_bounds()>>=
-void
-get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top,
-               int *right, int *bottom)
-{
-  *left = box->screen_upper_x;
-  *top = box->screen_upper_y;
-  *right = box->screen_lower_x;
-  *bottom = box->screen_lower_y;
-
-  /* PB : bounding box has to take into account the width of the line it is
-     composed with, ie adding/substracting half the width to this box */
-  /* PB : but width is unknown here */	
-	
-  *left = *left - 4;
-  *top = *top - 4;
-	
-  *right = *right + 4;
-  *bottom = *bottom + 4;
-}
-
-@ %def get_box_bounds
-
-
-@section Function @code{world_get_box_bounds()}
-
-@defun world_get_box_bounds w_current box left top right bottom
-@end defun
-
-<<o_box_basic.c : world_get_box_bounds()>>=
-void
-world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom)
-{
-  *left = min(box->upper_x, box->lower_x);
-  *top = min(box->upper_y, box->lower_y);
-  *right = max(box->upper_x, box->lower_x);
-  *bottom = max(box->upper_y, box->lower_y);
-
-  /* PB : same as above here */	
-
-
-#if DEBUG 
-  printf("box: %d %d %d %d\n", *left, *top, *right, *bottom);
-#endif
-
-	
-}
-                 
-@ %def world_get_box_bounds
-
-
-@section Function @code{o_box_add()}
+@section Function [[o_box_add()]]
 
 @defun o_box_add w_current object_list type color x1 y1 x2 y2
+This function creates a new object representing a box. This object is added to the end of the list [[object_list]] pointed object belongs to.
+The box is described by its upper left corner - [[x1]], [[y1]] - and its lower right corner - [[x2]], [[y2]].
+The [[type]] parameter must be equal to [[OBJ_BOX]]. The [[color]] corresponds to the color the box will be drawn with.
 @end defun
+
+The [[OBJECT]] structure is allocated with the [[s_basic_init_object()]] function. The structure describing the box is allocated and initialized with the parameters given to the function.
+
+Both the line type and the filling type are set to default values : solid line type with a width of 0, and no filling. It can be changed after with the [[o_set_line_options()]] and [[o_set_fill_options()]].
+
+The object is added to the end of the list described by the [[object_list]] parameter by the [[s_basic_link_object()]].
+
+The function returns a new pointer on the end of the object list.
 
 <<o_box_basic.c : o_box_add()>>=
 OBJECT *
@@ -179,325 +145,74 @@ o_box_add(TOPLEVEL *w_current, OBJECT *object_list,
   OBJECT *new_node;
   BOX *box;
 
-  new_node = s_basic_init_object("box");
-  new_node->type = type;
-  new_node->color = color;
+  <<o_box_add() : allocate memory for the new box>>
 
-  box = (BOX *) malloc(sizeof(BOX));
+  <<o_box_add() : initialize the box>>
 
-  box->upper_x = x1;
-  box->upper_y = y1;
-  box->lower_x = x2;
-  box->lower_y = y2;
+  <<o_box_add() : calculate the screen coords and the bounding box>>
 
-  new_node->box = box;
+  <<o_box_add() : add the object to the list>>
 
-  /* Init */
-  o_set_line_options(w_current, new_node,
-                     END_NONE, TYPE_SOLID, 0, -1, -1);
-  o_set_fill_options(w_current, new_node,
-                     FILLING_HOLLOW, -1, -1, -1, -1, -1);
-	
-  o_box_recalc(w_current, new_node);
-
-  /* TODO: questionable cast */     
-  new_node->draw_func = (void *) box_draw_func; 
-  /* TODO: questionable cast */     
-  new_node->sel_func = (void *) select_func;  
-
-  object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
   return(object_list);
 }
 
 @ %def o_box_add
 
 
-@section Function @code{o_box_recalc()}
+<<o_box_add() : allocate memory for the new box>>=
+/* create the object */
+new_node        = s_basic_init_object("box");
+new_node->type  = type;
+new_node->color = color;
 
-@defun o_box_recalc w_current o_current
-@end defun
+box = (BOX *) malloc(sizeof(BOX));
+new_node->box   = box;
 
-<<o_box_basic.c : o_box_recalc()>>=
-void
-o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
-{
-  int left, top, right, bottom;
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
-
-  if (o_current->box == NULL) {
-    return;
-  }
-
-  WORLDtoSCREEN(w_current, o_current->box->upper_x, 
-                o_current->box->upper_y, 
-                &screen_x1,
-                &screen_y1);  
-
-  o_current->box->screen_upper_x = screen_x1;
-  o_current->box->screen_upper_y = screen_y1;
-
-  WORLDtoSCREEN(w_current, o_current->box->lower_x, 
-                o_current->box->lower_y, 
-                &screen_x2,
-                &screen_y2);  
-
-  o_current->box->screen_lower_x = screen_x2;
-  o_current->box->screen_lower_y = screen_y2;
-	
-  get_box_bounds(w_current, o_current->box, &left, &top, &right, &bottom);
-
-  o_current->left = left;
-  o_current->top = top;
-  o_current->right = right;
-  o_current->bottom = bottom;
-
-  o_object_recalc(w_current, o_current);
-	
-}
-
-@ %def o_box_recalc
+@ 
 
 
-@section Function @code{o_box_read()}
+<<o_box_add() : initialize the box>>=
+/* describe the box with its upper left and lower right corner */
+box->upper_x = x1;
+box->upper_y = y1;
+box->lower_x = x2;
+box->lower_y = y2;
 
-@defun o_box_read w_current object_list buf version
-@end defun
+/* line type and filling initialized to default */
+o_set_line_options(w_current, new_node,
+				   END_NONE, TYPE_SOLID, 0, -1, -1);
+o_set_fill_options(w_current, new_node,
+				   FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-<<o_box_basic.c : o_box_read()>>=
-OBJECT *
-o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
-{
-  char type; 
-  int x1, y1;
-  int width, height; 
-  int d_x1, d_y1;
-  int d_x2, d_y2;
-  int color;
-  int box_width, box_space, box_length;
-  int fill_width, angle1, pitch1, angle2, pitch2;
-  OBJECT_END box_end;
-  OBJECT_TYPE box_type;
-  OBJECT_FILLING box_filling;
-  long int ver;
+/* TODO: questionable cast */     
+new_node->draw_func = (void *) box_draw_func; 
+/* TODO: questionable cast */     
+new_node->sel_func  = (void *) select_func;  
 
-  ver = strtol(version, NULL, 10);
-  if(ver <= VERSION_20000704) {
-    sscanf(buf, "%c %d %d %d %d %d\n",
-           &type, &x1, &y1, &width, &height, &color);
-
-    box_width   = 0;
-    box_end     = END_NONE;
-    box_type    = TYPE_SOLID;
-    box_length  = -1;
-    box_space   = -1;
-
-    box_filling = FILLING_HOLLOW;		
-    fill_width  = 0;
-    angle1      = -1;
-    pitch1      = -1;
-    angle2      = -1;
-    pitch2      = -1;
-  } else {
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-           &type, &x1, &y1, &width, &height, &color,
-           &box_width, &box_end, &box_type, &box_length, 
-           &box_space, &box_filling,
-           &fill_width, &angle1, &pitch1, &angle2, &pitch2);			   
-  }
-
-  d_x1 = x1;
-  d_y1 = y1+height; /* move box origin to top left */
-
-  d_x2 = x1+width; /* end points of the box */
-  d_y2 = y1;
-
-  if (width == 0 || height == 0) {
-    fprintf(stderr, "Found a zero width/height box [ %c %d %d %d %d %d ]\n",
-            type, x1, y1, width, height, color);
-    s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n",
-                  type, x1, y1, width, height, color);
-  }
-
-  if (color < 0 || color > MAX_COLORS) {
-    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-    s_log_message("Found an invalid color [ %s ]\n", buf);
-    s_log_message("Setting color to WHITE\n");
-    color = WHITE;
-  }
-	
-  object_list = (OBJECT *) o_box_add(w_current, object_list,
-                                     type, color,
-                                     d_x1, d_y1, d_x2, d_y2);
-  o_set_line_options(w_current, object_list,
-                     box_end, box_type, box_width, 
-                     box_length, box_space);
-  o_set_fill_options(w_current, object_list,
-                     box_filling, fill_width,
-                     pitch1, angle1, pitch2, angle2);
-
-  return(object_list);
-}
-
-@ %def o_box_read
+@ 
 
 
-@section Function @code{o_box_save()}
+<<o_box_add() : calculate the screen coords and the bounding box>>=
+/* compute the bounding box */
+o_box_recalc(w_current, new_node);
 
-@defun o_box_save buf object
-@end defun
-
-<<o_box_basic.c : o_box_save()>>=
-char *
-o_box_save(char *buf, OBJECT *object)
-{
-  int x1, y1; 
-  int width, height;
-  int color;
-  int box_width, box_space, box_length;
-  int fill_width, angle1, pitch1, angle2, pitch2;
-  OBJECT_END box_end;
-  OBJECT_TYPE box_type;
-  OBJECT_FILLING box_fill;
-		
-  width  = abs(object->box->lower_x - object->box->upper_x); 
-  height = abs(object->box->upper_y - object->box->lower_y);
-
-  x1 = object->box->upper_x;
-  y1 = object->box->upper_y - height; /* move the origin to 0, 0*/
-
-#if DEBUG
-  printf("box: %d %d %d %d\n", x1, y1, d_x, d_y);
-#endif
-
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-
-  box_end    = object->line_end;
-  box_width  = object->line_width;
-  box_type   = object->line_type;
-  box_length = object->line_length;
-  box_space  = object->line_space;
-	
-  box_fill   = object->fill_type;
-  fill_width = object->fill_width;
-  angle1     = object->fill_angle1;
-  pitch1     = object->fill_pitch1;
-  angle2     = object->fill_angle2;
-  pitch2     = object->fill_pitch2;
-
-  sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
-          object->type,
-          x1, y1, width, height, color,
-          box_width, box_end, box_type, box_length, box_space, 
-          box_fill,
-          fill_width, angle1, pitch1, angle2, pitch2);
-			
-  return(buf);
-}
-
-@ %def o_box_save
+@ 
 
 
-@section Function @code{o_box_translate()}
+<<o_box_add() : add the object to the list>>=
+/* add the object to the list */
+object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-@defun o_box_translate w_current dx dy object
-@end defun
-
-<<o_box_basic.c : o_box_translate()>>=
-void
-o_box_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-  int x, y;
-
-  if (object == NULL) printf("bt NO!\n");
-	
-
-  /* Do screen coords */
-  object->box->screen_upper_x = object->box->screen_upper_x + dx;
-  object->box->screen_upper_y = object->box->screen_upper_y + dy;
-  object->box->screen_lower_x = object->box->screen_lower_x + dx;
-  object->box->screen_lower_y = object->box->screen_lower_y + dy;
-
-  /* printf("box: trans: %d %d\n", dx, dy);*/
-
-  SCREENtoWORLD(w_current, object->box->screen_upper_x,
-                object->box->screen_upper_y,
-                &x,
-                &y);
-	
-  object->box->upper_x = snap_grid(w_current, x);
-  object->box->upper_y = snap_grid(w_current, y);
-	
-  SCREENtoWORLD(w_current, object->box->screen_lower_x,
-                object->box->screen_lower_y,
-                &x,
-                &y);
-	
-  object->box->lower_x = snap_grid(w_current, x);
-  object->box->lower_y = snap_grid(w_current, y);
-}
-
-@ %def o_box_translate
+@ 
 
 
-@section Function @code{o_box_translate_world()}
-
-@defun o_box_translate_world w_current x1 y1 object
-@end defun
-
-<<o_box_basic.c : o_box_translate_world()>>=
-void
-o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
-{
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
-  int left, right, top, bottom;
-
-  if (object == NULL) printf("btw NO!\n");
-	
-	
-  /* Do world coords */
-  object->box->upper_x = object->box->upper_x + x1;
-  object->box->upper_y = object->box->upper_y + y1;
-  object->box->lower_x = object->box->lower_x + x1;
-  object->box->lower_y = object->box->lower_y + y1;     
-	
-  WORLDtoSCREEN(w_current, object->box->upper_x, 
-                object->box->upper_y, 
-                &screen_x1,
-                &screen_y1);  
-	
-  object->box->screen_upper_x = screen_x1;
-  object->box->screen_upper_y = screen_y1;
-	
-  WORLDtoSCREEN(w_current, object->box->lower_x, 
-                object->box->lower_y, 
-                &screen_x2,
-                &screen_y2);  
-	
-  object->box->screen_lower_x = screen_x2;
-  object->box->screen_lower_y = screen_y2;
-	
-  get_box_bounds(w_current, object->box, &left, &top, &right, &bottom);
-	
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;
-}
-
-@ %def o_box_translate_world
-
-
-@section Function @code{o_box_copy()}
+@section Function [[o_box_copy()]]
 
 @defun o_box_copy w_current list_tail o_current
+The function [[o_box_copy()]] creates a verbatim copy of the object pointed by [[o_current]] describing a box. The new object is added at the end of the list, following the [[list_tail]] pointed object.
 @end defun
+
+The function returns a new pointer on the end of the object list.
 
 <<o_box_basic.c : o_box_copy()>>=
 OBJECT *
@@ -512,50 +227,742 @@ o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
   } else {
     color = o_current->saved_color;
   }
-	
-  new_obj = o_box_add(w_current, list_tail,
-                      OBJ_BOX, color,
-                      0, 0, 0, 0);
-	
-  new_obj->box->screen_upper_x = o_current->box->screen_upper_x;
-  new_obj->box->screen_upper_y = o_current->box->screen_upper_y;
-  new_obj->box->screen_lower_x = o_current->box->screen_lower_x;
-  new_obj->box->screen_lower_y = o_current->box->screen_lower_y;  
-	
-  new_obj->box->upper_x = o_current->box->upper_x;
-  new_obj->box->upper_y = o_current->box->upper_y;
-  new_obj->box->lower_x = o_current->box->lower_x;
-  new_obj->box->lower_y = o_current->box->lower_y;
 
-	
-  o_set_line_options(w_current, new_obj, o_current->line_end,
-                     o_current->line_type, o_current->line_width,
-                     o_current->line_length, o_current->line_space);
-  o_set_fill_options(w_current, new_obj,
-                     o_current->fill_type, o_current->fill_width,
-                     o_current->fill_pitch1, o_current->fill_angle1,
-                     o_current->fill_pitch2, o_current->fill_angle2);
-	
-  /*	new_obj->attribute = 0;*/
-  a_current = o_current->attribs;
-  if (a_current) {
-    while ( a_current ) {
-			
-      /* head attrib node has prev = NULL */
-      if (a_current->prev != NULL) {
-        a_current->copied_to = new_obj;
-      }
-      a_current = a_current->next;
-    }
-  }
+  <<o_box_copy() : create and insert a new object in the list>>
 
+  <<o_box_copy() : modify the fields of the new object>>
+
+  <<o_box_copy() : copy the attributes>>
+
+  /* return the new tail of the object list */
   return(new_obj);
 } 
 
 @ %def o_box_copy
 
 
-@section Function @code{o_box_print()}
+A new box object is added at the end of the object list with [[o_box_add()]]. Values for its fields are default and need to be modified.
+
+<<o_box_copy() : create and insert a new object in the list>>=
+/* create and link a new box object */	
+new_obj = o_box_add(w_current, list_tail,
+					OBJ_BOX, color,
+					0, 0, 0, 0);
+
+@ 
+
+
+The dimensions of the new box are set with the ones of the original box. The two boxes have the same line type and the same filling options.
+
+The coordinates and the values in screen unit are computed with [[o_box_recalc()]].
+
+<<o_box_copy() : modify the fields of the new object>>=
+/* modifying */
+/* pb20011002 - have to check if o_current is a box object */
+new_obj->box->upper_x = o_current->box->upper_x;
+new_obj->box->upper_y = o_current->box->upper_y;
+new_obj->box->lower_x = o_current->box->lower_x;
+new_obj->box->lower_y = o_current->box->lower_y;
+	
+o_set_line_options(w_current, new_obj, o_current->line_end,
+				   o_current->line_type, o_current->line_width,
+				   o_current->line_length, o_current->line_space);
+o_set_fill_options(w_current, new_obj,
+				   o_current->fill_type, o_current->fill_width,
+				   o_current->fill_pitch1, o_current->fill_angle1,
+				   o_current->fill_pitch2, o_current->fill_angle2);
+
+o_box_recalc(w_current, new_obj);
+
+@ 
+
+
+<<o_box_copy() : copy the attributes>>=
+/*	new_obj->attribute = 0;*/
+a_current = o_current->attribs;
+if (a_current) {
+    while ( a_current ) {
+		
+		/* head attrib node has prev = NULL */
+		if (a_current->prev != NULL) {
+			a_current->copied_to = new_obj;
+		}
+		a_current = a_current->next;
+    }
+}
+
+@ 
+
+
+@section Function [[o_box_modify()]]
+
+@defun o_box_modify w_current object x y whichone
+This function modifies the coordinates of one of the four corner of the box. The new coordinates of the corner identified by [[whichone]] are given by [[x]] and [[y]] in world unit.
+@end defun
+
+The coordinates of the corner is modified in the world coordinate system. Screen coordinates and boundings are then updated.
+
+<<o_box_basic.c : o_box_modify()>>=
+/* pb20011002 - rewritten : old one did not used x, y and whichone */
+void
+o_box_modify(TOPLEVEL *w_current, OBJECT *object, 
+			 int x, int y, int whichone)
+{
+	int tmp;
+	
+	/* change the position of the selected corner */
+	switch(whichone) {
+		case BOX_UPPER_LEFT:
+			object->box->upper_x = x;
+			object->box->upper_y = y;
+			break;
+			
+		case BOX_LOWER_LEFT:
+			object->box->upper_x = x;
+			object->box->lower_y = y;
+			break;
+			
+		case BOX_UPPER_RIGHT:
+			object->box->lower_x = x;
+			object->box->upper_y = y;
+			break;
+			
+		case BOX_LOWER_RIGHT:
+			object->box->lower_x = x;
+			object->box->lower_y = y;
+			break;
+			
+		default:
+			return;
+	}
+	
+	/* need to update the upper left and lower right corners */
+	if(object->box->upper_x > object->box->lower_x) {
+		tmp                  = object->box->upper_x;
+		object->box->upper_x = object->box->lower_x;
+		object->box->lower_x = tmp;
+	}
+	
+	if(object->box->upper_y < object->box->lower_y) {
+		tmp                  = object->box->upper_y;
+		object->box->upper_y = object->box->lower_y;
+		object->box->lower_y = tmp;
+	}
+	
+	/* recalculate the screen coords and the boundings */
+	o_box_recalc(w_current, object);
+  
+}
+
+@ %def o_box_modify
+
+
+@section Function [[o_box_read()]]
+
+@defun o_box_read w_current object_list buf version
+The function [[o_box_read()]] get from the character string [[*buf]] the description of a box. The new box is then added to the list of object of which [[*object_list]] is the last element before the call.
+The function returns the new last element, that is the added box object.
+@end defun
+
+Depending on [[*version]], the correct file format is considered. Currently two file format revisions are supported :
+@itemize @bullet
+@item
+the file format used until 20000704 release ;
+@item
+the file format used for the releases after 2000704.
+@end itemize
+
+<<o_box_basic.c : o_box_read()>>=
+OBJECT *
+o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
+{
+	char type; 
+	int x1, y1;
+	int width, height; 
+	int d_x1, d_y1;
+	int d_x2, d_y2;
+	int color;
+	int box_width, box_space, box_length;
+	int fill_width, angle1, pitch1, angle2, pitch2;
+	OBJECT_END box_end;
+	OBJECT_TYPE box_type;
+	OBJECT_FILLING box_filling;
+	long int ver;
+	
+	ver = strtol(version, NULL, 10);
+	if(ver <= VERSION_20000704) {
+		<<o_box_read() : old geda file format>>
+			  
+	} else {
+		<<o_box_read() : geda file format after release 20000704>>
+		
+	}
+
+	<<o_box_read() : check the values of the parameters>>
+
+	<<o_box_read() : add the new box to the list of objects>>
+
+	return(object_list);
+}
+
+@ %def o_box_read
+
+
+The old geda file format, i.e. releases 20000704 and older, does not handle the line type and the filling of the box object. They are set to default.
+
+<<o_box_read() : old geda file format>>=
+sscanf(buf, "%c %d %d %d %d %d\n",
+	   &type, &x1, &y1, &width, &height, &color);
+
+box_width   = 0;
+box_end     = END_NONE;
+box_type    = TYPE_SOLID;
+box_length  = -1;
+box_space   = -1;
+
+box_filling = FILLING_HOLLOW;		
+fill_width  = 0;
+angle1      = -1;
+pitch1      = -1;
+angle2      = -1;
+pitch2      = -1;
+
+@ 
+
+
+The current line format to describe a box is a space separated list of characters and numbers in plain ASCII on a single line. The meaning of each item is described in the file format documentation.
+
+<<o_box_read() : geda file format after release 20000704>>=
+sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+	   &type, &x1, &y1, &width, &height, &color,
+	   &box_width, &box_end, &box_type, &box_length, 
+	   &box_space, &box_filling,
+	   &fill_width, &angle1, &pitch1, &angle2, &pitch2);			   
+
+@ 
+
+
+<<o_box_read() : check the values of the parameters>>=
+if (width == 0 || height == 0) {
+    fprintf(stderr, "Found a zero width/height box [ %c %d %d %d %d %d ]\n",
+            type, x1, y1, width, height, color);
+    s_log_message("Found a zero width/height box [ %c %d %d %d %d %d ]\n",
+                  type, x1, y1, width, height, color);
+}
+
+if (color < 0 || color > MAX_COLORS) {
+    fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
+    s_log_message("Found an invalid color [ %s ]\n", buf);
+    s_log_message("Setting color to WHITE\n");
+    color = WHITE;
+}
+
+@ 
+
+
+A box is internally described by its lower right and upper left corner whereas the line describe it with the lower left corner and the width and height.
+
+A new object is allocated, initialized and added to the object list. Its filling and line type are set according to the values of the field on the line.
+
+<<o_box_read() : add the new box to the list of objects>>=
+/* upper left corner of the box */
+d_x1 = x1;
+d_y1 = y1+height; /* move box origin to top left */
+
+/* lower right corner of the box */
+d_x2 = x1+width; /* end points of the box */
+d_y2 = y1;
+
+/* create and add the box to the list */
+object_list = (OBJECT *) o_box_add(w_current, object_list,
+								   type, color,
+								   d_x1, d_y1, d_x2, d_y2);
+/* set its line options */
+o_set_line_options(w_current, object_list,
+				   box_end, box_type, box_width, 
+				   box_length, box_space);
+/* set its fill options */
+o_set_fill_options(w_current, object_list,
+				   box_filling, fill_width,
+				   pitch1, angle1, pitch2, angle2);
+
+@ 
+
+
+@section Function [[o_box_save()]]
+
+@defun o_box_save buf object
+This function formats a string in the buffer [[*buff]] to describe the box object [[*object]].
+It follows the post-20000704 release file format that handle the line type and fill options. 
+A pointer on the formated string is returned.
+@end defun
+
+<<o_box_basic.c : o_box_save()>>=
+char *
+o_box_save(char *buf, OBJECT *object)
+{
+  int x1, y1; 
+  int width, height;
+  int color;
+  int box_width, box_space, box_length;
+  int fill_width, angle1, pitch1, angle2, pitch2;
+  OBJECT_END box_end;
+  OBJECT_TYPE box_type;
+  OBJECT_FILLING box_fill;
+
+  <<o_box_save() : prepare the description of the box>>
+
+  <<o_box_save() : describe a box with post-20000704 file format>>
+			
+  return(buf);
+}
+
+@ %def o_box_save
+
+
+A box is internally represented by its lower right and upper left corner whereas it is described in the file format as its lower left corner and its width and height.
+
+<<o_box_save() : prepare the description of the box>>=
+/* calculate the width and height of the box */
+width  = abs(object->box->lower_x - object->box->upper_x); 
+height = abs(object->box->upper_y - object->box->lower_y);
+
+/* calculate the lower left corner of the box */
+x1 = object->box->upper_x;
+y1 = object->box->upper_y - height; /* move the origin to 0, 0*/
+
+#if DEBUG
+printf("box: %d %d %d %d\n", x1, y1, width, height);
+#endif
+
+/* description of the line type for the outline */
+box_end    = object->line_end;
+box_width  = object->line_width;
+box_type   = object->line_type;
+box_length = object->line_length;
+box_space  = object->line_space;
+
+/* description of the filling of the box */
+box_fill   = object->fill_type;
+fill_width = object->fill_width;
+angle1     = object->fill_angle1;
+pitch1     = object->fill_pitch1;
+angle2     = object->fill_angle2;
+pitch2     = object->fill_pitch2;
+
+/* Use the right color */
+if (object->saved_color == -1) {
+    color = object->color;
+} else {
+    color = object->saved_color;
+}
+
+@ 
+
+
+<<o_box_save() : describe a box with post-20000704 file format>>=
+sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
+		object->type,
+		x1, y1, width, height, color,
+		box_width, box_end, box_type, box_length, box_space, 
+		box_fill,
+		fill_width, angle1, pitch1, angle2, pitch2);
+
+@ 
+
+
+@section Function [[o_box_translate()]]
+
+@defun o_box_translate w_current dx dy object
+This function applies a translation of ([[dx]],[[dy]]) to the box described by [[*object]]. [[dx]] and [[dy]] are in screen unit.
+@end defun
+
+The translation vector is converted in world unit. The translation is made with [[o_box_translate_world()]].
+
+<<o_box_basic.c : o_box_translate()>>=
+void
+o_box_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+{
+  int world_dx, world_dy;
+
+  if (object == NULL) printf("bt NO!\n");
+
+  /* convert the translation vector in world unit */
+  world_dx = SCREENabs(w_current, dx);
+  world_dy = SCREENabs(w_current, dy);
+
+  /* translate the box */
+  o_box_translate_world(w_current, world_dx, world_dy, object);
+
+  /* screen coords and boundings are updated by _translate_world */
+  
+}
+
+@ %def o_box_translate
+
+
+@section Function [[o_box_translate_world()]]
+
+@defun o_box_translate_world w_current x1 y1 object
+This function applies a translation of ([[x1]],[[y1]]) to the box described by [[*object]]. [[x1]] and [[y1]] are in world unit.
+@end defun
+
+<<o_box_basic.c : o_box_translate_world()>>=
+void
+o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
+{
+  if (object == NULL) printf("btw NO!\n");
+
+  <<o_box_translate_world() : translate the box>>
+
+  <<o_box_translate_world() : update the screen coordinates>>
+  
+}
+
+@ %def o_box_translate_world
+
+
+<<o_box_translate_world() : translate the box>>=
+/* Do world coords */
+object->box->upper_x = object->box->upper_x + x1;
+object->box->upper_y = object->box->upper_y + y1;
+object->box->lower_x = object->box->lower_x + x1;
+object->box->lower_y = object->box->lower_y + y1;     
+
+@ 
+
+
+<<o_box_translate_world() : update the screen coordinates>>=
+/* recalc the screen coords and the bounding box */
+o_box_recalc(w_current, object);
+
+@ 
+
+
+@section Function [[o_box_rotate()]]
+
+@defun o_box_rotate w_current centerx centery angle object
+This function applies a rotation of center ([[centerx]], [[centery]]) and angle [[angle]] to the box object [[*object]].
+The coordinates of the rotation center are in screen units. 
+[[angle]] must be a 90 degree multiple. If not, no rotation is applied.
+@end defun
+
+The rotation is made with the [[o_box_rotate_world()]] function that perform a rotation of angle [[angle]] and center ([[world_centerx]], [[world_centery]]) in world unit.
+
+<<o_box_basic.c : o_box_rotate()>>=
+/* takes in screen coordinates for the centerx,y, and then does the rotate 
+ * in world space */
+/* also ignores angle argument... for now, rotate only in 90 degree 
+ * increments */
+/* fixed to 90 degrees... it's *not* general now */
+void
+o_box_rotate(TOPLEVEL *w_current,
+			 int centerx, int centery, int angle,
+             OBJECT *object)
+{
+  int world_centerx, world_centery;
+
+  /* convert the center of rotation to world unit */
+  SCREENtoWORLD(w_current,
+				centerx, centery, 
+                &world_centerx, &world_centery);  
+
+  /* rotate the box */
+  /* the check of the rotation angle is in o_box_rotate_world() */
+  o_box_rotate_world(w_current,
+					 world_centerx, world_centery, angle,
+					 object);
+
+  /* screen coords and boundings are updated by _rotate_world() */
+  
+}
+
+@ %def o_box_rotate
+
+
+@section Function [[o_box_rotate_world()]]
+
+@defun o_box_rotate_world w_current world_centerx world_centery angle object
+The function [[o_box_rotate_world()]] rotate the box described by [[*object]] around the ([[world_centerx]], [[world_centery]]) point by [[angle]] degrees.
+The center of rotation is in world unit.
+@end defun
+
+<<o_box_basic.c : o_box_rotate_world()>>=
+void
+o_box_rotate_world(TOPLEVEL *w_current, 
+                   int world_centerx, int world_centery, int angle,
+                   OBJECT *object)
+{
+	int newx1, newy1;
+	int newx2, newy2;
+
+	<<o_box_rotate_world() : check the rotation angle>>
+
+	<<o_box_rotate_world() : rotate the box world coords>>
+
+	<<o_box_rotate_world() : update the screen coords>>
+	
+}
+
+@ %def o_box_rotate_world
+
+
+Only 90 degree multiple and positive angles are allowed.
+
+<<o_box_rotate_world() : check the rotation angle>>=
+/* angle must be positive */
+if(angle < 0) angle = -angle;
+/* angle must be a 90 multiple or no rotation performed */
+if((angle % 90) != 0) return;
+
+@ 
+
+
+The center of rotation ([[world_centerx]], [[world_centery]]) is translated to the origin. The rotation of the upper left and lower right corner are then performed. Finally, the rotated box is translated back to its previous location.
+
+<<o_box_rotate_world() : rotate the box world coords>>=
+/* translate object to origin */
+object->box->upper_x -= world_centerx;
+object->box->upper_y -= world_centery;
+object->box->lower_x -= world_centerx;
+object->box->lower_y -= world_centery;
+
+/* rotate the upper left corner of the box */
+rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
+				&newx1, &newy1);
+
+/* rotate the lower left corner of the box */
+rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
+				&newx2, &newy2);
+
+/* reorder the corners after rotation */
+object->box->upper_x = min(newx1,newx2);
+object->box->upper_y = max(newy1,newy2);
+object->box->lower_x = max(newx1,newx2);
+object->box->lower_y = min(newy1,newy2);
+
+/* translate object back to normal position */
+object->box->upper_x += world_centerx;
+object->box->upper_y += world_centery;
+object->box->lower_x += world_centerx;
+object->box->lower_y += world_centery;
+
+@ 
+
+
+<<o_box_rotate_world() : update the screen coords>>=
+/* recalc boundings and screen coords */
+o_box_recalc(w_current, object);
+
+@ 
+
+
+@section Function [[o_box_mirror()]]
+
+@defun o_box_mirror w_current centerx centery object
+This function mirrors the box from the point ([[centerx]],[[centery]]) in screen unit.
+@end defun
+
+The origin of the mirror in screen unit is converted in world unit. The box is mirrored with the function [[o_box_mirror_world()]] for which the origin of the mirror must be given in world unit.
+
+<<o_box_basic.c : o_box_mirror()>>=
+void
+o_box_mirror(TOPLEVEL *w_current,
+			 int centerx, int centery,
+			 OBJECT *object)
+{
+  int world_centerx, world_centery;
+
+  /* convert the origin of mirror */
+  SCREENtoWORLD(w_current, centerx, centery, 
+                &world_centerx,
+                &world_centery);  
+
+  /* apply the mirror in world coords */
+  o_box_mirror_world(w_current,
+					 world_centerx, world_centery,
+					 object);
+
+  /* screen coords and boundings are updated by _mirror_world() */
+  
+}
+
+@ %def o_box_mirror
+
+
+@section Function [[o_box_mirror_world()]]
+
+@defun o_box_mirror_world w_current world_centerx world_centery object
+This function mirrors the box from the point ([[world_centerx]],[[world_centery]]) in world unit.
+@end defun
+
+The box is first translated to the origin, then mirrored and finally translated back at its previous position.
+
+<<o_box_basic.c : o_box_mirror_world()>>=
+void
+o_box_mirror_world(TOPLEVEL *w_current,
+				   int world_centerx, int world_centery,
+                   OBJECT *object)
+{
+  int newx1, newy1;
+  int newx2, newy2;
+
+  /* translate object to origin */
+  object->box->upper_x -= world_centerx;
+  object->box->upper_y -= world_centery;
+  object->box->lower_x -= world_centerx;
+  object->box->lower_y -= world_centery;
+
+  /* mirror the corners */
+  newx1 = -object->box->upper_x;
+  newy1 = object->box->upper_y;
+  newx2 = -object->box->lower_x;
+  newy2 = object->box->lower_y;
+
+  /* reorder the corners */
+  object->box->upper_x = min(newx1,newx2);
+  object->box->upper_y = max(newy1,newy2);
+  object->box->lower_x = max(newx1,newx2);
+  object->box->lower_y = min(newy1,newy2);
+
+  /* translate back in position */
+  object->box->upper_x += world_centerx;
+  object->box->upper_y += world_centery;
+  object->box->lower_x += world_centerx;
+  object->box->lower_y += world_centery;
+
+  /* recalc boundings and screen coords */
+  o_box_recalc(w_current, object);
+  
+}
+
+@ %def o_box_mirror_world
+
+
+@section Function [[o_box_recalc()]]
+
+@defun o_box_recalc w_current o_current
+This function recalculates the screen coords of the [[o_current]] pointed box object from its world coords.
+@end defun
+
+The box coordinates and its bounding are recalculated as well as the OBJECT specific fields (line width, filling ...).
+
+<<o_box_basic.c : o_box_recalc()>>=
+void
+o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+{
+  int left, top, right, bottom;
+  int screen_x1, screen_y1;
+  int screen_x2, screen_y2;
+
+  if (o_current->box == NULL) {
+    return;
+  }
+
+  <<o_box_recalc() : update the screen coords from world coords>>
+
+  <<o_box_recalc() : update the bounding box in screen unit>>
+
+  <<o_box_recalc() : update the object general fields>>
+	
+}
+
+@ %def o_box_recalc
+
+
+<<o_box_recalc() : update the screen coords from world coords>>=
+/* update the screen coords of the upper left corner of the box */
+WORLDtoSCREEN(w_current,
+			  o_current->box->upper_x, o_current->box->upper_y, 
+			  &screen_x1, &screen_y1);  
+o_current->box->screen_upper_x = screen_x1;
+o_current->box->screen_upper_y = screen_y1;
+
+/* update the screen coords of the lower right corner of the box */
+WORLDtoSCREEN(w_current,
+			  o_current->box->lower_x, o_current->box->lower_y, 
+			  &screen_x2, &screen_y2);  
+o_current->box->screen_lower_x = screen_x2;
+o_current->box->screen_lower_y = screen_y2;
+
+@ 
+
+
+<<o_box_recalc() : update the bounding box in screen unit>>=
+/* update the bounding box - screen unit */
+get_box_bounds(w_current, o_current->box, &left, &top, &right, &bottom);
+o_current->left   = left;
+o_current->top    = top;
+o_current->right  = right;
+o_current->bottom = bottom;
+
+@ 
+
+
+<<o_box_recalc() : update the object general fields>>=
+/* recalc OBJECT specific parameters */
+o_object_recalc(w_current, o_current);
+
+@ 
+
+
+@section Function [[get_box_bounds()]]
+
+@defun get_box_bounds w_current object left top right bottom
+The [[get_box_bounds()]] function set the [[left]], [[top]], [[right]] and [[bottom]] pointed variables to the boundings of the box object described in [[*box]] in screen unit.
+@end defun
+
+<<o_box_basic.c : get_box_bounds()>>=
+void
+get_box_bounds(TOPLEVEL *w_current, BOX *box,
+			   int *left, int *top, int *right, int *bottom)
+{
+  *left   = box->screen_upper_x;
+  *top    = box->screen_upper_y;
+  *right  = box->screen_lower_x;
+  *bottom = box->screen_lower_y;
+
+  /* PB : bounding box has to take into account the width of the line */
+  /* PB : but line width is unknown here */
+	
+  *left   = *left   - 4;
+  *top    = *top    - 4;
+  *right  = *right  + 4;
+  *bottom = *bottom + 4;
+}
+
+@ %def get_box_bounds
+
+
+@section Function [[world_get_box_bounds()]]
+
+@defun world_get_box_bounds w_current box left top right bottom
+The [[world_get_box_bounds()]] function sets the [[left]], [[top]], [[right]] and [[bottom]] pointed variables to the boundings of the box object described in [[*box]] in world unit.
+@end defun
+
+<<o_box_basic.c : world_get_box_bounds()>>=
+void
+world_get_box_bounds(TOPLEVEL *w_current, BOX *box,
+					 int *left, int *top, int *right, int *bottom)
+{
+	/* pb20011002 - why using min and max here and not above ? */
+	*left   = min(box->upper_x, box->lower_x);
+	*top    = min(box->upper_y, box->lower_y);
+	*right  = max(box->upper_x, box->lower_x);
+	*bottom = max(box->upper_y, box->lower_y);
+	
+	/* PB : same as above here for width of edges */	
+
+#if DEBUG 
+	printf("box: %d %d %d %d\n", *left, *top, *right, *bottom);
+#endif
+	
+}
+                 
+@ %def world_get_box_bounds
+
+
+@section Function [[o_box_print()]]
 
 @defun o_box_print w_current fp o_current origin_x origin_y
 This function write in a postscript file the box described by the [[o_current]] pointed object. It takes into account its line type and fill type.
@@ -605,51 +1012,51 @@ The needed parameters for each of these type is extracted from the [[o_current]]
 In the eventuality of a length and/or space null, the line is printed solid to avoid and endless loop produced by other functions in such a case.
 
 <<o_box_print() : printing outline>>=
-  line_width = o_current->line_width;
-  length = o_current->line_length;
-  space  = o_current->line_space;
-	
-  switch(o_current->line_type) {
+line_width = o_current->line_width;
+length = o_current->line_length;
+space  = o_current->line_space;
+
+switch(o_current->line_type) {
     case(TYPE_SOLID):
-      length = -1; space  = -1;
-      outl_func = (void *) o_box_print_solid;
-      break;
-
+		length = -1; space  = -1;
+		outl_func = (void *) o_box_print_solid;
+		break;
+		
     case(TYPE_DOTTED):
-      length = -1;
-      outl_func = (void *) o_box_print_dotted;
-      break;
-
+		length = -1;
+		outl_func = (void *) o_box_print_dotted;
+		break;
+		
     case(TYPE_DASHED):
-      outl_func = (void *) o_box_print_dashed;
-      break;
-
+		outl_func = (void *) o_box_print_dashed;
+		break;
+		
     case(TYPE_CENTER):
-      outl_func = (void *) o_box_print_center;
-      break;
-
+		outl_func = (void *) o_box_print_center;
+		break;
+		
     case(TYPE_PHANTOM):
-      outl_func = (void *) o_box_print_phantom;
-      break;
-
+		outl_func = (void *) o_box_print_phantom;
+		break;
+		
     case(TYPE_ERASE):
-      /* Unused for now, print it solid */
-      length = -1; space  = -1;
-      outl_func = (void *) o_box_print_solid;
-      break;
-  }
+			/* Unused for now, print it solid */
+		length = -1; space  = -1;
+		outl_func = (void *) o_box_print_solid;
+		break;
+}
 
-  if((length == 0) || (space == 0)) {
+if((length == 0) || (space == 0)) {
     length = -1; space  = -1;
     outl_func = (void *) o_box_print_solid;
-  }
+}
 
-  (*outl_func)(w_current, fp,
-               x, y, width, height,
-               color,
-               line_width,
-               length, space,
-               origin_x, origin_y);
+(*outl_func)(w_current, fp,
+			 x, y, width, height,
+			 color,
+			 line_width,
+			 length, space,
+			 origin_x, origin_y);
 
 @ 
 
@@ -659,57 +1066,57 @@ If the filling type of the box is not [[HOLLOW]], the appropriate function is ch
 The case where [[pitch1]] and [[pitch2]] are null or negative is avoided as it leads to an endless loop in most of the called functions. In such a case, the box is printed filled. Unused parameters for each of these functions are set to -1 or any passive value.
 
 <<o_box_print() : printing the filling>>=
-  if(o_current->fill_type != FILLING_HOLLOW) {
+if(o_current->fill_type != FILLING_HOLLOW) {
     fill_width = o_current->fill_width;
     angle1     = o_current->fill_angle1;
     pitch1     = o_current->fill_pitch1;
     angle2     = o_current->fill_angle2;
     pitch2     = o_current->fill_pitch2;
-		
+	
     switch(o_current->fill_type) {
-      case(FILLING_FILL):
-        angle1 = -1; pitch1 = 1;
-        angle2 = -1; pitch2 = 1;
-        fill_width = -1;
-        fill_func = (void *) o_box_print_filled;
-        break;
+		case(FILLING_FILL):
+			angle1 = -1; pitch1 = 1;
+			angle2 = -1; pitch2 = 1;
+			fill_width = -1;
+			fill_func = (void *) o_box_print_filled;
+			break;
 			
-      case(FILLING_MESH):
-        fill_func = (void *) o_box_print_mesh;
-        break;
-				
-      case(FILLING_HATCH):
-        angle2 = -1; pitch2 = 1;
-        fill_func = (void *) o_box_print_hatch;
-        break;
-				
-      case(FILLING_VOID):
-        /* Unused for now, print it filled */
-        angle1 = -1; pitch1 = 1;
-        angle2 = -1; pitch2 = 1;
-        fill_width = -1;
-        fill_func = (void *) o_box_print_filled;
-        break;
+		case(FILLING_MESH):
+			fill_func = (void *) o_box_print_mesh;
+			break;
+			
+		case(FILLING_HATCH):
+			angle2 = -1; pitch2 = 1;
+			fill_func = (void *) o_box_print_hatch;
+			break;
+			
+		case(FILLING_VOID):
+				/* Unused for now, print it filled */
+			angle1 = -1; pitch1 = 1;
+			angle2 = -1; pitch2 = 1;
+			fill_width = -1;
+			fill_func = (void *) o_box_print_filled;
+			break;
     }
-
+	
     if((pitch1 <= 0) || (pitch2 <= 0)) {
-      angle1 = -1; pitch1 = 1;
-      angle2 = -1; pitch2 = 1;
-      fill_func = (void *) o_box_print_filled;
+		angle1 = -1; pitch1 = 1;
+		angle2 = -1; pitch2 = 1;
+		fill_func = (void *) o_box_print_filled;
     }
-		
+	
     (*fill_func)(w_current, fp,
                  x, y, width, height,
                  color,
                  fill_width,
                  angle1, pitch1, angle2, pitch2,
                  origin_x, origin_y);
-  }
+}
 
 @
 
 
-@section Function @code{o_box_print_solid()}
+@section Function [[o_box_print_solid()]]
 
 @defun o_box_print_solid w_current fp x y width height color line_width length space orign_x origin_y
 This function prints the outline of a box when a solid line type is required. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. 
@@ -770,7 +1177,7 @@ o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_solid
 
 
-@section Function @code{o_box_print_dotted()}
+@section Function [[o_box_print_dotted()]]
 
 @defun o_box_print_dotted w_current fp x y width height color line_width length space origin_x origin_y
 This function prints the outline of a box when a dotted line type is required. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. 
@@ -832,7 +1239,7 @@ o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_dotted
 
 
-@section Function @code{o_box_print_dashed()}
+@section Function [[o_box_print_dashed()]]
 
 @defun o_box_print_dashed w_current fp x y width height color line_width length space origin_x origin_y
 This function prints the outline of a box when a dashed line type is required. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. 
@@ -893,7 +1300,7 @@ o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_dashed
 
 
-@section Function @code{o_box_print_center()}
+@section Function [[o_box_print_center()]]
 
 @defun o_box_print_center w_current fp x y width height color line_width length space origin_x origin_y
 This function prints the outline of a box when a centered line type is required. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. 
@@ -954,7 +1361,7 @@ o_box_print_center(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_center
 
 
-@section Function @code{o_box_print_phantom()}
+@section Function [[o_box_print_phantom()]]
 
 @defun o_box_print_phantom w_current fp x y width height color line_width length space origin_x origin_y
 This function prints the outline of a box when a phantom line type is required. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. 
@@ -1014,7 +1421,7 @@ o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_phantom
 
 
-@section Function @code{o_box_print_filled()}
+@section Function [[o_box_print_filled()]]
 
 @defun o_box_print_filled w_current fp x y width height color fill_width angle1 pitch1 angle2 pitch2 origin_x origin_y
 The function prints a filled box with a solid pattern. No outline is printed. 
@@ -1064,7 +1471,7 @@ o_box_print_filled(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_filled
 
 
-@section Function @code{o_box_print_mesh()}
+@section Function [[o_box_print_mesh()]]
 
 @defun o_box_print_mesh w_current fp o_current x y width height color fill_width angle1 pitch1 angle2 pitch2 origin_x origin_y
 The function prints a meshed box. No outline is printed. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. The postscript file is defined by the file pointer [[fp]]. 
@@ -1105,7 +1512,7 @@ o_box_print_mesh(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_mesh
 
 
-@section Function @code{o_box_print_hatch()}
+@section Function [[o_box_print_hatch()]]
 
 @defun o_box_print_hacth w_current fp x y width height color fill_width angle1 pitch1 angle2 pitch2 origin_x origin_y
 The function prints a hatched box. No outline is printed. The box is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. The postscript file is defined by the file pointer [[fp]]. 
@@ -1165,7 +1572,7 @@ The function considers the smallest circle around the box. Its radius is given b
 
 When drawing a line in a circle there is two intersections. With the previously described circle, these intersections are out of the box. They can be easily calculated, the first by resolution of an equation and the second one by symetry in relation to the vertical axis going through the center of the circle.
 
-These two points are then rotated of angle @code{angle1} using the matrix previously mentionned.
+These two points are then rotated of angle [[angle1]] using the matrix previously mentionned.
 
 <<o_box_print_hatch() : calculating and printing the lines>>=
   y0 = 0;
@@ -1261,9 +1668,10 @@ If there is no intersection of the segment with any of the sides, then there is 
 @
 
 
-@section Function @code{o_box_print_old()}
+@section Function [[o_box_print_old()]]
 
 @defun o_box_print_old w_current fp o_current origin_x origin_y
+This function is the old function to print a box. It does not handle line type and filling of a box.
 @end defun
 
 <<o_box_basic.c : o_box_print_old()>>=
@@ -1298,9 +1706,10 @@ o_box_print_old(TOPLEVEL *w_current, FILE *fp,
 @ %def o_box_print_old
 
 
-@section Function @code{o_box_image_write()}
+@section Function [[o_box_image_write()]]
 
 @defun o_box_image_write w_current o_current origin_x origin_y color_mode
+This function draws a box in an image with the libgdgeda function [[gdImageRectangle()]].
 @end defun
 
 <<o_box_basic.c : o_box_image_write()>>=
@@ -1337,223 +1746,3 @@ o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 @ %def o_box_image_write
 
-
-@section Function @code{o_box_rotate()}
-
-@defun o_box_rotate w_current centerx centery angle object
-@end defun
-
-<<o_box_basic.c : o_box_rotate()>>=
-/* takes in screen coordinates for the centerx,y, and then does the rotate 
- * in world space */
-/* also ignores angle argument... for now, rotate only in 90 degree 
- * increments */
-/* fixed to 90 degrees... it's *not* general now */
-void
-o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
-             OBJECT *object)
-{
-  int world_centerx, world_centery;
-  int newx1, newy1;
-  int newx2, newy2;
-  int width, height;
-
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  width = abs(object->box->upper_x - object->box->lower_x);
-  height = abs(object->box->upper_y - object->box->lower_y);
-
-  /* translate object to origin */
-  o_box_translate_world(w_current, -world_centerx, -world_centery, object);
-  rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
-                  &newx1, &newy1);
-
-  rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
-                  &newx2, &newy2);
-
-
-
-  object->box->upper_x = min(newx1,newx2);
-  object->box->upper_y = max(newy1,newy2);
-  object->box->lower_x = max(newx1,newx2);
-  object->box->lower_y = min(newy1,newy2);
-	
-  o_box_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_box_rotate
-
-
-@section Function @code{o_box_rotate_world()}
-
-@defun o_box_rotate_world w_current world_centerx world_centery angle object
-@end defun
-
-<<o_box_basic.c : o_box_rotate_world()>>=
-void
-o_box_rotate_world(TOPLEVEL *w_current, 
-                   int world_centerx, int world_centery, int angle,
-                   OBJECT *object)
-{
-  int newx1, newy1;
-  int newx2, newy2;
-  int width, height;
-
-  if (angle == 0)
-  return;
-		
-
-  width = abs(object->box->upper_x - object->box->lower_x);
-  height = abs(object->box->upper_y - object->box->lower_y);
-
-  /* translate object to origin */
-  o_box_translate_world(w_current, -world_centerx, -world_centery, object);
-  rotate_point_90(object->box->upper_x, object->box->upper_y, angle,
-                  &newx1, &newy1);
-
-  rotate_point_90(object->box->lower_x, object->box->lower_y, angle,
-                  &newx2, &newy2);
-
-  object->box->upper_x = min(newx1,newx2);
-  object->box->upper_y = max(newy1,newy2);
-  object->box->lower_x = max(newx1,newx2);
-  object->box->lower_y = min(newy1,newy2);
-	
-  o_box_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_box_rotate_world
-
-
-@section Function @code{o_box_mirror()}
-
-@defun o_box_mirror w_current centerx centery object
-@end defun
-
-<<o_box_basic.c : o_box_mirror()>>=
-void
-o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
-{
-  int world_centerx, world_centery;
-  int newx1, newy1;
-  int newx2, newy2;
-  int width, height;
-
-  SCREENtoWORLD(w_current, centerx, centery, 
-                &world_centerx,
-                &world_centery);  
-
-  width = abs(object->box->upper_x - object->box->lower_x);
-  height = abs(object->box->upper_y - object->box->lower_y);
-
-  /* translate object to origin */
-  o_box_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  newx1 = -object->box->upper_x;
-  newy1 = object->box->upper_y;
-  newx2 = -object->box->lower_x;
-  newy2 = object->box->lower_y;
-
-  object->box->upper_x = min(newx1,newx2);
-  object->box->upper_y = max(newy1,newy2);
-  object->box->lower_x = max(newx1,newx2);
-  object->box->lower_y = min(newy1,newy2);
-	
-  o_box_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_box_mirror
-
-
-@section Function @code{o_box_mirror_world()}
-
-@defun o_box_mirror_world w_current world_centerx world_centery object
-@end defun
-
-<<o_box_basic.c : o_box_mirror_world()>>=
-void
-o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery,
-                   OBJECT *object)
-{
-  int newx1, newy1;
-  int newx2, newy2;
-  int width, height;
-
-  width = abs(object->box->upper_x - object->box->lower_x);
-  height = abs(object->box->upper_y - object->box->lower_y);
-
-  /* translate object to origin */
-  o_box_translate_world(w_current, -world_centerx, -world_centery, object);
-
-  newx1 = -object->box->upper_x;
-  newy1 = object->box->upper_y;
-  newx2 = -object->box->lower_x;
-  newy2 = object->box->lower_y;
-
-  object->box->upper_x = min(newx1,newx2);
-  object->box->upper_y = max(newy1,newy2);
-  object->box->lower_x = max(newx1,newx2);
-  object->box->lower_y = min(newy1,newy2);
-	
-  o_box_translate_world(w_current, world_centerx, world_centery, object);
-}
-
-@ %def o_box_mirror_world
-
-
-@section Function @code{o_box_modify()}
-
-@defun o_box_modify w_current object x y whichone
-@end defun
-
-<<o_box_basic.c : o_box_modify()>>=
-void
-o_box_modify(TOPLEVEL *w_current, OBJECT *object, 
-	     int x, int y, int whichone)
-{
-  int x1, y1, x2, y2;
-  int left, right, top, bottom;
-  int box_width, box_height, box_left, box_top;
-
-  box_width  = GET_BOX_WIDTH (w_current);
-  box_height = GET_BOX_HEIGHT(w_current);
-  box_left   = GET_BOX_LEFT  (w_current);
-  box_top    = GET_BOX_TOP   (w_current);
-
-  SCREENtoWORLD(w_current,
-                box_left,
-                box_top,
-                &x1,
-                &y1);
-  SCREENtoWORLD(w_current,
-                box_left + box_width,
-                box_top  + box_height,
-                &x2,
-                &y2);
-
-  x1 = snap_grid(w_current, x1);
-  y1 = snap_grid(w_current, y1);
-  x2 = snap_grid(w_current, x2);
-  y2 = snap_grid(w_current, y2);
-
-  object->box->upper_x = x1; 
-  object->box->upper_y = y1;
-  object->box->lower_x = x2; 
-  object->box->lower_y = y2;
-
-  object->box->screen_upper_x = box_left; 
-  object->box->screen_upper_y = box_top;
-  object->box->screen_lower_x = box_left + box_width; 
-  object->box->screen_lower_y = box_top  + box_height;
-
-  get_box_bounds(w_current, object->box, &left, &top, &right, &bottom);
-	
-  object->left = left;
-  object->top = top;
-  object->right = right;
-  object->bottom = bottom;	
-}
-
-@ %def o_box_modify
