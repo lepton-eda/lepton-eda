@@ -1,3 +1,25 @@
+2003-10-19 Werner Hoch <werner.ho@gmx.de>
+	symbol rework in micro/
+	* 6821-1.sym: added missing pinlabel and pintype
+	* 6821-2.sym: correct some pintypes, prettified
+	* 8031.sym: added missing pin, repaired
+	* 8052basic-1.sym: added pintype
+	* 8086-1.sym: added pinlabel/pintype, missing negation bubbles
+	* ACE1202-1.sym: put pinlabels into pin{}
+	* 8088-1.sym, 8254-1.sym, 8255A-1.sym, 8259A-1.sym: 
+		put pinlabels into pin{} added pintype
+	* AT89C2051-1.sym, AT89C51_DIP.sym, AT89C51_PLCC.sym, 
+	  AT89C51_TQFP.sym: 
+		replaced i/o with io, added numslots=0, description
+	* AT43USB320A.sym, AT90S1200.sym, AT90S2323.sym, AT90S2343.sym,
+	  AT90S4433_DIP.sym, AT90S4433_TQFP.sym, AT90S8515_DIP.sym,
+	  AT90S8515_PLCC.sym, AT90S8515_TQFP.sym, AT90S8535_DIP.sym,
+	  AT90S8535_PLCC.sym, AT90S8535.sym, AT90S8535_TQFP.sym, ATmega103.sym,
+	  ATmega161_DIP.sym, ATmega161_TQFP.sym, ATmega163_DIP.sym, 
+	  ATtiny11.sym, ATmega163_TQFP.sym, ATtiny12.sym, ATtiny28_DIP.sym, 
+	  ATtiny28_TQFP.sym
+ 		added numslots=0, author, rearanged pintype
+	
 2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to something more recent, but this
