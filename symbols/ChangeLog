@@ -1,3 +1,6 @@
+2002-10-01 Werner Hoch <werner.ho@gmx.de>
+	*74/741[456]?-*: corrected the wrong whichend attribute on some pins
+	
 2002-09-29 Werner Hoch <werner.ho@gmx.de>
 	*74/741[456]?-*: completed symbols (added net, pinlabels, pintype, ...)
 	*74/74161-2.sym, 74/74168-1.sym, 74/74169-1.sym: marked as bad
