@@ -1027,11 +1027,15 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 
 		/* first check for attributes */
 		if (del_object->attribs) {
+#if DEBUG
 			printf("yeah... del object has attributes\n");
 			printf("reconnecting them to the right place\n");
+#endif
 			if (object->attribs) {
 
+#if DEBUG
 		printf("object DID have attributes\n");
+#endif
 
 
 	/* NEWSEL, this corrupts the selection / object_head badly */
@@ -1075,7 +1079,9 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 
 			} else {
 
+#if DEBUG
 		printf("object didn't have any attributes\n");
+#endif
 				object->attribs = del_object->attribs;
 /* TODO: what should this be? */
 				object->attribs->prev = NULL;
