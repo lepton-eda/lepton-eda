@@ -1,3 +1,7 @@
+2002-11-09 Werner Hoch  <werner.ho@gmx.de>	
+	* spice/: added vdc-1.sym, vac-1.sym, vpulse-1.sym, 
+	          vsin-1.sym, vexp-1.sym, vpwl-1.sym
+	
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* 4000/*.sym: Ran gsymupdate on all symbols
