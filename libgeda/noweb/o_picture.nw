@@ -98,13 +98,12 @@ o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int width, height, angle;
   gchar mirrored, embedded;
   int num_conv;
-  double ratio;
   gchar type;
   gchar buffer[MAX_TEXT_LINE_LENGTH]; 
   gchar *filename;
   GdkPixbuf *pixbuf;
 
-  num_conv = sscanf(buf, "%c %d %d %d %d %d %d %d\n",
+  num_conv = sscanf(buf, "%c %d %d %d %d %d %c %c\n",
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
 
   if (num_conv != 8) {
@@ -120,18 +119,18 @@ o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   }
 
   if ( (mirrored > 1) || (mirrored < 0)) {
-    fprintf(stderr, "Found a picture with a wrong 'mirrored' parameter: %s.\n",
+    fprintf(stderr, "Found a picture with a wrong 'mirrored' parameter: %c.\n",
 	    mirrored);
-    s_log_message("Found a picture with a wrong 'mirrored' parameter: %s.\n",
+    s_log_message("Found a picture with a wrong 'mirrored' parameter: %c.\n",
 	    mirrored);
     s_log_message("Setting mirrored to 0\n");
     mirrored = 0;
   }
 
   if ( (embedded > 1) || (embedded < 0)) {
-    fprintf(stderr, "Found a picture with a wrong 'embedded' parameter: %s.\n",
+    fprintf(stderr, "Found a picture with a wrong 'embedded' parameter: %c.\n",
 	    mirrored);
-    s_log_message("Found a picture with a wrong 'embedded' parameter: %s.\n",
+    s_log_message("Found a picture with a wrong 'embedded' parameter: %c.\n",
 	    mirrored);
     s_log_message("Setting mirrored to 0\n");
     mirrored = 0;
@@ -361,7 +360,7 @@ if (picture->original_picture == NULL) {
 }
 
 /* Clean w_current variables */
-/* FIXME: This should be done when canceling the action.
+/* FIXME: This should be done when canceling the action. */
 /* Pixbuf filename is not freed because we want to remember the last directory */
 /*
 if (w_current->current_pixbuf != NULL) {

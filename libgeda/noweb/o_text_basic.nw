@@ -578,7 +578,7 @@ o_text_load_font(TOPLEVEL *w_current, unsigned char needed_char)
   }
 
   if ( access(temp_string, R_OK) != 0 ) {
-    s_log_message("Could not find character %c definition\n",needed_char, temp_string);
+    s_log_message("Could not find character %c definition.  %s\n",needed_char, temp_string);
     free(temp_string);
     temp_string = g_strdup_printf("%s%cquest.sym", w_current->font_directory, G_DIR_SEPARATOR);
     if ( access(temp_string, R_OK) != 0 ) {
