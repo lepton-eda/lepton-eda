@@ -1,3 +1,15 @@
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+2003-10-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/*.c: Added an #include "../config.h" to all files a required
+	by the general ./configure mechanism.  
+
+	* src/Makefile.am: Corrected the localedir define
+
 2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* po/pt_BR.po, src/Makefile.am: Integrated Antonio's pt_BR

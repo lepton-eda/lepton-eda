@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([noweb/gschem.nw])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gschem
-VERSION=20030921
+VERSION=20031004
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 
@@ -37,7 +37,7 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 AC_ARG_WITH(gtk12, [  --with-gtk12            Force the use of gtk+ 1.2.x], [opt_gtkver=1.2])
 
 # Allow the user to specify where there libstroke library lives
-AC_ARG_WITH(stroke, [  --with-stroke           Tell configure where to find libstroke], [opt_stroke=$withval])
+AC_ARG_WITH(stroke, [  --with-stroke=DIR       Tell configure where to find libstroke], [opt_stroke=$withval])
 
 # 
 # Command line flags end

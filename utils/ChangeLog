@@ -1,3 +1,8 @@
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated version to something more recent, but this
+	version is not an official release.
+
 2003-10-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gsch2pcb.c, ChangeLog.gsch2pcb: Updated to Bill Wilson's 
