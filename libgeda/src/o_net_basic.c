@@ -1147,6 +1147,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 				if (current_orient == object_orient &&
 				    c_current->object->sid != object->sid &&
 				    object->type == OBJ_NET && 
+ 				    current_orient != NEITHER &&
 				    c_current->object->type == OBJ_NET) {
 
 #if DEBUG 
@@ -1217,6 +1218,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 				if (current_orient == object_orient &&
 				    c_current->object->sid != object->sid &&
 				    object->type == OBJ_NET && 
+ 				    current_orient != NEITHER &&
 				    c_current->object->type == OBJ_NET) {
 
 #if DEBUG
