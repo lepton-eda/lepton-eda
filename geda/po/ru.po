@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-31 21:18-0500\n"
+"POT-Creation-Date: 2004-09-15 10:42-0400\n"
 "PO-Revision-Date: 2003-01-21 18:43+0200\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -26,118 +26,118 @@ msgstr "Невозможно найти файл картинки: %s"
 msgid "Error loading pixmap file: %s"
 msgstr "Ошибка загрузки файла картинки: %s"
 
-#: src/interface.c:75
+#: src/interface.c:76
 msgid "gEDA"
 msgstr ""
 
-#: src/interface.c:93 src/interface.c:506
+#: src/interface.c:94 src/interface.c:507
 msgid "Project"
 msgstr "проект"
 
-#: src/interface.c:107 src/interface.c:200
+#: src/interface.c:108 src/interface.c:201
 msgid "New"
 msgstr "Новый"
 
-#: src/interface.c:114
+#: src/interface.c:115
 msgid "Open"
 msgstr "Открыть"
 
-#: src/interface.c:121
+#: src/interface.c:122
 msgid "Properties"
 msgstr ""
 
-#: src/interface.c:128 src/interface.c:185
+#: src/interface.c:129 src/interface.c:186
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/interface.c:143
+#: src/interface.c:144
 msgid "Exit"
 msgstr "Выйти"
 
-#: src/interface.c:150 src/interface.c:708
+#: src/interface.c:151 src/interface.c:709
 msgid "File"
 msgstr "Файл"
 
-#: src/interface.c:164
+#: src/interface.c:165
 msgid "Edit"
 msgstr "Редактировать"
 
-#: src/interface.c:171
+#: src/interface.c:172
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/interface.c:178
+#: src/interface.c:179
 msgid "Print"
 msgstr "Печать"
 
-#: src/interface.c:207
+#: src/interface.c:208
 msgid "Import"
 msgstr "Импорт"
 
-#: src/interface.c:214
+#: src/interface.c:215
 msgid "Unlink"
 msgstr ""
 
-#: src/interface.c:221
+#: src/interface.c:222
 msgid "Delete"
 msgstr "Удалить"
 
-#: src/interface.c:228
+#: src/interface.c:229
 msgid "Action"
 msgstr "Действие"
 
-#: src/interface.c:235
+#: src/interface.c:236
 msgid "Tool"
 msgstr "Инструмент"
 
-#: src/interface.c:242
+#: src/interface.c:243
 msgid "Window"
 msgstr "Окно"
 
-#: src/interface.c:343
+#: src/interface.c:344
 msgid "Modules"
 msgstr "Модули"
 
-#: src/interface.c:367
+#: src/interface.c:368
 msgid "Files"
 msgstr "Файлы"
 
-#: src/interface.c:398
+#: src/interface.c:399
 msgid "Status"
 msgstr "Статус"
 
-#: src/interface.c:494
+#: src/interface.c:495
 msgid "Project Properties"
 msgstr ""
 
-#: src/interface.c:524 src/interface.c:763
+#: src/interface.c:525 src/interface.c:764
 msgid "Name"
 msgstr ""
 
-#: src/interface.c:535
+#: src/interface.c:536
 msgid "Directory"
 msgstr ""
 
-#: src/interface.c:546
+#: src/interface.c:547
 msgid "Author"
 msgstr ""
 
-#: src/interface.c:557
+#: src/interface.c:558
 msgid "Description"
 msgstr ""
 
-#: src/interface.c:635 src/interface.c:782
+#: src/interface.c:636 src/interface.c:783
 msgid "Ok"
 msgstr ""
 
-#: src/interface.c:644 src/interface.c:791
+#: src/interface.c:645 src/interface.c:792
 msgid "Cancel"
 msgstr ""
 
-#: src/interface.c:696
+#: src/interface.c:697
 msgid "New file ..."
 msgstr ""
 
-#: src/interface.c:753
+#: src/interface.c:754
 msgid "Type"
 msgstr ""

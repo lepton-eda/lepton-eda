@@ -1,3 +1,7 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/fr.po: Added French translation by Iznogood
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228
