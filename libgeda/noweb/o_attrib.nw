@@ -47,6 +47,7 @@
 <<o_attrib.c : o_attrib_search_name()>>
 <<o_attrib.c : o_attrib_search_string_list()>>
 <<o_attrib.c : o_attrib_search_string_partial()>>
+<<o_attrib.c : o_attrib_search_string_single()>>
 <<o_attrib.c : o_attrib_search_attrib_value()>>
 <<o_attrib.c : o_attrib_search_attrib_name()>>
 <<o_attrib.c : o_attrib_search_toplevel()>>
@@ -1184,7 +1185,11 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
 
     o_current=o_current->next;
   }
-	
+
+  if (return_found) {
+    *return_found = o_current;
+  }
+
   return (NULL);
 } 
 
@@ -1289,7 +1294,7 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 
 @section Function @code{o_attrib_search_string_list()}
 
-@defun o_attrib_search_string_list list string return_found 
+@defun o_attrib_search_string_list list string 
 @end defun
 
 <<o_attrib.c : o_attrib_search_string_list()>>=
@@ -1500,6 +1505,43 @@ o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter)
 @ %def o_attrib_search_string_partial
 
 
+@section Function @code{o_attrib_search_string_single()}
+
+@defun o_attrib_search_string_single object fullattribute
+@end defun
+
+<<o_attrib.c : o_attrib_search_string_single()>>=
+OBJECT *
+o_attrib_search_string_single(OBJECT *object, char *search_for)
+{
+  OBJECT *o_current;
+  ATTRIB *a_current;
+  OBJECT *found;
+  int val;
+  int internal_counter=0;
+  char found_name[128]; /* limit hack */
+  char found_value[128];
+  char *return_string;
+
+  o_current = object;
+
+  if (o_current == NULL) {
+    return(NULL);
+  }
+
+  if (o_current->type == OBJ_TEXT) {
+    if (strcmp(o_current->text->string, search_for) == 0) {
+      return(o_current);
+    }
+  }	
+	
+  return (NULL);
+} 
+
+@ %def o_attrib_search_string_single
+
+
+
 @section Function @code{o_attrib_search_attrib_value()}
 
 @defun o_attrib_search_attrib_value list value name counter
@@ -1696,6 +1738,10 @@ o_attrib_return_parent(ATTRIB *attribute)
 
   a_current = attribute;
 
+  if (!a_current) {
+    return(NULL);
+  }
+  
   while (a_current->prev != NULL) {
     a_current = a_current->prev;	
   }	
@@ -1970,6 +2016,10 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
     }	
   }
 
+  if (return_found) {
+    *return_found = NULL;
+  }
+
   return (NULL);
 } 
 
@@ -2109,20 +2159,20 @@ o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
 char *
 o_attrib_search_numslots(OBJECT *object, OBJECT **return_found)
 {
-	char *return_value;
+  char *return_value;
 
-	/* search for numslots attribute buried inside the complex */
-	return_value = o_attrib_search_name(object->complex->prim_objs, 
-					    "numslots", 0);
+  /* search for numslots attribute buried inside the complex */
+  return_value = o_attrib_search_name(object->complex->prim_objs, 
+                                      "numslots", 0);
 
-	if (return_value) {
-		return(return_value);
-	}
+  if (return_value) {
+    return(return_value);
+  }
 
-	if (return_found) {
-		*return_found = NULL;
-	}
-	return(NULL);
+  if (return_found) {
+    *return_found = NULL;
+  }
+  return(NULL);
 }
 
 @ %def o_attrib_search_numslots
@@ -2175,10 +2225,12 @@ o_attrib_search_pinseq(OBJECT *list, int pin_number)
   sprintf(search_for, "pinseq=%d", pin_number);
 
   pinseq_text_object = o_attrib_search_string_list(list, search_for);
-  if (pinseq_text_object) {
-    free(search_for);
+  free(search_for);
+  
+  if (pinseq_text_object && pinseq_text_object->attached_to) {
     return(o_attrib_return_parent(pinseq_text_object->attached_to));
   }
+  
   return(NULL);
 }
 

@@ -16,5 +16,10 @@ Martin Benes		- For contributing the attribute promotion code,
 
 Werner Hoch		- For some new code in m_basic.c: round_5_2_1()
 
+Patrick Bernaud		- For lots and lots of work on libgeda, gschem,
+			  the noweb tangle/untangle mechanism and much more.
+
+Bryce Denney		- For contributing the \r patch to nl_remove()
+
 Please see the AUTHORS file in the various sub packages 
 (gschem/gnetlist/etc...).

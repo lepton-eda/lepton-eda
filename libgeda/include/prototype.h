@@ -104,6 +104,7 @@ void o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes);
 char *o_attrib_search_name(OBJECT *list, char *name, int counter);
 OBJECT *o_attrib_search_string_list(OBJECT *list, char *string);
 char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter);
+OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
 OBJECT *o_attrib_search_attrib_value(ATTRIB *list, char *value, char *name, int counter);
 char *o_attrib_search_attrib_name(ATTRIB *list, char *name, int counter);
 char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter);

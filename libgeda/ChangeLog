@@ -1,3 +1,20 @@
+2002-06-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_basic.nw: Added patch by Bryce Denney to remove \r in 
+	remove_nl(...).  This was done to have clean interoperability between
+	the unix and win32 ports.  I don't know if the patch is sufficient
+	to cleanup component (etc...) lines.  Will have to test this for the
+	next release.
+
+	* noweb/o_attrib.nw: A few misc cleanups in various functions
+
+	* noweb/o_attrib.nw: Added o_attrib_search_string_single to help
+	support gnetlist backend fix work.  Takes an object and a complete
+	attribute and returns a pointer to the object.
+
+	* noweb/o_attrib.nw: Added a null pointer check in
+	o_attrib_return_parent(...) 
+
 2002-06-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_attrib.nw: Drastic changes to the standard attributes.

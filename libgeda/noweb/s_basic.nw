@@ -750,7 +750,7 @@ remove_nl(char *string)
   int i;
 		
   i = 0;
-  while(string[i] != '\0' && string[i] != '\n') {
+  while(string[i] != '\0' && string[i] != '\n' && string[i] != '\r') {
     i++; 
   }
 
