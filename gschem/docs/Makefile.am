@@ -24,7 +24,8 @@ gschemdoc_TEXINFOS =	a_pan.texi a_zoom.texi g_funcs.texi g_hook.texi       \
 			x_fileselect.texi x_grid.texi x_image.texi x_log.texi \
 			x_menus.texi x_multimulti.texi x_pagesel.texi         \
 			x_preview.texi x_print.texi x_script.texi             \
-			x_stroke.texi x_window.texi x_attribedit.texi
+			x_stroke.texi x_window.texi x_attribedit.texi         \
+			x_multiattrib.texi
 TEXINFO_TEX =		./texinfo.tex
 
 

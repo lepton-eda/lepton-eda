@@ -28,6 +28,7 @@ noweb/x_event.nw
 noweb/x_fileselect.nw
 noweb/x_image.nw
 noweb/x_log.nw
+noweb/x_multiattrib.nw
 noweb/x_multimulti.nw
 noweb/x_pagesel.nw
 noweb/x_print.nw

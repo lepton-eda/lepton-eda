@@ -73,6 +73,7 @@ Copyright @copyright{} xxxx XXXX.
 * File x_basic.c:: file x_basic.c.
 * File x_color.c:: file x_color.c.
 * File x_dialog.c:: file x_dialog.c.
+* File x_multiattrib.c:: file x_multiattrib.c.
 * File x_event.c:: file x_event.c.
 * File x_fileselect.c:: file x_fileselect.c.
 * File x_grid.c:: file x_grid.c.
@@ -131,6 +132,7 @@ Copyright @copyright{} xxxx XXXX.
 @include x_basic.texi
 @include x_color.texi
 @include x_dialog.texi
+@include x_multiattrib.texi
 @include x_event.texi
 @include x_fileselect.texi
 @include x_grid.texi

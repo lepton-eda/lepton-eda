@@ -22,7 +22,7 @@
 <<x_attribedit.c : attrib_edit_dialog_delete()>>
 <<x_attribedit.c : attrib_edit_dialog()>>
 /***************** End of Attrib Edit dialog box **********************/
-
+@
 
 <<x_attribedit.c : copyright and license>>=
 /* gEDA - GPL Electronic Design Automation

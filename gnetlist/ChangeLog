@@ -30,7 +30,7 @@
 	
 2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* src/gschem2pcb: Intergrated patch from Dan Mcmahill to make this
+	* src/gschem2pcb: Intergrated patch from Dan McMahill to make this
 	script a lot more portable (replacing long options with short ones,
 	gawk->awk, bash->sh)
 

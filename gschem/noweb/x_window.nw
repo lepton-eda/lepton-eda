@@ -702,6 +702,7 @@ x_window_create_main(TOPLEVEL *w_current)
   w_current->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
   gtk_widget_set_name (w_current->main_window, "gschem");
+  gtk_window_set_policy (GTK_WINDOW (w_current->main_window), TRUE, TRUE, TRUE);
 
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,

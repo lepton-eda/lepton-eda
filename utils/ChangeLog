@@ -41,8 +41,8 @@
 
 2002-05-15 Chris Ellec <chris @ gtx.seul.org>
 
-     * src/gmk_sym.c: Added a couple of data verifications
-     to avoid seg faults when the input file has errors.
+	* src/gmk_sym.c: Added a couple of data verifications to avoid
+	seg faults when the input file has errors.
 
 2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
