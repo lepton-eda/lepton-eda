@@ -200,6 +200,7 @@ SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_scheme_directory(SCM path);
+SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
 SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_scrollbars(SCM mode);
@@ -250,10 +251,13 @@ void i_update_right_button(char *string);
 void i_set_filename(TOPLEVEL *w_current, char *string);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_file_new(GtkWidget *widget, gpointer data);
 void i_callback_file_new_window(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_open(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_file_open(GtkWidget *widget, gpointer data);
 void i_callback_file_script(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_save(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_file_save(GtkWidget *widget, gpointer data);
 void i_callback_file_save_all(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_save_as(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_print(gpointer data, guint callback_action, GtkWidget *widget);
@@ -262,7 +266,9 @@ void i_callback_file_close(gpointer data, guint callback_action, GtkWidget *widg
 int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_quit(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_undo(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_edit_undo(GtkWidget *widget, gpointer data);
 void i_callback_edit_redo(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_edit_redo(GtkWidget *widget, gpointer data);
 void i_callback_edit_select(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
@@ -331,6 +337,7 @@ void i_callback_buffer_paste3_hotkey(gpointer data, guint callback_action, GtkWi
 void i_callback_buffer_paste4_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_paste5_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_component(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_add_component(GtkWidget *widget, gpointer data);
 void i_callback_add_attribute(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_attribute_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_net(gpointer data, guint callback_action, GtkWidget *widget);
@@ -338,6 +345,7 @@ void i_callback_add_net_hotkey(gpointer data, guint callback_action, GtkWidget *
 void i_callback_add_bus(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_bus_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_text(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_toolbar_add_text(GtkWidget *widget, gpointer data);
 void i_callback_add_line(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_line_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box(gpointer data, guint callback_action, GtkWidget *widget);

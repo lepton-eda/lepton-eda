@@ -1,3 +1,7 @@
+2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added bitmap-directory rc variable 
+
 2002-05-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* acinclude.m4: Removed file from repository

@@ -1,3 +1,36 @@
+2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw: Added bitmap-directory 
+	rc keyword
+
+	* noweb/x_window.nw: Added the use of bitmap_directory
+
+	* noweb/x_window.nw, x_preview.nw and others: Fixed a few possible
+	places where something is freed but wasn't be initialized to NULL
+
+	* lib/system-gschemrc.in: Changed the default background color
+	and all the colors to correspond to a light (almost white) background
+	Commented out the black background colors
+
+	* noweb/x_window.nw: Much more work on the toolbar.  Added Edit, Add
+	Text...  Also got some of the callbacks working.
+
+	* noweb/x_dialog.nw: Improved the label which appears on top of the
+	Text entry dialog box.
+
+	* noweb/x_window.nw: Much more work on getting toolbar complete.
+ 	Still need to add the appropriate callbacks to the buttons.
+
+2002-05-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Added in white background color theme.
+	Commented out.
+
+	* noweb/x_window.nw, i_callbacks.nw: Added toolbar with New, Open,
+	Save, Undo, Redo
+
+	* noweb/x_window.nw: Moved menu bar into a handlebox
+
 2002-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_color.nw: Fixed outline colors so that they xor properly

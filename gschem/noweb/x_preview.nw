@@ -131,21 +131,29 @@ x_preview_close(TOPLEVEL *w_current)
 
   if (w_current->series_name) {
     free(w_current->series_name);
+    w_current->series_name = NULL;
   }
 
   if (w_current->untitled_name) {
     free(w_current->untitled_name);
+    w_current->untitled_name = NULL;
   }
 
   if (w_current->font_directory) {
     free(w_current->font_directory);
+    w_current->font_directory = NULL;
   }
 
   if (w_current->scheme_directory) {
     free(w_current->scheme_directory);
+    w_current->scheme_directory = NULL;
   }
 
-	
+  if (w_current->bitmap_directory) {
+    free(w_current->bitmap_directory);
+    w_current->bitmap_directory = NULL;
+  }
+
   if (w_current->backingstore) {
     gdk_pixmap_unref(w_current->backingstore);
   }

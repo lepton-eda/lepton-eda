@@ -23,10 +23,13 @@
 
 /* File menu */
 <<i_callbacks.c : i_callback_file_new()>>
+<<i_callbacks.c : i_callback_toolbar_file_new()>>
 <<i_callbacks.c : i_callback_file_new_window()>>
 <<i_callbacks.c : i_callback_file_open()>>
+<<i_callbacks.c : i_callback_toolbar_file_open()>>
 <<i_callbacks.c : i_callback_file_script()>>
 <<i_callbacks.c : i_callback_file_save()>>
+<<i_callbacks.c : i_callback_toolbar_file_save()>>
 <<i_callbacks.c : i_callback_file_save_all()>>
 <<i_callbacks.c : i_callback_file_save_as()>>
 <<i_callbacks.c : i_callback_file_print()>>
@@ -37,7 +40,9 @@
 
 /* Edit menu */
 <<i_callbacks.c : i_callback_edit_undo()>>
+<<i_callbacks.c : i_callback_toolbar_edit_undo()>>
 <<i_callbacks.c : i_callback_edit_redo()>>
+<<i_callbacks.c : i_callback_toolbar_edit_redo()>>
 <<i_callbacks.c : i_callback_edit_select()>>
 <<i_callbacks.c : i_callback_edit_copy()>>
 <<i_callbacks.c : i_callback_edit_copy_hotkey()>>
@@ -114,6 +119,7 @@
 
 /* Add menu */
 <<i_callbacks.c : i_callback_add_component()>>
+<<i_callbacks.c : i_callback_toolbar_add_component()>>
 <<i_callbacks.c : i_callback_add_attribute()>>
 <<i_callbacks.c : i_callback_add_attribute_hotkey()>>
 <<i_callbacks.c : i_callback_add_net()>>
@@ -121,6 +127,7 @@
 <<i_callbacks.c : i_callback_add_bus()>>
 <<i_callbacks.c : i_callback_add_bus_hotkey()>>
 <<i_callbacks.c : i_callback_add_text()>>
+<<i_callbacks.c : i_callback_toolbar_add_text()>>
 <<i_callbacks.c : i_callback_add_line()>>
 <<i_callbacks.c : i_callback_add_line_hotkey()>>
 <<i_callbacks.c : i_callback_add_box()>>
@@ -392,6 +399,23 @@ DEFINE_I_CALLBACK(file_new)
 @ %def i_callback_file_new
 
 
+@section Function @code{i_callback_toolbar_file_new()}
+
+@defun i_callback_toolbar_file_new widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_file_new()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
+{
+   i_callback_file_new((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_file_new
+
+
 @section Function @code{i_callback_file_new_window()}
 
 @defun i_callback_file_new_window data callback_action widget
@@ -466,6 +490,25 @@ DEFINE_I_CALLBACK(file_open)
 @ %def i_callback_file_open
 
 
+@section Function @code{i_callback_toolbar_file_open()}
+
+@defun i_callback_toolbar_file_open widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_file_open()>>=
+/* don't use the widget parameter on this function, or do some
+ * checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current) */
+/* This should be renamed to page_open perhaps... */
+void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
+{
+   i_callback_file_open((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_file_open
+
+
 @section Function @code{i_callback_file_script()}
 
 @defun i_callback_file_script data callback_action widget
@@ -532,6 +575,25 @@ DEFINE_I_CALLBACK(file_save)
 
 
 @ %def i_callback_file_save
+
+
+@section Function @code{i_callback_toolbar_file_save()}
+
+@defun i_callback_toolbar_file_save widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_file_save()>>=
+/* don't use the widget parameter on this function, or do some
+ * checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current) */
+/* This should be renamed to page_open perhaps... */
+void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
+{
+   i_callback_file_save((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_file_open
 
 
 @section Function @code{i_callback_file_save_all()}
@@ -769,6 +831,23 @@ DEFINE_I_CALLBACK(edit_undo)
 @ %def i_callback_edit_undo
 
 
+@section Function @code{i_callback_toolbar_edit_undo()}
+
+@defun i_callback_toolbar_edit_undo widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_edit_undo()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
+{
+   i_callback_edit_undo((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_edit_undo
+
+
 @section Function @code{i_callback_edit_redo()}
 
 @defun i_callback_edit_redo data callback_action widget
@@ -784,6 +863,23 @@ DEFINE_I_CALLBACK(edit_redo)
 
 
 @ %def i_callback_edit_redo
+
+
+@section Function @code{i_callback_toolbar_edit_redo()}
+
+@defun i_callback_toolbar_edit_redo widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_edit_redo()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
+{
+   i_callback_edit_redo((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_edit_redo
 
 
 @section Function @code{i_callback_edit_select()}
@@ -2712,6 +2808,23 @@ DEFINE_I_CALLBACK(add_component)
 @ %def i_callback_add_component
 
 
+@section Function @code{i_callback_toolbar_add_component()}
+
+@defun i_callback_toolbar_add_component widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_add_component()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
+{
+   i_callback_add_component((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_add_component
+
+
 @section Function @code{i_callback_add_attribute()}
 
 @defun i_callback_add_attribute data callback_action widget
@@ -2878,6 +2991,23 @@ DEFINE_I_CALLBACK(add_text)
 
 
 @ %def i_callback_add_text
+
+
+@section Function @code{i_callback_toolbar_add_text()}
+
+@defun i_callback_toolbar_add_text widget data
+@end defun
+
+<<i_callbacks.c : i_callback_toolbar_add_text()>>=
+/* don't use the widget parameter on this function, or do some checking... */
+/* since there is a call: widget = NULL, data = 0 (will be w_current hack) */
+void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
+{
+   i_callback_add_text((TOPLEVEL*) data, 0, NULL);
+}
+
+
+@ %def i_callback_toolbar_add_text
 
 
 @section Function @code{i_callback_add_line()}

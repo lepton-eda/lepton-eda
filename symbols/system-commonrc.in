@@ -138,6 +138,15 @@
 ;
 (scheme-directory "${GEDADATA}@PATHSEP@scheme")
 
+
+; bitmap-directory string
+; Specifies where the supporting bitmaps live
+; You should have read access to this directory and all the files inside
+; the directory.
+; All environment variables *MUST* be in the form ${variable_name}
+;
+(bitmap-directory "${GEDADATA}@PATHSEP@bitmap")
+
 ;
 ; End of path related keywords
 ;

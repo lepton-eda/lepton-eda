@@ -60,6 +60,7 @@
 <<g_rc.c : g_rc_source_library_search()>>
 <<g_rc.c : g_rc_attribute_name()>>
 <<g_rc.c : g_rc_scheme_directory()>>
+<<g_rc.c : g_rc_bitmap_directory()>>
 
 #if 0 /* old obsolete way of handling strokes */
 <<g_rc.c : g_rc_stroke()>>
@@ -1687,6 +1688,66 @@ g_rc_scheme_directory(SCM path)
 
 
 @ %def g_rc_scheme_directory
+
+
+@section Function @code{g_rc_bitmap_directory()}
+
+@defun g_rc_scheme_directory path
+@end defun
+
+<<g_rc.c : g_rc_bitmap_directory()>>=
+SCM
+g_rc_bitmap_directory(SCM path)
+{
+  int ret;
+  struct stat buf;
+  char *string = gh_scm2newstr(path, NULL);
+
+  if (string == NULL) {
+    fprintf(stderr,
+            "%s requires a string as a parameter\n",
+            "bitmap-directory"
+            );
+    return SCM_BOOL_F;
+  }
+
+  /* take care of any shell variables */
+  string = expand_env_variables(string);
+
+  ret = stat(string, &buf);
+
+  /* invalid path? */
+  if (ret < 0) {
+    fprintf(stderr,
+            "Invalid path [%s] passed to bitmap-directory\n",
+            string);
+    if (string) {
+      free(string);
+    }
+    return SCM_BOOL_F;
+  }
+
+  /* not a directory? */
+  if (!S_ISDIR(buf.st_mode)) {
+    if (string) {
+      free(string);
+    }
+    return SCM_BOOL_F;
+  }
+
+  if (default_bitmap_directory) {
+    free(default_bitmap_directory);
+  }
+  default_bitmap_directory = u_basic_strdup(string);
+
+  if (string) {
+    free(string);
+  }
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_bitmap_directory
 
 
 @section Function @code{g_rc_stroke()}

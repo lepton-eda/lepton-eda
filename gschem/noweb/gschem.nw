@@ -90,8 +90,9 @@ gschem_quit(void)
 
   free(default_series_name);
   free(default_untitled_name);
-  free(default_scheme_directory);
   free(default_font_directory);
+  free(default_scheme_directory);
+  free(default_bitmap_directory);
 
 
   /* x_window_free_head(); can't do this since it causes a

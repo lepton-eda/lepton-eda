@@ -123,19 +123,16 @@ label
 
 If you want to label a net then attach an attribute called label=value to
 the net.  All nets which have the same name are considered electrically
-connected.  You should also use this attribute when you want to label
-pins.
+connected.  
 
 
-label
+pinlabel
 (inside symbols attached to pins)
 
-All pins should also have the label=label attribute attached to them.
+All pins should also have the pinlabel=label attribute attached to them.
 This is visible label associated with each pin.  Please make this
 attribute green (instead of the default attribute yellow).  Right now,
 the symbol libraries do not follow this convention, but they will.  
-This symbol was formally known as "pinlabel"; that name should not be
-used anymore.
 
 
 name

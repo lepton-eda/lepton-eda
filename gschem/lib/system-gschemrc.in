@@ -66,12 +66,15 @@
 ; 	and the final 3 integers are the RGB values for PNG image files
 ;
 
+
+
 ; background-color index color_name outline_color ps_color_string 
 ;                  int_red int_green int_blue 
 ; Set the default background color.  
 ; DO NOT change the value of the index (first number)
 ;
-(background-color 0 "black" "null" "null" -1 -1 -1)
+(background-color 0 "grey94" "null" "null" -1 -1 -1)  	; light background
+;(background-color 0 "black" "null" "null" -1 -1 -1)  	; dark background
 
 ; pin-color index color_name outline_color ps_color_string 
 ;           int_red int_green int_blue 
@@ -79,14 +82,16 @@
 ; To change existing pins use the override-pin-color
 ; DO NOT change the value of the index (first number)
 ;
-(pin-color 1 "white" "grey" "1 1 1" 255 255 255)
+(pin-color 1 "black" "grey30" "0 0 0" 0 0 0)		; light background
+;(pin-color 1 "white" "grey" "1 1 1" 255 255 255) 	; dark background
 
 ; net-endpoint-color index color_name outline_color ps_color_string 
 ;                    int_red int_green int_blue 
 ; Set the default net endpoint color.  
 ; DO NOT change the value of the index (first number)
 ;
-(net-endpoint-color 2 "red" "red3" "1 0 0" 255 0 0)
+(net-endpoint-color 2 "red" "red3" "1 0 0" 255 0 0)	; light background
+;(net-endpoint-color 2 "red" "red3" "1 0 0" 255 0 0)	; dark background	
 
 ; graphic-color index color_name outline_color ps_color_string 
 ;               int_red int_green int_blue 
@@ -95,7 +100,8 @@
 ; by this keyword.  
 ; DO NOT change the value of the index (first number)
 ; 
-(graphic-color 3 "green" "green3" "0 1 0" 0 255 0)
+(graphic-color 3 "green4" "green4" "0 1 0" 0 255 0)	; light background
+;(graphic-color 3 "green" "green3" "0 1 0" 0 255 0)	; dark background
 
 ; net-color index color_name outline_color ps_color_string 
 ;           int_red int_green int_blue 
@@ -103,7 +109,8 @@
 ; To change existing nets use the override-net-color 
 ; DO NOT change the value of the index (first number)
 ;
-(net-color 4 "blue" "blue3" "0 0 1" 0 0 255)
+(net-color 4 "blue2" "blue3" "0 0 1" 0 0 255)		; light background
+;(net-color 4 "blue" "blue3" "0 0 1" 0 0 255)		; dark background
 
 ; attribute-color index color_name outline_color ps_color_string 
 ;                 int_red int_green int_blue 
@@ -111,21 +118,25 @@
 ; another with the 'Attach Attribute' command.  
 ; DO NOT change the value of the index (first number)
 ;
-(attribute-color 5 "yellow" "yellow3" "1 1 0" 255 255 0)
+(attribute-color 5 "black" "grey30" "0 0 0" 0 0 0)	  ; light background
+;(attribute-color 5 "yellow" "yellow3" "1 1 0" 255 255 0) ; dark background
 
 ; logic-bubble-color index color_name outline_color ps_color_string 
 ;                    int_red int_green int_blue 
 ; Set the color of logic bubbles / circles.  
 ; DO NOT change the value of the index (first number)
 ;
-(logic-bubble-color 6 "cyan" "cyan3" "0 1 1" 0 255 255)
+; light background  
+(logic-bubble-color 6 "DarkCyan" "DarkCyan" "0 .54 .54" 0 139 139) 
+;(logic-bubble-color 6 "cyan" "cyan3" "0 1 1" 0 255 255) ; dark background
 
 ; grid-color index color_name outline_color ps_color_string 
 ;            int_red int_green int_blue 
 ; Set the default grid color.  
 ; DO NOT change the value of the index (first number)
 ;
-(grid-color 7 "grey" "null" "null" -1 -1 -1)
+(grid-color 7 "grey50" "null" "null" -1 -1 -1)		; light background
+;(grid-color 7 "grey" "null" "null" -1 -1 -1)		; dark background
 
 ; detached-attribute-color index color_name outline_color ps_color_string 
 ;                          int_red int_green int_blue 
@@ -134,7 +145,8 @@
 ; are created in conjunction with the 'Detach Attribute' command.  
 ; DO NOT change the value of the index (first number)
 ;
-(detached-attribute-color 8 "red" "red3" "1 0 0" 255 0 0)
+(detached-attribute-color 8 "red" "red3" "1 0 0" 255 0 0)   ; light background
+;(detached-attribute-color 8 "red" "red3" "1 0 0" 255 0 0)  ; dark background
 
 ; text-color index color_name outline_color ps_color_string 
 ;            int_red int_green int_blue 
@@ -142,7 +154,8 @@
 ; Existing graphic objects are not effected by this keyword.  
 ; DO NOT change the value of the index (first number)
 ;
-(text-color 9 "green" "green3" "0 1 0" 0 255 0)
+(text-color 9 "green4" "green4" "0 .54 0" 0 139 0)	    ; light background
+;(text-color 9 "green" "green3" "0 1 0" 0 255 0)	    ; dark background
 
 ; bus-color index color_name outline_color ps_color_string 
 ;           int_red int_green int_blue 
@@ -150,7 +163,8 @@
 ; To change existing buses use the override-bus-color 
 ; DO NOT change the value of the index (first number)
 ;
-(bus-color 10 "green" "green3" "0 1 0" 0 255 0)
+(bus-color 10 "green2" "green3" "0 .9333 0" 0 238 0)	    ; light background
+;(bus-color 10 "green" "green3" "0 1 0" 0 255 0)	    ; dark background
 
 ; select-color index color_name outline_color ps_color_string 
 ;              int_red int_green int_blue 
@@ -158,7 +172,8 @@
 ; selects and when objects are selected.  
 ; DO NOT change the value of the index (first number)
 ;
-(select-color 11 "orange" "orange" "null" -1 -1 -1)
+(select-color 11 "firebrick" "firebrick" "null" -1 -1 -1)   ; light background
+;(select-color 11 "orange" "orange" "null" -1 -1 -1)	    ; dark background
 
 ; boundingbox-color index color_name outline_color ps_color_string 
 ;                   int_red int_green int_blue 
@@ -167,7 +182,8 @@
 ; instead of the default outline.  
 ; DO NOT change the value of the index (first number)
 ; 
-(boundingbox-color 12 "orange" "orange" "null" -1 -1 -1)
+(boundingbox-color 12 "orange" "orange" "null" -1 -1 -1)    ; light background
+;(boundingbox-color 12 "orange" "orange" "null" -1 -1 -1)   ; dark background
 
 ; zoom-box-color index color_name outline_color ps_color_string 
 ;                int_red int_green int_blue 
@@ -175,7 +191,8 @@
 ; whenever you use the zoom window / box option. 
 ; DO NOT change the value of the index (first number)
 ; 
-(zoom-box-color 13 "cyan" "cyan" "null" -1 -1 -1)
+(zoom-box-color 13 "DarkCyan" "DarkCyan" "null" -1 -1 -1)    ; light background
+;(zoom-box-color 13 "cyan" "cyan" "null" -1 -1 -1)	     ; dark background
 
 ; stroke-color index color_name outline_color ps_color_string 
 ;              int_red int_green int_blue 
@@ -183,14 +200,16 @@
 ; Basically this color specifies what the mouse droppings color
 ; DO NOT change the value of the index (first number)
 ;
-(stroke-color 14 "grey90" "grey90" "null" -1 -1 -1)
+(stroke-color 14 "grey90" "grey90" "null" -1 -1 -1)	     ; light background
+;(stroke-color 14 "grey90" "grey90" "null" -1 -1 -1)	     ; dark background
 
 ; lock-color index color_name outline_color ps_color_string 
 ;            int_red int_green int_blue 
 ; Set the default lock color which is used when you lock an object down
 ; DO NOT change the value of the index (first number)
 ;
-(lock-color 15 "grey" "darkgrey" ".75 .75 .75" 190 190 190)
+(lock-color 15 "grey40" "darkgrey" ".4 .4 .4" 102 102 102)   ; light background
+;(lock-color 15 "grey" "darkgrey" ".75 .75 .75" 190 190 190) ; dark background
 
 ; output-color-background index color_name outline_color ps_color_string 
 ;                         int_red int_green int_blue 
@@ -199,8 +218,8 @@
 ; 	- Only used if ouput-color is "enabled" (see above)
 ; DO NOT change the value of the index (first number)
 ;
-(output-color-background 16 "black" "null" "0 0 0" 0 0 0)
-;(output-color-background 16 "white" "null" "1 1 1" 255 255 255)
+(output-color-background 16 "white" "null" "1 1 1" 255 255 255) ; light back
+;(output-color-background 16 "black" "null" "0 0 0" 0 0 0)    ; dark background
 
 ; override-net-color index color_name outline_color ps_color_string 
 ;                    int_red int_green int_blue 
@@ -607,9 +626,10 @@
 ; window-size width height 
 ;
 ; Specifies the size of the drawing area window.  The width and height
-; are specified in pixels and do not include the two menu bars and 
-; scrollbars (so the window will be slightly larger than the specified 
+; are specified in pixels and do not include the three menu bars and 
+; scrollbars (so the window will be larger than the specified 
 ; measurements). Try to keep an aspect ratio of 1.333333 if at all possible. 
+; These numbers are NOT the true size of the window, but of the drawing area.
 ;
 ;(window-size 800 600)
 (window-size 1024 768)

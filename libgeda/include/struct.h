@@ -422,8 +422,9 @@ struct st_toplevel {
 
   char *series_name;			/* Current series basename */
   char *untitled_name;			/* untitled sch basename */
-  char *font_directory; 			/* path of the vector fonts */
+  char *font_directory; 		/* path of the vector fonts */
   char *scheme_directory; 		/* path of the scheme scripts */
+  char *bitmap_directory; 		/* path of the bitmaps */
 	
   int event_state;			/* Current event state */
 
@@ -507,6 +508,16 @@ struct st_toplevel {
   GtkWidget *right_label;
   GtkWidget *filename_label;
   GtkWidget *status_label;
+
+  GtkWidget *toolbar_select;
+  GtkWidget *toolbar_net;
+  GtkWidget *toolbar_bus;
+  GtkWidget *toolbar_edit;
+  GtkWidget *toolbar_move;
+  GtkWidget *toolbar_copy;
+  GtkWidget *toolbar_delete;
+  GtkWidget *toolbar_rotate;
+  GtkWidget *toolbar_mirror;
 
   GtkMenuFactory *factory;
   GtkMenuFactory *subfactory[2];

@@ -499,6 +499,7 @@ AC_CONFIG_FILES([Makefile            \
 		src/Makefile        \
 		include/Makefile    \
 		scheme/Makefile     \
+		bitmap/Makefile     \
 		scripts/Makefile    \
 		examples/Makefile   \
 		docs/Makefile       \

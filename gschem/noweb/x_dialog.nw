@@ -1064,11 +1064,11 @@ text_input_dialog (TOPLEVEL *w_current)
 #endif
 
     gtk_window_set_title(GTK_WINDOW (w_current->tiwindow),
-                         "Enter Text");
+                         "Text Entry...");
     gtk_container_border_width(
                                GTK_CONTAINER (w_current->tiwindow), 0);
 
-    label = gtk_label_new ("Enter Text");
+    label = gtk_label_new ("Enter text, Click apply,\nMove cursor into window, click to place text.");
     gtk_box_pack_start(
                        GTK_BOX(vbox),
                        label, TRUE, TRUE, 0);
