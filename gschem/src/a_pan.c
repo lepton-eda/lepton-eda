@@ -41,30 +41,114 @@ int current_center_x = 0;
 int current_center_y = 0;
 
 /* experimental */
-#if 0
 /* Kazu Hirata <kazu@seul.org> on July 25, 1999 - all zoom- and
  * pan-related functions should eventually get to this function. It
  * takes the desired center coordinate and the desired zoom
  * factor. Necessary adjustments may be done depending on situations.
  * */
-static void
-a_pan_general(TOPLEVEL *w_current, int cx, int cy, int zoom_factor)
+/* this code is not longer experimental an is use by several funktions
+like every zooming-function and the x_event_configure (Werner Hoch,(hw))*/
+void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
+	double relativ_zoom_factor,int flags)
 {
+	/* see libgeda/include/defines.h for flags */
+
 	int fix = 0;
-	int wx, wy;
+	
+	/*if the borders should be ignored always rm outcomment or changes
+	the flags in the function-calls*/
+/*	flags |= A_PAN_IGNORE_BORDERS;
+*/		
+	/* think it's better that the zoomfactor is defined as pix/mills
+	this will be the same as w_current->page_current->to_screen_x/y_constant*/
+	int zoom_max = 5;	
+	double zx,zy,zoom_old,zoom_new,zoom_min;
+#if DEBUG
+	printf("--------------a_pan_general: \nworld_cx: %f, world_cy: %f \n ",world_cx, world_cy);
+#endif	
+	/* calc minimum zoomfactors and choose the smaller one, they are equal
+	if the aspectratio of the world is the same as the worlds*/
+	zx = (double) w_current->width / (w_current->init_right -
+		w_current->init_left);
+	zy = (double) w_current->height / (w_current->init_bottom -
+		w_current->init_top);
+	zoom_min = zx < zy ? zx : zy;
 
-	/* compute world size that fits in the current screen */
-	wx = 100; /* fix me */
-	wy = 100; /* fix me */
+#if DEBUG
+	printf("zx_min: %f, zy_min: %f , flags: %d\n ",zx, zy, flags);
+#endif	
 
-	/* check left wall */
-
-	/* check right wall */
-
-	/* check top wall */
-
-	/* check bottom wall */
-
+        /*to_screen_x_constant and to_screen_y_constant are nearly equal*/
+/*	zx = w_current->page_current->to_screen_x_constant;
+	zy = w_current->page_current->to_screen_y_constant;
+       	zoom_old = zx < zy ? zx : zy;
+*/	zoom_old = w_current->page_current->to_screen_y_constant;
+		
+	/*calc new zooming factor */
+	zoom_new = zoom_old * relativ_zoom_factor;
+	zoom_new = zoom_new > zoom_max ? zoom_max : zoom_new;
+	if (!(flags & A_PAN_IGNORE_BORDERS)) {
+		zoom_new = zoom_new < zoom_min ? zoom_min : zoom_new;
+	}
+	
+	/*check if theres a zoom_full (rel is -1)*/
+	if (relativ_zoom_factor <0)  {
+		zoom_new = zoom_min;
+	}
+	/*calculate the new visible area; adding 0.5 to round */
+       	w_current->page_current->left = world_cx - (double) w_current->width
+       		/ 2 / zoom_new + 0.5;
+       	w_current->page_current->right = world_cx + (double) w_current->width
+       		/ 2 / zoom_new + 0.5;
+       	w_current->page_current->top = world_cy - (double) w_current->height
+       		/ 2 / zoom_new + 0.5;
+       	w_current->page_current->bottom = world_cy + (double) w_current->height
+       		/ 2 / zoom_new + 0.5;
+	
+	/*and put it back to the borders */
+	if (!(flags & A_PAN_IGNORE_BORDERS)) {
+  		/* check right border */
+	   	if (w_current->page_current->right > w_current->init_right) {
+   			w_current->page_current->left +=
+   				w_current->init_right -
+   				w_current->page_current->right;
+   			w_current->page_current->right =
+   				w_current->init_right;
+	   	}
+	  	/* check left border; this have to be done after the right border */
+   		if (w_current->page_current->left < w_current->init_left) {
+   			w_current->page_current->right +=
+   				w_current->init_left -
+   				w_current->page_current->left;
+   			w_current->page_current->left =
+   				w_current->init_left;
+	   	}
+  		/* check bottom border */
+	   	if (w_current->page_current->bottom > w_current->init_bottom) {
+			w_current->page_current->top +=
+				w_current->init_bottom -
+				w_current->page_current->bottom;
+			w_current->page_current->bottom = w_current->init_bottom;
+	   	}
+  		/* check top border this have to be done after the bottom border*/
+	   	if (w_current->page_current->top < w_current->init_top) {
+	   		w_current->page_current->bottom +=
+	   			w_current->init_top -
+	   			w_current->page_current->top;
+   			w_current->page_current->top = w_current->init_top;
+	   	}
+	}
+	
+#if DEBUG
+	printf("zoom_old: %f, zoom_new: %f \n ",zoom_old, zoom_new);
+	printf("left: %d, right: %d, top: %d, bottom: %d\n",
+	       w_current->page_current->left, w_current->page_current->right, w_current->page_current->top, w_current->page_current->bottom);
+	printf("aspect: %f\n",
+	       (float) fabs(w_current->page_current->right  - w_current->page_current->left) /
+	       (float) fabs(w_current->page_current->bottom - w_current->page_current->top ));
+#endif
+	
+	/* not used any longer because there are no rounding errors to fix*/
 	/* correct aspect ratio */
 	if (fix != 0) {
 		correct_aspect(w_current);
@@ -78,17 +162,18 @@ a_pan_general(TOPLEVEL *w_current, int cx, int cy, int zoom_factor)
 		   w_current->page_current->bottom);
 
 	/* redraw */
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_REDRAW = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_RESIZE = 0;
+	if (!(flags & A_PAN_DONT_REDRAW)) {
+        	w_current->DONT_RECALC = 1;
+        	w_current->DONT_RESIZE = 1;
+        	w_current->DONT_REDRAW = 1;
+        	x_hscrollbar_update(w_current);
+        	x_vscrollbar_update(w_current);
+        	o_redraw_all(w_current);
+        	w_current->DONT_REDRAW = 0;
+        	w_current->DONT_RECALC = 0;
+        	w_current->DONT_RESIZE = 0;
+	}
 }
-#endif
 
 void
 a_pan_calc(TOPLEVEL *w_current, int x, int y)
@@ -143,71 +228,11 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
 
 #if DEBUG
 	printf("left: %d, right: %d, top: %d, bottom: %d\n",
-	       left, right, top, bottom);
+	       w_current->page_current->left, w_current->page_current->right, w_current->page_current->top, w_current->page_current->bottom);
 	printf("aspect: %f\n",
-	       (float) fabs(right  - left) /
-	       (float) fabs(bottom - top ));
-	printf("zoomfactor: %d\n", zoom_factor);
-#endif
-
-	current_center_x = GET_PAGE_CENTER_X(w_current);
-	current_center_y = GET_PAGE_CENTER_Y(w_current);
-
-#if DEBUG
-	printf("%d %d\n", current_center_x, current_center_y);
-#endif
-}
-
-/* Moves the section back in the allowed borders */
-void
-a_pan_section_check(TOPLEVEL *w_current)
-{
-     	if (w_current->page_current->right > w_current->init_right) {
-     		w_current->page_current->left -= w_current->page_current->right - w_current->init_right;
-     		w_current->page_current->right = w_current->init_right;
-     	}
-     	if (w_current->page_current->left < 0) {
-     		w_current->page_current->right -= w_current->page_current->left;
-     		w_current->page_current->left = 0;
-     	}
-     	if (w_current->page_current->bottom > w_current->init_bottom) {
-     		w_current->page_current->top -= w_current->page_current->bottom - w_current->init_bottom;
-     	     	w_current->page_current->bottom = w_current->init_bottom;
-     	}
-     	if (w_current->page_current->top < 0) {
-     		w_current->page_current->bottom -= w_current->page_current->top;
-     		w_current->page_current->top = 0;
-     	}
-}
-
-
-void
-a_pan_calc_without_bordercheck(TOPLEVEL *w_current, int x, int y)
-{
-	int pan_x, pan_y;
-	int ix, iy, center_x, center_y;
-
-	pan_x = mil_x(w_current, x);
-	pan_y = mil_y(w_current, y);
-
-	center_x = GET_PAGE_CENTER_X(w_current);
-	center_y = GET_PAGE_CENTER_Y(w_current);
-
-        ix = center_x - pan_x;
-	w_current->page_current->left  -= ix;
-	w_current->page_current->right -= ix;
-
-	iy = center_y - pan_y;
-	w_current->page_current->top    -= iy;
-	w_current->page_current->bottom -= iy;
-
-#if DEBUG
-	printf("left: %d, right: %d, top: %d, bottom: %d\n",
-	       left, right, top, bottom);
-	printf("aspect: %f\n",
-	       (float) fabs(right  - left) /
-	       (float) fabs(bottom - top ));
-	printf("zoomfactor: %d\n", zoom_factor);
+	       (float) fabs(w_current->page_current->right  - w_current->page_current->left) /
+	       (float) fabs(w_current->page_current->bottom - w_current->page_current->top ));
+	printf("zoomfactor: %d\n", w_current->page_current->zoom_factor);
 #endif
 
 	current_center_x = GET_PAGE_CENTER_X(w_current);
@@ -253,15 +278,16 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 	/* do the actual work */
 	a_pan_calc(w_current, x, y);
 
-	w_current->DONT_REDRAW = 1;
 	w_current->DONT_RECALC = 1;
 	w_current->DONT_RESIZE = 1;
+	w_current->DONT_REDRAW = 1;
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
-	o_redraw_all_fast(w_current);
 	w_current->DONT_REDRAW = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_RESIZE = 0;
+
+	o_redraw_all_fast(w_current);
 
 	/* convert coords back to screen coords */
 	if (w_current->inside_action) {
@@ -377,25 +403,15 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 #endif
 	}
 
-
-	/* really bound the lower left hand corner */
+	/* really bound the left */ 
 	if (w_current->page_current->left < 0) {
-		w_current->page_current->left = 0;
+		w_current->page_current->left = 0; 
 	}
-	if (w_current->page_current->top < 0) {
-		w_current->page_current->top = 0;
+						     
+	/* really bound the top */ 
+	if (w_current->page_current->top < 0) { 
+		w_current->page_current->top = 0; 
 	}
-
-#if DEBUG 
-	printf ("init = %d %d %d %d\n", w_current->init_left,
-		w_current->init_top,
-		w_current->init_right,
-		w_current->init_bottom);
-
-	printf ("current = %d %d %d %d\n", w_current->page_current->left,
-		w_current->page_current->top, w_current->page_current->right,
-		w_current->page_current->bottom);
-#endif
 
 	if (fix != 0) {
 		correct_aspect(w_current);
@@ -415,22 +431,23 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 	       w_current->page_current->bottom);
 #endif
 
-	w_current->DONT_REDRAW = 1;
 	w_current->DONT_RECALC = 1;
 	w_current->DONT_RESIZE = 1;
+	w_current->DONT_REDRAW = 1;
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
-	o_redraw_all_fast(w_current);
 	w_current->DONT_REDRAW = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_RESIZE = 0;
 
+	o_redraw_all_fast(w_current);
+
 #if DEBUG
 	printf("left: %d, right: %d, top: %d, bottom: %d\n",
-	       left, right, top, bottom);
+	       w_current->page_current->left, w_current->page_current->right, w_current->page_current->top, w_current->page_current->bottom);
 	printf("aspect: %f\n",
-	       (float) fabs(right  - left) /
-	       (float) fabs(bottom - top ));
-	printf("zoomfactor: %d\n", zoom_factor);
+	       (float) fabs(w_current->page_current->right  - w_current->page_current->left) /
+	       (float) fabs(w_current->page_current->bottom - w_current->page_current->top ));
+	printf("zoomfactor: %d\n", w_current->page_current->zoom_factor);
 #endif
 }
