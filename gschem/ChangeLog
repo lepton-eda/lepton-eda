@@ -1,3 +1,10 @@
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* examples/*.sch, tests/*.sch: Updated schematics to the latest
+	version via gschupdate
+
+        * configure.in: Updated version to 20021103 (an official version)
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/gschem.txt: Move this file into ../docs/gschem

@@ -1,4 +1,4 @@
-v 20020527
+v 20021103
 B 54300 46600 5000 1700 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 54400 46700 9 5 1 0 0 0
 original test schematic created by Werner Hoch
