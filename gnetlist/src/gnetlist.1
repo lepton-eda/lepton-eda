@@ -1,4 +1,4 @@
-.TH gEDA 1 "May 25th, 2003" Version 20030525
+.TH gEDA 1 "October 1st, 2003" Version 20030901
 .SH NAME
 gnetlist - gEDA/gaf Netlist extraction/generation
 .SH SYNOPSIS
@@ -8,8 +8,7 @@ gnetlist - gEDA/gaf Netlist extraction/generation
 .PP
 \fIgnetlist\fP is the netlist extraction/generation program which is part gEDA 
 (GPL Electronic Design Automation) toolset.  This program takes a schematic
-for its input and outputs a netlist.  As of the writing of this man page
-a test netlist format is the only existing output format ("ales-netlist").  
+for its input and outputs a netlist.  
 
 gnetlist depends heavily on guile (a scheme based scripting language).  It 
 uses guile to define the output format.  Basically gnetlist reads a schematic,
@@ -79,9 +78,9 @@ string is execute before any init or netlist backend scheme code is
 loaded or executed.
 .TP 8
 .B -i 
-Interactive mode.  After the schematic is read in and parsed and, if specified,
-the guile_procedure is execute then go into interactive mode.  Interactive
-mode allows the user to execute guile procedures directly. 
+Interactive mode.  After the schematic is read in and parsed then go into 
+interactive mode.  Interactive mode allows the user to execute guile 
+procedures directly. 
 .TP 8
 schematic1 [... schematicN]
 At least one schematic file must be specified.  If multiple schematics are 

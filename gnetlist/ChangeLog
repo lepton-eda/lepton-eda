@@ -1,3 +1,7 @@
+2003-10-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Updated interactive section in man page a little. 
+
 2003-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-drc2.scm, src/g_netlist.c: Applied Carlos' latest
