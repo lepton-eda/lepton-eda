@@ -1,3 +1,14 @@
+2002-09-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_multiattrib.nw: Redid multi attribute dialog box using
+	glade.  Internals very similar, a few widget changes.
+
+	* noweb/x_multiattrib.nw: Not done yet, still need to redo flags
+	column in the clist (not good enough yet)
+
+	* noweb/x_attribedit.nw: Removed a static keyword to allow function
+	reuse.
+
 2002-09-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Created new file.

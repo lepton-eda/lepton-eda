@@ -73,7 +73,7 @@
 @end defun
 
 <<x_attribedit.c : option_menu_get_history()>>=
-static gint 
+gint 
 option_menu_get_history (GtkOptionMenu *option_menu) 
 { 
   GtkWidget *active_widget; 
