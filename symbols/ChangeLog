@@ -1,3 +1,9 @@
+2002-09-09 Werner Hoch <werner.ho@gmx.de>
+	* 74/74HCT*: completed symbols (added net, pinlabels, ...)
+	* 74/74124-2.sym: corrected slotdefs
+	* 74/7410[79]*.sym: completed symbols (added net, pinlabels, ...)
+	* 74/74109-2.sym: corrected slotdef
+
 2002-09-06 Werner Hoch <werner.ho@gmx.de>
 	
 	* 74/: 74[56789]?-*: completed symbols (added net, pinlabels, ...)
