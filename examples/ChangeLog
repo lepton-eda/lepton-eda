@@ -2,7 +2,9 @@
 
 	* lightning_detector/: Added sch/pcb example by Terry Porter.
 
-	* Makefile.am, configure.in: Added above directory
+	* RF_Amp/: Added hierarchical spice example by Stuart Brorson
+
+	* Makefile.am, configure.in: Added above directories
 
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
