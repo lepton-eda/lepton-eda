@@ -40,6 +40,7 @@ symbolbase=`echo "$4" | sed s/-[0-9]\\.sym//`
 view_file_if_pdf()
 {
 	if test -f "$1" && (file "$1" | grep -q "PDF") && test "${pdfreader}"!="no"; then
+		echo "Found ${pdfreader}"
 		echo "Using PDF viewer and file: $1"
 		${pdfreader} -- "$1"
 		exit
@@ -96,29 +97,17 @@ lookup_manual()
 #
 browser="no"
 for a in ${CANDIDATE_BROWSER}; do
-	b=`which $a 2>/dev/null`
-	if test "$b" != ""; then
-		browser="$b"
-		break
-	fi
+	b=`which $a 2>/dev/null` && browser=$b && break
 done
 
 pdfreader="no"
 for a in ${CANDIDATE_PDFREADER}; do
-	b=`which $a 2>/dev/null`
-	if test "$b" != ""; then
-		pdfreader="$b"
-		break
-	fi
+	b=`which $a 2>/dev/null` && pdfreader=$b && break
 done
 
 locate="no"
 for a in ${CANDIDATE_LOCATE}; do
-	b=`which $a 2>/dev/null`
-	if test "$b" != ""; then
-		locate="$b"
-		break
-	fi
+	b=`which $a 2>/dev/null` && locate=$b && break
 done
 
 #

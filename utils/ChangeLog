@@ -4,6 +4,9 @@
 	to increase the likelyhood of getting the datasheet.  Suggested by
 	Antonio A Todo Bom.
 
+	* scripts/gschemdoc.sh: Applied the patch by Gabriel Paubert to 
+	this file to fix the which problems reported on geda-dev.  Thanks.
+
 2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschupdate, scripts/symupdate: Oops, these scripts will
