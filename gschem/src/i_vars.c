@@ -103,6 +103,7 @@ int   default_middle_button = REPEAT;
 int   default_net_consolidate = FALSE;
 int   default_file_preview = FALSE;
 int   default_enforce_hierarchy = TRUE;
+int   default_text_origin_marker = TRUE;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -183,6 +184,7 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->net_consolidate    = default_net_consolidate;
 	w_current->file_preview       = default_file_preview;
 	w_current->enforce_hierarchy  = default_enforce_hierarchy;
+	w_current->text_origin_marker = default_text_origin_marker;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;

@@ -1025,13 +1025,130 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 /***************** End of Attrib Edit dialog box *********************/
 
 /***************** Start of Text Edit dialog box *********************/
+gint
+change_alignment(GtkWidget *w, TOPLEVEL *w_current)
+{
+	char *alignment;
+	alignment = gtk_object_get_data(GTK_OBJECT(w),"alignment");
+	w_current->text_alignment = atoi(alignment);
+	
+}
+
+static GtkWidget*
+create_menu_alignment (TOPLEVEL *w_current)
+{
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+	GSList *group;
+	char buf[100];
+
+	menu = gtk_menu_new ();
+	group = NULL;
+
+	sprintf (buf, "Lower Left");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "0");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Middle Left");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "1");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Upper Left");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "2");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Lower Middle");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "3");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Middle Middle");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "4");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Upper Middle");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "5");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Lower Right");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "6");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Middle Right");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "7");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	sprintf (buf, "Upper Right");
+	menuitem = gtk_radio_menu_item_new_with_label (group, buf);
+	group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "8");
+	gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
+			   (GtkSignalFunc) change_alignment,
+			   w_current);
+	gtk_widget_show (menuitem);
+
+	return(menu);
+}
+
+
 void
 text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
 	int len;
 	int text_size;
+	GtkWidget *align_entry;
 	char *text_string = NULL;
 	char *text_size_string = NULL;
+	char *text_alignment = NULL;
+	int new_text_alignment;	
 
 	text_string = gtk_entry_get_text(GTK_ENTRY(w_current->teentry));
 	text_size_string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
@@ -1053,9 +1170,11 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 			text_size = default_text_size;
 		}
 
+		new_text_alignment = w_current->text_alignment;
+
 		if (len < 80) {
 			o_text_edit_end(w_current, text_string,
-					 len, text_size);
+					 len, text_size, new_text_alignment);
 		} else {
 			/* TODO: you should NOT have limits */
 			fprintf(stderr, "String too long... hack!\n");
@@ -1081,12 +1200,15 @@ text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 }
 
 void
-text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size)
+text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size,
+		  int text_alignment)
 {
 	GtkWidget *label = NULL;
 	GtkWidget *buttonok     = NULL;
 	GtkWidget *buttoncancel = NULL;
 	GtkWidget *vbox, *action_area;
+	GtkWidget *optionmenu = NULL;
+	GtkWidget *align_menu = NULL;
 	char text_size_string[10];
 	int len;
 
@@ -1148,6 +1270,24 @@ text_edit_dialog (TOPLEVEL *w_current, char *string, int text_size)
 				   GTK_SIGNAL_FUNC(text_edit_dialog_ok),
 				   w_current);
       		gtk_widget_show (w_current->tsentry);
+
+		
+		label = gtk_label_new ("Edit Text Alignment");
+		gtk_box_pack_start(
+			GTK_BOX(vbox),
+			label, TRUE, TRUE, 5);
+      		gtk_widget_show (label);
+
+		optionmenu = gtk_option_menu_new ();
+		align_menu = create_menu_alignment (w_current);
+		gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
+					 align_menu);
+		gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 
+					    text_alignment);
+		w_current->text_alignment = text_alignment;
+		gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+										                gtk_widget_show(optionmenu);
+
 
 		buttonok = gtk_button_new_with_label ("OK");
 		GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);

@@ -798,7 +798,7 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[],
 		sscanf(buf, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
 					        &color, &size,
 						&visibility, &show_name_value, 
-						&alignment, &angle);	
+						&angle, &alignment);	
 	}
 
         if (size == 0) {
@@ -874,8 +874,8 @@ o_text_save(char *buf, OBJECT *object)
 
         sprintf(buf, "%c %d %d %d %d %d %d %d %d\n%s", object->type, x, y, 
 		color, size,  object->visibility, 
-	        object->show_name_value, object->text_alignment, 
-	        object->angle, string);
+	        object->show_name_value, object->angle, 
+		object->text_alignment, string);
 
         return(buf);
 }
@@ -1077,6 +1077,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	char output_string[1025]; /* hack */
 	char name[1025]; /* hack */
         char value[1025]; /* hack */
+	int sign=1;
 	int len;
 	int i;
 	int x, y;
@@ -1132,94 +1133,227 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		strcpy(output_string, o_current->text_string);
 	}
 
-	if (o_current->angle != 180) {
+	switch(o_current->angle) {
+		case(0):
+			sign = -1;
+			break;
+		case(90):
+			sign = 1;
+			break;
+		case(180):
+			sign = 1;
+			break;
+		case(270):
+			sign = -1;
+			break;
+	}
 
-		x = o_current->x;
-		y = o_current->y;
+	x = o_current->x;
+	y = o_current->y;
+	if (o_current->angle == 0 || o_current->angle == 180 ) {
+
 		switch(o_current->text_alignment) {
 			case(LOWER_LEFT):
 				fprintf(fp, "%d mils %d mils moveto\n", x, y);
+//				x_offset = x;
+//				y_offset = y;
 			break;
 
 			case(MIDDLE_LEFT):
 				fprintf(fp, "%d mils %d mils\n", x, y);
 				o_text_print_text_height(fp, o_current->text_size);
-				fprintf(fp, ".5 mul sub moveto\n");
+				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
+//				x_offset = x;
+//				y_offset = y + sign*0.5*text_height;
 			break;
 
 			case(UPPER_LEFT):
 				fprintf(fp, "%d mils %d mils\n", x, y);
 				o_text_print_text_height(fp, o_current->text_size);
-				fprintf(fp, "sub moveto\n");
+				fprintf(fp, "%d mul add moveto\n", sign);
+//				x_offset = x;
+//				y_offset = y + sign*text_height;
 			break;
 
 			case(LOWER_MIDDLE):
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
-				fprintf(fp, ".5 mul sub\n");
+				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				fprintf(fp, "moveto\n");
+//				x_offset = x + sign*0.5*text_width;
+//				y_offset = y;
 			break;
 
 			case(MIDDLE_MIDDLE):
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
-				fprintf(fp, ".5 mul sub\n");
+				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
-				fprintf(fp, ".5 mul sub moveto\n");
+				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
+//				x_offset = x + sign*0.5*text_width;
+//				y_offset = y + sign*0.5*text_height;
 			break;
 
 			case(UPPER_MIDDLE):
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
-				fprintf(fp, ".5 mul sub\n");
+				fprintf(fp, ".5 mul %d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
-				fprintf(fp, "sub moveto\n");
+				fprintf(fp, "%d mul add moveto\n", sign);
+//				x_offset = x + sign*0.5*text_width;
+//				y_offset = y + sign*text_height;
 			break;
 
 			case(LOWER_RIGHT):
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
-				fprintf(fp, "sub\n");
+				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				fprintf(fp, "moveto\n");
+//				x_offset = x + sign*text_width;
+//				y_offset = y;
 			break;
 
 			case(MIDDLE_RIGHT):
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
-				fprintf(fp, "sub\n");
+				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
-				fprintf(fp, ".5 mul sub moveto\n");
+				fprintf(fp, ".5 mul %d mul add moveto\n", sign);
+//				x_offset = x + sign*text_width;
+//				y_offset = y + sign*0.5*text_height;
 			break;
 
 			case(UPPER_RIGHT):
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
-				fprintf(fp, "sub\n");
+				fprintf(fp, "%d mul add\n", sign);
 				fprintf(fp, "%d mils\n", y);
 				o_text_print_text_height(fp, o_current->text_size);
-				fprintf(fp, "sub moveto\n");
+				fprintf(fp, "%d mul add moveto\n", sign);
+//				x_offset = x + sign*text_width;
+//				y_offset = y + sign*text_height;
 			break;
-			/* still need to do upper everything */
-			/* and then deal with rotation */
 		}
 
+#if 0 /* no longer needed */
+		if (o_current->angle == ) {
+			fprintf(fp, "%d rotate\n", o_current->angle); 
+		}
+#endif
+
+	} else if (o_current->angle == 90 || o_current->angle == 270) {
+		switch(o_current->text_alignment) {
+
+			case(LOWER_LEFT):
+				fprintf(fp, "%d mils %d mils moveto\n", x, y);
+//				x_offset = x;
+//				y_offset = y;
+			break;
+		
+			case(MIDDLE_LEFT):
+				fprintf(fp, "%d mils\n", x); 
+						
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, ".5 mul %d mul add\n", sign);
+				fprintf(fp, "%d mils moveto\n", y);
+//				x_offset = x + sign*0.5*text_height;
+//				y_offset = y;
+			break;
+	
+			case(UPPER_LEFT):
+				fprintf(fp, "%d mils\n", x); 
+						
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "%d mul add\n", sign);
+				fprintf(fp, "%d mils moveto\n", y);
+//				x_offset = x + sign*text_height;
+//				y_offset = y;
+			break;
+	
+			case(LOWER_MIDDLE):
+				fprintf(fp, "%d mils\n", x);
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
+//				x_offset = x;
+//				y_offset = y - sign*0.5*text_width;
+			break;
+	
+			case(MIDDLE_MIDDLE):
+				fprintf(fp, "%d mils\n", x);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "0.5 mul %d mul add\n", sign);
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
+//				x_offset = x + sign*0.5*text_height;
+//				y_offset = y - sign*0.5*text_width;
+			break;
+	
+			case(UPPER_MIDDLE):
+				fprintf(fp, "%d mils\n", x);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "%d mul add\n", sign);
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
+//				x_offset = x + sign*text_height;
+//				y_offset = y - sign*0.5*text_width;
+	
+			break;
+	
+			case(LOWER_RIGHT):
+				fprintf(fp, "%d mils\n", x);
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "%d mul sub moveto\n", sign);
+//				x_offset = x;
+//				y_offset = y - sign*text_width;
+			break;
+	
+			case(MIDDLE_RIGHT):
+				fprintf(fp, "%d mils\n", x);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "0.5 mul %d mul add\n", sign);
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "%d mul sub moveto\n", sign);
+//				x_offset = x + sign*0.5*text_height;
+//				y_offset = y - sign*text_width;
+			break;
+	
+			case(UPPER_RIGHT):
+				fprintf(fp, "%d mils\n", x);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "%d mul add\n", sign);
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "%d mul sub moveto\n", sign);
+//				x_offset = x + sign*text_height;
+//				y_offset = y - sign*text_width;
+			break;
+		}
 
 		if (o_current->angle) {
 			fprintf(fp, "%d rotate\n", o_current->angle); 
 		}
-	} else {
+	} 
+	
+	if (o_current->angle == 180) {
 
+/* old way of doing 180 rotated text */
+#if 0
 		/* 180 degree rotated text is special... */
 		/* subtract width and height from origin and don't */
 		/* do the rotation */
@@ -1250,9 +1384,19 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		/* 1000 mils per inch */
 		fprintf(fp, "%d mils moveto\n", 
 			o_current->y-origin_y - (int) rint(o_current->text_size*1.1*0.0139*1000));
+/* old way of doing 180 rotated text */
+#endif
 
+
+		o_text_print_text_width(fp, output_string); 
+		fprintf(fp, "-1.0 mul\n"); /* x distance back */
+		o_text_print_text_height(fp, o_current->text_size);
+		fprintf(fp, "-1.0 mul\n"); /* y distance down */
+		fprintf(fp, "rmoveto\n");
 	}
 
+
+	/* old way, which doesn't allow ('s and )'s to be used in strings */
 	/* fprintf(fp, "(%s) show\n", output_string);*/
 
 	fprintf(fp, "(");

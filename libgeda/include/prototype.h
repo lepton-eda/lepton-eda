@@ -305,6 +305,8 @@ void o_text_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_text_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *o_current);
 OBJECT *o_text_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
 void o_text_freeallfonts(TOPLEVEL *w_current);
+void o_text_print_text_width(FILE *fp, char *output_string);
+void o_text_print_text_height(FILE *fp, int size);
 void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);

@@ -48,8 +48,12 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 
 	o_complex_draw(w_current, o_current);
 
-	/* make this mark configurable through the rc mechanism */
-	small_dist = SCREENabs(w_current, 5);
+	/* return if text origin marker displaying is disabled */ 
+	if (w_current->text_origin_marker == FALSE) {
+		return;
+	}
+
+	small_dist = SCREENabs(w_current, 10);
 
 	screen_x1 = o_current->screen_x;
 	screen_y1 = o_current->screen_y;
@@ -69,8 +73,18 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		      screen_y1+small_dist, 
                       screen_x1+small_dist, 
 		      screen_y1-small_dist);
+	gdk_draw_line(w_current->backingstore, w_current->gc, 
+		      screen_x1-small_dist, 
+		      screen_y1+small_dist, 
+                      screen_x1+small_dist, 
+		      screen_y1-small_dist);
 
 	gdk_draw_line(w_current->window, w_current->gc, 
+		      screen_x1+small_dist, 
+		      screen_y1+small_dist, 
+                      screen_x1-small_dist, 
+		      screen_y1-small_dist);
+	gdk_draw_line(w_current->backingstore, w_current->gc, 
 		      screen_x1+small_dist, 
 		      screen_y1+small_dist, 
                       screen_x1-small_dist, 
@@ -320,11 +334,13 @@ o_text_edit(TOPLEVEL *w_current, OBJECT *o_current)
 	/* you need to check to make sure only one object is selected */
 	/* no actually this is okay... not here in o_edit */
 	text_edit_dialog(w_current,
-			 o_current->text_string, o_current->text_size);
+			 o_current->text_string, o_current->text_size,
+			 o_current->text_alignment);
 }
 
 void
-o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
+o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
+		int text_alignment)
 {
 	OBJECT *real;
 	OBJECT *temp;
@@ -355,6 +371,7 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 		temp = w_current->page_current->selection_head->next;
 
 		temp->text_size = text_size;
+		temp->text_alignment = text_alignment;
 		o_text_recreate(w_current, temp);
 
 		o_redraw_selected(w_current);
@@ -382,6 +399,7 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size)
 
 		temp = real;
 		real->text_size = text_size;
+		real->text_alignment = text_alignment;
 		o_text_recreate(w_current, temp);
 
 		w_current->page_current->CHANGED = 1;

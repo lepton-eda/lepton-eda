@@ -339,6 +339,11 @@
 ;
 (text-display-zoomfactor 3)
 
+; text-origin-marker string
+;
+(text-origin-marker "enabled")
+;(text-origin-marker "disabled")
+
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)

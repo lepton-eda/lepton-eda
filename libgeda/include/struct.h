@@ -292,6 +292,9 @@ struct st_toplevel {
 	int starting_width;			/* starting window width */
 						/* used to control text */
 
+	int text_alignment;			/* location to hold current */
+						/* alignment of text */
+
 
 	int override_color;			/* used in doing selections */
 	int inside_redraw;			/* complex vs list redrawing */
@@ -473,6 +476,8 @@ struct st_toplevel {
 	int file_preview; /* controls if the preview area is enabled or not */ 
 	int enforce_hierarchy; /* controls how much freedom user has when */ 
                                /* traversing the hierarchy */
+	int text_origin_marker; /* controls if text origin marker is */
+				/* displayed or not */
 
 	int print_output_type;			/* either window or limits */
 

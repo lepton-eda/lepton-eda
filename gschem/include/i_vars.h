@@ -59,4 +59,5 @@ extern int default_middle_button;
 extern int default_net_consolidate;
 extern int default_file_preview;
 extern int default_enforce_hierarchy;
+extern int default_text_origin_marker;
 

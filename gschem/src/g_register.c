@@ -126,6 +126,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("net-consolidate", g_rc_net_consolidate);
 	gh_new_procedure1_0 ("file-preview", g_rc_file_preview);
 	gh_new_procedure1_0 ("enforce-hierarchy", g_rc_enforce_hierarchy);
+	gh_new_procedure1_0 ("text-origin-marker", g_rc_text_origin_marker);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);

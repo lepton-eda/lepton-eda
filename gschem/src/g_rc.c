@@ -1275,6 +1275,16 @@ g_rc_enforce_hierarchy(SCM mode)
 		{FALSE, "disabled"},
 	};
 
-	/* this variable is inconsistantly named with the rest */
 	RETURN_G_RC_MODE("enforce-hierarchy", default_enforce_hierarchy, 2);
+}
+
+SCM
+g_rc_text_origin_marker(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("text-origin-marker", default_text_origin_marker, 2);
 }

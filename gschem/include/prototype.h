@@ -178,6 +178,7 @@ SCM g_rc_middle_button(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);
+SCM g_rc_text_origin_marker(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -429,7 +430,7 @@ void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_text_end(TOPLEVEL *w_current);
 void o_text_rubberattrib(TOPLEVEL *w_current);
 void o_text_edit(TOPLEVEL *w_current, OBJECT *o_current);
-void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
+void o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
 void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);
 /* parsecmd.c */
 void usage(char *cmd);
@@ -452,9 +453,12 @@ GdkColor *x_get_darkcolor(int color);
 int x_color_get_name(int index, char *string);
 /* x_dialog.c */
 void destroy_window(GtkWidget *widget, GtkWidget **window);
+char *multi_attrib_edit_parser(GtkWidget *w, char **text, int *vis, int *show);
+void multi_attrib_edit_set_values(GtkWindow *window, OBJECT *attrib);
+void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
+void multi_attrib_edit_select_row(GtkCList *clist, gint row, gint col, GdkEventButton *event, TOPLEVEL *w_current);
 void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
 void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit(TOPLEVEL *w_current, OBJECT *list);
@@ -465,9 +469,10 @@ void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list);
+gint change_alignment(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
-void text_edit_dialog(TOPLEVEL *w_current, char *string, int text_size);
+void text_edit_dialog(TOPLEVEL *w_current, char *string, int text_size, int text_alignment);
 void exit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void exit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void exit_dialog(TOPLEVEL *w_current);
