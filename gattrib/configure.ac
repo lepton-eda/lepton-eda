@@ -16,6 +16,11 @@ AM_CONFIG_HEADER([config.h])
 # Initialize maintainer mode
 AM_MAINTAINER_MODE
 
+# Create option to debug
+AC_ARG_ENABLE(debug,
+[ --enable-debug  Sets the DEBUG flag which causes lots of debug spew to be generated],
+[ AC_DEFINE(DEBUG, 1, DEBUG) ]
+)
 
 #########################################################################
 # Command line flags start

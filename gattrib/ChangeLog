@@ -1,3 +1,18 @@
+2005-01-22 Stuart Brorson   <sdb@cloud9.net>
+
+	* src/s_toplevel.c, src/s_attrib.c, src/s_sheet_data, Makefile.am: 
+	Fixed bug where pre-existing
+	attribs were deleted instead of being replaced.  Added new fcn 
+	in s_attrib.c as part of this bugfix.
+
+	* include/prototype.h, include/struct.h, include/x_menu.h,
+	src/gattrib.c, src/gtkitementry_2_2.c,src/gtksheet_2_2.c,
+	src/x_dialog.c:  New feature -- check for unsaved chages
+	before leaving program.
+
+	* configure.ac:  Added --enable-debug as configure option.
+
+	
 2005-01-21 Stuart Brorson   <sdb@cloud9.net>
 
         * src/s_toplevel.c, src/x_dialog.c: Fix bug where only one
