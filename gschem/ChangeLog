@@ -1,3 +1,14 @@
+2005-02-03 23:04  danmc
+
+	* include/prototype.h, noweb/o_misc.nw, noweb/o_net.nw,
+	  noweb/x_attribedit.nw, noweb/x_fileselect.nw, noweb/x_image.nw,
+	  noweb/x_print.nw, noweb/x_script.nw: - lots of clean up of
+	  'const' usage.  Seems to have squished all   gcc warnings around
+	  const.  Mostly this involved adding lots of	missing const's.  -
+	  also add a few missing prototypes and header files.  - fix call
+	  to realpath (it was being given a pointer to a pointer rather
+	  than a pointer).
+
 2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/*.nw: Switched to the new scm interface of guile.

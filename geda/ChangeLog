@@ -1,3 +1,49 @@
+2005-02-03 23:04  danmc
+
+	* src/m_file.c: - lots of clean up of 'const' usage.  Seems to have
+	  squished all	 gcc warnings around const.  Mostly this involved
+	  adding lots of   missing const's.  - also add a few missing
+	  prototypes and header files.	- fix call to realpath (it was
+	  being given a pointer to a pointer rather   than a pointer).
+
+2005-02-03 12:43  danmc
+
+	* src/m_file.c: use stdlib.h instead of malloc.h
+
+2005-02-03 12:28  danmc
+
+	* src/doc.c: Use stdlib.h instead of malloc.h to get malloc/free
+	  prototypes as the former is more standard.  Should fix OS-X
+	  compilation problems.
+
+2005-01-17 01:09  danmc
+
+	* graphman/Makefile.am: add missing @LIBINTL@ to graphman_LDADD
+
+2005-01-17 00:41  danmc
+
+	* graphman/callbacks.c, graphman/libstring.c, graphman/main.c,
+	  src/doc.c: add missing header includes
+
+2005-01-17 00:41  danmc
+
+	* src/callbacks.c: add a return value to avoid compiler warnings.
+	  As it turns out we shouldn't ever get here anyway, but we
+	  increase the SNR of the compiler output.
+
+2005-01-17 00:40  danmc
+
+	* graphman/config.c: add missing type for cSeparator
+
+2005-01-16 21:24  danmc
+
+	* graphman/raw2gw.c: use posix getcwd() instead of gnu extension
+	  get_current_dir_name()
+
+2005-01-16 21:15  danmc
+
+	* src/Makefile.am: add missing @LIBINTL@ to geda_LDADD
+
 2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * po/it_IT.po: Added the Italian translation by Petrecca Michele.

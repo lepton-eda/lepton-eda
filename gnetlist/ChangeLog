@@ -1,3 +1,15 @@
+2005-02-03 12:49  danmc
+
+	* scheme/: gnet-PCB.scm, gnet-PCBboard.scm, gnet-allegro.scm,
+	  gnet-bae.scm, gnet-bom.scm, gnet-bom2.scm, gnet-drc.scm,
+	  gnet-drc2.scm, gnet-eagle.scm, gnet-geda.scm, gnet-gossip.scm,
+	  gnet-gsch2pcb.scm, gnet-maxascii.scm, gnet-pads.scm,
+	  gnet-partslist-common.scm, gnet-partslist1.scm,
+	  gnet-partslist2.scm, gnet-partslist3.scm, gnet-protelII.scm,
+	  gnet-redac.scm, gnet-spice-sdb.scm, gnet-spice.scm,
+	  gnet-systemc.scm, gnet-tango.scm, gnet-vams.scm,
+	  gnet-verilog.scm, gnet-vhdl.scm, gnet-vipec.scm: add RCS Ids
+
 2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/g_netlist.c: Switched to the new scm interface of guile.

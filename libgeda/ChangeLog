@@ -1,3 +1,18 @@
+2005-02-03 23:04  danmc
+
+	* include/prototype.h, noweb/a_basic.nw, noweb/f_basic.nw,
+	  noweb/f_image.nw, noweb/f_print.nw, noweb/g_basic.nw,
+	  noweb/o_image.nw, noweb/s_project.nw: - lots of clean up of
+	  'const' usage.  Seems to have squished all   gcc warnings around
+	  const.  Mostly this involved adding lots of	missing const's.  -
+	  also add a few missing prototypes and header files.  - fix call
+	  to realpath (it was being given a pointer to a pointer rather
+	  than a pointer).
+
+2005-02-03 03:54  danmc
+
+	* include/prototype.h: add missing s_project_alloc prototype
+
 2005-02-01  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/*.nw:
