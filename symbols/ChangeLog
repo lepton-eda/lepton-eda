@@ -1,3 +1,16 @@
+2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 4000/4002-1.sym 4000/40107-1.sym 4000/4011-1.sym 4000/4012-1.sym
+ 	4000/4023-1.sym 4000/4025-1.sym 4000/4030-1.sym 4000/4068-1.sym
+ 	4000/4070-1.sym 4000/4072-1.sym 4000/4073-1.sym 4000/4075-1.sym
+ 	4000/4078-1.sym 4000/4081-1.sym 4000/4082-1.sym 4000/4085-1.sym:
+	Completely redrew most of these symbols.  These are the first
+	symbols to get a symversion= attribute to signify that they have
+	changed in a major way.
+
+	* 4000/40107-2.sym: Moved this file to 40107-1.sym since -1 was 
+	completely broken and wrong.
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20040710
