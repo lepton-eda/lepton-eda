@@ -1,3 +1,8 @@
+2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gsymcheckrc.in: Fixed the load of the commonrc file to 
+	work with --with-rcdir again.
+
 2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_check.c: Added s_check_slotdef which checks the slot info
