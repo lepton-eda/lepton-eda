@@ -8,6 +8,10 @@
 	* noweb/x_fileselect.nw: Added the key binding for the Escape key
 
 	* src/Makefile.am: Remove x_attrsel.nw (obsolete file)
+
+	* lib/system-gschemrc.in: Added setpagedevice-* keywords
+
+	* noweb/g_rc.nw, and others: Added support for above keywords
 	
 2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
 

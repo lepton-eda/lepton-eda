@@ -560,6 +560,25 @@
 ;(output-capstyle "round")
 ;(output-capstyle "butt")
 
+
+; setpagedevice-orientation string
+;
+; If enabled, puts a << /Orientation x >> setpagedevice into the postscript
+; output.  x is either 1 for landscape or 0 for portrait.
+;
+(setpagedevice-orientation "disabled")
+;(setpagedevice-orientation "enabled")
+
+
+; setpagedevice-pagesize string
+;
+; If enabled, puts a << /PageSize XxY >> setpagedevice into the postscript
+; output.  XxY is the size of the paper in points.
+;
+(setpagedevice-pagesize "disabled")
+;(setpagedevice-pagesize "enabled")
+
+
 ; image-color string
 ;
 ; Controls if image (gif) is color (enabled) or black/white (disabled)

@@ -238,6 +238,8 @@ SCM g_rc_window_size(SCM width, SCM height);
 SCM g_rc_warp_cursor(SCM mode);
 SCM g_rc_toolbars(SCM mode);
 SCM g_rc_handleboxes(SCM mode);
+SCM g_rc_setpagedevice_orientation(SCM mode);
+SCM g_rc_setpagedevice_pagesize(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -649,8 +651,6 @@ void attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current);
 void attrib_edit_dialog(TOPLEVEL *w_current, OBJECT *list, int flag);
-void attrib_edit_dialog_orig(TOPLEVEL *w_current, OBJECT *list, int flag);
-/* x_attrsel.c */
 /* x_basic.c */
 void x_repaint_background(TOPLEVEL *w_current);
 void x_hscrollbar_set_ranges(TOPLEVEL *w_current);
@@ -771,6 +771,7 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, TOPLEVEL *w_curre
 gint x_event_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 /* x_fileselect.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
+void x_fileselect_keypress(GtkWidget *widget, GdkEventKey *event, FILEDIALOG *f_current);
 void x_fileselect_init_list_buffers(FILEDIALOG *f_current);
 void x_fileselect_free_list_buffers(FILEDIALOG *f_current);
 void x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename);

@@ -78,3 +78,5 @@ extern int default_sort_component_library;
 extern int default_warp_cursor;
 extern int default_toolbars;
 extern int default_handleboxes;
+extern int default_setpagedevice_orientation;
+extern int default_setpagedevice_pagesize;

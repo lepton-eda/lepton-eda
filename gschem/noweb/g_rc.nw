@@ -102,6 +102,8 @@
 <<g_rc.c : g_rc_warp_cursor()>>
 <<g_rc.c : g_rc_toolbars()>>
 <<g_rc.c : g_rc_handleboxes()>>
+<<g_rc.c : g_rc_setpagedevice_orientation()>>
+<<g_rc.c : g_rc_setpagedevice_pagesize()>>
 
 @
 
@@ -1958,7 +1960,7 @@ g_rc_paper_size(SCM width, SCM height)
 {
   int i_width, i_height;
 
-  /* yes this is legit, we are casing the resulting double to an int */
+  /* yes this is legit, we are casting the resulting double to an int */
 
   i_width  = (int) (gh_scm2double(width ) * MILS_PER_INCH);
   i_height = (int) (gh_scm2double(height) * MILS_PER_INCH);
@@ -2678,4 +2680,48 @@ g_rc_handleboxes(SCM mode)
 }
 
 
-@ %def g_rc_toolbars
+@ %def g_rc_handleboxes
+
+
+@section Function @code{g_rc_setpagedevice_orientation()}
+
+@defun g_rc_setpagedevice_orientation mode
+@end defun
+ 
+<<g_rc.c : g_rc_setpagedevice_orientation()>>=
+SCM
+g_rc_setpagedevice_orientation(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("setpagedevice-orientation",
+                   default_setpagedevice_orientation, 2);
+}
+
+
+@ %def g_rc_setpagedevice_orientation
+
+
+@section Function @code{g_rc_setpagedevice_pagesize()}
+
+@defun g_rc_setpagedevice_pagesize mode
+@end defun
+ 
+<<g_rc.c : g_rc_setpagedevice_pagesize()>>=
+SCM
+g_rc_setpagedevice_pagesize(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("setpagedevice-pagesize",
+                   default_setpagedevice_pagesize, 2);
+}
+
+
+@ %def g_rc_setpagedevice_pagesize

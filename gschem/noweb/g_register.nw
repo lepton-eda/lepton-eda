@@ -185,6 +185,8 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("warp-cursor", g_rc_warp_cursor);
   gh_new_procedure1_0 ("toolbars", g_rc_toolbars);
   gh_new_procedure1_0 ("handleboxes", g_rc_handleboxes);
+  gh_new_procedure1_0 ("setpagedevice-orientation", g_rc_setpagedevice_orientation);
+  gh_new_procedure1_0 ("setpagedevice-pagesize", g_rc_setpagedevice_pagesize);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);

@@ -669,7 +669,13 @@ struct st_toplevel {
   int print_color; 
 
   /* color used color ouput for background */ 
-  int print_color_background; 
+  int print_color_background;
+
+  /* setpagedevice orientation option enable (TRUE or FALSE) */
+  int setpagedevice_orientation;
+
+  /* setpagedevice pagesize option enable (TRUE or FALSE) */
+  int setpagedevice_pagesize;
 
   /* color of the stroke points */
   int stroke_color; 

@@ -220,6 +220,25 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
 
   fprintf(fp, "\n");
 
+  if (w_current->setpagedevice_orientation) {
+    if (w_current->print_orientation == LANDSCAPE) {
+      fprintf(fp, "%c%c /Orientation 1 %c%c setpagedevice\n\n", '<', '<',
+              '>', '>');
+    } else {
+      fprintf(fp, "%c%c /Orientation 0 %c%c setpagedevice\n\n", '<', '<',
+              '>', '>');
+    }
+  }
+
+  /* the height and width are in the right order here, since they were
+   * specified in landscape order in the system-gschemrc file. */
+  if (w_current->setpagedevice_pagesize) {
+    fprintf(fp, "%c%c /PageSize [%d %d] %c%c setpagedevice\n\n", '<', '<',
+            (w_current->paper_height * 72) / MILS_PER_INCH,
+            (w_current->paper_width * 72) / MILS_PER_INCH,
+            '>', '>');
+  }
+
   /* coordinate setup function */
   fprintf(fp, "/setcoords\n{\n");
 
