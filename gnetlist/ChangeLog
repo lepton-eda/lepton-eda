@@ -7,6 +7,12 @@
 	at least the current list of backends and all the new command line
 	flags.
 
+	* tests/gnetlistrc.vhdl, tests/Makefile.am: Added vhdl only
+	gnetlistrc This was required because the vhdl library was
+	removed from system-commonrc, so this rc file has to put it back.
+	The gnetlistrc.vhdl file is copied to gnetlistrc before any vhdl
+	test is run and then the gnetlistrc file is removed.
+
 2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * scheme/gnet-gsch2pcb.scm: Upgraded to Bill Wilson's latest

@@ -9,7 +9,7 @@ EXTRA_DIST = 7447.vhdl README amp.spice darlington.spice netattrib.geda \
              powersupply.tango singlenet.PCB singlenet.geda singlenet.pads \
              singlenet.protel singlenet.sch stack.geda amp.spice-sdb \
 	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
-	     multiequal.spice-sdb
+	     multiequal.spice-sdb gnetlistrc.vhdl
 
 tests:
 # cleanup
@@ -23,8 +23,10 @@ tests:
 	gnetlist -o new_stack.geda -g geda ../../gschem/examples/stack_1.sch
 	diff stack.geda new_stack.geda
 # 7447 VHDL
+	cp -f ./gnetlistrc.vhdl ./gnetlistrc
 	gnetlist -o new_7447.vhdl -g vhdl ../examples/7447.sch
 	diff 7447.vhdl new_7447.vhdl
+	rm -f ./gnetlistrc
 # singlenet gEDA 
 	gnetlist -o new_singlenet.geda -g geda ./singlenet.sch
 	diff singlenet.geda new_singlenet.geda
