@@ -226,11 +226,11 @@ else
 		        	GDGEDA_LIB=""	
 	        	 	libgdgeda_ldflags=""
 	        	 	libgdgeda_cflags=""
+			else
+	        	        AC_DEFINE(HAS_LIBZ)
+		                AC_DEFINE(HAS_LIBPNG)
+	        	        AC_DEFINE(HAS_LIBGDGEDA)
 			fi
-
-        	        AC_DEFINE(HAS_LIBZ)
-	                AC_DEFINE(HAS_LIBPNG)
-	                AC_DEFINE(HAS_LIBGDGEDA)
 		fi
 	fi
 fi

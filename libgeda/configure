@@ -3612,20 +3612,20 @@ fi
 		        	GDGEDA_LIB=""	
 	        	 	libgdgeda_ldflags=""
 	        	 	libgdgeda_cflags=""
-			fi
-
-        	        cat >> confdefs.h <<\EOF
+			else
+	        	        cat >> confdefs.h <<\EOF
 #define HAS_LIBZ 1
 EOF
 
-	                cat >> confdefs.h <<\EOF
+		                cat >> confdefs.h <<\EOF
 #define HAS_LIBPNG 1
 EOF
 
-	                cat >> confdefs.h <<\EOF
+	        	        cat >> confdefs.h <<\EOF
 #define HAS_LIBGDGEDA 1
 EOF
 
+			fi
 		fi
 	fi
 fi
