@@ -1,3 +1,7 @@
+2003-01-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* README: Removed bogus BUGS and NEWS reference.
+
 2003-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am: Fixed the distclean-local target.
