@@ -269,6 +269,8 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
 
   pr_current->show_hidden_text = 0;
 
+  pr_current->major_changed_refdes = NULL;
+
   pr_current->cswindow = NULL;
   pr_current->aswindow = NULL;
   pr_current->fowindow = NULL;

@@ -279,6 +279,8 @@ x_window_setup_rest(TOPLEVEL *w_current)
   w_current->SHIFTKEY=0;
   w_current->last_callback=NULL;
 
+  w_current->major_changed_refdes = NULL;
+
   w_current->status_label = NULL;
   w_current->middle_label = NULL;
   w_current->filename_label = NULL;
@@ -1401,6 +1403,17 @@ x_window_close(TOPLEVEL *w_current)
   if (w_current->bus_ripper_symname) {
     free(w_current->bus_ripper_symname);
     w_current->bus_ripper_symname = NULL;
+  }
+
+  if (w_current->major_changed_refdes) {
+    GList* current = w_current->major_changed_refdes;
+    while (current)
+    {
+      /* printf("yeah freeing: %s\n", (char*) current->data); */
+      free(current->data);
+      current = current->next;
+    }
+    g_list_free(w_current->major_changed_refdes);
   }
 
   /* stuff that has to be done before we free w_current */

@@ -165,6 +165,12 @@
 <<x_dialog.c : select_all_text_in_textview()>>
 <<x_dialog.c : text_view_calculate_real_tab_width()>>
 /*********** End of some Gtk utils *******/
+
+/*********** Start of major symbol changed dialog box *******/
+<<x_dialog.c : major_changed_dialog()>>
+/*********** End of major symbol changed dialog box *******/
+
+
 @
 
 
@@ -4455,3 +4461,60 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 @ %def autonumber_text_dialog
 
 
+@section Function @code{major_changed_dialog()}
+
+@defun major_changed_dialog w_current
+@end defun
+
+<<x_dialog.c : major_changed_dialog()>>=
+void
+major_changed_dialog(TOPLEVEL* w_current)
+{
+  GtkWidget* dialog;
+  char* refdes_string = NULL;
+  char* tmp;
+
+  if (w_current->major_changed_refdes) {
+
+    GList* current = w_current->major_changed_refdes;
+    while (current)
+    {
+      char *value = (char*) current->data;
+
+      if (!refdes_string)
+      {
+        refdes_string = u_basic_strdup(value);
+      } else {
+        tmp = u_basic_strdup_multiple(refdes_string, "\n", value, NULL);
+        free(refdes_string);
+        refdes_string = tmp;
+      }
+      
+      current = current->next;
+    }
+
+    tmp = u_basic_strdup_multiple(refdes_string, 
+             "\n\nBe sure to verify each of these symbols!", 
+                                  NULL);
+    free(refdes_string);
+    refdes_string = tmp;
+
+    dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_CLOSE,
+                        "Major symbol changes detected in refdes:\n\n%s\n",
+                                     refdes_string);
+
+    gtk_widget_show(dialog);
+
+    g_signal_connect_swapped (dialog, "response",
+                              G_CALLBACK (gtk_widget_destroy),
+                              dialog);
+
+    if (refdes_string) free(refdes_string);
+  }
+}
+
+
+@ %def major_changed_dialog

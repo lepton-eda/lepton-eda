@@ -1,3 +1,25 @@
+2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/versionsym1.sch versionsym2.sch versionsym3.sch
+	versionsym_basic.sym versionsym_invalid.sym versionsym_major.sym
+	versionsym_minor.sym versionsym_minor2.sym: Added a bunch of 
+	test schematic for the symversion attribute
+
+	* tests/gafrc: Added the first global rc file for all gaf tools.
+
+	* lib/system-gschemrc.in: Added symversion= to the attribute list
+	keyword. 
+
+	* noweb/gschem.nw: Added call to put up an error dialog box if there
+	are symbols which have changed too much.
+
+	* noweb/x_window.nw: Added code to free up the list of changed 
+	refdes (symbols which have changed too much are put into a list which
+	the major changed dialog displays).
+
+	* noweb/x_dialog.nw: Added code to implement the symbol has "changed 
+	majorly" dialog box.
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: spelling and grammar fixes

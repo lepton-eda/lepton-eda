@@ -732,6 +732,7 @@
 (attribute-name "footprint")
 (attribute-name "description")
 (attribute-name "documentation")
+(attribute-name "symversion")
 
 ;
 ; End of path related keywords

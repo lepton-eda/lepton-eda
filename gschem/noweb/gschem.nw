@@ -358,6 +358,10 @@ main_prog(int argc, char *argv[])
     x_log_setup_win(w_current);
   }
 
+  /* if there were any symbols which had major changes, put up an error */
+  /* dialog box */
+  major_changed_dialog(w_current);
+    
   /* enter main loop */
   gtk_main();
 }

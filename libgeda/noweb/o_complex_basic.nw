@@ -40,6 +40,7 @@
 <<o_complex_basic.c : o_complex_rotate_lowlevel()>>
 <<o_complex_basic.c : o_complex_mirror_lowlevel()>>
 <<o_complex_basic.c : o_complex_return_pin_object()>>
+<<o_complex_basic.c : o_complex_check_symversion()>>
 
 @
 
@@ -394,21 +395,32 @@ o_complex_is_eligible_attribute (OBJECT *object, int promote_invisible)
 {
   char *ptr;
 
-  /* object is invisible and we do not want to promote invisible text */
-  if (object->visibility == INVISIBLE && promote_invisible == FALSE) {
-    return 0;
+  if (object->type != OBJ_TEXT || object->attribute || object->attached_to)
+  {
+    return 0; /* not a text item or is already attached */
   }
 
-  if (object->type==OBJ_TEXT && !object->attribute && !object->attached_to) { 
-    ptr=strchr(object->text->string,'=');
-    if (ptr && ptr[1]!='\0' && ptr[1]!=' ') {
-      /*&& allow the promotion of the device= attribute */
-      /*strncmp(object->text->string,"device=",7)!=0) { */
-      return 1;
-    }
+  /* Make sure text item is an attribute */
+  ptr = strchr(object->text->string, '=');
+  if (!ptr || ptr[1] == '\0' || ptr[1] == ' ')
+  {
+    return 0;  /* not an attribute */
   }
-  
-  return 0;
+
+  /* always promote symversion= attribute, even if it is invisible */
+  if (strncmp(object->text->string, "symversion=", 11) == 0)
+  {
+    return 1;
+  }
+
+  /* object is invisible and we do not want to promote invisible text */
+  if (object->visibility == INVISIBLE && promote_invisible == FALSE)
+  {
+    return 0; /* attribute not eligible for promotion */
+  }
+
+  /* yup, attribute can be promoted */
+  return 1;
 }
 
 @ %def o_complex_is_eligible_attribute
@@ -528,12 +540,11 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
       next=tmp->next;
 
       /* valid floating attrib? */
-      if (o_complex_is_eligible_attribute(
-                                          tmp, w_current->promote_invisible)) { 
-
+      if (o_complex_is_eligible_attribute(tmp, w_current->promote_invisible))
+      {
         /* Is attribute promotion called for? (passed in parameter) */
-        if (attribute_promotion) {
-
+        if (attribute_promotion)
+        {
           /* remove tmp from the complex list */
           if (tmp->next)
             tmp->next->prev=tmp->prev;
@@ -734,7 +745,6 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
     <<o_complex_read() : add an embedded complex>>
   } else {
     <<o_complex_read() : add a complex from library>>
-
   }
 
   return object_list;
@@ -1647,3 +1657,183 @@ o_complex_return_pin_object(OBJECT *object, char *pin)
 }
 
 @ %def o_complex_return_pin_object
+
+
+
+@section Function @code{o_complex_check_symversion()}
+
+@defun o_complex_check_symversion w_current object
+@end defun
+
+<<o_complex_basic.c : o_complex_check_symversion()>>=
+void
+o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object) 
+{
+  char *inside = NULL;
+  char *outside = NULL;
+  char *refdes = NULL;
+  double inside_value = -1.0;
+  double outside_value = -1.0;
+  char *err_check = NULL;
+  int inside_present = FALSE;
+  int outside_present = FALSE;
+  double inside_major, inside_minor;
+  double outside_major, outside_minor;
+  
+  if (object->type != OBJ_COMPLEX)
+  {
+    return;
+  }
+
+  /* first look on the inside for the symversion= attribute */
+  inside = o_attrib_search_name(object->complex->prim_objs, "symversion", 0);
+
+  /* now look for the symversion= attached to object */
+  outside = o_attrib_search_attrib_name(object->attribs, "symversion", 0);
+
+  /* get the uref for future use */
+  refdes = o_attrib_search_attrib_name(object->attribs, "refdes", 0);
+  if (!refdes)
+  {
+    refdes = u_basic_strdup("unknown");
+  }
+  
+  if (inside)
+  {
+    inside_value = strtod(inside, &err_check);
+    if (inside_value == 0 && inside == err_check)
+    {
+      s_log_message("WARNING: Symbol version parse error on refdes %s:\n"
+                    "\tCould not parse symbol file symversion=%s\n",
+                    refdes, inside);
+      goto done;
+    }
+    inside_present = TRUE;
+  } else {
+    inside_present = FALSE;  /* attribute not inside */
+  }
+
+  if (outside)
+  {
+    outside_value = strtod(outside, &err_check);
+    if (outside_value == 0 && outside == err_check)
+    {
+      s_log_message("WARNING: Symbol version parse error on refdes %s:\n"
+                    "\tCould not parse attached symversion=%s\n",
+                    refdes, outside);
+      goto done;
+    }
+    outside_present = TRUE; 
+  } else {
+    outside_present = FALSE;  /* attribute not outside */
+  }
+
+#if DEBUG
+  printf("%s:\n\tinside: %.1f outside: %.1f\n\n", object->name,
+         inside_value, outside_value);
+#endif
+  
+  /* symversion= is not present anywhere */
+  if (!inside_present && !outside_present)
+  {
+    /* symbol is legacy and versioned okay */
+    goto done;
+  }
+
+  /* No symversion inside, but a version is outside, this is a weird case */
+  if (!inside_present && outside_present)
+  {
+    s_log_message("WARNING: Symbol version oddity on refdes %s:\n"
+                  "\tsymversion=%s attached to instanciated symbol, "
+                  "but no symversion= inside symbol file\n",
+                  refdes, outside);
+    goto done;
+  }
+
+  /* inside & not outside is a valid case, means symbol in library is newer */
+  /* also if inside_value is greater than outside_value, then symbol in */
+  /* library is newer */
+  if ((inside_present && !outside_present) ||
+      ((inside_present && outside_present) && (inside_value > outside_value)))
+  {
+    
+    fprintf(stderr, "WARNING: Symbol version mismatch on refdes %s (%s):\n"
+            "\tSymbol in library is newer than "
+            "instanciated symbol\n",
+            refdes, object->complex_basename);
+    s_log_message("WARNING: Symbol version mismatch on refdes %s (%s):\n"
+                  "\tSymbol in library is newer than "
+                  "instanciated symbol\n",
+                  refdes, object->complex_basename);
+
+    /* break up the version values into major.minor numbers */
+    inside_major = floor(inside_value);
+    inside_minor = inside_value - inside_major;
+
+    if (outside_present)
+    {
+      outside_major = floor(outside_value);
+      outside_minor = outside_value - outside_major;
+    } else {
+      /* symversion was not attached to the symbol, set all to zero */
+      outside_major = 0.0;
+      outside_minor = 0.0;
+      outside_value = 0.0;
+    }
+
+#if DEBUG
+    printf("i: %f %f %f\n", inside_value, inside_major, inside_minor);
+    printf("o: %f %f %f\n", outside_value, outside_major, outside_minor);
+#endif
+    
+    if (inside_major > outside_major)
+    {
+      char* refdes_copy;
+      fprintf(stderr, "\tMAJOR VERSION CHANGE (file %.3f, "
+              "instanciated %.3f)!\n",
+              inside_value, outside_value, refdes);
+      s_log_message("\tMAJOR VERSION CHANGE (file %.3f, "
+                    "instanciated %.3f)!\n",
+                    inside_value, outside_value);
+
+      /* add the refdes to the major_changed_refdes GList */
+      /* make sure refdes_copy is freed somewhere */
+      refdes_copy = u_basic_strdup_multiple(refdes, " (",
+                                            object->complex_basename,
+                                            ")", NULL);
+      w_current->major_changed_refdes =
+        g_list_append(w_current->major_changed_refdes, refdes_copy);
+    }
+
+    if (inside_minor > outside_minor)
+    {
+      fprintf(stderr, "\tMinor version change (file %.3f, "
+              "instanciated %.3f)\n",
+              inside_value, outside_value);
+      s_log_message("\tMinor version change (file %.3f, "
+                    "instanciated %.3f)\n",
+                    inside_value, outside_value);
+    }
+
+    goto done;
+  }
+
+  /* outside value is greater than inside value, this is weird case */
+  if ((inside_present && outside_present) && (outside_value > inside_value))
+  {
+    s_log_message("WARNING: Symbol version oddity on refdes %s:\n"
+                  "\tInstanciated symbol is newer than "
+                  "symbol in library\n",
+                  refdes);
+    goto done;
+  }
+
+  /* if inside_value and outside_value match, then symbol versions are okay */
+
+done:
+  if (inside) free(inside);
+  if (outside) free(outside);
+  if (refdes) free(refdes);
+}
+
+@ %def o_complex_check_symversion

@@ -512,6 +512,9 @@ struct st_toplevel {
   void (*last_callback)();	  	/* Last i_call* cmd executed */
   char cwd[256]; /* size is hack */ 	/* current working directory */
 
+  GList* major_changed_refdes;          /* A list of all refdes's that have */
+                                        /* major symbol version changes */
+
   /* main window widgets */
   GtkWidget *main_window;
   GtkWidget *drawing_area;

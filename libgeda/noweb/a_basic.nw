@@ -336,6 +336,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   unsigned int fileformat_ver;
   unsigned int current_fileformat_ver;
   int found_pin = 0;
+  OBJECT* last_complex = NULL;
   int itemsread = 0;
 
   /* fill version with default file format version (the current one) */
@@ -386,6 +387,9 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         /* this is necessary because complex may add attributes which float */
 	/* needed now? */
         object_list = (OBJECT *) return_tail(object_list);
+
+        /* last_complex is used for verifying symversion attribute */
+        last_complex = object_list;
         break;
 
       case(OBJ_TEXT):
@@ -412,6 +416,16 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 	/* 2nd is the object to get the attributes */ 
         object_list = (OBJECT *) o_read_attribs(w_current, fp, object_list,
                                                 release_ver, fileformat_ver);
+
+        /* by now we have finished reading all the attributes */
+        /* did we just finish attaching to a complex object? */
+        if (last_complex)
+        {
+          /* yes */
+          /* verify symbol version (not file format but rather contents) */
+          o_complex_check_symversion(w_current, last_complex);
+          last_complex = NULL;
+        }
         
 	/* slots only apply to complex objects */
         if (object_before_attr->type == OBJ_COMPLEX) {
@@ -447,7 +461,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         w_current->page_current->object_parent = temp_parent;
         break;
 
-      case(ENDATTACH_ATTR): 
+      case(ENDATTACH_ATTR):
+        /* this case is never hit, since the } is consumed by o_read_attribs */
         break;	
 
       case(INFO_FONT): 

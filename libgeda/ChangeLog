@@ -1,3 +1,28 @@
+2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added major_changed_refdes GList to toplevel 
+	structure.
+
+	* include/prototype.h: Added new function prototype for:
+	o_complex_check_symversion 
+
+	* noweb/a_basic.nw: Added some code to make the call to 
+	o_complex_check_symversion when a symbol has been read from disk.
+
+	* noweb/s_project.nw: Misc init code
+
+	* noweb/o_complex_basic.nw: Added code to implement 
+	o_complex_check_symversion which is called whenever a symbol is
+	loaded from disk.  This function goes through and searches for
+	the symversion= attribute both inside the symbol and attached to
+	the instanciated symbol and checks to make sure nothing/something
+	has changed.
+
+	* noweb/o_complex_basic.nw: Rearranged o_complex_is_eligible_attribute 
+	a little to make it easier to force certain attributes (like the 
+	new symversion= attribute) to be always promoted (even if they are
+	invisible).   Misc whitespace cleanup too.
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Added code to specify the rc directory via

@@ -259,6 +259,7 @@ OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
+void o_complex_check_symversion(TOPLEVEL* w_current, OBJECT* object);
 /* o_image.c */
 void o_image_init(void);
 void o_image_create(int x, int y, int color_mode);
