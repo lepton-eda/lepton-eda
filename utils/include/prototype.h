@@ -11,6 +11,7 @@ SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_world_size(SCM width, SCM height, SCM border);
+SCM g_rc_force_boundingbox(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);

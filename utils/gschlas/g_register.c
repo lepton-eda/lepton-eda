@@ -53,6 +53,7 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("bitmap-directory", g_rc_bitmap_directory);
   gh_new_procedure1_0 ("scheme-directory", g_rc_scheme_directory);
   gh_new_procedure3_0 ("world-size", g_rc_world_size);
+  gh_new_procedure1_0 ("force-boundingbox", g_rc_force_boundingbox);
 }
 
 SCM

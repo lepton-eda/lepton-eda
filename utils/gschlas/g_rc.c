@@ -842,4 +842,17 @@ g_rc_world_size(SCM width, SCM height, SCM border)
   return SCM_BOOL_T;
 }
 
+
+SCM 
+g_rc_force_boundingbox(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE, "enabled"},
+    {FALSE, "disabled"}
+			    };
+
+  RETURN_G_RC_MODE("force-boundingbox", default_force_boundingbox, 2);
+}
+
+
 /*************************** GUILE end done *********************************/

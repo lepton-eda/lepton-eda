@@ -19,6 +19,7 @@
 
 extern int default_init_right;
 extern int default_init_bottom;
+extern int default_force_boundingbox;
 
 extern char *default_series_name;
 extern char *default_untitled_name;

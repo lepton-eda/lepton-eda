@@ -53,11 +53,14 @@ char *default_bitmap_directory = NULL;
 
 int default_init_right = WIDTH_C;
 int default_init_bottom = HEIGHT_C;
+int default_force_boundingbox = FALSE;
 
 void i_vars_set(TOPLEVEL * pr_current)
 { 
     pr_current->init_right   = default_init_right;
     pr_current->init_bottom  = default_init_bottom;
+
+    pr_current->force_boundingbox = default_force_boundingbox;
 
     	/* you cannot free the default* strings here since new windows */
 	/* need them */

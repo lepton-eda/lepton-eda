@@ -53,7 +53,9 @@ view_file_browser()
 {
 	if test "${browser}" != "no" ; then
 		echo "Using browser and file: $1"
-		${browser} -- "file:$1"
+		# NOTE: Mozilla and Netscape does not seem to support
+		#       -- on the command line
+		${browser} "file:$1"
 		exit
 	fi
 }
@@ -65,7 +67,7 @@ go_look_for()
 {
 	if test "${browser}" != "no" ; then
 		echo "Go look for: $1"
-		${browser} -- "http://www.google.com/search?q=$1"
+		${browser} "http://www.google.com/search?q=$1"
 		exit
 	fi
 }
@@ -144,7 +146,7 @@ if test "${browser}" != "no"; then
 	for s in http ftp file; do
 		if echo "$1" | grep -q "^$s:"; then
 			echo "Using browser and URL: $1"
-			${browser} -- "$1"
+			${browser} "$1"
 			exit
 		fi
 	done

@@ -3,6 +3,14 @@
 	* configure and friends: Ran "autoreconf --force --install -v" 
 	to really upgrade to the newest version of the auto* tools.
 
+	* scripts/gschemdoc: Applied Egil's patch to remove the -- for
+	Netscape and Mozilla
+
+	* gschlas/g_rc.c, g_register.c, i_vars.c, include/i_vars.h: Added
+	force-boundingbox rc variable.
+
+	* lib/system-gschlas.in: Added default for force-boundingbox variable
+
 2002-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, *.m4: Upgraded to automake 1.7.1 and autoconf 2.54
