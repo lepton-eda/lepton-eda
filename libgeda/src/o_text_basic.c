@@ -1134,32 +1134,26 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 
 	if (o_current->angle != 180) {
 
+		x = o_current->x;
+		y = o_current->y;
 		switch(o_current->text_alignment) {
 			case(LOWER_LEFT):
-				x = o_current->x;
-				y = o_current->y;
 				fprintf(fp, "%d mils %d mils moveto\n", x, y);
 			break;
 
 			case(MIDDLE_LEFT):
-				x = o_current->x;
-				y = o_current->y;
 				fprintf(fp, "%d mils %d mils\n", x, y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, ".5 mul sub moveto\n");
 			break;
 
 			case(UPPER_LEFT):
-				x = o_current->x;
-				y = o_current->y;
 				fprintf(fp, "%d mils %d mils\n", x, y);
 				o_text_print_text_height(fp, o_current->text_size);
 				fprintf(fp, "sub moveto\n");
 			break;
 
 			case(LOWER_MIDDLE):
-				x = o_current->x;
-				y = o_current->y;
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
@@ -1169,8 +1163,6 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			break;
 
 			case(MIDDLE_MIDDLE):
-				x = o_current->x;
-				y = o_current->y;
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
@@ -1181,8 +1173,6 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			break;
 
 			case(UPPER_MIDDLE):
-				x = o_current->x;
-				y = o_current->y;
 				fprintf(fp, "%d mils ", x);
 
 				o_text_print_text_width(fp, output_string);
@@ -1192,6 +1182,34 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				fprintf(fp, "sub moveto\n");
 			break;
 
+			case(LOWER_RIGHT):
+				fprintf(fp, "%d mils ", x);
+
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "sub\n");
+				fprintf(fp, "%d mils\n", y);
+				fprintf(fp, "moveto\n");
+			break;
+
+			case(MIDDLE_RIGHT):
+				fprintf(fp, "%d mils ", x);
+
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "sub\n");
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, ".5 mul sub moveto\n");
+			break;
+
+			case(UPPER_RIGHT):
+				fprintf(fp, "%d mils ", x);
+
+				o_text_print_text_width(fp, output_string);
+				fprintf(fp, "sub\n");
+				fprintf(fp, "%d mils\n", y);
+				o_text_print_text_height(fp, o_current->text_size);
+				fprintf(fp, "sub moveto\n");
+			break;
 			/* still need to do upper everything */
 			/* and then deal with rotation */
 		}

@@ -8,6 +8,11 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-02-17  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_text_basic.c: More work on getting postscript output to work
+	  with new text alignment
+
 2000-02-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* All configure.in files: Changed the version to 20000220 (to force
