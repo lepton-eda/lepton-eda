@@ -4,6 +4,11 @@
 	selected if there is something to select (makes replacing the text
 	much faster).
 
+	* tests/: Created tests directory mainly to hold various tests 
+
+	* examples/*.sch: Moved some of the developer only schematics into
+	the test/ directory
+
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* examples/*.sch: Updated all schematics to use netname instead of
