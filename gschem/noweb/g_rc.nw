@@ -109,6 +109,8 @@
 <<g_rc.c : g_rc_bus_ripper_symname()>>
 <<g_rc.c : g_rc_bus_ripper_rotation()>>
 <<g_rc.c : g_rc_force_boundingbox()>>
+<<g_rc.c : g_rc_reset_component_library()>>
+<<g_rc.c : g_rc_reset_source_library()>>
 
 @
 
@@ -2860,3 +2862,41 @@ g_rc_force_boundingbox(SCM mode)
 
 @ %def g_rc_force_boundingbox
 
+
+@section Function @code{g_rc_reset_component_library()}
+
+@defun g_rc_reset_component_library 
+@end defun
+
+<<g_rc.c : g_rc_reset_component_library()>>=
+SCM
+g_rc_reset_component_library(void)
+{
+  s_clib_cache_free();
+  s_clib_free();
+  s_clib_init();
+  
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_reset_component_library
+
+
+@section Function @code{g_rc_reset_source_library()}
+
+@defun g_rc_reset_source_library 
+@end defun
+
+<<g_rc.c : g_rc_reset_source_library()>>=
+SCM
+g_rc_reset_source_library(void)
+{
+  s_slib_free();
+  s_slib_init();
+  
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_reset_source_library

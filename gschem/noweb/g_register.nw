@@ -192,6 +192,8 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("bus-ripper-symname", g_rc_bus_ripper_symname);
   gh_new_procedure1_0 ("bus-ripper-rotation", g_rc_bus_ripper_rotation);
   gh_new_procedure1_0 ("force-boundingbox", g_rc_force_boundingbox);
+  gh_new_procedure0_0 ("reset-component-library", g_rc_reset_component_library);
+  gh_new_procedure0_0 ("reset-source-library", g_rc_reset_source_library);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);

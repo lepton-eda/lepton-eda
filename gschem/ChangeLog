@@ -1,3 +1,10 @@
+2003-04-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw, g_register.nw: Added reset-component-library and
+	reset-source-library rc keywords.  These empty the
+	component/source libraries when executed.  Useful when a user
+	wants set (override) all the paths themselves from a user rc file.
+	
 2003-03-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_callbacks.nw: Fixed bug #43: "If gschemdoc is not install,

@@ -659,6 +659,26 @@
 (force-boundingbox "disabled")
 ;(force-boundingbox "enabled")
 
+
+; reset-componet-library
+;
+; When reset-component-library is executed, then all known component library
+; paths are erased.  This is useful if the user wants to override all the
+; system provided paths and provide his/her own set.  Normally this is not
+; commented in.
+;
+; (reset-component-library)
+
+
+; reset-source-library
+;
+; When reset-source-library is executed, then all known source library
+; paths are erased.  This is useful if the user wants to override all the
+; system provided paths and provide his/her own set.  Normally this is not
+; commented in.
+;
+; (reset-source-library)
+
 ;
 ; End of mode related keywords
 ;
