@@ -102,5 +102,6 @@ AC_OUTPUT([ Makefile
 	 po/Makefile.in 
          include/Makefile
 	 src/Makefile 
-	 pixmaps/Makefile ])
+	 pixmaps/Makefile 
+	 graphman/Makefile ])
 
