@@ -3,6 +3,12 @@
 	* po/de_DE.po: Updated the Project-Id-Version so that gettext is
 	happy (I hope).
 
+	* noweb/rcstrings.nw: Added the toplevel menu items into this file
+	so that they can be translated.
+
+	* po/*.po: Removed geda-gschem.pot which caused the translation files
+	to be rebuilt.
+
 2002-09-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw, x_dialog.nw, x_fileselect.nw: Added a few
