@@ -9,6 +9,14 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-12-15  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/a_pan.c: Changed o_redraw_all call to o_redraw_all_fast just
+	  to speed things up a bit
+
+	* src/gschem.c: Changed o_redraw_all call to o_redraw_all_fast just
+	  to speed things up a bit
+
 2000-12-14  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_preview.c: Fixed a bug relating to the preview box randomly

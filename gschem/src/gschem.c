@@ -249,7 +249,7 @@ main_prog(int argc, char *argv[])
 #endif
         }
 
-	o_redraw_all(w_current);
+	o_redraw_all_fast(w_current);
 
 #if DEBUG
 	gh_eval_str ("(display \"hello guile\n\")");

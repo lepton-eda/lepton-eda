@@ -242,7 +242,7 @@ a_zoom_box(TOPLEVEL *w_current, int pan_flags)
                 w_current->page_current->left;
 	world_pan_center_y = (double) w_current->page_current->bottom -
 		cy * w_current->page_current->to_world_y_constant;
-	
+
 	/* and create the new window*/
 	a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
 		 relativ_zoom_factor, pan_flags);	
