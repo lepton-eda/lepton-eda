@@ -81,3 +81,7 @@ extern int default_handleboxes;
 extern int default_setpagedevice_orientation;
 extern int default_setpagedevice_pagesize;
 extern int default_bus_ripper_size;
+extern int default_bus_ripper_type;
+extern char *default_bus_ripper_symname;
+extern int default_bus_ripper_rotation;
+

@@ -79,6 +79,11 @@ Egil Kvaleberg		- For providing a patch which gives gEDA gtk+ 1.1.x
 			  Rewrote part of the event state / status message
 			  to implement the "Snap off" / "Show Hidden" feature.
 
+			  For providing code/patch to support bus rippers
+			  in gschem.  This patch was not directly applied, but
+			  served as inspiration on how to quickly implement
+			  bus ripper support in gschem.
+
 Thomas Dean		- Submitting a few useful patches for various
 			  things
 

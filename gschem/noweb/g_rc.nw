@@ -105,6 +105,9 @@
 <<g_rc.c : g_rc_setpagedevice_orientation()>>
 <<g_rc.c : g_rc_setpagedevice_pagesize()>>
 <<g_rc.c : g_rc_bus_ripper_size()>>
+<<g_rc.c : g_rc_bus_ripper_type()>>
+<<g_rc.c : g_rc_bus_ripper_symname()>>
+<<g_rc.c : g_rc_bus_ripper_rotation()>>
 
 @
 
@@ -2754,3 +2757,82 @@ g_rc_bus_ripper_size(SCM size)
 
 
 @ %def g_rc_bus_ripper_size
+
+
+@section Function @code{g_rc_bus_ripper_type()}
+
+@defun g_rc_bus_ripper_type mode
+@end defun
+
+<<g_rc.c : g_rc_bus_ripper_type()>>=
+SCM
+g_rc_bus_ripper_type(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {COMP_BUS_RIPPER, "component" },
+    {NET_BUS_RIPPER,  "net" }
+  };
+
+  RETURN_G_RC_MODE("bus-ripper-type", default_bus_ripper_type, 2);
+}
+
+
+@ %def g_rc_bus_ripper_type
+
+
+@section Function @code{g_rc_bus_ripper_symname()}
+
+@defun g_rc_bus_ripper_symname mode
+@end defun
+
+<<g_rc.c : g_rc_bus_ripper_symname()>>=
+SCM
+g_rc_bus_ripper_symname(SCM scmsymname)
+{
+  char *symname = gh_scm2newstr(scmsymname, NULL);
+
+  if (symname == NULL) {
+    fprintf(stderr,
+            _("%s requires a string as a parameter\n"),
+            "bus-ripper-symname"
+            );
+    return SCM_BOOL_F;
+  }
+
+  if (default_bus_ripper_symname) {
+    free(default_bus_ripper_symname);
+  }
+  default_bus_ripper_symname = u_basic_strdup(symname);
+
+  if (symname) {
+    free(symname);
+  }
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_bus_ripper_symname
+
+
+
+@section Function @code{g_rc_bus_ripper_rotation()}
+
+@defun g_rc_bus_ripper_rotation mode
+@end defun
+
+<<g_rc.c : g_rc_bus_ripper_rotation()>>=
+SCM
+g_rc_bus_ripper_rotation(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {SYMMETRIC,     "symmetric" },
+    {NON_SYMMETRIC, "non-symmetric"  }
+  };
+
+  RETURN_G_RC_MODE("bus-ripper-rotation", default_bus_ripper_rotation, 2);
+}
+
+
+@ %def g_rc_bus_ripper_rotation
+

@@ -188,6 +188,9 @@ g_register_funcs(void)
   gh_new_procedure1_0 ("setpagedevice-orientation", g_rc_setpagedevice_orientation);
   gh_new_procedure1_0 ("setpagedevice-pagesize", g_rc_setpagedevice_pagesize);
   gh_new_procedure1_0 ("bus-ripper-size", g_rc_bus_ripper_size);
+  gh_new_procedure1_0 ("bus-ripper-type", g_rc_bus_ripper_type);
+  gh_new_procedure1_0 ("bus-ripper-symname", g_rc_bus_ripper_symname);
+  gh_new_procedure1_0 ("bus-ripper-rotation", g_rc_bus_ripper_rotation);
 
   /* general guile functions */
   gh_new_procedure1_0 ("gschem-print", g_funcs_print);

@@ -201,6 +201,12 @@ Finally the function takes care of the grips.
   (*draw_func)(w_current->backingstore, w_current->gc, color, line_end,
                x1, y1, x2, y2, line_width, length, space);
 
+  /* reset line width and reset back to default */
+  gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
+                             GDK_CAP_NOT_LAST,
+                             GDK_JOIN_MITER);
+
+
   <<o_line_draw() : grip specific stuff>>
 
 }

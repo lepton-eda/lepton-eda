@@ -265,6 +265,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
   w_current->font_directory = NULL;
   w_current->scheme_directory = NULL;
   w_current->bitmap_directory = NULL;
+  w_current->bus_ripper_symname = NULL;
 
   w_current->override_color = -1;
   w_current->inside_redraw=0;
@@ -1377,6 +1378,11 @@ x_window_close(TOPLEVEL *w_current)
   if (w_current->bitmap_directory) {
     free(w_current->bitmap_directory);
     w_current->bitmap_directory = NULL;
+  }
+
+  if (w_current->bus_ripper_symname) {
+    free(w_current->bus_ripper_symname);
+    w_current->bus_ripper_symname = NULL;
   }
 
   /* stuff that has to be done before we free w_current */

@@ -1,3 +1,21 @@
+2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw, i_vars.h: Added the 
+        following rc keywords: bus-ripper-type, bus-ripper-symname, and 
+        bus-ripper-rotation
+
+	* noweb/o_net.nw: Added code to act on the above rc keyword info.
+
+	* noweb/x_window.nw: Properly init/free some of newly added variables
+	to the TOPLEVEL structure.
+
+	* noweb/o_line.nw: Properly reset the thickness of lines to zero.
+
+	* lib/system-gschemrc.in: Added defaults for all the bus ripper
+	keywords.
+
+	* tests/buses.sch: Added test schematic for buses.	
+
 2002-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_net.nw: Added o_net_add_busrippers function.  This

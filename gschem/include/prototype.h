@@ -243,6 +243,9 @@ SCM g_rc_handleboxes(SCM mode);
 SCM g_rc_setpagedevice_orientation(SCM mode);
 SCM g_rc_setpagedevice_pagesize(SCM mode);
 SCM g_rc_bus_ripper_size(SCM size);
+SCM g_rc_bus_ripper_type(SCM mode);
+SCM g_rc_bus_ripper_symname(SCM scmsymname);
+SCM g_rc_bus_ripper_rotation(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

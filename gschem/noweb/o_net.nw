@@ -797,6 +797,8 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
   int first, second;
   int made_changes = FALSE;
   const int ripper_size = w_current->bus_ripper_size;
+  int complex_angle = 0;
+  char *clib = NULL;
   
   length = o_line_length(net_obj);
 
@@ -886,7 +888,19 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
             made_changes = FALSE;
             break;
           }
-          
+
+          if (w_current->bus_ripper_rotation == NON_SYMMETRIC) {
+            /* non-symmetric */
+            if (sign == 1) {
+              complex_angle = 0;
+            } else {
+              complex_angle = 90;
+            }
+          } else {
+            /* symmetric */
+            complex_angle = 0;
+          }
+
           net_obj->line->y[found_conn->whichone] -= ripper_size;
           o_net_recalc(w_current, net_obj);
           rippers[ripper_count].x[0] = 
@@ -897,9 +911,10 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
             net_obj->line->x[found_conn->whichone] + sign*ripper_size;       
           rippers[ripper_count].y[1] =
             net_obj->line->y[found_conn->whichone] + ripper_size;
-            ripper_count++;
-            /* printf("done\n"); */
+          ripper_count++;
+          /* printf("done\n"); */
           made_changes++;
+          
         } else {
           /* new net is above bus */
           /* printf("above\n"); */
@@ -909,6 +924,18 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
             fprintf(stderr, _("Tried to add more than two bus rippers. Internal gschem error.\n"));
             made_changes = FALSE;
             break;
+          }
+
+          if (w_current->bus_ripper_rotation == NON_SYMMETRIC) {
+            /* non-symmetric */
+            if (sign == 1) {
+              complex_angle = 270;
+            } else {
+              complex_angle = 180;
+            }
+          } else {
+            /* symmetric */
+            complex_angle = 180;
           }
           
           net_obj->line->y[found_conn->whichone] += ripper_size;
@@ -956,19 +983,30 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
           }
           bus_object->bus_ripper_direction = sign;
         } 
-
         /* printf("ver sign: %d\n", sign); */
+
         
         if (net_obj->line->x[otherone] < bus_object->line->x[0]) {
           /* new net is to the left of the bus */
           /* printf("left\n"); */
-
           
           if (ripper_count >= 2) {
             /* try to exit gracefully */
             fprintf(stderr, _("Tried to add more than two bus rippers. Internal gschem error.\n"));
             made_changes = FALSE;
             break;
+          }
+
+          if (w_current->bus_ripper_rotation == NON_SYMMETRIC) {
+            /* non-symmetric */
+            if (sign == 1) {
+              complex_angle = 0;
+            } else {
+              complex_angle = 270;
+            }
+          } else {
+            /* symmetric */
+            complex_angle = 270;
           }
 
           net_obj->line->x[found_conn->whichone] -= ripper_size;
@@ -995,6 +1033,18 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
             break;
           }
 
+          if (w_current->bus_ripper_rotation == NON_SYMMETRIC) {
+            /* non-symmetric */
+            if (sign == 1) {
+              complex_angle = 90;
+            } else {
+              complex_angle = 180;
+            }
+          } else {
+            /* symmetric */
+            complex_angle = 90;
+          }
+
           net_obj->line->x[found_conn->whichone] += ripper_size;
           o_net_recalc(w_current, net_obj);
           rippers[ripper_count].x[0] = 
@@ -1019,25 +1069,44 @@ o_net_add_busrippers(TOPLEVEL *w_current, OBJECT *net_obj,
   if (made_changes) {
     s_conn_remove(w_current, net_obj);
 
+    if (w_current->bus_ripper_type == COMP_BUS_RIPPER) {
+        clib = s_clib_search(w_current->bus_ripper_symname);
+    }
+    
     for (i = 0; i < ripper_count; i++) {
-      w_current->page_current->object_tail =
-        o_net_add(w_current, w_current->page_current->object_tail,
-                  OBJ_NET, color,
-                  rippers[i].x[0], rippers[i].y[0],
-                  rippers[i].x[1], rippers[i].y[1]);
-      o_net_draw(w_current,w_current->page_current->object_tail);
+      if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
+        w_current->page_current->object_tail =
+          o_net_add(w_current, w_current->page_current->object_tail,
+                    OBJ_NET, color,
+                    rippers[i].x[0], rippers[i].y[0],
+                    rippers[i].x[1], rippers[i].y[1]);
+      } else {
+
+        if (clib) {
+          w_current->page_current->object_tail = 
+          (OBJECT *) o_complex_add(
+                                   w_current,
+                                   w_current->page_current->object_tail,
+                                   OBJ_COMPLEX, WHITE,
+                                   rippers[i].x[0], rippers[i].y[0],
+                                   complex_angle, 0,
+                                   clib,
+                                   w_current->bus_ripper_symname, 1, TRUE);
+          
+          o_complex_draw(w_current,w_current->page_current->object_tail);
+        } else {
+          s_log_message(_("Could not find %s in any component-library\n"),
+                        w_current->bus_ripper_symname);
+        }
+      }
     }
 
+    if (clib) {
+      free(clib);
+      clib = NULL;
+    }
+    
     s_conn_update_object(w_current, net_obj);
-
-#if 0 /* this causes serious memory corruption.  Not sure why */
-    /* either way it is not needed */
-    g_list_free(other_objects);
-    other_objects = NULL;
-    other_objects = s_conn_return_others(other_objects,
-                                         net_obj);
-#endif
-
     return(TRUE);
   }
 
