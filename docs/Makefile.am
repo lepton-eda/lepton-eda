@@ -1,6 +1,6 @@
 
 SUBDIRS = attributes symbols fileformats hooks keymapping netattrib \
-	  gschem gnetlist switcap toplevel templates 
+	  gschem gnetlist switcap spice-sdb toplevel templates 
 
 EXTRA_DIST = 
 

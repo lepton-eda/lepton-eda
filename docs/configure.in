@@ -82,6 +82,7 @@ AC_CONFIG_FILES([Makefile \
 		 gschem/Makefile \
 		 gnetlist/Makefile \
 		 switcap/Makefile \
+		 spice-sdb/Makefile \
 		 toplevel/Makefile \
                  templates/Makefile])
 AC_OUTPUT

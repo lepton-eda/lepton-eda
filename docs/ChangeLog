@@ -8,6 +8,13 @@
 	* switcap/switcap.tex: Fixed a figure reference typo.  
 
 	* toplevel/gedadocs.html: Added links to the switcap backend docs
+	
+	* Makefile.am, configure.in, spice-sdb/, toplevel/gedadocs.html: 
+	Integrated  Stuart Brorson's advanced spice netlister (the docs)
+
+	* switcap/Makefile.am, symbols/Makefile.am, attributes/Makefile.am,
+	fileformats/Makefile.am: Added a "-" to some rm commands so that they
+	would not fail (ignore errors)
 
 2003-02-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
