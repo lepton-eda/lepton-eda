@@ -33,7 +33,7 @@
 # either version 20020527 or earlier.
 #
 
-print "gEDA/gsymupdate version 0.1\n";
+print "gEDA/gsymupdate version 0.2\n";
 print "gEDA/gsymupdate comes with ABSOLUTELY NO WARRANTY; see COPYING for more details\n";
 print "This is free software, and you are welcome to redistribute it under certain\n";
 print "conditions; please see the COPYING file for more details.\n\n";
@@ -69,7 +69,7 @@ foreach $filename (@ARGV) {
                 if ($textline =~ /=/) {  
 
                     # Break the attribute up into name=value
-                    @attrib = split(/=/,$textline);
+                    @attrib = split(/=/,$textline,2);
                     $name=@attrib[0];
                     $value=@attrib[1];
 

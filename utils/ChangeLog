@@ -1,3 +1,11 @@
+2002-11-03 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/gschupdate, scripts/symupdate: Oops, these scripts will
+	break if an attribute has a ='s in it.  Fixed this by passing 2 as
+	the LIMIT to perl's split.
+
+        * configure.in: Updated version to 20021103 (an official version)
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschemdoc.sh: Changed the manual which is brought up when

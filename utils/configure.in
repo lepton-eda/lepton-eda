@@ -8,7 +8,7 @@ PACKAGE=geda-utils
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20021031
+VERSION=20021103
 
 echo Configuring utils version $VERSION
 
