@@ -1,3 +1,8 @@
+2002-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_attribedit.nw, o_undo.nw, o_misc.nw, o_delete.nw: Added 
+	missing calls to i_update_menus()
+
 2002-12-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_basic.nw: Added o_draw_list() and o_draw_selected() helper 
