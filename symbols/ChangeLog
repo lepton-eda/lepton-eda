@@ -2,6 +2,8 @@
 
 	* *.sym: Updated all symbols and font definitions to 20030901
 
+	* connector/DB15-1.sym: Added new symbol by Gabriel Paubert. Thanks.
+
 2003-08-31 Werner Hoch <werner.ho@gmx.de>
 	* memory/*.sym: repaired and completed all symbols
 	
