@@ -576,6 +576,107 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     return (scm_return_value);
 }
 
+/* takes a uref and pinseq number and returns wanted_attribute associated */
+/* with that pinseq pin and component */
+SCM g_get_pin_attribute_seq(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib)
+{
+  SCM scm_return_value;
+  NETLIST *nl_current;
+  char *uref;
+  char *pinseq;
+  char *wanted_attrib;
+  char *pinseq_attrib;
+  char *return_value = NULL;
+  char *string;
+  OBJECT *o_text_object;
+  OBJECT *o_pin_object;
+
+  SCM_ASSERT( (SCM_NIMP (scm_uref) && SCM_STRINGP (scm_uref) ),
+              scm_uref, SCM_ARG1, "gnetlist:get-pin-number-seq");
+
+  SCM_ASSERT( (SCM_NIMP (scm_pinseq) &&
+               SCM_STRINGP (scm_pinseq) ),
+              scm_pinseq, SCM_ARG2, "gnetlist:get-pin-number-seq");
+
+
+  SCM_ASSERT( (SCM_NIMP (scm_wanted_attrib) &&
+               SCM_STRINGP (scm_wanted_attrib) ),
+              scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute-seq");
+
+  uref = gh_scm2newstr(scm_uref, NULL);
+  pinseq = gh_scm2newstr(scm_pinseq, NULL);
+  wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+  
+  pinseq_attrib = u_basic_strdup_multiple("pinseq=", pinseq, NULL);
+
+#if DEBUG
+  printf("wanted_pin_seq: %s\n", pinseq);
+#endif
+
+  /* here is where you make it multi page aware */
+  nl_current = netlist_head;
+
+  /* search for the first instance */
+  /* through the entire list */
+  while (nl_current != NULL) {
+
+    if (nl_current->component_uref) {
+      if (strcmp(nl_current->component_uref, uref) == 0) {
+
+        /* first search outside the symbol */
+        o_text_object = o_attrib_search_string_single(nl_current->object_ptr,
+                                                      pinseq_attrib);
+        if (o_text_object && o_text_object->attached_to) {
+          o_pin_object = o_attrib_return_parent(o_text_object->attached_to);
+
+          if (o_pin_object) {
+            return_value = o_attrib_search_name_single(o_pin_object,
+                                                       wanted_attrib,
+                                                       NULL);
+            if (return_value) {
+              break;
+            }
+          }
+
+        }
+        
+        /* now search inside the symbol */
+        o_text_object =
+          o_attrib_search_string_list(nl_current->object_ptr->
+                                      complex->prim_objs, pinseq_attrib);
+
+        if (o_text_object && o_text_object->attached_to) {
+          o_pin_object = o_attrib_return_parent(o_text_object->attached_to);
+          if (o_pin_object) {
+            return_value = o_attrib_search_name_single(o_pin_object,
+                                                       wanted_attrib,
+                                                       NULL);
+            if (return_value) {
+              break;
+            }
+          }
+        }
+        
+        break;
+      }
+    }
+    nl_current = nl_current->next;
+  }
+
+  if (return_value) {
+    scm_return_value = gh_str2scm(return_value, strlen(return_value));
+  } else {
+    scm_return_value = gh_str2scm("unknown", strlen("unknown"));
+
+  }
+
+  free(uref);
+  free(pinseq);
+  free(wanted_attrib);
+  free(pinseq_attrib);
+
+  return (scm_return_value);
+}
 
 SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib)
 {

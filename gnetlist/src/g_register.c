@@ -38,64 +38,65 @@
 
 void g_register_funcs(void)
 {
-    /* general functions */
-    gh_new_procedure0_0("quit", g_quit);
-    gh_new_procedure0_0("exit", g_quit);
+  /* general functions */
+  gh_new_procedure0_0("quit", g_quit);
+  gh_new_procedure0_0("exit", g_quit);
 
-    /* gnetlistrc functions */
-    gh_new_procedure1_0("gnetlist-version", g_rc_gnetlist_version);
-    gh_new_procedure1_0("default-series-name", g_rc_default_series_name);
-    gh_new_procedure1_0("component-library", g_rc_component_library);
-    gh_new_procedure1_0("component-library-search",
-			g_rc_component_library_search);
-    gh_new_procedure1_0("source-library", g_rc_source_library);
-    gh_new_procedure1_0("source-library-search",
-			g_rc_source_library_search);
-    gh_new_procedure1_0("font-directory", g_rc_font_directory);
-    gh_new_procedure1_0("scheme-directory", g_rc_scheme_directory);
-    gh_new_procedure1_0("bitmap-directory", g_rc_bitmap_directory);
-    gh_new_procedure3_0("world-size", g_rc_world_size);
+  /* gnetlistrc functions */
+  gh_new_procedure1_0("gnetlist-version", g_rc_gnetlist_version);
+  gh_new_procedure1_0("default-series-name", g_rc_default_series_name);
+  gh_new_procedure1_0("component-library", g_rc_component_library);
+  gh_new_procedure1_0("component-library-search",
+                      g_rc_component_library_search);
+  gh_new_procedure1_0("source-library", g_rc_source_library);
+  gh_new_procedure1_0("source-library-search",
+                      g_rc_source_library_search);
+  gh_new_procedure1_0("font-directory", g_rc_font_directory);
+  gh_new_procedure1_0("scheme-directory", g_rc_scheme_directory);
+  gh_new_procedure1_0("bitmap-directory", g_rc_bitmap_directory);
+  gh_new_procedure3_0("world-size", g_rc_world_size);
     
-    gh_new_procedure1_0("net-naming-priority", g_rc_net_naming_priority);
-    gh_new_procedure1_0("hierarchy-traversal", g_rc_hierarchy_traversal);
-    gh_new_procedure1_0("hierarchy-uref-mangle",
-			g_rc_hierarchy_uref_mangle);
-    gh_new_procedure1_0("hierarchy-netname-mangle",
-			g_rc_hierarchy_netname_mangle);
-    gh_new_procedure1_0("hierarchy-netattrib-mangle",
-			g_rc_hierarchy_netattrib_mangle);
-    gh_new_procedure1_0("hierarchy-uref-separator",
-			g_rc_hierarchy_uref_separator);
-    gh_new_procedure1_0("hierarchy-netname-separator",
-			g_rc_hierarchy_netname_separator);
-    gh_new_procedure1_0("hierarchy-netattrib-separator",
-			g_rc_hierarchy_netattrib_separator);
-    gh_new_procedure1_0("hierarchy-netattrib-order",
-			g_rc_hierarchy_netattrib_order);
-    gh_new_procedure1_0("hierarchy-netname-order",
-			g_rc_hierarchy_netname_order);
-    gh_new_procedure1_0("hierarchy-uref-order", g_rc_hierarchy_uref_order);
+  gh_new_procedure1_0("net-naming-priority", g_rc_net_naming_priority);
+  gh_new_procedure1_0("hierarchy-traversal", g_rc_hierarchy_traversal);
+  gh_new_procedure1_0("hierarchy-uref-mangle",
+                      g_rc_hierarchy_uref_mangle);
+  gh_new_procedure1_0("hierarchy-netname-mangle",
+                      g_rc_hierarchy_netname_mangle);
+  gh_new_procedure1_0("hierarchy-netattrib-mangle",
+                      g_rc_hierarchy_netattrib_mangle);
+  gh_new_procedure1_0("hierarchy-uref-separator",
+                      g_rc_hierarchy_uref_separator);
+  gh_new_procedure1_0("hierarchy-netname-separator",
+                      g_rc_hierarchy_netname_separator);
+  gh_new_procedure1_0("hierarchy-netattrib-separator",
+                      g_rc_hierarchy_netattrib_separator);
+  gh_new_procedure1_0("hierarchy-netattrib-order",
+                      g_rc_hierarchy_netattrib_order);
+  gh_new_procedure1_0("hierarchy-netname-order",
+                      g_rc_hierarchy_netname_order);
+  gh_new_procedure1_0("hierarchy-uref-order", g_rc_hierarchy_uref_order);
 
-    /* netlist functions */
-    gh_new_procedure1_0("gnetlist:get-packages", g_get_packages);
-    gh_new_procedure1_0("gnetlist:get-pins", g_get_pins);
-    gh_new_procedure1_0("gnetlist:get-all-nets", g_get_all_nets);
-    gh_new_procedure1_0("gnetlist:get-all-unique-nets",
-			g_get_all_unique_nets);
-    gh_new_procedure1_0("gnetlist:get-all-connections",
-			g_get_all_connections);
-    gh_new_procedure2_0("gnetlist:get-nets", g_get_nets);
-    gh_new_procedure1_0("gnetlist:get-pins-nets", g_get_pins_nets);
+  /* netlist functions */
+  gh_new_procedure1_0("gnetlist:get-packages", g_get_packages);
+  gh_new_procedure1_0("gnetlist:get-pins", g_get_pins);
+  gh_new_procedure1_0("gnetlist:get-all-nets", g_get_all_nets);
+  gh_new_procedure1_0("gnetlist:get-all-unique-nets",
+                      g_get_all_unique_nets);
+  gh_new_procedure1_0("gnetlist:get-all-connections",
+                      g_get_all_connections);
+  gh_new_procedure2_0("gnetlist:get-nets", g_get_nets);
+  gh_new_procedure1_0("gnetlist:get-pins-nets", g_get_pins_nets);
 
-    gh_new_procedure2_0("gnetlist:get-package-attribute",
-			g_get_package_attribute);
-    gh_new_procedure1_0("gnetlist:get-toplevel-attribute",
-			g_get_toplevel_attribute);
-    /* gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode); no longer needed */
-    gh_new_procedure1_0("gnetlist:get-renamed-nets", g_get_renamed_nets);
-    gh_new_procedure3_0("gnetlist:get-pin-attribute", g_get_pin_attribute);
-    gh_new_procedure1_0("gnetlist:vams-get-package-attributes",
-			vams_get_package_attributes);
+  gh_new_procedure2_0("gnetlist:get-package-attribute",
+                      g_get_package_attribute);
+  gh_new_procedure1_0("gnetlist:get-toplevel-attribute",
+                      g_get_toplevel_attribute);
+  /* gh_new_procedure1_0 ("gnetlist:set-netlist-mode", g_set_netlist_mode); no longer needed */
+  gh_new_procedure1_0("gnetlist:get-renamed-nets", g_get_renamed_nets);
+  gh_new_procedure3_0("gnetlist:get-pin-attribute", g_get_pin_attribute);
+  gh_new_procedure1_0("gnetlist:vams-get-package-attributes",
+                      vams_get_package_attributes);
+  gh_new_procedure3_0("gnetlist:get-pin-attribute-seq", g_get_pin_attribute_seq);
 
 }
 
