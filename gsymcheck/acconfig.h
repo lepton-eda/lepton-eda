@@ -11,6 +11,15 @@
 /* Define if you have rint in the math library   */
 #undef HAS_RINT  
 
+/* Define if you have the gdgeda library   */
+#undef HAS_LIBGDGEDA
+
+/* Define if you have the zlib (libz) library   */
+#undef HAS_LIBZ
+
+/* Define if you have the png library   */
+#undef HAS_LIBPNG
+
 /* Define if you are using gtk+ 1.1.x */
 #undef GTK_DEVEL
 

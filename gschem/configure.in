@@ -2,7 +2,9 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/gschem.c)
 
 dnl Initialize automake stuff
-PACKAGE=gEDA
+PACKAGE=gschem
+
+DATADIR=gEDA
 
 # new way of doing version
 VERSION=20010304
@@ -203,6 +205,7 @@ if test $LIBGEDACONFIG = "no"; then
 	AC_MSG_ERROR(Cannot find libgeda-config -- be sure that libgeda is installed)
 fi
 
+
 libgeda_version=`$LIBGEDACONFIG --version`
 if test $libgeda_version != $VERSION; then
 	AC_MSG_ERROR(Found a different version of libgeda-config: $LIBGEDACONFIG -- Make sure your PATH variable is correct)
@@ -318,7 +321,7 @@ sourcedir=$gedatopdir/source
 HOME=`echo $HOME`
 
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
 
@@ -348,9 +351,9 @@ AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 
 # old way of installing data into a version dependant directory
-#gedadatadir=$datadir/$PACKAGE-$VERSION
+#gedadatadir=$datadir/$DATADIR-$VERSION
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 AC_SUBST(gedadatadir)
 AC_SUBST(gedarcdir)
@@ -379,7 +382,9 @@ AC_OUTPUT( 	Makefile \
 		src/Makefile \
 		include/Makefile \
 		scheme/Makefile \
+		scripts/Makefile \
 		examples/Makefile \
+		docs/Makefile \
 		lib/Makefile \
 		lib/system-gschemrc )
 

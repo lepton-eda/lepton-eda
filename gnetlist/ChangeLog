@@ -1,3 +1,13 @@
+2001-03-17 Ales Hvezda   <ahvezda@geda.seul.org>
+        
+        * Got make dist and make distcheck working (means all files which are
+          in CVS are in some Makefile)
+
+	* configure.in, acconfig.h: unfortunately libgdgeda and stroke are
+	  required for linking, so they MUST be inside these files
+
+	* configure.in: Added DATADIR instead of PACKAGE
+
 2001-03-06  Stefan Petersen  <spe@geda.seul.org>
 
 	* configure.in, acconfig.h: In the spirit of yesterday I removed

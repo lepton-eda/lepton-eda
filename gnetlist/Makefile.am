@@ -1,7 +1,7 @@
 
-SUBDIRS = src include utils lib scheme examples tests
+SUBDIRS = src include utils lib scheme examples scripts docs tests
 
-EXTRA_DIST = 
+EXTRA_DIST = BUGS 
 
 proto:
 	(cd src ; ./create_proto)

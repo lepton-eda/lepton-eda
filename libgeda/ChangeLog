@@ -1,6 +1,13 @@
+2001-03-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* Got make dist and make distcheck working (means all files which are
+	  in CVS are in some Makefile)
+
+        * configure.in: Added DATADIR instead of PACKAGE
+
 2001-03-16  Stefan Petersen  <spe@geda.seul.org>
 
-	* configure, configure.in: Didn't bulid properly if libgdgeda
+	* configure, configure.in: Didn't build properly if libgdgeda
 	  was placed in a not common place.
 	
 2001-03-11  Stefan Petersen  <spe@geda.seul.org>

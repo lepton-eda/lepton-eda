@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-EXTRA_DIST = README singlenet_1.PCB singlenet_1.geda \
-	     stack_1.geda darlington_1.spice \
-	     amp_1.spice 7447.vhdl singlenet_1.pads singlenet_1.protel
+EXTRA_DIST = 7447.vhdl README amp_1.spice darlington_1.spice \
+	     netattrib_1.geda netattrib_1.sch singlenet_1.PCB \
+	     singlenet_1.geda singlenet_1.pads singlenet_1.protel stack_1.geda
 
 tests:
 	rm -f new_*

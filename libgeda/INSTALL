@@ -15,6 +15,9 @@ Quick Ref:
 % make 
 % make install
 
+(Depending on where you installed the libraries, you might have to run
+ ldconfig (as root)).
+
 In order to build libgeda you must install the following packages first: 
 
 	GLIB 1.2.x

@@ -1,8 +1,9 @@
 
 scmdatadir = @gedadatadir@/scheme
-scmdata_DATA = gschem.scm list-keys.scm auto-uref.scm print-NB-attribs.scm \
-	       generate_netlist.scm 
- 
+scmdata_DATA = auto-uref.scm generate_netlist.scm gschem.scm list-keys.scm \
+	       print-NB-attribs.scm 
+
+EXTRA_DIST = $(scmdata_DATA)
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

@@ -2,7 +2,9 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/gsymcheck.c)
 
 dnl Initialize automake stuff
-PACKAGE=gEDA
+PACKAGE=gsymcheck
+
+DATADIR=gEDA
 
 # new way of doing version
 VERSION=20010304
@@ -15,6 +17,16 @@ AC_ARG_ENABLE(debug,
     [
         debug=yes
     ])
+
+dnl --disable-gdgeda : turn off libgdgeda support
+AC_ARG_ENABLE(gdgeda,
+    [  --disable-gdgeda        Disable libgdgeda support (don't use libgdgeda at all)],
+    [
+        if test $enableval = "no"; then
+                no_gdgeda=yes
+        fi
+    ])
+
 
 dnl Change default location of gtk-config
 AC_ARG_WITH(gtk-config, [  --with-gtk-config=path  Change where gtk-config is located], [opt_gtkconfig=$withval])
@@ -166,6 +178,46 @@ gesym_version=`$GESYMCONFIG --version`
 if test $gesym_version != $VERSION; then                                                AC_MSG_ERROR(Found a different version of gesym-config: $GESYMCONFIG -- Make sure your PATH variable is correct)
 fi
 
+# search for libgdgeda-config
+AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
+
+if test $LIBGDGEDACONFIG = "no" -o no_gdgeda = yes; then
+	 GDGEDA_LIB=""
+         libgdgeda_ldflags=""
+         libgdgeda_cflags=""
+else
+         libgdgeda_ldflags=`$LIBGDGEDACONFIG --libs`
+         libgdgeda_cflags=`$LIBGDGEDACONFIG --cflags`
+         GD_EXTRA="$libgdgeda_cflags $libgdgeda_ldflags -lm"
+         X_CFLAGS="$libgdgeda_cflags"
+
+         AC_CHECK_LIB(z, uncompress, Z_LIB="-lz", Z_LIB=no)
+         if test $Z_LIB = no; then
+	 	AC_MSG_ERROR(Cannot find libz (zlib), be sure to install zlib; it is required for libgdgeda)
+	 else
+
+		PNG_EXTRA="-lz -lm"
+                AC_CHECK_LIB(png, png_read_init, PNG_LIB="-lpng", PNG_LIB=no, $PNG_EXTRA)
+
+                if test $PNG_LIB = no; then
+                        AC_MSG_ERROR(Cannot find libpng, be sure to install png; it is required for libgdgeda)
+                else
+
+			AC_CHECK_LIB(gdgeda, gdImageColorAllocate, GDGEDA_LIB="-lgdgeda", GDGEDA_LIB=no, $GD_EXTRA)
+
+			if test $GDGEDA_LIB = no; then
+			        GDGEDA_LIB=""
+		         	libgdgeda_ldflags=""
+         			libgdgeda_cflags=""
+			else
+		                AC_DEFINE(HAS_LIBZ)
+                		AC_DEFINE(HAS_LIBPNG)
+		                AC_DEFINE(HAS_LIBGDGEDA)
+		        fi
+		fi
+	fi
+fi
+
 LDEXTRA=
 CFEXTRA=
 GTK=
@@ -238,7 +290,7 @@ sourcedir=$gedatopdir/source
 HOME=`echo $HOME`
 
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 if eval "test x$opt_rcdir = x"; then
 
@@ -268,9 +320,9 @@ AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 
 # old way of installing data into a version dependant directory
-#gedadatadir=$datadir/$PACKAGE-$VERSION
+#gedadatadir=$datadir/$DATADIR-$VERSION
 # new way without version
-gedadatadir=$datadir/$PACKAGE
+gedadatadir=$datadir/$DATADIR
 
 AC_SUBST(gedadatadir)
 AC_SUBST(gedarcdir)

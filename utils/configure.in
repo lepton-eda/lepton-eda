@@ -2,7 +2,9 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/char_width.c)
 
 dnl Initialize automake stuff
-PACKAGE=gEDA
+PACKAGE=utils
+
+DATADIR=gEDA
 
 # new way of doing version
 VERSION=20010304
@@ -67,5 +69,6 @@ AC_SUBST(VERSION)
 AC_SUBST(LIBGEDA_CFLAGS)
 
 AC_OUTPUT( 	Makefile \
+		examples/Makefile \
 		src/Makefile )
 

@@ -6,6 +6,8 @@ scmdata_DATA = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
                gnet-pads.scm gnetlist.scm gnet-bae.scm gnet-protelII.scm \
                gnet-bom2.scm gnet-gossip.scm gnet-drc.scm gnet-vams.scm
 
+EXTRA_DIST = $(scmdata_DATA)
+
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
 DISTCLEANFILES = *.log *~

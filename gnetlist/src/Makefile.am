@@ -21,7 +21,7 @@ gnetlist_LDADD = @GUILE_LIB@ @GLIB@ @X_LDFLAGS@
 
 man_MANS = gnetlist.1
 
-EXTRA_DIST = create_proto gnetlist.1
+EXTRA_DIST = create_proto gnetlist.1 gschem2pcb
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
 CLEANFILES = *.log *.ps core FILE *~ prototype.bak

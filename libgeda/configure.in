@@ -2,7 +2,9 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(src/s_basic.c)
 
 dnl Initialize automake stuff
-PACKAGE=gEDA
+PACKAGE=libgeda
+
+DATADIR=gEDA
 
 # new way of doing version
 VERSION=20010304
@@ -256,7 +258,7 @@ else
  dprefix=$prefix
 fi
 
-gedatopdir=$dprefix/share/$PACKAGE
+gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
 
 # this has to be expanded ( no ${prefix} ) --
