@@ -503,7 +503,7 @@ AC_SUBST(NOWEAVE)
 AC_SUBST(TEXI2HTML)
 AC_SUBST(INDENT)
 
-AC_CONFIG_FILES([Makefile m4/Makefile po/Makefile.in  intl/Makefile \
+AC_CONFIG_FILES([Makefile m4/Makefile po/Makefile.in intl/Makefile \
 		src/Makefile        \
 		include/Makefile    \
 		scheme/Makefile     \
