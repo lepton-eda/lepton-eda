@@ -1,5 +1,8 @@
 2005-01-30  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/g_rc.nw: Code cleanup: added guile assertions, fixed some 
+	memory problems, make it use more of glib.
+
 	* noweb/o_complex_basic.nw (o_complex_read): Fixed test after library 
 	search to avoid crash when the component is not found.
 

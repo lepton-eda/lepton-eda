@@ -31,15 +31,16 @@ void f_print_set_type(TOPLEVEL *w_current, int type);
 int g_read_file(char *filename);
 
 /* g_rc.c */
-int g_rc_parse_general(TOPLEVEL *w_current, const char *fname, 
-                       const char *ok_msg, const char *err_msg);
-char *g_rc_parse_path(void);
-static int g_rc_parse_system_rc(TOPLEVEL *w_current, char* rcname);
-static int g_rc_parse_home_rc(TOPLEVEL *w_current, char* rcname);
-static int g_rc_parse_local_rc(TOPLEVEL *w_current, char* rcname);
-void g_rc_parse(TOPLEVEL *w_current, char* rcname, 
-                char* specified_rc_filename);
-int g_rc_parse_specified_rc(TOPLEVEL *w_current, char *rcfilename);
+gint g_rc_parse_general(TOPLEVEL *w_current,
+                        const gchar *fname, 
+                        const gchar *ok_msg, const gchar *err_msg);
+const char *g_rc_parse_path(void);
+static gint g_rc_parse_system_rc(TOPLEVEL *w_current, const gchar *rcname);
+static gint g_rc_parse_home_rc(TOPLEVEL *w_current, const gchar *rcname);
+static gint g_rc_parse_local_rc(TOPLEVEL *w_current, const gchar *rcname);
+void g_rc_parse(TOPLEVEL *w_current, const gchar* rcname, 
+                const gchar* specified_rc_filename);
+gint g_rc_parse_specified_rc(TOPLEVEL *w_current, const gchar *rcfilename);
 SCM g_rc_component_library(SCM path);
 SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
