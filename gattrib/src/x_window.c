@@ -271,7 +271,7 @@ x_window_add_items()
   x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
 
 #if 0
-  if (sheet_head->pin_count > 0 ) {
+  if (sheet_head->net_count > 0 ) {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), sheet_head->net_count, sheet_head->master_net_list_head);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), sheet_head->net_attrib_count, sheet_head->master_net_attrib_list_head);
   } else {
@@ -302,6 +302,7 @@ x_window_add_items()
     }
   }
   gtk_widget_show( GTK_WIDGET(sheets[0]) );
+  gtk_widget_show( GTK_WIDGET(scrolled_windows[0]) );
 
 
 #ifdef DEBUG
@@ -321,6 +322,7 @@ x_window_add_items()
   }
   if (sheet_head->net_count > 0) {
     gtk_widget_show( GTK_WIDGET(sheets[1]) );
+    gtk_widget_show( GTK_WIDGET(scrolled_windows[1]) );
   }
 
 
@@ -342,9 +344,11 @@ x_window_add_items()
   }
   if (sheet_head->pin_count > 0) {
     gtk_widget_show( GTK_WIDGET(sheets[2]) );
+    gtk_widget_show( GTK_WIDGET(scrolled_windows[2]) );
   }
 
   gtk_widget_show( GTK_WIDGET(notebook) );
+  gtk_widget_show( GTK_WIDGET(main_vbox) );
   gtk_widget_show( GTK_WIDGET(window) );
 
   return;

@@ -267,6 +267,7 @@ void gattrib_main(int argc, char *argv[])
       if (p_local->pid != -1) {   /* only traverse pages which are toplevel */
 	if (p_local->object_head && p_local->page_control == 0) {
 	  s_table_add_toplevel_comp_items_to_comp_table(p_local->object_head);    /* adds all components from page to comp_table */
+
 #if 0
 	  /* Note that this must be changed.  We need to input the entire project
 	   * before doing anything with the nets because we need to first
@@ -319,6 +320,17 @@ void gattrib_main(int argc, char *argv[])
     printf("In gattrib_main -- no files specified on command line.  Throw up filedialog.\n");
 #endif
     x_fileselect_setup(pr_current, OPEN);
+
+    gtk_widget_show( GTK_WIDGET(notebook) );
+    gtk_widget_show( GTK_WIDGET(window) );
+
+    while( gtk_events_pending () ) {
+#ifdef DEBUG
+      printf("In gattrib_main, trying to flush gtk event queue before running gtk_main. . . . \n");
+#endif
+      gtk_main_iteration();  /* force window exposure by running event handler once */
+    }
+    
   }
 
   /* ---------- Now make sure that there are attributes to display.  ---------- */
@@ -326,6 +338,7 @@ void gattrib_main(int argc, char *argv[])
 
   /* ---------- Now enter main event loop for spreadsheet.  ---------- */
   gtk_widget_show( GTK_WIDGET(window) );  /*  One final show for good measure  */
+  gtk_main_iteration();  /* force window exposure by running event handler once */
   gtk_main();
 
   /* ---------- Spreadsheet has been killed; we are quitting.  ---------- */

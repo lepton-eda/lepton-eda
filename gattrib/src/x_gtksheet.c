@@ -206,13 +206,11 @@ x_gtksheet_init()
 
       scrolled_windows=(GtkWidget **)realloc(scrolled_windows, (i+1)*sizeof(GtkWidget *));
       scrolled_windows[i]=gtk_scrolled_window_new(NULL, NULL);
-      gtk_widget_show( GTK_WIDGET(scrolled_windows[i]) );
       
 #ifdef DEBUG
-      printf("In x_gtksheet_init, working on sheet %d.  About to call gtk_container_add.\n", i);
+      printf("In x_gtksheet_init, working on sheet %d.  About to add sheet to scrolled_window.\n", i);
 #endif
       gtk_container_add( GTK_CONTAINER(scrolled_windows[i]), GTK_WIDGET(sheets[i]) );
-      gtk_widget_show( GTK_WIDGET(sheets[i]) );
 
       /* First remove old notebook page.  I should probably do some checking here. */
       if (notebook != NULL) 
@@ -228,6 +226,11 @@ x_gtksheet_init()
       gtk_notebook_append_page(GTK_NOTEBOOK(notebook), GTK_WIDGET(scrolled_windows[i]),
 			       GTK_WIDGET(label) );
 
+      gtk_widget_show( GTK_WIDGET(sheets[i]) );
+      gtk_widget_show( GTK_WIDGET(scrolled_windows[i]) );
+      gtk_widget_show( GTK_WIDGET(notebook) );  /* show updated notebook  */
+
+
       /*  "changed" signal raised when user changes anything in entry cell  */
       gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(GTK_SHEET(sheets[i]))),
 			   "changed", (GtkSignalFunc) show_entry, NULL);
@@ -239,11 +242,10 @@ x_gtksheet_init()
 			 NULL);
 #endif
 
-      gtk_widget_show( GTK_WIDGET(notebook) );
+
 
     }
   }
-
 
   return;
 

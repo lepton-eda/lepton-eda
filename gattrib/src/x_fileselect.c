@@ -858,9 +858,15 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
       s_string_list_sort_master_net_attrib_list();
 #endif
 
+      s_string_list_sort_master_pin_list();
+      s_string_list_sort_master_pin_attrib_list();
+                                                                                                       
+
       /* ---------- Now create and load the tables  ---------- */
       sheet_head->component_table = s_table_new(sheet_head->comp_count, sheet_head->comp_attrib_count);
       sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
+      sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
+
       
       p_local = pr_current->page_head; /* must iterate over all pages in design */
       while (p_local != NULL) {
@@ -884,11 +890,12 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 #if DEBUG
       printf("In x_fileselect_open_file -- we have just added more files to the project.\n");
 #endif  
-      
+
       /* -------------- update windows --------------- */
       x_window_add_items();    /* This updates the top level stuff,
 				* and then calls another fcn to update
 				* the GtkSheet itself.  */
+
 #ifdef DEBUG
       printf("In x_fileselect_open_file -- we have just returned from x_window_add_items.\n");
 #endif
@@ -899,7 +906,11 @@ void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
   
   /* Now close file dialog window . . . . */
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
-  
+
+  /* try showing all windows now */
+  gtk_widget_show( GTK_WIDGET(notebook));
+  gtk_widget_show( GTK_WIDGET(window));
+
   return;
 }
 
