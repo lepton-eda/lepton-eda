@@ -786,3 +786,27 @@ o_ales_disconnect(PAGE *p_current)
 		NULL);
 }
 
+void 
+o_ales_search_object_func(gpointer key, gpointer value, gpointer user_data)
+{
+	char *orig_key;
+	ALES *ales_list;
+
+	orig_key = key;
+	ales_list = (ALES *) value;
+
+	printf("item in hash: %s type: %d cue: %d\n", orig_key, ales_list->type, ales_list->visual_cue);
+
+ 	o_ales_print(ales_list);
+
+	printf("--\n");
+}
+
+ALES *
+o_ales_search_object(GHashTable *ales_table, OBJECT *object, int counter)
+{
+	g_hash_table_foreach(ales_table, o_ales_search_object_func, NULL);
+
+	return(NULL);
+}
+

@@ -4,7 +4,7 @@ Bugs (no particular order):
 
 	Prioritize this list!
 
-	Missing GDK_CONFIGURE from event types wanted list?
+OKAY	Missing GDK_CONFIGURE from event types wanted list?
 
 	Swedish characters don't work.
 
@@ -42,7 +42,7 @@ FIXED	Unexplained core dump when opening another window (when compiled
 	Was caused by freeing common rc variables (ie each window didn't have
 	a proper copy of the string)
 
-	THERE IS A SIGNIFICANT slowdown in this version (19981013 before
+DONE	THERE IS A SIGNIFICANT slowdown in this version (19981013 before
 	another release) delete really (with o_conn_disconnect_all with
 	big schematics)
 
@@ -99,7 +99,7 @@ FIXED	Gschem core dumps when I hit the special Windows key...  ha, it
         Got a "Ahh you blew it.. tried to delete something which does
 	exist" error.  need to watch for that and replicated it
 
-	Got an unexplained core dump, dealing with trying to disconnect a 
+GONE?	Got an unexplained core dump, dealing with trying to disconnect a 
 	bogus net (already freed?).  I haven't been able to replicate this 
 	at all.  
 
@@ -134,10 +134,10 @@ GONE?	Saw some odd selection behavior, ie selecting something when you were
 	not inside it's bounding box.  I think this was caused by not having
 	snap on.
 
-	Selection boxes and hitting the control key does not behave as it
+OKAY?	Selection boxes and hitting the control key does not behave as it
 	should (ie selection box toggles existing objects)
 
-	Found some wierdness with the symbol translate (due to snap being off)
+OKAY?	Found some wierdness with the symbol translate (due to snap being off)
 
 OKAY?	Unexplained core dump with related to object_lastplace being bogus.
 	cannot replicate this. (haven't seen this at all again)
@@ -253,7 +253,7 @@ FIXED	Droppings with thick pins and move/copies/deletes?
 	of each of the nets )  It's caused by order dependant searching 
 	and if the old and new overlap you will get a round connection
 
-	Multiconnection midpoints, should draw a circle, but doesn't for now.
+DONE	Multiconnection midpoints, should draw a circle, but doesn't for now.
 	Put warnings in documentation (ie when you draw many nets to a single
 	point you should get a circle... instead you get nothing... 
 

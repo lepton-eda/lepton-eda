@@ -80,9 +80,10 @@ DONE	Add a new dialog box for saving and managing pages.  Use a different
 	Seperate translate in the X and Y directions (in addition to the 
 	current coupled X and Y translate)
 
-	Code to have all attributes visible
+DONE	Code to have all attributes visible
 
-	Make sure snap spacing is set to 100 when doing symbol translates
+DONE	Make sure snap spacing is set to 100 when doing symbol translates
+	(warn user in log window)
 
 	Agg! get rid of all window_current's and global_window_current
 
@@ -94,8 +95,9 @@ DONE	Add a new dialog box for saving and managing pages.  Use a different
 	Figure out if you want the net draw/add action to end when you draw
 	a zero length net (configureable?) 
 
-	Check and see what we are doing with invisible attibutes, if we are
-	rendering them or not (to speed things up)
+DONE	Check and see what we are doing with invisible attibutes, if we are
+	rendering them or not (to speed things up), fixed by NOT creating
+	the attribute (or text)
 
 	Check for incorrect angles on text... warn user
 
@@ -119,7 +121,7 @@ DONE	Add the ability to specify $HOME in an rc file for a path
 
 DONE	Do sanity checks on all drawing input
 
-BETTER	Better handling of dot/square size routine drawing based on zoom 
+DONE	Better handling of dot/square size routine drawing based on zoom 
 	factor
 
 DONE	Don't allow zero length objects in general
@@ -173,7 +175,7 @@ DONE	Move schematic filenames toward the _# convention.  Where the #
 
 DONE	Move/Copy actions start right away after hot key press
 
-	Go back and look at 4 nets coming together problem (not showing dot)
+DONE	Go back and look at 4 nets coming together problem (not showing dot)
 
 DONE	Added text dialog box which behaves like attribute add.
 

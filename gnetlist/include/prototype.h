@@ -64,4 +64,4 @@ void s_traverse_init(void);
 void s_traverse_start(TOPLEVEL *pr_current);
 void s_traverse_sheet(TOPLEVEL *pr_current, OBJECT *start);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component);
-NET *s_traverse_net(OBJECT *previous_object, NET *nets, OBJECT *object);
+NET *s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object);
