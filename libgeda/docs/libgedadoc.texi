@@ -67,7 +67,6 @@ Copyright @copyright{} xxxx XXXX.
 * File s_log.c:: file s_log.c.
 * File s_page.c:: file s_page.c.
 * File s_papersizes.c:: file s_papersizes.c.
-* File s_scratch.c:: file s_scratch.c.
 * File s_slib.c:: file s_slib.c.
 * File s_stretch.c:: file s_stretch.c.
 * File s_tile.c:: file s_tile.c.
@@ -113,7 +112,6 @@ Copyright @copyright{} xxxx XXXX.
 @include s_log.texi
 @include s_page.texi
 @include s_papersizes.texi
-@include s_scratch.texi
 @include s_slib.texi
 @include s_stretch.texi
 @include s_tile.texi

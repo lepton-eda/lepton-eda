@@ -1,3 +1,10 @@
+2005-02-13  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* docs/Makefile.am, src/Makefile.am, noweb/Makefile.am: 
+	* docs/libgedadoc.texi: Updated after removal of s_scratch.
+
+	* noweb/s_scratch.nw: Removed.
+
 2005-02-13 01:38  Dan McMahill <danmc>
 
 	* include/prototype.h, noweb/s_slib.nw: fix up const usage to be

@@ -18,7 +18,7 @@ libgedadoc_TEXINFOS =	a_basic.texi f_basic.texi f_image.texi f_print.texi   \
 			o_selection.texi o_text_basic.texi s_attrib.texi      \
 			s_basic.texi s_clib.texi s_color.texi s_conn.texi     \
 			s_cue.texi s_hierarchy.texi s_log.texi s_menu.texi    \
-			s_page.texi s_papersizes.texi s_scratch.texi          \
+			s_page.texi s_papersizes.texi                         \
 			s_slib.texi s_stretch.texi s_tile.texi s_undo.texi    \
 			s_toplevel.texi u_basic.texi
 TEXINFO_TEX =		./texinfo.tex
