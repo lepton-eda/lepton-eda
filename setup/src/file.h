@@ -40,6 +40,7 @@ void FileGetName(char *szFullName, char *szName);
 void FileGetExt(char *szFullName, char *szExt);
 void FileGetDir(char *szFullName, char *szDir);
 void FileGetRel(char *szFullName, char *szName);
+char *FileGetFilename(char *szFullName);
 
 
 

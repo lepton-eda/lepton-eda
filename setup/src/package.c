@@ -33,6 +33,7 @@
 #include "config.h"
 #include "file.h"
 #include "global.h"
+#include "log.h"
 #include "msgbox.h"
 #include "package.h"
 
@@ -48,6 +49,7 @@ int iSoftwareInstalled = FALSE;
 
 /* static functions and variables used in this module */
 static int ReadSection(char *szpackage, struct CompsTable_s *pComp);
+char *PackageNext(const char *szPackage);
 char szWorkingDirectory[TEXTLEN];
 
 
@@ -68,7 +70,7 @@ int PackageInitialize(void)
 	{
 		sprintf(szValue, "Cannot find a configuration file '%s'", PACKAGE_CFGFILE);
 		MsgBox(
-			GTK_WINDOW(pWindowMain), 
+			GTK_WINDOW(pWindowMain),
 			"Error !",
 			szValue, 
 			MSGBOX_ERROR | MSGBOX_OKD
@@ -172,7 +174,7 @@ int PackageInitialize(void)
 	/* read components properties */
 	for (iResult = ConfigSectionFirst(szName), iCount = 0, iPrevious = -1, i = 0; iResult == SUCCESS; iResult = ConfigSectionNext(szName))
 	{
-		
+
 		/* save package properties */
 		if (iPrevious != -1)
 		{
@@ -208,7 +210,7 @@ int PackageInitialize(void)
 
 		pComp->szNode[0] = pComp->szName;
 		pComp->szNode[1] = pComp->szLicense;
-		
+
 		pComp->bInstalled = FALSE;
 		pComp->pCompParent = NULL;
 	}
@@ -248,6 +250,8 @@ static int ReadSection(char *szPackage, struct CompsTable_s *pComp)
 		strcpy(pComp->szTopLevel, "");
 		strcpy(pComp->szFileName, "");
 		strcpy(pComp->szPatch, "");
+		strcpy(pComp->szFtpFile, "");
+		strcpy(pComp->szFtpPatch, "");
 		strcpy(pComp->szDirName, "");
 		strcpy(pComp->szBldTools, "");
 		strcpy(pComp->szCommand, "");
@@ -376,6 +380,14 @@ static int ReadSection(char *szPackage, struct CompsTable_s *pComp)
 			}
 			iSize += strlen(szValue) + 1;
 		}
+		else if (strcmp(szName, "INSTCMD") == 0)
+		{
+			if (pComp != NULL && strlen(pComp->szInstCmd) == 0)
+			{
+				strcpy(INSTCMD(pComp), szValue);
+			}
+			iSize += strlen(szValue) + 1;
+		}
 		else if (strcmp(szName, "PREINST") == 0)
 		{
 			if (pComp != NULL && strlen(pComp->szPreInst) == 0)
@@ -447,59 +459,147 @@ static int ReadSection(char *szPackage, struct CompsTable_s *pComp)
 	Accessing to package variables
 */
 
-/* set package pointer to the first one */
-int PackageFirst(void)
-{
-	pPackage = pCompsTable;
-	if (pPackage == NULL)
-		return FAILURE;
-	
-	return SUCCESS;
-}
 
-
-/* set package pointer to the next one */
-int PackageNext(void)
+char *PackageNext(const char *szPackage)
 {
-	if (pPackage->pNextComp == NULL)
-		return FAILURE;
-	pPackage = pPackage->pNextComp;
-	
-	return SUCCESS;
+	struct CompsTable_s *pPkg;
+
+	if (szPackage == NULL)
+	{
+		if (pCompsTable == NULL)
+			return NULL;
+		else
+			return pCompsTable->szCodeName;
+	}
+
+	pPkg = get_component_by_name(szPackage);
+	if (pPkg == NULL)
+		return NULL;
+
+	if (pPkg->pNextComp == NULL)
+		return NULL;
+
+	return pPkg->pNextComp->szCodeName;
 }
 
 
 
 /* get value of a property */
-int PackageGetValue(int iName, void *pValue)
+void *PackageValueGet(const int iName, const int iNumber, const char *szPackage)
 {
-	if (pPackage == NULL)
-		return FAILURE;
-	
+	static void *pResult = NULL;
+	struct CompsTable_s *pPkg;
+
+	if (pResult != NULL)
+	{
+		free(pResult);
+		pResult = NULL;
+	}
+
+	if (iName == PACKAGE_NEXT)
+	{
+		if (PackageNext(szPackage) == NULL)
+			return NULL;
+		
+		pResult = malloc(strlen(PackageNext(szPackage)) + 1);
+		strcpy((char *)pResult, PackageNext(szPackage)); 
+		return pResult;
+	}
+
+	pPkg = get_component_by_name(szPackage);
+	if (pPkg == NULL)
+		return NULL;
+
 	switch (iName)
 	{
-		case PACKAGE_NAME:       strcpy((char *)pValue, pPackage->szName);           break;
-		case PACKAGE_VERSION:    strcpy((char *)pValue, pPackage->szVersion);        break;
-		case PACKAGE_RELEASE:    strcpy((char *)pValue, pPackage->szRelease);        break;
-		case PACKAGE_DESC:       strcpy((char *)pValue, pPackage->szDesc);           break;
-		case PACKAGE_LICENSE:    strcpy((char *)pValue, pPackage->szLicense);        break;
-		case PACKAGE_FLAGDISP:   *((int *)pValue) = pPackage->bToBeDisplayed;        break;
-		case PACKAGE_FLAGINST:   *((int *)pValue) = pPackage->iToBeInstalled;        break;
-		case PACKAGE_REQLIST:    strcpy((char *)pValue, pPackage->szRequiresList);   break;
-		case PACKAGE_PACKAGES:   strcpy((char *)pValue, pPackage->szTopLevel);       break;
-		case PACKAGE_FILENAME:   strcpy((char *)pValue, pPackage->szFileName);       break;
-		case PACKAGE_PATCH:      strcpy((char *)pValue, pPackage->szPatch);          break;
-		case PACKAGE_DIRNAME:    strcpy((char *)pValue, pPackage->szDirName);        break;
-		case PACKAGE_BLDTOOLS:   strcpy((char *)pValue, pPackage->szBldTools);       break;
-		case PACKAGE_BLDCMD:     strcpy((char *)pValue, pPackage->szCommand);        break;
-		case PACKAGE_FILES:      strcpy((char *)pValue, FILES(pPackage));            break;
-		case PACKAGE_PREINST:    strcpy((char *)pValue, pPackage->szPreInst);        break;
-		case PACKAGE_POSTINST:   strcpy((char *)pValue, pPackage->szPostInst);       break;
-		case PACKAGE_PREUNIN:    strcpy((char *)pValue, pPackage->szPreUnin);        break;
-		case PACKAGE_POSTUNIN:   strcpy((char *)pValue, pPackage->szPostUnin);       break;
-		default:                 return FAILURE;
+		case PACKAGE_NAME:       pResult = malloc(strlen(pPkg->szName) + 1);       break;
+		case PACKAGE_VERSION:    pResult = malloc(strlen(pPkg->szVersion) + 1);    break;
+		case PACKAGE_RELEASE:    pResult = malloc(strlen(pPkg->szRelease) + 1);    break;
+		case PACKAGE_DESC:       pResult = malloc(strlen(pPkg->szDesc) + 1);       break;
+		case PACKAGE_LICENSE:    pResult = malloc(strlen(pPkg->szLicense) + 1);    break;
+		case PACKAGE_FLAGDISP:   pResult = malloc(sizeof(int));                    break;
+		case PACKAGE_FLAGINST:   pResult = malloc(sizeof(int));                    break;
+		case PACKAGE_REQLIST:    pResult = malloc(strlen(pPkg->szRequiresList) + 1);    break;
+		case PACKAGE_PACKAGES:   pResult = malloc(strlen(pPkg->szTopLevel) + 1);   break;
+		case PACKAGE_FILENAME:   pResult = malloc(strlen(pPkg->szFileName) + 1);   break;
+		case PACKAGE_PATCH:      pResult = malloc(strlen(pPkg->szPatch) + 1);      break;
+		case PACKAGE_DIRNAME:    pResult = malloc(strlen(pPkg->szDirName) + 1);    break;
+		case PACKAGE_BLDTOOLS:   pResult = malloc(strlen(pPkg->szBldTools) + 1);   break;
+		case PACKAGE_BLDCMD:     pResult = malloc(strlen(pPkg->szCommand) + 1);    break;
+		case PACKAGE_INSTCMD:    pResult = malloc(strlen(pPkg->szInstCmd) + 1);    break;
+		case PACKAGE_PREINST:    pResult = malloc(strlen(pPkg->szPreInst) + 1);    break;
+		case PACKAGE_POSTINST:   pResult = malloc(strlen(pPkg->szPostInst) + 1);   break;
+		case PACKAGE_PREUNIN:    pResult = malloc(strlen(pPkg->szPreUnin) + 1);    break;
+		case PACKAGE_POSTUNIN:   pResult = malloc(strlen(pPkg->szPostUnin) + 1);   break;
+		case PACKAGE_INSTALLED:  pResult = malloc(sizeof(BOOL));                   break;
 	}
-	
+	if (pResult == NULL)
+		return NULL;
+
+	switch (iName)
+	{
+		case PACKAGE_NAME:       strcpy((char *)pResult, pPkg->szName);           break;
+		case PACKAGE_VERSION:    strcpy((char *)pResult, pPkg->szVersion);        break;
+		case PACKAGE_RELEASE:    strcpy((char *)pResult, pPkg->szRelease);        break;
+		case PACKAGE_DESC:       strcpy((char *)pResult, pPkg->szDesc);           break;
+		case PACKAGE_LICENSE:    strcpy((char *)pResult, pPkg->szLicense);        break;
+		case PACKAGE_FLAGDISP:   *((int *)pResult) = pPkg->bToBeDisplayed;        break;
+		case PACKAGE_FLAGINST:   *((int *)pResult) = pPkg->iToBeInstalled;        break;
+		case PACKAGE_REQLIST:    strcpy((char *)pResult, pPkg->szRequiresList);   break;
+		case PACKAGE_PACKAGES:   strcpy((char *)pResult, pPkg->szTopLevel);       break;
+		case PACKAGE_FILENAME:   strcpy((char *)pResult, pPkg->szFileName);       break;
+		case PACKAGE_PATCH:      strcpy((char *)pResult, pPkg->szPatch);          break;
+		case PACKAGE_DIRNAME:    strcpy((char *)pResult, pPkg->szDirName);        break;
+		case PACKAGE_BLDTOOLS:   strcpy((char *)pResult, pPkg->szBldTools);       break;
+		case PACKAGE_BLDCMD:     strcpy((char *)pResult, pPkg->szCommand);        break;
+		case PACKAGE_INSTCMD:    strcpy((char *)pResult, pPkg->szInstCmd);        break;
+		case PACKAGE_PREINST:    strcpy((char *)pResult, pPkg->szPreInst);        break;
+		case PACKAGE_POSTINST:   strcpy((char *)pResult, pPkg->szPostInst);       break;
+		case PACKAGE_PREUNIN:    strcpy((char *)pResult, pPkg->szPreUnin);        break;
+		case PACKAGE_POSTUNIN:   strcpy((char *)pResult, pPkg->szPostUnin);       break;
+		case PACKAGE_INSTALLED:  *((BOOL *)pResult) = pPkg->bInstalled;           break;
+
+		default:                 MsgBox(
+						GTK_WINDOW(pWindowMain),
+						NULL,
+						"Missing case statement in PackageGetValue()",
+						MSGBOX_FATAL | MSGBOX_OKD
+						);
+					_exit(0);
+	}
+
+	return (void *) pResult;
+}
+
+
+
+/* set value of a property */
+int PackageValueSet(const int iName, const int iNumber, const char *szPackage, void *pValue)
+{
+	struct CompsTable_s *pPkg;
+
+	if (pValue == NULL)
+		return FAILURE;
+
+	pPkg = get_component_by_name(szPackage);
+	if (pPkg == NULL)
+		return FAILURE;
+
+	switch (iName)
+	{
+		case PACKAGE_FLAGINST:   pPkg->iToBeInstalled = * (int *) pValue;          break;
+		case PACKAGE_INSTALLED:  pPkg->bInstalled = * (BOOL *) pValue;             break;
+
+		default:     
+					MsgBox(
+						GTK_WINDOW(pWindowMain),
+						NULL,
+						"Missing case statement in PackageSetValue()",
+						MSGBOX_FATAL | MSGBOX_OKD
+						);
+					_exit(0);
+	}
+
 	return SUCCESS;
 }
 
@@ -531,7 +631,7 @@ char *PackageWhatIsMissing(const char *szTestedCodeName)
 	}
 
 	/* test a package */
-	if (strlen(pTestedComp->szFileName) > 0 && PackageTestIfInstalled(pTestedComp) != SUCCESS)
+	if (strlen(pTestedComp->szFileName) > 0 /*&& PackageTestIfInstalled(pTestedComp) != SUCCESS*/)
 	{
 		/* check existence of package and patch files */
 		if (strlen(pTestedComp->szFileName) > 0 && FileTest(pTestedComp->szFileName) != SUCCESS)
@@ -696,25 +796,36 @@ int PackageTestIfInstalled(struct CompsTable_s *pPkg)
 
 				iResult = FileSearch(pPath, szFileDest);
 				if (iResult != SUCCESS)
+				{
+					sprintf(szMessage, "File '%s' not found in path '%s'", szFileDest, pPath);
+					Log(LOG_MESSAGE, MODULE_PACKAGE, szMessage);
 					return FAILURE;
+				}
 				break;
 
 			case PACKAGE_FILE_LIBRARY:
 
 				FileGetDir(szFileDest, szPreDir);
-				if (strlen(szPreDir) > 0)
-					strcpy(szName, szFileDest + strlen(szPreDir) + 1);
-
-				iResult = FileSearch(szLdLibraryPath, szName/*szFileDest*/);
+				strcpy(szName, (strlen(szPreDir) > 0) ? szFileDest + strlen(szPreDir) + 1 : szFileDest);
+				iResult = FileSearch(szLdLibraryPath, /*szName*/szFileDest);
 				if (iResult != SUCCESS)
+				{
+					sprintf(szMessage, "File '%s' not found in path '%s'", szFileDest, szLdLibraryPath);
+					Log(LOG_MESSAGE, MODULE_PACKAGE, szMessage);
 					return FAILURE;
+				}
 				break;
 
 			case PACKAGE_FILE_DATA:
 
-				iResult = FileSearch(szInstallDirectory, szFileDest);
+				sprintf(szName, "%s:%s:%s", szInstallDirectory, "/usr", "/usr/local");
+				iResult = FileSearch(szName/*szInstallDirectory*/, szFileDest);
 				if (iResult != SUCCESS)
+				{
+					sprintf(szMessage, "File '%s' not found in path '%s'", szFileDest, szName);
+					Log(LOG_MESSAGE, MODULE_PACKAGE, szMessage);
 					return FAILURE;
+				}
 				break;
 
 			case PACKAGE_FILE_LINK:

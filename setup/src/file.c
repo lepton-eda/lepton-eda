@@ -348,6 +348,9 @@ void FileGetName(char *szFullName, char *szName)
 {
 	int i, j;
 
+	if (szFullName == NULL)
+		return;
+	
 	for (i = strlen(szFullName) - 1; i >= 0 && szFullName[i] != '/'; i --)
 		;
 	for (j = strlen(szFullName) - 1; j >= i && szFullName[j] != '.'; j --)
@@ -364,6 +367,9 @@ void FileGetExt(char *szFullName, char *szExt)
 {
 	int i;
 	
+	if (szFullName == NULL)
+		return;
+	
 	for (i = strlen(szFullName) - 1; i >= 0 && szFullName[i] != '/' && szFullName[i] != '.'; i --)
 		;
 	if (szFullName[i] == '/')
@@ -379,6 +385,9 @@ void FileGetDir(char *szFullName, char *szDir)
 {
 	int i;
 
+	if (szFullName == NULL)
+		return;
+	
 	strcpy(szDir, szFullName);
 	for (i = strlen(szDir) - 1; i >= 0 && szDir[i] != '/'; i --)
 		;
@@ -396,6 +405,9 @@ void FileGetRel(char *szFullName, char *szName)
 	int i, j, k;
 	char szDirectory[TEXTLEN], *pResult;
 
+	if (szFullName == NULL)
+		return;
+	
 	/* get current directory */
 	pResult = getcwd(szDirectory, TEXTLEN);
 	if (pResult == NULL)
@@ -435,3 +447,25 @@ void FileGetRel(char *szFullName, char *szName)
 		strcat(szName, szFullName + i);
 	}
 }
+
+
+
+char *FileGetFilename(char *szFullName)
+{
+	static char szName[TEXTLEN];
+	char szExt[TEXTLEN];
+	
+	if (szFullName == NULL)
+		return NULL;
+	
+	FileGetName(szFullName, szName);
+	FileGetExt(szFullName, szExt);
+	if (strlen(szExt) > 0)
+	{
+		strcat(szName, ".");
+		strcat(szName, szExt);
+	}
+	
+	return szName;
+}
+

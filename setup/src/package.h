@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -86,10 +86,14 @@ struct CompsTable_s
 	char szDirName[TEXTLEN];
 	char szBldTools[TEXTLEN];
 	char szCommand[TEXTLEN];
+	char szInstCmd[TEXTLEN];
 	char szPreInst[TEXTLEN];
 	char szPostInst[TEXTLEN];
 	char szPreUnin[TEXTLEN];
 	char szPostUnin[TEXTLEN];
+	char szFtpFile[TEXTLEN];
+	char szFtpPatch[TEXTLEN];
+
 	int iFileList;
 
 	/* variables for an internal use or to be removed */
@@ -127,6 +131,7 @@ extern struct CompsTable_s *pCompsTable;
 #define DIRNAME(Comp)        ( Comp->szDirName )
 #define BLDTOOLS(Comp)       ( Comp->szBldTools )
 #define BLDCMD(Comp)         ( Comp->szCommand )
+#define INSTCMD(Comp)        ( Comp->szInstCmd )
 #define FILES(Comp)          ( Comp->szVariables + Comp->iFileList )
 #define PREINST(Comp)        ( Comp->szPreInst )
 #define POSTINST(Comp)       ( Comp->szPostInst )
@@ -156,6 +161,9 @@ extern struct CompsTable_s *pCompsTable;
 #define PACKAGE_POSTINST     17
 #define PACKAGE_PREUNIN      18
 #define PACKAGE_POSTUNIN     19
+#define PACKAGE_INSTCMD      20
+#define PACKAGE_INSTALLED    21
+#define PACKAGE_NEXT         22
 
 /* Installation Flag values */
 #define PACKAGE_NOTSET       0           /* value not set */
@@ -177,9 +185,8 @@ extern struct CompsTable_s *pCompsTable;
 
 int PackageInitialize(void);
 int PackageRelease(void);
-int PackageFirst(void);
-int PackageNext(void);
-int PackageGetValue(int iName, void *pValue);
+void *PackageValueGet(const int iName, const int iNumber, const char *szPackage);
+int PackageValueSet(const int iName, const int iNumber, const char *szPackage, void *pValue);
 char *PackageWhatIsMissing(const char *szTestedCodeName);
 int PackageTestIfInstalled(struct CompsTable_s *pPkg);
 int get_next_component(struct CompsTable_s *pComp, int iIndex, char *szName);

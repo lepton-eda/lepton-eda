@@ -40,19 +40,51 @@
 
 
 /* private functions */
-static int are_requirements_met(struct CompsTable_s *pComp);
+static BOOL RequirementsMet(const char *szPackage);
 static int get_percentage(void);
-static int InstallComponent(struct CompsTable_s *pComp);
-static int VerifyFiles(struct CompsTable_s *pPkg);
-static int CopyFiles(struct CompsTable_s *pPkg);
+static int InstallComponent(const char *szPackage);
+static int TestIfInstall(const char *szPackage);
+static int Download(const char *szPackage);
+static int InstallPreprocessing(const char *szPackage);
+static int VerifyFiles(const char *szPackage);
+static int Unpacking(const char *szPackage);
+static int Patching(const char *szPackage);
+static int TestBuildTools(const char *szPackage);
+static int BuildFiles(const char *szPackage);
+static int InstallFiles(const char *szPackage);
+static int CopyFiles(const char *szPackage);
+static int InstallPostprocessing(const char *szPackage);
 static int VariableAdd(const char *szVariable, const char *szValue);
 static int VariableCheck(const char *szVariable, const char *szValue);
 static int iErrorFlag = FALSE;
+static GtkLabel *pName, *pAction, *pCompleted;
 
-#define OVERWRITE_ASK        0
-#define OVERWRITE_YES        1
-#define OVERWRITE_NO         2
-static int iOverWrite = OVERWRITE_ASK;
+static GtkLabel *pName, *pAction, *pCompleted;
+int bInstallUsingScript = TRUE;
+
+
+/* messages */
+#define MSG_UNPACK_SCRIPT   "tar -xzf "
+#define MSG_PATCH_SCRIPT    "patch -d./ -p0 < "
+#define MSG_OVERWRITE_Q     " is already installed.\nInstall it anyway ?"
+#define MSG_FTPFILE_SCRIPT  "wget -c -t0 "
+
+
+
+void FatalError(const char *szFile, const int iLine, const char *szDate);
+void FatalError(const char *szFile, const int iLine, const char *szDate)
+{
+	char szMessage[TEXTLEN];
+
+	sprintf(szMessage, "Fatal error !\nFile: %s\nLine: %d", szFile, iLine);
+			MsgBox(
+				GTK_WINDOW(pWindowMain),
+				"Error !",
+				szMessage,
+				MSGBOX_ERROR | MSGBOX_OKD
+				);
+			_exit(0);
+}
 
 
 
@@ -62,12 +94,10 @@ static int iOverWrite = OVERWRITE_ASK;
 
 int InstallSoftware(void)
 {
-	struct CompsTable_s *pComp;
 	GtkWidget *pWidget;
-	GtkLabel *pName, *pAction, *pCompleted;
-	char szValue[TEXTLEN], *szVariable, szMessage[TEXTLEN], *pResult;
+	char szValue[TEXTLEN], *szVariable, szMessage[TEXTLEN], *pResult, *pPackage, szPackage[TEXTLEN];
 	int iPreviouslyToBeInstalled = -1, bUpdatePath = FALSE, bUpdateLdLibraryPath = FALSE, iToBeInstalled, iResult;
-	
+
 	/* clear setup log */
 	if (FileTest(SETUP_LOGFILE) == SUCCESS)
 	{
@@ -78,228 +108,144 @@ int InstallSoftware(void)
 			MsgBox(
 				GTK_WINDOW(pWindowMain),
 				"Warning !",
-				szMessage, 
+				szMessage,
 				MSGBOX_WARNING | MSGBOX_OKD
 				);
 		}
 	}
-	
+
 	/* update window */
 	pWidget = (GtkWidget *) lookup_widget(pWindowMain, "Container");
 	if (pWidget == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage, 
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
+		FatalError(__FILE__, __LINE__, __DATE__);
 	gtk_notebook_next_page((GtkNotebook *) pWidget);
 	/* TODO: remove it */
 	setup_buttons(pWindowMain);
-	gtk_widget_show(pWidget);	
+	gtk_widget_show(pWidget);
 	while (g_main_iteration(FALSE));
-	
+
 	/* prepare used widgets */
 	pName = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelName");
 	if (pName == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage, 
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
+		FatalError(__FILE__, __LINE__, __DATE__);
 	pAction = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelAction");
 	if (pAction == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage, 
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
+		FatalError(__FILE__, __LINE__, __DATE__);
 	pCompleted = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelCompleted");
 	if (pCompleted == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage,
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
+		FatalError(__FILE__, __LINE__, __DATE__);
 
-	/* check PATH */
+	/* set PATH */
 	sprintf(szValue, "%s/bin", szInstallDirectory);
 	bUpdatePath = (VariableCheck("PATH", szValue) != SUCCESS)
 		? TRUE
 		: FALSE;
-
-	/* set PATH */
 	if (bUpdatePath)
 	{
 		szVariable = getenv("PATH");
-		if (szVariable == NULL)
-		{
-			sprintf(szMessage, "Cannot get PATH variable");
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage,
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			_exit(0);
-		}
-		sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "bin", szVariable);
+		sprintf(szValue, "%s%c%s:%s",
+			szInstallDirectory, '/', "bin",
+			(szVariable != NULL) ? szVariable : ""
+			);
 		iResult = setenv("PATH", szValue, 1);
 		if (iResult != 0)
-		{
-			sprintf(szMessage, "Cannot set PATH variable");
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage,
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			_exit(0);
-		}
+			FatalError(__FILE__, __LINE__, __DATE__);
 	}
 
-	/* check LD_LIBRARY_PATH */
+	/* set LD_LIBRARY_PATH */
 	sprintf(szValue, "%s/lib", szInstallDirectory);
 	bUpdateLdLibraryPath = (VariableCheck("LD_LIBRARY_PATH", szValue) != SUCCESS)
 		? TRUE
 		: FALSE;
-
-	/* set LD_LIBRARY_PATH */
 	if (bUpdateLdLibraryPath)
 	{
 		szVariable = getenv("LD_LIBRARY_PATH");
-		if (szVariable == NULL)
-		{
-			sprintf(szMessage, "Cannot get LD_LIBRARY_PATH variable");
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage,
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			_exit(0);
-		}
-		sprintf(szValue, "%s%c%s:%s", szInstallDirectory, '/', "lib", szVariable);
+		sprintf(szValue, "%s%c%s:%s",
+			szInstallDirectory, '/', "lib",
+			(szVariable != NULL) ? szVariable : ""
+			);
 		iResult = setenv("LD_LIBRARY_PATH", szValue, 1);
 		if (iResult != 0)
-		{
-			sprintf(szMessage, "Cannot set LD_LIBRARY_PATH variable");
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage,
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			_exit(0);
-		}
+			FatalError(__FILE__, __LINE__, __DATE__);
 	}
 
 	/* set CFLAGS */
 	sprintf(szValue, "-I%s/include -L%s/lib", szInstallDirectory, szInstallDirectory);
 	iResult = setenv("CFLAGS", szValue, 1);
 	if (iResult != 0)
-	{
-		sprintf(szMessage, "Cannot set CFLAGS variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
-	}
-		
+		FatalError(__FILE__, __LINE__, __DATE__);
+
 	/* set CPPFLAGS */
 	sprintf(szValue, "-I%s/include -L%s/lib", szInstallDirectory, szInstallDirectory);
 	iResult = setenv("CPPFLAGS", szValue, 1);
 	if (iResult != 0)
-	{
-		sprintf(szMessage, "Cannot set CPPFLAGS variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
-	}
-		
+		FatalError(__FILE__, __LINE__, __DATE__);
+
 	/* set PREFIX */
 	iResult = setenv("PREFIX", szInstallDirectory, 1);
 	if (iResult != 0)
-	{
-		sprintf(szMessage, "Cannot set PREFIX variable");
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		_exit(0);
-	}
+		FatalError(__FILE__, __LINE__, __DATE__);
 
 	/* remember the directory */
 	pResult = getcwd(szWorkingDirectory, TEXTLEN);
 	if (pResult == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage, 
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		_exit(0);
-	}
-
-	/* check dependencies and mark components to be installed */
-	mark_to_be_installed();
+		FatalError(__FILE__, __LINE__, __DATE__);
 
 	while (iPreviouslyToBeInstalled > 0 || iPreviouslyToBeInstalled == -1)
 	{
 		iToBeInstalled = 0;
+		mark_to_be_installed();
 
-		/* try install all packages with fulfilled requirements */
-		for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+		/* try install required components */
+		for (
+			pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, NULL);
+			pPackage != NULL;
+			pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, szPackage)
+			)
 		{
-			/* check if install the package */
-			if (strlen(pComp->szFileName) == 0)
+			strcpy(szPackage, pPackage);
+			
+			if (strlen(PackageValueGet(PACKAGE_FILENAME, 0, szPackage)) == 0)
 				continue;
-			if (pComp->iToBeInstalled != PACKAGE_SELECTED
-				&& pComp->iToBeInstalled != PACKAGE_REQUIRED
-				)
+			if (*((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) != PACKAGE_REQUIRED)
 				continue;
-			if (pComp->bInstalled)
+			if (*((BOOL *) PackageValueGet(PACKAGE_INSTALLED, 0, szPackage)))
 				continue;
-			if (!are_requirements_met(pComp))
+			if (!RequirementsMet(szPackage))
 			{
 				iToBeInstalled ++;
 				continue;
 			}
 
-			/* install component */
-			InstallComponent(pComp);
+			InstallComponent(szPackage);
 		}
-		
+
+		/* try install selected components */
+		for (
+			pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, NULL);
+			pPackage != NULL;
+			pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, szPackage)
+			)
+		{
+			strcpy(szPackage, pPackage);
+			
+			if (strlen(PackageValueGet(PACKAGE_FILENAME, 0, szPackage)) == 0)
+				continue;
+			if ( *((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) != PACKAGE_SELECTED
+				&& *((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) != PACKAGE_BLDTOOL
+				)
+				continue;
+			if (*((BOOL *) PackageValueGet(PACKAGE_INSTALLED, 0, szPackage)))
+				continue;
+			if (!RequirementsMet(szPackage))
+			{
+				iToBeInstalled ++;
+				continue;
+			}
+
+			InstallComponent(szPackage);
+		}
+
 		/* check if something has been installed, if no - exit loop */
 		if (iToBeInstalled == iPreviouslyToBeInstalled)
 			break;
@@ -346,12 +292,18 @@ int InstallSoftware(void)
 	while (g_main_iteration(FALSE));
 
 	pWidget = lookup_widget(pWindowMain, "OkButton");
+	if (pWidget == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
 	gtk_widget_set_sensitive(pWidget, TRUE);
 
 	pWidget = lookup_widget(pWindowMain, "NextButton");
+	if (pWidget == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
 	gtk_widget_set_sensitive(pWidget, FALSE);
 
 	pWidget = lookup_widget(pWindowMain, "PreviousButton");
+	if (pWidget == NULL)
+		FatalError(__FILE__, __LINE__, __DATE__);
 	gtk_widget_set_sensitive(pWidget, FALSE);
 
 	iSoftwareInstalled = TRUE;
@@ -360,347 +312,103 @@ int InstallSoftware(void)
 }
 
 
-static int InstallComponent(struct CompsTable_s *pComp)
+static int InstallComponent(const char *szPackage)
 {
-	struct CompsTable_s *pPkg, *pCount;
 	GtkProgressBar *pBar;
-	GtkLabel *pName, *pAction, *pCompleted;
-	int iResult, i, j;
-	char szMessage[TEXTLEN], szCodeName[TEXTLEN], szCommand[TEXTLEN], szDir[TEXTLEN];
-
-	/* prepare used widgets */
-	pName = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelName");
-	if (pName == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage,
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-	pAction = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelAction");
-	if (pAction == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage,
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-	pCompleted = (GtkLabel *) lookup_widget(pWindowMain, "StatusLabelCompleted");
-	if (pCompleted == NULL)
-	{
-		sprintf(szMessage, "Fatal error in file %s at line %d\n\nPlease send a bug to %s", __FILE__, __LINE__, SETUP_EMAIL);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Fatal error !",
-			szMessage, 
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-		
-	/* check dependencies - obsolete, done in InstallSoftware() */
-	pPkg = pComp;
-
-	/* display package name */
-	sprintf(szMessage, "Installing %s", pPkg->szName);
+	BOOL b;
+	int iResult;
+	char szMessage[TEXTLEN];
+	
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "");
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	gtk_label_set_text(pName, pComp->szName);
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Package being installed");
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
 	while (g_main_iteration(FALSE));
 
-	/* testing if a package is already installed */
-	sprintf(szMessage, "Searching in system");
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	gtk_label_set_text(pAction, "Searching in system");
-	while (g_main_iteration(FALSE));
-	iResult = PackageTestIfInstalled(pPkg);
-	if (iResult == SUCCESS)
+	iResult = TestIfInstall(szPackage);
+	if (iResult != SUCCESS)
+		goto INSTALL_END;
+	
+	iResult = Download(szPackage);
+	if (iResult != SUCCESS)
 	{
-		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Package already installed");
-		
-		switch (iOverWrite)
+		iErrorFlag = TRUE;
+		goto LABEL;
+	}
+
+	iResult = Unpacking(szPackage);
+	if (iResult != SUCCESS)
+	{
+		iErrorFlag = TRUE;
+		goto LABEL;
+	}
+
+	iResult = InstallPreprocessing(szPackage);
+	if (iResult != SUCCESS)
+	{
+		iErrorFlag = TRUE;
+		goto LABEL;
+	}
+
+	iResult = VerifyFiles(szPackage);
+	if (iResult != SUCCESS || (strlen(PackageValueGet(PACKAGE_INSTCMD, 0, szPackage)) > 0 && bInstallUsingScript))
+	{
+		iResult = TestBuildTools(szPackage);
+		if (iResult != SUCCESS)
 		{
-			case OVERWRITE_ASK:
-
-				sprintf(szMessage, "%s is already installed.\nInstall it anyway ?", pPkg->szName);
-				iResult = MsgBox(
-					GTK_WINDOW(pWindowMain),
-					"Question ...",
-					szMessage, 
-					MSGBOX_QUESTION | MSGBOX_ALWAYSYES | MSGBOX_YESD | MSGBOX_ALWAYSNO | MSGBOX_NO
-					);
-				switch (iResult)
-				{
-					case MSGBOX_YES:                                                           break;
-					case MSGBOX_ALWAYSYES:   iOverWrite = OVERWRITE_YES;                       break;
-					case MSGBOX_NO:                                        goto INSTALL_END;   break;
-					case MSGBOX_ALWAYSNO:    iOverWrite = OVERWRITE_NO;    goto INSTALL_END;   break;
-				}
-				break;
-
-			case OVERWRITE_YES:
-				
-				break;
-			
-			case OVERWRITE_NO:
-				
-				goto INSTALL_END;
-				break;
+			iErrorFlag = TRUE;
+			goto LABEL;
 		}
 
-		Log(LOG_WARNING, LOG_MODULE_INSTALL, "Package to be installed anyway");
+		iResult = Patching(szPackage);
+		if (iResult != 0)
+		{
+			iErrorFlag = TRUE;
+			goto LABEL;
+		}
+
+		iResult = BuildFiles(szPackage);
+		if (iResult != 0)
+		{
+			iErrorFlag = TRUE;
+			goto LABEL;
+		}
+
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Package being installed");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+		while (g_main_iteration(FALSE));
+	}
+
+	if (strlen(PackageValueGet(PACKAGE_INSTCMD, 0, szPackage)) > 0 && bInstallUsingScript)
+	{
+		iResult = InstallFiles(szPackage);
+		if (iResult != SUCCESS)
+		{
+			iErrorFlag = TRUE;
+			goto LABEL;
+		}
+	}
+	else
+	{
+		iResult = CopyFiles(szPackage);
+		if (iResult != SUCCESS)
+		{
+			iErrorFlag = TRUE;
+			goto LABEL;
+		}
 	}
 	
-	/* unpack the package */
-	sprintf(szMessage, "Unpacking %s", pPkg->szFileName);
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	gtk_label_set_text(pAction, "Unpacking");
-	while (g_main_iteration(FALSE));
-	iResult = FileTest(pPkg->szFileName);
-	if (iResult != SUCCESS)
-	{
-		getcwd(szDir, TEXTLEN);
-		sprintf(szMessage, "Cannot find a file '%s' in %s", pComp->szFileName, szDir);
-		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		iErrorFlag = TRUE;
-		goto LABEL;
-	}
-	sprintf(szCommand, "tar -xzf %s", pPkg->szFileName);
-	iResult = FileExec(szCommand);
-	if (iResult != SUCCESS)
-	{
-		getcwd(szDir, TEXTLEN);
-		sprintf(szMessage, "Cannot unpack a file '%s' in %s", pPkg->szFileName, szDir);
-		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		iErrorFlag = TRUE;
-		goto LABEL;
-	}
-
-	/* installing patch */
-	if (strlen(pComp->szPatch) > 0)
-	{
-		sprintf(szMessage, "Patching with %s", pPkg->szPatch);
-		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-		gtk_label_set_text(pAction, "Patching");
-		while (g_main_iteration(FALSE));
-		iResult = FileTest(pPkg->szPatch);
-		if (iResult != SUCCESS)
-		{
-			getcwd(szDir, TEXTLEN);
-			sprintf(szMessage, "Cannot find a patch file '%s' in %s", pComp->szPatch, szDir);
-			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage,
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			iErrorFlag = TRUE;
-			goto LABEL;
-		}
-		sprintf(szCommand, "patch -d./ -p0 < %s", pPkg->szPatch);
-		iResult = FileExec(szCommand);
-		if (iResult != SUCCESS)
-		{
-			getcwd(szDir, TEXTLEN);
-			sprintf(szMessage, "Cannot patch with '%s' in %s", pPkg->szPatch, szDir);
-			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage, 
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			iErrorFlag = TRUE;
-			goto LABEL;
-		}
-	}
-
-	/* enter into the package directory */
-	sprintf(szMessage, "Entering a directory %s", pPkg->szDirName);
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	iResult = chdir(pPkg->szDirName);
-	if (iResult != 0)
-	{
-		sprintf(szMessage, "Cannot enter the directory '%s'", pPkg->szDirName);
-		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-		MsgBox(
-			GTK_WINDOW(pWindowMain),
-			"Error !",
-			szMessage, 
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		iErrorFlag = TRUE;
-		goto LABEL;
-	}
-
-	/* preprocessing */
-	if (strlen(pComp->szPreInst) > 0)
-	{	
-		sprintf(szMessage, "Running preprocessing command: %s", pPkg->szPreInst);
-		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-		gtk_label_set_text(pAction, "Preprocessing");
-		while (g_main_iteration(FALSE));
-
-		iResult = FileExec(pComp->szPreInst);
-		if (iResult != SUCCESS)
-		{
-			sprintf(szMessage, "Cannot execute preprocessing command:\n%s", pComp->szPreInst);
-			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage, 
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			iErrorFlag = TRUE;
-			goto LABEL;
-		}
-	}
-			
-	/* verify completness of binary and data files */
-	sprintf(szMessage, "Verifying binaries in the package file");
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	gtk_label_set_text(pAction, "Verifying");
-	while (g_main_iteration(FALSE));
-	iResult = VerifyFiles(pComp);
-	if (iResult != SUCCESS || strlen(FILES(pComp)) == 0)
-	{
-		sprintf(szMessage, "Preparing to building binaries");
-		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-
-		/* build tools testing */
-		for (i = 0; i < strlen(pComp->szBldTools); i ++)
-		{
-			/* get code name of a tool */
-			for (; i <strlen(pComp->szBldTools) && isspace(pComp->szBldTools[i]);)
-				i ++;
-			for (j = 0; i < strlen(pComp->szBldTools) && !isspace(pComp->szBldTools[i]);)
-				szCodeName[j ++] = pComp->szBldTools[i ++];
-			szCodeName[j] = 0;
-
-			/* find package with the code name */
-			for (pCount = pCompsTable; pCount != NULL; pCount = pCount->pNextComp)
-				if (!strcmp(pCount->szCodeName, szCodeName))
-					break;
-			if (pCount == NULL)
-			{
-				sprintf(szMessage, "Fatal error in configuration file !\nCannot find section [%s].", szCodeName);
-				MsgBox(
-					GTK_WINDOW(pWindowMain),
-					"Fatal error !",
-					szMessage, 
-					MSGBOX_FATAL | MSGBOX_OKD
-					);
-				goto LABEL;
-			}
-					
-			/* test if the tool is installed */
-			iResult = PackageTestIfInstalled(pCount);
-			if (iResult != SUCCESS)
-			{
-				/* check if software distribution contains the tool */
-				if (strlen(pCount->szFileName) == 0)
-				{
-					sprintf(szMessage, "Cannot build %s from sources.\n\nPlease install %s before running %s setup.", pPkg->szName, pCount->szName, Software.szName);
-					MsgBox(
-						GTK_WINDOW(pWindowMain),
-						"Error !",
-						szMessage, 
-						MSGBOX_ERROR | MSGBOX_OKD
-						);
-					iErrorFlag = TRUE;
-					goto LABEL;
-				}
-
-				/* install the tool */
-				iResult = InstallComponent(pCount);
-				if (iResult != SUCCESS)
-				{
-					/* errors signalled by InstallComponent( <BLDTOOL> )*/
-					goto LABEL;
-				}
-			}
-		}
-				
-		/* building */
-		sprintf(szMessage, "Running build command: %s", pPkg->szCommand);
-		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-		gtk_label_set_text(pAction, "Building");
-		while (g_main_iteration(FALSE));
-		iResult = FileExec(pPkg->szCommand);
-		if (iResult != SUCCESS)
-		{
-			sprintf(szMessage, "Cannot execute build command\n%s", pPkg->szCommand);
-			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage, 
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			iErrorFlag = TRUE;
-			goto LABEL;
-		}
-	}
-				
-	/* copy binary and data files */
-	sprintf(szMessage, "Copying files");
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	gtk_label_set_text(pAction, "Copying");
-	while (g_main_iteration(FALSE));
-	iResult = CopyFiles(pComp);
+	iResult = InstallPostprocessing(szPackage);
 	if (iResult != SUCCESS)
 	{
 		iErrorFlag = TRUE;
 		goto LABEL;
 	}
 
-	/* postprocessing */
-	sprintf(szMessage, "Running postprocessing command: %s", pPkg->szPostInst);
-	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-	gtk_label_set_text(pAction, "Postprocessing");
-	while (g_main_iteration(FALSE));
-	if (strlen(pComp->szPostInst) > 0)
-	{
-		iResult = FileExec(pComp->szPostInst);
-		if (iResult != SUCCESS)
-		{
-			sprintf(szMessage, "Cannot execute postprocessing command:\n%s", pComp->szPostInst);
-			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
-			MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage, 
-				MSGBOX_ERROR | MSGBOX_OKD
-				);
-			iErrorFlag = TRUE;
-			goto LABEL;
-		}
-	}
-			
 	/* return to parent directory */
-LABEL:	
+LABEL:
 	sprintf(szMessage, "Entering a directory %s", szWorkingDirectory);
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
 	gtk_label_set_text(pAction, "Removing temporary files");
@@ -713,7 +421,7 @@ LABEL:
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		iErrorFlag = TRUE;
@@ -724,15 +432,15 @@ LABEL:
 	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
 	gtk_label_set_text(pAction, "Testing");
 	while (g_main_iteration(FALSE));
-	iResult = PackageTestIfInstalled(pPkg);
+	iResult = PackageTestIfInstalled(get_component_by_name(szPackage));
 	if (iResult != SUCCESS)
 	{
-		sprintf(szMessage, "%s cannot not be installed.", pPkg->szName);
+		sprintf(szMessage, "%s cannot not be installed.", (char *) PackageValueGet(PACKAGE_NAME, 0, szPackage));
 		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
 		MsgBox(
 			GTK_WINDOW(pWindowMain),
 			"Error !",
-			szMessage, 
+			szMessage,
 			MSGBOX_ERROR | MSGBOX_OKD
 			);
 		iErrorFlag = TRUE;
@@ -741,13 +449,15 @@ LABEL:
 	/* remove temporary package resources */
 	else
 	{
-		sprintf(szMessage, "Removing directory %s", pPkg->szDirName);
+		char szCommand[TEXTLEN];
+		
+		sprintf(szMessage, "Removing directory %s", PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
 		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
-		sprintf(szCommand, "rm -Rf %s", pPkg->szDirName);
+		sprintf(szCommand, "rm -Rf %s", PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
 		iResult = FileExec(szCommand);
 		if (iResult != SUCCESS)
 		{
-			sprintf(szMessage, "Cannot remove directory: %s", pPkg->szDirName);
+			sprintf(szMessage, "Cannot remove directory: %s", PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
 			Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
 			MsgBox(
 				GTK_WINDOW(pWindowMain),
@@ -758,10 +468,14 @@ LABEL:
 			iErrorFlag = TRUE;
 		}
 	}
-			
+
 	/* let's say that the package has been installed (even with errors) */
 INSTALL_END:
-	pComp->bInstalled = TRUE;
+	b = TRUE;
+	iResult = PackageValueSet(PACKAGE_INSTALLED, 0, szPackage, &b);
+	if (iResult != SUCCESS)
+		iErrorFlag = FAILURE;
+	
 	gtk_label_set_text(pName, "");
 	gtk_label_set_text(pAction, "");
 	while (g_main_iteration(FALSE));
@@ -773,17 +487,349 @@ INSTALL_END:
 	gtk_widget_show(pWindowMain);
 	while (g_main_iteration(FALSE));
 
-	return (iErrorFlag) 
-		? FAILURE 
+	return (iErrorFlag)
+		? FAILURE
 		: SUCCESS;
 }
 
 
-static int VerifyFiles(struct CompsTable_s *pPkg)
+
+/*
+	Test if package should be installed. It returns SUCCESS if:
+	- package is not installed at all
+	- all packages should be overwritten
+	- user selects overwriting
+*/
+
+#define OVERWRITE_ASK        0
+#define OVERWRITE_YES        1
+#define OVERWRITE_NO         2
+
+static int TestIfInstall(const char *szPackage)
 {
+	static int iOverWrite = OVERWRITE_ASK;
+	int iResult;
+	char *pQuestion;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Searching in system");
+	if (PackageValueGet(PACKAGE_NAME, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		FatalError(__FILE__, __LINE__, __DATE__);
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Searching in system");
+	while (g_main_iteration(FALSE));
+
+	iResult = PackageTestIfInstalled(get_component_by_name(szPackage));
+	if (iResult != SUCCESS)
+		return SUCCESS;
+	
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Package already installed");
+
+	if (iOverWrite == OVERWRITE_NO)
+		return FAILURE;
+
+	if (iOverWrite == OVERWRITE_ASK)
+	{
+		pQuestion = (char *) malloc(strlen(MSG_OVERWRITE_Q) + strlen(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) + 1);
+		strcpy(pQuestion, FileGetFilename(PackageValueGet(PACKAGE_NAME, 0, szPackage)));
+		strcat(pQuestion, MSG_OVERWRITE_Q);
+			
+		iResult = MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Question ...",
+			pQuestion,
+			MSGBOX_QUESTION | MSGBOX_ALWAYSYES | MSGBOX_YESD | MSGBOX_ALWAYSNO | MSGBOX_NO
+			);
+			
+		free(pQuestion);
+			
+		switch (iResult)
+		{
+			case MSGBOX_YES:                                       break;
+			case MSGBOX_ALWAYSYES:   iOverWrite = OVERWRITE_YES;   break;
+			case MSGBOX_NO:                                        return FAILURE;
+			case MSGBOX_ALWAYSNO:    iOverWrite = OVERWRITE_NO;    return FAILURE;
+		}
+	}
+	
+	Log(LOG_WARNING, LOG_MODULE_INSTALL, "Previous installation is to be overwritten");
+	
+	return SUCCESS;
+}
+
+
+
+static int Download(const char *szPackage)
+{
+	int iResult;
+	char *pCommand;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Downloading file");
+	if (PackageValueGet(PACKAGE_FILENAME, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		FatalError(__FILE__, __LINE__, __DATE__);
+	}
+	if (strlen(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) == 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (FileTest(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) == SUCCESS)
+	{
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "File exists");
+		return SUCCESS;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Downloading file");
+	while (g_main_iteration(FALSE));
+
+	pCommand = (char *) malloc(strlen(MSG_FTPFILE_SCRIPT) + strlen(PackageValueGet(PACKAGE_FILENAME, 0, szPackage)) + 1);
+	strcpy(pCommand, MSG_FTPFILE_SCRIPT);
+	strcat(pCommand, PackageValueGet(PACKAGE_FILENAME, 0, szPackage));
+	iResult = FileExec(pCommand);
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, pCommand);
+		free(pCommand);
+		return FAILURE;
+	}
+	free(pCommand);
+	
+	if (strlen(PackageValueGet(PACKAGE_PATCH, 0, szPackage)) == 0)
+		return SUCCESS;
+	if (strlen(FileGetFilename(PackageValueGet(PACKAGE_PATCH, 0, szPackage))) == 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (FileTest(FileGetFilename(PackageValueGet(PACKAGE_PATCH, 0, szPackage))) == SUCCESS)
+	{
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Patch exists");
+		return SUCCESS;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Downloading patch");
+	while (g_main_iteration(FALSE));
+
+	pCommand = (char *) malloc(strlen(MSG_FTPFILE_SCRIPT) + strlen(PackageValueGet(PACKAGE_PATCH, 0, szPackage)) + 1);
+	strcpy(pCommand, MSG_FTPFILE_SCRIPT);
+	strcat(pCommand, PackageValueGet(PACKAGE_PATCH, 0, szPackage));
+	iResult = FileExec(pCommand);
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, pCommand);
+		free(pCommand);
+		return FAILURE;
+	}
+	free(pCommand);
+	
+	gtk_label_set_text(pAction, "");
+	while (g_main_iteration(FALSE));
+
+	return SUCCESS;
+}
+
+
+
+static int Unpacking(const char *szPackage)
+{
+	int iResult;
+	char *pCommand;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Unpacking");
+	if (PackageValueGet(PACKAGE_FILENAME, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (strlen(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) == 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (FileTest(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "File not found");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage)));
+		return FAILURE;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Unpacking");
+	while (g_main_iteration(FALSE));
+
+	pCommand = (char *) malloc(strlen(MSG_UNPACK_SCRIPT) + strlen(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage))) + 1);
+	strcpy(pCommand, MSG_UNPACK_SCRIPT);
+	strcat(pCommand, FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szPackage)));
+	iResult = FileExec(pCommand);
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, pCommand);
+		free(pCommand);
+		return FAILURE;
+	}
+	free(pCommand);
+
+	return SUCCESS;
+}
+
+
+
+static int Patching(const char *szPackage)
+{
+	int iResult;
+	char *pCommand;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Patching");
+	if (PackageValueGet(PACKAGE_PATCH, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (strlen(PackageValueGet(PACKAGE_PATCH, 0, szPackage)) == 0)
+		return SUCCESS;
+	if (FileTest(FileGetFilename(PackageValueGet(PACKAGE_PATCH, 0, szPackage))) != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "File not found");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, FileGetFilename(PackageValueGet(PACKAGE_PATCH, 0, szPackage)));
+		return FAILURE;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Patching");
+	while (g_main_iteration(FALSE));
+
+	/*
+	iResult = chdir(PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		return FAILURE;
+	}
+	*/
+	
+	pCommand = (char *) malloc(strlen(MSG_PATCH_SCRIPT) + strlen(PackageValueGet(PACKAGE_PATCH, 0, szPackage)) + 1);
+	strcpy(pCommand, MSG_PATCH_SCRIPT);
+	strcat(pCommand, PackageValueGet(PACKAGE_PATCH, 0, szPackage));
+	iResult = FileExec(pCommand);
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, pCommand);
+		free(pCommand);
+		return FAILURE;
+	}
+	free(pCommand);
+
+	/*
+	iResult = chdir(szWorkingDirectory);
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szWorkingDirectory);
+		return FAILURE;
+	}
+	*/
+
+	return SUCCESS;
+}
+
+
+
+static int InstallPreprocessing(const char *szPackage)
+{
+	int iResult;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Executing initial script");
+	if (PackageValueGet(PACKAGE_PREINST, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (strlen(PackageValueGet(PACKAGE_PREINST, 0, szPackage)) == 0)
+		return SUCCESS;
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Executing initial script");
+	while (g_main_iteration(FALSE));
+
+	iResult = chdir(PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = FileExec(PackageValueGet(PACKAGE_PREINST, 0, szPackage));
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_PREINST, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = chdir(szWorkingDirectory);
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szWorkingDirectory);
+		return FAILURE;
+	}
+
+	return SUCCESS;
+}
+
+
+
+static int VerifyFiles(const char *szPackage)
+{
+	struct CompsTable_s *pPkg;
 	FILE *File;
-	int iFileType = PACKAGE_FILE_UNKNOWN, i, j;
-	char szFileSource[TEXTLEN], szFileDest[TEXTLEN], szValue[TEXTLEN];
+	int iResult, iFileType = PACKAGE_FILE_UNKNOWN, i, j;
+	char szFileSource[TEXTLEN], szFileDest[TEXTLEN], szValue[TEXTLEN], szMessage[TEXTLEN];
+
+	pPkg = get_component_by_name(szPackage);
+	
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Verifying files");
+	if (PackageValueGet(PACKAGE_FILENAME, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		FatalError(__FILE__, __LINE__, __DATE__);
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Verifying files");
+	while (g_main_iteration(FALSE));
+
+	/* enter into the package directory */
+	sprintf(szMessage, "Entering a directory %s", pPkg->szDirName);
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
+	iResult = chdir(pPkg->szDirName);
+	if (iResult != 0)
+	{
+		sprintf(szMessage, "Cannot enter the directory '%s'", pPkg->szDirName);
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
+		MsgBox(
+			GTK_WINDOW(pWindowMain),
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
+		return FAILURE;
+	}
 
 	for (i = 0; i < strlen(FILES(pPkg)); )
 	{
@@ -827,31 +873,196 @@ static int VerifyFiles(struct CompsTable_s *pPkg)
 			szFileDest[j ++] = FILES(pPkg)[i];
 		szFileDest[j] = 0;
 		i ++;
-		
+
 		/* checking if the file is accessible */
 		switch (iFileType)
 		{
 			case PACKAGE_FILE_BINARY:
 			case PACKAGE_FILE_LIBRARY:
 			case PACKAGE_FILE_DATA:
-			
+
 				File = fopen(szFileSource, "r");
 				if (File == NULL)
+				{
+	iResult = chdir(szWorkingDirectory);
+
 					return FAILURE;
+	}
 				fclose(File);
 				break;
 		}
 	}
-	
+	iResult = chdir(szWorkingDirectory);
+
 	return SUCCESS;
 }
 
 
-static int CopyFiles(struct CompsTable_s *pPkg)
+
+static int TestBuildTools(const char *szPackage)
 {
+	int iResult, i, j;
+	char szBldTools[TEXTLEN], szCodeName[TEXTLEN], szMessage[TEXTLEN];
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Testing build tools");
+	if (PackageValueGet(PACKAGE_BLDTOOLS, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szPackage);
+		return FAILURE;
+	}
+	if (strlen(PackageValueGet(PACKAGE_BLDTOOLS, 0, szPackage)) == 0)
+		return SUCCESS;
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Testing build tools");
+	while (g_main_iteration(FALSE));
+
+	strcpy(szBldTools, PackageValueGet(PACKAGE_BLDTOOLS, 0, szPackage));
+	for (i = 0; i < strlen(szBldTools); i ++)
+	{
+		/* get code name of a tool */
+		for (; i <strlen(szBldTools) && isspace(szBldTools[i]);)
+			i ++;
+		for (j = 0; i < strlen(szBldTools) && !isspace(szBldTools[i]);)
+			szCodeName[j ++] = szBldTools[i ++];
+		szCodeName[j] = 0;
+
+		iResult = PackageTestIfInstalled(get_component_by_name(szCodeName));
+		if (iResult != SUCCESS)
+		{
+			if (strlen(FileGetFilename(PackageValueGet(PACKAGE_FILENAME, 0, szCodeName))) == 0)
+			{
+				Log(LOG_ERROR, LOG_MODULE_INSTALL, "Build tool not found");
+				Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_NAME, 0, szCodeName));
+
+				sprintf(szMessage, "%s not found.\nPlease install it and restart setup.", (char *) PackageValueGet(PACKAGE_NAME, 0, szCodeName));
+				MsgBox(GTK_WINDOW(pWindowMain), "Error !", szMessage, MSGBOX_ERROR | MSGBOX_OKD);
+				return FAILURE;
+			}
+
+			iResult = InstallComponent(szCodeName);
+			if (iResult != SUCCESS)
+				return FAILURE;
+		}
+	}
+
+	return SUCCESS;
+}
+
+
+
+static int BuildFiles(const char *szPackage)
+{
+	int iResult;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Building files");
+	if (PackageValueGet(PACKAGE_BLDCMD, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		return FAILURE;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Building files");
+	while (g_main_iteration(FALSE));
+
+	iResult = chdir(PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = FileExec(PackageValueGet(PACKAGE_BLDCMD, 0, szPackage));
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_BLDCMD, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = chdir(szWorkingDirectory);
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szWorkingDirectory);
+		return FAILURE;
+	}
+
+	return SUCCESS;
+}
+
+
+
+static int InstallFiles(const char *szPackage)
+{
+	int iResult;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Installing files");
+	if (PackageValueGet(PACKAGE_INSTCMD, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		return FAILURE;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Installing files");
+	while (g_main_iteration(FALSE));
+
+	iResult = chdir(PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = FileExec(PackageValueGet(PACKAGE_INSTCMD, 0, szPackage));
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_BLDCMD, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = chdir(szWorkingDirectory);
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szWorkingDirectory);
+		return FAILURE;
+	}
+
+	return SUCCESS;
+}
+
+
+
+static int CopyFiles(const char *szPackage)
+{
+	struct CompsTable_s *pPkg;
 	mode_t Mode;
 	int iFileType = PACKAGE_FILE_UNKNOWN, iTotalResult = SUCCESS, iResult, i, j;
 	char szFileSource[TEXTLEN], szFileDest[TEXTLEN], szMessage[TEXTLEN], szValue[TEXTLEN];
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Copying files");
+	if (PackageValueGet(PACKAGE_NAME, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		return FAILURE;
+	}
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Copying files");
+	while (g_main_iteration(FALSE));
+
+	iResult = chdir(PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		return FAILURE;
+	}
+
+	pPkg = get_component_by_name(szPackage);
 	
 	for (i = 0; i < strlen(FILES(pPkg)); )
 	{
@@ -878,7 +1089,7 @@ static int CopyFiles(struct CompsTable_s *pPkg)
 		for (j = 0; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
 			;
 		i ++;
-		
+
 		/* get source file name */
 		for (; i < strlen(FILES(pPkg)) && FILES(pPkg)[i] != '"'; i ++)
 			;
@@ -896,7 +1107,11 @@ static int CopyFiles(struct CompsTable_s *pPkg)
 			szFileDest[j ++] = FILES(pPkg)[i];
 		szFileDest[j] = 0;
 		i ++;
-		
+
+		sprintf(szMessage, "Copying %s", szFileDest);
+		gtk_label_set_text(pAction, szMessage);
+		while (g_main_iteration(FALSE));
+
 		/* copy / link the file */
 		sprintf(szMessage, "Installing %s (%o) from %s to %s", szValue, Mode, szFileSource, szFileDest);
 		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szMessage);
@@ -904,18 +1119,18 @@ static int CopyFiles(struct CompsTable_s *pPkg)
 		{
 			case PACKAGE_FILE_BINARY:
 			case PACKAGE_FILE_LIBRARY:
-				
+
 				iResult = FileCopy(szFileSource, szFileDest, Mode);
 				if (iResult != SUCCESS)
 				{
-					sprintf(szMessage, "Cannot install file\n%s/%s", szInstallDirectory, szFileDest);
+					sprintf(szMessage, "Cannot install file\n'%s'/'%s'", szInstallDirectory, szFileDest);
 					Log(LOG_ERROR, LOG_MODULE_INSTALL, szMessage);
 					iTotalResult = FAILURE;
 				}
 				break;
-				
+
 			case PACKAGE_FILE_DATA:
-				
+
 				iResult = FileTest(szFileDest);
 				if (iResult == SUCCESS)
 				{
@@ -945,9 +1160,65 @@ static int CopyFiles(struct CompsTable_s *pPkg)
 				break;
 		}
 	}
-	
+
+	iResult = chdir(szWorkingDirectory);
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szWorkingDirectory);
+		return FAILURE;
+	}
+
 	return iTotalResult;
 }
+
+
+
+static int InstallPostprocessing(const char *szPackage)
+{
+	int iResult;
+
+	Log(LOG_MESSAGE, LOG_MODULE_INSTALL, "Executing final script");
+	if (PackageValueGet(PACKAGE_POSTINST, 0, szPackage) == NULL)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot find package configuration");
+		return FAILURE;
+	}
+	if (strlen(PackageValueGet(PACKAGE_POSTINST, 0, szPackage)) == 0)
+		return SUCCESS;
+	gtk_label_set_text(pName, PackageValueGet(PACKAGE_NAME, 0, szPackage));
+	gtk_label_set_text(pAction, "Executing final script");
+	while (g_main_iteration(FALSE));
+
+	iResult = chdir(PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_DIRNAME, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = FileExec(PackageValueGet(PACKAGE_POSTINST, 0, szPackage));
+	if (iResult != SUCCESS)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot execute script");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, PackageValueGet(PACKAGE_POSTINST, 0, szPackage));
+		return FAILURE;
+	}
+
+	iResult = chdir(szWorkingDirectory);
+	if (iResult != 0)
+	{
+		Log(LOG_ERROR, LOG_MODULE_INSTALL, "Cannot change directory");
+		Log(LOG_MESSAGE, LOG_MODULE_INSTALL, szWorkingDirectory);
+		return FAILURE;
+	}
+
+	return SUCCESS;
+}
+
+
+
 
 
 
@@ -971,30 +1242,27 @@ static int CopyFiles(struct CompsTable_s *pPkg)
 
 
 
-static int are_requirements_met(struct CompsTable_s *pComp)
+static BOOL RequirementsMet(const char *szPackage)
 {
-	struct CompsTable_s *pCount;
 	int iResult = TRUE, i;
 	char szCodeName[TEXTLEN];
 	
-	for (i = 0; i < strlen(pComp->szRequiresList); i ++)
+	for (i = 0; i < strlen(PackageValueGet(PACKAGE_REQLIST, 0, szPackage)); i ++)
 	{
-		i = get_next_component(pComp, i, szCodeName);
+		i = get_next_component(get_component_by_name(szPackage), i, szCodeName);
 		if (strlen(szCodeName) == 0)
 			break;
 		
-		pCount = get_component_by_name(szCodeName);
-		if (pCount == NULL)
-		{
-			/* TODO: error handling */
+		if (*((BOOL *) PackageValueGet(PACKAGE_INSTALLED, 0, szCodeName)))
 			continue;
-		}
 		
-		if (pCount->bInstalled == FALSE && PackageTestIfInstalled(pCount) != SUCCESS)
-			iResult = FALSE;
+		if (PackageTestIfInstalled(get_component_by_name(szCodeName)) == SUCCESS)
+			continue;
+
+		iResult = FALSE;
+		break;
 	}
-	
-	
+
 	return iResult;
 }
 
@@ -1002,47 +1270,55 @@ static int are_requirements_met(struct CompsTable_s *pComp)
 
 void mark_to_be_installed(void)
 {
-	struct CompsTable_s *pCount, *pComp;
-	int i, bChanged;
-	char szCodeName[TEXTLEN];
+	int iValue, i, bChanged;
+	char szCodeName[TEXTLEN], szPackage[TEXTLEN], *pPackage;
 	
 	/* cancel all REQUIRED markers */
-	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+	for (
+		pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, NULL);
+		pPackage != NULL;
+		pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, szPackage)
+		)
 	{
-		if (pComp->iToBeInstalled == PACKAGE_REQUIRED)
-			pComp->iToBeInstalled = PACKAGE_IGNORED;
+		strcpy(szPackage, pPackage);
+		
+		if (*((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) == PACKAGE_REQUIRED)
+		{
+			iValue = PACKAGE_IGNORED;
+			PackageValueSet(PACKAGE_FLAGINST, 0, szPackage, (void *) &iValue);
+		}
 	}
-
-	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
+	
+	for (
+		pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, NULL);
+		pPackage != NULL;
+		pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, szPackage)
+		)
 	{
+		strcpy(szPackage, pPackage);
 		bChanged = FALSE;
 		
-		if (pComp->iToBeInstalled == PACKAGE_SELECTED
-			|| pComp->iToBeInstalled == PACKAGE_REQUIRED
+		if (*((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) == PACKAGE_SELECTED
+			|| *((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) == PACKAGE_REQUIRED
+			|| *((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szPackage)) == PACKAGE_BLDTOOL
 			)
 		{
-			for (i = 0; i < strlen(pComp->szRequiresList); i ++)
+			for (i = 0; i < strlen(PackageValueGet(PACKAGE_REQLIST, 0, szPackage)); i ++)
 			{
-				i = get_next_component(pComp, i, szCodeName);
+				i = get_next_component(get_component_by_name(szPackage), i, szCodeName);
 				if (strlen(szCodeName) == 0)
 					break;
-		
-				pCount = get_component_by_name(szCodeName);
-				if (pCount == NULL)
+
+				if (*((int *) PackageValueGet(PACKAGE_FLAGINST, 0, szCodeName)) == PACKAGE_IGNORED)
 				{
-					/* TODO: error handling */
-					continue;
-				}
-		
-				if (pCount->iToBeInstalled == PACKAGE_IGNORED)
-				{
-					pCount->iToBeInstalled = PACKAGE_REQUIRED;
+					iValue = PACKAGE_REQUIRED;
+					PackageValueSet(PACKAGE_FLAGINST, 0, szCodeName, (void *) &iValue);
 					bChanged = TRUE;
 				}
 			}
 			
 			if (bChanged)
-				pComp = pCompsTable;
+				pPackage = (char *) PackageValueGet(PACKAGE_NEXT, 0, NULL);
 		}
 	}
 }

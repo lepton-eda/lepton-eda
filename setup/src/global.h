@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -26,14 +26,25 @@
 
 
 
+/*
+ *	Type definitions
+ */
+ 
+#ifndef BOOL
+typedef int BOOL;
+#endif
+
+#define SUCCESS              0
+#define FAILURE              1
+
+
+
 /* global defines */
 #define SETUP_EMAIL          "sp9rve@eter.ariadna.pl"
 #define SETUP_TMPDIR         "tmp"
 #define SETUP_LOGFILE        "/tmp/geda-setup.log"
 
 /* results of executing of functions */
-#define SUCCESS              0
-#define FAILURE              1
 
 /* TODO: remove it in the future */
 #define TEXTLEN              256
