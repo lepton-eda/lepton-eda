@@ -62,7 +62,7 @@ void main_prog(void *closure, int argc, char *argv[])
     argv_index = parse_commandline(argc, argv);
     cwd = getcwd(NULL, 1024);
 #ifdef __MINGW32__
-    u_basic_strip_trailing(cwd, PATH_SEPARATER_CHAR);
+    u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
 
     /* this is a kludge to make sure that spice mode gets set */
@@ -138,7 +138,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
     i = argv_index;
     while (argv[i] != NULL) {
-      filename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING,
+      filename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S,
 					 argv[i],
 					 NULL);
 
@@ -196,7 +196,7 @@ void main_prog(void *closure, int argc, char *argv[])
     /* temporarly reuse input_str */
 
     sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory, 
-            PATH_SEPARATER_CHAR);
+            G_DIR_SEPARATOR);
 
 /* don't need either of these */
 /*	gh_eval_str ("(primitive-load-path \"ice-9/boot-9.scm\")");*/
@@ -233,7 +233,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
 	/* load the appropriate scm file */
 	sprintf(input_str, "%s%cgnet-%s.scm", pr_current->scheme_directory,
-		PATH_SEPARATER_CHAR, guile_proc);
+		G_DIR_SEPARATOR, guile_proc);
 
 	if (g_read_file(input_str) != -1) {
 	    s_log_message("Read %s scm file [%s]\n", guile_proc,

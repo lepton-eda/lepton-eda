@@ -1,3 +1,8 @@
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* gschlas/gschlas.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
+	libgeda's *_SEPARATER_*.
+
 2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* gschlas/gschlas.c (gschlas_quit): Adapted for new component library 

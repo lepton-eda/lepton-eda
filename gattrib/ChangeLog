@@ -1,3 +1,8 @@
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gattrib.c, src/x_fileselect.c:  Made it use GLib's 
+	G_DIR_SEPARATOR* instead of libgeda's *_SEPARATER_*.
+
 2005-01-27 Stuart Brorson   <sdb@cloud9.net>
 
 	* src/gattrib.c: Changes made to enable correct opening

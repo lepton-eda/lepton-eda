@@ -824,7 +824,7 @@ x_window_create_main(TOPLEVEL *w_current)
 	}
 
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-new.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-new.xpm", NULL);
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("New"), 
 			   _("New file"), 
@@ -837,7 +837,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			   w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-open.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-open.xpm", NULL);
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("Open"), 
 			   _("Open file..."), 
@@ -850,7 +850,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			   w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-save.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-save.xpm", NULL);
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("Save"), 
 			   _("Save file"), 
@@ -864,7 +864,7 @@ x_window_create_main(TOPLEVEL *w_current)
   	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-undo.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-undo.xpm", NULL);
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("Undo"), 
 			   _("Undo last operation"), 
@@ -877,7 +877,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			   w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-redo.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-redo.xpm", NULL);
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("Redo"), 
 			   _("Redo last undo"), 
@@ -891,7 +891,7 @@ x_window_create_main(TOPLEVEL *w_current)
   	gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-comp.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-comp.xpm", NULL);
   	/* not part of any radio button group */
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("Component"), 
@@ -905,7 +905,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			   w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-net.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-net.xpm", NULL);
   	w_current->toolbar_net = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      NULL,
@@ -920,7 +920,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-bus.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-bus.xpm", NULL);
   	w_current->toolbar_bus = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_net,
@@ -935,7 +935,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-text.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-text.xpm", NULL);
   	/* not part of any radio button group */
   	gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
 		  	   _("Text"), 
@@ -952,7 +952,7 @@ x_window_create_main(TOPLEVEL *w_current)
 
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-select.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-select.xpm", NULL);
   	w_current->toolbar_select = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_bus,
@@ -969,7 +969,7 @@ x_window_create_main(TOPLEVEL *w_current)
 
 #if 0 /* out until they work */
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-edit.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-edit.xpm", NULL);
   	w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_select,
@@ -984,7 +984,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-move.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-move.xpm", NULL);
   	w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_edit,
@@ -999,7 +999,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-copy.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-copy.xpm", NULL);
   	w_current->toolbar_edit = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_edit,
@@ -1014,7 +1014,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-delete.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-delete.xpm", NULL);
   	w_current->toolbar_delete = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_edit,
@@ -1029,7 +1029,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-rotate.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-rotate.xpm", NULL);
   	w_current->toolbar_rotate = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_delete,
@@ -1044,7 +1044,7 @@ x_window_create_main(TOPLEVEL *w_current)
 			             w_current);
   	free(filename);
   	filename = u_basic_strdup_multiple(w_current->bitmap_directory, 
-			       PATH_SEPARATER_STRING, "gschem-mirror.xpm", NULL);
+			       G_DIR_SEPARATOR_S, "gschem-mirror.xpm", NULL);
   	w_current->toolbar_mirror = gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                      GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                      w_current->toolbar_rotate,

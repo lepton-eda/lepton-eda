@@ -417,7 +417,7 @@ DEFINE_I_CALLBACK(file_new)
    * getcwd(NULL, 0); */
   if (getcwd(w_current->cwd, 256)) {
 #ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, PATH_SEPARATER_CHAR);
+    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
 #endif
     /* TODO: the #'s are for 10 digits hack */
     /* TODO: perform a NULL check */
@@ -428,7 +428,7 @@ DEFINE_I_CALLBACK(file_new)
                                                     1));
 
     w_current->num_untitled++;
-    sprintf(temp_filename, "%s%c%s_%d.sch", w_current->cwd, PATH_SEPARATER_CHAR,
+    sprintf(temp_filename, "%s%c%s_%d.sch", w_current->cwd, G_DIR_SEPARATOR,
             w_current->series_name,
             w_current->num_untitled);
   } else {
@@ -503,7 +503,7 @@ DEFINE_I_CALLBACK(file_new_window)
 
   if (getcwd(w_current->cwd, 256)) {
 #ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, PATH_SEPARATER_CHAR);
+    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
 #endif
     if (w_current->page_current->page_filename) {
       free(w_current->page_current->page_filename);
@@ -517,7 +517,7 @@ DEFINE_I_CALLBACK(file_new_window)
 
     w_current->num_untitled++;
     sprintf(w_current->page_current->page_filename, "%s%c%s_%d.sch",
-            w_current->cwd, PATH_SEPARATER_CHAR,
+            w_current->cwd, G_DIR_SEPARATOR,
             w_current->series_name,
             w_current->num_untitled);
   } else {
@@ -2201,7 +2201,7 @@ DEFINE_I_CALLBACK(page_new)
 
   if (getcwd(w_current->cwd, 256)) {
 #ifdef __MINGW32__
-    u_basic_strip_trailing(w_current->cwd, PATH_SEPARATER_CHAR);
+    u_basic_strip_trailing(w_current->cwd, G_DIR_SEPARATOR);
 #endif
     /* TODO: perform a NULL check */
     /* the 20 is a hack and needs to be changed */
@@ -2213,7 +2213,7 @@ DEFINE_I_CALLBACK(page_new)
 
     w_current->num_untitled++;
     sprintf(filename, "%s%c%s_%d.sch",
-            w_current->cwd, PATH_SEPARATER_CHAR,
+            w_current->cwd, G_DIR_SEPARATOR,
             w_current->series_name,
             w_current->num_untitled);
 
@@ -3810,7 +3810,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX) {
       filename = u_basic_strdup_multiple(object->complex_clib, 
-					 PATH_SEPARATER_STRING, 
+                                         G_DIR_SEPARATOR_S,
                                          object->complex_basename, NULL);
       s_log_message(_("Searching for symbol [%s]\n"), filename);
       s_hierarchy_down_symbol(w_current, filename, 

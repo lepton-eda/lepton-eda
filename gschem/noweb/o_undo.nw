@@ -145,7 +145,7 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
     filename = malloc(sizeof(char)*(strlen("/gschem.save_.sch")+
 	              strlen(TMP)+32));
 
-    sprintf(filename, "%s%cgschem.save%d_%d.sch", TMP, PATH_SEPARATER_CHAR,
+    sprintf(filename, "%s%cgschem.save%d_%d.sch", TMP, G_DIR_SEPARATOR,
             prog_pid, 
             undo_file_index++);
 
@@ -538,7 +538,7 @@ o_undo_cleanup(void)
   char *filename;
 
   for (i = 0 ; i < undo_file_index; i++) {
-    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", TMP, PATH_SEPARATER_CHAR, 
+    filename = g_strdup_printf("%s%cgschem.save%d_%d.sch", TMP, G_DIR_SEPARATOR,
 			       prog_pid, i);
     unlink(filename);
     free(filename);

@@ -59,7 +59,7 @@ main_prog(int argc, char *argv[])
   argv_index = parse_commandline(argc, argv);
   cwd = getcwd(NULL, 1024);
 #ifdef __MINGW32__
-  u_basic_strip_trailing(cwd, PATH_SEPARATER_CHAR);
+  u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
 
   libgeda_init();
@@ -105,7 +105,7 @@ main_prog(int argc, char *argv[])
   
   i = argv_index;
   while (argv[i] != NULL) {
-    filename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING,
+    filename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S,
                                        argv[i],
                                        NULL);
                                                                                                 
@@ -126,15 +126,15 @@ main_prog(int argc, char *argv[])
 #if 0
         /* SDB Notes: This is what it used to be.  I have probably broken the MINGW32 stuff */
 #ifdef __MINGW32__
-        if (argv[i][1] == ':' && (argv[i][2] == PATH_SEPARATER_CHAR ||
+        if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
                                   argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) {
 #else
-        if (argv[i][0] == PATH_SEPARATER_CHAR) {
+        if (argv[i][0] == G_DIR_SEPARATOR) {
 #endif
           pr_current->page_current->page_filename = u_basic_strdup(argv[i]);
         } else {
           pr_current->page_current->page_filename =
-            u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, argv[i], NULL);
+            u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
         }
 #endif 
         /* Always use absolute file names to eliminate confusion */

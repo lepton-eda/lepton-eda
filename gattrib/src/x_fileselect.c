@@ -208,13 +208,13 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
 
     free(temp);
 #ifdef __MINGW32__
-    if (u_basic_has_trailing(f_current->directory, PATH_SEPARATER_CHAR)) {
+    if (u_basic_has_trailing(f_current->directory, G_DIR_SEPARATOR)) {
       temp = u_basic_strdup_multiple(f_current->directory,
 				     f_current->filename, NULL);
     } else {
 #endif
       temp = u_basic_strdup_multiple(f_current->directory,
-				     PATH_SEPARATER_STRING,
+				     G_DIR_SEPARATOR_S,
 				     f_current->filename, NULL);
 #ifdef __MINGW32__
     }
@@ -336,7 +336,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
 
 #ifdef __MINGW32__
   has_trailing = u_basic_has_trailing(f_current->directory,
-				      PATH_SEPARATER_CHAR);
+				      G_DIR_SEPARATOR);
 #endif
 
   if (!directory) {
@@ -352,7 +352,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
     } else {
 #endif
       sprintf(path_buf, "%s%c%s", f_current->directory,
-	      PATH_SEPARATER_CHAR, dirent_ptr->d_name);
+	      G_DIR_SEPARATOR, dirent_ptr->d_name);
 #ifdef __MINGW32__
     }
 #endif
@@ -388,7 +388,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
     } else {
 #endif
       sprintf(path_buf, "%s%c%s", f_current->directory,
-	      PATH_SEPARATER_CHAR, dirent_ptr->d_name);
+	      G_DIR_SEPARATOR, dirent_ptr->d_name);
 #ifdef __MINGW32__
     }
 #endif
@@ -466,7 +466,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
   max_width = 0;
   for (i = 0; i < dir_count; i++) {
     temp = u_basic_strdup_multiple(f_current->directory_entries[i],
-				   PATH_SEPARATER_STRING, NULL);
+				   G_DIR_SEPARATOR_S, NULL);
     text[0] = temp;
     gtk_clist_append(GTK_CLIST(f_current->dir_list), text);
 
@@ -655,7 +655,7 @@ void x_fileselect_saveas(GtkWidget * w, FILEDIALOG * f_current)
 
   len = strlen(string);
 
-  if (string[len - 1] != PATH_SEPARATER_CHAR) {
+  if (string[len - 1] != G_DIR_SEPARATOR) {
     if (w_current->page_current->page_filename) {
       free(w_current->page_current->page_filename);
     }
@@ -1042,7 +1042,7 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
   filename = (char *) malloc(sizeof(char) * (strlen(new_filename) + 1));
 
   ptr = new_filename;
-  temp = strrchr(new_filename, PATH_SEPARATER_CHAR);
+  temp = strrchr(new_filename, G_DIR_SEPARATOR);
   if (temp) {
     /* SDB asks: What is all this stuff for? */
     i = 0;
@@ -1084,13 +1084,13 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
     free(filename);
   }
 #ifdef __MINGW32__
-  if (u_basic_has_trailing(f_current->directory, PATH_SEPARATER_CHAR)) {
+  if (u_basic_has_trailing(f_current->directory, G_DIR_SEPARATOR)) {
     temp = u_basic_strdup_multiple(f_current->directory,
 				   f_current->filename, NULL);
   } else {
 #endif
     temp = u_basic_strdup_multiple(f_current->directory,
-				   PATH_SEPARATER_STRING,
+				   G_DIR_SEPARATOR_S,
 				   f_current->filename, NULL);
 #ifdef __MINGW32__
   }

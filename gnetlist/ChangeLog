@@ -1,3 +1,8 @@
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gnetlist.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
+	libgeda's *_SEPARATER_*.
+
 2005-02-03 12:49  danmc
 
 	* scheme/: gnet-PCB.scm, gnet-PCBboard.scm, gnet-allegro.scm,

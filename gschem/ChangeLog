@@ -1,3 +1,8 @@
+2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/*.nw: Made it use GLib's G_DIR_SEPARATOR* instead of 
+	libgeda's *_SEPARATER_*.
+
 2005-02-04 04:39  danmc
 
 	* configure.ac, noweb/a_pan.nw, noweb/a_zoom.nw, noweb/g_funcs.nw,

@@ -210,7 +210,7 @@ void gattrib_main(int argc, char *argv[])
   i = argv_index;
   while(argv[i]) {
     
-    filename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, 
+    filename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S, 
 				       argv[i],
 				       NULL);
 

@@ -86,7 +86,7 @@ script_selection_ok(GtkWidget *w, TOPLEVEL *w_current)
   if(string != NULL) {
     len = strlen(string);
 
-    if (string[len - 1] != PATH_SEPARATER_CHAR) {
+    if (string[len - 1] != G_DIR_SEPARATOR) {
       s_log_message(_("Executing guile script [%s]\n"), string);
       g_read_file(string);
     }
