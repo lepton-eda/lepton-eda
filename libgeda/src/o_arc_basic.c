@@ -17,6 +17,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+
+/* DO NOT read or edit this file ! Use ../noweb/o_arc_basic.nw instead */
+
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
@@ -43,1286 +46,1329 @@
 
 #define VERSION_20000704 20000704
 
+
+
 void
-get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom)
+get_arc_bounds (TOPLEVEL * w_current, OBJECT * object,
+		int *left, int *top, int *right, int *bottom)
 {
-	*left = w_current->width;
-	*top = w_current->height;
-	*right = 0;
-	*bottom = 0;
+  int x1, y1, x2, y2, x3, y3;
+  int radius, start_angle, end_angle;
+  int i, angle;
 
-	*left = object->arc->screen_x  - 4;
-	*top = object->arc->screen_y - 4;
+  radius = object->arc->screen_width / 2;
+  start_angle = object->arc->start_angle % 360;
+  end_angle = object->arc->end_angle % 360;
 
-	if (object->arc->start_angle < 0 || 
-	    object->arc->start_angle >= 180*64 || 
-	    object->arc->end_angle >= 180*64) { 
-		*right = object->arc->screen_width + 4;
-		*bottom = object->arc->screen_height + 4;
-	} else {
-		/* top half of box only */
-		*right = object->arc->screen_width;
-		*bottom = object->arc->screen_y + 
-		    abs(object->arc->screen_y - object->arc->screen_height)/2;
+  x1 = object->arc->screen_x;
+  y1 = object->arc->screen_y;
+  x2 = x1 + radius * cos (start_angle * M_PI / 180);
+  y2 = y1 - radius * sin (start_angle * M_PI / 180);
+  x3 = x1 + radius * cos ((start_angle + end_angle) * M_PI / 180);
+  y3 = y1 - radius * sin ((start_angle + end_angle) * M_PI / 180);
+
+  *left = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
+  *right = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
+  *top = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
+  *bottom = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
+
+  angle = ((int) (start_angle / 90)) * 90;
+  for (i = 0; i < 4; i++)
+    {
+      angle = angle + 90;
+      if (angle < start_angle + end_angle)
+	{
+	  if (angle % 360 == 0)
+	    *right = x1 + radius;
+	  if (angle % 360 == 90)
+	    *top = y1 - radius;
+	  if (angle % 360 == 180)
+	    *left = x1 - radius;
+	  if (angle % 360 == 270)
+	    *bottom = y1 + radius;
 	}
+      else
+	{
+	  break;
+	}
+    }
 
 /* PB : bounding box has to take into account the width of the line it is
    composed with, ie adding/substracting half the width to this box */
-/* PB : but width is unknown here */	
-   
+/* PB : but width is unknown here */
+
 }
-
+	/* done */
 void
-world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom)
+world_get_arc_bounds (TOPLEVEL * w_current, OBJECT * object, int *left, int *top, int *right, int *bottom)
 {
-	*left = w_current->init_right;
-        *top = w_current->init_bottom;
-        *right = 0;
-        *bottom = 0;
+  int x1, y1, x2, y2, x3, y3;
+  int radius, start_angle, end_angle;
+  int i, angle;
 
-	*left = object->arc->x;
-	*top = object->arc->y;
+  radius = object->arc->width / 2;
+  start_angle = object->arc->start_angle % 360;
+  end_angle = object->arc->end_angle % 360;
 
-	/* whole box if angle is less than 0 and sweep_angle is 180 
-	 * or greater 
-	 */
-	if (object->arc->start_angle < 0 || 
-	    object->arc->start_angle >= 180*64 || 
-	    object->arc->end_angle >= 180*64) { 
-		*right = object->arc->width;
-		*bottom = object->arc->height;
-	} else {
-		/* top half of box only */
-		*right = object->arc->width;
-		*bottom = object->arc->y - 
-			abs(object->arc->y - object->arc->height)/2;
+  x1 = object->arc->x;
+  y1 = object->arc->y;
+  x2 = x1 + radius * cos (start_angle * M_PI / 180);
+  y2 = y1 + radius * sin (start_angle * M_PI / 180);
+  x3 = x1 + radius * cos ((start_angle + end_angle) * M_PI / 180);
+  y3 = y1 + radius * sin ((start_angle + end_angle) * M_PI / 180);
+
+  *left = (x1 < x2) ? ((x1 < x3) ? x1 : x3) : ((x2 < x3) ? x2 : x3);
+  *right = (x1 > x2) ? ((x1 > x3) ? x1 : x3) : ((x2 > x3) ? x2 : x3);
+  *bottom = (y1 < y2) ? ((y1 < y3) ? y1 : y3) : ((y2 < y3) ? y2 : y3);
+  *top = (y1 > y2) ? ((y1 > y3) ? y1 : y3) : ((y2 > y3) ? y2 : y3);
+
+  angle = ((int) (start_angle / 90)) * 90;
+  for (i = 0; i < 4; i++)
+    {
+      angle = angle + 90;
+      if (angle < start_angle + end_angle)
+	{
+	  if (angle % 360 == 0)
+	    *right = x1 + radius;
+	  if (angle % 360 == 90)
+	    *top = y1 + radius;
+	  if (angle % 360 == 180)
+	    *left = x1 - radius;
+	  if (angle % 360 == 270)
+	    *bottom = y1 - radius;
 	}
+      else
+	{
+	  break;
+	}
+    }
 
 /* PB : same problem as above */
-	
+
 }
+  /* done */
 
 /* now fixed for world_coords */
 OBJECT *
-o_arc_add(TOPLEVEL *w_current, OBJECT *object_list,
-		  char type, int color,
-		  int x, int y, int width, int height, int start_angle, int end_angle)
+o_arc_add (TOPLEVEL * w_current, OBJECT * object_list,
+	   char type, int color,
+	   int x, int y, int radius, int start_angle, int end_angle)
 {
 
-	OBJECT *new_node;
+  OBJECT *new_node;
 
-	new_node = s_basic_init_object("arc");
-	new_node->type = type;
-	new_node->color = color;
+  new_node = s_basic_init_object ("arc");
+  new_node->type = type;
+  new_node->color = color;
 
-	new_node->arc = (ARC *) malloc(sizeof(ARC));	
+  new_node->arc = (ARC *) malloc (sizeof (ARC));
 
-	/* Screen */	
-	new_node->arc->width = width;
-	new_node->arc->height = height;
-	new_node->arc->start_angle = start_angle;
-	new_node->arc->end_angle = end_angle;
-	new_node->arc->x = x; 
-	new_node->arc->y = y; 
+  /* World coordinates */
+  new_node->arc->x = x;
+  new_node->arc->y = y;
+  new_node->arc->width = 2 * radius;
+  new_node->arc->height = 2 * radius;
 
-	/* Init */
-	o_set_line_options(w_current, new_node,
-			   END_NONE, TYPE_SOLID, 0, -1, -1);
-	o_set_fill_options(w_current, new_node,
-			   FILLING_HOLLOW, -1, -1, -1, -1, -1);
-	
-	o_arc_recalc(w_current, new_node);
+  /* PB : must check the sign of start_angle, end_angle ... */
+  if(end_angle < 0) {
+	  start_angle = start_angle + end_angle;
+	  end_angle = -end_angle;
+  }
+  if(start_angle < 0) start_angle = 360 + start_angle;
+  
+  new_node->arc->start_angle = start_angle;
+  new_node->arc->end_angle = end_angle;
 
-	/* new_node->graphical = arc; eventually */
-	
-	/* TODO: questionable cast */
-	new_node->draw_func = (void *) arc_draw_func;  
-	/* TODO: questionable cast */
-	new_node->sel_func = (void *) select_func;  
-	
-	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
-	return(object_list);
+  /* Default init */
+  o_set_line_options (w_current, new_node,
+		      END_NONE, TYPE_SOLID, 0, -1, -1);
+  o_set_fill_options (w_current, new_node,
+		      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+
+  o_arc_recalc (w_current, new_node);
+
+  /* new_node->graphical = arc; eventually */
+
+  /* TODO: questionable cast */
+  new_node->draw_func = (void *) arc_draw_func;
+  /* TODO: questionable cast */
+  new_node->sel_func = (void *) select_func;
+
+  object_list = (OBJECT *) s_basic_link_object (new_node, object_list);
+
+  return (object_list);
 }
+	     /* done */
 
 void
-o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current)
+o_arc_recalc (TOPLEVEL * w_current, OBJECT * o_current)
 {
-	int width, height;
-	int screen_x, screen_y;	
-	int left, right, top, bottom;
-	
+  int screen_x1, screen_y1, screen_x2, screen_y2;
+  int left, right, top, bottom;
 
-	if (o_current->arc == NULL) {
-		return;
-	}
+  if (o_current->arc == NULL)
+    {
+      return;
+    }
 
-	WORLDtoSCREEN(w_current, o_current->arc->x, o_current->arc->y, 
-		      &screen_x, &screen_y);  
+  /* update the screen_x and screen_y fields of the arc */
+  WORLDtoSCREEN (w_current, o_current->arc->x, o_current->arc->y,
+		 &screen_x1, &screen_y1);
 
-	o_current->arc->screen_x = screen_x; /* x and y coords */
-	o_current->arc->screen_y = screen_y;
+  o_current->arc->screen_x = screen_x1;		/* x coord */
+  o_current->arc->screen_y = screen_y1;		/* y coord */
 
-	WORLDtoSCREEN(w_current, o_current->arc->width, o_current->arc->height, 
-		      &width, &height);  
+  /* update the screen_width and screen_height fields of the arc */
+  WORLDtoSCREEN (w_current,
+		 o_current->arc->x + o_current->arc->width,
+		 o_current->arc->y - o_current->arc->height,
+		 &screen_x2, &screen_y2);
 
-	o_current->arc->screen_width = width; /* width and height */
-	o_current->arc->screen_height = height; /* was height */
-	/* with x and y added in */
+  o_current->arc->screen_width = screen_x2 - screen_x1;		/* width */
+  o_current->arc->screen_height = screen_y2 - screen_y1;	/* height */
 
-	o_object_recalc(w_current, o_current);
-		
-	get_arc_bounds(w_current, o_current, &left, &top, &right, &bottom);
+  /* recalculates the line type information in o_current */
+  o_object_recalc (w_current, o_current);
 
-	o_current->left = left;
-	o_current->top = top;
-	o_current->right = right;
-	o_current->bottom = bottom;
+  /* recalculates the bounding box */
+  get_arc_bounds (w_current, o_current, &left, &top, &right, &bottom);
+  o_current->left = left;
+  o_current->top = top;
+  o_current->right = right;
+  o_current->bottom = bottom;
 
 }
+	  /* done */
+void
+o_arc_recalc_world (TOPLEVEL * w_current, OBJECT * o_current)
+{
+  int world_x1, world_y1, world_x2, world_y2;
+  int left, right, top, bottom;
+
+  if (o_current->arc == NULL)
+    {
+      return;
+    }
+
+  /* update the x and y fields of the arc */
+  SCREENtoWORLD (w_current,
+		 o_current->arc->screen_x, o_current->arc->screen_y,
+		 &world_x1, &world_y1);
+  o_current->arc->x = world_x1;	/* x coord */
+  o_current->arc->y = world_y1;	/* y coord */
+
+  /* update the width and height fields of the arc */
+  SCREENtoWORLD (w_current,
+		 o_current->arc->screen_x + o_current->arc->screen_width,
+		 o_current->arc->screen_y + o_current->arc->screen_height,
+		 &world_x2, &world_y2);
+  o_current->arc->width = world_x2 - world_x1;	/* width */
+  o_current->arc->height = world_y1 - world_y2;		/* height */
+
+  /* recalculates the bounding box in screen units */
+  get_arc_bounds (w_current, o_current, &left, &top, &right, &bottom);
+  o_current->left = left;
+  o_current->top = top;
+  o_current->right = right;
+  o_current->bottom = bottom;
+
+}
+    /* done */
 
 OBJECT *
-o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
+o_arc_read (TOPLEVEL * w_current, OBJECT * object_list, char buf[], char *version)
 {
-	char type; 
-	int x, y;
-	int x1, y1;
-	int width, height;
-	int radius;
-	int start_angle, end_angle;
-	int color;
-	int arc_width, arc_length, arc_space;
-	OBJECT_TYPE arc_type;
-	OBJECT_END arc_end;
-	long int ver;
-	
-	ver = strtol(version, NULL, 10);
-	if(ver <= VERSION_20000704) {
-        sscanf(buf, "%c %d %d %d %d %d %d", &type,
-			   &x1, &y1, &radius, &start_angle, &end_angle, &color);
+  char type;
+  int x, y, x1, y1;
+  int radius;
+  int start_angle, end_angle;
+  int color;
+  int arc_width, arc_length, arc_space;
+  OBJECT_TYPE arc_type;
+  OBJECT_END arc_end;
+  long int ver;
 
-		arc_width = 0;
-		arc_end   = END_NONE;
-		arc_type  = TYPE_SOLID;
-		arc_space = -1;
-		arc_length= -1;
-	} else {
-        sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
-			   &x1, &y1, &radius, &start_angle, &end_angle, &color,
-			   &arc_width, &arc_end, &arc_type, &arc_length, &arc_space);
+  ver = strtol (version, NULL, 10);
+  if (ver <= VERSION_20000704)
+    {
+      sscanf (buf, "%c %d %d %d %d %d %d", &type,
+	      &x1, &y1, &radius, &start_angle, &end_angle, &color);
 
-	}
-		
+      arc_width = 0;
+      arc_end = END_NONE;
+      arc_type = TYPE_SOLID;
+      arc_space = -1;
+      arc_length = -1;
+    }
+  else
+    {
+      sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
+	      &x1, &y1, &radius, &start_angle, &end_angle, &color,
+	      &arc_width, &arc_end, &arc_type, &arc_length, &arc_space);
 
-	x = x1 - radius; 
-	y = y1 + radius;
+    }
 
-	width = x1 + radius;
-	height = y1 - radius;
 
-	if (radius == 0) {
-		fprintf(stderr, "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
-				type, x1, y1, radius, start_angle, end_angle, color);
-		s_log_message("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
-					  type, x1, y1, radius, start_angle, end_angle, color);
-	}
-	
-	if (color < 0 || color > MAX_COLORS) {
-		fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
-		s_log_message("Found an invalid color [ %s ]\n", buf);
-		s_log_message("Setting color to WHITE\n");
-		color = WHITE;
-	}
-	
-/* PB : modification of the o_arc_add() prototype */	
-	object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,  x, y, 
-				width, height, 
-				start_angle*64, end_angle*64);
-	o_set_line_options(w_current, object_list,
-			   arc_end, arc_type, arc_width, arc_length, arc_space);
-	o_set_fill_options(w_current, object_list,
-			   FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  /* Error check */
+  if (radius <= 0)
+    {
+      fprintf (stderr, "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+	       type, x1, y1, radius, start_angle, end_angle, color);
+      s_log_message ("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+		     type, x1, y1, radius, start_angle, end_angle, color);
+    }
 
-	return(object_list);
+  if (color < 0 || color > MAX_COLORS)
+    {
+      fprintf (stderr, "Found an invalid color [ %s ]\n", buf);
+      s_log_message ("Found an invalid color [ %s ]\n", buf);
+      s_log_message ("Setting color to WHITE\n");
+      color = WHITE;
+    }
+
+  /* Allocation and initialization */
+  object_list = o_arc_add (w_current, object_list, OBJ_ARC, color,
+			   x1, y1, radius, start_angle, end_angle);
+  o_set_line_options (w_current, object_list,
+		      arc_end, arc_type, arc_width, arc_length, arc_space);
+  o_set_fill_options (w_current, object_list,
+		      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+
+  return (object_list);
 }
-
+	    /* done */
 /* EEK! there is a nasty non-snap bug here! */
 /* Basically the center isn't being snapped */
 /* in complex objects only it seems... */
 char *
-o_arc_save(char *buf, OBJECT *object)
+o_arc_save (char *buf, OBJECT * object)
 {
-	int x, y;
-	int color;
-	int start_angle, end_angle;
-	int width, height;
-	int radius;
-	int arc_width, arc_length, arc_space;
-	OBJECT_END arc_end;
-	OBJECT_TYPE arc_type;
+  int x, y;
+  int radius;
+  int color;
+  int start_angle, end_angle;
+  int arc_width, arc_length, arc_space;
+  OBJECT_END arc_end;
+  OBJECT_TYPE arc_type;
 
-	width = object->arc->width;
-	height = object->arc->height;
+  radius = object->arc->width / 2;
+  x = object->arc->x;
+  y = object->arc->y;
+  start_angle = object->arc->start_angle;
+  end_angle = object->arc->end_angle;
 
-	radius = abs(height - object->arc->y)/2;
-	
-	x = object->arc->x+radius;
-	y = object->arc->y-radius;
-	
-	start_angle = object->arc->start_angle/64;
-	end_angle = object->arc->end_angle/64;
-	
-	/* Use the right color */
-	if (object->saved_color == -1) {
-		color = object->color;
-	} else {
-		color = object->saved_color;
-	}
+  /* Save the right color */
+  if (object->saved_color == -1)
+    {
+      color = object->color;
+    }
+  else
+    {
+      color = object->saved_color;
+    }
 
-/* PB : new fields are saved */
-	arc_width  = object->line_width;
-	arc_end    = object->line_end;
-	arc_type   = object->line_type;
-	arc_length = object->line_length;
-	arc_space  = object->line_space;
-	
-	sprintf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
-			x, y, radius, start_angle, end_angle, color,
-			arc_width, arc_end, arc_type, arc_length, arc_space);
-	return(buf);
+  arc_width = object->line_width;
+  arc_end = object->line_end;
+  arc_type = object->line_type;
+  arc_length = object->line_length;
+  arc_space = object->line_space;
+
+  sprintf (buf, "%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
+	   x, y, radius, start_angle, end_angle, color,
+	   arc_width, arc_end, arc_type, arc_length, arc_space);
+  return (buf);
 }
-       
+
 
 /* this routine is a hack and should be taken out and shot */
 int
-enter_number()
+enter_number ()
 {
-        int i;
-        char c;
-	char string[90];
+  int i;
+  char c;
+  char string[90];
 
-        i = 0;
-        c = getchar();
-        while( c != '\n') {
-                string[i++] = c;
-                c = getchar();
-        }
-        string[i] = '\0';
-        return(atoi(string));
-}
-           
-void
-o_arc_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
-{
-	int x, y;
-
-	if (object == NULL) printf("at NO!\n");
-
-
-	/* Do screen coords */
-	object->arc->screen_x = object->arc->screen_x + dx;
-	object->arc->screen_y = object->arc->screen_y + dy;
-	object->arc->screen_width = object->arc->screen_width + dx;
-	object->arc->screen_height = object->arc->screen_height + dy;
-
-	SCREENtoWORLD(w_current, object->arc->screen_x, 
-		  object->arc->screen_y, 
-		  &x,
-                  &y);  
-
-	object->arc->x = x; 
-	object->arc->y = y; 
-	
-	SCREENtoWORLD(w_current, object->arc->screen_width, 
-		  object->arc->screen_height, 
-		  &x,
-                  &y);  
-	
-	object->arc->width = x;
-	object->arc->height = y;
+  i = 0;
+  c = getchar ();
+  while (c != '\n')
+    {
+      string[i++] = c;
+      c = getchar ();
+    }
+  string[i] = '\0';
+  return (atoi (string));
 }
 
-
-void
-o_arc_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
-{
-	int screen_x, screen_y;
-	int left, right, top, bottom;
-
-	if (object == NULL) printf("atw NO!\n");
-
-
-	/* Do world coords */
-	object->arc->x = object->arc->x + x1;
-	object->arc->y = object->arc->y + y1;
-	object->arc->width = object->arc->width + x1;
-	object->arc->height = object->arc->height + y1;
-
-	/* update screen coords */
-	WORLDtoSCREEN(w_current, object->arc->x, 
-		  object->arc->y, 
-		  &screen_x,
-                  &screen_y);  
-
-	object->arc->screen_x = screen_x;
-	object->arc->screen_y = screen_y;
-
-	WORLDtoSCREEN(w_current, object->arc->width, 
-		  object->arc->height, 
-		  &screen_x,
-                  &screen_y);  
-
-	object->arc->screen_width = screen_x;
-	object->arc->screen_height = screen_y;
-
-	/* update bounding box */
-	get_arc_bounds(w_current, object, &left, &top, &right, &bottom);
-
-	object->left = left;
-	object->top = top;
-	object->right = right;
-	object->bottom = bottom;
-}
 
 OBJECT *
-o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
+o_arc_copy (TOPLEVEL * w_current, OBJECT * list_tail, OBJECT * o_current)
 {
-	OBJECT *new_obj;
-	ATTRIB *a_current;
-	int color;
+  OBJECT *new_obj;
+  ATTRIB *a_current;
+  int color;
 
-	if (o_current->saved_color == -1) {
-		color = o_current->color;
-	} else {
-		color = o_current->saved_color;
+  if (o_current->saved_color == -1)
+    {
+      color = o_current->color;
+    }
+  else
+    {
+      color = o_current->saved_color;
+    }
+
+  new_obj = o_arc_add (w_current, list_tail, OBJ_ARC, color,
+		       o_current->arc->x, o_current->arc->y,
+		       o_current->arc->width / 2,
+		       o_current->arc->start_angle,
+		       o_current->arc->end_angle);
+  o_set_line_options (w_current, new_obj,
+		      o_current->line_end, o_current->line_type,
+		      o_current->line_width,
+		      o_current->line_length, o_current->line_space);
+  o_set_fill_options (w_current, new_obj,
+		      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+
+  a_current = o_current->attribs;
+  if (a_current)
+    {
+      while (a_current)
+	{
+
+	  /* head attrib node has prev = NULL */
+	  if (a_current->prev != NULL)
+	    {
+	      a_current->copied_to = new_obj;
+	    }
+	  a_current = a_current->next;
 	}
+    }
 
-
-/* PB : modification of the o_arc_add() prototype */	
-	new_obj = o_arc_add(w_current, list_tail, OBJ_ARC, color,
-				o_current->arc->x, o_current->arc->y, 
-				o_current->arc->width,
-				o_current->arc->height,
-				o_current->arc->start_angle,
-				o_current->arc->end_angle);
-	o_set_line_options(w_current, new_obj,
-				o_current->line_end, o_current->line_type,
-				o_current->line_width,
-				o_current->line_length, o_current->line_space);
-	o_set_fill_options(w_current, new_obj,
-				o_current->fill_type, o_current->fill_width,
-				o_current->fill_pitch1, o_current->fill_angle1,
-				o_current->fill_pitch2, o_current->fill_angle2);
-
-	a_current = o_current->attribs;
-	if (a_current) {
-		while ( a_current ) {
-
-			/* head attrib node has prev = NULL */
-			if (a_current->prev != NULL) {
-				a_current->copied_to = new_obj;
-			}
-			a_current = a_current->next;
-		}
-	}
-
-	return(new_obj);
+  return (new_obj);
 }
+	    /* done */
 
 void
-o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
-	int origin_x, int origin_y)
+o_arc_print (TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
+	     int origin_x, int origin_y)
 {
-	int width, height;
-	int arc_width, space, length;
+  int x, y, radius, start_angle, end_angle;
+  int color;
+  int arc_width, space, length;
+  void (*outl_func) ();
 
-	if (o_current == NULL) {
-		printf("got null in o_arc_print\n");
-		return;
-	}
+  if (o_current == NULL)
+    {
+      printf ("got null in o_arc_print\n");
+      return;
+    }
 
-	width = o_current->arc->width - o_current->arc->x;
-	height = o_current->arc->height - o_current->arc->y;
-	length = o_current->line_length;
-	space = o_current->line_space;
+  x = o_current->arc->x;
+  y = o_current->arc->y;
+  radius = o_current->arc->width / 2;
+  start_angle = o_current->arc->start_angle;
+  end_angle = o_current->arc->end_angle;
 
-	if (o_current->line_width > 0) {
-		arc_width = o_current->line_width;
-	} else {
-		arc_width = 1;
-	}
+  if (o_current->line_width > 0)
+    {
+      arc_width = o_current->line_width;
+    }
+  else
+    {
+      arc_width = 1;
+    }
+  length = o_current->line_length;
+  space = o_current->line_space;
 
-	switch(o_current->line_type) {
-		case(TYPE_SOLID):
-			o_arc_print_solid(w_current, fp, o_current,
-		  			  o_current->arc->x-origin_x,
-					  o_current->arc->y-origin_y, 
-					  width, height, o_current->color,
-					  o_current->arc->start_angle,
-					  o_current->arc->end_angle,
-					  arc_width, length, space,
-					  origin_x, origin_y);
-		break;
+  switch (o_current->line_type)
+    {
+    case (TYPE_SOLID):
+      length = -1;
+      space = -1;
+      outl_func = (void *) o_arc_print_solid;
+      break;
 
-		case(TYPE_DOTTED):
-			o_arc_print_dotted(w_current, fp, o_current,
-		  			  o_current->arc->x-origin_x,
-					  o_current->arc->y-origin_y, 
-					  width, height, o_current->color,
-					  o_current->arc->start_angle,
-					  o_current->arc->end_angle,
-					  arc_width, length, space,
-					  origin_x, origin_y);
-	
-		break;
+    case (TYPE_DOTTED):
+      length = -1;
+      outl_func = (void *) o_arc_print_dotted;
+      break;
 
-		case(TYPE_DASHED):
-			o_arc_print_dashed(w_current, fp, o_current,
-		  			  o_current->arc->x-origin_x,
-					  o_current->arc->y-origin_y, 
-					  width, height, o_current->color,
-					  o_current->arc->start_angle,
-					  o_current->arc->end_angle,
-					  arc_width, length, space,
-					  origin_x, origin_y);
+    case (TYPE_DASHED):
+      outl_func = (void *) o_arc_print_dashed;
+      break;
 
-		break;
+    case (TYPE_CENTER):
+      outl_func = (void *) o_arc_print_center;
+      break;
 
-		case(TYPE_CENTER):
-			o_arc_print_center(w_current, fp, o_current,
-		  			  o_current->arc->x-origin_x,
-					  o_current->arc->y-origin_y, 
-					  width, height, o_current->color,
-					  o_current->arc->start_angle,
-					  o_current->arc->end_angle,
-					  arc_width, length, space,
-					  origin_x, origin_y);
+    case (TYPE_PHANTOM):
+      outl_func = (void *) o_arc_print_phantom;
+      break;
 
-		break;
+    case (TYPE_ERASE):
+      /* Unused for now, print it solid */
+      length = -1;
+      space = -1;
+      outl_func = (void *) o_arc_print_solid;
+      break;
+    }
 
-		case(TYPE_PHANTOM):
-			o_arc_print_phantom(w_current, fp, o_current,
-		  			    o_current->arc->x-origin_x,
-					    o_current->arc->y-origin_y, 
-					    width, height, o_current->color,
-					    o_current->arc->start_angle,
-					    o_current->arc->end_angle,
-					    arc_width, length, space,
-					    origin_x, origin_y);
+  if ((space == 0) || (length == 0))
+    {
+      length = -1;
+      space = -1;
+      outl_func = (void *) o_arc_print_solid;
+    }
 
-		break;
+  (*outl_func) (w_current, fp,
+		x - origin_x, y - origin_x, radius,
+		start_angle, end_angle,
+		color,
+		arc_width, length, space,
+		origin_x, origin_y);
 
-		case(TYPE_ERASE):
 
-		break;
-	}
 }
+	   /* done */
 
 void
-o_arc_print_solid(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
-		  int x, int y, int width, int height, int color,
-		  int angle1, int angle2, int arc_width, int length, int space,
-		  int origin_x, int origin_y)
-{
-	double radius;
-	double x1, y1;
-
-	fprintf(fp, "gsave\n");
-	if (w_current->print_color) {
-		f_print_set_color(fp, color);
-	}
-
-	radius = ((double) width) / 2;
-
-	/* Center coordinates of the arc */
-	x1 = (double) x + radius;
-	y1 = (double) y - radius;
-
-	/* PB/AVH inverting angle2 if < 0 and changing angle1 accordingly */
-	if (angle2 < 0) {
-		angle1 = angle1 + angle2;
-		angle2 = -angle2;
-	}
-
-	f_print_set_line_width(fp, arc_width);
-
-	fprintf(fp, "newpath\n");
-	fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
-	fprintf(fp, "%d mils\n", (int) radius);
-	fprintf(fp, "%d %d arc\n", (int)angle1/64, (int)angle1/64 + angle2/64);
-	fprintf(fp, "stroke\n");
-
-	fprintf(fp, "grestore\n");
-}
-
-void
-o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
-		  int x, int y, int width, int height, int color,
-		  int angle1, int angle2, int arc_width, int length, int space,
-		  int origin_x, int origin_y)
-{
-	double radius;
-	double x1, y1;		/* coordinate of center */
-	double xa, ya;
-	int da, d;
-
-
-	fprintf(fp, "gsave\n");
-	if (w_current->print_color) {
-		f_print_set_color(fp, color);
-	}
-
-	f_print_set_line_width(fp, arc_width);
-
-	radius = ((double) width) / 2;
-
-	/* Center coordinates of the arc */
-	x1 = (double) x + radius;
-	y1 = (double) y - radius;
-
-	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
-	/* the loop test assume that da > 0 */
-	if (angle2 < 0) {
-		angle1 = angle1 + angle2;
-		angle2 = -angle2;
-	}
-	da = (int) (((space * 180) / (M_PI * radius)) * 64);
-
-	/* If da or db too small for arc to be displayed as dotted,
-           draw a solid arc */
-	if (da <= 0) {
-		o_arc_print_solid(w_current, fp, o_current,
-		  		  x, y, width, height, color,
-		  		  angle1, angle2, arc_width, length, space,
-		                  origin_x, origin_y);
-		return;
-	}
-
-	d = angle1;
-	while (d < (angle2 + angle1)) {
-		xa = x1 + radius * cos((d / 64) * M_PI / 180);
-		ya = y1 + radius * sin((d / 64) * M_PI / 180);
-
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
-
-		d = d + da;
-    	}
-
-	fprintf(fp, "grestore\n");
-}
-
-
-void
-o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
-		   int x, int y, int width, int height, int color,
-		   int angle1, int angle2, int arc_width, int length, int space,
+o_arc_print_solid (TOPLEVEL * w_current, FILE * fp,
+		   int x, int y, int radius,
+		   int angle1, int angle2,
+		   int color,
+		   int arc_width, int length, int space,
 		   int origin_x, int origin_y)
 {
-	double radius;
-	int da, db, a1, a2, d;
-	int x1, y1;
+  fprintf (fp, "gsave\n");
+  if (w_current->print_color)
+    {
+      f_print_set_color (fp, color);
+    }
 
-	fprintf(fp, "gsave\n");
-	if (w_current->print_color) {
-		f_print_set_color(fp, color);
-	}
+  /* PB/AVH inverting angle2 if < 0 and changing angle1 accordingly */
+  if (angle2 < 0)
+    {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
 
-	f_print_set_line_width(fp, arc_width);
+  f_print_set_line_width (fp, arc_width);
 
-	radius = ((double) width) / 2;
+  fprintf (fp, "newpath\n");
+  fprintf (fp, "%d mils %d mils\n", x, y);
+  fprintf (fp, "%d mils\n", radius);
+  fprintf (fp, "%d %d arc\n", angle1, angle1 + angle2);
+  fprintf (fp, "stroke\n");
 
-	/* Center coordinates of the arc */
-	x1 = (double) x + radius;
-	y1 = (double) y - radius;
-
-	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
-	/* the loop test assume that da > 0 */
-	if (angle2 < 0) {
-		angle1 = angle1 + angle2;
-		angle2 = -angle2;
-    	}
-	da = (int) ((length * 180) / (M_PI * radius)) * 64;
-	db = (int) ((space * 180) / (M_PI * radius)) * 64;
-
-	/* If da or db too small for arc to be displayed as dotted,
-           draw a solid arc */
-	if ((da <= 0) || (db <= 0)) {
-		o_arc_print_solid(w_current, fp, o_current,
-		  		  x, y, width, height, color,
-		  		  angle1, angle2, arc_width, length, space,
-		                  origin_x, origin_y);
-		return;
-    	}
-	
-	d = angle1;
-	while ((d + da + db) < (angle1 + angle2)) {
-		a1 = d;
-		d = d + da;
-
-		/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da); */
-
-	 	fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils\n", x1, y1);
-		fprintf(fp, "%d mils\n",(int) radius);
-		fprintf(fp, "%d %d arc\n", a1/64, a1/64 + da/64);
-		fprintf(fp, "stroke\n");
-
-		d = d + db;
-	}
-
-	if ((d + da) < (angle1 + angle2)) {
-		a1 = d;
-		a2 = da;
-	} else {
-		a1 = d;
-		a2 = (angle1 + angle2) - d;
-    	}
-
-   	/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, a2); */
-	fprintf(fp, "newpath\n");
-	fprintf(fp, "%d mils %d mils\n", x1, y1);
-	fprintf(fp, "%d mils\n", radius);
-	fprintf(fp, "%d %d arc\n", a1/64, a1/64 + a2/64);
-	fprintf(fp, "stroke\n");
-
-	fprintf(fp, "grestore\n");
-
+  fprintf (fp, "grestore\n");
 }
-
+     /* done */
 void
-o_arc_print_center(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
-		   int x, int y, int width, int height, int color,
-		   int angle1, int angle2, int arc_width, int length, int space,
-		   int origin_x, int origin_y)
+o_arc_print_dotted (TOPLEVEL * w_current, FILE * fp,
+		    int x, int y, int radius,
+		    int angle1, int angle2,
+		    int color,
+		    int arc_width, int length, int space,
+		    int origin_x, int origin_y)
 {
-	double radius;
-	double x1, y1, xa, ya;	/* coordinate of center */
-	int da, db, a1, a2, d;
+  double xa, ya;
+  int da, d;
 
-	fprintf(fp, "gsave\n");
-	if (w_current->print_color) {
-		f_print_set_color(fp, color);
+
+  fprintf (fp, "gsave\n");
+  if (w_current->print_color)
+    {
+      f_print_set_color (fp, color);
+    }
+
+  /* PB : is the width relevant for a dot (circle) ? */
+  f_print_set_line_width (fp, arc_width);
+
+  /* Inverting angle2 if < 0 and changing angle1 accordingly */
+  /* the loop test assume that da > 0 */
+  if (angle2 < 0)
+    {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
+  da = (int) ((space * 180) / (M_PI * ((double) radius)));
+
+  /* If da or db too small for arc to be displayed as dotted,
+     draw a solid arc */
+  if (da <= 0)
+    {
+      o_arc_print_solid (w_current, fp,
+			 x, y, radius,
+			 angle1, angle2,
+			 color,
+			 arc_width, length, space,
+			 origin_x, origin_y);
+      return;
+    }
+
+  d = angle1;
+  while (d < (angle2 + angle1))
+    {
+      xa = ((double) x) + ((double) radius) * cos (d * M_PI / 180);
+      ya = ((double) y) + ((double) radius) * sin (d * M_PI / 180);
+
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
 	}
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
+	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
 
-	f_print_set_line_width(fp, arc_width);
 
-	radius = ((double) width) / 2;
+      d = d + da;
+    }
 
-	/* Center coordinates of the arc */
- 	x1 = (double) x + radius;
-	y1 = (double) y - radius;
+  fprintf (fp, "grestore\n");
 
-	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
-	/* the loop test assume that da > 0 */
-	if (angle2 < 0) {
-		angle1 = angle1 + angle2;
-		angle2 = -angle2;
-    	}
-
-	da = (int) ((length * 180) / (M_PI * radius)) * 64;
-	db = (int) ((space * 180) / (M_PI * radius)) * 64;
-
-	/* If da or db too small to be displayed, draw an arc */
-	if ((da <= 0) || (db <= 0)) {
-		o_arc_print_solid(w_current, fp, o_current,
-		  		  x, y, width, height, color,
-		  		  angle1, angle2, arc_width, length, space,
-		                  origin_x, origin_y);
-		return;
-    	}
-
- 	d = angle1;
-	while ((d + da + 2 * db) < (angle1 + angle2)) {
-		a1 = d;
-		d = d + da;
-
-		/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da);*/
-
-	 	fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
-		fprintf(fp, "%d mils\n",(int) radius);
-		fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + da/64);
-		fprintf(fp, "stroke\n");
-
-		d = d + db;
-		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
-		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
-
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
-
-		d = d + db;
-    	}
-
-    	if ((d + da) < (angle1 + angle2)) {
-		a1 = d;
-		a2 = da;
-
-		d = d + da;
-    	} else {
-		a1 = d;
-		a2 = (angle1 + angle2) - d;
-
-		d = d + da;
-    	}
-    	/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da); */
-	fprintf(fp, "newpath\n");
-	fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
-	fprintf(fp, "%d mils\n",(int) radius);
-	fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + da/64);
-	fprintf(fp, "stroke\n");
-
-    	if ((d + db) < (angle1 + angle2)) {
-		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
-		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
-
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
-    	}
-
-	fprintf(fp, "grestore\n");
 }
-
+    /* done */
 void
-o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
-		   int x, int y, int width, int height, int color,
-		   int angle1, int angle2, int arc_width, int length, int space,
-		   int origin_x, int origin_y)
+o_arc_print_dashed (TOPLEVEL * w_current, FILE * fp,
+		    int x, int y, int radius,
+		    int angle1, int angle2,
+		    int color,
+		    int arc_width, int length, int space,
+		    int origin_x, int origin_y)
 {
+  int da, db, a1, a2, d;
 
-	double radius;
-	double x1, y1, xa, ya;	/* coordinate of center */
- 	int da, db, a1, a2, d;
+  fprintf (fp, "gsave\n");
+  if (w_current->print_color)
+    {
+      f_print_set_color (fp, color);
+    }
 
-	fprintf(fp, "gsave\n");
-	if (w_current->print_color) {
-		f_print_set_color(fp, color);
-	}
+  f_print_set_line_width (fp, arc_width);
 
-	f_print_set_line_width(fp, arc_width);
+  /* Inverting angle2 if < 0 and changing angle1 accordingly */
+  /* the loop test assume that da > 0 */
+  if (angle2 < 0)
+    {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
+  da = (int) ((length * 180) / (M_PI * ((double) radius)));
+  db = (int) ((space * 180) / (M_PI * ((double) radius)));
 
-	radius = ((double) width) / 2;
+  /* If da or db too small for arc to be displayed as dotted,
+     draw a solid arc */
+  if ((da <= 0) || (db <= 0))
+    {
+      o_arc_print_solid (w_current, fp,
+			 x, y, radius,
+			 angle1, angle2,
+			 color,
+			 arc_width, length, space,
+			 origin_x, origin_y);
+      return;
+    }
 
-	/* Center coordinates of the arc */
-	x1 = (double) x + radius;
-	y1 = (double) y - radius;
+  d = angle1;
+  while ((d + da + db) < (angle1 + angle2))
+    {
+      a1 = d;
+      d = d + da;
 
-	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
- 	/* the loop test assume that da > 0 */
- 	if (angle2 < 0) {
-		angle1 = angle1 + angle2;
-		angle2 = -angle2;
-    	}
-	da = (int) ((length * 180) / (M_PI * radius)) * 64;
-	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", x, y);
+      fprintf (fp, "%d mils\n", radius);
+      fprintf (fp, "%d %d arc\n", a1, a1 + da);
+      fprintf (fp, "stroke\n");
 
-	/* If da or db too small for arc to be displayed as dotted,
-           draw a solid arc */
-	if ((da <= 0) || (db <= 0)) {
-		/*gdk_draw_arc(w, gc, FALSE, x, y, width, height, angle1, angle2);*/
-		o_arc_print_solid(w_current, fp, o_current,
-		  		  x, y, width, height, color,
-		  		  angle1, angle2, arc_width, length, space,
-		                  origin_x, origin_y);
-		return;
-    	}
 
-	d = angle1;
-	while ((d + da + 3 * db) < (angle1 + angle2)) {
-		a1 = d;
-		d = d + da;
-		/*gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da);*/
-	 	fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
-		fprintf(fp, "%d mils\n",(int) radius);
-		fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + da/64);
-		fprintf(fp, "stroke\n");
+      d = d + db;
+    }
 
-		d = d + db;
-		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
-		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+  if ((d + da) < (angle1 + angle2))
+    {
+      a1 = d;
+      a2 = da;
+    }
+  else
+    {
+      a1 = d;
+      a2 = (angle1 + angle2) - d;
+    }
 
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
+  fprintf (fp, "newpath\n");
+  fprintf (fp, "%d mils %d mils\n", x, y);
+  fprintf (fp, "%d mils\n", radius);
+  fprintf (fp, "%d %d arc\n", a1, a1 + da);
+  fprintf (fp, "stroke\n");
 
-		d = d + db;
 
-		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
-		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+  fprintf (fp, "grestore\n");
 
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
-
-		d = d + db;
-	}
-
-	if ((d + da) < (angle1 + angle2)) {
-		a1 = d;
-		a2 = da;
-		d = d + da;
-    	} else {
-		a1 = d;
-		a2 = (angle1 + angle2) - d;
-		d = d + da;
-    	}
-    	/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, a2);*/
-	fprintf(fp, "newpath\n");
-	fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
-	fprintf(fp, "%d mils\n", (int) radius);
-	fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + a2/64);
-	fprintf(fp, "stroke\n");
-
-    	if ((d + db) < (angle1 + angle2)) {
-		d = d + db;
-
-		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
-		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
-
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
-    	}
-
-    	if ((d + db) < (angle1 + angle2)) {
-		d = d + db;
-
-		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
-		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
-
-	 	fprintf(fp, "newpath\n");
-		if (arc_width == 1) {
-			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils %d mils\n", 
-				((int) xa), ((int) ya));
-			fprintf(fp, "%d mils\n", arc_width);
-		}
-		fprintf(fp, "%d %d arc\n", 0, 360);
-		fprintf(fp, "fill\n");
-    	}
-
-	fprintf(fp, "grestore\n");
 }
-
-#if 0 /* original way of printing arcs, no longer used */
+    /* done */
 void
-o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
-	int origin_x, int origin_y)
+o_arc_print_center (TOPLEVEL * w_current, FILE * fp,
+		    int x, int y, int radius,
+		    int angle1, int angle2,
+		    int color,
+		    int arc_width, int length, int space,
+		    int origin_x, int origin_y)
 {
-	int radius;
-	int start_angle, end_angle;
-	int awidth, aheight;
-	int x, y;
+  double xa, ya;
+  int da, db, a1, a2, d;
 
-	if (o_current == NULL) {
-		printf("got null in o_arc_print\n");
-		return;
+  fprintf (fp, "gsave\n");
+  if (w_current->print_color)
+    {
+      f_print_set_color (fp, color);
+    }
+
+  f_print_set_line_width (fp, arc_width);
+
+  /* Inverting angle2 if < 0 and changing angle1 accordingly */
+  /* the loop test assume that da > 0 */
+  if (angle2 < 0)
+    {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
+
+  da = (int) ((length * 180) / (M_PI * ((double) radius)));
+  db = (int) ((space * 180) / (M_PI * ((double) radius)));
+
+  /* If da or db too small to be displayed, draw an arc */
+  if ((da <= 0) || (db <= 0))
+    {
+      o_arc_print_solid (w_current, fp,
+			 x, y, radius,
+			 angle1, angle2,
+			 color,
+			 arc_width, length, space,
+			 origin_x, origin_y);
+      return;
+    }
+
+  d = angle1;
+  while ((d + da + 2 * db) < (angle1 + angle2))
+    {
+      a1 = d;
+      d = d + da;
+
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", x, y);
+      fprintf (fp, "%d mils\n", radius);
+      fprintf (fp, "%d %d arc\n", (int) a1, (int) a1 + da);
+      fprintf (fp, "stroke\n");
+
+
+      d = d + db;
+      xa = ((double) x) + ((double) radius) * cos (d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin (d * (M_PI / 180));
+
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
 	}
-
-	fprintf(fp, "gsave\n");
-	if (w_current->print_color) {
-		f_print_set_color(fp, o_current->color);
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
 	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
 
-	f_print_set_line_width(fp, o_current->line_width);
 
-        awidth = o_current->arc->width;
-        aheight = o_current->arc->height;
+      d = d + db;
+    }
 
-	radius = abs(aheight - o_current->arc->y)/2;
+  if ((d + da) < (angle1 + angle2))
+    {
+      a1 = d;
+      a2 = da;
 
-	/* hack hack hack */
-	/* the snap_grid here is a safety for arcs inside complex objects */
-	/* which are not snapped to the grid */
-	/* ALL arcs centers will be snapped to the center */
-	/* hack hack hack */
-	/* Geee I wish there was a better solution */
-	/* well for now, if you print the complex structure that's in memory */
-	/* then the arc will be properly snapped */
-	/*x = snap_grid(w_current, o_current->x+radius);
-	y = snap_grid(w_current, o_current->y-radius);*/
+      d = d + da;
+    }
+  else
+    {
+      a1 = d;
+      a2 = (angle1 + angle2) - d;
 
-	x = (o_current->arc->x+radius);
-	y = (o_current->arc->y-radius);
+      d = d + da;
+    }
 
-	start_angle = o_current->arc->start_angle/64;
-       	end_angle = o_current->arc->end_angle/64;
+  fprintf (fp, "newpath\n");
+  fprintf (fp, "%d mils %d mils\n", x, y);
+  fprintf (fp, "%d mils\n", radius);
+  fprintf (fp, "%d %d arc\n", (int) a1, (int) a1 + da);
+  fprintf (fp, "stroke\n");
 
-	if ( end_angle < 0) {
 
-		if (end_angle >= 180) {
-			start_angle = (start_angle - (end_angle)) % 360;
-		} else {
-			start_angle = (start_angle + (end_angle)) % 360;
-		}
+  if ((d + db) < (angle1 + angle2))
+    {
+      xa = ((double) x) + ((double) radius) * cos (d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin (d * (M_PI / 180));
 
-		end_angle = abs(end_angle);
-
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
 	}
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
+	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
 
-	end_angle = start_angle + end_angle;
-		
 
-	fprintf(fp, "newpath\n");
-	fprintf(fp, "%d mils %d mils\n", x-origin_x, y-origin_y);
-	fprintf(fp, "%d mils\n", radius);
-	fprintf(fp, "%d %d arc\n", start_angle, end_angle);
-	fprintf(fp, "stroke\n");
-	fprintf(fp, "grestore\n");
+    }
+
+  fprintf (fp, "grestore\n");
 }
+    /* done */
+void
+o_arc_print_phantom (TOPLEVEL * w_current, FILE * fp,
+		     int x, int y, int radius,
+		     int angle1, int angle2,
+		     int color,
+		     int arc_width, int length, int space,
+		     int origin_x, int origin_y)
+{
+  double xa, ya;
+  int da, db, a1, a2, d;
+
+  fprintf (fp, "gsave\n");
+  if (w_current->print_color)
+    {
+      f_print_set_color (fp, color);
+    }
+
+  f_print_set_line_width (fp, arc_width);
+
+  /* Inverting angle2 if < 0 and changing angle1 accordingly */
+  /* the loop test assume that da > 0 */
+  if (angle2 < 0)
+    {
+      angle1 = angle1 + angle2;
+      angle2 = -angle2;
+    }
+  da = (int) ((length * 180) / (((double) radius) * M_PI));
+  db = (int) ((space * 180) / (((double) radius) * M_PI));
+
+  /* If da or db too small for arc to be displayed as dotted,
+     draw a solid arc */
+  if ((da <= 0) || (db <= 0))
+    {
+      o_arc_print_solid (w_current, fp,
+			 x, y, radius,
+			 angle1, angle2,
+			 color,
+			 arc_width, length, space,
+			 origin_x, origin_y);
+      return;
+    }
+
+  d = angle1;
+  while ((d + da + 3 * db) < (angle1 + angle2))
+    {
+      a1 = d;
+      d = d + da;
+
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", x, y);
+      fprintf (fp, "%d mils\n", (int) radius);
+      fprintf (fp, "%d %d arc\n", (int) a1, (int) a1 + da);
+      fprintf (fp, "stroke\n");
+
+
+      d = d + db;
+      xa = ((double) x) + ((double) radius) * cos (d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin (d * (M_PI / 180));
+
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
+	}
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
+	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
+
+
+      d = d + db;
+
+      xa = ((double) x) + ((double) radius) * cos (d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin (d * (M_PI / 180));
+
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
+	}
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
+	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
+
+
+      d = d + db;
+    }
+
+  if ((d + da) < (angle1 + angle2))
+    {
+      a1 = d;
+      a2 = da;
+      d = d + da;
+    }
+  else
+    {
+      a1 = d;
+      a2 = (angle1 + angle2) - d;
+      d = d + da;
+    }
+
+  fprintf (fp, "newpath\n");
+  fprintf (fp, "%d mils %d mils\n", x, y);
+  fprintf (fp, "%d mils\n", (int) radius);
+  fprintf (fp, "%d %d arc\n", (int) a1, (int) a1 + da);
+  fprintf (fp, "stroke\n");
+
+
+  if ((d + db) < (angle1 + angle2))
+    {
+      d = d + db;
+
+      xa = ((double) x) + ((double) radius) * cos (d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin (d * (M_PI / 180));
+
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
+	}
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
+	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
+
+    }
+
+  if ((d + db) < (angle1 + angle2))
+    {
+      d = d + db;
+
+      xa = ((double) x) + ((double) radius) * cos (d * (M_PI / 180));
+      ya = ((double) y) + ((double) radius) * sin (d * (M_PI / 180));
+
+      /* PB : problem corrected : diameter of printed dots */
+      fprintf (fp, "newpath\n");
+      fprintf (fp, "%d mils %d mils\n", (int) xa, (int) ya);
+      if (arc_width <= 1)
+	{
+	  fprintf (fp, "2 mils\n");
+	}
+      else
+	{
+	  fprintf (fp, "%d mils\n", (int) arc_width / 2);
+	}
+      fprintf (fp, "0 360 arc\n");
+      fprintf (fp, "fill\n");
+      /* PB : end */
+
+
+    }
+
+  fprintf (fp, "grestore\n");
+}
+   /* done */
+
+#if 0				/* original way of printing arcs, no longer used */
+void
+o_arc_print_old (TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
+		 int origin_x, int origin_y)
+{
+  int radius;
+  int start_angle, end_angle;
+  int awidth, aheight;
+  int x, y;
+
+  if (o_current == NULL)
+    {
+      printf ("got null in o_arc_print\n");
+      return;
+    }
+
+  fprintf (fp, "gsave\n");
+  if (w_current->print_color)
+    {
+      f_print_set_color (fp, o_current->color);
+    }
+
+  f_print_set_line_width (fp, o_current->line_width);
+
+  awidth = o_current->arc->width;
+  aheight = o_current->arc->height;
+
+  radius = abs (aheight - o_current->arc->y) / 2;
+
+  /* hack hack hack */
+  /* the snap_grid here is a safety for arcs inside complex objects */
+  /* which are not snapped to the grid */
+  /* ALL arcs centers will be snapped to the center */
+  /* hack hack hack */
+  /* Geee I wish there was a better solution */
+  /* well for now, if you print the complex structure that's in memory */
+  /* then the arc will be properly snapped */
+  /*x = snap_grid(w_current, o_current->x+radius);
+     y = snap_grid(w_current, o_current->y-radius); */
+
+  x = (o_current->arc->x + radius);
+  y = (o_current->arc->y - radius);
+
+  start_angle = o_current->arc->start_angle / 64;
+  end_angle = o_current->arc->end_angle / 64;
+
+  if (end_angle < 0)
+    {
+
+      if (end_angle >= 180)
+	{
+	  start_angle = (start_angle - (end_angle)) % 360;
+	}
+      else
+	{
+	  start_angle = (start_angle + (end_angle)) % 360;
+	}
+
+      end_angle = abs (end_angle);
+
+    }
+
+  end_angle = start_angle + end_angle;
+
+
+  fprintf (fp, "newpath\n");
+  fprintf (fp, "%d mils %d mils\n", x - origin_x, y - origin_y);
+  fprintf (fp, "%d mils\n", radius);
+  fprintf (fp, "%d %d arc\n", start_angle, end_angle);
+  fprintf (fp, "stroke\n");
+  fprintf (fp, "grestore\n");
+}
+       /* done */
 #endif
 
-
 void
-o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
-	int origin_x, int origin_y, int color_mode)
+o_arc_image_write (TOPLEVEL * w_current, OBJECT * o_current,
+		   int origin_x, int origin_y, int color_mode)
 {
-	int start_angle, end_angle;
-	int width, height;
-	int final;
-	int color;
-	int x, y;
+  int start_angle, end_angle;
+  int width, height;
+  int final;
+  int color;
+  int x, y;
 
-	if (o_current == NULL) {
-		printf("got null in o_arc_image_write\n");
-		return;
+  if (o_current == NULL)
+    {
+      printf ("got null in o_arc_image_write\n");
+      return;
+    }
+
+  if (color_mode == TRUE)
+    {
+      color = o_image_geda2gd_color (o_current->color);
+    }
+  else
+    {
+      color = image_black;
+    }
+
+  start_angle = o_current->arc->start_angle;
+  end_angle = o_current->arc->end_angle;
+
+  if (end_angle < 0)
+    {
+
+      if (end_angle >= 180)
+	{
+	  start_angle = (start_angle - (end_angle)) % 360;
+	}
+      else
+	{
+	  start_angle = (start_angle + (end_angle)) % 360;
 	}
 
-	if (color_mode == TRUE) {
-		color = o_image_geda2gd_color(o_current->color);
-	} else {
-		color = image_black;
-	}
+      end_angle = abs (end_angle);
 
-	start_angle = o_current->arc->start_angle/64;
-       	end_angle = o_current->arc->end_angle/64;
+    }
 
-	if ( end_angle < 0) {
-
-		if (end_angle >= 180) {
-			start_angle = (start_angle - (end_angle)) % 360;
-		} else {
-			start_angle = (start_angle + (end_angle)) % 360;
-		}
-
-		end_angle = abs(end_angle);
-
-	}
-
-	end_angle = start_angle + end_angle;
+  end_angle = start_angle + end_angle;
 
 
 
 #if DEBUG
-	printf("%d %d -- %d %d -- %d %d\n", 
-			o_current->arc->screen_x, o_current->arc->screen_y,
-			o_current->arc->screen_width-o_current->arc->screen_x,
-			o_current->arc->screen_height-o_current->arc->screen_y,
-                        start_angle, end_angle);
+  printf ("%d %d -- %d %d -- %d %d\n",
+	  o_current->arc->screen_x, o_current->arc->screen_y,
+	  o_current->arc->screen_width - o_current->arc->screen_x,
+	  o_current->arc->screen_height - o_current->arc->screen_y,
+	  start_angle, end_angle);
 #endif
 
-	if (start_angle < end_angle) {
+  if (start_angle < end_angle)
+    {
 
-		start_angle = start_angle + 360;
-	}
+      start_angle = start_angle + 360;
+    }
 
 #if DEBUG
-	printf("%d %d -- %d %d -- %d %d\n", 
-			o_current->arc->screen_x, o_current->arc->screen_y,
-			o_current->arc->screen_width-o_current->arc->screen_x,
-			o_current->arc->screen_height-o_current->arc->screen_y,
-                        start_angle, end_angle);
+  printf ("%d %d -- %d %d -- %d %d\n",
+	  o_current->arc->screen_x, o_current->arc->screen_y,
+	  o_current->arc->screen_width - o_current->arc->screen_x,
+	  o_current->arc->screen_height - o_current->arc->screen_y,
+	  start_angle, end_angle);
 #endif
 
 
-	width = o_current->arc->screen_width - o_current->arc->screen_x;
-	height = o_current->arc->screen_height - o_current->arc->screen_y;
+  width = o_current->arc->screen_width;
+  height = o_current->arc->screen_height;
 
-	final = max(width, height);
+  final = max (width, height);
 
-	x = o_current->arc->screen_x + (final)/2;
-	y = o_current->arc->screen_y + (final)/2;
+  x = o_current->arc->screen_x + (final) / 2;
+  y = o_current->arc->screen_y + (final) / 2;
 
 #ifdef HAS_LIBGDGEDA
-	gdImageArc(current_im_ptr, 
-			x, y,
-			final, final,
-                        start_angle, end_angle,
-			color);
+  gdImageArc (current_im_ptr,
+	      x, y,
+	      final, final,
+	      start_angle, end_angle,
+	      color);
 #endif
-	
+
 }
 
 
-/* takes in screen coordinates for the centerx,y, and then does the rotate 
- * in world space */
-/* also ignores angle argument... for now, rotate only in 90 degree 
- * increments */
 void
-o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
-	OBJECT *object)
+o_arc_translate (TOPLEVEL * w_current, int dx, int dy, OBJECT * object)
 {
-	int world_centerx, world_centery;
-	int newx, newy;
-	int height, width;
-	int radius;
-	int x, y;
+  if (object == NULL)
+    {
+      return;
+    }
 
-	SCREENtoWORLD(w_current, centerx, centery, 
-				  &world_centerx,
-                  &world_centery);  
+  /* Do screen coords */
+  object->arc->screen_x = object->arc->screen_x + dx;
+  object->arc->screen_y = object->arc->screen_y + dy;
 
-	width = object->arc->width;
-	height = object->arc->height;
-	
-	radius = abs(height - object->arc->y)/2;
-	
-	/* translate object to origin */
-	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
+  /* Recalculate world coords from new screen coords */
+  o_arc_recalc_world (w_current, object);
 
-	/* get center */
-	x = object->arc->x+radius;
-	y = object->arc->y-radius;
+}
+       /* done */
+void
+o_arc_translate_world (TOPLEVEL * w_current, int dx, int dy, OBJECT * object)
+{
+  if (object == NULL)
+    {
+      return;
+    }
 
-	rotate_point_90(x, y, angle, &newx, &newy);
+  /* Do world coords */
+  object->arc->x = object->arc->x + dx;
+  object->arc->y = object->arc->y + dy;
 
-	object->arc->x = newx - radius;
-	object->arc->y = newy + radius;
+  /* Recalculate screen coords from new world coords */
+  o_arc_recalc (w_current, object);
 
-	/* change angle values next... */
-
-	object->arc->width = newx + radius;
-	object->arc->height = newy - radius;
-
-        object->arc->start_angle = (object->arc->start_angle + 90*64) % (360*64);
-        /* object->arc->end_angle = (object->arc->end_angle); */
-
-	o_arc_translate_world(w_current, world_centerx, world_centery, object);
-}                                   
+}
+ /* done */
 
 void
-o_arc_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, 
-	int angle,
-	OBJECT *object)
+o_arc_rotate (TOPLEVEL * w_current, int centerx, int centery,
+	      int angle,
+	      OBJECT * object)
 {
-	int newx, newy;
-	int height, width;
-	int radius;
-	int x, y;
-	
-        width = object->arc->width;
-        height = object->arc->height;
+  int x, y, newx, newy;
 
-	radius = abs(height - object->arc->y)/2;
+  /* translate object to origin */
+  o_arc_translate (w_current, -centerx, -centery, object);
 
-	/* translate object to origin */
-	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
+  /* get center, and rotate center */
+  x = object->arc->screen_x;
+  y = object->arc->screen_y;
 
-	/* get center */
-	x = object->arc->x+radius;
-	y = object->arc->y-radius;
+  if (angle % 90 == 0)
+    rotate_point_90 (x, y, angle, &newx, &newy);
+  else
+    rotate_point (x, y, angle, &newx, &newy);
 
-	rotate_point_90(x, y, angle, &newx, &newy);
+  object->arc->screen_x = newx;
+  object->arc->screen_y = newy;
 
-	object->arc->x = newx - radius;
-	object->arc->y = newy + radius;
+  /* apply rotation to angles */
+  object->arc->start_angle = (object->arc->start_angle + 90) % 360;
+  /* end_angle is unchanged as it is the sweep of the arc */
+  /* object->arc->end_angle = (object->arc->end_angle); */
 
-	/* change angle values next... */
+  /* translate object to its previous place */
+  o_arc_translate (w_current, centerx, centery, object);
 
-	object->arc->width = newx + radius;
-	object->arc->height = newy - radius;
+}
+	  /* done */
+void
+o_arc_rotate_world (TOPLEVEL * w_current,
+		    int world_centerx, int world_centery, int angle,
+		    OBJECT * object)
+{
+  int x, y, newx, newy;
 
-        object->arc->start_angle =  (object->arc->start_angle + angle*64) % (360*64);
-        /* object->arc->end_angle = (object->arc->end_angle); */
+  /* translate object to origin */
+  o_arc_translate_world (w_current, -world_centerx, -world_centery, object);
 
+  /* get center, and rotate center */
+  x = object->arc->x;
+  y = object->arc->y;
 
-	o_arc_translate_world(w_current, world_centerx, world_centery, object);
-}                                   
+  if (angle % 90 == 0)
+    rotate_point_90 (x, y, angle % 360, &newx, &newy);
+  else
+    rotate_point (x, y, angle % 360, &newx, &newy);
 
+  object->arc->x = newx;
+  object->arc->y = newy;
+
+  /* apply rotation to angles */
+  object->arc->start_angle = (object->arc->start_angle + angle) % 360;
+  /* end_angle is unchanged as it is the sweep of the arc */
+  /* object->arc->end_angle = (object->arc->end_angle); */
+
+  /* translate object to its previous place */
+  o_arc_translate_world (w_current, world_centerx, world_centery, object);
+
+}
+    /* done */
 
 void
-o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
+o_arc_mirror (TOPLEVEL * w_current,
+	      int centerx, int centery, OBJECT * object)
 {
-	int world_centerx, world_centery;
-	int newx, newy;
-	int height, width;
-	int radius;
-	int x, y;
-	int start;
+  int x, y, newx, newy;
+  int start, end;
 
-	SCREENtoWORLD(w_current, centerx, centery, 
-		  &world_centerx,
-                  &world_centery);  
+  /* translate object to origin */
+  o_arc_translate (w_current, -centerx, -centery, object);
 
-        width = object->arc->width;
-        height = object->arc->height;
+  /* get center, and mirror it */
+  x = object->arc->x;
+  y = object->arc->y;
 
-	radius = abs(height - object->arc->y)/2;
-
-	/* translate object to origin */
-	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
-
-	/* get center */
-	x = object->arc->x+radius;
-	y = object->arc->y-radius;
-
-#if 1 /* vertical */
-	newx = -x;
-	newy = y;
+#if 1				/* vertical */
+  newx = -x;
+  newy = y;
+#else /* horizontal */
+  newx = x;
+  newy = -y;
 #endif
 
-#if 0 /* horizontal */
-	newx = x;
-	newy = -y;
+  object->arc->x = newx;
+  object->arc->y = newy;
+
+  /* apply mirror to angles */
+  start = object->arc->start_angle;
+  end = object->arc->end_angle;
+
+#if 1				/* vertical */
+  start = 180 - start;
+#else /* horizontal */
+  start = -start;
 #endif
 
-	object->arc->x = newx - radius;
-	object->arc->y = newy + radius;
+  if (start < 0)
+    start = (360 - (-start % 360)) % 360;
+  else
+    start = start % 360;
 
-	/* change angle values next... */
+  object->arc->start_angle = start;
+  object->arc->end_angle = -end;
 
-	object->arc->width = newx + radius;
-	object->arc->height = newy - radius;
+  /* translate object back to its previous position */
+  o_arc_translate (w_current, centerx, centery, object);
 
-
-#if 1 /* vertical */
-	start = 180 - object->arc->start_angle/64; 
-#endif
-
-
-#if 0 /* horizontal */
-	start = -object->arc->start_angle/64; 
-#endif
-
-
-	if (start <0) {
-		object->arc->start_angle = (360 - (-start % 360)) % 360;
-	} else { 
-		object->arc->start_angle = start % 360;
-	}
-
-	object->arc->start_angle = object->arc->start_angle*64;
-	object->arc->end_angle = -object->arc->end_angle;
-	
-
-	o_arc_translate_world(w_current, world_centerx, world_centery, object);
-}                                   
-
+}
+	  /* done */
 void
-o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object)
+o_arc_mirror_world (TOPLEVEL * w_current,
+		    int world_centerx, int world_centery, OBJECT * object)
 {
-	int newx, newy;
-	int height, width;
-	int radius;
+  int x, y, newx, newy;
+  int start, end;
 
-	int x, y;
-	int start;
+  /* translate object to origin */
+  o_arc_translate_world (w_current, -world_centerx, -world_centery, object);
 
-        width = object->arc->width;
-        height = object->arc->height;
+  /* get center, and mirror it */
+  x = object->arc->x;
+  y = object->arc->y;
 
-	radius = abs(height - object->arc->y)/2;
-
-	/* translate object to origin */
-	o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
-
-	/* get center */
-	x = object->arc->x+radius;
-	y = object->arc->y-radius;
-
-#if 1 /* vertical */
-	newx = -x;
-	newy = y;
+#if 1				/* vertical */
+  newx = -x;
+  newy = y;
+#else /* horizontal */
+  newx = x;
+  newy = -y;
 #endif
 
-#if 0 /* horizontal */
-	newx = x;
-	newy = -y;
+  object->arc->x = newx;
+  object->arc->y = newy;
+
+  /* apply mirror to angles */
+  start = object->arc->start_angle;
+  end = object->arc->end_angle;
+
+#if 1				/* vertical */
+  start = 180 - start;
+#else /* horizontal */
+  start = -start;
 #endif
 
-	object->arc->x = newx - radius;
-	object->arc->y = newy + radius;
+  if (start < 0)
+    start = (360 - (-start % 360)) % 360;
+  else
+    start = start % 360;
 
-	/* change angle values next... */
+  object->arc->start_angle = start;
+  object->arc->end_angle = -end;
 
-	object->arc->width = newx + radius;
-	object->arc->height = newy - radius;
+  /* translate object back to its previous position */
+  o_arc_translate_world (w_current, world_centerx, world_centery, object);
 
-
-#if 1 /* vertical */
-	start = 180 - object->arc->start_angle/64; 
-#endif
-
-
-#if 0 /* horizontal */
-	start = -object->arc->start_angle/64; 
-#endif
-
-
-	if (start <0) {
-		object->arc->start_angle = (360 - (-start % 360)) % 360;
-	} else { 
-		object->arc->start_angle = start % 360;
-	}
-
-	object->arc->start_angle = object->arc->start_angle*64;
-	object->arc->end_angle = -object->arc->end_angle;
-	
-
-	o_arc_translate_world(w_current, world_centerx, world_centery, object);
-}                                   
-
+}
+    /* done */
