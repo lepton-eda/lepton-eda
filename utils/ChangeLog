@@ -2,6 +2,9 @@
 
         * configure.ac: Updated version to 20040111
 
+	* src/gsch2pcb.c, examples/gsch2pcb/project.sample: Upgraded to 
+	Bill Wilson's latest version (1.4) (1.3 skipped)
+
 2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* docs/Makefile.am: Changed doc install directory readme to readmes

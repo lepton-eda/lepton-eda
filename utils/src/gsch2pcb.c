@@ -32,7 +32,7 @@
 #endif
 
 
-#define	GSC2PCB_VERSION		"1.2"
+#define	GSC2PCB_VERSION		"1.4"
 
 #define	DEFAULT_PCB_INC		"pcb.inc"
 
@@ -48,8 +48,12 @@ typedef struct
 	gint		x,
 				y;
 	gchar		*pkg_name_fix;
+	gchar		res_char;
+
 	gboolean	still_exists,
-				new_format;
+				new_format,
+				hi_res_format,
+				omit_PKG;
 	}
 	PcbElement;
 
@@ -74,6 +78,8 @@ static gchar	*m4_command,
 				*m4_files,
 				*m4_override_file;
 
+static gchar	*empty_footprint_name;
+
 static gint		verbose,
 				n_deleted,
 				n_added_m4,
@@ -83,7 +89,10 @@ static gint		verbose,
 				n_PKG_removed_old,
 				n_preserved,
 				n_changed_value,
-				n_unknown;
+				n_not_found,
+				n_unknown,
+				n_none,
+				n_empty;
 
 static gboolean	remove_unfound_elements,
 				force_element_files,
@@ -273,7 +282,10 @@ fix_spaces(gchar *str)
 	return str;
 	}
 
-  /* New PCB 1.7 / 1.99 Element() line format:
+  /* As of 1/9/2004 CVS hi_res Element[] line format:
+  |  Element[element_flags, description, pcb-name, value, mark_x, mark_y,
+  |			text_x, text_y, text_direction, text_scale, text_flags]
+  |  New PCB 1.7 / 1.99 Element() line format:
   |  Element(element_flags, description, pcb-name, value, mark_x, mark_y,
   |			text_x, text_y, text_direction, text_scale, text_flags)
   |  Old PCB 1.6 Element() line format:
@@ -282,19 +294,32 @@ fix_spaces(gchar *str)
   |
   |  (mark_x, mark_y) is the element position (mark) and (text_x,text_y)
   |  is the description text position which is absolute in pre 1.7 and
-  |  is now relative.
+  |  is now relative.  The hi_res mark_x,mark_y and text_x,text_y resolutions
+  |  are 100x the other formats.
   */
 PcbElement *
 pcb_element_line_parse(gchar *line)
 	{
 	PcbElement	*el = NULL;
-	gchar		*s, *t;
+	gchar		*s, *t, close_char;
 	gint		state = 0, elcount = 0;
 
-	if (strncmp(line, "Element(", 8))
+	if (strncmp(line, "Element", 7))
 		return NULL;
 
 	el = g_new0(PcbElement, 1);
+
+	if (*(line + 7) == '[')
+		el->hi_res_format = TRUE;
+	else if (*(line + 7) != '(')
+		{
+		g_free(el);
+		return NULL;
+		}
+
+	el->res_char = el->hi_res_format ? '[' : '(';
+	close_char = el->hi_res_format ? ']' : ')';
+
 	el->flags = token(line + 8, NULL);
 	el->description = token(NULL, NULL);
 	el->refdes = token(NULL, NULL);
@@ -315,7 +340,7 @@ pcb_element_line_parse(gchar *line)
 	/* Count the tokens in tail to decide if it's new or old format.
 	|  Old format will have 3 tokens, new format will have 5 tokens.
 	*/
-	for (s = el->tail; *s && *s != ')'; ++s)
+	for (s = el->tail; *s && *s != close_char; ++s)
 		{
 		if (*s != ' ')
 			{
@@ -430,12 +455,15 @@ pcb_element_exists(PcbElement *el_test, gboolean record)
 static void
 simple_translate(PcbElement *el)
 	{
+	gint	factor;
+
 	if (el->new_format)
 		{
-		if (el->x > 1000)
-			el->x = 500;
-		if (el->y > 1000)
-			el->y = 500;
+		factor = el->hi_res_format ? 100 : 1;
+		if (el->x > 1000 * factor)
+			el->x = 500 * factor;
+		if (el->y > 1000 * factor)
+			el->y = 500 * factor;
 		}
 	}
 
@@ -456,7 +484,7 @@ insert_element(FILE *f_out, gchar *element_file,
 		return FALSE;
 		}
 	/* Copy the file element lines.  Substitute new parameters into the
-	|  Element() line and strip comments.
+	|  Element() or Element[] line and strip comments.
 	*/
 	while ((fgets(buf, sizeof(buf), f_in)) != NULL)
 		{
@@ -465,8 +493,8 @@ insert_element(FILE *f_out, gchar *element_file,
 		if ((el = pcb_element_line_parse(s)) != NULL)
 			{
 			simple_translate(el);
-			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
-						el->flags, footprint, refdes, value,
+			fprintf(f_out, "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+						el->res_char, el->flags, footprint, refdes, value,
 						el->x, el->y, el->tail);
 			retval = TRUE;;
 			}
@@ -665,6 +693,32 @@ pkg_to_element(FILE *f, gchar *pkg_line)
 			*s = '\0';
 		}
 	g_strfreev(args);
+
+	if (empty_footprint_name && !strcmp(el->description, empty_footprint_name))
+		{
+		if (verbose)
+			printf(
+"%s: has the empty footprint attribute \"%s\" so won't be in the layout.\n",
+				el->refdes, el->description);
+		n_empty += 1;
+		el->omit_PKG = TRUE;
+		}
+	else if (!strcmp(el->description, "none"))
+		{
+		fprintf(stderr,
+"WARNING: %s has a footprint attribute \"%s\" so won't be in the layout.\n",
+				el->refdes, el->description);
+		n_none += 1;
+		el->omit_PKG = TRUE;
+		}
+	else if (!strcmp(el->description, "unknown"))
+		{
+		fprintf(stderr,
+		"WARNING: %s has no footprint attribute so won't be in the layout.\n",
+				el->refdes);
+		n_unknown += 1;
+		el->omit_PKG = TRUE;
+		}
 	return el;
 	}
 
@@ -717,9 +771,14 @@ add_elements(gchar *pcb_file)
 			pcb_element_free(el);
 			continue;
 			}
-		if (!el)
+		if (!el || el->omit_PKG)
 			{
-			fputs(buf, f_out);
+			if (el)
+				{
+				
+				}
+			else
+				fputs(buf, f_out);
 			continue;
 			}
 		if (!is_m4 || (is_m4 && force_element_files))
@@ -761,7 +820,7 @@ add_elements(gchar *pcb_file)
 					}
 				else
 					{
-					++n_unknown;
+					++n_not_found;
 					fputs(buf, f_out);	/* Copy PKG_ line */
 					}
 				}
@@ -783,7 +842,7 @@ add_elements(gchar *pcb_file)
 	fclose(f_in);
 	fclose(f_out);
 
-	total = n_added_ef + n_added_m4 + n_unknown;
+	total = n_added_ef + n_added_m4 + n_not_found;
 	if (total == 0)
 		command = g_strconcat("rm ", tmp_file, NULL);
 	else
@@ -830,7 +889,8 @@ update_element_descriptions(gchar *pcb_file, gchar *bak)
 			&& el_exists->changed_description
 		   )
 			{
-			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+			fprintf(f_out, "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+						el->res_char,
 						el->flags, el_exists->changed_description,
 						el->refdes, el->value, el->x, el->y, el->tail);
 			printf("%s: updating element Description: %s -> %s\n",
@@ -928,8 +988,8 @@ prune_elements(gchar *pcb_file, gchar *bak)
 			}
 		if (el_exists && el_exists->changed_value)
 			{
-			fprintf(f_out, "Element(%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
-					el->flags, el->description, el->refdes,
+			fprintf(f_out, "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+					el->res_char, el->flags, el->description, el->refdes,
 					el_exists->changed_value, el->x, el->y, el->tail);
 			if (verbose)
 				printf(
@@ -1055,6 +1115,8 @@ parse_config(gchar *config, gchar *arg)
 	else if (!strcmp(config, "gnetlist"))
 		extra_gnetlist_list =
 				g_list_append(extra_gnetlist_list, g_strdup(arg));
+	else if (!strcmp(config, "empty-footprint"))
+		empty_footprint_name = g_strdup(arg);
 	else
 		return -1;
 
@@ -1150,10 +1212,10 @@ static gchar *usage_string0 =
 "                         instead of the default:\n";
 
 static gchar *usage_string1 =
-"\n"
-"       --gnetlist backend  A convenience run of extra gnetlist -g commands.\n"
+"   --gnetlist backend    A convenience run of extra gnetlist -g commands.\n"
 "                         Example:  gnetlist partslist3\n"
 "                         Creates:  myproject.partslist3\n"
+" --empty-footprint name  See the project.sample file.\n"
 "\n"
 "options (not recognized in a project file):\n"
 "       --fix-elements    If a schematic component footprint is not equal\n"
@@ -1255,6 +1317,7 @@ main(gint argc, gchar **argv)
 		   m4_pcbdir
 		: "/usr/X11R6/lib/X11/pcb/m4" /* hardwired in gnet-gsch2pcb.scm */);
 
+
 	get_args(argc, argv);
 
 	load_extra_project_files();
@@ -1262,6 +1325,7 @@ main(gint argc, gchar **argv)
 
 	if (!schematics)
 		usage();
+
 
 	/* Hardwire in directories from Pcb.ad.  PCB as of 20031113 uses share
 	|  instead of lib.  Check for standard prefix dirs of /usr and /usr/local.
@@ -1337,12 +1401,22 @@ main(gint argc, gchar **argv)
 	if (n_added_ef + n_added_m4 > 0)
 		printf("%d file elements and %d m4 elements added to %s.\n",
 					n_added_ef, n_added_m4, pcb_new_file_name);
-	else if (n_unknown == 0)
+	else if (n_not_found == 0)
 		printf("No elements to add so not creating %s\n", pcb_new_file_name);
+	if (n_not_found > 0)
+		{
+		printf("%d not found elements added to %s.\n",
+				n_not_found, pcb_new_file_name);
+		}
 	if (n_unknown > 0)
-		printf("%d unknown elements added to %s.\n",
-				n_unknown, pcb_new_file_name);
-
+		printf("%d components had no footprint attribute and are omitted.\n",
+				n_unknown);
+	if (n_none > 0)
+		printf("%d components with footprint \"none\" omitted from %s.\n",
+				n_none, pcb_new_file_name);
+	if (n_empty > 0)
+		printf("%d components with empty footprint \"%s\" omitted from %s.\n",
+				n_empty, empty_footprint_name, pcb_new_file_name);
 	if (n_changed_value > 0)
 		printf("%d elements had a value change in %s.\n",
 				n_changed_value, pcb_file_name);

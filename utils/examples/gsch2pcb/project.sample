@@ -68,7 +68,27 @@ output-name	foo
 # For example, to create a partslist file myproject.partslist3:
 #
 #gnetlist partslist3
-
+#
 # To create a partslist with a specified output file name board.parts:
 #
 #gnetlist partslist3 -o board.parts
+
+# The default gsch2pcb behavior is to skip with a warning any components
+# with a footprint=none attribute.  So the "none" footprint can serve as a
+# generic place holder where multiple real footprints are candidates and the
+# gsch2pcb warning serves as a reminder that some real footprint should
+# be chosen.
+# However, if it is intended that components with a "none" footprint should
+# not be in the layout, you can suppress the warnings by specifying it as
+# the empty-footprint:
+#
+#empty-footprint none
+#
+# If you assign a name other than "none" to empty-footprint, then components
+# with that name will be omitted instead and you will need to use the verbose
+# option to see any warnings.  This is just a convenience way to have symbols
+# in a schematic which will not be mounted on the PC board and to shut up
+# gsch2pcb warnings about it.  But note that if you make net connections
+# to these symbols, they will be in the netlist and PCB will warn if the
+# netlist is loaded.  So, maybe connections to such parts should be drawn
+# with a graphical line and not a net?
