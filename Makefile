@@ -98,8 +98,9 @@ xinstall:
 		if ! test -f setup.sh ; then \
 			if test -x $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh; then \
 				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
-			elif test -f setup$(CD_VERSION).tar.gz; then \
-				tar -xzf setup$(CD_VERSION).tar.gz src/setup.sh ; \
+			elif test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
+				tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh ; \
+				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
 			else \
 				echo "ERROR ! Cannot find setup.sh ..." >&2 ; \
 				exit 0 ; \
@@ -110,8 +111,9 @@ xinstall:
 		if ! test -f setup.cfg ; then \
 			if test -f $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg; then \
 				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg . ; \
-			elif test -f setup$(CD_VERSION).tar.gz; then \
-				tar -xzf setup$(CD_VERSION).tar.gz src/setup.cfg ; \
+			elif test -f $(DIR_PREFIX)setup$(CD_VERSION).tar.gz; then \
+				tar -xzf $(DIR_PREFIX)setup$(CD_VERSION).tar.gz $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg ; \
+				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg . ; \
 			else \
 				echo "ERROR ! Cannot find setup.cfg ..." >&2 ; \
 				exit 0 ; \
