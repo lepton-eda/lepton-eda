@@ -2,6 +2,10 @@
 
 	* configure.in: Updated version to 20021103 (an official version)
 
+	* configure.in: Changed some of the AC_MSG_ERROR lines to just
+	echos, this will allow me to distribute prebuilt docs and still
+	use the configure mechanism
+
 2002-10-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, Makefile.am: Updates to get things working a little
