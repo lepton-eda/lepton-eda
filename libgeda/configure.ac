@@ -73,7 +73,14 @@ AC_PROG_MAKE_SET
 # Check for guile start
 #
 GUILE_FLAGS
-GUILE_PROGS
+
+# Manually search for guile-config.  This is provided by GUILE_PROGS, but
+# guile-1.4 does not have GUILE_PROGS, so we have to do it manually.
+AC_PATH_PROG(GUILE_CONFIG,guile-config)
+if test "$GUILE_CONFIG" = "" ; then
+    AC_MSG_ERROR([guile-config required but not found])
+fi
+AC_SUBST(GUILE_CONFIG)
 
 # must have guile flags in CFLAGS for AC_COMPILE_IFELSE to work right
 svead_CFLAGS="${CFLAGS}"

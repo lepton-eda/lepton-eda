@@ -5,6 +5,9 @@
 	* noweb/x_dialog.nw: Rewrote the exit dialog box to look better
 	under gtk+ 2.2.x and 1.2.x
 
+	* configure.ac: Removed the use of GUILE_PROGS as it is not part
+	of guile 1.4.  Put in a manual check for guile-config.
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_multiattrib.nw: Oops wasn't return true or false in the

@@ -2,6 +2,9 @@
 
 	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
 
+        * configure.ac: Removed the use of GUILE_PROGS as it is not part
+        of guile 1.4.  Put in a manual check for guile-config.
+
 2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Fixed the test for libgdgeda.  It was failing if
