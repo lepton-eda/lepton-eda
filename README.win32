@@ -3,7 +3,7 @@ gEDA
 
 GNU Electronic Design Automation
 --------------------------------------------------------------------------
-Build instructions for CYGWIN/gEDA (gEDA running on Win32 machines)
+Build instructions for gEDA/Cygwin (gEDA running on Win32 machines)
 
 First an important warning:
 
@@ -14,7 +14,7 @@ build bug.
 
 If you don't understand any part of this document, then 1) ask Ales, it 
 might be a valid question, and/or 2) Just run the binary distribution of 
-CYGWIN/gEDA.   
+gEDA/Cygwin.   
 
 --------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ Here is a list of all the cygwin packages I installed (some are old, just
 grab the latest versions):
 
 ash-20000627.tar.gz       gzip.tar.gz
-bash-2.04.1.tar.gz        index.html
+bash-2.04.1.tar.gz        README
 binutils-20000625.tar.gz  inetutils-1.3.2-4.tar.gz
 bison.tar.gz              less.tar.gz
 bootstrap.zip             m4.tar.gz
@@ -46,6 +46,15 @@ gawk-3.0.4.tar.gz         texinfo.tar.gz
 gcc-2.95.2-5.tar.gz       textutils.tar.gz
 gdb-20000610.tar.gz       w32api-20001111-1.tar.gz
 grep.tar.gz
+
+	It is important to get regex-*.tar.gz so that some of the gnetlist
+backends and other scheme scripts in gEDA run.  You also need to install
+cvs-win32 if you want to checkout gEDA from the CVS repository.
+
+	You will also need the following libraries (from the cygwin contrib
+directory) if you want to build libgdgeda-1.8:
+
+libpng-1.0.8-2.tar.gz  zlib-1.1.3-5-src.tar.gz 
 
 
 *	set MAKEFLAGS to --unix
@@ -71,9 +80,11 @@ mounts with textmode
 			 Windows path to this will be: c:\cygwin\geda)
 
 * Added /geda/bin to your path (either in the cygwin environment by editing
-  a shell init file (.profile) or set it for all windows with My Computer/
+  a shell init file (.bashrc) or set it for all windows with My Computer/
   Properties/Environment/PATH.  You have to set globally if you want to 
-  gschem and friends outside of the cygwin environment 
+  gschem and friends outside of the cygwin environment.  If you do use the
+  Windows environment dialog box, make sure you give it a windows path,
+  ie c:\cygwin\geda\bin  (not /geda/bin). 
 
 --------------------------------------------------------------------------
 
@@ -81,16 +92,15 @@ mounts with textmode
 Installed guile-1.4:
 
 * Untar guile-1.4.tar.gz. 
-	If you use winzip, then winzip may complain 
-	about and-let*.scm 
-	Get this file from a unix host and call it and-let.scm
+	You will get a complaint about and-let*.scm 
+	Get this file from a unix host and call it and-letstar.scm
 
 * Run bash (via c:\cygwin\cygwin.bat)
 
 * cd guile-1.4
 
-* edit Makefile.in in ice-9 and remove the * in and-let*.scm,
-	add file to ice-9 dir: and-let.scm 
+* edit Makefile.in in ice-9 and replace the * in and-let*.scm with star,
+	add file to ice-9 dir: and-letstar.scm 
 
 * ./configure --prefix=/geda 
 
@@ -135,14 +145,27 @@ Install gtk+, gdk, and glib per these instructions:
 	/geda/src/libiconv-1.3/src
   into /geda/bin (which is in your path)
 
-* touch /geda/src/gtk+/gdk/gdkx.h into existance (empty file)
+* Copy all the *.a from 
+	/geda/src/gtk+/gtk
+	/geda/src/gtk+/gdk
+	/geda/src/glib
+	/geda/src/glib/gmodule
+	/geda/src/intl
+	/geda/src/libiconv-1.3/src
+
+  Rename each of the *.a file to be libPACKAGE.a (not libPACKAGE-1.3.a, get 
+  rid of the version)
+
+* touch /geda/src/gtk+/gdk/gdkx.h into existance (empty file).  This file
+  really should be used in the gEDA sources, I will eventually remove the
+  reference.
 
 * Edit /geda/src/glib/gwin32.h  and comment out the lines which define
   the glib dirent interface (this conflicts with the cygwin one).  
   Approximately lines 67-100.  If you do this, don't use this include for 
   any other gtk+/win32 programs.  You have been warned.
 
-* Also in /geda/src/glib/gwin32.h comment out MAXPATHLEN #define 
+* Also in /geda/src/glib/gwin32.h comment out MAXPATHLEN #define (line 39)
   (it conflicts with something in cygwin install)
 
 
@@ -150,22 +173,36 @@ Install gtk+, gdk, and glib per these instructions:
 
 Get gEDA from CVS 
 
-*	Install CVS (make sure cvs.exe is in your path)
+* Install CVS (make sure cvs.exe is in your path)
 
-*	Set CVSROOT to: :pserver:anoncvs@cvs.seul.org:/home/cvspsrv/cvsroot
+* Set CVSROOT to: :pserver:anoncvs@cvs.seul.org:/home/cvspsrv/cvsroot
 
-*	cd <to some good toplevel directory like devel>
+* cd <to some good toplevel directory like devel>
 
-*	cvs login
+* cvs login
 
-*	cvs co geda/devel/libgeda geda/devel/symbols geda/devel/gschem
+* cvs co geda/devel
 
-*	cvs co geda/devel/winfonts geda/devel/gsymcheck geda/devel/gnetlist
-
-*	cvs co Makefile README
+* cvs co support/libgdgeda-1.8
 
 Alternatively, you can grab all the development tarballs and use those
 instead of checking stuff out of CVS
+
+--------------------------------------------------------------------------
+
+Building libgdgeda-1.8
+
+This step is OPTIONAL.  Build and install libgdgeda if you want PNG output
+support.  
+
+Make sure you have installed libpng and zlib from the cygwin site and not
+the version that came with gtk+
+
+* cd geda/support/libgdgeda-1.8	
+
+* ./configure --prefix=/geda
+
+* make install
 
 --------------------------------------------------------------------------
 
