@@ -18,6 +18,10 @@
 	* noweb/x_print.nw: Added the key binding for the Escape key
 	
 	* noweb/x_image.nw: Added the key binding for the Escape key
+
+	* noweb/o_misc.nw: Fixed the long standing bug in o_edit_find_text
+	where the found text would sometimes be unlegible because of the
+	zoom factor (pointed out by Dave Lawrence a long long time ago).
 	
 2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
 

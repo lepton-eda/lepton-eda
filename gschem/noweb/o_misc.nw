@@ -937,6 +937,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
   int page_control = 0;
   int pcount = 0;
   int rv;
+  int text_screen_height;
 
   OBJECT *o_current = NULL;
 
@@ -996,16 +997,31 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 	   } */
 	if (!skiplast) {
 
-#if 0 /* replaced by below call by avh, might not quite be right though */
+#if 0 /* replaced by code below by avh, might not quite be right though */
 	  set_window(w_current, o_current->text->x - FIND_WINDOW_HALF_SIZE,
 		     o_current->text->x + FIND_WINDOW_HALF_SIZE,
 		     o_current->text->y - FIND_WINDOW_HALF_SIZE,
 		     o_current->text->y + FIND_WINDOW_HALF_SIZE);
+          correct_aspect(w_current);
+
 #endif
-	  a_zoom_extents(w_current, w_current->page_current->object_head,
-                         A_PAN_DONT_REDRAW);
-	  a_pan_general(w_current, o_current->text->x, o_current->text->y, 
-	  	        1, A_PAN_DONT_REDRAW);
+          a_zoom(w_current, ZOOM_FULL, HOTKEY, A_PAN_DONT_REDRAW);
+          text_screen_height =  SCREENabs(w_current,
+                                          o_text_height(w_current,
+                                                        o_current->
+                                                        text->size));
+          /* this code will zoom/pan till the text screen height is about */
+          /* 50 pixels high, perhaps a future enhancement will be to make */
+          /* this number configurable */
+          while (text_screen_height < 50) {
+            a_zoom(w_current, ZOOM_IN, HOTKEY, A_PAN_DONT_REDRAW);
+            a_pan_general(w_current, o_current->text->x, o_current->text->y, 
+                          1, A_PAN_DONT_REDRAW);
+            text_screen_height =  SCREENabs(w_current,
+                                            o_text_height(w_current,
+                                                          o_current->
+                                                          text->size));
+          }
 	  x_scrollbars_update(w_current);
 	  o_redraw_all_fast(w_current);
 
