@@ -36,24 +36,28 @@
 <<o_attrib.c : o_attrib_set_show()>>
 <<o_attrib.c : o_attrib_set_visible()>>
 <<o_attrib.c : o_attrib_set_string()>>
-<<o_attrib.c : o_attrib_search_name()>>
-<<o_attrib.c : o_attrib_search_name2()>>
-<<o_attrib.c : o_attrib_search_name_partial()>>
-<<o_attrib.c : o_attrib_search_attrib_value()>>
-<<o_attrib.c : o_attrib_search_attrib_name()>>
-<<o_attrib.c : o_attrib_search_toplevel()>>
 <<o_attrib.c : o_attrib_return_parent()>>
 <<o_attrib.c : o_attrib_copy_all()>>
 <<o_attrib.c : o_attrib_reattach()>>
 <<o_attrib.c : o_attrib_set_color()>>
+#if 0 /* obsolete */
+<<o_attrib.c : o_attrib_search_name2()>>
+<<o_attrib.c : o_attrib_search_name_partial()>>
+#endif
+<<o_attrib.c : o_attrib_search_name()>>
+<<o_attrib.c : o_attrib_search_string_list()>>
+<<o_attrib.c : o_attrib_search_string_partial()>>
+<<o_attrib.c : o_attrib_search_attrib_value()>>
+<<o_attrib.c : o_attrib_search_attrib_name()>>
+<<o_attrib.c : o_attrib_search_toplevel()>>
 <<o_attrib.c : o_attrib_search_special()>>
 <<o_attrib.c : o_attrib_search_name_single()>>
 <<o_attrib.c : o_attrib_search_name_single_count()>>
 <<o_attrib.c : o_attrib_search_slot()>>
 <<o_attrib.c : o_attrib_search_numslots()>>
 <<o_attrib.c : o_attrib_search_default_slot()>>
-<<o_attrib.c : o_attrib_search_pin_number()>>
-<<o_attrib.c : o_attrib_search_slot_number()>>
+<<o_attrib.c : o_attrib_search_pinseq()>>
+<<o_attrib.c : o_attrib_search_slotdef()>>
 <<o_attrib.c : o_attrib_search_component()>>
 <<o_attrib.c : o_attrib_slot_update()>>
 <<o_attrib.c : o_attrib_slot_copy()>>
@@ -1089,6 +1093,104 @@ o_attrib_set_string(TOPLEVEL *w_current, char *string)
 @ %def o_attrib_set_string
 
 
+
+
+#if 0 /* obsolete */
+@section Function @code{o_attrib_search_name2()}
+
+@defun o_attrib_search_name2 list name return_found
+@end defun
+
+<<o_attrib.c : o_attrib_search_name2()>>=
+/* it is the responsibility of the caller to free the returned string */
+/* returned string is the value */
+/* counter is the nth occurance of the attribute, starts from ZERO! */
+/* zero being the first occurance */
+/* the list is the top level list... don't pass it an object_head list */
+/* unless you know what you are doing... */
+/* be sure caller free's return value */
+/* this needs a better name, but it's a special function of above which */
+/* returns the object where the attribute lives */
+char *
+o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found) 
+{
+  OBJECT *o_current;
+  ATTRIB *a_current;
+  OBJECT *found;
+  int val;
+  char found_name[128]; /* limit hack */
+  char found_value[128];
+  char *return_string;
+
+  o_current = list;
+
+  while(o_current != NULL) {
+    if (o_current->attribs != NULL) {
+      a_current = o_current->attribs;
+
+      while(a_current != NULL) {
+        found = a_current->object;
+        if (found != NULL) {
+          if (found->type == OBJ_TEXT) {
+            val = o_attrib_get_name_value(
+                                          found->text->string, 
+                                          found_name, found_value);
+
+            if (val) {
+              if (strcmp(name, found_name) == 0) {
+                return_string = (char *) 
+                  malloc(
+                         sizeof(char)*
+                         strlen(found_value)+1);
+                strcpy(return_string, found_value);
+                if (return_found) {
+                  *return_found = found;
+                }
+                return(return_string);
+              }
+            }	
+
+#if DEBUG 
+            printf("0 _%s_\n", found->text->string);
+            printf("1 _%s_\n", found_name);
+            printf("2 _%s_\n", found_value);
+#endif
+          }
+        }
+        a_current=a_current->next;
+      }	
+    }
+
+    /* search for attributes outside */
+
+    if (o_current->type == OBJ_TEXT) {
+      val = o_attrib_get_name_value(
+                                    o_current->text->string, 
+                                    found_name, found_value);
+      if (val) {
+        if (strcmp(name, found_name) == 0) {
+          return_string = (char *) 
+            malloc(
+                   sizeof(char)*
+                   strlen(found_value)+1);
+          strcpy(return_string, found_value);
+          if (return_found) {
+            *return_found = o_current;
+            return(return_string);
+          }
+        }
+      }	
+    }
+
+    o_current=o_current->next;
+  }
+	
+  return (NULL);
+} 
+
+@ %def o_attrib_search_name2
+#endif
+
 @section Function @code{o_attrib_search_name()}
 
 @defun o_attrib_search_name list name counter
@@ -1185,35 +1287,25 @@ o_attrib_search_name(OBJECT *list, char *name, int counter)
 @ %def o_attrib_search_name
 
 
-@section Function @code{o_attrib_search_name2()}
+@section Function @code{o_attrib_search_string_list()}
 
-@defun o_attrib_search_name2 list name return_found
+@defun o_attrib_search_string_list list string return_found 
 @end defun
 
-<<o_attrib.c : o_attrib_search_name2()>>=
-/* it is the responsibility of the caller to free the returned string */
-/* returned string is the value */
-/* counter is the nth occurance of the attribute, starts from ZERO! */
-/* zero being the first occurance */
+<<o_attrib.c : o_attrib_search_string_list()>>=
 /* the list is the top level list... don't pass it an object_head list */
 /* unless you know what you are doing... */
-/* be sure caller free's return value */
-/* this needs a better name, but it's a special function of above which */
-/* returns the object where the attribute lives */
-char *
-o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found) 
+OBJECT *
+o_attrib_search_string_list(OBJECT *list, char *string)
 {
   OBJECT *o_current;
   ATTRIB *a_current;
   OBJECT *found;
-  int val;
-  char found_name[128]; /* limit hack */
-  char found_value[128];
-  char *return_string;
 
   o_current = list;
 
   while(o_current != NULL) {
+    /* first search attribute list */
     if (o_current->attribs != NULL) {
       a_current = o_current->attribs;
 
@@ -1221,65 +1313,33 @@ o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found)
         found = a_current->object;
         if (found != NULL) {
           if (found->type == OBJ_TEXT) {
-            val = o_attrib_get_name_value(
-                                          found->text->string, 
-                                          found_name, found_value);
-
-            if (val) {
-              if (strcmp(name, found_name) == 0) {
-                return_string = (char *) 
-                  malloc(
-                         sizeof(char)*
-                         strlen(found_value)+1);
-                strcpy(return_string, found_value);
-                if (return_found) {
-                  *return_found = found;
-                }
-                return(return_string);
-              }
-            }	
-
-#if DEBUG 
-            printf("0 _%s_\n", found->text->string);
-            printf("1 _%s_\n", found_name);
-            printf("2 _%s_\n", found_value);
-#endif
-          }
+            if (strcmp(string, found->text->string) == 0) {
+              return(found);
+            }
+          }	
         }
         a_current=a_current->next;
-      }	
-    }
-
-    /* search for attributes outside */
-
+      }
+    }	
+  
+    /* search for attributes outside (ie the actual object) */
     if (o_current->type == OBJ_TEXT) {
-      val = o_attrib_get_name_value(
-                                    o_current->text->string, 
-                                    found_name, found_value);
-      if (val) {
-        if (strcmp(name, found_name) == 0) {
-          return_string = (char *) 
-            malloc(
-                   sizeof(char)*
-                   strlen(found_value)+1);
-          strcpy(return_string, found_value);
-          if (return_found) {
-            *return_found = o_current;
-            return(return_string);
-          }
-        }
-      }	
+      if (strcmp(string, o_current->text->string) == 0) {
+        return(o_current);
+      }
     }
-
+    
     o_current=o_current->next;
   }
-	
+
   return (NULL);
 } 
 
-@ %def o_attrib_search_name2
+@ %def o_attrib_search_string_list
 
 
+
+#if 0 /* obsolete */
 @section Function @code{o_attrib_search_name_partial()}
 
 @defun o_attrib_search_name_partial object name counter
@@ -1329,7 +1389,11 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
                 /* THIS IS A TOTAL HACK.  Ales should be *totally* ashamed of this */
                 /* This prevents gnetlist from picking up pinlabel when it wants pin */
                 /* THIS BETTER BE FIXED when pin#=# goes away */
-                if (!strstr(found_name, "label")) {
+               if (!strcmp(name, "pin") && !isdigit(found_name[3])) {
+                 // we were looking for a pin number attribute in the
+                 // form of pin#=#, but this attribute has a non-number
+                 // after the word pin.  Ignore it.
+               } else {
                   /* ************************************************************* */
                   return_string = (char *) 
                     malloc(
@@ -1379,6 +1443,61 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 } 
 
 @ %def o_attrib_search_name_partial
+#endif
+
+
+@section Function @code{o_attrib_search_string_partial()}
+
+@defun o_attrib_search_string_partial object name counter
+@end defun
+
+<<o_attrib.c : o_attrib_search_string_partial()>>=
+/* it is the responsibility of the caller to free the returned string */
+/* returned string is the value */
+/* counter is the nth occurance of the attribute, starts from ZERO! */
+/* zero being the first occurance */
+/* be sure caller free's return value */
+char *
+o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter) 
+{
+  OBJECT *o_current;
+  ATTRIB *a_current;
+  OBJECT *found;
+  int val;
+  int internal_counter=0;
+  char found_name[128]; /* limit hack */
+  char found_value[128];
+  char *return_string;
+
+  o_current = object;
+
+  if (o_current == NULL) {
+    return(NULL);
+  }
+
+  if (o_current->type == OBJ_TEXT) {
+    if (strstr(o_current->text->string, search_for)) {
+      if (counter != internal_counter) {
+        internal_counter++;	
+      } else {
+        val = o_attrib_get_name_value(o_current->text->string, 
+                                      found_name, found_value);
+        if (val) {
+          return_string = (char *) 
+            malloc(
+                   sizeof(char)*
+                   strlen(found_value)+1);
+          strcpy(return_string, found_value);
+          return(return_string);
+        }
+      }
+    }
+  }	
+	
+  return (NULL);
+} 
+
+@ %def o_attrib_search_string_partial
 
 
 @section Function @code{o_attrib_search_attrib_value()}
@@ -1820,7 +1939,7 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
             }
           }	
 
-#if DEBUG 
+#if DEBUG
           printf("0 _%s_\n", found->text->string);
           printf("1 _%s_\n", found_name);
           printf("2 _%s_\n", found_value);
@@ -2035,73 +2154,66 @@ o_attrib_search_default_slot(OBJECT *object)
 @ %def o_attrib_search_default_slot
 
 
-@section Function @code{o_attrib_search_pin_number()}
+@section Function @code{o_attrib_search_pinseq()}
 
-@defun o_attrib_search_pin_number object pin_number return_found
+@defun o_attrib_search_pinseq object pin_number
 @end defun
 
-<<o_attrib.c : o_attrib_search_pin_number()>>=
-char *
-o_attrib_search_pin_number(OBJECT *object, int pin_number, 
-	OBJECT **return_found)
+<<o_attrib.c : o_attrib_search_pinseq()>>=
+OBJECT *
+o_attrib_search_pinseq(OBJECT *list, int pin_number)
 {
+  OBJECT *pinseq_text_object;
+  ATTRIB *a_current;
   char *return_value;
   char *search_for;
+  char found_name[128]; /* limit hack */
+  char found_value[128];
 
   /* The 9 is the number of digits plus null */
-  search_for = (char *) malloc(sizeof(char)*(strlen("pin")+9));
+  search_for = (char *) malloc(sizeof(char)*(strlen("pinseq=")+9));
+  sprintf(search_for, "pinseq=%d", pin_number);
 
-  sprintf(search_for, "pin%d", pin_number);
-
-#if DEBUG
-  printf("searching for %s\n", search_for);
-#endif
-
-  /* search for default value attribute buried inside the complex */
-  /* using special name2 function which returns return_found */
-  return_value = o_attrib_search_name2(object, search_for, return_found);
-  free(search_for);
-
-  if (return_value) {
-    return(return_value);
+  pinseq_text_object = o_attrib_search_string_list(list, search_for);
+  if (pinseq_text_object) {
+    free(search_for);
+    return(o_attrib_return_parent(pinseq_text_object->attached_to));
   }
-
-  if (return_found) {
-    *return_found = NULL;
-  }
-
   return(NULL);
 }
 
-@ %def o_attrib_search_pin_number
+@ %def o_attrib_search_pinseq
 
 
-@section Function @code{o_attrib_search_slot_number()}
+@section Function @code{o_attrib_search_slotdef()}
 
 @defun o_attrib_search_slot_number
 @end defun
 
-<<o_attrib.c : o_attrib_search_slot_number()>>=
+<<o_attrib.c : o_attrib_search_slotdef()>>=
 /* be sure caller frees string */
 char *
-o_attrib_search_slot_number(OBJECT *object, int slotnumber)
+o_attrib_search_slotdef(OBJECT *object, int slotnumber)
 {
   char *return_value;
   char *search_for;
+  OBJECT *o_current;
 
   /* The 9 is the number of digits plus null */
-  search_for = (char *) malloc(sizeof(char)*(strlen("slot")+9));
+  search_for = (char *) malloc(sizeof(char)*(strlen("slotdef=:")+9));
 
-  sprintf(search_for, "slot%d", slotnumber);
+  sprintf(search_for, "slotdef=%d:", slotnumber);
 
-#if DEBUG
-  printf("slotnumber: _%s_\n", search_for); 
-#endif
-  /* search for default value attribute buried inside the complex */
-  return_value = o_attrib_search_name(object->complex->prim_objs, 
-                                      search_for, 0);
+  o_current = object->complex->prim_objs;
+  while (o_current != NULL) {
+    return_value = o_attrib_search_string_partial(o_current, search_for, 0);
+    if (return_value) {
+	break;
+    }
+    o_current = o_current->next; 
+  }
   free(search_for);
-
+  
   if (return_value) {
     return(return_value);
   }
@@ -2109,7 +2221,7 @@ o_attrib_search_slot_number(OBJECT *object, int slotnumber)
   return(NULL);
 }
 
-@ %def o_attrib_search_slot_number
+@ %def o_attrib_search_slotdef
 
 
 @section Function @code{o_attrib_search_component()}
@@ -2163,92 +2275,88 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 {
   OBJECT *o_current;
   OBJECT *o_slot_attrib;
-  OBJECT *o_pin_attrib;
+  OBJECT *o_pin_object;
+  OBJECT *o_pinnum_object;
   char *string;
-  char *slot_num;
+  char *slotdef;
   int slot;
   int pin_counter;
   char* current_pin;
+  char* cptr;
 
   o_current = object;
 	
   string = o_attrib_search_slot(o_current, &o_slot_attrib);
 	
   if (!string) {
-#if DEBUG 
-    printf("didn't find slot=\n");
-#endif
+    s_log_message("Did not find slot= attribute\n");
     return;
   } 
-	
-
-#if DEBUG 
-  printf("SLOT attrib found!\n");
-#endif
-
   slot = atoi(string);
   free(string);
-#if DEBUG
-  printf("slot is %d\n", slot);
-#endif
-
-  slot_num = o_attrib_search_slot_number(o_current, slot);
-
-  if (!slot_num) {
-#if DEBUG
-    printf("didn't find slot#=\n");
-#endif
+  
+  slotdef = o_attrib_search_slotdef(o_current, slot);
+  
+  if (!slotdef) {
+    s_log_message("Did not find slotdef=#:#,#,#... attribute\n");
     return;
   }
 
-#if DEBUG
-  printf("slot%d = _%s_\n", slot, string);	
-#endif
-	
+  if (!strstr(slotdef, ":")) {
+    /* didn't proper slotdef=#:... TODO into log*/
+    return;
+  }
+
+  /* skip over slotdef number */
+  /* slotdef is in the form #:#,#,# */
+  /* this code skips first #: */
+  cptr = slotdef;
+  while (*cptr != '\0' && *cptr != ':') {
+    cptr++;
+  }
+  cptr++; /* skip colon */
+
+  if (*cptr == '\0') {
+    s_log_message("Did not find proper slotdef=#:#,#,#... attribute\n");
+    return;
+  }
+  
   pin_counter = 1;
-  current_pin = strtok(slot_num, DELIMITERS);
+  current_pin = strtok(cptr, DELIMITERS);
   while(current_pin != NULL) {
 
-    string = o_attrib_search_pin_number(
-                                        o_current->complex->prim_objs, 
-                                        pin_counter, &o_pin_attrib);
+    o_pin_object = o_attrib_search_pinseq(o_current->complex->prim_objs, 
+                                          pin_counter);
 
-    if (string) {
+    if (o_pin_object) {
 
-      /* don't care about the value */
-      free(string);
+      string = o_attrib_search_name_single(o_pin_object, "pinnumber",
+                                           &o_pinnum_object);
+  
+      if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
+          o_pinnum_object->text->string) {
+        free(string);
+        free(o_pinnum_object->text->string);
 
-      if (o_pin_attrib->text->string) {
-        free(o_pin_attrib->text->string);	
+        /* 9 is the size of one number plus null character */
+        o_pinnum_object->text->string = (char *)
+          malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
+
+        /* removed _int from current_pin */
+        sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
+        
+        o_text_recreate(w_current, o_pinnum_object);
       }
-
-      /* current_pin_int is the new pin value assigned */	
-      /* however this is not valid for alphanumeric pins */
-      /* current_pin_int = atoi(current_pin);	*/
-
-      /* 9 is the size of one number plus null character */
-      o_pin_attrib->text->string = (char *) malloc(
-                                                   sizeof(char)*(strlen("pin=")+
-                                                                 strlen(current_pin)+9));
-
-      /* removed _int from current_pin */
-      sprintf(o_pin_attrib->text->string, "pin%d=%s", 
-              pin_counter, current_pin); 
-
-      o_text_recreate(w_current, o_pin_attrib);
-
-#if DEBUG 
-      printf("full object string %s\n", o_pin_attrib->text->string);
-#endif
+      
       pin_counter++;
     } else {
-      printf("component missing pin# attribute\n");
+      s_log_message("component missing pinseq= attribute\n");
     }
-
+    
     current_pin = strtok(NULL, DELIMITERS);
   } 
-
-  free(slot_num);
+  
+  free(slotdef);
 }
 
 @ %def o_attrib_slot_update
@@ -2263,89 +2371,92 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 void
 o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 {
+
+  OBJECT *o_current;
   OBJECT *o_slot_attrib;
-  OBJECT *o_pin_attrib;
+  OBJECT *o_pin_object;
+  OBJECT *o_pinnum_object;
   char *string;
-  char *slot_num;
+  char *slotdef;
   int slot;
   int pin_counter;
   char* current_pin;
+  char* cptr;
 
+  o_current = original;
 	
-  string = o_attrib_search_slot(original, &o_slot_attrib);
+  string = o_attrib_search_slot(o_current, &o_slot_attrib);
 	
   if (!string) {
-#if DEBUG
-    printf("didn't find slot=\n");
-#endif
+    s_log_message("Did not find slot= attribute\n");
     return;
   } 
-	
   slot = atoi(string);
   free(string);
-
-#if DEBUG	
-  printf("SLOT attrib found!\n");
-#endif
-#if DEBUG
-  printf("slot is %d\n", slot);
-#endif
-
-  slot_num = o_attrib_search_slot_number(original, slot);
-
-  if (!slot_num) {
-#if DEBUG
-    printf("didn't find slot#=\n");
-#endif
+  
+  slotdef = o_attrib_search_slotdef(o_current, slot);
+ 
+  if (!slotdef) {
+    s_log_message("Did not find slotdef=#:#,#,#... attribute\n");
     return;
   }
 
-#if DEBUG
-  printf("slot%d = _%s_\n", slot, string);	
-#endif
-	
+  if (!strstr(slotdef, ":")) {
+    /* didn't proper slotdef=#:... TODO into log*/
+    return;
+  }
+
+  /* skip over slotdef number */
+  /* slotdef is in the form #:#,#,# */
+  /* this code skips first #: */
+  cptr = slotdef;
+  while (*cptr != '\0' && *cptr != ':') {
+    cptr++;
+  }
+  cptr++; /* skip colon */
+
+  if (*cptr == '\0') {
+    s_log_message("Did not find proper slotdef=#:#,#,#... attribute\n");
+    return;
+  }
+  
   pin_counter = 1;
-  current_pin = strtok(slot_num, DELIMITERS);
+  current_pin = strtok(cptr, DELIMITERS);
   while(current_pin != NULL) {
 
-    string = o_attrib_search_pin_number(target->complex->prim_objs,
-                                        pin_counter, &o_pin_attrib);
+    o_pin_object = o_attrib_search_pinseq(target->complex->prim_objs, 
+                                          pin_counter);
 
-    if (string) {
+    if (o_pin_object) {
 
-      /* don't care about the value */
-      free(string);
+      string = o_attrib_search_name_single(o_pin_object, "pinnumber",
+                                           &o_pinnum_object);
+  
+      if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
+          o_pinnum_object->text->string) {
 
-      if (o_pin_attrib->text->string) {
-        free(o_pin_attrib->text->string);	
+        free(string);
+        free(o_pinnum_object->text->string);
+
+        /* 9 is the size of one number plus null character */
+        o_pinnum_object->text->string = (char *)
+          malloc(sizeof(char)*(strlen("pinnumber=")+strlen(current_pin)+9));
+
+        /* removed _int from current_pin */
+        sprintf(o_pinnum_object->text->string, "pinnumber=%s", current_pin);
+        
+        o_text_recreate(w_current, o_pinnum_object);
       }
-
-      /* current_pin_int is the new pin value assigned */	
-      /* however this is not valid for alphanumeric pins */
-      /* current_pin_int = atoi(current_pin);	*/
-
-      /* 9 is the size of one number plus null character */
-      o_pin_attrib->text->string = (char *) malloc(
-                                                   sizeof(char)*(strlen("pin=")+
-                                                                 strlen(current_pin)+9));
-
-      /* changed current_pin_int to current_pin (a string) */
-      sprintf(o_pin_attrib->text->string, "pin%d=%s", 
-              pin_counter, current_pin); 
-
-      o_text_recreate(w_current, o_pin_attrib);
-
-#if DEBUG 
-      printf("full object string %s\n", o_pin_attrib->text->string);
-#endif
+      
       pin_counter++;
     } else {
-      printf("component missing pin# attribute\n");
+      s_log_message("component missing pinseq= attribute\n");
     }
-
+    
     current_pin = strtok(NULL, DELIMITERS);
   } 
-  free(slot_num);
+  
+  free(slotdef);
 }
 
 @ %def o_attrib_slot_copy

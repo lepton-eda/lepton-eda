@@ -1,3 +1,19 @@
+2002-06-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_attrib.nw: Drastic changes to the standard attributes.
+		- pin#=# has been removed
+		- slot#=# has been removed
+		- pinseq=# added
+		- pinnumber=# added
+		- slot#=# removed
+		- slotdef=#:#,#,#,# added
+		- A bunch of functions renamed / removed
+		- A few lame hacks removed
+	These changes are the first of many that deal with how libgeda handles
+	pin / slot attributes
+
+	* noweb/Makefile.am: Incremented libgeda.so version number
+
 2002-06-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/u_basic.nw: Added u_basic_strip_trailing utility function
