@@ -769,16 +769,8 @@ DEFINE_I_CALLBACK(view_zoom_full)
 	exit_if_null(w_current);
 
 	/* scroll bar stuff */
-	a_zoom(w_current, ZOOM_FULL, DONTCARE);
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_RESIZE = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_REDRAW = 0;
+	a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
+	o_redraw_all_fast(w_current);
 	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
@@ -790,16 +782,9 @@ DEFINE_I_CALLBACK(view_zoom_limits)
 	exit_if_null(w_current);
 
 	/* scroll bar stuff */
-	a_zoom_limits(w_current, w_current->page_current->object_head);
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_RESIZE = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_REDRAW = 0;
+	a_zoom_limits(w_current, w_current->page_current->object_head,
+		      A_PAN_DONT_REDRAW);
+	o_redraw_all_fast(w_current);
 	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
@@ -836,16 +821,8 @@ DEFINE_I_CALLBACK(view_zoom_in)
 
 	exit_if_null(w_current);
 
-	a_zoom(w_current, ZOOM_IN, MENU);
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_RESIZE = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_REDRAW = 0;
+	a_zoom(w_current, ZOOM_IN, MENU, A_PAN_DONT_REDRAW);
+	o_redraw_all_fast(w_current);
 	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
@@ -856,16 +833,8 @@ DEFINE_I_CALLBACK(view_zoom_out)
 
 	exit_if_null(w_current);
 
-	a_zoom(w_current, ZOOM_OUT, MENU);
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_RESIZE = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_REDRAW = 0;
+	a_zoom(w_current, ZOOM_OUT, MENU, A_PAN_DONT_REDRAW);
+	o_redraw_all_fast(w_current);
 	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
@@ -877,16 +846,8 @@ DEFINE_I_CALLBACK(view_zoom_in_hotkey)
 
 	exit_if_null(w_current);
 
-	a_zoom(w_current, ZOOM_IN, HOTKEY);
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_RESIZE = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_REDRAW = 0;
+	a_zoom(w_current, ZOOM_IN, HOTKEY, A_PAN_DONT_REDRAW);
+	o_redraw_all_fast(w_current);
 	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
@@ -897,16 +858,8 @@ DEFINE_I_CALLBACK(view_zoom_out_hotkey)
 
 	exit_if_null(w_current);
 
-	a_zoom(w_current, ZOOM_OUT, HOTKEY);
-	w_current->DONT_REDRAW = 1;
-	w_current->DONT_RECALC = 1;
-	w_current->DONT_RESIZE = 1;
-	x_hscrollbar_update(w_current);
-	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
-	w_current->DONT_RESIZE = 0;
-	w_current->DONT_RECALC = 0;
-	w_current->DONT_REDRAW = 0;
+	a_zoom(w_current, ZOOM_OUT, HOTKEY, A_PAN_DONT_REDRAW);
+	o_redraw_all_fast(w_current);
 	o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 
@@ -1193,7 +1146,6 @@ DEFINE_I_CALLBACK(page_revert)
 	s_page_new(w_current, filename);
 
 	/* now re open it */
-	w_current->DONT_REDRAW = 1;
         f_open(w_current, w_current->page_current->page_filename);
         i_set_filename(w_current, w_current->page_current->page_filename);
 
@@ -1204,14 +1156,14 @@ DEFINE_I_CALLBACK(page_revert)
 	x_repaint_background(w_current);
 	x_window_setup_world(w_current);
 	x_manual_resize(w_current);
-	a_zoom_limits(w_current, w_current->page_current->object_head);
+	a_zoom_limits(w_current, w_current->page_current->object_head,
+		      A_PAN_DONT_REDRAW);
 	o_undo_savestate(w_current, UNDO_ALL);
 
 	/* now update the scrollbars */
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
 	update_page_manager(NULL, w_current);
-	w_current->DONT_REDRAW = 0;
 
 	o_redraw_all(w_current);
 	free(filename);
@@ -1945,7 +1897,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 						a_zoom_limits(w_current, 
 				          		      w_current->
 							      page_current->
-							      object_head);
+							      object_head,
+							      A_PAN_DONT_REDRAW);
 						o_undo_savestate(w_current, 
 								 UNDO_ALL);
 					}
@@ -2026,7 +1979,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 							     "source",
 							     count);
 				}
-	} 
+			} 
 
 			if (loaded_flag) {
 	
@@ -2037,7 +1990,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 				i_set_filename(w_current, w_current->
 					page_current->page_filename);
 				a_zoom_limits(w_current, 
-				      w_current->page_current->object_head);
+				      w_current->page_current->object_head,
+				      A_PAN_DONT_REDRAW);
 				o_redraw_all(w_current);
 				update_page_manager(NULL, w_current);
 			}
@@ -2066,7 +2020,8 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 			i_set_filename(w_current,
 				       w_current->page_current->page_filename);
 			a_zoom_limits(w_current, 
-				      w_current->page_current->object_head);
+				      w_current->page_current->object_head,
+				      A_PAN_DONT_REDRAW);
 			o_undo_savestate(w_current, UNDO_ALL);
 			o_redraw_all(w_current);
 			update_page_manager(NULL, w_current);
