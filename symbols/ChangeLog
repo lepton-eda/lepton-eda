@@ -7,6 +7,8 @@
 
 	* 74/9602-1.sym 9602-2.sym, 74266-1.sym: Added symbols by Jim Battle
 
+	* micros/pic16F876-1.sym: Added symbol by James Carter
+
 2002-08-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* analog/transformer-1.sym: Added symbol, need to verify pinnumbers
