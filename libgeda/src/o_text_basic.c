@@ -325,10 +325,11 @@ o_text_load_font(TOPLEVEL *w_current, char needed_char)
 					w_current->font_directory,
 				 	needed_char);
 			}
-#endif
+#else
 			sprintf(temp_string, "%s/%c.sym", 
 					w_current->font_directory,
 				 	needed_char);
+#endif
 		break;
 
 	}
