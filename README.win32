@@ -312,3 +312,13 @@ gsymcheck:
 
 utils:
 
+* cd utils
+	
+* ./configure --prefix=/geda
+
+* make install
+
+* cd ..
+
+--------------------------------------------------------------------------
+
