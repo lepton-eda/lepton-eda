@@ -1,6 +1,10 @@
+2003-11-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* symbols/symbols.tex: Added an item to the symbol creation steps.
+
 2003-10-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* fileformats/fileformats.text: Added num_lines field for text
+	* fileformats/fileformats.tex: Added num_lines field for text
 	items.
 
 2003-10-18 Ales Hvezda   <ahvezda@geda.seul.org>
