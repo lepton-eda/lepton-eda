@@ -41,6 +41,12 @@
    (lambda (package)
       (gnetlist:get-package-attribute package "device")))
 
+;; ETTUS
+;; Shorthand for get component values
+(define get-value
+   (lambda (package)
+      (gnetlist:get-package-attribute package "value")))
+
 ;; return all pins for a particular package 
 (define pins
    (lambda (package)
@@ -124,4 +130,25 @@
          ((string=? item (car ls)) #t)
          (#t (contains? (cdr ls) item)))))
 
+;; ETTUS
+;; Usage: (number-nets all-unique-nets 1)
+;; Returns a list of pairs of form (netname . number)
+(define number-nets
+   (lambda (nets number)
+      (if (null? nets)
+         '()
+         (cons
+            (cons (car nets) number)
+            (number-nets (cdr nets)(+ number 1))))))  
+
+;; ETTUS
+;; Usage: (get-net-number netname numberlist)
+;; numberlist should be from (number-nets) above
+;; Returns the number corresponding to the net
+(define get-net-number
+   (lambda (netname numberlist)
+      (if (not (null? numberlist))
+         (if (string=? netname (car (car numberlist)))
+            (cdr (car numberlist))
+            (get-net-number netname (cdr numberlist))))))
 
