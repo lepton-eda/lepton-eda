@@ -7,6 +7,12 @@ ChangeLog for gsymcheck (renamed gsymbol)
 
 Most recent changes (version wise) are at the top of this file 
 
+2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Added -fnative-struct flag for CYGWIN port only
+
+        * configure.in: Added --enable-debug flag to enable -g flag
+
 2000-10-12  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/create_proto: Update with the latest version of this

@@ -23,6 +23,12 @@ AC_ARG_ENABLE(gdgeda,
 	no_gdgeda=yes
     ])
 
+dnl --enable-debug : turn on debugging support (normally off)
+AC_ARG_ENABLE(debug,
+    [  --enable-debug          Enable debugging support],
+    [
+	debug=yes
+    ])
 
 dnl Change default location of gtk-config
 AC_ARG_WITH(gtk-config, [  --with-gtk-config=path  Change where gtk-config is located], [opt_gtkconfig=$withval])
@@ -223,6 +229,15 @@ fi
 
 LDFLAGS="$saved_ldflags $LDEXTRA"
 CFLAGS="$saved_cflags $CFEXTRA"
+
+if ! test "$CYGWIN"x = x; then
+	echo Including -fnative-struct in CFLAGS for CYGWIN port
+	CFLAGS="$CFLAGS -fnative-struct"
+fi
+
+if test "$debug" = "yes"; then
+	CFLAGS="$CFLAGS -g"
+fi
 
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT

@@ -1,4 +1,10 @@
 
+2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * configure.in: Added -fnative-struct flag for CYGWIN port only
+
+        * configure.in: Added --enable-debug flag to enable -g flag
+
 2000-11-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_traverse.c: Move s_traverse_nethash_build to libgeda

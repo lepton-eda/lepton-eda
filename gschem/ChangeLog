@@ -13,6 +13,10 @@ into the cvs repository.
 
 	* src/o_bus.c, o_box.c, o_move.c: Removed unused variable
 
+        * configure.in: Added -fnative-struct flag for CYGWIN port only
+
+        * configure.in: Added --enable-debug flag to enable -g flag
+
 2000-11-22  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_move.c, x_event.c, o_basic.c: Finished adding the code to 

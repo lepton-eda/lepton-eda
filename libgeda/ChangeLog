@@ -17,6 +17,10 @@ Most recent changes are at the top of this file
 
 	* src/o_circle.c: Removed unneeded variable
 
+	* configure.in: Added -fnative-struct flag for CYGWIN port only
+
+	* configure.in: Added --enable-debug flag to enable -g flag 
+
 2000-11-21  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added netconn_rubberband variable to st_toplevel
