@@ -33,7 +33,7 @@
 #include "../include/prototype.h"
 
 
-void
+int
 f_open(TOPLEVEL *w_current, char *filename)
 {
 	/* has the head been freed yet? */
@@ -48,7 +48,10 @@ f_open(TOPLEVEL *w_current, char *filename)
 
 	if (w_current->page_current->object_tail != NULL) {
 		s_log_message("Opened schematic [%s]\n", filename);
-	}	
+	} else {
+	  /* Failed to open page */
+	  return 1;
+	}
 
         w_current->page_current->object_tail = (OBJECT *) 
 			return_tail(w_current->page_current->object_head); 
@@ -65,6 +68,8 @@ f_open(TOPLEVEL *w_current, char *filename)
 	w_current->page_current->zoom_factor = 0;
 
 	w_current->page_current->CHANGED=0; /* added 4/7/98 */
+
+	return 0;
 }
 
 void
