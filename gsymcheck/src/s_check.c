@@ -511,6 +511,9 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
     s_current->warning_messages = g_list_append(s_current->warning_messages,
                                                 message);
     s_current->warning_count++;
+    message = u_basic_strdup("If this symbol does not need slotting, set numslots to zero (numslots=0)\n");
+    s_current->info_messages = g_list_append(s_current->info_messages,
+                                             message);
     return;
   }
 
@@ -518,11 +521,18 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   sprintf(numslots_str, "%d", numslots);
   free(value);
 
-  message = u_basic_strdup_multiple("Found numberslots=", numslots_str, 
+  message = u_basic_strdup_multiple("Found numslots=", numslots_str, 
  			            " attribute\n", NULL);
   s_current->info_messages = g_list_append(s_current->info_messages,
 	 	    			   message);
 
+  if (numslots == 0) {
+    message = u_basic_strdup("numslots set to zero, symbol does not have slots\n");
+    s_current->info_messages = g_list_append(s_current->info_messages,
+                                             message);
+    return;
+  }
+  
   i = 0;
   /* get the slotdef attribute */
   slotdef = o_attrib_search_name(object_head, "slotdef", 0);
