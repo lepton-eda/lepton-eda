@@ -1,6 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* Setup - version 0.2.1                                                       */
+/* Setup                                                                       */
 /*                                                                             */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
@@ -300,7 +300,7 @@ int FileSearch(char *szSearchDir, char *szSearchName)
 {
 	int iResult, i, j;
 	char szFullPath[TEXTLEN], szDir[TEXTLEN], szName[TEXTLEN], szPreDir[TEXTLEN];
-	
+
 	/* move eventual directory form search name to search directory */
 	FileGetDir(szSearchName, szPreDir);
 	if (strlen(szPreDir) > 0)
@@ -309,7 +309,10 @@ int FileSearch(char *szSearchDir, char *szSearchName)
 		i = strlen(szPreDir) + 1;
 	}
 	else
+	{
+		strcpy(szDir, szSearchDir);
 		i = 0;
+	}
 	strcpy(szName, szSearchName + i);
 
 	/* check existence of a file in a path */
@@ -319,126 +322,32 @@ int FileSearch(char *szSearchDir, char *szSearchName)
 		for (j = 0; i < strlen(szDir) && szDir[i] != ':'; i ++, j ++)
 			szFullPath[j] = szDir[i];
 		szFullPath[j] = 0;
-		
+
 		/* adding file name to directory */
-		strcat(szFullPath, "/");
-		strcat(szFullPath, szName);
+		strcpy(szFullPath + strlen(szFullPath), "/");
+		strcpy(szFullPath + strlen(szFullPath), szName);
 
 		/* checking if the file exists */
 		iResult = FileTest(szFullPath);
 		if (iResult == SUCCESS)
+		{
 			return SUCCESS;
+		}
 	}
 
 	return FAILURE;
 }
 
-#if 0
-int FileExecStdOut(char *pValue, int iMaxLength)
-{
-	FILE *hFile;
-	int i, j;
-	char szValue[TEXTLEN];
-	
-	/* open last stdout file */
-	sprintf(szValue, "/%s/%s-stdout-%d", SETUP_TMPDIR, Software.szDirname, Pid);
-	hFile = fopen(szValue, "r");
-	if (hFile == NULL)
-	{
-		return FAILURE;
-	}
-	
-	/* copy file to pValue */
-	for (i = 0; i < iMaxLength; i ++)
-		pValue[i] = 0;
-	for (i = 0; i < iMaxLength && !feof(hFile); i ++)
-	{
-		j = fgetc(hFile);
-		if (j >= 0)
-			pValue[i] = j;
-		else
-			break;
-	}
-	
-	/* close the file */
-	fclose(hFile);
-	
-	return SUCCESS;
-}
 
 
-int FileExecStdErr(char *pValue, int iMaxLength)
-{
-	FILE *hFile;
-	int i, j;
-	char szValue[TEXTLEN];
-	
-	/* open last stderr file */
-	sprintf(szValue, "/%s/%s-stderr-%d", SETUP_TMPDIR, Software.szDirname, Pid);
-	hFile = fopen(szValue, "r");
-	if (hFile == NULL)
-	{
-		return FAILURE;
-	}
-	
-	/* copy file to pValue */
-	for (i = 0; i < iMaxLength; i ++)
-		pValue[i] = 0;
-	for (i = 0; i < iMaxLength && !feof(hFile); i ++)
-	{
-		j = fgetc(hFile);
-		if (j >= 0)
-			pValue[i] = j;
-		else
-			break;
-	}
-	
-	/* close the file */
-	fclose(hFile);
-	
-	return SUCCESS;
-}
-
-
-int FileWhich(char *szCommand)
-{
-	int iResult;
-	char szValue[TEXTLEN];
-
-	/* executing which command */
-	sprintf(szValue, "which %s", szCommand);
-	iResult = FileExec(szValue);
-	if (iResult != SUCCESS)
-	{
-		return FAILURE;
-	}
-	
-	/* testing stderr for errors (it should have length = 0) */
-	iResult = FileExecStdErr(szValue, TEXTLEN);
-	if (iResult != SUCCESS)
-	{
-		return FAILURE;
-	}
-
-	if (szValue[0] != 0)
-	{
-		return FAILURE;
-	}
-
-	return SUCCESS;
-}
-#endif
-
-
-
-/* 
-	get file name, extension and directory from full path 
+/*
+	get file name, extension and directory from full path
 */
 
 void FileGetName(char *szFullName, char *szName)
 {
 	int i, j;
-	
+
 	for (i = strlen(szFullName) - 1; i >= 0 && szFullName[i] != '/'; i --)
 		;
 	for (j = strlen(szFullName) - 1; j >= i && szFullName[j] != '.'; j --)
@@ -469,12 +378,14 @@ void FileGetExt(char *szFullName, char *szExt)
 void FileGetDir(char *szFullName, char *szDir)
 {
 	int i;
-	
+
 	strcpy(szDir, szFullName);
 	for (i = strlen(szDir) - 1; i >= 0 && szDir[i] != '/'; i --)
 		;
-	if (szDir[i] == '/')
+	if (i >= 0 /*&& szDir[i] == '/'*/)
 		szDir[i] = 0;
+	else
+		szDir[0] = 0;
 }
 
 
@@ -484,7 +395,7 @@ void FileGetRel(char *szFullName, char *szName)
 {
 	int i, j, k;
 	char szDirectory[TEXTLEN], *pResult;
-	
+
 	/* get current directory */
 	pResult = getcwd(szDirectory, TEXTLEN);
 	if (pResult == NULL)
