@@ -40,6 +40,7 @@ typedef struct st_tile TILE;
 typedef struct st_tile_loc TILE_LOC;
 
 typedef struct st_conn CONN;
+typedef struct st_bus_ripper BUS_RIPPER;
 
 /* Used when you move objects and you want the nets/pins to stretch */
 typedef struct st_stretch STRETCH;
@@ -211,6 +212,13 @@ struct st_object {
   int draw_grips;				/* if selected, enables 
 						   drawing of grips */
 
+  /* controls which direction bus rippers go */
+  /* it is either 0 for un-inited, */
+  /* 1 for right, -1 for left (horizontal bus) */
+  /* 1 for up, -1 for down (vertial bus) */
+  int bus_ripper_direction;             /* only valid on buses */
+  
+
   int font_text_size;			/* used only with fonts defs */
   OBJECT *font_prim_objs;			/* used only with fonts defs */
 
@@ -246,6 +254,14 @@ struct st_conn {
 				/* caused this connection */
   int other_whichone;	/* which endpoint of the "other" object */
 				/* caused this connection */
+};
+
+/* this structure is used in gschem to add rippers when drawing nets */
+/* it is never stored in any object, it is only temporary */
+struct st_bus_ripper
+{
+  int x[2];
+  int y[2];
 };
 
 struct st_selection {
@@ -765,6 +781,9 @@ struct st_toplevel {
 
   /* landscape printing only */
   int paper_width, paper_height;
+
+  /* controls the size of the bus rippers */
+  int bus_ripper_size;
 
   /* gnetlist specific */
   int net_naming_priority;
