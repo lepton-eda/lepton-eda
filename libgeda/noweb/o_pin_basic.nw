@@ -298,7 +298,6 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int color;
   int pin_type;
   int whichend;
-  long int ver;
 
   if(release_ver <= VERSION_20020825) {
     sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
@@ -311,9 +310,8 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 
   if (whichend == -1) {
     fprintf(stderr,
-            "Loaded a symbol which did not have the pin whichone field set\nSome pins may be incorrect. Verify and correct them manually.\n");
-    s_log_message("Loaded a symbol which did not have the pin whichone field set\nSome pins may be incorrect. Verify and correct them manully.\n");
-    whichend = 0;
+            "Found a pin which did not have the whichone field set.\nVerify and correct manually.\n");
+    s_log_message("Found a pin which did not have the whichone field set.\nVerify and correct manully.\n");
   } else if (whichend < -1 || whichend > 1) {
     fprintf(stderr,
             "Found an invalid whichend on a pin (reseting to zero): %d\n",

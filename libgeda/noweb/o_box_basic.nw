@@ -383,7 +383,6 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 	int box_end;
 	int box_type;
 	int box_filling;
-	long int ver;
 	
 	if(release_ver <= VERSION_20000704) {
 		<<o_box_read() : old geda file format>>

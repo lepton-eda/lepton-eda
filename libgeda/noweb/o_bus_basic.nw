@@ -289,7 +289,6 @@ o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int d_x2, d_y2;
   int color;
   int ripper_dir;
-  long int ver;
 
   if(release_ver <= VERSION_20020825) {
     sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);

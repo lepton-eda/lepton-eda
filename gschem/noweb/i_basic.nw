@@ -225,6 +225,8 @@ i_show_state(TOPLEVEL *w_current, const char *message)
   const char *state_string = i_status_string(w_current);
   const char *what_to_say;
 
+  /* This may be a memory leak... either way it's weird and -Wall is */
+  /* complaining... */
   buf = g_strdup_printf("");
   aux = buf;
 

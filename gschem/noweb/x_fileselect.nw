@@ -948,7 +948,7 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
   files = (GTK_CLIST(f_current->file_list))->selection;
   if (files) {
     /* iterate over selected files  */
-    for (files ; files ; files = files->next) {     
+    for (; files ; files = files->next) {     
       row = (int) files->data;     /* Why do we need to do cast here?  */
                                    /* because files->data is a void *  */
       gtk_clist_get_text (GTK_CLIST(f_current->file_list), row, 0, &filename);

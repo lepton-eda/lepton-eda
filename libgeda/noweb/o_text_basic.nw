@@ -937,7 +937,6 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
     start_of_char = temp_list;
 
     if (font_set[(unsigned char) string[i]].font_prim_objs->next) {
-      int char_pos;
       int rel_char_coord;
       int size_of_tab_in_coord;
 
@@ -1278,8 +1277,6 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   char* string = NULL;
   char* temp = NULL;
   char buffer[MAX_TEXT_LINE_LENGTH]; 
-  int strsize;
-
 
   if (fileformat_ver == 1) {
     sscanf(buf, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
@@ -1683,16 +1680,14 @@ void
 o_text_print_text_width(FILE *fp, char *output_string)
 {
   int len, i, j;
-  int starting_charcter = 0;
+  int starting_character = 0;
   int num_lines, line_number;
   int max_len = -1;
   char *single_line = NULL;
   char *max_length_line = NULL;
-  int starting_character;
   int single_len;
 
   /* break up the string and find the longest string */
-  starting_character = 0;
   num_lines = o_text_num_lines(output_string);
   single_line = u_basic_strdup(output_string);  /* larger than needed */
   len = strlen(output_string);
@@ -2173,7 +2168,7 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     o_text_print_text_string(fp, single_line);
 
     if (o_current->text->angle == 90 || o_current->text->angle == 270) {
-      fprintf(fp, "grestore\n", o_current->text->angle); 
+      fprintf(fp, "grestore\n"); 
     }
 
     /* Correct the position on the stack to go to the next line */

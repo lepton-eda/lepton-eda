@@ -901,7 +901,6 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
 {
   ATTRIB *a_current=NULL;
   OBJECT *o_current=NULL;
-  char buf[200];
   char *out;
 
   a_current = attribs;

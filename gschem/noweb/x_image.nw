@@ -373,9 +373,6 @@ gint
 x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 {
   char *filename=NULL;
-  int width, height;
-  int save_height, save_width;
-
   filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
 
   if (filename[0] != '\0') {

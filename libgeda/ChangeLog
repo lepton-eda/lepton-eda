@@ -2,6 +2,20 @@
 
         * configure.ac: Updated version to 20040111
 
+	* noweb/o_arc_basic.nw o_attrib.nw o_box_basic.nw o_bus_basic.nw 
+	o_circle_basic.nw o_line_basic.nw o_pin_basic.nw o_text_basic.nw:
+	Fixed most -Wall warnings.
+
+	* include/prototype.h: Added missing function (caught by -Wall
+	in gschem)
+
+	* noweb/o_pin_basic.nw: Had to remove the pin whichend reset
+	I added on 2003-12-22, since it broke the auto pin whichend 
+	code (o_pin_update_whichend; which relies on whichend equaling -1
+	when the whichend is unknown).  Fix the whichend for embedded
+	components still needs to be dealt/fixed.  This problem needs a 
+	release note.
+
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_text_basic.nw: Fixed the postscript printing of text

@@ -128,7 +128,7 @@ o_text_draw_lowlevel(TOPLEVEL *w_current, OBJECT *o_current)
 void
 o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int left, right, top, bottom;
+  int left=0, right=0, top=0, bottom=0;
   int screen_x1, screen_y1;
   int width, height, dx=0, dy=0;
   GdkColor *color;
@@ -185,6 +185,12 @@ o_text_draw_rectangle(TOPLEVEL *w_current, OBJECT *o_current)
       right = height;
       bottom = width;
       break;
+
+    default:
+      s_log_message("Tried to render text with an invalid angle: %s\n",
+                    o_current->text->angle); 
+      return;
+      break;
   }
 
   /* The right, bottom variables are really just the width and height and */
@@ -238,7 +244,6 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int screen_x1, screen_y1;
   int small_dist, offset;
-  int width, height, dx=0, dy=0;
 
   if (o_current->visibility == INVISIBLE && !w_current->show_hidden_text) {
     return;

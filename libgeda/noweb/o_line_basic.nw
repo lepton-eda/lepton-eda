@@ -342,7 +342,6 @@ o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int line_end;
   int line_type;
   int color;
-  long int ver;
 
   if(release_ver <= VERSION_20000704) {
 	  <<o_line_read() : old geda file format>>

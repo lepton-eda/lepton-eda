@@ -368,7 +368,6 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int circle_end;
   int circle_type;
   int circle_fill;
-  long int ver;
 
   if(release_ver <= VERSION_20000704) {
 	  <<o_circle_read() : old geda file format>>

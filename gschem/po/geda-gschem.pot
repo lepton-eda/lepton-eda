@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-11 17:48-0500\n"
+"POT-Creation-Date: 2004-01-11 18:38-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,27 +328,27 @@ msgstr ""
 msgid "Move"
 msgstr ""
 
-#: noweb/i_basic.nw:238
+#: noweb/i_basic.nw:240
 msgid "Snap Off"
 msgstr ""
 
-#: noweb/i_basic.nw:244
+#: noweb/i_basic.nw:246
 msgid "Show Hidden"
 msgstr ""
 
-#: noweb/i_basic.nw:350 noweb/x_window.nw:1112
+#: noweb/i_basic.nw:352 noweb/x_window.nw:1112
 msgid "Action"
 msgstr ""
 
-#: noweb/i_basic.nw:358 noweb/x_window.nw:1107
+#: noweb/i_basic.nw:360 noweb/x_window.nw:1107
 msgid "Stroke"
 msgstr ""
 
-#: noweb/i_basic.nw:365 noweb/x_window.nw:1109
+#: noweb/i_basic.nw:367 noweb/x_window.nw:1109
 msgid "none"
 msgstr ""
 
-#: noweb/i_basic.nw:373
+#: noweb/i_basic.nw:375
 msgid "Repeat/"
 msgstr ""
 
@@ -1053,7 +1053,7 @@ msgstr ""
 
 #: noweb/x_dialog.nw:532 noweb/x_dialog.nw:2979 noweb/x_dialog.nw:3132
 #: noweb/x_dialog.nw:3476 noweb/x_dialog.nw:3676 noweb/x_fileselect.nw:2417
-#: noweb/x_image.nw:482 noweb/x_log.nw:403 noweb/x_multiattrib.nw:949
+#: noweb/x_image.nw:479 noweb/x_log.nw:403 noweb/x_multiattrib.nw:949
 #: noweb/rcstrings.nw:73
 msgid "Close"
 msgstr ""
@@ -1449,7 +1449,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: noweb/x_fileselect.nw:2300 noweb/x_image.nw:554 noweb/x_print.nw:546
+#: noweb/x_fileselect.nw:2300 noweb/x_image.nw:551 noweb/x_print.nw:546
 msgid "Filename"
 msgstr ""
 
@@ -1471,23 +1471,23 @@ msgstr ""
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr ""
 
-#: noweb/x_image.nw:471
+#: noweb/x_image.nw:468
 msgid "Write Image..."
 msgstr ""
 
-#: noweb/x_image.nw:473
+#: noweb/x_image.nw:470
 msgid "Write"
 msgstr ""
 
-#: noweb/x_image.nw:503
+#: noweb/x_image.nw:500
 msgid "Width"
 msgstr ""
 
-#: noweb/x_image.nw:522
+#: noweb/x_image.nw:519
 msgid "Height"
 msgstr ""
 
-#: noweb/x_image.nw:541
+#: noweb/x_image.nw:538
 msgid "Width x Height"
 msgstr ""
 
