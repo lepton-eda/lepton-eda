@@ -316,24 +316,34 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name)
 int make_box(int fldcnt,char *pFields[])
 { int pos_x=300,pos_y=300;
   char name[100],device[100],name_pos[100];
+  char uref[100],class[100];
   int pin_width,pin_height,font_size=10;
   int name_size=0;
+  int len = 0;
 
   strcpy(device,pFields[0]);
   strcpy(name,pFields[1]);
   strcpy(name_pos,pFields[2]); 
   pin_width  = atoi(pFields[3]); 
   pin_height = atoi(pFields[4]); 
+  strcpy(uref,pFields[5]);
+  strcat(uref,"?"); 
+  if(uref[0]=='U' || uref[0]=='u')strcpy(class,"IC");
+  if(uref[0]=='J' || uref[0]=='j')strcpy(class,"IO");
+  if(uref[0]=='C' || uref[0]=='c')strcpy(class,"IO");
+//  U is for ICs, J or CONN for IO.  We assume no discretes with this tool
   pin_0_x  = pin_spacing; 
   pin_0_y  = pin_spacing*(pin_height + 1); 
 
   BoxWidth = pin_width * pin_spacing;
   BoxHeight = pin_height * pin_spacing;
   printf("B %d %d %d %d %d\n",pos_x,pos_y,BoxWidth,BoxHeight,GREEN);
-  printf("{\n");
-  printf("T %d %d %d %d 0 0 0 0\n",pin_0_x+BoxWidth+200,pin_0_y-125,YELLOW,font_size);
+  printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+700,YELLOW,font_size);
   printf("device=%s\n",device);
-  printf("}\n");
+  printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+900,YELLOW,font_size);
+  printf("class=%s\n",class);
+  printf("T %d %d %d %d 1 1 0 0\n",pos_x,pos_y+BoxHeight+500,RED,font_size);
+  printf("uref=%s\n",uref);
 
 #if 0
   /* Display pin locations */
