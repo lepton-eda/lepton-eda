@@ -1,6 +1,6 @@
 /* g_netlist.c */
 void g_set_project_current(TOPLEVEL *pr_current);
-SCM g_get_packages(SCM scm_level);
+SCM g_get_packages(SCM level);
 SCM g_get_pins(SCM uref);
 SCM g_get_all_nets(SCM scm_level);
 SCM g_get_all_unique_nets(SCM scm_level);
