@@ -1,3 +1,7 @@
+2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gnetlist.c (main_prog): Adapted for new logging system.
+
 2005-02-19  Carlos Nieves Onega <cnieves@iespana.es>
 
 	* src/globals.c: Added definition of picture_draw_func after 

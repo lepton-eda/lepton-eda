@@ -56,6 +56,7 @@ main_prog(void *closure, int argc, char *argv[])
   int fopen_status;
   char *cwd;
   struct stat buf;
+  char *logfile;
   
   TOPLEVEL *pr_current;
 
@@ -71,7 +72,12 @@ main_prog(void *closure, int argc, char *argv[])
 
   /* create log file right away */
   /* even if logging is enabled */
-  s_log_init(cwd, "gschlas.log");
+  logfile = g_build_path (G_DIR_SEPARATOR_S,
+                          cwd,
+                          "gschlas.log",
+                          NULL);
+  s_log_init (logfile);
+  g_free (logfile);
 	
   logging_dest=STDOUT_TTY;
   if (!quiet_mode)

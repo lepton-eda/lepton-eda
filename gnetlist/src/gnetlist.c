@@ -59,6 +59,7 @@ void main_prog(void *closure, int argc, char *argv[])
     int argv_index;
     char *cwd;
     GSList *list_pnt;
+    gchar *logfile;
 
     TOPLEVEL *pr_current;
 
@@ -95,7 +96,12 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* create log file right away */
     /* even if logging is enabled */
-    s_log_init(cwd, "gnetlist.log");
+    logfile = g_build_path (G_DIR_SEPARATOR_S,
+                            cwd,
+                            "gnetlist.log",
+                            NULL);
+    s_log_init (logfile);
+    g_free (logfile);
 
     s_log_message("gEDA/gnetlist version %s\n", VERSION);
     s_log_message

@@ -117,6 +117,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   char *cwd;
   char *input_str;
   PAGE *p_local;
+  char *logfile;
   
 
   
@@ -130,7 +131,12 @@ void gattrib_main(void *closure, int argc, char *argv[])
   
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
-  s_log_init(cwd, "gattrib.log");
+  logfile = g_build_path (G_DIR_SEPARATOR_S,
+                          cwd,
+                          "gattrib.log",
+                          NULL);
+  s_log_init (logfile);
+  g_free (logfile);
   
   s_log_message
     ("gEDA/gattrib version %s\n", VERSION);
