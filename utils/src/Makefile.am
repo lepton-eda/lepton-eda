@@ -26,7 +26,7 @@ gmk_sym_LDADD = @MINGW_LIBS@
 smash_megafile_LDADD = @MINGW_LIBS@
 convert_sym_LDADD = @MINGW_LIBS@ -lm
 sarlacc_schem_LDADD = @MINGW_LIBS@
-olib_LDADD = @LEXLIB@ @MINGW_LIBS@ -lm
+olib_LDADD =  @MINGW_LIBS@ -lm
 gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ 
 
 EXTRA_DIST = glib12-compat.c

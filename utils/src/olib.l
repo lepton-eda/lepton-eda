@@ -1,5 +1,5 @@
 %{
-/*
+/*  $Id$
 
     olib.lex - Orcad to gEDA lib converter
     Copyright (C) 2002 Mario Pascucci <m.pas@libero.it>
@@ -50,9 +50,18 @@
 #define PIN_TYPE_OE	8
 
 
+#ifndef GCC_VERSION
+#define GCC_VERSION (__GNUC__ * 1000 + __GNUC_MINOR__)
+#endif /* GCC_VERSION */
 
-static const __attribute__ ((unused)) char *mp_name = "OrCAD to gEDA lib converter";
-static const __attribute__ ((unused)) char *mp_license = "Copyright (c) 2002 Mario Pascucci <m.pas@libero.it>";
+#if GCC_VERSION > 2007
+#define ATTRIBUTE_UNUSED __attribute__((unused)) 
+#else
+#define ATTRIBUTE_UNUSED
+#endif 
+
+static const ATTRIBUTE_UNUSED char *mp_name = "OrCAD to gEDA lib converter";
+static const ATTRIBUTE_UNUSED char *mp_license = "Copyright (c) 2002 Mario Pascucci <m.pas@libero.it>";
 
 static char fnsym[512];	    /* gEDA symbol file name */
 static FILE *fsym;	    /* FILE* to gEDA symbol file */
@@ -207,7 +216,6 @@ COMMENT		\{[^\n\}]*\}
 PIN_ID		[TBLR][0-9]{1,4}
 
 
-%option noyywrap
 
 %s wait_END wait_sizex wait_sizey wait_parts pin_list pinrealnum pindata 
 %s waitnamestart in_name waitnameend waitpinend vector_list vector_ignore
@@ -216,7 +224,7 @@ PIN_ID		[TBLR][0-9]{1,4}
 
 %%
 
-
+%{
   /*******************************************
   handling of:
   PREFIX
@@ -226,33 +234,34 @@ PIN_ID		[TBLR][0-9]{1,4}
   ...
   END
   *******************************************/
-
+%}
 
 {COMMENT} {
   /* ignore comments */
   fprintf(stderr,"Ignore comment: %s\n",yytext);
-}
+ }
 
 
 <INITIAL>PREFIX	{
   /* shortcuts for parts name: ignored */
   fprintf(stderr,"Found PREFIX\n");
   BEGIN(wait_END);
-}
+ }
 
 
 <wait_END>^{IDENT}.*\n {
   fprintf(stderr,"Shorthand found, ignored\n");
   /* ignore shortcut list */
-}
+ }
 
 
 <wait_END>END {
   /* founds shortcut list end */
   fprintf(stderr,"Found END for shorthands\n");
   BEGIN(INITIAL);
-}
+ }
 
+%{
 
   /*******************************************
   handling of:
@@ -260,6 +269,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   'IDENT'
   ...
   *******************************************/
+%}
 
 <INITIAL>^{IDENT} {
   /* founds first part identifier */
@@ -273,13 +283,13 @@ PIN_ID		[TBLR][0-9]{1,4}
   vector_found = 0;
   ref_str[0] = 'U';
   ref_str[1] = 0;
-}
+ }
 
 
 <wait_sizex>^REFERENCE {
   /* REFERENCE statement found */
   BEGIN(reference);
-}
+ }
 
 
 <reference>{IDENT} {
@@ -287,7 +297,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   strcpy(ref_str,strip_quotes(yytext));
   fprintf(stderr,"REFERENCE: %s\n",yytext);
   BEGIN(wait_sizex);
-}
+ }
 
 
 <wait_sizex>^{IDENT} {
@@ -296,20 +306,22 @@ PIN_ID		[TBLR][0-9]{1,4}
   fprintf(stderr,"Found an alias: %s\n",yytext);
   strcpy(part_aliases[aliascount], strip_invalid(yytext));
   aliascount++;
-}
+ }
 
 
+%{
   /*******************************************
   handling of:
   {X Size =} x      {Y Size =} y      {Parts per Package =} n
   *******************************************/
+%}
 
 <wait_sizex>{INTEGER} {
   /* trovata la dimansione X */
   sizex = atoi(yytext);
   fprintf(stderr,"Found X size: %d (%s)\n",sizex,yytext);
   BEGIN(wait_sizey);
-}
+ }
 
 
 <wait_sizey>{INTEGER} {
@@ -317,14 +329,14 @@ PIN_ID		[TBLR][0-9]{1,4}
   sizey = atoi(yytext);
   fprintf(stderr,"Found Y size: %d (%s)\n",sizey,yytext);
   BEGIN(wait_parts);
-}
+ }
 
 
 <wait_parts>GRIDARRAY {
   /* found a PGA component, unsupported */
   fprintf(stderr,"Found a GRIDARRAY: unsupported\n");
   BEGIN(INITIAL);
-}
+ }
 
 
 <wait_parts>{INTEGER} {
@@ -344,7 +356,7 @@ PIN_ID		[TBLR][0-9]{1,4}
     sizex = sizex * PIN_SPACE;
     sizey = sizey * PIN_SPACE;
   }
-}
+ }
 
 
 <INITIAL>^{PIN_ID}.+\n |
@@ -358,9 +370,10 @@ PIN_ID		[TBLR][0-9]{1,4}
 <INITIAL>^END.*\n     {
   /* ignored */
   fprintf(stderr,"Ignored: %s",yytext);
-}
+ }
 
 
+%{
   /*******************************************
   handling of:
   VECTOR 'IDENT'  (unsupported)
@@ -373,6 +386,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   TEXT x y size 'text'	(partially supported)
   END
   *******************************************/
+%}
 
 <pin_list>^VECTOR {
   /* components isn't a simple "box", but it's drawed */
@@ -380,7 +394,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   vector_count = 0;
   vector_found = -1;
   fprintf(stderr,"Found: VECTOR\n");
-}
+ }
 
 
 <vector_list,vector_ignore>{IDENT} {
@@ -388,7 +402,7 @@ PIN_ID		[TBLR][0-9]{1,4}
       unsupported at the moment */
   BEGIN(pin_list);
   fprintf(stderr,"Found unsupported: VECTOR 'IDENT'\n");
-}
+ }
 
 
 <vector_list>LINE {
@@ -397,7 +411,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   BEGIN(param_list);
   paramcount = 0;
   fprintf(stderr,"Found: LINE params:");
-}
+ }
 
 
 <vector_list>CIRCLE {
@@ -406,7 +420,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   BEGIN(param_list);
   paramcount = 0;
   fprintf(stderr,"Found: CIRCLE params:");
-}
+ }
 
 
 <vector_list>ARC {
@@ -415,7 +429,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   BEGIN(param_list);
   paramcount = 0;
   fprintf(stderr,"Found: ARC params:");
-}
+ }
 
 
 <vector_list>FILL {
@@ -425,7 +439,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   BEGIN(param_list);
   paramcount = 0;
   fprintf(stderr,"Found unsupported: FILL params:");
-}
+ }
 
 
 <vector_list>TEXT {
@@ -434,7 +448,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   BEGIN(param_list);
   paramcount = 0;
   fprintf(stderr,"Found: TEXT params:");
-}
+ }
 
 
 <param_list>{INTEGER} {
@@ -443,7 +457,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   paramcount++;
   BEGIN(param_list);
   fprintf(stderr," %s",yytext);
-}
+ }
 
 
 <param_list>{DECIMAL} {
@@ -452,7 +466,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   paramcount++;
   BEGIN(param_list);
   fprintf(stderr," %s",yytext);
-}
+ }
 
 
 <param_list>{IDENT} {
@@ -464,7 +478,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   paramcount++;
   BEGIN(param_list);
   fprintf(stderr," %s",yytext);
-}
+ }
 
 
 <param_list>\n	{
@@ -515,16 +529,17 @@ PIN_ID		[TBLR][0-9]{1,4}
   }
   vector_count++;
   BEGIN(vector_list);
-}
+ }
 
 
 <vector_list>^END {
   /* end of vector list */
   BEGIN(pin_list);
   fprintf(stderr,"Found: END of VECTOR list\n");
-}
+ }
 
 
+%{
   /*******************************************
   handling of:
   CONVERT 'IDENT'
@@ -534,30 +549,31 @@ PIN_ID		[TBLR][0-9]{1,4}
   pin_def
   ...
   *******************************************/
+%}
 
 <pin_list,convert>^CONVERT {
   /* alternate part drawing */
   /* unsupported */
   BEGIN(convert);
-}
+ }
 
 
 <convert>{IDENT} {
   /* CONVERT 'part' unsupported */
   BEGIN(pin_list);
-}
+ }
 
 
 <convert>^{PIN_ID} {
   /* ignore PIN list in CONVERT */
   BEGIN(convert_ignore_pin);
-}
+ }
 
 
 <convert_ignore_pin>.*\n {
   /* ignore line */
   BEGIN(convert);
-}
+ }
 
 
 <convert>^VECTOR {
@@ -570,13 +586,13 @@ PIN_ID		[TBLR][0-9]{1,4}
     vector_count = 0;
     vector_found = -1;
   }
-}
+ }
 
 
 <vector_ignore>^END.*\n {
   /* end of ignore */
   BEGIN(pin_list);
-}
+ }
 <vector_ignore>^VECTOR.*\n |
 <vector_ignore>^CONVERT.*\n |
 <vector_ignore>^TEXT.*\n |
@@ -586,15 +602,17 @@ PIN_ID		[TBLR][0-9]{1,4}
 <vector_ignore>^CIRCLE.*\n {
   /* ignored */
   fprintf(stderr,"Ignored VECTOR: %s",yytext);
-}
+ }
 
 
+%{
   /*******************************************
   handling of:
   pin_def
   pin_def
   ...
   *******************************************/
+%}
 
 <pin_list>^{PIN_ID} {
   /* trovato un pin */
@@ -611,7 +629,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   }
   else
     BEGIN(pinrealnum);
-}
+ }
 
 
 <pin_list>^{IDENT} {
@@ -631,18 +649,8 @@ PIN_ID		[TBLR][0-9]{1,4}
   fprintf(stderr,"New part name: %s (%s)\n",part_aliases[0],yytext);
   fprintf(stderr,"New .sym name: %s\n",fnsym);
   BEGIN(wait_sizex);
-}
+ }
 
-
-<*><<EOF>> {
-  /* found a part name after pinlist, this mean that part definition ends,
-      and starts a new part definition */
-  fprintf(stderr,"Writing down new symbol: %s pin: %d  vectors: %d\n",part_aliases[0],pincount,vector_count);      
-  write_sym();	    /* write the .sym gEDA symbol definition */
-  /* restore initial condition */
-  fprintf(stderr,"End of lib file\n");
-  yyterminate();
-}  
 
 
 <pinrealnum>{INTEGER} {
@@ -650,28 +658,28 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].pin = atoi(yytext);
   fprintf(stderr,"Found pin num: %d (%s)\n",pinlist[pincount].pin,yytext);
   BEGIN(pindata);
-}
+ }
 
 
 <pindata>DOT {
   /* DOT flag found, boolean negate */
   pinlist[pincount].flags |= PIN_DOTFLAG;
   fprintf(stderr,"Found DOT flag\n");
-}
+ }
 
 
 <pindata>CLK {
   /* CLK flag found, clock input */
   pinlist[pincount].flags |= PIN_CLKFLAG;
   fprintf(stderr,"Found CLK flag\n");
-}
+ }
 
 
 <pindata>SHORT {
   /* SHORT flag found, short terminal */
   pinlist[pincount].flags |= PIN_SHORTFLAG;
   fprintf(stderr,"Found SHORT flag\n");
-}
+ }
 
 
 <pindata>IN {
@@ -679,7 +687,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_IN;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type IN\n");
-}
+ }
 
 
 <pindata>OUT {
@@ -687,7 +695,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_OUT;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type OUT\n");
-}
+ }
 
 
 <pindata>PWR {
@@ -695,7 +703,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_PWR;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type PWR\n");
-}
+ }
 
 
 <pindata>OC {
@@ -703,7 +711,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_OC;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type OC\n");
-}
+ }
 
 
 <pindata>OE {
@@ -711,7 +719,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_OE;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type OE\n");
-}
+ }
 
 
 <pindata>PAS {
@@ -719,7 +727,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_PAS;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type PAS\n");
-}
+ }
 
 
 <pindata>hiZ {
@@ -727,7 +735,7 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_HIZ;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type hiZ\n");
-}
+ }
 
 
 <pindata>"I/O" {
@@ -735,34 +743,34 @@ PIN_ID		[TBLR][0-9]{1,4}
   pinlist[pincount].type = PIN_TYPE_IO;
   BEGIN(waitnamestart);
   fprintf(stderr,"Pin type I/O\n");
-}
+ }
 
 
-<waitnamestart>' {
+<waitnamestart>"'" {
   /* found initial quote */
   ii = 0;
   BEGIN(in_name);
-}
+ }
 
 
 <in_name>'' {
   /* found a ' in pin name */
   pinlist[pincount].name[ii++] = '\'';
-}
+ }
 
 
-<in_name>[^'\n] {
+<in_name>[^"'"\n] {
   /* get a char from the pin symbolic name */
   pinlist[pincount].name[ii++] = *yytext;
-}
+ }
 
 
-<in_name>' {
+<in_name>"'" {
   /* all ok, waiting for new pin definition */
   pinlist[pincount].name[ii] = 0;
   fprintf(stderr,"Pin label: %s\n",pinlist[pincount].name);
   BEGIN(waitpinend);
-}
+ }
 
 
 <waitpinend>\n {
@@ -772,17 +780,24 @@ PIN_ID		[TBLR][0-9]{1,4}
     pinlist[pincount].name);
   pincount++;
   BEGIN(pin_list);
-}
+ }
 
 
-<*>^\n	  /* empty lines ignored */
+%{
+  /* 
+   * we don't need to use <*> to match any state, we just don't
+   * specify a state
+   */
+%}
+
+^\n 	{ /* empty lines ignored */ }
 
 
-<*>[ \t\n\r]    /* ignored, the \r char is for "DOS" ASCII files */
+[ \t\n\r]    { /* ignored, the \r char is for "DOS" ASCII files */ }
 
 
 
-  
+
 
 %%
 
@@ -797,6 +812,18 @@ void usage(void)
   fprintf(stderr,"\t-o\tuse old format (v 20020209) for .sym file\n");
   fprintf(stderr,"\t\telse use 'v 20020825' as version string in .sym file\n");
   fprintf(stderr,"\t-n\thides pin name if symbol is VECTOR drawed\n");
+}
+
+int yywrap()
+{
+  /* found a part name after pinlist, this mean that part definition ends,
+      and starts a new part definition */
+  fprintf(stderr,"Writing down new symbol: %s pin: %d  vectors: %d\n",part_aliases[0],pincount,vector_count);      
+  write_sym();	    /* write the .sym gEDA symbol definition */
+  /* restore initial condition */
+  fprintf(stderr,"End of lib file\n");
+
+  return 1;
 }
 
 
