@@ -1,14 +1,14 @@
 /* a_basic.c */
 void o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp);
 void o_save_write_header(FILE *fp);
-void o_save(TOPLEVEL *w_current, char *filename);
+int o_save(TOPLEVEL *w_current, char *filename);
 OBJECT *o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename);
 void o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale);
 /* f_basic.c */
 int f_open(TOPLEVEL *w_current, char *filename);
 void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
-void f_save(TOPLEVEL *w_current, char *filename);
+int f_save(TOPLEVEL *w_current, char *filename);
 /* f_image.c */
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);

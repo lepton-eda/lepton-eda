@@ -149,10 +149,10 @@ f_save_close(TOPLEVEL *w_current, char *filename)
 @end defun
 
 <<f_basic.c : f_save()>>=
-void
+int
 f_save(TOPLEVEL *w_current, char *filename)
 {
-  o_save(w_current, filename);
+  return o_save(w_current, filename);
 }
 
 @ %def f_save

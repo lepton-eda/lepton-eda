@@ -190,7 +190,7 @@ o_save_write_header(FILE *fp)
 @end defun
 
 <<a_basic.c : o_save()>>=
-void
+int
 o_save(TOPLEVEL *w_current, char *filename)
 {
   OBJECT *o_current=NULL;
@@ -203,7 +203,7 @@ o_save(TOPLEVEL *w_current, char *filename)
 	
   if (fp == NULL) {
     s_log_message("o_save: Could not open [%s]\n", filename);
-    return;
+    return 0;
   }
 
 
@@ -302,7 +302,7 @@ o_save(TOPLEVEL *w_current, char *filename)
   }
 
   fclose(fp);
-
+  return 1;
 }
 
 
