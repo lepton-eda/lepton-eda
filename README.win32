@@ -156,6 +156,10 @@ Install gtk+, gdk, and glib per these instructions:
   Rename each of the *.a file to be libPACKAGE.a (not libPACKAGE-1.3.a, get 
   rid of the version)
 
+* Copy cygpn2.dll and cygz.dll into /geda/bin (You only have to do this if
+  you want to create a standalone /geda directory; really only for binary
+  package creators).  These *.dll live in /usr/bin
+
 * touch /geda/src/gtk+/gdk/gdkx.h into existance (empty file).  This file
   really should be used in the gEDA sources, I will eventually remove the
   reference.
