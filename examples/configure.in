@@ -28,6 +28,7 @@ AC_SUBST(GEDADATADIR)
 
 AC_CONFIG_FILES([ 
         Makefile 
-        gTAG/Makefile ])
+        gTAG/Makefile 
+        lightning_detector/Makefile ])
 AC_OUTPUT 
 

@@ -1,0 +1,65 @@
+#!/usr/bin/python
+import fileinput
+import re
+import commands
+
+tempfile=open('workfile', 'w')
+
+uref = "component"
+value = "value"
+text = "anything"
+word_length = 0
+
+
+for line in fileinput.input():
+	text = line
+	if re.search("uref=",text):
+		word_length = len(text) - 1   #remove newline
+                uref = text[5:word_length]    #get component uref
+
+	if re.search("value=",text):
+               	word_length = len(text) - 1   #remove newline
+               	value = text[6:word_length]   #get component value 
+                #print  uref,
+		#print "-------",
+		#print  value
+		tempfile.write(uref)          
+                tempfile.write(' ---------- ') 
+		tempfile.write(value)
+		tempfile.write("\n")
+
+tempfile.close()
+
+print fileinput.filename()
+
+x = open('workfile','r')
+
+pp=fileinput.filename()
+
+bom=open(pp +'.bom','w')
+
+bom.write("Bill of Materials for "+ fileinput.filename() + '\n')
+bom.write("\n")
+bom.write("Component    Value\n")
+
+a = x.readlines()
+a.sort()
+for tuple in a:
+	bom.write(tuple)
+bom.close()
+x.close()
+
+bom = open(pp + '.bom','r')
+for line in bom.readlines():
+	print line,
+
+commands.getoutput('rm workfile') #remove workfile
+
+
+
+
+
+
+
+
+

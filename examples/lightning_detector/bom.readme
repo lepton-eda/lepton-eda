@@ -1,0 +1,18 @@
+# An awful hack, not yet finished, written by Terry Porter <techman@dingoblue.net.au>
+# January 2001, released under the terms of the GPL, please see the file "COPYING",
+#  included.
+
+# I'm learning Python as I go, and I'm a hardware guy with no formal
+# programming experience, just a little basic C knowledge, and it shows. 
+
+# Requires Python installed on your system.
+# Is designed to work *only* with schematic capture files produced by
+# gschem.
+
+# Usage:    "./bom schematic.sch"
+# this will produce "schematic.sch.bom"
+
+# Bugs: If a part has no value it won't be listed.
+
+# How does it work ? Bom just searches the gschem sch file for "uref"
+# and value, saves them to a temp file then sorts them.

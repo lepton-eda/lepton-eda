@@ -1,5 +1,5 @@
 
-SUBDIRS = gTAG
+SUBDIRS = gTAG lightning_detector
 
 EXTRA_DIST = 
 

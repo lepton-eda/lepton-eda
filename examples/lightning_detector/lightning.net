@@ -1,0 +1,13 @@
+unnamed_net13	Q4-1 lamp(2)-1 
+unnamed_net12	Q2-1 R5-1 
+unnamed_net11	D1-2 R4-2 R4-3 Q3-1 lamp(1)-1 R7-1 
+unnamed_net10	C6-1 R7-2 bat(+3v)-1 R2-1 
+unnamed_net9	Q3-2 R5-2 C5-1 
+unnamed_net8	Q4-2 C5-2 Q3-3 R6-2 R3-1 C4-2 
+unnamed_net7	D1-1 Q2-3 C4-1 
+unnamed_net6	Q2-2 R4-1 R3-2 C3-2 
+unnamed_net5	Q1-1 R1-1 R2-2 C3-1 
+unnamed_net4	Q1-2 R1-2 C2-2 
+unnamed_net3	A1-1 L2-2 
+unnamed_net2	C6-2 Q4-3 Q1-3 bat(0v)-1 C1-2 R6-1 L1-1 
+unnamed_net1	C1-1 C2-1 L2-1 L1-2 
