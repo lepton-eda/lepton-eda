@@ -94,6 +94,95 @@ extern char *XpmDefault[];               /* default icon displayed by the wizard
 	"                ",       \
 	"                "};
 
-	
-	
+#define XPM_ICON_FULL_FAILED {       \
+	"16 16 3 1",              \
+	"       c #FFFFFF", \
+	".      c #000000", \
+	"X      c #FF0000", \
+	"                ",       \
+	"                ",       \
+	"                ",       \
+	"  ...........   ",       \
+	"  .         .   ",       \
+	"  .       X .   ",       \
+	"  .      XX .   ",       \
+	"  . X   XXX .   ",       \
+	"  . XX XXX  .   ",       \
+	"  . XXXXX   .   ",       \
+	"  .  XXX    .   ",       \
+	"  .   X     .   ",       \
+	"  .         .   ",       \
+	"  ...........   ",       \
+	"                ",       \
+	"                "};
+
+#define XPM_ICON_PART_FAILED {       \
+	"16 16 4 1",              \
+	"       c #FFFFFF", \
+	".      c #000000", \
+	"A      c #FF0000", \
+	"X      c #CCCCCC", \
+	"                ",       \
+	"                ",       \
+	"                ",       \
+	"  ...........   ",       \
+	"  .XXXXXXXXX.   ",       \
+	"  .XXXXXXXAX.   ",       \
+	"  .XXXXXXAAX.   ",       \
+	"  .XAXXXAAAX.   ",       \
+	"  .XAAXAAAXX.   ",       \
+	"  .XAAAAAXXX.   ",       \
+	"  .XXAAAXXXX.   ",       \
+	"  .XXXAXXXXX.   ",       \
+	"  .XXXXXXXXX.   ",       \
+	"  ...........   ",       \
+	"                ",       \
+	"                "};
+
+#define XPM_ICON_REQUIRED {       \
+	"16 16 3 1",              \
+	"       c #FFFFFF", \
+	".      c #000000", \
+	"X      c #CCCCCC", \
+	"                ",       \
+	"                ",       \
+	"                ",       \
+	"  ...........   ",       \
+	"  .         .   ",       \
+	"  .  ....   .   ",       \
+	"  .  .   .  .   ",       \
+	"  .  .   .  .   ",       \
+	"  .  .....  .   ",       \
+	"  .  . .    .   ",       \
+	"  .  .  .   .   ",       \
+	"  .  .   .  .   ",       \
+	"  .         .   ",       \
+	"  ...........   ",       \
+	"                ",       \
+	"                "};
+
+#define XPM_ICON_REQUIRED_FAILED {       \
+	"16 16 3 1",              \
+	"       c #FFFFFF", \
+	".      c #000000", \
+	"X      c #FF0000", \
+	"                ",       \
+	"                ",       \
+	"                ",       \
+	"  ...........   ",       \
+	"  .         .   ",       \
+	"  .  XXXX   .   ",       \
+	"  .  X   X  .   ",       \
+	"  .  X   X  .   ",       \
+	"  .  XXXX.  .   ",       \
+	"  .  X X    .   ",       \
+	"  .  X  X   .   ",       \
+	"  .  X   X  .   ",       \
+	"  .         .   ",       \
+	"  ...........   ",       \
+	"                ",       \
+	"                "};
+
+
+
 #endif
