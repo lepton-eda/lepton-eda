@@ -1,3 +1,7 @@
+2002-12-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* m4/Makefile.am: Added Makefile.in to the maintainer-clean target.
+
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * lib/system-gschemrc.in: Changed the variable names which hold
