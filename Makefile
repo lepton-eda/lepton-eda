@@ -4,7 +4,7 @@ SHELL=/bin/sh
 #
 # Change this to the real version of the distribution
 #
-VERSION=20040710
+VERSION=20041228
 
 # 
 # Use this when you are building the CVS version
@@ -13,13 +13,13 @@ DIR_PREFIX=
 
 #
 # Use this when you are building the Released version (comment out above)
-# CD_VERSION=-$(VERSION)
-# DIR_PREFIX=geda-
+#CD_VERSION=-$(VERSION)
+#DIR_PREFIX=geda-
 
 #
 # Set this to the location where you want to install gEDA/gaf
 #
-prefix=/usr/local/geda
+prefix=$(HOME)/geda
 
 #
 # You can set any global options you want here to be passed to the 
