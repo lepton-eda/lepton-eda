@@ -10,6 +10,8 @@
 
 	* spice: Added a couple symbols by Daniel Nilsson.
 
+	* micro: Added a symbol by Al Williams.
+
 2002-05-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* system-commonrc.in: Add bitmap-directory rc keyword
