@@ -1,3 +1,8 @@
+2002-02-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* power/*.sym: Made sure all the power symbols have the net= attribute
+  	in them.  Misc cleanup as well.
+
 2002-02-16 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* micro/AT*.sym: Oops grabbed the wrong versions of Werner's symbols.
