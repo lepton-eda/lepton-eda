@@ -121,7 +121,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
     list->data = (gchar *) g_strdup(item);
     list->next = NULL;
     list->prev = NULL;  /* this may have already been initialized. . . . */
-    list->pos = (int) count;  /* This enumerates the pos on the list.  Value is reset later by sorting. */
+    list->pos = *count; /* This enumerates the pos on the list.  Value is reset later by sorting. */
     (*count)++;  /* increment count to 1 */
     return;
   }
@@ -148,7 +148,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   local_list->next = NULL;
   local_list->prev = prev;  /* point this item to last entry in old list */
   prev->next = local_list;  /* make last item in old list point to this one. */
-  local_list->pos = (int) count;  /* This enumerates the pos on the list.  Value is reset later by sorting. */
+  local_list->pos = *count; /* This enumerates the pos on the list.  Value is reset later by sorting. */
   (*count)++;  /* increment count */
   /*   list = local_list;  */
   return;
