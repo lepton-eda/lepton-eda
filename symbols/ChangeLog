@@ -18,6 +18,9 @@ into the cvs repository.
 	* */*.sym: Loaded and saved all symbols in gschem to get the new 
 	  version and file format (text alignment change) 
 
+	* analog/*.sym: Added pin#= attributes to a few of the symbols
+	  Added missing device= attributes as well
+
 2000-02-19  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * README/INSTALL: Updated files to reflect next release
