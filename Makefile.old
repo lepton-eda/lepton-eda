@@ -1,6 +1,6 @@
-
+ 
 # Thanks to Kazu Hirata for suggestion some comments which would make this
-# Makefile a bit more "user friendly"
+# Makefile a bit more "user friendly".
 
 #SUBDIRS=libgeda symbols gschem 
 #SUBDIRS=libgeda symbols gschem gnetlist gpcb
