@@ -13,6 +13,30 @@
 	quest-open.sym, u_-acute-accent.sym: Added a bunch of new
 	spanish characters by Carlos.
 
+	* Makefile.am, configure.ac, system-commonrc.in, gnetman/*.sym: Added
+	gnetman symbol library and symbols.  (updated symbols to the latest
+	file format: 1)
+
+	* 74/74259-1.sym analog/darlington_NPN-1.sym
+	analog/photo-transistor-1.sym analog/resistorpack7-2.sym
+	connector/header50-3.sym connector/header50r-1.sym
+	connector/rj45-1.sym linear/lm337-1.sym maxim/adm202-1.sym
+	maxim/adm202-2.sym memory/628512-1.sym misc/HIP4080A-1.sym
+	misc/HIP4081A-1.sym misc/mc3479-1.sym national/DS2405-1.sym
+	national/DS26C31-1.sym national/DS26C32-2.sym
+	national/DS2890_TO92-1.sym opto/CNY17-1.sym opto/K3020P-1.sym
+	opto/hcnr201-1.sym, analog/pot-1.sym analog/pot-2.sym 
+	analog/testpt-1.sym symbols/misc/PCF8563-1.sym: 
+	Added a bunch of contributed symbols.  Thanks everybody!
+
+	* system-commonrc.in: Commented out the following conflicting 
+	component-libraries:
+
+		vhdl/ verilog/ asic/ gnetman/  
+
+	Note this libraries are only commented out temporary, just until
+	the component search limitation is fixed.  (see jitterbug #9)
+
 2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am, configure.ac, system-commonrc.in, cascade/*.sym: Added

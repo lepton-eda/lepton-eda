@@ -1,0 +1,100 @@
+v 20031231 1
+B 300 300 1400 1500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1300 1900 9 10 1 1 0 0 1
+device=PCF8563
+T 400 1900 8 10 1 1 0 0 1
+refdes=U?
+T 400 2300 5 10 0 0 0 0 1
+footprint=DIP8
+T 400 2500 5 10 0 0 0 0 1
+description=Real-time clock/calendar
+T 400 2100 5 10 0 0 0 0 1
+numslots=0
+P 1700 1500 2000 1500 1 0 1
+{
+T 1800 1550 5 10 1 1 0 0 1
+pinnumber=6
+T 1800 1350 5 10 0 1 0 0 1
+pinseq=6
+T 1900 1350 5 10 0 1 0 0 1
+pintype=in
+T 1200 1500 9 10 1 1 0 1 1
+pinlabel=SCL
+}
+P 1700 1200 2000 1200 1 0 1
+{
+T 1800 1250 5 10 1 1 0 0 1
+pinnumber=5
+T 1800 1050 5 10 0 1 0 0 1
+pinseq=5
+T 1900 1050 5 10 0 1 0 0 1
+pintype=io
+T 1200 1200 9 10 1 1 0 1 1
+pinlabel=SDA
+}
+P 300 1500 0 1500 1 0 1
+{
+T 0 1550 5 10 1 1 0 0 1
+pinnumber=1
+T 0 1350 5 10 0 1 0 0 1
+pinseq=1
+T 100 1350 5 10 0 1 0 0 1
+pintype=in
+T 400 1500 9 10 1 1 0 1 1
+pinlabel=OSCI
+}
+P 300 600 0 600 1 0 1
+{
+T 0 650 5 10 1 1 0 0 1
+pinnumber=2
+T 0 450 5 10 0 1 0 0 1
+pinseq=2
+T 100 450 5 10 0 1 0 0 1
+pintype=out
+T 400 600 9 10 1 1 0 1 1
+pinlabel=OSCO
+}
+P 1000 300 1000 0 1 0 1
+{
+T 1050 100 5 10 1 1 0 0 1
+pinnumber=4
+T 550 100 5 10 0 1 0 0 1
+pinseq=4
+T 650 100 5 10 0 1 0 0 1
+pintype=pwr
+T 800 400 9 10 1 1 0 1 1
+pinlabel=GND
+}
+P 1000 1800 1000 2100 1 0 1
+{
+T 1050 1900 5 10 1 1 0 0 1
+pinnumber=8
+T 750 1900 5 10 0 1 0 0 1
+pinseq=8
+T 850 1900 5 10 0 1 0 0 1
+pintype=pwr
+T 800 1700 9 10 1 1 0 1 1
+pinlabel=Vdd
+}
+P 1700 900 2000 900 1 0 1
+{
+T 1800 950 5 10 1 1 0 0 1
+pinnumber=7
+T 1800 750 5 10 0 1 0 0 1
+pinseq=7
+T 1900 750 5 10 0 1 0 0 1
+pintype=out
+T 800 900 9 10 1 1 0 1 1
+pinlabel=CLKOUT
+}
+P 1700 600 2000 600 1 0 1
+{
+T 1800 650 5 10 1 1 0 0 1
+pinnumber=3
+T 1800 450 5 10 0 1 0 0 1
+pinseq=3
+T 1900 450 5 10 0 1 0 0 1
+pintype=out
+T 1200 600 9 10 1 1 0 1 1
+pinlabel=/INT
+}

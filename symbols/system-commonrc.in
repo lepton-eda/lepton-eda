@@ -17,6 +17,11 @@
 ; is searched *first*.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
+; NOTE: Some of the below component libraries below are commented out.
+;       This was done because there are conflicting filenames within these
+;       libraries.  Please see Jitterbug #9 on this gEDA/gaf limitation.
+;       It will be fixed soon.
+;
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
@@ -42,8 +47,8 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@connector")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switch")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switcap")
-(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
-(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@spice")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@rf")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@bus")
@@ -55,7 +60,8 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@cascade")
-(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
+;(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@gnetman")
 
 ; component-library-search atring
 ;

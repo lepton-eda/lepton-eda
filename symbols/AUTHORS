@@ -535,7 +535,8 @@ James Carter		- For contributing the following symbol:
 Dan McMahill		- For contributing the following symbols:
 
 			 	ax4106-1.sym max4107-1.sym arfx1229-1.sym
-				max1211-1.sym 
+				max1211-1.sym pot-1.sym pot-2.sym
+				testpt-1.sym
 
 Jesse Alexander		- For contributing the following symbol:
 
@@ -557,6 +558,7 @@ Onno Kortmann:		- For contributing the following symbols:
  			  	voltmeter-1.sym lm1877-1.sym 
 				mosfet-with-diode-1.sym ntc-1.sym, 
 				l200-1.sym, tfds4500-1.sym 
+				photo-transistor-1.sym
 
 Thomas Maeke:		- For contributing the following symbols:
 
@@ -602,7 +604,7 @@ Stuart Brorson: 	- For contributing the following symbols:
 
 Mario Klebsch		- For contributing the following symbol:
 
-			  	7432-2.sym
+			  7432-2.sym
 
 			  For pointing out the swap between 7408-2 and 
 			  7409-2.
@@ -618,6 +620,7 @@ Terry Porter		- For contributing the following symbols:
 Bob Paddock		- For contributing the following symbols:
 	
 			  	header26-2.sym header32-2.sym
+				header50-3.sym header50r-1.sym
 
 
 voncarstadsl (e-mail only) - For contributing the following symbol:
@@ -629,6 +632,58 @@ michalsc (e-mail only)	- For contributing the following symbols:
 				lm339-2.sym  
 				
 			  And pointing out the errors in lm339-1.sym
+
+Fernando Pereira	- For contributing the following symbol:
+
+				74259-1.sym
+
+Teemu Ikonen		- For contributing the following symbols:
+
+				DS2405-1.sym DS2890_TO92-1.sym
+				HIP4080A-1.sym HIP4081A-1.sym
+				CNY17-1.sym
+
+Bill Gatliff		- For contributing the following symbols:
+
+				adm202-1.sym adm202-2.sym
+
+Wilbert Knol		- For contributing the following symbols:
+
+				darlington_NPN-1.sym
+
+Jon Noble		- For contributing the following symbol:
+
+				hcnr201-1.sym
+
+Take Vos		- For contributing the following symbol:
+	
+				mc3479-1.sym
+
+Holger Dietze		- For contributing the following symbol:
+
+				628512-1.sym
+
+Dermot Tynan		- For contributing the following symbols:
+	
+				DS26C31-1.sym DS26C32-2.sym
+				rj45-1.sym
+
+Ezra (e-mail only)	- For contributing the following symbol:
+
+				K3020P-1.sym
+
+jmarino (e-mail only)	- For contributing the following symbol:
+
+				lm337-1.sym
+
+Piotr Buciak		- For contributing the following symbol:
+		
+				resistorpack7-2.sym
+
+Leon Kos		- For contributing the following symbol:
+	
+				PCF8563-1.sym
+
 
 The following people contributed symbols via the online symbol upload
 (E-mails purposefully truncated):
