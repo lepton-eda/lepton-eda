@@ -909,8 +909,8 @@ o_arc_end1(TOPLEVEL *w_current, int x, int y)
   o_arc_rubberarc_xor(w_current);
 
   /* compute the radius, i.e. the distance */
-  w_current->last_x = x;
-  w_current->last_y = y;
+  w_current->last_x = fix_x(w_current, x);
+  w_current->last_y = fix_y(w_current, y);
   w_current->distance = GET_DISTANCE(w_current);
 
   /* ack! zero length radius */

@@ -682,9 +682,12 @@ DEFINE_I_CALLBACK(file_save_all)
 
   exit_if_null(w_current);
 
-  s_page_save_all(w_current);
+  if (s_page_save_all(w_current)) {
+     i_set_state_msg(w_current, SELECT, _("Failed to Save All"));
+  } else {
+     i_set_state_msg(w_current, SELECT, _("Saved All"));
+  }
 
-  i_set_state_msg(w_current, SELECT, _("Saved All"));
   i_update_toolbar(w_current);
   update_page_manager(NULL, w_current);
   i_update_menus(w_current);

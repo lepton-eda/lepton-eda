@@ -1,3 +1,17 @@
+2003-01-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_arc.nw: Added the first of Patrick's suggestions to fixing
+	bug #45.  Not completely fixed yet.
+
+	* noweb/i_callbacks.nw: Added code to properly output a failed error
+	message when executing File/Save All and one of the files cannot be
+        saved.
+
+2002-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/ext_chars.sch: Applied Egil's patch to add the new chars
+	to this test schematic.
+
 2002-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_attribedit.nw, o_undo.nw, o_misc.nw, o_delete.nw: Added 
