@@ -76,37 +76,8 @@
 ; is searched *first*.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@analog")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@altera")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@lattice")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@xilinx")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@idt")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@memory")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@micro")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@linear")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@maxim")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@national")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@misc")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@power")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@transistor")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@radio")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@tube")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@connector")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@switch")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@verilog")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@vhdl")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@rf")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@pla")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@ecl")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@dec")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@supervisor")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@bus")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@opto")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
-(source-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
+; Example:
+;(source-library "${HOME}@PATHSEP@projects@PATHSEP@my_schematics")
 
 ; source-library-search atring
 ;
@@ -119,7 +90,8 @@
 ; *before* the source libraries specified above.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(source-library-search "${GEDADATA}@PATHSEP@sym")
+; Example:
+;(source-library-search "${HOME}@PATHSEP@projects@PATHSEP@my_schematics")
 
 ; font-directory string
 ; Specifies where the vector font definitions are stored.

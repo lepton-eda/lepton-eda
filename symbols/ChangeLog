@@ -4,7 +4,13 @@
 	* 4000/400?-*.sym: completed symbol (added net, pinlabels, ...)
 	* 4000/: 4000-2.sym, 4002-2.sym, 4006-2.sym, 4008-2.sym added
 
-2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+2002-10-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-commonrc.in: Removed stale source-library paths.  These 
+	paths really ought to be in the users environment and not here.
+	And they most certainly should not be the symbol directories.
+
+2002-10-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* misc/interpage_bidir-1.sym, interpage_from-1.sym, 
 	  interpage_to-1.sym: Symbols into CVS.  These somehow made it into
