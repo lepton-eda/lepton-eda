@@ -1,6 +1,5 @@
 Makefile
 Makefile.in
-stamp-h*.in
 stamp-h1
 configure
 *.cache
