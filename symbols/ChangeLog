@@ -1,3 +1,7 @@
+2003-06-01 Werner Hoch <werner.ho@gmx.de>
+	* 74/74520-3.sym, 74/74189-2.sym, 74673A-2.sym: Added with swapped
+	LSB/MSB order. (hint of Magnus Danielson)
+
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* connector/header50-1.sym: Changed the color on some detached
