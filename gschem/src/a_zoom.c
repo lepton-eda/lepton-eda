@@ -17,13 +17,11 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-
 #include <config.h>
 #include <stdio.h>
 #include <math.h>
 
 #include <guile/gh.h>
-
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -37,6 +35,15 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+/* Kazu on July 8, 1999 - added these macros to simplify the code */
+/* keep these macros local to this file! KISS! */
+#define GET_PAGE_WIDTH(w)					\
+	((w)->page_current->right  - (w)->page_current->left)
+#define GET_PAGE_HEIGHT(w)					\
+	((w)->page_current->bottom - (w)->page_current->top )
+#define GET_PAGE_ASPECT_RATIO(w)		\
+	((float) fabs(GET_PAGE_WIDTH (w)) /	\
+	 (float) fabs(GET_PAGE_HEIGHT(w)))
 
 /* dir is either ZOOM_IN or ZOOM_OUT which are defined in globals.h */
 void
@@ -46,136 +53,124 @@ a_zoom(TOPLEVEL *w_current, int dir)
 	double new_aspect;
 	int diff_x, diff_y;
 	int zoom_scale;
-	int sx,lx, sy, ly, last_factor;
+	int sx, sy;
+	int lx, ly;
+	int last_factor;
 
-	/* check to see if we are inside an action 
-	 * draw net, etc.  If yes, convert screen 
-	 * coords to world coords*/
+	/* check to see if we are inside an action draw net, etc.  If
+	 * yes, convert screen coords to world coords */
 	last_factor = w_current->page_current->zoom_factor;
-	if(w_current->inside_action)
-	{
+	if(w_current->inside_action) {
 		SCREENtoWORLD(w_current,
-				w_current->start_x,
-				w_current->start_y,
-				&sx, &sy);
+			      w_current->start_x,
+			      w_current->start_y,
+			      &sx, &sy);
 		SCREENtoWORLD(w_current,
-				w_current->last_x,
-				w_current->last_y,
-				&lx, &ly);
+			      w_current->last_x,
+			      w_current->last_y,
+			      &lx, &ly);
 #if DEBUG
 		printf("Inside an action\n");
 		printf("BEGIN: start x %d -> %d \n", w_current->start_x, sx);
 		printf("BEGIN: start y %d -> %d \n", w_current->start_y, sy);
-		printf("BEGIN: last  x %d -> %d \n", w_current->last_x, lx);
-		printf("BEGIN: last  y %d -> %d \n", w_current->last_y, ly);
+		printf("BEGIN: last  x %d -> %d \n", w_current->last_x , lx);
+		printf("BEGIN: last  y %d -> %d \n", w_current->last_y , ly);
 #endif
 		w_current->start_x = sx;
 		w_current->start_y = sy;
-		w_current->last_x = lx;
-		w_current->last_y = ly;
+		w_current->last_x  = lx;
+		w_current->last_y  = ly;
 	}
 
 	switch(dir) {
-		case(ZOOM_IN):
+	case(ZOOM_IN):
+		if (w_current->page_current->zoom_factor >=
+		    w_current->max_zoom) {
+			w_current->page_current->zoom_factor =
+				w_current->max_zoom;
+			return;
+		}
 
-       			if (w_current->page_current->zoom_factor >= 
-			   w_current->max_zoom ) {
-				w_current->page_current->zoom_factor = 
-					w_current->max_zoom;
-				return;
-			}
+		i = GET_PAGE_WIDTH(w_current) / 4;
+		w_current->page_current->right -= (int) i;
+		w_current->page_current->left  += (int) i;
+		/* rint is a hack */
+		i = GET_PAGE_HEIGHT(w_current) / 4;
+		w_current->page_current->bottom -= (int) i;
+		w_current->page_current->top    += (int) i;
 
-        		i = (w_current->page_current->right - 
-				w_current->page_current->left)/4;
-        		w_current->page_current->right -= (int) i;
-        		w_current->page_current->left += (int) i;
-			/* rint is a hack */
-        		i = (w_current->page_current->bottom - 
-				w_current->page_current->top)/4; 
-        		w_current->page_current->bottom -= (int) i;
-        		w_current->page_current->top += (int) i;
-	
-			break;
-
-		case(ZOOM_OUT):
-
-
-			if (w_current->page_current->zoom_factor <= 1 ) {
-			/* we are either zoomed out all the way, or are
-			 * one step from all the way*/
-				w_current->page_current->zoom_factor = 0;
-	
-				w_current->page_current->left = 
-						w_current->init_left;
-				w_current->page_current->top = 
-						w_current->init_top;
-				w_current->page_current->right = 
-						w_current->init_right;
-				w_current->page_current->bottom = 
-						w_current->init_bottom;
-				set_window(w_current, 
-					w_current->page_current->left, 
-					w_current->page_current->right, 
-					w_current->page_current->top, 
-					w_current->page_current->bottom);
-				/* have to have the net draw stuff here too
-				 * because of the return statement*/
-				if(w_current->inside_action)
-				{
-					WORLDtoSCREEN(w_current, 
-							w_current->start_x,
-							w_current->start_y,
-							&sx, &sy);
-					WORLDtoSCREEN(w_current,
-							w_current->last_x,
-							w_current->last_y,
-							&lx, &ly);
-					w_current->start_x = sx;
-					w_current->start_y = sy;
-					w_current->last_x = lx;
-					w_current->last_y = ly;
-				}
-				return;
-			} else {
-
-				i = (w_current->page_current->right - 
-				     w_current->page_current->left)/2;
-        			w_current->page_current->right = 
-					(i + w_current->page_current->right >
-					w_current->init_right
-		 			? w_current->init_right : 
-					i + w_current->page_current->right);
-        			w_current->page_current->left = 
-					(w_current->page_current->left - 
-					i < 0 ? 0 : 
-					w_current->page_current->left - i);
-
-        			i = (w_current->page_current->bottom - 
-				     	w_current->page_current->top)/2;
-        			w_current->page_current->bottom = 
-					(i + w_current->page_current->bottom > 
-					w_current->init_bottom ? 
-					w_current->init_bottom : 
-					i + w_current->page_current->bottom);
-        			w_current->page_current->top = 
-					(w_current->page_current->top - i < 0 
-					? 0 : w_current->page_current->top - i);
-			}
 		break;
 
-		case(ZOOM_FULL):
-			w_current->page_current->zoom_factor=0;
-			w_current->page_current->left = w_current->init_left;
-			w_current->page_current->top = w_current->init_top;
-			w_current->page_current->right = 
-						w_current->init_right;
-			w_current->page_current->bottom = 
-						w_current->init_bottom;
+	case(ZOOM_OUT):
+		if (w_current->page_current->zoom_factor <= 1 ) {
+			/* we are either zoomed out all the way, or
+			 * are one step from all the way */
+			w_current->page_current->zoom_factor = 0;
+
+			w_current->page_current->left =
+				w_current->init_left;
+			w_current->page_current->top =
+				w_current->init_top;
+			w_current->page_current->right =
+				w_current->init_right;
+			w_current->page_current->bottom =
+				w_current->init_bottom;
+			set_window(w_current,
+				   w_current->page_current->left,
+				   w_current->page_current->right,
+				   w_current->page_current->top,
+				   w_current->page_current->bottom);
+			/* have to have the net draw stuff here too
+			 * because of the return statement */
+			if(w_current->inside_action) {
+				WORLDtoSCREEN(w_current,
+					      w_current->start_x,
+					      w_current->start_y,
+					      &sx, &sy);
+				WORLDtoSCREEN(w_current,
+					      w_current->last_x,
+					      w_current->last_y,
+					      &lx, &ly);
+				w_current->start_x = sx;
+				w_current->start_y = sy;
+				w_current->last_x  = lx;
+				w_current->last_y  = ly;
+			}
+			return;
+		} else {
+			i = GET_PAGE_WIDTH(w_current) / 2;
+			w_current->page_current->right =
+				(i + w_current->page_current->right >
+				 w_current->init_right
+				 ? w_current->init_right :
+				 i + w_current->page_current->right);
+			w_current->page_current->left =
+				(w_current->page_current->left -
+				 i < 0 ? 0 :
+				 w_current->page_current->left - i);
+
+			i = GET_PAGE_HEIGHT(w_current) / 2;
+			w_current->page_current->bottom =
+				(i + w_current->page_current->bottom >
+				 w_current->init_bottom ?
+				 w_current->init_bottom :
+				 i + w_current->page_current->bottom);
+			w_current->page_current->top =
+				(w_current->page_current->top - i < 0
+				 ? 0 : w_current->page_current->top - i);
+		}
+		break;
+
+	case(ZOOM_FULL):
+		w_current->page_current->zoom_factor=0;
+		w_current->page_current->left   = w_current->init_left;
+		w_current->page_current->top    = w_current->init_top;
+		w_current->page_current->right  = w_current->init_right;
+		w_current->page_current->bottom = w_current->init_bottom;
 
 #if DEBUG
-			printf("Zooming Full\n");
+		printf("Zooming Full\n");
 #endif
-
 
 		break;
 	}
@@ -184,19 +179,13 @@ a_zoom(TOPLEVEL *w_current, int dir)
 	printf("-------------------\n");
 	printf("zoomfactor: %d\n", zoom_factor);
 	printf("left: %d, right: %d, top: %d, bottom: %d\n",
-				left, right, top, bottom);	
+	       left, right, top, bottom);
 #endif
 
+	diff_x = GET_PAGE_WIDTH (w_current);
+	diff_y = GET_PAGE_HEIGHT(w_current);
 
-	diff_x = w_current->page_current->right - 
-			w_current->page_current->left;		
-	diff_y = w_current->page_current->bottom - 
-			w_current->page_current->top;		
-
-	new_aspect = (float) fabs(w_current->page_current->right - 
-			w_current->page_current->left) / 
-		     (float) fabs(w_current->page_current->bottom - 
-			w_current->page_current->top);
+	new_aspect = GET_PAGE_ASPECT_RATIO(w_current);
 
 #if DEBUG
 	printf("wxh: %d %d\n", diff_x, diff_y);
@@ -205,65 +194,61 @@ a_zoom(TOPLEVEL *w_current, int dir)
 
 	/* Make sure aspect ratio is correct */
 	if (fabs(new_aspect - w_current->page_current->coord_aspectratio)) {
-
 		if (new_aspect > w_current->page_current->coord_aspectratio) {
 #if DEBUG
-			printf("new larger then coord\n");	
-			printf("implies that height is too large\n"); 
+			printf("new larger then coord\n");
+			printf("implies that height is too large\n");
 #endif
-			w_current->page_current->bottom = 
-				w_current->page_current->top + 
-				(w_current->page_current->right - 
-				 w_current->page_current->left) / 
-				w_current->page_current->coord_aspectratio; 
+			w_current->page_current->bottom =
+				w_current->page_current->top +
+				GET_PAGE_WIDTH(w_current) /
+				w_current->page_current->coord_aspectratio;
 		} else {
 #if DEBUG
 			printf("new smaller then coord\n");
-			printf("implies that width is too small\n"); 
+			printf("implies that width is too small\n");
 #endif
-			w_current->page_current->right = 
-				w_current->page_current->left + 
-				(w_current->page_current->bottom - 
-				 w_current->page_current->top) * 
-				w_current->page_current->coord_aspectratio; 
+			w_current->page_current->right =
+				w_current->page_current->left +
+				GET_PAGE_HEIGHT(w_current) *
+				w_current->page_current->coord_aspectratio;
                 }
-#if DEBUG 
+#if DEBUG
                 printf("invalid aspectratio corrected\n");
 #endif
         }
 
+	set_window(w_current,
+		   w_current->page_current->left,
+		   w_current->page_current->right,
+		   w_current->page_current->top,
+		   w_current->page_current->bottom);
 
-	set_window(w_current, 
-		w_current->page_current->left, 
-		w_current->page_current->right, 
-		w_current->page_current->top, 
-		w_current->page_current->bottom);
+	/* don't have to do this since scrollbars will do the redraw */
+#if 0
+	o_redraw_all();
+#endif
 
-/* don't have to do this since scrollbars will do the redraw */
-/* o_redraw_all();*/
+	diff_x = fabs(GET_PAGE_WIDTH(w_current));
 
-	diff_x = fabs(w_current->page_current->right - 
-		      w_current->page_current->left);
-	
 #ifdef HAS_RINT
 	zoom_scale = (int) rint(w_current->init_right / diff_x);
-#else 
+#else
 	zoom_scale = (int) w_current->init_right / diff_x;
 #endif
 
 	w_current->page_current->zoom_factor = zoom_scale;
 
 	/* convert things back to screen coords*/
-	if(w_current->inside_action)
-	{
-		WORLDtoSCREEN(w_current, 
-				w_current->start_x,
-				w_current->start_y,
-				&sx, &sy);
+	if(w_current->inside_action) {
 		WORLDtoSCREEN(w_current,
-				w_current->last_x,
-				w_current->last_y,
-				&lx, &ly);
+			      w_current->start_x,
+			      w_current->start_y,
+			      &sx, &sy);
+		WORLDtoSCREEN(w_current,
+			      w_current->last_x,
+			      w_current->last_y,
+			      &lx, &ly);
 #if DEBUG
 		printf("END: current factor = %d\n", w_current->page_current->zoom_factor);
 		printf("END: last_factor = %d\n", last_factor);
@@ -277,61 +262,56 @@ a_zoom(TOPLEVEL *w_current, int dir)
 		w_current->last_x = lx;
 		w_current->last_y = ly;
 	}
-
 }
 
 void
-a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current) 
+a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current)
 {
-	int lleft, lright, ltop, lbottom,tmp;	
+	int lleft, lright, ltop, lbottom,tmp;
 	double new_aspect,delta_x,delta_y,pad_x,pad_y;
 	int zoom_scale;
 	int diff_x;
-	
+
 	if (o_current != NULL) {
 		if (o_current->next == NULL) {
-			return;	
-		}	
+			return;
+		}
 	} else {
-		return;	
+		return;
 	}
 
+	world_get_complex_bounds(w_current, o_current,
+				 &lleft, &ltop,
+				 &lright, &lbottom);
 
-	world_get_complex_bounds(w_current, o_current, 
-					&lleft, &ltop, 
-					&lright, &lbottom);
-
-#if DEBUG 
+#if DEBUG
 	printf("in a_zoom_limits:  left: %d, right: %d, top: %d, bottom: %d\n",
-				lleft, lright, ltop, lbottom);	
+	       lleft, lright, ltop, lbottom);
 #endif
 
-	/* Hacked by ER 28/10/98 
-	 * now zoom-limits is centered, with paddings on all sides 
-	 * Slightly modified by AVH to make sure all .sch files work 
+	/* Hacked by ER 28/10/98
+	 * now zoom-limits is centered, with paddings on all sides
+	 * Slightly modified by AVH to make sure all .sch files work
 	 */
 
-
 	if (lleft > lright) { /* swap values */
-	    tmp = lleft;
-	    lleft = lright;
-	    lright = tmp;
+		tmp = lleft;
+		lleft = lright;
+		lright = tmp;
 	}
-	
 
 	if (ltop > lbottom) {
 		tmp = ltop;
 		ltop = lbottom;
 		lbottom = tmp;
 	}
-	
 
 	/* ok, now add some padding on all sides */
 	delta_x = (float) fabs(lleft - lright);
 	pad_x = delta_x/20;
 	delta_y = (float) fabs(ltop - lbottom);
 	pad_y = delta_y/20;
-	
+
 	lleft = lleft - (int)pad_x;
 	lright = lright + (int)pad_x;
 	ltop = ltop - (int)pad_y;
@@ -348,21 +328,19 @@ a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current)
 
 #if DEBUG
 	printf("new limits:  left: %d, right: %d, top: %d, bottom: %d\n",
-				lleft, lright, ltop, lbottom);	
+	       lleft, lright, ltop, lbottom);
 #endif
-	
+
 	/* new_aspect = (float) fabs(
-	   w_current->page_current->right - w_current->page_current->left) / 
-	   (float) fabs(w_current->page_current->bottom - 
+	   w_current->page_current->right - w_current->page_current->left) /
+	   (float) fabs(w_current->page_current->bottom -
 	   w_current->page_current->top); */
 
 	new_aspect = delta_x/delta_y;
-	
-	
 
-#if DEBUG 
-	printf("coord set in stone aspect %f\n", 
-			w_current->page_current->coord_aspectratio);
+#if DEBUG
+	printf("coord set in stone aspect %f\n",
+	       w_current->page_current->coord_aspectratio);
 	printf("new aspect %f\n", new_aspect);
 #endif
 	/* Make sure aspect ratio is correct */
@@ -370,48 +348,48 @@ a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current)
 
 /* sign was > */
 		if (new_aspect > w_current->page_current->coord_aspectratio) {
-#if DEBUG 
-			printf("new larger then coord\n");	
-			printf("implies that height is too large\n"); 
+#if DEBUG
+			printf("new larger then coord\n");
+			printf("implies that height is too large\n");
 #endif
 			/* calculate neccesary padding on Y */
 
-			w_current->page_current->bottom = 
+			w_current->page_current->bottom =
 				w_current->page_current->top + (
-				w_current->page_current->right - 
-				w_current->page_current->left) /
-				w_current->page_current->coord_aspectratio; 
+					w_current->page_current->right -
+					w_current->page_current->left) /
+				w_current->page_current->coord_aspectratio;
 
 #if 0 /* ER's original zoom limits code */
 			pad_y = (delta_y - delta_x*
-				w_current->page_current->coord_aspectratio)/2;
-			w_current->page_current->bottom = 
+				 w_current->page_current->coord_aspectratio)/2;
+			w_current->page_current->bottom =
 				w_current->page_current->bottom + pad_y;
-			w_current->page_current->top = 
-				w_current->page_current->top - pad_y; 
+			w_current->page_current->top =
+				w_current->page_current->top - pad_y;
 #endif
 
 		} else {
 
-#if DEBUG 
+#if DEBUG
 			printf("new smaller then coord\n");
-			printf("implies that width is too small\n"); 
+			printf("implies that width is too small\n");
 #endif
 			/* calculate necessary padding on X */
-			w_current->page_current->right = 
+			w_current->page_current->right =
 				w_current->page_current->left + (
-				w_current->page_current->bottom - 
-				w_current->page_current->top) * 
-				w_current->page_current->coord_aspectratio; 
+					w_current->page_current->bottom -
+					w_current->page_current->top) *
+				w_current->page_current->coord_aspectratio;
 
 #if 0 /* ER's original zoom limits code */
-			pad_x = (delta_x - delta_y * 
-				w_current->page_current->coord_aspectratio)/2;	
+			pad_x = (delta_x - delta_y *
+				 w_current->page_current->coord_aspectratio)/2;
 
-			w_current->page_current->right = 
-					w_current->page_current->right - pad_x; 
-			w_current->page_current->left = 
-					w_current->page_current->left + pad_x; 
+			w_current->page_current->right =
+				w_current->page_current->right - pad_x;
+			w_current->page_current->left =
+				w_current->page_current->left + pad_x;
 #endif
 
                 }
@@ -419,51 +397,50 @@ a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current)
                 printf("invalid aspectratio corrected\n");
 #endif
         }
-	
+
 	new_aspect = (float) fabs(
-		w_current->page_current->right - 
-		w_current->page_current->left) / 
-		(float) fabs(w_current->page_current->bottom - 
+		w_current->page_current->right -
+		w_current->page_current->left) /
+		(float) fabs(w_current->page_current->bottom -
 			     w_current->page_current->top);
 
-#if DEBUG 
+#if DEBUG
 	printf("final %f\n", new_aspect);
 #endif
 
-	diff_x = fabs(w_current->page_current->right - 
+	diff_x = fabs(w_current->page_current->right -
 		      w_current->page_current->left);
-	
+
 #ifdef HAS_RINT
 	zoom_scale = (int) rint(w_current->init_right / diff_x);
-#else 
+#else
 	zoom_scale = (int) w_current->init_right / diff_x;
 #endif
-	
+
 	if (zoom_scale > w_current->max_zoom) {
-		zoom_scale = w_current->max_zoom;	
+		zoom_scale = w_current->max_zoom;
 	}
-	
+
 	if (zoom_scale < w_current->min_zoom) {
-		zoom_scale = w_current->min_zoom;	
+		zoom_scale = w_current->min_zoom;
 	}
 
 	w_current->page_current->zoom_factor = zoom_scale;
 
 #if DEBUG
-	printf("zoom limits final %d %d %d %d \n", 
-		w_current->page_current->left, 
-		w_current->page_current->right, 
-		w_current->page_current->top, 
-		w_current->page_current->bottom); 
+	printf("zoom limits final %d %d %d %d \n",
+	       w_current->page_current->left,
+	       w_current->page_current->right,
+	       w_current->page_current->top,
+	       w_current->page_current->bottom);
 #endif
 
-	set_window(w_current, 
-		w_current->page_current->left, 
-		w_current->page_current->right, 
-		w_current->page_current->top, 
-		w_current->page_current->bottom); 
+	set_window(w_current,
+		   w_current->page_current->left,
+		   w_current->page_current->right,
+		   w_current->page_current->top,
+		   w_current->page_current->bottom);
 }
-
 
 /* I think this works okay, but it isn't perfect! */
 void
@@ -473,9 +450,9 @@ a_zoom_box(TOPLEVEL *w_current)
 	int x1, y1, x2, y2;
 	int zoom_scale;
 	int diff_x, diff_y;
-	
+
 	int tmp;
-	
+
 	if( w_current->last_x < w_current->start_x ) {
 		tmp = w_current->last_x;
 		w_current->last_x = w_current->start_x;
@@ -488,10 +465,10 @@ a_zoom_box(TOPLEVEL *w_current)
 	}
 
 	SCREENtoWORLD(w_current,  w_current->start_x, w_current->start_y,
-					&x1, &y1);
+		      &x1, &y1);
 
 	SCREENtoWORLD(w_current,  w_current->last_x, w_current->last_y,
-					&x2, &y2);
+		      &x2, &y2);
 
 	diff_x = abs(x1 - x2);
 	diff_y = abs(y1 - y2);
@@ -499,7 +476,6 @@ a_zoom_box(TOPLEVEL *w_current)
 		s_log_message("Zoom too small!  Cannot zoom further.\n");
 		return;
 	}
-	
 
 	world_left = w_current->page_current->left = min(x1, x2);
 	world_top = w_current->page_current->top = min(y1, y2);
@@ -507,53 +483,51 @@ a_zoom_box(TOPLEVEL *w_current)
 	world_bottom = w_current->page_current->bottom = max(y1, y2);
 
 #if DEBUG
-	printf("screen %d %d to %d %d\n", 
-		w_current->start_x, w_current->start_y,
-				w_current->last_x, w_current->last_y);
-	printf("raw %d %d to %d %d\n", 
-			world_left, world_top, world_right,world_bottom);
+	printf("screen %d %d to %d %d\n",
+	       w_current->start_x, w_current->start_y,
+	       w_current->last_x, w_current->last_y);
+	printf("raw %d %d to %d %d\n",
+	       world_left, world_top, world_right,world_bottom);
 #endif
 
-
-	if (diff_x > diff_y) { 
-		world_bottom = w_current->page_current->bottom = 
-			w_current->page_current->top + 
-			(w_current->page_current->right - 
+	if (diff_x > diff_y) {
+		world_bottom = w_current->page_current->bottom =
+			w_current->page_current->top +
+			(w_current->page_current->right -
 			 w_current->page_current->left) / 1.333333333;
 
 	} else {
 
-		world_right = w_current->page_current->right = 
-			w_current->page_current->left + 
-			(w_current->page_current->bottom - 
+		world_right = w_current->page_current->right =
+			w_current->page_current->left +
+			(w_current->page_current->bottom -
 			 w_current->page_current->top) * 1.333333333;
 	}
 
+#if DEBUG
+	printf("final %d %d to %d %d\n", w_current->page_current->left,
+	       w_current->page_current->top,
+	       w_current->page_current->right,
+	       w_current->page_current->bottom);
 
-#if DEBUG 
-	printf("final %d %d to %d %d\n", w_current->page_current->left, 
-			w_current->page_current->top, 
-			w_current->page_current->right, 
-			w_current->page_current->bottom);
-
-	new_aspect = (float) fabs(w_current->page_current->right - 
-		 	 w_current->page_current->left) / 
-			(float) fabs(w_current->page_current->bottom - 
-			 w_current->page_current->top);
+	new_aspect = (float) fabs(w_current->page_current->right -
+				  w_current->page_current->left) /
+		(float) fabs(w_current->page_current->bottom -
+			     w_current->page_current->top);
 
 	printf("final aspect %f\n", new_aspect);
 #endif
 
-	set_window(w_current, 
-		world_left, world_right, 
-		world_top, world_bottom); 
+	set_window(w_current,
+		   world_left, world_right,
+		   world_top, world_bottom);
 
-	diff_x = fabs(w_current->page_current->right - 
-			w_current->page_current->left);
-	
+	diff_x = fabs(w_current->page_current->right -
+		      w_current->page_current->left);
+
 #ifdef HAS_RINT
 	zoom_scale = (int) rint(w_current->init_right / diff_x);
-#else 
+#else
 	zoom_scale = (int) w_current->init_right / diff_x;
 #endif
 
@@ -575,19 +549,17 @@ a_zoom_box_start(TOPLEVEL *w_current, int x, int y)
 	int box_width, box_height;
 
         w_current->last_x = w_current->start_x = x;
-        w_current->last_y = w_current->start_y = y; 
+        w_current->last_y = w_current->start_y = y;
 
 	box_width = abs(w_current->last_x - w_current->start_x);
 	box_height = abs(w_current->last_y - w_current->start_y);
 
-
 	gdk_gc_set_foreground(w_current->xor_gc, &white);
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-		   FALSE, w_current->start_x, w_current->start_y, 
-			box_width, box_height);
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE, w_current->start_x, w_current->start_y,
+			   box_width, box_height);
 
 }
-
 
 void
 a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
@@ -601,7 +573,7 @@ a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
         }
 
 	box_width = abs(w_current->last_x - w_current->start_x);
-	box_height = abs(w_current->last_y - w_current->start_y);	
+	box_height = abs(w_current->last_y - w_current->start_y);
 
 	if( w_current->last_y < w_current->start_y )
 		box_top = w_current->last_y;
@@ -612,18 +584,18 @@ a_zoom_box_end(TOPLEVEL *w_current, int x, int y)
 		box_left = w_current->last_x;
 	else
 		box_left = w_current->start_x;
-	
+
 	gdk_gc_set_foreground(w_current->xor_gc, &white);
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-			FALSE, box_left, box_top,
-                        box_width, box_height); 
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE, box_left, box_top,
+			   box_width, box_height);
 
 	/* erase the box */
 #if 0
 	gdk_gc_set_foreground(w_current->gc, &white);
-	gdk_draw_rectangle(w_current->window, w_current->gc, 
-			FALSE, box_left, box_top,
-                        box_width, box_height); 
+	gdk_draw_rectangle(w_current->window, w_current->gc,
+			   FALSE, box_left, box_top,
+			   box_width, box_height);
 #endif
 
 	a_zoom_box(w_current);
@@ -655,12 +627,12 @@ a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
 		box_left = w_current->start_x;
 
 	gdk_gc_set_foreground(w_current->xor_gc, &white);
-	gdk_draw_rectangle(w_current->window, w_current->xor_gc, 
-		    FALSE, box_left, box_top, 
-			box_width, box_height);
+	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
+			   FALSE, box_left, box_top,
+			   box_width, box_height);
 
-       w_current->last_x = (int) x; 
-       w_current->last_y = (int) y;
+	w_current->last_x = (int) x;
+	w_current->last_y = (int) y;
 
 	box_width = abs(w_current->last_x - w_current->start_x);
 	box_height = abs(w_current->last_y - w_current->start_y);
@@ -676,9 +648,9 @@ a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
 		box_left = w_current->start_x;
 
 	gdk_draw_rectangle(w_current->window, w_current->xor_gc,
-		 FALSE, box_left, box_top, 
-		 box_width, box_height);
-}                                                       
+			   FALSE, box_left, box_top,
+			   box_width, box_height);
+}
 
 void
 correct_aspect(TOPLEVEL *w_current)
@@ -687,58 +659,59 @@ correct_aspect(TOPLEVEL *w_current)
 	int diff_x;
 	int zoom_scale;
 
-	new_aspect = (float) fabs(w_current->page_current->right - 
-			w_current->page_current->left) / 
-		     (float) fabs(w_current->page_current->bottom - 
-			w_current->page_current->top);
+	new_aspect =
+		(float) fabs(w_current->page_current->right -
+			     w_current->page_current->left) /
+		(float) fabs(w_current->page_current->bottom -
+			     w_current->page_current->top);
 
 	/* Make sure aspect ratio is correct */
 	if (fabs(new_aspect - w_current->page_current->coord_aspectratio)) {
 
 /* sign was > */
 		if (new_aspect > w_current->page_current->coord_aspectratio) {
-#if DEBUG 
-			printf("new larger then coord\n");	
-			printf("implies that height is too large\n"); 
+#if DEBUG
+			printf("new larger then coord\n");
+			printf("implies that height is too large\n");
 #endif
 			/* calculate neccesary padding on Y */
 
-			w_current->page_current->bottom = 
+			w_current->page_current->bottom =
 				w_current->page_current->top + (
-				w_current->page_current->right - 
-				w_current->page_current->left) /
-				w_current->page_current->coord_aspectratio; 
+					w_current->page_current->right -
+					w_current->page_current->left) /
+				w_current->page_current->coord_aspectratio;
 
 #if 0 /* ER's original zoom limits code */
 			pad_y = (delta_y - delta_x*
-				w_current->page_current->coord_aspectratio)/2;
-			w_current->page_current->bottom = 
+				 w_current->page_current->coord_aspectratio)/2;
+			w_current->page_current->bottom =
 				w_current->page_current->bottom + pad_y;
-			w_current->page_current->top = 
-				w_current->page_current->top - pad_y; 
+			w_current->page_current->top =
+				w_current->page_current->top - pad_y;
 #endif
 
 		} else {
 
-#if DEBUG 
+#if DEBUG
 			printf("new smaller then coord\n");
-			printf("implies that width is too small\n"); 
+			printf("implies that width is too small\n");
 #endif
 			/* calculate necessary padding on X */
-			w_current->page_current->right = 
+			w_current->page_current->right =
 				w_current->page_current->left + (
-				w_current->page_current->bottom - 
-				w_current->page_current->top) * 
-				w_current->page_current->coord_aspectratio; 
+					w_current->page_current->bottom -
+					w_current->page_current->top) *
+				w_current->page_current->coord_aspectratio;
 
 #if 0 /* ER's original zoom limits code */
-			pad_x = (delta_x - delta_y * 
-				w_current->page_current->coord_aspectratio)/2;	
+			pad_x = (delta_x - delta_y *
+				 w_current->page_current->coord_aspectratio)/2;
 
-			w_current->page_current->right = 
-					w_current->page_current->right - pad_x; 
-			w_current->page_current->left = 
-					w_current->page_current->left + pad_x; 
+			w_current->page_current->right =
+				w_current->page_current->right - pad_x;
+			w_current->page_current->left =
+				w_current->page_current->left + pad_x;
 #endif
 
                 }
@@ -746,33 +719,33 @@ correct_aspect(TOPLEVEL *w_current)
                 printf("invalid aspectratio corrected\n");
 #endif
         }
-	
+
 	new_aspect = (float) fabs(
-		w_current->page_current->right - 
-		w_current->page_current->left) / 
-		(float) fabs(w_current->page_current->bottom - 
+		w_current->page_current->right -
+		w_current->page_current->left) /
+		(float) fabs(w_current->page_current->bottom -
 			     w_current->page_current->top);
 
-#if DEBUG 
+#if DEBUG
 	printf("final %f\n", new_aspect);
 #endif
 
 #if 1
-	diff_x = fabs(w_current->page_current->right - 
+	diff_x = fabs(w_current->page_current->right -
 		      w_current->page_current->left);
-	
+
 #ifdef HAS_RINT
 	zoom_scale = (int) rint(w_current->init_right / diff_x);
-#else 
+#else
 	zoom_scale = (int) w_current->init_right / diff_x;
 #endif
-	
+
 	if (zoom_scale > w_current->max_zoom) {
-		zoom_scale = w_current->max_zoom;	
+		zoom_scale = w_current->max_zoom;
 	}
-	
+
 	if (zoom_scale < w_current->min_zoom) {
-		zoom_scale = w_current->min_zoom;	
+		zoom_scale = w_current->min_zoom;
 	}
 
 	w_current->page_current->zoom_factor = zoom_scale;
