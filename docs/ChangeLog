@@ -1,3 +1,9 @@
+2005-03-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: The changes to configure.ac added on 3/12/05 have
+	been removed.  In the distributed tarballs, it is okay to not have
+	latex installed since the docs are pre-generated.
+
 2005-03-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* gschem/gschem.tex: Removed obsolete install tests

@@ -16,7 +16,7 @@ AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
 AC_PATH_PROG(LATEX, latex, no, ${PATH})
 if test $LATEX = "no"; then
    echo "Cannot find latex -- documentation cannot be created"
-   AC_MSG_ERROR([Install latex or install the prepared geda-docs package])
+   echo "Install latex or install the prepared geda-docs package"
 fi
 
 AC_PATH_PROG(DVIPS, dvips, no, ${PATH})
@@ -24,19 +24,19 @@ AC_PATH_PROG(DVI2PS, dvi2ps, no, ${PATH})
 
 if test $DVIPS = "no" -a $DVI2PS = "no"; then
    echo "Cannot find dvips or dvi2ps -- documentation cannot be created" 
-   AC_MSG_ERROR([Install dvips or dvi2ps or install the prepared geda-docs package])
+   echo "Install dvips or dvi2ps or install the prepared geda-docs package"
 fi
 
 AC_PATH_PROG(LATEX2HTML, latex2html, no, ${PATH})
 if test $LATEX2HTML = "no"; then 
    echo "Cannot find latex2html -- documentation cannot be created" 
-   AC_MSG_ERROR([Install latex2html or install the prepared geda-docs package])
+   echo "Install latex2html or install the prepared geda-docs package"
 fi
 
 AC_PATH_PROG(PS2PDF, ps2pdf, no, ${PATH})
 if test $PS2PDF = "no"; then 
    echo "Cannot find pdf2ps -- documentation cannot be created" 
-   AC_MSG_ERROR([Install pdf2ps or install the prepared geda-docs package])
+   echo "Install pdf2ps or install the prepared geda-docs package"
 fi
 
 # 
