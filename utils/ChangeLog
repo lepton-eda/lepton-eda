@@ -1,3 +1,8 @@
+2003-10-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gsch2pcb.c, ChangeLog.gsch2pcb: Updated to Bill Wilson's 
+	version 1.0.1
+
 2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* ChangeLog.gsch2pcb, README.gsch2pcb, examples/gsch2pcb/.cvsignore,

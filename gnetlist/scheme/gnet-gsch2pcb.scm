@@ -139,7 +139,8 @@
 
 ;; To emulate popen. Guileish again.
 ; Needed after guile ver. 1.3.2. To save 1.3a users, wrap it in.
-(false-if-exception (use-modules (ice-9 popen)))
+; Doesn't work in guile 1.6 (false-if-exception (use-modules (ice-9 popen)))
+(use-modules (ice-9 popen))
 
 (define (gsch2pcb output-filename)
   (let ((port (open-output-file output-filename)))

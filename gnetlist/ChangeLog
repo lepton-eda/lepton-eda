@@ -1,3 +1,8 @@
+2003-10-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scheme/gnet-gsch2pcb.scm: Replaced file with one from 
+	Bill Wilson's gsch2pcb-1.0.1.  This fixes a guile-1.6 problem.
+
 2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-gsch2pcb.scm: Replaced file with one from 

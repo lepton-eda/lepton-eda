@@ -1,6 +1,11 @@
 
 gsch2pcb Changelog
 ------------------
+1.0.1
+---------
+	* Change use-modules usage in gnet-sch2pcb.scm that worked in guile 1.4
+	  but did not work in guile 1.6.
+
 1.0
 ---------
 	* Added --m4-command, --m4-pcbdir, and --m4-file options as suggested

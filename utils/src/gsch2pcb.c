@@ -32,7 +32,7 @@
 #endif
 
 
-#define	GSC2PCB_VERSION		"1.0"
+#define	GSC2PCB_VERSION		"1.0.1"
 
 #define	DEFAULT_PCB_INC		"pcb.inc"
 
