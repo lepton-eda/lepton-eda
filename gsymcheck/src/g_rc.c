@@ -313,7 +313,8 @@ g_rc_component_library_search(SCM path)
 			if (s_clib_uniq(fullpath)) {
 #ifdef __MINGW32__
 				if (fullpath[1] == ':' &&
-				    fullpath[2] == PATH_SEPARATER_CHAR) {
+				    (fullpath[2] == PATH_SEPARATER_CHAR ||
+				     fullpath[2] == OTHER_PATH_SEPARATER_CHAR)) {
 #else
 				if (fullpath[0] == PATH_SEPARATER_CHAR) {
 #endif
@@ -449,7 +450,8 @@ g_rc_source_library_search(SCM path)
 			if (s_slib_uniq(fullpath)) {
 #ifdef __MINGW32__
 				if (fullpath[1] == ':' &&
-				    fullpath[2] == PATH_SEPARATER_CHAR) {
+				    (fullpath[2] == PATH_SEPARATER_CHAR ||
+				     fullpath[2] == OTHER_PATH_SEPARATER_CHAR)) {
 #else
 				if (fullpath[0] == PATH_SEPARATER_CHAR) {
 #endif
