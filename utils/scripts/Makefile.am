@@ -1,9 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc
+bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate gschemdoc refdes_renum
 
 EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl \
-	     sarlacc_sym gschupdate gsymupdate config.sh.in gschemdoc.sh
+	     sarlacc_sym gschupdate gsymupdate refdes_renum \
+	     config.sh.in gschemdoc.sh
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~

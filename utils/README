@@ -147,6 +147,19 @@ IMPORTANT
     1.10) parts library (in ASCII dump format, through "decomp" utility)
     to gEDA component definition in .sym format file.
 
+    
+    refdes_renum
+    Dan McMahill
+
+    refdes_renum reads a gschem schematic file or files and renumbers
+    all reference designators.  The reference designators are numbered
+    starting with 1 and the old schematic file is replaced by the modified
+    schematic file.
+
+    Run the program with no parameters or with --help to see usage 
+    information.
+ 
+
 
 - License  
 
