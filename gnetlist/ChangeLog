@@ -2,6 +2,9 @@
 
 	* configure.ac: Changed AC_CONFIG_HEADER to AM_CONFIG_HEADER
 
+	* tests/stack.geda: Updated test files since one of the symbols got
+	a missing power/gnd net.
+
 2003-08-24 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gschem2pcb: Moved script into this directory from src/
