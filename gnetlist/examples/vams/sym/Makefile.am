@@ -6,8 +6,8 @@ EXTRA_DIST = BJT_transistor_simple.sym capacitor.sym current_source.sym \
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
-DISTCLEANFILES = core *.log FILE *.ps *~
-MAINTAINERCLEANFILES = core *.log FILE *.ps *~
+DISTCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
+MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
 
 
 

@@ -6,6 +6,6 @@ EXTRA_DIST = $(dataanalog_DATA)
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log *~
-MAINTAINERCLEANFILES = *.log *~
+DISTCLEANFILES = *.log *~ Makefile.in configure
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
 

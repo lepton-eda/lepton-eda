@@ -33,6 +33,6 @@ EXTRA_DIST = create_proto gschem.1
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
 CLEANFILES = *.log *.ps core FILE *~ prototype.bak
-DISTCLEANFILES = *.log *.ps core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h
+DISTCLEANFILES = *.log *.ps core FILE *~ prototype.bak Makefile.in configure
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure
 

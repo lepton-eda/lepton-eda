@@ -45,8 +45,8 @@ tests_ales:
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
-DISTCLEANFILES = new_* core *.log FILE *.ps *~
-MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~
+DISTCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
+MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
 
 
 

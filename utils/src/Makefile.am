@@ -20,6 +20,6 @@ EXTRA_DIST = convert_sym.awk gpstoimage mk_char_tab.pl sarlacc_sym
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 
-DISTCLEANFILES = *.log *.ps core FILE *~ 
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ 
+DISTCLEANFILES = *.log *.ps core FILE *~  Makefile.in configure
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~  Makefile.in configure
 

@@ -30,8 +30,8 @@ EXTRA_DIST = create_proto
 
 MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
 CLEANFILES = *.log core FILE *~ prototype.bak
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h
+DISTCLEANFILES = *.log core FILE *~ prototype.bak Makefile.in configure
+MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h Makefile.in configure
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.
