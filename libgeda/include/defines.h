@@ -268,6 +268,9 @@
 #define VERTICAL_LEFT		5
 #define VERTICAL_RIGHT		6
 
+/* gnetlist: hierarchy_*_order */
+#define APPEND			0
+#define PREPEND			1
 
 /* gnetlist: netlist_mode */
 #define gEDA			0

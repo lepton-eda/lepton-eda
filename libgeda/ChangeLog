@@ -8,6 +8,43 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-11-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added some more gnetlist rc variables to toplevel
+	  struct
+
+	* include/defines.h: Added some hierarchy_*_order #defines
+
+	* src/o_attrib.c: Put in a very very lame lame lame hack in 
+	  o_attrib_search_name_partial which should be taken out and shot.
+	  It better be removed when I fix the pin#=# problems
+
+2000-10-31  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added some gnetlist rc variables to toplevel
+	  struct
+
+2000-10-31  Stefan Petersen  <spe@geda.seul.org>
+
+	* src/f_basic.c: Fixed f_open to return 0 on failure to open a 
+	  schematic and 1 on success.  (Ales merged his changes to match this)
+
+2000-10-26  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/o_basic.c, o_box_basic.c, o_circle_basic.c: New fill
+	  support and minor changes to line type support.
+
+2000-10-22  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/f_basic.c: Slightly changed Stefan's f_open change.  Even if
+	  you cannot open a file, you should still setup the page.
+
+	* include/struct.h: Added some fields in the gnetlist structs for 
+          the pinlabel
+
+	* include/struct.h: Added more fields in the gnetlist structs for
+	  prefix / suffix strings (for hierarchy support)
+
 2000-10-10  Stefan Petersen  <spe@geda.seul.org>
 
 	* src/f_basic.c: f_open returns an int; 0 on failure, 1 on success

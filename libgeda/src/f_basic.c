@@ -38,6 +38,8 @@
 int
 f_open(TOPLEVEL *w_current, char *filename)
 {
+	int opened=FALSE;
+
 	/* has the head been freed yet? */
 	/* probably not hack PAGE */
 
@@ -50,9 +52,10 @@ f_open(TOPLEVEL *w_current, char *filename)
 
 	if (w_current->page_current->object_tail != NULL) {
 		s_log_message("Opened schematic [%s]\n", filename);
+		opened = TRUE;
 	} else {
-	  /* Failed to open page */
-	  return 0;
+	  	/* Failed to open page */
+          	opened = FALSE;	 
 	}
 
         w_current->page_current->object_tail = (OBJECT *) 
@@ -71,7 +74,11 @@ f_open(TOPLEVEL *w_current, char *filename)
 
 	w_current->page_current->CHANGED=0; /* added 4/7/98 */
 
-	return 1;
+	if (!opened) {
+		return (FALSE);
+	} else {
+		return (TRUE);
+	}
 }
 
 void

@@ -628,6 +628,16 @@ struct st_toplevel {
 
 	/* gnetlist specific */
 	int net_naming_priority;
+	int hierarchy_traversal;
+	int hierarchy_uref_mangle;
+	int hierarchy_netname_mangle;
+	int hierarchy_netattrib_mangle;
+	char *hierarchy_uref_seperator;
+	char *hierarchy_netname_seperator;
+	char *hierarchy_netattrib_seperator;
+	int hierarchy_netattrib_order;
+	int hierarchy_netname_order;
+	int hierarchy_uref_order;
 
 	TOPLEVEL *next;
 	TOPLEVEL *prev; 
@@ -646,6 +656,9 @@ struct st_netlist {
 	
 	CPINLIST *cpins;		
 
+	char *hierarchy_tag;
+	int composite_component;
+
 	NETLIST *prev;
 	NETLIST *next;
 };
@@ -657,6 +670,7 @@ struct st_cpinlist {
 
 	char *pin_number;
         char *net_name;			/* this is resolved at very end */
+	char *pin_label;
 
         NET *nets;
 
@@ -671,6 +685,7 @@ struct st_net {
 
 	int net_name_has_priority;
         char *net_name;
+	char *pin_label;
 
         char *connected_to; /* new to replace above */
 

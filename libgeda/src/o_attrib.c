@@ -1005,12 +1005,19 @@ o_attrib_search_name_partial(OBJECT *object, char *name, int counter)
 					if (counter != internal_counter) {
 						internal_counter++;	
 					} else {
+/* ************************************************************* */
+/* THIS IS A TOTAL HACK.  Ales should be *totally* ashamed of this */
+/* This prevents gnetlist from picking up pinlabel when it wants pin */
+/* THIS BETTER BE FIXED when pin#=# goes away */
+				         if (!strstr(found_name, "label")) {
+/* ************************************************************* */
 					   return_string = (char *) 
 							malloc(
 			     				 sizeof(char)*
 							 strlen(found_value)+1);
 					  strcpy(return_string, found_value);
 					  return(return_string);
+					 } 
 					}
 				   }
 				}	
