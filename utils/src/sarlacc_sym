@@ -114,7 +114,7 @@ if($line =~ /REFERENCE/)
 	($dummy,$ref) = split("\'",$line);
 	$line=<LIBRARY>;
 	print COMPONENT "T 100 100 $textcolor $partnamesize 0 1 0\n";
-	print COMPONENT "refdes=$ref\n";
+	print COMPONENT "uref=$ref\n";
 }
 
 ($dummy,$x,$y,$parts)=split("=}",$line);
@@ -247,7 +247,7 @@ while (( $line = <LIBRARY>) =~ /^[LRTB]/)
 	    $x1=$xsize+$dotsize; $x2=$xsize+$len; $y1=$y2=-$num*100;
 	    $textx = $xsize+$spacing;
 	    $texty=$y1+20;
-	    $namex = $xsize-string_len($pinlabel,$pinnumsize)-$spacing;
+	    $namex = $xsize-$spacing;
 	    $namey=$y1;
 	    if( $dotsize )
 	    {
@@ -287,16 +287,16 @@ while (( $line = <LIBRARY>) =~ /^[LRTB]/)
 #  BAD  Must set color somehow
 	print COMPONENT "P $x1 $y1 $x2 $y2 $pincolor\n";
 	print COMPONENT "{\n";
-	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize $visibility 1 0\n";
+	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize $visibility 1 0 $pinnumalign\n";
 	print COMPONENT "pin$pinnumber=$pinnumber\n";
 
-	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 0 0\n";
+	print COMPONENT "T $textx $texty $pinnumcolor $pinnumsize 0 0 0 0\n";
 	print COMPONENT "pintype=$pintype\n";
 
 	if ( not ($pinlabel =~ /\$/) )
 	{
 		print COMPONENT "T $namex $namey $pinnumcolor ",
-		"$pinnumsize $visibility 1 0\n";
+		"$pinnumsize $visibility 1 0 $pinlabelalign\n";
 		print COMPONENT "pinlabel=$pinlabel\n";
 	}
 	if ($pinname)
