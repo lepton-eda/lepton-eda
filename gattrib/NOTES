@@ -7,13 +7,15 @@ The were also useful when architecting the workings of gattrib.
 A spreadsheet holding function names is held in the file
 called "ProgramArchitecture.gnumeric", which should live in the
 design directory.  This spreadsheet should help you wade
-through the various fcns used during processing.
+through the various fcns used during processing.  Note that this
+spreadsheet might be a little out of date.  The source code is the
+final documentation.  
 
 No guarantee is made that these notes are accurate, useful,
 or even understandable to anybody else.  -- SDB 12.5.2003
                                             sdb@cloud9.net
 
-Updated on 7.17.2004.  SDB.
+Last updated on 11.10.2004.  SDB.
 
 
 -----------------------------------------------------------------------
@@ -48,9 +50,10 @@ gattrib algorithm:
 	sheet_head->master_net_list_head  (TBD) 
     *  Net attributes found in the design.  
 	sheet_head->master_net_attrib_list_head (TBD)
-    *  Component pins found in the design (TBD)
-
-    *  Component pins attributes found in the design (TBD)
+    *  Component pins found in the design 
+	sheet_head->master_pin_list_head
+    *  Component pins attributes found in the design
+	sheet_head->master_pin_attrib_list_head
 
     Each master list is stored using a STRING_DATA struct.
     Attach pointers to these master lists inside SHEET_DATA.
@@ -66,7 +69,7 @@ gattrib algorithm:
 	sheet_head->component_table
     *  Netnames and attached attributes.  (TBD)
 	sheet_head->net_table 
-    *  Component pins and attached attributes.  (TBD)
+    *  Component pins and attached attributes.
 
     After creation, attach TABLE inside SHEET_DATA.  The fcns which add components
     and nets to the internal data structs are called s_*_set_*"  Items in the table
@@ -132,7 +135,7 @@ STRING_LIST:
   master lists.
 
 GtkWidget **sheets:
-  These are the spreadsheet widgets themselves.  There are thre of them:
+  These are the spreadsheet widgets themselves.  There are three of them:
   1.  Comp attribs
   2.  Net attribs (currently TBD)
   3.  Pin attribs (i.e. pinseq and so on).
@@ -141,23 +144,36 @@ GtkWidget **sheets:
 ---------------------------------------------------------------------------------
 ********         How data gets from TOPLEVEL into GtkSheet               ********
 ---------------------------------------------------------------------------------
-Here's what happens when the program starts, or file->save is invoked from the menu
+Here's what happens when the program starts, or file->open is invoked from the menu
 and the data is read in.  (I handle data structure initialization elsewhere.)  Keep
-in mind that gattrib is a thin layer between GtkSheet and TOPLEVEL.  When you read
-in a design, libgeda functions are used to fill out the TOPLEVEL data structure.  The
-the purpose of gattrib is to take all teh stuff out of TOPLEVEL and stick it into
-GtkSheet for user manipulation.
+in mind that gattrib's data structures (in particular, SHEET_DATA) are
+a thin layer between GtkSheet and TOPLEVEL.  When you read in a
+design, libgeda functions are used to fill out the TOPLEVEL data
+structure.  The the purpose of gattrib is to take all the stuff out of
+TOPLEVEL run it throught SHEET_DATA, and finally stick it into
+GtkSheet for user manipulation.  
 
-1.  Loop on each page.  For each page in the design, read it in using 
-    s_toplevel_read_page.  Then invoke s_sheet_data_add_master_*_list items.
+1.  Loop on each page.  For each page in the design, do this:
+    *  Read in the page using s_toplevel_read_page.
+    *  Invoke s_sheet_data_add_master_*_list items and 
+       s_sheet_data_add_master_*_attrib_list items.  This fills out the lists in 
+       SHEET__DATA.
 
-2.  Create the tables using s_table_new.
+2.  Sort the master lists.
 
-3.  Load the tables using s_sheet_data_add_*_table_items.
+3.  Create the tables: sheet_head->*_table = s_table_new(. . . .)
 
+4.  Loop on pages again. Fill out the tables using 
+    s_table_add_toplevel_*_items_to_*_table(. . . .)
 
-
-
+5.  Transfer data from tables to gtksheet using x_window_add_items.  
+    This fcn does the following:
+    * Create a new gtksheet having the current dimensions.
+    * Call x_gktsheet_add_row_labels(*_count, master_*_list_head)
+    * Call x_gktsheet_add_col_labels(*_attrib_count, master_*_attrib_list_head)
+    * loop on i, j -- call x_gtksheet_add_entry(i, j, attrib_value), taking the 
+      values out of sheet_heat->*_table.
+    * Call gtk_widget_show(window) to show new window.
 
 
 ---------------------------------------------------------------------------------
@@ -165,10 +181,12 @@ GtkSheet for user manipulation.
 ---------------------------------------------------------------------------------
 Here's what happens when file->save is invoked from the menu.  Please keep in 
 mind that gattrib is a thin layer between GtkSheet and TOPLEVEL.  When you save
-out a design, the purpose of gattrib is to take all the stuff out of GtkSheet
-and stick it into TOPLEVEL and then save it.
+out a design, the purpose of gattrib is to take all the stuff out of GtkSheet 
+and put it temporarily into sheet_data->*_table.  From there, it can then
+stick it into TOPLEVEL.  Thereafter, libgeda fcns are used to save it.
 
-1.  Selecting "save" from the menubar invokes the callback s_toplevel_menubar_file_save.
+1.  Selecting "save" from the menubar invokes the callback 
+    s_toplevel_menubar_file_save.
     (callbacks are defined in includes/x_menu.h)
     This calls s_toplevel_gtksheet_to_toplevel.  
 
@@ -181,16 +199,16 @@ and stick it into TOPLEVEL and then save it.
 4.  s_table_gtksheet_to_all_tables calls s_table_gtksheet_to_table individually 
     for each sheet (comps, nets, pins)
 
-5.  s_table_gtksheet_to_table loops on the gtksheet and loads all the stuff it 
-    finds back into TABLE (part of sheet_data).
+5.  s_table_gtksheet_to_table loops over all cells in the the gtksheet 
+    and loads all the stuff it finds back into sheet_data->*_table.
 
 6.  Back in s_toplevel_gtksheet_to_toplevel.  Now that the tables are loaded, 
     we loop on all pages and call s_toplevel_sheetdata_to_toplevel with a pointer
     to the first obj on the page as the calling arg.
 
-7.  Inside s_toplevel_sheetdata_to_toplevel, we loop on all objs in teh page, 
-    find the corresponding entry in TABLE, and then copy all attribs out of
-    TABLE and back into the object's attrib list.
+7.  Inside s_toplevel_sheetdata_to_toplevel, we loop on all objs in the page, 
+    find the corresponding entry in sheet_data->*_table, and then copy 
+    all attribs out of sheet_data->*_table and back into the object's attrib list.
 
 8.  Finally, the libgeda fcn s_page_save_all is called.  This saves out all
     pages in the design.

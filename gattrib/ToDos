@@ -6,7 +6,7 @@ Updated 8.06.2004 -- SDB
 This is a running list of things left to be done with gattrib.  Items
 already completed are marked with  #####. 
 
-*  Fix key_press event handling so that arrow keys work intelligently
+*  #####  Fix key_press event handling so that arrow keys work intelligently
    when using gtk-2.2.
 *  Decide what to do about "pins" editing:  How to save out chages?
    Right now "pins" are only displayed, they cannot be changed.
@@ -61,4 +61,5 @@ already completed are marked with  #####.
 *  Per Ales, use the gtksheet stuff as a library instead of a bunch of source
    files.  Is this necessary?
 *  User should be able to set attrib visibility.  How to implement & show?
-*  Incorporate ability to add attrib columns.
+*  #####  Incorporate ability to add attrib columns.
+*  Refactor code so that it makes more sense architecturally.
