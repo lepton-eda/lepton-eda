@@ -3,6 +3,10 @@
 bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem olib \
 	       gsch2pcb
 
+if CCISGCC
+AM_CFLAGS = -Wall
+endif
+
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c 
 smash_megafile_SOURCES = smash_megafile.c 

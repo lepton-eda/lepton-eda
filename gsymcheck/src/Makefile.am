@@ -7,6 +7,10 @@ gsymcheck_SOURCES = \
 		g_rc.c g_register.c globals.c gsymcheck.c i_vars.c \
 		parsecmd.c s_check.c s_symstruct.c
 
+if CCISGCC
+AM_CFLAGS = -Wall
+endif
+
 INCLUDES = -I$(top_srcdir)/include @GSYMCHECK_CFLAGS@
 gsymcheck_LDADD = @GSYMCHECK_LDFLAGS@
 

@@ -9,6 +9,10 @@ gnetlist_SOURCES = \
 		s_netlist.c s_netattrib.c s_traverse.c \
 		s_rename.c s_hierarchy.c s_misc.c vams_misc.c
 
+if CCISGCC
+AM_CFLAGS = -Wall
+endif
+
 INCLUDES = -I$(top_srcdir)/include @GNETLIST_CFLAGS@
 gnetlist_LDADD = @GNETLIST_LDFLAGS@
 
