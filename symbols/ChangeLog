@@ -1,3 +1,9 @@
+2002-10-12 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[12]?-*.sym: completed symbols (added net, footprint, ..)
+	* 4000/: 4014-2.sym, 4016-2.sym, 4017-2.sym, 4018-2.sym, 4019-2.sym
+		 4021-3.sym, 4022-2.sym, 4028-2.sym added
+	* 4000/400[68]-*.sym: changed footprint from none to DIP...
+	
 2002-10-09 Werner Hoch <werner.ho@gmx.de>
 	* maxim/max232-1.sym: completed symbol (added net, pinlabels, ...)
 	* maxim/max232-2.sym: added symbol with rearranged pins, 1400mils block
