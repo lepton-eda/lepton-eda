@@ -261,7 +261,8 @@ o_move_end(TOPLEVEL *w_current)
 	w_current->page_current->CHANGED=1;
 
 	o_ales_disconnect_update(w_current->page_current);
-	o_ales_draw_all(w_current, w_current->page_current->object_head);
-        o_redraw_real(w_current, w_current->page_current->selection_head);
+	o_ales_draw_net_pin(w_current, w_current->page_current->object_head);
+	/* o_ales_draw_all(w_current, w_current->page_current->object_head);*/
+/* no longer needed due to above o_redraw_real(w_current, w_current->page_current->selection_head); */
         o_redraw_selected(w_current);
 }

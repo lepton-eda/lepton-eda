@@ -15,8 +15,7 @@ Quick Ref:
 % make 
 % make install
 
-In order to build gschem you must install the following packages first (in
-the following order):
+In order to build gschem you must install the following packages first:
 
 	GLIB 1.2.x
 	GTK+ 1.2.x

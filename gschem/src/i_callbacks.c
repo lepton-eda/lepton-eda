@@ -791,6 +791,30 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
 	}
 }
 
+#if GTK_DEVEL
+void 
+i_callback_edit_show_hidden (gpointer data, guint callback_action, GtkWidget *widget) 
+#else
+void 
+i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
+#endif
+{
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	/* This is a new addition 3/15 to prevent this from executing  
+	 * inside an action */
+	if (w_current->inside_action)
+		return;
+
+	i_update_middle_button(w_current, i_callback_attributes_visibility_toggle, "ShowHidden");
+
+	o_edit_show_hidden(w_current, w_current->page_current->object_head);
+}
+
 /* View menu */
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right button */
@@ -1815,6 +1839,7 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 		o_attrib_toggle_visibility(w_current, w_current->page_current->selection_head->next);
         } 	
 }
+
 
 /* Script menu */
 /* not currently implemented */

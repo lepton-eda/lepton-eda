@@ -41,6 +41,7 @@ SCM g_key_edit_unlock(void);
 SCM g_key_edit_translate(void);
 SCM g_key_edit_embed(void);
 SCM g_key_edit_unembed(void);
+SCM g_key_edit_show_hidden(void);
 SCM g_key_view_redraw(void);
 SCM g_key_view_zoom_full(void);
 SCM g_key_view_zoom_limits(void);
@@ -182,6 +183,7 @@ void i_callback_edit_unlock(gpointer data, guint callback_action, GtkWidget *wid
 void i_callback_edit_translate(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_embed(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_unembed(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_show_hidden(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_redraw(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_full(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_limits(gpointer data, guint callback_action, GtkWidget *widget);
@@ -243,6 +245,10 @@ void i_vars_setnames(TOPLEVEL *w_current);
 /* o_ales.c */
 void o_ales_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
 void o_ales_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
+void o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object);
+void o_ales_draw_all(TOPLEVEL *w_current, OBJECT *object_list);
+void o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list);
+void o_ales_draw_net_pin(TOPLEVEL *w_current, OBJECT *object_list);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -269,6 +275,7 @@ void o_unredraw_selected(TOPLEVEL *w_current);
 void o_erase_selected(TOPLEVEL *w_current);
 void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
 void o_unredraw_real(TOPLEVEL *w_current, OBJECT *list);
+void o_redraw_real(TOPLEVEL *w_current, OBJECT *list);
 void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color);
 void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_box.c */
@@ -314,12 +321,14 @@ void o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery);
 void o_embed(TOPLEVEL *w_current);
 void o_unembed(TOPLEVEL *w_current);
 void o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery);
+void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end(TOPLEVEL *w_current);
 /* o_net.c */
-void o_net_CONN_erase(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
-void o_net_CONN_recalc_draw(TOPLEVEL *w_current, OBJECT *object_list);
+void o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current);
+void o_net_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
+void o_net_ales_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_net_start(TOPLEVEL *w_current, int x, int y);
@@ -337,8 +346,7 @@ void o_ntext_rubberattrib(TOPLEVEL *w_current);
 void o_ntext_edit(TOPLEVEL *w_current, OBJECT *o_current);
 void o_ntext_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size);
 /* o_pin.c */
-void o_pin_CONN_erase(TOPLEVEL *w_current, OBJECT *o_current, int whichone);
-void o_pin_CONN_recalc_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_pin_ales_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_pin_start(TOPLEVEL *w_current, int x, int y);

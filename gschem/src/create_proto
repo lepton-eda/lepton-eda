@@ -11,7 +11,7 @@
 
 devel_flag=-DGTK_DEVEL
 
-cproto $devel_flag -I/usr/X11R6/include -I. -I../include -I.. -I/usr/local/gtk/gtk/include -I/usr/local/gtk/gtk/include/gtk -I/usr/local/gtk/gtk/include/gdk -I/usr/local/gtk/gtk/lib/glib/include *.c > new_proto
+cproto $devel_flag -I/home/ahvezda/geda/include -I/usr/X11R6/include -I. -I../include -I.. -I/usr/local/gtk/gtk/include -I/usr/local/gtk/gtk/include/gtk -I/usr/local/gtk/gtk/include/gdk -I/usr/local/gtk/gtk/lib/glib/include *.c > new_proto
 
 #cproto $devel_flag -I/usr/X11R6/include -I. -I../include -I.. -I$HOME/newgtk/include -I$HOME/newgtk/include/gtk -I$HOME/newgtk/include/gdk -I$HOME/newgtk//lib/glib/include *.c > new_proto
 

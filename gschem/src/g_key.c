@@ -434,6 +434,17 @@ g_key_edit_unembed (void)
 	return(gh_int2scm(0));
 }
 
+SCM 
+g_key_edit_show_hidden (void)
+{
+#if GTK_DEVEL
+	i_callback_edit_show_hidden(window_current, 0, NULL);
+#else
+	i_callback_edit_show_hidden(NULL, window_current);
+#endif
+	return(gh_int2scm(0));
+}
+
 /* View menu */
 
 /* repeat middle shortcut doesn't make sense on redraw, just hit right button */
@@ -884,6 +895,7 @@ g_key_attributes_visibility_toggle (void)
 #endif
 	return(gh_int2scm(0));
 }
+
 
 /* Script menu */
 /* not currently implemented */

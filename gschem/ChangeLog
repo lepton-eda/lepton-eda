@@ -34,6 +34,19 @@ into the cvs repository.
 
 	Started removing the dead code from the previous connection scheme
 
+	Tried to improve the "flashing" of net cues when you move something,
+	but did not succeed.
+
+	Added the show all hidden attributes function (useful with the new
+	ability to have toplevel hidden unattached attributes)
+		And everything required to implement the above
+
+	Fixed that stupid log problem where if you couldn't open the log
+	the log window would lose it's mind (fixed by disabling logging 
+	if you can't read/write the log file)
+
+	If logging is off or disabled, don't show the log window on startup
+
 5/28/99 Got ./configure working with gesym-config
 
 	Misc integration work

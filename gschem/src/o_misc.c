@@ -689,3 +689,29 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 	o_redraw_selected(w_current); 
 }
 
+void
+o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list)
+{
+	OBJECT *o_current=NULL;
+	OBJECT *real=NULL;
+
+	if (list == NULL)
+		return;
+
+	o_current = list;
+
+	while(o_current != NULL) {
+
+		if (o_current->type == OBJ_NTEXT) {
+			if (o_current->visibility == INVISIBLE) {
+				o_current->visibility = VISIBLE;	
+				if (o_current->draw_func &&
+					o_current->type != OBJ_HEAD) {
+					(*o_current->draw_func)(w_current, o_current);
+				}
+				w_current->page_current->CHANGED=1;
+			}
+		}
+		o_current=o_current->next;
+	}
+}

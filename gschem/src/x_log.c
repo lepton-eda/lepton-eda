@@ -64,6 +64,11 @@ x_log_read(void)
 
  	tmp_fd = open("gschem.log", O_RDONLY, 0600);
 
+	if (tmp_fd == -1) {
+		do_logging = FALSE;
+		return;
+	}
+
 	while( (len = read(tmp_fd, &buf, 79)) != 0) {
 		/* not sure if this nukes the last char or not... */
 
@@ -139,6 +144,10 @@ x_log_setup_win (TOPLEVEL *w_current)
 	GtkWidget *hscrollbar=NULL;
 	GtkWidget *vscrollbar=NULL;
 	GtkWidget *table=NULL;
+
+	if (do_logging == FALSE) {
+		return;
+	}
 
 	if (!stwindow)
 	{

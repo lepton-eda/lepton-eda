@@ -87,8 +87,12 @@ i_vars_set(TOPLEVEL *w_current)
 {
 /* put this back when you get keymaps working again */
 /* 	int i;*/
-	
-	do_logging = default_do_logging;
+
+	/* this will be false if logging cannot be enabled */
+	if (do_logging != FALSE) {
+		do_logging = default_do_logging;
+	}
+
 	logging_dest = default_logging_dest;
 
 	w_current->graphic_color = default_graphic_color;

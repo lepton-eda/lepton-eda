@@ -149,6 +149,7 @@ o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list)
 	}
 }
 
+
 void
 o_attrib_toggle_show_name_value(TOPLEVEL *w_current, OBJECT *list, int new_show_name_value)
 {
