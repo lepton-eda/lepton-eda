@@ -5,7 +5,7 @@
 
 	* symbols/symbols.tex, 7400a.eps, 7400b.eps: Fixed example to 
 	actually be a correct symbol (first version had a duplicate net=
-	pin value for both power and gnd).
+	pin value for both power and gnd).  Pointed out by Werner Hoch
 	
 	* symbols/Makefile.am, attributes.am: Further refined clean rules
 
