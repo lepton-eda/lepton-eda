@@ -150,10 +150,9 @@
 
 (map-font-character-to-file " " (string-append default-font-directory "@PATHSEP@" 
 					       "space.sym"))
-; The newline.sym symbol is not used!!. Use excl.sym or the newline
-; will not be handled correctly!!. 
+
 (map-font-character-to-file "\n" (string-append default-font-directory "/" 
-						"excl.sym"))
+						"newline.sym"))
 
 (map-font-character-to-file "!" (string-append default-font-directory "@PATHSEP@" 
 					       "excl.sym"))

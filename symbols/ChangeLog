@@ -1,3 +1,10 @@
+2005-03-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-gafrc.in, font/newline.sym: Fixed up hashtable filling
+	scheme code to use the newline.sym file instead of excl.sym and
+	fixed newline.sym to contain something to allow a critical
+	code path within o_text_basic.nw (line 744) to execute.
+
 2005-03-06 Werner Hoch <werner.ho@gmx.de>
 	* micro/pic12c5xx-1.sym: removed accidently added power nets
 
