@@ -125,6 +125,7 @@ main_prog(int argc, char *argv[])
   int argv_index;
   int first_page = 1;
   char *geda_data;
+  char *HOME;
 
   gtk_init(&argc, &argv);
   visual = gdk_visual_get_system();
@@ -192,6 +193,12 @@ main_prog(int argc, char *argv[])
   }
   sprintf(input_str, "%s/gschem-gtkrc", geda_data);
   gtk_rc_parse(input_str);
+
+  HOME = (char *) getenv("HOME"); 
+  if (HOME != NULL) {
+    sprintf(input_str, "%s/.gschem-gtkrc", HOME);
+    gtk_rc_parse(input_str);
+  }
   
   sprintf(input_str, "%s/gschem.scm", default_scheme_directory);
   if (g_read_file(input_str) != -1) {
@@ -258,8 +265,8 @@ main_prog(int argc, char *argv[])
                      w_current->page_current->page_filename);
 
       a_zoom_extents(w_current,
-                    w_current->page_current->object_head,
-                    A_PAN_DONT_REDRAW);
+                     w_current->page_current->object_head,
+                     A_PAN_DONT_REDRAW);
       o_undo_savestate(w_current, UNDO_ALL);
 
 #if 0
@@ -283,8 +290,8 @@ main_prog(int argc, char *argv[])
         i_set_filename(w_current,
                        w_current->page_current->page_filename);
         a_zoom_extents(w_current,
-                      w_current->page_current->object_head,
-                      A_PAN_DONT_REDRAW);
+                       w_current->page_current->object_head,
+                       A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
 
 				/* now update the scrollbars */

@@ -422,7 +422,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
     
     root_menu = gtk_menu_item_new_with_label (*menu_name);
     if (strcmp(*menu_name, "Help") == 0) {
-      gtk_menu_item_right_justify (root_menu);
+      gtk_menu_item_right_justify (GTK_MENU_ITEM(root_menu));
     }
     gtk_widget_show (root_menu);
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
