@@ -533,7 +533,7 @@ void on_ComponentTree_tree_select_row(GtkCTree *ctree, GList *node, gint column,
 	struct CompsTable_s *pComp;
 	BOOL bCanBeDownloaded = FALSE;
 	int iResult = MSGBOX_NO;
-	char szMessage[TEXTLEN], *szMissingFile;
+	char szMessage[TEXTLEN], *szMissingFile=NULL;
 
 	if (cSelectFlag == 0)
 		return;
