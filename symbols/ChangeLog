@@ -1,3 +1,9 @@
+2002-08-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* maxim/max4106-1.sym, max4107-1.sym: Added symbols by Dan McMahill
+	
+	* misc/arfx1229-1.sym: Added symbol by Dan McMahill
+
 2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* 74/7474-2.sym: Fixed typo (0 in slotdef), pointed out by Karel
