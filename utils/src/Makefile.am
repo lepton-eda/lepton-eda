@@ -6,7 +6,7 @@ bin_SCRIPTS = sarlacc_sym
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c 
 smash_megafile_SOURCES = smash_megafile.c 
-convert_sym_SOURCES = convert_sym.c 
+convert_sym_SOURCES = convert_sym.c char_width.c
 sarlacc_schem_SOURCES = sarlacc_schem.c
 
 INCLUDES =
