@@ -5,17 +5,20 @@ GNU Electronic Design Automation
 
 ChangeLog for gschem
 
-Most recent changes (version wise) are at the top of this file 
+Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
-7/11/99 Code cleanup by Kazu Hirata (a_pan.c, a_zoom.c, g_key.c, g_funcs.c)
+7/11/99 Chnaged the return values of the Scheme functions in g_*.c from
+	0 and -1 to #t and #f. (by Kazu Hirata)
+
+7/11/99 Code cleanup by Kazu Hirata (a_pan.c, a_zoom.c, g_key.c, g_funcs.c
 
 7/10/99	Updated a few places where it's important to call set_window
 	(part of the math speed improvements)
 
-	Put in code that controls if text is either: xored (completely drawn) 
-	when doing a copy/move/place (the outline that's dragged) or 
+	Put in code that controls if text is either: xored (completely drawn)
+	when doing a copy/move/place (the outline that's dragged) or
 	a simple line is drawn.  This makes the placing/copying/moving of
 	large symbols faster
 
@@ -31,7 +34,7 @@ into the cvs repository.
 	Now fixed.
 
 7/5/99	Added in manually configure.in patch Manu provided to help in his
-	rpm building procedures 
+	rpm building procedures
 
 	Added pintype to attribute-name list in system-gschemrc
 
@@ -41,7 +44,7 @@ into the cvs repository.
 
 	Fixed some misc problems in configure.in (missing if test to make sure
 	libgeda-config was found)
-	
+
 	Got configure.in to be almost identical to gnetlist/configure.in
 
 	Updated man page a tiny bit
@@ -66,7 +69,7 @@ into the cvs repository.
 	Fixed a visual annoyance: Place lots of components and inbetween
 	each place there would be a redraw.  Not necessary.  Fixed.
 
-6/25/99 Added the rc keyword "image-color" which controls if image is 
+6/25/99 Added the rc keyword "image-color" which controls if image is
 	in color (enabled) or black and white (disabled)
 
 	Added the start of mouse button pan.
@@ -103,7 +106,7 @@ into the cvs repository.
 	Worked a bit more to reduce the flashing of nets/pins when a complex
 	is moved
 
-	Put a redraw in o_delete, just to make things look better after 
+	Put a redraw in o_delete, just to make things look better after
 	something is deleted
 
 	I think I got the flashing (when doing move's under control now)
@@ -123,7 +126,7 @@ into the cvs repository.
 	might not be the real objects)
 
 	Started updating the conn hash table in when nets are being drawn
-		Added o_ales_draw_objects 
+		Added o_ales_draw_objects
 		Added o_net_ales_erase
 		Added o_net_ales_draw
 
@@ -150,7 +153,7 @@ into the cvs repository.
 		And everything required to implement the above
 
 	Fixed that stupid log problem where if you couldn't open the log
-	the log window would lose it's mind (fixed by disabling logging 
+	the log window would lose it's mind (fixed by disabling logging
 	if you can't read/write the log file)
 
 	If logging is off or disabled, don't show the log window on startup
@@ -169,21 +172,21 @@ into the cvs repository.
 
 	Fixed up ./configure to use libgeda-config
 
-5/99	Removed all traces of the old connection system 
+5/99	Removed all traces of the old connection system
 	All removals should be tagged with either CONNECTION or CONN
 
-	Added new connection (called ALES and st_ales) structures 
+	Added new connection (called ALES and st_ales) structures
 
 	Got gschem to use the includes from libgeda package
 
-	GTK+ 1.2.x is now required due to the use of 
+	GTK+ 1.2.x is now required due to the use of
 	g_hash_table_lookup_extended
 
 	Got misc callback to print out hash table structure
 
 	Started work on getting delete to delete nets properly
 
-	fixed old bug when you cancelled the drawing of a net, prog would 
+	fixed old bug when you cancelled the drawing of a net, prog would
 	erase too much
 
 	started work on getting copy to copy nets properly
@@ -193,7 +196,6 @@ into the cvs repository.
 	added comma key to gschemrc files
 
 	Removed all conn stuff from include/struct.h
-	
 
 ---------------- Development division starts here --------------------------
 
@@ -226,9 +228,9 @@ into the cvs repository.
 	Made the log window startup when gschem is run (updated all *rc files)
 
 	Added log-window keyword which controls if the log window is opened
-	when the program starts up 
+	when the program starts up
 
-	Added the ability to make the log window transient or not 
+	Added the ability to make the log window transient or not
 	(configurable through the log-window-type keyword)
 	(only works with gtk+ 1.2)
 
@@ -242,20 +244,20 @@ into the cvs repository.
 	Changed x_window and x_menu so that those warnings about menufactory
 	disappear (by using itemfactory with gtk+ 1.2.0)
 
-	Involved adding the appropriate new functions to x_menu.c and 
-	modifing x_window.c 
+	Involved adding the appropriate new functions to x_menu.c and
+	modifing x_window.c
 
 	Got rid of warning messages when you start up gschem
 
 	With the new itemfactory stuff from gtk+ 1.2.x you can now have
-	tear off menus 
+	tear off menus
 
 	Got the passing of callback data working with the menus
 
 	Got all the popup menu i_callback_* functions to use the new callback
-	parameter passing order 
+	parameter passing order
 
-	Got all menu structure to work with the gtk+ 1.2.0 itemfactor 
+	Got all menu structure to work with the gtk+ 1.2.0 itemfactor
 	(major pain)
 
 	Went through and add the proper parameter passing order to *ALL*
@@ -271,18 +273,18 @@ into the cvs repository.
 	Missed a reference to a callback (last_callback) which is a pointer
 	to a callback function, it too needs the new function prototype
 
-	Changed the default text size in the C code to be 10, (it was 8, 
+	Changed the default text size in the C code to be 10, (it was 8,
 	which was a really really old default value) rc file is the same as
 	before (size in there is still 10)
 
-	Added the ability to change the text size; added this to the 
+	Added the ability to change the text size; added this to the
 	Edit/Edit... dialog box
 
 	Text size and snap size and (as before text edit) dialog boxes
 	once again grab the focus for the whole app.  This is because
 	they share common variables
 
-3/23/99 Added a menu option Help/About... 
+3/23/99 Added a menu option Help/About...
 
 	Added callback/dialog box for above
 
@@ -293,7 +295,7 @@ into the cvs repository.
 
 	Minor cosmetic changes to gschem.1
 
-3/19/99 Fixed changed flag so that when you do some attribute associated 
+3/19/99 Fixed changed flag so that when you do some attribute associated
 	actions, you are prompted for a save instead of just quitting
 
 	When opening a symbol using hierarchy, filename at the bottom
@@ -311,7 +313,7 @@ into the cvs repository.
 
 	Removed some duplicate strokes from the gschemrc's
 
-	Made the stroke output (when running with the -t flag) a bit cleaner 
+	Made the stroke output (when running with the -t flag) a bit cleaner
 	(and hopefully clearer)
 
 2/25/99 Added stroke_info_mode (enabled with -t flag) so that users can get
@@ -323,17 +325,17 @@ into the cvs repository.
 	it so that it only is called once, when you quit)  The call is in the
 	right place now
 
-	Added x_stroke_free_all which just frees all remaining stroke 
-	points 
+	Added x_stroke_free_all which just frees all remaining stroke
+	points
 
 	Fixed a major bug dealing with multiple windows and the freeing of
 	several common (rc strings) variables, which caused some bad behavior
 
 	Added some more space to the above variable mallocs,
-	since ccmalloc seemed to have some problems dealing with them, 
+	since ccmalloc seemed to have some problems dealing with them,
 	and there was enough space for the strings + null (there is now)
 
-	Discovered why sometimes if you close a window you lose any 
+	Discovered why sometimes if you close a window you lose any
 	subsequent log message (it's because I was closing the log file in
 	the wrong place), fixed (the call is in the right place now)
 
@@ -349,7 +351,7 @@ into the cvs repository.
 	Changed it so that stroke points are only erased when a valid stroke
 	is found.  Leave invalid strokes around
 
-	Added some more basic strokes to gschemrc 
+	Added some more basic strokes to gschemrc
 
 	Put back middle button repeat for when strokes are enabled.  Holding
 	down the control key and pressing the middle button executes the
@@ -367,12 +369,12 @@ into the cvs repository.
 		Added stroke keyword to rc files
 		Added s_stroke_search_exeecute to x_event.c
 
-	Started adding most basic strokes to gschemrc 
+	Started adding most basic strokes to gschemrc
 
 1/31/99 Made postscript font text ouput the default (output-text "ps")
 
 	Updated page manager to work with gtk+ 1.1.x (scrolled window works
-	better, but not 100%) 
+	better, but not 100%)
 
 1/24/99 Added a read/execute guile script option (-s script_filename)
 
@@ -380,7 +382,7 @@ into the cvs repository.
 
 	Added menu option and keymapping for File/Script Execute...
 
-	Added global variable global_window_current, which will be used by 
+	Added global variable global_window_current, which will be used by
 	various guile functions, since they have no idea which window they
 	are executing for/in. (careful with multi windows anyway)
 
@@ -391,7 +393,7 @@ into the cvs repository.
 	Added gschem-print, gschem-exit, gschem-use-rc-values guile functions
 
 1/23/99 Finally changed where the rc file(s) are read -- before the window
-	is created.  This allows for much more flexiablity in the user 
+	is created.  This allows for much more flexiablity in the user
 	interface
 
 	Found most of the bugs in above (I hope)
@@ -411,27 +413,26 @@ into the cvs repository.
 
 	Fixed a minor bug in above (wrong label being displayed)
 
-	Added "output-color-background" keyword for controlling the 
+	Added "output-color-background" keyword for controlling the
 	background color in postcript output (also added supporting code)
 	(letter size sheets ONLY)
 
 	Added "output-color" keyword for controlling if postscript is color
 	or not
 
-	Added "output-type" keyword which specifies "limits" or 
+	Added "output-type" keyword which specifies "limits" or
 	"current-window"
 
 	Renamed keyword "text-output" to "output-text" just to be consistant
 	Might eventually change output to postscript
 
+1/21/98 Added a message to the start of gschem about the warnings when
+	using gtk+ 1.1.x
 
-1/21/98 Added a message to the start of gschem about the warnings when 
-	using gtk+ 1.1.x 
-
-1/12/98 Worked on x_attrsel.c and x_print.c to get them gtk+ 1.1.x 
+1/12/98 Worked on x_attrsel.c and x_print.c to get them gtk+ 1.1.x
 	compliant.
 
-1/10/98	Spent some time working on the scrolled_window changes in 
+1/10/98	Spent some time working on the scrolled_window changes in
 	x_compsel.c for gtk+ 1.1.x, still needs some work though
 
 1/9/98	Started integrating patch for 1.1.x (provided by Egil Kvaleberg)
@@ -441,7 +442,7 @@ into the cvs repository.
         	gtk_window_add_accelerator_table ->
 		  gtk_window_add_accel_group 	     (x_window.c)
 
-	 Added a few #include <math.h> where they were missing (compiler 
+	 Added a few #include <math.h> where they were missing (compiler
 	 warnings for fabs)
 
 1/06/98  Fixed some code in o_erase_* where a constant instead of a variable
@@ -453,40 +454,40 @@ into the cvs repository.
 	 Found and fixed (I think) a bug with displaying schematics for
 	 the first time (after a load), display wasn't being zoomed limits
 	 if there where coordinates with negative values (display will not be
-	 zoomed properly, since negative values are not supported for 
+	 zoomed properly, since negative values are not supported for
 	 scrollbars)
 
-12/29/98 Changed x_grid_draw to draw to backingstore and then copy that 
+12/29/98 Changed x_grid_draw to draw to backingstore and then copy that
 	 to the drawing area, hopefully that'll speed things up when gschem
-	 runs over a lan? 
+	 runs over a lan?
 
 	 Commented out the above code, need to due some further testing.
 
 12/15/98 Fixed line/pin/net to deal with the real clipping code
-	
+
 	 Now all line related objects are being clipped, fixed the
 	 disappearing lines/nets/pins when zoomed in really close
 
 12/13/98 Integrated Jeff McNeal transparent zoom/pan patch.  It works,
 	 but it still needs some work, since panning and zooming while
-	 drawing nets/pins leaves xor droppings 
+	 drawing nets/pins leaves xor droppings
 
 	 Added pin-color to gschemrc file.  For some odd reason was missing.
 
 	 Also found another bug which was causing the pin color to be saved
-	 as -1, fixed  
+	 as -1, fixed
 
 	 Added File/Save All menu option and hotkey to save all documents
-	 and not bother asking. 
+	 and not bother asking.
 
 	 Added code to o_complex_end to support the concept of an included
-	 component, which basically is the inclusion of all the pieces of 
+	 component, which basically is the inclusion of all the pieces of
 	 a component so they can be edited.  Useful in symbol creation; you
 	 can reuse other components.
 
 	 Changed the add component dialog box to allow for a selection between
-	 the default, embed and now include ways of adding components.  
-	 I don't like the way it works, so I'm probably going to go with a 
+	 the default, embed and now include ways of adding components.
+	 I don't like the way it works, so I'm probably going to go with a
 	 option menu instead of radio buttons
 
 	 Changed the above radio boxes to an option menu, much cleaner looking
@@ -494,29 +495,29 @@ into the cvs repository.
 	 Found a place where I was trying to strcpy into a NULL rc_filename
 	 doh!
 
-12/10/98 Finished adding the first step for autoconnect to the nearest 
-	 net point 
+12/10/98 Finished adding the first step for autoconnect to the nearest
+	 net point
 
 	 Added o_conn_search_closest to search inside complex objects for
 	 the nearest pin
 
 	 Added an event_state = STARTDRAWNET to i_callback_add_net_hotkey
-	 to make the o_net_start connection code work 
+	 to make the o_net_start connection code work
 
 	 Added o_conn_search_closest_range to search for the nearest pin/net
 	 with range
 
 	 Removed the net snapping stuff for now, it still needs a lot of work.
 
-	 Added command line argument -r (which specifies an rc file after 
+	 Added command line argument -r (which specifies an rc file after
 	 it tries to read all the other standard rc files)
 
 	 Finally make rc_filename a pointer instead of statically allocating
-	 the space 
+	 the space
 
 12/9/98 Changed how circles are drawn, specify center point and then the
 	radius.  o_circle_start, o_circle_end, o_circle_rubberband
-	Includes a line which shows the radius of the circle when you 
+	Includes a line which shows the radius of the circle when you
 	rubberband
 
 	Changed the way the width of pins and nets is determined, now using
@@ -526,7 +527,7 @@ into the cvs repository.
 	(o_conn_*)
 
 	Minor circle cleanup: made sure radius is multiple of grid snap if
-	snap is on; made sure final circle is drawn on backingstore  
+	snap is on; made sure final circle is drawn on backingstore
 
 12/8/98 In order to fix the bugs below, have to rewrite some circle code,
 	integrated changes to deal with struct.h changes and libgeda changes
@@ -544,20 +545,20 @@ into the cvs repository.
 
 11/10/98 Changed a label in the print dialog box: "Current Window"
 
-11/8/98	Found a bug when drawing single point lines (ie line as zero length) 
+11/8/98	Found a bug when drawing single point lines (ie line as zero length)
 	Fixed by adding a (few) call for draw point in o_line_draw,
-	not sure that's the best solution.  
+	not sure that's the best solution.
 
 	Added zero length error checking code to all primative objects
-	( interesting side effect, you can end net draw by drawing a 
+	( interesting side effect, you can end net draw by drawing a
 	  zero length net and that stops the action )
 
-	Removed some code in o_arc.c which erased the rubberband line 
+	Removed some code in o_arc.c which erased the rubberband line
 	incorrectly
 
 	You could segfault gschem by inputing a null string (nothing) and
 	then hitting apply and drawing over to the drawing area.  Fixed by
-	moving x state change code inside the if "check if not null" 
+	moving x state change code inside the if "check if not null"
 	(attribute add is okay)
 
 11/7/98 After applying text input, highlight the selection in the dialog box
@@ -565,9 +566,9 @@ into the cvs repository.
 
 11/6/98 Added some checks to prevent gschem from core dumping when you hit
 	one of the special "microsoft keys"
-	
-	Added code to handle the new papersize list 
-	
+
+	Added code to handle the new papersize list
+
 	Added x_print.c (the printing dialog box) and supporting code
 
 	Added paper-sizes keyword to rc file
@@ -588,7 +589,7 @@ into the cvs repository.
 
 10/28/98 Rearranged View menu a bit
 
-	 Applied patch by Manu for a_zoom_limits 
+	 Applied patch by Manu for a_zoom_limits
 
 	 Had to make minor modifications to make above work on all cases.
 
@@ -613,7 +614,7 @@ into the cvs repository.
 	 Changed a few of the status lines in the copy/move (and hotkey)
 	 callbacks
 
-10/22/98 Added code in o_read to update the slot if the last read object 
+10/22/98 Added code in o_read to update the slot if the last read object
 	 was a component
 
 	 Added o_attrib_slot_update in o_copy_end
@@ -621,11 +622,11 @@ into the cvs repository.
 	 Added code to o_copy_end to deal with slotting (ie copy the info
 	 from the object that is being copied) and the selection list
 
-	 Updated o_slot_end to use the new o_attrib_slot_update 
+	 Updated o_slot_end to use the new o_attrib_slot_update
 
 	 Added o_erase_single, just as a function to make life easier
 
-	 Attempted to get the slot= attribute to be update and drawn 
+	 Attempted to get the slot= attribute to be update and drawn
 	 correctly if it is visible.  This does not work right yet.
 
 	 Got the first working version of the slotting done
@@ -633,19 +634,18 @@ into the cvs repository.
 	 bug: Old component outline not being erased if you select a new
 	 component from the list (pointed out by Patrick Bertholon, thanks)
 
-10/20/98 Added Stefan's and thi's latest gschem.scm 
-		- repeat-last-command doesn't cause a stack overflow 
+10/20/98 Added Stefan's and thi's latest gschem.scm
+		- repeat-last-command doesn't cause a stack overflow
 		- bit more paranoid code.
 		- last-command-sequence (holds what it says)
 
  	 Change rc file guile primative version to gschem-version
 
-
 10/18/98 Added callbacks for change Slot... code
 
 	 Added o_slot_start which starts the change of a slot number
 
-	 Added dialog box for slot editing... 
+	 Added dialog box for slot editing...
 
 	 Added o_slot_end which finished up the slot number change operation
 
@@ -653,7 +653,7 @@ into the cvs repository.
 	 o_copy.c, o_slot.c, and o_delete.c
 
 	 Worked some on o_slot_end, slot attribute value is being changed
-	 and added if needed as of today, but schematic not reflected. 
+	 and added if needed as of today, but schematic not reflected.
 	 (to be finished later..)
 
 10/17/98 misc minor fix to the rc file (text-input "ps")
@@ -666,9 +666,9 @@ into the cvs repository.
 	 symbols must end .sym to be displayed
 
 	 An attempt fix the arc bound box code of arcs, doesn't quite
-	 work 100%.	
-	
-10/12/98 Added device attribute to the list of default attributes in the rc 
+	 work 100%.
+
+10/12/98 Added device attribute to the list of default attributes in the rc
 	 files
 
 	 Finally fixed an outstanding bug in the arc drawing/adding etc...
@@ -678,7 +678,7 @@ into the cvs repository.
 
 	 Simplifed the loading of schematic pages and incorperated above
 
-	 Added quiet_mode and verbose_mode to the command line arguments 
+	 Added quiet_mode and verbose_mode to the command line arguments
 	 as well as the usage() function which exits
 
 	 Removed all warnings
@@ -693,26 +693,26 @@ into the cvs repository.
 	Added thi's improved gschem.scm (not fully using all the new stuff
 	in there yet)
 
-10/8/98 Worked some more on mirroring of complex objects, almost got it 	
+10/8/98 Worked some more on mirroring of complex objects, almost got it
 	completely right except for text inside complex objects
 
 	I got the above fixed (with really ugly kludge) :-( will eventually
 	get it totally fixed once I figure out how to flip/rotate text
 	in place.
 
-10/6/98 Added code to deal with mirror of complexs (mainly change to 
+10/6/98 Added code to deal with mirror of complexs (mainly change to
 	complex_add)
 
 10/5/98 Added o_mirror (and all required support code, events, i_callbacks...)
 
-	Added *_mirror_hotkeys 
+	Added *_mirror_hotkeys
 
 	Added g_key *mirror code
 
 10/4/98 Changed default size for a 800x600 sized display
 
 	Added text-output keyword to control how text is rendered
-	
+
 10/1/98 Fixed all warnings
 
 9/29/98 Today starts the new release system: 19980929
@@ -721,8 +721,7 @@ into the cvs repository.
 	rotate a component
 
 	Fixed a bug that was causing text to be saved twice (once as an
-	attribute and once as a regular text item). 
-
+	attribute and once as a regular text item).
 
 0.0.5
 -------
@@ -733,42 +732,42 @@ into the cvs repository.
 	de-kludge it one of these days
 
 	Found a bug in o_complex_end, where the selection tail and the prev
-	pointers where not being set 
+	pointers where not being set
 
 	Fixed the same bug in o_ntext_end
 
-	Found/fixed a really nasty old bug in o_unselect_all where 
+	Found/fixed a really nasty old bug in o_unselect_all where
 	selection_tail wasn't being update at all
 
-	Found/fixed a whole bunch more places where selection_tail 
+	Found/fixed a whole bunch more places where selection_tail
 	(in o_select_*) wasn't being update (ie it was dangling)
 
 	Fixed a bunch of places in the i_callback functions where the middle
 	button short cut key wasn't been set to the hotkey version of the
-	function 
+	function
 
 	Added selection_list code for rotating complex objects (ie once a
 	complex is rotated, it stays in the selection list)
 
-	Went back and change Edit/Rotate Primative to Edit/Rotate 90 in 
+	Went back and change Edit/Rotate Primative to Edit/Rotate 90 in
 	all applicable locations (x_menus, g_*, gschemrc.in files)
 
 	Added code and a message stating that rotating an embedded component
 	isn't possible yet. (it should be, but I'll worry about that later)
 
 	Changed default pan behavior when you select it from the hotkey--
-	it pan using the current mouse position as the center 
+	it pan using the current mouse position as the center
 
 	Set zoom_scale to a constant in the code which determines whether we
-	are drawing an sbox or just selecting single object 
+	are drawing an sbox or just selecting single object
 
 	Found a few more misused selection_tails in o_attrib (tag new ales)
 
 	Go rid of net que droppings being left behind by rotate
 
-	Added needed function call so that nets and pin associations are 
+	Added needed function call so that nets and pin associations are
 	recalculated after a rotate
-	
+
 9/25/98 Worked some more on o_rotate (a_basic)
 
 	Missed a zoom_scale/factor bug dealing with sboxes, you couldn't
@@ -789,11 +788,11 @@ into the cvs repository.
 
 9/21/98 Minor gschemrc changes (keymapping fixes)
 
-	Fixed a minor asthetic bug dealing with placing text and seeing a 
+	Fixed a minor asthetic bug dealing with placing text and seeing a
 	ghost image of the newly placed text (erase the bounding/outline box)
 	(Migrated change to attribute place as well)
 
-	Fixed a minor bug with the keymapping code, modifiers are no longer 
+	Fixed a minor bug with the keymapping code, modifiers are no longer
 	passed to the guile code
 
 	Made the default select color grey
@@ -819,11 +818,11 @@ into the cvs repository.
 	changes you into select mode
 
 	Changed the way text is placed.  Now it is similar to the way
-	attributes are placed (dialog box comes up, type in text, move and 
+	attributes are placed (dialog box comes up, type in text, move and
 	place text)
 
-9/18/98 Adding code to do the move/copy action change (action 
-	starts right away after mouse press 
+9/18/98 Adding code to do the move/copy action change (action
+	starts right away after mouse press
 
 	Added edit-move-hotkey and edit-copy-hotkey to take above change
 	into account (changed rc files as well)
@@ -840,7 +839,7 @@ into the cvs repository.
 	Fixed/Added a few misc items to the keymapping in the rc files
 
 9/13/98	Added some feedback (loading message) if you specify schematics at
-	the commandline 
+	the commandline
 
 	Added scheme-directory keyword (and supporting code) to the rc file
 
@@ -849,24 +848,24 @@ into the cvs repository.
 	Added g_key.c (support functions of guile key mapping support)
 
 	Added all menu callback functions to g_key (as g_key_*)
-	
+
 	Added gh_register functions for above (g_register.c)
 
 	Deleted ifdefd out keymapping code in g_rc.c
 
-	Added gschem.scm file which has scheme code for keymapping 
+	Added gschem.scm file which has scheme code for keymapping
 
 	Added data structures to support scheme keymapping (gschemrc.in)
-	
+
 9/12/98 Added Zoom Limits option (and underlying code)  experimental
 
-	Started preliminary change to make zoom_factor represent the 
-	magnification, not the zoom number (how many times you zoomed in)	
+	Started preliminary change to make zoom_factor represent the
+	magnification, not the zoom number (how many times you zoomed in)
 
 	Changed zoom functions to take above into account
 
 	Changed o_conn functions to use return_zoom_number (in libgeda)
-	Also fixed o_pin and o_net thickness 
+	Also fixed o_pin and o_net thickness
 
 	Changed x_grid to use return_zoom_number -- also new grid spacing
 	for the different levels, also experimental
@@ -911,17 +910,17 @@ into the cvs repository.
 
 	Removed Add/NEW text menu item (old test code)
 
-8/31/98 More bug fixes to the copy attribute change.  
+8/31/98 More bug fixes to the copy attribute change.
 		. o_ntext_copy does not handle attributes now, it is handled by
 		  who ever called it
 		. o_list_copy_to and o_list_copy_all now take a flag which is
 		  either NORMAL or SELECTION (we don't want to do attributes)
 		  when we are adding stuff to the selection buffer
-		. Text is copied (o_list_* and o_copy_end routines) last to 
+		. Text is copied (o_list_* and o_copy_end routines) last to
 		  make sure that all the attribute recieving objects exist
-		  in the list 
+		  in the list
 
-	Fixed another attribute which changed color (to red) at the wrong 
+	Fixed another attribute which changed color (to red) at the wrong
 	time (basically all text was changing color, eventhough it wasn't
 	supposed to) (fixed in o_copy_end)
 
@@ -936,8 +935,8 @@ into the cvs repository.
 	Created x_preview.c, a highly temp file demonstrating the preview
 	capabilities (removed from dist for the time being)
 
-8/30/98 Added support for embedded symbols in schematics 
-		loading / saving / copying 
+8/30/98 Added support for embedded symbols in schematics
+		loading / saving / copying
 
 	Added o_embed (embed all object which are selected)
 
@@ -961,18 +960,18 @@ into the cvs repository.
 
 	Propagated p_text_string[0] = '\0' changes from gnetlist to gschem
 
-	Propagated head node attribs->object change from gnetlist to gschem 
+	Propagated head node attribs->object change from gnetlist to gschem
 
 	Started to fix attribute copy problem which has existed for a long
-	time (ie attributes were not being copied) (this is highly unstable 
+	time (ie attributes were not being copied) (this is highly unstable
 	I think)
 
 	Fixed a bug related to the above attribs->object change, bug was in
-	detach routine, making the original object all red... 
+	detach routine, making the original object all red...
 
 	Continued to fix bugs related to attribute copy fix, several
 	in o_list_copy_* and in other places, seems to work now, but highly
-	experimental 
+	experimental
 
 	Changed the way copies are handled.  First all non text items are
 	copied and then text items are copied.  This is for the attribute
@@ -984,9 +983,9 @@ into the cvs repository.
 
 8/29/98 Added complex_parent pointer to object structure
 
-        Added code to fill above pointer 
+        Added code to fill above pointer
 
-8/27/98 Made some further improvements to the grid code so it uses less 
+8/27/98 Made some further improvements to the grid code so it uses less
 	memory, but is still faster then drawing one point at a time
 
 8/26/98 Changed the grid from drawing one point at a time to drawing all the
@@ -994,7 +993,7 @@ into the cvs repository.
 
 	Changed the max zoom factor to 8 instead of 4
 
-	Fixed a bug dealing with different paper sizes and the scrollbars 
+	Fixed a bug dealing with different paper sizes and the scrollbars
 	(max value on the scrollbars was being set incorrectly)
 
 8/9/98	Added page-size keyword to the rc file (lets you specify the size of
@@ -1025,15 +1024,15 @@ into the cvs repository.
 	calling o_list_copy_to
 
 	Fixed a really old bug in o_text_print (and the new routine for
-	ntext).  Invisible text was getting printed (oops)! 
+	ntext).  Invisible text was getting printed (oops)!
 
 8/6/98	Fixed stupid core dump related to freeing a already freed string
-	
+
 	Fixed g_rc_font_directory to be implemented correctly
 
-	Changed text_input dialog box to call new o_ntext routines	
+	Changed text_input dialog box to call new o_ntext routines
 
-	Changed text_input read and save to actually work	
+	Changed text_input read and save to actually work
 
 	Added OBJ_NTEXT support to: o_move_end, o_copy_end, o_delete,
 				    o_save, o_read,  and a whole bunch
@@ -1052,7 +1051,7 @@ into the cvs repository.
 8/5/98	Added rotate core rotate functions back into source code, not working
 	yet
 
-	Added o_line_scale_world 
+	Added o_line_scale_world
 
 	Added o_line_rotate
 
@@ -1062,7 +1061,7 @@ into the cvs repository.
 
 	Added/worked on core routines for o_ntext
 
-	Integrated/indented new g_read_file from thi (thanks!) 
+	Integrated/indented new g_read_file from thi (thanks!)
 
 	Added the keyword font-directory which specify where the vector
 	font definitions are contained
@@ -1087,7 +1086,7 @@ into the cvs repository.
 	Added s_clib_uniq and supporting functions to see if a clib path is
 	uniq (if so add it, else don't)
 
-	Added s_attrib_uniq to make sure attribute names (which are specified 
+	Added s_attrib_uniq to make sure attribute names (which are specified
 	in the init file are uniq
 
 	Changed search order for components.  Components are now searched for
@@ -1098,18 +1097,18 @@ into the cvs repository.
 
 	Finished getting all gschemrc keywords converted to new guile format
 
-7/25/98 Added g_basic.c which will contain basic guile setup routines 
-	
+7/25/98 Added g_basic.c which will contain basic guile setup routines
+
 	Added code to start up the guile interpreter (gschem.c)
 	guile is now *required*
 
 	Removed all calls to f_rc_parse (old init file)
 
-	Added g_rc.c which holds new guile init file functions 
+	Added g_rc.c which holds new guile init file functions
 
 	Started converting all f_rc keywords to g_rc keywords
 
-	Wrote g_rc_parse (basically it is f_rc_parse) 
+	Wrote g_rc_parse (basically it is f_rc_parse)
 	  The order of rcfile reading is now:
 	     - system-gschemrc
 	     - ~/.gEDA/gschemrc
@@ -1127,7 +1126,7 @@ into the cvs repository.
 	(Perfect excuse to try out debian :-)
 
 7/22/98	A user trying to build gEDA on HP-UX discovered that I missed an rint
-	call (it wasn't wrappered by the HAS_RINT define).  Fixed it. 
+	call (it wasn't wrappered by the HAS_RINT define).  Fixed it.
 
 7/21/98 Finally fixed arcs so that any start or end angle arcs print
 	properly, involved changing how I handled the translate and rotate
@@ -1149,13 +1148,13 @@ into the cvs repository.
 
 7/11/98 Found and squashed a nasty bug dealing with the object clipping code.
 	Basically objects that were not visible were not being update (ie
-	bounding boxes not being updated) so selections would find fantom 
+	bounding boxes not being updated) so selections would find fantom
 	objects.
 
-	Rearranged some code (bounding box recalc) inside the object draws 
+	Rearranged some code (bounding box recalc) inside the object draws
 	just to be consistent
 
-	Removed the /* PAGE */ tag from almost every file 
+	Removed the /* PAGE */ tag from almost every file
 
 	Fixed the threshold bug when you are zoomed in really close, now the
 	start an sbox or not is based on the zoom scale
@@ -1163,12 +1162,12 @@ into the cvs repository.
 	Removed the STARTSBOX state (fixed states.sch appropriately)
 
 	Removed some snap_grids from o_arc.c, these were a hack and I am not
-	sure if I broke arcs now. 
+	sure if I broke arcs now.
 
 	Added some s_log_messages in f_parse_rc so you know which rcfiles were
 	read
-	
-7/10/98 Fixed some minor nits in some comments 
+
+7/10/98 Fixed some minor nits in some comments
 
 	Removed some // accidentally left in
 
@@ -1191,23 +1190,23 @@ into the cvs repository.
 	if an object is to be drawn" time (determine if, earlier)
 
 	Added ObjectClipping keyword to control the behavior of the new
-	object clipping code (on or off)	
+	object clipping code (on or off)
 
 	Fixed some minor bugs in the *visible functions
 
-7/3/98 	Added low level clipping routines in m_basic.c 
+7/3/98 	Added low level clipping routines in m_basic.c
 
 	Added high level routine to determine if object is visible
 
-	Added code in all relavent o_* files to use above routine (execpt 
+	Added code in all relavent o_* files to use above routine (execpt
 	o_text, which will be added later)
 
 	Changed default scrollbar update policy to be continuous (vs delayed)
 
 	Added ScrollbarUpdate to control above behavior
 
-	Squashed a few bugs related to above 
-	
+	Squashed a few bugs related to above
+
 7/1/98	Fixed a minor bug in selection box, causing selection box to erase
 	underlying schematic
 
@@ -1216,10 +1215,10 @@ into the cvs repository.
 
 	Fixed a minor memory leak dealing with the allocation of page_filename
 
-	Fixed a core dump condition (if there was no gschemrc, untiled_name or 
+	Fixed a core dump condition (if there was no gschemrc, untiled_name or
 	series_name would be null and doing a strlen of a null doesn't work.
 
-6/30/98	Fixed the page manager core dump (open schematic, open page manager, 
+6/30/98	Fixed the page manager core dump (open schematic, open page manager,
 	open another page (page manager now messed up), click on another page)
 
 6/23/98	Integrated patch by Erick Britis Ortiz which fixed the well known
@@ -1228,20 +1227,20 @@ into the cvs repository.
 	Extended patch to work with boxes, so those work as well now!
 	A similar patch was provided by Jeff McNeal.  Thanks!
 
-6/21/98	Added series_name variable to WINDOW structure.  This variable 
+6/21/98	Added series_name variable to WINDOW structure.  This variable
 	lets you set a series filename, especially useful when adding new
 	pages
 
-	Added series_name and untitled_name to WINDOW structure 
+	Added series_name and untitled_name to WINDOW structure
 
-	Added DefaultSeriesName keyword to gschemrc file 
+	Added DefaultSeriesName keyword to gschemrc file
 
 	Added UntitledName keyword to gschemrc file
 
 	Went through and changed all the places where the above two changes
 	would affect.
 
-	Slightly changed where defaults are set and where the rc file is read 	
+	Slightly changed where defaults are set and where the rc file is read
 	when a new window is opened.
 
 6/20/98	Started working on the Source Library code
@@ -1250,33 +1249,32 @@ into the cvs repository.
 
 	Added SourceLibrary keyword to the rc file
 
-	Got basic routines in s_slib working 
+	Got basic routines in s_slib working
 
 	Wrote s_slib_getbasename which strips extenstions and trailing _#'s
 	from the filename
 
 	Started working on s_slib_search which goes out and hunts for all
-	the associated source files 
+	the associated source files
 
-	Squashed a nasty stupid bug in the parse filenames startup code 
-	was doing: strlen(blah+5) instead of strlen(blah)+5  (still not 	
-	completely correct but close enough for now) 
+	Squashed a nasty stupid bug in the parse filenames startup code
+	was doing: strlen(blah+5) instead of strlen(blah)+5  (still not
+	completely correct but close enough for now)
 
 	Squashed another nasty bug, which should have been caught by the
 	prototype mechanism, but I didn't update my prototype.h DOH!
 	Wrong number of parameters to update_page_manager
 
-
 6/14/98	Changed the way the CHANGED flag works.  Now you get a single dialog
-	box saying that "there are schematics unsaved!".  
-	
+	box saying that "there are schematics unsaved!".
+
 	You now get one exit dialog for each window instead of the mess of
-	multiple exit dialog boxes 
+	multiple exit dialog boxes
 
-	Added back the window grab for exit dialog boxes. 
+	Added back the window grab for exit dialog boxes.
 
-	Removed the SaveAs dialog box when you exit / create a new page / 
-	open a new schematic  
+	Removed the SaveAs dialog box when you exit / create a new page /
+	open a new schematic
 
 	Modified x_window_close taking in account the above changes
 
@@ -1292,15 +1290,15 @@ into the cvs repository.
 
 	Found a minor bug in above code which caused a coredump (w_current->
 	page_current wasn't being reset)
-	
-	Added very prelim ability to load up *all* specified schematics 
+
+	Added very prelim ability to load up *all* specified schematics
 	(which are on the commandline) at startup. (try gschem *.sch in ../bin)
 
 	Found a bug in the calling of s_page_free_all, the last parameter was
 	not page_tail (it has to be)
 
-	Added back the code which if you hit Save (not saveas) and the 
-	filename had an "untitled.sch" in it, you would get a SaveAs dialog 
+	Added back the code which if you hit Save (not saveas) and the
+	filename had an "untitled.sch" in it, you would get a SaveAs dialog
 	box
 
 	When you create a new filename the cwd is prepended to it.  (that
@@ -1311,16 +1309,16 @@ into the cvs repository.
 
 	Added update button and current page tracking to the page manager
 
-	Added num_untitled counter to keep track of untitled pages (for 
+	Added num_untitled counter to keep track of untitled pages (for
 	uniqueness)
-	
+
 6/9/98	Put an #if 0 around TRUE/FALSE defines in defines.h since gtk+ 1.0.4
 	defines these in glib.h now.
 
 	Changed page mechanism so that zoom factor and zoom display is included
 	in a per page structure
 
-	Fixed a minor bug when drawing arc and the new page mechanism, 
+	Fixed a minor bug when drawing arc and the new page mechanism,
 	wasn't setting up the world coord system at the right time (too late)
 
 	Added a check to see if a schematic file exists, if it doesn't then
@@ -1343,23 +1341,22 @@ into the cvs repository.
 5/18/98 Started experimenting with tcl and gschem, still not convinced this
 	is the way to go.  Will look into guile (and swig)
 
-5/17/98	Started adding support for tcl 
-		Create interp 
+5/17/98	Started adding support for tcl
+		Create interp
 		Delete interp
 
 	Started adding multi page support
-		Added st_page structure 
+		Added st_page structure
 		Added stub s_page routines
 
-5/16/98	Fixed several bugs in cancel callbacks for most dialog boxs; was not 
+5/16/98	Fixed several bugs in cancel callbacks for most dialog boxs; was not
         setting event_state to select mode, but was setting status label to
 	Select Mode
-
 
 0.0.3
 -------
 5/10/98	Changed MOVE/COPY/PAN modes so that they DO NOT stay in MOVE/COPY/PAN
-	Staying after execution of these modes was driving me nuts. 
+	Staying after execution of these modes was driving me nuts.
 
 	Fixed a minor cosmetic bug in the saveas dialog box (wasn't updating
 	the filename at the bottom of the screen)
@@ -1375,10 +1372,10 @@ into the cvs repository.
 5/9/98 	Quit now checks the CHANGED flag properly and prompts you to save.
 	Still some weirdness with multi window quit and dialog boxes
 
-	Went through the code and changed the interface code so that you 
+	Went through the code and changed the interface code so that you
 	stay in a mode unless you change modes (there are exceptions to this)
 
-	Added some error condition functions (in call callback and event 
+	Added some error condition functions (in call callback and event
 	functions)
 
 	Re-enabled the window grab on the text edit dialog box.  This might
@@ -1390,28 +1387,28 @@ into the cvs repository.
 	Fixed the names of menu items (New/Close Window etc...)
 
 5/7/98	Worked a bit more on the multi window code, getting it solid
-	
+
 	Added a head node to window_head just to make my life easier
 	( head nodes aren't deallocated and so window_head doesn't change)
 
 	Fixed a nasty bug with the text size dialog box.  Had a variable
-	entry which wasn't inited or used, but was being referenced! 
+	entry which wasn't inited or used, but was being referenced!
 
 	Fixed another holdover bug (from the days when null entry input
-	caused gtk to coredump) in the text size dialog box 
+	caused gtk to coredump) in the text size dialog box
 
-5/6/98  Fixed a few memory leaks, there are still a few, but those are in 
+5/6/98  Fixed a few memory leaks, there are still a few, but those are in
 	gtk/my code that doesn't deallocate resources which gtk provides
 
-5/3/98 	Fixed a minor bug dealing with not having a default for 
+5/3/98 	Fixed a minor bug dealing with not having a default for
 	override_net|pin_color, which caused problems when gschem
-	could not find a gschemrc file. 
-	
+	could not find a gschemrc file.
+
 	Fixed a minor bug dealing with sending delete events to a window,
-	data parameter wasn't being passed.  (disabled both delete and 
+	data parameter wasn't being passed.  (disabled both delete and
 	destroy for now)
 
-5/2/98  Finished global cleanup, gschem now builds cleanly, and seems to 
+5/2/98  Finished global cleanup, gschem now builds cleanly, and seems to
 	run and seems to be stable.  *All* functionality needs to be checked
 
 	Added New window menu item
@@ -1422,12 +1419,12 @@ into the cvs repository.
 	WINDOW * to all function that require the contained variables.
 
 	Got rid of i_vars.h file, moved contents into defines.h
-	
+
 4/26/98 Worked some more on new WINDOW structure (MAJOR code CHANGE)
 
 	Got program to compile, works mostly, not completely stable yet.
 
-4/25/98 Further reduced the number of globals in x_dialog.c 
+4/25/98 Further reduced the number of globals in x_dialog.c
 
 	Created the new WINDOW structure and started changing every file
 	to use this new structure (MAJOR code CHANGE)
@@ -1437,15 +1434,14 @@ into the cvs repository.
 	Began process of figuring out which variables are getting encapsulated
 	in the "per-window" and "pages" structures
 
-4/23/98 Whole bunch of code cleanup, including making most variables consistant 
+4/23/98 Whole bunch of code cleanup, including making most variables consistant
         renaming a few functions.
 
 4/20/98	Fixed Makefile.am to not include the math library (-lm) twice
 
-
 0.0.2
 -------
-4/16/98 Tested code with GTK+ 1.0.0.  This will be the version of gtk which 
+4/16/98 Tested code with GTK+ 1.0.0.  This will be the version of gtk which
 	will work with gschem.
 
 	Changed the order of init functions in main.c
@@ -1454,7 +1450,7 @@ into the cvs repository.
 	1) wasn't properly checking for no input in the name/value boxes
 	2) wasn't allocating enough memory for current_attribute.
 
-4/15/98 Added some finishing touches to the Add Attribute dialog box and 
+4/15/98 Added some finishing touches to the Add Attribute dialog box and
 	the code that actually does the work.
 
 	Removed accelerator keys from popup menu.  They were misbehaving
@@ -1467,17 +1463,17 @@ into the cvs repository.
 	the names to the Add/Attribute dialog box.
 
 	Started putting in the underlying code that is called by the various
-	Add Attribute buttons. 
+	Add Attribute buttons.
 
 	Added some low level functions to o_attrib.c to support above activity
 
 	Changed Arc hotkey to Shift-R and added Add/Attribute as "a"
- 
+
 4/12/98 Added the #ifdefs to things that configure checks for (some of them)
 
-	Disabled the very broken "get correct filename.ps" code when you 
+	Disabled the very broken "get correct filename.ps" code when you
  	print something.  Right now all postscript output goes to out.ps
-	
+
 	Fixed a minor bug: if you are drawing a net and haven't yet placed
   	the first point and then you hit the right button a redraw is not
 	needed.  (removed the redraw)
@@ -1486,14 +1482,14 @@ into the cvs repository.
 
 4/11/98 Fixed up most compiler warnings about missing prototypes and unused
 	variables
-	
+
 	Tested code with gtk version 0.99.10
 		Due to changes in this version, several changes had to occur:
 			Now forcing a update of scrollbars when you startup
 			Fixed dialog boxes when users enters null string
 
 	Added scrollbar updates to open and new callback routines
-	
+
 	Fixed text enter, text edit, text size, translate, arc angles dialog
 	boxes so that enter is equivalent to clicking OK.
 
@@ -1504,7 +1500,7 @@ into the cvs repository.
 	can only connect to it at the ends. (need to document this)
 
 	As a result of above, a bug was found in the connection search routine.
-	The fix is highly experimental so if any midpoint nets which should 
+	The fix is highly experimental so if any midpoint nets which should
 	be connected are not, then e-mail the maintainers.
 
 	Likewise added the ability to draw ortho lines by pressing the CONTROL
@@ -1518,12 +1514,12 @@ into the cvs repository.
 
 4/9/98  Added TextCapsStyle rcfile keyword
 
-	Totally rewrote o_text to allow text to be any point size 
+	Totally rewrote o_text to allow text to be any point size
 
-	Added some code to put a few pixels inbetween each text character 
+	Added some code to put a few pixels inbetween each text character
 	(right now turned off)
 
-	Added text size selection dialog 
+	Added text size selection dialog
 
 	Changed Version keyword in rcfile to reflect new version (0.0.2)
 
@@ -1531,7 +1527,7 @@ into the cvs repository.
 
 	Removed the code that controlled (limited) text size in rcfiles
 
-	Fixed most dialog box titles 
+	Fixed most dialog box titles
 
 	Fixed all example .sch files to have 10 point text labels
 
@@ -1539,9 +1535,9 @@ into the cvs repository.
 
 4/7/98	Fixed minor bug with opening a file and CHANGED flag not being cleared
 
-4/6/98	Relaxed aspectratio calculation (no more aspectratio enforcement) 
+4/6/98	Relaxed aspectratio calculation (no more aspectratio enforcement)
 
-	Changed default drawing area min size to 800x600 
+	Changed default drawing area min size to 800x600
 
 	Merged m_prims.c and m_matrix.c into m_basic.c (new file)
 
@@ -1549,14 +1545,11 @@ into the cvs repository.
 
 	Added call to hide file ops in all file selection dialog boxes
 
-	Fixed searching order of rc files 
+	Fixed searching order of rc files
 
 	Added scroll bars to right and bottom.  Underlying code not impl.
 
-
-
-
-0.0.1 
+0.0.1
 -------
 
 4/1/98	First Release to the public
