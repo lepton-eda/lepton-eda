@@ -32,9 +32,9 @@ README for gEDA version 2002*
 - License  
 
 	gEDA (libgeda/gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils
-	and all associated files (such as component symbols)) is placed
-	under the GNU Public License (GPL) version 2.0.  See the toplevel
-	COPYING file for more information.
+	and all associated files (such as component symbols)) are placed
+	under the GNU Public License (GPL) version 2.0.  See the various
+	COPYING files for more information.
 
 	Programs and associated files are: 
 	Copyright 1998-2002 by Ales V. Hvezda and the respective
@@ -87,4 +87,5 @@ README for gEDA version 2002*
 	Ales V. Hvezda 
 	E-mail: ahvezda@geda.seul.org
 	Web: http://www.geda.seul.org/
+
 
