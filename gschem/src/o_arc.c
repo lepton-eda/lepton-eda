@@ -60,7 +60,7 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
         }
 
 #if DEBUG 
-        printf("drawing arc\n");
+        printf("drawing arc %d %d\n", o_current->screen_x, o_current->screen_y);
 #endif
 
 	if (w_current->override_color != -1 ) {

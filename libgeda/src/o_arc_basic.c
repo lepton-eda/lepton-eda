@@ -475,15 +475,14 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	int origin_x, int origin_y)
 {
 	int start_angle, end_angle;
-	int wwidth, wheight;
-	int swidth, sheight;
+	int width, height;
 	int radius;
 	int screen_radius;
+	int final;
 	int x, y;
-	int center_x, center_y;
 
 	if (o_current == NULL) {
-		printf("got null in o_circle_image_write\n");
+		printf("got null in o_arc_image_write\n");
 		return;
 	}
 
@@ -503,34 +502,45 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	}
 
 	end_angle = start_angle + end_angle;
+
+
+
+#if DEBUG
 	printf("%d %d -- %d %d -- %d %d\n", 
 			o_current->screen_x, o_current->screen_y,
 			o_current->line_points->screen_x1-o_current->screen_x,
 			o_current->line_points->screen_y1-o_current->screen_y,
                         start_angle, end_angle);
+#endif
 
-	if ( o_current->screen_x >= 0 && o_current->screen_y >= 0) {
+	if (start_angle < end_angle) {
 
+		start_angle = start_angle + 360;
+	}
 
-#if 0
-	gdImageArc(current_im_ptr, 
+#if DEBUG
+	printf("%d %d -- %d %d -- %d %d\n", 
 			o_current->screen_x, o_current->screen_y,
 			o_current->line_points->screen_x1-o_current->screen_x,
 			o_current->line_points->screen_y1-o_current->screen_y,
+                        start_angle, end_angle);
+#endif
+
+
+	width = o_current->line_points->screen_x1-o_current->screen_x;
+	height =  o_current->line_points->screen_y1-o_current->screen_y;
+
+	final = max(width, height);
+
+	x = o_current->screen_x + (final)/2;
+	y = o_current->screen_y + (final)/2;
+
+	gdImageArc(current_im_ptr, 
+			x, y,
+			final, final,
                         start_angle, end_angle,
 			o_image_geda2gd_color(o_current->color));
 	
-	}
-#endif
-
-	gdImageArc(current_im_ptr, 
-			200, 200,
-			300, 300,
-                        0, 45,
-			o_image_geda2gd_color(o_current->color));
-	
-	}
-
 }
 
 

@@ -9,6 +9,8 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+6/24/99 Made the Image write dialog box go away once you pressed write
+
 6/23/99 Added the first bits of support for the writing of images
 
 	Added configure ability to find and turn off libgd support

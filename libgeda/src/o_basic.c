@@ -70,3 +70,48 @@ o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current)
 	}
 }
 
+void
+o_recalc(TOPLEVEL *w_current, OBJECT *object_list)
+{
+	OBJECT *o_current;
+
+	if (object_list == NULL)
+		return;
+	
+	o_current = object_list;
+	while (o_current != NULL) {
+		switch(o_current->type) {
+
+			case(OBJ_LINE):
+				o_line_recalc(w_current, o_current);
+			break;
+
+			case(OBJ_NET):
+				o_net_recalc(w_current, o_current);
+			break;
+
+			case(OBJ_BOX):
+				o_box_recalc(w_current, o_current);
+			break;
+
+			case(OBJ_CIRCLE):
+				o_circle_recalc(w_current, o_current);
+			break;
+
+			case(OBJ_COMPLEX):
+				o_complex_recalc(w_current, o_current);
+			break;
+
+			case(OBJ_PIN):
+				o_pin_recalc(w_current, o_current);
+			break;
+
+			case(OBJ_ARC):
+				o_arc_recalc(w_current, o_current);
+			break;
+		}
+
+		o_current = o_current->next;
+	}
+}
+

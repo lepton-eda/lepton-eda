@@ -8,6 +8,13 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+6/24/99 Got all the object primatives outputing to the image (including
+	the rather painful arcs) 
+
+	Added the ability to change the image size
+
+	Added a o_recalc function which recalcs, but doesn't draw the objects
+
 6/23/99 Added o_image.c (which is code which uses the gd lib to output 
 	schematics to gifs)
 

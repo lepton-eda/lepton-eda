@@ -210,8 +210,7 @@ x_print_print(GtkWidget *w, TOPLEVEL *w_current)
 	        s_log_message("Printed current schematic to [%s]\n", filename);
 	}
 
-	/* gtk_grab_remove(w_current->pwindow);*/
-	/* gtk_widget_destroy(w_current->pwindow);
+	/*gtk_widget_destroy(w_current->pwindow);
 	w_current->pwindow=NULL;*/
 	return(0);
 }

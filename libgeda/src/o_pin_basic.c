@@ -388,7 +388,7 @@ o_pin_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 {
 
         if (o_current == NULL) {
-                printf("got null in o_pin_print\n");
+                printf("got null in o_pin_image_write\n");
                 return;
         }
 

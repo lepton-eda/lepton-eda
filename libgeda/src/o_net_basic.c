@@ -549,7 +549,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	int i;
 
         if (o_current == NULL) {
-                printf("got null in o_net_print\n");
+                printf("got null in o_net_image_write\n");
                 return;
         }
 

@@ -356,6 +356,25 @@ o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "%d mils %d mils box\n", width, height);
 }
 
+void
+o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current, 
+	int origin_x, int origin_y)
+{
+
+	if (o_current == NULL) {
+		printf("got null in o_box_image_write\n");
+		return;
+	}
+
+	/* assumes screen coords are already calculated correctly */
+	gdImageRectangle(current_im_ptr, 
+			o_current->line_points->screen_x1,
+			o_current->line_points->screen_y1,
+			o_current->line_points->screen_x2,
+			o_current->line_points->screen_y2, 
+			o_image_geda2gd_color(o_current->color));	
+}
+
 
 /* takes in screen coordinates for the centerx,y, and then does the rotate 
  * in world space */

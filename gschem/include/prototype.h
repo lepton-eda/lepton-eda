@@ -455,7 +455,6 @@ gint image_landscape(GtkWidget *w, TOPLEVEL *w_current);
 gint image_portrait(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_set_window(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_set_limits(GtkWidget *w, TOPLEVEL *w_current);
-gint x_image_change_size(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void x_image_setup(TOPLEVEL *w_current, char *filename);

@@ -208,18 +208,26 @@ gint
 x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 {
 	char *filename=NULL;
+	char *c_width;
+	char *c_height;
+	int width, height;
 
 	filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
 
-	if (filename[0] != '\0') {
-		printf("blah\n");
-		f_image_write(w_current, filename);
-	        s_log_message("Wrote current schematic to [%s]\n", filename);
+	c_width = gtk_entry_get_text(GTK_ENTRY(w_current->iwidth_entry));
+	c_height = gtk_entry_get_text(GTK_ENTRY(w_current->iheight_entry));
+
+	if (filename[0] != '\0' && c_width[0] != '\0' && c_height[0] != '\0') {
+
+		width = atoi(c_width);
+		height = atoi(c_height);
+
+		f_image_write(w_current, filename, width, height);
+	        s_log_message("Wrote current schematic to [%s] [%d x %d]\n", filename, width, height);
 	}
 
-	/* gtk_grab_remove(w_current->iwindow);*/
-	/* gtk_widget_destroy(w_current->iwindow);
-	w_current->iwindow=NULL;*/
+	gtk_widget_destroy(w_current->iwindow);
+	w_current->iwindow=NULL;
 	return(0);
 }
 
@@ -376,17 +384,54 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                            w_current);
 #endif
 
-		box = gtk_hbox_new(FALSE, 0);
+		box = gtk_vbox_new(FALSE, 0);
         	gtk_container_border_width(GTK_CONTAINER(box), 5);
         	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(w_current->iwindow)->vbox), box);
         	gtk_widget_show(box);            
+
+		label = gtk_label_new ("Width");
+		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
+                gtk_misc_set_padding (GTK_MISC (label), 0, 0);
+                gtk_box_pack_start (GTK_BOX (box),
+                          label, FALSE, FALSE, 0);
+                gtk_widget_show (label); 
+
+		w_current->iwidth_entry = gtk_entry_new_with_max_length (5);
+                gtk_editable_select_region (GTK_EDITABLE (w_current->iwidth_entry), 0, -1);
+                gtk_box_pack_start (GTK_BOX (box),
+                          w_current->iwidth_entry, TRUE, TRUE, 10);
+/* 
+		gtk_signal_connect(GTK_OBJECT(w_current->width_entry), 
+			"activate",
+                       GTK_SIGNAL_FUNC(x_image_write),
+                       w_current);
+*/
+                gtk_widget_show (w_current->iwidth_entry); 
+
+		label = gtk_label_new ("Height");
+		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
+                gtk_misc_set_padding (GTK_MISC (label), 0, 0);
+                gtk_box_pack_start (GTK_BOX (box),
+                          label, FALSE, FALSE, 0);
+                gtk_widget_show (label); 
+
+		w_current->iheight_entry = gtk_entry_new_with_max_length (5);
+                gtk_editable_select_region (GTK_EDITABLE (w_current->iheight_entry), 0, -1);
+                gtk_box_pack_start (GTK_BOX (box),
+                          w_current->iheight_entry, TRUE, TRUE, 10);
+/* 
+		gtk_signal_connect(GTK_OBJECT(w_current->height_entry), 
+			"activate",
+                       GTK_SIGNAL_FUNC(x_image_write),
+                       w_current);
+*/
+                gtk_widget_show (w_current->iheight_entry); 
 
 		label = gtk_label_new ("Filename");
 		gtk_misc_set_alignment( GTK_MISC (label), 0, 0);
                 gtk_misc_set_padding (GTK_MISC (label), 0, 0);
                 gtk_box_pack_start (GTK_BOX (box),
                           label, FALSE, FALSE, 0);
-
                 gtk_widget_show (label); 
 
 		w_current->ifilename_entry = gtk_entry_new_with_max_length (79);
@@ -439,6 +484,9 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 
 	if (!GTK_WIDGET_VISIBLE (w_current->iwindow)) {
         	gtk_entry_set_text(GTK_ENTRY(w_current->ifilename_entry), filename);
+        	gtk_entry_set_text(GTK_ENTRY(w_current->iwidth_entry), "800");
+        	gtk_entry_set_text(GTK_ENTRY(w_current->iheight_entry), "600");
+
         	/*gtk_entry_select_region(GTK_ENTRY(w_current->ifilename_entry), 0, strlen(filename)); 	*/
 		gtk_widget_show (w_current->iwindow);
 		gdk_window_raise(w_current->iwindow->window); 

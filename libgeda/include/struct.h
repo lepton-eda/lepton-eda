@@ -308,6 +308,8 @@ struct st_toplevel {
 	GtkWidget *iwindow;			/* image write dialog box */
 	GtkWidget *ilib_list;			/* paper size box */
 	GtkWidget *ifilename_entry; 
+	GtkWidget *iwidth_entry; 
+	GtkWidget *iheight_entry; 
 
 	GtkWidget *pswindow;			/* page select */
 	GtkWidget *page_clist;

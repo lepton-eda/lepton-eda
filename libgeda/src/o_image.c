@@ -84,8 +84,6 @@ o_image_write(char *filename)
 		return(-1);
 	}
 
-	printf("yeah...\n");
-
 	gdImageInterlace(current_im_ptr, 1);
 
 	out = fopen(filename, "wb");

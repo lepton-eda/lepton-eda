@@ -111,6 +111,7 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 
 	o_current = head;
 
+
 	while ( o_current != NULL ) {
 
 		if (o_current->type != OBJ_HEAD) {
@@ -169,19 +170,15 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 						origin_x, origin_y);
 				break;
 
-#if 0	
 				case(OBJ_BOX):
-					o_box_image_write(w_current, fp, o_current,
+					o_box_image_write(w_current, o_current,
 						origin_x, origin_y);
 				break;
 			
-
-
 				default:
 					fprintf(stderr, "Error type!\n");
 					exit(-1);
 				break;
-#endif
 			}
 
 		} 
@@ -192,10 +189,11 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 }
 
 void
-f_image_write(TOPLEVEL *w_current, char *filename)
+f_image_write(TOPLEVEL *w_current, char *filename, int width, int height)
 {
 	int origin_x, origin_y, bottom, right;
 	float scale;
+	int save_height, save_width;
 
 	/* new ALES stuff */
 	o_ales_disconnect_update(w_current->page_current);
@@ -210,7 +208,17 @@ f_image_write(TOPLEVEL *w_current, char *filename)
 			&origin_x, &origin_y, 
 			&right, &bottom);
 
-	o_image_create(800, 600);
+
+	save_width = w_current->width;
+	save_height = w_current->height;
+
+	w_current->width = width;
+	w_current->height = height;
+
+	o_image_create(width, height);
+
+	/* try to use recalc here */
+	o_redraw_all(w_current);
 
 #if 0
 	if (w_current->image_output_type == LIMITS) {
@@ -253,6 +261,14 @@ f_image_write(TOPLEVEL *w_current, char *filename)
 	
 	o_image_write(filename);
 	o_image_close();
+
+	w_current->width = save_width;
+	w_current->height = save_height;
+
+	/* try to use recalc here... */
+	o_redraw_all(w_current);
+
+
 }
 
 
