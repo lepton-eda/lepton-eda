@@ -1,3 +1,13 @@
+2003-09-01 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* linear/lm339-1.sym: Added note to warn people not to use this 
+	symbol.  This symbol will eventually be removed.
+
+	* 74/74688-2.sym connector/header26-2.sym connector/header32-2.sym 
+	linear/lm2576T-1.sym linear/lm339-2.sym maxim/max1211-1.sym
+	maxim/max6674-1.sym micro/6821-2.sym opto/810-1.sym: Added 
+	contributed symbols.
+
 2003-08-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* *.sym: Updated all symbols and font definitions to 20030901

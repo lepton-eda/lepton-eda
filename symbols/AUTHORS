@@ -530,6 +530,7 @@ James Carter		- For contributing the following symbol:
 Dan McMahill		- For contributing the following symbols:
 
 			 	ax4106-1.sym max4107-1.sym arfx1229-1.sym
+				max1211-1.sym 
 
 Jesse Alexander		- For contributing the following symbol:
 
@@ -539,69 +540,90 @@ Egil Kvaleberg 		- For contributing lots of code and support on the
 			  search for documentation from within gschem feature.
 		
 			  For contributing the initial version of 
-		          busripper-1.sym
+		          	busripper-1.sym
 
 Jan Stap:		- For contributing the following symbols:
 
-			  tiny-tiger-1.sym, max3223e-1.sym, FND5148-1.sym,
-			  QT60040-1.sym
+			  	tiny-tiger-1.sym, max3223e-1.sym, 
+				FND5148-1.sym, QT60040-1.sym
 
 Onno Kortmann:		- For contributing the following symbols:
 
- 			  voltmeter-1.sym lm1877-1.sym mosfet-with-diode-1.sym
-			  ntc-1.sym, l200-1.sym, tfds4500-1.sym 
+ 			  	voltmeter-1.sym lm1877-1.sym 
+				mosfet-with-diode-1.sym ntc-1.sym, 
+				l200-1.sym, tfds4500-1.sym 
 
 Thomas Maeke:		- For contributing the following symbols:
 
-			  max1080-1.sym max1608-1.sym Si9986.sym 
-   			  max1081-1.sym max1609-1.sym
+			  	max1080-1.sym max1608-1.sym Si9986.sym 
+   			  	max1081-1.sym max1609-1.sym
 
 
 Walter Fetter:		- For contributing the following symbols:
 
-			  max4420-1.sym max4429-1.sym osc-2.sym 
-			  22V10-DIP-1.sym 6N135-1.sym 6N136-1.sym 74HC244-1.sym
-			  74HC244-2.sym 74HC373-1.sym 74HC374-1.sym 
-			  DIN41612C48-2.sym DIN41612C56-2.sym 
-			  DIN41612C96-2.sym HCPL4502-1.sym HCTL-2000-1.sym
-			  HCTL-2016-1.sym IRF1010N-1.sym IRLZ24N-1.sym
-			  PCA82C250-1.sym TINIm390-RevD.sym header50-1.sym
-			  header8-1.sym header8-2.sym input-2.sym
-			  io-1.sym led-3.sym lt1160-1.sym lt1162-1.sym
-			  mxt429-1.sym nmos-3.sym output-2.sym passive-1.sym
-			  pmos-3.sym
+			  	max4420-1.sym max4429-1.sym osc-2.sym 
+			  	22V10-DIP-1.sym 6N135-1.sym 6N136-1.sym 
+				74HC244-1.sym 74HC244-2.sym 74HC373-1.sym 
+				74HC374-1.sym 
+			  	DIN41612C48-2.sym DIN41612C56-2.sym 
+			  	DIN41612C96-2.sym HCPL4502-1.sym HCTL-2000-1.sym
+			  	HCTL-2016-1.sym IRF1010N-1.sym IRLZ24N-1.sym
+			  	PCA82C250-1.sym TINIm390-RevD.sym header50-1.sym
+			  	header8-1.sym header8-2.sym input-2.sym
+			  	io-1.sym led-3.sym lt1160-1.sym lt1162-1.sym
+			  	mxt429-1.sym nmos-3.sym output-2.sym 
+				passive-1.sym pmos-3.sym
 
 faisal (e-mail only)	- For contributing the following symbols:
 	
-			  lm3909-1.sym lm386-1.sym
+			  	lm3909-1.sym lm386-1.sym
 
 vince (e-mail only)	- For contributing the following symbols:
 
-			  ISA-98W-SOCKET-1.sym
+			  	ISA-98W-SOCKET-1.sym
 
 richard (e-mail only)	- For contributing the following symbols: 
 
-			  mc68hc908gp32cp-1.sym
+			  	mc68hc908gp32cp-1.sym
 
 Stuart Brorson: 	- For contributing the following symbols:
 
-			  spice/idc-1.sym spice/spice-directive-1.sym
-			  spice/spice-include-1.sym spice/spice-model-1.sym
-			  spice/spice-options-1.sym 
-			  spice/spice-subcircuit-IO-1.sym
-			  spice/spice-subcircuit-LL-1.sym
+			  	spice/idc-1.sym spice/spice-directive-1.sym
+			  	spice/spice-include-1.sym 
+				spice/spice-model-1.sym
+			  	spice/spice-options-1.sym 
+			  	spice/spice-subcircuit-IO-1.sym
+			  	spice/spice-subcircuit-LL-1.sym
 
 Mario Klebsch		- For contributing the following symbol:
 
-			  7432-2.sym
+			  	7432-2.sym
 
 			  For pointing out the swap between 7408-2 and 
 			  7409-2.
 
 Gabriel Paubert		- For contributing the following symbol:
 
-			  DB15-1.sym
+			  	DB15-1.sym
 
+Terry Porter		- For contributing the following symbols:
+
+			  	6821-2.sym 74688-2.sym 810-1.sym 
+
+Bob Paddock		- For contributing the following symbols:
+	
+			  	header26-2.sym header32-2.sym
+
+
+voncarstadsl (e-mail only) - For contributing the following symbol:
+
+			  	lm2576T-1.sym
+
+michalsc (e-mail only)	- For contributing the following symbols: 
+
+				lm339-2.sym  
+				
+			  And pointing out the errors in lm339-1.sym
 
 The following people contributed symbols via the online symbol upload
 (E-mails purposefully truncated):
