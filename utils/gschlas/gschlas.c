@@ -54,7 +54,6 @@ main_prog(void *closure, int argc, char *argv[])
   int first_page=1;
   int fopen_status;
   char *cwd;
-  char *filename;
   struct stat buf;
   
   TOPLEVEL *pr_current;
@@ -93,90 +92,38 @@ main_prog(void *closure, int argc, char *argv[])
   /* register guile (scheme) functions */
   g_register_funcs();
 
-  /*
-   * Now create new project in three steps. This is the new setup scheme
-   * by SDB which was necessitated by dealing with the RC project list.
-   */
-  /* 1.  Alloc pr_current */
-  pr_current = s_project_alloc();
-  /* 2. Read in RC files. */
+  pr_current = s_toplevel_new ();
   g_rc_parse(pr_current, "gschlasrc", rc_filename);
-  /* 3. Finish filling out pr_current */
-  s_project_fill_out(pr_current);
-
-  s_project_add_head();
+  i_vars_set(pr_current);
   
   i = argv_index;
   while (argv[i] != NULL) {
-    filename = g_strconcat (cwd,
-                            G_DIR_SEPARATOR_S,
-                            argv[i],
-                            NULL);
-                                                                                                
+    gchar *filename = g_build_path (G_DIR_SEPARATOR_S,
+                                    cwd,
+                                    argv[i],
+                                    NULL);
+    
     if (stat(filename, &buf) != 0) {
       s_log_message("Could not open [%s]\n", filename);
       s_log_message("Exiting...\n");
       exit(2); /* error */
     } else {
-      if (first_page) {
-        if (pr_current->page_current->page_filename) {
-          free(pr_current->page_current->page_filename);
-        }
+      if (verbose_mode) {
+        s_log_message("Loading file [%s]\n", filename);
+      }
 
-        /* Page structure has already been created... */	
-        /* so, just set the filename and open the schematic */
-        /* for the first page */
-
-#if 0
-        /* SDB Notes: This is what it used to be.  I have probably broken the MINGW32 stuff */
-#ifdef __MINGW32__
-        if (argv[i][1] == ':' && (argv[i][2] == G_DIR_SEPARATOR ||
-                                  argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) {
-#else
-        if (argv[i][0] == G_DIR_SEPARATOR) {
-#endif
-          pr_current->page_current->page_filename = g_strdup (argv[i]);
-        } else {
-          pr_current->page_current->page_filename =
-            g_strconcat (cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
-        }
-#endif 
-        /* Always use absolute file names to eliminate confusion */
-        pr_current->page_current->page_filename = filename;
-                                                                                                   
-        if (verbose_mode) {
-          s_log_message("Loading file [%s]\n",
-                        pr_current->page_current->page_filename);
-        }
-        fopen_status = f_open(pr_current,
-                              pr_current->page_current->page_filename);
-                                                                                                   
-        if (!fopen_status) {
-          s_log_message("gsymcheck: Could not load [%s]\n",
-                        pr_current->page_current->page_filename);
-          s_log_message("Exiting...\n");
-          exit(2); // error
-        }
-        first_page = 0;
-      } else {
-
-        /* now are there any other filenames specified? */
-        /* Much simpler	*/
-        if (verbose_mode) {
-          s_log_message("Loading file [%s]\n", filename);
-        }
-        if (!s_page_new(pr_current, argv[i])) {
-          fopen_status = f_open(pr_current,
-                                pr_current->page_current->page_filename);
-          if (!fopen_status) {
-            s_log_message("gschlas: Could not load [%s]\n", filename);
-            s_log_message("Exiting...\n");
-            exit(2); // error 
-          }
-        }
+      s_page_goto (pr_current,
+                   s_page_new (pr_current, filename));
+      
+      if (!f_open(pr_current, filename)) {
+        s_log_message("gsymcheck: Could not load [%s]\n", filename);
+        s_log_message("Exiting...\n");
+        exit(2); // error
       }
     }
+    
     i++;
+    g_free (filename);
   }
 
   if (argv[argv_index] == NULL) {
@@ -197,7 +144,7 @@ main_prog(void *closure, int argc, char *argv[])
   /* save all the opened files */
   s_page_save_all(pr_current);
 
-  s_page_free_all(pr_current, pr_current->page_tail);
+  s_page_delete_list (pr_current);
   gschlas_quit();
 
   exit(0);

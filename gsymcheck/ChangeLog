@@ -1,3 +1,8 @@
+2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gsymcheck.c (main_prog): Adapted for new toplevel and page APIs 
+	in libgeda.
+
 2005-02-09 Carlos Nieves Onega <cnieves@iespana.es>
 	* include/prototype.h, include/struct.h, src/s_check.c, 
 	  src/s_symstruct.c:

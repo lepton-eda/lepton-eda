@@ -1,3 +1,8 @@
+2005-02-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* src/gnetlist.c (main_prog): Adapted for new toplevel and page APIs
+	in libgeda.
+	
 2005-02-08 Carlos Nieves Onega <cnieves@iespana.es>
 	* scheme/gnet-drc2.scm:
 	  Use a parameter instead of the quiet mode of gnetlist so 
