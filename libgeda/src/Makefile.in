@@ -98,7 +98,7 @@ EXTRA_DIST = BUGS TODO create_proto
 
 # Build a libtool library, libhello.la for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
-libgeda_la_SOURCES =  	a_basic.c f_basic.c f_print.c f_image.c g_basic.c m_basic.c 	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c o_circle_basic.c 	o_complex_basic.c o_line_basic.c o_list.c o_net_basic.c o_selection.c 	o_bus_basic.c o_text_basic.c o_pin_basic.c o_image.c u_basic.c 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c s_stretch.c 	s_log.c s_page.c s_scratch.c s_slib.c s_stroke.c s_color.c s_undo.c 	s_conn.c s_cue.c s_nethash.c s_tile.c g_smob.c funcs.h globals.h  
+libgeda_la_SOURCES =  	a_basic.c f_basic.c f_print.c f_image.c g_basic.c m_basic.c 	o_arc_basic.c o_attrib.c o_basic.c o_box_basic.c o_circle_basic.c 	o_complex_basic.c o_line_basic.c o_list.c o_net_basic.c o_selection.c 	o_bus_basic.c o_text_basic.c o_pin_basic.c o_image.c u_basic.c 	s_attrib.c s_basic.c s_clib.c s_hierarchy.c s_papersizes.c s_stretch.c 	s_log.c s_page.c s_scratch.c s_slib.c s_stroke.c s_color.c s_undo.c 	s_conn.c s_cue.c s_tile.c g_smob.c funcs.h globals.h  
 
 
 libgeda_la_LDFLAGS = -version-info 12:0:0
@@ -135,7 +135,7 @@ o_list.lo o_net_basic.lo o_selection.lo o_bus_basic.lo o_text_basic.lo \
 o_pin_basic.lo o_image.lo u_basic.lo s_attrib.lo s_basic.lo s_clib.lo \
 s_hierarchy.lo s_papersizes.lo s_stretch.lo s_log.lo s_page.lo \
 s_scratch.lo s_slib.lo s_stroke.lo s_color.lo s_undo.lo s_conn.lo \
-s_cue.lo s_nethash.lo s_tile.lo g_smob.lo
+s_cue.lo s_tile.lo g_smob.lo
 CFLAGS = @CFLAGS@
 COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
