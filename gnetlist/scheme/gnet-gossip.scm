@@ -22,7 +22,6 @@
 ;;  For more info see http://gossip.sourceforge.net 
 ;;
 
-
 (define gossip:write-top-header
    (lambda (p)
       (display ";; Gossip Netlist Created by gNetlist" p) 
@@ -61,20 +60,16 @@
                (display " :" port)
                (display pinname port)
                (write-char #\space port)
-               (display (find-net uref pin allnets) port)
+               (display (gossip:find-net uref pin allnets) port)
                (gossip:list-pins allnets uref (+ 1 pin) port))))))
       
-
 ;(define gossip:reverse-netlist
-   ;(lambda (allnets)
-      ;(if (null? allnets)
-         ;'()
-         ;(let ((connections (gnetlist:get-all-connections (car allnets))))
-            ;(cons (gossip:connectionlist connections)
-                  ;(gossip:reverse-netlist (cdr allnets))))))
-;
-;(define gossip:connectionlist
-   ;(lambda (connections)
+;   (lambda (allnets)
+;      (if (null? allnets)
+;         '()
+;         (let ((connections (gnetlist:get-all-connections (car allnets))))
+;            (cons (gossip:connectionlist connections)
+;                  (gossip:reverse-netlist (cdr allnets))))))
       
 (define gossip:find-net
    (lambda (uref pin allnets)
@@ -87,10 +82,8 @@
    (lambda (uref pin list)
       (cond
          ((null? list)'())
-         ((and (string=? uref (caar list)) (string=? pin (cadar list))) #t)
+         ((and (string=? uref (caar list)) (eq? pin (cadar list))) #t)
          (#t (gossip:finder uref pin (cdr list))))))
-         ;;((match? uref pin (car list)) #t)
-
 
 (define gossip:display-connections
    (lambda (nets port)
@@ -111,18 +104,6 @@
          (gossip:display-connections nets port)
          (write-char #\space port) 
          (newline port))))
-
-(define gossip:write-net
-   (lambda (port netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-	    (begin
-	       (display netname port)
-	       (display " : " port)
-               (gossip:display-name-nets port (gnetlist:get-all-connections netname))
-	       (gossip:write-net port (cdr netnames))))))) 
-
-;;  Need to add code to find all input and output ports
 
 (define gossip:blocks
    (lambda (port ls allnets)
