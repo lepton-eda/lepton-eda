@@ -1,3 +1,14 @@
+2003-12-05 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/doc.c, src/project.c, src/project.h, src/m_project.c,
+        src/m_project.h: added support for project properties window
+        (not connected yet), small changes in project file format.
+        
+2003-12-02 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/global.h, src/main.c: Added function FatalError() and
+        default project values.
+        
 2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* config.guess config.rpath config.sub depcomp mkinstalldirs

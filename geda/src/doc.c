@@ -19,12 +19,19 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include "../config.h"
-#endif
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#ifdef HAVE_CONFIG_H
+#include "../config.h"
+#else
+#define VERSION "devel"
+#endif
+
 #include "config.h"
 #include "doc.h"
 #include "file.h"
@@ -82,7 +89,7 @@ int DocCreate(const char *szFileName, const char *szParentFileName)
 		if (pParent == NULL)
 			return SUCCESS;
 	}
-	
+
 	pDoc = (struct Doc_s *) malloc(sizeof(struct Doc_s));
 	if (pDoc == NULL)
 		return FAILURE;
@@ -102,7 +109,6 @@ int DocCreate(const char *szFileName, const char *szParentFileName)
 		pDocList = pDoc;
 	}
 	pDoc->bChanged = FALSE;
-	ProjectChanged(TRUE);
 	DocViewAdd(pDoc);
 
 	return SUCCESS;
@@ -146,7 +152,6 @@ int DocDestroy(const char *szFileName)
 		ProjectTitle();
 	}
 	free(pDoc);
-	ProjectChanged(TRUE);
 
 	return SUCCESS;
 }
@@ -223,21 +228,91 @@ int DocSave(const char *szFileName)
 {
 	FILE *hProject;
 	struct Doc_s *pDoc;
-	char szMessage[TEXTLEN];
+	char szMessage[TEXTLEN], szPwd[TEXTLEN], szDirName[TEXTLEN], szFullDest[TEXTLEN], *pResult;
+	int iResult, i, j;
+
+#if 0
+	FILE *FileSource, *FileDest;
+	char szMessage[TEXTLEN], *pResult;
+#endif
+	
+	/* read current working directory */
+	pResult = getcwd(szPwd, TEXTLEN);
+	if (pResult == NULL)
+	{
+		sprintf(szMessage, "Cannot determine current working directory (Package::FileCopy())");
+//		Log(LOG_ERROR, MODULE_PACKAGE, szMessage);
+		return FAILURE;
+	}
+
+#if 0
+	/* add installation directory (if only the read one is not an absolute path) */
+	if (szDest[0] != G_DIR_SEPARATOR)
+	{
+		strcpy(szFullDest, szInstallDirectory);
+		strcat(szFullDest, G_DIR_SEPARATOR_S);
+		strcat(szFullDest, szDest);
+	}
+#endif
+	
+strcpy(szFullDest, szFileName);
+	
+	/* creating directories */
+	for (i = 0, j = 0; i < strlen(szFullDest); )
+	{
+		/* get destination directory name */
+		for (; i < strlen(szFullDest) && szFullDest[i] != G_DIR_SEPARATOR; i ++)
+			szDirName[j ++] = szFullDest[i];
+		for (; i < strlen(szFullDest) && szFullDest[i] == G_DIR_SEPARATOR; i ++)
+			szDirName[j ++] = szFullDest[i];
+		szDirName[j] = 0;
+		
+		/* if end of string - it is not a directory */
+		if (i == strlen(szFullDest))
+			break;
+		
+		/* check if it exists */
+		iResult = chdir(szDirName);
+		if (iResult != 0)
+		{
+			/* if not - create it */
+			iResult = mkdir(szDirName, 0777);
+			if (iResult != 0)
+			{
+				sprintf(szMessage, "Cannot make directory '%s'",
+					szDirName
+					);
+//				Log(LOG_ERROR, MODULE_PACKAGE, szMessage);
+				return FAILURE;
+			}
+		}
+
+		/* return to the working directory */
+		iResult = chdir(szPwd);
+		if (iResult != 0)
+		{
+			sprintf(szMessage,
+				"Cannot return to the working directory '%s'",
+				szPwd
+				);
+//			Log(LOG_ERROR, MODULE_PACKAGE, szMessage);
+			return FAILURE;
+		}
+	}
+	
+
 	
 	/* open project file */
 	hProject = fopen(szFileName, "w");
 	if (hProject == NULL)
-	{
-		sprintf(szMessage, "Cannot save the project file '%s' !", szFileName);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
 		return FAILURE;
-	}
+	
+	/* save project properties */
+	fprintf(hProject, "[PROJECT]\n");
+	fprintf(hProject, "GMANAGER = \"%s\"\n", VERSION);
+	fprintf(hProject, "NAME = \"%s\"\n", Project.szName);
+	fprintf(hProject, "AUTHOR = \"%s\"\n", Project.szAuthor);
+	fprintf(hProject, "DESC = \"%s\"\n", Project.szDesc);
 	
 	/* save file list */
 	fprintf(hProject, "[FILES]\n");
@@ -251,7 +326,6 @@ int DocSave(const char *szFileName)
 	
 	/* close project file */
 	fclose(hProject);
-	ProjectChanged(FALSE);
 	
 	return SUCCESS;
 }
@@ -277,6 +351,51 @@ int DocLoad(const char *szFileName)
 		return FAILURE;
 	}
 	
+	/* read PROJECT section */
+	iResult = ConfigSection("PROJECT");
+	if (iResult != SUCCESS)
+	{
+		sprintf(szMessage, "'%s' is not a valid project file !", szFileName);
+		MsgBox(
+			pWindowMain,
+			"Error !",
+			szMessage,
+			MSGBOX_ERROR | MSGBOX_OKD
+			);
+		ConfigClose();
+		return FAILURE;
+	}
+	for (iResult = ConfigGetNext(szName, szValue); iResult == SUCCESS; iResult = ConfigGetNext(szName, szValue))
+	{
+		if (!strcmp(szName, "AUTHOR"))
+		{
+			/* read file name */
+			for (i = 0; i < strlen(szValue) && szValue[i] != '"'; i ++)
+				;
+			i ++;
+			for (j = 0; i < strlen(szValue) && szValue[i] != '"'; i ++)
+				szDoc[j ++] = szValue[i];
+			szDoc[j] = 0;
+			i ++;
+			
+			strcpy(Project.szAuthor, szDoc);
+		}
+
+		else if (!strcmp(szName, "DESC"))
+		{
+			/* read file name */
+			for (i = 0; i < strlen(szValue) && szValue[i] != '"'; i ++)
+				;
+			i ++;
+			for (j = 0; i < strlen(szValue) && szValue[i] != '"'; i ++)
+				szDoc[j ++] = szValue[i];
+			szDoc[j] = 0;
+			i ++;
+			
+			strcpy(Project.szDesc, szDoc);
+		}
+	}
+
 	/* read FILE section */
 	iResult = ConfigSection("FILES");
 	if (iResult != SUCCESS)
@@ -334,6 +453,7 @@ int DocLoad(const char *szFileName)
 				if (DocSearch(ParentTab[i]) != NULL || strlen(ParentTab[i]) == 0)
 				{
 					DocCreate(FileTab[i], ParentTab[i]);
+//					ProjectSave();
 					
 					free(FileTab[i]);
 					free(ParentTab[i]);
@@ -352,7 +472,6 @@ int DocLoad(const char *szFileName)
 	
 	/* close project file */
 	ConfigClose();
-	ProjectChanged(FALSE);
 	
 	return SUCCESS;
 }
@@ -462,7 +581,6 @@ static struct Doc_s *DocSearch(const char *szFileName)
 */
 
 static GtkCTree *pTreeModules, *pTreeFiles;
-extern struct Ext_s *pExtList;
 
 
 
@@ -585,9 +703,9 @@ static void DocViewModulesDelete(struct Doc_s *pDoc)
 static void DocViewModulesSort(void)
 {
 	struct Doc_s *pDoc, *pSibling, *pPtr, *pParent;
-	struct Ext_s *pExt;
 	GtkCTreeNode *pNodeParent, *pNode;
-	int iResult;
+	int iGroupId, iResult, i;
+	char szExt[TEXTLEN];
 
 	for (pDoc = pDocList; pDoc != NULL; pDoc = pDoc->pNext)
 	{
@@ -603,15 +721,24 @@ static void DocViewModulesSort(void)
 			pNodeParent = pParent->pNodeModules;
 		else
 		{
-			for (pNodeParent = NULL, pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
+			for (i = 0, iResult = SUCCESS; iResult == SUCCESS; i ++)
 			{
-				if (!strcmp(FileGetExt(pDoc->szFileName), pExt->szExt))
+				iResult = ToolValueGet(EXT_LIST, EXT_EXT, i, szExt);
+				if (iResult != SUCCESS)
+					break;
+		
+				if (!strcmp(szExt, FileGetExt(pDoc->szFileName)))
 					break;
 			}
-			if (pExt == NULL)
-				continue;
-
-			iResult = ToolValueGet(GROUP_LIST, GROUP_NODE, pExt->iGroupId, &pNodeParent);
+			if (iResult != SUCCESS)
+				break;
+			
+			iResult = ToolValueGet(EXT_LIST, EXT_GROUPID, i, &iGroupId);
+			if (iResult != SUCCESS)
+				FatalError(__FILE__, __LINE__, __DATE__);
+			
+			pNodeParent = NULL;
+			iResult = ToolValueGet(GROUP_LIST, GROUP_NODE, iGroupId, &pNodeParent);
 			if (iResult == FAILURE)
 				pNodeParent = NULL;
 		}
@@ -627,15 +754,23 @@ static void DocViewModulesSort(void)
 			/* check groups for main files */
 			if (pParent == NULL)
 			{
-				for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
+				for (i = 0, iResult = SUCCESS; iResult == SUCCESS; i ++)
 				{
-					if (!strcmp(FileGetExt(pPtr->szFileName), pExt->szExt))
+					iResult = ToolValueGet(EXT_LIST, EXT_EXT, i, szExt);
+					if (iResult != SUCCESS)
+						break;
+		
+					if (!strcmp(szExt, FileGetExt(pPtr->szFileName)))
 						break;
 				}
-				if (pExt == NULL)
-					continue;
+				if (iResult != SUCCESS)
+					break;
+			
+				iResult = ToolValueGet(EXT_LIST, EXT_GROUPID, i, &iGroupId);
+				if (iResult != SUCCESS)
+					FatalError(__FILE__, __LINE__, __DATE__);
 
-				iResult = ToolValueGet(GROUP_LIST, GROUP_NODE, pExt->iGroupId, &pNode);
+				iResult = ToolValueGet(GROUP_LIST, GROUP_NODE, iGroupId, &pNode);
 				if (iResult == FAILURE)
 					pNode = NULL;
 			}
@@ -769,7 +904,6 @@ void Doc_Selection(GtkCTree *pTree, GList *node, gint column, gpointer user_data
 
 		/* create appropiate action menu */
 		MenuActionRefresh("");
-		MenuFileNewRefresh("");
 	}
 	else
 	{
@@ -786,7 +920,6 @@ void Doc_Selection(GtkCTree *pTree, GList *node, gint column, gpointer user_data
 		/* create appropiate action menu */
 		szExt = FileGetExt(pDoc->szFileName);
 		MenuActionRefresh(szExt);
-		MenuFileNewRefresh(szExt);
 	}
 	
 	ProjectTitle();

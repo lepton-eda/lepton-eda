@@ -24,35 +24,42 @@
 
 
 
-#define PROJECT_EXT          "prj"
+/*******************************************************************************
 
+	Project description structure
 
+*******************************************************************************/
 
-/* project description structure */
 struct Project_s
 {
 	char szName[TEXTLEN];
 	char szExt[TEXTLEN];
 	char szDir[TEXTLEN];
+	char szAuthor[TEXTLEN];
+	char szDesc[TEXTLEN];
 	int bChanged;
 };
+
 extern struct Project_s Project;	
 
 
-/* public functions */
+
+/*******************************************************************************
+
+	Public functions and variables
+
+*******************************************************************************/
+
 void ProjectInitialize(void);
 void ProjectNew(const char *szPath);
 void ProjectOpen(const char *szPath);
-void MenuProjectNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectOpen_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void MenuProjectExit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-void ProjectTitle(void);
-void ProjectChanged(int bValue);
-extern char szProjectFileName[];
+int ProjectSave(void);
+
 void ProjectWidgetsShow(void);
+void ProjectWidgetsHide(void);
+void ProjectTitle(void);
+void ProjectChanged(BOOL bValue);
 
 
 
-#endif
+#endif /* __PROJECT_H_INCLUDED */
