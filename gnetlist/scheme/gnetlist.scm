@@ -164,26 +164,27 @@
     (apply print-to-port (cons (current-output-port) l)))
 
 ;;
-;; Split a string into lines no longer than split-length
+;; Wrap a string into lines no longer than wrap-length
 ;; (from Stefan Petersen)
-(define (split string-to-split split-length port)
-  (if (> split-length (string-length string-to-split))
-      (display string-to-split port) ; Last snippet of string
-      (let ((pos (string-rindex string-to-split #\space 0 split-length)))
+(define (gnetlist:wrap string-to-wrap wrap-length)
+  (if (> wrap-length (string-length string-to-wrap))
+      string-to-wrap ; Last snippet of string
+      (let ((pos (string-rindex string-to-wrap #\space 0 wrap-length)))
 	(cond ((not pos)
-	       (display "Couldn't split at requested position\n"))
+	       (display "Couldn't wrap string  at requested position\n")
+	       " Wrap error!")
 	      (else
-	       (display (string-append (substring string-to-split 0 pos) 
-				       " \\") port)
-	       (newline port)
-	       (split (substring string-to-split (+ pos 1)) split-length))))))
+	       (string-append 
+		(substring string-to-wrap 0 pos) 
+		" \\\n"
+		(gnetlist:wrap (substring string-to-wrap (+ pos 1)) wrap-length)))))))
 
 ;; example use
-; (define (run-test test-string split-len)
-;   (display (string-append "Splitting \"" test-string "\" into "))
-;   (display split-len)
+; (define (run-test test-string wrap-len)
+;   (display (string-append "Wrapping \"" test-string "\" into "))
+;   (display wrap-len)
 ;   (newline)
-;   (split test-string split-len)
+;   (display (gnetlist:wrap split test-string wrap-len))
 ;   (newline)
 ;   (newline))
 

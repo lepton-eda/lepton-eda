@@ -18,30 +18,25 @@
 
 ;;  PCB format
 
-(define PCB:display-connections
-   (lambda (nets port)
-      (if (not (null? nets))
-         (begin
-            (display (car (car nets)) port)
-            (display "-" port)
-            (display (car (cdr (car nets))) port)
-            (write-char #\space port)
-            (PCB:display-connections (cdr nets) port))
-         (newline port))))
+(define (PCB:display-connections nets)
+  (if (not (null? nets))
+      (string-append
+       (car (car nets)) "-" (car (cdr (car nets))) " " 
+       (PCB:display-connections (cdr nets)))
+      "\n"))
 
 
-(define PCB:write-net
-   (lambda (port netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (display netname port)
-            (display "\t" port)
-            (PCB:display-connections (gnetlist:get-all-connections netname) port)
-            (PCB:write-net port (cdr netnames))))))
+(define (PCB:write-net netnames port)
+  (if (not (null? netnames))
+      (let ((netname (car netnames)))
+	(display netname port)
+	(display "\t" port)
+	(display (gnetlist:wrap (PCB:display-connections (gnetlist:get-all-connections netname)) 200) port)
+	(PCB:write-net (cdr netnames) port))))
 
-(define PCB
-   (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
-         (PCB:write-net port (gnetlist:get-all-unique-nets "dummy"))
-         (close-output-port port))))
+
+(define (PCB output-filename)
+  (let ((port (open-output-file output-filename)))
+    (PCB:write-net (gnetlist:get-all-unique-nets "dummy") port)
+    (close-output-port port)))
 

@@ -1,4 +1,12 @@
 
+2000-10-31  Stefan Petersen  <spe@geda.seul.org>
+
+	* scheme/gnetlist.scm: Cleaned up and renamed split
+	  gnetlist:wrap.
+
+	* scheme/gnet-PCB.scm: Now PCB-backend uses wrap function
+	  above. Was reported as a bug by Russ Dill.
+	
 2000-10-12  Stefan Petersen  <spe@geda.seul.org>
 
 	* src/gnetlist.c: Fixed a screw up that made gnetlist fail
