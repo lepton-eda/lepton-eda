@@ -1,4 +1,8 @@
 
+2000-06-15  Matt Ettus  <matt@ettus.com>
+
+	* Added scheme/gnet-pads.scm by Roger
+
 2000-06-11  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/parsecmd.c: Added the -c flag which allows you to execute
