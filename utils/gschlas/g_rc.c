@@ -112,12 +112,12 @@ SCM g_rc_gschlas_version(SCM version)
     char *string;
 
     SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
-		SCM_ARG1, "gschem-version");
+		SCM_ARG1, "gschlas-version");
 
 
     if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
 	fprintf(stderr, "Found a version [%s] gschlas file:\n[%s]\n",
-		SCM_STRING_CHARS (version), rc_filename);
+		SCM_STRING_CHARS (version), rc_filename ? rc_filename : "unknown");
 	fprintf(stderr,
 		"While gschlas is in ALPHA, please be sure that you have the latest rc file.\n");
 	return SCM_BOOL_F;
