@@ -1,5 +1,5 @@
-v 20020209
-T 2400 5900 2 10 1 1 0 6
+v 20020527
+T 2400 5900 8 10 1 1 0 6
 uref=U?
 T 400 5850 9 10 1 0 0 0
 ATtiny28
@@ -8,39 +8,37 @@ device=ATtiny28_DIP
 T 400 6250 5 10 0 0 0 0
 footprint=DIP28
 T 400 6450 5 10 0 0 0 0
-net=Vcc:7
+net=Vcc:7,20
 T 400 6650 5 10 0 0 0 0
-net=GND:8
+net=GND:8,22
 T 400 6850 5 10 0 0 0 0
-net=Vcc:20
-T 400 7050 5 10 0 0 0 0
-net=GND:22
+description=8-bit RISC micro controller (Atmel)
 P 1700 100 1700 400 1
 {
 T 1750 200 5 8 1 1 0 0
 pin1=10
-T 1700 450 3 8 1 1 0 3
-label=XTAL2
+T 1700 450 9 8 1 1 0 3
+pinlabel=XTAL2
 T 1700 600 5 8 0 1 0 3
-type=out
+pintype=out
 }
 P 1100 100 1100 400 1
 {
 T 1150 200 5 8 1 1 0 0
 pin2=9
-T 1100 450 3 8 1 1 0 3
-label=XTAL1
+T 1100 450 9 8 1 1 0 3
+pinlabel=XTAL1
 T 1100 600 5 8 0 1 0 3
-type=in
+pintype=in
 }
 P 100 800 300 800 1
 {
 T 300 850 5 8 1 1 0 6
 pin3=1
-T 450 800 3 8 1 1 0 0
-label=Reset
+T 450 800 9 8 1 1 0 0
+pinlabel=Reset
 T 450 800 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 450 924 834 924 3 0 0 0 -1 -1
 V 350 800 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -48,189 +46,189 @@ P 100 2600 400 2600 1
 {
 T 300 2650 5 8 1 1 0 6
 pin4=13
-T 450 2600 3 8 1 1 0 0
-label=PD7
+T 450 2600 9 8 1 1 0 0
+pinlabel=PD7
 T 450 2600 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 3000 400 3000 1
 {
 T 300 3050 5 8 1 1 0 6
 pin5=12
-T 450 3000 3 8 1 1 0 0
-label=PD6
+T 450 3000 9 8 1 1 0 0
+pinlabel=PD6
 T 450 3000 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 3400 400 3400 1
 {
 T 300 3450 5 8 1 1 0 6
 pin6=11
-T 450 3400 3 8 1 1 0 0
-label=PD5
+T 450 3400 9 8 1 1 0 0
+pinlabel=PD5
 T 450 3400 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 3800 400 3800 1
 {
 T 300 3850 5 8 1 1 0 6
 pin7=6
-T 450 3800 3 8 1 1 0 0
-label=PD4
+T 450 3800 9 8 1 1 0 0
+pinlabel=PD4
 T 450 3800 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 4200 400 4200 1
 {
 T 300 4250 5 8 1 1 0 6
 pin8=5
-T 450 4200 3 8 1 1 0 0
-label=PD3
+T 450 4200 9 8 1 1 0 0
+pinlabel=PD3
 T 450 4200 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 4600 400 4600 1
 {
 T 300 4650 5 8 1 1 0 6
 pin9=4
-T 450 4600 3 8 1 1 0 0
-label=PD2
+T 450 4600 9 8 1 1 0 0
+pinlabel=PD2
 T 450 4600 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 5000 400 5000 1
 {
 T 300 5050 5 8 1 1 0 6
 pin10=3
-T 450 5000 3 8 1 1 0 0
-label=PD1
+T 450 5000 9 8 1 1 0 0
+pinlabel=PD1
 T 450 5000 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 5400 400 5400 1
 {
 T 300 5450 5 8 1 1 0 6
 pin11=2
-T 450 5400 3 8 1 1 0 0
-label=PD0
+T 450 5400 9 8 1 1 0 0
+pinlabel=PD0
 T 450 5400 5 8 0 1 0 2
-type=i/o
+pintype=io
 }
 P 100 1200 400 1200 1
 {
 T 300 1250 5 8 1 1 0 6
 pin12=21
-T 450 1200 3 8 1 1 0 0
-label=NC.
+T 450 1200 9 8 1 1 0 0
+pinlabel=NC.
 T 450 1200 5 8 0 1 0 2
-type=tp
+pintype=tp
 }
 P 2700 800 2400 800 1
 {
 T 2500 850 5 8 1 1 0 0
 pin13=24
-T 2350 800 3 8 1 1 0 6
-label=PB7
+T 2350 800 9 8 1 1 0 6
+pinlabel=PB7
 T 2350 800 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 1200 2400 1200 1
 {
 T 2500 1250 5 8 1 1 0 0
 pin14=23
-T 2350 1200 3 8 1 1 0 6
-label=PB6
+T 2350 1200 9 8 1 1 0 6
+pinlabel=PB6
 T 2350 1200 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 1600 2400 1600 1
 {
 T 2500 1650 5 8 1 1 0 0
 pin15=19
-T 2350 1600 3 8 1 1 0 6
-label=PB5
+T 2350 1600 9 8 1 1 0 6
+pinlabel=PB5
 T 2350 1600 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 2000 2400 2000 1
 {
 T 2500 2050 5 8 1 1 0 0
 pin16=18
-T 2350 2000 3 8 1 1 0 6
-label=(INT1) PB4
+T 2350 2000 9 8 1 1 0 6
+pinlabel=(INT1) PB4
 T 2350 2000 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 2400 2400 2400 1
 {
 T 2500 2450 5 8 1 1 0 0
 pin17=17
-T 2350 2400 3 8 1 1 0 6
-label=(INT0) PB3
+T 2350 2400 9 8 1 1 0 6
+pinlabel=(INT0) PB3
 T 2350 2400 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 2800 2400 2800 1
 {
 T 2500 2850 5 8 1 1 0 0
 pin18=16
-T 2350 2800 3 8 1 1 0 6
-label=(T0) PB2
+T 2350 2800 9 8 1 1 0 6
+pinlabel=(T0) PB2
 T 2350 2800 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 3200 2400 3200 1
 {
 T 2500 3250 5 8 1 1 0 0
 pin19=15
-T 2350 3200 3 8 1 1 0 6
-label=(AIN1) PB1
+T 2350 3200 9 8 1 1 0 6
+pinlabel=(AIN1) PB1
 T 2350 3200 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 3600 2400 3600 1
 {
 T 2500 3650 5 8 1 1 0 0
 pin20=14
-T 2350 3600 3 8 1 1 0 6
-label=(AIN0) PB0
+T 2350 3600 9 8 1 1 0 6
+pinlabel=(AIN0) PB0
 T 2350 3600 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 4200 2400 4200 1
 {
 T 2500 4250 5 8 1 1 0 0
 pin21=26
-T 2350 4200 3 8 1 1 0 6
-label=PA3
+T 2350 4200 9 8 1 1 0 6
+pinlabel=PA3
 T 2350 4200 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 4600 2400 4600 1
 {
 T 2500 4650 5 8 1 1 0 0
 pin22=25
-T 2350 4600 3 8 1 1 0 6
-label=(IR) PA2
+T 2350 4600 9 8 1 1 0 6
+pinlabel=(IR) PA2
 T 2350 4600 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 5000 2400 5000 1
 {
 T 2500 5050 5 8 1 1 0 0
 pin23=27
-T 2350 5000 3 8 1 1 0 6
-label=PA1
+T 2350 5000 9 8 1 1 0 6
+pinlabel=PA1
 T 2350 5000 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2700 5400 2400 5400 1
 {
 T 2500 5450 5 8 1 1 0 0
 pin24=28
-T 2350 5400 3 8 1 1 0 6
-label=PA0
+T 2350 5400 9 8 1 1 0 6
+pinlabel=PA0
 T 2350 5400 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 B 400 400 2000 5400 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
