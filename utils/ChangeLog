@@ -9,6 +9,11 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2001-02-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gmk_sym.c: Added #include <time.h> to see if that solves
+	  Hamish's build problem.  
+
 2000-12-03  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/gmk_sym.c: Put in a #ifndef to make the cygwin port happy

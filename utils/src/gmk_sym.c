@@ -77,6 +77,7 @@ PRE,1,dot,B,1
 #include <string.h>
 #include <ctype.h>
 #include <sys/time.h>
+#include <time.h>
 #include <errno.h>
 
 /* #include "char_width.c" commented out by AVH, since it's linked in */ 
