@@ -52,6 +52,15 @@ None of the examples are installed anywhere.
 	simulation using gEDA.
 
 
+	TwoStageAmp - A Two stage amplifier SPICE playpen
+	-----------------------------
+	Author: Stuart Brorson
+	Copyright (C) 2003 Stuart Brorson
+
+	This example shows how to do gEDA SPICE netlisting with SPICE
+	models, includes, and directives.
+
+
 - License  
 
         gEDA (includes gschem/gnetlist/geda/gsymcheck/gschcheck/gpcb/utils

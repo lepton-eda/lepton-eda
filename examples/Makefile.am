@@ -1,5 +1,5 @@
 
-SUBDIRS = gTAG lightning_detector RF_Amp
+SUBDIRS = gTAG lightning_detector RF_Amp TwoStageAmp
 
 EXTRA_DIST = 
 

@@ -32,6 +32,9 @@ AC_CONFIG_FILES([
         lightning_detector/Makefile 
         RF_Amp/Makefile 
         RF_Amp/model/Makefile 
-        RF_Amp/sym/Makefile ])
+        RF_Amp/sym/Makefile 
+        TwoStageAmp/Makefile 
+        TwoStageAmp/sym/Makefile ])
+
 AC_OUTPUT 
 
