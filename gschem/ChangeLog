@@ -1,3 +1,7 @@
+2005-02-28  Carlos Nieves Onega <cnieves@iespana.es>
+
+	* po/es_ES.po: updated spanish translation.
+	
 2005-02-28  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* scripts/notangle_guile.in: Improved script with changes suggested

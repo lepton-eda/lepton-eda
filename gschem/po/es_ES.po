@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-28 21:51-0500\n"
-"PO-Revision-Date: 2005-02-13 20:26+0100\n"
+"PO-Revision-Date: 2005-02-28 22:42+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "¡Ups! ¡La asignación de teclas rápidas ha fallado!.\n"
 #: noweb/g_hook.nw:100
 #, c-format
 msgid "Attribute failed ot find.\n"
-msgstr ""
+msgstr "Propiedad no encontrada.\n"
 
 #: noweb/g_rc.nw:221 noweb/g_rc.nw:958
 #, c-format
@@ -131,7 +131,7 @@ msgstr "gEDA/gschem no incluye NINGUNA GARANTÍA; véase el fichero COPYING para
 #, c-format
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
-msgstr "Esto es software abierto, y puede redistribuirlo bajo ciertas\n"
+msgstr "Esto es software libre, y puede redistribuirlo bajo ciertas\n"
 
 #: noweb/gschem.nw:175 noweb/gschem.nw:185
 #, c-format
@@ -371,7 +371,7 @@ msgstr "Editar texto"
 
 #: noweb/i_callbacks.nw:1209
 msgid "Slot"
-msgstr ""
+msgstr "Elemento"
 
 #: noweb/i_callbacks.nw:1231
 msgid "Color"
@@ -869,7 +869,7 @@ msgstr "No se ha encontrado %s en ninguna librería de componentes\n"
 
 #: noweb/o_slot.nw:165
 msgid "Slot attribute malformed\n"
-msgstr ""
+msgstr "El atributo del elemento está mal especificado\n"
 
 #: noweb/o_slot.nw:176
 msgid "numslots attribute missing\n"
@@ -877,16 +877,16 @@ msgstr "La propiedad \"numslots\" no está definida\n"
 
 #: noweb/o_slot.nw:178
 msgid "Slotting not allowed for this component\n"
-msgstr ""
+msgstr "No se permiten múltiples elementos para este componente\n"
 
 #: noweb/o_slot.nw:194
 msgid "New slot number out of range\n"
-msgstr ""
+msgstr "El nuevo número de elemento está fuera de rango\n"
 
 #: noweb/o_slot.nw:279
 #, c-format
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-msgstr ""
+msgstr "¡¡Ufff!! ¡se ha intentado editar el elemento de algo que no existe!\n"
 
 #: noweb/o_undo.nw:353
 msgid "Undo/Redo disabled in rc file\n"
@@ -1223,7 +1223,7 @@ msgstr "Cadena muy larga... ¡a programar!\n"
 
 #: noweb/x_dialog.nw:2823 noweb/x_dialog.nw:2827
 msgid "Edit slot number"
-msgstr ""
+msgstr "Editar número de elemento"
 
 #: noweb/x_dialog.nw:2943 noweb/rcstrings.nw:117
 msgid "About..."
@@ -1724,7 +1724,7 @@ msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
 msgstr ""
-"Modo de añadir conexión\n"
+"Añadir conexión\n"
 "Botón derecho del ratón para cancelar"
 
 #: noweb/x_window.nw:889
@@ -1732,7 +1732,7 @@ msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
 msgstr ""
-"Modo de añadir bus\n"
+"Añadir bus\n"
 "Botón derecho del ratón para cancelar"
 
 #: noweb/x_window.nw:902
@@ -1749,31 +1749,31 @@ msgstr "Seleccionar"
 
 #: noweb/x_window.nw:921
 msgid "Select mode"
-msgstr "Modo Seleccionar"
+msgstr "Seleccionar"
 
 #: noweb/x_window.nw:938
 msgid "Edit mode"
-msgstr "Modo Edición"
+msgstr "Edición"
 
 #: noweb/x_window.nw:953
 msgid "Move mode"
-msgstr "Modo Mover"
+msgstr "Mover"
 
 #: noweb/x_window.nw:968
 msgid "Copy mode"
-msgstr "Modo Copiar"
+msgstr "Copiar"
 
 #: noweb/x_window.nw:983
 msgid "Delete mode"
-msgstr "Modo Borrar"
+msgstr "Borrar"
 
 #: noweb/x_window.nw:998
 msgid "Rotate mode"
-msgstr "Modo rotar"
+msgstr "Rotar"
 
 #: noweb/x_window.nw:1013
 msgid "Mirror mode"
-msgstr "Modo Voltear"
+msgstr "Voltear"
 
 #: noweb/x_window.nw:1103
 msgid "Pick"
@@ -1845,7 +1845,7 @@ msgstr "Modo Rotar 90º"
 
 #: noweb/rcstrings.nw:28
 msgid "Slot..."
-msgstr ""
+msgstr "Elemento..."
 
 #: noweb/rcstrings.nw:29
 msgid "Color..."
