@@ -1,5 +1,5 @@
 
-SUBDIRS = src scripts examples 
+SUBDIRS = src gschlas scripts lib include examples 
 
 EXTRA_DIST = 
 

@@ -44,13 +44,15 @@ if ($numArgs < 1) {
 foreach $filename (@ARGV) {
 
     if (-r "$filename.old") { 
-      print "Found backup file: $filename.old).  Not gschUpdating $filename\n";
+      print "Found backup file: $filename.old.  Not gschUpdating $filename\n";
     } else {
         rename ($filename, "$filename.old");
         print "gschUpdating: $filename (backup: $filename.old)\n";
 
+
         open (FILE, "$filename.old") || die "Cannot open input file: $filename.old  Exiting.\n";
     open (NEWFILE, ">$filename") || die "Cannot open output file: $filename Exiting.\n";
+
 
         while (<FILE>) {
 
@@ -102,6 +104,11 @@ foreach $filename (@ARGV) {
         close $FILE;
         close $NEWFILE;
 
+        # Load and Save the file using gschlas
+        # This updates the file to be absolutely current
+        system("gschlas $filename");
+        @args = ("gschlas", "$filename");
+        system(@args) == 0 || die "system @args failed: $?"
     }
 }
 

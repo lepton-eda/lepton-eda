@@ -12,6 +12,15 @@ VERSION=20020825
 
 echo Configuring utils version $VERSION
 
+dnl Change default location of gtk-config
+AC_ARG_WITH(gtk-config, [  --with-gtk-config=path  Change where gtk-config is located], [opt_gtkconfig=$withval])
+
+dnl Change default location of glib-config
+AC_ARG_WITH(glib-config, [  --with-glib-config=path  Change where glib-config is located], [opt_glibconfig=$withval])
+
+dnl Change default location for rc files
+AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
+
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
 dnl Create a configuration header
@@ -58,7 +67,47 @@ fi
 
 AC_MINGW32
 
+dnl Guile stuff
+GUILE_FLAGS
+
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+
+if eval "test x$opt_gtkconfig != x" ; then
+
+	if test ! -r "$opt_gtkconfig"; then
+
+		AC_MSG_ERROR(Cannot find $opt_gtkconfig -- be sure that this pathname is correct)
+
+	else
+		GTK_CONFIG=$opt_gtkconfig
+	fi
+else
+	AM_PATH_GTK(1.2.3,,AC_MSG_ERROR([*** GTK+ >= 1.2.3 not installed - please install first ***]))
+fi
+
+
+if test $GTK_CONFIG = "no"; then
+   	  AC_MSG_ERROR(Cannot find gtk-config -- be sure that gtk >= 1.2.3 is installed)
+fi
+
+# search for glib-config
+if eval "test x$opt_glibconfig != x" ; then
+
+	if test ! -r "$opt_glibconfig"; then
+
+		AC_MSG_ERROR(Cannot find $opt_glibconfig -- be sure that this pathname is correct)
+
+	else
+		GLIB_CONFIG=$opt_glibconfig
+	fi
+else
+	AM_PATH_GLIB(1.2.3,,AC_MSG_ERROR([*** GLIB >= 1.2.3 not installed - please install first ***]))
+fi
+
+
+if test $GLIB_CONFIG = "no"; then
+   	  AC_MSG_ERROR(Cannot find glib-config -- be sure that gtk >= 1.2.3 is installed)
+fi
 
 # search for libgeda-config
 AC_PATH_PROG(LIBGEDACONFIG, libgeda-config, no, ${PATH})
@@ -67,8 +116,78 @@ if test $LIBGEDACONFIG = "no"; then
         AC_MSG_ERROR(Cannot find libgeda-config -- be sure that libgeda is installed)
 fi
 
+
+# search for gesym-config
+AC_PATH_PROG(GESYMCONFIG, gesym-config, no, ${PATH})
+
+if test $GESYMCONFIG = "no"; then
+   	  AC_MSG_ERROR(Cannot find gesym-config -- be sure that the symbols are installed)
+fi
+
+gesym_version=`$GESYMCONFIG --version`
+if test $gesym_version != $VERSION; then
+        AC_MSG_ERROR(Found a different version of gesym-config: $GESYMCONFIG -- Make sure your PATH variable is correct)
+fi
+
+
+# search for libgdgeda-config
+AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
+
+if test $LIBGDGEDACONFIG = "no" -o no_gdgeda = yes; then
+	 GDGEDA_LIB=""
+         libgdgeda_ldflags=""
+         libgdgeda_cflags=""
+else
+         libgdgeda_ldflags=`$LIBGDGEDACONFIG --libs`
+         libgdgeda_cflags=`$LIBGDGEDACONFIG --cflags`
+         GD_EXTRA="$libgdgeda_cflags $libgdgeda_ldflags -lm"
+
+         AC_CHECK_LIB(z, uncompress, Z_LIB="-lz", Z_LIB=no)
+         if test $Z_LIB = no; then
+	 	AC_MSG_ERROR(Cannot find libz (zlib), be sure to install zlib; it is required for libgdgeda)
+	 else
+
+		PNG_EXTRA="-lz -lm"
+                AC_CHECK_LIB(png, png_read_png, PNG_LIB="-lpng", PNG_LIB=no, $PNG_EXTRA)
+
+                if test $PNG_LIB = no; then
+                        AC_MSG_ERROR(Cannot find libpng, be sure to install png; it is required for libgdgeda)
+                else
+
+			AC_CHECK_LIB(gdgeda, gdImageColorAllocate, GDGEDA_LIB="-lgdgeda", GDGEDA_LIB=no, $GD_EXTRA)
+
+			if test $GDGEDA_LIB = no; then
+			        GDGEDA_LIB=""
+		         	libgdgeda_ldflags=""
+         			libgdgeda_cflags=""
+			else
+		                AC_DEFINE(HAS_LIBZ)
+                		AC_DEFINE(HAS_LIBPNG)
+		                AC_DEFINE(HAS_LIBGDGEDA)
+		        fi
+		fi
+	fi
+fi
+
+
 LIBGEDA_CFLAGS=`$LIBGEDACONFIG --cflags`
-#LIBGEDA_LDFLAGS = `$LIBGEDACONFIG --libs`
+
+gedatopdir=`$GESYMCONFIG --toplevel`
+HOME=`echo $HOME`
+
+if eval "test x$opt_rcdir = x"; then
+        # path was not specified with --with-rcdir
+        AC_DEFINE_UNQUOTED(GEDARCDIR, "none")
+        GEDARCDIR="$gedatopdir"
+else
+        # path WAS specified with --with-rcdir
+        AC_DEFINE_UNQUOTED(GEDARCDIR, "$opt_rcdir")
+        GEDARCDIR="$opt_rcdir"
+fi
+
+AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir")
+GEDADATADIR=$gedatopdir
+
 
 if ! test "$MINGW32" = "no" -o "$MINGW32"x = x; then
 	echo Adding -liberty for MINGW32 port
@@ -80,16 +199,43 @@ else
 	OTHERPATHSEP=\\\\
 fi 
 
+LDEXTRA=
+CFEXTRA=
+GTK=
+GDK=
+GLIB=
+X_LDFLAGS="`$LIBGEDACONFIG --libs` $libgdgeda_ldflags `$GLIB_CONFIG --libs`"
+X_CFLAGS="`$GTK_CONFIG --cflags` $libgdgeda_cflags `$LIBGEDACONFIG --cflags`"
+
+gtkversion=`$GTK_CONFIG --version | cut -d. -f1,2`
+AC_DEFINE_UNQUOTED(GTKVERSION, "$gtkversion")
+
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(LIBGEDA_CFLAGS)
 AC_SUBST(LIBERTY)
 AC_SUBST(PATHSEP)
 AC_SUBST(OTHERPATHSEP)
+AC_SUBST(GEDARCDIR)
+AC_SUBST(GEDADATADIR)
+
+
+AC_SUBST(X_CFLAGS)
+AC_SUBST(X_LDFLAGS)
+AC_SUBST(X_LIBS)
+AC_SUBST(DL_LIB)
+AC_SUBST(GTK)
+AC_SUBST(GDK)
+AC_SUBST(GLIB)
+
 
 AC_CONFIG_FILES([Makefile \
 		examples/Makefile \
+                include/Makefile \
   	  	scripts/Makefile \
+	        lib/Makefile \
+	        lib/system-gschlasrc \
+	        gschlas/Makefile \
 		src/Makefile ])
 AC_OUTPUT
 

@@ -1,3 +1,19 @@
+2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschlas/: Added new libgeda program: gEDA schematic/symbol Load and
+	Save.  This program just loads the specified files and saves them in
+	the current file format.  gschlas is used by gschupdate and
+	gsymupdate.
+
+	* lib/, lib/system-gschlasrc.in: Added rc file for above
+
+	* include/: Added include directory and files for above
+
+	* scripts/gschupdate, gsymupdate: Updated to use gschlas.
+
+	* configure.in and others: Updated scripts to search for libgeda and
+	all the required programs.
+
 2002-09-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* utils/convert_sym.c: Updated code to attach pinseq= and pinnumber=

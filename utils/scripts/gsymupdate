@@ -47,7 +47,7 @@ if ($numArgs < 1) {
 foreach $filename (@ARGV) {
 
     if (-r "$filename.old") { 
-        print "Found backup file: $filename.old).  Not gsymUpdating $filename\n";
+        print "Found backup file: $filename.old.  Not gsymUpdating $filename\n";
     } else {
 
         rename ($filename, "$filename.old");
@@ -136,6 +136,12 @@ foreach $filename (@ARGV) {
         }
         close $FILE;
         close $NEWFILE;
+
+        # Load and Save the file using gschlas
+        # This updates the file to be absolutely current
+        system("gschlas $filename");
+        @args = ("gschlas", "$filename");
+        system(@args) == 0 || die "system @args failed: $?"
 
     }
 }
