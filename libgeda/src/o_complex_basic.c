@@ -313,8 +313,9 @@ o_complex_is_eligible_attribute (OBJECT *object, int promote_invisible)
 
   if (object->type==OBJ_TEXT && !object->attribute && !object->attached_to) { 
     ptr=strchr(object->text->string,'=');
-    if (ptr && ptr[1]!='\0' && ptr[1]!=' ' && 
-         strncmp(object->text->string,"device=",7)!=0) {
+    if (ptr && ptr[1]!='\0' && ptr[1]!=' ') { 
+	 /*&& allow the promotion of the device= attribute */
+         /*strncmp(object->text->string,"device=",7)!=0) {*/
       return 1;
     }
   }

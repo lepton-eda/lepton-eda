@@ -207,12 +207,22 @@ if test $LIBGEDACONFIG = "no"; then
 	AC_MSG_ERROR(Cannot find libgeda-config -- be sure that libgeda is installed)
 fi
 
+libgeda_version=`$LIBGEDACONFIG --version`
+if test $libgeda_version != $VERSION; then
+	AC_MSG_ERROR(Found a different version of libgeda-config: $LIBGEDACONFIG -- Make sure your PATH variable is correct)
+fi
+
+
 # search for gesym-config
 AC_PATH_PROG(GESYMCONFIG, gesym-config, no, ${PATH})
 
 if test $GESYMCONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find gesym-config -- be sure that the symbols are installed)
 	fi
+
+gesym_version=`$GESYMCONFIG --version`
+if test $gesym_version != $VERSION; then                                                AC_MSG_ERROR(Found a different version of gesym-config: $GESYMCONFIG -- Make sure your PATH variable is correct)
+fi
 
 # here is where the final X ld/c flags get set
 LDEXTRA=

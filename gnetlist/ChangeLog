@@ -5,6 +5,9 @@
 
 	* configure.in: Updated version
 
+	* configure.in: Added a check to make sure libgeda-config and 
+	  gesym-config are the right version
+
 2001-03-01  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Misc -Wall warnings cleaned up

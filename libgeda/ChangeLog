@@ -12,6 +12,9 @@
 
         * configure.in: Updated version
 
+	* src/o_complex_basic.c: Allowed the promotion of the device=
+	  attribute
+
 2001-03-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Fixed a few bugs dealing with the enabling and
