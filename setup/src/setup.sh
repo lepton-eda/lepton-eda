@@ -2,8 +2,9 @@
 
 # modify these versions if necessary
 # (Gtk+ 1.2.4 used as default to be compatible with glibc 2.1)
+# Upgraded to 1.2.10 since gschem doesn't work 100% with 1.2.4. AVH 12/31/03
 
-GTK_VERSION=1.2.4
+GTK_VERSION=1.2.10
 
 ##############################################################################
 
@@ -67,7 +68,7 @@ if ! (which wget >/dev/null 2>/dev/null) ; then
 fi
 
 echo Checking for libglib ...
-if ! test -x /lib/${GLIB_LIB} && ! test -x /usr/lib/${GLIB_LIB} && ! test -x ./${GLIB_LIB}; then
+if ! test -r /lib/${GLIB_LIB} && ! test -r /usr/lib/${GLIB_LIB} && ! test -r ./${GLIB_LIB}; then
 	echo WARNING ! Library ${GLIB_LIB} not found, building ...
 	if ! test -f ${GLIB_FILE} ; then
 		echo WARNING ! Cannot find ${GLIB_FILE}, downloading using wget ... >&2
@@ -83,14 +84,14 @@ if ! test -x /lib/${GLIB_LIB} && ! test -x /usr/lib/${GLIB_LIB} && ! test -x ./$
 	make
 	make install
 	cd ..
-	if ! test -x ${PREFIX}/lib/${GLIB_LIB} ; then
+	if ! test -r ${PREFIX}/lib/${GLIB_LIB} ; then
 		echo Cannot build ${GLIB_LIB}, sorry >&2
 		exit
 	fi
 fi
 
 echo Checking for libgtk ...
-if ! test -x /lib/${GTK_LIB} && ! test -x /usr/lib/${GTK_LIB} && ! test -x ./${GTK_LIB}; then
+if ! test -r /lib/${GTK_LIB} && ! test -r /usr/lib/${GTK_LIB} && ! test -r ./${GTK_LIB}; then
 	echo WARNING ! Library ${GTK_LIB} not found, building ... >&2
 	if ! test -f ${GTK_FILE} ; then
 		echo WARNING ! Cannot find ${GTK_FILE}, downloading using wget ...
@@ -106,7 +107,7 @@ if ! test -x /lib/${GTK_LIB} && ! test -x /usr/lib/${GTK_LIB} && ! test -x ./${G
 	make
 	make install
 	cd ..
-	if ! test -x ${PREFIX}/lib/${GTK_LIB} ; then
+	if ! test -r ${PREFIX}/lib/${GTK_LIB} ; then
 		echo ERROR ! Cannot build ${GTK_LIB}, sorry >&2
 		exit
 	fi

@@ -9,6 +9,19 @@
 
         * configure.ac: Bumped version to 20031231
 
+	* src/setup.sh: Changed some test -x flags (for libraries) to -r
+	since links to shared libraries are sometimes not executable.
+
+        * m4/Makefile.am: Added some missing *.m4 files to EXTRA_DIST.
+
+	* src/setup.sh, src/setup.cfg: Upgraded gtk+ 1.2.4 to 1.2.10.  This 
+	was necessary since gschem has some problems working with 1.2.4.
+
+	* src/setup.cfg: Fixed libstroke's filename to be ftp://... so that
+	it is downloaded/built/installed if it isn't already installed.
+
+	* src/setup.cfg: Fixed some incorrect descriptions (mainly for Glib).
+
 2003-12-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * ABOUT-NLS: Removed machine generated file from CVS
