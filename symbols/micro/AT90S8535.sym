@@ -1,345 +1,347 @@
 v 20020209
-T 2700 7500 2 10 1 1 0 6
+T 2700 7500 8 10 1 1 0 6
 uref=U?
 T 400 7450 9 10 1 0 0 0
 AT90S8535
-T 400 7650 9 10 0 0 0 0
+T 400 7650 5 10 0 0 0 0
 device=AT90S8535
-T 400 7850 9 10 0 0 0 0
+T 400 7850 5 10 0 0 0 0
 footprint=DIP40
-T 400 8050 9 10 0 0 0 0
+T 400 8050 5 10 0 0 0 0
 net=Vcc:10
-T 400 8250 9 10 0 0 0 0
+T 400 8250 5 10 0 0 0 0
 net=GND:11
-T 400 8450 9 10 0 0 0 0
+T 400 8450 5 10 0 0 0 0
 net=AVcc:30
-T 400 8650 9 10 0 0 0 0
+T 400 8650 5 10 0 0 0 0
 net=AGND:31
 P 1300 100 1300 400 1
 {
 T 1350 200 5 8 1 1 0 0
-PIN1=12
-T 1300 450 3 8 1 1 0 3
-label=XTAL2
-T 1300 600 3 8 0 1 0 3
-type=out
+pin1=12
+T 1300 450 9 8 1 1 0 3
+pinlabel=XTAL2
+T 1300 600 5 8 0 1 0 3
+pintype=out
 }
 P 1800 100 1800 400 1
 {
 T 1850 200 5 8 1 1 0 0
-PIN2=13
-T 1800 450 3 8 1 1 0 3
-label=XTAL1
-T 1800 600 3 8 0 1 0 3
-type=in
+pin2=13
+T 1800 450 9 8 1 1 0 3
+pinlabel=XTAL1
+T 1800 600 5 8 0 1 0 3
+pintype=in
 }
 P 2300 100 2300 400 1
 {
 T 2350 200 5 8 1 1 0 0
-PIN3=32
-T 2300 450 3 8 1 1 0 3
-label=AREF
-T 2300 600 3 8 0 1 0 3
-type=in
+pin3=32
+T 2300 450 9 8 1 1 0 3
+pinlabel=AREF
+T 2300 600 5 8 0 1 0 3
+pintype=in
 }
 P 800 100 800 300 1
 {
 T 850 200 5 8 1 1 0 0
-PIN4=9
-T 800 450 3 8 1 1 0 3
-label=Reset
-T 800 600 3 8 0 1 0 3
-type=in
+pin4=9
+T 800 450 9 8 1 1 0 3
+pinlabel=Reset
+T 800 600 5 8 0 1 0 3
+pintype=in
 }
 V 800 350 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 100 800 400 800 1
 {
 T 300 850 5 8 1 1 0 6
-PIN5=21
-T 450 800 3 8 1 1 0 0
-label=PD7 (OC2)
-T 450 800 3 8 0 1 0 2
-type=tri
+pin5=21
+T 450 800 9 8 1 1 0 0
+pinlabel=PD7 (OC2)
+T 450 800 5 8 0 1 0 2
+pintype=tri
 }
 P 100 1200 400 1200 1
 {
 T 300 1250 5 8 1 1 0 6
-PIN6=20
-T 450 1200 3 8 1 1 0 0
-label=PD6 (ICP)
-T 450 1200 3 8 0 1 0 2
-type=tri
+pin6=20
+T 450 1200 9 8 1 1 0 0
+pinlabel=PD6 (ICP)
+T 450 1200 5 8 0 1 0 2
+pintype=tri
 }
 P 100 1600 400 1600 1
 {
 T 300 1650 5 8 1 1 0 6
-PIN7=19
-T 450 1600 3 8 1 1 0 0
-label=PD5 (OC1A)
-T 450 1600 3 8 0 1 0 2
-type=tri
+pin7=19
+T 450 1600 9 8 1 1 0 0
+pinlabel=PD5 (OC1A)
+T 450 1600 5 8 0 1 0 2
+pintype=tri
 }
 P 100 2000 400 2000 1
 {
 T 300 2050 5 8 1 1 0 6
-PIN8=18
-T 450 2000 3 8 1 1 0 0
-label=PD4 (OC1B)
-T 450 2000 3 8 0 1 0 2
-type=tri
+pin8=18
+T 450 2000 9 8 1 1 0 0
+pinlabel=PD4 (OC1B)
+T 450 2000 5 8 0 1 0 2
+pintype=tri
 }
 P 100 2400 400 2400 1
 {
 T 300 2450 5 8 1 1 0 6
-PIN9=17
-T 450 2400 3 8 1 1 0 0
-label=PD3 (INT1)
-T 450 2400 3 8 0 1 0 2
-type=tri
+pin9=17
+T 450 2400 9 8 1 1 0 0
+pinlabel=PD3 (INT1)
+T 450 2400 5 8 0 1 0 2
+pintype=tri
 }
 P 100 2800 400 2800 1
 {
 T 300 2850 5 8 1 1 0 6
-PIN10=16
-T 450 2800 3 8 1 1 0 0
-label=PD2 (INT0)
-T 450 2800 3 8 0 1 0 2
-type=tri
+pin10=16
+T 450 2800 9 8 1 1 0 0
+pinlabel=PD2 (INT0)
+T 450 2800 5 8 0 1 0 2
+pintype=tri
 }
 P 100 3200 400 3200 1
 {
 T 300 3250 5 8 1 1 0 6
-PIN11=15
-T 450 3200 3 8 1 1 0 0
-label=PD1 (TXD)
-T 450 3200 3 8 0 1 0 2
-type=tri
+pin11=15
+T 450 3200 9 8 1 1 0 0
+pinlabel=PD1 (TXD)
+T 450 3200 5 8 0 1 0 2
+pintype=tri
 }
 P 100 3600 400 3600 1
 {
 T 300 3650 5 8 1 1 0 6
-PIN12=14
-T 450 3600 3 8 1 1 0 0
-label=PD0 (RXD)
-T 450 3600 3 8 0 1 0 2
-type=tri
+pin12=14
+T 450 3600 9 8 1 1 0 0
+pinlabel=PD0 (RXD)
+T 450 3600 5 8 0 1 0 2
+pintype=tri
 }
 P 100 4200 400 4200 1
 {
 T 300 4250 5 8 1 1 0 6
-PIN13=8
-T 450 4200 3 8 1 1 0 0
-label=PB7 (SCK)
-T 450 4200 3 8 0 1 0 2
-type=tri
+pin13=8
+T 450 4200 9 8 1 1 0 0
+pinlabel=PB7 (SCK)
+T 450 4200 5 8 0 1 0 2
+pintype=tri
 }
 P 100 4600 400 4600 1
 {
 T 300 4650 5 8 1 1 0 6
-PIN14=7
-T 450 4600 3 8 1 1 0 0
-label=PB6 (MISO)
-T 450 4600 3 8 0 1 0 2
-type=tri
+pin14=7
+T 450 4600 9 8 1 1 0 0
+pinlabel=PB6 (MISO)
+T 450 4600 5 8 0 1 0 2
+pintype=tri
 }
 P 100 5000 400 5000 1
 {
 T 300 5050 5 8 1 1 0 6
-PIN15=6
-T 450 5000 3 8 1 1 0 0
-label=PB5 (MOSI)
-T 450 5000 3 8 0 1 0 2
-type=tri
+pin15=6
+T 450 5000 9 8 1 1 0 0
+pinlabel=PB5 (MOSI)
+T 450 5000 5 8 0 1 0 2
+pintype=tri
 }
 P 100 5400 400 5400 1
 {
 T 300 5450 5 8 1 1 0 6
-PIN16=5
-T 450 5400 3 8 1 1 0 0
-label=PB4 (SS)
-T 450 5400 3 8 0 1 0 2
-type=tri
+pin16=5
+T 450 5400 9 8 1 1 0 0
+pinlabel=PB4 (SS)
+T 450 5400 5 8 0 1 0 2
+pintype=tri
 }
 P 100 5800 400 5800 1
 {
 T 300 5850 5 8 1 1 0 6
-PIN17=4
-T 450 5800 3 8 1 1 0 0
-label=PB3 (AIN1)
-T 450 5800 3 8 0 1 0 2
-type=tri
+pin17=4
+T 450 5800 9 8 1 1 0 0
+pinlabel=PB3 (AIN1)
+T 450 5800 5 8 0 1 0 2
+pintype=tri
 }
 P 100 6200 400 6200 1
 {
 T 300 6250 5 8 1 1 0 6
-PIN18=3
-T 450 6200 3 8 1 1 0 0
-label=PB2 (AIN0)
-T 450 6200 3 8 0 1 0 2
-type=tri
+pin18=3
+T 450 6200 9 8 1 1 0 0
+pinlabel=PB2 (AIN0)
+T 450 6200 5 8 0 1 0 2
+pintype=tri
 }
 P 100 6600 400 6600 1
 {
 T 300 6650 5 8 1 1 0 6
-PIN19=2
-T 450 6600 3 8 1 1 0 0
-label=PB1 (T1)
-T 450 6600 3 8 0 1 0 2
-type=tri
+pin19=2
+T 450 6600 9 8 1 1 0 0
+pinlabel=PB1 (T1)
+T 450 6600 5 8 0 1 0 2
+pintype=tri
 }
 P 100 7000 400 7000 1
 {
 T 300 7050 5 8 1 1 0 6
-PIN20=1
-T 450 7000 3 8 1 1 0 0
-label=PB0 (T0)
-T 450 7000 3 8 0 1 0 2
-type=tri
+pin20=1
+T 450 7000 9 8 1 1 0 0
+pinlabel=PB0 (T0)
+T 450 7000 5 8 0 1 0 2
+pintype=tri
 }
 P 3000 800 2700 800 1
 {
 T 2800 850 5 8 1 1 0 0
-PIN21=29
-T 2650 800 3 8 1 1 0 6
-label=(TOSC2) PC7
-T 2650 800 3 8 0 1 0 8
-type=tri
+pin21=29
+T 2650 800 9 8 1 1 0 6
+pinlabel=(TOSC2) PC7
+T 2650 800 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 1200 2700 1200 1
 {
 T 2800 1250 5 8 1 1 0 0
-PIN22=28
-T 2650 1200 3 8 1 1 0 6
-label=(TOSC1) PC6
-T 2650 1200 3 8 0 1 0 8
-type=tri
+pin22=28
+T 2650 1200 9 8 1 1 0 6
+pinlabel=(TOSC1) PC6
+T 2650 1200 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 1600 2700 1600 1
 {
 T 2800 1650 5 8 1 1 0 0
-PIN23=27
-T 2650 1600 3 8 1 1 0 6
-label=PC5
-T 2650 1600 3 8 0 1 0 8
-type=tri
+pin23=27
+T 2650 1600 9 8 1 1 0 6
+pinlabel=PC5
+T 2650 1600 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 2000 2700 2000 1
 {
 T 2800 2050 5 8 1 1 0 0
-PIN24=26
-T 2650 2000 3 8 1 1 0 6
-label=PC4
-T 2650 2000 3 8 0 1 0 8
-type=tri
+pin24=26
+T 2650 2000 9 8 1 1 0 6
+pinlabel=PC4
+T 2650 2000 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 2400 2700 2400 1
 {
 T 2800 2450 5 8 1 1 0 0
-PIN25=25
-T 2650 2400 3 8 1 1 0 6
-label=PC3
-T 2650 2400 3 8 0 1 0 8
-type=tri
+pin25=25
+T 2650 2400 9 8 1 1 0 6
+pinlabel=PC3
+T 2650 2400 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 2800 2700 2800 1
 {
 T 2800 2850 5 8 1 1 0 0
-PIN26=24
-T 2650 2800 3 8 1 1 0 6
-label=PC2
-T 2650 2800 3 8 0 1 0 8
-type=tri
+pin26=24
+T 2650 2800 9 8 1 1 0 6
+pinlabel=PC2
+T 2650 2800 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 3200 2700 3200 1
 {
 T 2800 3250 5 8 1 1 0 0
-PIN27=23
-T 2650 3200 3 8 1 1 0 6
-label=PC1
-T 2650 3200 3 8 0 1 0 8
-type=tri
+pin27=23
+T 2650 3200 9 8 1 1 0 6
+pinlabel=PC1
+T 2650 3200 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 3600 2700 3600 1
 {
 T 2800 3650 5 8 1 1 0 0
-PIN28=22
-T 2650 3600 3 8 1 1 0 6
-label=PC0
-T 2650 3600 3 8 0 1 0 8
-type=tri
+pin28=22
+T 2650 3600 9 8 1 1 0 6
+pinlabel=PC0
+T 2650 3600 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 4200 2700 4200 1
 {
 T 2800 4250 5 8 1 1 0 0
-PIN29=33
-T 2650 4200 3 8 1 1 0 6
-label=(ADC7) PA7
-T 2650 4200 3 8 0 1 0 8
-type=tri
+pin29=33
+T 2650 4200 9 8 1 1 0 6
+pinlabel=(ADC7) PA7
+T 2650 4200 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 4600 2700 4600 1
 {
 T 2800 4650 5 8 1 1 0 0
-PIN30=34
-T 2650 4600 3 8 1 1 0 6
-label=(ADC6) PA6
-T 2650 4600 3 8 0 1 0 8
-type=tri
+pin30=34
+T 2650 4600 9 8 1 1 0 6
+pinlabel=(ADC6) PA6
+T 2650 4600 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 5000 2700 5000 1
 {
 T 2800 5050 5 8 1 1 0 0
-PIN31=35
-T 2650 5000 3 8 1 1 0 6
-label=(ADC5) PA5
-T 2650 5000 3 8 0 1 0 8
-type=tri
+pin31=35
+T 2650 5000 9 8 1 1 0 6
+pinlabel=(ADC5) PA5
+T 2650 5000 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 5400 2700 5400 1
 {
 T 2800 5450 5 8 1 1 0 0
-PIN32=36
-T 2650 5400 3 8 1 1 0 6
-label=(ADC4) PA4
-T 2650 5400 3 8 0 1 0 8
-type=tri
+pin32=36
+T 2650 5400 9 8 1 1 0 6
+pinlabel=(ADC4) PA4
+T 2650 5400 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 5800 2700 5800 1
 {
 T 2800 5850 5 8 1 1 0 0
-PIN33=37
-T 2650 5800 3 8 1 1 0 6
-label=(ADC3) PA3
-T 2650 5800 3 8 0 1 0 8
-type=tri
+pin33=37
+T 2650 5800 9 8 1 1 0 6
+pinlabel=(ADC3) PA3
+T 2650 5800 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 6200 2700 6200 1
 {
 T 2800 6250 5 8 1 1 0 0
-PIN34=38
-T 2650 6200 3 8 1 1 0 6
-label=(ADC2) PA2
-T 2650 6200 3 8 0 1 0 8
-type=tri
+pin34=38
+T 2650 6200 9 8 1 1 0 6
+pinlabel=(ADC2) PA2
+T 2650 6200 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 6600 2700 6600 1
 {
 T 2800 6650 5 8 1 1 0 0
-PIN35=39
-T 2650 6600 3 8 1 1 0 6
-label=(ADC1) PA1
-T 2650 6600 3 8 0 1 0 8
-type=tri
+pin35=39
+T 2650 6600 9 8 1 1 0 6
+pinlabel=(ADC1) PA1
+T 2650 6600 5 8 0 1 0 8
+pintype=tri
 }
 P 3000 7000 2700 7000 1
 {
 T 2800 7050 5 8 1 1 0 0
-PIN36=40
-T 2650 7000 3 8 1 1 0 6
-label=(ADC0) PA0
-T 2650 7000 3 8 0 1 0 8
-type=tri
+pin36=40
+T 2650 7000 9 8 1 1 0 6
+pinlabel=(ADC0) PA0
+T 2650 7000 5 8 0 1 0 8
+pintype=tri
 }
 B 400 400 2300 7000 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 L 622 565 994 565 3 0 0 0 -1 -1
 L 858 5515 1046 5515 3 0 0 0 -1 -1
+T 400 8850 5 10 0 0 0 0
+comment=dont_use this symbol: nonstandard symwidth
