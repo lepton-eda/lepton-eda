@@ -33,8 +33,8 @@ ARCHITECTURE netlist OF top IS
     SIGNAL OUTPUTEn : Std_Logic;
     SIGNAL OUTPUTDn : Std_Logic;
     SIGNAL OUTPUTCn : Std_Logic;
-    SIGNAL OUTPUTBn : Std_Logic;
     SIGNAL unnamed_net30 : Std_Logic;
+    SIGNAL OUTPUTBn : Std_Logic;
     SIGNAL OUTPUTAn : Std_Logic;
     SIGNAL unnamed_net29 : Std_Logic;
     SIGNAL unnamed_net28 : Std_Logic;
@@ -163,43 +163,43 @@ BEGIN
 
     U26 : ENTITY not
     PORT MAP (
-        IN => INPUTD,
-        OUT => unnamed_net8);
+        OUT => unnamed_net8,
+        IN => INPUTD);
 
     U40 : ENTITY not
     PORT MAP (
-        IN => unnamed_net27,
-        OUT => OUTPUTGn);
+        OUT => OUTPUTGn,
+        IN => unnamed_net27);
 
     U39 : ENTITY not
     PORT MAP (
-        IN => unnamed_net25,
-        OUT => OUTPUTFn);
+        OUT => OUTPUTFn,
+        IN => unnamed_net25);
 
     U25 : ENTITY not
     PORT MAP (
-        IN => unnamed_net24,
-        OUT => OUTPUTEn);
+        OUT => OUTPUTEn,
+        IN => unnamed_net24);
 
     U24 : ENTITY not
     PORT MAP (
-        IN => unnamed_net20,
-        OUT => OUTPUTDn);
+        OUT => OUTPUTDn,
+        IN => unnamed_net20);
 
     U23 : ENTITY not
     PORT MAP (
-        IN => unnamed_net18,
-        OUT => OUTPUTCn);
+        OUT => OUTPUTCn,
+        IN => unnamed_net18);
 
     U22 : ENTITY not
     PORT MAP (
-        IN => unnamed_net30,
-        OUT => OUTPUTBn);
+        OUT => OUTPUTBn,
+        IN => unnamed_net30);
 
     U21 : ENTITY not
     PORT MAP (
-        IN => unnamed_net16,
-        OUT => OUTPUTAn);
+        OUT => OUTPUTAn,
+        IN => unnamed_net16);
 
     U20 : ENTITY nor
     PORT MAP (

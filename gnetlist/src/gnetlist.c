@@ -45,7 +45,7 @@ void
 main_prog(int argc, char *argv[])
 {
 	int i;
-	char c;
+	int c;
 	int done;
 	char input_str[2048];
 	int argv_index;

@@ -618,12 +618,14 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
 /* both name and value must be pre allocated */
 /* And if you get an invalid attribute (improper) with a name and no */
 /* value, then it is NOT an attribute */
+/* Also, there cannot be any spaces beside the equals sign */
 int
 o_attrib_get_name_value(char *string, char *name, char *value )
 {
 	int i=0;
 	int j=0;
 	int attribute_found=FALSE;
+	char *equal_ptr;
 
 	name[0] = '\0';
 	value[0] = '\0';
@@ -639,9 +641,21 @@ o_attrib_get_name_value(char *string, char *name, char *value )
 	}
 
 	if (!attribute_found) {
-		return(0);
+		return(FALSE);
 	}
-	
+
+	/* make sure there are no spaces in between equals */
+ 	equal_ptr = strchr(string, '=');
+	if ( (*(equal_ptr + 1) == ' ') || (*(equal_ptr - 1) == ' ') ) {
+#if DEBUG /* sometimes you have text with an ='s in it, it shouldn't be */
+	  /* treated like an attribute */
+		s_log_message("Found attrib/text with spaces beside the ='s [%s]\n", string);
+		s_log_message("You can ignore the above message if the text is not intended to be an attribute\n");
+		fprintf(stderr, "Found an attribute with spaces beside the ='s [%s]\n", string);
+#endif
+		return(FALSE);
+	}
+
 	name[i] = '\0';
 	i++; /* skip over the ='s */
 
