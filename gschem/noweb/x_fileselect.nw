@@ -1452,7 +1452,6 @@ x_fileselect_comp_fill_libs(TOPLEVEL *w_current, FILEDIALOG *f_current)
 {
   char *text[2];
   char *temp;
-  char *string;
   int i;
   int max_width=0;
   int width;
