@@ -1,0 +1,365 @@
+/* gEDA - GNU Electronic Design Automation
+ * gsymcheck - GNU Symbol Check 
+ * Copyright (C) 1998 Ales V. Hvezda
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+#include <config.h>
+#include <stdio.h> 
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h> 
+#endif
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
+#include <guile/gh.h>
+
+#include <libgeda/struct.h>
+#include <libgeda/defines.h>
+#include <libgeda/globals.h>  
+#include <libgeda/prototype.h>
+
+#include "../include/globals.h"
+#include "../include/prototype.h"
+
+
+/* this is needed so that these routines know which window they are changing */
+static TOPLEVEL *project_current;
+
+void
+set_static_project_current(TOPLEVEL *pr_current)
+{
+	project_current = pr_current;
+}
+
+void
+g_rc_parse(TOPLEVEL *pr_current)
+{
+	char *HOME;
+	char filename[256]; /* hack */
+	int found_rc=0;
+
+	if (pr_current == NULL)
+		return;
+
+	set_static_project_current(pr_current);
+
+	/* Let's try a the system one - GEDARCDIR/system-gsymcheck */
+	sprintf(filename, "%s/system-gsymcheckrc", GEDARCDIR);
+	if ( access(filename, R_OK) == 0 ) {
+		strcpy(rc_filename, filename); /* size verify hack */
+		g_read_file(filename);
+		found_rc = 1;
+		s_log_message("Read system-gsymcheckrc file [%s]\n", filename);
+	} else {
+		s_log_message("Did not find local gsymcheckrc file [%s]\n", filename);
+	}
+
+	/* now search the proper rc location (in ~/.gEDA) */
+	HOME = (char *)  getenv("HOME");
+	if (HOME) {
+		sprintf(filename, "%s/.gEDA/gsymcheckrc", HOME);
+		if ( access(filename, R_OK) == 0) {
+			strcpy(rc_filename, filename); /* size verify hack */
+			g_read_file(filename);
+			found_rc = 1;
+			s_log_message("Read ~/.gEDA/gsymcheckrc file [%s]\n", filename);
+		} else {
+			s_log_message("Did not find ~/.gEDA/gsymcheckc file [%s]\n", filename);
+		}
+	}
+
+	/* try the local directory for a gsymcheck */ 
+	sprintf(filename, "./gsymcheckrc");
+	if ( access(filename, R_OK) == 0 ) {
+		strcpy(rc_filename, filename); /* size verify hack */
+		g_read_file(filename);
+		found_rc = 1;
+		s_log_message("Read local gsymcheckrc file [%s]\n", filename);
+	} else {
+		s_log_message("Did not find local gsymcheckc file [%s]\n", filename);
+	}
+
+
+
+	/* Oh well I couldn't find any rcfile, exit! */
+
+	if (!found_rc) {
+		s_log_message("Could not find any gsymcheckrc file!\n");
+		fprintf(stderr, "Could not find a gsymcheckrc file\n");
+		exit(-1);
+	}
+}
+
+SCM
+g_rc_gsymcheck_version(SCM version)
+{
+	char *string;
+
+	string = gh_scm2newstr(version, NULL);
+
+	if ( strcmp(string, VERSION) != 0 ) {
+		fprintf(stderr, "Found a version [%s] gsymcheck file:\n[%s]\n", 
+					string, rc_filename); 
+		fprintf(stderr, "While gsymcheck is in ALPHA, please be sure that you have the latest rc file.\n");
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+SCM
+g_rc_default_series_name(SCM name)
+{
+	char *string;
+
+	string = gh_scm2newstr(name, NULL);
+
+	if (project_current->series_name) {
+		free(project_current->series_name);
+	}
+
+	project_current->series_name = malloc(sizeof(char)*(strlen(string)+1));
+	strcpy(project_current->series_name, string);
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+
+SCM
+g_rc_untitled_name(SCM name)
+{
+	char *string;
+
+	string = gh_scm2newstr(name, NULL);
+
+	if (project_current->untitled_name) {
+		free(project_current->untitled_name);
+	}
+
+	project_current->untitled_name = malloc(sizeof(char)*(
+					strlen(string)+1));
+	strcpy(project_current->untitled_name, string);
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+
+SCM
+g_rc_component_library(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string;
+
+	string = gh_scm2newstr(path, NULL);
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+	
+	if (ret < 0) {
+		fprintf(stderr, "Invalid path [%s] passed to component-library\n", string);
+	} else {
+
+		if (S_ISDIR(buf.st_mode)) {
+			/* only add path if it is uniq */	
+			if (s_clib_uniq(string)) {
+				s_clib_add_entry(string);
+			} else {
+				if (string) free(string);
+				return(gh_int2scm(-1)); 
+			}
+		} else {
+			if (string) free(string);
+			return(gh_int2scm(-1)); 
+		}
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+
+SCM
+g_rc_source_library(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string;
+
+	string = gh_scm2newstr(path, NULL);
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+	
+	if (ret < 0) {
+		fprintf(stderr, "Invalid path [%s] passed to source-library\n", string);
+	} else {
+		if (S_ISDIR(buf.st_mode)) {
+			if (s_slib_uniq(string)) {
+				s_slib_add_entry(string);
+			} else {
+				if (string) free(string);
+				return(gh_int2scm(-1)); 
+			}
+		} else {
+			if (string) free(string);
+			return(gh_int2scm(-1)); 
+			
+		}
+	}
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+SCM
+g_rc_scheme_directory(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string;
+
+	string = gh_scm2newstr(path, NULL);
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+	
+	if (ret < 0) {
+		fprintf(stderr, "Invalid path [%s] passed to scheme-directory\n", string);
+	} else {
+
+		if (S_ISDIR(buf.st_mode)) {
+			/* only add path if it is uniq */	
+
+			if (project_current->scheme_directory)
+				free(project_current->scheme_directory);
+
+			project_current->scheme_directory = 
+				 malloc(sizeof(char)*(strlen(string)+1));
+			strcpy(project_current->scheme_directory, string);
+
+		} else {
+			if (string) free(string);
+			return(gh_int2scm(-1)); 
+		}
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+
+SCM
+g_rc_font_directory(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string;
+
+	string = gh_scm2newstr(path, NULL);
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+	
+	if (ret < 0) {
+		fprintf(stderr, "Invalid path [%s] passed to font-directory\n", string);
+	} else {
+
+		if (S_ISDIR(buf.st_mode)) {
+			if (project_current->font_directory)
+				free(project_current->font_directory);
+
+			project_current->font_directory = malloc(sizeof(char)*(
+					strlen(string)+1));
+			strcpy(project_current->font_directory, string);
+
+		} else {
+			if (string) free(string);
+			return(gh_int2scm(-1)); 
+		}
+	}
+
+	if (string) {
+		free(string);
+	}
+
+	return(gh_int2scm(0)); 
+}
+
+SCM 
+g_rc_paper_size(SCM width, SCM height, SCM border) 
+{
+	int i_width, i_height, i_border;
+	int init_right, init_bottom;
+
+	/* yes this is legit, we are casing the resulting double to an int */	
+	i_width = (int) gh_scm2double(width)*MILS_PER_INCH;
+ 	i_height = (int)gh_scm2double(height)*MILS_PER_INCH;
+	i_border = (int) gh_scm2double(border)*MILS_PER_INCH;
+
+	/* project_current->text_size = val; */
+
+	PAPERSIZEtoWORLD(i_width, i_height, i_border, 
+			 &init_right, &init_bottom);
+
+#if DEBUG
+	printf("%d %d\n", i_width, i_height);
+	printf("%d %d\n", init_right, init_bottom); 
+#endif
+	
+	project_current->init_right = init_right;
+	project_current->init_bottom = init_bottom;
+	
+	s_project_setup_world(project_current);	
+	return(gh_int2scm(0)); 
+}
+
+/*************************** GUILE end done *********************************/
+

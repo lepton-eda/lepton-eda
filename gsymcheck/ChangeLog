@@ -1,0 +1,63 @@
+gEDA
+
+GNU Electronic Design Automation
+------------------------------------------------------------------------------
+
+ChangeLog for gsymcheck (renamed gsymbol)
+
+Most recent changes (version wise) are at the top of this file 
+
+9/19/99 Make sure gsymcheck runs with guile-1.3.2a
+
+9/16/99	Added code in gsymcheck.c to only load up schematics which haven't
+        been loaded already
+
+9/4/99	Finally integrated gsymcheck into the new development snapshot
+	scheme
+
+	Created basic gsymcheck.1 manpage
+
+	Started to do minor updates to the code 
+
+---------------- Development division starts here --------------------------
+
+3/19/99 Updated g_rc to print more diag message to the log file when
+        it can't find an rc file (like gschem)
+
+3/18/99 Updated g_rc to use new macros for finding system-*rc files
+
+3/9/99  Fixed a few variables which were uninitialized (width, height,
+	snap_size)
+
+3/1/99  Added missing tube and radio paths from *rc file
+
+2/25/99 Added s_symstruct.c to init and manage the per symbol struct 
+
+	Rewrote the way errors are reported and handled (now error messages
+	are printed and checked for after all the checking work is done)
+
+1/30/99 Added -c flag (and associated global variable, check_mode)
+
+	Added s_check.c : s_check_all and s_check_symbol
+
+	Worked on above to get the most basic attribute checks 
+	
+	Changed some quiet_mode ifs to be verbose_mode ifs
+	
+	Renamed gsymbol to gsymcheck.  
+
+	Removed -c flag, since now that's the only purpose of the program
+
+1/27/99 Took gnetlist source and converted to look like gsymbol.
+
+	Got source to compile and load in schematic/symbol files
+
+1/9/99 	Cleaned up some character strings to reflect that this is gsymbol
+	not gnetlist
+
+0.0.5
+-------
+9/4/98 	Added support for libgeda
+
+8/26/98	Added Makefiles and support files to repository
+

@@ -1,0 +1,48 @@
+.TH gEDA 1 "July 5th, 1999" Version 19990705
+.SH NAME
+gsymcheck - GNU Symbol Checker
+.SH SYNOPSIS
+.B gnetlist
+[-h] [-v] [-q] symbol1 [... symbolN]
+.SH DESCRIPTION
+.PP
+\fIgsymcheck\fP is a symbol checker for gEDA.  Eventually there will be a 
+list of checks performed on the symbols listed here.
+
+.SH OPTIONS
+.l
+\fIgsymcheck\fP accepts the following options:
+.TP 8
+.B -q
+Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
+.TP 8
+.B -v 
+Verbose mode on.  This mode gives as much feedback to the user as possible. (optional)
+.TP 8
+.B -h 
+Usage summary / gsymcheck help
+.TP 8
+symbol1 [... symbolN]
+At least one symbol file must be specified.  If multiple symbols are 
+specified then they are sequentially read in and checked.  
+
+.SH EXAMPLES 
+Examples to be listed here eventually
+
+.SH "ENVIRONMENT"
+No environment variables are used.
+
+.SH "AUTHOR"
+Ales V. Hvezda and many others
+
+.SH SEE ALSO
+.BR geda (1),
+.BR gschem (1),
+.BR gnetlist (1),
+.BR gsymcheck (1)
+.SH COPYRIGHT
+Copyright \(co  1999 Ales V Hvezda
+
+This document can be freely redistributed according to the terms of the 
+GNU General Public License version 2.0
+
