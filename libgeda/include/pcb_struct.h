@@ -32,6 +32,7 @@ typedef struct st_via_ewb VIA_T;
 typedef struct st_pad_ewb PAD_T;
 typedef struct st_selection_ewb SELECTION_T;
 typedef char * COMP_REF;
+typedef char * NET_REF;
 typedef char * FOOTPRINT_ID;
 typedef char * PAD_NAME;
 
@@ -40,6 +41,9 @@ typedef enum {DRAW_NORMAL, DRAW_SELECTED, DRAW_CLEAR, DRAW_MOVING, DRAW_XOR} dra
 
 /* Start with 2 layers, but permit additional layers later */
 typedef enum {LAYER_ALL=-1, LAYER_NONE, LAYER_1, LAYER_2} layer_type;
+
+/* Supported types of vias, should eventually include buried vias and such */
+typedef enum {VIA_NULL, VIA_FULL} via_type;
 
 /* Supported types of pads, should eventually include surface mount types */
 typedef enum {PAD_NULL, PAD_THRU_HOLE} pad_type;
@@ -77,6 +81,7 @@ struct st_page_ewb {
 	SELECTION_T *last_selection;
 	NET_T *routeNet;
 	TRACK_T *routeTrack;
+	TRACK_SEG_T *lastSeg;
 	TRACK_SEG_T *routeSeg;
 };
 
@@ -116,6 +121,9 @@ struct st_footprint_ewb {
 struct st_track_ewb {
 	TRACK_SEG_T *track_segs;   /* Linked list of track segments */
 	TRACK_SEG_T *last_seg;     /* Last track segment */
+	VIA_T *vias;               /* Linked list of vias in this track */
+	VIA_T *last_via;           /* Last via */
+	VIA_T *next2last_via;      /* Second to last via */
 	NET_T *net;                /* Net that this route corresponds to */
 
 	BOUNDING_BOX_T bb;
@@ -148,6 +156,8 @@ struct st_net_ewb {
 
 	int routed;             /* Indicates that this net has been routed, so don't draw it */
 
+	NET_REF id;
+
 	COMPONENT_T *src_comp;  /* Link to source component */
 	COMPONENT_T *dst_comp;  /* Link to destination component */
 	
@@ -162,12 +172,14 @@ struct st_via_ewb {
 	int x, y;              /* Coords of via position, in screen coords */
 	int size;              /* Size of via */
 
+	via_type type;
 	int selected;
 
 	layer_type src_layer;  /* Layer of source track */
 	layer_type dst_layer;  /* Layer of destination track */
 
 	BOUNDING_BOX_T bb;
+	VIA_T *next;
 };
 
 /* Electrical connections occur between components and tracks at pads */
