@@ -133,7 +133,9 @@
 ;;
 ;;
 
-(define *m4-pcbdir* "/usr/X11R6/lib/X11/pcb/m4")
+(define m4-command "m4")
+(define m4-pcbdir "/usr/X11R6/lib/X11/pcb/m4")
+(define m4-files "")
 
 ;; To emulate popen. Guileish again.
 ; Needed after guile ver. 1.3.2. To save 1.3a users, wrap it in.
@@ -143,19 +145,16 @@
   (let ((port (open-output-file output-filename)))
     (gsch2pcb:write-top-header port)
        (close-port port))
-       ;; pipe with the macro define in pcb program
-;;  (let ((pipe (open-output-pipe (string-append "m4 " *m4-pcbdir* "/common.m4 - | sed '/^PKG/d' - >> " output-filename))))
-;;  leave the packages that have not been found in the file.pcb
-;;  will be process in the script gschem2pcb
-;; Original pipe command commented out by AVH (bugfix by Rich Walker)
-;;  (let ((pipe (open-output-pipe (string-append "m4 " *m4-pcbdir* "/common.m4 - >> " output-filename))))
-;; Fixed pipe command (AVH 1/27/02)
-   (let ((pipe (open-output-pipe (string-append "m4 -d -I" *m4-pcbdir* " " *m4-pcbdir* "/common.m4 - >> " output-filename))))
+  	;; pipe with the macro define in pcb program
+  	(let ((pipe (open-output-pipe (string-append
+			m4-command " -d -I. -I" m4-pcbdir " "
+			m4-pcbdir "/common.m4 " m4-files " - >> "
+			output-filename))))
 
 
-       ;; packages is a list with the different refdes value
-    (gsch2pcb:write-value-footprint pipe packages)
-       (close-pipe pipe))
+		;; packages is a list with the different refdes value
+		(gsch2pcb:write-value-footprint pipe packages)
+		(close-pipe pipe))
   (let ((port (open output-filename (logior O_WRONLY O_APPEND))))
     (gsch2pcb:write-bottom-footer port)
        close-port port))
