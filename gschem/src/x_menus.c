@@ -64,6 +64,7 @@ static GtkItemFactoryEntry menu_items[] = {
   	{"/Edit/tearoff", NULL, NULL, 0, "<Tearoff>" },
 	{"/Edit/Select Mode", NULL, i_callback_edit_select, 0, NULL},
 	{"/Edit/Edit...", NULL, i_callback_edit_edit, 0, NULL},
+	{"/Edit/Edit Text...", NULL, i_callback_edit_text, 0, NULL},
 	{"/Edit/Copy Mode", NULL, i_callback_edit_copy, 0, NULL},
 	{"/Edit/Move Mode", NULL, i_callback_edit_move, 0, NULL},
 	{"/Edit/Delete", NULL, i_callback_edit_delete, 0, NULL},
