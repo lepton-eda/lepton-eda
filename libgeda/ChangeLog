@@ -1,3 +1,13 @@
+2001-03-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/o_complex_basic.c: Re-enabled the bounding box calculation 
+	  for arcs inside complex objects.  This was possible because
+	  Patrick fixed the bounding box for arcs!
+
+	* src/o_arc_basic.c: Fixed mirror / rotate code according to what
+	  Patrick suggested (all object manipulation occurs in world coord
+	  space).
+
 2001-03-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Fixed a few bugs dealing with the enabling and

@@ -98,20 +98,10 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex,
 					get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 					break;
 
-/* experimental mod */
-/* actually more of a hack... since arcs have HUGE bounding boxes, and this */
-/* is really effecting complex selects, well why not NOT use them in calcing */
-/* the BB for the complex? */
-/* BUG that is caused by this is that when you move a single arc and you */
-/* have BB actionfeedback mode you don't see anything! hack */
-/* */
-/* try with a fix on the bounding box code ? ?? hack */
-/* taken out again */
-#if 0
 			case(OBJ_ARC):
 					get_arc_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
 					break;
-#endif
+
 			default:
 					break;
 		}
@@ -191,20 +181,10 @@ get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head,
 					get_pin_bounds(w_current, o_current->line, &rleft, &rtop, &rright, &rbottom);
 					break;
 
-/* experimental mod */
-/* actually more of a hack... since arcs have HUGE bounding boxes, and this */
-/* is really effecting complex selects, well why not NOT use them in calcing */
-/* the BB for the complex? */
-/* BUG that is caused by this is that when you move a single arc and you */
-/* have BB actionfeedback mode you don't see anything! hack */
-/* */
-/* try with a fix on the bounding box code ? ?? hack */
-/* taken out again */
-#if 0
 			case(OBJ_ARC):
 					get_arc_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
 					break;
-#endif
+
 			default:
 					break;
 		}

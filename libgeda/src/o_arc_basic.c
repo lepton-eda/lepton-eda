@@ -93,8 +93,10 @@ void get_arc_bounds(TOPLEVEL * w_current, OBJECT * object,
 /* PB : but width is unknown here */
 
 }
+
 	/* done */
-void world_get_arc_bounds(TOPLEVEL * w_current, OBJECT * object, int *left, int *top, int *right, int *bottom)
+void world_get_arc_bounds(TOPLEVEL * w_current, OBJECT * object, int *left,
+			  int *top, int *right, int *bottom)
 {
     int x1, y1, x2, y2, x3, y3;
     int radius, start_angle, end_angle;
@@ -136,13 +138,13 @@ void world_get_arc_bounds(TOPLEVEL * w_current, OBJECT * object, int *left, int 
 /* PB : same problem as above */
 
 }
+
   /* done */
 
 /* now fixed for world_coords */
-OBJECT *
- o_arc_add(TOPLEVEL * w_current, OBJECT * object_list,
-	   char type, int color,
-	   int x, int y, int radius, int start_angle, int end_angle)
+OBJECT *o_arc_add(TOPLEVEL * w_current, OBJECT * object_list,
+		  char type, int color,
+		  int x, int y, int radius, int start_angle, int end_angle)
 {
 
     OBJECT *new_node;
@@ -189,6 +191,7 @@ OBJECT *
 
     return (object_list);
 }
+
 	     /* done */
 
 void o_arc_recalc(TOPLEVEL * w_current, OBJECT * o_current)
@@ -226,6 +229,7 @@ void o_arc_recalc(TOPLEVEL * w_current, OBJECT * o_current)
     o_current->bottom = bottom;
 
 }
+
 	  /* done */
 void o_arc_recalc_world(TOPLEVEL * w_current, OBJECT * o_current)
 {
@@ -245,7 +249,7 @@ void o_arc_recalc_world(TOPLEVEL * w_current, OBJECT * o_current)
     /* update the width and height fields of the arc */
     SCREENtoWORLD(w_current,
 		  o_current->arc->screen_x + o_current->arc->screen_width,
-		o_current->arc->screen_y + o_current->arc->screen_height,
+		  o_current->arc->screen_y + o_current->arc->screen_height,
 		  &world_x2, &world_y2);
     o_current->arc->width = world_x2 - world_x1;	/* width */
     o_current->arc->height = world_y1 - world_y2;	/* height */
@@ -258,10 +262,11 @@ void o_arc_recalc_world(TOPLEVEL * w_current, OBJECT * o_current)
     o_current->bottom = bottom;
 
 }
+
     /* done */
 
-OBJECT *
- o_arc_read(TOPLEVEL * w_current, OBJECT * object_list, char buf[], char *version)
+OBJECT *o_arc_read(TOPLEVEL * w_current, OBJECT * object_list, char buf[],
+		   char *version)
 {
     char type;
     int x1, y1;
@@ -293,10 +298,12 @@ OBJECT *
 
     /* Error check */
     if (radius <= 0) {
-	fprintf(stderr, "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+	fprintf(stderr,
+		"Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
 		type, x1, y1, radius, start_angle, end_angle, color);
-	s_log_message("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
-		    type, x1, y1, radius, start_angle, end_angle, color);
+	s_log_message
+	    ("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n",
+	     type, x1, y1, radius, start_angle, end_angle, color);
     }
     if (color < 0 || color > MAX_COLORS) {
 	fprintf(stderr, "Found an invalid color [ %s ]\n", buf);
@@ -308,18 +315,19 @@ OBJECT *
     object_list = o_arc_add(w_current, object_list, OBJ_ARC, color,
 			    x1, y1, radius, start_angle, end_angle);
     o_set_line_options(w_current, object_list,
-		    arc_end, arc_type, arc_width, arc_length, arc_space);
-    o_set_fill_options(w_current, object_list,
-		       FILLING_HOLLOW, -1, -1, -1, -1, -1);
+		       arc_end, arc_type, arc_width, arc_length,
+		       arc_space);
+    o_set_fill_options(w_current, object_list, FILLING_HOLLOW, -1, -1, -1,
+		       -1, -1);
 
     return (object_list);
 }
+
 	    /* done */
 /* EEK! there is a nasty non-snap bug here! */
 /* Basically the center isn't being snapped */
 /* in complex objects only it seems... */
-char *
- o_arc_save(char *buf, OBJECT * object)
+char *o_arc_save(char *buf, OBJECT * object)
 {
     int x, y;
     int radius;
@@ -373,8 +381,8 @@ int enter_number()
 }
 
 
-OBJECT *
- o_arc_copy(TOPLEVEL * w_current, OBJECT * list_tail, OBJECT * o_current)
+OBJECT *o_arc_copy(TOPLEVEL * w_current, OBJECT * list_tail,
+		   OBJECT * o_current)
 {
     OBJECT *new_obj;
     ATTRIB *a_current;
@@ -411,6 +419,7 @@ OBJECT *
     }
     return (new_obj);
 }
+
 	    /* done */
 
 void o_arc_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
@@ -432,15 +441,15 @@ void o_arc_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     end_angle = o_current->arc->end_angle;
     color = o_current->color;
 
-#if 0 /* was causing arcs which are solid to be much thinner compared to */
-      /* lines, boxes, also of zero width */
+#if 0				/* was causing arcs which are solid to be much thinner compared to */
+    /* lines, boxes, also of zero width */
     if (o_current->line_width > 0) {
 	arc_width = o_current->line_width;
     } else {
 	arc_width = 1;
     }
 #endif
-    arc_width = o_current->line_width;  /* Added instead of above */
+    arc_width = o_current->line_width;	/* Added instead of above */
     length = o_current->line_length;
     space = o_current->line_space;
 
@@ -484,9 +493,7 @@ void o_arc_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     (*outl_func) (w_current, fp,
 		  x - origin_x, y - origin_x, radius,
 		  start_angle, end_angle,
-		  color,
-		  arc_width, length, space,
-		  origin_x, origin_y);
+		  color, arc_width, length, space, origin_x, origin_y);
 
 
 }
@@ -519,6 +526,7 @@ void o_arc_print_solid(TOPLEVEL * w_current, FILE * fp,
 
     fprintf(fp, "grestore\n");
 }
+
      /* done */
 void o_arc_print_dotted(TOPLEVEL * w_current, FILE * fp,
 			int x, int y, int radius,
@@ -553,8 +561,7 @@ void o_arc_print_dotted(TOPLEVEL * w_current, FILE * fp,
 			  x, y, radius,
 			  angle1, angle2,
 			  color,
-			  arc_width, length, space,
-			  origin_x, origin_y);
+			  arc_width, length, space, origin_x, origin_y);
 	return;
     }
     d = angle1;
@@ -614,8 +621,7 @@ void o_arc_print_dashed(TOPLEVEL * w_current, FILE * fp,
 			  x, y, radius,
 			  angle1, angle2,
 			  color,
-			  arc_width, length, space,
-			  origin_x, origin_y);
+			  arc_width, length, space, origin_x, origin_y);
 	return;
     }
     d = angle1;
@@ -651,6 +657,7 @@ void o_arc_print_dashed(TOPLEVEL * w_current, FILE * fp,
     fprintf(fp, "grestore\n");
 
 }
+
     /* done */
 void o_arc_print_center(TOPLEVEL * w_current, FILE * fp,
 			int x, int y, int radius,
@@ -683,8 +690,7 @@ void o_arc_print_center(TOPLEVEL * w_current, FILE * fp,
 			  x, y, radius,
 			  angle1, angle2,
 			  color,
-			  arc_width, length, space,
-			  origin_x, origin_y);
+			  arc_width, length, space, origin_x, origin_y);
 	return;
     }
     d = angle1;
@@ -792,8 +798,7 @@ void o_arc_print_phantom(TOPLEVEL * w_current, FILE * fp,
 			  x, y, radius,
 			  angle1, angle2,
 			  color,
-			  arc_width, length, space,
-			  origin_x, origin_y);
+			  arc_width, length, space, origin_x, origin_y);
 	return;
     }
     d = angle1;
@@ -969,6 +974,7 @@ void o_arc_print_old(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     fprintf(fp, "stroke\n");
     fprintf(fp, "grestore\n");
 }
+
        /* done */
 #endif
 
@@ -1036,14 +1042,11 @@ void o_arc_image_write(TOPLEVEL * w_current, OBJECT * o_current,
     final = max(width, height);
 
     x = o_current->arc->screen_x;
-    y = o_current->arc->screen_y; 
+    y = o_current->arc->screen_y;
 
 #ifdef HAS_LIBGDGEDA
     gdImageArc(current_im_ptr,
-	       x, y,
-	       final, final,
-	       start_angle, end_angle,
-	       color);
+	       x, y, final, final, start_angle, end_angle, color);
 #endif
 
 }
@@ -1062,8 +1065,10 @@ void o_arc_translate(TOPLEVEL * w_current, int dx, int dy, OBJECT * object)
     o_arc_recalc_world(w_current, object);
 
 }
+
        /* done */
-void o_arc_translate_world(TOPLEVEL * w_current, int dx, int dy, OBJECT * object)
+void o_arc_translate_world(TOPLEVEL * w_current, int dx, int dy,
+			   OBJECT * object)
 {
     if (object == NULL) {
 	return;
@@ -1076,42 +1081,21 @@ void o_arc_translate_world(TOPLEVEL * w_current, int dx, int dy, OBJECT * object
     o_arc_recalc(w_current, object);
 
 }
+
  /* done */
 
 void o_arc_rotate(TOPLEVEL * w_current, int centerx, int centery,
-		  int angle,
-		  OBJECT * object)
+		  int angle, OBJECT * object)
 {
-    int x, y, newx, newy;
-    int i, j;
+    int world_centerx, world_centery;
 
-    i = object->arc->screen_x;
-    j = object->arc->screen_y;
+    SCREENtoWORLD(w_current, centerx, centery,
+		  &world_centerx, &world_centery);
 
-    /* translate object to origin */
-    o_arc_translate(w_current, -centerx, -centery, object);
-
-    /* get center, and rotate center */
-    x = object->arc->screen_x;
-    y = object->arc->screen_y;
-
-    if (angle % 90 == 0) 
-	rotate_point_90(x, y, angle, &newx, &newy);
-    else 
-	rotate_point(x, y, angle, &newx, &newy);
-
-    object->arc->screen_x = newx;
-    object->arc->screen_y = newy;
-
-    /* apply rotation to angles */
-    object->arc->start_angle = (object->arc->start_angle + 90) % 360;
-    /* end_angle is unchanged as it is the sweep of the arc */
-    /* object->arc->end_angle = (object->arc->end_angle); */
-
-    /* translate object to its previous place */
-    o_arc_translate(w_current, centerx, centery, object);
-
+    o_arc_rotate_world(w_current, world_centerx, world_centery,
+		       angle, object);
 }
+
 	  /* done */
 void o_arc_rotate_world(TOPLEVEL * w_current,
 			int world_centerx, int world_centery, int angle,
@@ -1120,7 +1104,8 @@ void o_arc_rotate_world(TOPLEVEL * w_current,
     int x, y, newx, newy;
 
     /* translate object to origin */
-    o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
+    o_arc_translate_world(w_current, -world_centerx, -world_centery,
+			  object);
 
     /* get center, and rotate center */
     x = object->arc->x;
@@ -1143,63 +1128,31 @@ void o_arc_rotate_world(TOPLEVEL * w_current,
     o_arc_translate_world(w_current, world_centerx, world_centery, object);
 
 }
+
     /* done */
 
 void o_arc_mirror(TOPLEVEL * w_current,
 		  int centerx, int centery, OBJECT * object)
 {
-    int x, y, newx, newy;
-    int start, end;
+    int world_centerx, world_centery;
 
-    /* translate object to origin */
-    o_arc_translate(w_current, -centerx, -centery, object);
+    SCREENtoWORLD(w_current, centerx, centery,
+		  &world_centerx, &world_centery);
 
-    /* get center, and mirror it */
-    x = object->arc->x;
-    y = object->arc->y;
-
-#if 1				/* vertical */
-    newx = -x;
-    newy = y;
-#else				/* horizontal */
-    newx = x;
-    newy = -y;
-#endif
-
-    object->arc->x = newx;
-    object->arc->y = newy;
-
-    /* apply mirror to angles */
-    start = object->arc->start_angle;
-    end = object->arc->end_angle;
-
-#if 1				/* vertical */
-    start = 180 - start;
-#else				/* horizontal */
-    start = -start;
-#endif
-
-    if (start < 0)
-	start = (360 - (-start % 360)) % 360;
-    else
-	start = start % 360;
-
-    object->arc->start_angle = start;
-    object->arc->end_angle = -end;
-
-    /* translate object back to its previous position */
-    o_arc_translate(w_current, centerx, centery, object);
-
+    o_arc_mirror_world(w_current, world_centerx, world_centery, object);
 }
+
 	  /* done */
 void o_arc_mirror_world(TOPLEVEL * w_current,
-		   int world_centerx, int world_centery, OBJECT * object)
+			int world_centerx, int world_centery,
+			OBJECT * object)
 {
     int x, y, newx, newy;
     int start, end;
 
     /* translate object to origin */
-    o_arc_translate_world(w_current, -world_centerx, -world_centery, object);
+    o_arc_translate_world(w_current, -world_centerx, -world_centery,
+			  object);
 
     /* get center, and mirror it */
     x = object->arc->x;
@@ -1238,6 +1191,7 @@ void o_arc_mirror_world(TOPLEVEL * w_current,
     o_arc_translate_world(w_current, world_centerx, world_centery, object);
 
 }
+
     /* done */
 
 void o_arc_modify(TOPLEVEL * w_current, OBJECT * object,
@@ -1277,4 +1231,5 @@ void o_arc_modify(TOPLEVEL * w_current, OBJECT * object,
     object->bottom = bottom;
 
 }
+
 	  /* done */
