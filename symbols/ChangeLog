@@ -1,3 +1,8 @@
+2002-12-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* documentation/Makefile.am: Updated makefile to distribute all the
+	nc* docs when doing a make dist.
+
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * aclocal.m4: Removed file from cvs.

@@ -2,9 +2,9 @@ datadocdir = @GEDADATADIR@/documentation
 
 datadoc_DATA = nc.pdf
 
-EXTRA_DIST = nc.doc geda.fig geda.pic
+EXTRA_DIST = nc.doc geda.fig geda.pic nc.ps
 
-BUILT_SOURCES = geda.pic
+BUILT_SOURCES = geda.pic nc.pdf nc.ps
 
 #
 #  some standard rules for groff based documentation
@@ -50,4 +50,4 @@ nc.ps: geda.pic
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ *.ps *.pdf 
 DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda.pic
+MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda.pic *.pdf *.ps
