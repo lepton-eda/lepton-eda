@@ -136,17 +136,7 @@ DEFINE_G_KEY(file_write_png)
 /* don't use the widget parameter on this function, or do some checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */
 /* this function closes a window */
-
-/* can't convert to the macro becasue of the inconsisntency of the
- * function names */
-SCM
-g_key_file_close_window(void)
-{
-	/* close the current window */
-	i_callback_file_close(window_current, 0, NULL);
-	return SCM_BOOL_T;
-}
-
+DEFINE_G_KEY(file_close)
 DEFINE_G_KEY(file_quit)
 
 /* Select also does not update the middle button shortcut */
@@ -160,6 +150,8 @@ DEFINE_G_KEY(edit_rotate_90)
 DEFINE_G_KEY(edit_rotate_90_hotkey)
 DEFINE_G_KEY(edit_mirror)
 DEFINE_G_KEY(edit_mirror_hotkey)
+DEFINE_G_KEY(edit_stretch)
+DEFINE_G_KEY(edit_stretch_hotkey)
 DEFINE_G_KEY(edit_slot)
 DEFINE_G_KEY(edit_color)
 DEFINE_G_KEY(edit_edit)
@@ -231,23 +223,8 @@ DEFINE_G_KEY(options_afeedback)
 DEFINE_G_KEY(options_grid)
 DEFINE_G_KEY(options_snap)
 DEFINE_G_KEY(options_snap_size)
-
-/* can't convert to the macro becasue of the inconsisntency of the
- * function names */
-SCM g_key_options_show_log_window(void)
-{
-	i_callback_options_show_status(window_current, 0, NULL);
-	return SCM_BOOL_T;
-}
-
-/* can't convert to the macro becasue of the inconsisntency of the
- * function names */
-SCM g_key_options_show_coord_window(void)
-{
-	i_callback_options_show_coord(window_current, 0, NULL);
-	return SCM_BOOL_T;
-}
-
+DEFINE_G_KEY(options_show_log_window)
+DEFINE_G_KEY(options_show_coord_window)
 DEFINE_G_KEY(misc)
 
 /* be sure that you don't use the widget parameter in this one, since it is

@@ -73,6 +73,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Edit/Delete", NULL, i_callback_edit_delete, 0, NULL},
 	{"/Edit/Rotate 90 Mode", NULL, i_callback_edit_rotate_90, 0, NULL},
 	{"/Edit/Mirror Mode", NULL, i_callback_edit_mirror, 0, NULL},
+	{"/Edit/Stretch", NULL, i_callback_edit_stretch, 0, NULL},
 	{"/Edit/sep1",     NULL,         NULL, 0, "<Separator>"},
 	{"/Edit/Slot...", NULL, i_callback_edit_slot, 0, NULL},
 	{"/Edit/Color...", NULL, i_callback_edit_color, 0, NULL},
@@ -132,8 +133,8 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Options/Toggle Snap", NULL, i_callback_options_snap, 0, NULL},
 	{"/Options/Snap Grid Spacing...", NULL, i_callback_options_snap_size, 0, NULL},
 	{"/Options/Toggle Outline", NULL, i_callback_options_afeedback, 0, NULL},
-	{"/Options/Show Log Window", NULL, i_callback_options_show_status, 0, NULL},
-	{"/Options/Show Coord Window", NULL, i_callback_options_show_coord, 0, NULL},
+	{"/Options/Show Log Window", NULL, i_callback_options_show_log_window, 0, NULL},
+	{"/Options/Show Coord Window", NULL, i_callback_options_show_coord_window, 0, NULL},
         {"/Help", NULL, NULL, 0, "<LastBranch>"},
         {"/Help/About", NULL, i_callback_help_about, 0, NULL},
 };

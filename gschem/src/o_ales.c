@@ -273,3 +273,141 @@ o_ales_erase_all(TOPLEVEL *w_current, OBJECT *object_list)
 		o_current = o_current->next;
 	}
 }
+
+
+OBJECT *
+o_ales_find_closest(OBJECT *object_list, int x, int y, 
+		    int *whichone, int *prev_distance, int *prev_which)
+{
+	OBJECT *o_current;
+	OBJECT *closest=NULL;
+	OBJECT *temp=NULL;
+	int distance = 1000000;
+	int which_point=0;
+	int temp_dist1;
+	int temp_dist2;
+
+	if (prev_distance) {
+		distance = *prev_distance;
+	}
+
+	o_current = object_list;
+
+	while(o_current != NULL ) {
+		switch(o_current->type) {
+			case(OBJ_PIN):
+			case(OBJ_NET):
+				if (o_current->line_points) {
+					temp_dist1 = dist(
+							o_current->
+						    	line_points->
+							screen_x1,
+							o_current->
+							line_points->
+							screen_y1,
+							x, y);
+	
+					temp_dist2 = dist(
+							o_current->
+							line_points->
+							screen_x2,
+							o_current->
+							line_points->
+							screen_y2,
+							x, y);
+
+					if (temp_dist1 < temp_dist2) {
+						if (temp_dist1 < distance) {
+							closest = o_current;
+							which_point = 1;
+							distance = temp_dist1;
+							if (prev_distance) {
+								*prev_distance =
+								   distance;
+							}
+							if (prev_which) {
+								*prev_which = 
+								   which_point;
+							}
+						}
+					} else {
+						if (temp_dist2 < distance) {
+							closest = o_current;
+							which_point = 2;
+							distance = temp_dist2;
+							if (prev_distance) {
+								*prev_distance =
+								   distance;
+							}
+
+							if (prev_which) {
+								*prev_which = 
+								   which_point;
+							}
+
+						}
+					}
+				}			
+				break;
+
+#if 0
+			case(OBJ_COMPLEX):
+				temp = o_ales_find_closest(o_current->
+							   complex, 
+							   x, y, 
+							   new_x, new_y,
+							   &distance, 
+							   &which_point);
+				if (temp) {
+					closest = temp;
+				}
+				break;
+#endif
+
+		}
+		o_current = o_current->next;
+	}
+
+	if (closest) {
+		if (which_point == 1) {
+#if 0
+			if (new_x) {
+				*new_x = closest->line_points->screen_x1;
+			}
+
+			if (new_y) {
+				*new_y = closest->line_points->screen_y1;
+
+			}
+#endif
+			if (whichone) {
+				*whichone = 1;
+			}
+			return(closest);
+
+		} else if (which_point == 2) {
+#if 0
+			if (new_x) {
+				*new_x = closest->line_points->screen_x2;
+			}
+
+			if (new_y) {
+				*new_y = closest->line_points->screen_y2;
+
+			}
+#endif
+			if (whichone) {
+				*whichone = 2;
+			}
+			return(closest);
+		} else {
+			printf("incorrect which_point");	
+			if (whichone) {
+				*whichone = 0;
+			}
+			return(NULL);
+		}
+	} else {
+		return(NULL);
+	}
+}

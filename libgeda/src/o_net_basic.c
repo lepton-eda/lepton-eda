@@ -1118,3 +1118,49 @@ o_net_consolidate(TOPLEVEL *w_current)
 		}
 	}
 }
+
+void
+o_net_modify(TOPLEVEL *w_current, OBJECT *object, 
+	     int x, int y, int whichone)
+{
+	int screen_x, screen_y;
+	int left, right, top, bottom;
+
+	switch(whichone) {
+
+	case(1):
+		object->line_points->x1 = x;
+		object->line_points->y1 = y;
+
+		WORLDtoSCREEN(w_current, 
+		              object->line_points->x1, 
+			      object->line_points->y1, 
+		  	      &screen_x, &screen_y);  
+	
+		object->line_points->screen_x1 = screen_x;
+		object->line_points->screen_y1 = screen_y;
+		break;
+
+	case(2):
+		object->line_points->x2 = x;
+		object->line_points->y2 = y;
+
+		WORLDtoSCREEN(w_current, 
+		  	      object->line_points->x2, 
+			      object->line_points->y2, 
+		  	      &screen_x,
+                              &screen_y);  
+
+		object->line_points->screen_x2 = screen_x;
+		object->line_points->screen_y2 = screen_y;
+		break;
+	}
+
+	get_net_bounds(w_current, object->line_points, 
+			&left, &top, &right, &bottom);
+	
+	object->left = left;
+	object->top = top;
+	object->right = right;
+	object->bottom = bottom;	
+}

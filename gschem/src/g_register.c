@@ -117,7 +117,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("file-save-all", g_key_file_save_all);
 	gh_new_procedure0_0 ("file-print", g_key_file_print);
 	gh_new_procedure0_0 ("file-image", g_key_file_write_png);
-	gh_new_procedure0_0 ("file-close-window", g_key_file_close_window);
+	gh_new_procedure0_0 ("file-close-window", g_key_file_close);
 	gh_new_procedure0_0 ("file-quit", g_key_file_quit);
 	gh_new_procedure0_0 ("edit-select", g_key_edit_select);
 	gh_new_procedure0_0 ("edit-copy", g_key_edit_copy);
@@ -129,6 +129,8 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("edit-rotate-90-hotkey", g_key_edit_rotate_90_hotkey);
 	gh_new_procedure0_0 ("edit-mirror", g_key_edit_mirror);
 	gh_new_procedure0_0 ("edit-mirror-hotkey", g_key_edit_mirror_hotkey);
+	gh_new_procedure0_0 ("edit-stretch", g_key_edit_stretch);
+	gh_new_procedure0_0 ("edit-stretch-hotkey", g_key_edit_stretch_hotkey);
 	gh_new_procedure0_0 ("edit-slot", g_key_edit_slot);
 	gh_new_procedure0_0 ("edit-color", g_key_edit_color);
 	gh_new_procedure0_0 ("edit-edit", g_key_edit_edit);

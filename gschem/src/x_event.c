@@ -147,6 +147,18 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 			}
                         break;
 
+		case(STARTSTRETCH):
+			/* make sure the list is not empty */
+			if (w_current->page_current->selection_head->next != 
+			    NULL) {
+				o_stretch_start(w_current, 
+						(int) event->x, 
+						(int) event->y);
+				w_current->event_state = STRETCH;
+				w_current->inside_action = 1;
+			}
+                        break;       
+
 		case(DRAWLINE):
 			o_line_start(w_current,
 				     (int) event->x,
@@ -418,6 +430,10 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			w_current->event_state = ENDCOPY;
 			break;
 
+		case(STRETCH):
+			w_current->event_state = ENDSTRETCH;
+			break;
+
 		case(ENDMOVE):
 			o_move_end(w_current);
 			/* having this stay in copy was driving me nuts*/
@@ -428,6 +444,14 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
 		case(ENDCOPY):
 			o_copy_end(w_current);
+			/* having this stay in copy was driving me nuts*/
+			w_current->event_state = SELECT;
+			i_update_status(w_current, "Select Mode");
+			w_current->inside_action = 0;
+			break;
+
+		case(ENDSTRETCH):
+			o_stretch_end(w_current);
 			/* having this stay in copy was driving me nuts*/
 			w_current->event_state = SELECT;
 			i_update_status(w_current, "Select Mode");
@@ -580,6 +604,15 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 				x_get_color(w_current->bb_color));
 		}
                 break;
+
+	case(ENDSTRETCH):
+	case(STRETCH):
+		if (w_current->inside_action) {
+			o_stretch_motion(w_current, 
+			                 (int) event->x, (int) event->y);
+			/* printf("inside stretch\n");*/
+		}
+		break;
 
 	case(ENDCOPY):
 	case(COPY):

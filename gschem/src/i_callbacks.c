@@ -505,6 +505,42 @@ DEFINE_I_CALLBACK(edit_edit)
 	}
 }
 
+
+DEFINE_I_CALLBACK(edit_stretch)
+{
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_edit_stretch, "Stretch");
+	if (w_current->page_current->selection_head->next != NULL) {
+		i_update_status(w_current, "Stretch Mode");
+		w_current->event_state = STARTSTRETCH;
+	} else {
+		i_update_status(w_current, "Select objs first");
+	}
+
+}
+
+DEFINE_I_CALLBACK(edit_stretch_hotkey)
+{
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	i_update_middle_button(w_current, i_callback_edit_stretch_hotkey, 
+			       "Stretch");
+	if (w_current->page_current->selection_head->next != NULL) {
+		o_stretch_start(w_current, mouse_x, mouse_y);
+		w_current->event_state = ENDSTRETCH;
+		w_current->inside_action = 1;
+	}
+}
+
 DEFINE_I_CALLBACK(edit_slot)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
@@ -1536,7 +1572,7 @@ DEFINE_I_CALLBACK(options_snap)
 	}
 }
 
-DEFINE_I_CALLBACK(options_show_status)
+DEFINE_I_CALLBACK(options_show_log_window)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
@@ -1601,7 +1637,7 @@ DEFINE_I_CALLBACK(help_about)
 	about_dialog(w_current);
 }
 
-DEFINE_I_CALLBACK(options_show_coord)
+DEFINE_I_CALLBACK(options_show_coord_window)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 

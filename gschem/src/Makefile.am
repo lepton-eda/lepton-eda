@@ -13,7 +13,7 @@ gschem_SOURCES = \
 	globals.c gschem.c \
 	i_basic.c i_callbacks.c i_sbox.c i_vars.c \
 	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c \
-	o_slot.c \
+	o_slot.c o_stretch.c \
 	o_arc.c o_box.c o_circle.c o_complex.c \
 	o_line.c o_net.c o_ntext.c o_pin.c \
 	x_attrsel.c x_basic.c x_compsel.c x_dialog.c \

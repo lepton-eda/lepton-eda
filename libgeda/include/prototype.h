@@ -112,7 +112,7 @@ void o_attrib_set_string(TOPLEVEL *w_current, char *string);
 char *o_attrib_search_name(OBJECT *list, char *name, int counter);
 char *o_attrib_search_name2(OBJECT *list, char *name, OBJECT **return_found);
 char *o_attrib_search_name_partial(OBJECT *object, char *name, int counter);
-OBJECT *o_attrib_search_attrib(OBJECT *list, char *attribute, int counter);
+char *o_attrib_search_toplevel(OBJECT *list, char *name, int counter);
 OBJECT *o_attrib_return_parent(ATTRIB *attribute);
 ATTRIB *o_attrib_copy_all(TOPLEVEL *w_current, OBJECT *attached_to, ATTRIB *attributes);
 void o_attrib_reattach(ATTRIB *attributes);
@@ -126,6 +126,8 @@ char *o_attrib_search_pin_number(OBJECT *object, int pin_number, OBJECT **return
 char *o_attrib_search_slot_number(OBJECT *object, int slotnumber);
 void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target);
+int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name);
+char *o_attrib_search_toplevel_all(PAGE *page_head, char *name);
 /* o_basic.c */
 int inside_region(int left, int top, int right, int bottom, int x, int y);
 void o_redraw_single(TOPLEVEL *w_current, OBJECT *o_current);
@@ -234,6 +236,7 @@ int o_net_orientation(OBJECT *object);
 void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
 int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
 int o_net_consolidate(TOPLEVEL *w_current);
+void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_ntext_basic.c */
 void get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 void world_get_ntext_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
