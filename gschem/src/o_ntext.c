@@ -63,11 +63,82 @@ o_ntext_draw(TOPLEVEL *w_current, OBJECT *o_current)
 void
 o_ntext_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+	int screen_x1, screen_y1;
+	int length;
+
 	if (o_current->visibility == INVISIBLE) {
 		return;
 	}
 
-	o_complex_draw_xor(w_current, dx, dy, o_current->complex);
+	/* always display text which is 12 or larger */
+	if ( (w_current->page_current->zoom_factor > 
+	    w_current->text_display_zoomfactor) || 
+		o_current->text_size >= 12 || 
+		w_current->text_feedback == ALWAYS) {
+		o_complex_draw_xor(w_current, dx, dy, o_current->complex);
+	} else {
+
+		/* text is too small so go through and draw a line in it's
+	 	   place */
+
+		screen_x1 = o_current->screen_x;
+		screen_y1 = o_current->screen_y;
+		
+		gdk_gc_set_foreground(w_current->outline_xor_gc, 
+			x_get_darkcolor(o_current->color));
+
+		/* 10 seems to be the average text length */
+		/* of ONE point text... (should be a 20, but that's for 2 
+		/* point text */
+		length = SCREENabs(w_current, 
+			o_current->displayed_text_len*10*o_current->text_size);
+
+#if DEBUG 
+		printf("%d %d %d\n",  o_current->displayed_text_len, o_current->displayed_text_len*20*o_current->text_size, length);
+#endif
+
+		switch(o_current->angle) {
+			case(0):
+
+				gdk_draw_line(w_current->window,
+       	        	         	w_current->outline_xor_gc, 
+       		                 	screen_x1+dx,
+       	        	       	        screen_y1+dy,
+					screen_x1+dx+length,
+					screen_y1+dy);
+			break;
+
+			case(90):
+
+				gdk_draw_line(w_current->window,
+       	        	         	w_current->outline_xor_gc, 
+       		                 	screen_x1+dx,
+       	        	       	        screen_y1+dy,
+					screen_x1+dx,
+					screen_y1+dy+length);
+			break;
+
+			case(180):
+
+				gdk_draw_line(w_current->window,
+       	        	         	w_current->outline_xor_gc, 
+       		                 	screen_x1+dx,
+       	        	       	        screen_y1+dy,
+					screen_x1+dx-length,
+					screen_y1+dy);
+			break;
+
+			case(270):
+
+				gdk_draw_line(w_current->window,
+       	        	         	w_current->outline_xor_gc, 
+       		                 	screen_x1+dx,
+       	        	       	        screen_y1+dy,
+					screen_x1+dx,
+					screen_y1+dy-length);
+			break;
+		}	
+	}
 }
 
 void

@@ -114,6 +114,11 @@
 #define BOUNDINGBOX     1 
 
 
+/* there are modes for text-feedback */
+#define ONLY_WHEN_READABLE	0
+#define ALWAYS			1
+
+
 /* These are for where status information goes */
 #define LOG_WINDOW		0
 #define STDOUT_TTY		1

@@ -77,7 +77,7 @@ Feature additions (no particular order):
 DONE	Add a new dialog box for saving and managing pages.  Use a different
 	mechanism for calling the saveas dialog box. 
 
-	Panning: the working area follows the mouse.
+DONE	Panning: the working area follows the mouse.
 
 	Seperate translate in the X and Y directions (in addition to the 
 	current coupled X and Y translate)
@@ -101,7 +101,7 @@ DONE	Check and see what we are doing with invisible attibutes, if we are
 	rendering them or not (to speed things up), fixed by NOT creating
 	the attribute (or text)
 
-	Check for incorrect angles on text... warn user
+DONE	Check for incorrect angles on text... warn user
 
 	Add dashed lines etc...
 
@@ -163,7 +163,7 @@ DONE	Move schematic filenames toward the _# convention.  Where the #
 	(is a number) signifies the sheet number it's on.  Will make moving
 	between sheets easier.
 
-	A toggle invisiblity ALL objects
+DONE	A toggle invisiblity ALL objects
 
 	Configurability of mouse button order (left vs right handed)
 
@@ -173,7 +173,7 @@ DONE	Move schematic filenames toward the _# convention.  Where the #
 	Configurability as to what mode a cancel (with right mouse button)
 	does.
 
-	Better toggle buttons for visibility etc (sub instead: GtkSpinButton)
+DONE	Better toggle buttons for visibility etc (sub instead: GtkSpinButton)
 
 DONE	Move/Copy actions start right away after hot key press
 
@@ -280,7 +280,7 @@ Second TODO list
 
 easy:	
 0	remove all // comments
-	newer net system
+3	newer net system
 	buses
 	comments in the code
 	Control-C handler
@@ -288,15 +288,15 @@ easy:
 	update specs
 	crosshair
 	console
-	color selection (better color handling)
+1	color selection (better color handling)
 1	macro/extensiable lang
 1	Make symbol (odd bug with hitting S twice then it works ? )
 1	push/pop into a symbol
 2	cleanup printfs
 2	hierarchical design
-2	object clipping out of active window
+3	object clipping out of active window
 3	logging mechanism
-3	attributes 
+4	attributes 
 3	sloting (as in pin numbers in multpacks) of components
 3	rotate of primatives
 3	rotate of complex

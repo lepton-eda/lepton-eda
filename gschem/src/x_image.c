@@ -178,8 +178,6 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 	c_height = gtk_entry_get_text(GTK_ENTRY(w_current->iheight_entry));
 */
 
-//&& c_width[0] != '\0' && c_height[0] != '\0') {
-
 	if (filename[0] != '\0') { 
 
 		width = w_current->image_width;
@@ -191,6 +189,14 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
         	w_current->width = width;
         	w_current->height = height;
 
+		/* need to do this every time you change width / height */
+		set_window(w_current, 
+			w_current->page_current->left, 
+			w_current->page_current->right,
+                   	w_current->page_current->top, 
+			w_current->page_current->bottom);
+	
+
 		/* try to use recalc here */
 		o_redraw_all(w_current);
 
@@ -198,12 +204,18 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 
 		w_current->width = save_width;
 		w_current->height = save_height;
+
         
 		/* try to use recalc here... */
 		o_redraw_all(w_current);
 
+		/* need to do this every time you change width / height */
+		set_window(w_current, 
+			w_current->page_current->left, 
+			w_current->page_current->right,
+                   	w_current->page_current->top, 
+			w_current->page_current->bottom);
 
-		
 		if (w_current->image_color == TRUE) {
 	        	s_log_message("Wrote color image to [%s] [%d x %d]\n", filename, width, height);
 		} else {

@@ -589,8 +589,10 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 			o_ntext_create_string(w_current, temp_list, 
 					      output_string, size, color,
 					      x, y, angle); 
+			object_list->displayed_text_len = strlen(output_string);
 	} else {
 		object_list->complex = NULL;
+		object_list->displayed_text_len = 0;
 		s_delete(w_current, temp_list);
 	}
 
@@ -641,6 +643,23 @@ o_ntext_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char string[]
                 fprintf(stderr, "Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
                 s_log_message("Found a zero size text string [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
         }
+
+	switch(angle) {
+	
+		case(0):
+		case(90):
+		case(180):
+		case(270):
+		break;
+
+		default:
+                	fprintf(stderr, "Found an unsupported text angle [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
+                	s_log_message("Found an unsupported text angle [ %c %d %d %d %d %d %d %d ]\n", type, x, y, color, size, visibility, show_name_value, angle);
+                	s_log_message("Setting angle to 0\n");
+			angle=0;
+		break;
+
+	}
 
 	object_list = o_ntext_add(w_current, object_list, type, color, x, y, 
 				angle, string, 
@@ -746,8 +765,10 @@ o_ntext_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 					      o_current->color, 
 					      o_current->x, o_current->y,
 					      o_current->angle); 
+			o_current->displayed_text_len = strlen(output_string);
 	} else {
 		o_current->complex = NULL;
+		o_current->displayed_text_len = 0;
 	}
 
 	w_current->page_current->object_parent = temp_parent;

@@ -84,6 +84,10 @@ char *default_font_directory=NULL;
 int default_log_window=MAP_ON_STARTUP;
 int default_log_window_type=DECORATED;
 int default_third_button=POPUP_ENABLED;
+int default_text_display_zoomfactor=4; /* default zoom_factor at which */
+				       /* text is displayed completely */
+int default_text_feedback=ONLY_WHEN_READABLE;
+		
 
 void
 i_vars_set(TOPLEVEL *w_current)
@@ -125,6 +129,8 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->override_pin_color = default_override_pin_color;
 
 	w_current->actionfeedback_mode = default_actionfeedback_mode;
+	w_current->text_display_zoomfactor = default_text_display_zoomfactor;
+	w_current->text_feedback = default_text_feedback;
 	w_current->scrollbars_flag = default_scrollbars_flag;
 
 	w_current->object_clipping = default_object_clipping;
@@ -142,6 +148,7 @@ i_vars_set(TOPLEVEL *w_current)
 
 	w_current->image_color = default_image_color;
 	w_current->third_button = default_third_button;
+
 
 	w_current->paper_width=default_paper_width; 
 	w_current->paper_height=default_paper_height;

@@ -191,6 +191,21 @@
 (action-feedback-mode "outline")
 ;(action-feedback-mode "boundingbox")
 
+; text-feedback string
+; Controls if text is drawn when doing an xor action (like copy/move)
+; Comment out if you want the default mode.
+; Not in production yet.
+;
+(text-feedback "only-when-readable")
+;(text-feedback "always")
+
+; text-display-zoomfactor number
+; Sets the zoomfactor number (1 being the most zoomed out factor) 
+; at which text is displayed completely (not a line).  This is only valid
+; if above is set to "only-when-readable"
+;
+(text-display-zoomfactor 3)
+
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)

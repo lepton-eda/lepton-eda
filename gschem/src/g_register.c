@@ -67,6 +67,8 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("net-style", g_rc_net_style);
 	gh_new_procedure1_0 ("pin-style", g_rc_pin_style);
 	gh_new_procedure1_0 ("action-feedback-mode", g_rc_action_feedback_mode);
+	gh_new_procedure1_0 ("text-feedback", g_rc_text_feedback);
+	gh_new_procedure1_0 ("text-display-zoomfactor", g_rc_text_display_zoomfactor);
 	gh_new_procedure1_0 ("scrollbars", g_rc_scrollbars);
 	gh_new_procedure1_0 ("scrollbar-update", g_rc_scrollbar_update);
 	gh_new_procedure1_0 ("object-clipping", g_rc_object_clipping);

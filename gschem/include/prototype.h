@@ -116,6 +116,8 @@ SCM g_rc_net_midpoint_mode(SCM mode);
 SCM g_rc_net_style(SCM mode);
 SCM g_rc_pin_style(SCM mode);
 SCM g_rc_action_feedback_mode(SCM mode);
+SCM g_rc_text_feedback(SCM mode);
+SCM g_rc_text_display_zoomfactor(SCM zoomfactor);
 SCM g_rc_scrollbar_update(SCM mode);
 SCM g_rc_object_clipping(SCM mode);
 SCM g_rc_logging(SCM mode);

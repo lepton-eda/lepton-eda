@@ -110,6 +110,7 @@ struct st_object {
 	char *text_string;			/* text stuff */
 	int text_size;
 	int text_len;
+	int displayed_text_len;
 
         int snap_size;                          /* snap grid size */
 
@@ -173,6 +174,12 @@ struct st_page {
 	double coord_aspectratio;		/* Real worldcoords ratio (?) */
 	int clist_row;				/* used in page manager */
 						/* which row is the page in */
+
+	float to_screen_x_constant;
+	float to_screen_y_constant;
+
+	float to_world_x_constant;
+	float to_world_y_constant;
 
 	GHashTable *ales_table;	/* used to maintain ales information */
 
@@ -377,6 +384,10 @@ struct st_toplevel {
 	int pin_style;
 	int net_style;
 	int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
+	int text_feedback; /* controls if text is drawn or not in */
+			   /* copy/move/place ops */
+	int text_display_zoomfactor; /* zoom factor at which text is 
+			             /* displayed completely */
 	int net_endpoint_mode; /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
 	int net_midpoint_mode; /* can be either NONE or FILLED or EMPTY */
 	int object_clipping; /* controls whether objects are clipped */

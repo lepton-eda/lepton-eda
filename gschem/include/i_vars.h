@@ -19,6 +19,8 @@ extern int default_background_color;
 extern int default_select_color;
 extern int default_bb_color;
 extern int default_actionfeedback_mode;
+extern int default_text_feedback;
+extern int default_text_display_zoomfactor;
 extern int default_object_clipping;
 extern int default_do_logging;
 extern int default_logging_dest;

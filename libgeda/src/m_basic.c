@@ -35,16 +35,20 @@
 int
 mil_x(TOPLEVEL *w_current, int val)
 {
-	double fw0,fw1,fw,fval;
-
 	double i;
+	double fval;
 	int j;
 
+#if 0 /* removed for speed improvements */
+	double fw0,fw1,fw,fval;
 	fw1 = w_current->page_current->right;
 	fw0 = w_current->page_current->left;
 	fw  = w_current->width;
+#endif
+
 	fval = val;
-	i = fval * (fw1 - fw0) / fw + fw0;
+	i = fval * w_current->page_current->to_world_x_constant + 
+		w_current->page_current->left;
 
 	/* i -= mil_x_tw2;
 	i = ((i) / 100 ) * 100; I don't think we need this 
@@ -64,15 +68,21 @@ mil_x(TOPLEVEL *w_current, int val)
 int 
 mil_y(TOPLEVEL *w_current, int val)
 {
-	double fw0,fw1,fw,fval;
 	double i;
+	double fval;
 	int j;
 
+#if 0 /* removed for speed improvements */
+	double fw0,fw1,fw,fval;
 	fw1 = w_current->page_current->bottom;
 	fw0 = w_current->page_current->top;
 	fw  = w_current->height;
+#endif
+
 	fval = w_current->height - val; 
-	i = fval * (fw1 - fw0) / fw + fw0;
+	i = fval * w_current->page_current->to_world_y_constant +
+		w_current->page_current->top;
+
 	/* i = ((i) / 100 ) * 100; I don't think we need this */
 	/* i += mil_y_tw1; or this*/
 
@@ -88,16 +98,21 @@ mil_y(TOPLEVEL *w_current, int val)
 int
 pix_x(TOPLEVEL *w_current, int val)
 {
-	double fs,f0,f1,f;
 
 	double i;
 	int j;
 
+#if 0 /* removed for speed */
+	double fs,f0,f1,f;
 	f0 = w_current->page_current->left;
 	f1 = w_current->page_current->right;
 	fs = w_current->width;
 	f = w_current->width / (f1 - f0);
-	i = f * (double)(val - w_current->page_current->left);
+#endif
+
+
+	i = w_current->page_current->to_screen_x_constant * 
+		(double)(val - w_current->page_current->left);
 
 #ifdef HAS_RINT
 	j = rint(i);
@@ -111,15 +126,19 @@ pix_x(TOPLEVEL *w_current, int val)
 int 
 pix_y(TOPLEVEL *w_current, int val)
 {
-	double fs,f0,f1,f;
 	double i;
 	int j;
 
+#if 0 /* removed for speed */
+	double fs,f0,f1,f;
     	f0 = w_current->page_current->top;
     	f1 = w_current->page_current->bottom;
     	fs = w_current->height;
     	f = fs / (f1 - f0); /* fs was w_current->height */
-    	i = fs - (f * (double)(val - w_current->page_current->top)); 
+#endif
+    	i = w_current->height - (
+	    w_current->page_current->to_screen_y_constant * 
+	    (double)(val - w_current->page_current->top)); 
 
 #ifdef HAS_RINT
 	j = rint(i);
@@ -275,10 +294,40 @@ WORLDabs(TOPLEVEL *w_current, int val)
 
 void set_window(TOPLEVEL *w_current, int xmin, int xmax, int ymin, int ymax)
 {
+	double fs,f0,f1,f;
+	double fw0,fw1,fw,fval;
+
 	w_current->page_current->left=xmin;
 	w_current->page_current->right=xmax;
 	w_current->page_current->top=ymin; 
 	w_current->page_current->bottom=ymax;
+
+	/* now do the constant setups */
+
+	/* pix_x */
+	f0 = w_current->page_current->left;
+        f1 = w_current->page_current->right;
+        fs = w_current->width;
+	w_current->page_current->to_screen_x_constant = fs / (f1 - f0);
+
+	/* pix_y */
+	f0 = w_current->page_current->left;
+	f0 = w_current->page_current->top;
+        f1 = w_current->page_current->bottom;
+        fs = w_current->height;
+	w_current->page_current->to_screen_y_constant = fs / (f1 - f0); 
+
+	/* mil_x */
+	fw1 = w_current->page_current->right;
+	fw0 = w_current->page_current->left;
+	fw  = w_current->width;
+	w_current->page_current->to_world_x_constant = (fw1 - fw0) / fw;
+
+	/* mil_y */
+	fw1 = w_current->page_current->bottom;
+	fw0 = w_current->page_current->top;
+	fw  = w_current->height;
+	w_current->page_current->to_world_y_constant = (fw1 - fw0) / fw;
 }
 
 /* fix_x and fix_y are used for grid snap */

@@ -9,6 +9,9 @@ Ales V. Hvezda
 E-mail: ahvezda@geda.seul.org
 Web: http://www.geda.seul.org/
 
+Kazu Hirata		- For doing significant code cleanup.  Greatly
+			  appreciated! (especially since some of the code
+			  is so gross)
 
 Michael Linnemann	- For proposing the multi hot key scheme which is
 			  currently in use

@@ -390,6 +390,36 @@ g_rc_action_feedback_mode(SCM mode)
 }
 
 SCM
+g_rc_text_feedback(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{ALWAYS    , "always"   },
+		{ONLY_WHEN_READABLE, "only-when-readable"}
+	};
+
+	RETURN_G_RC_MODE("text-feedback", default_text_feedback);
+}
+
+SCM
+g_rc_text_display_zoomfactor(SCM zoomfactor)
+{
+	int val;
+
+	val = gh_scm2int(zoomfactor);
+
+	if (val == 0) {
+		fprintf(stderr,
+			"Invalid zoomfactor [%d] passed to text-display-zoomfactor\n",
+			val);
+		val = 10; /* absolute default */
+	}
+
+	default_text_display_zoomfactor = val;
+
+	return(gh_int2scm(0));
+}
+
+SCM
 g_rc_scrollbar_update(SCM mode)
 {
 	char *string=NULL;

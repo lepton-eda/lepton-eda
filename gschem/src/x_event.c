@@ -851,6 +851,13 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 	w_current->width = w_current->win_width;
 	w_current->height = w_current->win_height;
 
+	/* need to do this every time you change width / height */
+	set_window(w_current,
+		w_current->page_current->left,
+		w_current->page_current->right,
+		w_current->page_current->top,
+		w_current->page_current->bottom);
+
 	if (w_current->backingstore)
         {
 		gdk_pixmap_unref(w_current->backingstore);
@@ -883,6 +890,12 @@ x_manual_resize(TOPLEVEL *w_current)
 	w_current->width = w_current->win_width;
 	w_current->height = w_current->win_height;
 
+	/* need to do this every time you change width / height */
+	set_window(w_current,
+		w_current->page_current->left,
+		w_current->page_current->right,
+		w_current->page_current->top,
+		w_current->page_current->bottom);
 
 #if DEBUG
 	printf("Coord aspect: %f Window aspect: %f\n", coord_aspectratio, (float

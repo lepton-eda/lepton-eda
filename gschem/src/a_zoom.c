@@ -288,6 +288,7 @@ a_zoom(TOPLEVEL *w_current, int dir)
 		w_current->last_x = lx;
 		w_current->last_y = ly;
 	}
+
 }
 
 void
