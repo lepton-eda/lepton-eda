@@ -526,7 +526,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   fclose(fp);
 
   /* Was the very last thing we read a complex and has it not been checked */
-  /* yet?  This would happen if the complex is at the very end of the file 
+  /* yet?  This would happen if the complex is at the very end of the file  */
   /* and had no attached attributes */
   if (last_complex)
   {
