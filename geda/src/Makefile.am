@@ -58,7 +58,7 @@ geda_SOURCES = \
 
 geda_LDFLAGS = @GMANAGER_LDFLAGS@
 
-geda_LDADD = @GTK_LIBS@
+geda_LDADD = @GTK_LIBS@ @LIBINTL@
 
 MOSTLYCLEANFILES = *.log *~ geda
 CLEANFILES = *.log *~ geda
