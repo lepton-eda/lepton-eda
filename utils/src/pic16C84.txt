@@ -1,0 +1,25 @@
+; PIC16C84 symbol
+; Created by Marcus Isaksson
+
+PIC16C84, PIC16C84, PIC16C84, 7, 10
+
+RA2,1,line, l, 1
+RA3,2,line, l, 2
+RA4/TOCKI,3,line, l, 3
+MCLR,4,dot, l,4
+VSS,5,line, l,5
+RB0/INT,6,line, l,6
+RB1,7,line, l,7
+RB2,8,line, l,8
+RB3,9,line, l,9
+RA1,18,line,r,1
+RA0,17,line,r,2
+OSC1/CLKIN,16,clock,r,3
+OSC2/CLKOUT,15,line,r,4
+VDD,14,line,r,5
+RB7,13,line,r,6
+RB6,12,line,r,7
+RB5,11,line,r,8
+RB4,10,line,r,9
+
+

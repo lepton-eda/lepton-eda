@@ -1,0 +1,24 @@
+; DM9368 symbol (7-Segment Decoder/Driver/Latch with Constant Current,
+;                Fairchild Semiconductor)
+; Created by Marcus Isaksson
+
+DM9368, DM9368, DM9368, 4, 9
+
+A1,1,line, l, 1
+A2,2,line, l, 2
+LE,3,dot, l, 3
+RB0,4,dot, l,4
+RB1,5,dot, l,5
+A3,6,line, l,6
+A0,7,line, l,7
+GND,8,line, l,8
+VCC,16,line,r,1
+f,15,line,r,2
+g,14,line,r,3
+a,13,line,r,4
+b,12,line,r,5
+c,11,line,r,6
+d,10,line,r,7
+e,9,line,r,8
+
+

@@ -1,0 +1,23 @@
+; PCF8591 symbol (8-bit A/D and D/A converter, Philips Semiconductors)
+; Created by Marcus Isaksson
+
+PCF8591, PCF8591, kalle, 5, 9
+
+AIN0,1,line, l, 1
+AIN1,2,line, l, 2
+AIN2,3,line, l, 3
+AIN3,4,line, l,4
+A0,5,line, l,5
+A1,6,line, l,6
+A2,7,line, l,7
+VSS,8,line, l,8
+VDD,16,line,r,1
+AOUT,15,line,r,2
+VREF,14,line,r,3
+AGND,13,line,r,4
+EXT,12,line,r,5
+OSC,11,clock,r,6
+SCL,10,line,r,7
+SDA,9,line,r,8
+
+
