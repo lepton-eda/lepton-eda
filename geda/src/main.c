@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
 #if ENABLE_NLS
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
 	textdomain (PACKAGE);
+	bind_textdomain_codeset(PACKAGE, "UTF-8");
 #endif
 	gtk_set_locale ();
 	gtk_init (&argc, &argv);
