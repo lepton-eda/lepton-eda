@@ -1,3 +1,14 @@
+2002-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_complex_basic.nw: Removed an extra / when reading in
+	embedded components
+
+	* noweb/o_attrib.nw: Removed a log message which is not an error:
+	( Did not find slot= attribute )
+
+	* noweb/o_complex_basic.nw: Changed o_complex_return_pin_object to 
+	search using the pinseq attribute
+
 2002-06-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_attrib.nw: Added a o_attrib_print_reverse to help
@@ -5,12 +16,6 @@
 
 	* noweb/o_attrib.nw: Added a bit more output to o_attrib_print
 	to help in debugging.
-
-	* noweb/o_complex_basic.nw: Removed an extra / when reading in
-	embedded components
-
-	* noweb/o_attrib.nw: Removed a log message which is not an error:
-	( Did not find slot= attribute )
 
 2002-06-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
