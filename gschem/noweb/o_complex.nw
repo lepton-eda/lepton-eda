@@ -768,6 +768,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
   o_redraw_all(w_current);
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
+  i_update_menus(w_current);
 }
 
 

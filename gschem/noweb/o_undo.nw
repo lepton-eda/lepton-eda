@@ -474,6 +474,7 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 #endif
 
   o_redraw_all(w_current);
+  i_update_menus(w_current);
 
   /* restore saved undo structures */
   w_current->page_current->undo_bottom = save_bottom;

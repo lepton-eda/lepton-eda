@@ -337,6 +337,7 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
   o_undo_savestate(w_current, UNDO_ALL);
 
   i_set_state(w_current, SELECT);
+  i_update_menus(w_current);
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
   w_current->aewindow = NULL;

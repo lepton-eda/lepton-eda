@@ -210,6 +210,7 @@ o_lock(TOPLEVEL *w_current)
 
   o_unselect_all(w_current);
   o_undo_savestate(w_current, UNDO_ALL);
+  i_update_menus(w_current);
 }
 
 @ %def o_lock
