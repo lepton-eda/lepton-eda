@@ -304,8 +304,8 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 
 	/* temporarily disable logging */
 	save_logging = do_logging;
-	do_logging = FALSE;
 	w_current->DONT_REDRAW = 1;
+	do_logging = FALSE;
 
 	if (w_current->undo_type == UNDO_DISK && u_current->filename) {
 
@@ -358,12 +358,14 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 
 	diff_x = GET_PAGE_WIDTH (w_current);
 
+#if 0 /* zoom factor is no longer used */
 #ifdef HAS_RINT
-	w_current->page_current->zoom_factor= (int) rint(w_current->init_right /
+	w_current->page_current->ZOOM_FACTOR= (int) rint(w_current->init_right /
 							diff_x);
 #else
-	w_current->page_current->zoom_factor = (int) (w_current->init_right /
+	w_current->page_current->ZOOM_FACTOR = (int) (w_current->init_right /
 							diff_x);
+#endif
 #endif
 
 	o_redraw_all(w_current);
