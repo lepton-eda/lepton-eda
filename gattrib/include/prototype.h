@@ -4,6 +4,7 @@
  */
 
 /* ---------------- gattrib.c ---------------- */
+void gattrib_really_quit(void);
 void gattrib_quit(void);
 void gattrib_main(int argc, char *argv[]);
 int main(int argc, char *argv[]);
@@ -26,6 +27,9 @@ SCM g_quit(void);
 
 /* ------------- g_rc.c ------------- */
 SCM g_rc_gattrib_version(SCM version);
+
+/* ------------- s_attrib.c ------------- */
+int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name);
 
 /* ------------- s_sheet_data.c ------------- */
 SHEET_DATA *s_sheet_data_new();
@@ -168,6 +172,15 @@ int x_dialog_missing_sym_donothing_callback(GtkWidget * widget,
 int x_dialog_missing_sym_continue_callback(GtkWidget *buttonclose,
 					   GtkWidget *window);
 int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
+					GtkWidget *window);
+
+int x_dialog_unsaved_data();
+int x_dialog_unsaved_data_donothing_callback(GtkWidget * widget,
+					    GdkEventKey * event,
+					    GtkWidget *window);
+int x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose,
+					   GtkWidget *window);
+int x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes,
 					GtkWidget *window);
 
 int x_dialog_unimplemented_feature();

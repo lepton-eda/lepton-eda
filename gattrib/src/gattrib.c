@@ -66,22 +66,39 @@
 
 
 /*------------------------------------------------------------------
+ * gattrib_really_quit callback -- Unsaved changes were found.  Ask 
+ * user if he really means it.
+ *------------------------------------------------------------------*/
+void gattrib_really_quit(void)
+{
+
+  if (sheet_head->CHANGED == TRUE) {
+    printf("User is quitting without saving last changes.\n");
+    x_dialog_unsaved_data();
+  } else {
+    gattrib_quit();
+  }
+}
+
+
+/*------------------------------------------------------------------
  * gattrib_quit -- wrap up and quit fcn.
  *------------------------------------------------------------------*/
 void gattrib_quit(void)
 {
-    s_clib_cache_free();
-    s_clib_free();
-    s_slib_free();
-    /* s_rename_destroy_all(); */
+  s_clib_cache_free();
+  s_clib_free();
+  s_slib_free();
+  /* s_rename_destroy_all(); */
 #ifdef DEBUG
-    fflush(stderr);
-    fflush(stdout);
-    printf("In gattrib_quit, calling gtk_main_quit()\n");
+  fflush(stderr);
+  fflush(stdout);
+  printf("In gattrib_quit, calling gtk_main_quit()\n");
 #endif
-    gtk_main_quit();
-    return;
+  gtk_main_quit();
+  return;
 }
+
 
 /*------------------------------------------------------------------
  * gattrib_main -- main gattrib fcn.

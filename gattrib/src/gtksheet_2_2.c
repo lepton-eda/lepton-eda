@@ -48,6 +48,17 @@
 #include "gtksheet_2_2.h"
 #include "gtkextra-marshal.h"
 
+/*------------------------------------------------------------------
+ * Gattrib specific includes -- stuff dealing with gattrib data structs.
+ * Included here in order to grab sheet_head->CHANGED, which is set
+ * when the user puts a new value in a cell.
+ *------------------------------------------------------------------*/
+#include <libgeda/libgeda.h>       /* geda library fcns  */
+#include "../include/struct.h"     /* typdef and struct declarations */
+#include "../include/prototype.h"  /* function prototypes */
+#include "../include/globals.h"
+
+
 /* sheet flags */
 enum
 { 
@@ -5821,7 +5832,9 @@ gtk_sheet_key_press(GtkWidget *widget,
     default:
 #ifdef DEBUG
       printf("In gtk_sheet_key_press, after switch, found default case.\n");
+      printf("  User probably typed letter key or DEL.\n");
 #endif
+      sheet_head->CHANGED = 1;  /* cell has been updated.  */
       if(in_selection) {
 	GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
 	if(extend_selection) return TRUE; 

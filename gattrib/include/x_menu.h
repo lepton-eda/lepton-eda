@@ -103,7 +103,7 @@ static GtkItemFactoryEntry menu_items[] = {
   },
   { "/File/Quit",   
     "<control>Q", 
-    gattrib_quit,
+    gattrib_really_quit,
     0, 
     NULL
   },

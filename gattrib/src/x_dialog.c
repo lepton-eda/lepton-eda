@@ -431,6 +431,10 @@ int x_dialog_missing_sym(OBJECT *object)
   gtk_window_set_transient_for(GTK_WINDOW(missing_sym_window),
                                GTK_WINDOW(window))   /* window is gloabl main window */;
 
+  /* This works to make dialog maintain focus */
+  gtk_grab_add(GTK_WIDGET(missing_sym_window));
+
+
   gtk_window_set_title(GTK_WINDOW(missing_sym_window), "Missing symbol file found for component!");
   gtk_container_border_width(GTK_CONTAINER(missing_sym_window), 5);
   
@@ -563,6 +567,153 @@ int x_dialog_missing_sym_abort_callback(GtkWidget *buttonyes,
   printf("In x_dialog_missing_sym_abort_callback, closing program\n");
 #endif
   gattrib_quit();
+}
+
+
+/* ========================================================= *
+ * Unsaved data windows
+ * ========================================================= */
+
+/* --------------------------------------------------------- *
+ * This is the "Unsaved data -- are you sure you want to quit?"
+ * dialog box which is thrown up before the user quits.
+ * --------------------------------------------------------- */
+int x_dialog_unsaved_data()
+{
+  GtkWidget *unsaved_data_window;
+  GtkWidget *label;
+  GtkWidget *buttoncontinue = NULL;
+  GtkWidget *buttonabort = NULL;
+  GtkWidget *vbox, *action_area;
+  char *string;
+
+#ifdef DEBUG
+  printf("In x_dialog_unsaved_data, creating windows.\n");
+#endif
+
+  /* Create window and set its properties */
+  unsaved_data_window = x_dialog_create_dialog_box(&vbox, &action_area);
+  gtk_window_position(GTK_WINDOW(unsaved_data_window),
+		      GTK_WIN_POS_MOUSE);
+
+  /* I want dialog to maintain focus.  Neither of these seem to work. */
+  gtk_window_set_modal(GTK_WINDOW(unsaved_data_window), TRUE);
+
+  gtk_window_set_transient_for(GTK_WINDOW(unsaved_data_window),
+                               GTK_WINDOW(window))   /* window is gloabl main window */;
+
+
+  /* This works to make dialog maintain focus */
+  gtk_grab_add(GTK_WIDGET(unsaved_data_window));
+
+
+  gtk_widget_set_size_request (GTK_WIDGET(unsaved_data_window), 400, 150); 
+
+  gtk_window_set_title(GTK_WINDOW(unsaved_data_window), "Unsaved data.  Really quit?");
+  gtk_container_border_width(GTK_CONTAINER(unsaved_data_window), 5);
+  
+  gtk_signal_connect(GTK_OBJECT(unsaved_data_window),
+		     "destroy", GTK_SIGNAL_FUNC(x_dialog_unsaved_data_donothing_callback),
+		     GTK_WIDGET(unsaved_data_window) );
+  
+  gtk_signal_connect(GTK_OBJECT(unsaved_data_window),
+		     "key_press_event", GTK_SIGNAL_FUNC(x_dialog_unsaved_data_donothing_callback),
+		     GTK_WIDGET(unsaved_data_window) );
+  
+
+  /*  Create a text label for the dialog window */
+  string =
+    g_strdup_printf(_("Warning!  You have unsaved data in the spreadsheet!\n"));
+  string =
+    g_strdup_printf(_("%sAre you sure you want to quit?  Click \"Continue\" to\n"), string);
+  string =
+    g_strdup_printf(_("%squit, or \"Abort\" to go back and save you work.\n"), string);
+
+  label = gtk_label_new(string);
+  gtk_widget_show (label);
+  gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
+
+  /* Now create "Abort program" and "Continue" buttons */
+  buttonabort = gtk_button_new_with_label("Abort");
+  GTK_WIDGET_SET_FLAGS(buttonabort, GTK_CAN_DEFAULT); /* what does this do? */
+  gtk_box_pack_start(GTK_BOX(action_area), buttonabort, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttonabort), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_unsaved_data_abort_callback), 
+		     GTK_WIDGET(unsaved_data_window) );
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (GTK_WIDGET (buttonabort), 70, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttonabort), 70, 30);
+#endif
+  gtk_widget_show(buttonabort);
+
+
+  buttoncontinue = gtk_button_new_with_label("Continue");
+  gtk_box_pack_start(GTK_BOX(action_area), buttoncontinue, FALSE, FALSE, 0);
+  gtk_signal_connect(GTK_OBJECT(buttoncontinue), "clicked",
+		     GTK_SIGNAL_FUNC(x_dialog_unsaved_data_continue_callback), 
+		     GTK_WIDGET(unsaved_data_window) );
+#ifdef HAS_GTK22
+  gtk_widget_set_size_request (GTK_WIDGET (buttoncontinue), 70, 30);
+#else
+  gtk_widget_set_usize (GTK_WIDGET (buttoncontinue), 70, 30);
+#endif
+  gtk_widget_show(buttoncontinue);
+
+
+#ifdef DEBUG
+  printf("In x_dialog_unsaved_data, now show window.\n");
+#endif
+
+  if (!GTK_WIDGET_VISIBLE(unsaved_data_window)) {
+    gtk_widget_show(unsaved_data_window);
+  }
+  
+  return;
+}
+
+/* --------------------------------------------------------- *
+ * This callback traps certain events and does nothing.  The
+ * idea is to prevent default event handlers from handing the
+ * events.  
+ * --------------------------------------------------------- */
+int x_dialog_unsaved_data_donothing_callback(GtkWidget * widget, 
+					 GdkEventKey * event,
+					 GtkWidget *window)
+{
+#ifdef DEBUG
+    printf("In x_dialog_unsaved_data_donothing, received an event, but doing nothing.\n");
+#endif
+  return TRUE;
+}
+
+/* --------------------------------------------------------- *
+ * continue window
+ * --------------------------------------------------------- */
+int x_dialog_unsaved_data_continue_callback(GtkWidget *buttonclose, 
+				      GtkWidget *window)
+{
+#ifdef DEBUG
+  printf("In x_dialog_unsaved_data_continue_callback, continuing to quit\n");
+#endif
+  x_dialog_close_window(window);
+  gattrib_quit();
+  return;
+}
+
+
+/* --------------------------------------------------------- *
+ * Abort button pressed -- go back to save.
+ * --------------------------------------------------------- */
+int x_dialog_unsaved_data_abort_callback(GtkWidget *buttonyes, 
+					 GtkWidget *window)
+{
+#ifdef DEBUG
+  printf("In x_dialog_unsaved_data_abort_callback, going back\n");
+#endif
+  
+  gtk_grab_remove(GTK_WIDGET(window));
+  x_dialog_close_window(window);
 }
 
 
