@@ -28,7 +28,7 @@
 #endif
 #include <sys/param.h>
 
-#if defined(HAVE_DIRENT_H) && !defined(__CYGWIN32__)
+#if defined(HAVE_DIRENT_H) 
 #include <dirent.h>
 #endif
 

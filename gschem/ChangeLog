@@ -14,6 +14,17 @@ into the cvs repository.
 	* src/gschem.c, src/i_callbacks.c, src/x_fileselect.c, src/x_preview.c
 	  f_open calls silently ignores the error code returned.
 
+2000-10-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_rc.c: Removed a #if defined around #include <dirent.h>
+	  for CYGWIN32
+
+	* src/x_fileselect.c: Removed a #if defined around #include <dirent.h>
+	  for CYGWIN32
+
+	* configure.in config.h: Removed an old GTK+ test which is not
+	  longer used
+
 2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Removed all // comments

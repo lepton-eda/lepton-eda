@@ -207,19 +207,6 @@ gtkversion=`$GTK_CONFIG --version | cut -d. -f1,2`
 
 AC_DEFINE_UNQUOTED(GTKVERSION, "$gtkversion")
 
-dnl set a #define for a new version of gtk 
-dnl and step the prototype.h files
-if eval "test $gtkversion = '1.2'" ; then
-	AC_DEFINE(GTK_DEVEL)
-
-	echo Found GTK+ 1.2.x
-#  ( cd src; rm -f prototype.h ; ln -f -s prototype1.2.h prototype.h )
-else 
-	echo Found GTK+ 1.0.x
-   	AC_MSG_ERROR(GTK+ 1.0.x is no longer supported by gEDA, please upgrade to 1.2.x)
-fi
-
-
 dnl old way of doing this, see if new way works 
 dnl CFLAGS="$CFLAGS $CFEXTRA `$GTK_CONFIG --cflags`"
 
@@ -341,7 +328,6 @@ AC_SUBST(sourcedir)
 AC_SUBST(HOME)
 AC_SUBST(VERSION)
 AC_SUBST(GTKVERSION)
-AC_SUBST(GTK_DEVEL)
 
 AC_SUBST(X_CFLAGS)
 AC_SUBST(X_LDFLAGS)

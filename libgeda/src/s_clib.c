@@ -24,15 +24,16 @@
 #include <string.h> 
 #include <sys/types.h>
 
+#if defined(HAVE_DIRENT_H) 
+#include <dirent.h>
+#endif
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
 #include <guile/gh.h>
 
-#if defined(HAVE_DIRENT_H) && !defined(__CYGWIN32__)
-#include <dirent.h>
-#endif
 
 #include "defines.h"
 #include "struct.h"

@@ -8,6 +8,10 @@
 
 	* src/gnetlist.c: Honours the error code returned from f_open
 	  from now on and tells invoker it didn't find the file.
+
+2000-10-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Removed an old GTK+ test which is no longer used
 	
 2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
 

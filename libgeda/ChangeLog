@@ -13,6 +13,14 @@ Most recent changes are at the top of this file
 	* src/f_basic.c: f_open returns an int; 0 on failure, 1 on success
 
 	* include/prototype.h: f_open returns an int.
+
+2000-10-07  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/s_slib.c, src/s_clib.c: changed order for #include <dirent.h>
+	  and removed a #if defined for CYGWIN32 
+
+	* configure.in: Removed an really old GTK+ check which is no longer
+	  needed
 	
 2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
 
