@@ -593,7 +593,7 @@ Right now, each time it is called, it rebuilds all the model from the list of pa
 <<x_pagesel.c : pagesel_update()>>=
 /* recursive function to populate the tree store */
 static
-add_page (GtkTreeModel *model, GtkTreeIter *parent,
+void add_page (GtkTreeModel *model, GtkTreeIter *parent,
           PAGE *page)
 {
   GtkTreeIter iter;
@@ -623,7 +623,7 @@ add_page (GtkTreeModel *model, GtkTreeIter *parent,
 
 /* recursive function to select the current page in the treeview */
 static
-select_page (GtkTreeView *treeview, GtkTreeIter *parent, PAGE *page)
+void select_page (GtkTreeView *treeview, GtkTreeIter *parent, PAGE *page)
 {
   GtkTreeModel *treemodel = gtk_tree_view_get_model (treeview);
   GtkTreeIter iter;
