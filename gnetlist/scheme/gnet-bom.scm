@@ -32,17 +32,10 @@
 (define bom
   (lambda (output-filename)
     (let ((port (open-output-file output-filename))
-	  (attriblist (bom:strip1 (bom:parseconfig
+	  (attriblist (strip1 (bom:parseconfig
 				   (open-input-file "attribs")))))
       (bom:printlist (cons 'package attriblist) port)
       (bom:components port packages attriblist))))
-
-(define bom:strip1
-  (lambda (ls)
-    (if (or (null? ls)
-	    (null? (cdr ls)))
-        '()
-	(cons (car ls) (bom:strip1 (cdr ls))))))
 
 (define bom:printlist
   (lambda (ls port)

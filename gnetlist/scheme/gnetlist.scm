@@ -74,3 +74,54 @@
    (lambda (plist)
       (for-each display-nl plist)))
 
+;; ETTUS
+;; find-device
+;; Usage:  (find-device packages devicename)
+;; Returns the first package which matches the devicename
+(define find-device
+   (lambda (components devicename)
+      (if (not (null? components))       
+         (if (string=? devicename (get-device (car components)))
+            (car components)
+            (find-device (cdr components) devicename))))) 
+
+
+;; ETTUS
+;; find-devices
+;; Usage:  (find-devices packages devicename '())
+;; Returns a list of packages which match the device name
+(define find-devices
+   (lambda (components devicename list)
+      (if (not (null? components))
+         (if (string=? devicename (get-device (car components)))
+            (find-devices (cdr components)
+                                devicename
+                                (cons (car components) list))
+            (find-devices (cdr components)
+                                devicename
+                                list))
+         list)))
+
+;; ETTUS
+;; strip1
+;; Usage (strip1 list)
+;; Cuts off the last element
+(define bom:strip1
+  (lambda (ls)
+    (if (or (null? ls)
+            (null? (cdr ls)))
+        '()        
+        (cons (car ls) (bom:strip1 (cdr ls))))))
+
+;; ETTUS
+;; contains?
+;; Usage (contains? list item)
+;; True if the list contains the item, according to string=?
+(define contains?
+   (lambda (ls item)
+      (cond
+         ((null? ls) #f)
+         ((string=? item (car ls)) #t)
+         (#t (contains? (cdr ls) item)))))
+
+

@@ -42,7 +42,6 @@
 (define PCB
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
-         (gnetlist:set-netlist-mode "gEDA")
          (PCB:write-net port (gnetlist:get-all-unique-nets "dummy"))
          (close-output-port port))))
 

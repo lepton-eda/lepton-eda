@@ -22,7 +22,6 @@
 (define allegro 
    (lambda (filename)
       (let ((port (open-output-file filename)))
-         (gnetlist:set-netlist-mode "gEDA")
          (display "(Allegro netlister by M. Ettus)\n" port)
          (display "$PACKAGES\n" port)
          (allegro:components port packages)
@@ -32,18 +31,11 @@
          (close-output-port port)
 	 (allegro:write-device-files packages '() ))))
 
-(define allegro:contains?
-   (lambda (ls item)
-      (cond
-         ((null? ls) #f)
-         ((string=? item (car ls)) #t)
-         (#t (allegro:contains? (cdr ls) item)))))
-
 (define allegro:write-device-files
    (lambda (packages done)
       (if (not (null? packages))
          (let ((device (get-device (car packages))))
-            (if (allegro:contains? done device)
+            (if (contains? done device)
                (allegro:write-device-files (cdr packages) done)
                (begin
                   (allegro:write-device device (car packages))
@@ -66,22 +58,21 @@
          (close-output-port p))))
 
 (define allegro:components
-   (lambda (port ls)
-      (if (not (null? ls))
-	 (begin
-	    (allegro:component port (car ls))
-	    (allegro:components port (cdr ls))))))
-
-(define allegro:component
-   (lambda (port package)
-      (let ((pattern (gnetlist:get-package-attribute package "pattern")))
-            (if (not (string=? pattern "unknown"))
-               (display pattern port))
-            (display "! " port)
-            (display (gnetlist:get-package-attribute package "device") port)
-            (display "; " port )
-            (display package port)
-            (newline port))))
+   (lambda (port packages)
+      (if (not (null? packages)
+         (begin
+            (let ((pattern (gnetlist:get-package-attribute (car packages) 
+                                                           package 
+                                                           "pattern"))
+                  (package (car packages)))
+               (if (not (string=? pattern "unknown"))
+                  (display pattern port))
+               (display "! " port)
+               (display (gnetlist:get-package-attribute package "device") port)
+               (display "; " port )
+               (display package port)
+               (newline port))
+            (allegro:components port (cdr packages))))))
 
 (define allegro:display-connections
    (lambda (port nets)
