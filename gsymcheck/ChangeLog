@@ -12,6 +12,11 @@
 	* src/s_check.c: Added a little bit more info output for some of 
 	the tests
 
+	* src/s_check.c: Fixed the search for name= to only search for 
+	name= 
+
+	* src/s_check.c: Fixed the checking for graphical=1 symbols
+
 2002-08-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_check.c: Changed exit status to return negative numbers for

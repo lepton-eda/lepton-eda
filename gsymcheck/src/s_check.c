@@ -202,20 +202,19 @@ s_check_device(OBJECT *o_current, SYMCHECK *s_current)
   }
 
   /* check for device = none for graphical symbols */
-  if (s_current->graphical_symbol && temp) { 
-    if ((strcmp(temp, "none") == 0)) {
-      s_current->device_attribute_incorrect=FALSE;
-      message = u_basic_strdup("Found graphical symbol, device=none\n");
-      s_current->info_messages = g_list_append(s_current->info_messages,
-		    			       message);
-    } else if (s_current->graphical_symbol) {
-      s_current->device_attribute_incorrect=TRUE;
-      message = u_basic_strdup("Found graphical symbol, device= should be set to none\n");
-      s_current->warning_messages = g_list_append(s_current->warning_messages,
-		    			          message);
-      s_current->warning_count++;
-    } 
-  }
+  if (temp && s_current->graphical_symbol && (strcmp(temp, "none") == 0)) {
+    s_current->device_attribute_incorrect=FALSE;
+    message = u_basic_strdup("Found graphical symbol, device=none\n");
+    s_current->info_messages = g_list_append(s_current->info_messages,
+                                             message);
+  } else if (s_current->graphical_symbol) {
+    s_current->device_attribute_incorrect=TRUE;
+    message = u_basic_strdup("Found graphical symbol, device= should be set to none\n");
+    s_current->warning_messages = g_list_append(s_current->warning_messages,
+                                                message);
+    s_current->warning_count++;
+  } 
+
   if (temp) 
     free(temp);
 }
@@ -956,7 +955,7 @@ s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_current)
       }
 
       attrib = strstr(o_current->text->string, "type=");
-      /* make sure we only check for label= and not pinlabel= */
+      /* make sure we only check for type= and not pintype= */
       if (attrib && attrib == o_current->text->string) {
         message = 
           u_basic_strdup_multiple("Found forbidden type= attribute: ",
@@ -968,7 +967,8 @@ s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_current)
         s_current->error_count++;         
       }
 
-      if (strstr(o_current->text->string, "name=")) {
+      attrib = strstr(o_current->text->string, "name=");
+      if (attrib && attrib == o_current->text->string) {
         message = 
           u_basic_strdup_multiple("Found forbidden name= attribute: ",
                                   o_current->text->string, 
