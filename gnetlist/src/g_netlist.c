@@ -38,8 +38,7 @@ g_set_project_current(TOPLEVEL *pr_current)
 }
 
 
-#if 0 /* I really don't want to have the packages done this way */
-/* with the other version of this, you are garanteed uniqness of the packages */
+/* this function will only return a unique list of packages */
 SCM
 g_get_packages(SCM level)
 {
@@ -48,22 +47,29 @@ g_get_packages(SCM level)
 	NETLIST *nl_current = NULL; 
 
 	nl_current = netlist_head;
+	s_scratch_string_init();
 
 	while (nl_current != NULL) {
 
-		prinf("yeah inside\n");
-		if (nl_current->component_uref)
-			list = gh_cons( gh_str2scm (nl_current->component_uref, 
-					   strlen(nl_current->component_uref)),
-					   list);	
-
+		if (nl_current->component_uref) {
+			if (s_scratch_string_fill(nl_current->component_uref)) {
+				list = gh_cons( gh_str2scm (
+					        nl_current->component_uref, 
+					        strlen(nl_current->
+						       component_uref)), list);	
+			}
+		}
 		nl_current = nl_current->next;
 	}
 
+	s_scratch_string_free();
 	return(list);
 }
-#endif
 
+/* old way which didn't return all components, is based on the object_head */
+/* datastructure which is not a good idea, since the uref info has already */
+/* been extracted into the netlist_head datastructures... */
+#if 0
 SCM
 g_get_packages(SCM scm_level)
 {
@@ -103,6 +109,7 @@ g_get_packages(SCM scm_level)
 	return(list);
 
 }
+#endif
 
 
 SCM

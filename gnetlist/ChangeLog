@@ -1,3 +1,9 @@
+2000-01-24  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_netlist.c: Fixed g_get_packages to properly return ALL packages
+	  of ALL loaded schematics (basically switch to an previous attempt, 
+	  and folding in any improvements the new version had)
+
 1999-10-19  Matt Ettus   <matt@ettus.com>
 
 	* scheme/gnet-vipec.scm: Fixed ground node handling, some code cleaning.
