@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "POT-Creation-Date: 2003-05-12 08:13-0400\n"
-"PO-Revision-Date: 2003-03-07 23:04GMT\n"
+"PO-Revision-Date: 2003-06-03 18:30GMT\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,7 @@ msgstr "Spiegel Modus"
 
 #: noweb/i_basic.nw:166 noweb/rcstrings.nw:61
 msgid "Zoom Box"
-msgstr "Vergrößere Fenster"
+msgstr "Ausschnitt wählen"
 
 #: noweb/i_basic.nw:170
 msgid "Pan Mode"
@@ -526,7 +526,7 @@ msgstr "Editiere Füllmuster"
 
 #: noweb/i_callbacks.nw:1907 noweb/i_callbacks.nw:1927 noweb/rcstrings.nw:60
 msgid "Pan"
-msgstr "Ausschnitt"
+msgstr "Ausschnitt verschieben"
 
 #: noweb/i_callbacks.nw:1965
 msgid "Update Cues"
@@ -1850,7 +1850,7 @@ msgstr "Neues Fenster"
 
 #: noweb/rcstrings.nw:5
 msgid "Open Page..."
-msgstr "Öffen..."
+msgstr "Öffnen..."
 
 #: noweb/rcstrings.nw:7
 msgid "Revert Page"
@@ -2006,11 +2006,11 @@ msgstr "Neu zeichnen"
 
 #: noweb/rcstrings.nw:62
 msgid "Zoom Extents"
-msgstr "Ausschnitt wählen"
+msgstr "Automatisch"
 
 #: noweb/rcstrings.nw:63
 msgid "Zoom In"
-msgstr "Bereich vergrößern"
+msgstr "Vergrößern"
 
 #: noweb/rcstrings.nw:64
 msgid "Zoom Out"
@@ -2156,11 +2156,3 @@ msgstr "Hilfe"
 msgid "Manual..."
 msgstr "Handbuch..."
 
-#~ msgid "Ok"
-#~ msgstr "OK"
-
-#~ msgid "Test Sheet"
-#~ msgstr "Test Blatt"
-
-#~ msgid "Edit Component"
-#~ msgstr "Editiere Bauteil"
