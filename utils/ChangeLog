@@ -1,3 +1,8 @@
+2002-02-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/sarlacc_schem.c: Put in placed the updated files from 
+	Dave Lawrence.  Bug fixes
+	
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/char_width.c: Added patch by Dan Mcmahill for 64-bit 

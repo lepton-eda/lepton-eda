@@ -633,7 +633,6 @@ o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
 	OBJECT *object)
 {
   int world_centerx, world_centery;
-  int newx, newy;
 
   /* convert the center of rotation to world unit */
   SCREENtoWORLD(w_current, centerx, centery, 

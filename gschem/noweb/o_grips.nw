@@ -128,71 +128,68 @@ A specific search function is provided for every kind of graphical object. The l
 OBJECT *
 o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone)
 {
-	OBJECT *object=NULL;
-	OBJECT *found=NULL;
-	SELECTION *s_current;
-	int top, left, right, bottom;
-	int size, x2size;
-	int x1, y1;
-	int factor;
+  OBJECT *object=NULL;
+  OBJECT *found=NULL;
+  SELECTION *s_current;
+  int size, x2size;
 	
-	if (!whichone) {
-		return(NULL);
-	}
+  if (!whichone) {
+    return(NULL);
+  }
 
-	/* get the size of the grip according to zoom level */
-	size = o_grips_size(w_current);
-	/* size is half the width of a grip, x2size is full width */
-	x2size = size * 2;
+  /* get the size of the grip according to zoom level */
+  size = o_grips_size(w_current);
+  /* size is half the width of a grip, x2size is full width */
+  x2size = size * 2;
 	
-	/* skip over head */
-	s_current = w_current->page_current->selection2_head->next;
-	while (s_current) {
-		if (s_current->selected_object) {
-			object = s_current->selected_object;
-			switch(object->type) {
+  /* skip over head */
+  s_current = w_current->page_current->selection2_head->next;
+  while (s_current) {
+    if (s_current->selected_object) {
+      object = s_current->selected_object;
+      switch(object->type) {
 				
-				case(OBJ_ARC):
-					/* check the grips of the arc object */
-					found = o_grips_search_arc(w_current, object,
-											   x, y, size, whichone);
-					if(found != NULL) return found;
-					break;
+        case(OBJ_ARC):
+          /* check the grips of the arc object */
+          found = o_grips_search_arc(w_current, object,
+                                     x, y, size, whichone);
+          if(found != NULL) return found;
+          break;
 				
-				case(OBJ_BOX):
-					/* check the grips of the box object */
-					found = o_grips_search_box(w_current, object,
-											   x, y, size, whichone);
-					if(found != NULL) return found;
-					break;
+        case(OBJ_BOX):
+          /* check the grips of the box object */
+          found = o_grips_search_box(w_current, object,
+                                     x, y, size, whichone);
+          if(found != NULL) return found;
+          break;
 		  
-				case(OBJ_CIRCLE):
-					/* check the grips of the circle object */
-					found = o_grips_search_circle(w_current, object,
-												  x, y, size, whichone);
-					if(found != NULL) return found;
-					break;
+        case(OBJ_CIRCLE):
+          /* check the grips of the circle object */
+          found = o_grips_search_circle(w_current, object,
+                                        x, y, size, whichone);
+          if(found != NULL) return found;
+          break;
 			
-				case(OBJ_LINE):
-				case(OBJ_PIN):
-				case(OBJ_NET):
-				case(OBJ_BUS):
-					/* check the grips of the line object */
-					/* the function is the same for line, pin, net, bus */
-					found = o_grips_search_line(w_current, object,
-												x, y, size, whichone);
-					if(found != NULL) return found;
-					break;
+        case(OBJ_LINE):
+        case(OBJ_PIN):
+        case(OBJ_NET):
+        case(OBJ_BUS):
+          /* check the grips of the line object */
+          /* the function is the same for line, pin, net, bus */
+          found = o_grips_search_line(w_current, object,
+                                      x, y, size, whichone);
+          if(found != NULL) return found;
+          break;
 
-				default:
-					/* object type is unknown : error condition */
-					return NULL;
-			}
-		}
-		s_current = s_current->next;	
-	}
+        default:
+          /* object type is unknown : error condition */
+          return NULL;
+      }
+    }
+    s_current = s_current->next;	
+  }
 	
-	return(NULL);
+  return(NULL);
 }
 
 @  %def o_grips_search
@@ -213,134 +210,132 @@ If a grip has been found, this function modifies the global variables [[whichone
 int
 o_grips_start(TOPLEVEL *w_current, int x, int y)
 {
-	OBJECT *object;
-	int whichone;
-	int x1, y1;
-	int box_width, box_height, box_top, box_left;
+  OBJECT *object;
+  int whichone;
 	
-	if (w_current->draw_grips == FALSE) {
-		return(FALSE);
-	}
+  if (w_current->draw_grips == FALSE) {
+    return(FALSE);
+  }
 
-	/* search if there is a grip on a selected object at (x,y) */
-	object = o_grips_search(w_current, x, y, &whichone);
-	if (object) {
-		/* there is one */
-		/* depending on its type, start the modification process */
-		switch(object->type) {
+  /* search if there is a grip on a selected object at (x,y) */
+  object = o_grips_search(w_current, x, y, &whichone);
+  if (object) {
+    /* there is one */
+    /* depending on its type, start the modification process */
+    switch(object->type) {
 
-			case(OBJ_ARC):
+      case(OBJ_ARC):
 				/* start the modification of a grip on an arc */
-				o_grips_start_arc(w_current, object, x, y, whichone);
+        o_grips_start_arc(w_current, object, x, y, whichone);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				return(TRUE);
-				break;
+        whichone_changing = whichone;
+        object_changing = object;
+        return(TRUE);
+        break;
 
-			case(OBJ_BOX):
+      case(OBJ_BOX):
 				/* start the modification of a grip on a box */
-				o_grips_start_box(w_current, object, x, y, whichone);
+        o_grips_start_box(w_current, object, x, y, whichone);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				return(TRUE);
-				break;
+        whichone_changing = whichone;
+        object_changing = object;
+        return(TRUE);
+        break;
 				
-			case(OBJ_CIRCLE):
+      case(OBJ_CIRCLE):
 				/* start the modification of a grip on a circle */
-				o_grips_start_circle(w_current, object, x, y, whichone);
+        o_grips_start_circle(w_current, object, x, y, whichone);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				return(TRUE);
-				break;
+        whichone_changing = whichone;
+        object_changing = object;
+        return(TRUE);
+        break;
 			
-			case(OBJ_LINE):
+      case(OBJ_LINE):
 				/* start the modification of a grip on a line */
-				o_grips_start_line(w_current, object, x, y, whichone);
+        o_grips_start_line(w_current, object, x, y, whichone);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				return(TRUE);
-				break;
+        whichone_changing = whichone;
+        object_changing = object;
+        return(TRUE);
+        break;
 
-			case(OBJ_NET): 
-				w_current->last_drawb_mode = -1;
-				w_current->last_x = object->line->screen_x[whichone];
-				w_current->last_y = object->line->screen_y[whichone];
-				w_current->start_x = object->line->screen_x[!whichone];
-				w_current->start_y = object->line->screen_y[!whichone];
+      case(OBJ_NET): 
+        w_current->last_drawb_mode = -1;
+        w_current->last_x = object->line->screen_x[whichone];
+        w_current->last_y = object->line->screen_y[whichone];
+        w_current->start_x = object->line->screen_x[!whichone];
+        w_current->start_y = object->line->screen_y[!whichone];
 				
-				o_net_erase(w_current, object);
-				gdk_gc_set_foreground(w_current->xor_gc, 
-									  x_get_color(w_current->select_color) );
-				gdk_draw_line(w_current->window, w_current->xor_gc, 
-							  w_current->start_x, w_current->start_y, 
-							  w_current->last_x, w_current->last_y);
-				o_line_erase_grips(w_current, object);
+        o_net_erase(w_current, object);
+        gdk_gc_set_foreground(w_current->xor_gc, 
+                              x_get_color(w_current->select_color) );
+        gdk_draw_line(w_current->window, w_current->xor_gc, 
+                      w_current->start_x, w_current->start_y, 
+                      w_current->last_x, w_current->last_y);
+        o_line_erase_grips(w_current, object);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				gdk_gc_set_foreground(w_current->gc, 
-									  x_get_color(w_current->background_color)); 
-				return(TRUE);
+        whichone_changing = whichone;
+        object_changing = object;
+        gdk_gc_set_foreground(w_current->gc, 
+                              x_get_color(w_current->background_color)); 
+        return(TRUE);
 				
-				break; 
+        break; 
 				
-			case(OBJ_PIN): 
+      case(OBJ_PIN): 
 				
-				w_current->last_drawb_mode = -1;
-				w_current->last_x = object->line->screen_x[whichone];
-				w_current->last_y = object->line->screen_y[whichone];
-				w_current->start_x = object->line->screen_x[!whichone];
-				w_current->start_y = object->line->screen_y[!whichone];
+        w_current->last_drawb_mode = -1;
+        w_current->last_x = object->line->screen_x[whichone];
+        w_current->last_y = object->line->screen_y[whichone];
+        w_current->start_x = object->line->screen_x[!whichone];
+        w_current->start_y = object->line->screen_y[!whichone];
 				
-				o_pin_erase(w_current, object);
-				gdk_gc_set_foreground(w_current->xor_gc, 
-									  x_get_color(w_current->select_color) );
-				gdk_draw_line(w_current->window, w_current->xor_gc, 
-							  w_current->start_x, w_current->start_y, 
-							  w_current->last_x, w_current->last_y);
-				o_line_erase_grips(w_current, object);
+        o_pin_erase(w_current, object);
+        gdk_gc_set_foreground(w_current->xor_gc, 
+                              x_get_color(w_current->select_color) );
+        gdk_draw_line(w_current->window, w_current->xor_gc, 
+                      w_current->start_x, w_current->start_y, 
+                      w_current->last_x, w_current->last_y);
+        o_line_erase_grips(w_current, object);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				return(TRUE);
+        whichone_changing = whichone;
+        object_changing = object;
+        return(TRUE);
 				
-				break; 
+        break; 
 				
-			case(OBJ_BUS): 
-				w_current->last_drawb_mode = -1;
-				w_current->last_x = object->line->screen_x[whichone];
-				w_current->last_y = object->line->screen_y[whichone];
-				w_current->start_x = object->line->screen_x[!whichone];
-				w_current->start_y = object->line->screen_y[!whichone];
+      case(OBJ_BUS): 
+        w_current->last_drawb_mode = -1;
+        w_current->last_x = object->line->screen_x[whichone];
+        w_current->last_y = object->line->screen_y[whichone];
+        w_current->start_x = object->line->screen_x[!whichone];
+        w_current->start_y = object->line->screen_y[!whichone];
 				
-				o_bus_erase(w_current, object);
-				gdk_gc_set_foreground(w_current->xor_gc, 
-									  x_get_color(w_current->select_color) );
-				gdk_draw_line(w_current->window, w_current->xor_gc, 
-							  w_current->start_x, w_current->start_y, 
-							  w_current->last_x, w_current->last_y);
-				o_line_erase_grips(w_current, object);
+        o_bus_erase(w_current, object);
+        gdk_gc_set_foreground(w_current->xor_gc, 
+                              x_get_color(w_current->select_color) );
+        gdk_draw_line(w_current->window, w_current->xor_gc, 
+                      w_current->start_x, w_current->start_y, 
+                      w_current->last_x, w_current->last_y);
+        o_line_erase_grips(w_current, object);
 				
-				whichone_changing = whichone;
-				object_changing = object;
-				gdk_gc_set_foreground(w_current->gc, 
-									  x_get_color(w_current->background_color)); 
-				return(TRUE);
+        whichone_changing = whichone;
+        object_changing = object;
+        gdk_gc_set_foreground(w_current->gc, 
+                              x_get_color(w_current->background_color)); 
+        return(TRUE);
 				
-				break;
+        break;
 
-			default:
+      default:
 				/* object type unknown : error condition */
-				return(FALSE);
+        return(FALSE);
 				
-		}
-	}
+    }
+  }
 	
-	return(FALSE);
+  return(FALSE);
 }
 
 @ %def o_grips_start
@@ -361,50 +356,48 @@ Depending on the object type, a specific function is used. It erases the tempora
 void
 o_grips_motion(TOPLEVEL *w_current, int x, int y)
 {
-	int diff_x, diff_y;
-	int box_height, box_width, box_left, box_top;
 	
-	if (w_current->inside_action == 0) {
-		o_redraw(w_current, w_current->page_current->object_head);
-		return;
-	}
+  if (w_current->inside_action == 0) {
+    o_redraw(w_current, w_current->page_current->object_head);
+    return;
+  }
 
-	/* no object changing */
-	if (object_changing == NULL) {
-		/* stop grip process */
-		o_redraw(w_current, w_current->page_current->object_head);
-		return;
-	}
+  /* no object changing */
+  if (object_changing == NULL) {
+    /* stop grip process */
+    o_redraw(w_current, w_current->page_current->object_head);
+    return;
+  }
 	
-	switch(object_changing->type) {
+  switch(object_changing->type) {
 
-		case(OBJ_ARC):
-		/* erase, update and draw an arc */
-		o_grips_motion_arc(w_current, x, y, whichone_changing);
-		break;
+    case(OBJ_ARC):
+    /* erase, update and draw an arc */
+    o_grips_motion_arc(w_current, x, y, whichone_changing);
+    break;
 
-		case(OBJ_BOX):
-		/* erase, update and draw a box */
-		o_grips_motion_box(w_current, x, y, whichone_changing);
-		break;
+    case(OBJ_BOX):
+    /* erase, update and draw a box */
+    o_grips_motion_box(w_current, x, y, whichone_changing);
+    break;
 		
-		case(OBJ_CIRCLE):
-		/* erase, update and draw a circle */
-		o_grips_motion_circle(w_current, x, y, whichone_changing);
-		break;
+    case(OBJ_CIRCLE):
+    /* erase, update and draw a circle */
+    o_grips_motion_circle(w_current, x, y, whichone_changing);
+    break;
 		
-		case(OBJ_LINE):
-		case(OBJ_NET):
-		case(OBJ_PIN):
-		case(OBJ_BUS):
-		/* erase, update and draw a line */
-		/* same for net, pin and bus as they share the same internal rep. */
-		o_grips_motion_line(w_current, x, y, whichone_changing);
-		break;
+    case(OBJ_LINE):
+    case(OBJ_NET):
+    case(OBJ_PIN):
+    case(OBJ_BUS):
+    /* erase, update and draw a line */
+    /* same for net, pin and bus as they share the same internal rep. */
+    o_grips_motion_line(w_current, x, y, whichone_changing);
+    break;
 
-		default:
-		return; /* error condition */
-	}
+    default:
+    return; /* error condition */
+  }
 	
 }
 
@@ -428,7 +421,6 @@ o_grips_end(TOPLEVEL *w_current)
 {
   OBJECT *object=NULL;
   int x, y;
-  int box_height, box_width, box_top, box_left;
   GList *other_objects = NULL;
   GList *connected_objects = NULL;
 	
@@ -444,203 +436,203 @@ o_grips_end(TOPLEVEL *w_current)
 
   switch(object->type) {
 
-	  case(OBJ_ARC):
-	  /* modify an arc object */
-	  o_grips_end_arc(w_current, object, whichone_changing);
-	  break;
+    case(OBJ_ARC):
+    /* modify an arc object */
+    o_grips_end_arc(w_current, object, whichone_changing);
+    break;
 	  
-	  case(OBJ_BOX):
-	  /* modify a box object */
-	  o_grips_end_box(w_current, object, whichone_changing);
-	  break;
+    case(OBJ_BOX):
+    /* modify a box object */
+    o_grips_end_box(w_current, object, whichone_changing);
+    break;
 	  
-	  case(OBJ_CIRCLE):
-	  /* modify a circle object */
-	  o_grips_end_circle(w_current, object, whichone_changing);
-	  break;
+    case(OBJ_CIRCLE):
+    /* modify a circle object */
+    o_grips_end_circle(w_current, object, whichone_changing);
+    break;
 	  
-	  case(OBJ_LINE):
-	  /* modify a line object */
-	  o_grips_end_line(w_current, object, whichone_changing);
-	  break;
+    case(OBJ_LINE):
+    /* modify a line object */
+    o_grips_end_line(w_current, object, whichone_changing);
+    break;
 
-	  case(OBJ_NET):
-	  /* don't allow zero length nets / lines / pins
-	   * this ends the net drawing behavior 
-	   * we want this? hack */
-	  if ((w_current->start_x == w_current->last_x) &&
-		  (w_current->start_y == w_current->last_y)) {
-		  w_current->start_x = (-1);
-		  w_current->start_y = (-1);
-		  w_current->last_x = (-1);
-		  w_current->last_y = (-1);
-		  w_current->inside_action=0;
-		  w_current->event_state = SELECT;
-		  i_update_status(w_current, 
-						  "Select Mode");
-		  o_net_eraserubber(w_current);
-		  o_redraw_single(w_current, object);
-		  return;
-	  }
+    case(OBJ_NET):
+    /* don't allow zero length nets / lines / pins
+     * this ends the net drawing behavior 
+     * we want this? hack */
+    if ((w_current->start_x == w_current->last_x) &&
+        (w_current->start_y == w_current->last_y)) {
+      w_current->start_x = (-1);
+      w_current->start_y = (-1);
+      w_current->last_x = (-1);
+      w_current->last_y = (-1);
+      w_current->inside_action=0;
+      w_current->event_state = SELECT;
+      i_update_status(w_current, 
+                      "Select Mode");
+      o_net_eraserubber(w_current);
+      o_redraw_single(w_current, object);
+      return;
+    }
 	  
 	  
-	  SCREENtoWORLD(w_current, 
-					w_current->last_x, 
-					w_current->last_y, &x, &y);
+    SCREENtoWORLD(w_current, 
+                  w_current->last_x, 
+                  w_current->last_y, &x, &y);
 	  
-	  x = snap_grid(w_current, x);
-	  y = snap_grid(w_current, y);
+    x = snap_grid(w_current, x);
+    y = snap_grid(w_current, y);
 	  
-	  o_cue_undraw(w_current, object);
-	  o_net_erase(w_current, object);
-	  /* erase xor line */
-	  gdk_gc_set_foreground(w_current->xor_gc,
-							x_get_color(w_current->select_color));
-	  gdk_draw_line(w_current->window, w_current->xor_gc,
-					w_current->start_x, w_current->start_y,
-					w_current->last_x, w_current->last_y);
-	  o_line_erase_grips(w_current, object);
+    o_cue_undraw(w_current, object);
+    o_net_erase(w_current, object);
+    /* erase xor line */
+    gdk_gc_set_foreground(w_current->xor_gc,
+                          x_get_color(w_current->select_color));
+    gdk_draw_line(w_current->window, w_current->xor_gc,
+                  w_current->start_x, w_current->start_y,
+                  w_current->last_x, w_current->last_y);
+    o_line_erase_grips(w_current, object);
 	  
-	  other_objects = s_conn_return_others(other_objects, object);
-	  s_conn_remove(w_current, object);
+    other_objects = s_conn_return_others(other_objects, object);
+    s_conn_remove(w_current, object);
 	  
-	  o_net_modify(w_current, object, x, y, 
-				   whichone_changing);
-	  s_conn_update_object(w_current, object);
-	  o_redraw_single(w_current, object);
+    o_net_modify(w_current, object, x, y, 
+                 whichone_changing);
+    s_conn_update_object(w_current, object);
+    o_redraw_single(w_current, object);
 	  
-	  /* draw the object objects */
-	  o_cue_undraw_list(w_current, other_objects);
-	  o_cue_draw_list(w_current, other_objects);
+    /* draw the object objects */
+    o_cue_undraw_list(w_current, other_objects);
+    o_cue_draw_list(w_current, other_objects);
 	  
-	  /* get the other connected objects and redraw them */
-	  connected_objects = s_conn_return_others(connected_objects,
-											   object);
-	  o_cue_undraw_list(w_current, connected_objects);
-	  o_cue_draw_list(w_current, connected_objects);
+    /* get the other connected objects and redraw them */
+    connected_objects = s_conn_return_others(connected_objects,
+                                             object);
+    o_cue_undraw_list(w_current, connected_objects);
+    o_cue_draw_list(w_current, connected_objects);
 	  
-	  /* finally draw this objects cues */
-	  o_cue_draw_single(w_current, object);
-	  break;
+    /* finally draw this objects cues */
+    o_cue_draw_single(w_current, object);
+    break;
 
-	  case(OBJ_PIN):
-	  /* don't allow zero length nets / lines / pins
-	   * this ends the net drawing behavior 
-	   * we want this? hack */
-	  if ((w_current->start_x == w_current->last_x) &&
-		  (w_current->start_y == w_current->last_y)) {
-		  w_current->start_x = (-1);
-		  w_current->start_y = (-1);
-		  w_current->last_x = (-1);
-		  w_current->last_y = (-1);
-		  w_current->inside_action=0;
-		  w_current->event_state = SELECT;
-		  i_update_status(w_current, 
-						  "Select Mode");
-		  o_redraw_single(w_current, object);
-		  return;
-	  }
+    case(OBJ_PIN):
+    /* don't allow zero length nets / lines / pins
+     * this ends the net drawing behavior 
+     * we want this? hack */
+    if ((w_current->start_x == w_current->last_x) &&
+        (w_current->start_y == w_current->last_y)) {
+      w_current->start_x = (-1);
+      w_current->start_y = (-1);
+      w_current->last_x = (-1);
+      w_current->last_y = (-1);
+      w_current->inside_action=0;
+      w_current->event_state = SELECT;
+      i_update_status(w_current, 
+                      "Select Mode");
+      o_redraw_single(w_current, object);
+      return;
+    }
 	  
 	  
-	  SCREENtoWORLD(w_current, 
-					w_current->last_x, 
-					w_current->last_y, &x, &y);
+    SCREENtoWORLD(w_current, 
+                  w_current->last_x, 
+                  w_current->last_y, &x, &y);
 	  
-	  x = snap_grid(w_current, x);
-	  y = snap_grid(w_current, y);
+    x = snap_grid(w_current, x);
+    y = snap_grid(w_current, y);
 	  
-	  o_cue_undraw(w_current, object);
-	  o_pin_erase(w_current, object);
-	  /* erase xor line */
-	  gdk_gc_set_foreground(w_current->xor_gc,
-							x_get_color(w_current->select_color));
-	  gdk_draw_line(w_current->window, w_current->xor_gc,
-					w_current->start_x, w_current->start_y,
-					w_current->last_x, w_current->last_y);
-	  o_line_erase_grips(w_current, object);
+    o_cue_undraw(w_current, object);
+    o_pin_erase(w_current, object);
+    /* erase xor line */
+    gdk_gc_set_foreground(w_current->xor_gc,
+                          x_get_color(w_current->select_color));
+    gdk_draw_line(w_current->window, w_current->xor_gc,
+                  w_current->start_x, w_current->start_y,
+                  w_current->last_x, w_current->last_y);
+    o_line_erase_grips(w_current, object);
 	  
-	  other_objects = s_conn_return_others(other_objects, object);
-	  s_conn_remove(w_current, object);
+    other_objects = s_conn_return_others(other_objects, object);
+    s_conn_remove(w_current, object);
 	  
-	  o_pin_modify(w_current, object, x, y, 
-				   whichone_changing);
-	  s_conn_update_object(w_current, object);
-	  o_redraw_single(w_current, object);
+    o_pin_modify(w_current, object, x, y, 
+                 whichone_changing);
+    s_conn_update_object(w_current, object);
+    o_redraw_single(w_current, object);
 	  
-	  /* draw the object objects */
-	  o_cue_undraw_list(w_current, other_objects);
-	  o_cue_draw_list(w_current, other_objects);
+    /* draw the object objects */
+    o_cue_undraw_list(w_current, other_objects);
+    o_cue_draw_list(w_current, other_objects);
 	  
-	  /* get the other connected objects and redraw them */
-	  connected_objects = s_conn_return_others(connected_objects,
-											   object);
-	  o_cue_undraw_list(w_current, connected_objects);
-	  o_cue_draw_list(w_current, connected_objects);
+    /* get the other connected objects and redraw them */
+    connected_objects = s_conn_return_others(connected_objects,
+                                             object);
+    o_cue_undraw_list(w_current, connected_objects);
+    o_cue_draw_list(w_current, connected_objects);
 	  
-	  /* finally draw this objects cues */
-	  o_cue_draw_single(w_current, object);
-	  break;
+    /* finally draw this objects cues */
+    o_cue_draw_single(w_current, object);
+    break;
 	  
-	  case(OBJ_BUS):
-	  /* don't allow zero length nets / lines / pins
-	   * this ends the net drawing behavior 
-	   * we want this? hack */
-	  if ((w_current->start_x == w_current->last_x) &&
-		  (w_current->start_y == w_current->last_y)) {
-		  w_current->start_x = (-1);
-		  w_current->start_y = (-1);
-		  w_current->last_x = (-1);
-		  w_current->last_y = (-1);
-		  w_current->inside_action=0;
-		  w_current->event_state = SELECT;
-		  i_update_status(w_current, 
-						  "Select Mode");
-		  o_net_eraserubber(w_current);
-		  o_redraw_single(w_current, object);
-		  return;
-	  }
+    case(OBJ_BUS):
+    /* don't allow zero length nets / lines / pins
+     * this ends the net drawing behavior 
+     * we want this? hack */
+    if ((w_current->start_x == w_current->last_x) &&
+        (w_current->start_y == w_current->last_y)) {
+      w_current->start_x = (-1);
+      w_current->start_y = (-1);
+      w_current->last_x = (-1);
+      w_current->last_y = (-1);
+      w_current->inside_action=0;
+      w_current->event_state = SELECT;
+      i_update_status(w_current, 
+                      "Select Mode");
+      o_net_eraserubber(w_current);
+      o_redraw_single(w_current, object);
+      return;
+    }
 	  
-	  SCREENtoWORLD(w_current, 
-					w_current->last_x, 
-					w_current->last_y, &x, &y);
+    SCREENtoWORLD(w_current, 
+                  w_current->last_x, 
+                  w_current->last_y, &x, &y);
 	  
-	  x = snap_grid(w_current, x);
-	  y = snap_grid(w_current, y);
+    x = snap_grid(w_current, x);
+    y = snap_grid(w_current, y);
 	  
-	  o_cue_undraw(w_current, object);
-	  o_bus_erase(w_current, object);
-	  /* erase xor line */
-	  gdk_gc_set_foreground(w_current->xor_gc,
-							x_get_color(w_current->select_color));
-	  gdk_draw_line(w_current->window, w_current->xor_gc,
-					w_current->start_x, w_current->start_y,
-					w_current->last_x, w_current->last_y);
-	  o_line_erase_grips(w_current, object);
+    o_cue_undraw(w_current, object);
+    o_bus_erase(w_current, object);
+    /* erase xor line */
+    gdk_gc_set_foreground(w_current->xor_gc,
+                          x_get_color(w_current->select_color));
+    gdk_draw_line(w_current->window, w_current->xor_gc,
+                  w_current->start_x, w_current->start_y,
+                  w_current->last_x, w_current->last_y);
+    o_line_erase_grips(w_current, object);
 	  
-	  other_objects = s_conn_return_others(other_objects, object);
-	  s_conn_remove(w_current, object);
+    other_objects = s_conn_return_others(other_objects, object);
+    s_conn_remove(w_current, object);
 	  
-	  o_bus_modify(w_current, object, x, y, 
-				   whichone_changing);
-	  s_conn_update_object(w_current, object);
-	  o_redraw_single(w_current, object);
+    o_bus_modify(w_current, object, x, y, 
+                 whichone_changing);
+    s_conn_update_object(w_current, object);
+    o_redraw_single(w_current, object);
 	  
-	  /* draw the object objects */
-	  o_cue_undraw_list(w_current, other_objects);
-	  o_cue_draw_list(w_current, other_objects);
+    /* draw the object objects */
+    o_cue_undraw_list(w_current, other_objects);
+    o_cue_draw_list(w_current, other_objects);
 	  
-	  /* get the other connected objects and redraw them */
-	  connected_objects = s_conn_return_others(connected_objects,
-											   object);
-	  o_cue_undraw_list(w_current, connected_objects);
-	  o_cue_draw_list(w_current, connected_objects);
+    /* get the other connected objects and redraw them */
+    connected_objects = s_conn_return_others(connected_objects,
+                                             object);
+    o_cue_undraw_list(w_current, connected_objects);
+    o_cue_draw_list(w_current, connected_objects);
 	  
-	  /* finally draw this objects cues */
-	  o_cue_draw_single(w_current, object);
-	  break;
+    /* finally draw this objects cues */
+    o_cue_draw_single(w_current, object);
+    break;
 	  
-	  default:
-	  return;
+    default:
+    return;
   }
 
 			
@@ -757,23 +749,23 @@ void
 o_grips_start_arc(TOPLEVEL *w_current, OBJECT *o_current,
 				  int x, int y, int whichone)
 {
-	w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = -1;
 
-	/* erase the arc before */
-	o_arc_erase(w_current, o_current);
+  /* erase the arc before */
+  o_arc_erase(w_current, o_current);
 
-	/* describe the arc with TOPLEVEL variables */
-	/* center */
-	w_current->start_x = o_current->arc->screen_x;
-	w_current->start_y = o_current->arc->screen_y;
-	/* radius */
-	w_current->distance = o_current->arc->screen_width / 2;
-	/* angles */
-	w_current->loc_x = o_current->arc->start_angle;
-	w_current->loc_y = o_current->arc->end_angle;
+  /* describe the arc with TOPLEVEL variables */
+  /* center */
+  w_current->start_x = o_current->arc->screen_x;
+  w_current->start_y = o_current->arc->screen_y;
+  /* radius */
+  w_current->distance = o_current->arc->screen_width / 2;
+  /* angles */
+  w_current->loc_x = o_current->arc->start_angle;
+  w_current->loc_y = o_current->arc->end_angle;
 
-	/* draw the first temporary arc */
-	o_arc_rubberarc_xor(w_current);
+  /* draw the first temporary arc */
+  o_arc_rubberarc_xor(w_current);
 	
 }
 
@@ -823,29 +815,29 @@ o_grips_end_arc(TOPLEVEL *w_current, OBJECT *o_current, int whichone)
 
   /* determination of the parameters to give to o_arc_modify() */
   switch(whichone) {
-	  case ARC_RADIUS:
-		  /* convert the radius in world coords */
-		  arg1 = WORLDabs(w_current, w_current->distance);
-		  /* second parameter is not used */
-		  arg2 = -1;
-		  break;
+    case ARC_RADIUS:
+      /* convert the radius in world coords */
+      arg1 = WORLDabs(w_current, w_current->distance);
+      /* second parameter is not used */
+      arg2 = -1;
+      break;
 		  
-	  case ARC_START_ANGLE:
-		  /* get the start angle from w_current */
-		  arg1 = w_current->loc_x;
-		  /* second parameter is not used */
-		  arg2 = -1;
-		  break;
+    case ARC_START_ANGLE:
+      /* get the start angle from w_current */
+      arg1 = w_current->loc_x;
+      /* second parameter is not used */
+      arg2 = -1;
+      break;
 
-	  case ARC_END_ANGLE:
-		  /* get the end angle from w_current */
-		  arg1 = w_current->loc_y;
-		  /* second parameter is not used */
-		  arg2 = -1;
-		  break;
+    case ARC_END_ANGLE:
+      /* get the end angle from w_current */
+      arg1 = w_current->loc_y;
+      /* second parameter is not used */
+      arg2 = -1;
+      break;
 
-	  default:
-		  return;
+    default:
+      return;
   }
 
   /* modify the arc with the parameters determined above */
@@ -878,53 +870,53 @@ OBJECT *
 o_grips_search_box(TOPLEVEL *w_current, OBJECT *o_current,
 				   int x, int y, int size, int *whichone)
 {
-	int left, right, top, bottom;
-	int x2size;
+  int left, right, top, bottom;
+  int x2size;
 
-	/* width/height of the grip */
-	x2size = 2 * size;
+  /* width/height of the grip */
+  x2size = 2 * size;
 
-	/* inside upper left grip ? */
-	left   = o_current->box->screen_upper_x - size;
-	top    = o_current->box->screen_upper_y - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
-		*whichone = BOX_UPPER_LEFT;
-		return(o_current);
-	}
+  /* inside upper left grip ? */
+  left   = o_current->box->screen_upper_x - size;
+  top    = o_current->box->screen_upper_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = BOX_UPPER_LEFT;
+    return(o_current);
+  }
 
-	/* inside lower right grip ? */
-	left   = o_current->box->screen_lower_x - size;
-	top    = o_current->box->screen_lower_y - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
-		*whichone = BOX_LOWER_RIGHT;
-		return(o_current);
-	}
+  /* inside lower right grip ? */
+  left   = o_current->box->screen_lower_x - size;
+  top    = o_current->box->screen_lower_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = BOX_LOWER_RIGHT;
+    return(o_current);
+  }
 
-	/* inside upper right grip ? */
-	left   = o_current->box->screen_lower_x - size;
-	top    = o_current->box->screen_upper_y - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
-		*whichone = BOX_UPPER_RIGHT;
-		return(o_current);
-	}
+  /* inside upper right grip ? */
+  left   = o_current->box->screen_lower_x - size;
+  top    = o_current->box->screen_upper_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = BOX_UPPER_RIGHT;
+    return(o_current);
+  }
 
-	/* inside lower left grip ? */
-	left   = o_current->box->screen_upper_x - size;
-	top    = o_current->box->screen_lower_y - size;
-	right  = left + x2size;
-	bottom = top  + x2size;
-	if (inside_region(left, top, right, bottom, x, y)) {
-		*whichone = BOX_LOWER_LEFT;
-		return(o_current);
-	}
+  /* inside lower left grip ? */
+  left   = o_current->box->screen_upper_x - size;
+  top    = o_current->box->screen_lower_y - size;
+  right  = left + x2size;
+  bottom = top  + x2size;
+  if (inside_region(left, top, right, bottom, x, y)) {
+    *whichone = BOX_LOWER_LEFT;
+    return(o_current);
+  }
 
-	return NULL;
+  return NULL;
 }
 
 @ %def o_grips_search_box
@@ -947,44 +939,44 @@ void
 o_grips_start_box(TOPLEVEL *w_current, OBJECT *o_current,
 				  int x, int y, int whichone)
 {
-	w_current->last_drawb_mode = -1;
+  w_current->last_drawb_mode = -1;
 	
-	/* erase the box before */
-	o_box_erase(w_current, o_current);
+  /* erase the box before */
+  o_box_erase(w_current, o_current);
 
-	/* (last_x,last_y)    is the selected corner */
-	/* (start_x, start_y) is the opposite corner */
-	switch(whichone) {
-		case BOX_UPPER_LEFT: 
-			w_current->last_x  = o_current->box->screen_upper_x;
-			w_current->last_y  = o_current->box->screen_upper_y;
-			w_current->start_x = o_current->box->screen_lower_x;
-			w_current->start_y = o_current->box->screen_lower_y;
-			break;
-		case BOX_LOWER_RIGHT: 
-			w_current->last_x  = o_current->box->screen_lower_x;
-			w_current->last_y  = o_current->box->screen_lower_y;
-			w_current->start_x = o_current->box->screen_upper_x;
-			w_current->start_y = o_current->box->screen_upper_y;
-            break;
-		case BOX_UPPER_RIGHT: 
-            w_current->last_x  = o_current->box->screen_lower_x;
-            w_current->last_y  = o_current->box->screen_upper_y;
-            w_current->start_x = o_current->box->screen_upper_x;
-            w_current->start_y = o_current->box->screen_lower_y;
-            break;
-		case BOX_LOWER_LEFT: 
-            w_current->last_x  = o_current->box->screen_upper_x;
-            w_current->last_y  = o_current->box->screen_lower_y;
-            w_current->start_x = o_current->box->screen_lower_x;
-            w_current->start_y = o_current->box->screen_upper_y;
-            break;
-		default:
-			return; /* error */
-	}
+  /* (last_x,last_y)    is the selected corner */
+  /* (start_x, start_y) is the opposite corner */
+  switch(whichone) {
+    case BOX_UPPER_LEFT: 
+      w_current->last_x  = o_current->box->screen_upper_x;
+      w_current->last_y  = o_current->box->screen_upper_y;
+      w_current->start_x = o_current->box->screen_lower_x;
+      w_current->start_y = o_current->box->screen_lower_y;
+      break;
+    case BOX_LOWER_RIGHT: 
+      w_current->last_x  = o_current->box->screen_lower_x;
+      w_current->last_y  = o_current->box->screen_lower_y;
+      w_current->start_x = o_current->box->screen_upper_x;
+      w_current->start_y = o_current->box->screen_upper_y;
+      break;
+    case BOX_UPPER_RIGHT: 
+      w_current->last_x  = o_current->box->screen_lower_x;
+      w_current->last_y  = o_current->box->screen_upper_y;
+      w_current->start_x = o_current->box->screen_upper_x;
+      w_current->start_y = o_current->box->screen_lower_y;
+      break;
+    case BOX_LOWER_LEFT: 
+      w_current->last_x  = o_current->box->screen_upper_x;
+      w_current->last_y  = o_current->box->screen_lower_y;
+      w_current->start_x = o_current->box->screen_lower_x;
+      w_current->start_y = o_current->box->screen_upper_y;
+      break;
+    default:
+      return; /* error */
+  }
 
-	/* draw the first temporary box */
-	o_box_rubberbox_xor(w_current);
+  /* draw the first temporary box */
+  o_box_rubberbox_xor(w_current);
 
 }
 

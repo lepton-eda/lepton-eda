@@ -56,7 +56,7 @@ ALES_HACK =	-D__GNUC__
 
 proto: prototype.h
 
-prototype.h: $(gschem_SOURCES)
+prototype.h: $(libgeda_la_SOURCES)
 	$(CPROTO) $(ALES_HACK) $(CPROTOCFLAGS) *.c > new_proto
 	mv new_proto ../include/prototype.h
 

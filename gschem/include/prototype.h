@@ -282,6 +282,7 @@ void i_callback_edit_translate(gpointer data, guint callback_action, GtkWidget *
 void i_callback_edit_embed(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_unembed(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_hidden(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_make_visible(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_find(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_hide_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_text(gpointer data, guint callback_action, GtkWidget *widget);
@@ -545,11 +546,12 @@ void o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 void o_embed(TOPLEVEL *w_current);
 void o_unembed(TOPLEVEL *w_current);
 void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
+void o_edit_show_hidden_lowlevel(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
 void o_edit_make_visible(TOPLEVEL *w_current, OBJECT *o_list);
 int o_edit_find_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext, int descend, int skip);
 void find_max(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
-int autonumber_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
+void autonumber_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_autonumber_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_hide_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_show_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);

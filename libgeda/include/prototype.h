@@ -10,6 +10,7 @@ void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 int f_save(TOPLEVEL *w_current, char *filename);
 /* f_image.c */
+void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
@@ -51,15 +52,20 @@ void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
 double round_5_2_1(double unrounded);
 /* o_arc_basic.c */
-void get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
-void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
 OBJECT *o_arc_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int radius, int start_angle, int end_angle);
-void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current);
-void o_arc_recalc_world(TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_arc_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 OBJECT *o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_arc_save(char *buf, OBJECT *object);
-int enter_number(void);
-OBJECT *o_arc_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_arc_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_arc_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_arc_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+void get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
+void world_get_arc_bounds(TOPLEVEL *w_current, OBJECT *object, int *left, int *top, int *right, int *bottom);
 void o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_arc_print_solid(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 void o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
@@ -67,13 +73,6 @@ void o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius,
 void o_arc_print_center(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 void o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
 void o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
-void o_arc_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
-void o_arc_translate_world(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
-void o_arc_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
-void o_arc_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_arc_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
-void o_arc_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-void o_arc_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_attrib.c */
 void o_attrib_update_urefBM(TOPLEVEL *w_current, OBJECT *o_current);
 ATTRIB *o_attrib_search(ATTRIB *list, OBJECT *item);
@@ -132,15 +131,20 @@ void o_set_line_options(TOPLEVEL *w_current, OBJECT *o_current, OBJECT_END end, 
 void o_set_fill_options(TOPLEVEL *w_current, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
 void o_object_recalc(TOPLEVEL *w_current, OBJECT *o_current);
 /* o_box_basic.c */
-void get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom);
-void world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom);
 OBJECT *o_box_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
-void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_box_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 OBJECT *o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_box_save(char *buf, OBJECT *object);
 void o_box_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_box_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
-OBJECT *o_box_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_box_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+void get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom);
+void world_get_box_bounds(TOPLEVEL *w_current, BOX *box, int *left, int *top, int *right, int *bottom);
 void o_box_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_box_print_solid(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
 void o_box_print_dotted(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
@@ -151,11 +155,6 @@ void o_box_print_filled(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, 
 void o_box_print_mesh(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_box_print_hatch(TOPLEVEL *w_current, FILE *fp, int x, int y, int width, int height, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
-void o_box_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
-void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
-void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-void o_box_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_bus_basic.c */
 void get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 void world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
@@ -179,13 +178,20 @@ void o_bus_consolidate(TOPLEVEL *w_current);
 void o_bus_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_circle_basic.c */
 int dist(int x1, int y1, int x2, int y2);
-void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
-void world_get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
 OBJECT *o_circle_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int radius);
-void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_circle_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 OBJECT *o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_circle_save(char *buf, OBJECT *object);
-OBJECT *o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_circle_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_circle_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
+void o_circle_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_circle_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_circle_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_circle_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+void get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
+void world_get_circle_bounds(TOPLEVEL *w_current, CIRCLE *circle, int *left, int *top, int *right, int *bottom);
 void o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_circle_print_solid(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
 void o_circle_print_dotted(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
@@ -196,13 +202,6 @@ void o_circle_print_filled(TOPLEVEL *w_current, FILE *fp, int x, int y, int radi
 void o_circle_print_mesh(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp, int x, int y, int radius, int color, int fill_width, int angle1, int pitch1, int angle2, int pitch2, int origin_x, int origin_y);
 void o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
-void o_circle_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
-void o_circle_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
-void o_circle_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
-void o_circle_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_circle_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
-void o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-void o_circle_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 /* o_complex_basic.c */
 void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);
@@ -234,18 +233,26 @@ void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
 /* o_image.c */
+void o_image_init(void);
+void o_image_create(int x, int y, int color_mode);
+void o_image_close(void);
+int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
 /* o_line_basic.c */
-void get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
-void world_get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
-int o_line_visible(TOPLEVEL *w_current, LINE *line, int *x1, int *y1, int *x2, int *y2);
 OBJECT *o_line_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1, int y1, int x2, int y2);
-void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_line_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
 OBJECT *o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version);
 char *o_line_save(char *buf, OBJECT *object);
 void o_line_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_line_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
-OBJECT *o_line_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+void o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
+void o_line_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
+void o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
+void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
+void o_line_recalc(TOPLEVEL *w_current, OBJECT *o_current);
+void get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
+void world_get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 void o_line_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_line_print_solid(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
 void o_line_print_dotted(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
@@ -254,11 +261,7 @@ void o_line_print_center(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, 
 void o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
 void o_line_image_write(TOPLEVEL *w_current, OBJECT *o_current, int origin_x, int origin_y, int color_mode);
 void o_line_scale_world(TOPLEVEL *w_current, int x_scale, int y_scale, OBJECT *object);
-void o_line_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, OBJECT *object);
-void o_line_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
-void o_line_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
-void o_line_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
-void o_line_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
+int o_line_visible(TOPLEVEL *w_current, LINE *line, int *x1, int *y1, int *x2, int *y2);
 /* o_list.c */
 OBJECT *o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag, OBJECT **return_end);
 OBJECT *o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag);
@@ -319,6 +322,7 @@ void o_selection_select(OBJECT *object, int color);
 void o_selection_unselect(OBJECT *object);
 OBJECT *o_selection_return_first_object(SELECTION *head);
 OBJECT *o_selection_return_nth_object(SELECTION *head, int count);
+int o_selection_return_num(SELECTION *head);
 /* o_text_basic.c */
 void get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 void world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
@@ -411,6 +415,8 @@ GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *w_current, FILE *fp, int x, int y);
 void s_cue_postscript_fillcircle(TOPLEVEL *w_current, FILE *fp, int x, int y);
+void s_cue_image_fillbox(TOPLEVEL *w_current, OBJECT *object, int world_x, int world_y);
+void s_cue_image_fillcircle(TOPLEVEL *w_current, int world_x, int world_y);
 void s_cue_output_all(TOPLEVEL *w_current, OBJECT *head, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int output_type);

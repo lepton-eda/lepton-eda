@@ -33,7 +33,12 @@
 	* noweb/o_text.nw: Fixed the above behavior to work for text items
 	within placed components.  Now you can show all hidden text on a 
 	schematic and see exactly what text is within a symbol! :-)
-		
+
+	* noweb/x_dialog.nw: Put in fix from Dave Lawrence wrt
+	find_text_ok, redraw_all after you find no more text occurances
+
+	* noweb/*.nw: Removed all -Wall warnings
+	 		
 2002-01-24 Stefan Petersen <spe@stacken.kth.se>
 
 	* lib/system-gschemrc.in: Fixed bug in path when loading 

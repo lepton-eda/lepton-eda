@@ -58,6 +58,7 @@
 #include <config.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include <libgeda/libgeda.h>
 
@@ -924,13 +925,11 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
 		     int descend, int skip)
 {
 
-  OBJECT *o_save = NULL;
   char *attrib = NULL;
   int count = 0;
   PAGE *parent = NULL;
   char *current_filename = NULL;
   int page_control = 0;
-  int saved_page_control = 0;
   int pcount = 0;
   int rv;
 
@@ -1044,11 +1043,9 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
   PAGE *parent = NULL;
   char *current_filename = NULL;
   int page_control = 0;
-  int saved_page_control = 0;
   int pcount = 0;
 
-  unsigned char ss[256];
-  int l, m, max = 1;
+  int l, m;
 
 
   if (o_list == NULL)
@@ -1117,20 +1114,19 @@ void find_max(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 @end defun
 
 <<o_misc.c : autonumber_text()>>=
+void
 autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 {
   OBJECT *o_current = NULL;
-  OBJECT *o_save = NULL;
   char *attrib = NULL;
   int count = 0;
   PAGE *parent = NULL;
   char *current_filename = NULL;
   int page_control = 0;
-  int saved_page_control = 0;
   int pcount = 0;
 
   unsigned char ss[256];
-  int l, m, max = 1;
+  int l;
 
   o_current = o_list;
   while (o_current != NULL) {

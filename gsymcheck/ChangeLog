@@ -1,3 +1,7 @@
+2001-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* src/s_project.c: Made sure to init show_hidden_text to 0.
+	
 2001-07-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, src/gsymcheck.c, src/g_rc.c: Cleanup and added the

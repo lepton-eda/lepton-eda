@@ -189,9 +189,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef HAVE_STRINGS_H
-#include <strings.h>
-#endif
+#include <string.h>
 
 #include <libgeda/libgeda.h>
 
@@ -1575,8 +1573,8 @@ create_menu_alignment (TOPLEVEL *w_current)
 void
 text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 {
-  int len;
-  int text_size;
+  int len=0;
+  int text_size=8;
   char *text_string = NULL;
   char *text_size_string = NULL;
   int new_text_alignment;
@@ -4319,7 +4317,6 @@ char generic_textstring[256] = "uref=R";
 void generic_text_input_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
-  int size;
 
   string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
@@ -4340,7 +4337,6 @@ void generic_text_input_ok(GtkWidget * w, TOPLEVEL * w_current)
 <<x_dialog.c : generic_text_input_dialog()>>=
 void generic_text_input_dialog(TOPLEVEL * w_current)
 {
-  char string[30];
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok = NULL;
@@ -4414,25 +4410,24 @@ OBJECT *remember_page;
 void find_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
-  int size, done;
-  GtkWidget *descend;
+  int done;
 
   string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
 
-  /*    descend = gtk_object_get_data(GTK_OBJECT(w_current->tsentry),"descend"); */
+  /* descend = gtk_object_get_data(GTK_OBJECT(w_current->tsentry),"descend");*/
 
   strncpy(generic_textstring, string, 256);
-
 
   while (remember_page != w_current->page_current->object_head) {
     s_hierarchy_up(w_current, w_current->page_current->up);
   }
   done =
       o_edit_find_text(w_current, remember_page, string,
-		       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-						    (checkdescend)),
-		       !start_find);
+         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
+          (checkdescend)),
+         !start_find);
   if (done) {
+    o_redraw_all_fast(w_current);
     gtk_grab_remove(w_current->tswindow);
     gtk_widget_destroy(w_current->tswindow);
     w_current->tswindow = NULL;
@@ -4440,6 +4435,7 @@ void find_text_ok(GtkWidget * w, TOPLEVEL * w_current)
   start_find = 0;
 
 }
+
 @ %def find_text_ok
 
 
@@ -4451,10 +4447,6 @@ void find_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 <<x_dialog.c : find_text_done()>>=
 void find_text_done(GtkWidget * w, TOPLEVEL * w_current)
 {
-  char *string = NULL;
-  int size;
-  GtkWidget *descend;
-
   gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
   w_current->tswindow = NULL;
@@ -4470,7 +4462,6 @@ void find_text_done(GtkWidget * w, TOPLEVEL * w_current)
 <<x_dialog.c : find_text_dialog()>>=
 void find_text_dialog(TOPLEVEL * w_current)
 {
-  char string[30];
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok = NULL;
@@ -4568,7 +4559,6 @@ void find_text_dialog(TOPLEVEL * w_current)
 void hide_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
-  int size;
 
   string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
@@ -4592,7 +4582,6 @@ void hide_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 <<x_dialog.c : hide_text_dialog()>>=
 void hide_text_dialog(TOPLEVEL * w_current)
 {
-  char string[30];
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok = NULL;
@@ -4662,7 +4651,6 @@ void hide_text_dialog(TOPLEVEL * w_current)
 void show_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
-  int size;
 
   string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
@@ -4686,7 +4674,6 @@ void show_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 <<x_dialog.c : show_text_dialog()>>=
 void show_text_dialog(TOPLEVEL * w_current)
 {
-  char string[30];
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok = NULL;
@@ -4755,7 +4742,6 @@ void show_text_dialog(TOPLEVEL * w_current)
 void autonumber_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 {
   char *string = NULL;
-  int size;
 
   string = gtk_entry_get_text(GTK_ENTRY(w_current->tsentry));
   strncpy(generic_textstring, string, 256);
@@ -4779,7 +4765,6 @@ void autonumber_text_ok(GtkWidget * w, TOPLEVEL * w_current)
 <<x_dialog.c : autonumber_text_dialog()>>=
 void autonumber_text_dialog(TOPLEVEL * w_current)
 {
-  char string[30];
   int len;
   GtkWidget *label = NULL;
   GtkWidget *buttonok = NULL;

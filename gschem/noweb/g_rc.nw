@@ -2496,8 +2496,7 @@ g_rc_add_menu(SCM menu_name, SCM menu_items)
 SCM
 g_rc_window_size(SCM width, SCM height)
 {
-  int i_width, i_height, i_border;
-  int init_right, init_bottom;
+  int i_width, i_height;
 
   i_width  = gh_scm2int(width);
   i_height = gh_scm2int(height);

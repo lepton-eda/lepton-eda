@@ -1057,7 +1057,7 @@ The [[o_arc_end4()]] function ends the process of the input of an arc. [[start_a
 void
 o_arc_end4(TOPLEVEL *w_current, int start_angle, int end_angle)
 {
-  int x1, y1, x2, y2;
+  int x1, y1;
   int radius;
 
   /* get the center in world coords */

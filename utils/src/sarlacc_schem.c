@@ -9,6 +9,7 @@
  
 #include<stdio.h>
 #include<stdlib.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -82,7 +83,7 @@ void read_string_file(int fd,char *dest)
 
 void parse_header(int fd1,int fd2)
 {
-    char localbuf[32];
+    unsigned char localbuf[32];
     int length;
     read(fd1,localbuf,32);
     if( strncmp(localbuf,"Schematic FILE",14) )
@@ -135,21 +136,26 @@ void parse_component(int fd1,int fd2)
     char partname[256];
     int size;
     int x,y;
-    int xpos,ypos;
+    int xpos,ypos,xpossav,ypossav;
     int xgeda,ygeda;
     int angle,mirror;
     int i;
+    int orcad_xsize = 0, orcad_ysize = 0, orcad_msize = 0;
+    int attribcnt;
 
     int refx,refy,ref_vis;
     char refdes[32];
     int valx,valy,val_vis;
     char value[64];
     char attrib[64];
+    char attribsav[64];
 
     char flags;
     char vis;
     
     int pointer;
+    FILE *cfp;
+    char buff[128];
     
     read(fd1,localbuf,2);
     size=CONV16(localbuf,0);
@@ -194,29 +200,104 @@ void parse_component(int fd1,int fd2)
     remove_spaces(partname);
     fprintf(stderr,"Component: %s\n",partname);
 
+    if (angle!=0 || mirror!=0) {
+      sprintf(buff,"%s-1.sym", partname);
+      cfp = fopen(buff, "r");
+      if (cfp > 0) {
+	while (!feof(cfp)) {
+	  fgets(buff, 128, cfp);
+	  if (!strncmp(buff, "orcad_xsize =", 13)) {
+	    sscanf(buff+13, "%d", &orcad_xsize);
+	  }
+	  if (!strncmp(buff, "orcad_ysize =", 13)) {
+	    sscanf(buff+13, "%d", &orcad_ysize);
+	  }
+	}
+	fclose(cfp);
+	fprintf(stderr,"orcad_size = %d %d\n", orcad_xsize, orcad_ysize);
+	orcad_msize = (orcad_xsize<orcad_ysize)?orcad_xsize:orcad_ysize;
+	if (mirror && !angle) {
+	  xgeda = xgeda + (orcad_xsize*100.0);
+	} else if (angle && !mirror) {
+	  switch (angle) {
+	  case 90:
+	    /*	    ygeda = ygeda - (orcad_msize*100.0);*/
+	    
+	    ygeda = ygeda - (orcad_xsize*100.0);
+	    break;
+	  case 180:
+	    ygeda = ygeda - (orcad_ysize*100.0);
+	    xgeda = xgeda + (orcad_xsize*100.0);
+	    break;
+	  case 270:
+	    /*	    xgeda = xgeda + (orcad_msize*100.0);*/
+	    xgeda = xgeda + (orcad_ysize*100.0);
+	    break;
+	  default:
+	    break;
+	  }
+	} else if (mirror) {
+	  if (angle == 270) {
+	    ygeda = ygeda - (orcad_xsize*100.0);
+	    /* Could be msize instead of ysize */
+	    xgeda = xgeda + (orcad_ysize*100.0);
+	  } else if (angle == 180) {
+	    /* Could be msize instead of ysize */
+	    ygeda = ygeda - (orcad_ysize*100.0);
+	  }
+	}
+      } else {
+	fprintf(stderr,"Couldn't open %s\n", partname);
+      }
+      
+    }
+
+
     fprintf(stdout,"C %d %d 1 %d %d %s-1.sym\n",
 	xgeda,ygeda,angle,mirror,partname);
     fprintf(stdout,"{\n");
 
-    fprintf(stdout,"T %d %d %d %d %d 1 0\nuref=%s\n",
-	refx,refy,TEXTCOLOR,TEXTSIZE,ref_vis,refdes);
-    fprintf(stdout,"T %d %d %d %d %d 1 0\nvalue=%s\n",
-	valx,valy,TEXTCOLOR,TEXTSIZE,val_vis,value);
+    /* For sarlacc debugging purposes, it's useful to see
+       if a component is mirrored and how much it's rotated
+       fprintf(stdout,"T %d %d %d %d %d 1 0\nmirror=%d\n",
+	refx,refy,TEXTCOLOR,TEXTSIZE,0,mirror);
+    fprintf(stdout,"T %d %d %d %d %d 1 0\nrotation=%d\n",
+    refx,refy,TEXTCOLOR,TEXTSIZE,0,angle);*/
+    if (refdes[0] != 0) {
+      fprintf(stdout,"T %d %d %d %d %d 1 0\nuref=%s\n",
+	      refx,refy,TEXTCOLOR,TEXTSIZE,ref_vis,refdes);
+    }
 
+    if (value[0]!=0) {
+      fprintf(stdout,"T %d %d %d %d %d 1 0\nvalue=%s\n",
+	      valx,valy,TEXTCOLOR,TEXTSIZE,val_vis,value);
+    }
+    attribcnt = 0;
     if(flags & 0x40)
 	for(i=0;i<8;i++)
 	{
+
+	  /* This assumes that the last attribute is the footprint */
 	    xpos = CONVX(x + CONV16(localbuf,pointer));
 	    ypos = CONVY(y + CONV16(localbuf,pointer+2));
 	    pointer += 4;
 	    size = read_string(attrib,localbuf+pointer);
 	    pointer += size + 1;
-	    if(size > 0)
-		fprintf(stdout,"T %d %d %d %d %d 1 0\npattern=%s\n",
-	    		xpos,ypos,TEXTCOLOR,TEXTSIZE,
-	    		( (flags & (1<<i))?1:0 ),attrib);
-	} 
-
+	    if(size > 0) {
+	      attribcnt++;
+	      fprintf(stdout,"T %d %d %d %d %d 1 0\npattern=%s\n",
+		      xpos,ypos,TEXTCOLOR,TEXTSIZE,
+		      ( (flags & (1<<i))?1:0 ),attrib);
+	      xpossav = xpos;
+	      ypossav = ypos;
+	      strcpy(attribsav, attrib);
+	    }
+	}
+    if (attribcnt > 0) {
+      fprintf(stdout,"T %d %d %d %d %d 1 0\nfootprint=%s\n",
+	      xpos,ypos,TEXTCOLOR,TEXTSIZE,
+	      ( (flags & (1<<i))?1:0 ),attrib);
+    }
     fprintf(stdout,"}\n");
 }
 
@@ -246,6 +327,10 @@ void parse_sheet (int fd)
     exit(-1);
 }
  
+static int pending_netlabel=0;
+static char netlabel[256];
+static int netlx, netly, netla;
+
 /* BAD Set wire color properly  */
 void parse_wire (int fd)
 {
@@ -263,6 +348,13 @@ void parse_wire (int fd)
     x2=CONVX(CONV16(localbuf,4));
     y2=CONVY(CONV16(localbuf,6));                         
     fprintf(stdout,"N %d %d %d %d 4\n",x1,y1,x2,y2);
+    if (pending_netlabel) {
+      fprintf(stdout,"{\n");
+      fprintf(stdout,"T %d %d 5 10 1 1 %d 0\n", netlx, netly, netla);
+      fprintf(stdout,"label=%s\n", netlabel);
+      fprintf(stdout,"}\n");
+      pending_netlabel = 0;
+    }
 }
 
 /*  BAD GEDA doesn't do buses yet! */
@@ -342,8 +434,13 @@ void parse_label (int fd)
         textsize *= -1;
         angle = 90;
     }
-    fprintf(stdout,"T %d %d 3 6 1 1 %d\n",x,y,angle);
-    fprintf(stdout,"label=%s ATTACHME\n",textbuf);                  
+    /*    fprintf(stdout,"T %d %d 3 6 1 1 %d\n",x,y,angle);
+	  fprintf(stdout,"label=%s ATTACHME\n",textbuf);                  */
+    pending_netlabel = 1;
+    strncpy(netlabel, textbuf, 256);
+    netlx = x;
+    netly = y;
+    netla = angle;
 }  
 
 /* BAD Fix Entries */
@@ -425,8 +522,10 @@ void parse_power (int fd)
 		symbol = "vcc-orcad-circle-1.sym";break;
     }
     fprintf(stdout,"C %d %d 1 %d 0 %s\n",x,y,angle,symbol);
-    fprintf(stdout,"{\nT %d %d %d %d 1 1 %d\nvalue=%s\n}\n",
-	xtext,ytext,TEXTCOLOR,TEXTSIZE,angle%180,textbuf);
+    /*    fprintf(stdout,"{\nT %d %d %d %d 1 1 %d\nvalue=%s\n}\n",
+	  xtext,ytext,TEXTCOLOR,TEXTSIZE,angle%180,textbuf);*/
+    fprintf(stdout,"{\nT %d %d %d %d 1 1 %d\nnet=%s:1\n}\n",
+	    xtext,ytext,TEXTCOLOR,TEXTSIZE,angle%180,textbuf);
 }
 
 /*  BAD Fix Text color and check rotation */
@@ -571,5 +670,6 @@ main(int argc, char **argv)
 
     return(0);    
 }
+
 
 

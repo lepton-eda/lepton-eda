@@ -8,6 +8,11 @@
 	* noweb/o_text_basic.nw: Went through and make sure that text is 
 	created properly if it is invisible and show_hidden_text is true
 
+	* noweb/*.nw bunch of files: Make sure visibility is being dealt with
+	correct wrt show_hidden_text
+
+	* noweb/*.nw: Removed most -Wall warnings
+
 2001-11-25  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/o_arc_basic.nw: Corrected a bug about arc mirroring due to 

@@ -1,3 +1,7 @@
+2002-02-09 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_project.c: Made sure to init show_hidden_text to 0.
+	
 2002-01-27 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* scheme/gnet-PCBboard.scm: put in the fix from Rich Walker about

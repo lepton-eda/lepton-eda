@@ -128,8 +128,6 @@ main_prog(int argc, char *argv[])
   int argv_index;
   int first_page = 1;
   char *geda_data;
-  char *geda_rcdata;
-  char *HOME;
 
   gtk_init(&argc, &argv);
   visual = gdk_visual_get_system();

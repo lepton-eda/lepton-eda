@@ -256,7 +256,6 @@ s_cue_output_lowlevel(TOPLEVEL * w_current, OBJECT * object, int whichone,
   CONN *conn;
   int type, count = 0;
   int done = FALSE;
-  int size, x2size;
 
   x = object->line->x[whichone];
   y = object->line->y[whichone];
@@ -341,10 +340,9 @@ void
 s_cue_output_lowlevel_midpoints(TOPLEVEL * w_current, OBJECT * object,
 				FILE * fp, int output_type)
 {
-  int x, y, screen_x, screen_y;
+  int x, y;
   GList *cl_current;
   CONN *conn;
-  int size;
 
   cl_current = object->conn_list;
   while (cl_current != NULL) {

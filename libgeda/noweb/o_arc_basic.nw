@@ -657,9 +657,6 @@ o_arc_mirror_world(TOPLEVEL *w_current,
                    int world_centerx, int world_centery,
                    OBJECT *object)
 {
-  int x, y, newx, newy;
-  int start, end;
-
   /* translate object to origin */
   object->arc->x -= world_centerx;
   object->arc->y -= world_centery;
