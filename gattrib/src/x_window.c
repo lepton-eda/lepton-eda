@@ -326,7 +326,6 @@ x_window_add_items()
   }
 
 
-
 #ifdef DEBUG
   printf("In x_window_add_items, now put pin attrib values in the pin sheet.\n");
 #endif

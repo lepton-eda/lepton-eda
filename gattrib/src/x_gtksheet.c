@@ -344,6 +344,32 @@ x_gtksheet_add_cell_item(GtkSheet *sheet, int i, int j, gchar *text)
 }
 
 
+/*  -----------------------------------------------------------------  *
+ *  This fcn returns the index of the first column selected, or 
+ *  -1 if no column is selected
+ *  -----------------------------------------------------------------  */
+int x_gtksheet_get_min_col(GtkSheet *sheet) {
+  if (sheet->state == GTK_SHEET_COLUMN_SELECTED) {
+    return sheet->range.col0;
+  } else {
+    return -1;
+  }
+}
+
+
+/*  -----------------------------------------------------------------  *
+ *  This fcn returns the index of the last column selected, or 
+ *  -1 if no column is selected
+ *  -----------------------------------------------------------------  */
+int x_gtksheet_get_max_col(GtkSheet *sheet) {
+  if (sheet->state == GTK_SHEET_COLUMN_SELECTED) {
+    return sheet->range.coli;
+  } else {
+    return -1;
+  }
+}
+
+
 /*  ==================== Private functions ===================  */
 
 /*  The stuff below was copied over from testgtksheet.c  */

@@ -308,7 +308,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
 
 
 
-
+ 
 /*------------------------------------------------------------------
  * This fcn deletes the text object pointed to by text_object.  It
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
@@ -327,3 +327,4 @@ void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_
 
 }
                                                                                                     
+

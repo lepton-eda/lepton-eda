@@ -58,6 +58,34 @@ STRING_LIST *s_string_list_new() {
 
 
 /*------------------------------------------------------------------
+ * This takes an old string list, duplicates it and returns a pointer
+ * to the new, duplicate list.
+ *------------------------------------------------------------------*/
+STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
+  STRING_LIST *new_string_list;
+  STRING_LIST *local_string_list;
+  char *data;
+  gint count;
+
+  new_string_list = s_string_list_new();
+
+  if (old_string_list->data == NULL) 
+    /* This is an empty string list */
+    return new_string_list;
+
+  local_string_list = old_string_list;
+  while (local_string_list != NULL) {
+    data = u_basic_strdup(local_string_list->data);
+    s_string_list_add_item(new_string_list, &count, data);
+    free(data);
+    local_string_list = local_string_list->next;
+  }
+
+  return new_string_list;
+}
+
+
+/*------------------------------------------------------------------
  * This fcn inserts the item into a char* list.  It first cycles through the
  * list to make sure that there are no duplications. The list is assumed
  * to be a STRING_LIST:
@@ -75,6 +103,11 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   STRING_LIST *prev;
   STRING_LIST *local_list;
   
+  if (list == NULL) {
+    fprintf(stderr, "In s_string_list_add_item, tried to add to a NULL list.\n");
+    return;
+  }
+
   /* First check to see if list is empty.  Handle insertion of first item 
      into empty list separately.  (Is this necessary?) */
   if (list->data == NULL) {
@@ -106,17 +139,102 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* If we are here, it's 'cause we didn't find the item pre-existing in the list. */
   /* In this case, we insert it. */
 
-  local_list = malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
+  local_list = (STRING_LIST *) malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
   local_list->data = (gchar *) u_basic_strdup(item);   /* copy data into list */
   local_list->next = NULL;
   local_list->prev = prev;  /* point this item to last entry in old list */
   prev->next = local_list;  /* make last item in old list point to this one. */
   local_list->pos = (int) count;  /* This enumerates the pos on the list.  Value is reset later by sorting. */
   (*count)++;  /* increment count */
-  list = local_list;
+  /*   list = local_list;  */
   return;
 
 }
+
+
+/*------------------------------------------------------------------
+ * This fcn deletes an item in a STRING_LIST.
+ * It takes args: list to to delete item, pointer to no of items in
+ * list at end, and the item itself to remove.
+ *------------------------------------------------------------------*/
+void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
+
+  gchar *trial_item = NULL;
+  STRING_LIST *list_item;
+  STRING_LIST *next_item = NULL;
+  STRING_LIST *prev_item = NULL;
+
+  /* First check to see if list is empty.  If empty, spew error and return */
+  if ( (*list)->data == NULL) {
+    fprintf(stderr, "In s_string_list_delete_item, tried to remove item from empty list\n");
+    return;
+  }
+
+#ifdef DEBUG
+    printf("In s_string_list_delete_item, about to delete item %s from list.\n", item);
+#endif
+
+  /* Now loop through list looking for item */
+  list_item = (*list);
+  while (list_item != NULL) {
+    trial_item = (gchar *) u_basic_strdup(list_item->data);        
+#ifdef DEBUG
+    printf("In s_string_list_delete_item, matching item against trial item = %s from list.\n", trial_item);
+#endif
+    if (strcmp(trial_item, item) == 0) {
+      /* found item, now delete it. */
+#ifdef DEBUG
+    printf("In s_string_list_delete_item, found match . . . . . \n");
+#endif
+      prev_item = list_item->prev;
+      next_item = list_item->next;
+
+      /* Check position in list */
+      if (next_item == NULL && prev_item == NULL) {
+	/* pathological case of one item list. */
+	(*list) = NULL;
+      } else if (next_item == NULL && prev_item != NULL) {
+	/* at list's end */
+	prev_item->next = NULL;
+      } else if (next_item != NULL && prev_item == NULL) {
+	/* at list's beginning */
+	next_item->prev = NULL;
+	(*list) = next_item;         /* also need to fix pointer to list head */
+	/*  free(list);  */
+      } else {
+	/* normal case of element in middle of list */
+	prev_item->next = next_item;
+	next_item->prev = prev_item;
+      }
+      
+#ifdef DEBUG
+    printf("In s_string_list_delete_item, now free list_item\n");
+#endif
+      free(list_item);  /* free current list item */
+      (*count)--;       /* decrement count */
+      /* Do we need to re-number the list? */
+
+#ifdef DEBUG
+    printf("In s_string_list_delete_item, now free trial_item\n");
+#endif
+      free(trial_item); /* free trial item before returning */
+#ifdef DEBUG
+    printf("In s_string_list_delete_item, returning . . . .\n");
+#endif
+      return;
+    }
+    free(trial_item);
+    list_item = list_item->next;
+  }
+
+  /* If we are here, it's 'cause we didn't find the item.
+   * Spew error and return.
+   */
+  fprintf(stderr, "In s_string_list_delete_item, couldn't delete item %s\n", item);
+  return;
+
+}
+
 
 /*------------------------------------------------------------------
  * This fcn looks for item in the list.  It returns 1 if item is
@@ -151,6 +269,30 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
 
 }
 
+
+/*------------------------------------------------------------------
+ * This fcn returns the index'th item in the string list.
+ * It returns NULL if there is a problem
+ *------------------------------------------------------------------*/
+gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index) 
+{
+  gint i;
+  STRING_LIST *local_item;
+
+  /* First check to see if list is empty.  If empty, return
+   * NULL automatically.  */
+  if (list->data == NULL) {
+    return NULL;
+  }
+
+  local_item = list;
+  for (i = 0 ; i < index ; i++) {
+    if (local_item == NULL) {
+      return NULL;
+    }
+  }
+  return list->data;
+}
 
 
 /*------------------------------------------------------------------

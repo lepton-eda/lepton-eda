@@ -80,6 +80,41 @@ TABLE **s_table_new(int rows, int cols)
 
 }
 
+#if 0
+/*------------------------------------------------------------------
+ * This fcn recreates the table with a new size
+ *------------------------------------------------------------------*/
+TABLE **s_table_resize(TABLE **table, 
+		       int old_rows, int old_cols, int new_rows, int new_cols)
+{
+  int i, j;
+
+  s_table_destroy(**table, old_rows, old_cols);
+
+  /* Here I am trying to create a 2 dimensional array of structs */
+  new_table = (TABLE **) malloc(new_rows*sizeof(TABLE *));
+  for (i = 0; i < new_rows; i++) {
+    new_table[i] = (TABLE *) malloc(new_cols * sizeof(TABLE));
+    /* Note that I should put some checks in here to verify that 
+     * malloc worked correctly. */
+  }
+
+  /* Now pre-load the table with NULLs */
+  for (i = 0; i < new_rows; i++) {
+    for (j = 0; j < new_cols; j++) {
+      (new_table[i][j]).attrib_value = NULL;
+      (new_table[i][j]).row_name = NULL;
+      (new_table[i][j]).col_name = NULL;
+      (new_table[i][j]).row = i;
+      (new_table[i][j]).col = j;
+      (new_table[i][j]).visibility = 3; /* both name & value visible */
+    }
+  }
+
+  return (new_table);
+
+}
+#endif
 
 /*------------------------------------------------------------------
  * This fcn destroys the old table.  Use it after reading in a new
@@ -88,12 +123,28 @@ TABLE **s_table_new(int rows, int cols)
 void s_table_destroy(TABLE **table, int row_count, int col_count)
 {
   int i, j;
-  for (i = 0; i < row_count; i++) {
-    for (j = 0; j < row_count; j++) {
-      free( (table[i][j]).attrib_value );
-    }
 
+  if (table == NULL)
+    return;
+
+  for (i = 0; i < row_count; i++) {
+    for (j = 0; j < col_count; j++) {
+      if ( (table[i][j]).attrib_value != NULL)
+	free( (table[i][j]).attrib_value );
+      if ( (table[i][j]).row_name != NULL)
+	free( (table[i][j]).row_name );
+      if ( (table[i][j]).col_name != NULL)
+	free( (table[i][j]).col_name );
+    }
   }
+
+  for (i = 0; i < row_count; i++) {
+    free( table[i] );
+  }
+
+  free(table);
+  table = NULL;
+
   return;
 }
 
@@ -121,10 +172,46 @@ int s_table_get_index(STRING_LIST *local_list, char *local_string) {
     count++;
     list_element = list_element->next;
   }
-  /* If we are here, it is by mistake */
-  fprintf(stderr, "s_table_get_index passed a string not in master list!.\n");  
-  exit(-1);
+  exit(-1);  /* return code when string is not in master_list  */
 }
+
+
+
+/*------------------------------------------------------------------
+ * This fcn takes a table, a row list, and a row name, 
+ * and returns a list holding
+ * name=value pairs for all attribs pertainent to that particular
+ * row.
+ * If the row holds no attribs, it just returns NULL.
+ *------------------------------------------------------------------*/
+STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
+					TABLE **table, 
+					STRING_LIST *row_list,
+					int num_attribs)
+{
+  STRING_LIST *attrib_pair_list;
+  char *attrib_name, *attrib_value, *name_value_pair;
+  int row, col;
+  int count = 0;
+  
+  attrib_pair_list = s_string_list_new();
+
+  row = s_table_get_index(row_list, row_name);
+  for (col = 0; col < num_attribs; col++) {
+    /* pull attrib from table.  If non-null, add it to attrib_pair_list  */
+    if ( (table[row][col]).attrib_value != NULL) {
+      attrib_name = (table[row][col]).col_name;
+      attrib_value = (table[row][col]).attrib_value;
+      name_value_pair = u_basic_strdup_multiple(attrib_name, "=", attrib_value, NULL);
+      s_string_list_add_item(attrib_pair_list, &count, name_value_pair);
+      free(name_value_pair);
+    }
+  }
+
+  return attrib_pair_list;
+}
+
+
 
 
 /*------------------------------------------------------------------
@@ -434,8 +521,13 @@ int s_table_gtksheet_to_all_tables() {
   local_gtk_sheet = sheets[0];
   master_row_list = sheet_head->master_comp_list_head;
   master_col_list = sheet_head->master_comp_attrib_list_head;
+
   local_table = sheet_head->component_table;
 
+  /* now fill out new table */
+#ifdef DEBUG
+  printf("In s_table_gtksheet_to_all_tables, now about to fill out new component table.\n");
+#endif
   s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
 		       master_col_list, local_table,
 		       num_rows, num_cols);
@@ -460,7 +552,7 @@ int s_table_gtksheet_to_all_tables() {
   local_gtk_sheet = sheets[2];
   master_row_list = sheet_head->master_pin_list_head;
   master_col_list = sheet_head->master_pin_attrib_list_head;
-  local_table = sheet_head->pin_table;
+  local_table = s_table_new(num_rows, num_cols);
 
   s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
 		       master_col_list, local_table,
@@ -490,6 +582,11 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row
   gchar *col_title;
   
   gchar *attrib_value;
+
+#ifdef DEBUG
+      printf("**********    Entering s_table_update_table     ******************\n");
+#endif
+
 
   row_list_item = master_row_list;
   for (row = 0; row < num_rows; row++) {
