@@ -184,7 +184,7 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
 void
 o_save_write_header(FILE *fp)
 {
-  fprintf(fp, "v %s\n", VERSION);
+  fprintf(fp, "v %s %u\n", VERSION, FILEFORMAT_VERSION);
 }
 
 
@@ -329,18 +329,18 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   char buf[1024];
   char string[1024];
   char objtype;
-  char version[20];         /* 20 should be big enough hack */
   OBJECT *object_list_save=NULL;
   OBJECT *temp_tail=NULL;
   OBJECT *temp_parent=NULL;
   OBJECT *object_before_attr=NULL;
-  long int ver;
-  long int current_ver;
+  unsigned int release_ver;
+  unsigned int fileformat_ver;
+  unsigned int current_fileformat_ver;
   int found_pin = 0;
+  int itemsread = 0;
 
-  /* fill version with default string, the current version */
-  strcpy(version, VERSION); 
-  current_ver = strtol(version, NULL, 10);	
+  /* fill version with default file format version (the current one) */
+  current_fileformat_ver = FILEFORMAT_VERSION;
 
   fp = fopen(filename, "r");
 
@@ -355,62 +355,72 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
     switch (objtype) {
 
       case(OBJ_LINE):
-        object_list = (OBJECT *) o_line_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_line_read(w_current, object_list, buf, 
+	                                     release_ver, fileformat_ver);
         break;
 
 
       case(OBJ_NET):
-        object_list = (OBJECT *) o_net_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_net_read(w_current, object_list, buf,
+                                            release_ver, fileformat_ver);
         break;
 
       case(OBJ_BUS):
-        object_list = (OBJECT *) o_bus_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_bus_read(w_current, object_list, buf,
+                                            release_ver, fileformat_ver);
         break;
 
       case(OBJ_BOX):
-        object_list = (OBJECT *) o_box_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_box_read(w_current, object_list, buf,
+                                            release_ver, fileformat_ver);
         break;
 		
       case(OBJ_CIRCLE):
-        object_list = (OBJECT *) o_circle_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_circle_read(w_current, object_list, buf,
+                                               release_ver, fileformat_ver);
         break;
 
       case(OBJ_COMPLEX):
-        object_list = (OBJECT *) o_complex_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_complex_read(w_current, object_list, buf,
+                                                release_ver, fileformat_ver);
 
-				/* this is necessary because complex may add
-				   attributes which float */
-				/* needed now? */
+        /* this is necessary because complex may add attributes which float */
+	/* needed now? */
         object_list = (OBJECT *) return_tail(object_list);
         break;
 
       case(OBJ_TEXT):
         fgets(string, 1024, fp); /* check if invalid */
-        object_list = (OBJECT *) o_text_read(w_current, object_list, buf, string, version);
+        object_list = (OBJECT *) o_text_read(w_current, object_list, buf,
+                                             string,
+                                             release_ver, fileformat_ver);
         break;
 
       case(OBJ_PIN):
-        object_list = (OBJECT *) o_pin_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_pin_read(w_current, object_list, buf,
+                                            release_ver, fileformat_ver);
         found_pin++;
         break;
 
       case(OBJ_ARC):
-        object_list = (OBJECT *) o_arc_read(w_current, object_list, buf, version);
+        object_list = (OBJECT *) o_arc_read(w_current, object_list, buf,
+                                            release_ver, fileformat_ver);
         break;
 
       case(STARTATTACH_ATTR): 
         object_before_attr = object_list;
-				/* first is the fp */
-				/* 2nd is the object to get the attributes */ 
-        object_list = (OBJECT *) o_read_attribs(w_current, fp, object_list, version);
-
-				/* slots only apply to complex objects */
+	/* first is the fp */
+	/* 2nd is the object to get the attributes */ 
+        object_list = (OBJECT *) o_read_attribs(w_current, fp, object_list,
+                                                release_ver, fileformat_ver);
+        
+	/* slots only apply to complex objects */
         if (object_before_attr->type == OBJ_COMPLEX) {
           o_attrib_slot_update(w_current, object_before_attr);	
         }
 
-				/* need this? */
-				/*object_list = return_tail(object_list);*/
+	/* need this? nope */
+	/*object_list = return_tail(object_list);*/
         object_before_attr = NULL;
         break;
 
@@ -429,13 +439,11 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
 
       case(END_EMBEDDED): 
         object_list = object_list_save;
-				/* don't do this since objects are already
-				 * stored/read translated 
-                                 o_complex_world_translate(w_current, 
-                                 object_list->x, 
-                                 object_list->y, 
-                                 object_list->complex);
-				*/
+	/* don't do this since objects are already
+	 * stored/read translated 
+         * o_complex_world_translate(w_current, object_list->x,
+         *                           object_list->y, object_list->complex);
+	 */
         w_current->page_current->object_tail = temp_tail;
         w_current->page_current->object_parent = temp_parent;
         break;
@@ -448,19 +456,28 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
         break;	
 
       case(COMMENT):
-				/* do nothing */
+	/* do nothing */
         break;
 
       case(VERSION_CHAR):
-        sscanf(buf, "v %s\n", version);
+        itemsread = sscanf(buf, "v %u %u\n", &release_ver, &fileformat_ver);
 
-	ver = strtol(version, NULL, 10);	
-	if (ver < current_ver) {
-	   s_log_message("The file %s has a version of %s.\nPlease run g[sym|sch]update on %s to update.\n", filename, version, filename);
+	/* 20030921 was the last version which did not have a fileformat */
+	/* version.  The below latter test should not happen, but it is here 
+	/* just in in case. */
+	if (release_ver <= VERSION_20030921 || itemsread == 1)
+        { 
+          fileformat_ver = 0;
 	}
-#if DEBUG 
-        printf("Found version: %s\n", version);
-#endif
+        
+	if (fileformat_ver < current_fileformat_ver)
+        {
+          s_log_message("The file %s has a file format version of %d.\n"
+                        "The current file format version is: %d\n"
+                        "Please run g[sym|sch]update on %s to update.\n", 
+                        filename, fileformat_ver, current_fileformat_ver, 
+                        filename);
+	}
         break;
 
       default:
@@ -473,9 +490,8 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   fclose(fp);
 
   if (found_pin) {
-    ver = strtol(version, NULL, 10);
-    if (ver <= VERSION_20020825) {
-       o_pin_update_whichend(w_current, return_head(object_list), found_pin);
+    if (release_ver <= VERSION_20020825) {
+      o_pin_update_whichend(w_current, return_head(object_list), found_pin);
     }
   }
   

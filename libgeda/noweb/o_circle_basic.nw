@@ -11,8 +11,6 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_circle_basic.nw instead */
 
 <<o_circle_basic.c : include directives>>
-<<o_circle_basic.c : macros>>
-
 
 <<o_circle_basic.c : dist()>>
 
@@ -102,11 +100,6 @@
 #include "../include/prototype.h"
 
 @ 
-
-<<o_circle_basic.c : macros>>=
-#define VERSION_20000704 20000704
-
-@ %def VERSION_20000704
 
 
 @section Function [[dist()]]
@@ -363,7 +356,8 @@ the file format used for the releases after 20000704.
 
 <<o_circle_basic.c : o_circle_read()>>=
 OBJECT * 
-o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
+o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+              unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
   int x1, y1;
@@ -376,8 +370,7 @@ o_circle_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versio
   int circle_fill;
   long int ver;
 
-  ver = strtol(version, NULL, 10);
-  if(ver <= VERSION_20000704) {
+  if(release_ver <= VERSION_20000704) {
 	  <<o_circle_read() : old geda file format>>
 			
   } else {

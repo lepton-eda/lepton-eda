@@ -762,7 +762,8 @@ o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_head)
 
 <<o_attrib.c : o_read_attribs()>>=
 OBJECT *
-o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, char *version)
+o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs,
+               unsigned int release_ver, unsigned int fileformat_ver)
 {
   OBJECT *object_list=NULL;
   char buf[1024];
@@ -782,7 +783,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
         object_list = (OBJECT *) o_line_read(w_current, 
                                              object_list,
                                              buf, 
-                                             version);
+                                             release_ver, fileformat_ver);
         break;
 
 
@@ -790,21 +791,21 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
         object_list = (OBJECT *) o_net_read(w_current, 
                                             object_list, 
                                             buf, 
-                                            version);
+                                            release_ver, fileformat_ver);
         break;
 
       case(OBJ_BUS):
         object_list = (OBJECT *) o_bus_read(w_current, 
                                             object_list, 
                                             buf, 
-                                            version);
+                                            release_ver, fileformat_ver);
         break;
 
       case(OBJ_BOX):
         object_list = (OBJECT *) o_box_read(w_current, 
                                             object_list, 
                                             buf, 
-                                            version);
+                                            release_ver, fileformat_ver);
         break;
 		
       case(OBJ_CIRCLE):
@@ -812,7 +813,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
                                                w_current, 
                                                object_list, 
                                                buf, 
-                                               version);
+                                               release_ver, fileformat_ver);
         break;
 
       case(OBJ_COMPLEX):
@@ -821,7 +822,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
                                                 w_current, 
                                                 object_list, 
                                                 buf, 
-                                                version);
+                                                release_ver, fileformat_ver);
 
 				/* this is necessary because complex may add
 				   attributes which float */
@@ -834,14 +835,14 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
         object_list = (OBJECT *) o_pin_read(w_current, 
                                             object_list, 
                                             buf, 
-                                            version);
+                                            release_ver, fileformat_ver);
         break;
 
       case(OBJ_ARC):
         object_list = (OBJECT *) o_arc_read(w_current, 
                                             object_list, 
                                             buf, 
-                                            version);
+                                            release_ver, fileformat_ver);
         break;
 
       case(OBJ_TEXT):
@@ -850,7 +851,7 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
                                              object_list, 
                                              buf, 
                                              string, 
-                                             version);
+                                             release_ver, fileformat_ver);
         saved_color = object_list->color;
         ATTACH=TRUE;
 		

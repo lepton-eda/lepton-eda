@@ -686,7 +686,8 @@ o_complex_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 <<o_complex_basic.c : o_complex_read()>>=
 OBJECT *
 o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
-			   char buf[], char *version)
+               char buf[], unsigned int release_ver,
+               unsigned int fileformat_ver)
 {
   char type; 
   int x1, y1;

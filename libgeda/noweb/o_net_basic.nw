@@ -290,7 +290,7 @@ void o_net_recalc(TOPLEVEL * w_current, OBJECT * o_current)
 
 <<o_net_basic.c : o_net_read()>>=
 OBJECT *o_net_read(TOPLEVEL * w_current, OBJECT * object_list, char buf[],
-		   char *version)
+		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type;
   int x1, y1;

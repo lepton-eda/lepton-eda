@@ -11,7 +11,6 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_pin_basic.nw instead */
 
 <<o_pin_basic.c : include directives>>
-<<o_pin_basic.c : macros>>
 <<o_pin_basic.c : get_pin_bounds()>>
 <<o_pin_basic.c : world_get_pin_bounds()>>
 <<o_pin_basic.c : o_pin_add()>>
@@ -79,11 +78,6 @@
 #include "../include/prototype.h"
 
 @
-
-<<o_pin_basic.c : macros>>=
-#define VERSION_20020825 20020825
-
-@ %def VERSION_20020825
 
 
 @section Function @code{get_pin_bounds()}
@@ -293,7 +287,8 @@ o_pin_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 <<o_pin_basic.c : o_pin_read()>>=
 OBJECT *
-o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
+o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+           unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
   int x1, y1;
@@ -305,8 +300,7 @@ o_pin_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
   int whichend;
   long int ver;
 
-  ver = strtol(version, NULL, 10);
-  if(ver <= VERSION_20020825) {
+  if(release_ver <= VERSION_20020825) {
     sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
     pin_type = PIN_TYPE_NET;
     whichend = -1;     

@@ -572,8 +572,10 @@ o_text_width(TOPLEVEL *w_current, char *string, int size)
     width = width + size*font_set[(unsigned char) string[i]].font_text_size;
   }
 
-  /* the size is a fudge factor */
-  return(width - size*10);
+  /* the size is a fudge factor.  I don't think this fudge factor is */
+  /* correct.  Removed on 09/27/2003 */
+  /* return(width - size*10); */
+  return (width);
 }
 
 
@@ -1005,7 +1007,8 @@ o_text_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 <<o_text_basic.c : o_text_read()>>=
 OBJECT *
 o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
-            char buf[], char string[], char *version)
+            char buf[], char string[], unsigned int release_ver,
+            unsigned int fileformat_ver)
 {
   char type; 
   int x, y;
@@ -1015,13 +1018,12 @@ o_text_read(TOPLEVEL *w_current, OBJECT *object_list,
   int show_name_value;
   int angle;
   int alignment;
-  int int_version;
 
   string = remove_nl(string);	
 
-  int_version = atoi(version);
-
-  if (int_version < 20000220) {
+  /* yes, less than (not less than and equal) is correct.  This format */
+  /* change occurred in 20000220 */
+  if (release_ver < VERSION_20000220) {
     sscanf(buf, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
            &color, &size,
            &visibility, &show_name_value, 

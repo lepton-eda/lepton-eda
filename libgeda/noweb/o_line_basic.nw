@@ -11,8 +11,6 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_line_basic.nw instead */
 
 <<o_line_basic.c : include directives>>
-<<o_line_basic.c : macros>>
-
 
 <<o_line_basic.c : o_line_add()>>
 
@@ -103,10 +101,6 @@
 
 @ 
 
-<<o_line_basic.c : macros>>=
-#define VERSION_20000704 20000704
-
-@ %def VERSION_20000704
 
 
 @section Function [[o_line_add()]]
@@ -337,7 +331,7 @@ the file format used for the releases after 20010704.
 <<o_line_basic.c : o_line_read()>>=
 OBJECT *
 o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
-            char *version)
+            unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
   int x1, y1;
@@ -350,8 +344,7 @@ o_line_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
   int color;
   long int ver;
 
-  ver = strtol(version, NULL, 10);
-  if(ver <= VERSION_20000704) {
+  if(release_ver <= VERSION_20000704) {
 	  <<o_line_read() : old geda file format>>
 
   } else {

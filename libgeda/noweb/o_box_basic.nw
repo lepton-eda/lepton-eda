@@ -111,9 +111,8 @@
 #define GET_BOX_TOP(w)                          \
 		min((w)->start_y, (w)->last_y);
 
-#define VERSION_20000704 20000704
 
-@ %def GET_BOX_WIDTH GET_BOX_HEIGHT GET_BOX_LEFT GET_BOX_TOP VERSION_20000704
+@ %def GET_BOX_WIDTH GET_BOX_HEIGHT GET_BOX_LEFT GET_BOX_TOP
 
 
 @section Function [[o_box_add()]]
@@ -370,7 +369,8 @@ the file format used for the releases after 2000704.
 
 <<o_box_basic.c : o_box_read()>>=
 OBJECT *
-o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
+o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+           unsigned int release_ver, unsigned int fileformat_ver)
 {
 	char type; 
 	int x1, y1;
@@ -385,8 +385,7 @@ o_box_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
 	int box_filling;
 	long int ver;
 	
-	ver = strtol(version, NULL, 10);
-	if(ver <= VERSION_20000704) {
+	if(release_ver <= VERSION_20000704) {
 		<<o_box_read() : old geda file format>>
 			  
 	} else {

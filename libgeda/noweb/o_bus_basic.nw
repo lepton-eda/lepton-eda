@@ -11,7 +11,6 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_bus_basic.nw instead */
 
 <<o_bus_basic.c : include directives>>
-<<o_bus_basic.c : macros>>
 <<o_bus_basic.c : get_bus_bounds()>>
 <<o_bus_basic.c : world_get_bus_bounds()>>
 <<o_bus_basic.c : o_bus_add()>>
@@ -83,10 +82,6 @@
 @ %def
 
 
-<<o_bus_basic.c : macros>>=
-#define VERSION_20020825 20020825
-
-@ %def VERSION_20020825
 
 
 @section Function @code{get_bus_bounds()}
@@ -284,7 +279,8 @@ o_bus_recalc(TOPLEVEL *w_current, OBJECT *o_current)
 
 <<o_bus_basic.c : o_bus_read()>>=
 OBJECT *
-o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
+o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
+           unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
   int x1, y1;
@@ -295,8 +291,7 @@ o_bus_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *version)
   int ripper_dir;
   long int ver;
 
-  ver = strtol(version, NULL, 10);
-  if(ver <= VERSION_20020825) {
+  if(release_ver <= VERSION_20020825) {
     sscanf(buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
     ripper_dir = 0;
   } else {

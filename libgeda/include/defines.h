@@ -20,6 +20,19 @@
 #ifndef _DEFINES_H_INCL
 #define _DEFINES_H_INCL
 
+/* Current schematic/symbol file format */
+#define FILEFORMAT_VERSION     1
+
+/* release version which had file format changes */
+/* New file format changes after 20030921 use the above version */
+/* and not these #defines anymore. */
+#define VERSION_20000220 20000220
+#define VERSION_20000704 20000704
+#define VERSION_20020825 20020825
+#define VERSION_20030921 20030921
+/* 20030921 wasn't a real version, just a MinGW test version, but it is */
+/* out there */
+
 /* for color mechanism used in gschem */
 #define MAX_COLORS 25
 

@@ -11,7 +11,6 @@
 /* DO NOT read or edit this file ! Use ../noweb/o_arc_basic.nw instead */
 
 <<o_arc_basic.c : include directives>>
-<<o_arc_basic.c : macros>>
 
 <<o_arc_basic.c : o_arc_add()>>
 
@@ -96,11 +95,6 @@
 #include "../include/prototype.h"
 
 @ 
-
-<<o_arc_basic.c : macros>>=
-#define VERSION_20000704 20000704
-
-@ %def VERSION_20000704
 
 
 @section Function [[o_arc_add()]]
@@ -312,7 +306,7 @@ A negative or null radius is not allowed.
 <<o_arc_basic.c : o_arc_read()>>=
 OBJECT *
 o_arc_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
-		   char *version)
+		   unsigned int release_ver, unsigned int fileformat_ver)
 {
   char type; 
   int x1, y1;
@@ -363,8 +357,7 @@ Depending on the version of the file format used to describe this arc, the buffe
 
 <<o_arc_read() : file format version compatibility>>=
 
-  ver = strtol(version, NULL, 10);
-  if(ver <= VERSION_20000704) {
+  if(release_ver <= VERSION_20000704) {
     sscanf(buf, "%c %d %d %d %d %d %d", &type,
            &x1, &y1, &radius, &start_angle, &end_angle, &color);
 

@@ -1,3 +1,22 @@
+2003-10-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to something more recent, but this
+        version is not an official release.
+
+	* noweb/a_basic.nw, o_arc_basic.nw, o_attrib.nw, o_box_basic.nw, 
+	o_bus_basic.nw, o_circle_basic.nw, o_complex_basic.nw, 
+	o_line_basic.nw, o_net_basic.nw, o_pin_basic.nw, o_text_basic.nw: 
+	Added the file format flag to the "v" file line.  Also moved all 
+	version numbers into include/define.h.
+
+	* noweb/o_text_basic.nw: Removed fudge factor from width calculation.
+
+	* include/defines.h: Added version numbers, added #define for the
+	current file format version (FILEFORMAT_VERSION).
+
+	* include/prototype.h: Updated due to changed loading function
+	signatures.
+
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Fixed MinGW cflags/ldflags
