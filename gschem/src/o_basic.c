@@ -48,16 +48,23 @@ o_redraw_all(TOPLEVEL *w_current)
 	struct timeval tv2;
 #endif
 
+
 	/* this is slowing things down A LOT, remove it eventually */
 	o_conn_disconnect_update(w_current->page_current);
 
-	x_repaint_background(w_current);
+	if (!w_current->DONT_REDRAW) {
+		x_repaint_background(w_current);
+	}
+
 #if 0
 	gettimeofday(&tv1, NULL);
 #endif
 
 	o_recalc(w_current, w_current->page_current->object_head);
-	o_redraw(w_current, w_current->page_current->object_head);
+
+	if (!w_current->DONT_REDRAW) {
+		o_redraw(w_current, w_current->page_current->object_head);
+	}
 
 #if 0
 	gettimeofday(&tv2, NULL);
@@ -101,9 +108,15 @@ o_redraw_all(TOPLEVEL *w_current)
 void
 o_redraw_all_fast(TOPLEVEL *w_current)
 {
-	x_repaint_background(w_current);
+	if (!w_current->DONT_REDRAW) {
+		x_repaint_background(w_current);
+	}
+
 	o_recalc(w_current, w_current->page_current->object_head);
-	o_redraw(w_current, w_current->page_current->object_head);
+
+	if (!w_current->DONT_REDRAW) {
+		o_redraw(w_current, w_current->page_current->object_head);
+	}
 }
 
 void
