@@ -2,7 +2,7 @@
 -e main -s
 !#
 
-;;; Copyright 2001 by Patrick Bernaud. All rights reserved
+;;; Copyright (C) 2001, 2005 by Patrick Bernaud. All rights reserved
 ;;; See file COPYRIGHT for more information.
 
 ;;; This scripts is supposed to do the same things as notangle do.
@@ -12,21 +12,118 @@
 
 
 (use-modules (ice-9 getopt-long)
-             (ice-9 regex))
+	     (ice-9 regex))
 
 (debug-enable 'backtrace)
+
+(define noweb-rootname     "*")
+(define noweb-filename     #f)
+(define code-chunks        '())
+
+(define def-regexp  (make-regexp "^\<\<(.*)\>\>="))
+(define ref-regexp  (make-regexp "\<\<([^>]*)\>\>"))
+(define end-regexp  (make-regexp "^@\ ?"))
+
+
+(define (tangle-step1)
+
+  ;; reads and returns a code chunk
+  (define (read-code-chunk)
+    (let loop ((line (read-line (current-input-port) 'concat)))
+      (if (not (eof-object? line))
+          (let ((res (regexp-exec end-regexp line)))
+            ;; code chunk ends at line that match end-regexp (^@\ ?)
+            (if (regexp-match? res)
+                ;; reached end of chunk
+                '()
+                ;; end not yet reached, continues the analyze
+                (append (list line) 
+                        (loop (read-line (current-input-port) 'concat))))))))
+
+  ;; identifies code chunk and adds them to the association table
+  (let loop ((line ""))
+    (if (not (eof-object? line))
+        (let ((m (regexp-exec def-regexp line)))
+          (if (regexp-match? m)
+              (add-code-chunk (match:substring m 1) (read-code-chunk)))
+          (loop (read-line))))))
+
+(define (tangle-step2)
+
+  ;; search in the association table for a code chunk named name
+  ;; and output its content recursively, looking for embedded references
+  (define (output-code-chunk name offset)
+    (let ((code (assoc-ref code-chunks name))
+          (first #t))
+      ;; check there actually exists a code chunk with this name
+      (if code
+          ;; yes, go on and process each line of the code chunk
+          (for-each
+           (lambda (line)
+             ;; the offset must not be printed when it is the first line
+             ;; of a code chunk
+             (if (not first) (display offset) (set! first #f))
+             ;; search for one (or more) chunk reference in the current line
+             (let loop ((l line))
+               (let ((m (regexp-exec ref-regexp l)))
+                 (if (regexp-match? m)
+                     ;; found a reference in the line, process it
+                     (begin
+                       (display (match:prefix m))
+                       (output-code-chunk (match:substring m 1)
+                                          (string-append offset
+                                                         (make-string
+                                                          (match:start m)
+                                                          #\space)))
+                       (loop (match:suffix m)))
+                     ;; no reference found, output the full line
+                     (display l)))))
+           code)
+          (error (format #f "undefined chunk name: \<\<~a\>\>~%" name)))))
+
+  ;; check there is a code chunk with name rootname
+  (if (assoc-ref code-chunks noweb-rootname)
+      ;; ok, start tangling from rootname and null offset
+      (output-code-chunk noweb-rootname "")
+      (error (format #f "The root module \<\<~a\>\> was not defined.~%" 
+                     noweb-rootname))))
+
+(define (tangle-noweb)
+  ;; first reads the file and collect the code chunks
+  (tangle-step1)
+  ;; then assemble them
+  (tangle-step2))
+
+(define (add-code-chunk name code)
+  ;; the last newline char of a code chunk must be removed
+  (let ((last (1- (length code))))
+    (if (>= last 0)
+        (list-set! code last (remove-newline (list-ref code last)))))
+  ;; add a new entry for name to the association list code-chunks
+  ;; or complete an entry if it already exists
+  (set! code-chunks 
+        (assoc-set! code-chunks name
+                    (let ((code-prev (assoc-ref code-chunks name)))
+                      ;; check if chunk is already defined
+                      (if code-prev
+                          ;; yes, append new code
+                          (append code-prev (list "\n") code)
+                          ;; otherwise, only associate name with code
+                          code)))))
+
+(define (remove-newline str)
+  (cond ((string-null? str) str)
+        ((char=? (string-ref str (1- (string-length str))) #\newline)
+         (substring str 0 (1- (string-length str))))
+        (else str)))
+
 
 (define option-spec
   '((rootname (required? #f) (single-char #\R) (value #t))
     (help     (required? #f) (single-char #\h))
     (version  (required? #f) (single-char #\v))
-;;; pb20010901 - unsupported notangle options
-;    (filter   (required? #f) (value #t))
-;    (tabsl    (required? #f) (value #optionnal))
-))
+    ))
 
-
-;;; pb20010901 - taken from getopt-long example in Guile Reference Manual
 (define (display-usage)
   (display "Usage: notangle_guile [options...] [file]\n")
   (display "  --help, -h                  Show this usage information\n")
@@ -35,188 +132,38 @@
   (exit))
 
 (define (display-version)
-  (display "notangle_guile 20010901\n")
+  (display "notangle_guile 20050224\n")
   (exit))
-
-
-(define (display-error msg)
-  (display msg (current-error-port)))
-
-
-(define noweb-rootname     "*")
-(define noweb-file         "")
-(define code-chunks        '())
-(define current-chunk-name "")
-(define current-code-chunk '())
-
-
-(define def-regexp  (make-regexp "^\<\<[A-Za-z0-9_/\*:\ ()\.\,\-]*\>\>="))
-(define ref-regexp  (make-regexp "\<\<[A-Za-z0-9_/\*:\ ()\.\,\-]*\>\>"))
-(define end-regexp  (make-regexp "^@"))
-(define crlf-regexp (make-regexp "[\n\r]"))
-
-
-(define (tangle-step1 fdes)
-  (let ((inside-code #f))
-    (do ((line (read-line fdes 'concat) (read-line fdes 'concat)))
-        ((eof-object? line) line)
-      (if inside-code 
-          ;;; when inside a code chunk, look for its end
-          (let ((res (regexp-exec end-regexp line)))
-            (if (regexp-match? res)
-                ;;; found the end of the current code chunk
-                (begin 
-                  ;;; remove the crlf from last line of current-code-chunk
-                  (remove-last-crlf current-code-chunk)
-                  ;;; add the code chunk to the global association list
-                  (add-code-chunk current-chunk-name current-code-chunk)
-                  ;;; switch to a 'inside documentation chunk" status
-                  (set! inside-code #f)
-                  ;;; reset toplevel variables
-                  (set! current-chunk-name "")
-                  (set! current-code-chunk '()))
-                ;;; not found, so line is part of the current code chunk
-                (begin 
-                  ;;; add the line to the current-code-chunk
-                  (set! current-code-chunk 
-                        (append current-code-chunk (list line))))))
-          ;;; when outside of a code chunk, look for the start of one
-          (let ((res (regexp-exec def-regexp line)))
-            (if (regexp-match? res)
-                ;;; found the start of a new code chunk
-                ;;;   -> extract its name frome the match
-                (let ((name (match:substring res)))
-                  ;;; remove the beginning and trailing sequences around name
-                  (set! current-chunk-name 
-                        (substring name 2 (- (string-length name) 3)))
-                  ;;; switch to a 'inside code chunk' status
-                  (set! inside-code #t))))))))
-
-
-;;; pb20010901 - taken from getopt-long example in Guile Reference Manual
-(define (display-usage)
-  (display "Usage: notangle_guile [options...] [file]\n")
-  (display "  --help, -h                  Show this usage information\n")
-  (display "  --version, -v               Show version information\n")
-  (display "  --rootname=value, -Rvalue   Set root code chunk name to value\n")
-  (exit))
-
-(define (display-version)
-  (display "notangle_guile 20010901\n")
-  (exit))
-
-
-(define (add-code-chunk name code)
-  ;;; check if chunk already defined
-  (let ((code-prev (assoc-ref code-chunks name)))
-    (if (list? code-prev)
-        ;;; chunk already defined
-        ;;;  -> append the previous lines and the new lines
-        (set! code (append code-prev code))))
-  ;;; place the code chunk in the association list
-  (set! code-chunks (assoc-set! code-chunks name code)))
-
-
-(define (tangle-step2 name offset) 
-  ;;; check if the chunk exists in the association list
-  (let ((first-line #t)
-        (code (assoc-ref code-chunks name)))
-    (if (list? code)
-        (begin
-          ;;; remove the crlf from last line of current-code-chunk
-          (remove-last-crlf code)
-          ;;; the code chunk exists
-          ;;;  -> for each line in list, search for a chunk reference
-          (for-each
-           (lambda (x)
-             (let ((noff offset))
-               (if (not first-line)
-                   ;;; display the horizontal offset
-                   (display offset (current-output-port))
-                   ;;; change the flag after first line
-                   (set! first-line #f))
-
-               ;;; repeat for all references on the line
-               (do ((tmp (regexp-exec ref-regexp x)
-                         (regexp-exec ref-regexp x)))
-                   ((not (regexp-match? tmp)) tmp)
-                 (begin
-                   ;;; output chars before the reference
-                   (display (match:prefix tmp) (current-output-port))
-                   ;;; expand the code chunk referenced
-                   (let* ((tmp2 (match:substring tmp))
-                          ;;; get the code chunk name
-                          (tmp3 (substring tmp2 2 
-                                           (- (string-length tmp2) 2))))
-                     ;;; update the horizontal offset
-                     ;;; with the length of chars before the reference
-                     (set! noff (string-append noff (make-string 
-                                                     (string-length 
-                                                      (match:prefix tmp)) 
-                                                     #\ )))
-                     ;;; expand the code chunk 'tmp3' at the current position
-                     (tangle-step2 tmp3 noff)
-                     ;;; update the horizontal offset
-                     ;;; with the length of the reference for next tangling
-                     (set! noff (string-append noff (make-string 
-                                                     (+ (string-length tmp3) 4)
-                                                     #\ ))))
-                   ;;; change x to become the remaining of the line
-                   ;;; and launch a new search for a chunk reference
-                   (set! x (match:suffix tmp))))
-
-
-               ;;; display the remaining chars from the line
-               (display x (current-output-port))))
-          code))
-        ;;; the code chunk does not exist
-        ;;;  -> displays an error and exits
-        (display-error (string-append "undefined chunk name: <<" name
-                                      ">>\n")))))
-
-
-(define (tangle-noweb-file)
-  (if (file-exists? noweb-file)
-      ;;; if file exists, open it and start tangling
-      (begin 
-        (let ((fdes (open-input-file noweb-file)))
-          (tangle-step1 fdes)
-          (close fdes)
-          (tangle-step2 noweb-rootname "")))
-      ;;; if not, display an error and exit
-      (display-error (string-append "couldn't open file" noweb-file "\n"))))
-
-
-(define (remove-last-crlf chunk)
-  (if (list? chunk)
-      (let* ((index-last-element (- (length chunk) 1))
-             (last-element       (list-ref chunk index-last-element)))
-        (let ((res (regexp-exec crlf-regexp last-element)))
-          (if (regexp-match? res)
-              (list-set! chunk index-last-element (match:prefix res)))))))
-
 
 (define (main args)
-  ;;; processing command line
+  ;; processing command line
   (let* ((opts           (getopt-long args option-spec))
          (help-wanted    (option-ref opts 'help     #f))
          (version-wanted (option-ref opts 'version  #f))
          (rootname       (option-ref opts 'rootname #f))
          (filename       (option-ref opts '()       #f)))
-    ;;; display version if -v flag
+    ;; display version if -v flag
     (if version-wanted (display-version))
-    ;;; display usage   if -h flag
+    ;; display usage   if -h flag
     (if help-wanted    (display-usage))
-    ;;; if a filename is given, filename is a string
-    ;;; else, filename is set to #f
-    (if (string? (car filename))
-         (set! noweb-file (car filename)))
-    ;;; if rootname is given, rootname is a string
-    ;;; else, rootname is set to #f
+    ;; if a filename is given, filename is a string
+    ;; else, filename is set to #f
+    (if (not (null? filename))
+        (if (file-exists? (car filename))
+            (set! noweb-filename (car filename))
+            (error (format #f "couldn't find file ~a~%" (car filename)))))
+    ;; if rootname is given, rootname is a string
+    ;; else, rootname is set to #f
     (if (string? rootname)
         (set! noweb-rootname rootname)))
 
-  ;;; start tangling noweb-file
-  (tangle-noweb-file))
+  ;; start tangling
+  (if (string? noweb-filename)
+      ;; work on a file
+      (with-input-from-file noweb-filename
+        (lambda ()
+          (tangle-noweb)))
+      ;; no file specified, work on current input port
+      (tangle-noweb)))
 
 
