@@ -21,6 +21,33 @@
 ;;
 ;; --------------------------------------------------------------------------
 
+;; some useful regexes for working with net-names
+;;
+(use-modules (ice-9 regex))
+
+(define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
+(define numeric  "[0-9]+")
+;; match on a verilog identifier like:  netname[x:y]
+(define bit-range-reg (make-regexp
+		       (string-append "^(" id-regexp ")[[:space:]]*" 
+				      "\\["
+				      "[[:space:]]*(" numeric ")[[:space:]]*"
+				      ":"
+				      "[[:space:]]*(" numeric ")[[:space:]]*"
+				      "\\]")))
+
+;; match on a verilog identifier like:  netname[x]
+(define single-bit-reg (make-regexp 
+			(string-append "^(" id-regexp ")[[:space:]]*"
+				       "\\["
+				       "[[:space:]]*(" numeric ")[[:space:]]*"
+				       "\\]" )))
+
+;; match on a verilog identifier like:  netname
+(define simple-id-reg (make-regexp 
+		       ( string-append "^(" id-regexp ")$" )))
+
+
 ;; return the top level block name for the module
 (define verilog:get-module-name
   ( gnetlist:get-toplevel-attribute "module_name" ))
@@ -91,14 +118,14 @@
 	  (if (not (null? the-pins))
 	      (begin
 		(display "       " p) 
-		(display (car the-pins) p)
+		(display (verilog:netname (car the-pins)) p)
 		(if (not (null? (cdr the-pins)))
 		    (for-each (lambda (pin)   ; loop over outputs
 				(begin
 				  (display " ," p)
 				  (newline p)
 				  (display "       " p)
-				  (display pin p)))
+				  (display (verilog:netname pin) p)))
 			      (cdr the-pins) ))))
 	(newline p)
 	(display "      );" p)
@@ -117,21 +144,21 @@
 	(for-each (lambda (pin)
 		    (begin
 		      (display "input " p)
-		      (display pin p)
+		      (display (verilog:netname pin) p)
 		      (display " ;" p)
 		      (newline p))) in)       ; do each input
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "output " p)
-		      (display pin p)
+		      (display (verilog:netname pin) p)
 		      (display " ;" p)
 		      (newline p))) out)      ; do each output
 
 	(for-each (lambda (pin)
 		    (begin
 		      (display "inout " p)
-		      (display pin p)
+		      (display (verilog:netname pin) p)
 		      (display " ;" p)
 		      (newline p))) inout)    ; do each inout
 		      
@@ -167,7 +194,240 @@
 )
 
 ;;
+;; Take a netname and parse it into a structure that describes the net:
+;;
+;;    (   netname            ; name of the wire
+;;      ( N1                 ; first limit
+;;        N2                 ; second limit
+;;        Increasing_order   ; #t if N2>N1
+;;        sure               ; #t if we are sure about the order
+;;      ))
+(define verilog:net-parse
+  (lambda (netname)
+    (let 
+	((bit-range (regexp-exec bit-range-reg netname))
+	 (single-bit (regexp-exec single-bit-reg netname))
+	 (simple-id (regexp-exec simple-id-reg netname)))
+
+      ;; check over each expression type, and build the appropriate
+      ;; result
+      ;(display netname) (display ": ")
+      (cond
+       ;; is it a bit range?
+       (bit-range
+	;(display "bit-range" )
+	(list (match:substring bit-range 1) 
+	      (list (string->number (match:substring bit-range 2))
+		    (string->number (match:substring bit-range 3))
+		    (> (string->number (match:substring bit-range 3))
+		       (string->number (match:substring bit-range 2))) 
+		    '#t netname)))
+
+       ;; just a single bit?
+       (single-bit 
+	;(display "single-bit")
+	(list (match:substring single-bit 1) 
+	      (list (string->number (match:substring single-bit 2))
+		    (string->number (match:substring single-bit 2))
+		    '#f '#f netname)))
+
+       ;; or a net without anything
+       (simple-id   
+	;(display "bare-net")
+	(list (match:substring simple-id 1) (list 0 0 #f #f netname)))
+
+       (else       
+	(display 
+	 (string-append "Warning: `" netname 
+			"' is not likely a valid Verilog identifier"))
+	(newline)
+	(list netname (list 0 0 #f #f netname)))
+       ))))
+
+;;
+;; return just the netname part of a verilog identifier
+;;
+(define verilog:netname
+  (lambda (netname)
+    (car (verilog:net-parse netname))))
+      
+;;  Update the given bit range with data passed.  Take care
+;;  of ordering issues.
+;;  
+;;   n1     : new first range
+;;   n2     : new second range
+;;   old-n1 : first range to be updated
+;;   old-n2 : second range to be updated
+;;   increasing : original order was increasing
+(define verilog:update-range
+  (lambda (n1 n2 old-n1 old-n2 increasing)
+    (let ((rn1 (if increasing
+		   (min n1 old-n1)     ; originally increasing
+		   (max n1 old-n1)))   ; originally decreasing
+
+	  (rn2 (if increasing
+		   (max n2 old-n2)     ; originally increasing
+		   (min n2 old-n2))))
+;      (display (string-append "increasing:" 
+;			      (if increasing "increasing" "decreasing")
+;			      " rn1:" (number->string rn1) 
+;			      " rn2:" (number->string rn2)
+;			      " n1:" (number->string n1)
+;			      " n2:" (number->string n2)
+;			      " old-n1:" (number->string old-n1)
+;			      " old-n2:" (number->string old-n2))) (newline)
+      (list rn1 rn2)
+	
+      )))
+
+
+;; return a record that has been updated with the given
+;; parameters
+(define verilog:update-record
+  (lambda (n1
+	   n2 
+	   list-n1 
+	   list-n2
+	   increasing
+	   sure
+	   real)
+    (list
+     (append (verilog:update-range 
+	      n1 n2 list-n1 list-n2
+	      increasing)
+	     (list increasing
+		   sure
+		   real)))))
+
+;;
+;;  Work over the list of `unique' nets in the design,
+;;  extracting names, and bit ranges, if appropriate.
+;;  return a list of net description objects
+;;
+
+(define the-nets '())
+
+(define verilog:get-nets 
+  (begin 
+    (for-each 
+     (lambda (netname)
+       ; parse the netname, and see if it is already on the list
+       (let* ((parsed (verilog:net-parse netname))
+	      (listed (assoc (car parsed) the-nets)))
+	 (if listed
+	     (begin ; it is, do some checks, and update the record
+	       ;; extract fields from list
+	       (let* ((list-name       (car listed))
+		      (list-n1         (car (cadr listed)))
+		      (list-n2         (cadr (cadr listed)))
+		      (list-increasing (caddr (cadr listed)))
+		      (list-sure       (cadddr (cadr listed)))
+		      (list-real       (cadddr (cdr (cadr listed))))
+		      
+		      (name            (car parsed))
+		      (n1              (car (cadr parsed)))
+		      (n2              (cadr (cadr parsed)))
+		      (increasing      (caddr (cadr parsed)))
+		      (sure            (cadddr (cadr parsed)))
+		      (real            (cadddr (cdr (cadr parsed))))
+
+		      (consistant      (or (and list-increasing increasing)
+					   (and (not list-increasing) 
+						(not increasing))))
+		      
+		     )
+
+		 (cond
+		  ((and list-sure consistant)
+		   (begin
+		     (set-cdr! listed
+			       (verilog:update-record n1 n2
+						      list-n1 list-n2
+						      increasing
+						      #t
+						      real)
+			       )))
+		   ((and list-sure (not sure) (zero? n1) (zero? n2))
+		    '() ;; this is a net without any expression, leave it
+		    )
+		  ((and list-sure (not consistant))
+		   (begin      ;; order is inconsistent
+		     (display 
+		      (string-append "Warning: Net `" real "' has a " 
+				     "bit order that conflicts with "
+				     "the original definition of `"
+				     list-real "', ignoring `"
+				     real "'"
+				     ))
+		     (newline))) 
+		   ((and (not list-sure) sure consistant)
+		    (begin
+		      (set-cdr! listed
+				(verilog:update-record n1 n2
+						       list-n1 list-n2
+						       increasing
+						       #t
+						       real))))
+		    
+		   ((and (not list-sure) sure (not consistant))
+		    (begin
+		      (set-cdr! listed
+				(verilog:update-record n1 n2
+						       list-n2 list-n1
+						       increasing
+						       #t
+						       real))))
+		   ((and (not list-sure) (not sure))
+		    (begin
+		      (set-cdr! listed
+				(verilog:update-record n1 n2
+						       list-n1 list-n2
+						       increasing
+						       #f
+						       real))))
+		   (else
+		    (begin
+		      (display "This should never happen!")
+		      (newline)))
+		   )
+	     )
+	 )
+       (begin ; it is not, just add it to the end
+	 (set! the-nets 
+	       (append the-nets 
+		       (list parsed))))
+       ))
+     )
+     
+    all-unique-nets)
+    the-nets))
+
+;;
 ;;  Display wires from the design
+;;
+;;  Display a net a legal verilog format, based on the object passed
+(define verilog:display-wire
+  (lambda (wire p)
+    ;; figure out if we need a bit range
+    (let ((name            (car wire))
+	  (n1              (car (cadr wire)))
+	  (n2              (cadr (cadr wire)))
+	  )
+      
+      (if (not (and (zero? n1) (zero? n2)))
+	  (begin     ;; yes, print it
+	    (display "[ " p)
+	    (display (car (cadr wire)) p)
+	    (display " : " p)
+	    (display (cadr (cadr wire)) p)
+	    (display " ] " p)
+	  )
+	)
+    ;; print the wire name
+      (display name p))))
+
+;;
+;;  Loop over the list of nets in the design, writing one by one
 ;;
 (define verilog:write-wires
   (lambda (p)
@@ -175,9 +435,10 @@
     (newline p)
     (for-each (lambda (wire)          ; print a wire statement for each
 		(display "wire " p)   ; net in the design
-		(display wire p)
+		(verilog:display-wire wire p)
 		(display " ;" p)
-		(newline p)) all-unique-nets)
+		(newline p))
+	      verilog:get-nets ) 
     (newline p)))
 
 ;;  Output any continuous assignment statements generated
@@ -187,14 +448,16 @@
     (display "/* continuous assignments */" p) (newline p)
     (for-each (lambda (wire)             ; do high values
 		(begin
-		  (display "assign " p) 
-		  (display wire p) (display " = 1'b1;" p)
+		  (display "assign " p) 	
+		  ;; XXX fixme, multiple bit widths!
+		  (display wire p) (display " = 1'b1;" p) 
 		  (newline p)))
 	      (verilog:get-matching-nets "device" "HIGH"))
 
     (for-each (lambda (wire)
 		(begin
 		  (display "assign " p) 
+		  ;; XXX fixme, multiple bit widths!
 		  (display wire p) (display " = 1'b0;" p)
 		  (newline p)))
 	      (verilog:get-matching-nets "device" "LOW"))
@@ -329,8 +592,7 @@
       (close-output-port port)
       )
     )
-  ) 
-
+) 
 ;;
 ;; Verilog netlist backend written by Mike Jarabek ends here
 ;;
