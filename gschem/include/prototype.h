@@ -852,6 +852,7 @@ void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit(TOPLEVEL *w_current, SELECTION *list);
+void multi_attrib_parse_attribute(GtkWidget *w, GtkWidget *w_current);
 /* x_multimulti.c */
 /* x_pagesel.c */
 void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);

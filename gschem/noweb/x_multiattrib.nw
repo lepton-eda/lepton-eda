@@ -8,9 +8,7 @@
 <<x_multiattrib.c : *>>=
 <<x_multiattrib.c : copyright and license>>
 
-/* DO NOT read or edit this file ! Use ../noweb/x_dialog.nw instead */
-
-/* STILL NEED to clean up line lengths in aa and tr */
+/* DO NOT read or edit this file ! Use ../noweb/x_multiattrib.nw instead */
 
 <<x_multiattrib.c : include directives>>
 
@@ -19,6 +17,7 @@
 <<x_multiattrib.c : multi_attrib_edit_parser()>>
 <<x_multiattrib.c : multi_attrib_edit_set_values()>>
 <<x_multiattrib.c : multi_attrib_edit_clear()>>
+<<x_multiattrib.c : multi_attrib_parse_attribute()>>
 <<x_multiattrib.c : multi_attrib_edit_select_row()>>
 <<x_multiattrib.c : multi_attrib_edit_add()>>
 <<x_multiattrib.c : multi_attrib_edit_change()>>
@@ -221,6 +220,126 @@ multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
 
 
 @ %def multi_attrib_edit_set_values
+
+
+@section Function @code{multi_attrib_parse_attribute()}
+ 
+@defun multi_attrib_parse_attribute w w_current
+@end defun
+ 
+<<x_multiattrib.c : multi_attrib_parse_attribute()>>=
+void multi_attrib_parse_attribute (GtkWidget *w, GtkWidget *w_current)
+{
+  GtkWidget *top_window;
+  GtkWidget *combo_entry;
+  GtkWidget *add_button;
+  GtkWidget *change_button;
+  GtkWidget *value_entry;
+  GtkWidget *clist;
+  char *attrib_name;
+  char *value;
+  int row, attrib_def_row;
+  char attrib_defined;
+  char *row_attrib_name;
+  GSList *special_attrib_list = NULL;
+  int special_attrib_found;
+  GSList *tmp;
+
+
+  top_window = gtk_widget_get_ancestor(w, GTK_TYPE_WINDOW);
+
+  /* Get combo with attribute name */
+  combo_entry =
+      gtk_object_get_data(GTK_OBJECT(top_window), "attrib_combo_entry");
+  attrib_name = gtk_entry_get_text(GTK_ENTRY(combo_entry));
+
+  /* Get entry with value of the attribute */
+  value_entry = gtk_object_get_data(GTK_OBJECT(top_window), "value_entry");
+  value = gtk_entry_get_text(GTK_ENTRY(value_entry));
+
+  /* Get clist with the attribute list */
+  clist = gtk_object_get_data(GTK_OBJECT(top_window), "clist");
+
+  /* Check if the attribute is already defined */
+  attrib_defined = FALSE;
+  attrib_def_row = -1;
+  row = 0;
+  while (gtk_clist_get_text(GTK_CLIST(clist), row, 0, &row_attrib_name) == 1) {
+    if (strcmp(row_attrib_name, attrib_name) == 0) {
+      attrib_defined = TRUE;
+      attrib_def_row = row;
+    }
+    row++;
+  }
+
+  /* Create a list with the attributes which can be attached multiple times */
+  special_attrib_list = g_slist_append(special_attrib_list, "comment");
+  special_attrib_list = g_slist_append(special_attrib_list, "source");
+  special_attrib_list = g_slist_append(special_attrib_list, "net");
+
+  add_button = gtk_object_get_data(GTK_OBJECT(top_window), "addbutton");
+  change_button =
+      gtk_object_get_data(GTK_OBJECT(top_window), "changebutton");
+
+
+  /* Search the attrib_name in the special list.  */
+  special_attrib_found = FALSE;
+  tmp = special_attrib_list;
+  while (tmp != NULL)
+  {
+    if (strcmp(attrib_name, tmp->data) == 0)
+    special_attrib_found = TRUE;
+    tmp = g_slist_next(tmp);
+  }
+ 
+ 
+  /* Select the attribute's row if it's not selected and it can be attached 
+     only once. */
+  if ((attrib_defined == TRUE) &&
+      (!special_attrib_found) ) {
+
+    /* Get the selected row */
+    GList *list;
+    gint row = -1;
+    for (list = GTK_CLIST(clist)->selection; list; list = list->next) {
+      row = GPOINTER_TO_INT(list->data);
+    }
+    /* Select the attribute's row if it's not selected */
+    if (row != attrib_def_row) {
+      gtk_clist_select_row(GTK_CLIST(clist), attrib_def_row, -1);
+    }
+  }
+
+  /* Unselect all if the attribute is not defined */
+  if (!attrib_defined) {
+    gtk_clist_unselect_all(GTK_CLIST(clist));
+  }
+
+  /* Enable/Disable Add and Change buttons */
+  if ((strlen(attrib_name) == 0) || (strlen(value) == 0)) {
+    /* Disable buttons when there is no name or value */
+    gtk_widget_set_sensitive(add_button, FALSE);
+    gtk_widget_set_sensitive(change_button, FALSE);
+  } else {
+    if (!attrib_defined) {
+      /* If the attribute is not defined, then only Add button is enabled. */
+      gtk_widget_set_sensitive(add_button, TRUE);
+      gtk_widget_set_sensitive(change_button, FALSE);
+    } else {
+      /* If it's defined, then the Change button is enabled. */
+      gtk_widget_set_sensitive(change_button, TRUE);
+
+      /* If it's in the list, then the Add button should be enabled.  */
+      if (!special_attrib_found) {
+         gtk_widget_set_sensitive(add_button, FALSE);
+      } else
+         gtk_widget_set_sensitive(add_button, TRUE);
+    }
+  }
+  g_slist_free(special_attrib_list);
+}   
+
+@ %def multi_attrib_parse_attribute
 
 
 @section Function @code{multi_attrib_edit_clear()}
@@ -762,7 +881,10 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
                      GTK_SIGNAL_FUNC(multi_attrib_edit_select_row),w_current);
   gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
                      GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
-
+  gtk_signal_connect(GTK_OBJECT(attrib_combo_entry), "changed",
+                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
+  gtk_signal_connect(GTK_OBJECT(value_entry), "changed",
+                     GTK_SIGNAL_FUNC(multi_attrib_parse_attribute), w_current);
 
   /* allocate memory, gschem specific */
   text[0] = malloc(sizeof(char)*512);
