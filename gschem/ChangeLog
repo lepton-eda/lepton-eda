@@ -3,6 +3,23 @@
 	* examples/flipflop_1.sch: Fixed invalid attributes and gave all
 	components a refdes.
 
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
+	* noweb/o_pin.nw: Added a call to draw the cues with pin's draw.
+	This may affect rendering performance a little.  This call is needed
+	to update pin's new cues when an object is selected/unselected.
+
+	* noweb/o_pin.nw: Added default parameters for pin_type and whichend
+	when adding a pin.
+
+	* noweb/o_cue.nw: Added code to draw the new pin dangling cues.
+
+	* noweb/o_cue.nw: Added an if in various places so that only the 
+	appropriate cue (based on whichend) is drawn or erase.  This gets
+	rid of a very annoying visual artifiact which was driving me nuts:
+        parts of symbols were being erased when a connection was being made
+ 	at the WRONG end. 
+
 2002-09-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/globals.c: Added variable_set_func and quit_func.  These

@@ -114,7 +114,8 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   CONN *conn;
   int type, count = 0;
   int done = FALSE;
-  int size, x2size;
+  int size, x2size, pinsize;
+  int otherone;
   
   x = object->line->x[whichone];
   y = object->line->y[whichone];
@@ -163,7 +164,7 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   }
 
   WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
-  
+
   switch(type) {
     
     case(CONN_ENDPOINT):
@@ -196,6 +197,58 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
                        screen_y - size / 2,
                        size, size, 0, FULL_CIRCLE);
 
+        }
+      } else if (object->type == OBJ_PIN) {
+        /* Didn't find anything connected there */
+        if (count < 1 && object->whichend == whichone) {
+                  
+          otherone = !whichone;
+
+          pinsize = SCREENabs(w_current, 10);
+          if (w_current->pin_style == THICK ) {
+            gdk_gc_set_line_attributes(w_current->gc, pinsize,
+                                       GDK_LINE_SOLID,
+                                       GDK_CAP_NOT_LAST,
+                                       GDK_JOIN_MITER);
+          }
+
+          if (object->line->y[whichone] == object->line->y[otherone]) {
+            /* horizontal line */
+            if (object->line->x[whichone] <= object->line->x[otherone]) {
+              gdk_draw_line(w_current->window, w_current->gc,
+                            screen_x, screen_y, screen_x + size, screen_y);
+              gdk_draw_line(w_current->backingstore, w_current->gc,
+                            screen_x, screen_y, screen_x + size, screen_y);
+            } else {
+              gdk_draw_line(w_current->window, w_current->gc,
+                            screen_x, screen_y, screen_x - size, screen_y);
+              gdk_draw_line(w_current->backingstore, w_current->gc,
+                            screen_x, screen_y, screen_x - size, screen_y);
+            }
+          } else if (object->line->x[0] == object->line->x[1]) {
+            /* vertical line */
+            if (object->line->y[whichone] <= object->line->y[otherone]) {
+              gdk_draw_line(w_current->window, w_current->gc,
+                            screen_x, screen_y, screen_x, screen_y - size);
+              gdk_draw_line(w_current->backingstore, w_current->gc,
+                            screen_x, screen_y, screen_x, screen_y - size);
+            } else {
+              gdk_draw_line(w_current->window, w_current->gc,
+                            screen_x, screen_y, screen_x, screen_y + size);
+              gdk_draw_line(w_current->backingstore, w_current->gc,
+                            screen_x, screen_y, screen_x, screen_y + size);
+            }
+          } else {
+            /* angled line */
+            /* not supporting rendering of que for angled pin for now. hack */
+          }
+
+          if (w_current->pin_style == THICK ) {
+            gdk_gc_set_line_attributes(w_current->gc, 0,
+                                       GDK_LINE_SOLID,
+                                       GDK_CAP_NOT_LAST,
+                                       GDK_JOIN_MITER);
+          }
         }
       }
       break;
@@ -347,9 +400,13 @@ o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object)
         return;
       }
 
-  o_cue_draw_lowlevel(w_current, object, 0);
-  o_cue_draw_lowlevel(w_current, object, 1);
-  o_cue_draw_lowlevel_midpoints(w_current, object);
+  if (object->type != OBJ_PIN) {
+    o_cue_draw_lowlevel(w_current, object, 0);
+    o_cue_draw_lowlevel(w_current, object, 1);
+    o_cue_draw_lowlevel_midpoints(w_current, object);
+  } else {
+    o_cue_draw_lowlevel(w_current, object, object->whichend);
+  }
 }
 
 
@@ -370,15 +427,20 @@ o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object)
   }
 
   if (object->type != OBJ_NET && object->type != OBJ_PIN &&
-      object->type != OBJ_BUS) {
-        return;
-      }
+      object->type != OBJ_BUS)
+  {
+    return;
+  }
 
-  o_cue_erase_lowlevel(w_current, object, 0);
-  o_cue_erase_lowlevel(w_current, object, 1);
-  w_current->override_color = w_current->background_color;
-  o_cue_draw_lowlevel_midpoints(w_current, object);
-  w_current->override_color = -1;
+  if (object->type != OBJ_PIN) {
+    o_cue_erase_lowlevel(w_current, object, 0);
+    o_cue_erase_lowlevel(w_current, object, 1);
+    w_current->override_color = w_current->background_color;
+    o_cue_draw_lowlevel_midpoints(w_current, object);
+    w_current->override_color = -1;
+  } else {
+    o_cue_erase_lowlevel(w_current, object, object->whichend);
+  }
 }
 
 
