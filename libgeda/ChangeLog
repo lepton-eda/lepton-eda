@@ -1,3 +1,8 @@
+2003-02-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* config.h.in, configure.in, include/libgeda.h, noweb/g_basic.nw:
+	Applied Steve Tell's guile 1.6.3 patch.  Thanks.
+
 2003-02-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Applied Gabriel Paubert's warning reducing patch with

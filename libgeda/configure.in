@@ -68,6 +68,22 @@ esac
 dnl Check for guile
 GUILE_FLAGS
 
+dnl must have guile flags in CFLAGS for AC_COMPILE_IFELSE to work right
+saved_CFLAGS="${CFLAGS}"
+CFLAGS="${CFLAGS} ${GUILE_CFLAGS}"
+
+dnl 1-argument scm_eval_x (guile-1.4) or 2-argument form (guile-1.6)?
+AC_MSG_CHECKING([if scm_eval_x() takes a second module argument])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <libguile.h>
+]], [[SCM foo,bar; scm_eval_x(foo,bar);]])],
+[AC_DEFINE([HAVE_SCM_EVAL_X_MODULE], 1, [Define if the SCM_EVAL_X function takes a second argument "module"])
+AC_MSG_RESULT(yes)
+],[
+AC_MSG_RESULT(no)
+])
+
+CFLAGS="${saved_CFLAGS}"
+
 dnl Check that scm_make_smob_type exist
 AC_CHECK_LIB(guile, scm_make_smob_type,,
 	AC_MSG_ERROR(**Upgrade Guile**  At least version >= 1.3.2),

@@ -67,6 +67,9 @@
 /* Define to 1 if you have the <ndir.h> header file, and it defines `DIR'. */
 #undef HAVE_NDIR_H
 
+/* Define if the SCM_EVAL_X function takes a second argument "module" */
+#undef HAVE_SCM_EVAL_X_MODULE
+
 /* Define to 1 if you have the `snprintf' function. */
 #undef HAVE_SNPRINTF
 

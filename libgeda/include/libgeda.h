@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
+#include <stdio.h>
 #include <guile/gh.h>
 
 #include <libgeda/defines.h>

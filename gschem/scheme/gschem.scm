@@ -17,9 +17,16 @@
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
+; guile 1.4/1.6 compatibility:  Define an eval-in-currentmodule procedure
+; If this version of guile has an R5RS-compatible eval (that requires a
+; second argument specfying the environment), and a current-module function
+; (like 1.6) use them to define eval-cm. else define eval-cm to eval (for 1.4)
+(if (false-if-exception (eval 'display (current-module)))
+    (define (eval-cm exp) (eval exp (current-module)))
+    (define eval-cm eval))
+
 (define last-command-sequence #f)
 (define current-command-sequence '())
-
 
 ; no action hotkey
 (define no-action
@@ -47,7 +54,7 @@
                 )))))
 
 (define (perform-action action)
-    (let ((local-action (eval action)))
+    (let ((local-action (eval-cm action)))
       (cond ((list? local-action)
              (set! current-keymap local-action))
             ((equal? 'repeat-last-command action)
@@ -76,7 +83,7 @@
 ;           (display "Scheme found action ")
 ;           (display action)
 ;           (display "\n")
-           ((eval (cdr action)))
+           ((eval-cm (cdr action)))
            #t))))
 
 
@@ -90,10 +97,10 @@
     (lambda (keymap function)
       (for-each 
        (lambda (mapped-key) ; Receives a pair
-         (if (list? (eval (cdr mapped-key)))
+         (if (list? (eval-cm (cdr mapped-key)))
              (begin
                (set! temp (car mapped-key))
-               (find-key-lowlevel (eval (cdr mapped-key)) function)
+               (find-key-lowlevel (eval-cm (cdr mapped-key)) function)
                (set! temp "")
                )
              (if (eq? (cdr mapped-key) function)	
@@ -124,7 +131,7 @@
 
 ; Ales' function which fills internal C buffers with the keymap info
 (define (fill-mapped-keys mapped-keys)
-  (gschem-key-name (car mapped-keys))
+  (gschem-key-name (symbol->string (car mapped-keys)))
   (for-each (lambda (key)
 	      (cond ((not (null? key))
 		     (gschem-key-value key))))
@@ -133,7 +140,7 @@
 
 (define (mapping-keys keymap keys)
   (for-each (lambda (mapped-key) ; Receives a pair
-	      (let ((action (eval (cdr mapped-key))))
+	      (let ((action (eval-cm (cdr mapped-key))))
 		(cond ((list? action)
 		       (mapping-keys action (append keys (car mapped-key))))
 		      (else

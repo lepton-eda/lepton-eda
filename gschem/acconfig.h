@@ -14,7 +14,7 @@
 /* Define if you have the gdgeda library   */
 #undef HAS_LIBGDGEDA
 
-/* Define if you have the gdgeda library   */
+/* Define if you have the gtkextra library   */
 #undef HAS_LIBGTKEXTRA
 
 /* Define if you have the zlib (libz) library   */

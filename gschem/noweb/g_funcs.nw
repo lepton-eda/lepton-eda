@@ -142,7 +142,9 @@ static char *key_value_string = NULL;
 /* it's actually pretty usable right now, but needs to be reviewed again */
 SCM g_funcs_key_name(SCM keystring)
 {
-  char *string = gh_scm2newstr(keystring, NULL);
+  char *string;
+  SCM_ASSERT(SCM_STRINGP(keystring), keystring, 1, "g_funcs_key_name");
+  string = gh_scm2newstr(keystring, NULL);
 
   if (string == NULL) {
     return SCM_BOOL_T;

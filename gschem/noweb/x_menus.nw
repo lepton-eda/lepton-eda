@@ -178,10 +178,13 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
       scm_item_name = gh_car(scm_item);
       scm_item_func = gh_cadr(scm_item);
       scm_item_hotkey_func = gh_caddr(scm_item);
+      SCM_ASSERT(SCM_STRINGP(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
+      SCM_ASSERT(SCM_SYMBOLP(scm_item_func), scm_item_func, SCM_ARGn, "get_main_menu item_func");
+      SCM_ASSERT(SCM_SYMBOLP(scm_item_hotkey_func), scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
 
       raw_menu_item_name = gh_scm2newstr(scm_item_name, NULL);
-      menu_item_func = gh_scm2newstr(scm_item_func, NULL);
-      menu_item_hotkey_func = gh_scm2newstr(scm_item_hotkey_func, NULL);
+      menu_item_func = gh_scm2newstr(scm_symbol_to_string(scm_item_func), NULL);
+      menu_item_hotkey_func = gh_scm2newstr(scm_symbol_to_string(scm_item_hotkey_func), NULL);
 
       menu_item_name = (char *) gettext(raw_menu_item_name);
 
