@@ -44,12 +44,17 @@ s_symstruct_init(void)
   s_symcheck->device_attribute=NULL;
   s_symcheck->missing_pinseq_attrib=FALSE;
   s_symcheck->multiple_pinseq_attrib=FALSE;
+  s_symcheck->duplicate_pinseq_attrib=FALSE;
   s_symcheck->missing_pinnumber_attrib=FALSE;
   s_symcheck->multiple_pinnumber_attrib=FALSE;
   s_symcheck->missing_numslots_attrib=FALSE;
+  s_symcheck->slotting_errors=FALSE;
   s_symcheck->found_oldpin_attrib=FALSE;
   s_symcheck->found_oldslot_attrib=FALSE;
   s_symcheck->unattached_attribs=FALSE;
+  s_symcheck->found_net=FALSE;
+  s_symcheck->found_bus=FALSE;
+  s_symcheck->found_connection=FALSE;
 
   s_symcheck->numpins=0;
   s_symcheck->error_count=0;
@@ -57,12 +62,9 @@ s_symstruct_init(void)
   return(s_symcheck);
 }
 
-/* return 1 if there were errors */
-/* return 0 if there were no errors */
-int
+void
 s_symstruct_print(SYMCHECK *s_current)
 {
-  int status=0;
   
   if (s_current->device_attribute) {
     if (verbose_mode) s_log_message("- INFO: device attribute = %s\n",
@@ -73,47 +75,53 @@ s_symstruct_print(SYMCHECK *s_current)
     if (verbose_mode) s_log_message("- INFO: graphical symbol\n");
   }
 
-  if (s_current->error_count) {
-    status++;
-  }
-  
   if (s_current->missing_device_attrib) {
     if (verbose_mode) s_log_message("- ERROR: missing device attribute\n");
-    status++;
   }
   
   if (s_current->missing_pinseq_attrib) {
     if (verbose_mode) s_log_message("- ERROR: missing pinseq attribute(s)\n");
-    status++;
   }
 
   if (s_current->multiple_pinseq_attrib) {
     if (verbose_mode) s_log_message("- ERROR: multiple pinseq attributes on a single pin\n");
-    status++;
+  }
+
+  if (s_current->duplicate_pinseq_attrib) {
+    if (verbose_mode) s_log_message("- ERROR: duplicate pinseq attributes on different pins\n");
   }
   
   if (s_current->missing_pinnumber_attrib) {
     if (verbose_mode) s_log_message("- ERROR: missing pinnumber attribute(s)\n");
-    status++;
   }
 
   if (s_current->multiple_pinnumber_attrib) {
     if (verbose_mode) s_log_message("- ERROR: multiple pinnumber attributes on a single pin\n");
-    status++;
   }
 
+  if (s_current->slotting_errors) {
+    if (verbose_mode) s_log_message("- ERROR: number of slotting errors: %d\n", s_current->slotting_errors);
+  }
+
+  if (s_current->found_net) {
+    if (verbose_mode) s_log_message("- ERROR: number of nets found inside: %d\n", s_current->found_net);
+  }
+
+  if (s_current->found_bus) {
+    if (verbose_mode) s_log_message("- ERROR: number of buses found inside: %d\n", s_current->found_bus);
+  }
+
+  if (s_current->found_connection) {
+    if (verbose_mode) s_log_message("- ERROR: number of connections found inside: %d\n", s_current->found_connection);
+  }
+  
   if (s_current->found_oldpin_attrib) {
     if (verbose_mode) s_log_message("- ERROR: found old pin#=# attribute(s)\n");
-    status++;
   }
 
   if (s_current->found_oldslot_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: found old pin#=# attribute(s)\n");
-    status++;
+    if (verbose_mode) s_log_message("- ERROR: found old slot#=# attribute(s)\n");
   }
-
-
-  return(status);
 }
 
 void

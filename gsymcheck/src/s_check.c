@@ -64,7 +64,7 @@ int
 s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
 {
   SYMCHECK *s_symcheck=NULL;
-  int errors=0;
+  int errors;
 
   s_symcheck = s_symstruct_init();
   
@@ -94,14 +94,22 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for old pin#=# attributes */
   s_check_oldslot(object_head, s_symcheck);
 
-  /* now see if there were any errors and print out status */
-  errors = s_symstruct_print(s_symcheck);
+  /* check for nets or buses within the symbol (completely disallowed) */
+  s_check_nets_buses(object_head, s_symcheck);
 
-  if (errors) {
+  /* check for connections with in a symbol (completely disallowed) */
+  s_check_connections(object_head, s_symcheck); 
+
+  
+  /* done, now see if there were any errors and print out status */
+  s_symstruct_print(s_symcheck);
+
+  if (s_symcheck->error_count) {
     s_log_message("ERROR: %s has %d errors\n",
            p_current->page_filename, s_symcheck->error_count);	
   } 
 
+  errors = s_symcheck->error_count;
   s_symstruct_free(s_symcheck);
   return(errors);
 }
@@ -221,6 +229,11 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
   int multiple_pinseq_attrib_sum=0;
   int counter=0;
 
+  GList *found_numbers = NULL;
+  GList *ptr1 = NULL;
+  GList *ptr2 = NULL;
+  char *number;
+  
   o_current = object_head;
   while(o_current != NULL)
   {
@@ -244,7 +257,8 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
       {
         if (verbose_mode)
           s_log_message("- INFO: found pinseq=%s attribute\n", string);
-        
+
+        number = u_basic_strdup(string);
         free(string);
 
         if (found_first) {
@@ -254,7 +268,11 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
         
         /* this is the first attribute found? */
         if (!found_first) {
+          found_numbers = g_list_append(found_numbers, number);
           found_first=TRUE;
+        } else {
+          if (number)
+            free(number);
         }
         
         counter++;
@@ -269,6 +287,44 @@ s_check_pinseq(OBJECT *object_head, SYMCHECK *s_current)
     
     o_current = o_current->next;
   }
+
+  ptr1 = found_numbers;
+  while (ptr1)
+  {
+    char *string = (char *) ptr1->data;
+    int found = 0;
+    
+    ptr2 = found_numbers;
+    while(ptr2 && string)
+    {
+      char *current = (char *) ptr2->data;
+
+      if (current && strcmp(string, current) == 0) {
+        found++;
+      }
+      
+      ptr2 = ptr2->next;
+    }
+
+    if (found > 1)
+    {
+      if (verbose_mode)
+        s_log_message("- ERROR: found duplicate pinseq [%s] attributes\n", string);
+        s_current->error_count++;
+        s_current->duplicate_pinseq_attrib++;
+    }
+    
+    ptr1 = ptr1->next;
+  }
+
+  ptr1 = found_numbers;
+  while (ptr1)
+  {
+    free(ptr1->data);
+    ptr1 = ptr1->next;
+  }
+  g_list_free(found_numbers);
+  
 }
 
 
@@ -289,7 +345,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 
   if (!value) {
     if (verbose_mode)
-      s_log_message("- INFO: no slotting information found\n");
+      s_log_message("- WARNING: did not find numslots attribute\n");
 
     return;
   }
@@ -311,6 +367,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       if (verbose_mode)
         s_log_message("- ERROR: Too many slotdef (should be %d slotdef attributes)\n", numslots);
       s_current->error_count++;
+      s_current->slotting_errors++;
       return;
     }
     
@@ -323,6 +380,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       if (verbose_mode)
         s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
       s_current->error_count++;
+      s_current->slotting_errors++;
       free(slotdef);
       return;
     }
@@ -334,6 +392,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       if (verbose_mode)
         s_log_message("- ERROR: Slot %d is larger then maximum number (%d) of slots\n", slot, numslots);
       s_current->error_count++;
+      s_current->slotting_errors++;
     }
 
     /* skip over the : */
@@ -342,6 +401,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       if (verbose_mode)
         s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
       s_current->error_count++;
+      s_current->slotting_errors++;
       free(slotdef);
       return;
     }
@@ -350,6 +410,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
       if (verbose_mode)
         s_log_message("- ERROR: Invalid slotdef %s\n", slotdef);
       s_current->error_count++;
+      s_current->slotting_errors++;
       free(slotdef);
       return;
     }
@@ -368,6 +429,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
         if (verbose_mode)
           s_log_message("- ERROR: Not enough pins in slotdef=%s\n", slotdef);
         s_current->error_count++;
+        s_current->slotting_errors++;
         break;
       }
 
@@ -375,6 +437,7 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
         if (verbose_mode)
           s_log_message("- ERROR: Too many pins in slotdef=%s\n", slotdef);
         s_current->error_count++;
+        s_current->slotting_errors++;
         free(temp);
         temp = NULL;
         break;
@@ -394,8 +457,9 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
   
   if (!slotdef && i < numslots) {
     if (verbose_mode)
-      s_log_message("- ERROR: missing slotdef (should be %d slotdef attributes)\n", numslots);
+      s_log_message("- ERROR: missing slotdef (there should be %d slotdef attributes)\n", numslots);
     s_current->error_count++;
+    s_current->slotting_errors++;
     return;
   }
     
@@ -405,12 +469,208 @@ s_check_slotdef(OBJECT *object_head, SYMCHECK *s_current)
 void
 s_check_oldpin(OBJECT *object_head, SYMCHECK *s_current)
 {
+  OBJECT *o_current;
+  char *ptr;
+  int found_old = FALSE;
+  int number_counter = 0;
+  
+  o_current = object_head;
+  while(o_current != NULL)
+  {
+    
+    if (o_current->type == OBJ_TEXT)
+    {
+      if (strstr(o_current->text->string, "pin"))
+      {
+        /* skip over "pin" */
+        ptr = o_current->text->string + 3;
 
+        found_old = FALSE;
+        number_counter = 0;
+        while (ptr && *ptr > '0' && *ptr < '9')
+        {
+          number_counter++;
+          ptr++;
+        }
+
+        if (ptr && *ptr == '=')
+        {
+          found_old++;
+        }
+
+        if (!ptr)
+        {
+          o_current = o_current->next;
+          continue;
+        }
+
+        /* found no numbers inbetween pin and = */
+        if (number_counter == 0)
+        {
+          o_current = o_current->next;
+          continue;
+        }
+        
+        /* skip over = char */
+        ptr++;
+
+        while (ptr && *ptr > '0' && *ptr < '9')
+        {
+          ptr++;
+        }
+
+        if (*ptr == '\0')
+        {
+          found_old++;
+        } 
+
+        /* 2 matches -> number found after pin and only numbers after = sign */
+        if (found_old == 2)
+        {
+          if (verbose_mode)
+            s_log_message("- ERROR: Found old pin#=# attribute [%s]\n",
+                          o_current->text->string);
+
+          s_current->found_oldpin_attrib += found_old;
+          s_current->error_count++;
+
+        }
+      }
+    }
+
+    o_current = o_current->next;
+  }
+  
 }
 
 
 void
 s_check_oldslot(OBJECT *object_head, SYMCHECK *s_current)
 {
+  OBJECT *o_current;
+  char *ptr;
+  int found_old = FALSE;
+  int number_counter = 0;
+  
+  o_current = object_head;
+  while(o_current != NULL)
+  {
+    
+    if (o_current->type == OBJ_TEXT)
+    {
+      if (strstr(o_current->text->string, "slot"))
+      {
+        /* skip over "slot" */
+        ptr = o_current->text->string + 4;
 
+        found_old = FALSE;
+        number_counter = 0;
+        while (ptr && *ptr > '0' && *ptr < '9')
+        {
+          number_counter++;
+          ptr++;
+        }
+
+        if (ptr && *ptr == '=')
+        {
+          found_old++;
+        }
+
+        if (!ptr)
+        {
+          o_current = o_current->next;
+          continue;
+        }
+
+        /* found no numbers inbetween pin and = */
+        if (number_counter == 0)
+        {
+          o_current = o_current->next;
+          continue;
+        }
+        
+        /* skip over = char */
+        ptr++;
+
+        while (ptr && *ptr > '0' && *ptr < '9' || *ptr == ',')
+        {
+          ptr++;
+        }
+
+        if (*ptr == '\0')
+        {
+          found_old++;
+        }
+
+        /* 2 matches -> number found after slot and only numbers after = */
+        if (found_old == 2)
+        {
+          if (verbose_mode)
+            s_log_message("- ERROR: Found old slot#=# attribute [%s]\n",
+                          o_current->text->string);
+
+          s_current->found_oldslot_attrib += found_old;
+          s_current->error_count++;
+
+        }
+      }
+    }
+
+    o_current = o_current->next;
+  }
 }
+
+
+void
+s_check_nets_buses(OBJECT *object_head, SYMCHECK *s_current)
+{
+  OBJECT *o_current;
+  
+  o_current = object_head;
+  while(o_current != NULL)
+  {
+    if (o_current->type == OBJ_NET)
+    {
+      if (verbose_mode)
+        s_log_message("- ERROR: Found a net inside a symbol!\n");
+
+      s_current->found_net++;
+      s_current->error_count++;
+    }
+
+    if (o_current->type == OBJ_BUS)
+    {
+      if (verbose_mode)
+        s_log_message("- ERROR: Found a bus inside a symbol!\n");
+
+      s_current->found_bus++;
+      s_current->error_count++;
+    }
+
+    
+    o_current = o_current->next;
+  }
+}
+
+void
+s_check_connections(OBJECT *object_head, SYMCHECK *s_current)
+{
+  OBJECT *o_current;
+  
+  o_current = object_head;
+  while(o_current != NULL)
+  {
+
+    if (o_current->conn_list) {
+      if (verbose_mode)
+        s_log_message("- ERROR: Found a connection inside a symbol!\n");
+
+      s_current->found_connection++;
+      s_current->error_count++;
+    }
+    
+    o_current = o_current->next;
+  }
+}
+
+

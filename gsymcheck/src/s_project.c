@@ -284,11 +284,12 @@ s_project_create_new(void)
 
   g_rc_parse(pr_current);
 
-  /* renable the events */
-  pr_current->DONT_DRAW_CONN=0;
-  pr_current->DONT_RESIZE=0;
-  pr_current->DONT_EXPOSE=0;
-  pr_current->DONT_RECALC=0;
+  /* disable the events */
+  pr_current->DONT_DRAW_CONN=1;
+  pr_current->DONT_RESIZE=1;
+  pr_current->DONT_EXPOSE=1;
+  pr_current->DONT_RECALC=1;
+  pr_current->DONT_REDRAW=1;
 
   return(pr_current);
 }

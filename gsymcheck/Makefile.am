@@ -1,5 +1,5 @@
 
-SUBDIRS = src include utils lib scheme examples
+SUBDIRS = src include utils lib scheme examples tests
 
 EXTRA_DIST = BUGS
 

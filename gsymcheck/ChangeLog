@@ -1,3 +1,21 @@
+2002-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in/Makefile.am, tests: Added tests directory and a whole
+	slew of .sym files with various problems.
+
+	* src/gsymcheck.c: Added a call to free some memory.  This may cause
+	problems if I missed an init of some variable.
+
+	* src/s_project.c: Disabled all drawing events as gsymcheck does not
+	draw anything.
+
+	* src/s_symcheck.c src/s_check.c: Added a bunch more tests:
+	  - search for old pin#=# and slot#=# attributes,
+	  - check for buses or nets inside a symbol,
+ 	  - check for connections inside a symbol.
+	  - check for duplicate pinseq attributes on multiple pins
+	  - various improvements to existing tests 
+
 2002-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in/Makefile.am: Upgraded to automake 1.6.2

@@ -314,5 +314,6 @@ AC_OUTPUT( 	Makefile \
 		examples/Makefile \
 		lib/Makefile \
 		utils/Makefile \
+		tests/Makefile \
 		lib/system-gsymcheckrc )
 

@@ -38,10 +38,10 @@
 void
 gsymcheck_quit(void)
 {
+  
   s_clib_cache_free();
   s_clib_free();
   s_slib_free();
-  /* o_text_freeallfonts();*/
 
 }
 
@@ -156,8 +156,10 @@ main_prog(int argc, char *argv[])
   if (verbose_mode) s_log_message("\n");
 
   errors = s_check_all(pr_current);
-  
+
+  s_page_free_all(pr_current, pr_current->page_tail);
   gsymcheck_quit();
+
   exit(errors);
 }
 
