@@ -5,6 +5,8 @@
 #include <gtk/gtk.h>
 #include <signal.h>
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "callbacks.h"
 #include "interface.h"
@@ -13,9 +15,11 @@
 
 #include "comps.h"
 #include "dirs.h"
+#include "install.h"
 #include "msgbox.h"
 #include "package.h"
 #include "setup.h"
+#include "summary.h"
 
 
 
@@ -37,7 +41,7 @@ void on_next_clicked(GtkButton *pButton, gpointer user_data)
 	GtkNotebook *pNotebook;
 	int iPage;
 	
-	pNotebook = (GtkNotebook *) lookup_widget(pButton, "Container");
+	pNotebook = (GtkNotebook *) lookup_widget(GTK_WIDGET(pButton), "Container");
 	if (pNotebook == NULL)
 	{
 		/* TODO: error handling */
@@ -68,7 +72,7 @@ void on_next_clicked(GtkButton *pButton, gpointer user_data)
 		case 4: /* summary information */
 			
 			SummaryPrepare();
-			SummaryShow(pButton);
+			SummaryShow(GTK_WIDGET(pButton));
 			break;
 		
 		case 5: /* installation status */
@@ -80,9 +84,9 @@ void on_next_clicked(GtkButton *pButton, gpointer user_data)
 			/* TODO: error handling */
 	}
 	
-	setup_buttons(pButton);
+	setup_buttons(GTK_WIDGET(pButton));
 
-	gtk_widget_show(pNotebook);	
+	gtk_widget_show(GTK_WIDGET(pNotebook));
 }
 
 
@@ -92,7 +96,7 @@ void on_previous_clicked(GtkButton *pButton, gpointer user_data)
 	GtkNotebook *pNotebook;
 	int iPage;
 	
-	pNotebook = (GtkNotebook *) lookup_widget(pButton, "Container");
+	pNotebook = (GtkNotebook *) lookup_widget(GTK_WIDGET(pButton), "Container");
 	if (pNotebook == NULL)
 	{
 		/* TODO: error handling */
@@ -122,7 +126,7 @@ void on_previous_clicked(GtkButton *pButton, gpointer user_data)
 		case 4: /* summary information */
 			
 			SummaryPrepare();
-			SummaryShow(pButton);
+			SummaryShow(GTK_WIDGET(pButton));
 			break;
 		
 		case 5: /* installation status */
@@ -134,9 +138,9 @@ void on_previous_clicked(GtkButton *pButton, gpointer user_data)
 			/* TODO: error handling */
 	}
 	
-	setup_buttons(pButton);
+	setup_buttons(GTK_WIDGET(pButton));
 
-	gtk_widget_show(pNotebook);
+	gtk_widget_show(GTK_WIDGET(pNotebook));
 }
 
 extern int iSoftwareInstalled;
@@ -147,7 +151,7 @@ void on_ok_clicked(GtkButton *pButton, gpointer user_data)
 	int iPage;
 
 	/* look for notebook */
-	pNotebook = (GtkNotebook *) lookup_widget(pButton, "Container");
+	pNotebook = (GtkNotebook *) lookup_widget(GTK_WIDGET(pButton), "Container");
 	if (pNotebook == NULL)
 	{
 		Log(LOG_FATAL, LOG_MODULE_CALLBACK, "lookup_widget() cannot find widget 'Container'");
@@ -234,7 +238,7 @@ on_InstallLocalButton_clicked          (GtkButton       *button,
                                         gpointer         user_data)
 {
 	GtkWidget *w;
-	w = lookup_widget(button, "InstallDirectoryEntry");
+	w = lookup_widget(GTK_WIDGET(button), "InstallDirectoryEntry");
 
 	dirs_local(w);
 }
@@ -245,7 +249,7 @@ on_InstallGlobalButton_clicked         (GtkButton       *button,
                                         gpointer         user_data)
 {
 	GtkWidget *w;
-	w = lookup_widget(button, "InstallDirectoryEntry");
+	w = lookup_widget(GTK_WIDGET(button), "InstallDirectoryEntry");
 
 	dirs_global(w);
 }
@@ -256,7 +260,7 @@ on_InstallCustomButton_clicked         (GtkButton       *button,
                                         gpointer         user_data)
 {
 	GtkWidget *w;
-	w = lookup_widget(button, "InstallDirectoryEntry");
+	w = lookup_widget(GTK_WIDGET(button), "InstallDirectoryEntry");
 
 	dirs_custom(w);
 }
@@ -267,7 +271,7 @@ on_AgreeButton_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
 {
 	iLicenseAgreement = 1;
-	setup_buttons(button);
+	setup_buttons(GTK_WIDGET(button));
 }
 
 
@@ -276,125 +280,14 @@ on_DismissButton_clicked               (GtkButton       *button,
                                         gpointer         user_data)
 {
 	iLicenseAgreement = 0;
-	setup_buttons(button);
+	setup_buttons(GTK_WIDGET(button));
 }
 
-char cSelectFlag = 1;
+
 
 extern GtkPixmap *PixmapNone, *PixmapFull;
 
 
-
-/*
-	Module COMPONENTS - callbacks
-*/
-
-void on_ComponentTree_tree_select_row       (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data)
-{
-	struct CompsTable_s *pComp;
-	int iResult;
-	char szMessage[TEXTLEN], *szMissingFile;
-		
-	if (cSelectFlag == 0)
-		return;
-	
-//printf("onSelect() >\n");
-	
-	/* search component */
-	for (pComp = pCompsTable; pComp != NULL; pComp = pComp->pNextComp)
-	{
-		if (GTK_CTREE_NODE(node) == pComp->pNode)
-			break;
-	}
-	if (pComp == NULL)
-	{
-		/* TODO: error handling */
-	}
-	
-//printf("onSelect() > package '%s'\n", pComp->szCodeName);
-	/* toggle installation flag */
-	if (pComp->iToBeInstalled == PACKAGE_SELECTED)
-	{
-		pComp->iToBeInstalled = PACKAGE_IGNORED;
-		mark_components(pComp, MARK_UNSELECT);
-	}
-	else
-	{
-		if (!pComp->bCanBeInstalled && !bCompsAlwaysMarkFailed)
-		{
-			szMissingFile = PackageWhatIsMissing(pComp->szCodeName);
-
-			sprintf(
-				szMessage,
-				"%s cannot be installed.\nMissing file: %s !\n\nForcing installation will cause errors. Continue ?",
-				pComp->szName,
-				szMissingFile
-				);
-			iResult = MsgBox(
-				GTK_WINDOW(pWindowMain),
-				"Error !",
-				szMessage,
-				MSGBOX_ERROR | MSGBOX_YES | MSGBOX_ALWAYSYES | MSGBOX_NOD
-				);
-			if (iResult == MSGBOX_ALWAYSYES)
-				bCompsAlwaysMarkFailed = TRUE;
-		}
-
-		if (pComp->bCanBeInstalled == TRUE || iResult == MSGBOX_YES || bCompsAlwaysMarkFailed)
-		{
-			pComp->iToBeInstalled = PACKAGE_SELECTED;
-			mark_components(pComp, MARK_SELECT);
-		}
-	}
-
-	/* activate display changes */
-	iResult = ShowDesc(pComp);
-	if (iResult != SUCCESS)
-	{
-		Log(LOG_FATAL, LOG_MAIN, "Cannot show COMPONENTS page");
-		return;
-	}
-}
-
-
-void
-on_ComponentTree_tree_unselect_row     (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data)
-{
-	on_ComponentTree_tree_select_row(ctree, node, column, user_data);
-}
-
-void
-on_ComponentTree_tree_expand           (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gpointer         user_data)
-{
-	//printf("expand() >\n");
-	ShowIcons("");
-}
-
-
-void
-on_ComponentTree_tree_collapse         (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gpointer         user_data)
-{
-	//printf("collapse() >\n");
-	ShowIcons("");
-}
-
-
-void
-on_ComponentTree_change_focus_row_expansion
-                                        (GtkCList        *clist,
-                                        gpointer         user_data)
-{
-}
 
 void
 on_InstallDirectoryEntry_changed       (GtkEditable     *editable,
@@ -402,7 +295,7 @@ on_InstallDirectoryEntry_changed       (GtkEditable     *editable,
 {
 	GtkEntry *pEntry;
 	
-	pEntry = lookup_widget(editable, "InstallDirectoryEntry");
+	pEntry = GTK_ENTRY(lookup_widget(GTK_WIDGET(editable), "InstallDirectoryEntry"));
 	if (pEntry == NULL)
 	{
 		/* TODO: error handling */

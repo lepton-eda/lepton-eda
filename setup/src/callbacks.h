@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-  
+
 void
 on_optionmenu1_enter                   (GtkButton       *button,
                                         gpointer         user_data);
@@ -25,16 +25,6 @@ void
 on_ok_clicked                          (GtkButton       *button,
                                         gpointer         user_data);
 
-
-gboolean
-on_ComponentTree_show                  (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_draw                  (GtkWidget       *widget,
-                                        GdkRectangle    *area,
-                                        gpointer         user_data);
 
 void
 on_ok_clicked                          (GtkButton       *button,
@@ -61,57 +51,8 @@ on_DismissButton_clicked               (GtkButton       *button,
                                         gpointer         user_data);
 
 void
-on_ComponentTree_tree_select_row       (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_unselect_row     (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_expand           (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_collapse         (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_change_focus_row_expansion
-                                        (GtkCList        *clist,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_select_row       (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_unselect_row     (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_expand           (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gpointer         user_data);
-
-void
-on_ComponentTree_tree_collapse         (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gpointer         user_data);
-
-void
 on_InstallDirectoryEntry_changed       (GtkEditable     *editable,
-                                        gpointer         user_data);
+                                        gpointer         user_data)
 
 gboolean
 on_MainWindow_delete_event             (GtkWidget       *widget,
