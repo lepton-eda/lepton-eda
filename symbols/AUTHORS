@@ -14,6 +14,8 @@ Stefan Petersen		- For contributing the following symbols:
 
 				crystal-1.sym resistor-2.sym 
 				mt8870-1.sym vdd-2.sym
+			
+	 		  Pointing out some bugs in the io symbols
 
 Ron Van Dam		- Contributed (10) 74x symbols
 				74123-1.sym 74138-1.sym 74139-1.sym
