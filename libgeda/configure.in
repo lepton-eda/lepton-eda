@@ -7,7 +7,7 @@ PACKAGE=libgeda
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20010708
+VERSION=20010722
 
 echo Configuring libgeda version $VERSION
 
@@ -48,9 +48,6 @@ AM_SANITY_CHECK
 dnl Initialize libtool
 AM_PROG_LIBTOOL
 
-dnl Check to see if we are building in the cygnus win32 environment
-AC_CYGWIN
-
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 
@@ -59,6 +56,9 @@ AC_PROG_CC
 dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
+
+dnl Check to see if we are building in the cygnus win32 environment
+AC_CYGWIN
 
 dnl Check for guile
 GUILE_FLAGS

@@ -1,3 +1,7 @@
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped up version to 20010722
+
 2001-07-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* opto/hcpl-2631-1.sym: Minor touch up work

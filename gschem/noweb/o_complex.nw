@@ -699,7 +699,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   /* first zoom extents */
   a_zoom_extents(w_current, w_current->page_current->object_head, 
-                A_PAN_DONT_REDRAW);
+                 A_PAN_DONT_REDRAW);
   o_redraw_all(w_current);
 
   get_complex_bounds(w_current, w_current->page_current->object_head,
@@ -717,7 +717,11 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   o_current = w_current->page_current->object_head;
   while(o_current != NULL) {
-    s_conn_remove(w_current, o_current);
+    if (o_current->type != OBJ_COMPLEX) {
+      s_conn_remove(w_current, o_current);
+    } else {
+      s_conn_remove_complex(w_current, o_current);
+    }
     o_current = o_current->next;
   }
         
@@ -738,7 +742,11 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 
   o_current = w_current->page_current->object_head;
   while(o_current != NULL) {
-    s_conn_update_object(w_current, o_current);
+    if (o_current->type != OBJ_COMPLEX) {
+      s_conn_update_object(w_current, o_current);
+    } else {
+      s_conn_update_complex(w_current, o_current->complex->prim_objs);
+    }
     o_current = o_current->next;
   }
 
@@ -751,7 +759,7 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 #endif
 
   a_zoom_extents(w_current, w_current->page_current->object_head, 
-                A_PAN_DONT_REDRAW);
+                 A_PAN_DONT_REDRAW);
   o_unselect_all(w_current);
   o_redraw_all(w_current);
   w_current->page_current->CHANGED=1;

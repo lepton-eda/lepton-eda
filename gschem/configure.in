@@ -7,7 +7,7 @@ PACKAGE=geda-gschem
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20010708
+VERSION=20010722
 
 echo Configuring gschem version $VERSION
 
@@ -54,9 +54,6 @@ AM_CONFIG_HEADER(config.h)
 dnl Build time sanity check...
 AM_SANITY_CHECK
 
-dnl Check to see if we are building in the cygnus win32 environment
-AC_CYGWIN
-
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 
@@ -65,6 +62,9 @@ AC_PROG_CC
 dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
+
+dnl Check to see if we are building in the cygnus win32 environment
+AC_CYGWIN
 
 dnl Guile stuff
 GUILE_FLAGS
@@ -134,9 +134,6 @@ fi
 
         gtk_ldflags="`$GTK_CONFIG --libs`"
         gtk_cflags="`$GTK_CONFIG --cflags`"
-
-LDFLAGS="$saved_ldflags $LDEXTRA"
-CFLAGS="$saved_cflags $CFEXTRA"
 
 # search for libgdgeda-config
 AC_PATH_PROG(LIBGDGEDACONFIG, libgdgeda-config, no, ${PATH})
@@ -263,7 +260,8 @@ if test $gtk_found = no; then
 	AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
 fi
 
-
+LDFLAGS="$saved_ldflags $LDEXTRA"
+CFLAGS="$saved_cflags $CFEXTRA"
 
 if ! test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
 	echo Including -fnative-struct in CFLAGS for CYGWIN port

@@ -1,3 +1,17 @@
+2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, src/Makefile.am: got the configure mechanism to
+	  deal with the guile detection more like gschem.
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Fixed all the LDFLAGS to be correct (and only link
+	  the libraries once)
+
+	* configure.in: Bumped up version to 20010722
+
+	* configure.in: More updates to get cygwin to build right
+
 2001-07-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/gsymcheck.c: Removed the "This is alpha software" message and

@@ -1,3 +1,14 @@
+2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_conn.c: Added s_conn_remove_complex to remove complex
+	  conn connections
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped up version to 20010722
+
+	* configure.in: More updates to get cygwin to build right
+
 2001-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/s_menu.nw: Added new file to support dynamic menus in

@@ -1,20 +1,20 @@
 
-gEDA / Cygwin
+gEDA / gaf - Cygwin
 
 GPL Electronic Design Automation  
 --------------------------------------------------------------------------
-To run the binary distribution of gEDA/Cygwin
+To run the binary distribution of gEDA/gaf - Cygwin:
 
-You should not have to install the cygwin distribution.  gEDA/Cygwin
+You should not have to install the cygwin distribution.  gEDA/gaf - Cygwin
 is fairly self contained.
 
-1) Grab geda-cygwin-version.zip and unzip it into c:\   At this stage
-   in the game, it really needs to be in c:\  Unzipping the zip file
+1) Grab geda-cygwin-VERSION.zip and unzip it into c:\   At this stage
+   in the game, it really should be in c:\  Unzipping the zip file
    should create a directory called "geda" (c:\geda)
 
 2) Set the following environment variables:
 	TMP	(some temp directory, say C:\TEMP , make sure this dir exists)
-	HOME	(some home directory, say C:\ ,make sure this dir exists)
+	HOME	(some home directory, say C:\ , make sure this dir exists)
 
 3) Added c:\geda\bin to your PATH variable
 
@@ -23,11 +23,26 @@ is fairly self contained.
    also create a shortcut on the desktop to the binary, just change the
    Run option to run "minimized" if you don't want to see the console.
 
+If you want to put the geda directory somewhere else, then you can do
+that too, but you will need to set then environment variable:
+
+GEDADATA 
+to 
+[new_path_to_geda]\geda\share\gEDA       (like d:\programs\geda\share\gEDA)
+
+Do not forget to put [new_path_to_geda]/geda/bin into your PATH.  You
+also need to set: 
+
+GUILE_LOAD_PATH 
+to 
+[new_path_to_geda]\geda\share\guile\1.4
+
 
 Please keep in mind that this port is really new and may do really stupid
 things.  PLEASE BACKUP ANY DATA YOU VALUE.  gEDA/Cygwin (or any gEDA software)
 comes with NO WARRANTY (I hate having to say this).  Please let me know
 if there are any problems.
+
 
 --------------------------------------------------------------------------
 Build instructions for gEDA/Cygwin (gEDA running on Win32 machines)
@@ -74,7 +89,11 @@ grep.tar.gz
 
 	It is important to get regex-*.tar.gz so that some of the gnetlist
 backends and other scheme scripts in gEDA run.  You also need to install
-cvs-win32 if you want to checkout gEDA from the CVS repository.
+cvs-win32 if you want to checkout gEDA from the CVS repository.  Also, 
+if you plan to build the cvs version, you need automake and autoconf.  
+I do not really recommend building the cvs version, instead grab a snapshot
+and work from that (the cvs version requires the Makefiles* to be built, 
+which sometimes works with the cygwin version of automake/autoconf).
 
 	You will also need the following libraries (from the cygwin contrib
 directory) if you want to build libgdgeda-1.8:

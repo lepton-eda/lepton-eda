@@ -7,7 +7,7 @@ PACKAGE=geda-gsymcheck
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20010708
+VERSION=20010722
 
 echo Configuring gsymcheck version $VERSION
 
@@ -47,9 +47,6 @@ AM_CONFIG_HEADER(config.h)
 dnl Build time sanity check...
 AM_SANITY_CHECK
 
-dnl Check to see if we are building in the cygnus win32 environment
-AC_CYGWIN
-
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 
@@ -59,21 +56,11 @@ dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
 
-dnl Check for guile-config; use it to set 
-dnl GUILE_INCLUDE and GUILE_LIB.
-dnl Issue: Is it OK to include "-L" in GUILE_LIB?
+dnl Check to see if we are building in the cygnus win32 environment
+AC_CYGWIN
 
-AC_PATH_PROG(GUILE_CONFIG_PROG, guile-config)
-
-if test ! -n "$GUILE_CONFIG_PROG" ; then
-		AC_MSG_ERROR(Cannot find guile-config -- Install GUILE 1.3 and run ./configure again)
-fi
-
-	guile_incdir=`$GUILE_CONFIG_PROG info includedir`
-	guile_libdir=`$GUILE_CONFIG_PROG info libdir`
-	guile_libs=`$GUILE_CONFIG_PROG link`
-	GUILE_INCLUDE="-I${guile_incdir}"
-	GUILE_LIB="-L${guile_libdir} ${guile_libs}"
+dnl Guile stuff
+GUILE_FLAGS
 
 saved_cflags="$CFLAGS"
 saved_ldflags="$LDFLAGS"
@@ -267,6 +254,9 @@ AC_MSG_RESULT($optarg_found)
 if test $optarg_found = yes; then
 		AC_DEFINE(OPTARG_IN_UNISTD)
 fi
+
+LDFLAGS="$saved_ldflags $LDEXTRA"
+CFLAGS="$saved_cflags $CFEXTRA"
 
 #
 # Defs for libary symbol files

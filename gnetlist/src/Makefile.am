@@ -14,7 +14,7 @@ gnetlist_SOURCES = \
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
 
 INCLUDES = @GUILE_INCLUDE@ @X_CFLAGS@  
-gnetlist_LDADD = @GUILE_LIB@ @GLIB@ @X_LDFLAGS@ 
+gnetlist_LDADD = @GLIB@ @X_LDFLAGS@ @GUILE_LDFLAGS@
 
 # original gnetlist which links in everything
 #gnetlist_LDADD = @STROKE_LIB@ @GUILE_LIB@ @GTK@ @GDK@ @GLIB@ @X_LDFLAGS@ 

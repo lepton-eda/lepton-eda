@@ -1,3 +1,28 @@
+2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_menu.nw: Added code for Cygwin to get monospaced fonts
+	  for the menus.
+
+	* noweb/i_callbacks.nw: Fixed the "scrollbar not updating when 
+	  panning" bug pointed out by Chris; wasn't updating the
+	  scrollbars when panning :)
+
+	* noweb/i_callbacks.nw: Fixed the wasn't updating connections when
+	  doing a symbol translate in a schematic (valid and should work)
+	  This still does NOT work. :(
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Fixed all the LDFLAGS to be correct (and only link
+	  the libraries once)
+
+	* configure.in: Bumped up version to 20010722
+
+	* configure.in: More updates to get cygwin to build right
+
+	* src/Makefile.am: Changed the order in which things are linked
+	  (guile last)
+
 2001-07-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_fileselect.nw: Changed a constant two days ago in

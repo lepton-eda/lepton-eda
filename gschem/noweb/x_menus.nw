@@ -329,6 +329,10 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
   GtkWidget *root_menu;
   GtkWidget *menu_bar;
   GtkWidget *menu;
+#ifdef __CYGWIN32__      
+  GdkFont *font=NULL;
+  GtkStyle *style;
+#endif
   char **menu_name = malloc (sizeof(char *));
   int scm_items_len;
   SCM scm_items;
@@ -412,7 +416,33 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         free(menu_item_keys);
       }
       
-      gtk_widget_show(menu_item);  
+      gtk_widget_show(menu_item);
+
+#ifdef __CYGWIN32__      
+      if (GTK_BIN (menu_item)->child) {
+        GtkWidget *child = GTK_BIN (menu_item)->child;
+        
+        /* do stuff with child */
+        if (GTK_IS_LABEL (child))
+        {
+          font =
+            gdk_font_load ("-unknown-Courier New-normal-r-normal--17-127-96-96-m-0-iso8859-1");
+          if (!font) {
+            font =
+              gdk_font_load ("-unknown-Fixedsys-normal-r-normal--14-105-96-96-m-0-iso8859-1");
+          }
+
+          if (font) {
+            style = gtk_style_copy (gtk_widget_get_style (child));
+            gdk_font_unref (style->font);
+            style->font = font;
+            gdk_font_ref (style->font);
+            gtk_widget_set_style (child, style);
+          }
+        }
+      }
+#endif
+
       free(menu_item_name);
       free(menu_item_func);
       free(menu_item_hotkey_func);

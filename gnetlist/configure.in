@@ -7,7 +7,7 @@ PACKAGE=geda-gnetlist
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20010708
+VERSION=20010722
 
 echo Configuring gnetlist version $VERSION
 
@@ -46,9 +46,6 @@ AM_CONFIG_HEADER(config.h)
 dnl Build time sanity check...
 AM_SANITY_CHECK
 
-dnl Check to see if we are building in the cygnus win32 environment
-AC_CYGWIN
-
 dnl Initialize maintainer mode
 AM_MAINTAINER_MODE
 
@@ -58,21 +55,11 @@ dnl AC_PROG_LEX
 dnl AC_DECL_YYTEXT
 AC_PROG_MAKE_SET
 
-dnl Check for guile-config; use it to set 
-dnl GUILE_INCLUDE and GUILE_LIB.
-dnl Issue: Is it OK to include "-L" in GUILE_LIB?
+dnl Check to see if we are building in the cygnus win32 environment
+AC_CYGWIN
 
-AC_PATH_PROG(GUILE_CONFIG_PROG, guile-config)
-
-if test ! -n "$GUILE_CONFIG_PROG" ; then
-		AC_MSG_ERROR(Cannot find guile-config -- Install GUILE 1.3 and run ./configure again)
-fi
-
-	guile_incdir=`$GUILE_CONFIG_PROG info includedir`
-	guile_libdir=`$GUILE_CONFIG_PROG info libdir`
-	guile_libs=`$GUILE_CONFIG_PROG link`
-	GUILE_INCLUDE="-I${guile_incdir}"
-	GUILE_LIB="-L${guile_libdir} ${guile_libs}"
+dnl Guile stuff
+GUILE_FLAGS
 
 saved_cflags="$CFLAGS"
 saved_ldflags="$LDFLAGS"
@@ -140,9 +127,6 @@ fi
 if test $GLIB_CONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find glib-config -- be sure that gtk >= 1.2.3 is installed)
 fi
-
-dnl LDFLAGS="$saved_ldflags $LDEXTRA"
-dnl CFLAGS="$saved_cflags $CFEXTRA"
 
 # search for libgeda-config
 AC_PATH_PROG(LIBGEDACONFIG, libgeda-config, no, ${PATH})
@@ -227,6 +211,7 @@ dnl CFLAGS="$CFLAGS $CFEXTRA `$GTK_CONFIG --cflags`"
 CFLAGS="`$GTK_CONFIG --cflags` $CFLAGS $CFEXTRA"
 LDFLAGS="$LDEXTRA `$GTK_CONFIG --libs` $LDFLAGS"
 
+
 AC_MSG_CHECKING([for the rest of gtk])
 AC_TRY_COMPILE(
 [#include <gtk/gtk.h>],
@@ -238,6 +223,9 @@ AC_MSG_RESULT($gtk_found)
 if test $gtk_found = no; then
 	AC_MSG_ERROR(Cannot include/link gtk/gdk/glib--check CFLAGS/LDFLAGS)
 fi
+
+LDFLAGS="$saved_ldflags $LDEXTRA"
+CFLAGS="$saved_cflags $CFEXTRA"
 
 if ! test "$CYGWIN" = "no" -o "$CYGWIN"x = x; then
         echo Including -fnative-struct in CFLAGS for CYGWIN port

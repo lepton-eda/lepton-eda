@@ -1,3 +1,20 @@
+2001-07-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in, aclocal.m4: got configure script to be more like
+	  gschem wrt the guile detection
+	
+2001-07-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Fixed all the LDFLAGS to be correct (and only link
+	  the libraries once)
+
+	* configure.in: Bumped up version to 20010722
+
+	* configure.in: More updates to get cygwin to build right
+
+	* src/Makefile.am: Changed the order in which things are linked
+	  (guile last)
+
 2001-07-07 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/bompp.sh: Added bom pretty printer written by Rolf Fiedler

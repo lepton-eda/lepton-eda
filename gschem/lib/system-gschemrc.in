@@ -376,7 +376,7 @@
 (continue-component-place "enabled")
 ;(continue-component-place "disabled")
 
-; sort-components string
+; sort-components-library string
 ;
 ; If this is enabled, then the component library will be sorted in alpha
 ; order.  Enabling this will hide the search order for components, keep

@@ -15,6 +15,7 @@
 <<s_conn.c : s_conn_uniq()>>
 <<s_conn.c : s_conn_remove_other()>>
 <<s_conn.c : s_conn_remove()>>
+<<s_conn.c : s_conn_remove_complex()>>
 <<s_conn.c : s_conn_check_midpoint()>>
 <<s_conn.c : s_conn_update_object()>>
 <<s_conn.c : s_conn_update_complex()>>
@@ -230,6 +231,38 @@ void s_conn_remove(TOPLEVEL * w_current, OBJECT * to_remove)
 
 
 @ %def s_conn_remove
+
+
+@section Function @code{s_conn_remove_complex()}
+
+@defun s_conn_remove_complex w_current to_remove
+@end defun
+
+<<s_conn.c : s_conn_remove_complex()>>=
+void s_conn_remove_complex(TOPLEVEL * w_current, OBJECT * to_remove)
+{
+  OBJECT *o_current;
+  
+  if (to_remove->type != OBJ_COMPLEX) {
+    return;
+  }
+
+  o_current = to_remove->complex->prim_objs;
+  while (o_current != NULL) {
+    switch (o_current->type) {
+      case (OBJ_NET):
+      case (OBJ_PIN):
+      case (OBJ_BUS):
+        s_conn_remove(w_current, o_current);
+        break;
+
+    }
+    o_current = o_current->next;
+  }
+  
+}
+
+@ %def s_conn_remove_complex
 
 
 @section Function @code{s_conn_check_midpoint()}
