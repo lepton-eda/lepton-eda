@@ -244,7 +244,242 @@ TBA
 TBA
 
 \section{Scheme backend API}
-TBA
+Please note that this section is still under construction.  The
+information here should be correct, but it is not complete.
+
+\subsection{Overview}
+gnetlist operates by loading the schematic database from the .sch
+files, building an internal representation and then calling a function
+specific to the desired output netlist type which performs the actual
+netlisting.  Each gnetlist backend is contained in a file called
+gnet-<backend>.scm.  Where <backend> is the name of the particular
+backend.  For example, gnet-switcap.scm contains the code used by
+``gnetlist -g switcap'' and gnet-drc.scm contains the code used by
+``gnetlist -g drc''.  The backends are written in the Scheme
+programming language.  The particular implementation of scheme is
+guile which stands for GNU's Ubiquitous Intelligent Language for
+Extensions.  More information about guile may be found at
+\url{http://www.gnu.org/software/guile/guile.html}. 
+
+\subsection{Entry Point}
+Each netlist backend is required to provide a function whose name
+matches the netlist type.  For example, the switcap backend contained
+in gnet-switcap.scm must provide a function called ``switcap''.  That
+is the function which gnetlist will call to initiate the netlisting.
+The entry point function is given a single argument which is the
+filename for the output netlist.  Typically the first thing a
+netlister does is to open the output file for writing.
+
+The following excerpt from the switcap backend shows the start of the
+entry point function and shows the output file being opened.  At the
+end of the function, the output file is closed.
+\begin{verbatim}
+
+;; ---------------------------------------
+;; Switcap netlist generation -- top level
+;; ---------------------------------------
+(define switcap
+  (lambda (output-filename)
+    (let ((port (open-output-file output-filename)))
+
+;; rest of netlisting goes here
+
+;; close the output file and return
+      (close-output-port port))))
+
+\end{verbatim}
+
+\subsection{Initialization of the Backend}
+After opening the output netlist, any specific initializations which
+must be done for the particular netlist are done.  In the switcap
+example, we must initialize a net name and reference designator
+(refdes) aliasing database.  This is because switcap has  more
+restrictive requirements on its net names than gschem does.  In
+addition, the reference designators in a switcap netlist have special
+requirements.  To deal with this situation, gnetlist provides some
+general purpose functions which rename nets and reference designators
+to comply with the target netlist requirements.  More details on this
+later.  For now, just note that the switcap backend uses the following
+code: 
+
+\begin{verbatim}
+
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases switcap:map-net-names 
+          all-unique-nets)
+
+      ;; initialize the refdes aliasing
+      (gnetlist:build-refdes-aliases switcap:map-refdes
+          packages)
+
+\end{verbatim}
+
+The other initialization which is typically done, although not
+required by all netlist types, is to output some sort of header.  This
+header may be explicitly contained in the entry point function or it
+may be contained in its own function for code clarity.  In the switcap
+backend, the call is:
+
+\begin{verbatim}
+
+      (switcap:write-top-header port)
+
+\end{verbatim}
+Note that the convention is for any backend specific functions to have
+their names prefixed by the backend name.  For example all switcap
+specific functions begin with ``switcap:''.  Functions which are
+available to all backends and provided by gnetlist are prefixed by
+``gnetlist:''.
+
+The definition of ``switcap:write-top-header'' is 
+
+\begin{verbatim}
+
+;; 
+;; Switcap netlist header
+;;
+(define switcap:write-top-header
+  (lambda (port)
+    (display 
+      "/* Switcap netlist produced by gnetlist (part of gEDA) */\n" 
+      port)  
+    (display 
+      "/* See http://www.geda.seul.org for more information.  */\n"
+      port)  
+    (display 
+      "/* Switcap backend written by Dan McMahill             */\n"
+      port)
+    (display "\n\n" port)
+    )
+  )
+
+
+\end{verbatim}
+
+The entry point function continues by calling functions for each
+section in the output netlist.  The variable ``packages'' is
+predefined by gnetlist to be a list of all components in the design
+and ``all-unique-nets'' is a list of all the nets in the design.  The
+various functions used by the backend for each section in the netlist
+will use these variables.  For example, the main part of the switcap
+netlist which contains the components and their connectivity is
+written to the output file with
+
+\begin{verbatim}
+
+      (switcap:write-netlist port packages)
+
+\end{verbatim}
+
+\subsection{Net Name and Reference Designator Aliasing}
+It is common for a target netlist type to have a more restrictive
+requirement for the net names than gschem does.  For example, there
+may be restrictions on length, allowed characters, or case.  To
+address this issue, gnetlist provides a net name aliasing feature.  To
+use this feature, the function ``gnetlist:build-net-aliases'' is
+called as part of the initialization section of the entry point
+function.  For example in the switcap backend,
+
+\begin{verbatim}
+
+      ;; initialize the net-name aliasing
+      (gnetlist:build-net-aliases switcap:map-net-names
+          all-unique-nets)
+
+\end{verbatim}
+
+The function ``switcap:map-net-names'' is a backend specific (switcap
+in this case) function which accepts a gschem net name as an argument
+and returns a modified net name which meets the requirements for the
+output netlist format.  In the case of switcap, the requirement is
+ground must be called ``0'', nets may have no more than 7 characters,
+and the netlist is not case sensitive.  
+
+\begin{verbatim}
+
+;; This procedure takes a net name as determined by
+;; gnetlist and modifies it to be a valid SWITCAP net name.
+;;
+(define switcap:map-net-names
+  (lambda (net-name)
+    (let ((rx (make-regexp "^unnamed_net"))
+          (net-alias net-name)
+          )
+      ;; XXX we should use a dynamic regexp based on the 
+      ;; current value for the unnamed net base string.
+
+      (cond 
+       ;; Change "GND" to "0"
+       ((string=? net-name "GND") (set! net-alias "0"))
+       ;; remove the 'unnamed_net' part
+       ((regexp-exec rx net-name) 
+           (set! net-alias (substring net-name 11)))
+       (else net-name)
+       )
+
+      ;; Truncate to 7 characters
+      (if (> (string-length net-alias) 7)
+          (set! net-alias (substring net-alias 0 7))
+          )
+      ;; Convert to all upper case
+      (string-upcase net-alias)
+
+      )
+    )
+  )
+
+\end{verbatim}
+
+The function ``gnetlist:build-net-aliases'' creates a database which
+later on lets you look up the output net name from the gschem net name
+or the gschem net name from the output net name.  In addition it does
+the very important task of ensuring that no shorts are created by
+modifying the net names.  As an example suppose you had a net called
+``MyNet'' and another called ``mynet'' in the schematic.  Those are
+unique but after converting both to upper case they become a single
+net.  ``gnetlist:build-net-aliases'' will detect this condition and
+issue an error and stop netlisting.
+
+Now that the database has been initialized, the netlister simply uses
+\begin{verbatim}
+
+(gnetlist:alias-net somenet)
+
+\end{verbatim}
+to retrive the netlist net name from the gschem net name.
+
+A similar set of functions are provided for reference designator
+aliasing.
+
+\subsection{Debugging Hints}
+A useful debugging tool is to run gnetlist in interactive mode.  This
+is done by using the ``-i'' option to gnetlist.  This will give
+you a shell where you may enter scheme commands.  This provides a 
+simple way to examine various variables and try out various functions.
+
+An example of running gnetlist in interactive mode is shown below.
+
+\begin{verbatim}
+
+% gnetlist -i ../../gnetlist/examples/switcap/*.sch
+gEDA/gnetlist version 20041228
+gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.
+This is free software, and you are welcome to redistribute it under certain
+conditions; please see the COPYING file for more details.
+
+Loading schematic [../../gnetlist/examples/switcap/analysis.sch]
+Loading schematic [../../gnetlist/examples/switcap/ckt.sch]
+Loading schematic [../../gnetlist/examples/switcap/clocks.sch]
+gnetlist> all-unique-nets
+("unnamed_net6" "unnamed_net5" "unnamed_net4" "OUT" "unnamed_net3"
+ "unnamed_net2" "unnamed_net1" "GND")
+gnetlist> packages
+("TIMING" "CLK1" "S7" "S8" "S6" "S5" "C3" "S4" "C2" "C1" "E1" "S3"
+ "S1" "V1" "S2" "OPTIONS" "TITLE" "ANA1")
+gnetlist> (quit)
+%
+
+\end{verbatim}
 
 \end{document}
 
