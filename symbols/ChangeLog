@@ -1,3 +1,8 @@
+2003-09-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* connector/mains-plug-1.sym: Deleted device= attribute which was 
+	out in la la land.
+
 2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Fixed MinGW cflags/ldflags
