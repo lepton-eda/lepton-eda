@@ -58,11 +58,6 @@ g_key_execute(int state, int keyval)
 	char guile_string[50];
 	char modifier[10];
 
-/* part of win32 port for now */
-#ifdef __CYGWIN32__
-	return;
-#endif
-
 	if (keyval == 0) {
 		return;
 	}
@@ -78,6 +73,7 @@ g_key_execute(int state, int keyval)
 		modifier[1] = '\0';
 	}
 
+#if 0 /* old non-portable way */
 	/* don't pass the raw modifier key presses to the guile code */
 	if (strstr(XKeysymToString(keyval), "Alt")) {
 		return;
@@ -93,6 +89,23 @@ g_key_execute(int state, int keyval)
 
 	sprintf(guile_string, "(press-key %s%s\")",
 		modifier, XKeysymToString (keyval));
+#endif
+
+	/* don't pass the raw modifier key presses to the guile code */
+	if (strstr(gdk_keyval_name(keyval), "Alt")) {
+		return;
+	}
+
+	if (strstr(gdk_keyval_name(keyval), "Shift")) {
+		return;
+	}
+
+	if (strstr(gdk_keyval_name(keyval), "Control")) {
+		return;
+	}
+
+	sprintf(guile_string, "(press-key %s%s\")",
+		modifier, gdk_keyval_name (keyval));
 
 #if DEBUG
 	printf("_%s_\n", guile_string);
