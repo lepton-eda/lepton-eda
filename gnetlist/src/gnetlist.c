@@ -50,6 +50,7 @@ void main_prog(int argc, char *argv[])
     int argv_index;
     int first_page = 1;
     char *cwd;
+    GSList *list_pnt;
 
     TOPLEVEL *pr_current;
 
@@ -191,6 +192,26 @@ void main_prog(int argc, char *argv[])
 	s_log_message("Failed to read init scm file [%s]\n", input_str);
 	fprintf(stderr, "Failed to read init scm file [%s]\n", input_str);
     }
+
+
+ 
+    /* Load first the configuration file */
+    list_pnt = load_files_list;
+    while (list_pnt) {
+      if (g_read_file(list_pnt->data) != -1) {
+        s_log_message("Read scm file [%s]\n", 
+                      list_pnt->data);
+      } else {
+        s_log_message("Failed to read scm file [%s]\n", 
+                      list_pnt->data);
+        
+        fprintf(stderr, "Failed to read scm file [%s]\n", 
+                list_pnt->data);
+      }
+      list_pnt = g_slist_next(list_pnt);
+    }
+    /* Free now the list of configuration files */
+    g_slist_free(load_files_list);
 
 
     if (guile_proc) {

@@ -32,7 +32,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-#define OPTIONS "o:qihvg:c:"
+#define OPTIONS "o:qihvg:c:l:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -43,11 +43,12 @@ extern int optind;
 void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-    printf("  -i  		Interactive GUILE mode\n");
+    printf("  -i  		Interactive scheme mode\n");
     printf("  -q  		Quiet mode\n");
-    printf("  -g proc	GUILE procedure to execute \n");
+    printf("  -l filename       Load scheme file before executing procedure\n");
+    printf("  -g proc	        Scheme procedure to execute\n");
     printf("  -o filename	Output netlist filename\n");
-    printf("  -c string	Execute string like was a guile script\n");
+    printf("  -c string	        Execute string as a scheme script\n");
     printf("  -v  		Verbose mode on\n");
     printf("\n");
     exit(0);
@@ -78,6 +79,10 @@ int parse_commandline(int argc, char *argv[])
 	    strcpy(guile_proc, optarg);
 
 	    break;
+
+       case 'l':        
+           load_files_list = g_slist_append(load_files_list, optarg);
+           break;
 
 	case 'o':
 	    if (output_filename) {

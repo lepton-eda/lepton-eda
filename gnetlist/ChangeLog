@@ -1,3 +1,11 @@
+2003-06-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/globals.h, src/globals.c, src/gnetlist.c,
+	src/parsecmd.c: Applied Carlos Nieves Onega's -l load scheme
+	patch.  Thanks.
+
+	* src/gnetlist.1: Updated manpage with new -l flag
+	
 2003-05-25 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_traverse.c, src/s_netlist.c: Renamed a couple forgotten

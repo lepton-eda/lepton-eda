@@ -69,3 +69,7 @@ int quiet_mode=FALSE;
 int netlist_mode=gEDA;
 char *output_filename=NULL;
 
+/* list of filenames to load before executing the backend */
+GSList *load_files_list=NULL;
+
+

@@ -56,4 +56,5 @@ extern int interactive_mode;
 extern int quiet_mode;
 extern int netlist_mode;
 extern char *output_filename;
+extern GSList *load_files_list;
 
