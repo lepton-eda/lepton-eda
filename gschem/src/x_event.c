@@ -627,8 +627,8 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                        			x_stroke_erase_all(w_current);
 				}
 				break;
-		}
 #endif
+		}
 
 	} else if (event->button == 3) {
                 w_current->event_state = SELECT;
