@@ -41,7 +41,7 @@ usage(char *cmd)
 {
 	printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
 	printf("  -i  		Interactive GUILE mode\n");
-	printf("  -q  		Quite mode\n");
+	printf("  -q  		Quiet mode\n");
 	printf("  -g proc	GUILE procedure to execute \n");
 	printf("  -o filename	Output netlist filename\n");
 	printf("  -c string	Execute string like was a guile script\n");
