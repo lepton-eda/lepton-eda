@@ -236,6 +236,13 @@ symbol library.
 \item Please do not mix inputs and outputs on the same side of the symbol,
       unless absolutely necessary. 
 \item You can have pins on the top or bottom of a symbol.
+\item The order for rows of pins (buses) should be LSB (least significant
+      bit) to MSB (most significant bit).  When drawing pins which
+      are part of a bus, make sure the LSB of the bus is at the top
+      (or for pins on top/bottom of a symbol, left of the rest of
+      the other pins).  Look at 74/74181-1.sym for a correct example
+      of this order (A0 on top through A3 and B0 on top through B3).
+      Violating this rule will make connecting buses much more difficult.
 
 \end{itemize}
 
