@@ -32,6 +32,12 @@
 
 static const gchar *list_item_data_key = "list_item_data";
 
+void
+setup_attr_selector (TOPLEVEL *w_current)
+{
+	attrib_edit_dialog(w_current,NULL);
+}
+#if 0
 gint
 change_attr(GtkWidget *gtklist, TOPLEVEL *w_current)
 {
@@ -355,4 +361,4 @@ setup_attr_selector (TOPLEVEL *w_current)
 		gdk_window_raise(w_current->aswindow->window);
 	}
 }
-
+#endif

@@ -572,9 +572,12 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
 	attribptr = gtk_object_get_data(GTK_OBJECT(w_current->tewindow),"attrib");
 	if(!attribptr)
-		printf("Do Add Here\n");
-
-	o_text_change(w_current,attribptr,newtext,vis,show);
+		o_attrib_add_attrib(w_current, newtext, vis,
+                                    show,
+                                    w_current->page_current->
+                                    selection_head->next);
+	else
+		o_text_change(w_current,attribptr,newtext,vis,show);
         gtk_widget_destroy(w_current->tewindow);
 	w_current->tewindow = NULL;
 	free(newtext);
@@ -731,18 +734,47 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttonok);
 	GTK_WIDGET_SET_FLAGS (buttonok, GTK_CAN_DEFAULT);
 
-	buttondelete = gtk_button_new_with_label ("Delete");
-	gtk_widget_show (buttondelete);
-	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttondelete);
-	GTK_WIDGET_SET_FLAGS (buttondelete, GTK_CAN_DEFAULT);
+	if(list)
+	{
+		buttondelete = gtk_button_new_with_label ("Delete");
+		gtk_widget_show (buttondelete);
+		gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttondelete);
+		GTK_WIDGET_SET_FLAGS (buttondelete, GTK_CAN_DEFAULT);
+	}
 
 	buttoncancel = gtk_button_new_with_label ("Cancel");
 	gtk_widget_show (buttoncancel);
 	gtk_container_add (GTK_CONTAINER (hbuttonbox2), buttoncancel);
 	GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
 
-	o_attrib_get_name_value(list->text_string,name,val);
 
+	if(list)
+	{
+		o_attrib_get_name_value(list->text_string,name,val);
+		attrib=o_list_search(w_current->page_current->object_head,list);
+		if(attrib->visibility == VISIBLE)
+			gtk_toggle_button_set_active 
+				(GTK_TOGGLE_BUTTON (visbutton), TRUE);
+
+		if(attrib->show_name_value == SHOW_NAME)
+			gtk_toggle_button_set_active 
+				(GTK_TOGGLE_BUTTON(radiobutton8),TRUE);
+		else if(attrib->show_name_value == SHOW_VALUE)
+			gtk_toggle_button_set_active 
+				(GTK_TOGGLE_BUTTON(radiobutton9),TRUE);
+		else gtk_toggle_button_set_active 
+			(GTK_TOGGLE_BUTTON(radiobutton10),TRUE);
+	}
+	else
+	{
+		attrib=NULL;
+		name[0]=0;
+		val[0]=0;
+		gtk_toggle_button_set_active 
+			(GTK_TOGGLE_BUTTON (visbutton), TRUE);
+		gtk_toggle_button_set_active 
+			(GTK_TOGGLE_BUTTON(radiobutton9),TRUE);
+	}
 	i = 0;
 	string = (char *) s_attrib_get(i);
 	while (string != NULL)
@@ -755,16 +787,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	gtk_combo_set_popdown_strings (GTK_COMBO (combo3), combo3_items);
 	g_list_free (combo3_items);
 
-	attrib=o_list_search(w_current->page_current->object_head,list);
 	gtk_object_set_data(GTK_OBJECT(tewindow),"attrib",attrib);
-	if(attrib->visibility == VISIBLE)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (visbutton), TRUE);
-
-	if(attrib->show_name_value == SHOW_NAME)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(radiobutton8),TRUE);
-	else if(attrib->show_name_value == SHOW_VALUE)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(radiobutton9),TRUE);
-	else gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(radiobutton10),TRUE);
 
 	gtk_entry_set_text (GTK_ENTRY (val_entry), val);
 	gtk_entry_set_text (GTK_ENTRY (lab_entry), name);
@@ -781,7 +804,8 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_ok),w_current);
 	gtk_signal_connect(GTK_OBJECT(buttoncancel),"clicked",
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_cancel),w_current);
-	gtk_signal_connect(GTK_OBJECT(buttondelete),"clicked",
+	if(list)
+		gtk_signal_connect(GTK_OBJECT(buttondelete),"clicked",
 			GTK_SIGNAL_FUNC(attrib_edit_dialog_delete),w_current);
 
 	gtk_widget_show(tewindow);
