@@ -1,3 +1,8 @@
+2005-01-30  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/o_complex_basic.nw (o_complex_read): Fixed test after library 
+	search to avoid crash when the component is not found.
+
 2005-01-29  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/g_rc.nw, noweb/o_complex_basic.nw: Adapted for new component 

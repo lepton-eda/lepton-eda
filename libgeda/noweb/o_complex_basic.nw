@@ -867,29 +867,29 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
 @ 
 
 <<o_complex_read() : add a complex from library>>=
-GList *clibs = s_clib_search_basename (basename);
-if (g_slist_next (clibs)) {
-  s_log_message ("More than one component found with name [%s]\n",
-                 basename);
-  /* PB: for now, use the first directory in clibs */
-  /* PB: maybe open a dialog to select the right one? */
+const GSList *clibs = s_clib_search_basename (basename);
+if (clibs == NULL) {
+  s_log_message("Component [%s] was not found in any component library\n", 
+                basename);
+  fprintf(stderr,
+          "Component [%s] was not found in any component library\n", 
+          basename);
+  clib = NULL;
+} else {
+  if (g_slist_next (clibs)) {
+    s_log_message ("More than one component found with name [%s]\n",
+                   basename);
+    /* PB: for now, use the first directory in clibs */
+    /* PB: maybe open a dialog to select the right one? */
+  }
+  clib = (gchar*)clibs->data;
 }
-clib = (gchar*)clibs->data;
- 
-    if (clib == NULL)
-    {
-      s_log_message("Component [%s] was not found in any component library\n", 
-                      basename);
-      fprintf(stderr,
-              "Component [%s] was not found in any component library\n", 
-              basename);
-    }
 
-    object_list = o_complex_add(w_current, object_list, type, 
-                                WHITE, 
-                                x1, y1, 
-                                angle, mirror,
-                                clib, basename, selectable, FALSE);
+object_list = o_complex_add(w_current, object_list, type, 
+                            WHITE, 
+                            x1, y1, 
+                            angle, mirror,
+                            clib, basename, selectable, FALSE);
 
 @ 
 
