@@ -11,8 +11,8 @@
 /* Define if you have optarg in unistd.h */
 #undef OPTARG_IN_UNISTD
 
-/* Define if you have the gd library   */
-#undef HAS_LIBGD
+/* Define if you have the gdgeda library   */
+#undef HAS_LIBGDGEDA
 
 /* Define if you have rint in the math library   */
 #undef HAS_RINT  

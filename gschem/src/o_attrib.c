@@ -28,9 +28,6 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
-#endif
 
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>

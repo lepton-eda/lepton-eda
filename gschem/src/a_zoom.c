@@ -24,9 +24,6 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
-#endif
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>

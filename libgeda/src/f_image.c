@@ -25,8 +25,8 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
 #endif
 
 #include <guile/gh.h>
@@ -43,7 +43,7 @@
 #include "../include/prototype.h"
 
 
-#ifdef HAS_LIBGD
+#ifdef HAS_LIBGDGEDA
 /* what happens if snap is off? */
 /* hack deal with this !!!!!!!! */
 void
@@ -138,11 +138,15 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 
 	return;
 }
+#endif
 
 void
 f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, 
 	int color_mode)
 {
+
+#ifdef HAS_LIBGDGEDA
+
 	int origin_x, origin_y, bottom, right;
 	float scale;
 
@@ -169,6 +173,7 @@ f_image_write(TOPLEVEL *w_current, char *filename, int width, int height,
 	
 	o_image_write(filename);
 	o_image_close();
+#endif
 
 }
 
@@ -178,7 +183,6 @@ f_image_set_type(TOPLEVEL *w_current, int type)
 {
 	w_current->image_output_type = type;
 }
-#endif
 
 
 

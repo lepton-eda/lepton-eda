@@ -28,8 +28,8 @@
 
 
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
 #endif
 
 #include "../include/colors.h"
@@ -43,7 +43,7 @@ int image_yellow;
 int image_cyan;
 int image_grey;
 
-#ifdef HAS_LIBGD
+#ifdef HAS_LIBGDGEDA
 
 gdImagePtr current_im_ptr;
 
@@ -112,8 +112,10 @@ o_image_write(char *filename)
 	fclose(out);
 	return(0);
 }
+#endif
 
 
+/* this can stay in even if libgdgeda doesn't exist */
 int
 o_image_geda2gd_color(int color) 
 {
@@ -158,4 +160,3 @@ o_image_geda2gd_color(int color)
 	
 }
 
-#endif

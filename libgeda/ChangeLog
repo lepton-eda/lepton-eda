@@ -8,6 +8,15 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/1/99 	Changed all gd includes to gdgeda to distinguish my version of gd
+	from the official one
+
+	Changed HAS_LIBGD to HAS_LIBGDGEDA
+
+	Added #ifdef HAS_LIBGDGEDA where appropriate
+
+	Missed a few spots in adding above, found them all I hope
+
 6/29/99 Added s_nethash.c which deals with the nethash table in gnetlist
 
 	Added init of the nethash table to s_page.c

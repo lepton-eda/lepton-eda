@@ -27,8 +27,8 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
 #endif
 
 #include "struct.h"
@@ -580,7 +580,9 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	y2 = o_current->line_points->screen_y2;
 
         /* assumes screen coords are already calculated correctly */
+#ifdef HAS_LIBGDGEDA
         gdImageLine(current_im_ptr, x1, y1, x2, y2, color);
+#endif
 
 	cue = o_ales_query_table(w_current->page_current->ales_table,
 				o_current->line_points->x1,
@@ -600,28 +602,34 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 
 			/* hack clean this up so that you save some code */	
 			case(FILLEDBOX): 
+#ifdef HAS_LIBGDGEDA
 				gdImageFilledRectangle(current_im_ptr, 
 						x1-offset, y1-offset, 
 					        x1-offset+offset2, 
 						y1-offset+offset2,
 						endpoint_color);
+#endif
 			break;
 
 			case(EMPTYBOX): 
+#ifdef HAS_LIBGDGEDA
 				gdImageRectangle(current_im_ptr, 
 						x1-offset, y1-offset, 
 					        x1-offset+offset2, 
 						y1-offset+offset2,
 						endpoint_color);
+#endif
 			break;
 
 			case(X):
+#ifdef HAS_LIBGDGEDA
         			gdImageLine(current_im_ptr, x1-cross, y1-cross,
 						x1+cross, y1+cross,
 						endpoint_color);
         			gdImageLine(current_im_ptr, x1-cross, y1+cross,
 						x1+cross, y1-cross,
 						endpoint_color);
+#endif
 			break;
 
 			case(NONE):
@@ -636,6 +644,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	   case(MIDPOINT_CUE):
 		if (w_current->net_midpoint_mode != NONE) {
 			if (w_current->net_midpoint_mode == FILLED) {
+#ifdef HAS_LIBGDGEDA
 				gdImageArc(current_im_ptr, x1, y1, 
 					   offset2*1.25, offset2*1.25, 
 					   0, 360, endpoint_color);
@@ -643,10 +652,13 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 					gdImageArc(current_im_ptr, x1, y1,
                                            i, i, 0, 360, endpoint_color);
 				}
+#endif
 			} else if (w_current->net_midpoint_mode == EMPTY) {
+#ifdef HAS_LIBGDGEDA
 				gdImageArc(current_im_ptr, x1, y1, 
 					   offset2*1.25, offset2*1.25, 
 					   0, 360, endpoint_color);
+#endif
 			}
 		}
            break;
@@ -664,28 +676,34 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	
 			/* clean this up so that you save some code */	
 			case(FILLEDBOX):
+#ifdef HAS_LIBGDGEDA
 				gdImageFilledRectangle(current_im_ptr, 
 						x2-offset, y2-offset, 
 					        x2-offset+offset2, 
 						y2-offset+offset2,
 						endpoint_color);
+#endif
 				break;
 
 			case(EMPTYBOX): 
+#ifdef HAS_LIBGDGEDA
 				gdImageRectangle(current_im_ptr, 
 						x2-offset, y2-offset, 
 					        x2-offset+offset2, 
 						y2-offset+offset2,
 						endpoint_color);
+#endif
 			break;
 
 			case(X):
+#ifdef HAS_LIBGDGEDA
         			gdImageLine(current_im_ptr, x2-cross, y2-cross,
 						x2+cross, y2+cross,
 						endpoint_color);
         			gdImageLine(current_im_ptr, x2-cross, y2+cross,
 						x2+cross, y2-cross,
 						endpoint_color);
+#endif
 			break;
 			
 			case(NONE):
@@ -700,6 +718,7 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	   case(MIDPOINT_CUE):
 		if (w_current->net_midpoint_mode != NONE) {
 			if (w_current->net_midpoint_mode == FILLED) {
+#ifdef HAS_LIBGDGEDA
 				gdImageArc(current_im_ptr, x2, y2, 
 					   offset2*1.25, offset2*1.25, 
 					   0, 360, endpoint_color);
@@ -708,11 +727,14 @@ o_net_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 					gdImageArc(current_im_ptr, x2, y2,
                                            i, i, 0, 360, endpoint_color);
 				}
+#endif
 			
 			} else if (w_current->net_midpoint_mode == EMPTY) {
+#ifdef HAS_LIBGDGEDA
 				gdImageArc(current_im_ptr, x2, y2, 
 				 	   offset2*1.25, offset2*1.25, 
 					   0, 360, endpoint_color);
+#endif
 			}
 		}
            break;

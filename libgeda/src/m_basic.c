@@ -27,10 +27,6 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
-#endif
-
 #include "struct.h" /* why should I include these hack, just for prototype ? */
 #include "globals.h"
 

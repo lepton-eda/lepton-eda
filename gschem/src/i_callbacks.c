@@ -30,9 +30,6 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
-#endif
 
 #include <libgeda/struct.h>
 #include <libgeda/defines.h>
@@ -301,6 +298,12 @@ i_callback_file_image_write (gpointer data, guint callback_action, GtkWidget *wi
 	w_current = (TOPLEVEL *) data;
 
 	exit_if_null(w_current);
+
+#ifndef HAS_LIBGDGEDA
+	fprintf(stderr, "libgdgeda not installed or disabled, so this feature is disabled\n");
+	s_log_message("libgdgeda not installed or disabled, so this feature is disabled\n");
+	return;
+#endif
 
 	/* + 1 is for null character */
 	/* this will be plenty of space since .sch is being replaced by .ps */ 

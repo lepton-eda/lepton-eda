@@ -17,14 +17,14 @@ Stefan Petersen		- For writing the actual guile code which implements
 			  the key remapping (worked almost out of the box!)
 			- Pointed out some obsolete stuff in the configure.in
 			- Bug fixes and improvements to gschem.scm
+			- Continued bug fixes and additions to gschem.scm
+			- list-keys.scm which prints out the keymap
 
 Thien-Thi Nguyen 	- Wrote a much better g_read_file()
 		     	- A configure.in which handles guile better then 
 			  my quick hack
 			- Help with the guile key remapping code 
 			- Bug fixes and improvements to gschem.scm
-			- Patch to gnetlist adding newlines for 
-			  interactive mode
 
 Erick Britis Ortiz	- Provided a patch to fix the broken select box and  
 Jeff McNeal		  box object

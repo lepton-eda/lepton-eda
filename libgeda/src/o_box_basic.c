@@ -27,8 +27,8 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
 #endif
 
 #include "struct.h"
@@ -376,12 +376,15 @@ o_box_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	}
 
 	/* assumes screen coords are already calculated correctly */
-	gdImageRectangle(current_im_ptr, 
+#ifdef HAS_LIBGDGEDA
+ 	gdImageRectangle(current_im_ptr, 
 			o_current->line_points->screen_x1,
 			o_current->line_points->screen_y1,
 			o_current->line_points->screen_x2,
 			o_current->line_points->screen_y2, 
 			color);
+#endif
+
 }
 
 

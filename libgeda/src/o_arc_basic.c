@@ -27,8 +27,8 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
 #endif
 
 #include "struct.h"
@@ -542,11 +542,13 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 	x = o_current->screen_x + (final)/2;
 	y = o_current->screen_y + (final)/2;
 
+#ifdef HAS_LIBGDGEDA
 	gdImageArc(current_im_ptr, 
 			x, y,
 			final, final,
                         start_angle, end_angle,
 			color);
+#endif
 	
 }
 

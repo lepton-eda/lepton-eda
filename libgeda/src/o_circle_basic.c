@@ -27,8 +27,8 @@
 
 #include <guile/gh.h>
 
-#ifdef HAS_LIBGD
-#include <gd/gd.h>
+#ifdef HAS_LIBGDGEDA
+#include <gdgeda/gd.h>
 #endif
 
 #include "struct.h"
@@ -407,6 +407,7 @@ o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 		color = image_black;
 	}
 
+#ifdef HAS_LIBGDGEDA
 	gdImageArc(current_im_ptr, 
 			o_current->circle->screen_x, 
 			o_current->circle->screen_y,
@@ -414,6 +415,7 @@ o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,
                         SCREENabs(w_current, o_current->circle->radius)*2,
                         0, 360, 
 			color);
+#endif
 	
 }
 
