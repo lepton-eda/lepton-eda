@@ -21,7 +21,6 @@
 <<x_attribedit.c : attrib_edit_dialog_cancel()>>
 <<x_attribedit.c : attrib_edit_dialog_delete()>>
 <<x_attribedit.c : attrib_edit_dialog()>>
-<<x_attribedit.c : attrib_edit_dialog_orig()>>
 /***************** End of Attrib Edit dialog box **********************/
 
 
@@ -986,7 +985,12 @@ attrib_edit_dialog(TOPLEVEL * w_current, OBJECT * list, int flag)
   }
 
   gtk_grab_add(w_current->aewindow);
-  gtk_widget_grab_focus(value_entry);
+
+  if (attrib) { 
+        gtk_widget_grab_focus(value_entry);
+  } else {  
+        gtk_widget_grab_focus(attrib_combo_entry);
+  }
 }
 
 

@@ -1218,8 +1218,9 @@ void
 o_edit_autonumber_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext)
 {
   int i, tmp,sorted=0;
-  current_max = 1;
-  used_count = 0;
+  int current_max = 0; /* AVH 8/18/2002 changed to 0, so 1 would be used */
+  int used_count = 0;
+
   find_max(w_current, o_list, stext);
 
   if ((used_count < 4094)&&(used_count > 0)) {

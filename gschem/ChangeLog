@@ -1,3 +1,18 @@
+2002-08-18 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_grips.nw: Fixed a bug where searching for grips would stop
+	if something that did not have grips was selected.
+
+	* noweb/o_misc.nw: Changed used_list initial value to be 0 so that
+	the number one is used when autonumbering refdes's.
+
+	* noweb/o_text.nw: Changed the color of the x and I (origin/invisible)
+ 	graphical cues to be grey (locked color) instead of red.  Red is 
+	reserved for errors.
+
+	* noweb/x_attribedit.nw: Changed the cursor focus entry to be the
+	name entry when nothing is selected (i.e. not editing an attribute)
+
 2002-08-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
  	* noweb/i_basic.nw: Added a const to get rid of compiler warnings 
