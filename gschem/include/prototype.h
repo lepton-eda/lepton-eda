@@ -510,7 +510,7 @@ void file_selection_cancel_saveas(GtkWidget *w, TOPLEVEL *w_current);
 void setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename);
 /* x_fs.c */
 void x_fileselect_destroy_window(GtkWidget *widget, FILEDIALOG *f_current);
-void x_fileselect_update_directory(FILEDIALOG *f_current, char *filename);
+void x_fileselect_update_dirfile(FILEDIALOG *f_current, char *filename);
 void x_fileselect_init_list_buffers(FILEDIALOG *f_current);
 void x_fileselect_free_list_buffers(FILEDIALOG *f_current);
 void x_fileselect_setup_list_buffers(FILEDIALOG *f_current, int num_files, int num_directories);
@@ -519,6 +519,7 @@ int x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current);
 void x_fileselect_close(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_close_saveas(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_change_dir(FILEDIALOG *f_current, char *new_directory);
+void x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_dir_button(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
 void x_fileselect_file_button(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent, FILEDIALOG *f_current);
 void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
@@ -554,13 +555,14 @@ gint page_discard(GtkWidget *gtklist, TOPLEVEL *w_current);
 gint change_page(GtkWidget *widget, gint row, gint column, GdkEventButton *bevent);
 void setup_page_selector(TOPLEVEL *w_current);
 /* x_preview.c */
+void x_preview_update(TOPLEVEL *preview, char *directory, char *filename);
 void x_preview_close(TOPLEVEL *w_current);
 gint x_preview_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);
 gint x_preview_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current);
 gint x_preview_key_press(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current);
-int x_preview_setup_rest(TOPLEVEL *preview);
+void x_preview_setup_rest(TOPLEVEL *preview);
 TOPLEVEL *x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox);
 /* x_print.c */
 gint print_landscape(GtkWidget *w, TOPLEVEL *w_current);

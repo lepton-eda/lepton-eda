@@ -194,6 +194,7 @@ x_preview_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 
 }
 
+void
 x_preview_setup_rest(TOPLEVEL *preview)
 {
 

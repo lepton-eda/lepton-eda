@@ -402,6 +402,7 @@ x_fileselect_change_dir(FILEDIALOG *f_current, char *new_directory)
 }
 
 /* don't use widget, since it can be NULL */
+void
 x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 {
 	TOPLEVEL *w_current;
