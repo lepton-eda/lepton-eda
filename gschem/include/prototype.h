@@ -454,6 +454,12 @@ void setup_saveas_file_selector(TOPLEVEL *w_current, int flag, char *filename);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);
 /* x_image.c */
+gint image_320(GtkWidget *w, TOPLEVEL *w_current);
+gint image_640(GtkWidget *w, TOPLEVEL *w_current);
+gint image_800(GtkWidget *w, TOPLEVEL *w_current);
+gint image_1024(GtkWidget *w, TOPLEVEL *w_current);
+gint image_1280(GtkWidget *w, TOPLEVEL *w_current);
+gint image_1600(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 void x_image_setup(TOPLEVEL *w_current, char *filename);

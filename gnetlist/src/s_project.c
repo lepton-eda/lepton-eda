@@ -180,6 +180,7 @@ s_project_setup_rest(TOPLEVEL *pr_current)
 	pr_current->tswindow = NULL;	
 	pr_current->pswindow = NULL;	
 	pr_current->pwindow = NULL;	
+	pr_current->iwindow = NULL;	
 	pr_current->abwindow = NULL;	
 	pr_current->cowindow = NULL;	
 

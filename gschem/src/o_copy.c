@@ -65,7 +65,6 @@ o_copy_end(TOPLEVEL *w_current)
 	int screen_diff_x, screen_diff_y;
 	int lx,ly;
 	int sx,sy;
-	int adding_sel_save;
 
 	if (w_current->page_current->selection_head->next == NULL) { 
 		/* error condition hack */

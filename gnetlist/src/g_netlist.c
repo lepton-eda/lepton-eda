@@ -260,7 +260,6 @@ g_get_all_connections(SCM scm_netname)
   NET *n_current;
   char *wanted_net_name;
   char *net_name;
-  char *level;
   char *pin;
   char *uref;
 

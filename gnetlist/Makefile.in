@@ -91,6 +91,7 @@ X_CFLAGS = @X_CFLAGS@
 X_LDFLAGS = @X_LDFLAGS@
 X_LIBS = @X_LIBS@
 expandgedadatadir = @expandgedadatadir@
+expandgedarcdir = @expandgedarcdir@
 gedadatadir = @gedadatadir@
 gedarcdir = @gedarcdir@
 sourcedir = @sourcedir@

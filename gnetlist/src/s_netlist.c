@@ -131,11 +131,10 @@ s_netlist_print(NETLIST *ptr)
 }
 
 void
-s_netlist_post_resolve(NETLIST *head)
+s_netlist_post_process(NETLIST *head)
 {
 	NETLIST *nl_current;
 	CPINLIST *pl_current;
-	CPINLIST *pinlist_parent;
 	int vi=0;
 
 	nl_current = head;
@@ -146,7 +145,7 @@ if (verbose_mode) {
 	vi = 0;
 }
 
-	/* this pass gives all nets a name, whether specified or creates a 
+	/* this pass gives all nets a name, whether specified or creates a */
 	/* name */
 	nl_current = head;
 	while(nl_current != NULL) {

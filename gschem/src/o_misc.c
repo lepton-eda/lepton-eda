@@ -694,7 +694,6 @@ void
 o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list)
 {
 	OBJECT *o_current=NULL;
-	OBJECT *real=NULL;
 
 	if (list == NULL)
 		return;

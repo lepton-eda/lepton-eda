@@ -10,7 +10,7 @@ all: targets
 install::
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "configuring/making/installing" all "in $$i..."; \
 	(cd $$i ; ./configure --prefix=$(prefix); make install); \
 	done
 	@echo Finished!
@@ -25,10 +25,17 @@ install::
 	@echo setenv PATH ${prefix}:\$$PATH
 	@echo ""
 
+config::
+	for i in $(SUBDIRS) ;\
+	do \
+	echo "configuring" all "in $$i..."; \
+	(cd $$i ; ./configure --prefix=$(prefix)); \
+	done
+
 clean::	
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "cleaning" all "in $$i..."; \
 	(cd $$i ; make clean); \
 	done
 	rm -f *~ *.log
@@ -37,7 +44,7 @@ clean::
 uninstall::	
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "uninstalling" all "in $$i..."; \
 	(cd $$i ; make uninstall); \
 	done
 	@echo Finished!
@@ -46,7 +53,7 @@ uninstall::
 maint::	
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "maint-cleaning" all "in $$i..."; \
 	(cd $$i ; make maintainer-clean); \
 	done
 	rm -f *~ *.log
@@ -55,15 +62,15 @@ maint::
 build::	
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "building" all "in $$i..."; \
 	(cd $$i ; make); \
 	done
 	@echo Finished!
 
-config: 
+reconfig: 
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "reconfiging" all "in $$i..."; \
 	(cd $$i ; autoreconf --force ; automake ); \
 	done
 	@echo Finished!
@@ -71,15 +78,15 @@ config:
 distconfig: 
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
-	(cd $$i ; autoreconf --force ; automake --include-deps; ./configure --prefix=$(prefix)); \
+	echo "distconfiging" all "in $$i..."; \
+	(cd $$i ; autoreconf --force ; automake --include-deps); \
 	done
 	@echo Finished!
 
 justinstall::
 	for i in $(SUBDIRS) ;\
 	do \
-	echo "making" all "in $$i..."; \
+	echo "justinstalling" all "in $$i..."; \
 	(cd $$i ; make install); \
 	done
 	@echo Finished!
@@ -89,11 +96,12 @@ targets::
 	@echo Type:
 	@echo ""
 	@echo "make install      Installs into $(prefix) directory"
+	@echo "make config       Just do the ./configure --prefix=${prefix}"
 	@echo "make build        Just builds, doesn't install"
 	@echo "make clean        Simple clean only"
 	@echo "make maint        Total maintenance clean"
-	@echo "make config       ./configure --prefix=$(prefix) (recreate conf)"
-	@echo "make distconfig   Distribution ./configure (recreate conf)"
+	@echo "make reconfig     Create ./configure (recreate configure)"
+	@echo "make distconfig   Create dist ./configure (recreate configure)"
 	@echo "make justinstall  Just install, no building \(if not needed\)"
 	@echo "make uninstall    Install everything from $(prefix)"
 	@echo ""

@@ -45,6 +45,9 @@ Roger Williams 		- For supplying a patch with provides variable snap
 
 			  For contributing the agile-vfo-block_1.sch schematic
 
+			  For pointing out how to fix support for alphanumeric
+			  slotting (in libgeda)
+
 Mike Jarabek 		- For contributing code which displays grid points 
 			  at negative coordinates. 
 		

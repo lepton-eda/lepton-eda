@@ -530,7 +530,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990610
+VERSION=19990705
 
 echo Configuring symbols version $VERSION
 
@@ -927,6 +927,7 @@ if eval "test x$opt_rcdir = x"; then
 #define GEDARCDIR "$rclocation"
 EOF
 
+	expandgedarcdir=$rclocation
 
 	# this is used in the makefiles so it can have a ${prefix} in it
 	gedarcdir=$gedadatadir
@@ -934,6 +935,7 @@ else
 
 	# path WAS specified with --with-rcdir
 	gedarcdir=$opt_rcdir
+	expandgedarcdir=$opt_rcdir
 	cat >> confdefs.h <<EOF
 #define GEDARCDIR "$opt_rcdir"
 EOF

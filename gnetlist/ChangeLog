@@ -7,6 +7,18 @@ ChangeLog for gnetlist
 
 Most recent changes (version wise) are at the top of this file 
 
+7/5/99 	Verified that gnetlist works with alphanumeric slotting
+
+	Fixed all warnings 
+
+	Renamed s_netlist_post_resolve to s_netlist_post_process
+
+	Put Manu's configure.in changes into gnetlist as well
+	
+	Got configure.in to be almost identical to gnetlist/configure.in
+
+	Updated man page slightly
+
 7/4/99 	Integrated latest verilog backend from Mike 
 
 	Changed Mike's all-nets function to use get-all-unique-nets 

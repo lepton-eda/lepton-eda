@@ -315,7 +315,6 @@ char *
 s_net_name(NETLIST *netlist_head, NET *net_head)
 {
 	char *string;
-	NET *n_current; 
 	NET *n_start;
 	NETLIST *nl_current;
 	CPINLIST *pl_current;

@@ -53,8 +53,17 @@ IMPORTANT
 	GUILE - guile-1.3 is required (and anything guile requires).  Guile
 	can be found at: ftp://prep.ai.mit.edu/pub/gnu/guile 
 
-	LibStroke [OPTIONAL] - if you want stroke support.  The homepage
+	LibStroke 0.3 [OPTIONAL] - if you want stroke support.  The homepage
 	for LibStroke is: http://www.etla.net/libstroke/
+
+	libgdgeda 1.5 [OPTIONAL] - if you want the ability to write gif 
+	images.  libgdgeda is based on gd 1.5.  The homepage for gd 1.5 is
+	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
+	website: http://www.geda.seul.org/dist
+
+        If you use libgdgeda then you also need zlib.  zlib can be found at:
+        http://www.cdrom.com/pub/infozip/zlib  zlib can also be found on
+        the gEDA website: http://www.geda.seul.org/dist 
 
 	An understanding that this software is ALPHA release quality :)
 

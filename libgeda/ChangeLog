@@ -8,6 +8,18 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/5/99	Fixed a minor typo when allocating a string "pin" instead of "slot"
+
+	Hopefully got slotting to work with alphanumeric pins
+
+	Removed all warnings	
+
+	Updated configure.in a bit
+
+	Updated version number (in all other programs as well)
+	
+	Updated README file (in all other programs as well)
+
 7/4/99	Fixed the headers in all files to be correct (GPL)
 
 7/3/99 	Removed some debug printfs from s_nethash.c

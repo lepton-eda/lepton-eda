@@ -466,7 +466,6 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 	ALES **ales_list = NULL;
 	char **orig_key = NULL;
 	ALES *found = NULL;
-	int ret_value=0;
 
 	ales_table = p_current->ales_table;
 
@@ -544,7 +543,7 @@ o_ales_update_net(PAGE *p_current, OBJECT *o_current, int x, int y)
 		/* added st_ales node for o_current */
 		o_ales_add(*ales_list, o_current, NULL, ALES_NET, x, y);
 
-		/* do a complete search of entire object list
+		/* do a complete search of entire object list */
 		/* to see if point is a mid point connection */
 		midpoint_object = o_ales_find_midpoint(p_current->object_head, 
 						       x, y);
@@ -579,11 +578,9 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 {
 	GHashTable *ales_table;
 	char *key = NULL;
-	OBJECT *midpoint_object=NULL;
 	ALES **ales_list = NULL;
 	char **orig_key = NULL;
 	ALES *found = NULL;
-	int ret_value=0;
 
 	ales_table = p_current->ales_table;
 
@@ -655,8 +652,6 @@ o_ales_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y)
 void
 o_ales_update(PAGE *p_current, OBJECT *o_current)
 {
-	ALES *blah=NULL;
-
 	switch (o_current->type) {
 
 		case(OBJ_NET):
@@ -744,6 +739,7 @@ o_ales_query_table(GHashTable *ales_table, int x, int y)
 	return(ret_value);
 }
 
+int
 o_ales_disconnect_func(
 	gpointer key, 
 	gpointer value, 
@@ -767,8 +763,6 @@ o_ales_disconnect_func(
 void
 o_ales_disconnect_update(PAGE *p_current)
 {
-	GHashTable *ales_table;
-
 	g_hash_table_foreach_remove(p_current->ales_table, 
 		o_ales_disconnect_func, 
 		NULL);
@@ -779,8 +773,6 @@ o_ales_disconnect_update(PAGE *p_current)
 void
 o_ales_disconnect(PAGE *p_current)
 {
-	GHashTable *ales_table;
-
 	g_hash_table_foreach_remove(p_current->ales_table, 
 		o_ales_disconnect_func, 
 		NULL);

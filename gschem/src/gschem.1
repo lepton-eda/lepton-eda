@@ -1,4 +1,4 @@
-.TH gEDA 1 "January 24th, 1998" Version 19990124
+.TH gEDA 1 "July 5th, 1999" Version 19990705
 .SH NAME
 gschem - GNU Schematic Capture
 .SH SYNOPSIS
@@ -55,8 +55,8 @@ multiple schematic files are specified they are read in sequentially and
 put on seperate pages.  
 
 .SH EXAMPLES 
-These examples assume that you are in the \fIgschem\fP directory of the gEDA
-distribution.
+These examples assume that you have a schematic called stack_1.sch in
+the current directory
 
 To run \fIgschem\fP and then interact with the program:
 
@@ -65,17 +65,11 @@ To run \fIgschem\fP and then interact with the program:
 
 To run \fIgschem\fP in interactive mode but load a sample schematic:
 
-	./gschem ../examples/adders_1.sch
+	./gschem adders_1.sch
 
-To run \fIgschem\fP and load up all schematics in the examples subdirectory:
+To run \fIgschem\fP and load up all schematics in the current subdirectory:
 
-	./gschem ../examples/*.sch
-
-To run \fIgschem\fP but run the guile script "print.scm" (which terminates \fIgschem\fP):
-
-.nf
-	./gschem -s ../scripts/print.scm ../examples/adders_1.sch
-
+	./gschem *.sch
 
 .SH "ENVIRONMENT"
 No environment variables are used.

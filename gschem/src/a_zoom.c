@@ -683,11 +683,9 @@ a_zoom_box_rubberband(TOPLEVEL *w_current, int x, int y)
 void
 correct_aspect(TOPLEVEL *w_current)
 {
-	float i;
 	double new_aspect;
-	int diff_x, diff_y;
+	int diff_x;
 	int zoom_scale;
-	int sx,lx, sy, ly, last_factor;
 
 	new_aspect = (float) fabs(w_current->page_current->right - 
 			w_current->page_current->left) / 

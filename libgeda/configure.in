@@ -5,7 +5,7 @@ dnl Initialize automake stuff
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990610
+VERSION=19990705
 
 echo Configuring libgeda version $VERSION
 
@@ -16,9 +16,9 @@ AC_ARG_ENABLE(strokes,
 	no_strokes=yes
     ])
 
-dnl --disable-gdgeda : turn off gd support
-AC_ARG_ENABLE(gdgeda,                   
-    [  --disable-gdgeda        Disable gdgeda support (don't use libgdgeda at all)],
+dnl --disable-gdgeda : turn off libgdgeda support
+AC_ARG_ENABLE(gdgeda,
+    [  --disable-gdgeda        Disable libgdgeda support (don't use libgdgeda at all)],
     [
 	no_gdgeda=yes
     ])
@@ -226,7 +226,7 @@ AC_CHECK_FUNCS(getcwd strstr vsnprintf snprintf)
 AC_MSG_CHECKING([for optarg in unistd.h])
 AC_TRY_COMPILE(
 [#include <unistd.h>],
-[char *string = optarg; int i = optind;],
+[ char *string = optarg; int i = optind; ],
 optarg_found=yes,
 optarg_found=no)
 AC_MSG_RESULT($optarg_found)

@@ -20,6 +20,7 @@ In order to build libgeda you must install the following packages first:
 	GLIB 1.2.x
 	GTK+ 1.2.x
 	LibStroke 0.3 (optional)
+	libgdgeda 1.5 (optional)  (you also need zlib for libgdgeda)
 
 -----------------------------------------------------------------------------
 More detailed info:

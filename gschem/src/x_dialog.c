@@ -1080,7 +1080,6 @@ coord_display_update(TOPLEVEL *w_current, int x, int y)
 void
 coord_dialog (TOPLEVEL *w_current, int x, int y)
 {
-	GtkWidget *label=NULL;
         GtkWidget *buttonclose=NULL;
         GtkWidget *frame;
         GtkWidget *vbox;
@@ -1353,11 +1352,8 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 void
 color_edit_dialog (TOPLEVEL *w_current)
 {
-	GtkWidget *label=NULL;
         GtkWidget *buttonclose=NULL;
         GtkWidget *buttonapply=NULL;
-        GtkWidget *frame;
-        GtkWidget *vbox;
 	GtkWidget *optionmenu;
 
         if (!w_current->clwindow)

@@ -31,6 +31,7 @@
 #include <libgeda/struct.h>
 #include <libgeda/globals.h>
 #include <libgeda/defines.h>
+#include <libgeda/prototype.h>
 
 #include "../include/prototype.h"
 
@@ -197,10 +198,8 @@ void
 a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 {
 	int pan_x, pan_y;
-	int ix, iy, center_x, center_y;
 	int fix=0;
 
-	int sx, sy, lx, ly;
 
 	pan_x = WORLDabs(w_current, diff_x);
 	pan_y = WORLDabs(w_current, diff_y);

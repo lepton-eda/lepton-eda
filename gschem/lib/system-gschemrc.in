@@ -33,7 +33,7 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for gnetlist
-(load "@expandgedadatadir@/system-commonrc")
+(load "@expandgedarcdir@/system-commonrc")
 
 ;
 ; Start of color related keywords
@@ -476,9 +476,10 @@
 (attribute-name "value")
 (attribute-name "slot")
 (attribute-name "device")
-(attribute-name "slot#")
 (attribute-name "pin#")
+(attribute-name "pintype")
 (attribute-name "numslots")
+(attribute-name "slot#")
 (attribute-name "graphical")
 (attribute-name "name")
 

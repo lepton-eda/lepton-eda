@@ -51,7 +51,7 @@ f_image_write_objects(TOPLEVEL *w_current, OBJECT *head,
 	int start_x, int start_y, float scale, int color_mode)
 {
 	OBJECT *o_current=NULL;
-	int origin_x, origin_y, bottom, right;
+	int origin_x, origin_y;
 	
 	if (head == NULL) {
 		return;
@@ -148,7 +148,7 @@ f_image_write(TOPLEVEL *w_current, char *filename, int width, int height,
 #ifdef HAS_LIBGDGEDA
 
 	int origin_x, origin_y, bottom, right;
-	float scale;
+	float scale=0.0;
 
 	/* new ALES stuff */
 	o_ales_disconnect_update(w_current->page_current);

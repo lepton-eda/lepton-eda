@@ -102,8 +102,6 @@ o_net_ales_erase(TOPLEVEL *w_current, OBJECT *o_current)
 void
 o_net_ales_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
 {
-	int cue;
-
 	gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->background_color));
 

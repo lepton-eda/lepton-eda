@@ -318,7 +318,6 @@ NETHASH *
 o_nethash_query_table(GHashTable *nethash_table, char *key)
 {
 	NETHASH *nethash_list;
-	int ret_value=0;
 
 	nethash_list = g_hash_table_lookup(nethash_table,
 					key);

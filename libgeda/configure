@@ -14,7 +14,7 @@ ac_default_prefix=/usr/local
 ac_help="$ac_help
   --disable-strokes       Disable stroke support (don't use LibStroke at all)"
 ac_help="$ac_help
-  --disable-gdgeda        Disable gdgeda support (don't use libgdgeda at all)"
+  --disable-gdgeda        Disable libgdgeda support (don't use libgdgeda at all)"
 ac_help="$ac_help
   --with-gtk-config=path  Change where gtk-config is located"
 ac_help="$ac_help
@@ -548,7 +548,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990610
+VERSION=19990705
 
 echo Configuring libgeda version $VERSION
 
@@ -3628,7 +3628,7 @@ cat > conftest.$ac_ext <<EOF
 #include "confdefs.h"
 #include <unistd.h>
 int main() {
-char *string = optarg; int i = optind;
+ char *string = optarg; int i = optind; 
 ; return 0; }
 EOF
 if { (eval echo configure:3635: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then

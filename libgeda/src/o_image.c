@@ -32,7 +32,16 @@
 #include <gdgeda/gd.h>
 #endif
 
-#include "../include/colors.h"
+#include "struct.h"
+#include "defines.h"
+#include "globals.h"
+#include "s_passing.h"
+#include "o_types.h"
+
+#include "colors.h"
+
+#include "../include/prototype.h"
+
 
 int image_black;
 int image_white;

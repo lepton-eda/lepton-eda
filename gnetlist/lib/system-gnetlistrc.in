@@ -20,7 +20,7 @@
 ; Load up commonrc
 ;
 ; Contains all paths needed for gnetlist
-(load "@expandgedadatadir@/system-commonrc")
+(load "@expandgedarcdir@/system-commonrc")
 
 ;  default-series-name string
 ;  Specify the default series name (of new schematics)

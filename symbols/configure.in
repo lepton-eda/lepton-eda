@@ -5,7 +5,7 @@ dnl Initialize automake stuff
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=19990610
+VERSION=19990705
 
 echo Configuring symbols version $VERSION
 
@@ -137,6 +137,7 @@ if eval "test x$opt_rcdir = x"; then
 
 	# this needs to be expanded (NO ${prefix}) since it's used in the code
 	AC_DEFINE_UNQUOTED(GEDARCDIR, "$rclocation")
+	expandgedarcdir=$rclocation
 
 	# this is used in the makefiles so it can have a ${prefix} in it
 	gedarcdir=$gedadatadir
@@ -144,6 +145,7 @@ else
 
 	# path WAS specified with --with-rcdir
 	gedarcdir=$opt_rcdir
+	expandgedarcdir=$opt_rcdir
 	AC_DEFINE_UNQUOTED(GEDARCDIR, "$opt_rcdir")
 
 fi

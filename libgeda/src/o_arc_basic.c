@@ -482,8 +482,6 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 {
 	int start_angle, end_angle;
 	int width, height;
-	int radius;
-	int screen_radius;
 	int final;
 	int color;
 	int x, y;

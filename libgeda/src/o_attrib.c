@@ -1087,7 +1087,7 @@ o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found)
 {
 	OBJECT *o_current;
 	ATTRIB *a_current;
-	OBJECT *found;
+	OBJECT *found=NULL;
 	int val;
 	char found_name[128]; /* limit hack */
 	char found_value[128];
@@ -1216,7 +1216,7 @@ o_attrib_search_pin_number(OBJECT *object, int pin_number,
 	char *search_for;
 
 	/* The 9 is the number of digits plus null */
-	search_for = (char *) malloc(sizeof(char)*(strlen("slot")+9));
+	search_for = (char *) malloc(sizeof(char)*(strlen("pin")+9));
 
 	sprintf(search_for, "pin%d", pin_number);
 
@@ -1279,7 +1279,6 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 	int slot;
 	int pin_counter;
 	char* current_pin;
-	int current_pin_int;
 
 	o_current = object;
 	
@@ -1332,18 +1331,21 @@ o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object)
 			}
 
 			/* current_pin_int is the new pin value assigned */	
-			current_pin_int = atoi(current_pin);	
+			/* however this is not valid for alphanumeric pins */
+			/* current_pin_int = atoi(current_pin);	*/
 
-			/* 18 is the size of two numbers plus null character */
+			/* 9 is the size of one number plus null character */
 			o_pin_attrib->text_string = (char *) malloc(
-				sizeof(char)*(strlen("pin=")+18));
+				sizeof(char)*(strlen("pin=")+
+					      strlen(current_pin)+9));
 
-			sprintf(o_pin_attrib->text_string, "pin%d=%d", 
-					pin_counter, current_pin_int); 
+			/* removed _int from current_pin */
+			sprintf(o_pin_attrib->text_string, "pin%d=%s", 
+					pin_counter, current_pin); 
 
 			o_ntext_recreate(w_current, o_pin_attrib);
 
-#if DEBUG
+#if DEBUG 
 			printf("full object string %s\n", o_pin_attrib->text_string);
 #endif
 			pin_counter++;
@@ -1367,7 +1369,6 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 	int slot;
 	int pin_counter;
 	char* current_pin;
-	int current_pin_int;
 
 	
 	string = o_attrib_search_slot(original, &o_slot_attrib);
@@ -1418,14 +1419,17 @@ o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target)
 			}
 
 			/* current_pin_int is the new pin value assigned */	
-			current_pin_int = atoi(current_pin);	
+			/* however this is not valid for alphanumeric pins */
+			/* current_pin_int = atoi(current_pin);	*/
 
-			/* 18 is the size of two numbers plus null character */
+			/* 9 is the size of one number plus null character */
 			o_pin_attrib->text_string = (char *) malloc(
-				sizeof(char)*(strlen("pin=")+18));
+				sizeof(char)*(strlen("pin=")+
+					      strlen(current_pin)+9));
 
-			sprintf(o_pin_attrib->text_string, "pin%d=%d", 
-					pin_counter, current_pin_int); 
+			/* changed current_pin_int to current_pin (a string) */
+			sprintf(o_pin_attrib->text_string, "pin%d=%s", 
+					pin_counter, current_pin); 
 
 			o_ntext_recreate(w_current, o_pin_attrib);
 

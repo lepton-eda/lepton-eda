@@ -49,7 +49,7 @@ NETLIST *s_netlist_return_tail(NETLIST *head);
 NETLIST *s_netlist_return_head(NETLIST *tail);
 NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_print(NETLIST *ptr);
-void s_netlist_post_resolve(NETLIST *head);
+void s_netlist_post_process(NETLIST *head);
 /* s_project.c */
 TOPLEVEL *s_project_add(TOPLEVEL *w_head, TOPLEVEL *pr_current);
 void s_project_add_head(void);

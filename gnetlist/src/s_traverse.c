@@ -149,6 +149,9 @@ if (verbose_mode) {
 					netlist->cpins = s_traverse_component(
 							pr_current, 
 							o_current);
+
+					/* here is where you deal with the */
+					/* net attribute */
 				}
 		}			
 
@@ -167,7 +170,7 @@ if (verbose_mode) {
 	/* questions... when should you do this?  now or after all sheets have
 	 * been read */
 
-	s_netlist_post_resolve(netlist_head); 
+	s_netlist_post_process(netlist_head); 
 
 if (verbose_mode) {
 	printf("\nInternal netlist representation:\n\n");
@@ -339,10 +342,8 @@ s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT 
 	OBJECT *o_current;
 	NET *new_net;
 	char *key = NULL;
-	char *net_name = NULL;
 	ALES *ales_list1;
 	ALES *ales_list2;
-	ALES *ales_list_midpoint;
 	ALES *c_current;
 
 	o_current = object;

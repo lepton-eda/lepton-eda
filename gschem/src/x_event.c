@@ -597,7 +597,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 			start_pan_y = (int) event->y;
 		}
 		throttle++;
-	  	return;
+	  	return(0);
 	  }
         }
 
@@ -766,9 +766,6 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 	TOPLEVEL *w_current)
 {
 	int new_height, new_width;
-	int diff_height, diff_width;
-	int diff_x, diff_y;
-	float new_aspect;
 
 	/* this callback is for drawing areas only! */	
 	/* things like changing a label causes a resize */

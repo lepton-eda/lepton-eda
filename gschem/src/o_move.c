@@ -59,8 +59,6 @@ void
 o_move_end(TOPLEVEL *w_current)
 {
 	OBJECT *selection_list=NULL;
-	OBJECT *one=NULL;
-	OBJECT *two=NULL;
 	OBJECT *current=NULL;
 	OBJECT *found=NULL;
 	int diff_x, diff_y; 

@@ -160,7 +160,6 @@ o_ales_draw_objects(TOPLEVEL *w_current, OBJECT *object)
 
 
 	char *key;
-	int ret_value=0;
 
 	/* be sure to carefully free this key */
 	/* only when it's not inserted into the list */

@@ -140,7 +140,7 @@ struct st_ales {
 				/* Only used with type == ALES_MIDPOINT */
 
 	int type; /* individual object type */
-	int whole_type;	/* type of the entire list, either 
+	int whole_type;	/* type of the entire list, either */
 			/* HAS_MIDPOINT or NO_MIDPOINT */
 	int visual_cue; /* this is only used when type == HEAD */
 	int x, y;
@@ -231,6 +231,7 @@ struct st_toplevel {
 
 	int win_width, win_height;		/* Actual size of window (?) */
 	int width, height;			/* height, width of window */
+	int image_width, image_height;		/* h, w of image write */
 	int snap;				/* Snap on/off*/
 	int grid;				/* Grid on/off*/
 	int min_zoom;				/* minimum zoom factor */
@@ -313,10 +314,7 @@ struct st_toplevel {
 	GtkWidget *pfilename_entry; 
 
 	GtkWidget *iwindow;			/* image write dialog box */
-	GtkWidget *ilib_list;			/* paper size box */
 	GtkWidget *ifilename_entry; 
-	GtkWidget *iwidth_entry; 
-	GtkWidget *iheight_entry; 
 
 	GtkWidget *pswindow;			/* page select */
 	GtkWidget *page_clist;
