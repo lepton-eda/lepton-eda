@@ -43,32 +43,43 @@ void g_set_project_current(TOPLEVEL * pr_current)
     project_current = pr_current;
 }
 
+
+static void
+hash_table_2_list (gpointer key,
+                   gpointer value,
+                   gpointer user_data)
+{
+  SCM* plist = (SCM*)user_data;
+
+  *plist = scm_cons (scm_makfrom0str ((char*)value),
+                     *plist);
+}
+
 /* this function will only return a unique list of packages */
 SCM g_get_packages(SCM level)
 {
     SCM list = SCM_EOL;
+    GHashTable *ht;
 
     NETLIST *nl_current = NULL;
 
     SCM_ASSERT( (SCM_NIMP (level) && SCM_STRINGP (level) ),
 		level, SCM_ARG1, "gnetlist:get-pins");
 
-    nl_current = netlist_head;
-    s_scratch_string_init();
-
-    while (nl_current != NULL) {
-
-	if (nl_current->component_uref) {
-	    if (s_scratch_string_fill(nl_current->component_uref)) {
-          list = scm_cons (scm_makfrom0str (nl_current->component_uref),
-                           list);
-	    }
-	}
-	nl_current = nl_current->next;
+    /* build a hash table */
+    ht = g_hash_table_new (g_str_hash, g_str_equal);
+    for (nl_current = netlist_head; nl_current != NULL;
+         nl_current = nl_current->next) {
+      if (nl_current->component_uref != NULL) {
+        /* add component_uref in the hash table */
+        /* uniqueness of component_uref is guaranteed by the hashtable */
+        g_hash_table_insert (ht,
+                             nl_current->component_uref,
+                             nl_current->component_uref);
+      }
     }
 
-    s_scratch_string_free();
-    return (list);
+    return list;
 }
 
 /* this function will only return a non unique list of packages */
@@ -79,24 +90,17 @@ SCM g_get_non_unique_packages(SCM level)
     NETLIST *nl_current = NULL;
 
     SCM_ASSERT( (SCM_NIMP (level) && SCM_STRINGP (level) ),
-		level, SCM_ARG1, "gnetlist:get-pins");
+                level, SCM_ARG1, "gnetlist:get-pins");
 
-    nl_current = netlist_head;
-    s_scratch_string_init();
-
-    while (nl_current != NULL) {
-
-	if (nl_current->component_uref) {
-	    if (s_scratch_non_unique_string_fill(nl_current->component_uref)) {
-          list = scm_cons (scm_makfrom0str (nl_current->component_uref),
-                           list);
-	    }
-	}
-	nl_current = nl_current->next;
+    for (nl_current = netlist_head; nl_current != NULL;
+         nl_current = nl_current->next) {
+      if (nl_current->component_uref != NULL) {
+        list = scm_cons (scm_makfrom0str (nl_current->component_uref),
+                         list);
+      }
     }
-
-    s_scratch_string_free();
-    return (list);
+    
+    return list;
 }
 
 
