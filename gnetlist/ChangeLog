@@ -1,4 +1,9 @@
 
+2000-04-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnetlist.scm: Added useful scheme functions by Andrew 
+          Bardsley
+
 2000-04-15  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/g_netlist.c: Added g_get_pin_attribute which given a uref,

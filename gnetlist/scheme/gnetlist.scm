@@ -143,3 +143,12 @@
             (cdr (car numberlist))
             (get-net-number netname (cdr numberlist))))))
 
+;; 
+;; Useful output functions contributed by Andrew Bardsley
+;;
+(define (print-to-port port . l)
+    (for-each (lambda (elem) (display elem port)) l))
+
+(define (print . l)
+    (apply print-to-port (cons (current-output-port) l)))
+
