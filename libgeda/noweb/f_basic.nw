@@ -79,6 +79,8 @@ f_open(TOPLEVEL *w_current, char *filename)
   char *full_rcfilename;
   char *file_directory;
   char *saved_cwd;
+  int current_clib_index, new_clib_index;
+  int i;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */
@@ -95,6 +97,7 @@ f_open(TOPLEVEL *w_current, char *filename)
    */
   if (w_current->wid == -1) {
     saved_cwd = getcwd(NULL, 1024);
+    current_clib_index = s_clib_get_index();
   }
 
   /* get full, absolute path to file */
@@ -155,10 +158,16 @@ f_open(TOPLEVEL *w_current, char *filename)
   free(full_rcfilename);
 
   /* If this was a preview window, reset the directory to the 
-   * value it had when f_open was called.  */
+   * value it had when f_open was called.  Also get rid of component
+   * libraries opened while opening preview window.  If the component
+   * is actually selected, they will be re-read later. */
   if (w_current->wid == -1) {
     chdir(saved_cwd);
     free(saved_cwd);
+    new_clib_index = s_clib_get_index();
+    for (i = new_clib_index; i > current_clib_index ; i--) {
+      s_clib_pop();
+    }
   }
 
   if (!opened) {

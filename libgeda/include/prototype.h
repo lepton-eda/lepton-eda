@@ -459,6 +459,9 @@ void s_clib_init(void);
 char *s_clib_getdir(int index);
 GSList *s_clib_getfiles(const char *directory, const char *filter);
 int s_clib_uniq(char *path);
+int s_clib_get_index();
+void s_clib_pop();
+
 
 /* s_color.c */
 void s_color_init(void);

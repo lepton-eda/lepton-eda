@@ -26,6 +26,8 @@
 <<s_clib.c : s_clib_getdir()>>
 <<s_clib.c : s_clib_getfiles()>>
 <<s_clib.c : s_clib_uniq()>>
+<<s_clib.c : s_clib_get_index()>>
+<<s_clib.c : s_clib_pop()>>
 
 @
 
@@ -571,6 +573,46 @@ s_clib_uniq(char *path)
   }
 }
 
-
 @ %def s_clib_uniq
+
+
+
+@section Function @code{s_clib_get_index()}
+
+@defun s_clib_get_index
+@end defun
+
+<<s_clib.c : s_clib_get_index()>>=
+int
+s_clib_get_index() 
+{
+  int local_clib_index;
+  local_clib_index = clib_index;
+  return local_clib_index;
+}
+@ %def s_clib_get_index
+
+
+
+@section Function @code{s_clib_pop()}
+
+@defun s_clib_pop
+@end defun
+
+<<s_clib.c : s_clib_pop()>>=
+void
+s_clib_pop() 
+{
+  int i = clib_index;
+    
+  if (clib[i].dir_name) {
+    free(clib[i].dir_name);
+    clib[i].dir_name = NULL;
+    clib_index--;
+  }		
+
+  return;
+}
+
+@ %def s_clib_pop
 
