@@ -1,3 +1,7 @@
+2005-01-08  Stuart Brorson <sdb@cloud9.net>
+	* noweb/x_multiattrib.nw: Added symbol name to items displayed 
+	in multiattrib dialog box.
+	
 2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/x_fileselect.nw (x_fileselect_comp_fill_components) 
