@@ -2,6 +2,10 @@
 
         * configure.ac: Updated version to 20040111
 
+	* src/setup.sh: Added the export keyword to the PATH and 
+	LD_LIBRARY_PATH variables to really make sure that the installed
+	libraries are used instead of system libraries.
+
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/install.c: Replaced with file provided by Piotr.  Fixes a 

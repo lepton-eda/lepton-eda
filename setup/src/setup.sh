@@ -17,8 +17,8 @@ GTK_FILE=gtk+-${GTK_VERSION}.tar.gz
 GTK_DIR=gtk+-${GTK_VERSION}
 
 PREFIX=${PWD}
-PATH=${PREFIX}:${PREFIX}/bin:${PATH}
-LD_LIBRARY_PATH=${PREFIX}:${PREFIX}/lib:${LD_LIBRARY_PATH}
+export PATH=${PREFIX}:${PREFIX}/bin:${PATH}
+export LD_LIBRARY_PATH=${PREFIX}:${PREFIX}/lib:${LD_LIBRARY_PATH}
 
 echo "gEDA Suite setup"
 echo "(c) 2001-2003 Piotr Miarecki"
