@@ -77,6 +77,10 @@ s_symstruct_init(void)
   s_symcheck->error_count=0;
   s_symcheck->warning_count=0;
 
+  s_symcheck->missing_pintype_attrib=FALSE;
+  s_symcheck->multiple_pintype_attrib=FALSE;
+  s_symcheck->duplicate_pintype_attrib=FALSE;
+
   return(s_symcheck);
 }
 

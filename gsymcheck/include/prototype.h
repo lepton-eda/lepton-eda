@@ -30,6 +30,7 @@ void s_check_obsolete_forbidden_attributes(OBJECT *object_head, SYMCHECK *s_curr
 void s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current);
 void s_check_missing_attributes(OBJECT *object_head, SYMCHECK *s_current);
 void s_check_totalpins(OBJECT *object_head, SYMCHECK *s_current);
+void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current);
 /* s_symstruct.c */
 SYMCHECK *s_symstruct_init(void);
 void s_symstruct_print(SYMCHECK *s_current);

@@ -89,6 +89,9 @@ s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, OBJECT *object_head)
   /* check for obsolete attributes */
   s_check_obsolete_forbidden_attributes(object_head, s_symcheck);
 
+  /* check for pintype attribute (and multiples) on all pins */
+  s_check_pintype(object_head, s_symcheck);
+    
   /* check for pinseq attribute (and multiples) on all pins */
   s_check_pinseq(object_head, s_symcheck);
 
@@ -1220,4 +1223,101 @@ s_check_totalpins(OBJECT *object_head, SYMCHECK *s_current)
   }
 
 
+}
+
+void s_check_pintype(OBJECT *object_head, SYMCHECK *s_current)
+{
+  OBJECT *o_current;
+  char *string;
+  int missing_pintype_attrib_sum = 0;
+  int multiple_pintype_attrib_sum = 0;
+  int invalid_pintype_attrib_sum = 0;
+  int found_first=FALSE;
+  int counter=0;
+
+  GList *ptr1 = NULL;
+  GList *ptr2 = NULL;
+  char *pintype;
+  char *message;
+  
+  o_current = object_head;
+  while(o_current != NULL)
+  {
+    
+    if (o_current->type == OBJ_PIN)
+    {
+      missing_pintype_attrib_sum = 0;
+      multiple_pintype_attrib_sum = 0;
+      invalid_pintype_attrib_sum = 0;
+      found_first = FALSE;
+      counter = 0;
+      
+      string = o_attrib_search_name_single_count(o_current, "pintype",
+                                                 counter);
+/*       if (!string) */
+/*       { */
+/*         Missing pintype is already checked. */
+/*         message = g_strdup ("Missing pintype= attribute\n"); */
+/*         s_current->error_messages = g_list_append(s_current->error_messages, */
+/*                                                   message); */
+/*         missing_pintype_attrib_sum++; */
+/*         s_current->error_count++; */
+/*       } */
+
+      while (string)
+      {
+        
+        message = g_strdup_printf("Found pintype=%s attribute", string);
+        s_current->info_messages = g_list_append(s_current->info_messages,
+	 	    			         message);
+
+        pintype = g_strdup (string);
+
+	if ( (strcmp(pintype, "in") != 0) &&
+	     (strcmp(pintype, "out") != 0) &&
+	     (strcmp(pintype, "io") != 0) &&
+	     (strcmp(pintype, "oc") != 0) &&
+	     (strcmp(pintype, "oe") != 0) &&
+	     (strcmp(pintype, "pas") != 0) &&
+	     (strcmp(pintype, "tp") != 0) &&
+	     (strcmp(pintype, "tri") != 0) &&
+	     (strcmp(pintype, "clk") != 0) &&
+	     (strcmp(pintype, "pwr") != 0) ) {
+
+	  message = g_strdup_printf ("Invalid pintype=%s attribute\n", pintype);
+	  s_current->error_messages = g_list_append(s_current->error_messages, 
+						    message); 
+	  invalid_pintype_attrib_sum++; 
+	  s_current->error_count++; 
+	  
+	}
+
+/*         if (found_first) { */
+	  /* Multiple pintype attributes already checked. */
+/* 	  message = g_strdup_printf ("Found multiple pintype=%s attributes on one pin\n", string);  */
+/*           s_current->error_messages = g_list_append(s_current->error_messages, */
+/* 	 	    			            message); */
+/*           multiple_pintype_attrib_sum++; */
+/*           s_current->error_count++; */
+/*         } */
+
+        free(string);
+        
+	if (pintype)
+	  free(pintype);
+        
+        counter++;
+        string = o_attrib_search_name_single_count(o_current, "pintype",
+                                                   counter);
+      }
+
+      s_current->missing_pintype_attrib += missing_pintype_attrib_sum;
+      s_current->multiple_pintype_attrib += multiple_pintype_attrib_sum;
+    }
+
+    
+    o_current = o_current->next;
+  }
+
+  
 }
