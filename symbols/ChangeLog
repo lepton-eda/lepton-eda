@@ -1,3 +1,9 @@
+2003-09-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Fixed MinGW cflags/ldflags
+
+	* auto* files: Updated to autoconf 2.57 and automake 1.7.6
+
 2003-09-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* linear/lm339-1.sym: Added note to warn people not to use this 

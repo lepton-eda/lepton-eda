@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([74/7400-1.sym])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-symbols
-VERSION=20030901
+VERSION=20030921
 SHARED_LIBRARY_VERSION=19:0:0
 echo Configuring $PACKAGE version $VERSION
 
@@ -29,6 +29,7 @@ AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files 
 #########################################################################
 # 
 # Misc win32 / mingw checks and variables start
+AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
@@ -37,15 +38,11 @@ case $host_os in
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
-   MINGW_CFLAGS="-mms-bitfields"
-   MINGW_LIBS=
    MINGW="yes"
    PATHSEP=\\\\
    OTHERPATHSEP=/
 else
    # Unix host
-   MINGW_CFLAGS=
-   MINGW_LIBS=
    MINGW="no"
    PATHSEP=/
    OTHERPATHSEP=\\\\
@@ -87,8 +84,9 @@ fi
 # Some of our own macros for setting up library files
 AC_DEFUN(GEDA_DECLARE_SYMLIB,
  [
-	data$1=`ls -1 $srcdir/$1 | grep -v Makefile \
+	data$1=`ls -1 $srcdir/$1 | grep -v Makefile | grep -v ChangeLog \
 				 | grep -v CVS | grep -v "\\.cvsignore" \
+				 | grep -v README \
 				 | grep -v "\\~" | grep -v "\\.orig"`
 	data$1=`echo $data$1`
         AC_SUBST(data$1)
