@@ -233,6 +233,7 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
   pr_current->font_directory = NULL;
   pr_current->bitmap_directory = NULL;
   pr_current->scheme_directory = NULL;
+  pr_current->bus_ripper_symname = NULL;
 
   /* part of page mechanism addition commented out 
      pr_current->zoom_factor=0;
@@ -414,6 +415,11 @@ void s_project_close(TOPLEVEL * pr_current)
     pr_current->bitmap_directory = NULL;
   }
 
+  if (pr_current->bus_ripper_symname) {
+    free(pr_current->bus_ripper_symname);
+    pr_current->bus_ripper_symname = NULL;
+  }
+  
   /* close the log file */
   s_log_close();
 

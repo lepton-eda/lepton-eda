@@ -671,6 +671,12 @@ o_bus_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
                 &world_centerx,
                 &world_centery);  
 
+  /* change the bus ripper orientation when the rotation is 90 degrees */
+  /* yes it's okay to use o_net_orientation */
+  if (o_net_orientation(object) == VERTICAL && angle == 90) {
+    object->bus_ripper_direction = -object->bus_ripper_direction;
+  }
+  
   /* translate object to origin */
   o_bus_translate_world(w_current, -world_centerx, -world_centery, object);
 
@@ -687,6 +693,7 @@ o_bus_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle,
   object->line->y[1] = newy;
 
   o_bus_translate_world(w_current, world_centerx, world_centery, object);
+
 }
 
 @ %def o_bus_rotate

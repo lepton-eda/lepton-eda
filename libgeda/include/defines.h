@@ -63,6 +63,14 @@
 #define SMALL_ZOOMFACTOR1	150 
 #define SMALL_ZOOMFACTOR2	30 
 
+/* for bus_ripper_type */
+#define COMP_BUS_RIPPER         0
+#define NET_BUS_RIPPER          1
+
+/* for bus_ripper_rotation */
+#define SYMMETRIC               0
+#define NON_SYMMETRIC           1
+
 #undef max
 #define max(a,b) ((a) > (b) ? (a) : (b))
 

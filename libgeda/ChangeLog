@@ -1,3 +1,18 @@
+2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added variables for the bus ripper support
+	in gschem (to TOPLEVEL structure).
+
+	* include/defines.h: Added #defines for the bus ripper support
+	in gschem.
+
+	* noweb/s_basic.nw: Added code to init some of the above added
+	variables
+
+	* noweb/o_bus_basic.nw: Added code to properly set the
+	bus_ripper_direction variable when rotating nets.
+
+
 2002-10-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added bus_ripper_direction variable to objects.

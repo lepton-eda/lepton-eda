@@ -785,6 +785,15 @@ struct st_toplevel {
   /* controls the size of the bus rippers */
   int bus_ripper_size;
 
+  /* controls the type of the bus ripper (either component or net) */
+  int bus_ripper_type;
+
+  /* filename of the bus ripper component if set above */
+  char *bus_ripper_symname;
+
+  /* controls whether or not the the bus ripper is symmetric or not */
+  int bus_ripper_rotation;
+  
   /* gnetlist specific */
   int net_naming_priority;
   int hierarchy_traversal;
