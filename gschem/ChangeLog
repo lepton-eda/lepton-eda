@@ -9,6 +9,81 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-06-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* lib/system-gschemrc.in: Made net-consolidate enabled by default
+
+	* src/i_vars.c: Made net_consolidate variable enabled (TRUE)
+
+2000-06-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_rc.c, src/i_vars.c: Added continue-component-place *rc keyword
+          (functions and variables)
+
+	* lib/system-gschemrc.in: Added continue-component-place keyword
+
+2000-06-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/g_rc.c, src/i_vars.c: Added promote-invisible *rc keyword
+          (functions and variables)
+
+	* lib/system-gschemrc.in: Added promote-invisible keyword
+
+	* src/o_complex.c: Removed some lame cleverness related to the
+          attribute_promotion variable (it was being used instead of a real
+          flag which lead to some ambiguous code)
+
+	* src/g_rc.c, src/i_vars.c: Added keep-invisible *rc keyword 
+          (functions and variables)
+
+	* lib/system-gschemrc.in: Added keep-invisible keyword
+
+	* lib/system-gschemrc.in: Spent a little time cleaning this file up.
+	  (more whitespace, a few missing comments)
+	
+2000-05-29  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex.c: Added Martin Benes' changes which implement the
+	  promotion and attachment of floating attributes when you 
+	  instanciate a component. 
+
+	* src/o_complex.c, src/g_rc.c, src/i_vars.c: Made the above 
+	  code configureable through the *rc files (keyword: 
+	  "attribute-promotion")
+
+	* lib/system-gschemrc.in: Added attribute-promotion keyword (enabled by
+ 	  default)
+
+2000-05-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_misc.c: Oops, had a typo in o_rotate_90 which caused boxes 
+	  to be rotated but not drawn 
+
+	* src/x_dialog.c: In the multimulti dialog box, give the value entry
+	  the keyboard focus by default (when an attribute is selected) 
+	  Written by Martin Benes
+
+	* src/x_dialog.c: In the multimulti dialog box, hitting return in
+	  the value entry caues the dialog box to close
+	  Written by Martin Benes
+
+	* src/x_dialog.c: In the atribute edit dialog box, give the value 
+	  entry the keyboard focus by default
+	  Written by Martin Benes
+
+	* src/x_dialog.c: If you add an attribute to a net, the name 
+	  entry gets a default value of "label"
+	  Written by Martin Benes
+
+	* src/x_dialog.c: When adding an attribute to an object using 
+	  the attribute add dialog box, the current mouse location is used
+   	  as the origin point for the new text item.
+	  Written by Martin Benes
+
+	* src/x_event.c: After placing a component (using the place dialog
+	  box), immediately starting placing the same dialog again.
+	  Written by Martin Benes
+
 2000-05-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/globals.c: Renamed buffers to object_buffers

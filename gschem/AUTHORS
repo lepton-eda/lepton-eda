@@ -80,6 +80,10 @@ Matt Ettus		- For greatly rewritting the attribute edit
 
 			  For writing the multi-add/edit attribute dialog box
 
+Martin Benes            - For contributing the attribute promotion code and
+                          a bunch of useful GUI bug fixes/patches.  Ales had
+                          to slighly modify a few (to make them configurable)
+
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
 the subscribers provided good suggestions which are greatly appreciated
