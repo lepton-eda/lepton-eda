@@ -432,13 +432,538 @@ void
 o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
 	int origin_x, int origin_y)
 {
+	int width, height;
+	int arc_width, space, length;
+
+	if (o_current == NULL) {
+		printf("got null in o_arc_print\n");
+		return;
+	}
+
+	width = o_current->arc->width - o_current->arc->x;
+	height = o_current->arc->height - o_current->arc->y;
+	length = o_current->line_length;
+	space = o_current->line_space;
+
+	if (o_current->line_width > 0) {
+		arc_width = o_current->line_width;
+	} else {
+		arc_width = 1;
+	}
+
+	switch(o_current->line_type) {
+		case(TYPE_SOLID):
+			o_arc_print_solid(w_current, fp, o_current,
+		  			  o_current->arc->x-origin_x,
+					  o_current->arc->y-origin_y, 
+					  width, height, o_current->color,
+					  o_current->arc->start_angle,
+					  o_current->arc->end_angle,
+					  arc_width, length, space,
+					  origin_x, origin_y);
+		break;
+
+		case(TYPE_DOTTED):
+			o_arc_print_dotted(w_current, fp, o_current,
+		  			  o_current->arc->x-origin_x,
+					  o_current->arc->y-origin_y, 
+					  width, height, o_current->color,
+					  o_current->arc->start_angle,
+					  o_current->arc->end_angle,
+					  arc_width, length, space,
+					  origin_x, origin_y);
+	
+		break;
+
+		case(TYPE_DASHED):
+			o_arc_print_dashed(w_current, fp, o_current,
+		  			  o_current->arc->x-origin_x,
+					  o_current->arc->y-origin_y, 
+					  width, height, o_current->color,
+					  o_current->arc->start_angle,
+					  o_current->arc->end_angle,
+					  arc_width, length, space,
+					  origin_x, origin_y);
+
+		break;
+
+		case(TYPE_CENTER):
+			o_arc_print_center(w_current, fp, o_current,
+		  			  o_current->arc->x-origin_x,
+					  o_current->arc->y-origin_y, 
+					  width, height, o_current->color,
+					  o_current->arc->start_angle,
+					  o_current->arc->end_angle,
+					  arc_width, length, space,
+					  origin_x, origin_y);
+
+		break;
+
+		case(TYPE_PHANTOM):
+			o_arc_print_phantom(w_current, fp, o_current,
+		  			    o_current->arc->x-origin_x,
+					    o_current->arc->y-origin_y, 
+					    width, height, o_current->color,
+					    o_current->arc->start_angle,
+					    o_current->arc->end_angle,
+					    arc_width, length, space,
+					    origin_x, origin_y);
+
+		break;
+
+		case(TYPE_ERASE):
+
+		break;
+	}
+}
+
+void
+o_arc_print_solid(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+		  int x, int y, int width, int height, int color,
+		  int angle1, int angle2, int arc_width, int length, int space,
+		  int origin_x, int origin_y)
+{
+	double radius;
+	double x1, y1;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y - radius;
+
+	f_print_set_line_width(fp, arc_width);
+
+	fprintf(fp, "newpath\n");
+	fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
+	fprintf(fp, "%d mils\n", (int) radius);
+	fprintf(fp, "%d %d arc\n", (int)angle1/64, (int)angle1/64 + angle2/64);
+	fprintf(fp, "stroke\n");
+
+	fprintf(fp, "grestore\n");
+}
+
+void
+o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+		  int x, int y, int width, int height, int color,
+		  int angle1, int angle2, int arc_width, int length, int space,
+		  int origin_x, int origin_y)
+{
+	double radius;
+	double x1, y1;		/* coordinate of center */
+	double xa, ya;
+	int da, d;
+
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, arc_width);
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y - radius;
+
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if (angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+	}
+	da = (int) (((space * 180) / (M_PI * radius)) * 64);
+
+	/* If da or db too small for arc to be displayed as dotted,
+           draw a solid arc */
+	if (da <= 0) {
+		o_arc_print_solid(w_current, fp, o_current,
+		  		  x, y, width, height, color,
+		  		  angle1, angle2, arc_width, length, space,
+		                  origin_x, origin_y);
+		return;
+	}
+
+	d = angle1;
+	while (d < (angle2 + angle1)) {
+		xa = x1 + radius * cos((d / 64) * M_PI / 180);
+		ya = y1 + radius * sin((d / 64) * M_PI / 180);
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+
+		d = d + da;
+    	}
+
+	fprintf(fp, "grestore\n");
+}
+
+
+void
+o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+		   int x, int y, int width, int height, int color,
+		   int angle1, int angle2, int arc_width, int length, int space,
+		   int origin_x, int origin_y)
+{
+	double radius;
+	int da, db, a1, a2, d;
+	int x1, y1;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, arc_width);
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y - radius;
+
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if (angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+    	}
+	da = (int) ((length * 180) / (M_PI * radius)) * 64;
+	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+
+	/* If da or db too small for arc to be displayed as dotted,
+           draw a solid arc */
+	if ((da <= 0) || (db <= 0)) {
+		o_arc_print_solid(w_current, fp, o_current,
+		  		  x, y, width, height, color,
+		  		  angle1, angle2, arc_width, length, space,
+		                  origin_x, origin_y);
+		return;
+    	}
+	
+	d = angle1;
+	while ((d + da + db) < (angle1 + angle2)) {
+		a1 = d;
+		d = d + da;
+
+		/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da); */
+
+	 	fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils\n", x1, y1);
+		fprintf(fp, "%d mils\n",(int) radius);
+		fprintf(fp, "%d %d arc\n", a1/64, a1/64 + da/64);
+		fprintf(fp, "stroke\n");
+
+		d = d + db;
+	}
+
+	if ((d + da) < (angle1 + angle2)) {
+		a1 = d;
+		a2 = da;
+	} else {
+		a1 = d;
+		a2 = (angle1 + angle2) - d;
+    	}
+
+   	/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, a2); */
+	fprintf(fp, "newpath\n");
+	fprintf(fp, "%d mils %d mils\n", x1, y1);
+	fprintf(fp, "%d mils\n", radius);
+	fprintf(fp, "%d %d arc\n", a1/64, a1/64 + a2/64);
+	fprintf(fp, "stroke\n");
+
+	fprintf(fp, "grestore\n");
+
+}
+
+void
+o_arc_print_center(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+		   int x, int y, int width, int height, int color,
+		   int angle1, int angle2, int arc_width, int length, int space,
+		   int origin_x, int origin_y)
+{
+	double radius;
+	double x1, y1, xa, ya;	/* coordinate of center */
+	int da, db, a1, a2, d;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, arc_width);
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+ 	x1 = (double) x + radius;
+	y1 = (double) y - radius;
+
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+	/* the loop test assume that da > 0 */
+	if (angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+    	}
+
+	da = (int) ((length * 180) / (M_PI * radius)) * 64;
+	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+
+	/* If da or db too small to be displayed, draw an arc */
+	if ((da <= 0) || (db <= 0)) {
+		o_arc_print_solid(w_current, fp, o_current,
+		  		  x, y, width, height, color,
+		  		  angle1, angle2, arc_width, length, space,
+		                  origin_x, origin_y);
+		return;
+    	}
+
+ 	d = angle1;
+	while ((d + da + 2 * db) < (angle1 + angle2)) {
+		a1 = d;
+		d = d + da;
+
+		/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da);*/
+
+	 	fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
+		fprintf(fp, "%d mils\n",(int) radius);
+		fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + da/64);
+		fprintf(fp, "stroke\n");
+
+		d = d + db;
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+
+		d = d + db;
+    	}
+
+    	if ((d + da) < (angle1 + angle2)) {
+		a1 = d;
+		a2 = da;
+
+		d = d + da;
+    	} else {
+		a1 = d;
+		a2 = (angle1 + angle2) - d;
+
+		d = d + da;
+    	}
+    	/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da); */
+	fprintf(fp, "newpath\n");
+	fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
+	fprintf(fp, "%d mils\n",(int) radius);
+	fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + da/64);
+	fprintf(fp, "stroke\n");
+
+    	if ((d + db) < (angle1 + angle2)) {
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+    	}
+
+	fprintf(fp, "grestore\n");
+}
+
+void
+o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+		   int x, int y, int width, int height, int color,
+		   int angle1, int angle2, int arc_width, int length, int space,
+		   int origin_x, int origin_y)
+{
+
+	double radius;
+	double x1, y1, xa, ya;	/* coordinate of center */
+ 	int da, db, a1, a2, d;
+
+	fprintf(fp, "gsave\n");
+	if (w_current->print_color) {
+		f_print_set_color(fp, color);
+	}
+
+	f_print_set_line_width(fp, arc_width);
+
+	radius = ((double) width) / 2;
+
+	/* Center coordinates of the arc */
+	x1 = (double) x + radius;
+	y1 = (double) y - radius;
+
+	/* PB inverting angle2 if < 0 and changing angle1 accordingly */
+ 	/* the loop test assume that da > 0 */
+ 	if (angle2 < 0) {
+		angle1 = angle1 + angle2;
+		angle2 = -angle2;
+    	}
+	da = (int) ((length * 180) / (M_PI * radius)) * 64;
+	db = (int) ((space * 180) / (M_PI * radius)) * 64;
+
+	/* If da or db too small for arc to be displayed as dotted,
+           draw a solid arc */
+	if ((da <= 0) || (db <= 0)) {
+		/*gdk_draw_arc(w, gc, FALSE, x, y, width, height, angle1, angle2);*/
+		o_arc_print_solid(w_current, fp, o_current,
+		  		  x, y, width, height, color,
+		  		  angle1, angle2, arc_width, length, space,
+		                  origin_x, origin_y);
+		return;
+    	}
+
+	d = angle1;
+	while ((d + da + 3 * db) < (angle1 + angle2)) {
+		a1 = d;
+		d = d + da;
+		/*gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, da);*/
+	 	fprintf(fp, "newpath\n");
+		fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
+		fprintf(fp, "%d mils\n",(int) radius);
+		fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + da/64);
+		fprintf(fp, "stroke\n");
+
+		d = d + db;
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+
+		d = d + db;
+
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+
+		d = d + db;
+	}
+
+	if ((d + da) < (angle1 + angle2)) {
+		a1 = d;
+		a2 = da;
+		d = d + da;
+    	} else {
+		a1 = d;
+		a2 = (angle1 + angle2) - d;
+		d = d + da;
+    	}
+    	/* gdk_draw_arc(w, gc, FALSE, x, y, width, height, a1, a2);*/
+	fprintf(fp, "newpath\n");
+	fprintf(fp, "%d mils %d mils\n", (int) x1, (int) y1);
+	fprintf(fp, "%d mils\n", (int) radius);
+	fprintf(fp, "%d %d arc\n", (int) a1/64, (int) a1/64 + a2/64);
+	fprintf(fp, "stroke\n");
+
+    	if ((d + db) < (angle1 + angle2)) {
+		d = d + db;
+
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+    	}
+
+    	if ((d + db) < (angle1 + angle2)) {
+		d = d + db;
+
+		xa = x1 + radius * cos((d / 64) * (M_PI / 180));
+		ya = y1 + radius * sin((d / 64) * (M_PI / 180));
+
+	 	fprintf(fp, "newpath\n");
+		if (arc_width == 1) {
+			fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
+			fprintf(fp, "2 mils\n");
+		} else {
+			fprintf(fp, "%d mils %d mils\n", 
+				((int) xa), ((int) ya));
+			fprintf(fp, "%d mils\n", arc_width);
+		}
+		fprintf(fp, "%d %d arc\n", 0, 360);
+		fprintf(fp, "fill\n");
+    	}
+
+	fprintf(fp, "grestore\n");
+}
+
+#if 0 /* original way of printing arcs, no longer used */
+void
+o_arc_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+	int origin_x, int origin_y)
+{
 	int radius;
 	int start_angle, end_angle;
 	int awidth, aheight;
 	int x, y;
 
 	if (o_current == NULL) {
-		printf("got null in o_circle_print\n");
+		printf("got null in o_arc_print\n");
 		return;
 	}
 
@@ -493,6 +1018,7 @@ o_arc_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "stroke\n");
 	fprintf(fp, "grestore\n");
 }
+#endif
 
 
 void

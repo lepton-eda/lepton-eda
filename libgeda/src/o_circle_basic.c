@@ -452,7 +452,96 @@ o_circle_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 }
 
 void
-o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
+o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+	int origin_x, int origin_y)
+{
+	int width, height;
+	int circle_width, space, length;
+	int x, y;
+
+	if (o_current == NULL) {
+		printf("got null in o_circle_print\n");
+		return;
+	}
+
+	width = o_current->circle->radius*2;
+	height = width;
+	length = o_current->line_length;
+	space = o_current->line_space;
+
+	x = o_current->circle->center_x - o_current->circle->radius; 
+	y = o_current->circle->center_y + o_current->circle->radius;
+
+	if (o_current->line_width > 0) {
+		circle_width = o_current->line_width;
+	} else {
+		circle_width = 1;
+	}
+
+	switch(o_current->line_type) {
+		case(TYPE_SOLID):
+			o_arc_print_solid(w_current, fp, o_current,
+		  			  x-origin_x,
+					  y-origin_y, 
+					  width, height, o_current->color,
+					  0, FULL_CIRCLE,
+					  circle_width, length, space,
+					  origin_x, origin_y);
+		break;
+
+		case(TYPE_DOTTED):
+			o_arc_print_dotted(w_current, fp, o_current,
+		  			  x-origin_x,
+					  y-origin_y, 
+					  width, height, o_current->color,
+					  0, FULL_CIRCLE,
+					  circle_width, length, space,
+					  origin_x, origin_y);
+	
+		break;
+
+		case(TYPE_DASHED):
+			o_arc_print_dashed(w_current, fp, o_current,
+		  			  x-origin_x,
+					  y-origin_y, 
+					  width, height, o_current->color,
+					  0, FULL_CIRCLE,
+					  circle_width, length, space,
+					  origin_x, origin_y);
+
+		break;
+
+		case(TYPE_CENTER):
+			o_arc_print_center(w_current, fp, o_current,
+		  			  x-origin_x,
+					  y-origin_y, 
+					  width, height, o_current->color,
+					  0, FULL_CIRCLE,
+					  circle_width, length, space,
+					  origin_x, origin_y);
+
+		break;
+
+		case(TYPE_PHANTOM):
+			o_arc_print_phantom(w_current, fp, o_current,
+		  			    x-origin_x,
+					    y-origin_y, 
+					    width, height, o_current->color,
+					    0, FULL_CIRCLE,
+					    circle_width, length, space,
+					    origin_x, origin_y);
+
+		break;
+
+		case(TYPE_ERASE):
+
+		break;
+	}
+}
+
+#if 0 /* no longer used */
+void
+o_circle_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	int origin_x, int origin_y)
 {
 	if (o_current == NULL) {
@@ -475,6 +564,7 @@ o_circle_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 	fprintf(fp, "stroke\n");
 	fprintf(fp, "grestore\n");
 }
+#endif
 
 void
 o_circle_image_write(TOPLEVEL *w_current, OBJECT *o_current,

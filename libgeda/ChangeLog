@@ -12,6 +12,15 @@ Most recent changes are at the top of this file
 
 	* include/struct.h: Removed zoom_factor variable
 
+	* src/o_arc.c: Finally added code to implement the line type 
+	  postscript output for arcs
+
+	* src/o_circle.c: Also added code to implement the line type
+	  postscript output for circles (using arc code)
+
+        * src/configure.in: Added back the lines (saved_cflags etc...)
+          which caused debug output to be included in the build
+
 2000-12-09  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/m_basic.c: Put some code into WORLDtoSCREEN routines to bound
