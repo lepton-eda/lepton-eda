@@ -564,7 +564,7 @@ fi
 PACKAGE=gEDA
 
 # new way of doing version
-VERSION=20001006
+VERSION=20001217
 
 echo Configuring gnetlist version $VERSION
 

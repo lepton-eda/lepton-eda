@@ -43,19 +43,19 @@ IMPORTANT
 
 	A C compiler (that understands ANSI, like gcc) 
 
-	GLIB version 1.2.3 or higher (and anything glib requires)
+	GLIB version 1.2.8 or higher (and anything glib requires)
 	Glib can be found at ftp://ftp.gtk.org/pub/gtk
 
-	GTK+ version 1.2.3 or higher (and anything gtk requires)
+	GTK+ version 1.2.8 or higher (and anything gtk requires)
 	Gtk can be found at: ftp://ftp.gtk.org/pub/gtk
 
-	GUILE - guile-1.3 is required (and anything guile requires).  Guile
+	GUILE - guile-1.4 is required (and anything guile requires).  Guile
 	can be found at: ftp://prep.ai.mit.edu/pub/gnu/guile 
 
-	LibStroke 0.3 [OPTIONAL] - if you want stroke support.  The homepage
+	LibStroke 0.4 [OPTIONAL] - if you want stroke support.  The homepage
 	for LibStroke is: http://www.etla.net/libstroke/
 
-	libgdgeda 1.6 [OPTIONAL] - if you want the ability to write png 
+	libgdgeda 1.8 [OPTIONAL] - if you want the ability to write png 
 	images.  libgdgeda is based on gd 1.6.3  The homepage for gd 1.6 is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist
@@ -63,6 +63,9 @@ IMPORTANT
         If you use libgdgeda then you also need zlib.  zlib can be found at:
         http://www.cdrom.com/pub/infozip/zlib  zlib can also be found on
         the gEDA website: http://www.geda.seul.org/dist 
+
+        If you use libgdgeda then you also need libpng.  libpng can be found 
+        at: http://www.libpng.org/pub/png/pngcode.html  libpng can also be              found on the gEDA website: http://www.geda.seul.org/dist
 
 	An understanding that this software is ALPHA release quality :)
 
@@ -76,7 +79,7 @@ IMPORTANT
 	COPYING file for more information.
 
 	Programs and associated files are:
-	Copyright 1998,1999 by Ales V. Hvezda and the respective original
+	Copyright 1998-2000 by Ales V. Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 

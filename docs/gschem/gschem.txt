@@ -424,6 +424,10 @@ the resource file (see the section below for more info).
 		attached attribute color) to signify that this text item
 		is an attribute.
 
+		You can rotate the text before you place it by
+		clicking the middle button.  For every button click,
+		the text will be rotate 90 degrees.
+
 	Add Line
 
 		Draws a line in the same fashion as drawing nets with the
@@ -1212,28 +1216,9 @@ the resource file (see the section below for more info).
 				It is important the symbols have this
 				extension.
 
-#if 0 /* this is all old */
-		For toplevel symbols which have underlying schematics
-		(for a schematics hierarchy) there is a naming convention
-		(it's basically what's described above).  This naming
-		convection is best described by an silly example:
-
-		Suppose you have a symbol called ales-1.sym (which
-		represents an alcoholic beverage generating black box).
-		Now this alcoholic beverage black box has a bunch of
-		underlying schematics.	These schematics are called
-		ales_1.sch, ales_2.sch, ales_3.sch etc...
-
-		So basically the name of the symbol and the name
-		schematics is the same (only the sequence numbers
-		change).  Now this also means that ales-2.sym has
-		the same underlying schematics (ales_1.sch, ales_2.sch,
-		ales_3.sch etc...).
-#endif 
-	
-		The new way of specifying hierarchy is by using the source=
-		attribute.  Please see the master attribute document for info
-	 	on this mechanism.
+		The way of specifying hierarchy is by using the source=
+		attribute.  Please see the master attribute document
+		for info on this mechanism.
 
 		The hierarchy mechanism is still in heavy flux, so there 
 	 	might be some more changes.

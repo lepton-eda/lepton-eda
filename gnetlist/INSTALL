@@ -19,8 +19,9 @@ In order to build gschem you must install the following packages first:
 
 	GLIB 1.2.x
 	GTK+ 1.2.x
-	LibStroke 0.3 (optional)
-	libgdgeda 1.5 (optional)  (you also need zlib for libgdgeda)
+	guile 1.4
+	LibStroke 0.4 (optional)
+	libgdgeda 1.8 (optional)  (you also need zlib for libgdgeda)
 	libgeda
 	symbols
 
