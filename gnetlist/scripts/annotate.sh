@@ -28,10 +28,10 @@ if [ -z $1 ]; then
 fi 
 
 
-# Determine the different uref=?
+# Determine the different refdes=?
 
-list=`gawk '/^uref=[A-Z]+\?/ {
-		A=$1; gsub(/uref=/,"",A)
+list=`gawk '/^refdes=[A-Z]+\?/ {
+		A=$1; gsub(/refdes=/,"",A)
 		gsub(/\?/,"",A)
 		print A}' $1 | sort | gawk 'BEGIN {if (NR==1) {A=$1} }{if (A !=$1) print ; A=$1}' - `
 
@@ -50,8 +50,8 @@ cp $1 $1.sauv
 for f in  $list; do 
     # creation du script gawk 1 
     echo "BEGIN {R=0}" >sc.awk
-    echo "/^uref=$f[0-9]+/ {B=\$1" >>sc.awk
-    echo "gsub(/uref=[A-Z]+/,\"\",B)" >>sc.awk
+    echo "/^refdes=$f[0-9]+/ {B=\$1" >>sc.awk
+    echo "gsub(/refdes=[A-Z]+/,\"\",B)" >>sc.awk
     echo "if (B>R) {R=B}" >>sc.awk
     echo "}" >>sc.awk
     echo "END {printf(\"%d\",R)}" >>sc.awk
@@ -63,7 +63,7 @@ for f in  $list; do
     # creation du script gawk 2 
     
     echo "BEGIN {R=MAX} ">sc.awk
-    echo "{if (match(\$1,/^uref=$f\?/)!=0) {" >>sc.awk
+    echo "{if (match(\$1,/^refdes=$f\?/)!=0) {" >>sc.awk
     echo "R=R+1" >>sc.awk
     echo "sub(/\?/,R,\$1)" >>sc.awk
     echo "print \$1 } " >>sc.awk

@@ -8,6 +8,6 @@ if [ -z $1 ]; then
 	exit 1
 fi 
 
-cat $1 | sed "/uref=\([A-Za-z][A-Za-z]*\)[0-9][0-9]*/s//uref=\1?/g" > $1.tmp
+cat $1 | sed "/refdes=\([A-Za-z][A-Za-z]*\)[0-9][0-9]*/s//refdes=\1?/g" > $1.tmp
 #mv $1.tmp $1
 

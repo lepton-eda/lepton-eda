@@ -1,3 +1,8 @@
+2002-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/annotate.sh, unannotate.sh: Oops, forgot to change a bunch
+	of uref= attributes to refdes=.  These scripts now work.
+
 2002-11-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gnetlistrc.in: Changed the variable names which hold
