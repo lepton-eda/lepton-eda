@@ -49,6 +49,7 @@ void main_prog(int argc, char *argv[])
     int argv_index;
     int first_page = 1;
     char *cwd;
+    char *filename;
     GSList *list_pnt;
 
     TOPLEVEL *pr_current;
@@ -85,7 +86,6 @@ void main_prog(int argc, char *argv[])
     /* create log file right away */
     /* even if logging is enabled */
     s_log_init(cwd, "gnetlist.log");
-    free(cwd);
 
     s_log_message("gEDA/gnetlist version %s\n", VERSION);
     s_log_message
@@ -122,55 +122,62 @@ void main_prog(int argc, char *argv[])
     /* register guile (scheme) functions */
     g_register_funcs();
 
-    g_rc_parse("gnetlistrc", rc_filename);
+    /* 
+     * Now create new project in three steps. This is the new setup scheme
+     * by SDB which was necessitated by dealing with the RC project list.
+     */
+    /* 1.  Alloc pr_current */
+    pr_current = s_project_alloc();
+    /* 2. Read in RC files. */
+    g_rc_parse(pr_current, "gnetlistrc", rc_filename);
+    /* 3. Finish filling out pr_current */
+    s_project_fill_out(pr_current);  
+
+
     s_rename_init();
-
     s_project_add_head();
-
-    pr_current = s_project_create_new();
 
     i = argv_index;
     while (argv[i] != NULL) {
-	if (first_page) {
-	    if (pr_current->page_current->page_filename) {
-		free(pr_current->page_current->page_filename);
-	    }
+      filename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING,
+					 argv[i],
+					 NULL);
 
-	    /* Page structure has already been created... */
-	    /* so, just set the filename and open the schematic */
-	    /* for the first page */
-
-	    pr_current->page_current->page_filename =
-		malloc(sizeof(char) * strlen(argv[i]) + 5);
-	    strcpy(pr_current->page_current->page_filename, argv[i]);
-
-	    if (!quiet_mode) {
-		printf("Loading schematic [%s]\n", argv[i]);
-	    }
-	    if (!f_open(pr_current,
-			pr_current->page_current->page_filename)) {
-		fprintf(stderr, "Couldn't load schematic [%s]\n",
-			pr_current->page_current->page_filename);
-	    }
-	    first_page = 0;
-	} else {
-
-	    /* now are there any other filenames specified? */
-	    /* Much simpler */
-	    if (!quiet_mode) {
-		printf("Loading schematic [%s]\n", argv[i]);
-	    }
-	    if (!s_page_new(pr_current, argv[i])) {
-		if (!f_open(pr_current,
-			    pr_current->page_current->page_filename)) {
-		    fprintf(stderr, "Couldn't load schematic [%s]\n",
-			    pr_current->page_current->page_filename);
-		}
-
-	    }
+      if (first_page) {
+	if (pr_current->page_current->page_filename) {
+	  free(pr_current->page_current->page_filename);
 	}
-	i++;
-    }
+	
+	/* Page structure has already been created... */
+	/* so, just set the filename and open the schematic */
+	/* for the first page */
+	
+	pr_current->page_current->page_filename = u_basic_strdup(filename);
+	if (!quiet_mode) {
+	  printf("Loading schematic [%s]\n", filename);
+	}
+	if (!f_open(pr_current, filename)) {
+	  fprintf(stderr, "Couldn't load schematic [%s]\n", filename);
+	}
+	first_page = 0;
+	
+      } else {
+	/* now are there any other filenames specified? */
+	/* Much simpler */
+	if (!quiet_mode) {
+	  printf("Loading schematic [%s]\n", filename);
+	}
+	if (!s_page_new(pr_current, filename)) {
+	  if (!f_open(pr_current, filename)) {
+	    fprintf(stderr, "Couldn't load schematic [%s]\n", filename);
+	  }
+	}
+      }
+      i++;
+      free(filename);
+    }  /* while(argv[i] != NULL)  */
+    free(cwd);
+
 
     if (argv[argv_index] == NULL) {
 	fprintf(stderr,

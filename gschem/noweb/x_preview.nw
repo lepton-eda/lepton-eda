@@ -91,6 +91,11 @@ void
 x_preview_update(TOPLEVEL *preview, char *directory, char *filename) 
 {
   char *temp;
+  char *cwd;
+
+  /* Since f_open now changes the directory, we need to 
+   * use this to reset the cwd at end of fcn */
+  cwd = getcwd(NULL, 1024);  
 
 #if DEBUG
   printf("%s %s\n", directory, filename);
@@ -111,13 +116,20 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 
   s_page_new(preview, temp);
   preview->page_current = preview->page_tail;
+
+  /* open up file for preview */
   (void)f_open(preview, temp);
 
   a_zoom_extents(preview, preview->page_current->object_head, 
                 A_PAN_DONT_REDRAW);
 
   o_redraw_all(preview);
+
+  chdir(cwd); /* Go back to original directory */
+  free(cwd);
   free(temp);
+
+  return;
 }
 
 
@@ -433,6 +445,8 @@ x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
 
   preview_window = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
   preview_window->wid = -1;
+
+  preview_window->RC_list = NULL; 
 
   preview_window->init_left = 0;
   preview_window->init_top = 0;

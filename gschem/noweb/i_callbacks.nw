@@ -492,7 +492,8 @@ DEFINE_I_CALLBACK(file_new_window)
 {
   TOPLEVEL *w_current;
        
-  w_current = x_window_create_new();
+  w_current = x_window_alloc();
+  x_window_fill_out(w_current);
 
   exit_if_null(w_current);
 

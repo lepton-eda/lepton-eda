@@ -1,3 +1,10 @@
+2005-01-27 Stuart Brorson   <sdb@cloud9.net>
+
+	* src/gattrib.c: Changes made to enable correct opening
+	of schematics in foreign directories.  Changes detailed 
+	in libgeda ChangeLog.  
+
+	
 2005-01-22 (Later in same day) Stuart Brorson   <sdb@cloud9.net>
 
 	* x_dialog.c, s_toplevel.c:  Rewrote missing symbol dialog box

@@ -549,7 +549,11 @@ s_page_clear_changed(PAGE *p_head)
 void
 s_page_goto(TOPLEVEL *w_current, PAGE *p_new) 
 {
-	w_current->page_current = p_new;
+  w_current->page_current = p_new;
+
+  if (w_current->page_current->page_filename) { /* sanity check */
+    chdir(f_get_directory_from_path(w_current->page_current->page_filename));
+  }
 }
 
 

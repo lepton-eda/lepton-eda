@@ -1,3 +1,24 @@
+2005-01-27  Stuart Brorson <sdb@cloud9.net>
+
+	* include/prototype.h, noweb/gschem.nw, noweb/i_callbacks.nw,
+	noweb/x_fileselect.nw, noweb/x_preview.nw, noweb/x_window.nw:
+	Changes made to enable correct opening
+	of schematics in foreign directories.  New algorithm:
+	
+        1.  Take the filename the user wants to open.
+        2.  Turn it into an absolute path, like /foo/bar/baz.sch
+        3.  From the path, figure out the directory, /foo/bar
+        4.  From this, create the absolute path to the local gafrc, 
+	    /foo/bar/gafrc.
+        5.  cd to /foo/bar
+        6.  read /foo/bar/gafrc while sitting in the directory /foo/bar.  
+	    This takes care of all the guile search path problems, 
+	    like when people put things like 
+	    (component-library "../common/symlib") or some such into
+            their RC files.
+        7.  After that, read the file itself.
+        8.  Leave the directory set to this directory.  
+	
 2005-01-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/missing.sch, Makefile.am: Added test schematic to test

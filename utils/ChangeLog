@@ -1,3 +1,9 @@
+2005-27-01 Stuart Brorson <sdb@cloud9.net>
+
+	* gschlas/gschlas.c: Changes made to enable correct opening
+	of schematics in foreign directories.  Changes detailed in libgeda
+	ChangeLog.  
+	
 2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/gsymfix.pl: Added symbol cleanup script by Mike Skerritt.

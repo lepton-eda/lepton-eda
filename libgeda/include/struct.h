@@ -20,6 +20,8 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#include <glib.h>  /* Include needed to make GList work. */
+
 /* gschem structures (gschem) */
 typedef struct st_complex COMPLEX;
 typedef struct st_line LINE;
@@ -436,6 +438,7 @@ struct st_toplevel {
   /* if it should go in here or not */
   /* leave outside for now */
 
+  GList *RC_list;                       /* List of RC files which have been read in. */
 
   char *series_name;			/* Current series basename */
   char *untitled_name;			/* untitled sch basename */

@@ -16,6 +16,7 @@
 <<u_basic.c : u_basic_breakup_string()>>
 <<u_basic.c : u_basic_strip_trailing()>>
 <<u_basic.c : u_basic_has_trailing()>>
+<<u_basic.c : u_basic_count_char()>>
 
 @
 
@@ -67,7 +68,7 @@
 #include "../include/prototype.h"
 @
 
-
+/* ------------------------------------------------------------ */
 @section Function @code{u_basic_strdup()}
 
 @defun u_basic_strdup p
@@ -89,7 +90,7 @@ u_basic_strdup(const char* p)
 
 @ %def u_basic_strdup
 
-
+/* ------------------------------------------------------------ */
 @section Function @code{u_basic_strdup_multiple()}
 
 @defun u_basic_strdup_multiple str ...
@@ -141,7 +142,7 @@ u_basic_strdup_multiple(const char *str, ...)
 
 @ %def u_basic_strdup_multiple
 
-
+/* ------------------------------------------------------------ */
 @section Function @code{u_basic_breakup_string()}
 
 @defun u_basic_breakup_string string count
@@ -206,7 +207,7 @@ u_basic_breakup_string(char *string, char delimiter, int count)
 
 @ %def u_basic_breakup_string
 
-
+/* ------------------------------------------------------------ */
 @section Function @code{u_basic_strip_trailing()}
 
 @defun u_basic_strip_trailing string character
@@ -227,7 +228,7 @@ u_basic_strip_trailing(char *string, char c)
 
 @ %def u_basic_strip_trailing
 
-
+/* ------------------------------------------------------------ */
 @section Function @code{u_basic_has_trailing()}
 
 @defun u_has_strip_trailing string character
@@ -248,3 +249,43 @@ u_basic_has_trailing(char *string, char c)
 
 
 @ %def u_basic_has_trailing
+
+
+/* ------------------------------------------------------------ */
+@section Function @code{u_basic_count_char()}
+
+@defun u_basic_count_char string character
+@end defun
+
+<<u_basic.c : u_basic_count_char()>>=
+/*
+ * This fcn counts the number of occurances of the character
+ * "character" in the string "string".
+ * 1.23.2005 -- SDB
+ */
+int u_basic_count_char(const char *string, char character)
+{
+  int count = 0;
+  int i=0;
+
+#ifdef DEBUG
+  printf("In u_basic_count_char, looking for char \"%c\" in string \"%s\".\n", 
+	  character, string);
+#endif
+
+  while (string[i] != '\0') {
+    if (string[i] == character) {
+      count++;
+    }
+  i++;
+  }
+#ifdef DEBUG
+  printf(". . . . .   Found it %d times.\n", 
+	  count);
+#endif
+
+return count;
+}
+
+
+@ %def u_basic_count_char

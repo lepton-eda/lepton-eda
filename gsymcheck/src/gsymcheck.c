@@ -54,6 +54,7 @@ main_prog(int argc, char *argv[])
   int exit_status;
   int fopen_status;
   char *cwd;
+  char *filename;
   struct stat buf;
   
   TOPLEVEL *pr_current;
@@ -92,21 +93,31 @@ main_prog(int argc, char *argv[])
   /* register guile (scheme) functions */
   g_register_funcs();
 
-  g_rc_parse("gsymcheckrc", rc_filename);
+  /*
+   * Now create new project in three steps. This is the new setup scheme
+   * by SDB which was necessitated by dealing with the RC project list.
+   */
+  /* 1.  Alloc pr_current */
+  pr_current = s_project_alloc();
+  /* 2. Read in RC files. */
+  g_rc_parse(pr_current, "gsymcheckrc", rc_filename);
+  /* 3. Finish filling out pr_current */
+  s_project_fill_out(pr_current);
 
   s_project_add_head();
-  pr_current = s_project_create_new();
   
   i = argv_index;
-  
   while (argv[i] != NULL) {
-    
-    if (stat(argv[i], &buf) != 0) {
-      s_log_message("Could not open [%s]\n", argv[i]);
+    filename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING,
+				       argv[i],
+				       NULL);
+
+    if (stat(filename, &buf) != 0) {
+      s_log_message("Could not open [%s]\n", filename);
       s_log_message("Exiting...\n");
       exit(2); /* error */
     } else {
-    
+      
       if (first_page) {
         if (pr_current->page_current->page_filename) {
           free(pr_current->page_current->page_filename);
@@ -117,6 +128,8 @@ main_prog(int argc, char *argv[])
         /* for the first page */
 
 
+#if 0
+	/* SDB Notes: This is what it used to be.  I have probably broken the MINGW32 stuff */
 #ifdef __MINGW32__
         if (argv[i][1] == ':' && (argv[i][2] == PATH_SEPARATER_CHAR ||
                                   argv[i][2] == OTHER_PATH_SEPARATER_CHAR)) {
@@ -125,18 +138,22 @@ main_prog(int argc, char *argv[])
 #endif
           pr_current->page_current->page_filename = u_basic_strdup(argv[i]);
         } else {
-          pr_current->page_current->page_filename =
-            u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, argv[i], NULL);
+          pr_current->page_current->page_filename = filename;
         }
+#endif 
+	/* Always use absolute file names to eliminate confusion */
+	pr_current->page_current->page_filename = filename;
 
         if (verbose_mode) {
-          s_log_message("Loading file [%s]\n", argv[i]);
+          s_log_message("Loading file [%s]\n", 
+			pr_current->page_current->page_filename);
         }
-        fopen_status = f_open(pr_current,
+        fopen_status = f_open(pr_current, 
                               pr_current->page_current->page_filename);
 
         if (!fopen_status) {
-          s_log_message("gsymcheck: Could not load [%s]\n", argv[i]);
+          s_log_message("gsymcheck: Could not load [%s]\n", 
+			pr_current->page_current->page_filename);
           s_log_message("Exiting...\n");
           exit(2); // error 
         }
@@ -146,13 +163,13 @@ main_prog(int argc, char *argv[])
         /* now are there any other filenames specified? */
         /* Much simpler	*/
         if (verbose_mode) {
-          s_log_message("Loading file [%s]\n", argv[i]);
+          s_log_message("Loading file [%s]\n", filename);
         }
-        if (!s_page_new(pr_current, argv[i])) {
+        if (!s_page_new(pr_current, filename)) {
           fopen_status = f_open(pr_current,
                                 pr_current->page_current->page_filename);
           if (!fopen_status) {
-            s_log_message("gsymcheck: Could not load [%s]\n", argv[i]);
+            s_log_message("gsymcheck: Could not load [%s]\n", filename);
             s_log_message("Exiting...\n");
             exit(2); // error 
           }

@@ -409,7 +409,7 @@ x_fileselect_fill_lists(FILEDIALOG *f_current)
 #endif
 
   if (!directory) {
-    fprintf(stderr, _("Agg, could open directory: %s\n"), f_current->directory);
+    fprintf(stderr, _("Agg, could not open directory: %s\n"), f_current->directory);
     return;
   }
 
@@ -967,6 +967,7 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
       if (string[len - 1] != PATH_SEPARATER_CHAR) {
         if ( !(found_page = s_page_new(w_current, string)) ) {
           w_current->DONT_REDRAW = 1;
+
 #if DEBUG
           printf("In x_fileselect_open_file, after checking, full filename to open = %s\n", string);
 #endif

@@ -12,13 +12,14 @@
 
 <<s_project.c : include directives>>
 <<s_project.c : global variables>>
+<<s_project.c : s_project_alloc()>>
 <<s_project.c : s_project_add()>>
 <<s_project.c : s_project_add_head()>>
 <<s_project.c : s_project_free_head()>>
 <<s_project.c : s_project_delete()>>
 <<s_project.c : s_project_setup_world()>>
 <<s_project.c : s_project_setup_rest()>>
-<<s_project.c : s_project_create_new()>>
+<<s_project.c : s_project_fill_out()>>
 <<s_project.c : s_project_close()>>
 <<s_project.c : s_project_close_all()>>
 <<s_project.c : s_project_get_ptr()>>
@@ -74,6 +75,7 @@
 
 @
 
+/* -------------------------------------------------------- */
 <<s_project.c : global variables>>=
 
 /* global_wid always increments, it needs to be unique per run */
@@ -87,7 +89,30 @@ static TOPLEVEL *project_tail = NULL;
 
 @
 
+/* -------------------------------------------------------- */
+@section Function @code{s_project_alloc()}
 
+@defun s_project_alloc
+@end defun
+
+<<s_project.c : s_project_alloc()>>=
+TOPLEVEL *s_project_alloc()
+{
+  TOPLEVEL *project;
+ 
+  project = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
+  if (project) {
+    return project;
+  } else {
+    fprintf(stderr, "Couldn't allocate space for project.\n");
+    exit(-1);
+  }
+}
+
+@ %def s_project_add
+
+
+/* -------------------------------------------------------- */
 @section Function @code{s_project_add()}
 
 @defun s_project_add
@@ -113,6 +138,7 @@ TOPLEVEL *s_project_add(TOPLEVEL * w_head, TOPLEVEL * pr_current)
 @ %def s_project_add
 
 
+/* -------------------------------------------------------- */
 @section Function @code{s_project_add_head()}
 
 @defun s_project_add_head
@@ -128,7 +154,7 @@ void s_project_add_head()
 
 @ %def s_project_add_head
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_free_head()}
 
 @defun s_project_free_head
@@ -143,7 +169,7 @@ void s_project_free_head()
 
 @ %def s_project_free_head
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_delete()}
 Deletes the specified toplevel object
 @defun s_project_delete
@@ -171,7 +197,7 @@ void s_project_delete(TOPLEVEL * w_head, TOPLEVEL * pr_current)
 
 @ %def s_project_delete
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_setup_world()}
 
 @defun s_project_setup_world
@@ -193,7 +219,7 @@ void s_project_setup_world(TOPLEVEL * pr_current)
 }
 @ %def s_project_setup_world
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_setup_rest()}
 
 @defun s_project_setup_rest
@@ -318,22 +344,21 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
 
 @ %def s_project_setup_rest
 
-
-@section Function @code{s_project_create_new()}
-Creates a new project, this is the top of the s_project_* functions
-@defun s_project_create_new
+/* -------------------------------------------------------- */
+@section Function @code{s_project_fill_out()}
+After s_project_alloc, this fills out the 
+guts of the new project.  This is the top of the s_project_* functions
+@defun s_project_fill_out
 
 @end defun
 
-<<s_project.c : s_project_create_new()>>=
-TOPLEVEL *s_project_create_new(void)
+<<s_project.c : s_project_fill_out()>>=
+int s_project_fill_out(TOPLEVEL *pr_current)
 {
-  TOPLEVEL *pr_current = NULL;
-
-  /* allocate new window structure */
-  pr_current = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
 
   pr_current->wid = global_wid;
+
+  pr_current->RC_list = (GList *) NULL;
 
   /* the default coord sizes */
   /* real ones set in rc file */
@@ -381,9 +406,9 @@ TOPLEVEL *s_project_create_new(void)
 
   return (pr_current);
 }
-@ %def s_project_create_new
+@ %def s_project_fill_out
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_close()}
 
 @defun s_project_close
@@ -451,7 +476,7 @@ void s_project_close(TOPLEVEL * pr_current)
 }
 @ %def s_project_close
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_close_all()}
 Closes/deletes/frees all toplevel objects
 @defun s_project_close_all
@@ -485,7 +510,7 @@ void s_project_close_all()
 
 @ %def s_project_close_all
 
-
+/* -------------------------------------------------------- */
 @section Function @code{s_project_get_ptr()}
 
 @defun s_project_get_ptr

@@ -17,7 +17,7 @@
 <<g_rc.c : g_rc_parse_system_rc()>>
 <<g_rc.c : g_rc_parse_home_rc()>>
 <<g_rc.c : g_rc_parse_local_rc()>>
-<<g_rc.c : g_rc_parse_gaf_rc()>>
+<<g_rc.c : g_rc_parse_specified_rc()>>
 <<g_rc.c : g_rc_parse()>>
 
 <<g_rc.c : g_rc_component_library()>>
@@ -97,18 +97,55 @@
 
 @
 
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_parse_general()}
 
-@defun g_rc_parse_general fname ok_msg err_msg
+@defun g_rc_parse_general w_current fname ok_msg err_msg
 @end defun
 
+/* 
+ * This is the fcn which actually reads in the RC file.  First, it looks in
+ * a list of previously read RC files.  If the file has already been read,
+ * it just says OK.  After reading the file, it places the filename in 
+ * the list of read files.
+ */
 <<g_rc.c : g_rc_parse_general()>>=
 int
-g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)
+g_rc_parse_general(TOPLEVEL *w_current, const char *fname, 
+                   const char *ok_msg, const char *err_msg)
 {
   int found_rc = 0;
-  char* tmp;
+  char *tmp;
+  GList *found_rc_filename_element;
+  char *rc_file_directory;
+  char *msg;
 
+  if (w_current->wid == -1) {
+    /* This is a preview window. Don't do any RC file processing */
+    return;
+  }
+
+
+  /* First see if fname is in list of previously read files. */
+  found_rc_filename_element = (GList *) g_list_find_custom(w_current->RC_list, 
+                                                           (gconstpointer) fname,
+                                                           (GCompareFunc) strcmp);
+  if (found_rc_filename_element != NULL) {
+    /* We've already read this one in. */
+    found_rc = 1;
+    msg = u_basic_strdup("RC file [%s] already read in.\n");
+    s_log_message(msg, fname);
+    return found_rc;
+  }
+
+  /* This is a new RC file.  First change directory to its directory. */
+  rc_file_directory = f_get_directory_from_path(fname);
+  if (rc_file_directory) { 
+    chdir(rc_file_directory);  
+    /* Probably should do some checking of chdir return values */
+  }
+
+  /* Now try to read in contents of RC file.  */
   if (access(fname, R_OK) == 0) {
     /* TODO: fix g_read_file to accept "const char *" */
     tmp = u_basic_strdup(fname);
@@ -116,16 +153,21 @@ g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)
     free(tmp);
     found_rc = 1;
     s_log_message(ok_msg, fname);
+
+    /* Everything was OK.  Now add this file to list of read RC files. */
+    w_current->RC_list = g_list_append(w_current->RC_list, u_basic_strdup(fname) );
+
   } else {
     s_log_message(err_msg, fname);
   }
+
   return found_rc;
 }
 
 
 @ %def g_rc_parse_general
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_parse_path()}
 
 @defun g_rc_parse_path 
@@ -152,15 +194,15 @@ g_rc_parse_path()
 @ %def g_rc_parse_path
 
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_parse_system_rc()}
 
-@defun g_rc_parse_system_rc 
+@defun g_rc_parse_system_rc w_current rcname
 @end defun
 
 <<g_rc.c : g_rc_parse_system_rc()>>=
 static int
-g_rc_parse_system_rc(char* rcname)
+g_rc_parse_system_rc(TOPLEVEL *w_current, char* rcname)
 {
   int found_rc;
   char *filename;
@@ -176,10 +218,12 @@ g_rc_parse_system_rc(char* rcname)
 
   path_to_rc = g_rc_parse_path(); /* do not free path_to_rc */
 
-  filename = u_basic_strdup_multiple(path_to_rc,
-				     PATH_SEPARATER_STRING, 
-                                     "system-", rcname,
-                                     NULL);
+  filename = f_normalize_filename(u_basic_strdup_multiple(path_to_rc,
+				                          PATH_SEPARATER_STRING, 
+                                                          "system-", rcname,
+                                                          NULL)
+                                  );
+  
   
   if (filename == NULL) {
     return 0;
@@ -189,7 +233,7 @@ g_rc_parse_system_rc(char* rcname)
                                    NULL);
   err_msg = u_basic_strdup_multiple("Did not find required system-",
                                     rcname, " file [%s]\n", NULL);  
-  found_rc = g_rc_parse_general(filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
   
   free(ok_msg);
   free(err_msg);  
@@ -201,15 +245,15 @@ g_rc_parse_system_rc(char* rcname)
 
 @ %def g_rc_parse_system_rc
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_parse_home_rc()}
 
-@defun g_rc_parse_home_rc 
+@defun g_rc_parse_home_rc w_current rcname
 @end defun
 
 <<g_rc.c : g_rc_parse_home_rc()>>=
 static int
-g_rc_parse_home_rc(char* rcname)
+g_rc_parse_home_rc(TOPLEVEL *w_current, char* rcname)
 {
   int found_rc;
   char *filename;
@@ -222,12 +266,13 @@ g_rc_parse_home_rc(char* rcname)
     return 0;
   }
 
-  filename = u_basic_strdup_multiple(HOME,
-				     PATH_SEPARATER_STRING,
-                                     ".gEDA",
-				     PATH_SEPARATER_STRING, 
-				     rcname,
-                                     NULL);
+  filename = f_normalize_filename(u_basic_strdup_multiple(HOME,
+				                          PATH_SEPARATER_STRING,
+                                                          ".gEDA",
+				                          PATH_SEPARATER_STRING, 
+				                          rcname,
+                                                          NULL)
+                                  );
   if (filename == NULL) {
     return 0;
   }
@@ -236,7 +281,7 @@ g_rc_parse_home_rc(char* rcname)
                                    NULL);
   err_msg = u_basic_strdup_multiple("Did not find optional ~/.gEDA/",
                                     rcname, " file [%s]\n", NULL);  
-  found_rc = g_rc_parse_general(filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
   
   free(ok_msg);
   free(err_msg);
@@ -248,23 +293,26 @@ g_rc_parse_home_rc(char* rcname)
 
 @ %def g_rc_parse_home_rc
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_parse_local_rc()}
 
-@defun g_rc_parse_local_rc 
+@defun g_rc_parse_local_rc w_current rcname
 @end defun
 
 <<g_rc.c : g_rc_parse_local_rc()>>=
 static int
-g_rc_parse_local_rc(char* rcname)
+g_rc_parse_local_rc(TOPLEVEL *w_current, char* rcname)
 {
   int found_rc;
   char *filename;
   char *ok_msg;
   char *err_msg;
 
-  filename = u_basic_strdup_multiple(".", PATH_SEPARATER_STRING, rcname, 
-				     NULL);
+  filename = f_normalize_filename( u_basic_strdup_multiple(".", PATH_SEPARATER_STRING, 
+                                                            rcname, 
+				                            NULL)
+                                 );
+
   if (filename == NULL) {
     return 0;
   }
@@ -273,7 +321,7 @@ g_rc_parse_local_rc(char* rcname)
                                    NULL);
   err_msg = u_basic_strdup_multiple("Did not find optional local ",
                                     rcname, " file [%s]\n", NULL);  
-  found_rc = g_rc_parse_general(filename, ok_msg, err_msg);
+  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
   
   free(ok_msg);
   free(err_msg);
@@ -286,90 +334,82 @@ g_rc_parse_local_rc(char* rcname)
 @ %def g_rc_parse_local_rc
 
 
-@section Function @code{g_rc_parse_gaf_rc()}
 
-@defun g_rc_parse_gaf_rc 
+
+/* ----------------------------------------------------------- */
+@section Function @code{g_rc_parse_specified_rc()}
+
+@defun g_rc_parse_specified_rc w_current rcname
 @end defun
 
-<<g_rc.c : g_rc_parse_gaf_rc()>>=
-int
-g_rc_parse_gaf_rc()
+/*  This fcn tries to open & read the specified rc file.  */
+<<g_rc.c : g_rc_parse_specified_rc()>>=
+int g_rc_parse_specified_rc(TOPLEVEL *w_current, char *rcname)
 {
-  int found_rc;
+  int found_rc = 0;
   char *filename;
+  char *ok_msg;
+  char *err_msg;
 
-  filename = u_basic_strdup_multiple(".", PATH_SEPARATER_STRING, "gafrc", 
-				     NULL);
-  if (filename == NULL) {
+  if (rcname == NULL) {
     return 0;
   }
 
-  found_rc =
-    g_rc_parse_general(filename,
-                       "Read local gafrc file [%s]\n",
-                       "Did not find optional local gafrc file [%s]\n");
+  filename = f_normalize_filename(rcname);
 
+  ok_msg = u_basic_strdup_multiple("Read specified ", rcname, " file [%s]\n",
+                                   NULL);
+  err_msg = u_basic_strdup_multiple("Did not find specified ",
+                                    rcname, " file [%s]\n", NULL);  
+  found_rc = g_rc_parse_general(w_current, filename, ok_msg, err_msg);
+  
+  free(ok_msg);
+  free(err_msg);
   free(filename);
 
   return found_rc;
 }
 
-@ %def g_rc_parse_gaf_rc
+@ %def g_rc_parse_specified_rc
 
 
+
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_parse()}
 
-@defun g_rc_parse 
+@defun g_rc_parse w_current rcname specified_rc_filename
 @end defun
 
 <<g_rc.c : g_rc_parse()>>=
 void
-g_rc_parse(char* rcname, char* specified_rc_filename)
+g_rc_parse(TOPLEVEL *w_current, char* rcname, char* specified_rc_filename)
 {
   int found_rc = 0;
   char *rc_path;
   char *geda_rcdata;
 
-  rc_path = g_rc_parse_path(); /* do not free rc_path */
+  rc_path = f_normalize_filename(g_rc_parse_path()); /* do not free rc_path */
 
   /* set the GEDADATARC environment variable so that the rc files */
   /* know where to look for others */
+
   geda_rcdata = u_basic_strdup_multiple("GEDADATARC=", rc_path, NULL);
   putenv(geda_rcdata);
   
   /* visit rc files in order */
   /* Changed by SDB 1.2.2005 in response to Peter Kaiser's bug report.
    * Read gafrc files first */
-  found_rc |= g_rc_parse_system_rc("gafrc");
-  found_rc |= g_rc_parse_home_rc("gafrc");
-  found_rc |= g_rc_parse_local_rc("gafrc");
+  found_rc |= g_rc_parse_system_rc(w_current, "gafrc");
+  found_rc |= g_rc_parse_home_rc(w_current, "gafrc");
+  found_rc |= g_rc_parse_local_rc(w_current, "gafrc");
   /* continue support for individual rc files for each program.  */
-  found_rc |= g_rc_parse_system_rc(rcname);
-  found_rc |= g_rc_parse_home_rc(rcname);
-  found_rc |= g_rc_parse_local_rc(rcname);
+  found_rc |= g_rc_parse_system_rc(w_current, rcname);
+  found_rc |= g_rc_parse_home_rc(w_current, rcname);
+  found_rc |= g_rc_parse_local_rc(w_current, rcname);
 
-/* g_rc_parse_gaf_rc defined in libgeda/g_rc.nw */
-/* Don't need this now 
- *  found_rc |= g_rc_parse_gaf_rc(); 
- */
-
-
-  if (specified_rc_filename != NULL) {
-    if (access(specified_rc_filename, R_OK) == 0) {
-      g_read_file(specified_rc_filename);
-      found_rc = 1;
-      s_log_message(
-                    "Read specified rc file [%s]\n",
-                    specified_rc_filename);
-    } else {
-      fprintf(stderr,
-              "Did not find specified %s file [%s]\n",
-              rcname, specified_rc_filename);
-      s_log_message(
-                    "Did not find specified %s file [%s]\n",
-                    rcname, specified_rc_filename);
-    }
-  }
+  /* New fcn introduced by SDB to consolidate this & make it available 
+   * for other programs */
+  found_rc |= g_rc_parse_specified_rc(w_current, specified_rc_filename);
 
 
   /* Oh well, I couldn't find any rcfile, exit! */
@@ -386,7 +426,7 @@ g_rc_parse(char* rcname, char* specified_rc_filename)
 @ %def g_rc_parse
 
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_component_library()}
 
 @defun g_rc_component_library path
@@ -464,7 +504,7 @@ g_rc_component_library(SCM path)
 
 @ %def g_rc_component_library
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_component_library_search()}
 
 @defun g_rc_component_library_search path
@@ -577,7 +617,7 @@ g_rc_component_library_search(SCM path)
 
 @ %def g_rc_component_library_search
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_source_library()}
 
 @defun g_rc_source_library path
@@ -661,7 +701,7 @@ g_rc_source_library(SCM path)
 
 @ %def g_rc_source_library
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_source_library_search()}
 
 @defun g_rc_source_library_search path
@@ -775,7 +815,7 @@ g_rc_source_library_search(SCM path)
 @ %def g_rc_source_library_search
 
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_world_size()}
 
 @defun g_rc_world_size width height border
@@ -810,7 +850,7 @@ g_rc_world_size(SCM width, SCM height, SCM border)
 
 @ %def g_rc_world_size
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_default_series_name()}
 
 @defun g_rc_default_series_name name
@@ -843,7 +883,7 @@ g_rc_default_series_name(SCM name)
 
 @ %def g_rc_default_series_name
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_untitled_name()}
 
 @defun g_rc_untitled_name name
@@ -877,7 +917,7 @@ g_rc_untitled_name(SCM name)
 @ %def g_rc_untitled_name
 
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_font_directory()}
 
 @defun g_rc_font_directory path
@@ -937,7 +977,7 @@ g_rc_font_directory(SCM path)
 @
 @ %def g_rc_font_directory
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_scheme_directory()}
 
 @defun g_rc_scheme_directory path
@@ -997,7 +1037,7 @@ g_rc_scheme_directory(SCM path)
 
 @ %def g_rc_scheme_directory
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_bitmap_directory()}
 
 @defun g_rc_scheme_directory path
@@ -1057,7 +1097,7 @@ g_rc_bitmap_directory(SCM path)
 
 @ %def g_rc_bitmap_directory
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_bus_ripper_symname()}
 
 @defun g_rc_bus_ripper_symname mode
@@ -1094,7 +1134,7 @@ g_rc_bus_ripper_symname(SCM scmsymname)
 
 
 
-
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_reset_component_library()}
 
 @defun g_rc_reset_component_library 
@@ -1115,6 +1155,7 @@ g_rc_reset_component_library(void)
 @ %def g_rc_reset_component_library
 
 
+/* ----------------------------------------------------------- */
 @section Function @code{g_rc_reset_source_library()}
 
 @defun g_rc_reset_source_library 

@@ -12,6 +12,7 @@
 
 <<x_window.c : include directives>>
 <<x_window.c : global variables>>
+<<x_window.c : x_window_alloc()>>
 <<x_window.c : x_window_add()>>
 <<x_window.c : x_window_add_head()>>
 <<x_window.c : x_window_free_head()>>
@@ -26,7 +27,7 @@
 <<x_window.c : x_window_setup_draw_events()>>
 <<x_window.c : x_window_new_pixmap()>>
 <<x_window.c : x_window_create_main()>>
-<<x_window.c : x_window_create_new()>>
+<<x_window.c : x_window_fill_out()>>
 <<x_window.c : x_window_close()>>
 <<x_window.c : x_window_close_all()>>
 <<x_window.c : x_window_get_ptr()>>
@@ -86,6 +87,36 @@ static TOPLEVEL *window_tail=NULL;
 @ %def num_windows global_wid window_head window_tail
 
 
+
+
+
+
+/* -------------------------------------------------- */
+@section Function @code{x_window_alloc()}
+
+@defun x_window_alloc
+@end defun
+
+<<x_window.c : x_window_alloc()>>=
+TOPLEVEL *x_window_alloc()
+{
+  TOPLEVEL *window;
+
+  window = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
+  if (window) {
+    return window;
+  } else {
+    fprintf(stderr, "Couldn't allocate space for window.\n");
+    exit(-1);
+  }
+}
+
+
+@ %def x_window_alloc
+
+
+
+/* -------------------------------------------------- */
 @section Function @code{x_window_add()}
 
 @defun x_window_add w_head w_current
@@ -111,7 +142,7 @@ x_window_add(TOPLEVEL *w_head, TOPLEVEL *w_current)
 
 @ %def x_window_add
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_add_head()}
 
 @defun x_window_add_head 
@@ -121,14 +152,14 @@ x_window_add(TOPLEVEL *w_head, TOPLEVEL *w_current)
 void
 x_window_add_head()
 {
-  window_tail = window_head = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
+  window_tail = window_head = x_window_alloc();
   window_head->wid = -1;
 }
 
 
 @ %def x_window_add_head
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_free_head()}
 
 @defun x_window_free_head 
@@ -144,7 +175,7 @@ x_window_free_head()
 
 @ %def x_window_free_head
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_delete()}
 
 @defun x_window_delete w_head w_current
@@ -174,7 +205,7 @@ x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current)
 
 @ %def x_window_delete
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_setup_world()}
 
 @defun x_window_setup_world w_current
@@ -222,7 +253,7 @@ x_window_setup_world(TOPLEVEL *w_current)
 
 @ %def x_window_setup_world
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_setup_rest()}
 
 @defun x_window_setup_rest w_current
@@ -329,7 +360,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 
 @ %def x_window_setup_rest
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_setup_colors()}
 
 @defun x_window_setup_colors 
@@ -454,7 +485,7 @@ x_window_setup_colors(void)
 
 @ %def x_window_setup_colors
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_free_colors()}
 
 @defun x_window_free_colors w_current
@@ -470,7 +501,7 @@ x_window_free_colors(TOPLEVEL *w_current)
 
 @ %def x_window_free_colors
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_setup_gc()}
 
 @defun x_window_setup_gc w_current
@@ -543,7 +574,7 @@ x_window_setup_gc(TOPLEVEL *w_current)
 
 @ %def x_window_setup_gc
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_free_gc()}
 
 @defun x_window_free_gc w_current
@@ -562,7 +593,7 @@ x_window_free_gc(TOPLEVEL *w_current)
 
 @ %def x_window_free_gc
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_create_drawing()}
 
 @defun x_window_create_drawing drawbox w_current
@@ -594,7 +625,7 @@ x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 
 @ %def x_window_create_drawing
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_setup_draw_events()}
 
 @defun x_window_setup_draw_events w_current
@@ -659,7 +690,7 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
 
 @ %def x_window_setup_draw_events
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_new_pixmap()}
 
 @defun x_window_new_pixmap filename window background
@@ -688,7 +719,7 @@ x_window_new_pixmap(char *filename, GdkWindow *window, GdkColor  *background)
 @ %def new_pixmap
 
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_create_main()}
 
 @defun x_window_create_main w_current
@@ -1174,20 +1205,20 @@ x_window_create_main(TOPLEVEL *w_current)
 
 @ %def x_window_create_main
 
+/* -------------------------------------------------- */
+@section Function @code{x_window_fill_out()}
 
-@section Function @code{x_window_create_new()}
-
-@defun x_window_create_new
+@defun x_window_fill_out
 @end defun
 
-<<x_window.c : x_window_create_new()>>=
-TOPLEVEL *
-x_window_create_new(void)
+<<x_window.c : x_window_fill_out()>>=
+int x_window_fill_out(TOPLEVEL *w_current)
 {
-  TOPLEVEL *w_current=NULL;
 
-  /* allocate new window structure */
-  w_current = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
+  /* allocate new window structure if it's not already done */
+  if (w_current == NULL) {
+    w_current = x_window_alloc();
+  }
 
   /* do init var fill in */
   x_window_setup_rest(w_current);
@@ -1196,6 +1227,8 @@ x_window_create_new(void)
   i_vars_set(w_current);
 
   w_current->wid = global_wid;
+
+  w_current->RC_list = NULL;
 
   /* make sure none of these events happen till we are done */
   w_current->DONT_DRAW_CONN=1;
@@ -1262,13 +1295,13 @@ x_window_create_new(void)
   w_current->DONT_EXPOSE=0;
   w_current->DONT_RECALC=0;
 
-  return(w_current);
+  return;
 }
 
 
-@ %def x_window_create_new
+@ %def x_window_fill_out
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_close()}
 
 @defun x_window_close w_current
@@ -1450,7 +1483,7 @@ x_window_close(TOPLEVEL *w_current)
 
 @ %def x_window_close
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_close_all()}
 
 @defun x_window_close_all 
@@ -1485,7 +1518,7 @@ x_window_close_all()
 
 @ %def x_window_close_all
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_get_ptr()}
 
 @defun x_window_get_ptr wid
@@ -1513,7 +1546,7 @@ x_window_get_ptr(int wid)
 
 @ %def x_window_get_ptr
 
-
+/* -------------------------------------------------- */
 @section Function @code{x_window_search_page_clist()}
 
 @defun x_window_search_page_clist findme

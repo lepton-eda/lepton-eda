@@ -1,4 +1,10 @@
-2004-01-23 Carlos Nieves Onega <cnieves@iespana.es>
+2005-01-27 Stuart Brorson   <sdb@cloud9.net>
+
+	* src/gnetlist.c: Changes made to enable correct opening
+	of schematics in foreign directories.  Changes detailed in libgeda
+	ChangeLog.
+	
+2005-01-23 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/gnet-drc2.scm: Added check for duplicated references.
         (above patch applied by Stuart Brorson)

@@ -66,12 +66,11 @@
 
 
 /*------------------------------------------------------------------
- * gattrib_really_quit callback -- Unsaved changes were found.  Ask 
- * user if he really means it.
+ * gattrib_really_quit callback -- called when user selects "quit"
+ * from menubar.  Checks for unsaved changes.
  *------------------------------------------------------------------*/
 void gattrib_really_quit(void)
 {
-
   if (sheet_head->CHANGED == TRUE) {
     printf("User is quitting without saving last changes.\n");
     x_dialog_unsaved_data();
@@ -113,7 +112,8 @@ void gattrib_main(int argc, char *argv[])
   int return_code = 0;  /* used when invoking s_toplevel_read_page */
   int argv_index;
   char *cwd;
-  char *full_filename;
+  char *filename;
+  char *input_str;
   PAGE *p_local;
   
 
@@ -156,49 +156,46 @@ void gattrib_main(int argc, char *argv[])
   /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
   g_register_funcs();
 #if DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main -- we have just registered the guile functions.\n");
 #endif  
 
 
   /* ------  These libraries are defined in libgeda  ------ */
 #if DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main -- we have just initialized the component and source libs.\n");
 #endif  
   
-  /* ----- Read in all rc files and set up relevant directory pointers ----- */
-  g_rc_parse("gattribrc", rc_filename);
+
+  /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
+  pr_current = s_project_alloc();
+
+  /* ----- Read in RC files.   ----- */
+  /*
+   * This step must happen after creation of pr_current, but before it is 
+   * filled out in order for guile stuff to take effect.  (Specifically
+   * fonts.)
+   */
+  g_rc_parse(pr_current, "gattribrc", rc_filename);
 #if DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main -- we have just read in and parsed the RC files.\n");
 #endif  
 
-  /* ---------- This creates pointer to new project: (TOPLEVEL *pr_current) ---------- */
-  pr_current = s_project_create_new();    /* pr_current declared in globals.h */
-  s_toplevel_init(pr_current);  /* This finishes initialization of pr_current */
+  s_project_fill_out(pr_current);    /* pr_current declared in globals.h */
+  s_toplevel_init(pr_current); 
 #if DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main -- we have just created and init'ed a new pr_current\n");
 #endif  
-  
+
+
 
   /* --------  Initialize main_window.  -------- */
 #if DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main -- calling gtk_init. . . ..\n");
 #endif  
   gtk_init(&argc, &argv);
 
   x_window_init();  
 #if DEBUG
-  fflush(stderr);
-  fflush(stdout);
   printf("In gattrib_main -- we have just initialized the main_window.\n");
 #endif  
  
@@ -212,12 +209,13 @@ void gattrib_main(int argc, char *argv[])
    * position of the first filename  */
   i = argv_index;
   while(argv[i]) {
-    full_filename = u_basic_strdup(argv[i]);
     
+    filename = u_basic_strdup_multiple(cwd, PATH_SEPARATER_STRING, 
+				       argv[i],
+				       NULL);
+
 #if DEBUG
-    fflush(stderr);
-    fflush(stdout);
-    printf("In gattrib_main, opening full_filename = %s\n", full_filename);
+    printf("In gattrib_main, we want to open filename = %s\n", filename);
 #endif
     
     if (first_page == 1) {
@@ -227,12 +225,12 @@ void gattrib_main(int argc, char *argv[])
 	 * and open the project.  First free "unknown" name.  */
 	free(pr_current->page_current->page_filename);
       }
-      return_code |= s_toplevel_read_page(full_filename); /* read in first page */
+      return_code |= s_toplevel_read_page(filename); /* read in first page */
       first_page = 0;
     } else {
-      return_code |= s_toplevel_read_page(full_filename); /* read in secondary page */
+      return_code |= s_toplevel_read_page(filename); /* read in secondary page */
     }  
-    free(full_filename);
+    free(filename);
     
     /* Now add all items found to the master lists */
     s_sheet_data_add_master_comp_list_items(pr_current->page_current->object_head); 
@@ -256,7 +254,7 @@ void gattrib_main(int argc, char *argv[])
 
 
   /* ---------- Now complete read-in of project  ---------- */
-  if (first_page != 1) { 
+  if ( first_page != 1 ) { 
 
 
     /* ---------- Sort the master lists  ---------- */

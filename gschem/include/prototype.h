@@ -898,6 +898,7 @@ void x_stroke_free_all(void);
 int x_stroke_search_execute(char *sequence);
 /* x_window.c */
 TOPLEVEL *x_window_add(TOPLEVEL *w_head, TOPLEVEL *w_current);
+TOPLEVEL *x_window_alloc(void);
 void x_window_add_head(void);
 void x_window_free_head(void);
 void x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current);
@@ -910,7 +911,7 @@ void x_window_free_gc(TOPLEVEL *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current);
 void x_window_setup_draw_events(TOPLEVEL *w_current);
 void x_window_create_main(TOPLEVEL *w_current);
-TOPLEVEL *x_window_create_new(void);
+int x_window_fill_out(TOPLEVEL *w_current);
 void x_window_close(TOPLEVEL *w_current);
 void x_window_close_all(void);
 TOPLEVEL *x_window_get_ptr(int wid);

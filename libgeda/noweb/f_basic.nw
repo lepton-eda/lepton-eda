@@ -15,6 +15,8 @@
 <<f_basic.c : f_close()>>
 <<f_basic.c : f_save_close()>>
 <<f_basic.c : f_save()>>
+<<f_basic.c : f_get_directory_from_path()>>
+<<f_basic.c : f_normalize_filename()>>
 
 @ 
 
@@ -58,18 +60,23 @@
 
 @ 
 
-
+/* -------------------------------------------------- */
 @section Function @code{f_open()}
 
 @defun f_open w_current filename
 @end defun
 
 <<f_basic.c : f_open()>>=
-/* Returns 0 on failure and 1 on success */
+/* This fcn opens the schematic file.  It returns 0 on failure and 1 
+ * on success.  Before it reads the schematic, it tries to open 
+ * and read the local gafrc file.  */
 int
 f_open(TOPLEVEL *w_current, char *filename)
 {
   int opened=FALSE;
+  char *full_filename;
+  char *full_rcfilename;
+  char *file_directory;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */
@@ -77,17 +84,41 @@ f_open(TOPLEVEL *w_current, char *filename)
   set_window(w_current, w_current->init_left, w_current->init_right,
              w_current->init_top, w_current->init_bottom);
 
+  /* get full, absolute path to file */
+  full_filename = u_basic_strdup(f_normalize_filename(filename)); 
+
+  /* write full, absolute filename into page_current->page_filename */
+  if (w_current->page_current->page_filename) {
+    free(w_current->page_current->page_filename);
+  }
+  w_current->page_current->page_filename = u_basic_strdup(full_filename);
+
+
+  /* Before we open the page, let's load the corresponding gafrc. */
+  file_directory = f_get_directory_from_path(full_filename);  /* experimental call  */
+
+  full_rcfilename = u_basic_strdup_multiple(file_directory,  
+	     				      PATH_SEPARATER_STRING, 
+					      "gafrc", 
+					      NULL);
+  /* the directory gets reset in here to file_directory. */
+  g_rc_parse_specified_rc(w_current, full_rcfilename);
+
+
+  /* Now that we have set the current directory, read in design */
   w_current->page_current->object_tail = (OBJECT *) 
   o_read(w_current, w_current->page_current->object_tail, 
-         filename);
+         full_filename);
 
   if (w_current->page_current->object_tail != NULL) {
-    s_log_message("Opened schematic [%s]\n", filename);
+    s_log_message("Opened file [%s]\n", full_filename);
     opened = TRUE;
+
   } else {
     /* Failed to open page */
     opened = FALSE;	 
   }
+
 
   w_current->page_current->object_tail = (OBJECT *) 
   return_tail(w_current->page_current->object_head); 
@@ -100,6 +131,11 @@ f_open(TOPLEVEL *w_current, char *filename)
 
   w_current->page_current->CHANGED=0; /* added 4/7/98 */
 
+  /* Do I really need to free these, or will they just go away when I return? */
+  free(file_directory);
+  free(full_filename);
+  free(full_rcfilename);
+
   if (!opened) {
     return (FALSE);
   } else {
@@ -110,6 +146,7 @@ f_open(TOPLEVEL *w_current, char *filename)
 @ %def f_open
 
 
+/* -------------------------------------------------- */
 @section Function @code{f_close()}
 
 @defun f_close w_current
@@ -124,7 +161,7 @@ f_close(TOPLEVEL *w_current)
 
 @ %def f_close
 
-
+/* -------------------------------------------------- */
 @section Function @code{f_save_close()}
 
 @defun f_save_close w_current filename
@@ -140,7 +177,7 @@ f_save_close(TOPLEVEL *w_current, char *filename)
 
 @ %def f_save_close
 
-
+/* -------------------------------------------------- */
 @section Function @code{f_save()}
 
 @defun f_save w_current filename
@@ -156,4 +193,90 @@ f_save(TOPLEVEL *w_current, char *filename)
 @ %def f_save
 
 
+/* -------------------------------------------------- */
+@section Function @code{f_get_directory_from_path()}
+
+@defun f_get_directory_from_path path
+@end defun
+
+<<f_basic.c : f_get_directory_from_path()>>=
+/* ------------------------------------------------------------- *
+ * given a path like /home/user/foo.sch, this fcn returns the 
+ * directory /home/user.  Note that I use PATH_SEPARATER_* to make
+ * the fcn transportable.
+ * ------------------------------------------------------------- */
+char* f_get_directory_from_path(char *path)
+{
+  int num_slash;
+  int i;
+  char *base_directory = NULL;
+  char *temp_string;
+
+  /*
+   * I should probably do some sanity checking of the path here
+   */
+
+  num_slash = u_basic_count_char(path, PATH_SEPARATER_CHAR);
+
+  /* 
+   * Now we know how many slashes are in the file path.  Now assemble the
+   * file path by taking portions of path and concatenating them
+   * together. 
+   */
+  base_directory = u_basic_strdup(""); /* hack to make u_basic_strdup_multiple happy */
+  for (i = 1; i <= num_slash-1; i++) {
+    temp_string = u_basic_breakup_string(path, PATH_SEPARATER_CHAR, i);
+    base_directory = u_basic_strdup_multiple(base_directory,
+                                             PATH_SEPARATER_STRING, 
+                                             temp_string,
+                                             NULL);
+    free(temp_string);
+  }
+
+  
+
+#ifdef DEBUG 
+  printf ("In f_get_directory_from_path, base_directory = %s\n", base_directory);
+#endif
+
+  return base_directory;
+
+}
+
+@ %def f_get_directory_from_path
+
+
+/* -------------------------------------------------- */
+@section Function @code{f_normalize_filename()}
+
+@defun f_normalize_filename filename
+@end defun
+
+<<f_basic.c : f_normalize_filename()>>=
+/* ------------------------------------------------------------- *
+ * Given a filename in any format, this returns the full, absolute
+ * resolved filename,
+ * ------------------------------------------------------------- */
+char* f_normalize_filename(char *filename)
+{
+  char filename_buffer[1024];  /* nasty hack for realpath */
+  char *full_filename;
+
+  /*  Check for pathological case  */
+  if (filename == NULL) {
+    return NULL;
+  }
+
+  realpath(filename, &filename_buffer);  /* places reult in filename_buffer */
+  full_filename = u_basic_strdup(filename_buffer);
+
+#ifdef DEBUG
+  printf("In f_normalize_filename, returning full_filename= %s \n", full_filename);
+#endif 
+
+  return full_filename;
+
+}
+
+@ %def f_normalize_filename
 

@@ -1,3 +1,9 @@
+2005-01-27 Stuart Brorson   <sdb@cloud9.net>
+
+	* src/gsymcheck.c: Changes made to enable correct opening
+	of schematics in foreign directories.  Changes detailed in libgeda
+	ChangeLog.  
+	
 2004-12-27 Stuart Brorson   <sdb@cloud9.net>
 
         * lib/system-gsymcheckrc.in: Changed reference to system-commonrc
