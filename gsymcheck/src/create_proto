@@ -1,30 +1,11 @@
 #!/bin/sh
 
-# script starts here
+CFLAGS="`guile-config compile` `gtk-config --cflags` `libgeda-config --cflags`" 
 
-#gtkversion=`gtk-config --version | cut -d. -f1,2`
-#if [ "$gtkversion" = "1.0" ]
-#then
-#devel_flag=
-#else
-#fi
+MISC_FLAGS="-I/usr/X11R6/include -I../include -I. -I.."
 
-devel_flag=-DGTK_DEVEL
+ALES_HACK=-D__GNUC__
 
-cproto $devel_flag -I/home/ahvezda/geda/include -I/usr/X11R6/include -I. -I../include -I.. -I/usr/local/include -I/usr/local/include/gtk -I/usr/local/include/gdk -I/usr/local/lib/glib/include *.c > new_proto
+cproto $ALES_HACK $CFLAGS $MISC_FLAGS *.c > new_proto
 
-#cproto $devel_flag -I/usr/X11R6/include -I. -I../include -I.. -I$HOME/newgtk/include -I$HOME/newgtk/include/gtk -I$HOME/newgtk/include/gdk -I$HOME/newgtk//lib/glib/include *.c > new_proto
-
-
-#if [ "$gtkversion" = "1.0" ]
-#then
-#	cp -f prototype1.0.h prototype.bak
-#        mv -f new_proto prototype1.0.h
-#else
-# for gtk+ 1.2.x
-#	cp -f prototype1.2.h prototype.bak
-#fi
-
-        mv -f new_proto ../include/prototype.h
-
-
+mv -f new_proto ../include/prototype.h
