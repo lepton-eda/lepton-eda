@@ -1,4 +1,4 @@
-% gEDA - GNU Electronic Design Automation
+% gEDA - GPL Electronic Design Automation
 % attributes.tex - Master Attribute Document
 % Copyright (C) 2002 Ales V. Hvezda
 %
@@ -95,6 +95,12 @@ This is a free standing or floating attribute.  Don't forget to set
 
 Example: \texttt{graphical=1}
 
+\subsection{\bf description\label{description}}
+The description attribute provides a simple one line description of what 
+the symbol is supposed to represent.  
+
+Example: \texttt{description=4 NAND gates with 2 inputs}
+
 
 \subsection{\bf pinseq\label{pinseq}}
 This attribute is used to give each pin an unique number or sequence.
@@ -133,6 +139,7 @@ this attribute.
 \vspace{.125in}
 
 \begin{table}[h]
+\begin{center}
 \begin{tabular}{|l|l|} \hline
 in & Input \\ \hline
 out & Output \\ \hline
@@ -145,6 +152,7 @@ tri & Tristate (high impedance) \\ \hline
 clk & Clock \\ \hline
 pwr & Power/Ground \\ \hline
 \end{tabular}
+\end{center}
 \caption{{\bf pintype} values} \label{pintype values}
 \end{table}
 
@@ -324,6 +332,7 @@ attribute for this is {\bf pintype} (\ref{pintype}).
 July 14th, 2002 & Created attributes.tex from attributes.txt. \\ \hline
 July 14th, 2002 & Updated doc to be in sync with post-20020527. \\ \hline
 August 25th, 2002 & Added obsolete type= attribute. \\ \hline
+September 14, 2002 & Added description= attribute. Minor fixes\\ \hline
 
 \end{tabular}
 \end{table}
