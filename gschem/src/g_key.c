@@ -174,6 +174,8 @@ DEFINE_G_KEY(view_zoom_full)
 DEFINE_G_KEY(view_zoom_limits)
 DEFINE_G_KEY(view_zoom_in)
 DEFINE_G_KEY(view_zoom_out)
+DEFINE_G_KEY(view_zoom_in_hotkey)
+DEFINE_G_KEY(view_zoom_out_hotkey)
 
 DEFINE_G_KEY(view_zoom_box)
 DEFINE_G_KEY(view_zoom_box_hotkey)

@@ -18,6 +18,7 @@ extern int default_grid_color;
 extern int default_background_color;
 extern int default_select_color;
 extern int default_bb_color;
+extern int default_zoom_with_pan;
 extern int default_actionfeedback_mode;
 extern int default_text_feedback;
 extern int default_text_display_zoomfactor;

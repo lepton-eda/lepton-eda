@@ -64,6 +64,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("net-midpoint-mode", g_rc_net_midpoint_mode);
 	gh_new_procedure1_0 ("net-style", g_rc_net_style);
 	gh_new_procedure1_0 ("pin-style", g_rc_pin_style);
+	gh_new_procedure1_0 ("zoom-with-pan", g_rc_zoom_with_pan);
 	gh_new_procedure1_0 ("action-feedback-mode", g_rc_action_feedback_mode);
 	gh_new_procedure1_0 ("text-feedback", g_rc_text_feedback);
 	gh_new_procedure1_0 ("text-display-zoomfactor", g_rc_text_display_zoomfactor);
@@ -142,6 +143,8 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("view-zoom-limits", g_key_view_zoom_limits);
 	gh_new_procedure0_0 ("view-zoom-in", g_key_view_zoom_in);
 	gh_new_procedure0_0 ("view-zoom-out", g_key_view_zoom_out);
+	gh_new_procedure0_0 ("view-zoom-in-hotkey", g_key_view_zoom_in_hotkey);
+	gh_new_procedure0_0 ("view-zoom-out-hotkey", g_key_view_zoom_out_hotkey);
 	gh_new_procedure0_0 ("view-zoom-box", g_key_view_zoom_box);
 	gh_new_procedure0_0 ("view-zoom-box-hotkey", g_key_view_zoom_box_hotkey);
 	gh_new_procedure0_0 ("view-pan", g_key_view_pan);

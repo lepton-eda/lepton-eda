@@ -401,6 +401,17 @@ g_rc_action_feedback_mode(SCM mode)
 }
 
 SCM
+g_rc_zoom_with_pan(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE,  "enabled" },
+		{FALSE, "disabled"}
+	};
+
+	RETURN_G_RC_MODE("zoom-with-pan", default_zoom_with_pan);
+}
+
+SCM
 g_rc_text_feedback(SCM mode)
 {
 	static const vstbl_entry mode_table[] = {

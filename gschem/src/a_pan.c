@@ -49,38 +49,13 @@
 int current_center_x = 0;
 int current_center_y = 0;
 
-/* Kazu on July 8, 1999 - TODO: distill common part from a_pan() and
- * a_pan_mouse() because they are doing basically the same thing */
+
 void
-a_pan(TOPLEVEL *w_current, int x, int y)
+a_pan_calc(TOPLEVEL *w_current, int x, int y)
 {
 	int pan_x, pan_y;
 	int ix, iy, center_x, center_y;
 	int sx, sy, lx, ly;
-
-	/* check to see if we are inside an action draw net, etc.  If
-	 * yes, convert screen coords to world coords */
-	if (w_current->inside_action) {
-		SCREENtoWORLD(w_current,
-			      w_current->start_x,
-			      w_current->start_y,
-			      &sx, &sy);
-		SCREENtoWORLD(w_current,
-			      w_current->last_x,
-			      w_current->last_y,
-			      &lx, &ly);
-
-#if 0
-		printf("BEGIN: start x %d -> %d \n", w_current->start_x, sx);
-		printf("BEGIN: start y %d -> %d \n", w_current->start_y, sy);
-		printf("BEGIN: last  x %d -> %d \n", w_current->last_x , lx);
-		printf("BEGIN: last  y %d -> %d \n", w_current->last_y , ly);
-#endif
-		w_current->start_x = sx;
-		w_current->start_y = sy;
-		w_current->last_x  = lx;
-		w_current->last_y  = ly;
-	}
 
 	pan_x = mil_x(w_current, x);
 	pan_y = mil_y(w_current, y);
@@ -127,6 +102,60 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 		w_current->page_current->bottom -= iy;
         }
 
+#if DEBUG
+	printf("left: %d, right: %d, top: %d, bottom: %d\n",
+	       left, right, top, bottom);
+	printf("aspect: %f\n",
+	       (float) fabs(right  - left) /
+	       (float) fabs(bottom - top ));
+	printf("zoomfactor: %d\n", zoom_factor);
+#endif
+
+	current_center_x = GET_PAGE_CENTER_X(w_current);
+	current_center_y = GET_PAGE_CENTER_Y(w_current);
+	
+#if DEBUG
+	printf("%d %d\n", current_center_x, current_center_y);
+#endif
+}
+
+
+/* Kazu on July 8, 1999 - TODO: distill common part from a_pan() and
+ * a_pan_mouse() because they are doing basically the same thing */
+void
+a_pan(TOPLEVEL *w_current, int x, int y)
+{
+	int pan_x, pan_y;
+	int ix, iy, center_x, center_y;
+	int sx, sy, lx, ly;
+
+	/* check to see if we are inside an action draw net, etc.  If
+	 * yes, convert screen coords to world coords */
+	if (w_current->inside_action) {
+		SCREENtoWORLD(w_current,
+			      w_current->start_x,
+			      w_current->start_y,
+			      &sx, &sy);
+		SCREENtoWORLD(w_current,
+			      w_current->last_x,
+			      w_current->last_y,
+			      &lx, &ly);
+
+#if 0
+		printf("BEGIN: start x %d -> %d \n", w_current->start_x, sx);
+		printf("BEGIN: start y %d -> %d \n", w_current->start_y, sy);
+		printf("BEGIN: last  x %d -> %d \n", w_current->last_x , lx);
+		printf("BEGIN: last  y %d -> %d \n", w_current->last_y , ly);
+#endif
+		w_current->start_x = sx;
+		w_current->start_y = sy;
+		w_current->last_x  = lx;
+		w_current->last_y  = ly;
+	}
+
+	/* do the actual work */
+	a_pan_calc(w_current, x, y);
+
 	w_current->DONT_REDRAW = 1;
 	w_current->DONT_RECALC = 1;
 	w_current->DONT_RESIZE = 1;
@@ -136,15 +165,6 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 	w_current->DONT_REDRAW = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_RESIZE = 0;
-
-#if DEBUG
-	printf("left: %d, right: %d, top: %d, bottom: %d\n",
-	       left, right, top, bottom);
-	printf("aspect: %f\n",
-	       (float) fabs(right  - left) /
-	       (float) fabs(bottom - top ));
-	printf("zoomfactor: %d\n", zoom_factor);
-#endif
 
 	/* convert coords back to screen coords */
 	if (w_current->inside_action) {
@@ -167,14 +187,8 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 		w_current->last_x  = lx;
 		w_current->last_y  = ly;
 	}
-
-	current_center_x = GET_PAGE_CENTER_X(w_current);
-	current_center_y = GET_PAGE_CENTER_Y(w_current);
-	
-#if DEBUG
-	printf("%d %d\n", current_center_x, current_center_y);
-#endif
 }
+
 
 void
 a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)

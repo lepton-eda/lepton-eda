@@ -58,6 +58,7 @@ int default_background_color=BLACK;
 int default_select_color=GREY90;
 int default_bb_color=GREY90;
 int default_actionfeedback_mode=OUTLINE; 
+int default_zoom_with_pan=TRUE; 
 int default_object_clipping=TRUE; 
 int default_do_logging=TRUE; 
 int default_logging_dest=LOG_WINDOW; 
@@ -128,6 +129,7 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->pin_style = default_pin_style;
 	w_current->override_pin_color = default_override_pin_color;
 
+	w_current->zoom_with_pan = default_zoom_with_pan;
 	w_current->actionfeedback_mode = default_actionfeedback_mode;
 	w_current->text_display_zoomfactor = default_text_display_zoomfactor;
 	w_current->text_feedback = default_text_feedback;

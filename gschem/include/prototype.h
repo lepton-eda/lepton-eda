@@ -1,8 +1,9 @@
 /* a_pan.c */
+void a_pan_calc(TOPLEVEL *w_current, int x, int y);
 void a_pan(TOPLEVEL *w_current, int x, int y);
 void a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
-void a_zoom(TOPLEVEL *w_current, int dir);
+void a_zoom(TOPLEVEL *w_current, int dir, int selected_from);
 void a_zoom_limits(TOPLEVEL *w_current, OBJECT *o_current);
 void a_zoom_box(TOPLEVEL *w_current);
 void a_zoom_box_start(TOPLEVEL *w_current, int x, int y);
@@ -51,6 +52,8 @@ SCM g_key_view_zoom_full(void);
 SCM g_key_view_zoom_limits(void);
 SCM g_key_view_zoom_in(void);
 SCM g_key_view_zoom_out(void);
+SCM g_key_view_zoom_in_hotkey(void);
+SCM g_key_view_zoom_out_hotkey(void);
 SCM g_key_view_zoom_box(void);
 SCM g_key_view_zoom_box_hotkey(void);
 SCM g_key_view_pan(void);
@@ -116,6 +119,7 @@ SCM g_rc_net_midpoint_mode(SCM mode);
 SCM g_rc_net_style(SCM mode);
 SCM g_rc_pin_style(SCM mode);
 SCM g_rc_action_feedback_mode(SCM mode);
+SCM g_rc_zoom_with_pan(SCM mode);
 SCM g_rc_text_feedback(SCM mode);
 SCM g_rc_text_display_zoomfactor(SCM zoomfactor);
 SCM g_rc_scrollbar_update(SCM mode);
@@ -201,6 +205,8 @@ void i_callback_view_zoom_box(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_view_zoom_box_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_in(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_zoom_out(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_zoom_in_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_view_zoom_out_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_pan(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_pan_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_updatenets(gpointer data, guint callback_action, GtkWidget *widget);

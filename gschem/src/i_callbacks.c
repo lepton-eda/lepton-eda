@@ -771,7 +771,7 @@ i_callback_view_zoom_full (gpointer data, guint callback_action, GtkWidget *widg
 	exit_if_null(w_current);
 
 	/* scroll bar stuff */
-	a_zoom(w_current, ZOOM_FULL);
+	a_zoom(w_current, ZOOM_FULL, DONTCARE);
 	w_current->DONT_REDRAW=1;
 	w_current->DONT_RECALC=1;
 	w_current->DONT_RESIZE=1;
@@ -849,7 +849,7 @@ i_callback_view_zoom_in (gpointer data, guint callback_action, GtkWidget *widget
 
 	exit_if_null(w_current);
 
-	a_zoom(w_current, ZOOM_IN);
+	a_zoom(w_current, ZOOM_IN, MENU);
 	w_current->DONT_REDRAW=1;
 	w_current->DONT_RECALC=1;
 	w_current->DONT_RESIZE=1;
@@ -871,7 +871,52 @@ i_callback_view_zoom_out (gpointer data, guint callback_action, GtkWidget *widge
 
 	exit_if_null(w_current);
 
-	a_zoom(w_current, ZOOM_OUT);
+	a_zoom(w_current, ZOOM_OUT, MENU);
+	w_current->DONT_REDRAW=1;
+	w_current->DONT_RECALC=1;
+	w_current->DONT_RESIZE=1;
+	x_hscrollbar_update(w_current);
+	x_vscrollbar_update(w_current);
+	o_redraw_all(w_current);
+	w_current->DONT_RESIZE=0;
+	w_current->DONT_RECALC=0;
+	w_current->DONT_REDRAW=0;
+}
+
+
+/* repeat middle shortcut would get into the way of what user is try to do */
+void 
+i_callback_view_zoom_in_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
+{
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	a_zoom(w_current, ZOOM_IN, HOTKEY);
+	w_current->DONT_REDRAW=1;
+	w_current->DONT_RECALC=1;
+	w_current->DONT_RESIZE=1;
+	x_hscrollbar_update(w_current);
+	x_vscrollbar_update(w_current);
+	o_redraw_all(w_current);
+	w_current->DONT_RESIZE=0;
+	w_current->DONT_RECALC=0;
+	w_current->DONT_REDRAW=0;
+}
+
+/* repeat middle shortcut would get into the way of what user is try to do */
+void 
+i_callback_view_zoom_out_hotkey (gpointer data, guint callback_action, GtkWidget *widget) 
+{
+	TOPLEVEL *w_current;
+
+	w_current = (TOPLEVEL *) data;
+
+	exit_if_null(w_current);
+
+	a_zoom(w_current, ZOOM_OUT, HOTKEY);
 	w_current->DONT_REDRAW=1;
 	w_current->DONT_RECALC=1;
 	w_current->DONT_RESIZE=1;

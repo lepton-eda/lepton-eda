@@ -73,7 +73,7 @@
 
 /* dir is either ZOOM_IN or ZOOM_OUT which are defined in globals.h */
 void
-a_zoom(TOPLEVEL *w_current, int dir)
+a_zoom(TOPLEVEL *w_current, int dir, int selected_from)
 {
 	float i;
 	double new_aspect;
@@ -106,6 +106,10 @@ a_zoom(TOPLEVEL *w_current, int dir)
 		w_current->start_y = sy;
 		w_current->last_x  = lx;
 		w_current->last_y  = ly;
+	}
+
+	if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
+		a_pan_calc(w_current, mouse_x, mouse_y);
 	}
 
 	switch(dir) {

@@ -180,6 +180,14 @@
 ;(pin-style "thin")
 (pin-style "thick")
 
+; zoom-with-pan string
+; Sets the zoom in and zoom out functions to pan the display and then zoom.
+; Basically zoom in / out where the mouse pointer sits on the display.
+; Comment out if you want the default mode.
+;
+(zoom-with-pan "enabled")
+;(zoom-with-pan "disabled")
+
 ; action-feedback-mode string
 ; Set the default action feedback mode (for copy/move/component place).
 ; Set to outline to get an outline of the selection. 
@@ -694,8 +702,8 @@
     ("l" . view-zoom-limits)
     ("p" . view-pan-hotkey)
     ("u" . view-update-nets)
-    ("o" . view-zoom-out)
-    ("i" . view-zoom-in)))
+    ("o" . view-zoom-out-hotkey)
+    ("i" . view-zoom-in-hotkey)))
 
 ; All keys in this keymap *must* be unique
 (define page-keymap
@@ -771,14 +779,14 @@
     ("w" . view-zoom-box-hotkey)
     ("x" . view-pan-hotkey)
     ("y" . no-action)
-    ("z" . view-zoom-in)
+    ("z" . view-zoom-in-hotkey)
     ("period" . repeat-last-command)
     ("comma" . misc-misc)
     ("Delete" . edit-delete)
     ("Shift greater" . page-next)
     ("Shift less" . page-prev)
     ("Alt q" . file-quit)
-    ("Shift Z" . view-zoom-out)))
+    ("Shift Z" . view-zoom-out-hotkey)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)

@@ -154,6 +154,11 @@
 #define POPUP_ENABLED		0
 #define MOUSEPAN_ENABLED	1
 
+/* for selected_from */
+#define DONTCARE		0
+#define MENU			1
+#define HOTKEY			2	
+
 /* gnetlist: netlist_mode */
 #define gEDA			0
 #define SPICE			1

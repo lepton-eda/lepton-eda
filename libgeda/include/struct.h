@@ -383,6 +383,7 @@ struct st_toplevel {
 	int override_pin_color;
 	int pin_style;
 	int net_style;
+	int zoom_with_pan; 
 	int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
 	int text_feedback; /* controls if text is drawn or not in */
 			   /* copy/move/place ops */
