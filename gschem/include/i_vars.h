@@ -58,4 +58,5 @@ extern int default_third_button;
 extern int default_middle_button;
 extern int default_net_consolidate;
 extern int default_file_preview;
+extern int default_enforce_hierarchy;
 

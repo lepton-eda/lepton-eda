@@ -46,6 +46,7 @@ SCM g_key_edit_stretch_hotkey(void);
 SCM g_key_edit_slot(void);
 SCM g_key_edit_color(void);
 SCM g_key_edit_edit(void);
+SCM g_key_edit_text(void);
 SCM g_key_edit_lock(void);
 SCM g_key_edit_unlock(void);
 SCM g_key_edit_translate(void);
@@ -176,6 +177,7 @@ SCM g_rc_third_button(SCM mode);
 SCM g_rc_middle_button(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
+SCM g_rc_enforce_hierarchy(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -210,6 +212,7 @@ void i_callback_edit_move(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_edit_move_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_delete(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_edit(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_stretch(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_stretch_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_slot(gpointer data, guint callback_action, GtkWidget *widget);

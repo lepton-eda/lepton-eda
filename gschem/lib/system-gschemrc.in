@@ -454,6 +454,16 @@
 (file-preview "disabled")
 ;(file-preview "enabled")
 
+;  enforce-hierarchy string
+;  Controls if the movement between hierarchy levels (of the same underlying
+;  schematics) is allowed or not.
+;  If this is enabled, then the user cannot (without using the page manager)
+;  move between hierarchy levels otherwise, if enabled, the user sees all
+;  the hierarchy levels as being flat.
+;
+(enforce-hierarchy "enabled")
+;(enforce-hierarchy "disabled")
+
 ;  default-series-name string
 ;  Specify the default series name (of new schematics)
 ;  Will probably be changed a runtime
@@ -645,6 +655,7 @@
 (attribute-name "device")
 (attribute-name "pin#")
 (attribute-name "pintype")
+(attribute-name "source")
 (attribute-name "numslots")
 (attribute-name "slot#")
 (attribute-name "graphical")
@@ -822,7 +833,8 @@
   '(("s" . edit-select)
     ("c" . edit-copy-hotkey)    ; This can also just be edit-copy and then
     ("e" . edit-edit)           ; you must pick the anchor point
-    ("m" . edit-move-hotkey)    ; This can also just be edit-move
+    ("x" . edit-text)           
+    ("m" . edit-move-hotkey)    ; This can also just be edit-move 
     ("d" . edit-delete)
     ("r" . edit-rotate-90-hotkey)
     ("i" . edit-mirror-hotkey)

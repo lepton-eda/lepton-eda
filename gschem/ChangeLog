@@ -9,6 +9,37 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-01-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Added code to allow you to specify a lower 
+	  (source) schematic use the source= attribute
+
+	* src/x_dialog.c: Fixed that bug which I introduced in the multi-attrib
+	  edit dialog box which caused it to not open if a component with no
+	  attached attributes is selected
+
+	* src/g_rc.c and friends: Added enforce-hierarchy rc keyword which 
+	  controls if how easy it is to move between hierarchy levels
+
+	* src/x_dialog.c: Increased the height of the multi-attrib edit dialog 
+	  box by using gtk_widget_set_usize function 
+
+	* lib/system-gschemrc.in: Add source attribute name to attribute-list
+
+	* src/x_dialog.c: Gave multi attrib, slot edit, and attrib edit their
+	  very own entries in the toplevel structure (mawindow, sewindow, 	
+	  aewindow).  Also gave slot edit it's very own entry "entry" 
+	  (seentry)
+
+	* src/o_misc.c: Added checks in o_edit to make sure that an attribute
+	  is really an attribute (='s not sorrounded by spaces)
+
+	* src/x_dialog.c: Hopefully got the grab for attribute edit dialog
+	  and multi attribute dialog boxes working
+
+	* src/i_callbacks.c and friends: Added edit_text callback just so 
+	  that the user an forcely edit text even if that text is an attribute
+
 2000-01-26  Matt Ettus  <matt@ettus.com>
 
 	* src/x_dialog.c:  Added capability for Edit Attribute Dialog
