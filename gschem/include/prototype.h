@@ -453,9 +453,9 @@ int x_color_get_name(int index, char *string);
 /* x_dialog.c */
 void destroy_window(GtkWidget *widget, GtkWidget **window);
 void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit_change(GtkWidget *w, GtkCList *clist);
+void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_clear(GtkWidget *w, GtkWindow *window);
-void multi_attrib_edit_delete(GtkWidget *w, GtkCList *clist);
+void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit(TOPLEVEL *w_current, OBJECT *list);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);

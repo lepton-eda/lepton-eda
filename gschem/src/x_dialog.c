@@ -43,25 +43,21 @@ destroy_window(GtkWidget *widget, GtkWidget **window)
 
 /***************** Start of Multiple Attrib Edit dialog box ***********/
 
-void
-multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
+char*
+multi_attrib_edit_parser (GtkWidget *w,
+	char **text, int *vis, int *show)
 {
 	GtkWidget *window;
 	GtkWidget *label;
 	GtkWidget *value;
-	GtkWidget *clist;
 
 	GtkWidget *visbutton;
 	GtkWidget *showvalbutton;
 	GtkWidget *shownamebutton;
 
-	int vis,show;
-
-	char *text[3];
 	char *newtext;
 	
 	text[1]=malloc(4);
-
 	
 	window = gtk_object_get_data(GTK_OBJECT(w),"window");
 	label = gtk_object_get_data(GTK_OBJECT(window),"lab_entry");
@@ -81,72 +77,192 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 
         if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton)))
 	{
-                vis = VISIBLE;
+                *vis = VISIBLE;
 		text[1][0]='V';
 	}
         else
 	{
-                vis = INVISIBLE;
+                *vis = INVISIBLE;
 		text[1][0]='I';
 	}
         if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(showvalbutton)))
 	{
-                show = SHOW_VALUE;
+                *show = SHOW_VALUE;
 		text[1][2]='V';
 	}
         else if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(shownamebutton)))
 	{
-                show = SHOW_NAME;
+                *show = SHOW_NAME;
 		text[1][2]='N';
 	}
         else
 	{
-                show = SHOW_NAME_VALUE;
+                *show = SHOW_NAME_VALUE;
 		text[1][2]='B';
 	}
-
-	clist = gtk_object_get_data(GTK_OBJECT(window),"clist");
-	gtk_clist_append(GTK_CLIST(clist),text);
-
-	o_attrib_add_attrib(w_current, newtext, vis,
-		show, w_current->page_current->
-		selection_head->next);
-	free(newtext);
-	multi_attrib_edit_clear(GTK_WIDGET(NULL),GTK_WINDOW(window));
+	return newtext;
 }
 
 void
-multi_attrib_edit_change (GtkWidget *w, GtkCList *clist)
+multi_attrib_edit_set_values (GtkWindow *window, OBJECT *attrib)
 {
-	char *text[]= { "","V V","" };
-	gtk_clist_append(clist,text);
+	GtkWidget *lab_entry;
+	GtkWidget *val_entry;
+	GtkWidget *showvalbutton;
+	GtkWidget *shownamebutton;
+	GtkWidget *showbothbutton;
+	GtkWidget *visbutton;
+
+	char name[1000];
+	char value[1000];
+
+	lab_entry = gtk_object_get_data(GTK_OBJECT(window),"lab_entry");
+	val_entry = gtk_object_get_data(GTK_OBJECT(window),"val_entry");
+
+	visbutton = gtk_object_get_data(GTK_OBJECT(window),"visbutton");
+
+	showbothbutton = gtk_object_get_data(GTK_OBJECT(window),"showbothbutton");
+	shownamebutton = gtk_object_get_data(GTK_OBJECT(window),"shownamebutton");
+	showvalbutton = gtk_object_get_data(GTK_OBJECT(window),"showvalbutton");
+
+	if(!attrib)
+	{
+		gtk_entry_set_text(GTK_ENTRY(lab_entry),"");
+		gtk_entry_set_text(GTK_ENTRY(val_entry),"");
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton),TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(showvalbutton),TRUE);
+	}
+	else
+	{
+		if(attrib->visibility == VISIBLE)
+			gtk_toggle_button_set_active 
+				(GTK_TOGGLE_BUTTON (visbutton), TRUE);
+		else
+			gtk_toggle_button_set_active
+                                (GTK_TOGGLE_BUTTON (visbutton), FALSE);
+	
+		if(attrib->show_name_value == SHOW_NAME)
+			gtk_toggle_button_set_active 
+				(GTK_TOGGLE_BUTTON(shownamebutton),TRUE);
+		else if(attrib->show_name_value == SHOW_VALUE)
+			gtk_toggle_button_set_active 
+				(GTK_TOGGLE_BUTTON(showvalbutton),TRUE);
+		else gtk_toggle_button_set_active 
+			(GTK_TOGGLE_BUTTON(showbothbutton),TRUE);
+
+		o_attrib_get_name_value(attrib->text_string,name,value);
+		gtk_entry_set_text (GTK_ENTRY (val_entry), value);
+		gtk_entry_set_text (GTK_ENTRY (lab_entry), name);
+	}
 }
 
 void
 multi_attrib_edit_clear (GtkWidget *w, GtkWindow *window)
 {
-	GtkWidget *label;
-	GtkWidget *value;
-
-	GtkWidget *visbutton;
-	GtkWidget *showvalbutton;
-
-	label = gtk_object_get_data(GTK_OBJECT(window),"lab_entry");
-	value = gtk_object_get_data(GTK_OBJECT(window),"val_entry");
-
-	visbutton = gtk_object_get_data(GTK_OBJECT(window),"visbutton");
-	showvalbutton = gtk_object_get_data(GTK_OBJECT(window),"showvalbutton");
-
-	gtk_entry_set_text(GTK_ENTRY(label),"");
-	gtk_entry_set_text(GTK_ENTRY(value),"");
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton),TRUE);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(showvalbutton),TRUE);
+	multi_attrib_edit_set_values(window,NULL);
 }
 
 void
-multi_attrib_edit_delete (GtkWidget *w, GtkCList *clist)
+multi_attrib_edit_select_row (GtkCList *clist, gint row, gint col,
+				GdkEventButton *event, TOPLEVEL *w_current)
 {
+	GtkWidget *window;
+	OBJECT *attrib;
+
+	window = w_current->mawindow;
+	clist = gtk_object_get_data(GTK_OBJECT(window),"clist");
+
+	gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)row);
+	attrib = gtk_clist_get_row_data(clist,row);
+	multi_attrib_edit_set_values (GTK_WINDOW(window), attrib);
+}
+
+void
+multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
+{
+	int vis,show;
+	char *newtext;
+	gint row;
+	OBJECT *attrib;
+	char **text;
+	GtkWidget *clist;
+
+	clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
+
+	text=malloc(3*sizeof(char*));
+
+	newtext = multi_attrib_edit_parser (w,text,&vis,&show);
+
+	if(text[0][0] == '\0' || text[0][0] == ' ')
+		return;
+
+	row = gtk_clist_append(GTK_CLIST(clist),text);
+
+	attrib = o_attrib_add_attrib(w_current, newtext, vis,
+		show, w_current->page_current->
+		selection_head->next);
+
+	gtk_clist_set_row_data(GTK_CLIST(clist),row,attrib);
+	multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));
+
+	free(newtext);
+	free(text);
+}
+
+void
+multi_attrib_edit_change (GtkWidget *w, TOPLEVEL *w_current)
+{
+	int vis,show;
+	char *newtext;
+	gint row;
+	OBJECT *attrib;
+	char **text;
+	GtkWidget *clist;
+
+	clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
+
+	text=malloc(3*sizeof(char*));
+	newtext = multi_attrib_edit_parser (w,text,&vis,&show);
+
+	if(text[0][0] != '\0' && text[0][0] != ' ')
+	{
+		row = (int)gtk_object_get_data(GTK_OBJECT(clist),"selected");
+		if(row != -1)
+		{
+			attrib = gtk_clist_get_row_data(GTK_CLIST(clist),row);
+			o_text_change(w_current,attrib,newtext,vis,show);
+//			multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));
+			gtk_clist_set_text(GTK_CLIST(clist),row,0,text[0]);
+			gtk_clist_set_text(GTK_CLIST(clist),row,1,text[1]);
+			gtk_clist_set_text(GTK_CLIST(clist),row,2,text[2]);
+		}
+	}
+	free(newtext);
+	free(text);
+}
+
+
+void
+multi_attrib_edit_delete (GtkWidget *w, TOPLEVEL *w_current)
+{
+	OBJECT *attrib;
+	GtkCList *clist;
+	gint selected;
 	
+	clist = gtk_object_get_data(GTK_OBJECT(w_current->mawindow),"clist");
+
+	selected = (gint)gtk_object_get_data(GTK_OBJECT(clist),"selected");
+	if(selected == -1)
+		return;
+	attrib = gtk_clist_get_row_data(clist,selected);
+	gtk_clist_remove(clist,selected);
+	gtk_object_set_data(GTK_OBJECT(clist),"selected",(gpointer)-1);
+	
+	o_delete_text(w_current,attrib);
+	
+	multi_attrib_edit_clear (NULL,GTK_WINDOW(w_current->mawindow));
+// Tell System about change!
+
 }
 
 void
@@ -167,6 +283,7 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	char name[1000];
 	char *string;
 	int i;
+	int row;
 	OBJECT **attriblist=NULL;
 
 	GtkWidget *window;
@@ -348,6 +465,7 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (bothbutton));
 	gtk_widget_show (bothbutton);
 	gtk_box_pack_start (GTK_BOX (hbox6), bothbutton, FALSE, FALSE, 0);
+	gtk_object_set_data(GTK_OBJECT(window),"showbothbutton",bothbutton);
 	
 	hbuttonbox1 = gtk_hbutton_box_new ();
 	gtk_widget_show (hbuttonbox1);
@@ -364,6 +482,8 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	gtk_widget_show (changebutton);
 	gtk_container_add (GTK_CONTAINER (hbuttonbox1), changebutton);
 	GTK_WIDGET_SET_FLAGS (changebutton, GTK_CAN_DEFAULT);
+
+	gtk_object_set_data(GTK_OBJECT(changebutton),"window",window);
 
 	clearbutton = gtk_button_new_with_label ("Clear");
 	gtk_widget_show (clearbutton);
@@ -398,7 +518,8 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 				text[1][2]='V';
 			else
 				text[1][2]='B';
-                	gtk_clist_append(GTK_CLIST(clist),text);
+                	row = gtk_clist_append(GTK_CLIST(clist),text);
+			gtk_clist_set_row_data (GTK_CLIST(clist),row,attriblist[i]);
                 	i++;
         	}
 	}
@@ -436,7 +557,10 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
         gtk_signal_connect(GTK_OBJECT(closebutton),"clicked",
                         GTK_SIGNAL_FUNC(multi_attrib_edit_close),w_current);
 
-	multi_attrib_edit_clear(GTK_WIDGET(NULL),GTK_WINDOW(window));
+	gtk_signal_connect(GTK_OBJECT(clist),"select-row",
+			GTK_SIGNAL_FUNC(multi_attrib_edit_select_row),w_current);
+
+	multi_attrib_edit_clear(NULL,GTK_WINDOW(window));
         gtk_grab_add(w_current->mawindow);
 
 	free(text[0]);
@@ -704,9 +828,9 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	GtkWidget *visbutton;
 	GtkWidget *hbox10;
 	GSList *show_group = NULL;
-	GtkWidget *radiobutton8;
-	GtkWidget *radiobutton9;
-	GtkWidget *radiobutton10;
+	GtkWidget *namebutton;
+	GtkWidget *valbutton;
+	GtkWidget *showbothbutton;
 	GtkWidget *hbuttonbox2;
 	GtkWidget *buttondelete;
 	GtkWidget *buttonok;
@@ -779,23 +903,23 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 	gtk_container_set_border_width (GTK_CONTAINER (hbox10), 3);
 
-	radiobutton8 = gtk_radio_button_new_with_label (show_group, "Name");
-	gtk_object_set_data(GTK_OBJECT(aewindow),"showlabbutton",radiobutton8);
-	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton8));
-	gtk_widget_show (radiobutton8);
-	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton8, FALSE, FALSE, 0);
+	namebutton = gtk_radio_button_new_with_label (show_group, "Name");
+	gtk_object_set_data(GTK_OBJECT(aewindow),"showlabbutton",namebutton);
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (namebutton));
+	gtk_widget_show (namebutton);
+	gtk_box_pack_start (GTK_BOX (hbox10), namebutton, FALSE, FALSE, 0);
 
-	radiobutton9 = gtk_radio_button_new_with_label (show_group, "Value");
-	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton9));
-	gtk_object_set_data(GTK_OBJECT(aewindow),"showvalbutton",radiobutton9);
-	gtk_widget_show (radiobutton9);
-	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton9, FALSE, FALSE, 0);
+	valbutton = gtk_radio_button_new_with_label (show_group, "Value");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (valbutton));
+	gtk_object_set_data(GTK_OBJECT(aewindow),"showvalbutton",valbutton);
+	gtk_widget_show (valbutton);
+	gtk_box_pack_start (GTK_BOX (hbox10), valbutton, FALSE, FALSE, 0);
 
-	radiobutton10 = gtk_radio_button_new_with_label (show_group, "Both");
-	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (radiobutton10));
-	gtk_object_set_data(GTK_OBJECT(aewindow),"showboth",radiobutton10);
-	gtk_widget_show (radiobutton10);
-	gtk_box_pack_start (GTK_BOX (hbox10), radiobutton10, FALSE, FALSE, 0);
+	showbothbutton = gtk_radio_button_new_with_label (show_group, "Both");
+	show_group = gtk_radio_button_group (GTK_RADIO_BUTTON (showbothbutton));
+	gtk_object_set_data(GTK_OBJECT(aewindow),"showboth",showbothbutton);
+	gtk_widget_show (showbothbutton);
+	gtk_box_pack_start (GTK_BOX (hbox10), showbothbutton, FALSE, FALSE, 0);
 
 	hbuttonbox2 = gtk_hbutton_box_new ();
 	gtk_widget_show (hbuttonbox2);
@@ -838,12 +962,12 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 
 		if(attrib->show_name_value == SHOW_NAME)
 			gtk_toggle_button_set_active 
-				(GTK_TOGGLE_BUTTON(radiobutton8),TRUE);
+				(GTK_TOGGLE_BUTTON(namebutton),TRUE);
 		else if(attrib->show_name_value == SHOW_VALUE)
 			gtk_toggle_button_set_active 
-				(GTK_TOGGLE_BUTTON(radiobutton9),TRUE);
+				(GTK_TOGGLE_BUTTON(valbutton),TRUE);
 		else gtk_toggle_button_set_active 
-			(GTK_TOGGLE_BUTTON(radiobutton10),TRUE);
+			(GTK_TOGGLE_BUTTON(showbothbutton),TRUE);
 	}
 	else
 	{
@@ -853,7 +977,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 		gtk_toggle_button_set_active 
 			(GTK_TOGGLE_BUTTON (visbutton), TRUE);
 		gtk_toggle_button_set_active 
-			(GTK_TOGGLE_BUTTON(radiobutton9),TRUE);
+			(GTK_TOGGLE_BUTTON(valbutton),TRUE);
 	}
 	i = 0;
 	string = (char *) s_attrib_get(i);
