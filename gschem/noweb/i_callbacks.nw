@@ -1715,19 +1715,40 @@ DEFINE_I_CALLBACK(edit_linetype)
 @end defun
 
 <<i_callbacks.c : i_callback_edit_filltype()>>=
-/* PB : support for fill dialog */
 DEFINE_I_CALLBACK(edit_filltype)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
-  OBJECT *object;
 
   exit_if_null(w_current);
-	
-  i_update_middle_button(w_current, i_callback_edit_color, _("Edit Fill Type"));
 
-  if ( (object = o_select_return_first_object(w_current)) ) {
-    fill_type_dialog(w_current, object);
+  /* anything selected ? */
+  if (o_select_selected(w_current)) {
+    SELECTION *s_current =
+      w_current->page_current->selection2_head->next;
+    GList *objects = NULL;
+
+    /* yes, build a list of relevant objects */
+    while (s_current != NULL) {
+      OBJECT *o_current = s_current->selected_object;
+          
+      if (o_current->type == OBJ_BOX ||
+          o_current->type == OBJ_CIRCLE) {
+        objects = g_list_prepend (objects, o_current);
+      }
+
+      s_current = s_current->next;
+    }
+
+    if (objects != NULL) {
+      /* at least one object in the list */
+      i_update_middle_button(w_current,
+                             i_callback_edit_color,
+                             _("Edit Fill Type"));
+      /* enter edition of parameters of selected objects */
+      fill_type_dialog(w_current, objects);
+    }
   }
+  
 }
 
 

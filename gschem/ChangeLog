@@ -1,5 +1,13 @@
 2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/i_callbacks.nw (i_callback_edit_filltype): Modified to
+	create a list of relevant objects that is passed to
+	fill_type_dialog.
+
+	* noweb/x_dialog.nw (fill_type_dialog*): Rewrote code for this
+	dialog to work one more than a single object (on the model of
+	line_type_dialog).
+	
 	* noweb/o_misc.nw (o_update_component): Added initialization of
 	attribute list and a redraw for each new attribute object.
 
