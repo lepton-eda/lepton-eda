@@ -1,3 +1,4 @@
+
 2000-07-12  Matt Ettus  <matt@ettus.com>
 
 	* Fixed autoconf/automake stuff to install protel and bae backends
@@ -6,6 +7,11 @@
 	  for value, label, and device text in that order
 
 	* scheme/gnet-allegro.scm:  Use the above function
+
+2000-07-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version up to 20000704a so people know they 
+	  have applied the 20000704a patch correctly.
 
 2000-07-05  Ales Hvezda  <ahvezda@geda.seul.org>
 
