@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "POT-Creation-Date: 2003-02-24 00:39-0500\n"
-"PO-Revision-Date: 2002-12-03 16:04GMT\n"
+"PO-Revision-Date: 2003-03-07 23:04GMT\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,7 @@ msgstr "Dies ist die MINGW32 Portierung.\n"
 #: noweb/gschem.nw:185
 #, c-format
 msgid "Current locale settings: %s\n"
-msgstr ""
+msgstr "Aktuelle Spracheinstellungen: %s\n"
 
 #: noweb/gschem.nw:214
 #, c-format
@@ -410,9 +410,8 @@ msgid "Error while trying to save"
 msgstr "Fehler während des Speicherns"
 
 #: noweb/i_callbacks.nw:686
-#, fuzzy
 msgid "Failed to Save All"
-msgstr "Alles speichern"
+msgstr "Alles speichern fehlgeschlagen"
 
 #: noweb/i_callbacks.nw:688
 msgid "Saved All"
@@ -1661,11 +1660,11 @@ msgstr "Hochformat"
 
 #: noweb/x_print.nw:236
 msgid "Extents with margins"
-msgstr ""
+msgstr "Alles mit Rand"
 
 #: noweb/x_print.nw:245
 msgid "Extents no margins"
-msgstr ""
+msgstr "Alles ohne Rand"
 
 #: noweb/x_print.nw:253
 msgid "Current Window"
@@ -1683,7 +1682,7 @@ msgstr "Aktueller Schalplan in [%s] ausgedruckt\n"
 
 #: noweb/x_print.nw:459 noweb/rcstrings.nw:11
 msgid "Print..."
-msgstr "Drucke..."
+msgstr "Drucken..."
 
 #: noweb/x_print.nw:461
 msgid "Print"
@@ -2168,6 +2167,3 @@ msgstr "Hilfe"
 #: noweb/rcstrings.nw:118
 msgid "Manual..."
 msgstr "Handbuch..."
-
-#~ msgid "Limits"
-#~ msgstr "Grenzen"
