@@ -1,3 +1,10 @@
+2005.01.18 Stuart Brorson   <sdb@cloud9.net>
+	* RF_Amp/MSA-2643.sch:  Added "source" attributes to Q1, Q2 to enable
+	full use of hierarchy when examining schematic.
+
+	* RF_Amp/gafrc:  Added pointer to source-library for hierarchical
+	schematic browsing support.
+
 2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* RF_Amp/gafrc TwoStageAmp/gafrc lightning_detector/gafrc:

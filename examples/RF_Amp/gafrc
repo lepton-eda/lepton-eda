@@ -1,1 +1,3 @@
 (component-library "./sym")
+(component-library-search "./sym")
+(source-library ".")
