@@ -6,6 +6,8 @@
 
 	* fileformats/fileformats.tex: Added new valid version string
 
+	* toplevel/toplevel.html.in: Background color tweak
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 	
 	* configure.ac: Updated version to 20041228
