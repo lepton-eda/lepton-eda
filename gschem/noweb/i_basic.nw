@@ -68,7 +68,7 @@
 
 <<i_basic.c : i_update_status()>>=
 void
-i_update_status(TOPLEVEL *w_current, char *string)
+i_update_status(TOPLEVEL *w_current, const char *string)
 {
   if (!w_current->status_label) {
     return;
@@ -95,7 +95,7 @@ i_update_status(TOPLEVEL *w_current, char *string)
  * create one function for both...  Now it's exactly the same as above
  * */
 void
-i_update_status2(TOPLEVEL *w_current, char *string)
+i_update_status2(TOPLEVEL *w_current, const char *string)
 {
   if (string) {
     w_current->DONT_RESIZE = 1;
@@ -118,7 +118,7 @@ i_update_status2(TOPLEVEL *w_current, char *string)
 
 <<i_basic.c : i_update_left_button()>>=
 void
-i_update_left_button(char *string)
+i_update_left_button(const char *string)
 {
 }
 
@@ -133,7 +133,7 @@ i_update_left_button(char *string)
 
 <<i_basic.c : i_update_middle_button()>>=
 void
-i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
+i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, const char *string)
 {
   char *temp_string;
 
@@ -201,7 +201,7 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string)
 
 <<i_basic.c : i_update_right_button()>>=
 void
-i_update_right_button(char *string)
+i_update_right_button(const char *string)
 {
 }
 
@@ -297,7 +297,7 @@ i_update_toolbar(TOPLEVEL *w_current)
 
 <<i_basic.c : i_set_filename()>>=
 void
-i_set_filename(TOPLEVEL *w_current, char *string)
+i_set_filename(TOPLEVEL *w_current, const char *string)
 {
   char trunc_string[41];
   int len;

@@ -246,14 +246,14 @@ void gschem_quit(void);
 void main_prog(int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_basic.c */
-void i_update_status(TOPLEVEL *w_current, char *string);
-void i_update_status2(TOPLEVEL *w_current, char *string);
-void i_update_left_button(char *string);
-void i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, char *string);
-void i_update_right_button(char *string);
+void i_update_status(TOPLEVEL *w_current, const char *string);
+void i_update_status2(TOPLEVEL *w_current, const char *string);
+void i_update_left_button(const char *string);
+void i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, const char *string);
+void i_update_right_button(const char *string);
 void i_update_toolbar(TOPLEVEL *w_current);
 void i_update_cursor(TOPLEVEL *w_current);
-void i_set_filename(TOPLEVEL *w_current, char *string);
+void i_set_filename(TOPLEVEL *w_current, const char *string);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_file_new(GtkWidget *widget, gpointer data);
