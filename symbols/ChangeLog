@@ -1,3 +1,11 @@
+2002-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 74/7404-3.sym, connector/connector20-1.sym,
+	connector/header16-1.sym, memory/ST39SF020A-1.sym,
+	memory/ST39SF020A.sym, micro/ACE1202-1.sym,
+	micro/DS2450-1.sym, micro/DS2480B-1.sym, national/pc16500d-1.sym:
+	New symbols which needed a few tweaks.  Various contributers.  Thanks.
+
 2002-12-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* font/ae_-lig.sym font/AE-lig.sym font/u_-diaeresis.sym 
