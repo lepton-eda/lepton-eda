@@ -797,6 +797,9 @@ struct st_toplevel {
 
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
+
+  /* controls the grid dot size */
+  int grid_dot_size;
   
   /* gnetlist specific */
   int net_naming_priority;
