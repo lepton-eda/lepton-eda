@@ -1,6 +1,6 @@
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
-;;; Copyright (C) 1998 Ales V. Hvezda
+;;; Copyright (C) 1998-2000 Ales V. Hvezda
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -33,19 +33,13 @@
                (newline port))
             (pads:components port (cdr packages))))))
 
-(define pads:display-connections
-   (lambda (port nets)
-      (if (not (null? nets))
-	 (begin
-	    (write-char #\space port) 
-	    (display (car (car nets)) port)
-	    (write-char #\. port) 
-	    (display (car (cdr (car nets))) port)
-	    (if (null? (cdr nets))
-	       (newline port)
-               (begin
-	          (pads:display-connections port (cdr nets))
-		))))))
+(define (pads:display-connections nets)
+  (if (not (null? nets))
+      (string-append " " (car (car nets)) "." (car (cdr (car nets)))
+       (pads:display-connections (cdr nets)))
+      "\n"))
+
+
 
 (define pads:write-net
    (lambda (port netnames)
@@ -54,8 +48,12 @@
 	    (display "*SIGNAL* " port)
 	    (display netname port)
 	    (newline port)
-            (pads:display-connections port (gnetlist:get-all-connections netname))
-	    (pads:write-net port (cdr netnames)))))) 
+            (display (gnetlist:wrap 
+		      (pads:display-connections 
+		       (gnetlist:get-all-connections netname)) 
+		      78) 
+		     port)
+	    (pads:write-net port (cdr netnames))))))
 
 (define pads 
    (lambda (filename)
