@@ -1603,7 +1603,6 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
 {
   int start_angle, end_angle;
   int width, height;
-  int final;
   int color;
   int x, y;
 
@@ -1662,14 +1661,12 @@ o_arc_image_write(TOPLEVEL *w_current, OBJECT *o_current,
   width  = o_current->arc->screen_width;
   height = o_current->arc->screen_height;
 
-  final = max(width, height);
-
   x = o_current->arc->screen_x;
   y = o_current->arc->screen_y;
 	
 #ifdef HAS_LIBGDGEDA
   gdImageArc(current_im_ptr, 
-             x, y, final, final, start_angle, end_angle, color);
+             x, y, width, height, start_angle, end_angle, color);
 #endif
 	
 }
