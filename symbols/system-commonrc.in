@@ -55,6 +55,7 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@diode")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@relay")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@cascade")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@asic")
 
 ; component-library-search atring
 ;

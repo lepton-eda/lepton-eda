@@ -1,0 +1,28 @@
+v 20031231 1
+P 1100 500 850 500 1 0 0
+{
+T 1000 550 5 6 0 1 0 0 1
+pinnumber=2
+T 1000 350 5 8 0 0 0 0 1
+pinseq=2
+}
+P 0 500 250 500 1 0 0
+{
+T 100 550 5 6 0 1 0 0 1
+pinnumber=1
+T 100 350 5 8 0 0 0 0 1
+pinseq=1
+}
+T 1200 250 5 8 0 0 0 0 1
+device=RESISTOR
+T 200 700 5 10 1 1 0 0 1
+refdes=R?
+B 250 400 600 200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 200 200 5 8 1 0 0 0 1
+l=10u
+T 200 0 5 8 1 0 0 0 1
+w=3u
+T 356 450 5 8 1 1 0 0 1
+model-name=rpolyh
+T 1200 100 5 8 0 0 0 0 1
+description=high resistive poly0 resistor

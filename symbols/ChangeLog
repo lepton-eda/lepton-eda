@@ -1,7 +1,25 @@
 2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* Makefile.am, configure.ac, system-commonrc.in, cascade/*.sym: Added
-	RF Cascade symbol library and symbols.
+	RF Cascade symbol library and symbols.  (updated symbols to the latest
+	file format: 1)
+
+	* micro/AT89S8252-24PC-1.sym, MSP430x11x1.sym, basicstamp-1.sym,
+	pic16C74A-1.sym, AT90S8535J-1.sym, MSP430x11x2.sym,
+	AT90S8535P-1.sym, MSP430x12x.sym, mc68hc05j1a-1.sym,
+	pic16F876-1.sym, ATmega323-1.sym, MSP430x12x2.sym,
+	mc68hc705kj1-1.sym, pic16F877-1.sym, DS1602-1.sym,
+	MSP430x13-4x.sym, mc68hc811e2fn-1.sym, pic16F877A-1.sym,
+	DS2450-1.sym, MSP430x15-6x.sym, mc68hc812a4-1.sym,
+	pic16c505-1.sym, DS2480B-1.sym, MSP430x41x.sym,
+	mc68hc908gp32cp-1.sym, pic16c5x-1.sym, DS80C310-1.sym,
+	MSP430x43x.sym, mc68hc912b32-1.sym, sx28ac-1.sym, DS80C320-1.sym,
+	MSP430x44x.sym, pic12c5xx-1.sym, z80pio-1.sym: Check in all of Werner's
+	changes to the symbols in the micro directory.  Thanks Werner.
+
+	* Makefile.am, configure.ac, system-commonrc.in, asic/*.sym: Added
+	asic symbol library and symbols (created by Peter Kaiser).  Thanks
+	Peter.
 
 2003-12-31 Ales Hvezda   <ahvezda@geda.seul.org>
 
