@@ -1,3 +1,19 @@
+2003-11-28 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * m4/Makefile.am: Fixed bug: nls.m4 and po.m4 were not distributed.
+        
+2003-11-21 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/setup.sh, src/setup.cfg (and toplevel Makefile): Removed
+        dependencies on gaf version.
+        
+        * src/package.c, src/package.h: Added functions to reading/writing
+        installation parameters.
+        
+        * src/install.c: Added possibility of ftp downloading (using wget).
+        
+        * src/file.c: Removed bugs, small changes.
+        
 2003-11-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * autogen.sh: Added script to generate all the auto* generated files.
