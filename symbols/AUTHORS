@@ -516,8 +516,9 @@ Al Williams		- For contributing the following symbol:
 
 Jim Battle		- For contributing the following symbols:
 
-				9602-1.sym 9602-2.sym
+				9602-1.sym 9602-2.sym (translated to zero)
 				Adding an OC arc to 7403-1.sym
+				74266-1.sym (minor graphical changes by AVH)
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
