@@ -24,6 +24,7 @@
 #include <string.h>
 #include "config.h"
 #include "doc.h"
+#include "file.h"
 #include "filetool.h"
 #include "global.h"
 #include "m_action.h"
@@ -31,7 +32,7 @@
 #include "project.h"
 #include "support.h"
 #include "tool.h"
-
+#include "txtedit.h"
 
 
 /* document list and current document name */
@@ -41,7 +42,7 @@ static char szDocCurrent[TEXTLEN] = "";
 
 
 /* private functions */
-static struct Doc_s *DocSearch(char *szFileName);
+static struct Doc_s *DocSearch(const char *szFileName);
 
 static void DocViewAdd(struct Doc_s *pDoc);
 static void DocViewDelete(struct Doc_s *pDoc);
@@ -61,7 +62,7 @@ static void DocViewFilesSort(void);
 
 int DocCreate(const char *szFileName, const char *szParentFileName)
 {
-	struct Doc_s *pDoc = NULL, *pParent;
+	struct Doc_s *pDoc = NULL, *pParent = NULL;
 	int iResult;
 
 	pDoc = DocSearch(szFileName);
@@ -98,7 +99,7 @@ int DocCreate(const char *szFileName, const char *szParentFileName)
 	pDoc->bChanged = FALSE;
 	ProjectChanged(TRUE);
 	DocViewAdd(pDoc);
-	
+
 	return SUCCESS;
 }
 
@@ -106,8 +107,7 @@ int DocCreate(const char *szFileName, const char *szParentFileName)
 int DocDestroy(char *szFileName)
 {
 	struct Doc_s *pDoc = NULL, *pPrevious;
-	int iResult;
-	
+
 	/* look for document */
 	pDoc = DocSearch(szFileName);
 	if (pDoc == NULL)
@@ -116,12 +116,12 @@ int DocDestroy(char *szFileName)
 		MsgBox("No such document", MSGBOX_OK);
 		return FAILURE;
 	}
-	
+
 	DocClose(pDoc);
-	
+
 	/* remove from the view tree */
 	DocViewDelete(pDoc);
-	
+
 	/* remove from the list */
 	if (pDoc == pDocList)
 	{
@@ -134,12 +134,12 @@ int DocDestroy(char *szFileName)
 			if (pPrevious->pNext == pDoc)
 				break;
 		}
-		
+
 		if (pPrevious == NULL)
 		{
 			MsgBox("Missing document", MSGBOX_OK);
 		}
-		
+
 		pPrevious->pNext = pDoc->pNext;
 	}
 	if (strcmp(szDocCurrent, pDoc->szFileName) == 0)
@@ -162,8 +162,7 @@ int DocDestroy(char *szFileName)
 int DocOpen(char *szFileName, int iAction)
 {
 	struct Action_s *pAction;
-	int iResult, i;
-	char *szName, *szExt, *Params[2];
+	char *Params[2];
 	
 	for (pAction = pActionList; pAction != NULL; pAction = pAction->pNext)
 	{
@@ -175,37 +174,16 @@ int DocOpen(char *szFileName, int iAction)
 	}
 	if (pAction == NULL)
 		return FAILURE;
-	
+
 	if (pAction->fFlags & TASK_INTERNAL)
 		FileEdit(szFileName);
 	else
 	{
-		Params[0] = pAction;
+		Params[0] = (char *) pAction;
 		Params[1] = szFileName;
-		TaskNew(TASK_ACTION, Params);
+		TaskNew(TASK_ACTION, (const void **) Params);
 	}
-#if 0	
-	/* extract name and extension */
-	szName = FileGetName(szFileName);
-	szExt = FileGetExt(szFileName);
-	
-	/* make the selected document current */
-	ProjectTitle();
-	
-	/* open the file to edit */
-	iResult = ToolGetExtensionId(szExt, &i);
-	if (iResult != SUCCESS)
-	{
-		MsgBox("Cannot determine tool for this extension", MSGBOX_OK);
-		return FAILURE;
-	}
-	iResult = ToolOpenFile(i, szFileName, TOOL_DEFAULT);
-	if (iResult != SUCCESS)
-	{
-		MsgBox("Cannot open file", MSGBOX_OK);
-		return FAILURE;
-	}
-#endif
+
 	return SUCCESS;
 }
 
@@ -233,7 +211,7 @@ int DocClose(char *szFileName)
 		else if (iResult == 0)
 			FileSave(szFileName);
 	}
-	
+
 	FileClose(szFileName);
 	
 	return SUCCESS;
@@ -430,7 +408,7 @@ int DocGetProperty(int iProperty, char *szDoc, void *pValue)
 		case DOC_CHANGED:   
 
 			pDoc = DocSearch(szDoc);
-			*((int *) pValue) = (pDoc != NULL) ? pDoc->bChanged : NULL;
+			*((int *) pValue) = (pDoc != NULL) ? pDoc->bChanged : 0;
 			if (pDoc == NULL)
 				return FAILURE;
 			break;
@@ -449,7 +427,7 @@ int DocGetProperty(int iProperty, char *szDoc, void *pValue)
 */
 
 /* look for document */
-static struct Doc_s *DocSearch(char *szFileName)
+static struct Doc_s *DocSearch(const char *szFileName)
 {
 	struct Doc_s *pPtr;
 	
@@ -469,17 +447,73 @@ static struct Doc_s *DocSearch(char *szFileName)
 */
 
 static GtkCTree *pTreeModules, *pTreeFiles;
+extern struct Ext_s *pExtList;
+
+
+
+void DocViewInitialize(void)
+{
+	GtkCTreeNode *pNode;
+	char *pNameNode[2], pName[TEXTLEN];
+	int iId;
+
+	pTreeModules = GTK_CTREE(lookup_widget(pWindowMain, "DocModulesTree"));
+	pTreeFiles = GTK_CTREE(lookup_widget(pWindowMain, "DocFilesTree"));
+
+	/* create and show file groups */
+	for (
+		ToolValueGet(GROUP_LIST, GROUP_NEXT, GROUP_NONE, &iId);
+		iId != GROUP_NONE;
+		ToolValueGet(GROUP_LIST, GROUP_NEXT, iId, &iId)
+		)
+	{
+		ToolValueGet(GROUP_LIST, GROUP_NAME, iId, pName);
+		pNameNode[0] = pName;
+		pNameNode[1] = NULL;
+
+		pNode = gtk_ctree_insert_node(
+			pTreeModules,
+			NULL,
+			NULL,
+			pNameNode,
+			1,
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			FALSE,
+			TRUE
+			);
+
+		ToolValueSet(GROUP_LIST, GROUP_NODE, iId, &pNode);
+	}
+}
+
+
+
+void DocViewRelease(void)
+{
+	GtkCTreeNode *pNode = NULL;
+	int iId;
+
+	for (
+		ToolValueGet(GROUP_LIST, GROUP_NEXT, GROUP_NONE, &iId);
+		iId != GROUP_NONE;
+		ToolValueGet(GROUP_LIST, GROUP_NEXT, iId, &iId)
+		)
+	{
+		ToolValueGet(GROUP_LIST, GROUP_NODE, iId, pNode);
+		gtk_ctree_remove_node(pTreeModules, pNode);
+	}
+}
 
 
 
 static void DocViewAdd(struct Doc_s *pDoc)
 {
-	pTreeModules = GTK_CTREE(lookup_widget(pWindowMain, "DocModulesTree"));
-	pTreeFiles = GTK_CTREE(lookup_widget(pWindowMain, "DocFilesTree"));
-
 	DocViewModulesAdd(pDoc);
 	DocViewFilesAdd(pDoc);
-	
+
 	DocViewSort();
 }
 
@@ -503,24 +537,16 @@ static void DocViewSort(void)
 
 static void DocViewModulesAdd(struct Doc_s *pDoc)
 {
-	struct Doc_s *pParent;
-	char *pNode[2];
+	char *pNameNode[2];
 
-	/* looking for parent node */
-	for (pParent = pDocList; pParent != NULL; pParent = pParent->pNext)
-	{
-		if (pDoc->pParent == pParent)
-			break;
-	}
-
-	/* inserting node */
-	pNode[0] = pDoc->szFileName;
-	pNode[1] = NULL;
+	/* insert node into modules tree */
+	pNameNode[0] = pDoc->szFileName;
+	pNameNode[1] = NULL;
 	pDoc->pNodeModules = gtk_ctree_insert_node(
 		pTreeModules,
-		(pDoc->pParent == pParent && pParent != NULL) ? pParent->pNodeModules : NULL,
 		NULL,
-		pNode,
+		NULL,
+		pNameNode,
 		1,
 		NULL,
 		NULL,
@@ -529,7 +555,6 @@ static void DocViewModulesAdd(struct Doc_s *pDoc)
 		FALSE,
 		TRUE
 		);
-	gtk_ctree_sort_node(pTreeModules, pDoc->pNodeModules);
 }
 
 
@@ -537,41 +562,90 @@ static void DocViewModulesAdd(struct Doc_s *pDoc)
 static void DocViewModulesDelete(struct Doc_s *pDoc)
 {
 	gtk_ctree_remove_node(pTreeModules, pDoc->pNodeModules);
+	pDoc->pNodeModules = NULL;
 }
 
 
 
 static void DocViewModulesSort(void)
 {
-	struct Doc_s *pDoc, *pSibling, *pPtr;
+	struct Doc_s *pDoc, *pSibling, *pPtr, *pParent;
+	struct Ext_s *pExt;
+	GtkCTreeNode *pNodeParent, *pNode;
+	int iResult;
 
 	for (pDoc = pDocList; pDoc != NULL; pDoc = pDoc->pNext)
 	{
-		for (pSibling = NULL, pPtr = pDocList; pPtr != NULL; pPtr = pPtr->pNext)
+		/* looking for parent doc */
+		for (pParent = pDocList; pParent != NULL; pParent = pParent->pNext)
+		{
+			if (pDoc->pParent == pParent)
+				break;
+		}
+
+		/* determine parent node */
+		if (pParent != NULL)
+			pNodeParent = pParent->pNodeModules;
+		else
+		{
+			for (pNodeParent = NULL, pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
+			{
+				if (!strcmp(FileGetExt(pDoc->szFileName), pExt->szExt))
+					break;
+			}
+			if (pExt == NULL)
+				continue;
+
+			iResult = ToolValueGet(GROUP_LIST, GROUP_NODE, pExt->iGroupId, &pNodeParent);
+			if (iResult == FAILURE)
+				pNodeParent = NULL;
+		}
+
+		/* determine sibling node */
+		for (pSibling = NULL, pPtr = pDocList; pPtr != NULL /*&& pParent != NULL*/; pPtr = pPtr->pNext)
 		{
 			if (pPtr == pDoc)
 				continue;
 			if (pPtr->pParent != pDoc->pParent)
 				continue;
+
+			/* check groups for main files */
+			if (pParent == NULL)
+			{
+				for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
+				{
+					if (!strcmp(FileGetExt(pPtr->szFileName), pExt->szExt))
+						break;
+				}
+				if (pExt == NULL)
+					continue;
+
+				iResult = ToolValueGet(GROUP_LIST, GROUP_NODE, pExt->iGroupId, &pNode);
+				if (iResult == FAILURE)
+					pNode = NULL;
+			}
+			if (pNode != pNodeParent)
+				continue;
+
 			if (strcmp(pPtr->szFileName, pDoc->szFileName) < 0)
 				continue;
-			
+
 			if (pSibling != NULL)
 			{
 				if (strcmp(pPtr->szFileName, pSibling->szFileName) < 0)
 					pSibling = pPtr;
 			}
-			
+
 			else
 			{
 				pSibling = pPtr;
 			}
 		}
-		
+
 		gtk_ctree_move(
-			pTreeModules, 
-			pDoc->pNodeModules, 
-			(pDoc->pParent != NULL) ? pDoc->pParent->pNodeModules : NULL, 
+			pTreeModules,
+			pDoc->pNodeModules,
+			pNodeParent,
 			(pSibling != NULL) ? pSibling->pNodeModules : NULL
 			);
 	}
@@ -674,23 +748,33 @@ void Doc_Selection(GtkCTree *pTree, GList *node, gint column, gpointer user_data
 			break;
 	}
 	if (pDoc == NULL)
-		return;
+	{
+		/* unselect current file */
+		strcpy(szDocCurrent, "");
+
+		/* create appropiate action menu */
+		MenuActionRefresh("");
+		MenuFileNewRefresh("");
+	}
+	else
+	{
+		/* select the same document on different views */
+		bBlocked = TRUE;
+		gtk_ctree_select(pTreeModules, pDoc->pNodeModules);
+		gtk_ctree_select(pTreeFiles, pDoc->pNodeFiles);
+		while (g_main_iteration(FALSE));
+		bBlocked = FALSE;
 	
-	/* select the same document on different views */
-	bBlocked = TRUE;
-	gtk_ctree_select(pTreeModules, pDoc->pNodeModules);
-	gtk_ctree_select(pTreeFiles, pDoc->pNodeFiles);
-	while (g_main_iteration(FALSE));
-	bBlocked = FALSE;
+		/* make the selected document current */
+		strcpy(szDocCurrent, pDoc->szFileName);
+
+		/* create appropiate action menu */
+		szExt = FileGetExt(pDoc->szFileName);
+		MenuActionRefresh(szExt);
+		MenuFileNewRefresh(szExt);
+	}
 	
-	/* make the selected document current */
-	strcpy(szDocCurrent, pDoc->szFileName);
 	ProjectTitle();
-	
-	/* create appropiate action menu */
-	szExt = FileGetExt(pDoc->szFileName);
-	MenuActionRefresh(szExt);
-	MenuFileNewRefresh(szExt);
 	
 	iResult = (pDoc != NULL)
 		? SUCCESS
