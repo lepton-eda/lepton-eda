@@ -1,5 +1,16 @@
+2005-02-22  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_log.nw: Fixed to work with GTK 2.2.
+
 2005-02-21  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* noweb/o_misc.nw (o_edit): Adapted for new dialog.
+
+	* include/x_multiattrib.h: New file for the new x_multiattrib.nw.
+	
+	* noweb/x_multiattrib.nw: Modified the dialog to remove deprecated 
+	widgets and enable edition of attributes directly from the list.
+	
 	* noweb/x_pagesel.nw: Added a context-sensitive menu to the list of 
 	pages and a label below for information.
 

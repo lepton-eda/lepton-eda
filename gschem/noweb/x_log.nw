@@ -311,9 +311,11 @@ log_init (Log *log)
   /* create the text view and attach the buffer to it */
   text_view = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
                                         /* GtkTextView */
-                                        "buffer",   text_buffer,
+/* unknown property in GTK 2.2, use gtk_text_view_set_buffer() instead */
+/*                                         "buffer",   text_buffer, */
                                         "editable", FALSE,
                                         NULL));
+  gtk_text_view_set_buffer (GTK_TEXT_VIEW (text_view), text_buffer);
 
   /* add the text view to the scrolled window */
   gtk_container_add (GTK_CONTAINER (scrolled_win), text_view);
