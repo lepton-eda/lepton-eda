@@ -39,4 +39,5 @@
 gboolean on_MainWindow_delete_event(GtkWidget *pWidget, GdkEvent *pEvent, gpointer pUserData)
 {
 	ProjectExit_MenuActivation(GTK_MENU_ITEM(pWidget), pUserData);
+	return 0;
 }
