@@ -276,6 +276,23 @@
      ("¡" . "excl-open.sym")
      ;; open question spanish
      ("¿" . "quest-open.sym")
+     ;; 
+     ("ą" . "a_-ogonek.sym")
+     ("Ą" . "A-ogonek.sym")
+     ("ć" . "c_-acute-accent.sym")
+     ("Ć" . "C-acute-accent.sym")
+     ("ę" . "e_-ogonek.sym")
+     ("Ę" . "E-ogonek.sym")
+     ("ł" . "l_-slash.sym")
+     ("Ł" . "L-slash.sym")
+     ("ń" . "n_-acute-accent.sym")
+     ("Ń" . "N-acute-accent.sym")
+     ("ś" . "s_-acute-accent.sym")
+     ("Ś" . "S-acute-accent.sym")
+     ("ź" . "z_-acute-accent.sym")
+     ("Ź" . "Z-acute-accent.sym")
+     ("ż" . "z_-dot.sym")
+     ("Ż" . "Z-dot.sym")
      )))
 
 ;

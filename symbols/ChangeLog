@@ -1,3 +1,9 @@
+2005-03-12  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* font/:
+	* system-gafrc.in: Added polish font definitions provided by
+	Wojciech Kazubski.
+
 2005-03-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* font/*.sym: Converted special character definitions to UTF-8. 
