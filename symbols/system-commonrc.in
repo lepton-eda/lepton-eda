@@ -20,7 +20,7 @@
 ; NOTE: Some of the below component libraries below are commented out.
 ;       This was done because there are conflicting filenames within these
 ;       libraries.  Please see Jitterbug #9 on this gEDA/gaf limitation.
-;       It will be fixed soon.
+;       It will be fixed soon. AVH 01/04/2004
 ;
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@local")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
@@ -74,7 +74,11 @@
 ; *before* the component libraries specified above.
 ; All environment variables *MUST* be in the form ${variable_name}
 ;
-(component-library-search "${GEDADATA}@PATHSEP@sym")
+; This is commented out since it will add in the above commented out
+; component libraries automatically and this will most certainly cause
+; schematics to break. AVH 01/04/2004
+;
+;(component-library-search "${GEDADATA}@PATHSEP@sym")
 
 ; source-library string
 ; Specify where source entities exist.

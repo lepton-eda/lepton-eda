@@ -36,6 +36,10 @@
 
 	Note this libraries are only commented out temporary, just until
 	the component search limitation is fixed.  (see jitterbug #9)
+	Also commented out the automatic symbol search mechanism.
+
+	* */*.sym: Updated all symbols to creation date 20031231. 
+	20031231 will be the last version where this will be done.
 
 2004-01-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
