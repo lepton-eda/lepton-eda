@@ -706,17 +706,29 @@ o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 {
 	OBJECT *new_obj=NULL;
 	ATTRIB *a_current;
+	int color;
+	int selectable;
 
-	new_obj = o_complex_add(w_current, list_tail, OBJ_COMPLEX, o_current->color,
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
+	
+	if (o_current->sel_func) {
+		selectable = TRUE;	
+	} else {
+		selectable = FALSE;	
+	}
+
+	new_obj = o_complex_add(w_current, list_tail, OBJ_COMPLEX, color,
 			o_current->x, o_current->y, 
 			o_current->angle, o_current->mirror,
 			o_current->complex_clib, o_current->complex_basename, 
-			1, FALSE); 
+			selectable, FALSE); 
 			/* 1 for sel is a hack */
 
-	/*if (!w_current->ADDING_SEL) {*/
-		o_attrib_slot_copy(w_current, o_current, new_obj);
-	/*}*/
+	o_attrib_slot_copy(w_current, o_current, new_obj);
 
 	/* deal with stuff that has changed */
 
@@ -724,7 +736,7 @@ o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 	 * connected to the new list, probably make an attribute list and
 	 * fill it with sid's of the attributes */
 	a_current = o_current->attribs;
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */	
@@ -745,13 +757,26 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 	OBJECT *new_obj=NULL;
 	OBJECT *temp_list;
 	ATTRIB *a_current;
+	int color;
+	int selectable;
+
+	if (o_current->saved_color == -1) {
+		color = o_current->color;
+	} else {
+		color = o_current->saved_color;
+	}
+
+	if (o_current->sel_func) {
+		selectable = TRUE;	
+	} else {
+		selectable = FALSE;	
+	}
 
 	new_obj = o_complex_add_embedded(w_current, list_tail, OBJ_COMPLEX, 
-			o_current->color,
+			color,
 			o_current->x, o_current->y, o_current->angle, 
 			o_current->complex_clib, o_current->complex_basename, 
-			1); 
-	/* 1 for sel is a hack */
+			selectable); 
 	/* deal with stuff that has changed */
 	
 	temp_list = o_list_copy_all(w_current,
@@ -763,9 +788,8 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 	/* here you need to create a list of attributes which need to be 
 	 * connected to the new list, probably make an attribute list and
 	 * fill it with sid's of the attributes */
-#if 1
 	a_current = o_current->attribs;
-	if (a_current && !w_current->ADDING_SEL) {
+	if (a_current) {
 		while ( a_current ) {
 
 			/* head attrib node has prev = NULL */	
@@ -776,7 +800,6 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 			a_current = a_current->next;
 		}
 	}
-#endif
 
 	return(new_obj);
 }
