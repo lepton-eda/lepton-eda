@@ -1,3 +1,18 @@
+2002-06-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* TODO: A little bit of cleanup, organizing things.  I will move
+	most of the critical items into jitterbug
+
+	* noweb/x_fileselect.nw: Fixed a bug which could have caused a crash.
+ 	Turn on the preview button with nothing (or just a directory)
+	selected, and gschem tried to open that garbage.
+	
+	* noweb/x_dialog.nw: Fixed add/edit attribute dialog box to not add
+	improper attributes
+
+	* noweb/x_dialog.nw, i_callbacks.nw: Added a bunch i_update_toolbar 
+	calls
+
 2002-06-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_fileselect.nw: A bit more work on getting the WinME problem

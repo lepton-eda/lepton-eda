@@ -591,8 +591,9 @@ multi_attrib_edit_delete (GtkWidget *w, TOPLEVEL *w_current)
 void
 multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->mawindow);
   gtk_widget_destroy(w_current->mawindow);
   w_current->mawindow = NULL;
@@ -1007,8 +1008,9 @@ text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 #if 0
   gtk_grab_remove(w_current->tiwindow);
 #endif
@@ -1158,16 +1160,25 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   val_entry = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"val_entry");
   lab_entry = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"lab_entry");
+  value=gtk_entry_get_text(val_entry);
+  label=gtk_entry_get_text(lab_entry);
+
+  if (value[0] == '\0' || label[0] == '\0') 
+  {
+    gtk_grab_remove(w_current->aewindow);
+    gtk_widget_destroy(w_current->aewindow);
+    w_current->aewindow = NULL;
+    return;
+  }
+
   visbutton = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"visbutton");
   showvalbutton = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"showvalbutton");
   showlabbutton = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"showlabbutton");
   showboth = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"showboth");
-
-  value=gtk_entry_get_text(val_entry);
-  label=gtk_entry_get_text(lab_entry);
 
   newtext = u_basic_strdup_multiple(label,"=",value,NULL);
   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton)))
@@ -1230,8 +1241,9 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 attrib_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
   w_current->aewindow = NULL;
@@ -1261,8 +1273,9 @@ attrib_edit_dialog_delete(GtkWidget *w, TOPLEVEL *w_current)
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
 
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->aewindow);
   gtk_widget_destroy(w_current->aewindow);
   w_current->aewindow = NULL;
@@ -1716,6 +1729,7 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->tewindow);
   gtk_widget_destroy(w_current->tewindow);
@@ -1735,8 +1749,9 @@ text_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tewindow);
   gtk_widget_destroy(w_current->tewindow);
   w_current->tewindow = NULL;
@@ -2097,6 +2112,7 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   w_current->page_current->CHANGED = 1;
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->ltwindow);
   gtk_widget_destroy(w_current->ltwindow);
@@ -2116,8 +2132,9 @@ line_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 line_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->ltwindow);
   gtk_widget_destroy(w_current->ltwindow);
   w_current->ltwindow = NULL;
@@ -2492,6 +2509,7 @@ fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
   w_current->page_current->CHANGED = 1;
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->ftwindow);
   gtk_widget_destroy(w_current->ftwindow);
@@ -2511,8 +2529,9 @@ fill_type_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 fill_type_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->ftwindow);
   gtk_widget_destroy(w_current->ftwindow);
   w_current->ftwindow = NULL;
@@ -3132,13 +3151,14 @@ translate_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 translate_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-	i_update_status(w_current, "Select Mode");
-	w_current->event_state = SELECT;
+  w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 #if 0
 	gtk_grab_remove(w_current->trwindow);
 #endif
-	gtk_widget_destroy(w_current->trwindow);
-	w_current->trwindow=NULL;
+  gtk_widget_destroy(w_current->trwindow);
+  w_current->trwindow=NULL;
 }
 
 
@@ -3297,11 +3317,12 @@ text_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 text_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-	i_update_status(w_current, "Select Mode");
-	w_current->event_state = SELECT;
-	gtk_grab_remove(w_current->tswindow);
-	gtk_widget_destroy(w_current->tswindow);
-	w_current->tswindow = NULL;
+  w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
+  gtk_grab_remove(w_current->tswindow);
+  gtk_widget_destroy(w_current->tswindow);
+  w_current->tswindow = NULL;
 }
 
 
@@ -3462,8 +3483,9 @@ snap_size_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 snap_size_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->tswindow);
   gtk_widget_destroy(w_current->tswindow);
   w_current->tswindow = NULL;
@@ -3618,6 +3640,7 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 
   w_current->event_state = SELECT;
   i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
 
   gtk_grab_remove(w_current->sewindow);
   gtk_widget_destroy(w_current->sewindow);
@@ -3637,8 +3660,9 @@ slot_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 void
 slot_edit_dialog_cancel(GtkWidget *w, TOPLEVEL *w_current)
 {
-  i_update_status(w_current, "Select Mode");
   w_current->event_state = SELECT;
+  i_update_status(w_current, "Select Mode");
+  i_update_toolbar(w_current);
   gtk_grab_remove(w_current->sewindow);
   gtk_widget_destroy(w_current->sewindow);
   w_current->sewindow = NULL;

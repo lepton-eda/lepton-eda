@@ -7,8 +7,6 @@ Code cleanups (no particular order):
 	
 	coding standards
 
-DONE	Remove gd/gd.h from every file... in gschem and libgeda
-
 	Go through and format the code.  it's really gross right now
 
 	Re name end_angle in o_arc* to be sweep_angle
@@ -16,10 +14,6 @@ DONE	Remove gd/gd.h from every file... in gschem and libgeda
 	Go through and make sure all mallocs with strings are sane
 
 	It's becoming critical to add comments...  (very critical)
-	
-DONE	Created o_net_translate_world (been using line function)
-
-DONE	Replace all struct st_object with a typedef
 
 	Clean up COPY vs ENDCOPY (MOVE as well) in x_event 
 
@@ -29,11 +23,6 @@ DONE	Replace all struct st_object with a typedef
 	Go through and add null checks and print statements
 
 	o_connect_midpoint etc... fix/get rid of the offset2 stuff
-	
-FIRST	Figure out gtk_signal_connect and friends: proper last param.
-SHOT DONE
-
-DONE	The p_connect stuff is unused and needs to be removed 
 
 	IMPORTANT go through and fix object_tail and return_tail on all places
 
@@ -41,12 +30,9 @@ DONE	The p_connect stuff is unused and needs to be removed
 	(they have a head, which has a null "object" pointer), which causes
 	some grief, see note in o_attrib.c about the grief
 
-DONE	Get accurate names for o_list... routines.  like o_list_delete_all
-	which doesn't delete all (it doesn't delete the head)
-
 	Total chaos between selected/object_head and replicated coded
 
-DONE	Inconsistant naming of o_current, object, current etc...
+	Agg! get rid of all window_current's and global_window_current
 
 	Go through and clean up switch, case, break tabbing.
 	Related to above, way too many switch/case statements... 
@@ -67,7 +53,23 @@ DONE	Inconsistant naming of o_current, object, current etc...
 	get some consistancy with *_world world_* etc.. *_world_*
 	(in complex really)
 
-	Make zoom in, zoom out, pan a single function.  Now this is doable
+DONE	Make zoom in, zoom out, pan a single function.  Now this is doable
+
+DONE	Remove gd/gd.h from every file... in gschem and libgeda
+
+DONE	Inconsistant naming of o_current, object, current etc...
+
+DONE	Get accurate names for o_list... routines.  like o_list_delete_all
+	which doesn't delete all (it doesn't delete the head)
+
+FIRST	Figure out gtk_signal_connect and friends: proper last param.
+SHOT DONE
+
+DONE	The p_connect stuff is unused and needs to be removed 
+	
+DONE	Created o_net_translate_world (been using line function)
+
+DONE	Replace all struct st_object with a typedef
 
 ----------------------
 
@@ -76,44 +78,16 @@ DONE	Inconsistant naming of o_current, object, current etc...
 Feature additions (no particular order):
 ----------------------
 
-DONE	Add a new dialog box for saving and managing pages.  Use a different
-	mechanism for calling the saveas dialog box. 
-
-DONE	Panning: the working area follows the mouse.
-
 	Seperate translate in the X and Y directions (in addition to the 
 	current coupled X and Y translate)
-
-DONE	Code to have all attributes visible
-
-DONE	Make sure snap spacing is set to 100 when doing symbol translates
-	(warn user in log window)
 
 	Simplify i_update_* so that static strings are being re-set 
 	constantly
 
-	Fix the stupidity of when net consolidation is on, you unselect 
-	everything.  This was temporary till you rewrite 
-	o_net_consoliate_lowlevel (in libgeda)
-
-	Agg! get rid of all window_current's and global_window_current
 
 	Added rc keyword for pin/net thickness (the value) and for visual
 	cue size
 	
-DONE	Fix the color scheme and make it flexable.
-
-OKAY	Figure out if you want the net draw/add action to end when you draw
-	a zero length net (configureable?) 
-
-DONE	Check and see what we are doing with invisible attibutes, if we are
-	rendering them or not (to speed things up), fixed by NOT creating
-	the attribute (or text)
-
-DONE	Check for incorrect angles on text... warn user
-
-DONE	Add dashed lines etc...
-
 	there was an analog to the 'array' command  where you select
 	a group of stuff and hit array, enter the number of rows and
 	columns, and the relative spacing between them, and the copies
@@ -127,30 +101,11 @@ DONE	Add dashed lines etc...
 	text geometry stored relative to its "mother object" so that
 	the text moves when the "mother" does.
 
-DONE	Add the ability to specify $HOME in an rc file for a path
-	( do you want to do ~ as well? )
-
-DONE	Do sanity checks on all drawing input
-
-DONE	Better handling of dot/square size routine drawing based on zoom 
-	factor
-
-DONE	Don't allow zero length objects in general
-
 	Go through and make sure everything has a default (every release)
-
-	Added the ability to rotate embedded components
-
-DONE	When you rotate a component, associated attributes get de-assosciated
-	write code to fix this
 
 	Added LogFilename keyword 
 
-DONE	Search for schematic in memory and don't load it from disk if it is.
-
 	Document all the features of the dialog boxes (returns etc...)
-
-DONE	Alignment of text objects
 
 	Document filename naming restrictions: 
 		- Symbols are named filename.sym
@@ -162,17 +117,9 @@ DONE	Alignment of text objects
 	the program should run a image program, use mime.types and mailcap
 	for this
 
-	Add config option for geometry of the window. (or command line option)
-
 	Change directory option? 
 
 	Open symbol pops up a new window, configurable through rc file
-
-DONE	Move schematic filenames toward the _# convention.  Where the #
-	(is a number) signifies the sheet number it's on.  Will make moving
-	between sheets easier.
-
-DONE	A toggle invisiblity ALL objects
 
 	Configurability of mouse button order (left vs right handed)
 
@@ -182,21 +129,7 @@ DONE	A toggle invisiblity ALL objects
 	Configurability as to what mode a cancel (with right mouse button)
 	does.
 
-DONE	Better toggle buttons for visibility etc (sub instead: GtkSpinButton)
-
-DONE	Move/Copy actions start right away after hot key press
-
-DONE	Go back and look at 4 nets coming together problem (not showing dot)
-
-DONE	Added text dialog box which behaves like attribute add.
-
 	Breaking of nets when you connect in the middle.
-
-DONE	Automatic saving
-
-DONE	mouse coordinates
-
-DONE	Document the ortho/non ortho ability of nets 
 
 	Two "indicators" in some way (suggest to the right of the pulldowns)
 	that indicates if you're in 'toggle snap' or not, and if you're in
@@ -208,23 +141,10 @@ DONE	Document the ortho/non ortho ability of nets
 	user the possibility to rotate the component around it's origin
 	or a common point? Rotate more selected objects the way it is
 	implemented now.
-
-                                                                 
-NAH	Consider using an aspect frame to control the aspectratio of the 
-	drawing area (enforce aspect ratio then indirectly)
 	
 	Complex within a Complex?
 	Probably not yet at least not yet. (might work mostly now, but not
 	completely)  This is not the same thing as hierarchical design.
-	
-DONE	Attribute dialog box.  which lets you select the standard attributes
-
-DONE	Font system must be replaced by a more flexable system.  Ie arbitrary
-	text sizes allowed and the choosing of the font should be based on
-	zoom_scale.
-
-DONE	Dialog box for printing...
-(first cut)
 	
 	A set of compile or runtime flags to control "fluff" (ie make things
 	go as fast as possible) 
@@ -234,40 +154,121 @@ DONE	Dialog box for printing...
 	Not sure I like that selectable vs unselectable flag in complex's
 	Fix with locking layers
 
+	Fix o_edit to handle multi edits.  Should be just a code clean:
+		get rid of all direct access to new_sel_head and friends 	
+		pass in structure that is being edited...
+		Move object/structure code out of x_dialog.c 
+
+	PIN/NET thickness configurability
+
+	Add code so that when you switch between actionfeedback modes
+	and your inside an action you get instant feedback 
+
+	Not a well behaved X program: finish wm hints, icon, X commandline args
+	etc... 
+
+DONE	Add config option for geometry of the window. (or command line option)
+
+
+DONE	Fix the stupidity of when net consolidation is on, you unselect 
+	everything.  This was temporary till you rewrite 
+	o_net_consoliate_lowlevel (in libgeda)
+
+DONE	Code to have all attributes visible
+
+DONE	Make sure snap spacing is set to 100 when doing symbol translates
+	(warn user in log window)
+
+DONE	Added the ability to rotate embedded components
+
+DONE	Fix the color scheme and make it flexable.
+
+OKAY	Figure out if you want the net draw/add action to end when you draw
+	a zero length net (configureable?) 
+
+DONE	Check and see what we are doing with invisible attibutes, if we are
+	rendering them or not (to speed things up), fixed by NOT creating
+	the attribute (or text)
+
+DONE	Check for incorrect angles on text... warn user
+
+DONE	Add dashed lines etc...
+
+DONE	When you rotate a component, associated attributes get de-assosciated
+	write code to fix this
+
+DONE	Search for schematic in memory and don't load it from disk if it is.
+
+DONE	Add the ability to specify $HOME in an rc file for a path
+	( do you want to do ~ as well? )
+
+DONE	Do sanity checks on all drawing input
+
+DONE	Better handling of dot/square size routine drawing based on zoom 
+	factor
+
+DONE	Don't allow zero length objects in general
+
+DONE	Alignment of text objects
+
+DONE	Move schematic filenames toward the _# convention.  Where the #
+	(is a number) signifies the sheet number it's on.  Will make moving
+	between sheets easier.
+
+DONE	A toggle invisiblity ALL objects
+
+DONE	Automatic saving
+
+DONE	mouse coordinates
+
+DONE	Document the ortho/non ortho ability of nets 
+
+NAH	Consider using an aspect frame to control the aspectratio of the 
+	drawing area (enforce aspect ratio then indirectly)
+
+DONE	Dialog box for printing...
+(first cut)
+
 DONE	Default behavior of caps vs case sensitive labels/text? 
 	make this configurable 
 
 GONE	fix dialog box to be able to handle NEW discards... see NEW define
 	in x_filesel.c
 
-	Fix o_edit to handle multi edits.  Should be just a code clean:
-		get rid of all direct access to new_sel_head and friends 	
-		pass in structure that is being edited...
-		Move object/structure code out of x_dialog.c 
-
 DONE	Editing of objects:
 		TEXT - color size string
 		LINE/CIRCLE/ARC/BOX color endpoints?
 		NET/COMP ???? 
 
-	PIN/NET thickness configurability
-
 DONE	configuration ability for ortho pins and nets
 	This wasn't done, but you can draw non-orth lines and nets. (non ortho
 	pins might be added later)
-
-	Add code so that when you switch between actionfeedback modes
-	and your inside an action you get instant feedback 
 
 OKAY	Pins need their own conn_recalc routine
 
 DONE	Boxes (box and selection) that go in both directions... left->right 
 	right->left 
 
-	Not a well behaved X program: finish wm hints, icon, X commandline args
-	etc... 
+DONE	Attribute dialog box.  which lets you select the standard attributes
+
+DONE	Font system must be replaced by a more flexable system.  Ie arbitrary
+	text sizes allowed and the choosing of the font should be based on
+	zoom_scale.
 
 DONE	Add lock down component code and interface hook.
+
+DONE	Add a new dialog box for saving and managing pages.  Use a different
+	mechanism for calling the saveas dialog box. 
+
+DONE	Panning: the working area follows the mouse.
+
+DONE	Move/Copy actions start right away after hot key press
+
+DONE	Go back and look at 4 nets coming together problem (not showing dot)
+
+DONE	Added text dialog box which behaves like attribute add.
+
+DONE	Better toggle buttons for visibility etc (sub instead: GtkSpinButton)
 
 MOSTLY	Object clipping...
 DONE
@@ -297,26 +298,28 @@ easy:
 1	buses
 1	macro/extensiable lang
 1	Make symbol (odd bug with hitting S twice then it works ? )
-1	push/pop into a symbol
-2	stretch/edit of nets
 2	cleanup printfs
-2	hierarchical design
 3	object clipping out of active window
+3	dashed lines (slightly hard, but time consuming to change code value?)
 3	sloting (as in pin numbers in multpacks) of components
-3	newer net system
 3	console
-3	rotate of complex
-3	mirror of primatives
-3	mirror of complex
 3	Standard place for symbols/symbol hierarchy
+4	stretch/edit of nets
+4	newer net system
 4	color selection (better color handling)
-4	logging mechanism
-4	attributes 
 4	boundingbox vs outline
-4	arcs
+4	hierarchical design
 4	pins (still need to check conn funcs)
-4	rotate of primatives
 4	interface cleanup
+4	multibuffers (make sure all routines don't hardcode new_sel_head)
+5	rotate of complex
+5	logging mechanism
+5	push/pop into a symbol
+5	mirror of primatives
+5	mirror of complex
+5	arcs
+5	rotate of primatives
+5	attributes 
 5 	zoom box
 5	text (vector font)
 5	finer grid (selectable snappage)
@@ -342,10 +345,8 @@ medium:
 
 harder:
 	transparent zooms and pans
-	multibuffers (make sure all routines don't hardcode new_sel_head)
 	client lib to do above and protocol
 	cut and paste
-	dashed lines (slightly hard, but time consuming to change code value?)
 
 questionable:
 	active attributes

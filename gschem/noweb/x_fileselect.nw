@@ -749,8 +749,10 @@ x_fileselect_preview_checkbox(GtkWidget *widget, FILEDIALOG *f_current)
   } else {
     f_current->preview_control = TRUE;
 
-    x_preview_update(f_current->preview, f_current->directory, 
+    if (f_current->directory && f_current->filename) {
+       x_preview_update(f_current->preview, f_current->directory, 
 	             f_current->filename);
+    }
   }
   return(0);
 }
@@ -1017,7 +1019,7 @@ x_fileselect_file_button (GtkWidget *widget, gint row, gint column,
           x_fileselect_update_dirfile(
                                       f_current, temp);
 
-          if (f_current->preview_control) { 
+          if (f_current->preview_control && f_current->directory && temp) { 
             x_preview_update(f_current->preview, f_current->directory, temp);
           }
           break;
@@ -1652,7 +1654,7 @@ x_fileselect_comp_select (GtkWidget *widget, gint row, gint column,
   if (comp) {	
     strcpy(w_current->current_basename, comp);
 
-    if (f_current->preview_control) { 
+    if (f_current->preview_control && w_current->current_clib && comp) { 
       x_preview_update(f_current->preview, 
                        w_current->current_clib,
                        comp);
