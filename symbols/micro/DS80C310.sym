@@ -1,6 +1,6 @@
-v 20001006
+v 20020209
 B 300 300 1500 6600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-T 2000 6775 5 10 0 0 0 0
+T 300 7175 5 10 0 0 0 0
 device=DS80C310
 T 350 6950 9 10 1 0 0 0
 DS80C310
@@ -273,3 +273,5 @@ pin37=16
 }
 T 1800 7000 8 10 1 1 0 0
 uref=U?
+T 300 7375 5 10 1 1 0 0
+comment=dont_use this broken symbol, pin A12 is missing, check your design
