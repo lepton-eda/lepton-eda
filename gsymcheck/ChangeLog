@@ -1,3 +1,39 @@
+2002-07-25 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* tests/*.sym: Bunch of additional symbols to test various new
+	problems and updates to existing test files
+
+	* src/s_check.c: Finished conversion to use new *_messages lists
+
+	* src/s_symcheck.c: Finished conversion to use new *_messages
+	lists
+
+	* src/parsecmd.c: Improved the verbose flag to be cumulative
+
+	* src/s_check.c: Added the following tests:
+	  checks for missing attributes
+	     pinlabel
+	     pintype
+	     footprint
+	     refdes
+	  checks for multiple attributes
+	     pinlabel
+	     pintype
+	     footprint
+	     refdes
+	  checks for obsolete or forbidden attributes
+	     label
+	     uref
+	     name
+	     type
+	  zero pinseqs or pinnumbers are not allowed
+
+	* include/struct.h: A few changes to track above tests
+
+	* src/s_check.c: Improved some of the messages
+
+	* src/s_check.c: Fixed quiet flag (-q) to be really quiet
+
 2002-07-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added *_messages list items

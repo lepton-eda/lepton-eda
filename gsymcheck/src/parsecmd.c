@@ -43,9 +43,9 @@ usage(char *cmd)
 	printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
 	printf("  -h  		Print usage\n");
 	printf("  -q  		Quiet mode\n");
-	printf("  -v  		Verbose mode on\n");
+	printf("  -v  		Verbose mode (cumulative: errors, warnings, info)\n");
 	printf("                Use this to get the actual symbol error messages\n");
-	printf("\n                Check all specified symbols (filename1 ... filenameN)\n");
+	printf("\nfilename1 ... filenameN are the symbols to check\n");
 	printf("\n");
 	exit(0);
 }
@@ -59,7 +59,7 @@ parse_commandline(int argc, char *argv[])
     switch (ch) {
 
       case 'v':
-        verbose_mode=TRUE;
+        verbose_mode++;
         break;
 
       case 'q':
@@ -81,10 +81,6 @@ parse_commandline(int argc, char *argv[])
         usage(argv[0]);
         break;
     }
-  }
-
-  if (quiet_mode) {
-    verbose_mode = FALSE;
   }
 
   return(optind);

@@ -5,14 +5,10 @@ typedef struct st_symcheck SYMCHECK;
 /* gsymcheck structure */
 struct st_symcheck {
 
-  int found_oldpin_attrib;
-  int found_oldslot_attrib;
+  /* unused for now */
   int unattached_attribs;
-  int found_net;
-  int found_bus;
-  int found_connection;
-  int numpins;
 
+  /* info / warning / error messages */
   GList* info_messages;
   GList* warning_messages;
   GList* error_messages;
@@ -37,8 +33,36 @@ struct st_symcheck {
   int missing_numslots_attrib;
   int slotting_errors;
 
+  /* old pin#=# and slot#=# checks */
+  int found_oldpin_attrib;
+  int found_oldslot_attrib;
+
+  /* net, bus, connection checks */
+  int found_net;
+  int found_bus;
+  int found_connection;
+
+  /* obsolete attribute checks */
+  int found_label;
+  int found_uref;
+
+  /* forbidden attributes */
+  int found_name;
+  int found_type;
+
+  /* misc attributes */
+  int found_footprint;
+  int found_refdes;
+  
+  /* number of pins */
+  int numpins;
+  
   /* total error counter */
   int error_count;
+
+  /* total warning counter */
+  int warning_count;
+  
 };
 
 

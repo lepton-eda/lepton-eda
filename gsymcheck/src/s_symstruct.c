@@ -63,9 +63,16 @@ s_symstruct_init(void)
   s_symcheck->found_net=FALSE;
   s_symcheck->found_bus=FALSE;
   s_symcheck->found_connection=FALSE;
+  s_symcheck->found_label=FALSE;
+  s_symcheck->found_uref=FALSE;
+  s_symcheck->found_name=FALSE;
+  s_symcheck->found_type=FALSE;
+  s_symcheck->found_footprint=FALSE;
+  s_symcheck->found_refdes=FALSE;
 
   s_symcheck->numpins=0;
   s_symcheck->error_count=0;
+  s_symcheck->warning_count=0;
 
   return(s_symcheck);
 }
@@ -75,76 +82,50 @@ s_symstruct_print(SYMCHECK *s_current)
 {
   GList *list;
   char *msg;
-  
-  list = s_current->info_messages;
-  while (list != NULL) {
-     msg = (char *) list->data;     
-   /* printf("found info: %s\n", msg); */
-     if (msg && verbose_mode) { 
-       s_log_message("Info: %s", msg);
-     }
 
-     if (msg)
-       free(msg);
+  if (verbose_mode > 2) {
+    list = s_current->info_messages;
+    while (list != NULL) {
+      msg = (char *) list->data;     
+      /* printf("found info: %s\n", msg); */
+      if (msg) { 
+        s_log_message("Info: %s", msg);
+        free(msg);
+      }
 
-     list = list->next;
-  } 
+      list = list->next;
+    }
+  }
 
-  list = s_current->warning_messages;
-  while (list != NULL) {
-     msg = (char *) list->data;     
+  if (verbose_mode > 1) {
+    list = s_current->warning_messages;
+    while (list != NULL) {
+      msg = (char *) list->data;     
      
-   /* printf("found warning: %s\n", msg); */
-     if (msg && verbose_mode) { 
-       s_log_message("Warning: %s", msg);
-     }
+      /* printf("found warning: %s\n", msg); */
+      if (msg) { 
+        s_log_message("Warning: %s", msg);
+        free(msg);
+      }
 
-     if (msg)
-       free(msg);
+      list = list->next;
+    }
+  }
 
-     list = list->next;
-  } 
-
-  list = s_current->error_messages;
-  while (list != NULL) {
-     msg = (char *) list->data;     
+  if (verbose_mode > 0) {
+    list = s_current->error_messages;
+    while (list != NULL) {
+      msg = (char *) list->data;     
      
-   /* printf("found error: %s\n", msg); */
-     if (msg && verbose_mode) { 
-       s_log_message("ERROR: %s", msg);
-     }
+      /* printf("found error: %s\n", msg); */
+      if (msg && verbose_mode) { 
+        s_log_message("ERROR: %s", msg);
+        free(msg);
+      }
 
-     if (msg)
-       free(msg);
-
-     list = list->next;
-  } 
-   
-#if 0	
-  if (s_current->slotting_errors) {
-    if (verbose_mode) s_log_message("- ERROR: number of slotting errors: %d\n", s_current->slotting_errors);
+      list = list->next;
+    }
   }
-
-  if (s_current->found_net) {
-    if (verbose_mode) s_log_message("- ERROR: number of nets found inside: %d\n", s_current->found_net);
-  }
-
-  if (s_current->found_bus) {
-    if (verbose_mode) s_log_message("- ERROR: number of buses found inside: %d\n", s_current->found_bus);
-  }
-
-  if (s_current->found_connection) {
-    if (verbose_mode) s_log_message("- ERROR: number of connections found inside: %d\n", s_current->found_connection);
-  }
-  
-  if (s_current->found_oldpin_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: found old pin#=# attribute(s)\n");
-  }
-
-  if (s_current->found_oldslot_attrib) {
-    if (verbose_mode) s_log_message("- ERROR: found old slot#=# attribute(s)\n");
-  }
-#endif
 }
 
 void

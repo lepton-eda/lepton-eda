@@ -153,7 +153,7 @@ main_prog(int argc, char *argv[])
 #endif
   logging_dest=STDOUT_TTY;
   
-  if (verbose_mode) s_log_message("\n");
+  if (!quiet_mode) s_log_message("\n");
 
   errors = s_check_all(pr_current);
 
