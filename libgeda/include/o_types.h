@@ -29,11 +29,14 @@
 #define OBJ_NET         'N'
 #define OBJ_BUS         'U'
 #define OBJ_COMPLEX     'C'
-#define OBJ_TEXT       'T'
+#define OBJ_TEXT        'T'
 #define OBJ_PIN         'P'
 #define OBJ_ARC         'A' 
 #define OBJ_ROUTE       'R' 
 #define OBJ_THRU_HOLE   'H' 
+#define OBJ_PLACEHOLDER 'X'  /* added 1.19.2005 by SDB to prevent
+			      * deletion of unfound symbol files */
+
 
 #define STARTATTACH_ATTR	'{'	
 #define ENDATTACH_ATTR		'}'	

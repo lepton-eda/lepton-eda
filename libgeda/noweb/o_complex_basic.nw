@@ -767,8 +767,19 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
 
   clib = (char *) s_clib_search(basename); 
   if (clib == NULL) {
-    /* do something here? hack */
+    /* Put placeholder into object list.  Changed by SDB on
+     * 1.19.2005 to fix problem that symbols were silently
+     * deleted by gattrib when RC files were messed up.  */
     s_log_message("Complex [%s] not in library\n", basename);
+    s_log_message("Putting placeholder into object list.\n");
+
+    /* put placeholder into obj list */
+    object_list = o_complex_add(w_current, object_list, OBJ_PLACEHOLDER, 
+                                0, 
+                                0, 0, 
+                                0, 0,
+                                "", "", FALSE, FALSE);
+
   } else {
     filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
 

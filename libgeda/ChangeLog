@@ -1,3 +1,16 @@
+2005-01-19 Stuart Brorson <sdb@cloud9.net>	
+	* noweb/o_complex_basic.nw, include/o_types.h: Created 
+	OBJ_PLACEHOLDER to signal a complex found with no
+	symbol file.  Changed o_complex_read to put this
+	placeholder into object_list instead of nuking complex.
+	This is to mitigate problem where components were being
+	removed if sym files weren't found.
+
+2005-01-15 Stuart Brorson <sdb@cloud9.net>	
+	* noweb/s_log.nw, prototype.h: changed s_log_init 
+	to take const char as arg since it's always called 
+	with a quoted string.
+
 2005-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/s_project.nw (s_project_setup_rest): Made it handle
