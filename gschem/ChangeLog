@@ -9,6 +9,19 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Removed all // comments
+
+	* src/gschem.c: Changed CYGWIN32 warning message
+
+	* src/o_arc.c: Patrick checked in a rotate fix for arcs 
+
+	* src/o_misc.c: Added *_erase_grips calls to o_rotate_90 and o_mirror
+
+	* src/o_slot.c: Fixed a core dumper.  Basically tried to use text
+	  paramters when instead wanted to use the complex structure
+
 2000-10-05  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/x_dialog.c: Also remove the log window and the page manger
@@ -39,7 +52,10 @@ into the cvs repository.
 
 	* src/*.c: Fixed all -Wall warnings
 
-	* src/o_complex.c: Added o_complex_place_rotate
+	* src/o_complex.c: Added o_complex_place_rotate (allows you to rotate
+  	  a component before you place it)
+
+	* src/x_event.c: Added code to call o_complex_place_rotate
 
 	* src/x_dialog.c: Removed some code (o_undo_savestate) which didn't 
  	  belong

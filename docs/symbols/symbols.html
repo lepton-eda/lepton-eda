@@ -113,10 +113,10 @@ using gschem just like drawing a schematic sheet.  <p>
 	     ever makes the most sense) the pin which they are attached to.
 <p>
 
-	<LI> Polarity bubbles should be cyan </LI>
+	<LI> Polarity bubbles should be cyan</LI>
 <p>
 	<LI> Do not draw power and ground pins.  That information will be
-             conveyed using attributes </LI>	     
+             conveyed using attributes (see netattrib.txt)</LI>	     
 <p>
 
 	<LI> Expanding on above, symbols are symbolic, they do not represent
@@ -230,17 +230,20 @@ using gschem just like drawing a schematic sheet.  <p>
 		</LI>
 
 		<LI> The label= attribute should not be attached anywhere in
-		     the symbol.  It is used for net name labels only!</LI>
+		     the symbol.  It is used for net name labels only!  This 
+		     statement contradicts the above pin label= attribute.
+		     For now, ignore this statement.  </LI>
 
 		<LI> The name= attribute should not be attached anywhere in
 		     the symbol.  It's currently unused.</LI>
 
-		<LI> The uref= attribute should not be attached anywhere in
-		     the symbol.  It belongs on the outside of the symbol when
-		     it is placed on a schematic sheet. </LI>
+		<LI> You can put a uref= attribute inside a symbol.  Make only
+		     the value visible and it will be promoted (attached
+		     to the outside of the symbol (so it can be edited)
+		     when the symbol is placed in a schematic.
 
-		<LI> Attributes which deal with power and ground have not
-		     been decided upon yet.  </LI>
+		<LI> Please look at the netattrib.txt doc file for info on 
+		     how to assign power/ground information </LI>
 
 	</UL>
 </OL>
@@ -259,18 +262,16 @@ using gschem just like drawing a schematic sheet.  <p>
 	   Use the symbol translate command instead (or move the object
 	   with grid snap off).  </LI>
 <p>
-	<LI> If you need a finer grid then use Options/Snap Grid
-	Spacing...
-	 to set a finer grid snap spacing.  Just remember to set this
-	 back to 100 once you are ready to translate the symbol to the
-	 origin </LI>
+	<LI> If you need a finer grid then use Options/Snap Grid Spacing...
+	    to set a finer grid snap spacing.  Just remember to set this
+	    back to 100 once you are ready to translate the symbol to the
+	    origin </LI>
 <p>
 
-	<LI> If you want to translate a symbol from the origin to
-	elsewhere,
-	  then use the "Symbol translate" command and enter a non zero
-	  number.  Make sure this number is a multiple of 100 (ie 1000,
-	  or 1100). </LI>
+	<LI> If you want to translate a symbol from the origin to elsewhere,
+	     then use the "Symbol translate" command and enter a non zero
+	     number.  Make sure this number is a multiple of 100 (ie 1000,
+	     or 1100). </LI>
 <p>
 
 	<LI> Pins *MUST* be snapped on the 100 spaced grid (at least
@@ -283,13 +284,9 @@ using gschem just like drawing a schematic sheet.  <p>
 <p>
 
 	<LI> Don't include nets inside symbols.  That isn't implemented and
-          doesn't make much sense anyway. </LI>
+             doesn't make much sense anyway. </LI>
 <p>
 
-	<LI> Colors and friends are not yet changeable with gschem, so you have
-          to change them by hand in the file. (see include/colors.h for the
-          number equivs) </LI>
-                         
 </OL>
 </OL>
 

@@ -67,8 +67,8 @@ if (!quiet_mode) {
 }
 
 #ifdef __CYGWIN32__
-        fprintf(stderr, "THIS IS THE WinNT version, It is only a DEMO!\n");
-        fprintf(stderr, "Use at your own risk!\n");
+        fprintf(stderr, "This is the CYGWIN32 version, It is an unsupported port.\n");
+	fprintf(stderr, "USE AT YOUR OWN RISK!\n");
 #endif  
 
 	/* register guile (scheme) functions */

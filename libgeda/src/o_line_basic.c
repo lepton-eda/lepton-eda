@@ -624,7 +624,7 @@ o_line_print_dashed(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		xb = xa + dx1;
 		yb = ya + dy1;
 
-		//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -645,7 +645,7 @@ o_line_print_dashed(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		yb = y2;
 	}
 
-	//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+	/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 
 	fprintf(fp, "newpath\n");
 	fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
@@ -692,7 +692,7 @@ o_line_print_center(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		d = d + length;
 		xb = xa + dx1;
 		yb = ya + dy1;
-		//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -722,7 +722,7 @@ o_line_print_center(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		d = d + length;
 		xb = xa + dx1;
 		yb = ya + dy1;
-		//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -752,7 +752,7 @@ o_line_print_center(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			yb = y2;
 		}
 		
-		//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -800,7 +800,7 @@ o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		d = d + length;
 		xb = xa + dx1;
 		yb = ya + dy1;
-		//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -847,7 +847,7 @@ o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 		d = d + length;
 		xb = xa + dx1;
 		yb = ya + dy1;
-		//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+		/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 		fprintf(fp, "newpath\n");
 		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -888,7 +888,7 @@ o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 			d = d + length;
 			xb = xa + dx1;
 			yb = ya + dy1;
-			//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+			/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 			fprintf(fp, "newpath\n");
 			fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 			fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
@@ -917,7 +917,7 @@ o_line_print_phantom(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
 				yb = y2;
 			}
 		
-			//gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);
+			/*gdk_draw_line(w, gc, (int) xa, (int) ya, (int) xb, (int) yb);*/
 			fprintf(fp, "newpath\n");
 			fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
 			fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);

@@ -6,7 +6,6 @@
 <font face="arial,helvetica"> 
 
 
-This document is ALPHA quality and is under construction.
 <CENTER>   
 <H1>
 File Formats in gEDA
@@ -16,7 +15,7 @@ File Formats in gEDA
 This file is the official documentation for the file formats in gEDA.
 The primary file format used in gEDA is the schematic/symbol format.
 Files which end with .sch or .sym are schematics or symbol files. This
-file format is current as of gEDA version 19990327.  
+file format is current as of gEDA version 20001006.  
 <p>
 
 <OL TYPE="I">
@@ -60,25 +59,31 @@ sheet of paper turned on its side.
 The object type letter <strong>must</strong> start in the first
 column.  Schematic/Symbol files are case sensitive. <p>
 
+<hr>
 <strong> Version number </strong> <p>
+
+type versionnumber <p>
 
 Example:<br>
 v 19990327<p>
 
-type versionnumber <p>
-
 <UL>
 	type = v<br>
-	versionnumber = version of gEDA which created this file<br>
+	versionnumber = version of gEDA which created this file<p>
+
+	This flag must be in EVERY file used by the gEDA tools.
+	The version number is not a timestamp.
+
 </UL>
 <p>
 
+<hr>
 <strong> Components </strong> <p>
+
+type x y selectable angle mirror basename <p>
 
 Example:<br>
 C 18600 19900 1 0 0 7400-1.sym<p>
-
-type x y selectable angle mirror basename <p>
 
 <UL>
         type = C<br>
@@ -90,14 +95,15 @@ type x y selectable angle mirror basename <p>
 </UL>
 <p>
 
+<hr>
 <strong> Text </strong> <p>
+
+type x y color size visibility show_name_value angle alignment<br>
+string<p>
 
 Example:<br>
 T 16900 35800 3 10 1 0 0 0<br>
 I'm a string!<p>
-
-type x y color size visibility show_name_value angle alignment<br>
-string<p>
 
 <UL>
         type = T<br>
@@ -128,35 +134,65 @@ string<p>
 </UL>
 <p>
 
+<hr>
 <strong>
 Net<br>
 Pin<br>
-Line<p>
 Bus<p>
 </strong>
+
+type x1 y1 x2 y2 color<p>
 
 Examples:<br>
 N 12700 29400 32900 29400 4<br>
 P 17800 33100 22300 33100 1<br>
-L 27300 37400 37200 35300 3<p>
 U 27300 37400 37200 35300 3<p>
 
-type x1 y1 x2 y2 color<p>
-
 <UL>
-        type = N L P U (net line pin bus respectively)<br>
+        type = N P U (net pin bus respectively)<br>
         x1 y1 = first point<br>
         x2 y2 = second point<br>
         color = see include/colors.h<br>
 </UL>
 <p>
 
+<hr>
+<strong> Line </strong><p>
+
+type x1 y1 x2 y2 color width end type length space<p>
+
+Example:<br> 
+L 23000 69000 28000 69000 3 40 0 1 -1 75<p>
+
+<UL>
+        type = N P U (net pin bus respectively)<br>
+        x1 y1 = first point<br>
+        x2 y2 = second point<br>
+        color = see include/colors.h<br>
+	width = width of line in mils<br>
+	end = line cap style 
+<UL>
+		END_NONE = 0, END_SQUARE = 1, END_ROUND = 2
+</UL>
+
+	type = line type 
+<UL>
+        TYPE_SOLID = 0, TYPE_DOTTED = 1, TYPE_DASHED = 2, TYPE_CENTER = 3<br>
+	TYPE_PHANTOM = 4<br>
+</UL>
+	length = length of dashes in mils (not used for TYPE_SOLID and TYPE_DOTTED)<br>
+	space = space inbetween dashes in mils (not used for TYPE_SOLID)<br>
+	
+</UL>
+<p>
+<hr>
+
 <strong> Arc </strong><p>
 
-Example:<br>
-A 0 500 400 -50 90 3<p>
+type x y radius start_angle sweep_angle color width end type length space<p>
 
-type x y radius start_angle sweep_angle color<p>
+Example:<br>
+30600 75000 2000 0 45 3 0 0 3 75 50<p>
 
 <UL>
         type = A<br>
@@ -165,39 +201,95 @@ type x y radius start_angle sweep_angle color<p>
         start_angle = starting angle in degrees / Standard cartesian layout<br>
         sweep_angle = degrees to sweep arc<br>
         color = see include/colors.h<br>
+	width = width of line in mils<br>
+	end = line cap style<br> 
+<UL>
+		END_NONE = 0, END_SQUARE = 1, END_ROUND = 2
+</UL>
+
+	type = line type<br> 
+<UL>
+        TYPE_SOLID = 0, TYPE_DOTTED = 1, TYPE_DASHED = 2, TYPE_CENTER = 3<br>
+	TYPE_PHANTOM = 4<br>
+</UL>
+	length = length of dashes in mils (not used for TYPE_SOLID and TYPE_DOTTED)<br>
+	space = space inbetween dashes in mils (not used for TYPE_SOLID)<br>
 </UL>
 <p>
 
+<hr>
 <strong> Box </strong><p>
 
-Example:<br>
-B 300 300 1400 2900 3<p>
+type x y width height color width end type length space filling fillwidth angle1 pitch1 angle2 pitch2<p>
 
-type x y width height color<p>
+Example:<br>
+B 33000 67300 2000 2000 3 60 0 2 75 50 0 -1 -1 -1 -1 -1<p>
+
+<p>
 
 <UL>
         type = B<br>
         x y = lower left hand corner<br>
         width height = width and height of the box<br>
         color = see include/colors.h<br>
+	width = width of line in mils<br>
+	end = line cap style<br> 
+<UL>
+		END_NONE = 0, END_SQUARE = 1, END_ROUND = 2
+</UL>
+
+	type = line type<br> 
+<UL>
+        TYPE_SOLID = 0, TYPE_DOTTED = 1, TYPE_DASHED = 2, TYPE_CENTER = 3<br>
+	TYPE_PHANTOM = 4<br>
+</UL>
+	length = length of dashes in mils (not used for TYPE_SOLID and TYPE_DOTTED)<br>
+	space = space inbetween dashes in mils (not used for TYPE_SOLID)<br>
+	filling = unused currently should be 0<br> 
+	fillewidth = unused currently should be -1<br>	
+	angle1 = unused currently should be -1<br>	
+	pitch1 = unused currently should be -1<br>	
+	angle2 = unused currently should be -1<br>	
+	pitch2 = unused currently should be -1<br>
 </UL>
 <p>
 
+<hr>
 <strong> Circle </strong><p>
 
 Example:<br>
-V 250 700 50 6<p>
+V 38000 67000 900 3 0 0 2 75 50 0 -1 -1 -1 -1 -1<p>
 
-type x y radius color<p>
+type x y width height color width end type length space filling fillwidth angle1 pitch1 angle2 pitch2<p>
 
 <UL>
         type = V<br>
         x y = center of circle<br>
         radius = radius of the circle<br>
         color = see include/colors.h<br>
+	width = width of line in mils<br>
+	end = line cap style<br>
+<UL>
+		END_NONE = 0, END_SQUARE = 1, END_ROUND = 2
+</UL>
+
+	type = line type<br> 
+<UL>
+        TYPE_SOLID = 0, TYPE_DOTTED = 1, TYPE_DASHED = 2, TYPE_CENTER = 3<br>
+	TYPE_PHANTOM = 4<br>
+</UL>
+	length = length of dashes in mils (not used for TYPE_SOLID and TYPE_DOTTED)<br>
+	space = space inbetween dashes in mils (not used for TYPE_SOLID)<br>
+	filling = unused currently should be 0<br> 
+	fillewidth = unused currently should be -1<br>	
+	angle1 = unused currently should be -1<br>	
+	pitch1 = unused currently should be -1<br>	
+	angle2 = unused currently should be -1<br>	
+	pitch2 = unused currently should be -1<br>	
 </UL>
 <p>
 
+<hr>
 <strong>Special font definition object</strong><p>
 
 Example:<br>
@@ -270,9 +362,9 @@ unembed a component.<p>
 
 Currently, nets and other components should NOT be inside components.<p>
 
-gschem and friends do not like bad schematic/symbol files, ie file syntax 
-checking is non-existent and gschem and friends will exit if they find an
-invalid file.  <p>
+gschem and friends do not like bad schematic/symbol files.  A lot of work
+has gone into making gschem and friends read invalid files, but there are 
+some cases were gschem may exit abruptly (core dump). <p>
 
 
 

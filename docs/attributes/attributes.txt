@@ -57,17 +57,6 @@ in sequential order starting at pin1 going through pinN. Example: pin1=1,
 pin2=2, pin3=5.  These attributes can be either hidden or invisible.
 
 
-label
-(inside symbols attached to pins)
-
-All pins should also have the label=label attribute attached to them.
-This is visible label associated with each pin.  Please make this
-attribute green (instead of the default attribute yellow).  Right now,
-the symbol libraries do not follow this convention, but they will.  
-This symbol was formally known as "pinlabel"; that name should not be
-used anymore.
-
-
 type
 (inside symbols only attached to pins)
 
@@ -130,11 +119,23 @@ None of the current libraries use this.
 
 
 label
-(schematics only)
+(schematics)
 
 If you want to label a net then attach an attribute called label=value to
 the net.  All nets which have the same name are considered electrically
-connected.
+connected.  You should also use this attribute when you want to label
+pins.
+
+
+label
+(inside symbols attached to pins)
+
+All pins should also have the label=label attribute attached to them.
+This is visible label associated with each pin.  Please make this
+attribute green (instead of the default attribute yellow).  Right now,
+the symbol libraries do not follow this convention, but they will.  
+This symbol was formally known as "pinlabel"; that name should not be
+used anymore.
 
 
 name
@@ -145,13 +146,13 @@ It's currently unused and is considered ambiguous.
 
 
 uref
-(schematics only)
+(both symbols and schematics )
 
-The uref= attribute should not be attached anywhere in the symbol.
-It belongs on the outside of the symbol when it is placed on a schematic
-sheet.  This attribute is used to specify the reference name to a particular
-instantiated component.  This attribute will change to uref in the near
-future (don't use ref yet).
+This attribute is used to specify the reference name to a particular
+instantiated component.  It should be on ALL components which have some
+sort of electrical significance.  This attribute can also be on the
+inside of a symbol (it will be promoted, ie attached to the outside of
+the symbol, if it is visible).
 
 
 net

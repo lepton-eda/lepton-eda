@@ -163,7 +163,7 @@ s_net_return_connected_string(OBJECT *object)
 					strlen("  ")+1);	
 	
 			sprintf(string, "U? ?");
-			fprintf(stderr, "Missing Attributes (either uref or pin number)\n");	
+			fprintf(stderr, "Missing Attributes (uref and pin number)\n");	
 		}
 	}
 

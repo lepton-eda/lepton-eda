@@ -210,6 +210,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 		switch(object->type) {
 
 			case(OBJ_LINE):
+				o_line_erase_grips(w_current, object);
 				o_line_erase(w_current, object);
 
 				o_line_rotate(w_current, centerx, centery, 
@@ -222,6 +223,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				/* erase the current selection */
 				o_net_conn_erase(w_current, object);
 				o_net_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 
 				o_net_rotate(w_current, centerx, centery, 
 					     90, object);
@@ -235,6 +237,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 #endif
 				/* erase the current selection */
 				o_bus_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 
 				o_bus_rotate(w_current, centerx, centery, 
 					     90, object);
@@ -246,6 +249,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				/* erase the current selection */
 				o_pin_conn_erase(w_current, object);
 				o_pin_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 
 				o_pin_rotate(w_current, centerx, centery, 
 					     90, object);
@@ -255,6 +259,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
 			case(OBJ_BOX):
 				/* erase the current selection */
+				o_box_erase_grips(w_current, object);
 				o_box_erase(w_current, object);
 
 				o_box_rotate(w_current, centerx, centery, 
@@ -264,6 +269,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 			break;
 
 			case(OBJ_CIRCLE):
+				o_circle_erase_grips(w_current, object);
 				o_circle_erase(w_current, object);
 
 				o_circle_rotate(w_current, centerx, centery, 
@@ -448,6 +454,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 		switch(object->type) {
 
 			case(OBJ_LINE):
+				o_line_erase_grips(w_current, object);
 				o_line_erase(w_current, object);
 				o_line_mirror(w_current,
 					      centerx, centery, object);
@@ -459,6 +466,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 		       		/* erase the current selection */
 	                        o_net_conn_erase(w_current, object);
 				o_net_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 				o_net_mirror(w_current,
 				     	     centerx, centery, object);
 				o_net_draw(w_current, object);
@@ -471,6 +479,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				o_bus_conn_erase(w_current, object);
 #endif
 				o_bus_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 				o_bus_mirror(w_current,
 				     	     centerx, centery, object);
 				o_bus_draw(w_current, object);
@@ -481,6 +490,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 				/* erase the current selection */
 				o_pin_conn_erase(w_current, object);
 				o_pin_erase(w_current, object);
+				o_line_erase_grips(w_current, object);
 				o_pin_mirror(w_current,
 				     	     centerx, centery, object);
 				o_pin_draw(w_current, object);
@@ -488,6 +498,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
 			case(OBJ_BOX):
 				/* erase the current selection */
+				o_box_erase_grips(w_current, object);
 				o_box_erase(w_current, object);
 				o_box_mirror(w_current,
 				     	     centerx, centery, object);
@@ -496,6 +507,7 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
 			case(OBJ_CIRCLE):
 				/* erase the current selection */
+				o_circle_erase_grips(w_current, object);
 				o_circle_erase(w_current, object);
 				o_circle_mirror(w_current,
 						centerx, centery, object);

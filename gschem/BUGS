@@ -20,7 +20,7 @@ BETTER	Length of fast text line is wrong.
 	Try opening a file called untitled_1.sch, doesn't work since
 	you have an untitled_1 (the default) already open.
 
-	Change the color of an attached attribute, and then copy it (color
+FIXED	Change the color of an attached attribute, and then copy it (color
 	changes to yellow oops).
 
 	translate 0 does not seem to work right with nets in the file...
@@ -29,7 +29,7 @@ BETTER	Length of fast text line is wrong.
 	Zoom in a lot and try to select something with the select box. 
 	Not easy to do.
 
-	stretch seems to pick random objects to stretch if you don't select 
+GONE	stretch seems to pick random objects to stretch if you don't select 
 	something (cannot replicate)
 
 	Swedish characters don't work. In fact, any Multi key character acts
@@ -41,7 +41,7 @@ FIXED	still have some core problems with net extension and selections
 
 	Zoom with pan doesn't work 100% when you are zoomed out all the way.
 
-	Net consolidate will not work right (core dump) if you select a net
+FIXED	Net consolidate will not work right (core dump) if you select a net
 	and then try to extend that net.. You need to remove that net which
 	is being deleted from the selection list, before you delete it.
 
@@ -100,7 +100,7 @@ FIXED 	net conslidate is broken on objects which have attributes and selected,
       	attempt).
 
 	Still todo in selection2: 
-	All slot= stuff does not work yet
+FIXED	All slot= stuff does not work yet
 
 	does it cause problems that the translate dialog box doesn't
 	grab the focus for the app?
@@ -108,8 +108,7 @@ FIXED 	net conslidate is broken on objects which have attributes and selected,
 	there's a bug in arc visiblity clipping, just zoom around close
 	in using DB*-1.sym (the corners)
 
-
-	Mirror something and then change slots... selection is wrong
+GONE	Mirror something and then change slots... selection is wrong
 
 GONE	Move a single net.  You will see a stray visual cue at 0,0
 
@@ -135,7 +134,10 @@ KLUDGED	Really odd behavior with display :'s... type some :'s and then
 	Observed some really odd characters being written to the log files
 	(between Read local gschemrc and Saved ...
 
-	Rotate object... slot is wrong
+GONE	Rotate object... slot is wrong 
+
+	Rotate object with a slot number then copy it immediately.
+	slot attribute not being selected.
 
 	View Limits is broken for a single horizontal line (at least you 
 	can't see the line because it's below the drawing area)

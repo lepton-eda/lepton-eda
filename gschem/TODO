@@ -103,7 +103,7 @@ DONE	Make sure snap spacing is set to 100 when doing symbol translates
 	
 DONE	Fix the color scheme and make it flexable.
 
-	Figure out if you want the net draw/add action to end when you draw
+OKAY	Figure out if you want the net draw/add action to end when you draw
 	a zero length net (configureable?) 
 
 DONE	Check and see what we are doing with invisible attibutes, if we are
@@ -112,7 +112,7 @@ DONE	Check and see what we are doing with invisible attibutes, if we are
 
 DONE	Check for incorrect angles on text... warn user
 
-	Add dashed lines etc...
+DONE	Add dashed lines etc...
 
 	there was an analog to the 'array' command  where you select
 	a group of stuff and hit array, enter the number of rows and
@@ -192,7 +192,7 @@ DONE	Added text dialog box which behaves like attribute add.
 
 	Breaking of nets when you connect in the middle.
 
-	Automatic saving
+DONE	Automatic saving
 
 DONE	mouse coordinates
 
@@ -245,7 +245,7 @@ GONE	fix dialog box to be able to handle NEW discards... see NEW define
 		pass in structure that is being edited...
 		Move object/structure code out of x_dialog.c 
 
-	Editing of objects:
+DONE	Editing of objects:
 		TEXT - color size string
 		LINE/CIRCLE/ARC/BOX color endpoints?
 		NET/COMP ???? 

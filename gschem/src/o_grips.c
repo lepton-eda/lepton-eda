@@ -811,7 +811,7 @@ o_grips_end(TOPLEVEL *w_current)
 
 	o_conn_disconnect_update(w_current->page_current);
 
-	//o_redraw_single(w_current, object);
+	/*o_redraw_single(w_current, object);*/
 
 	/* not sure I want to do this.. but let's try it */	
 	o_redraw(w_current, w_current->page_current->object_head);

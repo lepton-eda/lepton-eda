@@ -1,4 +1,12 @@
 
+2000-10-06  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Changed the code which reports if a uref is
+	  missing or not.  Should be a little better, but might falsely
+	  report missing urefs
+
+        * src/gnetlist.c: Changed CYGWIN32 warning message
+
 2000-10-04  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_net.c: Fixed a lame error message to be a little more 

@@ -140,12 +140,17 @@ if (verbose_mode) {
 
 				if (!netlist->component_uref) {
 
+					/* search of net attribute */
+					/* maybe symbol is not a component */
+					/* but a power / gnd symbol */
 					temp = o_attrib_search_name(o_current->
 								    complex-> 
 								    prim_objs,
-								    "footprint",
+								    "net",
 								    0);
-					if (temp) {
+
+					/* nope net attribute not found */
+					if (!temp) {
 
 						fprintf(stderr, 
 				"Could not find uref on component and could not find any special attributes!\n");

@@ -164,6 +164,7 @@ the resource file (see the section below for more info).
 	f. Attribute operations (Attach/Detach/Toggle visibility etc...)
 	g. Buffer operations
 	h. Option changing (text size/gridding/snap etc...)
+	i. Grips
 
 	This section will describe each of these.
 
@@ -228,7 +229,9 @@ the resource file (see the section below for more info).
 	Write PNG...
 	
 		Brings up the Write PNG dialog box.  Please see the
-		dialog box section for more info on this.
+		dialog box section for more info on this.  Note you must
+		have libgdgeda install (and any required dependencies)
+		if you want to output images.
 
 	Close Window
 
@@ -292,6 +295,10 @@ the resource file (see the section below for more info).
 		If a component name is already selected, hitting apply
 		and moving the mouse into the main window will allow
 		you to place that component again.
+
+		You can rotate the component before you place it by clicking
+		the middle button.  For every button click, the component
+		will be rotate 90 degrees.  
 
 		To cancel a component place press the last mouse button or
 		the ESC key.
@@ -662,28 +669,6 @@ the resource file (see the section below for more info).
 
 		Mirroring of embedded components is not supported.
 
-	Stretch
-
-		Stretch allows you to change the end points of nets.
-
-		To stretch a net (picking Edit/Stretch off of a menu):
-
-			1. Pick the desired net.
-			2. Select Edit/Stretch Mode off of a menu
-			3. Click the first mouse button near the endpoint 
-	                   you want to stretch
-			4. Move the mouse and the rubberbanding net to
-			   the new location and press the first mouse button
-			   to finalize the stretch.
-
-		Stretching nets using the hotkey is similar to above
-		except that the endpoint is automatically picked based
-		on the last mouse position when you typed the hotkey.
-
-		Right now you can only stretch nets, but this will be
-		expanded to other objects eventually.  You can only stretch
-		one net at a time.
-
 	Slot...
 
 		Slot... allows you to change the slot of a multiple slot
@@ -748,6 +733,17 @@ the resource file (see the section below for more info).
 		you quit any locked objects (lines/pins/boxes...) will
 		become unlocked.  The locked/unlocked state of components
 		is preserved in the file format though.
+
+	Line Width & Type...
+	
+		This dialog box lets you control the width and type of lines,
+		boxes, circles, and arcs.  This dialog box is still under
+		development.  
+
+		Select an object and then select this option will bring up
+		a dialog box which lets you set the line width, line type,
+		line dash length, and line dash spacing.  Pressing OK will
+		apply the changes.
 
 	Symbol Translate...
 
@@ -1128,6 +1124,28 @@ the resource file (see the section below for more info).
 		This option displays a dialog box which displays the
 		current x, y location of the mouse pointer in screen
 		(pixels) and world coordinates (mils)
+
+	i. Grips
+
+	Grips are a mechanism used in gschem to provide an easy way of
+	modifying objects inside schematics.  When you select an object,
+	little squares are placed in strategic locations (line end points or
+	circle radius point or corners of a box) which allow you to change
+	the object quickly.   Grip support currently exists for lines,
+	nets, pins, buses, circles, and boxes.  Arcs do not yet have grips,
+	but will eventually.
+
+	Using grips is easy:
+
+		1) Select the object you want to change.  The grips (the
+		   little boxes) will appear.
+
+		2) Click and hold the first mouse button inside the box.
+	
+		3) Move the mouse around till you have the object where you
+		   want it
+
+		4) Release the mouse button.
 
 
 6. Files used/created by gschem 

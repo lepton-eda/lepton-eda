@@ -176,7 +176,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 					w_current,
 					w_current->page_current->object_tail,
 					OBJ_TEXT, w_current->text_color,
-					object->text->x, object->text->y,
+					object->complex->x, object->complex->y,
 					LOWER_LEFT,
 					0, /* zero is angle */
 					string,

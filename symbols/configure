@@ -918,6 +918,10 @@ EOF
 	data74=`echo $data74`
  
 
+	databus=`ls -1 $srcdir/bus | grep -v Makefile | grep -v CVS`
+	databus=`echo $databus`
+ 
+
 	datasupervisor=`ls -1 $srcdir/supervisor | grep -v Makefile | grep -v CVS`
 	datasupervisor=`echo $datasupervisor`
  
