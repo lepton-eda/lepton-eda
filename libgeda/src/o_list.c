@@ -50,7 +50,7 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected,
 	OBJECT *end=NULL;
 
 	/* are we adding a selection or the real object list */
-	w_current->ADDING_SEL = flag; 
+	w_current->ADDING_SEL = flag;
 
 	end = (OBJECT *) return_tail(list_head);
 
@@ -113,8 +113,9 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected,
 		end->sid = selected->sid;
 	}
 
-	w_current->ADDING_SEL = 0; /* hack */
-
+	/* I don't think this is a good idea at all */
+        /* w_current->ADDING_SEL = 0; */
+        
 	if (return_end) {
 		*return_end = end;	
 	}
@@ -188,7 +189,7 @@ o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_he
 			dest = dest->next;
 			dest->sid = global_sid++;
 	
-        if (src->attached_to && !w_current->ADDING_SEL) {
+             if (src->attached_to /*&& !w_current->ADDING_SEL*/) {
                 if (src->attached_to->copied_to) {
                         o_attrib_attach(w_current,
                                 w_current->page_current->object_parent,
@@ -295,7 +296,7 @@ o_list_copy_all_selection2(TOPLEVEL *w_current, SELECTION *src_list_head,
 			dest = dest->next;
 			dest->sid = global_sid++;
 
-        if (object->attached_to && !w_current->ADDING_SEL) {
+            if (object->attached_to /*&& !w_current->ADDING_SEL*/) {
                 if (object->attached_to->copied_to) {
                         o_attrib_attach(w_current,
                                 w_current->page_current->object_parent,

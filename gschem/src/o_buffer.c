@@ -46,9 +46,11 @@ o_buffer_copy(TOPLEVEL *w_current, int buf_num)
 		object_buffer[buf_num]->next = NULL;
 	}
 
+        w_current->ADDING_SEL = 1;
 	o_list_copy_all_selection2(w_current, s_current, 
-				   object_buffer[buf_num], NORMAL_FLAG);		
-
+				   object_buffer[buf_num], SELECTION_FLAG);
+        w_current->ADDING_SEL = 0;
+        
 #if DEBUG
 	o_current = object_buffer[buf_num];
 	while(o_current != NULL) {
@@ -77,9 +79,11 @@ o_buffer_cut(TOPLEVEL *w_current, int buf_num)
 		o_list_delete_rest(w_current, object_buffer[buf_num]);
 		object_buffer[buf_num]->next = NULL;
 	}
-
+        
+        w_current->ADDING_SEL = 1;
 	o_list_copy_all_selection2(w_current, s_current, 
-				   object_buffer[buf_num], NORMAL_FLAG);
+				   object_buffer[buf_num], SELECTION_FLAG);
+        w_current->ADDING_SEL = 0;
 	o_delete(w_current);
 
 #if DEBUG
@@ -111,11 +115,15 @@ o_buffer_paste_start(TOPLEVEL *w_current, int screen_x, int screen_y,
         x = snap_grid(w_current, rleft);
         y = snap_grid(w_current, rtop);
 
+        w_current->ADDING_SEL = 1;
 	o_complex_world_translate(w_current, -x, -y, object_buffer[buf_num]);
+        w_current->ADDING_SEL = 0;
 
 	/* now translate selection to current position */
 	SCREENtoWORLD(w_current, screen_x, screen_y, &x, &y);
+        w_current->ADDING_SEL = 1;
 	o_complex_world_translate(w_current, x, y, object_buffer[buf_num]);
+        w_current->ADDING_SEL = 0;
 
         w_current->last_x = w_current->start_x = fix_x(w_current, screen_x);
         w_current->last_y = w_current->start_y = fix_y(w_current, screen_y);
@@ -141,6 +149,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 	OBJECT *o_saved;
 	SELECTION *temp_list;
 	PAGE *p_current;
+        GList *connected_objects = NULL;
 
 	if (buf_num < 0 || buf_num > MAX_BUFFERS) {
 		fprintf(stderr, "Got an invalid buffer_number [o_buffer_paste_end]\n");
@@ -164,8 +173,10 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 	/* calc and translate objects to their final position */
 	w_diff_x = w_x - w_start_x;
 	w_diff_y = w_y - w_start_y;
+        w_current->ADDING_SEL = 1;
 	o_complex_world_translate(w_current, w_diff_x, w_diff_y, 
 				  object_buffer[buf_num]);
+        w_current->ADDING_SEL = 0;
 
 	o_current = object_buffer[buf_num]->next;
 	p_current = w_current->page_current;
@@ -181,9 +192,24 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
 	/* now add new objects to the selection list */
 	while (o_current != NULL) {
 		o_selection_add(temp_list, o_current);
+                s_conn_update_object(w_current, o_current);
+                if (o_current->type == OBJ_COMPLEX) {
+                  connected_objects = s_conn_return_complex_others(
+                                                           connected_objects,
+                                                           o_current);
+                } else {
+                  connected_objects = s_conn_return_others(connected_objects,
+                                                           o_current);
+                }
 		o_current = o_current->next;
 	}
 
+        o_cue_redraw_all(w_current, o_saved->next);
+        o_cue_undraw_list(w_current, connected_objects);
+        o_cue_draw_list(w_current, connected_objects);
+        g_list_free(connected_objects);
+        connected_objects = NULL;
+        
 	o_selection_remove_most(w_current,
                                 w_current->page_current->selection2_head);
         o_selection_destroy_head(w_current->page_current->selection2_head);
@@ -192,8 +218,7 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
                                                         temp_list);
 
 	w_current->page_current->CHANGED = 1;
-        o_conn_disconnect_update(w_current->page_current);
-	o_redraw(w_current, w_current->page_current->object_head);
+	o_redraw(w_current, o_saved->next); /* only redraw new objects */
 	o_undo_savestate(w_current, UNDO_ALL);
 }
 

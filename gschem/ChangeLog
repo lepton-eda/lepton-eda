@@ -1,20 +1,101 @@
-gEDA
+2001-02-19 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
-GNU Electronic Design Automation
-------------------------------------------------------------------------------
+	* src/o_complex.c: Added code to get symbol translate working with
+	  the new connection / cue system
+	
+2001-02-17 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
-ChangeLog for gschem
+	* src/o_move.c: Modified and put back the code which implements 
+	  netconn rubberbanding
 
-Most recent changes (version wise) are at the top of this file
-All the changes are usually noted in this file when they are checked
-into the cvs repository.
+	* src/o_basic.c: Enabled some code to support above
 
+	* src/x_event.c: Enabled some code to support above
+
+	* src/o_grips.c: Added a redraw_single of the original object if
+	  you try to create a zero length object with a grip 
+
+	* src/i_callbacks.c, g_*.c, x_menus.c: Integrated patch from Chris
+	  Ellec for turning on and off the netconn rubberbanding
+
+	* src/x_window.c: Integrated patch by Rolf Fiedler, increasing the
+	  size of the main window depending on the screen resolution
+
+	* lib/system-gschemrc.in: Made the default for netconn-rubberband
+	  enabled by default
+	
+2001-02-11 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/x_print.c: Fixed a filename entry widget bug, filenames are
+	  typically longer than 79 characters, so increased size to 200
+	  chars
+
+	* src/x_image.c: Fixed same bug as above for image dialog box
+
+	* src/o_buffer.c: Misc code changes to support the new connection
+	  and cue system
+	
+2001-02-10 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_complex.c: Added code to properly update connection / cues
+	  when placing complex objects
+
+	* src/o_complex.c: Found/Fixed a memory leak when placing the 
+	  individual objects inside a schematic (via "include objects ...")
+
+	* Started resyncing with the cvs repository.  
+
+	* src/o_grips.c: Got grips to use the new connection / cues system
+
+	* src/o_grips.c: Removed the global o_redraw at the end of
+	  o_grips_end
+
+	* src/o_grips.c: Finally fixed the "disappearing object" bug when you
+	  use a grip on any of the objects.  Now the grips behave like
+	  they should (finally)! :-)
+	
+2001-02-08 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_misc.c: Got mirror to use the new connection / cue system
+
+	* src/o_misc.c: Removed the call to o_complex_mirror2 from the
+	  mirror switch.  I don't think this special exception is needed
+	  anymore.  Have to watch out for any breakage.
+
+	* src/o_misc.c: Finally removed the restriction that you could not
+	  mirror embedded components.  :-)  Have to watch out for any 
+	  breakage.
+	
 2001-02-03  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/o_arc.c: Added code to draw grips on an arc
 
 	* src/o_grips.c : Added code to handle grips on arc with
 	  o_grips_<search|start|motion|end>_arc() functions.
+	
+2001-02-03 Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_copy.c: Got copy to use the new connection / cue system
+
+	* src/o_copy.c: Rearranged things around in the switch statement
+	  so that you don't have to do a o_redraw at the end
+
+	* src/o_basic.c: Minor cleanup
+
+	* src/o_delete.c: Got delete to use the new connection / cue
+	  system
+
+	* src/o_net.c: Updated o_net_end to use the new connection / cue
+	  system (also removed some old obsolete functions)
+
+	* src/o_pin.c: Updated o_pin_end to use the new connection / cue
+	  system (also removed some old obsolete functions)
+
+	* src/o_bus.c: Updated o_bus_end to use the new connection / cue
+	  system (also removed some old obsolete functions)
+
+	* src/o_misc.c: #if'd out some function calls which don't exist
+	  anymore (but I need the place holder to add new functions)
 	
 2001-01-27  Ales Hvezda  <ahvezda@geda.seul.org>
 
@@ -28,22 +109,37 @@ into the cvs repository.
 	* src/o_circle.c: Modified the calls to arc drawing functions to
 	  match the change in the meaning of arc parameters
 	
-2001-01-16  Ales Hvezda  <ahvezda@geda.seul.org>
+2001-01-23 Ales Hvezda	 <ahvezda@geda.seul.org>	
 
-	* src/x_event.c, g_key.c: Fixed a bug pointed out by Thomas Lundin
-	  which was causing a core dump.  Basically, g_key_* functions
-	  were using a stale w_current pointer; switched them to use the
-	  always correct global_window_current pointer.
+	* src/o_move.c, o_cue.c: Work on getting the new conn system to
+	  work with move 
+	
+2001-01-19  Ales Hvezda	 <ahvezda@geda.seul.org>	
+
+	* src/o_cue.c: Renamed o_conn.c to o_cue.c (makefile updates etc...)
+
+	* src/o_cue.c: More work on getting cues done
 	
 2001-01-19  Stefan Petersen  <spe@geda.seul.org>
 
 	* scheme/auto-uref.scm: If there wasn't a question mark in the
 	  uref string, the auto-ref function blew up.
 	
+2001-01-18  Ales Hvezda	 <ahvezda@geda.seul.org>
+
+	* src/o_conn.c: A lot of work on getting the visual cues done
+	
 2001-01-17  Stefan Petersen  <spe@geda.seul.org>
 
 	* scheme/auto-uref.scm: Made the associative list,used to keep track
 	  of used prefixes, using _real_ Guile associative list functions.
+	
+2001-01-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_event.c, g_key.c: Fixed a bug pointed out by Thomas Lundin
+	  which was causing a core dump.  Basically, g_key_* functions
+	  were using a stale w_current pointer; switched them to use the
+	  always correct global_window_current pointer.
 	
 2001-01-16  Ales Hvezda  <ahvezda@geda.seul.org>
 
@@ -55,7 +151,21 @@ into the cvs repository.
 	  future typechecking.
 	
 	* src/g_rc.c: minor spell error in boundingbox
-	
+
+2001-01-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net.c: Added some text drawing to nets to make debugging
+	  easier.  This code will not be executed in real builds (needs
+	  to #if DEBUG'ed out)
+
+2001-01-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Removed all trace of conn table (and functions), nethash
+	  table (and functions), and temporarily commented out stretch code
+
+	* src/x_grid.c: Added x_draw_tiles to help in the coding of the tile
+	  storage system
+
 2000-12-17  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* docs/gschem.txt: Misc doc updates

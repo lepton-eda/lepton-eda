@@ -75,7 +75,7 @@ Reinhard Kotucha        - For suggesting the use of setlinecap in the
 			  postscript output.  Output looks much better
 			  with some sort of cap style set.
 
-			  One of many who suggested rotation of component	
+			  One of many who suggested rotation of component
 			  before it is placed	
 
 Matt Ettus		- For greatly rewritting the attribute edit
@@ -92,6 +92,10 @@ Martin Benes            - For contributing the attribute promotion code and
 Patrick Bernaud		- For many primitive object code updates, bug
 			  fixes, and additions (line types and fill types)
 
+                          Adding grips to the arc object
+
+                          Many improvements to the primitive objects
+
 Werner Hoch		- For providing a patch to fix some long outstanding
 			  zooming / panning bugs
 
@@ -106,8 +110,15 @@ Chris Ellec		- For providing a patch that causes changes in the
 			  (Add and Change) to take effect.
 			  For providing lots of feedback on various bugs
 
+                          For contributing various patches to add very useful
+                          functionality
+
 Eduard Moser 		- For contributing the guile and C code to generate
 Martin Lehmann		  netlists on the fly (at least for the vams backend)
+
+Rolf Fiedler            - For contributing patches and ideas for feature / UI
+                          improvements (patch: increase drawing window size)
+                          
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
@@ -137,6 +148,9 @@ Arnim Littek
 Nick Bastin
 
 And anybody else who spoke up and let their opinion be heard.
+
+
+
 
 
 

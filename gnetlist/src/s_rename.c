@@ -101,9 +101,7 @@ void s_rename_print(void)
 
 	    if (rename_pairs[i][j].dest) {
 		printf(" -> Dest: _%s_\n", rename_pairs[i][j].dest);
-	    } else {
-		printf(" -> No Dest! Invalid entry!\n");
-	    }
+	    } 
 	}
     }
 }

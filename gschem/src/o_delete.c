@@ -25,6 +25,97 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
+
+void
+o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
+{
+	int removing_sel_save;
+        GList *other_objects = NULL;
+
+        o_cue_undraw(w_current, obj);
+	o_net_erase(w_current, obj);
+	o_line_erase_grips(w_current, obj);
+
+        other_objects = s_conn_return_others(other_objects, obj);
+       
+	removing_sel_save = w_current->REMOVING_SEL;
+	w_current->REMOVING_SEL = 1;
+	s_delete(w_current, obj);
+	w_current->REMOVING_SEL = removing_sel_save;
+
+	w_current->page_current->object_tail =
+		(OBJECT *) return_tail(w_current->page_current->object_head);
+
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+        g_list_free(other_objects);
+}
+
+void
+o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
+{
+	int removing_sel_save;
+        GList *other_objects = NULL;
+        
+        o_cue_undraw(w_current, obj);
+	o_bus_erase(w_current, obj);
+	o_line_erase_grips(w_current, obj);
+
+        other_objects = s_conn_return_others(other_objects, obj);
+
+        removing_sel_save = w_current->REMOVING_SEL;
+	w_current->REMOVING_SEL = 1;
+	s_delete(w_current, obj);
+	w_current->REMOVING_SEL = removing_sel_save;
+
+	w_current->page_current->object_tail =
+		(OBJECT *) return_tail(w_current->page_current->object_head);
+
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+        g_list_free(other_objects);
+
+}
+
+static void
+o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
+{
+        GList *other_objects = NULL;
+        
+        o_cue_undraw(w_current, obj);
+	o_pin_erase(w_current, obj);
+	o_line_erase_grips(w_current, obj);
+        
+        other_objects = s_conn_return_others(other_objects, obj);
+        
+	s_delete(w_current, obj);
+	w_current->page_current->object_tail =
+		(OBJECT *) return_tail(w_current->page_current->object_head);
+
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+        g_list_free(other_objects);
+
+}
+
+static void
+o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
+{
+        GList *other_objects = NULL;
+
+        o_cue_undraw_complex(w_current, obj);
+        o_complex_erase(w_current, obj);
+
+        other_objects = s_conn_return_complex_others(other_objects, obj);
+
+	o_complex_delete(w_current, obj);
+
+        /* TODO: special case hack no return_tail. why? */
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+        g_list_free(other_objects);
+}
+
 static void
 o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
 {
@@ -32,42 +123,6 @@ o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
 	o_line_erase_grips(w_current, obj);
 
 	s_delete(w_current, obj);
-	w_current->page_current->object_tail =
-		(OBJECT *) return_tail(w_current->page_current->object_head);
-}
-
-void
-o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
-{
-	int removing_sel_save;
-
-	o_net_erase(w_current, obj);
-	o_line_erase_grips(w_current, obj);
-	o_net_conn_erase_force(w_current, obj);
-
-	removing_sel_save = w_current->REMOVING_SEL;
-	w_current->REMOVING_SEL = 1;
-	s_delete(w_current, obj);
-	w_current->REMOVING_SEL = removing_sel_save;
-
-	w_current->page_current->object_tail =
-		(OBJECT *) return_tail(w_current->page_current->object_head);
-}
-
-void
-o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
-{
-	int removing_sel_save;
-
-	o_bus_erase(w_current, obj);
-	o_bus_conn_erase_force(w_current, obj);
-	o_line_erase_grips(w_current, obj);
-
-	removing_sel_save = w_current->REMOVING_SEL;
-	w_current->REMOVING_SEL = 1;
-	s_delete(w_current, obj);
-	w_current->REMOVING_SEL = removing_sel_save;
-
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
 }
@@ -95,25 +150,6 @@ o_delete_circle(TOPLEVEL *w_current, OBJECT *obj)
 		(OBJECT *) return_tail(w_current->page_current->object_head);
 }
 
-static void
-o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
-{
-	o_complex_erase(w_current, obj);
-	o_complex_delete(w_current, obj);
-
-	/* TODO: special case hack no return_tail. why? */
-}
-
-static void
-o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
-{
-	o_pin_erase(w_current, obj);
-	o_line_erase_grips(w_current, obj);
-
-	s_delete(w_current, obj);
-	w_current->page_current->object_tail =
-		(OBJECT *) return_tail(w_current->page_current->object_head);
-}
 
 void
 o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
@@ -209,14 +245,8 @@ o_delete(TOPLEVEL *w_current)
 	w_current->page_current->selection2_head = o_selection_new_head();
 	w_current->page_current->CHANGED=1;
 
-	/* New CONN stuff */
-	o_conn_disconnect_update(w_current->page_current);
+	/* no longer needed */
+        /* o_redraw(w_current, w_current->page_current->object_head);*/
 
-	o_redraw(w_current, w_current->page_current->object_head);
-
-	/* I don't think I like this */
-#if 0
-	o_conn_draw_all(w_current, w_current->page_current->object_head);
-#endif
 	o_undo_savestate(w_current, UNDO_ALL);
 }

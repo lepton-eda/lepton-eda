@@ -11,18 +11,16 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 /* g_rc.c */
-void set_static_project_current(TOPLEVEL *pr_current);
-void g_rc_parse(TOPLEVEL *pr_current);
+void g_rc_parse(void);
 SCM g_rc_gnetlist_version(SCM version);
 SCM g_rc_default_series_name(SCM name);
-SCM g_rc_untitled_name(SCM name);
 SCM g_rc_component_library(SCM path);
 SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_font_directory(SCM path);
-SCM g_rc_paper_size(SCM width, SCM height, SCM border);
+SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_net_naming_priority(SCM mode);
 SCM g_rc_hierarchy_traversal(SCM mode);
 SCM g_rc_hierarchy_uref_mangle(SCM mode);
@@ -118,7 +116,6 @@ void s_traverse_sheet(TOPLEVEL *pr_current, OBJECT *start, char *hierarchy_tag);
 CPINLIST *s_traverse_component(TOPLEVEL *pr_current, OBJECT *component, char *hierarchy_tag);
 void s_traverse_clear_all_visited(OBJECT *object_head);
 NET *s_traverse_net(TOPLEVEL *pr_current, OBJECT *previous_object, NET *nets, OBJECT *object, char *hierarchy_tag);
-NET *s_traverse_midpoints(TOPLEVEL *pr_current, OBJECT *object, NET *nets, char *hierarchy_tag);
 /* vams_misc.c */
 char *vams_get_attribs_list(OBJECT *object, SCM *list, OBJECT **return_found);
 SCM vams_get_package_attributes(SCM scm_uref);

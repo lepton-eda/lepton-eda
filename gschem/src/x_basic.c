@@ -279,5 +279,3 @@ x_create_dialog_box_horiz(GtkWidget **out_hbox, GtkWidget **out_action_area)
 }
 
 
-
-

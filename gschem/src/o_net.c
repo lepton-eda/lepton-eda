@@ -27,333 +27,17 @@
 #include "../include/prototype.h"
 
 void
-o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current)
-{
-	int cue;
-	OBJECT *bus_object;
-
-
-	gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->background_color));
-	gdk_gc_set_foreground(w_current->bus_gc,
-			x_get_color(w_current->background_color));
-
-	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line->x[0],
-				o_current->line->y[0]);
-
-#if DEBUG
-	printf("efirst: %d\n",cue);
-#endif
-	switch(cue) {
-
-		case(NET_DANGLING_CUE):
-		case(NO_CUE):
-			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[0],
-                                             o_current->line->screen_y[0]);
-		break;
-
-		case(MIDPOINT_CUE):
-			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[0],
-                                             o_current->line->screen_y[0]);
-		break;
-
-		case(INVALID_CUE):
-			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line->screen_x[0],
-				            o_current->line->screen_y[0]);
-                break;
-
-		case(BUS_MIDPOINT_CUE):
-			bus_object = o_conn_return_bus_object(w_current->
-						              page_current->
-						              conn_table,
-                                		 	      o_current->
-							      line->x[0],
-                                		 	      o_current->
-							      line->y[0]);
-
-			if (!bus_object) {
-				fprintf(stderr, "Got a null bus_object!\n");
-			} else {
-				o_conn_draw_busmidpoint(w_current, bus_object, 
-					    w_current->bus_gc,
-			                    o_current->line->screen_x[0],
-				            o_current->line->screen_y[0],
-			                    o_current->line->x[1],
-				            o_current->line->y[1]);
-			}
-                break;
-
-	}
-
-	cue = o_conn_query_table(w_current->page_current->conn_table,
-				 o_current->line->x[1],
-				 o_current->line->y[1]);
-#if DEBUG
-	printf("esecond: %d\n",cue);
-#endif
-	switch(cue) {
-
-		case(NET_DANGLING_CUE):
-		case(NO_CUE):
-			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[1],
-                                             o_current->line->screen_y[1]);
-		break;
-
-		case(MIDPOINT_CUE):
-			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[1],
-                                             o_current->line->screen_y[1]);
-		break;
-
-		case(INVALID_CUE):
-			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line->screen_x[1],
-				            o_current->line->screen_y[1]);
-                break;
-
-		case(BUS_MIDPOINT_CUE):
-
-			bus_object = o_conn_return_bus_object(w_current->
-						              page_current->
-						              conn_table,
-                                		 	      o_current->
-							      line->x[1],
-                                		 	      o_current->
-							      line->y[1]);
-
-			if (!bus_object) {
-				fprintf(stderr, "Got a null bus_object!\n");
-			} else {
-				o_conn_draw_busmidpoint(w_current, bus_object, 
-					    w_current->bus_gc,
-			                    o_current->line->screen_x[1],
-				            o_current->line->screen_y[1],
-			                    o_current->line->x[0],
-				            o_current->line->y[0]);
-			}
-                break;
-	}
-
-}
-
-void
-o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current)
-{
-	OBJECT *bus_object;
-	int size;
-
-	gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->background_color));
-
-	gdk_gc_set_foreground(w_current->bus_gc,
-			x_get_color(w_current->background_color));
-
-	if (w_current->net_style == THICK ) {
-
-		size = SCREENabs(w_current, 10);
-
-		gdk_gc_set_line_attributes(w_current->bus_gc, size,
-					   GDK_LINE_SOLID,
-					   GDK_CAP_NOT_LAST,
-					   GDK_JOIN_MITER);
-	}
-
-	o_conn_draw_endpoint(w_current, w_current->gc,
-       				o_current->line->screen_x[0],
-                                o_current->line->screen_y[0]);
-
-	o_conn_draw_endpoint(w_current, w_current->gc,
-                                 o_current->line->screen_x[1],
-                                 o_current->line->screen_y[1]);
-
-	bus_object = o_conn_return_bus_object(w_current->page_current->
-					      conn_table,
-                                	      o_current->
-					      line->x[0],
-                                	      o_current->
-					      line->y[0]);
-	if (bus_object) {
-		o_conn_draw_busmidpoint(w_current, bus_object, 
-					w_current->bus_gc,
-			                o_current->line->screen_x[0],
-				        o_current->line->screen_y[0],
-			                o_current->line->x[1],
-				        o_current->line->y[1]);
-	}
-
-	bus_object = o_conn_return_bus_object(w_current->page_current->
-					      conn_table,
-                                	      o_current->
-					      line->x[1],
-                                	      o_current->
-					      line->y[1]);
-	if (bus_object) {
-		o_conn_draw_busmidpoint(w_current, bus_object, 
-					w_current->bus_gc,
-			                o_current->line->screen_x[1],
-				        o_current->line->screen_y[1],
-			                o_current->line->x[0],
-				        o_current->line->y[0]);
-	}
-
-        /* yes zero is right for the width -> use hardware lines */
-	if (w_current->net_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->bus_gc, 0, GDK_LINE_SOLID,
-				GDK_CAP_NOT_LAST,
-				GDK_JOIN_MITER);
-	}
-}
-
-void
-o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
-{
-	int cue;
-	int size;
-	OBJECT *bus_object;
-
-	gdk_gc_set_foreground(w_current->gc,
-		x_get_color(w_current->net_endpoint_color));
-
-	gdk_gc_set_foreground(w_current->bus_gc,
-		x_get_color(w_current->net_color));
-
-	if (w_current->net_style == THICK ) {
-
-		size = SCREENabs(w_current, 10);
-
-		gdk_gc_set_line_attributes(w_current->bus_gc, size,
-					   GDK_LINE_SOLID,
-					   GDK_CAP_NOT_LAST,
-					   GDK_JOIN_MITER);
-	}
-
-	cue = o_conn_query_table(w_current->page_current->conn_table,
-				o_current->line->x[0],
-				o_current->line->y[0]);
-
-#if DEBUG 
-	printf("dfirst: %d\n", cue);
-#endif
-	switch(cue) {
-
-		case(NO_CUE):
-
-		break;
-
-		case(NET_DANGLING_CUE):
-			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[0],
-                                             o_current->line->screen_y[0]);
-		break;
-
-		case(MIDPOINT_CUE):
-			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[0],
-                                             o_current->line->screen_y[0]);
-		break;
-
-		case(INVALID_CUE):
-			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line->screen_x[0],
-				            o_current->line->screen_y[0]);
-                break;
-
-		case(BUS_MIDPOINT_CUE):
-
-			bus_object = o_conn_return_bus_object(w_current->
-						              page_current->
-						              conn_table,
-                                		 	      o_current->
-							      line->x[0],
-                                		 	      o_current->
-							      line->y[0]);
-
-			if (!bus_object) {
-				fprintf(stderr, "Got a null bus_object!\n");
-			} else {
-				o_conn_draw_busmidpoint(w_current, bus_object, 
-					    w_current->bus_gc,
-			                    o_current->line->screen_x[0],
-				            o_current->line->screen_y[0],
-			                    o_current->line->x[1],
-				            o_current->line->y[1]);
-			}
-                break;
-	}
-
-	cue = o_conn_query_table(w_current->page_current->conn_table,
-				 o_current->line->x[1],
-				 o_current->line->y[1]);
-
-#if DEBUG
-	printf("dsecond: %d\n", cue);
-#endif
-	switch(cue) {
-
-		case(NO_CUE):
-
-		break;
-
-		case(NET_DANGLING_CUE):
-			o_conn_draw_endpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[1],
-                                             o_current->line->screen_y[1]);
-		break;
-
-		case(MIDPOINT_CUE):
-			o_conn_draw_midpoint(w_current, w_current->gc,
-                                             o_current->line->screen_x[1],
-                                             o_current->line->screen_y[1]);
-		break;
-
-		case(INVALID_CUE):
-			o_conn_draw_invalid(w_current, w_current->gc,
-			                    o_current->line->screen_x[1],
-				            o_current->line->screen_y[1]);
-                break;
-
-		case(BUS_MIDPOINT_CUE):
-			bus_object = o_conn_return_bus_object(w_current->
-						              page_current->
-						              conn_table,
-                                		 	      o_current->
-							      line->x[1],
-                                		 	      o_current->
-							      line->y[1]);
-
-			if (!bus_object) {
-				fprintf(stderr, "Got a null bus_object!\n");
-			} else {
-				o_conn_draw_busmidpoint(w_current, bus_object, 
-					    w_current->bus_gc,
-			                    o_current->line->screen_x[1],
-				            o_current->line->screen_y[1],
-			                    o_current->line->x[0],
-				            o_current->line->y[0]);
-			}
-                break;
-	}
-
-        /* yes zero is right for the width -> use hardware lines */
-	if (w_current->net_style == THICK ) {
-		gdk_gc_set_line_attributes(w_current->bus_gc, 0, GDK_LINE_SOLID,
-				GDK_CAP_NOT_LAST,
-				GDK_JOIN_MITER);
-	}
-}
-
-void
 o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int size;
 	int cue;
 	int x1, y1, x2, y2; /* screen coords */
 	OBJECT *bus_object;
+
+#if NET_DEBUG /* debug */
+	char tempstring[64];
+	GdkFont *font;
+#endif
 
 	if (o_current == NULL) {
 		return;
@@ -408,144 +92,26 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 				       x1, y1, x2, y2);
 		gdk_draw_line(w_current->backingstore, w_current->gc,
 				       x1, y1, x2, y2);
-	}
 
 
-
-	/* CONN stuff, not sure if I'm going to leave this here */
-	/* only draw the connection points, if: */
-	/* - you are drawing regular lines, */
-	/* - you aren't redrawing selected (DONT_DRAW_CONN), */
-	/* - And, you are erasing them */
-
-       if ( ((w_current->override_color == -1) &&
-	    (!w_current->DONT_DRAW_CONN)) ||
-            (w_current->override_color == w_current->background_color ) ) {
-
-		if (w_current->override_color != -1) {
-                        gdk_gc_set_foreground(w_current->gc,
-                                x_get_color(w_current->override_color));
-                        gdk_gc_set_foreground(w_current->bus_gc,
-                                x_get_color(w_current->override_color));
-                } else {
-                        gdk_gc_set_foreground(w_current->gc,
-                                x_get_color(w_current->net_endpoint_color));
-                        gdk_gc_set_foreground(w_current->bus_gc,
-                                x_get_color(w_current->net_color));
-                }
-
-		cue = o_conn_query_table(w_current->page_current->conn_table,
-					 o_current->line->x[0],
-					 o_current->line->y[0]);
-		switch(cue) {
-
-			case(NO_CUE):
-
-			break;
-
-			case(NET_DANGLING_CUE):
-				o_conn_draw_endpoint(w_current, w_current->gc,
-                                          	     o_current->line->
-						     screen_x[0],
-                                          	     o_current->line->
-						     screen_y[0]);
-			break;
-
-			case(MIDPOINT_CUE):
-				o_conn_draw_midpoint(w_current, w_current->gc,
-                                          	     o_current->line->
-						     screen_x[0],
-                                          	     o_current->line->
-						     screen_y[0]);
-			break;
-
-			case(INVALID_CUE):
-				o_conn_draw_invalid(w_current, w_current->gc,
-			                            o_current->line->
-						    screen_x[0],
-				                    o_current->line->
-						    screen_y[0]);
-                	break;
-
-			case(BUS_MIDPOINT_CUE):
-
-			bus_object = o_conn_return_bus_object(w_current->
-						              page_current->
-						              conn_table,
-                                		 	      o_current->
-							      line->x[0],
-                                		 	      o_current->
-							      line->y[0]);
-
-			if (!bus_object) {
-				fprintf(stderr, "Got a null bus_object!\n");
-			} else {
-				o_conn_draw_busmidpoint(w_current, bus_object, 
-					    w_current->bus_gc,
-			                    o_current->line->screen_x[0],
-				            o_current->line->screen_y[0],
-			                    o_current->line->x[1],
-				            o_current->line->y[1]);
-			}
-
-                	break;
-
-		}
-
-		cue = o_conn_query_table(w_current->page_current->conn_table,
-					 o_current->line->x[1],
-					 o_current->line->y[1]);
-		switch(cue) {
-
-			case(NO_CUE):
-
-			break;
-
-			case(NET_DANGLING_CUE):
-				o_conn_draw_endpoint(w_current, w_current->gc,
-                                          	     o_current->line->
-						     screen_x[1],
-                                                     o_current->line->
-						     screen_y[1]);
-			break;
-
-			case(MIDPOINT_CUE):
-				o_conn_draw_midpoint(w_current, w_current->gc,
-                                          	     o_current->line->
-						     screen_x[1],
-                                           	     o_current->line->
-						     screen_y[1]);
-			break;
-
-			case(INVALID_CUE):
-				o_conn_draw_invalid(w_current, w_current->gc,
-			                            o_current->line->
-						    screen_x[1],
-				                    o_current->line->
-						    screen_y[1]);
-                	break;
-
-			case(BUS_MIDPOINT_CUE):
-			bus_object = o_conn_return_bus_object(w_current->
-						              page_current->
-						              conn_table,
-                                		 	      o_current->
-							      line->x[1],
-                                		 	      o_current->
-							      line->y[1]);
-
-			if (!bus_object) {
-				fprintf(stderr, "Got a null bus_object!\n");
-			} else {
-				o_conn_draw_busmidpoint(w_current, bus_object, 
-					    w_current->bus_gc,
-			                    o_current->line->screen_x[1],
-				            o_current->line->screen_y[1],
-			                    o_current->line->x[0],
-				            o_current->line->y[0]);
-			}
-                	break;
-		}
+#if NET_DEBUG
+		/* temp debug only */
+		font = gdk_font_load ("10x20");
+		sprintf(tempstring, "%s", o_current->name);
+		gdk_draw_text (w_current->window,
+				font,
+				w_current->gc,
+				x1+20, y1+20,
+				tempstring,
+				strlen(tempstring));
+		gdk_draw_text (w_current->backingstore,
+				font,
+				w_current->gc,
+				x1+20, y1+20,
+				tempstring,
+				strlen(tempstring));
+	gdk_font_unref(font);
+#endif
 	}
 
 #if DEBUG 
@@ -813,6 +379,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	int size;
 	/*int temp_x, temp_y;*/
 	/* OBJECT *o_current;*/
+        GList *other_objects = NULL;
 
 	if (w_current->inside_action == 0) {
                 o_redraw(w_current, w_current->page_current->object_head);
@@ -903,15 +470,21 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	w_current->save_y = w_current->last_y;
 
 
-	w_current->page_current->object_tail = o_net_add(w_current, w_current->page_current->object_tail, OBJ_NET, color, x1, y1, x2, y2);
+	w_current->page_current->object_tail =
+          o_net_add(w_current,
+                    w_current->page_current->object_tail,
+                    OBJ_NET,
+                    color,
+                    x1, y1, x2, y2);
 
 	/* conn stuff */
-	o_conn_disconnect_update(w_current->page_current);
-
-	o_net_conn_erase(w_current, w_current->page_current->object_tail);
-	o_net_conn_draw(w_current, w_current->page_current->object_tail);
-	o_conn_draw_objects(w_current, w_current->page_current->object_tail);
-
+        other_objects = s_conn_return_others(other_objects,
+                                             w_current->page_current->
+                                             object_tail);
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+        g_list_free(other_objects);
+        o_cue_draw_single(w_current, w_current->page_current->object_tail);
 
 	/* you don't want to consolidate nets which are drawn non-ortho */
 	if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {

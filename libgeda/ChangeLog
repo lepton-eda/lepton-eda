@@ -1,13 +1,85 @@
+2001-02-23 Ales Hvezda  <ahvezda@geda.seul.org>
 
-gEDA
+	* src/s_hierarchy.c: Added code to either do a normal hierarchy
+	  load or force the load (for gnetlist and hierarchical traversal)
 
-GNU Electronic Design Automation
-------------------------------------------------------------------------------
+	* src/s_page.c: Added code to forcibly load a schematic page
+	  (s_page_new_lowlevel).  Modified s_page_new to use this new
+	  routine.
+	
+2001-02-17 Ales Hvezda  <ahvezda@geda.seul.org>
 
-ChangeLog for libgeda 
+	* include/struct.c: Removed more of the old connection code
+	  (which was #ifdef'ed out)
 
-Most recent changes are at the top of this file
+	* src/s_page.c: Commented in stretch_head, stretch_tail init code
 
+	* src/s_page.c: Removed all trace of the old connection code
+	  (which was #ifdef'ed out)
+
+	* src/s_stretch.c: Put this file back into the build
+
+	* src/f_*.c: Removed all traces of the old connection code
+	
+2001-02-16 Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net_basic.c: Oops, nets which caused midpoints were being
+	  consolidated away (bad), fixed this by checking first to make
+	  sure that that particular endpoint didn't cause any midpoints
+	  (if it did, don't consolidate the net)
+	  
+2001-02-11 Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net_basic.c, src/o_pin_basic.c: Moved the tile update call
+	  inside the ADDING_SEL if inside the *_add functions.  
+
+	* src/s_tile.c: Added a return if ADDING_SEL is true.
+
+	* src/o_list.c: Made some changes in the various o_list_*
+	  functions regarding ADDING_SEL.  Have to watch for any side
+	  effects
+
+	* src/o_net_basic.c: Rewrote net consolidate code to work with the
+	  new connection system
+	
+2001-02-10 Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex_basic.c: Minor changes, call net functions for
+	  nets (not the line functions).  All this needs to be cleaned up 
+	  eventually
+
+	* Started syncing with cvs repository
+	
+2001-02-08 Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex_basic.c: In one of the translate functions,
+	  removed a whole bunch of cruft.
+	
+2001-02-04 Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex_basic.c: Added a flag to save the state of
+	  ADDING_SEL (bad variable name, it really means that you want to
+	  delay doing any s_conn_update_* calls)
+
+	* src/s_conn.c: Changed the *_return* functions to take in a list
+	  and then return it
+
+	* src/s_tile.c: Changed update function to return if an invalid
+	  v, w tile index was ever calculated (this means that the objects
+	  is outside of the tile grid (which is okay mainly for rotation of
+	  objects)
+
+	* src/s_page.c: Made sure page_current points to the current page
+	  being freed in s_page_free_all
+
+	* src/s_tile.c: Changed s_tile_remove_object to take a page 
+	  parameter (so that the objects get removed from the right page)
+	
+2001-02-03  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_conn.c: Added s_conn_return_complex_others to support
+	  o_copy in gschem
+	
 2001-02-03  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* src/o_arc_basic.c: Added function o_arc_modify() 
@@ -28,11 +100,97 @@ Most recent changes are at the top of this file
 	* src/o_circle_basic.c : Added functions to print the filling
 	  of a circle
 	
+2001-01-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_conn.c: Minor cleanups
+	
+2001-01-17  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_conn.c: More work on getting this all done (worked on mid-
+	  point connections
+
+	* src/s_tile.c: Minor update to the free all routine (more info)
+
+2001-01-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_conn.c: Bunch of changes to get new conn system finished 
+	
 2000-01-15  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/o_image.c: Fixed bug -- allow the background of pngs to
 	  take on a different value than black, bug pointed out by 
           George Billios
+
+2001-01-07  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added conn_list list as well as new version
+	  of st_conn
+
+	* src/s_conn.c: Added new file which contains the routines to support
+	  the new connection scheme
+
+	* src/o_net_basic.c: Added s_conn_update_object call to *net_add
+	  function
+
+	* src/o_pin_basic.c: Added s_conn_update_object call to *pin_add
+	  function
+
+	* src/o_bus_basic.c: Added s_conn_update_object call to *bus_add
+	  function
+
+	* src/o_complex_basic.c: Had to add some flags to prevent the
+	  calc of connections for complex objects; the connection update needs
+	  to happen once all the prim_objs have been translated to their
+	  final resting spot
+
+	* src/s_basic.c: Added calls and variable inits for new conn system
+
+	* include/defines.h: Removed some old conn #defines, replaced them
+	  with new simplified ones
+
+2001-01-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_arc_basic.c: Fixed the PS printing of solid arcs if they
+	  are mirror (and/or rotated).  Bug pointed out by Matt Ettus
+
+2001-01-01  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/*.c: Removed all trace of the conn_table, o_conn, s_nethash 
+	  functions. This is in prep for the total rewrite 
+	
+	* include/struct.h: Removed conn table and nethash table and also
+	  removed stretch structure for now.
+
+	* src/s_tile.c: Added new file and function which divide up the
+	  world space into smaller tiles (will be used by the new conn
+	  system)
+
+	* include/struct.h: Added world_tiles 2d array to page structure
+
+	* include/struct.h: Added st_tile data structure 
+
+	* include/defines.h: Added MAX_TILES_X and MAX_TILES_Y #defines
+
+	* src/s_page.c: Added s_tile_init to s_page_add
+
+	* src/s_tile.c: More work on some of the routines to get objects
+ 	  into the right tiles
+
+	* src/o_net_basic.c, o_pin_basic.c, o_bus_basic.c: Added call to
+	  s_tile_add_object when an object is added to object_head 
+	  (or object_tail)
+
+	* src/o_net_basic.c, o_pin_basic.c, o_bus_basic.c: Called copy
+	  routines with the right x,y values so that tiling code works right 
+
+	* src/o_net_basic.c, o_pin_basic.c, o_bus_basic.c: Added a bunch of 
+	  calls to s_tile_update_object after the object is translate 
+          (moved around)
+
+	* include/struct.h: Added to the object structure tile_locs which is
+	  a list of tile locations (in which tiles the object exists in)
+
+	* src/s_basic.c: Added init code to deal with above list
 
 2000-12-17  Ales Hvezda  <ahvezda@geda.seul.org>
 

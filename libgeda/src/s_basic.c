@@ -154,6 +154,10 @@ s_basic_init_object( char *name )
 	new_node->text = NULL;
 	new_node->complex = NULL;
 
+	new_node->tile_locs = NULL;
+
+	new_node->conn_list = NULL;
+
 	new_node->visited = 0;
 	
 	new_node->complex_basename = NULL;
@@ -312,17 +316,8 @@ s_delete(TOPLEVEL *w_current, OBJECT *o_current)
 		else
 			o_current->prev = NULL;
 
-/* move this flag up out of this function ? so that we don't have to pass
-   the window TRANSFORM hack */
-if (!w_current->REMOVING_SEL) {
-		/* find all instances of points to current and remove them */
-
-		/* CONN new stuff */
-		o_conn_disconnect(w_current->page_current); 
-
-} /* end of REMOVING_SEL */
-
-
+		s_conn_remove(w_current, o_current);
+	
 		/* second half of if is odd that we need it? hack */
 		/* need to do this early so we can do the printfs */
 		if (o_current->attached_to != NULL && o_current->attribute == 1) {
@@ -343,6 +338,11 @@ if (!w_current->REMOVING_SEL) {
 		if (o_current->line) {
 		/*	printf("sdeleting line\n");*/
 			free(o_current->line);
+
+			/* yes this object might be in the tile system */
+			s_tile_remove_object_all(w_current,
+                                                 w_current->page_current,
+                                                 o_current);
 		}
 		o_current->line = NULL;
 

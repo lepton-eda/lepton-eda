@@ -161,6 +161,7 @@ static GtkItemFactoryEntry menu_items[] = {
 	{"/Options/Toggle Snap", NULL, i_callback_options_snap, 0, NULL},
 	{"/Options/Snap Grid Spacing...", NULL, i_callback_options_snap_size, 0, NULL},
 	{"/Options/Toggle Outline", NULL, i_callback_options_afeedback, 0, NULL},
+        {"/Options/Toggle Rubber band", NULL, i_callback_options_rubberband, 0, NULL},
 	{"/Options/Show Log Window", NULL, i_callback_options_show_log_window, 0, NULL},
 	{"/Options/Show Coord Window", NULL, i_callback_options_show_coord_window, 0, NULL},
         {"/Help", NULL, NULL, 0, "<LastBranch>"},

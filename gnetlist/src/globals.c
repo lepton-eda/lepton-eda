@@ -25,8 +25,7 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
-
-char rc_filename[256]; /* size is hack */  
+char *rc_filename = NULL; 
 
 /* color stuff */
 GdkColormap *colormap; 

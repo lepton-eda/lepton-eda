@@ -159,13 +159,9 @@
 
 
 /* The conn modes for type */
-#define CONN_HEAD		-1	
-#define INVALID			0	
-#define CONN_NET		1
-#define CONN_PIN		2
-#define CONN_MIDPOINT		3
-#define CONN_BUS		4
-#define CONN_BUS_MIDPOINT	5
+#define CONN_NULL               0
+#define CONN_ENDPOINT		1
+#define CONN_MIDPOINT		2
 
 /* The conn whole type */
 #define NO_MIDPOINT		0
@@ -180,6 +176,11 @@
 #define MIDPOINT_CUE		5
 #define BUS_MIDPOINT_CUE	6
 #define INVALID_CUE		7	
+
+
+/* used by world_tiles to set the size of the array */
+#define MAX_TILES_X		10
+#define MAX_TILES_Y		10
 
 /* These modes are for actionfeedback_mode */
 /* there's a hack in i_keypress.c dealing with the 0 and 1 (has to be these */
@@ -212,6 +213,10 @@
 /* list copying flags */
 #define NORMAL_FLAG		0
 #define SELECTION_FLAG		1
+
+/* hierarchy loading flags */
+#define HIERARCHY_NORMAL_LOAD   0
+#define HIERARCHY_FORCE_LOAD    1
 
 /* selection types */
 /* used in o_select_object */

@@ -123,4 +123,70 @@ x_grid_draw(TOPLEVEL *w_current)
 			w_current->drawing_area->allocation.height);
 
 #endif
+
+#if DEBUG
+	/* highly temp, just for diag purposes */
+	x_draw_tiles(w_current);
+#endif        
+}
+
+void
+x_draw_tiles(TOPLEVEL *w_current)
+{
+	TILE *t_current;
+	GdkFont *font;
+	int i,j;
+	int x1, y1, x2, y2;
+	int screen_x, screen_y;
+	int width, height;
+	char tempstring[32];
+
+	gdk_gc_set_foreground(w_current->gc, x_get_color(w_current->lock_color));
+
+	font = gdk_font_load ("fixed");
+	for (j = 0; j < MAX_TILES_Y; j++) {
+		for (i = 0; i < MAX_TILES_X; i++) {
+			t_current = &w_current->page_current->world_tiles[i][j];
+			WORLDtoSCREEN(w_current, t_current->left, 
+				      t_current->top, &x1, &y1);
+			WORLDtoSCREEN(w_current, t_current->right, 
+				      t_current->bottom, &x2, &y2);
+
+			screen_x = min(x1, x2);
+			screen_y = min(y1, y2);
+
+			width = abs(x1 - x2);
+			height = abs(y1 - y2);
+
+#if DEBUG
+			printf("x, y: %d %d\n", screen_x, screen_y);
+			printf("w x h: %d %d\n", width, height);
+#endif
+			gdk_draw_rectangle(w_current->window, 
+					   w_current->gc, 
+				           FALSE, screen_x, screen_y,
+					   width, height);
+			gdk_draw_rectangle(w_current->backingstore, 
+					   w_current->gc, 
+				           FALSE, screen_x, screen_y,
+					   width, height);
+
+			sprintf(tempstring, "%d %d", i, j);
+			gdk_draw_text (w_current->window,
+					font,
+		    			w_current->gc,
+		    			screen_x+10, screen_y+10, 
+		    			tempstring,
+		    			strlen(tempstring));
+
+			gdk_draw_text (w_current->backingstore,
+					font,
+		    			w_current->gc,
+		    			screen_x+10, screen_y+10, 
+		    			tempstring,
+		    			strlen(tempstring));
+		}
+	}
+
+	gdk_font_unref(font);
 }

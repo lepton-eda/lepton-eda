@@ -351,7 +351,7 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
                           label, FALSE, FALSE, 0);
                 gtk_widget_show (label);
 
-		w_current->ifilename_entry = gtk_entry_new_with_max_length (79);
+		w_current->ifilename_entry = gtk_entry_new_with_max_length (200);
                 gtk_editable_select_region (GTK_EDITABLE (w_current->ifilename_entry), 0, -1);
                 gtk_box_pack_start (GTK_BOX (box),
                           w_current->ifilename_entry, TRUE, TRUE, 10);

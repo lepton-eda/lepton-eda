@@ -75,7 +75,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 		s_hierarchy_down_schematic_single(pr_current,
 						  current_filename,
 						  pr_current->page_current,
-						  page_control);
+						  page_control,
+                                                  HIERARCHY_FORCE_LOAD);
 
 	    if (page_control == -1) {
 		fprintf(stderr, "Could not open [%s]\n", current_filename);

@@ -74,110 +74,175 @@ static int vstbl_get_val(const vstbl_entry * table, int index)
     return table[index].m_val;
 }
 
-/* written by Kazu, much much better rc handling routines */
+
+static int
+g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)
+{
+	int found_rc = 0;
+	char* tmp;
+
+	if (access(fname, R_OK) == 0) {
+		/* TODO: fix g_read_file to accept "const char *" */
+		tmp = u_basic_strdup(fname);
+		g_read_file(tmp);
+		free(tmp);
+		found_rc = 1;
+		s_log_message(ok_msg, fname);
+	} else {
+		s_log_message(err_msg, fname);
+	}
+	return found_rc;
+}
+
+static int
+g_rc_parse_system_rc()
+{
+	int found_rc;
+	char *filename;
+
+	filename = u_basic_strdup_multiple(GEDARCDIR,
+					   "/system-gnetlistrc",
+					   NULL);
+	if (filename == NULL) {
+		return 0;
+	}
+
+	found_rc = g_rc_parse_general(
+		filename,
+		"Read system-gnetlistrc file [%s]\n",
+		"Did not find system-gnetlistrc file [%s]\n");
+
+	free(filename);
+
+	return found_rc;
+}
+
+static int
+g_rc_parse_home_rc()
+{
+	int found_rc;
+	char *filename;
+	char *HOME;
+
+	HOME = (char *) getenv("HOME");
+	if (HOME == NULL) {
+		return 0;
+	}
+
+	filename = u_basic_strdup_multiple(HOME,
+					   "/.gEDA/gnetlistrc",
+					   NULL);
+	if (filename == NULL) {
+		return 0;
+	}
+
+	found_rc = g_rc_parse_general(
+		filename,
+		"Read ~/.gEDA/gnetlistrc file [%s]\n",
+		"Did not find ~/.gEDA/gnetlistrc file [%s]\n");
+
+	free(filename);
+
+	return found_rc;
+}
+
+static int
+g_rc_parse_local_rc()
+{
+	int found_rc;
+	char *filename;
+
+	filename = u_basic_strdup("./gnetlistrc");
+	if (filename == NULL) {
+		return 0;
+	}
+
+	found_rc = g_rc_parse_general(
+		filename,
+		"Read local gnetlistrc file [%s]\n",
+		"Did not find local gnetlistrc file [%s]\n");
+
+	free(filename);
+
+	return found_rc;
+}
+
+void
+g_rc_parse(void)
+{
+	int found_rc = 0;
+
+	/* visit rc files in order */
+	found_rc |= g_rc_parse_system_rc();
+	found_rc |= g_rc_parse_home_rc();
+	found_rc |= g_rc_parse_local_rc();
+
+	if (rc_filename != NULL) {
+		if (access(rc_filename, R_OK) == 0) {
+			g_read_file(rc_filename);
+			found_rc = 1;
+			s_log_message(
+				"Read specified rc file [%s]\n",
+				rc_filename);
+		} else {
+			fprintf(stderr,
+				"Did not find specified gnetlistrc file [%s]\n",
+				rc_filename);
+			s_log_message(
+				"Did not find specified gnetlistrc file [%s]\n",
+				rc_filename);
+		}
+	}
+
+	/* Oh well, I couldn't find any rcfile, exit! */
+	if (!found_rc) {
+		/* TODO: these two are basically the
+		 * same. Inefficient! */
+		s_log_message("Could not find any gnetlistrc file!\n");
+		fprintf(stderr, "Could not find a gnetlistrc file\n");
+		exit(-1);
+	}
+}
+
 static SCM
 g_rc_mode_general(SCM mode,
 		  const char *rc_name,
-		  int *mode_var, const vstbl_entry * table, int table_size)
+		  int *mode_var,
+		  const vstbl_entry *table,
+		  int table_size)
 {
-    int index;
-    char *string;
+	int index;
+	char *string;
 
-    string = gh_scm2newstr(mode, NULL);
-    index = vstbl_lookup_str(table, table_size, string);
+	string = gh_scm2newstr(mode, NULL);
+	index = vstbl_lookup_str(table, table_size, string);
 
-    /* no match? */
-    if (index == table_size) {
-	fprintf(stderr,
-		"Invalid mode [%s] passed to %s\n", string, rc_name);
+	/* no match? */
+	if(index == table_size) {
+		fprintf(stderr,
+			"Invalid mode [%s] passed to %s\n",
+			string,
+			rc_name);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	*mode_var = vstbl_get_val(table, index);
+
 	if (string) {
-	    free(string);
+		free(string);
 	}
-	return SCM_BOOL_F;
-    }
-
-    *mode_var = vstbl_get_val(table, index);
-
-    if (string) {
-	free(string);
-    }
-    return SCM_BOOL_T;
+	return SCM_BOOL_T;
 }
 
-#define RETURN_G_RC_MODE(rc, var, size)                 \
-        return g_rc_mode_general(mode,                  \
-                                 (rc),                  \
-                                 &(var),                \
-                                 mode_table,            \
-                                 size)
-
-
-void set_static_project_current(TOPLEVEL * pr_current)
-{
-    project_current = pr_current;
-}
-
-void g_rc_parse(TOPLEVEL * pr_current)
-{
-    char *HOME;
-    char filename[256];		/* hack */
-    int found_rc = 0;
-
-    if (pr_current == NULL)
-	return;
-
-    set_static_project_current(pr_current);
-
-    /* Let's try a the system one - GEDARCDIR/system-gnetlist */
-    sprintf(filename, "%s/system-gnetlistrc", GEDARCDIR);
-    if (access(filename, R_OK) == 0) {
-	strcpy(rc_filename, filename);	/* size verify hack */
-	g_read_file(filename);
-	found_rc = 1;
-	s_log_message("Read system-gnetlistrc file [%s]\n", filename);
-    } else {
-	s_log_message("Did not find system-gnetlistrc file [%s]\n",
-		      filename);
-    }
-
-    /* now search the proper rc location (in ~/.gEDA) */
-    HOME = (char *) getenv("HOME");
-    if (HOME) {
-	sprintf(filename, "%s/.gEDA/gnetlistrc", HOME);
-	if (access(filename, R_OK) == 0) {
-	    strcpy(rc_filename, filename);	/* size verify hack */
-	    g_read_file(filename);
-	    found_rc = 1;
-	    s_log_message("Read ~/.gEDA/gnetlistrc file [%s]\n", filename);
-	} else {
-	    s_log_message("Did not find ~/.gEDA/gnetlistrc file [%s]\n",
-			  filename);
-	}
-    }
-
-    /* try the local directory for a gnetlist */
-    sprintf(filename, "./gnetlistrc");
-    if (access(filename, R_OK) == 0) {
-	strcpy(rc_filename, filename);	/* size verify hack */
-	g_read_file(filename);
-	found_rc = 1;
-	s_log_message("Read local gnetlist file [%s]\n", filename);
-    } else {
-	s_log_message("Did not find local gnetlistrc file [%s]\n",
-		      filename);
-    }
-
-
-
-
-    /* Oh well I couldn't find any rcfile, exit! */
-
-    if (!found_rc) {
-	s_log_message("Could not find any gnetlistrc file!\n");
-	fprintf(stderr, "Could not find a gnetlistrc file\n");
-	exit(-1);
-    }
-}
+#define RETURN_G_RC_MODE(rc, var, size)			\
+	return g_rc_mode_general(mode,			\
+				 (rc),			\
+				 &(var),		\
+				 mode_table,		\
+				 size)
 
 SCM g_rc_gnetlist_version(SCM version)
 {
@@ -199,422 +264,464 @@ SCM g_rc_gnetlist_version(SCM version)
     return (gh_int2scm(0));
 }
 
-SCM g_rc_default_series_name(SCM name)
+
+SCM
+g_rc_default_series_name(SCM name)
 {
-    char *string;
+	char *string = gh_scm2newstr(name, NULL);
 
-    string = gh_scm2newstr(name, NULL);
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"series-name"
+			);
+		return SCM_BOOL_F;
+	}
 
-    if (project_current->series_name) {
-	free(project_current->series_name);
-    }
+	if (default_series_name) {
+		free(default_series_name);
+	}
 
-    project_current->series_name =
-	malloc(sizeof(char) * (strlen(string) + 1));
-    strcpy(project_current->series_name, string);
+	default_series_name = u_basic_strdup(string);
 
-    if (string) {
 	free(string);
-    }
-
-    return (gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
-
-SCM g_rc_untitled_name(SCM name)
+#if 1
+SCM
+g_rc_component_library(SCM path)
 {
-    char *string;
+	int ret;
+	struct stat buf;
+	char *cwd;
+	char *string = gh_scm2newstr(path, NULL);
+	char *temp;
 
-    string = gh_scm2newstr(name, NULL);
+	/* TODO: don't I have to check string if it's NULL here? */
 
-    if (project_current->untitled_name) {
-	free(project_current->untitled_name);
-    }
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
 
-    project_current->untitled_name =
-	malloc(sizeof(char) * (strlen(string) + 1));
-    strcpy(project_current->untitled_name, string);
+	ret = stat(string, &buf);
 
-    if (string) {
-	free(string);
-    }
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+			"Invalid path [%s] passed to component-library\n",
+			string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
 
-    return (gh_int2scm(0));
-}
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not an unique path? */
+	if (!s_clib_uniq(string)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
 
 
-SCM g_rc_component_library(SCM path)
-{
-    int ret;
-    struct stat buf;
-    char *string;
-
-    string = gh_scm2newstr(path, NULL);
-
-    /* take care of any shell variables */
-    string = expand_env_variables(string);
-
-    ret = stat(string, &buf);
-
-    if (ret < 0) {
-	fprintf(stderr, "Invalid path [%s] passed to component-library\n",
-		string);
-    } else {
-
-	if (S_ISDIR(buf.st_mode)) {
-	    /* only add path if it is uniq */
-	    if (s_clib_uniq(string)) {
+	if (string[0] == '/') {
 		s_clib_add_entry(string);
-	    } else {
-		if (string)
-		    free(string);
-		return (gh_int2scm(-1));
-	    }
 	} else {
-	    if (string)
-		free(string);
-	    return (gh_int2scm(-1));
+		cwd = getcwd(NULL, 1024);
+		temp = u_basic_strdup_multiple(cwd, "/", string, NULL);
+		s_clib_add_entry(temp);
+		free(temp);
+		free(cwd);
 	}
-    }
 
-    if (string) {
-	free(string);
-    }
+	if (string) {
+		free(string);
+	}
 
-    return (gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
-SCM g_rc_component_library_search(SCM path)
+SCM
+g_rc_component_library_search(SCM path)
 {
-    int ret;
-    struct stat buf;
-    DIR *top_ptr;
-    struct dirent *dptr;
-    char *string = gh_scm2newstr(path, NULL);
-    char *fullpath;
-    char *cwd, *temp;
+	int ret;
+	struct stat buf;
+	DIR *top_ptr;
+        struct dirent *dptr;
+	char *string = gh_scm2newstr(path, NULL);
+	char *fullpath;
+	char *cwd, *temp;
 
-    /* TODO: don't I have to check string if it's NULL here? */
+	/* TODO: don't I have to check string if it's NULL here? */
 
-    /* take care of any shell variables */
-    string = expand_env_variables(string);
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
 
-    ret = stat(string, &buf);
+	ret = stat(string, &buf);
 
-    /* invalid path? */
-    if (ret < 0) {
-	fprintf(stderr,
-		"Invalid path [%s] passed to component-library-search\n",
-		string);
-	if (string) {
-	    free(string);
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to component-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
 	}
-	return SCM_BOOL_F;
-    }
 
-    /* not a directory? */
-    if (!S_ISDIR(buf.st_mode)) {
-	if (string) {
-	    free(string);
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
 	}
-	return SCM_BOOL_F;
-    }
 
-    top_ptr = opendir(string);
+	top_ptr = opendir(string);
 
-    if (top_ptr == NULL) {
-	fprintf(stderr,
-		"Invalid path [%s] passed to component-library-search\n",
-		string);
-	if (string) {
-	    free(string);
-	}
-	return SCM_BOOL_F;
-    }
+	if (top_ptr == NULL) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to component-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+        }
 
-    while ((dptr = readdir(top_ptr))) {
+        while((dptr = readdir(top_ptr))) {
 
-	/* don't do . and .. and special case font */
-	if ((strcmp(dptr->d_name, ".") != 0) &&
-	    (strcmp(dptr->d_name, "..") != 0) &&
-	    (strcmp(dptr->d_name, "font") != 0)) {
+	  /* don't do . and .. and special case font */
+	  if ((strcmp(dptr->d_name, ".") != 0) && 
+	      (strcmp(dptr->d_name, "..") != 0) &&
+              (strcmp(dptr->d_name, "font") != 0)) {
 
-	    fullpath = (char *) malloc(sizeof(char) * (strlen(string) +
-						       strlen(dptr->d_name)
-						       + 2));
-	    sprintf(fullpath, "%s/%s", string, dptr->d_name);
-	    stat(fullpath, &buf);
-	    if (S_ISDIR(buf.st_mode)) {
-		if (s_clib_uniq(fullpath)) {
-		    if (fullpath[0] == '/') {
-			s_clib_add_entry(fullpath);
+		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
+						      strlen(dptr->d_name)+2));
+		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+                stat(fullpath, &buf);
+                if (S_ISDIR(buf.st_mode)) { 
+			if (s_clib_uniq(fullpath)) {
+				if (fullpath[0] == '/') {
+					s_clib_add_entry(fullpath);
 #if DEBUG
 			printf("absolute: %s\n", fullpath);
 #endif
-		    } else {
-			cwd = getcwd(NULL, 1024);
-			temp = u_basic_strdup_multiple(cwd,
-						       "/", fullpath,
-						       NULL);
+				} else {
+					cwd = getcwd(NULL, 1024);
+					temp = u_basic_strdup_multiple(cwd, 
+							"/", fullpath, NULL);
 #if DEBUG
 			printf("relative: %s\n", temp);
 #endif
-			s_clib_add_entry(temp);
-			free(temp);
-			free(cwd);
-		    }
-		}
-	    }
-	    free(fullpath);
+					s_clib_add_entry(temp);
+					free(temp);
+					free(cwd);
+				}
+			} 
+                }
+		free(fullpath);
+            }
+        }       
+
+	if (string) {
+		free(string);
 	}
-    }
 
-    if (string) {
-	free(string);
-    }
-
-    return SCM_BOOL_T;
+	return SCM_BOOL_T;
 }
 
-SCM g_rc_source_library(SCM path)
+SCM
+g_rc_source_library(SCM path)
 {
-    int ret;
-    struct stat buf;
-    char *string;
+	int ret;
+	struct stat buf;
+	char *string = gh_scm2newstr(path, NULL);
+	char *temp, *cwd;
 
-    string = gh_scm2newstr(path, NULL);
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"source-library"
+			);
+		return SCM_BOOL_F;
+	}
 
-    /* take care of any shell variables */
-    string = expand_env_variables(string);
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
 
-    ret = stat(string, &buf);
+	ret = stat(string, &buf);
 
-    if (ret < 0) {
-	fprintf(stderr, "Invalid path [%s] passed to source-library\n",
-		string);
-    } else {
-	if (S_ISDIR(buf.st_mode)) {
-	    if (s_slib_uniq(string)) {
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+			"Invalid path [%s] passed to %s\n",
+			string,
+			"source-library");
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a unique path? */
+	if (!s_slib_uniq(string)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	if (string[0] == '/') {
 		s_slib_add_entry(string);
-	    } else {
-		if (string)
-		    free(string);
-		return (gh_int2scm(-1));
-	    }
 	} else {
-	    if (string)
-		free(string);
-	    return (gh_int2scm(-1));
-
+		cwd = getcwd(NULL, 1024);
+		temp = u_basic_strdup_multiple(cwd, "/", string, NULL);
+		s_slib_add_entry(temp);
+		free(temp);
+		free(cwd);
 	}
-    }
-    if (string) {
-	free(string);
-    }
 
-    return (gh_int2scm(0));
+	if (string) {
+		free(string);
+	}
+	return SCM_BOOL_T;
 }
 
-SCM g_rc_source_library_search(SCM path)
+SCM
+g_rc_source_library_search(SCM path)
 {
-    int ret;
-    struct stat buf;
-    DIR *top_ptr;
-    struct dirent *dptr;
-    char *string = gh_scm2newstr(path, NULL);
-    char *fullpath;
-    char *cwd, *temp;
+	int ret;
+	struct stat buf;
+	DIR *top_ptr;
+        struct dirent *dptr;
+	char *string = gh_scm2newstr(path, NULL);
+	char *fullpath;
+	char *cwd, *temp;
 
-    /* TODO: don't I have to check string if it's NULL here? */
+	/* TODO: don't I have to check string if it's NULL here? */
 
-    /* take care of any shell variables */
-    string = expand_env_variables(string);
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
 
-    ret = stat(string, &buf);
+	ret = stat(string, &buf);
 
-    /* invalid path? */
-    if (ret < 0) {
-	fprintf(stderr,
-		"Invalid path [%s] passed to source-library-search\n",
-		string);
-	if (string) {
-	    free(string);
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to source-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
 	}
-	return SCM_BOOL_F;
-    }
 
-    /* not a directory? */
-    if (!S_ISDIR(buf.st_mode)) {
-	if (string) {
-	    free(string);
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
 	}
-	return SCM_BOOL_F;
-    }
 
-    top_ptr = opendir(string);
+	top_ptr = opendir(string);
 
-    if (top_ptr == NULL) {
-	fprintf(stderr,
-		"Invalid path [%s] passed to source-library-search\n",
-		string);
-	if (string) {
-	    free(string);
-	}
-	return SCM_BOOL_F;
-    }
+	if (top_ptr == NULL) {
+		fprintf(stderr,
+		     "Invalid path [%s] passed to source-library-search\n",
+		     string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+        }
 
-    while ((dptr = readdir(top_ptr))) {
+        while((dptr = readdir(top_ptr))) {
 
-	/* don't do . and .. and special case font */
-	if ((strcmp(dptr->d_name, ".") != 0) &&
-	    (strcmp(dptr->d_name, "..") != 0) &&
-	    (strcmp(dptr->d_name, "font") != 0)) {
+	  /* don't do . and .. and special case font */
+	  if ((strcmp(dptr->d_name, ".") != 0) && 
+	      (strcmp(dptr->d_name, "..") != 0) &&
+              (strcmp(dptr->d_name, "font") != 0)) {
 
-	    fullpath = (char *) malloc(sizeof(char) * (strlen(string) +
-						       strlen(dptr->d_name)
-						       + 2));
-	    sprintf(fullpath, "%s/%s", string, dptr->d_name);
-	    stat(fullpath, &buf);
-	    if (S_ISDIR(buf.st_mode)) {
-		if (s_slib_uniq(fullpath)) {
-		    if (fullpath[0] == '/') {
-			s_slib_add_entry(fullpath);
+		fullpath=(char *)malloc(sizeof(char)*(strlen(string)+
+						      strlen(dptr->d_name)+2));
+		sprintf(fullpath, "%s/%s", string, dptr->d_name);
+                stat(fullpath, &buf);
+                if (S_ISDIR(buf.st_mode)) { 
+			if (s_slib_uniq(fullpath)) {
+				if (fullpath[0] == '/') {
+					s_slib_add_entry(fullpath);
 #if DEBUG
 			printf("absolute: %s\n", fullpath);
 #endif
-		    } else {
-			cwd = getcwd(NULL, 1024);
-			temp = u_basic_strdup_multiple(cwd,
-						       "/", fullpath,
-						       NULL);
+				} else {
+					cwd = getcwd(NULL, 1024);
+					temp = u_basic_strdup_multiple(cwd, 
+							"/", fullpath, NULL);
 #if DEBUG
 			printf("relative: %s\n", temp);
 #endif
-			s_slib_add_entry(temp);
-			free(temp);
-			free(cwd);
-		    }
-		}
-	    }
-	    free(fullpath);
-	}
-    }
+					s_slib_add_entry(temp);
+					free(temp);
+					free(cwd);
+				}
+			} 
+                }
+		free(fullpath);
+            }
+        }       
 
-    if (string) {
-	free(string);
-    }
-
-    return SCM_BOOL_T;
-}
-
-SCM g_rc_scheme_directory(SCM path)
-{
-    int ret;
-    struct stat buf;
-    char *string;
-
-    string = gh_scm2newstr(path, NULL);
-
-    /* take care of any shell variables */
-    string = expand_env_variables(string);
-
-    ret = stat(string, &buf);
-
-    if (ret < 0) {
-	fprintf(stderr, "Invalid path [%s] passed to scheme-directory\n",
-		string);
-    } else {
-
-	if (S_ISDIR(buf.st_mode)) {
-	    /* only add path if it is uniq */
-
-	    if (project_current->scheme_directory)
-		free(project_current->scheme_directory);
-
-	    project_current->scheme_directory =
-		malloc(sizeof(char) * (strlen(string) + 1));
-	    strcpy(project_current->scheme_directory, string);
-
-	} else {
-	    if (string)
+	if (string) {
 		free(string);
-	    return (gh_int2scm(-1));
 	}
-    }
 
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
+	return SCM_BOOL_T;
 }
 
-
-SCM g_rc_font_directory(SCM path)
-{
-    int ret;
-    struct stat buf;
-    char *string;
-
-    string = gh_scm2newstr(path, NULL);
-
-    /* take care of any shell variables */
-    string = expand_env_variables(string);
-
-    ret = stat(string, &buf);
-
-    if (ret < 0) {
-	fprintf(stderr, "Invalid path [%s] passed to font-directory\n",
-		string);
-    } else {
-
-	if (S_ISDIR(buf.st_mode)) {
-	    if (project_current->font_directory)
-		free(project_current->font_directory);
-
-	    project_current->font_directory =
-		malloc(sizeof(char) * (strlen(string) + 1));
-	    strcpy(project_current->font_directory, string);
-
-	} else {
-	    if (string)
-		free(string);
-	    return (gh_int2scm(-1));
-	}
-    }
-
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
-}
-
-SCM g_rc_paper_size(SCM width, SCM height, SCM border)
-{
-    int i_width, i_height, i_border;
-    int init_right, init_bottom;
-
-    /* yes this is legit, we are casing the resulting double to an int */
-    i_width = (int) gh_scm2double(width) * MILS_PER_INCH;
-    i_height = (int) gh_scm2double(height) * MILS_PER_INCH;
-    i_border = (int) gh_scm2double(border) * MILS_PER_INCH;
-
-    /* project_current->text_size = val; */
-
-    PAPERSIZEtoWORLD(i_width, i_height, i_border,
-		     &init_right, &init_bottom);
-
-#if DEBUG
-    printf("%d %d\n", i_width, i_height);
-    printf("%d %d\n", init_right, init_bottom);
 #endif
 
-    project_current->init_right = init_right;
-    project_current->init_bottom = init_bottom;
+SCM
+g_rc_scheme_directory(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string = gh_scm2newstr(path, NULL);
 
-    s_project_setup_world(project_current);
-    return (gh_int2scm(0));
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"scheme-directory"
+			);
+		return SCM_BOOL_F;
+	}
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+			"Invalid path [%s] passed to scheme-directory\n",
+			string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	if (default_scheme_directory) {
+		free(default_scheme_directory);
+	}
+	default_scheme_directory = u_basic_strdup(string);
+
+	if (string) {
+		free(string);
+	}
+	return SCM_BOOL_T;
+}
+
+SCM
+g_rc_font_directory(SCM path)
+{
+	int ret;
+	struct stat buf;
+	char *string = gh_scm2newstr(path, NULL);
+
+	if (string == NULL) {
+		fprintf(stderr,
+			"%s requires a string as a parameter\n",
+			"font-direcoty"
+			);
+		return SCM_BOOL_F;
+	}
+
+	/* take care of any shell variables */
+	string = expand_env_variables(string);
+
+	ret = stat(string, &buf);
+
+	/* invalid path? */
+	if (ret < 0) {
+		fprintf(stderr,
+			"Invalid path [%s] passed to font-directory\n",
+			string);
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	/* not a directory? */
+	if (!S_ISDIR(buf.st_mode)) {
+		if (string) {
+			free(string);
+		}
+		return SCM_BOOL_F;
+	}
+
+	if (default_font_directory) {
+		free(default_font_directory);
+	}
+	default_font_directory = u_basic_strdup(string);
+
+	if (string) {
+		free(string);
+	}
+	return SCM_BOOL_T;
+}
+
+SCM
+g_rc_world_size(SCM width, SCM height, SCM border)
+{
+	int i_width, i_height, i_border;
+	int init_right, init_bottom;
+
+	/* yes this is legit, we are casing the resulting double to an int */
+	i_width  = (int) (gh_scm2double(width ) * MILS_PER_INCH);
+ 	i_height = (int) (gh_scm2double(height) * MILS_PER_INCH);
+	i_border = (int) (gh_scm2double(border) * MILS_PER_INCH);
+
+	PAPERSIZEtoWORLD(i_width, i_height, i_border,
+			 &init_right, &init_bottom);
+
+#if DEBUG
+	printf("%d %d\n", i_width, i_height);
+	printf("%d %d\n", init_right, init_bottom);
+#endif
+
+	default_init_right  = init_right;
+	default_init_bottom = init_bottom;
+
+	return SCM_BOOL_T;
 }
 
 SCM g_rc_net_naming_priority(SCM mode)
@@ -674,77 +781,69 @@ SCM g_rc_hierarchy_netattrib_mangle(SCM mode)
 
 SCM g_rc_hierarchy_netname_separator(SCM name)
 {
-    char *string;
+  char *string = gh_scm2newstr(name, NULL);
 
-    string = gh_scm2newstr(name, NULL);
+  if (string == NULL) {
+    fprintf(stderr,
+            "%s requires a string as a parameter\n",
+            "hierarchy-netname-separator"
+            );
+    return SCM_BOOL_F;
+  }
 
-    if (project_current->hierarchy_netname_separator) {
-	free(project_current->hierarchy_netname_separator);
-    }
+  if (default_hierarchy_netname_separator) {
+    free(default_hierarchy_netname_separator);
+  }
 
-    if (string) {
-	project_current->hierarchy_netname_separator =
-	    malloc(sizeof(char) * (strlen(string) + 1));
-	strcpy(project_current->hierarchy_netname_separator, string);
-    } else {
-	project_current->hierarchy_netname_separator = NULL;
-    }
+  default_hierarchy_netname_separator = u_basic_strdup(string);
 
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
+  free(string);
+  return SCM_BOOL_T;
+    
 }
 
 SCM g_rc_hierarchy_netattrib_separator(SCM name)
 {
-    char *string;
+  char *string = gh_scm2newstr(name, NULL);
 
-    string = gh_scm2newstr(name, NULL);
+  if (string == NULL) {
+    fprintf(stderr,
+            "%s requires a string as a parameter\n",
+            "hierarchy-netattrib-separator"
+            );
+    return SCM_BOOL_F;
+  }
 
-    if (project_current->hierarchy_netattrib_separator) {
-	free(project_current->hierarchy_netattrib_separator);
-    }
+  if (default_hierarchy_netattrib_separator) {
+    free(default_hierarchy_netattrib_separator);
+  }
 
-    if (string) {
-	project_current->hierarchy_netattrib_separator =
-	    malloc(sizeof(char) * (strlen(string) + 1));
-	strcpy(project_current->hierarchy_netattrib_separator, string);
-    } else {
-	project_current->hierarchy_netattrib_separator = NULL;
-    }
+  default_hierarchy_netattrib_separator = u_basic_strdup(string);
 
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
+  free(string);
+  return SCM_BOOL_T;
 }
 
 SCM g_rc_hierarchy_uref_separator(SCM name)
 {
-    char *string;
+  char *string = gh_scm2newstr(name, NULL);
 
-    string = gh_scm2newstr(name, NULL);
+  if (string == NULL) {
+    fprintf(stderr,
+            "%s requires a string as a parameter\n",
+            "hierarchy-uref-separator"
+            );
+    return SCM_BOOL_F;
+  }
 
-    if (project_current->hierarchy_uref_separator) {
-	free(project_current->hierarchy_uref_separator);
-    }
+  if (default_hierarchy_uref_separator) {
+    free(default_hierarchy_uref_separator);
+  }
 
-    if (string) {
-	project_current->hierarchy_uref_separator =
-	    malloc(sizeof(char) * (strlen(string) + 1));
-	strcpy(project_current->hierarchy_uref_separator, string);
-    } else {
-	project_current->hierarchy_uref_separator = NULL;
-    }
+  default_hierarchy_uref_separator = u_basic_strdup(string);
 
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
+  free(string);
+  return SCM_BOOL_T;
 }
 
 SCM g_rc_hierarchy_netattrib_order(SCM mode)
@@ -781,3 +880,8 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
 }
 
 /*************************** GUILE end done *********************************/
+
+
+
+
+

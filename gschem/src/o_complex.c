@@ -1,4 +1,3 @@
-/* -*- geda-c -*- */
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
@@ -213,6 +212,7 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	OBJECT *o_temp;
 	char *include_filename;
 	int temp, new_angle, i;
+        GList *connected_objects=NULL;
 
 	diff_x = w_current->last_x - w_current->start_x;
         diff_y = w_current->last_y - w_current->start_y;
@@ -236,14 +236,31 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 			w_current->internal_basename,
 			NULL);
 
+                w_current->ADDING_SEL=1;
 		o_start = w_current->page_current->object_tail;
 		w_current->page_current->object_tail =
 			o_read(w_current,
 			       w_current->page_current->object_tail,
 			       include_filename);
 		o_start = o_start->next;
+                w_current->ADDING_SEL=0;
 
 		o_complex_world_translate(w_current, x, y, o_start);
+
+                o_temp = o_start;
+                while (o_temp != NULL) {
+                  if (o_temp->type == OBJ_NET || o_temp->type == OBJ_PIN ||
+                      o_temp->type == OBJ_BUS) {
+                    s_conn_update_object(w_current, o_temp);
+                  
+                    connected_objects = s_conn_return_others(connected_objects,
+                                                           o_temp);
+                  }
+                  o_temp = o_temp->next;
+                }
+                o_cue_undraw_list(w_current, connected_objects);
+                o_cue_draw_list(w_current, connected_objects);
+                g_list_free(connected_objects);
 
 		free(include_filename);
 
@@ -280,6 +297,8 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 		o_redraw(w_current, o_start);
 		w_current->page_current->CHANGED = 1;
 		o_undo_savestate(w_current, UNDO_ALL);
+                o_list_delete_rest(w_current, w_current->page_current->
+                                              complex_place_head);
 		return;
 	}
 
@@ -384,13 +403,14 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	 * returns */
 	o_attrib_add_selected(w_current, w_current->page_current->object_tail);
 
-	o_conn_disconnect_update(w_current->page_current);
-	o_conn_erase_all(w_current, w_current->page_current->object_tail);
-#if 0
-        o_conn_draw_all(w_current, w_current->page_current->object_head);
-#endif
-	o_redraw(w_current, w_current->page_current->object_head);
-
+        s_conn_update_complex(w_current, o_current->complex->prim_objs);
+        connected_objects = s_conn_return_complex_others(connected_objects,
+                                                         o_current);
+        o_cue_undraw_list(w_current, connected_objects);
+        o_cue_draw_list(w_current, connected_objects);
+        g_list_free(connected_objects);
+        o_cue_draw_single(w_current, w_current->page_current->object_tail);
+        
 	w_current->page_current->CHANGED = 1;
 	o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -528,28 +548,8 @@ void
 o_complex_translate_all(TOPLEVEL *w_current, int offset)
 {
 	int rleft, rtop, rright, rbottom;
+        OBJECT *o_current;
 	int x, y;
-
-#if 0
-	/* these warnings have been moved into
-         * i_callback_edit_translate */
-	if (w_current->snap == 0) {
-		s_log_message("WARNING: Do not translate with snap off!\n");
-		s_log_message(
-			"WARNING: Turning snap on and "
-			"continuing with translate.\n");
-		w_current->snap = 1;
-	}
-
-	if (w_current->snap_size != 100) {
-		s_log_message(
-			"WARNING: Snap grid size is not equal to 100!\n");
-		s_log_message(
-			"WARNING: If you are translating a symbol "
-			"to the origin, the snap grid size should be "
-			"set to 100\n");
-	}
-#endif
 
 	get_complex_bounds(w_current, w_current->page_current->object_head,
 			   &rleft,
@@ -564,6 +564,12 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 		      &x,
 		      &y);
 
+        o_current = w_current->page_current->object_head;
+        while(o_current != NULL) {
+          s_conn_remove(w_current, o_current);
+          o_current = o_current->next;
+        }
+        
 	if (offset == 0) {
 		s_log_message("Translating schematic [%d %d]\n", -x, -y);
 		o_complex_world_translate(
@@ -578,6 +584,12 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 			offset, offset,
 			w_current->page_current->object_head);
 	}
+
+        o_current = w_current->page_current->object_head;
+        while(o_current != NULL) {
+          s_conn_update_object(w_current, o_current);
+          o_current = o_current->next;
+        }
 
 	/* this is an experimental mod, to be able to translate to all
 	 * places */

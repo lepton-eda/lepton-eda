@@ -265,6 +265,7 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("options-action-feedback", g_key_options_afeedback);
 	gh_new_procedure0_0 ("options-grid", g_key_options_grid);
 	gh_new_procedure0_0 ("options-snap", g_key_options_snap);
+        gh_new_procedure0_0 ("options-rubberband", g_key_options_rubberband);
 	gh_new_procedure0_0 ("options-show-log-window", g_key_options_show_log_window);
 	gh_new_procedure0_0 ("options-show-coord-window", g_key_options_show_coord_window);
 	gh_new_procedure0_0 ("help-about", g_key_help_about);

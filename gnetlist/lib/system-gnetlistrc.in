@@ -28,12 +28,6 @@
 ;
 (default-series-name "untitled")
 
-; untitled-name string
-; Specify the default untitled basename (usually only used a startup time)
-; And typically not changed at runtime
-;
-(untitled-name "untitled")
-
 ; net-naming-priority string
 ;
 ; Specifies which netname has priority if a net is found with two labels.
@@ -163,17 +157,18 @@
 ; End of path related keywords
 ;
 
-; paper-size width height border
-; Specifies the size of the paper and a border around the page
+; world-size width height border
+;
+; Specifies the size of the world and a border 
 ; Be sure all inputs are reals (floats/doubles) and don't try to reverse
 ; the values: to get a portrait mode.  Code to support that needs to be added
 ; The code that implements this automatically transforms the dimensions into
 ; the proper aspect ratio.  All units are in inches.
+; This is not the paper size.  That is specified elsewhere.  End users should
+; not change this at all
 ;
-;(paper-size 11.0 8.5 1.0)    ; A size sheet
-;(paper-size 17.0 11.0 1.0)   ; B size sheet
-(paper-size 22.0 17.0 1.0)   ; C size sheet
-;(paper-size 34.0 22.0 1.0)   ; D size sheet
-;(paper-size 44.0 34.0 1.0)   ; E size shee
+(world-size 120.0 90.0 1.0)
+;(world-size 60.0 45.0 1.0)
+
 
 

@@ -40,7 +40,6 @@ void g_register_funcs(void)
     /* gnetlistrc functions */
     gh_new_procedure1_0("gnetlist-version", g_rc_gnetlist_version);
     gh_new_procedure1_0("default-series-name", g_rc_default_series_name);
-    gh_new_procedure1_0("untitled-name", g_rc_untitled_name);
     gh_new_procedure1_0("component-library", g_rc_component_library);
     gh_new_procedure1_0("component-library-search",
 			g_rc_component_library_search);
@@ -49,7 +48,8 @@ void g_register_funcs(void)
 			g_rc_source_library_search);
     gh_new_procedure1_0("font-directory", g_rc_font_directory);
     gh_new_procedure1_0("scheme-directory", g_rc_scheme_directory);
-    gh_new_procedure3_0("paper-size", g_rc_paper_size);
+    gh_new_procedure3_0("world-size", g_rc_world_size);
+    
     gh_new_procedure1_0("net-naming-priority", g_rc_net_naming_priority);
     gh_new_procedure1_0("hierarchy-traversal", g_rc_hierarchy_traversal);
     gh_new_procedure1_0("hierarchy-uref-mangle",

@@ -84,7 +84,7 @@ SCM g_funcs_key_name(SCM keystring)
 	key_value_string = (char *) malloc(sizeof(char)*(
 				            strlen(string)+25));
 
-	sprintf(key_value_string, "%s : ", string);
+	sprintf(key_value_string, "%s :", string);
 
 	free(string);
 	return SCM_BOOL_T;

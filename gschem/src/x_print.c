@@ -350,7 +350,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
                 gtk_widget_show (label);
 
 		w_current->pfilename_entry =
-			gtk_entry_new_with_max_length(79);
+			gtk_entry_new_with_max_length(200);
                 gtk_editable_select_region(
 			GTK_EDITABLE(w_current->pfilename_entry), 0, -1);
                 gtk_box_pack_start(GTK_BOX (box),

@@ -134,6 +134,7 @@ SCM g_key_options_afeedback(void);
 SCM g_key_options_grid(void);
 SCM g_key_options_snap(void);
 SCM g_key_options_snap_size(void);
+SCM g_key_options_rubberband(void);
 SCM g_key_options_show_log_window(void);
 SCM g_key_options_show_coord_window(void);
 SCM g_key_misc(void);
@@ -356,6 +357,7 @@ void i_callback_options_snap_size(gpointer data, guint callback_action, GtkWidge
 void i_callback_options_afeedback(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_grid(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_snap(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_options_rubberband(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_log_window(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_misc(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_misc2(gpointer data, guint callback_action, GtkWidget *widget);
@@ -427,9 +429,6 @@ void o_buffer_paste_rubberpaste(TOPLEVEL *w_current, int buf_num);
 void o_buffer_init(void);
 void o_buffer_free(TOPLEVEL *w_current);
 /* o_bus.c */
-void o_bus_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_bus_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
-void o_bus_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -468,18 +467,21 @@ void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, SELECTIO
 void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
 int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery, OBJECT *object);
-/* o_conn.c */
-void o_conn_draw_endpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
-void o_conn_draw_midpoint(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
-void o_conn_draw_invalid(TOPLEVEL *w_current, GdkGC *local_gc, int x, int y);
-void o_conn_draw_objects(TOPLEVEL *w_current, OBJECT *object);
-void o_conn_draw_all(TOPLEVEL *w_current, OBJECT *object_list);
-void o_conn_erase_all(TOPLEVEL *w_current, OBJECT *object_list);
-OBJECT *o_conn_find_closest(OBJECT *object_list, int x, int y, int *whichone, int *prev_distance, int *prev_which);
-int o_conn_draw_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, GdkGC *local_gc, int x, int y, int other_wx, int other_wy);
 /* o_copy.c */
 void o_copy_start(TOPLEVEL *w_current, int x, int y);
 void o_copy_end(TOPLEVEL *w_current);
+/* o_cue.c */
+void o_cue_redraw_all(TOPLEVEL *w_current, OBJECT *head);
+void o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone);
+void o_cue_erase_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone);
+void o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object);
+void o_cue_draw_single(TOPLEVEL *w_current, OBJECT *object);
+void o_cue_erase_single(TOPLEVEL *w_current, OBJECT *object);
+void o_cue_undraw(TOPLEVEL *w_current, OBJECT *object);
+void o_cue_undraw_complex(TOPLEVEL *w_current, OBJECT *object);
+int o_cue_draw_list(TOPLEVEL *w_current, GList *object_list);
+int o_cue_undraw_list(TOPLEVEL *w_current, GList *object_list);
+void o_cue_undraw_objects(TOPLEVEL *w_current, OBJECT *list);
 /* o_delete.c */
 void o_delete_net(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_bus(TOPLEVEL *w_current, OBJECT *obj);
@@ -521,18 +523,15 @@ void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
 void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
+void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, int screen_diff_x, int screen_diff_y);
 void o_move_end(TOPLEVEL *w_current);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(TOPLEVEL *w_current, OBJECT *object);
-void o_move_check_midpoint(TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(TOPLEVEL *w_current);
 int o_move_zero_length(OBJECT *object);
 void o_move_end_rubberband(TOPLEVEL *w_current, int world_diff_x, int world_diff_y);
 void o_move_stretch_rubberband(TOPLEVEL *w_current);
 /* o_net.c */
-void o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
-void o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -543,8 +542,6 @@ void o_net_rubbernet(TOPLEVEL *w_current, int x, int y);
 void o_net_eraserubber(TOPLEVEL *w_current);
 void o_net_xorrubber(TOPLEVEL *w_current);
 /* o_pin.c */
-void o_pin_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
-void o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
@@ -715,6 +712,7 @@ void x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);
+void x_draw_tiles(TOPLEVEL *w_current);
 /* x_image.c */
 gint image_320(GtkWidget *w, TOPLEVEL *w_current);
 gint image_640(GtkWidget *w, TOPLEVEL *w_current);

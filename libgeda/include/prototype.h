@@ -10,6 +10,7 @@ void f_close(TOPLEVEL *w_current);
 void f_save_close(TOPLEVEL *w_current, char *filename);
 void f_save(TOPLEVEL *w_current, char *filename);
 /* f_image.c */
+void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
 void f_image_write(TOPLEVEL *w_current, char *filename, int width, int height, int color_mode);
 void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
@@ -116,6 +117,7 @@ char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_default_slot(OBJECT *object);
 char *o_attrib_search_pin_number(OBJECT *object, int pin_number, OBJECT **return_found);
 char *o_attrib_search_slot_number(OBJECT *object, int slotnumber);
+char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *w_current, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *w_current, OBJECT *original, OBJECT *target);
 int o_attrib_count_toplevel(TOPLEVEL *w_current, char *name);
@@ -154,7 +156,6 @@ void o_box_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_center
 void o_box_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_box_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 void o_box_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
-/* o_box_circle.c */
 /* o_bus_basic.c */
 void get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
 void world_get_bus_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
@@ -231,38 +232,11 @@ OBJECT *o_complex_return_nth_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
-/* o_conn.c */
-CONN *o_conn_return_tail(CONN *head);
-CONN *o_conn_add_head(OBJECT *parent, int x, int y);
-CONN *o_conn_add(CONN *list_head, OBJECT *item, OBJECT *responsible, int type, int x, int y);
-void o_conn_free(CONN *current);
-void o_conn_free_all(CONN *list);
-void o_conn_print(CONN *conn);
-void o_conn_print_hash_func(gpointer key, gpointer value, gpointer user_data);
-void o_conn_print_hash(GHashTable *conn_table);
-void o_conn_delete(CONN *c_current);
-char *o_conn_return_key(int x, int y);
-CONN *o_conn_search(CONN *conn_list, OBJECT *o_current);
-int o_conn_is_bus(CONN *conn_list);
-int o_conn_is_net(CONN *conn_list);
-int o_conn_is_pin(CONN *conn_list);
-int o_conn_has_bus_midpoint(CONN *conn_list);
-void o_conn_makeup(GHashTable *conn_table, char *key, OBJECT *o_current);
-void o_conn_update_cues_info(CONN *conn_list);
-OBJECT *o_conn_find_midpoint(OBJECT *object_list, int x, int y);
-void o_conn_update_net(PAGE *p_current, OBJECT *o_current, int x, int y);
-void o_conn_update_bus(PAGE *p_current, OBJECT *o_current, int x, int y);
-void o_conn_update_pin(PAGE *p_current, OBJECT *o_current, int x, int y);
-void o_conn_update(PAGE *p_current, OBJECT *o_current);
-void o_conn_update_all(PAGE *p_current, OBJECT *object_list);
-int o_conn_query_table(GHashTable *conn_table, int x, int y);
-OBJECT *o_conn_return_bus_object(GHashTable *conn_table, int x, int y);
-int o_conn_disconnect_func(gpointer key, gpointer value, gpointer user_data);
-void o_conn_disconnect_update(PAGE *p_current);
-void o_conn_disconnect(PAGE *p_current);
-void o_conn_print_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, FILE *fp, int x, int y, int other_wx, int other_wy);
-void o_conn_image_busmidpoint(TOPLEVEL *w_current, OBJECT *bus_object, int x, int y, int other_wx, int other_wy);
 /* o_image.c */
+void o_image_init(void);
+void o_image_create(int x, int y, int color_mode);
+void o_image_close(void);
+int o_image_write(char *filename);
 int o_image_geda2gd_color(int color);
 /* o_line_basic.c */
 void get_line_bounds(TOPLEVEL *w_current, LINE *line, int *left, int *top, int *right, int *bottom);
@@ -313,6 +287,7 @@ void o_net_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object)
 void o_net_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 int o_net_orientation(OBJECT *object);
 void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
+int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y);
 int o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object);
 void o_net_consolidate(TOPLEVEL *w_current);
 void o_net_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
@@ -423,8 +398,19 @@ char *s_color_ps_string(int color);
 int s_color_image_int(int color);
 void s_color_gdcolor_init(void);
 int s_color_get_name(int index, char *string);
+/* s_conn.c */
+CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
+int s_conn_uniq(GList *conn_list, CONN *input_conn);
+int s_conn_remove_other(TOPLEVEL *w_current, OBJECT *other_object, OBJECT *to_remove);
+void s_conn_remove(TOPLEVEL *w_current, OBJECT *to_remove);
+OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
+void s_conn_update_object(TOPLEVEL *w_current, OBJECT *object);
+void s_conn_update_complex(TOPLEVEL *w_current, OBJECT *complex);
+void s_conn_print(GList *conn_list);
+GList *s_conn_return_others(GList *input_list, OBJECT *object);
+GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 /* s_hierarchy.c */
-int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename, PAGE *parent, int page_control);
+int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename, PAGE *parent, int page_control, int flag);
 void s_hierarchy_down_schematic_multiple(TOPLEVEL *w_current, char *filename, PAGE *parent);
 void s_hierarchy_down_symbol(TOPLEVEL *w_current, char *filename, PAGE *parent);
 void s_hierarchy_up(TOPLEVEL *w_current, int pid);
@@ -437,22 +423,6 @@ void s_log_init(char *cwd, char *filename);
 void s_log_message(const gchar *format, ...);
 void s_log_close(void);
 /* s_nethash.c */
-NETHASH *s_nethash_return_tail(NETHASH *head);
-NETHASH *s_nethash_add_head(OBJECT *parent);
-NETHASH *s_nethash_add(NETHASH *list_head, OBJECT *object, int type, CONN *conn_list);
-void s_nethash_free(NETHASH *current);
-void s_nethash_free_all(NETHASH *list);
-void s_nethash_print(NETHASH *nethash);
-void s_nethash_print_hash_func(gpointer key, gpointer value, gpointer user_data);
-void s_nethash_print_hash(GHashTable *nethash_table);
-int s_nethash_delete_func(gpointer key, gpointer value, gpointer user_data);
-void s_nethash_delete_all(GHashTable *nethash_table);
-void s_nethash_delete(NETHASH *nh_current);
-NETHASH *s_nethash_search(NETHASH *nethash_list, OBJECT *o_current);
-void s_nethash_add_new(GHashTable *nethash_table, OBJECT *o_current, char *new_key, int type, CONN *conn_list);
-NETHASH *s_nethash_query_table(GHashTable *nethash_table, char *key);
-void s_nethash_build_func(gpointer key, gpointer value, gpointer user_data);
-void s_nethash_build(GHashTable *nethash_table, GHashTable *conn_table, OBJECT *start);
 /* s_page.c */
 PAGE *s_page_return_tail(PAGE *head);
 void s_page_free(TOPLEVEL *w_current, PAGE *p_current);
@@ -509,6 +479,15 @@ void s_stretch_remove_most(TOPLEVEL *w_current, STRETCH *head);
 void s_stretch_print_all(STRETCH *head);
 void s_stretch_destroy_all(STRETCH *head);
 /* s_stroke.c */
+/* s_tile.c */
+void s_tile_init(TOPLEVEL *w_current, PAGE *p_current);
+TILE_LOC *s_tile_new_loc(int i, int j);
+void s_tile_add_object(TOPLEVEL *w_current, OBJECT *object, int world_x1, int world_y1, int world_x2, int world_y2);
+void s_tile_remove_object_all_crude(TOPLEVEL *w_current, OBJECT *object);
+void s_tile_remove_object_all(TOPLEVEL *w_current, PAGE *p_current, OBJECT *object);
+void s_tile_update_object(TOPLEVEL *w_current, OBJECT *object);
+void s_tile_print(TOPLEVEL *w_current);
+void s_tile_free_all(PAGE *p_current);
 /* s_undo.c */
 UNDO *s_undo_return_tail(UNDO *head);
 UNDO *s_undo_return_head(UNDO *tail);

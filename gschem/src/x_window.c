@@ -98,19 +98,21 @@ x_window_setup_world(TOPLEVEL *w_current)
         w_current->max_zoom = 256;  /* was 128 */
 
 	if (w_current->display_width <= 800) {
-/* old way */
-#if 0
-		w_current->width = 700;
-		w_current->height = 525;
-#endif
-
-/* new way */
 		w_current->width = 672;
 		w_current->height = 504;
-	} else {
+	} else if (w_current->display_width <= 1024) {
 		w_current->width = 800;
 		w_current->height = 600;
-	}
+	} else if (w_current->display_width <= 1280) {
+               w_current->width = 1024;
+               w_current->height = 768;
+        } else if (w_current->display_width <= 1600) {
+               w_current->width = 1280;
+               w_current->height = 960;
+        } else {
+               w_current->width = 1600;
+               w_current->height = 1200;
+        }
 
         w_current->starting_width = w_current->width;
 

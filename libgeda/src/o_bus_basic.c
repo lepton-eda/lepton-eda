@@ -137,9 +137,12 @@ o_bus_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x1
 
 	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 
-	/* new CONN stuff */
+	s_tile_add_object(w_current, object_list, 
+			  new_node->line->x[0], new_node->line->y[0], 
+			  new_node->line->x[1], new_node->line->y[1]);
+
 	if (!w_current->ADDING_SEL) {
-		o_conn_update(w_current->page_current, object_list);
+		s_conn_update_object(w_current, object_list);
 	}
 
 	return(object_list);
@@ -279,6 +282,8 @@ o_bus_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 	
 	object->line->x[1] = snap_grid(w_current, x);
 	object->line->y[1] = snap_grid(w_current, y);
+
+	s_tile_update_object(w_current, object);
 }
 
 
@@ -322,6 +327,8 @@ o_bus_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 	object->top = top;
 	object->right = right;
 	object->bottom = bottom;
+
+	s_tile_update_object(w_current, object);
 }
 
 
@@ -338,12 +345,13 @@ o_bus_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 		color = o_current->saved_color;
 	}
 
-	/* CONN stuff... */
 	/* make sure you fix this in pin and bus as well */
 	/* still doesn't work... you need to pass in the new values */
 	/* or don't update and update later */
 	/* I think for now I'll disable the update and manually update */
-	new_obj = o_bus_add(w_current, list_tail, OBJ_BUS, color, 0,0,0,0);
+	new_obj = o_bus_add(w_current, list_tail, OBJ_BUS, color, 
+				o_current->line->x[0], o_current->line->y[0],
+				o_current->line->x[1], o_current->line->y[1]);
 
 	new_obj->line->screen_x[0] = o_current->line->screen_x[0];
 	new_obj->line->screen_y[0] = o_current->line->screen_y[0];
@@ -721,145 +729,13 @@ o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 int 
 o_bus_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 {
-#if 0
-	char *key=NULL;
-	CONN *conn_list;
-	CONN *c_current;
-	int object_orient;
-	int current_orient;
-	int cue;
-	int changed=0;
 
-	if (object == NULL) {
-		return;
-	}
-
-	object_orient = o_net_orientation(object);
-
-	key = o_conn_return_key(object->line->x[0],
-                                object->line->y[0]);
-
-	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
-                                        key);
-
-	if (conn_list) {
-/* TODO: bus here as well? */
-	  if (conn_list->visual_cue != MIDPOINT_CUE) {
-		cue = conn_list->visual_cue;
-                c_current = conn_list;
-                while (c_current != NULL) {
-                        if (c_current->object != NULL) {
-				current_orient = o_net_orientation(c_current->object);
-
-				if (current_orient == object_orient &&
-				    c_current->object->sid != object->sid &&
-				    object->type == OBJ_NET && 
-				    c_current->object->type == OBJ_NET) {
-
-#if DEBUG 
-					printf("yeah, can connect %s and %s %d\n",
-						object->name, 
-						c_current->object->name, cue);
-#endif
-
-					o_net_consolidate_lowlevel(object, 
-							c_current->object, 
-							current_orient);
-
-					changed++;
-				
-					s_delete(w_current, c_current->object);
-			                o_conn_disconnect_update(w_current->page_current);
-					o_net_recalc(w_current, object);
-					w_current->page_current->object_tail = 	
-						return_tail(w_current->page_current->object_head);
-					free(key);
-					return(-1);
-				}
-
-                        }                                                     
-                        c_current = c_current->next;
-                }
-	  }
-        }
-
-	free(key);
-
-	key = o_conn_return_key(object->line->x[1],
-                                object->line->y[1]);
-
-	conn_list = g_hash_table_lookup(w_current->page_current->conn_table,
-                                        key);
-
-	if (conn_list) {
-/* TODO: bus here as well? */
-	  if (conn_list->visual_cue != MIDPOINT_CUE) {
-		cue = conn_list->visual_cue;
-                c_current = conn_list;
-                while (c_current != NULL) {
-                        if (c_current->object != NULL) {
-				current_orient = o_net_orientation(c_current->object);
-
-				if (current_orient == object_orient &&
-				    c_current->object->sid != object->sid &&
-				    object->type == OBJ_NET && 
-				    c_current->object->type == OBJ_NET) {
-
-#if 1
-					printf("yeah, can connect %s and %s %d\n",
-						object->name, 
-						c_current->object->name, cue);
-#endif
-					o_net_consolidate_lowlevel(object, 
-							c_current->object,
-							current_orient);
-					changed++;
-					s_delete(w_current, c_current->object);
-			                o_conn_disconnect_update(w_current->page_current);
-				
-					o_net_recalc(w_current, object);
-					w_current->page_current->object_tail = 	
-						return_tail(w_current->page_current->object_head);
-					free(key);
-					return(-1);
-				}
-
-                        }                                                     
-                        c_current = c_current->next;
-                }
-          }
-        }
-
-	free(key);
-
-	return(changed);
-#endif
-	return(0);
 }
 
 void
 o_bus_consolidate(TOPLEVEL *w_current)
 {
-#if 0
-	OBJECT *o_current;
-	int status = 0;
 
-	o_current = w_current->page_current->object_head;
-
-	while(o_current != NULL) {
-
-		if (o_current->type == OBJ_BUS) {
-			status = o_bus_consolidate_segments(w_current, o_current);
-		}
-
-		if (status == -1) {
-			o_current = w_current->page_current->object_head;
-			status = 0;
-		} else {
-			o_current = o_current->next;
-		}
-	}
-#endif
 }
 
 void

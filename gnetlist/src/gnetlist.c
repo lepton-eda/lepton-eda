@@ -1,5 +1,4 @@
-/* -*- geda-c -*-
- * gEDA - GPL Electronic Design Automation
+/* gEDA - GPL Electronic Design Automation
  * gnetlist - gEDA Netlist 
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
@@ -93,6 +92,7 @@ void main_prog(int argc, char *argv[])
     s_clib_init();
     s_slib_init();
 
+    g_rc_parse();
     s_rename_init();
 
     s_project_add_head();

@@ -148,9 +148,12 @@ ifed out 3/15/98 due to above
         }     
 #endif
 
-	/* we'll try this here */
+
 	if (!w_current->ADDING_SEL) {
-		o_conn_update(w_current->page_current, object_list);
+          s_tile_add_object(w_current, object_list, 
+			  new_node->line->x[0], new_node->line->y[0], 
+			  new_node->line->x[1], new_node->line->y[1]);
+	  s_conn_update_object(w_current, object_list);
 	}
 
 	return(object_list);
@@ -282,6 +285,8 @@ o_pin_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
 	
 	object->line->x[1] = snap_grid(w_current, x);
 	object->line->y[1] = snap_grid(w_current, y);
+
+	s_tile_update_object(w_current, object);
 }
 
 void
@@ -324,6 +329,8 @@ o_pin_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object)
 	object->top = top;
 	object->right = right;
 	object->bottom = bottom;
+
+	s_tile_update_object(w_current, object);
 }
 
 OBJECT *
@@ -339,7 +346,9 @@ o_pin_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 		color = o_current->saved_color;
 	}
 
-	new_obj = o_pin_add(w_current, list_tail, OBJ_PIN, color, 0, 0, 0, 0);
+	new_obj = o_pin_add(w_current, list_tail, OBJ_PIN, color, 
+				o_current->line->x[0], o_current->line->y[0],
+				o_current->line->x[1], o_current->line->y[1]);
 
 	/* why is this here ? */
 	/* because they all have it, and it is used during outline actions */
@@ -543,4 +552,6 @@ o_pin_modify(TOPLEVEL *w_current, OBJECT *object,
 	object->top = top;
 	object->right = right;
 	object->bottom = bottom;	
+
+	s_tile_update_object(w_current, object);
 }

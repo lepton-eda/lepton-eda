@@ -1,4 +1,27 @@
+2001-02-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
+	* src/s_hierarchy.c: Fixed the nasty bug which was caused by my
+	  replacing the rc system to be like gschem.  Basically schematics
+	  were being loaded so that there was only ONE copy in memory at 
+	  all times.  This is not how gnetlist works.  Each hierarchical
+	  schematic must be uniq in memory.  Fixed it by changing
+	  libgeda's s_hierarchy_down_schematic_single to take a normal
+	  or force flag.
+	
+2001-02-17  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Got all the traverse functions to use the new
+	  connection system
+
+	* src/g_rc.c, i_vars.c: Replaced rc system to be almost exactly
+	  the same as gschem's
+
+	* lib/system-gnetlistrc.in: Updates to this file to take into
+	  account about changes
+
+	* include/i_vars.h: Updated file to take into account above
+	  changes
+	
 2001-01-30  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_traverse.c: Fixed the graphical=1 test so that the 

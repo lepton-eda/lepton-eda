@@ -49,9 +49,6 @@ o_redraw_all(TOPLEVEL *w_current)
 #endif
 
 
-	/* this is slowing things down A LOT, remove it eventually */
-	o_conn_disconnect_update(w_current->page_current);
-
 	if (!w_current->DONT_REDRAW) {
 		x_repaint_background(w_current);
 	}
@@ -64,6 +61,8 @@ o_redraw_all(TOPLEVEL *w_current)
 
 	if (!w_current->DONT_REDRAW) {
 		o_redraw(w_current, w_current->page_current->object_head);
+                o_cue_redraw_all(w_current,
+                                  w_current->page_current->object_head);
 	}
 
 #if 0
@@ -116,6 +115,8 @@ o_redraw_all_fast(TOPLEVEL *w_current)
 
 	if (!w_current->DONT_REDRAW) {
 		o_redraw(w_current, w_current->page_current->object_head);
+                o_cue_redraw_all(w_current,
+                                  w_current->page_current->object_head);
 	}
 }
 
@@ -151,25 +152,6 @@ o_erase_selected(TOPLEVEL *w_current)
 	if (w_current->inside_redraw) {
 		return;
 	}
-
-	/* erases the selection list */
-#if 0
-	o_current = w_current->page_current->selection_head;
-
-	w_current->DONT_DRAW_CONN = 1;
-	w_current->override_color = w_current->background_color;
-	if (w_current->page_current->selection_head->next != NULL) {
-		while (o_current != NULL) {
-			if (o_current->draw_func &&
-			      o_current->type != OBJ_HEAD) {
-				(*o_current->draw_func)(w_current, o_current);
-			}
-			o_current = o_current->next;
-		}
-	}
-	w_current->override_color = -1;
-	w_current->DONT_DRAW_CONN = 0;
-#endif
 }
 
 void
@@ -414,6 +396,7 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list,
 					   rright  - rleft,
 					   rbottom - rtop);
 		}
+
 		if (w_current->netconn_rubberband) {
 			o_move_stretch_rubberband(w_current);
 			o_move_stretch_rubberband(w_current);

@@ -203,7 +203,7 @@ OBJECT *
     bottom = top + x2size;
 
     if (inside_region(left, top, right, bottom, x, y)) {
-	printf("found something 0!\n");
+      /*printf("found something 0!\n");*/
 	*whichone = 0;
 	return (o_current);
     }
@@ -216,7 +216,7 @@ OBJECT *
     bottom = top + x2size;
 
     if (inside_region(left, top, right, bottom, x, y)) {
-	printf("found something 1!\n");
+      /*printf("found something 1!\n");*/
 	*whichone = 1;
 	return (o_current);
     }
@@ -229,7 +229,7 @@ OBJECT *
     bottom = top + x2size;
 
     if (inside_region(left, top, right, bottom, x, y)) {
-	printf("found something 2!\n");
+      /*printf("found something 2!\n");*/
 	*whichone = 2;
 	return (o_current);
     }
@@ -260,6 +260,7 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    w_current->start_x = object->line->screen_x[!whichone];
 	    w_current->start_y = object->line->screen_y[!whichone];
 
+            o_line_erase(w_current, object);
 	    gdk_gc_set_foreground(w_current->xor_gc,
 				  x_get_color(w_current->select_color));
 	    gdk_draw_line(w_current->window, w_current->xor_gc,
@@ -280,6 +281,7 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    w_current->start_x = object->line->screen_x[!whichone];
 	    w_current->start_y = object->line->screen_y[!whichone];
 
+            o_net_erase(w_current, object);
 	    gdk_gc_set_foreground(w_current->xor_gc,
 				  x_get_color(w_current->select_color));
 	    gdk_draw_line(w_current->window, w_current->xor_gc,
@@ -291,8 +293,6 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    object_changing = object;
 	    gdk_gc_set_foreground(w_current->gc,
 			       x_get_color(w_current->background_color));
-	    o_conn_draw_endpoint(w_current, w_current->gc,
-				 w_current->last_x, w_current->last_y);
 	    return (TRUE);
 
 	    break;
@@ -305,6 +305,7 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    w_current->start_x = object->line->screen_x[!whichone];
 	    w_current->start_y = object->line->screen_y[!whichone];
 
+            o_pin_erase(w_current, object);
 	    gdk_gc_set_foreground(w_current->xor_gc,
 				  x_get_color(w_current->select_color));
 	    gdk_draw_line(w_current->window, w_current->xor_gc,
@@ -325,6 +326,7 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    w_current->start_x = object->line->screen_x[!whichone];
 	    w_current->start_y = object->line->screen_y[!whichone];
 
+            o_bus_erase(w_current, object);
 	    gdk_gc_set_foreground(w_current->xor_gc,
 				  x_get_color(w_current->select_color));
 	    gdk_draw_line(w_current->window, w_current->xor_gc,
@@ -336,8 +338,6 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    object_changing = object;
 	    gdk_gc_set_foreground(w_current->gc,
 			       x_get_color(w_current->background_color));
-	    o_conn_draw_endpoint(w_current, w_current->gc,
-				 w_current->last_x, w_current->last_y);
 	    return (TRUE);
 
 	    break;
@@ -380,6 +380,7 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 	    box_left = GET_BOX_LEFT(w_current);
 	    box_top = GET_BOX_TOP(w_current);
 
+            o_box_erase(w_current, object);
 	    gdk_gc_set_foreground(w_current->xor_gc,
 				  x_get_color(w_current->select_color));
 	    gdk_draw_rectangle(w_current->window, w_current->xor_gc,
@@ -407,6 +408,7 @@ int o_grips_start(TOPLEVEL * w_current, int x, int y)
 				       w_current->last_x,
 				       w_current->last_y);
 
+            o_circle_erase(w_current, object);
 	    gdk_gc_set_foreground(w_current->xor_gc,
 				  x_get_color(w_current->select_color));
 
@@ -462,6 +464,7 @@ void o_grips_start_arc(TOPLEVEL * w_current, OBJECT * o_current,
 	break;
     }
 
+    o_arc_erase(w_current, o_current);
     gdk_gc_set_foreground(w_current->xor_gc,
 			  x_get_color(w_current->select_color));
     gdk_draw_arc(w_current->window, w_current->xor_gc, FALSE,
@@ -744,6 +747,8 @@ void o_grips_end(TOPLEVEL * w_current)
     OBJECT *object = NULL;
     int x, y;
     int box_height, box_width, box_top, box_left;
+    GList *other_objects=NULL;
+    GList *connected_objects=NULL;
 
     object = object_changing;
 
@@ -771,6 +776,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	    w_current->event_state = SELECT;
 	    i_update_status(w_current,
 			    "Select Mode");
+            o_redraw_single(w_current, object);
 	    return;
 	}
 	SCREENtoWORLD(w_current,
@@ -792,7 +798,7 @@ void o_grips_end(TOPLEVEL * w_current)
 
 	o_line_modify(w_current, object, x, y,
 		      whichone_changing);
-
+        o_redraw_single(w_current, object);
 	break;
 
     case (OBJ_NET):
@@ -810,6 +816,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	    i_update_status(w_current,
 			    "Select Mode");
 	    o_net_eraserubber(w_current);
+            o_redraw_single(w_current, object);
 	    return;
 	}
 	SCREENtoWORLD(w_current,
@@ -819,6 +826,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	x = snap_grid(w_current, x);
 	y = snap_grid(w_current, y);
 
+        o_cue_undraw(w_current, object);
 	o_net_erase(w_current, object);
 	/* erase xor line */
 	gdk_gc_set_foreground(w_current->xor_gc,
@@ -827,10 +835,27 @@ void o_grips_end(TOPLEVEL * w_current)
 		      w_current->start_x, w_current->start_y,
 		      w_current->last_x, w_current->last_y);
 	o_line_erase_grips(w_current, object);
+        
+        other_objects = s_conn_return_others(other_objects, object);
+        s_conn_remove(w_current, object);
 
 	o_net_modify(w_current, object, x, y,
 		     whichone_changing);
+        s_conn_update_object(w_current, object);
+        o_redraw_single(w_current, object);
 
+        /* draw the object objects */
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+
+        /* get the other connected objects and redraw them */
+        connected_objects = s_conn_return_others(connected_objects,
+                                                 object);
+        o_cue_undraw_list(w_current, connected_objects);
+        o_cue_draw_list(w_current, connected_objects);
+
+        /* finally draw this objects cues */
+        o_cue_draw_single(w_current, object); 
 	break;
 
     case (OBJ_PIN):
@@ -847,6 +872,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	    w_current->event_state = SELECT;
 	    i_update_status(w_current,
 			    "Select Mode");
+            o_redraw_single(w_current, object);
 	    return;
 	}
 	SCREENtoWORLD(w_current,
@@ -856,6 +882,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	x = snap_grid(w_current, x);
 	y = snap_grid(w_current, y);
 
+        o_cue_undraw(w_current, object);
 	o_pin_erase(w_current, object);
 	/* erase xor line */
 	gdk_gc_set_foreground(w_current->xor_gc,
@@ -864,10 +891,27 @@ void o_grips_end(TOPLEVEL * w_current)
 		      w_current->start_x, w_current->start_y,
 		      w_current->last_x, w_current->last_y);
 	o_line_erase_grips(w_current, object);
+        
+        other_objects = s_conn_return_others(other_objects, object);
+        s_conn_remove(w_current, object);
 
 	o_pin_modify(w_current, object, x, y,
 		     whichone_changing);
+        s_conn_update_object(w_current, object);
+        o_redraw_single(w_current, object);
 
+        /* draw the object objects */
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+
+        /* get the other connected objects and redraw them */
+        connected_objects = s_conn_return_others(connected_objects,
+                                                 object);
+        o_cue_undraw_list(w_current, connected_objects);
+        o_cue_draw_list(w_current, connected_objects);
+
+        /* finally draw this objects cues */
+        o_cue_draw_single(w_current, object); 
 	break;
 
     case (OBJ_BUS):
@@ -885,6 +929,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	    i_update_status(w_current,
 			    "Select Mode");
 	    o_net_eraserubber(w_current);
+            o_redraw_single(w_current, object);
 	    return;
 	}
 	SCREENtoWORLD(w_current,
@@ -894,7 +939,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	x = snap_grid(w_current, x);
 	y = snap_grid(w_current, y);
 
-
+        o_cue_undraw(w_current, object);
 	o_bus_erase(w_current, object);
 	/* erase xor line */
 	gdk_gc_set_foreground(w_current->xor_gc,
@@ -903,9 +948,27 @@ void o_grips_end(TOPLEVEL * w_current)
 		      w_current->start_x, w_current->start_y,
 		      w_current->last_x, w_current->last_y);
 	o_line_erase_grips(w_current, object);
+        
+        other_objects = s_conn_return_others(other_objects, object);
+        s_conn_remove(w_current, object);
 
 	o_bus_modify(w_current, object, x, y,
 		     whichone_changing);
+        s_conn_update_object(w_current, object);
+        o_redraw_single(w_current, object);
+
+        /* draw the object objects */
+        o_cue_undraw_list(w_current, other_objects);
+        o_cue_draw_list(w_current, other_objects);
+
+        /* get the other connected objects and redraw them */
+        connected_objects = s_conn_return_others(connected_objects,
+                                                 object);
+        o_cue_undraw_list(w_current, connected_objects);
+        o_cue_draw_list(w_current, connected_objects);
+
+        /* finally draw this objects cues */
+        o_cue_draw_single(w_current, object); 
 	break;
 
     case (OBJ_BOX):
@@ -922,6 +985,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	    w_current->event_state = SELECT;
 	    i_update_status(w_current,
 			    "Select Mode");
+            o_redraw_single(w_current, object);
 	    return;
 	}
 	SCREENtoWORLD(w_current,
@@ -947,6 +1011,7 @@ void o_grips_end(TOPLEVEL * w_current)
 
 	o_box_modify(w_current, object, x, y,
 		     whichone_changing);
+        o_redraw_single(w_current, object);
 	break;
 
     case (OBJ_CIRCLE):
@@ -964,6 +1029,7 @@ void o_grips_end(TOPLEVEL * w_current)
 	    w_current->event_state = SELECT;
 	    i_update_status(w_current,
 			    "Select Mode");
+            o_redraw_single(w_current, object);
 	    return;
 	}
 	SCREENtoWORLD(w_current,
@@ -995,21 +1061,20 @@ void o_grips_end(TOPLEVEL * w_current)
 
 	o_circle_modify(w_current, object, x, y,
 			whichone_changing);
-	break;
+        o_redraw_single(w_current, object);
+    	break;
     case (OBJ_ARC):
 	o_grips_end_arc(w_current, object, whichone_changing);
 	break;
-    }
+   }
 
 
     w_current->page_current->CHANGED = 1;
 
-    o_conn_disconnect_update(w_current->page_current);
-
-    /*o_redraw_single(w_current, object); */
-
-    /* not sure I want to do this.. but let's try it */
-    o_redraw(w_current, w_current->page_current->object_head);
+    g_list_free(other_objects);
+    other_objects = NULL;
+    g_list_free(connected_objects);
+    connected_objects = NULL;
 
     whichone_changing = -1;
     object_changing = NULL;
@@ -1048,6 +1113,7 @@ void o_grips_end_arc(TOPLEVEL * w_current, OBJECT * o_current, int whichone)
 
 	o_arc_modify(w_current, o_current,
 		     w_current->distance, -1, whichone);
+        o_redraw_single(w_current, o_current);
 
 	break;
 
@@ -1057,6 +1123,7 @@ void o_grips_end_arc(TOPLEVEL * w_current, OBJECT * o_current, int whichone)
 
 	o_arc_modify(w_current, o_current,
 		     w_current->start_x, w_current->start_y, whichone);
+        o_redraw_single(w_current, o_current);
 
 	break;
     }

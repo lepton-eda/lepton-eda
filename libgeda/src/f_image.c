@@ -155,9 +155,6 @@ f_image_write(TOPLEVEL *w_current, char *filename, int width, int height,
 	int origin_x, origin_y, bottom, right;
 	float scale=0.0;
 
-	/* new CONN stuff */
-	o_conn_disconnect_update(w_current->page_current);
-
 	/* dots are breaking my filename selection hack hack !!!! */
 	
 

@@ -70,8 +70,13 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	o_selection_destroy_all(p_current->selection2_head);
 	w_current->REMOVING_SEL = 0;  
 
+#if DEBUG
+	printf("Freeing page: %s\n", p_current->page_filename);
+	s_tile_print(w_current);
+#endif
+	s_tile_free_all(p_current);
+
 	s_stretch_destroy_all(p_current->stretch_head);
-	s_nethash_delete_all(p_current->nethash_table);
 
 	/* free current page undo structs */
 	s_undo_free_all(w_current, p_current); 
@@ -84,6 +89,7 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	p_current->selection2_tail = NULL;
 	p_current->stretch_head = NULL;
 	p_current->stretch_tail = NULL;
+
 	p_current->complex_place_head = NULL;
 	p_current->complex_place_tail = NULL;
 	p_current->attrib_place_head = NULL;
@@ -104,11 +110,9 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
                 p_current->prev->next = p_current->next;
 
 
-	/* be sure table is empty CONN */
-	/* g_hash_table_foreach_remove(hash_table, free_func, NULL);*/
-	g_hash_table_destroy(p_current->conn_table);
-
-	g_hash_table_destroy(p_current->nethash_table);
+#if DEBUG
+	s_tile_print(w_current);
+#endif
 
 	free(p_current);
 
@@ -133,12 +137,12 @@ s_page_free_all(TOPLEVEL *w_current, PAGE *p_tail)
 
 	while (p_current != NULL && p_current->pid != -1) {
 		p_prev = p_current->prev;
+		w_current->page_current = p_current;
 #if DEBUG
 		printf("about to free %d\n", p_current->pid);
 #endif
                 s_page_free(w_current, p_current);
                 p_current = p_prev;
-		w_current->page_current = p_current;
 	}	
 
 	/* Now free the head */
@@ -180,6 +184,10 @@ s_page_add(TOPLEVEL *w_current, PAGE *p_tail, char *page_filename)
 	p_new->up = -2;
 	/* p_new->down = NULL; not needed */
 	p_new->page_control = 0;
+
+	/* Init tile array, has to be here since we need w_current */
+	/* cannot be in s_page_setup or s_page_new */
+	s_tile_init(w_current, p_new);
 
 	if (p_tail == NULL) {
 		p_new->pid = -1; /* head node */
@@ -243,6 +251,28 @@ s_page_delete()
 
 }
 
+
+PAGE *
+s_page_new_lowlevel(TOPLEVEL *w_current, char *page_filename)
+{
+	/* Now create a blank page */
+        w_current->page_tail = s_page_add(w_current,
+					  w_current->page_tail, page_filename);
+
+        /* setup page_current link */
+        w_current->page_current = w_current->page_tail;
+
+	s_page_setup(w_current->page_current);
+	w_current->page_current->object_lastplace=NULL;
+        w_current->page_current->object_selected=NULL;
+
+	set_window(w_current, w_current->init_left, w_current->init_right,
+                   w_current->init_top, w_current->init_bottom);
+
+        return(NULL);
+}
+
+
 PAGE *
 s_page_new(TOPLEVEL *w_current, char *page_filename)
 {
@@ -255,23 +285,11 @@ s_page_new(TOPLEVEL *w_current, char *page_filename)
 		return(return_value);
 	}
 
-	/* Now create a blank page */
-        w_current->page_tail = s_page_add(w_current,
-					  w_current->page_tail, page_filename);
+        return_value = s_page_new_lowlevel(w_current, page_filename);
 
-        /* setup page_current link */
-        w_current->page_current = w_current->page_tail;
-
-	s_page_setup(w_current->page_current);
-	w_current->page_current->object_lastplace=NULL;
-        w_current->page_current->object_selected=NULL;
-
-
-	set_window(w_current, w_current->init_left, w_current->init_right,
-                   w_current->init_top, w_current->init_bottom);
-
-	return(NULL);
+	return(return_value);
 }
+
 
 void
 s_page_setup(PAGE *p_current)
@@ -297,13 +315,6 @@ s_page_setup(PAGE *p_current)
 				s_basic_init_object("attrib_place_head");
 	p_current->attrib_place_tail->type = OBJ_HEAD;
 	
-
-	/* new CONN stuff */
-	p_current->conn_table = g_hash_table_new(g_str_hash, g_str_equal);
-
-	/* new NETHASH stuff */
-	p_current->nethash_table = g_hash_table_new(g_str_hash, g_str_equal);
-
 	/* do this just to be sure that object tail is truely correct */
 	p_current->object_tail = return_tail(p_current->object_head);
 
@@ -314,6 +325,7 @@ s_page_setup(PAGE *p_current)
 
  	/* Init undo struct pointers */
 	s_undo_init(p_current);
+
 }
 
 int
@@ -400,6 +412,7 @@ s_page_print_all(TOPLEVEL *w_current)
         while(p_current != NULL) {
 
                 if (p_current->pid != -1) {
+			printf("FILENAME: %s\n", p_current->page_filename);
                         print_struct_forw(p_current->object_head);
                 }
 

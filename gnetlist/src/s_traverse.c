@@ -103,16 +103,6 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
     char *temp_uref;
     int page_control = 0;
 
-
-    if (verbose_mode) {
-	printf("- Creating nethash table\n");
-    }
-
-    s_nethash_build(pr_current->page_current->nethash_table,
-		    pr_current->page_current->conn_table, start);
-
-    verbose_done();
-
     if (verbose_mode) {
 	printf("- Starting internal netlist creation\n");
     }
@@ -220,128 +210,119 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 			       char *hierarchy_tag)
 {
-    CPINLIST *cpinlist_head = NULL;
-    CPINLIST *cpins = NULL;
-    OBJECT *o_current = NULL;
-    NET *nets_head = NULL;
-    NET *nets = NULL;
-    char *key;
-    char *temp;
-    CONN *conn_list;
-    CONN *c_current;
-    int endpoint;
+  CPINLIST *cpinlist_head = NULL;
+  CPINLIST *cpins = NULL;
+  OBJECT *o_current = NULL;
+  NET *nets_head = NULL;
+  NET *nets = NULL;
+  char *key;
+  char *temp;
+  CONN *conn_list;
+  CONN *c_current;
+  GList *cl_current;
+  int endpoint;
 
-    o_current = component->complex->prim_objs;
+  o_current = component->complex->prim_objs;
 
-    cpinlist_head = cpins = s_cpinlist_add(NULL);
-    cpins->plid = -1;
+  cpinlist_head = cpins = s_cpinlist_add(NULL);
+  cpins->plid = -1;
 
-    while (o_current != NULL) {
-	if (o_current->type == OBJ_PIN) {
+  while (o_current != NULL) {
+    if (o_current->type == OBJ_PIN) {
 
-	    verbose_print("p");
+      verbose_print("p");
 
-	    o_current->visited = 1;
+      o_current->visited = 1;
 
-	    /* add cpin node */
-	    cpins = s_cpinlist_add(cpins);
-	    cpins->plid = o_current->sid;
+      /* add cpin node */
+      cpins = s_cpinlist_add(cpins);
+      cpins->plid = o_current->sid;
 
-	    /* search the object only */
-	    cpins->pin_number =
-		o_attrib_search_name_partial(o_current, "pin", 0);
+      /* search the object only */
+      cpins->pin_number =
+        o_attrib_search_name_partial(o_current, "pin", 0);
 
-	    temp =
-		o_attrib_search_name_single_count(o_current, "pinlabel",
-						  0);
+      temp =
+        o_attrib_search_name_single_count(o_current, "pinlabel",
+                                          0);
 
-	    if (temp) {
-		cpins->pin_label = temp;
-	    }
+      if (temp) {
+        cpins->pin_label = temp;
+      }
 
-	    /* head nets node */
-	    /* is this really need */
-	    nets_head = nets = s_net_add(NULL);
-	    nets->nid = -1;
+      /* head nets node */
+      /* is this really need */
+      nets_head = nets = s_net_add(NULL);
+      nets->nid = -1;
 
-	    for (endpoint = 0; endpoint < 2; endpoint++) {
-		/* search for line->x|y[endpoint] */
-		key = o_conn_return_key(o_current->line->x[endpoint],
-					o_current->line->y[endpoint]);
 
-		conn_list =
-		    g_hash_table_lookup(pr_current->page_current->
-					conn_table, key);
+      cl_current = o_current->conn_list;
+      while (cl_current != NULL) {
 
-		if (conn_list) {
+        c_current = (CONN *) cl_current->data;
 
-		    c_current = conn_list;
+        
+        if (c_current->other_object != NULL) {
 
-		    while (c_current != NULL) {
-			if (c_current->object != NULL &&
-			    c_current->type != CONN_HEAD) {
+#if DEBUG          
+          printf("c_current other_object, not NULL\n");
+#endif          
+          
+          if (!c_current->other_object->visited &&
+              c_current->other_object != o_current) {
 
-			    if (!c_current->object->visited &&
-				c_current->object != o_current) {
+            nets = s_net_add(nets);
+	    nets->nid = o_current->sid; 
 
-				nets = s_net_add(nets);
-				nets->nid = o_current->sid;
-				nets->connected_to =
-				    s_net_return_connected_string
-				    (pr_current, o_current, hierarchy_tag);
+            nets->connected_to = s_net_return_connected_string(pr_current,
+                                                               o_current,
+                                                               hierarchy_tag);
 
-/* net= new */
-				if (strstr(nets->connected_to, "POWER")) {
+            /* net= new */
+            if (strstr(nets->connected_to, "POWER")) {
 #if DEBUG
-				    printf("going to find netname %s\n",
-					   nets->connected_to);
+              printf("going to find netname %s\n",
+                     nets->connected_to);
 #endif
-				    nets->net_name =
-					s_netattrib_return_netname
-					(pr_current, o_current,
-					 nets->connected_to,
-					 hierarchy_tag);
-				    nets->net_name_has_priority = TRUE;
-				    free(nets->connected_to);
-				    nets->connected_to = NULL;
-				}
+              nets->net_name = s_netattrib_return_netname(pr_current,
+                                                          o_current,
+                                                          nets->connected_to,
+                                                          hierarchy_tag);
+              nets->net_name_has_priority = TRUE;
+              free(nets->connected_to);
+              nets->connected_to = NULL;
+            }
 #if DEBUG
-				printf("%s\n", nets->connected_to);
+            printf("%s\n", nets->connected_to);
 #endif
-				nets =
-				    s_traverse_net(pr_current, o_current,
-						   nets, c_current->object,
-						   hierarchy_tag);
+            nets =
+              s_traverse_net(pr_current, o_current, nets,
+                             c_current->other_object,
+                             hierarchy_tag);
 
-				s_traverse_clear_all_visited
-				    (pr_current->page_current->
-				     object_head);
-			    }
+            s_traverse_clear_all_visited(pr_current->page_current->
+                                         object_head);
+          }
 
-			}
-			c_current = c_current->next;
-		    }
-		}
+        }
+        cl_current = cl_current->next;
+      }
 
-		free(key);
-	    }
+      cpins->nets = nets_head;
+      /* s_net_print(nets); */
 
-	    cpins->nets = nets_head;
-	    /* s_net_print(nets); */
-
-	    /* this is iffy */
-	    /* should passindent: Standard input:519: Error:Stmt nesting error.
-	       indent: Standard input:519: Error:Stmt nesting error.
-	       in page_current in top level func */
-	}
-	s_traverse_clear_all_visited(pr_current->page_current->
-				     object_head);
-
-	o_current = o_current->next;
+      /* this is iffy */
+      /* should passindent: Standard input:519: Error:Stmt nesting error.
+         indent: Standard input:519: Error:Stmt nesting error.
+         in page_current in top level func */
     }
+    s_traverse_clear_all_visited(pr_current->page_current->object_head);
+
+    o_current = o_current->next;
+  }
 
 
-    return (cpinlist_head);
+  return (cpinlist_head);
 }
 
 
@@ -374,133 +355,111 @@ void s_traverse_clear_all_visited(OBJECT * object_head)
 NET *s_traverse_net(TOPLEVEL * pr_current, OBJECT * previous_object,
 		    NET * nets, OBJECT * object, char *hierarchy_tag)
 {
-    OBJECT *o_current;
-    NET *new_net;
-    char *key = NULL;
-    CONN *conn_list;
-    CONN *c_current;
-    int endpoint;
-    char *temp;
+  OBJECT *o_current;
+  NET *new_net;
+  char *key = NULL;
+  CONN *conn_list;
+  CONN *c_current;
+  GList *cl_current;
+  int endpoint;
+  char *temp;
 
-    o_current = object;
+  o_current = object;
 
-    new_net = nets = s_net_add(nets);
-    new_net->nid = object->sid;
+  new_net = nets = s_net_add(nets);
+  new_net->nid = object->sid;
 
-    /* Pins are NOT allowed to supply the label= attribute */
-    if (o_current->type != OBJ_PIN) {
-	temp = o_attrib_search_name_single(o_current, "label", NULL);
+  /* Pins are NOT allowed to supply the label= attribute */
+  if (o_current->type != OBJ_PIN) {
+    temp = o_attrib_search_name_single(o_current, "label", NULL);
 
-	if (temp) {
-	    new_net->net_name =
-		s_hierarchy_create_netname(pr_current, temp,
-					   hierarchy_tag);
-	    free(temp);
-	}
+    if (temp) {
+      new_net->net_name =
+        s_hierarchy_create_netname(pr_current, temp,
+                                   hierarchy_tag);
+      free(temp);
     }
+  }
+  
 #if DEBUG
-    printf("inside traverse: %s\n", object->name);
+  printf("inside traverse: %s\n", object->name);
 #endif
 
-    if (object->type == OBJ_PIN) {
+  if (object->type == OBJ_PIN) {
 
-	verbose_print("P");
+    verbose_print("P");
 
-	new_net->connected_to =
-	    s_net_return_connected_string(pr_current, o_current,
-					  hierarchy_tag);
+    new_net->connected_to =
+      s_net_return_connected_string(pr_current, o_current,
+                                    hierarchy_tag);
 
-	temp = o_attrib_search_name_single_count(o_current, "pinlabel", 0);
+    temp = o_attrib_search_name_single_count(o_current, "pinlabel", 0);
 
-	if (temp) {
-	    new_net->pin_label = temp;
-	}
-
-/* net= new */
-	if (strstr(nets->connected_to, "POWER")) {
-
-#if DEBUG
-	    printf("going to find netname %s \n", nets->connected_to);
-#endif
-	    nets->net_name =
-		s_netattrib_return_netname(pr_current, o_current,
-					   nets->connected_to,
-					   hierarchy_tag);
-	    nets->net_name_has_priority = TRUE;
-	    free(nets->connected_to);
-	    nets->connected_to = NULL;
-	}
-#if DEBUG
-	printf("traverse connected_to: %s\n", new_net->connected_to);
-#endif
-	return (nets);
-
+    if (temp) {
+      new_net->pin_label = temp;
     }
 
-    /*printf("Found net %s\n", object->name); */
-    verbose_print("n");
+    /* net= new */
+    if (strstr(nets->connected_to, "POWER")) {
 
-    object->visited++;
-
-    /* this is not perfect yet and won't detect a loop... */
-    if (object->visited > 100) {
-	fprintf(stderr, "Found a possible net/pin infinite connection\n");
-	exit(-1);
+#if DEBUG
+      printf("going to find netname %s \n", nets->connected_to);
+#endif
+      nets->net_name =
+        s_netattrib_return_netname(pr_current, o_current,
+                                   nets->connected_to,
+                                   hierarchy_tag);
+      nets->net_name_has_priority = TRUE;
+      free(nets->connected_to);
+      nets->connected_to = NULL;
     }
-
-
-    for (endpoint = 0; endpoint < 2; endpoint++) {
-	/* search for line->x|y[endpoint] ... */
-	key =
-	    o_conn_return_key(o_current->line->x[endpoint],
-			      o_current->line->y[endpoint]);
-
 #if DEBUG
-	printf("looking at %d: %s\n", endpoint, key);
+    printf("traverse connected_to: %s\n", new_net->connected_to);
 #endif
-	conn_list =
-	    g_hash_table_lookup(pr_current->page_current->conn_table, key);
-
-	if (conn_list) {
-
-#if DEBUG
-	    printf("	found at %d: %s\n", endpoint, key);
-#endif
-	    c_current = conn_list;
-
-	    while (c_current != NULL) {
-		if (c_current->object != NULL
-		    && c_current->type != CONN_HEAD) {
-
-#if DEBUG
-		    printf("c_current %s visited: %d\n",
-			   c_current->object->name,
-			   c_current->object->visited);
-#endif
-
-		    if (!c_current->object->visited &&
-			c_current->object != o_current) {
-
-			nets =
-			    s_traverse_net(pr_current, object, nets,
-					   c_current->object,
-					   hierarchy_tag);
-		    }
-
-		}
-		c_current = c_current->next;
-	    }
-	}
-
-	free(key);
-    }
-
-    /* now search for any mid points */
-    nets = s_traverse_midpoints(pr_current, object, nets, hierarchy_tag);
-
     return (nets);
+
+  }
+
+  /*printf("Found net %s\n", object->name); */
+  verbose_print("n");
+
+  object->visited++;
+
+  /* this is not perfect yet and won't detect a loop... */
+  if (object->visited > 100) {
+    fprintf(stderr, "Found a possible net/pin infinite connection\n");
+    exit(-1);
+  }
+
+  cl_current = object->conn_list;
+  while (cl_current != NULL) {
+
+    c_current = (CONN *) cl_current->data;
+              
+    if (c_current->other_object != NULL) {
+		    
+#if DEBUG
+      printf("c_current %s visited: %d\n",
+             c_current->other_object->name, c_current->other_object->visited);
+#endif
+
+      if (!c_current->other_object->visited &&
+          c_current->other_object != o_current) {
+
+        nets =
+          s_traverse_net(pr_current, object, nets, c_current->other_object,
+                         hierarchy_tag);
+      }
+
+    }
+    cl_current = cl_current->next;
+  }
+   
+  return (nets);
 }
 
+
+#if 0 /* no longer needed */
 NET *s_traverse_midpoints(TOPLEVEL * pr_current, OBJECT * object,
 			  NET * nets, char *hierarchy_tag)
 {
@@ -541,4 +500,5 @@ NET *s_traverse_midpoints(TOPLEVEL * pr_current, OBJECT * object,
 #endif
     return (nets);
 }
+#endif
 

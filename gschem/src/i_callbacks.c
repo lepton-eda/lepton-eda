@@ -915,7 +915,6 @@ DEFINE_I_CALLBACK(view_update_cues)
 	i_update_middle_button(w_current,
 			       i_callback_view_update_cues, "Update Cues");
 
-	o_conn_disconnect_update(w_current->page_current);
         o_redraw_all(w_current);
 }
 
@@ -1892,7 +1891,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 							   w_current, 
 							   current_filename, 
 							   parent,
-							   page_control);
+							   page_control,
+                                                           HIERARCHY_NORMAL_LOAD);
 
 					if (page_control != -1)  {
 						a_zoom_limits(w_current, 
@@ -2306,6 +2306,23 @@ DEFINE_I_CALLBACK(options_snap)
 	}
 }
 
+/* Rubber band is cool ! */
+/* Added on/off option from the pull down menu */
+/* Chris Ellec - January 2001 */
+DEFINE_I_CALLBACK(options_rubberband)
+{
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+        if (w_current->netconn_rubberband) {
+                w_current->netconn_rubberband = 0;
+		s_log_message("Rubber band OFF \n");
+        } else {
+                w_current->netconn_rubberband = 1;
+		s_log_message("Rubber band ON\n");
+	}
+}
+
+
 DEFINE_I_CALLBACK(options_show_log_window)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
@@ -2317,105 +2334,28 @@ DEFINE_I_CALLBACK(options_show_log_window)
 /* this is Ales' catch all misc callback */
 DEFINE_I_CALLBACK(misc)
 {
-#if 0 /* testing of stretch of nets while moving */
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
-	s_nethash_build(w_current->page_current->nethash_table, 
-			w_current->page_current->conn_table, 
-			w_current->page_current->object_head);
-	s_nethash_print_hash(w_current->page_current->nethash_table);
-#endif
-
-#if 0 /* old demonstration code on getting all attribs from an object */
-	if (w_current->page_current->selection_head->next != NULL) {
-		attrib_objects = o_attrib_return_attribs(
-					      w_current->page_current->
-					      object_head,
-				              w_current->page_current->
-				              selection_head->next);
-
-
-		if (attrib_objects) {
-			while(attrib_objects[i] != NULL) {
-				o_attrib_get_name_value(
-						attrib_objects[i]->text->string, 
-						name, value);
-                		printf("%d : %s\n", i, 
-					attrib_objects[i]->text->string);
-				printf("   name: %s\n", name);
-				printf("   value: %s\n", value);
-                		i++;
-			}
-			o_attrib_free_returned(attrib_objects);
-		}
-
-        }
-#endif
-	/*o_selection_print_all(w_current->page_current->selection2_head);*/
-	/* printf("\n\nUNDO:\n"); */
-	/* s_undo_print_all(w_current->page_current->undo_bottom);*/
-
-
-#if 0 /* no longer needed and old */
-	/* In this case w_current->page_current->next can be safely null */	
-	/* new demonstration code which shows how to use o_attrib_add_attrib */
-	object = o_attrib_add_attrib(w_current, "name=value", VISIBLE, 
-				    SHOW_NAME_VALUE, 
-				    w_current->page_current->
-				    selection_head->next);
-
-
- 	/* for debugging purposes */
-	printf("%d %s %s\n", object->sid, object->name, object->text->string);
-	/*o_conn_print_hash(w_current->page_current->conn_table);*/
-	/* o_text_print_set();*/
-#endif
+	s_tile_print(w_current);
 }
 
 /* this is Ales' second catch all misc callback */
 DEFINE_I_CALLBACK(misc2)
 {
-#if 0
-	TOPLEVEL *w_current = (TOPLEVEL *) data;
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+  OBJECT *first = o_select_return_first_object(w_current);
 
-	SELECTION *s_current = NULL;
-	OBJECT *o_current = NULL;
-
-	if (w_current->page_current->selection2_head->next == NULL)
-		return;
-
-	/* o_buffer_cut(w_current);*/
-	/*o_buffer_copy(w_current);*/
-#endif
+  if (first) {
+    //o_cue_draw_single(w_current, first);
+    o_cue_undraw(w_current, first);
+    s_conn_print(first->conn_list);
+  }
 }
 
 /* this is Ales' third catch all misc callback */
 DEFINE_I_CALLBACK(misc3)
 {
-#if 0
-	TOPLEVEL *w_current = (TOPLEVEL *) data;
 
-	OBJECT *o_current;
-	PAGE *p_current;
-	OBJECT *new_object;
-	OBJECT *o_saved = NULL;
-	SELECTION *temp_list = NULL;
-
-	if (object_buffer[0] == NULL) {
-		return;
-	}
-
-#if DEBUG
-	o_current = object_buffer[0];
-	while(o_current != NULL) {
-		printf("- %s\n", o_current->name);
-		o_current = o_current->next;
-	}
-#endif
-
-
-	/* o_buffer_paste_start(w_current, mouse_x, mouse_y);*/
-#endif
 }
 
 /* HACK: be sure that you don't use the widget parameter in this one,

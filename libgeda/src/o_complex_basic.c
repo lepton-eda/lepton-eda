@@ -349,6 +349,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	OBJECT *prim_objs=NULL;
 	OBJECT *temp_tail=NULL;
 	OBJECT *temp_parent=NULL;
+        int save_adding_sel=0;
 	
 	char filename[256]; /* hack */
 
@@ -405,7 +406,12 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	if (access(filename, R_OK)) {
 		fprintf(stderr, "Could not open [%s]\n", filename); 
 	} else {
+                save_adding_sel = w_current->ADDING_SEL;
+		w_current->ADDING_SEL=1; /* name is hack, don't want to */
+					 /* add connections till translated */
 		o_read(w_current, prim_objs, filename);
+		/* name is hack, rename later */
+                w_current->ADDING_SEL=save_adding_sel;
 	}
 
 	if (w_current->attribute_promotion) { /* controlled through rc file */
@@ -466,6 +472,10 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	o_complex_rotate_lowlevel(w_current, x, y, angle, angle, object_list);
 
 	o_complex_world_translate(w_current, x, y, prim_objs);
+
+        if (!w_current->ADDING_SEL) {
+          s_conn_update_complex(w_current, prim_objs);
+        }
 	
 	return(object_list);
 }
@@ -838,14 +848,12 @@ o_complex_delete(TOPLEVEL *w_current, OBJECT *delete)
 /* libhack */
 /* and recalc stuff */
 /* this function takes in a complex list */
+/* 1/23/01, and there's some serious legacy cruft which needs to be removed */
 void
 o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, 
 			  OBJECT *prim_objs)
 {
 	OBJECT *o_current=NULL;
-	OBJECT *one=NULL;
-	OBJECT *two=NULL;
-	unsigned long temp_color;
 
 	o_current = prim_objs;
 
@@ -856,23 +864,11 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1,
 			break;
 
 			case(OBJ_NET):
-				/* same as a line, don't do this */
-				o_line_translate_world(w_current, x1, y1, o_current);
-				temp_color = w_current->override_color;
-				w_current->override_color = -1;
-				o_redraw_single(w_current, one); /* trying loop? hack*/
-				o_redraw_single(w_current, two);
-				w_current->override_color = temp_color;
+				o_net_translate_world(w_current, x1, y1, o_current);
 			break;
 
 			case(OBJ_BUS):
-				/* same as a line, don't do this */
-				o_line_translate_world(w_current, x1, y1, o_current);
-				temp_color = w_current->override_color;
-				w_current->override_color = -1;
-				o_redraw_single(w_current, one); /* trying loop? hack*/
-				o_redraw_single(w_current, two);
-				w_current->override_color = temp_color;
+				o_bus_translate_world(w_current, x1, y1, o_current);
 			break;
 	
 			case(OBJ_BOX):
@@ -891,7 +887,6 @@ o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1,
 				o_text_translate_world(w_current, x1, y1, o_current);
 			break;
 
-			/* same note as above */
 			case(OBJ_PIN):
 				o_pin_translate_world(w_current, x1, y1, o_current);
 			break;

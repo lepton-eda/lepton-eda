@@ -199,66 +199,56 @@ void s_project_setup_rest(TOPLEVEL * pr_current)
 /* stays the same */
 TOPLEVEL *s_project_create_new(void)
 {
-    TOPLEVEL *pr_current = NULL;
+  TOPLEVEL *pr_current = NULL;
 
-    /* allocate new window structure */
-    pr_current = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
+  /* allocate new window structure */
+  pr_current = (TOPLEVEL *) malloc(sizeof(TOPLEVEL));
 
-    pr_current->wid = global_wid;
+  pr_current->wid = global_wid;
 
-    /* the default coord sizes */
-    /* real ones set in rc file */
-    pr_current->init_right = WIDTH_C;
-    pr_current->init_bottom = HEIGHT_C;
+  /* the default coord sizes */
+  /* real ones set in rc file */
+  /* pr_current->init_right = WIDTH_C;*/
+  /* pr_current->init_bottom = HEIGHT_C;*/
+
+  s_project_setup_world(pr_current);
+
+  /* do other var fill in */
+  s_project_setup_rest(pr_current);
+
+  /* set the rest of the variables */
+  i_vars_set(pr_current);
+
+  /* Put head node on page list... be sure to free this somewhere hack */
+  s_page_add_head(pr_current);
+
+  /* Now create a blank page */
+  pr_current->page_tail = s_page_add(pr_current,
+                                     pr_current->page_tail, "unknown");
+  /* this is correct */
+
+  s_page_setup(pr_current->page_tail);
+
+  /* setup page_current link */
+  pr_current->page_current = pr_current->page_tail;
+
+  /* Special case init */
+  set_window(pr_current, pr_current->init_left, pr_current->init_right,
+             pr_current->init_top, pr_current->init_bottom);
+
+  global_wid++;
+  num_projects++;
+
+  project_tail = s_project_add(project_tail, pr_current);
 
 
-#if 0				/* X related stuff */
-    pr_current->display_height = gdk_screen_height();
-    pr_current->display_width = gdk_screen_width();
-#endif
+  /* renable the events */
+  pr_current->DONT_DRAW_CONN = 0;
+  pr_current->DONT_RESIZE = 0;
+  pr_current->DONT_EXPOSE = 0;
+  pr_current->DONT_RECALC = 0;
 
-    s_project_setup_world(pr_current);
-
-#if 0				/* X related stuff */
-    /* do X fill in first */
-    s_project_create_main(pr_current);
-#endif
-
-    /* do other var fill in */
-    s_project_setup_rest(pr_current);
-
-    /* Put head node on page list... be sure to free this somewhere hack */
-    s_page_add_head(pr_current);
-
-    /* Now create a blank page */
-    pr_current->page_tail = s_page_add(pr_current,
-				       pr_current->page_tail, "unknown");
-    /* this is correct */
-
-    s_page_setup(pr_current->page_tail);
-
-    /* setup page_current link */
-    pr_current->page_current = pr_current->page_tail;
-
-    /* Special case init */
-    set_window(pr_current, pr_current->init_left, pr_current->init_right,
-	       pr_current->init_top, pr_current->init_bottom);
-
-    global_wid++;
-    num_projects++;
-
-    project_tail = s_project_add(project_tail, pr_current);
-
-    g_rc_parse(pr_current);
-    i_vars_set(pr_current);
-
-    /* renable the events */
-    pr_current->DONT_DRAW_CONN = 0;
-    pr_current->DONT_RESIZE = 0;
-    pr_current->DONT_EXPOSE = 0;
-    pr_current->DONT_RECALC = 0;
-
-    return (pr_current);
+  return (pr_current);
 }
 
 /* stays the same ???????????? */

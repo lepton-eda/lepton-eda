@@ -1,5 +1,4 @@
-/* -*- geda-c -*-
- * gEDA - GNU Electronic Design Automation
+/* gEDA - GNU Electronic Design Automation
  * libgeda - include files
  * Copyright (C) 1998 Ales V. Hvezda
  *
@@ -41,8 +40,9 @@ typedef struct st_color COLOR;
 typedef struct st_filedialog FILEDIALOG;
 typedef struct st_selection SELECTION;
 typedef struct st_undo UNDO;
+typedef struct st_tile TILE;
+typedef struct st_tile_loc TILE_LOC;
 
-/* rename to the real thing once things work right */
 typedef struct st_conn CONN;
 
 /* Used when you move objects and you want the nets/pins to stretch */
@@ -52,7 +52,6 @@ typedef struct st_stretch STRETCH;
 typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
 typedef struct st_net NET;
-typedef struct st_nethash NETHASH;
 
 /* sym check structures (gsymcheck) */
 typedef struct st_symcheck SYMCHECK;
@@ -157,6 +156,11 @@ struct st_object {
 	BOX *box;
 	TEXT *text;
 
+	GList *tile_locs;			/* tile locations */
+
+	GList *conn_list;			/* List of connections */
+						/* to and from this object */
+
 /* PB : change begin */
 /* PB : every graphical primitive have more or less the same options. */
 /* PB : depending on its nature a primitive is concerned with one or more */
@@ -220,19 +224,14 @@ struct st_attrib {
 };
 
 struct st_conn {
-	OBJECT *object;	/* object connected to */
-	OBJECT *responsible;	/* object which caused this midpoint to be */
-				/* created */
-				/* Only used with type == CONN_MIDPOINT */
-
-	int type; /* individual object type */
-	int whole_type;	/* type of the entire list, either */
-			/* HAS_MIDPOINT or NO_MIDPOINT */
-	int visual_cue; /* this is only used when type == HEAD */
-	int x, y;
-	
-	CONN *prev;
-	CONN *next;
+	OBJECT *other_object;	/* The "other" object connected to this one */
+	int type;		/* Always in reference to how the "other" */
+				/* object is connected to the current one */
+	int x, y;		/* x, y coord of the connection */
+	int whichone;		/* which endpoint of the current object */
+				/* caused this connection */
+	int other_whichone;	/* which endpoint of the "other" object */
+				/* caused this connection */
 };
 
 struct st_selection {
@@ -275,6 +274,16 @@ struct st_undo {
         UNDO *next;
 };
 
+struct st_tile {
+	GList *objects;
+
+	int top, left, right, bottom;
+};
+
+struct st_tile_loc {
+	int i, j;	/* these are the indices into the tile structure */
+};
+
 struct st_page {
 
 	int pid;
@@ -307,11 +316,7 @@ struct st_page {
 	float to_world_x_constant;
 	float to_world_y_constant;
 
-	GHashTable *conn_table;	/* used to maintain conn information */
-
-	/* used to maintain net/midpoint information */
-	/* used only in gnetlist */
-	GHashTable *nethash_table;
+	TILE world_tiles[MAX_TILES_X][MAX_TILES_Y];
 
 	/* Undo/Redo Stacks and pointers */	
 	/* needs to go into page mechanism actually */
@@ -722,19 +727,6 @@ struct st_net {
         NET *prev;
         NET *next;
 };
-
-/* used to resolve midpoint connections */
-struct st_nethash {
-	OBJECT *object;	/* object connected to */
-
-	CONN *conn_list;
-
-	int type; /* individual object type */
-
-	NETHASH *prev;
-	NETHASH *next;
-};
-
 
 /* gsymcheck structure */
 struct st_symcheck {

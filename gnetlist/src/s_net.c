@@ -107,12 +107,12 @@ void s_net_print(NET * ptr)
 
 #if DEBUG
 	    if (n_current->net_name) {
-		printf("	%s\n", n_current->net_name);
+		printf("	%s [%d]\n", n_current->net_name, n_current->nid);
 	    }
 #endif
 
 	    if (n_current->connected_to) {
-		printf("		%s\n", n_current->connected_to);
+		printf("		%s [%d]\n", n_current->connected_to, n_current->nid);
 	    }
 	}
 
@@ -360,9 +360,11 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
     if (net_name) {
 	return (net_name);
     }
+
 #if DEBUG
     printf("didn't find named net\n");
 #endif
+    
     /* didn't find a name */
     /* go looking for another net which might have already been named */
     /* ie you don't want to create a new unnamed net if the net has */

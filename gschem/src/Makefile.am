@@ -20,7 +20,7 @@ gschem_SOURCES = \
 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c \
 	x_fileselect.c x_preview.c \
 	x_multimulti.c \
-	parsecmd.c o_conn.c
+	parsecmd.c o_cue.c
 
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
 

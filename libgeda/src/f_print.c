@@ -397,10 +397,6 @@ f_print(TOPLEVEL *w_current, char *filename)
 		return(-1);
 	}
 
-	/* new CONN stuff */
-	o_conn_disconnect_update(w_current->page_current);
-
-
 /*	printf("%d %d\n", w_current->paper_width, w_current->paper_height);*/
 
 	world_get_complex_bounds(w_current, 

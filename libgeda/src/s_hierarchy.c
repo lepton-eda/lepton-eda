@@ -42,9 +42,12 @@ static int page_control_counter=0;
 /* This function goes and finds the associated source files and loads ALL up */
 /* only works for schematic files though */
 /* this is basically push */
+/* flag can either be HIERARCHY_NORMAL_LOAD or HIERARCHY_FORCE_LOAD */
+/* flag is mainly used by gnetlist where pushed down schematics MUST be */
+/* uniq */
 int
 s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename, 
-				  PAGE *parent, int page_control) 
+				  PAGE *parent, int page_control, int flag) 
 {
 	char *string=NULL;
 	PAGE *found;
@@ -55,22 +58,29 @@ s_hierarchy_down_schematic_single(TOPLEVEL *w_current, char *filename,
 		return(-1);
 	}
 
-	found = s_page_new(w_current, string);
+        if (flag == HIERARCHY_NORMAL_LOAD) {
+          found = s_page_new(w_current, string);
 
-	if (found) {
-		w_current->page_current = found;
-		s_page_goto(w_current, found);
-		if (page_control != 0) {
-			w_current->page_current->page_control = page_control;
-		}
-		w_current->page_current->up = parent->pid;
-		if (string) 
-			free(string);
-		return(w_current->page_current->page_control);
-	}
+          if (found) {
+            w_current->page_current = found;
+            s_page_goto(w_current, found);
+            if (page_control != 0) {
+              w_current->page_current->page_control = page_control;
+            }
+            w_current->page_current->up = parent->pid;
+            if (string) 
+              free(string);
+            return(w_current->page_current->page_control);
+          }
+          
+          f_open(w_current, w_current->page_current->page_filename);
+          
+        } else if (flag == HIERARCHY_FORCE_LOAD) {
+          found = s_page_new_lowlevel(w_current, string); 
+          f_open(w_current, w_current->page_current->page_filename);
+        }
 
-	f_open(w_current, w_current->page_current->page_filename);
-
+        
 	if (page_control == 0) {
 		page_control_counter++;
 		w_current->page_current->page_control = 

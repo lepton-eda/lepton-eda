@@ -1233,7 +1233,7 @@ g_rc_world_size(SCM width, SCM height, SCM border)
 	PAPERSIZEtoWORLD(i_width, i_height, i_border,
 			 &init_right, &init_bottom);
 
-#if 0
+#if DEBUG
 	printf("%d %d\n", i_width, i_height);
 	printf("%d %d\n", init_right, init_bottom);
 #endif
