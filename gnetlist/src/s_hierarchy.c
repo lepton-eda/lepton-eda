@@ -59,7 +59,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 
 	/* look for source=filename,filename, ... */
 	pcount = 0;
-	current_filename = u_basic_breakup_string(attrib, pcount);
+	current_filename = u_basic_breakup_string(attrib, ',', pcount);
 
 	/* loop over all filenames */
 	while (current_filename != NULL) {
@@ -103,7 +103,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 
 	    free(current_filename);
 	    pcount++;
-	    current_filename = u_basic_breakup_string(attrib, pcount);
+	    current_filename = u_basic_breakup_string(attrib, ',', pcount);
 	}
 
 	if (attrib) {

@@ -1,3 +1,7 @@
+2002-06-21 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_hierarchy.c: Updated all u_basic_breakup_string calls
+
 2002-06-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/s_rename.c: Added patch by Bryce Denney to fix an infinite loop
