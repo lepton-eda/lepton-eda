@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([74/7400-1.sym])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-symbols
-VERSION=20040710
+VERSION=20041228
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake stuff
@@ -134,6 +134,11 @@ GEDA_DECLARE_SYMLIB(opto)
 GEDA_DECLARE_SYMLIB(cascade)
 GEDA_DECLARE_SYMLIB(asic)
 GEDA_DECLARE_SYMLIB(gnetman)
+GEDA_DECLARE_SYMLIB(minicircuits)
+GEDA_DECLARE_SYMLIB(st)
+GEDA_DECLARE_SYMLIB(apex)
+GEDA_DECLARE_SYMLIB(allegro)
+GEDA_DECLARE_SYMLIB(irf)
 # 
 # Do individual library files start
 #########################################################################
@@ -218,6 +223,11 @@ AC_CONFIG_FILES([
 	cascade/Makefile 
 	asic/Makefile 
 	gnetman/Makefile 
+	minicircuits/Makefile
+	st/Makefile 
+	apex/Makefile 
+	allegro/Makefile 
+	irf/Makefile 
 	documentation/Makefile
 	system-commonrc ])
 

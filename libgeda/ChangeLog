@@ -1,3 +1,8 @@
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228, update shared library
+	version to 22
+
 2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/struct.h: Added major_changed_refdes GList to toplevel 

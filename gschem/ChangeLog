@@ -1,3 +1,7 @@
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228
+
 2004-10-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gschemrc.in: Added comment to attribute list.

@@ -1,3 +1,60 @@
+2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated version to 20041228
+
+	* Created new component library directories: mini-circuits st apex 
+	allegro irf
+
+	* 74/7404-4.sym 74/74133-2.sym 74/7414-2.sym 74/74238-1.sym
+	74/7432-3.sym 74/7474-3.sym 74/74power-1.sym analog/capacitor-4.sym
+	analog/darlington_NPN_PNP-1.sym analog/transformer-5.sym 
+	analog/varistor-1.sym connector/DB25-3.sym connector/connector1-2.sym
+	connector/connector10-2.sym connector/connector11-2.sym
+	connector/connector12-2.sym connector/connector13-2.sym
+	connector/connector14-2.sym connector/connector15-2.sym
+	connector/connector16-2.sym connector/connector17-2.sym
+	connector/connector18-2.sym connector/connector19-2.sym
+	connector/connector2-2.sym connector/connector20-2.sym
+	connector/connector21-2.sym connector/connector22-2.sym
+	connector/connector23-2.sym connector/connector24-2.sym
+	connector/connector25-2.sym connector/connector26-2.sym
+	connector/connector27-2.sym connector/connector28-2.sym
+	connector/connector29-2.sym connector/connector3-2.sym
+	connector/connector30-2.sym connector/connector31-2.sym
+	connector/connector32-2.sym connector/connector33-2.sym
+	connector/connector34-2.sym connector/connector35-2.sym
+	connector/connector36-2.sym connector/connector37-2.sym
+	connector/connector38-2.sym connector/connector39-2.sym
+	connector/connector4-2.sym connector/connector40-2.sym
+	connector/connector5-2.sym connector/connector6-2.sym
+	connector/connector7-2.sym connector/connector8-2.sym
+	connector/connector9-2.sym connector/mains-entry-1.sym
+	connector/terminal-1.sym diode/schottky-1.sym
+	io/LCD-1.sym io/TEC4x3-1.sym linear/lm319-1.sym linear/lm723-1.sym
+	linear/lp2954IT-1.sym maxim/max1206-1.sym maxim/max1207-1.sym
+	maxim/max1208-1.sym maxim/max1209-1.sym maxim/max122-1.sym
+	maxim/max12553-1.sym maxim/max12554-1.sym maxim/max12555-1.sym
+	maxim/max507-1.sym memory/25Cxx-1.sym memory/2732-1.sym
+	memory/AT45db021bso8w-1.sym memory/HM628511HC-SOJ36-1.sym
+	micro/AT89C5131_PLCC-1.sym micro/AT89C5132_TQFP-1.sym
+	micro/AT89S53-24PI-1.sym micro/ATmega16L-1.sym
+	micro/ATmega16_DIP-1.sym micro/ATmega32MLF-1.sym
+	micro/ATmega8-1.sym micro/ATtiny15L-1.sym micro/pic12F675-1.sym
+	micro/pic12F675-2.sym micro/pic16F628-1.sym micro/pic18F4431-1.sym
+	misc/75176-1.sym misc/MC34063-1.sym misc/dc_motor-1.sym 
+	misc/ir2110-1.sym misc/ltp-757g-1.sym opto/hsdl3612-1.sym 
+	philips/PCF8563-1.sym spice/gnucap-directive-1.sym 
+	spice/gnucap-include-1.sym spice/gnucap-model-1.sym
+	spice/gnucap-npn-1.sym spice/gnucap-options-1.sym
+	switch/switch-dip12.sym transistor/2N2222-1.sym
+	transistor/2N3904-2.sym transistor/2N3906-1.sym transistor/BC182-1.sym
+	transistor/BC307-1.sym transistor/BC547-2.sym transistor/BC547-3.sym
+	transistor/BC557-2.sym transistor/ips3310-1.sym 
+	transistor/ips521-1.sym: Added a whole bunch of contributed
+	symbols.  Some of these were added without any modification,
+	others with minor tweaks, and some had significant enough changes
+	to warrent a symversion=1.0
+
 2004-12-13 Werner Hoch <werner.ho@gmx.de>
 	* linear/lt1782-1.sym: duplicate pinnumber repaired
 	* pintype corrected to [in,out,io,...]
