@@ -1,3 +1,8 @@
+2002-11-10 Werner Hoch <werner.ho@gmx.de>
+	* 4000/40[34]?-*.sym: completed symbols (added net, footprint, ..)
+	* 4000/: 4032-2.sym, 4033-2.sym, 4035-2.sym, 4038-2.sym, 
+	         4042-2.sym, 4043-2.sym, 4044-2.sym
+	
 2002-11-09 Werner Hoch  <werner.ho@gmx.de>	
 	* spice/: added vdc-1.sym, vac-1.sym, vpulse-1.sym, 
 	          vsin-1.sym, vexp-1.sym, vpwl-1.sym
