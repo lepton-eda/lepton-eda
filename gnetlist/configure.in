@@ -135,7 +135,7 @@ if test $LIBGEDACONFIG = "no"; then
    	  AC_MSG_ERROR(Cannot find libgeda-config -- be sure that libgeda is installed)
 	fi
 
-# search for libgeda-config
+# search for gesym-config
 AC_PATH_PROG(GESYMCONFIG, gesym-config, no, ${PATH})
 
 if test $GESYMCONFIG = "no"; then

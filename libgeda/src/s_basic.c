@@ -449,6 +449,7 @@ if (!w_current->REMOVING_SEL) {
 	}
 }
 
+#if 0
 void
 s_delete_head(TOPLEVEL *w_current, OBJECT *head)
 {
@@ -508,6 +509,7 @@ s_delete_head(TOPLEVEL *w_current, OBJECT *head)
 	}
 
 }
+#endif
 
 /* deletes everything include the head */
 void
@@ -521,7 +523,8 @@ s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start)
 	current = return_tail(start);
 
 	/* do the delete backwards */
-	while(current != NULL && current->type != OBJ_HEAD ) {
+	/*while(current != NULL && current->type != OBJ_HEAD ) {*/
+	while(current != NULL) {
 		o_current = current->prev;
 		s_delete(w_current, current);
 		current = o_current;
@@ -529,7 +532,8 @@ s_delete_list_fromstart(TOPLEVEL *w_current, OBJECT *start)
 
 	/* now delete the head node */
 	/* might not need this but what the hell */
-	s_delete_head(w_current, start);
+	/* no longer needed, since it's deleted above */
+	/*s_delete_head(w_current, start);*/
 }
 
 #if 0 /* old way of doing this */

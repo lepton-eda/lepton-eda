@@ -73,8 +73,10 @@ main_prog(int argc, char *argv[])
 	int argv_index;
         int first_page=1;
 
+
 	gtk_init(&argc, &argv);	
 	visual = gdk_visual_get_system ();
+
 
 	argv_index = parse_commandline(argc, argv);
 

@@ -538,6 +538,7 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 	p_line_points = NULL;
         p_circle = NULL;
 	p_color = color;
+	p_complex = NULL;
 	p_visibility = visibility; 
 	p_show_name_value = show_name_value;
 
@@ -591,6 +592,7 @@ o_ntext_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int 
 					      x, y, angle); 
 	} else {
 		object_list->complex = NULL;
+		s_delete(w_current, temp_list);
 	}
 
 	w_current->page_current->object_parent = temp_parent;

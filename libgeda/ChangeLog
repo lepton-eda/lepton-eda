@@ -8,6 +8,12 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+6/13/99 Removed s_delete_head from production
+
+	Attempted to find the hidden attribute memory leak
+
+	Found above memory leak and squashed. 
+
 6/10/99 Added the start of support for not creating text items which are 
 	hidden
 
