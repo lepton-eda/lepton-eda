@@ -562,7 +562,6 @@ static int ToolReadExtensions(void);
 static int ToolRegisterExtension(struct Ext_s Entry);
 static int Menu_Tool_Initialize(void);
 static void Menu_Tool_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-static int Menu_FileNew_Initialize(void);
 void StrReplace(char *szString, char *szFrom, char *szTo);
 
 
@@ -602,14 +601,6 @@ int ToolInitialize(void)
 
 	/* read table of extensions */
 	iResult = ToolReadExtensions();
-	if (iResult == FAILURE)
-	{
-		/* TODO: error handling */
-		return FAILURE;
-	}
-
-	/* menu File/New */
-	iResult = Menu_FileNew_Initialize();
 	if (iResult == FAILURE)
 	{
 		/* TODO: error handling */
@@ -1136,108 +1127,6 @@ static int ToolRegisterGroup(struct Group_s Entry)
 		pGroupList = pNewEntry;
 
 	return SUCCESS;
-}
-
-
-
-/*
-	Menu File/New
-*/
-
-void FileNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData);
-
-static GtkMenu *pMenu;
-
-static int Menu_FileNew_Initialize()
-{
-	GtkWidget *pWidget;
-	struct Ext_s *pExt;
-
-	/* look for File/New widget */
-	pWidget = lookup_widget(GTK_WIDGET(pWindowMain), "MenuFileNew");
-	if (pWidget == NULL)
-	{
-		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot find widget 'MenuFileNew'");
-		return FAILURE;
-	}
-	
-	/* create File/New menu */
-	pMenu = GTK_MENU(gtk_menu_new());
-	gtk_widget_ref(GTK_WIDGET(pMenu));
-	gtk_object_set_data_full(GTK_OBJECT(pWindowMain), "MenuFileNew_menu", pMenu, (GtkDestroyNotify) gtk_widget_unref);
-	gtk_menu_item_set_submenu(GTK_MENU_ITEM(pWidget), GTK_WIDGET(pMenu));
-
-	/* add items to the menu */
-	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
-	{
-		if (!pExt->bInFileNew)
-			continue;
-		
-		pExt->pMenuItem = GTK_MENU_ITEM(gtk_menu_item_new_with_label(pExt->szName));
-		gtk_widget_ref((GtkWidget *) pExt->pMenuItem);
-		pExt->bMenuUsed = FALSE;
-		gtk_signal_connect(GTK_OBJECT(pExt->pMenuItem), "activate", GTK_SIGNAL_FUNC(FileNew_Activation), NULL);
-	}
-
-	MenuFileNewRefresh("");
-	return SUCCESS;
-}
-
-
-void MenuFileNewRefresh(const char *szExt)
-{
-	struct Ext_s *pExt;
-	char szDocSelected[TEXTLEN];
-
-	DocGetProperty(DOC_SELECTED, "", (void *) szDocSelected);
-
-	/* remove items from menu */
-	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
-	{
-		if (!pExt->bMenuUsed)
-			continue;
-
-		gtk_container_remove(GTK_CONTAINER(pMenu), GTK_WIDGET(pExt->pMenuItem));
-		pExt->bMenuUsed = FALSE;
-	}
-
-	/* add items to the menu */
-	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
-	{
-		if (!pExt->bInFileNew || (strcmp(pExt->szParent, FileGetExt(szDocSelected)) && strlen(pExt->szParent) > 0))
-			continue;
-
-		gtk_widget_show((GtkWidget *) pExt->pMenuItem);
-		gtk_container_add(GTK_CONTAINER(pMenu), (GtkWidget *) pExt->pMenuItem);
-		gtk_widget_set_sensitive(GTK_WIDGET(pExt->pMenuItem), TRUE);
-		pExt->bMenuUsed = TRUE;
-	}
-}
-
-
-void FileNew_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	struct Ext_s *pExt;
-	int iResult;
-
-	/* determine type of file extension */
-	for (pExt = pExtList; pExt != NULL; pExt = pExt->pNext)
-		if (pExt->pMenuItem == pMenuItem)
-			break;
-	if (pExt == NULL)
-	{
-		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot determine file type and extension");
-		return;
-	}
-
-	/* run File/New function */
-	iResult = FileNew(pExt->iId);
-	if (iResult != SUCCESS)
-	{
-		Log(LOG_FATAL, __FILE__, __LINE__, "Cannot create new file");
-		return;
-	}
-
 }
 
 

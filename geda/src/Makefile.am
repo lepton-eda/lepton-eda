@@ -40,6 +40,8 @@ geda_SOURCES = \
 	log.c\
 	m_action.h\
 	m_action.c\
+	m_file.h\
+	m_file.c\
 	m_project.h\
 	m_project.c\
 	m_window.h\

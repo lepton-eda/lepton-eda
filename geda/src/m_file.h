@@ -19,8 +19,8 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifndef __FILE_H_INCLUDED
-#define __FILE_H_INCLUDED
+#ifndef __M_FILE_H_INCLUDED
+#define __M_FILE_H_INCLUDED
 
 
 
@@ -30,15 +30,21 @@
 
 *******************************************************************************/
 
-/* common part for menu, icon and library calls */
-char *FileEdit(const char *szPath);
-char *FileSave(const char *szPath);
-char *FilePrint(const char *szPath);
-char *FileClose(const char *szPath);
-char *FileNew(const char *szFile, const char *szParent);
-char *FileDelete(const char *szFilename);
-char *FileUnlink(const char *szFilename);
+/* menu callbacks */
+void FileEdit_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FileSave_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FilePrint_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FileClose_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FileNew_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FileImport_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FileUnlink_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+void FileDelete_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData);
+
+/* other callbacks */
+void FileNew_ButtonOk(GtkButton *pButton, gpointer pUserData);
+void FileNew_ButtonCancel(GtkButton *pButton, gpointer pUserData);
+gboolean FileNew_Destroy(GtkWidget *pWidget, GdkEvent *pEvent, gpointer pUserData);
 
 
 
-#endif /* __FILE_H_INCLUDED */
+#endif /* __M_FILE_H_INCLUDED */

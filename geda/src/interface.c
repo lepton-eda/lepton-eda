@@ -422,29 +422,32 @@ create_MainWindow (void)
   gtk_signal_connect (GTK_OBJECT (MenuProjectClose), "activate",
                       GTK_SIGNAL_FUNC (MenuProjectClose_Activation),
                       NULL);
+  gtk_signal_connect (GTK_OBJECT (MenuFileNew), "activate",
+                      GTK_SIGNAL_FUNC (FileNew_MenuActivation),
+                      NULL);
   gtk_signal_connect (GTK_OBJECT (MenuProjectExit), "activate",
                       GTK_SIGNAL_FUNC (MenuProjectExit_Activation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileEdit), "activate",
-                      GTK_SIGNAL_FUNC (MenuFileEdit_Activation),
+                      GTK_SIGNAL_FUNC (FileEdit_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileSave), "activate",
-                      GTK_SIGNAL_FUNC (MenuFileSave_Activation),
+                      GTK_SIGNAL_FUNC (FileSave_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFilePrint), "activate",
-                      GTK_SIGNAL_FUNC (MenuFilePrint_Activation),
+                      GTK_SIGNAL_FUNC (FilePrint_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileClose), "activate",
-                      GTK_SIGNAL_FUNC (MenuFileClose_Activation),
+                      GTK_SIGNAL_FUNC (FileClose_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileImport), "activate",
-                      GTK_SIGNAL_FUNC (MenuFileImport_Activation),
+                      GTK_SIGNAL_FUNC (FileImport_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileUnlink), "activate",
-                      GTK_SIGNAL_FUNC (MenuFileUnlink_Activation),
+                      GTK_SIGNAL_FUNC (FileUnlink_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (MenuFileDelete), "activate",
-                      GTK_SIGNAL_FUNC (MenuFileDelete_Activation),
+                      GTK_SIGNAL_FUNC (FileDelete_MenuActivation),
                       NULL);
   gtk_signal_connect (GTK_OBJECT (DocModulesTree), "tree_select_row",
                       GTK_SIGNAL_FUNC (Doc_Selection),
@@ -460,5 +463,143 @@ create_MainWindow (void)
                             NULL);
 
   return MainWindow;
+}
+
+GtkWidget*
+create_FileNew (void)
+{
+  GtkWidget *FileNew;
+  GtkWidget *pFileNewVBox;
+  GtkWidget *pFileNewFrame;
+  GtkWidget *pFileNewTable;
+  GtkWidget *pFileNewTypeCombo;
+  GtkWidget *pFileNewTypeComboEntry;
+  GtkWidget *pFileNewNameEntry;
+  GtkWidget *pFileNewTypeLabel;
+  GtkWidget *pFileNewNameLabel;
+  GtkWidget *pFileNewHBox;
+  GtkWidget *pFileNewButtonOk;
+  GtkWidget *pFileNewButtonCancel;
+
+  FileNew = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_object_set_data (GTK_OBJECT (FileNew), "FileNew", FileNew);
+  gtk_widget_set_usize (FileNew, 400, -2);
+  gtk_window_set_title (GTK_WINDOW (FileNew), _("New file ..."));
+  gtk_window_set_modal (GTK_WINDOW (FileNew), TRUE);
+  gtk_window_set_default_size (GTK_WINDOW (FileNew), 400, -1);
+  gtk_window_set_policy (GTK_WINDOW (FileNew), FALSE, FALSE, FALSE);
+
+  pFileNewVBox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_ref (pFileNewVBox);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewVBox", pFileNewVBox,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewVBox);
+  gtk_container_add (GTK_CONTAINER (FileNew), pFileNewVBox);
+
+  pFileNewFrame = gtk_frame_new (_("File"));
+  gtk_widget_ref (pFileNewFrame);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewFrame", pFileNewFrame,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewFrame);
+  gtk_box_pack_start (GTK_BOX (pFileNewVBox), pFileNewFrame, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (pFileNewFrame), 8);
+
+  pFileNewTable = gtk_table_new (2, 2, FALSE);
+  gtk_widget_ref (pFileNewTable);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewTable", pFileNewTable,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewTable);
+  gtk_container_add (GTK_CONTAINER (pFileNewFrame), pFileNewTable);
+  gtk_container_set_border_width (GTK_CONTAINER (pFileNewTable), 8);
+  gtk_table_set_row_spacings (GTK_TABLE (pFileNewTable), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (pFileNewTable), 8);
+
+  pFileNewTypeCombo = gtk_combo_new ();
+  gtk_widget_ref (pFileNewTypeCombo);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewTypeCombo", pFileNewTypeCombo,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewTypeCombo);
+  gtk_table_attach (GTK_TABLE (pFileNewTable), pFileNewTypeCombo, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  GTK_WIDGET_SET_FLAGS (pFileNewTypeCombo, GTK_CAN_DEFAULT);
+
+  pFileNewTypeComboEntry = GTK_COMBO (pFileNewTypeCombo)->entry;
+  gtk_widget_ref (pFileNewTypeComboEntry);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewTypeComboEntry", pFileNewTypeComboEntry,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewTypeComboEntry);
+  gtk_entry_set_editable (GTK_ENTRY (pFileNewTypeComboEntry), FALSE);
+
+  pFileNewNameEntry = gtk_entry_new ();
+  gtk_widget_ref (pFileNewNameEntry);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewNameEntry", pFileNewNameEntry,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewNameEntry);
+  gtk_table_attach (GTK_TABLE (pFileNewTable), pFileNewNameEntry, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  GTK_WIDGET_SET_FLAGS (pFileNewNameEntry, GTK_CAN_DEFAULT);
+
+  pFileNewTypeLabel = gtk_label_new (_("Type"));
+  gtk_widget_ref (pFileNewTypeLabel);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewTypeLabel", pFileNewTypeLabel,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewTypeLabel);
+  gtk_table_attach (GTK_TABLE (pFileNewTable), pFileNewTypeLabel, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (pFileNewTypeLabel), 0, 0.5);
+
+  pFileNewNameLabel = gtk_label_new (_("Name"));
+  gtk_widget_ref (pFileNewNameLabel);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewNameLabel", pFileNewNameLabel,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewNameLabel);
+  gtk_table_attach (GTK_TABLE (pFileNewTable), pFileNewNameLabel, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (pFileNewNameLabel), 0, 0.5);
+
+  pFileNewHBox = gtk_hbox_new (TRUE, 0);
+  gtk_widget_ref (pFileNewHBox);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewHBox", pFileNewHBox,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewHBox);
+  gtk_box_pack_start (GTK_BOX (pFileNewVBox), pFileNewHBox, FALSE, FALSE, 0);
+  gtk_widget_set_usize (pFileNewHBox, -2, 48);
+  gtk_container_set_border_width (GTK_CONTAINER (pFileNewHBox), 8);
+
+  pFileNewButtonOk = gtk_button_new_with_label (_("Ok"));
+  gtk_widget_ref (pFileNewButtonOk);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewButtonOk", pFileNewButtonOk,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewButtonOk);
+  gtk_box_pack_start (GTK_BOX (pFileNewHBox), pFileNewButtonOk, FALSE, FALSE, 0);
+  gtk_widget_set_usize (pFileNewButtonOk, 112, 48);
+  GTK_WIDGET_SET_FLAGS (pFileNewButtonOk, GTK_CAN_DEFAULT);
+
+  pFileNewButtonCancel = gtk_button_new_with_label (_("Cancel"));
+  gtk_widget_ref (pFileNewButtonCancel);
+  gtk_object_set_data_full (GTK_OBJECT (FileNew), "pFileNewButtonCancel", pFileNewButtonCancel,
+                            (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (pFileNewButtonCancel);
+  gtk_box_pack_start (GTK_BOX (pFileNewHBox), pFileNewButtonCancel, FALSE, FALSE, 0);
+  gtk_widget_set_usize (pFileNewButtonCancel, 112, 48);
+  GTK_WIDGET_SET_FLAGS (pFileNewButtonCancel, GTK_CAN_DEFAULT);
+
+  gtk_signal_connect (GTK_OBJECT (FileNew), "destroy_event",
+                      GTK_SIGNAL_FUNC (FileNew_Destroy),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (pFileNewButtonOk), "clicked",
+                      GTK_SIGNAL_FUNC (FileNew_ButtonOk),
+                      NULL);
+  gtk_signal_connect (GTK_OBJECT (pFileNewButtonCancel), "clicked",
+                      GTK_SIGNAL_FUNC (FileNew_ButtonCancel),
+                      NULL);
+
+  gtk_widget_grab_focus (pFileNewNameEntry);
+  gtk_widget_grab_default (pFileNewNameEntry);
+  return FileNew;
 }
 

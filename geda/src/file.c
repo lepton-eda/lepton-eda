@@ -19,566 +19,374 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-#include "../config.h"
-#endif
-#include <gtk/gtk.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
 #include "file.h"
-#include "filesel.h"
 #include "filetool.h"
 #include "doc.h"
-#include "msgbox.h"
+#include "project.h"
 #include "tool.h"
 #include "txtedit.h"
-#include "window.h"
 
-/*
-	Menu FILE handlers
-	(Edit, Save, Print, Close, New, Import, Unlink, Delete)
-*/
-static void FileDelete(const char *szFilename);
-static void FileUnlink(const char *szFilename);
 
-void FileEdit(const char *szPath)
+
+/*******************************************************************************
+
+	Private functions and variables
+
+*******************************************************************************/
+
+/* error string returned to a calling function */
+static char *pErrorString = NULL;
+
+/* error strings */
+#define MSG_FILATTACHED    "File already exists in project"
+#define MSG_FILEXIST       "File already exists on disk"
+#define MSG_FILTYPERR      "File type not supported"
+#define MSG_FILWRIERR      "Cannot write to a file"
+#define MSG_FILDELERR      "Cannot delete a file"
+#define MSG_INTERROR       "Internal error"
+#define MSG_PROMPT         ":\n\n"
+
+/* string functions */
+/* TODO: move to a separate module */
+void StringSet(char *pVar, const char *pString);
+void StringAdd(char *pVar, const char *pString);
+
+
+
+/*******************************************************************************
+
+	File edit
+
+*******************************************************************************/
+
+char *FileEdit(const char *szPath)
 {
 	EditOpen(szPath);
+
+	return NULL;
 }
 
 
 
-void FileSave(const char *szPath)
+/*******************************************************************************
+
+	File save
+
+*******************************************************************************/
+
+char *FileSave(const char *szPath)
 {
 	EditSave(szPath);
+	
+	return NULL;
 }
 
 
-void FilePrint(const char *szPath)
+
+/*******************************************************************************
+
+	File print
+
+*******************************************************************************/
+
+char *FilePrint(const char *szPath)
 {
 	EditPrint(szPath);
+	
+	return NULL;
 }
 
 
 
-void FileClose(const char *szPath)
+/*******************************************************************************
+
+	File close
+
+*******************************************************************************/
+
+char *FileClose(const char *szPath)
 {
 	EditClose(szPath);
-}
-
-
-
-void MenuFileEdit_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult;
-	char szName[TEXTLEN];
 	
-	/* get the file name */
-	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
-	if (iResult != SUCCESS)
-		return;
-	if (strlen(szName) == 0)
-		return;
-	
-	FileEdit(szName);
-}
-
-
-void MenuFileSave_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult;
-	char szName[TEXTLEN], *pFileName;
-
-	/* get the file name */
-	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
-	if (iResult != SUCCESS)
-		return;
-	if (strlen(szName) == 0)
-		return;
-	pFileName = WindowTop();
-	FileSave(pFileName);
-}
-
-
-void MenuFilePrint_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult;
-	char szName[TEXTLEN];
-	
-	/* get the file name */
-	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
-	if (iResult != SUCCESS)
-		return;
-	if (strlen(szName) == 0)
-		return;
-	
-	FilePrint(WindowTop());
-}
-
-
-void MenuFileClose_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult;
-	char szName[TEXTLEN], *pFileName;
-
-	/* get the file name */
-	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
-	if (iResult != SUCCESS)
-		return;
-	if (strlen(szName) == 0)
-		return;
-
-	pFileName = WindowTop();
-	DocClose(pFileName);
-}
-
-
-/* TODO: missing MenuFileNew_Activation() */
-
-
-void MenuFileImport_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult, iExtId;
-	char szName[TEXTLEN], szExtension[TEXTLEN], *szRelName, pValue[TEXTLEN], szDocSelected[TEXTLEN], *szExt, szMessage[TEXTLEN], szParent[TEXTLEN];
-
-	/* enter file name and location */
-	strcpy(szName, "");
-	strcpy(szExtension, "*");
-	iResult = FileSelection(szExtension, szName);
-	if (iResult != SUCCESS)
-	{
-		/* not an error, simply action cancelled */
-		return;
-	}
-
-	/* check extension in database */
-	szExt = FileGetExt(szName);
-	iResult = ToolGetExtensionId(szExt, &iExtId);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Cannot import files of type '%s'", szExt);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-	iResult = ToolValueGet(EXT_LIST, EXT_PARENT, iExtId, szParent);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Fatal error in file '%s' at line %d", __FILE__, __LINE__);
-		MsgBox(
-			pWindowMain,
-			"Fatal error !",
-			szMessage,
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return;
-	}
-	iResult = DocGetProperty(DOC_SELECTED, "", szDocSelected);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Fatal error in file '%s' at line %d", __FILE__, __LINE__);
-		MsgBox(
-			pWindowMain,
-			"Fatal error !",
-			szMessage,
-			MSGBOX_FATAL | MSGBOX_OKD
-			);
-		return;
-	}
-	if (strcmp(szParent, FileGetExt(szDocSelected)) && strlen(szParent) > 0)
-	{
-		sprintf(szMessage, "File '%s' can be bind only to files of type '%s'", szName, szParent);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-	
-	/* check if the file is existing */
-	iResult = FileIsExisting(szName);
-	if (iResult != SUCCESS)
-	{
-		/* error, file does exist */
-		MsgBox(
-			pWindowMain,
-			"File does not exist.",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-	
-	/* check if the file has been already added in project */
-	iResult = DocGetProperty(DOC_FILENAME, szName, pValue);
-	if (iResult == SUCCESS)
-	{
-		/* error, file in project */
-		MsgBox(
-			pWindowMain,
-			"File already exists.",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-	
-	/* add file to the project */
-	szRelName = FileGetRel(szName);
-	iResult = DocCreate(szRelName, strlen(szParent) > 0 ? szDocSelected : "");
-	if (iResult != SUCCESS)
-	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot import file.",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-}
-
-
-void MenuFileUnlink_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult;
-	char szMessage[TEXTLEN], szName[TEXTLEN];
-	
-	/* get the file name */
-	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
-	if (iResult != SUCCESS)
-		return;
-	if (strlen(szName) == 0)
-		return;
-	
-	/* accept unlink */
-	sprintf(szMessage, "Do you want to remove file '%s' (and all dependend files) from project ?", szName);
-	iResult = MsgBox(
-		pWindowMain,
-		"Question ...",
-		szMessage,
-		MSGBOX_QUESTION | MSGBOX_OKD | MSGBOX_CANCEL
-		);
-	if (iResult == MSGBOX_CANCEL)
-		return;
-
-	FileUnlink(szName);
-}
-
-
-void MenuFileDelete_Activation(GtkMenuItem *pMenuItem, gpointer pUserData)
-{
-	int iResult;
-	char szMessage[TEXTLEN], szName[TEXTLEN];
-
-	/* get the file name */
-	iResult = DocGetProperty(DOC_SELECTED, NULL, (void *) szName);
-	if (iResult != SUCCESS)
-		return;
-	if (strlen(szName) == 0)
-		return;
-
-	/* accept delete */
-	sprintf(szMessage, "Do you want to delete file '%s' (and all dependend files) from the disk ?", szName);
-	iResult = MsgBox(
-		pWindowMain,
-		"Question ...",
-		szMessage,
-		MSGBOX_QUESTION | MSGBOX_OKD | MSGBOX_CANCEL
-		);
-	if (iResult == 1)
-		return;
-
-	return;
-}
-
-
-static void FileDelete(const char *szFilename)
-{
-	char szMessage[TEXTLEN], szName[TEXTLEN], szParent[TEXTLEN];
-	int iResult;
-
-	/* delete all children of the file */
-	iResult = SUCCESS;
-	strcpy(szName, "");
-	while (iResult == SUCCESS)
-	{
-		iResult = DocGetProperty(DOC_NEXT, szName, (void *) szName);
-		if (iResult != SUCCESS)
-			break;
-
-		iResult = DocGetProperty(DOC_PARENT, szName, (void *) szParent);
-		if (iResult != SUCCESS)
-			break;
-
-		if (!strcmp(szParent, szFilename))
-			FileDelete(szName);
-	}
-
-	/* close the file */
-	iResult = DocClose(szFilename);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Cannot close file '%s'", szFilename);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-
-	/* remove file from document list */
-	iResult = DocDestroy(szFilename);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Cannot remove file '%s' from project", szFilename);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-
-	/* delete file from disk */
-	iResult = unlink(szFilename);
-	if (iResult != SUCCESS)
-	{	sprintf(szMessage, "Cannot delete file '%s'", szFilename);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-}
-
-
-static void FileUnlink(const char *szFilename)
-{
-	char szMessage[TEXTLEN], szName[TEXTLEN], szParent[TEXTLEN];
-	int iResult;
-
-	/* delete all children of the file */
-	iResult = SUCCESS;
-	strcpy(szName, "");
-	while (iResult == SUCCESS)
-	{
-		iResult = DocGetProperty(DOC_NEXT, szName, (void *) szName);
-		if (iResult != SUCCESS)
-			break;
-
-		iResult = DocGetProperty(DOC_PARENT, szName, (void *) szParent);
-		if (iResult != SUCCESS)
-			break;
-
-		if (!strcmp(szParent, szFilename))
-			FileUnlink(szName);
-	}
-
-	/* close the file */
-	iResult = DocClose(szFilename);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Cannot close file '%s'", szFilename);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
-
-	/* remove file from document list */
-	iResult = DocDestroy(szFilename);
-	if (iResult != SUCCESS)
-	{
-		sprintf(szMessage, "Cannot remove file '%s' from project", szFilename);
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			szMessage,
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return;
-	}
+	return NULL;
 }
 
 
 
+/*******************************************************************************
 
+	File new
 
+*******************************************************************************/
 
-
-
-
-
-
-
-
-
-
-
-
-int FileNew(int iExtId)
+char *FileNew(const char *pFile, const char *pParent)
 {
 	FILE *hFile;
-	int iResult, iActionId;
-	char szTemplate[TEXTLEN], szName[TEXTLEN], *szExt, szExtension[TEXTLEN], *szRelName, pValue[TEXTLEN], szDocSelected[TEXTLEN], szParent[TEXTLEN];
+	int iId, iResult;
+	char *pResult, szTemplate[TEXTLEN], szExt[TEXTLEN], pValue[TEXTLEN];
 
-	/* check if the file has been already added in project */
-	iResult = DocGetProperty(DOC_FILENAME, szName, pValue);
+
+	/* 
+		check existence of file (in project, on disk) 
+	*/
+	
+	iResult = DocGetProperty(DOC_FILENAME, pFile, (void *) pValue);
 	if (iResult == SUCCESS)
 	{
-		/* error, file in project */
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"File already exists.",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
+		StringSet(pErrorString, MSG_FILATTACHED);
+		StringAdd(pErrorString, MSG_PROMPT);
+		StringAdd(pErrorString, pFile);
+		return pErrorString;
 	}
 
-	/* read extension */
-	iResult = ToolValueGet(EXT_LIST, EXT_EXT, iExtId, (void *) szExtension);
-	if (iResult != SUCCESS)
-	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot read file extension",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-
-	/* read extension of parent */
-	iResult = ToolValueGet(EXT_LIST, EXT_PARENT, iExtId, (void *) szParent);
-	if (iResult != SUCCESS)
-	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot read parent extension",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-
-	/* read template */
-	iResult = ToolValueGet(EXT_LIST, EXT_TEMPLATE, iExtId, (void *) szTemplate);
-	if (iResult != SUCCESS)
-	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot read file template",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-
-	/* read default action */
-	iResult = ToolValueGet(EXT_LIST, EXT_ACTIONID, iExtId, (void *) &iActionId);
-	if (iResult != SUCCESS)
-	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot determine file extension",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
-	}
-
-	/* enter file name and location */
-	strcpy(szName, "unnamed");
-	strcat(szName, ".");
-	strcat(szName, szExtension);
-	iResult = FileSelection(szExtension, szName);
-	if (iResult != SUCCESS)
-	{
-		/* not an error, simply action cancelled */
-		return FAILURE;
-	}
-	szExt = FileGetExt(szName);
-	if (strcmp(szExt, szExtension))
-	{
-		strcat(szName, ".");
-		strcat(szName, szExtension);
-	}
-
-	/* check if the file is existing */
-	iResult = FileIsExisting(szName);
+	iResult = FileIsExisting(pFile);
 	if (iResult == SUCCESS)
 	{
-		/* error, file does exist */
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"File already exists",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
+		StringSet(pErrorString, MSG_FILEXIST);
+		StringAdd(pErrorString, MSG_PROMPT);
+		StringAdd(pErrorString, pFile);
+		return pErrorString;
 	}
 
-	/* create file from template */
-	hFile = fopen(szName, "w");
+
+	/* 
+		create  file 
+	*/
+
+	for (
+		iId = 0, iResult = SUCCESS; iResult == SUCCESS; iId ++)
+	{
+		iResult = ToolValueGet(EXT_LIST, EXT_EXT, iId, szExt);
+		if (iResult != SUCCESS)
+		{
+			StringSet(pErrorString, MSG_FILTYPERR);
+			return pErrorString;
+		}
+		
+		if (!strcmp(szExt, FileGetExt(pFile)))
+			break;
+	}
+
+	iResult = ToolValueGet(EXT_LIST, EXT_TEMPLATE, iId, (void *) szTemplate);
+	if (iResult != SUCCESS)
+		FatalError(__FILE__, __LINE__, __DATE__);
+
+	hFile = fopen(pFile, "w");
 	if (hFile == NULL)
 	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot copy template",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
+		StringSet(pErrorString, MSG_FILWRIERR);
+		StringAdd(pErrorString, MSG_PROMPT);
+		StringAdd(pErrorString, pFile);
+		return pErrorString;
 	}
 	fprintf(hFile, "%s", szTemplate);
 	fclose(hFile);
 
-	/* check if the file is existing */
-	iResult = FileIsExisting(szName);
+
+	/* 
+		add file to project 
+	*/
+	
+	iResult = DocCreate(FileGetRel(pFile), pParent);
 	if (iResult != SUCCESS)
 	{
-		/* error, file does exist */
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"File does not exist",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
+		StringSet(pErrorString, MSG_INTERROR);
+		return pErrorString;
 	}
-
-	DocGetProperty(DOC_SELECTED, "", szDocSelected);
-
-	/* create new file and add it to the project */
-	szRelName = FileGetRel(szName);
-	iResult = DocCreate(szRelName, strlen(szParent) ? szDocSelected : "");
+	
+	iResult = ProjectSave();
 	if (iResult != SUCCESS)
 	{
-		MsgBox(
-			pWindowMain,
-			"Error !",
-			"Cannot create document",
-			MSGBOX_ERROR | MSGBOX_OKD
-			);
-		return FAILURE;
+		StringSet(pErrorString, MSG_INTERROR);
+		return pErrorString;
+	}
+	
+	
+	/* 
+		open file 
+	*/
+	
+	pResult = FileEdit(pFile);
+	if (pResult != NULL)
+		return pResult;
+
+
+	return NULL;
+}
+
+
+
+/*******************************************************************************
+
+	File import
+
+*******************************************************************************/
+
+
+
+/*******************************************************************************
+
+	File unlink
+
+*******************************************************************************/
+
+char *FileUnlink(const char *szFilename)
+{
+	char *pResult, szName[TEXTLEN], szParent[TEXTLEN];
+	int iResult;
+
+	/* 
+		delete all children of the file 
+	*/
+	
+	iResult = SUCCESS;
+	strcpy(szName, "");
+	while (iResult == SUCCESS)
+	{
+		iResult = DocGetProperty(DOC_NEXT, szName, (void *) szName);
+		if (iResult != SUCCESS)
+			break;
+
+		iResult = DocGetProperty(DOC_PARENT, szName, (void *) szParent);
+		if (iResult != SUCCESS)
+			break;
+
+		if (!strcmp(szParent, szFilename))
+		{
+			pResult = FileUnlink(szName);
+			if (pResult != NULL)
+				return pResult;
+		}
 	}
 
-	return SUCCESS;
+
+	/* 
+		close the file 
+	*/
+	
+	iResult = DocClose(szFilename);
+	if (iResult != SUCCESS)
+	{
+		StringSet(pErrorString, MSG_INTERROR);
+		return pErrorString;
+	}
+
+
+	/* 
+		remove file from document list 
+	*/
+	
+	iResult = DocDestroy(szFilename);
+	if (iResult != SUCCESS)
+	{
+		StringSet(pErrorString, MSG_INTERROR);
+		return pErrorString;
+	}
+	
+	iResult = ProjectSave();
+	if (iResult != SUCCESS)
+	{
+		StringSet(pErrorString, MSG_INTERROR);
+		return pErrorString;
+	}
+	
+	return NULL;
+}
+
+
+
+/*******************************************************************************
+
+	File delete
+
+*******************************************************************************/
+
+char *FileDelete(const char *szFilename)
+{
+	char *pResult;
+	int iResult;
+
+	/*
+		unlink the file
+	*/
+	
+	pResult = FileUnlink(szFilename);
+	if (pResult != NULL)
+		return pResult;
+
+	
+	/* 
+		delete the file from disk 
+	*/
+	
+	iResult = unlink(szFilename);
+	if (iResult != 0)
+	{	
+		StringSet(pErrorString, MSG_FILDELERR);
+		StringAdd(pErrorString, MSG_PROMPT);
+		StringAdd(pErrorString, szFilename);
+		return pErrorString;
+	}
+	
+	return NULL;
+}
+
+
+
+/*******************************************************************************
+
+	Private functions and variables
+
+*******************************************************************************/
+
+/* copy pString to pVar */
+void StringSet(char *pVar, const char *pString)
+{
+	char *pPtr;
+	
+	if (pString == NULL)
+		return;
+		
+	if (pVar == NULL)
+	{
+		pPtr = (char *) malloc(strlen(pString) + 1);
+		if (pPtr == NULL)
+			return;
+	} else {
+		pPtr = (char *) realloc(pVar, strlen(pString) + 1);
+		if (pPtr == NULL)
+			return;
+	}
+	
+	strcpy(pVar, pString);
+	pVar = pPtr;
+}
+
+
+/* add pString to pVar */
+void StringAdd(char *pVar, const char *pString)
+{
+	char *pPtr;
+	
+	if (pString == NULL)
+		return;
+		
+	if (pVar == NULL)
+	{
+		pPtr = (char *) malloc(strlen(pString) + 1);
+		if (pPtr == NULL)
+			return;
+	} else {
+		pPtr = (char *) realloc(pVar, strlen(pVar) + strlen(pString) + 1);
+		if (pPtr == NULL)
+			return;
+	}
+	
+	strcpy(pPtr, pVar);
+	strcat(pPtr, pString);
+	pVar = pPtr;
 }

@@ -1,3 +1,9 @@
+2003-12-08 Piotr Miarecki   <tertul@poczta.onet.pl>
+
+        * src/Makefile.am, src/interface.c, src/interface.h, src/callbacks.h,
+        src/m_file.c, src/m_file.h, src/file.c, src/file.h, src/tool.c:
+        Added new File->New window.
+        
 2003-12-05 Piotr Miarecki   <tertul@poczta.onet.pl>
 
         * src/doc.c, src/project.c, src/project.h, src/m_project.c,

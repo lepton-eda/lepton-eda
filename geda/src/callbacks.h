@@ -1,187 +1,37 @@
+/*******************************************************************************/
+/*                                                                             */
+/* gEDA Suite Project Manager                                                  */
+/*                                                                             */
+/* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
+/*                                                                             */
+/* This program is free software; you can redistribute it and/or               */
+/* modify it under the terms of the GNU General Public License                 */
+/* as published by the Free Software Foundation version 2.                     */
+/*                                                                             */
+/* This program is distributed in the hope that it will be useful,             */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of              */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               */
+/* GNU General Public License for more details.                                */
+/*                                                                             */
+/* You should have received a copy of the GNU General Public License           */
+/* along with this program; if not, write to the Free Software                 */
+/* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. */
+/*                                                                             */
+/*******************************************************************************/
+
+#ifndef __CALLBACKS_H_INCLUDED
+#define __CALLBACKS_H_INCLUDED
+
 #include <gtk/gtk.h>
-#include "file.h"
+#include "m_file.h"
+#include "m_project.h"
 
 
 
-void
-on_MenuProjectExit_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
+gboolean on_MainWindow_delete_event(GtkWidget *pWidget, GdkEvent *pEvent, gpointer pUserData);
+void Doc_Selection(GtkCTree *pCTree, GList *pNode, gint iColumn, gpointer pUserData);
+gboolean on_DocModulesTree_button_press_event(GtkWidget *pWidget, GdkEventButton *pEvent, gpointer pUserData);
 
-void
-on_MenuProjectNew_activate             (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
 
-void
-on_MenuProjectOpen_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
 
-void
-on_MenuProjectSave_activate            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuProjectClose_activate           (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-gboolean
-on_MainWindow_delete_event             (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data);
-
-void
-on_MenuFileNew_activate                (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuFileOpen_activate               (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuFileSave_activate               (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuFileSaveAs_activate             (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuFilePrint_activate              (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuFileClose_activate              (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_MenuTextEditor_activate             (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_FileSelectOk_clicked                (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_FileSelectCancel_clicked            (GtkButton       *button,
-                                        gpointer         user_data);
-
-gboolean
-on_FileSelect_delete_event             (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data);
-
-void
-Doc_Selection                          (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-MenuFileOpen_Activation                (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuFileImport_Activation              (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuProjectNew_Activation              (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuProjectOpen_Activation             (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuProjectSave_Activation             (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuProjectClose_Activation            (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuProjectExit_Activation             (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-MenuFileEdit_Activation                (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-Doc_Selection                          (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-gboolean
-FlyingVPressed                         (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
-FlyingVReleased                        (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
-FlyingHPressed                         (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
-FlyingHReleased                        (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-void
-Doc_Selection                          (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-Doc_Selection                          (GtkCTree        *ctree,
-                                        GList           *node,
-                                        gint             column,
-                                        gpointer         user_data);
-
-void
-on_button1_pressed                     (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_button1_released                    (GtkButton       *button,
-                                        gpointer         user_data);
-
-gboolean
-on_button1_motion_notify_event         (GtkWidget       *widget,
-                                        GdkEventMotion  *event,
-                                        gpointer         user_data);
-
-void
-on_button2_pressed                     (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_button2_released                    (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-WindowSwitch                           (GtkNotebook     *notebook,
-                                        GtkNotebookPage *page,
-                                        gint             page_num,
-                                        gpointer         user_data);
-
-gboolean
-on_DocModulesTree_button_press_event   (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
-on_DocModulesTree_button_press_event   (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-void
-on_StatusText_changed                  (GtkEditable     *editable,
-                                        gpointer         user_data);
+#endif /* __CALLBACKS_H_INCLUDED */
