@@ -589,8 +589,6 @@ void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
 /* x_multimulti.c */
-void multi_multi_edit_close(GtkWidget *w, GtkWidget *window);
-void multi_multi_edit(TOPLEVEL *w_current, SELECTION *list);
 /* x_pagesel.c */
 void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);
 gint save_page(GtkWidget *gtklist, TOPLEVEL *w_current);
