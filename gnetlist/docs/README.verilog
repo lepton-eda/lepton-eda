@@ -4,6 +4,24 @@ THIS IS FREE SOFTWARE, see the included file COPYING for more info.
 
 Latest README:
 
+	This is the fifth release of the Verilog netlister for gEDA.
+
+	New in this release:
+
+	1) Escaped Verilog identifiers.
+
+	To facilitate board level simulations, the Verilog netlister now
+outputs `escaped' Verilog identifiers for any net, port or instance name
+that does not appear to be a valid Verilog identifier.  In this way, 
+chips with numbered pins can be netlisted and models constructed to run
+digital simulations of complete circuits.
+
+
+		Mike Jarabek
+
+
+----- OLDER README.verilog's -----
+
 	This is the fourth release of the Verilog netlister for gEDA.
 
 	New in this release:
@@ -75,8 +93,6 @@ to verilog.
 	
 					Mike Jarabek
 
-
------ OLDER README.verilog's -----
 
         This is the third release of the Verilog netlister for geda.
 
