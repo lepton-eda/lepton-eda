@@ -1,3 +1,7 @@
+2004-02-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Fixed a broken comment (broken by indent)
+
 2004-01-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * config.h.in: Remove machine generated file.

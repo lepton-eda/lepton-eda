@@ -319,9 +319,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
       /* s_net_print(nets); */
 
       /* this is iffy */
-      /* should passindent: Standard input:519: Error:Stmt nesting error.
-         indent: Standard input:519: Error:Stmt nesting error.
-         in page_current in top level func */
+      /* should pass in page_current in top level func */
     }
     s_traverse_clear_all_visited(pr_current->page_current->
                                  object_head);
