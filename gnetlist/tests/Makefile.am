@@ -10,6 +10,9 @@ tests:
 	gnetlist -o new_singlenet_1.geda -g geda ../examples/singlenet_1.sch
 	diff singlenet_1.geda new_singlenet_1.geda
 # gEDA 
+	gnetlist -o new_netattrib_1.geda -g geda ./netattrib_1.sch
+	diff netattrib_1.geda new_netattrib_1.geda
+# gEDA 
 	gnetlist -o new_stack_1.geda -g geda \
 		../../gschem/examples/stack_1.sch
 	diff stack_1.geda new_stack_1.geda

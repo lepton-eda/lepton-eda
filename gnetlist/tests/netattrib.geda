@@ -1,0 +1,31 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+U300 device=7404
+U200 device=7404
+U100 device=7400
+
+END components
+
+START renamed-nets
+
+two -> one
+
+END renamed-nets
+
+START nets
+
+unnamed_net1 : U300 2 
+Vcc : U300 14, U200 14 
+GND : U300 7, U200 7 
+netattrib : U200 2, U100 5 
+one : U300 1, U200 1, U100 3 
+
+END nets
+
