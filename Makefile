@@ -92,6 +92,34 @@ uninstall: utils_uninstall gsymcheck_uninstall gnetlist_uninstall \
            gschem_uninstall symbols_uninstall libgeda_uninstall \
 	   geda_uninstall setup_uninstall docs_uninstall
 
+# It runs installation using setup.
+xinstall:
+	( \
+		if ! test -f setup.sh ; then \
+			if test -x $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh; then \
+				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.sh . ; \
+			elif test -f setup$(CD_VERSION).tar.gz; then \
+				tar -xzf setup$(CD_VERSION).tar.gz src/setup.sh ; \
+			else \
+				echo "ERROR ! Cannot find setup.sh ..." >&2 ; \
+				exit 0 ; \
+			fi ; \
+		fi \
+	)
+	( \
+		if ! test -f setup.cfg ; then \
+			if test -f $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg; then \
+				cp $(DIR_PREFIX)setup$(CD_VERSION)/src/setup.cfg . ; \
+			elif test -f setup$(CD_VERSION).tar.gz; then \
+				tar -xzf setup$(CD_VERSION).tar.gz src/setup.cfg ; \
+			else \
+				echo "ERROR ! Cannot find setup.cfg ..." >&2 ; \
+				exit 0 ; \
+			fi ; \
+		fi \
+	)
+	./setup.sh
+
 # This does a maintainer-clean removes EVERYTHING that's config/built
 maint: libgeda_maint symbols_maint gschem_maint gnetlist_maint \
        gsymcheck_maint utils_maint geda_maint setup_maint docs_maint
@@ -123,7 +151,6 @@ distconfig: libgeda_distconfig symbols_distconfig gschem_distconfig \
             gnetlist_distconfig gsymcheck_distconfig utils_distconfig \
 	    geda_distconfig setup_distconfig docs_distconfig
 
-# TODO: maybe convert geda, setup to use date version?
 dist: libgeda_dist symbols_dist gschem_dist \
       gnetlist_dist gsymcheck_dist utils_dist \
       geda_dist setup_dist docs_dist
@@ -134,7 +161,7 @@ dist: libgeda_dist symbols_dist gschem_dist \
 	mv -f gsymcheck/geda-gsymcheck*.tar.gz .
 	mv -f utils/geda-utils*.tar.gz .
 	mv -f geda/geda-*.tar.gz .
-	mv -f setup/setup-*.tar.gz .
+	mv -f setup/geda-setup-*.tar.gz .
 	mv -f docs/geda-docs*.tar.gz .
 
 distcheck: libgeda_distcheck symbols_distcheck gschem_distcheck \
@@ -184,7 +211,7 @@ symbols_config:
 symbols_reconfig: 
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; automake )
 
-symbols_distconfig: 
+symbols_distconfig:
 	( cd $(DIR_PREFIX)symbols$(CD_VERSION); aclocal ; autoconf ; \
 	  automake --include-deps )
 
