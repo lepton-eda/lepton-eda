@@ -3,8 +3,8 @@
 #
 # NOTE: built from gschemdoc.sh
 #
-# present as relevant documentation as possible wrt a component
-# the strategy is built into separate cases so that may be re-arranged easily
+# Present as relevant documentation as possible wrt a component
+# The strategy is built into separate cases so that may be re-arranged easily
 #
 # arguments are:
 #    1: "documentation" attribute, which can be a filename or an URL
@@ -25,7 +25,7 @@
 #
 # these may be changed to suit local preferences
 #
-CANDIDATE_BROWSER="galeon mozilla netscape netscape-navigator opera"
+CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera"
 CANDIDATE_PDFREADER="xpdf acroread ggv gv"
 CANDIDATE_LOCATE="slocate locate"
 
