@@ -1,5 +1,5 @@
 
-SUBDIRS = attributes symbols
+SUBDIRS = attributes symbols 
 
 EXTRA_DIST = 
 
@@ -8,8 +8,6 @@ dist-clean-local:
 
 maintainer-clean-local:
 	-rm -rf autom4te.cache
-
-ACLOCAL_AMFLAGS = -I m4
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
