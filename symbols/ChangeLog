@@ -1,3 +1,11 @@
+2004-11-05 Werner Hoch <werner.ho@gmx.de>
+	* 74/74123-2.sym, 74/74124-1.sym, 74/74133-1.sym, 74/74159-1.sym
+	74161-2.sym, 74168-1.sym, 74169-1.sym, 74265-1.sym, 74/7495-1.sym: 
+	Repaired symbol, added symversion=1.0
+	* 74/7447-1.sym, 74/7446-1.sym, 74/7448-1.sym:
+	added lamp test pin, added symversion=1.0
+	* 74/7497-1.sym: repaired whichend, added missing pin, symversion
+	
 2004-07-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* 4000/4002-1.sym 4000/40107-1.sym 4000/4011-1.sym 4000/4012-1.sym
