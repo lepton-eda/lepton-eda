@@ -521,7 +521,7 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type,
   filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
 
   if (access(filename, R_OK)) {
-    fprintf(stderr, "Could not open [%s]\n", filename); 
+    fprintf(stderr, "o_complex_add: Could not open [%s]\n", filename); 
   } else {
     save_adding_sel = w_current->ADDING_SEL;
     w_current->ADDING_SEL = 1;	/* name is hack, don't want to */
@@ -773,12 +773,15 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list,
     s_log_message("Complex [%s] not in library\n", basename);
     s_log_message("Putting placeholder into object list.\n");
 
-    /* put placeholder into obj list */
+    /*
+     * Put placeholder into obj list.
+     * All parameters are present, except for clib.
+     */ 
     object_list = o_complex_add(w_current, object_list, OBJ_PLACEHOLDER, 
-                                0, 
-                                0, 0, 
-                                0, 0,
-                                "", "", FALSE, FALSE);
+                                WHITE, 
+                                x1, y1, 
+                                angle, mirror,
+                                "", basename, selectable, FALSE);
 
   } else {
     filename = g_strdup_printf("%s%c%s", clib, PATH_SEPARATER_CHAR, basename);
@@ -811,12 +814,19 @@ o_complex_save(OBJECT *object)
   selectable = 1;
   else 
   selectable = 0;
-	
-	
-  buf = g_strdup_printf("%c %d %d %d %d %d %s", object->type,
-			object->complex->x, object->complex->y, selectable, 
-			object->complex->angle, object->complex->mirror, 
-			object->complex_basename);
+
+  if (object->type == OBJ_COMPLEX) {
+    buf = g_strdup_printf("%c %d %d %d %d %d %s", object->type,
+	    		  object->complex->x, object->complex->y, selectable, 
+			  object->complex->angle, object->complex->mirror, 
+			  object->complex_basename);
+  } else if (object->type == OBJ_PLACEHOLDER) {
+    buf = g_strdup_printf("C %d %d %d %d %d %s",
+	    		  object->complex->x, object->complex->y, selectable, 
+			  object->complex->angle, object->complex->mirror, 
+			  object->complex_basename);  /* write 'C' manually */
+  }
+
   return(buf);
 }
 

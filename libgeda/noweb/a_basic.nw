@@ -136,6 +136,10 @@ o_save_embedded(TOPLEVEL *w_current, OBJECT *object_list, FILE *fp)
             }
             break;
 
+          case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
+            out = (char *) o_complex_save(o_current);
+            break;
+
           case(OBJ_TEXT):
             out = (char *) o_text_save(o_current);
             break;
@@ -270,6 +274,10 @@ o_save(TOPLEVEL *w_current, char *filename)
             }
             break;
 
+          case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
+            out = (char *) o_complex_save(o_current);
+            break;
+
           case(OBJ_TEXT):
             out = (char *) o_text_save(o_current);
             break;
@@ -345,7 +353,7 @@ o_read(TOPLEVEL *w_current, OBJECT *object_list, char *filename)
   fp = fopen(filename, "r");
 
   if (fp == NULL) {
-    s_log_message("Could not open [%s]\n", filename);
+    s_log_message("o_read: Could not open [%s]\n", filename);
     return(NULL);
   }
 

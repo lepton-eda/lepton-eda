@@ -363,7 +363,7 @@ s_clib_search(char *basename)
       s_clib_cache_add(clib_path, basename);
       return(clib_path);
     } else {
-      fprintf(stderr, "Could not find [%s] in any ComponentLibrary\nSymbol will be removed from schematic\n", basename);
+      fprintf(stderr, "Could not find [%s] in any ComponentLibrary\nA placeholder will be inserted in the schematic\n", basename);
       return(NULL);
     }
 

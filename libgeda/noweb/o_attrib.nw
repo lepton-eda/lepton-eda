@@ -944,6 +944,10 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
           out = (char *) o_complex_save(o_current);
           break;
 
+        case(OBJ_PLACEHOLDER):  /* new type -- SDB 1.20.2005 */
+          out = (char *) o_complex_save(o_current);
+          break;
+
         case(OBJ_TEXT):
           out = (char *) o_text_save(o_current);
           break;

@@ -441,6 +441,10 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
           fprintf(fp, "grestore\n");
           break;
 
+        case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
+          fprintf(fp, "Found object placeholder.  Doing nothing.\n");
+          break;
+
         case(OBJ_TEXT):
           if (o_current->visibility == VISIBLE) {
             fprintf(fp, "gsave\n");
