@@ -1,0 +1,122 @@
+v 20020825
+B 400 0 1400 1600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 900 1900 5 10 0 0 0 0
+device=DS2450
+P 400 1400 100 1400 1
+{
+T 200 1250 5 8 0 1 0 0
+pinnumber=1
+T 200 1250 5 8 0 1 0 0
+pinseq=1
+T 300 1250 5 8 0 1 0 0
+pintype=pwr
+T 200 1450 5 8 1 1 0 0
+pinlabel=1
+}
+P 400 1000 100 1000 1
+{
+T 200 850 5 8 0 1 0 0
+pinnumber=2
+T 200 850 5 8 0 1 0 0
+pinseq=2
+T 300 850 5 8 0 1 0 0
+pintype=pas
+T 200 1050 5 8 1 1 0 0
+pinlabel=2
+}
+P 400 600 100 600 1
+{
+T 200 450 5 8 0 1 0 0
+pinnumber=3
+T 200 450 5 8 0 1 0 0
+pinseq=3
+T 300 450 5 8 0 1 0 0
+pintype=io
+T 200 650 5 8 1 1 0 0
+pinlabel=3
+}
+P 400 200 100 200 1
+{
+T 200 50 5 8 0 1 0 0
+pinnumber=4
+T 200 50 5 8 0 1 0 0
+pinseq=4
+T 300 50 5 8 0 1 0 0
+pintype=pwr
+T 200 250 5 8 1 1 0 0
+pinlabel=4
+}
+P 2100 200 1800 200 1
+{
+T 1900 50 5 8 0 1 0 0
+pinnumber=5
+T 1900 50 5 8 0 1 0 0
+pinseq=5
+T 2000 50 5 8 0 1 0 0
+pintype=io
+T 1900 250 5 8 1 1 0 0
+pinlabel=5
+}
+P 2100 600 1800 600 1
+{
+T 1900 450 5 8 0 1 0 0
+pinnumber=6
+T 1900 450 5 8 0 1 0 0
+pinseq=6
+T 2000 450 5 8 0 1 0 0
+pintype=io
+T 1900 650 5 8 1 1 0 0
+pinlabel=6
+}
+P 2100 1000 1800 1000 1
+{
+T 1900 850 5 8 0 1 0 0
+pinnumber=7
+T 1900 850 5 8 0 1 0 0
+pinseq=7
+T 2000 850 5 8 0 1 0 0
+pintype=io
+T 1900 1050 5 8 1 1 0 0
+pinlabel=7
+}
+P 2100 1400 1800 1400 1
+{
+T 1900 1250 5 8 0 1 0 0
+pinnumber=8
+T 1900 1250 5 8 0 1 0 0
+pinseq=8
+T 2000 1250 5 8 0 1 0 0
+pintype=io
+T 1900 1450 5 8 1 1 0 0
+pinlabel=8
+}
+T 1200 1000 9 10 1 0 0 0
+AIN-C
+T 1200 600 9 10 1 0 0 0
+AIN-B
+T 1200 200 9 10 1 0 0 0
+AIN-A
+T 1200 1400 9 10 1 0 0 0
+AIN-D
+T 500 1400 9 10 1 0 0 0
+Vcc
+T 500 1000 9 10 1 0 0 0
+NC
+T 500 600 9 10 1 0 0 0
+DATA
+T 500 200 9 10 1 0 0 0
+GND
+T 450 1700 9 8 1 0 0 0
+DS2450
+T 1400 1700 8 10 1 1 0 0
+refdes=U?
+T 900 2300 5 10 0 0 0 0
+footprint=SMD8
+T 900 2100 5 10 0 0 0 0
+numslots=0
+T 900 2500 5 10 0 0 0 0
+description=Dallas Semiconductor 1-Wire A/D Converter (Travis Sawyer)
+T 900 2700 5 10 0 0 0 0
+net=GND:4
+T 900 2900 5 10 0 0 0 0
+net=Vcc:1
