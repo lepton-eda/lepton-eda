@@ -362,7 +362,7 @@ initiate_gschemdoc(const char* documentation,const char *device,
 
     /* if we return, then nothing happened */
     fprintf(stderr, _("Could not invoke %s\n"), gschemdoc);
-    exit(0);
+    _exit(0);
   }
 }
 

@@ -1,3 +1,8 @@
+2003-03-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/i_callbacks.nw: Fixed bug #43: "If gschemdoc is not install,
+	gschem crashes", by changing exit to _exit.  Fix by Mario Klebsch.
+
 2003-03-09 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gschem.scm: Fixed the crashing bug when you press a
