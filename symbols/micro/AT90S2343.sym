@@ -1,5 +1,5 @@
-v 20020209
-T 2300 2300 2 10 1 1 0 6
+v 20020527
+T 2300 2300 8 10 1 1 0 6
 uref=U?
 T 300 2250 9 10 1 0 0 0
 AT90S2343
@@ -15,10 +15,10 @@ P 0 300 200 300 1
 {
 T 200 350 5 8 1 1 0 6
 pin1=1
-T 350 300 3 8 1 1 0 0
-label=Reset
+T 350 300 9 8 1 1 0 0
+pinlabel=Reset
 T 350 300 5 8 0 1 0 2
-type=in
+pintype=in
 }
 L 350 424 734 424 3 0 0 0 -1 -1
 V 250 300 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -26,45 +26,47 @@ P 2600 300 2300 300 1
 {
 T 2400 350 5 8 1 1 0 0
 pin2=3
-T 2250 300 3 8 1 1 0 6
-label=PB4
+T 2250 300 9 8 1 1 0 6
+pinlabel=PB4
 T 2250 300 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2600 700 2300 700 1
 {
 T 2400 750 5 8 1 1 0 0
 pin3=2
-T 2250 700 3 8 1 1 0 6
-label=(CLK) PB3
+T 2250 700 9 8 1 1 0 6
+pinlabel=(CLK) PB3
 T 2250 700 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2600 1100 2300 1100 1
 {
 T 2400 1150 5 8 1 1 0 0
 pin4=7
-T 2250 1100 3 8 1 1 0 6
-label=(SCK/T0) PB2
+T 2250 1100 9 8 1 1 0 6
+pinlabel=(SCK/T0) PB2
 T 2250 1100 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2600 1500 2300 1500 1
 {
 T 2400 1550 5 8 1 1 0 0
 pin5=6
-T 2250 1500 3 8 1 1 0 6
-label=(MISO/INT0) PB1
+T 2250 1500 9 8 1 1 0 6
+pinlabel=(MISO/INT0) PB1
 T 2250 1500 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 P 2600 1900 2300 1900 1
 {
 T 2400 1950 5 8 1 1 0 0
 pin6=5
-T 2250 1900 3 8 1 1 0 6
-label=(MOSI) PB0
+T 2250 1900 9 8 1 1 0 6
+pinlabel=(MOSI) PB0
 T 2250 1900 5 8 0 1 0 8
-type=i/o
+pintype=io
 }
 B 300 0 2000 2200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 300 3250 5 10 0 0 0 0
+description=8-bit RISC micro controller (Atmel)
