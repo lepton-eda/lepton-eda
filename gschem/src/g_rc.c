@@ -20,16 +20,22 @@
 #include <config.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifndef __CYGWIN32__
+#include <sys/stat.h>
+#endif
+
 #include <ctype.h>
 #include <stdlib.h>
-#include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
+
 
 #include <guile/gh.h>
 
@@ -38,9 +44,16 @@
 #include <libgeda/globals.h>
 #include <libgeda/prototype.h>
 
+
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+
+/* for some really odd reason, the cygnus sys/stat.h doesn't want to work */
+/* if it's included before the gtk stuff, so here it is */
+#ifdef __CYGWIN32__
+#include <sys/stat.h>
+#endif
 
 static int
 g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)

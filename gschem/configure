@@ -2908,9 +2908,6 @@ X_EXT=no
 fi
 
 
-	if test "$X_LIBS" = no; then
-          { echo "configure: error: Cannot find -lX11 library" 1>&2; exit 1; }
-        fi
 
 echo $ac_n "checking for rint in -lm""... $ac_c" 1>&6
 echo "configure:2917: checking for rint in -lm" >&5

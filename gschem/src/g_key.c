@@ -58,6 +58,11 @@ g_key_execute(int state, int keyval)
 	char guile_string[50];
 	char modifier[10];
 
+/* part of win32 port for now */
+#ifdef __CYGWIN32__
+	return;
+#endif
+
 	if (keyval == 0) {
 		return;
 	}

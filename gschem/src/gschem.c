@@ -240,6 +240,7 @@ main_prog(int argc, char *argv[])
 		x_log_setup_win(w_current);
 	}
 
+
 	/* enter main loop */
         gtk_main();
 }

@@ -11,6 +11,8 @@ into the cvs repository.
 
 8/5/99  Added some stuff to configure.in for win32 builds
 
+	Added some misc #ifdefs to support the CYGWIN32 port
+
 8/3/99	Added net-consolidate keyword to the rc file, controls if the
 	net consolidation code is used or not.
 
