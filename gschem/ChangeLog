@@ -6,6 +6,14 @@
 	* noweb/o_cue.nw: Fixed all hardcoded sizes for the visual cues to
 	be #define'd
 
+	* configure and friends: Upgraded to gettext 0.11.5
+
+	* configure.in: Added AM_GNU_GETTEXT_VERSION(x.yy.zz) macro to make 
+        autopoint happy.
+
+        * configure and friends: Ran "autoreconf --force --install -v" 
+        to really upgrade to the auto* tools.
+
 2002-10-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw, i_vars.h: Added the 

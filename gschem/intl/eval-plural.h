@@ -68,8 +68,16 @@ plural_eval (pexp, n)
 	      case mult:
 		return leftarg * rightarg;
 	      case divide:
+#if !INTDIV0_RAISES_SIGFPE
+		if (rightarg == 0)
+		  raise (SIGFPE);
+#endif
 		return leftarg / rightarg;
 	      case module:
+#if !INTDIV0_RAISES_SIGFPE
+		if (rightarg == 0)
+		  raise (SIGFPE);
+#endif
 		return leftarg % rightarg;
 	      case plus:
 		return leftarg + rightarg;

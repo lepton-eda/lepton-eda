@@ -39,7 +39,7 @@ _nl_getenv (const char *name)
 }
 
 /* A fixed size buffer.  */
-char _nl_default_dirname__[MAXPATHLEN+1];
+char libintl_nl_default_dirname[MAXPATHLEN+1];
 
 char *_nlos2_libdir = NULL;
 char *_nlos2_localealiaspath = NULL;
@@ -94,5 +94,5 @@ nlos2_initialize ()
     }
 
   if (strlen (_nlos2_localedir) <= MAXPATHLEN)
-    strcpy (_nl_default_dirname__, _nlos2_localedir);
+    strcpy (libintl_nl_default_dirname, _nlos2_localedir);
 }

@@ -65,6 +65,9 @@
 # ifndef LANG_CATALAN
 # define LANG_CATALAN 0x03
 # endif
+# ifndef LANG_DIVEHI
+# define LANG_DIVEHI 0x65
+# endif
 # ifndef LANG_ESTONIAN
 # define LANG_ESTONIAN 0x25
 # endif
@@ -73,6 +76,9 @@
 # endif
 # ifndef LANG_FARSI
 # define LANG_FARSI 0x29
+# endif
+# ifndef LANG_GALICIAN
+# define LANG_GALICIAN 0x56
 # endif
 # ifndef LANG_GEORGIAN
 # define LANG_GEORGIAN 0x37
@@ -101,6 +107,9 @@
 # ifndef LANG_KONKANI
 # define LANG_KONKANI 0x57
 # endif
+# ifndef LANG_KYRGYZ
+# define LANG_KYRGYZ 0x40
+# endif
 # ifndef LANG_LATVIAN
 # define LANG_LATVIAN 0x26
 # endif
@@ -121,6 +130,9 @@
 # endif
 # ifndef LANG_MARATHI
 # define LANG_MARATHI 0x4e
+# endif
+# ifndef LANG_MONGOLIAN
+# define LANG_MONGOLIAN 0x50
 # endif
 # ifndef LANG_NEPALI
 # define LANG_NEPALI 0x61
@@ -143,8 +155,14 @@
 # ifndef LANG_SLOVAK
 # define LANG_SLOVAK 0x1b
 # endif
+# ifndef LANG_SORBIAN
+# define LANG_SORBIAN 0x2e
+# endif
 # ifndef LANG_SWAHILI
 # define LANG_SWAHILI 0x41
+# endif
+# ifndef LANG_SYRIAC
+# define LANG_SYRIAC 0x5a
 # endif
 # ifndef LANG_TAMIL
 # define LANG_TAMIL 0x49
@@ -428,10 +446,15 @@ _nl_locale_name (category, categoryname)
   /* Split into language and territory part.  */
   primary = PRIMARYLANGID (langid);
   sub = SUBLANGID (langid);
+
+  /* Dispatch on language.
+     See also http://www.unicode.org/unicode/onlinedat/languages.html .
+     For details about languages, see http://www.ethnologue.com/ .  */
   switch (primary)
     {
     case LANG_AFRIKAANS: return "af_ZA";
     case LANG_ALBANIAN: return "sq_AL";
+    case 0x5e: /* AMHARIC */ return "am_ET";
     case LANG_ARABIC:
       switch (sub)
 	{
@@ -468,7 +491,10 @@ _nl_locale_name (category, categoryname)
     case LANG_BELARUSIAN: return "be_BY";
     case LANG_BENGALI: return "bn_IN";
     case LANG_BULGARIAN: return "bg_BG";
+    case 0x55: /* BURMESE */ return "my_MM";
+    case 0x53: /* CAMBODIAN */ return "km_KH";
     case LANG_CATALAN: return "ca_ES";
+    case 0x5c: /* CHEROKEE */ return "chr_US";
     case LANG_CHINESE:
       switch (sub)
 	{
@@ -489,20 +515,22 @@ _nl_locale_name (category, categoryname)
 				 */
       switch (sub)
 	{
-	/* FIXME: How to distinguish Croatian and Latin Serbian locales?  */
+	case SUBLANG_DEFAULT: return "hr_HR";
 	case SUBLANG_SERBIAN_LATIN: return "sr_YU";
 	case SUBLANG_SERBIAN_CYRILLIC: return "sr_YU@cyrillic";
-	default: return "hr_HR";
 	}
+      return "hr";
     case LANG_CZECH: return "cs_CZ";
     case LANG_DANISH: return "da_DK";
+    case LANG_DIVEHI: return "div_MV";
     case LANG_DUTCH:
       switch (sub)
 	{
 	case SUBLANG_DUTCH: return "nl_NL";
-	case SUBLANG_DUTCH_BELGIAN: return "nl_BE";
+	case SUBLANG_DUTCH_BELGIAN: /* FLEMISH, VLAAMS */ return "nl_BE";
 	}
       return "nl";
+    case 0x66: /* EDO */ return "bin_NG";
     case LANG_ENGLISH:
       switch (sub)
 	{
@@ -533,13 +561,23 @@ _nl_locale_name (category, categoryname)
       switch (sub)
 	{
 	case SUBLANG_FRENCH: return "fr_FR";
-	case SUBLANG_FRENCH_BELGIAN: return "fr_BE";
+	case SUBLANG_FRENCH_BELGIAN: /* WALLOON */ return "fr_BE";
 	case SUBLANG_FRENCH_CANADIAN: return "fr_CA";
 	case SUBLANG_FRENCH_SWISS: return "fr_CH";
 	case SUBLANG_FRENCH_LUXEMBOURG: return "fr_LU";
 	case SUBLANG_FRENCH_MONACO: return "fr_MC";
 	}
       return "fr";
+    case 0x62: /* FRISIAN */ return "fy_NL";
+    case 0x67: /* FULFULDE */ return "ful_NG";
+    case 0x3c: /* GAELIC */
+      switch (sub)
+	{
+	case 0x01: /* SCOTTISH */ return "gd_GB";
+	case 0x02: /* IRISH */ return "ga_IE";
+	}
+      return "C";
+    case LANG_GALICIAN: return "gl_ES";
     case LANG_GEORGIAN: return "ka_GE";
     case LANG_GERMAN:
       switch (sub)
@@ -552,12 +590,21 @@ _nl_locale_name (category, categoryname)
 	}
       return "de";
     case LANG_GREEK: return "el_GR";
+    case 0x74: /* GUARANI */ return "gn_PY";
     case LANG_GUJARATI: return "gu_IN";
+    case 0x68: /* HAUSA */ return "ha_NG";
+    case 0x75: /* HAWAIIAN */
+      /* FIXME: Do they mean Hawaiian ("haw_US", 1000 speakers)
+	 or Hawaii Creole English ("cpe_US", 600000 speakers)?  */
+      return "cpe_US";
     case LANG_HEBREW: return "he_IL";
     case LANG_HINDI: return "hi_IN";
     case LANG_HUNGARIAN: return "hu_HU";
+    case 0x69: /* IBIBIO */ return "nic_NG";
     case LANG_ICELANDIC: return "is_IS";
+    case 0x70: /* IGBO */ return "ibo_NG";
     case LANG_INDONESIAN: return "id_ID";
+    case 0x5d: /* INUKTITUT */ return "iu_CA";
     case LANG_ITALIAN:
       switch (sub)
 	{
@@ -567,6 +614,7 @@ _nl_locale_name (category, categoryname)
       return "it";
     case LANG_JAPANESE: return "ja_JP";
     case LANG_KANNADA: return "kn_IN";
+    case 0x71: /* KANURI */ return "kau_NG";
     case LANG_KASHMIRI:
       switch (sub)
 	{
@@ -579,6 +627,9 @@ _nl_locale_name (category, categoryname)
       /* FIXME: Adjust this when such locales appear on Unix.  */
       return "kok_IN";
     case LANG_KOREAN: return "ko_KR";
+    case LANG_KYRGYZ: return "ky_KG";
+    case 0x54: /* LAO */ return "lo_LA";
+    case 0x76: /* LATIN */ return "la_VA";
     case LANG_LATVIAN: return "lv_LV";
     case LANG_LITHUANIAN: return "lt_LT";
     case LANG_MACEDONIAN: return "mk_MK";
@@ -590,10 +641,13 @@ _nl_locale_name (category, categoryname)
 	}
       return "ms";
     case LANG_MALAYALAM: return "ml_IN";
+    case 0x3a: /* MALTESE */ return "mt_MT";
     case LANG_MANIPURI:
       /* FIXME: Adjust this when such locales appear on Unix.  */
       return "mni_IN";
     case LANG_MARATHI: return "mr_IN";
+    case LANG_MONGOLIAN:
+      return "mn"; /* Ambiguous: could be "mn_CN" or "mn_MN".  */
     case LANG_NEPALI:
       switch (sub)
 	{
@@ -609,6 +663,10 @@ _nl_locale_name (category, categoryname)
 	}
       return "no";
     case LANG_ORIYA: return "or_IN";
+    case 0x72: /* OROMO */ return "om_ET";
+    case 0x79: /* PAPIAMENTU */ return "pap_AN";
+    case 0x63: /* PASHTO */
+      return "ps"; /* Ambiguous: could be "ps_PK" or "ps_AF".  */
     case LANG_POLISH: return "pl_PL";
     case LANG_PORTUGUESE:
       switch (sub)
@@ -620,13 +678,17 @@ _nl_locale_name (category, categoryname)
 	}
       return "pt";
     case LANG_PUNJABI: return "pa_IN";
+    case 0x17: /* RHAETO-ROMANCE */ return "rm_CH";
     case LANG_ROMANIAN: return "ro_RO";
     case LANG_RUSSIAN:
       return "ru"; /* Ambiguous: could be "ru_RU" or "ru_UA".  */
+    case 0x3b: /* SAMI */ return "se_NO";
     case LANG_SANSKRIT: return "sa_IN";
     case LANG_SINDHI: return "sd";
+    case 0x5b: /* SINHALESE */ return "si_LK";
     case LANG_SLOVAK: return "sk_SK";
     case LANG_SLOVENIAN: return "sl_SI";
+    case 0x77: /* SOMALI */ return "so_SO";
     case LANG_SORBIAN:
       /* FIXME: Adjust this when such locales appear on Unix.  */
       return "wen_DE";
@@ -656,7 +718,8 @@ _nl_locale_name (category, categoryname)
 	case SUBLANG_SPANISH_PUERTO_RICO: return "es_PR";
 	}
       return "es";
-    case LANG_SWAHILI: return "sw";
+    case 0x30: /* SUTU */ return "bnt_TZ";
+    case LANG_SWAHILI: return "sw_KE";
     case LANG_SWEDISH:
       switch (sub)
 	{
@@ -664,12 +727,20 @@ _nl_locale_name (category, categoryname)
 	case SUBLANG_SWEDISH_FINLAND: return "sv_FI";
 	}
       return "sv";
+    case LANG_SYRIAC: return "syr_TR"; /* An extinct language.  */
+    case 0x64: /* TAGALOG */ return "tl_PH";
+    case 0x28: /* TAJIK */ return "tg_TJ";
+    case 0x5f: /* TAMAZIGHT */ return "ber_MA";
     case LANG_TAMIL:
       return "ta"; /* Ambiguous: could be "ta_IN" or "ta_LK" or "ta_SG".  */
-    case LANG_TATAR: return "tt";
+    case LANG_TATAR: return "tt_RU";
     case LANG_TELUGU: return "te_IN";
     case LANG_THAI: return "th_TH";
+    case 0x51: /* TIBETAN */ return "bo_CN";
+    case 0x73: /* TIGRINYA */ return "ti_ET";
+    case 0x31: /* TSONGA */ return "ts_ZA";
     case LANG_TURKISH: return "tr_TR";
+    case 0x42: /* TURKMEN */ return "tk_TM";
     case LANG_UKRAINIAN: return "uk_UA";
     case LANG_URDU:
       switch (sub)
@@ -686,7 +757,14 @@ _nl_locale_name (category, categoryname)
 	case SUBLANG_UZBEK_CYRILLIC: return "uz_UZ@cyrillic";
 	}
       return "uz";
+    case 0x33: /* VENDA */ return "ven_ZA";
     case LANG_VIETNAMESE: return "vi_VN";
+    case 0x52: /* WELSH */ return "cy_GB";
+    case 0x34: /* XHOSA */ return "xh_ZA";
+    case 0x78: /* YI */ return "sit_CN";
+    case 0x3d: /* YIDDISH */ return "yi_IL";
+    case 0x6a: /* YORUBA */ return "yo_NG";
+    case 0x35: /* ZULU */ return "zu_ZA";
     default: return "C";
     }
 

@@ -98,10 +98,10 @@ struct parse_args
 # define GERMANIC_PLURAL __gettext_germanic_plural
 # define EXTRACT_PLURAL_EXPRESSION __gettext_extract_plural
 #elif defined (IN_LIBINTL)
-# define FREE_EXPRESSION gettext_free_exp__
-# define PLURAL_PARSE gettextparse__
-# define GERMANIC_PLURAL gettext_germanic_plural__
-# define EXTRACT_PLURAL_EXPRESSION gettext_extract_plural__
+# define FREE_EXPRESSION libintl_gettext_free_exp
+# define PLURAL_PARSE libintl_gettextparse
+# define GERMANIC_PLURAL libintl_gettext_germanic_plural
+# define EXTRACT_PLURAL_EXPRESSION libintl_gettext_extract_plural
 #else
 # define FREE_EXPRESSION free_plural_expression
 # define PLURAL_PARSE parse_plural_expression

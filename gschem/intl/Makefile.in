@@ -84,9 +84,9 @@ COPYING.LIB-2 gettext.h libgettext.h plural-eval.c
 # according to the libtool documentation, section "Library interface versions".
 # Maintainers of other packages that include the intl directory must *not*
 # change these values.
-LTV_CURRENT=2
-LTV_REVISION=1
-LTV_AGE=0
+LTV_CURRENT=4
+LTV_REVISION=0
+LTV_AGE=2
 
 .SUFFIXES:
 .SUFFIXES: .c .y .o .lo .sin .sed
