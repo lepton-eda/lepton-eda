@@ -100,12 +100,16 @@ int   default_middle_button = STROKE;
 #else
 int   default_middle_button = REPEAT;
 #endif
-int   default_net_consolidate = FALSE;
+int   default_net_consolidate = TRUE;
 int   default_file_preview = FALSE;
 int   default_enforce_hierarchy = TRUE;
 int   default_text_origin_marker = TRUE;
 int   default_fast_mousepan = TRUE;
 int   default_raise_dialog_boxes = FALSE;
+int   default_attribute_promotion = TRUE;
+int   default_promote_invisible = FALSE;
+int   default_keep_invisible = FALSE;
+int   default_continue_component_place = TRUE;
 
 /* default zoom_factor at which text is displayed completely */
 int   default_text_display_zoomfactor = 4;
@@ -189,6 +193,10 @@ i_vars_set(TOPLEVEL *w_current)
 	w_current->text_origin_marker = default_text_origin_marker;
 	w_current->fast_mousepan      = default_fast_mousepan;
 	w_current->raise_dialog_boxes = default_raise_dialog_boxes;
+	w_current->attribute_promotion = default_attribute_promotion;
+	w_current->promote_invisible = default_promote_invisible;
+	w_current->keep_invisible = default_keep_invisible;
+	w_current->continue_component_place = default_continue_component_place;
 
 	w_current->paper_width  = default_paper_width;
 	w_current->paper_height = default_paper_height;
