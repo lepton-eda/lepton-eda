@@ -1,3 +1,8 @@
+2003-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* spice/spice-options-1.sym: Updated symbol from Stuart Brorson's
+	latest symbol tarball.
+
 2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* memory/am9128-1.sym: Cosmetic improvements to this symbol

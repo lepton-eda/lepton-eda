@@ -1,3 +1,10 @@
+2003-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.1: Applied man page patch by Dan McMahill.  
+
+	* scheme/gnet-spice-sdb.scm: Integrated bug fix patch from 
+	Stuart Brorson (for .OPTION handling).
+
 2003-04-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in, docs/Makefile.am, docs/README.switcap, 

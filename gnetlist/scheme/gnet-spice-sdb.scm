@@ -1113,7 +1113,7 @@
 (define spice-sdb:write-options
   (lambda (package port)
       (display (string-append "Found .OPTIONS box.  Refdes = " package "\n"))
-    (display (string-append package ".OPTIONS " (spice-sdb:component-value package) "\n") port)))
+    (display (string-append ".OPTIONS " (spice-sdb:component-value package) "\n") port)))
 
 
 ;;----------------------------------------------------------
@@ -1232,7 +1232,7 @@
 ;; each refdes to get the corresponding
 ;; "device" attribute.  Depending upon the device, it then invokes one or another of the 
 ;; spice line output fcns to output a line of the spice netlist.
-;; I have enlarged the number of devices it recognizes -- sdb.
+;; I have enlarged the number of devices it recognizes -- SDB.
 ;; write the refdes, to the pin# connected net and component 
 ;; value and optional extra attributes
 ;; check if the component is a special spice component.

@@ -19,20 +19,22 @@ guile script extracts the connections into some netlist format.
 gnetlist is very much so a work in progress.  Currently it supports the
 following backends: 
 
-        1) PCB / PCBboard (-g PCB and -g PCBboard)
-        2) Allegro netlist format (-g allegro)
-        3) BAE netlist format (-g bae)
-        4) BOM / BOM2 - Bill of Materials (-g bom and -g bom2)
-        5) DRC - Start of a design rule checker (-g drc)
-        6) gEDA - native format, mainly used for testing (-g geda)
-        7) Gossip netlist format (-g gossip)
-        8) PADS netlist format (-g pads)
+        1) Allegro netlist format (-g allegro)
+        2) BAE netlist format (-g bae)
+        3) BOM / BOM2 - Bill of Materials (-g bom and -g bom2)
+        4) DRC - Start of a design rule checker (-g drc)
+        5) gEDA - native format, mainly used for testing (-g geda)
+        6) Gossip netlist format (-g gossip)
+        7) PADS netlist format (-g pads)
+        8) PCB / PCBboard (-g PCB and -g PCBboard)
         9) ProtelII netlist format (-g protelII)
         10) Spice compatible netlist format (-g spice)
-        11) Tango netlist format (-g tango)
-        12) Verilog code (-g verilog)
-        13) VHDL code (-g vhdl)
-        14) VIPEC netlist format (-g vipec)
+        11) Enhanced spice compatible netlist format (-g spice-sdb)
+        12) Switcap netlist format (-g switcap)
+        13) Tango netlist format (-g tango)
+        14) Verilog code (-g verilog)
+        15) VHDL code (-g vhdl)
+        16) VIPEC netlist format (-g vipec)
 
 For more info on these formats please look at the README.*
 
@@ -131,7 +133,7 @@ Ales V. Hvezda and many others
 .BR gnetlist (1),
 .BR gsymbol (1)
 .SH COPYRIGHT
-Copyright \(co  1999 Ales V Hvezda
+Copyright \(co  1999, 2000, 2001, 2003 Ales V Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0

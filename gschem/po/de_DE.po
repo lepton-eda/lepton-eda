@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
-"POT-Creation-Date: 2003-02-24 00:39-0500\n"
+"POT-Creation-Date: 2003-05-12 08:13-0400\n"
 "PO-Revision-Date: 2003-03-07 23:04GMT\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -27,66 +27,66 @@ msgstr "Ups! Irgend etwas ist falsch mit der Tastenzuordnung!\n"
 msgid "Attribute failed ot find.\n"
 msgstr "Attribut wurde nicht gefunden.\n"
 
-#: noweb/g_rc.nw:258 noweb/gschem.nw:203
+#: noweb/g_rc.nw:260 noweb/gschem.nw:203
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "Die Umgebungsvariable GEDADATA muß definiert werden!\n"
 
-#: noweb/g_rc.nw:275
+#: noweb/g_rc.nw:277
 #, c-format
 msgid "Read system-gschemrc file [%s]\n"
 msgstr "Lese system-gschemrc Datei [%s]\n"
 
-#: noweb/g_rc.nw:276
+#: noweb/g_rc.nw:278
 #, c-format
 msgid "Did not find system-gschemrc file [%s]\n"
 msgstr "Datei system-gschemrc [%s] nicht gefunden.\n"
 
-#: noweb/g_rc.nw:317
+#: noweb/g_rc.nw:319
 #, c-format
 msgid "Read ~/.gEDA/gschemrc file [%s]\n"
 msgstr "Lese ~/.gEDA/gschemrc Datei [%s]\n"
 
-#: noweb/g_rc.nw:318
+#: noweb/g_rc.nw:320
 #, c-format
 msgid "Did not find ~/.gEDA/gschemrc file [%s]\n"
 msgstr "Datei ~/.gEDA/gschemrc [%s] nicht gefunden.\n"
 
-#: noweb/g_rc.nw:349
+#: noweb/g_rc.nw:351
 #, c-format
 msgid "Read local gschemrc file [%s]\n"
 msgstr "Lese lokale gschemrc Datei [%s]\n"
 
-#: noweb/g_rc.nw:350
+#: noweb/g_rc.nw:352
 #, c-format
 msgid "Did not find local gschemrc file [%s]\n"
 msgstr "Lokale gschemrc Datei [%s] nicht gefunden\n"
 
-#: noweb/g_rc.nw:407
+#: noweb/g_rc.nw:409
 #, c-format
 msgid "Read specified rc file [%s]\n"
 msgstr "Lese die angegebene rc Datei [%s]\n"
 
-#: noweb/g_rc.nw:411 noweb/g_rc.nw:414
+#: noweb/g_rc.nw:413 noweb/g_rc.nw:416
 #, c-format
 msgid "Did not find specified gschemrc file [%s]\n"
 msgstr "Konnte die angegebene rc Datei [%s] nicht finden.\n"
 
-#: noweb/g_rc.nw:423
+#: noweb/g_rc.nw:425
 msgid "Could not find any gschemrc file!\n"
 msgstr "Es wurde keinerlei gschemrc Datei gefunden!\n"
 
-#: noweb/g_rc.nw:424
+#: noweb/g_rc.nw:426
 msgid "Could not find a gschemrc file\n"
 msgstr "Keine gschemrc Datei gefunden.\n"
 
-#: noweb/g_rc.nw:446 noweb/g_rc.nw:1183 noweb/g_rc.nw:1216 noweb/g_rc.nw:1443
-#: noweb/g_rc.nw:1637 noweb/g_rc.nw:1673 noweb/g_rc.nw:1733 noweb/g_rc.nw:1840
-#: noweb/g_rc.nw:2799
+#: noweb/g_rc.nw:448 noweb/g_rc.nw:1185 noweb/g_rc.nw:1218 noweb/g_rc.nw:1445
+#: noweb/g_rc.nw:1639 noweb/g_rc.nw:1675 noweb/g_rc.nw:1735 noweb/g_rc.nw:1842
+#: noweb/g_rc.nw:2801
 #, c-format
 msgid "%s requires a string as a parameter\n"
 msgstr "%s benötigte eine Zeichenkette als Parameter.\n"
 
-#: noweb/g_rc.nw:454
+#: noweb/g_rc.nw:456
 #, c-format
 msgid ""
 "Found a version [%s] gschemrc file:\n"
@@ -95,7 +95,7 @@ msgstr ""
 "Die Version der gschemrc Datei ist [%s].\n"
 "gschemrc Datei: [%s]\n"
 
-#: noweb/g_rc.nw:457
+#: noweb/g_rc.nw:459
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
@@ -103,78 +103,78 @@ msgstr ""
 "Datei \n"
 "verwendet wird.\n"
 
-#: noweb/g_rc.nw:506
+#: noweb/g_rc.nw:508
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "Eine ungültige Farbe [%s] wurde an %s übergeben.\n"
 
-#: noweb/g_rc.nw:738
+#: noweb/g_rc.nw:740
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Ein ungültiger Modus [%s] wurde an %s übergeben.\n"
 
-#: noweb/g_rc.nw:940
+#: noweb/g_rc.nw:942
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Ein ungültiger Vergrösserungsfaktor [%d] wurde an %s übergeben.\n"
 
-#: noweb/g_rc.nw:985
+#: noweb/g_rc.nw:987
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr "Ein ungültiger Modus [%s] wurde an scrollbar-update übergeben.\n"
 
-#: noweb/g_rc.nw:1082
+#: noweb/g_rc.nw:1084
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an text-size übergeben.\n"
 
-#: noweb/g_rc.nw:1134
+#: noweb/g_rc.nw:1136
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an snap-size übergeben.\n"
 
-#: noweb/g_rc.nw:1261
+#: noweb/g_rc.nw:1263
 #, c-format
 msgid "Invalid path [%s] passed to component-library\n"
 msgstr ""
 "Ein ungültiges Verzeichnis [%s] wurde an component-library übergeben.\n"
 
-#: noweb/g_rc.nw:1341 noweb/g_rc.nw:1361
+#: noweb/g_rc.nw:1343 noweb/g_rc.nw:1363
 #, c-format
 msgid "Invalid path [%s] passed to component-library-search\n"
 msgstr ""
 "Ein ungültiges Verzeichnis [%s] wurde an component-library-search "
 "übergeben.\n"
 
-#: noweb/g_rc.nw:1457
+#: noweb/g_rc.nw:1459
 #, c-format
 msgid "Invalid path [%s] passed to %s\n"
 msgstr "Ein ungültiges Verzeichnis [%s] wurde an %s übergeben.\n"
 
-#: noweb/g_rc.nw:1538 noweb/g_rc.nw:1558
+#: noweb/g_rc.nw:1540 noweb/g_rc.nw:1560
 #, c-format
 msgid "Invalid path [%s] passed to source-library-search\n"
 msgstr ""
 "Ein ungültiges Verzeichnis [%s] wurde an source-library-search übergeben.\n"
 
-#: noweb/g_rc.nw:1687
+#: noweb/g_rc.nw:1689
 #, c-format
 msgid "Invalid path [%s] passed to scheme-directory\n"
 msgstr "Ein ungültiges Verzeichnis [%s] wurde an scheme-directory übergeben.\n"
 
-#: noweb/g_rc.nw:1747
+#: noweb/g_rc.nw:1749
 #, c-format
 msgid "Invalid path [%s] passed to bitmap-directory\n"
 msgstr "Ein ungültigesVerzeichnis [%s] wurde an bitmap-directory übergeben.\n"
 
-#: noweb/g_rc.nw:1792 noweb/g_rc.nw:1795
+#: noweb/g_rc.nw:1794 noweb/g_rc.nw:1797
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr ""
 "Eine doppelte Definition eines Tastenkürzels wurde an stroke übergeben! [%"
 "s]\n"
 
-#: noweb/g_rc.nw:1812
+#: noweb/g_rc.nw:1814
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
 "is not compiled to support strokes, please recompile gschem\n"
@@ -184,21 +184,21 @@ msgstr ""
 "wurde ohne Tastenkürzelunterstützung kompiliert, bitte kompiliere\n"
 "gschem mit LibStroke.\n"
 
-#: noweb/g_rc.nw:1854
+#: noweb/g_rc.nw:1856
 #, c-format
 msgid "Invalid path [%s] passed to font-directory\n"
 msgstr "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
 
-#: noweb/g_rc.nw:1999
+#: noweb/g_rc.nw:2001
 msgid "Invalid parameters to paper-sizes\n"
 msgstr "Ungültige Parameter an paper-sizes übergeben.\n"
 
-#: noweb/g_rc.nw:2463
+#: noweb/g_rc.nw:2465
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Eine ungültige Ebenenanzahl [%d] wurde an undo-levels übergeben.\n"
 
-#: noweb/g_rc.nw:2751
+#: noweb/g_rc.nw:2753
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an bus-ripper-size übergeben.\n"
@@ -1037,7 +1037,7 @@ msgstr "Anwenden"
 #: noweb/x_dialog.nw:1166 noweb/x_dialog.nw:1617 noweb/x_dialog.nw:1783
 #: noweb/x_dialog.nw:1968 noweb/x_dialog.nw:2127 noweb/x_dialog.nw:2293
 #: noweb/x_dialog.nw:2457 noweb/x_dialog.nw:2631 noweb/x_fileselect.nw:2280
-#: noweb/x_fileselect.nw:2299 noweb/x_multimulti.nw:150
+#: noweb/x_fileselect.nw:2299
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -1606,18 +1606,6 @@ msgstr "Einfügen"
 msgid "Clear"
 msgstr "Entfernen"
 
-#: noweb/x_multimulti.nw:147
-msgid "Ok"
-msgstr "OK"
-
-#: noweb/x_multimulti.nw:154
-msgid "Test Sheet"
-msgstr "Test Blatt"
-
-#: noweb/x_multimulti.nw:158
-msgid "Edit Component"
-msgstr "Editiere Bauteil"
-
 #: noweb/x_pagesel.nw:389
 msgid "Page Manager"
 msgstr "Seiten Manager"
@@ -2167,3 +2155,12 @@ msgstr "Hilfe"
 #: noweb/rcstrings.nw:118
 msgid "Manual..."
 msgstr "Handbuch..."
+
+#~ msgid "Ok"
+#~ msgstr "OK"
+
+#~ msgid "Test Sheet"
+#~ msgstr "Test Blatt"
+
+#~ msgid "Edit Component"
+#~ msgstr "Editiere Bauteil"

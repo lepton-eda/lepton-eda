@@ -28,7 +28,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#ifdef HAVE_GETOPT_H
 #include <getopt.h>
+#endif
 
 #include <libgeda/colors.h>
 

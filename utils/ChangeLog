@@ -1,9 +1,14 @@
+2003-05-13 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/sarlacc_schem.c: Applied patch by Charles Lepple to fix a 
+	build problem on OSX.
+
 2003-02-23 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* utils/configure.in: Added shell code to expand prefix and set the
+	* configure.in: Added shell code to expand prefix and set the
 	GEDADOCDIR to the proper path ($prefix/share/doc/geda-doc
 
-	* utils/scripts/config.sh.in: Changed variables to use the above
+	* scripts/config.sh.in: Changed variables to use the above
 	GEDADOCDIR
 
 2003-02-20 Ales Hvezda   <ahvezda@geda.seul.org>

@@ -73,7 +73,7 @@ Bryce Denney		- For the following patches:
 			patch.pintype-appears-in-netlist - Fixed lame bug in
 			libgeda (provided a fix for some embarrassing code).
 
-Dan Mcmahill		- For contributing a patch to make gschem2pcb a lot
+Dan McMahill		- For contributing a patch to make gschem2pcb a lot
 			  more portable.
 
 			  For contributing the switcap backend
