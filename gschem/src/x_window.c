@@ -212,7 +212,6 @@ x_window_setup_rest(TOPLEVEL *w_current)
 
 }
 
-/* stays the same */
 void
 x_window_setup_colors(void)
 {
@@ -328,14 +327,12 @@ x_window_setup_colors(void)
 #endif
 }
 
-/* stays the same */
 void
 x_window_free_colors(TOPLEVEL *w_current)
 {
 	/* to be done later */
 }
 
-/* stays the same */
 void
 x_window_setup_gc(TOPLEVEL *w_current)
 {
@@ -399,7 +396,6 @@ x_window_setup_gc(TOPLEVEL *w_current)
 	}
 }
 
-/* stays the same */
 void
 x_window_free_gc(TOPLEVEL *w_current)
 {
@@ -409,7 +405,6 @@ x_window_free_gc(TOPLEVEL *w_current)
 	gdk_gc_unref(w_current->outline_xor_gc);
 }
 
-/* stays the same */
 void
 x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 {
@@ -432,7 +427,6 @@ x_window_create_drawing(GtkWidget *drawbox, TOPLEVEL *w_current)
 
 }
 
-/* stays the same */
 void
 x_window_setup_draw_events(TOPLEVEL *w_current)
 {
@@ -482,7 +476,6 @@ x_window_setup_draw_events(TOPLEVEL *w_current)
 			    w_current);
 }
 
-/* stays the same */
 void
 x_window_create_main(TOPLEVEL *w_current)
 {
@@ -494,7 +487,7 @@ x_window_create_main(TOPLEVEL *w_current)
 
         w_current->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-	gtk_widget_set_name (w_current->main_window, "3gschem");
+	gtk_widget_set_name (w_current->main_window, "gschem");
 
 	/* We want the widgets to flow around the drawing area, so we don't
   	 * set a size of the main window.  The drawing area's size is fixed,
@@ -504,20 +497,20 @@ x_window_create_main(TOPLEVEL *w_current)
          * gtk_widget_set_uposition (w_current->main_window, 0, 0);
 	 */
 
+	/* I could not get the destroy signal to work. always got a: */
+	/* Gdk-ERROR **: an x io error occurred */
+	/* aborting... */
+	/* message */
 #if 0
-/* for now this is commented out.... */
-/* this was causing problems with the multi window stuff */
-/* you will need to wrapper these properly */
 	gtk_signal_connect (GTK_OBJECT (w_current->main_window), "destroy",
-                            GTK_SIGNAL_FUNC(i_callback_quit),
+                            GTK_SIGNAL_FUNC(i_callback_destroy_wm),
                             w_current);
 #endif
 
-#if 0
+	/* this should work fine */
         gtk_signal_connect (GTK_OBJECT (w_current->main_window), "delete_event",
-                            GTK_SIGNAL_FUNC (i_callback_close),
+                            GTK_SIGNAL_FUNC (i_callback_close_wm),
                             w_current);
-#endif
 
 	/* Containers first */
         main_box = gtk_vbox_new(FALSE, 1);
@@ -644,7 +637,6 @@ x_window_create_main(TOPLEVEL *w_current)
 	x_window_setup_gc(w_current);
 }
 
-/* stays the same */
 TOPLEVEL *
 x_window_create_new(void)
 {
@@ -728,7 +720,6 @@ x_window_create_new(void)
 	return(w_current);
 }
 
-/* stays the same ???????????? */
 void
 x_window_close(TOPLEVEL *w_current)
 {
@@ -830,7 +821,6 @@ x_window_close(TOPLEVEL *w_current)
 	}
 }
 
-/* stays the same ???????????? */
 void
 x_window_close_all()
 {
@@ -874,7 +864,6 @@ x_window_get_ptr(int wid)
 	return(NULL);
 }
 
-/* stays the same */
 /* GROSS! but this is required because clist widgets don't seem to allow you
  * pass data to callback functions, so I need to get w_current by searching
  * the entire window list for page_clist widget :(  If somebody knows a better

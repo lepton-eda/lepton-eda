@@ -271,6 +271,7 @@ void i_callback_cancel(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_about(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_sbox.c */
 void i_sbox_search(TOPLEVEL *w_current, int flag);
 void i_sbox_start(TOPLEVEL *w_current, int x, int y);

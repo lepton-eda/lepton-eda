@@ -1691,3 +1691,21 @@ DEFINE_I_CALLBACK(preview)
 	setup_preview(w_current);
 }
 #endif
+
+/* these is a special wrapper function which cannot use the above */
+/* DEFINE_I_CALLBACK macro */
+
+/* When invoked (via signal delete_event), closes the current window */
+/* if this is the last window, quit gschem */
+/* used when you click the close button on the window which sends a DELETE */
+/* signal to the app */
+void i_callback_close_wm ( GtkWidget *widget, GdkEvent *event, 
+	                   gpointer data ) 
+{
+
+	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	exit_if_null(w_current);
+
+	x_window_close(w_current);
+}
+

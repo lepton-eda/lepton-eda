@@ -14,7 +14,6 @@ Thien-Thi Nguyen	- Patch to gnetlist adding newlines for interactive
 			  mode
 			
 			  For updating the BOM backend to be more scheme like
-			 	
 
 Mike Jarabek		- For contributing the backend verilog netlister
                           (for use with gnetlist)
@@ -28,8 +27,11 @@ Nuno Sucena             - For contributing the TANGO gnetlist backend
 
 Bas Gieltjes            - For contributing the SPICE gnetlist backend
 
-Matt Ettus		- For contributing the bill of materials guile
-			  code
+Matt Ettus		- For contributing the Bill of Materials guile code
+
+			  For contributing the Allegro gnetlist backend
+			
+			  For contributing the PCB gnetlist backend
 
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
