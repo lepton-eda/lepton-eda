@@ -91,8 +91,8 @@ x_window_delete(TOPLEVEL *w_head, TOPLEVEL *w_current)
 void
 x_window_setup_world(TOPLEVEL *w_current)
 {
-        w_current->init_left = 0;
-        w_current->init_top = 0;
+        w_current->init_left = -45;
+        w_current->init_top = -45;
 	/* init_right and _bottom are set before this function is called */
         w_current->min_zoom = 0;
         w_current->max_zoom = 256;  /* was 128 */
@@ -117,9 +117,6 @@ x_window_setup_world(TOPLEVEL *w_current)
 	w_current->win_width = w_current->width;
         w_current->win_height = w_current->height;
 
-/* part of page mechanism addition commented out
-	w_current->zoom_factor = 0;
-*/
 }
 
 void
@@ -155,20 +152,8 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->font_directory = NULL;
 	w_current->scheme_directory = NULL;
 
-/* part of page mechanism addition commented out
-	w_current->zoom_factor=0;
-*/
 	w_current->override_color=-1;
 	w_current->inside_redraw=0;
-
-	/* Don't init these to zero here... once we are done with all init
-	 *  will these be inited to zero
-	 * w_current->DONT_DRAW_CONN=0;
-	 * w_current->DONT_RESIZE=0;
-	 * w_current->DONT_EXPOSE=0;
-	 * w_current->DONT_REDRAW=0;
-	 * w_current->DONT_RECALC=0;
-	 */
 
 	w_current->FORCE_CONN_UPDATE=0;
 	w_current->ADDING_SEL=0;
@@ -694,7 +679,6 @@ x_window_create_new(void)
 	w_current->DONT_DRAW_CONN=1;
 	w_current->DONT_RESIZE=1;
 	w_current->DONT_EXPOSE=1;
-	w_current->DONT_REDRAW=1;
 	w_current->DONT_RECALC=1;
 
 	/* the default coord sizes */
@@ -739,8 +723,10 @@ x_window_create_new(void)
 	o_undo_savestate(w_current, UNDO_ALL);
 
 	/* now update the scrollbars */
+	w_current->DONT_REDRAW = 1;
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
+	w_current->DONT_REDRAW = 0;
 
 	global_wid++;
 	num_windows++;
@@ -751,7 +737,6 @@ x_window_create_new(void)
 	w_current->DONT_DRAW_CONN=0;
 	w_current->DONT_RESIZE=0;
 	w_current->DONT_EXPOSE=0;
-	w_current->DONT_REDRAW=0;
 	w_current->DONT_RECALC=0;
 
 	return(w_current);
