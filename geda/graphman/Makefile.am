@@ -43,7 +43,7 @@ graphman_SOURCES = \
 	
 graphman_LDFLAGS = @GMANAGER_LDFLAGS@
 
-graphman_LDADD = @GTK_LIBS@
+graphman_LDADD = @GTK_LIBS@ @LIBINTL@
 
 MOSTLYCLEANFILES = *.log *~ graphman
 CLEANFILES = *.log *~ graphman
