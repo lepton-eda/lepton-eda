@@ -180,6 +180,7 @@ SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);
 SCM g_rc_text_origin_marker(SCM mode);
 SCM g_rc_fast_mousepan(SCM mode);
+SCM g_rc_raise_dialog_boxes_on_expose(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -517,6 +518,7 @@ void x_dialog_hotkeys_close(GtkWidget *w, TOPLEVEL *w_current);
 void x_dialog_hotkeys_free_all(void);
 void x_dialog_hotkeys_fill(char *string);
 void x_dialog_hotkeys(TOPLEVEL *w_current);
+int x_dialog_raise_all(TOPLEVEL *w_current);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);

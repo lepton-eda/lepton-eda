@@ -367,11 +367,19 @@
 (scrollbar-update "continuous")
 ;(scrollbar-update "delayed")
 
+; raise-dialog-boxes-on-expose string
+;
+; Controls if dialog boxes are raised whenever an expose event happens
+; Default is disabled
+;
+(raise-dialog-boxes-on-expose "disabled")
+;(raise-dialog-boxes-on-expose "enabled")
+
 ; object-clipping string
 ; Determines if the object clipping code is executed or not
 ; This code does speed up redraws a bit.
 ;   Possible options: enabled or disabled
-; Default is enabled
+; Default is enabled, I do not recommend turning this off.
 ;
 (object-clipping "enabled")
 ;(object-clipping "disabled")

@@ -2604,3 +2604,86 @@ x_dialog_hotkeys (TOPLEVEL *w_current)
 	}
 }
 /***************** End of help/keymapping dialog box *********************/
+
+/*********** Start of misc support functions for dialog boxes ************/
+
+extern GtkWidget *stwindow;
+
+x_dialog_raise_all(TOPLEVEL *w_current)
+{
+	if (stwindow) {
+		gdk_window_raise(stwindow->window);
+	}
+        if(w_current->fowindow) {
+		gdk_window_raise(w_current->fowindow->window);
+	}
+        if(w_current->fswindow) {
+		gdk_window_raise(w_current->fswindow->window);
+	}
+        if(w_current->sowindow) {
+		gdk_window_raise(w_current->sowindow->window);
+	}
+        if(w_current->aswindow) {
+		gdk_window_raise(w_current->aswindow->window);
+	}
+        if(w_current->cswindow) {
+		gdk_window_raise(w_current->cswindow->window);
+	}
+        if(w_current->fileselect[FILESELECT].xfwindow) {
+		gdk_window_raise(w_current->fileselect[FILESELECT].xfwindow->window);
+	}
+        if(w_current->fileselect[COMPSELECT].xfwindow) {
+		gdk_window_raise(w_current->fileselect[COMPSELECT].xfwindow->window);
+	}
+        if(w_current->pwindow) {
+		gdk_window_raise(w_current->pwindow->window);
+	}
+        if(w_current->iwindow) {
+		gdk_window_raise(w_current->iwindow->window);
+	}
+        if(w_current->pswindow) {
+		gdk_window_raise(w_current->pswindow->window);
+	}
+        if(w_current->tiwindow) {
+		gdk_window_raise(w_current->tiwindow->window);
+	}
+        if(w_current->tewindow) {
+		gdk_window_raise(w_current->tewindow->window);
+	}
+        if(w_current->sewindow) {
+		gdk_window_raise(w_current->sewindow->window);
+	}
+        if(w_current->exwindow) {
+		gdk_window_raise(w_current->exwindow->window);
+	}
+        if(w_current->aawindow) {
+		gdk_window_raise(w_current->aawindow->window);
+	}
+        if(w_current->mawindow) {
+		gdk_window_raise(w_current->mawindow->window);
+	}
+        if(w_current->aewindow) {
+		gdk_window_raise(w_current->aewindow->window);
+	}
+        if(w_current->trwindow) {
+		gdk_window_raise(w_current->trwindow->window);
+	}
+        if(w_current->tswindow) {
+		gdk_window_raise(w_current->tswindow->window);
+	}
+        if(w_current->abwindow) {
+		gdk_window_raise(w_current->abwindow->window);
+	}
+        if(w_current->hkwindow) {
+		gdk_window_raise(w_current->hkwindow->window);
+	}
+        if(w_current->cowindow) {
+		gdk_window_raise(w_current->cowindow->window);
+	}
+        if(w_current->clwindow) {
+		gdk_window_raise(w_current->clwindow->window);
+	}
+
+}
+/*********** End of misc support functions for dialog boxes ************/
+

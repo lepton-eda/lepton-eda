@@ -193,6 +193,8 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->tewindow = NULL;
 	w_current->exwindow = NULL;
 	w_current->aawindow = NULL;
+	w_current->mawindow = NULL;
+	w_current->aewindow = NULL;
 	w_current->trwindow = NULL;
 	w_current->tswindow = NULL;
 	w_current->pswindow = NULL;
@@ -202,6 +204,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 	w_current->hkwindow = NULL;
 	w_current->cowindow = NULL;
 	w_current->clwindow = NULL;
+	w_current->sewindow = NULL;
 	w_current->fileselect[FILESELECT].xfwindow = NULL;
 	w_current->fileselect[FILESELECT].directory = NULL;
 	w_current->fileselect[FILESELECT].filename = NULL;
@@ -795,6 +798,12 @@ x_window_close(TOPLEVEL *w_current)
 	if (w_current->aawindow)
 		gtk_widget_destroy(w_current->aawindow);
 
+	if (w_current->mawindow)
+		gtk_widget_destroy(w_current->mawindow);
+
+	if (w_current->aewindow)
+		gtk_widget_destroy(w_current->aewindow);
+
 	if (w_current->trwindow)
 		gtk_widget_destroy(w_current->trwindow);
 
@@ -824,6 +833,9 @@ x_window_close(TOPLEVEL *w_current)
 
 	if (w_current->clwindow)
 		gtk_widget_destroy(w_current->clwindow);
+
+	if (w_current->sewindow)
+		gtk_widget_destroy(w_current->sewindow);
 
 	if (w_current->fileselect[FILESELECT].xfwindow) {
 		gtk_widget_destroy(w_current->fileselect[FILESELECT].xfwindow);

@@ -1299,3 +1299,14 @@ g_rc_fast_mousepan(SCM mode)
 
 	RETURN_G_RC_MODE("fast-mousepan", default_fast_mousepan, 2);
 }
+
+SCM
+g_rc_raise_dialog_boxes_on_expose(SCM mode)
+{
+	static const vstbl_entry mode_table[] = {
+		{TRUE , "enabled" },
+		{FALSE, "disabled"},
+	};
+
+	RETURN_G_RC_MODE("raise-dialog-boxes-on-expose", default_raise_dialog_boxes, 2);
+}

@@ -30,6 +30,8 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
+#define DELIMITERS ", "
+
 /* Kazu Hirata <kazu@seul.org> on July 25, 1999 - Returns a pointer to
  * the last '.' in the given string. If there is none, the function
  * returns a pointer to the first null character in the string. If you
@@ -1538,12 +1540,16 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	char *filename;
 	char *attrib;
+	char *current_filename;
 	int count=0;
 	OBJECT *object;
 	PAGE *save_first_page=NULL;
 	PAGE *parent=NULL;
-	int loaded_flag=0;
+	int loaded_flag=FALSE;
 	int page_control = 0;
+	int saved_page_control = 0;
+        int pcount = 0;
+	int looking_inside=FALSE;
 
 	exit_if_null(w_current);
 
@@ -1556,51 +1562,124 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 			attrib = o_attrib_search_name_single_count(object,
 							           "source",
 							           count);
+
+			/* if above is null, then look inside symbol */
+			if (attrib == NULL) {
+				attrib = o_attrib_search_name(object->complex,
+							      "source", 
+							      count);
+				looking_inside = TRUE;
+#if DEBUG
+				printf("going to look inside now\n");
+#endif
+			}
+
 			while (attrib) {
 
-				s_log_message("Searching for source [%s]\n", 
-					      attrib);
+				/* look for source=filename,filename, ... */
+				pcount = 0;
+				current_filename = u_basic_breakup_string(
+								attrib, 
+							        pcount);
 
-				page_control = 
-				   s_hierarchy_down_schematic_single(w_current, 
-							   attrib, parent,
+				/* loop over all filenames */
+        			while(current_filename != NULL) {
+
+					s_log_message(
+						"Searching for source [%s]\n", 
+					        current_filename);
+
+					saved_page_control = page_control;
+					page_control = 
+				           s_hierarchy_down_schematic_single(
+							   w_current, 
+							   current_filename, 
+							   parent,
 							   page_control);
 
+					if (page_control != -1)  {
+						a_zoom_limits(w_current, 
+				          		      w_current->
+							      page_current->
+							      object_head);
+					}
 
-				if (page_control != -1)  {
-					a_zoom_limits(w_current, 
-				          w_current->page_current->object_head);
+
+					/* save the first page */
+					if (!loaded_flag && 
+					     page_control != -1 && 
+					     page_control != 0) {
+						save_first_page = w_current->
+							          page_current;
+					}
+
+					/* now do some error fixing */
+					if (page_control == -1) {
+						s_log_message(
+					  	  "Cannot find source [%s]\n", 
+						  current_filename);
+						fprintf(stderr, 
+						   "Cannot find source [%s]\n", 
+						   current_filename); 
+
+						/* restore this for the next */
+						/* page */
+						page_control = 
+							saved_page_control;
+					} else {
+						/* this only signifies that */
+						/* we tried */
+						loaded_flag = TRUE;
+					}
+
+					free(current_filename);
+					pcount++;
+					current_filename = 
+							u_basic_breakup_string(
+								  attrib, 
+								  pcount);
 				}
 
-				/* save the first page */
-				if (!loaded_flag && page_control) {
-					save_first_page = w_current->
-						page_current;
+				if (attrib) {
+					free(attrib);
 				}
 
-				/* this only signifies that we tried */
-				loaded_flag = 1;
-				free(attrib);
+				if (current_filename) {
+					free(current_filename);
+				}
 
 				count++;
-				attrib = o_attrib_search_name_single_count(
+
+				/* continue looking outside first */
+				if (!looking_inside) {
+					attrib = 
+					   o_attrib_search_name_single_count(
 							     object,
 							     "source",
 							     count);
-			} 
+				} 
 
-			/* Try the old way (based on the name of the symbol) */
-			if (!loaded_flag) {
-				filename = object->complex_basename;
-				s_log_message("Searching for source [%s]\n", 
-					      filename);
-				s_hierarchy_down_schematic_multiple(w_current, 
-							          filename,
-				 		                  w_current->
-							          page_current);
-				/* this only signifies that we tried */
-				loaded_flag = 1;
-			}
+				/* okay we were looking outside and didn't */
+				/* find anything, so now we need to look */
+				/* inside the symbol */
+				if (!looking_inside && attrib == NULL && 
+				    !loaded_flag ) {
+					looking_inside = TRUE;
+#if DEBUG
+					printf("switching to go to look inside\n");
+#endif
+				}
+
+				if (looking_inside) {
+#if DEBUG
+					printf("looking inside\n");
+#endif
+					attrib = o_attrib_search_name(
+							     object->complex,
+							     "source",
+							     count);
+				}
+			} 
 
 			if (loaded_flag) {
 	
@@ -1682,6 +1761,10 @@ DEFINE_I_CALLBACK(attributes_attach)
 
 	/* skip over head */
 	s_current = w_current->page_current->selection2_head->next;
+	if (!s_current) {
+		return;
+	}
+
 	first_object = s_current->selected_object; 
 	if (!first_object) {
 		return;	

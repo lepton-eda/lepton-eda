@@ -43,8 +43,7 @@ multi_multi_edit(TOPLEVEL *w_current, SELECTION *list)
 
 	components = g_ptr_array_new();
 	//type = list->type;
-	
-	g_ptr_array_add(components,list);
+	//g_ptr_array_add(components,list);
 
 	s_current=list;
 	while(s_current != NULL)

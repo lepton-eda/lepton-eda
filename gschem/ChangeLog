@@ -9,6 +9,31 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-04-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Worked more on the source= and hierarchy down 
+	  schematic feature by adding the ability to have multiple filenames
+	  (comma seperated) in the source= attribute 
+	  (Idea by Thepthai Tabtieng)
+
+	* src/i_callbacks.c: Fixed the Attribute/Attach... segfault (added
+	  an if ...) (Bug pointed out by Stefan, Thanks)
+
+	* src/i_callbacks.c: Added the ability to search for the source=
+	  attribute inside the symbol if it isn't found attached to the 
+	  outside of the symbol (omission pointed out by Thepthai Tabtieng).
+	  If you attach source= attribute to the outside, then inside is 
+	  NEVER searched.
+
+	* src/x_window.c: Oops forgot to init and destroy w_current->sewindow 
+	  Oops forgot to init and destroy w_current->mawindow
+	  Oops forgot to init and destroy w_current->aewindow
+	
+	* src/x_dialog.c: Added x_dialog_raise_all which raises all dialog 
+	  boxes if they are displayed
+
+	* src/g_rc.c: Added raise-dialog-boxes-on-expose rc keyword to control
+	  above
 
 2000-04-15  Ales Hvezda  <ahvezda@geda.seul.org>
 

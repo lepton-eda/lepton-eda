@@ -37,7 +37,7 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
-static GtkWidget *stwindow = NULL;
+GtkWidget *stwindow = NULL;
 static GtkWidget *sttext = NULL;
 
 static char *logfilename;

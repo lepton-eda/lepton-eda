@@ -61,4 +61,5 @@ extern int default_file_preview;
 extern int default_enforce_hierarchy;
 extern int default_text_origin_marker;
 extern int default_fast_mousepan;
+extern int default_raise_dialog_boxes;
 

@@ -128,6 +128,7 @@ g_register_funcs(void)
 	gh_new_procedure1_0 ("enforce-hierarchy", g_rc_enforce_hierarchy);
 	gh_new_procedure1_0 ("text-origin-marker", g_rc_text_origin_marker);
 	gh_new_procedure1_0 ("fast-mousepan", g_rc_fast_mousepan);
+	gh_new_procedure1_0 ("raise-dialog-boxes-on-expose", g_rc_raise_dialog_boxes_on_expose);
 
 	/* general guile functions */
 	gh_new_procedure1_0 ("gschem-print", g_funcs_print);

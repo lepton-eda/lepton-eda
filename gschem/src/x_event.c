@@ -87,6 +87,11 @@ x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
                 }
         }
 
+	/* raise the dialog boxes if this feature is enabled */
+	if (w_current->raise_dialog_boxes) {
+		x_dialog_raise_all(w_current);
+	}
+
 	return(0);
 }
 
