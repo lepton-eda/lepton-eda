@@ -555,8 +555,8 @@ g_get_toplevel_attribute(SCM scm_wanted_attrib)
 		scm_return_value = gh_str2scm(return_value, strlen(return_value));
 		free(return_value);
 	} else {
-		scm_return_value = gh_str2scm("unknown", 
-					       strlen("unknown"));
+		scm_return_value = gh_str2scm("not found", 
+					       strlen("not found"));
 	}
 
 	free(wanted_attrib);
