@@ -10,6 +10,12 @@ bin_SCRIPTS = gesym-config
 rcdatadir = @GEDARCDIR@
 rcdata_DATA = system-commonrc 
 
+
+gesym-config-install: gesym-config
+	chmod +x gesym-config
+	$(mkinstalldirs) $(DESTDIR)$(bindir)
+	$(binSCRIPT_INSTALL) gesym-config $(DESTDIR)$(bindir)
+
 dist-clean-local:
 	-rm -rf autom4te.cache
 

@@ -8,6 +8,12 @@ EXTRA_DIST = guile.m4 HACKING BUGS
 #proto:
 #	(cd src ; ./create_proto)
 
+libgeda-config-install: libgeda-config
+	chmod +x libgeda-config	
+	$(mkinstalldirs) $(DESTDIR)$(bindir)
+	$(binSCRIPT_INSTALL) libgeda-config $(DESTDIR)$(bindir)
+	
+
 distclean-local:
 	-rm -rf autom4te.cache
 
