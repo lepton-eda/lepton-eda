@@ -1,3 +1,10 @@
+2005-01-06 Werner Hoch <werner.ho@gmx.de>
+	* maxim/*sym: added documentation, pinlabel, pintype,
+	fixed several symbol errors,
+	* analog/ntc-1.sym: contained a component, fixed
+	* linear/lm135-1.sym, transistor/2N5245-1.sym, transistor/2N5911-1.sym:
+	added pinattributes
+	
 2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* allegro/3967-1.sym allegro/3967-2.sym irf/ips021-1.sym
