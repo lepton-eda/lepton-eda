@@ -4,8 +4,8 @@
 	12.29.2003.c
 
 	* tests/amp.spice-sdb, darlington.spice-sdb: Updated golden files
-	to the new spice-sdb backend version.  (tests not passing yet due to 
-	extra spaces, needs to be fixed).
+	to the new spice-sdb backend version (version and spaces at the end
+	of certain lines).  
 
 2003-12-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
