@@ -130,15 +130,15 @@ parse_commandline(int argc, char *argv[])
         break;
 
       case 'r':
-        rc_filename = u_basic_strdup(optarg);
+        rc_filename = g_strdup (optarg);
         break;
 
       case 's':
-        script_filename = u_basic_strdup(optarg);
+        script_filename = g_strdup (optarg);
         break;
 
       case 'o':
-        output_filename = u_basic_strdup(optarg);
+        output_filename = g_strdup (optarg);
         break;
 
       case 'h':

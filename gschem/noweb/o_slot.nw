@@ -126,7 +126,7 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 				/* no default, make something up? */
 				/* for now.. this is an error
                                    condition */
-        slot_value = u_basic_strdup("slot=1");
+        slot_value = g_strdup ("slot=1");
       }
 
 #if DEBUG
@@ -210,7 +210,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
         free(slot_text_object->text->string);
       }
 
-      slot_text_object->text->string = u_basic_strdup(string);
+      slot_text_object->text->string = g_strdup (string);
 
       temp = slot_text_object;
 

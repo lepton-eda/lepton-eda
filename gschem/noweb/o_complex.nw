@@ -330,11 +330,10 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 
   if (w_current->include_complex) {
-    include_filename = u_basic_strdup_multiple(
-                                               w_current->internal_clib,
-                                               G_DIR_SEPARATOR_S,
-                                               w_current->internal_basename,
-                                               NULL);
+    include_filename = g_strconcat (w_current->internal_clib,
+                                    G_DIR_SEPARATOR_S,
+                                    w_current->internal_basename,
+                                    NULL);
 
     w_current->ADDING_SEL=1;
     o_start = w_current->page_current->object_tail;
@@ -448,15 +447,15 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 
     free(o_current->complex_clib);
 
-    o_current->complex_clib = u_basic_strdup("EMBEDDED");
+    o_current->complex_clib = g_strdup ("EMBEDDED");
 
-    new_basename = u_basic_strdup_multiple("EMBEDDED",
-                                           o_current->complex_basename,
-                                           NULL);
+    new_basename = g_strconcat ("EMBEDDED",
+                                o_current->complex_basename,
+                                NULL);
 
     free(o_current->complex_basename);
 
-    o_current->complex_basename = u_basic_strdup(new_basename);
+    o_current->complex_basename = g_strdup (new_basename);
 
     free(new_basename);
   }

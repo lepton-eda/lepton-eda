@@ -105,9 +105,10 @@ main_prog(int argc, char *argv[])
   
   i = argv_index;
   while (argv[i] != NULL) {
-    filename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S,
-                                       argv[i],
-                                       NULL);
+    filename = g_strconcat (cwd,
+                            G_DIR_SEPARATOR_S,
+                            argv[i],
+                            NULL);
                                                                                                 
     if (stat(filename, &buf) != 0) {
       s_log_message("Could not open [%s]\n", filename);
@@ -131,10 +132,10 @@ main_prog(int argc, char *argv[])
 #else
         if (argv[i][0] == G_DIR_SEPARATOR) {
 #endif
-          pr_current->page_current->page_filename = u_basic_strdup(argv[i]);
+          pr_current->page_current->page_filename = g_strdup (argv[i]);
         } else {
           pr_current->page_current->page_filename =
-            u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
+            g_strconcat (cwd, G_DIR_SEPARATOR_S, argv[i], NULL);
         }
 #endif 
         /* Always use absolute file names to eliminate confusion */

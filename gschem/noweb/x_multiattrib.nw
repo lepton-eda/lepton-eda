@@ -136,7 +136,7 @@ multi_attrib_edit_parser (GtkWidget *w, char **text, int *vis, int *show)
   text[1] = (char *) gtk_entry_get_text(GTK_ENTRY(value));
 #endif
 
-  newtext = u_basic_strdup_multiple(text[0],"=",text[1],NULL); 
+  newtext = g_strconcat (text[0],"=",text[1],NULL); 
 
   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton))) {
     *vis = VISIBLE;

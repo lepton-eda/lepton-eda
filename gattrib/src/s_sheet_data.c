@@ -195,7 +195,7 @@ void s_sheet_data_add_master_comp_attrib_list_items(OBJECT *start_obj) {
 	while (a_current != NULL) {
 	  if (a_current->object->type == OBJ_TEXT 
 	      && a_current->object->text != NULL) {  /* found an attribute */
-	    attrib_text = u_basic_strdup(a_current->object->text->string);
+	    attrib_text = g_strdup(a_current->object->text->string);
 	    attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 
 	      /* Don't include "refdes" or "slot" because they form the row name */
@@ -297,7 +297,7 @@ void s_sheet_data_add_master_pin_list_items(OBJECT *start_obj) {
 	      temp_pinnumber = o_attrib_search_name_single(o_lower_current, "pinnumber", NULL);
 	      
 	      if( temp_pinnumber != NULL) {
-		row_label = u_basic_strdup_multiple(temp_uref, ":", temp_pinnumber, NULL);
+		row_label = g_strconcat(temp_uref, ":", temp_pinnumber, NULL);
 #if DEBUG
 		printf("In s_sheet_data_add_master_pin_list_items, about to add to master pin list row_label = %s\n", row_label);
 #endif
@@ -388,7 +388,7 @@ void s_sheet_data_add_master_pin_attrib_list_items(OBJECT *start_obj) {
 	      while (pin_attrib != NULL) {
 		if (pin_attrib->object->type == OBJ_TEXT 
 		    && pin_attrib->object->text != NULL) {  /* found an attribute */
-		  attrib_text = u_basic_strdup(pin_attrib->object->text->string);
+		  attrib_text = g_strdup(pin_attrib->object->text->string);
 		  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 		  attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
 		  if ( (strcmp(attrib_name, "pinnumber") != 0) 

@@ -181,7 +181,7 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 			if (pl_current->net_name && pl_current->nets) {
 			    if (pl_current->nets->next) {
 				pl_current->nets->next->net_name =
-				    u_basic_strdup(pl_current->net_name);
+				    g_strdup (pl_current->net_name);
 			    }
 			}
 		    }

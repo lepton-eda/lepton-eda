@@ -279,7 +279,7 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
-    text = (gchar *) u_basic_strdup(string_list_item->data);
+    text = (gchar *) g_strdup(string_list_item->data);
     new_width = char_width * strlen(text);  
     if (new_width > width) 
       width = new_width;
@@ -310,7 +310,7 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
-    text = (gchar *) u_basic_strdup(string_list_item->data);
+    text = (gchar *) g_strdup(string_list_item->data);
     gtk_sheet_column_button_add_label(sheet, j, text);
     gtk_sheet_column_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
     /* need to resize the column width here . . . */

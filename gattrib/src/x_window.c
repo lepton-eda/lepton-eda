@@ -295,7 +295,7 @@ x_window_add_items()
   for (i = 0; i < num_rows; i++) {
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->component_table)[i][j].attrib_value ) { /* NULL = no entry */
-	text = (gchar *) u_basic_strdup( (sheet_head->component_table)[i][j].attrib_value );
+	text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
 	x_gtksheet_add_cell_item( GTK_SHEET(sheets[0]), i, j, (gchar *) text );
 	free(text);
       }
@@ -314,7 +314,7 @@ x_window_add_items()
   for (i = 0; i < num_rows; i++) {
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->net_table)[i][j].attrib_value ) { /* NULL = no entry */
-	text = (gchar *) u_basic_strdup( (sheet_head->net_table)[i][j].attrib_value );
+	text = (gchar *) g_strdup( (sheet_head->net_table)[i][j].attrib_value );
 	x_gtksheet_add_cell_item( GTK_SHEET(sheets[1]), i, j, (gchar *) text );
 	free(text);
       }
@@ -335,7 +335,7 @@ x_window_add_items()
   for (i = 0; i < num_rows; i++) {
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->pin_table)[i][j].attrib_value ) { /* NULL = no entry */
-	text = (gchar *) u_basic_strdup( (sheet_head->pin_table)[i][j].attrib_value );
+	text = (gchar *) g_strdup( (sheet_head->pin_table)[i][j].attrib_value );
 	x_gtksheet_add_cell_item( GTK_SHEET(sheets[2]), i, j, (gchar *) text );
 	free(text);
       }

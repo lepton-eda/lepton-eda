@@ -2,6 +2,8 @@
 
 	* noweb/*.nw: Made it use GLib's G_DIR_SEPARATOR* instead of 
 	libgeda's *_SEPARATER_*.
+	Replaced u_basic_strdup() and u_basic_strdup_multiple() by GLib 
+        functions.
 
 2005-02-04 04:39  danmc
 

@@ -505,12 +505,12 @@ o_embed(TOPLEVEL *w_current, OBJECT *o_current)
     if (o_current->complex_clib) {
       free (o_current->complex_clib);
     }
-    o_current->complex_clib = u_basic_strdup ("EMBEDDED");
+    o_current->complex_clib = g_strdup ("EMBEDDED");
 
     /* change the basename to "EMBEDDED"+basename */
-    new_basename = u_basic_strdup_multiple ("EMBEDDED",
-                                            o_current->complex_basename,
-                                            NULL);
+    new_basename = g_strconcat ("EMBEDDED",
+                                o_current->complex_basename,
+                                NULL);
     free (o_current->complex_basename);
     o_current->complex_basename = new_basename;
 
@@ -544,7 +544,7 @@ o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
       o_complex_is_embedded (o_current))
   {
     /* get ride of the EMBEDDED word in basename */
-    new_basename = u_basic_strdup (o_current->complex_basename + 8);
+    new_basename = g_strdup (o_current->complex_basename + 8);
     
     /* search for the symbol in the library */
     clibs = s_clib_search_basename (new_basename);

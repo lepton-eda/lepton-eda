@@ -1,5 +1,10 @@
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/g_netlist.c, src/gnetlist.c, src/i_vars.c:
+	* src/parsecmd.c, src/s_hierarchy.c, src/s_netattrib.c:
+	* src/s_netlist.c, src/s_traverse.c: Replaced u_basic_strdup() and 
+	u_basic_strdup_multiple() by GLib functions.
+	
 	* src/gnetlist.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
 	libgeda's *_SEPARATER_*.
 

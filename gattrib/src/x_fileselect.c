@@ -203,17 +203,17 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
   temp = getcwd(NULL, 1024);
 
   if (filename) {
-    f_current->directory = u_basic_strdup(temp);
-    f_current->filename = u_basic_strdup(filename);
+    f_current->directory = g_strdup(temp);
+    f_current->filename = g_strdup(filename);
 
     free(temp);
 #ifdef __MINGW32__
     if (u_basic_has_trailing(f_current->directory, G_DIR_SEPARATOR)) {
-      temp = u_basic_strdup_multiple(f_current->directory,
+      temp = g_strconcat(f_current->directory,
 				     f_current->filename, NULL);
     } else {
 #endif
-      temp = u_basic_strdup_multiple(f_current->directory,
+      temp = g_strconcat(f_current->directory,
 				     G_DIR_SEPARATOR_S,
 				     f_current->filename, NULL);
 #ifdef __MINGW32__
@@ -223,7 +223,7 @@ void x_fileselect_update_dirfile(FILEDIALOG * f_current, char *filename)
     gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
 
   } else {
-    f_current->directory = u_basic_strdup(temp);
+    f_current->directory = g_strdup(temp);
 
     if (f_current->filename) {
       free(f_current->filename);
@@ -465,7 +465,7 @@ void x_fileselect_fill_lists(FILEDIALOG * f_current)
   text[1] = NULL;
   max_width = 0;
   for (i = 0; i < dir_count; i++) {
-    temp = u_basic_strdup_multiple(f_current->directory_entries[i],
+    temp = g_strconcat(f_current->directory_entries[i],
 				   G_DIR_SEPARATOR_S, NULL);
     text[0] = temp;
     gtk_clist_append(GTK_CLIST(f_current->dir_list), text);
@@ -660,7 +660,7 @@ void x_fileselect_saveas(GtkWidget * w, FILEDIALOG * f_current)
       free(w_current->page_current->page_filename);
     }
 
-    w_current->page_current->page_filename = u_basic_strdup(string);
+    w_current->page_current->page_filename = g_strdup(string);
 
     /* Try to do save by calling f_save . . . . */
     if (f_save(w_current, string)) {
@@ -1064,7 +1064,7 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
 #endif
     /* SDB says: This is what generally is run.  What is the above stuff for? */
     directory = getcwd(NULL, 1024);
-    filename = u_basic_strdup(new_filename);
+    filename = g_strdup(new_filename);
 #if 0
   }
 #endif
@@ -1075,21 +1075,21 @@ x_fileselect_update_dirfile_saveas(FILEDIALOG * f_current,
 #endif
 
   if (directory) {
-    f_current->directory = u_basic_strdup(directory);
+    f_current->directory = g_strdup(directory);
     free(directory);
   }
 
   if (filename) {
-    f_current->filename = u_basic_strdup(filename);
+    f_current->filename = g_strdup(filename);
     free(filename);
   }
 #ifdef __MINGW32__
   if (u_basic_has_trailing(f_current->directory, G_DIR_SEPARATOR)) {
-    temp = u_basic_strdup_multiple(f_current->directory,
+    temp = g_strconcat(f_current->directory,
 				   f_current->filename, NULL);
   } else {
 #endif
-    temp = u_basic_strdup_multiple(f_current->directory,
+    temp = g_strconcat(f_current->directory,
 				   G_DIR_SEPARATOR_S,
 				   f_current->filename, NULL);
 #ifdef __MINGW32__
@@ -1280,7 +1280,7 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   
   
   /*  -----  Create the "directories"/"libraries" clist widgets -----  */
-  dir_title[0] = u_basic_strdup("Directories");
+  dir_title[0] = g_strdup("Directories");
   dir_title[1] = NULL;
   f_current->dir_list = gtk_clist_new_with_titles(1,
 						  (char **) dir_title);
@@ -1306,7 +1306,7 @@ void x_fileselect_setup(TOPLEVEL *pr_current, int filesel_type)
   free(dir_title[0]);
   
   /*  ----- Create the files clist -----  */
-  file_title[0] = u_basic_strdup("Files");
+  file_title[0] = g_strdup("Files");
   file_title[1] = NULL;
   f_current->file_list = gtk_clist_new_with_titles(1,
 						   (gchar **)

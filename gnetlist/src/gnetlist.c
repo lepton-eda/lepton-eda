@@ -138,9 +138,10 @@ void main_prog(void *closure, int argc, char *argv[])
 
     i = argv_index;
     while (argv[i] != NULL) {
-      filename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S,
-					 argv[i],
-					 NULL);
+      filename = g_strconcat (cwd,
+                              G_DIR_SEPARATOR_S,
+                              argv[i],
+                              NULL);
 
       if (first_page) {
 	if (pr_current->page_current->page_filename) {
@@ -151,7 +152,7 @@ void main_prog(void *closure, int argc, char *argv[])
 	/* so, just set the filename and open the schematic */
 	/* for the first page */
 	
-	pr_current->page_current->page_filename = u_basic_strdup(filename);
+	pr_current->page_current->page_filename = g_strdup (filename);
 	if (!quiet_mode) {
 	  printf("Loading schematic [%s]\n", filename);
 	}

@@ -49,7 +49,7 @@ char *s_netattrib_extract_netname(char *value)
     int i = 0;
 
     /* a bit larger than needed ... */
-    return_value = u_basic_strdup(value);
+    return_value = g_strdup (value);
 
     while (value[i] != ':' && value[i] != '\0') {
 	return_value[i] = value[i];
@@ -58,7 +58,7 @@ char *s_netattrib_extract_netname(char *value)
 
     if (value[i] != ':') {
 	fprintf(stderr, "Found malformed net attribute\n");
-	return (u_basic_strdup("unknown"));
+	return (g_strdup ("unknown"));
     }
 
     return_value[i] = '\0';
@@ -132,8 +132,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 				     strlen(current_pin) + 2));
 		sprintf(connected_to, "%s %s",
 			netlist->component_uref, current_pin);
-		old_cpin->nets->connected_to =
-		    u_basic_strdup(connected_to);
+		old_cpin->nets->connected_to = g_strdup (connected_to);
 		old_cpin->nets->nid = o_current->sid;
 		free(connected_to);
 	    } else {
@@ -141,7 +140,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 
 		new_cpin = s_cpinlist_add(cpinlist_tail);
 
-		new_cpin->pin_number = u_basic_strdup(current_pin);
+		new_cpin->pin_number = g_strdup (current_pin);
 		new_cpin->net_name = NULL;
 
 		new_cpin->plid = o_current->sid;
@@ -159,8 +158,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 				     strlen(current_pin) + 2));
 		sprintf(connected_to, "%s %s",
 			netlist->component_uref, current_pin);
-		new_cpin->nets->connected_to =
-		    u_basic_strdup(connected_to);
+		new_cpin->nets->connected_to = g_strdup(connected_to);
 		new_cpin->nets->nid = o_current->sid;
 
 #if DEBUG

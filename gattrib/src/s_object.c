@@ -65,7 +65,7 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current, char *new_attrib_name
 
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
-    name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", new_attrib_value, NULL);
+    name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
     attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, INVISIBLE, 
 							 SHOW_NAME_VALUE, o_current);
   }
@@ -105,7 +105,7 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
 
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
-    name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", new_attrib_value, NULL);
+    name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
     attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, 
 								 INVISIBLE, 
 								 SHOW_NAME_VALUE, o_current);
@@ -136,14 +136,14 @@ void s_object_replace_attrib_in_object(OBJECT *o_current, char *new_attrib_name,
 	&& a_current->object->text != NULL) {  /* found an attribute */
       
       /* may need to check more thoroughly here. . . . */
-      old_attrib_text = u_basic_strdup(a_current->object->text->string);
+      old_attrib_text = g_strdup(a_current->object->text->string);
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
 	/* create attrib=value text string & stuff it back into pr_current */
-	new_attrib_text = u_basic_strdup_multiple(new_attrib_name, "=", new_attrib_value, NULL);
+	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
 	free(a_current->object->text->string);   /* remove old attrib string */
-	a_current->object->text->string = u_basic_strdup(new_attrib_text);   /* insert new attrib string */
+	a_current->object->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
 	free(new_attrib_text);
 	free(old_attrib_text);
 	free(old_attrib_name);
@@ -182,7 +182,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 	&& a_current->object->text != NULL) {  /* found an attribute */
       
       /* may need to check more thoroughly here. . . . */
-      old_attrib_text = u_basic_strdup(a_current->object->text->string);
+      old_attrib_text = g_strdup(a_current->object->text->string);
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {

@@ -96,7 +96,7 @@ char *s_attrib_get_refdes(OBJECT *object)
 #if DEBUG
     printf(". . .  , found slotted component with slot = %s\n", slot_value);
 #endif
-    temp_uref = u_basic_strdup_multiple(temp_uref, ".", slot_value, NULL);
+    temp_uref = g_strconcat(temp_uref, ".", slot_value, NULL);
   }
 
 #ifdef DEBUG

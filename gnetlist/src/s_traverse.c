@@ -156,7 +156,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
         }
 
         if (hierarchy_tag) {
-          netlist->hierarchy_tag = u_basic_strdup(hierarchy_tag);
+          netlist->hierarchy_tag = g_strdup (hierarchy_tag);
         }
 
         if (temp_uref) {

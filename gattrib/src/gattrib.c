@@ -124,7 +124,7 @@ void gattrib_main(int argc, char *argv[])
   /* Note that argv_index holds index to first non-flag command line option 
    * (that is, to the first file name) */
   argv_index = parse_commandline(argc, argv);
-  cwd = u_basic_strdup(getcwd(NULL, 1024));
+  cwd = g_strdup(getcwd(NULL, 1024));
   
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
@@ -210,9 +210,10 @@ void gattrib_main(int argc, char *argv[])
   i = argv_index;
   while(argv[i]) {
     
-    filename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S, 
-				       argv[i],
-				       NULL);
+    filename = g_strconcat(cwd,
+                           G_DIR_SEPARATOR_S, 
+                           argv[i],
+                           NULL);
 
 #if DEBUG
     printf("In gattrib_main, we want to open filename = %s\n", filename);

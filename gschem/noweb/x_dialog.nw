@@ -3276,58 +3276,58 @@ index2functionstring(int index)
 
   switch(index) {
     case(BACKGROUND_COLOR):
-      string = u_basic_strdup("background");
+      string = g_strdup ("background");
       break;
     case(PIN_COLOR):
-      string = u_basic_strdup("pin");
+      string = g_strdup ("pin");
       break;
     case(NET_ENDPOINT_COLOR):
-      string = u_basic_strdup("net endpoint");
+      string = g_strdup ("net endpoint");
       break;
     case(GRAPHIC_COLOR):
-      string = u_basic_strdup("graphic");
+      string = g_strdup ("graphic");
       break;
     case(NET_COLOR):
-      string = u_basic_strdup("net");
+      string = g_strdup ("net");
       break;
     case(ATTRIBUTE_COLOR):
-      string = u_basic_strdup("attribute");
+      string = g_strdup ("attribute");
       break;
     case(LOGIC_BUBBLE_COLOR):
-      string = u_basic_strdup("logic bubble");
+      string = g_strdup ("logic bubble");
       break;
     case(GRID_COLOR):
-      string = u_basic_strdup("grid point");
+      string = g_strdup ("grid point");
       break;
     case(DETACHED_ATTRIBUTE_COLOR):
-      string = u_basic_strdup("detached attribute");
+      string = g_strdup ("detached attribute");
       break;
     case(TEXT_COLOR):
-      string = u_basic_strdup("text");
+      string = g_strdup ("text");
       break;
     case(BUS_COLOR):
-      string = u_basic_strdup("bus");
+      string = g_strdup ("bus");
       break;
     case(SELECT_COLOR):
-      string = u_basic_strdup("select");
+      string = g_strdup ("select");
       break;
     case(BOUNDINGBOX_COLOR):
-      string = u_basic_strdup("bounding box");
+      string = g_strdup ("bounding box");
       break;
     case(ZOOM_BOX_COLOR):
-      string = u_basic_strdup("zoom box");
+      string = g_strdup ("zoom box");
       break;
     case(STROKE_COLOR):
-      string = u_basic_strdup("stroke");
+      string = g_strdup ("stroke");
       break;
     case(LOCK_COLOR):
-      string = u_basic_strdup("lock");
+      string = g_strdup ("lock");
       break;
     case(OUTPUT_BACKGROUND_COLOR):
-      string = u_basic_strdup("output background");
+      string = g_strdup ("output background");
       break;
     default:
-      string = u_basic_strdup("unknown");
+      string = g_strdup ("unknown");
       break;
   }
   return(string);
@@ -4600,9 +4600,9 @@ major_changed_dialog(TOPLEVEL* w_current)
 
       if (!refdes_string)
       {
-        refdes_string = u_basic_strdup(value);
+        refdes_string = g_strdup (value);
       } else {
-        tmp = u_basic_strdup_multiple(refdes_string, "\n", value, NULL);
+        tmp = g_strconcat (refdes_string, "\n", value, NULL);
         free(refdes_string);
         refdes_string = tmp;
       }
@@ -4610,9 +4610,9 @@ major_changed_dialog(TOPLEVEL* w_current)
       current = current->next;
     }
 
-    tmp = u_basic_strdup_multiple(refdes_string, 
-             "\n\nBe sure to verify each of these symbols!", 
-                                  NULL);
+    tmp = g_strconcat (refdes_string, 
+                       "\n\nBe sure to verify each of these symbols!", 
+                       NULL);
     free(refdes_string);
     refdes_string = tmp;
 
@@ -4630,10 +4630,10 @@ major_changed_dialog(TOPLEVEL* w_current)
                               G_CALLBACK (gtk_widget_destroy),
                               dialog);
 #else
-    tmp = u_basic_strdup_multiple(
-             "\n  Major symbol changes detected in refdes:  \n\n", 
-                                  refdes_string, 
-                                  NULL);
+    tmp = g_strconcat(
+      "\n  Major symbol changes detected in refdes:  \n\n", 
+      refdes_string, 
+      NULL);
     free(refdes_string);
     refdes_string = tmp;
     quick_message_dialog(refdes_string);

@@ -277,8 +277,7 @@ void get_main_menu(TOPLEVEL * w_current, GtkWidget ** menubar)
         gtk_signal_connect_object(GTK_OBJECT(menu_item), "activate",
                                   GTK_SIGNAL_FUNC(g_menu_execute),
                                   (gpointer) g_strdup (menu_item_func));
-/*                                   (gpointer) u_basic_strdup(menu_item_func)); */
-        /* The u_basic_strdup is a memory leak, but this is okay. I think. */
+        /* The g_strdup is a memory leak, but this is okay. I think. */
         free(spaces);
         free(menu_item_keys);
       }

@@ -376,8 +376,7 @@ i_update_middle_button(TOPLEVEL *w_current, void *func_ptr, const char *string)
     case(REPEAT):
     w_current->DONT_RESIZE = 1;
 
-    temp_string = u_basic_strdup_multiple(
-                                          _("Repeat/"), string, NULL);
+    temp_string = g_strconcat (_("Repeat/"), string, NULL);
 
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   temp_string);

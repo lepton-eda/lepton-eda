@@ -75,7 +75,7 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
 
   local_string_list = old_string_list;
   while (local_string_list != NULL) {
-    data = u_basic_strdup(local_string_list->data);
+    data = g_strdup(local_string_list->data);
     s_string_list_add_item(new_string_list, &count, data);
     free(data);
     local_string_list = local_string_list->next;
@@ -114,7 +114,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 #ifdef DEBUG
     printf("In s_string_list_add_item, about to place first item in list.\n");
 #endif
-    list->data = (gchar *) u_basic_strdup(item);
+    list->data = (gchar *) g_strdup(item);
     list->next = NULL;
     list->prev = NULL;  /* this may have already been initialized. . . . */
     list->pos = (int) count;  /* This enumerates the pos on the list.  Value is reset later by sorting. */
@@ -125,7 +125,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* Otherwise, loop through list looking for duplicates */
   prev = list;
   while (list != NULL) {
-    trial_item = (gchar *) u_basic_strdup(list->data);        
+    trial_item = (gchar *) g_strdup(list->data);        
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  Just return. */
       free(trial_item);
@@ -140,7 +140,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* In this case, we insert it. */
 
   local_list = (STRING_LIST *) malloc(sizeof(STRING_LIST));  /* allocate space for this list entry */
-  local_list->data = (gchar *) u_basic_strdup(item);   /* copy data into list */
+  local_list->data = (gchar *) g_strdup(item);   /* copy data into list */
   local_list->next = NULL;
   local_list->prev = prev;  /* point this item to last entry in old list */
   prev->next = local_list;  /* make last item in old list point to this one. */
@@ -177,7 +177,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
   /* Now loop through list looking for item */
   list_item = (*list);
   while (list_item != NULL) {
-    trial_item = (gchar *) u_basic_strdup(list_item->data);        
+    trial_item = (gchar *) g_strdup(list_item->data);        
 #ifdef DEBUG
     printf("In s_string_list_delete_item, matching item against trial item = %s from list.\n", trial_item);
 #endif
@@ -253,7 +253,7 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
 
   /* Otherwise, loop through list looking for duplicates */
   while (list != NULL) {
-    trial_item = (gchar *) u_basic_strdup(list->data);        
+    trial_item = (gchar *) g_strdup(list->data);        
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  return 1. */
       free(trial_item);

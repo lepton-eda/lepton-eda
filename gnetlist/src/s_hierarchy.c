@@ -345,17 +345,15 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
 		switch (pr_current->hierarchy_uref_order) {
 		case (APPEND):
 		    return_value =
-			u_basic_strdup_multiple(hierarchy_tag,
-						pr_current->
-						hierarchy_uref_separator,
-						basename, NULL);
+			g_strconcat (hierarchy_tag,
+                         pr_current->hierarchy_uref_separator,
+                         basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
-			u_basic_strdup_multiple(basename,
-						pr_current->
-						hierarchy_uref_separator,
-						hierarchy_tag, NULL);
+			g_strconcat (basename,
+                         pr_current->hierarchy_uref_separator,
+                         hierarchy_tag, NULL);
 
 		    break;
 		}
@@ -363,13 +361,11 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
 		switch (pr_current->hierarchy_uref_order) {
 		case (APPEND):
 		    return_value =
-			u_basic_strdup_multiple(hierarchy_tag, basename,
-						NULL);
+			g_strconcat (hierarchy_tag, basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
-			u_basic_strdup_multiple(basename, hierarchy_tag,
-						NULL);
+			g_strconcat (basename, hierarchy_tag, NULL);
 		    break;
 
 		}
@@ -379,7 +375,7 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
 	}
     } else {
 	if (basename) {
-	    return_value = u_basic_strdup(basename);
+	    return_value = g_strdup (basename);
 	} else {
 	    return_value = NULL;
 	}
@@ -395,7 +391,7 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 
     if (pr_current->hierarchy_netname_mangle == FALSE) {
 	if (basename) {
-	    return (u_basic_strdup(basename));
+	    return (g_strdup (basename));
 	} else {
 	    return (NULL);
 	}
@@ -408,19 +404,17 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 		switch (pr_current->hierarchy_netname_order) {
 		case (APPEND):
 		    return_value =
-			u_basic_strdup_multiple(hierarchy_tag,
-						pr_current->
-						hierarchy_netname_separator,
-						basename, NULL);
+			g_strconcat (hierarchy_tag,
+                         pr_current->hierarchy_netname_separator,
+                         basename, NULL);
 
 		    break;
 
 		case (PREPEND):
 		    return_value =
-			u_basic_strdup_multiple(basename,
-						pr_current->
-						hierarchy_netname_separator,
-						hierarchy_tag, NULL);
+			g_strconcat (basename,
+                         pr_current->hierarchy_netname_separator,
+                         hierarchy_tag, NULL);
 
 		    break;
 
@@ -430,13 +424,11 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 		case (APPEND):
 
 		    return_value =
-			u_basic_strdup_multiple(hierarchy_tag, basename,
-						NULL);
+			g_strconcat (hierarchy_tag, basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
-			u_basic_strdup_multiple(basename, hierarchy_tag,
-						NULL);
+			g_strconcat (basename, hierarchy_tag, NULL);
 
 		    break;
 		}
@@ -447,7 +439,7 @@ char *s_hierarchy_create_netname(TOPLEVEL * pr_current, char *basename,
 	}
     } else {
 	if (basename) {
-	    return_value = u_basic_strdup(basename);
+	    return_value = g_strdup (basename);
 	} else {
 	    return_value = NULL;
 	}
@@ -463,7 +455,7 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 
     if (pr_current->hierarchy_netattrib_mangle == FALSE) {
 	if (basename) {
-	    return (u_basic_strdup(basename));
+	    return (g_strdup (basename));
 	} else {
 	    return (NULL);
 	}
@@ -476,17 +468,15 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 		switch (pr_current->hierarchy_netattrib_order) {
 		case (APPEND):
 		    return_value =
-			u_basic_strdup_multiple(hierarchy_tag,
-						pr_current->
-						hierarchy_netattrib_separator,
-						basename, NULL);
+			g_strconcat (hierarchy_tag,
+                         pr_current->hierarchy_netattrib_separator,
+                         basename, NULL);
 		    break;
 		case (PREPEND):
 		    return_value =
-			u_basic_strdup_multiple(basename,
-						pr_current->
-						hierarchy_netattrib_separator,
-						hierarchy_tag, NULL);
+			g_strconcat (basename,
+                         pr_current->hierarchy_netattrib_separator,
+                         hierarchy_tag, NULL);
 
 		    break;
 		}
@@ -494,12 +484,10 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 		switch (pr_current->hierarchy_netattrib_order) {
 		case (APPEND):
 		    return_value =
-			u_basic_strdup_multiple(hierarchy_tag, basename,
-						NULL);
+			g_strconcat (hierarchy_tag, basename, NULL);
 		case (PREPEND):
 		    return_value =
-			u_basic_strdup_multiple(basename, hierarchy_tag,
-						NULL);
+			g_strconcat (basename, hierarchy_tag, NULL);
 		    break;
 		}
 	    }
@@ -508,7 +496,7 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 	}
     } else {
 	if (basename) {
-	    return_value = u_basic_strdup(basename);
+	    return_value = g_strdup (basename);
 	} else {
 	    return_value = NULL;
 	}
@@ -551,7 +539,7 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 		    new_uref =
 			s_hierarchy_return_baseuref(pr_current, uref);
 		    new_connected_to =
-			u_basic_strdup(n_current->connected_to);
+			g_strdup(n_current->connected_to);
 		    sprintf(new_connected_to, "%s %s", new_uref, pin);
 		    free(n_current->connected_to);
 		    n_current->connected_to = new_connected_to;
@@ -589,17 +577,17 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 	start_of_base = rindex(uref, '/');	/* separator is always '/' */
 
 	if (start_of_base == NULL) {
-	    return (u_basic_strdup(uref));
+	    return (g_strdup (uref));
 	}
 
-	return_value = u_basic_strdup(start_of_base + 1);
+	return_value = g_strdup (start_of_base + 1);
 
     } else if (pr_current->hierarchy_uref_order == PREPEND) {
 
 	end_of_base = index(uref, '/');
 
 	if (end_of_base == NULL) {
-	    return (u_basic_strdup(uref));
+	    return (g_strdup (uref));
 	}
 
 	cptr = uref;

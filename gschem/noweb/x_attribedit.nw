@@ -153,7 +153,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 
   value = gtk_entry_get_text(value_entry);
   label = gtk_entry_get_text(name_entry);
-  newtext = u_basic_strdup_multiple(label, "=", value, NULL);
+  newtext = g_strconcat (label, "=", value, NULL);
 
   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(visbutton)))
   vis = VISIBLE;

@@ -203,7 +203,7 @@ int x_dialog_newattrib_ok_callback(GtkWidget *buttonok,
 
   /* Retreive pointer to attrib_entry widget, then use it to get entered text. */
   entry = gtk_object_get_data(GTK_OBJECT(window), "attrib_entry");
-  entry_text = u_basic_strdup( gtk_entry_get_text(GTK_ENTRY(entry)) );
+  entry_text = g_strdup( gtk_entry_get_text(GTK_ENTRY(entry)) );
 
   /* Perhaps do some other checks . . . . */
   if (entry_text != NULL) {

@@ -71,9 +71,9 @@ char *create_command_line(int argc, char *argv[])
   int i;
   char *local_command_line = NULL;
 
-  local_command_line = u_basic_strdup(argv[0]);   /*  Initialize command line string  */
+  local_command_line = g_strdup (argv[0]);   /*  Initialize command line string  */
   for (i = 1; i < argc; i++) {
-    local_command_line = u_basic_strdup_multiple(local_command_line, " ", argv[i], NULL);
+    local_command_line = g_strconcat (local_command_line, " ", argv[i], NULL);
   }
   return local_command_line;
 }

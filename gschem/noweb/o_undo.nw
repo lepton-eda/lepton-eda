@@ -106,7 +106,7 @@ o_undo_init(void)
 
   TMP = getenv("TMP");
   if (!TMP) {
-     TMP = u_basic_strdup("/tmp");
+     TMP = g_strdup ("/tmp");
      freeTMP = TRUE;
   } 
 #if DEBUG
@@ -391,7 +391,7 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   }
 
   /* save filename */
-  save_filename = u_basic_strdup(w_current->page_current->page_filename);
+  save_filename = g_strdup (w_current->page_current->page_filename);
 
 
   /* save structure so it's not nuked */	

@@ -36,12 +36,12 @@
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
 #define DEFAULT_BITMAP_DIRECTORY   "non-existant"
 
-#define INIT_STR(w, name, str) {					\
-	if ((w)->name) {						\
-		free((w)->name);					\
-	}								\
-	(w)->name = u_basic_strdup(((default_ ## name) != NULL) ?	\
-				(default_ ## name) : (str));		\
+#define INIT_STR(w, name, str) {                            \
+    if ((w)->name) {                                        \
+        free((w)->name);                                    \
+    }                                                       \
+    (w)->name = g_strdup (((default_ ## name) != NULL) ?    \
+                          (default_ ## name) : (str));      \
 }
 
 int default_net_naming_priority = NETATTRIB_ATTRIBUTE;
@@ -77,7 +77,7 @@ void i_vars_set(TOPLEVEL * pr_current)
 	if (pr_current->hierarchy_uref_separator) {
 	    strcpy(pr_current->hierarchy_uref_separator, "/");
 	} else {
-	    pr_current->hierarchy_uref_separator = u_basic_strdup("/");
+	    pr_current->hierarchy_uref_separator = g_strdup("/");
 	}
     }
     

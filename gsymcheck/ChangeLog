@@ -1,5 +1,8 @@
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/gsymcheck.c, src/s_check.c: Replaced u_basic_strdup() and 
+	u_basic_strdup_multiple() by GLib functions.
+	
 	* src/gsymcheck.c: Made it use GLib's G_DIR_SEPARATOR* instead of 
 	libgeda's *_SEPARATER_*.
 

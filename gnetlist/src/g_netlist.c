@@ -550,7 +550,7 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   pinseq        = SCM_STRING_CHARS (scm_pinseq);
   wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
   
-  pinseq_attrib = u_basic_strdup_multiple("pinseq=", pinseq, NULL);
+  pinseq_attrib = g_strconcat ("pinseq=", pinseq, NULL);
 
 #if DEBUG
   printf("wanted_pin_seq: %s\n", pinseq);

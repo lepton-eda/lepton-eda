@@ -105,8 +105,10 @@ static char *logfilename;
 void 
 x_log_init(char *cwd, const char *filename) 
 {
-  logfilename = u_basic_strdup_multiple(cwd, G_DIR_SEPARATOR_S, 
-					filename, NULL); 
+  logfilename = g_strconcat(cwd,
+                            G_DIR_SEPARATOR_S, 
+                            filename,
+                            NULL); 
 }
 
 

@@ -202,7 +202,7 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
     if ( (table[row][col]).attrib_value != NULL) {
       attrib_name = (table[row][col]).col_name;
       attrib_value = (table[row][col]).attrib_value;
-      name_value_pair = u_basic_strdup_multiple(attrib_name, "=", attrib_value, NULL);
+      name_value_pair = g_strconcat(attrib_name, "=", attrib_value, NULL);
       s_string_list_add_item(attrib_pair_list, &count, name_value_pair);
       free(name_value_pair);
     }
@@ -253,7 +253,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
          !o_attrib_search_component(o_current, "graphical") ) {
                                                               
       /* ---- Don't process part if it lacks a refdes ----- */
-      temp_uref = u_basic_strdup(s_attrib_get_refdes(o_current));
+      temp_uref = g_strdup(s_attrib_get_refdes(o_current));
       if (temp_uref) {
 
 #if DEBUG
@@ -269,7 +269,7 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
           if (a_current->object->type == OBJ_TEXT
               && a_current->object->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
-            attrib_text = u_basic_strdup(a_current->object->text->string);
+            attrib_text = g_strdup(a_current->object->text->string);
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
             attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
 
@@ -288,9 +288,9 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
               /* Is there a compelling reason for me to put this into a separate fcn? */
               ((sheet_head->component_table)[row][col]).row = row;
               ((sheet_head->component_table)[row][col]).col = col;
-              ((sheet_head->component_table)[row][col]).row_name = u_basic_strdup(temp_uref);
-              ((sheet_head->component_table)[row][col]).col_name = u_basic_strdup(attrib_name);
-              ((sheet_head->component_table)[row][col]).attrib_value = u_basic_strdup(attrib_value);
+              ((sheet_head->component_table)[row][col]).row_name = g_strdup(temp_uref);
+              ((sheet_head->component_table)[row][col]).col_name = g_strdup(attrib_name);
+              ((sheet_head->component_table)[row][col]).attrib_value = g_strdup(attrib_value);
             }
             free(attrib_name);
             free(attrib_text);
@@ -345,7 +345,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
         if (a_current->object->type == OBJ_TEXT
             && a_current->object->text != NULL) {  /* found an attribute */
           /* may need to check more thoroughly here. . . . */
-          attrib_text = u_basic_strdup(a_current->object->text->string);
+          attrib_text = g_strdup(a_current->object->text->string);
           attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
           attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
           if (strcmp(attrib_name, "netname") != 0) {
@@ -364,9 +364,9 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
             /* Is there a compelling reason for me to put this into a separate fcn? */
             ((sheet_head->net_table)[row][col]).row = row;
             ((sheet_head->net_table)[row][col]).col = col;
-            ((sheet_head->net_table)[row][col]).row_name = u_basic_strdup(temp_netname);
-            ((sheet_head->net_table)[row][col]).col_name = u_basic_strdup(attrib_name);
-            ((sheet_head->net_table)[row][col]).attrib_value = u_basic_strdup(attrib_value);
+            ((sheet_head->net_table)[row][col]).row_name = g_strdup(temp_netname);
+            ((sheet_head->net_table)[row][col]).col_name = g_strdup(attrib_name);
+            ((sheet_head->net_table)[row][col]).attrib_value = g_strdup(attrib_value);
           }
           free(attrib_name);
           free(attrib_text);
@@ -445,7 +445,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 	  if (o_lower_current->type == OBJ_PIN) {
 	    /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
 	    pinnumber = o_attrib_search_name_single(o_lower_current, "pinnumber", NULL);
-	    row_label = u_basic_strdup_multiple(temp_uref, ":", pinnumber, NULL);
+	    row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);
 
 #if DEBUG
         printf("      In s_table_add_toplevel_pin_items_to_pin_table, examining pin %s\n", row_label);
@@ -455,7 +455,7 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 	    while (pin_attrib != NULL) {
 	      if (pin_attrib->object->type == OBJ_TEXT
 		  && pin_attrib->object->text != NULL) {  /* found an attribute */
-		attrib_text = u_basic_strdup(pin_attrib->object->text->string);
+		attrib_text = g_strdup(pin_attrib->object->text->string);
 		attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
 		attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
  
@@ -476,9 +476,9 @@ void s_table_add_toplevel_pin_items_to_pin_table(OBJECT *start_obj) {
 		  /* Is there a compelling reason for me to put this into a separate fcn? */
 		  ((sheet_head->pin_table)[row][col]).row = row;
 		  ((sheet_head->pin_table)[row][col]).col = col;
-		  ((sheet_head->pin_table)[row][col]).row_name = u_basic_strdup(row_label);
-		  ((sheet_head->pin_table)[row][col]).col_name = u_basic_strdup(attrib_name);
-		  ((sheet_head->pin_table)[row][col]).attrib_value = u_basic_strdup(attrib_value);
+		  ((sheet_head->pin_table)[row][col]).row_name = g_strdup(row_label);
+		  ((sheet_head->pin_table)[row][col]).col_name = g_strdup(attrib_name);
+		  ((sheet_head->pin_table)[row][col]).attrib_value = g_strdup(attrib_value);
 		}
 		free(attrib_name);
 		free(attrib_text);
@@ -595,11 +595,11 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row
 
   row_list_item = master_row_list;
   for (row = 0; row < num_rows; row++) {
-    row_title = (gchar *) u_basic_strdup(row_list_item->data);
+    row_title = (gchar *) g_strdup(row_list_item->data);
 
     col_list_item = master_col_list;
     for (col = 0; col < num_cols; col++) {
-      col_title = (gchar *) u_basic_strdup(col_list_item->data);
+      col_title = (gchar *) g_strdup(col_list_item->data);
 
       /* get value of attrib in cell  */
       attrib_value = (gchar *) gtk_sheet_cell_get_text(GTK_SHEET(local_gtk_sheet), row, col);
@@ -622,7 +622,7 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row
 	free( local_table[row][col].attrib_value );
       }
       if (attrib_value != NULL) {
-	local_table[row][col].attrib_value = (gchar *) u_basic_strdup(attrib_value);
+	local_table[row][col].attrib_value = (gchar *) g_strdup(attrib_value);
       } else {
 	local_table[row][col].attrib_value = NULL;
       }
@@ -632,7 +632,7 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row
 	free( local_table[row][col].row_name );
       }
       if (row_title != NULL) {
-	local_table[row][col].row_name = (gchar *) u_basic_strdup(row_title);
+	local_table[row][col].row_name = (gchar *) g_strdup(row_title);
       } else {
 	local_table[row][col].row_name = NULL;
       }
@@ -642,7 +642,7 @@ int s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row
 	free( local_table[row][col].col_name );
       }
       if (col_title != NULL) {
-	local_table[row][col].col_name = (gchar *) u_basic_strdup(col_title);
+	local_table[row][col].col_name = (gchar *) g_strdup(col_title);
       } else {
 	local_table[row][col].col_name = NULL;
       }

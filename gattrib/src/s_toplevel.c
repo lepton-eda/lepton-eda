@@ -86,7 +86,7 @@ int s_toplevel_read_page(char *filename)
   }
     
   /* Now that we have a new page, set the new filename and read in the page */
-  pr_current->page_current->page_filename = u_basic_strdup(filename);
+  pr_current->page_current->page_filename = g_strdup(filename);
   
   /* read in and fill out pr_current using f_open and its callees */
   file_return_code = f_open(pr_current, filename);
@@ -399,7 +399,7 @@ void s_toplevel_delete_attrib_col() {
 		    sheet_head->comp_count, sheet_head->comp_attrib_count);
 
     /*  Get name (label) of the col to delete from the gtk sheet */
-    attrib_name = u_basic_strdup( gtk_sheet_column_button_get_label(sheet, mincol) );
+    attrib_name = g_strdup( gtk_sheet_column_button_get_label(sheet, mincol) );
     
     if (attrib_name != NULL) {
 #ifdef DEBUG
@@ -655,14 +655,14 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
   i = 0;
   local_attrib_list = sheet_head->master_comp_attrib_list_head;
   while (local_attrib_list != NULL) {  /* iterate over all possible attribs */
-    new_attrib_name = u_basic_strdup(local_attrib_list->data);  /* take attrib name from column headings */
+    new_attrib_name = g_strdup(local_attrib_list->data);  /* take attrib name from column headings */
 
     if ( ((sheet_head->component_table)[row][i]).attrib_value ) {
-      new_attrib_value = u_basic_strdup( ((sheet_head->component_table)[row][i]).attrib_value );
-      name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", new_attrib_value, NULL);
+      new_attrib_value = g_strdup( ((sheet_head->component_table)[row][i]).attrib_value );
+      name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
       free(new_attrib_value);      
     } else {
-      name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", NULL);  /* empty attrib */
+      name_value_pair = g_strconcat(new_attrib_name, "=", NULL);  /* empty attrib */
     }
     s_string_list_add_item(new_attrib_list, &count, name_value_pair);  /* add name=value to new list */
     free(new_attrib_name);
@@ -743,7 +743,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
     if (a_current->object->type == OBJ_TEXT
 	&& a_current->object->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
-      old_name_value_pair = u_basic_strdup(a_current->object->text->string);
+      old_name_value_pair = g_strdup(a_current->object->text->string);
       old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
       /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
        * one is already in there. */
@@ -920,7 +920,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   pinnumber = o_attrib_search_name_single(pin, "pinnumber", NULL);
 
   if ( (refdes != NULL) && (pinnumber != NULL) ) {
-    row_label = u_basic_strdup_multiple(refdes, ":", pinnumber, NULL);
+    row_label = g_strconcat(refdes, ":", pinnumber, NULL);
   } else {
     fprintf(stderr, 
 	    "In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object missing!\n");
@@ -943,14 +943,14 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   i = 0;
   local_attrib_list = sheet_head->master_pin_attrib_list_head;
   while (local_attrib_list != NULL) {  /* iterate over all possible attribs */
-    new_attrib_name = u_basic_strdup(local_attrib_list->data);  /* take attrib name from column headings */
+    new_attrib_name = g_strdup(local_attrib_list->data);  /* take attrib name from column headings */
 
     if ( ((sheet_head->pin_table)[row][i]).attrib_value ) {
-      new_attrib_value = u_basic_strdup( ((sheet_head->pin_table)[row][i]).attrib_value );
-      name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", new_attrib_value, NULL);
+      new_attrib_value = g_strdup( ((sheet_head->pin_table)[row][i]).attrib_value );
+      name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
       free(new_attrib_value);      
     } else {
-      name_value_pair = u_basic_strdup_multiple(new_attrib_name, "=", NULL);  /* empty attrib */
+      name_value_pair = g_strconcat(new_attrib_name, "=", NULL);  /* empty attrib */
     }
     s_string_list_add_item(new_attrib_list, &count, name_value_pair);  /* add name=value to new list */
     free(new_attrib_name);
@@ -1006,7 +1006,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
   /* loop on name=value pairs held in new_pin_attrib_list */
   local_list = new_pin_attrib_list;
   while (local_list != NULL) {
-    new_name_value_pair = u_basic_strdup(local_list->data);
+    new_name_value_pair = g_strdup(local_list->data);
 #if DEBUG
   printf("        In s_toplevel_update_pin_attribs_in_toplevel, handling entry in master list %s .\n", new_name_value_pair);
 #endif

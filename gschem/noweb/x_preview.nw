@@ -107,11 +107,11 @@ x_preview_update(TOPLEVEL *preview, char *directory, char *filename)
 
 #ifdef __MINGW32__
   if (u_basic_has_trailing(directory, G_DIR_SEPARATOR)) {
-     temp = u_basic_strdup_multiple(directory, filename, NULL);
+     temp = g_strconcat (directory, filename, NULL);
   } else {
 #endif
-     temp = u_basic_strdup_multiple(directory, G_DIR_SEPARATOR_S, 
-				    filename, NULL);
+     temp = g_strconcat(directory, G_DIR_SEPARATOR_S, 
+                        filename, NULL);
 #ifdef __MINGW32__
   }
 #endif

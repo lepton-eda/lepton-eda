@@ -754,7 +754,7 @@ o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
           object->text->string = malloc(sizeof(char) * len + 1);
           strcpy(object->text->string, string);
 #else
-          object->text->string = u_basic_strdup(string);
+          object->text->string = g_strdup (string);
 #endif
         }
 
@@ -808,7 +808,7 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
     free(object->text->string);
   }
 
-  object->text->string = u_basic_strdup(string);
+  object->text->string = g_strdup (string);
   object->visibility = visibility;
   object->show_name_value = show;
   o_text_recreate(w_current, object);

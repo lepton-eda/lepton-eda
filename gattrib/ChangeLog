@@ -1,5 +1,11 @@
 2005-02-04  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* src/gattrib.c, src/s_attrib.c, src/s_object.c:
+	* src/s_sheet_data.c, src/s_string_list.c, src/s_table.c:
+	* src/s_toplevel.c, src/x_dialog.c, src/x_fileselect.c:
+	* src/x_gtksheet.c, src/x_window.c: Replaced u_basic_strdup() and 
+	u_basic_strdup_multiple() by GLib functions.
+	
 	* src/gattrib.c, src/x_fileselect.c:  Made it use GLib's 
 	G_DIR_SEPARATOR* instead of libgeda's *_SEPARATER_*.
 
