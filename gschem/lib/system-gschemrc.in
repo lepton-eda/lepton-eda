@@ -775,6 +775,14 @@
 (third-button "popup")
 ;(third-button "mousepan")
 
+; warp-cursor string
+;
+; Controls if the cursor is warped (or moved) when you zoom in and out.
+; Some people find this forced cursor movement annoying.
+;
+(warp-cursor "enabled")
+;(warp-cursor "disabled")
+
 ;
 ; End of mode related keywords
 ;

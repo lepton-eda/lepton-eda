@@ -1,3 +1,10 @@
+2002-05-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw and friends: Added warp cursor rc keyword and support
+	to disable the warping of the cursor when zooming
+
+	* lib/system-gschemrc.in: Added warp-cursor rc keyword
+
 2002-04-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_dialog.nw: Added the rest of the signal connects for

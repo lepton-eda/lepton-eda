@@ -233,6 +233,7 @@ SCM g_rc_netconn_rubberband(SCM mode);
 SCM g_rc_sort_component_library(SCM mode);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 SCM g_rc_window_size(SCM width, SCM height);
+SCM g_rc_warp_cursor(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

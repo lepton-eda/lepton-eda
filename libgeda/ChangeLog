@@ -4,6 +4,9 @@
 
 	* include/pcb_struct.h: Removed obsolete file
 
+	* include/struct.h: Added warp_cursor rc variable and a bunch of
+	comment cleanup
+
 2002-04-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Changed the function which is search for libpng.

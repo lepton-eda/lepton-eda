@@ -403,10 +403,10 @@ struct st_toplevel {
   int loc_x, loc_y;
   int distance;
 
-  char *current_attribute;		/* used by attribute dialog */
-  /* also used by text add 
-   * dialog 
-   */
+  /* used by attribute dialog */
+  /* also used by text add dialog */
+  char *current_attribute;		
+
   int current_visible;			/* in o_attrib.c */
   int current_show;
   /* have to decided on attribute list stuff */
@@ -439,16 +439,18 @@ struct st_toplevel {
   int grid;				/* Grid on/off*/
   int min_zoom;				/* minimum zoom factor */
   int max_zoom;				/* maximum zoom factor */
-  int starting_width;			/* starting window width */
-  /* used to control text */
 
-  int text_alignment;			/* location to hold current */
-  /* alignment of text */
+  /* starting window width used to control text */
+  int starting_width;			
 
-  int line_type;				/* location to hold current */
-  /* line type selection */
-  int fill_type;				/* location to hold current */
-  /* fill type selection (PB) */
+  /* location to hold current alignment of text */
+  int text_alignment;
+
+  /* location to hold current line type selection */
+  int line_type;			
+
+  /* location to hold current fill type selection (PB) */
+  int fill_type;	
 
   int override_color;			/* used in doing selections */
   int inside_redraw;			/* complex vs list redrawing */
@@ -465,17 +467,14 @@ struct st_toplevel {
   int ADDING_SEL;
   int REMOVING_SEL;
 
-  int drawbounding_action_mode; 		/* outline vs bounding box */
+  int drawbounding_action_mode; 	/* outline vs bounding box */
   int last_drawb_mode;			/* last above mode */
 
-  int CONTROLKEY;				/* control key pressed? */
+  int CONTROLKEY;			/* control key pressed? */
   int SHIFTKEY;				/* shift key pressed? */
   int ALTKEY;				/* alt key pressed? */
 	
-  int doing_pan;				/* mouse pan status flag */
-
-  /* Page system used by gPCB */
-  /*	PAGE_T *current_page; commented out */
+  int doing_pan;			/* mouse pan status flag */
 
   /* page system */
   PAGE *page_head;	
@@ -545,11 +544,10 @@ struct st_toplevel {
 
   GtkWidget *pswindow;			/* page select */
   GtkWidget *page_clist;
-  int clist_sig;				/* used only in page manager */
+  int clist_sig;			/* used only in page manager */
 
   /* misc dialogs */
   GtkWidget *tiwindow;			/* text input */
-  /*	GtkWidget *tientry;*/
   GtkWidget *tewindow;			/* text edit */
   GtkWidget *teentry;
   GtkWidget *ltwindow;			/* line type / width edit */
@@ -566,8 +564,8 @@ struct st_toplevel {
   GtkWidget *trentry;
   GtkWidget *tswindow;			/* text size */
   GtkWidget *tsentry;			/* used in edit/edit and */
-  /* Text size and the snap */
-  /* size dialog boxes */
+  					/* Text size and the snap */
+  					/* size dialog boxes */
 	
   GtkWidget *abwindow;			/* Help/About... dialog*/
   GtkWidget *hkwindow;			/* Help/Hotkeys... dialog*/
@@ -595,13 +593,18 @@ struct st_toplevel {
   int graphic_color;
   int pin_color;
   int text_color;
-  int logic_bubble_color; /* not used anywhere yet, but will be */
+
+  /* not used anywhere yet, but will be */
+  int logic_bubble_color; 
   int zoom_box_color; 
   int text_caps;
   int attribute_color;
   int detachedattr_color;
   int text_size;
-  int snap_size;		/* used by math funcs for the snapping */
+
+  /* used by math funcs for the snapping */
+  int snap_size;		
+
   int grid_color;
   int background_color;
   int select_color;
@@ -617,63 +620,125 @@ struct st_toplevel {
   int net_style;
   int bus_style;
   int zoom_with_pan; 
-  int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
-  int text_feedback; /* controls if text is drawn or not in */
-  /* copy/move/place ops */
-  int text_display_zoomfactor; /* zoom factor at which text is
-                                * displayed completely */
-  int net_endpoint_mode; /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
-  int net_midpoint_mode; /* can be either NONE or FILLED or EMPTY */
-  int object_clipping; /* controls whether objects are clipped */
-  int embed_complex; /* controls if complex objects are embedded */
-  int include_complex; /* controls if complex objects are included */
-  int text_output; /* controls how text is printed (vector / PS font) */ 
-  int scrollbars_flag; /* controls if scrollbars are displayed */ 
-  int print_orientation; /* either landscape or portrait */
-  int image_color; /* either TRUE or FALSE (color or no color) */
-  int print_color; /* either TRUE or FALSE (color or no color) */
-  int print_color_background; /* color used color ouput for background */ 
-  int stroke_color; /* color of the stroke points */
-  int log_window; /* controls if the log windows mapped on startup */
-  int log_window_type; /* controls if the log window is decorated or not */
-  int third_button; /* controls what the third mouse button does */
-  int middle_button; /* controls what the third mouse button does */
-  int net_consolidate; /* controls if the net consolidation code is used */ 
-  int file_preview; /* controls if the preview area is enabled or not */ 
-  int enforce_hierarchy; /* controls how much freedom user has when */ 
-  /* traversing the hierarchy */
-  int text_origin_marker; /* controls if text origin marker is */
-				/* displayed or not */
-  int fast_mousepan;	/* controls if text is completely drawn */
-				/* during mouse pan */
 
-  int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
+  /* can be either OUTLINE or BOUNDINGBOX */
+  int actionfeedback_mode; 
 
-  int attribute_promotion; /*controls if attribute promotion happens */
-  int promote_invisible; /* controls if invisible attribs are promoted */
-  int keep_invisible;   /* controls if invisible attribs are kept and */
-  /* not deleted */
-  int continue_component_place; /* controls if after doing a place the */
+  /* controls if text is drawn or not in copy/move/place ops */
+  int text_feedback; 
+
+  /* zoom factor at which text is displayed completely */
+  int text_display_zoomfactor; 
+
+  /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
+  int net_endpoint_mode; 
+
+  /* can be either NONE or FILLED or EMPTY */
+  int net_midpoint_mode; 
+
+  /* controls whether objects are clipped */
+  int object_clipping; 
+
+  /* controls if complex objects are embedded */
+  int embed_complex; 
+
+  /* controls if complex objects are included */
+  int include_complex; 
+
+  /* controls how text is printed (vector / PS font) */ 
+  int text_output; 
+
+  /* controls if scrollbars are displayed */ 
+  int scrollbars_flag; 
+
+  /* either landscape or portrait */
+  int print_orientation; 
+
+  /* either TRUE or FALSE (color or no color) */
+  int image_color; 
+
+  /* either TRUE or FALSE (color or no color) */
+  int print_color; 
+
+  /* color used color ouput for background */ 
+  int print_color_background; 
+
+  /* color of the stroke points */
+  int stroke_color; 
+
+  /* controls if the log windows mapped on startup */
+  int log_window; 
+
+  /* controls if the log window is decorated or not */
+  int log_window_type; 
+
+  /* controls what the third mouse button does */
+  int third_button; 
+
+  /* controls what the third mouse button does */
+  int middle_button; 
+
+  /* controls if the net consolidation code is used */ 
+  int net_consolidate; 
+
+  /* controls if the preview area is enabled or not */ 
+  int file_preview; 
+
+  /* controls how much freedom user has when traversing the hierarchy */
+  int enforce_hierarchy; 
+
+  /* controls if text origin marker is displayed or not */
+  int text_origin_marker; 
+
+  /* controls if text is completely drawn during mouse pan */
+  int fast_mousepan;	
+
+  /*controls if expose events raise dialog boxes*/
+  int raise_dialog_boxes; 
+
+  /*controls if attribute promotion happens */
+  int attribute_promotion; 
+
+  /* controls if invisible attribs are promoted */
+  int promote_invisible; 
+
+  /* controls if invisible attribs are kept and not deleted */
+  int keep_invisible;   
+
+  /* controls if after doing a place the */
   /* same component can be placed again */
+  int continue_component_place; 
 
-  int undo_levels;	/* Number of undo levels stored on disk */
-  int undo_control;	/* Controls if undo is enabled or not */
-  int undo_type;	        /* Type of undo (disk/memory) */
+  /* Number of undo levels stored on disk */
+  int undo_levels;	
 
-  int draw_grips;	        /* Controls if grips are enabled or not */
+  /* Controls if undo is enabled or not */
+  int undo_control;	
 
-  int netconn_rubberband;			/* controls if nets are */
-  /* rubberbanded as you move */
+  /* Type of undo (disk/memory) */
+  int undo_type;	        
+
+  /* Controls if grips are enabled or not */
+  int draw_grips;	        
+
+  /* controls if nets are rubberbanded as you move */
   /* them (or connecting comps) */
+  int netconn_rubberband;	
+
+  /* sort the component library */
   int sort_component_library;                    
 
+  /* warp the cursor when zooming */
+  int warp_cursor;                    
 
-  int print_output_type;			/* either window or limits */
+  /* either window or limits */
+  int print_output_type;
 
-  int print_output_capstyle;		/* BUTT, ROUND, SQUARE caps */
+  /* BUTT, ROUND, SQUARE caps */
+  int print_output_capstyle;		
 
-  /* fixed init variables */
-  int image_output_type;			/* either window or limits */
+  /* either window or limits */
+  int image_output_type;			
 
   /* landscape printing only */
   int paper_width, paper_height;
