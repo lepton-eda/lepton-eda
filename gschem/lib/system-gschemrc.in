@@ -994,7 +994,8 @@
     ("b" . add-box-hotkey)
     ("i" . add-circle-hotkey)
     ("r" . add-arc-hotkey)
-    ("p" . add-pin-hotkey)))
+    ("p" . add-pin-hotkey)
+    ("g" . add-picture-hotkey)))
 
 ; All keys in this keymap *must* be unique
 (define hierarchy-keymap
@@ -1202,10 +1203,10 @@
 	   ("SEPARATOR"		no-action		no-action)
 	   ("Line"		add-line  	     	add-line-hotkey)
 	   ("Box"		add-box  	     	add-box-hotkey)
-	   ("Picture..."       	add-picture  	     	add-picture-hotkey)
 	   ("Circle"		add-circle  	     	add-circle-hotkey)
 	   ("Arc"		add-arc  	     	add-arc-hotkey)
-	   ("Pin"		add-pin  	     	add-pin-hotkey)))
+	   ("Pin"		add-pin  	     	add-pin-hotkey)
+	   ("Picture..."       	add-picture  	     	add-picture-hotkey)))
 
 (define hierarchy-menu-items 
 ;;

@@ -3,6 +3,12 @@
 	* noweb/x_log.nw: Added code to scroll to the end of the text buffer
 	when the log window is opened up.
 
+	* noweb/i_callbacks.nw: Added implementation for the add_picture_hotkey
+	callback.
+
+	* lib/system-gschemrc.in: Added hotkey assignment "ag" to 
+	Add/Picture... and move the new item to the bottom of the menu list.
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/i_callbacks.nw, noweb/gschem.nw: Adapted for new logging 

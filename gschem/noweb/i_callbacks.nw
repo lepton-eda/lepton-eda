@@ -3456,8 +3456,10 @@ DEFINE_I_CALLBACK(add_picture)
 <<i_callbacks.c : i_callback_add_picture_hotkey()>>=
 DEFINE_I_CALLBACK(add_picture_hotkey)
 {
-  /* FIXME: If this function necessary? */
-  fprintf(stderr, "Define add picture hotkey function if necessary!!\n");
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  /* If this function necessary? Yes, if you want the hotkey to work. */
+  i_callback_add_picture(w_current, 0, NULL);
 }
 
 
