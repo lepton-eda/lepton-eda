@@ -41,6 +41,7 @@
 (component-library "@symdir@/verilog")
 (component-library "@symdir@/spice")
 (component-library "@symdir@/rf")
+(component-library "@symdir@/bus")
 (component-library "@symdir@/pla")
 (component-library "@symdir@/dec")
 (component-library "@symdir@/supervisor")
@@ -91,6 +92,7 @@
 (source-library "@symdir@/pla")
 (source-library "@symdir@/dec")
 (source-library "@symdir@/supervisor")
+(source-library "@symdir@/bus")
 
 ; source-library-search atring
 ;
