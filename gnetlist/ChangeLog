@@ -1,4 +1,10 @@
 
+2000-12-02  Ales Hvezda  <ahvezda@geda.seul.org>
+
+        * src/gnetlist.c: Changed Cygwin warning message
+
+	* src/g_rc.c: Updated an #if to work with the current cygwin
+
 2000-11-30  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * configure.in: Added -fnative-struct flag for CYGWIN port only
