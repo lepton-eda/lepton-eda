@@ -1,0 +1,368 @@
+v 20041228 1
+B 300 0 2500 6600 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 300 6200 0 6200 1 0 1
+{
+T 200 6250 5 8 1 1 0 6 1
+pinnumber=1
+T 200 6150 5 8 0 1 0 8 1
+pinseq=1
+T 350 6200 9 8 1 1 0 0 1
+pinlabel=EESK
+T 350 6200 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 5800 0 5800 1 0 1
+{
+T 200 5850 5 8 1 1 0 6 1
+pinnumber=2
+T 200 5750 5 8 0 1 0 8 1
+pinseq=2
+T 350 5800 9 8 1 1 0 0 1
+pinlabel=EEDATA
+T 350 5800 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 5400 0 5400 1 0 1
+{
+T 200 5450 5 8 1 1 0 6 1
+pinnumber=3
+T 200 5350 5 8 0 1 0 8 1
+pinseq=3
+T 350 5400 9 8 1 1 0 0 1
+pinlabel=VCC
+T 350 5400 5 8 0 1 0 2 1
+pintype=pwr
+}
+P 300 5000 0 5000 1 0 1
+{
+T 200 5050 5 8 1 1 0 6 1
+pinnumber=4
+T 200 4950 5 8 0 1 0 8 1
+pinseq=4
+T 350 5000 9 8 1 1 0 0 1
+pinlabel=RESET#
+T 350 5000 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 4600 0 4600 1 0 1
+{
+T 200 4650 5 8 1 1 0 6 1
+pinnumber=5
+T 200 4550 5 8 0 1 0 8 1
+pinseq=5
+T 350 4600 9 8 1 1 0 0 1
+pinlabel=RSTO#
+T 350 4600 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 4200 0 4200 1 0 1
+{
+T 200 4250 5 8 1 1 0 6 1
+pinnumber=6
+T 200 4150 5 8 0 1 0 8 1
+pinseq=6
+T 350 4200 9 8 1 1 0 0 1
+pinlabel=3V3OUT
+T 350 4200 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 3800 0 3800 1 0 1
+{
+T 200 3850 5 8 1 1 0 6 1
+pinnumber=7
+T 200 3750 5 8 0 1 0 8 1
+pinseq=7
+T 350 3800 9 8 1 1 0 0 1
+pinlabel=USBDP
+T 350 3800 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 3400 0 3400 1 0 1
+{
+T 200 3450 5 8 1 1 0 6 1
+pinnumber=8
+T 200 3350 5 8 0 1 0 8 1
+pinseq=8
+T 350 3400 9 8 1 1 0 0 1
+pinlabel=USBDM
+T 350 3400 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 3000 0 3000 1 0 1
+{
+T 200 3050 5 8 1 1 0 6 1
+pinnumber=9
+T 200 2950 5 8 0 1 0 8 1
+pinseq=9
+T 350 3000 9 8 1 1 0 0 1
+pinlabel=GND
+T 300 3000 5 10 0 1 0 0 1
+pintype=pwr
+}
+P 300 2600 0 2600 1 0 1
+{
+T 200 2650 5 8 1 1 0 6 1
+pinnumber=10
+T 200 2550 5 8 0 1 0 8 1
+pinseq=10
+T 350 2600 9 8 1 1 0 0 1
+pinlabel=PWREN#
+T 350 2600 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 2200 0 2200 1 0 1
+{
+T 200 2250 5 8 1 1 0 6 1
+pinnumber=11
+T 200 2150 5 8 0 1 0 8 1
+pinseq=11
+T 350 2200 9 8 1 1 0 0 1
+pinlabel=SI / WU
+T 350 2200 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 1800 0 1800 1 0 1
+{
+T 200 1850 5 8 1 1 0 6 1
+pinnumber=12
+T 200 1750 5 8 0 1 0 8 1
+pinseq=12
+T 350 1800 9 8 1 1 0 0 1
+pinlabel=RXF#
+T 350 1800 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 1400 0 1400 1 0 1
+{
+T 200 1450 5 8 1 1 0 6 1
+pinnumber=13
+T 200 1350 5 8 0 1 0 8 1
+pinseq=13
+T 350 1400 9 8 1 1 0 0 1
+pinlabel=VCCIO
+T 350 1400 5 8 0 1 0 2 1
+pintype=pwr
+}
+P 300 1000 0 1000 1 0 1
+{
+T 200 1050 5 8 1 1 0 6 1
+pinnumber=14
+T 200 950 5 8 0 1 0 8 1
+pinseq=14
+T 350 1000 9 8 1 1 0 0 1
+pinlabel=TXE#
+T 350 1000 5 8 0 1 0 2 1
+pintype=io
+}
+P 3100 200 2800 200 1 0 0
+{
+T 2900 250 5 8 1 1 0 0 1
+pinnumber=17
+T 2900 150 5 8 0 1 0 2 1
+pinseq=17
+T 2750 200 9 8 1 1 0 6 1
+pinlabel=GND
+T 3100 200 5 10 0 1 0 0 1
+pintype=pwr
+}
+P 3100 600 2800 600 1 0 0
+{
+T 2900 650 5 8 1 1 0 0 1
+pinnumber=18
+T 2900 550 5 8 0 1 0 2 1
+pinseq=18
+T 2750 600 9 8 1 1 0 6 1
+pinlabel=D7
+T 2750 600 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 1000 2800 1000 1 0 0
+{
+T 2900 1050 5 8 1 1 0 0 1
+pinnumber=19
+T 2900 950 5 8 0 1 0 2 1
+pinseq=19
+T 2750 1000 9 8 1 1 0 6 1
+pinlabel=D6
+T 2750 1000 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 1400 2800 1400 1 0 0
+{
+T 2900 1450 5 8 1 1 0 0 1
+pinnumber=20
+T 2900 1350 5 8 0 1 0 2 1
+pinseq=20
+T 2750 1400 9 8 1 1 0 6 1
+pinlabel=D5
+T 2750 1400 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 1800 2800 1800 1 0 0
+{
+T 2900 1850 5 8 1 1 0 0 1
+pinnumber=21
+T 2900 1750 5 8 0 1 0 2 1
+pinseq=21
+T 2750 1800 9 8 1 1 0 6 1
+pinlabel=D4
+T 2750 1800 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 2200 2800 2200 1 0 0
+{
+T 2900 2250 5 8 1 1 0 0 1
+pinnumber=22
+T 2900 2150 5 8 0 1 0 2 1
+pinseq=22
+T 2750 2200 9 8 1 1 0 6 1
+pinlabel=D3
+T 2750 2200 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 2600 2800 2600 1 0 0
+{
+T 2900 2650 5 8 1 1 0 0 1
+pinnumber=23
+T 2900 2550 5 8 0 1 0 2 1
+pinseq=23
+T 2750 2600 9 8 1 1 0 6 1
+pinlabel=D2
+T 2750 2600 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 3000 2800 3000 1 0 0
+{
+T 2900 3050 5 8 1 1 0 0 1
+pinnumber=24
+T 2900 2950 5 8 0 1 0 2 1
+pinseq=24
+T 2750 3000 9 8 1 1 0 6 1
+pinlabel=D1
+T 2750 3000 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 3400 2800 3400 1 0 0
+{
+T 2900 3450 5 8 1 1 0 0 1
+pinnumber=25
+T 2900 3350 5 8 0 1 0 2 1
+pinseq=25
+T 2750 3400 9 8 1 1 0 6 1
+pinlabel=D0
+T 2750 3400 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 3800 2800 3800 1 0 0
+{
+T 2900 3850 5 8 1 1 0 0 1
+pinnumber=26
+T 2900 3750 5 8 0 1 0 2 1
+pinseq=26
+T 2750 3800 9 8 1 1 0 6 1
+pinlabel=VCC
+T 2750 3800 5 8 0 1 0 8 1
+pintype=pwr
+}
+P 3100 4200 2800 4200 1 0 0
+{
+T 2900 4250 5 8 1 1 0 0 1
+pinnumber=27
+T 2900 4150 5 8 0 1 0 2 1
+pinseq=27
+T 2750 4200 9 8 1 1 0 6 1
+pinlabel=XTIN
+T 2750 4200 5 8 0 1 0 8 1
+pintype=in
+}
+P 3100 4600 2800 4600 1 0 0
+{
+T 2900 4650 5 8 1 1 0 0 1
+pinnumber=28
+T 2900 4550 5 8 0 1 0 2 1
+pinseq=28
+T 2750 4600 9 8 1 1 0 6 1
+pinlabel=XTOUT
+T 2750 4600 5 8 0 1 0 8 1
+pintype=out
+}
+T 2600 6700 8 10 1 1 0 0 1
+refdes=U?
+T 300 6850 8 10 0 0 0 0 1
+device=FT245BM
+T 300 7250 8 10 0 0 0 0 1
+footprint=TQFP32
+T 300 7450 8 10 0 0 0 0 1
+description=USB FIFO (USB - Parallel)
+T 300 7050 8 10 0 0 0 0 1
+numslots=0
+T 300 7650 8 10 0 0 0 0 1
+documentation=http://www.ftdichip.com/Documents/ds245b11.pdf
+T 300 6650 9 10 1 0 0 0 1
+FT245BM
+P 300 600 0 600 1 0 1
+{
+T 200 650 5 8 1 1 0 6 1
+pinnumber=15
+T 200 550 5 8 0 1 0 8 1
+pinseq=15
+T 350 600 9 8 1 1 0 0 1
+pinlabel=WR
+T 350 600 5 8 0 1 0 2 1
+pintype=io
+}
+P 300 200 0 200 1 0 1
+{
+T 200 250 5 8 1 1 0 6 1
+pinnumber=16
+T 200 150 5 8 0 1 0 8 1
+pinseq=16
+T 350 200 9 8 1 1 0 0 1
+pinlabel=RD#
+T 350 200 5 8 0 1 0 2 1
+pintype=io
+}
+P 3100 5000 2800 5000 1 0 0
+{
+T 2900 5050 5 8 1 1 0 0 1
+pinnumber=29
+T 2900 4950 5 8 0 1 0 2 1
+pinseq=29
+T 2750 5000 9 8 1 1 0 6 1
+pinlabel=AGND
+T 3100 5000 5 10 0 1 0 0 1
+pintype=pwr
+}
+P 3100 5400 2800 5400 1 0 0
+{
+T 2900 5450 5 8 1 1 0 0 1
+pinnumber=30
+T 2900 5350 5 8 0 1 0 2 1
+pinseq=30
+T 2750 5400 9 8 1 1 0 6 1
+pinlabel=AVCC
+T 2750 5400 5 8 0 1 0 8 1
+pintype=pwr
+}
+P 3100 5800 2800 5800 1 0 0
+{
+T 2900 5850 5 8 1 1 0 0 1
+pinnumber=31
+T 2900 5750 5 8 0 1 0 2 1
+pinseq=31
+T 2750 5800 9 8 1 1 0 6 1
+pinlabel=TEST
+T 2750 5800 5 8 0 1 0 8 1
+pintype=io
+}
+P 3100 6200 2800 6200 1 0 0
+{
+T 2900 6250 5 8 1 1 0 0 1
+pinnumber=32
+T 2900 6150 5 8 0 1 0 2 1
+pinseq=32
+T 2750 6200 9 8 1 1 0 6 1
+pinlabel=EECS
+T 2750 6200 5 8 0 1 0 8 1
+pintype=io
+}

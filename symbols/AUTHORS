@@ -491,7 +491,7 @@ Werner Hoch:		- For contribute the following symbols:
 				ATmega161_DIP.sym ATmega161_TQFP.sym
 				ATmega163_DIP.sym ATmega163_TQFP.sym
 				ATtiny11.sym ATtiny12.sym ATtiny28_DIP.sym
-				ATtiny28_TQFP.sym
+				ATtiny28_TQFP.sym ATmega128-2.sym
 
 			- For *SIGNIFICANT* cleanup of the symbol
 			  libraries (74, 4000, maxim, others).  This is
@@ -664,6 +664,7 @@ moncheto (e-mail only)  - For contributing the following symbol:
 
 				LCD-1.sym (added -1)
 				TEC4x3-1.sym (added -1)
+				pic16F628-2.sym (added -2)
 
 Fernando Pereira	- For contributing the following symbol:
 
@@ -716,9 +717,10 @@ Piotr Buciak		- For contributing the following symbol:
 		
 				resistorpack7-2.sym
 
-Leon Kos		- For contributing the following symbol:
+Leon Kos		- For contributing the following symbols:
 	
-				PCF8563-1.sym PCF8563-1.sym
+				PCF8563-1.sym PCF8563-1.sym DS75176-1.sym
+				DS89C450-1.sym
 
 			  For correct the following symbol:
 
@@ -748,10 +750,9 @@ Leon Kos		- For contributing the following symbol:
 				connector6-2.sym connector7-2.sym
 				connector8-2.sym connector9-2.sym
 	
-Geert Stappers		- For contributing the following symbol:
+Geert Stappers		- For contributing the following symbols:
 
-				switch-dip12.sym
-
+				switch-dip12.sym 27C2001-1.sym 
 
 Jean-Francios L. Blavier - For conributing the following symbol:
 				
@@ -777,7 +778,7 @@ Fernando Pereira	- For contributing the following symbol:
 William R. Dieter	- For contributing the following symbols: 
 
 				pic12F675-2.sym pic12F675.sym
-				lp2954IT-1.sym
+				lp2954IT-1.sym ips021-1.sym
 
 cbaurtx (e-mail only)	- For contributing the following symbols:
 
@@ -821,7 +822,7 @@ Alejandro Sobrino Beltrán - For contributing the following symbol:
 
 Kenny Johansson		- For contributing the following symbol:
 
-				ATmega16L-1.sym
+				ATmega16L-1.sym DS1620-1.sym DS1620-1.sym
 
 Jaroslaw Juda		- For contributing the following symbol:
 
@@ -851,17 +852,49 @@ Ludwig			- For contributing the following symbol:
 
 				 2N2222-1.sym
 
-Marvin Dickens		- For contributing the following symbol:
+Marvin Dickens		- For contributing the following symbols:
 
-				75176-1.sym
+				75176-1.sym 3967-1.sym staver24m32-1.sym
+				DS1307-1.sym
 
 Stephan Walter		- For contributing the following symbol:
 
-				MC34063-1.sym
+				MC34063-1.sym ATmega64-1.sym
+				FT245BM-1.sym
 
-Fernando Pereira	- For contributing the following symbol:
+Fernando Pereira	- For contributing the following symbols:
 
-				ir2110-1.sym
+				ir2110-1.sym 6A259-1.sym
+
+Cyrille Chepelov	- For contributing the following symbol:
+
+				ATmega128-1.sym
+
+Radoslaw Korzeniewski	- For contributing the following symbol:
+
+				ATmega128-3.sym
+
+Jared Harvey		- For contributing the following symbol:
+
+				max662A-1.sym
+
+John Robbins		- For contributing the following symbol:
+
+				pic18F242-1.sym
+
+Nathan (nuttykongs)	- For contributing the following symbol:
+
+				 3967-2.sym
+
+Fredrik Simonsson	- For contributing the following symbols:
+
+				ADG601-1.sym ADG602-1.sym ADG619-1.sym 
+				ADG620-1.sym
+
+Tomeu Capó		- For contributing the following symbol:
+
+				ADC0831-1.sym
+
 
 The following people contributed symbols via the online symbol upload
 (E-mails purposefully truncated):

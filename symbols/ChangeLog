@@ -1,3 +1,15 @@
+2004-12-28 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* allegro/3967-1.sym allegro/3967-2.sym irf/ips021-1.sym
+	maxim/DS1307-1.sym maxim/DS89C450-1.sym maxim/max662A-1.sym
+	memory/27C2001-1.sym micro/ATmega128-1.sym micro/ATmega128-2.sym
+	micro/ATmega128-3.sym micro/ATmega64-1.sym micro/FT245BM-1.sym
+	micro/pic16F628-2.sym micro/pic18F242-1.sym micro/staver24m32-1.sym
+	misc/6A259-1.sym misc/ADG601-1.sym misc/ADG602-1.sym misc/ADG619-1.sym
+	misc/ADG620-1.sym national/ADC0831-1.sym national/DS1620-1.sym
+	national/DS75176-1.sym: Checked in another set of user contributed
+	symbols
+
 2004-12-27 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated version to 20041228

@@ -1,0 +1,84 @@
+v 20041228 1
+P 300 1000 0 1000 1 0 1
+{
+T 200 1050 5 8 1 1 0 6 1
+pinnumber=2
+T 200 950 5 8 0 1 0 8 1
+pinseq=2
+T 350 1000 9 8 1 1 0 0 1
+pinlabel=RE*
+T 350 1000 5 8 0 1 0 2 1
+pintype=in
+}
+P 300 700 0 700 1 0 1
+{
+T 200 750 5 8 1 1 0 6 1
+pinnumber=3
+T 200 650 5 8 0 1 0 8 1
+pinseq=3
+T 350 700 9 8 1 1 0 0 1
+pinlabel=DE
+T 350 700 5 8 0 1 0 2 1
+pintype=in
+}
+P 300 400 0 400 1 0 1
+{
+T 200 450 5 8 1 1 0 6 1
+pinnumber=4
+T 200 350 5 8 0 1 0 8 1
+pinseq=4
+T 350 400 9 8 1 1 0 0 1
+pinlabel=DI
+T 350 400 5 8 0 1 0 2 1
+pintype=in
+}
+P 1700 400 2000 400 1 0 1
+{
+T 1800 450 5 8 1 1 0 0 1
+pinnumber=6
+T 1800 350 5 8 0 1 0 2 1
+pinseq=6
+T 1650 400 9 8 1 1 0 6 1
+pinlabel=DO/RI
+T 1650 400 5 8 0 1 0 8 1
+pintype=tri
+}
+T 300 1750 9 10 1 1 0 0 1
+DS75176
+P 1700 1300 2000 1300 1 0 1
+{
+T 1800 1350 5 8 1 1 0 0 1
+pinnumber=7
+T 1800 1250 5 8 0 1 0 2 1
+pinseq=7
+T 1650 1300 9 8 1 1 0 6 1
+pinlabel=DO*/RI*
+T 1650 1300 5 8 0 1 0 8 1
+pintype=tri
+}
+P 300 1300 0 1300 1 0 1
+{
+T 200 1350 5 8 1 1 0 6 1
+pinnumber=1
+T 200 1250 5 8 0 1 0 8 1
+pinseq=1
+T 350 1300 9 8 1 1 0 0 1
+pinlabel=RO
+T 350 1300 5 8 0 1 0 2 1
+pintype=out
+}
+B 300 0 1400 1700 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1700 1800 8 10 1 1 0 6 1
+refdes=U?
+T 300 1950 8 10 0 0 0 0 1
+footprint=DIP8
+T 300 2150 8 10 0 0 0 0 1
+description=Multipoint RS-485/RS-422 Transceivers
+T 300 2750 8 10 0 0 0 0 1
+numslots=0
+T 300 2350 8 10 0 0 0 0 1
+net=Vcc:8
+T 300 2550 8 10 0 0 0 0 1
+net=GND:5
+T 300 2950 8 10 0 0 0 0 1
+device=DS75176
