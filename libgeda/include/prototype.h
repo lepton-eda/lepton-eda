@@ -415,4 +415,5 @@ void s_stroke_init(void);
 int s_stroke_search_execute(char *stroke);
 
 /* u_basic.c */
+char *u_basic_strdup(const char *str);
 char *u_basic_strdup_multiple(const char *str, ...);

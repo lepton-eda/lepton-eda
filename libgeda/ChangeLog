@@ -8,6 +8,8 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+7/25/99 Cleaned up g_read_file(). (by Kazu Hirata)
+	
 7/23/99 Added u_basic_strdup_multiple() to u_basic.c. (by Kazu Hirata)
 
 7/21/99 More work on getting all objects to use new object init and link

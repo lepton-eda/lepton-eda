@@ -41,46 +41,25 @@
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
-/* TODO: Kazu Hirata <kazu@seul.org> on July 13, 1999 - Probably we
- * need to use the following set of functions to deal with file
- * extention: adding and removing. Embedding this kind of code
- * directly into i_callback_ functions is mess. Something like the
- * following shuold help. The idea about the string manipulation is
- * based on Java in that it never changes the contents of strings and
- * just keeps creating new strings. */
-
-#if 1
-/* Kazu Hirata <kazu@seul.org> on July 14, 1999 - My own version of
- * strdup(). */
-static char *
-my_strdup(const char* p)
-{
-	char *q = (char *) malloc(strlen(p) + 1);
-	if (q != NULL) {
-		strcpy(q, p);
-	}
-	return q;
-}
-
-/* Kazu Hirata <kazu@seul.org> on July 14, 1999 - Returns a pointer to
+/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - Returns a pointer to
  * the last '.' in the given string. If there is none, the function
- * returns NULL. If you want to change the extention using the return
- * value of the function, you need to do pointer arithmetic, assuming
- * your fname is defined as a constant. :-) */
+ * returns a pointer to the first null character in the string. If you
+ * want to change the extention using the return value of the
+ * function, you need to do pointer arithmetic, assuming your fname is
+ * defined as a constant. :-) Note that, if the only '.' appears as
+ * the firt character, it is ignored. */
 static const char *
 fnameext_get(const char* fname)
 {
 	const char *p = strrchr(fname, '.');
 
-	/* if '.' is the only '.' and is the first character, ignore
-         * it */
-	if(p == fname) {
-		p = NULL;
+	if((p == NULL) || (p == fname)) {
+		p = &fname[strlen(fname)];
 	}
 	return p;
 }
 
-/* Kazu Hirata <kazu@seul.org> on July 14, 1999 - The function removes
+/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - The function removes
  * an extention including a '.' if any and returns the new string in a
  * newly allocated memory. If there is no '.' after the first
  * character, then the function simply returns a copy of fname. If
@@ -92,8 +71,8 @@ fnameext_remove(const char *fname)
 	char *fname_new;
 	int len;
 
-	if(p == NULL) {
-		fname_new = my_strdup(p);
+	if(*p == '\0') {
+		fname_new = u_basic_strdup(p);
 	} else {
 		len = (p - fname) + 1;
 		fname_new = (char *) malloc(sizeof(char) * len);
@@ -106,31 +85,15 @@ fnameext_remove(const char *fname)
 	return fname_new;
 }
 
-/* Kazu Hirata <kazu@seul.org> on July 13, 1999 - The function adds an
+/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - The function adds an
  * extention and returns the new string in a newly allocated
- * memory. ext must not have '.'  as the first character unless you
- * wish an extention like '..c'. If memory allocation fails, the
- * function returns NULL. */
+ * memory. ext must have '.'  as the first character. If memory
+ * allocation fails, the function returns NULL. */
 static char *
 fnameext_add(const char *fname, const char* ext)
 {
-	char *p;
-	
-	/* TODO: use my_strdups */
-	p = (char *) malloc(sizeof(char) *
-			    strlen(fname) +
-			    1 + /* the length of "." */
-			    strlen(ext) +
-			    1);
-	if(p == NULL) {
-		return NULL;
-	}
-	strcpy(p, fname);
-	strcat(p, ".");
-	strcat(p, ext);
-	return p;
+	return u_basic_strdup_multiple(fname, ext, NULL);
 }
-#endif
 
 /* evey i_callback functions have the same footprint */
 #define DEFINE_I_CALLBACK(name)				\
@@ -140,7 +103,7 @@ fnameext_add(const char *fname, const char* ext)
 			    GtkWidget *widget)
 
 /* right now, all callbacks execpt for the ones on the File menu have
- * the middle button shortcut.  Let me (Ales) know if we should also
+ * the middle button shortcut. Let me (Ales) know if we should also
  * shortcut the File button */
 
 /* File menu */
@@ -159,7 +122,6 @@ DEFINE_I_CALLBACK(file_new)
          * getcwd(NULL, 0); */
 	if (getcwd(w_current->cwd, 256)) {
 		/* TODO: the #'s are for 10 digits hack */
-		/* TODO: use strdups */
 		/* TODO: perform a NULL check */
 		temp_filename = (char *) malloc(
 			sizeof(char) * (strlen(w_current->cwd)+
@@ -172,7 +134,6 @@ DEFINE_I_CALLBACK(file_new)
 			w_current->series_name,
 			w_current->num_untitled);
 	} else {
-		/* TODO: use strdups */
 		/* TODO: perform a NULL check */
        		temp_filename = malloc(sizeof(char) * (
 			strlen(w_current->series_name)+
@@ -211,7 +172,6 @@ DEFINE_I_CALLBACK(file_new_window)
                	 	free(w_current->page_current->page_filename);
         	}
 
-		/* TODO: use strdupts */
 		/* TODO: perform a NULL check */
         	w_current->page_current->page_filename = malloc(
                        	         sizeof(char) * (
@@ -235,7 +195,8 @@ DEFINE_I_CALLBACK(file_new_window)
 	i_set_filename(w_current, w_current->page_current->page_filename);
 }
 
-/* don't use the widget parameter on this function, or do some checking... */
+/* don't use the widget parameter on this function, or do some
+ * checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */
 /* This should be renamed to page_open perhaps... */
 DEFINE_I_CALLBACK(file_open)
@@ -254,7 +215,8 @@ DEFINE_I_CALLBACK(file_script)
 	setup_script_selector(w_current);
 }
 
-/* don't use the widget parameter on this function, or do some checking... */
+/* don't use the widget parameter on this function, or do some
+ * checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */
 DEFINE_I_CALLBACK(file_save)
 {
@@ -262,6 +224,10 @@ DEFINE_I_CALLBACK(file_save)
 
 	exit_if_null(w_current);
 
+	/* TODO: probably there should be a flag that says whether
+	 * page_filename is derived from untitled_name or specified by
+	 * a user. Some twisted people might name their files like
+	 * untitled_name. :-) */
 	if (strstr(w_current->page_current->page_filename,
 		   w_current->untitled_name)) {
 		setup_saveas_file_selector(
@@ -310,33 +276,27 @@ DEFINE_I_CALLBACK(file_save_as)
 DEFINE_I_CALLBACK(file_print)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	/* don't fix the size hack */
-        char *ps_filename = NULL;
-	char *c_ptr;
-	int len;
+	char *base;
+        char *ps_filename;
 
 	exit_if_null(w_current);
 
-	/* TODO: use strdups */
-	/* TODO: perform a NULL check */
-	/* + 1 is for null character */
-	/* this will be plenty of space since .sch is being replaced by .ps */
-	len = strlen(w_current->page_current->page_filename) +
-		strlen(".ps") + 1;
-	ps_filename = (char *) malloc(sizeof(char) * len);
-
-	strcpy(ps_filename, w_current->page_current->page_filename);
-	/* HACK: .sch may not be at the end like .school.sch :-) */
-	c_ptr = strstr(ps_filename, ".sch");
-	if (c_ptr == NULL) {
-		/* filename didn't have .sch extension */
-		/* so append a .ps, string should be big enough */
-		len = strlen(w_current->page_current->page_filename);
-		strcpy(&ps_filename[len], ".ps");
+	/* get the base file name */
+	if (strcmp(fnameext_get(w_current->page_current->page_filename),
+		   ".sch") == 0) {
+		/* the filename ends with .sch */
+		base = fnameext_remove(w_current->page_current->page_filename);
 	} else {
-		/* found .sch extension, replace it with .ps */
-		strcpy(c_ptr, ".ps");
+		/* the filename does not end with .sch */
+		base = u_basic_strdup(w_current->page_current->page_filename);
 	}
+	if(base == NULL) {
+		/* TODO: do something */
+	}
+
+	/* add ".ps" tp the base filename */
+	ps_filename = fnameext_add(base, ".ps");
+	free(base);
 
 	if (output_filename) {
 		x_print_setup(w_current, output_filename);
@@ -357,10 +317,8 @@ DEFINE_I_CALLBACK(file_print)
 DEFINE_I_CALLBACK(file_write_png)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
-	/* don't fix the size hack */
-        char *img_filename = NULL;
-	char *c_ptr;
-	int len;
+	char *base;
+        char *img_filename;
 
 	exit_if_null(w_current);
 
@@ -369,34 +327,28 @@ DEFINE_I_CALLBACK(file_write_png)
 	fprintf(stderr,
 		"libgdgeda not installed or disabled, "
 		"so this feature is disabled\n");
-	s_log_message("libgdgeda not installed or disabled, "
-		      "so this feature is disabled\n");
+	s_log_message(
+		"libgdgeda not installed or disabled, "
+		"so this feature is disabled\n");
 	return;
 #endif
 
-	/* TODO: use strdupts */
-	/* TODO: perform a NULL check */
-	/* + 1 is for null character */
-	/* this will be plenty of space since .sch is being replaced by .png */ 
-	len = strlen(w_current->page_current->page_filename) + 
-              strlen(".png") + 
-	      1;
-
-	img_filename = (char *) malloc(sizeof(char) * len);
-
-	strcpy(img_filename, w_current->page_current->page_filename);
-
-	/* HACK: .sch may not be at the end like .school.sch :-) */
-	c_ptr = strstr(img_filename, ".sch");
-	if (c_ptr == NULL) {
-		/* filename didn't have .sch extension, so append a
-		 * .ps, string should be big enough */
-		len = strlen(w_current->page_current->page_filename);
-		strcpy(&img_filename[len], ".png");
+	/* get the base file name */
+	if (strcmp(fnameext_get(w_current->page_current->page_filename),
+		   ".png") == 0) {
+		/* the filename ends with .png */
+		base = fnameext_remove(w_current->page_current->page_filename);
 	} else {
-		/* found .sch extension, replace it with .ps */
-		strcpy(c_ptr, ".png");
+		/* the filename does not end with .png */
+		base = u_basic_strdup(w_current->page_current->page_filename);
 	}
+	if(base == NULL) {
+		/* TODO: do something */
+	}
+
+	/* add ".ps" tp the base filename */
+	img_filename = fnameext_add(base, ".png");
+	free(base);
 
 	if (output_filename) {
 		x_image_setup(w_current, output_filename);
@@ -414,7 +366,8 @@ DEFINE_I_CALLBACK(file_write_png)
 	}
 }
 
-/* don't use the widget parameter on this function, or do some checking... */
+/* don't use the widget parameter on this function, or do some
+   checking... */
 /* since there is a call: widget = NULL, data = 0 (will be w_current) */
 /* this function closes a window */
 DEFINE_I_CALLBACK(file_close)
@@ -429,8 +382,8 @@ DEFINE_I_CALLBACK(file_close)
 
 /* this function is called when you send a delete event to gschem */
 /* Also DON'T ref the widget parameter since they can be null */
-/* HACK: need a cleaner way of doing this hack */
-/* this routine is used by the delete event signals */
+/* TODO: Need a cleaner way of doing this. This routine is used by the
+ * delete event signals */
 int
 i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
 {
@@ -909,8 +862,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
 	/* I don't know if this would get in the way */
 	i_update_middle_button(w_current, i_callback_view_pan_hotkey, "Pan");
 
-	/*
-         * I have NO idea what ramifications removing the next line has,
+	/* I have NO idea what ramifications removing the next line has,
 	 * only that it makes the code work when drawing a net and panning
 	 * at the same time.  Jeff McNeal - 11-19-98
 	 * w_current->inside_action = 0;
@@ -918,10 +870,10 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
 
 	a_pan(w_current, mouse_x, mouse_y);
 
-	/* if we are drawing a net, don't change the event state,
-	 * because we want to continue drawing a net.  If we are
-	 * just panning, then continue in select mode.
-	 * Jeff McNeal - 11-19-98 */
+	/* Jeff McNeal on Nov 19, 1998 - if we are drawing a net,
+	 * don't change the event state, because we want to continue
+	 * drawing a net. If we are just panning, then continue in
+	 * select mode.  */
 	if(!(w_current->event_state == DRAWNET ||
 	     w_current->event_state == NETCONT ||
              w_current->event_state == STARTDRAWNET )) {
@@ -958,7 +910,6 @@ DEFINE_I_CALLBACK(page_next)
 
 	if (w_current->page_current->next != NULL &&
 	    w_current->page_current->next->pid != -1) {
-
 		w_current->page_current = w_current->page_current->next;
 	}
 
@@ -978,7 +929,6 @@ DEFINE_I_CALLBACK(page_prev)
 
 	if (w_current->page_current->prev != NULL &&
 			w_current->page_current->prev->pid != -1) {
-
 		w_current->page_current = w_current->page_current->prev;
 	}
 
@@ -997,7 +947,6 @@ DEFINE_I_CALLBACK(page_new)
 	exit_if_null(w_current);
 
 	if (getcwd(w_current->cwd, 256)) {
-		/* TODO: use strdups */
 		/* TODO: perform a NULL check */
 		/* the 20 is a hack and needs to be changed */
         	filename = malloc(sizeof(char) *

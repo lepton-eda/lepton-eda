@@ -42,88 +42,138 @@
 #include "../include/globals.h"
 #include "../include/prototype.h"
 
+static int
+g_rc_parse_general(const char *fname, const char *ok_msg, const char *err_msg)
+{
+	int found_rc = 0;
+	char* tmp;
+
+	if (access(fname, R_OK) == 0) {
+		/* TODO: fix g_read_file to accept "const char *" */
+		tmp = u_basic_strdup(fname);
+		g_read_file(tmp);
+		free(tmp);
+		found_rc = 1;
+		s_log_message(ok_msg, fname);
+	} else {
+		s_log_message(err_msg, fname);
+	}
+	return found_rc;
+}
+
+static int
+g_rc_parse_system_rc()
+{
+	int found_rc;
+	char *filename;
+
+	filename = u_basic_strdup_multiple(GEDARCDIR,
+					   "/system-gschemrc",
+					   NULL);
+	if (filename == NULL) {
+		return 0;
+	}
+
+	found_rc = g_rc_parse_general(
+		filename,
+		"Read system-gschemrc file [%s]\n",
+		"Did not find system-gschemrc file [%s]\n");
+
+	free(filename);
+
+	return found_rc;
+}
+
+static int
+g_rc_parse_home_rc()
+{
+	int found_rc;
+	char *filename;
+	char *HOME;
+
+	HOME = (char *) getenv("HOME");
+	if (HOME == NULL) {
+		return 0;
+	}
+
+	filename = u_basic_strdup_multiple(HOME,
+					   "/.gEDA/gschemrc",
+					   NULL);
+	if (filename == NULL) {
+		return 0;
+	}
+
+	found_rc = g_rc_parse_general(
+		filename,
+		"Read ~/.gEDA/gschemrc file [%s]\n",
+		"Did not find ~/.gEDA/gschemrc file [%s]\n");
+
+	free(filename);
+
+	return found_rc;
+}
+
+static int
+g_rc_parse_local_rc()
+{
+	int found_rc;
+	char *filename;
+
+	filename = u_basic_strdup("./gschemrc");
+	if (filename == NULL) {
+		return 0;
+	}
+
+	found_rc = g_rc_parse_general(
+		filename,
+		"Read local gschemrc file [%s]\n",
+		"Did not find local gschemrc file [%s]\n");
+
+	free(filename);
+
+	return found_rc;
+}
+
+
 void
 g_rc_parse(void)
 /* g_rc_parse(TOPLEVEL *w_current) */
 {
-	char *HOME;
-	char *filename;
-	int found_rc=0;
-	int len;
+	int found_rc = 0;
 
+	/* TODO: why is this still here? */
 #if 0
 	if (w_current == NULL) {
 		return;
 	}
 #endif
 
-	/* Let's try a the system one - GEDARCDIR/system-gschemrc */
+	/* visit rc files in order */
+	found_rc |= g_rc_parse_system_rc();
+	found_rc |= g_rc_parse_home_rc();
+	found_rc |= g_rc_parse_local_rc();
 
-	len = strlen("/system-gschemrc") + strlen(GEDARCDIR) + 1;
-	filename = (char *) malloc(sizeof(char) * len);
-	sprintf(filename, "%s/system-gschemrc", GEDARCDIR);
-	if (access(filename, R_OK) == 0) {
-		g_read_file(filename);
-		found_rc = 1;
-		s_log_message("Read system-gschemrc file [%s]\n", filename);
-	} else {
-		s_log_message("Did not find system-gschemrc file [%s]\n",
-			      filename);
-	}
-	free(filename);
-
-	/* now search the proper rc location (in ~/.gEDA) */
-	HOME = (char *) getenv("HOME");
-	if (HOME) {
-		len = strlen("/.gEDA/gschemrc") + strlen(HOME) + 1;
-		filename = (char *) malloc(sizeof(char)*len);
-		sprintf(filename, "%s/.gEDA/gschemrc", HOME);
-		if (access(filename, R_OK) == 0) {
-			g_read_file(filename);
-			found_rc = 1;
-			s_log_message("Read ~/.gEDA/gschemrc file [%s]\n",
-				      filename);
-		} else {
-			s_log_message("Did not find ~/.gEDA/gschemrc file [%s]\n",
-				      filename);
-		}
-		free(filename);
-	}
-
-	/* try the local directory for a gschemrc */
-	len = strlen("./gschemrc") + 1;
-	filename = (char *) malloc(sizeof(char)*len);
-	strcpy(filename, "./gschemrc");
-	if (access(filename, R_OK) == 0) {
-		g_read_file(filename);
-		found_rc = 1;
-		s_log_message("Read local gschemrc file [%s]\n", filename);
-	} else {
-		s_log_message("Did not find local gschemrc file [%s]\n",
-			      filename);
-	}
-	free(filename);
-
-	if (rc_filename) {
-		len = strlen(rc_filename) + 1;
+	if (rc_filename != NULL) {
 		if (access(rc_filename, R_OK) == 0) {
 			g_read_file(rc_filename);
 			found_rc = 1;
-			s_log_message("Read specified rc file [%s]\n",
-				      rc_filename);
+			s_log_message(
+				"Read specified rc file [%s]\n",
+				rc_filename);
 		} else {
 			fprintf(stderr,
 				"Did not find specified gschemrc file [%s]\n",
 				rc_filename);
-			s_log_message("Did not find "
-				      "specified gschemrc file [%s]\n",
-				      rc_filename);
+			s_log_message(
+				"Did not find specified gschemrc file [%s]\n",
+				rc_filename);
 		}
 	}
 
-	/* Oh well I couldn't find any rcfile, exit! */
-
+	/* Oh well, I couldn't find any rcfile, exit! */
 	if (!found_rc) {
+		/* TODO: these two are basically the
+		 * same. Inefficient! */
 		s_log_message("Could not find any gschemrc file!\n");
 		fprintf(stderr, "Could not find a gschemrc file\n");
 		exit(-1);
@@ -133,9 +183,7 @@ g_rc_parse(void)
 SCM
 g_rc_gschem_version(SCM version)
 {
-	char *string;
-
-	string = gh_scm2newstr(version, NULL);
+	char *string = gh_scm2newstr(version, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -152,26 +200,21 @@ g_rc_gschem_version(SCM version)
 		fprintf(stderr,
 			"While gschem is in ALPHA, "
 			"please be sure that you have the latest rc file.\n");
-		if (string) {
 			free(string);
-		}
 		return SCM_BOOL_F;
 	}
 
-	if (string) {
-		free(string);
-	}
+	free(string);
 	return SCM_BOOL_T;
 }
 
 /* general color-setting function */
 static SCM
-g_rc_color_general(SCM color, const char* rc_name, int* color_var)
+g_rc_color_general(SCM color, const char *rc_name, int *color_var)
 {
-	char *string;
 	int newcolor;
+	char *string = gh_scm2newstr(color, NULL);
 
-	string = gh_scm2newstr(color, NULL);
 	newcolor = colornametovalue(string);
 
 	/* invalid color? */
@@ -415,7 +458,7 @@ SCM
 g_rc_text_feedback(SCM mode)
 {
 	static const vstbl_entry mode_table[] = {
-		{ALWAYS    , "always"   },
+		{ALWAYS            , "always"            },
 		{ONLY_WHEN_READABLE, "only-when-readable"}
 	};
 
@@ -533,7 +576,7 @@ g_rc_text_size(SCM size)
 	return SCM_BOOL_T;
 }
 
-/* HACK: inconsistant naming with keyword name and variable to hold
+/* TODO: inconsistant naming with keyword name and variable to hold
  * variable */
 SCM
 g_rc_text_caps_style(SCM mode)
@@ -580,9 +623,7 @@ g_rc_logging_destination(SCM mode)
 SCM
 g_rc_default_series_name(SCM name)
 {
-	char *string;
-
-	string = gh_scm2newstr(name, NULL);
+	char *string = gh_scm2newstr(name, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -596,20 +637,16 @@ g_rc_default_series_name(SCM name)
 		free(default_series_name);
 	}
 
-	default_series_name = strdup(string);
+	default_series_name = u_basic_strdup(string);
 
-	if (string) {
-		free(string);
-	}
+	free(string);
 	return SCM_BOOL_T;
 }
 
 SCM
 g_rc_untitled_name(SCM name)
 {
-	char *string;
-
-	string = gh_scm2newstr(name, NULL);
+	char *string = gh_scm2newstr(name, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -623,11 +660,9 @@ g_rc_untitled_name(SCM name)
 		free(default_untitled_name);
 	}
 
-	default_untitled_name = strdup(string);
+	default_untitled_name = u_basic_strdup(string);
 
-	if (string) {
-		free(string);
-	}
+	free(string);
 	return SCM_BOOL_T;
 }
 
@@ -636,9 +671,9 @@ g_rc_component_library(SCM path)
 {
 	int ret;
 	struct stat buf;
-	char *string;
+	char *string = gh_scm2newstr(path, NULL);
 
-	string = gh_scm2newstr(path, NULL);
+	/* TODO: don't I have to check string if it's NULL here? */
 
 	/* take care of any shell variables */
 	string = expand_env_variables(string);
@@ -685,9 +720,7 @@ g_rc_source_library(SCM path)
 {
 	int ret;
 	struct stat buf;
-	char *string;
-
-	string = gh_scm2newstr(path, NULL);
+	char *string = gh_scm2newstr(path, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -741,9 +774,7 @@ g_rc_source_library(SCM path)
 SCM
 g_rc_attribute_name(SCM path)
 {
-	char *string;
-
-	string = gh_scm2newstr(path, NULL);
+	char *string = gh_scm2newstr(path, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -754,17 +785,13 @@ g_rc_attribute_name(SCM path)
 
 	/* not unique? */
 	if (!s_attrib_uniq(string)) {
-		if (string) {
-			free(string);
-		}
+		free(string);
 		return SCM_BOOL_F;
 	}
 
 	s_attrib_add_entry(string);
 
-	if (string) {
-		free(string);
-	}
+	free(string);
 	return SCM_BOOL_T;
 }
 
@@ -773,9 +800,7 @@ g_rc_scheme_directory(SCM path)
 {
 	int ret;
 	struct stat buf;
-	char *string;
-
-	string = gh_scm2newstr(path, NULL);
+	char *string = gh_scm2newstr(path, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -812,7 +837,7 @@ g_rc_scheme_directory(SCM path)
 	if (default_scheme_directory) {
 		free(default_scheme_directory);
 	}
-	default_scheme_directory = strdup(string);
+	default_scheme_directory = u_basic_strdup(string);
 
 	if (string) {
 		free(string);
@@ -824,15 +849,15 @@ SCM
 g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 {
 #if HAS_LIBSTROKE
-	char *stroke;
-
-	stroke = gh_scm2newstr(scm_stroke, NULL);
+	char *stroke = gh_scm2newstr(scm_stroke, NULL);
 
 	if (!s_stroke_uniq(stroke)) {
 		if (stroke_info_mode) {
-			s_log_message("Duplicate stroke definition passed to stroke! [%s]\n",
+			s_log_message("Duplicate stroke definition "
+				      "passed to stroke! [%s]\n",
 				      stroke);
-			printf("Duplicate stroke definition passed to stroke! [%s]\n",
+			printf("Duplicate stroke definition "
+			       "passed to stroke! [%s]\n",
 			       stroke);
 		}
 		if (stroke) {
@@ -848,9 +873,9 @@ g_rc_stroke(SCM scm_stroke, SCM scm_guile_func)
 	}
 #else
 	if (stroke_info_mode) {
-		printf("A stroke keyword has been found in an rc file, but gschem\n");
-		printf("is not compiled to support strokes, please recompile gschem\n");
-		printf("with LibStroke\n");
+		printf("A stroke keyword has been found in an rc file, but gschem\n"
+		       "is not compiled to support strokes, please recompile gschem\n"
+		       "with LibStroke\n");
 	}
 #endif
 
@@ -866,9 +891,7 @@ g_rc_font_directory(SCM path)
 {
 	int ret;
 	struct stat buf;
-	char *string;
-
-	string = gh_scm2newstr(path, NULL);
+	char *string = gh_scm2newstr(path, NULL);
 
 	if (string == NULL) {
 		fprintf(stderr,
@@ -905,7 +928,7 @@ g_rc_font_directory(SCM path)
 	if (default_font_directory) {
 		free(default_font_directory);
 	}
-	default_font_directory = strdup(string);
+	default_font_directory = u_basic_strdup(string);
 
 	if (string) {
 		free(string);
@@ -984,11 +1007,9 @@ g_rc_paper_size(SCM width, SCM height)
 SCM
 g_rc_paper_sizes(SCM papername, SCM scm_width, SCM scm_height)
 {
-	char *string;
 	int width;
 	int height;
-
-	string = gh_scm2newstr(papername, NULL);
+	char *string = gh_scm2newstr(papername, NULL);
 	width  = (int) (gh_scm2double(scm_width)  * MILS_PER_INCH);
 	height = (int) (gh_scm2double(scm_height) * MILS_PER_INCH);
 

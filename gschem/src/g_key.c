@@ -54,7 +54,8 @@ set_window_current_key(TOPLEVEL *w_current)
 void
 g_key_execute(int state, int keyval)
 {
-	char guile_string[50]; /* size hack */
+	/* TODO: the size is hack */
+	char guile_string[50];
 	char modifier[10];
 
 	if (keyval == 0) {

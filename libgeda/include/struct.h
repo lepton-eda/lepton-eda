@@ -386,8 +386,8 @@ struct st_toplevel {
 	int actionfeedback_mode; /* can be either OUTLINE or BOUNDINGBOX */
 	int text_feedback; /* controls if text is drawn or not in */
 			   /* copy/move/place ops */
-	int text_display_zoomfactor; /* zoom factor at which text is 
-			             /* displayed completely */
+	int text_display_zoomfactor; /* zoom factor at which text is
+				      * displayed completely */
 	int net_endpoint_mode; /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
 	int net_midpoint_mode; /* can be either NONE or FILLED or EMPTY */
 	int object_clipping; /* controls whether objects are clipped */

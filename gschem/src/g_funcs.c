@@ -43,9 +43,8 @@
 
 SCM g_funcs_print(SCM filename)
 {
-	char *string;
+	char *string = gh_scm2newstr(filename, NULL);
 
-	string = gh_scm2newstr(filename, NULL);
 	if (string == NULL) {
 		return SCM_BOOL_T;
 	}

@@ -49,13 +49,61 @@
 int current_center_x = 0;
 int current_center_y = 0;
 
+/* experimental */
+#if 0
+/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - all zoom- and
+ * pan-related functions should eventually get to this function. It
+ * takes the desired center coordinate and the desired zoom
+ * factor. Necessary adjustments may be done depending on situations.
+ * */
+static void
+a_pan_general(TOPLEVEL *w_current, int cx, int cy, int zoom_factor)
+{
+	int fix = 0;
+	int wx, wy;
+
+	/* compute world size that fits in the current screen */
+	wx = 100; /* fix me */
+	wy = 100; /* fix me */
+
+	/* check left wall */
+
+	/* check right wall */
+
+	/* check top wall */
+
+	/* check bottom wall */
+
+	/* correct aspect ratio */
+	if (fix != 0) {
+		correct_aspect(w_current);
+	}
+
+	/* set_window */
+	set_window(w_current,
+		   w_current->page_current->left  ,
+		   w_current->page_current->right ,
+		   w_current->page_current->top   ,
+		   w_current->page_current->bottom);
+
+	/* redraw */
+	w_current->DONT_REDRAW = 1;
+	w_current->DONT_RECALC = 1;
+	w_current->DONT_RESIZE = 1;
+	x_hscrollbar_update(w_current);
+	x_vscrollbar_update(w_current);
+	o_redraw_all(w_current);
+	w_current->DONT_REDRAW = 0;
+	w_current->DONT_RECALC = 0;
+	w_current->DONT_RESIZE = 0;
+}
+#endif
 
 void
 a_pan_calc(TOPLEVEL *w_current, int x, int y)
 {
 	int pan_x, pan_y;
 	int ix, iy, center_x, center_y;
-	int sx, sy, lx, ly;
 
 	pan_x = mil_x(w_current, x);
 	pan_y = mil_y(w_current, y);
@@ -66,11 +114,11 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
         ix = center_x - pan_x;
         if (w_current->page_current->right - ix > w_current->init_right) {
 		/* the right wall was hit */
+
 		w_current->page_current->left =
 			w_current->init_right - GET_PAGE_WIDTH(w_current);
 		
-		w_current->page_current->right =
-			w_current->init_right;
+		w_current->page_current->right = w_current->init_right;
         } else if (w_current->page_current->left - ix < w_current->init_left) {
 		/* the left wall was hit */
 		w_current->page_current->right =
@@ -125,8 +173,6 @@ a_pan_calc(TOPLEVEL *w_current, int x, int y)
 void
 a_pan(TOPLEVEL *w_current, int x, int y)
 {
-	int pan_x, pan_y;
-	int ix, iy, center_x, center_y;
 	int sx, sy, lx, ly;
 
 	/* check to see if we are inside an action draw net, etc.  If

@@ -29,10 +29,22 @@
 
 #include <guile/gh.h>
 
-/* Kazu Hirata <kazu@seul.org> on July 23, 1999 - Return a pointer to
- * a string that contains all strings passed as parameters
- * combined. The last one must be NULL so that the function can
- * identify the end of the list. */
+/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - My own version of
+ * strdup(). */
+char *
+u_basic_strdup(const char* p)
+{
+	char *q = (char *) malloc(strlen(p) + 1);
+	if (q == NULL) {
+		return NULL;
+	}
+	return strcpy(q, p);
+}
+
+/* Kazu Hirata <kazu@seul.org> on July 25, 1999 - Allocates memory and
+ * returns a pointer to a string that contains all strings passed as
+ * parameters combined. The last one must be NULL so that the function
+ * can identify the end of the list. */
 char *
 u_basic_strdup_multiple(const char *str, ...)
 {
