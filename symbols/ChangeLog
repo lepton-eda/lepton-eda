@@ -1,3 +1,7 @@
+2002-09-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: Bumped version to 20020922, which is NOT a release.
+
 2002-09-13 Werner Hoch <werner.ho@gmx.de>
 	* 74/741[123]?-*: completed symbols (added net, pinlabels, pintype, ...)
 

@@ -19,7 +19,7 @@ PACKAGE=geda-symbols
 DATADIR=gEDA
 
 # new way of doing version
-VERSION=20020825
+VERSION=20020922
 
 echo Configuring symbols version $VERSION
 
