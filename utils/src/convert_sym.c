@@ -25,6 +25,7 @@
  */
 
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -36,6 +37,11 @@
 #ifndef lint
 static char vcid[] = "$Id$";
 #endif /* lint */
+#endif
+
+#ifndef OPTARG_IN_UNISTD
+extern char *optarg;
+extern int optind;
 #endif
 
 /* local defines */
@@ -93,12 +99,12 @@ struct Translation {
 struct Translation translations[] = 
 {
   {"PKG_TYPE", "PHYSICAL", REPLACE_NAME},
-  {"PARTS",    "",         KILL},
+  {"PART_SPEC","device",   REPLACE_NAME},
   {"LEVEL",    "",         KILL},
   {"P/D_NUM",  "",         KILL},
   {"NC",       "",         KILL},
-  {"REFDES",   "",         KILL},
-  {"PINTYPE",  "",         KILL},
+  {"REFDES",   "uref",     REPLACE_NAME},
+  /*{"PINTYPE",  "",         KILL},*/
   {"NAME",     "",         KILL},
   {"LABEL",    "",         KILL},
 };
@@ -114,6 +120,7 @@ int get_continued_string(char *buf, size_t buffer_size, FILE *fp);
 int get_style(FILE *fp, unsigned int *colour, 
 	      unsigned int *fillstyle,
 	      unsigned int *linestyle);
+void set_orientation(int *angle, int *mirror, int orientation);
 
 /* conversion readers */
 void do_nop(FILE *fp);
@@ -127,7 +134,7 @@ void do_box(FILE *fp);
 void do_circle(FILE *fp);
 void do_arc(FILE *fp);
 void do_label(FILE *fp);
-void do_net_start(void);
+void do_net_start(FILE *fp);
 void do_net_node(FILE *fp);
 void do_net_segment(FILE *fp);
 void do_net_segment_bus(FILE *fp);
@@ -148,11 +155,15 @@ void box_object(int x1, int y1, unsigned int width, unsigned int height,
 void arc_object(int x1, int y1, unsigned int radius, 
 		int start_angle, int sweep_angle, unsigned int color);
 void net_segment(int x1, int y1, int x2, int y2, unsigned int color);
+void bus_segment(int x1, int y1, int x2, int y2, unsigned int color);
 void complex_object(int x, int y, unsigned int selectable, 
 	       int angle, unsigned int mirror, char *name);
 void begin_attach(void);
 void end_attach(void);
 void reset_attributes(void);
+
+/* externals */
+int GetStringDisplayLength(char *str,int font_size);
 
 
 
@@ -170,13 +181,27 @@ int segment_count  = 0;    /* the number of net segments read for a net */
 int net_nodes_x[MAX_NODES];
 int net_nodes_y[MAX_NODES];
 int scale          = 10;   /* scale factor for viewlogic-geda conversion */
+int symbol_mode    = 0;
+int records_processed = 0; /* used to keep track of the number of viewlogic
+			    * records processed for diagnostics
+			    */
 
 int minx = 0;              /* bounding box for symbol */
 int miny = 0;
 int maxx = 0;
 int maxy = 0;
 
-
+void
+usage(char *cmd)
+{
+  fprintf(stderr,
+	  "Usage:\n\t%s [-s] <viewlogic_filename>\n"
+	  " Where:\n"
+	  "\t-s                   converting symbol file.\n" 
+	  "\t<viewlogic_filename> is the name of the file you\n"
+	  "\t\t\t  want to convert to gEDA format\n", cmd);
+  exit(1);
+}
 
 int
 main(int argc, char **argv)
@@ -185,17 +210,29 @@ main(int argc, char **argv)
   FILE *infile;
   char *infileName;
 
-  if(argc != 2)
-    {
-      fprintf(stderr,"Usage:\n\t%s <viewlogic_filename>\n"
-	      "Where:\n"
-	      "\t<viewlogic_filename> is the name of the file you\n"
-	      "\t  want to convert to gEDA format\n",argv[0]);
-      return 1;
+  int ch;
+
+  while ((ch = getopt (argc, argv, "s?h")) != -1) {
+    switch (ch) {
+
+    case 's':
+      symbol_mode = 1;
+      break;
+      
+    case '?':
+    case 'h':
+    default:
+      usage(argv[0]);
+      break;
     }
+  }
+
+  if (optind == argc)
+    usage(argv[0]);
+
 
   /* 'parse' arguments */
-  infileName = argv[1];
+  infileName = argv[optind];
 
   infile=fopen(infileName,"r");
   if(infile == NULL)
@@ -217,10 +254,12 @@ int
 convert_file(FILE *fp)
 {
   int c;
+  int text_len;
+
   char buf[MAX_TEXTLEN];
 
   /* output pre-amble */
-  printf("v 19981025\n");
+  printf("v %s\n",VERSION);
   reset_attributes();
 
 
@@ -270,7 +309,7 @@ convert_file(FILE *fp)
 
 	  /* net stuff */
 	case 'N':
-	  do_net_start();
+	  do_net_start(fp);
 	  break;
 	case 'J':
 	  do_net_node(fp);
@@ -293,15 +332,30 @@ convert_file(FILE *fp)
 	  break;
 	
 	case 'Q':
-	  fprintf(stderr,"Warning 'Q' record found and not handled"
-		  "contact maintainer\n");
+	  fprintf(stderr,"Warning 'Q' record found and not handled at"
+		  "record %d, contact maintainer\n",records_processed);
+	  break;
+
+	case 'C':  /* connected pin record */
+	  do_nop(fp);
+	  break;
+
+	case 'X':  /* unconnected pin record */
+	  do_nop(fp);
 	  break;
 
 	default: /* just read in the record and trash it */
 	  fgets(buf, MAX_TEXTLEN, fp);
-	  fprintf(stderr,"Warning: Unrecognized record:\n'%c%s'\n",
-		  c, buf);
+	  /* nuke trailing CR, if there */
+	  text_len=strlen(buf);
+	  if(buf[text_len-1] == '\n')
+	    {
+	      buf[text_len-1] = 0;
+	    }
+	  fprintf(stderr,"Warning: Unrecognized record #%d:\n'%c%s'\n",
+		  records_processed, c, buf);
 	}
+      records_processed++;
     }
 
   /* output post-amble */
@@ -325,8 +379,8 @@ do_bounding_box(FILE *fp)
   /* just fetch the values and store */
   if(fscanf(fp,"%d %d %d %d\n", &minx, &miny, &maxx, &maxy) != 4)
     {
-      fprintf(stderr,"Error: Invalid bounding box record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid bounding box record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -334,6 +388,9 @@ do_bounding_box(FILE *fp)
   miny *= scale;
   maxx *= scale;
   maxy *= scale;
+
+  if (symbol_mode == 0)
+    box_object(minx, miny, maxx-minx, maxy-miny, 1);
 }
 
 
@@ -357,8 +414,9 @@ do_unnatached_attribute(FILE *fp)
   if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin, 
 	    &viewvis) != 6)
     {
-      fprintf(stderr,"Error: Invalid Unattached attribute record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid Unattached attribute record #%d "
+	      "in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -396,8 +454,9 @@ do_unnatached_attribute(FILE *fp)
       break;
       
     default:
-      fprintf(stderr,"Error: Invalid visibility value %d in viewlogic file "
-	      "in function %s()\n",viewvis,__FUNCTION__);
+      fprintf(stderr,"Error: Invalid visibility value %d in "
+	      "viewlogic file at record #%d in function %s()\n",
+	      viewvis, records_processed, __FUNCTION__);
       return;
     }
 
@@ -429,8 +488,8 @@ do_attached_attribute(FILE *fp)
   if(fscanf(fp,"%d %d %u %d %u %u", &x, &y, &size, &angle, &origin, 
 	 &viewvis) != 6)
     {
-      fprintf(stderr,"Error: Invalid attached attribute record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid attached attribute record #%d"
+	      " in %s()\n", records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -467,8 +526,9 @@ do_attached_attribute(FILE *fp)
       break;
       
     default:
-      fprintf(stderr,"Error: Invalid visibility value %d in viewlogic file "
-	      "in function %s()\n",viewvis,__FUNCTION__);
+      fprintf(stderr,"Error: Invalid visibility value %d in "
+	      "viewlogic file at record #%d, in function %s()\n",
+	      viewvis, records_processed, __FUNCTION__);
       return;
     }
 
@@ -517,8 +577,8 @@ do_text(FILE *fp)
   if(fscanf(fp,"%d %d %u %d %u",&x, &y, &size, &angle, 
 	    &origin) != 5)
     {
-      fprintf(stderr,"Error: Invalid text record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid text record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -558,8 +618,9 @@ do_line(FILE *fp)
 
   if(fscanf(fp,"%d",&pairs) != 1)
     {
-      fprintf(stderr,"Error: Unable to read number of line pairs in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Unable to read number of line pairs "
+	      "for record #%d, in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -569,7 +630,8 @@ do_line(FILE *fp)
       if(fscanf(fp,"%d %d", &x[i], &y[i]) != 2)
 	{
 	  fprintf(stderr,"Error: unable to read %dth coodinate pair "
-		  "in %s()\n",i+1,__FUNCTION__);
+		  "for record #%d, in %s()\n",
+		  i+1, records_processed, __FUNCTION__);
 	  exit(1);
 	}
 	  
@@ -606,7 +668,8 @@ do_pin(FILE *fp)
   if(fscanf(fp,"%*d %d %d %d %d %*d %u %u\n",&x1, &y1, &x2, &y2, 
 	    &pindir, &pinsense) != 6)
     {
-      fprintf(stderr,"Error:Invalid pin record in %s()\n",__FUNCTION__);
+      fprintf(stderr,"Error:Invalid pin record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 	
@@ -683,9 +746,10 @@ do_pin(FILE *fp)
       } 
     else
       {
-	fprintf(stderr,"Error: Unable to determine pin sense in %s()\n"
+	fprintf(stderr,"Error: Unable to determine pin sense "
+		"for record #%d in %s()\n"
 		"\tminx: %d, miny: %d, maxx: %d, maxy: %d\n",
-		__FUNCTION__, minx, miny, maxx, maxy);
+		records_processed, __FUNCTION__, minx, miny, maxx, maxy);
 	return;
       }
 
@@ -718,7 +782,8 @@ do_box(FILE *fp)
    */
   if(fscanf(fp, "%d %d %d %d\n", &x1, &y1, &x2, &y2) != 4)
     {
-      fprintf(stderr, "Error: Invalid box record in %s()\n",__FUNCTION__);
+      fprintf(stderr, "Error: Invalid box record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -751,8 +816,8 @@ do_circle(FILE *fp)
    */
   if(fscanf(fp,"%d %d %u\n",&x, &y, &radius) != 3)
     {
-      fprintf(stderr,"Error: Invalid circle record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid circle record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
   
@@ -788,8 +853,8 @@ do_arc(FILE *fp)
   if(fscanf(fp,"%d %d %d %d %d %d\n", 
 	    &x1, &y1, &x2, &y2, &x3, &y3) != 6)
     {
-      fprintf(stderr,"Error: Invalid arc record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid arc record #%d, in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
       
@@ -860,7 +925,7 @@ do_arc(FILE *fp)
 void 
 do_label(FILE *fp)
 {
-  int x, y, angle;
+  int x, y, angle, foo;
   unsigned int color, size, origin, visibility, show_name_value;
   unsigned int fillstyle, linestyle;
   char text[MAX_TEXTLEN];
@@ -872,18 +937,17 @@ do_label(FILE *fp)
 
   /* reproduce as simple text, unless it is a label for an object */
 
-  if(fscanf(fp,"%d %d %u %d %d %*d %*d %*d", 
-	    &x, &y, &size, &angle, &origin) != 5)
+  if(fscanf(fp,"%d %d %u %d %d %d %d %*d", 
+	    &x, &y, &size, &angle, &origin, &foo, &visibility) != 7)
     {
-      fprintf(stderr,"Error: Invalid label record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid label record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
   x *= scale;
   y *= scale;
   color = 5;
-  visibility = 1;
   show_name_value = 0;
 
   /* read in the text */
@@ -894,9 +958,9 @@ do_label(FILE *fp)
   if(net_attributes == 1) /* a label on a net is its netname */
     {
 #ifdef HAVE_SNPRINTF
-      snprintf(text, MAX_TEXTLEN, "net=%s", text2);
+      snprintf(text, MAX_TEXTLEN, "label=%s", text2);
 #else
-      sprintf(text, "net=%s", text2);
+      sprintf(text, "label=%s", text2);
 #endif
       show_name_value = 1;
     }
@@ -921,18 +985,20 @@ do_label(FILE *fp)
 
 /* four functions for doing net stuff */
 void 
-do_net_start(void)
+do_net_start(FILE *fp)
 {
   reset_attributes();
 
+  fscanf(fp,"%*d\n");  /* just dispose of the net instance number */
+      
   reading_net = 1;
-  segment_count = 0;
+  segment_count = 1;
 }
 
 void 
 do_net_node(FILE *fp)
 {
-  int x,y;
+  int x,y,type;
 
   /* in geda nets are composed of a number of segments, gschem connects
    * them together on the screen,  since viewlogic stores a net as a series
@@ -945,16 +1011,17 @@ do_net_node(FILE *fp)
 
   if(segment_count > MAX_NODES)
     {
-      fprintf(stderr,"Error: too many nodes on a net in %s(), try increasing\n"
-	      "\tMAX_NODES\n",__FUNCTION__);
+      fprintf(stderr,"Error: too many nodes on a net at record #%d, "
+	      "in %s(), try increasing\n"
+	      "\tMAX_NODES\n", records_processed, __FUNCTION__);
       exit(1); /* this is fatal */
     }
 
   /* get the current info */
-  if(fscanf(fp,"%d %d\n",&x, &y) != 2)
+  if(fscanf(fp,"%d %d %d\n",&x, &y, &type) < 2)
     {
-      fprintf(stderr,"Error: Invalid net node record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid net node record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
@@ -981,8 +1048,8 @@ do_net_segment(FILE *fp)
 
   if(fscanf(fp,"%u %u\n",&n1, &n2) != 2)
     {
-      fprintf(stderr,"Error: Invalid net segment record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid net segment record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
       
@@ -1011,15 +1078,15 @@ do_net_segment_bus(FILE *fp)
 
   if(fscanf(fp,"%u %u\n",&n1, &n2) != 2)
     {
-      fprintf(stderr,"Error: Invalid bus segment record in %s()\n",
-	      __FUNCTION__);
+      fprintf(stderr,"Error: Invalid bus segment record #%d in %s()\n",
+	      records_processed, __FUNCTION__);
       exit(1);
     }
 
   color = 4;
 
-  /* output a geda net segment */ /* XXX should output a BUS segment here */
-  net_segment(net_nodes_x[n1], net_nodes_y[n1], 
+  /* output a geda bus segment */
+  bus_segment(net_nodes_x[n1], net_nodes_y[n1], 
 	      net_nodes_x[n2], net_nodes_y[n2], color);
 
   /* there could be attributes to follow */
@@ -1032,8 +1099,9 @@ void
 do_instance(FILE *fp)
 {
   char lib[MAX_TEXTLEN], name[MAX_TEXTLEN], symName[MAX_TEXTLEN];
-  unsigned int extension, selectable, mirror;
-  int x, y, angle;
+  unsigned int extension, selectable;
+  int x, y, angle, orientation, mirror;
+  float scale_factor;
 
   reset_attributes();
 
@@ -1047,30 +1115,30 @@ do_instance(FILE *fp)
   x = 0;
   y = 0;
 
-  if(fscanf(fp,"%*d %[a-zA-Z0-9]:%[a-zA-Z0-9] %u %d %d %*s\n",
-	    lib, name, &extension, &x, &y) != 5)
+  if(fscanf(fp,"%*d %[a-zA-Z0-9]:%[a-zA-Z0-9] %u %d %d %d %g %*s\n",
+	    lib, name, &extension, &x, &y, &orientation, &scale_factor) < 5)
     {
-      fprintf(stderr,"Error: Invalid instance record in %s()\n"
+      fprintf(stderr,"Error: Invalid instance record #%d in %s()\n"
 	      "lib:'%s', name:'%s'\n"
 	      "extension:%d, x:%d, y:%d\n",
-	      __FUNCTION__, lib,name,extension, x, y);
+	      records_processed, __FUNCTION__, lib,name,extension, x, y);
       exit(1);
     }
       
   x *= scale;
   y *= scale;
   selectable = 1;
-  angle = 0;
-  mirror = 0;   /* XXX need to add logic to decode rotation and mirror */
 
+  set_orientation(&angle, &mirror, orientation);
+      
   /* fix case */
   strtolower(name);
 
   /* produce proper file name: */
 #ifdef HAVE_SNPRINTF
-  snprintf(symName, MAX_TEXTLEN, "%s.%d.sym",name,extension);
+  snprintf(symName, MAX_TEXTLEN, "%s-%d.sym",name,extension);
 #else
-  sprintf(symName, "%s.%d.sym",name,extension);
+  sprintf(symName, "%s-%d.sym",name,extension);
 #endif
 
   complex_object(x, y, selectable, angle, mirror, symName);
@@ -1080,6 +1148,52 @@ do_instance(FILE *fp)
   attach_pending = 1;     /* signal that an attachment could be coming */
   complex_attributes = 1; /* and that they are complex attributes */
 
+}
+
+/* Viewlogic mirror over y-axis, but gschem mirror over x-axis. */
+/* This makes (270, 1) viewlogic -> (90, 1) gschem */
+/*        and (90, 1)  viewlogic -> (270, 1) gschem */ 
+/*        and (180, 1)  viewlogic -> (0, 1) gschem */ 
+/*        and (0, 1)  viewlogic -> (180, 1) gschem */ 
+void
+set_orientation(int *angle, int *mirror, int orientation)
+{
+  switch (orientation) {
+  case 0:  /* 0 rotation, 0 mirror */
+    *angle = 0;
+    *mirror = 0;
+    break;
+  case 1:  /* 90 rotation, 0 mirror */
+    *angle = 90;
+    *mirror = 0;
+    break;
+  case 2:  /* 180 rotation, 0 mirror */
+    *angle = 180;
+    *mirror = 0;
+    break;
+  case 3:  /* 270 rotation, 0 mirror */
+    *angle = 270;
+    *mirror = 0;
+    break;
+  case 4:  /* 180 rotation, 1 mirror */
+    *angle = 0;
+    *mirror = 1;
+    break;
+  case 5:  /* 90 rotation, 1 mirror */
+    *angle = 270;
+    *mirror = 1;
+    break;
+  case 6:  /* 0 rotation, 1 mirror */
+    *angle = 180;
+    *mirror = 1;
+  case 7:  /* 270 rotation, 1 mirror */
+    *angle = 90;
+    *mirror = 1;
+    break;
+  default:
+    fprintf(stderr,"Error: Invalid orientation value %d at record %d\n",
+	    orientation, records_processed);
+  }
 }
 
 /* YYYY */
@@ -1094,7 +1208,9 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   unsigned int textlen;
 
   /* fudge the text size, in viewdraw it is actually the height
-   * in geda it is the point size
+   * in geda it is the point size.  The Variable text_size contains
+   * the height of the text in points, size contains the height of
+   * the text in viewlogic units.
    */
   text_size = (int)(size * 0.72);
 
@@ -1105,7 +1221,7 @@ text_object(int x, int y, unsigned int color, unsigned int size,
    */
   if ( (origin == 2) || (origin == 5) || (origin == 8) ) 
     {
-      y -= (size*10) / 2;
+      y -= (size * scale) / 2;
     }
 
   if( (origin == 1) || (origin == 4) || (origin == 7) ) 
@@ -1118,25 +1234,25 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   switch(show_name_value)
     {
     case 0:   /* measure whole text length */
-      textlen = strlen(text);
+      textlen = GetStringDisplayLength(text,text_size);
       break;
   
     case 1:   /* measure just the value part */
-      textlen = strlen(text) - strindex(text,'=') - 1;
+      textlen = GetStringDisplayLength(&text[strindex(text,'=') + 1],
+				       text_size);
       break;
 
     case 2:   /* measure just the name part */
-      textlen = strindex(text,'=');
+      textlen = GetStringDisplayLength(text, text_size) 
+	- GetStringDisplayLength(&text[strindex(text,'=')],text_size);
       break;
       
     default:
-      fprintf(stderr,"Error: invalid show_name_value: %d in %s()\n",
-	      show_name_value, __FUNCTION__);
+      fprintf(stderr,"Error: invalid show_name_value: %d at record #%d, "
+	      "in %s()\n",
+	      show_name_value, records_processed, __FUNCTION__);
       return;
     }
-
-  /* fix text size */
-  textlen = textlen * size * scale;
 
   /* if the origin is one of the middle ones
    * fix the x coordinate
@@ -1157,8 +1273,9 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   if(angle != 0)
     {
       angle = 0;
-      fprintf(stderr,"Warning: Forcing text '%s' into standard alignment\n",
-	      text);
+      fprintf(stderr,"Warning: Forcing text '%s' into standard alignment "
+	      "at record #%d\n",
+	      text,records_processed);
     }
 
   /* force text to start on a 10 unit boundary */
@@ -1176,9 +1293,9 @@ text_object(int x, int y, unsigned int color, unsigned int size,
   /* XXX Fix GEDA!, text size limited to 79 chars! */
   if(strlen(text) >= 79)
     {
-      fprintf(stderr,"Warning: Text '%s' truncated to 79 chars!! "
-	      "FIXME! in %s()\n",
-	      text, __FUNCTION__);
+      fprintf(stderr,"Warning: Text '%s' truncated to 79 chars at "
+	      "record #%d!! FIXME! in %s()\n",
+	      text, records_processed, __FUNCTION__);
       text[79]=0;
     }
 
@@ -1223,20 +1340,23 @@ attribute_object(int x, int y, unsigned int color, unsigned int  size,
 	    break;
 
 	  case KILL:
-	    fprintf(stderr,"Warning: Killing attribute `%s=%s' at (%d,%d)\n",
-		    tmpName, value,x,y);
+	    fprintf(stderr,"Warning: Killing attribute `%s=%s' at (%d,%d)"
+		    " from record #%d\n",
+		    tmpName, value,x,y,records_processed);
 	    done = 1;
 	    return;
 
 	  case WARN_USER:
-	    fprintf(stderr,"Warning: attribute name `%s=%s' at (%d,%d) found "
-		    "during conversion\n"
-		    "\tpassing it through unchanged\n",tmpName,value,x,y);
+	    fprintf(stderr,"Warning: attribute name `%s=%s' at (%d,%d) "
+		    "at record #%d, found during conversion\n"
+		    "\tpassing it through unchanged\n",
+		    tmpName,value,x,y,records_processed);
 	    done = 1;
 	    break;
 	  default:
 	    fprintf(stderr,"Error: Unknown action code for attribute\n"
-		    "`%s=%s' in %s()\n",tmpName,value,__FUNCTION__);
+		    "`%s=%s' at record #%d in %s()\n",
+		    tmpName,value,records_processed,__FUNCTION__);
 	    exit(1);
 	  }
     }	  
@@ -1291,6 +1411,12 @@ void
 net_segment(int x1, int y1, int x2, int y2, unsigned int color )
 {
   printf("N %d %d %d %d %u\n", x1, y1, x2, y2, color);
+}
+
+void
+bus_segment(int x1, int y1, int x2, int y2, unsigned int color )
+{
+  printf("U %d %d %d %d %u\n", x1, y1, x2, y2, color);
 }
 
 void
@@ -1354,6 +1480,7 @@ get_continued_string(char *buf, size_t buffer_size, FILE *fp)
   
   /* read in the text */
   fgets(buf, buffer_size, fp);
+  records_processed++;
   /* nuke trailing CR, if there */
   text_len=strlen(buf);
   if(buf[text_len-1] == '\n')
@@ -1367,6 +1494,7 @@ get_continued_string(char *buf, size_t buffer_size, FILE *fp)
     {
       c = getc(fp);                         /* suck in space */
       fgets(&buf[text_len], MAX_TEXTLEN-text_len,fp);  /* read in next chunk */
+      records_processed++;
       text_len=strlen(buf);                 /* update text length */
       if(buf[text_len-1] == '\n')           /* nuke any trailing CR's */
 	{
@@ -1395,19 +1523,21 @@ int get_style(FILE *fp, unsigned int *colour,
     {
       if(fscanf(fp,"%u %u %u\n", colour, fillstyle, linestyle) != 3)
 	{
-	  fprintf(stderr,"Error: Invalid modifier record in %s()\n",
-		  __FUNCTION__);
+	  fprintf(stderr,"Error: Invalid modifier record #%d in %s()\n",
+		  records_processed, __FUNCTION__);
 	  exit(1);
 	}
 
       /* re-map colour into a geda colour */
       if(*colour > 15)
 	{
-	  fprintf(stderr,"Error: Invalid colour number %u in record in %s()\n",
-		  *colour,__FUNCTION__);
+	  fprintf(stderr,"Error: Invalid colour number %u in record #%d, "
+		  "in %s()\n",
+		  *colour,records_processed, __FUNCTION__);
 	  exit(1);
 	}
       *colour = colormap[*colour]; 
+      records_processed++;
     }
   else
     ungetc(c,fp); /* false alarm */
