@@ -167,6 +167,7 @@
 /*********** End of some Gtk utils *******/
 
 /*********** Start of major symbol changed dialog box *******/
+<<x_dialog.c : quick_message_dialog()>>
 <<x_dialog.c : major_changed_dialog()>>
 /*********** End of major symbol changed dialog box *******/
 
@@ -223,7 +224,7 @@
      	/* Select all the text in the GtkTextView entry */
 
 <<x_dialog.c : select_all_text_in_textview()>>=
-#if HAS_GTK22
+#ifdef HAS_GTK22
 void 
 select_all_text_in_textview(GtkTextView *textview) 
 {
@@ -241,14 +242,14 @@ select_all_text_in_textview(GtkTextView *textview)
 
 @ %def select_all_text_in_textview
 
-@section Function @code{select_all_text_in_textview()}
+@section Function @code{text_view_calculate_real_tab_width()}
 
-@defun select_all_text_in_textview textview
+@defun text_view_calculate_real_tab_width textview tab_size
 @end defun
 
 /* Calculate tab width in pango units. Taken from gedit. */
 <<x_dialog.c : text_view_calculate_real_tab_width()>>=
-#if HAS_GTK22
+#ifdef HAS_GTK22
 int
 text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size) 
 {
@@ -4461,6 +4462,42 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 @ %def autonumber_text_dialog
 
 
+@section Function @code{quick_message_dialog()}
+
+@defun quick_message_dialog message
+@end defun
+
+<<x_dialog.c : quick_message_dialog()>>=
+#ifdef HAS_GTK12
+void 
+quick_message_dialog(char *message)
+{
+  GtkWidget *dialog, *label, *close_button;
+   
+  /* Create the widgets */
+   
+  dialog = gtk_dialog_new();
+  label = gtk_label_new (message);
+  close_button = gtk_button_new_with_label("Close");
+   
+  /* Ensure that the dialog box is destroyed when the user clicks ok. */
+   
+  gtk_signal_connect_object (GTK_OBJECT (close_button), "clicked",
+                             GTK_SIGNAL_FUNC (gtk_widget_destroy), 
+                             (gpointer) dialog);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->action_area),
+                     close_button);
+
+  /* Add the label, and show everything we've added to the dialog. */
+
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG(dialog)->vbox),
+                     label);
+  gtk_widget_show_all (dialog);
+}
+#endif
+@ %def quick_message_dialog
+
+
 @section Function @code{major_changed_dialog()}
 
 @defun major_changed_dialog w_current
@@ -4499,6 +4536,7 @@ major_changed_dialog(TOPLEVEL* w_current)
     free(refdes_string);
     refdes_string = tmp;
 
+#ifdef HAS_GTK22
     dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      GTK_MESSAGE_ERROR,
@@ -4511,6 +4549,15 @@ major_changed_dialog(TOPLEVEL* w_current)
     g_signal_connect_swapped (dialog, "response",
                               G_CALLBACK (gtk_widget_destroy),
                               dialog);
+#else
+    tmp = u_basic_strdup_multiple(
+             "\n  Major symbol changes detected in refdes:  \n\n", 
+                                  refdes_string, 
+                                  NULL);
+    free(refdes_string);
+    refdes_string = tmp;
+    quick_message_dialog(refdes_string);
+#endif
 
     if (refdes_string) free(refdes_string);
   }

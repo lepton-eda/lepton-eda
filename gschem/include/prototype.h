@@ -765,6 +765,9 @@ int autonumber_text_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_
 void autonumber_text_ok(GtkWidget *w, TOPLEVEL *w_current);
 void autonumber_text_done(GtkWidget *w, TOPLEVEL *w_current);
 void autonumber_text_dialog(TOPLEVEL *w_current);
+#ifdef HAS_GTK12
+void quick_message_dialog(char *message);
+#endif
 void major_changed_dialog(TOPLEVEL* w_current);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);

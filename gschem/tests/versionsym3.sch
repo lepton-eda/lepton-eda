@@ -49,3 +49,12 @@ blah=minor change without
 T 40600 55800 5 10 1 1 0 0 1
 refdes=Uminor3
 }
+C 43900 55900 1 0 0 versionsym_major.sym
+{
+T 43900 55700 5 10 1 1 0 0 1
+blah=major & minor change with attached
+T 44200 56800 5 10 1 1 0 0 1
+refdes=Umajor3
+T 45200 56600 5 10 0 0 0 0 1
+symversion=2.9
+}

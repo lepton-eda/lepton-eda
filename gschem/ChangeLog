@@ -20,6 +20,16 @@
 	* noweb/x_dialog.nw: Added code to implement the symbol has "changed 
 	majorly" dialog box.
 
+	* noweb/x_dialog.nw: Added some code to make the new dialog box
+	work with gtk+ 1.2.x.
+
+	* noweb/i_callbacks.nw: Added a question dialog box when reverting
+	a page.  I lost several schematics because I accidentally hit page
+	revert (you cannot undo a page revert).  This dialog box is only
+	implemented for gtk+ 2.2.x
+
+	* tests/versionsym*.sch: Minor updates
+
 2004-07-03 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: spelling and grammar fixes
