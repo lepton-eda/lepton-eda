@@ -17,6 +17,9 @@ SCM g_funcs_use_rc_values(void);
 SCM g_funcs_key_name(SCM keystring);
 SCM g_funcs_key_value(SCM keystring);
 SCM g_funcs_key_done(void);
+/* g_hook.c */
+SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object);
+SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value);
 /* g_key.c */
 void set_window_current_key(TOPLEVEL *w_current);
 void g_key_execute(int state, int keyval);
@@ -715,3 +718,5 @@ void x_window_close(TOPLEVEL *w_current);
 void x_window_close_all(void);
 TOPLEVEL *x_window_get_ptr(int wid);
 TOPLEVEL *x_window_search_page_clist(GtkWidget *findme);
+
+

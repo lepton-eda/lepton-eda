@@ -7,7 +7,7 @@ bin_PROGRAMS = gschem
 
 gschem_SOURCES = \
 	a_pan.c a_zoom.c \
-	g_register.c \
+	g_register.c g_hook.c\
 	g_rc.c g_key.c g_funcs.c \
 	globals.c gschem.c \
 	i_basic.c i_callbacks.c i_vars.c \

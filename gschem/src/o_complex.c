@@ -1,3 +1,4 @@
+/* -*- geda-c -*-
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
@@ -26,7 +27,9 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 void
 o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
@@ -233,8 +236,14 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 		w_current->internal_basename, 1, TRUE);
 
 	/* 1 should be define fix everywhere hack */
-
+	
 	o_current = w_current->page_current->object_tail;
+
+	if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F &&
+	    o_current != NULL) {
+		scm_run_hook(add_component_hook, gh_cons(g_make_attrib_smob_list(w_current, o_current), SCM_EOL));
+	}
+
 	/* put code here to deal with emebedded stuff */
 	if (w_current->embed_complex) {
 		char* new_basename;

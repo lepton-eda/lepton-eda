@@ -1,4 +1,5 @@
-/* gEDA - GPL Electronic Design Automation
+/* -*- geda-c -*-
+ * gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
@@ -28,6 +29,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 void
 o_move_start(TOPLEVEL *w_current, int x, int y)
@@ -191,6 +193,11 @@ o_move_end(TOPLEVEL *w_current)
 			break;
 
 			case(OBJ_COMPLEX):
+
+				if (scm_hook_empty_p(move_component_hook) == SCM_BOOL_F &&
+				    object != NULL) {
+					scm_run_hook(move_component_hook, gh_cons(g_make_attrib_smob_list(w_current, object), SCM_EOL));
+				}
 
 				o_complex_erase(w_current, object);
 				if (w_current->actionfeedback_mode == OUTLINE) {

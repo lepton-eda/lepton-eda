@@ -28,6 +28,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/globals.h"
 #include "../include/prototype.h"
 
 
@@ -265,5 +266,15 @@ g_register_funcs(void)
 	gh_new_procedure0_0 ("misc-misc2", g_key_misc2);
 	gh_new_procedure0_0 ("misc-misc3", g_key_misc3);
 	gh_new_procedure0_0 ("cancel", g_key_cancel);
+
+	g_init_attrib_smob();
+
+	/* Hook stuff */
+	scm_make_gsubr("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
+	add_component_hook  = scm_create_hook("add-component-hook", 1);
+	copy_component_hook = scm_create_hook("copy-component-hook", 1);
+	move_component_hook = scm_create_hook("move-component-hook", 1);
+
+	return;
 }
 

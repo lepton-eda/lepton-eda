@@ -1,4 +1,5 @@
-/* gEDA - GPL Electronic Design Automation
+/* -*- geda-c -*-
+ * gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
@@ -24,6 +25,7 @@
 
 #include "../include/x_states.h"
 #include "../include/prototype.h"
+#include "../include/globals.h"
 
 void
 o_copy_start(TOPLEVEL *w_current, int x, int y)
@@ -47,6 +49,7 @@ o_copy_end(TOPLEVEL *w_current)
 	SELECTION *temp_list = NULL;
 	SELECTION *s_current = NULL;
 	OBJECT *new_object = NULL;
+	OBJECT *complex_object = NULL;
 	OBJECT *object;
 	int diff_x, diff_y;
 	int screen_diff_x, screen_diff_y;
@@ -226,6 +229,8 @@ o_copy_end(TOPLEVEL *w_current)
 							page_current->
 							object_tail, object);
 				}
+				
+				complex_object = new_object;
 
 				if (w_current->actionfeedback_mode == OUTLINE) {
 					o_complex_draw_xor(w_current,
@@ -337,6 +342,10 @@ o_copy_end(TOPLEVEL *w_current)
 							new_object,
 							object->attached_to->
 							copied_to);
+
+						if (scm_hook_empty_p(copy_component_hook) == SCM_BOOL_F) {
+							scm_run_hook(copy_component_hook, gh_cons(g_make_attrib_smob_list(w_current, complex_object), SCM_EOL));
+				}
 
 					/* TODO: I have no idea if this is
                                            really needed.... ? */

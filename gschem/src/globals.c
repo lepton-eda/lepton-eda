@@ -1,4 +1,5 @@
-/* gEDA - GPL Electronic Design Automation
+/* -*- geda-c -*-
+ * gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2000 Ales V. Hvezda
  *
@@ -67,3 +68,7 @@ int stroke_info_mode = FALSE;
 /* Global buffers */
 OBJECT *object_buffer[MAX_BUFFERS];
 
+/* Hooks */
+SCM add_component_hook;
+SCM copy_component_hook;
+SCM move_component_hook;

@@ -1,4 +1,5 @@
-/* gEDA - GNU Electronic Design Automation
+/* -*- geda-c -*-
+ * gEDA - GNU Electronic Design Automation
  * gschem - GNU Schematic Capture
  * Copyright (C) 1998 Ales V. Hvezda
  *
@@ -68,3 +69,8 @@ extern int stroke_info_mode;
 #define MAX_BUFFERS 	5
 /* Global buffers */
 extern OBJECT *object_buffer[MAX_BUFFERS];
+
+/* Hooks */
+extern SCM add_component_hook;
+extern SCM copy_component_hook;
+extern SCM move_component_hook;
