@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([noweb/gschem.nw])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gschem
-VERSION=20041228
+VERSION=20050313
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 

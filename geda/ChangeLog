@@ -1,3 +1,7 @@
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20050313
+
 2005-02-21 14:18  Dan McMahill <danmc>
 
 	* graphman/Makefile.am, src/Makefile.am: add -g -O that I managed

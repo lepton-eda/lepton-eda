@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-15 10:42-0400\n"
+"POT-Creation-Date: 2005-03-08 23:58-0500\n"
 "PO-Revision-Date: 2003-09-20 18:27-0300\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
 "Language-Team: Potugues Brasil <pt_BR@li.org>\n"
@@ -15,16 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.1\n"
-
-#: src/support.c:121
-#, c-format
-msgid "Couldn't find pixmap file: %s"
-msgstr ""
-
-#: src/support.c:130
-#, c-format
-msgid "Error loading pixmap file: %s"
-msgstr ""
 
 #: src/interface.c:76
 msgid "gEDA"
@@ -54,7 +44,7 @@ msgstr "Fechar"
 msgid "Exit"
 msgstr "Sair"
 
-#: src/interface.c:151 src/interface.c:709
+#: src/interface.c:151 src/interface.c:717
 msgid "File"
 msgstr "Arquivo"
 
@@ -110,7 +100,7 @@ msgstr ""
 msgid "Project Properties"
 msgstr ""
 
-#: src/interface.c:525 src/interface.c:764
+#: src/interface.c:525 src/interface.c:772
 msgid "Name"
 msgstr ""
 
@@ -126,18 +116,28 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: src/interface.c:636 src/interface.c:783
+#: src/interface.c:637 src/interface.c:792
 msgid "Ok"
 msgstr ""
 
-#: src/interface.c:645 src/interface.c:792
+#: src/interface.c:650 src/interface.c:805
 msgid "Cancel"
 msgstr ""
 
-#: src/interface.c:697
+#: src/interface.c:705
 msgid "New file ..."
 msgstr ""
 
-#: src/interface.c:754
+#: src/interface.c:762
 msgid "Type"
+msgstr ""
+
+#: src/support.c:121
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr ""
+
+#: src/support.c:130
+#, c-format
+msgid "Error loading pixmap file: %s"
 msgstr ""

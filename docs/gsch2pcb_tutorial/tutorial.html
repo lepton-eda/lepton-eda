@@ -3,7 +3,7 @@
 <head>
     <title>gsch2pcb tutorial</title>
 </head>
-<body background="./images/paper1.gif">
+<body background="../gkrellm/paper1.gif">
 
 <center><h2>gschem -> gsch2pcb -> PCB</h2></center>
 <hr width=100% size=2>
@@ -23,16 +23,38 @@ The goal is to use gsch2pcb as the bridge between gschem and PCB so
 that the schematics can always be in sync with the PCB layout
 because all element additions or deletions in the layout will
 automatically be driven by changes in the schematics.
-<p> If you have versions less than gschem 20030525 or PCB 1.99 these
-tutorial examples may not work as expected.
-<p> If you have gEDA version 20030901 installed such that you are
-using its included gsch2pcb 0.9 and you are getting an error:
-<pre>
-    ERROR: Unbound variable: open-output-pipe
-</pre>
-then the problem is syntax in <i>gnet-gsch2pcb.scm</i> that worked
-in guile 1.4 but does not work in guile 1.6.  You'll need to upgrade to
-using at least gsch2pcb 1.0.1 to solve this problem.
+</blockquote>
+
+<h3> Tutorial Release Notes </h3>
+<blockquote>
+<ul>
+	<li>If you have versions less than gschem 20030525 or PCB 1.99 these
+	tutorial examples may not work as expected.
+	</li>
+	<li>If you have gEDA version 20030901 installed such that you are
+	using its included gsch2pcb 0.9 and you are getting an error:
+	<blockquote><pre>
+ERROR: Unbound variable: open-output-pipe
+	</pre></blockquote>
+	then the problem is syntax in <i>gnet-gsch2pcb.scm</i> that worked
+	in guile 1.4 but does not work in guile 1.6.  You'll need to upgrade to
+	using at least gsch2pcb 1.0.1 to solve this problem.
+	</li>
+	<li>As of about 1/9/2004 CVS PCB versions changed to using a hi
+	resolution output file format which will require using at
+	least gsch2pcb-1.4.
+	</li>
+	<li><h5> Mini Changelog</h5>
+	<ul>
+		<li> 1/10/2004 - corrected my sloppy PCB file elements which had
+			silkscreen lines overlapping solder pads.
+		</li>
+		<li> 12/23/2003 - added comments about new CVS PCB versions which
+			have the m4 and newlib directories default installed under
+			/usr/share or /usr/local/share.
+		</li>
+	</ul>
+	</li>
 </blockquote>
 
 <h3> Terminology </h3>
@@ -260,7 +282,8 @@ Edit the attributes of the components on the schematic.
 	library symbols having an initial <b>footprint</b> (and even <b>value</b>)
 	attribute default that covers most of your uses.  Or, when you add your
 	first component, edit it to have a good footprint default and then copy it
-	for all remaining components instead of adding them from the library.<br>
+	(select it and hit the <b>ec</b> keys) for all
+	remaining components instead of adding them from the library.<br>
 	Anyway, we're done for now with <b>one.sch</b>, so save it with
 	the menu <b>File->Save Page</b> and quit gschem.
 	</blockquote>
@@ -290,11 +313,14 @@ Edit the attributes of the components on the schematic.
 			<li> Move components and draw nets as before.
 			</li>
 			<li> Edit component attributes:<br>
-			Input module port: make <b>net</b> attribute be <b>vmixer:1</b>
-			so this net will be connected to the <b>vmixer</b> in one.sch.
+			Input module port: edit <b>net</b> attribute to be invisible
+			and have value <b>vmixer:1</b>
+			so this net will be connected
+			to the <b>vmixer</b> in one.sch.
 			Make the <b>value</b> attribute be <b>Vmixer</b>.<br>
-			Resistor: give it a <b>footprint</b> attribute of <b>R025</b>
-			and a <b>value</b> attribute like 10K.<br>
+			Resistor: give it invisible <b>footprint</b> attribute
+			<b>R025</b>
+			and a visible <b>value</b> attribute 10K.<br>
 			Transistor: add <b>value</b> attribute <b>2N3904</b> and
 			invisible <b>footprint</b> attribute <b>TO92</b>.<br>
 			BNC connector: add invisible <b>footprint</b> attribute
@@ -329,7 +355,7 @@ Edit the attributes of the components on the schematic.
 	<p>
 	Now we are done with the schematics except for assigning <b>refdes</b>
 	attributes and we can use the command <b>refdes_renum</b> to do this
-	for both schematics at once.  So, run:
+	for both schematics at once.  So, save <b>two.sch</b>, quit gschem and run:
 	<blockquote><pre>
 $ refdes_renum --pgskip one.sch two.sch
 	</pre></blockquote>
@@ -347,7 +373,11 @@ $ refdes_renum --pgskip one.sch two.sch
 	after you initially run <b>refdes_renum</b> and start a PCB
 	layout, to be safe you will
 	need to manually add (unique) <b>refdes</b> attributes for any
-	schematic components you might add.
+	schematic components you might add.  Also note that <b>refdes_renum</b> may
+	number your resistors differently than it did for my examples here
+	depending on the order in which resistors were added.  Keep that in
+	mind when comparing your eventual PCB layout to what you see in the
+	images below.
 	</blockquote>
 	<h4> Generate PCB Files from Schematics</h4>
 	<blockquote>
@@ -393,7 +423,7 @@ $ refdes_renum --pgskip one.sch two.sch
 	for tight layout situations.  You should also set the default line
 	and via sizes you
 	want for Signal, Power, Fat, and Skinny drawing in the 
-	<b>Sizes->adjust...</b> menu.  Then select the routing style you wish
+	<b>Sizes->adjust...</b> menu.  Then select the routing style you want
 	to use from the <b>Sizes</b> menu. You can set your
 	board size now or wait until later with <b>Edit->change board size</b>.
 	And it may be useful to you to set <b>Screen->display grid</b>.
@@ -465,7 +495,8 @@ $ refdes_renum --pgskip one.sch two.sch
 				middle mouse button and rotate them with the left mouse
 				button until the rats-nest lines look minimized.  Hit the
 				<b>f</b> key with the mouse on a pin to highlight
-				particular routes to help visualize the routes.
+				particular routes to help visualize the routes.  <b>Shift f</b>
+				to unhighlight.
 			</td>
 			</tr></table>
 		</td>
@@ -473,6 +504,13 @@ $ refdes_renum --pgskip one.sch two.sch
 	</table>
 
 	<blockquote>
+	Note: you can use the PCB auto placement feature instead of
+	manually placing the components as described above.  To do this
+	you would load the netlist, select the components you want to be
+	autoplaced (if this is the first PCB run, just <b>Select->select all
+	objects</b>) then do <b>Select->auto place selected elements</b>.
+	Then you can manually tune the PCB generated placements.
+	<p>
 	At this point you can start routing traces between pins connected
 	by rats nest lines.  On the left PCB toolbar,
 	select the <b>LINE</b> tool, select the layer you want to draw on
@@ -482,7 +520,7 @@ $ refdes_renum --pgskip one.sch two.sch
 	routes that need to be connected.
 	If you want to stop the current trace so you can start
 	drawing a new trace somewhere else, finish the current trace with
-	a middle mouse click.  Or auto route if you wish.
+	a middle mouse click.  Or you can play with auto routing here.
 	<p>
 	A very useful operation with the <b>SEL</b>
 	tool is to select multiple objects and then cut or copy them to a
@@ -568,21 +606,25 @@ $ refdes_renum --pgskip one.sch two.sch
 	modify a schematic to use a <b>file element</b>.  But first, it would
 	help to know about the default elements PCB provides.  Depending
 	on the location of your PCB install there will be a directory
-	<b>/usr/local/pcb_lib, /usr/lib/pcb_lib,</b> or possibly
-	something else.  Once you find your <b>pcb_lib</b> directory,
+	<b>/usr/local/share/pcb/newlib, /usr/share/pcb/newlib</b>, or possibly
+	something else (depending on the <i>prefix</i> specified when PCB
+	was installed).  PCB versions before 20031113 used <b>pcb_lib</b> instead
+	of <b>newlib</b> in the locations
+	<b>/usr/local/pcb_lib, </b> or <b>/usr/lib/pcb_lib,</b>. 
+	Once you find your <b>newlib</b> directory,
 	look at the file names in each subdirectory.  Each file name
 	is a name which may be used as a <b>footprint</b> attribute
 	for a schematic component.  For example, there is the file
-	<b>xxx/pcb_lib/2_pin_thru-hole_packages/0.125W_Carbon_Resistor</b>
+	<b>xxx/newlib/2_pin_thru-hole_packages/0.125W_Carbon_Resistor</b>
 	so if we wanted 1/8 watt resistors on our layout, we could
 	use <b>0.125W_Carbon_Resistor</b> as the resistor <b>footprint</b>
 	attribute instead of <b>R025</b>.  Try changing, say resistor R101 to
 	use <b>0.125W_Carbon_Resistor</b> in <b>one.sch</b> and
 	then run <b>gsch2pcb project</b>.  If gsch2pcb does not find
-	this element, then you need to add your <b>pcb_lib</b>
+	this element, then you need to add your <b>newlib</b>
 	directory to your <b>project</b> file with a line like:
 	<blockquote><pre>
-elements-dir /usr/lib/pcb_lib
+elements-dir /usr/lib/newlib
 	</pre></blockquote>
 	If gsch2pcb does find it, you will get:
 	<blockquote><pre>
@@ -605,8 +647,11 @@ board.pcb is backed up as board.pcb.bak1.
 	A common way to generate a custom symbol is to start with an
 	existing symbol and modify it.  One thing I don't like about
 	the <b>dual-opamp-1.sym</b> we used is that the power pins are
-	repeated on each symbol and it would make a page full of opamps
-	look a little cluttered.  It's possible with gschem for symbols to
+	repeated on each symbol.  While some will prefer this, I
+	think it makes a page full of opamps
+	look a little cluttered and it presents a good opportunity to
+	learn about <b>net</b> attributes in this tutorial.
+	It's possible with gschem for symbols to
 	have <b>net</b> attributes which can assign pins to a particular
 	net.  Instead of hooking up each opamp pin 8 to Vcc and pin 4 to
 	to Vee on the schematic, we can have that happen automatically and
@@ -730,7 +775,7 @@ No elements to add so not creating board.new.pcb
 </pre></blockquote>
 Where the gEDA gnetlist program seems a bit excited about finding the new
 Vcc and Vee <b>net</b> attributes we just added, and a new netlist
-was generated.  Now the schematic looks
+was generated.  Now I think the schematic looks
 cleaner:
 	<p>
 	<center><table border=1>
@@ -768,7 +813,7 @@ cleaner:
 	<p>
 	Run <b>pcb</b> and the first thing to do is go to the <b>Sizes</b>
 	menu and select <b>adjust "Signal" sizes</b>.  Set the via hole
-	to 42 and the via size to 70 or larger if you wish.  Then make
+	to 42 and the via size to 70 or larger as you like.  Then make
 	sure you use this via
 	size by selecting <b>Sizes->use "Signal" routing style</b>.  Select
 	<b>Screen->25 mil</b> and <b>Screen->display grid</b>.
@@ -787,10 +832,13 @@ cleaner:
 			<td>
 			<ul>
 				<li>Select the <b>VIA</b> tool and place two vias 400 mils
-				apart.
+				apart.</li>
 				<li>With the mouse on the left via, hit the <b>n</b>
 				key and give the via the name <b>1</b>.  Give the
 				right via the name <b>2</b>
+				</li>
+				<li> Pin 1 will be the cathode and this must agree with the
+				pin numbers in your diode gschem symbol.
 				</li>
 			</ul>
 
@@ -808,11 +856,13 @@ cleaner:
 			<ul>
 				<li>Select the <b>Silk</b> layer and the <b>LINE</b> tool.
 				</li>
-				<li>Draw the component outline as shown.
+				<li>Draw the component outline as shown with line width set
+					to 10 mils and the grid setting set to 10 mils.
 				</li>
 				<li>Draw the left fat cathode indicator with three lines after
-					setting line width to 20 and the grid setting
-					to 10 mils.
+					setting the line width to 20 mils.
+				</li>
+				<li> Don't let silk layer lines overlap solder pads. </li>
 			</ul>
 
 			</td>
@@ -838,11 +888,19 @@ cleaner:
 	<b>Note:</b> if you save the element with a name which is the same
 	as a <b>m4 element</b>, gsch2pcb will preferentially use the m4
 	element unless you give gsch2pcb the --use-files (or -f) option.
-	You may put <b>use-files</b> in a project file if you wish to always
+	You may put <b>use-files</b> in a project file if you want to always
 	give priority to using <b>file elements</b>.  The m4 element names appear
 	to use upper case, so you could also avoid the problem by using
-	lower case in your file element names.<br>
-	<p>
+	lower case in your file element names.  Also, the only way I know to make
+	the pin 1 of the symbol square is to edit the D400-1A file manually and
+	change the square flag in the Pin "1" line.  For example, change the
+	line:
+	<blockquote><pre>
+    Pin(0 0 70 20 70 42 "" "1" 0x00000001)
+to:
+    Pin(0 0 70 20 70 42 "" "1" 0x00000101)
+	</pre></blockquote>
+
 	You can now use <b>D400-1A</b> in a gschem schematic symbol
 	<b>footprint</b> attribute and gsch2pcb will find it provided
 	you have made the <b>packages</b> link described in the <b>Setup</b>
@@ -852,14 +910,15 @@ cleaner:
 elements-dir ~/gaf/pcb-elements
 	</pre></blockquote>
 
-	Possibly you've noticed, but there is something not right about the
-	<b>myproject1</b> example.
-	The transistor is backwards on the layout!
+	Possibly you've noticed, but there are some things not right about the
+	<b>myproject1</b> example.  For one thing, silk layer lines are
+	overlapping solder pads on some of the elements, and for another,
+	the transistor is backwards on the layout!
 	You otherwise shouldn't have a problem like this when working
 	with gschem and PCB, but transistor pin numbering can be confusing.
 	If you will be using transistors in your designs, here's a description
 	of my approach to
-	making sure transistor symbol pin numbering is
+	making sure my gschem transistor symbol pin numbering is
 	coordinated with PCB element pin numbers:
 	<a href="transistor-guide.html" name="transistor-guide.html">
 	transistor guide.</a>
@@ -876,13 +935,17 @@ elements-dir ~/gaf/pcb-elements
 	names, select <b>Screen->pinout shows number</b>.
 	<p>
 	I have libraries with transistor symbols and elements that you might
-	find useful, so if you wish you can get your custom
+	find useful, so as a convenience you can get your custom
 	libraries initially populated by installing my
-	<a href="http://web.wt.net/~billw/gsch2pcb/gsch2pcb-libs.tar.gz" name="gsch2pcb-libs.tar.gz">
-	gschem/PCB libraries </a>.
+	<a href="gsch2pcb-libs-20040110.tar.gz"
+	name="gsch2pcb-libs-20040110.tar.gz"> gschem/PCB libraries </a>.
 	Untar them under ~/gaf to mirror the setup of our example
 	and there will also be a
 	<b>~/gaf/pcb-elements.Readme</b> which documents the PCB elements.
+	<blockquote>
+	<i>Note: as of 1/10/2004 I've corrected the tarball pcb elements
+	to not overlap solder pads with silk layer lines.</i>
+	</blockquote>
 	If you untar them somewhere else,
 	you will need to make sure that gschem knows about them with
 	gschemrc/gnetlistrc <b>component-library</b> lines and that
@@ -899,20 +962,22 @@ elements-dir ~/gaf/pcb-elements
 	shows a new symbol for the 2N3904 which I created from my
 	custom <b>npn-ebc.sym</b> as described in my transistor guide.
 	  In the updated board.pcb layout,
-	compare the outline appearance of the transistor to the original
-	layout.  I also changed the <b>footprint</b> attribute for
+	if you compare the outline appearance of the transistor to the original
+	layout you see that the orientation is now correct and that silk layer
+	lines don't overlap the solder pads.
+	I also changed the <b>footprint</b> attribute for
 	resistors R102 and R103 in <b>one.sch</b> to my custom
 	1/8 watt <b>R0w8</b> and 1/4 watt <b>R0w4</b> elements to
 	illustrate the differences in style you can have with
 	custom elements.  You can also see the R101 style after its
 	footprint was changed to <b>0.125W_Carbon_Resistor</b> as suggested
 	above.  As you evaluate the differences in these styles, I'll mention
-	that for my custom elements I wanted sufficient room to display
-	value and refdes text (the 0.125W... element body is too small
-	to hold the R101 text) and I wanted the pin diameter a little larger
+	that for my custom elements I wanted to maximize room to display
+	value and refdes text (the 0.125W... element body could be a little
+	larger) and I wanted the solder pad diameter a little larger
 	so it will be more forgiving of board fabrication technique.
-	Also, the resistor pin spacing for my <b>R0w4</b> is slightly less than in
-	<b>R025</b> to improve component density.
+	Also, the resistor pin spacing for my <b>R0w4</b> is slightly less
+	than in <b>R025</b> to improve component density.
 
 	</blockquote>
 	<center><table cellspacing=30>
@@ -955,13 +1020,16 @@ elements-dir ~/gaf/pcb-elements
 	So for now all I can say is that the best
 	way to find out what's available is to read the m4 element files and
 	for this you need to know where the PCB
-	m4 files install location is.  On most installs it will be the directory
-	<b>/usr/X11R6/lib/X11/pcb/m4</b>, but if yours is
-	somewhere else you will
-	have to track it down.  By the way, if this directory <i>is</i> somewhere
-	different, then gsch2pcb won't be finding your <b>m4 elements</b> in
-	the above examples and you will need to add this directory
-	to your <b>project</b> file with a line like:
+	m4 files install location is.  As of PCB 20031113 this install
+	directory will most likely be <b>/usr/share/pcb/m4</b> or
+	<b>/usr/local/share/pcb/m4</b>, while on earlier PCB versions it could be
+	<b>/usr/X11R6/lib/X11/pcb/m4</b> (run <i>gsch2pcb --help</i> or
+	<i>gsch2pcb -v project</i> to see which of these directories gsch2pcb
+	is using).  But if your install is somewhere else you will
+	have to track it down.  By the way, if the m4 directory <i>is</i> somewhere
+	different from the above three, then gsch2pcb won't be finding your
+	<b>m4 elements</b> in the above examples and you will need to add
+	the correct m4 directory to your <b>project</b> file with a line like:
 	<blockquote><pre>
 m4-pcbdir /path/to/pcb/m4
 	</pre></blockquote>
@@ -1082,7 +1150,7 @@ m4-file /path/to/anyfile
 	For this tutorial, I'll use the first <b>pcb.inc</b> way, so copy over
 	the existing macro file:
 	<blockquote><pre>
-cd /usr/X11R6/lib/X11/pcb/m4
+cd /usr/local/share/pcb/m4  (or /usr/share/pcb/m4 or /usr/X11R6/lib/X11/pcb/m4)
 cp dil.inc ~/gaf/myproject1/pcb.inc
 cd ~/gaf/myproject1
 	</pre></blockquote>
@@ -1159,6 +1227,7 @@ way to set up for multiple users who need to share resources:
 			</pre>
 		</li>
 		<li> If the default PCB m4 install is not
+			<b>/usr/local/share/pcb/m4, /usr/share/pcb/m4,</b> or
 			<b>/usr/X11R6/lib/X11/pcb/m4</b>, then make the install location
 			known to all users of gsch2pcb by putting into
 			<b>/etc/gsch2pcb</b> or <b>/usr/local/etc/gsch2pcb</b> the line:
@@ -1191,7 +1260,7 @@ way to set up for multiple users who need to share resources:
 	<address>
 	<p align=center>
 	<a href="http://web.wt.net/~billw/gsch2pcb/gsch2pcb.html"
-		name="gsch2pcb Home">gsch2pcb Home</a>
+		name="www.gkrellm.net">gsch2pcb Home</a>
 	<br>
 	Bill Wilson <A HREF="mailto:bill--at--gkrellm.net">bill--at--gkrellm.net</A>
 	<br>

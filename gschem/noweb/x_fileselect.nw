@@ -1544,7 +1544,7 @@ void
 x_fileselect_comp_fill_components(FILEDIALOG *f_current, int row)
 {
   GSList *filenames, *filename;
-  gint width, max_width;
+  gint width = 0, max_width = 0;
 	
   gtk_clist_freeze (GTK_CLIST (f_current->file_list));
   gtk_clist_clear (GTK_CLIST (f_current->file_list));

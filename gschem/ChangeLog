@@ -1,3 +1,14 @@
+2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped version to 20050313
+
+	* po/POTFILES.in: For some odd reason, the list of files in this
+	file was really out of date, so updated it.  
+
+	* Ran make dist to update geda-gschem.pot
+
+	* noweb/x_fileselect.nw: Fixed uninitialized variable warning
+
 2005-03-05 Werner Hoch <werner.ho@gmx.de>
 	* noweb/o_misc.nw: added error handling for missing source pages
 	* noweb/x_dialog.nw: swapped apply and close button position
