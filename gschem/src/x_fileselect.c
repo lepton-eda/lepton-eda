@@ -1108,6 +1108,7 @@ x_fileselect_comp_update_current(FILEDIALOG *f_current,
 		temp = u_basic_strdup_multiple(f_current->directory, 
 				       f_current->filename, NULL);
 		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), temp);
+		free(temp);
 	} else if (f_current->directory && !f_current->filename) {
 		gtk_entry_set_text(GTK_ENTRY(f_current->filename_entry), 
 				   f_current->directory);
@@ -1129,8 +1130,6 @@ x_fileselect_comp_update_current(FILEDIALOG *f_current,
 					" ");
 	}
 #endif
-
-	free(temp);
 
 #if DEBUG 
 	printf("directory: %s\n", f_current->directory);
