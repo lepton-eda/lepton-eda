@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -318,8 +319,31 @@ add_head(void)
 	return(new_node);
 }
 
+/* The promote_invisible flag is either TRUE or FALSE */
+/* It controls if invisible text is promoted (TRUE) or not (FALSE) */
+int 
+o_complex_is_eligible_attribute (OBJECT *object, int promote_invisible) 
+{
+  char *ptr;
+
+  /* object is invisible and we do not want to promote invisible text */
+  if (object->visibility == INVISIBLE && promote_invisible == FALSE) {
+    return 0;
+  }
+
+  if (object->type==OBJ_TEXT && !object->attribute && !object->attached_to) { 
+    ptr=strchr(object->text_string,'=');
+    if (ptr && ptr[1]!='\0' && ptr[1]!=' ' && 
+         strncmp(object->text_string,"device=",7)!=0) {
+      return 1;
+    }
+  }
+  
+  return 0;
+}
+
 OBJECT *
-o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable)
+o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable, int attribute_promotion)
 {
 	OBJECT *new_node=NULL;
 	OBJECT *complex=NULL;
@@ -354,13 +378,11 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 		new_node->sel_func = NULL;
 	}
 
-	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);	
-
 	/* this was at the beginning and p_complex was = to complex */
 	complex = (OBJECT *) add_head();
 	
 	/* set the parent field now */
-	complex->complex_parent = object_list;
+	complex->complex_parent = new_node;
 
 	/* is the bit with the temp and object_tail needed? */
 	/* I don't like this at all hack */
@@ -379,12 +401,58 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	if (access(filename, R_OK)) {
 		fprintf(stderr, "Could not open [%s]\n", filename); 
 	} else {
-		o_read(w_current, complex, filename); 
+		o_read(w_current, complex, filename);
+	}
+
+	if (w_current->attribute_promotion) { /* controlled through rc file */
+
+	  OBJECT *tmp,*next;
+
+	  for (tmp=complex->next;tmp;tmp=next) {
+
+	    next=tmp->next;
+
+            /* valid floating attrib? */
+	    if (o_complex_is_eligible_attribute(
+                     tmp, w_current->promote_invisible)) { 
+
+	      /* Is attribute promotion called for? (passed in parameter) */
+	      if (attribute_promotion) {
+
+                /* remove tmp from the complex list */
+		if (tmp->next)
+		  tmp->next->prev=tmp->prev;
+		if (tmp->prev)
+		  tmp->prev->next=tmp->next;
+
+		/* Isolate tmp completely, now that it's removed from list */
+		tmp->next=tmp->prev=NULL;
+		
+		object_list = (OBJECT *) s_basic_link_object(tmp, object_list);
+		o_attrib_attach (w_current, object_list, tmp, new_node);
+		o_text_translate_world(w_current, x, y, tmp);
+
+	      } else { /* not promoting now, but deal with floating attribs */
+
+		if (w_current->keep_invisible == TRUE) {  
+                  /* if we are not promoting invisible attribs, keep them */
+		  /* around */
+                  tmp->visibility = INVISIBLE;
+                } else {
+                  /* else do the default behavior of deleting the original */
+                  /* object */
+                  s_delete(w_current, tmp);
+		}
+
+	      }
+	    }
+	  }
 	}
 
 	w_current->page_current->object_tail = temp_tail;
 	w_current->page_current->object_parent = temp_parent;
 
+	object_list = (OBJECT *) s_basic_link_object(new_node, object_list);
 	object_list->complex = complex;
 
 	if (mirror) {
@@ -528,7 +596,7 @@ o_complex_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[], char *versi
 				WHITE, 
 				x1, y1, 
 				angle, mirror,
-				clib, basename, selectable);
+				clib, basename, selectable, FALSE);
 
 		if (clib)
 			free(clib);
@@ -643,7 +711,7 @@ o_complex_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current)
 			o_current->x, o_current->y, 
 			o_current->angle, o_current->mirror,
 			o_current->complex_clib, o_current->complex_basename, 
-			1); 
+			1, FALSE); 
 			/* 1 for sel is a hack */
 
 	/*if (!w_current->ADDING_SEL) {*/
