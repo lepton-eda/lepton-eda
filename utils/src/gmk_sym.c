@@ -278,22 +278,22 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name)
      }
   else if (shape == DOT_SHAPE)
      {
+     printf("V %d %d 50 %d\n",pos_x-50*xdir,pos_y-50*ydir,CYAN);
      printf("P %d %d %d %d %d\n",pos_x-100*xdir,pos_y-100*ydir,
                                  pos_x-pin_len*xdir,pos_y-pin_len*ydir,
 			         WHITE);
      printf("{\n");
-     printf("V %d %d 50 %d\n",pos_x-50*xdir,pos_y-50*ydir,CYAN);
      }
   else if (shape == CLOCK_SHAPE)
      {
-     printf("P %d %d %d %d %d\n",pos_x,pos_y,
-                                 pos_x-pin_len*xdir,pos_y-pin_len*ydir,
-				 WHITE);
-     printf("{\n");
      printf("L %d %d %d %d %d\n",pos_x-100*ydir,pos_y-100*xdir,
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
      printf("L %d %d %d %d %d\n",pos_x+100*ydir,pos_y+100*xdir,
                                  pos_x+100*xdir,pos_y+100*ydir,GREEN);
+     printf("P %d %d %d %d %d\n",pos_x,pos_y,
+                                 pos_x-pin_len*xdir,pos_y-pin_len*ydir,
+				 WHITE);
+     printf("{\n");
      }
    x = pos_x;
    y = pos_y;
@@ -309,9 +309,11 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name)
 	       break;
        case R_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size-50-shape_offset,pos_y-50,GREEN,font_size);
 	       break;
-       case B_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y+50,GREEN,font_size);
+       /*case B_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y+50,GREEN,font_size); commented out by Rolf (avh) */
+       case B_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y+75+shape_offset,GREEN,font_size);
 	       break;
-       case T_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y-150,GREEN,font_size);
+       /* case T_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y-150,GREEN,font_size); commented out by Rolf (avh) */
+	case T_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y-name_size-50-shape_offset,GREEN,font_size);
 	       break;
        }
      printf("%s\n",name);

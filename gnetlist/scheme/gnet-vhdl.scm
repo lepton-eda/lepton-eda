@@ -21,33 +21,54 @@
 ;;; reshaped for vhdl. Doing this now saves labour when the implementations
 ;;; starts to divert further.
 
-;;; Get port list
-(define vhdl:get-port-list
-  (lambda ()
-    ;; construct list
-    (list (vhdl:get-matching-nets "device" "IPAD")
-	  (vhdl:get-matching-nets "device" "OPAD")
-	  (vhdl:get-matching-nets "device" "IOPAD"))))
+;;; Get port list of top-level Entity
+;;; THHE changed this to the urefs of the I/O-PAD symbols rather than the
+;;; net names. So the uref of the I/O port will become the port name in
+;;; the VHDLport clause.
 
-;;; Get matching nets
-(define vhdl:get-matching-nets
-  (lambda (attribute value)
-    (map car (vhdl:filter attribute value packages))))
-
+;;; THHE
+;;; 
+;;; Since VHDL know about port directions, pins need a additional attribute.
+;;; The code assumes the attribute "type" (IN, OUT, INOUT) on each pin of a symbol.
+;;; In addition you can add the attribute "width" for a very simple definition of
+;;; busses. (Not complete yet!)
 ;;;
 
-(define vhdl:filter 
+(define vhdl:get-top-port-list
+  (lambda ()
+    ;; construct list
+    (list (vhdl:get-matching-urefs "device" "IPAD"  packages)
+	  (vhdl:get-matching-urefs "device" "OPAD"  packages)
+	  (vhdl:get-matching-urefs "device" "IOPAD" packages))))
+
+;;; Get matching urefs
+(define vhdl:get-matching-urefs
   (lambda (attribute value package-list)
-    (cond ((null? package-list) '())
-	  ((string=? (gnetlist:get-package-attribute (car package-list) 
-						      attribute) value)
-	   (cons 
-	    (map (lambda (pin)
-		   (car (gnetlist:get-nets (car package-list) pin)))
-		 (pins (car package-list)))
-	    (vhdl:filter attribute value (cdr package-list))))
-	  (else (vhdl:filter attribute value (cdr package-list)))))
+     (cond ((null? package-list) '())
+          ((string=? (gnetlist:get-package-attribute (car package-list)
+                                                      attribute) value)
+           (cons
+            (cons (car package-list) (gnetlist:get-package-attribute (car package-list) "width"))
+            (vhdl:get-matching-urefs attribute value (cdr package-list))))
+          (else (vhdl:get-matching-urefs attribute value (cdr package-list))))
+    
+  )
 )
+
+;;; THHE did not need it anymore
+;
+;(define vhdl:filter 
+;  (lambda (attribute value package-list)
+;    (cond ((null? package-list) '())
+;	  ((string=? (gnetlist:get-package-attribute (car package-list) 
+;						      attribute) value)
+;	   (cons 
+;	    (map (lambda (pin)
+;		   (car (gnetlist:get-nets (car package-list) pin)))
+;		 (pins (car package-list)))
+;	    (vhdl:filter attribute value (cdr package-list))))
+;	  (else (vhdl:filter attribute value (cdr package-list)))))
+;)
 
 ;;; Port Clause
 ;;;
@@ -103,17 +124,36 @@
 
 ;;; This little routine writes a single pin on the port clause.
 ;;; It assumes a list containing (portname, mode, type) such as
-;;; (CLK in Std_Logic).
-
+;;; (CLK in Std_Logic width).
+;;;
+;;; THHE If you added a attribute width=n to a pin or to a I/O-PAD, you get
+;;;      portname : IN Std_Logic_Vector(width-1 downto 0)
+;;;
 (define vhdl:write-port
   (lambda (port p)
     (if (not (null? port))
-	(begin
-	  (display (car port) p)
-	  (display " : " p)
-	  (display (cadr port) p)
-	  (display " " p)
-	  (display (caddr port) p)
+        (begin
+          (if (string=? (cadddr port) "unknown")
+	    (begin
+	      (display (car port) p)
+	      (display " : " p)
+	      (display (cadr port) p)
+	      (display " " p)
+	      (display (caddr port) p)
+            )
+          )
+          (if (not (string=? (cadddr port) "unknown"))
+	    (begin
+	      (display (car port) p)
+	      (display " : " p)
+	      (display (cadr port) p)
+	      (display " " p)
+	      (display (caddr port) p)
+              (display "_Vector(" p)
+              (display (- (string->number(cadddr port)) 1) p)
+              (display " downto 0)" p) 
+            )
+          )
 	)
     )
   )
@@ -129,7 +169,6 @@
 	  (display "    PORT (" p)
 	  (newline p)
 	  (display "        " p)
-	  (display (car list))
 	  (vhdl:write-port (car list) p)
 	  (for-each (lambda (pin)
 		      (begin
@@ -163,11 +202,11 @@
       (vhdl:write-port-list
         (append
 	  (map (lambda (pin)
-		      (list pin "in" "Std_Logic")) in)
+		      (list (car pin) "in" "Std_Logic" (cdr pin))) in)
 	  (map (lambda (pin)
-		      (list pin "out" "Std_Logic")) out)
+		      (list (car pin) "out" "Std_Logic" (cdr pin))) out)
 	  (map (lambda (pin)
-		      (list pin "inout" "Std_Logic")) inout)
+		      (list (car pin) "inout" "Std_Logic" (cdr pin))) inout)
 	)
 	p
       )
@@ -230,11 +269,19 @@
       ; entity_header := [ generic_clause port_clause ]
       ; Insert generic_clause here when time comes
       ; port_clause
+      ;;; <DEBUG>
+      ;(newline)
+      ;(display "The schematic contains the following devices:")
+      ;(newline)
+      ;(display unique-devices)
+      ;(newline)
+      ;(newline)
+      ;;; </DEBUG>
       (vhdl:write-port-clause port-list p)
       ; entity_declarative_part is assumed not to be used
       ; entity_statement_part is assumed not to be used
       ; Entity trailer
-      (display "END ENTITY " p)
+      (display "END " p)
       (display module-name p)
       (display ";" p)
       (newline p)
@@ -268,35 +315,111 @@
 ;;;    be in line with good VHDL-93 practice and keep compilers happy.
 
 (define vhdl:write-component-declarations
-  (lambda (components p)
+  (lambda (device-list p)
     (begin
+      ;;; <DEBUG>
+      ;(display "uref : package : (( IN )( OUT )(INOUT ))")
+      ;(newline)
+      ;(display "========================================")
+      ;(newline)
+      ;;; </DEBUG>
       (for-each
-         (lambda (component)
-	   (begin
-	     (let ((device (get-device component)))
-	       ; Hmm... I just grabbed this if stuff... do I need it?
-	       (if (not (memv (string->symbol device) ; ignore specials
-			      (map string->symbol
-				   (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
-		   (begin
+        (lambda (device)
+          (begin
+            ; Hmm... I just grabbed this if stuff... do I need it?
+	    (if (not (memv (string->symbol device) ; ignore specials
+	  	           (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+		(begin
 		     (display "    COMPONENT " p)
-		     (display (get-device component) p)
-		     (display " IS" p)
+		     (display device p)
+		     ;(display " IS" p)
 		     (newline p)
 		     ; Generic clause should be inserted here
-; XXX - Broken!		     (vhdl:write-port-clause (gnetlist:get-pins-nets component) p)
+                     ;;; <DEBUG>
+                     ;(display (find-device packages device))
+                     ;(display " : ")
+                     ;(display device)
+                     ;(display " : ")
+                     ;(display (vhdl:get-device-port-list 
+                     ;                    (find-device packages device)
+                     ;         )
+                     ;)
+                     ;(newline)
+                     ;;; </DEBUG>
+                     (vhdl:write-port-clause (vhdl:get-device-port-list 
+                                                (find-device packages device)) 
+                                             p)
 		     (display "    END COMPONENT " p)
-		     (display (get-device component) p)
 		     (display ";" p)
 		     (newline p)
-		     (newline p))))
-             )
-	   )
-         components
+		     (newline p)
+                )
+            )
+          )
+        ) device-list
       )
     )
   )
 )
+
+;;; THHE
+;;; Build the port list from the symbols
+;;;
+;;; ... wouldn't it be better to feed get-pins, get-pin-attribute and co.
+;;;     with the device rather than the component? pin names and atributes are locked to
+;;;     the symbol and not to the instance of the symbol in the sheet!
+
+(define vhdl:get-device-port-list
+  (lambda (device)
+    ;; construct list
+    (list (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "IN")
+	  (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "OUT")
+	  (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "INOUT")
+    )
+  )
+)
+
+;;; THHE
+;;; get a list of all pins of a given type
+;;;
+
+(define vhdl:get-device-matching-pins
+  (lambda (device pin-list value)
+    (cond ((null? pin-list) '())
+	  ((string=? (gnetlist:get-pin-attribute device (car pin-list) "type" )
+                     value)
+	   (cons 
+            (cons (car pin-list) (gnetlist:get-pin-attribute device (car pin-list) "width"))  
+	    (vhdl:get-device-matching-pins device (cdr pin-list) value))
+           )
+	  (else (vhdl:get-device-matching-pins device (cdr pin-list) value))
+    )
+  )
+)
+
+;;; THHE
+;;; build a list of all unique devices in in the list
+;;;
+
+(define vhdl:get-unique-devices
+  (lambda (device-list)
+      (cond ((null? device-list) '())
+            ((not (contains? (cdr device-list) (car device-list)))
+             (append (vhdl:get-unique-devices (cdr device-list)) 
+                     (list (car device-list))))
+            (else (vhdl:get-unique-devices (cdr device-list)))
+      )
+  )
+)
+
+;;; THHE
+;;; build a list of  all unique devices in the schematic
+;;;
+
+(define unique-devices
+  (vhdl:get-unique-devices (map get-device packages))
+)
+
 
 ;;; Signal Declaration
 ;;;
@@ -391,7 +514,8 @@
     (begin
       ; Due to my taste will the component declarations go first
       ; XXX - Broken until someday
-      ; (vhdl:write-component-declarations packages p)
+      ; THHE fixed today ;-)
+      (vhdl:write-component-declarations unique-devices p)
       ; Then comes the signal declatations
       (vhdl:write-signal-declarations p)
     )
@@ -453,28 +577,117 @@
     (begin
       (display "-- Architecture statement part" p)
       (newline p)
-      (for-each (lambda (package)
-		  (begin
-		    (let ((device (get-device package)))
-		      (if (not (memv (string->symbol device)
-				     (map string->symbol
-					  (list "IOPAD" "IPAD" "OPAD"
-						"HIGH" "LOW"))))
-			  (begin
-			    (display "    " p)
-			    ; label
-			    (display package p)
-			    (display " : ENTITY " p)
-			    ; entity name
-			    (display (get-device package) p)
-			    (newline p)
-			    ; Generic map aspect should go in here
-			    ; Port map aspect
-			    (vhdl:write-port-map package p)
-			    (display ";" p)
-			    (newline p)
-			    (newline p))))))
-		  packages)))
+      (vhdl:write-component-instantiation-statements packages p)
+      (display "-- Signal assignment part" p)
+      (newline p)
+      (vhdl:write-signal-assignment-statements packages p)
+    )
+  )
+)
+;;; THHE
+;;; write component instantiation for each component in the sheet
+;;;
+
+(define vhdl:write-component-instantiation-statements
+  (lambda (packages p)
+    (for-each (lambda (package)
+      (begin
+        (let ((device (get-device package)))
+          (if (not (memv (string->symbol device)
+                         (map string->symbol
+                                (list "IOPAD" "IPAD" "OPAD"
+                                 "HIGH" "LOW"))))
+            (begin
+              (display "    " p)
+              ; label
+              (display package p)
+              (display " : " p)
+              ; entity name
+              (display (get-device package) p)
+              (newline p)
+              ; Generic map aspect should go in here
+              ; Port map aspect
+              (vhdl:write-port-map package p)
+              (display ";" p)
+              (newline p)
+              (newline p)
+            )
+          )
+        )
+      )
+    )
+    packages)
+  )
+)
+
+;;; THHE
+;;; Write the signal assignment for the top-level ports
+;;; Since I like to have the urefs as port names in the top
+;;; level entity, I have to assign them to the correspinding nets as well
+
+(define vhdl:write-signal-assignment-statements
+  (lambda (packages p)
+    (begin
+      (for-each (lambda (port-ass) (vhdl:write-in-signal-assignment port-ass p))
+        (vhdl:get-top-level-ports packages "IPAD"))
+      (for-each (lambda (port-ass) (vhdl:write-out-signal-assignment port-ass p))
+        (vhdl:get-top-level-ports packages "OPAD"))
+      (for-each (lambda (port-ass) (vhdl:write-inout-signal-assignment port-ass p))
+        (vhdl:get-top-level-ports packages "IOPAD"))
+    )
+  )
+)
+;;; THHE
+;;; get a list of the top-level ports (the urefs of the I/O-PADs)
+
+(define vhdl:get-top-level-ports
+  (lambda (package-list pad-type)
+    (cond ((null? package-list) '())
+          ((string=? (get-device (car package-list)) pad-type)
+           (cons (cons (car package-list)
+                       (cdar (gnetlist:get-pins-nets (car package-list))) )
+                 (vhdl:get-top-level-ports (cdr package-list ) pad-type )))
+           (else (vhdl:get-top-level-ports (cdr package-list ) pad-type ))
+
+    )
+  )
+)
+
+;;;THHE
+(define vhdl:write-in-signal-assignment
+  (lambda (port-assignment p)
+    (begin
+      (display (cdr port-assignment) p)
+      (display " <= " p)
+      (display (car port-assignment) p)
+      (display ";" p)
+      (newline p)
+    )
+  )
+)
+
+;;;THHE
+(define vhdl:write-out-signal-assignment
+  (lambda (port-assignment p)
+    (begin
+      (display (car port-assignment) p)
+      (display " <= " p)
+      (display (cdr port-assignment) p)
+      (display ";" p)
+      (newline p)
+    )
+  )
+)
+
+
+;;;THHE
+(define vhdl:write-inout-signal-assignment
+  (lambda (port-assignment p)
+    (begin
+      (vhdl:write-in-signal-assignment port-assignment p)
+      (vhdl:write-out-signal-assignment port-assignment p)
+    )
+  )
 )
 
 ;;; Port map aspect
@@ -607,7 +820,7 @@
     (newline p)
     ; architecture_statement_part
     (vhdl:write-architecture-statement-part packages p)
-    (display "END ARCHITECTURE netlist;" p)
+    (display "END netlist;" p)
     (newline p)
   )
 )
@@ -618,8 +831,8 @@
 (define vhdl
   (lambda (output-filename)
     (let ((port (open-output-file output-filename))
-	  (module-name "top")
-	  (port-list (vhdl:get-port-list)))
+	  (module-name (gnetlist:get-toplevel-attribute "module-name"))
+	  (port-list (vhdl:get-top-port-list)))
       (begin
 
 ;; No longer needed... especially since VHDL isn't a valid mode. :-) 
@@ -631,7 +844,8 @@
 	(vhdl:write-context-clause port)
 	; library_unit := primary_unit secondary_unit
 	(vhdl:write-primary-unit module-name port-list port)
-	(vhdl:write-secondary-unit "top" port)
+        (newline port)
+	(vhdl:write-secondary-unit module-name port)
       )
       (close-output-port port)
     )

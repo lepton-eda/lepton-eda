@@ -1,3 +1,8 @@
+2001-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* scheme/gnet-vhdl.scm: Integrate Thomas Heidel's VHDL bug fixes
+	  (to generate better VHDL output)
+
 2001-03-01  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/*.c: Misc -Wall warnings cleaned up

@@ -9,6 +9,13 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2001-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/gmk_sym.c: Patched file according to the fixes which 
+	  Rolf Fiedler provided (polarity bubbles and clock symbols are
+	  not attached as attributes), also fixed the orientation of 
+	  text for top and bottom pins.
+
 2001-02-23  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/gmk_sym.c: Added #include <time.h> to see if that solves
