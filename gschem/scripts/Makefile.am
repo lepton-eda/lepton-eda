@@ -1,5 +1,5 @@
 
-EXTRA_DIST = ChangeLog geda_totexi.in geda_totexi.awk makeallimages \
+EXTRA_DIST = ChangeLog geda_totexi.in makeallimages \
 	     makeimages print.scm notangle_guile.scm.in
 
 MOSTLYCLEANFILES =	*.log *~

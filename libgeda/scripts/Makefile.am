@@ -1,6 +1,5 @@
 
-EXTRA_DIST = 	geda_totexi.in geda_totexi.awk prepnoweb \
-		notangle_guile.scm.in
+EXTRA_DIST = 	geda_totexi.in prepnoweb notangle_guile.scm.in
 
 MOSTLYCLEANFILES = 	*.log *~
 CLEANFILES = 		*.log *~
