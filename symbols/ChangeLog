@@ -1,3 +1,9 @@
+2004-01-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* 4000/40106-1.sym 4000/4061-1.sym 4000/4062-1.sym 4000/4513-1.sym
+	4000/4580-1.sym 4000/4723-1.sym analog/pot-1.sym analog/pot-2.sym:
+	Changed the footprint= attribute to be none (not None or NONE).
+
 2004-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* DS26LS31-1.sym 74133-1.sym switch-spdt-2.sym

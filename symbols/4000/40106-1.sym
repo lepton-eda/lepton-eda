@@ -31,7 +31,7 @@ net=VSS:14
 T 1700 400 5 10 0 0 0 0 1
 device=40106
 T 1700 600 5 10 0 0 0 0 1
-footprint=None
+footprint=none
 T 1700 800 5 10 0 0 0 0 1
 numslots=6
 T 1700 1000 5 10 0 0 0 0 1

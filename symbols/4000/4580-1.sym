@@ -4,7 +4,7 @@ refdes=U?
 T 2900 2050 5 10 0 0 0 0 1
 device=4580
 T 2900 2250 5 10 0 0 0 0 1
-footprint=None
+footprint=none
 T 2900 2450 5 10 0 0 0 0 1
 net=VSS:12
 T 2900 2650 5 10 0 0 0 0 1

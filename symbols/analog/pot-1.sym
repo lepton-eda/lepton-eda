@@ -51,6 +51,6 @@ pins=3
 T 800 1100 5 10 0 1 0 0 1
 class=DISCRETE
 T 800 1500 8 10 0 0 0 0 1
-footprint=NONE
+footprint=none
 T 800 700 5 10 0 0 0 0 1
 numslots=0
