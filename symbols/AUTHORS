@@ -549,6 +549,7 @@ Jan Stap:		- For contributing the following symbols:
 Onno Kortmann:		- For contributing the following symbols:
 
  			  voltmeter-1.sym lm1877-1.sym mosfet-with-diode-1.sym
+			  ntc-1.sym, l200-1.sym, tfds4500-1.sym 
 
 Thomas Maeke:		- For contributing the following symbols:
 
@@ -609,6 +610,14 @@ lvu
 paulo.s.carneiro
 steveu
 tkeisala
+ajkerr
+jerzy
+rmiller
+leon.kos
+saenen
+bjornar.ness
+tomeu
+nao
 
 Thanks.
 

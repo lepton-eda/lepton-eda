@@ -10,6 +10,17 @@
 
 	* 74/7432-2.sym: Added new symbol by Mario Klebsch.
 
+	* analog/bridge-2.sym analog/fuse-2.sym analog/npn-IGBT-1.sym 
+	analog/ntc-1.sym analog/transformer-2.sym analog/transformer-3.sym 
+	analog/transformer-4.sym analog/triac-1.sym 
+	connector/smart-media-1.sym linear/l200-1.sym linear/lm7912-1.sym 
+	maxim/max713-1.sym maxim/max7652-1.sym micro/AT89C2051-1.sym 
+	micro/DS1602-1.sym micro/M41T00-SO8-1.sym micro/mc68hc705kj1-1.sym 
+	opto/tfds4500-1.sym: Added a bunch of new symbols
+
+	* memory/93Cx6-1.sym: Fixed symbol based on patch from Holger Dietze
+	Fix for Bug#65
+
 2003-05-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.in: Updated version
