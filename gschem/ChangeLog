@@ -9,8 +9,12 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+7/14/99 Wrote functions to handle file name extention in i_callback.c.
+
+	Fixed a memory leak in g_funcs_print(). (by Kazu Hirata)
+
 7/13/99 Cleaned up i_callbacks.c (by Kazu Hirata)
-	
+
 7/12/99 Moved the core of a_pan into a_pan_calc
 
 	Implemented the zoom and pan to where the mouse is (center at the

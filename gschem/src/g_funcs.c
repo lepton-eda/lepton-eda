@@ -46,6 +46,9 @@ SCM g_funcs_print(SCM filename)
 	char *string;
 
 	string = gh_scm2newstr(filename, NULL);
+	if (string == NULL) {
+		return SCM_BOOL_T;
+	}
 
 	if (output_filename) {
 		f_print(global_window_current, output_filename);
@@ -53,11 +56,7 @@ SCM g_funcs_print(SCM filename)
 		f_print(global_window_current, string);
 	}
 
-	/* TODO: don't I have to this? */
-#if 0
 	free(string);
-#endif
-
 	return SCM_BOOL_T;
 }
 

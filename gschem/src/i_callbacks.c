@@ -49,17 +49,30 @@
  * based on Java in that it never changes the contents of strings and
  * just keeps creating new strings. */
 
-#if 0
-/* Kazu Hirata <kazu@seul.org> on July 13, 1999 - Returns a pointer to
+#if 1
+/* Kazu Hirata <kazu@seul.org> on July 14, 1999 - My own version of
+ * strdup(). */
+static char *
+my_strdup(const char* p)
+{
+	char *q = (char *) malloc(strlen(p) + 1);
+	if (q != NULL) {
+		strcpy(q, p);
+	}
+	return q;
+}
+
+/* Kazu Hirata <kazu@seul.org> on July 14, 1999 - Returns a pointer to
  * the last '.' in the given string. If there is none, the function
  * returns NULL. If you want to change the extention using the return
  * value of the function, you need to do pointer arithmetic, assuming
  * your fname is defined as a constant. :-) */
-const char *fnameext_get(const char* fname)
+const char *
+fnameext_get(const char* fname)
 {
 	const char *p = strrchr(fname, '.');
 
-	/* if '.' is the only one and is the first character, ignore
+	/* if '.' is the only '.' and is the first character, ignore
          * it */
 	if(p == fname) {
 		p = NULL;
@@ -67,26 +80,28 @@ const char *fnameext_get(const char* fname)
 	return p;
 }
 
-/* Kazu Hirata <kazu@seul.org> on July 13, 1999 - The function removes
+/* Kazu Hirata <kazu@seul.org> on July 14, 1999 - The function removes
  * an extention including a '.' if any and returns the new string in a
  * newly allocated memory. If there is no '.' after the first
  * character, then the function simply returns a copy of fname. If
  * memory allocation fails, the function returns NULL. */
-/**************************************
- * This function is not completed yet *
- *************************************/
-char *fnameext_remove(const char *fname)
+char *
+fnameext_remove(const char *fname)
 {
 	const char *p = fnameext_get(fname);
-	char* fname_new;
+	char *fname_new;
 	int len;
 
 	if(p == NULL) {
-		fname_new = strdup(p);
+		fname_new = my_strdup(p);
 	} else {
-		len = p - fname + 1;
-		fname_new = malloc(sizeof(char) * len);
+		len = (p - fname) + 1;
+		fname_new = (char *) malloc(sizeof(char) * len);
+		if(fname_new == NULL) {
+			return NULL;
+		}
 		strncpy(fname_new, fname, len -1);
+		fname_new[len] = '\0';
 	}
 	return fname_new;
 }
@@ -96,13 +111,23 @@ char *fnameext_remove(const char *fname)
  * memory. ext must not have '.'  as the first character unless you
  * wish an extention like '..c'. If memory allocation fails, the
  * function returns NULL. */
-/**************************************
- * This function is not completed yet *
- *************************************/
 char *fnameext_add(const char *fname, const char* ext)
 {
-	/* do something */
-	return NULL;
+	char *p;
+	
+	/* TODO: use my_strdups */
+	p = (char *) malloc(sizeof(char) *
+			    strlen(fname) +
+			    1 + /* the length of "." */
+			    strlen(ext) +
+			    1);
+	if(p == NULL) {
+		return NULL;
+	}
+	strcpy(p, fname);
+	strcat(p, ".");
+	strcat(p, ext);
+	return p;
 }
 #endif
 
@@ -132,7 +157,7 @@ DEFINE_I_CALLBACK(file_new)
 	/* TODO: probably 256 is enough, but shuold be something like
          * getcwd(NULL, 0); */
 	if (getcwd(w_current->cwd, 256)) {
-		/* HACK: the #'s are for 10 digits hack */
+		/* TODO: the #'s are for 10 digits hack */
 		/* TODO: use strdups */
 		/* TODO: perform a NULL check */
 		temp_filename = (char *) malloc(
