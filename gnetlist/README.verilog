@@ -1,9 +1,82 @@
-
-Latest README:
-
 Verilog netlister readme.
 
 THIS IS FREE SOFTWARE, see the included file COPYING for more info.
+
+Latest README:
+
+	This is the fourth release of the Verilog netlister for gEDA.
+
+	New in this release:
+
+	1) Multiple width wires.
+
+How to use: (mostly taken from a previous readme... )
+
+       Here's how to proceed to make a schematic that can be netlisted
+to verilog.
+
+	   1) Create your modules by the standard method, keep in mind
+              that you must supply a `pin#' attribute for each port
+              you want to create in the generated verilog.  gmk_sym is
+              useful for this.
+
+	   2) Place each of your newly created modules on the
+              schematic.  You may also place primitives from the
+              `verilog' symbol library.  Be sure to give a _unique_
+              `uref' to every symbol you place on the schematic,
+              unless two symbols are actually different parts of the
+              same module, and the pins listed on each symbol do not
+              have any names in common.  Otherwise they will not get
+              netlisted.
+
+	   3) Connect nets between the modules you want.  Remember, if
+              you want legible Verilog later, don't forget to name all
+              your nets by attaching `label' attributes to them.  For
+              Multiple bit wires just use standard Verilog notation.
+              The netlister will figure out which bit ordering you
+              want.  Be sure to have at least one net labeled with the
+              complete range expression, otherwise the netlister will
+              guess at whether you wanted net[15:0] or net[0:15] in
+              your declarations.  Any inconsistent ranges will be
+              reported as a warning.  Strings that appear to be
+              invalid Verilog identifiers will be printed with a
+              warning, but otherwise ignored. (If you get a warning
+              for a valid Verilog identifier, please post a bug
+              report!)
+
+	   4) Insert IPAD's, OPAD's, and IOPAD's for all the nets you
+              want to be visible in the module declaration statement.
+              It is especially important to make sure that the nets
+              you hook up to the pads are named, as the net names
+              could change from run to run, that's a bad thing. (I/O
+              pads would be a good place to put the aformentionned
+              full range expressions.  Range expressions on I/O pads
+              are ignored when outputting the module declaration, but
+              they are used in figuring out the final bit ranges.)
+              Every pad must have a unique uref, otherwise the
+              netlister will get confused.
+
+ 	   5) Add an unattached attribute `module_name=Your_Module'
+	      somewhere on the schematic, near the title block is
+	      good.  This will name the generated Verilog module
+	      `Your_Module'.
+		
+	   6) Save your design.
+
+	   7) Run the schematic through the netlister:
+
+		  gnetlist -g verilog -o output.v schematic.sch
+
+           7a) Check the output for correctness, _especially_ if you got
+               any warnings. (There should be no warnings.)
+
+	   8) Feed the netlist to your favorite simulator/synthesis tool.
+
+	
+					Mike Jarabek
+
+
+----- OLDER README.verilog's -----
 
         This is the third release of the Verilog netlister for geda.
 
@@ -61,8 +134,6 @@ THIS IS FREE SOFTWARE, see the included file COPYING for more info.
 
         gnetlist -g verilog -o 7447.v examples/sch/7447.sch
 
-
------ OLDER README.TXT's -----
 
 (This README was from 19990629)
 Verilog netlister readme.
