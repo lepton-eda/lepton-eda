@@ -64,17 +64,18 @@ s_page_free(TOPLEVEL *w_current, PAGE *p_current)
 	/* printf("freeing\n");*/
 	s_delete_list_fromstart(w_current, p_current->object_head);
 	w_current->REMOVING_SEL = 1;
-	s_delete_list_fromstart(w_current, p_current->selection_head);
+ 	
 	s_delete_list_fromstart(w_current, p_current->complex_place_head);
 	s_delete_list_fromstart(w_current, p_current->attrib_place_head);
+	o_selection_destroy_all(p_current->selection2_head);
 	w_current->REMOVING_SEL = 0;  
 
 	p_current->object_head = NULL;
 	p_current->object_tail = NULL;
 	p_current->object_parent = NULL;
 	p_current->object_lastplace = NULL;
-	p_current->selection_head = NULL;
-	p_current->selection_tail = NULL;
+	p_current->selection2_head = NULL;
+	p_current->selection2_tail = NULL;
 	p_current->complex_place_head = NULL;
 	p_current->complex_place_tail = NULL;
 	p_current->attrib_place_head = NULL;
@@ -274,9 +275,9 @@ s_page_setup(PAGE *p_current)
 	p_current->object_head = s_basic_init_object("object_head");
 	p_current->object_head->type = OBJ_HEAD;
 
-	p_current->selection_tail = p_current->selection_head = 
-				s_basic_init_object("sel_head");
-	p_current->selection_tail->type = OBJ_HEAD;
+	/* new selection mechanism */
+        p_current->selection2_head = p_current->selection2_tail = 
+				o_selection_new_head();
 
 	p_current->complex_place_tail = p_current->complex_place_head = 
 				s_basic_init_object("complex_place_head");

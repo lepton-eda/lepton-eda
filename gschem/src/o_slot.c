@@ -31,7 +31,7 @@
 void
 o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 {
-	OBJECT *real;
+	OBJECT *object;
 	OBJECT *slot_text_object;
 	char *default_slot_value;
 	char *slot_value;
@@ -45,15 +45,13 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 		return;
 	}
 
-	/* search for the real object */
-	real = (OBJECT *) o_list_search(w_current->page_current->object_head,
-					list);
+	object = o_select_return_first_object(w_current);
 
 	/* single object for now */
-	if (real->type == OBJ_COMPLEX) {
+	if (object->type == OBJ_COMPLEX) {
 		/* first see if slot attribute already exists outside
 	         * complex */
-		slot_value = o_attrib_search_slot(real, &slot_text_object);
+		slot_value = o_attrib_search_slot(object, &slot_text_object);
 
 		if (slot_value) {
 #if DEBUG
@@ -68,7 +66,7 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 
 			/* See if there is a default value */
 			default_slot_value =
-				o_attrib_search_default_slot(real);
+				o_attrib_search_default_slot(object);
 
 			if (default_slot_value) {
 				/* two is for null and equals sign */
@@ -99,7 +97,8 @@ o_slot_start(TOPLEVEL *w_current, OBJECT *list)
 void
 o_slot_end(TOPLEVEL *w_current, char *string, int len)
 {
-	OBJECT *real;
+	OBJECT *object;
+	OBJECT *second;
 	OBJECT *temp;
 	char *slot_value;
 	char *numslots_value;
@@ -116,14 +115,11 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 		return;
 	}
 
-	/* find the real object */
-	real = (OBJECT *) o_list_search(
-		w_current->page_current->object_head,
-		w_current->page_current->selection_head->next);
+	object = o_select_return_first_object(w_current);
 
 	/* now find the slot attribute on the outside first */
-	if (real != NULL) {
-		numslots_value = o_attrib_search_numslots(real, NULL);
+	if (object != NULL) {
+		numslots_value = o_attrib_search_numslots(object, NULL);
 
 		if (!numslots_value) {
 			s_log_message("numslots attribute missing\n");
@@ -148,7 +144,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 
 		/* first see if slot attribute already exists outside
 	         * complex */
-		slot_value = o_attrib_search_slot(real, &slot_text_object);
+		slot_value = o_attrib_search_slot(object, &slot_text_object);
 
 		if (slot_value) {
 			if (slot_text_object->text_string) {
@@ -181,7 +177,7 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 					w_current,
 					w_current->page_current->object_tail,
 					OBJ_TEXT, w_current->text_color,
-					real->x, real->y,
+					object->x, object->y,
 					LOWER_LEFT,
 					0, /* zero is angle */
 					string,
@@ -189,26 +185,33 @@ o_slot_end(TOPLEVEL *w_current, char *string, int len)
 					INVISIBLE, SHOW_NAME_VALUE);
 
 			/* manually attach attribute */
+
+			/* NEWSEL this is okay too, since tail is single obj */
 			o_attrib_attach(w_current,
 					w_current->page_current->object_head,
 					w_current->page_current->object_tail,
-					real);
+					object);
 
 			slot_text_object =
 				w_current->page_current->object_tail;
 		}
 
-		o_attrib_slot_update(w_current, real);
+		o_erase_single(w_current, object);
+		o_attrib_slot_update(w_current, object);
 
+
+#if 0 /* NEWSEL */
+	/* why? */
 		/* erase the selection list */
 		o_erase_selected(w_current);
 
 		o_attrib_slot_copy(
-			w_current, real,
+			w_current, object,
 			w_current->page_current->selection_head->next);
-		o_redraw_single(w_current,real);
+		o_redraw_single(w_current,object);
+#endif
 
-		o_redraw_selected(w_current);
+		o_redraw_single(w_current,object);
 
 		w_current->page_current->CHANGED = 1;
 	} else {

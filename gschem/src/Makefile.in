@@ -1,4 +1,4 @@
-# Makefile.in generated automatically by automake 1.4a from Makefile.am
+# Makefile.in generated automatically by automake 1.4 from Makefile.am
 
 # Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
@@ -46,10 +46,9 @@ AUTOMAKE = @AUTOMAKE@
 AUTOHEADER = @AUTOHEADER@
 
 INSTALL = @INSTALL@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
-INSTALL_STRIP_FLAG =
 transform = @program_transform_name@
 
 NORMAL_INSTALL = :
@@ -101,8 +100,7 @@ symdir = @symdir@
 
 bin_PROGRAMS = gschem
 
-# don't forget all *.h files */
-gschem_SOURCES =  	a_pan.c a_zoom.c 	g_register.c 	g_rc.c g_key.c g_funcs.c 	globals.c gschem.c 	i_basic.c i_callbacks.c i_sbox.c i_vars.c 	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c 	o_slot.c o_stretch.c 	o_arc.c o_box.c o_circle.c o_complex.c 	o_line.c o_net.c o_text.c o_pin.c o_bus.c 	x_attrsel.c x_basic.c x_dialog.c 	x_event.c x_grid.c x_log.c x_menus.c x_script.c 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c 	x_fileselect.c x_preview.c 	x_multimulti.c 	prototype1.0.h prototype1.2.h 	parsecmd.c globals.h i_vars.h o_conn.c
+gschem_SOURCES =  	a_pan.c a_zoom.c 	g_register.c 	g_rc.c g_key.c g_funcs.c 	globals.c gschem.c 	i_basic.c i_callbacks.c i_vars.c 	o_basic.c o_attrib.c o_move.c o_copy.c o_delete.c o_misc.c 	o_slot.c o_stretch.c 	o_arc.c o_box.c o_circle.c o_complex.c o_select.c o_find.c 	o_line.c o_net.c o_text.c o_pin.c o_bus.c 	x_attrsel.c x_basic.c x_dialog.c 	x_event.c x_grid.c x_log.c x_menus.c x_script.c 	x_pagesel.c x_print.c x_window.c x_stroke.c x_image.c x_color.c 	x_fileselect.c x_preview.c 	x_multimulti.c 	parsecmd.c o_conn.c
 
 
 #INCLUDES = -I../include @GUILE_INCLUDE@ @X_CFLAGS@  
@@ -131,12 +129,12 @@ LIBS = @LIBS@
 X_EXTRA_LIBS = @X_EXTRA_LIBS@
 X_PRE_LIBS = @X_PRE_LIBS@
 gschem_OBJECTS =  a_pan.o a_zoom.o g_register.o g_rc.o g_key.o g_funcs.o \
-globals.o gschem.o i_basic.o i_callbacks.o i_sbox.o i_vars.o o_basic.o \
+globals.o gschem.o i_basic.o i_callbacks.o i_vars.o o_basic.o \
 o_attrib.o o_move.o o_copy.o o_delete.o o_misc.o o_slot.o o_stretch.o \
-o_arc.o o_box.o o_circle.o o_complex.o o_line.o o_net.o o_text.o \
-o_pin.o o_bus.o x_attrsel.o x_basic.o x_dialog.o x_event.o x_grid.o \
-x_log.o x_menus.o x_script.o x_pagesel.o x_print.o x_window.o \
-x_stroke.o x_image.o x_color.o x_fileselect.o x_preview.o \
+o_arc.o o_box.o o_circle.o o_complex.o o_select.o o_find.o o_line.o \
+o_net.o o_text.o o_pin.o o_bus.o x_attrsel.o x_basic.o x_dialog.o \
+x_event.o x_grid.o x_log.o x_menus.o x_script.o x_pagesel.o x_print.o \
+x_window.o x_stroke.o x_image.o x_color.o x_fileselect.o x_preview.o \
 x_multimulti.o parsecmd.o o_conn.o
 gschem_DEPENDENCIES = 
 gschem_LDFLAGS = 
@@ -154,19 +152,19 @@ DIST_COMMON =  Makefile.am Makefile.in
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
-TAR = gtar
+TAR = tar
 GZIP_ENV = --best
 DEP_FILES =  .deps/a_pan.P .deps/a_zoom.P .deps/g_funcs.P .deps/g_key.P \
 .deps/g_rc.P .deps/g_register.P .deps/globals.P .deps/gschem.P \
-.deps/i_basic.P .deps/i_callbacks.P .deps/i_sbox.P .deps/i_vars.P \
-.deps/o_arc.P .deps/o_attrib.P .deps/o_basic.P .deps/o_box.P \
-.deps/o_bus.P .deps/o_circle.P .deps/o_complex.P .deps/o_conn.P \
-.deps/o_copy.P .deps/o_delete.P .deps/o_line.P .deps/o_misc.P \
-.deps/o_move.P .deps/o_net.P .deps/o_pin.P .deps/o_slot.P \
-.deps/o_stretch.P .deps/o_text.P .deps/parsecmd.P .deps/x_attrsel.P \
-.deps/x_basic.P .deps/x_color.P .deps/x_dialog.P .deps/x_event.P \
-.deps/x_fileselect.P .deps/x_grid.P .deps/x_image.P .deps/x_log.P \
-.deps/x_menus.P .deps/x_multimulti.P .deps/x_pagesel.P \
+.deps/i_basic.P .deps/i_callbacks.P .deps/i_vars.P .deps/o_arc.P \
+.deps/o_attrib.P .deps/o_basic.P .deps/o_box.P .deps/o_bus.P \
+.deps/o_circle.P .deps/o_complex.P .deps/o_conn.P .deps/o_copy.P \
+.deps/o_delete.P .deps/o_find.P .deps/o_line.P .deps/o_misc.P \
+.deps/o_move.P .deps/o_net.P .deps/o_pin.P .deps/o_select.P \
+.deps/o_slot.P .deps/o_stretch.P .deps/o_text.P .deps/parsecmd.P \
+.deps/x_attrsel.P .deps/x_basic.P .deps/x_color.P .deps/x_dialog.P \
+.deps/x_event.P .deps/x_fileselect.P .deps/x_grid.P .deps/x_image.P \
+.deps/x_log.P .deps/x_menus.P .deps/x_multimulti.P .deps/x_pagesel.P \
 .deps/x_preview.P .deps/x_print.P .deps/x_script.P .deps/x_stroke.P \
 .deps/x_window.P
 SOURCES = $(gschem_SOURCES)
@@ -197,8 +195,8 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
 	@list='$(bin_PROGRAMS)'; for p in $$list; do \
 	  if test -f $$p; then \
-	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $(INSTALL_STRIP_FLAG) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
-	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $(INSTALL_STRIP_FLAG) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
+	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	  else :; fi; \
 	done
 
@@ -325,7 +323,7 @@ distdir: $(DISTFILES)
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
 	  if test -d $$d/$$file; then \
-	    cp -pr $$d/$$file $(distdir)/$$file; \
+	    cp -pr $$/$$file $(distdir)/$$file; \
 	  else \
 	    test -f $(distdir)/$$file \
 	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
@@ -386,7 +384,7 @@ uninstall: uninstall-am
 all-am: Makefile $(PROGRAMS) $(MANS)
 all-redirect: all-am
 install-strip:
-	$(MAKE) $(AM_MAKEFLAGS) INSTALL_STRIP_FLAG=-s install
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
 installdirs:
 	$(mkinstalldirs)  $(DESTDIR)$(bindir) $(DESTDIR)$(mandir)/man1
 

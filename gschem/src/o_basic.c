@@ -43,11 +43,13 @@
 void
 o_redraw_all(TOPLEVEL *w_current)
 {
+	OBJECT *object;
 #if 0
  	struct timeval tv1;
 	struct timeval tv2;
 #endif
 
+	/* this is slowing things down A LOT, remove it eventually */
 	o_conn_disconnect_update(w_current->page_current);
 
 	x_repaint_background(w_current);
@@ -64,38 +66,45 @@ o_redraw_all(TOPLEVEL *w_current)
 	printf("usecs: %d\n\n", tv2.tv_usec - tv1.tv_usec);
 #endif
 
-	o_redraw_selected(w_current);
-
 	if (w_current->inside_action) {
 		switch(w_current->event_state) {
 		case(ENDMOVE):
 		case(ENDCOPY):
-			o_drawbounding(
-				w_current,
-				w_current->page_current->
-				selection_head->next,
+			o_drawbounding(w_current, NULL,
+				w_current->page_current->selection2_head->next,
 				x_get_color(w_current->bb_color));
 			break;
 
 		case(DRAWCOMP):
 		case(ENDCOMP):
-			o_drawbounding(
-				w_current,
-				w_current->page_current->
-				complex_place_head->next,
-				x_get_color(w_current->bb_color));
+			o_drawbounding(w_current, w_current->
+						  page_current->
+						  complex_place_head->next,
+				      NULL,
+				      x_get_color(w_current->bb_color));
 			break;
 
 		case(DRAWATTRIB):
 		case(ENDATTRIB):
-			o_drawbounding(
-				w_current,
-				w_current->page_current->
-				attrib_place_head->next,
-				x_get_color(w_current->bb_color));
+		case(DRAWTEXT):
+		case(ENDTEXT):
+			o_drawbounding(w_current, w_current->
+						  page_current->
+						  attrib_place_head->next,
+				      NULL,
+				      x_get_color(w_current->bb_color));
 			break;
 		}
 	}
+}
+
+/* basically like above but doesn't do the o_conn_disconnect_update */
+void
+o_redraw_all_fast(TOPLEVEL *w_current)
+{
+	x_repaint_background(w_current);
+	o_recalc(w_current, w_current->page_current->object_head);
+	o_redraw(w_current, w_current->page_current->object_head);
 }
 
 void
@@ -113,510 +122,15 @@ o_redraw(TOPLEVEL *w_current, OBJECT *object_list)
 
 		o_current = o_current->next;
 	}
-
-	/* taken out since it looped complex unselects... do i need it? */
-	/* we need it because if you redraw the current selected object */
-	/* won't be draw */
-	/* so, we need to use the inside_draw flag */
-	if (!w_current->inside_redraw) {
-		w_current->inside_redraw = 1;
-		o_redraw_selected(w_current);
-		w_current->inside_redraw = 0;
-	}
 }
 
 void
 o_unselect_all(TOPLEVEL *w_current)
 {
-	/* The proper way to do this is to not unredraw_selected, but
-	 * to redraw the original object, to reflect if any colors
-	 * have changed */
-	/* Why is this needed, because when you update some element in
-	 * the object_head list, then you want that object to be
-	 * reflected not the selected one! */
-	/* now if you want both the selected and the real object to
-	 * reflect a change, then you need to do something completely
-	 * different */
-
-	/* didn't find anything */
         if (!w_current->SHIFTKEY) {
-		/* this was changed to undraw the real */
-                /* o_unredraw_selected(); */
-		o_unredraw_real(w_current,
-				w_current->page_current->selection_head);
-                o_list_delete_rest(w_current,
-				   w_current->page_current->selection_head);
-                w_current->page_current->selection_head->next = NULL;
-
-                w_current->page_current->selection_tail =
-			w_current->page_current->selection_head;
+		o_selection_remove_most(w_current, w_current->page_current->
+					selection2_head); 
         }
-}
-
-void
-o_find(TOPLEVEL *w_current, int x, int y)
-{
-	OBJECT *o_current = NULL;
-
-	if (w_current->page_current->object_lastplace == NULL) {
-		o_current = w_current->page_current->object_head;
-	} else {
-		o_current = w_current->page_current->object_lastplace;
-	}
-
-	while (o_current != NULL) {
-		if (inside_region(o_current->left,
-				  o_current->top,
-				  o_current->right,
-				  o_current->bottom, x, y)) {
-			if (o_current->sel_func != NULL &&
-			    o_current->visibility == VISIBLE &&
-			    o_current->type != OBJ_HEAD) {
-				(*o_current->sel_func)(w_current, o_current);
-				w_current->page_current->object_lastplace =
-					o_current->next;
-
-				return;
-			}
-		}
-		o_current = o_current->next;
-	}
-
-	o_current = w_current->page_current->object_head;
-	while (o_current != NULL &&
-	       o_current != w_current->page_current->object_lastplace) {
-		if (inside_region(o_current->left,
-				  o_current->top,
-				  o_current->right,
-				  o_current->bottom, x, y)) {
-			if (o_current->sel_func != NULL &&
-			    o_current->visibility == VISIBLE &&
-			    o_current->type != OBJ_HEAD) {
-				(*o_current->sel_func)(w_current, o_current);
-				w_current->page_current->object_lastplace =
-					o_current;
-				/* same thing as above comment before
-				 * ret */
-				return;
-			}
-		}
-		o_current = o_current->next;
-	}
-
-#if DEBUG
-	printf("found nothing\n");
-#endif
-
-	/* here we start to sbox draw box */
-	/* if we start to move */
-
-	/* not sure if we want to keep this */
-	w_current->event_state = SELECT;
-	/* didn't find anything */
-	o_unselect_all(w_current);
-}
-
-void
-o_select(TOPLEVEL *w_current, OBJECT *selected)
-{
-	OBJECT *found = NULL;
-
-	if (selected == NULL) {
-		return;
-	}
-
-	/* The list is empty */
-	if (w_current->page_current->selection_head->next == NULL) {
-#if 0
-		printf("list is empty\n");
-#endif
-		/* returning tail is okay since it's just peachy. */
-		w_current->page_current->selection_tail =
-			(OBJECT *) o_list_copy_to(
-				w_current,
-				w_current->page_current->selection_head,
-				selected,
-				SELECTION);
-		w_current->override_color = w_current->select_color;
-#if DEBUG
-		printf("selected is: %s\n", selected->name);
-#endif
-
-		if ((selected->draw_func != NULL) &&
-		    (selected->type != OBJ_HEAD)) {
-			(*selected->draw_func)(w_current, selected);
-		}
-
-		w_current->override_color = -1;
-
-		/* don't know if I like this behavior hack*/
-		deal_attr(w_current, selected);
-
-		/* update selection tail to point to the right place */
-		w_current->page_current->selection_tail = (OBJECT *)
-			return_tail(w_current->page_current->selection_head);
-
-		return;
-	}
-
-	if (w_current->page_current->selection_head->next != NULL) {
-#if 0
-		printf("list is NOT empty -- ");
-#endif
-
-		if (w_current->SHIFTKEY) {
-#if 0
-			printf("with shift key pressed\n");
-			printf("searching for %d\n", selected->sid);
-#endif
-			/* search in sel list to see if object is there */
-			found = (OBJECT *) o_list_search(
-				w_current->page_current->
-				selection_head,
-				selected);
-			if (found) {
-#if 0
-				printf("found\n");
-#endif
-				/* okay it was found so delete it */
-
-				/* single object */
-				o_list_delete(
-					w_current,
-					w_current->page_current->
-					selection_head,
-					found);
-
-				w_current->override_color = -1;
-				if ((selected->draw_func != NULL) &&
-				    (selected->type != OBJ_HEAD)) {
-					(*selected->draw_func)(w_current,
-							       selected);
-				}
-			} else {
-#if 0
-				printf("NOT found\n");
-#endif
-				w_current->page_current->selection_tail =
-					(OBJECT *) o_list_copy_to(
-						w_current,
-						w_current->page_current->
-						selection_tail,
-						selected, SELECTION);
-				w_current->override_color =
-					w_current->select_color;
-				if ((selected->draw_func != NULL) &&
-				    (selected->type != OBJ_HEAD)) {
-					(*selected->draw_func)(w_current,
-							       selected);
-				}
-				w_current->override_color = -1;
-			}
-		} else {
-#if 0
-			printf("withOUT shift key pressed\n");
-			printf("searching for %d\n", selected->sid);
-#endif
-			found = (OBJECT *) o_list_search(
-				w_current->page_current->selection_head,
-				selected);
-			if (found) {
-				/* selected is the same what is
-				 * already in list */
-
-				/* TODO: here is where you will check
-                                 * for CTRL KEY and just remove the
-                                 * object from the selection */
-				/* TODO: careful bug here I don't know? */
-				if (found->sid == selected->sid) {
-					/* this was just
-                                         * unredraw_selected */
-					/* TODO: verify this is really
-                                         * right */
-					if (!w_current->CONTROLKEY) {
-						o_unredraw_real(
-							w_current,
-							w_current->
-							page_current->
-							selection_head);
-						o_list_delete_rest(
-							w_current,
-							w_current->
-							page_current->
-							selection_head);
-						w_current->page_current->
-							selection_head->next =
-							NULL;
-
-						/* put that selected
-						 * object back into
-						 * the list */
-						w_current->page_current->
-							selection_tail =
-							(OBJECT *)
-							o_list_copy_to(
-								w_current,
-								w_current->
-								page_current->
-								selection_head,
-								selected,
-								SELECTION);
-						w_current->override_color =
-							w_current->
-							select_color;
-						if ((selected->draw_func !=
-						     NULL) &&
-						    (selected->type !=
-						     OBJ_HEAD)) {
-							(*selected->draw_func)(
-								w_current,
-								selected);
-						}
-						w_current->override_color = -1;
-
-					} else {
-						/* test this */
-						o_list_delete(
-							w_current,
-							w_current->
-							page_current->
-							selection_head,
-							found);
-
-						w_current->override_color = -1;
-						if ((selected->draw_func !=
-						     NULL) &&
-						    (selected->type !=
-						     OBJ_HEAD)) {
-							(*selected->draw_func)(
-								w_current,
-								selected);
-						}
-					}
-				}
-			} else {
-				/* new object unslect old */
-				/* this was just unredraw_selected */
-				o_unredraw_real(
-					w_current,
-					w_current->page_current->
-					selection_head);
-				o_list_delete_rest(
-					w_current,
-					w_current->page_current->
-					selection_head);
-				w_current->page_current->selection_head->next =
-					NULL;
-
-				/* add new selected to list */
-				w_current->page_current->selection_tail =
-					(OBJECT *) o_list_copy_to(
-						w_current,
-						w_current->page_current->
-						selection_head,
-						selected,
-						SELECTION);
-				w_current->override_color =
-					w_current->select_color;
-				if ((selected->draw_func != NULL) &&
-				    (selected->type != OBJ_HEAD)) {
-					(*selected->draw_func)(
-						w_current,
-						selected);
-				}
-				w_current->override_color = -1;
-			}
-
-		}
-	}
-
-	/* don't know if I like this behavior hack*/
-	deal_attr(w_current, selected);
-
-	/* update selection tail to point to the right place */
-	w_current->page_current->selection_tail = (OBJECT *)
-		return_tail(w_current->page_current->selection_head);
-
-	return;
-}
-
-void
-o_select_many(TOPLEVEL *w_current, OBJECT *selected, int count)
-{
-	OBJECT *found=NULL;
-
-	if (selected == NULL) {
-		printf("nothing selected\n");
-		return;
-	}
-
-	/* The list is empty */
-	if (w_current->page_current->selection_head->next == NULL) {
-#if 0
-		printf("list is empty\n");
-#endif
-		w_current->page_current->selection_tail =
-			(OBJECT *) o_list_copy_to(
-				w_current,
-				w_current->page_current->selection_head,
-				selected, SELECTION);
-		if ((selected->draw_func != NULL) &&
-		    (selected->type != OBJ_HEAD)) {
-			w_current->override_color = w_current->select_color;
-			(*selected->draw_func)(w_current, selected);
-			w_current->override_color = -1;
-		}
-
-		/* don't know if I like this behavior hack*/
-		deal_attr(w_current, selected);
-
-		/* update selection tail to point to the right place */
-		w_current->page_current->selection_tail = (OBJECT *)
-			return_tail(w_current->page_current->selection_head);
-
-		return;
-	}
-
-	if (w_current->page_current->selection_head->next != NULL) {
-#if 0
-		printf("list is NOT empty -- ");
-#endif
-		/* not holding down shift, and first object */
-		if (!w_current->SHIFTKEY && count == 0 &&
-		    !w_current->CONTROLKEY) {
-			/* this was just unredraw_selected */
-			o_unredraw_real(
-				w_current,
-				w_current->page_current->selection_head);
-			o_list_delete_rest(
-				w_current,
-				w_current->page_current->selection_head);
-			w_current->page_current->selection_head->next = NULL;
-
-			w_current->page_current->selection_tail =
-				w_current->page_current->selection_head;
-		}
-
-		/* TODO: comment: do we want to unselect stuff when we are
-		 * inserting many stuff ???? */
-
-		/* Problem: Drawing sboxes always acts like the shift
-                 * key was down. What you want is if you draw a sbox
-                 * then select the stuff, but then if you draw another
-                 * sbox, and the SHIFT key isn't down */
-		/* the deselect the stuff */
-		/* is this still right? 3/1 ??? */
-		/* doesn't look like it */
-
-#if 0
-		printf("searching for %d\n", selected->sid);
-#endif
-		/* search in sel list to see if object is there */
-		found = (OBJECT *) o_list_search(
-			w_current->page_current->selection_head, selected);
-		if (found) {
-#if 0
-			printf("found\n");
-#endif
-			/* okay it was found so delete it */
-
-			/*hack experimental */
-			if (w_current->CONTROLKEY) {
-				/* single object */
-				o_list_delete(
-					w_current,
-					w_current->page_current->
-					selection_head,
-					found);
-
-				w_current->override_color = -1;
-				if (selected->draw_func &&
-				    (selected->type != OBJ_HEAD)) {
-					(*selected->draw_func)(w_current,
-							       selected);
-				}
-			}
-		} else {
-#if 0
-			printf("NOT found\n");
-#endif
-			w_current->page_current->selection_tail =
-				(OBJECT *) o_list_copy_to(
-					w_current,
-					w_current->page_current->
-					selection_tail, selected, SELECTION);
-			w_current->override_color = w_current->select_color;
-			if (selected->draw_func &&
-			    (selected->type != OBJ_HEAD)) {
-				(*selected->draw_func)(w_current, selected);
-			}
-			w_current->override_color = -1;
-		}
-	}
-
-	/* don't know if I like this behavior hack*/
-	deal_attr(w_current, selected);
-
-	/* update selection tail to point to the right place */
-	w_current->page_current->selection_tail = (OBJECT *)
-		return_tail(w_current->page_current->selection_head);
-
-	return;
-}
-
-void
-o_redraw_selected(TOPLEVEL *w_current)
-{
-	OBJECT *o_current = NULL;
-
-	if (w_current->page_current->selection_head == NULL) {
-		return;
-	}
-
-	o_current = w_current->page_current->selection_head;
-
-	if (w_current->inside_redraw) {
-		return;
-	}
-
-	w_current->DONT_DRAW_CONN = 1;
-	w_current->override_color = w_current->select_color;
-	if (w_current->page_current->selection_head->next != NULL) {
-		while (o_current != NULL) {
-			if (o_current->draw_func &&
-			      o_current->type != OBJ_HEAD) {
-				(*o_current->draw_func)(w_current, o_current);
-			}
-			o_current = o_current->next;
-		}
-	}
-	w_current->override_color = -1;
-	w_current->DONT_DRAW_CONN = 0;
-}
-
-void
-o_unredraw_selected(TOPLEVEL *w_current)
-{
-	OBJECT *o_current = NULL;
-
-	if (w_current->inside_redraw) {
-		return;
-	}
-
-	o_current = w_current->page_current->selection_head;
-
-	w_current->DONT_DRAW_CONN = 1;
-	w_current->override_color = -1;
-	if (w_current->page_current->selection_head->next != NULL) {
-		while (o_current != NULL) {
-			if (o_current->draw_func &&
-			      o_current->type != OBJ_HEAD) {
-				(*o_current->draw_func)(w_current, o_current);
-			}
-			o_current = o_current->next;
-		}
-	}
-	w_current->DONT_DRAW_CONN = 0;
 }
 
 void
@@ -628,6 +142,8 @@ o_erase_selected(TOPLEVEL *w_current)
 		return;
 	}
 
+	/* erases the selection list */
+#if 0
 	o_current = w_current->page_current->selection_head;
 
 	w_current->DONT_DRAW_CONN = 1;
@@ -643,6 +159,7 @@ o_erase_selected(TOPLEVEL *w_current)
 	}
 	w_current->override_color = -1;
 	w_current->DONT_DRAW_CONN = 0;
+#endif
 }
 
 void
@@ -668,90 +185,12 @@ o_erase_single(TOPLEVEL *w_current, OBJECT *object)
 	w_current->DONT_DRAW_CONN = 0;
 }
 
-void
-o_unredraw_real(TOPLEVEL *w_current, OBJECT *list)
-{
-	OBJECT *o_current = NULL;
-	OBJECT *found = NULL;
-
-	o_current = list;
-
-	if (w_current->inside_redraw) {
-		return;
-	}
-
-	if (list == NULL) {
-		return;
-	}
-
-	w_current->DONT_DRAW_CONN = 1;
-	w_current->override_color = -1;
-	if (w_current->page_current->selection_head->next != NULL) {
-		while (o_current != NULL) {
-			found = (OBJECT *)
-				o_list_search(
-					w_current->page_current->object_head,
-					o_current);
-
-			if (found) {
-#if 0
-				printf("found real redrawing\n");
-#endif
-				if (found->draw_func &&
-				    (found->type != OBJ_HEAD)) {
-					(*found->draw_func)(w_current, found);
-				}
-			}
-			o_current = o_current->next;
-		}
-	}
-	w_current->DONT_DRAW_CONN = 0;
-}
-
-void
-o_redraw_real(TOPLEVEL *w_current, OBJECT *list)
-{
-	OBJECT *o_current = NULL;
-	OBJECT *found = NULL;
-
-	o_current = list;
-
-	if (w_current->inside_redraw) {
-		return;
-	}
-
-	if (list == NULL) {
-		return;
-	}
-
-	w_current->override_color = -1;
-	if (w_current->page_current->selection_head->next != NULL) {
-		while (o_current != NULL) {
-			found = (OBJECT *)
-				o_list_search(
-					w_current->page_current->object_head,
-					o_current);
-
-			if (found) {
-#if 0
-				printf("found real redrawing\n");
-#endif
-				if (found->draw_func &&
-				    (found->type != OBJ_HEAD)) {
-					(*found->draw_func)(w_current, found);
-				}
-			}
-			o_current = o_current->next;
-		}
-	}
-}
 
 /* both outline and boundingbox work! */
-/* TODO: make this general purpose, get rid of selection_head and pass
-   that in */
 /* name is blah */
 void
-o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
+o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, 
+	       GdkColor *color)
 {
 	int diff_x, diff_y;
 	int test_x, test_y;
@@ -759,6 +198,10 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 	/* static is highly temp */	
 	/* you have to make these static... for the once mode */
 	int rleft, rtop, rbottom, rright;
+
+	if (!o_list && !s_list) {
+		return;
+	}
 
 	#if 0 /* this once stuff is a start at fixing bounding box mode */
 	/* highly temp */
@@ -777,17 +220,34 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
         	gdk_gc_set_foreground(w_current->bounding_xor_gc,
 				      x_get_color(
 					      w_current->background_color));
-		o_complex_translate_display(w_current,
+		if (o_list) {
+			o_complex_translate_display(w_current,
 					    diff_x,
 					    diff_y,
-					    o_current);
+					    o_list);
+		} else if (s_list) { 
+			o_complex_translate_display_selection(w_current,
+					    diff_x,
+					    diff_y,
+					    s_list);
+		}
+
         	gdk_gc_set_foreground(w_current->bounding_xor_gc, color);
 
-		get_complex_bounds(w_current, o_current,
+		if (o_list) {
+			get_complex_bounds(w_current, o_list,
 				   &rleft  ,
 				   &rtop   ,
 				   &rright ,
 				   &rbottom);
+		} else if (s_list) {
+			get_complex_bounds_selection(w_current, s_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+		}
+
         	gdk_draw_rectangle(w_current->window,
 				   w_current->bounding_xor_gc, FALSE,
                 		   rleft + diff_x,
@@ -803,11 +263,20 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 		printf("going to outline\n");
 #endif
 
-		get_complex_bounds(w_current, o_current,
+		if (o_list) {
+			get_complex_bounds(w_current, o_list,
 				   &rleft  ,
 				   &rtop   ,
 				   &rright ,
 				   &rbottom);
+		} else if (s_list) {
+			get_complex_bounds_selection(w_current, s_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+		}
+
 		diff_x = w_current->last_x - w_current->start_x;
         	diff_y = w_current->last_y - w_current->start_y;
         	gdk_gc_set_foreground(w_current->gc,
@@ -820,10 +289,17 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
                 	           rright  - rleft ,
 				   rbottom - rtop  );
 
-		o_complex_translate_display(w_current,
+		if (o_list) {
+			o_complex_translate_display(w_current,
 					    diff_x,
 					    diff_y,
-					    o_current);
+					    o_list);
+		} else if (s_list) { 
+			o_complex_translate_display_selection(w_current,
+					    diff_x,
+					    diff_y,
+					    s_list);
+		}
 	}
 
 	w_current->last_drawb_mode = w_current->actionfeedback_mode;
@@ -845,16 +321,31 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 		w_current->drawbounding_action_mode = CONSTRAINED;
 
 		if (w_current->actionfeedback_mode == OUTLINE) {
-			o_complex_translate_display(w_current,
+			if (o_list) {
+				o_complex_translate_display(w_current,
 						    diff_x,
 						    diff_y,
-						    o_current);
+						    o_list);
+			} else if (s_list) { 
+				o_complex_translate_display_selection(w_current,
+						    diff_x,
+						    diff_y,
+						    s_list);
+			}
 		} else {
-			get_complex_bounds(w_current, o_current,
-					   &rleft,
-					   &rtop,
-					   &rright,
+			if (o_list) {
+				get_complex_bounds(w_current, o_list,
+					   &rleft  ,
+					   &rtop   ,
+					   &rright ,
 					   &rbottom);
+			} else if (s_list) {
+				get_complex_bounds_selection(w_current, s_list,
+					   &rleft  ,
+					   &rtop   ,
+					   &rright ,
+					   &rbottom);
+			}
 
 			gdk_gc_set_foreground(w_current->bounding_xor_gc,
 					      color);
@@ -878,16 +369,31 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 		diff_y = w_current->last_y - w_current->start_y;
 
 		if (w_current->actionfeedback_mode == OUTLINE) {
-			o_complex_translate_display(w_current,
+			if (o_list) {
+				o_complex_translate_display(w_current,
 						    diff_x,
 						    diff_y,
-						    o_current);
+						    o_list);
+			} else if (s_list) { 
+				o_complex_translate_display_selection(w_current,
+						    diff_x,
+						    diff_y,
+						    s_list);
+			}
 		} else {
-			get_complex_bounds(w_current, o_current,
+			if (o_list) {
+				get_complex_bounds(w_current, o_list,
 					   &rleft  ,
 					   &rtop   ,
 					   &rright ,
 					   &rbottom);
+			} else if (s_list) {
+				get_complex_bounds_selection(w_current, s_list,
+					   &rleft  ,
+					   &rtop   ,
+					   &rright ,
+					   &rbottom);
+			}
 			gdk_gc_set_foreground(w_current->bounding_xor_gc,
 					      color);
         		gdk_draw_rectangle(w_current->window,
@@ -911,23 +417,42 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 		diff_y = w_current->last_y - w_current->start_y;
 		w_current->drawbounding_action_mode = FREE;
 		if (w_current->actionfeedback_mode == OUTLINE) {
-			o_complex_translate_display(w_current,
-						    diff_x,
-						    diff_y,
-						    o_current);
 			/* do it twice to get rid of old outline */
-			o_complex_translate_display(w_current,
+			if (o_list) {
+				o_complex_translate_display(w_current,
 						    diff_x,
 						    diff_y,
-						    o_current);
+						    o_list);
+				o_complex_translate_display(w_current,
+						    diff_x,
+						    diff_y,
+						    o_list);
+			} else if (s_list) { 
+				o_complex_translate_display_selection(w_current,
+						    diff_x,
+						    diff_y,
+						    s_list);
+				o_complex_translate_display_selection(w_current,
+						    diff_x,
+						    diff_y,
+						    s_list);
+			}
 		} else {
 			/* TODO: why are we doing this here...?
 			 * probably a reason */
-			get_complex_bounds(w_current, o_current,
+			if (o_list) {
+				get_complex_bounds(w_current, o_list,
 					   &rleft  ,
 					   &rtop   ,
 					   &rright ,
 					   &rbottom);
+			} else if (s_list) {
+				get_complex_bounds_selection(w_current, s_list,
+					   &rleft  ,
+					   &rtop   ,
+					   &rright ,
+					   &rbottom);
+			}
 		}
 	}
 
@@ -944,8 +469,19 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 	if (w_current->actionfeedback_mode == BOUNDINGBOX) {
 		/* this slows things down quite a bit hack */
 		/* if (once == 0) {*/
-		get_complex_bounds(w_current, o_current, &rleft, &rtop,
-				   &rright, &rbottom);
+		if (o_list) {
+			get_complex_bounds(w_current, o_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+		} else if (s_list) {
+			get_complex_bounds_selection(w_current, s_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+		}
 			/* printf("once\n");*/
 			/* once=1;*/
 		/* }*/
@@ -967,16 +503,21 @@ o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color)
 
 	/* TODO: have I mentioned how temp this is? Make this general
 	 * so that all lists can be moved ... */
-	o_complex_translate2(w_current, diff_x, diff_y, o_current);
+	if (o_list) {
+		o_complex_translate2(w_current, diff_x, diff_y, o_list);
+	} else if (s_list) {
+		o_complex_translate_selection(w_current, diff_x, diff_y, 
+					      s_list);
+	}
 }
 
 void
-o_erasebounding(TOPLEVEL *w_current, OBJECT *o_current)
+o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list)
 {
 	int diff_x, diff_y;
 	int rleft, rtop, rright, rbottom;
 
-	if (o_current == NULL) {
+	if (o_list == NULL) {
 		/* this is an error condition */
 		w_current->event_state = SELECT;
 		w_current->inside_action = 0;
@@ -987,8 +528,19 @@ o_erasebounding(TOPLEVEL *w_current, OBJECT *o_current)
 		return;
 	}
 
-	get_complex_bounds(w_current, o_current, &rleft, &rtop,
-			   &rright, &rbottom);
+	if (o_list) {
+		get_complex_bounds(w_current, o_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+	} else if (s_list) {
+		get_complex_bounds_selection(w_current, s_list,
+				   &rleft  ,
+				   &rtop   ,
+				   &rright ,
+				   &rbottom);
+	}
 
 	diff_x = w_current->last_x - w_current->start_x;
         diff_y = w_current->last_y - w_current->start_y;
@@ -1001,3 +553,4 @@ o_erasebounding(TOPLEVEL *w_current, OBJECT *o_current)
 			   rright  - rleft ,
 			   rbottom - rtop  );
 }
+

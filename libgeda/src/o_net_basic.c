@@ -1027,6 +1027,11 @@ o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient)
 
 		printf("object DID have attributes\n");
 
+
+	/* NEWSEL, this corrupts the selection / object_head badly */
+	/* fix it, because you can't just go around deleting objects */
+	/* this whole net conslidate needs to be re thought.. since you */
+	/* don't really del the del_object */
 #if 0
 	printf("object->attribs\n");
 	o_attrib_print(object->attribs);
@@ -1093,6 +1098,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 	int current_orient;
 	int cue;
 	int changed=0;
+	int reselect_new=FALSE;
 
 	if (object == NULL) {
 		return(0);
@@ -1112,6 +1118,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 		cue = conn_list->visual_cue;
                 c_current = conn_list;
                 while (c_current != NULL) {
+			reselect_new = FALSE;
                         if (c_current->object != NULL) {
 				current_orient = o_net_orientation(c_current->object);
 
@@ -1131,6 +1138,26 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 							current_orient);
 
 					changed++;
+					if (c_current->object->selected == 
+					    TRUE ) { 
+						o_selection_remove(w_current->
+							page_current->
+							selection2_head, 
+							c_current->object);
+						reselect_new=TRUE;
+					}
+
+					if (reselect_new == TRUE) {
+						o_selection_remove(w_current->
+							page_current->
+							selection2_head, 
+							object);
+
+						o_selection_add(w_current->
+							page_current->
+							selection2_head, 
+							object);
+					}
 				
 					s_delete(w_current, c_current->object);
 			                o_conn_disconnect_update(w_current->page_current);
@@ -1161,6 +1188,7 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 		cue = conn_list->visual_cue;
                 c_current = conn_list;
                 while (c_current != NULL) {
+			reselect_new = FALSE;
                         if (c_current->object != NULL) {
 				current_orient = o_net_orientation(c_current->object);
 
@@ -1178,6 +1206,28 @@ o_net_consolidate_segments(TOPLEVEL *w_current, OBJECT *object)
 							c_current->object,
 							current_orient);
 					changed++;
+
+					if (c_current->object->selected == 
+					    TRUE ) { 
+						o_selection_remove(w_current->
+							page_current->
+							selection2_head, 
+							c_current->object);
+						reselect_new=TRUE;
+					}
+
+					if (reselect_new == TRUE) {
+						o_selection_remove(w_current->
+							page_current->
+							selection2_head, 
+							object);
+
+						o_selection_add(w_current->
+							page_current->
+							selection2_head, 
+							object);
+					}
+
 					s_delete(w_current, c_current->object);
 			                o_conn_disconnect_update(w_current->page_current);
 				

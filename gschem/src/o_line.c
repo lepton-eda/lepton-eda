@@ -101,15 +101,31 @@ o_line_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_line_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+        w_current->override_color = w_current->background_color;
+	o_line_draw(w_current, o_current);
+        w_current->override_color = -1;
+}
+
+void
 o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+	int color;
+
 	if (o_current->line_points == NULL) {
 		return;
 	}
 
+        if (o_current->saved_color != -1) {
+                color = o_current->saved_color;
+        } else {
+                color = o_current->color;
+        }
+
 	/* changed for dark color stuff */
 	gdk_gc_set_foreground(w_current->outline_xor_gc,
-		x_get_darkcolor(o_current->color));
+		x_get_darkcolor(color));
 	gdk_draw_line(w_current->window, w_current->outline_xor_gc,
 		       o_current->line_points->screen_x1+dx,
 		       o_current->line_points->screen_y1+dy,

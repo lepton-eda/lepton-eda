@@ -45,6 +45,12 @@
 /* #define REMOVE 0
 #define ADD 1 */
 
+#if 0 
+/*
+ ********************************************************************* 
+ *  NOBODY should be calling this functions....  They are obsolete
+ ********************************************************************* 
+ */
 void
 /* TODO: for now, but this needs to be more general */
 i_sbox_search(TOPLEVEL *w_current, int flag)
@@ -221,3 +227,9 @@ i_sbox_rubberbox(TOPLEVEL *w_current, int x, int y)
 			   box_width,
 			   box_height);
 }
+/*
+ ********************************************************************* 
+ *  NOBODY should be calling the above functions....  They are obsolete
+ ********************************************************************* 
+ */
+#endif

@@ -571,15 +571,31 @@ o_net_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_net_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+        w_current->override_color = w_current->background_color;
+	o_net_draw(w_current, o_current);
+        w_current->override_color = -1;
+}
+
+void
 o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int size;
+	int color;
+
         if (o_current->line_points == NULL) {
                 return;
         }
 
+        if (o_current->saved_color != -1) {
+                color = o_current->saved_color;
+        } else {
+                color = o_current->color;
+        }
+
         gdk_gc_set_foreground(w_current->outline_xor_gc,
-			x_get_darkcolor(o_current->color));
+			x_get_darkcolor(color));
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->net_style == THICK ) {
                 size = SCREENabs(w_current, 10);
@@ -641,7 +657,7 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 		if (o_current->type == OBJ_NET) {
 			if (o_current->line_points) {
 
-			   real = o_list_search(
+			   real = o_list_sear( /* ch */ 
 					w_current->page_current->object_head,
 					o_current);
 
@@ -674,7 +690,7 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 			   }
 			}
 		} else if (o_current->type == OBJ_COMPLEX) {
-			real = o_list_search(
+			real = o_list_sear( /* ch */
 				w_current->page_current->object_head,
 				o_current);
 

@@ -60,4 +60,5 @@ extern int default_net_consolidate;
 extern int default_file_preview;
 extern int default_enforce_hierarchy;
 extern int default_text_origin_marker;
+extern int default_fast_mousepan;
 

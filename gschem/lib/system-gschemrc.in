@@ -313,6 +313,13 @@
 (zoom-with-pan "enabled")
 ;(zoom-with-pan "disabled")
 
+; fast-mousepan string
+; Controls if text is drawn properly or if a simplified version (a line which
+; represents the text string) is drawn during mouse pan.  Drawing a simple
+; line speeds up mousepan a lot for big schematics
+(fast-mousepan "enabled")
+;(fast-mousepan "disabled")
+
 ; action-feedback-mode string
 ; Set the default action feedback mode (for copy/move/component place).
 ; Set to outline to get an outline of the selection. 

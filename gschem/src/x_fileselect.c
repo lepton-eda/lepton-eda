@@ -581,6 +581,7 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 
 		w_current->page_current->page_filename = u_basic_strdup(string);
 
+		o_select_unselect_all(w_current); 
 		f_save(w_current, string);
 
 		s_log_message("Saved As [%s]\n", 

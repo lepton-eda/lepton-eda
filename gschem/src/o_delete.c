@@ -28,9 +28,7 @@
 static void
 o_delete_line(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_line_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_line_erase(w_current, obj);
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -41,9 +39,7 @@ o_delete_net(TOPLEVEL *w_current, OBJECT *obj)
 {
 	int removing_sel_save;
 
-	w_current->override_color = w_current->background_color;
-	o_net_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_net_erase(w_current, obj);
 
 	o_net_conn_erase_force(w_current, obj);
 
@@ -61,10 +57,7 @@ o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
 {
 	int removing_sel_save;
 
-	w_current->override_color = w_current->background_color;
-	o_bus_draw(w_current, obj);
-	w_current->override_color = -1;
-
+	o_bus_erase(w_current, obj);
 	o_bus_conn_erase_force(w_current, obj);
 
 	removing_sel_save = w_current->REMOVING_SEL;
@@ -79,9 +72,7 @@ o_delete_bus(TOPLEVEL *w_current, OBJECT *obj)
 static void
 o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_box_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_box_erase(w_current, obj);
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -90,9 +81,7 @@ o_delete_box(TOPLEVEL *w_current, OBJECT *obj)
 static void
 o_delete_circle(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_circle_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_circle_erase(w_current, obj);
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -101,9 +90,7 @@ o_delete_circle(TOPLEVEL *w_current, OBJECT *obj)
 static void
 o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_redraw_single(w_current, obj);
-	w_current->override_color = -1;
+	o_complex_erase(w_current, obj);
 	o_complex_delete(w_current, obj);
 	/* TODO: special case hack no return_tail. why? */
 }
@@ -111,9 +98,7 @@ o_delete_complex(TOPLEVEL *w_current, OBJECT *obj)
 static void
 o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_pin_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_pin_erase(w_current, obj);
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -122,9 +107,7 @@ o_delete_pin(TOPLEVEL *w_current, OBJECT *obj)
 void
 o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_text_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_text_erase(w_current, obj);
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -133,9 +116,7 @@ o_delete_text(TOPLEVEL *w_current, OBJECT *obj)
 static void
 o_delete_arc(TOPLEVEL *w_current, OBJECT *obj)
 {
-	w_current->override_color = w_current->background_color;
-	o_arc_draw(w_current, obj);
-	w_current->override_color = -1;
+	o_arc_erase(w_current, obj);
 	s_delete(w_current, obj);
 	w_current->page_current->object_tail =
 		(OBJECT *) return_tail(w_current->page_current->object_head);
@@ -144,10 +125,11 @@ o_delete_arc(TOPLEVEL *w_current, OBJECT *obj)
 void
 o_delete(TOPLEVEL *w_current)
 {
-	OBJECT *current = NULL;
-	OBJECT *found = NULL;
+	SELECTION *s_current = NULL;
+	OBJECT *object = NULL;
 
-	if (w_current->page_current->selection_head->next == NULL) {
+	object = o_select_return_first_object(w_current);
+	if (object == NULL) {
 		/* TODO: error condition */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
@@ -155,67 +137,63 @@ o_delete(TOPLEVEL *w_current)
 		return;
 	}
 
-	/* skip over head */
-	current = w_current->page_current->selection_head->next;
 
-	while(current != NULL) {
-		found = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, current);
-		if (found == NULL) {
-			fprintf(stderr,
-				"UGGG! you blew it... tried "
-				"to delete something that didn't exist");
+	/* skip over head node */
+        s_current = w_current->page_current->selection2_head->next;
+
+	while(s_current != NULL) {
+
+		object = s_current->selected_object;
+		if (object == NULL) {
+			fprintf(stderr, 
+				"ERROR: NULL object in o_delete_end!\n");
 			exit(-1);
 		}
 
-		switch(found->type) {
-		case(OBJ_LINE):
-			o_delete_line(w_current, found);
+		switch(object->type) {
+			case(OBJ_LINE):
+				o_delete_line(w_current, object);
 			break;
 
-		case(OBJ_NET):
-			o_delete_net(w_current, found);
+			case(OBJ_NET):
+				o_delete_net(w_current, object);
 			break;
 
-		case(OBJ_BUS):
-			o_delete_bus(w_current, found);
+			case(OBJ_BUS):
+				o_delete_bus(w_current, object);
 			break;
 
-		case(OBJ_BOX):
-			o_delete_box(w_current, found);
+			case(OBJ_BOX):
+				o_delete_box(w_current, object);
 			break;
 
-		case(OBJ_CIRCLE):
-			o_delete_circle(w_current, found);
+			case(OBJ_CIRCLE):
+				o_delete_circle(w_current, object);
 			break;
 
-		case(OBJ_COMPLEX):
-			o_delete_complex(w_current, found);
+			case(OBJ_COMPLEX):
+				o_delete_complex(w_current, object);
 			break;
 
-		case(OBJ_PIN):
-			o_delete_pin(w_current, found);
+			case(OBJ_PIN):
+				o_delete_pin(w_current, object);
 			break;
 
-		case(OBJ_TEXT):
-			o_delete_text(w_current, found);
+			case(OBJ_TEXT):
+				o_delete_text(w_current, object);
 			break;
 
-		case(OBJ_ARC):
-			o_delete_arc(w_current, found);
+			case(OBJ_ARC):
+				o_delete_arc(w_current, object);
 			break;
 		}
-		current = current->next;
+		s_current = s_current->next;
 	}
 
 	w_current->inside_action = 0;
 
-	o_list_delete_rest(w_current, w_current->page_current->selection_head);
-	w_current->page_current->selection_head->next = NULL;
-
-	w_current->page_current->selection_tail = return_tail(
-		w_current->page_current->selection_head);
-
+	o_selection_destroy_all(w_current->page_current->selection2_head);
+	w_current->page_current->selection2_head = o_selection_new_head();
 	w_current->page_current->CHANGED=1;
 
 	/* New CONN stuff */

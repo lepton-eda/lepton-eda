@@ -114,10 +114,19 @@ o_box_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_box_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+	w_current->override_color = w_current->background_color;
+	o_box_draw(w_current, o_current);
+	w_current->override_color = -1;
+}
+
+void
 o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
 	int screen_x2, screen_y2;
+	int color;
 
 	if (o_current->line_points == NULL) {
 		return;
@@ -128,8 +137,14 @@ o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 	screen_x2 = o_current->line_points->screen_x2;
 	screen_y2 = o_current->line_points->screen_y2;
 
+        if (o_current->saved_color != -1) {
+                color = o_current->saved_color;
+        } else {
+                color = o_current->color;
+        }
+
         gdk_gc_set_foreground(w_current->outline_xor_gc,
-			      x_get_darkcolor(o_current->color));
+			      x_get_darkcolor(color));
 	gdk_draw_rectangle(w_current->window,
 			   w_current->outline_xor_gc, FALSE,
 			   screen_x1 + dx,

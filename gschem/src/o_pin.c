@@ -137,6 +137,7 @@ o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current)
 		break;
 	}
 }
+
 void
 o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
@@ -245,14 +246,30 @@ o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+        w_current->override_color = w_current->background_color;
+	o_pin_draw(w_current, o_current);
+        w_current->override_color = -1;
+}
+
+void
 o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int size;
+	int color;
+
 	if (o_current->line_points == NULL) {
 		return;
 	}
 
-	gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor(o_current->color));
+        if (o_current->saved_color != -1) {
+                color = o_current->saved_color;
+        } else {
+                color = o_current->color;
+        }
+
+	gdk_gc_set_foreground(w_current->xor_gc, x_get_darkcolor(color));
 
 	if (w_current->page_current->zoom_factor > 0 && w_current->pin_style == THICK ) {
 		size = SCREENabs(w_current, 10);

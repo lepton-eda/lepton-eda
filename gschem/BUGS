@@ -4,6 +4,12 @@ Bugs (no particular order):
 
 	Prioritize this list!
 
+FIXED	Text direction on rotated fast text line is wrong.
+
+BETTER	Length of fast text line is wrong.
+	Length of fast text line is still too long (for attributes)
+	since I don't take SHOW_BOTH_VALUE into account
+
 	Relative paths are not displayed properly in the component add 
 	dialog box
 
@@ -15,8 +21,14 @@ Bugs (no particular order):
 	Change the color of an attached attribute, and then copy it (color
 	changes to yellow oops).
 
+	translate 0 does not seem to work right with nets in the file...
+	(nets should not be in the picture anyway, but either way...)
+
 	Zoom in a lot and try to select something with the select box. 
 	Not easy to do.
+
+	stretch seems to pick random objects to stretch if you don't select 
+	something (cannot replicate)
 
 	Swedish characters don't work.
 
@@ -36,7 +48,13 @@ BETTER	Almost got that 180 postscript printing bug fixed... not perfect yet
 
 	Mouse pan crashed my X server once
 
-	Select some text while a symbol is at 0,0 and you will see something
+FIXED 	slow redraw (due to o_conn_disconnect_update being there), added
+        o_redraw_all_fast to be used in places where it's necessary to redraw
+	quickly (like in the panning) 
+
+	slow drawbounding box (caused by way too many get_complex_bound calls)
+
+GONE	Select some text while a symbol is at 0,0 and you will see something
 	being erased at 0,0.  I haven't got a clue as to what is being 
 	erased.  Actually I do, it's the selection list's copy of the text.
 	it seems.  I bet before I translate text object I erase it. hmmmm
@@ -57,6 +75,30 @@ BETTER	Almost got that 180 postscript printing bug fixed... not perfect yet
 	Document how tswindow is being used in the include file.
 	(it's also used by snap size), have snapsize get it's own window
 
+	selection2 related bugs:
+FIXED 	lock and unlock need a seperate color for locking..
+FIXED 	go through o_misc and get them all working (lock, unlock, embed, 
+        unembed)
+FIXED 	o_mirror doesn't work
+FIXED 	color change doesn't work...
+FIXED 	o_edit temporarly #ifed out
+FIXED 	i_callback_attrib_attach. needs to loop over selection list...
+FIXED 	copy attribute, stays an attribute... ?
+FIXED 	i_callback_attrib_detach is also broken
+FIXED 	edit text and it gets an invalid color
+FIXED 	toggle vis totally broken
+FIXED 	selection of invisible
+FIXED   Copy an object and attribute, then unselect each using CTRL
+        and then click away to unselect both and attribute becomes invalid
+        color (caused specifically by: select object, deselect object,
+        text was already selected) (not related to copy at all...)
+FIXED 	net conslidate is broken on objects which have attributes and selected,
+      	totally broken (dumps core), fixed with a hack (unselect all before you
+      	attempt).
+
+	Still todo in selection2: 
+	All slot= stuff does not work yet
+
 	does it cause problems that the translate dialog box doesn't
 	grab the focus for the app?
 
@@ -66,7 +108,7 @@ BETTER	Almost got that 180 postscript printing bug fixed... not perfect yet
 
 	Mirror something and then change slots... selection is wrong
 
-	Move a single net.  You will see a stray visual cue at 0,0
+GONE	Move a single net.  You will see a stray visual cue at 0,0
 
 	Setting slot=something other than 1 in a symbol doesn't work (ie
 	slot isn't updated when you place the component).
@@ -95,7 +137,7 @@ KLUDGED	Really odd behavior with display :'s... type some :'s and then
 	View Limits is broken for a single horizontal line (at least you 
 	can't see the line because it's below the drawing area)
 
-	When placing an invisible attribute, you get the left over image
+GONE	When placing an invisible attribute, you get the left over image
 	that needs to be erased.
 
 	I'm not eraseing or dealing with the slot= attribute if you change
@@ -103,7 +145,7 @@ KLUDGED	Really odd behavior with display :'s... type some :'s and then
 	drawn.  (need to do a redraw to see the visible results)
 
 
-	In o_select and o_select_many, when you try to update the tail to
+GONE	In o_select and o_select_many, when you try to update the tail to
 	be proper, select_many doesn't work.  I wonder what else is effected
 	Might have fixed some of this, but it's still highly suspect.
 	
@@ -114,11 +156,11 @@ GONE?	Got an unexplained core dump, dealing with trying to disconnect a
 	bogus net (already freed?).  I haven't been able to replicate this 
 	at all.  
 
-	Figure out and fix why text when selected and deselected (and placed)
+GONE	Figure out and fix why text when selected and deselected (and placed)
 	is sometimes offset (visually).  You have to do a redraw to get one
 	image (non-offset)
 
-	When doing "open symbols...", the newly loaded symbols are not 
+GONE	When doing "open symbols...", the newly loaded symbols are not 
 	zoomed limits
 
 	Bug in arcs and large large world-size... Don't draw right.
@@ -161,7 +203,7 @@ OKAY?	Another segfault.  This one totally unexplained.  Was seeing some
 	Unfortunately core not generated since gtk wasn't compiled to 
 	generate code dump files.  Need to recompile gtk to do so.
 
-	A segfault will occur if you attach NON text items to other items
+GONE	A segfault will occur if you attach NON text items to other items
 	and then delete the whole bunch and then try to select something.
 	The cause is unknown but a possible fix is known.  You should not be 
 	allowed to attach NON text items as attributes.  (it segfault 
@@ -187,12 +229,12 @@ OKAY	Apparently, an undocumented feature (or maybe it is documented), but
 		- middle button shortcut updates (same reason as above)
 	
 
-	What happens if you attach an attribute to two places... nothing, 
+GONE	What happens if you attach an attribute to two places... nothing, 
 	but you should disallow that.
 	
 
 
-	Still have dangling cue blip in lower corner... 
+GONE	Still have dangling cue blip in lower corner... 
 	now seeing it on copys/moves, related to selected drawing conns.
 
 	CHANGED flag -- make sure it's set in all places.
@@ -204,7 +246,7 @@ BETTER	Do some sanity on input files
 		- get consistant name
 		- and perhaps make +4 zoom_factor aware
 
-	You can't put ='s in text strings (unless it's the seperator for
+OKAY	You can't put ='s in text strings (unless it's the seperator for
 	name=value in attributes) (is this a bug or just a restriction?)
 	(either way, document it).
 
@@ -232,7 +274,7 @@ DONE
 	overs from the net command  (same thing as mentioned above. inside
 	action and hitting a key leaves ghosts)
 
-	place two complex.
+GONE?	place two complex.
 	- Connect net inbetween.
 	- Connect another net to that new net
 	Move all... see what happens?  ( be sure components are at the end

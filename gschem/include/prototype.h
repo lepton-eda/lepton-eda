@@ -179,6 +179,7 @@ SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);
 SCM g_rc_text_origin_marker(SCM mode);
+SCM g_rc_fast_mousepan(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -290,45 +291,37 @@ void i_callback_help_hotkeys(gpointer data, guint callback_action, GtkWidget *wi
 void i_callback_options_show_coord_window(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_sbox.c */
-void i_sbox_search(TOPLEVEL *w_current, int flag);
-void i_sbox_start(TOPLEVEL *w_current, int x, int y);
-void i_sbox_end(TOPLEVEL *w_current, int x, int y);
-void i_sbox_rubberbox(TOPLEVEL *w_current, int x, int y);
 /* i_vars.c */
 void i_vars_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
 /* o_arc.c */
 void o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_arc_start(TOPLEVEL *w_current, int x, int y);
 void o_arc_end1(TOPLEVEL *w_current, int x, int y);
 void o_arc_end2(TOPLEVEL *w_current, int start_angle, int end_angle);
 void o_arc_rubberline(TOPLEVEL *w_current, int x, int y);
 /* o_attrib.c */
-void deal_attr(TOPLEVEL *w_current, OBJECT *selected);
-void o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list);
-void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, OBJECT *list, int new_show_name_value);
+void o_attrib_add_selected(TOPLEVEL *w_current, OBJECT *selected);
+void o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list);
+void o_attrib_toggle_show_name_value(TOPLEVEL *w_current, SELECTION *list, int new_show_name_value);
 void o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_attrib_end(TOPLEVEL *w_current);
 void o_attrib_rubberattrib(TOPLEVEL *w_current);
 OBJECT *o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility, int show_name_value, OBJECT *o_current);
 /* o_basic.c */
 void o_redraw_all(TOPLEVEL *w_current);
+void o_redraw_all_fast(TOPLEVEL *w_current);
 void o_redraw(TOPLEVEL *w_current, OBJECT *object_list);
 void o_unselect_all(TOPLEVEL *w_current);
-void o_find(TOPLEVEL *w_current, int x, int y);
-void o_select(TOPLEVEL *w_current, OBJECT *selected);
-void o_select_many(TOPLEVEL *w_current, OBJECT *selected, int count);
-void o_redraw_selected(TOPLEVEL *w_current);
-void o_unredraw_selected(TOPLEVEL *w_current);
 void o_erase_selected(TOPLEVEL *w_current);
 void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
-void o_unredraw_real(TOPLEVEL *w_current, OBJECT *list);
-void o_redraw_real(TOPLEVEL *w_current, OBJECT *list);
-void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_current, GdkColor *color);
-void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_current);
+void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, GdkColor *color);
+void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list);
 /* o_box.c */
 void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_box_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_box_start(TOPLEVEL *w_current, int x, int y);
 void o_box_end(TOPLEVEL *w_current, int x, int y);
@@ -338,6 +331,7 @@ void o_bus_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_bus_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_bus_start(TOPLEVEL *w_current, int x, int y);
 void o_bus_end(TOPLEVEL *w_current, int x, int y);
@@ -346,19 +340,23 @@ void o_bus_eraserubber(TOPLEVEL *w_current);
 void o_bus_xorrubber(TOPLEVEL *w_current);
 /* o_circle.c */
 void o_circle_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_circle_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_circle_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_circle_start(TOPLEVEL *w_current, int x, int y);
 void o_circle_end(TOPLEVEL *w_current, int x, int y);
 void o_circle_rubbercircle(TOPLEVEL *w_current, int x, int y);
 /* o_complex.c */
 void o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_complex_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
 void o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y);
 void o_complex_rubbercomplex(TOPLEVEL *w_current);
 void o_complex_translate_display(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
-void o_complex_translate_all(TOPLEVEL *w_current, int offset);
+void o_complex_translate_display_selection(TOPLEVEL *w_current, int x1, int y1, SELECTION *head);
 void o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
+void o_complex_translate_all(TOPLEVEL *w_current, int offset);
+void o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, SELECTION *head);
 void o_complex_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);
 int o_complex_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 OBJECT *o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery, OBJECT *object);
@@ -377,21 +375,24 @@ void o_copy_end(TOPLEVEL *w_current);
 /* o_delete.c */
 void o_delete_text(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(TOPLEVEL *w_current);
+/* o_find.c */
+void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
 /* o_line.c */
 void o_line_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_line_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_line_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_line_start(TOPLEVEL *w_current, int x, int y);
 void o_line_end(TOPLEVEL *w_current, int x, int y);
 void o_line_rubberline(TOPLEVEL *w_current, int x, int y);
 /* o_misc.c */
-void o_edit(TOPLEVEL *w_current, OBJECT *list);
+void o_edit(TOPLEVEL *w_current, SELECTION *list);
 void o_lock(TOPLEVEL *w_current);
 void o_unlock(TOPLEVEL *w_current);
-void o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery);
+void o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
 void o_embed(TOPLEVEL *w_current);
 void o_unembed(TOPLEVEL *w_current);
-void o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery);
-void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list);
+void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
+void o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end(TOPLEVEL *w_current);
@@ -400,6 +401,7 @@ void o_net_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_conn_erase_force(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_net_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_net_start(TOPLEVEL *w_current, int x, int y);
 void o_net_end(TOPLEVEL *w_current, int x, int y);
@@ -410,11 +412,21 @@ void o_net_xorrubber(TOPLEVEL *w_current);
 void o_pin_conn_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_conn_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_pin_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_pin_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_pin_start(TOPLEVEL *w_current, int x, int y);
 void o_pin_end(TOPLEVEL *w_current, int x, int y);
 void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y);
 void o_pin_eraserubber(TOPLEVEL *w_current);
+/* o_select.c */
+void o_select_object(TOPLEVEL *w_current, OBJECT *o_current, int type, int count);
+void o_select_box_start(TOPLEVEL *w_current, int x, int y);
+void o_select_box_end(TOPLEVEL *w_current, int x, int y);
+void o_select_box_rubberband(TOPLEVEL *w_current, int x, int y);
+void o_select_box_search(TOPLEVEL *w_current);
+OBJECT *o_select_return_first_object(TOPLEVEL *w_current);
+int o_select_selected(TOPLEVEL *w_current);
+void o_select_unselect_all(TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(TOPLEVEL *w_current, OBJECT *list);
 void o_slot_end(TOPLEVEL *w_current, char *string, int len);
@@ -424,6 +436,7 @@ void o_stretch_end(TOPLEVEL *w_current);
 void o_stretch_motion(TOPLEVEL *w_current, int x, int y);
 /* o_text.c */
 void o_text_draw(TOPLEVEL *w_current, OBJECT *o_current);
+void o_text_erase(TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_text_input(TOPLEVEL *w_current);
 void o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y);
@@ -436,7 +449,6 @@ void o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, int visibi
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* x_attrsel.c */
-void setup_attr_selector(TOPLEVEL *w_current);
 /* x_basic.c */
 void x_repaint_background(TOPLEVEL *w_current);
 void x_hscrollbar_set_ranges(TOPLEVEL *w_current);
@@ -461,7 +473,7 @@ void multi_attrib_edit_add(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_change(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_delete(GtkWidget *w, TOPLEVEL *w_current);
 void multi_attrib_edit_close(GtkWidget *w, TOPLEVEL *w_current);
-void multi_attrib_edit(TOPLEVEL *w_current, OBJECT *list);
+void multi_attrib_edit(TOPLEVEL *w_current, SELECTION *list);
 void text_input_dialog_apply(GtkWidget *w, TOPLEVEL *w_current);
 void text_input_dialog_close(GtkWidget *w, TOPLEVEL *w_current);
 void text_input_dialog(TOPLEVEL *w_current);
@@ -576,6 +588,9 @@ void print_hello(gpointer data, guint callback_action, GtkWidget *widget);
 void get_main_menu(TOPLEVEL *w_current, GtkWidget **menubar);
 void get_main_popup(TOPLEVEL *w_current, GtkWidget **menu);
 gint do_popup(TOPLEVEL *w_current, GdkEventButton *event);
+/* x_multimulti.c */
+void multi_multi_edit_close(GtkWidget *w, GtkWidget *window);
+void multi_multi_edit(TOPLEVEL *w_current, SELECTION *list);
 /* x_pagesel.c */
 void update_page_manager(GtkWidget *widget, TOPLEVEL *w_current);
 gint save_page(GtkWidget *gtklist, TOPLEVEL *w_current);

@@ -24,10 +24,11 @@ multi_multi_edit_close(GtkWidget *w,GtkWidget *window)
 }
 
 void
-multi_multi_edit(TOPLEVEL *w_current, OBJECT *list)
+multi_multi_edit(TOPLEVEL *w_current, SELECTION *list)
 {
 	gint type;
-	OBJECT *current;
+	SELECTION *s_current;
+	OBJECT *o_current;
 	GPtrArray *components;
 
 	GtkSheet *sheet;
@@ -39,20 +40,26 @@ multi_multi_edit(TOPLEVEL *w_current, OBJECT *list)
 	GtkWidget *cancelbutton;
 
 	int rowcount = 1;
+
 	components = g_ptr_array_new();
-	type = list->type;
+	//type = list->type;
 	
 	g_ptr_array_add(components,list);
 
-	current=list->next;
-	while(current)
+	s_current=list;
+	while(s_current != NULL)
 	{
-		if(current->type == type)
+		o_current = s_current->selected_object;
+		if (o_current) 
 		{
-			g_ptr_array_add(components,current);
-			rowcount++;
+			if(o_current->type != OBJ_TEXT && 
+			   o_current->type != -1 ) 
+			{
+				g_ptr_array_add(components, o_current);
+				rowcount++;
+			}
 		}
-		current=current->next;
+		s_current=s_current->next;
 	}
 
 //	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,

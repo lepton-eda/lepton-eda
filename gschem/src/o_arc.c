@@ -120,9 +120,18 @@ o_arc_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_arc_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+	w_current->override_color = w_current->background_color;
+	o_arc_draw(w_current, o_current);
+	w_current->override_color = -1;
+}
+
+void
 o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int width, height;
+	int color;
 
 	if (o_current->line_points == NULL) {
 		return;
@@ -151,8 +160,14 @@ o_arc_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 		width = 1;
 	}
 
+	if (o_current->saved_color != -1) {
+		color = o_current->saved_color;
+	} else {
+		color = o_current->color;
+	}
+
 	gdk_gc_set_foreground(w_current->outline_xor_gc,
-			      x_get_darkcolor(o_current->color));
+			      x_get_darkcolor(color));
 	gdk_draw_arc(w_current->window, w_current->outline_xor_gc,
 		     FALSE,
 		     /* x and y */

@@ -30,11 +30,13 @@ static int whichone_changing=-1;
 int
 o_stretch_start(TOPLEVEL *w_current, int x, int y)
 {
-	OBJECT *found;
-	OBJECT *selected;
+	OBJECT *object;
+	OBJECT *closest;
 	int whichone;
 
-	if (w_current->page_current->selection_head->next != NULL) {
+	object = o_select_return_first_object(w_current);
+
+	if (object) {
 
 		w_current->last_drawb_mode = -1;
 		w_current->event_state = STRETCH; 
@@ -43,11 +45,10 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 		printf("objects selected and inside stretch now\n");
 #endif
 	
-		selected = w_current->page_current->selection_head->next;
-		found = o_conn_find_closest(selected, x, y, 
-					    &whichone, NULL, NULL);
+		closest = o_conn_find_closest(object, x, y, 
+					      &whichone, NULL, NULL);
 
-		if (found) {
+		if (closest) {
 
 			switch(whichone) {
 
@@ -59,36 +60,36 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 
 				whichone_changing = 1;
 
-				w_current->last_x = found->
+				w_current->last_x = closest->
 						    line_points->
 						    screen_x1;
-				w_current->last_y = found->
+				w_current->last_y = closest->
 						    line_points->
 						    screen_y1;
-				w_current->start_x = found->
+				w_current->start_x = closest->
 						    line_points->
 						    screen_x2;
-				w_current->start_y = found->
+				w_current->start_y = closest->
 						    line_points->
 						    screen_y2;
 #if 0
 				w_current->last_x = fix_x(w_current, 
-							  found->
+							  closest->
 							  line_points->
 							  screen_x1);
 
 				w_current->last_y = fix_x(w_current, 
-							  found->
+							  closest->
 							  line_points->
 							  screen_y1);
 
 				w_current->start_x = fix_x(w_current, 
-							   found->
+							   closest->
 							   line_points->
 							   screen_x2);
 
 				w_current->start_y = fix_y(w_current, 
-							   found->
+							   closest->
 							   line_points->
 							   screen_y2);
 #endif
@@ -96,8 +97,8 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 #if DEBUG
 				gdk_draw_arc(w_current->window, 
 					     w_current->gc, FALSE,
-                                       	     found->line_points->screen_x1,
-                                       	     found->line_points->screen_y1,
+                                       	     closest->line_points->screen_x1,
+                                       	     closest->line_points->screen_y1,
                                        	     100, 100, 0, FULL_CIRCLE);
 #endif
 
@@ -107,16 +108,16 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 
 				whichone_changing = 2;
 
-				w_current->last_x = found->
+				w_current->last_x = closest->
 						    line_points->
 						    screen_x2;
-				w_current->last_y = found->
+				w_current->last_y = closest->
 						    line_points->
 						    screen_y2;
-				w_current->start_x = found->
+				w_current->start_x = closest->
 						    line_points->
 						    screen_x1;
-				w_current->start_y = found->
+				w_current->start_y = closest->
 						    line_points->
 						    screen_y1;
 
@@ -145,8 +146,8 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 #if DEBUG
 				gdk_draw_arc(w_current->window, 
 					     w_current->gc, FALSE,
-                                       	     found->line_points->screen_x2,
-                                       	     found->line_points->screen_y2,
+                                       	     closest->line_points->screen_x2,
+                                       	     closest->line_points->screen_y2,
                                        	     100, 100, 0, FULL_CIRCLE);
 #endif
 				break;
@@ -160,12 +161,12 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 		printf("whichone: %d\n", whichone);
 #endif
 
-		if (!found) {
+		if (!closest) {
 			printf("Stretching not supported for this object type\n");
 			return(FALSE);
 		}
 		
-		if (found->type == OBJ_NET) {
+		if (closest->type == OBJ_NET) {
 			gdk_gc_set_foreground(w_current->gc,
                                               x_get_color(w_current->
 							  background_color));
@@ -183,11 +184,13 @@ o_stretch_start(TOPLEVEL *w_current, int x, int y)
 void
 o_stretch_end(TOPLEVEL *w_current)
 {
-	OBJECT *o_current=NULL;
 	OBJECT *found=NULL;
+	OBJECT *object=NULL;
 	int x, y;
 
-	if (w_current->page_current->selection_head->next == NULL) { 
+	object = o_select_return_first_object(w_current);
+
+	if (!object) {
 		/* actually this is an error condition hack */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
@@ -195,23 +198,9 @@ o_stretch_end(TOPLEVEL *w_current)
 		return;
 	}
 
-	/* skip over head */
-	o_current = w_current->page_current->selection_head->next; 
 
-	/* this will change to while(...) once things work right */
-	if(o_current != NULL) {
-
-		found = (OBJECT *) o_list_search(w_current->
-						 page_current->
-					         object_head, 
-						 o_current);
-		if (found == NULL) {
-			fprintf(stderr, "UGGG! you blew it... tried to "
-					"delete something that didn't exist\n");	
-			exit(-1);
-		}
-
-		switch(found->type) {
+	/* maybe put in a while (...) to stretch many objects... */
+	switch(object->type) {
 			case(OBJ_LINE):
 
 			break;
@@ -246,25 +235,23 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("previous endpoints: %d %d %d %d\n", 
-				found->line_points->x1,
-				found->line_points->y1,  
-				found->line_points->x2,
-				found->line_points->y2);  
+				object->line_points->x1,
+				object->line_points->y1,  
+				object->line_points->x2,
+				object->line_points->y2);  
 
 		printf("new end points: %d %d\n", x, y);
 #endif
 
-				o_net_modify(w_current, found, 
-					     x, y, whichone_changing);
-				o_net_modify(w_current, o_current, 
+				o_net_modify(w_current, object, 
 					     x, y, whichone_changing);
 
 #if DEBUG
 		printf("final endpoints: %d %d %d %d\n", 
-				found->line_points->x1,
-				found->line_points->y1,  
-				found->line_points->x2,
-				found->line_points->y2);  
+				object->line_points->x1,
+				object->line_points->y1,  
+				object->line_points->x2,
+				object->line_points->y2);  
 #endif
 			break;
 
@@ -299,17 +286,15 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("previous endpoints: %d %d %d %d\n", 
-				found->line_points->x1,
-				found->line_points->y1,  
-				found->line_points->x2,
-				found->line_points->y2);  
+				object->line_points->x1,
+				object->line_points->y1,  
+				object->line_points->x2,
+				object->line_points->y2);  
 
 		printf("new end points: %d %d\n", x, y);
 #endif
 
-				o_bus_modify(w_current, found, 
-					     x, y, whichone_changing);
-				o_bus_modify(w_current, o_current, 
+				o_bus_modify(w_current, object, 
 					     x, y, whichone_changing);
 
 #if DEBUG
@@ -353,25 +338,23 @@ o_stretch_end(TOPLEVEL *w_current)
 
 #if DEBUG
 		printf("previous endpoints: %d %d %d %d\n", 
-				found->line_points->x1,
-				found->line_points->y1,  
-				found->line_points->x2,
-				found->line_points->y2);  
+				object->line_points->x1,
+				object->line_points->y1,  
+				object->line_points->x2,
+				object->line_points->y2);  
 
 		printf("new end points: %d %d\n", x, y);
 #endif
 
-				o_pin_modify(w_current, found, 
-					     x, y, whichone_changing);
-				o_pin_modify(w_current, o_current, 
+				o_pin_modify(w_current, object, 
 					     x, y, whichone_changing);
 
 #if DEBUG
 		printf("final endpoints: %d %d %d %d\n", 
-				found->line_points->x1,
-				found->line_points->y1,  
-				found->line_points->x2,
-				found->line_points->y2);  
+				object->line_points->x1,
+				object->line_points->y1,  
+				object->line_points->x2,
+				object->line_points->y2);  
 #endif
 
 			break;
@@ -396,9 +379,6 @@ o_stretch_end(TOPLEVEL *w_current)
 			case(OBJ_ARC):
 
 			break;
-
-		}
-		o_current = o_current->next;
 	}
 
 	w_current->page_current->CHANGED=1;
@@ -406,8 +386,9 @@ o_stretch_end(TOPLEVEL *w_current)
 	o_conn_disconnect_update(w_current->page_current);
 
 	/* o_conn_erase_all(w_current, w_current->page_current->object_head);*/
+
+	/* TODO this is questionable, is it really needed? */
 	o_redraw(w_current, w_current->page_current->object_head);
-        o_redraw_selected(w_current);
 
 	whichone_changing = -1;
 }

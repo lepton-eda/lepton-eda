@@ -40,7 +40,7 @@ extern int global_sid;
 /* returns head !!!!!!!!!!!!!!!!!!! */
 /* look at above.. this returns what was passed in!!!! */
 /* copies selected to list_head (!! returns new list) */
-/* flag is either NORMAL or SELECTION */
+/* flag is either NORMAL_FLAG or SELECTION_FLAG */
 OBJECT *
 o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int flag)
 {
@@ -120,7 +120,7 @@ o_list_copy_to(TOPLEVEL *w_current, OBJECT *list_head, OBJECT *selected, int fla
 }
 
 /* you need to pass in a head_node for dest_list_head */
-/* flag is either NORMAL or SELECTION */
+/* flag is either NORMAL_FLAG or SELECTION_FLAG */
 OBJECT *
 o_list_copy_all(TOPLEVEL *w_current, OBJECT *src_list_head, OBJECT *dest_list_head, int flag)
 {

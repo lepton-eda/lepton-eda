@@ -236,6 +236,7 @@ DEFINE_I_CALLBACK(file_save)
 		s_log_message("Saved [%s]\n",
 			      w_current->page_current->page_filename);
 
+                o_select_unselect_all(w_current); 
        		f_save(w_current, w_current->page_current->page_filename);
 
 		/* don't know if should be kept going to select mode... */
@@ -414,7 +415,7 @@ DEFINE_I_CALLBACK(edit_copy)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_copy, "Copy");
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
 		i_update_status(w_current, "Copy Mode");
 		w_current->event_state = STARTCOPY;
 	} else {
@@ -429,7 +430,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_copy_hotkey, "Copy");
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
 		o_copy_start(w_current, mouse_x, mouse_y);
 		w_current->event_state = ENDCOPY;
 		w_current->inside_action = 1;
@@ -443,7 +444,7 @@ DEFINE_I_CALLBACK(edit_move)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_move, "Move");
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
 		i_update_status(w_current, "Move Mode");
 		w_current->event_state = STARTMOVE;
 	} else {
@@ -458,7 +459,7 @@ DEFINE_I_CALLBACK(edit_move_hotkey)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_move_hotkey, "Move");
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
 		o_move_start(w_current, mouse_x, mouse_y);
 		w_current->event_state = ENDMOVE;
 		w_current->inside_action = 1;
@@ -473,7 +474,7 @@ DEFINE_I_CALLBACK(edit_delete)
 
 	i_update_middle_button(w_current, i_callback_edit_delete, "Delete");
 
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
                 o_delete(w_current);
 
 		/* if you delete the objects you must go into select
@@ -491,25 +492,21 @@ DEFINE_I_CALLBACK(edit_edit)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_edit, "Edit");
-	if (w_current->page_current->selection_head->next != NULL) {
-		o_edit(w_current,
-		       w_current->page_current->selection_head->next);
-	}
+	o_edit(w_current, w_current->page_current->selection2_head->next);
 }
 
 DEFINE_I_CALLBACK(edit_text)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
 
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_text, "Edit Text");
-	if (w_current->page_current->selection_head->next != NULL) {
-
-		if (w_current->page_current->selection_head->next->type == 
-		    OBJ_TEXT) {
-			o_text_edit(w_current, w_current->page_current->
-				       selection_head->next);
+	object = o_select_return_first_object(w_current);
+	if (object) {
+		if (object->type == OBJ_TEXT) {
+			o_text_edit(w_current, object);
 		}
 	}
 }
@@ -524,7 +521,7 @@ DEFINE_I_CALLBACK(edit_stretch)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_stretch, "Stretch");
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
 		i_update_status(w_current, "Stretch Mode");
 		w_current->event_state = STARTSTRETCH;
 	} else {
@@ -543,7 +540,7 @@ DEFINE_I_CALLBACK(edit_stretch_hotkey)
 
 	i_update_middle_button(w_current, i_callback_edit_stretch_hotkey, 
 			       "Stretch");
-	if (w_current->page_current->selection_head->next != NULL) {
+	if (o_select_return_first_object(w_current)) {
 		/* only stretch if it's a valid object */
 		if (o_stretch_start(w_current, mouse_x, mouse_y)) {
 			w_current->event_state = ENDSTRETCH;
@@ -555,13 +552,15 @@ DEFINE_I_CALLBACK(edit_stretch_hotkey)
 DEFINE_I_CALLBACK(edit_slot)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+        OBJECT *object;
 
 	exit_if_null(w_current);
 
+        object = o_select_return_first_object(w_current);
+
 	i_update_middle_button(w_current, i_callback_edit_slot, "Slot");
-	if (w_current->page_current->selection_head->next != NULL) {
-		o_slot_start(w_current,
-			     w_current->page_current->selection_head->next);
+	if (object) {
+		o_slot_start(w_current, object);
 	}
 }
 
@@ -593,14 +592,16 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 {
         TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current;
 
         exit_if_null(w_current);
 
-        i_update_middle_button(w_current,
+	if (w_current->page_current->selection2_head) {
+		s_current = w_current->page_current->selection2_head->next;
+        	i_update_middle_button(w_current,
 			       i_callback_edit_rotate_90_hotkey, "Rotate");
-
-	o_rotate_90(w_current, w_current->page_current->selection_head->next,
-		    mouse_x, mouse_y);
+		o_rotate_90(w_current, s_current, mouse_x, mouse_y);
+	}
 
         w_current->event_state = SELECT;
         w_current->inside_action = 0;
@@ -621,14 +622,20 @@ DEFINE_I_CALLBACK(edit_mirror)
 DEFINE_I_CALLBACK(edit_mirror_hotkey)
 {
         TOPLEVEL *w_current = (TOPLEVEL *) data;
+        OBJECT *object;
 
         exit_if_null(w_current);
 
-        i_update_middle_button(w_current,
+	object = o_select_return_first_object(w_current);
+
+	if (object) {
+        	i_update_middle_button(w_current,
 			       i_callback_edit_mirror_hotkey, "Mirror");
 
-	o_mirror(w_current, w_current->page_current->selection_head->next,
-		mouse_x, mouse_y);
+		o_mirror(w_current, 
+			 w_current->page_current->selection2_head->next, 
+			 mouse_x, mouse_y);
+	}
 
         w_current->event_state = SELECT;
         w_current->inside_action = 0;
@@ -642,7 +649,8 @@ DEFINE_I_CALLBACK(edit_lock)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_lock, "Lock");
-	if (w_current->page_current->selection_head->next != NULL) {
+
+        if (o_select_return_first_object(w_current)) {
 		o_lock(w_current);
 	}
 }
@@ -655,7 +663,7 @@ DEFINE_I_CALLBACK(edit_unlock)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_unlock, "Unlock");
-	if (w_current->page_current->selection_head->next != NULL) {
+        if (o_select_return_first_object(w_current)) {
 		o_unlock(w_current);
 	}
 }
@@ -695,7 +703,7 @@ DEFINE_I_CALLBACK(edit_embed)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_embed, "Embed");
-	if (w_current->page_current->selection_head->next != NULL) {
+        if (o_select_return_first_object(w_current)) {
 		o_embed(w_current);
 	}
 }
@@ -708,7 +716,7 @@ DEFINE_I_CALLBACK(edit_unembed)
 	exit_if_null(w_current);
 
 	i_update_middle_button(w_current, i_callback_edit_unembed, "Unembed");
-	if (w_current->page_current->selection_head->next != NULL) {
+        if (o_select_return_first_object(w_current)) {
 		o_unembed(w_current);
 	}
 }
@@ -725,7 +733,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 		return;
 
 	i_update_middle_button(w_current,
-			       i_callback_attributes_visibility_toggle,
+			       i_callback_edit_show_hidden,
 			       "ShowHidden");
 
 	o_edit_show_hidden(w_current, w_current->page_current->object_head);
@@ -1539,18 +1547,10 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
 	exit_if_null(w_current);
 
-	if (w_current->page_current->selection_head->next != NULL) {
+	object = o_select_return_first_object(w_current);
+	if (object != NULL) {
 		/* only allow going into symbols */
-		if (w_current->page_current->selection_head->next->type == 
-		     OBJ_COMPLEX) {
-			object = o_list_search(w_current->
-					       page_current->object_head, 
-					       w_current->page_current->
-					       selection_head->next);
-			if (!object) {
-				fprintf(stderr, "Oops, something is wrong, could not find original object\n");
-				return;
-			}
+		if (object->type == OBJ_COMPLEX) {
 
 			parent = w_current->page_current;
 			attrib = o_attrib_search_name_single_count(object,
@@ -1591,9 +1591,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
 			/* Try the old way (based on the name of the symbol) */
 			if (!loaded_flag) {
-				filename = w_current->page_current->
-					   selection_head->next->
-					   complex_basename;
+				filename = object->complex_basename;
 				s_log_message("Searching for source [%s]\n", 
 					      filename);
 				s_hierarchy_down_schematic_multiple(w_current, 
@@ -1624,20 +1622,18 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 DEFINE_I_CALLBACK(hierarchy_down_symbol)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
 	char *filename;
 
 	exit_if_null(w_current);
 
-	if (w_current->page_current->selection_head->next != NULL) {
+	object = o_select_return_first_object(w_current);
+	if (object != NULL) {
 		/* only allow going into symbols */
-		if (w_current->page_current->selection_head->next->
-		    type == OBJ_COMPLEX) {
+		if (object->type == OBJ_COMPLEX) {
 			filename = u_basic_strdup_multiple( 
-				w_current->page_current->selection_head->next->
-				complex_clib, 
-				"/", 
-				w_current->page_current->selection_head->next->
-				complex_basename, NULL);
+				object->complex_clib, "/", 
+				object->complex_basename, NULL);
 			s_log_message("Searching for symbol [%s]\n", filename);
 			s_hierarchy_down_symbol(w_current, filename, 
 				 		w_current->page_current);
@@ -1668,6 +1664,8 @@ DEFINE_I_CALLBACK(hierarchy_up)
 DEFINE_I_CALLBACK(attributes_attach)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *first_object;
+	SELECTION *s_current;
 
 	exit_if_null(w_current);
 
@@ -1682,23 +1680,31 @@ DEFINE_I_CALLBACK(attributes_attach)
 	i_update_middle_button(w_current, i_callback_attributes_attach,
 			       "Attach");
 
-	if (w_current->page_current->selection_head->next != NULL) {
-                if (w_current->page_current->selection_head->next->next !=
-		    NULL) {
-			/* HACK: fix this? next next bit? hack */
-                        o_attrib_attach(
-				w_current,
+	/* skip over head */
+	s_current = w_current->page_current->selection2_head->next;
+	first_object = s_current->selected_object; 
+	if (!first_object) {
+		return;	
+	}
+
+	/* skip over first object */
+	s_current = s_current->next;
+	while (s_current != NULL) {
+		if (s_current->selected_object) {
+			o_attrib_attach(w_current,
 				w_current->page_current->object_head,
-				w_current->page_current->selection_head->
-				next->next,
-				w_current->page_current->selection_head->next);
+				s_current->selected_object,
+				first_object);
 		}
+		s_current = s_current->next;
 	}
 }
 
 DEFINE_I_CALLBACK(attributes_detach)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	SELECTION *s_current;
+	OBJECT *o_current;
 
 	exit_if_null(w_current);
 
@@ -1712,24 +1718,30 @@ DEFINE_I_CALLBACK(attributes_detach)
 	i_update_middle_button(w_current, i_callback_attributes_detach,
 			       "Detach");
 
-	if (w_current->page_current->selection_head->next != NULL) {
-                if (w_current->page_current->selection_head->next->next !=
-		    NULL) {
-                        o_attrib_detach_all(
-				w_current,
-				w_current->page_current->selection_head,
-				w_current->page_current->object_head);
-
-                        o_redraw_selected(w_current);
+	/* skip over head */
+	s_current = w_current->page_current->selection2_head->next;
+	while (s_current != NULL) {
+		o_current = s_current->selected_object;
+		if (o_current) {
+			if (o_current->attribs) {
+				o_attrib_free_all(w_current, 
+						  o_current->attribs);
+				o_current->attribs = NULL;
+				w_current->page_current->CHANGED=1;
+			}
 		}
+		s_current = s_current->next;
 	}
 }
 
 DEFINE_I_CALLBACK(attributes_show_name)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
 
 	exit_if_null(w_current);
+
+	object = o_select_return_first_object(w_current);
 
 	/* This is a new addition 3/15 to prevent this from executing
 	 * inside an action */
@@ -1740,19 +1752,22 @@ DEFINE_I_CALLBACK(attributes_show_name)
 	i_update_middle_button(w_current, i_callback_attributes_show_name,
 			       "ShowN");
 
-	if (w_current->page_current->selection_head->next != NULL) {
-		o_attrib_toggle_show_name_value(
-			w_current,
-			w_current->page_current->selection_head->next,
-			SHOW_NAME);
+	if (object != NULL) {
+		o_attrib_toggle_show_name_value(w_current, 
+                                                w_current->page_current->
+                                                selection2_head->next,
+						SHOW_NAME);
         }
 }
 
 DEFINE_I_CALLBACK(attributes_show_value)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
 
 	exit_if_null(w_current);
+
+	object = o_select_return_first_object(w_current);
 
 	/* This is a new addition 3/15 to prevent this from executing
 	 * inside an action */
@@ -1763,19 +1778,22 @@ DEFINE_I_CALLBACK(attributes_show_value)
 	i_update_middle_button(w_current, i_callback_attributes_show_value,
 			       "ShowV");
 
-	if (w_current->page_current->selection_head->next != NULL) {
-		o_attrib_toggle_show_name_value(
-			w_current,
-			w_current->page_current->selection_head->next,
-			SHOW_VALUE);
+	if (object != NULL) {
+		o_attrib_toggle_show_name_value(w_current, 
+                                                w_current->page_current->
+                                                selection2_head->next,
+						SHOW_VALUE);
         }
 }
 
 DEFINE_I_CALLBACK(attributes_show_both)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
 
 	exit_if_null(w_current);
+
+	object = o_select_return_first_object(w_current);
 
 	/* This is a new addition 3/15 to prevent this from executing
 	 * inside an action */
@@ -1786,19 +1804,22 @@ DEFINE_I_CALLBACK(attributes_show_both)
 	i_update_middle_button(w_current, i_callback_attributes_show_both,
 			       "ShowB");
 
-	if (w_current->page_current->selection_head->next != NULL) {
-		o_attrib_toggle_show_name_value(
-			w_current,
-			w_current->page_current->selection_head->next,
-			SHOW_NAME_VALUE);
+	if (object != NULL) {
+		o_attrib_toggle_show_name_value(w_current, 
+					        w_current->page_current->
+					        selection2_head->next,
+						SHOW_NAME_VALUE);
         }
 }
 
 DEFINE_I_CALLBACK(attributes_visibility_toggle)
 {
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
+	OBJECT *object;
 
 	exit_if_null(w_current);
+
+	object = o_select_return_first_object(w_current);
 
 	/* This is a new addition 3/15 to prevent this from executing
 	 * inside an action */
@@ -1810,10 +1831,10 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
 			       i_callback_attributes_visibility_toggle,
 			       "VisToggle");
 
-	if (w_current->page_current->selection_head->next != NULL) {
-		o_attrib_toggle_visibility(
-			w_current,
-			w_current->page_current->selection_head->next);
+	if (object != NULL) {
+		o_attrib_toggle_visibility(w_current, 
+					   w_current->page_current->
+					   selection2_head->next);
         }
 }
 
@@ -1934,7 +1955,9 @@ DEFINE_I_CALLBACK(misc)
 
         }
 #endif
+	o_selection_print_all(w_current->page_current->selection2_head);
 
+#if 0 /* no longer needed and old */
 	/* In this case w_current->page_current->next can be safely null */	
 	/* new demonstration code which shows how to use o_attrib_add_attrib */
 	object = o_attrib_add_attrib(w_current, "name=value", VISIBLE, 
@@ -1947,6 +1970,7 @@ DEFINE_I_CALLBACK(misc)
 	printf("%d %s %s\n", object->sid, object->name, object->text_string);
 	/*o_conn_print_hash(w_current->page_current->conn_table);*/
 	/* o_text_print_set();*/
+#endif
 }
 
 /* this is Ales' second catch all misc callback */
@@ -1955,20 +1979,22 @@ DEFINE_I_CALLBACK(misc2)
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	OBJECT *real;
 
+#if 0 /* old and nolonger needed */
 	if (w_current->page_current->selection_head->next != NULL) {
 
 		/* normally you should already have the real object, but */
 		/* in this test code I better get it first since */
 		/* o_text_change requires that the object passed in is the */
 		/* real deal */
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head,
-			w_current->page_current->selection_head->next);
+		/* real = (OBJECT *) o_list_search(*/
+		/*	w_current->page_current->object_head,*/
+		/*	w_current->page_current->selection_head->next);*/
 
 		/* string paramter is exactly how you want the string to be */
 		/* set */
 		o_text_change(w_current, real, "new_name=new_value", VISIBLE, SHOW_VALUE);
 	}
+#endif
 }
 
 /* this is Ales' third catch all misc callback */
@@ -1978,6 +2004,7 @@ DEFINE_I_CALLBACK(misc3)
 	TOPLEVEL *w_current = (TOPLEVEL *) data;
 	int i=0;
 
+#if 0 /* old and no longer needed */
 	if (w_current->page_current->selection_head->next != NULL) {
 		attrib_objects = o_attrib_return_attribs(
 					      w_current->page_current->
@@ -2003,6 +2030,7 @@ DEFINE_I_CALLBACK(misc3)
 		}
 
         }
+#endif
 }
 
 /* HACK: be sure that you don't use the widget parameter in this one,

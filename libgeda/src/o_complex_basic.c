@@ -41,7 +41,8 @@
 #include "../include/prototype.h"
 
 void
-get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom)
+get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+		   int *left, int *top, int *right, int *bottom)
 {
 	OBJECT *o_current=NULL;
 	int rleft, rtop, rright, rbottom;
@@ -126,7 +127,101 @@ get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, in
 }
 
 void
-world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom)
+get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, 
+			     int *left, int *top, int *right, int *bottom)
+{
+	SELECTION *s_current=NULL;
+	OBJECT *o_current=NULL;
+	int rleft, rtop, rright, rbottom;
+	
+	*left = rleft = 999999;
+	*top = rtop = 9999999;
+	*right = rright = 0;
+	*bottom = rbottom = 0;
+	
+	s_current = head;
+	
+	while ( s_current != NULL ) {
+
+		o_current = s_current->selected_object;
+
+		if (!o_current) {
+			fprintf(stderr, "Got NULL in get_complex_bounds_selection\n");
+			exit(-1);
+		}
+
+		switch(o_current->type) {
+			case(OBJ_LINE):
+					get_line_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+			break;
+
+			case(OBJ_NET):
+					/* same as a line (diff name)*/
+					get_net_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+			break;
+
+			case(OBJ_BUS):
+					/* same as a line (diff name)*/
+					get_bus_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+			break;
+	
+			case(OBJ_BOX):
+					get_box_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+			break;
+
+			case(OBJ_CIRCLE):
+					get_circle_bounds(w_current, o_current->circle, &rleft, &rtop, &rright, &rbottom);
+			break;
+
+			case(OBJ_COMPLEX):
+					/* recursive objects ?*/
+					get_complex_bounds(w_current, o_current->complex, &rleft, &rtop, &rright, &rbottom);
+			break;
+
+			case(OBJ_TEXT):
+					/* only do bounding boxes for visble */
+					/* you might lose some attrs though */
+					if (o_current->visibility == VISIBLE) {
+						get_text_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
+					}
+			break;
+
+			case(OBJ_PIN):
+					get_pin_bounds(w_current, o_current->line_points, &rleft, &rtop, &rright, &rbottom);
+					break;
+
+/* experimental mod */
+/* actually more of a hack... since arcs have HUGE bounding boxes, and this */
+/* is really effecting complex selects, well why not NOT use them in calcing */
+/* the BB for the complex? */
+/* BUG that is caused by this is that when you move a single arc and you */
+/* have BB actionfeedback mode you don't see anything! hack */
+/* */
+/* try with a fix on the bounding box code ? ?? hack */
+/* taken out again */
+#if 0
+			case(OBJ_ARC):
+					get_arc_bounds(w_current, o_current, &rleft, &rtop, &rright, &rbottom);
+					break;
+#endif
+			default:
+					break;
+		}
+
+		if (rleft < *left) *left = rleft;
+		if (rtop < *top) *top = rtop;
+		if (rright > *right) *right = rright;
+		if (rbottom > *bottom) *bottom = rbottom;
+	
+
+		s_current=s_current->next;
+	}
+
+}
+
+void
+world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, 
+			 int *left, int *top, int *right, int *bottom)
 {
 	OBJECT *o_current=NULL;
 	int rleft, rtop, rright, rbottom;
@@ -254,7 +349,6 @@ o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, in
 	new_node->draw_func = (void *) complex_draw_func;  
 
 	if (selectable) { 
-
 		new_node->sel_func = (void *) select_func;
 	} else {
 		new_node->sel_func = NULL;
@@ -594,7 +688,7 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 	
 	temp_list = o_list_copy_all(w_current,
 			         	o_current->complex->next,
-					new_obj->complex, NORMAL);
+					new_obj->complex, NORMAL_FLAG);
 	
 	new_obj->complex = return_head(temp_list);
 
@@ -619,7 +713,6 @@ o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_curren
 	return(new_obj);
 }
 
-/* really verify this */
 void
 o_complex_delete(TOPLEVEL *w_current, OBJECT *delete)
 {
@@ -730,7 +823,7 @@ o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *
 }
 
 void
-o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex)
+o_complex_set_color(OBJECT *complex, int color)
 {
 	OBJECT *o_current=NULL;
 
@@ -746,11 +839,110 @@ o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex)
 			case(OBJ_PIN):
 			case(OBJ_ARC):
 				o_current->color = color;
+			break;
 
 			case(OBJ_TEXT):
 			case(OBJ_COMPLEX):
-				o_complex_set_color(w_current, color, o_current->complex);
+				o_current->color = color;
+				o_complex_set_color(o_current->complex, color);
+			break;
 
+		}
+		o_current=o_current->next;
+	}
+}
+
+void
+o_complex_set_color_save(OBJECT *complex, int color)
+{
+	OBJECT *o_current=NULL;
+
+	o_current = complex;
+
+	while ( o_current != NULL ) {
+		switch(o_current->type) {
+			case(OBJ_LINE):
+			case(OBJ_NET):
+			case(OBJ_BUS):
+			case(OBJ_BOX):
+			case(OBJ_CIRCLE):
+			case(OBJ_PIN):
+			case(OBJ_ARC):
+				o_current->saved_color = o_current->color;
+				o_current->color = color;
+			break;
+
+			case(OBJ_TEXT):
+			case(OBJ_COMPLEX):
+				o_current->saved_color = o_current->color;
+				o_current->color = color;
+				o_complex_set_color_save(o_current->complex, 
+							 color);
+			break;
+
+		}
+		o_current=o_current->next;
+	}
+}
+
+void
+o_complex_unset_color(OBJECT *complex)
+{
+	OBJECT *o_current=NULL;
+
+	o_current = complex;
+
+	while ( o_current != NULL ) {
+		switch(o_current->type) {
+			case(OBJ_LINE):
+			case(OBJ_NET):
+			case(OBJ_BUS):
+			case(OBJ_BOX):
+			case(OBJ_CIRCLE):
+			case(OBJ_PIN):
+			case(OBJ_ARC):
+				o_current->color = o_current->saved_color;
+				o_current->saved_color = -1;
+			break;
+
+			case(OBJ_TEXT):
+			case(OBJ_COMPLEX):
+				o_current->color = o_current->saved_color;
+				o_current->saved_color = -1;
+				o_complex_unset_color(o_current->complex);
+
+			break;
+
+		}
+		o_current=o_current->next;
+	}
+}
+
+void
+o_complex_set_saved_color_only(OBJECT *complex, int color)
+{
+	OBJECT *o_current=NULL;
+
+	o_current = complex;
+
+	while ( o_current != NULL ) {
+		switch(o_current->type) {
+			case(OBJ_LINE):
+			case(OBJ_NET):
+			case(OBJ_BUS):
+			case(OBJ_BOX):
+			case(OBJ_CIRCLE):
+			case(OBJ_PIN):
+			case(OBJ_ARC):
+				o_current->saved_color = color;
+			break;
+
+			case(OBJ_TEXT):
+			case(OBJ_COMPLEX):
+				o_current->saved_color = color;
+				o_complex_set_saved_color_only(
+							o_current->complex, 
+							color);
 			break;
 
 		}

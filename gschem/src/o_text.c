@@ -41,13 +41,86 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
 	int small_dist;
+	int length, dx=0, dy=0;
 
 	if (o_current->visibility == INVISIBLE) {
 		return;
 	}
 
-	o_complex_draw(w_current, o_current);
+	if (!w_current->fast_mousepan || !w_current->doing_pan) {
+		o_complex_draw(w_current, o_current);
+	} else {
+		if (w_current->doing_pan) {
+			o_complex_recalc(w_current, o_current);
+		
+			/* text is too small so go through and draw a line in
+	 		   it's place */
+	
+			screen_x1 = o_current->screen_x;
+			screen_y1 = o_current->screen_y;
+	
+			gdk_gc_set_foreground(w_current->gc,
+					      x_get_color(o_current->color));
 
+#if 0 /* new way, but doesn't always look so good */	
+			length = SCREENabs(w_current, 
+					   o_text_width(w_current, 
+					   o_current->text_string,
+					   o_current->text_size/2)); 
+#endif
+
+			length = SCREENabs(w_current,
+					   o_current->displayed_text_len*10*
+					   o_current->text_size);
+
+#if DEBUG
+			printf("%d %d %d\n",
+			       o_current->displayed_text_len,
+			       o_current->displayed_text_len * 20 *
+			       o_current->text_size, length);
+#endif
+
+			switch(o_current->angle) {
+			case(0):
+				gdk_draw_line(w_current->window,
+					      w_current->gc,
+					      screen_x1+dx,
+					      screen_y1+dy,
+					      screen_x1+dx+length,
+					      screen_y1+dy);
+				break;
+	
+			case(90):
+				gdk_draw_line(w_current->window,
+					      w_current->gc,
+					      screen_x1+dx,
+					      screen_y1+dy,
+					      screen_x1+dx,
+					      screen_y1+dy-length);
+				break;
+	
+			case(180):
+				gdk_draw_line(w_current->window,
+					      w_current->gc,
+					      screen_x1+dx,
+					      screen_y1+dy,
+					      screen_x1+dx-length,
+					      screen_y1+dy);
+				break;
+	
+			case(270):
+				gdk_draw_line(w_current->window,
+					      w_current->gc,
+					      screen_x1+dx,
+					      screen_y1+dy,
+					      screen_x1+dx,
+					      screen_y1+dy+length);
+				break;
+			}
+			return;
+		}
+	}
+	
 	/* return if text origin marker displaying is disabled */ 
 	if (w_current->text_origin_marker == FALSE) {
 		return;
@@ -92,10 +165,19 @@ o_text_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_text_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+        w_current->override_color = w_current->background_color;
+	o_text_draw(w_current, o_current);
+        w_current->override_color = -1;
+}
+
+void
 o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
 	int screen_x1, screen_y1;
 	int length;
+	int color;
 
 	if (o_current->visibility == INVISIBLE) {
 		return;
@@ -114,15 +196,25 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 		screen_x1 = o_current->screen_x;
 		screen_y1 = o_current->screen_y;
 
-		gdk_gc_set_foreground(w_current->outline_xor_gc,
-				      x_get_darkcolor(o_current->color));
+	        if (o_current->saved_color != -1) {
+       	        	color = o_current->saved_color;
+		} else {
+                	color = o_current->color;
+        	}
 
-		/* 10 seems to be the average text length of ONE point
-		   text... (should be a 20, but that's for 2 point
-		   text */
-		length = SCREENabs(
-			w_current,
-			o_current->displayed_text_len*10*o_current->text_size);
+		gdk_gc_set_foreground(w_current->outline_xor_gc,
+				      x_get_darkcolor(color));
+
+		length = SCREENabs(w_current,
+				   o_current->displayed_text_len*10*
+				   o_current->text_size);
+
+#if 0 /* new way, but doesn't look so good */
+		length = SCREENabs(w_current, o_text_width(w_current, 
+					   o_current->text_string,
+					   o_current->text_size/2)); 
+#endif
+
 
 #if DEBUG
 		printf("%d %d %d\n",
@@ -147,7 +239,7 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 				      screen_x1+dx,
 				      screen_y1+dy,
 				      screen_x1+dx,
-				      screen_y1+dy+length);
+				      screen_y1+dy-length);
 			break;
 
 		case(180):
@@ -165,7 +257,7 @@ o_text_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 				      screen_x1+dx,
 				      screen_y1+dy,
 				      screen_x1+dx,
-				      screen_y1+dy-length);
+				      screen_y1+dy+length);
 			break;
 		}
 	}
@@ -233,6 +325,7 @@ o_text_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
 	o_drawbounding(w_current,
 		       w_current->page_current->attrib_place_head->next,
+		       NULL,
 		       x_get_color(w_current->bb_color));
 }
 
@@ -269,6 +362,7 @@ o_text_end(TOPLEVEL *w_current)
 		o_drawbounding(
 			w_current,
 			w_current->page_current->attrib_place_head->next,
+			NULL,
 			x_get_color(w_current->bb_color));
 	}
 	/* TODO: you need to erase the bounding box if have that mode
@@ -279,11 +373,13 @@ o_text_end(TOPLEVEL *w_current)
 		o_drawbounding(
 			w_current,
 			w_current->page_current->attrib_place_head->next,
+			NULL,
 			x_get_color(w_current->text_color));
 	} else {
 		o_drawbounding(
 			w_current,
 			w_current->page_current->attrib_place_head->next,
+			NULL,
 			x_get_color(w_current->select_color));
 	}
 
@@ -291,23 +387,11 @@ o_text_end(TOPLEVEL *w_current)
 
         w_current->page_current->CHANGED=1;
 
-	/* clear previous selection list if any */
-	o_unselect_all(w_current);
-
-	/* add item to the selection or it'll be selected by itself */
-	/* TODO: you probably should create some new functions for
-           this... */
-	w_current->page_current->selection_tail = (OBJECT *) o_list_copy_to(
-		w_current,
-		w_current->page_current->selection_head,
-		w_current->page_current->object_tail,
-		SELECTION);
-
-	w_current->page_current->selection_tail = return_tail(
-		w_current->page_current->selection_head);
-
-	/* now redraw this new item as being selected */
-	w_current->override_color = w_current->select_color;
+	o_selection_remove_most(w_current,
+       				w_current->page_current->selection2_head);
+	o_selection_add(w_current->page_current->selection2_head, 
+			w_current->page_current->object_tail);
+	
 
 	/* object_tail is the object that was just added */
 	if (w_current->page_current->object_tail->draw_func != NULL &&
@@ -325,6 +409,7 @@ o_text_rubberattrib(TOPLEVEL *w_current)
 {
 	o_drawbounding(w_current,
 		       w_current->page_current->attrib_place_head->next,
+		       NULL,
 		       x_get_color(w_current->bb_color));
 }
 
@@ -342,69 +427,34 @@ void
 o_text_edit_end(TOPLEVEL *w_current, char *string, int len, int text_size,
 		int text_alignment)
 {
-	OBJECT *real;
-	OBJECT *temp;
+	OBJECT *object;
 
-	/* first change selected */
-	if (w_current->page_current->selection_head->next) {
-		o_erase_selected(w_current);
-		if (w_current->page_current->
-		    selection_head->next->text_string) {
-			free(w_current->page_current->
-			     selection_head->next->text_string);
+	object = o_select_return_first_object(w_current);
+
+	if (object != NULL) {
+		if (object->text_string) {
+			free(object->text_string);
 		}
 
 		/* Kazu <kazu@seul.org> on August 5, 1999 - I am not
                    sure if strlen(string) == len. If so, activate the
                    second part of this "if".*/
 #if 1
-		w_current->page_current->selection_head->next->text_string =
-			malloc(sizeof(char) * len + 1);
-		strcpy(w_current->page_current->
-		       selection_head->next->text_string,
-		       string);
+		object->text_string = malloc(sizeof(char) * len + 1);
+		strcpy(object->text_string, string);
 #else
-		w_current->page_current->selection_head->next->text_string =
-			u_basic_strdup(string);
+		object->text_string = u_basic_strdup(string);
 #endif
 
-		temp = w_current->page_current->selection_head->next;
-
-		temp->text_size = text_size;
-		temp->text_alignment = text_alignment;
-		o_text_recreate(w_current, temp);
-
-		o_redraw_selected(w_current);
-	}
-
-	/* second change real object */
-	real = (OBJECT *) o_list_search(
-		w_current->page_current->object_head,
-		w_current->page_current->selection_head->next);
-
-	if (real != NULL) {
-		if (real->text_string) {
-			free(real->text_string);
-		}
-
-		/* Kazu <kazu@seul.org> on August 5, 1999 - I am not
-                   sure if strlen(string) == len. If so, activate the
-                   second part of this "if".*/
-#if 1
-		real->text_string = malloc(sizeof(char) * len + 1);
-		strcpy(real->text_string, string);
-#else
-		real->text_string = u_basic_strdup(string);
-#endif
-
-		temp = real;
-		real->text_size = text_size;
-		real->text_alignment = text_alignment;
-		o_text_recreate(w_current, temp);
+		object->text_size = text_size;
+		object->text_alignment = text_alignment;
+		
+		o_text_erase(w_current, object);
+		o_text_recreate(w_current, object);
+		o_text_draw(w_current, object);
 
 		w_current->page_current->CHANGED = 1;
 	} else {
-
 		fprintf(stderr, "uggg! you tried to text edit something "
 			"that doesn't exist!\n");
 		exit(-1);
@@ -417,8 +467,6 @@ void
 o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string, 
 	      int visibility, int show)
 {
-	OBJECT *selected=NULL;
-
 	if (object == NULL) {
 		return;
 	}
@@ -427,29 +475,8 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 		return;
 	}
 
-	/* first change selected */
-
-	/* search for the selected object in the selection list */
-	selected = (OBJECT *) o_list_search(
-		w_current->page_current->selection_head->next,
-		object);
-
-	/* this is okay if it is null, since that means the object we */
-   	/* are change isn't currently selected */
-	if (selected) {
-		o_erase_selected(w_current);
-		if (selected->text_string) {
-			free(selected->text_string);
-		}
-
-		selected->text_string = u_basic_strdup(string);
-		selected->visibility = visibility;
-		selected->show_name_value = show;
-
-		/* we don't want to change the visibilty of the selection */
-		o_text_recreate(w_current, selected);
-		o_redraw_selected(w_current);
-	}
+	/* erase old object */
+	o_text_erase(w_current, object);
 
 	/* second change the real object */
 	if (object->text_string) {
@@ -460,6 +487,7 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
 	object->visibility = visibility;
 	object->show_name_value = show;
 	o_text_recreate(w_current, object);
+	o_text_draw(w_current, object);
 
 	w_current->page_current->CHANGED = 1;
 }

@@ -9,10 +9,165 @@ Most recent changes (version wise) are at the top of this file
 All the changes are usually noted in this file when they are checked
 into the cvs repository.
 
+2000-03-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net.c: Removed the stupidity of unselecting the selection
+	  when we consolidate nets
+
+	* src/o_text.c: Fixed both instances of the fast text drawing
+	  code for 90 and 270 rotated text (line was going the wrong
+	  direction).
+
+	* src/o_text.c: Alsmot got the length of the fast text line right.
+	  Still not perfect, but better
+
+	* src/o_slot.c: o_slot_end, got the changing of sloting to look right
+	  with the new selection mechanism
+
+
+2000-03-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_misc.c: Got o_embed and o_unembed working with the new
+	  selection mechanism
+
+	* src/o_misc.c: Got o_lock and o_unlock to use a new variable
+	  (locked_color) instead of the selection reserved variable
+	  saved_color
+
+	* src/o_misc.c: Added some diag messages to lock and unlock routines
+
+	* src/o_net.c: Introduced a hack which simplifies the handling of 
+	  net consolidation and selections (unselect everything before you
+	  attempt consolidation)  Not a good solution, but for now it will do.
+
+	* src/*.c: Removed most // comments
+
+2000-03-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_misc.c: Got o_mirror totally working with new selection
+	  mechanism
+
+2000-03-15  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/i_callbacks.c: Got the parameters to o_mirror correct 
+
+	* src/o_misc.c: Started getting o_mirror to work with new selection 
+	  mechanism (still has some serious bugs)
+
+2000-03-12  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/Makefile.am: Removed obsolete i_sbox.c from Makefile
+
+	* src/x_dialog.c: Got color edit dialog box to work with new selection
+	  mechanism
+
+2000-03-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_basic.c: Added o_redraw_all_fast (which is a faster version
+ 	  of o_redraw_all)
+
+	* src/a_pan.c: Made mouse pan use the above routine
+
+	* src/x_event.c src/o_text.c: Added code to increase the speed of the
+	  mouse pan (by not drawing all the text)
+
+	* src/a_zoom.c src/x_event.c: Also speed up zoom box and zoom in/out 
+	  with new faster redraw function
+
+	* src/g_rc.c and friends: Added fast-mousepan keyword which controls
+	  if text is drawn during a pan or not.
+
+	* src/o_misc.c: Fixed up o_edit to work with new selection mechanism
+	  
+	* src/o_misc.c: Cleanup of code which calls the multi_* functions to
+	  be simpler
+
+	* src/x_dialog.c: Got multi_attrib_edit to work with new selection
+ 	  mechanism
+
+	* src/x_multimult.c: Got multi_multi_edit to work with new selection
+	  mechanism
+
+2000-03-09  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/i_callbacks.c: Got attribute attach and detach working with
+	  the new selection mechanism
+
+2000-03-08  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_copy.c: Got the setting of color on detached attributes right
+
+	* src/o_attrib.c: Fixed a bug where you could pick an object with
+	  attributes and then deselect it and then select it again, and you
+	  would end up with invalid colors for the attributes.
+	  (in o_attrib_add_selected)
+
 2000-03-07  Matt Ettus <matt@ettus.com>
 
-	* x_multimulti.c:  Moving along on dialog box
+	* src/x_multimulti.c:  Moving along on dialog box
 	  Shouldn't segault anymore, looks nicer.
+
+2000-03-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/x_image.c: Unselected all objects first before writing image
+
+	* src/x_print.c: Unselected all objects first before writing postscript
+
+	* src/o_text.c: Got text edit to work with new selection mechanism
+	  (proper erase before and redraw after the edit)
+	
+	* src/o_text.c: Got attrib text edit to work with new selection 
+	  mechanism
+
+	* src/o_attrib.c: Fixed toggle visibility to work with new selection
+	  mechanism
+
+	* src/o_select.c: Fixed a bug where you could select invisible objects
+	  using the selection box and caused other invisible objects to be
+	  selected (don't consider invisible objects for anything).
+
+	* src/Makefile.am: Removed old *.h entries 
+
+	* src/o_attrib.c: Fixed o_attrib_toggle_show_name_value to work with
+	  the new selection mechanism
+
+	* src/o_misc.c: Got Edit/Show Hidden... working again.
+	
+2000-03-04  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_basic.c: Combined o_drawbounding and o_drawbounding_new into
+	  a single function.
+
+	* src/o_complex.c: Put the new o_drawbounding into place (new 
+	  prototype, which means all instances need to be fixed)
+
+	* src/o_basic.c: More o_drawbounding cases fixed
+
+	* src/o_basic.c: Fixed a bug where text would not be draw properly
+	  if a redraw came in the middle of a place
+
+	* src/o_text.c, o_attrib.c: Fixed o_drawbounding in code
+
+	* src/*.c: Fixed rest of the o_drawbounding[_new] in the code
+
+2000-02-28  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_*.c: Added required o_*_erase functions
+
+	* src/*.c: Continued work on getting new selection mechanism working
+
+	* src/o_misc.c: Finished a few of the functions for above, but 
+	  #if 0'ed out the rest
+
+	* src/o_slot.c: Update function for new selection mechanism  
+
+	* src/o_stretch.c: Update function for new selection mechanism  
+
+	* src/o_copy.c, o_move.c, o_delete.c: Basically working again.  Still
+	  have lots to work here.
+
+	* Finished first draft of selection mechanism rewrite... _a lot_ of 
+	  things still broken
 
 2000-02-28  Matt Ettus <matt@ettus.com>
 
@@ -22,6 +177,45 @@ into the cvs repository.
 
 	* x_multi_multi.c:  New File, contains beginnings of
 	  multi component attrib editor dialog
+
+2000-02-27  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_selection.c: Added new selection code
+
+	* src/o_find.c: Added new object find function
+
+	* src/o_select.c: Added new object selection code
+
+	* src/*.c: Changed #define SELECTION to SELECTION_FLAG in all the code
+
+	* src/*.c: Changed #define NORMAL to NORMAL_FLAG in all the code
+
+	* src/*.c: Started work on using new selection mechanism, got basic
+	  selection (single/multiple) working
+
+	* src/o_misc: Fixed a minor bug in o_unlock (will be rewritten anyway)
+
+	* src/o_attrib.c: Renamed deal_attrib to o_attrib_add_selected 
+
+	* src/o_basic.c: Removed a whole bunch of old functions
+
+	* src/*.c: Started removing all traces of the old selection 
+	  mechanism
+
+	* src/o_basic.c: Removed a bunch of functions which are no longer
+	  needed
+
+	* src/o_move.c: Rewrote the functions to use new selection mechanism
+
+	* src/o_copy.c: Rewrote the functions to use new selection mechanism
+
+	* src/o_delete.c: Rewrote the functions to use new selection mechanism
+
+	* src/o_misc.c: Rewrote the functions to use new selection mechanism
+
+	* Still todo/broken is o_drawbounding, o_erasebounding, an 
+	  o_attrib_slot_copy?, referenced to undraw unselect functions,
+	  and need to write a bunch of _erase functions
 
 2000-02-25  Ales Hvezda  <ahvezda@geda.seul.org>
 

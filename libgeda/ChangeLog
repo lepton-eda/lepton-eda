@@ -8,6 +8,108 @@ ChangeLog for libgeda
 
 Most recent changes are at the top of this file
 
+2000-03-23  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_net.c: Started fixing the broken code in o_net_consolidate*
+	  which was causing a core dump with the new selection code
+
+	* src/o_net.c: Added some intelligence to o_net_consolidate_segments
+	  so that objects are properly selected when consolidation happens
+
+2000-03-20  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added locked_color to OBJECT structure
+
+	* src/s_basic.c: Inited locked_color to -1
+
+	* src/o_selection.c: Removed some old debugging info
+
+	* src/a_basic.c: Removed dead code from o_scale
+
+	* src/o_attrib.c: Removed some more dead code (old selection related) 
+	  from o_attrib_*
+
+	* src/o_complex.c: Misc code cleanup
+	
+	* src/s_color.c: Removed an obsolete comment
+	
+2000-03-16  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_attrib.c: Got o_attrib_set_color to work with the new selection
+	  mechanism
+
+2000-03-10  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added doing_pan variable to TOPLEVEL structure
+
+	* include/struct.h: Added fast_mousepan variable to TOPLEVEL structure
+
+2000-03-09  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_attrib.c: Removed the first (of many) o_redraw_single's from
+	  the attrib free routine
+
+2000-03-08  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_attrib.c: Further cleaned up o_attrib_attach to only attach
+	  the single specified attribute item (instead of looping which is
+	  not correct anymore)
+
+	* src/o_attrib.c: Got the color setting on attributes and 
+	  non-attributes right
+
+	* src/o_net_basic.c: Put some comments in the net consolidate functions
+	  since these functions are really broken with new selection mechanism
+
+2000-03-06  Ales Hvezda  <ahvezda@geda.seul.org>
+	
+	* src/o_attrib.c: Got rid of some of the o_list_search's which are
+	  now not required anymore
+
+2000-03-05  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_text_basic.c: Got o_text_recreate to work right with new 
+	  selection mechanism (set saved_color correctly)
+
+2000-02-28  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/o_complex.c: Added o_complex_set_saved_color_only which only
+	  sets the saved_color flag of a complex object
+
+	* src/o_complex.c: Added some selection specific functions 
+
+	* src/x_event.c: Got middle button actions working again
+
+2000-02-25  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* include/struct.h: Added SELECTION typedef and structure
+
+	* src/o_selection.c: Added new selection (data structure) code
+
+	* include/defines.h: Changed NORMAL and SELECTION #defines to be
+	  NORMAL_FLAG and SELECTION_FLAG due to name clashes
+
+	* include/struct.h: Added selected flag to OBJECT structure
+
+	* src/o_complex.c: Simplified o_complex_set_color to have only the
+	  required parameters (object and the new color) (Also changed order)
+
+	* src/o_complex.c: Found/Fixed a bug in o_complex_set_color
+
+	* src/o_complex.c: Added o_complex_set_color_save which sets the color
+	  but also saves it for future use (used in selection mechanism)
+
+	* src/o_complex.c: Added o_complex_unset_color which restores the
+	  color from the saved_color variable (used in selection mechanism).
+
+	* src/o_selection.c: Added o_selection_return_first_object
+
+	* src/o_selection.c: Added o_selection_return_nth_object (returns
+	  the nth object starting at zero being the first object)
+
+	* include/struct.h: Removed selection_tail and selection_head so that
+	  gschem can be completely purged of the old selection mechanism
+
 2000-02-19  Ales Hvezda  <ahvezda@geda.seul.org>
 
         * README/INSTALL: Updated files to reflect next release

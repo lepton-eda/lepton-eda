@@ -186,6 +186,11 @@ x_image_write(GtkWidget *w, TOPLEVEL *w_current)
                    	w_current->page_current->top,
 			w_current->page_current->bottom);
 
+		/* de select everything first */
+        	o_selection_remove_most(w_current,
+                                        w_current->page_current->
+					selection2_head);
+		
 		/* try to use recalc here */
 		o_redraw_all(w_current);
 

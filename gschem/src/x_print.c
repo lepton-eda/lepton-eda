@@ -188,6 +188,12 @@ x_print_print(GtkWidget *w, TOPLEVEL *w_current)
 		gtk_entry_get_text(GTK_ENTRY(w_current->pfilename_entry));
 
 	if (filename[0] != '\0') {
+
+		/* de select everything first */
+                o_selection_remove_most(w_current,
+                                        w_current->page_current->
+                                        selection2_head);
+
 		status = f_print(w_current, filename);
 
 		if (status) {

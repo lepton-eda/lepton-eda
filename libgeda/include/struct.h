@@ -31,6 +31,7 @@ typedef struct st_page PAGE;
 typedef struct st_toplevel TOPLEVEL;
 typedef struct st_color COLOR;
 typedef struct st_filedialog FILEDIALOG;
+typedef struct st_selection SELECTION;
 
 /* rename to the real thing once things work right */
 typedef struct st_conn CONN;
@@ -101,6 +102,10 @@ struct st_object {
 
 	int color; 				/* Which color */
 	int saved_color; 			/* Saved color */
+	int selected;				/* object selected flag */
+	int locked_color; 			/* Locked color (used to save */
+						/* the object's real color */
+						/* when the object is locked) */
 	
 	int angle;				/* orientation, only multiples
 					   	 * of 90 degrees allowed */   
@@ -151,6 +156,12 @@ struct st_conn {
 	CONN *next;
 };
 
+struct st_selection {
+        OBJECT *selected_object;
+
+        SELECTION *prev;
+        SELECTION *next;
+};
 
 struct st_page {
 
@@ -159,8 +170,11 @@ struct st_page {
 	OBJECT *object_head;
 	OBJECT *object_tail;
 	OBJECT *object_parent;
-	OBJECT *selection_head;
-	OBJECT *selection_tail;
+	/* old selection mechanism */
+	/* OBJECT *selection_head;	    
+	OBJECT *selection_tail; OLDSEL */
+	SELECTION *selection2_head; /* new selection mechanism */
+	SELECTION *selection2_tail; 
 	OBJECT *complex_place_head;  /* used to place complex's and text */
 	OBJECT *complex_place_tail; 
 	OBJECT *attrib_place_head;
@@ -317,6 +331,8 @@ struct st_toplevel {
 	int CONTROLKEY;				/* control key pressed? */
 	int SHIFTKEY;				/* shift key pressed? */
 	int ALTKEY;				/* alt key pressed? */
+	
+	int doing_pan;				/* mouse pan status flag */
 
 /* Page system used by gPCB */
 	PAGE_T *current_page;
@@ -478,6 +494,8 @@ struct st_toplevel {
                                /* traversing the hierarchy */
 	int text_origin_marker; /* controls if text origin marker is */
 				/* displayed or not */
+	int fast_mousepan;	/* controls if text is completely drawn */
+				/* during mouse pan */
 
 	int print_output_type;			/* either window or limits */
 

@@ -585,9 +585,9 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 		if (font_set[(int) string[i]].complex->next) {
 			temp_list = o_list_copy_all(w_current, 
 				    font_set[(int) string[i]].complex->next, 
-				    temp_list, NORMAL);
+				    temp_list, NORMAL_FLAG);
 			start_of_char = start_of_char->next;
-			o_complex_set_color(w_current, color, start_of_char);	
+			o_complex_set_color(start_of_char, color);	
 			o_scale(w_current, start_of_char, size/2, size/2);
 		
 			/* do this if you want to stack chars */
@@ -888,6 +888,7 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 	char name[1025];
 	char value[1025]; /* ugg hack */
 	char output_string[1025]; /* uggg hack */
+	int color;
 
 	if (o_attrib_get_name_value(o_current->text_string, name, value)) {
 		switch(o_current->show_name_value) {
@@ -946,7 +947,10 @@ o_text_recreate(TOPLEVEL *w_current, OBJECT *o_current)
 					      o_current->x, o_current->y,
 					      o_current->text_alignment,
 					      o_current->angle); 
-			o_current->displayed_text_len = strlen(output_string);
+
+		o_complex_set_saved_color_only(o_current->complex, 
+					       o_current->saved_color);
+		o_current->displayed_text_len = strlen(output_string);
 	} else {
 		o_current->complex = NULL;
 		o_current->displayed_text_len = 0;

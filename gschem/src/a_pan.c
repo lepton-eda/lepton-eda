@@ -197,7 +197,7 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 	w_current->DONT_RESIZE = 1;
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
+	o_redraw_all_fast(w_current);
 	w_current->DONT_REDRAW = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_RESIZE = 0;
@@ -337,7 +337,7 @@ a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 	w_current->DONT_RESIZE = 1;
 	x_hscrollbar_update(w_current);
 	x_vscrollbar_update(w_current);
-	o_redraw_all(w_current);
+	o_redraw_all_fast(w_current);
 	w_current->DONT_REDRAW = 0;
 	w_current->DONT_RECALC = 0;
 	w_current->DONT_RESIZE = 0;

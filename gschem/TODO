@@ -92,6 +92,10 @@ DONE	Make sure snap spacing is set to 100 when doing symbol translates
 	Simplify i_update_* so that static strings are being re-set 
 	constantly
 
+	Fix the stupidity of when net consolidation is on, you unselect 
+	everything.  This was temporary till you rewrite 
+	o_net_consoliate_lowlevel (in libgeda)
+
 	Agg! get rid of all window_current's and global_window_current
 
 	Added rc keyword for pin/net thickness (the value) and for visual
@@ -146,7 +150,7 @@ DONE	Search for schematic in memory and don't load it from disk if it is.
 
 	Document all the features of the dialog boxes (returns etc...)
 
-	Alignment of text objects
+DONE	Alignment of text objects
 
 	Document filename naming restrictions: 
 		- Symbols are named filename.sym
@@ -285,13 +289,12 @@ Second TODO list
 
 easy:	
 0	remove all // comments
-3	newer net system
-1	buses
 	comments in the code
 	Control-C handler
 	checks for all system calls (with perror)	
 	update specs
 	crosshair
+1	buses
 1	macro/extensiable lang
 1	Make symbol (odd bug with hitting S twice then it works ? )
 1	push/pop into a symbol
@@ -300,6 +303,7 @@ easy:
 2	hierarchical design
 3	object clipping out of active window
 3	sloting (as in pin numbers in multpacks) of components
+3	newer net system
 3	console
 3	rotate of complex
 3	mirror of primatives

@@ -29,61 +29,70 @@
 /* TODO: probably should go back and do the same for o_copy o_move
    o_delete... */
 void
-o_edit(TOPLEVEL *w_current, OBJECT *list)
+o_edit(TOPLEVEL *w_current, SELECTION *list)
 {
 	char *equal_ptr;
-#ifdef HAS_LIBGTKEXTRA
-	OBJECT *current;
-#endif
+	OBJECT *o_current;
+	SELECTION *s_current;
+	int object_count=0;
 
-	/* shouldn't happen */
 	if (list == NULL) {
-		/* TODO: this is an error condition */
 		w_current->event_state = SELECT;
 		i_update_status(w_current, "Select Mode");
 		w_current->inside_action = 0;
 		return;
 	}
 
+	o_current = list->selected_object;	
+	if (o_current == NULL) {
+		fprintf(stderr, "Got an unexpected NULL in o_edit\n");
+		exit(-1);
+	}
+
+#ifdef HAS_LIBGTKEXTRA
+	/* count up how many non-text objects exist in the selection */
+	/* list.  Why?  Because if there are multiple objects, invoke the 
+	/* multi_multi_edit dialog box */
+	s_current = list;
+	while (s_current != NULL) {
+		if (s_current->selected_object) {
+			if (s_current->selected_object->type != OBJ_TEXT) {
+				object_count++;	
+			}				
+		}
+		s_current=s_current->next;
+	}
+
+	/* now decide what we want to do, either single edit or */
+	/* multi multi edit */
+	if (object_count == 1 && o_current->type != OBJ_TEXT) {
+		multi_attrib_edit(w_current, list);
+		return;
+	} else if ( object_count > 1 ) {
+		multi_multi_edit(w_current, list);
+		return;
+	}
+#endif
+
+
 	/* for now deal with only the first item */
-	switch(list->type) {
+	switch(o_current->type) {
 
 	/* also add the ability to multi attrib edit: nets, busses, pins */
 	case(OBJ_COMPLEX):
-#ifdef HAS_LIBGTKEXTRA
-		current = list->next;
-		if(current == NULL)
-			multi_attrib_edit(w_current, list);
-		else 
-			while(current)
-			{
-				if(current->type == OBJ_COMPLEX)
-				{
-					multi_multi_edit(w_current,list);
-					break;
-				}
-				else if(current->next == NULL)
-					multi_attrib_edit(w_current, list);
-				current=current->next;
-			}
-
-#endif
-#ifndef HAS_LIBGTKEXTRA
-			multi_attrib_edit(w_current, list);
-#endif
-		break;
 	case(OBJ_NET):
 	case(OBJ_PIN):
 	case(OBJ_BUS):
 		multi_attrib_edit(w_current, list);
 		break;
+
 	case(OBJ_TEXT):
-		if(strchr(list->text_string,'=')) {
+		if(strchr(o_current->text_string,'=')) {
 
 			/* now really make sure it's an attribute by 
                          * checking that there are NO spaces around the ='s 
                          */
-			equal_ptr = strchr(list->text_string, '=');
+			equal_ptr = strchr(o_current->text_string, '=');
 
 			/* there is a possiblity for core dump yes? */
 			/* by exceeding the size of the text_string? */
@@ -91,12 +100,12 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 			/* the string, there better be a null after it! */
 			if ( (*(equal_ptr + 1) != ' ') &&
 			     (*(equal_ptr - 1) != ' ') ) {
-				attrib_edit_dialog(w_current,list);
+				attrib_edit_dialog(w_current,o_current);
 			} else {
-				o_text_edit(w_current, list);
+				o_text_edit(w_current, o_current);
 			} 
 		} else {
-			o_text_edit(w_current, list);
+			o_text_edit(w_current, o_current);
 		}
 		break;
 	}
@@ -111,25 +120,27 @@ o_edit(TOPLEVEL *w_current, OBJECT *list)
 void
 o_lock(TOPLEVEL *w_current)
 {
-	OBJECT *real = NULL;
-	OBJECT *o_current = NULL;
+	OBJECT *object = NULL;
+	SELECTION *s_current = NULL;
 
-	o_current = w_current->page_current->selection_head->next;
+	/* skip over head */
+	s_current = w_current->page_current->selection2_head->next;
 
-	while(o_current != NULL) {
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, o_current);
-		if (real) {
-			/* check to see if saved_color is already being used */
-			if (real->saved_color == -1) {
-				real->sel_func = NULL;
-				real->saved_color = real->color;
-				real->color = w_current->lock_color;
+	while(s_current != NULL) {
+		object = s_current->selected_object;
+		if (object) {
+			/* check to see if locked_color is already being used */
+			if (object->locked_color == -1) {
+				object->sel_func = NULL;
+				object->locked_color = object->color;
+				object->color = w_current->lock_color;
 				w_current->page_current->CHANGED=1;
+			} else {
+				s_log_message("Object alreadly locked\n");
 			}
 		}
 
-		o_current=o_current->next;
+		s_current=s_current->next;
 	}
 
 	o_unselect_all(w_current);
@@ -142,36 +153,35 @@ o_lock(TOPLEVEL *w_current)
 void
 o_unlock(TOPLEVEL *w_current)
 {
-	OBJECT *real = NULL;
-	OBJECT *o_current = NULL;
+	OBJECT *object = NULL;
+	SELECTION *s_current = NULL;
 
-	o_current = w_current->page_current->selection_head->next;
+	s_current = w_current->page_current->selection2_head->next;
 
-	while(o_current != NULL) {
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, o_current);
-		if (real) {
+	while(s_current != NULL) {
+		object = s_current->selected_object;
+		if (object) {
 			/* only unlock if sel_func is not set to something */
-			if (real->sel_func == NULL) {
-				real->sel_func = o_select;
-				real->color = real->saved_color;
-				real->saved_color = -1;
+			if (object->sel_func == NULL) {
+				object->sel_func = select_func;
+				object->color = object->locked_color;
+				object->locked_color = -1;
 				w_current->page_current->CHANGED = 1;
+			} else {
+				s_log_message("Object alreadly unlocked\n");
 			}
 		}
 
-		o_current=o_current->next;
+		s_current=s_current->next;
 	}
 }
 
 void
-o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
+o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 {
-	OBJECT *real;
-	OBJECT *o_current;
+	OBJECT *object;
+	SELECTION *s_current;
 	OBJECT *temp = NULL;
-	OBJECT *selection_list = NULL;
-	int new_next = 0;
 	int new_angle;
 
 	/* this is okay if you just hit rotate and have nothing selected */
@@ -182,337 +192,234 @@ o_rotate_90(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 		return;
 	}
 
-	o_current = list;
+	s_current = list;
 
-	while (o_current != NULL) {
-		/* first get the real object */
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, o_current);
+	while (s_current != NULL) {
+		object = s_current->selected_object;
 
-		if (real == NULL) {
-			printf("Oops! you tried to rotate an object "
-			       "which doesn't exists\n");
+		if (!object) {
+			fprintf(stderr, "ERROR: NULL object in o_rotate_90!\n");
 			return;
 		}
 
-		switch(real->type) {
+		switch(object->type) {
 
-		case(OBJ_LINE):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_line_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_LINE):
+				o_line_erase(w_current, object);
 
-			o_line_rotate(w_current,
-				      centerx, centery, 90, real);
+				o_line_rotate(w_current, centerx, centery, 
+					      90, object);
 
-			o_line_rotate(w_current,
-				      centerx, centery, 90, o_current);
-
-			o_line_draw(w_current, real);
+				o_line_draw(w_current, object);
 			break;
 
-		case(OBJ_NET):
-			/* erase the current selection */
-			o_net_conn_erase(w_current, real);
-			w_current->override_color =
-				w_current->background_color;
-			o_net_draw(w_current, o_current);
+			case(OBJ_NET):
+				/* erase the current selection */
+				o_net_conn_erase(w_current, object);
+				o_net_erase(w_current, object);
 
-			w_current->override_color = -1;
+				o_net_rotate(w_current, centerx, centery, 
+					     90, object);
 
-			o_net_rotate(w_current,
-				     centerx, centery, 90, real);
-
-			o_net_rotate(w_current,
-				     centerx, centery, 90, o_current);
-
-			o_net_draw(w_current, real);
+				o_net_draw(w_current, object);
 			break;
 
-		case(OBJ_BUS):
+			case(OBJ_BUS):
 #if 0 /* needs to be bus specific */
-			o_bus_conn_erase(w_current, real);
+				o_bus_conn_erase(w_current, object);
 #endif
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_bus_draw(w_current, o_current);
+				/* erase the current selection */
+				o_bus_erase(w_current, object);
 
-			w_current->override_color = -1;
+				o_bus_rotate(w_current, centerx, centery, 
+					     90, object);
 
-			o_bus_rotate(w_current,
-				     centerx, centery, 90, real);
-
-			o_bus_rotate(w_current,
-				     centerx, centery, 90, o_current);
-
-			o_bus_draw(w_current, real);
+				o_bus_draw(w_current, object);
 			break;
 
-		case(OBJ_PIN):
-			/* erase the current selection */
-			o_pin_conn_erase(w_current, real);
-			w_current->override_color =
-				w_current->background_color;
-			o_pin_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_PIN):
+				/* erase the current selection */
+				o_pin_conn_erase(w_current, object);
+				o_pin_erase(w_current, object);
 
-			o_pin_rotate(w_current,
-				     centerx, centery, 90, o_current);
+				o_pin_rotate(w_current, centerx, centery, 
+					     90, object);
 
-			o_pin_rotate(w_current,
-				     centerx, centery, 90, real);
-
-			o_pin_draw(w_current, real);
-
+				o_pin_draw(w_current, object);
 			break;
 
-		case(OBJ_BOX):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_box_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_BOX):
+				/* erase the current selection */
+				o_box_erase(w_current, object);
 
-			o_box_rotate(w_current,
-				     centerx, centery, 90, real);
+				o_box_rotate(w_current, centerx, centery, 
+					     90, object);
 
-			o_box_rotate(w_current,
-				     centerx, centery, 90, o_current);
-
-			o_box_draw(w_current, real);
+				o_box_erase(w_current, object);
 			break;
 
-		case(OBJ_CIRCLE):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_circle_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_CIRCLE):
+				o_circle_erase(w_current, object);
 
-			o_circle_rotate(w_current,
-					centerx, centery, 90, real);
+				o_circle_rotate(w_current, centerx, centery, 
+						90, object);
 
-			o_circle_rotate(w_current,
-					centerx, centery, 90, o_current);
-
-			o_circle_draw(w_current, real);
+				o_circle_draw(w_current, object);
 			break;
 
-		case(OBJ_ARC):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_arc_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_ARC):
+				o_arc_erase(w_current, object);
 
-			o_arc_rotate(w_current,
-				     centerx, centery, 90, real);
+				o_arc_rotate(w_current, centerx, centery, 
+					     90, object);
 
-			o_arc_rotate(w_current,
-				     centerx, centery, 90, o_current);
-
-			o_arc_draw(w_current, real);
+				o_arc_draw(w_current, object);
 			break;
 
-		case(OBJ_COMPLEX):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_complex_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_COMPLEX):
+				/* erase the current selection */
+				o_complex_erase(w_current, object);
 
-			w_current->ADDING_SEL=1;
-			new_angle = (real->angle + 90) % 360;
-			o_complex_rotate(w_current,
-					 centerx,
-					 centery,
-					 new_angle, 90, real);
+				w_current->ADDING_SEL=1; /* NEWSEL: needed? */
+				new_angle = (object->angle + 90) % 360;
+				o_complex_rotate(w_current, centerx, centery,
+					         new_angle, 90, object);
+				w_current->ADDING_SEL = 0; /* NEWSEL: needed? */
 
-			new_angle = (o_current->angle + 90) % 360;
-			o_complex_rotate(w_current,
-					 centerx,
-					 centery,
-					 new_angle, 90, o_current);
-			w_current->ADDING_SEL = 0;
-
-			o_complex_draw(w_current, real);
+				o_complex_draw(w_current, object);
 			break;
 
-		case(OBJ_TEXT):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_text_draw(w_current, o_current);
-			w_current->override_color = -1;
+			case(OBJ_TEXT):
+				/* erase the current selection */
+				o_text_erase(w_current, object);
 
-			new_angle = (real->angle + 90) % 360;
-			o_text_rotate(w_current,
-				       centerx,
-				       centery,
-				       new_angle, 90, real);
+				new_angle = (object->angle + 90) % 360;
+				o_text_rotate(w_current, centerx, centery,
+				              new_angle, 90, object);
 
-			new_angle = (o_current->angle + 90) % 360;
-			o_text_rotate(w_current,
-				       centerx,
-				       centery,
-				       new_angle, 90, o_current);
-
-			o_text_draw(w_current, real);
+				o_text_draw(w_current, object);
 			break;
 		}
-
-		if (new_next) {
-			o_current = temp;
-			temp = NULL;
-			new_next = 0;
-		} else {
-			o_current = o_current->next;
-		}
+		s_current = s_current->next;
 	}
 
 	w_current->page_current->CHANGED = 1;
 
-	/* are the objects to be appended to the selection list */
-	if (selection_list) {
-		selection_list = (OBJECT *) return_head(selection_list);
-
-		selection_list->prev = w_current->page_current->selection_tail;
-		w_current->page_current->selection_tail->next = selection_list;
-		w_current->page_current->selection_tail = return_tail(
-			w_current->page_current->selection_head);
-	}
-
 	o_conn_disconnect_update(w_current->page_current);
-	o_conn_draw_all(w_current, w_current->page_current->object_head);
-        o_redraw_real(w_current, w_current->page_current->selection_head);
-	o_redraw_selected(w_current);
+
+/* NEWSEL: below needed? */
+/*	o_conn_draw_all(w_current, w_current->page_current->object_head);*/
+
 }
 
 void
 o_embed(TOPLEVEL *w_current)
 {
-	OBJECT *real = NULL;
+	OBJECT *object = NULL;
 	char *new_basename;
-	OBJECT *o_current = NULL;
+	SELECTION *s_current = NULL;
 
-	o_current = w_current->page_current->selection_head->next;
+	s_current = w_current->page_current->selection2_head->next;
 
-	while(o_current != NULL) {
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, o_current);
-		if (real) {
-			if (real->type == OBJ_COMPLEX) {
-				if (strncmp(real->complex_clib,
-					    "EMBEDDED", 8) != 0) {
-					if (real->complex_clib)
-						free(real->complex_clib);
+	while (s_current != NULL) {
+		object = s_current->selected_object;
 
-					/* TODO: this code fragment
-                                           needs to be cleaned
-                                           up... way too many mallocs
-                                           frees and strcpy's */
-					real->complex_clib =
-						u_basic_strdup("EMBEDDED");
-					new_basename =
-						u_basic_strdup_multiple(
-							"EMBEDDED",
-							real->complex_basename,
-							NULL);
-
-					free(real->complex_basename);
-
-					real->complex_basename =
-						u_basic_strdup(new_basename);
-
-					free(new_basename);
-
-					w_current->page_current->CHANGED = 1;
-				}
-			}
+		if (!object) {
+			fprintf(stderr, "ERROR: NULL object in o_embed!\n");
+			return;
 		}
 
-		o_current = o_current->next;
+		if (object->type == OBJ_COMPLEX) {
+			if (strncmp(object->complex_clib, "EMBEDDED", 8) != 0) {
+
+				if (object->complex_clib) {
+					free(object->complex_clib);
+				}
+
+				object->complex_clib = 
+						u_basic_strdup("EMBEDDED");
+				new_basename = u_basic_strdup_multiple(
+							"EMBEDDED",
+							object->
+							complex_basename,
+							NULL);
+
+				free(object->complex_basename);
+
+				object->complex_basename =
+						u_basic_strdup(new_basename);
+
+				free(new_basename);
+
+				w_current->page_current->CHANGED = 1;
+			}
+		}
+		s_current = s_current->next;
 	}
 }
 
 void
 o_unembed(TOPLEVEL *w_current)
 {
-	OBJECT *real = NULL;
+	OBJECT *object = NULL;
 	char *new_basename;
 	char *new_clib;
-	OBJECT *o_current = NULL;
+	SELECTION *s_current = NULL;
 
-	o_current = w_current->page_current->selection_head->next;
+	s_current = w_current->page_current->selection2_head->next;
 
-	while(o_current != NULL) {
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, o_current);
-		if ((real != NULL) && (real->type == OBJ_COMPLEX)) {
-			if (strncmp(real->complex_clib,
-				    "EMBEDDED", 8) == 0) {
+	while (s_current != NULL) {
+		object = s_current->selected_object;
 
-				/* Kazu Hirata <kazu@seul.org> on
-				   August 5, 1999 - I am not sure if I
-				   can switch to the second part of
-				   the "if" because the memory
-				   allocated is bigger than
-				   strlen(reda->complex_basename +
-				   8). */
-#if 1
+		if (!object) {
+			fprintf(stderr, "ERROR: NULL object in o_embed!\n");
+			return;
+		}
+
+		if (object->type == OBJ_COMPLEX) {
+			if (strncmp(object->complex_clib, "EMBEDDED", 8) == 0) {
+
 				new_basename =
 					(char *) malloc(
 						sizeof(char) *
-						(strlen(real->complex_basename)+
-						 1));
+						(strlen(object->
+						  complex_basename)+1));
 
 				sprintf(new_basename, "%s",
-					(real->complex_basename + 8));
-#else
-				new_basename =
-					u_basic_strdup(
-						(real->complex_basename + 8));
-#endif
-
+					(object->complex_basename + 8));
 
 				new_clib =
 					(char *) s_clib_search(new_basename);
 
 				if (!new_clib) {
-					fprintf(stderr,
-						"Could not find component [%s], while trying to unembed.\n",
-						real->complex_basename);
+					fprintf(stderr, "Could not find component [%s], while trying to unembed.\n",
+						object->complex_basename);
 					fprintf(stderr,
 						"Component is still embedded\n");
 				} else {
-					free(real->complex_basename);
+					free(object->complex_basename);
 
-					real->complex_basename = new_basename;
+					object->complex_basename = new_basename;
 
-					free(real->complex_clib);
+					free(object->complex_clib);
 
-					real->complex_clib = new_clib;
+					object->complex_clib = new_clib;
 
 					w_current->page_current->CHANGED = 1;
 				}
 			}
 		}
 
-		o_current=o_current->next;
+		s_current=s_current->next;
 	}
 }
 
 void
-o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
+o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 {
-	OBJECT *real;
-	OBJECT *o_current;
+	OBJECT *object;
+	SELECTION *s_current;
 	OBJECT *temp = NULL;
-	OBJECT *selection_list = NULL;
-	int new_next = 0;
 
 	if (list == NULL) {
 		w_current->event_state = SELECT;
@@ -521,270 +428,189 @@ o_mirror(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery)
 		return;
 	}
 
-	o_current = list;
+	s_current = list;
 
-	while (o_current != NULL) {
-		/* first get the real object */
-		real = (OBJECT *)
-			o_list_search(w_current->page_current->object_head,
-				      o_current);
+	while (s_current != NULL) {
 
-		if (real == NULL) {
-			printf("Oops! you tried to mirror an object "
-			       "which doesn't exists\n");
+		object = s_current->selected_object;
+
+		if (!object) {
+			fprintf(stderr, "ERROR: NULL object in o_mirror!\n");
 			return;
 		}
 
-		switch(real->type) {
+		switch(object->type) {
 
-		case(OBJ_LINE):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_line_draw(w_current, o_current);
-			w_current->override_color = -1;
-
-			o_line_mirror(w_current,
-				      centerx, centery, real);
-
-			o_line_mirror(w_current,
-				      centerx, centery, o_current);
-
-			o_line_draw(w_current, real);
+			case(OBJ_LINE):
+				o_line_erase(w_current, object);
+				o_line_mirror(w_current,
+					      centerx, centery, object);
+				o_line_draw(w_current, object);
 			break;
 
-		case(OBJ_NET):
-			/* need to recalculate nets */
-		       	/* erase the current selection */
-			o_net_conn_erase(w_current, real);
-			w_current->override_color =
-				w_current->background_color;
-			o_net_draw(w_current, o_current);
-
-			w_current->override_color = -1;
-
-			o_net_mirror(w_current,
-				     centerx, centery, real);
-
-			o_net_mirror(w_current,
-				     centerx, centery, o_current);
-
-			o_net_draw(w_current, real);
+			case(OBJ_NET):
+				/* need to recalculate nets */
+		       		/* erase the current selection */
+	                        o_net_conn_erase(w_current, object);
+				o_net_erase(w_current, object);
+				o_net_mirror(w_current,
+				     	     centerx, centery, object);
+				o_net_draw(w_current, object);
 
 			break;
 
-		case(OBJ_BUS):
+			case(OBJ_BUS):
 		       	/* erase the current selection */
 #if 0 /* needs to be bus specific */
-			o_bus_conn_erase(w_current, real);
+				o_bus_conn_erase(w_current, object);
 #endif
-			w_current->override_color =
-				w_current->background_color;
-			o_bus_draw(w_current, o_current);
-
-			w_current->override_color = -1;
-
-			o_bus_mirror(w_current,
-				     centerx, centery, real);
-
-			o_bus_mirror(w_current,
-				     centerx, centery, o_current);
-
-			o_bus_draw(w_current, real);
+				o_bus_erase(w_current, object);
+				o_bus_mirror(w_current,
+				     	     centerx, centery, object);
+				o_bus_draw(w_current, object);
 
 			break;
 
-		case(OBJ_PIN):
-			/* erase the current selection */
-			o_pin_conn_erase(w_current, real);
-			w_current->override_color =
-				w_current->background_color;
-			o_pin_draw(w_current, o_current);
-			w_current->override_color = -1;
-
-			o_pin_mirror(w_current,
-				     centerx, centery, real);
-
-			o_pin_mirror(w_current,
-				     centerx, centery, o_current);
-
-			o_pin_draw(w_current, real);
+			case(OBJ_PIN):
+				/* erase the current selection */
+				o_pin_conn_erase(w_current, object);
+				o_pin_erase(w_current, object);
+				o_pin_mirror(w_current,
+				     	     centerx, centery, object);
+				o_pin_draw(w_current, object);
 			break;
 
-		case(OBJ_BOX):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_box_draw(w_current, o_current);
-			w_current->override_color = -1;
-
-			o_box_mirror(w_current,
-				     centerx, centery, real);
-
-			o_box_mirror(w_current,
-				     centerx, centery, o_current);
-
-			o_box_draw(w_current, real);
-
+			case(OBJ_BOX):
+				/* erase the current selection */
+				o_box_erase(w_current, object);
+				o_box_mirror(w_current,
+				     	     centerx, centery, object);
+				o_box_draw(w_current, object);
 			break;
 
-		case(OBJ_CIRCLE):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_circle_draw(w_current, o_current);
-			w_current->override_color = -1;
-
-			o_circle_mirror(w_current,
-					centerx, centery, real);
-
-			o_circle_mirror(w_current,
-					centerx, centery, o_current);
-
-			o_circle_draw(w_current, real);
+			case(OBJ_CIRCLE):
+				/* erase the current selection */
+				o_circle_erase(w_current, object);
+				o_circle_mirror(w_current,
+						centerx, centery, object);
+				o_circle_draw(w_current, object);
 			break;
 
-		case(OBJ_ARC):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_arc_draw(w_current, o_current);
-			w_current->override_color = -1;
-
-			o_arc_mirror(w_current,
-				     centerx, centery, real);
-
-			o_arc_mirror(w_current,
-				     centerx, centery, o_current);
-
-			o_arc_draw(w_current, real);
+			case(OBJ_ARC):
+				/* erase the current selection */
+				o_arc_erase(w_current, object);
+				o_arc_mirror(w_current,
+					     centerx, centery, object);
+				o_arc_draw(w_current, object);
 			break;
 
-		case(OBJ_COMPLEX):
-			if (strncmp(real->complex_clib,
+			case(OBJ_COMPLEX):
+				if (strncmp(object->complex_clib,
 				    "EMBEDDED", 8) == 0) {
-				s_log_message(
-					"Mirroring of embedded components "
-					"not supported yet\n");
-
-			} else {
-				/* component is not embedded */
-
-				/* crude hack */
-				if (real->angle == 90 ||
-				    real->angle == 270) {
-
-			 		temp = o_complex_mirror2(
-						w_current,
-						w_current->page_current->
-						object_tail,
-						centerx,
-						centery, real);
-
-					/* erase the current selection */
-					w_current->override_color =
-               	                		w_current->background_color;
-               	        		o_complex_draw(w_current, o_current);
-               	                	w_current->override_color = -1;
-					o_complex_draw(w_current, temp);
-
-					selection_list = (OBJECT *)
-						o_list_copy_to(w_current,
-							       selection_list,
-							       temp,
-							       SELECTION);
-
-					new_next = TRUE;
-					temp = o_current->next;
-
-					s_delete(w_current, o_current);
-
-					w_current->page_current->
-						selection_tail = return_tail(
-							w_current->page_current->
-							selection_head);
-
+					s_log_message("Mirroring of embedded components not supported yet\n");
 				} else {
+					/* component is not embedded */
+					/* crude hack */
+					if (object->angle == 90 || 
+					    object->angle == 270) {
 
-					/* erase the current selection */
-					w_current->override_color =
-						w_current->background_color;
-                                	o_complex_draw(w_current, o_current);
-                                	w_current->override_color = -1;
+						/*erase the current selection*/
+               	        			o_complex_erase(w_current, 
+								object);
 
-					w_current->ADDING_SEL=1;
-		 			o_complex_mirror(w_current,
-							 centerx, centery, real);
+			 			temp = o_complex_mirror2(
+							w_current,
+							w_current->
+							page_current->
+							object_tail,
+							centerx, centery, 
+							object);
 
-					o_complex_mirror(w_current,
-							 centerx, centery, o_current);
-					w_current->ADDING_SEL=0;
+						w_current->page_current->
+						object_tail = 
+                					return_tail(w_current->
+								page_current->
+								object_head);
 
-					o_complex_draw(w_current, real);
+						object = 
+						  s_current->selected_object = 
+									temp;
+
+						o_selection_select(object, 
+								 SELECT_COLOR);
+
+						o_complex_draw(w_current, temp);
+
+					} else {
+						/*erase the current selection*/
+               	        			o_complex_erase(w_current, 
+								object);
+		 				o_complex_mirror(w_current,
+							  	 centerx, 
+							 	 centery, 
+								 object);
+						o_complex_draw(w_current, 
+							       object);
+					}
 				}
-			}
 			break;
 
-		case(OBJ_TEXT):
-			/* erase the current selection */
-			w_current->override_color =
-				w_current->background_color;
-			o_text_draw(w_current, o_current);
-			w_current->override_color = -1;
-
-			o_text_mirror(w_current,
-				       centerx, centery,
-				       real);
-
-			w_current->ADDING_SEL = 1;
-			o_text_mirror(w_current,
-				       centerx, centery,
-				       o_current);
-			w_current->ADDING_SEL=0;
-
-			o_text_draw(w_current, real);
+			case(OBJ_TEXT):
+				/* erase the current selection */
+				o_text_erase(w_current, object);
+				o_text_mirror(w_current,
+				       	      centerx, centery, object);
+				o_text_draw(w_current, object);
 			break;
+
 		}
 
- 		if (new_next) {
-			o_current = temp;
-			temp = NULL;
-			new_next = 0;
-		} else {
-			o_current = o_current->next;
-		}
+#if 0 /* OLDSEL */
+/*if (new_next) { */
+/*o_current = temp; */
+/*temp = NULL; */
+/*new_next = 0; */
+/*} else { */
+/*o_current = o_current->next; */
+/*} */
+#endif
+			s_current = s_current->next;
 
 	}
 
 	w_current->page_current->CHANGED=1;
 
-	/* are the objects to be appended to the selection list */
-	if (selection_list) {
-		selection_list = (OBJECT *) return_head(selection_list);
-
-		selection_list->prev = w_current->page_current->selection_tail;
-		w_current->page_current->selection_tail->next = selection_list;
-		w_current->page_current->selection_tail = return_tail(
-			w_current->page_current->selection_head);
-	}
+#if 0 /* OLDSEL */
+/* are the objects to be appended to the selection list */
+/*if (selection_list) {*/
+/*selection_list = (OBJECT *) return_head(selection_list);*/
+/*selection_list->prev = w_current->page_current->selection_tail;*/
+/*w_current->page_current->selection_tail->next = selection_list;*/
+/*w_current->page_current->selection_tail = return_tail(*/
+/*w_current->page_current->selection_head);*/
+/*} */
+#endif /* OLDSEL */
 
 	o_conn_disconnect_update(w_current->page_current);
-	o_conn_draw_all(w_current, w_current->page_current->object_head);
-        o_redraw_real(w_current, w_current->page_current->selection_head);
-	o_redraw_selected(w_current);
+
+/* NEWSEL needed? *?
+/*o_conn_draw_all(w_current, w_current->page_current->object_head); */
+/*o_redraw_real(w_current, w_current->page_current->selection_head); */
+/*o_redraw_selected(w_current); */
 }
 
 void
-o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list)
+o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *o_list)
 {
 	OBJECT *o_current = NULL;
 
-	if (list == NULL)
+	if (o_list == NULL)
 		return;
 
-	o_current = list;
+	o_current = o_list;
 
 	while(o_current != NULL) {
+
 		if (o_current->type == OBJ_TEXT) {
 			if (o_current->visibility == INVISIBLE) {
 				o_current->visibility = VISIBLE;
@@ -793,11 +619,8 @@ o_edit_show_hidden(TOPLEVEL *w_current, OBJECT *list)
 					o_text_recreate(w_current, o_current);
 				}
 
-				if (o_current->draw_func &&
-				    o_current->type != OBJ_HEAD) {
-					(*o_current->draw_func)(w_current,
-								o_current);
-				}
+				o_text_draw(w_current, o_current);
+
 				w_current->page_current->CHANGED = 1;
 			}
 		}

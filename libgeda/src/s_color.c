@@ -34,8 +34,6 @@
 #include "prototype.h"
 
 
-/* this really ought to be moved mostly into libgeda */
-
 COLOR colors[MAX_COLORS];
 
 void

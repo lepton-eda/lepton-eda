@@ -410,19 +410,6 @@ o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale)
 
 	while (o_current != NULL) {
 
-#if 0
-		/* first get the real object */	
-		real = (OBJECT *) 
-			o_list_search(w_current->page_current->object_head, 
-					o_current);
-
-		if (real == NULL) {
-			printf("Oops! you tried to scale an object which doesn't exists\n");
-			return;	
-		}
-#endif
-
-
 		switch(o_current->type) {
 
 			case(OBJ_LINE):
@@ -433,19 +420,8 @@ o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale)
                                 /* o_line_draw(w_current, o_current);*/
                                 w_current->override_color = -1;
 
-#if 0
-				o_line_scale_world(w_current, 
-					x_scale, y_scale, real);
-#endif
-
 				o_line_scale_world(w_current, 
 					x_scale, y_scale, o_current);
-
-
-#if 0
-				o_redraw_single(w_current, o_current);
-				o_line_draw(w_current, real);
-#endif
 			break;
 		}
 
@@ -454,7 +430,4 @@ o_scale(TOPLEVEL *w_current, OBJECT *list, int x_scale, int y_scale)
 
 	/* don't do this at this level */
 	/* w_current->page_current->CHANGED=1;*/
-#if 0 
-	o_redraw_selected(w_current);
-#endif
 }

@@ -213,6 +213,7 @@ x_window_setup_rest(TOPLEVEL *w_current)
 
 	w_current->coord_world = NULL;
 	w_current->coord_screen = NULL;
+	w_current->doing_pan=FALSE;
 	/* w_current->preview = NULL;experimental widget */
 
 }

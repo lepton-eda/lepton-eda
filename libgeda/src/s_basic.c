@@ -165,6 +165,8 @@ s_basic_init_object( char *name )
 	/* Setup the color */
 	new_node->color = WHITE;
 	new_node->saved_color = -1;
+	new_node->selected = FALSE;
+	new_node->locked_color = -1;
 
 	new_node->action_func = error_if_called; 
 	new_node->sel_func = error_if_called; 

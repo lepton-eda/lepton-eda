@@ -167,6 +167,7 @@ void o_circle_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *obje
 void o_circle_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 /* o_complex_basic.c */
 void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
+void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 OBJECT *add_head(void);
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable);
@@ -182,7 +183,10 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *
 void o_complex_delete(TOPLEVEL *w_current, OBJECT *delete);
 void o_complex_world_translate(TOPLEVEL *w_current, int x1, int y1, OBJECT *complex);
 void o_complex_world_translate_toplevel(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
-void o_complex_set_color(TOPLEVEL *w_current, int color, OBJECT *complex);
+void o_complex_set_color(OBJECT *complex, int color);
+void o_complex_set_color_save(OBJECT *complex, int color);
+void o_complex_unset_color(OBJECT *complex);
+void o_complex_set_saved_color_only(OBJECT *complex, int color);
 OBJECT *o_complex_return_pin(OBJECT *o_list, int counter);
 void o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_complex_mirror_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
@@ -285,6 +289,20 @@ void o_pin_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_center
 void o_pin_mirror(TOPLEVEL *w_current, int centerx, int centery, OBJECT *object);
 void o_pin_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_centery, OBJECT *object);
 void o_pin_modify(TOPLEVEL *w_current, OBJECT *object, int x, int y, int whichone);
+/* o_selection.c */
+SELECTION *o_selection_return_tail(SELECTION *head);
+SELECTION *o_selection_return_head(SELECTION *tail);
+SELECTION *o_selection_new_head(void);
+void o_selection_destroy_head(SELECTION *s_head);
+SELECTION *o_selection_add(SELECTION *head, OBJECT *o_selected);
+void o_selection_remove(SELECTION *head, OBJECT *o_selected);
+SELECTION *o_selection_remove_most(TOPLEVEL *w_current, SELECTION *head);
+SELECTION *o_selection_print_all(SELECTION *head);
+void o_selection_destroy_all(SELECTION *head);
+void o_selection_select(OBJECT *object, int color);
+void o_selection_unselect(OBJECT *object);
+OBJECT *o_selection_return_first_object(SELECTION *head);
+OBJECT *o_selection_return_nth_object(SELECTION *head, int count);
 /* o_text_basic.c */
 void get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 void world_get_text_bounds(TOPLEVEL *w_current, OBJECT *o_current, int *left, int *top, int *right, int *bottom);

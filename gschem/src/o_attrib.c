@@ -41,172 +41,106 @@
 /* TODO: get a better name */
 /* copy all attributes selected to the selection list */
 void
-deal_attr(TOPLEVEL *w_current, OBJECT *selected)
+o_attrib_add_selected(TOPLEVEL *w_current, OBJECT *selected)
 {
 	ATTRIB *a_current;
-	OBJECT *found;
-	unsigned long temp_color;
 
-	temp_color = w_current->override_color;
 	/* deal with attributes here? */
 	if (selected->attribs != NULL) {
 		/* first node is head */
 		a_current = selected->attribs->next;
 
 		while (a_current != NULL) {
-			found = (OBJECT *) o_list_search(
-				w_current->page_current->selection_head,
-				a_current->object);
-			if (!found) {
-				w_current->page_current->selection_tail =
-					(OBJECT *) o_list_copy_to(
-						w_current,
-						w_current->page_current->
-						selection_head,
-						a_current->object, SELECTION);
 
-				w_current->page_current->selection_tail =
-					return_head(w_current->page_current->
-						    selection_head);
+			if (a_current->object) {
 
-				w_current->override_color =
-					w_current->select_color;
-				/* draw last object correctly (selected) */
-				if (a_current->object->draw_func &&
-				    a_current->object->type != OBJ_HEAD) {
-					(*a_current->object->draw_func)(
-						w_current,
-						a_current->object);
+				/* make sure object isn't selected already */
+				if (a_current->object->saved_color == -1) {
+				  o_selection_add(w_current->page_current->
+					selection2_head, a_current->object);
+				  o_redraw_single(w_current, a_current->object);
 				}
+
 			}
 
 			a_current = a_current->next;
 		}
 	}
 
-	w_current->override_color = temp_color;
-
 	return;
 }
 
 void
-o_attrib_toggle_visibility(TOPLEVEL *w_current, OBJECT *list)
+o_attrib_toggle_visibility(TOPLEVEL *w_current, SELECTION *list)
 {
-	OBJECT *o_current = NULL;
-	OBJECT *real = NULL;
+	SELECTION *s_current = NULL;
+	OBJECT *object = NULL;
 
 	if (list == NULL) {
 		return;
 	}
 
-	o_current = list;
+	s_current = list;
 
-	while(o_current != NULL) {
-		real = (OBJECT *) o_list_search(
-			w_current->page_current->object_head, o_current);
-		if (real == NULL) {
-			printf("you've got a problem "
-			       "in o_attrib_toggle_vis\nthis "
-			       "should never be null\n");
-			return;
+	while(s_current != NULL) {
+		object = s_current->selected_object;
+		if (object == NULL) {
+			fprintf(stderr, "Got NULL in o_attrib_toggle_visibility\n");	
+			exit(-1);
 		}
-		/* all text can be invisible or visible, so next line
-                 * is out */
-		/* if (real->attribute && real->type == OBJ_TEXT) { */
-		if (real->type == OBJ_TEXT) {
-			if (real->visibility == VISIBLE) {
-				w_current->override_color =
-					w_current->background_color;
-				if (real->draw_func &&
-				    real->type != OBJ_HEAD) {
-					(*real->draw_func)(w_current, real);
-				}
-				w_current->override_color = -1;
-				real->visibility = INVISIBLE;
-				o_current->visibility = INVISIBLE;
+
+		if (object->type == OBJ_TEXT) {
+			if (object->visibility == VISIBLE) {
+
+				o_text_erase(w_current, object);
+				object->visibility = INVISIBLE;
+
 				w_current->page_current->CHANGED=1;
 			} else {
-				real->visibility = VISIBLE;
+				object->visibility = VISIBLE;
 
 				/* you must do this since real->complex */
 				/* might be null when text is invisible */
-				if (real->complex == NULL)
-					o_text_recreate(w_current, real);
+				if (object->complex == NULL)
+					o_text_recreate(w_current, object);
 
-				if (real->draw_func &&
-				    real->type != OBJ_HEAD) {
-					(*real->draw_func)(w_current, real);
-				}
-
-				o_current->visibility = VISIBLE;
-
-				/* same comment as above */
-				if (o_current->complex == NULL)  {
-					o_text_recreate(w_current, o_current);
-				}
-
-				w_current->override_color =
-					w_current->select_color;
-				if (o_current->draw_func &&
-				    o_current->type != OBJ_HEAD) {
-					(*o_current->draw_func)(w_current,
-								o_current);
-				}
-				w_current->override_color = -1;
+				o_text_draw(w_current, object);
 				w_current->page_current->CHANGED = 1;
 			}
 		}
-		o_current = o_current->next;
+		s_current = s_current->next;
 	}
 }
 
 void
-o_attrib_toggle_show_name_value(
-	TOPLEVEL *w_current, OBJECT *list, int new_show_name_value)
+o_attrib_toggle_show_name_value(TOPLEVEL *w_current, 
+				SELECTION *list, int new_show_name_value)
 {
-	OBJECT *o_current = NULL;
-	OBJECT *real = NULL;
+	SELECTION *s_current = NULL;
+	OBJECT *object = NULL;
 
 	if (list == NULL) {
 		return;
 	}
 
-	o_current = list;
+	s_current = list;
 
-	while(o_current != NULL) {
-		real = (OBJECT *) o_list_search(w_current->page_current->
-						object_head, o_current);
+	while(s_current != NULL) {
+		object = s_current->selected_object;
 
-		if (real == NULL) {
-			printf("you've got a problem "
-			       "in o_attrib_toggle_show_name\nthis "
-			       "should never be null\n");
-			return;
+		if (object == NULL) {
+			fprintf(stderr, "Got NULL in o_attrib_toggle_show_name_value\n");	
+			exit(-1);
 		}
 
-		if (real->type == OBJ_TEXT) {
-			/* just for attributes or for all? */
-			w_current->override_color =
-				w_current->background_color;
-			if (o_current->draw_func &&
-			    o_current->type != OBJ_HEAD) {
-				(*o_current->draw_func)(w_current, o_current);
-			}
-
-			real->show_name_value = new_show_name_value;
-			o_text_recreate(w_current, real);
-			o_current->show_name_value = new_show_name_value;
-			o_text_recreate(w_current, o_current);
-
-			w_current->override_color = w_current->select_color;
-			if (o_current->draw_func &&
-			    o_current->type != OBJ_HEAD) {
-				(*o_current->draw_func)(w_current, o_current);
-			}
-			w_current->override_color = -1;
+		if (object->type == OBJ_TEXT) {
+			o_text_erase(w_current, object);
+			object->show_name_value = new_show_name_value;
+			o_text_recreate(w_current, object);
+			o_text_draw(w_current, object);
 			w_current->page_current->CHANGED=1;
 		}
-		o_current = o_current->next;
+		s_current = s_current->next;
 	}
 }
 
@@ -278,6 +212,7 @@ o_attrib_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 
 	o_drawbounding(w_current,
 		       w_current->page_current->attrib_place_head->next,
+		       NULL,
 		       x_get_color(w_current->bb_color));
 }
 
@@ -285,6 +220,7 @@ void
 o_attrib_end(TOPLEVEL *w_current)
 {
 	int world_x, world_y; /* get consistant names hack */
+	OBJECT *object;
 
         SCREENtoWORLD(w_current,
 		      w_current->last_x,
@@ -313,9 +249,11 @@ o_attrib_end(TOPLEVEL *w_current)
 	/* if the attribute is invisible then you need to erase the
 	 * outline left by the place */
 	if (w_current->current_visible == INVISIBLE) {
+
 		o_drawbounding(w_current,
 			       w_current->page_current->
 			       attrib_place_head->next,
+			       NULL,
 			       x_get_color(w_current->bb_color));
 	}
 
@@ -326,11 +264,13 @@ o_attrib_end(TOPLEVEL *w_current)
 		o_drawbounding(w_current,
 			       w_current->page_current->
 			       attrib_place_head->next,
+			       NULL,
 			       x_get_color(w_current->text_color));
 	} else {
 		o_drawbounding(w_current,
 			       w_current->page_current->
 			       attrib_place_head->next,
+			       NULL,
 			       x_get_color(w_current->select_color));
 	}
 
@@ -344,35 +284,18 @@ o_attrib_end(TOPLEVEL *w_current)
 	/* here is where you attach the stuff */
 	/* if an object is selected, else just place it */
 	/* selection_head should never be null since it has a head struct */
-	if (w_current->page_current->selection_head->next != NULL) {
+	object = o_select_return_first_object(w_current);
+	if (object != NULL) {
 		/* should attribute be selected? probably */
+		/* this is probably okay, NEWSEL, since tail is a single obj */
 		o_attrib_attach(w_current,
 				w_current->page_current->object_head,
 				w_current->page_current->object_tail,
-				w_current->page_current->selection_head->next);
+				object);
 	}
 
-	/* add item to the selection or it'll be selected by itself */
-	/* you probably should create some new functions for this... hack */
-	w_current->page_current->selection_tail = (OBJECT *) o_list_copy_to(
-		w_current,
-		w_current->page_current->selection_head,
-		w_current->page_current->object_tail, SELECTION);
-
-	w_current->page_current->selection_tail =
-		return_tail(w_current->page_current->selection_head);
-
-	/* now redraw this new item as being selected */
-	w_current->override_color = w_current->select_color;
-
-	/* object_tail is the object that was just added */
-	if (w_current->page_current->object_tail->draw_func != NULL &&
-	    w_current->page_current->object_tail->type != OBJ_HEAD) {
-        	(*w_current->page_current->object_tail->draw_func)(
-			w_current, w_current->page_current->object_tail);
-        }
-
-	w_current->override_color = -1;
+	o_selection_add(w_current->page_current->selection2_head,
+			w_current->page_current->object_tail);
 }
 
 void
@@ -380,6 +303,7 @@ o_attrib_rubberattrib(TOPLEVEL *w_current)
 {
 	o_drawbounding(w_current,
 		       w_current->page_current->attrib_place_head->next,
+		       NULL,
 		       x_get_color(w_current->bb_color));
 }
 
@@ -457,20 +381,12 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
                                    o_current);
 	}
 
-        /* add item to the selection or it'll be selected by itself */
-        w_current->page_current->selection_tail = (OBJECT *) o_list_copy_to(
-                w_current,
-                w_current->page_current->selection_head,
-                w_current->page_current->object_tail, SELECTION);
+	o_selection_add(w_current->page_current->selection2_head,
+			w_current->page_current->object_tail);
 
-        /* now redraw this new item as being selected */
-        w_current->override_color = w_current->select_color;
+	o_text_erase(w_current, w_current->page_current->object_tail); 
+	o_text_draw(w_current, w_current->page_current->object_tail);
 
-        /* crude but quite functional */
-        (*w_current->page_current->object_tail->draw_func)(
-                        w_current, w_current->page_current->object_tail);
-
-        w_current->override_color = -1;
         w_current->page_current->CHANGED = 1;
 
 	return(w_current->page_current->object_tail);

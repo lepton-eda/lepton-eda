@@ -188,8 +188,13 @@
 #define BOTH_LOGWIN_STDOUT	2
 
 /* list copying flags */
-#define NORMAL			0
-#define SELECTION		1
+#define NORMAL_FLAG		0
+#define SELECTION_FLAG		1
+
+/* selection types */
+/* used in o_select_object */
+#define SINGLE                  0
+#define MULTIPLE                1
 
 #define MILS_PER_INCH		1000 
 

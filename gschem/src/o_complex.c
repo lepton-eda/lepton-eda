@@ -50,6 +50,14 @@ o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 void
+o_complex_erase(TOPLEVEL *w_current, OBJECT *o_current)
+{
+        w_current->override_color = w_current->background_color;
+	o_complex_draw(w_current, o_current);
+        w_current->override_color = -1;
+}
+
+void
 o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
 {
 	OBJECT *o_current = complex;
@@ -131,8 +139,9 @@ o_complex_start(TOPLEVEL *w_current, int screen_x, int screen_y)
 	w_current->ADDING_SEL = 0;
 	w_current->DONT_DRAW_CONN = 0;
 
-	o_drawbounding(w_current,
+	o_drawbounding(w_current, 
 		       w_current->page_current->complex_place_head->next,
+		       NULL,
 		       x_get_color(w_current->bb_color));
 }
 
@@ -282,19 +291,25 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 	/* This doesn't allow anything else to be in the selection
 	 * list when you add a component */
 
-	selection_list = (OBJECT *) o_list_copy_to(
-		w_current,
-		selection_list,
-		w_current->page_current->object_tail, SELECTION);
+#if 0 /* OLDSEL */
+/*selection_list = (OBJECT *) o_list_copy_to( */
+/*w_current, */
+/*selection_list, */
+/*w_current->page_current->object_tail, SELECTION_FLAG); */
+/*addon maybe later... press shift when adding an object to */
+/*add it to the current selection list?  */
+/*o_unredraw_selected(w_current); */
+/*o_list_delete_rest(w_current, w_current->page_current->selection_head); */
+/*w_current->page_current->selection_head->next = selection_list; */
+/*selection_list->prev = w_current->page_current->selection_head; */
+/*w_current->page_current->selection_tail = return_tail( */
+/*w_current->page_current->selection_head); */
+#endif
 
-	/* addon maybe later... press shift when adding an object to
-	 * add it to the current selection list? */
-	o_unredraw_selected(w_current);
-	o_list_delete_rest(w_current, w_current->page_current->selection_head);
-	w_current->page_current->selection_head->next = selection_list;
-	selection_list->prev = w_current->page_current->selection_head;
-	w_current->page_current->selection_tail = return_tail(
-		w_current->page_current->selection_head);
+	o_selection_remove_most(w_current,
+                                w_current->page_current->selection2_head);
+	o_selection_add(w_current->page_current->selection2_head, 
+			w_current->page_current->object_tail);
 	/* the o_redraw_selected is in x_events.c after this call
 	 * returns */
 
@@ -305,8 +320,6 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
 #endif
 	o_redraw(w_current, w_current->page_current->object_head);
 
-        o_redraw_real(w_current, w_current->page_current->selection_head);
-
 	w_current->page_current->CHANGED = 1;
 }
 
@@ -315,6 +328,7 @@ o_complex_rubbercomplex(TOPLEVEL *w_current)
 {
 	o_drawbounding(w_current,
 		       w_current->page_current->complex_place_head->next,
+	               NULL,
 		       x_get_color(w_current->bb_color));
 }
 
@@ -365,6 +379,76 @@ o_complex_translate_display(TOPLEVEL *w_current,
 		}
 		o_current = o_current->next;
 	}
+}
+
+void
+o_complex_translate_display_selection(TOPLEVEL *w_current,
+			    int x1, int y1, SELECTION *head)
+{
+	SELECTION *s_current = head;
+	OBJECT *o_current;
+
+	while (s_current != NULL) {
+
+		o_current = s_current->selected_object;
+
+                if (!o_current) {
+                        fprintf(stderr, "Got NULL in o_complex_translate_display_selection\n");
+                        exit(-1);
+                }
+
+		switch(o_current->type) {
+		case(OBJ_LINE):
+			o_line_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_NET):
+			o_net_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_BUS):
+			o_bus_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_BOX):
+			o_box_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_CIRCLE):
+			o_circle_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_COMPLEX):
+			o_complex_draw_xor(w_current,
+					   x1, y1, o_current->complex);
+			break;
+
+		case(OBJ_TEXT):
+			o_text_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_PIN):
+			o_pin_draw_xor(w_current, x1, y1, o_current);
+			break;
+
+		case(OBJ_ARC):
+			o_arc_draw_xor(w_current, x1, y1, o_current);
+			break;
+		}
+		s_current = s_current->next;
+	}
+}
+
+/* experimental */
+void
+o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+{
+        if (object == NULL)  {
+                printf("cmt2 NO!\n");
+                return;
+        }
+
+        o_complex_translate_display(w_current, dx, dy, object);
 }
 
 /* don't know if this belongs yet */
@@ -436,16 +520,16 @@ o_complex_translate_all(TOPLEVEL *w_current, int offset)
 	w_current->page_current->CHANGED=1;
 }
 
-/* experimental */
 void
-o_complex_translate2(TOPLEVEL *w_current, int dx, int dy, OBJECT *object)
+o_complex_translate_selection(TOPLEVEL *w_current, int dx, int dy, 
+			      SELECTION *head)
 {
-	if (object == NULL)  {
-		printf("cmt2 NO!\n");
+	if (head == NULL)  {
+		printf("Got NULL in o_complex_translate_selection!\n");
 		return;
 	}
 
-	o_complex_translate_display(w_current, dx, dy, object);
+	o_complex_translate_display_selection(w_current, dx, dy, head);
 }
 
 void
@@ -577,6 +661,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 	int origx, origy;
 	int world_centerx, world_centery;
 	int change=0;
+	int color;
 
 	SCREENtoWORLD(w_current,
 		      centerx,
@@ -619,9 +704,16 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 
 	object->mirror = !object->mirror;
 
+	if (object->saved_color == -1) {
+		color = object->color;
+	} else {
+		color = object->saved_color;
+	}
+
+
 	new_obj = o_complex_add(w_current,
 				list, OBJ_COMPLEX,
-				object->color,
+				color,
 				x, y,
 				object->angle, object->mirror,
 				object->complex_clib, object->complex_basename,
@@ -640,6 +732,7 @@ o_complex_mirror2(TOPLEVEL *w_current, OBJECT *list, int centerx, int centery,
 	/* need to do the following, because delete severs links */
 	o_attrib_reattach(new_obj->attribs);
  	o_attrib_set_color(w_current, new_obj->attribs);
+
 
 #if 0
  	w_current->page_current->object_tail = (OBJECT *)

@@ -519,7 +519,7 @@ a_zoom_box(TOPLEVEL *w_current)
         w_current->DONT_RESIZE = 1;
         x_hscrollbar_update(w_current);
         x_vscrollbar_update(w_current);
-        o_redraw_all(w_current);
+        o_redraw_all_fast(w_current);
         w_current->DONT_RESIZE = 0;
         w_current->DONT_RECALC = 0;
         w_current->DONT_REDRAW = 0;

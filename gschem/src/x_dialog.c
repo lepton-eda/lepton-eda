@@ -184,6 +184,7 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 	char *newtext;
 	gint row;
 	OBJECT *attrib;
+	OBJECT *object;
 	char **text;
 	GtkWidget *clist;
 
@@ -198,9 +199,8 @@ multi_attrib_edit_add (GtkWidget *w, TOPLEVEL *w_current)
 
 	row = gtk_clist_append(GTK_CLIST(clist),text);
 
-	attrib = o_attrib_add_attrib(w_current, newtext, vis,
-		show, w_current->page_current->
-		selection_head->next);
+	object = o_select_return_first_object(w_current); 
+	attrib = o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
 	gtk_clist_set_row_data(GTK_CLIST(clist),row,attrib);
 	multi_attrib_edit_clear(NULL,GTK_WINDOW(w_current->mawindow));
@@ -276,7 +276,7 @@ multi_attrib_edit_close (GtkWidget *w, TOPLEVEL *w_current)
 }
 
 void
-multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
+multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
 {
 
 	char *text[3];
@@ -284,6 +284,7 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 	int i;
 	int row;
 	OBJECT **attriblist=NULL;
+	OBJECT *object=NULL;
 
 	GtkWidget *window;
 	GtkWidget *table;
@@ -323,14 +324,14 @@ multi_attrib_edit (TOPLEVEL *w_current, OBJECT *list)
 
 
 	/* Do basic checks first */	
-	if(!w_current)return;
-	if(!w_current->page_current)return;
-	if(!w_current->page_current->object_head)return;
-	if(!w_current->page_current->selection_head)return;
-	if(!w_current->page_current->selection_head->next)return;
+	if(!w_current) return;
+	if(!w_current->page_current) return;
+	if(!w_current->page_current->object_head) return;
+	object = list->selected_object;
+	if (!object) return;
 	
 	attriblist=o_attrib_return_attribs(w_current->page_current->object_head,
-		w_current->page_current->selection_head->next);
+					   object);	
 	text[0] = malloc(sizeof(char)*512);
 	text[1] = malloc(sizeof(char)*5);
 	text[2] = malloc(sizeof(char)*512);
@@ -736,6 +737,7 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
 	GtkEntry *val_entry, *lab_entry;
 	GtkWidget *visbutton,*showvalbutton,*showlabbutton,*showboth;
 	OBJECT *attribptr;
+	OBJECT *object;
 	int vis,show;
 
         w_current->event_state = SELECT;
@@ -765,13 +767,12 @@ attrib_edit_dialog_ok(GtkWidget *w, TOPLEVEL *w_current)
         	show = SHOW_NAME_VALUE;
 
 	attribptr = gtk_object_get_data(GTK_OBJECT(w_current->aewindow),"attrib");
-	if(!attribptr)
-		o_attrib_add_attrib(w_current, newtext, vis,
-                                    show,
-                                    w_current->page_current->
-                                    selection_head->next);
-	else
+	if(!attribptr) {
+		object = o_select_return_first_object(w_current);
+		o_attrib_add_attrib(w_current, newtext, vis, show, object);
+	} else {
 		o_text_change(w_current,attribptr,newtext,vis,show);
+	}
         gtk_grab_remove(w_current->aewindow);
         gtk_widget_destroy(w_current->aewindow);
 	w_current->aewindow = NULL;
@@ -955,7 +956,7 @@ attrib_edit_dialog (TOPLEVEL *w_current, OBJECT *list)
 	if(list)
 	{
 		o_attrib_get_name_value(list->text_string,name,val);
-		attrib=o_list_search(w_current->page_current->object_head,list);
+		attrib=list;
 		if(attrib->visibility == VISIBLE)
 			gtk_toggle_button_set_active 
 				(GTK_TOGGLE_BUTTON (visbutton), TRUE);
@@ -2360,24 +2361,21 @@ color_edit_dialog_close(GtkWidget *w, TOPLEVEL *w_current)
 void
 color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 {
-	OBJECT *o_current = NULL;
-	OBJECT *found = NULL;
+	SELECTION *s_current = NULL;
+	OBJECT *object = NULL;
 
-	o_current = w_current->page_current->selection_head->next;
+	/* skip over head */
+	s_current = w_current->page_current->selection2_head->next;
 
-	while(o_current != NULL) {
-		found = (OBJECT *) o_list_search(
-			w_current->page_current->object_head,
-			o_current);
+	while(s_current != NULL) {
 
-		if (found == NULL) {
-			fprintf(stderr,
-				"UGGG! you blew it... "
-				"tried to delete something that didn't exist");
+		object = s_current->selected_object;
+		if (object == NULL) {
+			fprintf(stderr, "ERROR: NULL object in color_edit_dialog_apply!\n");
 			exit(-1);
 		}
 
-		switch(found->type) {
+		switch(object->type) {
 			case(OBJ_LINE):
 			case(OBJ_BOX):
 			case(OBJ_CIRCLE):
@@ -2385,20 +2383,19 @@ color_edit_dialog_apply(GtkWidget *w, TOPLEVEL *w_current)
 			case(OBJ_BUS):
 			case(OBJ_PIN):
 			case(OBJ_ARC):
-				found->color = w_current->edit_color;
+				object->saved_color = w_current->edit_color;
 				w_current->page_current->CHANGED = 1;
 				break;
 
 			case(OBJ_TEXT):
-				found->color = w_current->edit_color;
-				o_complex_set_color(w_current,
-					    w_current->edit_color,
-					    found->complex);
+				object->saved_color = w_current->edit_color;	
+				o_complex_set_saved_color_only(object->complex,
+					            w_current->edit_color);
 				w_current->page_current->CHANGED = 1;
 				break;
 		}
 
-		o_current = o_current->next;
+		s_current = s_current->next;
 	}
 }
 

@@ -135,7 +135,7 @@ o_attrib_add(TOPLEVEL *w_current, ATTRIB *list_head, OBJECT *item)
 	/* Show that that item is an attribute */
 	new->object->color = w_current->attribute_color; 
 	/* this is assuming item is text */
-	o_complex_set_color(w_current, new->object->color, new->object->complex);
+	o_complex_set_color(new->object->complex, new->object->color);
 
 	/* Add link from item to attrib listing */
 	new->object->attached_to = new;
@@ -159,11 +159,19 @@ o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
 		/* this makes me nervous... very nervous */
 		if (current->object != NULL && current->prev != NULL) {
 			current->object->attribute = 0;	
-			current->object->color = w_current->detachedattr_color;	
-			o_complex_set_color(w_current, current->object->color, 
-					    current->object->complex);
 			current->object->attached_to=NULL;
-			o_redraw_single(w_current, current->object);
+			current->object->color = w_current->detachedattr_color;	
+			o_complex_set_color(current->object->complex, 
+					    current->object->color);
+
+			/* not sure on this */
+			if (current->object->saved_color != -1) {
+				o_complex_set_saved_color_only(
+						current->object->complex, 
+						w_current->detachedattr_color);
+				current->object->saved_color = w_current->
+							detachedattr_color;
+			}
 		}
 
 		/* were do we detach the object->attached_to? above */
@@ -177,93 +185,76 @@ o_attrib_free(TOPLEVEL *w_current, ATTRIB *current)
 
 /* IMPORTANT, lists first then specific single item */
 /* object is the place where you want to add item as an attribute */
-/* list are the actual attributes to be added */
+/* text_object is the actual attribute to be added */
 /* parent_list is the list where the actual attribute objects live */
 /* typically parent_list is object_parent (object_head), but it is */
 /* overridden in o_complex_add so that it points to head node of the complex */
 void
-o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, OBJECT *list, OBJECT *object)
+o_attrib_attach(TOPLEVEL *w_current, OBJECT *parent_list, 
+		OBJECT *text_object, OBJECT *object)
 {
-	OBJECT *real = NULL;
 	OBJECT *o_current = NULL;
-
-	/* unused in this code? yes... 
-	OBJECT *temp2 = NULL;
-	*/
 
 	ATTRIB *found = NULL;
 	OBJECT *found2 = NULL; /* object in main list */
 
-        o_current = list; /* hack get consistant names */
+        o_current = text_object; 
 
-#if 0 /* no need to have this in */
-	if (object->type == OBJ_TEXT) {
-	/* printf("Make sure first is NOT a text item"); */
-	/* messages like this need to to a error location, like a log! */
-	/* or maybe it's okay.. don't do anything if this happens */
-		return;
-	}
-#endif
-
-	/* find the real object in the true object_list */
-	real = (OBJECT *) o_list_search(parent_list, object);	
-	/* check to make sure this is not null hack */
-
-	if (real == NULL) {
+	if (object == NULL) {
 		printf("ah.. object was not found in the parent list!\n");
 		return;
 	}
 
-	while (o_current != NULL) {
-		/* is the object already part of the list ? */
-		found = o_attrib_search(real->attribs, o_current);
-		if (!found) { /* no it's not, add it to the list */
+	/* is the object already part of the list ? */
+	found = o_attrib_search(object->attribs, o_current);
+	if (!found) { /* no it's not, add it to the list */
 		
-			found2 = (OBJECT *) o_list_search(parent_list, o_current);	
+		found2 = (OBJECT *) o_list_search(parent_list, o_current);	
 
-			/* check to see if found2 is not null hack */
-			if (found2) {
-				if (found2->type == OBJ_TEXT) {
+		/* check to see if found2 is not null hack */
+		if (found2) {
+			if (found2->type == OBJ_TEXT) {
 
-					if (real->attribs == NULL) {
-						real->attribs = 
-							add_attrib_head(real);
-					}
+				if (object->attribs == NULL) {
+					object->attribs = 
+						add_attrib_head(object);
+				}
 
 
-					if (found2->attached_to) {
-						fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text_string);
-					} else {
-
-						o_attrib_add(w_current, 
-					                     real-> attribs, 
-							     found2);
-
-			/* can't do this here since just selecting something */
-			/* will cause this to be set */
-			/* w_current->page_current->CHANGED=1;*/
-		
-				/* Also set the selection's color as well */
-						o_current->color = w_current->
-							       attribute_color; 
-						o_complex_set_color( w_current, 
-							    o_current->color,
-							    o_current->complex);
-					}
-
+				if (found2->attached_to) {
+					fprintf(stderr, "You cannot attach this attribute [%s] to more than one object\n", found2->text_string);
 				} else {
-					fprintf(stderr, "You cannot attach non text items as attributes!\n");
-				}	
-			}
-		} else {
-			if (o_current->text_string) { 	
-				printf("Attribute [%s] already attached\n", 
-					o_current->text_string);
-			}
+
+					o_attrib_add(w_current, 
+				                     object->attribs, 
+						     found2);
+
+					o_current->color = w_current->
+							   attribute_color; 
+					o_complex_set_color(o_current->complex,
+							    o_current->color);
+
+					if (o_current->saved_color != -1) {
+						o_complex_set_saved_color_only(
+						        o_current->complex, 
+							o_current->color);
+						o_current->saved_color = 
+							o_current->color;
+					}
+/* can't do this here since just selecting something */
+/* will cause this to be set */
+/* w_current->page_current->CHANGED=1;*/
+				}
+			} else {
+				fprintf(stderr, "You cannot attach non text items as attributes!\n");
+			}	
 		}
-		o_current = o_current->next;
+	} else {
+		if (o_current->text_string) { 	
+			printf("Attribute [%s] already attached\n", 
+				o_current->text_string);
+		}
 	}
-	
 }
 
 void
@@ -403,24 +394,25 @@ o_attrib_remove(ATTRIB *list, ATTRIB *remove)
 void
 o_attrib_detach_all(TOPLEVEL *w_current, OBJECT *object_list, OBJECT *main_head)
 {
+#if 0 /* not used */
 	OBJECT *o_current=NULL;
-        OBJECT *real=NULL;
 
         o_current = object_list;
 
         while(o_current != NULL) {
 
-                real = (OBJECT *) o_list_search(main_head, o_current);
+                X = (OBJECT *) o_list_search(main_head, o_current);
 
-                if (real) {
-                        if (real->attribs != NULL) {
-                                o_attrib_free_all(w_current, real->attribs);
-                                real->attribs = NULL; /* leak possible? */
+                if (X) {
+                        if (X->attribs != NULL) {
+                                o_attrib_free_all(w_current, X->attribs);
+                                X->attribs = NULL; /* leak possible? */
 				w_current->page_current->CHANGED=1;
                         }
                 }
                 o_current = o_current->next;
         }
+#endif
 }
 
 OBJECT *
@@ -531,9 +523,8 @@ o_read_attribs(TOPLEVEL *w_current, FILE *fp, OBJECT *object_to_get_attribs, cha
 			/* check color to set it to the right value */
 			if (object_list->color != saved_color) {
 				object_list->color = saved_color;
-				o_complex_set_color(w_current,
-                                        	    object_list->color,
-                                                    object_list->complex);
+				o_complex_set_color(object_list->complex,
+                                                    object_list->color);
 			}
 			ATTACH=FALSE;
 		} else {
@@ -1170,6 +1161,7 @@ void
 o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes) 
 {
 	ATTRIB *a_current;
+	int color;
 
 	a_current = attributes;
 
@@ -1183,11 +1175,32 @@ o_attrib_set_color(TOPLEVEL *w_current, ATTRIB *attributes)
 			
 			if (a_current->object->type == OBJ_TEXT &&
 			     a_current->object->complex) {
-				o_complex_set_color(w_current, 
-					w_current->attribute_color, 
-					a_current->object->complex);	
-			        a_current->object->color = 
-					 w_current->attribute_color;
+
+				/* I'm not terribly happy with this */
+		
+				if (a_current->object->saved_color != -1) {
+
+					/* if the object is selected, make */
+					/* sure it it say selected */
+					o_complex_set_color(
+						a_current->object->complex,
+						SELECT_COLOR);
+			        	a_current->object->color = 
+						SELECT_COLOR;
+
+					o_complex_set_saved_color_only(
+						a_current->object->complex,
+						w_current->attribute_color); 
+			        	a_current->object->saved_color = w_current->
+							attribute_color;
+
+				} else {
+					o_complex_set_color(
+						a_current->object->complex,
+						w_current->attribute_color); 
+			        	a_current->object->color = 
+						 w_current->attribute_color;
+				}
 			}	
 
 		a_current = a_current->next;	
