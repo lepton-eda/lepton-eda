@@ -1,8 +1,13 @@
+2001-07-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.in: A little more work to get indent vs gindent to
+	  be detected correctly
+
 2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
-	* src/configure.in: Now searching for gindent as well as indent
+	* configure.in: Now searching for gindent as well as indent
 
-	* src/configure.in: Make sure configure scripts work with autoconf-2.50
+	* configure.in: Make sure configure scripts work with autoconf-2.50
 	  (had to fix cygwin check), they do not yet work with 2.50
 
 2001-06-24 Ales Hvezda   <ahvezda@geda.seul.org>

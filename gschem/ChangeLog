@@ -1,3 +1,8 @@
+2001-07-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.in: A little more work to get indent vs gindent to
+          be detected correctly
+
 2001-07-01 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.in: Now searching for gindent as well as indent

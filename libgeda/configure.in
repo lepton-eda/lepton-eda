@@ -266,11 +266,17 @@ fi
 # search for indent
 AC_PATH_PROG(INDENT, indent, no, ${PATH})
 
-if test "$INDENT" = "no"; then 
+if ! test "$INDENT" = "no"; then 
+	indentversion=`$INDENT --version | grep GNU`
+else 
+	indentversion=
+fi
+
+if test "$INDENT" = "no" -o "$indentversion"x = x; then 
 	AC_PATH_PROG(GINDENT, gindent, no, ${PATH})
 
 	if test "$GINDENT" = "no"; then 
-        	echo "** Cannot find indent or gindent, C code formatting disabled **"
+        	echo "** Cannot find GNU indent or gindent, C code formatting disabled **"
 		INDENT=echo
 	else
 		INDENT=$GINDENT
