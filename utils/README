@@ -20,6 +20,12 @@ IMPORTANT
 - Utilities
 
    gmk_sym		
+   Updated by Matthew Ettus, matt@ettus.com
+
+	Jerry's instructions below still work.  There are
+	additional features for the first input line.
+	See TL16C554AFN.txt for an example of the extended input
+
    Written by: Jerry O'Keefe, jerryok@pacbell.net 
 
 	This is a simple utility to convert comma separated
