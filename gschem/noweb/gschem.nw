@@ -106,7 +106,6 @@ gschem_quit(void)
   /* g_mem_profile();*/
 	 
 
-  x_log_free();
   gtk_main_quit();
 }
 
@@ -159,13 +158,17 @@ main_prog(void *closure, int argc, char *argv[])
 #ifdef __MINGW32__
     u_basic_strip_trailing(cwd, G_DIR_SEPARATOR);
 #endif
-
+  
   libgeda_init();
   
   /* TODO: Probably the file name shuold be defined elsewhere */
   /* create log file right away even if logging is enabled */
-  x_log_init(cwd, "gschem.log");
-  s_log_init(cwd, "gschem.log");
+  filename = g_build_path (G_DIR_SEPARATOR_S,
+                           cwd,
+                           "gschem.log",
+                           NULL);
+  s_log_init (filename);
+  g_free (filename);
 
 #ifdef HAS_LIBSTROKE
   stroke_init(); /* libstroke function */
@@ -383,7 +386,7 @@ main_prog(void *closure, int argc, char *argv[])
 
   /* open up log window on startup */
   if (w_current->log_window == MAP_ON_STARTUP) {
-    x_log_setup_win(w_current);
+    x_log_open ();
   }
 
   /* if there were any symbols which had major changes, put up an error */

@@ -10,17 +10,17 @@
 
 /* DO NOT read or edit this file ! Use ../noweb/x_log.nw instead */
 
-/* TODO: STILL NEED to clean up line lengths in aa and tr */
-
 <<x_log.c : include directives>>
+
 <<x_log.c : global variables>>
-<<x_log.c : x_log_init()>>
-<<x_log.c : x_log_read()>>
-<<x_log.c : x_log_update()>>
+
+
+<<x_log.c : x_log_open()>>
 <<x_log.c : x_log_close()>>
-<<x_log.c : x_log_free()>>
-<<x_log.c : x_log_keypress()>>
-<<x_log.c : x_log_setup_win()>>
+<<x_log.c : x_log_message()>>
+<<x_log.c : x_log_callback_response()>>
+
+<<x_log.c : Log widget>>
 
 @
 
@@ -76,370 +76,283 @@
 #include <dmalloc.h>
 #endif
 
+#include "../include/x_log.h"
+
+
+static void x_log_callback_response (GtkDialog *dialog,
+                                     gint arg1,
+                                     gpointer user_data);
+
 @
 
 
 <<x_log.c : global variables>>=
-GtkWidget *stwindow = NULL;
+static GtkWidget *log_dialog = NULL;
 
-#ifdef HAS_GTK22
-static GtkTextBuffer *sttextbuf = NULL;
-static GtkTextView   *sttextview = NULL;
-static GtkTextIter startIter, endIter;
-static GtkTextMark *endMark;
-#else
-static GtkWidget *sttext = NULL;
-#endif
-
-static char *logfilename;
-
-@ %def stwindow sttextbuf sttextview logfilename
+@ %def log_dialog
 
 
-@section Function @code{x_log_init()}
 
-@defun x_log_init cwd filename
+@section Function @code{x_log_open()}
+
+@defun x_log_open
 @end defun
 
-<<x_log.c : x_log_init()>>=
-void 
-x_log_init(char *cwd, const char *filename) 
-{
-  logfilename = g_strconcat(cwd,
-                            G_DIR_SEPARATOR_S, 
-                            filename,
-                            NULL); 
-}
-
-
-@ %def x_log_init
-
-
-@section Function @code{x_log_read()}
-
-@defun x_log_read 
-@end defun
-
-<<x_log.c : x_log_read()>>=
+<<x_log.c : x_log_open()>>=
 void
-x_log_read(void)
+x_log_open ()
 {
-  char buf[200]; /* increased size to make multibyte character sets happy */
-  int tmp_fd;
-  int len;
+  if (log_dialog == NULL) {
+    gchar *contents;
+    
+    log_dialog = GTK_WIDGET (g_object_new (TYPE_LOG,
+                                           NULL));
 
-	
-  if (do_logging == FALSE) {
-    return;
+    g_signal_connect (log_dialog,
+                      "response",
+                      G_CALLBACK (x_log_callback_response),
+                      NULL);
+
+    /* make it read the content of the current log file */
+    /* and add its contents to the dialog */
+    contents = s_log_read ();
+    log_message (LOG (log_dialog), contents);
+    g_free (contents);
+
+    x_log_update_func = (void*)x_log_message;
+    
+    gtk_widget_show (log_dialog);
+  } else {
+    g_assert (IS_LOG (log_dialog));
+    gdk_window_raise ((GdkWindow*)log_dialog);
   }
 
-  tmp_fd = open(logfilename, O_RDONLY, 0600);
-
-  if (tmp_fd == -1) {
-    do_logging = FALSE;
-    return;
-  }
-
-  while ((len = read(tmp_fd, &buf, 198)) != 0) {
-    /* not sure if this nukes the last char or not... */
-    buf[len] = '\0'; /* null terminate the buffer */
-#ifdef HAS_GTK22
-    gtk_text_buffer_insert_at_cursor(sttextbuf, buf, len);
-#else
-    gtk_text_insert (GTK_TEXT (sttext),
-                     NULL, NULL, NULL,
-                     buf, len);
-#endif
-  }
-
-  close(tmp_fd);
 }
 
-
-@ %def x_log_read
-
-
-@section Function @code{x_log_update()}
-
-@defun x_log_update buf
-@end defun
-
-<<x_log.c : x_log_update()>>=
-void
-x_log_update(char *buf)
-{
-  int nchars;
-
-  if (do_logging == FALSE) {
-    return;
-  }
-
-  if (buf == NULL) {
-    return;
-  }
-
-  switch(logging_dest) {
-    case(LOG_WINDOW):
-    if (!stwindow) {
-      return;
-    }
-
-    nchars = strlen(buf);
-#ifdef HAS_GTK22
-    gtk_text_buffer_insert_at_cursor(sttextbuf, buf, nchars);
-    gtk_text_view_scroll_mark_onscreen(sttextview, endMark);
-#else
-    gtk_text_insert(GTK_TEXT (sttext),
-                    NULL, NULL, NULL,
-                    buf, nchars);
-#endif
-    break;
-
-    case(STDOUT_TTY):
-    fputs (buf, stdout);
-    break;
-
-    case(BOTH):
-    fputs (buf, stdout);
-
-    if (!stwindow) {
-      break;
-    }
-
-    nchars = strlen(buf);
-#if HAS_GTK22
-    gtk_text_buffer_insert_at_cursor(sttextbuf, buf, nchars);
-    gtk_text_view_scroll_mark_onscreen(sttextview, endMark);
-#else
-    gtk_text_insert(GTK_TEXT (sttext),
-                    NULL, NULL, NULL,
-                    buf, nchars);
-#endif
-    break;
-  }
-}
-
-
-@ %def x_log_update
+@ %def x_log_open
 
 
 @section Function @code{x_log_close()}
 
-@defun x_log_close w w_current
+@defun x_log_close
 @end defun
 
 <<x_log.c : x_log_close()>>=
 void
-x_log_close(GtkWidget *w, TOPLEVEL *w_current)
+x_log_close ()
 {
-  gtk_widget_destroy(stwindow);
-  stwindow = NULL;
+  if (log_dialog) {
+    g_assert (IS_LOG (log_dialog));
+    gtk_widget_destroy (log_dialog);
+    x_log_update_func = NULL;
+    log_dialog = NULL;
+  }
 
-
-#if 0
-  gtk_grab_remove(w_current->stwindow);
-#endif
 }
-
 
 @ %def x_log_close
 
 
-@section Function @code{x_log_free()}
+@section Function @code{x_log_message()}
 
-@defun x_log_free 
+@defun x_log_message message
 @end defun
 
-<<x_log.c : x_log_free()>>=
+<<x_log.c : x_log_message()>>=
 void
-x_log_free(void)
+x_log_message (const gchar *message)
 {
-  free(logfilename);
-  logfilename = NULL;
+  g_return_if_fail (log_dialog != NULL);
+  
+  g_assert (IS_LOG (log_dialog));
+  log_message ((Log*)log_dialog, message);
+    
 }
 
+@ %def x_log_message
 
-@ %def x_log_free
 
+@section Function @code{x_log_callback_response()}
 
-@section Function @code{x_log_keypress()}
- 
-@defun x_log_keypress w event w_current
+@defun x_log_callback_response
 @end defun
- 
-<<x_log.c : x_log_keypress()>>=
-int
-x_log_keypress(GtkWidget * widget, GdkEventKey * event,
-               TOPLEVEL * w_current)
+
+<<x_log.c : x_log_callback_response()>>=
+static void
+x_log_callback_response (GtkDialog *dialog,
+                         gint arg1,
+                         gpointer user_data)
 {
-  if (strcmp(gdk_keyval_name(event->keyval), "Escape") == 0) {
-    x_log_close(NULL, w_current);
-    return TRUE;
+  switch (arg1) {
+    case GTK_RESPONSE_DELETE_EVENT:
+    case LOG_RESPONSE_CLOSE:
+    g_assert (GTK_WIDGET (dialog) == log_dialog);
+    x_log_close ();
+    break;
+    default:
+    g_assert_not_reached ();
   }
-
-  return FALSE;
+  
 }
 
+@ %def x_log_callback_response
 
-@ %def x_log_keypress
+
+@section Widget @code{Log}
+
+<<x_log.c : Log widget>>=
+static void log_class_init (LogClass *class);
+static void log_init       (Log *log);
 
 
-@section Function @code{x_log_setup_win()}
+<<x_log.c : log_message()>>
 
-@defun x_log_setup_win w_current
+<<x_log.c : log_get_type()>>
+<<x_log.c : log_class_init()>>
+<<x_log.c : log_init()>>
+
+
+@
+
+
+@subsection Function [[log_get_type()]]
+
+@defun log_get_type
 @end defun
 
-<<x_log.c : x_log_setup_win()>>=
+<<x_log.c : log_get_type()>>=
+GType
+log_get_type ()
+{
+  static GType log_type = 0;
+  
+  if (!log_type) {
+    static const GTypeInfo log_info = {
+      sizeof(LogClass),
+      NULL, /* base_init */
+      NULL, /* base_finalize */
+      (GClassInitFunc) log_class_init,
+      NULL, /* class_finalize */
+      NULL, /* class_data */
+      sizeof(Log),
+      0,    /* n_preallocs */
+      (GInstanceInitFunc) log_init,
+    };
+		
+    log_type = g_type_register_static (GTK_TYPE_DIALOG,
+                                       "Log",
+                                       &log_info, 0);
+  }
+  
+  return log_type;
+}
+
+@ %def log_get_type
+
+
+@subsection Function [[log_class_init()]]
+
+@defun log_class_init klass
+@end defun
+
+<<x_log.c : log_class_init()>>=
+static void
+log_class_init (LogClass *klass)
+{
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+	
+}
+
+@ %def log_class_init
+
+
+@subsection Function @code{log_init()}
+
+@defun log_init log
+@end defun
+
+<<x_log.c : log_init()>>=
+static void
+log_init (Log *log)
+{
+  GtkWidget *scrolled_win, *text_view;
+  GtkTextBuffer *text_buffer;
+
+  /* dialog initialization */
+  g_object_set (G_OBJECT (log),
+                /* GtkContainer */
+                "border-width",    0,
+                /* GtkWindow */
+                "type",            GTK_WINDOW_TOPLEVEL,
+                "title",           _("Status"),
+                "default-width",   600,
+                "default-height",  200,
+                "modal",           FALSE,
+                "window-position", GTK_WIN_POS_NONE,
+                "type-hint",       GDK_WINDOW_TYPE_HINT_NORMAL,
+                /* GtkDialog */
+                "has-separator",   TRUE,
+                NULL);
+
+  /* create a scrolled window for the textview */
+  scrolled_win = GTK_WIDGET (
+    g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                  /* GtkContainer */
+                  "border-width",      5,
+                  /* GtkScrolledWindow */
+                  "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                  "shadow-type",       GTK_SHADOW_ETCHED_IN,
+                  NULL));
+  /* create the text buffer */
+  text_buffer = GTK_TEXT_BUFFER (g_object_new (GTK_TYPE_TEXT_BUFFER,
+                                               NULL));
+  /* create the text view and attach the buffer to it */
+  text_view = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
+                                        /* GtkTextView */
+                                        "buffer",   text_buffer,
+                                        "editable", FALSE,
+                                        NULL));
+
+  /* add the text view to the scrolled window */
+  gtk_container_add (GTK_CONTAINER (scrolled_win), text_view);
+  /* set textview of log */
+  log->textview = GTK_TEXT_VIEW (text_view);
+
+  /* add the scrolled window to the dialog vbox */
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (log)->vbox), scrolled_win,
+                      TRUE, TRUE, 0);
+  gtk_widget_show_all (scrolled_win);
+
+  /* now add the close button to the action area */
+  gtk_dialog_add_button (GTK_DIALOG (log),
+                         GTK_STOCK_CLOSE, LOG_RESPONSE_CLOSE);
+  
+}
+
+@ %def log_init
+
+
+@subsection Function @code{log_message()}
+
+@defun log_message log message
+@end defun
+
+<<x_log.c : log_message()>>=
 void
-x_log_setup_win (TOPLEVEL *w_current)
+log_message (Log *log, const gchar *message)
 {
-  GtkWidget *buttoncancel = NULL;
-#ifdef HAS_GTK12 
-  GtkWidget *hscrollbar = NULL;
-  GtkWidget *vscrollbar = NULL;
-#endif
-  GtkWidget *table = NULL;
-  GtkWidget *vbox, *action_area, *hbuttonbox1;
-#ifdef HAS_GTK22
-  GtkWidget *viewport1;
-  GtkWidget *textView;
-  GtkWidget *scrolledWin;
-  GtkScrolledWindow *swin;
-#endif
+  GtkTextBuffer *buffer;
+  GtkTextIter iter;
+  
+  g_return_if_fail (IS_LOG (log));
 
-  if (do_logging == FALSE) {
-    return;
-  }
-
-
-  if (!stwindow) {
-
-    stwindow = x_create_dialog_box(&vbox, &action_area); 
-
-    /* comment this out if you want the log window to have
-     * wm decorations */
-    if (w_current->log_window_type == TRANSIENT) {
-      gtk_window_set_transient_for(
-                                   GTK_WINDOW (stwindow),
-                                   GTK_WINDOW (w_current->main_window));
-      gtk_window_position (GTK_WINDOW (stwindow),
-                           GTK_WIN_POS_MOUSE);
-    } else {
-      gtk_window_position (GTK_WINDOW (stwindow),
-                           GTK_WIN_POS_NONE);
-    }
-
-    gtk_widget_set_usize(stwindow, 600, 200);
-
-    gtk_signal_connect(GTK_OBJECT (stwindow),
-                       "destroy", GTK_SIGNAL_FUNC(destroy_window),
-                       &stwindow);
-
-#if 0 /* this was causing the dialog box to not die */
-    gtk_signal_connect(GTK_OBJECT (stwindow),
-                       "delete_event",
-                       GTK_SIGNAL_FUNC(destroy_window),
-                       &stwindow);
-#endif
-
-    gtk_window_set_title(GTK_WINDOW (stwindow),
-                         _("Status"));
-    gtk_container_border_width (GTK_CONTAINER (stwindow), 5);
-
-    table = gtk_table_new (2, 2, FALSE);
-    gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-    gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-    gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 5);
-    gtk_widget_show (table);
-
-#ifdef HAS_GTK22
-    sttextbuf = gtk_text_buffer_new(gtk_text_tag_table_new());
-    textView= gtk_text_view_new_with_buffer(sttextbuf);
-    sttextview = GTK_TEXT_VIEW(textView);
-    gtk_text_view_set_editable (sttextview, FALSE);
-
-    scrolledWin = gtk_scrolled_window_new(sttextview->hadjustment,
-                                          sttextview->vadjustment);
-    swin = GTK_SCROLLED_WINDOW(scrolledWin);
-    gtk_scrolled_window_set_policy(swin, GTK_POLICY_AUTOMATIC, 
-                                       GTK_POLICY_AUTOMATIC);
-
-    viewport1 = gtk_viewport_new (NULL, NULL);
-    gtk_widget_show (viewport1);
-    gtk_container_add (GTK_CONTAINER (viewport1), scrolledWin);
-#else
-    sttext = gtk_text_new (NULL, NULL);
-    gtk_text_set_editable (GTK_TEXT (sttext), FALSE);
-#endif
-
-#ifdef HAS_GTK22
-    gtk_table_attach (GTK_TABLE (table), GTK_WIDGET(viewport1),
-#else
-    gtk_table_attach (GTK_TABLE (table), sttext,
-#endif
-                      0, 1, 0, 1,
-                      GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-                      GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-#ifdef HAS_GTK22
-    gtk_container_add(GTK_CONTAINER(swin), GTK_WIDGET(sttextview));
-    gtk_widget_show (GTK_WIDGET(swin));
-    gtk_widget_show (GTK_WIDGET(sttextview));
-#else
-    gtk_widget_show (sttext);
-#endif
-
-#ifdef HAS_GTK12 
-    hscrollbar = gtk_hscrollbar_new (GTK_TEXT (sttext)->hadj);
-    gtk_table_attach (GTK_TABLE (table), hscrollbar, 0, 1, 1, 2,
-                      GTK_EXPAND | GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
-    gtk_widget_show (hscrollbar);
-
-    vscrollbar = gtk_vscrollbar_new (GTK_TEXT (sttext)->vadj);
-    gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
-                      GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-    gtk_widget_show (vscrollbar);
-#endif
-                      
-    hbuttonbox1 = gtk_hbutton_box_new ();
-    gtk_widget_show (hbuttonbox1);
-    gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1),
-                               GTK_BUTTONBOX_END);
-    gtk_box_pack_start (GTK_BOX (action_area), hbuttonbox1, TRUE, TRUE, 0);
-
-#ifdef HAS_GTK12
-    buttoncancel = gtk_button_new_with_label (_("Close"));
-#else
-    buttoncancel = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-#endif
-    gtk_container_add (GTK_CONTAINER (hbuttonbox1), buttoncancel);
-    GTK_WIDGET_SET_FLAGS (buttoncancel, GTK_CAN_DEFAULT);
-#if 0                  
-    gtk_box_pack_start (GTK_BOX (action_area),
-                        buttoncancel, FALSE, FALSE, 0);
-#endif
-    gtk_signal_connect (GTK_OBJECT (buttoncancel), "clicked",
-                        GTK_SIGNAL_FUNC(x_log_close), NULL);
-    gtk_widget_show (buttoncancel);
-
-    gtk_signal_connect(GTK_OBJECT(stwindow), "key_press_event",
-                     (GtkSignalFunc) x_log_keypress, w_current);
-  }
-
-  if (!GTK_WIDGET_VISIBLE (stwindow)) {
-    gtk_widget_show (stwindow);
-    x_log_read(); /* update the contents of the log */
-  } else {
-    gdk_window_raise(stwindow->window);
-  }
-
-#ifdef HAS_GTK22
-  gtk_text_buffer_get_bounds(sttextbuf, &startIter, &endIter);
-  endMark = gtk_text_buffer_create_mark(sttextbuf, NULL, &endIter, FALSE);
-  gtk_text_view_scroll_mark_onscreen(sttextview, endMark);
-#endif
-
+  buffer = gtk_text_view_get_buffer (log->textview);
+  gtk_text_buffer_insert_at_cursor (buffer, message, strlen (message));
+  
+  gtk_text_buffer_get_end_iter (buffer, &iter);
+  gtk_text_view_scroll_to_iter (log->textview, &iter, 0, TRUE, 0, 1);
+  
 }
 
-
-@ %def x_log_setup_win
-
+@ %def log_message
