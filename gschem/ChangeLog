@@ -15,6 +15,9 @@
 	code changes.  Thanks Stuart. You can now pick multiple files from 
 	the file list and they will all be opened.  Use the shift and 
 	control keys to pick the individual files.
+
+	* noweb/x_multiattrib.nw: Moved some code around to fix a memory 
+	leak.
 	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 

@@ -4,6 +4,12 @@
 	and displayed_height variables to the st_text structure.  These
 	variables represent the actual width and height of the displayed
 	string.  This info is needed when drawing the quick text rectangles.
+
+	* noweb/o_attrib.nw: Fixed a really nasty bug which only
+	appeared when using glib 1.2.x.  Appearently g_strsplit() does
+	not split strings under glib 1.2.x vs glib 2.2.x in the same way.
+	Put back some old code which works properly when using glib 1.2.x.
+	Bug identified by Stuart.  Thanks!
 	
 2003-12-29 Ales Hvezda   <ahvezda@geda.seul.org>
 

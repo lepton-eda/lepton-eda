@@ -668,7 +668,7 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
   GList *combo1_items = NULL;
   char *text[NUM_COLUMNS];
   char *string;
-  int i;
+  int i, j;
   int row;
   OBJECT **attriblist=NULL;
   OBJECT *object=NULL;
@@ -1013,13 +1013,16 @@ multi_attrib_edit (TOPLEVEL *w_current, SELECTION *list)
       row = gtk_clist_append(GTK_CLIST(clist),text);
       gtk_clist_set_row_data (GTK_CLIST(clist),row,attriblist[i]);
       i++;
-    }
 
-    /* now free the text array, don't try to do this later as some */
-    /* components do not have attributes and the free will core dump */
-    for (i = 0; i < NUM_COLUMNS; i++) { 
-      if (text[i])
-          free(text[i]);
+      /* Now free the text array, don't try to do this later as some */
+      /* components do not have attributes and the free will core dump. */
+      /* You have to free here, since you will be filling up text with */
+      /* another row. */
+      for (j = 0; j < NUM_COLUMNS; j++) { 
+        if (text[j]) {
+            free(text[j]);
+        }
+      }
     }
   }
 

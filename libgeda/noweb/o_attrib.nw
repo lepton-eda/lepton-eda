@@ -988,13 +988,17 @@ o_save_attribs(FILE *fp, ATTRIB *attribs)
 /* Also, there cannot be any spaces beside the equals sign */
 /* Changed: now it allocates memory for name and value strings. */
 /* Caller must free these strings when not needed. */
-/* Also, attributes are single line entities.  If the string has multiple */
-/* lines, then it is NOT an attribute */
 int
 o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
 {
   char *equal_ptr;
+#ifdef HAS_GTK22
   char **str_array;
+#else
+  int attribute_found=FALSE;
+  int i, j;
+  char *name, *value;
+#endif
 
   if (name_ptr == NULL || value_ptr == NULL) {
     return(FALSE);
@@ -1012,26 +1016,80 @@ o_attrib_get_name_value(char *string, char **name_ptr, char **value_ptr )
   if (equal_ptr == NULL) {
     return(FALSE);
   }
+
   if ( (*(equal_ptr + 1) == ' ') || (*(equal_ptr - 1) == ' ') ) {
-#if DEBUG /* sometimes you have text with an ='s in it, it shouldn't be */
+     /* sometimes you have text with an ='s in it, it shouldn't be */
+
+#if DEBUG 
     /* treated like an attribute */
-    s_log_message("Found attrib/text with spaces beside the ='s [%s]\n", string);
+    s_log_message("Found attrib/text with spaces beside the ='s [%s]\n", 
+	          string);
     s_log_message("You can ignore the above message if the text is not intended to be an attribute\n");
-    fprintf(stderr, "Found an attribute with spaces beside the ='s [%s]\n", string);
+    fprintf(stderr, "Found an attribute with spaces beside the ='s [%s]\n", 
+            string);
 #endif
+
     return(FALSE);
   }
-  
+
+#ifdef HAS_GTK22  
+
+  /* can't use g_strsplit under glib/gtk+ 1.2 since it splits strings */
+  /* incorrectly! */
   str_array = g_strsplit (string, "=", 2);
   
   *name_ptr = g_strdup(str_array[0]);
   *value_ptr = g_strdup(str_array[1]);
   g_strfreev(str_array);
+
+#else
+
+  /* larger than needed... but this is okay for now. */
+  *name_ptr = u_basic_strdup(string);
+  *value_ptr = u_basic_strdup(string);
+
+  /* for convenience sake */
+  name = *name_ptr;
+  value = *value_ptr;
+
+  /* get the name */
+  i = 0;
+  while(string[i] != '\0' && !attribute_found) {
+    if (string[i] == '=') {
+      attribute_found = TRUE;
+    } else {
+      name[i] = string[i];
+      i++;
+    }
+  }
+
+  /* no = found */
+  if (!attribute_found) {
+    free(*name_ptr); *name_ptr = NULL; 
+    free(*value_ptr); *value_ptr = NULL;
+    return(FALSE);
+  }
+
+  name[i] = '\0';
+  i++; /* skip over the ='s */
+
+  j = 0;
+  while(string[i] != '\0') {
+    value[j] = string[i];
+    i++;
+    j++;
+  }
+
+  value[j] = '\0';
+
+#endif
   
   if (*value_ptr && (*value_ptr)[0] == '\0') {
     s_log_message("Found an improper attribute: _%s_\n", string);
-    /* Don't free *name_ptr,  Freeing *name_ptr is a bad free, */
-    /* for some reason */ 
+#if 0 /* for now leak this memory till this is verified correct everywhere */
+    free(*name_ptr); *name_ptr = NULL;
+    free(*value_ptr); *value_ptr = NULL;
+#endif
     return(FALSE);
   } else {
     return(TRUE);
