@@ -45,7 +45,7 @@ gsymcheck_quit(void)
 }
 
 void 
-main_prog(int argc, char *argv[])
+main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   int argv_index;
@@ -210,6 +210,6 @@ main (int argc, char *argv[])
   if(getenv("GUILE_WARN_DEPRECATED")==NULL)
     putenv("GUILE_WARN_DEPRECATED=no");
 
-  gh_enter (argc, argv, main_prog);
+  scm_boot_guile (argc, argv, main_prog, NULL);
   return 0;
 }

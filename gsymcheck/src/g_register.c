@@ -40,11 +40,12 @@ void
 g_register_funcs(void)
 {
   /* general functions */
-  gh_new_procedure0_0 ("quit", g_quit);
-  gh_new_procedure0_0 ("exit", g_quit);
+  scm_c_define_gsubr ("quit", 0, 0, 0, g_quit);
+  scm_c_define_gsubr ("exit", 0, 0, 0, g_quit);
 
   /* gsymcheckrc functions */
-  gh_new_procedure1_0 ("gsymcheck-version", g_rc_gsymcheck_version);
+  scm_c_define_gsubr ("gsymcheck-version", 1, 0, 0, g_rc_gsymcheck_version);
+
 }
 
 SCM

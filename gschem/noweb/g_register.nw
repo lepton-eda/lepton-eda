@@ -338,7 +338,7 @@ g_register_funcs (void)
   g_init_attrib_smob ();
 
   /* Hook stuff */
-  scm_make_gsubr ("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
+  scm_c_define_gsubr ("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
   add_component_hook  = scm_create_hook ("add-component-hook", 1);
   copy_component_hook = scm_create_hook ("copy-component-hook", 1);
   move_component_hook = scm_create_hook ("move-component-hook", 1);

@@ -76,30 +76,29 @@ g_rc_mode_general(SCM mode,
 		  const vstbl_entry *table,
 		  int table_size)
 {
+  SCM ret;
   int index;
-  char *string;
+  char *mode;
 
-  string = gh_scm2newstr(mode, NULL);
-  index = vstbl_lookup_str(table, table_size, string);
-
+  SCM_ASSERT (SCM_NIMP (scmmode) && SCM_STRINGP (scmmode), scmmode,
+              SCM_ARG1, rc_name);
+  
+  mode = SCM_STRING_CHARS (scmmode);
+  
+  index = vstbl_lookup_str(table, table_size, mode);
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
             "Invalid mode [%s] passed to %s\n",
-            string,
+            mode,
             rc_name);
-    if (string) {
-      free(string);
-    }
-    return SCM_BOOL_F;
+    ret = SCM_BOOL_F;
+  } else {
+    *mode_var = vstbl_get_val(table, index);
+    ret = SCM_BOOL_T;
   }
-
-  *mode_var = vstbl_get_val(table, index);
-
-  if (string) {
-    free(string);
-  }
-  return SCM_BOOL_T;
+  
+  return ret;
 }
 
 #define RETURN_G_RC_MODE(rc, var, size)			\
@@ -112,22 +111,23 @@ g_rc_mode_general(SCM mode,
 
 SCM g_rc_gsymcheck_version(SCM version)
 {
-    char *string;
+  SCM_ASSERT (SCM_NIMP (version) && SCM_STRINGP (version), version,
+	      SCM_ARG1, "gsymcheck-version");
+  
+  if (g_strcasecmp (SCM_STRING_CHARS (version), VERSION) != 0) {
+    fprintf(stderr,
+	    "You are running gEDA version [%s],\n", VERSION);
+    fprintf(stderr,
+	    "but you have a version [%s] gsymcheck file:\n[%s]\n",
+	    SCM_STRING_CHARS (version), rc_filename);
+    fprintf(stderr,
+	    "While gsymcheck is in ALPHA, "
+	    "please be sure that you have the latest rc file.\n");
+    return SCM_BOOL_F;
+  }
+  
+  return SCM_BOOL_T;
 
-    string = gh_scm2newstr(version, NULL);
-
-    if (strcmp(string, VERSION) != 0) {
-	fprintf(stderr, "Found a version [%s] gsymcheck file:\n[%s]\n",
-		string, rc_filename);
-	fprintf(stderr,
-		"While gsymcheck is in ALPHA, please be sure that you have the latest rc file.\n");
-    }
-
-    if (string) {
-	free(string);
-    }
-
-    return (gh_int2scm(0));
 }
 
 /*************************** GUILE end done *********************************/

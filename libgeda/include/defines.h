@@ -355,4 +355,7 @@
 #define M_PI  3.14159265358979323846
 #endif
 
+/* why guile doesn't come with this, I don't know */
+#define MEM02STR(x) scm_mem2string((x), strlen(x))
+
 #endif
