@@ -115,6 +115,7 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   int done = FALSE;
   int size, x2size, pinsize;
   int otherone;
+  int bus_involved=FALSE;
 
   if (whichone < 0 || whichone > 1) return;
   
@@ -135,12 +136,26 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
         
         case(CONN_ENDPOINT):
           count++;
+          if (conn->other_object &&
+              ((object->type == OBJ_NET &&
+               conn->other_object->type == OBJ_BUS) ||
+              (object->type == OBJ_BUS &&
+               conn->other_object->type == OBJ_NET))) {
+            bus_involved=TRUE;
+          }
           break;
 
         case(CONN_MIDPOINT):
           type = CONN_MIDPOINT;
           done = TRUE;
           count = 0;
+          if (conn->other_object &&
+              ((object->type == OBJ_NET &&
+                conn->other_object->type == OBJ_BUS) ||
+               (object->type == OBJ_BUS &&
+               conn->other_object->type == OBJ_NET))) {
+            bus_involved=TRUE;
+          }
           break;
       }
     }
@@ -154,7 +169,6 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
   
   size = SCREENabs(w_current, 30);
   x2size = 2 * size;
-
 
   if (w_current->override_color != -1 ) {
     gdk_gc_set_foreground(w_current->gc,
@@ -186,7 +200,13 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
         
         } else if (count >= 2) {
           /* draw circle */
-          size = SCREENabs(w_current, 60);
+
+          if (bus_involved) {
+            size = SCREENabs(w_current, 30);
+          } else {
+            size = SCREENabs(w_current, 60);
+          }
+          
           gdk_draw_arc(w_current->window, w_current->gc,
                        TRUE,
                        screen_x - size / 2,
@@ -257,7 +277,12 @@ o_cue_draw_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone)
     case(CONN_MIDPOINT):
   
       /* draw circle */
-      size = SCREENabs(w_current, 60);
+      if (bus_involved) {
+        size = SCREENabs(w_current, 30);
+      } else {
+        size = SCREENabs(w_current, 60);
+      }
+
       gdk_draw_arc(w_current->window, w_current->gc,
                    TRUE,
                    screen_x - size / 2,
@@ -360,7 +385,16 @@ o_cue_draw_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object)
         WORLDtoSCREEN(w_current, x, y, &screen_x, &screen_y);
  
         /* draw circle */
-        size = SCREENabs(w_current, 60);
+        if (conn->other_object &&
+            ( (object->type == OBJ_BUS &&
+               conn->other_object->type == OBJ_NET) ||
+              (object->type == OBJ_NET &&
+               conn->other_object->type == OBJ_BUS))) {
+          size = SCREENabs(w_current, 30);
+        } else {
+          size = SCREENabs(w_current, 60);
+        }
+
         gdk_draw_arc(w_current->window, w_current->gc,
                      TRUE,
                      screen_x - size / 2,
