@@ -1,49 +1,58 @@
-PROJECT MANAGER
+gEDA
 
-gEDA Suite Project Manager is a start point for everything what you may want to
-do. It is used to organize your files and easy running tools. It simplifies your
-job.
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
 
-There is a menu at the top of the window. Main area of Project Manager window is
-divided into three parts:
+README for Project Manager 2003* 
 
-* Project Browser - there are your files enumerated here. In a Modules view you 
-can see project hierarchy, in a Files view - files sorted in disk folders.
 
-* Workspace - there are your files opened here. Listing of opened files is shown 
-under Window menu.
+gEDA Suite Project Manager is a start point for everything what you may
+want to do. It is used to organize your files and easy running tools. It
+simplifies your job.
 
-* Status Area - effects of your actions will be shown here.
+There is a menu at the top of the window. Main area of Project Manager
+window is divided into three parts:
 
-gEDA Suite is strongly project oriented. It means that you cannot work with files 
-without creating a project. To force it, workspace and status area are inactive 
-when no project is loaded.
+	* Project Browser - there are your files enumerated here. In a
+	  Modules view you can see project hierarchy, in a Files view -
+	  files sorted in disk folders.
 
-If you have a project saved on the disk, choose Project -> Open. A new dialog 
-window - File Selection -will be opened. Choose a directory where project files 
-is stored, click or type a name of the project file, then press Ok. 
+	* Workspace - there are your files opened here. Listing of opened
+	  files is shown under Window menu.
 
-To create a new project choose Project -> New from the menu. A new dialog window 
-- File Selection -will be opened. Choose a desired directory where project files 
-should be stored, a name of the new project file, then press Ok. The name has to 
-be ended with .prj. The new project should be created.
+	* Status Area - effects of your actions will be shown here.
 
-Now the project is opened, its name is displayed in a title bar and menus are 
-activated. You can add, remove, open, etc. files. 
+gEDA Suite is strongly project oriented. It means that you cannot work
+with files without creating a project. To force it, workspace and status
+area are inactive when no project is loaded.
 
-Some of those actions can modify your project, then an asteriks * will be added 
-to the project name on the title bar. It informs you that you have to save the 
-project choosing Project -> Save from the menu. If you try to close the project 
-or exit Project Manager without saving, a warning will be displayed.
+If you have a project saved on the disk, choose Project -> Open. A
+new dialog window - File Selection -will be opened. Choose a directory
+where project files is stored, click or type a name of the project file,
+then press Ok.
 
-After completing your job please close the project choosing Project -> Close
-from the menu.
+To create a new project choose Project -> New from the menu. A new dialog
+window - File Selection -will be opened. Choose a desired directory where
+project files should be stored, a name of the new project file, then press
+Ok. The name has to be ended with .prj. The new project should be created.
 
-If a project is opened, you can add files to the project and work with them. 
-Only files of registered types can be added. For any of them a set of possible 
-actions is defined. There are also some file types generated and imported 
-automatically after running actions. They cannot be added manually to the 
-project. 
+Now the project is opened, its name is displayed in a title bar and
+menus are activated. You can add, remove, open, etc. files.
+
+Some of those actions can modify your project, then an asteriks * will
+be added to the project name on the title bar. It informs you that you
+have to save the project choosing Project -> Save from the menu. If
+you try to close the project or exit Project Manager without saving,
+a warning will be displayed.
+
+After completing your job please close the project choosing Project ->
+Close from the menu.
+
+If a project is opened, you can add files to the project and work with
+them.  Only files of registered types can be added. For any of them a set
+of possible actions is defined. There are also some file types generated
+and imported automatically after running actions. They cannot be added
+manually to the project.
 
 All registered files types are listed below:
 
@@ -65,22 +74,22 @@ Schematic   *.sch   Open                                     File -> New
 
 PCB layout  *.pcb   Open                                     File -> New or 
                                                              generated from 
-															 schematic
-															
+					 		     schematic
+
 SPICE       *.cir   Open                                     File -> New or
 netlist             Simulate                         *.gw    generated from 
                                                              schematic
-															 
+
 Verilog     *.v     Open                                     File -> New or
 source              Simulate                         *.vcd   generated from 
-					Synthesize                       *.xnf   schematic
+		    Synthesize                       *.xnf   schematic
  
 VHDL source *.vhd   Open                                     Generated from  
                                                              schematic
-															 
+
 Gerber file *.grb   Open                                     Generated in PCB
 
-Analog      *.gw    Open                                     Generated from  
+Analog      *.gw    Open                                     Generated from 
 waveform                                                     SPICE netlist.
 
 Digital     *.vcd   Open                                     Generated from  
@@ -88,42 +97,43 @@ waveform                                                     Verilog source
 
 DRC report  *.drc   Open                                     Generated from  
                                                              schematic
-															 
+
 BOM report  *.bom   Open                                     Generated from  
                                                              schematic
-															 
+
 Xilinx XNF  *.xnf                                            Generated from  
                                                              Verilog source
 
 --------------------------------------------------------------------------------
 
-To add a new file to the project choose File -> New, then select a type of added 
-file. To add an existing file choose File -> Import. In both cases a new dialog 
-- File Selection - will be opened. Go to desired directory, then click or type 
-a name of the file, then press Ok. Remeber that the file has to have its 
-extension as mentioned in the table above!
+To add a new file to the project choose File -> New, then select a type of
+added file. To add an existing file choose File -> Import. In both cases
+a new dialog - File Selection - will be opened. Go to desired directory,
+then click or type a name of the file, then press Ok. Remeber that the
+file has to have its extension as mentioned in the table above!
 
-To remove a file from the project, click its name in Project Browser and choose 
-File -> Unlink from the menu. The file will stay on the disk. To completely 
-delete the file, choose File -> Delete. In both cases a warning will be 
-displayed.
+To remove a file from the project, click its name in Project Browser
+and choose File -> Unlink from the menu. The file will stay on the
+disk. To completely delete the file, choose File -> Delete. In both
+cases a warning will be displayed.
 
-Files selected in Project Browser can be opened, edited and used for other 
-actions. Majority of files are ASCII ones. They can be edited as a text in 
-builtin text editor. To edit a file choose File -> Edit from the menu. 
+Files selected in Project Browser can be opened, edited and used for other
+actions. Majority of files are ASCII ones. They can be edited as a text
+in builtin text editor. To edit a file choose File -> Edit from the menu.
 
-To open a file select it in Project Browser, then choose Action -> Open form 
-the menu. You can double click the file in Project Browser as well.
+To open a file select it in Project Browser, then choose Action -> Open
+form the menu. You can double click the file in Project Browser as well.
 
-Files can be opened in internal or external tools. If an internal one is used 
-- the file will be displayed as a new window in the Workspace. If external one 
-is used - a new tool will be runned. All opened files are listed in Window menu. 
-You can switch between internally opened windows choosing its name in the Window 
-menu.
+Files can be opened in internal or external tools. If an internal one is
+used - the file will be displayed as a new window in the Workspace. If
+external one is used - a new tool will be runned. All opened files are
+listed in Window menu.  You can switch between internally opened windows
+choosing its name in the Window menu.
 
-To close an internally opened file - choose it from the Window menu, then choose 
-File -> Close. If the file is modified and not saved, a warning will be 
-displayed.
+To close an internally opened file - choose it from the Window menu,
+then choose File -> Close. If the file is modified and not saved,
+a warning will be displayed.
 
-Files opened and modified should be saved with File -> Save. A file currently 
-opened in the workspace will be saved.
+Files opened and modified should be saved with File -> Save. A file
+currently opened in the workspace will be saved.
+

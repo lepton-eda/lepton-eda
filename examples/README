@@ -4,14 +4,11 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-
 README for examples version 2003* 
 
 
 This directory contains design examples done with gEDA/gaf.  All designs
 in this examples directory are covered by the GPL or equivalent license.
-
-None of the examples are installed anywhere.
 
 
 - Examples
