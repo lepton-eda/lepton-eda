@@ -1,4 +1,9 @@
 
+2001-01-30  Ales Hvezda  <ahvezda@geda.seul.org>
+
+	* src/s_traverse.c: Fixed the graphical=1 test so that the 
+	  outside of the component is also looked at for this attribute
+
 2001-01-27  Ales Hvezda  <ahvezda@geda.seul.org>
 
 	* src/s_rename.c: Due to a bug in how the s_rename_* routines are

@@ -133,8 +133,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
 
 	    /* look for special tag */
 	    temp =
-		o_attrib_search_name(o_current->complex->prim_objs,
-				     "graphical", 0);
+		o_attrib_search_component(o_current, "graphical");
 	    if (temp) {
 		/* don't want to traverse graphical elements */
 		free(temp);
