@@ -1,7 +1,6 @@
 /*******************************************************************************/
 /*                                                                             */
-/* gEDA Suite Project Manager                                                  */
-/*                                                                             */
+/* Message box                                                                 */
 /* Copyright (C) 2002 Piotr Miarecki, sp9rve@eter.ariadna.pl                   */
 /*                                                                             */
 /* This program is free software; you can redistribute it and/or               */
@@ -37,6 +36,8 @@
 #define MSGBOX_ALWAYSCANCEL  0x00000020
 #define MSGBOX_ALWAYSYES     0x00000040
 #define MSGBOX_ALWAYSNO      0x00000080
+#define MSGBOX_WAIT          0x00008000
+#define MSGBOX__LAST         0x00008000
 
 /* single default buttons */
 #define MSGBOX_OKD           0x80000001
@@ -49,10 +50,12 @@
 #define MSGBOX_ALWAYSNOD     0x87000080
 
 /* msg box status */
-#define MSGBOX_MESSAGE       0x00010000
-#define MSGBOX_WARNING       0x00020000
-#define MSGBOX_ERROR         0x00040000
-#define MSGBOX_FATAL         0x00080000
+#define MSGBOX_QUESTION      0x00010000
+#define MSGBOX_MESSAGE       0x00020000
+#define MSGBOX_WARNING       0x00040000
+#define MSGBOX_ERROR         0x00080000
+#define MSGBOX_FATAL         0x00100000
+#define MSGBOX_STATUSMASK    0x00FF0000
 
 /* groups of buttons (for compatibility) */
 #define MSGBOX_OKCANCEL      (MSGBOX_OK | MSGBOX_CANCEL)
@@ -62,7 +65,8 @@
 
 
 /* public functions */
-int MsgBox(char *szLabel, DWORD dwButtons);
+int MsgBox(const GtkWindow *pWindow, const char *szTitle, const char *szLabel, const unsigned long dwButtons);
+void MsgBoxDestroy(void);
 
 
 
