@@ -1,3 +1,8 @@
+2004-01-11 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/gschem.nw: Added a call to the scrollbar update code to fix
+	the "scrollbars are wrong on startup" bug.
+
 2004-01-10 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* tests/multiline3.sch: Added another test schematic for the 
