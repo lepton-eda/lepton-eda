@@ -8,6 +8,7 @@ SCM g_get_all_connections(SCM scm_netname);
 SCM g_get_nets(SCM scm_uref, SCM scm_pin);
 SCM g_get_pins_nets(SCM scm_uref);
 SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
+SCM g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 /* g_rc.c */
 void set_static_project_current(TOPLEVEL *pr_current);

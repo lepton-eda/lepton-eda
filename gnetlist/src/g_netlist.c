@@ -330,6 +330,8 @@ g_get_all_connections(SCM scm_netname)
   return connlist;
 }
 
+/* Given a uref and a pin number return a list of: */
+/*  (netname (uref pin) (uref pin) ... ) */
 SCM
 g_get_nets(SCM scm_uref, SCM scm_pin)
 {
@@ -533,6 +535,68 @@ g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 
 	return(scm_return_value);
 }
+
+
+SCM
+g_get_pin_attribute(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib)
+{
+	SCM scm_return_value;
+	NETLIST *nl_current;
+	OBJECT *pin_object;
+	char *uref;
+	char *pin;
+	char *wanted_attrib;
+	char *return_value=NULL;
+	int done = FALSE;
+
+        uref = gh_scm2newstr(scm_uref, NULL);
+        pin = gh_scm2newstr(scm_pin, NULL);
+        wanted_attrib = gh_scm2newstr(scm_wanted_attrib, NULL);
+
+	/* here is where you make it multi page aware */
+	nl_current = netlist_head;
+
+	/* search for the first instance */
+	/* through the entire list */
+	while(nl_current != NULL && !done) {
+	      if (nl_current->component_uref) {
+		if (strcmp(nl_current->component_uref, uref) == 0) {
+
+		  pin_object = o_complex_return_pin_object(nl_current->
+							   object_ptr, pin);
+
+		  if (pin_object) {
+
+			/* only look for the first occurance of wanted_attrib */
+			return_value = o_attrib_search_attrib_name(
+						    pin_object->attribs, 
+						    wanted_attrib, 0);
+#if DEBUG	
+			if (return_value) { 
+				printf("GOT IT: %s\n", return_value);
+			}
+#endif
+		  }
+		}
+              }
+	      nl_current = nl_current->next;
+	}
+
+	if (return_value) {
+		scm_return_value = gh_str2scm(return_value, 
+					       strlen(return_value));
+	} else {
+		scm_return_value = gh_str2scm("unknown", 
+					       strlen("unknown"));
+	}
+
+	free(uref);
+	free(pin);
+	free(wanted_attrib);
+
+	return(scm_return_value);
+}
+
 
 /* returns value of attribute otherwise string "none" */
 /* still highly temp and doesn't work right */
