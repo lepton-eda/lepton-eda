@@ -69,11 +69,11 @@
 /*   These are the items which appear upon clicking the right mouse button. */
 <<x_menus.c : popup menu items>>=
 static GtkItemFactoryEntry popup_items[] = {
-  {"/Net", 		NULL, i_callback_add_net, 0, NULL},
-  {"/Attribute...", 	NULL, i_callback_add_attribute, 0, NULL},
-  {"/Component...", 	NULL, i_callback_add_component, 0, NULL},
-  {"/Bus", 		NULL, i_callback_add_bus, 0, NULL},
-  {"/Text", 		NULL, i_callback_add_text, 0, NULL},
+  {"/Add Net", 		NULL, i_callback_add_net, 0, NULL},
+  {"/Add Attribute...", 	NULL, i_callback_add_attribute, 0, NULL},
+  {"/Add Component...", 	NULL, i_callback_add_component, 0, NULL},
+  {"/Add Bus", 		NULL, i_callback_add_bus, 0, NULL},
+  {"/Add Text", 		NULL, i_callback_add_text, 0, NULL},
   {"/sep1", NULL, NULL, 0, "<Separator>"},
   {"/Zoom In",            NULL, i_callback_view_zoom_in, 0, NULL},
   {"/Zoom Out",           NULL, i_callback_view_zoom_out, 0, NULL},

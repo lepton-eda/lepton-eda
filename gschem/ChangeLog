@@ -9,6 +9,9 @@
 	* lib/system-gschemrc.in: Added hotkey assignment "ag" to 
 	Add/Picture... and move the new item to the bottom of the menu list.
 
+	* noweb/x_menu.nw: Applied part of a patch from Patrick Ammann to
+	add "Add/..." in front of some of the commands in the popup menu.
+
 2005-02-20  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* noweb/i_callbacks.nw, noweb/gschem.nw: Adapted for new logging 
