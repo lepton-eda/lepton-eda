@@ -114,6 +114,9 @@ datamisc=`echo $datamisc`
 data74=`ls -1 74 | grep -v Makefile | grep -v CVS`
 data74=`echo $data74`
 
+datarf=`ls -1 rf | grep -v Makefile | grep -v CVS`
+datarf=`echo $datarf`
+
 datafoot=`ls -1 foot | grep -v Makefile | grep -v CVS`
 datafoot=`echo $datafoot`
 
@@ -185,6 +188,7 @@ AC_SUBST(datamemory)
 AC_SUBST(datamicro)
 AC_SUBST(datamisc)
 AC_SUBST(data74)
+AC_SUBST(datarf)
 AC_SUBST(datafoot)
 AC_SUBST(dataIEC417)
 AC_SUBST(datafont)
@@ -200,6 +204,7 @@ AC_OUTPUT([
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 
 	analog/Makefile 

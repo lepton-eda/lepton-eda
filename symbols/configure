@@ -901,6 +901,9 @@ datamisc=`echo $datamisc`
 data74=`ls -1 74 | grep -v Makefile | grep -v CVS`
 data74=`echo $data74`
 
+datarf=`ls -1 rf | grep -v Makefile | grep -v CVS`
+datarf=`echo $datarf`
+
 datafoot=`ls -1 foot | grep -v Makefile | grep -v CVS`
 datafoot=`echo $datafoot`
 
@@ -960,6 +963,7 @@ EOF
 cat >> confdefs.h <<EOF
 #define VERSION "$GEDA_VERSION"
 EOF
+
 
 
 
@@ -1112,6 +1116,7 @@ trap 'rm -fr `echo "
         Makefile 
 	4000/Makefile
 	74/Makefile 
+	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 
 	analog/Makefile 
@@ -1200,6 +1205,7 @@ s%@datamemory@%$datamemory%g
 s%@datamicro@%$datamicro%g
 s%@datamisc@%$datamisc%g
 s%@data74@%$data74%g
+s%@datarf@%$datarf%g
 s%@datafoot@%$datafoot%g
 s%@dataIEC417@%$dataIEC417%g
 s%@datafont@%$datafont%g
@@ -1251,6 +1257,7 @@ cat >> $CONFIG_STATUS <<EOF
 CONFIG_FILES=\${CONFIG_FILES-"Makefile 
 	4000/Makefile
 	74/Makefile 
+	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 
 	analog/Makefile 
