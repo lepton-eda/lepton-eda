@@ -20,7 +20,8 @@
 /*          place the device name in the center of the symbol, useful    */
 /*          for large symbols containing pins on all sides.  Top and     */
 /*          bottom pin numbers are rotated by 90 degrees to match the    */
-/*          pin rotation.  Added pin type attribute capability.                                                */
+/*          pin rotation.  Added pin type attribute capability. (Roberto */
+/*          Puon)                                                        */
 /*									 */
 /*-----------------------------------------------------------------------*/
 /* This program is free software; you can redistribute it and/or modify  */
@@ -92,8 +93,6 @@ PRE,1,dot,B,1
 #include <time.h>
 #include <errno.h>
 
-/* #include "char_width.c" commented out by AVH, since it's linked in */ 
-
 #define BLACK		0
 #define WHITE		1
 #define RED		2
@@ -138,10 +137,7 @@ int line_chk(char *pBuf);
 #ifndef __CYGWIN32__
 int stricmp(char *s, char *p);
 #endif
-char *TimeStamp(void);
 
-/* add by AVH to make compile warning free */
-int GetStringDisplayLength(char *str,int font_size);
 
 int pin_len=300;
 int pin_spacing =300;
@@ -187,9 +183,8 @@ int main(int argc,char **argv)
       }
   line_nub=-1;
 
-  /* printf("v %s\n",TimeStamp()); Original line of code AVH 10/2/00 */
   printf("v 20000704\n"); /* The v character is the version of the file AVH */
-  			  /* not a time stamp */
+
   while (fgets(LineBuf,sizeof(LineBuf)-1,stream) != NULL)
         {
         if (line_chk(LineBuf) < 0)
@@ -250,36 +245,8 @@ void cross(int pos_x,int pos_y,int color)
 
 /***************************************************/
 /***************************************************/
-#if 0
-/* commented out by puon.  No longer needed since pins
-   are now anchored using the text origin capabilities of gschem.
-*/
-void pin_xy(int dir,char *pin,int font_size,int *x,int *y)
-{ int pixs;
-  pixs = GetStringDisplayLength(pin,font_size);
-  switch(dir)
-    {
-    case L_SIDE: *x = *x -pixs-100;
-                 *y = *y + 50;
-	         return;
-    case R_SIDE: *x = *x + 100;
-                 *y = *y + 50;
-	         return;
-    case B_SIDE: *x = *x + 75;
-                 *y = *y - 150;
-	         return;
-    case T_SIDE: *x = *x + 75;
-                 *y = *y + 75;
-	         return;
-    }
-}
-#endif
-
-/***************************************************/
-/***************************************************/
 void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *type)
 { int x,y;
-//  int name_size=0;
   int xdir=0,ydir=0,font_size=8;
   int shape_offset=0;
 
@@ -326,7 +293,6 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
    x = pos_x;
    y = pos_y;
 
-   /* puon: begin */
    /* pin_xy(dir,pin,font_size,&x,&y); */
    switch (dir)
      {
@@ -343,50 +309,54 @@ void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *t
        printf("T %d %d %d %d 1 1 90 0\n",x-50,y+50,YELLOW,font_size);
        break;
      }
-   /* puon: end */
    printf("pin%d=%s\n",++net_pin,pin);
 
 
-   if (strlen(name))
+   if (type)
      {
-     /*name_size = GetStringDisplayLength(name,font_size);*/
-     switch (dir)
-       {
-       /*case L_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x+75+shape_offset,pos_y-50,GREEN,font_size); commented out by puon*/
-       case L_SIDE: printf("T %d %d %d %d 1 0 0 1\n",pos_x+100,pos_y,GREEN,font_size);
-	       break;
-       /*case R_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size-50-shape_offset,pos_y-50,GREEN,font_size); commented out by puon */
-       case R_SIDE: printf("T %d %d %d %d 1 0 0 7\n",pos_x-100,pos_y,GREEN,font_size);
-	       break;
-       /*case B_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y+50,GREEN,font_size); commented out by Rolf (avh) */
-       /*case B_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y+75+shape_offset,GREEN,font_size); commented out by puon*/
-       case B_SIDE: printf("T %d %d %d %d 1 0 90 1\n",pos_x,pos_y+100,GREEN,font_size);
-	       break;
-       /* case T_SIDE: printf("T %d %d %d %d 1 0 0 0\n",pos_x-name_size/2,pos_y-150,GREEN,font_size); commented out by Rolf (avh) */
-       /*case T_SIDE: printf("T %d %d %d %d 1 0 90 0\n",pos_x+50,pos_y-name_size-50-shape_offset,GREEN,font_size); commented out by puon */
-       case T_SIDE: printf("T %d %d %d %d 1 0 90 7\n",pos_x,pos_y-100,GREEN,font_size);
-	       break;
-       }
-     printf("%s\n",name);
+       switch (dir)
+	 {
+	 case L_SIDE:
+	   printf("T %d %d %d %d 0 0 0 7\n",pos_x-400,pos_y,YELLOW,font_size);
+	   break;
+	 case R_SIDE:
+	   printf("T %d %d %d %d 0 0 0 1\n",pos_x+400,pos_y,YELLOW,font_size);
+	   break;
+	 case B_SIDE:
+	   printf("T %d %d %d %d 0 0 90 7\n",pos_x,pos_y-400,YELLOW,font_size);
+	   break;
+	 case T_SIDE:
+	   printf("T %d %d %d %d 0 0 90 1\n",pos_x,pos_y+400,YELLOW,font_size);
+	   break;
+	 }
+       printf("type=%s\n",type);
      }
 
-  if (type)
-  {
-     switch (dir)
-     {
-        case L_SIDE: printf("T %d %d %d %d 0 0 0 7\n",pos_x-400,pos_y,YELLOW,font_size);
-          break;
-        case R_SIDE: printf("T %d %d %d %d 0 0 0 1\n",pos_x+400,pos_y,YELLOW,font_size);
-          break;
-        case B_SIDE: printf("T %d %d %d %d 0 0 90 7\n",pos_x,pos_y-400,YELLOW,font_size);
-          break;
-        case T_SIDE: printf("T %d %d %d %d 0 0 90 1\n",pos_x,pos_y+400,YELLOW,font_size);
-          break;
-     }
-     printf("type=%s\n",type);
-  }
+  if (strlen(name))
+    {
+      switch (dir)
+	{
+	case L_SIDE:
+	  printf("T %d %d %d %d 1 1 0 1\n",pos_x+100,pos_y,GREEN,font_size);
+	  break;
+	case R_SIDE:
+	  printf("T %d %d %d %d 1 1 0 7\n",pos_x-100,pos_y,GREEN,font_size);
+	  break;
+	case B_SIDE:
+	  printf("T %d %d %d %d 1 1 90 1\n",pos_x,pos_y+100,GREEN,font_size);
+	  break;
+	case T_SIDE:
+	  printf("T %d %d %d %d 1 1 90 7\n",pos_x,pos_y-100,GREEN,font_size);
+	  break;
+	}
+      printf("label=%s\n",name);
+    }
 
-   printf("}\n");
+
+  printf("}\n");
+
+
+
 }
 
 /***************************************************/
@@ -418,7 +388,8 @@ int make_box(int fldcnt,char *pFields[])
   	if(uref[0]=='U' || uref[0]=='u')strcpy(class,"IC");
   	if(uref[0]=='J' || uref[0]=='j')strcpy(class,"IO");
   	if(uref[0]=='C' || uref[0]=='c')strcpy(class,"IO");
-	//  U is for ICs, J or CONN for IO.  We assume no discretes with this tool
+	/* U is for ICs, J or CONN for IO.  We assume no discretes
+         *  with this tool */
 	strcpy(footprint,pFields[6]);
 	pincount = atoi(pFields[7]);
         printf("T %d %d %d %d 0 0 0 0\n",pos_x,pos_y+BoxHeight+1100,YELLOW,font_size);
@@ -513,11 +484,11 @@ int make_pin(int fldcnt,char *pFields[])
   char *type;
 
   strcpy(pin_name,pFields[0]);
-  strcpy(pin,pFields[1]); 	   // get pin number
+  strcpy(pin,pFields[1]); 	      /* get pin number */
   shape = LINE_SHAPE;
-  if (!stricmp(pFields[2],"dot"))     // get shape
+  if (!stricmp(pFields[2],"dot"))     /* get shape */
      shape = DOT_SHAPE;
-  if (!stricmp(pFields[2],"clock"))     // get shape
+  if (!stricmp(pFields[2],"clock"))   /* get shape */
      shape = CLOCK_SHAPE;
   if (!stricmp(pFields[3],"L"))
       side = L_SIDE;
@@ -653,19 +624,4 @@ int stricmp(char *s, char *p)
 }
 #endif
 
-/********************************/
-/*  Create a timestamp string   */
-/********************************/
-char *TimeStamp(void)
-{
-  static char time_string[200];
-  struct tm *pTm;
-  time_t now;
-
-  now = time(NULL);
-  pTm = localtime(&now);
-  sprintf(time_string, "%d%02d%02d",
-          1900+pTm->tm_year, pTm->tm_mon + 1, pTm->tm_mday);
-  return time_string;
-}
 
