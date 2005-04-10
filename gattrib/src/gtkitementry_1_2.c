@@ -280,6 +280,19 @@ gtk_entry_class_init (GtkItemEntryClass *klass)
   editable_class->set_selection = gtk_entry_set_selection;
   editable_class->set_position = gtk_entry_set_position_from_editable;
 
+  gtk_widget_class_install_style_property (widget_class,
+					   g_param_spec_boxed ("default-border",
+							       NULL, /* P_("Default Spacing"),*/
+							       NULL, /* P_("Extra space to add for CAN_DEFAULT buttons"), */
+							       GTK_TYPE_BORDER,
+							       G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+					   g_param_spec_boxed ("default-outside-border",
+							       NULL, /* P_("Default Outside Spacing"), */
+							       NULL, /* P_("Extra space to add for CAN_DEFAULT buttons that is always drawn outside the border"), */
+							       GTK_TYPE_BORDER,
+							       G_PARAM_READABLE));
 }
 
 

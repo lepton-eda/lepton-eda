@@ -75,9 +75,6 @@
 #define DEFAULT_FONT_ASCENT(widget) (widget->style->font->ascent)
 #define DEFAULT_FONT_DESCENT(widget) (widget->style->font->descent)
 
-static GtkBorder default_border = { 1, 1, 1, 1 };
-static GtkBorder default_outside_border = { 0, 0, 0, 0 };
-
 
 /*-----------------------------------------------------------------------------*/
 /* scrollbar spacing class macro */
@@ -771,6 +768,20 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   klass->set_cell = NULL;
   klass->clear_cell = NULL;
   klass->changed = NULL;
+
+  gtk_widget_class_install_style_property (widget_class,
+					   g_param_spec_boxed ("default-border",
+							       NULL, /* P_("Default Spacing"),*/
+							       NULL, /* P_("Extra space to add for CAN_DEFAULT buttons"), */
+							       GTK_TYPE_BORDER,
+							       G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+					   g_param_spec_boxed ("default-outside-border",
+							       NULL, /* P_("Default Outside Spacing"), */
+							       NULL, /* P_("Extra space to add for CAN_DEFAULT buttons that is always drawn outside the border"), */
+							       GTK_TYPE_BORDER,
+							       G_PARAM_READABLE));
 
 }
 

@@ -260,6 +260,19 @@ gtk_item_entry_class_init (GtkItemEntryClass *class)
   entry_class->insert_at_cursor = gtk_entry_insert_at_cursor;
   entry_class->delete_from_cursor = gtk_entry_delete_from_cursor;
 
+  gtk_widget_class_install_style_property (widget_class,
+					   g_param_spec_boxed ("default-border",
+							       NULL, /* P_("Default Spacing"),*/
+							       NULL, /* P_("Extra space to add for CAN_DEFAULT buttons"), */
+							       GTK_TYPE_BORDER,
+							       G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property (widget_class,
+					   g_param_spec_boxed ("default-outside-border",
+							       NULL, /* P_("Default Outside Spacing"), */
+							       NULL, /* P_("Extra space to add for CAN_DEFAULT buttons that is always drawn outside the border"), */
+							       GTK_TYPE_BORDER,
+							       G_PARAM_READABLE));
 }
 
 static void
