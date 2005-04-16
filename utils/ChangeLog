@@ -1,3 +1,7 @@
+2005-04-16 Carlos Nieves Onega <cnieves@iespana.es>
+	* scripts/tragesym: Changed the way it draws the symbol so
+	there is no need to translate it to the origin.
+
 2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 

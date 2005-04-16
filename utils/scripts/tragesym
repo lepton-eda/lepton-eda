@@ -20,6 +20,9 @@
 # - swap words of the pinlabels
 # - negation lines if label is in "_","\" is for escape
 # - rotate top and bottom pinlabels if wished
+# - if the symbol's width specified is 0, then tragesym calculates the
+#   symbol width based on the greater number of pins at the top or at the
+#   bottom of the symbol
 
 # TODO:
 # - make a nicer comandline interface including stdin /stdout
@@ -29,7 +32,7 @@
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.7"
+VERSION="0.0.8"
 
 CHARHIGH=26
 pre_options={"wordswap":"yes"
@@ -38,6 +41,7 @@ pre_options={"wordswap":"yes"
          ,"generate_pinseq":"yes"    
          ,"sym_width":"1400"
          ,"pinwidthvertikal":"400"
+         ,"pinwidthvertical":"400"
          ,"pinwidthhorizontal":"400"}
 pre_attr=["version", "name", "device", "refdes", "footprint", "numslots", "slot",
           "slotdef","description", "comment", "author", "documentation"]
@@ -157,6 +161,14 @@ def readsrc(filename):
 
 def checkpins(pinlist):
     for pin in pinlist:
+    	if (pin[P_STYLE]=="spacer"):
+	    if (pin[P_POS] == ""):
+		print "There must be a position with a spacer.\n"
+		sys.exit()
+	    if pin[P_POS] not in poslist:
+		print "Position is not allowed: \n", pin
+		sys.exit()
+    	    continue
         try:
             if pin[P_STYLE] != "none":
                 string.atoi(pin[P_SEQ])
@@ -244,115 +256,87 @@ def sort(item1,item2):
 def writesym(filename,options,attr,pins):
     o_symwidth=string.atoi(options["sym_width"])
     o_hdist=string.atoi(options["pinwidthhorizontal"])
-    o_vdist=string.atoi(options["pinwidthvertikal"])
+    
+    # If pinwidthvertikal was defined, use it, else use pinwidthvertical
+    # This keeps compatibility with older versions, while fixing the spell
+    # bug
+    if options["pinwidthvertikal"] != pre_options["pinwidthvertikal"]:
+    	o_vdist=string.atoi(options["pinwidthvertikal"])
+    else:
+	o_vdist=string.atoi(options["pinwidthvertical"])
+
     o_wordswap=options["wordswap"]
     o_rotate=options["rotate_labels"]
     o_sort=options["sort_labels"]
 
     pinlength = 300
-    topleftx, toplefty = 50000, 30000  ## top left of the box
-    textx, texty= topleftx , toplefty + 50
-    urefx, urefy= topleftx + o_symwidth, toplefty + 100
-    prightx, prighty= topleftx + pinlength + o_symwidth, toplefty - o_vdist
-    pleftx, plefty= topleftx - pinlength, toplefty - o_vdist
-    ptopx, ptopy= topleftx + o_symwidth + 1000, toplefty + pinlength
-    pbottomx, pbottomy= topleftx + o_symwidth + 1000, toplefty - 2000 
-    
-    f = open(filename, "w")
-    texty_basis=texty
 
+### Count the number of pins in each side
+
+    numpleft=0
+    numpright=0
+    numpbottom=0
+    numptop = 0
+    for pin in pins:
+    	if pin[P_POS] == "l": # left pin
+    		numpleft=numpleft+1
+    	elif pin[P_POS] == "r": #right pin
+    		numpright=numpright+1
+    	elif pin[P_POS] == "b": #right pin
+    		numpbottom=numpbottom+1
+    	elif pin[P_POS] == "t": #right pin
+    		numptop=numptop+1
+
+    # If there are pins on the top, then o_vdist should be 500 at least
+    if ( (numptop > 0) and (o_vdist < 500) ):
+	o_vdist = 500
+
+    # Calculate the position of the pins in the left and right side.    
+    plefty, prighty = 0, 0
+    if numpleft >  numpright:
+        plefty=plefty+(numpleft-1)*o_vdist
+        prighty = plefty
+    else :
+        prighty=prighty+(numpright-1)*o_vdist
+        plefty = prighty
+
+    # Calculate the bottom left of the box
+    bottomleftx, bottomlefty = pinlength + 100, 100  ## bottom left of the box
+    if numpbottom > 0:
+	bottomlefty += pinlength
+
+    # Calculate the minimum symwidth and increase it if necessary
+    if numpbottom > numptop:
+	calculated_symwidth=(numpbottom-1)*o_hdist+2*o_hdist
+    else:
+	calculated_symwidth=(numptop-1)*o_hdist+2*o_hdist
+
+    if o_symwidth == 0:
+	o_symwidth = calculated_symwidth
+
+    # Calculate the symbol's high
+    if numpleft < numpright:
+        high=(numpright+1)*o_vdist 
+    else:
+        high=(numpleft+1)*o_vdist 
+    topy = bottomlefty + high
+
+    # Calculate the position of several items.
+    prightx, prighty= bottomleftx + pinlength + o_symwidth, prighty + bottomlefty + o_vdist
+    pleftx, plefty= bottomleftx - pinlength, plefty + bottomlefty + o_vdist
+    ptopx, ptopy= bottomleftx + o_hdist, bottomlefty + high + pinlength
+    pbottomx, pbottomy = bottomleftx + o_hdist, bottomlefty - pinlength   
+
+
+    f = open(filename, "w")
+
+### Draw the symbol version
     if attr.has_key(("version",1)):
         value=attr[("version",1)]
-        f.write("v " + value + "\n")
+        f.write("v " + value + " 1\n")
     else:
         print "version attribut missing"
-    if attr.has_key(("refdes",1)):
-        value=attr[("refdes",1)]
-        f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6 1\n")
-        f.write("refdes=" + value + "\n")
-    else:
-        print "refdes attribut missing"
-    if attr.has_key(("name",1)):
-        value=attr[("name",1)]
-        f.write("T %i" %textx + " %i"% texty + " 9 10 1 0 0 0 1\n")
-        f.write(value + "\n")
-        texty=texty+200
-    else:
-        print "name attribut missing"
-    if attr.has_key(("device",1)):
-        value=attr[("device",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("device=" + value + "\n")
-        texty=texty+200
-    else:
-        print "device attribut missing"
-    if attr.has_key(("footprint",1)):
-        value=attr[("footprint",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("footprint=" + value + "\n")
-        texty=texty+200
-    else:
-        print "footprint attribut missing"
-    if attr.has_key(("author",1)):
-        value=attr[("author",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("author=" + value + "\n")
-        texty=texty+200
-    else:
-        print "author attribut missing"
-    if attr.has_key(("documentation",1)):
-        value=attr[("documentation",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("documentation=" + value + "\n")
-        texty=texty+200
-    else:
-        print "documentation attribut missing"
-    if attr.has_key(("description",1)):
-        value=attr[("description",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("description=" + value + "\n")
-        texty=texty+200
-    else:
-        print "description attribut missing"
-    if attr.has_key(("numslots",1)):
-        value=attr[("numslots",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("numslots=" + value + "\n")
-        texty=texty+200
-    else:
-        print "numslots attribut missing"
-    if attr.has_key(("slot",1)):
-        value=attr[("slot",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("slot=" + value + "\n")
-        texty=texty+200
-    i = 1
-    while attr.has_key(("slotdef",i)):
-        value=attr[("slotdef",i)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("slotdef=" + value + "\n")
-        texty=texty+200
-        i = i + 1
-    i = 1
-    while attr.has_key(("comment",i)):
-        value=attr[("comment",i)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("comment=" + value + "\n")
-        texty=texty+200
-        i = i + 1
-    
-    nets={}
-    for pin in pins:
-        if pin[P_STYLE] == "none":
-            if not nets.has_key(pin[P_NET]):
-                nets[pin[P_NET]] = pin[P_NR]
-            else:
-                nets[pin[P_NET]] = nets[pin[P_NET]] + ","+ pin[P_NR]
-    for key,value in nets.items():
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("net=" + key + ":" + value + "\n")
-        texty=texty+200
-
+   
     if o_sort == "yes":
         pins.sort(pinsort)
 
@@ -416,6 +400,8 @@ def writesym(filename,options,attr,pins):
                 negl=(0,20,1,0)
                 swap=0
             ptopx=ptopx + o_hdist
+        if (pin[P_STYLE]=="spacer"):
+            continue
 ### draw the pin
         if (pin[P_STYLE]=="dot" or  #short pin and dot?
             pin[P_STYLE]=="dotclk"):
@@ -430,12 +416,16 @@ def writesym(filename,options,attr,pins):
         pintx, pinty, pinta, pintr=pint
         x=basex+pintx
         y=basey+pinty
+        if pin[P_POS] == "t": # top pin
+	    y += 50
         f.write("T %i"%x+" %i"%y+" 5 8 1 1 %i"%pintr+" %i 1\n"%pinta)
         f.write("pinnumber="+pin[P_NR]+"\n")
 ### draw pinseq
         pintx, pinty, pinta, pintr=pinq
         x=basex+pintx
         y=basey+pinty
+        if pin[P_POS] == "t": # top pin
+	    y += 50
         f.write("T %i"%x+" %i"%y+" 5 8 0 1 %i"%pintr+" %i 1\n"%pinta)
         f.write("pinseq="+pin[P_SEQ]+"\n")
 ### draw pinlabel and pintype
@@ -491,14 +481,105 @@ def writesym(filename,options,attr,pins):
             f.write("L %i"%x1+" %i"%y1+" %i"%x2+" %i"%y2 + " 3 0 0 0 -1 -1\n")
             f.write("L %i"%x1+" %i"%y1+" %i"%x3+" %i"%y3 + " 3 0 0 0 -1 -1\n")
 ### draw a box 
-    width=o_symwidth
-    if plefty < prighty:
-        high=toplefty - plefty 
-    else:
-        high=toplefty - prighty
-    bottomy = toplefty - high
-    f.write("B %i"%topleftx+" %i"%bottomy+" %i"%width+" %i"%high+
+    f.write("B %i"%bottomleftx+" %i"%bottomlefty+" %i"%o_symwidth+" %i"%high+
             " 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1\n")
+
+### draw the attributes
+    urefx, urefy = bottomleftx+o_symwidth, bottomlefty + high + 100
+    namex, namey = bottomleftx, bottomlefty+high+100
+    textx = namex
+    texty = namey + 200
+    if numptop > 0:
+ 	texty += 100
+    
+    if attr.has_key(("refdes",1)):
+        value=attr[("refdes",1)]
+        f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6 1\n")
+        f.write("refdes=" + value + "\n")
+    else:
+        print "refdes attribut missing"
+    if attr.has_key(("name",1)):
+        value=attr[("name",1)]
+        f.write("T %i" %namex + " %i"% namey + " 9 10 1 0 0 0 1\n")
+        f.write(value + "\n")
+    else:
+        print "name attribut missing"
+    if attr.has_key(("device",1)):
+        value=attr[("device",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("device=" + value + "\n")
+        texty=texty+200
+    else:
+        print "device attribut missing"
+
+    if attr.has_key(("footprint",1)):
+        value=attr[("footprint",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("footprint=" + value + "\n")
+        texty=texty+200
+    else:
+        print "footprint attribut missing"
+    if attr.has_key(("author",1)):
+        value=attr[("author",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("author=" + value + "\n")
+        texty=texty+200
+    else:
+        print "author attribut missing"
+    if attr.has_key(("documentation",1)):
+        value=attr[("documentation",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("documentation=" + value + "\n")
+        texty=texty+200
+    else:
+        print "documentation attribut missing"
+    if attr.has_key(("description",1)):
+        value=attr[("description",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("description=" + value + "\n")
+        texty=texty+200
+    else:
+        print "description attribut missing"
+    if attr.has_key(("numslots",1)):
+        value=attr[("numslots",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("numslots=" + value + "\n")
+        texty=texty+200
+    else:
+        print "numslots attribut missing"
+    if attr.has_key(("slot",1)):
+        value=attr[("slot",1)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("slot=" + value + "\n")
+        texty=texty+200
+    i = 1
+    while attr.has_key(("slotdef",i)):
+        value=attr[("slotdef",i)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("slotdef=" + value + "\n")
+        texty=texty+200
+        i = i + 1
+    i = 1
+    while attr.has_key(("comment",i)):
+        value=attr[("comment",i)]
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("comment=" + value + "\n")
+        texty=texty+200
+        i = i + 1
+
+    nets={}
+    for pin in pins:
+        if pin[P_STYLE] == "none":
+            if not nets.has_key(pin[P_NET]):
+                nets[pin[P_NET]] = pin[P_NR]
+            else:
+                nets[pin[P_NET]] = nets[pin[P_NET]] + ","+ pin[P_NR]
+    for key,value in nets.items():
+        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+        f.write("net=" + key + ":" + value + "\n")
+        texty=texty+200
+ 
+
     return 0
 
 def mergeoptions(source_opt,pre_opt):
