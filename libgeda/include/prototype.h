@@ -378,6 +378,10 @@ void o_picture_mirror_world(TOPLEVEL *w_current, int world_centerx, int world_ce
 void o_picture_translate(TOPLEVEL *w_current, int dx, int dy, OBJECT *object);
 void o_picture_translate_world(TOPLEVEL *w_current, int x1, int y1, OBJECT *object);
 OBJECT *o_picture_copy(TOPLEVEL *w_current, OBJECT *list_tail, OBJECT *o_current);
+guint8 *o_picture_rgb_data(GdkPixbuf *image);
+guint8 *o_picture_mask_data(GdkPixbuf *image);
+void o_picture_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+		     int origin_x, int origin_y);
 #endif
 
 /* o_pin_basic.c */

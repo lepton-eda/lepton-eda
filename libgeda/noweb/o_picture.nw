@@ -26,6 +26,9 @@
 <<o_picture_basic.c : o_picture_translate()>>
 <<o_picture_basic.c : o_picture_translate_world()>>
 <<o_picture_basic.c : o_picture_copy()>>
+<<o_picture_basic.c : o_picture_rgb_data()>>
+<<o_picture_basic.c : o_picture_mask_data()>>
+<<o_picture_basic.c : o_picture_print()>>
 
 #endif
 
@@ -982,3 +985,161 @@ if (a_current) {
 
 @ 
 
+@section Function [[o_picture_rgb_data()]]
+
+@defun o_picture_rgb_data image
+This function returns the RGB data of the given image.
+Function taken from the DIA source code (http://www.gnome.org/projects/dia) and licensed under the GNU GPL version 2.
+@end defun
+
+<<o_picture_basic.c : o_picture_rgb_data()>>=
+guint8 *
+o_picture_rgb_data(GdkPixbuf *image)
+{
+  int width = gdk_pixbuf_get_width(image);
+  int height = gdk_pixbuf_get_height(image);
+  int rowstride = gdk_pixbuf_get_rowstride(image);
+  int size = height*rowstride;
+  guint8 *rgb_pixels = g_malloc(size);
+
+  if (gdk_pixbuf_get_has_alpha(image)) {
+    guint8 *pixels = gdk_pixbuf_get_pixels(image);
+    int i, j;
+    for (i = 0; i < height; i++) {
+      for (j = 0; j < width; j++) {
+	rgb_pixels[i*rowstride+j*3] = pixels[i*rowstride+j*4];
+	rgb_pixels[i*rowstride+j*3+1] = pixels[i*rowstride+j*4+1];
+	rgb_pixels[i*rowstride+j*3+2] = pixels[i*rowstride+j*4+2];
+      }
+    }
+    return rgb_pixels;
+  } else {
+    guint8 *pixels = gdk_pixbuf_get_pixels(image);
+
+    g_memmove(rgb_pixels, pixels, height*rowstride);
+    return rgb_pixels;
+  }
+}
+
+@ %def o_picture_rgb_data
+
+@section Function [[o_picture_mask_data()]]
+
+@defun o_picture_mask_data image
+This function returns the mask data of the given image.
+Function taken from the DIA source code (http://www.gnome.org/projects/dia) and licensed under the GNU GPL version 2.
+@end defun
+
+<<o_picture_basic.c : o_picture_mask_data()>>=
+guint8 *
+o_picture_mask_data(GdkPixbuf *image)
+{
+  guint8 *pixels;
+  guint8 *mask;
+  int i, size;
+
+  if (!gdk_pixbuf_get_has_alpha(image)) {
+    return NULL;
+  }
+  
+  pixels = gdk_pixbuf_get_pixels(image);
+
+  size = gdk_pixbuf_get_width(image)*
+    gdk_pixbuf_get_height(image);
+
+  mask = g_malloc(size);
+
+  /* Pick every fourth byte (the alpha channel) into mask */
+  for (i = 0; i < size; i++)
+    mask[i] = pixels[i*4+3];
+
+  return mask;
+}
+@ %def o_picture_mask_data
+
+
+@section Function [[o_picture_print()]]
+
+@defun o_picture_print w_current fp x y width height color line_width length space orign_x origin_y
+This function prints a picture object. The picture is defined by the coordinates of its upper left corner in ([[x]],[[y]]) and its width and height given by the [[width]] and [[height]] parameters. 
+The postscript file is defined by the file pointer [[fp]].
+Function based on the DIA source code (http://www.gnome.org/projects/dia) and licensed under the GNU GPL version 2.
+@end defun
+
+All dimensions are in mils.
+
+<<o_picture_basic.c : o_picture_print()>>=
+void
+o_picture_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
+                  int origin_x, int origin_y)
+{
+  int x1, y1, x, y;
+  int height, width;
+  GdkPixbuf* image = o_current->picture->displayed_picture;
+  int img_width, img_height, img_rowstride;
+  double ratio;
+  guint8 *rgb_data;
+  guint8 *mask_data;
+
+  /* calculate the width and height of the box */
+  width  = abs(o_current->picture->lower_x - o_current->picture->upper_x); 
+  height = abs(o_current->picture->upper_y - o_current->picture->lower_y);
+
+  /* calculate the origin of the box */
+  x1 = o_current->picture->upper_x;
+  y1 = o_current->picture->upper_y;
+
+  img_width = gdk_pixbuf_get_width(image);
+  img_rowstride = gdk_pixbuf_get_rowstride(image);
+  img_height = gdk_pixbuf_get_height(image);
+
+  rgb_data = o_picture_rgb_data(image);
+  mask_data = o_picture_mask_data(image);
+
+  ratio = height/width;
+
+  fprintf(fp, "gsave\n");
+
+  /* color output only */
+  fprintf(fp, "/pix %i string def\n", img_width * 3);
+  fprintf(fp, "%i %i 8\n", img_width, img_height);
+  fprintf(fp, "%i mils %i mils translate\n", x1, y1);
+  fprintf(fp, "%i mils %i mils scale\n", width, height);
+  fprintf(fp, "[%i 0 0 -%i 0 0]\n", img_width, img_height);
+
+  fprintf(fp, "{currentfile pix readhexstring pop}\n");
+  fprintf(fp, "false 3 colorimage\n");
+  fprintf(fp, "\n");
+
+  if (mask_data) {
+    for (y = 0; y < img_height; y++) {
+      for (x = 0; x < img_width; x++) {
+	int i = y*img_rowstride+x*3;
+	int m = y*img_width+x;
+        fprintf(fp, "%02x", 255-(mask_data[m]*(255-rgb_data[i])/255));
+        fprintf(fp, "%02x", 255-(mask_data[m]*(255-rgb_data[i+1])/255));
+        fprintf(fp, "%02x", 255-(mask_data[m]*(255-rgb_data[i+2])/255));
+      }
+      fprintf(fp, "\n");
+    }
+  } else {
+    for (y = 0; y < img_height; y++) {
+      for (x = 0; x < img_width; x++) {
+	int i = y*img_rowstride+x*3;
+        fprintf(fp, "%02x", (int)(rgb_data[i]));
+        fprintf(fp, "%02x", (int)(rgb_data[i+1]));
+        fprintf(fp, "%02x", (int)(rgb_data[i+2]));
+      }
+      fprintf(fp, "\n");
+    }
+  }
+  fprintf(fp, "grestore\n");
+  fprintf(fp, "\n");
+   
+  g_free(rgb_data);
+  g_free(mask_data);
+
+	
+}
+
+@ %def o_picture_print
