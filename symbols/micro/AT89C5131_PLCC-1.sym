@@ -1,15 +1,15 @@
-v 20041228 1
+v 20050313 1
 T 3000 10000 2 10 1 1 0 6 1
 refdes=U?
-T 400 10050 9 10 1 0 0 0 1
+T 400 9950 9 10 1 0 0 0 1
 AT89C5131
-T 500 10450 8 10 0 0 0 0 1
+T 400 10150 5 10 0 0 0 0 1
 device=AT89C5131_PLCC
-T 500 10650 8 10 0 0 0 0 1
+T 400 10350 5 10 0 0 0 0 1
 footprint=PLCC52
-T 500 10850 8 10 0 0 0 0 1
+T 400 10550 5 10 0 0 0 0 1
 net=GND:41
-T 500 11050 8 10 0 0 0 0 1
+T 400 10750 5 10 0 0 0 0 1
 net=Vcc:16
 P 3300 1600 3000 1600 1 0 0
 {
@@ -45,7 +45,7 @@ pinseq=3
 T 2950 9400 3 8 1 1 0 6 1
 pinlabel=(AD0) P0.0
 T 2950 9400 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 9000 3000 9000 1 0 0
 {
@@ -56,7 +56,7 @@ pinseq=4
 T 2950 9000 3 8 1 1 0 6 1
 pinlabel=(AD1) P0.1
 T 2950 9000 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 8600 3000 8600 1 0 0
 {
@@ -67,7 +67,7 @@ pinseq=5
 T 2950 8600 3 8 1 1 0 6 1
 pinlabel=(AD2) P0.2
 T 2950 8600 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 8200 3000 8200 1 0 0
 {
@@ -78,7 +78,7 @@ pinseq=6
 T 2950 8200 3 8 1 1 0 6 1
 pinlabel=(AD3) P0.3
 T 2950 8200 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 7800 3000 7800 1 0 0
 {
@@ -89,7 +89,7 @@ pinseq=7
 T 2950 7800 3 8 1 1 0 6 1
 pinlabel=(AD4) P0.4
 T 2950 7800 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 7400 3000 7400 1 0 0
 {
@@ -100,7 +100,7 @@ pinseq=8
 T 2950 7400 3 8 1 1 0 6 1
 pinlabel=(AD5) P0.5
 T 2950 7400 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 7000 3000 7000 1 0 0
 {
@@ -111,7 +111,7 @@ pinseq=9
 T 2950 7000 3 8 1 1 0 6 1
 pinlabel=(AD6) P0.6
 T 2950 7000 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 6600 3000 6600 1 0 0
 {
@@ -122,7 +122,7 @@ pinseq=10
 T 2950 6600 3 8 1 1 0 6 1
 pinlabel=(AD7) P0.7
 T 2950 6600 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 6000 3000 6000 1 0 0
 {
@@ -133,7 +133,7 @@ pinseq=11
 T 2950 6000 3 8 1 1 0 6 1
 pinlabel=(A8) P2.0
 T 2950 6000 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 5600 3000 5600 1 0 0
 {
@@ -144,7 +144,7 @@ pinseq=12
 T 2950 5600 3 8 1 1 0 6 1
 pinlabel=(A9) P2.1
 T 2950 5600 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 5200 3000 5200 1 0 0
 {
@@ -155,7 +155,7 @@ pinseq=13
 T 2950 5200 3 8 1 1 0 6 1
 pinlabel=(A10) P2.2
 T 2950 5200 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 4800 3000 4800 1 0 0
 {
@@ -166,7 +166,7 @@ pinseq=14
 T 2950 4800 3 8 1 1 0 6 1
 pinlabel=(A11) P2.3
 T 2950 4800 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 4400 3000 4400 1 0 0
 {
@@ -177,7 +177,7 @@ pinseq=15
 T 2950 4400 3 8 1 1 0 6 1
 pinlabel=(A12) P2.4
 T 2950 4400 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 4000 3000 4000 1 0 0
 {
@@ -188,7 +188,7 @@ pinseq=16
 T 2950 4000 3 8 1 1 0 6 1
 pinlabel=(A13) P2.5
 T 2950 4000 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 3600 3000 3600 1 0 0
 {
@@ -199,7 +199,7 @@ pinseq=17
 T 2950 3600 3 8 1 1 0 6 1
 pinlabel=(A14) P2.6
 T 2950 3600 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 3200 3000 3200 1 0 0
 {
@@ -210,7 +210,7 @@ pinseq=18
 T 2950 3200 3 8 1 1 0 6 1
 pinlabel=(A15) P2.7
 T 2950 3200 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 800 3100 800 1 0 0
 {
@@ -278,7 +278,7 @@ pinseq=24
 T 450 9400 3 8 1 1 0 0 1
 pinlabel=P1.0
 T 450 9400 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 9000 400 9000 1 0 0
 {
@@ -289,7 +289,7 @@ pinseq=25
 T 450 9000 3 8 1 1 0 0 1
 pinlabel=P1.1
 T 450 9000 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 8600 400 8600 1 0 0
 {
@@ -300,7 +300,7 @@ pinseq=26
 T 450 8600 3 8 1 1 0 0 1
 pinlabel=P1.2
 T 450 8600 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 8200 400 8200 1 0 0
 {
@@ -311,7 +311,7 @@ pinseq=27
 T 450 8200 3 8 1 1 0 0 1
 pinlabel=P1.3
 T 450 8200 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 7800 400 7800 1 0 0
 {
@@ -322,7 +322,7 @@ pinseq=28
 T 450 7800 3 8 1 1 0 0 1
 pinlabel=P1.4
 T 450 7800 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 7400 400 7400 1 0 0
 {
@@ -333,7 +333,7 @@ pinseq=29
 T 450 7400 3 8 1 1 0 0 1
 pinlabel=P1.5
 T 450 7400 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 7000 400 7000 1 0 0
 {
@@ -344,7 +344,7 @@ pinseq=30
 T 450 7000 3 8 1 1 0 0 1
 pinlabel=P1.6
 T 450 7000 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 6600 400 6600 1 0 0
 {
@@ -355,7 +355,7 @@ pinseq=31
 T 450 6600 3 8 1 1 0 0 1
 pinlabel=P1.7
 T 450 6600 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 6000 400 6000 1 0 0
 {
@@ -366,7 +366,7 @@ pinseq=32
 T 450 6000 3 8 1 1 0 0 1
 pinlabel=P3.0 (RXD)
 T 450 6000 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 5600 400 5600 1 0 0
 {
@@ -377,7 +377,7 @@ pinseq=33
 T 450 5600 3 8 1 1 0 0 1
 pinlabel=P3.1 (TXD)
 T 450 5600 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 5200 400 5200 1 0 0
 {
@@ -388,7 +388,7 @@ pinseq=34
 T 450 5200 3 8 1 1 0 0 1
 pinlabel=P3.2 (INT0)
 T 450 5200 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 L 882 5324 1226 5324 3 0 0 0 -1 -1
 P 100 4800 400 4800 1 0 0
@@ -400,7 +400,7 @@ pinseq=35
 T 450 4800 3 8 1 1 0 0 1
 pinlabel=P3.3 (INT1)
 T 450 4800 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 L 866 4924 1170 4924 3 0 0 0 -1 -1
 P 100 4400 400 4400 1 0 0
@@ -412,7 +412,7 @@ pinseq=36
 T 450 4400 3 8 1 1 0 0 1
 pinlabel=P3.4 (T0)
 T 450 4400 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 4000 400 4000 1 0 0
 {
@@ -423,7 +423,7 @@ pinseq=37
 T 450 4000 3 8 1 1 0 0 1
 pinlabel=P3.5 (T1)
 T 450 4000 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 P 100 3600 400 3600 1 0 0
 {
@@ -434,7 +434,7 @@ pinseq=38
 T 450 3600 3 8 1 1 0 0 1
 pinlabel=P3.6 (WR)
 T 450 3600 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 L 874 3724 1126 3724 3 0 0 0 -1 -1
 P 100 3200 400 3200 1 0 0
@@ -446,10 +446,10 @@ pinseq=39
 T 450 3200 3 8 1 1 0 0 1
 pinlabel=P3.7 (RD)
 T 450 3200 5 8 0 1 0 2 1
-pintype=i/o
+pintype=io
 }
 L 858 3324 1066 3324 3 0 0 0 -1 -1
-P 1000 100 1000 400 1 0 0
+P 1000 100 1000 300 1 0 0
 {
 T 1050 200 5 8 1 1 0 0 1
 pinnumber=43
@@ -484,7 +484,7 @@ pintype=out
 }
 B 400 400 2600 9500 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 {
-T 400 9900 9 10 0 1 0 0 1
+T 400 11550 5 10 0 0 0 0 1
 numslots=0
 }
 P 3300 2600 3000 2600 1 0 0
@@ -496,7 +496,7 @@ pinseq=43
 T 2950 2600 9 8 1 1 0 6 1
 pinlabel=(SCL) P4.0
 T 2950 2600 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
 P 3300 2200 3000 2200 1 0 0
 {
@@ -507,5 +507,52 @@ pinseq=44
 T 2950 2200 9 8 1 1 0 6 1
 pinlabel=(SDA) P4.1
 T 2950 2200 5 8 0 1 0 8 1
-pintype=i/o
+pintype=io
 }
+T 400 11750 5 10 0 0 0 0 1
+documentation=http://www.atmel.com/dyn/resources/prod_documents/doc4136.pdf
+T 400 11950 5 10 0 0 0 0 1
+description=USB C51-based microcontroller with 32kB  flash
+T 400 11150 5 10 0 0 0 0 1
+net=AVcc:17
+T 400 10950 5 10 0 0 0 0 1
+net=AGND:19
+V 1000 350 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+L 850 575 1125 575 3 0 0 0 -1 -1
+T 400 11350 5 10 0 0 0 0 1
+net=VREF:24
+P 100 2600 400 2600 1 0 0
+{
+T 300 2650 5 8 1 1 0 6 1
+pinnumber=22
+T 300 2650 5 8 0 0 0 6 1
+pinseq=45
+T 450 2600 3 8 1 1 0 0 1
+pinlabel=D-
+T 450 2600 5 8 0 1 0 2 1
+pintype=io
+}
+P 100 2200 400 2200 1 0 0
+{
+T 300 2250 5 8 1 1 0 6 1
+pinnumber=23
+T 300 2250 5 8 0 0 0 6 1
+pinseq=46
+T 450 2200 3 8 1 1 0 0 1
+pinlabel=D+
+T 450 2200 5 8 0 1 0 2 1
+pintype=io
+}
+P 100 1800 400 1800 1 0 0
+{
+T 300 1850 5 8 1 1 0 6 1
+pinnumber=21
+T 300 1850 5 8 0 0 0 6 1
+pinseq=47
+T 450 1800 3 8 1 1 0 0 1
+pinlabel=PLLF
+T 450 1800 5 8 0 1 0 2 1
+pintype=in
+}
+T 400 12150 5 10 0 0 0 0 1
+symversion=1.0

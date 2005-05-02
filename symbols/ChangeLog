@@ -1,3 +1,9 @@
+2005-03-25 Werner Hoch <werner.ho@gmx.de>
+	* memory/27C2001-1.sym: lowercase pintype
+	* memory/*: added some datasheet links
+	* micro/AT89C5131_PLCC-1.sym: added missing pins, ...
+	
+
 2005-03-14 07:13  Dan McMahill <danmc>
 
 	* maxim/: max12527-1.sym, max12557-1.sym: add 2 more Maxim high

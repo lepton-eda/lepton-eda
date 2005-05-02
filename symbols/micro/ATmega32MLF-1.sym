@@ -340,7 +340,7 @@ pinnumber=30
 T 100 7900 5 10 0 1 0 0 1
 pinseq=30
 T 100 7900 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 7500 400 7500 1 0 0
 {
@@ -351,7 +351,7 @@ pinnumber=31
 T 100 7500 5 10 0 1 0 0 1
 pinseq=31
 T 100 7500 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 7100 400 7100 1 0 0
 {
@@ -362,7 +362,7 @@ pinnumber=32
 T 100 7100 5 10 0 1 0 0 1
 pinseq=32
 T 100 7100 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 6700 400 6700 1 0 0
 {
@@ -373,7 +373,7 @@ pinnumber=33
 T 100 6700 5 10 0 1 0 0 1
 pinseq=33
 T 100 6700 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 6300 400 6300 1 0 0
 {
@@ -384,7 +384,7 @@ pinnumber=34
 T 100 6300 5 10 0 1 0 0 1
 pinseq=34
 T 100 6300 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 5900 400 5900 1 0 0
 {
@@ -395,7 +395,7 @@ pinnumber=35
 T 100 5900 5 10 0 1 0 0 1
 pinseq=35
 T 100 5900 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 5500 400 5500 1 0 0
 {
@@ -406,7 +406,7 @@ pinnumber=36
 T 100 5500 5 10 0 1 0 0 1
 pinseq=36
 T 100 5500 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 100 5100 400 5100 1 0 0
 {
@@ -417,7 +417,7 @@ pinnumber=37
 T 100 5100 5 10 0 1 0 0 1
 pinseq=37
 T 100 5100 5 10 0 1 0 0 1
-pintype=IO
+pintype=io
 }
 P 2200 100 2200 400 1 0 0
 {

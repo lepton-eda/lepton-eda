@@ -1,4 +1,4 @@
-v 20031231 1
+v 20050313 1
 P 0 1800 300 1800 1 0 0
 {
 T 200 1850 5 8 1 1 0 6 1
@@ -343,3 +343,5 @@ T 300 7650 5 10 0 0 0 0 1
 net=Vcc:32
 T 300 6650 9 10 1 0 0 0 1
 ST39SF020A
+T 300 8250 5 10 0 0 0 0 1
+documentation=http://www.sst.com/downloads/datasheet/S71147.pdf
