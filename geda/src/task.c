@@ -70,7 +70,7 @@ static GdkColor Color;
 static int NewIntCmd(const char *szFilename, struct Action_s *pAction);
 static int NewExtCmd(const char *szFilename, struct Action_s *pAction);
 static int NewImport(const char *szFilename, struct Action_s *pAction);
-static void StrReplace(char *szString, const char *szFrom, const char *szTo);
+static char* StrReplace(char *szString, const char *szFrom, const char *szTo);
 
 
 
@@ -411,10 +411,10 @@ static int NewExtCmd(const char *szFilename, struct Action_s *pAction)
 		return FAILURE;
 	}
 	strcpy(pTask->szValue, pAction->szCommand);
-	StrReplace((char *) pTask->szValue, "%FILENAME%", (char *) FileGetName(szFilename));
-	StrReplace((char *) pTask->szValue, "%FILEEXT%", (char *) FileGetExt(szFilename));
-	StrReplace((char *) pTask->szValue, "%FILEDIR%", (char *) FileGetDir(szFilename));
-	StrReplace((char *) pTask->szValue, "%FILEREL%", (char *) FileGetRel(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILENAME%", (char *) FileGetName(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILEEXT%", (char *) FileGetExt(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILEDIR%", (char *) FileGetDir(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILEREL%", (char *) FileGetRel(szFilename));
 		
 	/* display message box if task blocking */
 	if (pTask->fFlags & TASK_BLOCKING)
@@ -479,10 +479,10 @@ static int NewImport(const char *szFilename, struct Action_s *pAction)
 		return FAILURE;
 	}
 	strcpy(pTask->szValue, pAction->szImport);
-	StrReplace((char *) pTask->szValue, "%FILENAME%", (char *) FileGetName(szFilename));
-	StrReplace((char *) pTask->szValue, "%FILEEXT%", (char *) FileGetExt(szFilename));
-	StrReplace((char *) pTask->szValue, "%FILEDIR%", (char *) FileGetDir(szFilename));
-	StrReplace((char *) pTask->szValue, "%FILEREL%", (char *) FileGetRel(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILENAME%", (char *) FileGetName(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILEEXT%", (char *) FileGetExt(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILEDIR%", (char *) FileGetDir(szFilename));
+	pTask->szValue = StrReplace((char *) pTask->szValue, "%FILEREL%", (char *) FileGetRel(szFilename));
 			
 	pTask->pMenuItem = MenuWindowNew(pAction->szName);
 	pTask->Id = 0;
@@ -503,14 +503,14 @@ static int NewImport(const char *szFilename, struct Action_s *pAction)
 
 
 
-static void StrReplace(char *szString, const char *szFrom, const char *szTo)
+static char* StrReplace(char *szString, const char *szFrom, const char *szTo)
 {
 	char *szBegin, *szTemp;
 	int i;
 	
 	szTemp = (void *) malloc(strlen(szString) + 1);
 	if (szTemp == NULL)
-		return;
+		return NULL;
 	
 	for (szBegin = strstr(szString, szFrom); szBegin != NULL; szBegin = strstr(szString, szFrom))
 	{
@@ -520,11 +520,18 @@ static void StrReplace(char *szString, const char *szFrom, const char *szTo)
 		
 		strcpy(szString, szTemp);
 		szString[i] = 0;
-		
-		realloc(szString, strlen(szString) + strlen(szTo) + strlen(szBegin + strlen(szFrom)) + 1);
+	
+                /* realloc can change the modified pointer completely, so */
+                /* it needs to be assigned.  Not doing this caused a nasty */
+                /* bug on some architectures/machines. */	
+		szString = realloc(szString, strlen(szString) + strlen(szTo) + strlen(szBegin + strlen(szFrom)) + 1);
 		strcat(szString, szTo);
 		strcat(szString, szBegin + strlen(szFrom));
 	}
 	
 	free((void *) szTemp);
+
+        /* You must return the pointer since realloc might have completely */
+        /* changed the pointer. */
+        return szString;
 }

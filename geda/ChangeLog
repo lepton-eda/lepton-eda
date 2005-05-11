@@ -1,3 +1,12 @@
+2005-05-10 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/task.c: Fixed a nasty crash.  In StrReplace(), realloc
+	may return a completely new pointer which needs to be assigned
+	and used.  This modified pointer also needed to be returned
+	from StrReplace().  Note, gManager will not quite work right with
+	files (schematics/pcb/etc...) that do not live in the project 
+	directory.  This bug was logged against the debian packages.
+
 2005-03-25 Werner Hoch <werner.ho@gmx.de>
 	* src/project.c: added file check, geda hang if theres no file
 	  selection or selection is a directory (Bug #156)
