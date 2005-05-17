@@ -68,6 +68,10 @@
 ;;               was confusing ngspice.
 ;;  10.9.2004 -- Added patches for voltage controlled switches from Peter Kaiser.
 ;;  3.16.2005 -- Fixed CCCS bug (typo in Vsense) noticed by David Logan
+;;  5.16.2005 -- Modified behavior of .INCLUDE directive.  Now by default it just 
+;;               spits out the string instead of putting the contents of the file
+;;               into the SPICE netlist.  You can force insertion of the file using
+;;               the -e flag.
 ;;
 ;;**********************************************************************************
 ;;
@@ -1214,7 +1218,6 @@
 
 ;;----------------------------------------------------------
 ;; Include SPICE statements from a SPICE directive block.
-;; This includes an arbitrary piece of SPICE code.  
 ;;----------------------------------------------------------
 (define spice-sdb:write-directive
   (lambda (package port)
@@ -1249,15 +1252,49 @@
 
 ;;----------------------------------------------------------
 ;; Include a file using an .INCLUDE directive
+;; Changed on 5.16.2005: to embedd the contents of the file,
+;; you must call gnetlist with the -e flag set.
 ;;----------------------------------------------------------
 (define spice-sdb:write-include
   (lambda (package port)
-    (let ((file-name (gnetlist:get-package-attribute package "file")) )
-      (debug-spew (string-append "Found .INCLUDE box.  Refdes = " package "\n"))
-      (display (string-append ".INCLUDE " file-name "\n") port)
-    )
-  )
-)
+    (let ((value (gnetlist:get-package-attribute package "value"))
+	  (file (gnetlist:get-package-attribute package "file"))
+	  )   ;; end of local assignments
+
+      (debug-spew (string-append "Found SPICE include box.  Refdes = " package "\n"))
+      ;; (debug-spew (string-append "   value = " value "\n"))
+      ;; (debug-spew (string-append "   file = " file "\n"))
+      
+      (cond
+       ;; First look to see if value attribute is used
+       ((not (string=? value "unknown"))
+	(begin
+	  ;; (debug-spew "This include directive uses a value attribute.\n")
+	  (if (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
+	      (begin
+		(spice-sdb:insert-text-file value port)                 ;; -e found: invoke insert-text-file
+		(debug-spew (string-append "embedding contents of " value " into netlist.\n")))
+	      (begin
+		(display (string-append ".INCLUDE " value "\n") port)   ;; -e not found: just print out .INCLUDE card
+		(debug-spew "placing .include directive string into netlist.\n"))
+	 )))
+
+       ;; Now look to see if file is used
+       ((not (string=? file "unknown"))
+	(begin
+	  ;; (debug-spew "This include directive uses a file attribute.\n")
+	  (if (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
+	      (begin
+		(spice-sdb:insert-text-file file port)                 ;; -e found: invoke insert-text-file
+		(debug-spew (string-append "embedding contents of " value " into netlist.\n")))
+	      (begin
+		(display (string-append ".INCLUDE " file "\n") port)   ;; -e not found: just print out .INCLUDE card
+		(debug-spew "placing .include directive string into netlist.\n"))
+	  )  ;; end of if (calling-flag
+        )
+       )
+     ) ;; end of cond
+)))
 
 ;;----------------------------------------------------------
 ;; Include an option using an .OPTIONS directive

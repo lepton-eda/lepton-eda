@@ -1,3 +1,15 @@
+2005-05-16 Stuart Brorson <sdb@cloud9.net>
+
+        * include/globals.h, src/globals.c, src/parsecmd.c:
+	Incorporated new -e command line flag which forces embedding
+	of .include file's contents into SPICE netlist.
+
+2005-05-16 Stuart Brorson <sdb@cloud9.net>
+
+        * scheme/gnet-spice-sdb.scm: Modified so that .include
+	doesn't embedd the included file's contents in the SPICE
+	netlist by default.
+
 2005-03-16 Stuart Brorson <sdb@cloud9.net>
 
         * scheme/gnet-spice-sdb.scm: fix typo in CCCS.  Now usage of 
