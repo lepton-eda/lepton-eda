@@ -36,7 +36,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "o:qiIhvsg:c:l:m:O:"
+#define OPTIONS "o:qieIhvsg:c:l:m:O:"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -47,6 +47,7 @@ extern int optind;
 void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
+    printf("  -e                Force embedding contents of .include file\n");
     printf("  -i                Interactive scheme mode\n");
     printf("  -I                Put .INCLUDE <filename> in output file instead\n");
     printf("                    of model file's contents\n");
@@ -117,6 +118,11 @@ int parse_commandline(int argc, char *argv[])
         case 'I':
 	    backend_params = g_slist_append(backend_params, "include_mode");
             include_mode = TRUE;
+            break;
+
+        case 'e':
+	    backend_params = g_slist_append(backend_params, "embedd_mode");
+            embedd_mode = TRUE;
             break;
 
 	case 'q':
