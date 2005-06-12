@@ -1,3 +1,8 @@
+2005-06-12 Stuart Brorson <sdb@cloud9.net>
+	* scheme/gnet-spice-sdb.scm: Changed order of writing out 
+	netlist and .model/.subckt cards to facilitate use of 
+	numparam with ngspice.
+	
 2005-05-16 Stuart Brorson <sdb@cloud9.net>
 
         * include/globals.h, src/globals.c, src/parsecmd.c:
