@@ -1,3 +1,8 @@
+2005-06-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/i_vars.c: Fixed some more variables which were shadowing the
+	real variables in libgeda/noweb/i_vars.c.
+
 2005-04-10 Carlos Nieves Onega <cnieves@iespana.es>
 	* src/gtkitementry_1_2.c, src/gtkitementry_2_2.c,
 	  src/gtksheet_1_2.c src/gtksheet_2_2.c:

@@ -54,8 +54,6 @@ int   default_text_caps = LOWER;
 int   default_attribute_color = ATTRIBUTE_COLOR;
 int   default_paper_width = 11000; /* letter size */
 int   default_paper_height = 85000;
-int   default_init_right = WIDTH_C;
-int   default_init_bottom = HEIGHT_C;
 
 
 /*------------------------------------------------------------------
@@ -86,7 +84,5 @@ void i_window_vars_set(TOPLEVEL * pr_current)
   pr_current->attribute_color = default_attribute_color;
   pr_current->paper_width = default_paper_width;
   pr_current->paper_height = default_paper_height;
-  pr_current->init_right = default_init_right;
-  pr_current->init_bottom = default_init_bottom;
   
 }

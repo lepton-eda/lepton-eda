@@ -1,3 +1,13 @@
+2005-06-17 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/i_vars.nw, x_window.nw: Fixed a long standing bug
+	found in the OSX which prevented the full world space to used.
+	Basically a variable was defined twice, once in libgeda and once
+	in gschem.  Apparently OSX behaves very differently when this
+	happens (the two variables are different while other platforms
+	didn't complain but the "right" thing happened).  This bug was 
+	created when the rc code was refactored.
+
 2005-03-13 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Removed all tests for gtk+ 1.2.x and fixed error 

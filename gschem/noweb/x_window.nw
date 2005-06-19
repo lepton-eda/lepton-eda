@@ -185,11 +185,6 @@ x_window_setup (TOPLEVEL *toplevel)
   toplevel->DONT_EXPOSE    = 1;
   toplevel->DONT_RECALC    = 1;
 
-  /* the default coord sizes */
-  /* real ones set in rc file */
-  toplevel->init_right  = default_init_right;
-  toplevel->init_bottom = default_init_bottom;
-
   /* X related stuff */
   toplevel->display_height = gdk_screen_height ();
   toplevel->display_width  = gdk_screen_width ();
