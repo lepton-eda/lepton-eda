@@ -50,7 +50,6 @@ extern char *script_filename;
 extern char *output_filename;
 
 
-extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 

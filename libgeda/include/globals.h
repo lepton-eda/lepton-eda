@@ -49,7 +49,6 @@ extern COLOR colors[MAX_COLORS];
 extern char rc_filename[256]; /* size is hack */
 #endif
 
-extern int logfile_fd;
 extern int do_logging;
 extern int logging_dest;
 

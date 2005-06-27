@@ -1,3 +1,8 @@
+2005-06-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/globals.h: Removed a completely bogus extern declaration.
+	Reported by Wojciech Kazubski.  Thanks.
+
 2005-04-20 Carlos Nieves Onega <cnieves@iespana.es>
         * include/prototype.h, noweb/o_picture.nw, noweb/f_print.nw:
 	Added support for printing pictures to postscript.

@@ -1,3 +1,9 @@
+2005-06-26 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * include/globals.h, noweb/global.c: Removed a completely bogus
+        extern declaration and variable.  Reported by Wojciech Kazubski.
+        Thanks.
+
 2005-06-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/i_vars.nw, x_window.nw: Fixed a long standing bug

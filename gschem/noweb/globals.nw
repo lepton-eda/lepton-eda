@@ -75,7 +75,6 @@ GdkVisual *visual;
 GdkColor white;
 GdkColor black;
 
-int logfile_fd = -1;
 int do_logging = TRUE;
 int logging_dest = LOG_WINDOW;
 
@@ -111,4 +110,4 @@ SCM copy_component_hook;
 SCM move_component_hook;
 
 
-@ %def global_window_current rc_filename script_filename output_filename colormap visual white black logfile_fd do_logging logging_dest arc_draw_func box_draw_func circle_draw_func complex_draw_func line_draw_func net_draw_func bus_draw_func text_draw_func pin_draw_func select_func x_log_update_func quiet_mode verbose_mode stroke_info_mode object_buffer add_component_hook copy_component_hook move_component_hook
+@ %def global_window_current rc_filename script_filename output_filename colormap visual white black do_logging logging_dest arc_draw_func box_draw_func circle_draw_func complex_draw_func line_draw_func net_draw_func bus_draw_func text_draw_func pin_draw_func select_func x_log_update_func quiet_mode verbose_mode stroke_info_mode object_buffer add_component_hook copy_component_hook move_component_hook
