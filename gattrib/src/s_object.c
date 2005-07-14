@@ -61,17 +61,21 @@
  *    to attrib_graphic.
  * 3. It calls o_attrib_add to wrap attrib_graphic with (ATTRIB )
  *------------------------------------------------------------------ */
-void s_object_add_comp_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value)
+void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
+					char *new_attrib_name, 
+					char *new_attrib_value,
+					gint visibility,
+					gint show_name_value)
 {
   char *name_value_pair;
   OBJECT *attrib_graphic_object;
 
-  /* One last sanity check */
+
+  /* One last sanity check, then add attrib */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, INVISIBLE, 
-							 SHOW_NAME_VALUE, o_current);
+    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, visibility, 
+							 show_name_value, o_current);
   }
   
   return;
@@ -107,6 +111,7 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
   char *name_value_pair;
   OBJECT *attrib_graphic_object;
 
+
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
@@ -126,13 +131,17 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  * This fcn finds the instance of attrib_name on o_current, and
  * replaces it's value wiht new_attrib_value.
  *------------------------------------------------------------------*/
-void s_object_replace_attrib_in_object(OBJECT *o_current, char *new_attrib_name, 
-			       char *new_attrib_value)
+void s_object_replace_attrib_in_object(OBJECT *o_current, 
+				       char *new_attrib_name, 
+				       char *new_attrib_value,
+				       gint visibility, 
+				       gint show_name_value)
 {
   ATTRIB *a_current;
   char *old_attrib_text;
   char *old_attrib_name;
   char *new_attrib_text;
+
 
   a_current = o_current->attribs;
   while (a_current != NULL) {
@@ -148,18 +157,23 @@ void s_object_replace_attrib_in_object(OBJECT *o_current, char *new_attrib_name,
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
 	free(a_current->object->text->string);   /* remove old attrib string */
 	a_current->object->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
+	if (visibility != LEAVE_VISIBILITY_ALONE) 
+	  a_current->object->visibility = visibility;
+	if (show_name_value != LEAVE_NAME_VALUE_ALONE)
+	  a_current->object->show_name_value = show_name_value; 
 	free(new_attrib_text);
 	free(old_attrib_text);
 	free(old_attrib_name);
 	return;     /* we are done -- leave. */
-      }
-      free(old_attrib_text);
-      free(old_attrib_name);
+      } else {
+	free(old_attrib_text);
+	free(old_attrib_name);
+      }  /* if (strcmp . . . . */
     } /* if (a_current . . . . */
-
-    a_current = a_current->next;
-  }
   
+    a_current = a_current->next;
+  }  /* while */
+
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
   fprintf(stderr, 

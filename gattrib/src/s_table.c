@@ -76,7 +76,8 @@ TABLE **s_table_new(int rows, int cols)
       (new_table[i][j]).col_name = NULL;
       (new_table[i][j]).row = i;
       (new_table[i][j]).col = j;
-      (new_table[i][j]).visibility = 3; /* both name & value visible */
+      (new_table[i][j]).visibility = VISIBLE; 
+      (new_table[i][j]).show_name_value = SHOW_VALUE;
     }
   }
 
@@ -111,7 +112,9 @@ TABLE **s_table_resize(TABLE **table,
       (new_table[i][j]).col_name = NULL;
       (new_table[i][j]).row = i;
       (new_table[i][j]).col = j;
-      (new_table[i][j]).visibility = 3; /* both name & value visible */
+      (new_table[i][j]).visibility = VISIBLE;
+      (new_table[i][j]).show_name_value = SHOW_VALUE;
+      
     }
   }
 
@@ -231,6 +234,8 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
   gchar *attrib_name;
   gchar *attrib_value;
   ATTRIB *a_current;
+  gint old_visibility, old_show_name_value;
+
 
   if (verbose_mode) {
     printf("- Starting internal component TABLE creation\n");
@@ -275,6 +280,8 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
             attrib_text = g_strdup(a_current->object->text->string);
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
             attrib_value = u_basic_breakup_string(attrib_text, '=', 1);
+	    old_visibility = a_current->object->visibility;
+	    old_show_name_value = a_current->object->show_name_value;
 
 	    /* Don't include "refdes" or "slot" because they form the row name. */
             if ( (strcmp(attrib_name, "refdes") != 0)
@@ -294,6 +301,8 @@ void s_table_add_toplevel_comp_items_to_comp_table(OBJECT *start_obj) {
               ((sheet_head->component_table)[row][col]).row_name = g_strdup(temp_uref);
               ((sheet_head->component_table)[row][col]).col_name = g_strdup(attrib_name);
               ((sheet_head->component_table)[row][col]).attrib_value = g_strdup(attrib_value);
+              ((sheet_head->component_table)[row][col]).visibility = old_visibility;
+              ((sheet_head->component_table)[row][col]).show_name_value = old_show_name_value;
             }
             free(attrib_name);
             free(attrib_text);

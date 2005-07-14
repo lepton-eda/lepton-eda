@@ -682,8 +682,11 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   char *new_attrib_value;
   char *old_attrib_name;
   char *old_attrib_value;
+  gchar *refdes;
   ATTRIB *a_current;
   int count = 0;  /* This is to fake out a fcn called later */
+  gint row, col;
+  gint visibility, show_name_value;
 
 #if DEBUG
   printf("-----  Entering s_toplevel_update_component_attribs_in_toplevel.\n");
@@ -767,6 +770,16 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	 new_attrib_value);
 #endif
 
+  /* Now get row and col where this new attrib lives.  Then get 
+   * visibility of the new attrib stored in the component table */
+  /* We'll need this later */
+  refdes = g_strdup(s_attrib_get_refdes(o_current));
+  row = s_table_get_index(sheet_head->master_comp_list_head, refdes);
+  col = s_table_get_index(sheet_head->master_comp_attrib_list_head, new_attrib_name);
+  visibility = sheet_head->component_table[row][col].visibility;
+  show_name_value = sheet_head->component_table[row][col].show_name_value;
+  free(refdes);
+
 
     /* -------  Four cases to consider: Case 1 ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
@@ -775,7 +788,11 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to replace old attrib with name= %s, value= %s\n",
 	     new_attrib_name, new_attrib_value);
 #endif
-      s_object_replace_attrib_in_object(o_current, new_attrib_name, new_attrib_value);
+      s_object_replace_attrib_in_object(o_current, 
+					new_attrib_name, 
+					new_attrib_value, 
+					visibility, 
+					show_name_value);
     }
 
     /* -------  Four cases to consider: Case 2 ----- */
@@ -797,7 +814,11 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	     new_attrib_name, new_attrib_value);
 #endif 
 
-      s_object_add_comp_attrib_to_object(o_current, new_attrib_name, new_attrib_value);
+      s_object_add_comp_attrib_to_object(o_current, 
+					 new_attrib_name, 
+					 new_attrib_value, 
+					 visibility,
+					 show_name_value);
 
       /* -------  Four cases to consider: Case 4 ----- */
     } else {
@@ -806,6 +827,9 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       printf("     -- In s_toplevel_update_component_attribs_in_toplevel, nothing needs to be done.\n");
 #endif
     }
+
+    /* Toggle attribute visibility and name/value setting */
+    
 
     /* free everything and iterate */
     if (new_attrib_name != NULL) {
@@ -977,17 +1001,21 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
     }
     old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
                                                                                                        
-    /* -------  Four cases to consider: Case 1 ----- */
+    /* -------  Four cases to consider: Case 1: old and new attribs exist ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
       /* simply write new attrib into place of old one. */
 #if DEBUG
       printf("In s_toplevel_update_pin_attribs_in_toplevel, about to replace old attrib with new one: name= %s, value= %s\n",
              new_attrib_name, new_attrib_value);
 #endif
-      s_object_replace_attrib_in_object(o_pin, new_attrib_name, new_attrib_value);
+      s_object_replace_attrib_in_object(o_pin, 
+					new_attrib_name, 
+					new_attrib_value, 
+					LEAVE_VISIBILITY_ALONE,
+					LEAVE_NAME_VALUE_ALONE); 
     }
                                                                                                        
-    /* -------  Four cases to consider: Case 2 ----- */
+    /* -------  Four cases to consider: Case 2: old attrib exists, new one doesn't ----- */
     else if ( (old_attrib_value != NULL) && (new_attrib_value == NULL) ) {
       /* remove attrib from pin */
 #if DEBUG
@@ -997,7 +1025,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
       s_object_remove_attrib_in_object(o_pin, new_attrib_name);
     }
                                                                                                        
-    /* -------  Four cases to consider: Case 3 ----- */
+    /* -------  Four cases to consider: Case 3: No old attrib, new one exists. ----- */
     else if ( (old_attrib_value == NULL) && (new_attrib_value != NULL) ) {
       /* add new attrib to pin. */
                                                                                                        

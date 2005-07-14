@@ -64,43 +64,51 @@ static GtkItemFactoryEntry menu_items[] = {
   /* ------- File menu ------- */
   { "/_File", 
     NULL,
-    NULL, 0, 
+    NULL, 
+    0, 
     "<Branch>" 
   },
+
   { "/File/_Open",
     "<control>O", 
     s_toplevel_menubar_file_open, 
     0, 
     NULL 
   },
+
   { "/File/_Save",
     "<control>S", 
     s_toplevel_menubar_file_save, 
     0, 
     NULL },
+
   { "/File/sep1",    
     NULL,    
     NULL,
     0, 
     "<Separator>"
   },
+
   { "/File/Print setup",
     NULL,
     s_toplevel_menubar_unimplemented_feature,
     0, 
     NULL 
   },
+
   { "/File/Print",
     NULL,
     s_toplevel_menubar_unimplemented_feature,
     0, 
     NULL },
+
   { "/File/sep1",    
     NULL,    
     NULL,
     0, 
     "<Separator>"
   },
+
   { "/File/Quit",   
     "<control>Q", 
     gattrib_really_quit,
@@ -114,71 +122,70 @@ static GtkItemFactoryEntry menu_items[] = {
     0, 
     "<Branch>" 
   },
+
   { "/Edit/Add new attrib column",      
     NULL,  
     s_toplevel_menubar_edit_newattrib, 
     0, 
     NULL
   },
+
   { "/Edit/Delete attrib column",  
     NULL,  
     s_toplevel_menubar_edit_delattrib,
     0,
     NULL 
   },
+
   { "/Edit/Search for attrib value",
     NULL,
     s_toplevel_menubar_unimplemented_feature,
     0, 
     NULL 
   },
+
   { "/Edit/Search and replace attrib value", 
     NULL, 
     s_toplevel_menubar_unimplemented_feature,
     0, 
     NULL 
   },
+
   { "/Edit/Search for refdes", 
     NULL,
     s_toplevel_menubar_unimplemented_feature,
     0,
     NULL 
   },
-  /* ------- Options menu ------- */
-  { "/_Options",    
+  /* ------- Visibility menu ------- */
+  { "/_Visibility",    
     NULL,
     NULL,
     0, 
     "<Branch>" 
   },
-  { "/Options/Set attrib visibility",
+  { "/Visibility/Set selected invisible",
     NULL,
-    NULL,
-    0,
-    "<Branch>"
-  },
-  { "/Options/Set attrib visibility/invisible",
-    NULL,
-    s_toplevel_menubar_unimplemented_feature,
+    s_visibility_set_invisible,
     0,
     NULL
   },
-  { "/Options/Set attrib visibility/value only",
+  { "/Visibility/Set selected name visible only",
     NULL,
-    s_toplevel_menubar_unimplemented_feature,
+    s_visibility_set_name_only,
     0,
     NULL
   },
-  { "/Options/Set attrib visibility/name only",
+  { "/Visibility/Set selected value visible only",
     NULL,
-    s_toplevel_menubar_unimplemented_feature,
+    s_visibility_set_value_only,
+    0,
+    NULL
+  },
+  { "/Visibility/Set selected name and value visible",
+    NULL,
+    s_visibility_set_name_and_value,
     0, 
-    NULL
-  },
-  { "/Options/Set attrib visibility/name and value visible", 
-    NULL,
-    s_toplevel_menubar_unimplemented_feature,
-    0,
     NULL
   },
   /* ------- Help menu ------- */

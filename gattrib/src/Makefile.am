@@ -32,6 +32,7 @@ gattrib_SOURCES = \
 		s_object.c \
 		s_attrib.c \
 		s_toplevel.c \
+		s_visibility.c \
 		gattrib.c 
 else
 gattrib_SOURCES = \
@@ -56,6 +57,7 @@ gattrib_SOURCES = \
 		s_object.c \
 		s_attrib.c \
 		s_toplevel.c \
+		s_visibility.c \
 		gattrib.c 
 endif
 

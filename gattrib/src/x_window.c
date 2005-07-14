@@ -87,7 +87,7 @@
 void
 x_window_init()
 {
-  /* note that the graphical widgets themselves (window, vbox, menu_bar)
+  /* note that the graphical widgets themselves (window, main_vbox, menu_bar)
    * are globals defined in ../include/globals.h   On pr_current I 
    * attach pointers to some of them here for future reference.  */
 
@@ -122,16 +122,16 @@ x_window_init()
 		      GTK_SIGNAL_FUNC (gattrib_quit), NULL);
   
 
-  /* -----  Now create vbox.  This is a container which organizes child  ----- */  
+  /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
   /* -----  widgets into a vertical column.  ----- */  
   /* main_vbox is a global defined in globals.h */
 #ifdef DEBUG
   printf("In x_window_init, about to set up vobx.\n");
 #endif
-  main_vbox=gtk_vbox_new(FALSE,1);
+  main_vbox = gtk_vbox_new(FALSE,1);
   gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
-  gtk_container_add(GTK_CONTAINER(window), main_vbox);
-  gtk_widget_show(main_vbox);
+  gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
+  gtk_widget_show(GTK_WIDGET(main_vbox) );
 
 
   /* -----  Now create menu bar  ----- */  
@@ -359,7 +359,7 @@ x_window_add_items()
   }
 
   gtk_widget_show( GTK_WIDGET(notebook) );
-  gtk_widget_show( GTK_WIDGET(main_vbox) );
+  /*  gtk_widget_show( GTK_WIDGET(main_vbox) ); */
   gtk_widget_show( GTK_WIDGET(window) );
 
   return;

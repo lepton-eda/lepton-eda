@@ -1,6 +1,6 @@
 Gattrib todos.
 
-Updated 8.06.2004 -- SDB
+Last updated 7.13.2005 -- SDB
 
 --------------------------------------------------------------------
 This is a running list of things left to be done with gattrib.  Items
@@ -63,3 +63,10 @@ already completed are marked with  #####.
 *  User should be able to set attrib visibility.  How to implement & show?
 *  #####  Incorporate ability to add attrib columns.
 *  Refactor code so that it makes more sense architecturally.
+*  Fix behavior when using arrow keys to be more "MS Excel-like".  Current
+   Behavior is a PITA.
+*  Replicate attrib visibility code from comp attributes to net and pin
+   attributes.
+*  Change display of attrib text in each cell depending upon attrib
+   visibility state.  Example:  Invisible = light grey.  Name only = red.
+   Value only = normal.  Name & value = bold face.

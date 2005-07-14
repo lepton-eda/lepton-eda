@@ -109,18 +109,14 @@ struct st_sheet_data {
  * refdes/netname string held in the TOPLEVEL data structure, so that 
  * when SHEET_DATA is manipulated, so is TOPLEVEL.
  * -------------------------------------------------------------------- */
-#define ATTRIB_VIS_INVISIBLE 0
-#define ATTRIB_VIS_VALUE_ONLY 1
-#define ATTRIB_VIS_NAME_ONLY 2
-#define ATTRIB_VIS_BOTH 3
 struct st_table {
   int row;                       /* location on spreadsheet */
   int col;                       /* location on spreadsheet */
   gchar *row_name;               /* comp, net, or refdes:pin name */
   gchar *col_name;               /* attrib name */
   gchar *attrib_value;           /* attrib value */
-  int visibility;         /* 0 = invisible, 1 = value only, 2 = name only, 
-			   * 3 = both name & value visible  */
+  gint visibility;
+  gint show_name_value;
 
 };
 

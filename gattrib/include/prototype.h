@@ -108,20 +108,31 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *pin,
 
 
 /* ------------- s_object.c ------------- */
-void s_object_add_comp_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value);
-void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value);
-void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value);
+void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
+					char *new_attrib_name, 
+					char *new_attrib_value,
+					gint visibility,
+					gint show_name_value);
+void s_object_add_net_attrib_to_object(OBJECT *o_current, 
+				       char *new_attrib_name, 
+				       char *new_attrib_value);
+void s_object_add_pin_attrib_to_object(OBJECT *o_current, 
+				       char *new_attrib_name, 
+				       char *new_attrib_value);
 
-void s_object_replace_attrib_in_object(OBJECT *o_current, char *new_attrib_name, 
-			       char *new_attrib_value);
-void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name);
+void s_object_replace_attrib_in_object(OBJECT *o_current, 
+				       char *new_attrib_name, 
+				       char *new_attrib_value,
+				       gint visibility,
+				       gint show_name_value);
+void s_object_remove_attrib_in_object(OBJECT *o_current, 
+				      char *new_attrib_name);
 
-OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * w_current, char *text_string,
-				     int visibility, int show_name_value,
-				     OBJECT * object);
+OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * w_current, 
+					     char *text_string,
+					     gint visibility, 
+					     gint show_name_value,
+					     OBJECT * object);
 void s_object_delete_text_object_in_object(TOPLEVEL *w_current, OBJECT *test_object);
 int s_object_has_sym_file(OBJECT *object);
 
@@ -139,6 +150,14 @@ void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head);
 void verbose_print(char *string);
 void verbose_done(void);
 void verbose_reset_index(void);
+
+/* ------------- s_visibility.c ------------- */
+void s_visibility_set_invisible();
+void s_visibility_set_name_only();
+void s_visibility_set_value_only();
+void s_visibility_set_name_and_value();
+void s_visibility_set_cell(gint cur_page, gint row, gint col, 
+			   gint visibility, gint show_name_value);
 
 /* ------------- i_vars.c ------------- */
 void i_vars_set(TOPLEVEL * pr_current);

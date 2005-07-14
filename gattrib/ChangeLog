@@ -1,3 +1,9 @@
+2005-07-13 Stuart Brorson <sdb@cloud9.net>
+	* src/s_visibility.c, s_table.c, s_object.c, s_toplevel.c 
+	amongst others.  
+	Made changes to enable setting attribute visibility from
+	within gattrib.
+	
 2005-06-17 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/i_vars.c: Fixed some more variables which were shadowing the
