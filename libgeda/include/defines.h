@@ -60,10 +60,12 @@
 #define SHOW_NAME_VALUE         0
 #define SHOW_VALUE              1
 #define SHOW_NAME               2
+#define LEAVE_NAME_VALUE_ALONE  -1
 
 /* for visibility in st_objects */
-#define INVISIBLE       0
-#define VISIBLE         1
+#define INVISIBLE               0
+#define VISIBLE                 1
+#define LEAVE_VISIBILITY_ALONE -1
 
 /* For pin and net styles */
 #define THIN            0     
