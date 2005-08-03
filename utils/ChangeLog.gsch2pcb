@@ -1,6 +1,10 @@
 
 gsch2pcb Changelog
 ------------------
+1.5
+---------
+	* Fix handling of quoted flags in new CVS PCB versions.
+
 1.4
 ---------
 	* Handle the hi_res PCB Element[] format which is new in PCB CVS (as

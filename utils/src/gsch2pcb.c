@@ -41,7 +41,7 @@
 #include <dmalloc.h>
 #endif
 
-#define	GSC2PCB_VERSION		"1.4"
+#define	GSC2PCB_VERSION		"1.5"
 
 #define	DEFAULT_PCB_INC		"pcb.inc"
 
@@ -62,6 +62,7 @@ typedef struct
 	gboolean	still_exists,
 				new_format,
 				hi_res_format,
+				quoted_flags,
 				omit_PKG;
 	}
 	PcbElement;
@@ -103,8 +104,8 @@ static gint		verbose,
 				n_none,
 				n_empty;
 
-static gboolean	  remove_unfound_elements = TRUE,
-                                quiet_mode = FALSE,
+static gboolean	remove_unfound_elements = TRUE,
+				quiet_mode = FALSE,
 				force_element_files,
 				preserve,
 				fix_elements,
@@ -244,7 +245,7 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 	}
 
 static gchar *
-token(gchar *string, gchar **next)
+token(gchar *string, gchar **next, gboolean *quoted_ret)
 	{
 	static gchar	*str;
 	gchar			*s, *ret;
@@ -263,15 +264,21 @@ token(gchar *string, gchar **next)
 	if (*str == '"')
 		{
 		quoted = TRUE;
+		if (quoted_ret)
+			*quoted_ret = TRUE;
 		++str;
 		for (s = str; *s && *s != '"' && *s != '\n'; ++s)
 			;
 		}
 	else
+		{
+		if (quoted_ret)
+			*quoted_ret = FALSE;
 		for (s = str;
 				*s && (*s != ' ' && *s != '\t' && *s != ',' && *s != '\n');
 				++s)
 			;
+		}
 	ret = g_strndup(str, s - str);
 	str = (quoted && *s) ? s + 1 : s;
 	if (next)
@@ -319,9 +326,13 @@ pcb_element_line_parse(gchar *line)
 
 	el = g_new0(PcbElement, 1);
 
-	if (*(line + 7) == '[')
+	s = line + 7;
+	while (*s == ' ' || *s == '\t')
+		++s;
+
+	if (*s == '[')
 		el->hi_res_format = TRUE;
-	else if (*(line + 7) != '(')
+	else if (*s != '(')
 		{
 		g_free(el);
 		return NULL;
@@ -330,16 +341,16 @@ pcb_element_line_parse(gchar *line)
 	el->res_char = el->hi_res_format ? '[' : '(';
 	close_char = el->hi_res_format ? ']' : ')';
 
-	el->flags = token(line + 8, NULL);
-	el->description = token(NULL, NULL);
-	el->refdes = token(NULL, NULL);
-	el->value  = token(NULL, NULL);
+	el->flags = token(s + 1, NULL, &el->quoted_flags);
+	el->description = token(NULL, NULL, NULL);
+	el->refdes = token(NULL, NULL, NULL);
+	el->value  = token(NULL, NULL, NULL);
 
-	s = token(NULL, NULL);
+	s = token(NULL, NULL, NULL);
 	el->x = atoi(s);
 	g_free(s);
 
-	s = token(NULL, &t);
+	s = token(NULL, &t, NULL);
 	el->y = atoi(s);
 	g_free(s);
 
@@ -483,7 +494,7 @@ insert_element(FILE *f_out, gchar *element_file,
 	{
 	FILE		*f_in;
 	PcbElement	*el;
-	gchar		*s, buf[1024];
+	gchar		*fmt, *s, buf[1024];
 	gboolean	retval = FALSE;
 
 	if ((f_in = fopen(element_file, "r")) == NULL)
@@ -503,7 +514,11 @@ insert_element(FILE *f_out, gchar *element_file,
 		if ((el = pcb_element_line_parse(s)) != NULL)
 			{
 			simple_translate(el);
-			fprintf(f_out, "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+			fmt = el->quoted_flags ?
+						"Element%c\"%s\" \"%s\" \"%s\" \"%s\" %d %d%s\n" :
+						"Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n";
+
+			fprintf(f_out, fmt,
 						el->res_char, el->flags, footprint, refdes, value,
 						el->x, el->y, el->tail);
 			retval = TRUE;;
@@ -608,7 +623,7 @@ search_element_directories( PcbElement	*el)
 		{
 		dir_path = (gchar *) list->data;
 		if (verbose > 1)
-		      printf("\tLooking in directory: %s\n", dir_path);
+			printf("\tLooking in directory: %s\n", dir_path);
 		path = find_element(dir_path, elname);
 		if (path)
 			{
@@ -871,7 +886,7 @@ update_element_descriptions(gchar *pcb_file, gchar *bak)
 	FILE		*f_in, *f_out;
 	GList		*list;
 	PcbElement	*el, *el_exists;
-	gchar		*command, *tmp, *s, buf[1024];
+	gchar		*fmt, *command, *tmp, *s, buf[1024];
 
 	for (list = pcb_element_list; list; list = list->next)
 		{
@@ -901,7 +916,10 @@ update_element_descriptions(gchar *pcb_file, gchar *bak)
 			&& el_exists->changed_description
 		   )
 			{
-			fprintf(f_out, "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+			fmt = el->quoted_flags ?
+						"Element%c\"%s\" \"%s\" \"%s\" \"%s\" %d %d%s\n" :
+						"Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n";
+			fprintf(f_out, fmt,
 						el->res_char,
 						el->flags, el_exists->changed_description,
 						el->refdes, el->value, el->x, el->y, el->tail);
@@ -937,7 +955,7 @@ prune_elements(gchar *pcb_file, gchar *bak)
 	FILE		*f_in, *f_out;
 	GList		*list;
 	PcbElement	*el, *el_exists;
-	gchar		*command, *tmp, *s, buf[1024];
+	gchar		*fmt, *command, *tmp, *s, buf[1024];
 	gint		paren_level = 0;
 	gboolean	skipping = FALSE;
 
@@ -1000,7 +1018,10 @@ prune_elements(gchar *pcb_file, gchar *bak)
 			}
 		if (el_exists && el_exists->changed_value)
 			{
-			fprintf(f_out, "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n",
+			fmt = el->quoted_flags ?
+						"Element%c\"%s\" \"%s\" \"%s\" \"%s\" %d %d%s\n" :
+						"Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n";
+			fprintf(f_out, fmt,
 					el->res_char, el->flags, el->description, el->refdes,
 					el_exists->changed_value, el->x, el->y, el->tail);
 			if (verbose)
@@ -1093,18 +1114,17 @@ add_schematic(gchar *sch)
 static gint
 parse_config(gchar *config, gchar *arg)
 	{
-	gchar *s;
-	int i;
+	gchar	*s;
 
 	/* remove trailing white space otherwise strange things can happen */
 	if ( (arg != NULL) && (strlen(arg) >= 1) )
 		{
 		s = arg + strlen(arg) - 1;
-		while( (*s == ' ' || *s == '\t' ) && (s != arg) ) s--;
+		while( (*s == ' ' || *s == '\t' ) && (s != arg) )
+			s--;
 		s++;
 		*s = '\0';
 		}
-
 	if (verbose)
 		printf("    %s \"%s\"\n", config, arg ? arg : "");
 
@@ -1135,12 +1155,13 @@ parse_config(gchar *config, gchar *arg)
 		return 0;
 		}
 	if (!strcmp(config, "elements-dir") || !strcmp(config, "d"))
-	        {
-	        if (verbose > 1)
-	              printf("\tAdding directory to file element directory list: %s\n", expand_dir(arg) );
+		{
+		if (verbose > 1)
+			printf("\tAdding directory to file element directory list: %s\n",
+					expand_dir(arg));
 		element_directory_list =
 				g_list_prepend(element_directory_list, expand_dir(arg));
-	        }
+		}
 	else if (!strcmp(config, "output-name") || !strcmp(config, "o"))
 		basename = g_strdup(arg);
 	else if (!strcmp(config, "schematics"))
@@ -1252,9 +1273,9 @@ static gchar *usage_string0 =
 "                         so you really shouldn't need this option.\n"
 "   -q, --quiet           Don't tell the user what to do next after running gsch2pcb.\n"
 "\n"
-"   --m4-file F.inc       Use m4 file F.inc in addition to the default m4\n"
+"       --m4-file F.inc   Use m4 file F.inc in addition to the default m4\n"
 "                         files ./pcb.inc and ~/.pcb/pcb.inc.\n"
-"   --m4-pcbdir D         Use D as the PCB m4 files install directory\n"
+"       --m4-pcbdir D     Use D as the PCB m4 files install directory\n"
 "                         instead of the default:\n";
 
 static gchar *usage_string1 =
@@ -1264,7 +1285,7 @@ static gchar *usage_string1 =
 " --empty-footprint name  See the project.sample file.\n"
 "\n"
 "options (not recognized in a project file):\n"
-"   --fix-elements        If a schematic component footprint is not equal\n"
+"       --fix-elements    If a schematic component footprint is not equal\n"
 "                         to its PCB element Description, update the\n"
 "                         Description instead of replacing the element.\n"
 "                         Do this the first time gsch2pcb is used with\n"
@@ -1348,6 +1369,7 @@ main(gint argc, gchar **argv)
 			*tmp;
 	gint	i;
 	gboolean initial_pcb = TRUE;
+	gboolean created_pcb_file = TRUE;
 
 	if (argc < 2)
 		usage();
@@ -1450,8 +1472,12 @@ main(gint argc, gchar **argv)
 	if (n_added_ef + n_added_m4 > 0)
 		printf("%d file elements and %d m4 elements added to %s.\n",
 					n_added_ef, n_added_m4, pcb_new_file_name);
-	    else if (n_not_found == 0)
-		    printf("No elements to add so not creating %s\n", pcb_new_file_name);
+    else if (n_not_found == 0)
+		{
+	    printf("No elements to add so not creating %s\n", pcb_new_file_name);
+		created_pcb_file = FALSE;
+		}
+
 	if (n_not_found > 0)
 		{
 		printf("%d not found elements added to %s.\n",
@@ -1472,11 +1498,21 @@ main(gint argc, gchar **argv)
 	if (n_fixed > 0)
 		printf("%d elements fixed in %s.\n", n_fixed, pcb_file_name);
 	if (n_PKG_removed_old > 0)
-		printf("%d unknown elements removed from %s.\n",
-				n_PKG_removed_old, pcb_file_name);
+		{
+		printf("%d elements could not be found.", n_PKG_removed_old);
+		if (created_pcb_file)
+			printf("  So %s is incomplete.\n", pcb_file_name);
+		else
+			printf("\n");
+		}
 	if (n_PKG_removed_new > 0)
-		printf("%d unknown elements removed from %s.\n",
-				n_PKG_removed_new, pcb_new_file_name);
+		{
+		printf("%d elements could not be found.", n_PKG_removed_new);
+		if (created_pcb_file)
+			printf("  So %s is incomplete.\n", pcb_new_file_name);
+		else
+			printf("\n");
+		}
 	if (n_preserved > 0)
 		printf("%d elements not in the schematic preserved in %s.\n",
 				n_preserved, pcb_file_name);
@@ -1485,25 +1521,25 @@ main(gint argc, gchar **argv)
 	if (verbose)
 		printf("\n");
 
-	if ((n_added_ef + n_added_m4 > 0) && (initial_pcb == FALSE) && (quiet_mode == FALSE))
-	   {
-	     printf("\nNext steps:\n");
-	     printf("1.  Run pcb on your file %s.\n", pcb_file_name);
-             printf("2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n");
-             printf("    and select %s to load the new footprints into your existing layout.\n", 
-		          pcb_new_file_name);
-             printf("3.  From within PCB, select \"File -> Load netlist file\" and select \n");
-             printf("    %s to load the updated netlist.\n\n", net_file_name);
-	   }
-	else if ((n_added_ef + n_added_m4 > 0) && (initial_pcb == TRUE))
-	   {
-	     printf("\nNext steps:\n");
-	     printf("1.  Run pcb on your file %s.\n", pcb_file_name);
-             printf("    You will find all your footprints in a bundle ready for you to place.\n\n");
-	   }
-	else 
-	   {
-	     printf("\n");
-	   }
+	if (n_added_ef + n_added_m4 > 0)
+		{
+		if (initial_pcb)
+			{
+			printf("\nNext step:\n");
+			printf("\tRun pcb on your file %s.\n", pcb_file_name);
+			printf("\tYou will find all your footprints in a bundle ready for you to place.\n\n");
+			}
+		else if (quiet_mode == FALSE)
+			{
+			printf("\nNext steps:\n");
+			printf("1.  Run pcb on your file %s.\n", pcb_file_name);
+			printf("2.  From within PCB, select \"File -> Load layout data to paste buffer\"\n");
+			printf("    and select %s to load the new footprints into your existing layout.\n",
+						pcb_new_file_name);
+			printf("3.  From within PCB, select \"File -> Load netlist file\" and select \n");
+			printf("    %s to load the updated netlist.\n\n", net_file_name);
+			}
+		}
+
 	return 0;
 	}

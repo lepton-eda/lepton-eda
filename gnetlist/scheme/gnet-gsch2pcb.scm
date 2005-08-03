@@ -1,5 +1,4 @@
-;;; $Id$
-;;;
+
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
 ;;; Copyright (C) 1998-2000 Ales V. Hvezda
