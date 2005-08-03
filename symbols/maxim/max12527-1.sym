@@ -1,4 +1,4 @@
-v 20041228 1
+v 20050313 1
 P 100 11300 400 11300 1 0 0
 {
 T 325 11350 5 10 1 1 0 6 1
@@ -865,3 +865,5 @@ T 6400 5200 5 10 0 0 0 0 1
 description=Dual, 65Msps, 12-Bit, IF/Baseband ADC 
 T 6400 5000 5 10 0 0 0 0 1
 documentation=http://pdfserv.maxim-ic.com/en/ds/MAX12527.pdf
+T 6400 5800 5 10 0 0 0 0 1
+device=MAX12527
