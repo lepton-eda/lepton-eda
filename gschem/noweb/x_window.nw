@@ -528,9 +528,15 @@ x_window_create_main(TOPLEVEL *w_current)
    * set a size of the main window.  The drawing area's size is fixed,
    * see below
    */
-  /* commented out so that window manager prompts for the location
-   * gtk_widget_set_uposition (w_current->main_window, 0, 0);
-   */
+
+   /* 
+    * normally we let the window manager handle locating and sizing
+    * the window.  However, for some batch processing of schematics
+    * (generating a pdf of all schematics for example) we want to
+    * override this.  Hence "auto_place_mode".
+    */
+   if( auto_place_mode )
+   	gtk_widget_set_uposition (w_current->main_window, 10, 10);
 
   /* I could not get the destroy signal to work. always got a: */
   /* Gdk-ERROR **: an x io error occurred */

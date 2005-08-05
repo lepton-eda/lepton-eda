@@ -67,7 +67,7 @@
 
 
 <<parsecmd.c : macro>>=
-#define OPTIONS "hqvr:s:o:t"
+#define OPTIONS "hqvr:s:o:pt"
 
 @ %def OPTIONS
 
@@ -94,6 +94,7 @@ usage(char *cmd)
          "  -r filename   Rc filename\n"
          "  -s filename   Script (guile) filename\n"
          "  -o filename   Output filename (for printing)\n"
+         "  -p            Automatically place the window\n"
          "  -t            Print stroke information\n"
          "  -h            Help; this message\n"
          "\n"), cmd);
@@ -139,6 +140,10 @@ parse_commandline(int argc, char *argv[])
 
       case 'o':
         output_filename = g_strdup (optarg);
+        break;
+
+      case 'p':
+        auto_place_mode = TRUE;
         break;
 
       case 'h':
