@@ -1,3 +1,13 @@
+2005-08-04 22:49  Dan McMahill <danmc>
+
+	* include/globals.h, noweb/globals.nw, noweb/parsecmd.nw,
+	  noweb/x_log.nw, noweb/x_window.nw: add a new commandline option
+	  '-p' which automatically places the main gschem window and the
+	  gschem log window at startup time rather than letting the window
+	  manager figure out what to do.  This is useful when doing batch
+	  processing of schematics and you want to call gschem several
+	  times with no manual interaction.
+
 2005-06-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * include/globals.h, noweb/global.c: Removed a completely bogus
