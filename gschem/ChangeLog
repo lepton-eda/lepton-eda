@@ -7,6 +7,9 @@
 	* noweb/x_grid.nw: Added implmentation for fixed grid mode and
 	threshold (control by grid-mode and grid-fixed-threshold keywords).
 
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
 2005-08-04 22:49  Dan McMahill <danmc>
 
 	* include/globals.h, noweb/globals.nw, noweb/parsecmd.nw,

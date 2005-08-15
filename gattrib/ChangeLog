@@ -1,3 +1,8 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
 2005-07-13 Stuart Brorson <sdb@cloud9.net>
 	* src/s_visibility.c, s_table.c, s_object.c, s_toplevel.c 
 	amongst others.  

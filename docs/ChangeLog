@@ -1,3 +1,11 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Updated package version to 20050814.  This is a 
+	temporary version and not a real release number.
+
+	* fileformats/fileformats.tex: Added 20050814 as a test version
+	which should not be used.
+
 2005-03-15 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: The changes to configure.ac added on 3/12/05 have

@@ -9,6 +9,9 @@
 	* include/struct.h, noweb/s_toplevel.nw: Added grid_mode and 
 	grid_spacing rc variables to TOPLEVEL.
 
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
 2005-06-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/globals.h: Removed a completely bogus extern declaration.

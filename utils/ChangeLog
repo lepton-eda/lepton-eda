@@ -1,3 +1,8 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
 2005-08-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* ChangeLog.gsch2pcb, src/gsch2pcb.c: Update to Bill Wilson's gsch2pcb 

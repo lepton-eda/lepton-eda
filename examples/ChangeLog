@@ -1,3 +1,8 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Updated package version to 20050814.  This is a 
+        temporary version and not a real release number.
+
 2005-03-08 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped version to 20050313
