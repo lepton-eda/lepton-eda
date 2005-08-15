@@ -277,6 +277,10 @@
 #define VECTOR_FONTS		0
 #define PS_FONTS		1
 
+/* for grid_mode */
+#define GRID_VARIABLE_MODE	0
+#define GRID_FIXED_MODE		1
+
 /* for print dialog box */
 #define EXTENTS			0
 #define WINDOW			1

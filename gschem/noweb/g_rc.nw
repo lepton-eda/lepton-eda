@@ -95,7 +95,10 @@
 <<g_rc.c : g_rc_bus_ripper_rotation()>>
 <<g_rc.c : g_rc_force_boundingbox()>>
 <<g_rc.c : g_rc_grid_dot_size()>>
+<<g_rc.c : g_rc_grid_mode()>>
+<<g_rc.c : g_rc_grid_fixed_threshold()>>
 <<g_rc.c : g_rc_output_vector_threshold()>>
+<<g_rc.c : g_rc_add_attribute_offset()>>
 
 @
 
@@ -1978,6 +1981,58 @@ g_rc_grid_dot_size(SCM dotsize)
 @ %def g_rc_grid_dot_size
 
 
+@section Function @code{g_rc_grid_mode()}
+
+@defun g_rc_grid_mode mode
+@end defun
+
+<<g_rc.c : g_rc_grid_mode()>>=
+SCM
+g_rc_grid_mode(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {GRID_VARIABLE_MODE,  "variable" },
+    {GRID_FIXED_MODE, "fixed"  }
+  };
+
+  RETURN_G_RC_MODE("grid-mode", default_grid_mode, 2);
+}
+
+
+@ %def g_rc_grid_mode
+
+
+@section Function @code{g_rc_grid_fixed_threshold()}
+
+@defun g_rc_grid_fixed_threshold size
+@end defun
+
+<<g_rc.c : g_rc_grid_fixed_threshold()>>=
+SCM
+g_rc_grid_fixed_threshold(SCM spacing)
+{
+  int val;
+
+  SCM_ASSERT (SCM_INUMP (spacing), spacing, SCM_ARG1, "grid-fixed-threshold");
+  
+  val = SCM_INUM (spacing);
+
+  if (val <= 0) {
+    fprintf(stderr, _("Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"),
+            val);
+    val = 10; /* absolute default */
+  }
+
+  default_grid_fixed_threshold = val;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_grid_fixed_threshold
+
+
+
 @section Function @code{g_rc_output_vector_threshold()}
 
 @defun g_output_vector_threshold dotsize
@@ -2007,4 +2062,35 @@ g_rc_output_vector_threshold(SCM numlines)
 
 
 @ %def g_rc_output_vector_threshold
+
+
+@section Function @code{g_rc_add_attribute_offset()}
+
+@defun g_add_attribute_offset offset
+@end defun
+
+<<g_rc.c : g_rc_add_attribute_offset()>>=
+SCM
+g_rc_add_attribute_offset(SCM offset)
+{
+  int val;
+
+  SCM_ASSERT (SCM_INUMP (offset), offset,
+              SCM_ARG1, "add-attribute-offset");
+  
+  val = SCM_INUM (offset);
+
+  if (val < 0) {
+    fprintf(stderr, _("Invalid offset [%d] passed to add-attribute-offset\n"),
+            val);
+    val = 50; /* absolute default */
+  }
+
+  default_add_attribute_offset = val;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_add_attribute_offset
 

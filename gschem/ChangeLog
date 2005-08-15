@@ -1,3 +1,12 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_rc.nw, g_register.nw, i_vars.nw: Added 
+	g_rc_grid_fixed_threshold, g_rc_grid_mode and
+	g_rc_add_attribute_offset (which isn't used yet)
+
+	* noweb/x_grid.nw: Added implmentation for fixed grid mode and
+	threshold (control by grid-mode and grid-fixed-threshold keywords).
+
 2005-08-04 22:49  Dan McMahill <danmc>
 
 	* include/globals.h, noweb/globals.nw, noweb/parsecmd.nw,

@@ -841,10 +841,23 @@ struct st_toplevel {
   /* controls the grid dot size */
   int grid_dot_size;
 
+  /* controls the mode of the grid (either variable or fixed) */
+  int grid_mode;
+
+  /* controls the mininum number of pixels necessary for the grid to be */
+  /* displayed */
+  int grid_fixed_threshold;
+
   /* controls the threshold (in lines of text) when the multi-line text */
   /* output font is forced to vector */
   int print_vector_threshold;
   
+  /* controls the offset (in world coordinates) that are added to netname */
+  /* attributes when they are attached to vertical or horizontal nets */
+  int add_attribute_offset;
+
+
+
   /* gnetlist specific */
   int net_naming_priority;
   int hierarchy_traversal;

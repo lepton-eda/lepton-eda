@@ -1,3 +1,14 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/g_basic.nw: Applied patch by Carlos Azevedo which fully expands
+	the path of an rc file, so that it can be found.
+
+	* include/struct.h, noweb/s_toplevel.nw: Added add_attribute_offset 
+	rc variable to TOPLEVEL.
+
+	* include/struct.h, noweb/s_toplevel.nw: Added grid_mode and 
+	grid_spacing rc variables to TOPLEVEL.
+
 2005-06-26 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* include/globals.h: Removed a completely bogus extern declaration.

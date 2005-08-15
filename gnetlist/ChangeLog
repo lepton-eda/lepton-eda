@@ -1,3 +1,14 @@
+2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/gnetlist.c: Applied patch by Carlos Azevedo which moves the
+	chdir after s_traverse since it might change the directory as well.
+
+	* src/s_rename.c: Applied patch by Carlos Azevedo which 
+	re-implements the rename structures to be completely dynamic.
+
+	* tests/*: Re-copied golden test files to be current with sdb
+	version changes.
+
 2005-08-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-gsch2pcb.scm: Update to Bill Wilson's gsch2pcb version

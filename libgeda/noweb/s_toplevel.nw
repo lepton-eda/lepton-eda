@@ -440,8 +440,12 @@ s_toplevel_new (void)
   toplevel->force_boundingbox = FALSE;
 
   toplevel->grid_dot_size = 1;
+  toplevel->grid_mode = GRID_VARIABLE_MODE;
+  toplevel->grid_fixed_threshold = 10;
 
   toplevel->print_vector_threshold = 3;
+
+  toplevel->add_attribute_offset = 50;
   
   toplevel->net_naming_priority = 0;
   toplevel->hierarchy_traversal = 0;

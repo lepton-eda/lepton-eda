@@ -168,7 +168,10 @@ static struct gsubr_t gschem_funcs[] = {
   { "bus-ripper-rotation",       1, 0, 0, g_rc_bus_ripper_rotation },
   { "force-boundingbox",         1, 0, 0, g_rc_force_boundingbox },
   { "grid-dot-size",             1, 0, 0, g_rc_grid_dot_size },
+  { "grid-mode",		 1, 0, 0, g_rc_grid_mode },
+  { "grid-fixed-threshold",   	 1, 0, 0, g_rc_grid_fixed_threshold },
   { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
+  { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
 
   /* general guile functions */
   { "gschem-print",              1, 0, 0, g_funcs_print },

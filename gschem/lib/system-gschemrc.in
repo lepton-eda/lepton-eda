@@ -660,6 +660,7 @@
 ;(bus-ripper-type "net")
 
 ; Grid dot size 
+;
 ; The grid-dot-size keyword controls the size of the grid dots.  The units
 ; are in pixels.  The default (min) value of 1 is the best performing as the
 ; grid dot size is rendered as a single point and can be accelerated by 
@@ -671,6 +672,25 @@
 ;(grid-dot-size 2)
 ;(grid-dot-size 3)
 
+; Grid mode
+;
+; The grid-mode keyword controls the mode of the grid, either variable or 
+; fixed.  In the variable mode, the grid spacing changes depending
+; on the zoom factor.  In the fixed mode, the grid always represents
+; 100 units.  You can control the density of the grid using the 
+; grid-fixed-threshold.
+(grid-mode "variable")
+;(grid-mode "fixed")
+
+; Grid fixed threshold
+;
+; The grid-fixed-threshold specifies the minimum number of pixels needed
+; for the grid to be displayed.  Using this rc parameter you can control 
+; the density of the displayed grid (smaller numbers will cause the grid
+; to be drawn denser). This mode is only used when grid-mode is fixed.
+; 
+(grid-fixed-threshold 10)
+
 ; force-boundingbox string
 ;
 ; Controls if the entire bounding box of a symbol is used when figuring out
@@ -679,6 +699,26 @@
 ;
 (force-boundingbox "disabled")
 ;(force-boundingbox "enabled")
+
+
+; add-attribute-offset integer
+;
+; This has not been implemented/debugged yet.  
+; This has not been implemented/debugged yet.  
+; This has not been implemented/debugged yet.  
+;
+; Controls a offset which is added to the location of text items that are
+; added to an object as an attribute.  This offset is added when the following
+; conditions occur:
+;
+;  1) Add/Attribute... has been invoked via the hotkey
+;  2) It is the the "netname" attribute being added
+;  3) It is being attached to a horizontal or vertical net segment
+;  4) The initial mouse position is at or near the actual net (with one
+;     grid unit).
+;
+; If these four conditions are not met, then this offset is not added. 
+;(add-attribute-offset 50)
 
 
 ; reset-componet-library

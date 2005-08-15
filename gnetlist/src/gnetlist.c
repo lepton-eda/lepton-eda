@@ -144,7 +144,6 @@ void main_prog(void *closure, int argc, char *argv[])
 
     i = argv_index;
     while (argv[i] != NULL) {
-      PAGE *page;
       gchar *filename; 
 
 #ifdef __MINGW32__
@@ -179,8 +178,7 @@ void main_prog(void *closure, int argc, char *argv[])
     /* in the current directory.  Having the output go to a different */
     /* directory will confuse the user (confused me, at first). */
     chdir(cwd);
-    free(cwd);
-
+    /* free(cwd); - Defered; see below */
 
     if (argv[argv_index] == NULL) {
 	fprintf(stderr,
@@ -202,6 +200,11 @@ void main_prog(void *closure, int argc, char *argv[])
     sprintf(input_str, "%s%cgnetlist.scm", pr_current->scheme_directory, 
             G_DIR_SEPARATOR);
 
+    /* Change back to the directory where we started AGAIN.  This is done */
+    /* because the s_traverse functions can change the Current Working Directory. */
+    chdir(cwd);
+    free(cwd);
+
 /* don't need either of these */
 /*	gh_eval_str ("(primitive-load-path \"ice-9/boot-9.scm\")");*/
     /* scm_primitive_load_path (scm_makfrom0str ("ice-9/boot-9.scm")); */
@@ -214,7 +217,7 @@ void main_prog(void *closure, int argc, char *argv[])
     }
 
 
- 
+
     /* Load the first set of scm files */
     list_pnt = pre_backend_list;
     while (list_pnt) {
