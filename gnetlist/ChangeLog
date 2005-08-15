@@ -12,6 +12,8 @@
         * configure.ac: Updated package version to 20050814.  This is a 
         temporary version and not a real release number.
 
+	* scheme/gnet-gsch2pcb.scm: Oops accidentally removed an id tag.
+
 2005-08-02 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scheme/gnet-gsch2pcb.scm: Update to Bill Wilson's gsch2pcb version

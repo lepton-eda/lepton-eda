@@ -1,3 +1,5 @@
+;;; $Id$
+;;;
 
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
