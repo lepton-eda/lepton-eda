@@ -1,5 +1,5 @@
 
-SUBDIRS = src gschlas scripts lib include examples docs
+SUBDIRS = src gschlas scripts lib include examples docs man
 
 EXTRA_DIST = ChangeLog.tragesym ChangeLog.gsch2pcb autogen.sh
 

@@ -1,0 +1,66 @@
+This  is  grenum,  an advanced refdes renumber utility for gEDA's
+gschem.
+
+
+INTRODUCTION
+
+This program renumbers the refdes  definitions  read  from  input
+file.
+
+GOALS
+
+There  is  another  script  called  refdes_renum comes with geda-
+utyls, but it does not care about slotted elements.  grenum  will
+not  renumber all refdeses, only, if a "?" is found in the refdes
+definition. After the first run, you have to edit the  refdes  of
+multi  slotted  elements, but after it, they won't be renumbered.
+Moreover, the text after the refdes numbers are ignored. This  is
+useful,  if  you  want  to have e.g. IC3a, IC3b components on the
+schematic. Unfortunately, the next layer, the gsch2pcb  does  not
+ignore this, and will create a new component (am I right?).
+
+As  it was mentioned grenum does not renumber refdeses which were
+already renumbered. However, it detects gaps between  the  refdes
+numbers.  For  example, if you have IC3 and IC6, it'll start num-
+bering new components from IC1 to IC2, and IC4-IC5 and after IC7.
+This  is essential, because gsch2pcb does not care about refdeses
+(which is good), and if  the  refdeses  gets  totally  renumbered
+(gaps filled totally), then all your components will shifted, and
+you have to move everything on your board.
+
+COMPILATION
+
+This is very very tiny program, needs no external libraries, just
+a  working C compiler. If your C compiler is not gcc, you have to
+edit the Makefile in the src directory.
+
+To untar the package, issue the command
+
+$ tar -jxvf grenum.tar.bz2
+
+Note that you need bunzip2 and the tar utility.
+
+To compile the code cd to the grenum directory and make the  exe-
+cutable
+
+$ cd grenum $ make
+
+To install the compiled executable (as root) issue
+
+# make install
+
+USAGE
+
+To renumber your gschem file issue
+
+$ grenum yourfile.sch
+
+for  more  information,  see the manpage, and read the documenta-
+tion, which you can't since I had no time  write  it.  But  it'll
+come... :-)
+
+CONTACT
+
+Please send comments to
+
+        - levente.kovacs@interware.hu

@@ -1,0 +1,59 @@
+.TH grenum 1
+
+.SH NAME
+.B grenum
+\- An advanced refdes renumber utility
+
+.SH SYNOPSIS
+.B grenum
+[-v\||\|\-\-version \-h\||\|\-\-help \-p\||\|\-\-pagejump]
+.I infile1.sch infile2.sch
+\|.\|.\|.
+
+
+.SH DESCRIPTION
+
+The
+.B grenum
+program will renumber the refdes definitions read from
+.I infile\|.
+
+.SH OPTIONS
+.TP
+\-p, \-\-pagejump
+This will switch on the page jump mode. It means that refdes's from each
+.I inputfile
+gets renumbered from 100,200... etc.
+.TP
+\-v, \-\-version
+prints version information
+.TP
+\-h, \-\-help
+prints help message
+
+.SH RETURN VALUE
+.B grenum
+will return
+.B 0
+if all files processed successfully,
+.B -1
+if there was no input file specified,
+.B -2
+if I/O files can't be opened/written,
+.B -3
+if there is parse error in input file,
+.B -4
+if there is not enough memory to store refdes prefixes.
+.SH BUGS
+
+If you find one, please report it to:
+
+.SH AUTHOR
+
+Levente Kovacs
+
+Levente.Kovacs@interware.hu
+
+.SH SEE ALSO
+
+.B gschem(1)

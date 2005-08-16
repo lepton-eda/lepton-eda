@@ -1,0 +1,66 @@
+Why I wrote this program?
+
+
+Well...  I wanted to make a distortion pedal for my guitar, and a
+guitar tuner, and an active crossover circuit for my power ampli-
+fiers.
+
+I was using gEDA and pcb for a long time, because my policy is to
+use GPLed softwares all around. At work, everyone  laugh  at  me,
+why I'm using such crap stuff. Of course, I don't agree with this
+statement.
+
+In the other hand, I can see real problems with gEDA/pcb. One  is
+(or I hope it was!) the refdes renumbering business.
+
+When I was starting to design my first project, the guitar tuner,
+I was using a dual opamp. It was okay, I said, every time I  make
+some change to the layout, I had to modify the schematic too, be-
+cause both two slot got a different  designator  by  running  the
+refdes_renum  script.  I said "okay, this is for free...". In the
+meantime, I was developing software for CERN, and I've found  out
+that  the computer is for us, and it is existed to help us. At my
+second project which is still ongoing, I had real pain to manual-
+ly  annotating everything. I've just could not live with the fact
+that we have a relatively well written schematic  capture,  which
+can't number parts.
+
+In my head, there was already thoughts about the crossover. I use
+Linkwitz-Relay filters, which consist of four opa. The final  de-
+sign  will consist of 20-30 dual operational amplifiers. One just
+can't keep track with all the slot information in a head. At that
+point, I've decided to do something about it.
+
+I  was  examining  the  source  of the refdes_renum script. No, I
+can't speak perl. I took my editor, and I spent two days front of
+my  computer,  and  I  did the grenum program, which likely helps
+solving this problem. This is written in C.
+
+I hope You will find it useful, and I hope one day this code will
+be  integrated into gschem. It would be another step to full for-
+ward/backward annotation of gschem and pcb.
+
+
+Levente Kovacs, the author.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

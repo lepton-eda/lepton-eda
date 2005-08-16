@@ -329,12 +329,16 @@ GSCHLAS_CFLAGS="$LIBGEDA_CFLAGS"
 GSCHLAS_LDFLAGS="$LIBGEDA_LIBS $GTK_LIBS"  
 GSCH2PCB_CFLAGS="$GLIB_CFLAGS $MINGW_CFLAGS"
 GSCH2PCB_LDFLAGS="$GLIB_LIBS $MINGW_LIBS"  
+GRENUM_CFLAGS="$LIBGEDA_CFLAGS"
+GRENUM_LDFLAGS="$GLIB_LIBS"  
 
 # Makefile.in variable substitution
 AC_SUBST(GSCHLAS_CFLAGS)
 AC_SUBST(GSCHLAS_LDFLAGS)
 AC_SUBST(GSCH2PCB_CFLAGS)
 AC_SUBST(GSCH2PCB_LDFLAGS)
+AC_SUBST(GRENUM_CFLAGS)
+AC_SUBST(GRENUM_LDFLAGS)
 AC_SUBST(MINGW_CFLAGS)
 AC_SUBST(MINGW_LIBS)
 AC_SUBST(GEDARCDIR)
@@ -353,6 +357,7 @@ AC_CONFIG_FILES([Makefile
                  scripts/Makefile 
                  scripts/config.sh 
                  docs/Makefile 
+                 man/Makefile 
                  lib/Makefile 
                  lib/system-gschlasrc 
                  gschlas/Makefile 
