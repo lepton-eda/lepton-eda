@@ -1,3 +1,9 @@
+2005-08-16 Stuart Brorson <sdb@cloud9.net>
+	* configure.ac, Makefile.am, src/grenum.[hc]
+	src/Makefile.am, doc/Makefile.am, man/*:
+	Incorporated grenum into geda-utils.  Grenum is a
+	refdes generation utility by Levente Kovacs
+	
 2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Updated package version to 20050814.  This is a 
