@@ -1,3 +1,16 @@
+2005-08-16 22:54  Dan McMahill <danmc>
+
+	* configure.ac, scheme/Makefile.am, scheme/gnet-PCBboard.scm,
+	  scheme/gnet-PCBboard.scm.in, scheme/gnet-gsch2pcb.scm,
+	  scheme/gnet-gsch2pcb.scm.in: - use the M4 program discovered at
+	  configure time as the default for m4 in the PCB backends.
+
+	  - use the PCB directories from configure time as the defaults in
+	  the PCB backends.  These can still be changed with
+	  --with-pcbm4dir and --with-pcbconfdir.  As usual, they can be
+	  changed at runtime with the gsch2pcb project file, but hopefully
+	  this gets things nominally right by default.
+
 2005-08-15 10:12  Dan McMahill <danmc>
 
 	* configure.ac: Search for a m4 to use.  Will be used by the pcb
