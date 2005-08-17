@@ -25,6 +25,7 @@
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@74")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@4000")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@IEC417")
+(component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@amphenol")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@analog")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@linear")
 (component-library "${GEDADATA}@PATHSEP@sym@PATHSEP@altera")
