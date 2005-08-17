@@ -1,4 +1,6 @@
-#define VERSION "15082005"
+/* $Id$ */
+
+#define GRVERSION "15082005"
 #define COMP_DATE __DATE__
 #define COMP_TIME __TIME__
 #define MAX_PREFIX_COUNT 50 /*This specifies the maximum number of different prefixes. e.g. Ux Rx Qx...*/

@@ -21,6 +21,10 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,7 +32,7 @@
 #include <string.h>
 #endif
 
-#define _GNU_SOURCE
+//#define _GNU_SOURCE
 
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
@@ -327,6 +331,6 @@ void printhelp()
 void printver()
 	{
 	printf("This is grenum, an advanced refdes renumber utility for gEDA's gschem.\n");
-	printf("Version %s\n",VERSION);
+	printf("Version %s.  gEDA/gaf version %s\n",GRVERSION, VERSION);
 	printf("Compiled on %s at %s\n",COMP_DATE,COMP_TIME);
 	}
