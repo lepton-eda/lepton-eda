@@ -21,6 +21,22 @@ AM_MAINTAINER_MODE
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
+# Change default location for pcb's m4 library directory
+AC_ARG_WITH(pcbm4dir,
+	[  --with-pcbm4dir=path     Change where the PCB m4 files are installed [[default=${datadir}/pcb/m4]]],
+        [PCBM4DIR=$withval],
+	[PCBM4DIR="${datadir}/pcb/m4"]
+)
+AC_SUBST(PCBM4DIR)
+
+# Change default location for pcb's m4 site configuration directory
+AC_ARG_WITH(pcbm4dir,
+	[  --with-pcbconfdir=path     Change where the PCB site config files are installed [[default=${sysconfdir}/pcb]]],
+        [PCBCONFDIR=$withval],
+	[PCBCONFDIR="${sysconfdir}/pcb"]
+)
+AC_SUBST(PCBCONFDIR)
+
 # 
 # Command line flags end
 #########################################################################

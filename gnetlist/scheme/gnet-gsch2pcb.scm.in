@@ -135,8 +135,9 @@
 ;;
 ;;
 
-(define m4-command "m4")
-(define m4-pcbdir "/usr/X11R6/lib/X11/pcb/m4")
+(define m4-command "@m4@")
+(define m4-pcbdir "@pcbm4dir@")
+(define m4-pcbconfdir "@pcbconfdir@")
 (define m4-files "")
 
 ;; To emulate popen. Guileish again.
@@ -151,6 +152,7 @@
   	;; pipe with the macro define in pcb program
   	(let ((pipe (open-output-pipe (string-append
 			m4-command " -d -I. -I" m4-pcbdir " "
+			" -I " m4-pcbconfdir " -I$HOME/.pcb -I. "
 			m4-pcbdir "/common.m4 " m4-files " - >> "
 			output-filename))))
 
