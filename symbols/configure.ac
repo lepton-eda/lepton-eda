@@ -95,6 +95,7 @@ GEDA_DECLARE_SYMLIB(4000)
 GEDA_DECLARE_SYMLIB(national)
 GEDA_DECLARE_SYMLIB(local)
 GEDA_DECLARE_SYMLIB(io)
+GEDA_DECLARE_SYMLIB(amphenol)
 GEDA_DECLARE_SYMLIB(analog)
 GEDA_DECLARE_SYMLIB(maxim)
 GEDA_DECLARE_SYMLIB(verilog)
@@ -196,6 +197,7 @@ AC_CONFIG_FILES([
 	rf/Makefile 
 	IEC417/Makefile 
 	altera/Makefile 
+	amphenol/Makefile 
 	analog/Makefile 
 	connector/Makefile 
 	font/Makefile 
