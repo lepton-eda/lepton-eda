@@ -1,3 +1,4 @@
+/* $Id$ */
 /*	This is grenum, an advanced refdes renumber utility for gEDA's gschem.
  *
  *	Copyright (C) 2005  Levente Kovacs
@@ -22,10 +23,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
+
 #define _GNU_SOURCE
+
+#ifdef HAVE_GETOPT_H
 #include <getopt.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "grenum.h"
 /*#define DEBUG*/
@@ -36,7 +47,16 @@ int main(int argc, char *argv[])
 	char buff[255], infilename[100], outfilename[100], *cp;
 	unsigned char flags;
 	int c,opt_idx,pages;
-	static struct option opts[]={{"version",0,0,'v'},{"help",0,0,'h'},{"pagejump",0,0,'p'},{0,0,0,0}};
+
+#ifdef HAVE_GETOPT_LONG
+	const struct option long_opts[]={
+		{"version",  no_argument, NULL, 'v'},
+		{"help",     no_argument, NULL, 'h'},
+		{"pagejump", no_argument, NULL, 'p'},
+		{0,0,0,0}};
+#endif
+	const char *opt_options = "vhp";
+
 	struct refdes_ refdes, refdes_db[MAX_PREFIX_COUNT];
 
 	flags=0x00; /*Clear all flags*/
@@ -57,8 +77,12 @@ int main(int argc, char *argv[])
  */
 	while(1)
 		{
-		c=getopt_long(argc,argv,"vhp",opts,&opt_idx);
-		if(c==-1)
+#ifdef HAVE_GETOPT_LONG
+		c = getopt_long(argc, argv, opt_options, long_opts, &opt_idx);
+#else
+		c = getopt(argc, argv, opt_options);
+#endif
+		if(c == -1)
 			break;
 		switch(c)
 			{
@@ -281,9 +305,21 @@ int parse_refdes(struct refdes_ *refdes, char *ref_str)
 
 void printhelp()
 	{
+#ifdef HAVE_GETOPT_LONG
+	const char *v_opt="-v | --version";
+	const char *h_opt="-h | --help";
+	const char *p_opt="-p | --pagejump";
+#else
+	const char *v_opt="-v";
+	const char *h_opt="-h";
+	const char *p_opt="-p";
+#endif
+
 	printver();
-	printf("Usage: grenum [-v|--version -h|--help -p|--pagejump] file1.sch file2.sch ...\n\n");
-	printf("\t-v|--version\tprints version info\n\t-h|--help\tprints this help\n\t-p|--pagejump\tsets pagejump mode on\n");
+	printf("Usage: grenum [%s] [%s] [%s] file1.sch file2.sch ...\n\n",
+		v_opt, h_opt, p_opt);
+	printf("\t%s\tprints version info\n\t%s\tprints this help\n\t%s\tsets pagejump mode on\n",
+		v_opt, h_opt, p_opt);
 	printf("For more information read the README file and/or the manual.\n");
 	}
 
