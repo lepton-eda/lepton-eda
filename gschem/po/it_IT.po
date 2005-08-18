@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-14 13:12-0500\n"
+"POT-Creation-Date: 2005-08-15 23:22-0400\n"
 "PO-Revision-Date: 2004-12-16 21:53+0100\n"
 "Last-Translator:  <petrecca@interfree.it>\n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Attribute failed ot find.\n"
 msgstr ""
 
-#: noweb/g_rc.nw:232
+#: noweb/g_rc.nw:235
 #, c-format
 msgid ""
 "Found a version [%s] gschemrc file:\n"
@@ -38,7 +38,7 @@ msgstr ""
 "Trovata una versione [%s] del file gschemrc:\n"
 "[%s]\n"
 
-#: noweb/g_rc.nw:235
+#: noweb/g_rc.nw:238
 #, c-format
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
@@ -46,42 +46,42 @@ msgstr ""
 "Assicurati di avere sempre l'ultima versione del file rc perché gschem è "
 "ancora in versione alfa.\n"
 
-#: noweb/g_rc.nw:302
+#: noweb/g_rc.nw:305
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "Colore non valido [%s] passato a %s\n"
 
-#: noweb/g_rc.nw:521
+#: noweb/g_rc.nw:524
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Modo non valido [%s] passato a %s\n"
 
-#: noweb/g_rc.nw:720
+#: noweb/g_rc.nw:723
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Fattore di ingrandimento [%d] passato a %s non valido.\n"
 
-#: noweb/g_rc.nw:764
+#: noweb/g_rc.nw:767
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr ""
 
-#: noweb/g_rc.nw:863
+#: noweb/g_rc.nw:866
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 
-#: noweb/g_rc.nw:916
+#: noweb/g_rc.nw:919
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr ""
 
-#: noweb/g_rc.nw:1004 noweb/g_rc.nw:1007
+#: noweb/g_rc.nw:1007 noweb/g_rc.nw:1010
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr ""
 
-#: noweb/g_rc.nw:1018
+#: noweb/g_rc.nw:1021
 #, c-format
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
@@ -89,24 +89,34 @@ msgid ""
 "with LibStroke\n"
 msgstr ""
 
-#: noweb/g_rc.nw:1585
+#: noweb/g_rc.nw:1588
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr ""
 
-#: noweb/g_rc.nw:1873
+#: noweb/g_rc.nw:1876
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr ""
 
-#: noweb/g_rc.nw:1967
+#: noweb/g_rc.nw:1970
 #, fuzzy, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 
-#: noweb/g_rc.nw:1998
+#: noweb/g_rc.nw:2021
+#, fuzzy, c-format
+msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
+msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
+
+#: noweb/g_rc.nw:2053
 #, fuzzy, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
+msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
+
+#: noweb/g_rc.nw:2084
+#, fuzzy, c-format
+msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
@@ -178,7 +188,7 @@ msgstr "Cartelle degli schemi non impostata!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Esecuzione dello script guile [%s]\n"
 
-#: noweb/i_basic.nw:147 noweb/rcstrings.nw:20 noweb/x_window.nw:965
+#: noweb/i_basic.nw:147 noweb/rcstrings.nw:20 noweb/x_window.nw:966
 msgid "Select Mode"
 msgstr "Modalità Selezione"
 
@@ -257,12 +267,12 @@ msgid "Pin Mode"
 msgstr ""
 
 #: noweb/i_basic.nw:208 noweb/i_callbacks.nw:1013 noweb/i_callbacks.nw:1037
-#: noweb/x_window.nw:781
+#: noweb/x_window.nw:782
 msgid "Copy"
 msgstr "Copia"
 
 #: noweb/i_basic.nw:210 noweb/i_callbacks.nw:1061 noweb/i_callbacks.nw:1085
-#: noweb/x_window.nw:766
+#: noweb/x_window.nw:767
 msgid "Move"
 msgstr "Sposta"
 
@@ -274,15 +284,15 @@ msgstr ""
 msgid "Show Hidden"
 msgstr "Mostra Nascosto"
 
-#: noweb/i_basic.nw:360 noweb/x_window.nw:934
+#: noweb/i_basic.nw:360 noweb/x_window.nw:935
 msgid "Action"
 msgstr "Azione"
 
-#: noweb/i_basic.nw:368 noweb/x_window.nw:929
+#: noweb/i_basic.nw:368 noweb/x_window.nw:930
 msgid "Stroke"
 msgstr ""
 
-#: noweb/i_basic.nw:375 noweb/x_window.nw:931
+#: noweb/i_basic.nw:375 noweb/x_window.nw:932
 msgid "none"
 msgstr ""
 
@@ -360,11 +370,11 @@ msgid "Select objs first"
 msgstr "Seleziona prima un oggetto"
 
 #: noweb/i_callbacks.nw:1109 noweb/rcstrings.nw:25 noweb/x_attribedit.nw:572
-#: noweb/x_attribedit.nw:774 noweb/x_window.nw:796
+#: noweb/x_attribedit.nw:774 noweb/x_window.nw:797
 msgid "Delete"
 msgstr "Cancella"
 
-#: noweb/i_callbacks.nw:1138 noweb/rcstrings.nw:17 noweb/x_window.nw:751
+#: noweb/i_callbacks.nw:1138 noweb/rcstrings.nw:17 noweb/x_window.nw:752
 msgid "Edit"
 msgstr "Modifica"
 
@@ -380,11 +390,11 @@ msgstr "Slot"
 msgid "Color"
 msgstr "Colore"
 
-#: noweb/i_callbacks.nw:1232 noweb/i_callbacks.nw:1256 noweb/x_window.nw:811
+#: noweb/i_callbacks.nw:1232 noweb/i_callbacks.nw:1256 noweb/x_window.nw:812
 msgid "Rotate"
 msgstr "Ruota"
 
-#: noweb/i_callbacks.nw:1282 noweb/i_callbacks.nw:1306 noweb/x_window.nw:826
+#: noweb/i_callbacks.nw:1282 noweb/i_callbacks.nw:1306 noweb/x_window.nw:827
 msgid "Mirror"
 msgstr "Specchio"
 
@@ -538,7 +548,7 @@ msgstr "Incolla 4"
 msgid "Paste 5"
 msgstr "Incolla 5"
 
-#: noweb/i_callbacks.nw:3036 noweb/rcstrings.nw:121 noweb/x_window.nw:672
+#: noweb/i_callbacks.nw:3036 noweb/rcstrings.nw:121 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Componente"
 
@@ -552,7 +562,7 @@ msgid "Net"
 msgstr "Collegamento"
 
 #: noweb/i_callbacks.nw:3213 noweb/i_callbacks.nw:3241 noweb/rcstrings.nw:79
-#: noweb/x_window.nw:702
+#: noweb/x_window.nw:703
 msgid "Bus"
 msgstr "Bus"
 
@@ -913,6 +923,7 @@ msgid ""
 "  -r filename   Rc filename\n"
 "  -s filename   Script (guile) filename\n"
 "  -o filename   Output filename (for printing)\n"
+"  -p            Automatically place the window\n"
 "  -t            Print stroke information\n"
 "  -h            Help; this message\n"
 "\n"
@@ -974,11 +985,11 @@ msgstr "Chiudi Finestra"
 msgid "Quit"
 msgstr "Esci"
 
-#: noweb/rcstrings.nw:18 noweb/x_window.nw:644
+#: noweb/rcstrings.nw:18 noweb/x_window.nw:645
 msgid "Undo"
 msgstr "Annulla"
 
-#: noweb/rcstrings.nw:19 noweb/x_window.nw:657
+#: noweb/rcstrings.nw:19 noweb/x_window.nw:658
 msgid "Redo"
 msgstr "Ripristina"
 
@@ -1138,7 +1149,7 @@ msgstr "Successiva"
 msgid "Previous"
 msgstr "Precedente"
 
-#: noweb/rcstrings.nw:71 noweb/x_window.nw:604
+#: noweb/rcstrings.nw:71 noweb/x_window.nw:605
 msgid "New"
 msgstr "Nuovo"
 
@@ -1316,7 +1327,7 @@ msgstr "Tutto"
 msgid "Comps"
 msgstr ""
 
-#: noweb/x_attribedit.nw:498 noweb/x_attribedit.nw:933 noweb/x_window.nw:687
+#: noweb/x_attribedit.nw:498 noweb/x_attribedit.nw:933 noweb/x_window.nw:688
 msgid "Nets"
 msgstr "Collegamenti"
 
@@ -1400,8 +1411,8 @@ msgstr ""
 msgid "Ack! Cannot allocate white!\n"
 msgstr ""
 
-#: noweb/x_color.nw:117 noweb/x_color.nw:165 noweb/x_window.nw:255
-#: noweb/x_window.nw:264
+#: noweb/x_color.nw:117 noweb/x_color.nw:165 noweb/x_window.nw:250
+#: noweb/x_window.nw:259
 #, c-format
 msgid "Could not allocate the color %s!\n"
 msgstr ""
@@ -1866,7 +1877,7 @@ msgstr "Anteprima"
 msgid "Filename"
 msgstr "Nome file"
 
-#: noweb/x_fileselect.nw:2371 noweb/x_window.nw:617
+#: noweb/x_fileselect.nw:2371 noweb/x_window.nw:618
 msgid "Open"
 msgstr "Apri"
 
@@ -1904,7 +1915,7 @@ msgstr "Altezza"
 msgid "Width x Height"
 msgstr "Larghezza x Altezza"
 
-#: noweb/x_log.nw:288
+#: noweb/x_log.nw:290
 msgid "Status"
 msgstr "Stato"
 
@@ -2016,64 +2027,64 @@ msgstr "Orientazione"
 msgid "Script Execute..."
 msgstr "Esecuzione Script..."
 
-#: noweb/x_window.nw:255
+#: noweb/x_window.nw:250
 msgid "black"
 msgstr "nero"
 
-#: noweb/x_window.nw:264
+#: noweb/x_window.nw:259
 msgid "white"
 msgstr "bianco"
 
-#: noweb/x_window.nw:310
+#: noweb/x_window.nw:305
 #, c-format
 msgid "Couldn't allocate gc\n"
 msgstr "Non è possibile allocare gc\n"
 
-#: noweb/x_window.nw:323
+#: noweb/x_window.nw:318
 #, c-format
 msgid "Couldn't allocate xor_gc\n"
 msgstr "Non è possibile allocare xor_gc\n"
 
-#: noweb/x_window.nw:336
+#: noweb/x_window.nw:331
 #, c-format
 msgid "Couldn't allocate outline_xor_gc\n"
 msgstr "Non è possibile allocare outline_xor_gc\n"
 
-#: noweb/x_window.nw:352
+#: noweb/x_window.nw:347
 #, c-format
 msgid "Couldn't allocate bounding_xor_gc\n"
 msgstr "Non è possibile allocare bounding_xor_gc\n"
 
-#: noweb/x_window.nw:359
+#: noweb/x_window.nw:354
 #, c-format
 msgid "Couldn't allocate bus_gc\n"
 msgstr "Non è possibile allocare bus_gc\n"
 
-#: noweb/x_window.nw:605
+#: noweb/x_window.nw:606
 msgid "New file"
 msgstr "Nuovo file"
 
-#: noweb/x_window.nw:618
+#: noweb/x_window.nw:619
 msgid "Open file..."
 msgstr "Apri file..."
 
-#: noweb/x_window.nw:630
+#: noweb/x_window.nw:631
 msgid "Save"
 msgstr "Salva"
 
-#: noweb/x_window.nw:631
+#: noweb/x_window.nw:632
 msgid "Save file"
 msgstr "Salva file"
 
-#: noweb/x_window.nw:645
+#: noweb/x_window.nw:646
 msgid "Undo last operation"
 msgstr "Annulla l'ultima operazione"
 
-#: noweb/x_window.nw:658
+#: noweb/x_window.nw:659
 msgid "Redo last undo"
 msgstr "Ripristina ultima operazione annullata"
 
-#: noweb/x_window.nw:673
+#: noweb/x_window.nw:674
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -2087,7 +2098,7 @@ msgstr ""
 "Il tasto destro del mouse serve ad abbandonare il componente al fine di "
 "sceglierne un altro."
 
-#: noweb/x_window.nw:688
+#: noweb/x_window.nw:689
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -2097,7 +2108,7 @@ msgstr ""
 "cancellare il collegamento prima\n"
 "che essere rilasciato."
 
-#: noweb/x_window.nw:703
+#: noweb/x_window.nw:704
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
@@ -2107,59 +2118,59 @@ msgstr ""
 "cancellare il collegamento prima\n"
 "che essere rilasciato"
 
-#: noweb/x_window.nw:716
+#: noweb/x_window.nw:717
 msgid "Text"
 msgstr "Testo"
 
-#: noweb/x_window.nw:717
+#: noweb/x_window.nw:718
 msgid "Add Text..."
 msgstr "Aggiungi Testo..."
 
-#: noweb/x_window.nw:734
+#: noweb/x_window.nw:735
 msgid "Select"
 msgstr "Seleziona"
 
-#: noweb/x_window.nw:735
+#: noweb/x_window.nw:736
 msgid "Select mode"
 msgstr "Modalità Seleziona"
 
-#: noweb/x_window.nw:752
+#: noweb/x_window.nw:753
 msgid "Edit mode"
 msgstr "Modalità Testo"
 
-#: noweb/x_window.nw:767
+#: noweb/x_window.nw:768
 msgid "Move mode"
 msgstr "Sposta"
 
-#: noweb/x_window.nw:782
+#: noweb/x_window.nw:783
 msgid "Copy mode"
 msgstr "Copia"
 
-#: noweb/x_window.nw:797
+#: noweb/x_window.nw:798
 msgid "Delete mode"
 msgstr "Cancella"
 
-#: noweb/x_window.nw:812
+#: noweb/x_window.nw:813
 msgid "Rotate mode"
 msgstr ""
 
-#: noweb/x_window.nw:827
+#: noweb/x_window.nw:828
 msgid "Mirror mode"
 msgstr ""
 
-#: noweb/x_window.nw:918
+#: noweb/x_window.nw:919
 msgid "Pick"
 msgstr ""
 
-#: noweb/x_window.nw:936
+#: noweb/x_window.nw:937
 msgid "Repeat/none"
 msgstr ""
 
-#: noweb/x_window.nw:948
+#: noweb/x_window.nw:949
 msgid "Menu/Cancel"
 msgstr "Menù/Cancella"
 
-#: noweb/x_window.nw:950
+#: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr ""
 
