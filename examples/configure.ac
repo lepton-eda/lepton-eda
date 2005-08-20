@@ -3,7 +3,7 @@ AC_INIT
 AC_CONFIG_SRCDIR([gTAG/gTAG.sch])
 
 PACKAGE=geda-examples
-VERSION=20050814
+VERSION=20050820
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 

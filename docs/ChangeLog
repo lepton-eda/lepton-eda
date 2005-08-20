@@ -1,3 +1,11 @@
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+	
+	* configure.ac: Bumped the package version to 20050820 which will be
+	a real snapshot.
+
+	* fileformats/fileformats.tex: Added 20050820 as a real release version
+	number.
+
 2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* configure.ac: Updated package version to 20050814.  This is a 

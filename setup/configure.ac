@@ -5,7 +5,7 @@ dnl Initialize automake stuff
 PACKAGE=geda-setup
 
 # new way of doing version
-VERSION=20050814
+VERSION=20050820
 
 echo Configuring $PACKAGE version $VERSION
 

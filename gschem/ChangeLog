@@ -11,6 +11,9 @@
 	wheel.  This is an unfortunate effect of how the scroll wheel code
 	is implemented (it needs the scrollbars to exist).
 
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
+
 2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw: Added 

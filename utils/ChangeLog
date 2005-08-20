@@ -4,12 +4,16 @@
 	ViewDraw converter.  Thanks.  Changes include:
 	- Updated to support gEDA file format version 1
 	- Added capability to import more graphic styles from ViewDraw
-	- Corrected bug associated with absense of library reference in local ViewDraw symbols
+	- Corrected bug associated with absense of library reference in local 
+          ViewDraw symbols
 	- Removed command-line option -s; no longer necessary
 	- Mapped ViewDraw "SIGNAL" attribute to gEDA "net" attribute
 	- Mapped ViewDraw "HETERO" attribute to a new "split" attribute 
 	  (netlister to be later updated to support this)
 	- Mapped ViewDraw "PINTYPE" attributes to correct gEDA pintypes
+
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
 
 2005-08-16 Stuart Brorson <sdb@cloud9.net>
 	* configure.ac, Makefile.am, src/grenum.[hc]

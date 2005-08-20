@@ -1,3 +1,8 @@
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped the package version to 20050820 which will be
+        a real snapshot.
+
 2005-08-16 22:54  Dan McMahill <danmc>
 
 	* configure.ac, scheme/Makefile.am, scheme/gnet-PCBboard.scm,
