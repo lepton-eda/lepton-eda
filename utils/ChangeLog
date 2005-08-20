@@ -1,3 +1,6 @@
+2005-08-20 Werner Hoch <werner.ho@gmx.de>
+	* scripts/gschemdoc.sh: added konqueror and firefox to the browser list
+
 2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* src/convert_sym.c: Integrated Jeff McLamb's greatly updated 

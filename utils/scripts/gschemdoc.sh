@@ -25,7 +25,7 @@
 #
 # these may be changed to suit local preferences
 #
-CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera"
+CANDIDATE_BROWSER="galeon mozilla phoenix netscape netscape-navigator opera firefox konqueror"
 CANDIDATE_PDFREADER="xpdf acroread ggv gv"
 CANDIDATE_LOCATE="slocate locate"
 
