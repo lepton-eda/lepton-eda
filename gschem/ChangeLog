@@ -1,3 +1,10 @@
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_text.nw, x_dialog.nw: Applied Matthias Wenzel's color 
+	and usability patch.  Thanks.  The Edit/Color... dialog now makes
+	the selected object's color the default color in the dialog box and
+	the Edit/Text Edit... dialog box has the color selector.
+
 2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw: Added 
