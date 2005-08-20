@@ -5,6 +5,12 @@
 	the selected object's color the default color in the dialog box and
 	the Edit/Text Edit... dialog box has the color selector.
 
+	* noweb/x_event.nw: Fixed a long standing crash that if you disable
+	the scrollbars and tried to scroll with a wheel button, gschem will
+	crash.  You cannot disable the scrollbars and still scroll with the
+	wheel.  This is an unfortunate effect of how the scroll wheel code
+	is implemented (it needs the scrollbars to exist).
+
 2005-08-14 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/g_rc.nw, g_register.nw, i_vars.nw: Added 

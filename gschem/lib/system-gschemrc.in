@@ -223,6 +223,9 @@
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)
+; If you disable the scrollbars, you will not be able to use the scroll 
+; wheel on your mouse.  This is an unfortunate side effect of how the
+; code is implemented.
 ;
 (scrollbars "enabled")
 ;(scrollbars "disabled")
