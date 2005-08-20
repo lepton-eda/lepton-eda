@@ -1,3 +1,16 @@
+2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* src/convert_sym.c: Integrated Jeff McLamb's greatly updated 
+	ViewDraw converter.  Thanks.  Changes include:
+	- Updated to support gEDA file format version 1
+	- Added capability to import more graphic styles from ViewDraw
+	- Corrected bug associated with absense of library reference in local ViewDraw symbols
+	- Removed command-line option -s; no longer necessary
+	- Mapped ViewDraw "SIGNAL" attribute to gEDA "net" attribute
+	- Mapped ViewDraw "HETERO" attribute to a new "split" attribute 
+	  (netlister to be later updated to support this)
+	- Mapped ViewDraw "PINTYPE" attributes to correct gEDA pintypes
+
 2005-08-16 Stuart Brorson <sdb@cloud9.net>
 	* configure.ac, Makefile.am, src/grenum.[hc]
 	src/Makefile.am, doc/Makefile.am, man/*:
