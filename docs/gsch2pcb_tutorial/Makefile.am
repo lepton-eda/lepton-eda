@@ -2,7 +2,8 @@ SUBDIRS = images
 
 docsdir = @GEDADOCDIR@/tutorials/gsch2pcb
 
-docs_DATA = gschem-warmup.html transistor-guide.html tutorial.html
+docs_DATA = gschem-warmup.html transistor-guide.html tutorial.html \
+	    tutorial-old.html
 
 EXTRA_DIST = $(docs_DATA)
 

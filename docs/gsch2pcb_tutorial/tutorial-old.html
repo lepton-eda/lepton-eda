@@ -13,8 +13,8 @@ This is a tutorial on the process of using gsch2pcb as an
 interface between gschem and PCB.
 It assumes the gEDA, PCB and gsch2pcb packages
 are already installed and ready to use.  Starting with gEDA 20030901,
-gsch2pcb is packaged with gEDA and doesn't need to be separately installed.
-This tutorial is functional and intended to
+gsch2pcb version 0.9 is packaged with gEDA, but some of the steps below
+will require gsch2pcb 1.0.  This tutorial is functional and intended to
 generate results as quickly as possible.  It is not a complete reference
 on gschem or PCB, but it does show with a simple example design
 all the steps one might need to take.
@@ -22,22 +22,13 @@ all the steps one might need to take.
 The goal is to use gsch2pcb as the bridge between gschem and PCB so
 that the schematics can always be in sync with the PCB layout
 because all element additions or deletions in the layout will
-automatically be driven by changes in the schematics.  Back annotation
-from PCB to gschem is currently not possible.
+automatically be driven by changes in the schematics.
 </blockquote>
 
 <h3> Tutorial Release Notes </h3>
 <blockquote>
 <ul>
-	<li> Starting with the PCB-20050609 snapshot, PCB has a new Gtk
-	user interface which replaces the old Xaw interface and this tutorial
-	will describe using the Gtk interface.  If you are using the Xaw PCB,
-	you can look at this
-	<a href="tutorial-old.html" name="tutorial-old.html">
-		older version of this tutorial,</a> which is also not up to date
-		with info on the gEDA gafrc files.
-	</li>
-	<li>If you have a gschem version less than 20030525 these
+	<li>If you have versions less than gschem 20030525 or PCB 1.99 these
 	tutorial examples may not work as expected.
 	</li>
 	<li>If you have gEDA version 20030901 installed such that you are
@@ -55,24 +46,12 @@ ERROR: Unbound variable: open-output-pipe
 	</li>
 	<li><h5> Mini Changelog</h5>
 	<ul>
-		<li> 6/23/2005
-			<blockquote>
-			Added gafrc file info to setup section.<br>
-			Updated the tutorial to use the Gtk PCB.
-			</blockquote>
-		</li>
-		<li> 1/10/2004
-			<blockquote>
-			Corrected my sloppy PCB file elements which had
+		<li> 1/10/2004 - corrected my sloppy PCB file elements which had
 			silkscreen lines overlapping solder pads.
-			</blockquote>
 		</li>
-		<li> 12/23/2003
-			<blockquote>
-			Added comments about new CVS PCB versions which
+		<li> 12/23/2003 - added comments about new CVS PCB versions which
 			have the m4 and newlib directories default installed under
 			/usr/share or /usr/local/share.
-			</blockquote>
 		</li>
 	</ul>
 	</li>
@@ -108,21 +87,19 @@ these distinct element types as
 <b>m4 elements</b> and <b>file elements</b>.
 When rou run PCB, the gschem <b>footprint</b> attribute
 value will appear as the displayed element name when you
-select <b>Description</b> from the <b>Screen->Displayed Element Name</b>
-menu because gsch2pcb uses this field to keep track of which
-<b>footprint</b> corresponds to a particular PCB element.
+select <b>description</b> from the <b>Screen</b> menu because gsch2pcb
+uses this field to keep track of which <b>footprint</b> corresponds
+to a particular PCB element.
 <p>
 The gschem <b>refdes</b> attribute value is the reference designator
 on the schematic such as Q1, U1, R1, etc.  When you run PCB, this
 refdes will appear as the displayed element name when you select
-<b>Reference Designator</b> from the
-<b>Screen->Displayed Element Name</b> menu.
-
+<b>name on PCB</b> from the <b>Screen</b> menu.
 <p>
 The gschem <b>value</b> attribute value is the particular component value
 such as BC546, 7400, 1K, etc.  When you run PCB, this
 <b>value</b> will appear as the displayed element name when you select
-<b>Value</b> from the <b>Screen->Displayed Element Name</b> menu.
+<b>value</b> from the <b>Screen</b> menu.
 </blockquote>
 
 
@@ -134,9 +111,8 @@ and PCB gives you a set of default gschem symbols and
 default PCB elements, but you can also provide for creating your own custom
 libraries of gschem symbols and PCB elements.
 <ul>
-	<li> Somewhere, probably under your home directory, create a
-		directory structure for your projects.
-		Use directory names you like, but
+	<li> Somewhere, probably under your home directory, create your
+		directory structure.  Use directory names you like, but
 		this tutorial will reference the directory name structure
 		I use:
 		<blockquote><pre>
@@ -145,73 +121,31 @@ gaf/gschem-sym/                    Where I put the custom gschem symbols I creat
 gaf/gschem-sym/transistors/        You can organize your custom symbols into subdirectories.
 gaf/pcb-elements/                  Where I put the custom PCB file elements I create.
                                        These can also be organized into subdirectories.
-gaf/myproject1/                    And finally, separate directories for each
-gaf/myproject2/                        design project. 
+gaf/myproject1/
+gaf/myproject2/
 ...
 		</pre></blockquote>
-	With this organization, any custom gschem symbols and PCB elements you
-	make can be common to all of your projects and this is good enough
-	to get you started.
+	With this organization, your custom gschem symbols and PCB elements can
+	be common to all of your projects and is good enough to get you started.
 	However, I'll mention other possibilities which will be revealed
-	below:  There can be project specific PCB <b>file element</b>
+	below.  There can be project specific PCB <b>file element</b>
 	subdirectories  or <b>m4 element</b> files.  Or, CAD administrators can
 	set up site wide custom PCB <b>file element</b> directories and
 	<b>m4 element</b> files.  
 
 	</li>
 	<p>
-	<li> <b>gEDA setup (for new versions released >= 2005): </b>
-	the gschem, gnetlist, and other
-	programs you may use such as gattrib, etc, all need to be
-	able to find any
-	custom symbols you will make, so you need to make your custom gschem
-	symbol directories known to these programs in a gEDA gafrc file
-	by adding
-	<b>component-library</b> lines to either a user
-	<b>${HOME}/gafrc</b> file or a project specific <b>gafrc</b> file
-	in the project directory.  There is also a system wide
-	<b>${GEDADATA}/system-gafrc</b> file administrators can set up.
-	The <b>HOME</b> and <b>GEDADATA</b> environment variables must
-	be respectively set for those <b>gafrc</b> files to be found.
-	For our directory structure setup above, we could add these lines
-	to <b>${HOME}/gafrc</b>
-	(plus lines for each additional <b>gschem-sym </b>
-	subdirectory you want):
-    <blockquote><pre>
-(component-library "${HOME}/gaf/gschem-sym")
-(component-library "${HOME}/gaf/gschem-sym/transistors")
-	</pre></blockquote>
-		or, in each project directory there could be a <b>gafrc</b> file with
-		the lines:
-    <blockquote><pre>
-(component-library "../gaf/gschem-sym")
-(component-library "../gaf/gschem-sym/transistors")
-	</pre></blockquote>
-	</li>
-
-	<li> <b>gEDA setup (for old versions released <= 2004): </b>
-	The <b>gafrc</b> file is not supported.  Well, the feature was actually
-	introduced mid 2004, but to get the full functionality described
-	here (relative paths) you really need a 2005 gEDA.  Anyway,
-	when using an older gEDA
-	it is necessary to duplicate the <b>component-library</b> setup lines
-	in multiple rc files that apply to the various gEDA programs:
-	<uL>
-	<li> <b>gschem program setup: </b> create the file <b>~/.gEDA/gschemrc</b>
-	with this content:
+	<li> <b>gschem setup: </b> So gschem will be able to find any custom
+	symbols you will make and put in <b>gaf/gschem-sym</b> create the
+	file <b>~/.gEDA/gschemrc</b> with this content (plus an entry for each
+	additional <b>gschem-sym </b> subdirectory you want):
 	<blockquote><pre>
 (component-library "${HOME}/gaf/gschem-sym")
 (component-library "${HOME}/gaf/gschem-sym/transistors")
 	</pre></blockquote>
-	</li>
-	<li>
-	<b>gnetlist program setup: </b> gnetlist will also need to find these
-	symbols so duplicate those lines into <b>~/.gEDA/gnetlistrc</b>.
-	</li>
-	</ul>
-	</li>
+	<b>gnetlist setup: </b> gnetlist will also need to find these symbols
+	so duplicate those lines into <b>~/.gEDA/gnetlistrc</b>.
 	<p>
-	<li>
 	If you want a more detailed customization of gschem and gnetlist, you
 	can override other initializations that are setup in the global rc files.
 	In Debian, look at rc files in <b>/etc/gEDA/</b> for settings
@@ -483,32 +417,16 @@ $ refdes_renum --pgskip one.sch two.sch
 	<h4> Layout PCB Files</h4>
 	<blockquote>
 	When you run PCB on a <b>.pcb</b> file for the first time as in Step 1
-	below, you should set up various initial values.
-	I usually set a
-	25 mil grid spacing with <b>Screen->Grid Setting->25 mil</b>
-	for the bulk of my
+	below, you should set up various intial values.  I usually set a
+	25 mil grid spacing with <b>Screen->25 mil</b> for the bulk of my
 	layout work and then change grid spacing to smaller values as needed
-	for tight layout situations.  Note that if you have enabled millimeter
-	units with <b>Screen->Enable millimeter grid units</b> you will see
-	a set of millimeter size options to select from instead of mils in the
-	<b>Screen->Grid Setting</b> menu.  You may change between millimeter
-	and mil grid units at any time when doing a layout.
-	You should also set the default line
+	for tight layout situations.  You should also set the default line
 	and via sizes you
-	want for the Signal, Power, Fat, and Skinny drawing route styles.
-	Simply select one of these four route styles at the
-	lower left of the PCB window and then press the <b>Route Style</b>
-	button to edit the sizes.
-	You can set your
-	board size now or wait until later while working on the layout.
-	To change the board size, bring up the <b>File->Preferences</b>
-	window and select the <b>Sizes</b> page.  Other design rule
-	checking and increment sizes can also be edited in the Preferences
-	window.  You should review PCB documentation for definitions of
-	these items.
-
-	And you may find it useful to select <b>Screen->Enable visible grid</b>.
-<br>
+	want for Signal, Power, Fat, and Skinny drawing in the 
+	<b>Sizes->adjust...</b> menu.  Then select the routing style you want
+	to use from the <b>Sizes</b> menu. You can set your
+	board size now or wait until later with <b>Edit->change board size</b>.
+	And it may be useful to you to set <b>Screen->display grid</b>.
 
 	</blockquote>
 	<table cellspacing=10>
@@ -539,10 +457,6 @@ $ refdes_renum --pgskip one.sch two.sch
 			<td>
 				Use the middle mouse button to grab and move elements one
 				at a time until you have separated all the elements.
-				<br>
-				Or, you can let PCB spread out the elements with
-				<b>Select->Disperse all elements</b> before you fine tune
-				the positions with the middle mouse button.
 			</td>
 			</tr></table>
 		</td>
@@ -590,16 +504,12 @@ $ refdes_renum --pgskip one.sch two.sch
 	</table>
 
 	<blockquote>
-	Note: you can use the PCB auto placement
-	feature instead of manually placing (or dispersing with the
-	<b>Select->Disperse ...</b> commands)
-	the components as described in Step 2 above.  To do this
+	Note: you can use the PCB auto placement feature instead of
+	manually placing the components as described above.  To do this
 	you would load the netlist, select the components you want to be
-	autoplaced (if this is the first PCB run, just <b>Select->Select all
-	objects</b>) then do <b>Select->Auto place selected elements</b>.
-	Then you can again manually tune the PCB generated placements.
-	The auto place function should place elements more intelligently than the
-	disperse function, but it is also much slower as layouts get larger.
+	autoplaced (if this is the first PCB run, just <b>Select->select all
+	objects</b>) then do <b>Select->auto place selected elements</b>.
+	Then you can manually tune the PCB generated placements.
 	<p>
 	At this point you can start routing traces between pins connected
 	by rats nest lines.  On the left PCB toolbar,
@@ -614,10 +524,10 @@ $ refdes_renum --pgskip one.sch two.sch
 	<p>
 	A very useful operation with the <b>SEL</b>
 	tool is to select multiple objects and then cut or copy them to a
-	buffer with the menu <b>Buffer->Cut selection to buffer</b> (or copy).
+	buffer with the menu <b>Buffer->cut selection to buffer</b> (or copy).
 	You can immediately paste the buffer contents or abort the current
 	paste by selecting another tool.  The buffer contents can be pasted
-	any time later with <b>Buffer->Paste buffer to layout</b>.  With
+	any time later with <b>Buffer->paste buffer to layout</b>.  With
 	this you can move layout
 	areas around or step and repeat common trace patterns.  To
 	select multiple objects with the <b>SEL</b> tool, click and drag
@@ -626,8 +536,7 @@ $ refdes_renum --pgskip one.sch two.sch
 	<p>
 	When you've finished routing the traces (PCB will congratulate you if all
 	traces are routed when you optimze the rats nest) the board can look
-	something like this.  For this view I've selected
-	<b>Screen->Displayed element name->Value</b>.
+	something like this.  For this view I've selected <b>Screen->value</b>.
 	<p>
 	<center><table border=1>
 	<tr bgcolor=#b0b0a8>
@@ -642,39 +551,9 @@ $ refdes_renum --pgskip one.sch two.sch
 	of html docs in the PCB source tarball.  I don't know of a link to
 	put here, but you can get the latest tarball from the
 	<a href="http://sourceforge.net/projects/pcb/"
-	name="PCB development">PCB development </a> site.
+	name="1.99 development">PCB 1.99 development </a> site.
 	Or the docs may be installed somewhere on your system.
 	The Debian package has them installed in <b>/usr/share/doc/pcb/html/</b>.
-	PCB also has some convenient "live" documentation that can
-	help you become familiar with keyboard shortcuts or keyboard commands.
-	Bring up the keyboard shortcuts window with the menu
-	<b>Window->Key Reference</b> and you'll probably find just reading
-	through the shortcuts available will teach you a lot about what you
-	can do with PCB.
-	If you have selected in the <b>File->Preferences</b> window the
-	<i>Use separate window for command entry</i> option, then when
-	you bring up the Command window with <b>Window->Command Entry</b>
-	(or the ':' key), you will see a <b>Command Reference</b> expander
-	arrow.  Click on the arrow and a command reference will be shown
-	which lists some commands you can type in that may not be available
-	from the menus or a keyboard shortcut.
-	<p>
-	For example, say you
-	have in the <b>Preferences->Increments</b> page configured a size
-	increment of 5 mils.  With this you can select some lines and
-	then increase their width by 5 mils by selecting from the menu
-	<b>Select->Change size of selected objects->Increment lines by 5 mils.</b>
-	However, suppose you want to be changing widths by random values and it's
-	inconvenient to be changing the Preferences each time.  For this,
-	you can select some lines,
-	bring up the command window (hit '<b>:</b>') and type in the command:
-	<blockquote><pre>
-	<i>changesize(selectedlines, +3, mils)</i>
-	</pre></blockquote>
-	 and the selected lines
-	will increase by 3 mils.  This command is now in a history list
-	which you can recall and quickly edit in the command window to change
-	sizes by other values.
 	</blockquote>
 
 
@@ -894,7 +773,7 @@ Found a cpinlist head with a netname! [Vcc]
 Found a cpinlist head with a netname! [Vee]
 No elements to add so not creating board.new.pcb
 </pre></blockquote>
-Where the gEDA gnetlist program seems a bit "excited" about finding the new
+Where the gEDA gnetlist program seems a bit excited about finding the new
 Vcc and Vee <b>net</b> attributes we just added, and a new netlist
 was generated.  Now I think the schematic looks
 cleaner:
@@ -932,14 +811,12 @@ cleaner:
 	right for this 1 amp
 	diode with slightly fatter leads.  It needs about a 42 mil (#58) drill.
 	<p>
-	Run <b>pcb</b> and the first thing to do is select the <b>Signal</b>
-	routing style and edit its sizes (press the <b>Route Style</b> button)
-
-	Set the <b>Via hole</b> size
-	to 42 and the <b>via size</b> to 70 or larger as you like.
-	Select
-	<b>Screen->Grid setting->25 mil</b> and
-	<b>Screen->Enable visible grid</b>.
+	Run <b>pcb</b> and the first thing to do is go to the <b>Sizes</b>
+	menu and select <b>adjust "Signal" sizes</b>.  Set the via hole
+	to 42 and the via size to 70 or larger as you like.  Then make
+	sure you use this via
+	size by selecting <b>Sizes->use "Signal" routing style</b>.  Select
+	<b>Screen->25 mil</b> and <b>Screen->display grid</b>.
 	Zoom in a couple of steps, then make the element:
 
 	</blockquote>
@@ -998,12 +875,12 @@ cleaner:
 	Select the vias and the outline just drawn using the <b>SEL</b> tool
 	and finish making the element:
 	<ul>
-		<li><b>Buffer->Cut selection to buffer</b> and move the cursor
+		<li><b>Buffer->cut selection to buffer</b> and move the cursor
 			to the center of the left via and click.
 		</li>
-		<li><b>Buffer->Convert buffer to element</b>
+		<li><b>Buffer->convert buffer to element</b>
 		</li>
-		<li><b>Buffer->Save buffer elements to file</b> and navigate to
+		<li><b>Buffer->save buffer elements to file</b> and navigate to
 			<b>~/gaf/pcb-elements</b> and save the element as
 			<b>D400-1A</b> since it's a package for a 1A diode with
 			400 mil spaced pins.  Or give it any descriptive name you like.
@@ -1382,7 +1259,7 @@ way to set up for multiple users who need to share resources:
 <hr>
 	<address>
 	<p align=center>
-	<a href="http://members.dslextreme.com/users/billw/gsch2pcb/gsch2pcb.html"
+	<a href="http://web.wt.net/~billw/gsch2pcb/gsch2pcb.html"
 		name="www.gkrellm.net">gsch2pcb Home</a>
 	<br>
 	Bill Wilson <A HREF="mailto:bill--at--gkrellm.net">bill--at--gkrellm.net</A>
