@@ -1,20 +1,23 @@
+# translation of it.po to 
 # Italian messages for geda.
 # Copyright (C) 2004, 2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the geda package.
 # Marco Colombo <m.colombo@ed.ac.uk>, 2005.
+# Michele Petrecca <michelinux@alice.it>, 2005.
 # Michele Petrecca <petrecca@interfree.it>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-15 23:23-0400\n"
-"PO-Revision-Date: 2005-02-18 09:34+0000\n"
-"Last-Translator: Marco Colombo <m.colombo@ed.ac.uk>\n"
-"Language-Team: Italian <tp@lists.linux.it>\n"
+"POT-Creation-Date: 2005-03-08 23:58-0500\n"
+"PO-Revision-Date: 2005-06-26 16:18+0200\n"
+"Last-Translator: Michele Petrecca\n"
+"Language-Team:  <michelinux@alice.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: src/interface.c:76
 msgid "gEDA"
@@ -34,7 +37,7 @@ msgstr "Apri"
 
 #: src/interface.c:122
 msgid "Properties"
-msgstr "Proprietà"
+msgstr "Proprietà "
 
 #: src/interface.c:129 src/interface.c:186
 msgid "Close"
@@ -98,7 +101,7 @@ msgstr "Stato"
 
 #: src/interface.c:495
 msgid "Project Properties"
-msgstr "Proprietà progetto"
+msgstr "Proprietà Progetto"
 
 #: src/interface.c:525 src/interface.c:772
 msgid "Name"
@@ -126,31 +129,11 @@ msgstr "Annulla"
 
 #: src/interface.c:705
 msgid "New file ..."
-msgstr "Nuovo file..."
+msgstr "Nuovo file ..."
 
 #: src/interface.c:762
 msgid "Type"
 msgstr "Tipo"
-
-#: src/project.c:105
-msgid "Question..."
-msgstr ""
-
-#: src/project.c:106
-msgid "Project already exists. Overwrite?"
-msgstr ""
-
-#: src/project.c:161 src/project.c:201
-msgid "Error!"
-msgstr ""
-
-#: src/project.c:162
-msgid "Cannot load project!"
-msgstr ""
-
-#: src/project.c:202
-msgid "Cannot save project!"
-msgstr ""
 
 #: src/support.c:121
 #, c-format
@@ -161,3 +144,4 @@ msgstr "Impossibile trovare l'immagine: %s"
 #, c-format
 msgid "Error loading pixmap file: %s"
 msgstr "Errore durante il caricamento dell'immagine: %s"
+
