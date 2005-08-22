@@ -30,7 +30,7 @@ AC_ARG_WITH(pcbm4dir,
 AC_SUBST(PCBM4DIR)
 
 # Change default location for pcb's m4 site configuration directory
-AC_ARG_WITH(pcbm4dir,
+AC_ARG_WITH(pcbconfdir,
 	[  --with-pcbconfdir=path     Change where the PCB site config files are installed [[default=${sysconfdir}/pcb]]],
         [PCBCONFDIR=$withval],
 	[PCBCONFDIR="${sysconfdir}/pcb"]
