@@ -315,6 +315,8 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 {
   int width, height;
   int save_height, save_width;
+  int save_page_left, save_page_right, save_page_top, save_page_bottom;
+  int page_width, page_height, page_center_left, page_center_top;
 
   width = w_current->image_width;
   height = w_current->image_height;
@@ -325,12 +327,31 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   w_current->width = width;
   w_current->height = height;
 
+  save_page_left = w_current->page_current->left;
+  save_page_right = w_current->page_current->right;
+  save_page_top = w_current->page_current->top;
+  save_page_bottom = w_current->page_current->bottom;
+  
+  page_width = save_page_right - save_page_left;
+  page_height = save_page_bottom - save_page_top;
+
+  page_center_left = save_page_left + (page_width / 2);
+  page_center_top = save_page_top + (page_height / 2);
+
+  /* Preserve proportions */
+  float prop = (float)width / height;
+  if(page_width > page_height) {
+    page_height = (page_width / prop);
+  }else{
+    page_width = (page_height * prop);
+  }
+
   /* need to do this every time you change width / height */
   set_window(w_current, w_current->page_current,
-             w_current->page_current->left,
-             w_current->page_current->right,
-             w_current->page_current->top,
-             w_current->page_current->bottom);
+             page_center_left - (page_width / 2),
+             page_center_left + (page_width / 2),
+             page_center_top - (page_height / 2),
+             page_center_top + (page_height / 2));
 
   /* de select everything first */
   o_selection_remove_most(w_current,
@@ -348,10 +369,10 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
 
   /* need to do this every time you change width / height */
   set_window(w_current, w_current->page_current,
-             w_current->page_current->left,
-             w_current->page_current->right,
-             w_current->page_current->top,
-             w_current->page_current->bottom);
+             save_page_left,
+             save_page_right,
+             save_page_top,
+             save_page_bottom);
 
   /* try to use recalc here... */
   o_redraw_all(w_current);
