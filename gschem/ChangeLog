@@ -4,6 +4,8 @@
 	makes sure that proportions are preserved when exporting a
 	schematic to a PNG file.  Thanks for the bug fix.
 
+        * po/it_IT.po: Updated the Italian translation by Petrecca Michele.
+
 2005-08-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * po/it_IT.po: Updated the Italian translation by Petrecca Michele.
