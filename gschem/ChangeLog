@@ -1,3 +1,8 @@
+2005-09-09 08:05  Dan McMahill <danmc>
+
+	* noweb/x_dialog.nw: don't declare variables in the middle of
+	  functions.  Not all compilers like that.
+
 2005-09-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_image.nw: Applied patch by Michael Hanselmann which
