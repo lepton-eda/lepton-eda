@@ -75,6 +75,9 @@
 ;;  6.12.2005 -- Changed order of writing out netlist and .model/.subckt cards to 
 ;;               facilitate use of numparam with ngspice.  Change supplied by 
 ;;               Dominique Michel.
+;;  9.11.2005 -- Incorporated patch from Paul Bunyk to enable netlisting of
+;;               Josephson junctions and "K" mutual inductances.  Also enabled 
+;;               netlisting of "COIL" devices as inductors.
 ;;**********************************************************************************
 ;;
 ;;  Organization of gnet-spice-sdb.scm file:
@@ -1144,6 +1147,62 @@
     (newline port))
 )
 
+;;----------------------------------------------------------------------------
+;;  write Josephson junction in wrspice format. Paul Bunyk, Sep 2, 2005
+;;----------------------------------------------------------------------------
+(define spice-sdb:write-josephson-junction
+  (lambda (package port)
+
+    (debug-spew (string-append "Found Josephson junction.  Refdes = " package "\n"))
+
+    ;; first write out refdes and attached nets
+    (spice-sdb:write-component-no-value package port)
+
+    ;; next, add a dummy node for JJ phase. Unlike in Xic netlister, give it 
+    ;; a reasonable name, not a number, e.g., refdes.
+    (display (string-append package " ") port)
+
+    ;; next write JJ model name, if any.  
+    (let ((model-name (gnetlist:get-package-attribute package "model-name")))
+        (if (not (string=? model-name "unknown"))
+		(display (string-append model-name " " ) port))
+    )
+
+    ;; Next write out attribtes if they exist.  Use 
+    ;; a list of attributes which can be attached to a junction.
+    (let ((attrib-list (list "area")))
+      (spice-sdb:write-list-of-attributes package attrib-list port)
+            ;; write the off attribute separately
+		(display " " port))  ;; add additional space. . . . 
+
+    (newline port)
+  )
+)
+
+;;----------------------------------------------------------------------------
+;;  write mutual inductance(actually K). Paul Bunyk, Sep 2, 2005
+;;----------------------------------------------------------------------------
+(define spice-sdb:write-coupling-coefficient
+  (lambda (package port)
+
+    (debug-spew (string-append "Found mutual inductance.  Refdes = " package "\n"))
+
+    ;; first write out refdes and attached nets (none)
+    (spice-sdb:write-component-no-value package port)
+
+    ;; next two inductor names and value
+    (let ((inductors (gnetlist:get-package-attribute package "inductors"))
+	  (value (gnetlist:get-package-attribute package "value")) )
+        (if (not (string=? inductors "unknown"))
+		(display (string-append inductors " " ) port))	
+        (if (not (string=? value "unknown"))
+		(display (string-append value " " ) port))
+	
+    )
+
+    (newline port)
+  )
+)
 
 ;;--------------------------------------------------------------------
 ;; Given a refdes, returns the device associated nets(s) ordered by their pin#,
@@ -1487,10 +1546,16 @@
               (spice-sdb:write-capacitor package port))                  ;; change someday
           ( (string=? device "INDUCTOR")
               (spice-sdb:write-inductor package port))     
+          ( (string=? device "COIL")           ;; Added to enable netlisting of coil-*.sym
+              (spice-sdb:write-inductor package port))     
           ( (string=? device "VOLTAGE_SOURCE")
               (spice-sdb:write-independent-voltage-source package port)) ;; change someday
           ( (string=? device "CURRENT_SOURCE")
               (spice-sdb:write-independent-current-source package port)) ;; change someday
+          ( (string=? device "JOSEPHSON_JUNCTION")
+              (spice-sdb:write-josephson-junction package port)) 
+          ( (string=? device "K")
+              (spice-sdb:write-coupling-coefficient package port)) 
           ( (string=? device "model")
               (spice-sdb:write-model package port))
           ( (string=? device "options")
