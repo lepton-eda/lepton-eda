@@ -1,3 +1,10 @@
+2005-09-11	Werner Hoch <werner.ho@gmx.de>
+	* changed vertikal to vertical
+
+2005-04-16 (version 0.0.8) Carlos Nieves Onega <cnieves@iespana.es>
+	* scripts/tragesym: Changed the way it draws the symbol so
+	there is no need to translate it to the origin.
+
 2004-11-14: (version 0.0.7) Werner Hoch <werner.ho@gmx.de>
 	* made it more tolerant for input files
 	* corrected version

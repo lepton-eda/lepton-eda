@@ -10,7 +10,7 @@ rotate_labels=no
 sort_labels=yes
 generate_pinseq=no
 sym_width=2600
-pinwidthvertikal=400
+pinwidthvertical=400
 pinwidthhorizontal=600
 
 [geda_attr]
