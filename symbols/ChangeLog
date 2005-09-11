@@ -1,3 +1,8 @@
+2005-09-11 Stuart Brorson <sdb@cloud9.net>
+
+        * analog/jj-1.sym, spice/kmutual-1.sym: added symbols
+	contributed by Paul Bunyk.
+
 2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped the package version to 20050820 which will be
