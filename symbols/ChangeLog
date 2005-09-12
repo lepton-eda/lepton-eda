@@ -1,3 +1,6 @@
+2005-09-12 Werner Hoch <werner.ho@gmx.de>
+	* analog/*: added missing attributs, fixed a few symbols
+	
 2005-09-11 Stuart Brorson <sdb@cloud9.net>
 
         * analog/jj-1.sym, spice/kmutual-1.sym: added symbols
