@@ -271,13 +271,13 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
     fprintf(fp, "\n");	
     f_print_set_color(fp, w_current->print_color_background);
     if (w_current->print_orientation == LANDSCAPE) {
-       fprintf(fp, "0 0 moveto\n%d 0 rlineto 0 %d rlineto -%d 0 rlineto\n",
- 	       paper_size_y*72/1000, paper_size_x*72/1000, 
-	       paper_size_y*72/1000);
+       fprintf(fp, "0 0 moveto\n%f 0 rlineto 0 %f rlineto -%f 0 rlineto\n",
+ 	       paper_size_y*72/1000.0, paper_size_x*72/1000.0, 
+	       paper_size_y*72/1000.0);
     } else {
-       fprintf(fp, "0 0 moveto\n%d 0 rlineto 0 %d rlineto -%d 0 rlineto\n",
- 	       paper_size_x*72/1000, paper_size_y*72/1000, 
-	       paper_size_x*72/1000);
+       fprintf(fp, "0 0 moveto\n%f 0 rlineto 0 %f rlineto -%f 0 rlineto\n",
+ 	       paper_size_x*72/1000.0, paper_size_y*72/1000.0, 
+	       paper_size_x*72/1000.0);
    }
     fprintf(fp, "closepath fill\n");
   }
