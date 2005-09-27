@@ -1,4 +1,19 @@
+2005-09-27 18:46  Dan McMahill <danmc>
+
+        * gschlas/g_rc.c, gschlas/gschlas.c, src/convert_sym.c,
+          src/gmk_sym.c, src/grenum.c, src/olib.l: remove various compiler
+          warnings
+
+2005-09-11 Werner Hoch <werner.ho@gmx.de>
+
+        * ChangeLog.tragesym, examples/tragesym/4099.src,
+          examples/tragesym/AT90S8535_TQFP.src,
+          examples/tragesym/template.src, examples/tragesym/test1.src,
+          examples/tragesym/test2.src, examples/tragesym/test3.src:
+          ChangeLog entry copied, fixed typo
+
 2005-08-20 Werner Hoch <werner.ho@gmx.de>
+
 	* scripts/gschemdoc.sh: added konqueror and firefox to the browser list
 
 2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>

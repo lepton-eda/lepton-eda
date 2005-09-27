@@ -1,3 +1,7 @@
+2005-09-27 18:51  Dan McMahill <danmc>
+
+        * src/s_check.c: remove various compiler warnings
+
 2005-08-19 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped the package version to 20050820 which will be
