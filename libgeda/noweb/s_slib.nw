@@ -347,7 +347,7 @@ s_slib_getbasename(const char *rawname)
       /* we are still searching for the first underscore */
 
       /* first make sure char is a number */
-      if (isdigit(return_filename[i])) {
+      if (isdigit((int) return_filename[i])) {
         valid=1;
       } else if (return_filename[i] == '_' && valid) {
 				/* yes it is okay to delete the chars */
