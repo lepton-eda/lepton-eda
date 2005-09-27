@@ -1,3 +1,11 @@
+2005-09-27 18:38  Dan McMahill <danmc>
+
+        * docs/gschemdoc.texi: add title to remove warnings
+
+2005-09-27 18:36  Dan McMahill <danmc>
+
+        * noweb/: i_basic.nw, o_misc.nw: remove various compiler warnings
+
 2005-09-09 08:05  Dan McMahill <danmc>
 
 	* noweb/x_dialog.nw: don't declare variables in the middle of
