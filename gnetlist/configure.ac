@@ -154,7 +154,7 @@ fi
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
-AC_CHECK_HEADERS(unistd.h string.h stdlib.h \
+AC_CHECK_HEADERS(unistd.h string.h strings.h stdlib.h \
                  stdarg.h assert.h fcntl.h errno.h)
 
 # Checks for typedefs, structures, and compiler characteristics.
