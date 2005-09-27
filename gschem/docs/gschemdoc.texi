@@ -1,7 +1,7 @@
 \input texinfo @c -*-texinfo-*-
 @c %** start of header
 @setfilename gschemdoc.info
-@settitle 
+@settitle gschemdoc
 @c %**end of header
 
 @dircategory Gschem source documentation
