@@ -1,7 +1,7 @@
 \input texinfo @c -*-texinfo-*-
 @c %** start of header
 @setfilename libgedadoc.info
-@settitle 
+@settitle libgedadoc
 @c %**end of header
 
 @dircategory Libgeda source documentation
