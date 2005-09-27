@@ -396,8 +396,10 @@ static gint gtk_sheet_button_release 		(GtkWidget * widget,
 static gint gtk_sheet_motion 			(GtkWidget * widget,
 		  				 GdkEventMotion * event);
 
+#if 0
 static gint gtk_sheet_entry_key_press		(GtkWidget *widget,
 		                		 GdkEventKey *key);
+#endif
 
 static gint gtk_sheet_key_press			(GtkWidget *widget,
 		                		 GdkEventKey *key);
@@ -5584,7 +5586,9 @@ gtk_sheet_key_press(GtkWidget *widget,
   gint row, col;
   gint state;
   gboolean extend_selection = FALSE;
+#if 0
   gboolean force_move = FALSE;
+#endif
   gboolean in_selection = FALSE;
   gboolean veto = TRUE;
   gint scroll = 1;
@@ -7061,7 +7065,7 @@ draw_xor_rectangle(GtkSheet *sheet, GtkSheetRange range)
 
    gdk_gc_set_clip_rectangle(sheet->xor_gc, &clip_area);
 
-   for(i=-1;i<=1;i=++i)
+   for(i=-1;i<=1;i++)
      gdk_draw_rectangle(sheet->sheet_window,
                         sheet->xor_gc,
 		        FALSE,

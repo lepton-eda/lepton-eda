@@ -535,9 +535,11 @@ do_nop(FILE *fp)
 void
 do_bounding_box(FILE *fp)
 {
+#if 0
   unsigned int color;
   struct LineStyle linestyle;
   struct FillStyle fillstyle;
+#endif
 
   /* just fetch the values and store */
   if(fscanf(fp,"%d %d %d %d\n", &minx, &miny, &maxx, &maxy) != 4)
@@ -1611,7 +1613,9 @@ text_object(int x, int y, unsigned int color, unsigned int size,
 	    int angle, char *text, unsigned int origin)
 {
   unsigned int text_size;
-  unsigned int textlen;
+#if 0
+  unsigned int textlen; 
+#endif
   unsigned int numlines;
 
   /* fudge the text size, in viewdraw it is actually the height

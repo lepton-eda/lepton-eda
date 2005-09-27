@@ -119,7 +119,7 @@ int ConfigGetNext(char *szName, char *szValue)
 			continue;
 		if (szLine[0] == '[')
 			break;
-		if (isascii(szLine[0]))
+		if (isascii((int) szLine[0]))
 			iFound = 1;
 		break;
 	}
@@ -127,10 +127,10 @@ int ConfigGetNext(char *szName, char *szValue)
 	if (iFound == 0)
 		return FAILURE;
 
-	for (i = 0; i < strlen(szLine) && isalnum(szLine[i]); i ++)
+	for (i = 0; i < strlen(szLine) && isalnum((int) szLine[i]); i ++)
 		szName[i] = toupper(szLine[i]);
 	szName[i] = 0;
-	for (; i < strlen(szLine) && (szLine[i] == '=' || isspace(szLine[i])); i ++)
+	for (; i < strlen(szLine) && (szLine[i] == '=' || isspace((int) szLine[i])); i ++)
 		;
 	for (; i < strlen(szLine); i ++)
 		szValue[j ++] = szLine[i];

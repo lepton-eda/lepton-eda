@@ -51,8 +51,6 @@ main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   int argv_index;
-  int first_page=1;
-  int fopen_status;
   char *cwd;
   struct stat buf;
   char *logfile;

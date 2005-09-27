@@ -914,6 +914,7 @@ gtk_entry_move_cursor (GtkEntry       *entry,
 	case GTK_MOVEMENT_DISPLAY_LINES:
 	case GTK_MOVEMENT_PARAGRAPHS:
 	case GTK_MOVEMENT_PAGES:
+	case GTK_MOVEMENT_HORIZONTAL_PAGES:
 	  break;
 	}
     }
@@ -947,6 +948,7 @@ gtk_entry_move_cursor (GtkEntry       *entry,
 	case GTK_MOVEMENT_DISPLAY_LINES:
 	case GTK_MOVEMENT_PARAGRAPHS:
 	case GTK_MOVEMENT_PAGES:
+	case GTK_MOVEMENT_HORIZONTAL_PAGES:
 	  break;
 	}
     }

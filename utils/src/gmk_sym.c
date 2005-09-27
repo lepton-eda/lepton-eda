@@ -627,7 +627,7 @@ static char *strLabel(char *p, char *pTemp)
   q = pTemp;
   while ((*p == ' ') || (*p == '\t'))
     p++;
-  while (isprint(*p) && (*p != ','))    /* copy string to pTemp */
+  while (isprint((int) *p) && (*p != ','))    /* copy string to pTemp */
     *q++ = *p++;
   *q = 0;                       /* terminate the string     */
   strtrail(pTemp);              /* drop any trailing spaces */
@@ -648,7 +648,7 @@ void strtrail(char *wrk)
      *p = 0;
  if ((p = strchr(wrk,'\r')) != NULL)
      *p = 0;
-  while (isspace(*(wrk + strlen(wrk) - 1)))     /* Clear any trailing spaces */
+  while (isspace((int) *(wrk + strlen(wrk) - 1)))     /* Clear any trailing spaces */
     *(wrk + strlen(wrk) - 1) = 0;
 }
 
@@ -664,7 +664,7 @@ int line_chk(char *pBuf)
      *p = 0;
  if ((p = strchr(pBuf,'\r')) != NULL)
      *p = 0;
-  while (isspace(*(pBuf + strlen(pBuf) - 1)))     /* Clear any trailing spaces */
+  while (isspace((int) *(pBuf + strlen(pBuf) - 1)))     /* Clear any trailing spaces */
     *(pBuf + strlen(pBuf) - 1) = 0;
   if (*pBuf == ';')
      return -1;

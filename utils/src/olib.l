@@ -158,7 +158,7 @@ char *strip_invalid(char *str)
   p = buff;
   while (*str)
   {
-    if (isalnum(*str) || strchr("-_. ",*str))
+    if (isalnum((int) *str) || strchr("-_. ",*str))
     {
       if (*str == ' ')
 	*p = '_';

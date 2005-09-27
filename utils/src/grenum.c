@@ -50,9 +50,10 @@ int main(int argc, char *argv[])
 	FILE *infile,*outfile;
 	char buff[255], infilename[100], outfilename[100], *cp;
 	unsigned char flags;
-	int c,opt_idx,pages;
+	int c, pages;
 
 #ifdef HAVE_GETOPT_LONG
+	int opt_idx;
 	const struct option long_opts[]={
 		{"version",  no_argument, NULL, 'v'},
 		{"help",     no_argument, NULL, 'h'},
