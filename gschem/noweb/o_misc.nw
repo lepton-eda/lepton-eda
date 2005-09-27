@@ -1193,7 +1193,7 @@ void autonumber_find(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
       if (!(o_current->selected) || skip != AUTONUMBER_SKIP_SELECTION) {
 	if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
 	  if (!strncmp(stext, o_current->text->string, strlen(stext))) {
-	    if (isdigit(o_current->text->string[strlen(stext)])) {
+	    if (isdigit((int) o_current->text->string[strlen(stext)])) {
 	      sscanf(o_current->text->string + strlen(stext), "%d", &m);
 	      *used_numbers = g_slist_append(*used_numbers,GINT_TO_POINTER(m));
 	      /* printf(" %d\n", m);*/
@@ -1271,7 +1271,7 @@ autonumber_text(TOPLEVEL * w_current, char *stext, GSList **used,
   int save_page_control = 0;
   int pcount = 0;
 
-  unsigned char *ss;
+  char *ss;
   int l;
 
   o_current = w_current->page_current->object_head;
@@ -1286,7 +1286,7 @@ autonumber_text(TOPLEVEL * w_current, char *stext, GSList **used,
 	if ((l = strlen(o_current->text->string) - strlen(stext)) > 0) {
 	  if (!strncmp(stext, o_current->text->string, strlen(stext))) {
 	    if (o_current->text->string[strlen(stext)] == '?'
-		|| (isdigit(o_current->text->string[strlen(stext)])
+		|| (isdigit((int) o_current->text->string[strlen(stext)])
 		    && unnumbered == SELECTION_ALL)){
 	      o_list=g_slist_append(o_list,o_current);
 	      /* printf("autonumber_text: text \"%s\" \n", 
