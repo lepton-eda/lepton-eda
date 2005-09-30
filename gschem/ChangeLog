@@ -1,3 +1,7 @@
+2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/o_misc.nw, noweb/i_callbacks.nw: 
+	Added code to embed/unembed pictures.
+
 2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>
         * noweb/i_basic.nw: Added missing check.
 	

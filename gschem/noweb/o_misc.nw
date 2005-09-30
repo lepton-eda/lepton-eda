@@ -58,7 +58,6 @@
 
 @ 
 
-
 <<o_misc.c : include directives>>=
 #include <config.h>
 
@@ -67,6 +66,7 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
+#include <libgen.h>
 
 #include <libgeda/libgeda.h>
 
@@ -556,6 +556,20 @@ o_embed(TOPLEVEL *w_current, OBJECT *o_current)
     /* page content has been modified */
     w_current->page_current->CHANGED = 1;
   }
+
+  /* If it's a picture and it's not embedded */
+  if ( (o_current->type == OBJ_PICTURE) &&
+       (o_current->picture->embedded == 0) ) {
+
+    o_current->picture->embedded = 1;
+    
+    s_log_message (_("Picture [%s] has been embedded\n"),
+		   basename(o_current->picture->filename));
+    
+    
+    /* page content has been modified */
+    w_current->page_current->CHANGED = 1;
+  }
   
 }
 
@@ -613,6 +627,20 @@ o_unembed(TOPLEVEL *w_current, OBJECT *o_current)
       w_current->page_current->CHANGED = 1;
       
     }
+  }
+
+  /* If it's a picture and it's embedded */
+  if ( (o_current->type == OBJ_PICTURE) &&
+       (o_current->picture->embedded == 1) ) {
+
+    o_current->picture->embedded = 0;
+    
+    s_log_message (_("Picture [%s] has been unembedded\n"),
+		   basename(o_current->picture->filename));
+    
+    
+    /* page content has been modified */
+    w_current->page_current->CHANGED = 1;
   }
   
 }

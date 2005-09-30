@@ -520,6 +520,10 @@ void s_cue_output_lowlevel(TOPLEVEL *w_current, OBJECT *object, int whichone, FI
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int output_type);
 void s_cue_output_single(TOPLEVEL *w_current, OBJECT *object, FILE *fp, int type);
 
+/* s_encoding.c */
+gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
+gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
+
 /* s_hierarchy.c */
 int s_hierarchy_down_schematic_single(TOPLEVEL *w_current, const gchar *filename, PAGE *parent, int page_control, int flag);
 void s_hierarchy_down_schematic_multiple (TOPLEVEL *w_current, const gchar *filename, PAGE *parent);

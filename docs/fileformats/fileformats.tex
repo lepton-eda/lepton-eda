@@ -226,6 +226,10 @@ Valid in: Schematic and Symbol files
 {\bf type x1 y1 width height angle ratio mirrored embedded}
 \newline
 {\bf filename}
+\newline
+{\bf encoded picture data}
+\newline
+{\bf encoded picture end}
 
 \begin{table}[h]
 \begin{tabular}{|l|l|l|} \hline
@@ -240,12 +244,15 @@ Field 		& Type/unit 	& Description \\ \hline
 {\bf mirrored} 	& char          & Mirrored or normal picture \\ \hline
 {\bf embedded} 	& char          & Embedded or link to the picture file\\ \hline
 {\bf filename} 	& string        & path and filename of a not embedded  picture \\ \hline
+{\bf encoded picture data}   & string        & Serialized picture encoded using base64 \\ \hline
+{\bf encoded picture end}    & string     & A line containing only a dot character \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{itemize}
 \item This object is a picture object. The first line contains all the picture 
       parameters, and the second line is the path and filename of the picture.
+      The filename is not used if the picture is embedded.
 \item The angle of the picture can only take on one of the following values: 
       0, 90, 180, 270.
 \item The mirrored field is an enumerated type:
@@ -253,10 +260,15 @@ Field 		& Type/unit 	& Description \\ \hline
 	\item NOT MIRRORED = 0 
 	\item MIRRORED = 1
 \end{itemize}
-\item The embdded field is an enumerated type:
+\item The embedded field is an enumerated type:
 \begin{itemize}
 	\item NOT EMBEDDED = 0
 	\item EMBEDDED = 1 (not yet supported)
+\end{itemize}
+\item The encoded picture and encoded picture end fields are only in the file if the picture is embedded in the schematic:
+\begin{itemize}
+        \item encoded picture data: This is a multiple line field. The picture is serialized and then encoded using base64. This way the encoded data uses only printable characters. This field is the result of these two operations.
+	\item encoded picture end : A line containing only a single dot '.' character marks the end of the encoded picture data.
 \end{itemize}
 \end{itemize}
 
@@ -267,6 +279,19 @@ Example:\newline
 A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils (i.e.: the ratio is 0.6353). \newline
 The picture rotation is 0 degrees and the picture is not mirrored, neither embedded.\newline
 The picture path and filename is showed in the second line. \newline
+
+Example:\newline 
+{\tt G 16900 35800 1400 2175 0 6.435331e-01 0 1}\newline
+{\tt ../bitmaps/logo.jpg} \newline
+{\tt AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA} \newline
+{\tt BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB} \newline
+{\tt .} \newline
+
+A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils (i.e.: the ratio is 0.6353). \newline
+The picture rotation is 0 degrees, it is not mirrored, and it {\bf is} embedded.\newline
+The picture path and filename is showed in the second line. Since this is an embedded picture, the filename and path are not used. \newline
+The encoded picture data is only an example (it is not real data). The last line containing a single dot '.' character marks the end of the encoded picture data.
+
 
 
 \subsection{box}

@@ -1,3 +1,10 @@
+2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+	* include/struct.h, noweb/o_picture.nw:
+	Added embedded variable to the picture struct and initialize it.
+	* include/prototypes.h, noweb/Makefile.am, noweb/s_encoding.nw,
+	  src/Makefile.am:
+	Added new file containing functions for base64 encoding/decoding.
+	
 2005-09-27 18:31  Dan McMahill <danmc>
 
 	* docs/libgedadoc.texi: add title to document to quiet the

@@ -122,6 +122,7 @@ struct st_picture {
   char *filename;
   int angle;
   char mirrored;
+  char embedded;
 
   /* upper is considered the origin */
   int upper_x, upper_y; /* world */	

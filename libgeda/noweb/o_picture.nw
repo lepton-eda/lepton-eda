@@ -73,6 +73,7 @@
 #ifndef HAS_GTK12
 #include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk-pixbuf/gdk-pixdata.h>
 #endif
 
 #include "defines.h"
@@ -151,11 +152,11 @@ o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 
   if ( (embedded > 1) || (embedded < 0)) {
     fprintf(stderr, "Found a picture with a wrong 'embedded' parameter: %c.\n",
-	    mirrored);
+	    embedded);
     s_log_message("Found a picture with a wrong 'embedded' parameter: %c.\n",
-	    mirrored);
-    s_log_message("Setting mirrored to 0\n");
-    mirrored = 0;
+	    embedded);
+    s_log_message("Setting embedded to 0\n");
+    embedded = 0;
   }
   switch(angle) {
 	
@@ -191,8 +192,51 @@ o_picture_read(TOPLEVEL *w_current, OBJECT *object_list, char buf[],
 #endif  
   }
   else {
-    fprintf(stderr, "Embedded pictures are not supported yet.\n");
-    s_log_message ("Embedded pictures are not supported yet.\n");
+    GString *encoded_picture=g_string_new("");
+    GdkPixdata pixdata;
+    guint pixdata_serialized_length;
+    gchar *pixdata_serialized_data;
+    char finished = 0;
+
+    /* Read the encoded picture */
+    do {
+      finished = 0;
+      fgets(buffer, 1024, fp);
+      if (g_strcasecmp(buffer, ".\n") != 0) {
+	encoded_picture=g_string_append (encoded_picture, buffer);
+	encoded_picture=g_string_append (encoded_picture, "\n");
+      }
+      else {
+	finished = 1;
+      }
+    } while (finished == 0);
+
+    /* Decode the picture */
+    pixdata_serialized_data=s_encoding_base64_decode(encoded_picture->str,
+						     encoded_picture->len,
+						     &pixdata_serialized_length);
+    if (pixdata_serialized_data == NULL) {
+      fprintf(stderr, "Error decoding picture.\n");      
+      s_log_message ("Error decoding picture.\n");
+    }
+    else {
+      /* Deserialize the picture */
+      if (!gdk_pixdata_deserialize(&pixdata,pixdata_serialized_length, 
+				   (guint8 *) pixdata_serialized_data, NULL)) {
+				     fprintf(stderr, "Error deserializing picture.\n");
+				   }
+      else {
+	pixbuf = gdk_pixbuf_from_pixdata (&pixdata,TRUE, NULL);
+      }
+    }
+
+    if (pixdata_serialized_data != NULL) {
+      free (pixdata_serialized_data);
+    }
+    if (encoded_picture != NULL) {
+      g_string_free (encoded_picture, TRUE);
+    }
+
   }
 
   if (pixbuf == NULL) {
@@ -245,6 +289,11 @@ char *
 o_picture_save(OBJECT *object)
 {
   int width, height, x1, y1;
+  gchar *encoded_picture=NULL;
+  gchar *out=NULL;
+  gchar *pixdata_serialized_data=NULL;
+  guint pixdata_serialized_stream_length;
+  guint encoded_picture_length;
 
   /* calculate the width and height of the box */
   width  = abs(object->picture->lower_x - object->picture->upper_x); 
@@ -258,15 +307,60 @@ o_picture_save(OBJECT *object)
   printf("picture: %d %d %d %d\n", x1, y1, width, height);
 #endif
 
-  return(g_strdup_printf("%c %d %d %d %d %d %c %c\n%s", 
-			 object->type,
-			 x1, y1, width, height,
-			 object->picture->angle,
-			 /* Convert the (0,1) chars to ASCII */
-			 (object->picture->mirrored)+0x30, 
-			 0+0x30, /* No embedded pictures support yet */
-			 object->picture->filename));
+  /* Encode the picture if it's embedded */
+  if (object->picture->embedded == 1) {
+    GdkPixdata pixdata;
+    
+    /* Serialize the picture data */
+    gdk_pixdata_from_pixbuf (&pixdata, object->picture->original_picture, FALSE);
+    pixdata_serialized_data = (gchar *) gdk_pixdata_serialize(&pixdata, 
+						    &pixdata_serialized_stream_length);
+    if (pixdata_serialized_data == NULL) {
+      fprintf (stderr, "ERROR: o_picture_save: failed to create serialized data from picture\n");
+      s_log_message ("ERROR: o_picture_save: failed to create serialized data from picture\n");
+    }
+    else {
+      /* Encode the picture */
+      encoded_picture = s_encoding_base64_encode(pixdata_serialized_data, 
+						 pixdata_serialized_stream_length,
+						 &encoded_picture_length, TRUE); 
+      if (encoded_picture == NULL) {
+	fprintf(stderr, "ERROR: o_picture_save: unable to encode the picture.\n");
+	s_log_message("ERROR: o_picture_save: unable to encode the picture.\n");
+      }
+    }
+  }
 
+  if (object->picture->embedded==1) {
+    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s", 
+			  object->type,
+			  x1, y1, width, height,
+			  object->picture->angle,
+			  /* Convert the (0,1) chars to ASCII */
+			  (object->picture->mirrored)+0x30, 
+			  object->picture->embedded+0x30, 
+			  object->picture->filename,
+			  encoded_picture,
+			  ".");
+  }
+  else {
+    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s", 
+			  object->type,
+			  x1, y1, width, height,
+			  object->picture->angle,
+			  /* Convert the (0,1) chars to ASCII */
+			  (object->picture->mirrored)+0x30, 
+			  object->picture->embedded+0x30, 
+			  object->picture->filename);
+  }
+  if (encoded_picture != NULL) {
+    free(encoded_picture);
+  }
+  if (pixdata_serialized_data != NULL) {
+    free(pixdata_serialized_data);
+  }
+
+  return(out);
 
 }
 
@@ -377,6 +471,7 @@ picture->ratio = ratio;
 picture->displayed_picture = NULL;
 picture->angle = angle;
 picture->mirrored = mirrored;
+picture->embedded = embedded;
 
 if (picture->original_picture == NULL) {
   fprintf(stderr, "new picture: Couldn't get enough memory for the new picture\n");
