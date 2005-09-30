@@ -235,13 +235,15 @@ i_show_state(TOPLEVEL *w_current, const char *message)
 
   /* This may be a memory leak... either way it's weird and -Wall is */
   /* complaining... */
-  buf = NULL;
+  buf = g_strdup("");
   aux = buf;
 
-  if ( message && message[0] ) {
-    buf = g_strdup_printf("%s - ", message);
-    if (aux) free(aux);
-    aux = buf;
+  if ( message != NULL) {
+    if ( message && message[0] ) {
+      buf = g_strdup_printf("%s - ", message);
+      if (aux) free(aux);
+      aux = buf;
+    }
   }
 
   if ( !w_current->snap ) {
@@ -256,17 +258,22 @@ i_show_state(TOPLEVEL *w_current, const char *message)
     aux = buf;
   }
 
-  if (strlen(buf) > 0) {
-    buf = g_strdup_printf("%s%s", buf, state_string);
-    if (aux) free(aux);
-    aux = buf;
-    what_to_say = buf;
-  } else {
+  if (buf != NULL) {
+    if (strlen(buf) > 0) {
+      buf = g_strdup_printf("%s%s", buf, state_string);
+      if (aux) free(aux);
+      aux = buf;
+      what_to_say = buf;
+    } else {
+      what_to_say = state_string;
+    }
+  }
+  else {
     what_to_say = state_string;
   }
 
   i_update_status(w_current, what_to_say);
-  if(buf) free(buf);
+  free(buf);
 }
 
 

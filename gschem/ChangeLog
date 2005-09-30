@@ -1,3 +1,10 @@
+2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>
+        * noweb/i_basic.nw: Fixed memory leak which maked gschem to segfault 
+	when adding pictures. Undid the last patch made by Dan (a NULL string
+	is not the same as a "" string, and it maked gschem segfault), and
+	changed the g_strdup_printf("") to g_strdup(""). This fixes the 
+	compiler warning Dan wanted to fix.
+	
 2005-09-27 18:38  Dan McMahill <danmc>
 
         * docs/gschemdoc.texi: add title to remove warnings
