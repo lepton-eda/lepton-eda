@@ -273,7 +273,7 @@ i_show_state(TOPLEVEL *w_current, const char *message)
   }
 
   i_update_status(w_current, what_to_say);
-  free(buf);
+  if (buf != NULL) free(buf);
 }
 
 
