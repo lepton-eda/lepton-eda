@@ -54,6 +54,10 @@
 @
 
 <<s_encoding.c : include_directives>>=
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <ctype.h>
 #include <glib.h>
 #ifdef HAVE_STRING_H
