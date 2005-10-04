@@ -1,3 +1,11 @@
+2005-10-04 Werner Hoch <werner.ho@gmx.de>
+	* bus/pc104B-1.sym: added missing pinseq
+	* connector/DB37-1.sym: pinseq corrected
+	* connector/DIN41612C*: added pinattributes
+	* connector/smart-media-1.sym: pintype corrected, graphical rework
+	* ecl/*: added documentation (symbols are still bad)
+	* idt/idt7204-1.sym/*: added documentation (still bad)
+
 2005-09-12 Werner Hoch <werner.ho@gmx.de>
 	* analog/*: added missing attributs, fixed a few symbols
 	

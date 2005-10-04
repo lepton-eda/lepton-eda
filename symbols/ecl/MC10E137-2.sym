@@ -1,4 +1,4 @@
-v 20031231 1
+v 20050820 1
 B 300 0 2400 5400 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 P 300 2900 0 2900 1 0 1
 {
@@ -266,3 +266,5 @@ T 3800 4200 5 10 0 0 0 0 1
 footprint=PLCC 28
 T 3800 4400 5 10 0 0 0 0 1
 device=MC10E137
+T 3800 4600 5 10 0 0 0 0 1
+documentation=http://www.onsemi.com/pub/Collateral/MC10E137-D.PDF

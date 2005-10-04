@@ -1,4 +1,4 @@
-v 20031231 1
+v 20050820 1
 P 0 2300 300 2300 1 0 0
 {
 T 100 2350 5 8 1 1 0 0 1
@@ -248,3 +248,5 @@ pinseq=20
 }
 T 2300 4700 8 10 1 1 0 6 1
 refdes=U?
+T 2300 4900 5 10 0 0 0 0 1
+documentation=http://www1.idt.com/pcms/tempDocs/7203-7208_DS.pdf

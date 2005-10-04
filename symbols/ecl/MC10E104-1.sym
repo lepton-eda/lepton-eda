@@ -1,4 +1,4 @@
-v 20031231 1
+v 20050820 1
 B 300 300 2400 2400 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 1000 1800 9 10 1 1 0 0 1
 MC10E104
@@ -260,3 +260,5 @@ T 3450 2150 5 10 0 0 0 0 1
 footprint=PLCC 28
 T 3450 2350 5 10 0 0 0 0 1
 device=MC10E104
+T 3450 1950 5 10 0 0 0 0 1
+documentation=http://www.onsemi.com/pub/Collateral/MC10E104-D.PDF
