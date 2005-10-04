@@ -4765,7 +4765,7 @@ void autonumber_text_dialog(TOPLEVEL * w_current)
 
     combo_entry1 = GTK_COMBO (combo1)->entry;
     gtk_widget_show (combo_entry1);
-    gtk_entry_set_text (GTK_ENTRY (combo_entry1), _("refdes=C"));	
+    gtk_entry_set_text (GTK_ENTRY (combo_entry1), "refdes=C");	
     GLADE_HOOKUP_OBJECT(w_current->tswindow,combo_entry1,"searchtext");
 
     /* search focus section */
