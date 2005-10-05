@@ -1,3 +1,7 @@
+2005-10-05 Werner Hoch <werner.ho@gmx.de>
+	* include/struct.h: added the net-drawing patch from David Carr
+	it requires two additional coordinates in st_toplevel
+
 2005-10-01 Carlos Nieves Onega <cnieves@iespana.es>
 	* noweb/s_encoding.h: Fixed compiler warning. Thanks to Dan McMahill
 	for pointing out the solution.

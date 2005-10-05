@@ -350,8 +350,11 @@ o_net_start(TOPLEVEL *w_current, int x, int y)
 {
   int size;
 
-  w_current->last_x = w_current->start_x = fix_x(w_current, x);
-  w_current->last_y = w_current->start_y = fix_y(w_current, y);
+  /* initalize all parameters used when drawing the new net */
+  w_current->last_x = w_current->start_x = w_current->second_x = 
+    fix_x(w_current, x);
+  w_current->last_y = w_current->start_y = w_current->second_y = 
+    fix_y(w_current, y);
 
 #if 0 /* not ready for prime time use, this is the snap any point #if 0 */
   int distance1;
@@ -470,8 +473,11 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 {
   int x1, y1;
   int x2, y2;
+  int x3, y3;
   int color;
   int size;
+  int primary_zero_length, secondary_zero_length;
+
   /*int temp_x, temp_y;*/
   /* OBJECT *o_current;*/
   GList *other_objects = NULL;
@@ -499,41 +505,57 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 
   gdk_gc_set_foreground(w_current->xor_gc,
 			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, 
-		w_current->start_x, w_current->start_y, 
+
+  /* Erase primary rubber net line */
+  gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->net_style == THICK ) {
+  /* Erase secondary rubber net line */
+  gdk_draw_line(w_current->window, w_current->xor_gc,
+		 w_current->last_x, w_current->last_y,
+		 w_current->second_x, w_current->second_y);
+
+  if (w_current->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
     gdk_gc_set_line_attributes(w_current->gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 
-  /* don't allow zero length nets */
-  /* this ends the net drawing behavior we want this? hack */
-  if ( (w_current->start_x == w_current->last_x) &&
-       (w_current->start_y == w_current->last_y) ) {
-         w_current->start_x = (-1);
-         w_current->start_y = (-1);
-         w_current->last_x = (-1);
-         w_current->last_y = (-1);
-         w_current->inside_action=0;
-	 i_set_state(w_current, STARTDRAWNET);
-         o_net_eraserubber(w_current);
-         return(FALSE);
-       }
 
-#if 0 /* not ready for prime time use */
+  /* See if either of the nets are zero length.  We'll only add */
+  /* the non-zero ones */
+  primary_zero_length = (w_current->start_x == w_current->last_x) &&
+      (w_current->start_y == w_current->last_y);
+ 
+  secondary_zero_length = (w_current->last_x == w_current->second_x) &&
+      (w_current->last_y == w_current->second_y);
+
+  /* If both nets are zero length... */
+  /* this ends the net drawing behavior we want this? hack */
+  if ( primary_zero_length && secondary_zero_length ) {
+    w_current->start_x = (-1);
+    w_current->start_y = (-1);
+    w_current->last_x = (-1);
+    w_current->last_y = (-1);
+    w_current->second_x = (-1);
+    w_current->second_y = (-1);
+    w_current->inside_action = 0;
+    i_set_state(w_current, STARTDRAWNET);
+    o_net_eraserubber(w_current);
+    
+    return (FALSE);
+  }
+#if 0				/* not ready for prime time use */
   /* second attempt at all snapping */
   o_current = o_CONN_search_closest_range(w_current,
-                                          w_current->page_current->object_head,
-                                          w_current->last_x, w_current->last_y,
-                                          &temp_x, &temp_y, 200, NULL, NULL);
+					  w_current->page_current->
+					  object_head, w_current->last_x,
+					  w_current->last_y, &temp_x,
+					  &temp_y, 200, NULL, NULL);
 
   if (o_current) {
     w_current->last_x = temp_x;
@@ -544,78 +566,134 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
   }
 #endif
 
-  SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y, &x1, &y1);
+
+  /* Primary net runs from (x1,y1)-(x2,y2) */
+  /* Secondary net from (x2,y2)-(x3,y3) */
+  SCREENtoWORLD(w_current, w_current->start_x, w_current->start_y, &x1,	&y1);
   SCREENtoWORLD(w_current, w_current->last_x, w_current->last_y, &x2, &y2);
+  SCREENtoWORLD(w_current, w_current->second_x, w_current->second_y, &x3, &y3);
+
+  /* Snap points to closest grid location */
   x1 = snap_grid(w_current, x1);
   y1 = snap_grid(w_current, y1);
   x2 = snap_grid(w_current, x2);
   y2 = snap_grid(w_current, y2);
+  x3 = snap_grid(w_current, x3);
+  y3 = snap_grid(w_current, y3);
 
-  w_current->save_x = w_current->last_x;
-  w_current->save_y = w_current->last_y;
+  w_current->save_x = w_current->second_x;
+  w_current->save_y = w_current->second_y;
 
+  if (!primary_zero_length ) {
+  /* create primary net */
+      w_current->page_current->object_tail =
+	  new_net = o_net_add(w_current,
+			      w_current->page_current->object_tail,
+			      OBJ_NET, color, x1, y1, x2, y2);
+  
+      /* conn stuff */
+      /* LEAK CHECK 1 */
+      other_objects = s_conn_return_others(other_objects,
+					   w_current->page_current->
+					   object_tail);
 
-  w_current->page_current->object_tail =
-  new_net = o_net_add(w_current,
-            w_current->page_current->object_tail,
-            OBJ_NET,
-            color,
-            x1, y1, x2, y2);
-
-  /* conn stuff */
-  other_objects = s_conn_return_others(other_objects,
-                                       w_current->page_current->object_tail);
-
-  if (o_net_add_busrippers(w_current, new_net, other_objects)) {
-    g_list_free(other_objects);
-    other_objects = NULL;
-    other_objects = s_conn_return_others(other_objects,
-                                         new_net);
-  }
-
+      if (o_net_add_busrippers(w_current, new_net, other_objects)) {
+	  g_list_free(other_objects);
+	  other_objects = NULL;
+	  other_objects = s_conn_return_others(other_objects, new_net);
+      }
 #if DEBUG
-  s_conn_print(new_net->conn_list);
+      s_conn_print(new_net->conn_list);
 #endif
 
-  gdk_gc_set_foreground(w_current->gc, x_get_color(color));
-  gdk_draw_line(w_current->window, w_current->gc,
-                new_net->line->screen_x[0], new_net->line->screen_y[0],
-                new_net->line->screen_x[1], new_net->line->screen_y[1]);
-  gdk_draw_line(w_current->backingstore, w_current->gc,
-                new_net->line->screen_x[0], new_net->line->screen_y[0],
-                new_net->line->screen_x[1], new_net->line->screen_y[1]);
+      gdk_gc_set_foreground(w_current->gc, x_get_color(color));
+      gdk_draw_line(w_current->window, w_current->gc,
+		    new_net->line->screen_x[0], new_net->line->screen_y[0],
+		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
+      gdk_draw_line(w_current->backingstore, w_current->gc,
+		    new_net->line->screen_x[0], new_net->line->screen_y[0],
+		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
 
-  if (w_current->net_style == THICK) {
-    gdk_gc_set_line_attributes(w_current->gc, 0,
-			       GDK_LINE_SOLID,
-			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+      if (w_current->net_style == THICK) {
+	  gdk_gc_set_line_attributes(w_current->gc, 0,
+				     GDK_LINE_SOLID,
+				     GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+      }
+
+      o_cue_undraw_list(w_current, other_objects);
+      o_cue_draw_list(w_current, other_objects);
+      o_cue_draw_single(w_current, new_net);
+
+      /* you don't want to consolidate nets which are drawn non-ortho */
+      if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
+	  o_net_consolidate_segments(w_current, new_net);
+      }
   }
+  /* If the second net is not zero length, add it as well */
+  if (!secondary_zero_length) {
+      
+      /* Add secondary net */
+      w_current->page_current->object_tail =
+	  new_net = o_net_add(w_current,
+			      w_current->page_current->object_tail,
+			      OBJ_NET, color, x2, y2, x3, y3);
+  
+      /* conn stuff */
+      /* LEAK CHECK 2 */
+      other_objects = s_conn_return_others(other_objects,
+					   w_current->page_current->
+					   object_tail);
 
-  o_cue_undraw_list(w_current, other_objects);
-  o_cue_draw_list(w_current, other_objects);
+      if (o_net_add_busrippers(w_current, new_net, other_objects)) {
+	  g_list_free(other_objects);
+	  other_objects = NULL;
+	  other_objects = s_conn_return_others(other_objects, new_net);
+      }
+#if DEBUG
+      s_conn_print(new_net->conn_list);
+#endif
+
+      gdk_gc_set_foreground(w_current->gc, x_get_color(color));
+      gdk_draw_line(w_current->window, w_current->gc,
+		    new_net->line->screen_x[0], new_net->line->screen_y[0],
+		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
+      gdk_draw_line(w_current->backingstore, w_current->gc,
+		    new_net->line->screen_x[0], new_net->line->screen_y[0],
+		    new_net->line->screen_x[1], new_net->line->screen_y[1]);
+
+      if (w_current->net_style == THICK) {
+	  gdk_gc_set_line_attributes(w_current->gc, 0,
+				     GDK_LINE_SOLID,
+				     GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+      }
+
+      o_cue_undraw_list(w_current, other_objects);
+      o_cue_draw_list(w_current, other_objects);
+      o_cue_draw_single(w_current, new_net);
+
+      /* you don't want to consolidate nets which are drawn non-ortho */
+      if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
+	  o_net_consolidate_segments(w_current, new_net);
+      }
+  }
+  
+  /* LEAK CHECK 3 */
   g_list_free(other_objects);
-  o_cue_draw_single(w_current, new_net);
 
-  /* you don't want to consolidate nets which are drawn non-ortho */
-  if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-    o_net_consolidate_segments(w_current, new_net);
-  }
-
-  w_current->page_current->CHANGED=1;
+  w_current->page_current->CHANGED = 1;
   w_current->start_x = w_current->save_x;
   w_current->start_y = w_current->save_y;
   o_undo_savestate(w_current, UNDO_ALL);
 
-#if 0 /* a false attempt at ending the rubberbanding.. */
-  if (conn_count)
-  {
+#if 0				/* a false attempt at ending the rubberbanding.. */
+  if (conn_count) {
     w_current->inside_action = 0;
     i_set_state(w_current, STARTDRAWNET);
     o_net_eraserubber(w_current);
   }
 #endif
 
-  return(TRUE);
+  return (TRUE);
 }
 
 
@@ -633,58 +711,81 @@ o_net_rubbernet(TOPLEVEL *w_current, int x, int y)
 {
   int diff_x, diff_y;
   int size;
+  int ortho;
 
   if (w_current->inside_action == 0) {
     o_redraw(w_current, w_current->page_current->object_head);
     return;
   }
 
-  if (w_current->net_style == THICK ) {
+  if (w_current->net_style == THICK) {
     size = SCREENabs(w_current, NET_WIDTH);
     gdk_gc_set_line_attributes(w_current->xor_gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
+  gdk_gc_set_foreground(w_current->xor_gc,
+			x_get_darkcolor(w_current->select_color));
 
-  gdk_gc_set_foreground(w_current->xor_gc, 
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, 
-		w_current->start_x, w_current->start_y, 
+  /* Orthognal mode enabled when Control Key is NOT pressed */
+  ortho = !w_current->CONTROLKEY;
+
+  /* Erase primary line */
+  gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
-
-  /* going into ortho mode (control key not pressed) */
-  /* erase non-ortho line */
-
-  /* going into non-ortho mode (control key pressed) */
-  /* erase ortho line */
+  /* Erase secondary line*/
+  if ( w_current->second_x != -1 && w_current->second_y != -1 ) {
+      gdk_draw_line(w_current->window, w_current->xor_gc,
+		    w_current->last_x, w_current->last_y,
+		    w_current->second_x, w_current->second_y);
+  }
+ 
+  /* In orthogonal mode secondary line is the same as the first */
+  if (!ortho)
+  {
+      w_current->second_x = w_current->last_x;
+      w_current->second_y = w_current->last_y;
+  }
 
   w_current->last_x = fix_x(w_current, x);
   w_current->last_y = fix_y(w_current, y);
 
   /* If you press the control key then you can draw non-ortho nets */
-  if (!w_current->CONTROLKEY) {
+  if (ortho) {
     diff_x = abs(w_current->last_x - w_current->start_x);
     diff_y = abs(w_current->last_y - w_current->start_y);
 
-    if (diff_x >= diff_y) {
+    /* calculate the co-ordinates necessary to draw the lines*/
+    /* Pressing the shift key will cause the vertical and horizontal lines to switch places */
+    if ( !w_current->SHIFTKEY ) {
       w_current->last_y = w_current->start_y;
+      w_current->second_x = w_current->last_x;
+      w_current->second_y = fix_y(w_current,y);
     } else {
       w_current->last_x = w_current->start_x;
+      w_current->second_x = fix_x(w_current,x);
+      w_current->second_y = w_current->last_y;
     }
   }
 
   gdk_gc_set_foreground(w_current->xor_gc,
-			x_get_darkcolor(w_current->select_color) );
-  gdk_draw_line(w_current->window, w_current->xor_gc, 
-		w_current->start_x, w_current->start_y, 
+			x_get_darkcolor(w_current->select_color));
+  
+  /* draw primary line */
+  gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->start_x, w_current->start_y,
 		w_current->last_x, w_current->last_y);
 
-  if (w_current->net_style == THICK ) {
+  /* Draw secondary line */
+  gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->last_x, w_current->last_y,
+		w_current->second_x, w_current->second_y);
+
+  if (w_current->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->xor_gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 }
 
@@ -704,27 +805,33 @@ o_net_eraserubber(TOPLEVEL *w_current)
 {
   int size;
 
-  if (w_current->net_style == THICK ) {
+  if (w_current->net_style == THICK) {
     size = SCREENabs(w_current, NET_WIDTH);
 
     if (size < 0)
-      size=0;
+      size = 0;
 
     gdk_gc_set_line_attributes(w_current->gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 
   gdk_gc_set_foreground(w_current->gc,
-			x_get_color(w_current->background_color) );
-  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x, w_current->start_y, w_current->last_x, w_current->last_y);
+			x_get_color(w_current->background_color));
 
-  if (w_current->net_style == THICK ) {
+  /* Erase primary primary rubber net line */
+  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x,
+		w_current->start_y, w_current->last_x, w_current->last_y);
+
+  /* Erase secondary rubber net line */
+  gdk_draw_line(w_current->window, w_current->xor_gc,
+		w_current->last_x, w_current->last_y,
+		w_current->second_x, w_current->second_y);
+
+  if (w_current->net_style == THICK) {
     gdk_gc_set_line_attributes(w_current->gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
+			       GDK_LINE_SOLID,
+			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 }
 

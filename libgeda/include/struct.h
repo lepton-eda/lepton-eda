@@ -447,6 +447,8 @@ struct st_toplevel {
   int save_y;
   int last_x;
   int last_y;
+  int second_x;
+  int second_y;
   int loc_x, loc_y;
   int distance;
 
