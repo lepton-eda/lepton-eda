@@ -1,3 +1,8 @@
+2005-10-05 Werner Hoch <werner.ho@gmx.de>
+	* noweb/o_net.nw: added the patch from David Carr.
+	when drawing a net, there will be two segments in an L-shape.
+	the shift-key changes the drawing path.
+
 2005-10-04 Werner Hoch <werner.ho@gmx.de>
 	* noweb/x_dialog.nw: removed gettext makro from a programm string
 
