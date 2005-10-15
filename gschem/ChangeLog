@@ -1,4 +1,8 @@
 2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
+        * noweb/x_image.nw: Remove the grid when exporting to PNG.
+	Reorganize and comment some code.
+	
+2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
         * noweb/prototype.h, noweb/i_callbacks.nw, noweb/x_image.nw:
 	Added code to export the schematic to PNG, including pictures,
 	without using libgdgeda.
@@ -16,7 +20,6 @@
 2005-10-04 Werner Hoch <werner.ho@gmx.de>
 	* noweb/x_dialog.nw: removed gettext makro from a programm string
 
->>>>>>> 1.403
 2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/o_misc.nw, noweb/i_callbacks.nw: 
 	Added code to embed/unembed pictures.

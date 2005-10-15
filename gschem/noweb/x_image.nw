@@ -699,22 +699,26 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
 
   toplevel.window = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
   toplevel.backingstore = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
+  toplevel.grid = 0;
+
+  origin_x = origin_y = 0;
+  right = size_x;
+  bottom = size_y;
+  /* ------------------  Begin optional code ------------------------ */
+  /* If the the code in this region is commented, the PNG returned will
+     be the same as the one returned using libgdgeda.
+     I mean: there will be some border all around the schematic.
+     This code is used to adjust the schematic to the border of the image */
+
   /* Do a zoom extents to get fit all the schematic in the window */
+  /* Commented so the image returned will be the same as with libgdgeda */  
   a_zoom_extents (&toplevel,
 		  toplevel.page_current->object_head,
 		  A_PAN_DONT_REDRAW);
+
   
-  
-  o_redraw_all(&toplevel);
-
-  get_complex_bounds(&toplevel, 
-		     toplevel.page_current->object_head, 
-		     &origin_x, &origin_y, 
-		     &right, &bottom);
-
-  o_redraw_all (&toplevel); 
-
   /* See if there are objects */
+  
   aux = w_current->page_current->object_head;
   while (aux != NULL) {
     if (aux->type != -1) {
@@ -725,11 +729,16 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   }
   
   /* If there are no objects, can't use zoom_extents */
-  if (!object_found) {
-    origin_x = origin_y = 0;
-    right = size_x;
-    bottom = size_y;
+  if (object_found) {
+    o_redraw_all (&toplevel); 
+    get_complex_bounds(&toplevel, 
+		       toplevel.page_current->object_head, 
+		       &origin_x, &origin_y, 
+		       &right, &bottom);
   }
+  /* ------------------  End optional code ------------------------ */
+  
+  o_redraw_all (&toplevel); 
 
   /* Get the pixbuf */
   pixbuf=gdk_pixbuf_get_from_drawable(NULL,toplevel.backingstore, NULL, 
