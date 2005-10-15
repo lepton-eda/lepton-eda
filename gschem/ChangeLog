@@ -1,6 +1,7 @@
 2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
         * noweb/x_image.nw: Remove the grid when exporting to PNG.
 	Reorganize and comment some code.
+	Remove text origin markers when exporting to PNG.
 	
 2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
         * noweb/prototype.h, noweb/i_callbacks.nw, noweb/x_image.nw:

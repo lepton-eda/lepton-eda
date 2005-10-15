@@ -700,6 +700,7 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   toplevel.window = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
   toplevel.backingstore = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
   toplevel.grid = 0;
+  toplevel.text_origin_marker = FALSE;
 
   origin_x = origin_y = 0;
   right = size_x;
