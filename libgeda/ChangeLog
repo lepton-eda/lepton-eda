@@ -1,3 +1,7 @@
+2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
+        * noweb/f_image.nw:
+	Print error if calling f_image_write without libgdgeda support.
+	
 2005-10-05 Werner Hoch <werner.ho@gmx.de>
 	* include/struct.h: added the net-drawing patch from David Carr
 	it requires two additional coordinates in st_toplevel

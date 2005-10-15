@@ -28,6 +28,7 @@
 <<x_image.c : x_image_cancel()>>
 <<x_image.c : x_image_keypress()>>
 <<x_image.c : x_image_setup()>>
+<<x_image.c : x_image_get_pixbuf()>>
 
 @
 
@@ -317,6 +318,10 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   int save_height, save_width;
   int save_page_left, save_page_right, save_page_top, save_page_bottom;
   int page_width, page_height, page_center_left, page_center_top;
+#ifndef HAS_LIBGDGEDA
+  GdkPixbuf *pixbuf;
+  char *filetype;
+#endif
 
   width = w_current->image_width;
   height = w_current->image_height;
@@ -358,11 +363,38 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
                           w_current->page_current->
                           selection2_head);
 		
+
+#ifdef HAS_LIBGDGEDA
   /* try to use recalc here */
   o_redraw_all(w_current);
 
   f_image_write(w_current, filename, width, height, 
                 w_current->image_color);
+#else
+  pixbuf = x_image_get_pixbuf(w_current);
+  if (pixbuf != NULL) {
+    filetype = g_strdup("png");
+    if (!gdk_pixbuf_save(pixbuf, filename, filetype, NULL, NULL)) {
+      fprintf(stderr, "x_image_lowlevel: Unable to save PNG file  %s.\n", filename);
+      s_log_message("x_image_lowlevel: Unable to write PNG file.\n");      
+    }
+    else {
+      if (w_current->image_color == TRUE) {
+	s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
+      } else {
+	s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
+      }
+    }
+    if (filetype != NULL)
+      free(filetype);
+    if (pixbuf != NULL)
+	  free(pixbuf); 
+  }
+  else {
+    fprintf(stderr, "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
+    s_log_message("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
+  }
+#endif
 
   w_current->width = save_width;
   w_current->height = save_height;
@@ -377,11 +409,13 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   /* try to use recalc here... */
   o_redraw_all(w_current);
 
+#ifdef HAS_LIBGDGEDA
   if (w_current->image_color == TRUE) {
     s_log_message(_("Wrote color image to [%s] [%d x %d]\n"), filename, width, height);
   } else {
     s_log_message(_("Wrote black and white image to [%s] [%d x %d]\n"), filename, width, height);
   }
+#endif
 }
 
 
@@ -398,8 +432,8 @@ gint
 x_image_write(GtkWidget *w, TOPLEVEL *w_current)
 {
   const char *filename=NULL;
-  filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
 
+  filename = gtk_entry_get_text(GTK_ENTRY(w_current->ifilename_entry));
   if (filename[0] != '\0') {
     x_image_lowlevel(w_current, filename);
   }
@@ -624,5 +658,92 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
   }
 }
 
+
+@ %def x_image_setup
+
+@section Function @code{x_image_get_pixbuf()}
+
+@defun x_image_get_pixbuf w_current filename
+@end defun
+
+<<x_image.c : x_image_get_pixbuf()>>=
+GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
+{
+  GdkPixbuf *pixbuf;
+  int origin_x, origin_y, bottom, right;
+  int size_x, size_y, s_right, s_left, s_top,s_bottom;
+  TOPLEVEL toplevel;
+  OBJECT *aux;
+  char object_found = 0;
+
+
+  /* Do a copy of the toplevel struct and work with it */
+  memcpy(&toplevel, w_current, sizeof(TOPLEVEL));
+
+  WORLDtoSCREEN(&toplevel, 
+		w_current->page_current->right,
+		w_current->page_current->left,
+		&s_right,
+		&s_left);
+  WORLDtoSCREEN(&toplevel, 
+		w_current->page_current->bottom,
+		w_current->page_current->top,
+		&s_bottom,
+		&s_top);
+
+  size_x = s_left - s_right;
+  size_y = s_bottom - s_top;
+
+  size_x = toplevel.image_width;
+  size_y = toplevel.image_height;
+
+  toplevel.window = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
+  toplevel.backingstore = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
+  /* Do a zoom extents to get fit all the schematic in the window */
+  a_zoom_extents (&toplevel,
+		  toplevel.page_current->object_head,
+		  A_PAN_DONT_REDRAW);
+  
+  
+  o_redraw_all(&toplevel);
+
+  get_complex_bounds(&toplevel, 
+		     toplevel.page_current->object_head, 
+		     &origin_x, &origin_y, 
+		     &right, &bottom);
+
+  o_redraw_all (&toplevel); 
+
+  /* See if there are objects */
+  aux = w_current->page_current->object_head;
+  while (aux != NULL) {
+    if (aux->type != -1) {
+      object_found = 1;
+      break;
+    }
+    aux = aux->next;
+  }
+  
+  /* If there are no objects, can't use zoom_extents */
+  if (!object_found) {
+    origin_x = origin_y = 0;
+    right = size_x;
+    bottom = size_y;
+  }
+
+  /* Get the pixbuf */
+  pixbuf=gdk_pixbuf_get_from_drawable(NULL,toplevel.backingstore, NULL, 
+				      origin_x, origin_y, 0, 0,           
+				      right-origin_x, 
+				      bottom-origin_y);
+  if (toplevel.window != NULL) {
+    free(toplevel.window);
+  }
+  if (toplevel.backingstore != NULL) {
+    free(toplevel.backingstore);
+  }
+  return(pixbuf);
+
+}
 
 @ %def x_image_setup

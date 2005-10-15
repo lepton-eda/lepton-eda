@@ -876,6 +876,7 @@ gint x_image_write(GtkWidget *w, TOPLEVEL *w_current);
 gint x_image_cancel(GtkWidget *w, TOPLEVEL *w_current);
 int x_image_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);
 void x_image_setup(TOPLEVEL *w_current, char *filename);
+GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current);
 /* x_log.c */
 void x_log_open ();
 void x_log_close ();

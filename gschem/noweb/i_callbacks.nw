@@ -766,6 +766,7 @@ DEFINE_I_CALLBACK(file_write_png)
 
   exit_if_null(w_current);
 
+#if 0
 #ifndef HAS_LIBGDGEDA
   /* TODO: integrate these to messages */
   fprintf(stderr,
@@ -776,7 +777,7 @@ DEFINE_I_CALLBACK(file_write_png)
 		"so this feature is disabled\n"));
   return;
 #endif
-
+#endif
   /* get the base file name */
   if (strcmp(fnameext_get(w_current->page_current->page_filename),
              ".sch") == 0) {
@@ -790,7 +791,7 @@ DEFINE_I_CALLBACK(file_write_png)
     /* TODO: do something */
   }
 
-  /* add ".ps" tp the base filename */
+  /* add ".png" tp the base filename */
   img_filename = fnameext_add(base, ".png");
   free(base);
 
