@@ -28,6 +28,7 @@
 <<x_image.c : x_image_cancel()>>
 <<x_image.c : x_image_keypress()>>
 <<x_image.c : x_image_setup()>>
+<<x_image.c : x_image_convert_to_greyscale()>>
 <<x_image.c : x_image_get_pixbuf()>>
 
 @
@@ -661,9 +662,64 @@ x_image_setup (TOPLEVEL *w_current, char *filename)
 
 @ %def x_image_setup
 
+
+@section Function @code{x_image_convert_to_greyscale()}
+
+@defun x_image_convert_to_greyscale pixbuf 
+@end defun
+
+<<x_image.c : x_image_convert_to_greyscale()>>=
+static void
+x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
+{
+  int width, height, rowstride, n_channels;
+  guchar *pixels, *p, new_value;
+  int i, j;
+
+  n_channels = gdk_pixbuf_get_n_channels (pixbuf);
+  
+  if (n_channels != 3)
+  {
+    return;
+  }
+ 
+  if (gdk_pixbuf_get_colorspace (pixbuf) != GDK_COLORSPACE_RGB)
+  {
+    return;
+  }
+
+  if (gdk_pixbuf_get_bits_per_sample (pixbuf) != 8)
+  {
+    return;
+  }
+
+  width = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  pixels = gdk_pixbuf_get_pixels (pixbuf);
+
+  for (j = 0; j < height; j++)
+  {
+    for (i = 0; i < width; i++)
+    {
+      p = pixels + j * rowstride + i * n_channels;
+
+      new_value = 0.3 * p[0] + 0.59 * p[1] + 0.11 * p[2];
+      p[0] = new_value;
+      p[1] = new_value;
+      p[2] = new_value;
+    }
+  }
+}
+
+
+@ %def x_image_convert_to_greyscale
+
+
 @section Function @code{x_image_get_pixbuf()}
 
-@defun x_image_get_pixbuf w_current filename
+@defun x_image_get_pixbuf w_current 
 @end defun
 
 <<x_image.c : x_image_get_pixbuf()>>=
@@ -675,7 +731,6 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   TOPLEVEL toplevel;
   OBJECT *aux;
   char object_found = 0;
-
 
   /* Do a copy of the toplevel struct and work with it */
   memcpy(&toplevel, w_current, sizeof(TOPLEVEL));
@@ -701,6 +756,22 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
   toplevel.backingstore = gdk_pixmap_new(w_current->window, size_x, size_y, -1);
   toplevel.grid = 0;
   toplevel.text_origin_marker = FALSE;
+
+  toplevel.display_width = toplevel.image_width;
+  toplevel.display_height = toplevel.image_height;
+
+  toplevel.win_width = toplevel.image_width;
+  toplevel.win_height = toplevel.image_height;
+
+  if (toplevel.image_color == FALSE)
+  {
+    /* We are going to be doing black&white (grayscale) output, so change the */
+    /* color of all objects to a nice and dark color, say black */
+    toplevel.override_color = BLACK;  
+
+    /* also reset the background to white */
+    toplevel.background_color = WHITE;
+  }
 
   origin_x = origin_y = 0;
   right = size_x;
@@ -728,6 +799,7 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
     }
     aux = aux->next;
   }
+
   
   /* If there are no objects, can't use zoom_extents */
   if (object_found) {
@@ -746,14 +818,20 @@ GdkPixbuf *x_image_get_pixbuf (TOPLEVEL *w_current)
 				      origin_x, origin_y, 0, 0,           
 				      right-origin_x, 
 				      bottom-origin_y);
+
+  if (toplevel.image_color == FALSE)
+  {
+    x_image_convert_to_greyscale(pixbuf); 
+  }
+
   if (toplevel.window != NULL) {
     free(toplevel.window);
   }
   if (toplevel.backingstore != NULL) {
     free(toplevel.backingstore);
   }
-  return(pixbuf);
 
+  return(pixbuf);
 }
 
 @ %def x_image_setup

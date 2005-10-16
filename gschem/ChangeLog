@@ -1,3 +1,12 @@
+2005-10-15 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_image.nw: Added some code to make sure non-default sized
+	image are correctly created.  Added code to convert pixbufs to 
+	greyscale to implement the image-color rc keyword.
+
+	* configure.ac: Added check for gtk+ 2.6.x or greater to support some
+	future additions.
+
 2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
         * noweb/x_image.nw: Remove the grid when exporting to PNG.
 	Reorganize and comment some code.
