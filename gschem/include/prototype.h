@@ -897,6 +897,10 @@ void x_pagesel_update (TOPLEVEL *toplevel);
 GtkWidget *e_gtk_button_new_with_icon(const char *text, const char *stock);
 /* x_preview.c */
 void x_preview_update(TOPLEVEL *preview, const char *directory, const char *filename);
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+void x_preview_update_gtk24 (GtkFileChooser *file_chooser, gpointer data);
+#endif
 void x_preview_close(TOPLEVEL *w_current);
 gint x_preview_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current);
 gint x_preview_button_pressed(GtkWidget *widget, GdkEventButton *event, TOPLEVEL *w_current);

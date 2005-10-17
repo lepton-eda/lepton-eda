@@ -105,6 +105,7 @@
 #endif
 
 #include <libgeda/libgeda.h>
+#include <gtk/gtk.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -815,6 +816,7 @@ void
 x_fileselect_saveas_close (GtkWidget *w, FILEDIALOG *f_current)
 {
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
+  f_current->xfwindow = NULL;
 
 #if 0 /* this isn't relavent anymore */
   w_current = f_current->toplevel;
@@ -850,13 +852,16 @@ void
 x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
 {
   TOPLEVEL *w_current;
-  const char *string;
+  const char *string = NULL;
   int len;
 
   w_current = f_current->toplevel;
-
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+  string = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(f_current->xfwindow));
+#else
   string = gtk_entry_get_text(GTK_ENTRY(f_current->filename_entry));
-
+#endif
   if (!string) {
     return;
   }
@@ -898,6 +903,9 @@ x_fileselect_saveas(GtkWidget *w, FILEDIALOG *f_current)
     /* do nothing if SAVEAS_NONE */
   } else {
     s_log_message(_("Specify a Filename!\n"));
+  }
+  if (string != NULL) {
+    free ( (void *) string);
   }
 }
 
@@ -945,25 +953,41 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
   int len;
 
   char *filename = NULL;
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+  GSList *files;
+#else
   GList *files;
   int row;
+#endif
 
   /* get GList of selected files  */
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+  files = gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER(f_current->xfwindow));
+#else
   files = (GTK_CLIST(f_current->file_list))->selection;
+#endif
   if (files) {
     /* iterate over selected files  */
     for (; files ; files = files->next) {     
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+      filename = files->data;
+      string = filename;
+#else
       row = (int) files->data;     /* Why do we need to do cast here?  */
                                    /* because files->data is a void *  */
       gtk_clist_get_text (GTK_CLIST(f_current->file_list), row, 0, &filename);
-      w_current = f_current->toplevel;
-	
       /* allocate space, then stick full, absolute filename into string */
       string = g_build_path (G_DIR_SEPARATOR_S,
                              f_current->directory,
                              filename,
                              NULL);
 
+#endif
+      w_current = f_current->toplevel;
+	
       len = strlen(string);
       if (string[len - 1] != G_DIR_SEPARATOR) {
         found_page = s_page_search (f_current->toplevel, string);
@@ -1015,6 +1039,12 @@ x_fileselect_open_file(GtkWidget *w, FILEDIALOG *f_current)
 
     /* Now close file dialog window . . . . */
     gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
+    f_current->xfwindow = NULL;
+
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+    g_slist_free(files);
+#endif
   }     /* end of if string . . .  */                   
 }
 
@@ -1230,6 +1260,7 @@ void
 x_fileselect_close (GtkWidget *w, FILEDIALOG *f_current)
 {
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
+  f_current->xfwindow = NULL;
 }
 
 
@@ -1859,6 +1890,7 @@ x_fileselect_comp_close (GtkWidget *w, FILEDIALOG *f_current)
   i_update_toolbar(w_current);
 
   gtk_widget_destroy(GTK_WIDGET(f_current->xfwindow));
+  f_current->xfwindow = NULL;
   /* do nothing if close is pressed for SAVEAS_CLOSE case */
 }
 
@@ -2040,9 +2072,7 @@ x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current)
 @end defun
 
 <<x_fileselect.c : x_fileselect_setup()>>=
-void
-x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
-/*  ----- This fcn creates the entire "open file" dialog box -----  */
+void x_fileselect_setup_old (TOPLEVEL *w_current, int type, int filesel_type)
 {
   GtkWidget *buttonapply = NULL;
   GtkWidget *buttonclose = NULL;
@@ -2513,6 +2543,169 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
      * will core */
     gdk_window_raise(f_current->xfwindow->window);
   }
+  
+}
+
+void
+x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
+/*  ----- This fcn creates the entire "open file" dialog box -----  */
+{
+#if ((GTK_MAJOR_VERSION > 2) || \
+     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >= 4)) )
+
+  GtkImage *preview_widget;
+  gchar *title;
+  FILEDIALOG *f_current;
+  if (type < 0 || type > 2) {
+    return;
+  }
+
+  f_current = &w_current->fileselect[type];
+
+  if (!f_current->xfwindow) {
+    GtkFileFilter *sch_filefilter, *sym_filefilter, 
+      *sch_sym_filefilter, *all_filefilter;
+
+    f_current->toplevel = w_current;
+    f_current->type = type;
+    f_current->filesel_type = filesel_type;
+    f_current->last_search = -1;
+    f_current->filename = NULL;
+    f_current->directory = NULL;
+    
+    /* Create the filefilter */
+    sch_filefilter = gtk_file_filter_new ();
+    gtk_file_filter_set_name(sch_filefilter, _("Schematics"));
+    gtk_file_filter_add_pattern(sch_filefilter, "*.sch");
+    sym_filefilter = gtk_file_filter_new ();
+    gtk_file_filter_set_name(sym_filefilter, _("Symbols"));
+    gtk_file_filter_add_pattern(sym_filefilter, "*.sym");
+    sch_sym_filefilter = gtk_file_filter_new ();
+    gtk_file_filter_set_name(sch_sym_filefilter, _("Schematics and symbols"));
+    gtk_file_filter_add_pattern(sch_sym_filefilter, "*.sym");
+    gtk_file_filter_add_pattern(sch_sym_filefilter, "*.sch");
+    all_filefilter = gtk_file_filter_new ();
+    gtk_file_filter_set_name(all_filefilter, _("All files"));
+    gtk_file_filter_add_pattern(all_filefilter, "*");
+
+    if (filesel_type == OPEN) {
+      title = g_strdup(_("Open..."));
+      f_current->xfwindow = gtk_file_chooser_dialog_new (title, 
+							 GTK_WINDOW(w_current->main_window),
+							 GTK_FILE_CHOOSER_ACTION_OPEN,
+							 GTK_STOCK_CANCEL, 
+							 GTK_RESPONSE_CANCEL,
+							 GTK_STOCK_OPEN, 
+							 GTK_RESPONSE_ACCEPT,
+							 NULL);	     
+
+      gtk_file_chooser_set_select_multiple(GTK_FILE_CHOOSER(f_current->xfwindow), TRUE);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  sch_filefilter);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  sym_filefilter);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  sch_sym_filefilter);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  all_filefilter);
+
+      /* Code for handle the file preview. Not working yet!! */
+
+      /* Always have a file preview */
+      /*
+      f_current->preview_control = TRUE;
+      
+      f_current->preview = x_preview_setup(f_current->xfwindow, 
+					   NULL);
+					   
+      preview_widget = ???
+      gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER(f_current->xfwindow), 
+					   GTK_WIDGET(preview_widget));
+      */
+      /* There is a problem with setup_rest : 
+	 gdk_pixmap_new: Assertion drawable != NULL || depth != -1 failed.
+	 gdk_gc_new: drawable != NULL failed 
+	 x_preview_setup_rest (f_current->preview); */
+      /*
+      g_signal_connect (GTK_FILE_CHOOSER(f_current->xfwindow), 
+			"update-preview",
+			G_CALLBACK (x_preview_update_gtk24), 
+			f_current);
+      */
+
+      if (gtk_dialog_run (GTK_DIALOG (f_current->xfwindow)) == GTK_RESPONSE_ACCEPT)
+	{
+	  char *filename;
+	  
+	  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (f_current->xfwindow));
+	  x_fileselect_open_file(NULL, f_current);
+	  g_free (filename);
+	}
+      else {
+	x_fileselect_close (NULL, f_current);
+      }
+      
+      free (title);
+						   
+    } else if ( (filesel_type == SAVEAS) || (filesel_type == SAVEAS_CLOSE) ){
+      title = g_strdup(_("Save As..."));
+      f_current->xfwindow = gtk_file_chooser_dialog_new (title, 
+							 GTK_WINDOW(w_current->main_window),
+							 GTK_FILE_CHOOSER_ACTION_SAVE,
+							 GTK_STOCK_CANCEL, 
+							 GTK_RESPONSE_CANCEL,
+							 GTK_STOCK_OPEN, 
+							 GTK_RESPONSE_ACCEPT,
+							 NULL);	     
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  sch_filefilter);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  sym_filefilter);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  sch_sym_filefilter);
+      gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
+				  all_filefilter);
+
+      /* Select the filename */
+      if (!gtk_file_chooser_set_filename(GTK_FILE_CHOOSER (f_current->xfwindow),
+					 w_current->page_current->page_filename)) {
+	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER (f_current->xfwindow),
+					  w_current->page_current->page_filename);
+      }
+      if (gtk_dialog_run (GTK_DIALOG (f_current->xfwindow)) == GTK_RESPONSE_ACCEPT)
+	{
+	  char *filename;
+	  
+	  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (f_current->xfwindow));
+	  x_fileselect_saveas(NULL, f_current);
+	  g_free (filename);
+	}
+      else {
+	x_fileselect_close (NULL, f_current);
+      }
+
+      free (title);
+    }
+    else {
+      /* If it's not file load/save, then it's component library selection.
+	 Use the old interface */
+      x_fileselect_setup_old(w_current, type, filesel_type);
+    }
+    /* This is not the way to free filefilters. Really do they need to be freed?  */
+    /*
+    gtk_object_destroy(GTK_OBJECT(sch_filefilter));
+    gtk_object_destroy(GTK_OBJECT(sym_filefilter));
+    gtk_object_destroy(GTK_OBJECT(sch_sym_filefilter));
+    gtk_object_destroy(GTK_OBJECT(all_filefilter));
+    */
+  } else {
+    /* window should already be mapped, otherwise this
+     * will core */
+    gdk_window_raise(f_current->xfwindow->window);
+  }
+#else
+  x_fileselect_setup_old(w_current, type, filesel_type);
+#endif
 }
 
 
