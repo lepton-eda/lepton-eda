@@ -2560,6 +2560,12 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
     return;
   }
 
+  if ( (filesel_type != OPEN) &&
+       (filesel_type != SAVEAS) &&
+       (filesel_type != SAVEAS_CLOSE) ) {
+    x_fileselect_setup_old(w_current, type, filesel_type);
+  }
+
   f_current = &w_current->fileselect[type];
 
   if (!f_current->xfwindow) {

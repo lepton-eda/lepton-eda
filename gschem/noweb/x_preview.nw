@@ -465,9 +465,6 @@ x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
   /* be sure to turn off scrollbars */
   preview_toplevel->scrollbars_flag = FALSE;
 
-#if ((GTK_MAJOR_VERSION < 2) || \
-     ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 4)) )
-
   x_preview_create_drawing (drawbox, preview_toplevel);
 
   gtk_widget_set_events (preview_toplevel->drawing_area, 
@@ -480,7 +477,6 @@ x_preview_setup(GtkWidget *xfwindow, GtkWidget *drawbox)
                       tmp->c_handler,
                       preview_toplevel);
   }
-#endif
   return preview_toplevel;
 }
 
