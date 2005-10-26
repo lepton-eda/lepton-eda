@@ -140,7 +140,7 @@ if test "$LIBGEDA" = "yes"
 then
    LIBGEDA_VERSION=`$PKG_CONFIG libgeda --modversion`
 else
-   AC_MSG_ERROR([Cannot find libgeda (or libgeda.pc), please install libgeda])
+   AC_MSG_ERROR([Cannot find libgeda>=$GEDA_VERSION (or libgeda.pc), please install libgeda-$GEDA_VERSION])
 fi
 
 # 
