@@ -1,3 +1,10 @@
+2005-10-29 Carlos Nieves Onega <cnieves@iespana.es>	
+	* include/defines.h, include/prototype.h, include/struct.h,
+	  noweb/f_basic.nw, noweb/s_page.nw, noweb/s_toplevel.nw,
+	  noweb/s_undo.nw:
+	  Added support for backup copies and autosaving every 
+	  "interval" seconds.
+	  
 2005-10-15 Carlos Nieves Onega <cnieves@iespana.es>	
         * noweb/f_image.nw:
 	Print error if calling f_image_write without libgdgeda support.

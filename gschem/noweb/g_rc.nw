@@ -99,6 +99,7 @@
 <<g_rc.c : g_rc_grid_fixed_threshold()>>
 <<g_rc.c : g_rc_output_vector_threshold()>>
 <<g_rc.c : g_rc_add_attribute_offset()>>
+<<g_rc.c : g_rc_auto_save_interval()>>
 
 @
 
@@ -2093,4 +2094,34 @@ g_rc_add_attribute_offset(SCM offset)
 
 
 @ %def g_rc_add_attribute_offset
+
+@section Function @code{g_rc_auto_save_interval()}
+
+@defun g_rc_auto_save_interval seconds
+@end defun
+
+<<g_rc.c : g_rc_auto_save_interval()>>=
+SCM
+g_rc_auto_save_interval(SCM seconds)
+{
+  int val;
+
+  SCM_ASSERT (SCM_INUMP (seconds), seconds, SCM_ARG1, "auto-save-interval");
+
+  val = SCM_INUM (seconds);
+
+  if (val < 0) {
+    fprintf(stderr, _("Invalid number of seconds [%d] passed to auto-save-interval\n"),
+            val);
+    val = 120; /* absolute default */
+  }
+
+  default_auto_save_interval = val;
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_auto_save_interval
+
 

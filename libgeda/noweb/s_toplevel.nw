@@ -460,6 +460,9 @@ s_toplevel_new (void)
   toplevel->hierarchy_uref_order = 0;
   toplevel->unnamed_netname = NULL;
 
+  /* Auto-save interval */
+  toplevel->auto_save_interval = 0;
+
   /* set the rest of the variables */
   if (variable_set_func) {
     (*variable_set_func) (toplevel);

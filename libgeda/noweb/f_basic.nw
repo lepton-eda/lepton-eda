@@ -16,6 +16,7 @@
 <<f_basic.c : f_save_close()>>
 <<f_basic.c : f_save()>>
 <<f_basic.c : f_normalize_filename()>>
+<<f_basic.c : f_follow_symlinks()>>
 
 @ 
 
@@ -54,9 +55,14 @@
 
 #include <sys/param.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <gtk/gtk.h>
 #include <libguile.h>
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
 
 #include "defines.h"
 #include "struct.h"
@@ -225,7 +231,84 @@ f_save_close(TOPLEVEL *w_current, char *filename)
 int
 f_save(TOPLEVEL *w_current, const char *filename)
 {
-  return o_save(w_current, filename);
+  gchar *backup_filename;
+  gchar *real_filename;
+  gchar *only_filename;
+  gchar *dirname;
+  mode_t saved_umask;
+  struct stat st;
+
+  /* Get the real filename and file permissions */
+  real_filename = follow_symlinks (filename, NULL);
+
+  if (real_filename == NULL) {
+    s_log_message ("Can't get the real filename of %s.", filename);
+    fprintf (stderr, "Can't get the real filename of %s.\n", filename);
+    return 0;
+  }
+  
+  /* Get the directory in which the real filename lives */
+  dirname = g_path_get_dirname (real_filename);
+  only_filename = g_path_get_basename(real_filename);  
+
+  /* Do a backup if it's not an undo file backup and it was never saved. */
+  if (w_current->page_current->saved_since_first_loaded == 0) {    
+    if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
+	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
+    {
+      backup_filename = g_strdup_printf("%s%c%s~", dirname, 
+					G_DIR_SEPARATOR, only_filename);
+      if (rename(real_filename, backup_filename) != 0) {
+	s_log_message ("Can't save backup file: %s.", backup_filename);
+	fprintf (stderr, "Can't save backup file: %s.", backup_filename);
+      }
+      g_free(backup_filename);
+    }
+  }
+    /* If there is not an existing file with that name, compute the
+     * permissions and uid/gid that we will use for the newly-created file.
+     */
+       
+  if (stat (real_filename, &st) != 0)
+  {
+    struct stat dir_st;
+    int result;
+    
+    /* Use default permissions */
+    saved_umask = umask(0);
+    st.st_mode = 0666 & ~saved_umask;
+    umask(saved_umask);
+    st.st_uid = getuid ();
+    
+    result = stat (dirname, &dir_st);
+    
+    if (result == 0 && (dir_st.st_mode & S_ISGID))
+	  st.st_gid = dir_st.st_gid;
+    else
+    st.st_gid = getgid ();
+  }
+  g_free (dirname);
+  g_free (only_filename);
+  
+  if (o_save(w_current, real_filename)) {
+
+    w_current->page_current->saved_since_first_loaded = 1;
+
+    /* Reset the last saved timer */
+    g_get_current_time (&w_current->page_current->last_load_or_save_time);
+    w_current->page_current->ops_since_last_backup = 0;
+
+    /* Restore permissions. */
+    chmod (real_filename, st.st_mode);
+    chown (real_filename, st.st_uid, st.st_gid);
+
+    g_free (real_filename);
+    return 1;
+  }
+  else {
+    g_free (real_filename);
+    return 0;
+  }
 }
 
 @ %def f_save
@@ -262,3 +345,99 @@ char* f_normalize_filename(const gchar *filename)
 
 @ %def f_normalize_filename
 
+@section Function @code{f_normalize_filename()}
+
+@defun f_follow_symlinks filename error
+Does readlink() recursively until we find a real filename.
+Taken from gedit's source code.
+@end defun
+
+<<f_basic.c : f_follow_symlinks()>>=
+
+/* Does readlink() recursively until we find a real filename. */
+char *
+follow_symlinks (const gchar *filename, GError **error)
+{
+	gchar *followed_filename;
+	gint link_count;
+
+	g_return_val_if_fail (filename != NULL, NULL);
+	
+	g_return_val_if_fail (strlen (filename) + 1 <= MAXPATHLEN, NULL);
+
+	followed_filename = g_strdup (filename);
+	link_count = 0;
+
+	while (link_count < MAX_LINK_LEVEL)
+	{
+		struct stat st;
+
+		if (lstat (followed_filename, &st) != 0)
+			/* We could not access the file, so perhaps it does not
+			 * exist.  Return this as a real name so that we can
+			 * attempt to create the file.
+			 */
+			return followed_filename;
+
+		if (S_ISLNK (st.st_mode))
+		{
+			gint len;
+			gchar linkname[MAXPATHLEN];
+
+			link_count++;
+
+			len = readlink (followed_filename, linkname, MAXPATHLEN - 1);
+
+			if (len == -1)
+			{
+				s_log_message("Could not read symbolic link information for %s", followed_filename);
+				fprintf(stderr, "Could not read symbolic link information for %s", followed_filename);
+				g_free (followed_filename);
+				return NULL;
+			}
+
+			linkname[len] = '\0';
+
+			/* If the linkname is not an absolute path name, append
+			 * it to the directory name of the followed filename.  E.g.
+			 * we may have /foo/bar/baz.lnk -> eek.txt, which really
+			 * is /foo/bar/eek.txt.
+			 */
+
+			if (linkname[0] != G_DIR_SEPARATOR)
+			{
+				gchar *slashpos;
+				gchar *tmp;
+
+				slashpos = strrchr (followed_filename, G_DIR_SEPARATOR);
+
+				if (slashpos)
+					*slashpos = '\0';
+				else
+				{
+					tmp = g_strconcat ("./", followed_filename, NULL);
+					g_free (followed_filename);
+					followed_filename = tmp;
+				}
+
+				tmp = g_build_filename (followed_filename, linkname, NULL);
+				g_free (followed_filename);
+				followed_filename = tmp;
+			}
+			else
+			{
+				g_free (followed_filename);
+				followed_filename = g_strdup (linkname);
+			}
+		} else
+			return followed_filename;
+	}
+
+	/* Too many symlinks */
+
+	s_log_message("The file has too many symbolic links.");
+	fprintf(stderr, "The file has too many symbolic links.");
+
+	return NULL;
+}
+@ %def f_follow_symlinks

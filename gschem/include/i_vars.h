@@ -87,3 +87,4 @@ extern int default_grid_fixed_threshold;
 extern int default_print_vector_threshold;
 extern int default_add_attribute_offset;
 
+extern int default_auto_save_interval;

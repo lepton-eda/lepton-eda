@@ -139,6 +139,13 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
+
+    /* Increment the number of operations since last backup if 
+       auto-save is enabled */
+    if (w_current->auto_save_interval != 0) {
+      w_current->page_current->ops_since_last_backup++;
+    }
+
     /* 32 is? for max length of pid and index */
  
 
@@ -149,10 +156,21 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
             prog_pid, 
             undo_file_index++);
 
-    f_save(w_current, filename);
+    /* Changed from f_save to o_save when adding backup copy creation. */
+    /* f_save manages the creaton of backup copies. 
+       This way, f_save is called only when saving a file, and not when
+       saving an undo backup copy */
+    o_save(w_current, filename);
 
 		
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
+
+    /* Increment the number of operations since last backup if 
+       auto-save is enabled */
+    if (w_current->auto_save_interval != 0) {
+      w_current->page_current->ops_since_last_backup++;
+    }
+
     object_head = s_basic_init_object("undo_head");	
 		
     o_list_copy_all(w_current, 

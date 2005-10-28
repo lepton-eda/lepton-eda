@@ -173,6 +173,9 @@ static struct gsubr_t gschem_funcs[] = {
   { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
   { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
 
+  /* backup functions */
+  { "auto-save-interval",        1, 0, 0, g_rc_auto_save_interval },
+
   /* general guile functions */
   { "gschem-print",              1, 0, 0, g_funcs_print },
   { "gschem-image",              1, 0, 0, g_funcs_image },
@@ -319,6 +322,7 @@ static struct gsubr_t gschem_funcs[] = {
   /*help functions for generating netlists*/
   { "get-selected-filename",     0, 0, 0, g_get_selected_filename },
   { "get-selected-component-attributes", 0, 0, 0, g_get_selected_component_attributes },
+  
   { NULL,                        0, 0, 0, NULL } };
   
 @ %def gschem_funcs

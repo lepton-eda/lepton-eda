@@ -193,7 +193,7 @@ s_undo_add(UNDO *head, int type, char *filename, OBJECT *object_head,
 {
   UNDO *tail;
   UNDO *u_new;
-	
+
   u_new = (UNDO *) malloc(sizeof(UNDO));
 
   u_new->filename = g_strdup (filename);

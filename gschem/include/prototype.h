@@ -250,6 +250,7 @@ SCM g_rc_grid_mode(SCM mode);
 SCM g_rc_grid_fixed_threshold(SCM spacing);
 SCM g_rc_output_vector_threshold(SCM numlines);
 SCM g_rc_add_attribute_offset(SCM offset);
+SCM g_rc_auto_save_interval(SCM seconds);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */

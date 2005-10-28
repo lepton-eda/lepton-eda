@@ -83,6 +83,12 @@
 (undo-type "disk")
 ;(undo-type "memory")
 
+; autosave interval
+;
+; Controls if a backup copy is made every "interval" seconds.
+; Autosaving will not be allowed if setting it to zero.
+(auto-save-interval 120)
+
 ; draw-grips string
 ;
 ; Controls if the editing grips are drawn when selecting objects

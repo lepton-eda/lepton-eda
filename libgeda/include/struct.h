@@ -393,6 +393,11 @@ struct st_page {
   /* used to control which pages are viewable when moving around */
   int page_control;
 
+  /* backup variables */
+  GTimeVal last_load_or_save_time;
+  char saved_since_first_loaded;
+  gint ops_since_last_backup;
+
   /* left to right movement */
   PAGE *prev;
   PAGE *next;
@@ -664,6 +669,11 @@ struct st_toplevel {
   int graphic_color;
   int pin_color;
   int text_color;
+
+  /* backup variables */
+  int auto_save_interval;
+  gint auto_save_timeout;
+
 
   /* not used anywhere yet, but will be */
   int logic_bubble_color; 

@@ -12,6 +12,7 @@ void f_save_close(TOPLEVEL *w_current, char *filename);
 int f_save(TOPLEVEL *w_current, const char *filename);
 char* f_get_directory_from_path(char *path);
 char* f_normalize_filename(const gchar *filename);
+char *follow_symlinks (const gchar *filename, GError **error);
 
 /* f_image.c */
 void f_image_write_objects(TOPLEVEL *w_current, OBJECT *head, int start_x, int start_y, float scale, int color_mode);
@@ -559,6 +560,7 @@ void s_page_print_all (TOPLEVEL *toplevel);
 gint s_page_save_all (TOPLEVEL *toplevel);
 gboolean s_page_check_changed (PAGE *head);
 void s_page_clear_changed (PAGE *head);
+gint s_page_autosave (TOPLEVEL *w_current);
 
 /* s_papersizes.c */
 int s_papersizes_add_entry(char *new_papersize, int width, int height);

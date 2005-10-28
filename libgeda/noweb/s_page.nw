@@ -27,6 +27,7 @@
 
 <<s_page.c : s_page_check_changed()>>
 <<s_page.c : s_page_clear_changed()>>
+<<s_page.c : s_page_autosave()>>
 
 @
 
@@ -72,7 +73,12 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <libguile.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "defines.h"
 #include "struct.h"
@@ -175,6 +181,11 @@ s_page_new (TOPLEVEL *toplevel, const gchar *filename)
               toplevel->init_left, toplevel->init_right,
               toplevel->init_top,  toplevel->init_bottom);
 
+  /* Backup variables */
+  g_get_current_time (&page->last_load_or_save_time);
+  page->ops_since_last_backup = 0;
+  page->saved_since_first_loaded = 0;
+
   /* now append page to page list of toplevel */
   toplevel->page_tail->next = page;
   page->prev = toplevel->page_tail;
@@ -203,6 +214,10 @@ void
 s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 {
   PAGE *tmp;
+  gchar *backup_filename;
+  gchar *real_filename;
+  gchar *only_filename;
+  gchar *dirname;
   
   g_assert (page->pid != -1);
 
@@ -216,7 +231,35 @@ s_page_delete (TOPLEVEL *toplevel, PAGE *page)
     tmp = toplevel->page_current;
     s_page_goto (toplevel, page);
   }
+
+  /* Get the real filename and file permissions */
+  real_filename = follow_symlinks (page->page_filename, NULL);
   
+  if (real_filename == NULL) {
+    s_log_message ("s_page_delete: Can't get the real filename of %s.", page->page_filename);
+    fprintf (stderr, "s_page_delete: Can't get the real filename of %s.\n", page->page_filename);
+  }
+  else {
+    /* Get the directory in which the real filename lives */
+    dirname = g_path_get_dirname (real_filename);
+    only_filename = g_path_get_basename(real_filename);  
+    
+    
+    backup_filename = g_strdup_printf("%s%c#%s#", dirname, 
+				      G_DIR_SEPARATOR, only_filename);
+    /* Delete the backup file */
+    if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) && 
+	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
+    {
+      if (g_unlink(backup_filename) != 0) {
+	s_log_message("s_page_delete: Unable to delete backup file %s.", backup_filename);      }
+    }
+    g_free (dirname);
+    g_free (only_filename);
+    g_free (backup_filename);
+  }
+  g_free(real_filename);
+
   /* first delete objects of page */
   s_delete_list_fromstart (toplevel, page->object_head);
   
@@ -568,3 +611,101 @@ s_page_clear_changed (PAGE *head)
 
 
 @ %def s_page_clear_changed
+
+@section Function @code{s_page_autosave()}
+
+@defun s_page_autosave w_current
+It is a callback of the glib g_timeout functions.
+It is called every "interval" miliseconds and it saves a backup copy of the opened pages.
+The argument is the toplevel structure.
+@end defun
+
+<<s_page.c : s_page_autosave()>>=
+gint 
+s_page_autosave (TOPLEVEL *toplevel) 
+{
+  PAGE *p_save, *p_current;
+  gchar *backup_filename;
+  gchar *real_filename;
+  gchar *only_filename;
+  gchar *dirname;
+  mode_t saved_umask;
+  struct stat st;
+
+  g_assert (toplevel->page_head != NULL &&
+            toplevel->page_head->pid == -1);
+
+  /* save current page */
+  p_save = toplevel->page_current;
+  
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+
+    if (p_current->ops_since_last_backup != 0) {
+      /* make p_current the current page of toplevel */
+      s_page_goto (toplevel, p_current);
+      
+      /* Get the real filename and file permissions */
+      real_filename = follow_symlinks (p_current->page_filename, NULL);
+      
+      if (real_filename == NULL) {
+	s_log_message ("s_page_autosave: Can't get the real filename of %s.", p_current->page_filename);
+	fprintf (stderr, "s_page_autosave: Can't get the real filename of %s.\n", p_current->page_filename);
+      }
+      else {
+	/* Get the directory in which the real filename lives */
+	dirname = g_path_get_dirname (real_filename);
+	only_filename = g_path_get_basename(real_filename);  
+      
+
+	backup_filename = g_strdup_printf("%s%c#%s#", dirname, 
+					  G_DIR_SEPARATOR, only_filename);
+	
+	/* If there is not an existing file with that name, compute the
+	 * permissions and uid/gid that we will use for the newly-created file.
+	 */
+	
+	if (stat (real_filename, &st) != 0)
+	  {
+	    struct stat dir_st;
+	    int result;
+	    
+	    /* Use default permissions */
+	    saved_umask = umask(0);
+	    st.st_mode = 0666 & ~saved_umask;
+	    umask(saved_umask);
+	    st.st_uid = getuid ();
+	    
+	    result = stat (dirname, &dir_st);
+	    
+	    if (result == 0 && (dir_st.st_mode & S_ISGID))
+	      st.st_gid = dir_st.st_gid;
+	    else
+	      st.st_gid = getgid ();
+	  }
+	g_free (dirname);
+	g_free (only_filename);
+	g_free (real_filename);
+	
+	if (o_save (toplevel, backup_filename)) {
+	  p_current->ops_since_last_backup = 0;
+	} else {
+	  s_log_message ("Could NOT save backup file [%s]\n", 
+			 backup_filename);
+	}
+	g_free (backup_filename);
+      }
+    }
+    
+  }
+
+  /* restore current page */
+  s_page_goto (toplevel, p_save);
+
+  /* Returns non-zero if we want to continue autosaving */
+  return toplevel->auto_save_interval;
+  
+}
+
+@ %def s_page_autosave
