@@ -116,6 +116,13 @@ x_log_open ()
     /* make it read the content of the current log file */
     /* and add its contents to the dialog */
     contents = s_log_read ();
+
+    /* s_log_read can return NULL if the log file cannot be written to */
+    if (contents == NULL)
+    {
+      return;
+    }
+
     log_message (LOG (log_dialog), contents);
     g_free (contents);
 

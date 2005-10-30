@@ -71,7 +71,6 @@ AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
-AC_PATH_PROG(CUT,cut)
 
 ############################################################################
 # Check for guile start
@@ -195,10 +194,6 @@ then
    GTK_LIBS=$GTK22_LIBS
    GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
 
-   GTK_MAJOR_VERSION=`echo $GTK_VERSION | $CUT -d. -f1`
-   GTK_MINOR_VERSION=`echo $GTK_VERSION | $CUT -d. -f2`
-   GTK_MICRO_VERSION=`echo $GTK_VERSION | $CUT -d. -f3`
-
    # Search for glib
    PKG_CHECK_MODULES(GLIB22, glib-2.0 >= 2.2.0, GLIB22="yes", no_GLIB22="yes")
    if test "$GLIB22" != "yes"
@@ -216,12 +211,6 @@ fi
 if test "$GTK_VERSION" = ""
 then
    AC_MSG_ERROR([Cannot find gtk+ 2.2.x or later, please install gtk+.])
-fi
-
-if test "$GTK_MINOR_VERSION" -ge 6 
-then
-   echo Found gtk 6 okay! 
-   AC_DEFINE(HAS_GTK26, 1, [If gtk+ 2.6.x has been installed, define this])
 fi
 
 # 

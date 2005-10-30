@@ -1,3 +1,11 @@
+2005-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/x_log.nw: Added an if to prevent a core dump if the log file
+	cannot be opened. Bug reported by John Luciani.
+
+	* configure.ac: Removed check for gtk+ 2.6.x or greater since gtk+ 
+	already provides this information.
+
 2005-10-29 Carlos Nieves Onega <cnieves@iespana.es>	
         * include/i_vars.h, include/prototype.h, lib/system-gschemrc.in,
 	  noweb/g_rc.nw, noweb/g_register.nw, noweb/i_vars.nw, 

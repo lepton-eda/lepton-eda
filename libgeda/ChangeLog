@@ -1,3 +1,8 @@
+2005-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_log.nw: Added an if to get rid of an assert from glib if
+	the logfile_fd is not initialized.  Bug reported by John Luciani.
+
 2005-10-29 Carlos Nieves Onega <cnieves@iespana.es>	
 	* include/defines.h, include/prototype.h, include/struct.h,
 	  noweb/f_basic.nw, noweb/s_page.nw, noweb/s_toplevel.nw,

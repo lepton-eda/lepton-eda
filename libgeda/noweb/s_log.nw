@@ -158,6 +158,11 @@ s_log_close (void)
 {
   do_logging = FALSE; /* subsequent messages are lost after the close */
 
+  if (logfile_fd == -1)
+  {
+    return;
+  }
+
   /* remove the handler */
   g_log_remove_handler (NULL, log_handler_id);
   
