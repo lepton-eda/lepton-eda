@@ -133,10 +133,11 @@ All pins must have a {\bf pinseq}=\# attribute attached to the pin object.
 This attribute should be hidden.  This attribute is used extensively by
 gschem and gnetlist.
 
-gnetlist will output pins in the order of increasing pin sequence.
-The sequence numbers start at 1 and should increase without skipping
-any numbers.  This attribute is not the pin number (i.e. device pin
-numbers, like GND is 7 on TTL).  For pin numbers see the {\bf pinnumber} (\ref{pinnumber}) attribute.  
+In some backends (especially the SPICE backend), gnetlist will output
+pins in the order of increasing pin sequence.  The sequence numbers start
+at 1 and should increase without skipping any numbers.  This attribute
+is not the pin number (i.e. device pin numbers, like GND is 7 on TTL).
+For pin numbers see the {\bf pinnumber} (\ref{pinnumber}) attribute.
 
 Examples: \texttt{pinseq=1 pinseq=2 pinseq=3}
 

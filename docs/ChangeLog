@@ -1,3 +1,8 @@
+2005-11-05 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* attributes/attributes.tex: Clarified that pinseq= is used in some
+	gnetlist backends to output the pins in increasing pin sequence.
+
 2005-09-30 Carlos Nieves Onega <cnieves@iespana.es>
 	* fileformats/fileformats.tex: Added file format information for 
 	embedded pictures.
