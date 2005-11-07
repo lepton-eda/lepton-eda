@@ -1467,7 +1467,8 @@ DEFINE_I_CALLBACK(edit_unembed)
 
     while (s_current != NULL) {
       g_assert (s_current->selected_object != NULL);
-      if (s_current->selected_object->type == OBJ_COMPLEX) {
+      if ( (s_current->selected_object->type == OBJ_COMPLEX) ||
+           (s_current->selected_object->type == OBJ_PICTURE) ) {
         o_unembed (w_current, s_current->selected_object);
       }
       s_current = s_current->next;

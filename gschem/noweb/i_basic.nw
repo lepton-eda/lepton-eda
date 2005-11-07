@@ -532,8 +532,8 @@ i_update_menus(TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Edit/Unlock", TRUE);
     x_menus_sensitivity(w_current, "Edit/Line Width & Type...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Fill Type...", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Embed Component", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Unembed Component", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Embed Component/Picture", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Unembed Component/Picture", TRUE);
     x_menus_sensitivity(w_current, "Edit/Update Component", TRUE);
     x_menus_sensitivity(w_current, "Buffer/Copy into 1", TRUE);
     x_menus_sensitivity(w_current, "Buffer/Copy into 2", TRUE);
@@ -576,8 +576,8 @@ i_update_menus(TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Edit/Unlock", FALSE);
     x_menus_sensitivity(w_current, "Edit/Line Width & Type...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Fill Type...", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Embed Component", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Unembed Component", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Embed Component/Picture", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Unembed Component/Picture", FALSE);
     x_menus_sensitivity(w_current, "Edit/Update Component", FALSE);
     x_menus_sensitivity(w_current, "Buffer/Copy into 1", FALSE);
     x_menus_sensitivity(w_current, "Buffer/Copy into 2", FALSE);

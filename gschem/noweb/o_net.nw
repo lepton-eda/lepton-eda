@@ -477,6 +477,7 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
   int color;
   int size;
   int primary_zero_length, secondary_zero_length;
+  int found_primary_connection = FALSE;
 
   /*int temp_x, temp_y;*/
   /* OBJECT *o_current;*/
@@ -602,7 +603,9 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
 	  other_objects = NULL;
 	  other_objects = s_conn_return_others(other_objects, new_net);
       }
-#if DEBUG
+
+#if DEBUG 
+      printf("primary:\n"); 
       s_conn_print(new_net->conn_list);
 #endif
 
@@ -624,13 +627,26 @@ o_net_end(TOPLEVEL *w_current, int x, int y)
       o_cue_draw_list(w_current, other_objects);
       o_cue_draw_single(w_current, new_net);
 
+      /* Go off and search for valid connection on this newly created net */
+      found_primary_connection = s_conn_net_search(new_net, 1, 
+                                                   new_net->conn_list);
+      if (found_primary_connection)
+      {
+      	/* if a net connection is found, reset start point of next net */
+	w_current->save_x = w_current->last_x;
+	w_current->save_y = w_current->last_y;
+      }
+
       /* you don't want to consolidate nets which are drawn non-ortho */
       if (w_current->net_consolidate == TRUE && !w_current->CONTROLKEY) {
 	  o_net_consolidate_segments(w_current, new_net);
       }
   }
+
+
   /* If the second net is not zero length, add it as well */
-  if (!secondary_zero_length) {
+  /* Also, a valid net connection from the primary net was not found */
+  if (!secondary_zero_length && !found_primary_connection) {
       
       /* Add secondary net */
       w_current->page_current->object_tail =
@@ -811,16 +827,18 @@ o_net_eraserubber(TOPLEVEL *w_current)
     if (size < 0)
       size = 0;
 
-    gdk_gc_set_line_attributes(w_current->gc, size,
+    gdk_gc_set_line_attributes(w_current->xor_gc, size,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }
 
+#if 0
   gdk_gc_set_foreground(w_current->gc,
 			x_get_color(w_current->background_color));
+#endif
 
   /* Erase primary primary rubber net line */
-  gdk_draw_line(w_current->window, w_current->gc, w_current->start_x,
+  gdk_draw_line(w_current->window, w_current->xor_gc, w_current->start_x,
 		w_current->start_y, w_current->last_x, w_current->last_y);
 
   /* Erase secondary rubber net line */
@@ -829,7 +847,7 @@ o_net_eraserubber(TOPLEVEL *w_current)
 		w_current->second_x, w_current->second_y);
 
   if (w_current->net_style == THICK) {
-    gdk_gc_set_line_attributes(w_current->gc, 0,
+    gdk_gc_set_line_attributes(w_current->xor_gc, 0,
 			       GDK_LINE_SOLID,
 			       GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
   }

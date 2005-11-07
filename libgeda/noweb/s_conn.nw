@@ -20,6 +20,7 @@
 <<s_conn.c : s_conn_update_object()>>
 <<s_conn.c : s_conn_update_complex()>>
 <<s_conn.c : s_conn_print()>>
+<<s_conn.c : s_conn_net_search()>>
 <<s_conn.c : s_conn_return_others()>>
 <<s_conn.c : s_conn_return_complex_others()>>
 
@@ -821,6 +822,40 @@ s_conn_print(GList * conn_list)
 
 
 @ %def s_conn_print
+
+
+@defun s_conn_net_search conn_list
+This method searches the connection list for the first matching connection with
+the given x, y, and whichone endpoint.  Returns TRUE if one is found, else 
+FALSE.
+@end defun
+
+<<s_conn.c : s_conn_net_search()>>=
+int
+s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
+{
+  CONN *conn;
+  GList *cl_current;
+
+  cl_current = conn_list;
+  while (cl_current != NULL) {
+
+    conn = (CONN *) cl_current->data;
+    if (conn != NULL && conn->whichone == whichone && 
+        conn->x == new_net->line->x[whichone] &&
+	conn->y == new_net->line->y[whichone])
+    {
+       return TRUE;
+    }
+
+    cl_current = cl_current->next;
+  }
+ 
+  return FALSE;
+}
+
+
+@ %def s_conn_net_search
 
 
 @section Function @code{s_conn_return_others()}

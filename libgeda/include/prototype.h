@@ -508,6 +508,7 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
 void s_conn_update_object(TOPLEVEL *w_current, OBJECT *object);
 void s_conn_update_complex(TOPLEVEL *w_current, OBJECT *complex);
 void s_conn_print(GList *conn_list);
+int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
 GList *s_conn_return_complex_others(GList *input_list, OBJECT *object);
 

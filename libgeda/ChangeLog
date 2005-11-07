@@ -1,3 +1,9 @@
+2005-11-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* include/prototype.h, noweb/s_conn.nw: Added search routine which
+	is used in determining if a net segment (of the "L") connects to 
+	something else.
+
 2005-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/s_log.nw: Added an if to get rid of an assert from glib if

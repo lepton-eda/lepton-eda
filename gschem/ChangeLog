@@ -1,3 +1,21 @@
+2005-11-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/o_pin.nw, o_bus.nw, o_net.nw: Changed the rubber band erase
+	method to properly erase all xor segments properly.
+
+	* noweb/o_net.nw: Changed the net "L" drawing to prevent the
+	drawing of the secondary net if a connection is made after the
+	primary net is drawn/added.
+
+	* noweb/i_callbacks.nw: Added missing if test to allow pictures to
+	be unembedded.
+
+	* lib/system-gschemrc.in: Enabled preview by default when placing
+	components.
+
+	* lib/system-gschemrc.in, noweb/i_basic.nw: Updated Embed/Unembed
+	menu option to also include pictures
+
 2005-10-30 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/x_log.nw: Added an if to prevent a core dump if the log file

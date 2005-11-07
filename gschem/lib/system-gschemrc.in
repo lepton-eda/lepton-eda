@@ -395,8 +395,8 @@
 ;  Controls if the preview area in the File Open/Save As and Component 
 ;  dialog boxes is enabled by default or not
 ;
-(file-preview "disabled")
-;(file-preview "enabled")
+(file-preview "enabled")
+;(file-preview "disabled")
 
 ;  enforce-hierarchy string
 ;
@@ -1189,8 +1189,8 @@
            ("Line Width & Type..." edit-linetype        edit-linetype)
            ("Fill Type..."       edit-filltype          edit-filltype)
            ("Symbol Translate..." edit-translate        edit-translate)
-           ("Embed Component"    edit-embed             edit-embed)
-           ("Unembed Component"  edit-unembed           edit-unembed)
+           ("Embed Component/Picture"    edit-embed             edit-embed)
+           ("Unembed Component/Picture"  edit-unembed           edit-unembed)
            ("Update Component"   edit-update            edit-update)
 	   ("Show/Hide Inv Text" edit-show-hidden 	edit-show-hidden)
 	   ("Make Inv Text Vis"	 edit-make-text-visible edit-make-text-visible)))
