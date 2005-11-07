@@ -1,3 +1,7 @@
+2005-11-06 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gsch2pcb_tutorial/transistor-guide.html: Fixed link typo. 
+
 2005-11-05 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* attributes/attributes.tex: Clarified that pinseq= is used in some
