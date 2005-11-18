@@ -185,6 +185,7 @@ s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   g_get_current_time (&page->last_load_or_save_time);
   page->ops_since_last_backup = 0;
   page->saved_since_first_loaded = 0;
+  page->do_autosave_backup = 0;
 
   /* now append page to page list of toplevel */
   toplevel->page_tail->next = page;
@@ -616,7 +617,7 @@ s_page_clear_changed (PAGE *head)
 
 @defun s_page_autosave w_current
 It is a callback of the glib g_timeout functions.
-It is called every "interval" miliseconds and it saves a backup copy of the opened pages.
+It is called every "interval" miliseconds and it sets a flag to save a backup copy of the opened pages.
 The argument is the toplevel structure.
 @end defun
 
@@ -624,86 +625,19 @@ The argument is the toplevel structure.
 gint 
 s_page_autosave (TOPLEVEL *toplevel) 
 {
-  PAGE *p_save, *p_current;
-  gchar *backup_filename;
-  gchar *real_filename;
-  gchar *only_filename;
-  gchar *dirname;
-  mode_t saved_umask;
-  struct stat st;
+  PAGE *p_current;
 
-  g_assert (toplevel->page_head != NULL &&
-            toplevel->page_head->pid == -1);
-
-  /* save current page */
-  p_save = toplevel->page_current;
-  
   for (p_current = toplevel->page_head->next;
        p_current != NULL;
        p_current = p_current->next) {
 
     if (p_current->ops_since_last_backup != 0) {
-      /* make p_current the current page of toplevel */
-      s_page_goto (toplevel, p_current);
-      
-      /* Get the real filename and file permissions */
-      real_filename = follow_symlinks (p_current->page_filename, NULL);
-      
-      if (real_filename == NULL) {
-	s_log_message ("s_page_autosave: Can't get the real filename of %s.", p_current->page_filename);
-	fprintf (stderr, "s_page_autosave: Can't get the real filename of %s.\n", p_current->page_filename);
-      }
-      else {
-	/* Get the directory in which the real filename lives */
-	dirname = g_path_get_dirname (real_filename);
-	only_filename = g_path_get_basename(real_filename);  
-      
-
-	backup_filename = g_strdup_printf("%s%c#%s#", dirname, 
-					  G_DIR_SEPARATOR, only_filename);
-	
-	/* If there is not an existing file with that name, compute the
-	 * permissions and uid/gid that we will use for the newly-created file.
-	 */
-	
-	if (stat (real_filename, &st) != 0)
-	  {
-	    struct stat dir_st;
-	    int result;
-	    
-	    /* Use default permissions */
-	    saved_umask = umask(0);
-	    st.st_mode = 0666 & ~saved_umask;
-	    umask(saved_umask);
-	    st.st_uid = getuid ();
-	    
-	    result = stat (dirname, &dir_st);
-	    
-	    if (result == 0 && (dir_st.st_mode & S_ISGID))
-	      st.st_gid = dir_st.st_gid;
-	    else
-	      st.st_gid = getgid ();
-	  }
-	g_free (dirname);
-	g_free (only_filename);
-	g_free (real_filename);
-	
-	if (o_save (toplevel, backup_filename)) {
-	  p_current->ops_since_last_backup = 0;
-	} else {
-	  s_log_message ("Could NOT save backup file [%s]\n", 
-			 backup_filename);
-	}
-	g_free (backup_filename);
-      }
+      /* Real autosave is done in o_undo_savestate */
+      p_current->do_autosave_backup = 1;
     }
     
   }
 
-  /* restore current page */
-  s_page_goto (toplevel, p_save);
-
-  /* Returns non-zero if we want to continue autosaving */
   return toplevel->auto_save_interval;
   
 }

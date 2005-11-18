@@ -397,6 +397,7 @@ struct st_page {
   GTimeVal last_load_or_save_time;
   char saved_since_first_loaded;
   gint ops_since_last_backup;
+  gchar do_autosave_backup;
 
   /* left to right movement */
   PAGE *prev;

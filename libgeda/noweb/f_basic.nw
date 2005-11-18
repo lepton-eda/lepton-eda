@@ -297,6 +297,7 @@ f_save(TOPLEVEL *w_current, const char *filename)
     /* Reset the last saved timer */
     g_get_current_time (&w_current->page_current->last_load_or_save_time);
     w_current->page_current->ops_since_last_backup = 0;
+    w_current->page_current->do_autosave_backup = 0;
 
     /* Restore permissions. */
     chmod (real_filename, st.st_mode);

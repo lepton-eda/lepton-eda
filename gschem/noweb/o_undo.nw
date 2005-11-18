@@ -134,6 +134,9 @@ o_undo_savestate(TOPLEVEL *w_current, int flag)
   UNDO *u_current;
   UNDO *u_current_next;
 
+  /* save autosave backups if necessary */
+  o_autosave_backups(w_current);
+
   if (w_current->undo_control == FALSE) {
     return;	
   }

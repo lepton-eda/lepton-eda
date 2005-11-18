@@ -32,7 +32,7 @@
 <<o_misc.c : o_edit_hide_specific_text()>>
 <<o_misc.c : o_edit_show_specific_text()>>
 <<o_misc.c : o_update_component()>>
-
+<<o_misc.c : o_autosave_backups()>>
 @
 
 
@@ -67,6 +67,10 @@
 #include <string.h>
 #endif
 #include <libgen.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include <libgeda/libgeda.h>
 
@@ -1708,3 +1712,101 @@ o_update_component(TOPLEVEL *w_current, OBJECT *o_current)
 
 
 @ %def o_update_component
+
+@section Function @code{o_autosave_backups()}
+
+@defun o_autosave_backups w_current o_current
+Looks for pages with the do_autosave_backup flag activated and autosaves them.
+@end defun
+
+<<o_misc.c : o_autosave_backups()>>=
+void
+o_autosave_backups(TOPLEVEL *toplevel)
+{
+  PAGE *p_save, *p_current;
+  gchar *backup_filename;
+  gchar *real_filename;
+  gchar *only_filename;
+  gchar *dirname;
+  mode_t saved_umask;
+  struct stat st;
+
+  g_assert (toplevel->page_head != NULL &&
+            toplevel->page_head->pid == -1);
+
+  /* save current page */
+  p_save = toplevel->page_current;
+  
+  for (p_current = toplevel->page_head->next;
+       p_current != NULL;
+       p_current = p_current->next) {
+
+    if (p_current->do_autosave_backup == 0) {
+      continue;
+    }
+    if (p_current->ops_since_last_backup != 0) {
+      /* make p_current the current page of toplevel */
+      s_page_goto (toplevel, p_current);
+      
+      /* Get the real filename and file permissions */
+      real_filename = follow_symlinks (p_current->page_filename, NULL);
+      
+      if (real_filename == NULL) {
+	s_log_message ("o_autosave_backups: Can't get the real filename of %s.", p_current->page_filename);
+	fprintf (stderr, "o_autosave_backups: Can't get the real filename of %s.\n", p_current->page_filename);
+      }
+      else {
+	/* Get the directory in which the real filename lives */
+	dirname = g_path_get_dirname (real_filename);
+	only_filename = g_path_get_basename(real_filename);  
+      
+
+	backup_filename = g_strdup_printf("%s%c#%s#", dirname, 
+					  G_DIR_SEPARATOR, only_filename);
+	
+	/* If there is not an existing file with that name, compute the
+	 * permissions and uid/gid that we will use for the newly-created file.
+	 */
+	
+	if (stat (real_filename, &st) != 0)
+	  {
+	    struct stat dir_st;
+	    int result;
+	    
+	    /* Use default permissions */
+	    saved_umask = umask(0);
+	    st.st_mode = 0666 & ~saved_umask;
+	    umask(saved_umask);
+	    st.st_uid = getuid ();
+	    
+	    result = stat (dirname, &dir_st);
+	    
+	    if (result == 0 && (dir_st.st_mode & S_ISGID))
+	      st.st_gid = dir_st.st_gid;
+	    else
+	      st.st_gid = getgid ();
+	  }
+	g_free (dirname);
+	g_free (only_filename);
+	g_free (real_filename);
+	
+	if (o_save (toplevel, backup_filename)) {
+	  p_current->ops_since_last_backup = 0;
+          p_current->do_autosave_backup = 0;
+	} else {
+	  s_log_message ("Could NOT save backup file [%s]\n", 
+			 backup_filename);
+	}
+	g_free (backup_filename);
+      }
+    }
+    
+  }
+
+  /* restore current page */
+  s_page_goto (toplevel, p_save);
+
+}
+
+
+@ %def o_autosave_backups

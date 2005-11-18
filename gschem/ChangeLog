@@ -1,3 +1,11 @@
+2005-11-18 Carlos Nieves Onega <cnieves@iespana.es>	
+	* include/prototype.h, lib/system-gschemrc.in, noweb/o_misc.nw,
+	  noweb/o_undo.nw:
+	Changed autosave code so the timer callback doesn't do the
+	autosave backups. Now are made within o_undo_savestate, so
+	backups will ONLY be saved when there was a change to the 
+	schematic and there was a timeout of the autosave timer.	
+
 2005-11-06 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/o_pin.nw, o_bus.nw, o_net.nw: Changed the rubber band erase

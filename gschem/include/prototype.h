@@ -620,6 +620,7 @@ void o_edit_autonumber_text(TOPLEVEL * w_current, char * searchtext, int startnu
 void o_edit_hide_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_edit_show_specific_text(TOPLEVEL *w_current, OBJECT *o_list, char *stext);
 void o_update_component(TOPLEVEL *w_current, OBJECT *o_current);
+void o_autosave_backups(TOPLEVEL *toplevel);
 /* o_move.c */
 void o_move_start(TOPLEVEL *w_current, int x, int y);
 void o_move_end_lowlevel(TOPLEVEL *w_current, OBJECT *list, int type, int diff_x, int diff_y, int screen_diff_x, int screen_diff_y, GList **other_objects, GList **connected_objects);
