@@ -149,8 +149,10 @@ s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean str
       srclen -= 3;
 
       output[0] = (input[0] >> 2);
-      output[1] = ((input[0] & 0x03) @<< 4) + (input[1] @>> 4);
-      output[2] = ((input[1] & 0x0f) @<< 2) + (input[2] @>> 6);
+      output[1] = ((input[0] & 0x03) @<< 4) + 
+	(input[1] @>> 4);
+      output[2] = ((input[1] & 0x0f) @<< 2) + 
+	(input[2] @>> 6);
       output[3] = (input[2] & 0x3f);
 
       g_assert ((dstpos + 4) < *dstlenp);
@@ -175,8 +177,10 @@ s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean str
 	input[i] = *src++;
 
       output[0] = (input[0] >> 2);
-      output[1] = ((input[0] & 0x03) @<< 4) + (input[1] @>> 4);
-      output[2] = ((input[1] & 0x0f) @<< 2) + (input[2] @>> 6);
+      output[1] = ((input[0] & 0x03) @<< 4) + 
+	(input[1] @>> 4);
+      output[2] = ((input[1] & 0x0f) @<< 2) + 
+	(input[2] @>> 6);
 
       g_assert ((dstpos + 4) < *dstlenp);
 

@@ -1,4 +1,8 @@
 2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/s_encoding.nw: Break some lines so notangle_guile
+	doesn't get confused by noweb scape sequences.
+	
+2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>	
         * include/funcs.h, include/struct.h, noweb/f_basic.nw,
 	  noweb/s_page.nw:
 	Added definition of the autosave backup filename string.
