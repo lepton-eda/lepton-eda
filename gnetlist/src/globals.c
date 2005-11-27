@@ -60,6 +60,7 @@ void (*x_log_update_func)() = NULL;
 void (*quit_func)() = gnetlist_quit;
 /* void (*variable_set_func)() = i_vars_set; */
 void (*variable_set_func)() = NULL;
+int (*load_newer_backup_func)() = NULL;
 
 /* netlist specific variables */
 NETLIST *netlist_head=NULL;

@@ -387,3 +387,6 @@ s_log_message (const gchar *format,
 #endif  /* !__GNUC__ */
 
 #endif
+
+/* Backup filename creation string */
+#define AUTOSAVE_BACKUP_FILENAME_STRING "#%s#"

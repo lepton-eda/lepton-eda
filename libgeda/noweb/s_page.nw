@@ -84,6 +84,7 @@
 #include "struct.h"
 #include "globals.h"
 #include "o_types.h"
+#include "funcs.h"
 
 #include "../include/prototype.h"
 
@@ -187,6 +188,8 @@ s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->saved_since_first_loaded = 0;
   page->do_autosave_backup = 0;
 
+  page->load_newer_backup_func = (int *) load_newer_backup_func;
+
   /* now append page to page list of toplevel */
   toplevel->page_tail->next = page;
   page->prev = toplevel->page_tail;
@@ -245,9 +248,9 @@ s_page_delete (TOPLEVEL *toplevel, PAGE *page)
     dirname = g_path_get_dirname (real_filename);
     only_filename = g_path_get_basename(real_filename);  
     
-    
-    backup_filename = g_strdup_printf("%s%c#%s#", dirname, 
-				      G_DIR_SEPARATOR, only_filename);
+    backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
+				      dirname, G_DIR_SEPARATOR, only_filename);
+
     /* Delete the backup file */
     if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )

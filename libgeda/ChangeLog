@@ -1,3 +1,11 @@
+2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>	
+        * include/funcs.h, include/struct.h, noweb/f_basic.nw,
+	  noweb/s_page.nw:
+	Added definition of the autosave backup filename string.
+	Added check for a backup file when loading a schematic, 
+	and a function to call an app-dependant function to ask 
+	the user if the backup file should be loaded or not.
+	
 2005-11-18 Carlos Nieves Onega <cnieves@iespana.es>	
 	* include/struct.h, noweb/f_basic.nw, noweb/s_page.nw:
 	Changed autosave code so the timer callback doesn't do the

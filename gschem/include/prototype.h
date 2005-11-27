@@ -862,6 +862,7 @@ void x_fileselect_comp_close(GtkWidget *w, FILEDIALOG *f_current);
 int x_fileselect_search_library(FILEDIALOG *f_current, char *library, const char *string);
 void x_fileselect_comp_search(GtkWidget *w, FILEDIALOG *f_current);
 void x_fileselect_setup(TOPLEVEL *w_current, int type, int filesel_type);
+int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message);
 /* x_grid.c */
 void x_grid_draw(TOPLEVEL *w_current);
 void x_draw_tiles(TOPLEVEL *w_current);

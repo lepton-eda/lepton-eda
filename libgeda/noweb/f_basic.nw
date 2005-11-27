@@ -96,6 +96,8 @@ f_open(TOPLEVEL *w_current, char *filename)
   char *full_rcfilename = NULL;
   char *file_directory = NULL;
   char *saved_cwd = NULL;
+  char *backup_filename = NULL;
+  char load_backup_file = 0;
 
   /* has the head been freed yet? */
   /* probably not hack PAGE */
@@ -134,18 +136,85 @@ f_open(TOPLEVEL *w_current, char *filename)
   if (file_directory) { 
     chdir(file_directory);  
     /* Probably should do some checking of chdir return values */
-    free (file_directory);
   }
   /* If directory is not found, we should do something . . . . */
 
   /* Now open RC and process file */
   g_rc_parse_specified_rc(w_current, full_rcfilename);
 
+  /* Check if there is a newer autosave backup file */
+  backup_filename = g_strdup_printf("%s%c"AUTOSAVE_BACKUP_FILENAME_STRING,
+				    file_directory, G_DIR_SEPARATOR, 
+				    g_path_get_basename(full_filename));
+
+  g_free (file_directory);
+
+  if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
+       (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
+    /* An autosave backup file exists. Check if it's newer */
+    struct stat stat_backup;
+    struct stat stat_file;
+    char error_stat = 0;
+    GString *message;
+    
+    if (stat (backup_filename, &stat_backup) != 0) {
+      s_log_message ("f_open: Unable to get stat information of backup file %s.", 
+		     backup_filename);
+      error_stat = 1 ;
+    }
+    if (stat (full_filename, &stat_file) != 0) {
+      s_log_message ("f_open: Unable to get stat information of file %s.", 
+		     full_filename);
+      error_stat = 1;
+    }
+    if ((difftime (stat_file.st_ctime, stat_backup.st_ctime) < 0) ||
+	(error_stat == 1))
+    {
+      /* Found an autosave backup. It's newer if error_stat is 0 */
+      message = g_string_new ("");
+      g_string_append_printf(message, "\nWARNING: Found an autosave backup file:\n  %s.\n\n", backup_filename);
+      if (error_stat == 1) {
+	g_string_append(message, "I could not guess if it is newer, so you have to"
+			  "do it manually.\n");
+      }
+      else {
+	g_string_append(message, "The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n");
+      }
+      g_string_append (message, "Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptely.\n");
+      if (w_current->page_current->load_newer_backup_func == NULL) {
+	s_log_message(message->str);
+	s_log_message("\nRun gschem and correct the situation.\n\n");
+	fprintf(stderr, message->str);
+	fprintf(stderr, "\nRun gschem and correct the situation.\n\n");
+      }
+      else {
+	/* Ask the user if load the backup or the original file */
+	if (w_current->page_current->load_newer_backup_func 
+	    (w_current, message)) {
+	  /* Load the backup file */
+	  load_backup_file = 1;
+	}
+      }
+      g_string_free (message, TRUE);
+    }
+  }
+
   /* Now that we have set the current directory and read
    * the RC file, it's time to read in the file. */
-  w_current->page_current->object_tail = (OBJECT *) 
-  o_read(w_current, w_current->page_current->object_tail, 
-         full_filename);
+  if (load_backup_file == 1) {
+    /* Load the backup file */
+    w_current->page_current->object_tail = (OBJECT *) 
+    o_read(w_current, w_current->page_current->object_tail, 
+	   backup_filename);
+  }
+  else {
+    /* Load the original file */
+    w_current->page_current->object_tail = (OBJECT *) 
+    o_read(w_current, w_current->page_current->object_tail, 
+	   full_filename);
+  }
+
+  g_free (backup_filename);
 
   if (w_current->page_current->object_tail != NULL) {
     s_log_message("Opened file [%s]\n", full_filename);

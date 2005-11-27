@@ -58,6 +58,7 @@
 
 <<x_fileselect.c : x_fileselect_setup()>>
 
+<<x_fileselect.c : x_fileselect_load_backup()>>
 @
 
 
@@ -2717,3 +2718,36 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 
 @ %def x_fileselect_setup
 
+@section Function @code{x_fileselect_load_backup()}
+
+@defun x_fileselect_load_backup toplevel
+This function opens a message dialog and wait for the user to choose if load the backup or the original file.
+
+It returns TRUE if the user wants to load the backup file, and FALSE otherwise.
+@end defun
+
+<<x_fileselect.c : x_fileselect_load_backup()>>=
+int
+x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message)
+{
+  GtkWidget *dialog;
+
+  g_string_append(message, "\nIf you load the original file, the backup file will be overwritten in the next autosave timeout and it will be lost.\n\nDo you want to load the backup file?\n");
+
+  dialog = gtk_message_dialog_new(GTK_WINDOW(toplevel->main_window),
+			  GTK_DIALOG_MODAL,
+			  GTK_MESSAGE_QUESTION,
+			  GTK_BUTTONS_YES_NO,
+			  message->str);
+  gtk_widget_show (dialog);
+  if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_YES) {
+    gtk_widget_destroy(dialog);  
+    return TRUE;
+  }
+  else {
+    gtk_widget_destroy(dialog);  
+    return FALSE;
+  }
+}
+
+@ %def x_fileselect_load_backup

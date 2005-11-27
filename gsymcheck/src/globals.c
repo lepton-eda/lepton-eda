@@ -58,6 +58,7 @@ void (*x_log_update_func)() = s_log_update;
 void (*quit_func)() = gsymcheck_quit;
 /* void (*variable_set_func)() = i_vars_set; */
 void (*variable_set_func)() = NULL;
+int (*load_newer_backup_func)() = NULL;
 
 /* command line arguments */
 int verbose_mode=FALSE;

@@ -399,6 +399,9 @@ struct st_page {
   gint ops_since_last_backup;
   gchar do_autosave_backup;
 
+  /* Function which asks the user wether to load a newer backup file */
+  int (*load_newer_backup_func)();
+
   /* left to right movement */
   PAGE *prev;
   PAGE *next;
@@ -439,6 +442,7 @@ struct st_filedialog {
   /* this points to the owner of this filedialog structure */
   /* should NEVER be freed */
   TOPLEVEL *toplevel;
+
 }; 
 
 struct st_toplevel {

@@ -1,3 +1,10 @@
+2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>
+        * include/prototype.h, noweb/globals.h, noweb/o_misc.nw, 
+	  noweb/x_fileselect.nw:
+	Now gschems checks if there is an autosave backup file when
+	loading a schematic. If it exists, then gschem asks the user
+	what to do.
+
 2005-11-18 Carlos Nieves Onega <cnieves@iespana.es>	
 	* include/prototype.h, lib/system-gschemrc.in, noweb/o_misc.nw,
 	  noweb/o_undo.nw:

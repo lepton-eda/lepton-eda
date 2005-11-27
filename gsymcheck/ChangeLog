@@ -1,3 +1,8 @@
+2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>
+	* src/globals.c: Added setting of load_newer_backup_func to NULL.
+	It is needed now libgeda checks for autosave backup files when
+	opening a schematic.
+	
 2005-09-27 18:51  Dan McMahill <danmc>
 
         * src/s_check.c: remove various compiler warnings
