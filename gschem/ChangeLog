@@ -1,3 +1,9 @@
+2005-11-28 Carlos Nieves Onega <cnieves@iespana.es>
+	* noweb/x_fileselect.nw: 
+	Applied minor patch to file selector so the user sees the "Save as"
+	button instead of "Open" when saving the schematic.
+	Thanks to David Carr for noticing it and sending the patch.
+	
 2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>
         * include/prototype.h, noweb/globals.h, noweb/o_misc.nw, 
 	  noweb/x_fileselect.nw:

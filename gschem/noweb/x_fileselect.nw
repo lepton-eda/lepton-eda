@@ -2661,7 +2661,7 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 							 GTK_FILE_CHOOSER_ACTION_SAVE,
 							 GTK_STOCK_CANCEL, 
 							 GTK_RESPONSE_CANCEL,
-							 GTK_STOCK_OPEN, 
+							 GTK_STOCK_SAVE_AS, 
 							 GTK_RESPONSE_ACCEPT,
 							 NULL);	     
       gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
