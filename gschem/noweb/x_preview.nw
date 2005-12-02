@@ -397,6 +397,10 @@ x_preview_setup_rest (TOPLEVEL *preview)
 
   i_vars_set (preview);
 
+  /* i_vars_set will set auto_save_interval, so disable it 
+     We don't want to autosave previews!! */
+  preview->auto_save_interval = 0;
+
   /* be sure to turn off the grid */
   preview->grid = FALSE;
 

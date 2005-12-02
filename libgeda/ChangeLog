@@ -1,3 +1,9 @@
+2005-12-02 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/s_page.nw: Make the s_page_autosave function more 
+	failproof, checking all the pointers. This change, together 
+	with some gschem changes at the same date will fix some gschem 
+	crashes reported by David Carr. Thanks David!
+
 2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/s_encoding.nw: Break some lines so notangle_guile
 	doesn't get confused by noweb scape sequences.

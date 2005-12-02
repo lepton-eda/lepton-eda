@@ -630,6 +630,22 @@ s_page_autosave (TOPLEVEL *toplevel)
 {
   PAGE *p_current;
 
+  if (toplevel == NULL) {
+    return 0;
+  }
+
+  /* Do nothing if the interval is 0 */
+  if (toplevel->auto_save_interval == 0) {
+    return toplevel->auto_save_interval;
+  }
+  
+  /* In which situation can be page_head = NULL?
+     Should we just disable the autosave timeout returning 0 or
+     just wait for more pages to be added? */
+  if (toplevel->page_head == NULL) {
+    return (toplevel->auto_save_interval);
+  }
+
   for (p_current = toplevel->page_head->next;
        p_current != NULL;
        p_current = p_current->next) {

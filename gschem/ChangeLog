@@ -1,3 +1,8 @@
+2005-12-02 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/x_preview.nw: Disable the autosave feature in previews. 
+	This change, together with some libgeda changes at the same date
+	will fix some gschem crashes reported by David Carr. Thanks David!
+
 2005-11-28 Carlos Nieves Onega <cnieves@iespana.es>
 	* noweb/x_fileselect.nw: 
 	Applied minor patch to file selector so the user sees the "Save as"
