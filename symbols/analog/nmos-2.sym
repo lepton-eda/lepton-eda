@@ -14,6 +14,10 @@ T 0 500 5 10 0 1 0 0 1
 pinnumber=G
 T 0 500 5 10 0 0 0 0 1
 pinseq=2
+T 0 500 5 10 0 1 0 0 1 
+pinlabel=G
+T 0 500 5 10 0 1 0 0 1 
+pintype=pas
 }
 P 500 600 500 800 1 0 1
 {
@@ -21,6 +25,10 @@ T 300 700 5 10 0 1 0 0 1
 pinnumber=D
 T 300 700 5 10 0 0 0 0 1
 pinseq=1
+T 300 700 5 10 0 1 0 0 1 
+pinlabel=D
+T 300 700 5 10 0 1 0 0 1 
+pintype=pas
 }
 P 500 400 700 400 1 0 1
 {
@@ -28,6 +36,10 @@ T 600 500 5 10 0 1 0 0 1
 pinnumber=B
 T 600 500 5 10 0 0 0 0 1
 pinseq=4
+T 600 500 5 10 0 1 0 0 1 
+pinlabel=B
+T 600 500 5 10 0 1 0 0 1 
+pintype=pas
 }
 P 500 200 500 0 1 0 1
 {
@@ -35,6 +47,10 @@ T 300 0 5 10 0 1 0 0 1
 pinnumber=S
 T 300 0 5 10 0 0 0 0 1
 pinseq=3
+T 300 0 5 10 0 1 0 0 1 
+pinlabel=S
+T 300 0 5 10 0 1 0 0 1 
+pintype=pas
 }
 T 700 600 8 10 1 1 0 0 1
 refdes=Q?
