@@ -234,6 +234,8 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
       }
 
       while (s_current != NULL) {
+	gboolean replaced;
+
 	object = s_current->selected_object;
 	if (object && !object->attached_to && object->type != OBJ_TEXT ) {
 	  addmask = 4;
@@ -243,6 +245,7 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 	  if (object->type == OBJ_NET) {
 	    addmask = 1;
 	  }
+	  replaced = FALSE;
 	  if (addmask & addto) {
 	    a_current = object->attribs;
 	    if (replace) {
@@ -254,15 +257,17 @@ attrib_edit_dialog_ok(GtkWidget * w, TOPLEVEL * w_current)
 		  if (!strncmp
 		      (a_sav->object->text->string, newtext,
 		       strchr(newtext, '=') - newtext)) {
-		    o_selection_remove(w_current->page_current->
-				       selection2_head, a_sav->object);
-		    o_delete_text(w_current, a_sav->object);
+		    o_text_change(w_current, a_sav->object, 
+				  newtext, vis, show);
+		    replaced = TRUE;
 		    w_current->page_current->CHANGED = 1;
 		  }
 		}
 	      }
 	    }
-	    new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+	    if (!replaced) {
+	      new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+	    }
 	  }
 	}
 	s_current = s_current->next;

@@ -1,4 +1,12 @@
 2005-12-17 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/x_attribedit.nw:
+	When mass replacing properties using the add property command,
+	don't delete the old attribute and add a new one: just change
+	the property text, visibility and show proerties, keeping the 
+	text location.
+	Bug reported by Karel Kulhavy. Thanks for the bug report.
+	
+2005-12-17 Carlos Nieves Onega <cnieves@iespana.es>	
 	* include/prototype.h, noweb/x_color.nw, noweb/x_dialog.nw:
 	Changed	function x_color_get_name to use dynamic memory allocation.
 	Now it returns a newly allocated string with the colorname.
