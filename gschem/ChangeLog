@@ -1,3 +1,10 @@
+2005-12-17 Carlos Nieves Onega <cnieves@iespana.es>	
+	* include/prototype.h, noweb/x_color.nw, noweb/x_dialog.nw:
+	Changed	function x_color_get_name to use dynamic memory allocation.
+	Now it returns a newly allocated string with the colorname.
+	This should fix a bug found by John Doty: the 'ex' command provoked
+	a bus error in gschem under MacOS 10.4.3. Thanks for the bug report.
+	
 2005-12-02 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/x_preview.nw: Disable the autosave feature in previews. 
 	This change, together with some libgeda changes at the same date

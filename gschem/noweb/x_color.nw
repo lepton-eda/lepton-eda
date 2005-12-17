@@ -221,28 +221,24 @@ x_get_darkcolor(int color)
 
 @section Function @code{x_color_get_name()}
 
-@defun x_color_get_name index string
+@defun x_color_get_name index
 @end defun
 
 <<x_color.c : x_color_get_name()>>=
-int
-x_color_get_name(int index, char *string)
+gchar *
+x_color_get_name(int index)
 {
   if ((index >= MAX_COLORS) || (index < 0)) {
-    return(FALSE);
+    return(NULL);
   }
 
   /* only if these two variables are not null is the color settable */
   if (colors[index].color_name && colors[index].outline_color_name) {
-    if (string) {
-      strcpy(string, colors[index].color_name);
-    }
-    return(TRUE);
+    return (g_strdup(colors[index].color_name));
   }
 
-  string[0] = '\0';
   /* didn't find a color, but there still might be more */
-  return(-1);
+  return(NULL);
 }
 
 

@@ -728,7 +728,7 @@ void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y, gboolean relative);
 void x_color_allocate_all(void);
 GdkColor *x_get_color(int color);
 GdkColor *x_get_darkcolor(int color);
-int x_color_get_name(int index, char *string);
+gchar *x_color_get_name(int index);
 /* x_dialog.c */
 #ifdef HAS_GTK22
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
