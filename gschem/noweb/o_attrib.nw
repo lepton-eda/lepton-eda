@@ -547,6 +547,11 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
   o_text_erase(w_current, w_current->page_current->object_tail); 
   o_text_draw(w_current, w_current->page_current->object_tail);
 
+  /* handle slot= attribute, it's a special case */
+  if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {
+    o_slot_end (w_current, text_string, strlen (text_string));
+  }
+  
   w_current->page_current->CHANGED = 1;
 
   return(w_current->page_current->object_tail);

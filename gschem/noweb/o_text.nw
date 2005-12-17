@@ -818,6 +818,11 @@ o_text_change(TOPLEVEL *w_current, OBJECT *object, char *string,
   o_text_recreate(w_current, object);
   o_text_draw(w_current, object);
 
+  /* handle slot= attribute, it's a special case */
+  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
+    o_slot_end (w_current, string, strlen (string));
+  }
+
   w_current->page_current->CHANGED = 1;
 }
 

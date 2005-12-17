@@ -1,4 +1,14 @@
 2005-12-17 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/o_attrib.nw, noweb/o_text.nw, noweb/x_multiattrib.nw:
+	In x_multiattrib: moved handling of slot attribute after 
+	calling o_text_change or o_attrib_add_attrib into those functions.
+	This is just calling o_slot_end after changed or added a slot
+	attribute.
+	This fixes the bug reported by Karel Kulhavy: graphic symbol is
+	not updated when adding a slot attribute using the single attribute
+	editor. Thanks for the bug report.
+	
+2005-12-17 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/x_attribedit.nw:
 	When mass replacing properties using the add property command,
 	don't delete the old attribute and add a new one: just change
