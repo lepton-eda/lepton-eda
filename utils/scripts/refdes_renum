@@ -38,13 +38,19 @@ $Getopt::Long::autoabbrev=0;
 
 &GetOptions(("help" => \&usage, 
 	     "nocopy" => \$nocopy,
-	     "pgskip" => \$pkgskip,
+	     "pgskip:i" => \$pgskip,
 	     "verbose" => \$verbose,
 	     "version" => \&version
 	     ));
 
 usage() if $Getopt::Long::error;
+
+# set the default increment for sheets
+unless( $pgskip ) { $pgskip = 100; }
+
 usage() unless @ARGV;
+
+
 
 # make sure the input schematic exists and we can read it
 $i=0;
@@ -83,7 +89,7 @@ for($i=0; $i < $filecnt; $i++) {
 
     # if we're skipping numbers, then start at 100 for page 1
     # and we'll jump to 200 for page 2, etc.
-    if( ! $devcnt{$pre} ) { $devcnt{$pre} = $pkgskip ? ($i+1)*100 : 0; }
+    if( ! $devcnt{$pre} ) { $devcnt{$pre} = $pgskip ? ($i+1)*$pgskip : 0; }
     $devcnt{$pre}++;
     print "Renumbering $line to $pre$devcnt{$pre}\n" if($verbose);
     print OUTNET "refdes=$pre$devcnt{$pre}\n";
@@ -93,9 +99,17 @@ for($i=0; $i < $filecnt; $i++) {
 
   # round each element up to the next 100 to help identify what
   # schematic page a component is on by the refdes.
-  if( $pkgskip ) {
+  if( $pgskip ) {
       foreach $dev (keys %devcnt) {
-	  $devcnt{$dev} = 100*POSIX::ceil($devcnt{$dev}/100);
+	  my $new_cnt = ($i + 2)*$pgskip;
+	  if( $new_cnt < $devcnt{$dev} ) {
+	      print STDERR "ERROR:  You have more than $pgskip elements with\n";
+	      print STDERR "prefix $dev on this sheet.  You will need to either\n";
+	      print STDERR "reduce this number or specify a larger step with the\n";
+	      print STDERR "--pgskip argument.\n";
+	      exit( 1 );
+	  }
+	  $devcnt{$dev} = $new_cnt;
 	  print "Incremented \"$dev\" counter to $devcnt{$dev}\n" if($verbose);
       }
   }
@@ -129,7 +143,7 @@ sub usage {
   $pname =~ s/.*\///g;
 
   print "Usage:\n\n";
-  print "\t$pname [--nocopy] [--pgskip] file1 [file2 [file3 ... ] ]\n";
+  print "\t$pname [--nocopy] [--pgskip [number] ] file1 [file2 [file3 ... ] ]\n";
   print "\t$pname --help\n";
   print "\t$pname --version\n";
   print "\n";
@@ -147,11 +161,16 @@ sub usage {
   print "\n";
   print "    --pgskip    When this flag is used, components on the first schematic sheet\n";
   print "                are numbered starting with 101.  On the second sheet, they start\n";
-  print "                with 201, etc.  \n";
+  print "                with 201, etc  Specifying a value gives the step between pages.\n";
+  print "                For example --pgskip 10 will start with 11, 21, 31, etc.\n";
   print "\n";
   print "    --verbose   Enables verbose output.\n";
   print "\n";
   print "    --version   Shows the version of this program.\n";
+  print "\n\n";
+  print "Example:\n\n";
+  print "\t$pname mysch.sch\n";
+  print "\t$pname --pgskip pg1.sch pg2.sch pg3.sch\n";
   print "\n\n";
   print "$pname was written by Dan McMahill <dmcmahill\@netbsd.org>\n";
   print "\n\n";
@@ -187,7 +206,20 @@ sub version {
 # Change Log
 #
 # $Log$
-# Revision 1.1  2003-02-21 03:21:12  ahvezda
+# Revision 1.2  2005-12-21 00:09:56  danmc
+# - Fix a bug where when using the --pgskip option, components which were
+#   present on page n, but not on pages n+1 through n+j, and present again
+#   on page n+j+1 got numbered in a strange way.  For example, J101 on page
+#   1, no connectors on page 2, J201 on page 3 instead of J301.  Noted by
+#   Stuart Brorson.
+#
+# - While here allow the user to change the default increment from 100 to whatever
+#   they want.
+#
+# - Also fix a bug where exactly 101 components with the same refdes prefix
+#   would cause a duplicate refdes on the next page.
+#
+# Revision 1.1  2003/02/21 03:21:12  ahvezda
 # Added scripts/refdes_renum written by Dan McMahill
 #
 #
