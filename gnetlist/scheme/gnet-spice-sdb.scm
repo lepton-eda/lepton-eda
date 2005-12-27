@@ -78,6 +78,9 @@
 ;;  9.11.2005 -- Incorporated patch from Paul Bunyk to enable netlisting of
 ;;               Josephson junctions and "K" mutual inductances.  Also enabled 
 ;;               netlisting of "COIL" devices as inductors.
+;;  12.27.2005 -- Fix bug discovered by John Doty: spice-IO pins with refdes greater
+;;                than P9 were sorted incorrectly (as strings).  Now they are sorted
+;;                as numbers.
 ;;**********************************************************************************
 ;;
 ;;  Organization of gnet-spice-sdb.scm file:
@@ -254,12 +257,41 @@
 ;;----------------------------------------------------------------
 ;;  This takes the list of io-pin-packages and sorts it in order of 
 ;;  refdes.
+;;  Repaired on 12.27.2005 to correctly sort pin numbers > 9.
 ;;----------------------------------------------------------------
 (define spice-sdb:sort-spice-IO-pins 
   (lambda (package-list)
-    (sort package-list string<?)
+    ;;  Yes, this isn't good Scheme form.  Tough!  Writing this out
+    ;;  in a functional programming form would be totally confusing!
+    ;;  Note that this fcn requires that 
+    ;;  each spice-IO pin have the same, single character prefix (i.e. 'P')
+    (let* ((char-prefixes              (map car (map string->list package-list)))  ;; Pull off first char (prefix)
+	   (prefixes                   (map string char-prefixes))                 ;; Make list of strings from prefixes
+	   (split-numbers-list         (map cdr (map string->list package-list)))  ;; Pull off refdes numbers as list elements
+	   (string-numbers-list        (map list->string split-numbers-list))      ;; Recombine split up (multidigit) number strings
+	   (numbers-list               (map string->number string-numbers-list))   ;; Convert strings to numbers for sorting
+	   (sorted-numbers-list        (sort numbers-list <))                      ;; Sort refdes numbers as numbers
+	   (sorted-string-numbers-list (map number->string sorted-numbers-list)) ) ;; Create sorted list of refdes strings.
+
+      ;; (debug-spew "Packages found = \n")
+      ;; (debug-spew package-list)
+      ;; (debug-spew "\nPrefixes found = \n")
+      ;; (debug-spew prefixes)
+      ;; (debug-spew "\nNumbers found -- split-numbers-list\n")
+      ;; (debug-spew split-numbers-list)
+      ;; (debug-spew "\nNumbers found -- numbers-list\n")
+      ;; (debug-spew numbers-list)
+      ;; (debug-spew "\nSorted-numbers-list\n")
+      ;; (debug-spew sorted-numbers-list)
+      ;; (debug-spew "\nSorted-string-numbers-list\n")
+      ;; (debug-spew sorted-string-numbers-list)
+
+      (map-in-order string-append  prefixes sorted-string-numbers-list)  ;; Laminate prefixes back onto refdes numbers & return.
+
+    )
   )
 )
+
 
 
 ;;----------------------------------------------------------------
