@@ -1,3 +1,12 @@
+2005-12-28 Carlos Nieves Onega <cnieves@iespana.es>
+	* src/g_netlist: Dereferenced return value of scm_c_module_lookup,
+	which is passed to scm_sort_list_x.
+	Fixed long standing bug that produces a "Wrong type argument in
+	position 1: #<variable 8059240 binding: #<primitive-procedure <=>>" 
+	error when running gnetlist.
+	Thanks to Neal Baer and James Cotton for the bug report, and also
+	to Patrick Bernaud for the solution.	
+
 2005-11-27 Carlos Nieves Onega <cnieves@iespana.es>
 	* src/globals.c: Added setting of load_newer_backup_func to NULL.
 	It is needed now libgeda checks for autosave backup files when

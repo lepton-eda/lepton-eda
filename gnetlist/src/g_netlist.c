@@ -19,9 +19,9 @@
 
 #include <config.h>
 
-#include <stdio.h>
+#include <stdio.h> 
 #ifdef HAVE_STRING_H
-#include <string.h>
+#include <string.h> 
 #endif
 #include <math.h>
 
@@ -802,8 +802,8 @@ SCM g_get_slots(SCM scm_uref)
     }
 
     slots_list = scm_sort_list_x(slots_list,
-                                 scm_c_module_lookup (
-                                   scm_current_module (), "<"));
+                                 SCM_VARIABLE_REF (scm_c_module_lookup (
+                                   scm_current_module (), "<")));
 
     return (slots_list);
 }
@@ -869,9 +869,8 @@ SCM g_get_unique_slots(SCM scm_uref)
     }
 
     slots_list = scm_sort_list_x(slots_list,
-                                 scm_c_module_lookup (
-                                   scm_current_module (), "<"));
-
+                                 SCM_VARIABLE_REF (scm_c_module_lookup (
+                                   scm_current_module (), "<")));
     return (slots_list);
 }
 
