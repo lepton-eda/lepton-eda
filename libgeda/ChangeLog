@@ -1,3 +1,10 @@
+2006-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* noweb/s_encoding.nw: Removed extra @'s since they are no longer
+	required for either notangle_guile or notangle (noweb proper) and
+	they were breaking the build for notangle_guile.  Thank to Stuart
+	and Matthias Wenzel for the fix.
+
 2005-12-02 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/s_page.nw: Make the s_page_autosave function more 
 	failproof, checking all the pointers. This change, together 
