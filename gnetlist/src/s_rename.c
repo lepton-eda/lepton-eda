@@ -294,11 +294,6 @@ void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head)
         for (temp = last_set->first_rename; temp; temp = temp->next)
         {
             verbose_print("R");
-
-#if DEBUG 
-            printf("%d Renaming: %s -> %s\n", i, temp->src, temp->dest);
-#endif
-
             s_rename_all_lowlevel(netlist_head, temp->src, temp->dest);
 	}
     }

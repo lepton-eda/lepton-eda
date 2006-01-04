@@ -634,7 +634,7 @@
  	    (begin
 	      (newline port)
  	      (for-each (lambda (pin)
- 			  (if (not (string=? "unconnected_pin" (cdr pin)))
+ 			  (if (not  (strncmp? (cdr pin) "unconnected_pin" 15) )
 			      (begin 
  			        (display "    " port)(systemc:display-escaped-identifier package port) 
 				(systemc:display-pin pin positional port)

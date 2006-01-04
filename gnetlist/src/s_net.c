@@ -40,9 +40,11 @@
 #include <dmalloc.h>
 #endif
 
-static int unnamed_counter = 1;
+static int unnamed_net_counter = 1;
+static int unnamed_pin_counter = 1;
 
-#define MAX_UNNAMED 99999999
+#define MAX_UNNAMED_NETS 99999999
+#define MAX_UNNAMED_PINS 99999999
 
 /* hack rename this to be s_return_tail */
 /* update object_tail or any list of that matter */
@@ -431,10 +433,12 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
     if (net_head->nid == -1 && net_head->prev == NULL
 	&& net_head->next == NULL) {
 	string =
-	    (char *) malloc(sizeof(char) * (strlen("unconnected_pin")) +
-			    1);
+	    (char *) malloc(sizeof(char) * (strlen("unconnected_pin-")) +
+			    10);
 
-	sprintf(string, "unconnected_pin");
+	sprintf(string, "unconnected_pin-%d", 
+		unnamed_pin_counter++);
+
 	return (string);
 
     }
@@ -447,12 +451,12 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
     }
 
     /* have we exceeded the number of unnamed nets? */
-    if (unnamed_counter < MAX_UNNAMED) {
+    if (unnamed_net_counter < MAX_UNNAMED_NETS) {
 
 	if (netlist_mode == SPICE) {
 	    string =
 		(char *) malloc(sizeof(char) * (strlen("99999") + 10));
-	    sprintf(string, "%d", unnamed_counter++);
+	    sprintf(string, "%d", unnamed_net_counter++);
 
 	    return (string);
 	} else {
@@ -465,7 +469,7 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 		temp =
 		    (char *) malloc(sizeof(char) * (strlen("99999") + 10));
 		sprintf(temp, "%s%d", pr_current->unnamed_netname, 
-		        unnamed_counter++);
+		        unnamed_net_counter++);
 
 		misc =
 		    s_hierarchy_create_netname(pr_current, temp,
@@ -474,7 +478,7 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 		free(misc);
 	    } else {
 		sprintf(string, "%s%d", pr_current->unnamed_netname, 
-			unnamed_counter++);
+			unnamed_net_counter++);
 	    }
 
 	    return (string);

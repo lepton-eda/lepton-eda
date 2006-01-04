@@ -66,6 +66,26 @@
 
 ;; Support functions
 
+;;  This fcn should behave exactly the same as C's strncmp fcn.
+;;  It compares two strings from the start up to a user-defined end
+;;  char count.  It also checks that the string compare was successful through
+;;  the end char count (i.e. that both strings are >= "end").  This
+;;  guards against returning #t when comparing "unconnected_pin-23" to "unc"
+;;  (over 15 chars).
+;;  I needed to write this because substring chokes when the string arg is
+;;  shorter than the end arg.
+;;  1.4.2006 -- SDB.
+(define strncmp?
+  (lambda (string1 string2 end)
+    (and 
+     (string-ci=? (substring string1 0 (min end (string-length string1)))
+		  (substring string2 0 (min end (string-length string2))))
+     (>= (min (string-length string1) (string-length string2)) end)
+    )
+  )
+)
+
+
 ;; get all packages for a particular schematic page 
 ;; eventually placeholder will be either the hierarchical level or something 
 ;; of the sort

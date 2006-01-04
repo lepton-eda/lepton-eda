@@ -793,7 +793,7 @@
 		      (connection (cdr pair))
 		      )
 		(begin
-		  (if (string-ci=? connection "unconnected_pin")
+		  (if (strncmp? connection "unconnected_pin" 15)
 		      (begin
 			(let* ((position (drc2:position-of-pintype 
 					  (gnetlist:get-attribute-by-pinnumber ref pin "pintype")))

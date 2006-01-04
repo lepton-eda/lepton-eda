@@ -166,7 +166,8 @@ SCM g_get_all_nets(SCM scm_level)
 
 		net_name = pl_current->net_name;
 		/* filter off unconnected pins */
-		if (strcmp(net_name, "unconnected_pin") != 0) {
+		if (strncmp(net_name, "unconnected_pin", 15) != 0) {
+		    /*printf("Got net: `%s'\n",net_name); */
 		    /* add the net name to the list */
 #if DEBUG
 		    printf("Got net: `%s'\n", net_name);
@@ -209,7 +210,7 @@ SCM g_get_all_unique_nets(SCM scm_level)
 
 		net_name = pl_current->net_name;
 		/* filter off unconnected pins */
-		if (strcmp(net_name, "unconnected_pin") != 0) {
+		if (strncmp(net_name, "unconnected_pin", 15) != 0) {
 		    /* add the net name to the list */
 		    /*printf("Got net: `%s'\n",net_name); */
 

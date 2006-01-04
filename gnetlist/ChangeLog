@@ -1,3 +1,18 @@
+2006-01-04 Stuart Brorson <sdb@cloud9.net>
+	*  src/g_netlist.c, src/s_net.c, scheme/gnet-drc2.scm
+	scheme/gnetlist.scm, scheme/gnet-systemc.scm, 
+	scheme/gnet-vams.scm, scheme/gnet-verilog.scm
+	scheme/gnet-vhdl.scm:  Modified code to emit
+	"unconnected_pin-<number>" to fix bug noticed by John Doty.
+	Besides modifying s_net.c to achieve this, I had to change
+	the strcmp fcn in many files to a strncmp fcn to compare only
+	the first 15 chars against "unconnected_pin".  Added strncmp?
+	to scheme/gnetlist.scm to do this for Scheme backends.
+
+	*  scheme/gnet-spice-sdb.scm:  Fix bug discovered by John Doty: 
+	spice-IO pins with refdes greater than P9 were sorted 
+	incorrectly (as strings).  Now they are sorted as numbers.
+	
 2005-12-28 Carlos Nieves Onega <cnieves@iespana.es>
 	* src/g_netlist: Dereferenced return value of scm_c_module_lookup,
 	which is passed to scm_sort_list_x.

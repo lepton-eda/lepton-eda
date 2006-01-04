@@ -575,7 +575,7 @@
  	    (begin
 	      (newline port)
  	      (for-each (lambda (pin)
- 			  (if (not (string=? "unconnected_pin" (cdr pin)))
+ 			  (if (not (strncmp? "unconnected_pin" (cdr pin) 15))
 			      (begin
 				;; handle commas after the first pin
 				(if comma_pending 

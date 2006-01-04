@@ -776,7 +776,7 @@
     (begin
       (display (car pin) p)
       (display " => " p)
-      (if (string=? "unconnected_pin" (cdr pin))
+      (if (strncmp? "unconnected_pin" (cdr pin) 15)
 	  (display "OPEN" p)
 	  (display (cdr pin) p)))))
 

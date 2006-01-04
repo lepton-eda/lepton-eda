@@ -66,12 +66,6 @@ void s_traverse_start(TOPLEVEL * pr_current)
 
     p_current = pr_current->page_head;
 
-#if DEBUG
-    o_conn_print_hash(pr_current->page_current->conn_table);
-#endif
-
-
-
     while (p_current != NULL) {
 	if (p_current->pid != -1) {
 
