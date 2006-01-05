@@ -74,7 +74,6 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
-#include <glib/gstdio.h>
 #include <libguile.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -188,7 +187,7 @@ s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->saved_since_first_loaded = 0;
   page->do_autosave_backup = 0;
 
-  page->load_newer_backup_func = (int *) load_newer_backup_func;
+  page->load_newer_backup_func = load_newer_backup_func;
 
   /* now append page to page list of toplevel */
   toplevel->page_tail->next = page;
@@ -255,7 +254,7 @@ s_page_delete (TOPLEVEL *toplevel, PAGE *page)
     if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
     {
-      if (g_unlink(backup_filename) != 0) {
+      if (unlink(backup_filename) != 0) {
 	s_log_message("s_page_delete: Unable to delete backup file %s.", backup_filename);      }
     }
     g_free (dirname);
