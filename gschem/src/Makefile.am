@@ -40,7 +40,7 @@ AM_CFLAGS = -Wall
 endif
 
 INCLUDES = -I$(top_srcdir)/intl -I$(top_srcdir)/include @GSCHEM_CFLAGS@
-gschem_LDADD = @GSCHEM_LDFLAGS@ @LIBINTL@
+gschem_LDADD = @GSCHEM_LDFLAGS@ @LIBINTL@ @GUILE_LDFLAGS@
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

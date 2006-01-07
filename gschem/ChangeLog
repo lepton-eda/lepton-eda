@@ -1,3 +1,10 @@
+2006-01-07  Stuart Brorson  <sdb AT cloud9 DOT net>
+        * autogen.sh, Included "-I m4" into
+        aclocal to pick up macros from local m4 dir.
+	
+	*  src/Makefile.am:  Added @GUILE_LDFLAGS@ to gschem_LDADD
+	to force pick-up of lguile.
+	
 2006-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* po/fr_FR.po: Updated the French translation.
