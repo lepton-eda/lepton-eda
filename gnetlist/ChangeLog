@@ -1,3 +1,9 @@
+2006-01-07 Stuart Brorson <sdb AT cloud9 DOT net>
+	*  configure.ac, src/Makefile.am:  Changed automake stuff
+	to explicitly look for guile, and then link to it.
+
+	*  autogen.sh, m4/guile.m4:  Added local guile macros.
+	
 2006-01-04 Stuart Brorson <sdb@cloud9.net>
 	*  src/g_netlist.c, src/s_net.c, scheme/gnet-drc2.scm
 	scheme/gnetlist.scm, scheme/gnet-systemc.scm, 
