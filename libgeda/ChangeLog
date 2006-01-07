@@ -1,3 +1,7 @@
+2006-01-07 Stuart Brorson <sdb AT cloud9 DOT net>
+	* autogen.sh, m4/gettext.m4: Included "-I m4" into
+	aclocal to pick up gettext.m4 from local dir.
+	
 2006-01-04 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* noweb/s_encoding.nw: Removed extra @'s since they are no longer
