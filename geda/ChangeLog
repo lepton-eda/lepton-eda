@@ -1,3 +1,7 @@
+2006-01-07  Stuart Brorson  <sdb AT cloud9 DOT net>
+        * autogen.sh, m4/gettext.m4:  Included "-I m4" into
+        aclocal to pick up macros from local m4 dir.
+	
 2005-09-27 18:46  Dan McMahill <danmc>
 
         * graphman/configfile.c, src/configfile.c: remove various compiler
