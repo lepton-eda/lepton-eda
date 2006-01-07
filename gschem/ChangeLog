@@ -1,3 +1,10 @@
+2006-01-07  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* po/fr_FR.po: Updated the French translation.
+
+	* noweb/rcstrings.nw: Updated menu entries for un/embedding
+	components and pictures.
+	
 2005-12-17 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/o_attrib.nw, noweb/o_text.nw, noweb/x_multiattrib.nw:
 	In x_multiattrib: moved handling of slot attribute after 

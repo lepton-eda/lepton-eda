@@ -3,20 +3,19 @@
 # This file is distributed under the same license as the gEDA/gaf package.
 # Iznogood <iznogood@iznogood-factory.org>, 2005.
 # Patrick Bernaud <b-patrick@wanadoo.fr>, 2006.
-# <>, 2006.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: fr_FR VERSION\n"
+"Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-07 12:08+0100\n"
-"PO-Revision-Date: 2006-01-07 13:09+0100\n"
-"Last-Translator: Patrick Bernaud <patrickb@chez.com>\n"
+"PO-Revision-Date: 2006-01-07 17:01+0100\n"
+"Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -2217,38 +2216,38 @@ msgid "Pan/Cancel"
 msgstr "Panoramique/Annuler"
 
 #~ msgid "Could NOT autosave page [%s]\n"
-#~ msgstr "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂchec sauvegarde automatique de la page [%s]\n"
+#~ msgstr "chec sauvegarde automatique de la page [%s]\n"
 
 #~ msgid "Edit Attribute"
-#~ msgstr "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂditer l'attribut"
+#~ msgstr "Éditer l'attribut"
 
 #~ msgid "Add new attribute..."
 #~ msgstr "Ajouter un nouvel attribut..."
 
 #~ msgid "Edit attribute..."
-#~ msgstr "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂditer l'attribut..."
+#~ msgstr "Éditer l'attribut..."
 
 #~ msgid "Add new attribute"
 #~ msgstr "Ajouter un nouvel attribut"
 
 #~ msgid "%s requires a string as a parameter\n"
-#~ msgstr "%s nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©cessite un paramÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡tre\n"
+#~ msgstr "%s n©cessite un param¡tre\n"
 
 #~ msgid "Invalid parameters to paper-sizes\n"
-#~ msgstr "ParamÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡tres invalides pour paper-sizes\n"
+#~ msgstr "Param¡tres invalides pour paper-sizes\n"
 
 #~ msgid "Cannot obtain the current directory!\n"
-#~ msgstr "Je ne peux pas avoir le rÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©pertoire actuel!\n"
+#~ msgstr "Je ne peux pas avoir le r©pertoire actuel!\n"
 
 #~ msgid "Warning: two components with same refdes: %d\n"
 #~ msgstr ""
-#~ "Attention: deux composants avec le mÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂªme refdes: %d\n"
+#~ "Attention: deux composants avec le mªme refdes: %d\n"
 
 #~ msgid "Solid"
 #~ msgstr "Continu"
 
 #~ msgid "Dotted"
-#~ msgstr "PointillÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©s"
+#~ msgstr "Pointill©s"
 
 #~ msgid "Dashed"
 #~ msgstr "Alignement de Traits"
@@ -2257,7 +2256,7 @@ msgstr "Panoramique/Annuler"
 #~ msgstr "Centrer"
 
 #~ msgid "Phantom"
-#~ msgstr "FantÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂme"
+#~ msgstr "Fantme"
 
 #~ msgid "Filled"
 #~ msgstr "Remplir"
@@ -2275,7 +2274,7 @@ msgstr "Panoramique/Annuler"
 #~ msgstr "SN"
 
 #~ msgid "Add/Edit"
-#~ msgstr "Ajouter/ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂditer"
+#~ msgstr "Ajouter/Éditer"
 
 #~ msgid "Clear"
 #~ msgstr "Effacer"
@@ -2287,7 +2286,7 @@ msgstr "Panoramique/Annuler"
 #~ msgstr "Abandonner la Page"
 
 #~ msgid "Update Manager"
-#~ msgstr "Mise ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ  Jour du Gestionnaire"
+#~ msgstr "Mise à Jour du Gestionnaire"
 
 #~ msgid "Close Manager"
 #~ msgstr "Fermer le Gestionnaire"
