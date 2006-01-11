@@ -9,13 +9,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-07 12:08+0100\n"
+"POT-Creation-Date: 2006-01-11 16:18+0100\n"
 "PO-Revision-Date: 2006-01-07 17:01+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -378,7 +378,7 @@ msgid "Select objs first"
 msgstr "Sélectionnez d'abord des objets"
 
 #: noweb/i_callbacks.nw:1110 noweb/rcstrings.nw:25 noweb/x_attribedit.nw:577
-#: noweb/x_attribedit.nw:779 noweb/x_window.nw:797
+#: noweb/x_attribedit.nw:779 noweb/x_multiattrib.nw:1427 noweb/x_window.nw:797
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -485,6 +485,11 @@ msgstr "Nouvelle page [%s] créée\n"
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Ferme [%s]\n"
+
+#: noweb/i_callbacks.nw:2338
+#, fuzzy
+msgid "Really revert page?"
+msgstr "Annuler les modifications"
 
 #: noweb/i_callbacks.nw:2430 noweb/i_callbacks.nw:2450
 #: noweb/i_callbacks.nw:2476
@@ -874,6 +879,16 @@ msgstr ""
 msgid "Component still embedded and not updated\n"
 msgstr "Composant toujours embarqué et non mis à jour\n"
 
+#: noweb/o_misc.nw:1755
+#, c-format
+msgid "o_autosave_backups: Can't get the real filename of %s."
+msgstr ""
+
+#: noweb/o_misc.nw:1797
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%s]\n"
+msgstr "Échec de l'enregistrement de la page [%s]\n"
+
 #: noweb/o_move.nw:259
 #, c-format
 msgid "ERROR: NULL object in o_move_end!\n"
@@ -906,9 +921,30 @@ msgstr ""
 msgid "Could not find %s in any component-library\n"
 msgstr "Impossible de trouver %s dans toutes les bibliothèques de composants\n"
 
+#: noweb/o_picture.nw:234 noweb/o_picture.nw:411
+#, fuzzy, c-format
+msgid "Failed to load picture: %s"
+msgstr "Échec de la lecture du fichier scm de démarrage [%s]\n"
+
 #: noweb/o_picture.nw:253
 msgid "Picture"
 msgstr "Image"
+
+#: noweb/o_picture.nw:301
+msgid "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
+msgstr ""
+
+#: noweb/o_picture.nw:302 noweb/x_attribedit.nw:546 noweb/x_dialog.nw:1023
+#: noweb/x_dialog.nw:1424 noweb/x_dialog.nw:1905 noweb/x_dialog.nw:2132
+#: noweb/x_dialog.nw:2311 noweb/x_dialog.nw:2481 noweb/x_dialog.nw:2656
+#: noweb/x_dialog.nw:2831 noweb/x_dialog.nw:3016 noweb/x_dialog.nw:4120
+#: noweb/x_dialog.nw:4434 noweb/x_dialog.nw:4565
+msgid "OK"
+msgstr "OK"
+
+#: noweb/o_picture.nw:324 noweb/o_picture.nw:504
+msgid "Please select a picture file."
+msgstr ""
 
 #: noweb/o_picture.nw:437 noweb/x_attribedit.nw:193
 #, c-format
@@ -935,6 +971,11 @@ msgstr "Nouvelle valeur de slot hors plage\n"
 #, c-format
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "Tentative d'édition de slot sur un objet inexistant !\n"
+
+#: noweb/o_text.nw:194
+#, fuzzy, c-format
+msgid "Tried to render text with an invalid angle: %d\n"
+msgstr "Tentative d'obtention d'une couleur invalide : %d\n"
 
 #: noweb/o_undo.nw:378
 msgid "Undo/Redo disabled in rc file\n"
@@ -973,15 +1014,15 @@ msgstr "Fichier"
 msgid "New Window"
 msgstr "Nouvelle fenêtre"
 
-#: noweb/rcstrings.nw:4
+#: noweb/rcstrings.nw:4 noweb/x_pagesel.nw:501
 msgid "New Page"
 msgstr "Nouvelle page"
 
-#: noweb/rcstrings.nw:5
+#: noweb/rcstrings.nw:5 noweb/x_pagesel.nw:502
 msgid "Open Page..."
 msgstr "Ouvrir une page..."
 
-#: noweb/rcstrings.nw:6
+#: noweb/rcstrings.nw:6 noweb/x_pagesel.nw:505
 msgid "Close Page"
 msgstr "Fermer la page"
 
@@ -989,7 +1030,7 @@ msgstr "Fermer la page"
 msgid "Revert Page"
 msgstr "Annuler les modifications"
 
-#: noweb/rcstrings.nw:8
+#: noweb/rcstrings.nw:8 noweb/x_pagesel.nw:504
 msgid "Save Page"
 msgstr "Enregistrer la page"
 
@@ -1319,7 +1360,7 @@ msgstr "Montrer la fenêtre de messages..."
 msgid "Show Coord Window..."
 msgstr "Montrer la fenêtre de coordonnées..."
 
-#: noweb/rcstrings.nw:117 noweb/x_menus.nw:299
+#: noweb/rcstrings.nw:117 noweb/x_menus.nw:297
 msgid "Help"
 msgstr "Aide"
 
@@ -1379,14 +1420,6 @@ msgstr "Nom"
 #: noweb/x_attribedit.nw:535
 msgid "Both"
 msgstr "Nom et valeur"
-
-#: noweb/x_attribedit.nw:546 noweb/x_dialog.nw:1023 noweb/x_dialog.nw:1424
-#: noweb/x_dialog.nw:1905 noweb/x_dialog.nw:2132 noweb/x_dialog.nw:2311
-#: noweb/x_dialog.nw:2481 noweb/x_dialog.nw:2656 noweb/x_dialog.nw:2831
-#: noweb/x_dialog.nw:3016 noweb/x_dialog.nw:4120 noweb/x_dialog.nw:4434
-#: noweb/x_dialog.nw:4565
-msgid "OK"
-msgstr "OK"
 
 #: noweb/x_attribedit.nw:566 noweb/x_dialog.nw:586 noweb/x_dialog.nw:3690
 #: noweb/x_fileselect.nw:2429
@@ -1521,6 +1554,26 @@ msgstr "Taille du texte :"
 msgid "Edit Text Alignment"
 msgstr "Alignement du texte :"
 
+#: noweb/x_dialog.nw:1098
+msgid "Solid"
+msgstr "Continu"
+
+#: noweb/x_dialog.nw:1099
+msgid "Dotted"
+msgstr "Pointill©s"
+
+#: noweb/x_dialog.nw:1100
+msgid "Dashed"
+msgstr "Alignement de Traits"
+
+#: noweb/x_dialog.nw:1101
+msgid "Center"
+msgstr "Centrer"
+
+#: noweb/x_dialog.nw:1102
+msgid "Phantom"
+msgstr "Fantme"
+
 #: noweb/x_dialog.nw:1262 noweb/x_dialog.nw:1264 noweb/x_dialog.nw:1266
 #: noweb/x_dialog.nw:1473 noweb/x_dialog.nw:1474 noweb/x_dialog.nw:1475
 #: noweb/x_dialog.nw:1483 noweb/x_dialog.nw:1704 noweb/x_dialog.nw:1706
@@ -1549,6 +1602,23 @@ msgstr "Longueur du tiret :"
 #: noweb/x_dialog.nw:1414
 msgid "Line Dash Space"
 msgstr "Espace entre tirets :"
+
+#: noweb/x_dialog.nw:1526
+msgid "Hollow"
+msgstr ""
+
+#: noweb/x_dialog.nw:1527
+msgid "Filled"
+msgstr "Remplir"
+
+#: noweb/x_dialog.nw:1528
+msgid "Mesh"
+msgstr ""
+
+#: noweb/x_dialog.nw:1529
+#, fuzzy
+msgid "Hatch"
+msgstr "Détacher"
 
 #: noweb/x_dialog.nw:1825
 msgid "Fill Type"
@@ -1933,6 +2003,10 @@ msgstr "sym/sch - Schémas et symboles"
 msgid "All files"
 msgstr "* - Tous fichiers"
 
+#: noweb/x_image.nw:380
+msgid "x_image_lowlevel: Unable to write PNG file.\n"
+msgstr ""
+
 #: noweb/x_image.nw:384 noweb/x_image.nw:415
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
@@ -1942,6 +2016,10 @@ msgstr "Image couleur exportée dans fichier [%s] [%d x %d]\n"
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "Image noire et blanche exportée dans fichier [%s] [%d x %d]\n"
+
+#: noweb/x_image.nw:396
+msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
+msgstr ""
 
 #: noweb/x_image.nw:528
 msgid "Write Image..."
@@ -1966,6 +2044,90 @@ msgstr "Largeur x Hauteur"
 #: noweb/x_log.nw:297
 msgid "Status"
 msgstr "Messages"
+
+#: noweb/x_menus.nw:72
+#, fuzzy
+msgid "/Add Net"
+msgstr "Ajouter du texte..."
+
+#: noweb/x_menus.nw:73
+#, fuzzy
+msgid "/Add Attribute..."
+msgstr "Ajouter un attribut"
+
+#: noweb/x_menus.nw:74
+#, fuzzy
+msgid "/Add Component..."
+msgstr "Composant..."
+
+#: noweb/x_menus.nw:75
+msgid "/Add Bus"
+msgstr ""
+
+#: noweb/x_menus.nw:76
+#, fuzzy
+msgid "/Add Text"
+msgstr "Ajouter du texte..."
+
+#: noweb/x_menus.nw:78
+#, fuzzy
+msgid "/Zoom In"
+msgstr "Réduction"
+
+#: noweb/x_menus.nw:79
+#, fuzzy
+msgid "/Zoom Out"
+msgstr "Agrandissement"
+
+#: noweb/x_menus.nw:80
+#, fuzzy
+msgid "/Zoom Box"
+msgstr "Zoom boîte"
+
+#: noweb/x_menus.nw:81
+#, fuzzy
+msgid "/Zoom Extents"
+msgstr "Agrandissement auto"
+
+#: noweb/x_menus.nw:83
+#, fuzzy
+msgid "/Select"
+msgstr "Sélectionner"
+
+#: noweb/x_menus.nw:84
+#, fuzzy
+msgid "/Edit..."
+msgstr "Éditer"
+
+#: noweb/x_menus.nw:85
+#, fuzzy
+msgid "/Copy"
+msgstr "Copier"
+
+#: noweb/x_menus.nw:86
+#, fuzzy
+msgid "/Move"
+msgstr "Déplacer"
+
+#: noweb/x_menus.nw:87
+#, fuzzy
+msgid "/Delete"
+msgstr "Supprimer"
+
+#: noweb/x_menus.nw:90
+#, fuzzy
+msgid "/Down Schematic"
+msgstr "Descendre dans la hiérarchie"
+
+#: noweb/x_menus.nw:91
+#, fuzzy
+msgid "/Down Symbol"
+msgstr "Descendre dans le symbole"
+
+#: noweb/x_menus.nw:92
+#, fuzzy
+msgid "/Up"
+msgstr "Remonter"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
@@ -2012,6 +2174,10 @@ msgstr "Montrer seulement le nom"
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr "Les attributs sans nom sont interdits. Donnez un nom."
 
+#: noweb/x_multiattrib.nw:1426
+msgid "Duplicate"
+msgstr ""
+
 #: noweb/x_pagesel.nw:315
 msgid "Page Manager"
 msgstr "Gestionnaire de pages"
@@ -2023,6 +2189,14 @@ msgstr "Modifié"
 #: noweb/x_pagesel.nw:407
 msgid "Right click on the filename for more options..."
 msgstr "Utilisez le clic droit sur le nom de fichier pour plus d'options..."
+
+#: noweb/x_pagesel.nw:506
+msgid "Discard Page"
+msgstr "Abandonner la Page"
+
+#: noweb/x_preview.nw:183
+msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
+msgstr ""
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2240,26 +2414,7 @@ msgstr "Panoramique/Annuler"
 #~ msgstr "Je ne peux pas avoir le r©pertoire actuel!\n"
 
 #~ msgid "Warning: two components with same refdes: %d\n"
-#~ msgstr ""
-#~ "Attention: deux composants avec le mªme refdes: %d\n"
-
-#~ msgid "Solid"
-#~ msgstr "Continu"
-
-#~ msgid "Dotted"
-#~ msgstr "Pointill©s"
-
-#~ msgid "Dashed"
-#~ msgstr "Alignement de Traits"
-
-#~ msgid "Center"
-#~ msgstr "Centrer"
-
-#~ msgid "Phantom"
-#~ msgstr "Fantme"
-
-#~ msgid "Filled"
-#~ msgstr "Remplir"
+#~ msgstr "Attention: deux composants avec le mªme refdes: %d\n"
 
 #~ msgid "Yes"
 #~ msgstr "Oui"
@@ -2281,9 +2436,6 @@ msgstr "Panoramique/Annuler"
 
 #~ msgid "Open Page"
 #~ msgstr "Ouvrir la Page"
-
-#~ msgid "Discard Page"
-#~ msgstr "Abandonner la Page"
 
 #~ msgid "Update Manager"
 #~ msgstr "Mise à Jour du Gestionnaire"

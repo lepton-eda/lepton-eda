@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-15 23:22-0400\n"
+"POT-Creation-Date: 2006-01-11 16:18+0100\n"
 "PO-Revision-Date: 2005-03-11 23:41+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
@@ -30,7 +30,7 @@ msgstr "¡Ups! ¡La asignación de teclas rápidas ha fallado!.\n"
 msgid "Attribute failed ot find.\n"
 msgstr "Propiedad no encontrada.\n"
 
-#: noweb/g_rc.nw:235
+#: noweb/g_rc.nw:236
 #, c-format
 msgid ""
 "Found a version [%s] gschemrc file:\n"
@@ -39,7 +39,7 @@ msgstr ""
 "Encontrada una versión [%s] del fichero gschemrc:\n"
 "[%s]\n"
 
-#: noweb/g_rc.nw:238
+#: noweb/g_rc.nw:239
 #, c-format
 msgid ""
 "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
@@ -47,45 +47,45 @@ msgstr ""
 "Pero gschem es ALPHA. Por favor, asegúrese de que dispone de un fichero rc "
 "actualizado.\n"
 
-#: noweb/g_rc.nw:305
+#: noweb/g_rc.nw:306
 #, c-format
 msgid "Invalid color [%s] passed to %s\n"
 msgstr "Se ha especificado un color no válido [%s] a la función %s\n"
 
-#: noweb/g_rc.nw:524
+#: noweb/g_rc.nw:525
 #, c-format
 msgid "Invalid mode [%s] passed to %s\n"
 msgstr "Se ha especificado un modo no válido [%s] a la función %s\n"
 
-#: noweb/g_rc.nw:723
+#: noweb/g_rc.nw:724
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr ""
 "Se ha especificado un factor de ampliación no válido [%d] a la función %s\n"
 
-#: noweb/g_rc.nw:767
+#: noweb/g_rc.nw:768
 #, c-format
 msgid "Invalid mode [%s] passed to scrollbar-update\n"
 msgstr ""
 "Se ha especificado un modo no válido [%s] a la función scrollbar-update\n"
 
-#: noweb/g_rc.nw:866
+#: noweb/g_rc.nw:867
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Se ha especificado un tamaño no válido [%d] a la función text-size\n"
 
-#: noweb/g_rc.nw:919
+#: noweb/g_rc.nw:920
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Se ha especificado un tamaño no válido [%d] a la función snap-size\n"
 
-#: noweb/g_rc.nw:1007 noweb/g_rc.nw:1010
+#: noweb/g_rc.nw:1008 noweb/g_rc.nw:1011
 #, c-format
 msgid "Duplicate stroke definition passed to stroke! [%s]\n"
 msgstr ""
 "¡Se ha especificado una tecla rápida duplicada [%s] a la función stroke!\n"
 
-#: noweb/g_rc.nw:1021
+#: noweb/g_rc.nw:1022
 #, c-format
 msgid ""
 "A stroke keyword has been found in an rc file, but gschem\n"
@@ -97,40 +97,47 @@ msgstr ""
 "gschem\n"
 "con LibStroke\n"
 
-#: noweb/g_rc.nw:1588
+#: noweb/g_rc.nw:1589
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr ""
 "Número de niveles [%d] no válidos especificados a la función undo-levels\n"
 
-#: noweb/g_rc.nw:1876
+#: noweb/g_rc.nw:1877
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Tamaño no válido [%d] especificado a la función bus-ripper-size\n"
 
-#: noweb/g_rc.nw:1970
+#: noweb/g_rc.nw:1971
 #, c-format
 msgid "Invalid dot size [%d] passed to grid-dot-size\n"
 msgstr ""
 "Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
 
-#: noweb/g_rc.nw:2021
+#: noweb/g_rc.nw:2022
 #, fuzzy, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
 msgstr ""
 "Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
 
-#: noweb/g_rc.nw:2053
+#: noweb/g_rc.nw:2054
 #, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
 msgstr ""
 "Se ha especificado un número no válido de líneas [%d] a la función output-"
 "vector-threshold\n"
 
-#: noweb/g_rc.nw:2084
+#: noweb/g_rc.nw:2085
 #, fuzzy, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Se ha especificado un tamaño no válido [%d] a la función text-size\n"
+
+#: noweb/g_rc.nw:2114
+#, fuzzy, c-format
+msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
+msgstr ""
+"Se ha especificado un número no válido de líneas [%d] a la función output-"
+"vector-threshold\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -278,37 +285,37 @@ msgstr "Modo Arco"
 msgid "Pin Mode"
 msgstr "Modo Pin"
 
-#: noweb/i_basic.nw:208 noweb/i_callbacks.nw:1013 noweb/i_callbacks.nw:1037
+#: noweb/i_basic.nw:208 noweb/i_callbacks.nw:1014 noweb/i_callbacks.nw:1038
 #: noweb/x_window.nw:782
 msgid "Copy"
 msgstr "Copiar"
 
-#: noweb/i_basic.nw:210 noweb/i_callbacks.nw:1061 noweb/i_callbacks.nw:1085
+#: noweb/i_basic.nw:210 noweb/i_callbacks.nw:1062 noweb/i_callbacks.nw:1086
 #: noweb/x_window.nw:767
 msgid "Move"
 msgstr "Mover"
 
-#: noweb/i_basic.nw:248
+#: noweb/i_basic.nw:250
 msgid "Snap Off"
 msgstr "Desactivado el ajuste a la rejilla"
 
-#: noweb/i_basic.nw:254
+#: noweb/i_basic.nw:256
 msgid "Show Hidden"
 msgstr "Mostrar ocultos"
 
-#: noweb/i_basic.nw:360 noweb/x_window.nw:935
+#: noweb/i_basic.nw:367 noweb/x_window.nw:935
 msgid "Action"
 msgstr "Acción"
 
-#: noweb/i_basic.nw:368 noweb/x_window.nw:930
+#: noweb/i_basic.nw:375 noweb/x_window.nw:930
 msgid "Stroke"
 msgstr "Gesto"
 
-#: noweb/i_basic.nw:375 noweb/x_window.nw:932
+#: noweb/i_basic.nw:382 noweb/x_window.nw:932
 msgid "none"
 msgstr "ninguno"
 
-#: noweb/i_basic.nw:382
+#: noweb/i_basic.nw:389
 msgid "Repeat/"
 msgstr "Repetir/"
 
@@ -349,12 +356,12 @@ msgstr "Guardado [%s]\n"
 msgid "Saved"
 msgstr "Guardado"
 
-#: noweb/i_callbacks.nw:620 noweb/x_fileselect.nw:882
+#: noweb/i_callbacks.nw:620 noweb/x_fileselect.nw:888
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "NO se ha podido guardar [%s]\n"
 
-#: noweb/i_callbacks.nw:622 noweb/x_fileselect.nw:883
+#: noweb/i_callbacks.nw:622 noweb/x_fileselect.nw:889
 msgid "Error while trying to save"
 msgstr "Error al intentar guardar"
 
@@ -366,78 +373,78 @@ msgstr "No se ha podido guardar todo"
 msgid "Saved All"
 msgstr "Guardado todo"
 
-#: noweb/i_callbacks.nw:772 noweb/i_callbacks.nw:775
+#: noweb/i_callbacks.nw:773 noweb/i_callbacks.nw:776
 #, c-format
 msgid "libgdgeda not installed or disabled, so this feature is disabled\n"
 msgstr ""
 "La librería libgdgeda no está instalada o ha sido deshabilitada, así que "
 "esta opción está deshabilitada\n"
 
-#: noweb/i_callbacks.nw:828
+#: noweb/i_callbacks.nw:829
 msgid "Closing Window\n"
 msgstr "Cerrando ventana\n"
 
-#: noweb/i_callbacks.nw:1017 noweb/i_callbacks.nw:1065
+#: noweb/i_callbacks.nw:1018 noweb/i_callbacks.nw:1066
 msgid "Select objs first"
 msgstr "Antes seleccione objetos"
 
-#: noweb/i_callbacks.nw:1109 noweb/rcstrings.nw:25 noweb/x_attribedit.nw:572
-#: noweb/x_attribedit.nw:774 noweb/x_window.nw:797
+#: noweb/i_callbacks.nw:1110 noweb/rcstrings.nw:25 noweb/x_attribedit.nw:577
+#: noweb/x_attribedit.nw:779 noweb/x_multiattrib.nw:1427 noweb/x_window.nw:797
 msgid "Delete"
 msgstr "Borrar"
 
-#: noweb/i_callbacks.nw:1138 noweb/rcstrings.nw:17 noweb/x_window.nw:752
+#: noweb/i_callbacks.nw:1139 noweb/rcstrings.nw:17 noweb/x_window.nw:752
 msgid "Edit"
 msgstr "Editar"
 
-#: noweb/i_callbacks.nw:1159 noweb/x_dialog.nw:931 noweb/x_dialog.nw:936
+#: noweb/i_callbacks.nw:1160 noweb/x_dialog.nw:934 noweb/x_dialog.nw:939
 msgid "Edit Text"
 msgstr "Editar texto"
 
-#: noweb/i_callbacks.nw:1187
+#: noweb/i_callbacks.nw:1188
 msgid "Slot"
 msgstr "Elemento"
 
-#: noweb/i_callbacks.nw:1209
+#: noweb/i_callbacks.nw:1210
 msgid "Color"
 msgstr "Color"
 
-#: noweb/i_callbacks.nw:1232 noweb/i_callbacks.nw:1256 noweb/x_window.nw:812
+#: noweb/i_callbacks.nw:1233 noweb/i_callbacks.nw:1257 noweb/x_window.nw:812
 msgid "Rotate"
 msgstr "Rotar"
 
-#: noweb/i_callbacks.nw:1282 noweb/i_callbacks.nw:1306 noweb/x_window.nw:827
+#: noweb/i_callbacks.nw:1283 noweb/i_callbacks.nw:1307 noweb/x_window.nw:827
 msgid "Mirror"
 msgstr "Voltear"
 
-#: noweb/i_callbacks.nw:1335 noweb/rcstrings.nw:30
+#: noweb/i_callbacks.nw:1336 noweb/rcstrings.nw:30
 msgid "Lock"
 msgstr "Fijar"
 
-#: noweb/i_callbacks.nw:1359 noweb/rcstrings.nw:31
+#: noweb/i_callbacks.nw:1360 noweb/rcstrings.nw:31
 msgid "Unlock"
 msgstr "Desfijar"
 
-#: noweb/i_callbacks.nw:1382 noweb/x_dialog.nw:2443
+#: noweb/i_callbacks.nw:1383 noweb/x_dialog.nw:2458
 msgid "Translate"
 msgstr "Mover"
 
-#: noweb/i_callbacks.nw:1385
+#: noweb/i_callbacks.nw:1386
 msgid "WARNING: Do not translate with snap off!\n"
 msgstr ""
 "ADVERTENCIA: ¡No mueva objetos con el ajuste a la rejilla desactivado!\n"
 
-#: noweb/i_callbacks.nw:1386
+#: noweb/i_callbacks.nw:1387
 msgid "WARNING: Turning snap on and continuing with translate.\n"
 msgstr ""
 "ADVERTENCIA: Activando el ajuste a la rejilla y continuando con el "
 "movimiento.\n"
 
-#: noweb/i_callbacks.nw:1393
+#: noweb/i_callbacks.nw:1394
 msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "ADVERTENCIA: ¡El tamaño de la rejilla no es 100!\n"
 
-#: noweb/i_callbacks.nw:1395
+#: noweb/i_callbacks.nw:1396
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
@@ -445,238 +452,243 @@ msgstr ""
 "ADVERTENCIA: Si está moviendo un símbolo al origen, el tamaño de la "
 "rejilladebe ser de 100\n"
 
-#: noweb/i_callbacks.nw:1420
+#: noweb/i_callbacks.nw:1421
 msgid "Embed"
 msgstr "Incrustar"
 
-#: noweb/i_callbacks.nw:1459
+#: noweb/i_callbacks.nw:1461
 msgid "Unembed"
 msgstr "Desincrustar"
 
-#: noweb/i_callbacks.nw:1498
+#: noweb/i_callbacks.nw:1501
 msgid "Update"
 msgstr "Actualizar"
 
-#: noweb/i_callbacks.nw:1544
+#: noweb/i_callbacks.nw:1547
 msgid "ShowHidden"
 msgstr "Mostrar ocultos"
 
-#: noweb/i_callbacks.nw:1572
+#: noweb/i_callbacks.nw:1575
 msgid "MakeVisible"
 msgstr "Hacer visible"
 
-#: noweb/i_callbacks.nw:1710
+#: noweb/i_callbacks.nw:1713
 msgid "Edit Line Type"
 msgstr "Editar tipo de línea"
 
-#: noweb/i_callbacks.nw:1756 noweb/x_dialog.nw:1806
+#: noweb/i_callbacks.nw:1759 noweb/x_dialog.nw:1821
 msgid "Edit Fill Type"
 msgstr "Editar tipo de relleno"
 
-#: noweb/i_callbacks.nw:1985 noweb/i_callbacks.nw:2005 noweb/rcstrings.nw:60
+#: noweb/i_callbacks.nw:1988 noweb/i_callbacks.nw:2008 noweb/rcstrings.nw:60
 msgid "Pan"
 msgstr "Abarcar"
 
-#: noweb/i_callbacks.nw:2043
+#: noweb/i_callbacks.nw:2046
 msgid "Update Cues"
 msgstr "Actualizar entradas"
 
-#: noweb/i_callbacks.nw:2189
+#: noweb/i_callbacks.nw:2192
 #, c-format
 msgid "New Page created [%s]\n"
 msgstr "Se ha creado una página nueva [%s]\n"
 
-#: noweb/i_callbacks.nw:2226 noweb/i_callbacks.nw:2245
-#: noweb/i_callbacks.nw:2265 noweb/i_callbacks.nw:2291
-#: noweb/i_callbacks.nw:2408
+#: noweb/i_callbacks.nw:2229 noweb/i_callbacks.nw:2248
+#: noweb/i_callbacks.nw:2268 noweb/i_callbacks.nw:2294
+#: noweb/i_callbacks.nw:2411
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
 
-#: noweb/i_callbacks.nw:2427 noweb/i_callbacks.nw:2447
-#: noweb/i_callbacks.nw:2473
+#: noweb/i_callbacks.nw:2338
+#, fuzzy
+msgid "Really revert page?"
+msgstr "Recargar página"
+
+#: noweb/i_callbacks.nw:2430 noweb/i_callbacks.nw:2450
+#: noweb/i_callbacks.nw:2476
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Descartando página [%s]\n"
 
-#: noweb/i_callbacks.nw:2523
+#: noweb/i_callbacks.nw:2526
 msgid "Copy 1"
 msgstr "Copiar 1"
 
-#: noweb/i_callbacks.nw:2546
+#: noweb/i_callbacks.nw:2549
 msgid "Copy 2"
 msgstr "Copiar 2"
 
-#: noweb/i_callbacks.nw:2569
+#: noweb/i_callbacks.nw:2572
 msgid "Copy 3"
 msgstr "Copiar 3"
 
-#: noweb/i_callbacks.nw:2592
+#: noweb/i_callbacks.nw:2595
 msgid "Copy 4"
 msgstr "Copiar 4"
 
-#: noweb/i_callbacks.nw:2615
+#: noweb/i_callbacks.nw:2618
 msgid "Copy 5"
 msgstr "Copiar 5"
 
-#: noweb/i_callbacks.nw:2638
+#: noweb/i_callbacks.nw:2641
 msgid "Cut 1"
 msgstr "Cortar 1"
 
-#: noweb/i_callbacks.nw:2661
+#: noweb/i_callbacks.nw:2664
 msgid "Cut 2"
 msgstr "Cortar 2"
 
-#: noweb/i_callbacks.nw:2684
+#: noweb/i_callbacks.nw:2687
 msgid "Cut 3"
 msgstr "Cortar 3"
 
-#: noweb/i_callbacks.nw:2707
+#: noweb/i_callbacks.nw:2710
 msgid "Cut 4"
 msgstr "Cortar 4"
 
-#: noweb/i_callbacks.nw:2730
+#: noweb/i_callbacks.nw:2733
 msgid "Cut 5"
 msgstr "Cortar 5"
 
-#: noweb/i_callbacks.nw:2750
+#: noweb/i_callbacks.nw:2753
 msgid "Paste 1"
 msgstr "Pegar 1"
 
-#: noweb/i_callbacks.nw:2758 noweb/i_callbacks.nw:2786
-#: noweb/i_callbacks.nw:2814 noweb/i_callbacks.nw:2842
-#: noweb/i_callbacks.nw:2870
+#: noweb/i_callbacks.nw:2761 noweb/i_callbacks.nw:2789
+#: noweb/i_callbacks.nw:2817 noweb/i_callbacks.nw:2845
+#: noweb/i_callbacks.nw:2873
 msgid "Empty buffer"
 msgstr "Buffer vacío"
 
-#: noweb/i_callbacks.nw:2778
+#: noweb/i_callbacks.nw:2781
 msgid "Paste 2"
 msgstr "Pegar 2"
 
-#: noweb/i_callbacks.nw:2806
+#: noweb/i_callbacks.nw:2809
 msgid "Paste 3"
 msgstr "Pegar 3"
 
-#: noweb/i_callbacks.nw:2834
+#: noweb/i_callbacks.nw:2837
 msgid "Paste 4"
 msgstr "Pegar 4"
 
-#: noweb/i_callbacks.nw:2862
+#: noweb/i_callbacks.nw:2865
 msgid "Paste 5"
 msgstr "Pegar 5"
 
-#: noweb/i_callbacks.nw:3036 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Componente"
 
-#: noweb/i_callbacks.nw:3082 noweb/i_callbacks.nw:3107
-#: noweb/x_attribedit.nw:439
+#: noweb/i_callbacks.nw:3085 noweb/i_callbacks.nw:3110
+#: noweb/x_attribedit.nw:444
 msgid "Attribute"
 msgstr "Propiedad"
 
-#: noweb/i_callbacks.nw:3133 noweb/i_callbacks.nw:3160 noweb/rcstrings.nw:78
+#: noweb/i_callbacks.nw:3136 noweb/i_callbacks.nw:3163 noweb/rcstrings.nw:78
 msgid "Net"
 msgstr "Conexión"
 
-#: noweb/i_callbacks.nw:3213 noweb/i_callbacks.nw:3241 noweb/rcstrings.nw:79
+#: noweb/i_callbacks.nw:3216 noweb/i_callbacks.nw:3244 noweb/rcstrings.nw:79
 #: noweb/x_window.nw:703
 msgid "Bus"
 msgstr "Bus"
 
-#: noweb/i_callbacks.nw:3339 noweb/i_callbacks.nw:3363 noweb/rcstrings.nw:82
+#: noweb/i_callbacks.nw:3342 noweb/i_callbacks.nw:3366 noweb/rcstrings.nw:82
 msgid "Line"
 msgstr "Línea"
 
-#: noweb/i_callbacks.nw:3390 noweb/i_callbacks.nw:3414 noweb/rcstrings.nw:83
+#: noweb/i_callbacks.nw:3393 noweb/i_callbacks.nw:3417 noweb/rcstrings.nw:83
 msgid "Box"
 msgstr "Rectángulo"
 
-#: noweb/i_callbacks.nw:3484 noweb/i_callbacks.nw:3509 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
 msgid "Circle"
 msgstr "Círculo"
 
-#: noweb/i_callbacks.nw:3536 noweb/i_callbacks.nw:3560 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
 msgid "Arc"
 msgstr "Arco"
 
-#: noweb/i_callbacks.nw:3587 noweb/i_callbacks.nw:3611 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
 msgid "Pin"
 msgstr "Pin"
 
-#: noweb/i_callbacks.nw:3682
+#: noweb/i_callbacks.nw:3685
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Buscando origen [%s]\n"
 
-#: noweb/i_callbacks.nw:3715 noweb/i_callbacks.nw:3718 noweb/o_misc.nw:1235
-#: noweb/o_misc.nw:1238
+#: noweb/i_callbacks.nw:3718 noweb/i_callbacks.nw:3721 noweb/o_misc.nw:1267
+#: noweb/o_misc.nw:1270
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "No se ha podido encontrar la fuente [%s]\n"
 
-#: noweb/i_callbacks.nw:3819
+#: noweb/i_callbacks.nw:3822
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Buscando símbolo [%s]\n"
 
-#: noweb/i_callbacks.nw:3946 noweb/rcstrings.nw:96
+#: noweb/i_callbacks.nw:3949 noweb/rcstrings.nw:96
 msgid "Attach"
 msgstr "Adjuntar"
 
-#: noweb/i_callbacks.nw:4000
+#: noweb/i_callbacks.nw:4003
 msgid "Detach"
 msgstr "No adjuntar"
 
-#: noweb/i_callbacks.nw:4045
+#: noweb/i_callbacks.nw:4048
 msgid "ShowN"
 msgstr "Mostrar nombre"
 
-#: noweb/i_callbacks.nw:4081
+#: noweb/i_callbacks.nw:4084
 msgid "ShowV"
 msgstr "Mostrar valor"
 
-#: noweb/i_callbacks.nw:4117
+#: noweb/i_callbacks.nw:4120
 msgid "ShowB"
 msgstr "Mostrar ambos"
 
-#: noweb/i_callbacks.nw:4154
+#: noweb/i_callbacks.nw:4157
 msgid "VisToggle"
 msgstr "Cambiar visibilidad"
 
-#: noweb/i_callbacks.nw:4180
+#: noweb/i_callbacks.nw:4183
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Disculpe. Esta opción del menú no funciona\n"
 
-#: noweb/i_callbacks.nw:4244
+#: noweb/i_callbacks.nw:4247
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr ""
 
-#: noweb/i_callbacks.nw:4247
+#: noweb/i_callbacks.nw:4250
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr ""
 
-#: noweb/i_callbacks.nw:4269
+#: noweb/i_callbacks.nw:4272
 msgid "Grid OFF\n"
 msgstr "Rejilla DESACTIVADA\n"
 
-#: noweb/i_callbacks.nw:4272
+#: noweb/i_callbacks.nw:4275
 msgid "Grid ON\n"
 msgstr "Rejilla ACTIVADA\n"
 
-#: noweb/i_callbacks.nw:4294
+#: noweb/i_callbacks.nw:4297
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "¡PRECAUCIÓN!: Ajuste a la rejilla DESACTIVADO \n"
 
-#: noweb/i_callbacks.nw:4297
+#: noweb/i_callbacks.nw:4300
 msgid "Snap ON\n"
 msgstr "Ajuste a la rejilla ACTIVADO\n"
 
-#: noweb/i_callbacks.nw:4321
+#: noweb/i_callbacks.nw:4324
 msgid "Rubber band OFF \n"
 msgstr ""
 
-#: noweb/i_callbacks.nw:4324
+#: noweb/i_callbacks.nw:4327
 msgid "Rubber band ON\n"
 msgstr ""
 
@@ -755,7 +767,7 @@ msgstr ""
 "Se ha recibido un parámetro no válido (\"whichone\") en la función "
 "o_bus_draw_xor_single\n"
 
-#: noweb/o_bus.nw:344 noweb/o_bus.nw:378 noweb/o_net.nw:388 noweb/o_net.nw:422
+#: noweb/o_bus.nw:344 noweb/o_bus.nw:378 noweb/o_net.nw:391 noweb/o_net.nw:425
 #, c-format
 msgid "selected a nonexistant object!\n"
 msgstr "¡Seleccionado un objeto que no existe!\n"
@@ -816,30 +828,35 @@ msgstr "Final de línea desconocido (%d)\n"
 msgid "Unknown type for line (%d) !\n"
 msgstr "Tipo de línea desconocido (%d)\n"
 
-#: noweb/o_misc.nw:125
+#: noweb/o_misc.nw:129
 #, c-format
 msgid "Got an unexpected NULL in o_edit\n"
 msgstr "Se ha recibido NULL (no esperado) en la función o_edit\n"
 
-#: noweb/o_misc.nw:238
+#: noweb/o_misc.nw:242
 msgid "Object alreadly locked\n"
 msgstr "Objeto previamente fijado\n"
 
-#: noweb/o_misc.nw:282
+#: noweb/o_misc.nw:286
 msgid "Object alreadly unlocked\n"
 msgstr "El objeto no estaba fijado\n"
 
-#: noweb/o_misc.nw:324
+#: noweb/o_misc.nw:328
 #, c-format
 msgid "ERROR: NULL object in o_rotate_90!\n"
 msgstr "ERROR: en la función o_rotate_90, ¡el objeto es NULL!\n"
 
-#: noweb/o_misc.nw:553
+#: noweb/o_misc.nw:557
 #, c-format
 msgid "Component [%s] has been embedded\n"
 msgstr "Se ha incrustado el componente [%s]\n"
 
-#: noweb/o_misc.nw:590
+#: noweb/o_misc.nw:570
+#, fuzzy, c-format
+msgid "Picture [%s] has been embedded\n"
+msgstr "Se ha incrustado el componente [%s]\n"
+
+#: noweb/o_misc.nw:608
 #, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
@@ -848,38 +865,53 @@ msgstr ""
 "No se ha podido encontrar el componente [%s] al intentar desincrustar. El "
 "componente todavía está incrustado.\n"
 
-#: noweb/o_misc.nw:601 noweb/o_misc.nw:1590
+#: noweb/o_misc.nw:619 noweb/o_misc.nw:1622
 #, c-format
 msgid "More than one component found with name [%s]\n"
 msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
 
-#: noweb/o_misc.nw:609
+#: noweb/o_misc.nw:627
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "El componente [%s] se ha desincrustado satisfactoriamente\n"
 
-#: noweb/o_misc.nw:652
+#: noweb/o_misc.nw:642
+#, fuzzy, c-format
+msgid "Picture [%s] has been unembedded\n"
+msgstr "Se ha incrustado el componente [%s]\n"
+
+#: noweb/o_misc.nw:684
 #, c-format
 msgid "ERROR: NULL object in o_mirror!\n"
 msgstr "ERROR: en la función o_mirror, ¡el objeto es NULL!\n"
 
-#: noweb/o_misc.nw:901
+#: noweb/o_misc.nw:933
 msgid "Hidden text is now visible\n"
 msgstr "El texto oculto es ahora visible\n"
 
-#: noweb/o_misc.nw:903
+#: noweb/o_misc.nw:935
 msgid "Hidden text is now invisible\n"
 msgstr "El texto oculto es ahora invisible\n"
 
-#: noweb/o_misc.nw:1585
+#: noweb/o_misc.nw:1617
 msgid "Could not unembedded component, could not find appropriate .sym file\n"
 msgstr ""
 "No se puede desincrustar el componente, no se ha podido encontrar el "
 "fichero .sym correspondiente\n"
 
-#: noweb/o_misc.nw:1586
+#: noweb/o_misc.nw:1618
 msgid "Component still embedded and not updated\n"
 msgstr "El componente todavía está incrustado y no actualizado\n"
+
+#: noweb/o_misc.nw:1755
+#, c-format
+msgid "o_autosave_backups: Can't get the real filename of %s."
+msgstr ""
+
+#: noweb/o_misc.nw:1797
+#, fuzzy, c-format
+msgid "Could NOT save backup file [%s]\n"
+msgstr "NO se ha podido guardar [%s]\n"
 
 #: noweb/o_move.nw:259
 #, c-format
@@ -907,22 +939,43 @@ msgstr ""
 "Se ha recibido un parámetro no válido (\"whichone\") en la función "
 "o_net_draw_xor_single\n"
 
-#: noweb/o_net.nw:891 noweb/o_net.nw:928 noweb/o_net.nw:999
-#: noweb/o_net.nw:1035
+#: noweb/o_net.nw:1016 noweb/o_net.nw:1053 noweb/o_net.nw:1124
+#: noweb/o_net.nw:1160
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Se ha intentado añadir más de dos conexiones a bus. Error interno de "
 "gschem.\n"
 
-#: noweb/o_net.nw:1105
+#: noweb/o_net.nw:1230
 #, c-format
 msgid "Could not find %s in any component-library\n"
 msgstr "No se ha encontrado %s en ninguna librería de componentes\n"
 
+#: noweb/o_picture.nw:234 noweb/o_picture.nw:411
+#, fuzzy, c-format
+msgid "Failed to load picture: %s"
+msgstr "Fallo al leer fichero de inicialización scm [%s]\n"
+
 #: noweb/o_picture.nw:253
 msgid "Picture"
 msgstr "Imagen"
+
+#: noweb/o_picture.nw:301
+msgid "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
+msgstr ""
+
+#: noweb/o_picture.nw:302 noweb/x_attribedit.nw:546 noweb/x_dialog.nw:1023
+#: noweb/x_dialog.nw:1424 noweb/x_dialog.nw:1905 noweb/x_dialog.nw:2132
+#: noweb/x_dialog.nw:2311 noweb/x_dialog.nw:2481 noweb/x_dialog.nw:2656
+#: noweb/x_dialog.nw:2831 noweb/x_dialog.nw:3016 noweb/x_dialog.nw:4120
+#: noweb/x_dialog.nw:4434 noweb/x_dialog.nw:4565
+msgid "OK"
+msgstr "Aceptar"
+
+#: noweb/o_picture.nw:324 noweb/o_picture.nw:504
+msgid "Please select a picture file."
+msgstr ""
 
 #: noweb/o_picture.nw:437 noweb/x_attribedit.nw:193
 #, c-format
@@ -950,7 +1003,12 @@ msgstr "El nuevo número de elemento está fuera de rango\n"
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "¡¡Ufff!! ¡se ha intentado editar el elemento de algo que no existe!\n"
 
-#: noweb/o_undo.nw:357
+#: noweb/o_text.nw:194
+#, fuzzy, c-format
+msgid "Tried to render text with an invalid angle: %d\n"
+msgstr "Se ha intentado obtener un color no válido: %d\n"
+
+#: noweb/o_undo.nw:378
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "¡Deshacer/Rehacer deshabilitado en el fichero rc!\n"
 
@@ -981,15 +1039,15 @@ msgstr "Archivo"
 msgid "New Window"
 msgstr "Nueva ventana"
 
-#: noweb/rcstrings.nw:4
+#: noweb/rcstrings.nw:4 noweb/x_pagesel.nw:501
 msgid "New Page"
 msgstr "Nueva página"
 
-#: noweb/rcstrings.nw:5
+#: noweb/rcstrings.nw:5 noweb/x_pagesel.nw:502
 msgid "Open Page..."
 msgstr "Abrir página"
 
-#: noweb/rcstrings.nw:6
+#: noweb/rcstrings.nw:6 noweb/x_pagesel.nw:505
 msgid "Close Page"
 msgstr "Cerrar página"
 
@@ -997,7 +1055,7 @@ msgstr "Cerrar página"
 msgid "Revert Page"
 msgstr "Recargar página"
 
-#: noweb/rcstrings.nw:8
+#: noweb/rcstrings.nw:8 noweb/x_pagesel.nw:504
 msgid "Save Page"
 msgstr "Guardar página"
 
@@ -1070,11 +1128,13 @@ msgid "Symbol Translate..."
 msgstr "Mover símbolo..."
 
 #: noweb/rcstrings.nw:35
-msgid "Embed Component"
+#, fuzzy
+msgid "Embed Component/Picture"
 msgstr "Incrustar componente"
 
 #: noweb/rcstrings.nw:36
-msgid "Unembed Component"
+#, fuzzy
+msgid "Unembed Component/Picture"
 msgstr "Desincrustar componente"
 
 #: noweb/rcstrings.nw:37
@@ -1201,9 +1261,9 @@ msgstr "Nuevo"
 msgid "Revert"
 msgstr "Recargar"
 
-#: noweb/rcstrings.nw:73 noweb/x_dialog.nw:601 noweb/x_dialog.nw:3150
-#: noweb/x_dialog.nw:3307 noweb/x_dialog.nw:3663 noweb/x_dialog.nw:3867
-#: noweb/x_fileselect.nw:2464 noweb/x_image.nw:488
+#: noweb/rcstrings.nw:73 noweb/x_dialog.nw:601 noweb/x_dialog.nw:3165
+#: noweb/x_dialog.nw:3322 noweb/x_dialog.nw:3705 noweb/x_dialog.nw:3909
+#: noweb/x_fileselect.nw:2495 noweb/x_image.nw:544
 msgid "Close"
 msgstr "Cerrar"
 
@@ -1327,11 +1387,11 @@ msgstr "Mostrar ventana de registro..."
 msgid "Show Coord Window..."
 msgstr "Mostrar ventana de coordenadas..."
 
-#: noweb/rcstrings.nw:117 noweb/x_menus.nw:299
+#: noweb/rcstrings.nw:117 noweb/x_menus.nw:297
 msgid "Help"
 msgstr "Ayuda"
 
-#: noweb/rcstrings.nw:118 noweb/x_dialog.nw:3106
+#: noweb/rcstrings.nw:118 noweb/x_dialog.nw:3121
 msgid "About..."
 msgstr "Acerca de..."
 
@@ -1339,7 +1399,7 @@ msgstr "Acerca de..."
 msgid "Manual..."
 msgstr "Manual..."
 
-#: noweb/rcstrings.nw:120 noweb/x_dialog.nw:3803
+#: noweb/rcstrings.nw:120 noweb/x_dialog.nw:3845
 msgid "Hotkeys..."
 msgstr "Teclas rápidas..."
 
@@ -1349,94 +1409,86 @@ msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 "Se ha recibido una opción de mostrar no válida; mostrando ambos por defecto\n"
 
-#: noweb/x_attribedit.nw:422 noweb/x_attribedit.nw:729
+#: noweb/x_attribedit.nw:427 noweb/x_attribedit.nw:734
 msgid "Single Attribute Editor"
 msgstr "Editor de una única propiedad"
 
-#: noweb/x_attribedit.nw:458 noweb/x_attribedit.nw:524
+#: noweb/x_attribedit.nw:463 noweb/x_attribedit.nw:529
 #: noweb/x_multiattrib.nw:403
 msgid "Value"
 msgstr "Valor"
 
-#: noweb/x_attribedit.nw:469 noweb/x_attribedit.nw:842
+#: noweb/x_attribedit.nw:474 noweb/x_attribedit.nw:847
 #: noweb/x_multiattrib.nw:538
 msgid "Visible"
 msgstr "Visible"
 
-#: noweb/x_attribedit.nw:486 noweb/x_attribedit.nw:915
+#: noweb/x_attribedit.nw:491 noweb/x_attribedit.nw:920
 msgid "All"
 msgstr "Todo"
 
-#: noweb/x_attribedit.nw:492
+#: noweb/x_attribedit.nw:497
 msgid "Comps"
 msgstr "Componentes"
 
-#: noweb/x_attribedit.nw:498 noweb/x_attribedit.nw:933 noweb/x_window.nw:688
+#: noweb/x_attribedit.nw:503 noweb/x_attribedit.nw:938 noweb/x_window.nw:688
 msgid "Nets"
 msgstr "Conexiones"
 
-#: noweb/x_attribedit.nw:504 noweb/x_attribedit.nw:941
+#: noweb/x_attribedit.nw:509 noweb/x_attribedit.nw:946
 msgid "Replace"
 msgstr "Reemplazar"
 
-#: noweb/x_attribedit.nw:518 noweb/x_multiattrib.nw:379
+#: noweb/x_attribedit.nw:523 noweb/x_multiattrib.nw:379
 msgid "Name"
 msgstr "Nombre"
 
-#: noweb/x_attribedit.nw:530
+#: noweb/x_attribedit.nw:535
 msgid "Both"
 msgstr "Ambos"
 
-#: noweb/x_attribedit.nw:541 noweb/x_dialog.nw:1008 noweb/x_dialog.nw:1409
-#: noweb/x_dialog.nw:1890 noweb/x_dialog.nw:2117 noweb/x_dialog.nw:2296
-#: noweb/x_dialog.nw:2466 noweb/x_dialog.nw:2641 noweb/x_dialog.nw:2816
-#: noweb/x_dialog.nw:3001 noweb/x_dialog.nw:4078 noweb/x_dialog.nw:4392
-#: noweb/x_dialog.nw:4523
-msgid "OK"
-msgstr "Aceptar"
-
-#: noweb/x_attribedit.nw:561 noweb/x_dialog.nw:586 noweb/x_dialog.nw:3648
-#: noweb/x_fileselect.nw:2398
+#: noweb/x_attribedit.nw:566 noweb/x_dialog.nw:586 noweb/x_dialog.nw:3690
+#: noweb/x_fileselect.nw:2429
 msgid "Apply"
 msgstr "Aplicar"
 
-#: noweb/x_attribedit.nw:582 noweb/x_attribedit.nw:788 noweb/x_dialog.nw:1023
-#: noweb/x_dialog.nw:1423 noweb/x_dialog.nw:1904 noweb/x_dialog.nw:2128
-#: noweb/x_dialog.nw:2311 noweb/x_dialog.nw:2480 noweb/x_dialog.nw:2656
-#: noweb/x_dialog.nw:2831 noweb/x_dialog.nw:3016 noweb/x_fileselect.nw:2420
-#: noweb/x_fileselect.nw:2443 noweb/x_print.nw:487
+#: noweb/x_attribedit.nw:587 noweb/x_attribedit.nw:793 noweb/x_dialog.nw:1038
+#: noweb/x_dialog.nw:1438 noweb/x_dialog.nw:1919 noweb/x_dialog.nw:2143
+#: noweb/x_dialog.nw:2326 noweb/x_dialog.nw:2495 noweb/x_dialog.nw:2671
+#: noweb/x_dialog.nw:2846 noweb/x_dialog.nw:3031 noweb/x_fileselect.nw:2451
+#: noweb/x_fileselect.nw:2474 noweb/x_print.nw:487
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: noweb/x_attribedit.nw:800
+#: noweb/x_attribedit.nw:805
 msgid "Add/Edit Attribute"
 msgstr "Añadir/Editar propiedad"
 
-#: noweb/x_attribedit.nw:853 noweb/x_multiattrib.nw:513
+#: noweb/x_attribedit.nw:858 noweb/x_multiattrib.nw:513
 msgid "Value:"
 msgstr "Valor:"
 
-#: noweb/x_attribedit.nw:863 noweb/x_multiattrib.nw:494
+#: noweb/x_attribedit.nw:868 noweb/x_multiattrib.nw:494
 msgid "Name:"
 msgstr "Nombre:"
 
-#: noweb/x_attribedit.nw:885
+#: noweb/x_attribedit.nw:890
 msgid "Show Value Only"
 msgstr "Mostrar sólo valor"
 
-#: noweb/x_attribedit.nw:888
+#: noweb/x_attribedit.nw:893
 msgid "Show Name Only"
 msgstr "Mostrar sólo nombre"
 
-#: noweb/x_attribedit.nw:891 noweb/x_multiattrib.nw:674
+#: noweb/x_attribedit.nw:896 noweb/x_multiattrib.nw:674
 msgid "Show Name & Value"
 msgstr "Mostrar nombre y valor"
 
-#: noweb/x_attribedit.nw:898
+#: noweb/x_attribedit.nw:903
 msgid "Multiple Attach"
 msgstr "Asociado múltiple"
 
-#: noweb/x_attribedit.nw:924 noweb/x_fileselect.nw:2228
+#: noweb/x_attribedit.nw:929 noweb/x_fileselect.nw:2259
 msgid "Components"
 msgstr "Componentes"
 
@@ -1517,64 +1569,110 @@ msgstr "Abajo en el centro"
 msgid "Upper Right"
 msgstr "Arriba a la derecha"
 
-#: noweb/x_dialog.nw:973
+#: noweb/x_dialog.nw:976
+#, fuzzy
+msgid "Edit Text Color"
+msgstr "Editar texto"
+
+#: noweb/x_dialog.nw:988
 msgid "Edit Text Size"
 msgstr "Editar el tamaño del texto"
 
-#: noweb/x_dialog.nw:989
+#: noweb/x_dialog.nw:1004
 msgid "Edit Text Alignment"
 msgstr "Editar la alineación del texto"
 
-#: noweb/x_dialog.nw:1247 noweb/x_dialog.nw:1249 noweb/x_dialog.nw:1251
-#: noweb/x_dialog.nw:1458 noweb/x_dialog.nw:1459 noweb/x_dialog.nw:1460
-#: noweb/x_dialog.nw:1468 noweb/x_dialog.nw:1689 noweb/x_dialog.nw:1691
-#: noweb/x_dialog.nw:1693 noweb/x_dialog.nw:1695 noweb/x_dialog.nw:1697
-#: noweb/x_dialog.nw:1943 noweb/x_dialog.nw:1944 noweb/x_dialog.nw:1945
-#: noweb/x_dialog.nw:1946 noweb/x_dialog.nw:1947 noweb/x_dialog.nw:1955
+#: noweb/x_dialog.nw:1098
+#, fuzzy
+msgid "Solid"
+msgstr "Mundo"
+
+#: noweb/x_dialog.nw:1099
+#, fuzzy
+msgid "Dotted"
+msgstr "Rotar"
+
+#: noweb/x_dialog.nw:1100
+msgid "Dashed"
+msgstr ""
+
+#: noweb/x_dialog.nw:1101
+msgid "Center"
+msgstr ""
+
+#: noweb/x_dialog.nw:1102
+#, fuzzy
+msgid "Phantom"
+msgstr "Abarcar"
+
+#: noweb/x_dialog.nw:1262 noweb/x_dialog.nw:1264 noweb/x_dialog.nw:1266
+#: noweb/x_dialog.nw:1473 noweb/x_dialog.nw:1474 noweb/x_dialog.nw:1475
+#: noweb/x_dialog.nw:1483 noweb/x_dialog.nw:1704 noweb/x_dialog.nw:1706
+#: noweb/x_dialog.nw:1708 noweb/x_dialog.nw:1710 noweb/x_dialog.nw:1712
+#: noweb/x_dialog.nw:1958 noweb/x_dialog.nw:1959 noweb/x_dialog.nw:1960
+#: noweb/x_dialog.nw:1961 noweb/x_dialog.nw:1962 noweb/x_dialog.nw:1970
 msgid "*unchanged*"
 msgstr "*sin modificar*"
 
-#: noweb/x_dialog.nw:1357
+#: noweb/x_dialog.nw:1372
 msgid "Edit Line Width & Type"
 msgstr "Editar ancho y tipo de línea"
 
-#: noweb/x_dialog.nw:1361 noweb/x_dialog.nw:1824
+#: noweb/x_dialog.nw:1376 noweb/x_dialog.nw:1839
 msgid "Line Width"
 msgstr "Ancho de línea"
 
-#: noweb/x_dialog.nw:1375
+#: noweb/x_dialog.nw:1390
 msgid "Line Type"
 msgstr "Tipo de línea"
 
-#: noweb/x_dialog.nw:1389
+#: noweb/x_dialog.nw:1404
 msgid "Line Dash Length"
 msgstr "Longitud de la línea en la discontinuidad"
 
-#: noweb/x_dialog.nw:1399
+#: noweb/x_dialog.nw:1414
 msgid "Line Dash Space"
 msgstr "Espaciado de la discontinuidad"
 
-#: noweb/x_dialog.nw:1810
+#: noweb/x_dialog.nw:1526
+msgid "Hollow"
+msgstr ""
+
+#: noweb/x_dialog.nw:1527
+#, fuzzy
+msgid "Filled"
+msgstr "Archivo"
+
+#: noweb/x_dialog.nw:1528
+msgid "Mesh"
+msgstr ""
+
+#: noweb/x_dialog.nw:1529
+#, fuzzy
+msgid "Hatch"
+msgstr "Desasociar"
+
+#: noweb/x_dialog.nw:1825
 msgid "Fill Type"
 msgstr "Tipo de relleno"
 
-#: noweb/x_dialog.nw:1837
+#: noweb/x_dialog.nw:1852
 msgid "Angle1"
 msgstr "Ángulo 1"
 
-#: noweb/x_dialog.nw:1850
+#: noweb/x_dialog.nw:1865
 msgid "Pitch1"
 msgstr "Separación 1"
 
-#: noweb/x_dialog.nw:1863
+#: noweb/x_dialog.nw:1878
 msgid "Angle2"
 msgstr "Ángulo 2"
 
-#: noweb/x_dialog.nw:1876
+#: noweb/x_dialog.nw:1891
 msgid "Pitch2"
 msgstr "Separación 2"
 
-#: noweb/x_dialog.nw:2100
+#: noweb/x_dialog.nw:2115
 msgid ""
 "There are unsaved schematics!\n"
 "\n"
@@ -1586,19 +1684,19 @@ msgstr ""
 "¿Está seguro?\n"
 "¡Al \"Aceptar\" perderá todos los cambios!"
 
-#: noweb/x_dialog.nw:2259
+#: noweb/x_dialog.nw:2274
 msgid "Arc Params"
 msgstr "Parámetros de arco"
 
-#: noweb/x_dialog.nw:2263
+#: noweb/x_dialog.nw:2278
 msgid "Start Angle"
 msgstr "Ángulo de comienzo"
 
-#: noweb/x_dialog.nw:2278
+#: noweb/x_dialog.nw:2293
 msgid "Degrees of Sweep"
 msgstr "Grados de barrido"
 
-#: noweb/x_dialog.nw:2447
+#: noweb/x_dialog.nw:2462
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1606,41 +1704,41 @@ msgstr ""
 "¿Desplazamiento del movimiento?\n"
 "(0 para el origen)"
 
-#: noweb/x_dialog.nw:2618
+#: noweb/x_dialog.nw:2633
 msgid "Text Size"
 msgstr "Tamaño de texto"
 
-#: noweb/x_dialog.nw:2622
+#: noweb/x_dialog.nw:2637
 msgid "Enter new text size"
 msgstr "Introduzca nuevo tamaño de texto"
 
-#: noweb/x_dialog.nw:2793
+#: noweb/x_dialog.nw:2808
 msgid "Snap Grid"
 msgstr "Rejilla"
 
-#: noweb/x_dialog.nw:2797
+#: noweb/x_dialog.nw:2812
 msgid "Enter new snap grid spacing"
 msgstr "Introduzca el nuevo espaciado de la rejilla"
 
-#: noweb/x_dialog.nw:2905
+#: noweb/x_dialog.nw:2920
 #, c-format
 msgid "String too long... hack!\n"
 msgstr "Cadena muy larga... ¡a programar!\n"
 
-#: noweb/x_dialog.nw:2978 noweb/x_dialog.nw:2982
+#: noweb/x_dialog.nw:2993 noweb/x_dialog.nw:2997
 msgid "Edit slot number"
 msgstr "Editar número de elemento"
 
-#: noweb/x_dialog.nw:3125
+#: noweb/x_dialog.nw:3140
 msgid "gEDA : GPL Electronic Design Automation"
 msgstr "gEDA: Automatización de Diseño Electrónico GPL"
 
-#: noweb/x_dialog.nw:3133
+#: noweb/x_dialog.nw:3148
 #, c-format
 msgid "gschem version %s"
 msgstr "versión de gschem %s"
 
-#: noweb/x_dialog.nw:3141
+#: noweb/x_dialog.nw:3156
 msgid ""
 "Written by:\n"
 "Ales V. Hvezda\n"
@@ -1652,314 +1750,424 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "Y muchos otros (Véase el archivo AUTHORS)"
 
-#: noweb/x_dialog.nw:3257
+#: noweb/x_dialog.nw:3272
 msgid "Coords"
 msgstr "Coordenadas"
 
-#: noweb/x_dialog.nw:3281
+#: noweb/x_dialog.nw:3296
 msgid "Screen"
 msgstr "Pantalla"
 
-#: noweb/x_dialog.nw:3294
+#: noweb/x_dialog.nw:3309
 msgid "World"
 msgstr "Mundo"
 
-#: noweb/x_dialog.nw:3564
+#: noweb/x_dialog.nw:3605
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ERROR: ¡objeto vacío (NULL) en la función color_edit_dialog_apply!\n"
 
-#: noweb/x_dialog.nw:3619
+#: noweb/x_dialog.nw:3661
 msgid "Color Edit"
 msgstr "Editar color"
 
-#: noweb/x_dialog.nw:3765
+#: noweb/x_dialog.nw:3807
 #, c-format
 msgid "Ran out of space in the hotkey buffer...\n"
 msgstr "No hay más espacio para la memoria intermedia de teclas rápidas...\n"
 
-#: noweb/x_dialog.nw:3848
+#: noweb/x_dialog.nw:3890
 msgid "Function : keystroke(s)"
 msgstr "Función : Tecla(s) rápida(s)"
 
-#: noweb/x_dialog.nw:4061
+#: noweb/x_dialog.nw:4103
 msgid "Generic String"
 msgstr "Cadena genérica"
 
-#: noweb/x_dialog.nw:4064
+#: noweb/x_dialog.nw:4106
 msgid "Enter new string."
 msgstr "Introduzca nueva cadena."
 
-#: noweb/x_dialog.nw:4225
+#: noweb/x_dialog.nw:4267
 msgid "Find text"
 msgstr "Encontrar texto"
 
-#: noweb/x_dialog.nw:4228
+#: noweb/x_dialog.nw:4270
 msgid "Text to find:"
 msgstr "Texto a encontrar:"
 
-#: noweb/x_dialog.nw:4242
+#: noweb/x_dialog.nw:4284
 msgid "Find"
 msgstr "Encontrar"
 
-#: noweb/x_dialog.nw:4252
+#: noweb/x_dialog.nw:4294
 msgid "Done"
 msgstr "Hecho"
 
-#: noweb/x_dialog.nw:4263
+#: noweb/x_dialog.nw:4305
 msgid "descend into hierarchy"
 msgstr "Descender en la jerarquía"
 
-#: noweb/x_dialog.nw:4375
+#: noweb/x_dialog.nw:4417
 msgid "Hide text"
 msgstr "Ocultar texto"
 
-#: noweb/x_dialog.nw:4378
+#: noweb/x_dialog.nw:4420
 msgid "Hide text starting with:"
 msgstr "Ocultar texto que comienza por:"
 
-#: noweb/x_dialog.nw:4506
+#: noweb/x_dialog.nw:4548
 msgid "Show text"
 msgstr "Mostrar texto"
 
-#: noweb/x_dialog.nw:4509
+#: noweb/x_dialog.nw:4551
 msgid "Show text starting with:"
 msgstr "Mostrar texto que comienza por:"
 
-#: noweb/x_dialog.nw:4599
+#: noweb/x_dialog.nw:4641
 #, c-format
 msgid "Warning: negative numbers not allowed in the autonumber_text dialog\n"
 msgstr ""
 "Advertencia: no se admiten números negativos en la ventana de autonumeración "
 "de texto\n"
 
-#: noweb/x_dialog.nw:4684
+#: noweb/x_dialog.nw:4726
 msgid "Autonumber text"
 msgstr "Autoenumerar texto"
 
-#: noweb/x_dialog.nw:4690
+#: noweb/x_dialog.nw:4732
 msgid "selection"
 msgstr "Selección"
 
-#: noweb/x_dialog.nw:4699
+#: noweb/x_dialog.nw:4741
 msgid "search text"
 msgstr "Buscar texto"
 
-#: noweb/x_dialog.nw:4723
-msgid "refdes=C"
-msgstr "refdes=C"
-
-#: noweb/x_dialog.nw:4727
+#: noweb/x_dialog.nw:4769
 msgid "search focus"
 msgstr "Ámbito de búsqueda"
 
-#: noweb/x_dialog.nw:4740
+#: noweb/x_dialog.nw:4782
 msgid "selected objects"
 msgstr "objetos seleccionados"
 
-#: noweb/x_dialog.nw:4743
+#: noweb/x_dialog.nw:4785
 msgid "current sheet"
 msgstr "hoja actual"
 
-#: noweb/x_dialog.nw:4746
+#: noweb/x_dialog.nw:4788
 msgid "hierarchical sheets"
 msgstr "hojas jerárquicas"
 
-#: noweb/x_dialog.nw:4758
+#: noweb/x_dialog.nw:4800
 msgid "unnumbered"
 msgstr "sin numerar"
 
-#: noweb/x_dialog.nw:4762
+#: noweb/x_dialog.nw:4804
 msgid "all"
 msgstr "todo"
 
-#: noweb/x_dialog.nw:4771
+#: noweb/x_dialog.nw:4813
 msgid "options"
 msgstr "Opciones"
 
-#: noweb/x_dialog.nw:4778
+#: noweb/x_dialog.nw:4820
 msgid "start number"
 msgstr "Número inicial"
 
-#: noweb/x_dialog.nw:4791
+#: noweb/x_dialog.nw:4833
 msgid "sort order"
 msgstr "Método de ordenación"
 
-#: noweb/x_dialog.nw:4803
+#: noweb/x_dialog.nw:4845
 msgid "file order"
 msgstr "Orden de archivos"
 
-#: noweb/x_dialog.nw:4806
+#: noweb/x_dialog.nw:4848
 msgid "top down"
 msgstr "de arriba a abajo"
 
-#: noweb/x_dialog.nw:4809
+#: noweb/x_dialog.nw:4851
 msgid "left right"
 msgstr "de izquierda a derecha"
 
-#: noweb/x_dialog.nw:4812
+#: noweb/x_dialog.nw:4854
 msgid "diagonal"
 msgstr "diagonal"
 
-#: noweb/x_fileselect.nw:416
+#: noweb/x_fileselect.nw:418
 #, c-format
 msgid "Agg, could not open directory: %s\n"
 msgstr "¡Argg!, no se ha podido abrir la carpeta: %s\n"
 
-#: noweb/x_fileselect.nw:443
+#: noweb/x_fileselect.nw:445
 #, c-format
 msgid "Too many directories! Increase MAX_DIRS\n"
 msgstr "¡Demasiadas carpetas! Aumentar la variable MAX_DIRS\n"
 
-#: noweb/x_fileselect.nw:448
+#: noweb/x_fileselect.nw:450
 #, c-format
 msgid "Too many files! Increase MAX_FILES\n"
 msgstr "¡Demasiados archivos! Aumentar la variable MAX_FILES\n"
 
-#: noweb/x_fileselect.nw:710
+#: noweb/x_fileselect.nw:712
 msgid "sch - Schematics"
 msgstr "sch - Esquemas"
 
-#: noweb/x_fileselect.nw:720
+#: noweb/x_fileselect.nw:722
 msgid "sym - Symbols "
 msgstr "sym - Símbolos"
 
-#: noweb/x_fileselect.nw:730
+#: noweb/x_fileselect.nw:732
 msgid "sym/sch - Schematics and Symbols"
 msgstr "sym/sch - Esquemas y símbolos"
 
-#: noweb/x_fileselect.nw:740
+#: noweb/x_fileselect.nw:742
 msgid "* - All Files"
 msgstr "* - Todos los archivos"
 
-#: noweb/x_fileselect.nw:786
+#: noweb/x_fileselect.nw:788
 #, c-format
 msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
 msgstr ""
 "En la función x_fileselect_preview_checkbox: ¡se ha recibido el parámetro "
 "f_current vacío (NULL)!\n"
 
-#: noweb/x_fileselect.nw:874
+#: noweb/x_fileselect.nw:880
 #, c-format
 msgid "Saved As [%s]\n"
 msgstr "Guardado como [%s]\n"
 
-#: noweb/x_fileselect.nw:900 noweb/x_fileselect.nw:1010
+#: noweb/x_fileselect.nw:906 noweb/x_fileselect.nw:1035
 msgid "Specify a Filename!\n"
 msgstr "¡Hay que especificar un nombre de archivo!\n"
 
-#: noweb/x_fileselect.nw:1295 noweb/x_fileselect.nw:1298
-#: noweb/x_fileselect.nw:2287
+#: noweb/x_fileselect.nw:1327 noweb/x_fileselect.nw:1330
+#: noweb/x_fileselect.nw:2318
 msgid "Search in Files"
 msgstr "Buscar en los archivos"
 
-#: noweb/x_fileselect.nw:1320
+#: noweb/x_fileselect.nw:1352
 msgid "Search in Files - End of list"
 msgstr "Buscar en los archivos - Final de la lista"
 
-#: noweb/x_fileselect.nw:1399
+#: noweb/x_fileselect.nw:1431
 msgid "Default behavior - reference component"
 msgstr "Comportamiento por defecto - designar componente"
 
-#: noweb/x_fileselect.nw:1410
+#: noweb/x_fileselect.nw:1442
 msgid "Embed component in schematic"
 msgstr "Incrustar componente en el esquema"
 
-#: noweb/x_fileselect.nw:1420
+#: noweb/x_fileselect.nw:1452
 msgid "Include component as individual objects"
 msgstr "Incluir componentes como objetos individuales"
 
-#: noweb/x_fileselect.nw:1957 noweb/x_fileselect.nw:1961
-#: noweb/x_fileselect.nw:2289
+#: noweb/x_fileselect.nw:1990 noweb/x_fileselect.nw:1994
+#: noweb/x_fileselect.nw:2320
 msgid "Search in Components"
 msgstr "Buscar en los componentes"
 
-#: noweb/x_fileselect.nw:2020
+#: noweb/x_fileselect.nw:2053
 msgid "Search in Components - Found library only"
 msgstr "Buscar en los componentes - Sólo se ha encontrado una librería"
 
-#: noweb/x_fileselect.nw:2029
+#: noweb/x_fileselect.nw:2062
 msgid "Search in Components - End of list"
 msgstr "Buscar en los componentes - Final de la lista"
 
-#: noweb/x_fileselect.nw:2089
+#: noweb/x_fileselect.nw:2120 noweb/x_fileselect.nw:2599
 msgid "Open..."
 msgstr "Abrir..."
 
-#: noweb/x_fileselect.nw:2093 noweb/x_fileselect.nw:2097
+#: noweb/x_fileselect.nw:2124 noweb/x_fileselect.nw:2128
+#: noweb/x_fileselect.nw:2658
 msgid "Save As..."
 msgstr "Guardar como..."
 
-#: noweb/x_fileselect.nw:2103
+#: noweb/x_fileselect.nw:2134
 msgid "Select Component..."
 msgstr "Seleccionar componente..."
 
-#: noweb/x_fileselect.nw:2145
+#: noweb/x_fileselect.nw:2176
 msgid "Filter"
 msgstr "Filtro"
 
-#: noweb/x_fileselect.nw:2187
+#: noweb/x_fileselect.nw:2218
 msgid "Directories"
 msgstr "Carpetas"
 
-#: noweb/x_fileselect.nw:2189
+#: noweb/x_fileselect.nw:2220
 msgid "Libraries"
 msgstr "Librerías"
 
-#: noweb/x_fileselect.nw:2226
+#: noweb/x_fileselect.nw:2257
 msgid "Files"
 msgstr "Archivos"
 
-#: noweb/x_fileselect.nw:2278
+#: noweb/x_fileselect.nw:2309
 msgid "Preview"
 msgstr "Vista preliminar"
 
-#: noweb/x_fileselect.nw:2326 noweb/x_image.nw:563 noweb/x_pagesel.nw:371
+#: noweb/x_fileselect.nw:2357 noweb/x_image.nw:619 noweb/x_pagesel.nw:371
 #: noweb/x_print.nw:559
 msgid "Filename"
 msgstr "Nombre de archivo"
 
-#: noweb/x_fileselect.nw:2371 noweb/x_window.nw:618
+#: noweb/x_fileselect.nw:2402 noweb/x_window.nw:618
 msgid "Open"
 msgstr "Abrir"
 
-#: noweb/x_fileselect.nw:2388
+#: noweb/x_fileselect.nw:2419
 msgid "SaveAs"
 msgstr "Guardar como"
 
-#: noweb/x_image.nw:360
+#: noweb/x_fileselect.nw:2585
+#, fuzzy
+msgid "Schematics"
+msgstr "sch - Esquemas"
+
+#: noweb/x_fileselect.nw:2588
+#, fuzzy
+msgid "Symbols"
+msgstr "sym - Símbolos"
+
+#: noweb/x_fileselect.nw:2591
+#, fuzzy
+msgid "Schematics and symbols"
+msgstr "sym/sch - Esquemas y símbolos"
+
+#: noweb/x_fileselect.nw:2595
+#, fuzzy
+msgid "All files"
+msgstr "* - Todos los archivos"
+
+#: noweb/x_image.nw:380
+msgid "x_image_lowlevel: Unable to write PNG file.\n"
+msgstr ""
+
+#: noweb/x_image.nw:384 noweb/x_image.nw:415
 #, c-format
 msgid "Wrote color image to [%s] [%d x %d]\n"
 msgstr "Se ha guardado la imagen en color en [%s] [%d x %d]\n"
 
-#: noweb/x_image.nw:362
+#: noweb/x_image.nw:386 noweb/x_image.nw:417
 #, c-format
 msgid "Wrote black and white image to [%s] [%d x %d]\n"
 msgstr "Se ha guardado la imagen en blanco y negro en [%s] [%d x %d]\n"
 
-#: noweb/x_image.nw:472
+#: noweb/x_image.nw:396
+msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
+msgstr ""
+
+#: noweb/x_image.nw:528
 msgid "Write Image..."
 msgstr "Guardar imagen..."
 
-#: noweb/x_image.nw:475
+#: noweb/x_image.nw:531
 msgid "Write"
 msgstr "Guardar"
 
-#: noweb/x_image.nw:512
+#: noweb/x_image.nw:568
 msgid "Width"
 msgstr "Ancho"
 
-#: noweb/x_image.nw:531
+#: noweb/x_image.nw:587
 msgid "Height"
 msgstr "Altura"
 
-#: noweb/x_image.nw:550
+#: noweb/x_image.nw:606
 msgid "Width x Height"
 msgstr "Ancho x Altura"
 
-#: noweb/x_log.nw:290
+#: noweb/x_log.nw:297
 msgid "Status"
 msgstr "Estado"
+
+#: noweb/x_menus.nw:72
+#, fuzzy
+msgid "/Add Net"
+msgstr "Añadir texto..."
+
+#: noweb/x_menus.nw:73
+#, fuzzy
+msgid "/Add Attribute..."
+msgstr "Añadir propiedad"
+
+#: noweb/x_menus.nw:74
+#, fuzzy
+msgid "/Add Component..."
+msgstr "Componente..."
+
+#: noweb/x_menus.nw:75
+#, fuzzy
+msgid "/Add Bus"
+msgstr "Añadir texto..."
+
+#: noweb/x_menus.nw:76
+#, fuzzy
+msgid "/Add Text"
+msgstr "Añadir texto..."
+
+#: noweb/x_menus.nw:78
+#, fuzzy
+msgid "/Zoom In"
+msgstr "Aumentar ampliación"
+
+#: noweb/x_menus.nw:79
+#, fuzzy
+msgid "/Zoom Out"
+msgstr "Disminuir ampliación"
+
+#: noweb/x_menus.nw:80
+#, fuzzy
+msgid "/Zoom Box"
+msgstr "Ampliar"
+
+#: noweb/x_menus.nw:81
+#, fuzzy
+msgid "/Zoom Extents"
+msgstr "Mostrar todo"
+
+#: noweb/x_menus.nw:83
+#, fuzzy
+msgid "/Select"
+msgstr "Seleccionar"
+
+#: noweb/x_menus.nw:84
+#, fuzzy
+msgid "/Edit..."
+msgstr "Editar..."
+
+#: noweb/x_menus.nw:85
+#, fuzzy
+msgid "/Copy"
+msgstr "Copiar"
+
+#: noweb/x_menus.nw:86
+#, fuzzy
+msgid "/Move"
+msgstr "Mover"
+
+#: noweb/x_menus.nw:87
+#, fuzzy
+msgid "/Delete"
+msgstr "Borrar"
+
+#: noweb/x_menus.nw:90
+#, fuzzy
+msgid "/Down Schematic"
+msgstr "Descender en esquema"
+
+#: noweb/x_menus.nw:91
+#, fuzzy
+msgid "/Down Symbol"
+msgstr "Descender en símbolo"
+
+#: noweb/x_menus.nw:92
+#, fuzzy
+msgid "/Up"
+msgstr "Arriba"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
@@ -2010,6 +2218,10 @@ msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 "No se permiten las propiedades sin nombre. Por favor, introduzca un nombre."
 
+#: noweb/x_multiattrib.nw:1426
+msgid "Duplicate"
+msgstr ""
+
 #: noweb/x_pagesel.nw:315
 msgid "Page Manager"
 msgstr "Administrador de páginas"
@@ -2021,6 +2233,15 @@ msgstr "Modificado"
 #: noweb/x_pagesel.nw:407
 msgid "Right click on the filename for more options..."
 msgstr "Pulse con el botón derecho para ver más opciones..."
+
+#: noweb/x_pagesel.nw:506
+#, fuzzy
+msgid "Discard Page"
+msgstr "Descartar"
+
+#: noweb/x_preview.nw:183
+msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
+msgstr ""
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2212,6 +2433,9 @@ msgstr "Menú/Cancelar"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
+
+#~ msgid "refdes=C"
+#~ msgstr "refdes=C"
 
 #~ msgid "refdes=Q"
 #~ msgstr "refdes=Q"
