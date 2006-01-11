@@ -231,7 +231,7 @@ picture_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      GTK_MESSAGE_ERROR,
                                      GTK_BUTTONS_CLOSE,
-                                     "Failed to load picture: %s",
+                                     _("Failed to load picture: %s"),
                                      error->message);
     g_error_free (error);
      
@@ -298,8 +298,8 @@ picture_selection_dialog (TOPLEVEL *w_current)
    /* Create the widgets */
    
    dialog = gtk_dialog_new();
-   label = gtk_label_new ("Gschem doesn't support pictures if it has been compiled using GTK 1.2");
-   okay_button = gtk_button_new_with_label("OK");
+   label = gtk_label_new (_("Gschem doesn't support pictures if it has been compiled using GTK 1.2"));
+   okay_button = gtk_button_new_with_label(_("OK"));
    
    /* Ensure that the dialog box is destroyed when the user clicks ok. */
    
@@ -321,7 +321,7 @@ picture_selection_dialog (TOPLEVEL *w_current)
 #if DEBUG
      printf("Creating new picture file selection dialog\n");
 #endif
-     w_current->pfswindow = gtk_file_selection_new ("Please select a picture file.");
+     w_current->pfswindow = gtk_file_selection_new (_("Please select a picture file."));
      file_selector = w_current->pfswindow;
      if (w_current->pixbuf_filename)
        gtk_file_selection_set_filename(GTK_FILE_SELECTION(file_selector), w_current->pixbuf_filename);
@@ -408,7 +408,7 @@ picture_change_selection_ok (GtkWidget *widget, TOPLEVEL *w_current)
                                      GTK_DIALOG_DESTROY_WITH_PARENT,
                                      GTK_MESSAGE_ERROR,
                                      GTK_BUTTONS_CLOSE,
-                                     "Failed to load picture: %s",
+                                     _("Failed to load picture: %s"),
                                      error->message);
     g_error_free (error);
      
@@ -501,7 +501,7 @@ picture_change_filename_dialog (TOPLEVEL *w_current)
 #if DEBUG
      printf("Creating change picture file selection dialog\n");
 #endif
-     w_current->pcfswindow = gtk_file_selection_new ("Please select a picture file.");
+     w_current->pcfswindow = gtk_file_selection_new (_("Please select a picture file."));
      file_selector = w_current->pcfswindow;
      if (w_current->pixbuf_filename)
        gtk_file_selection_set_filename(GTK_FILE_SELECTION(file_selector), w_current->pixbuf_filename);

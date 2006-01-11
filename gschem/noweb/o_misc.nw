@@ -1752,7 +1752,7 @@ o_autosave_backups(TOPLEVEL *toplevel)
       real_filename = follow_symlinks (p_current->page_filename, NULL);
       
       if (real_filename == NULL) {
-	s_log_message ("o_autosave_backups: Can't get the real filename of %s.", p_current->page_filename);
+	s_log_message (_("o_autosave_backups: Can't get the real filename of %s."), p_current->page_filename);
 	fprintf (stderr, "o_autosave_backups: Can't get the real filename of %s.\n", p_current->page_filename);
       }
       else {
@@ -1794,7 +1794,7 @@ o_autosave_backups(TOPLEVEL *toplevel)
 	  p_current->ops_since_last_backup = 0;
           p_current->do_autosave_backup = 0;
 	} else {
-	  s_log_message ("Could NOT save backup file [%s]\n", 
+	  s_log_message (_("Could NOT save backup file [%s]\n"), 
 			 backup_filename);
 	}
 	g_free (backup_filename);

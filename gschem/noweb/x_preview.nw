@@ -179,7 +179,8 @@ x_preview_update_gtk24 (GtkFileChooser *file_chooser, gpointer data)
   }
   else {
     fprintf (stderr, "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n");
-    s_log_message("x_preview_update_gtk24: Can't get pixbuf from preview struct.\n");
+    s_log_message(
+      _("x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"));
   }
 
   g_free (filename);

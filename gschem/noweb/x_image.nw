@@ -377,7 +377,7 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
     filetype = g_strdup("png");
     if (!gdk_pixbuf_save(pixbuf, filename, filetype, NULL, NULL)) {
       fprintf(stderr, "x_image_lowlevel: Unable to save PNG file  %s.\n", filename);
-      s_log_message("x_image_lowlevel: Unable to write PNG file.\n");      
+      s_log_message(_("x_image_lowlevel: Unable to write PNG file.\n"));
     }
     else {
       if (w_current->image_color == TRUE) {
@@ -393,7 +393,7 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   }
   else {
     fprintf(stderr, "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
-    s_log_message("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n");
+    s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"));
   }
 #endif
 

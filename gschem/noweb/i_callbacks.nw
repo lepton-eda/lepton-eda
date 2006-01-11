@@ -2335,7 +2335,7 @@ DEFINE_I_CALLBACK(page_revert)
                                   GTK_DIALOG_DESTROY_WITH_PARENT,
                                   GTK_MESSAGE_QUESTION,
                                   GTK_BUTTONS_YES_NO,
-                                  "Really revert page?");
+                                  _("Really revert page?"));
  response = gtk_dialog_run (GTK_DIALOG (dialog));
  gtk_widget_destroy (dialog);
  
