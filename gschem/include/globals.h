@@ -74,6 +74,15 @@ extern SCM copy_component_hook;
 extern SCM move_component_hook;
 
 #include "gettext.h"
+#ifdef ENABLE_NLS
+# ifdef gettext_noop
+#  define N_(String) gettext_noop (String)
+# else
+#  define N_(String) (String)
+# endif
+#else
+# define N_(String) (String)
+#endif
 
 /*EK* used by prototype.h */
 #include "../include/x_states.h"

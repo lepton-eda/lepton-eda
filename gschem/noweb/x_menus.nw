@@ -69,29 +69,27 @@
 /*   These are the items which appear upon clicking the right mouse button. */
 <<x_menus.c : popup menu items>>=
 static GtkItemFactoryEntry popup_items[] = {
-  {"/Add Net", 		NULL, i_callback_add_net, 0, NULL},
-  {"/Add Attribute...", 	NULL, i_callback_add_attribute, 0, NULL},
-  {"/Add Component...", 	NULL, i_callback_add_component, 0, NULL},
-  {"/Add Bus", 		NULL, i_callback_add_bus, 0, NULL},
-  {"/Add Text", 		NULL, i_callback_add_text, 0, NULL},
-  {"/sep1", NULL, NULL, 0, "<Separator>"},
-  {"/Zoom In",            NULL, i_callback_view_zoom_in, 0, NULL},
-  {"/Zoom Out",           NULL, i_callback_view_zoom_out, 0, NULL},
-  {"/Zoom Box",           NULL, i_callback_view_zoom_box, 0, NULL},
-  {"/Zoom Extents",        NULL, i_callback_view_zoom_extents, 0, NULL},
-  {"/sep1", NULL, NULL, 0, "<Separator>"},
-  {"/Select", 		NULL, i_callback_edit_select, 0, NULL},
-  {"/Edit...", 		NULL, i_callback_edit_edit, 0, NULL},
-  {"/Copy", 		NULL, i_callback_edit_copy, 0, NULL},
-  {"/Move", 		NULL, i_callback_edit_move, 0, NULL},
-  {"/Delete", 		NULL, i_callback_edit_delete, 0, NULL},
-
+  { N_("/Add Net"), 		      NULL, i_callback_add_net,           0, NULL},
+  { N_("/Add Attribute..."), 	NULL, i_callback_add_attribute,     0, NULL},
+  { N_("/Add Component..."), 	NULL, i_callback_add_component,     0, NULL},
+  { N_("/Add Bus"), 		      NULL, i_callback_add_bus,           0, NULL},
+  { N_("/Add Text"), 		      NULL, i_callback_add_text,          0, NULL},
+  { "/sep1", NULL, NULL, 0, "<Separator>"},
+  { N_("/Zoom In"),           NULL, i_callback_view_zoom_in,      0, NULL},
+  { N_("/Zoom Out"),          NULL, i_callback_view_zoom_out,     0, NULL},
+  { N_("/Zoom Box"),          NULL, i_callback_view_zoom_box,     0, NULL},
+  { N_("/Zoom Extents"),      NULL, i_callback_view_zoom_extents, 0, NULL},
+  { "/sep1", NULL, NULL, 0, "<Separator>"},
+  { N_("/Select"), 		        NULL, i_callback_edit_select,       0, NULL},
+  { N_("/Edit..."), 		      NULL, i_callback_edit_edit,         0, NULL},
+  { N_("/Copy"), 		          NULL, i_callback_edit_copy,         0, NULL},
+  { N_("/Move"), 		          NULL, i_callback_edit_move,         0, NULL},
+  { N_("/Delete"), 		        NULL, i_callback_edit_delete,       0, NULL},
   /* Menu items for hierarchy added by SDB 1.9.2005.  */
   {"/sep1", NULL, NULL, 0, "<Separator>"},
-  {"/Down Schematic", 	NULL, i_callback_hierarchy_down_schematic, 0, NULL},
-  {"/Down Symbol", 	NULL, i_callback_hierarchy_down_symbol, 0, NULL},
-  {"/Up", 		NULL, i_callback_hierarchy_up, 0, NULL},
-
+  {N_("/Down Schematic"), NULL, i_callback_hierarchy_down_schematic, 0, NULL},
+  {N_("/Down Symbol"),    NULL, i_callback_hierarchy_down_symbol,    0, NULL},
+  {N_("/Up"),             NULL, i_callback_hierarchy_up,             0, NULL},
 };  
 
 
@@ -335,7 +333,9 @@ get_main_popup(TOPLEVEL *w_current)
   */
   item_factory = gtk_item_factory_new(GTK_TYPE_MENU, "<popup>",
                                       accel_group);
-
+  gtk_item_factory_set_translate_func (item_factory,
+                                       (GtkTranslateFunc)gettext,
+                                       NULL, NULL);
   /* This function creates the pop-up menu itself & attaches it to the
      GtkItemFactory. Pass the item factory,
      the number of items in the array, the array itself, and any

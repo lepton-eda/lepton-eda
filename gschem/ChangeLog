@@ -1,3 +1,12 @@
+2006-01-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/x_dialog.nw, noweb/x_menus.nw:
+	* noweb/x_multiattrib.nw, noweb/x_pagesel.nw: Marked strings in
+	structures (popup menus and option menus) for i18n with N_().
+
+	* include/globals.h: Introduced macro N_() as short for
+	gettext_noop().
+
 2006-01-07  Stuart Brorson  <sdb AT cloud9 DOT net>
         * autogen.sh, Included "-I m4" into
         aclocal to pick up macros from local m4 dir.

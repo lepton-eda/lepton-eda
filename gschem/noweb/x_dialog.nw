@@ -1095,11 +1095,11 @@ create_menu_linetype (TOPLEVEL *w_current)
   struct line_type {
     gchar *str;
     OBJECT_TYPE type;
-  } types[] = { { "Solid",   TYPE_SOLID },
-                { "Dotted",  TYPE_DOTTED },
-                { "Dashed",  TYPE_DASHED },
-                { "Center",  TYPE_CENTER },
-                { "Phantom", TYPE_PHANTOM } };
+  } types[] = { { N_("Solid"),   TYPE_SOLID },
+                { N_("Dotted"),  TYPE_DOTTED },
+                { N_("Dashed"),  TYPE_DASHED },
+                { N_("Center"),  TYPE_CENTER },
+                { N_("Phantom"), TYPE_PHANTOM } };
   gint i;
 
   menu  = gtk_menu_new ();
@@ -1523,10 +1523,10 @@ create_menu_filltype (TOPLEVEL *w_current)
   struct fill_type {
     gchar *str;
     OBJECT_FILLING type;
-  } types[] = { { "Hollow", FILLING_HOLLOW },
-                { "Filled", FILLING_FILL },
-                { "Mesh",   FILLING_MESH },
-                { "Hatch",  FILLING_HATCH } };
+  } types[] = { { N_("Hollow"), FILLING_HOLLOW },
+                { N_("Filled"), FILLING_FILL },
+                { N_("Mesh"),   FILLING_MESH },
+                { N_("Hatch"),  FILLING_HATCH } };
   gint i;
 
   menu  = gtk_menu_new ();

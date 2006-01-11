@@ -1423,9 +1423,9 @@ multiattrib_popup_menu (Multiattrib *multiattrib,
     void (*callback)(void);
   };
   struct menuitem_t menuitems[] = {
-    { "Duplicate", G_CALLBACK (multiattrib_callback_popup_duplicate) },
-    { "Delete",    G_CALLBACK (multiattrib_callback_popup_delete)    },
-    { NULL,        NULL                                              } };
+    { N_("Duplicate"), G_CALLBACK (multiattrib_callback_popup_duplicate) },
+    { N_("Delete"),    G_CALLBACK (multiattrib_callback_popup_delete)    },
+    { NULL,            NULL                                              } };
   struct menuitem_t *tmp;
   
   if (event != NULL &&

@@ -498,13 +498,13 @@ pagesel_popup_menu (Pagesel *pagesel,
     void (*callback)(void);
   };
   struct menuitem_t menuitems[] = {
-    { "New Page",     G_CALLBACK (pagesel_callback_popup_new_page)     },
-    { "Open Page...", G_CALLBACK (pagesel_callback_popup_open_page)    },
-    { "-",            NULL                                             },
-    { "Save Page",    G_CALLBACK (pagesel_callback_popup_save_page)    },
-    { "Close Page",   G_CALLBACK (pagesel_callback_popup_close_page)   },
-    { "Discard Page", G_CALLBACK (pagesel_callback_popup_discard_page) },
-    { NULL,           NULL                                             } };
+    { N_("New Page"),     G_CALLBACK (pagesel_callback_popup_new_page)     },
+    { N_("Open Page..."), G_CALLBACK (pagesel_callback_popup_open_page)    },
+    { "-",                NULL                                             },
+    { N_("Save Page"),    G_CALLBACK (pagesel_callback_popup_save_page)    },
+    { N_("Close Page"),   G_CALLBACK (pagesel_callback_popup_close_page)   },
+    { N_("Discard Page"), G_CALLBACK (pagesel_callback_popup_discard_page) },
+    { NULL,               NULL                                             } };
   struct menuitem_t *tmp;
   
   if (event != NULL &&
