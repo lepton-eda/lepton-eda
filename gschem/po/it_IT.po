@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2005-09-02 17:53+0200\n"
 "Last-Translator: Michele Petrecca <michelinux@alice.it>\n"
 "Language-Team: <michelinux@alice.it>\n"
@@ -565,7 +565,7 @@ msgstr "Incolla 4"
 msgid "Paste 5"
 msgstr "Incolla 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Componente"
 
@@ -591,15 +591,15 @@ msgstr "Linea"
 msgid "Box"
 msgstr "Box"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Cerchio"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Arco"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Pin"
 
@@ -623,7 +623,7 @@ msgstr "Ricerca del simbolo [%s]\n"
 msgid "Attach"
 msgstr "Collega"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "Scollega"
 
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Add"
 msgstr "Aggiungi"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr "Componente..."
 
@@ -1258,8 +1258,9 @@ msgstr "ProprietÃ Â ..."
 msgid "Text..."
 msgstr "Testo..."
 
-#: noweb/rcstrings.nw:84
-msgid "Image"
+#: noweb/rcstrings.nw:87
+#, fuzzy
+msgid "Picture..."
 msgstr "Immagine"
 
 #: noweb/rcstrings.nw:89
@@ -1286,10 +1287,6 @@ msgstr "Documentazione"
 msgid "Attributes"
 msgstr "ProprietÃ Â "
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr ""
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "Mostra Valore"
@@ -1306,25 +1303,25 @@ msgstr "Mostra Entrambi"
 msgid "Toggle Visibility"
 msgstr "Pulsante VisibilitÃ Â "
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr "Opzioni"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "Trova Testo Specifico..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "Nascondi Testo Specifico..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "Mostra Testo Specifico..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
 msgstr ""
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
+msgstr "Opzioni"
 
 #: noweb/rcstrings.nw:108
 msgid "Text Size..."
@@ -2399,6 +2396,9 @@ msgstr "MenÃ¹/Cancella"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr ""
+
+#~ msgid "Image"
+#~ msgstr "Immagine"
 
 #~ msgid "refdes=C"
 #~ msgstr "refdes=C"

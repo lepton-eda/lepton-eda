@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2002-10-05 20:00+0900\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -563,7 +563,7 @@ msgstr "ペースト 4"
 msgid "Paste 5"
 msgstr "ペースト 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "部品"
 
@@ -589,15 +589,15 @@ msgstr "線"
 msgid "Box"
 msgstr "ボックス"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "円"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "円弧"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "ピン"
 
@@ -621,7 +621,7 @@ msgstr "シンボル検索中[%s]\n"
 msgid "Attach"
 msgstr "アタッチ"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "アタッチ解除"
 
@@ -1235,7 +1235,7 @@ msgstr "破棄"
 msgid "Add"
 msgstr "追加"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr "部品..."
 
@@ -1247,10 +1247,10 @@ msgstr "アトリビュート..."
 msgid "Text..."
 msgstr "テキスト..."
 
-#: noweb/rcstrings.nw:84
+#: noweb/rcstrings.nw:87
 #, fuzzy
-msgid "Image"
-msgstr "ページ"
+msgid "Picture..."
+msgstr "印刷..."
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"
@@ -1276,10 +1276,6 @@ msgstr "ドキュメント表示/検索"
 msgid "Attributes"
 msgstr "アトリビュート"
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr "アタッチ解除"
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "値表示"
@@ -1296,25 +1292,25 @@ msgstr "名前と値を表示"
 msgid "Toggle Visibility"
 msgstr "表示/非表示"
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr "オプション"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "テキスト検索..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "テキストを隠す..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "テキストを表示..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
 msgstr "オートナンバーテキスト"
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
+msgstr "オプション"
 
 #: noweb/rcstrings.nw:108
 msgid "Text Size..."
@@ -2390,6 +2386,13 @@ msgstr "メニュー/キャンセル"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "パン/キャンセル"
+
+#, fuzzy
+#~ msgid "Image"
+#~ msgstr "ページ"
+
+#~ msgid "Deattach"
+#~ msgstr "アタッチ解除"
 
 #~ msgid "%s requires a string as a parameter\n"
 #~ msgstr "%sは文字列のパラメータでなくてはなりません。\n"

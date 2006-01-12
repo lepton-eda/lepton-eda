@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2003-04-21 02:59+0000\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <antonio@projetos.etc.br>\n"
 "Language-Team: geda em Portugues Brasil <geda-pt@seul.org>\n"
@@ -566,7 +566,7 @@ msgstr "Colar de 4"
 msgid "Paste 5"
 msgstr "Colar de 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Componente"
 
@@ -592,15 +592,15 @@ msgstr "Linha"
 msgid "Box"
 msgstr "Caixa"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Círculo"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Arco"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Pino"
 
@@ -624,7 +624,7 @@ msgstr "Procurando por símbolo [%s]\n"
 msgid "Attach"
 msgstr "Anexar"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "Desanexar"
 
@@ -1238,7 +1238,7 @@ msgstr "Descartar"
 msgid "Add"
 msgstr "Adicionar"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr "Componente..."
 
@@ -1250,10 +1250,10 @@ msgstr "Atributo..."
 msgid "Text..."
 msgstr "Texto..."
 
-#: noweb/rcstrings.nw:84
+#: noweb/rcstrings.nw:87
 #, fuzzy
-msgid "Image"
-msgstr "Página"
+msgid "Picture..."
+msgstr "Imprimir..."
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"
@@ -1279,10 +1279,6 @@ msgstr "Documentação"
 msgid "Attributes"
 msgstr "Atributos"
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr "Desanexar"
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "Mostra Valor"
@@ -1299,25 +1295,25 @@ msgstr "Mostrar Ambos"
 msgid "Toggle Visibility"
 msgstr "Comuta Visibilidade"
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr "Opções"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "Procurar texto..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "Ocultar Texto..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "Exibir Texto..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
 msgstr "Autonumerar..."
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
+msgstr "Opções"
 
 #: noweb/rcstrings.nw:108
 msgid "Text Size..."
@@ -2393,6 +2389,13 @@ msgstr "Menu/Cancelar"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Pan/Cancelar"
+
+#, fuzzy
+#~ msgid "Image"
+#~ msgstr "Página"
+
+#~ msgid "Deattach"
+#~ msgstr "Desanexar"
 
 #~ msgid "%s requires a string as a parameter\n"
 #~ msgstr "%s requer uma string como parâmetro\n"

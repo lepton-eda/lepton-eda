@@ -9,13 +9,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2006-01-11 16:59+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -562,7 +562,7 @@ msgstr "Coller 4"
 msgid "Paste 5"
 msgstr "Coller 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Composant"
 
@@ -588,15 +588,15 @@ msgstr "Ligne"
 msgid "Box"
 msgstr "Boîte"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Cercle"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Arc"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Broche"
 
@@ -620,7 +620,7 @@ msgstr "Recherche du symbole [%s]\n"
 msgid "Attach"
 msgstr "Attacher"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "Détacher"
 
@@ -881,7 +881,8 @@ msgstr "Composant toujours embarqué et non mis à jour\n"
 #: noweb/o_misc.nw:1755
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr "o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
+msgstr ""
+"o_autosave_backups() : Impossible de récupérer le véritable nom du fichier %s"
 
 #: noweb/o_misc.nw:1797
 #, c-format
@@ -1247,7 +1248,7 @@ msgstr "Abandonner"
 msgid "Add"
 msgstr "Ajouter"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr "Composant..."
 
@@ -1259,8 +1260,9 @@ msgstr "Attribut..."
 msgid "Text..."
 msgstr "Texte..."
 
-#: noweb/rcstrings.nw:84
-msgid "Image"
+#: noweb/rcstrings.nw:87
+#, fuzzy
+msgid "Picture..."
 msgstr "Image"
 
 #: noweb/rcstrings.nw:89
@@ -1287,10 +1289,6 @@ msgstr "Documentation"
 msgid "Attributes"
 msgstr "Attributs"
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr "Détacher"
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "Montrer la valeur"
@@ -1307,25 +1305,25 @@ msgstr "Montrer le nom et la valeur"
 msgid "Toggle Visibility"
 msgstr "Afficher/Cacher"
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr "Options"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "Rechercher le texte..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "Cacher le texte..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "Montrer le texte..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
 msgstr "Annotation automatique..."
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
+msgstr "Options"
 
 #: noweb/rcstrings.nw:108
 msgid "Text Size..."
@@ -2017,7 +2015,9 @@ msgstr "Image noire et blanche exportée dans fichier [%s] [%d x %d]\n"
 
 #: noweb/x_image.nw:396
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
-msgstr "x_image_lowlevel(): Impossible de récupérer le pixbuf depuis la fenêtre de gschem.\n"
+msgstr ""
+"x_image_lowlevel(): Impossible de récupérer le pixbuf depuis la fenêtre de "
+"gschem.\n"
 
 #: noweb/x_image.nw:528
 msgid "Write Image..."
@@ -2178,7 +2178,9 @@ msgstr "Abandonner la page"
 
 #: noweb/x_preview.nw:183
 msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-msgstr "x_preview_update_gtk24(): Ne peut obtenir le pixbuf depuis la structure preview.\n"
+msgstr ""
+"x_preview_update_gtk24(): Ne peut obtenir le pixbuf depuis la structure "
+"preview.\n"
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2370,6 +2372,12 @@ msgstr "Menu/Annuler"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Panoramique/Annuler"
+
+#~ msgid "Image"
+#~ msgstr "Image"
+
+#~ msgid "Deattach"
+#~ msgstr "Détacher"
 
 #~ msgid "Could NOT autosave page [%s]\n"
 #~ msgstr "chec sauvegarde automatique de la page [%s]\n"

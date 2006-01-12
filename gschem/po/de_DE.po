@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2006-01-11 18:52+0100\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -42,7 +42,8 @@ msgstr ""
 
 #: noweb/g_rc.nw:239
 #, c-format
-msgid "While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
+msgid ""
+"While gschem is in ALPHA, please be sure that you have the latest rc file.\n"
 msgstr ""
 "Solange gschem im ALPHA-Stadium ist, sollte unbedingt die neueste rc Datei \n"
 "verwendet werden.\n"
@@ -113,12 +114,14 @@ msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
 #: noweb/g_rc.nw:2022
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr ""
+"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
 #: noweb/g_rc.nw:2054
 #, c-format
 msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-msgstr "Eine falsche Zeilenzahl [%d] wurde an output-vector-threshold übergeben.\n"
+msgstr ""
+"Eine falsche Zeilenzahl [%d] wurde an output-vector-threshold übergeben.\n"
 
 #: noweb/g_rc.nw:2085
 #, c-format
@@ -128,7 +131,9 @@ msgstr "Ein ungültiger Offset [%d] wurde an add-attribute-offset übergeben.\n"
 #: noweb/g_rc.nw:2114
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
-msgstr "An \"auto-save-interval\" wurde eine ungültige Sekundenanzahl [%d] übergeben\n"
+msgstr ""
+"An \"auto-save-interval\" wurde eine ungültige Sekundenanzahl [%d] "
+"übergeben\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -146,7 +151,8 @@ msgstr ""
 
 #: noweb/gschem.nw:183 noweb/gschem.nw:193
 #, c-format
-msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgid ""
+"This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
@@ -423,7 +429,8 @@ msgstr "Verschieben nach"
 
 #: noweb/i_callbacks.nw:1386
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr ""
+"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: noweb/i_callbacks.nw:1387
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -567,7 +574,7 @@ msgstr "Einfügen 4"
 msgid "Paste 5"
 msgstr "Einfügen 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Bauteil"
 
@@ -593,15 +600,15 @@ msgstr "Linie"
 msgid "Box"
 msgstr "Rechteck"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Kreis"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Bogen"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Anschluß"
 
@@ -625,7 +632,7 @@ msgstr "Suche nach dem Symbol [%s]\n"
 msgid "Attach"
 msgstr "Anbringen"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "Ablösen"
 
@@ -725,7 +732,8 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: noweb/o_buffer.nw:76
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
 
 #: noweb/o_buffer.nw:120
 #, c-format
@@ -742,12 +750,14 @@ msgstr ""
 #: noweb/o_buffer.nw:226
 #, c-format
 msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-msgstr "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
+msgstr ""
+"Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_paste_end]\n"
 
 #: noweb/o_bus.nw:273
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr "Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
 
 #: noweb/o_bus.nw:344 noweb/o_bus.nw:378 noweb/o_net.nw:391 noweb/o_net.nw:425
 #, c-format
@@ -772,7 +782,8 @@ msgstr "Undefinierter Typ für einen Kreis (Füllung).\n"
 #: noweb/o_complex.nw:272
 #, c-format
 msgid "Could not find complex in new componet placement!\n"
-msgstr "Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
+msgstr ""
+"Konnte complex während des Hinzufügens eines neuen Bauteils nicht finden.\n"
 
 #: noweb/o_complex.nw:631
 #, c-format
@@ -887,7 +898,9 @@ msgstr "Das Bauteil ist noch eingebettet und wurde nicht aktualisiert.\n"
 #: noweb/o_misc.nw:1755
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr "o_autosave_backups: Konnte den tatsächlichen Dateinamen von %s nicht ermitteln."
+msgstr ""
+"o_autosave_backups: Konnte den tatsächlichen Dateinamen von %s nicht "
+"ermitteln."
 
 #: noweb/o_misc.nw:1797
 #, c-format
@@ -914,7 +927,8 @@ msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 #: noweb/o_net.nw:317
 #, c-format
 msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr "Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr ""
+"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
 
 #: noweb/o_net.nw:1016 noweb/o_net.nw:1053 noweb/o_net.nw:1124
 #: noweb/o_net.nw:1160
@@ -983,7 +997,8 @@ msgstr "Ups! Sie versuchen einen slot zu editieren, der nicht existiert.\n"
 #: noweb/o_text.nw:194
 #, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
-msgstr "Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
+msgstr ""
+"Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
 
 #: noweb/o_undo.nw:378
 msgid "Undo/Redo disabled in rc file\n"
@@ -1256,7 +1271,7 @@ msgstr "Ablegen"
 msgid "Add"
 msgstr "Einfügen"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr "Bauteil..."
 
@@ -1268,8 +1283,9 @@ msgstr "Attribut..."
 msgid "Text..."
 msgstr "Text..."
 
-#: noweb/rcstrings.nw:84
-msgid "Image"
+#: noweb/rcstrings.nw:87
+#, fuzzy
+msgid "Picture..."
 msgstr "Bild"
 
 #: noweb/rcstrings.nw:89
@@ -1296,10 +1312,6 @@ msgstr "Dokumentation"
 msgid "Attributes"
 msgstr "Attribut"
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr "Lösen"
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "Wert zeigen"
@@ -1316,25 +1328,25 @@ msgstr "Name & Wert zeigen"
 msgid "Toggle Visibility"
 msgstr "Sichbarkeit EIN/AUS"
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr "Optionen"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "Suche Text..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "Verberge Text..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "Zeige Text..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
 msgstr "Text durchnummerieren..."
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
+msgstr "Optionen"
 
 #: noweb/rcstrings.nw:108
 msgid "Text Size..."
@@ -1902,7 +1914,8 @@ msgstr "* - Alle Dateien"
 #: noweb/x_fileselect.nw:788
 #, c-format
 msgid "x_fileselect_preview_checkbox: Oops got a null f_current!\n"
-msgstr "x_fileselect_preview_checkbox: Der Rückgabewert von f_current ist NULL!\n"
+msgstr ""
+"x_fileselect_preview_checkbox: Der Rückgabewert von f_current ist NULL!\n"
 
 #: noweb/x_fileselect.nw:880
 #, c-format
@@ -2165,7 +2178,8 @@ msgstr "Nur Name anzeigen"
 
 #: noweb/x_multiattrib.nw:753
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr ""
+"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: noweb/x_multiattrib.nw:1426
 msgid "Duplicate"
@@ -2382,6 +2396,12 @@ msgstr "Menu/Cancel"
 msgid "Pan/Cancel"
 msgstr "Ausschnitt/Cancel"
 
+#~ msgid "Image"
+#~ msgstr "Bild"
+
+#~ msgid "Deattach"
+#~ msgstr "Lösen"
+
 #~ msgid "%s requires a string as a parameter\n"
 #~ msgstr "%s benötigte eine Zeichenkette als Parameter.\n"
 
@@ -2504,4 +2524,3 @@ msgstr "Ausschnitt/Cancel"
 
 #~ msgid "Discard Changes?"
 #~ msgstr "Verwerfe Änderungen?"
-

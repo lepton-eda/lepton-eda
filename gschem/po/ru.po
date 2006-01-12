@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2003-01-21 17:49+0200\n"
 "Last-Translator: Andy Shevchenko <andy@smile.org.ua>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -564,7 +564,7 @@ msgstr "Вставка 4"
 msgid "Paste 5"
 msgstr "Вставка 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Компонент"
 
@@ -590,15 +590,15 @@ msgstr "Линия"
 msgid "Box"
 msgstr "Прямоугольник"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Окружность"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Дуга"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Контакт"
 
@@ -622,7 +622,7 @@ msgstr "Поиск символа [%s]\n"
 msgid "Attach"
 msgstr "Прицепить"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "Отцепить"
 
@@ -1236,7 +1236,7 @@ msgstr "Отвергнуть"
 msgid "Add"
 msgstr "Добавить"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr "Компонент..."
 
@@ -1248,10 +1248,10 @@ msgstr "Атрибут..."
 msgid "Text..."
 msgstr "Текст..."
 
-#: noweb/rcstrings.nw:84
+#: noweb/rcstrings.nw:87
 #, fuzzy
-msgid "Image"
-msgstr "Страница"
+msgid "Picture..."
+msgstr "Печать..."
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"
@@ -1277,10 +1277,6 @@ msgstr "Документация"
 msgid "Attributes"
 msgstr "Атрибуты"
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr "Отцепить"
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "Показать значение"
@@ -1297,25 +1293,25 @@ msgstr "Показать оба параметра"
 msgid "Toggle Visibility"
 msgstr "Переключение видимости"
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr "Настройки"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "Найти определенный текст..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "Скрыть определенный текст..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "Показать определенный текст..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
 msgstr "Автонумеровать текст..."
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
+msgstr "Настройки"
 
 #: noweb/rcstrings.nw:108
 msgid "Text Size..."
@@ -2396,6 +2392,13 @@ msgstr "Меню/Отмена"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Центр/Отмена"
+
+#, fuzzy
+#~ msgid "Image"
+#~ msgstr "Страница"
+
+#~ msgid "Deattach"
+#~ msgstr "Отцепить"
 
 #~ msgid "%s requires a string as a parameter\n"
 #~ msgstr "%s требует строку в качестве параметра\n"

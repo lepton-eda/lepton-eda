@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem-CVS-2002-06-12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: 2002-09-06 20:11+CEST\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@seul.org \n"
@@ -578,7 +578,7 @@ msgstr "Plak 4"
 msgid "Paste 5"
 msgstr "Plak 5"
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr "Component"
 
@@ -604,15 +604,15 @@ msgstr "Lijn"
 msgid "Box"
 msgstr "Rechthoek"
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr "Cirkel"
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr "Boog"
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr "Pin"
 
@@ -636,7 +636,7 @@ msgstr "Zoek naar symbool [%s]\n"
 msgid "Attach"
 msgstr "Vastmaken"
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr "Losmaken"
 
@@ -1306,7 +1306,7 @@ msgstr "Wegdoen"
 msgid "Add"
 msgstr "Toevoegen"
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 #, fuzzy
 msgid "Component..."
 msgstr "Component..."
@@ -1321,9 +1321,9 @@ msgstr "Attribuut..."
 msgid "Text..."
 msgstr "Tekst..."
 
-#: noweb/rcstrings.nw:84
+#: noweb/rcstrings.nw:87
 #, fuzzy
-msgid "Image"
+msgid "Picture..."
 msgstr "Afbeelding"
 
 #: noweb/rcstrings.nw:89
@@ -1352,11 +1352,6 @@ msgstr "Documentatie"
 msgid "Attributes"
 msgstr "Attributen"
 
-#: noweb/rcstrings.nw:97
-#, fuzzy
-msgid "Deattach"
-msgstr "Losmaken"
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr "Toon Waarde"
@@ -1374,27 +1369,27 @@ msgstr "Toon Beide"
 msgid "Toggle Visibility"
 msgstr "Schakel Zichtbaarheid"
 
-#: noweb/rcstrings.nw:103
-#, fuzzy
-msgid "Options"
-msgstr "Akties"
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr "Vind Specifieke Tekst..."
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr "Verberg Specifike Tekst..."
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr "Toon Specifieke Tekst..."
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 #, fuzzy
 msgid "Autonumber Text..."
 msgstr "Automatisch Tekst Nummeren..."
+
+#: noweb/rcstrings.nw:107
+#, fuzzy
+msgid "Options"
+msgstr "Akties"
 
 #: noweb/rcstrings.nw:108
 #, fuzzy
@@ -2489,6 +2484,14 @@ msgstr "Menu/Afbreken"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Schuif/Afbreken"
+
+#, fuzzy
+#~ msgid "Image"
+#~ msgstr "Afbeelding"
+
+#, fuzzy
+#~ msgid "Deattach"
+#~ msgstr "Losmaken"
 
 #~ msgid "refdes=C"
 #~ msgstr "refdes=C"

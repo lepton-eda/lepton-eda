@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-11 16:18+0100\n"
+"POT-Creation-Date: 2006-01-12 19:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -547,7 +547,7 @@ msgstr ""
 msgid "Paste 5"
 msgstr ""
 
-#: noweb/i_callbacks.nw:3039 noweb/rcstrings.nw:121 noweb/x_window.nw:673
+#: noweb/i_callbacks.nw:3039 noweb/x_window.nw:673
 msgid "Component"
 msgstr ""
 
@@ -573,15 +573,15 @@ msgstr ""
 msgid "Box"
 msgstr ""
 
-#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:85
+#: noweb/i_callbacks.nw:3487 noweb/i_callbacks.nw:3512 noweb/rcstrings.nw:84
 msgid "Circle"
 msgstr ""
 
-#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:86
+#: noweb/i_callbacks.nw:3539 noweb/i_callbacks.nw:3563 noweb/rcstrings.nw:85
 msgid "Arc"
 msgstr ""
 
-#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:87
+#: noweb/i_callbacks.nw:3590 noweb/i_callbacks.nw:3614 noweb/rcstrings.nw:86
 msgid "Pin"
 msgstr ""
 
@@ -605,7 +605,7 @@ msgstr ""
 msgid "Attach"
 msgstr ""
 
-#: noweb/i_callbacks.nw:4003
+#: noweb/i_callbacks.nw:4003 noweb/rcstrings.nw:97
 msgid "Detach"
 msgstr ""
 
@@ -1216,7 +1216,7 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: noweb/rcstrings.nw:77
+#: noweb/rcstrings.nw:77 noweb/rcstrings.nw:121
 msgid "Component..."
 msgstr ""
 
@@ -1228,8 +1228,8 @@ msgstr ""
 msgid "Text..."
 msgstr ""
 
-#: noweb/rcstrings.nw:84
-msgid "Image"
+#: noweb/rcstrings.nw:87
+msgid "Picture..."
 msgstr ""
 
 #: noweb/rcstrings.nw:89
@@ -1256,10 +1256,6 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-#: noweb/rcstrings.nw:97
-msgid "Deattach"
-msgstr ""
-
 #: noweb/rcstrings.nw:98
 msgid "Show Value"
 msgstr ""
@@ -1276,24 +1272,24 @@ msgstr ""
 msgid "Toggle Visibility"
 msgstr ""
 
-#: noweb/rcstrings.nw:103
-msgid "Options"
-msgstr ""
-
-#: noweb/rcstrings.nw:104
+#: noweb/rcstrings.nw:102
 msgid "Find Specific Text..."
 msgstr ""
 
-#: noweb/rcstrings.nw:105
+#: noweb/rcstrings.nw:103
 msgid "Hide Specific Text..."
 msgstr ""
 
-#: noweb/rcstrings.nw:106
+#: noweb/rcstrings.nw:104
 msgid "Show Specific Text..."
 msgstr ""
 
-#: noweb/rcstrings.nw:107
+#: noweb/rcstrings.nw:105
 msgid "Autonumber Text..."
+msgstr ""
+
+#: noweb/rcstrings.nw:107
+msgid "Options"
 msgstr ""
 
 #: noweb/rcstrings.nw:108
