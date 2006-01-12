@@ -1,3 +1,7 @@
+2006-01-12  Patrick Bernaud  <b-patrick@wanadoo.fr>
+
+	* noweb/rcstrings.nw: Rebuilt file from latest system-gschemrc.
+
 2006-01-11  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
 	* po/fr_FR.po: Updated the French translation.
