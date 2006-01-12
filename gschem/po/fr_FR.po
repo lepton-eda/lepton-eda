@@ -10,12 +10,12 @@ msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-12 19:33+0100\n"
-"PO-Revision-Date: 2006-01-11 16:59+0100\n"
+"PO-Revision-Date: 2006-01-12 20:02+0100\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -887,7 +887,7 @@ msgstr ""
 #: noweb/o_misc.nw:1797
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
-msgstr "Échec à l'enregistrement du fichier de sauvegarde [%s]\n"
+msgstr "Échec lors de la création de la copie de sauvegarde [%s]\n"
 
 #: noweb/o_move.nw:259
 #, c-format
@@ -944,7 +944,7 @@ msgstr "OK"
 
 #: noweb/o_picture.nw:324 noweb/o_picture.nw:504
 msgid "Please select a picture file."
-msgstr ""
+msgstr "Sélectionner un fichier image."
 
 #: noweb/o_picture.nw:437 noweb/x_attribedit.nw:193
 #, c-format
@@ -1261,9 +1261,8 @@ msgid "Text..."
 msgstr "Texte..."
 
 #: noweb/rcstrings.nw:87
-#, fuzzy
 msgid "Picture..."
-msgstr "Image"
+msgstr "Image..."
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"

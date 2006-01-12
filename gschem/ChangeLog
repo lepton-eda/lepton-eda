@@ -1,5 +1,7 @@
 2006-01-12  Patrick Bernaud  <b-patrick@wanadoo.fr>
 
+	* po/fr_FR.po: Updated the French translation.
+
 	* po/*: Updated and merged i18n files.
 	
 	* noweb/rcstrings.nw: Rebuilt file from latest system-gschemrc.
