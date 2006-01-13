@@ -9,12 +9,12 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-12 19:33+0100\n"
-"PO-Revision-Date: 2005-03-11 23:41+0100\n"
+"PO-Revision-Date: 2006-01-13 17:54+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -115,10 +115,9 @@ msgstr ""
 "Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
 
 #: noweb/g_rc.nw:2022
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr ""
-"Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
+msgstr "Espaciado de punto no válido [%d] especificado a la función grid-fixed-threshold\n"
 
 #: noweb/g_rc.nw:2054
 #, c-format
@@ -128,16 +127,14 @@ msgstr ""
 "vector-threshold\n"
 
 #: noweb/g_rc.nw:2085
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
-msgstr "Se ha especificado un tamaño no válido [%d] a la función text-size\n"
+msgstr "Se ha especificado un desplazamiento no válido [%d] a la función add-attribute-offset\n"
 
 #: noweb/g_rc.nw:2114
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
-msgstr ""
-"Se ha especificado un número no válido de líneas [%d] a la función output-"
-"vector-threshold\n"
+msgstr "Se ha especificado un número de segundos no válido [%d] a la función auto-save-interval\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -501,9 +498,8 @@ msgid "Closing [%s]\n"
 msgstr "Cerrando [%s]\n"
 
 #: noweb/i_callbacks.nw:2338
-#, fuzzy
 msgid "Really revert page?"
-msgstr "Recargar página"
+msgstr "¿Seguro que quiere recargar la página?"
 
 #: noweb/i_callbacks.nw:2430 noweb/i_callbacks.nw:2450
 #: noweb/i_callbacks.nw:2476
@@ -662,11 +658,11 @@ msgstr "Disculpe. Esta opción del menú no funciona\n"
 
 #: noweb/i_callbacks.nw:4247
 msgid "Action feedback mode set to OUTLINE\n"
-msgstr ""
+msgstr "Modo de realimentación seleccionado: SILUETA\n"
 
 #: noweb/i_callbacks.nw:4250
 msgid "Action feedback mode set to BOUNDINGBOX\n"
-msgstr ""
+msgstr "Modo de realimentación seleccionado: CONTENEDOR\n"
 
 #: noweb/i_callbacks.nw:4272
 msgid "Grid OFF\n"
@@ -686,11 +682,11 @@ msgstr "Ajuste a la rejilla ACTIVADO\n"
 
 #: noweb/i_callbacks.nw:4324
 msgid "Rubber band OFF \n"
-msgstr ""
+msgstr "Goma de borrar DESACT\n"
 
 #: noweb/i_callbacks.nw:4327
 msgid "Rubber band ON\n"
-msgstr ""
+msgstr "Goma de borrar ACT\n"
 
 #: noweb/o_arc.nw:174
 #, c-format
@@ -852,9 +848,9 @@ msgid "Component [%s] has been embedded\n"
 msgstr "Se ha incrustado el componente [%s]\n"
 
 #: noweb/o_misc.nw:570
-#, fuzzy, c-format
+#, c-format
 msgid "Picture [%s] has been embedded\n"
-msgstr "Se ha incrustado el componente [%s]\n"
+msgstr "Se ha incrustado la imagen [%s]\n"
 
 #: noweb/o_misc.nw:608
 #, c-format
@@ -876,9 +872,9 @@ msgid "Component [%s] has been successfully unembedded\n"
 msgstr "El componente [%s] se ha desincrustado satisfactoriamente\n"
 
 #: noweb/o_misc.nw:642
-#, fuzzy, c-format
+#, c-format
 msgid "Picture [%s] has been unembedded\n"
-msgstr "Se ha incrustado el componente [%s]\n"
+msgstr "Se ha desincrustado la imagen [%s]\n"
 
 #: noweb/o_misc.nw:684
 #, c-format
@@ -906,12 +902,12 @@ msgstr "El componente todavía está incrustado y no actualizado\n"
 #: noweb/o_misc.nw:1755
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr ""
+msgstr "o_autosave_backups: Imposible averiguar el nombre de fichero real de %s."
 
 #: noweb/o_misc.nw:1797
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save backup file [%s]\n"
-msgstr "NO se ha podido guardar [%s]\n"
+msgstr "NO se ha podido guardar la copia de seguridad [%s]\n"
 
 #: noweb/o_move.nw:259
 #, c-format
@@ -953,9 +949,9 @@ msgid "Could not find %s in any component-library\n"
 msgstr "No se ha encontrado %s en ninguna librería de componentes\n"
 
 #: noweb/o_picture.nw:234 noweb/o_picture.nw:411
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load picture: %s"
-msgstr "Fallo al leer fichero de inicialización scm [%s]\n"
+msgstr "Fallo al cargar la imagen: %s"
 
 #: noweb/o_picture.nw:253
 msgid "Picture"
@@ -963,7 +959,7 @@ msgstr "Imagen"
 
 #: noweb/o_picture.nw:301
 msgid "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
-msgstr ""
+msgstr "Gschem no soporta imágenes si se ha compilado usando GTK 1.2"
 
 #: noweb/o_picture.nw:302 noweb/x_attribedit.nw:546 noweb/x_dialog.nw:1023
 #: noweb/x_dialog.nw:1424 noweb/x_dialog.nw:1905 noweb/x_dialog.nw:2132
@@ -975,7 +971,7 @@ msgstr "Aceptar"
 
 #: noweb/o_picture.nw:324 noweb/o_picture.nw:504
 msgid "Please select a picture file."
-msgstr ""
+msgstr "Seleccione una imagen."
 
 #: noweb/o_picture.nw:437 noweb/x_attribedit.nw:193
 #, c-format
@@ -1004,16 +1000,16 @@ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "¡¡Ufff!! ¡se ha intentado editar el elemento de algo que no existe!\n"
 
 #: noweb/o_text.nw:194
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to render text with an invalid angle: %d\n"
-msgstr "Se ha intentado obtener un color no válido: %d\n"
+msgstr "Se ha intentado presentar un texto con un ángulo no válido: %d\n"
 
 #: noweb/o_undo.nw:378
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "¡Deshacer/Rehacer deshabilitado en el fichero rc!\n"
 
 #: noweb/parsecmd.nw:91
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
 "  -q            Quiet mode\n"
@@ -1030,6 +1026,11 @@ msgstr ""
 "  -q                No mostrar mensajes adicionales\n"
 "  -v                Mostrar mensajes adicionales\n"
 "  -r archivo   Usar archivo Rc\n"
+"  -s archivo   Ejecutar fichero (guile)\n"
+"  -o archivo   Fichero de salida (para impresión)\n"
+"  -p                Posicionar automáticamente la ventana\n"
+"  -h                Ayuda; éste mensaje\n"
+"\n"
 
 #: noweb/rcstrings.nw:2
 msgid "File"
@@ -1128,14 +1129,12 @@ msgid "Symbol Translate..."
 msgstr "Mover símbolo..."
 
 #: noweb/rcstrings.nw:35
-#, fuzzy
 msgid "Embed Component/Picture"
-msgstr "Incrustar componente"
+msgstr "Incrustar componente/imagen"
 
 #: noweb/rcstrings.nw:36
-#, fuzzy
 msgid "Unembed Component/Picture"
-msgstr "Desincrustar componente"
+msgstr "Desincrustar componente/imagen"
 
 #: noweb/rcstrings.nw:37
 msgid "Update Component"
@@ -1288,9 +1287,8 @@ msgid "Text..."
 msgstr "Texto..."
 
 #: noweb/rcstrings.nw:87
-#, fuzzy
 msgid "Picture..."
-msgstr "Imagen"
+msgstr "Imagen..."
 
 #: noweb/rcstrings.nw:89
 msgid "Hierarchy"
@@ -1374,7 +1372,7 @@ msgstr "Cambiar Silueta/Rectángulo"
 
 #: noweb/rcstrings.nw:113
 msgid "Toggle Net Rubberband"
-msgstr ""
+msgstr "Act/Desact conservar conexiones"
 
 #: noweb/rcstrings.nw:114
 msgid "Show Log Window..."
@@ -1567,9 +1565,8 @@ msgid "Upper Right"
 msgstr "Arriba a la derecha"
 
 #: noweb/x_dialog.nw:976
-#, fuzzy
 msgid "Edit Text Color"
-msgstr "Editar texto"
+msgstr "Editar color del texto"
 
 #: noweb/x_dialog.nw:988
 msgid "Edit Text Size"
@@ -1580,27 +1577,24 @@ msgid "Edit Text Alignment"
 msgstr "Editar la alineación del texto"
 
 #: noweb/x_dialog.nw:1098
-#, fuzzy
 msgid "Solid"
-msgstr "Mundo"
+msgstr "Sólido"
 
 #: noweb/x_dialog.nw:1099
-#, fuzzy
 msgid "Dotted"
-msgstr "Rotar"
+msgstr "Punteado"
 
 #: noweb/x_dialog.nw:1100
 msgid "Dashed"
-msgstr ""
+msgstr "Guión"
 
 #: noweb/x_dialog.nw:1101
 msgid "Center"
-msgstr ""
+msgstr "Centrar"
 
 #: noweb/x_dialog.nw:1102
-#, fuzzy
 msgid "Phantom"
-msgstr "Abarcar"
+msgstr "Fantasma"
 
 #: noweb/x_dialog.nw:1262 noweb/x_dialog.nw:1264 noweb/x_dialog.nw:1266
 #: noweb/x_dialog.nw:1473 noweb/x_dialog.nw:1474 noweb/x_dialog.nw:1475
@@ -1633,21 +1627,19 @@ msgstr "Espaciado de la discontinuidad"
 
 #: noweb/x_dialog.nw:1526
 msgid "Hollow"
-msgstr ""
+msgstr "Hueco"
 
 #: noweb/x_dialog.nw:1527
-#, fuzzy
 msgid "Filled"
-msgstr "Archivo"
+msgstr "Relleno"
 
 #: noweb/x_dialog.nw:1528
 msgid "Mesh"
-msgstr ""
+msgstr "Malla"
 
 #: noweb/x_dialog.nw:1529
-#, fuzzy
 msgid "Hatch"
-msgstr "Desasociar"
+msgstr "Trama"
 
 #: noweb/x_dialog.nw:1825
 msgid "Fill Type"
@@ -2020,28 +2012,24 @@ msgid "SaveAs"
 msgstr "Guardar como"
 
 #: noweb/x_fileselect.nw:2585
-#, fuzzy
 msgid "Schematics"
-msgstr "sch - Esquemas"
+msgstr "Esquemas"
 
 #: noweb/x_fileselect.nw:2588
-#, fuzzy
 msgid "Symbols"
-msgstr "sym - Símbolos"
+msgstr "Símbolos"
 
 #: noweb/x_fileselect.nw:2591
-#, fuzzy
 msgid "Schematics and symbols"
-msgstr "sym/sch - Esquemas y símbolos"
+msgstr "Esquemas y símbolos"
 
 #: noweb/x_fileselect.nw:2595
-#, fuzzy
 msgid "All files"
-msgstr "* - Todos los archivos"
+msgstr "Todos los archivos"
 
 #: noweb/x_image.nw:380
 msgid "x_image_lowlevel: Unable to write PNG file.\n"
-msgstr ""
+msgstr "x_image_lowlevel: Imposible escribir imagen PNG.\n"
 
 #: noweb/x_image.nw:384 noweb/x_image.nw:415
 #, c-format
@@ -2055,7 +2043,7 @@ msgstr "Se ha guardado la imagen en blanco y negro en [%s] [%d x %d]\n"
 
 #: noweb/x_image.nw:396
 msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window.\n"
-msgstr ""
+msgstr "x_image_lowlevel: Imposible obtener pixbuf de la ventana de gschem.\n"
 
 #: noweb/x_image.nw:528
 msgid "Write Image..."
@@ -2082,89 +2070,72 @@ msgid "Status"
 msgstr "Estado"
 
 #: noweb/x_menus.nw:72
-#, fuzzy
 msgid "/Add Net"
-msgstr "Añadir texto..."
+msgstr "/Añadir conexión..."
 
 #: noweb/x_menus.nw:73
-#, fuzzy
 msgid "/Add Attribute..."
-msgstr "Añadir propiedad"
+msgstr "/Añadir propiedad"
 
 #: noweb/x_menus.nw:74
-#, fuzzy
 msgid "/Add Component..."
-msgstr "Componente..."
+msgstr "/Añadir componente..."
 
 #: noweb/x_menus.nw:75
-#, fuzzy
 msgid "/Add Bus"
-msgstr "Añadir texto..."
+msgstr "/Añadir bus"
 
 #: noweb/x_menus.nw:76
-#, fuzzy
 msgid "/Add Text"
-msgstr "Añadir texto..."
+msgstr "/Añadir texto"
 
 #: noweb/x_menus.nw:78
-#, fuzzy
 msgid "/Zoom In"
-msgstr "Aumentar ampliación"
+msgstr "/Aumentar ampliación"
 
 #: noweb/x_menus.nw:79
-#, fuzzy
 msgid "/Zoom Out"
-msgstr "Disminuir ampliación"
+msgstr "/Disminuir ampliación"
 
 #: noweb/x_menus.nw:80
-#, fuzzy
 msgid "/Zoom Box"
-msgstr "Ampliar"
+msgstr "/Ampliar zona"
 
 #: noweb/x_menus.nw:81
-#, fuzzy
 msgid "/Zoom Extents"
-msgstr "Mostrar todo"
+msgstr "/Mostrar todo"
 
 #: noweb/x_menus.nw:83
-#, fuzzy
 msgid "/Select"
-msgstr "Seleccionar"
+msgstr "/Seleccionar"
 
 #: noweb/x_menus.nw:84
-#, fuzzy
 msgid "/Edit..."
-msgstr "Editar..."
+msgstr "/Editar..."
 
 #: noweb/x_menus.nw:85
-#, fuzzy
 msgid "/Copy"
-msgstr "Copiar"
+msgstr "/Copiar"
 
 #: noweb/x_menus.nw:86
-#, fuzzy
 msgid "/Move"
-msgstr "Mover"
+msgstr "/Mover"
 
 #: noweb/x_menus.nw:87
-#, fuzzy
 msgid "/Delete"
-msgstr "Borrar"
+msgstr "/Borrar"
 
 #: noweb/x_menus.nw:90
-#, fuzzy
 msgid "/Down Schematic"
-msgstr "Descender en esquema"
+msgstr "/Descender en esquema"
 
 #: noweb/x_menus.nw:91
-#, fuzzy
 msgid "/Down Symbol"
-msgstr "Descender en símbolo"
+msgstr "/Descender en símbolo"
 
 #: noweb/x_menus.nw:92
-#, fuzzy
 msgid "/Up"
-msgstr "Arriba"
+msgstr "/Arriba"
 
 #: noweb/x_menus.nw:418
 msgid "Tried to set the sensitivity on a non-existent menu item\n"
@@ -2217,7 +2188,7 @@ msgstr ""
 
 #: noweb/x_multiattrib.nw:1426
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplicar"
 
 #: noweb/x_pagesel.nw:315
 msgid "Page Manager"
@@ -2232,13 +2203,12 @@ msgid "Right click on the filename for more options..."
 msgstr "Pulse con el botón derecho para ver más opciones..."
 
 #: noweb/x_pagesel.nw:506
-#, fuzzy
 msgid "Discard Page"
-msgstr "Descartar"
+msgstr "Descartar página"
 
 #: noweb/x_preview.nw:183
 msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-msgstr ""
+msgstr "x_preview_update_gtk24: Imposible obtener el pixbuf de la estructura preview.\n"
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2431,20 +2401,3 @@ msgstr "Menú/Cancelar"
 msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
 
-#~ msgid "Image"
-#~ msgstr "Imagen"
-
-#~ msgid "Deattach"
-#~ msgstr "Desasociar"
-
-#~ msgid "refdes=C"
-#~ msgstr "refdes=C"
-
-#~ msgid "refdes=Q"
-#~ msgstr "refdes=Q"
-
-#~ msgid "refdes=R"
-#~ msgstr "refdes=R"
-
-#~ msgid "refdes=X"
-#~ msgstr "refdes=X"
