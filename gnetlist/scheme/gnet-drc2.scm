@@ -20,6 +20,10 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2006-01-15: Changed error message to explain it a little bit.
+;;  2006-01-07: Added missing 'passive' in the pintype-full-names list, and
+;;              changed the pintype error/warning message to something more
+;;              self-explaining.
 ;;  2005-02-11: Output to stdout if the output filename is "-".
 ;;  2005-02-08: Use a parameter instead of the quiet mode of gnetlist so 
 ;;              gnetlist doesn't return a non-zero value when there are only
@@ -163,7 +167,7 @@
 (define pwr     10)
 (define undefined 11)
 (define pintype-names (list "unknown" "in" "out" "io" "oc" "oe" "pas" "tp" "tri" "clk" "pwr" "unconnected"))
-(define pintype-full-names (list "unknown" "input" "output" "input/output" "open collector" "open emitter" "totem-pole" "tristate" "clock" "power" "unconnected"))
+(define pintype-full-names (list "unknown" "input" "output" "input/output" "open collector" "open emitter" "passive" "totem-pole" "tristate" "clock" "power" "unconnected"))
 
 ; define if a specified pin can drive a net
 (if (defined? 'pintype-can-drive)
@@ -546,15 +550,15 @@
  	      (if (not (string-ci=? netname "NoConnection"))
 		  (begin
 		    (if (eq? (length (gnetlist:get-all-connections netname)) '0)
-			(begin (display "ERROR: Net has no connections: " port)
-			       (display netname port)
+			(begin (display (string-append "ERROR: Net '"
+						       netname "' has no connections.") port)
 			       (newline port)
 			       (set! errors_number (+ errors_number 1))
 			       )                      
 			)
 		    (if (eq? (length (gnetlist:get-all-connections netname)) '1)
-			(begin (display "ERROR: Net has only one connected pin: " port)
-			       (display netname port)
+			(begin (display (string-append "ERROR: Net '"
+						       netname "' is connected to only one pin.") port)
 			       (newline port)
 			       (set! errors_number (+ errors_number 1))
 			       )                      
@@ -658,13 +662,14 @@
 		       (display "ERROR: " port)
 		       (set! errors_number (+ errors_number 1))
 		       ))	  
+		   (display "Pin(s) with pintype '" port)
 		   (display (drc2:get-full-name-of-pintype-by-number type1) port)
-		   (display ": " port)
+		   (display "': " port)
 		   (display (drc2:display-pins-of-type port type1 
 							 connections) port)
-		   (display "connected to " port)
+		   (display "\n\tare connected to pin(s) with pintype '" port)
 		   (display (drc2:get-full-name-of-pintype-by-number type2) port)
-		   (display ": " port)
+		   (display "': " port)
 		   (display (drc2:display-pins-of-type port type2
 							 connections) port)
 		   (newline port)
