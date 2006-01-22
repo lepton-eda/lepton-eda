@@ -1,3 +1,15 @@
+2006-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* autogen.sh, m4/gettext.m4: Removed m4 files since they are 
+	installation specific
+
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * configure.ac: Bumped package version to 20060123 and also 
+	change the shared library's version to 25:0:0
+
+        * README: Updated for the new year and release.
+
 2006-01-07 Stuart Brorson <sdb AT cloud9 DOT net>
 	* autogen.sh, m4/gettext.m4: Included "-I m4" into
 	aclocal to pick up gettext.m4 from local dir.

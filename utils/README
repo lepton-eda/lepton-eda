@@ -3,7 +3,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for misc utilities versions 2005*
+README for misc utilities versions 2006*
 
 
 - Installation
@@ -222,7 +222,7 @@ README for misc utilities versions 2005*
         COPYING files for more information.
 
 	Programs and associated files are:
-	Copyright 1998-2005 by Ales Hvezda and the respective original
+	Copyright 1998-2006 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 	mk_sym is Copyright 1999 by Jerry O'Keefe

@@ -14,7 +14,7 @@ AM_CFLAGS = -Wall
 endif
 
 INCLUDES = -I$(top_srcdir)/include @GNETLIST_CFLAGS@
-gnetlist_LDADD = @GNETLIST_LDFLAGS@ @GUILE_LDFLAGS@
+gnetlist_LDADD = @GNETLIST_LDFLAGS@
 
 EXTRA_DIST = create_proto 
 

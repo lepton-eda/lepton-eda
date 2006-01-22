@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for docs version 2005* 
+README for docs version 2006* 
 
 
 This directory contains documentation related to the gEDA project.
@@ -20,7 +20,7 @@ These docs are always under heavy construction.
         COPYING files for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2005 by Ales V. Hvezda and the respective
+	Copyright 1998-2006 by Ales Hvezda and the respective
 	original authors (which are listed on the respective files)
 
 
@@ -53,7 +53,7 @@ These docs are always under heavy construction.
 
 - Contact information  
 
-	Ales V. Hvezda 
+	Ales Hvezda 
 	E-mail: ahvezda@geda.seul.org
 	Web: http://www.geda.seul.org/
 

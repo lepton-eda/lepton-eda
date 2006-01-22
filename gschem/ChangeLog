@@ -1,3 +1,19 @@
+2006-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * autogen.sh, m4/guile.m4, m4/gettext.m4, src/Makefile.am: Removed 
+	m4 files since they are installation specifc.  Also, all required
+	libraries should be coming from LIBGEDA_LDFLAGS
+
+2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* configure.ac: Bumped package version to 20060123
+
+	* noweb/x_fileselect.nw: Changed button order to be Open/Cancel and
+	Save/Cancel.  This is so that the application's dialog boxes are
+	consistent everywhere.
+
+        * README: Updated for the new year and release.
+
 2006-01-13 Carlos Nieves Onega <cnieves@iespana.es>	
 	* po/es_ES.po: Updated the spanish translation.
 	

@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for libgeda version 2005* 
+README for libgeda version 2006* 
 
 
 - Installation
@@ -51,7 +51,9 @@ README for libgeda version 2005*
 	for LibStroke is: http://www.etla.net/libstroke/
 
 	libgdgeda 2.0.15 [OPTIONAL] - if you want the ability to write png 
-	images.  libgdgeda is based on gd 2.0.9  The homepage for gd 2.0.x is
+	images.  New versions of libgeda/gschem write png using internal code,
+	so you will still be able to create png images without using libgdgeda. 
+        libgdgeda is based on gd 2.0.15  The homepage for gd 2.0.x is
 	http://www.boutell.com/gd  You can find libgdgeda on the gEDA
 	website: http://www.geda.seul.org/dist
 
@@ -75,7 +77,7 @@ README for libgeda version 2005*
         COPYING files for more information.
 
 	Programs and associated files are:
-	Copyright 1998-2005 by Ales V. Hvezda and the respective original
+	Copyright 1998-2006 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 

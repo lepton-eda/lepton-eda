@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/gnetlist.c])
 AC_PREREQ(2.54)
 
 PACKAGE=geda-gnetlist
-VERSION=20050820
+VERSION=20060123
 echo Configuring $PACKAGE version $VERSION
 
 # Initialize automake 
@@ -85,27 +85,6 @@ AC_CHECK_LIB(m, rint, AC_DEFINE(HAS_RINT, 1, [If your math library has rint in i
 AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 #
 # Check for mics things start
-############################################################################
-
-############################################################################
-# Check for guile start
-# Do a very basic guile test, as the bulk of the flags will come from
-# libgeda.pc
-                                                                                
-GUILE_FLAGS
-                                                                                
-# Manually search for guile-config.  This is provided by GUILE_PROGS, but
-# guile-1.4 does not have GUILE_PROGS, so we have to do it manually.
-AC_PATH_PROG(GUILE_CONFIG,guile-config)
-if test "$GUILE_CONFIG" = "" ; then
-    AC_MSG_ERROR([guile-config required but not found])
-fi
-AC_SUBST(GUILE_CONFIG)
-                                                                                
-GUILE_VERSION=`$GUILE_CONFIG info guileversion`
-                                                                                
-#
-# Check for guile end
 ############################################################################
 
 ############################################################################
@@ -321,7 +300,6 @@ AC_SUBST(GEDARCDIR)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(PATHSEP)
 AC_SUBST(OTHERPATHSEP)
-AC_SUBST(GUILEINTERP)
 
 # Create all the necessary derived files
 AC_CONFIG_FILES([Makefile 
@@ -357,7 +335,6 @@ AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $VERSION:
 
    GTK+ library version:             $GTK_VERSION
-   GUILE library version:            $GUILE_VERSION
    libgeda library version:          $LIBGEDA_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR

@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for gnetlist version 2005* 
+README for gnetlist version 2006* 
 
 
 - Installation
@@ -82,7 +82,7 @@ README for gnetlist version 2005*
         COPYING files for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2005 by Ales V. Hvezda and the respective original
+	Copyright 1998-2006 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 

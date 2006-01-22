@@ -3,7 +3,7 @@
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
 .B gschem
-[-q] [-v] [-t] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [schematic1 ... schematicN]
+[-q] [-v] [-t] [-r rcfilename] [-s scriptfilename] [-o outputfilename] [-p] [schematic1 ... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgschem\fP is the schematic capture program which is part gEDA 
@@ -54,6 +54,10 @@ Specify a filename for postscript output.  This command line argument is
 useful when running \fIgschem\fP from a shell script and with a guile script.  The 
 filename can be changed through
 the print dialog box.
+.TP 8
+.B -p 
+Automatically place the window, especially useful if running gschem from the
+command line and generating output.
 .TP 8
 .B schematic1 [... schematicN]
 Schematic file to be loaded.  Specifing a schematic file is optional.  If

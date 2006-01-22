@@ -87,7 +87,7 @@ do
     echo processing $dr
     ( cd $dr
 
-      aclocalinclude="-I m4 $ACLOCAL_FLAGS"
+      aclocalinclude="$ACLOCAL_FLAGS"
 
       if grep "^AM_GNU_GETTEXT" $configure_script >/dev/null; then
 	echo "autogen.sh running: autopoint ..." 

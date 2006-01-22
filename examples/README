@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for examples version 2005* 
+README for examples version 2006* 
 
 
 This directory contains design examples done with gEDA/gaf.  All designs
@@ -70,7 +70,7 @@ in this examples directory are covered by the GPL or equivalent license.
         COPYING files for more information.
 
         Programs and associated files are:
-        Copyright 1998-2005 by Ales V. Hvezda and the respective original
+        Copyright 1998-2006 by Ales Hvezda and the respective original
         authors (which are listed on the respective files)
 
 	All designs are copyright their respective authors. 
@@ -78,7 +78,7 @@ in this examples directory are covered by the GPL or equivalent license.
 
 - Contact information  
 
-	Ales V. Hvezda 
+	Ales Hvezda 
         E-mail: ahvezda@seul.org
         Web: http://www.geda.seul.org/
 

@@ -4,7 +4,7 @@ gEDA
 GPL Electronic Design Automation
 ------------------------------------------------------------------------------
 
-README for gsymcheck version 2005* 
+README for gsymcheck version 2006* 
 
 
 - Installation
@@ -23,7 +23,7 @@ README for gsymcheck version 2005*
         COPYING files for more information.
 
 	Programs and associated files are: 
-	Copyright 1998-2005 by Ales V. Hvezda and the respective original
+	Copyright 1998-2006 by Ales Hvezda and the respective original
 	authors (which are listed on the respective files)
 
 
@@ -39,7 +39,7 @@ README for gsymcheck version 2005*
 
 - Contact information  
 
-	Ales V. Hvezda 
+	Ales Hvezda 
 	E-mail: ahvezda@geda.seul.org
 	Web: http://www.geda.seul.org/
 
