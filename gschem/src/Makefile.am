@@ -39,8 +39,8 @@ if CCISGCC
 AM_CFLAGS = -Wall
 endif
 
-INCLUDES = -I$(top_srcdir)/intl -I$(top_srcdir)/include @GSCHEM_CFLAGS@
-gschem_LDADD = @GSCHEM_LDFLAGS@ @LIBINTL@
+INCLUDES = -I$(prefix)/include -I$(top_srcdir)/intl -I$(top_srcdir)/include @GSCHEM_CFLAGS@
+gschem_LDADD = -L$(prefix)/lib @GSCHEM_LDFLAGS@ @LIBINTL@
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
