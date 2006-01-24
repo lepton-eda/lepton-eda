@@ -14,7 +14,7 @@ msgstr ""
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -117,7 +117,9 @@ msgstr ""
 #: noweb/g_rc.nw:2022
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "Espaciado de punto no válido [%d] especificado a la función grid-fixed-threshold\n"
+msgstr ""
+"Espaciado de punto no válido [%d] especificado a la función grid-fixed-"
+"threshold\n"
 
 #: noweb/g_rc.nw:2054
 #, c-format
@@ -129,12 +131,16 @@ msgstr ""
 #: noweb/g_rc.nw:2085
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
-msgstr "Se ha especificado un desplazamiento no válido [%d] a la función add-attribute-offset\n"
+msgstr ""
+"Se ha especificado un desplazamiento no válido [%d] a la función add-"
+"attribute-offset\n"
 
 #: noweb/g_rc.nw:2114
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
-msgstr "Se ha especificado un número de segundos no válido [%d] a la función auto-save-interval\n"
+msgstr ""
+"Se ha especificado un número de segundos no válido [%d] a la función auto-"
+"save-interval\n"
 
 #: noweb/gschem.nw:179 noweb/gschem.nw:189
 #, c-format
@@ -902,7 +908,8 @@ msgstr "El componente todavía está incrustado y no actualizado\n"
 #: noweb/o_misc.nw:1755
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
-msgstr "o_autosave_backups: Imposible averiguar el nombre de fichero real de %s."
+msgstr ""
+"o_autosave_backups: Imposible averiguar el nombre de fichero real de %s."
 
 #: noweb/o_misc.nw:1797
 #, c-format
@@ -2208,7 +2215,9 @@ msgstr "Descartar página"
 
 #: noweb/x_preview.nw:183
 msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
-msgstr "x_preview_update_gtk24: Imposible obtener el pixbuf de la estructura preview.\n"
+msgstr ""
+"x_preview_update_gtk24: Imposible obtener el pixbuf de la estructura "
+"preview.\n"
 
 #: noweb/x_print.nw:189
 msgid "Landscape"
@@ -2400,4 +2409,3 @@ msgstr "Menú/Cancelar"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
-

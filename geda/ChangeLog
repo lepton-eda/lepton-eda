@@ -1,3 +1,7 @@
+2006-01-23 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* po/*: auto* tools update all po files for distribution.
+
 2006-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* autogen.sh, m4/gettext.m4: Removed files from CVS since they are

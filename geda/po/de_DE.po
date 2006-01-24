@@ -161,4 +161,3 @@ msgstr "Bilddatei nicht gefunden: %s"
 #, c-format
 msgid "Error loading pixmap file: %s"
 msgstr "Fehler beim Laden der Bilddatei %s"
-

@@ -15,7 +15,7 @@ msgstr ""
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
