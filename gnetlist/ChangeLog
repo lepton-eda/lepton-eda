@@ -1,3 +1,7 @@
+2006-02-05 Werner Hoch	<werner.ho@gmx.de>
+	* scheme/gnet-spice.scm: cccs, ccvs, vccs and vcvs replacement uses
+	a dash "-" in the name of vsens replacement, ngspice doesn't like that
+
 2006-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* autogen.sh, m4/guile.m4, src/Makefile.am: Removed m4 files since 

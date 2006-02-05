@@ -1,3 +1,7 @@
+2006-02-05: Werner Hoch  <werner.ho@gmx.de>
+	* spice/cccs-1.sym, spice/ccvs-1.sym, spice/vccs-1.sym, 
+	  spice/vcvs-1.sym: added value attribute, pinlabels fixed
+
 2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped package version to 20060123

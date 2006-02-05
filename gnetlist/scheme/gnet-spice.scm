@@ -81,14 +81,14 @@
           ;; the user should create the uref label begining with a h
       (display (string-append package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
-      (display (string-append "v-sense-" package  " " (spice:component-value package) "\n" ) port)
+      (display (string-append "Vsense_" package  " " (spice:component-value package) "\n" ) port)
           ;; implement the current measuring voltage source
-      (display (string-append "v-sense-" package " ") port)
+      (display (string-append "Vsense_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; now it is possible to leave the output voltage source unconnected
           ;; i.e. spice won't complain about unconnected nodes
-      (display (string-append "i-out-" package " ") port)
+      (display (string-append "Iout_" package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
       (display "dc 0\n" port)
       (display "* end ccvs expansion\n" port))))
@@ -105,9 +105,9 @@
           ;; the user should create the uref label begining with a f
       (display (string-append package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
-      (display (string-append "v-sense-" package " " (gnetlist:get-package-attribute package "value") "\n" ) port)
+      (display (string-append "Vsense_" package " " (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the current measuring voltage source
-      (display (string-append "v-sense-" package " ") port)
+      (display (string-append "Vsense_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
       (display "* end cccs expansion\n" port))))
@@ -130,7 +130,7 @@
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
-      (display (string-append "i-measure-" package " ") port)
+      (display (string-append "Imeasure_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
       (display "* end vccs expansion\n" port))))
@@ -152,12 +152,12 @@
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
-      (display (string-append "i-sense-" package " ") port)
+      (display (string-append "Isense_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; with an output current source it is possible to leave the output voltage source 
           ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "i-out-" package " ") port)
+      (display (string-append "Iout_" package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
       (display "dc 0\n" port)
       (display "* end vcvs expansion\n" port))))
@@ -178,12 +178,12 @@
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
-      (display (string-append "i-measure-" package " ") port)
+      (display (string-append "Imeasure_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
           ;; with an output current source it is possible to leave the output voltage source 
           ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "i-out-" package " ") port)
+      (display (string-append "Iout_" package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
       (display "dc 0\n" port)
       (display "* end of nullor expansion\n" port))))
