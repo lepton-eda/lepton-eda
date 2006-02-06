@@ -323,6 +323,7 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   GdkPixbuf *pixbuf;
   char *filetype;
 #endif
+  float prop;
 
   width = w_current->image_width;
   height = w_current->image_height;
@@ -345,7 +346,7 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
   page_center_top = save_page_top + (page_height / 2);
 
   /* Preserve proportions */
-  float prop = (float)width / height;
+  prop = (float)width / height;
   if(page_width > page_height) {
     page_height = (page_width / prop);
   }else{
