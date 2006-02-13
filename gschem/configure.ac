@@ -322,7 +322,7 @@ AC_PATH_PROG(NOTANGLE, notangle, no, ${PATH})
 cfiles=`\ls -1 src/libgeda.c 2> /dev/null`
 exit_status=$?
 
-if test "$NOTANGLE" = "no" -a "$exit_status" = "1"; then
+if test "$NOTANGLE" = "no" -a "$exit_status" != "0"; then
 
    # notangle not found, and no C sources in src 
    # need notangle_guile
