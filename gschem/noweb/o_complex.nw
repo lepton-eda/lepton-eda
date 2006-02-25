@@ -445,6 +445,13 @@ o_complex_end(TOPLEVEL *w_current, int screen_x, int screen_y)
                           SCM_EOL));
   }
 
+  if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F &&
+      o_current != NULL) {
+    scm_run_hook(add_component_object_hook,
+		 scm_cons(g_make_object_smob(w_current, o_current),
+			  SCM_EOL));
+  }
+
   /* put code here to deal with emebedded stuff */
   if (w_current->embed_complex) {
     char* new_basename;

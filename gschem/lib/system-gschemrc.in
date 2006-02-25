@@ -768,6 +768,122 @@
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 
+; Define default pin attributes
+; Attributes: 
+;   - Attribute name.
+;   - Value of the attribute.
+;   - Visibility: #t (visible) or #f (hidden).
+;   - Show_list:  a list containing what to show, using 
+;                 elements like 'name' or 'value', or an empty list.
+(define default-pin-attributes 
+       '(("pintype"   "unknown" #f ())
+	 ("pinlabel"  "unknown" #t (value))
+	 ("pinnumber" "0"       #t (value))
+	 ("pinseq"    "0"       #f ())))
+
+(define default-position-of-text-attributes
+   ; Specifies the default position of pin attributes.
+   ; An attribute whose name is "attrib_name" in a pin with direction
+   ; "pin_direction" will be placed at the offset specified (x_offset and
+   ; y_offset) from the "reference" of the symbol or pin..
+   ; The direction always points to inside of the symbol.
+   ; The reference string is the reference used when placing the attribute.
+   ; It has the format:
+   ;   "horizontal vertical", where: 
+   ;     - "horizontal" is one of the following: "Left", "Middle", "Right".
+   ;     - "vertical" is one of the following: "Lower", "Middle", "Upper".
+   ;   Example: "Lower Right".
+   ; The alignment and angle will be also set.
+   ; Attrib_name  Direct. X_offset Y_offset Reference       Alignment    Angle 
+  '( ("pinlabel"  ">"          50        0  "Lower Right"   "Lower Left"     0)
+     ("pinlabel"  "<"         -50        0  "Lower Left"    "Lower Right"    0)
+     ("pinlabel"  "^"           0       50  "Upper Middle"  "Lower Left"    90)
+     ("pinlabel"  "v"           0      -50  "Lower Middle"  "Lower Right"   90)
+     ("pinnumber" ">"        -100       50  "Lower Right"   "Lower Right"    0)
+     ("pinnumber" "<"         100       50  "Lower Left"    "Lower Left"     0)
+     ("pinnumber" "^"         -50     -100  "Upper Middle"  "Lower Right"   90)
+     ("pinnumber" "v"         -50      100  "Lower Middle"  "Lower Left"    90)
+
+     ; Component attributes
+     ;   One direction
+     ("refdes"    "<"         -50       50  "Upper Middle"  "Lower Right"    0)
+     ("value"     "<"          50       50  "Upper Middle"  "Lower Left"     0)
+     ("refdes"    ">"         -50       50  "Upper Middle"  "Lower Right"    0)
+     ("value"     ">"          50       50  "Upper Middle"  "Lower Left"     0)
+     ("refdes"    "^"          50      100  "Middle Left"   "Lower Right"    0)
+     ("value"     "^"          50     -100  "Middle Left"   "Lower Right"    0)
+     ("refdes"    "v"          50      100  "Middle Left"   "Lower Right"    0)
+     ("value"     "v"          50     -100  "Middle Left"   "Lower Right"    0)
+     ;   Two directions
+     ("refdes"    "<>"        -50       50  "Upper Middle"  "Lower Right"    0)
+     ("value"     "<>"         50       50  "Upper Middle"  "Lower Left"     0)
+     ("refdes"    "^v"        -50      100  "Middle Left"   "Lower Right"    0)
+     ("value"     "^v"        -50     -100  "Middle Left"   "Lower Right"    0)
+     ;   Three directions
+     ("refdes"    "<^v"       -50      100  "Middle Left"   "Lower Right"    0)
+     ("value"     "<^v"       -50     -100  "Middle Left"   "Lower Right"    0)
+     ("refdes"    ">^v"        50      100  "Middle Right"  "Lower Left"     0)
+     ("value"     ">^v"        50     -100  "Middle Right"  "Lower Left"     0)
+     ("refdes"    "<>v"       -50      -50  "Lower Middle"  "Upper Right"    0)
+     ("value"     "<>v"        50      -50  "Lower Middle"  "Upper Left"     0)
+     ("refdes"    "<>^"       -50       50  "Upper Middle"  "Lower Right"    0)
+     ("value"     "<>^"        50       50  "Upper Middle"  "Lower Left"     0)
+     ;   Four directions
+     ("refdes"    "<>^v"      300       50  "Upper Left"    "Lower Left"     0)
+     ("value"     "<>^v"     -300       50  "Upper Right"   "Lower Right"    0)
+     ))
+
+; Position of parameters inside default-position-of-text-attributes
+(define def-attrib-name-pos   0)
+(define def-direction-pos     1)
+(define def-x-offset-pos      2)
+(define def-y-offset-pos      3)
+(define def-reference-pos     4)
+(define def-alignment-pos     5)
+(define def-angle-pos         6)
+
+; Adds the default pin attributes to each newly placed pin.
+(define (add-default-pin-attributes object)
+  (for-each
+    (lambda (a)
+      (apply add-attribute-to-object object a)) default-pin-attributes))
+
+; Comment in this hook to automatically add the default attributes to
+; each newly placed pin
+(add-hook! add-pin-hook add-default-pin-attributes)
+
+
+; Comment in this to load the functions to place the attributes automatically.
+(load (string-append gedadatarc "/scheme/auto-place-attribs.scm"))
+
+; Autoplace pin text attributes hook. 
+; Comment in these if you want the pin attributes to be automatically placed.
+; There are different hooks for situations like adding a new pin and rotating
+; or mirroring an existing one. 
+; The #t at the end means that function is appended to the end of the hook.
+(add-hook! add-pin-hook (lambda (pin)
+	(autoplace-pin-attributes pin )) #t)
+(add-hook! rotate-pin-hook (lambda (pin)
+	(autoplace-pin-attributes pin )) #t)
+(add-hook! mirror-pin-hook (lambda (pin)
+	(autoplace-pin-attributes pin )) #t)
+
+; Autoplace component text attributes hook. 
+; Comment in these if you want the component attributes to be 
+; automatically placed.
+; There are different hooks for situations like adding a new pin, rotating
+; or mirroring an existing one, or adding a new attribute.
+; The #t at the end means that function is appended to the end of the hook.
+(add-hook! add-component-object-hook (lambda (object)
+	(autoplace-object-attributes object)) #t)
+(add-hook! rotate-component-object-hook (lambda (object)
+	(autoplace-object-attributes object)) #t)
+(add-hook! mirror-component-object-hook (lambda (object)
+	(autoplace-object-attributes object)) #t)
+(add-hook! add-attribute-hook (lambda (object)
+	(autoplace-object-attributes object)) #t)
+
+
 ;
 ; End of hooks
 ;

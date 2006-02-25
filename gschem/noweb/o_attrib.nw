@@ -551,6 +551,15 @@ o_attrib_add_attrib(TOPLEVEL *w_current, char *text_string, int visibility,
   if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {
     o_slot_end (w_current, text_string, strlen (text_string));
   }
+
+  /* Run the add attribute hook */
+  if (scm_hook_empty_p(add_attribute_hook) == SCM_BOOL_F &&
+      object != NULL) {
+	scm_run_hook(add_attribute_hook,
+		     scm_cons(g_make_object_smob(w_current, 
+						 o_current),
+			      SCM_EOL));
+      }
   
   w_current->page_current->CHANGED = 1;
 

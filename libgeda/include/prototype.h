@@ -66,6 +66,12 @@ SCM g_get_attrib_name_value(SCM attrib_smob);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
 void g_init_attrib_smob(void);
 
+SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
+SCM g_get_object_attributes(SCM object_smob);
+void g_init_object_smob(void);
+gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
+				     OBJECT **object);
+
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *w_current);
 void i_vars_setnames(TOPLEVEL *w_current);
@@ -497,6 +503,7 @@ char *s_color_ps_string(int color);
 int s_color_image_int(int color);
 void s_color_gdcolor_init(void);
 int s_color_get_name(int index, char *string);
+int s_color_get_index(char *string);
 
 /* s_conn.c */
 CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);

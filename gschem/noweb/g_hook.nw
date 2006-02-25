@@ -13,6 +13,11 @@
 <<g_hook.c : include directives>>
 <<g_hook.c : g_make_attrib_smob_list()>>
 <<g_hook.c : g_set_attrib_value_x()>>
+<<g_hook.c : g_add_attrib()>>
+<<g_hook.c : g_get_pin_ends()>>
+<<g_hook.c : g_set_attrib_text_properties()>>
+<<g_hook.c : g_get_object_bounds>>
+<<g_hook.c : g_get_object_pins>>
 
 @
 
@@ -145,3 +150,370 @@ g_set_attrib_value_x(SCM attrib_smob, SCM scm_value)
 @ %def g_set_attrib_value_x
 
 
+@defun g_add_attrib 
+Adds an attribute [[scm_attrib_name]] with value [[scm_attrib_value]] to the given [[object]].
+The attribute has the visibility [[scm_vis]] and show [[scm_show]] flags.
+The possible values are:
+  - [[scm_vis]]: scheme boolean. Visible (TRUE) or hidden (FALSE).
+  - [[scm_show]]: a list containing what to show: "name", "value", or both.
+The return value is always TRUE.
+@end defun
+
+<<g_hook.c : g_add_attrib()>>=
+SCM
+g_add_attrib(SCM object, SCM scm_attrib_name, 
+	     SCM scm_attrib_value, SCM scm_vis, SCM scm_show)
+{
+  TOPLEVEL *w_current=NULL; 
+  OBJECT *o_current=NULL;
+  gboolean vis;
+  int show=0;
+  gchar *attrib_name=NULL;
+  gchar *attrib_value=NULL;
+  gchar *value=NULL;
+  int i;
+  gchar *newtext=NULL;
+
+  SCM_ASSERT (SCM_STRINGP(scm_attrib_name), scm_attrib_name,
+	      SCM_ARG2, "add-attribute-to-object");
+  SCM_ASSERT (SCM_STRINGP(scm_attrib_value), scm_attrib_value,
+	      SCM_ARG3, "add-attribute-to-object");
+  SCM_ASSERT (scm_boolean_p(scm_vis), scm_vis,
+	      SCM_ARG4, "add-attribute-to-object");
+  SCM_ASSERT (scm_list_p(scm_show), scm_show,
+	      SCM_ARG5, "add-attribute-to-object");
+  
+  /* Get w_current and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object, &w_current, &o_current),
+	      object, SCM_ARG1, "add-attribute-to-object");
+
+  /* Get parameters */
+  attrib_name = SCM_STRING_CHARS(scm_attrib_name);
+  attrib_value = SCM_STRING_CHARS(scm_attrib_value);
+  vis = SCM_NFALSEP(scm_vis);
+
+  for (i=0; i<=SCM_INUM(scm_length(scm_show))-1; i++) {
+    value = SCM_STRING_CHARS(scm_list_ref(scm_show, SCM_MAKINUM(i)));
+    SCM_ASSERT(!((strcasecmp(value, "name") != 0) &&
+		 (strcasecmp(value, "value") != 0) ), scm_show,
+	       SCM_ARG5, "add-attribute-to-object"); 
+    /* show = 1 => show value; 
+       show = 2 => show name; 
+       show = 3 => show both */
+    if (strcasecmp(value, "value") == 0) {
+      show |= 1;
+    }
+    else if (strcasecmp(value, "name") == 0) {
+      show |= 2;
+    }	  
+  }
+  /* Show name and value (show = 3) => show=0 for gschem */
+  if (show == 3) {
+    show = 0;
+  }
+  
+  newtext = g_strdup_printf("%s=%s", attrib_name, attrib_value);
+  o_attrib_add_attrib (w_current, newtext, vis, show, o_current);
+  g_free(newtext);
+
+  return SCM_BOOL_T;
+
+}
+@ %def g_add_attrib
+
+@defun g_get_pin_ends
+Returns a list with coords of the ends of  the given pin [[object]].
+The list is ( (x0 y0) (x1 y1) ), where the beginning is at (x0,y0) and the end at (x1,y1). 
+The active connection end of the pin is the beginning, so this function cares about the whichend property of the pin object. If whichend is 1, then it has to reverse the ends.
+@end defun
+
+<<g_hook.c : g_get_pin_ends()>>=
+SCM
+g_get_pin_ends(SCM object)
+{
+  TOPLEVEL *w_current;
+  OBJECT *o_current;
+  SCM coord1 = SCM_EOL;
+  SCM coord2 = SCM_EOL;
+  SCM coords = SCM_EOL;
+
+  /* Get w_current and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object, &w_current, &o_current),
+	      object, SCM_ARG1, "get-pin-ends");
+  
+  /* Check that it is a pin object */
+  SCM_ASSERT (o_current != NULL,
+	      object, SCM_ARG1, "get-pin-ends");
+  SCM_ASSERT (o_current->type == OBJ_PIN,
+	      object, SCM_ARG1, "get-pin-ends");
+  SCM_ASSERT (o_current->line != NULL,
+	      object, SCM_ARG1, "get-pin-ends");
+
+  coord1 = scm_cons(SCM_MAKINUM(o_current->line->x[0]), 
+		    SCM_MAKINUM(o_current->line->y[0]));
+  coord2 = scm_cons(SCM_MAKINUM(o_current->line->x[1]),
+		    SCM_MAKINUM(o_current->line->y[1]));
+  if (o_current->whichend == 0) {
+    coords = scm_cons(coord1, scm_list(coord2));
+  } else {
+    coords = scm_cons(coord2, scm_list(coord1));
+  }    
+		     
+  return coords;  
+}
+@ %def g_get_pin_ends
+
+@defun g_set_attrib_text_properties
+Sets several text properties of the given [[attribute smob]]:
+  - [[colorname]]: The colorname of the text, or "" to keep previous color.
+  - [[size]]: Size (numeric) of the text, or -1 to keep the previous size.
+  - [[alignment]]: String with the alignment of the text. Possible values are:
+    * ""           : Keep the previous alignment.
+    * "Lower Left"
+    * "Middle Left"
+    * "Upper Left"
+    * "Lower Middle"
+    * "Middle Middle"
+    * "Upper Middle"
+    * "Lower Right"
+    * "Middle Right"
+    * "Upper Right"
+  - [[rotation]]: Angle of the text, or -1 to keep previous angle.
+  - [[x]], [[y]]: Coords of the text.
+@end defun
+
+<<g_hook.c : g_set_attrib_text_properties()>>=
+SCM
+g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size, 
+			     SCM scm_alignment, SCM scm_rotation, SCM scm_x,
+			     SCM scm_y)
+{
+  struct st_attrib_smob *attribute = 
+  (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  OBJECT *object;
+  TOPLEVEL *w_current = (TOPLEVEL *) attribute->world;
+
+  char *colorname=NULL;
+  int color=0;
+  int size = -1;
+  char *alignment_string;
+  int alignment = -2;
+  int rotation = 0;
+  int x = -1, y = -1;
+  gboolean changed = FALSE;
+
+  SCM_ASSERT (SCM_STRINGP(scm_colorname), scm_colorname,
+	      SCM_ARG2, "set-attribute-text-properties!");
+  SCM_ASSERT ( SCM_INUMP(scm_size),
+               scm_size, SCM_ARG3, "set-attribute-text-properties!");
+  SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+	      SCM_ARG4, "set-attribute-text-properties!");
+  SCM_ASSERT ( SCM_INUMP(scm_rotation),
+               scm_rotation, SCM_ARG5, "set-attribute-text-properties!");
+  SCM_ASSERT ( SCM_INUMP(scm_x),
+               scm_x, SCM_ARG6, "set-attribute-text-properties!");
+  SCM_ASSERT ( SCM_INUMP(scm_y),
+               scm_y, SCM_ARG7, "set-attribute-text-properties!");
+
+  colorname = SCM_STRING_CHARS(scm_colorname);
+
+  if (colorname && strlen(colorname) != 0) {
+    SCM_ASSERT ( (color = s_color_get_index(colorname)) != -1,
+		 scm_colorname, SCM_ARG2, "set-attribute-text-properties!");
+  }
+  else {
+    color = -1;
+  }
+  
+  size = SCM_INUM(scm_size);
+  rotation = SCM_INUM(scm_rotation);
+  x = SCM_INUM(scm_x);
+  y = SCM_INUM(scm_y);
+  
+  alignment_string = SCM_STRING_CHARS(scm_alignment);
+
+  if (strlen(alignment_string) == 0) {
+    alignment = -1;
+  }
+  if (strcmp(alignment_string, "Lower Left") == 0) {
+    alignment = 0;
+  }
+  if (strcmp(alignment_string, "Middle Left") == 0) {
+    alignment = 1;
+  }
+  if (strcmp(alignment_string, "Upper Left") == 0) {
+    alignment = 2;
+  }
+  if (strcmp(alignment_string, "Lower Middle") == 0) {
+    alignment = 3;
+  }
+  if (strcmp(alignment_string, "Middle Middle") == 0) {
+    alignment = 4;
+  }
+  if (strcmp(alignment_string, "Upper Middle") == 0) {
+    alignment = 5;
+  }
+  if (strcmp(alignment_string, "Lower Right") == 0) {
+    alignment = 6;
+  }
+  if (strcmp(alignment_string, "Middle Right") == 0) {
+    alignment = 7;
+  }
+  if (strcmp(alignment_string, "Upper Right") == 0) {
+    alignment = 8;
+  }
+  if (alignment == -2) {
+    /* Bad specified */
+    SCM_ASSERT (SCM_STRINGP(scm_alignment), scm_alignment,
+		SCM_ARG4, "set-attribute-text-properties!");
+  }
+
+  if (attribute &&
+      attribute->attribute &&
+      attribute->attribute->object) {
+    object = (OBJECT *) attribute->attribute->object;
+    if (object &&
+	object->text) {
+      if (x != -1) {
+	object->text->x = x;
+	changed = TRUE;
+      }
+      if (y != -1) {
+	object->text->y = y;
+	changed = TRUE;
+      }
+      if (changed) {
+	WORLDtoSCREEN(w_current, x, y, &object->text->screen_x, &object->text->screen_y);
+      }
+      if (size != -1) {
+	object->text->size = size;
+	changed = TRUE;
+      }
+      if (alignment != -1) {
+	object->text->alignment = alignment;
+	changed = TRUE;
+      }
+      if (rotation != -1) {
+	object->text->angle = rotation;
+	changed = TRUE;
+      }
+      if (changed) {
+	o_text_erase(w_current, object);
+	o_text_recreate(w_current, object);
+	o_text_draw(w_current, object);
+      }
+    }
+  }
+  return SCM_BOOL_T;
+}
+@ %def g_set_attrib_text_properties
+
+
+@defun g_get_object_bounds
+Returns a list of the bounds of the [[object smob]]. 
+The list has the format: ( (left right) (top bottom) )
+I got top and bottom values reversed from world_get_complex_bounds, so don\'t rely on the position in the list. /* FIXME */
+@end defun
+
+<<g_hook.c : g_get_object_bounds>>=
+SCM
+g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs)
+{
+  TOPLEVEL *w_current=NULL;
+  OBJECT *object=NULL;
+  int left=0, right=0, bottom=0, top=0;
+  SCM returned = SCM_EOL;
+  SCM vertical = SCM_EOL;
+  SCM horizontal = SCM_EOL;
+  OBJECT *new_object = NULL;
+  OBJECT *new_node = NULL;
+  OBJECT *aux, *last_added=NULL;
+  gboolean include_attribs;
+
+  SCM_ASSERT (scm_boolean_p(scm_inc_attribs), scm_inc_attribs,
+	      SCM_ARG2, "get-object-bounds");
+  include_attribs = SCM_NFALSEP(scm_inc_attribs);
+
+  /* Get w_current and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object_smob, &w_current, &object),
+	      object_smob, SCM_ARG1, "get-object-bounds");
+
+  if (!include_attribs) {
+    /* Don't include the attributes when computing the bounds.
+       So make a new object list without the attributes (those which
+       have the attached_to != NULL) */
+    aux = object;
+    while (aux != NULL) {
+      if (aux->attached_to == NULL) {
+	new_node = (OBJECT *) malloc(sizeof(OBJECT));
+	memcpy (new_node, aux, sizeof(OBJECT));
+	new_node->next = NULL;
+	new_node->prev = last_added;
+	if (new_object) {
+	  last_added->next = new_node;
+	  last_added = new_node;
+	}
+	else {
+	  new_object = new_node;
+	  last_added = new_object;
+	}
+      }
+      aux = aux->next;
+    }
+  }
+  else {
+    new_object = object;
+  }
+    
+  world_get_complex_bounds (w_current, new_object, 
+			    &left, &top, &right, &bottom);
+  
+  if (!include_attribs) {
+    /* Free the newly created list */
+    aux = new_object;
+    while (aux != NULL) {
+      new_object = aux->next;
+      g_free(aux);
+      aux = new_object;
+    }
+  }
+  
+  horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));
+  vertical = scm_cons (SCM_MAKINUM(top), SCM_MAKINUM(bottom));
+  returned = scm_cons (horizontal, vertical);
+  return (returned);
+}
+@ %def g_get_object_bounds
+
+
+
+@defun g_get_object_pins
+Returns a list of the pins of the [[object smob]].
+@end defun
+
+<<g_hook.c : g_get_object_pins>>=
+SCM
+g_get_object_pins (SCM object_smob)
+{
+  TOPLEVEL *w_current=NULL;
+  OBJECT *object=NULL;
+  OBJECT *prim_obj;
+  SCM returned=SCM_EOL;
+
+  /* Get w_current and o_current */
+  SCM_ASSERT (g_get_data_from_object_smob (object_smob, &w_current, &object),
+	      object_smob, SCM_ARG1, "get-object-pins");
+
+  if (object->complex && object->complex->prim_objs) {
+    prim_obj = object->complex->prim_objs;
+    while (prim_obj != NULL) {
+      if (prim_obj->type == OBJ_PIN) {
+	returned = scm_cons (g_make_object_smob(w_current, prim_obj),returned);
+      }
+      prim_obj = prim_obj->next;
+    }
+  }
+  
+  return (returned);
+}
+@ %def g_get_object_pins

@@ -299,6 +299,9 @@ o_unlock(TOPLEVEL *w_current)
 @section Function @code{o_rotate_90()}
 
 @defun o_rotate_90 w_current list centerx centery
+Given the selection [[list]], and the center of rotation ([[centerx]],[[centery]], this function traverses all the selection list, rotating each object.
+The selection list contains a given object and all its attributes (refdes, pinname, pinlabel, ...).
+There is a second pass to run the rotate hooks of non-simple objects, like pin or complex objects, for example.
 @end defun
 
 <<o_misc.c : o_rotate_90()>>=
@@ -310,7 +313,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
   int new_angle;
   GList *other_objects=NULL;
   GList *connected_objects=NULL;
-  OBJECT *o_current;
+  OBJECT *o_current=NULL;
         
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
@@ -411,7 +414,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
         o_cue_draw_list(w_current, connected_objects);
 
         /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object); 
+        o_cue_draw_single(w_current, object);
         break;
 
       case(OBJ_COMPLEX):
@@ -515,6 +518,46 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
         o_text_draw(w_current, object);
         break;
     }
+    s_current = s_current->next;
+  }
+
+  /* All objects were rotated. Do a 2nd pass to run the rotate hooks */
+  /* Do not run any hooks for simple objects here, like text, since they
+     were rotated in the previous pass, and the selection list can contain
+     an object and all its attributes (text) */
+  s_current = list;
+  while (s_current != NULL) {
+    object = s_current->selected_object;
+
+    if (!object) {
+      fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
+      return;
+    }
+
+    switch(object->type) {
+      case(OBJ_PIN):
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(rotate_pin_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(rotate_pin_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
+
+      case (OBJ_COMPLEX):
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(rotate_component_object_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
+    default:
+	break;
+    }
+
     s_current = s_current->next;
   }
 
@@ -851,6 +894,47 @@ o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
     s_current = s_current->next;
 
   }
+
+  /* All objects were rotated. Do a 2nd pass to run the rotate hooks */
+  /* Do not run any hooks for simple objects here, like text, since they
+     were rotated in the previous pass, and the selection list can contain
+     an object and all its attributes (text) */
+  s_current = list;
+  while (s_current != NULL) {
+    object = s_current->selected_object;
+
+    if (!object) {
+      fprintf(stderr, _("ERROR: NULL object in o_rotate_90!\n"));
+      return;
+    }
+
+    switch(object->type) {
+      case(OBJ_PIN):
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(mirror_pin_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(rotate_pin_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
+
+      case (OBJ_COMPLEX):
+	/* Run the rotate pin hook */
+	if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
+	    object != NULL) {
+	  scm_run_hook(mirror_component_object_hook,
+		       scm_cons(g_make_object_smob(w_current, object),
+				SCM_EOL));
+	}
+	break;
+    default:
+	break;
+    }
+
+    s_current = s_current->next;
+  }
+
 
   w_current->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

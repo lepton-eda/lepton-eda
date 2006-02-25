@@ -9,12 +9,12 @@ msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-12 19:33+0100\n"
-"PO-Revision-Date: 2006-01-13 17:54+0100\n"
+"PO-Revision-Date: 2006-02-12 22:18+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: noweb/a_zoom.nw:298
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -249,7 +249,7 @@ msgstr "Ampliar"
 
 #: noweb/i_basic.nw:175
 msgid "Pan Mode"
-msgstr "Modo Abarcar"
+msgstr "Modo Centrar"
 
 #: noweb/i_basic.nw:179
 #, c-format
@@ -485,7 +485,7 @@ msgstr "Editar tipo de relleno"
 
 #: noweb/i_callbacks.nw:1988 noweb/i_callbacks.nw:2008 noweb/rcstrings.nw:60
 msgid "Pan"
-msgstr "Abarcar"
+msgstr "Centrar respecto al cursor"
 
 #: noweb/i_callbacks.nw:2046
 msgid "Update Cues"
@@ -1541,7 +1541,7 @@ msgstr "Abajo a la izquierda"
 
 #: noweb/x_dialog.nw:680
 msgid "Middle Left"
-msgstr "Abajo en el centro"
+msgstr "Centrado a la izquierda"
 
 #: noweb/x_dialog.nw:691
 msgid "Upper Left"
@@ -1549,15 +1549,15 @@ msgstr "Arriba a la izquierda"
 
 #: noweb/x_dialog.nw:702
 msgid "Lower Middle"
-msgstr "Centro inferior"
+msgstr "Abajo centrado"
 
 #: noweb/x_dialog.nw:713
 msgid "Middle Middle"
-msgstr "Centro Centro"
+msgstr "Centrado Centrado"
 
 #: noweb/x_dialog.nw:724
 msgid "Upper Middle"
-msgstr "Centro superior"
+msgstr "Arriba centrado"
 
 #: noweb/x_dialog.nw:735
 msgid "Lower Right"
@@ -1565,7 +1565,7 @@ msgstr "Abajo a la derecha"
 
 #: noweb/x_dialog.nw:746
 msgid "Middle Right"
-msgstr "Abajo en el centro"
+msgstr "Centrado a la derecha"
 
 #: noweb/x_dialog.nw:757
 msgid "Upper Right"
@@ -2409,3 +2409,4 @@ msgstr "Menú/Cancelar"
 #: noweb/x_window.nw:951
 msgid "Pan/Cancel"
 msgstr "Panorámica/Cancelar"
+

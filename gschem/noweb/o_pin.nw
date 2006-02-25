@@ -53,6 +53,7 @@
 
 #include <libgeda/libgeda.h>
 
+#include "../include/globals.h"
 #include "../include/x_states.h"
 #include "../include/prototype.h"
 
@@ -266,6 +267,7 @@ o_pin_end(TOPLEVEL *w_current, int x, int y)
   int color;
   int size;
   GList *other_objects = NULL;
+  OBJECT *o_current;
 
   if (w_current->inside_action == 0) {
     o_redraw(w_current, w_current->page_current->object_head);
@@ -343,6 +345,14 @@ o_pin_end(TOPLEVEL *w_current, int x, int y)
             x1, y1, x2, y2,
             PIN_TYPE_NET, 0);
 
+  o_current = w_current->page_current->object_tail;
+  if (scm_hook_empty_p(add_pin_hook) == SCM_BOOL_F &&
+      o_current != NULL) {
+    scm_run_hook(add_pin_hook,
+		 scm_cons(g_make_object_smob(w_current, o_current),
+			  SCM_EOL));
+  }
+
   other_objects = s_conn_return_others(other_objects,
                                        w_current->page_current->
                                        object_tail);
@@ -356,6 +366,7 @@ o_pin_end(TOPLEVEL *w_current, int x, int y)
   w_current->last_x = (-1);
   w_current->last_y = (-1);
   w_current->page_current->CHANGED=1;
+
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

@@ -70,8 +70,15 @@ extern OBJECT *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
 extern SCM add_component_hook;
+extern SCM add_component_object_hook;
+extern SCM mirror_component_object_hook;
+extern SCM rotate_component_object_hook;
 extern SCM copy_component_hook;
 extern SCM move_component_hook;
+extern SCM add_pin_hook;
+extern SCM mirror_pin_hook;
+extern SCM rotate_pin_hook;
+extern SCM add_attribute_hook;
 
 #include "gettext.h"
 #ifdef ENABLE_NLS

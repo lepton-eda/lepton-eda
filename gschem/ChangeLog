@@ -1,3 +1,28 @@
+2006-02-25 Carlos Nieves Onega <cnieves@iespana.es>	
+	* include/globals.h, include/prototype.h, noweb/g_hook.nw, 
+	  noweb/g_register.nw, noweb/globals.nw, noweb/o_pin.nw, 
+	  noweb/o_misc.nw, noweb/o_attrib.nw, noweb/o_complex.nw:
+	  Added new hooks.
+	  Added new scheme subroutines:
+	    - g_add_attrib, which adds an attribute to an object from scheme.
+	    - g_get_pin_ends, which returns the ends' coords of a pin.
+	    - g_set_attrib_text_properties, which sets all text properties 
+	      of an attribute.
+	    - g_get_object_bounds, which returns a list with the object bounds.
+	    - g_get_object_pins, which returns a list with the pins.
+	
+	* scheme/Makefile.am, scheme/auto-place-attribs.scm:
+	  Added new functions to autoplace the attributes.
+	
+	* lib/system-gschemrc.in:
+	  Modified the system-gschemrc file so gschem adds automatically
+	  the default pin attributes when placing a new pin, and also
+	  to automatically place the text attributes.
+	
+	* noweb/i_vars.h: Fixed compiler warning.
+
+	* po/es_ES.po: fixed some strings.
+	
 2006-02-25 Carlos Nieves Onega <cnieves@iespana.es>
 	* noweb/o_misc.nw: Set the backup file readonly, so an 'rm *'
 	command will ask the user if he really wants to delete the file.

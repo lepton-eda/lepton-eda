@@ -19,7 +19,7 @@
 <<s_color.c : s_color_image_int()>>
 <<s_color.c : s_color_gdcolor_init()>>
 <<s_color.c : s_color_get_name()>>
-
+<<s_color.c : s_color_get_index()>>
 @
 
 
@@ -300,3 +300,34 @@ s_color_get_name(int index, char *string)
 
 @ %def s_color_get_name
 
+
+@section Function @code{s_color_get_index()}
+
+@defun s_color_get_index string
+Returns the index of the given color name. 
+Returns -1 if not found.
+@end defun
+
+<<s_color.c : s_color_get_index()>>=
+int
+s_color_get_index(char *string)
+{
+  int index;
+
+  if (string == NULL) {
+    return(-1);
+  }
+
+  for (index = 0; index < MAX_COLORS; index++) {
+    if (strcasecmp(string, colors[index].color_name) == 0) {
+      return (index); 
+    }
+  }
+
+  /* If the color was not found, return -1 */
+  return (-1);
+
+}
+
+
+@ %def s_color_get_int

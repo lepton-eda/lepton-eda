@@ -990,4 +990,9 @@ struct st_attrib_smob {
   ATTRIB   *attribute;
 };
 
+struct st_object_smob {
+  TOPLEVEL *world;   /* We need this when updating schematic */
+  OBJECT   *object;
+};
+
 #endif

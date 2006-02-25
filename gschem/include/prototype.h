@@ -24,6 +24,15 @@ SCM get_selected_filename(TOPLEVEL *toplevel);
 /* g_hook.c */
 SCM g_make_attrib_smob_list(TOPLEVEL *curr_w, OBJECT *curr_object);
 SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value);
+SCM g_add_attrib(SCM object, SCM attrib_name, 
+		 SCM attrib_value, SCM scm_vis, SCM scm_show);
+SCM g_get_pin_ends(SCM object);
+SCM
+g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size, 
+			     SCM scm_alignment, SCM scm_rotation, SCM scm_x,
+			     SCM scm_y);
+SCM g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs);
+SCM g_get_object_pins (SCM object_smob);
 /* g_keys.c */
 void set_window_current_key(TOPLEVEL *w_current);
 void g_keys_execute(int state, int keyval);

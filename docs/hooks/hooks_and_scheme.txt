@@ -4,6 +4,7 @@ HOOKS AND SCHEME EXTENSION IN GSCHEM
 ==================================== 
 
 Copyright (C) 2000 Stefan Petersen
+Copyright (C) 2006 Carlos Nieves Onega
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +37,7 @@ The rest I will try to describe here.
 
 Scheme functions
 ----------------
-There are two function available for handling attributes in the schematic.
+There are several functions available for handling attributes in the schematic.
 
 * get-attribute-name-value
 Inparameter  : an attribute
@@ -55,15 +56,40 @@ Description  : Sets a new value to an attribute. The attribute must
 	       Defined both in gschem and libgeda, mainly because 
 	       where different variables and information are available.
 
+* add-attribute-to-object
+Inparameters  : 
+  - Object: passed as a hook argument from gschem.
+  - Attribute name.
+  - Value of the attribute.
+  - Visibility: #t (visible) or #f (hidden).
+  - Show_list:  a list containing what to show, using 
+	                  elements like 'name' or 'value', or an empty list.
+Outparameter : undefined.
+Description  : Adds a new attribute to an object. 
+
+Examples:
+  (add-attribute-to-object object "pinlabel"  "unknown" #t '(value))
+  (add-attribute-to-object object "pinnumber" "0"       #t '(value name))
+  (add-attribute-to-object object "pinseq"    "0"       #f '(name))
 
 Hooks
 -----
 Hooks are a way to define functions that will be called during different
-part of a programs execution. In gschem there are (currently) three 
+part of a programs execution. In gschem there are (currently) several 
 different hooks available:
-* add-component-hook
+* add-component-hook: The parameter to the handling function is a list 
+                      of attributes.
+* add-component-object-hook: The parameter to the handling function is 
+                             the object added.
 * copy-component-hook
+* mirror-component-object-hook
 * move-component-hook
+* rotate-component-hook
+* add-pin-hook
+* mirror-pin-hook
+* rotate-pin-hook
+* add-attribute-hook
+
 
 As their name indicate, they are called at different occasions. When 
 you add a component add-component-hook is called, etc.
@@ -109,6 +135,11 @@ ${HOME}/.gEDA/gschemrc. They are:
 If you want auto enumeration to work when you copy the component too, you 
 simply add the following line:
 (add-hook! copy-component-hook auto-uref)
+
+If you want to automatically add default attributes to each newly placed pin, 
+just add the following line to your gschemrc file:
+(add-hook! add-pin-hook add-default-pin-attributes)
+Note: This is enabled by default in the system wide gschemrc file!.
 
 Good luck!
 
