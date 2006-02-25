@@ -235,7 +235,15 @@ f_open(TOPLEVEL *w_current, char *filename)
     o_net_consolidate(w_current);
   }
 
-  w_current->page_current->CHANGED=0; /* added 4/7/98 */
+  if (load_backup_file == 0) {
+    /* If it's not the backup file */
+    w_current->page_current->CHANGED=0; /* added 4/7/98 */
+  }
+  else {
+    /* We are loading the backup file, so gschem should ask
+       the user if save it or not when closing the page. */
+    w_current->page_current->CHANGED=1;
+  }
 
   free(full_filename);
   free(full_rcfilename);
@@ -304,7 +312,7 @@ f_save(TOPLEVEL *w_current, const char *filename)
   gchar *real_filename;
   gchar *only_filename;
   gchar *dirname;
-  mode_t saved_umask;
+  mode_t saved_umask, mask;
   struct stat st;
 
   /* Get the real filename and file permissions */
@@ -327,10 +335,34 @@ f_save(TOPLEVEL *w_current, const char *filename)
     {
       backup_filename = g_strdup_printf("%s%c%s~", dirname, 
 					G_DIR_SEPARATOR, only_filename);
+
+      /* Make the backup file read-write before saving a new one */
+      if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
+	   (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
+	if (chmod(backup_filename, S_IREAD|S_IWRITE) != 0) {
+	  s_log_message ("Could NOT set previous backup file [%s] read-write\n", 
+			 backup_filename);	    
+	}
+      }
+	
       if (rename(real_filename, backup_filename) != 0) {
 	s_log_message ("Can't save backup file: %s.", backup_filename);
 	fprintf (stderr, "Can't save backup file: %s.", backup_filename);
       }
+      else {
+	/* Make the backup file readonly so a 'rm *' command will ask 
+	   the user before deleting it */
+	saved_umask = umask(0);
+	mask = (S_IWRITE|S_IWGRP|S_IEXEC|S_IXGRP|S_IXOTH);
+	mask = (~mask)&0777;
+	mask &= ((~saved_umask) & 0777);
+	if (chmod(backup_filename, mask) != 0) {
+	  s_log_message ("Could NOT set backup file [%s] readonly\n", 
+			   backup_filename);	    
+	}
+	umask(saved_umask);
+      }
+
       g_free(backup_filename);
     }
   }

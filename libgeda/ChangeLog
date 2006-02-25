@@ -1,3 +1,10 @@
+2006-02-25 Carlos Nieves Onega <cnieves@iespana.es>
+        * noweb/f_basic.nw: Set the backup file readonly, so an 'rm *'
+	command will ask the user if he really wants to delete the file.
+	When loading an autosave backup file, set the page as changed.
+	Thus, when the user closes the page, gschem will ask him wether to
+	save it or not.
+
 2006-01-22 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* autogen.sh, m4/gettext.m4: Removed m4 files since they are 

@@ -1729,6 +1729,7 @@ o_autosave_backups(TOPLEVEL *toplevel)
   gchar *only_filename;
   gchar *dirname;
   mode_t saved_umask;
+  mode_t mask;
   struct stat st;
 
   g_assert (toplevel->page_head != NULL &&
@@ -1789,10 +1790,35 @@ o_autosave_backups(TOPLEVEL *toplevel)
 	g_free (dirname);
 	g_free (only_filename);
 	g_free (real_filename);
+
+	/* Make the backup file writable before saving a new one */
+	if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
+	     (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
+	  saved_umask = umask(0);
+	  if (chmod(backup_filename, (S_IWRITE|S_IWGRP|S_IWOTH) & 
+		    ((~saved_umask) & 0777)) != 0) {
+	    s_log_message (_("Could NOT set previous backup file [%s] read-write\n"), 
+			   backup_filename);	    
+	  }
+	  umask(saved_umask);
+	}
 	
 	if (o_save (toplevel, backup_filename)) {
+
 	  p_current->ops_since_last_backup = 0;
           p_current->do_autosave_backup = 0;
+
+	  /* Make the backup file readonly so a 'rm *' command will ask 
+	     the user before deleting it */
+	  saved_umask = umask(0);
+	  mask = (S_IWRITE|S_IWGRP|S_IEXEC|S_IXGRP|S_IXOTH);
+	  mask = (~mask)&0777;
+	  mask &= ((~saved_umask) & 0777);
+	  if (chmod(backup_filename,mask) != 0) {
+	    s_log_message (_("Could NOT set backup file [%s] readonly\n"), 
+			   backup_filename);	    
+	  }
+	  umask(saved_umask);
 	} else {
 	  s_log_message (_("Could NOT save backup file [%s]\n"), 
 			 backup_filename);
