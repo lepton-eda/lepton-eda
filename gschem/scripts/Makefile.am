@@ -1,3 +1,8 @@
+## $Id$
+##
+
+scmdatadir = @GEDADATADIR@/scheme
+scmdata_DATA = image.scm print.scm
 
 EXTRA_DIST = ChangeLog geda_totexi.in makeallimages \
 	     makeimages print.scm image.scm notangle_guile.in
