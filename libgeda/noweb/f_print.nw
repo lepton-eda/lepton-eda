@@ -51,6 +51,7 @@
 #include <config.h>
 
 #include <stdio.h>
+#include <unistd.h>
 #include <math.h>
 
 #include <gtk/gtk.h>
@@ -145,6 +146,7 @@ struct st_pslines header[] = {
 struct st_pslines footer[] = {
   { "\n"				},
   { "showpage\n"			},
+  { "%%EOF\n"                           },
   { NULL }
 };
 
@@ -205,23 +207,54 @@ float
 f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, 
 	int world_right, int world_bottom)
 {
-  int i;
+  int i,llx,lly,urx,ury;
   struct st_pslines *ptr;
+  time_t current_time,time_rc;
   float x, y;
   float final;
 
-  /* define an inch */
-  fprintf(fp, "%%!\n");
-  fprintf(fp, "/inch {72 mul} def\n");
+  /* Compute bounding box */
+  llx=0;                          /* So, right now, the box starts at (0,0) */
+  lly=0;
+  
+  if (w_current->print_orientation == LANDSCAPE) {
+    ury=((float)paper_size_x * 72.0)/1000; /* and extends to the extents */
+    urx=((float)paper_size_y * 72.0)/1000; 
+  } else {
+    urx=((float)paper_size_x * 72.0)/1000; /* portrait needs these switched */
+    ury=((float)paper_size_y * 72.0)/1000; 
+  }
 
-  /* define mils */
-  fprintf(fp, "\n");
-  fprintf(fp, "/mils\n");
-  fprintf(fp, "{\n");
-  fprintf(fp, "1000 div inch\n");
-  fprintf(fp, "} def\n");
+  /* Get Time of day for creation date */
+  time_rc = time(&current_time);
+  if(time_rc == (time_t)-1) {
+    s_log_message("Unable to get time of day in f_print_header()\n");
+    current_time=0; /* Just set it to 1970... */
+  }
 
-  fprintf(fp, "\n");
+  /* Output the DSC comments at the beginning of the document */
+  fprintf(fp, "%%!PS-Adobe-3.0\n"
+	  "%%%%Creator: gEDA gschem %s\n"
+	  "%%%%CreationDate: %s"
+	  "%%%%Title: %s\n"
+	  "%%%%Author: %s\n"
+	  "%%%%BoundingBox: %d %d %d %d\n"
+	  "%%%%Pages: 1\n"
+	  "%%%%Endcomments\n"
+	  "%%%%BeginProlog\n",
+	  VERSION,
+	  ctime(&current_time),
+	  w_current->page_current->page_filename,
+	  getlogin(),
+	  llx, lly, urx, ury
+	  );
+
+  /* define an inch, and mils */
+  fprintf(fp, "/inch {72 mul} def\n\n"
+	  "/mils\n"
+	  "{\n"
+	  "1000 div inch\n"
+	  "} def\n\n");
 
   if (w_current->setpagedevice_orientation) {
     if (w_current->print_orientation == LANDSCAPE) {
@@ -300,6 +333,8 @@ f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y
     fprintf(fp, "1 setlinecap\n");
   }
 
+  fprintf(fp,"%%%%EndProlog\n"
+	  "%%%%Page: 1 1");     /* Just name it `page 1' for now */
   return(final);
 }
 
