@@ -1,3 +1,11 @@
+;; $Id$
+;;
+;; This file may be used to produce png files from gschem schematics from the
+;; command line.  Typical usage is:
+;;
+;;   gschem -p -o mysch.png -s /path/to/this/file/image.scm mysch.sch
+;;
+;; The schematic in "mysch.sch" will be exported to the file "mysch.png"
 
 (image-size 1024 768)
 ;(image-size 3200 2400)

@@ -1,3 +1,11 @@
+;; $Id$
+;;
+;; This file may be used to print gschem schematics from the
+;; command line.  Typical usage is:
+;;
+;;   gschem -p -o mysch.ps -s /path/to/this/file/print.scm mysch.sch
+;;
+;; The schematic in "mysch.sch" will be printed to the file "mysch.ps"
 
 (output-orientation "portrait")
 (output-type "limits")
