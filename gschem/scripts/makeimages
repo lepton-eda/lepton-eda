@@ -1,4 +1,6 @@
 #!/bin/sh
+#
+# $Id$
 
 # This script requires the following packages :
 #	- gschem (located the your PATH )
@@ -61,6 +63,7 @@ do
 	# First create postscript file using gschem and print.scm
 	gschem  -o ${basedir}/${symname}.ps \
 		-s print.scm \
+		-p \
 		$i 
 
 	# Then take postscript file and create thumbnail ppm
