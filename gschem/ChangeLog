@@ -1,3 +1,8 @@
+2006-02-26 Carlos Nieves Onega <cnieves@iespana.es>	
+
+	* noweb/g_hook.nw: Erase the text before changing its attributes
+	  in g_set_attrib_text_properties.
+	
 2006-02-25 Carlos Nieves Onega <cnieves@iespana.es>	
 	* include/globals.h, include/prototype.h, noweb/g_hook.nw, 
 	  noweb/g_register.nw, noweb/globals.nw, noweb/o_pin.nw, 

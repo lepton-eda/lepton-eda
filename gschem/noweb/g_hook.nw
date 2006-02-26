@@ -374,6 +374,7 @@ g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size,
     object = (OBJECT *) attribute->attribute->object;
     if (object &&
 	object->text) {
+      o_text_erase(w_current, object);
       if (x != -1) {
 	object->text->x = x;
 	changed = TRUE;
@@ -397,11 +398,8 @@ g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size,
 	object->text->angle = rotation;
 	changed = TRUE;
       }
-      if (changed) {
-	o_text_erase(w_current, object);
-	o_text_recreate(w_current, object);
-	o_text_draw(w_current, object);
-      }
+      o_text_recreate(w_current, object);
+      o_text_draw(w_current, object);
     }
   }
   return SCM_BOOL_T;
