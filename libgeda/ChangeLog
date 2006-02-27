@@ -1,10 +1,15 @@
+2006-02-27 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/o_text_basic.nw:
+	Added support for overbars. Delimiter character for the overbar is
+	"\_" string (it should be at the beginning and at the end of the 
+	overbar). Support for overbars in Postscript code needs to be done.
+
 2006-02-26 Mike Jarabek <mjarabek@istop.com>
 	* noweb/f_print.nw:
 	  Added DSC comments and logic to f_print() so that page managers
 	  can make more intelligent choices about paper sizes.  The code
 	  lies about the actual extents, and so does not completely obey
 	  the DSC rules.
-
 
 2006-02-25 Carlos Nieves Onega <cnieves@iespana.es>	
 	
