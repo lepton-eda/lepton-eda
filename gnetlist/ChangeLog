@@ -1,3 +1,9 @@
+2006-02-28 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Added netname in the output message 
+	when checking pintype connections. 
+	Thanks to Holger Oehm for providing the patch. 
+	
 2006-02-05 Werner Hoch	<werner.ho@gmx.de>
 	* scheme/gnet-spice.scm: cccs, ccvs, vccs and vcvs replacement uses
 	a dash "-" in the name of vsens replacement, ngspice doesn't like that

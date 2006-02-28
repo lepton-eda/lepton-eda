@@ -20,6 +20,8 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2006-02-28: Added netname in the output message when checking pintype
+;;              connections. Thanks to Holger Oehm for providing the patch. 
 ;;  2006-01-15: Changed error message to explain it a little bit.
 ;;  2006-01-07: Added missing 'passive' in the pintype-full-names list, and
 ;;              changed the pintype error/warning message to something more
@@ -640,7 +642,7 @@
 ;; type1,type2: number of the position of the type in the vector.
 ;; connections: ((U100 1) (U101 1)), for example.
 (define drc2:check-connection-of-two-pintypes
-  (lambda (port type1 type2 connections)
+  (lambda (port type1 type2 connections netname)
     (let* (( drc-matrix-value (drc2:get-drc-matrix-element type1 type2)))
       (cond
        ((eqv? drc-matrix-value #\c) 1)
@@ -667,7 +669,8 @@
 		   (display "': " port)
 		   (display (drc2:display-pins-of-type port type1 
 							 connections) port)
-		   (display "\n\tare connected to pin(s) with pintype '" port)
+		   (display (string-append "\n\tare connected by net '" netname))
+                   (display "'\n\tto pin(s) with pintype '" port)
 		   (display (drc2:get-full-name-of-pintype-by-number type2) port)
 		   (display "': " port)
 		   (display (drc2:display-pins-of-type port type2
@@ -684,49 +687,49 @@
 ;; pintype-count: vector with the number of pins connected to a single net, by pintype.
 ;;     (1 2 3 4 ... 10), for example.
 (define drc2:check-pintypes-of-single-net
-  (lambda (port connections pintypes pintype-count type1 type2)
+  (lambda (port connections pintypes pintype-count type1 type2 netname)
     (define type1-count (list-ref pintype-count type1))
     (define type2-count (list-ref pintype-count type2))
     (define next-type1 
-      (lambda (port connections pintypes pintype-count type1 type2)
+      (lambda (port connections pintypes pintype-count type1 type2 netname)
 	(if (< type1 (- (length pintype-names) 2))
 	    (drc2:check-pintypes-of-single-net port connections pintypes pintype-count 
-						 (+ type1 1) (+ type1 1))	
+						 (+ type1 1) (+ type1 1) netname)	
 	    )
 	))
     (define next-type2
-      (lambda (port connections pintypes pintype-count type1 type2)
+      (lambda (port connections pintypes pintype-count type1 type2 netname)
 	(if (< type2 (- (length pintype-names) 2))
 	    (drc2:check-pintypes-of-single-net port connections pintypes pintype-count 
-						 type1 (+ type2 1))
-	    (next-type1 port connections pintypes pintype-count type1 type1)
+						 type1 (+ type2 1) netname)
+	    (next-type1 port connections pintypes pintype-count type1 type1 netname)
 	    )))
     
 					; Check type1 with type1 first
     (if (= type1-count 0)
 					; if no pins of type1 connected, then continue with (+ type1 1)
 	(begin
-	  (next-type1 port connections pintypes pintype-count type1 type2))
+	  (next-type1 port connections pintypes pintype-count type1 type2 netname))
 	  
     (if (= type1 type2)
 	(if (> type1-count 1)
 	    (begin
-	      (drc2:check-connection-of-two-pintypes port type1 type1 connections)
-	      (next-type2 port connections pintypes pintype-count type1 type2)
+	      (drc2:check-connection-of-two-pintypes port type1 type1 connections netname)
+	      (next-type2 port connections pintypes pintype-count type1 type2 netname)
 	      
 	      )
-	      (next-type2 port connections pintypes pintype-count type1 type2))
+	      (next-type2 port connections pintypes pintype-count type1 type2 netname))
 	(begin
       (if (= type2-count 0)
 					; if no pins of type2 connected, then continue with (+ type2 1)
-	  (next-type2 port connections pintypes pintype-count type1 type2)
+	  (next-type2 port connections pintypes pintype-count type1 type2 netname)
 	  )
       (if (and (> type1-count 0) (> type2-count 0))
 	  (begin	  
 					; Check connections between type1 and type2.
-	    (drc2:check-connection-of-two-pintypes port type1 type2 connections)
+	    (drc2:check-connection-of-two-pintypes port type1 type2 connections netname)
 					; and continue with the next type2 if within the limits
-	    (next-type2 port connections pintypes pintype-count type1 type2)
+	    (next-type2 port connections pintypes pintype-count type1 type2 netname)
 	    ))
     )
     ))))
@@ -761,7 +764,7 @@
 				     '()))
 		       (pintype-count (drc2:count-pintypes-of-net pintypes port))
 		       )
-		(drc2:check-pintypes-of-single-net port connections pintypes pintype-count 0 0)
+		(drc2:check-pintypes-of-single-net port connections pintypes pintype-count 0 0 netname)
 		(if (not (defined? 'dont-check-not-driven-nets))
 		    (begin
 		      (if (not (string-ci=? netname "NoConnection"))
