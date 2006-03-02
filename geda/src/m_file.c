@@ -39,7 +39,7 @@
 
 #include "doc.h"
 #include "file.h"
-#include "filesel.h"
+#include "filechoose.h"
 #include "filetool.h"
 #include "interface.h"
 #include "msgbox.h"
@@ -393,7 +393,7 @@ void FileImport_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 	/* enter file name and location */
 	strcpy(szName, "");
 	strcpy(szExtension, "*");
-	iResult = FileSelection(szExtension, szName);
+	iResult = FileChoose(szExtension, szName);
 	if (iResult != SUCCESS)
 	{
 		/* not an error, simply action cancelled */

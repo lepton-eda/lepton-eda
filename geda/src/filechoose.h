@@ -19,15 +19,13 @@
 /*                                                                             */
 /*******************************************************************************/
 
-#ifndef __FILESEL_H_INCLUDED
-#define __FILESEL_H_INCLUDED
+#ifndef __FILECHOOSE_H_INCLUDED
+#define __FILECHOOSE_H_INCLUDED
 
 
 
 /* public functions */
-int FileSelection(char *szPattern, char *szFileName);
-void FileSelection_OkClicked(void);
-void FileSelection_CancelClicked(void);
+int FileChoose(char *szPattern, char *szFileName);
 
 
 

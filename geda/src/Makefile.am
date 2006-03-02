@@ -21,8 +21,8 @@ geda_SOURCES = \
 	doc.c\
 	file.h\
 	file.c\
-	filesel.h\
-	filesel.c\
+	filechoose.h\
+	filechoose.c\
 	filetool.h\
 	filetool.c\
 	global.h\

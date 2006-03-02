@@ -38,7 +38,7 @@
 #endif
 
 #include "doc.h"
-#include "filesel.h"
+#include "filechoose.h"
 #include "filetool.h"
 #include "global.h"
 #include "interface.h"
@@ -114,7 +114,7 @@ void ProjectOpen_MenuActivation(GtkMenuItem *pMenuItem, gpointer pUserData)
 
 	/* ask for project name */
 	strcpy(szProjectFileName, DEF_PRJNAME);
-	iResult = FileSelection(DEF_PRJEXT, szProjectFileName);
+	iResult = FileChoose(DEF_PRJEXT, szProjectFileName);
 	if (iResult != SUCCESS)
 	{
 		strcpy(szProjectFileName, "");
