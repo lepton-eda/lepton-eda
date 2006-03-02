@@ -1,3 +1,8 @@
+2006-03-02 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Don't check pintypes of net "NoConnection".
+	Thanks to Holger Oehm for reporting the bug and providing a patch.     
+	
 2006-02-28 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/gnet-drc2.scm: Added netname in the output message 

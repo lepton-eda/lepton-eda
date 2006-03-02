@@ -1,6 +1,6 @@
 ;;; gEDA - GNU Electronic Design Automation
 ;;; gnetlist - GNU Netlist
-;;; Copyright (C) 1998-2005 Ales V. Hvezda
+;;; Copyright (C) 1998-2006 Ales V. Hvezda
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,6 +20,9 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2006-03-02: Don't check pintypes of net "NoConnection". 
+;;              Thanks to Holger Oehm for the bug report and providing 
+;;              a patch. 
 ;;  2006-02-28: Added netname in the output message when checking pintype
 ;;              connections. Thanks to Holger Oehm for providing the patch. 
 ;;  2006-01-15: Changed error message to explain it a little bit.
@@ -764,7 +767,9 @@
 				     '()))
 		       (pintype-count (drc2:count-pintypes-of-net pintypes port))
 		       )
-		(drc2:check-pintypes-of-single-net port connections pintypes pintype-count 0 0 netname)
+		; If netname is NoConnection, then it shouldn't be checked.
+		(if (not (string-ci=? netname "NoConnection"))
+		    (drc2:check-pintypes-of-single-net port connections pintypes pintype-count 0 0 netname))
 		(if (not (defined? 'dont-check-not-driven-nets))
 		    (begin
 		      (if (not (string-ci=? netname "NoConnection"))
