@@ -1,3 +1,8 @@
+2006-03-02 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* gschem/gschem.tex: Oops, fixed my overzealous use of search
+	and replace. 
+
 2006-02-27 Carlos Nieves Onega <cnieves@iespana.es>
 
         * gschem/gschem.tex: Added documentation for the new overbar 
