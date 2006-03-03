@@ -118,10 +118,11 @@ catch_handler (void *data, SCM tag, SCM throw_args)
 int parse_commandline(int argc, char *argv[])
 {
     int ch;
-    int option_index = 0;
 
     /* Converted to getopt_long by SDB 3.3.2006 */
 #ifdef HAVE_GETOPT_LONG
+    int option_index = 0;
+
     while ((ch = getopt_long(argc, argv, OPTIONS, long_options, &option_index)) != -1) {
 #else
     while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
