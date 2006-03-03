@@ -1,3 +1,7 @@
+2006-03-03 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/o_text_basic.nw: Finish the overbar if the ending overbar
+	delimiter is omitted.
+	
 2006-02-27 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/o_text_basic.nw:
 	Added support for overbars. Delimiter character for the overbar is

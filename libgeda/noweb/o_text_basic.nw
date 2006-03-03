@@ -546,7 +546,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   gchar *ptr;
   gchar *aux_string;
   OBJECT *o_font_set;
-  gunichar c=0, previous_char = 0;
+  gunichar c=0, previous_char = 0, next_char = 0;
 
   temp_list = object_list;
 
@@ -721,7 +721,8 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
        ptr != NULL && *ptr != 0;
        previous_char = 
 	 g_utf8_get_char_validated (ptr, -1),
-	 ptr = g_utf8_find_next_char (ptr, NULL)) {
+	 ptr = g_utf8_find_next_char (ptr, NULL),
+	 next_char = g_utf8_get_char_validated(g_utf8_find_next_char (ptr, NULL),-1)) {
     /* Keep track of the previous character and its width.
        They will be used in the overbar and escape characters */
     aux_string = g_strdup_printf("%c", previous_char);
@@ -757,6 +758,10 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
       size_of_tab_in_coord = tab_in_chars * 
                  o_text_width(w_current, TAB_CHAR_MODEL, size/2);
 
+      /* Ignore escape characters */
+      if ( (c == '\\') && (previous_char != '\\') )
+	continue;
+
       if (c != '\n' && c != '\t') {
          /* only add the character if it is not a newline, a tab character
 	    a escape character or the overbar delimiter escape sequence.
@@ -767,14 +772,30 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	  temp_list = o_list_copy_all(w_current, 
 				      o_font_set->font_prim_objs->next, 
 				      temp_list, NORMAL_FLAG);
+	  if (start_of_char != NULL)
+	    start_of_char = start_of_char->next;
+	  /* does not get here if the character was a newline, tab, or
+	     special character.
+	     This is correct. */ 
+	  o_complex_set_color(start_of_char, color);	
+	  o_scale(w_current, start_of_char, size/2, size/2);
+	  
+	  /* do this if you want to stack chars */
+	  /* we don't want to do that for now */
+	  /* Rotate and translate the character to its world position */
+	  o_text_rotate_lowlevel(w_current, x, y, angle, start_of_char);
+	  o_complex_world_translate(w_current, 
+				    x_offset, y_offset, 
+				    start_of_char);
 	}
-	if (start_of_char != NULL)
-	  start_of_char = start_of_char->next;
       }
+      
+      /* Now check for special characters */
       
       if ( (c == '_' && previous_char == '\\') || 
 	   (c == '\n' && overbar_started) || 
-	   (previous_char == '\n' && overbar_started) ) { 
+	   (previous_char == '\n' && overbar_started) ||
+	   (overbar_started && next_char == 0) ) { 
 	/* Found the overbar delimiter sequence 
 	   If the character is the newline and the overbar was started,
 	   then end it and start it again in the next character, after
@@ -807,6 +828,13 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	  }
 	} else {
 	  /* Then this is the end point of the overbar */
+	  if (overbar_started && next_char == 0 &&
+	      !(c == '_' && previous_char == '\\')) {
+	    /* Instead of ending in the last character, end the overbar
+	       after the current character (its width is 
+	       size/2*o_font_set->font_text_size */
+	    last_char_width = -size/2*o_font_set->font_text_size;
+	  }
 	  switch (angle) {
 	    case 0:
 	      overbar_endx = x_offset - last_char_width;
@@ -842,17 +870,14 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	    overbar_started = FALSE;
 	  }
 	}
+	if (c != '\n')
+	  continue;
       }
      
-      /* Do nothing with special characters */
-      if ( (c == '\\' && previous_char != '\\') ||
-	   (c == '_' && previous_char == '\\') ) {
-	continue;
-      }
-      
       /* If the character is a newline or tab, this code will "continue" */
       switch (c) {
       case '\n':
+	/* The character is a newline. Calcule the start of the next line */
         switch (angle) {
             case 0:
               x_offset = line_start_x;
@@ -923,21 +948,10 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
                   fprintf(stderr, "o_text_create_string: Angle not supported\n");
                   break;
             }
-      }
-      
-      /* does not get here if the character was a newline or tab.  This is */
-      /* correct. */ 
-      o_complex_set_color(start_of_char, color);	
-      o_scale(w_current, start_of_char, size/2, size/2);
-		
-      /* do this if you want to stack chars */
-      /* we don't want to do that for now */
-      o_text_rotate_lowlevel(w_current, x, y, angle, start_of_char);
-      o_complex_world_translate(w_current, 
-                                x_offset, y_offset, 
-                                start_of_char);
+      }      
     }
 
+    /* Calcule the position of the next character */
     switch(angle) {
       case(0):	
         x_offset = (x_offset) + 
