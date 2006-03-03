@@ -37,6 +37,25 @@ AC_ARG_WITH(pcbconfdir,
 )
 AC_SUBST(PCBCONFDIR)
 
+## Added by SDB 3.3.2006
+# Check for getopt_long
+dnl check GNU getopt() - thanks libcmml!
+HAVE_GETOPT_LONG="no"
+AC_CHECK_FUNC([getopt_long], [HAVE_GETOPT_LONG="yes"])
+if test "x$HAVE_GETOPT_LONG" != xyes ; then
+        dnl FreeBSD has a gnugetopt library
+        AC_CHECK_LIB([gnugetopt], [getopt_long], [HAVE_GETOPT_LONG="yes"])
+        if test "x$HAVE_GETOPT_LONG" = xyes ; then
+                GETOPT_LONG_LIBS="-lgnugetopt"
+                AC_SUBST(GETOPT_LONG_LIBS)
+        fi
+fi
+if test "x$HAVE_GETOPT_LONG" != "xyes"; then
+        GETOPT_LONG_LIBS=""
+        AC_SUBST(GETOPT_LONG_LIBS)
+fi
+
+
 # 
 # Command line flags end
 #########################################################################
@@ -155,7 +174,7 @@ AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
 AC_CHECK_HEADERS(unistd.h string.h strings.h stdlib.h \
-                 stdarg.h assert.h fcntl.h errno.h)
+                 stdarg.h assert.h fcntl.h errno.h getopt.h)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

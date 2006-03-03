@@ -27,6 +27,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#endif
+
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
@@ -44,10 +48,23 @@ extern int optind;
 #endif
 
 
+/* Added by SDB 3.3.2006.  */
+#ifdef HAVE_GETOPT_LONG
+struct option long_options[] =
+{
+  {"help", 0, 0, 0},
+  /* will add other args later */
+  {0, 0, 0, 0}
+};
+#endif
+
+
+
 void usage(char *cmd)
 {
     printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
     printf("  -e                Force embedding contents of .include file\n");
+    printf("  -h --help         Print this help string\n");
     printf("  -i                Interactive scheme mode\n");
     printf("  -I                Put .INCLUDE <filename> in output file instead\n");
     printf("                    of model file's contents\n");
@@ -101,8 +118,14 @@ catch_handler (void *data, SCM tag, SCM throw_args)
 int parse_commandline(int argc, char *argv[])
 {
     int ch;
+    int option_index = 0;
 
+    /* Converted to getopt_long by SDB 3.3.2006 */
+#ifdef HAVE_GETOPT_LONG
+    while ((ch = getopt_long(argc, argv, OPTIONS, long_options, &option_index)) != -1) {
+#else
     while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
+#endif
 	switch (ch) {
 
 	case 'v':
