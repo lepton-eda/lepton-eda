@@ -1,6 +1,6 @@
 2006-03-03 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/o_text_basic.nw: Finish the overbar if the ending overbar
-	delimiter is omitted.
+	delimiter is omitted. Feature suggested by Enoch H. Wexler. Thanks.
 	
 2006-02-27 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/o_text_basic.nw:
