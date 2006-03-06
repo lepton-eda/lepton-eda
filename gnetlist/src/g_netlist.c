@@ -680,6 +680,20 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 			printf("GOT IT: %s\n", return_value);
 		    }
 #endif
+		} else if (strcmp("pintype",
+				  wanted_attrib) == 0) {
+		  if (nl_current->cpins) {
+		    CPINLIST *pinobject =
+		      s_cpinlist_search_pin(nl_current->cpins, pin);
+		    if (pinobject) {
+		      return_value="pwr";
+#if DEBUG
+		      
+		      printf("Supplied pintype 'pwr' for artificial pin '%s' of '%s'\n",
+			     pin, uref);
+#endif
+		    }
+		  }		
 		}
 	    }
 	}
