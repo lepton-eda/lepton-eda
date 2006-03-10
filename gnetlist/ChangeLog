@@ -1,3 +1,7 @@
+2006-03-10 Stuart Brorson <sdb [AT] cloud9 [DOT] net>
+	* scheme/gnet-spice-sdb.scm: Added "m" attribute to PMOS and NMOS
+	transistors per request of Peter Kaiser. 
+	
 2006-03-06 Carlos Nieves Onega <cnieves@iespana.es>
 
         * src/g_netlist.c: Return 'pwr' when getting pintype of a hidden

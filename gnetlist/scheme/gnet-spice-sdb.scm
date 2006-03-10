@@ -81,6 +81,7 @@
 ;;  12.27.2005 -- Fix bug discovered by John Doty: spice-IO pins with refdes greater
 ;;                than P9 were sorted incorrectly (as strings).  Now they are sorted
 ;;                as numbers.
+;;  3.10.2006 -- Added "m" attribute to PMOS and NMOS per request of Peter Kaiser.
 ;;**********************************************************************************
 ;;
 ;;  Organization of gnet-spice-sdb.scm file:
@@ -987,7 +988,7 @@
   (lambda (package port)
     (debug-spew (string-append "Found PMOS transistor.  Refdes = " package "\n"))
     (spice-sdb:write-prefix package "M" port)
-    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic")))
+    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
       (spice-sdb:write-transistor-diode package "PMOS" attrib-list port))
   )
 )
@@ -999,7 +1000,7 @@
   (lambda (package port)
     (debug-spew (string-append "Found NMOS transistor.  Refdes = " package "\n"))
     (spice-sdb:write-prefix package "M" port)
-    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic")))
+    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
       (spice-sdb:write-transistor-diode package "NMOS" attrib-list port))
   )
 )
