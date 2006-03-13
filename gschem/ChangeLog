@@ -1,3 +1,8 @@
+2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * lib/system-gschemrc.in: Removed load for the system-gafrc file,
+        since it is loaded by libgeda first.
+
 2006-02-26 Carlos Nieves Onega <cnieves@iespana.es>	
 
 	* noweb/g_hook.nw: Erase the text before changing its attributes

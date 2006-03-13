@@ -17,10 +17,9 @@
 ;
 (gattrib-version "@VERSION@")
 
-; Load up gafrc
+; Setup data path variables.
 ;
 ; Contains all paths needed for gattrib
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
-(load (string-append gedadatarc "@PATHSEP@system-gafrc"))
 

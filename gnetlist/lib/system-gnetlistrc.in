@@ -17,12 +17,11 @@
 ;
 (gnetlist-version "@VERSION@")
 
-; Load up gafrc -- the RC file holding common data for all programs.
+; Setup data path variables.  
 ;
 ; Contains all paths needed for gnetlist
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
-(load (string-append gedadatarc "@PATHSEP@system-gafrc"))
 
 ;  default-series-name string
 ;  Specify the default series name (of new schematics)

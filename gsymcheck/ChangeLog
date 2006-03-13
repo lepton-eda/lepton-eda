@@ -1,3 +1,8 @@
+2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * lib/system-gsymcheckrc.in: Removed load for the system-gafrc file,
+        since it is loaded by libgeda first.
+
 2006-01-16 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * configure.ac: Bumped package version to 20060123

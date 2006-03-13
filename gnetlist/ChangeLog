@@ -1,3 +1,8 @@
+2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* lib/system-gnetlistrc.in: Removed load for the system-gafrc file,
+	since it is loaded by libgeda first.
+
 2006-03-10 Stuart Brorson <sdb [AT] cloud9 [DOT] net>
 	* scheme/gnet-spice-sdb.scm: Added "m" attribute to PMOS and NMOS
 	transistors per request of Peter Kaiser. 

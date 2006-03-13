@@ -18,12 +18,11 @@
 ;
 (gschem-version "@VERSION@")
 
-; Load up gafrc
+; Setup data path variables.
 ;
 ; Contains paths needed for all gaf programs
 (define gedadata (getenv "GEDADATA"))
 (define gedadatarc (getenv "GEDADATARC"))
-(load (string-append gedadatarc "@PATHSEP@system-gafrc"))
 
 ;
 ; Start of color section 
