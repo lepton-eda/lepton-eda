@@ -1,3 +1,10 @@
+2006-03-23: Werner Hoch  <werner.ho@gmx.de>
+	* ecl/MC10E104-1.sym, ecl/MC10E136-1.sym, ecl/MC10E137-1.sym, 
+	  ecl/MC10E137-2.sym, ecl/MC12429-1.sym, ecl/MC100ELT23-1.sym:
+	  changed negation marks from "\" to "\\". This is necessary
+	  to keep them visible after the introduction of the new overbar
+	  feature
+
 2006-02-05: Werner Hoch  <werner.ho@gmx.de>
 	* spice/cccs-1.sym, spice/ccvs-1.sym, spice/vccs-1.sym, 
 	  spice/vcvs-1.sym: added value attribute, pinlabels fixed

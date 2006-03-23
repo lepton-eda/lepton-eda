@@ -90,7 +90,7 @@ pinnumber=23
 T 1250 2800 5 8 0 0 0 0 1
 pinseq=23
 T 1300 2300 3 8 1 1 90 0 1
-pinlabel=Fout\
+pinlabel=Fout\\
 }
 P 1500 2700 1500 3000 1 0 1
 {

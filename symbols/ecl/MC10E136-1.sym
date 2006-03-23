@@ -54,7 +54,7 @@ pinnumber=3
 T 100 650 5 8 0 0 0 0 1
 pinseq=3
 T 350 550 3 8 1 1 0 0 1
-pinlabel=CIN\
+pinlabel=CIN\\
 }
 P 300 900 0 900 1 0 1
 {
@@ -63,7 +63,7 @@ pinnumber=4
 T 100 950 5 8 0 0 0 0 1
 pinseq=4
 T 350 850 3 8 1 1 0 0 1
-pinlabel=CLIN\
+pinlabel=CLIN\\
 }
 P 600 2700 600 3000 1 0 1
 {
@@ -180,7 +180,7 @@ pinnumber=13
 T 2800 950 5 8 0 0 0 0 1
 pinseq=13
 T 2150 850 3 8 1 1 0 0 1
-pinlabel=COUT\
+pinlabel=COUT\\
 }
 P 2700 600 3000 600 1 0 1
 {
@@ -189,7 +189,7 @@ pinnumber=12
 T 2800 650 5 8 0 0 0 0 1
 pinseq=12
 T 2050 550 3 8 1 1 0 0 1
-pinlabel=CLOUT\
+pinlabel=CLOUT\\
 }
 P 600 300 600 0 1 0 1
 {

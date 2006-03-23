@@ -1,4 +1,4 @@
-v 20041228 1
+v 20050820 1
 L 300 1200 300 200 3 0 0 0 -1 -1
 L 300 1200 1400 700 3 0 0 0 -1 -1
 L 300 200 1400 700 3 0 0 0 -1 -1
@@ -76,7 +76,7 @@ T 0 0 8 10 0 1 0 0 1
 slot=1
 T 600 2300 5 10 0 0 0 0 1
 documentation=http://eportal.apexmicrotech.com/mainsite/pdf/pa91u.pdf
-T -1500 -700 8 10 0 1 0 0 1
+T 600 1900 5 10 0 0 0 0 1
 footprint=SIP02
 T 1200 1300 8 10 1 1 0 0 1
 refdes=U?
