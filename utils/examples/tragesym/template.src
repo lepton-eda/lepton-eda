@@ -2,9 +2,12 @@
 # every line starting with '#' is a comment line.
 
 [options]
-# rotate_labels rotates the pintext of top and bottom pins
 # wordswap swaps labels if the pin is on the right side an looks like this:
-# "PB1 (CLK)"
+#   "PB1 (CLK)". That's useful for micro controller port labels
+# rotate_labels rotates the pintext of top and bottom pins
+#   this is useful for large symbols like FPGAs with more than 100 pins
+# sort_labels will sort the pins by it's labels
+#   useful for address ports, busses, ...
 wordswap=yes
 rotate_labels=no
 sort_labels=yes
@@ -17,7 +20,7 @@ pinwidthhorizontal=400
 # name will be printed in the top of the symbol
 # if you have a device with slots, you'll have to use slot= and slotdef=
 # use comment= if there are special information you want to add
-version=20040710 1
+version=20060113 1
 name=
 device=
 refdes=U?
@@ -37,15 +40,16 @@ numslots=0
 
 [pins]
 # tabseparated list of pin descriptions
+# ----------------------------------------
 # pinnr is the physical number of the pin
 # seq is the pinseq= attribute, leave it blank if it doesn't matter
 # type can be (in, out, io, oc, oe, pas, tp, tri, clk, pwr)
 # style can be (line,dot,clk,dotclk,none). none if only want to add a net
 # posit. can be (l,r,t,b) or empty for nets
-# net specifies the name of the Vcc or GND name
-# label represents the pinlabel. 
-#	negation lines can be added with _Q_ 
-#	if you want to add a "_" or "\" use "\_" and "\\" as escape sequences
+# net specifies the name of the net. Vcc or GND for example.
+# label represents the pinlabel.
+#	negation lines can be added with "\_" example: \_enable\_ 
+#	if you want to write a "\" use "\\" as escape sequence
 #-----------------------------------------------------
 #pinnr	seq	type	style	posit.	net	label	
 #-----------------------------------------------------

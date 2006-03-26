@@ -1,3 +1,10 @@
+2006-03-26	Werner Hoch <werner.ho@gmx.de>
+	* scripts/tragesym: changed version to 0.0.9
+	  use the overbar feature of gschem, removed it from tragesym
+	  added optional value attribute
+	* examples/tragesym/template.src, examples updated
+	* docs/README.tragesym: added feature list
+
 2005-09-11	Werner Hoch <werner.ho@gmx.de>
 	* changed vertikal to vertical
 

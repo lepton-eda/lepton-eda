@@ -1,10 +1,8 @@
-# This is the template file for creating symbols with tragesym.py
-# every line starting with '#' is a comment line.
+# test2:
+# this is a source file for tragesym
+# please take a look at the docs and the template.src file for more informations
 
 [options]
-# rotate_labels rotates the pintext of top and bottom pins
-# wordswap swaps labels if the pin is on the right side an looks like this:
-# "PB1 (CLK)"
 wordswap=yes
 rotate_labels=no
 sort_labels=no
@@ -14,10 +12,7 @@ pinwidthvertical=400
 pinwidthhorizontal=800
 
 [geda_attr]
-# name will be printed in the top of the symbol
-# if you have a device with slots, you'll have to use slot= and slotdef=
-# use comment= if there are special information you want to add
-version=20040710 1
+version=20060113 1
 name=TEST2
 device=devTEST2
 refdes=U?
@@ -25,7 +20,7 @@ footprint=TQFP234
 description=test without rotated text, not sorted, with slots
 documentation=http://url_to_the_datasheet.com/datasheet.pdf
 author=Werner Hoch <werner.ho(AT)gmx.de>
-numslots=0
+numslots=4
 slot=1
 slotdef=1:1,2,3
 slotdef=2:4,5,6
@@ -36,41 +31,31 @@ comment=comment2
 comment=comment3
 
 [pins]
-# tabseparated list of pin descriptions
-# pinnr is the physical number of the pin
-# seq is the pinseq= attribute, leave it blank if it doesn't matter
-# type can be (in, out, io, oc, oe, pas, tp, tri, clk, pwr)
-# style can be (line,dot,clk,dotclk,none). none if only want to add a net
-# posit. can be (l,r,t,b) or empty for nets
-# net specifies the name of the Vcc or GND name
-# label represents the pinlabel. 
-#	negation lines can be added with _Q_ 
-#	if you want to add a "_" or "\" use "\_" and "\\" as escape sequences
 #-----------------------------------------------------
 #pinnr	seq	type	style	posit.	net	label	
 #-----------------------------------------------------
 1		io	line	l		hello
-2		out	clk	l		_neg_
-3		out	dot	l		_n_0_n_
+2		out	clk	l		\_neg\_
+3		out	dot	l		\_n\_0\_n\_
 4		pwr	none		GND
-5		io	line	r		_ABC_ (DEF)
-6		out	clk	r		xx_XX_xx
-7		out	dot	r		_Reset_
+5		io	line	r		\_ABC\_ (DEF)
+6		out	clk	r		xx\_XX\_xx
+7		out	dot	r		\_Reset\_
 8		pwr	none		AGND
-9		io	line	b		\__ups_\_
+9		io	line	b		_\_ups\__
 10		out	clk	b		wer
 11		out	dot	b		ner
 12		pwr	none		AVcc
-13		io	line	t		_([])_
-14		out	clk	t		ABC (_DEF_)
+13		io	line	t		\_([])\_
+14		out	clk	t		ABC (\_DEF\_)
 15		out	dot	t		twelf
 16		pwr	none		Vcc
 17		in	dotclk	l		first
-18		in	dotclk	r		n_exe_n
+18		in	dotclk	r		n\_exe\_n
 19		in	dotclk	t		this
 20 		in	dotclk	b		other
-21		in	dot	b		_Reset_
-22		out	line	t		PD1 (_SS_)
-23		io	clk	r		PD2 (_xxx_hello_sss_)
-24		io	dot	r		PD3 (x\_no\_over)
-25		io	clk	l		PD4 (\\_strange\\_)
+21		in	dot	b		\_Reset\_
+22		out	line	t		PD1 (\_SS\_)
+23		io	clk	r		PD2 (\_xxx\_hello\_sss\_)
+24		io	dot	r		PD3 (x_no_over)
+25		io	clk	l		PD4 (\\\_strange\\\_)

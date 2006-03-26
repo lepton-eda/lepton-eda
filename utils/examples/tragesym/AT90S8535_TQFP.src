@@ -1,23 +1,18 @@
-# This is the template file for creating symbols with tragesym.py
-# every line starting with '#' is a comment line.
+# tragesym AT90S8535_TQFP.src: test with real symbols
+# this is a source file for tragesym
+# please take a look at the docs and the template.src file for more informations
 
 [options]
-# rotate_labels rotates the pintext of top and bottom pins
-# wordswap swaps labels if the pin is on the right side an looks like this:
-# "PB1 (CLK)"
 wordswap=yes
 rotate_labels=no
 sort_labels=yes
 generate_pinseq=yes
-sym_width=2000
+sym_width=2600
 pinwidthvertical=400
 pinwidthhorizontal=500
 
 [geda_attr]
-# name will be printed in the top of the symbol
-# if you have a device with slots, you'll have to use slot= and slotdef=
-# use comment= if there are special information you want to add
-version=20040710 1
+version=20060113 1
 name=AT90S8535
 device=AT90S8535_TQFP
 refdes=U?
@@ -31,28 +26,18 @@ numslots=0
 #slotdef=2:
 #slotdef=3:
 #slotdef=4:
-comment=this is comment1
-comment=this one is comment2
-comment=and comment3
+#comment=
+#comment=
+#comment=
 
 [pins]
-# tabseparated list of pin descriptions
-# pinnr is the physical number of the pin
-# seq is the pinseq= attribute, leave it blank if it doesn't matter
-# type can be (in, out, io, oc, oe, pas, tp, tri, clk, pwr)
-# style can be (line,dot,clk,dotclk,none). none if only want to add a net
-# posit. can be (l,r,t,b) or empty for nets
-# net specifies the name of the Vcc or GND name
-# label represents the pinlabel. 
-#	negation lines can be added with _Q_ 
-#	if you want to add a "_" or "\" use "\_" and "\\" as escape sequences
 #-----------------------------------------------------
 #pinnr	seq	type	style	posit.	net	label	
 #-----------------------------------------------------
 1		io	line	l		PB5 (MOSI)
 2		io	line	l		PB6 (MISO)
 3		io	line	l		PB7 (SCK)
-4		in	dot	b		_Reset_
+4		in	dot	b		\_Reset\_
 5		pwr	none		Vcc
 6		pwr	none		GND
 7		out	line	b		XTAL2
@@ -92,4 +77,4 @@ comment=and comment3
 41		io	line	l		PB1 (T1)
 42		io	line	l		PB2 (AIN0)
 43		io	line	l		PB3 (AIN1)
-44		io	line	l		PB4 (_SS_)
+44		io	line	l		PB4 (\_SS\_)

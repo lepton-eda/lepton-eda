@@ -1,18 +1,18 @@
 #!/usr/bin/python
 # coding: iso8859-1
-# ***************************************************************************
+############################################################################
 #    tragesym  - create gEDA symbols out of structured textfiles
-#    begin                : 2001-10-20
-#    copyright            : (C) 2001,2002,2003,2004 by Werner Hoch
-#    email                : werner.ho@gmx.de
-# ***************************************************************************
-# *                                                                         *
-# *   This program is free software; you can redistribute it and/or modify  *
-# *   it under the terms of the GNU General Public License as published by  *
-# *   the Free Software Foundation; either version 2 of the License, or     *
-# *   (at your option) any later version.                                   *
-# *                                                                         *
-# ***************************************************************************
+#    begin      : 2001-10-20
+#    copyright  : (C) 2001,2002,2003,2004,2006 by Werner Hoch
+#    email      : werner.ho@gmx.de
+############################################################################
+#                                                                          #
+#    This program is free software; you can redistribute it and/or modify  #
+#    it under the terms of the GNU General Public License as published by  #
+#    the Free Software Foundation; either version 2 of the License, or     #
+#    (at your option) any later version.                                   #
+#                                                                          #
+############################################################################
 
 # FEATURES:
 # - create pins and their elements
@@ -27,73 +27,59 @@
 # TODO:
 # - make a nicer comandline interface including stdin /stdout
 # - write cleaner code (variables, constants, structure)
-# - handle the fontwidth, negation line is over spacing. (cosmetic)
 
 import sys, string
 
 ##################### GLOBALS ############################################
-VERSION="0.0.8"
+VERSION="0.0.9"
 
 CHARHIGH=26
-pre_options={"wordswap":"yes"
-         ,"rotate_labels":"no"
-         ,"sort_labels":"yes"
-         ,"generate_pinseq":"yes"    
-         ,"sym_width":"1400"
-         ,"pinwidthvertikal":"400"
-         ,"pinwidthvertical":"400"
-         ,"pinwidthhorizontal":"400"}
-pre_attr=["version", "name", "device", "refdes", "footprint", "numslots", "slot",
-          "slotdef","description", "comment", "author", "documentation"]
-stylelist=["line","dot","clk","dotclk","none"]
-poslist=["l","r","t","b",""]
-typelist=["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
+preset_options = {"wordswap":"yes"
+                  ,"rotate_labels":"no"
+                  ,"sort_labels":"yes"
+                  ,"generate_pinseq":"yes"    
+                  ,"sym_width":"1400"
+                  ,"pinwidthvertikal":"400"
+                  ,"pinwidthvertical":"400"
+                  ,"pinwidthhorizontal":"400"}
+allowed_attr = ["version", "name", "device", "refdes", "footprint", "numslots",
+                "slot", "slotdef","description", "comment", "author",
+                "documentation","value"]
+single_attr_warning = ["device", "footprint", "author", "documentation",
+                       "description", "numslots"]
+single_attr = ["slot"]
+multiple_attr = ["slotdef", "comment"]
+stylelist = ["line","dot","clk","dotclk","none"]
+poslist = ["l","r","t","b",""]
+typelist = ["in","out","io","oc","oe","pas","tp","tri","clk","pwr"]
 P_NR, P_SEQ, P_TYPE, P_STYLE, P_POS, P_NET, P_LABEL = 0,1,2,3,4,5,6
 
-# a dictionary (char -> charwidth)
-font={'}': 12, '{': 12, 'y': 20, '\366': 20, 'w': 28, 'u': 19, 's': 18,
-      'q': 24, 'o': 20, 'm': 32, 'k': 19, 'i': 8, 'g': 24, '\344': 24,
-      'e': 20, 'c': 22, 'a': 24, '_': 25, ']': 12, '[': 12, 'Y': 25,
-      '\326': 32, 'W': 37, 'U': 27, 'S': 25, 'Q': 32, 'O': 32, 'M': 32,
-      'K': 27, 'I': 9, 'G': 30, '\304': 29, 'E': 29, 'C': 28, 'A': 29,
-      '?': 20, '=': 20, ';': 12, '9': 26, '7': 20, '5': 20, '3': 22,
-      '1': 16, '/': 18, '-': 20, '+': 20, ')': 12, "'": 10, '%': 28,
-      '#': 22, '!': 14, '~': 22, '|': 10, 'z': 21, 'x': 19, 'v': 20,
-      't': 12, 'r': 14, 'p': 20, 'n': 20, 'l': 9, 'j': 10, 'h': 20,'f': 12,
-      'd': 20, '\345': 24, 'b': 22, '`': 10, '^': 20, '\\': 14, 'Z': 27,
-      'X': 27, 'V': 27, 'T': 23, 'R': 26, 'P': 25, 'N': 28, 'L': 22,
-      'J': 21, 'H': 29, 'F': 21, 'D': 26, '\305': 29, 'B': 29, '@': 36,
-      '>': 20, '<': 20, ':': 12, '8': 22, '6': 24, '4': 26, '2': 26,
-      '0': 26, '.': 12, ',': 14, '*': 16, '(': 12, '&': 24, '$': 28,
-      '"': 14, ' ': 11}
 
 ################################# FUNCTIONS ##############################
+
 def parselabel(str):
-    # returns the striped label, the negation lines, and textlength
-    neg, esc, length= 0, 0, 0
+    '''returns a stripped label without overbar markers "\_"'''
+    slash, neg= 0, 0
     textout=""
-    neglines=[]
     for letter in str:
-        if letter == "_" and neg == 0 and esc == 0:
-            neg=1
-            startneg=length
-        elif letter == "_" and esc == 0:
-            neg=0
-            neglines.append((startneg,length))
-        elif letter == '\\' and esc == 0:
-            esc=1
-        elif letter == '\\' and esc == 1:
-            esc=0
-            textout=textout+letter
-            length=length+font[letter]
+        if letter == '\\' and slash == 0:
+            slash=1
+        elif slash == 1 and letter == '_':
+            if neg == 0:
+                neg = 1
+            else:
+                neg = 0
+            slash = 0                
         else:
             textout=textout+letter
-            length=length+font[letter]
-            esc=0
-    if esc == 1 or neg == 1:
-        print "unbalanced underlining or escaping: ", str
+            slash = 0
+            
+    if slash == 1 or neg == 1:
+        print '''unbalanced overbars or escapesequence: ''', str
+        print '''the overbar starts and ends with "\_" example: \"\_enable\_'''
+        print '''to write a "\" use "\\"'''
         sys.exit()
-    return textout, neglines, length
+    return textout
 
 ## returns the words in reverse order    
 def swapwords(str): 
@@ -169,12 +155,12 @@ def checkpins(pinlist):
 		print "Position is not allowed: \n", pin
 		sys.exit()
     	    continue
-        try:
-            if pin[P_STYLE] != "none":
+        if pin[P_STYLE] != "none":
+            if pin[P_SEQ].isdigit():
                 string.atoi(pin[P_SEQ])
-        except:
-            print "pinseq needs to be a number: \n", pin
-            sys.exit()
+            else:
+                print "pinseq needs to be a number: \n", pin
+                sys.exit()
         if pin[P_TYPE] not in typelist:
             print "Pintype not allowed: \n", pin
             sys.exit()
@@ -191,7 +177,7 @@ def checkpins(pinlist):
 def checkattr(attr):
     for attr,value in attr.items():
         attr,nr=attr
-        if attr not in pre_attr:
+        if attr not in allowed_attr:
             print "this attribute is not allowed: ", attr, value
             sys.exit()
 
@@ -229,8 +215,8 @@ def pinsort(pin1,pin2):
     elif pin1[P_POS] < pin2[P_POS]:
         return 1
     ## pinlabel
-    label1, skip, skip2 = parselabel(pin1[P_LABEL])
-    label2, skip, skip2 = parselabel(pin2[P_LABEL])
+    label1 = parselabel(pin1[P_LABEL])
+    label2 = parselabel(pin2[P_LABEL])
     l1 = splitspecial(label1)
     l2 = splitspecial(label2)
     minlen = len(l1)
@@ -260,7 +246,7 @@ def writesym(filename,options,attr,pins):
     # If pinwidthvertikal was defined, use it, else use pinwidthvertical
     # This keeps compatibility with older versions, while fixing the spell
     # bug
-    if options["pinwidthvertikal"] != pre_options["pinwidthvertikal"]:
+    if options["pinwidthvertikal"] != preset_options["pinwidthvertikal"]:
     	o_vdist=string.atoi(options["pinwidthvertikal"])
     else:
 	o_vdist=string.atoi(options["pinwidthvertical"])
@@ -335,7 +321,8 @@ def writesym(filename,options,attr,pins):
         value=attr[("version",1)]
         f.write("v " + value + " 1\n")
     else:
-        print "version attribut missing"
+        print "error: version attribut missing"
+        sys.exit()
    
     if o_sort == "yes":
         pins.sort(pinsort)
@@ -445,25 +432,11 @@ def writesym(filename,options,attr,pins):
             label=swapwords(pin[P_LABEL])
         else:
             label=pin[P_LABEL]
-        label, neglines, wordlength = parselabel(label)
         f.write("T %i"%pinlx+" %i"%pinly+" 9 8 1 1 %i"%pinlr+" %i 1\n"%pinla)
         f.write("pinlabel="+label+"\n")
         f.write("T %i"%pinax+" %i"%pinay+" 5 8 0 1 %i"%pinar+" %i 1\n"%pinaa)
         f.write("pintype="+pin[P_TYPE]+"\n")
         f.write("}\n")
-### draw negation lines
-        neglx, negly, neglv, neglr = negl
-        for start, stop in neglines:
-            if neglr == 1:
-                x1= pinlx - neglx
-                y1= pinly + negly + start*4 - wordlength*4*neglv/2
-                x2= x1
-                y2= y1 - start*4 + stop*4
-            else:
-                x1= pinlx - neglx - wordlength*4*neglv/2 + start*4
-                y1=y2= pinly + negly
-                x2= x1 - start*4 + stop*4
-            f.write("L %i"%x1+" %i"%y1+" %i"%x2+" %i"%y2+" 3 0 0 0 -1 -1\n")
 ### draw the negation bubble
         if (pin[P_STYLE]=="dot" or pin[P_STYLE]=="dotclk"):
             x=basex + xf*250
@@ -492,80 +465,43 @@ def writesym(filename,options,attr,pins):
     if numptop > 0:
  	texty += 100
     
+    ## special attribute format
     if attr.has_key(("refdes",1)):
-        value=attr[("refdes",1)]
         f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6 1\n")
-        f.write("refdes=" + value + "\n")
+        f.write("refdes=" + attr[("refdes",1)] + "\n")
     else:
-        print "refdes attribut missing"
-    if attr.has_key(("name",1)):
-        value=attr[("name",1)]
-        f.write("T %i" %namex + " %i"% namey + " 9 10 1 0 0 0 1\n")
-        f.write(value + "\n")
-    else:
-        print "name attribut missing"
-    if attr.has_key(("device",1)):
-        value=attr[("device",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("device=" + value + "\n")
-        texty=texty+200
-    else:
-        print "device attribut missing"
+        print "warning: refdes attribut missing"
 
-    if attr.has_key(("footprint",1)):
-        value=attr[("footprint",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("footprint=" + value + "\n")
-        texty=texty+200
+    if attr.has_key(("name",1)):
+        f.write("T %i" %namex + " %i"% namey + " 9 10 1 0 0 0 1\n")
+        f.write(attr[("name",1)] + "\n")
     else:
-        print "footprint attribut missing"
-    if attr.has_key(("author",1)):
-        value=attr[("author",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("author=" + value + "\n")
-        texty=texty+200
-    else:
-        print "author attribut missing"
-    if attr.has_key(("documentation",1)):
-        value=attr[("documentation",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("documentation=" + value + "\n")
-        texty=texty+200
-    else:
-        print "documentation attribut missing"
-    if attr.has_key(("description",1)):
-        value=attr[("description",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("description=" + value + "\n")
-        texty=texty+200
-    else:
-        print "description attribut missing"
-    if attr.has_key(("numslots",1)):
-        value=attr[("numslots",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("numslots=" + value + "\n")
-        texty=texty+200
-    else:
-        print "numslots attribut missing"
-    if attr.has_key(("slot",1)):
-        value=attr[("slot",1)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("slot=" + value + "\n")
-        texty=texty+200
-    i = 1
-    while attr.has_key(("slotdef",i)):
-        value=attr[("slotdef",i)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("slotdef=" + value + "\n")
-        texty=texty+200
-        i = i + 1
-    i = 1
-    while attr.has_key(("comment",i)):
-        value=attr[("comment",i)]
-        f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
-        f.write("comment=" + value + "\n")
-        texty=texty+200
-        i = i + 1
+        print "warning: name attribut missing"
+
+    ## attributes with same format and warnings
+    for a in single_attr_warning:
+        if attr.has_key((a,1)):
+            f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+            f.write(a + "=" + attr[(a,1)] + "\n")
+            texty=texty+200
+        else:
+            print "warning: " + a + " attribut missing"
+
+    ## attributes without warning
+    for a in single_attr:
+        if attr.has_key((a,1)):
+            f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+            f.write(a + "=" + attr[(a,1)] + "\n")
+            texty=texty+200
+
+    ## attributes with more than one equal name
+    for a in multiple_attr:
+        i = 1
+        while attr.has_key((a,i)):
+            f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+            f.write(a + "=" + attr[(a,i)] + "\n")
+            texty=texty+200
+            i = i + 1
 
     nets={}
     for pin in pins:
@@ -579,7 +515,6 @@ def writesym(filename,options,attr,pins):
         f.write("net=" + key + ":" + value + "\n")
         texty=texty+200
  
-
     return 0
 
 def mergeoptions(source_opt,pre_opt):
@@ -614,7 +549,7 @@ except:
 ## read sourcefile
 opts,attr,pins=readsrc(file_in)
 
-options=mergeoptions(opts,pre_options)
+options=mergeoptions(opts,preset_options)
 
 if options["generate_pinseq"] == "yes":
     pins=generate_pinseq(pins)
