@@ -1,8 +1,8 @@
-v 20041228 1
+v 20060123 1
 T 3000 8600 8 10 1 1 0 6 1
 refdes=U?
 T 400 8750 8 10 0 0 0 0 1
-device=ATmega161_DIP
+device=ATmega16L_DIP
 T 400 8950 8 10 0 0 0 0 1
 footprint=DIP40
 T 400 9150 8 10 0 0 0 0 1
@@ -344,7 +344,7 @@ P 100 900 400 900 1 0 0
 T 300 950 5 8 1 1 0 6 1
 pinnumber=19
 T 450 900 9 8 1 1 0 0 1
-pinlabel=PD2 (OC1A)
+pinlabel=PD5 (OC1A)
 T 450 900 5 8 0 1 0 2 1
 pintype=io
 T 100 900 5 10 0 1 0 0 1
@@ -461,5 +461,7 @@ T 3300 4900 5 10 0 1 0 0 1
 pinseq=32
 }
 V 340 4904 53 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-T 400 10100 8 10 0 0 0 0 1
-symversion=1.0
+T 400 10150 8 10 0 0 0 0 1
+symversion=1.1
+T 400 10350 8 10 0 0 0 0 1
+documentation=http://www.atmel.com/dyn/resources/prod_documents/doc2466.pdf

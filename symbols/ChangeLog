@@ -1,3 +1,6 @@
+2006-04-02: Werner Hoch  <werner.ho@gmx.de>
+	* micro/ATmega16L-1.sym: fixed Port label
+
 2006-03-23: Werner Hoch  <werner.ho@gmx.de>
 	* ecl/MC10E104-1.sym, ecl/MC10E136-1.sym, ecl/MC10E137-1.sym, 
 	  ecl/MC10E137-2.sym, ecl/MC12429-1.sym, ecl/MC100ELT23-1.sym:
