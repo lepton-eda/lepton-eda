@@ -1,3 +1,8 @@
+2006-04-03 Werner Hoch <werner.ho@gmx.de>
+
+	* noweb/x_print.nw: print dialog: widged packing fixed, 
+	  reported by Tomasz Nowak
+
 2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * lib/system-gschemrc.in: Removed load for the system-gafrc file,

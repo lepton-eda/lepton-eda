@@ -498,7 +498,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
     label = gtk_label_new (_("Output paper size"));
     gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
 
     gtk_widget_show (label);
 
@@ -509,7 +509,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
                                    GTK_POLICY_AUTOMATIC,
                                    GTK_POLICY_AUTOMATIC);
     gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 10);
-    gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 70);
+    gtk_widget_set_usize(GTK_WIDGET(scrolled_win), 150, 100);
     gtk_widget_show (scrolled_win);
     box2 = gtk_vbox_new (FALSE, 0);
     gtk_scrolled_window_add_with_viewport(
@@ -552,8 +552,9 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
                        w_current);
 
     box = gtk_hbox_new(FALSE, 0);
-    gtk_container_border_width(GTK_CONTAINER(box), 5);
-    gtk_container_add(GTK_CONTAINER(vbox), box);
+    gtk_container_border_width(GTK_CONTAINER(box), 0);
+    gtk_box_pack_start(GTK_CONTAINER(vbox), box, FALSE, TRUE, 5);
+    gtk_box_set_spacing(box, 10);
     gtk_widget_show(box);
 
     label = gtk_label_new (_("Filename"));
@@ -569,7 +570,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_editable_select_region(
                                GTK_EDITABLE(w_current->pfilename_entry), 0, -1);
     gtk_box_pack_start(GTK_BOX (box),
-                       w_current->pfilename_entry, TRUE, TRUE, 10);
+                       w_current->pfilename_entry, TRUE, TRUE, 0);
     gtk_signal_connect(GTK_OBJECT(w_current->pfilename_entry),
                        "activate",
                        GTK_SIGNAL_FUNC(x_print_print),
@@ -582,19 +583,19 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
     label = gtk_label_new (_("Type"));
     gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
     gtk_widget_show (label);
     optionmenu = gtk_option_menu_new ();
     type_menu = create_menu_type (w_current);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu), 
                              type_menu);
     gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
-    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
     gtk_widget_show(optionmenu);
 
     label = gtk_label_new (_("Orientation"));
     gtk_misc_set_padding (GTK_MISC (label), 5, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, TRUE, 0);
 
     gtk_widget_show (label);
     optionmenu = gtk_option_menu_new ();
@@ -602,7 +603,7 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
     gtk_option_menu_set_menu(GTK_OPTION_MENU (optionmenu), 
                              orient_menu);
     gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu), 4);
-    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), optionmenu, FALSE, TRUE, 0);
     gtk_widget_show (optionmenu);
 
     /* set some defaults */
