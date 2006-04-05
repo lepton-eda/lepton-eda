@@ -153,7 +153,7 @@ create_m4_override_file()
   |  board file (only gnetlist >= 20030901 recognizes -m).
   */
 static void
-run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
+run_gnetlist(gchar *pins_file, gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 	{
 	gchar		*command,
 				*out_file,
@@ -162,17 +162,41 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 	GList		*list;
 	struct stat	st;
 	time_t		mtime;
+	static const gchar *gnetlist = NULL;
+
+	/*
+	 * Allow the user to specify a full path or a different name for
+	 * the gnetlist command.  Especially useful if multiple copies
+	 * are installed at once.
+	 */
+	if (gnetlist == NULL)
+		gnetlist = g_getenv ("GNETLIST");
+	if (gnetlist == NULL)
+		gnetlist = "gnetlist";
 
 	if (verbose)
 		{
 		command = g_strconcat(
-					"gnetlist -g PCB -o ", net_file, " ", args, NULL);
+					gnetlist, " -g pcbpins -o ", pins_file, " ", args, NULL);
 		printf("Running command:\n\t%s\n", command);
 		printf("--------\n");
 		}
 	else
 		command = g_strconcat(
-					"gnetlist -q -g PCB -o ", net_file, " ", args, NULL);
+					gnetlist, " -q -g pcbpins -o ", pins_file, " ", args, NULL);
+	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
+	g_free(command);
+
+	if (verbose)
+		{
+		command = g_strconcat(
+					gnetlist, " -g PCB -o ", net_file, " ", args, NULL);
+		printf("Running command:\n\t%s\n", command);
+		printf("--------\n");
+		}
+	else
+		command = g_strconcat(
+					gnetlist, " -q -g PCB -o ", net_file, " ", args, NULL);
 	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
 	g_free(command);
 
@@ -187,13 +211,13 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 	if (verbose)
 		{
 		printf("--------\n");
-		command = g_strconcat("gnetlist -g gsch2pcb -o ", pcb_file, 
+		command = g_strconcat(gnetlist, " -g gsch2pcb -o ", pcb_file, 
 				" ", args1, NULL);
 		printf("Running command:\n\t%s\n", command);
 		printf("--------\n");
 		}
 	else
-		command = g_strconcat("gnetlist -q -g gsch2pcb -o ", pcb_file, 
+		command = g_strconcat(gnetlist, " -q -g gsch2pcb -o ", pcb_file, 
 				" ", args1, NULL);
 
 	g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
@@ -205,7 +229,7 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 		|| mtime == st.st_mtime
 	   )
 		{
-		fprintf(stderr, "gsch2pcb: gnetlist command failed.\n");
+		fprintf(stderr, "gsch2pcb: gnetlist command (%s) failed.\n", command);
 		if (m4_override_file)
 			fprintf(stderr,
 		"    At least gnetlist 20030901 is required for m4-xxx options.\n");
@@ -227,13 +251,13 @@ run_gnetlist(gchar *net_file, gchar *pcb_file, gchar *basename, gchar *args)
 		if (verbose)
 			{
 			printf("--------\n");
-			command = g_strconcat("gnetlist -g ", s, out_file,
+			command = g_strconcat(gnetlist, " -g ", s, out_file,
 							" ", args, NULL);
 			printf("Running command:\n\t%s\n", command);
 			printf("--------\n");
 			}
 		else
-			command = g_strconcat("gnetlist -q -g ", s, out_file,
+			command = g_strconcat(gnetlist, " -q -g ", s, out_file,
 							" ", args, NULL);
 
 		g_spawn_command_line_sync(command, NULL, NULL, NULL, NULL);
@@ -1231,6 +1255,7 @@ static gchar *usage_string0 =
 "\n"
 "Generate a PCB layout file from a set of gschem schematics.\n"
 "   gnetlist -g PCB is run to generate foo.net from the schematics.\n"
+"\n"
 "   gnetlist -g gsch2pcb is run to get PCB m4 derived elements which\n"
 "   match schematic footprints.  For schematic footprints which don't match\n"
 "   any PCB m4 layout elements, search a set of file element directories in\n"
@@ -1240,6 +1265,9 @@ static gchar *usage_string0 =
 "   If any elements with a non-empty element name in the current foo.pcb\n"
 "   have no matching schematic component, then remove those elements from\n"
 "   foo.pcb and rename foo.pcb to a foo.pcb.bak sequence.\n"
+"\n"
+"   gnetlist -g pcbpins is run to get a PCB actions file which will rename all\n"
+"   of the pins in a .pcb file to match pin names from the schematic.\n"
 "\n"
 "   \"project\" is a file (not ending in .sch) containing a list of\n"
 "   schematics to process and some options.  A schematics line is like:\n"
@@ -1292,6 +1320,16 @@ static gchar *usage_string1 =
 "                         PCB files originally created with gschem2pcb.\n"
 "   -v, --verbose         Use -v -v for additional file element debugging.\n"
 "   -V, --version\n\n"
+"environment variables:\n"
+"   GNETLIST              If set, this specifies the name of the gnetlist program\n"
+"                         to execute.\n"
+"\n"
+"Additional Resources:\n"
+"\n"
+"  gEDA homepage:  http://www.geda.seul.org\n"
+"  PCB homepage:   http://pcb.sf.net\n"
+"  gEDA Wiki:      http://geda.seul.org/dokuwiki/doku.php?id=geda\n"
+"\n"
 ;
 
 static void
@@ -1365,6 +1403,7 @@ main(gint argc, gchar **argv)
 	gchar	*pcb_file_name,
 			*pcb_new_file_name,
 			*bak_file_name,
+			*pins_file_name,
 			*net_file_name,
 			*tmp;
 	gint	i;
@@ -1419,6 +1458,7 @@ main(gint argc, gchar **argv)
 		element_directory_list = g_list_append(element_directory_list,
 					"/usr/local/pcb_lib");
 
+	pins_file_name = g_strconcat(basename, ".cmd", NULL);
 	net_file_name = g_strconcat(basename, ".net", NULL);
 	pcb_file_name = g_strconcat(basename, ".pcb", NULL);
 	bak_file_name = g_strconcat(basename, ".pcb.bak", NULL);
@@ -1440,7 +1480,7 @@ main(gint argc, gchar **argv)
 	else
 		pcb_new_file_name = g_strdup(pcb_file_name);
 
-	run_gnetlist(net_file_name, pcb_new_file_name, basename, schematics);
+	run_gnetlist(pins_file_name, net_file_name, pcb_new_file_name, basename, schematics);
 
 	if (add_elements(pcb_new_file_name) == 0)
 		{
@@ -1526,8 +1566,14 @@ main(gint argc, gchar **argv)
 		if (initial_pcb)
 			{
 			printf("\nNext step:\n");
-			printf("\tRun pcb on your file %s.\n", pcb_file_name);
-			printf("\tYou will find all your footprints in a bundle ready for you to place.\n\n");
+			printf("1.  Run pcb on your file %s.\n", pcb_file_name);
+			printf("    You will find all your footprints in a bundle ready for you to place\n");
+			printf("    or disperse with \"File -> Disperse all elements\" in PCB\n\n");
+			printf("2.  From within PCB, select \"File -> Load netlist file\" and select \n");
+			printf("    %s to load the netlist.\n\n", net_file_name);
+			printf("3.  From within PCB, enter\n\n");
+			printf("           :ExecuteFile(%s)\n\n", pins_file_name);
+			printf("    to propagate the pin names of all footprints to the layout.\n\n");
 			}
 		else if (quiet_mode == FALSE)
 			{
@@ -1538,8 +1584,16 @@ main(gint argc, gchar **argv)
 						pcb_new_file_name);
 			printf("3.  From within PCB, select \"File -> Load netlist file\" and select \n");
 			printf("    %s to load the updated netlist.\n\n", net_file_name);
+			printf("4.  From within PCB, enter\n\n");
+			printf("           :ExecuteFile(%s)\n\n", pins_file_name);
+			printf("    to update the pin names of all footprints.\n\n");
 			}
 		}
+
+	g_free(net_file_name);
+	g_free(pins_file_name);
+	g_free(pcb_file_name);
+	g_free(bak_file_name);
 
 	return 0;
 	}
