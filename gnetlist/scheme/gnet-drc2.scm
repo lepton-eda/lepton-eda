@@ -20,6 +20,8 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2006-04-05: Fixed parenthesis mismatch in function drc2:check-slots.
+;;              Thanks to David Logan for reporting the bug.
 ;;  2006-03-02: Don't check pintypes of net "NoConnection". 
 ;;              Thanks to Holger Oehm for the bug report and providing 
 ;;              a patch. 
@@ -424,20 +426,21 @@
 	  (begin
 	    (define check-slots-loop
 	      (lambda (slots_list)
-		(let ((this_slot (car slots_list)))
-		  (if (integer? this_slot)
-		      (if (not (and (<= this_slot numslots) (>= this_slot 1)))
-			  ;; If slot is not between 1 and numslots, then report an error.
-			  (begin
-			    (display (string-append "ERROR: Reference " uref 
-						    ": Slot out of range (" 
-						    (number->string this_slot)
-						    ").") port)
-			    (newline port)
-			    (set! errors_number (+ errors_number 1))))
+		(if (not (null? slots_list))
+		    (let ((this_slot (car slots_list)))
+		      (if (integer? this_slot)
+			  (if (not (and (<= this_slot numslots) (>= this_slot 1)))
+			      ;; If slot is not between 1 and numslots, then report an error.
+			      (begin
+				(display (string-append "ERROR: Reference " uref 
+							": Slot out of range (" 
+							(number->string this_slot)
+							").") port)
+				(newline port)
+				(set! errors_number (+ errors_number 1)))))
 		      
-		  (check-slots-loop (cdr slots_list))
-		  ))))
+		      (check-slots-loop (cdr slots_list))
+		      ))))
 	    
 	    (if (string-ci=? slot_string "unknown")
 		(begin

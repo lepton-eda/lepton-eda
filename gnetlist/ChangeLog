@@ -1,3 +1,9 @@
+2006-04-05 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-drc2.scm: Fixed parenthesis mismatch in 
+	function drc2:check-slots. 
+	Thanks to David Logan for reporting the bug.
+
 2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* lib/system-gnetlistrc.in: Removed load for the system-gafrc file,
