@@ -1,3 +1,16 @@
+2006-04-05 02:32  Dan McMahill <danmc>
+
+        * src/gsch2pcb.c: - look at the environment variable GNETLIST if
+          set to get the name of   the gnetlist executible.  Defaults to
+          gnetlist if GNETLIST is not set.
+
+          - add a pointer to the gEDA, PCB and gEDA wiki pages in the
+          --help output.
+
+          - run gnetlist -g pcbpins as part of the gnetlist runs to
+          generate a PCB   actions file which propagates pin names (not
+          just the numbers) from schematic   to layout.
+
 2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * lib/system-gschlasrc.in: Removed load for the system-gafrc file,
