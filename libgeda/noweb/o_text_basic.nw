@@ -547,6 +547,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
   gchar *aux_string;
   OBJECT *o_font_set;
   gunichar c=0, previous_char = 0, next_char = 0;
+  int escapes_counter = 0;
 
   temp_list = object_list;
 
@@ -758,8 +759,14 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
       size_of_tab_in_coord = tab_in_chars * 
                  o_text_width(w_current, TAB_CHAR_MODEL, size/2);
 
+      /* Count escape characters. Notice it includes the current character */
+      if (c == '\\') {
+	escapes_counter++;
+      }
+      
       /* Ignore escape characters */
-      if ( (c == '\\') && (previous_char != '\\') )
+      if ( ((c == '\\') && (previous_char != '\\')) ||
+	   (c == '\\') && (escapes_counter == 1) )
 	continue;
 
       if (c != '\n' && c != '\t') {
@@ -768,7 +775,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	    Add it if it is the escaped escape character */
 	if ( ( (c != '\\') &&
 	       (!(previous_char == '\\' && c == '_')) ) ||
-	     (previous_char == '\\' && c == '\\') ) {
+	     (previous_char == '\\' && c == '\\' && (escapes_counter > 1)) ) {
 	  temp_list = o_list_copy_all(w_current, 
 				      o_font_set->font_prim_objs->next, 
 				      temp_list, NORMAL_FLAG);
@@ -787,7 +794,14 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
 	  o_complex_world_translate(w_current, 
 				    x_offset, y_offset, 
 				    start_of_char);
-	}
+	  
+	  /* Reset the escapes counter after being processed. Otherwise, 
+	     if the next character is also a backslash, it will
+	     be processed as if were also escaped */
+	  if (previous_char == '\\' && c == '\\') {
+	    escapes_counter = 0;
+	  }
+	} 
       }
       
       /* Now check for special characters */
