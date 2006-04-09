@@ -111,7 +111,7 @@
 @end defun
 
 <<a_zoom.c : a_zoom()>>=
-/* dir is either ZOOM_IN or ZOOM_OUT which are defined in globals.h */
+/* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
 void
 a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
 {
@@ -173,7 +173,6 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
     case(ZOOM_FULL):
     /*hope someone have a better idea (hw)*/
     relativ_zoom_factor = -1;
-
     break;
   }
 
@@ -188,7 +187,7 @@ a_zoom(TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
 
   /*calculate new window and draw it */	
   a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
-                relativ_zoom_factor, pan_flags);	
+                relativ_zoom_factor, pan_flags);
 	
   /* convert things back to screen coords*/
   if (w_current->inside_action) {

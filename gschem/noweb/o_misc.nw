@@ -1154,7 +1154,7 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
           correct_aspect(w_current);
 
 #endif
-          a_zoom(w_current, ZOOM_FULL, HOTKEY, A_PAN_DONT_REDRAW);
+          a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           text_screen_height =  SCREENabs(w_current,
                                           o_text_height(o_current->
 							text->string,
@@ -1164,17 +1164,15 @@ int o_edit_find_text(TOPLEVEL * w_current, OBJECT * o_list, char *stext,
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
-            a_zoom(w_current, ZOOM_IN, HOTKEY, A_PAN_DONT_REDRAW);
-            a_pan_general(w_current, o_current->text->x, o_current->text->y, 
-                          1, A_PAN_DONT_REDRAW);
+            a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
             text_screen_height =  SCREENabs(w_current,
                                             o_text_height(o_current->
 							  text->string,
                                                           o_current->
                                                           text->size));
           }
-	  x_scrollbars_update(w_current);
-	  o_redraw_all_fast(w_current);
+	  a_pan_general(w_current, o_current->text->x, o_current->text->y, 
+			1, 0);
 
 	  last_o = o_current;
 	  break;

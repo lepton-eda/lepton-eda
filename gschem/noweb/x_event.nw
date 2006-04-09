@@ -1266,7 +1266,7 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
 		 w_current->page_current->right) /2;
   cy = (double) (w_current->page_current->top +
                  w_current->page_current->bottom) /2;	
-  a_pan_general(w_current, cx, cy, 1.0, 6);	
+  a_pan_general(w_current, cx, cy, 1.0, A_PAN_DONT_REDRAW);	
 	
 
   if (w_current->backingstore) {
@@ -1277,8 +1277,10 @@ x_event_configure(GtkWidget *widget, GdkEventConfigure *event,
                                            widget->allocation.width,
                                            widget->allocation.height,
                                            -1);
-  if (!w_current->DONT_REDRAW)
-  o_redraw_all_fast(w_current);
+  if (!w_current->DONT_REDRAW) {
+    o_redraw_all_fast(w_current);
+    x_scrollbars_update(w_current);
+  }
 
   return(0);
 }
