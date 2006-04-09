@@ -2663,6 +2663,8 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 							 GTK_RESPONSE_ACCEPT,
 							 GTK_STOCK_CANCEL, 
 							 GTK_RESPONSE_CANCEL,
+							 _("Discard changes"),
+							 GTK_RESPONSE_REJECT,
 							 NULL);	     
       gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(f_current->xfwindow), 
 				  sch_filefilter);
@@ -2679,16 +2681,28 @@ x_fileselect_setup (TOPLEVEL *w_current, int type, int filesel_type)
 	gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER (f_current->xfwindow),
 					  w_current->page_current->page_filename);
       }
-      if (gtk_dialog_run (GTK_DIALOG (f_current->xfwindow)) == GTK_RESPONSE_ACCEPT)
-	{
-	  char *filename;
+      switch (gtk_dialog_run (GTK_DIALOG (f_current->xfwindow))) {
+
+        case GTK_RESPONSE_ACCEPT:
+	  {
+	    char *filename;
+	    
+	    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (f_current->xfwindow));
+	    x_fileselect_saveas(NULL, f_current);
+	    g_free (filename);
+	  }
+	  break;
+        case GTK_RESPONSE_CANCEL:
+	  x_fileselect_close (NULL, f_current);
+	  break;
 	  
-	  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (f_current->xfwindow));
-	  x_fileselect_saveas(NULL, f_current);
-	  g_free (filename);
-	}
-      else {
-	x_fileselect_close (NULL, f_current);
+        case GTK_RESPONSE_REJECT:
+	  x_fileselect_close (NULL, f_current);
+	  /* Set the CHANGED flag to 0, so i_callback_page_close won't
+	     ask again if save the page or not. */
+	  w_current->page_current->CHANGED = 0;
+	  i_callback_page_close (w_current, 0, NULL);
+	  break;
       }
 
       free (title);

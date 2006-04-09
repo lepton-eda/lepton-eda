@@ -4,6 +4,9 @@
 	  It fixes the get_reference function to always return an integer
 	  value for horiz-pos and vertical-pos. This fixes bug 1463066.
 	  Thanks for the patch.
+
+	* noweb/x_fileselect.nw: Add the "discard changes" button to the
+	  close page dialog. This fixes bug 1442948.
 	
 2006-04-09 Werner Hoch <werner.ho@gmx.de>
 
