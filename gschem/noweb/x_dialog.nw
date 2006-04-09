@@ -4266,9 +4266,9 @@ void find_text_dialog(TOPLEVEL * w_current)
 
     gtk_window_set_title(GTK_WINDOW(w_current->tswindow), _("Find text"));
     gtk_container_border_width(GTK_CONTAINER(w_current->tswindow), 10);
+    gtk_box_set_spacing(GTK_BOX(vbox),10);
 
     label = gtk_label_new(_("Text to find:"));
-    gtk_misc_set_padding(GTK_MISC(label), 20, 20);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
     gtk_widget_show(label);
 
@@ -4279,6 +4279,11 @@ void find_text_dialog(TOPLEVEL * w_current)
 		       GTK_SIGNAL_FUNC(find_text_ok), w_current);
     gtk_widget_show(w_current->tsentry);
     gtk_widget_grab_focus(w_current->tsentry);
+
+    checkdescend =
+	gtk_check_button_new_with_label(_("descend into hierarchy"));
+    /*          gtk_object_set_data (GTK_OBJECT (w_current->tswindow), "descend", w_current->preview_checkbox);*/
+    gtk_box_pack_start(GTK_BOX(vbox), checkdescend, TRUE, TRUE, 0);
 
 #ifdef HAS_GTK12
     buttonok = gtk_button_new_with_label(_("Find"));
@@ -4301,11 +4306,6 @@ void find_text_dialog(TOPLEVEL * w_current)
 		       GTK_SIGNAL_FUNC(find_text_done), w_current);
 
 
-    checkdescend =
-	gtk_check_button_new_with_label(_("descend into hierarchy"));
-    /*          gtk_object_set_data (GTK_OBJECT (w_current->tswindow), "descend", w_current->preview_checkbox);*/
-
-    gtk_box_pack_start(GTK_BOX(action_area), checkdescend, TRUE, TRUE, 0);
 
     gtk_widget_show(buttonok);
     gtk_widget_show(buttondone);

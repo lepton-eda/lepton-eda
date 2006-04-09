@@ -1,5 +1,10 @@
 2006-04-09 Werner Hoch <werner.ho@gmx.de>
 
+	* noweb/x_dialog.nw: find_text_dialog(): moved the descend 
+	  checkbutton from the action_area to the vbox.
+
+2006-04-09 Werner Hoch <werner.ho@gmx.de>
+
 	* noweb/a_pan.nw: a_pan(), a_pan_mouse() rewritten, they'll use
 	a_pan_general() now, a_pan_calc() removed.
 
