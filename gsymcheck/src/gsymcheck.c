@@ -118,6 +118,7 @@ main_prog(void *closure, int argc, char *argv[])
     }
 
     if (stat(filename, &buf) != 0) {
+      logging_dest = STDOUT_TTY;
       s_log_message("Could not open [%s]\n", filename);
       s_log_message("Exiting...\n");
       exit(2); /* error */
