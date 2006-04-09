@@ -1,3 +1,10 @@
+2006-04-07 Carlos Nieves Onega <cnieves@iespana.es>
+        * asic/asic-cap-1.sym, asic/asic-cap-2.sym, asic/asic-cap-3.sym,
+	  asic/asic-diode-1.sym, asic/asic-nmos-1.sym, asic/asic-pmos-1.sym,
+	  asic/asic-res-1.sym, asic/asic-res-2.sym, asic/asic-res-3.sym,
+	  asic/asic-cap-4.sym:
+	  Added missing pintype and pinlabel attributes.
+	
 2006-04-02: Werner Hoch  <werner.ho@gmx.de>
 	* micro/ATmega16L-1.sym: fixed Port label
 
