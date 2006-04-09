@@ -1,3 +1,10 @@
+2006-04-09 Carlos Nieves Onega <cnieves@iespana.es>	
+
+        * scheme/auto-place-attribs.scm: Applied patch from Steve Brown
+	  It fixes the get_reference function to always return an integer
+	  value for horiz-pos and vertical-pos. This fixes bug 1463066.
+	  Thanks for the patch.
+	
 2006-04-09 Werner Hoch <werner.ho@gmx.de>
 
 	* noweb/x_dialog.nw: find_text_dialog(): moved the descend 
