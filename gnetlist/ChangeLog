@@ -1,3 +1,8 @@
+2006-04-11 Carlos Nieves Onega <cnieves@iespana.es>
+
+	* scheme/gnet-spice-sdb.scm: Changed .END and .ENDS cards to lowercase.
+	This fixes bug 1442912.
+
 2006-04-05 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/gnet-drc2.scm: Fixed parenthesis mismatch in 

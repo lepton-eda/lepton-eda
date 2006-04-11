@@ -82,6 +82,8 @@
 ;;                than P9 were sorted incorrectly (as strings).  Now they are sorted
 ;;                as numbers.
 ;;  3.10.2006 -- Added "m" attribute to PMOS and NMOS per request of Peter Kaiser.
+;;  4.11.2006 --  Changed the .END and .ENDS cards to lowercase. 
+;;                This fixes bug 1442912. Carlos Nieves Onega.
 ;;**********************************************************************************
 ;;
 ;;  Organization of gnet-spice-sdb.scm file:
@@ -1860,10 +1862,10 @@
 ;;
       (if (not (string=? schematic-type "normal schematic"))
           (begin 
-	    (spice-sdb:write-bottom-footer (string-append ".ENDS " model-name) port)
+	    (spice-sdb:write-bottom-footer (string-append ".ends " model-name) port)
 	    (display "*******************************\n" port)
 	  )
-          (spice-sdb:write-bottom-footer ".END" port)
+          (spice-sdb:write-bottom-footer ".end" port)
       )
 
 
