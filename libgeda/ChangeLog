@@ -1,3 +1,7 @@
+2006-04-14 Werner Hoch <werner.ho@gmx.de>
+	* noweb/f_basic.nw: added <time.h> for f_open()
+	  compiler warning was: implicit declaration function of difftime()
+
 2006-04-13 Werner Hoch <werner.ho@gmx.de>
 	* noweb/f_print.nw: added <time.h> for f_print_header()
 	
