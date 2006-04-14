@@ -101,10 +101,13 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
   /* think it's better that the zoomfactor is defined as pix/mills
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
   int zoom_max = 5;	
-  double zx,zy,zoom_old,zoom_new,zoom_min;
+  int start_x, start_y;
+  double zx, zy, zoom_old, zoom_new, zoom_min;
+
 #if DEBUG
   printf("a_pan_general(): world_cx=%f, world_cy=%f\n",world_cx, world_cy);
 #endif	
+
   /* calc minimum zoomfactors and choose the smaller one. They are equal
      if the aspectratio of the world is the same as the screen ratio */
   zx = (double) w_current->width / (w_current->init_right -
@@ -132,6 +135,14 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
     if (!(flags & A_PAN_IGNORE_BORDERS)) {
       zoom_new = zoom_new < zoom_min ? zoom_min : zoom_new;
     }
+  }
+
+  /* check to see if we are inside an action draw net, etc.  If
+   * yes, convert the start screen coords to world coords */
+  if (w_current->inside_action) {
+    SCREENtoWORLD(w_current,
+		  w_current->start_x, w_current->start_y,
+		  &start_x, &start_y);
   }
 
   /* calculate the new visible area; adding 0.5 to round */
@@ -181,10 +192,13 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
 #if DEBUG
   printf("zoom_old: %f, zoom_new: %f \n ",zoom_old, zoom_new);
   printf("left: %d, right: %d, top: %d, bottom: %d\n",
-         w_current->page_current->left, w_current->page_current->right, w_current->page_current->top, w_current->page_current->bottom);
+         w_current->page_current->left, w_current->page_current->right, 
+	 w_current->page_current->top, w_current->page_current->bottom);
   printf("aspect: %f\n",
-         (float) fabs(w_current->page_current->right  - w_current->page_current->left) /
-         (float) fabs(w_current->page_current->bottom - w_current->page_current->top ));
+         (float) fabs(w_current->page_current->right  
+		      - w_current->page_current->left) /
+         (float) fabs(w_current->page_current->bottom 
+		      - w_current->page_current->top ));
 #endif
 	
   /* set_window */
@@ -194,10 +208,26 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
              w_current->page_current->top   ,
              w_current->page_current->bottom);
 
+  /* convert world coords back to screen coords */
+  if (w_current->inside_action) {
+    WORLDtoSCREEN(w_current,
+		  start_x, start_y,
+		  &(w_current->start_x), &(w_current->start_y));
+    /* set all rubberband points to it's start values:
+       As we don't draw the rubberbands after zooming/paning this
+       will lead the a redraw of the rubberbands with the next
+       motion event */
+    w_current->last_x = w_current->second_x = w_current->start_x;
+    w_current->save_x = w_current->loc_x = w_current->start_x;
+    w_current->last_y = w_current->second_y = w_current->start_y;
+    w_current->save_y = w_current->loc_y = w_current->start_y;
+    w_current->distance = 0;
+  }
+
   /* redraw */
   if (!(flags & A_PAN_DONT_REDRAW)) {
     x_scrollbars_update(w_current);
-    o_redraw_all_fast(w_current);
+    o_redraw_all(w_current);
   }
 }
 
@@ -215,55 +245,25 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
 void
 a_pan(TOPLEVEL *w_current, int x, int y)
 {
-  int sx, sy, lx, ly;
   double world_cx, world_cy;
+
 #if DEBUG
   printf("a_pan(): x=%d, y=%d\n", x, y);
 #endif	
 
-  /* check to see if we are inside an action draw net, etc.  If
-   * yes, convert screen coords to world coords */
-  if (w_current->inside_action) {
-    SCREENtoWORLD(w_current,
-		  w_current->start_x, w_current->start_y,
-		  &sx, &sy);
-    SCREENtoWORLD(w_current,
-		  w_current->last_x, w_current->last_y,
-		  &lx, &ly);
-    
-#if 0
-    printf("BEGIN: start x %d -> %d \n", w_current->start_x, sx);
-    printf("BEGIN: start y %d -> %d \n", w_current->start_y, sy);
-    printf("BEGIN: last  x %d -> %d \n", w_current->last_x , lx);
-    printf("BEGIN: last  y %d -> %d \n", w_current->last_y , ly);
-#endif
-  }
-
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
-	
+
   world_cx = mil_x(w_current, x);
   world_cy = mil_y(w_current, y);
 
   a_pan_general(w_current, world_cx, world_cy, 1, 0);
 
-  /* convert world coords back to screen coords */
-  if (w_current->inside_action) {
-    WORLDtoSCREEN(w_current,
-		  sx, sy,
-		  &(w_current->start_x), &(w_current->start_y));
-    WORLDtoSCREEN(w_current,
-		  lx, ly,
-		  &(w_current->last_x), &(w_current->last_y));
-#if 0
-    printf("END:   start x %d <- %d \n", sx, w_current->start_x);
-    printf("END:   start y %d <- %d \n", sy, w_current->start_y);
-    printf("END:   last  x %d <- %d \n", lx, w_current->last_x );
-    printf("END:   last  y %d <- %d \n", ly, w_current->last_y );
-#endif
-  }
-  /* not needed */
-  /* o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); */
+  /* FIXME? This call will trigger a motion event (x_event_motion()), even 
+     if the user doesn't move the mouse 
+     Not ready for prime time, maybe there is another way to trigger the 
+     motion event without changing the cursor position (Werner)*/
+  /* x_basic_warp_cursor(w_current->drawing_area, x, y, 0); */
 }
 
 
@@ -279,18 +279,14 @@ a_pan(TOPLEVEL *w_current, int x, int y)
 void
 a_pan_mouse(TOPLEVEL *w_current, int diff_x, int diff_y)
 {
-  int world_dx, world_dy;
   double world_cx, world_cy;
 
 #if DEBUG
   printf("a_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
 #endif	
 
-  world_dx = WORLDabs(w_current, diff_x);
-  world_dy = WORLDabs(w_current, diff_y);
-
-  world_cx=GET_PAGE_CENTER_X(w_current) - world_dx;
-  world_cy=GET_PAGE_CENTER_Y(w_current) + world_dy;
+  world_cx=GET_PAGE_CENTER_X(w_current) - WORLDabs(w_current, diff_x);
+  world_cy=GET_PAGE_CENTER_Y(w_current) + WORLDabs(w_current, diff_y);
 
 #if DEBUG
   printf("  world_cx=%f, world_cy=%f, world_dx=%d, world_dy=%d\n",

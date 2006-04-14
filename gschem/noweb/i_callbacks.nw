@@ -2012,12 +2012,13 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
    * don't change the event state, because we want to continue
    * drawing a net. If we are just panning, then continue in
    * select mode.  */
-  if(!(w_current->event_state == DRAWNET ||
+  /* removed the limitations of the pan mode (werner) */
+  /* if(!(w_current->event_state == DRAWNET ||
        w_current->event_state == NETCONT ||
        w_current->event_state == STARTDRAWNET )) {
     i_set_state(w_current, SELECT);
     i_update_toolbar(w_current);
-  }
+    } */
   o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
 }
 

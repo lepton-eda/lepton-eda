@@ -880,7 +880,9 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
   int pdiff_x, pdiff_y;
 
   int zoom_scale;
-  int diff_x;
+  int diff_x; 
+  int skip_event=0;
+  GdkEvent *test_event;
 
   exit_if_null(w_current);
   global_window_current = w_current;
@@ -888,13 +890,6 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
-
-  mouse_x = (int) event->x;
-  mouse_y = (int) event->y;
-
-  if (w_current->cowindow) {
-    coord_display_update(w_current, mouse_x, mouse_y);
-  }
 
 #if DEBUG
   /* printf("MOTION!\n");*/
@@ -908,6 +903,28 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
     return(0);
   }
 #endif
+
+  /* skip the moving event if there are other moving events in the 
+     gdk event queue (Werner)
+     Only skip the event if is the same event and no buttons or modifier 
+     keys changed*/
+  if ((test_event = gdk_event_get()) != NULL) {
+    if (test_event->type == GDK_MOTION_NOTIFY
+	&& ((GdkEventMotion *) test_event)->state == event->state) {
+      skip_event= 1;
+    }
+    gdk_event_put(test_event); /* put it back in front of the queue */
+    gdk_event_free(test_event);
+    if (skip_event == 1)
+      return 0;
+  }
+
+  mouse_x = (int) event->x;
+  mouse_y = (int) event->y;
+
+  if (w_current->cowindow) {
+    coord_display_update(w_current, mouse_x, mouse_y);
+  }
 
   if (w_current->third_button == MOUSEPAN_ENABLED) {
     if((w_current->event_state == MOUSEPAN) &&

@@ -1,3 +1,18 @@
+2006-04-14 Werner Hoch <werner.ho@gmx.de>
+
+	* noweb/a_zoom.nw, noweb/a_pan.nw: rubberband redrawing changed
+	  moved coordinate calculations to a_pan_general()
+
+	* noweb/i_callback.nw: removed limitations of paning while drawing
+	* noweb/o_basic.nw: small fix for moving while drawing
+
+	* noweb/x_print.nw: GTK_BOX pointer type fixes
+
+	* noweb/x_event.nw: drop redundant x_event_motion() events if no
+	  mouse button or modifier key change occured.
+	  This speeds up moving large selections, copying selections and 
+	  mouse paning.
+
 2006-04-09 Carlos Nieves Onega <cnieves@iespana.es>	
 
         * scheme/auto-place-attribs.scm: Applied patch from Steve Brown
@@ -13,10 +28,8 @@
 	* noweb/x_dialog.nw: find_text_dialog(): moved the descend 
 	  checkbutton from the action_area to the vbox.
 
-2006-04-09 Werner Hoch <werner.ho@gmx.de>
-
 	* noweb/a_pan.nw: a_pan(), a_pan_mouse() rewritten, they'll use
-	a_pan_general() now, a_pan_calc() removed.
+	  a_pan_general() now, a_pan_calc() removed.
 
 	* noweb/a_pan, noweb/a_zoom.nw, noweb/i_callbacks.nw, noweb/o_misc.nw,
 	  noweb/x_event.nw: bugfix for "[ 1443804 ] gschem scrollbars not 

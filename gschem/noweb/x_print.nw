@@ -553,8 +553,8 @@ x_print_setup (TOPLEVEL *w_current, char *filename)
 
     box = gtk_hbox_new(FALSE, 0);
     gtk_container_border_width(GTK_CONTAINER(box), 0);
-    gtk_box_pack_start(GTK_CONTAINER(vbox), box, FALSE, TRUE, 5);
-    gtk_box_set_spacing(box, 10);
+    gtk_box_pack_start(GTK_BOX(vbox), box, FALSE, TRUE, 5);
+    gtk_box_set_spacing(GTK_BOX(box), 10);
     gtk_widget_show(box);
 
     label = gtk_label_new (_("Filename"));

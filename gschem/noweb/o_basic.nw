@@ -126,6 +126,8 @@ o_redraw_all(TOPLEVEL *w_current)
   if (w_current->inside_action) {
     switch(w_current->event_state) {
       case(ENDMOVE):
+	o_erase_selected(w_current);	
+	/* continue */
       case(ENDCOPY):
         o_drawbounding(w_current, NULL,
                        w_current->page_current->selection2_head->next,
