@@ -1148,7 +1148,7 @@ The arc is internally described by :
 void
 o_arc_rubberarc(TOPLEVEL *w_current, int x, int y, int whichone)
 {
-	double d, dx, dy, sin_a_, cos_a_, a;
+	double  dx, dy, a;
 	int diff_x, diff_y;
 
 	/* erase the previous temporary arc */
@@ -1195,21 +1195,7 @@ if (diff_x >= diff_y) {
 /* compute the angle */
 dx =   ((double) x) - ((double) w_current->start_x);
 dy = - ((double) y) + ((double) w_current->start_y);
-d  = sqrt((dx * dx) + (dy * dy));
-
-sin_a_ = dy / ((double) d);
-cos_a_ = dx / ((double) d);
-a = asin(sin_a_) * 180 / M_PI;
-if(a < 0) a *= -1;
-
-/* find the right quadrant */
-if(sin_a_ >= 0) {
-	if(cos_a_ >= 0) a = a;
-	else            a = 180 - a;
-} else {
-	if(cos_a_ >= 0) a = 360 - a;
-	else            a = 180 + a;
-}
+a = atan2(dy,dx) * 180 / M_PI;
 
 @ 
 
@@ -1218,11 +1204,11 @@ if(sin_a_ >= 0) {
 /* set the start or end angle with this angle */
 switch(whichone) {
 	case ARC_START_ANGLE:
-	w_current->loc_x = (int) a;
+	w_current->loc_x = ((int) a + 360) % 360;
 	break;
 	
 	case ARC_END_ANGLE:
-	w_current->loc_y = (int) a;
+	w_current->loc_y = ((int) a - w_current->loc_x + 720) % 360;
 	break;
 	
 	default:

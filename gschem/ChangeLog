@@ -1,3 +1,12 @@
+2006-04-15 Werner Hoch <werner.ho@gmx.de>
+
+	* noweb/o_arc.nw: corrected ARC_END_ANGLE calculation in 
+	  o_arc_rubberband(), simplified the function.
+	  this fixes bug 1468682
+	  
+	* noweb/a_pan.nw: set loc_x/y to 0 in a_pan_general,
+	  this fixes a zoom-while-drawing error
+
 2006-04-14 Werner Hoch <werner.ho@gmx.de>
 
 	* noweb/a_zoom.nw, noweb/a_pan.nw: rubberband redrawing changed

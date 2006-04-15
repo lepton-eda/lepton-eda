@@ -218,10 +218,10 @@ void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy,
        will lead the a redraw of the rubberbands with the next
        motion event */
     w_current->last_x = w_current->second_x = w_current->start_x;
-    w_current->save_x = w_current->loc_x = w_current->start_x;
+    w_current->save_x = w_current->start_x;
     w_current->last_y = w_current->second_y = w_current->start_y;
-    w_current->save_y = w_current->loc_y = w_current->start_y;
-    w_current->distance = 0;
+    w_current->save_y = w_current->start_y;
+    w_current->distance = w_current->loc_y = w_current->loc_x = 0;
   }
 
   /* redraw */
