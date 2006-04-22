@@ -39,6 +39,9 @@ void s_traverse_init(void)
     netlist_head = s_netlist_add(NULL);
     netlist_head->nlid = -1;	/* head node */
 
+    graphical_netlist_head = s_netlist_add(NULL);
+    graphical_netlist_head->nlid = -1;	/* head node */
+
     if (verbose_mode) {
 	printf
 	    ("\n\n------------------------------------------------------\n");
@@ -84,6 +87,10 @@ void s_traverse_start(TOPLEVEL * pr_current)
     /* post processing work */
     s_netlist_post_process(pr_current, netlist_head);
 
+    /* Now match the graphical netlist with the net names already assigned */
+    s_netlist_name_named_nets(pr_current, netlist_head, 
+			      graphical_netlist_head);
+			      
     if (verbose_mode) {
 	printf("\nInternal netlist representation:\n\n");
 	s_netlist_print(netlist_head);
@@ -99,6 +106,7 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
   NETLIST *netlist;
   char *temp;
   char *temp_uref;
+  gboolean is_graphical=FALSE;
 
   if (verbose_mode) {
     printf("- Starting internal netlist creation\n");
@@ -125,88 +133,92 @@ s_traverse_sheet(TOPLEVEL * pr_current, OBJECT * start,
       /* look for special tag */
       temp = o_attrib_search_component(o_current, "graphical");
       if (temp) {
-        /* don't want to traverse graphical elements */
+        /* traverse graphical elements, but adding them to the
+	   graphical netlist */
         free(temp);
-
+	
+	netlist = s_netlist_return_tail(graphical_netlist_head);
+	is_graphical = TRUE;
+	
+    
+      }
+      netlist = s_netlist_add(netlist);
+      netlist->nlid = o_current->sid;
+      
+      /* search the single object only.... */
+      temp_uref =
+	o_attrib_search_name_single(o_current, "refdes", NULL);
+      
+      if (!temp_uref) {
+	temp_uref =
+	  o_attrib_search_name_single(o_current, "uref", NULL); /* deprecated */
+	
+	if (temp_uref) {
+	  printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
+	}
+      }
+      
+      if (temp_uref) {
+	netlist->component_uref =
+	  s_hierarchy_create_uref(pr_current, temp_uref,
+				  hierarchy_tag);
       } else {
-        netlist = s_netlist_add(netlist);
-        netlist->nlid = o_current->sid;
+	netlist->component_uref = NULL;
+      }
+      
+      if (hierarchy_tag) {
+	netlist->hierarchy_tag = g_strdup (hierarchy_tag);
+      }
+      
+      if (temp_uref) {
+	free(temp_uref);
+      }
 
-        /* search the single object only.... */
-        temp_uref =
-          o_attrib_search_name_single(o_current, "refdes", NULL);
-
-        if (!temp_uref) {
-          temp_uref =
-            o_attrib_search_name_single(o_current, "uref", NULL); /* deprecated */
-
-          if (temp_uref) {
-            printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
-          }
-        }
-
-        if (temp_uref) {
-          netlist->component_uref =
-            s_hierarchy_create_uref(pr_current, temp_uref,
-                                    hierarchy_tag);
-        } else {
-          netlist->component_uref = NULL;
-        }
-
-        if (hierarchy_tag) {
-          netlist->hierarchy_tag = g_strdup (hierarchy_tag);
-        }
-
-        if (temp_uref) {
-          free(temp_uref);
-        }
-
-        netlist->object_ptr = o_current;
-
-        if (!netlist->component_uref) {
-
-          /* search of net attribute */
-          /* maybe symbol is not a component */
-          /* but a power / gnd symbol */
-          temp =
-            o_attrib_search_name(o_current->complex->prim_objs,
-                                 "net", 0);
-
-          /* nope net attribute not found */
-          if (!temp) {
-
-            fprintf(stderr,
-                    "Could not find refdes on component and could not find any special attributes!\n");
-
-            netlist->component_uref =
-              (char *) malloc(sizeof(char) * strlen("U?") +
-                              1);
-            strcpy(netlist->component_uref, "U?");
-          } else {
-
+      netlist->object_ptr = o_current;
+      
+      if (!netlist->component_uref) {
+	
+	/* search of net attribute */
+	/* maybe symbol is not a component */
+	/* but a power / gnd symbol */
+	temp =
+	  o_attrib_search_name(o_current->complex->prim_objs,
+			       "net", 0);
+	
+	/* nope net attribute not found */
+	if ( (!temp) && (!is_graphical) ) {
+	  
+	  fprintf(stderr,
+		  "Could not find refdes on component and could not find any special attributes!\n");
+	  
+	  netlist->component_uref =
+	    (char *) malloc(sizeof(char) * strlen("U?") +
+			    1);
+	  strcpy(netlist->component_uref, "U?");
+	} else {
+	  
 #if DEBUG
-            printf("yeah... found a power symbol\n");
+	  printf("yeah... found a power symbol\n");
 #endif
-            /* it's a power or some other special symbol */
-            netlist->component_uref = NULL;
-            free(temp);
-          }
+	  /* it's a power or some other special symbol */
+	  netlist->component_uref = NULL;
+	  free(temp);
+	}
+	
+      }
 
-        }
-
-        netlist->cpins =
-          s_traverse_component(pr_current, o_current,
-                               hierarchy_tag);
-
-        /* here is where you deal with the */
-        /* net attribute */
-        s_netattrib_handle(pr_current, o_current, netlist,
-                           hierarchy_tag);
-
-        /* now you need to traverse any underlying schematics */
-        if (pr_current->hierarchy_traversal == TRUE) {
-          s_hierarchy_traverse(pr_current, o_current, netlist);
-        }
+      netlist->cpins =
+	s_traverse_component(pr_current, o_current,
+			     hierarchy_tag);
+      
+      /* here is where you deal with the */
+      /* net attribute */
+      s_netattrib_handle(pr_current, o_current, netlist,
+			 hierarchy_tag);
+      
+      /* now you need to traverse any underlying schematics */
+      if (pr_current->hierarchy_traversal == TRUE) {
+	s_hierarchy_traverse(pr_current, o_current, netlist);
       }
     }
 

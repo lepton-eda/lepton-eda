@@ -941,6 +941,92 @@ SCM g_get_command_line()
 }
 
 
+/* given a net name, an attribute, and a wanted attribute, return all 
+   the given attribute of all the graphical objects connected to that 
+   net name */
+SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute)
+{
+
+    SCM list = SCM_EOL;
+    NETLIST *nl_current;
+    CPINLIST *pl_current;
+    char *wanted_net_name;
+    char *wanted_attrib;
+    char *has_attrib;
+    char *net_name;
+    char *attrib_value=NULL;
+    char *has_attrib_value = NULL;
+    char *has_attrib_name = NULL;
+
+    SCM_ASSERT( (SCM_NIMP (scm_netname) && SCM_STRINGP (scm_netname) ),
+		 scm_netname, SCM_ARG1, 
+		"gnetlist:get-attr-of-conn-graph-objs-with-attr");
+
+    SCM_ASSERT( (SCM_NIMP (scm_wanted_attribute) && 
+		 SCM_STRINGP (scm_wanted_attribute) ),
+		 scm_wanted_attribute, SCM_ARG2, 
+		"gnetlist:get-attr-of-conn-graph-objs-with-attr");
+
+    SCM_ASSERT( (SCM_NIMP (scm_has_attribute) && 
+		 SCM_STRINGP (scm_has_attribute) ),
+		 scm_has_attribute, SCM_ARG3, 
+		"gnetlist:get-attr-of-conn-graph-objs-with-attr");
+
+    wanted_net_name = SCM_STRING_CHARS (scm_netname);
+    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attribute);
+    has_attrib = SCM_STRING_CHARS (scm_has_attribute);
+    
+    if (wanted_net_name == NULL) {
+	return list;
+    }
+
+
+    nl_current = graphical_netlist_head;
+    
+    /* walk through the list of components, and through the list
+     * of individual pins on each, adding net names to the list
+     * being careful to ignore duplicates, and unconnected pins 
+     */
+    while (nl_current != NULL) {
+	pl_current = nl_current->cpins;
+	while (pl_current != NULL) {
+	    if (pl_current->net_name) {
+		net_name = pl_current->net_name;
+		if (strcmp(net_name, wanted_net_name) == 0) {
+
+		  if (o_attrib_get_name_value (has_attrib, &has_attrib_name,
+					       &has_attrib_value) != 0) {
+		    attrib_value = 
+		      o_attrib_search_name_single(nl_current->object_ptr,
+						  has_attrib_name, NULL);
+		    
+		    if ( ((has_attrib_value == NULL) && (attrib_value == NULL)) ||
+			 ((has_attrib_value != NULL) && (attrib_value != NULL) &&
+			  (strcmp(attrib_value, has_attrib_value) == 0)) ) {
+		      g_free (attrib_value);
+		      attrib_value = o_attrib_search_name_single(nl_current->object_ptr,
+								 wanted_attrib, NULL);
+		      if (attrib_value) {
+			list = scm_cons (scm_makfrom0str (attrib_value), list);
+		      }
+		      g_free (attrib_value);
+		    }
+		    g_free (has_attrib_name);
+		    g_free (has_attrib_value);
+		  }
+		}
+	    }
+	    pl_current = pl_current->next;
+	}
+	nl_current = nl_current->next;
+    }
+
+    return list;
+}
+
+
+
+
 
 /* 
  * This function is in s_rename.c:  SCM g_get_renamed_nets(SCM scm_level)

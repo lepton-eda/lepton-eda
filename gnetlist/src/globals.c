@@ -64,6 +64,8 @@ int (*load_newer_backup_func)() = NULL;
 
 /* netlist specific variables */
 NETLIST *netlist_head=NULL;
+NETLIST *graphical_netlist_head=NULL; /* Special objects with 
+					 graphical=1 attribute */
 char *guile_proc=NULL; 
 
 

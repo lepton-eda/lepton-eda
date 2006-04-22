@@ -50,6 +50,8 @@ extern void (*net_conn_recalc_func)();
 
 /* gnetlist specific stuff */
 extern NETLIST *netlist_head;
+extern NETLIST *graphical_netlist_head; /* Special objects with 
+					   graphical=1 attribute */
 extern char *guile_proc;
 extern int verbose_mode;
 extern int interactive_mode;

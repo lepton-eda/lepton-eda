@@ -20,6 +20,13 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2006-04-22: Display the pins when reporting a net with only one connection.
+;;  2006-04-08: Added support for DRC directives (DontCheckPintypes and 
+;;              NoConnection), so the DRC doesn't depend on the net name
+;;              anymore.
+;;              Changed the drc connection matrix. Now an unknown pin doesn't 
+;;              generate an error, and it can drive a net.
+;;              Added report for pins without the 'pintype' attribute.
 ;;  2006-04-05: Fixed parenthesis mismatch in function drc2:check-slots.
 ;;              Thanks to David Logan for reporting the bug.
 ;;  2006-03-02: Don't check pintypes of net "NoConnection". 
@@ -93,6 +100,7 @@
 ;; (define dont-check-non-numbered-parts 1)
 ;; (define dont-check-duplicated-references 1)
 ;; (define dont-check-one-connection-nets 1)
+;; (define dont-report-unknown-pintypes 1)
 ;; (define dont-check-pintypes-of-nets 1)
 ;; (define dont-check-not-driven-nets 1)
 ;; (define dont-check-unconnected-pins 1)
@@ -125,27 +133,27 @@
 ;;;  Order is important !
 ;;;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
 ;;;unknown
-;;  '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )
+;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
 ;;;in
-;;  '(            #\e   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
 ;;;out
-;;  '(            #\e   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
 ;;;io
-;;  '(            #\e   #\c   #\w   #\c   #\w   #\w   #\c   #\w   #\c   #\c   #\w   #\e )
+;;  '(            #\c   #\c   #\w   #\c   #\w   #\w   #\c   #\w   #\c   #\c   #\w   #\e )
 ;;;oc
-;;  '(            #\e   #\c   #\e   #\w   #\e   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
 ;;;oe
-;;  '(            #\e   #\c   #\e   #\w   #\c   #\e   #\c   #\e   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\c   #\e   #\c   #\e   #\c   #\c   #\e   #\e )
 ;;;pas
-;;  '(            #\e   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
 ;;;tp
-;;  '(            #\e   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
 ;;;tri
-;;  '(            #\e   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
 ;;;clk
-;;  '(            #\e   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e   #\e )
 ;;;pwr
-;;  '(            #\e   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c   #\e )
 ;;;unconnected
 ;;  '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )))
 
@@ -199,7 +207,8 @@
     (define pintype-can-drive 1))     ; Later is redefined if it's not a list.
 
 (if (not (list? pintype-can-drive))
-    (define pintype-can-drive (list 0 0 1 1 1 1 1 1 1 0 1 0 )))
+;                                  unk in out io oc oe pas tp tri clk pwr undef
+    (define pintype-can-drive (list 1   0  1   1  1  1  1   1  1   0   1    0 )))
 
 ; DRC matrix
 ;
@@ -209,27 +218,27 @@
 ;  Order is important !
 ;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
 ;unknown
-  '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )
+  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
 ;in
-  '(            #\e   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
 ;out
-  '(            #\e   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
 ;io
-  '(            #\e   #\c   #\w   #\c   #\w   #\w   #\c   #\w   #\c   #\c   #\w   #\e )
+  '(            #\c   #\c   #\w   #\c   #\w   #\w   #\c   #\w   #\c   #\c   #\w   #\e )
 ;oc
-  '(            #\e   #\c   #\e   #\w   #\e   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
 ;oe
-  '(            #\e   #\c   #\e   #\w   #\c   #\e   #\c   #\e   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\c   #\e   #\c   #\e   #\c   #\c   #\e   #\e )
 ;pas
-  '(            #\e   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
 ;tp
-  '(            #\e   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
 ;tri
-  '(            #\e   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
 ;clk
-  '(            #\e   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e   #\e )
 ;pwr
-  '(            #\e   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c   #\e )
 ;unconnected
   '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )
 )))
@@ -552,10 +561,15 @@
 (define drc2:check-single-nets
   (lambda (port all-nets)
       (if (not (null? all-nets))
-	  (let ((netname (car all-nets)))
+	  (let* ((netname (car all-nets))
+		 (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+			      netname
+			      "device=DRC_Directive"
+			      "value")))
 	    (begin
-	      ; If netname is NoConnection, then it shouldn't be checked.
- 	      (if (not (string-ci=? netname "NoConnection"))
+	      ; If one of the directives is NoConnection, 
+	      ; then it shouldn't be checked.
+ 	      (if (not (member "NoConnection" directives))
 		  (begin
 		    (if (eq? (length (gnetlist:get-all-connections netname)) '0)
 			(begin (display (string-append "ERROR: Net '"
@@ -566,7 +580,9 @@
 			)
 		    (if (eq? (length (gnetlist:get-all-connections netname)) '1)
 			(begin (display (string-append "ERROR: Net '"
-						       netname "' is connected to only one pin.") port)
+						       netname "' is connected to only one pin: ") port)
+			       (drc2:display-pins-of-type port "all" (gnetlist:get-all-connections netname))
+			       (display "." port)
 			       (newline port)
 			       (set! errors_number (+ errors_number 1))
 			       )                      
@@ -623,7 +639,8 @@
 ;;
 ;; Display pins of a specified type connected to a net
 ;;
-;; type: number of the position of the type in the vector.
+;; type: number of the position of the type in the vector, or 
+;;       the string "all" to display all the pins.
 ;; connections: ((U100 1) (U101 1)), for example.
 (define drc2:display-pins-of-type
   (lambda (port type connections)
@@ -631,8 +648,10 @@
 	(begin
 	  (let ((device (car (car connections)))
 		(pin (car (cdr (car connections)))))
-	    (if (string-ci=? (list-ref pintype-names type)
-			     (gnetlist:get-attribute-by-pinnumber device pin "pintype"))
+	    (if (or (and (string? type) (string-ci=? type "all"))
+		    (string-ci=? (list-ref pintype-names type)
+				 (gnetlist:get-attribute-by-pinnumber device pin "pintype"))
+		    )
 		(begin
 		  (display device port)
 		  (display ":" port)
@@ -769,13 +788,18 @@
 				     connections
 				     '()))
 		       (pintype-count (drc2:count-pintypes-of-net pintypes port))
+		       (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+				    netname
+				    "device=DRC_Directive"
+				    "value"))
 		       )
-		; If netname is NoConnection, then it shouldn't be checked.
-		(if (not (string-ci=? netname "NoConnection"))
+		; If some directives are defined, then it shouldn't be checked.
+		(if (not (member "DontCheckPintypes" directives))
 		    (drc2:check-pintypes-of-single-net port connections pintypes pintype-count 0 0 netname))
 		(if (not (defined? 'dont-check-not-driven-nets))
 		    (begin
-		      (if (not (string-ci=? netname "NoConnection"))
+		      (if (and (not (member "DontCheckIfDriven" directives))
+			       (not (member "NoConnection" directives)))
 			  (if (eqv? (drc2:check-if-net-is-driven pintype-count 0) #f)
 			      (begin
 				(set! errors_number (+ errors_number 1))
@@ -845,6 +869,41 @@
 	)
     ))
 
+; Report pins without the 'pintype' attribute (pintype=unknown)
+(define drc2:report-unknown-pintypes
+  (lambda (port nets)
+    (define count-unknown-pintypes
+      (lambda (port nets)
+	(if (null? nets)
+	    0
+	    (begin
+	      (let*  ( (netname     (car nets))
+		       (connections (gnetlist:get-all-connections netname))
+		       (pintypes    (drc2:get-pintypes-of-net-connections 
+				     connections
+				     '()))
+		       (pintype-count (drc2:count-pintypes-of-net pintypes port)))
+		(+ (list-ref pintype-count (drc2:position-of-pintype "unknown"))
+		   (count-unknown-pintypes port (cdr nets))))))))
+    (define display-unknown-pintypes
+      (lambda (port nets)
+	(if (not (null? nets))
+	    (begin
+	      (let*  ( (netname     (car nets))
+		       (connections (gnetlist:get-all-connections netname))
+		       )
+		(drc2:display-pins-of-type port (drc2:position-of-pintype "unknown")
+					   connections)		   
+		(display-unknown-pintypes port (cdr nets)))))))
+
+    (if (> (count-unknown-pintypes port nets) 0)
+	(begin
+	  (display "NOTE: Found pins without the 'pintype' attribute: " port)
+	  (display-unknown-pintypes port nets)
+	  (display "\n")))
+))
+	
+
 
 ;
 ;  End of Net checking functions
@@ -901,6 +960,14 @@
 		  (drc2:check-single-nets port (gnetlist:get-all-unique-nets "dummy"))
 		  (newline port)))
 
+	    ;; Check "unknown" pintypes
+	    (if (not (defined? 'dont-report-unknown-pintypes))
+		(begin
+		  (display "Checking pins without the 'pintype' attribute..." port)
+		  (newline port)
+		  (drc2:report-unknown-pintypes port (gnetlist:get-all-unique-nets "dummy"))
+		  (newline port)))
+	    
 	    ;; Check pintypes of the pins connected to every net
 	    (if (not (defined? 'dont-check-pintypes-of-nets))
 		(begin

@@ -1,3 +1,17 @@
+2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>
+	
+	* include/globals.h, include/prototype.h, src/g_netlist.c, 
+	  src/g_register.c, src/globals.c, s_netlist.c, s_traverse.c:
+	  Build a netlist of graphical objects. This feature enables
+	  using directives in the schematic.
+	
+        * scheme/gnet-drc2.scm: 
+	    - Added support for NoConnection and DontCheckPintypes directives.
+	    - Changed the drc connection matrix. Now an unknown pin doesn't 
+              generate an error, and it can drive a net.
+            - Added report for pins without the 'pintype' attribute.
+	    - Display the pins when reporting a net with only one connection.
+	
 2006-04-11 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* scheme/gnet-spice-sdb.scm: Changed .END and .ENDS cards to lowercase.

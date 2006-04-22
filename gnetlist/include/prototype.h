@@ -16,6 +16,7 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attri
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 SCM g_get_slots(SCM scm_uref);
 SCM g_get_unique_slots(SCM scm_uref);
+SCM g_graphical_objs_in_net_with_attrib_get_attrib(SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute);
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);
 SCM g_rc_net_naming_priority(SCM mode);
@@ -87,6 +88,12 @@ NETLIST *s_netlist_return_head(NETLIST *tail);
 NETLIST *s_netlist_add(NETLIST *ptr);
 void s_netlist_print(NETLIST *ptr);
 void s_netlist_post_process(TOPLEVEL *pr_current, NETLIST *head);
+void s_netlist_name_named_nets (TOPLEVEL *pr_current,
+				NETLIST *named_netlist,
+				NETLIST *unnamed_netlist);
+char *s_netlist_netname_of_netid (TOPLEVEL *pr_current,
+				  NETLIST *netlist_head,
+				  int net_id);
 /* s_rename.c */
 void s_rename_init(void);
 void s_rename_destroy_all(void);

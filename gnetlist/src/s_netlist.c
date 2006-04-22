@@ -220,3 +220,92 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 
     verbose_done();
 }
+
+void s_netlist_name_named_nets (TOPLEVEL *pr_current,
+				NETLIST *named_netlist,
+				NETLIST *unnamed_netlist) {
+
+  NETLIST *nl_current;
+  CPINLIST *pl_current;
+  NET *n_current;
+  char *net_name;
+  
+  if (verbose_mode) {
+    printf("\n- Staring post processing\n");
+    printf("- Naming nets of graphical objects:\n");
+  }
+  
+  /* this pass gives all nets a name, whether specified or creates a */
+  /* name */
+  nl_current = unnamed_netlist;
+  while (nl_current != NULL) {
+    if (nl_current->cpins) {
+      pl_current = nl_current->cpins;
+      while (pl_current != NULL) {
+	
+	if (pl_current->plid != -1) {
+	  verbose_print("p");
+	}
+	
+	if (pl_current->plid != -1 && pl_current->nets) {
+	  verbose_print("n");
+	  net_name = NULL;
+	  n_current = pl_current->nets;
+	  while (n_current != NULL) {
+	    if (n_current->net_name) {
+	      free (n_current->net_name);
+	    }	    
+	    n_current->net_name = s_netlist_netname_of_netid(pr_current,
+							     named_netlist,
+							     n_current->nid);
+	    
+	    if (n_current->net_name != NULL) {
+	      net_name = n_current->net_name;
+	    }
+	    n_current = n_current->next;
+	  }
+	  if (net_name != NULL) {
+	    pl_current->net_name = g_strdup(net_name);
+	  }
+	}
+	pl_current = pl_current->next;
+      }
+    }
+    nl_current = nl_current->next;
+  }
+
+  verbose_done();
+    
+}
+
+char *s_netlist_netname_of_netid (TOPLEVEL *pr_current,
+				  NETLIST *netlist_head,
+				  int net_id) {
+
+  NETLIST *nl_current;
+  CPINLIST *pl_current;
+  NET *n_current;
+  
+  nl_current = netlist_head;
+  
+  /* walk through the list of components, and through the list
+   * of individual pins on each, looking for the net identifier
+   */
+  while (nl_current != NULL) {
+    pl_current = nl_current->cpins;
+    while (pl_current != NULL) {
+      if (pl_current->net_name) {
+	n_current = pl_current->nets;
+	while (n_current != NULL) {
+	  if (n_current->nid == net_id) {
+	    return (g_strdup(n_current->net_name));
+	  }
+	  n_current = n_current->next;
+	}
+      }
+      pl_current = pl_current->next;
+    }
+    nl_current = nl_current->next;
+    } 
+  return NULL;
+}

@@ -89,6 +89,9 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist:get-slots",           1, 0, 0, g_get_slots },
   { "gnetlist:get-unique-slots",    1, 0, 0, g_get_unique_slots },
 
+  { "gnetlist:graphical-objs-in-net-with-attrib-get-attrib",    
+    3, 0, 0, g_graphical_objs_in_net_with_attrib_get_attrib },
+
   /* SDB -- 9.1.2003 */
   { "gnetlist:get-calling-flags",   0, 0, 0, g_get_calling_flags },
   /* SDB -- 8.22.2004 */
