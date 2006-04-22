@@ -1,3 +1,8 @@
+2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>	
+
+	* noweb/o_complex.nw, noweb/o_move.nw: Allow placing and moving
+	  complex objects inside complex objects.
+
 2006-04-15 Werner Hoch <werner.ho@gmx.de>
 
 	* noweb/o_arc.nw: corrected ARC_END_ANGLE calculation in 

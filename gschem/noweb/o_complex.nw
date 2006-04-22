@@ -161,12 +161,9 @@ o_complex_draw_xor(TOPLEVEL *w_current, int dx, int dy, OBJECT *complex)
         break;
 
       case(OBJ_COMPLEX):
-				/* TODO: complex inside a complex? -
-                                 * not supported yet */
-#if 0
+      case(OBJ_PLACEHOLDER):
         o_complex_draw_xor(w_current, dx, dy,
-                           o_current->complex);
-#endif
+                           o_current->complex->prim_objs);
         break;
 
       case(OBJ_TEXT):

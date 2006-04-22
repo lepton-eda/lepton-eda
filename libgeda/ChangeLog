@@ -1,3 +1,7 @@
+2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>	
+	* noweb/o_complex_basic.nw: Allow rotation and mirroring of
+	  complex objects inside complex objects.
+
 2006-04-14 Werner Hoch <werner.ho@gmx.de>
 	* noweb/f_basic.nw: added <time.h> for f_open()
 	  compiler warning was: implicit declaration function of difftime()

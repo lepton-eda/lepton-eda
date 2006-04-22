@@ -1690,11 +1690,10 @@ o_complex_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx,
         o_arc_rotate_world(w_current, 0, 0, angle_change, o_current);
         break;
 
-#if 0	/* complex within a complex? not right now */
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        break;
-#endif
+	o_complex_rotate_lowlevel(w_current, 0, 0, angle, angle_change, o_current);
+        break; 
 
       case(OBJ_TEXT):
         o_text_rotate_world(w_current, 0, 0, angle, angle_change, o_current);
@@ -1760,11 +1759,10 @@ o_complex_mirror_lowlevel(TOPLEVEL *w_current,
         o_arc_mirror_world(w_current, 0, 0, o_current);
         break;
 
-#if 0	/* complex within a complex? not right now */
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        break;
-#endif
+	o_complex_mirror_lowlevel(w_current, 0, 0, o_current);
+	break;
 
       case(OBJ_TEXT):
         o_text_mirror_world(w_current, 0, 0, o_current);
