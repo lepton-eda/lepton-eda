@@ -1,3 +1,18 @@
+2006-04-23 03:48  Dan McMahill <danmc>
+
+	* include/globals.h, include/prototype.h, lib/system-gschemrc.in,
+	  noweb/g_register.nw, noweb/globals.nw, noweb/o_basic.nw,
+	  noweb/o_buffer.nw, noweb/o_copy.nw, noweb/o_find.nw,
+	  noweb/o_select.nw, noweb/o_text.nw, noweb/x_image.nw,
+	  noweb/x_print.nw, scheme/Makefile.am, scheme/pcb.scm: add support
+	  for some new hooks:
+
+	  select_component_hook select_net_hook deselect_component_hook
+	  deselect_net_hook deselect_all
+
+	  In addition provide a partial example of how one can use these
+	  hooks to communicate to pcb.
+
 2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>	
 
 	* noweb/o_complex.nw, noweb/o_move.nw: Allow placing and moving
