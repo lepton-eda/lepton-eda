@@ -361,6 +361,7 @@ x_image_lowlevel(TOPLEVEL *w_current, const char* filename)
              page_center_top + (page_height / 2));
 
   /* de select everything first */
+  o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2); 
   o_selection_remove_most(w_current,
                           w_current->page_current->
                           selection2_head);

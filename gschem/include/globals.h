@@ -79,6 +79,11 @@ extern SCM add_pin_hook;
 extern SCM mirror_pin_hook;
 extern SCM rotate_pin_hook;
 extern SCM add_attribute_hook;
+extern SCM deselect_component_hook;
+extern SCM deselect_net_hook;
+extern SCM deselect_all_hook;
+extern SCM select_component_hook;
+extern SCM select_net_hook;
 
 #include "gettext.h"
 #ifdef ENABLE_NLS

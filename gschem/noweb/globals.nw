@@ -117,6 +117,11 @@ SCM move_component_hook;
 SCM add_pin_hook;
 SCM rotate_pin_hook;
 SCM mirror_pin_hook;
+SCM deselect_component_hook;
+SCM deselect_net_hook;
+SCM deselect_all_hook;
+SCM select_component_hook;
+SCM select_net_hook;
 
 
 @ %def global_window_current rc_filename script_filename output_filename colormap visual white black do_logging logging_dest arc_draw_func box_draw_func circle_draw_func complex_draw_func line_draw_func net_draw_func bus_draw_func text_draw_func pin_draw_func select_func x_log_update_func quiet_mode verbose_mode stroke_info_mode object_buffer add_component_hook add_component_object_hook copy_component_hook move_component_hook add_pin_hook rotate_pin_hook mirror_pin_hook mirror_component_object_hook add_attrib_hook

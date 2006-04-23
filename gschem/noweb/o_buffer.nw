@@ -280,7 +280,8 @@ o_buffer_paste_end(TOPLEVEL *w_current, int screen_x, int screen_y,
   o_cue_draw_list(w_current, connected_objects);
   g_list_free(connected_objects);
   connected_objects = NULL;
-        
+    
+  o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2); 
   o_selection_remove_most(w_current,
                           w_current->page_current->selection2_head);
   o_selection_destroy_head(w_current->page_current->selection2_head);

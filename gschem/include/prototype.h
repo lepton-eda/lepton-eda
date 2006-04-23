@@ -681,6 +681,7 @@ void o_pin_end(TOPLEVEL *w_current, int x, int y);
 void o_pin_rubberpin(TOPLEVEL *w_current, int x, int y);
 void o_pin_eraserubber(TOPLEVEL *w_current);
 /* o_select.c */
+void o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag);
 void o_select_object(TOPLEVEL *w_current, OBJECT *o_current, int type, int count);
 void o_select_box_start(TOPLEVEL *w_current, int x, int y);
 void o_select_box_end(TOPLEVEL *w_current, int x, int y);

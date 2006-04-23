@@ -225,6 +225,7 @@ void
 o_unselect_all(TOPLEVEL *w_current)
 {
   if (!w_current->SHIFTKEY) {
+    o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2);
     o_selection_remove_most(w_current, w_current->page_current->
                             selection2_head); 
   }

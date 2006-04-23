@@ -365,6 +365,11 @@ g_register_funcs (void)
 						1);
   copy_component_hook = scm_create_hook ("copy-component-hook", 1);
   move_component_hook = scm_create_hook ("move-component-hook", 1);
+  deselect_component_hook = scm_create_hook ("deselect-component-hook", 1);
+  deselect_net_hook = scm_create_hook ("deselect-net-hook", 1);
+  deselect_all_hook = scm_create_hook ("deselect-all-hook", 1);
+  select_component_hook = scm_create_hook ("select-component-hook", 1);
+  select_net_hook = scm_create_hook ("select-net-hook", 1);
 
   add_pin_hook = scm_create_hook ("add-pin-hook", 1);
   mirror_pin_hook = scm_create_hook ("mirror-pin-hook", 1);
