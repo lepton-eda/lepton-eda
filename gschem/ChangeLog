@@ -1,3 +1,13 @@
+2006-04-24 Werner Hoch <werner.ho@gmx.de>
+
+	* noweb/a_zoom.nw: removed redundant redraw
+
+	* noweb/a_basic.nw, noweb/i_callback.nw: added support for transparent
+	  zoom while moving, copying and component placement and modifiing.
+	  (changes in o_redraw_all(), modifiing arc's and zoom does not work)
+	  Added a intermediary select state to enable state jumps.
+	  (o_redraw_cleanstates() and it's calls)
+
 2006-04-23 03:48  Dan McMahill <danmc>
 
 	* include/globals.h, include/prototype.h, lib/system-gschemrc.in,

@@ -463,6 +463,7 @@ void o_erase_single(TOPLEVEL *w_current, OBJECT *object);
 void o_drawbounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list, GdkColor *color, int firsttime);
 void o_erasebounding(TOPLEVEL *w_current, OBJECT *o_list, SELECTION *s_list);
 int o_erase_rubber(TOPLEVEL *w_current);
+int o_redraw_cleanstates(TOPLEVEL *w_current);
 /* o_box.c */
 void o_box_draw(TOPLEVEL *w_current, OBJECT *o_current);
 void o_box_draw_solid(GdkDrawable *w, GdkGC *gc, GdkColor *color, GdkCapStyle cap, gint filled, gint x, gint y, gint width, gint height, gint line_width, gint length, gint space);

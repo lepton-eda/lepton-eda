@@ -27,6 +27,7 @@
 <<o_basic.c : o_drawbounding()>>
 <<o_basic.c : o_erasebounding()>>
 <<o_basic.c : o_erase_rubber()>>
+<<o_basic.c : o_redraw_cleanstates()>>
 
 @
 
@@ -100,7 +101,6 @@ o_redraw_all(TOPLEVEL *w_current)
   struct timeval tv2;
 #endif
 
-
   if (!w_current->DONT_REDRAW) {
     x_repaint_background(w_current);
   }
@@ -112,6 +112,7 @@ o_redraw_all(TOPLEVEL *w_current)
   o_recalc(w_current, w_current->page_current->object_head);
 
   if (!w_current->DONT_REDRAW) {
+    o_redraw(w_current, w_current->page_current->complex_place_head->next);
     o_redraw(w_current, w_current->page_current->object_head);
     o_cue_redraw_all(w_current,
                      w_current->page_current->object_head);
@@ -125,6 +126,7 @@ o_redraw_all(TOPLEVEL *w_current)
 
   if (w_current->inside_action) {
     switch(w_current->event_state) {
+      case(MOVE):
       case(ENDMOVE):
 	o_erase_selected(w_current);	
 	/* continue */
@@ -153,6 +155,9 @@ o_redraw_all(TOPLEVEL *w_current)
                        NULL,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
+      case (GRIPS):
+	o_erase_selected(w_current);	
+	break;
     }
   }
 }
@@ -829,3 +834,106 @@ o_erase_rubber(TOPLEVEL *w_current)
 
 
 @ %def o_erase_rubber
+
+
+@section Function @code{o_redraw_cleanstates()}
+
+@defun o_redraw_cleanstates w_current
+@end defun
+
+<<o_basic.c : o_redraw_cleanstates()>>=
+/* This function is neccesary to make jumps between event_states.
+   If we are inside an drawing action that created something on the dc, 
+   e.g. if we are drawing a box and then jump to line drawing without 
+   leaving the box drawing mode, there will remain some rubberbands on the
+   screen. 
+   Usually a intermediate select state would clean (redraw) the screen.
+*/
+int
+o_redraw_cleanstates(TOPLEVEL *w_current)
+{
+  /* returns FALSE if the function was'nt nessecary */
+  if (w_current->inside_action == 0) {
+    return FALSE;
+  }
+
+  switch (w_current->event_state) {
+    /* all states with something on the dc */
+    case(COPY): 
+    case(DRAWBUS): 
+    case(DRAWNET):   
+    case(ENDARC): 
+    case(ENDATTRIB):
+    case(ENDBOX): 
+    case(ENDCIRCLE): 
+    case(ENDCOMP): 
+    case(ENDCOPY): 
+    case(ENDLINE): 
+    case(ENDMOVE): 
+    case(ENDPASTE): 
+    case(ENDPIN): 
+    case(ENDTEXT): 
+    case(GRIPS): 
+    case(MOVE): 
+    case(NETCONT): 
+    case(ZOOMBOXEND): 
+      /* reset all rubberband variables and touch the select state */
+      w_current->start_x = w_current->second_x = w_current->last_x = -1;
+      w_current->start_y = w_current->second_y = w_current->last_y = -1;
+      w_current->loc_x = w_current->loc_y = w_current->distance = -1;
+      i_set_state(w_current, SELECT);
+
+      /* from i_callback_cancel() */
+      o_redraw_all(w_current);
+      /* it is possible to cancel in the middle of a complex place
+       * so lets be sure to clean up the complex_place_head
+       * structure and also clean up the attrib_place_head.
+       * remember these don't remove the head structure */
+      o_list_delete_rest(w_current,
+			 w_current->page_current->complex_place_head);
+      o_list_delete_rest(w_current,
+			 w_current->page_current->attrib_place_head);
+ 
+      /* also free internal current_attribute */
+      o_attrib_free_current(w_current);     
+      w_current->inside_action = 0;
+      return TRUE;
+
+    /* all remaining states without dc changes */
+    case(NONE): 
+    case(SELECT): 
+    case(DRAWLINE): 
+    case(DRAWBOX): 
+    case(DRAWCIRCLE): 
+    case(ZOOM):
+    case(PAN): 
+    case(BUSCONT): 
+    case(DRAWARC): 
+    case(DRAWATTRIB): 
+    case(DRAWCOMP):
+    case(DRAWPICTURE): 
+    case(DRAWPIN): 
+    case(DRAWTEXT): 
+    case(ENDMIRROR): 
+    case(ENDPICTURE):
+    case(ENDROTATEP): 
+    case(ENDROUTENET): 
+    case(MOUSEPAN): 
+    case(SBOX): 
+    case(STARTCOPY): 
+    case(STARTDRAWBUS): 
+    case(STARTDRAWNET): 
+    case(STARTMOVE): 
+    case(STARTPAN): 
+    case(STARTPASTE): 
+    case(STARTROUTENET): 
+    case(STARTSELECT): 
+    case(TEXTENTRY): 
+    case(ZOOMBOXSTART): 
+      return FALSE;
+  }
+
+  return FALSE;
+}
+
+@

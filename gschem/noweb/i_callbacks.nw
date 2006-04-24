@@ -717,7 +717,7 @@ DEFINE_I_CALLBACK(file_print)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
   char *base=NULL;
   char *ps_filename=NULL;
-
+  
   exit_if_null(w_current);
 
   /* get the base file name */
@@ -962,6 +962,7 @@ void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(edit_select)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
+  o_redraw_cleanstates(w_current);	
 
   /* this is probably the only place this should be */
   i_set_state(w_current, SELECT);
@@ -1037,6 +1038,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 
   i_update_middle_button(w_current, i_callback_edit_copy_hotkey, _("Copy"));
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);	
     o_copy_start(w_current, mouse_x, mouse_y);
     w_current->event_state = ENDCOPY;
     w_current->inside_action = 1;
@@ -1085,6 +1087,7 @@ DEFINE_I_CALLBACK(edit_move_hotkey)
 
   i_update_middle_button(w_current, i_callback_edit_move_hotkey, _("Move"));
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);	
     o_move_start(w_current, mouse_x, mouse_y);
     w_current->event_state = ENDMOVE;
     w_current->inside_action = 1;
@@ -1110,8 +1113,8 @@ DEFINE_I_CALLBACK(edit_delete)
   i_update_middle_button(w_current, i_callback_edit_delete, _("Delete"));
 
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);	
     o_delete(w_current);
-
     /* if you delete the objects you must go into select
      * mode after the delete */
     w_current->inside_action = 0;
@@ -1250,6 +1253,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   SELECTION *s_current;
 
   exit_if_null(w_current);
+  o_redraw_cleanstates(w_current);	
 
   if (w_current->page_current->selection2_head) {
     s_current = w_current->page_current->selection2_head->next;
@@ -1300,6 +1304,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   object = o_select_return_first_object(w_current);
 
   if (object) {
@@ -1435,6 +1440,7 @@ DEFINE_I_CALLBACK(edit_embed)
     }
   } else {
     /* nothing selected, go back to select state */
+    o_redraw_cleanstates(w_current);	
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
   }
@@ -1475,6 +1481,7 @@ DEFINE_I_CALLBACK(edit_unembed)
     }
   } else {
     /* nothing selected, go back to select state */
+    o_redraw_cleanstates(w_current);	
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
   }
@@ -1515,6 +1522,7 @@ DEFINE_I_CALLBACK(edit_update)
     }
   } else {
     /* nothing selected, go back to select state */
+    o_redraw_cleanstates(w_current);	
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
   }
@@ -1540,7 +1548,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
   if (w_current->inside_action)
-  return;
+    return;
 
   i_update_middle_button(w_current,
                          i_callback_edit_show_hidden,
@@ -1568,7 +1576,7 @@ DEFINE_I_CALLBACK(edit_make_visible)
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
   if (w_current->inside_action)
-  return;
+    return;
 
   i_update_middle_button(w_current,
                          i_callback_edit_make_visible,
@@ -1845,6 +1853,7 @@ DEFINE_I_CALLBACK(view_zoom_box)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   w_current->inside_action = 0;
   i_allow_expose();
   i_set_state(w_current, ZOOMBOXSTART);
@@ -1866,6 +1875,7 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   a_zoom_box_start(w_current, mouse_x, mouse_y);
 
   w_current->inside_action = 1;
@@ -1974,6 +1984,7 @@ DEFINE_I_CALLBACK(view_pan)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   w_current->inside_action = 0;
   i_set_state(w_current, STARTPAN);
 
@@ -2747,6 +2758,7 @@ DEFINE_I_CALLBACK(buffer_paste1)
   i_update_middle_button(w_current, i_callback_buffer_paste1, _("Paste 1"));
   if (object_buffer[0] != NULL) {
     if (object_buffer[0]->next != NULL) {
+      o_redraw_cleanstates(w_current);	
       w_current->buffer_number = 0;
       w_current->inside_action = 1;
       i_set_state(w_current, STARTPASTE);
@@ -2775,6 +2787,7 @@ DEFINE_I_CALLBACK(buffer_paste2)
   i_update_middle_button(w_current, i_callback_buffer_paste2, _("Paste 2"));
   if (object_buffer[1] != NULL) {
     if (object_buffer[1]->next != NULL) {
+      o_redraw_cleanstates(w_current);	
       w_current->buffer_number = 1;
       w_current->inside_action = 1;
       i_set_state(w_current, STARTPASTE);
@@ -2803,6 +2816,7 @@ DEFINE_I_CALLBACK(buffer_paste3)
   i_update_middle_button(w_current, i_callback_buffer_paste3, _("Paste 3"));
   if (object_buffer[2] != NULL) {
     if (object_buffer[2]->next != NULL) {
+      o_redraw_cleanstates(w_current);	
       w_current->buffer_number = 2;
       w_current->inside_action = 1;
       i_set_state(w_current, STARTPASTE);
@@ -2831,6 +2845,7 @@ DEFINE_I_CALLBACK(buffer_paste4)
   i_update_middle_button(w_current, i_callback_buffer_paste4, _("Paste 4"));
   if (object_buffer[3] != NULL) {
     if (object_buffer[3]->next != NULL) {
+      o_redraw_cleanstates(w_current);	
       w_current->buffer_number = 3;
       w_current->inside_action = 1;
       i_set_state(w_current, STARTPASTE);
@@ -2859,6 +2874,7 @@ DEFINE_I_CALLBACK(buffer_paste5)
   i_update_middle_button(w_current, i_callback_buffer_paste5, _("Paste 5"));
   if (object_buffer[4] != NULL) {
     if (object_buffer[4]->next != NULL) {
+      o_redraw_cleanstates(w_current);	
       w_current->buffer_number = 4;
       w_current->inside_action = 1;
       i_set_state(w_current, STARTPASTE);
@@ -3124,6 +3140,7 @@ DEFINE_I_CALLBACK(add_net)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   /* need to click */
@@ -3150,7 +3167,8 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
- 
+
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   /* need to click */
@@ -3204,6 +3222,7 @@ DEFINE_I_CALLBACK(add_bus)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   /* need to click */
@@ -3232,6 +3251,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   /* need to click */
@@ -3285,6 +3305,7 @@ DEFINE_I_CALLBACK(add_text)
 
   exit_if_null(w_current);
   
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   w_current->inside_action = 0;
@@ -3331,6 +3352,7 @@ DEFINE_I_CALLBACK(add_line)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_line, _("Line"));
@@ -3355,6 +3377,7 @@ DEFINE_I_CALLBACK(add_line_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_line_hotkey, _("Line"));
@@ -3382,6 +3405,7 @@ DEFINE_I_CALLBACK(add_box)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_box, _("Box"));
@@ -3406,6 +3430,7 @@ DEFINE_I_CALLBACK(add_box_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_box_hotkey, _("Box"));
@@ -3432,6 +3457,7 @@ DEFINE_I_CALLBACK(add_picture)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   w_current->inside_action = 0;
@@ -3476,6 +3502,7 @@ DEFINE_I_CALLBACK(add_circle)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
@@ -3500,6 +3527,7 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_circle_hotkey,
@@ -3528,6 +3556,7 @@ DEFINE_I_CALLBACK(add_arc)
 
   exit_if_null(w_current);
   
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
@@ -3552,6 +3581,7 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_arc_hotkey, _("Arc"));
@@ -3579,6 +3609,7 @@ DEFINE_I_CALLBACK(add_pin)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
@@ -3603,6 +3634,7 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
 
   exit_if_null(w_current);
 
+  o_redraw_cleanstates(w_current);	
   o_erase_rubber(w_current);
 
   i_update_middle_button(w_current, i_callback_add_pin_hotkey, _("Pin"));
