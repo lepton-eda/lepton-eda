@@ -494,11 +494,11 @@ o_select_box_search(TOPLEVEL *w_current)
   /* if there were no objects to be found in select box, count will be */
   /* zero, and you need to deselect anything remaining (unless the shift */
   /* key was pressed */
-  if (count == 0 && !SHIFTKEY) 
-  o_select_run_hooks(w_current, NULL, 2);
-  o_selection_remove_most(w_current,
-                          w_current->page_current->selection2_head);
-
+  if (count == 0 && !SHIFTKEY)  {
+    o_select_run_hooks(w_current, NULL, 2);
+    o_selection_remove_most(w_current,
+			    w_current->page_current->selection2_head);
+  }
   i_update_menus(w_current);
 }
 
