@@ -883,17 +883,6 @@
 	(autoplace-object-attributes object)) #t)
 
 
-; Comment in this scheme code if you want to link with pcb
-;
-; Please note that the hooks in pcb.scm are still
-; highly experimental
-; (load (string-append gedadatarc "/scheme/pcb.scm"))
-; (add-hook! deselect-component-hook pcb-deselect-component-hook)
-; (add-hook! deselect-net-hook pcb-deselect-net-hook)
-; (add-hook! deselect-all-hook pcb-deselect-all-hook)
-; (add-hook! select-component-hook pcb-select-component-hook)
-; (add-hook! select-net-hook pcb-select-net-hook)
-
 ;
 ; End of hooks
 ;
@@ -1458,3 +1447,17 @@
 ;
 ; End of keymapping related keywords
 ;
+
+
+;;
+;; Major modes
+;;
+
+;; Comment in this scheme code if you want to link with pcb
+;;
+;; Please note that the code in pcb.scm is still highly experimental
+;; and there are known (and easy) ways to crash pcb and/or gschem with this code.
+;; The short answer is neither program likes a pipe to break.
+;;
+; (load (string-append gedadatarc "/scheme/pcb.scm"))
+
