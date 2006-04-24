@@ -356,7 +356,7 @@ x_print_print(GtkWidget *w, TOPLEVEL *w_current)
   if (filename[0] != '\0') {
 
     /* de select everything first */
-    o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2); 
+    o_select_run_hooks(w_current, NULL, 2); 
     o_selection_remove_most(w_current,
                             w_current->page_current->
                             selection2_head);

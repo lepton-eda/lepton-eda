@@ -487,7 +487,7 @@ o_copy_end(TOPLEVEL *w_current)
                    x_get_darkcolor(w_current->bb_color), TRUE);
   }
 
-  o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2); 
+  o_select_run_hooks(w_current, NULL, 2); 
   o_selection_remove_most(w_current,
                           w_current->page_current->selection2_head);
   o_selection_destroy_head(w_current->page_current->selection2_head);

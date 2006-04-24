@@ -105,6 +105,7 @@ o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * between schematics and PCB layout or schematics and simulation results.
    */
   if ( (scm_hook_empty_p(select_component_hook) == SCM_BOOL_F) 
+       && o_current
        && (o_current->type == OBJ_COMPLEX) 
        && flag == 1 )
   {
@@ -119,6 +120,7 @@ o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * between schematics and PCB layout or schematics and simulation results.
    */
   if ( (scm_hook_empty_p(deselect_component_hook) == SCM_BOOL_F) 
+       && o_current
        && (o_current->type == OBJ_COMPLEX) 
        && flag == 0 )
   {
@@ -133,6 +135,7 @@ o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * between schematics and PCB layout or schematics and simulation results.
    */
   if ( (scm_hook_empty_p(select_net_hook) == SCM_BOOL_F) 
+       && o_current
        && (o_current->type == OBJ_NET) 
        && flag == 1) 
   {
@@ -147,6 +150,7 @@ o_select_run_hooks(TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * between schematics and PCB layout or schematics and simulation results.
    */
   if ( (scm_hook_empty_p(select_net_hook) == SCM_BOOL_F) 
+       && o_current
        && (o_current->type == OBJ_NET) 
        && flag == 0) 
   {
@@ -197,7 +201,7 @@ o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* condition: for both multiple and single object added */
           /* result: remove all objects from selection */
           if (count == 0 && !CONTROLKEY) {
-            o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2);
+            o_select_run_hooks(w_current, NULL, 2);
             o_selection_remove_most(w_current,
                                     w_current->page_current->selection2_head);
           }
@@ -206,8 +210,7 @@ o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
       } /* end shift key switch */
 
       /* object not select, add it to the selection list */
-      o_select_run_hooks(w_current->page_current->selection2_head,
-			 o_current, 1);
+      o_select_run_hooks(w_current, o_current, 1);
       o_selection_add(w_current->page_current->selection2_head,
                       o_current);
 
@@ -223,8 +226,7 @@ o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* condition: not doing multiple */
           /* result: remove object from selection */
           if (type != MULTIPLE) {
-            o_select_run_hooks(w_current->page_current->selection2_head,
-	   		       o_current, 0);
+            o_select_run_hooks(w_current, o_current, 0);
             o_selection_remove(
                                w_current->page_current->selection2_head,
                                o_current);
@@ -240,12 +242,11 @@ o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 1st result: remove all objects from selection */
           /* 2nd result: add object to selection */
           if (type == MULTIPLE && count == 0 && !CONTROLKEY) {
-            o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2);
+            o_select_run_hooks(w_current, NULL, 2);
             o_selection_remove_most(w_current,
                                     w_current->page_current->selection2_head);
 	    
-	    o_select_run_hooks(w_current->page_current->selection2_head,
-			       o_current, 1);
+	    o_select_run_hooks(w_current, o_current, 1);
             o_selection_add(
                             w_current->page_current->selection2_head,
                             o_current);
@@ -256,21 +257,18 @@ o_select_object(TOPLEVEL *w_current, OBJECT *o_current,
           /* 1st result: remove all objects from selection */
           /* 2nd result: add object to selection list */
           if (type == SINGLE && !CONTROLKEY) {
-            o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2);
+            o_select_run_hooks(w_current, NULL, 2);
             o_selection_remove_most(w_current,
                                     w_current->page_current->selection2_head);
 
-            o_select_run_hooks(
-			       w_current->page_current->selection2_head,
-			       o_current, 1);
+            o_select_run_hooks (w_current, o_current, 1);
             o_selection_add(
                             w_current->page_current->selection2_head,
                             o_current);
           }
 
           if (CONTROLKEY) {
-            o_select_run_hooks(w_current->page_current->selection2_head,
-	   		       o_current, 0);
+            o_select_run_hooks(w_current, o_current, 0);
             o_selection_remove(
                                w_current->page_current->selection2_head,
                                o_current);
@@ -497,7 +495,7 @@ o_select_box_search(TOPLEVEL *w_current)
   /* zero, and you need to deselect anything remaining (unless the shift */
   /* key was pressed */
   if (count == 0 && !SHIFTKEY) 
-  o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2);
+  o_select_run_hooks(w_current, NULL, 2);
   o_selection_remove_most(w_current,
                           w_current->page_current->selection2_head);
 
@@ -562,7 +560,7 @@ o_select_selected(TOPLEVEL *w_current)
 void 
 o_select_unselect_all(TOPLEVEL *w_current)
 {
-  o_select_run_hooks(w_current, w_current->page_current->selection2_head, 2);
+  o_select_run_hooks(w_current, NULL, 2);
   o_selection_remove_most(w_current, 
                           w_current->page_current->selection2_head);
 }
