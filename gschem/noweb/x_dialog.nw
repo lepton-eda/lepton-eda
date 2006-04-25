@@ -132,6 +132,14 @@
 <<x_dialog.c : x_dialog_raise_all()>>
 /*********** End of misc support functions for dialog boxes *******/
 
+/***************** Start of generic message dialog box ********************/
+<<x_dialog.c : generic_msg_dialog()>>
+/***************** End of generic message dialog box *********************/
+
+/***************** Start of generic confirm dialog box ********************/
+<<x_dialog.c : generic_confirm_dialog()>>
+/***************** End of generic confirm dialog box *********************/
+
 /*********** Start of generic text input dialog box *******/
 <<x_dialog.c : generic_text_input_ok()>>
 <<x_dialog.c : generic_text_input_dialog()>>
@@ -4042,6 +4050,67 @@ x_dialog_raise_all(TOPLEVEL *w_current)
 
 
 @ %def x_dialog_raise_all
+
+
+@section Function @code{generic_msg_dialog()}
+
+@defun generic_msg_dialog const char *
+@end defun
+
+<<x_dialog.c : generic_msg_dialog()>>=
+void
+generic_msg_dialog (const char *msg)
+{
+  GtkWidget *dialog;
+  
+  dialog = gtk_message_dialog_new (NULL,
+
+
+                                   GTK_DIALOG_MODAL
+                                   | GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_INFO,
+                                   GTK_BUTTONS_OK,
+                                   msg);
+
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+}
+
+
+@ %def generic_msg_dialog
+
+@defun generic_confirm_dialog const char *
+@end defun
+
+<<x_dialog.c : generic_confirm_dialog()>>=
+int
+generic_confirm_dialog (const char *msg)
+{
+  GtkWidget *dialog;
+  gint r;
+
+  dialog = gtk_message_dialog_new (NULL,
+
+
+                                   GTK_DIALOG_MODAL
+                                   | GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_INFO,
+                                   GTK_BUTTONS_OK_CANCEL,
+                                   msg);
+
+  r = gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+
+  if (r ==  GTK_RESPONSE_OK)
+    return 1;
+  else 
+    return 0;
+}
+
+
+@ %def generic_confirm_dialog
+
 
 
 @section Function @code{ generic_text_input_ok()}

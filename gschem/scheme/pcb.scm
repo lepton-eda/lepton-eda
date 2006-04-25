@@ -27,13 +27,13 @@
 ;; TODO
 ;;  Note:  This list is incomplete.
 ;;
-;; - Find a way to configure path to pcb and/or a log file to tee the
-;;   commands to (cat | tee /path/to/logfile | pcb --listen)
+;; - figure out how we should specify gsch2pcb arguments
 ;;
-;;
-;; - Figure out how to write to the gschem log window
+;; - figure out how to launch a gsch2pcb editor
 ;;
 ;; - Add an action to pcb which lets me write to its log window
+;;
+;; - Add a generic file select dialog box for scheme use
 ;;
 ;;   Menu items
 ;;
@@ -48,6 +48,16 @@
 ;;
 
 (use-modules (ice-9 popen))
+
+(gschem-log "Loading the PCB major mode\n")
+(gschem-log "PCB-mode version $Id$\n")
+
+;; These may be changed by the user in their gafrc files
+
+;; Various executibles
+(define pcb:pcb-cmd "pcb")
+(define pcb:gsch2pcb-cmd "gsch2pcb")
+(define pcb:editor-cmd "emacs &")
 
 ;; In general, we should probably load gnetlist.scm and the appropriate
 ;; gnetlist backend to have the refdes aliasing code available.
@@ -75,10 +85,11 @@
 	       ;; and set pcb:pipe to false so we don't
 	       ;; try and write again
 	       (lambda (key . args)
-		 (display "It appears that PCB has terminated.\n")
-		 (display "If this is not the case, you should save and exit and\n")
-		 (display "report this as a bug.\n\n")
-		 (display "If you exited PCB on purpose, you can ignore this message\n\n")
+		 (gschem-log "It appears that PCB has terminated.\n")
+		 (gschem-log "If this is not the case, you should save and exit and\n")
+		 (gschem-log "report this as a bug.\n\n")
+		 (gschem-log "If you exited PCB on purpose, you can ignore \n")
+		 (gschem-log "this message\n\n")
 		 (set! pcb:pipe #f)
 		 )
 
@@ -190,24 +201,54 @@
 ;;
 ;;
 (define (pcb:about)
-  (display "This is the pcb major mode for gschem\n")
-  (display "pcb.scm version $Id$\n")
-  (display "***** WARNING *****\n")
-  (display "This is highly experimental\n")
-  (display "You should save your work often\n")
-  (display "and keep backup copies.  You have\n")
-  (display "been warned.\n")
-)
+  (gschem-msg (string-append
+	       "This is the pcb major mode for gschem\n"
+	       "pcb.scm version $Id$\n"
+	       "***** WARNING *****\n"
+	       "This is highly experimental\n"
+	       "You should save your work often\n"
+	       "and keep backup copies.  You have\n"
+	       "been warned.\n"
+	       )
+	      )
+  )
 
 (define (pcb:launch-pcb)
   ;; We don't want to crash on a SIGPIPE if the user
   ;; exits from PCB
-  (sigaction SIGPIPE SIG_IGN)
-  (set! pcb:pipe (open-output-pipe "pcb --listen"))
-)
+  (if pcb:pipe 
+      (begin
+	(gschem-log "PCB is already running\n")
+	(gschem-msg "PCB is already running\n")
+	)
+
+      (begin
+	(if (gschem-confirm "Start pcb?")
+	    (begin
+	      (sigaction SIGPIPE SIG_IGN)
+	      (gschem-log "Launching PCB\n")
+	      (set! pcb:pipe (open-output-pipe 
+			      (string-append pcb:pcb-cmd " --listen")
+			      )
+		    )
+	      (if (not pcb:pipe)
+		  (gschem-log "Failed to launch PCB\n")
+		  (gschem-log "Launched PCB\n")
+		  )
+	      )
+	    (gschem-msg "Not launching PCB\n")
+	    )
+	)
+      )
+  )
 
 (define (pcb:run-gsch2pcb)
-  (system "gsch2pcb")
+  (gschem-log "Running gsch2pcb")
+  (system pcb:gsch2pcb-cmd)
+)
+
+(define (pcb:run-editor)
+  (system pcb:editor-cmd)
 )
 
 ; All keys in this keymap *must* be unique
@@ -216,6 +257,7 @@
     ("?" . pcb:about)
     ("l" . pcb:launch-pcb)
     ("n" . pcb:run-gsch2pcb)
+    ("e" . pcb:run-editor)
     )
   )
 
@@ -223,9 +265,10 @@
 ;;
 ;;          menu item name      menu action     	menu hotkey action
 ;;
-	'( ("About..."		pcb:about       	pcb:about)
-	   ("Launch PCB"        pcb:launch-pcb          pcb:launch-pcb)
-	   ("Run gsch2pcb"      pcb:run-gsch2pcb        pcb:run-gsch2pcb)
+	'( ("About..."		         pcb:about               pcb:about)
+	   ("Launch PCB"                 pcb:launch-pcb          pcb:launch-pcb)
+	   ("Run gsch2pcb"               pcb:run-gsch2pcb        pcb:run-gsch2pcb)
+	   ("Edit gsch2pcb project"      pcb:run-editor          pcb:run-editor)
 	   )
 )
 

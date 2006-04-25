@@ -1,4 +1,7 @@
 @c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+@c 
+@c $Id$
+@c
 
 @node File g_register.c,,,Top
 @chapter File @file{g_register.c}
@@ -184,6 +187,9 @@ static struct gsubr_t gschem_funcs[] = {
   { "gschem-key-done",           0, 0, 0, g_funcs_key_done },
   { "gschem-use-rc-values",      0, 0, 0, g_funcs_use_rc_values },
   { "gschem-exit",               0, 0, 0, g_funcs_exit },
+  { "gschem-log",                1, 0, 0, g_funcs_log },
+  { "gschem-msg",                1, 0, 0, g_funcs_msg },
+  { "gschem-confirm",            1, 0, 0, g_funcs_confirm },
   /* keymapping callbacks */
   { "file-new-window",           0, 0, 0, g_keys_file_new_window },
   { "file-new",                  0, 0, 0, g_keys_file_new },

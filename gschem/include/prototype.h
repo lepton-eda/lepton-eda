@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /* a_pan.c */
 void a_pan_general(TOPLEVEL *w_current, double world_cx, double world_cy, double relativ_zoom_factor, int flags);
 void a_pan_calc(TOPLEVEL *w_current, int x, int y);
@@ -15,6 +17,9 @@ void correct_aspect(TOPLEVEL *w_current);
 SCM g_funcs_print(SCM filename);
 SCM g_funcs_image(SCM filename);
 SCM g_funcs_exit(void);
+SCM g_funcs_log(SCM msg);
+SCM g_funcs_msg(SCM msg);
+SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_use_rc_values(void);
 SCM g_funcs_key_name(SCM keystring);
 SCM g_funcs_key_value(SCM keystring);
@@ -800,6 +805,10 @@ void x_dialog_hotkeys_free_all(void);
 void x_dialog_hotkeys_fill(char *string);
 void x_dialog_hotkeys(TOPLEVEL *w_current);
 void x_dialog_raise_all(TOPLEVEL *w_current);
+
+void generic_msg_dialog(const char *);
+int generic_confirm_dialog(const char *);
+
 void generic_text_input_ok(GtkWidget *w, TOPLEVEL *w_current);
 void generic_text_input_dialog(TOPLEVEL *w_current);
 int find_text_keypress(GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current);

@@ -1,4 +1,5 @@
 @c -*- mode: Noweb; noweb-doc-mode: texinfo-mode; noweb-code-mode: c-mode -*-
+@c $Id$
 
 @node File g_funcs.c,,,Top
 @chapter File @file{g_funcs.c}
@@ -14,6 +15,9 @@
 <<g_funcs.c : g_funcs_print()>>
 <<g_funcs.c : g_funcs_image()>>
 <<g_funcs.c : g_funcs_exit()>>
+<<g_funcs.c : g_funcs_log()>>
+<<g_funcs.c : g_funcs_msg()>>
+<<g_funcs.c : g_funcs_confirm()>>
 <<g_funcs.c : g_funcs_use_rc_values()>>
 <<g_funcs.c : g_funcs_key_name()>>
 <<g_funcs.c : g_funcs_key_value()>>
@@ -136,6 +140,71 @@ SCM g_funcs_exit(void)
 
 
 @ %def g_funcs_exit
+
+
+@section Function @code{g_funcs_log()}
+
+@defun g_funcs_log message
+@end defun
+
+<<g_funcs.c : g_funcs_log()>>=
+SCM g_funcs_log(SCM msg)
+{
+
+  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+              SCM_ARG1, "gschem-log");
+
+  s_log_message (SCM_STRING_CHARS (msg));
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_funcs_log
+
+@section Function @code{g_funcs_msg()}
+
+@defun g_funcs_msg message
+@end defun
+
+<<g_funcs.c : g_funcs_msg()>>=
+SCM g_funcs_msg(SCM msg)
+{
+
+  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+              SCM_ARG1, "gschem-msg");
+
+  generic_msg_dialog (SCM_STRING_CHARS (msg));
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_funcs_msg
+
+@section Function @code{g_funcs_confirm()}
+
+@defun g_funcs_confirm message
+@end defun
+
+<<g_funcs.c : g_funcs_confirm()>>=
+SCM g_funcs_confirm(SCM msg)
+{
+  int r;
+
+  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+	      SCM_ARG1, "gschem-msg");
+  
+  r = generic_confirm_dialog (SCM_STRING_CHARS (msg));
+
+  if (r)
+    return SCM_BOOL_T;
+  else
+    return SCM_BOOL_F;
+}
+
+
+@ %def g_funcs_confirm
 
 
 @section Function @code{g_funcs_use_rc_values()}
