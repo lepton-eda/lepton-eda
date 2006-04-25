@@ -30,10 +30,10 @@
 ;; - Find a way to configure path to pcb and/or a log file to tee the
 ;;   commands to (cat | tee /path/to/logfile | pcb --listen)
 ;;
-;; - consolidate the code which checks to see if the pipe is open.  Maybe
-;;   we should only open the pipe if the user asks for it via a menu
-;;   choice and then in all the hooks, just return without doing anything
-;;   if the pcb pipe is not open.
+;;
+;; - Figure out how to write to the gschem log window
+;;
+;; - Add an action to pcb which lets me write to its log window
 ;;
 ;;   Menu items
 ;;
@@ -46,11 +46,6 @@
 ;;       elements.
 ;;
 ;;
-;; - Add a gschem exit-hook which will gracefully shutdown pcb instead of just
-;;   having pcb abort due to a terminated input pipe.  Maybe need to catch this
-;;   in pcb too?
-;;
-;; - Have this module detect if the user exited from pcb which breaks the pipe
 
 (use-modules (ice-9 popen))
 
@@ -61,17 +56,49 @@
 
 ;; (close-pipe pcb:pipe)
 
+;; Use this instead of
+;; (display val pcb:pipe)
+;;
+(define (pcb:pipe-write val)
+  (if pcb:pipe
+
+      ;; pipe is open so try and write out our value
+      (begin
+	(catch #t 
+
+	       ;; try to write our value
+	       (lambda ()
+		 (display val pcb:pipe) 
+		 )
+
+	       ;; and if we fail spit out a message
+	       ;; and set pcb:pipe to false so we don't
+	       ;; try and write again
+	       (lambda (key . args)
+		 (display "It appears that PCB has terminated.\n")
+		 (display "If this is not the case, you should save and exit and\n")
+		 (display "report this as a bug.\n\n")
+		 (display "If you exited PCB on purpose, you can ignore this message\n\n")
+		 (set! pcb:pipe #f)
+		 )
+
+	       )
+	)
+
+      ;; pipe is not open so don't try and write to it
+      ;;(display "pcb:pipe is not open\n")
+      
+      )
+  
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; pcb-select-component-hook
 ;;
 
 (define (pcb-select-component-hook attribs)
-
-  (if (not pcb:pipe)
-      (set! pcb:pipe (open-output-pipe "/bin/cat > /tmp/pcb-hook.log"))
-      )
-
+  
   (for-each 
      (lambda (attrib) 
        (let* ((name-value (get-attribute-name-value attrib))
@@ -80,9 +107,9 @@
              )
 	     (if (string=? name "refdes")
 		 (let ()
-		  (display "Select(ElementByName, ^" pcb:pipe) 
-		  (display value pcb:pipe) 
-		  (display "$)\n" pcb:pipe)
+		  (pcb:pipe-write "Select(ElementByName, ^")
+		  (pcb:pipe-write value) 
+		  (pcb:pipe-write "$)\n")
 		  )
 		 )
 	     )
@@ -97,11 +124,6 @@
 ;;
 
 (define (pcb-deselect-component-hook attribs)
-
-  (if (not pcb:pipe)
-      (set! pcb:pipe (open-output-pipe "/bin/cat > /tmp/pcb-hook.log"))
-      )
-
   (for-each 
      (lambda (attrib) 
        (let* ((name-value (get-attribute-name-value attrib))
@@ -110,9 +132,9 @@
              )
 	     (if (string=? name "refdes")
 		 (let ()
-		  (display "Unselect(ElementByName, ^" pcb:pipe) 
-		  (display value pcb:pipe) 
-		  (display "$)\n" pcb:pipe)
+		  (pcb:pipe-write "Unselect(ElementByName, ^")
+		  (pcb:pipe-write value)
+		  (pcb:pipe-write "$)\n")
 		  )
 		 )
 	     )
@@ -147,11 +169,7 @@
 ;;
 
 (define (pcb-deselect-all-hook attribs)
-  (if (not pcb:pipe)
-      (set! pcb:pipe (open-output-pipe "/bin/cat > /tmp/pcb-hook.log"))
-      )
-  ;; Select net hook
-  (display "Unselect(All)\n" pcb:pipe)
+  (pcb:pipe-write "Unselect(All)\n")
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -182,6 +200,9 @@
 )
 
 (define (pcb:launch-pcb)
+  ;; We don't want to crash on a SIGPIPE if the user
+  ;; exits from PCB
+  (sigaction SIGPIPE SIG_IGN)
   (set! pcb:pipe (open-output-pipe "pcb --listen"))
 )
 
