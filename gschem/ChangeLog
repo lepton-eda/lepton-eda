@@ -1,3 +1,21 @@
+2006-04-25 22:26  Dan McMahill <danmc>
+
+	* include/prototype.h, noweb/g_funcs.nw, noweb/g_register.nw,
+	  noweb/x_dialog.nw, scheme/pcb.scm: - add gschem-log, gschem-msg,
+	  gschem-confirm scheme functions for logging to the log,
+	  displaying a message in a dialog box and executing a confirm
+	  dialog box from scheme.
+
+	  - make the pcb mode take advantage of these new features.
+
+2006-04-25 02:14  Dan McMahill <danmc>
+
+	* scheme/pcb.scm: - clean up the code which checks to see if the
+	  pipe to pcb is open.	- add signal handlers and exception
+	  handlers to gracefully deal with   the user exiting from PCB.  No
+	  more crashes from that! - shorten the TODO list :)
+
+
 2006-04-24 Werner Hoch <werner.ho@gmx.de>
 
 	* noweb/a_zoom.nw: removed redundant redraw
@@ -7,6 +25,37 @@
 	  (changes in o_redraw_all(), modifiing arc's and zoom does not work)
 	  Added a intermediary select state to enable state jumps.
 	  (o_redraw_cleanstates() and it's calls)
+
+2006-04-24 04:02  Dan McMahill <danmc>
+
+	* lib/system-gschemrc.in: move the (still commented out) stuff
+	  about pcb to the bottom of the file so the PCB menu ends up on
+	  the right instead of the left.  Also we only need to load the
+	  pcb.scm file, not manually install the hooks.
+
+2006-04-24 03:59  Dan McMahill <danmc>
+
+	* scheme/pcb.scm: - add the add-hook calls to this file.  We only
+	  want the user to have   to load this file to get everything
+	  going.
+
+	  - add some real stuff to the custom menu.  We can actually launch
+	  pcb	now!
+
+	  - update the TODO list
+
+2006-04-24 03:28  Dan McMahill <danmc>
+
+	* noweb/o_select.nw: repair broken select box
+
+2006-04-24 03:06  Dan McMahill <danmc>
+
+	* noweb/: o_basic.nw, o_buffer.nw, o_copy.nw, o_find.nw,
+	  o_select.nw, o_text.nw, x_image.nw, x_print.nw: Repair a segfault
+	  introduced by my last commit.  This makes sure we always pass in
+	  the correct types to o_select_run_hooks().  For the deselect all,
+	  we just pass in a NULL value for o_current and make sure we
+	  detect that.
 
 2006-04-23 03:48  Dan McMahill <danmc>
 
