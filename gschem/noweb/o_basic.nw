@@ -138,9 +138,8 @@ o_redraw_all(TOPLEVEL *w_current)
 
       case(DRAWCOMP):
       case(ENDCOMP):
-        o_drawbounding(w_current, w_current->
-                       page_current->
-                       complex_place_head->next,
+        o_drawbounding(w_current, 
+		       w_current->page_current->complex_place_head->next,
                        NULL,
                        x_get_darkcolor(w_current->bb_color), FALSE);
         break;
@@ -860,7 +859,8 @@ o_redraw_cleanstates(TOPLEVEL *w_current)
   switch (w_current->event_state) {
     /* all states with something on the dc */
     case(COPY): 
-    case(DRAWBUS): 
+    case(DRAWBUS):
+    case(DRAWCOMP): 
     case(DRAWNET):   
     case(ENDARC): 
     case(ENDATTRIB):
@@ -910,7 +910,6 @@ o_redraw_cleanstates(TOPLEVEL *w_current)
     case(BUSCONT): 
     case(DRAWARC): 
     case(DRAWATTRIB): 
-    case(DRAWCOMP):
     case(DRAWPICTURE): 
     case(DRAWPIN): 
     case(DRAWTEXT): 

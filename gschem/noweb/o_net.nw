@@ -863,7 +863,7 @@ o_net_eraserubber(TOPLEVEL *w_current)
 @end defun
 
 <<o_net.c : o_net_xorrubber()>>=
-/* used in button cancel code in x_events.c */
+/* used in x_event_expose() in x_events.c */
 void
 o_net_xorrubber(TOPLEVEL *w_current)
 {
@@ -886,6 +886,9 @@ o_net_xorrubber(TOPLEVEL *w_current)
 			x_get_darkcolor(w_current->select_color) );
   gdk_draw_line(w_current->window, w_current->gc, 
 		w_current->start_x, w_current->start_y, 
+		w_current->last_x, w_current->last_y);
+  gdk_draw_line(w_current->window, w_current->gc, 
+		w_current->second_x, w_current->second_y, 
 		w_current->last_x, w_current->last_y);
 
   if (w_current->net_style == THICK ) {

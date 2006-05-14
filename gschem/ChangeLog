@@ -1,3 +1,12 @@
+2006-05-14 Werner Hoch <werner.ho@gmx.de>
+
+	* noweb/x_event.nw: x_event_expose(): fixed some of the redraw error
+	  when changing the windows while drawing
+
+	* noweb/o_basic.nw: moved DRAWCOMP state in o_redraw_cleanstates()
+
+	* noweb/o_net.nw: o_net_xorrubber(): added code for L-net
+
 2006-04-25 22:26  Dan McMahill <danmc>
 
 	* include/prototype.h, noweb/g_funcs.nw, noweb/g_register.nw,
