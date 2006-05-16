@@ -1,3 +1,12 @@
+2006-05-16 22:31  Dan McMahill <danmc>
+
+	* include/Makefile.am, include/prototype.h, noweb/g_funcs.nw,
+	  noweb/g_register.nw, noweb/x_dialog.nw, scheme/pcb.scm: Add a
+	  (gschem-filesel) guile function which gives a generic file open
+	  and save as dialog box.  Add some placeholder code to the pcb
+	  major mode showing how this routine is used.	While here update
+	  the pcb major mode TODO list a bit.
+
 2006-05-16 Werner Hoch <werner.ho@gmx.de>:
 
 	* noweb/o_pin.nw: o_pin_end(): fixed whichend drawing and 
