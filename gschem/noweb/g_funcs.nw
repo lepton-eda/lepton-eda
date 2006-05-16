@@ -18,6 +18,7 @@
 <<g_funcs.c : g_funcs_log()>>
 <<g_funcs.c : g_funcs_msg()>>
 <<g_funcs.c : g_funcs_confirm()>>
+<<g_funcs.c : g_funcs_filesel()>>
 <<g_funcs.c : g_funcs_use_rc_values()>>
 <<g_funcs.c : g_funcs_key_name()>>
 <<g_funcs.c : g_funcs_key_value()>>
@@ -71,6 +72,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/x_dialog.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -205,6 +207,66 @@ SCM g_funcs_confirm(SCM msg)
 
 
 @ %def g_funcs_confirm
+
+@section Function @code{g_funcs_filesel()}
+
+@defun g_funcs_filesel message
+@end defun
+
+<<g_funcs.c : g_funcs_filesel()>>=
+SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
+{
+  int c_flags;
+  char * r;
+  SCM v;
+
+  SCM_ASSERT (SCM_NIMP (msg) && SCM_STRINGP (msg), msg,
+	      SCM_ARG1, "gschem-filesel");
+  
+  SCM_ASSERT (SCM_NIMP (templ) && SCM_STRINGP (templ), templ,
+	      SCM_ARG1, "gschem-filesel");
+  
+  /* FIXME -- figure out the magic SCM_ASSERT for the flags */
+
+  /* 
+   * FIXME -- how to deal with conflicting flags? 
+   * Should I throw a scheme error?  Just deal in the c code?
+   */
+  for (c_flags = 0; scm_pair_p (flags) == SCM_BOOL_T; flags = SCM_CDR (flags)) {
+    SCM f = SCM_CAR (flags);
+    if (strcmp (SCM_STRING_CHARS (f), "may_exist") == 0) {
+      c_flags |= FSB_MAY_EXIST;
+
+    } else if (strcmp (SCM_STRING_CHARS (f), "must_exist") == 0) {
+      c_flags |= FSB_MUST_EXIST;
+      
+    } else if (strcmp (SCM_STRING_CHARS (f), "must_not_exist") == 0) {
+      c_flags |= FSB_SHOULD_NOT_EXIST;
+
+    } else if (strcmp (SCM_STRING_CHARS (f), "save") == 0) {
+      c_flags |= FSB_SAVE;
+
+    } else if (strcmp (SCM_STRING_CHARS (f), "open") == 0) {
+      c_flags |= FSB_LOAD;
+
+    } else {
+      scm_wrong_type_arg ("gschem-filesel", 1, f);
+    }
+  }
+
+  r = generic_filesel_dialog (SCM_STRING_CHARS (msg),
+			      SCM_STRING_CHARS (templ),
+			      c_flags
+			      );
+
+  v = scm_makfrom0str (r);
+  g_free (r);
+
+  return v;
+}
+
+
+@ %def g_funcs_filesel
 
 
 @section Function @code{g_funcs_use_rc_values()}

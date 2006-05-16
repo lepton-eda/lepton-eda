@@ -1,7 +1,9 @@
+## $Id$
+##
 ## Process this file with automake to produce Makefile.in
 
 noinst_HEADERS = \
-	globals.h i_vars.h prototype.h x_event.h x_states.h \
+	globals.h i_vars.h prototype.h x_dialog.h x_event.h x_states.h \
 	gettext.h \
 	x_log.h x_multiattrib.h x_pagesel.h
 

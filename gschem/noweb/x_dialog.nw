@@ -132,13 +132,17 @@
 <<x_dialog.c : x_dialog_raise_all()>>
 /*********** End of misc support functions for dialog boxes *******/
 
-/***************** Start of generic message dialog box ********************/
+/***************** Start of generic message dialog box *******************/
 <<x_dialog.c : generic_msg_dialog()>>
 /***************** End of generic message dialog box *********************/
 
-/***************** Start of generic confirm dialog box ********************/
+/***************** Start of generic confirm dialog box *******************/
 <<x_dialog.c : generic_confirm_dialog()>>
 /***************** End of generic confirm dialog box *********************/
+
+/***************** Start of generic file select dialog box ***************/
+<<x_dialog.c : generic_filesel_dialog()>>
+/***************** End of generic file select dialog box *****************/
 
 /*********** Start of generic text input dialog box *******/
 <<x_dialog.c : generic_text_input_ok()>>
@@ -226,6 +230,7 @@
 #include "../include/i_vars.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/x_dialog.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -4110,6 +4115,99 @@ generic_confirm_dialog (const char *msg)
 
 
 @ %def generic_confirm_dialog
+
+@defun generic_filesel_dialog const char *
+@end defun
+
+<<x_dialog.c : generic_filesel_dialog()>>=
+/* Caller should free result */
+
+char *
+generic_filesel_dialog (const char *msg, const char *templ, gint flags)
+{
+  GtkWidget *dialog;
+  gchar *result = NULL, *folder, *seed;
+  char *title;
+  static gchar *path = NULL;
+  static gchar *shortcuts = NULL;
+
+  /* Default to load if not specified.  Maybe this should cause an error. */ 
+  if (! (flags & (FSB_LOAD | FSB_SAVE))) {
+    flags = flags | FSB_LOAD;
+  }
+
+  if (flags & FSB_LOAD) {
+    title = g_strdup_printf("%s: Open", msg);
+    dialog = gtk_file_chooser_dialog_new (title,
+					  NULL,
+					  GTK_FILE_CHOOSER_ACTION_OPEN,
+					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+					  NULL);
+    /* Since this is a load dialog box, the file must exist! */
+    flags = flags | FSB_MUST_EXIST;
+
+  } else {
+    title = g_strdup_printf("%s: Save", msg);
+    dialog = gtk_file_chooser_dialog_new (title,
+					  NULL,
+					  GTK_FILE_CHOOSER_ACTION_SAVE,
+					  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					  GTK_STOCK_OPEN, GTK_RESPONSE_OK,
+					  NULL);
+  }
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  /* Pick the current default folder to look for files in */
+  if (path && *path) {
+    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), path);
+  }
+
+
+  /* Pick the current template (*.rc) or default file name */
+  if (templ && *templ) {
+    if (flags & FSB_SAVE)  {
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), templ);
+    } else {
+      gtk_file_chooser_select_filename (GTK_FILE_CHOOSER (dialog), templ);
+    }
+  }
+
+  
+  if (shortcuts && *shortcuts) {
+    printf ("shortcuts = \"%s\"\n", shortcuts);
+    folder = g_strdup (shortcuts);
+    seed = folder;
+    while ((folder = strtok (seed, ":")) != NULL) {
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+					    folder, NULL);
+      seed = NULL;
+    }
+  
+    g_free (folder);
+  }
+
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK) {
+    result = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+    folder = gtk_file_chooser_get_current_folder (GTK_FILE_CHOOSER (dialog));
+    /* FIXME
+    if (folder && path) {
+      dup_string (path, folder);
+      g_free (folder);
+    }
+    */
+  }
+  gtk_widget_destroy (dialog);
+
+  g_free (title);
+
+  return result;
+
+}
+
+
+@ %def generic_filesel_dialog
 
 
 

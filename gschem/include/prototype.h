@@ -20,6 +20,7 @@ SCM g_funcs_exit(void);
 SCM g_funcs_log(SCM msg);
 SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
+SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
 SCM g_funcs_use_rc_values(void);
 SCM g_funcs_key_name(SCM keystring);
 SCM g_funcs_key_value(SCM keystring);
@@ -808,6 +809,7 @@ void x_dialog_raise_all(TOPLEVEL *w_current);
 
 void generic_msg_dialog(const char *);
 int generic_confirm_dialog(const char *);
+char * generic_filesel_dialog(const char *, const char *, gint);
 
 void generic_text_input_ok(GtkWidget *w, TOPLEVEL *w_current);
 void generic_text_input_dialog(TOPLEVEL *w_current);

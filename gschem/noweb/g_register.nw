@@ -190,6 +190,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "gschem-log",                1, 0, 0, g_funcs_log },
   { "gschem-msg",                1, 0, 0, g_funcs_msg },
   { "gschem-confirm",            1, 0, 0, g_funcs_confirm },
+  { "gschem-filesel",            2, 0, 1, g_funcs_filesel },
+
   /* keymapping callbacks */
   { "file-new-window",           0, 0, 0, g_keys_file_new_window },
   { "file-new",                  0, 0, 0, g_keys_file_new },
@@ -344,7 +346,7 @@ void
 g_register_funcs (void)
 {
   struct gsubr_t *tmp = gschem_funcs;
-  
+ 
   while (tmp->name != NULL) {
     scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, tmp->fnc);
     tmp++;

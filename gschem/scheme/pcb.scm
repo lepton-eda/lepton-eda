@@ -27,42 +27,55 @@
 ;; TODO
 ;;  Note:  This list is incomplete.
 ;;
-;; - figure out how we should specify gsch2pcb arguments
+;; - complete a project file which is essentially the same as a gsch2pcb
+;;   project file.
 ;;
-;; - figure out how to launch a gsch2pcb editor
+;; - figure out how we should specify gsch2pcb arguments.  The project file?
 ;;
-;; - Add an action to pcb which lets me write to its log window
+;; - figure out how to launch a gsch2pcb editor to modify the gsch2pcb project
+;;   file.
 ;;
-;; - Add a generic file select dialog box for scheme use
+;; - figure out how to capture standard output from gsch2pcb and put it to 
+;;   the gschem log.  Perhaps a gschem-system-and-log function?
 ;;
-;;   Menu items
+;; - tell the listening pcb to load the new netlist and also load the
+;;   new elements to the paste buffer after running gsch2pcb
 ;;
-;;    =) tell the listening pcb to load the new netlist and also load the
-;;       new elements to the paste buffer after running gsch2pcb
+;; - when launching pcb, tell it to load the correct file or maybe after after
+;;   running gsch2pcb, tell pcb what to load.
 ;;
-;;    =) back annotate (once we implement it)
+;; - back annotate (once we implement it)
 ;;
-;;    =) figure out how to have pcb talk back to gschem for selecting/deselecting
-;;       elements.
+;; - figure out how to have pcb talk back to gschem for selecting/deselecting
+;;   elements.
 ;;
+;; - figure out how to install the hotkeys
 ;;
 
 (use-modules (ice-9 popen))
 
 (gschem-log "Loading the PCB major mode\n")
 (gschem-log "PCB-mode version $Id$\n")
+(gschem-log "The PCB major mode is incomplete and considered experimental at this time\n")
 
-;; These may be changed by the user in their gafrc files
+;; These may be changed by the user in their gafrc files (FIXME -- make this
+;; preceeding comment be true)
 
 ;; Various executibles
 (define pcb:pcb-cmd "pcb")
 (define pcb:gsch2pcb-cmd "gsch2pcb")
+
+;; FIXME
+;; should probably look for a value defined in a gafrc, the EDITOR env variable,
+;; and then some default here.
 (define pcb:editor-cmd "emacs &")
 
 ;; In general, we should probably load gnetlist.scm and the appropriate
 ;; gnetlist backend to have the refdes aliasing code available.
 
 (define pcb:pipe #f)
+
+(define pcb:project-file-name "")
 
 ;; (close-pipe pcb:pipe)
 
@@ -103,7 +116,7 @@
   
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; pcb-select-component-hook
 ;;
@@ -129,7 +142,7 @@
       )
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; pcb-deselect-component-hook
 ;;
@@ -154,7 +167,7 @@
       )
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; pcb-select-net-hook
 ;;
@@ -164,7 +177,7 @@
   #t
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; pcb-deselect-net-hook
 ;;
@@ -174,7 +187,7 @@
   #t
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; pcb-deselect-all-hook
 ;;
@@ -183,7 +196,7 @@
   (pcb:pipe-write "Unselect(All)\n")
 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; Add the hooks
 ;;
@@ -194,7 +207,7 @@
 (add-hook! select-net-hook pcb-select-net-hook)
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
 ;;
 ;; Menus
 ;;
@@ -251,6 +264,24 @@
   (system pcb:editor-cmd)
 )
 
+(define (pcb:load-project)
+  (let ((f nil))
+    (gschem-msg "This menu choice does not really do anything yet other than select a file\n")
+
+    (set! f (gschem-filesel "Select Project File" pcb:project-file-name  'open 'must_exist))
+    (if f (set! pcb:project-file-name f) )
+  )
+)
+
+(define (pcb:save-project)
+  (let ((f def nil))
+    (gschem-msg "This menu choice does not really do anything yet other than select a file\n")
+
+    (set! f (gschem-filesel "Save Project File As" pcb:project-file-name 'save 'may_exist))
+    (if f (set! pcb:project-file-name f) )
+  )
+)
+
 ; All keys in this keymap *must* be unique
 (define pcb:pcb-keymap
   '(
@@ -258,6 +289,8 @@
     ("l" . pcb:launch-pcb)
     ("n" . pcb:run-gsch2pcb)
     ("e" . pcb:run-editor)
+    ("o" . pcb:load-project)
+    ("s" . pcb:save-project)
     )
   )
 
@@ -269,6 +302,8 @@
 	   ("Launch PCB"                 pcb:launch-pcb          pcb:launch-pcb)
 	   ("Run gsch2pcb"               pcb:run-gsch2pcb        pcb:run-gsch2pcb)
 	   ("Edit gsch2pcb project"      pcb:run-editor          pcb:run-editor)
+	   ("Load Project..."            pcb:load-project        pcb:load-project)
+	   ("Save Project..."            pcb:save-project        pcb:save-project)
 	   )
 )
 
