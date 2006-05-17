@@ -101,6 +101,15 @@ def type_translate(str):
         str="pas"
     return str
 
+## split a string at the first tab or equal char
+def split_tab_equal(str,n=1):
+    list_tab=string.split(str,'\t',n)
+    list_equal=string.split(str,'=',n)
+    if len(list_tab[0]) < len(list_equal[0]):
+        return list_tab
+    else:
+        return list_equal
+
 ## returns 2 dicts: (options, attr) and 2 arrays: (devices, pins)
 def readsrc(filename):
     geda_attr={}
@@ -119,11 +128,11 @@ def readsrc(filename):
              or len(string.strip(line)) == 0: # comment, empty line or no section
             continue
         if section=="options":
-            element=string.split(line,"=",1)
+            element=split_tab_equal(line,1)
             if len(element) > 1:
                 options[string.strip(element[0])]=string.strip(element[1])
         elif section=="geda_attr":
-            element=string.split(line,"=",1)
+            element=split_tab_equal(line,1)
             nr=1
             while geda_attr.has_key((element[0],nr)):
                 nr=nr+1

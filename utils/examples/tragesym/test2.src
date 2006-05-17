@@ -3,32 +3,32 @@
 # please take a look at the docs and the template.src file for more informations
 
 [options]
-wordswap=yes
-rotate_labels=no
-sort_labels=no
-generate_pinseq=yes
-sym_width=2600
-pinwidthvertical=400
-pinwidthhorizontal=800
+wordswap	yes
+rotate_labels	no
+sort_labels	no
+generate_pinseq	yes
+sym_width	2600
+pinwidthvertical	400
+pinwidthhorizontal	800
 
 [geda_attr]
-version=20060113 1
-name=TEST2
-device=devTEST2
-refdes=U?
-footprint=TQFP234
-description=test without rotated text, not sorted, with slots
-documentation=http://url_to_the_datasheet.com/datasheet.pdf
-author=Werner Hoch <werner.ho(AT)gmx.de>
-numslots=4
-slot=1
-slotdef=1:1,2,3
-slotdef=2:4,5,6
-slotdef=3:7,8,9
-slotdef=4:10,11,12
-comment=comment1
-comment=comment2
-comment=comment3
+version	20060113 1
+name	TEST2
+device	devTEST2
+refdes	U?
+footprint	TQFP234
+description	test without rotated text, not sorted, with slots
+documentation	http://url_to_the_datasheet.com/datasheet.pdf
+author	Werner Hoch <werner.ho(AT)gmx.de>
+numslots	4
+slot	1
+slotdef	1:1,2,3
+slotdef	2:4,5,6
+slotdef	3:7,8,9
+slotdef	4:10,11,12
+comment	comment1
+comment	comment2
+comment	comment3
 
 [pins]
 #-----------------------------------------------------

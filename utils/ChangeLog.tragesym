@@ -1,3 +1,8 @@
+2006-05-17	Werner Hoch <werner.ho@gmx.de>
+	* scripts/tragesym: accept tab as option delimiter
+
+	* examples/tragesym/template.ods: added OOo-template
+
 2006-03-26	Werner Hoch <werner.ho@gmx.de>
 	* scripts/tragesym: changed version to 0.0.9
 	  use the overbar feature of gschem, removed it from tragesym
