@@ -1,3 +1,17 @@
+2006-05-17 Carlos Nieves Onega <cnieves@iespana.es>
+	* include/i_vars.h, include/prototype.h, lib/system-gschemrc.in,
+	  noweb/i_vars.nw, noweb/o_find.nw:
+	  Added support for moving the selected objects just dragging them.
+	* include/prototype.h, include/x_states.h, noweb/g_keys.nw,
+	  noweb/g_rc.nw, noweb/g_register.nw, noweb/i_basic.nw,
+	  noweb/i_callbacks.nw, noweb/o_basic.nw:
+	  Added multiple copy command.
+	* noweb/o_copy.nw, noweb/o_move.nw, noweb/o_undo.nw,
+	  include/prototype.h, noweb/x_event.nw:
+	  Allow rotating while copying or moving objects.
+	* noweb/g_hook.nw, noweb/o_complex.nw, noweb/o_misc.nw:
+	  Don't draw text if w_current->DONT_REDRAW == 1.
+	
 2006-05-16 22:31  Dan McMahill <danmc>
 
 	* include/Makefile.am, include/prototype.h, noweb/g_funcs.nw,

@@ -58,6 +58,8 @@ SCM g_keys_edit_redo(void);
 SCM g_keys_edit_select(void);
 SCM g_keys_edit_copy(void);
 SCM g_keys_edit_copy_hotkey(void);
+SCM g_keys_edit_mcopy(void);
+SCM g_keys_edit_mcopy_hotkey(void);
 SCM g_keys_edit_move(void);
 SCM g_keys_edit_move_hotkey(void);
 SCM g_keys_edit_delete(void);
@@ -266,6 +268,7 @@ SCM g_rc_grid_fixed_threshold(SCM spacing);
 SCM g_rc_output_vector_threshold(SCM numlines);
 SCM g_rc_add_attribute_offset(SCM offset);
 SCM g_rc_auto_save_interval(SCM seconds);
+SCM g_rc_drag_can_move(SCM mode);
 /* g_register.c */
 void g_register_funcs(void);
 /* globals.c */
@@ -309,6 +312,8 @@ void i_callback_edit_select(gpointer data, guint callback_action, GtkWidget *wid
 void i_callback_toolbar_edit_select(GtkWidget *widget, gpointer data);
 void i_callback_edit_copy(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_mcopy(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_mcopy_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_move(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_move_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_delete(gpointer data, guint callback_action, GtkWidget *widget);
@@ -561,7 +566,8 @@ void o_delete_complex(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete_text(TOPLEVEL *w_current, OBJECT *obj);
 void o_delete(TOPLEVEL *w_current);
 /* o_find.c */
-void o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y);
+gboolean o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
+		       gboolean deselect_afterwards);
 /* o_grips.c */
 OBJECT *o_grips_search(TOPLEVEL *w_current, int x, int y, int *whichone);
 OBJECT *o_grips_search_arc(TOPLEVEL *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
@@ -618,7 +624,8 @@ void o_line_erase_grips(TOPLEVEL *w_current, OBJECT *o_current);
 void o_edit(TOPLEVEL *w_current, SELECTION *list);
 void o_lock(TOPLEVEL *w_current);
 void o_unlock(TOPLEVEL *w_current);
-void o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
+void o_rotate_90(TOPLEVEL *w_current, SELECTION *list, 
+		 int centerx, int centery);
 void o_embed(TOPLEVEL *w_current, OBJECT *o_current);
 void o_unembed(TOPLEVEL *w_current, OBJECT *o_current);
 void o_mirror(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery);
@@ -721,6 +728,7 @@ char *o_undo_find_prev_filename(UNDO *start);
 OBJECT *o_undo_find_prev_object_head(UNDO *start);
 void o_undo_callback(TOPLEVEL *w_current, int type);
 void o_undo_cleanup(void);
+void o_undo_remove_last_undo(TOPLEVEL *w_current);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);

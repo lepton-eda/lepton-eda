@@ -156,6 +156,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "undo-control",              1, 0, 0, g_rc_undo_control },
   { "undo-type",                 1, 0, 0, g_rc_undo_type },
 
+  { "drag-can-move",             1, 0, 0, g_rc_drag_can_move },
+
   { "draw-grips",                1, 0, 0, g_rc_draw_grips },
   { "netconn-rubberband",        1, 0, 0, g_rc_netconn_rubberband },
   { "sort-component-library",    1, 0, 0, g_rc_sort_component_library },
@@ -209,6 +211,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-select",               0, 0, 0, g_keys_edit_select },
   { "edit-copy",                 0, 0, 0, g_keys_edit_copy },
   { "edit-copy-hotkey",          0, 0, 0, g_keys_edit_copy_hotkey },
+  { "edit-mcopy",                0, 0, 0, g_keys_edit_mcopy },
+  { "edit-mcopy-hotkey",         0, 0, 0, g_keys_edit_mcopy_hotkey },
   { "edit-move",                 0, 0, 0, g_keys_edit_move },
   { "edit-move-hotkey",          0, 0, 0, g_keys_edit_move_hotkey },
   { "edit-delete",               0, 0, 0, g_keys_edit_delete },

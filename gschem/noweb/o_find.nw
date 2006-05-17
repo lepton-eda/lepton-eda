@@ -63,11 +63,13 @@
 @end defun
 
 <<o_find.c : o_find_object()>>=
-void
-o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
+gboolean
+o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
+	      gboolean change_selection)
 {
   OBJECT *o_current=NULL;
-				
+  gboolean object_found = FALSE;
+
   if (w_current->page_current->object_lastplace == NULL) {
     o_current = w_current->page_current->object_head;
   } else {
@@ -84,13 +86,16 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
                             (o_current->visibility == VISIBLE ||
                              (o_current->visibility == INVISIBLE &&
                               w_current->show_hidden_text))) {
-                                (*o_current->sel_func)(
-                                                       w_current, o_current, 
-                                                       SINGLE, 0); /* 0 is count */
+				if (change_selection) {
+				  (*o_current->sel_func)(
+							 w_current, o_current, 
+							 SINGLE, 0); /* 0 is count */
+				}
+				object_found = TRUE;
                                 w_current->page_current-> object_lastplace =
                                    o_current->next;
                                 i_update_menus(w_current);
-                                return;
+                                return object_found;
                               }
                       }
 
@@ -115,12 +120,15 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
           (o_current->visibility == VISIBLE ||
            (o_current->visibility == INVISIBLE &&
             w_current->show_hidden_text))) {
-        /* 0 is count */
-        (*o_current->sel_func)(w_current, o_current, SINGLE, 0);
-        w_current->page_current->object_lastplace = o_current;
+	if (change_selection) {
+	  /* 0 is count */
+	  (*o_current->sel_func)(w_current, o_current, SINGLE, 0);
+	}
+	w_current->page_current->object_lastplace = o_current;
+ 	object_found = TRUE;
         
         i_update_menus(w_current);
-        return;
+        return object_found;
       }
     }
     o_current = o_current->next;
@@ -129,8 +137,9 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
   /* didn't find anything.... reset lastplace */
   w_current->page_current->object_lastplace = NULL;
 
-  /* deselect everything only if shift key isn't pressed */	
-  if (!w_current->SHIFTKEY) {
+  /* deselect everything only if shift key isn't pressed and 
+     the caller allows it */	
+  if (change_selection && (!w_current->SHIFTKEY)) {
 
 #if DEBUG
     o_selection_print_all( w_current->page_current->selection2_head);
@@ -141,6 +150,8 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y )
   }
 
   i_update_menus(w_current);
+  
+  return (object_found);
 }
 
 

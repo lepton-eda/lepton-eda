@@ -87,6 +87,9 @@ extern int current_center_x, current_center_y;
 int start_pan_x, start_pan_y;
 int throttle = 0;
 
+/* Number of times that the selection was rotated inside another command */
+int rotated_inside = 0;
+
 @ %def mouse_x mouse_y current_center_x current_center_y start_pan_x start_pan_y throttle
 
 
@@ -134,6 +137,7 @@ x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
       case(ENDMOVE):
       case(COPY): 
       case(ENDCOPY):
+      case(ENDMCOPY):
         o_drawbounding(w_current, NULL,
                        w_current->page_current->selection2_head->next,
                        x_get_darkcolor(w_current->bb_color), FALSE);
@@ -141,39 +145,39 @@ x_event_expose(GtkWidget *widget, GdkEventExpose *event, TOPLEVEL *w_current)
       case(DRAWCOMP):
       case(ENDCOMP):
       case(ENDPASTE):
-        o_drawbounding(w_current, 
+ 	 o_drawbounding(w_current, 
 		       w_current->page_current->complex_place_head->next,
                        NULL,
-                       x_get_darkcolor(w_current->bb_color), FALSE);
+                       x_get_darkcolor(w_current->bb_color), FALSE); 
         break;
 
       case(BUSCONT):
       case(DRAWBUS):
-        o_bus_xorrubber(w_current); 
+	 o_bus_xorrubber(w_current);  
         break;
       case(DRAWNET):   
       case(NETCONT):
-        o_net_xorrubber(w_current);
+	 o_net_xorrubber(w_current); 
         break;
       case(ENDARC): 
-        o_arc_rubberarc_xor(w_current);
+	 o_arc_rubberarc_xor(w_current); 
         break;
       case(ENDATTRIB): /* TODO: how to test ??? */
-        o_attrib_rubberattrib(w_current);
+	 o_attrib_rubberattrib(w_current);
         break;
       case(ENDBOX):
-        o_box_rubberbox_xor(w_current);
+	 o_box_rubberbox_xor(w_current); 
         break;
       case(ENDCIRCLE):
-        o_circle_rubbercircle_xor(w_current);
+	 o_circle_rubbercircle_xor(w_current); 
         break;
       case(ENDLINE): 
-        o_line_rubberline_xor(w_current);
+	 o_line_rubberline_xor(w_current); 
         break;
       case(ENDPIN): /* TODO (no function in o_pin.nw available) */
         break;
       case(ENDTEXT): 
-        o_text_rubberattrib(w_current);
+	 o_text_rubberattrib(w_current);
         break;
       case(GRIPS): /* TODO (larger changes in o_grips.nw necessary) */
         break;
@@ -204,17 +208,24 @@ gint
 x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		       TOPLEVEL *w_current)
 {
+  int prev_state; 
+
   exit_if_null(w_current);
   global_window_current = w_current;
 
 #if DEBUG
-  printf("pressed! %d \n", event_state);
+  printf("pressed button %d! \n", event->button);
+  printf("event state: %d \n", event->state);
+  printf("w_current state: %d \n", w_current->event_state);
+  printf("Selection is:\n");
+  o_selection_print_all( w_current->page_current->selection2_head);
+  printf("\n");
 #endif
 
   if (event->type == GDK_2BUTTON_PRESS && 
       (w_current->event_state == STARTSELECT || 
        w_current->event_state == SELECT)) {
-    o_find_object(w_current, (int) event->x, (int) event->y);
+    o_find_object(w_current, (int) event->x, (int) event->y, TRUE);
     if (w_current->page_current->selection2_head->next) {
        o_edit(w_current, w_current->page_current->selection2_head->next);
        return(0);
@@ -233,11 +244,11 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         if (!o_grips_start(
                            w_current, (int) event->x, (int) event->y)) {
 				/* now go into normal SELECT */
-          w_current->event_state = STARTSELECT;
-          w_current->start_x = w_current->last_x =
-            (int) event->x;
-          w_current->start_y = w_current->last_y =
-            (int) event->y;
+	  w_current->event_state = STARTSELECT;
+	  w_current->start_x = w_current->last_x =
+	    (int) event->x;
+	  w_current->start_y = w_current->last_y =
+	    (int) event->y;
         } else {
 				/* a grip was found */
           w_current->event_state = GRIPS;
@@ -247,6 +258,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
+	  rotated_inside = 0;
           o_copy_start(w_current, 
                        (int) event->x, (int) event->y);
           w_current->event_state = COPY;
@@ -254,8 +266,19 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         }
         break;
 
+      case(STARTMCOPY):
+        if (o_select_selected(w_current)) {
+	  rotated_inside = 0;
+          o_copy_start(w_current, 
+                       (int) event->x, (int) event->y);
+          w_current->event_state = MCOPY;
+          w_current->inside_action = 1;
+        }
+        break;
+
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
+	  rotated_inside = 0;
           o_move_start(w_current,
                        (int) event->x, (int) event->y);
           w_current->event_state = MOVE;
@@ -467,10 +490,13 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDROTATEP):
+	prev_state = w_current->DONT_REDRAW;
+	w_current->DONT_REDRAW = 0;
         o_rotate_90(
                     w_current,
                     w_current->page_current->selection2_head->next,
                     (int) event->x, (int) event->y);
+	w_current->DONT_REDRAW = prev_state;
 
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
@@ -525,7 +551,10 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
     /* try this out and see how it behaves */
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP ||
-          w_current->event_state == ENDTEXT ) {
+          w_current->event_state == ENDTEXT ||
+	  w_current->event_state == ENDMOVE ||
+	  w_current->event_state == ENDCOPY ||
+	  w_current->event_state == ENDMCOPY) {
             return(0);
           } else {
             i_callback_cancel(w_current, 0, NULL);
@@ -546,7 +575,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         if (!w_current->SHIFTKEY) {
           o_find_object(w_current, 
                         (int) event->x, 
-                        (int) event->y);
+                        (int) event->y, TRUE);
         }
       } else {
         o_select_unselect_all(w_current);
@@ -555,7 +584,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         if (!w_current->SHIFTKEY) {
           o_find_object(w_current, 
                         (int) event->x, 
-                        (int) event->y);
+                        (int) event->y, TRUE);
         }
       }
 
@@ -696,11 +725,14 @@ gint
 x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 			TOPLEVEL *w_current)
 {
+  int prev_state;
+  int redraw_state;
+
   exit_if_null(w_current);
   global_window_current = w_current;
 
 #if DEBUG
-  printf("released! %d \n", event_state);
+  printf("released! %d \n", w_current->event_state);
 #endif
 
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
@@ -719,6 +751,10 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
       case(COPY):
         w_current->event_state = ENDCOPY;
+        break;
+
+      case(MCOPY):
+        w_current->event_state = ENDMCOPY;
         break;
 
       case(GRIPS):
@@ -742,6 +778,18 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
 	i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
+        break;
+
+      case(ENDMCOPY):
+        o_copy_end(w_current);
+        /* having this stay in copy was driving me nuts*/
+        w_current->inside_action = 1;
+	/* Keep the state and the inside_action, as the copy has not finished. */	
+	w_current->last_x = w_current->start_x = fix_x(w_current, mouse_x);
+	w_current->last_y = w_current->start_y = fix_y(w_current, mouse_y);
+	i_set_state(w_current, ENDMCOPY); 
+        i_update_toolbar(w_current);
+	o_undo_savestate(w_current, UNDO_ALL);
         break;
 
       case(SBOX):
@@ -779,7 +827,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 				/* now go looking for objects to select */
           o_find_object(w_current, 
                         (int) event->x, 
-                        (int) event->y);
+                        (int) event->y, TRUE);
           w_current->event_state = SELECT;
           w_current->inside_action = 0;
         } else {
@@ -802,8 +850,8 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         w_current->complex_rotate = 
         (w_current->complex_rotate + 90) % 360;
 
-        o_complex_place_rotate(w_current);
-
+	o_complex_place_rotate(w_current);
+	  
         o_drawbounding(w_current,
                        w_current->page_current->
                        complex_place_head->next, 
@@ -827,6 +875,36 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         return(0);
 
       }
+      else if ((w_current->event_state == ENDMOVE) ||
+	       (w_current->event_state == ENDCOPY) ||
+	       (w_current->event_state == ENDMCOPY) ) {
+	g_assert (w_current->page_current->selection2_head != NULL);
+	prev_state = w_current->event_state;
+
+	o_drawbounding(w_current, NULL,
+		       w_current->page_current->selection2_head->next,
+		       x_get_darkcolor(w_current->bb_color), TRUE);
+
+	/* Don't allow o_rotate_90 to erase the selection, neither to
+	   redraw the objects after rotating */
+	/* skip over head node */
+	redraw_state = w_current->DONT_REDRAW;
+	w_current->DONT_REDRAW = 1;
+
+	o_rotate_90(w_current, w_current->page_current->selection2_head->next,
+		    fix_x(w_current, w_current->start_x),
+		    fix_y(w_current, w_current->start_y));
+	w_current->DONT_REDRAW = redraw_state;
+	rotated_inside ++;	
+	w_current->event_state = prev_state;
+
+	o_drawbounding(w_current, NULL,
+		       w_current->page_current->selection2_head->next,
+		       x_get_darkcolor(w_current->bb_color), TRUE);
+	
+        return(0);
+      }
+
     }
 
     switch(w_current->middle_button) { 
@@ -927,7 +1005,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
 #if DEBUG
-  /* printf("MOTION!\n");*/
+  /*  printf("MOTION!\n");*/
 #endif
 
 #ifdef HAS_LIBSTROKE
@@ -993,6 +1071,52 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
     o_grips_motion(w_current, (int) event->x, (int) event->y);
     break;
 
+    case(STARTSELECT):
+    if ( (!w_current->drag_can_move) ||
+	 (w_current->drag_can_move && 
+	  (! o_find_object(w_current, 
+			   w_current->start_x, w_current->start_y, FALSE)))) {
+      temp_x = fix_x(w_current, (int) event->x);
+      temp_y = fix_y(w_current, (int) event->y);
+      /* is eight enough of a threshold? */
+      /* make this configurable anyways */
+      diff_x = fabs(w_current->page_current->right -
+		    w_current->page_current->left);
+      
+#ifdef HAS_RINT
+      zoom_scale = (int) rint(w_current->init_right / diff_x);
+#else
+      zoom_scale = (int) w_current->init_right / diff_x;
+#endif
+      
+      if (zoom_scale < 10) {
+	zoom_scale = 10;
+      }
+      
+      if ( (abs(temp_x - w_current->start_x) > zoom_scale) ||
+	   (abs(temp_y - w_current->start_y) > zoom_scale) ) {
+	w_current->event_state = SBOX;
+	/* NEW SELECTION code */
+	o_select_box_start(w_current,
+			   (int) event->x,
+			   (int) event->y);
+	     w_current->inside_action = 1;
+      }
+      break;
+    }
+    else {
+      /* Start the object movement */
+      rotated_inside = 0;
+      o_move_start(w_current,
+		   (int) event->x, (int) event->y);
+      w_current->event_state = ENDMOVE;
+      w_current->inside_action = 1;
+      
+      /* Continue to the MOVE actions */
+      /* Important!! keep the MOVE and ENDMOVE cases below this 
+	 without the break statement!! */
+    }
+
     case(ENDMOVE):
     case(MOVE):
     if (w_current->inside_action) {
@@ -1021,6 +1145,8 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
 
     case(ENDCOPY):
     case(COPY):
+    case(ENDMCOPY):
+    case(MCOPY):
     if (w_current->inside_action) {
       o_drawbounding(
                      w_current, NULL,
@@ -1144,35 +1270,6 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
     w_current->last_x = fix_x(w_current, (int) event->x);
     w_current->last_y = fix_y(w_current, (int) event->y);
     o_text_rubberattrib(w_current);
-    break;
-
-    case(STARTSELECT):
-    temp_x = fix_x(w_current, (int) event->x);
-    temp_y = fix_y(w_current, (int) event->y);
-    /* is eight enough of a threshold? */
-    /* make this configurable anyways */
-    diff_x = fabs(w_current->page_current->right -
-                  w_current->page_current->left);
-
-#ifdef HAS_RINT
-    zoom_scale = (int) rint(w_current->init_right / diff_x);
-#else
-    zoom_scale = (int) w_current->init_right / diff_x;
-#endif
-
-    if (zoom_scale < 10) {
-      zoom_scale = 10;
-    }
-
-    if ( (abs(temp_x - w_current->start_x) > zoom_scale) ||
-         (abs(temp_y - w_current->start_y) > zoom_scale) ) {
-           w_current->event_state = SBOX;
-           /* NEW SELECTION code */
-           o_select_box_start(w_current,
-                              (int) event->x,
-                              (int) event->y);
-           w_current->inside_action = 1;
-         }
     break;
 
     case(SBOX):
@@ -1358,7 +1455,7 @@ x_manual_resize(TOPLEVEL *w_current)
   w_current->win_height = w_current->drawing_area->allocation.height;
 
 #if DEBUG
-  printf("manual: %d %d\n", win_width, win_height);
+  printf("manual: %d %d\n", w_current->win_width, w_current->win_height);
 #endif
 
   w_current->width = w_current->win_width;
@@ -1372,11 +1469,11 @@ x_manual_resize(TOPLEVEL *w_current)
              w_current->page_current->bottom);
 
 #if DEBUG
-  printf("Coord aspect: %f Window aspect: %f\n",
-         coord_aspectratio,
-         (float) win_width / (float) win_height);
-  printf("w: %d h: %d\n", width, height);
-  printf("aw: %d ah: %d\n", win_width, win_height);
+  printf("Window aspect: %f\n",
+         (float) w_current->win_width / (float) w_current->win_height);
+  /* No longer used?
+     printf("w: %d h: %d\n", width, height); */
+  printf("aw: %d ah: %d\n", w_current->win_width, w_current->win_height);
 #endif
 
   /* I'm assuming that the backingstore pixmap is of the right
@@ -1465,7 +1562,8 @@ x_event_vschanged (GtkAdjustment *adj, TOPLEVEL *w_current)
 #if DEBUG
   printf("vrange %f %f\n", vadjustment->lower, vadjustment->upper);
   printf("vvalue %f\n", vadjustment->value);
-  printf("actual: %d %d\n", top, bottom);
+  printf("actual: %d %d\n", w_current->page_current->top, 
+	 w_current->page_current->bottom);
 #endif
 
   if (!w_current->DONT_REDRAW) {	
@@ -1512,6 +1610,9 @@ x_event_key_press (GtkWidget *widget, GdkEventKey *event, TOPLEVEL *w_current)
   set_window_current_key(w_current);
 
   if (event) {
+#if DEBUG
+    printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
+#endif
     g_keys_execute(event->state, event->keyval);
   }
 

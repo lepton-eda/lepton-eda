@@ -19,6 +19,7 @@
 <<o_undo.c : o_undo_find_prev_object_head()>>
 <<o_undo.c : o_undo_callback()>>
 <<o_undo.c : o_undo_cleanup()>>
+<<o_undo.c : o_undo_remove_last_undo()>>
 
 @
 
@@ -371,6 +372,7 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   int save_logging;
   int diff_x;
   int find_prev_data=FALSE;
+  int prev_status;
 
   char *save_filename;
 	
@@ -414,7 +416,6 @@ o_undo_callback(TOPLEVEL *w_current, int type)
   /* save filename */
   save_filename = g_strdup (w_current->page_current->page_filename);
 
-
   /* save structure so it's not nuked */	
   save_bottom = w_current->page_current->undo_bottom;
   save_tos = w_current->page_current->undo_tos;
@@ -438,6 +439,7 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 
   /* temporarily disable logging */
   save_logging = do_logging;
+  prev_status = w_current->DONT_REDRAW;
   w_current->DONT_REDRAW = 1;
   do_logging = FALSE;
 
@@ -487,7 +489,10 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 
   /* final redraw */
   x_pagesel_update (w_current);
-  w_current->DONT_REDRAW = 0;
+
+  /* Let the caller to decide if redraw or not */
+  /* w_current->DONT_REDRAW = 0; */
+  w_current->DONT_REDRAW = prev_status;
 
   diff_x = GET_PAGE_WIDTH (w_current);
 
@@ -501,7 +506,9 @@ o_undo_callback(TOPLEVEL *w_current, int type)
 #endif
 #endif
 
-  o_redraw_all(w_current);
+  if (!w_current->DONT_REDRAW) {
+    o_redraw_all(w_current);
+  }
   i_update_menus(w_current);
 
   /* restore saved undo structures */
@@ -576,3 +583,31 @@ o_undo_cleanup(void)
 
 
 @ %def o_undo_cleanup
+
+
+@section Function @code{o_undo_remove_last_undo()}
+
+@defun o_undo_remove_last_undo w_current
+@end defun
+
+<<o_undo.c : o_undo_remove_last_undo()>>=
+void
+o_undo_remove_last_undo(TOPLEVEL *w_current)
+{
+  if (w_current->page_current->undo_current == NULL) {
+    return;	
+  }
+
+  if (w_current->page_current->undo_current) {
+    w_current->page_current->undo_current = 
+      w_current->page_current->undo_current->prev;
+    if (w_current->page_current->undo_current == NULL) {
+      w_current->page_current->undo_current = 
+        w_current->page_current->undo_bottom;
+    }
+  }
+
+
+
+}
+@ %def o_undo_remove_last_undo

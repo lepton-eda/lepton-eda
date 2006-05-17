@@ -48,6 +48,8 @@
 <<i_callbacks.c : i_callback_toolbar_edit_select()>>
 <<i_callbacks.c : i_callback_edit_copy()>>
 <<i_callbacks.c : i_callback_edit_copy_hotkey()>>
+<<i_callbacks.c : i_callback_edit_mcopy()>>
+<<i_callbacks.c : i_callback_edit_mcopy_hotkey()>>
 <<i_callbacks.c : i_callback_edit_move()>>
 <<i_callbacks.c : i_callback_edit_move_hotkey()>>
 <<i_callbacks.c : i_callback_edit_delete()>>
@@ -237,6 +239,7 @@
 #include <dmalloc.h>
 #endif
 
+extern int rotated_inside;
 @
 
 
@@ -886,6 +889,7 @@ DEFINE_I_CALLBACK(edit_undo)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
+  w_current->DONT_REDRAW = 0;
   o_undo_callback(w_current, UNDO_ACTION);
 }
 
@@ -924,6 +928,7 @@ DEFINE_I_CALLBACK(edit_redo)
 {
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
+  w_current->DONT_REDRAW = 0;
   o_undo_callback(w_current, REDO_ACTION);
 }
 
@@ -1038,6 +1043,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 
   i_update_middle_button(w_current, i_callback_edit_copy_hotkey, _("Copy"));
   if (o_select_return_first_object(w_current)) {
+    w_current->event_state = COPY; 
     o_redraw_cleanstates(w_current);	
     o_copy_start(w_current, mouse_x, mouse_y);
     w_current->event_state = ENDCOPY;
@@ -1047,6 +1053,56 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 
 
 @ %def i_callback_edit_copy_hotkey
+
+
+@section Function @code{i_callback_edit_mcopy()}
+
+@defun i_callback_edit_mcopy data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_mcopy()>>=
+DEFINE_I_CALLBACK(edit_mcopy)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  i_update_middle_button(w_current, i_callback_edit_copy, _("Multiple Copy"));
+  if (o_select_return_first_object(w_current)) {
+    i_set_state(w_current, STARTMCOPY);
+  } else {
+    i_set_state_msg(w_current, SELECT, _("Select objs first"));
+  }
+}
+
+
+@ %def i_callback_edit_mcopy
+
+
+@section Function @code{i_callback_edit_mcopy_hotkey()}
+
+@defun i_callback_edit_mcopy_hotkey data callback_action widget
+@end defun
+
+<<i_callbacks.c : i_callback_edit_mcopy_hotkey()>>=
+DEFINE_I_CALLBACK(edit_mcopy_hotkey)
+{
+  TOPLEVEL *w_current = (TOPLEVEL *) data;
+
+  exit_if_null(w_current);
+
+  i_update_middle_button(w_current, i_callback_edit_mcopy_hotkey, _("Multiple Copy"));
+  if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);	
+    w_current->event_state = MCOPY; 
+    o_copy_start(w_current, mouse_x, mouse_y);
+    w_current->event_state = ENDMCOPY;
+    w_current->inside_action = 1;
+  }
+}
+
+
+@ %def i_callback_edit_mcopy_hotkey
 
 
 @section Function @code{i_callback_edit_move()}
@@ -1259,6 +1315,8 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
     s_current = w_current->page_current->selection2_head->next;
     i_update_middle_button(w_current,
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
+    /* Allow o_rotate_90 to redraw the objects */
+    w_current->DONT_REDRAW = 0;
     o_rotate_90(w_current, s_current, mouse_x, mouse_y);
   }
 
@@ -4450,6 +4508,12 @@ DEFINE_I_CALLBACK(cancel)
   TOPLEVEL *w_current = (TOPLEVEL *) data;
 
   exit_if_null(w_current);
+
+  if ( (w_current->inside_action) && 
+       (rotated_inside != 0)) {
+    o_undo_callback(w_current, UNDO_ACTION);	 
+    rotated_inside = 0;
+  }
 
   /* leave this on for now... but it might have to change */
   /* this is problematic since we don't know what the right mode */

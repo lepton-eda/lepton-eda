@@ -341,9 +341,11 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 
 
       case(OBJ_NET):
-        o_cue_undraw(w_current, object);
-        o_net_erase(w_current, object);
-        o_line_erase_grips(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw(w_current, object);
+	  o_net_erase(w_current, object);
+	  o_line_erase_grips(w_current, object);
+	}
                                 
         /* save the other objects */
         other_objects = s_conn_return_others(other_objects, object);
@@ -351,50 +353,62 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
                                 
         o_net_rotate(w_current, centerx, centery, 90, object);
         s_conn_update_object(w_current, object);
-        o_net_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_net_draw(w_current, object);
                                 
-        /* draw the other objects */
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
+	  /* draw the other objects */
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
-
-        /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object); 
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
+	  
+	  /* finally redraw the cues on the current object */
+	  o_cue_draw_single(w_current, object); 
+	}
         break;
 
       case(OBJ_BUS):
-        o_cue_undraw(w_current, object);
-        o_bus_erase(w_current, object);
-        o_line_erase_grips(w_current, object);
-        
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw(w_current, object);
+	  o_bus_erase(w_current, object);
+	  o_line_erase_grips(w_current, object);
+        }
+
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
         
         o_bus_rotate(w_current, centerx, centery, 90, object);
         s_conn_update_object(w_current, object);
-        o_bus_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_bus_draw(w_current, object);
         
-        /* draw the other objects */
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
+	  /* draw the other objects */
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
 
         /* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
 
-        /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object); 
+	  /* finally redraw the cues on the current object */
+	  o_cue_draw_single(w_current, object); 
+	}
         break;
 
       case(OBJ_PIN):
-        o_cue_undraw(w_current, object);
-        o_pin_erase(w_current, object);
-        o_line_erase_grips(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw(w_current, object);
+	  o_pin_erase(w_current, object);
+	  o_line_erase_grips(w_current, object);
+	}
         
         other_objects = s_conn_return_others(other_objects, object);
         s_conn_remove(w_current, object);
@@ -402,25 +416,31 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
         o_pin_rotate(w_current, centerx, centery, 
                      90, object);
         s_conn_update_object(w_current, object);
-        o_pin_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_pin_draw(w_current, object);
         
-        /* draw the other objects */
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
-
-        /* get other connected objects and redraw */
+	  /* draw the other objects */
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
+  
+	/* get other connected objects and redraw */
         connected_objects = s_conn_return_others(connected_objects, object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
-
-        /* finally redraw the cues on the current object */
-        o_cue_draw_single(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
+	  
+	  /* finally redraw the cues on the current object */
+	  o_cue_draw_single(w_current, object);
+	}
         break;
 
       case(OBJ_COMPLEX):
-        o_cue_undraw_objects(w_current, object->complex->prim_objs);
-	/* erase the current selection */
-        o_complex_erase(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_objects(w_current, object->complex->prim_objs);
+	  /* erase the current selection */
+	  o_complex_erase(w_current, object);
+	}
 
         other_objects = s_conn_return_complex_others(other_objects, object);
         
@@ -438,64 +458,87 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
                          new_angle, 90, object);
         /*w_current->ADDING_SEL = 0; NEWSEL: needed? */
         s_conn_update_complex(w_current, object->complex->prim_objs);
-        o_complex_draw(w_current, object);
-
-        o_cue_undraw_list(w_current, other_objects);
-        o_cue_draw_list(w_current, other_objects);
+	if (!w_current->DONT_REDRAW) {
+	  o_complex_draw(w_current, object);
+	  
+	  o_cue_undraw_list(w_current, other_objects);
+	  o_cue_draw_list(w_current, other_objects);
+	}
 
         /* now draw the newly connected objects */
         connected_objects = s_conn_return_complex_others(connected_objects,
                                                          object);
-        o_cue_undraw_list(w_current, connected_objects);
-        o_cue_draw_list(w_current, connected_objects);
+	if (!w_current->DONT_REDRAW) {
+	  o_cue_undraw_list(w_current, connected_objects);
+	  o_cue_draw_list(w_current, connected_objects);
+	}
         break;
         
       case(OBJ_LINE):
-        o_line_erase_grips(w_current, object);
-        o_line_erase(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_line_erase_grips(w_current, object);
+	  o_line_erase(w_current, object);
+	}
 
         o_line_rotate(w_current, centerx, centery, 
                       90, object);
 
-        o_line_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_line_draw(w_current, object);
+	}
         break;
 
       case(OBJ_BOX):
-				/* erase the current selection */
-        o_box_erase_grips(w_current, object);
-        o_box_erase(w_current, object);
+	/* erase the current selection */
+	if (!w_current->DONT_REDRAW) {
+	  o_box_erase_grips(w_current, object);
+	  o_box_erase(w_current, object);
+	}
 
         o_box_rotate(w_current, centerx, centery, 
                      90, object);
 
-        o_box_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_box_draw(w_current, object);
+	}
         break;
 
       case(OBJ_PICTURE):
 				/* erase the current selection */
 #ifndef HAS_GTK12
-        o_picture_erase_grips(w_current, object);
-        o_picture_erase(w_current, object);
-
+	
+	if (!w_current->DONT_REDRAW) {
+	  o_picture_erase_grips(w_current, object);
+	  o_picture_erase(w_current, object);
+	}
+	
         o_picture_rotate(w_current, centerx, centery, 
                      90, object);
 
-        o_picture_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_picture_draw(w_current, object);
+	}
 #endif
         break;
 
       case(OBJ_CIRCLE):
-        o_circle_erase_grips(w_current, object);
-        o_circle_erase(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_circle_erase_grips(w_current, object);
+	  o_circle_erase(w_current, object);
+	}
 
         o_circle_rotate(w_current, centerx, centery, 
                         90, object);
 
-        o_circle_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_circle_draw(w_current, object);
+	}
         break;
 
       case(OBJ_ARC):
-        o_arc_erase(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_arc_erase(w_current, object);
+	}
 
 #if 0 /* not needed anymore */
 	SCREENtoWORLD(w_current, centerx, centery, 
@@ -504,18 +547,24 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 #endif
 
         o_arc_rotate(w_current, centerx, centery, 90, object);
-        o_arc_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_arc_draw(w_current, object);
+	}
         break;
 
       case(OBJ_TEXT):
-				/* erase the current selection */
-        o_text_erase(w_current, object);
+	/* erase the current selection */
+	if (!w_current->DONT_REDRAW) {
+	  o_text_erase(w_current, object);
+	}
 
         new_angle = (object->text->angle + 90) % 360;
         o_text_rotate(w_current, centerx, centery,
                       new_angle, 90, object);
 
-        o_text_draw(w_current, object);
+	if (!w_current->DONT_REDRAW) {
+	  o_text_draw(w_current, object);
+	}
         break;
     }
     s_current = s_current->next;
@@ -546,7 +595,7 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
 	break;
 
       case (OBJ_COMPLEX):
-	/* Run the rotate pin hook */
+	/* Run the rotate hook */
 	if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
 	    object != NULL) {
 	  scm_run_hook(rotate_component_object_hook,
@@ -561,8 +610,12 @@ o_rotate_90(TOPLEVEL *w_current, SELECTION *list, int centerx, int centery)
     s_current = s_current->next;
   }
 
+  /* Don't save the undo state if we are inside an action */
+  /* This is useful when rotating the selection while moving, for example */
   w_current->page_current->CHANGED = 1;
-  o_undo_savestate(w_current, UNDO_ALL);
+  if (!w_current->inside_action) {
+    o_undo_savestate(w_current, UNDO_ALL);
+  }
 }
 
 

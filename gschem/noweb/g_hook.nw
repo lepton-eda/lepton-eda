@@ -399,7 +399,9 @@ g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size,
 	changed = TRUE;
       }
       o_text_recreate(w_current, object);
-      o_text_draw(w_current, object);
+      if (!w_current->DONT_REDRAW) {
+	o_text_draw(w_current, object);
+      }
     }
   }
   return SCM_BOOL_T;

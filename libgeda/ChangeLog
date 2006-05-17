@@ -1,3 +1,7 @@
+2006-05-17 Carlos Nieves Onega <cnieves@iespana.es>
+        * include/struct.h: Added variable which controls if the user
+	  can move objects just dragging them.
+
 2006-04-22 Carlos Nieves Onega <cnieves@iespana.es>	
 	* noweb/o_complex_basic.nw: Allow rotation and mirroring of
 	  complex objects inside complex objects.

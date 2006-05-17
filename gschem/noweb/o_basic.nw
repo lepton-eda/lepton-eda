@@ -131,9 +131,11 @@ o_redraw_all(TOPLEVEL *w_current)
 	o_erase_selected(w_current);	
 	/* continue */
       case(ENDCOPY):
-        o_drawbounding(w_current, NULL,
+      case(ENDMCOPY):
+	o_drawbounding(w_current, NULL,
                        w_current->page_current->selection2_head->next,
                        x_get_darkcolor(w_current->bb_color), FALSE);
+
         break;
 
       case(DRAWCOMP):
@@ -859,7 +861,8 @@ o_redraw_cleanstates(TOPLEVEL *w_current)
   switch (w_current->event_state) {
     /* all states with something on the dc */
     case(COPY): 
-    case(DRAWBUS):
+    case(MCOPY): 
+    case(DRAWBUS): 
     case(DRAWCOMP): 
     case(DRAWNET):   
     case(ENDARC): 
@@ -867,7 +870,8 @@ o_redraw_cleanstates(TOPLEVEL *w_current)
     case(ENDBOX): 
     case(ENDCIRCLE): 
     case(ENDCOMP): 
-    case(ENDCOPY): 
+    case(ENDCOPY):
+    case(ENDMCOPY): 
     case(ENDLINE): 
     case(ENDMOVE): 
     case(ENDPASTE): 
@@ -920,6 +924,7 @@ o_redraw_cleanstates(TOPLEVEL *w_current)
     case(MOUSEPAN): 
     case(SBOX): 
     case(STARTCOPY): 
+    case(STARTMCOPY):
     case(STARTDRAWBUS): 
     case(STARTDRAWNET): 
     case(STARTMOVE): 

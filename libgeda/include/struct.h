@@ -874,6 +874,8 @@ struct st_toplevel {
   /* attributes when they are attached to vertical or horizontal nets */
   int add_attribute_offset;
 
+  /* Controls if drag can move objects or not */
+  int drag_can_move;	
 
 
   /* gnetlist specific */

@@ -208,6 +208,11 @@ i_status_string(TOPLEVEL *w_current)
     return _("Copy");
   case MOVE:
     return _("Move");
+  case MCOPY:
+    return _("Multiple Copy");
+  case STARTMCOPY:
+  case ENDMCOPY:
+    return _("Multiple Copy Mode");
   }
   return ""; /* should not happen */
 }
@@ -489,6 +494,9 @@ i_update_toolbar(TOPLEVEL *w_current)
  	case(STARTPASTE): /* TODO */
  	case(ENDPASTE): /* TODO */
  	case(GRIPS): /* TODO */
+        case(MCOPY): /* TODO */
+        case(STARTMCOPY): /* TODO */
+        case(ENDMCOPY): /* TODO */
 	default:
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 					 w_current->toolbar_select), TRUE);
@@ -784,6 +792,9 @@ GdkCursor *cursor;
  	case(STARTPASTE): /* TODO */
  	case(ENDPASTE): /* TODO */
  	case(GRIPS): /* TODO */
+        case(MCOPY): /* TODO */
+        case(MCOPYSTART): /* TODO */
+        case(MCOPYEND): /* TODO */
 	default:
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 					 w_current->toolbar_select), TRUE);

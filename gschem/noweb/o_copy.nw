@@ -68,8 +68,13 @@ void
 o_copy_start(TOPLEVEL *w_current, int x, int y)
 {
   if (w_current->page_current->selection2_head->next != NULL) {
+    /* Save the current state. When rotating the selection when copying,
+       we have to come back to here */
+    o_undo_savestate(w_current, UNDO_ALL);
+
     w_current->last_drawb_mode = -1;
-    w_current->event_state = COPY;
+    /* Shouldn't this set by the caller ? */
+    /*    w_current->event_state = COPY; */
 
     w_current->last_x = w_current->start_x = fix_x(w_current, x);
     w_current->last_y = w_current->start_y = fix_y(w_current, y);
@@ -99,12 +104,14 @@ o_copy_end(TOPLEVEL *w_current)
   GList *connected_objects=NULL;
   OBJECT *new_object = NULL;
   OBJECT *complex_object = NULL;
+  OBJECT *new_objects_head = NULL;
   OBJECT *object;
   int diff_x, diff_y;
   int screen_diff_x, screen_diff_y;
   int lx, ly;
   int sx, sy;
   int color;
+  int redraw_state;
 
   object = o_select_return_first_object(w_current);
 
@@ -135,6 +142,7 @@ o_copy_end(TOPLEVEL *w_current)
   /* skip over head node */
   s_current = w_current->page_current->selection2_head->next;
   temp_list = o_selection_new_head();
+  new_objects_head = s_basic_init_object("object_head");
 
   while(s_current != NULL) {
 
@@ -153,8 +161,7 @@ o_copy_end(TOPLEVEL *w_current)
 	/* connections till much later */
         w_current->ADDING_SEL=1;
         new_object = (OBJECT *) o_net_copy(w_current,
-                                           w_current->page_current->
-                                           object_tail,
+					   return_tail(new_objects_head),
                                            object);
         w_current->ADDING_SEL=0; 
 
@@ -163,9 +170,13 @@ o_copy_end(TOPLEVEL *w_current)
                          screen_diff_x, screen_diff_y,
                          object);
         }
+
+        w_current->ADDING_SEL=1; 
         o_net_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
+        w_current->ADDING_SEL=0; 
+
 
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -183,8 +194,7 @@ o_copy_end(TOPLEVEL *w_current)
 	/* connections till much later */
         w_current->ADDING_SEL=1; 
         new_object = (OBJECT *) o_pin_copy(w_current,
-                                           w_current->page_current->
-                                           object_tail, 
+                                           return_tail(new_objects_head), 
                                            object);
         w_current->ADDING_SEL=0; 
 
@@ -195,9 +205,11 @@ o_copy_end(TOPLEVEL *w_current)
                          object);
         }
 
+        w_current->ADDING_SEL=1; 
         o_pin_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
+        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -215,8 +227,7 @@ o_copy_end(TOPLEVEL *w_current)
 	/* connections till much later */
         w_current->ADDING_SEL=1; 
         new_object = (OBJECT *) o_bus_copy(w_current,
-                                           w_current->page_current->
-                                           object_tail,
+                                           return_tail(new_objects_head),
                                            object);
         w_current->ADDING_SEL=0; 
 
@@ -226,9 +237,11 @@ o_copy_end(TOPLEVEL *w_current)
                          object);
         }
 
+        w_current->ADDING_SEL=1; 
         o_bus_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
+        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -248,13 +261,12 @@ o_copy_end(TOPLEVEL *w_current)
 
           new_object = (OBJECT *) 
             o_complex_copy_embedded(w_current, 
-                                    w_current->page_current->object_tail, 
+				    return_tail(new_objects_head), 
                                     object);
 
         } else {
           new_object = (OBJECT *) o_complex_copy(w_current,
-                                                 w_current-> 
-                                                 page_current->object_tail, 
+                                                 return_tail(new_objects_head), 
                                                  object);
         }
         w_current->ADDING_SEL=0; 
@@ -265,10 +277,13 @@ o_copy_end(TOPLEVEL *w_current)
           o_complex_draw_xor(w_current, screen_diff_x, screen_diff_y,
                              object->complex->prim_objs);
         }
+
+        w_current->ADDING_SEL=1; 
         o_complex_world_translate_toplevel(w_current,
                                            diff_x,
                                            diff_y,
                                            new_object);
+        w_current->ADDING_SEL=0; 
 
         o_selection_add(temp_list, new_object);
 
@@ -287,17 +302,20 @@ o_copy_end(TOPLEVEL *w_current)
 
       case(OBJ_LINE):
         new_object = (OBJECT *) o_line_copy(w_current,
-                                            w_current->page_current->
-                                            object_tail,
+                                            return_tail(new_objects_head),
                                             object);
         if (w_current->actionfeedback_mode == OUTLINE) {
           o_line_draw_xor(w_current,
                           screen_diff_x, screen_diff_y,
                           object);
         }
+
+        w_current->ADDING_SEL=1; 
         o_line_translate_world(w_current,
                                diff_x, diff_y,
                                new_object);
+        w_current->ADDING_SEL=0; 
+
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
         o_line_draw(w_current, new_object);
@@ -305,8 +323,7 @@ o_copy_end(TOPLEVEL *w_current)
 
       case(OBJ_BOX):
         new_object = (OBJECT *) o_box_copy(w_current,
-                                           w_current->page_current->
-                                           object_tail,
+                                           return_tail(new_objects_head),
                                            object);
         if (w_current->actionfeedback_mode == OUTLINE) {
           o_box_draw_xor(w_current,
@@ -314,9 +331,12 @@ o_copy_end(TOPLEVEL *w_current)
                          screen_diff_y,
                          object);
         }
+
+        w_current->ADDING_SEL=1; 
         o_box_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
+        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -327,8 +347,7 @@ o_copy_end(TOPLEVEL *w_current)
 #ifndef HAS_GTK12
       case(OBJ_PICTURE):
         new_object = (OBJECT *) o_picture_copy(w_current,
-					       w_current->page_current->
-					       object_tail,
+					       return_tail(new_objects_head),
 					       object);
         if (w_current->actionfeedback_mode == OUTLINE) {
           o_picture_draw_xor(w_current,
@@ -336,9 +355,12 @@ o_copy_end(TOPLEVEL *w_current)
 			     screen_diff_y,
 			     object);
         }
+
+        w_current->ADDING_SEL=1; 
         o_picture_translate_world(w_current,
 				  diff_x, diff_y,
 				  new_object);
+        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -348,8 +370,7 @@ o_copy_end(TOPLEVEL *w_current)
 #endif
       case(OBJ_CIRCLE):
         new_object = (OBJECT *) o_circle_copy(w_current,
-                                              w_current->page_current->
-                                              object_tail,
+                                              return_tail(new_objects_head),
                                               object);
 
         if (w_current->actionfeedback_mode == OUTLINE) {
@@ -358,9 +379,12 @@ o_copy_end(TOPLEVEL *w_current)
                             screen_diff_y,
                             object);
         }
+
+        w_current->ADDING_SEL=1; 
         o_circle_translate_world(w_current,
                                  diff_x, diff_y,
                                  new_object);
+        w_current->ADDING_SEL=0; 
 
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -369,8 +393,7 @@ o_copy_end(TOPLEVEL *w_current)
 
       case(OBJ_ARC):
         new_object = (OBJECT *) o_arc_copy(w_current,
-                                           w_current->page_current->
-                                           object_tail, 
+					   return_tail(new_objects_head), 
                                            object);
 
         if (w_current->actionfeedback_mode == OUTLINE) {
@@ -379,9 +402,12 @@ o_copy_end(TOPLEVEL *w_current)
                          screen_diff_y,
                          object);
         }
+
+        w_current->ADDING_SEL=1; 
         o_arc_translate_world(w_current,
                               diff_x, diff_y,
                               new_object);
+        w_current->ADDING_SEL=0; 
         
         o_selection_add(temp_list, new_object);
         new_object->saved_color = object->saved_color;
@@ -409,24 +435,18 @@ o_copy_end(TOPLEVEL *w_current)
     switch(object->type) {
 
       case(OBJ_TEXT):
+        w_current->ADDING_SEL=1; 
         new_object = (OBJECT *) o_text_copy(w_current,
-                                            w_current->page_current->
-                                            object_tail,
+                                            return_tail(new_objects_head),
                                             object);
+        w_current->ADDING_SEL=0; 
 
 	/* this is also okay NEWSEL new_obj is single */
         if (object->attached_to) {
           if (object->attached_to->copied_to) {
-            o_attrib_attach(w_current, w_current-> page_current-> object_head,
+            o_attrib_attach(w_current, new_objects_head,
                             new_object, object->attached_to-> copied_to);
-
-            if (scm_hook_empty_p(copy_component_hook) == SCM_BOOL_F) {
-              scm_run_hook(copy_component_hook,
-                           scm_cons (g_make_attrib_smob_list(w_current,
-                                                             complex_object),
-                                     SCM_EOL));
-            }
-
+	    	    
             /* TODO: I have no idea if this is
                really needed.... ? */
 #if 0
@@ -439,14 +459,17 @@ o_copy_end(TOPLEVEL *w_current)
             object->attached_to->copied_to = NULL;
           }
         }
-
+	
         if (w_current->actionfeedback_mode == OUTLINE) {
           o_text_draw_xor(w_current,
                           screen_diff_x,
                           screen_diff_y,
                           object);
-        }
+			  }
+
+        w_current->ADDING_SEL=1; 
         o_text_translate_world(w_current, diff_x, diff_y, new_object);
+        w_current->ADDING_SEL=0; 
 
 				/* old object was attr */
         if (!new_object->attribute && 
@@ -463,7 +486,7 @@ o_copy_end(TOPLEVEL *w_current)
         new_object->saved_color = color;
         
 	/* signify that object is no longer an attribute */
-        o_text_draw(w_current, new_object);
+	o_text_draw(w_current, new_object);
 
         o_complex_set_saved_color_only(
                                        new_object->text->prim_objs, 
@@ -476,6 +499,42 @@ o_copy_end(TOPLEVEL *w_current)
                              object_head);
     s_current = s_current->next;
   }
+
+  /* Go back to the state before copying, to restore possible rotations
+     of the selection */
+  redraw_state = w_current->DONT_REDRAW;
+  w_current->DONT_REDRAW = 0;
+  o_undo_callback(w_current, UNDO_ACTION);
+  w_current->DONT_REDRAW = redraw_state;
+
+  /* Add the new objects */
+  w_current->page_current->object_tail = (OBJECT *)
+  return_tail(w_current->page_current->object_head);
+
+  s_basic_link_object(new_objects_head, w_current->page_current->object_tail);
+
+  /* Run the copy component hook */
+  object = new_objects_head->next;
+  while (object != NULL) {
+    if ((object->type == OBJ_COMPLEX) &&
+	(scm_hook_empty_p(copy_component_hook) == SCM_BOOL_F)) {
+      scm_run_hook(copy_component_hook,
+		   scm_cons (g_make_attrib_smob_list(w_current, object),
+		   SCM_EOL));
+    }
+    object = object->next;
+  }
+  
+  /* And redraw them */
+  object = new_objects_head;
+  while (object) {
+    o_redraw_single(w_current, object);
+    object=object->next;
+  }
+  
+  /* Delete the new object head */
+  /*  new_objects_head->next = NULL;
+      s_delete_list_fromstart(w_current, new_objects_head); */
 
   w_current->page_current->object_tail = (OBJECT *)
   return_tail(w_current->page_current->object_head);
@@ -494,7 +553,6 @@ o_copy_end(TOPLEVEL *w_current)
   w_current->page_current->selection2_head = temp_list;
   w_current->page_current->selection2_tail = o_selection_return_tail(
                                                                      temp_list);
-
 #if DEBUG
   o_selection_print_all(w_current->page_current->selection2_head);
 #endif

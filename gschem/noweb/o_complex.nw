@@ -85,7 +85,9 @@ o_complex_draw(TOPLEVEL *w_current, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  o_redraw(w_current, o_current->complex->prim_objs);
+  if (!w_current->DONT_REDRAW) {
+    o_redraw(w_current, o_current->complex->prim_objs);
+  }
 
   get_complex_bounds(w_current, o_current->complex->prim_objs,
                      &left, &top, &right, &bottom);

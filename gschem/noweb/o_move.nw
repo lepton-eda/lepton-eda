@@ -74,6 +74,9 @@ void o_move_start(TOPLEVEL * w_current, int x, int y)
 {
   if (w_current->page_current->selection2_head->next != NULL) {
 
+    /* Save the current state. When rotating the selection when moving,
+       we have to come back to here */
+    o_undo_savestate(w_current, UNDO_ALL);
     w_current->last_drawb_mode = -1;
     w_current->event_state = MOVE;
 
@@ -322,6 +325,9 @@ void o_move_end(TOPLEVEL * w_current)
 
     s_current = s_current->next;
   }
+
+  /* Remove the undo saved in o_move_start */
+  o_undo_remove_last_undo(w_current);
 
   /* erase the bounding box */
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
