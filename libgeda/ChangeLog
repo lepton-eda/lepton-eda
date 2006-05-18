@@ -1,3 +1,19 @@
+2006-05-17  Mike Jarabek  <mjarabek@istop.com>
+
+	* Makefile.am, configure.ac
+	  Added share directory and rule to support share directory.
+	* include/i_vars.h, include/prototype.h, include/struct.h
+	  Added struct variable to contain name of PostScript prolog file
+	  and changes to function prototypes.
+	* noweb/f_print.nw
+	  New PostScript output functions.  Unicode support.
+	* noweb/g_rc.nw, noweb/g_register.nw, i_vars.nw
+	  New RC command to set the PostScript prolog file.
+	* noweb/o_*.nw, noweb/s_cue.nw
+	  New PostScript output changes. Output code now 50% smaller
+	* share/Makefile.am
+	  New makefile to install prolog.
+
 2006-05-17 Carlos Nieves Onega <cnieves@iespana.es>
         * include/struct.h: Added variable which controls if the user
 	  can move objects just dragging them.

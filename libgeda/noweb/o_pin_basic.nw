@@ -558,6 +558,10 @@ void
 o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
 	int origin_x, int origin_y)
 {
+  int pin_width;
+  int x1, y1;
+  int x2, y2;
+  
   if (o_current == NULL) {
     printf("got null in o_pin_print\n");
     return;
@@ -567,22 +571,17 @@ o_pin_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     f_print_set_color(fp, o_current->color);
   }
 
-  fprintf(fp, "newpath\n");
-  if (w_current->pin_style == THICK) {
-    fprintf(fp, "%d mils setlinewidth\n", PIN_WIDTH);
+  x1 = o_current->line->x[0] - origin_x;
+  y1 = o_current->line->y[0] - origin_y;
+  x2 = o_current->line->x[1] - origin_x;
+  y2 = o_current->line->y[1] - origin_y;
+  pin_width = 2;
+  if(w_current->pin_style == THICK) {
+    pin_width = PIN_WIDTH;
   }
-  fprintf(fp, "%d mils %d mils moveto\n", 
-          o_current->line->x[0]-origin_x,
-          o_current->line->y[0]-origin_y);
-  fprintf(fp, "%d mils %d mils lineto\n",
-          o_current->line->x[1]-origin_x,
-          o_current->line->y[1]-origin_y);
-  fprintf(fp, "stroke\n");
 
-  /* why is this done? */
-  if (w_current->pin_style == THICK) {
-    fprintf(fp, "1 setlinewidth\n");
-  }
+  fprintf(fp, "%d %d %d %d %d line\n",x1,y1,x2,y2,pin_width);
+  
 }
 
 

@@ -141,6 +141,17 @@
 ;
 (bitmap-directory "${GEDADATA}@PATHSEP@bitmap")
 
+
+; postscript-prolog
+;
+;  Sets the name of the postscript prolog file that will be 
+; pasted into the postscript output after the DSC comments, but
+; before the main script.
+(postscript-prolog "${GEDADATA}@PATHSEP@prolog.ps")
+
+
+
+
 ;
 ; End of path related keywords
 ;

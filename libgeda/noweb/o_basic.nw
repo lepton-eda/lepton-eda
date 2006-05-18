@@ -215,6 +215,9 @@ o_set_line_options(TOPLEVEL *w_current, OBJECT *o_current,
       s_log_message ("Invalid space specified, setting to 100\n");
     }
     break;
+    default:
+    
+    break;
   }
   
   o_current->line_width = width;

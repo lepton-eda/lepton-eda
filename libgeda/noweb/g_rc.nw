@@ -32,6 +32,7 @@
 <<g_rc.c : g_rc_scheme_directory()>>
 <<g_rc.c : g_rc_bitmap_directory()>>
 <<g_rc.c : g_rc_bus_ripper_symname()>>
+<<g_rc.c : g_rc_postscript_prolog()>>
 
 <<g_rc.c : g_rc_reset_component_library()>>
 <<g_rc.c : g_rc_reset_source_library()>>
@@ -933,7 +934,39 @@ g_rc_bus_ripper_symname(SCM scmsymname)
 }
 
 
-@ %def g_rc_bus_ripper_symname
+@ %def g_rc_postscript_prolog
+
+/* ----------------------------------------------------------- */
+@section Function @code{g_rc_postscript_prolog()}
+Sets the default name for the PostScript prolog file to be included in
+the generated postscript output.
+@defun g_rc_postscript_prolog file
+@end defun
+
+<<g_rc.c : g_rc_postscript_prolog()>>=
+SCM
+g_rc_postscript_prolog(SCM scmsymname)
+{
+  char *string;
+  
+  SCM_ASSERT (SCM_NIMP (scmsymname) && SCM_STRINGP (scmsymname), scmsymname,
+              SCM_ARG1, "postsript-prolog");
+
+  if (default_postscript_prolog) {
+    free (default_postscript_prolog);
+  }
+
+  string = g_strdup (SCM_STRING_CHARS (scmsymname));
+  /* take care of any shell variables */
+  string = expand_env_variables(string);
+
+  default_postscript_prolog = g_strdup (string);
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_postscript_prolog
 
 
 /* ----------------------------------------------------------- */

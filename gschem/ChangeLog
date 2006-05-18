@@ -1,3 +1,10 @@
+2006-05-17  Mike Jarabek  <mjarabek@istop.com>
+
+	* examples/drawing_primitives.sch
+	  Added example file with a sample of each drawing primitive
+	* examples/Makefile.am
+	  Added target to distribute drawing primitive schematic
+
 2006-05-17 Carlos Nieves Onega <cnieves@iespana.es>
 	* include/i_vars.h, include/prototype.h, lib/system-gschemrc.in,
 	  noweb/i_vars.nw, noweb/o_find.nw:

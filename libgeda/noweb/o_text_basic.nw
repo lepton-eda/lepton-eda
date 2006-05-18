@@ -766,7 +766,7 @@ o_text_create_string(TOPLEVEL *w_current, OBJECT *object_list,
       
       /* Ignore escape characters */
       if ( ((c == '\\') && (previous_char != '\\')) ||
-	   (c == '\\') && (escapes_counter == 1) )
+	   ((c == '\\') && (escapes_counter == 1)) )
 	continue;
 
       if (c != '\n' && c != '\t') {
@@ -1767,29 +1767,45 @@ o_text_print_text_height_full(FILE *fp, char *string, int size)
 
 <<o_text_basic.c : o_text_print_text_string()>>=
 void
-o_text_print_text_string(FILE *fp, char *string)
+o_text_print_text_string(FILE *fp, char *string, int unicode_count, 
+			 gunichar *unicode_table)
 {
-  int len, i; 
+  int len, j;
+  gchar *aux;
+  gunichar current_char, c;
 
   if (!string)
   {
     return;
   }
-  
-  len = strlen(string);
+
+  aux = string;
+  len = g_utf8_strlen(string, -1);
   
   fprintf(fp, "(");
-  for (i = 0 ; i < len; i++)
-  {  
-    if (string[i] == '(' || string[i] == ')' || string[i] == '\\' )
-    {
+
+  while (aux && ((gunichar) (*aux) != 0)) {
+    current_char = g_utf8_get_char_validated(aux, -1);
+    if (current_char == '(' || current_char == ')' || current_char == '\\') {
       fprintf(fp, "\\");
     }
-
-    fprintf(fp, "%c", string[i]);  
-  }
   
-  fprintf(fp, ") show\n");
+    c = current_char;
+    if (c >= 128) {
+      current_char = '?';
+      if (unicode_count)  {
+        for (j = 0; j < unicode_count; j++)
+          if (c == unicode_table[j]) {
+	    current_char = j + 128;
+            break;
+          }
+      }
+    }
+    fprintf(fp, "%c", current_char);
+    aux = g_utf8_find_next_char(aux, NULL);
+  }
+
+  fprintf(fp,") ");
 }
 
 
@@ -1805,18 +1821,16 @@ o_text_print_text_string(FILE *fp, char *string)
 <<o_text_basic.c : o_text_print()>>=
 void
 o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, 
-             int origin_x, int origin_y)
+             int origin_x, int origin_y, 
+	     int unicode_count, gunichar *unicode_table)
 {
+  char *centering_control = NULL;
+  char *p,*s;
   char *output_string = NULL;
   char *name = NULL;
   char *value = NULL;
-  int sign=1;
-  int len;
-  int i, j;
-  int x, y;
-  int num_lines, line_number, starting_character;
-  int full_text_height;
-  char *single_line = NULL;
+  int x, y, angle, len, char_height;
+  float font_size;
 
   if (!o_current->text->string) {
     return;
@@ -1826,12 +1840,6 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     f_print_set_color(fp, o_current->color);
   }
 
-  fprintf(fp, "/Helvetica findfont\n");
-  fprintf(fp, "%f scalefont\n", (float) o_current->text->size*1.4);
-  fprintf(fp, "setfont\n");
-  fprintf(fp, "\n");
-
-  /* fprintf(fp, "newpath\n");*/
 
   if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
     switch(o_current->show_name_value) {
@@ -1867,359 +1875,62 @@ o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
     output_string = g_strdup(o_current->text->string);
   }
 
-  switch(o_current->text->angle) {
-    case(0):
-    sign = -1;
+
+  /* Create an appropriate control string for the centering. */
+  switch(o_current->text->alignment) {
+                                       /* hcenter rjustify vcenter vjustify */
+  case(LOWER_LEFT):    centering_control = "false false false false";
     break;
-    case(90):
-    sign = 1;
+  case(MIDDLE_LEFT):   centering_control = "false false true false";
     break;
-    case(180):
-    sign = 1;
+  case(UPPER_LEFT):    centering_control = "false false false true";
     break;
-    case(270):
-    sign = -1;
+  case(LOWER_MIDDLE):  centering_control = "true false false false";
+    break;
+  case(MIDDLE_MIDDLE): centering_control = "true false true false";
+    break;
+  case(UPPER_MIDDLE):  centering_control = "true false false true";
+    break;
+  case(LOWER_RIGHT):   centering_control = "false true false false";
+    break;
+  case(MIDDLE_RIGHT):  centering_control = "false true true false";
+    break;
+  case(UPPER_RIGHT):   centering_control = "false true false true";
     break;
   }
 
-  full_text_height = o_text_height(output_string, o_current->text->size); 
-  num_lines = o_text_num_lines(output_string);
+  char_height = o_text_height("a", o_current->text->size);
+  fprintf(fp,"%s %f [",centering_control,(float)(char_height*LINE_SPACING));
 
+  /* split the line at each newline and print them */
+  p = output_string;   /* Current point */
+  s = output_string;   /* Start of the current string */
+  len = strlen(output_string)+1;
+  while(len != 0) {
+    /* Have we reached the end of a line? */
+    if((*p == '\n') || (*p == '\0')) {
+      /* Yes, replace the newline with a NULL and output the string */
+      *p = '\0';
+      o_text_print_text_string(fp,s,unicode_count,unicode_table);
+      /* Update output string start for next string */
+      s = p+1; /* One past the current character. */
+    }
+    p++;   /* Advance to next character */
+    len--; /* Keep track of how many characters left to process */
+  }
+
+  /* Finish up with the rest of the text print command */
+  /* Collect pertinent info about the text location */
   x = o_current->text->x;
   y = o_current->text->y;
-  if (o_current->text->angle == 0 || o_current->text->angle == 180 ) {
+  angle = o_current->text->angle; 
+  font_size = (float) o_current->text->size/72.0*1000.0;
+  fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
-    /* not quite sure about the second part of next statement. */
-    /* full_text_height should take the spacing into account, but it doesn't */
-    y = y - o_text_height("a", o_current->text->size) + full_text_height +
-      (num_lines-1)*o_current->text->size*LINE_SPACING;
-    
-    switch(o_current->text->alignment) {
-      case(LOWER_LEFT):
-        fprintf(fp, "%d mils %d mils moveto\n", x, y);
-        /*				x_offset = x; */
-        /*				y_offset = y; */
-        break;
-
-      case(MIDDLE_LEFT):
-        fprintf(fp, "%d mils %d mils\n", x, y);
-        o_text_print_text_height_full(fp, output_string,
-                                       o_current->text->size);
-        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-        fprintf(fp, ".5 mul %d mul add moveto\n", sign);
-        /*				x_offset = x; */
-        /*				y_offset = y + sign*0.5*text_height; */
-        break;
-
-      case(UPPER_LEFT):
-        fprintf(fp, "%d mils %d mils\n", x, y);
-        o_text_print_text_height_full(fp, output_string,
-                                      o_current->text->size);
-        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-        fprintf(fp, "%d mul add moveto\n", sign);
-        /*				x_offset = x; */
-        /*				y_offset = y + sign*text_height; */
-        break;
-
-      case(LOWER_MIDDLE):
-        fprintf(fp, "%d mils ", x);
-
-        o_text_print_text_width(fp, output_string);
-        fprintf(fp, ".5 mul %d mul add\n", sign);
-        fprintf(fp, "%d mils\n", y);
-        fprintf(fp, "moveto\n");
-        /*				x_offset = x + sign*0.5*text_width; */
-        /*				y_offset = y; */
-        break;
-
-      case(MIDDLE_MIDDLE):
-        fprintf(fp, "%d mils ", x);
-
-        o_text_print_text_width(fp, output_string);
-        fprintf(fp, ".5 mul %d mul add\n", sign);
-        fprintf(fp, "%d mils\n", y);
-        o_text_print_text_height_full(fp, output_string,
-                                      o_current->text->size);
-        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-        fprintf(fp, ".5 mul %d mul add moveto\n", sign);
-        /*				x_offset = x + sign*0.5*text_width; */
-        /*				y_offset = y + sign*0.5*text_height; */
-        break;
-
-      case(UPPER_MIDDLE):
-        fprintf(fp, "%d mils ", x);
-
-        o_text_print_text_width(fp, output_string);
-        fprintf(fp, ".5 mul %d mul add\n", sign);
-        fprintf(fp, "%d mils\n", y);
-        o_text_print_text_height_full(fp, output_string,
-                                      o_current->text->size);
-        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-        fprintf(fp, "%d mul add moveto\n", sign);
-        /*				x_offset = x + sign*0.5*text_width; */
-        /*				y_offset = y + sign*text_height; */
-        break;
-
-      case(LOWER_RIGHT):
-        fprintf(fp, "%d mils ", x);
-
-        o_text_print_text_width(fp, output_string);
-        fprintf(fp, "%d mul add\n", sign);
-        fprintf(fp, "%d mils\n", y);
-        fprintf(fp, "moveto\n");
-        /*				x_offset = x + sign*text_width; */
-        /*				y_offset = y; */
-        break;
-
-      case(MIDDLE_RIGHT):
-        fprintf(fp, "%d mils ", x);
-
-        o_text_print_text_width(fp, output_string);
-        fprintf(fp, "%d mul add\n", sign);
-        fprintf(fp, "%d mils\n", y);
-        o_text_print_text_height_full(fp, output_string,
-                                      o_current->text->size);
-        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-        fprintf(fp, ".5 mul %d mul add moveto\n", sign);
-        /*				x_offset = x + sign*text_width; */
-        /*				y_offset = y + sign*0.5*text_height; */
-        break;
-
-      case(UPPER_RIGHT):
-        fprintf(fp, "%d mils ", x);
-
-        o_text_print_text_width(fp, output_string);
-        fprintf(fp, "%d mul add\n", sign);
-        fprintf(fp, "%d mils\n", y);
-        o_text_print_text_height_full(fp, output_string,
-                                      o_current->text->size);
-        fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-        fprintf(fp, "%d mul add moveto\n", sign);
-        /*				x_offset = x + sign*text_width; */
-        /*				y_offset = y + sign*text_height; */
-        break;
-    }
-
-  } else if (o_current->text->angle == 90 || o_current->text->angle == 270) {
-
-    /* not quite sure about the second part of next statement. */
-    /* full_text_height should take the spacing into account, but it doesn't */
-    x = x + sign*(o_text_height("a", o_current->text->size) -
-                  full_text_height - (num_lines-1)*o_current->text->size*LINE_SPACING);
-
-    switch(o_current->text->alignment) {
-
-      case(LOWER_LEFT):
-      fprintf(fp, "%d mils %d mils moveto\n", x, y);
-      /*				x_offset = x; */
-      /*				y_offset = y; */
-      break;
-		
-      case(MIDDLE_LEFT):
-      fprintf(fp, "%d mils\n", x); 
-						
-      o_text_print_text_height_full(fp, output_string, o_current->text->size);
-      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-      fprintf(fp, ".5 mul %d mul add\n", sign);
-      fprintf(fp, "%d mils moveto\n", y);
-      /*				x_offset = x + sign*0.5*text_height; */
-      /*				y_offset = y; */
-      break;
-	
-      case(UPPER_LEFT):
-      fprintf(fp, "%d mils\n", x); 
-						
-      o_text_print_text_height_full(fp, output_string, o_current->text->size);
-      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-      fprintf(fp, "%d mul add\n", sign);
-      fprintf(fp, "%d mils moveto\n", y);
-      /*				x_offset = x + sign*text_height; */
-      /*				y_offset = y; */
-      break;
-	
-      case(LOWER_MIDDLE):
-      fprintf(fp, "%d mils\n", x);
-      fprintf(fp, "%d mils\n", y);
-      o_text_print_text_width(fp, output_string);
-      fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
-      /*				x_offset = x; */
-      /*				y_offset = y - sign*0.5*text_width; */
-      break;
-	
-      case(MIDDLE_MIDDLE):
-      fprintf(fp, "%d mils\n", x);
-      o_text_print_text_height_full(fp, output_string, o_current->text->size);
-      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-      fprintf(fp, "0.5 mul %d mul add\n", sign);
-      fprintf(fp, "%d mils\n", y);
-      o_text_print_text_width(fp, output_string);
-      fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
-      /*				x_offset = x + sign*0.5*text_height; */
-      /*				y_offset = y - sign*0.5*text_width; */
-      break;
-	
-      case(UPPER_MIDDLE):
-      fprintf(fp, "%d mils\n", x);
-      o_text_print_text_height_full(fp, output_string, o_current->text->size);
-      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-      fprintf(fp, "%d mul add\n", sign);
-      fprintf(fp, "%d mils\n", y);
-      o_text_print_text_width(fp, output_string);
-      fprintf(fp, "0.5 mul %d mul sub moveto\n", sign);
-      /*				x_offset = x + sign*text_height; */
-      /*				y_offset = y - sign*0.5*text_width; */
-	
-      break;
-	
-      case(LOWER_RIGHT):
-      fprintf(fp, "%d mils\n", x);
-      fprintf(fp, "%d mils\n", y);
-      o_text_print_text_width(fp, output_string);
-      fprintf(fp, "%d mul sub moveto\n", sign);
-      /*				x_offset = x; */
-      /*				y_offset = y - sign*text_width; */
-      break;
-	
-      case(MIDDLE_RIGHT):
-      fprintf(fp, "%d mils\n", x);
-      o_text_print_text_height_full(fp, output_string, o_current->text->size);
-      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-      fprintf(fp, "0.5 mul %d mul add\n", sign);
-      fprintf(fp, "%d mils\n", y);
-      o_text_print_text_width(fp, output_string);
-      fprintf(fp, "%d mul sub moveto\n", sign);
-      /*				x_offset = x + sign*0.5*text_height; */
-      /*				y_offset = y - sign*text_width; */
-      break;
-	
-      case(UPPER_RIGHT):
-      fprintf(fp, "%d mils\n", x);
-      o_text_print_text_height_full(fp, output_string, o_current->text->size);
-      fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-      fprintf(fp, "%d mul add\n", sign);
-      fprintf(fp, "%d mils\n", y);
-      o_text_print_text_width(fp, output_string);
-      fprintf(fp, "%d mul sub moveto\n", sign);
-      /*				x_offset = x + sign*text_height; */
-      /*				y_offset = y - sign*text_width; */
-      break;
-    }
-
-  } 
-
-  /* correct 180 degree rotated text so it is in the right position */
-  if (o_current->text->angle == 180)
-  {
-    o_text_print_text_width(fp, output_string); 
-    fprintf(fp, "-1.0 mul\n"); /* x distance back */
-    o_text_print_text_height_full(fp, output_string, o_current->text->size);
-    fprintf(fp, ".714285 mul\n"); /* height adjustment factor */
-    fprintf(fp, "-1.0 mul\n"); /* y distance down */
-    fprintf(fp, "rmoveto\n");
-  }
-  
-  starting_character = 0;
-  single_line = g_strdup (output_string);  /* larger than needed */
-  len = strlen(output_string);
-  for (line_number = 0; line_number < num_lines; line_number++)
-  {
-
-    j = 0;
-    /* break up the string into lines */
-    for (i = starting_character; i < len; i++)
-    {
-      if (output_string[i] != '\n' && output_string[i] != '\0')
-      {
-        single_line[j] = output_string[i];
-      }
-      else
-      {
-        starting_character = i + 1;
-        break;
-      }
-      j++;
-    }
-    single_line[j] = '\0';
-
-    /* Push the current position onto the stack */
-    fprintf(fp, "currentpoint\n");
-
-    if (o_current->text->angle == 90 || o_current->text->angle == 270) {
-      fprintf(fp, "gsave\n%d rotate\n", o_current->text->angle); 
-    }
-    
-    /* output the single line */
-    o_text_print_text_string(fp, single_line);
-
-    if (o_current->text->angle == 90 || o_current->text->angle == 270) {
-      fprintf(fp, "grestore\n"); 
-    }
-
-    /* Correct the position on the stack to go to the next line */
-    if (line_number != num_lines - 1)
-    {
-      /* only do this if there are more text lines to output */
-
-      switch (o_current->text->angle) {
-        
-        case 0:
-          /* stack: x y */
-          o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "-1 mul %f mul add moveto\n", LINE_SPACING);
-          /* stack: empty */
-
-          /* x = line_start_x; */          
-          /* y = line_start_y - char_height * 2; */
-          break;
-
-        case 90:
-          fprintf(fp, "exch\n"); /* stack: y x */
-          o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "%f mul add exch moveto\n", LINE_SPACING);
-          /* stack: empty */
-          /* x = line_start_x + char_height * 2; */
-          /* y = line_start_y; */
-          break;
-          
-        case 180:
-          /* stack: x y */
-          o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "%f mul sub moveto\n", LINE_SPACING);
-          /* stack: empty */
-
-          /* x = line_start_x; */
-          /* y = line_start_y + char_height * 2; */
-          break;
-
-
-        case 270:
-          fprintf(fp, "exch\n"); /* stack: y x */
-          o_text_print_text_height(fp, o_current->text->size);
-          fprintf(fp, "%f mul sub exch moveto\n", LINE_SPACING);
-          /* stack: empty */
-          
-          /* x = line_start_x - char_height * 2; */
-          /* y = line_start_y; */
-          break;
-          
-        default:
-          fprintf(stderr, "o_text_create_string: Angle not supported\n");
-          break;
-      }            
-      
-    }
-    else
-    {
-      /* get rid of the last unused current point */
-      fprintf(fp, "pop pop\n");
-
-    }
-  }
   
   if (output_string) free(output_string);
   if (name) free(name);
   if (value) free(value);
-  if (single_line) free(single_line);
 }
 
 

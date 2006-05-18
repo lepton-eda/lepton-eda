@@ -85,8 +85,9 @@
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
+#define DEFAULT_POSTSCRIPT_PROLOG  "prolog.ps"
 
-@ %def INIT_STR DEFAULT_SERIES_NAME DEFAULT_UNTITLED_NAME DEFAULT_SCHEME_DIRECTORY DEFAULT_FONT_DIRECTORY DEFAULT_BITMAP_DIRECTORY
+@ %def INIT_STR DEFAULT_SERIES_NAME DEFAULT_UNTITLED_NAME DEFAULT_SCHEME_DIRECTORY DEFAULT_FONT_DIRECTORY DEFAULT_BITMAP_DIRECTORY DEFAULT_POSTSCRIPT_PROLOG
 
 
 
@@ -99,7 +100,7 @@ char *default_font_directory = NULL;
 char *default_scheme_directory = NULL;
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
-
+char *default_postscript_prolog = NULL;
 
 @ %def default_init_right default_init_bottom
 
@@ -125,6 +126,7 @@ i_vars_libgeda_set(TOPLEVEL *w_current)
   INIT_STR(w_current, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
   INIT_STR(w_current, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
   INIT_STR(w_current, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
+  INIT_STR(w_current, postscript_prolog,  DEFAULT_POSTSCRIPT_PROLOG);
 }
 
 @ %def i_vars_libgeda_set
@@ -165,6 +167,7 @@ i_vars_freenames()
   free(default_scheme_directory);
   free(default_bitmap_directory);
   free(default_bus_ripper_symname);
+  free(default_postscript_prolog);
 }
 
 

@@ -1013,6 +1013,7 @@ In the eventuality of a length and/or space null, the line is printed solid to a
 
 <<o_box_print() : printing outline>>=
 line_width = o_current->line_width;
+if(line_width <=2) line_width=2;
 length = o_current->line_length;
 space  = o_current->line_space;
 
@@ -1144,12 +1145,9 @@ o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, line_width);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -1174,8 +1172,6 @@ o_box_print_solid(TOPLEVEL *w_current, FILE *fp,
                      color,
                      line_width, length, space,
                      origin_x, origin_y);
-  fprintf(fp, "grestore\n");
-	
 }
 
 @ %def o_box_print_solid
@@ -1206,12 +1202,9 @@ o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, line_width);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -1236,8 +1229,6 @@ o_box_print_dotted(TOPLEVEL *w_current, FILE *fp,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  fprintf(fp, "grestore\n");
-	
 }
 
 @ %def o_box_print_dotted
@@ -1267,13 +1258,11 @@ o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
 
-  f_print_set_line_width(fp, line_width);
-
+  
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
 
@@ -1297,8 +1286,6 @@ o_box_print_dashed(TOPLEVEL *w_current, FILE *fp,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  fprintf(fp, "grestore\n");
-	
 }
 
 @ %def o_box_print_dashed
@@ -1328,12 +1315,9 @@ o_box_print_center(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, line_width);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -1358,7 +1342,6 @@ o_box_print_center(TOPLEVEL *w_current, FILE *fp,
                       color,
                       line_width, length, space,
                       origin_x, origin_y);
-  fprintf(fp, "grestore\n");
 
 }
 
@@ -1389,12 +1372,9 @@ o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, line_width);
 
   x1 = x;
   y1 = y - height; /* move the origin to 0, 0*/
@@ -1419,7 +1399,6 @@ o_box_print_phantom(TOPLEVEL *w_current, FILE *fp,
                        color,
                        line_width, length, space,
                        origin_x, origin_y);
-  fprintf(fp, "grestore\n");
 }
 
 @ %def o_box_print_phantom
@@ -1437,7 +1416,7 @@ are ignored in this functions but kept for compatibility with other fill
 functions.
 @end defun
 
-It uses the fbox postscript function defined in the file @file{f_print.c} to 
+It uses the fbox postscript function defined in the prolog to 
 specify a filled box.
 
 All dimensions are in mils.
@@ -1455,21 +1434,16 @@ o_box_print_filled(TOPLEVEL *w_current, FILE *fp,
 {
   int x1, y1;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
 
-  f_print_set_line_width(fp, 1);
-
   x1 = x;
   y1 = y-height; /* move the origin to 0, 0*/
-
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils moveto\n", x1-origin_x, y1-origin_y);
-  fprintf(fp, "%d mils %d mils fbox\n", width, height);
-  fprintf(fp, "grestore\n");
-
+  fprintf(fp, "%d %d %d %d fbox\n",
+	  width, height,
+	  x1-origin_x, y1-origin_y);
+	  
 }
 
 @ %def o_box_print_filled
@@ -1545,13 +1519,13 @@ o_box_print_hatch(TOPLEVEL *w_current, FILE *fp,
   double x1, y1, x2, y2;
   double amin, amax, a[4], min1, min2, max1, max2;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
 
-  f_print_set_line_width(fp, fill_width);	
- 	
+  /* Avoid printing line widths too small */
+  if (fill_width <= 1) fill_width = 2;
+
 @ %def o_box_print_hatch	
 
 The cosinus and sinus of [[angle1]] are computed once and reused later.
@@ -1569,8 +1543,6 @@ The function considers the smallest circle around the box. Its radius is given b
 
   <<o_box_print_hatch() : calculating and printing the lines>>
 
-  fprintf(fp, "grestore\n");
-	
 }
 @ 
 
@@ -1647,20 +1619,15 @@ If there is no intersection of the segment with any of the sides, then there is 
 			x4 = (int) (x1 + amax*(x2 - x1));
 			y4 = (int) (y1 + amax*(y2 - y1));
 
-			fprintf(fp, "newpath\n");
-			fprintf(fp, "%d mils %d mils moveto\n",
-  					x3 + (x + width/2), y3 + (y - height/2));
-			fprintf(fp, "%d mils %d mils lineto\n",
-  					x4 + (x + width/2), y4 + (y - height/2));
+			fprintf(fp,"%d %d %d %d %d line\n",
+				x3 + (x + width/2), y3 + (y - height/2),
+				x4 + (x + width/2), y4 + (y - height/2),
+				fill_width);
 
-			fprintf(fp, "stroke\n");
-
-			fprintf(fp, "newpath\n");
-			fprintf(fp, "%d mils %d mils moveto\n",
-					-x3 + (x + width/2), -y3 + (y - height/2));
-			fprintf(fp, "%d mils %d mils lineto\n",
-					-x4 + (x + width/2), -y4 + (y - height/2));
-			fprintf(fp, "stroke\n");
+			fprintf(fp,"%d %d %d %d %d line\n",
+				-x3 + (x + width/2), -y3 + (y - height/2),
+				-x4 + (x + width/2), -y4 + (y - height/2),
+				fill_width);
 			
 		} else {
 			break;

@@ -906,6 +906,7 @@ In the eventuality of a length and/or space null, the arc is printed solid to av
   }
 #endif
   arc_width = o_current->line_width;	/* Added instead of above */
+  if (arc_width <= 2) arc_width = 2;
   length = o_current->line_length;
   space  = o_current->line_space;
 	
@@ -971,7 +972,6 @@ o_arc_print_solid(TOPLEVEL *w_current, FILE *fp,
                   int arc_width, int length, int space,
                   int origin_x, int origin_y)
 {
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
@@ -981,16 +981,11 @@ o_arc_print_solid(TOPLEVEL *w_current, FILE *fp,
     angle1 = angle1 + angle2;
     angle2 = -angle2;
   }
-	
-  f_print_set_line_width(fp, arc_width);
 
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x, y);
-  fprintf(fp, "%d mils\n", radius);
-  fprintf(fp, "%d %d arc\n", angle1, angle1 + angle2);
-  fprintf(fp, "stroke\n");
+  fprintf(fp, "%d %d %d %d %d %d darc\n",
+	  x,y, radius, angle1, angle1 + angle2,
+	  arc_width);
 
-  fprintf(fp, "grestore\n");
 }
 
 @ %def o_arc_print_solid
@@ -1019,17 +1014,12 @@ o_arc_print_dotted(TOPLEVEL *w_current, FILE *fp,
                    int arc_width, int length, int space,
                    int origin_x, int origin_y)
 {
-  double xa, ya;
   int da, d;
 
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  /* PB : is the width relevant for a dot (circle) ? */	
-  f_print_set_line_width(fp, arc_width);
 
 @ %def o_arc_print_dotted
 
@@ -1058,18 +1048,21 @@ As [[da]] is rounded as an integer, it can take a null value which will make the
     return;
   }
 
+  fprintf(fp,"[");
   d = angle1;
   while (d < (angle2 + angle1)) {
-    xa = ((double) x) + ((double) radius) * cos(d * M_PI / 180);
+    /*xa = ((double) x) + ((double) radius) * cos(d * M_PI / 180);
     ya = ((double) y) + ((double) radius) * sin(d * M_PI / 180);
-
+    */
+    fprintf(fp,"[%d] ",d);
+#if 0
     <<o_arc_print_dotted() : printing a dot>>
+#endif
 
         d = d + da;
   }
-
-  fprintf(fp, "grestore\n");
-	
+  fprintf(fp,"] %d %d %d %d dashedarc %% dotted\n",
+	  x,y, radius, arc_width);
 }
 
 @ %def o_arc_print_dotted
@@ -1079,6 +1072,7 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
 
 <<o_arc_print_dotted() : printing a dot>>=
   /* PB : problem corrected : diameter of printed dots */
+/*
   fprintf(fp, "newpath\n");
   fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
   if (arc_width <= 1) {
@@ -1088,7 +1082,7 @@ A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya
   }
   fprintf(fp, "0 360 arc\n");
   fprintf(fp, "fill\n");
-
+*/
 /* PB : end */		
 
 @ 
@@ -1118,12 +1112,9 @@ o_arc_print_dashed(TOPLEVEL *w_current, FILE *fp,
 {
   int da, db, a1, a2, d;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, arc_width);
 
 @ %def o_arc_print_dashed
 
@@ -1155,17 +1146,19 @@ It prints as many dashes of length [[length]] as possible.
                       arc_width, length, space, origin_x, origin_y);
     return;
   }
-	
+  
+  fprintf(fp,"[");
   d = angle1;
   while ((d + da + db) < (angle1 + angle2)) {
     a1 = d;
     d = d + da;
 
-    <<o_arc_print_dashed() : printing a dash>>
+    fprintf(fp,"[%d %d] ",
+	    a1, a1+da);
 
-        d = d + db;
+    d = d + db;
   }
-
+	  
 @ 
 
 
@@ -1181,23 +1174,16 @@ When the above condition is no more satisfied, then it is not possible to print 
     a2 = (angle1 + angle2) - d;
   }
 
-  <<o_arc_print_dashed() : printing a dash>>
+  fprintf(fp,"[%d %d] ",
+	  a1, a1+da);
 
-  fprintf(fp, "grestore\n");
+
+  fprintf(fp,"] %d %d %d %d dashedarc %% dashed\n",
+	  x,y, radius, arc_width);
 
 }
 
 @
-
-<<o_arc_print_dashed() : printing a dash>>=
-
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x, y);
-  fprintf(fp, "%d mils\n", radius);
-  fprintf(fp, "%d %d arc\n", a1, a1 + da);
-  fprintf(fp, "stroke\n");
-@ 
-
 
 @section Function [[o_arc_print_center()]]
 
@@ -1222,15 +1208,12 @@ o_arc_print_center(TOPLEVEL *w_current, FILE *fp,
                    int arc_width, int length, int space,
                    int origin_x, int origin_y)
 {
-  double xa, ya;
   int da, db, a1, a2, d;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
 
-  f_print_set_line_width(fp, arc_width);
 
 @ %def o_arc_print_center
 
@@ -1263,20 +1246,20 @@ It prints as many sets of dash-dot as possible.
       return;
     }
 
+    fprintf(fp, "[");
     d = angle1;
     while ((d + da + 2 * db) < (angle1 + angle2)) {
       a1 = d;
       d = d + da;
-
-      <<o_arc_print_center() : printing a dash>>
+      fprintf(fp,"[%d %d] ",(int) a1, (int) a1 + da);
 		
-          d = d + db;
+      d = d + db;
+      /*
       xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
       ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
-
-      <<o_arc_print_center() : printing a dot>>
-		
-          d = d + db;
+      */
+      fprintf(fp,"[%d] ",d);
+      d = d + db;
     }
 
 @ 
@@ -1304,49 +1287,27 @@ it is possible to print the dash or a part of the original dash ;
       d = d + da;
     }
 
-    <<o_arc_print_center() : printing a dash>>
+    fprintf(fp,"[%d %d] ",(int) a1, (int) a1 + da);
+
 	
     if ((d + db) < (angle1 + angle2)) {
+      /*
       xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
       ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
-
-      <<o_arc_print_center() : printing a dot>>
+      */
+      fprintf(fp,"[%d] ",d);
 		
     }
 
-    fprintf(fp, "grestore\n");
+  fprintf(fp,"] %d %d %d %d dashedarc %% center\n",
+	  x,y, radius, arc_width);
+
 }
 
 @ 
 
 
-<<o_arc_print_center() : printing a dash>>=
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x, y);
-  fprintf(fp, "%d mils\n", radius);
-  fprintf(fp, "%d %d arc\n", (int) a1, (int) a1 + da);
-  fprintf(fp, "stroke\n");
-
-@ 
-
-
 A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[arc_width]] parameter.
-
-<<o_arc_print_center() : printing a dot>>=
-  /* PB : problem corrected : diameter of printed dots */
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-  if (arc_width <= 1) {
-    fprintf(fp, "2 mils\n");
-  } else {
-    fprintf(fp, "%d mils\n", (int) arc_width/2);
-  }
-  fprintf(fp, "0 360 arc\n");
-  fprintf(fp, "fill\n");
-  /* PB : end */		
-
-@ 
-
 
 @section Function [[o_arc_print_phantom()]]
 
@@ -1371,15 +1332,11 @@ o_arc_print_phantom(TOPLEVEL *w_current, FILE *fp,
                     int arc_width, int length, int space,
                     int origin_x, int origin_y)
 {
-  double xa, ya;
   int da, db, a1, a2, d;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, arc_width);
 
 @ %def o_arc_print_phantom
 
@@ -1411,27 +1368,31 @@ It prints as many sets of dash-dot-dot as possible.
       return;
     }
 
+    fprintf(fp,"[");
+
     d = angle1;
     while ((d + da + 3 * db) < (angle1 + angle2)) {
       a1 = d;
       d = d + da;
 
-      <<o_arc_print_phantom() : printing a dash>>
+      fprintf(fp,"[%d %d] ",(int) a1, (int) a1 + da);
 
-          d = d + db;
+      d = d + db;
+      /*
       xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
       ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+      */
+      fprintf(fp,"[%d] ",d);
 
-      <<o_arc_print_phantom() : printing a dot>>
+      d = d + db;
 
-          d = d + db;
-
+      /*
       xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
       ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+      */
+      fprintf(fp,"[%d] ",d);
 
-      <<o_arc_print_phantom() : printing a dot>>
-
-          d = d + db;
+      d = d + db;
     }
 
 @ 
@@ -1458,40 +1419,37 @@ it is possible to print the dash or a part of the original dash ;
       d = d + da;
     }
 
-    <<o_arc_print_phantom() : printing a dash>>
+    fprintf(fp,"[%d %d] ",(int) a1, (int) a1 + da);
 
     if ((d + db) < (angle1 + angle2)) {
       d = d + db;
 		
+      /*
       xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
       ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+      */
+      fprintf(fp,"[%d] ",d);
 
-      <<o_arc_print_phantom() : printing a dot>>
     }
 
     if ((d + db) < (angle1 + angle2)) {
       d = d + db;
-		
+	
+      /*
       xa = ((double) x) + ((double) radius) * cos(d * (M_PI / 180));
       ya = ((double) y) + ((double) radius) * sin(d * (M_PI / 180));
+      */
+
+      fprintf(fp,"[%d] ",d);
 		
-      <<o_arc_print_phantom() : printing a dot>>
-		
+      		
     }
 
-    fprintf(fp, "grestore\n");
+  fprintf(fp,"] %d %d %d %d dashedarc %% phantom\n",
+	  x,y, radius, arc_width);
 }
 
 @
-
-
-<<o_arc_print_phantom() : printing a dash>>=
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x, y);
-  fprintf(fp, "%d mils\n",(int) radius);
-  fprintf(fp, "%d %d arc\n", (int) a1, (int) a1 + da);
-  fprintf(fp, "stroke\n");
-@ 
 
 
 A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[arc_width]] parameter.

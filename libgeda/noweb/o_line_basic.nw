@@ -948,6 +948,7 @@ In the eventuality of a length and/or space null, the line is printed solid to a
 
 <<o_line_print() : printing line>>=
 	line_width = o_current->line_width;
+        if(line_width <= 2) line_width = 2;
 	length = o_current->line_length;
 	space  = o_current->line_space;
 	
@@ -1015,19 +1016,12 @@ o_line_print_solid(TOPLEVEL *w_current, FILE *fp,
 				   int origin_x, int origin_y)
 {
 
-	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, color);
 	}
 
-	f_print_set_line_width(fp, line_width);
-
-	fprintf(fp, "newpath\n");
-	fprintf(fp, "%d mils %d mils moveto\n", x1, y1);
-	fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
-	fprintf(fp, "stroke\n");
-	fprintf(fp, "grestore\n");
-	
+	fprintf(fp,"%d %d %d %d %d line\n",
+		x1,y1,x2,y2, line_width);
 }
 
 @ %def o_line_print_solid
@@ -1060,18 +1054,24 @@ o_line_print_dotted(TOPLEVEL *w_current, FILE *fp,
 	double dx1, dy1;
 	double xa, ya;
 
-	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, color);
 	}
 
+	/* The dotted line command takes an array of dots so print out the
+	 * beginnings of the array 
+	 */
+	fprintf(fp,"[");
 	/* PB : is the width relevant for a dot (circle) ? */
-	f_print_set_line_width(fp, line_width);
+	/* f_print_set_line_width(fp, line_width); */
+
 
 @ %def o_line_print_dotted
 
 
 Depending on the slope of the line the space parameter is projected on each of the two directions x and y resulting in [[dx1]] and [[dy1]]. Starting from one end by increments of space the dots are printed.
+
+A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[line_width]] parameter.
 
 <<o_line_basic.c : o_line_print_dotted()>>=
 	dx = (double) (x2 - x1);
@@ -1085,37 +1085,19 @@ Depending on the slope of the line the space parameter is projected on each of t
 	xa = x1; ya = y1;
 	while(d < l) {
 
-		<<o_line_print_dotted() : printing a dot>>
-
-		d = d + space;
-		xa = xa + dx1;
-		ya = ya + dy1;
+	  fprintf(fp,"[%d %d] ",
+		  (int)xa, (int)ya);
+	  d = d + space;
+	  xa = xa + dx1;
+	  ya = ya + dy1;
 	}
 
-	fprintf(fp, "grestore\n");
-	
+	fprintf(fp,"] %d dashed\n",line_width);
+
 }
 
+
 @
-
-
-A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius is the [[line_width]] parameter.
-
-<<o_line_print_dotted() : printing a dot>>=
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils\n", 
-				(int) xa, (int) ya);
-		if(line_width <= 1) {
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils\n", line_width/2);
-		}
-		fprintf(fp, "0 360 arc\n");
-		fprintf(fp, "fill\n");
-
-@ 
-
-
 
 @section Function [[o_line_print_dashed()]]
 
@@ -1142,12 +1124,14 @@ o_line_print_dashed(TOPLEVEL *w_current, FILE *fp,
 	double dx1, dy1, dx2, dy2;
 	double xa, ya, xb, yb;
 
-	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, color);
 	}
 
-	f_print_set_line_width(fp, line_width);
+	/* the dashed line function takes an array of start-finish pairs
+	 * output the beginnings of the array now
+	 */
+	fprintf(fp,"[");
 
 @ %def o_line_print_dashed
 
@@ -1198,18 +1182,16 @@ When the above condition is no more satisfied, then it is not possible to print 
 
 	<<o_line_print_dashed() : printing a dash>>
 
-	fprintf(fp, "grestore\n");
-	
+	fprintf(fp,"] %d dashed\n", line_width);
 }
 
 @
 
 
 <<o_line_print_dashed() : printing a dash>>=
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
-		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
-		fprintf(fp, "stroke\n");
+		fprintf(fp, "[%d %d %d %d] ", 
+			(int) xa, (int) ya,
+			(int) xb, (int) yb);
 
 @ 
 
@@ -1239,12 +1221,11 @@ o_line_print_center(TOPLEVEL *w_current, FILE *fp,
 	double dx1, dy1, dx2, dy2;
 	double xa, ya, xb, yb;
 
-	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, color);
 	}
 
-	f_print_set_line_width(fp, line_width);
+	fprintf(fp, "[");
 
 @ %def o_line_print_center
 
@@ -1271,14 +1252,16 @@ It prints as many sets of dash and dot as possible.
 		xb = xa + dx1;
 		yb = ya + dy1;
 
-		<<o_line_print_center() : printing a dash>>
+		fprintf(fp, "[%d %d %d %d] ", 
+			(int) xa, (int) ya,
+			(int) xb, (int) yb);
 
 		d = d + space;
 		xa = xb + dx2;
 		ya = yb + dy2;
 
-		<<o_line_print_center() : printing a dot>>
-		
+		fprintf(fp,"[%d %d] ",(int) xa, (int) ya);
+				
 		d = d + space;
 		xa = xa + dx2;
 		ya = ya + dy2;
@@ -1301,13 +1284,15 @@ it is possible to print the dash or a part of the original dash ;
 		xb = xa + dx1;
 		yb = ya + dy1;
 
-		<<o_line_print_center() : printing a dash>>
-		
+		fprintf(fp, "[%d %d %d %d] ", 
+			(int) xa, (int) ya,
+			(int) xb, (int) yb);
+
 		d = d + space;
 		xa = xb + dx2;
 		ya = yb + dy2;
 
-		<<o_line_print_center() : printing a dot>>
+		fprintf(fp,"[%d %d] ",(int) xa, (int) ya);
 		
 	} else {
 		if(d + length < l) {
@@ -1318,37 +1303,19 @@ it is possible to print the dash or a part of the original dash ;
 			yb = y2;
 		}
 
-		<<o_line_print_center() : printing a dash>>
+		fprintf(fp, "[%d %d %d %d] ", 
+			(int) xa, (int) ya,
+			(int) xb, (int) yb);
 	
 	}
 
-	fprintf(fp, "grestore\n");
+	fprintf(fp,"] %d dashed\n", line_width);
 }
-
-@
-
-
-<<o_line_print_center() : printing a dash>>=
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
-		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
-		fprintf(fp, "stroke\n");
 
 @ 
 
 
 A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius by the [[line_width]] parameter.
-
-<<o_line_print_center() : printing a dot>>=
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-		if(line_width <= 1) {
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils\n", line_width/2);
-		}
-		fprintf(fp, "0 360 arc\n");
-		fprintf(fp, "fill\n");
 
 @ 
 
@@ -1378,12 +1345,11 @@ o_line_print_phantom(TOPLEVEL *w_current, FILE *fp,
 	double dx1, dy1, dx2, dy2;
 	double xa, ya, xb, yb;
 
-	fprintf(fp, "gsave\n");
 	if (w_current->print_color) {
 		f_print_set_color(fp, color);
 	}
 
-	f_print_set_line_width(fp, line_width);
+	fprintf(fp,"[");
 
 @ %def o_line_print_phantom	
 
@@ -1410,20 +1376,22 @@ It prints as many sets of dash-dot-dot as possible.
 		xb = xa + dx1;
 		yb = ya + dy1;
 
-		<<o_line_print_phantom() : printing a dash>>
+		fprintf(fp,"[%d %d %d %d] ",
+			(int) xa, (int)ya,
+			(int) xb, (int)yb);
 		
 		d = d + space;
 		xa = xb + dx2;
 		ya = yb + dy2;
 
-		<<o_line_print_phantom() : printing a dot>>
+		fprintf(fp,"[%d %d] ",(int) xa, (int) ya);
 
 		d = d + space;
 		xa = xa + dx2;
 		ya = ya + dy2;
 
-		<<o_line_print_phantom() : printing a dot>>
-
+		fprintf(fp,"[%d %d] ",(int) xa, (int) ya);
+				
 		d = d + space;
 		xa = xa + dx2;
 		ya = ya + dy2;
@@ -1448,19 +1416,21 @@ it is possible to print the dash or a part of the original dash ;
 		xb = xa + dx1;
 		yb = ya + dy1;
 
-		<<o_line_print_phantom() : printing a dash>>
+		fprintf(fp,"[%d %d %d %d] ",
+			(int) xa, (int)ya,
+			(int) xb, (int)yb);
 		
 		d = d + space;
 		xa = xb + dx2;
 		ya = yb + dy2;
 
-		<<o_line_print_phantom() : printing a dot>>
+		fprintf(fp,"[%d %d] ",(int) xa, (int)ya);
 
 		d = d + space;
 		xa = xb + dx2;
 		ya = yb + dy2;
 
-		<<o_line_print_phantom() : printing a dot>>
+		fprintf(fp,"[%d %d] ",(int) xa, (int)ya);
 
 	} else {
 		if(d + length + space < l) {
@@ -1468,13 +1438,15 @@ it is possible to print the dash or a part of the original dash ;
 			xb = xa + dx1;
 			yb = ya + dy1;
 
-			<<o_line_print_phantom() : printing a dash>>
+			fprintf(fp,"[%d %d %d %d] ",
+				(int) xa, (int)ya,
+				(int) xb, (int)yb);
 
 			d = d + space;
 			xa = xb + dx2;
 			ya = yb + dy2;
 
-			<<o_line_print_phantom() : printing a dot>>
+			fprintf(fp,"[%d %d] ",(int) xa, (int)ya);
 
 		} else {
 			if(d + length < l) {
@@ -1485,41 +1457,20 @@ it is possible to print the dash or a part of the original dash ;
 				yb = y2;
 			}
 
-			<<o_line_print_phantom() : printing a dash>>
+			fprintf(fp,"[%d %d %d %d] ",
+				(int) xa, (int)ya,
+				(int) xb, (int)yb);
 			
 		}
 	}
 
-
-	fprintf(fp, "grestore\n");
+	fprintf(fp,"] %d dashed\n", line_width);
 }
 
 @
 
 
-<<o_line_print_phantom() : printing a dash>>=
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils moveto\n", (int) xa, (int) ya);
-		fprintf(fp, "%d mils %d mils lineto\n", (int) xb, (int) yb);
-		fprintf(fp, "stroke\n");
-
-@ 
-
-
 A dot is represented by a filled circle. Position of the circle is ([[xa]], [[ya]]) and its radius by the [[line_width]] parameter.
-
-<<o_line_print_phantom() : printing a dot>>=
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils\n", (int) xa, (int) ya);
-		if(line_width <= 1) {
-			fprintf(fp, "2 mils\n");
-		} else {
-			fprintf(fp, "%d mils\n", line_width/2);
-		}
-		fprintf(fp, "0 360 arc\n");
-		fprintf(fp, "fill\n");
-
-@ 
 
 
 @section Function [[o_line_print_old()]]
@@ -1551,7 +1502,7 @@ o_line_print_old(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
           o_current->line_points->x2-origin_x,
           o_current->line_points->y2-origin_y);
   fprintf(fp, "stroke\n");
-	
+
 }
 
 @ %def o_line_print_old

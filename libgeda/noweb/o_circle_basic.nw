@@ -980,6 +980,7 @@ In the eventuality of a length and/or space null, the line is printed solid to a
 <<o_circle_print() : printing outline>>=
 
   circle_width = o_current->line_width;
+  if(circle_width <= 2) circle_width=2;
   length       = o_current->line_length;
   space        = o_current->line_space;
 
@@ -1268,19 +1269,13 @@ o_circle_print_filled(TOPLEVEL *w_current, FILE *fp,
                       int angle2, int pitch2,
                       int origin_x, int origin_y)
 {
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
 
-  f_print_set_line_width(fp, 1);
-
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils\n", x-origin_x, y-origin_y);
-  fprintf(fp, "%d mils\n", radius);
-  fprintf(fp, "0 360 arc\n");
-  fprintf(fp, "fill\n");
-  fprintf(fp, "grestore\n");
+  fprintf(fp, "%d %d %d dot\n",
+	  x-origin_x, y-origin_y,
+	  radius);
 	
 }
 
@@ -1359,12 +1354,9 @@ o_circle_print_hatch(TOPLEVEL *w_current, FILE *fp,
   double x0, y0, x1, y1, x2, y2;
   double cos_a_, sin_a_;
 
-  fprintf(fp, "gsave\n");
   if (w_current->print_color) {
     f_print_set_color(fp, color);
   }
-
-  f_print_set_line_width(fp, fill_width);	
 
 @ %def o_circle_print_hatch
 
@@ -1377,8 +1369,6 @@ The values of the cosinus and sinus of the angle [[angle1]] are calculated for f
 
   <<o_circle_print_hatch() : calculating and printing the lines>>
 
-  fprintf(fp, "grestore\n");
-	
 }
 @ 
 
@@ -1401,11 +1391,8 @@ These operations are repeated for every horizontal line that can fit in the uppe
     x2 = ((-x0)*cos_a_ - y0*sin_a_) + x;
     y2 = y + ((-x0)*sin_a_ + y0*cos_a_);
 
-    fprintf(fp, "newpath\n");
-    fprintf(fp, "%d mils %d mils moveto\n", (int) x1, (int) y1);
-    fprintf(fp, "%d mils %d mils lineto\n", (int) x2, (int) y2);
-    fprintf(fp, "stroke\n");
-
+    fprintf(fp, "%d %d %d %d %d line\n",
+	    (int) x1, (int) y1, (int) x2, (int) y2, fill_width);
 
 @ 
 
@@ -1418,11 +1405,8 @@ The function uses the symetry in relation to the centre of the circle. It avoid 
 		x2 = x + ((-x0)*cos_a_ - (-y0)*sin_a_);
 		y2 = y + ((-x0)*sin_a_ + (-y0)*cos_a_);
 
-		fprintf(fp, "newpath\n");
-		fprintf(fp, "%d mils %d mils moveto\n", (int) x1, (int) y1);
-		fprintf(fp, "%d mils %d mils lineto\n", (int) x2, (int) y2);
-		fprintf(fp, "stroke\n");
-
+		fprintf(fp, "%d %d %d %d %d line\n",
+			(int) x1, (int) y1, (int) x2, (int) y2, fill_width);
 		
 		y0 = y0 + pitch1;
 	}

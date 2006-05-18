@@ -1198,8 +1198,8 @@ o_picture_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current,
   /* color output only */
   fprintf(fp, "/pix %i string def\n", img_width * 3);
   fprintf(fp, "%i %i 8\n", img_width, img_height);
-  fprintf(fp, "%i mils %i mils translate\n", x1, y1);
-  fprintf(fp, "%i mils %i mils scale\n", width, height);
+  fprintf(fp, "%i %i translate\n", x1, y1);
+  fprintf(fp, "%i %i scale\n", width, height);
   fprintf(fp, "[%i 0 0 -%i 0 0]\n", img_width, img_height);
 
   fprintf(fp, "{currentfile pix readhexstring pop}\n");

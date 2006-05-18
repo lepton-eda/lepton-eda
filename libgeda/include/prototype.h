@@ -22,11 +22,12 @@ void f_image_set_type(TOPLEVEL *w_current, int type);
 /* f_print.c */
 void f_print_set_line_width(FILE *fp, int width);
 void f_print_set_color(FILE *fp, int color);
-float f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y, int world_right, int world_bottom);
+int f_print_header(TOPLEVEL *w_current, FILE *fp, int paper_size_x, int paper_size_y);
 void f_print_footer(FILE *fp);
-void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale);
+void f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
 int f_print(TOPLEVEL *w_current, const char *filename);
 void f_print_set_type(TOPLEVEL *w_current, int type);
+int f_print_initialize_glyph_table(void);
 
 /* g_basic.c */
 int g_read_file(const gchar *filename);
@@ -55,6 +56,7 @@ SCM g_rc_font_directory(SCM path);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
+SCM g_rc_postscript_prolog(SCM scmsymname);
 SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
 
 /* g_register.c */
@@ -449,8 +451,8 @@ void o_text_freeallfonts(TOPLEVEL *w_current);
 void o_text_print_text_width(FILE *fp, char *output_string);
 void o_text_print_text_height(FILE *fp, int size);
 void o_text_print_text_height_full(FILE *fp, char *string, int size);
-void o_text_print_text_string(FILE *fp, char *string);
-void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
+void o_text_print_text_string(FILE *fp, char *string, int unicode_count, gunichar *unicode_table);
+void o_text_print(TOPLEVEL *w_current, FILE *fp, OBJECT *o_current, int origin_x, int origin_y, int unicode_count, gunichar *unicode_table);
 void o_text_rotate_lowlevel(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_text_rotate_world(TOPLEVEL *w_current, int world_centerx, int world_centery, int angle, int angle_change, OBJECT *object);
 void o_text_rotate(TOPLEVEL *w_current, int centerx, int centery, int angle, int angle_change, OBJECT *object);

@@ -610,7 +610,8 @@ AC_CONFIG_FILES([Makefile
                  docs/Makefile
 	         libgeda.pc
 	         scripts/geda_totexi
-	         scripts/notangle_guile ])
+	         scripts/notangle_guile
+		 share/Makefile ])
 
 AC_CONFIG_COMMANDS([geda_totexi-chmod], 
                    [[chmod +x scripts/geda_totexi]],[[]])

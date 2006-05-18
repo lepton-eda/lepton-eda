@@ -755,6 +755,9 @@ struct st_toplevel {
   /* setpagedevice pagesize option enable (TRUE or FALSE) */
   int setpagedevice_pagesize;
 
+  /* The name of the prolog file to paste into the Postscript output */
+  char *postscript_prolog;
+
   /* color of the stroke points */
   int stroke_color; 
 

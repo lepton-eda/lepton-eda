@@ -8,4 +8,4 @@ extern char *default_font_directory;
 extern char *default_scheme_directory;
 extern char *default_bitmap_directory;
 extern char *default_bus_ripper_symname;
-
+extern char *default_postscript_prolog;

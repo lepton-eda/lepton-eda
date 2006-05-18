@@ -530,7 +530,7 @@ o_net_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
 	    int origin_x, int origin_y)
 {
   int offset, offset2;
-  int cross;
+  int cross, net_width;
   int x1, y1;
   int x2, y2;
 
@@ -548,10 +548,9 @@ o_net_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
     f_print_set_color(fp, o_current->color);
   }
 
-  fprintf(fp, "gsave\n");
-  fprintf(fp, "newpath\n");
+  net_width = 2;
   if (w_current->net_style == THICK) {
-    fprintf(fp, "%d mils setlinewidth\n", NET_WIDTH);
+    net_width = NET_WIDTH;
   }
 
   x1 = o_current->line->x[0] - origin_x,
@@ -559,19 +558,7 @@ o_net_print(TOPLEVEL * w_current, FILE * fp, OBJECT * o_current,
   x2 = o_current->line->x[1] - origin_x,
   y2 = o_current->line->y[1] - origin_y;
 
-  fprintf(fp, "%d mils %d mils moveto\n", x1, y1);
-  fprintf(fp, "%d mils %d mils lineto\n", x2, y2);
-
-  fprintf(fp, "stroke\n");
-
-#if 0 /* is this completely redundant, not sure why this is here */
-  /* maybe move this inside, so it doesn't clutter the ps file */
-  if (w_current->print_color) {
-    f_print_set_color(fp, w_current->net_endpoint_color);
-  }
-#endif
-
-  fprintf(fp, "grestore\n");
+  fprintf(fp, "%d %d %d %d %d line\n", x1,y1,x2,y2,net_width);
 }
 
 

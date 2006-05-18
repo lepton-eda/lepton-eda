@@ -104,9 +104,8 @@ void s_cue_postscript_fillbox(TOPLEVEL * w_current, FILE * fp, int x,
     f_print_set_color(fp, w_current->net_endpoint_color);
   }
 
-  fprintf(fp, "newpath\n");
-  fprintf(fp, "%d mils %d mils moveto\n", x - offset, y - offset);
-  fprintf(fp, "%d mils %d mils fbox\n", offset2, offset2);
+  fprintf(fp, "%d %d %d %d fbox\n", 
+	   offset2, offset2, x-offset, y-offset);
 }
 
 
