@@ -446,6 +446,10 @@ f_print(TOPLEVEL *w_current, const char *filename)
   case WINDOW:
     dx = w_current->page_current->right - w_current->page_current->left;
     dy = w_current->page_current->bottom - w_current->page_current->top;
+    origin_x = w_current->page_current->left;
+    origin_y = w_current->page_current->top;
+    right = w_current->page_current->right;
+    bottom = w_current->page_current->bottom;
     break;
 
   case EXTENTS_NOMARGINS:
@@ -475,8 +479,13 @@ f_print(TOPLEVEL *w_current, const char *filename)
     }
   }
 
+#if 0
+  /* Debug */
+  printf("dx: %d dy:%d, origin_x:%d origin_y:%d, right:%d bottom:%d\n",
+	 dx,dy,origin_x,origin_y,right,bottom);
   printf("scale:%f\n",scale);
-  
+#endif  
+
   /* Output the header */
   f_print_header(w_current, fp, 
 		 w_current->paper_width, 
@@ -551,14 +560,14 @@ f_print(TOPLEVEL *w_current, const char *filename)
 
   }
 
-    /* Now apply final mils to output scaling factor */
+  /* Now apply final mils to output scaling factor */
   fprintf(fp,"%f %f scale\n",
 	  scale, scale);
 
   /* Print the objects */
   f_print_objects(w_current, fp, 
 		  w_current->page_current->object_head,
-		  -1, -1, scale, unicode_count, unicode_table);
+		  origin_x, origin_y, scale, unicode_count, unicode_table);
 
   f_print_footer(fp);
 
