@@ -497,6 +497,8 @@ struct st_toplevel {
   int event_state;			/* Current event state */
 
   int inside_action;			/* Are we doing an action? */
+  int rotated_inside;                   /* Was the selection rotated 
+                                           inside an action? */
 
   int init_left, init_right; 		/* Starting values for above */
   int init_top, init_bottom; 

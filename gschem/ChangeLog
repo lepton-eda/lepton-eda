@@ -1,4 +1,5 @@
 2006-05-20 Carlos Nieves Onega <cnieves@iespana.es>
+
 	* include/prototype.h, noweb/o_find.nw, noweb/x_event.nw:
 	Fixed issue with the selection box when some components overlap.
 	This bug was introduced when adding support for object movement	
@@ -6,6 +7,9 @@
 
 	* noweb/g_hook.nw: Fixed bug when calculating the object bounds
 	in text autoplacing.
+
+	* src/Makefile.am: Commented out the indentation of the C code, 
+	so gdb can return correct information when debugging.
 	
 2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
