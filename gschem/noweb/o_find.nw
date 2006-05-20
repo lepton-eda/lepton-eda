@@ -181,10 +181,13 @@ o_find_selected_object(TOPLEVEL *w_current, int screen_x, int screen_y)
     if (inside_region(o_current->left, o_current->top,
                       o_current->right, o_current->bottom, 
                       screen_x, screen_y)) {
+
+#if DEBUG
       printf("o_find_selected_object:\n");
       printf("Object bounds:\n\tL: %i\tR: %i\n\tT: %i\tB: %i.\n",
 	     o_current->left, o_current->right, o_current->top, o_current->bottom);
       printf("Screen pointer at: (%i,%i)\n", screen_x, screen_y);
+#endif
       if (o_current->sel_func != NULL &&
 	  o_current->type != OBJ_HEAD &&
 	  (o_current->visibility == VISIBLE ||
