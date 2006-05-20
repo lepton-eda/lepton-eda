@@ -10,6 +10,9 @@
 
 	* src/Makefile.am: Commented out the indentation of the C code, 
 	so gdb can return correct information when debugging.
+
+	* noweb/i_callbacks.nw, noweb/x_event.nw: Moved rotated_inside into
+	the TOPLEVEL structure.
 	
 2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
 

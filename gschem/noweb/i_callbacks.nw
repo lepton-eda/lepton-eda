@@ -239,7 +239,6 @@
 #include <dmalloc.h>
 #endif
 
-extern int rotated_inside;
 @
 
 
@@ -4510,9 +4509,9 @@ DEFINE_I_CALLBACK(cancel)
   exit_if_null(w_current);
 
   if ( (w_current->inside_action) && 
-       (rotated_inside != 0)) {
+       (w_current->rotated_inside != 0)) {
     o_undo_callback(w_current, UNDO_ACTION);	 
-    rotated_inside = 0;
+    w_current->rotated_inside = 0;
   }
 
   /* leave this on for now... but it might have to change */

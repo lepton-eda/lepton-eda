@@ -87,9 +87,6 @@ extern int current_center_x, current_center_y;
 int start_pan_x, start_pan_y;
 int throttle = 0;
 
-/* Number of times that the selection was rotated inside another command */
-int rotated_inside = 0;
-
 @ %def mouse_x mouse_y current_center_x current_center_y start_pan_x start_pan_y throttle
 
 
@@ -258,7 +255,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
-	  rotated_inside = 0;
+	  w_current->rotated_inside = 0;
           o_copy_start(w_current, 
                        (int) event->x, (int) event->y);
           w_current->event_state = COPY;
@@ -268,7 +265,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTMCOPY):
         if (o_select_selected(w_current)) {
-	  rotated_inside = 0;
+	  w_current->rotated_inside = 0;
           o_copy_start(w_current, 
                        (int) event->x, (int) event->y);
           w_current->event_state = MCOPY;
@@ -278,7 +275,7 @@ x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
-	  rotated_inside = 0;
+	  w_current->rotated_inside = 0;
           o_move_start(w_current,
                        (int) event->x, (int) event->y);
           w_current->event_state = MOVE;
@@ -895,7 +892,7 @@ x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 		    fix_x(w_current, w_current->start_x),
 		    fix_y(w_current, w_current->start_y));
 	w_current->DONT_REDRAW = redraw_state;
-	rotated_inside ++;	
+	w_current->rotated_inside ++;	
 	w_current->event_state = prev_state;
 
 	o_drawbounding(w_current, NULL,
@@ -1106,7 +1103,7 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
     }
     else {
       /* Start the object movement */
-      rotated_inside = 0;
+      w_current->rotated_inside = 0;
       o_move_start(w_current,
 		   (int) event->x, (int) event->y);
       w_current->event_state = ENDMOVE;
