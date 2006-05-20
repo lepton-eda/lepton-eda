@@ -1,3 +1,9 @@
+2006-05-20 Carlos Nieves Onega <cnieves@iespana.es>
+	* include/prototype.h, noweb/o_find.nw, noweb/x_event.nw:
+	Fixed issue with the selection box when some components overlap.
+	This bug was introduced when adding support for object movement	
+	like "click and drag" style.
+	
 2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
 	* scripts/notangle_guile.in: Applied patch by Steve Brown to fix

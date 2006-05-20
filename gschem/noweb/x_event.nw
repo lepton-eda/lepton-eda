@@ -1074,8 +1074,8 @@ x_event_motion(GtkWidget *widget, GdkEventMotion *event, TOPLEVEL *w_current)
     case(STARTSELECT):
     if ( (!w_current->drag_can_move) ||
 	 (w_current->drag_can_move && 
-	  (! o_find_object(w_current, 
-			   w_current->start_x, w_current->start_y, FALSE)))) {
+	  (! o_find_selected_object(w_current, 
+				    w_current->start_x, w_current->start_y)))) {
       temp_x = fix_x(w_current, (int) event->x);
       temp_y = fix_y(w_current, (int) event->y);
       /* is eight enough of a threshold? */

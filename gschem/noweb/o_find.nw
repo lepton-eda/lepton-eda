@@ -12,6 +12,7 @@
 
 <<o_find.c : include directives>>
 <<o_find.c : o_find_object()>>
+<<o_find.c : o_find_selected_object()>>
 
 @
 
@@ -158,3 +159,46 @@ o_find_object(TOPLEVEL *w_current, int screen_x, int screen_y,
 @ %def o_find_object
 
 
+@section Function @code{o_find_selected_object()}
+
+@defun o_find_selected_object w_current screen_x screen_y
+@end defun
+
+<<o_find.c : o_find_selected_object()>>=
+gboolean
+o_find_selected_object(TOPLEVEL *w_current, int screen_x, int screen_y)
+{
+  OBJECT *o_current=NULL;
+  SELECTION *s_current;
+
+  g_assert (w_current->page_current->selection2_head != NULL);
+
+  /* Skip the head node */
+  s_current = w_current->page_current->selection2_head->next;
+  /* do first search */
+  while (s_current != NULL) {
+    o_current = s_current->selected_object;
+    if (inside_region(o_current->left, o_current->top,
+                      o_current->right, o_current->bottom, 
+                      screen_x, screen_y)) {
+      printf("o_find_selected_object:\n");
+      printf("Object bounds:\n\tL: %i\tR: %i\n\tT: %i\tB: %i.\n",
+	     o_current->left, o_current->right, o_current->top, o_current->bottom);
+      printf("Screen pointer at: (%i,%i)\n", screen_x, screen_y);
+      if (o_current->sel_func != NULL &&
+	  o_current->type != OBJ_HEAD &&
+	  (o_current->visibility == VISIBLE ||
+	   (o_current->visibility == INVISIBLE &&
+	    w_current->show_hidden_text))) {
+	return TRUE;
+      }
+    }
+    
+    s_current = s_current->next;
+  } 
+
+  return (FALSE);
+}
+
+
+@ %def o_find_selected_object
