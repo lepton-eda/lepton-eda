@@ -14,6 +14,7 @@
 (use-modules (ice-9 getopt-long)
 	     (ice-9 regex))
 
+(debug-set! stack 0)
 (debug-enable 'backtrace)
 
 (define noweb-rootname     "*")

@@ -69,6 +69,8 @@
 
 #include "../include/prototype.h"
 
+@
+
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
@@ -81,7 +83,7 @@ static int f_print_get_unicode_chars(TOPLEVEL * w_current, OBJECT * head, int co
 static void f_print_unicode_map(FILE * fp, int count, gunichar * table);
 
 
-@ %def header
+@ %def unicode_char_to_glyph 
 
 
 @section Function @code{f_print_set_line_width()}

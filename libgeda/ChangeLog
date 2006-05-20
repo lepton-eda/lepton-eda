@@ -1,3 +1,11 @@
+2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+        * scripts/notangle_guile.in: Applied patch by Steve Brown to fix
+        guile stack overflow
+
+	* noweb/f_print.nw: Fixed missing @ which made notangle_guile a 
+	little happier.
+
 2006-05-17  Mike Jarabek  <mjarabek@istop.com>
 
 	* Makefile.am, configure.ac

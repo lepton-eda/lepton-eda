@@ -1,3 +1,8 @@
+2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* scripts/notangle_guile.in: Applied patch by Steve Brown to fix
+	guile stack overflow
+
 2006-05-17  Mike Jarabek  <mjarabek@istop.com>
 
 	* examples/drawing_primitives.sch
