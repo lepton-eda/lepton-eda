@@ -880,6 +880,9 @@ struct st_toplevel {
   /* Controls if drag can move objects or not */
   int drag_can_move;	
 
+  /* List of attributes to always promote */
+  char *always_promote_attributes;
+
 
   /* gnetlist specific */
   int net_naming_priority;

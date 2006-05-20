@@ -310,3 +310,17 @@
 ;
 ; End of font related keywords
 ;
+
+;
+; Start of attribute promotion keywords
+;
+
+; always-promote-attributes string
+;
+; Contains a list of attributes that are always promoted regardless of
+; their visibility.  
+(always-promote-attributes "footprint device value model-name")
+
+;
+; End of attribute promotion keywords
+;

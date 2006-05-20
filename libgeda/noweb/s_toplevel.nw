@@ -446,7 +446,11 @@ s_toplevel_new (void)
   toplevel->print_vector_threshold = 3;
 
   toplevel->add_attribute_offset = 50;
-  
+
+  toplevel->drag_can_move = TRUE;
+
+  toplevel->always_promote_attributes = NULL;
+
   toplevel->net_naming_priority = 0;
   toplevel->hierarchy_traversal = 0;
   toplevel->hierarchy_uref_mangle = 0;

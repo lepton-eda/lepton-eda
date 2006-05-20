@@ -86,8 +86,9 @@
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 #define DEFAULT_POSTSCRIPT_PROLOG  "prolog.ps"
+#define DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES ""
 
-@ %def INIT_STR DEFAULT_SERIES_NAME DEFAULT_UNTITLED_NAME DEFAULT_SCHEME_DIRECTORY DEFAULT_FONT_DIRECTORY DEFAULT_BITMAP_DIRECTORY DEFAULT_POSTSCRIPT_PROLOG
+@ %def INIT_STR DEFAULT_SERIES_NAME DEFAULT_UNTITLED_NAME DEFAULT_SCHEME_DIRECTORY DEFAULT_FONT_DIRECTORY DEFAULT_BITMAP_DIRECTORY DEFAULT_POSTSCRIPT_PROLOG DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES
 
 
 
@@ -101,6 +102,7 @@ char *default_scheme_directory = NULL;
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 char *default_postscript_prolog = NULL;
+char *default_always_promote_attributes = NULL;
 
 @ %def default_init_right default_init_bottom
 
@@ -127,6 +129,8 @@ i_vars_libgeda_set(TOPLEVEL *w_current)
   INIT_STR(w_current, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
   INIT_STR(w_current, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
   INIT_STR(w_current, postscript_prolog,  DEFAULT_POSTSCRIPT_PROLOG);
+  INIT_STR(w_current, always_promote_attributes, DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
+
 }
 
 @ %def i_vars_libgeda_set
@@ -147,6 +151,7 @@ i_vars_setnames(TOPLEVEL *w_current)
   w_current->scheme_directory   = g_strdup (DEFAULT_SCHEME_DIRECTORY);
   w_current->bitmap_directory   = g_strdup (DEFAULT_BITMAP_DIRECTORY);
   w_current->bus_ripper_symname = g_strdup (DEFAULT_BUS_RIPPER_SYMNAME);
+  w_current->always_promote_attributes = g_strdup (DEFAULT_ALWAYS_PROMOTE_ATTRIBUTES);
 }
 
 @ %def i_vars_setnames
@@ -168,6 +173,7 @@ i_vars_freenames()
   free(default_bitmap_directory);
   free(default_bus_ripper_symname);
   free(default_postscript_prolog);
+  free(default_always_promote_attributes);
 }
 
 

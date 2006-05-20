@@ -1,3 +1,7 @@
+2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* system-gafrc.in: Added default setting for always-promote-attributes
+
 2006-04-07 Carlos Nieves Onega <cnieves@iespana.es>
         * asic/asic-cap-1.sym, asic/asic-cap-2.sym, asic/asic-cap-3.sym,
 	  asic/asic-diode-1.sym, asic/asic-nmos-1.sym, asic/asic-pmos-1.sym,

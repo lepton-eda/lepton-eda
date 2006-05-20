@@ -58,6 +58,7 @@ SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
 SCM g_rc_postscript_prolog(SCM scmsymname);
 SCM g_rc_map_font_character_to_file(SCM character_param, SCM file_param);
+SCM g_rc_always_promote_attributes(SCM scmsymname);
 
 /* g_register.c */
 void g_register_libgeda_funcs(void);
@@ -275,7 +276,7 @@ void get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *to
 void get_complex_bounds_selection(TOPLEVEL *w_current, SELECTION *head, int *left, int *top, int *right, int *bottom);
 void world_get_complex_bounds(TOPLEVEL *w_current, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 OBJECT *add_head(void);
-int o_complex_is_eligible_attribute(OBJECT *object, int promote_invisible);
+int o_complex_is_eligible_attribute(TOPLEVEL *w_current, OBJECT *object, int promote_invisible);
 int o_complex_is_embedded(OBJECT *o_current);
 OBJECT *o_complex_add(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, int mirror, char *clib, char *basename, int selectable, int attribute_promotion);
 OBJECT *o_complex_add_embedded(TOPLEVEL *w_current, OBJECT *object_list, char type, int color, int x, int y, int angle, char *clib, char *basename, int selectable);

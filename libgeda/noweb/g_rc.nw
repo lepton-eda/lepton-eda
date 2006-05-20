@@ -39,6 +39,8 @@
 
 <<g_rc.c : g_rc_map_font_character_to_file()>>
 
+<<g_rc.c : g_rc_always_promote_attributes()>>
+
 @
 
 
@@ -934,7 +936,7 @@ g_rc_bus_ripper_symname(SCM scmsymname)
 }
 
 
-@ %def g_rc_postscript_prolog
+@ %def g_rc_bus_ripper_symname
 
 /* ----------------------------------------------------------- */
 @section Function @code{g_rc_postscript_prolog()}
@@ -1051,3 +1053,27 @@ g_rc_map_font_character_to_file(SCM scmcharstr, SCM scmfilename)
 
 @ %def g_rc_map_font_character_to_file
 
+
+/* ----------------------------------------------------------- */
+@section Function @code{g_rc_always_promote_attributes()}
+
+@defun g_rc_always_promote_attributes string
+@end defun
+
+<<g_rc.c : g_rc_always_promote_attributes()>>=
+SCM
+g_rc_always_promote_attributes(SCM scmsymname)
+{
+  SCM_ASSERT (SCM_NIMP (scmsymname) && SCM_STRINGP (scmsymname), scmsymname,
+              SCM_ARG1, "always-promote-attributes");
+
+  if (default_always_promote_attributes) {
+    free (default_always_promote_attributes);
+  }
+  default_always_promote_attributes = g_strdup (SCM_STRING_CHARS (scmsymname));
+
+  return SCM_BOOL_T;
+}
+
+
+@ %def g_rc_always_promote_attributes
