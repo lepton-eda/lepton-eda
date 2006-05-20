@@ -421,13 +421,11 @@ g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs)
 {
   TOPLEVEL *w_current=NULL;
   OBJECT *object=NULL;
-  int left=0, right=0, bottom=0, top=0;
+  int left=0, right=0, bottom=0, top=0; 
   SCM returned = SCM_EOL;
   SCM vertical = SCM_EOL;
   SCM horizontal = SCM_EOL;
   OBJECT *new_object = NULL;
-  OBJECT *new_node = NULL;
-  OBJECT *aux, *last_added=NULL;
   gboolean include_attribs;
 
   SCM_ASSERT (scm_boolean_p(scm_inc_attribs), scm_inc_attribs,
@@ -439,43 +437,22 @@ g_get_object_bounds (SCM object_smob, SCM scm_inc_attribs)
 	      object_smob, SCM_ARG1, "get-object-bounds");
 
   if (!include_attribs) {
-    /* Don't include the attributes when computing the bounds.
-       So make a new object list without the attributes (those which
-       have the attached_to != NULL) */
-    aux = object;
-    while (aux != NULL) {
-      if (aux->attached_to == NULL) {
-	new_node = (OBJECT *) malloc(sizeof(OBJECT));
-	memcpy (new_node, aux, sizeof(OBJECT));
-	new_node->next = NULL;
-	new_node->prev = last_added;
-	if (new_object) {
-	  last_added->next = new_node;
-	  last_added = new_node;
-	}
-	else {
-	  new_object = new_node;
-	  last_added = new_object;
-	}
-      }
-      aux = aux->next;
-    }
+    new_object = (OBJECT *) malloc(sizeof(OBJECT));
+    memcpy (new_object, object, sizeof(OBJECT));
+    new_object->attribs = NULL;
+    new_object->next = NULL;
+    new_object->prev = NULL;
   }
-  else {
+  else { 
     new_object = object;
-  }
+  } 
     
   world_get_complex_bounds (w_current, new_object, 
 			    &left, &top, &right, &bottom);
   
   if (!include_attribs) {
-    /* Free the newly created list */
-    aux = new_object;
-    while (aux != NULL) {
-      new_object = aux->next;
-      g_free(aux);
-      aux = new_object;
-    }
+    /* Free the newly created object */
+    g_free(new_object);
   }
   
   horizontal = scm_cons (SCM_MAKINUM(left), SCM_MAKINUM(right));

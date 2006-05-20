@@ -3,6 +3,9 @@
 	Fixed issue with the selection box when some components overlap.
 	This bug was introduced when adding support for object movement	
 	like "click and drag" style.
+
+	* noweb/g_hook.nw: Fixed bug when calculating the object bounds
+	in text autoplacing.
 	
 2006-05-20 Ales Hvezda   <ahvezda@geda.seul.org>
 
