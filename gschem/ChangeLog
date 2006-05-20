@@ -9,6 +9,10 @@
 	* scripts/notangle_guile.in: Applied patch by Steve Brown to fix
 	guile stack overflow
 
+	* src/Makefile.am: Changed the .nw.c: rule to redirect the generated
+	C file to a temp file and then move it to the real one.	 This fixes
+	the stale file problem when notangle fails.
+
 2006-05-17  Mike Jarabek  <mjarabek@istop.com>
 
 	* examples/drawing_primitives.sch

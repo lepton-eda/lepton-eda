@@ -6,11 +6,15 @@
 	* noweb/f_print.nw: Fixed missing @ which made notangle_guile a 
 	little happier.
 
-	include/i_vars.h, include/prototype.h, include/struct.h, 
+	* include/i_vars.h, include/prototype.h, include/struct.h, 
 	noweb/g_rc.nw, noweb/g_register.nw, noweb/i_vars.nw,
 	noweb/o_complex_basic.nw, noweb/s_toplevel.nw: Finally added code
 	to support the rc keyword: always-promote-attributes.  This string
 	holds a list of attribute names that are always promoted.
+
+	* src/Makefile.am: Changed the .nw.c: rule to redirect the generated 
+        C file to a temp file and then move it to the real one.  This fixes 
+        the stale file problem when notangle fails.
 
 2006-05-17  Mike Jarabek  <mjarabek@istop.com>
 
