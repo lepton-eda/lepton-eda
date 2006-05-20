@@ -16,6 +16,8 @@
         C file to a temp file and then move it to the real one.  This fixes 
         the stale file problem when notangle fails.
 
+	* noweb/s_toplevel.nw: Added missing variable init 
+
 2006-05-17  Mike Jarabek  <mjarabek@istop.com>
 
 	* Makefile.am, configure.ac
