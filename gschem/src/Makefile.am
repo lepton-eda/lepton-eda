@@ -57,7 +57,7 @@ SUFFIXES = .nw
 .nw.c:
 	$(NOTANGLE) $(NOTANGLEFLAGS) $(NOTANGLEROOT)'$@ : *' $< > ../src/$@.tmp
 	mv -f ../src/$@.tmp ../src/$@
-	#$(INDENTBIN) $(INDENTFLAG) ../src/$@
+#	$(INDENTBIN) $(INDENTFLAG) ../src/$@
 	rm -f ../src/$@~
 
 CPROTO =	cproto

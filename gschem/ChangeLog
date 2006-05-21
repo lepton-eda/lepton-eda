@@ -1,3 +1,8 @@
+2006-05-21 Werner Hoch <werner.ho@gmx.de:
+
+	* src/Makefile.am: moved the comment sign to the first column.
+	  "make reconfig" is happy now.
+
 2006-05-20 Carlos Nieves Onega <cnieves@iespana.es>
 
 	* include/prototype.h, noweb/o_find.nw, noweb/x_event.nw:
