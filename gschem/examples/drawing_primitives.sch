@@ -5,8 +5,9 @@ T 1500 10100 9 10 1 0 0 0 1
 Lower Left
 T 1500 9600 9 10 1 0 0 1 1
 Middle Left
-T 1500 9100 9 10 1 0 0 8 1
-Upper Right
+T 1500 9100 9 10 1 0 0 2 2
+Upper Left
+
 T 1500 8600 9 10 1 0 0 3 1
 Lower Middle
 T 1500 8100 9 10 1 0 0 4 1
