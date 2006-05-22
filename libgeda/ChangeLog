@@ -1,3 +1,11 @@
+2006-05-22  Mike Jarabek  <mjarabek@istop.com>
+
+	* libgeda/share/prolog.ps: Added custom stringwidth function to
+	  printing routines that handles overbar characters.  Added
+	  overbar drawing support.  The overbar thickness is coded to be
+	  10% of the font size.  The height of the overbar is set to the
+	  font size.
+
 2006-05-21 Werner Hoch <werner.ho@gmx.de:
 
 	* src/Makefile.am: moved the comment sign to the first column.

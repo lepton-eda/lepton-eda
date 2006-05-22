@@ -199,13 +199,110 @@
     lly ury			% Return the results
 } bind def
 
-% XXX how to handle multiline text....?
+% calculate the string width taking into account the escapes.
+/mystrx 0.0 def
+/mystry 0.0 def
+/mystresc false def
+
+/mystringwidth {
+    /mystrx 0.0 def
+    /mystry 0.0 def
+    /mystresc false def
+    {				% work through string
+	% did we process the escape character last?
+	mystresc {
+	    % last character was escape
+	    % handle the escape
+	    % is it an _ = 95?
+	    dup 95 eq {
+		pop  % we don't need the character anymore
+		% toggle drawing overbars
+		0.0 0.0 % make it like it never happened...
+	    } {
+		% otherwise measure the character 
+		(\\ ) dup 1 4 -1 roll put % count a \ and the character
+		stringwidth
+	    } ifelse
+	    % and reset the flag
+	    /mystresc false def
+	} {
+	    % last character was not escape
+	    % is this escape
+	    dup 92 eq {
+		% yes, escape character, set flag
+		/mystresc true def
+		pop % drop character
+		0.0 0.0 % make like this character has no width and height
+	    } {
+		( ) dup 0 4 -1 roll put	% create one character string
+		stringwidth		% measure it's height/width
+	    } ifelse
+	} ifelse
+	% accumulate x and y movements
+	mystry add /mystry exch def
+	mystrx add /mystrx exch def
+    } forall
+    mystrx mystry % drop results on stack
+} bind def
+
+% Render a string with overbars
+%
+/escaped false def
+/drawoverbar false def
+/fontsize 0.0 def
+
+% Show a string, with an overbar over it
+% string charshow -
+/charshow {
+    drawoverbar {
+	% draw an overbar for the character
+	gsave
+	fontsize 10.0 div setlinewidth
+	0 fontsize rmoveto  % move to (0,overbarheight) 
+	dup stringwidth pop 0 rlineto % draw line to 
+	stroke
+	grestore
+    } if
+    show
+} bind def
+
+/overbarshow {
+    /drawoverbar false def      % start by not drawing overbars
+    {				% work through string
+	escaped {
+	    % the last character was the escape
+	    % handle the escape
+	    % is it an _ = 95?
+	    dup 95 eq {
+		pop  % we don't need the character anymore
+		% toggle drawing overbars
+		/drawoverbar drawoverbar not def
+	    } {
+		% otherwise render the character 
+		(\\ ) dup 1 4 -1 roll put % draw a \ and the character
+		charshow                      % render the string
+	    } ifelse
+	    % and reset the flag
+	    /escaped false def
+	} {
+	    % check for escape character \ = 92
+	    dup 92 eq {
+		% yes, escape character, set flag
+		/escaped true def
+		pop % drop character
+	    } {
+		% no, reset flag and draw character
+		( ) dup 0 4 -1 roll put	% create one character string
+		charshow
+	    } ifelse
+	} ifelse
+    } forall
+} bind def
 % 
 % hcenter rjustify vcenter vjustify spacing [(line1) (line2) ... ] rot x y size text -
 /stringw 0.0 def
 /stringh 0.0 def
 /spacing 0.0 def
-/fontsize 0.0 def
 /strings [ ] def
 /stringtxt ( ) def
 /stringcount 0 def
@@ -230,7 +327,7 @@
     % do we have more than 1 string to render?
     stringcount 1 eq {
 	/stringtxt strings aload pop def		% get the string 
-	/stringw stringtxt stringwidth pop neg def	% get the -width
+	/stringw stringtxt mystringwidth pop neg def	% get the -width
 	/stringh stringtxt stringheight exch pop neg def% get the -height
 
 	% First do vertical calculations
@@ -246,7 +343,7 @@
 	% center
 	{ stringw 2.0 div 0 rmoveto } if
 	% Draw the text
-	stringtxt show
+	stringtxt overbarshow
     } {
 	% More than one line, compute bounding box for the text
 
@@ -258,7 +355,7 @@
 	% of the longest string
 	/stringw 0.0 def
 	strings {
-	    stringwidth pop
+	    mystringwidth pop
 	    dup stringw gt {
 		/stringw exch def
 	    } {
@@ -282,7 +379,7 @@
 	0 stringcount 1 sub spacing mul rmoveto
 	strings {
 	    gsave		% Save starting point
-	    show		% render the text
+	    overbarshow		% render the text
 	    grestore
 	    0 spacing neg rmoveto
 	} forall
@@ -290,7 +387,4 @@
     grestore 	% Restore old state
 } bind def
 
-% Define an inch conversion.. XXX - remove me
-/inch {72 mul} bind def
-/mils {1000 div inch} bind def
 
