@@ -329,12 +329,24 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
 
         case(OBJ_TEXT):
           if (o_current->visibility == VISIBLE) {
+	    int vectors = 0;
+
+	    /* Look at flags and determine if vector text should
+	     * be used for output.
+	     */
+	    if(w_current->text_output == VECTOR_FONTS) {
+	      vectors = 1;
+	    } else if( (w_current->print_vector_threshold > 0)
+			&& ( o_text_num_lines(o_current->text->string) > 
+			     w_current->print_vector_threshold)) {
+	      vectors = 1;
+	    }
+            
             fprintf(fp, "gsave\n");
 			
-            if (w_current->text_output == VECTOR_FONTS || 
-		o_text_num_lines(o_current->text->string) > 
-	 	  w_current->print_vector_threshold) 
+            if (vectors)
             {	
+	      /* Output vectors */
               f_print_objects(w_current, 
                               fp, 
                               o_current->text->
@@ -342,11 +354,10 @@ f_print_objects(TOPLEVEL *w_current, FILE *fp, OBJECT *head,
                               origin_x, origin_y, 
                               scale, unicode_count, unicode_table);
             } else {
-
+	      /* Output text */
               o_text_print(w_current, fp, 
                            o_current,
                            origin_x, origin_y, unicode_count, unicode_table);
-
             }
 
             fprintf(fp, "grestore\n");

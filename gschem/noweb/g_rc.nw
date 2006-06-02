@@ -2051,12 +2051,6 @@ g_rc_output_vector_threshold(SCM numlines)
   
   val = SCM_INUM (numlines);
 
-  if (val < 0) {
-    fprintf(stderr, _("Invalid number of lines [%d] passed to output-vector-threshold\n"),
-            val);
-    val = 3; /* absolute default */
-  }
-
   default_print_vector_threshold = val;
 
   return SCM_BOOL_T;

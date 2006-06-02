@@ -1,3 +1,8 @@
+2006-06-02  Mike Jarabek  <mjarabek@istop.com>
+
+	* noweb/f_print.nw: Added code to check flag for vector vs. PS
+	  text output in text f_print_objects().
+
 2006-05-22  Mike Jarabek  <mjarabek@istop.com>
 
 	* share/prolog.ps: Added custom stringwidth function to printing

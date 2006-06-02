@@ -1,3 +1,14 @@
+2006-06-02  Mike Jarabek  <mjarabek@istop.com>
+
+	* lib/system-gschemrc.in: Corrected comments about PS backend, and
+	  changed default to not render vector text for multiline text
+	  items.  Added documentation that shows valid values.
+
+	* noweb/g_rc.nw: Removed check for negative numbers in
+	  g_rc_output_vector_threshold() as any value is valid now.
+	  Negative numbers indicate that vector text is not desired when
+	  printing multiline text.
+
 2006-05-21 Werner Hoch <werner.ho@gmx.de:
 
 	* src/Makefile.am: moved the comment sign to the first column.
