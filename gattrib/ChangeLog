@@ -1,3 +1,11 @@
+2006-06-03 Stuart Brorson <sdb@cloud9.net>
+	* src/gtksheet_2_2.c: Finally fixed annoying bug in which gattrib
+	soaked up 70% of processor time.  Problem had to do with infinite
+	loop of expose_events generated upon call
+	to gdk_window_show(sheet->row_title_window) and 
+	gdk_window_show(sheet->row_title_window) in gtk_sheet_expose.  I
+	removed calls to fix bug.
+
 2006-03-12 Ales Hvezda   <ahvezda@geda.seul.org>
 
         * lib/system-gattribrc.in: Removed load for the system-gafrc file,

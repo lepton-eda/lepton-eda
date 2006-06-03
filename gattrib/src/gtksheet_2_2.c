@@ -4786,6 +4786,10 @@ gtk_sheet_expose (GtkWidget * widget,
   GtkSheet *sheet;
   GtkSheetRange range;
 
+#ifdef DEBUG
+  printf("---> Entered gtk_sheet_expose ... must have received expose_event\n");
+#endif 
+
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GTK_IS_SHEET (widget), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
@@ -4801,14 +4805,12 @@ gtk_sheet_expose (GtkWidget * widget,
 
       /* exposure events on the sheet */
  
-      if(event->window == sheet->row_title_window && sheet->row_titles_visible){
+      if( (event->window == sheet->row_title_window) && sheet->row_titles_visible){
                      size_allocate_row_title_buttons(sheet);
-                     gdk_window_show(sheet->row_title_window);
       }
 
-      if(event->window == sheet->column_title_window && sheet->column_titles_visible){
+      if( (event->window == sheet->column_title_window) && sheet->column_titles_visible){
                      size_allocate_column_title_buttons(sheet);
-                     gdk_window_show(sheet->column_title_window);
       }
 
       if (event->window == sheet->sheet_window){
@@ -4843,6 +4845,10 @@ gtk_sheet_expose (GtkWidget * widget,
      gtk_widget_grab_focus(GTK_WIDGET(sheet));
 
   (* GTK_WIDGET_CLASS (parent_class)->expose_event) (widget, event);
+
+#ifdef DEBUG
+  printf("<--- Leaving gtk_sheet_expose\n");
+#endif 
 
   return FALSE;
 }
