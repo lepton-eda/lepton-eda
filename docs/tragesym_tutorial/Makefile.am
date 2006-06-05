@@ -1,6 +1,7 @@
 docsdir = @GEDADOCDIR@/tutorials/tragesym
 
-docs_DATA = gedit_corrected.jpg gedit_pasted.jpg gnumeric_dot.jpg gnumeric_export.jpg gnumeric_filled.jpg gnumeric_import.jpg gnumeric_import2.jpg gnumeric_moved.jpg gnumeric_posit.jpg gnumeric_pwr.jpg gnumeric_save.jpg gnumeric_sorted.jpg gnumeric_start.jpg gnumeric_type.jpg gschem_edited.jpg xpdf_block.jpg xpdf_open.jpg xpdf_pins.jpg xpdf_selected.jpg tragesym.html
+docs_DATA = acroread_selectiontable.png ooo_attributes.png ooo_selection.png xpdf_pinconfiguration.png gschem_finished.png ooo_changedpins.png xemacs_modifiedselection.png xpdf_pindescription.png gschem_showhidden.png ooo_rearanged.png xemacs_rawselection.png tragesym.html
+
 
 EXTRA_DIST = $(docs_DATA)
 
