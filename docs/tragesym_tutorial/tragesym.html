@@ -1,337 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-	<title>gschem symbol creation, the quick and easy tragesym way</title>
+    <title>gschem symbol creation, the quick and easy tragesym way</title>
 </head>
 
 <body>
 
-<h1>Creating gschem symbols quickly and easily using tragesym</h1>
-<p>Creating symbols for schematic capture can be very time consuming,
-error prone, and an all around pain. Luckily, gschem uses an open, text
-base file format that is very easy to use with scripting. This short
-tutorial describes how to use a third party tool, tragesym, to create
+<h2>Creating gschem symbols quickly and easily using tragesym and a spreadsheet
+programm</h2>
+Creating symbols for schematic capture can be very time consuming,
+error prone, and an all around pain. 
+Luckily, gschem uses an open, text based file format that is very easy to use
+with scripting. 
+This short tutorial describes how to use the tragesym script, to create
 symbols very quickly (probably more quickly than with any commercial
-package).</p>
+package).
 
-<h4>Step 1: Obtain tragesym</h4>
-<p>tragesym was written by Werner Hoch
-<a HREF="mailto:werner.ho(AT)gmx.de">&lt;werner.ho(AT)gmx.de&gt;</a> and is
-downloadable from <a HREF="http://www.my-stuff.onlinehome.de/tragesym.html">
-http://www.my-stuff.onlinehome.de/tragesym.html</A>. Once downloaded, just
-unpack it in the directory you'd like to work in. Take a moment and go
-over the COPYING file if you are not familiar with the liability restriction
-and redistribution rights of GPL'd code.</p>
+<h3>Required steps:</h3>
+    <ul>
+      <li>Step1: Open a tragesym template file</li>
+      <li>Step2: Download the part data sheet and find the pin list</li>
+      <li>Step3: Copy the pin list into an editor and prepare it</li>
+      <li>Step4: Insert all missing data into the spreadsheet</li>
+      <li>Step5: Export the spreadsheet into a tab seperated text file</li>
+      <li>Step6: execute tragesym and create the symbol</li>
+      <li>Step7: check the result with gschem and do some artwork</li>
+    </ul>
 
-<h4>Step 2: Download you data sheet, and find the pin list</h4>
-<p> For this example, we will be creating a symbol from the Philips
+
+<h3>Step 1: Open a tragesym template file</h3>
+tragesym comes with two template files. One is ASCII text, the second is a <a
+href="http://www.openoffice.org">OpenOffice</a> spreadsheet file.
+You can obtain them from the gEDA utility package: 
+utils/examples/tragesym/template.src and utils/examples/tragesym/template.ods
+<br>
+If you prefer a different spreadsheet program, like gnumeric or kspread, just
+create your own template out of the textual template file.
+The only difference between the textual template and the spreadsheet template is
+the syntax of the key value pairs in the [options] and [geda_attr] sections. 
+The textfile splits them with an equal sign (key=value), the spreadsheet has the
+value in the second column (which becomes a tab after beeing exported).
+
+
+<h3>Step 2: Download the part data sheet and find the pin list</h3>
+For this example, we will create a symbol from the Philips
 Semiconductor PCA9555 16-bit IIC IO port. The description of product and
 datasheet is available at Philips:
-<a HREF="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html">
-http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html</A>
-Download the datasheet and open it with a pdf viewer that allows for copying text
-out of the PDF, such as xpdf. Flip through the pages until you find the pinout for
-the device:</p>
+<a
+HREF="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html">
+http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html</a>.
+Download the datasheet and open it with a pdf viewer that allows copying text
+out of the pdf file, such as xpdf. Flip through the pages until you find the
+pinout for
+the device: <p>
 
-<img src="xpdf_open.jpg" border="0" hspace="0" vspace="0">
+<img src="xpdf_pinconfiguration.png" border="0" hspace="10" vspace="10">
+<img src="acroread_selectiontable.png" border="0" hspace="10" vspace="10"> 
 
-<h4>Step 3: Copy the pins from the data sheet, and put them somewhere</h4>
-<p> The end goal is to get the pin list into a spreadsheet, like gnumeric,
-unfortunately, xpdf doesn't copy/paste into a form gnumeric seems to like. The
-easiest solution is to use an intermediary, like gedit. First, highlight all the
-pins: </p>
+<h3>Step3: Copy the pin list into an editor and prepare it</h3>
 
-<img src="xpdf_selected.jpg" border="0" hspace="0" vspace="0">
+Inside the datasheet the pin list may only be in the drawing of the pin
+configuration.
+If there's a nice table, like in the second picture, use this one.
+Select the pin list and copy it into a text editor. 
+This intermediate step is required as your spreadsheet programm may need a
+special field seperator, like comma or tab. You may have to remove duplicate
+seperators or replace it with tabs. <p>
+<b>Note:</b>
+The selection behaviour of xpdf is different from the acroread viewer. 
+The xpdf viewer seems to give you a copy that looks more like the graphical
+representation, while the acroread viewer produces an output that is more "file
+order" oriented. 
+If you have to create a lot of symbols, try both and compare the results. <p>
 
-<p> And then open gedit, and hit the middle mouse button to paste them in: </p>
+<img src="xemacs_rawselection.png" border="0" hspace="10" vspace="10">
+<img src="xemacs_modifiedselection.png" border="0" hspace="10" vspace="10">
+<img src="ooo_selection.png" border="0" hspace="10" vspace="10"> <p>
 
-<img src="gedit_pasted.jpg"  border="0" hspace="0" vspace="0">
+The pictures above illustrate the steps:
+    <ul>
+      <li>insert the selection from your pdf viewer into a text editor</li>
+      <li>modify the pinlist to make your spreadsheet programm happy
+	<ul> 
+	  <li>cut out pinlist 24 to 13 with a rectangular selection</li>
+	  <li>insert the rectangular selection below the pins 1 to 12</li>
+	  <li>sort the lines (xemacs can do that ;-))</li>
+	  <li>remove or repair the lines with the numbers 2,3,... They are not
+in the same line. You can easily recreate the pin numbers later</li>
+	  <li>replace the spaces with tabs (not really need when using
+OpenOffice)</li>
+	</ul>
+      </li>
+      <li>copy the modified data into the spreadsheet template somewhere beside
+</li>
+    </ul>
 
-<p> Next, a little bit of preprocessing need to be done so that the gnumeric text
-import goes smoothly. We will tell gnumeric to use spaces as seperators, and to
-see two seperators as one. Notice that some of the pins have extra spaces before
-them. Correct this:</p>
+<h3>Step4: Insert all missing data into the spreadsheet</h3>
+Now, move the labels into the label column and the pin numbers into the pin
+number column.
+You can use the autofill feature of your spreadsheet programm to create the pin
+numbers, too. <p>
+<img src="ooo_rearanged.png" border="0" hspace="10" vspace="10"> <p>
+Set the type, style and position column to the most common value. You can use
+the autofill feature again.<p>
 
-<img src="gedit_corrected.jpg" border="0" hspace="0" vspace="0">
+Now you want to change some fo the values. Take a look at the pin description
+table in the datasheet: <p>
+<img src="xpdf_pindescription.png" border="0" hspace="10" vspace="10"> <p>
 
-<P> Now, just highlight everything and hit copy </p>
+Regarding to that table we change the following things (see result below):
+    <ul>
+      <li>Pin 1 is an output, we like to have a negation bubble and a negation
+overbar</li>
+      <li>A1 to A3 are inputs, we change the type and move them to the left
+side</li>
+      <li>set the SCL type to inpult and move SCL and SDA to the left side, too
+</li>
+      <li>change the type of the power pins VSS and VDD and add net names. We
+use the more usual GND and Vcc.</li>
+    </ul>
+<b>Note:</b> If one of your pin labels has a backslash "\" inside, you have to
+replace it with it's escape sequence "\\". <p>
+<img src="ooo_changedpins.png" border="0" hspace="10" vspace="10"> <p>
 
-<h4>Step 4: Import into gnumeric</h4>
-<p> open up gnumeric, click the first cell (A1) and hit the paste button. A
-dialog called "Importing structured text" should appear:</p>
+Before going on set the attributes and the options to appropriate values.<p>
+<img src="ooo_attributes.png" border="0" hspace="10" vspace="10"> 
 
-<img src="gnumeric_import.jpg" border="0" hspace="0" vspace="0">
 
-<p> click forward. The next page allows you to select how fields are seperated.
-The default is by commas. Uncheck the 'Comma (,)' box, and check the 'Space' box
-instead. Then select 'See two seperators as one'. Click Forward.
+<h3>Step5: Export the spreadsheet into a tab seperated text file</h3>
+You can either use the export function of your spreadsheet programm to create a
+tab seperated textfile or just select the table and copy the content into your
+text editor and save the file.
 
-<img src="gnumeric_import2.jpg" border="0" hspace="0" vspace="0">
 
-<p> Click apply to complete the import. </p>
-
-<h4>Step 5: Get stuff in the right place</h4>
-<p> Tragesym wants the columns in a specific order, template.src shows this:</p>
+<h3>Step6: execute tragesym and create the symbol</h3>
+Just use a shell and execute tragesym:
 <pre>
-[pins]
-# tabseparated list of pin descriptions
-# pinnr is the physical number of the pin
-# seq is the pinseq= attribute, leave it blank if it doesn't matter
-# type can be (in, out, i/o, oc, oe, pas, tp, tri, clk, pwr)
-# style can be (line,dot,clk,dotclk,none). none if only want to add a net
-# posit. can be (l,r,t,b) or empty for nets
-# net specifies the name of the Vcc or GND name
-# label represents the pinlabel.
-#       negation lines can be added with _Q_
-#       if you want to add a "_" or "\" use \_ and \\ as escape sequences
-#-----------------------------------------------------
-#pinnr  seq     type    style   posit.  net     label
-#-----------------------------------------------------
+werner@werner-amd64:~/Desktop/tragesym_tutorial> tragesym pca555.src pca555.sch
 </pre>
+If tragesym says that there's an error, just make some changes in the
+spreadsheet and export the file again, or just edit the exported file.
 
-<p><font size="-1"><em>Note: i/o is a typo, it should be io</em></font></p>
 
-<p> So we need to get all the pin numbers in column A, and all the labels
-in column G. Its basically however you want to do it, but for example: </p>
-
-Cut C1:C12 and paste into A13<BR>
-Cut D1:D12 and paste into G13<BR>
-Cut A1:A12 and paste into G1<BR>
-Cut B1:B12 and paste int A1<BR>
-
-<p> It should look like this: </p>
-
-<img src="gnumeric_moved.jpg" border="0" hspace="0" vspace="0">
-
-<p> you may want to sort by pin number at this point to make the order
-of the labels a bit more consistent. This step is of course optional. Just
-select all the data elements and click the sort button (little green down
-arrow in the tool bar with the A..Z</p>
-
-<img src="gnumeric_sorted.jpg" border="0" hspace="0" vspace="0">
-
-<h4>Step 6: Fill in the type, style, and position columns</h4>
-<p> First you probably want to just autofill the most common value
-for these three columns. First enter that into the first row (most common
-values for this symbol are probably io, line, and r (right).</p>
-
-<img src="gnumeric_start.jpg" border="0" hspace="0" vspace="0">
-
-<p> Now, highlight all three cells, grab the little square box in the lower
-right hand corner of the selection box, and pull down to the last row</p>
-
-<img src="gnumeric_filled.jpg" border="0" hspace="0" vspace="0">
-
-<p> Next you'll want to change some of the values that need to be changed.
-Look at the pin description table in the datasheet:</p>
-
-<img src="xpdf_pins.jpg" border="0" hspace="0" vspace="0">
-
-<p> INT is an output, so change its type column (column C) to out (from io).
-A0, A1, and A3 are inputs, so change those colums to in. Also, change the VSS
-and VDD type columns to pwr. (Note, the type column allows DRC checkers
-for gschem to work. They check to see that connections are sane (ie, two
-out nets are not connected together. If you don't care about this, you
-don't really need to bother, ie, leave everything as io)<p>
-
-<img src="gnumeric_type.jpg" border="0" hspace="0" vspace="0">
-
-<p> The choice of which pins are on which side of the symbol is really up to
-you, for this example, I just went off the datasheet: </p>
-
-<img src="xpdf_block.jpg" border="0" hspace="0" vspace="0">
-
-<p> So I'll change A0,A1,A2 and SCA/SCL over to l. For most symbols, you'll
-want Vcc and GND to hook up automatically, and they won't appear in the symbol,
-so delete their position values. If you have long runs of values you want to
-change, you can use the highlight and pull method to change them all.</p>
-
-<img src="gnumeric_posit.jpg" border="0" hspace="0" vspace="0">
-
-<h4>Step 6: Connect up the power pins</h4>
-<p> To connect up the power pins automatically, change the style column
-to none (from line) and put the net name (Vcc/GND) in the net column
-(column F). For some designs, you'll want the Vcc/GND pins accessable
-on the symbol rather than automatically connecting into the Vcc and GND
-nets. However, even if you do automatically connect them in, you can
-still override this later in a schematic by adding a net attribute, ie:</p>
+<h3>Step7: check the result with gschem and do some artwork</h3>
+Now open the generated symbol with gschem and check the result
 <pre>
-net=+5V:24
+werner@werner-amd64:~/Desktop/tragesym_tutorial> gschem pca555.sch &gt;
 </pre>
-<p> Anyway, here is what gnumeric looks like after we connected the power
-pins up </p>
+Enabling the hidden text ("en", Edit-&gt;Show/Hide Inv Text), you can see the
+whole generated symbol.
+It's not really necessary to change anything, but it might improve the look of
+the symbol if you rearange the pins a little bit.<p>
+<img src="gschem_showhidden.png" border="0" hspace="10" vspace="10">
+<img src="gschem_finished.png" border="0" hspace="10" vspace="10"> <p>
 
-<img src="gnumeric_pwr.jpg" border="0" hspace="0" vspace="0">
+Now we have a complete symbol. You can copy the symbol to your local symbol
+library e.g. /usr/local/share/gEDA/sym/local/ and use it.
 
-<h4>Step 7: Make it look pretty</h4>
-<p> You can give pins that have special functions or features a graphical
-depiction of that feature. For instance, a clock can have a triange on its
-input, or an active low signal can have a bubble. In this symbol, INT
-is an active low output, so lets make that aparent. First, change the sytle
-from line to dot. This will put a bubble next to the pin. Next, put a
-negation bar over INT by surrounding it with _'s, ie, _INT_. (Note: if
-your imported labels already have underscores in them, you'll have to escape
-them with a backslash. Just do a search and replace, s/_/\\_/).</p>
+<h3>Conclusion</h3>
+This was a simple example with a small pincount, but this method really
+pays off when you have high pin counts (ie, bga-272, tfqp-100, etc).
 
-<img src="gnumeric_dot.jpg" border="0" hspace="0" vspace="0">
+<h3>Credits</h3>
+Many thanks to <a HREF="mailto:Russ.Dill@asu.edu">&lt;Russ.Dill@asu.edu&gt;</a>,
+who wrote the first version of this tutorial.
 
-<h4>Step 7: Export it</h4>
-<p> Next you'll want to export it into a tab delimiated file. Just do
-File->Save. Browse to your tragesym directory, select
-'Text export (configurable)' as the file format, enter
-pca9555.src.1 into the file name box and hit ok.</P>
+<h3>Questions/Comments?</h3>
+If you have any comments or questions please send me a mail <a
+HREF="mailto:werner.ho@gmx.de">&lt;werner.ho@gmx.de&gt;</a>. You can use one of
+the gEDA mailing lists too.
 
-<img src="gnumeric_save.jpg" border="0" hspace="0" vspace="0">
-
-<p> A silly dialog box will come up complaining about the extension, 
-just click yes. Next, a more usefull dialog box will appear asking you
-to describe the output format. Select Tab for a seperator and Never for
-Quoting. Click Apply.</P>
-
-<img src="gnumeric_export.jpg" border="0" hspace="0" vspace="0">
-
-<h4>Step 8: Make a header</h4>
-<p> Copy the templete.src to pca9555.src.0 and edit it. You may need to
-change version to your version of gschem so that gschem stops complaining
-about outdated symbols. Do this in your templete.src so that you only need
-to do it once. Anyway, just set name= to pca9555, device= to pca9555, and
-footprint to whatever works for you (I really don't use this attribute,
-some people might). And description is really your call too. Anyway, here
-is what it might look like.</p>
-<pre>
-# This is the template file for creating symbols with tragesym.py
-# every line starting with '#' is a comment line.
- 
-[options]
-# rotate_labels rotates the pintext of top and bottom pins
-# wordswap swaps labels if the pin is on the right side an looks like this:
-# "PB1 (CLK)"
-wordswap=yes
-rotate_labels=no
-sort_labels=yes
-generate_pinseq=yes
-sym_width=1400
-pinwidthvertikal=400
-pinwidthhorizontal=400
- 
-[geda_attr]
-# name will be printed in the top of the symbol
-# if you have a device with slots, you'll have to use slot= and slotdef=
-# use comment= if there are special information you want to add
-version=20030525
-name=pca9555
-device=pca9555
-refdes=U?
-footprint=sot616-1
-description=IIC to Parallel IO
-numslots=0
-#slot=1
-#slotdef=1:
-#slotdef=2:
-#slotdef=3:
-#slotdef=4:
-#comment=
-#comment=
-#comment=
- 
-[pins]
-# tabseparated list of pin descriptions
-# pinnr is the physical number of the pin
-# seq is the pinseq= attribute, leave it blank if it doesn't matter
-# type can be (in, out, i/o, oc, oe, pas, tp, tri, clk, pwr)
-# style can be (line,dot,clk,dotclk,none). none if only want to add a net
-# posit. can be (l,r,t,b) or empty for nets
-# net specifies the name of the Vcc or GND name
-# label represents the pinlabel.
-#       negation lines can be added with _Q_
-#       if you want to add a "_" or "\" use \_ and \\ as escape sequences
-#-----------------------------------------------------
-#pinnr  seq     type    style   posit.  net     label
-#-----------------------------------------------------
-</pre>
-
-<h4>Step 9: Make the symbol</h4>
-<p> Next, you'll want to use tragesym to make the .sym file. First,
-concatinate your pin list and pin header into one source file </P>
-<pre>
-russ@russ:~/src/tragesym$ cat pca9555.src.0 pca9555.src.1 > pca9555.src
-</pre>
-<p> Next, use tragesym </p>
-<pre>
-russ@russ:~/src/tragesym$ ./tragesym.py pca9555.src pca9555.sym
-</pre>
-<p> If tragesym says you made a mistake, you can fix it in the spreadsheet
-and go through the intermediary steps again, or just edit the .src file </p>
-
-<h4>Step 10: Edit the symbol</h4>
-<p> Open up the symbol with gschem</p>
-<pre>
-russ@russ:~/src/tragesym$ gschem pca9555.sym
-</pre>
-<p>Its not really necessary to move pins around, but you might, to make
-your symbol easier to work with. So if you care, do that first.</p>
-
-<img src="gschem_edited.jpg" border="0" hspace="0" vspace="0">
-
-<p> These next two steps are neccessary however. First make all invisable
-text visable by selecting Edit->Show/Hide Env Text or by using the key sequence
-en, Zoom out so you can see everything (ve, view->Zoom Extents, or shift-z).
-Hightlight everything with the mouse, and translate the symbol to the origin
-(edit->Symbol Translate... or et). A little dialog will pop up, just enter 0
-and hit OK (or enter). Ok, save your symbol (just click save) and exit gschem.
-You can now install your symbol by copying it to /usr/share/gEDA/sym/local
-(depending on your directory configuration)</p>
-
-<p>This is a simple example with a small pincount, but this method really
-pays off when you have high pin counts (ie, bga-272, tfqp-100, etc). You can
-also create components from scratch using gnumeric. Numbered busses, for insance,
-are easy to make. just enter D0, D1, select both, then pull down to fill the rest.
-</p>
-
-<p> Similary, I have a simple C program that generates large data busses for
-use in schematics</p>
-
-<pre>
-#include <stdio.h>
- 
-#define LEN 800
-#define SPC 200
- 
-int main(int argc, char **argv)
-{
-        int i, start, end, j;
-        int spacing = SPC;
- 
-        if (argc < 4) {
-                printf("%s root start end (%s SD 0 31)\n",
-                        argv[0], argv[0]);
-                return 0;
-        }
-        if (argc == 5) spacing = atoi(argv[4]);
- 
-        start = atoi(argv[2]);
-        end = atoi(argv[3]);
-        printf("v 20030223\n");
- 
-        for (i = start, j = 1;
-             start < end ? i <= end : i >= end;
-             i += start < end ? : -1, j++) {
-                printf("N 200 %d %d %d 4\n{\n",
-                        j * spacing, 200 + LEN, j * spacing);
-                printf("T %d %d 5 10 1 1 0 0\n", 200 + LEN / 2, spacing * j + 30);
-                printf("netname=%s%d\n}\n", argv[1], i);
-        }
- 
-        return 0;
-}
-</pre>
-
-<p> Just run ./make_bus A 31 0 > bus.sch, open bus.sch, copy, paste, viola.
-Anyway, the exploitablity of the open, text based, gschem file formats are
-endless.</p>
-
-Comments? suggestions? additions? Email me: 
-<a HREF="mailto:Russ.Dill@asu.edu">&lt;Russ.Dill@asu.edu&gt;</a>
-
+</body>
+</html>
 
 
 
