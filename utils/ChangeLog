@@ -1,3 +1,8 @@
+2006-06-14 Ales Hvezda   <ahvezda@geda.seul.org>
+
+	* man/grenum.1, src/grenum.c, src/grenum.h: Checked in latest
+	version from Levente Kovacs.  Thanks!
+
 2006-04-05 02:32  Dan McMahill <danmc>
 
         * src/gsch2pcb.c: - look at the environment variable GNETLIST if
